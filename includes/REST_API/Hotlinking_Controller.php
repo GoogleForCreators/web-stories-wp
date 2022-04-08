@@ -597,8 +597,9 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	 */
 	protected function get_allowed_mime_types(): array {
 		$mime_type = $this->types->get_allowed_mime_types();
-		// TODO: Update once audio elements are supported.
-		$mime_type['audio'] = [];
+		if ( ! $this->experiments->is_experiment_enabled( 'audioHotlinking' ) ) {
+			$mime_type['audio'] = [];
+		}
 		if ( ! $this->experiments->is_experiment_enabled( 'captionHotlinking' ) ) {
 			unset( $mime_type['caption'] );
 		}

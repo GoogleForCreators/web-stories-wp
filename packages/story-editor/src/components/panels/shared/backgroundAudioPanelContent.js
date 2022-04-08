@@ -28,13 +28,16 @@ import {
   themeHelpers,
 } from '@googleforcreators/design-system';
 import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
-import { useCallback, useMemo } from '@googleforcreators/react';
+import { useCallback, useMemo, useState } from '@googleforcreators/react';
 import {
   ResourcePropTypes,
   getExtensionsFromMimeType,
+  preloadVideo,
+  getVideoLength,
 } from '@googleforcreators/media';
 import { v4 as uuidv4 } from 'uuid';
 import { BackgroundAudioPropType } from '@googleforcreators/elements';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -44,8 +47,10 @@ import { Z_INDEX_STORY_DETAILS } from '../../../constants/zIndex';
 import { Row } from '../../form';
 import AudioPlayer from '../../audioPlayer';
 import Tooltip from '../../tooltip';
+import useCORSProxy from '../../../utils/useCORSProxy';
 import CaptionsPanelContent from './captionsPanelContent';
 import LoopPanelContent from './loopPanelContent';
+import HotlinkModal from './hotlinkModal';
 
 const StyledButton = styled(Button)`
   ${({ theme }) =>
@@ -57,6 +62,10 @@ const StyledButton = styled(Button)`
 
 const UploadButton = styled(StyledButton)`
   padding: 12px 8px;
+`;
+
+const ButtonRow = styled(Row)`
+  gap: 12px;
 `;
 
 function BackgroundAudioPanelContent({
@@ -71,6 +80,10 @@ function BackgroundAudioPanelContent({
     capabilities: { hasUploadMediaAction },
     MediaUpload,
   } = useConfig();
+  const [isOpen, setIsOpen] = useState(false);
+  const enableAudioHotlinking = useFeature('audioHotlinking');
+  const { getProxiedUrl } = useCORSProxy();
+
   const allowedAudioFileTypes = useMemo(
     () =>
       allowedAudioMimeTypes
@@ -78,7 +91,9 @@ function BackgroundAudioPanelContent({
         .flat(),
     [allowedAudioMimeTypes]
   );
-  const { resource, tracks = [], loop = true } = backgroundAudio || {};
+  const { resource = {}, tracks = [], loop = true } = backgroundAudio || {};
+
+  const audioSrcProxied = getProxiedUrl(resource, resource?.src);
 
   const onSelectErrorMessage = sprintf(
     /* translators: %s: list of allowed file types. */
@@ -95,6 +110,7 @@ function BackgroundAudioPanelContent({
           mimeType: media.mimeType,
           length: media.length,
           lengthFormatted: media.lengthFormatted,
+          needsProxy: false,
         },
       };
 
@@ -107,6 +123,28 @@ function BackgroundAudioPanelContent({
       updateBackgroundAudio(updatedBackgroundAudio);
     },
     [showCaptions, showLoopControl, updateBackgroundAudio]
+  );
+
+  const onSelectHotlink = useCallback(
+    (media) => {
+      (async () => {
+        const audioProxied = getProxiedUrl(media, media.src);
+        const videoEl = await preloadVideo(audioProxied);
+        const { length, lengthFormatted } = getVideoLength(videoEl);
+
+        const newMedia = {
+          src: media.src,
+          id: media.id,
+          mimeType: media.mimeType,
+          length,
+          lengthFormatted,
+          needsProxy: media.needsProxy,
+        };
+
+        onSelect(newMedia);
+      })();
+    },
+    [getProxiedUrl, onSelect]
   );
 
   const updateTracks = useCallback(
@@ -187,17 +225,38 @@ function BackgroundAudioPanelContent({
 
   return (
     <>
-      {!resource?.src && hasUploadMediaAction && (
-        <Row expand>
-          <MediaUpload
-            onSelect={onSelect}
-            onSelectErrorMessage={onSelectErrorMessage}
-            type={allowedAudioMimeTypes}
-            title={__('Upload an audio file', 'web-stories')}
-            buttonInsertText={__('Select audio file', 'web-stories')}
-            render={renderUploadButton}
-          />
-        </Row>
+      {!resource?.src && (
+        <ButtonRow spaceBetween={false}>
+          {hasUploadMediaAction && (
+            <MediaUpload
+              onSelect={onSelect}
+              onSelectErrorMessage={onSelectErrorMessage}
+              type={allowedAudioMimeTypes}
+              title={__('Upload an audio file', 'web-stories')}
+              buttonInsertText={__('Select audio file', 'web-stories')}
+              render={renderUploadButton}
+            />
+          )}
+          {enableAudioHotlinking && (
+            <>
+              <UploadButton
+                variant={BUTTON_VARIANTS.RECTANGLE}
+                type={BUTTON_TYPES.SECONDARY}
+                size={BUTTON_SIZES.SMALL}
+                onClick={() => setIsOpen(true)}
+              >
+                {__('Link to file', 'web-stories')}
+              </UploadButton>
+              <HotlinkModal
+                title={__('Insert external background audio', 'web-stories')}
+                isOpen={isOpen}
+                onSelect={onSelectHotlink}
+                onClose={() => setIsOpen(false)}
+                allowedFileTypes={allowedAudioFileTypes}
+              />
+            </>
+          )}
+        </ButtonRow>
       )}
       {resource?.src && (
         <>
@@ -206,7 +265,7 @@ function BackgroundAudioPanelContent({
               title={resource?.src.substring(
                 resource?.src.lastIndexOf('/') + 1
               )}
-              src={resource?.src}
+              src={audioSrcProxied}
               mimeType={resource?.mimeType}
               tracks={tracks}
               audioId={audioId}

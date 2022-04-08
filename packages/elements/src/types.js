@@ -39,6 +39,7 @@ export const BackgroundAudioPropType = PropTypes.shape({
   length: PropTypes.number,
   lengthFormatted: PropTypes.string,
   mimeType: PropTypes.string,
+  needsProxy: PropTypes.bool,
 });
 
 StoryPropTypes.mask = PropTypes.shape({

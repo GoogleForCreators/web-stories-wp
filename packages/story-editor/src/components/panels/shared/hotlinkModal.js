@@ -20,6 +20,7 @@
 import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
 import { Input } from '@googleforcreators/design-system';
 import PropTypes from 'prop-types';
+import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components';
 import {
   useCallback,
@@ -134,7 +135,12 @@ function HotlinkModal({
         needs_proxy: shouldProxy,
       });
 
-      onSelect({ src: link, needsProxy: shouldProxy });
+      onSelect({
+        ...hotlinkInfo,
+        id: uuidv4(),
+        src: link,
+        needsProxy: shouldProxy,
+      });
     } catch (err) {
       trackError('hotlink_file', err?.message);
 
