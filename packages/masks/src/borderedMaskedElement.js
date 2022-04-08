@@ -20,7 +20,7 @@
 import { useMemo } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
-import { getTransformFlip } from '@googleforcreators/design-system';
+import { getTransformFlip } from '@googleforcreators/element-library';
 import { StoryPropTypes } from '@googleforcreators/elements';
 
 /**

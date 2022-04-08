@@ -36,13 +36,13 @@ import {
   DisplayWithMask as WithMask,
   shouldDisplayBorder,
 } from '@googleforcreators/masks';
-import { getTransformFlip } from '@googleforcreators/design-system';
 import { StoryPropTypes } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import { elementFillContent, elementWithFlip } from '../shared';
+import getTransformFlip from '../utils/getTransformFlip';
 import EditCropMoveable from './editCropMoveable';
 import { mediaWithScale } from './util';
 import EditPanMoveable from './editPanMoveable';

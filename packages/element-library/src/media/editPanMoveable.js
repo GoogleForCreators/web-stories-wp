@@ -23,10 +23,14 @@ import { getFocalFromOffset } from '@googleforcreators/media';
 import {
   useKeyDownEffect,
   getKeyboardMovement,
-  getTransformFlip,
 } from '@googleforcreators/design-system';
 import { Moveable } from '@googleforcreators/moveable';
 import { StoryPropTypes } from '@googleforcreators/elements';
+
+/**
+ * Internal dependencies
+ */
+import getTransformFlip from '../utils/getTransformFlip';
 
 function EditPanMoveable({
   setProperties,
