@@ -66,7 +66,17 @@ export default function ApiProviderFixture({ children }) {
   const usersApi = useMemo(
     () => ({
       getAuthors: () =>
-        Promise.resolve(formattedStoriesArray.map((story) => story.author)),
+        Promise.resolve(
+          Object.values(
+            formattedStoriesArray.reduce((dict, { author }) => {
+              if (dict[author.id] === undefined) {
+                dict[author.id] = author;
+              }
+
+              return dict;
+            }, {})
+          )
+        ),
     }),
     []
   );
