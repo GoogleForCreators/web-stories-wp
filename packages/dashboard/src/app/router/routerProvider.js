@@ -29,6 +29,17 @@ import { createHashHistory } from 'history';
 
 export const RouterContext = createContext({ state: {}, actions: {} });
 
+export const getActiveRoute = ({
+  availableRoutes,
+  currentPath,
+  defaultRoute,
+}) => {
+  const matchingRoutes = availableRoutes.filter((route) =>
+    currentPath.startsWith(route)
+  );
+  // this assumes that we have a route that's just the root path (/)
+  return matchingRoutes.length <= 1 ? defaultRoute : currentPath;
+};
 function RouterProvider({ children, ...props }) {
   const history = useRef(props.history || createHashHistory());
   const [currentPath, setCurrentPath] = useState(
@@ -37,13 +48,10 @@ function RouterProvider({ children, ...props }) {
   const [availableRoutes, setAvailableRoutes] = useState([]);
   const [defaultRoute, setDefaultRoute] = useState();
 
-  const activeRoute = useMemo(() => {
-    const matchingRoutes = availableRoutes.filter((route) =>
-      currentPath.startsWith(route)
-    );
-    // this assumes that we have a route that's just the root path (/)
-    return matchingRoutes.length <= 1 ? defaultRoute : currentPath;
-  }, [availableRoutes, currentPath, defaultRoute]);
+  const activeRoute = useMemo(
+    () => getActiveRoute({ availableRoutes, currentPath, defaultRoute }),
+    [availableRoutes, currentPath, defaultRoute]
+  );
 
   const parse = (search) => {
     const params = new URLSearchParams(search);

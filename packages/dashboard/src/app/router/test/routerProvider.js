@@ -21,55 +21,47 @@ import { renderHook, act } from '@testing-library/react-hooks';
 /**
  * Internal dependencies
  */
-import RouterProvider from '../routerProvider';
+import RouterProvider, { getActiveRoute } from '../routerProvider';
 import useRouteHistory from '../useRouteHistory';
 
 const DEFAULT_ROUTE = '/';
 const ROUTE_LIST = ['/templates-gallery', '/settings', '/custom-route'];
+const AVAILABLE_ROUTES = [...ROUTE_LIST, DEFAULT_ROUTE];
 
 describe('routerProvider', () => {
-  let result = null;
-
-  beforeEach(async () => {
-    const { result: _result } = renderHook(() => useRouteHistory(), {
+  it('should set available and default routes', async () => {
+    const { result } = renderHook(() => useRouteHistory(), {
       wrapper: (props) => <RouterProvider {...props} />,
     });
 
     await act(async () => {
-      await _result.current.actions.setAvailableRoutes([
-        ...ROUTE_LIST,
-        DEFAULT_ROUTE,
-      ]);
-      await _result.current.actions.setDefaultRoute(DEFAULT_ROUTE);
+      await result.current.actions.setAvailableRoutes(AVAILABLE_ROUTES);
+      await result.current.actions.setDefaultRoute(DEFAULT_ROUTE);
     });
-    result = _result;
-  });
 
-  it('should set available and default routes', () => {
-    expect(result.current.state.availableRoutes).toStrictEqual([
-      ...ROUTE_LIST,
-      DEFAULT_ROUTE,
-    ]);
+    expect(result.current.state.availableRoutes).toStrictEqual(
+      AVAILABLE_ROUTES
+    );
     expect(result.current.state.defaultRoute).toStrictEqual(DEFAULT_ROUTE);
     expect(result.current.state.activeRoute).toStrictEqual(DEFAULT_ROUTE);
   });
 
-  it('should keep activeRoute in sync even when route is not in our list of availableRoutes', async () => {
-    expect(result.current.state.activeRoute).toStrictEqual(DEFAULT_ROUTE);
-
-    await act(async () => {
-      await result.current.actions.push(ROUTE_LIST[0]);
-    });
-    expect(result.current.state.activeRoute).toStrictEqual(ROUTE_LIST[0]);
-
-    await act(async () => {
-      await result.current.actions.push('wpbody-content');
-    });
-    expect(result.current.state.activeRoute).toStrictEqual(DEFAULT_ROUTE);
-
-    await act(async () => {
-      await result.current.actions.push(`${ROUTE_LIST[0]}?id=51&isLocal=false`);
-    });
-    expect(result.current.state.activeRoute).toStrictEqual(ROUTE_LIST[0]);
-  });
+  it.each`
+    currentPath             | result
+    ${'/'}                  | ${'/'}
+    ${'/templates-gallery'} | ${'/templates-gallery'}
+    ${'wpbody-content'}     | ${'/'}
+    ${'/jafklajdfslkjl'}    | ${'/'}
+  `(
+    'should return proper active route if available otherwise the default route',
+    ({ currentPath, result }) => {
+      expect(
+        getActiveRoute({
+          currentPath,
+          defaultRoute: DEFAULT_ROUTE,
+          availableRoutes: AVAILABLE_ROUTES,
+        })
+      ).toStrictEqual(result);
+    }
+  );
 });
