@@ -27,7 +27,7 @@ import PropTypes from 'prop-types';
 import Color from '../../../form/color';
 
 const EYEDROPPER_WIDTH = 38; // icon width + spacing
-const WIDTH_INCLUDING_INPUTS = 178;
+const WIDTH_INCLUDING_INPUTS = 184;
 const WIDTH_EXCLUDING_INPUTS = 60;
 
 const PICKER_MAX_HEIGHT = 362;
