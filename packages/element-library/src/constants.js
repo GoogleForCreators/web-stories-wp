@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,22 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-export const KEYS = {
-  DOWN: 'ArrowDown',
-  LEFT: 'ArrowLeft',
-  RIGHT: 'ArrowRight',
-  UP: 'ArrowUp',
-  ENTER: 'Enter',
-  SPACE: 'Space',
-  TAB: 'Tab',
+export const DEFAULT_ATTRIBUTES_FOR_MEDIA = {
+  scale: 100,
+  focalX: 50,
+  focalY: 50,
 };
-
-export const FOCUSABLE_SELECTORS = [
-  'button:not(:disabled)',
-  '[href]',
-  'input:not(:disabled)',
-  'select:not(:disabled)',
-  'textarea:not(:disabled)',
-  '[tabindex]:not([tabindex="-1"])',
-];

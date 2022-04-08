@@ -22,7 +22,7 @@ import {
   canSupportMultiBorder,
   canMaskHaveBorder,
 } from '@googleforcreators/masks';
-import { DEFAULT_ATTRIBUTES_FOR_MEDIA } from '@googleforcreators/design-system';
+import { DEFAULT_ATTRIBUTES_FOR_MEDIA } from '@googleforcreators/element-library';
 
 /**
  * Internal dependencies
