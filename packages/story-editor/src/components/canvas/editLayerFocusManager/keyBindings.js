@@ -66,6 +66,14 @@ function KeyBindings({ uuid, node, activeFocusGroup, exitCurrentFocusGroup }) {
     [activeFocusGroup, uuid]
   );
 
+  const exitFocusGroup = useCallback(
+    (e) => {
+      e.preventDefault();
+      exitCurrentFocusGroup();
+    },
+    [exitCurrentFocusGroup]
+  );
+
   useKeyDownEffect(
     node,
     { key: ['tab'], allowDefault: true, editable: true, shift: true },
@@ -76,8 +84,8 @@ function KeyBindings({ uuid, node, activeFocusGroup, exitCurrentFocusGroup }) {
   useKeyDownEffect(
     node,
     { key: ['esc'], allowDefault: true, editable: true },
-    exitCurrentFocusGroup,
-    [exitCurrentFocusGroup]
+    exitFocusGroup,
+    [exitFocusGroup]
   );
 
   return null;

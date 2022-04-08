@@ -167,8 +167,11 @@ const Menu = forwardRef(
     const handleKeyboardNav = useCallback(
       (evt) => {
         const { key } = evt;
-        if (dismissOnEscape && key === 'Escape') {
-          onDismiss(evt);
+        if (key === 'Escape') {
+          if (dismissOnEscape) {
+            onDismiss(evt);
+          }
+
           return;
         }
 
