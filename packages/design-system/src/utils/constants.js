@@ -33,13 +33,6 @@ export const FOCUSABLE_SELECTORS = [
   '[tabindex]:not([tabindex="-1"])',
 ];
 
-export const OverlayType = {
-  NONE: 'none',
-  SOLID: 'solid',
-  LINEAR: 'linear',
-  RADIAL: 'radial',
-};
-
 export const DEFAULT_ATTRIBUTES_FOR_MEDIA = {
   scale: 100,
   focalX: 50,

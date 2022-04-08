@@ -78,3 +78,10 @@ export const BACKGROUND_TEXT_MODE = {
   FILL: 'FILL',
   HIGHLIGHT: 'HIGHLIGHT',
 };
+
+export const OverlayType = {
+  NONE: 'none',
+  SOLID: 'solid',
+  LINEAR: 'linear',
+  RADIAL: 'radial',
+};
