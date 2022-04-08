@@ -36,14 +36,11 @@ describe('routerProvider', () => {
 
     await act(async () => {
       await result.current.actions.setAvailableRoutes(AVAILABLE_ROUTES);
-      await result.current.actions.setDefaultRoute(DEFAULT_ROUTE);
     });
 
     expect(result.current.state.availableRoutes).toStrictEqual(
       AVAILABLE_ROUTES
     );
-    expect(result.current.state.defaultRoute).toStrictEqual(DEFAULT_ROUTE);
-    expect(result.current.state.activeRoute).toStrictEqual(DEFAULT_ROUTE);
   });
 
   it.each`

@@ -26,6 +26,10 @@ import {
 } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { createHashHistory } from 'history';
+/**
+ * Internal dependencies
+ */
+import { APP_ROUTES } from '../../constants';
 
 export const RouterContext = createContext({ state: {}, actions: {} });
 
@@ -46,7 +50,7 @@ function RouterProvider({ children, ...props }) {
     history.current.location.pathname
   );
   const [availableRoutes, setAvailableRoutes] = useState([]);
-  const [defaultRoute, setDefaultRoute] = useState();
+  const defaultRoute = APP_ROUTES.DASHBOARD;
 
   const activeRoute = useMemo(
     () => getActiveRoute({ availableRoutes, currentPath, defaultRoute }),
@@ -82,7 +86,6 @@ function RouterProvider({ children, ...props }) {
         push: history.current.push,
         replace: history.current.replace,
         setAvailableRoutes,
-        setDefaultRoute,
       },
     }),
     [activeRoute, availableRoutes, currentPath, defaultRoute, queryParams]

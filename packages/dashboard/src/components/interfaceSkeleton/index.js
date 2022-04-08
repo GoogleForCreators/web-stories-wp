@@ -45,7 +45,7 @@ const InterfaceSkeleton = ({ additionalRoutes }) => {
       templateId: state.queryParams.id,
     })
   );
-  const { push, setAvailableRoutes, setDefaultRoute } = useRouteHistory(
+  const { push, setAvailableRoutes } = useRouteHistory(
     ({ actions }) => actions
   );
 
@@ -98,13 +98,7 @@ const InterfaceSkeleton = ({ additionalRoutes }) => {
       ? additionalRoutes.map(({ path }) => path)
       : [];
     setAvailableRoutes([...Object.values(APP_ROUTES), ...additionalPaths]);
-    setDefaultRoute(APP_ROUTES.DASHBOARD);
-  }, [
-    additionalRoutes,
-    availableRoutes.length,
-    setAvailableRoutes,
-    setDefaultRoute,
-  ]);
+  }, [additionalRoutes, availableRoutes.length, setAvailableRoutes]);
 
   useEffect(() => {
     if (!isRedirectComplete) {
