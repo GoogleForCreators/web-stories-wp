@@ -274,7 +274,6 @@ WithMask.propTypes = {
     vertical: PropTypes.bool,
     horizontal: PropTypes.bool,
   }),
-  eventHandlers: PropTypes.object,
   children: PropTypes.node.isRequired,
   draggingResource: PropTypes.object,
   activeDropTargetId: PropTypes.string,

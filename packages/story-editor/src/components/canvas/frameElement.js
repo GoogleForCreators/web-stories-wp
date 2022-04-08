@@ -36,11 +36,7 @@ import {
   elementWithSize,
   elementWithRotation,
 } from '@googleforcreators/element-library';
-import {
-  FrameWithMask as WithMask,
-  getElementMask,
-  MaskTypes,
-} from '@googleforcreators/masks';
+import { FrameWithMask as WithMask } from '@googleforcreators/masks';
 import { useLiveRegion } from '@googleforcreators/design-system';
 
 /**
@@ -67,7 +63,6 @@ const Wrapper = styled.div`
   ${elementWithPosition}
   ${elementWithSize}
 	${elementWithRotation}
-  pointer-events: ${({ maskDisabled }) => (maskDisabled ? 'initial' : 'none')};
 
   outline: 1px solid transparent;
   transition: outline-color 0.5s;
@@ -201,6 +196,7 @@ function FrameElement({ id }) {
       if (!isSelected) {
         handleSelectElement(id, evt);
       }
+
       speak(FRAME_ELEMENT_MESSAGE);
     },
     [handleSelectElement, id, isSelected, speak]
@@ -208,11 +204,12 @@ function FrameElement({ id }) {
 
   const handleMouseDown = useCallback(
     (evt) => {
-      if (isSelected) {
-        elementRef.current.focus({ preventScroll: true });
-      } else {
+      if (!isSelected) {
         handleSelectElement(id, evt);
       }
+
+      elementRef.current.focus({ preventScroll: true });
+
       if (!isBackground) {
         evt.stopPropagation();
       }
@@ -220,24 +217,8 @@ function FrameElement({ id }) {
     [handleSelectElement, id, isBackground, isSelected]
   );
 
-  // For elements with no mask, handle events by the wrapper.
-  const mask = getElementMask(element);
-  const maskDisabled =
-    !mask?.type || (isBackground && mask.type !== MaskTypes.RECTANGLE);
-
-  const withMaskRef = useRef(null);
-
   usePerformanceTracking({
-    node: maskDisabled ? elementRef.current : null,
-    eventData: {
-      ...TRACKING_EVENTS.SELECT_ELEMENT,
-      label: element.type,
-    },
-    eventType: 'pointerdown',
-  });
-
-  usePerformanceTracking({
-    node: withMaskRef.current,
+    node: elementRef.current,
     eventData: {
       ...TRACKING_EVENTS.SELECT_ELEMENT,
       label: element.type,
@@ -273,7 +254,6 @@ function FrameElement({ id }) {
         onClick={isMedia ? handleMediaClick(id) : null}
       >
         <WithMask
-          ref={withMaskRef}
           element={element}
           fill
           flip={flip}
