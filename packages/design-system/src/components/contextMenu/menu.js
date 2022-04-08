@@ -168,10 +168,7 @@ const Menu = forwardRef(
       (evt) => {
         const { key } = evt;
         if (key === 'Escape') {
-          if (dismissOnEscape) {
-            onDismiss(evt);
-          }
-
+          onDismiss(evt);
           return;
         }
 
@@ -232,7 +229,6 @@ const Menu = forwardRef(
         isHorizontal,
         onCloseSubMenu,
         parentMenuRef,
-        dismissOnEscape,
       ]
     );
 
@@ -258,9 +254,13 @@ const Menu = forwardRef(
 
     useKeyDownEffect(
       menuRef,
-      { key: ['esc', 'down', 'up', 'left', 'right'] },
+      {
+        key: dismissOnEscape
+          ? ['esc', 'down', 'up', 'left', 'right']
+          : ['down', 'up', 'left', 'right'],
+      },
       handleKeyboardNav,
-      [handleKeyboardNav]
+      [handleKeyboardNav, dismissOnEscape]
     );
 
     useKeyDownEffect(menuRef, keySpec, onDismiss, [keySpec, onDismiss]);
