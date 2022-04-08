@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * Internal dependencies
  */
@@ -26,9 +25,10 @@ describe('Canvas - keyboard navigation', () => {
 
   beforeEach(async () => {
     fixture = new Fixture();
+    await fixture.render();
+
     focusContainer = fixture.screen.getByTestId('canvas-focus-container');
 
-    await fixture.render();
     await fixture.collapseHelpCenter();
   });
 
