@@ -479,7 +479,7 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
 
       // Expect text content to have style and content
       expect(getTextContent()).toBe(
-        '<span style="font-weight: 700">Fill in extra text</span>.'
+        '<span style="font-weight: 700">Fill in extra text</span>'
       );
 
       await data.fixture.snapshot('Pasting and replacing text');
