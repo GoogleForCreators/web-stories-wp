@@ -36,11 +36,13 @@ function RouterProvider({ children, ...props }) {
   );
   const [availableRoutes, setAvailableRoutes] = useState([]);
   const [defaultRoute, setDefaultRoute] = useState();
+
   const activeRoute = useMemo(() => {
     const matchingRoutes = availableRoutes.filter((route) =>
       currentPath.startsWith(route)
     );
-    return matchingRoutes.length === 0 ? defaultRoute : currentPath;
+    // this assumes that we have a route that's just the root path (/)
+    return matchingRoutes.length <= 1 ? defaultRoute : currentPath;
   }, [availableRoutes, currentPath, defaultRoute]);
 
   const parse = (search) => {
