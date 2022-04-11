@@ -624,7 +624,7 @@ describe('CUJ: Creator can view their stories in grid view', () => {
         /story-editor-grid-link/
       );
 
-      const storyIndex = 1;
+      const storyIndex = 0;
       const selectedStory = allItemGridLinks[storyIndex];
       // focus the delete context menu item of the first story with the keyboard
       // test cancelling deletion of the second story (not the default first story)
