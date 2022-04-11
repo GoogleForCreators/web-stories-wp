@@ -54,13 +54,24 @@ function InnerButton({
   text,
   checkpoint,
   hasHighPriorityIssues = false,
+  onClick,
   ...buttonProps
 }) {
+  const handleClick = (evt) => {
+    // https://github.com/reactjs/react-modal/issues/680#issuecomment-413422345
+    // React Modal restores input on last focused element on close.
+    // Blur button so that it doesn't steal focus back when opening the checklist.
+    evt.currentTarget.blur();
+
+    onClick?.(evt);
+  };
+
   return (
     <Button
       variant={BUTTON_VARIANTS.RECTANGLE}
       type={BUTTON_TYPES.PRIMARY}
       size={BUTTON_SIZES.SMALL}
+      onClick={handleClick}
       {...buttonProps}
     >
       {text}
@@ -70,9 +81,10 @@ function InnerButton({
 }
 
 InnerButton.propTypes = {
-  text: PropTypes.node.isRequired,
   checkpoint: PropTypes.oneOf(Object.values(PPC_CHECKPOINT_STATE)),
   hasHighPriorityIssues: PropTypes.bool,
+  onClick: PropTypes.func,
+  text: PropTypes.node.isRequired,
 };
 
 function ButtonWithChecklistWarning({

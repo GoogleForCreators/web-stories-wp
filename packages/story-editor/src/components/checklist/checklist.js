@@ -90,6 +90,7 @@ const ThroughputPopup = forwardRef(function ThroughputPopup(
             onClose={close}
             label={CHECKLIST_TITLE}
             popupId={POPUP_ID}
+            isOpen={isOpen}
           />
           <Tablist
             id="pre-publish-checklist"
