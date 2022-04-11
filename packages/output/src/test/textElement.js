@@ -22,8 +22,10 @@ import { useFeature } from 'flagged';
 import { renderToStaticMarkup } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { StoryAnimation } from '@googleforcreators/animation';
-import { BACKGROUND_TEXT_MODE } from '@googleforcreators/design-system';
-import { registerElementType } from '@googleforcreators/elements';
+import {
+  registerElementType,
+  BACKGROUND_TEXT_MODE,
+} from '@googleforcreators/elements';
 import { elementTypes } from '@googleforcreators/element-library';
 
 /**

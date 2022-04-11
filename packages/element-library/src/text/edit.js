@@ -39,12 +39,14 @@ import {
   useRichText,
 } from '@googleforcreators/rich-text';
 import { stripHTML } from '@googleforcreators/dom';
-import { BACKGROUND_TEXT_MODE } from '@googleforcreators/design-system';
 import {
   getBorderPositionCSS,
   shouldDisplayBorder,
 } from '@googleforcreators/masks';
-import { StoryPropTypes } from '@googleforcreators/elements';
+import {
+  StoryPropTypes,
+  BACKGROUND_TEXT_MODE,
+} from '@googleforcreators/elements';
 
 /**
  * Internal dependencies

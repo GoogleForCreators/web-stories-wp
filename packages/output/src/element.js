@@ -20,8 +20,8 @@
 import { generatePatternStyles } from '@googleforcreators/patterns';
 import { getBox } from '@googleforcreators/units';
 import { StoryAnimation } from '@googleforcreators/animation';
-import { BACKGROUND_TEXT_MODE } from '@googleforcreators/design-system';
 import {
+  BACKGROUND_TEXT_MODE,
   getDefinitionForType,
   StoryPropTypes,
 } from '@googleforcreators/elements';

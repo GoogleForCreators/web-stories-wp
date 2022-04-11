@@ -36,8 +36,7 @@ import {
   DisplayWithMask as WithMask,
   shouldDisplayBorder,
 } from '@googleforcreators/masks';
-import { getTransformFlip } from '@googleforcreators/design-system';
-import { StoryPropTypes } from '@googleforcreators/elements';
+import { StoryPropTypes, getTransformFlip } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies

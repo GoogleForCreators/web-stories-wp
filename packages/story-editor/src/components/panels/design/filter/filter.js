@@ -19,9 +19,8 @@
  */
 import PropTypes from 'prop-types';
 import { useCallback } from '@googleforcreators/react';
-import { OverlayType } from '@googleforcreators/design-system';
 import { __, _x, sprintf } from '@googleforcreators/i18n';
-import { getDefinitionForType } from '@googleforcreators/elements';
+import { getDefinitionForType, OverlayType } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
