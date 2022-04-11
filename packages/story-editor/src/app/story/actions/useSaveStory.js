@@ -74,16 +74,21 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
 
       const trackTiming = getTimeTracker('load_save_story');
 
-      return saveStoryById({
-        storyId,
-        ...getStoryPropsToSave({
-          story,
-          pages,
-          metadata,
-          flags,
-        }),
-        ...props,
-      })
+      // Wrapping everything in a Promise so we can catch
+      // errors caused by getStoryPropsToSave() / getStoryMarkup().
+      return Promise.resolve()
+        .then(() =>
+          saveStoryById({
+            storyId,
+            ...getStoryPropsToSave({
+              story,
+              pages,
+              metadata,
+              flags,
+            }),
+            ...props,
+          })
+        )
         .then((data) => {
           const {
             status,
