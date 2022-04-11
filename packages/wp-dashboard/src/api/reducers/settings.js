@@ -38,6 +38,8 @@ export const defaultSettingsState = {
   archivePageId: 0,
   videoCache: false,
   settingSaved: false,
+  shopifyHost: '',
+  shopifyAccessToken: '',
 };
 
 function settingsReducer(state, action) {
@@ -71,6 +73,8 @@ function settingsReducer(state, action) {
         videoCache: action.payload.videoCache,
         archive: action.payload.archive,
         archivePageId: action.payload.archivePageId,
+        shopifyHost: action.payload.shopifyHost,
+        shopifyAccessToken: action.payload.shopifyAccessToken,
       };
     }
 

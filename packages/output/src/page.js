@@ -36,6 +36,7 @@ import BackgroundAudio from './utils/backgroundAudio';
 import getTextElementTagNames from './utils/getTextElementTagNames';
 import getAutoAdvanceAfter from './utils/getAutoAdvanceAfter';
 import Outlink from './utils/outlink';
+import ShoppingAttachment from './utils/shoppingAttachment';
 
 const ASPECT_RATIO = `${PAGE_WIDTH}:${PAGE_HEIGHT}`;
 
@@ -43,6 +44,7 @@ function OutputPage({
   page,
   autoAdvance = DEFAULT_AUTO_ADVANCE,
   defaultPageDuration = DEFAULT_PAGE_DURATION,
+  flags,
 }) {
   const {
     id,
@@ -90,6 +92,11 @@ function OutputPage({
 
     return element;
   });
+
+  const products = elements
+    .filter(({ type }) => type === ELEMENT_TYPES.PRODUCT)
+    .map(({ product }) => product)
+    .filter(Boolean);
 
   const videoCaptions = elements
     .filter(
@@ -181,6 +188,9 @@ function OutputPage({
 
       {/* <amp-story-page-outlink> needs to be the last child element */}
       {pageAttachment?.url && <Outlink {...pageAttachment} />}
+      {products.length > 0 && flags?.shoppingIntegration && (
+        <ShoppingAttachment products={products} theme={pageAttachment.theme} />
+      )}
     </amp-story-page>
   );
 }

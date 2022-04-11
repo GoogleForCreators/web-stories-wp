@@ -27,6 +27,7 @@ import {
   TEXT,
   ELEMS,
   PAGE_TEMPLATES,
+  SHOPPING,
 } from './constants';
 import { MediaPane } from './panes/media/local';
 import { Media3pPane } from './panes/media/media3p';
@@ -34,6 +35,7 @@ import { ShapesPane } from './panes/shapes';
 import { TextPane } from './panes/text';
 import { ElementsPane } from './panes/elements';
 import { PageTemplatesPane } from './panes/pageTemplates';
+import { ShoppingPane } from './panes/shopping';
 
 function LibraryPanes() {
   const { tab, tabs } = useLibrary((state) => ({
@@ -91,6 +93,8 @@ function LibraryPanes() {
         return <ElementsPane {...paneProps} />;
       case PAGE_TEMPLATES.id:
         return <PageTemplatesPane {...paneProps} />;
+      case SHOPPING.id:
+        return <ShoppingPane {...paneProps} />;
       default:
         return null;
     }

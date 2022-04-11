@@ -17,8 +17,9 @@
 /**
  * External dependencies
  */
-import { Icons } from '@googleforcreators/design-system';
-import { __ } from '@googleforcreators/i18n';
+import styled from 'styled-components';
+import { __, _x } from '@googleforcreators/i18n';
+import { Icons, NumericInput } from '@googleforcreators/design-system';
 import { trackEvent } from '@googleforcreators/tracking';
 
 /**
@@ -26,7 +27,12 @@ import { trackEvent } from '@googleforcreators/tracking';
  */
 import { useStory } from '../../../app';
 import { MIN_MAX } from '../../panels/design/sizePosition/opacity';
-import { Input, useProperties } from './shared';
+import { useProperties } from './shared';
+
+const Input = styled(NumericInput)`
+  width: 82px;
+  flex: 0 0 82px;
+`;
 
 function LayerOpacity() {
   const { opacity, type } = useProperties(['opacity', 'type']);
@@ -50,6 +56,7 @@ function LayerOpacity() {
   return (
     <Input
       suffix={<Icons.ColorDrop />}
+      unit={_x('%', 'Percentage', 'web-stories')}
       value={opacity || 0}
       aria-label={__('Opacity in percent', 'web-stories')}
       onChange={handleOpacityChange}

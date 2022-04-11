@@ -380,6 +380,7 @@ class Editor extends Service_Base implements HasRequirements {
 				'media'          => '/web-stories/v1/media/',
 				'hotlink'        => '/web-stories/v1/hotlink/validate/',
 				'publisherLogos' => '/web-stories/v1/publisher-logos/',
+				'products'       => '/web-stories/v1/products/',
 				'proxy'          => rest_url( '/web-stories/v1/hotlink/proxy/' ),
 				'link'           => '/web-stories/v1/link/',
 				'statusCheck'    => '/web-stories/v1/status-check/',

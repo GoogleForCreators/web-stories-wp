@@ -29,8 +29,6 @@ import { TestFrameElement } from './_utils';
 
 jest.useFakeTimers();
 
-/* eslint-disable testing-library/no-node-access, testing-library/no-container */
-
 describe('TextFrame: enter edit mode', () => {
   let element;
   let storyContext;
@@ -97,7 +95,7 @@ describe('TextFrame: enter edit mode', () => {
 
   it('should go to edit mode on enter key', () => {
     setSelected();
-    const { container } = render(
+    render(
       <TestFrameElement
         storyContext={storyContext}
         editingElementContext={editingElementContext}
@@ -106,7 +104,7 @@ describe('TextFrame: enter edit mode', () => {
     );
 
     // Find the focusable target.
-    const target = container.querySelector('[tabindex="0"]');
+    const target = screen.getByTestId('frameElement');
 
     act(() => jest.runOnlyPendingTimers());
 
@@ -120,7 +118,7 @@ describe('TextFrame: enter edit mode', () => {
 
   it('should go to edit mode on a character key', () => {
     setSelected();
-    const { container } = render(
+    render(
       <TestFrameElement
         storyContext={storyContext}
         editingElementContext={editingElementContext}
@@ -129,7 +127,7 @@ describe('TextFrame: enter edit mode', () => {
     );
 
     // Find the focusable target.
-    const target = container.querySelector('[tabindex="0"]');
+    const target = screen.getByTestId('frameElement');
 
     act(() => jest.runOnlyPendingTimers());
 
@@ -141,5 +139,3 @@ describe('TextFrame: enter edit mode', () => {
     ).toHaveBeenCalledWith('1', { selectAll: true });
   });
 });
-
-/* eslint-enable testing-library/no-node-access, testing-library/no-container */

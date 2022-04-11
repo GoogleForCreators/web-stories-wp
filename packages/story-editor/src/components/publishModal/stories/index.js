@@ -55,8 +55,8 @@ export default {
   argTypes: {
     onPublish: { action: 'onPublish clicked' },
     onClose: { action: 'onClose clicked' },
-    onPublishDialogChecklistRequest: {
-      action: 'onPublishDialogChecklistRequest clicked',
+    handleReviewChecklist: {
+      action: 'handleReviewChecklist clicked',
     },
     checkpoint: {
       options: Object.values(PPC_CHECKPOINT_STATE),
@@ -81,7 +81,7 @@ export const _default = (args) => {
     hasFeaturedMedia,
     hasPublisherLogo,
     hasPriorityIssues,
-    onPublishDialogChecklistRequest,
+    handleReviewChecklist,
     publisher,
     storyStatus,
   } = args;
@@ -156,11 +156,10 @@ export const _default = (args) => {
             <CheckpointContext.Provider
               value={{
                 actions: {
-                  onPublishDialogChecklistRequest:
-                    onPublishDialogChecklistRequest,
+                  handleReviewChecklist: handleReviewChecklist,
                 },
                 state: {
-                  shouldReviewDialogBeSeen: hasPriorityIssues,
+                  hasHighPriorityIssues: hasPriorityIssues,
                   checkpoint: checkpoint,
                 },
               }}

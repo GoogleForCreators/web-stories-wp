@@ -35,6 +35,7 @@ import theme from '../../../theme';
 import useEditingElement from '../../../app/canvas/useEditingElement';
 import { DropTargetsProvider } from '../../dropTargets';
 import { MediaProvider } from '../../../app/media';
+import EditLayerFocusManager from '../editLayerFocusManager';
 
 jest.mock('../../../app/canvas/useEditingElement');
 
@@ -100,7 +101,9 @@ export function TestFrameElement({
               <TransformProvider>
                 <DropTargetsProvider>
                   <WithRefs refs={refs}>
-                    <FrameElement id={element.id} />
+                    <EditLayerFocusManager>
+                      <FrameElement id={element.id} />
+                    </EditLayerFocusManager>
                   </WithRefs>
                 </DropTargetsProvider>
               </TransformProvider>

@@ -26,6 +26,7 @@ import {
   MIN_IMG_HEIGHT,
   useConfig,
 } from '@googleforcreators/dashboard';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -42,6 +43,7 @@ import GoogleAnalyticsSettings from './googleAnalytics';
 import { Wrapper, Main } from './components';
 import useEditorSettings from './useEditorSettings';
 import CustomFontsSettings from './customFonts';
+import Shopping from './shopping';
 
 function EditorSettings() {
   const {
@@ -69,6 +71,8 @@ function EditorSettings() {
     fetchPublisherLogos,
     removePublisherLogo,
     setPublisherLogoAsDefault,
+    shopifyHost,
+    shopifyAccessToken,
   } = useEditorSettings(
     ({
       actions: {
@@ -94,6 +98,8 @@ function EditorSettings() {
           videoCache,
           archive,
           archivePageId,
+          shopifyHost,
+          shopifyAccessToken,
         },
         media: { isLoading: isMediaLoading, newlyCreatedMediaIds },
         publisherLogos: { publisherLogos },
@@ -124,8 +130,12 @@ function EditorSettings() {
       removePublisherLogo,
       setPublisherLogoAsDefault,
       publisherLogos,
+      shopifyHost,
+      shopifyAccessToken,
     })
   );
+
+  const isShoppingEnabled = useFeature('shoppingIntegration');
 
   const {
     capabilities: { canUploadFiles, canManageSettings } = {},
@@ -371,6 +381,13 @@ function EditorSettings() {
                   adManagerSlotId={adManagerSlotId}
                   siteKitStatus={siteKitStatus}
                 />
+                {isShoppingEnabled && (
+                  <Shopping
+                    updateSettings={updateSettings}
+                    shopifyHost={shopifyHost}
+                    shopifyAccessToken={shopifyAccessToken}
+                  />
+                )}
               </>
             )}
           </Main>
