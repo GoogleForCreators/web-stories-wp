@@ -34,7 +34,7 @@
     "@web-stories-wp/glider": "*",
     "@wordpress/api-fetch": "^6.0.1",
     "@wordpress/block-editor": "^8.1.0",
-    "@wordpress/blocks": "^11.0.0",
+    "@wordpress/blocks": "^11.5.0",
     "@wordpress/components": "^19.4.0",
     "@wordpress/compose": "^5.1.1",
     "@wordpress/data": "^6.1.4",
