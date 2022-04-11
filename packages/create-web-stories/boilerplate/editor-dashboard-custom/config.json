@@ -47,6 +47,10 @@
     {
       "src": "src/constants/editor-dashboard.js",
       "dest": "src/constants.js"
+    },
+    {
+      "src": "src/editor-components/preview.js",
+      "dest": "src/components/preview.js"
     }
   ]
 }
