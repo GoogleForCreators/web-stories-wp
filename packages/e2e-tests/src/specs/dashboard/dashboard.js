@@ -21,6 +21,9 @@ import {
   takeSnapshot,
   withRTL,
   visitDashboard,
+  createNewStory,
+  insertStoryTitle,
+  publishStory,
 } from '@web-stories-wp/e2e-test-utils';
 
 const percyCSS = `.dashboard-grid-item-date { display: none; }`;
@@ -43,8 +46,12 @@ describe('Stories Dashboard', () => {
   });
 
   it('should choose sort option for display', async () => {
+    // dropdown needs a story for filtering
+    await createNewStory();
+    await insertStoryTitle('Stories Dashboard test - story');
+    await publishStory();
     await visitDashboard();
-    await expect(page).toClick('[aria-label="Dashboard"]', {
+    await expect(page).toClick('[aria-label="Dashboard (active view)"]', {
       text: 'Dashboard',
     });
     const sortButtonSelector =
