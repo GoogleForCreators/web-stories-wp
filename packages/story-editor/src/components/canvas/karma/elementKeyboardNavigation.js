@@ -17,10 +17,14 @@
 /**
  * Internal dependencies
  */
+/**
+ * External dependencies
+ */
+import { waitFor } from '@testing-library/dom';
 import { Fixture } from '../../../karma';
 import { useStory } from '../../../app/story';
 
-fdescribe('Canvas Element - keyboard navigation', () => {
+describe('Canvas Element - keyboard navigation', () => {
   let fixture;
 
   beforeEach(async () => {
@@ -48,12 +52,26 @@ fdescribe('Canvas Element - keyboard navigation', () => {
     const rectangleShape = fixture.editor.library.shapes.shape('Rectangle');
     await fixture.events.click(rectangleShape);
 
-    // Click on one of the added shapes
-    const elementId = await fixture.renderHook(() =>
-      useStory(({ state }) => state.currentPage.elements[1].id)
-    );
-    const wrapperEl = getCanvasElementWrapperById(elementId);
-    await fixture.events.click(wrapperEl);
+    // Get the element wrapper and see that it has focus
+    let wrapperEl;
+    await waitFor(async () => {
+      const elementId = await fixture.renderHook(() =>
+        useStory(({ state }) => state.currentPage.elements[1].id)
+      );
+      wrapperEl = getCanvasElementWrapperById(elementId);
+
+      if (!wrapperEl) {
+        throw new Error('element has not rendered to screen');
+      }
+
+      // There's some sort of debaounced timeout that we need to wait for before
+      // frame elements receive focus after adding the element through the library
+      if (document.activeElement !== wrapperEl) {
+        throw new Error(
+          'frame element wrapper has not recieved focus since adding new element'
+        );
+      }
+    });
     expect(document.activeElement).toBe(wrapperEl);
 
     // Use Keyboard to navigate into the floating menu

@@ -103,6 +103,7 @@ const FRAME_ELEMENT_MESSAGE = sprintf(
 );
 
 function FrameElement({ id }) {
+  const speak = useLiveRegion();
   const enterFocusGroup = useEditLayerFocusManager(
     ({ enterFocusGroup }) => enterFocusGroup
   );
@@ -209,8 +210,15 @@ function FrameElement({ id }) {
       if (!isSelected) {
         handleSelectElement(id, evt);
       }
+
+      // no floating menu on background, so no need to announce
+      // possible floating menu keyboard navigation commands
+      if (isBackground) {
+        return;
+      }
+      speak(FRAME_ELEMENT_MESSAGE);
     },
-    [handleSelectElement, id, isSelected]
+    [handleSelectElement, id, isBackground, isSelected, speak]
   );
 
   const handleMouseDown = useCallback(

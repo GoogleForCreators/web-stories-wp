@@ -145,10 +145,11 @@ const Menu = forwardRef(
       (evt) => {
         onFocus(evt);
         const menuChildren = menuRef.current.children || [];
-        if (
-          menuRef.current === evt.target &&
-          ![...menuChildren].some((child) => child.contains(evt.target))
-        ) {
+        const isFocusOutsideMenu =
+          menuChildren.length &&
+          ![...menuChildren].some((child) => child.contains(evt.target));
+
+        if (menuRef.current === evt.target && isFocusOutsideMenu) {
           const focusableChildren = getFocusableChildren(menuRef.current);
           focusableChildren?.[0]?.focus();
         }
