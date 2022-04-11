@@ -63,6 +63,10 @@ describe('Canvas - keyboard navigation', () => {
     }
   }
 
+  function getActiveElementId() {
+    return document.activeElement.getAttribute('data-element-id');
+  }
+
   it('should not focus the canvas while tabbing through the editor', async () => {
     await tabToCanvasFocusContainer();
 
@@ -102,6 +106,7 @@ describe('Canvas - keyboard navigation', () => {
 
     expect(selectedElements.length).toBe(1);
     expect(selectedElements[0].isBackground).toBe(true);
+    // see that background element is selected & focused
     expect(document.activeElement.getAttribute('data-element-id')).toBe(
       selectedElements[0].id
     );
@@ -159,8 +164,10 @@ describe('Canvas - keyboard navigation', () => {
     selectedElements = await fixture.renderHook(() =>
       useStory(({ state }) => state.selectedElements)
     );
+    // shape should be selected and receive focus
     expect(selectedElements.length).toBe(1);
     expect(selectedElements[0].type).toBe('shape');
+    expect(getActiveElementId()).toBe(selectedElements[0].id);
 
     // tab to the sticker element
     await fixture.events.keyboard.press('Tab');
@@ -168,8 +175,10 @@ describe('Canvas - keyboard navigation', () => {
     selectedElements = await fixture.renderHook(() =>
       useStory(({ state }) => state.selectedElements)
     );
+    // sticker should be selected and receive focus
     expect(selectedElements.length).toBe(1);
     expect(selectedElements[0].type).toBe('sticker');
+    expect(getActiveElementId()).toBe(selectedElements[0].id);
 
     // tab to the image element
     await fixture.events.keyboard.press('Tab');
@@ -177,10 +186,12 @@ describe('Canvas - keyboard navigation', () => {
     selectedElements = await fixture.renderHook(() =>
       useStory(({ state }) => state.selectedElements)
     );
+    // image should be selected and receive focus
     expect(selectedElements.length).toBe(1);
     expect(selectedElements[0].type).toBe('image');
+    expect(getActiveElementId()).toBe(selectedElements[0].id);
 
-    // verify ciclicity: wrap around to background element
+    // verify cyclicality: wrap around to background element
     await fixture.events.keyboard.press('Tab');
 
     selectedElements = await fixture.renderHook(() =>

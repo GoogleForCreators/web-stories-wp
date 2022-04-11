@@ -88,8 +88,7 @@ describe('CUJ: Creator can Transform an Element: Selection integration', () => {
       down(),
       up(),
     ]);
-    const bgFrame = fixture.editor.canvas.framesLayer.frames[0].node;
-    expect(await getSelection()).not.toEqual([bgFrame.dataset.elementId]);
+    expect(await getSelection()).toEqual([frame1.dataset.elementId]);
   });
 
   it('should show the selection lines when an element is being selected', async () => {
