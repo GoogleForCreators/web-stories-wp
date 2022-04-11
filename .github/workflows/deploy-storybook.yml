@@ -46,7 +46,7 @@ jobs:
         run: npm run storybook:build
 
       - name: Upload storybook
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: storybook-files
           path: build/storybook
