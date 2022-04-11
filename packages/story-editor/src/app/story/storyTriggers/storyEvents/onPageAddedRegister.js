@@ -17,11 +17,11 @@
  * External dependencies
  */
 import { useRef, useEffect } from '@googleforcreators/react';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
-import { registerPropTypes } from './propTypes';
 import { STORY_EVENTS } from './types';
 
 function OnPageAddedRegister({ currentStory, dispatchStoryEvent }) {
@@ -57,6 +57,18 @@ function OnPageAddedRegister({ currentStory, dispatchStoryEvent }) {
   return null;
 }
 
-OnPageAddedRegister.propTypes = registerPropTypes;
+OnPageAddedRegister.propTypes = {
+  currentStory: PropTypes.shape({
+    story: PropTypes.shape({
+      pages: PropTypes.array,
+    }),
+  }),
+  prevStory: PropTypes.shape({
+    story: PropTypes.shape({
+      pages: PropTypes.array,
+    }),
+  }),
+  dispatchStoryEvent: PropTypes.func.isRequired,
+};
 
 export { OnPageAddedRegister };
