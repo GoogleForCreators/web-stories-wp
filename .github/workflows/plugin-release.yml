@@ -224,7 +224,7 @@ jobs:
           token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
 
       - name: Download assets version
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: assets-version
         continue-on-error: true
@@ -374,7 +374,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Download release artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: release-assets
           path: build
@@ -448,7 +448,7 @@ jobs:
       SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
     steps:
       - name: Download release artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: release-assets
           path: release-assets
