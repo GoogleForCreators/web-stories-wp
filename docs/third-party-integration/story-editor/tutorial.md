@@ -377,7 +377,7 @@ function Preview() {
 
     if (content) {
       document.open();
-      // Note that the use of document.write for replacing the whole page is just to quickly set up a preview for demo but may be not ideal for production.
+      // Note that the use of document.write for replacing the whole page is to quickly set up a preview for demo but may not be ideal for production.
       document.write(content);
       document.close();
     }
