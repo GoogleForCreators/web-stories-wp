@@ -75,7 +75,7 @@ describe('CUJ: Creator can Transform an Element: Selection integration', () => {
     expect(await getSelection()).toEqual([frame1.dataset.elementId]);
   });
 
-  it('should allow selecting background through the empty area of a triangle', async () => {
+  it('should not allow background selection through the empty area of a triangle', async () => {
     // Switch to shapes tab and click the triangle
     await fixture.events.click(fixture.editor.library.shapesTab);
     await fixture.events.click(fixture.editor.library.shapes.shape('Triangle'));
@@ -89,7 +89,7 @@ describe('CUJ: Creator can Transform an Element: Selection integration', () => {
       up(),
     ]);
     const bgFrame = fixture.editor.canvas.framesLayer.frames[0].node;
-    expect(await getSelection()).toEqual([bgFrame.dataset.elementId]);
+    expect(await getSelection()).not.toEqual([bgFrame.dataset.elementId]);
   });
 
   it('should show the selection lines when an element is being selected', async () => {
