@@ -355,7 +355,7 @@ const shortcuts = {
           ),
         },
         {
-          label: __('Access floating menu', 'web-stories'),
+          label: __('Access floating toolbar', 'web-stories'),
           shortcut: (
             <kbd>
               <kbd className="large-key">{prettifyShortcut('mod')}</kbd>
