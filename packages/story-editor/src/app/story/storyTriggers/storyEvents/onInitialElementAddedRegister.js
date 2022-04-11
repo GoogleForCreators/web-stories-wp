@@ -46,6 +46,6 @@ function OnInitialElementAddedRegister({ currentStory, dispatchStoryEvent }) {
   return null;
 }
 
-OnInitialElementAddedRegister.propType = registerPropTypes;
+OnInitialElementAddedRegister.propTypes = registerPropTypes;
 
 export { OnInitialElementAddedRegister };

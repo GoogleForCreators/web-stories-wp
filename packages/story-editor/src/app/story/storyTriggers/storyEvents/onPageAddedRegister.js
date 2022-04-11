@@ -57,6 +57,6 @@ function OnPageAddedRegister({ currentStory, dispatchStoryEvent }) {
   return null;
 }
 
-OnPageAddedRegister.propType = registerPropTypes;
+OnPageAddedRegister.propTypes = registerPropTypes;
 
 export { OnPageAddedRegister };
