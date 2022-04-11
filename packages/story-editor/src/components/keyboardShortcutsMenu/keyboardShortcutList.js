@@ -355,6 +355,16 @@ const shortcuts = {
           ),
         },
         {
+          label: __('Access floating menu', 'web-stories'),
+          shortcut: (
+            <kbd>
+              <kbd className="large-key">{prettifyShortcut('mod')}</kbd>
+              <kbd className="large-key">{prettifyShortcut('alt')}</kbd>
+              <kbd>{'P'}</kbd>
+            </kbd>
+          ),
+        },
+        {
           label: __('Open context menu', 'web-stories'),
           shortcut: (
             <kbd>
