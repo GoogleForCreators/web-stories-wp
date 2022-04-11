@@ -78,6 +78,9 @@ describe('Publish Story Modal', () => {
       expect(
         fixture.editor.checklist.issues.getAttribute('data-isexpanded')
       ).toBe('true');
+
+      // Checklist should be focused
+      expect(document.activeElement).toBe(fixture.editor.checklist.closeButton);
     });
 
     it('should not update story permalink when title is updated if permalink already exists', async () => {
