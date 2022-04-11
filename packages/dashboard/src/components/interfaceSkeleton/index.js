@@ -39,13 +39,15 @@ import useApi from '../../app/api/useApi';
 import { useConfig } from '../../app/config';
 
 const InterfaceSkeleton = ({ additionalRoutes }) => {
-  const {
-    state: {
-      currentPath,
-      queryParams: { id: templateId },
-    },
-    actions: { push },
-  } = useRouteHistory();
+  const { currentPath, templateId, availableRoutes } = useRouteHistory(
+    ({ state }) => ({
+      ...state,
+      templateId: state.queryParams.id,
+    })
+  );
+  const { push, setAvailableRoutes } = useRouteHistory(
+    ({ actions }) => actions
+  );
 
   const {
     canViewDefaultTemplates,
@@ -86,6 +88,17 @@ const InterfaceSkeleton = ({ additionalRoutes }) => {
       setIsRedirectComplete(true);
     });
   }, [addInitialFetchListener, push, currentPath, canViewDefaultTemplates]);
+
+  // Only set the available routes & default route on initial mount
+  useEffect(() => {
+    if (availableRoutes.length > 0) {
+      return;
+    }
+    const additionalPaths = additionalRoutes
+      ? additionalRoutes.map(({ path }) => path)
+      : [];
+    setAvailableRoutes([...Object.values(APP_ROUTES), ...additionalPaths]);
+  }, [additionalRoutes, availableRoutes.length, setAvailableRoutes]);
 
   useEffect(() => {
     if (!isRedirectComplete) {
@@ -135,6 +148,7 @@ const InterfaceSkeleton = ({ additionalRoutes }) => {
         <PageContent>
           <Route
             exact
+            isDefault
             path={APP_ROUTES.DASHBOARD}
             component={<MyStoriesView />}
           />

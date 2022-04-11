@@ -62,11 +62,9 @@ import { FOCUS_GROUPS, useFocusGroupRef } from './editLayerFocusManager';
 const Wrapper = styled.div`
   ${elementWithPosition}
   ${elementWithSize}
-	${elementWithRotation}
-
-  outline: 1px solid transparent;
+   ${elementWithRotation}
+   outline: 1px solid transparent;
   transition: outline-color 0.5s;
-
   &:focus,
   &:active,
   &:hover {

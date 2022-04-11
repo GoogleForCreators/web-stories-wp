@@ -39,7 +39,6 @@ function arrange({
   checklist: extraChecklistProps,
 } = {}) {
   const saveStory = jest.fn();
-  const onReviewDialogRequest = jest.fn();
 
   useIsUploadingToStory.mockImplementation(() => extraMediaProps?.isUploading);
 
@@ -67,11 +66,8 @@ function arrange({
 
   const prepublishChecklistContextValue = {
     state: {
-      shouldReviewDialogBeSeen: false,
+      hasHighPriorityIssues: false,
       ...extraChecklistProps,
-    },
-    actions: {
-      onReviewDialogRequest,
     },
   };
   renderWithTheme(

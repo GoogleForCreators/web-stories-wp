@@ -34,8 +34,6 @@ describe('Canvas - keyboard navigation', () => {
     await fixture.render();
 
     focusContainer = fixture.screen.getByTestId('canvas-focus-container');
-
-    await fixture.collapseHelpCenter();
   });
 
   afterEach(() => {

@@ -67,12 +67,37 @@ export function resolveRoute(route) {
   }
 }
 
-export function matchPath(currentPath, path, exact = false) {
+export function matchPath({
+  currentPath,
+  path,
+  availableRoutes,
+  defaultRoute,
+  isDefault = false,
+  exact = false,
+}) {
   const match = new RegExp(`^${path}`).exec(currentPath);
-  if (!match) {
+
+  // allow paths through that don't match if they are default, not narrowed out yet.
+  if (!match && !isDefault) {
     return null;
   }
-  const matchUrl = match[0];
+
+  // Find all available url matches
+  const matchUrl = match?.[0];
+
+  // Check if there is a default before looking for more exact matches
+  // If there is and the current path fits 1 or less
+  // of the available routes then render it as default
+  if (isDefault) {
+    const isValidDefaultRoute =
+      availableRoutes.filter((route) => currentPath.startsWith(route)).length <=
+      1;
+
+    if (isValidDefaultRoute) {
+      return defaultRoute;
+    }
+  }
+
   const isExactMatch = currentPath === matchUrl;
   if (exact && !isExactMatch) {
     return null;
@@ -80,9 +105,20 @@ export function matchPath(currentPath, path, exact = false) {
   return matchUrl;
 }
 
-function Route({ component, path, exact }) {
-  const { state } = useRouteHistory();
-  const match = matchPath(state.currentPath, path, exact);
+function Route({ component, path, exact = false, isDefault = false }) {
+  const { availableRoutes, currentPath, defaultRoute } = useRouteHistory(
+    ({ state }) => state
+  );
+
+  const match = matchPath({
+    currentPath,
+    availableRoutes,
+    defaultRoute,
+    path,
+    exact,
+    isDefault,
+  });
+
   if (!match) {
     return null;
   }

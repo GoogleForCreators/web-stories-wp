@@ -53,7 +53,7 @@ const Button = styled(DefaultButton)`
 function InnerButton({
   text,
   checkpoint,
-  shouldReviewDialogBeSeen = false,
+  hasHighPriorityIssues = false,
   ...buttonProps
 }) {
   return (
@@ -64,7 +64,7 @@ function InnerButton({
       {...buttonProps}
     >
       {text}
-      {shouldReviewDialogBeSeen && <ChecklistIcon checkpoint={checkpoint} />}
+      {hasHighPriorityIssues && <ChecklistIcon checkpoint={checkpoint} />}
     </Button>
   );
 }
@@ -72,7 +72,7 @@ function InnerButton({
 InnerButton.propTypes = {
   text: PropTypes.node.isRequired,
   checkpoint: PropTypes.oneOf(Object.values(PPC_CHECKPOINT_STATE)),
-  shouldReviewDialogBeSeen: PropTypes.bool,
+  hasHighPriorityIssues: PropTypes.bool,
 };
 
 function ButtonWithChecklistWarning({
@@ -87,14 +87,14 @@ function ButtonWithChecklistWarning({
     canPublish: Boolean(state?.capabilities?.publish),
   }));
 
-  const { checkpoint, shouldReviewDialogBeSeen } = useCheckpoint(
-    ({ state: { checkpoint, shouldReviewDialogBeSeen } }) => ({
+  const { checkpoint, hasHighPriorityIssues } = useCheckpoint(
+    ({ state: { checkpoint, hasHighPriorityIssues } }) => ({
       checkpoint,
-      shouldReviewDialogBeSeen,
+      hasHighPriorityIssues,
     })
   );
   const TOOLTIP_TEXT = {
-    [PPC_CHECKPOINT_STATE.ALL]: shouldReviewDialogBeSeen
+    [PPC_CHECKPOINT_STATE.ALL]: hasHighPriorityIssues
       ? __(
           'Make updates before publishing to improve discoverability and performance on search engines',
           'web-stories'
@@ -144,7 +144,7 @@ function ButtonWithChecklistWarning({
         text={text}
         disabled={disabled || isSaving || isUploading}
         checkpoint={checkpoint}
-        shouldReviewDialogBeSeen={shouldReviewDialogBeSeen}
+        hasHighPriorityIssues={hasHighPriorityIssues}
         {...buttonProps}
       />
     </Tooltip>

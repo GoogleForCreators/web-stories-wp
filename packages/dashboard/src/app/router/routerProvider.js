@@ -26,13 +26,35 @@ import {
 } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { createHashHistory } from 'history';
+/**
+ * Internal dependencies
+ */
+import { APP_ROUTES } from '../../constants';
 
 export const RouterContext = createContext({ state: {}, actions: {} });
 
+export const getActiveRoute = ({
+  availableRoutes,
+  currentPath,
+  defaultRoute,
+}) => {
+  const matchingRoutes = availableRoutes.filter((route) =>
+    currentPath.startsWith(route)
+  );
+  // this assumes that we have a route that's just the root path (/)
+  return matchingRoutes.length <= 1 ? defaultRoute : currentPath;
+};
 function RouterProvider({ children, ...props }) {
   const history = useRef(props.history || createHashHistory());
   const [currentPath, setCurrentPath] = useState(
     history.current.location.pathname
+  );
+  const [availableRoutes, setAvailableRoutes] = useState([]);
+  const defaultRoute = APP_ROUTES.DASHBOARD;
+
+  const activeRoute = useMemo(
+    () => getActiveRoute({ availableRoutes, currentPath, defaultRoute }),
+    [availableRoutes, currentPath, defaultRoute]
   );
 
   const parse = (search) => {
@@ -54,15 +76,19 @@ function RouterProvider({ children, ...props }) {
   const value = useMemo(
     () => ({
       state: {
+        activeRoute,
         currentPath,
         queryParams,
+        availableRoutes,
+        defaultRoute,
       },
       actions: {
         push: history.current.push,
         replace: history.current.replace,
+        setAvailableRoutes,
       },
     }),
-    [currentPath, queryParams]
+    [activeRoute, availableRoutes, currentPath, defaultRoute, queryParams]
   );
 
   return (

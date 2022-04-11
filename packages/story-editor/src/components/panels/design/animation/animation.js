@@ -29,7 +29,6 @@ import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import { __ } from '@googleforcreators/i18n';
 import styled from 'styled-components';
-import { Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
 import {
   BACKGROUND_ANIMATION_EFFECTS,
   BG_MAX_SCALE,
@@ -56,10 +55,6 @@ const ANIMATION_PROPERTY = 'animation';
 
 const StyledRow = styled(Row)`
   margin-bottom: -1px;
-`;
-
-const Note = styled(Text)`
-  color: ${({ theme }) => theme.colors.fg.secondary};
 `;
 
 const GroupWrapper = styled.div`
@@ -233,18 +228,7 @@ function AnimationPanel({
   }, [selectedElements]);
 
   const selectedEffectTitle = getEffectName(updatedAnimations[0]?.type);
-  return selectedElements.length > 1 ? (
-    <SimplePanel name="animation" title={__('Animation', 'web-stories')}>
-      <Row>
-        <Note
-          forwardedAs="span"
-          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-        >
-          {__('Group animation support coming soon.', 'web-stories')}
-        </Note>
-      </Row>
-    </SimplePanel>
-  ) : (
+  return selectedElements.length > 1 ? null : (
     <SimplePanel
       name="animation"
       title={__('Animation', 'web-stories')}

@@ -13,10 +13,10 @@ The easiest way of setting up an SPA React project is to use [CRA](https://creat
 
 ### Step 2: Install dependencies
 
-For a minimal story dashboard, you only need to install a single package `@googleforcreators/dashboard`.
+For a minimal story dashboard, you need to install three packages
 
 ```sh
-npm install @googleforcreators/dashboard
+npm install @googleforcreators/dashboard @googleforcreators/element-library @googleforcreators/elements
 ```
 
 ### Step 3: Use the `Dashboard` component to render the dashboard
