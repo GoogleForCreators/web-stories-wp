@@ -99,6 +99,16 @@ describe('Custom Fonts', () => {
     await takeSnapshot(page, 'Custom Fonts Settings');
   });
 
+  it('should select font when clicked', async () => {
+    await addCustomFont(OPEN_SANS_CONDENSED_LIGHT_ITALIC_URL);
+    await addCustomFont(OPEN_SANS_CONDENSED_BOLD_URL);
+    await addCustomFont(OPEN_SANS_CONDENSED_LIGHT_URL);
+    const fonts = await getFontList();
+    await page.click('div[role=listbox] [role=option]:last-child');
+    const selected = await getSelectedFont();
+    expect(selected.name).toStrictEqual(fonts[2].name);
+  });
+
   it('should show error on trying add font twice', async () => {
     await addCustomFont(OPEN_SANS_CONDENSED_LIGHT_URL);
     await addCustomFont(OPEN_SANS_CONDENSED_LIGHT_URL);
