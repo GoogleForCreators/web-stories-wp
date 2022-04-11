@@ -57,7 +57,8 @@ const IconWrap = styled.div`
 `;
 
 function LeftRail() {
-  const { state } = useRouteHistory();
+  const activeRoute = useRouteHistory(({ state }) => state.activeRoute);
+
   const {
     newStoryURL,
     version,
@@ -147,13 +148,13 @@ function LeftRail() {
               return (
                 <NavListItem key={path.value}>
                   <NavLink
-                    active={path.value === state.currentPath}
+                    active={activeRoute === path.value}
                     href={resolveRoute(path.value)}
                     size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
                     isBold
                     isIconLink={Boolean(Icon)}
                     aria-label={
-                      path.value === state.currentPath
+                      activeRoute === path.value
                         ? sprintf(
                             /* translators: %s: the current page, for example "Dashboard". */
                             __('%s (active view)', 'web-stories'),
@@ -185,11 +186,11 @@ function LeftRail() {
             {leftRailSecondaryNavigation.map((path) => (
               <NavListItem key={path.value}>
                 <NavLink
-                  active={path.value === state.currentPath}
+                  active={activeRoute === path.value}
                   href={resolveRoute(path.value)}
                   size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
                   aria-label={
-                    path.value === state.currentPath
+                    activeRoute === path.value
                       ? sprintf(
                           /* translators: %s: the current page, for example "Dashboard". */
                           __('%s (active view)', 'web-stories'),
