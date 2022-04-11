@@ -18,7 +18,6 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { __ } from '@googleforcreators/i18n';
 import {
   useCallback,
   useLayoutEffect,
@@ -37,7 +36,6 @@ import {
   elementWithRotation,
 } from '@googleforcreators/element-library';
 import { FrameWithMask as WithMask } from '@googleforcreators/masks';
-import { useLiveRegion } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -84,11 +82,6 @@ const EmptyFrame = styled.div`
 
 const NOOP = () => {};
 
-const FRAME_ELEMENT_MESSAGE = __(
-  'To exit the canvas area, press Escape. Press Tab to move to the next group or element.',
-  'web-stories'
-);
-
 function FrameElement({ id }) {
   const [isTransforming, setIsTransforming] = useState(false);
   const focusGroupRef = useFocusGroupRef(FOCUS_GROUPS.ELEMENT_SELECTION);
@@ -127,7 +120,6 @@ function FrameElement({ id }) {
   const combinedFocusGroupRef = useCombinedRefs(elementRef, focusGroupRef); // Only attach focus group ref to one element.
   const [hovering, setHovering] = useState(false);
   const { isRTL, styleConstants: { topOffset } = {} } = useConfig();
-  const speak = useLiveRegion();
 
   const {
     draggingResource,
@@ -194,10 +186,8 @@ function FrameElement({ id }) {
       if (!isSelected) {
         handleSelectElement(id, evt);
       }
-
-      speak(FRAME_ELEMENT_MESSAGE);
     },
-    [handleSelectElement, id, isSelected, speak]
+    [handleSelectElement, id, isSelected]
   );
 
   const handleMouseDown = useCallback(
