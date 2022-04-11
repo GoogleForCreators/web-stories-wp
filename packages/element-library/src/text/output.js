@@ -29,9 +29,11 @@ import {
   dataToFontSizeY as dataToFontSize,
 } from '@googleforcreators/units';
 import classnames from 'classnames';
-import { StoryPropTypes } from '@googleforcreators/elements';
+import {
+  StoryPropTypes,
+  BACKGROUND_TEXT_MODE,
+} from '@googleforcreators/elements';
 import { getHTMLFormatters } from '@googleforcreators/rich-text';
-import { BACKGROUND_TEXT_MODE } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

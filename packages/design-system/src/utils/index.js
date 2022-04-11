@@ -25,6 +25,5 @@ export { default as pointerEventsCss } from './pointerEventsCss';
 export { default as objectWithout } from './objectWithout';
 export { default as getKeyboardMovement } from './getKeyboardMovement';
 export { default as PanelTypes } from './panelTypes';
-export { default as getTransformFlip } from './getTransformFlip';
 export * from './constants';
 export * from './directions';
