@@ -20,6 +20,7 @@
 import { useMemo, useState } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { differenceInSeconds } from '@googleforcreators/date';
+import { uniqueEntriesByKey } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -65,18 +66,10 @@ export default function ApiProviderFixture({ children }) {
 
   const usersApi = useMemo(
     () => ({
-      getAuthors: () =>
-        Promise.resolve(
-          Object.values(
-            formattedStoriesArray.reduce((dict, { author }) => {
-              if (dict[author.id] === undefined) {
-                dict[author.id] = author;
-              }
-
-              return dict;
-            }, {})
-          )
-        ),
+      getAuthors: () => {
+        const authors = formattedStoriesArray.map((story) => story.author);
+        return Promise.resolve(uniqueEntriesByKey(authors, 'id'));
+      },
     }),
     []
   );
