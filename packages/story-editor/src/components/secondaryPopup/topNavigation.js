@@ -19,7 +19,7 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
-import { useEffect, useRef } from '@googleforcreators/react';
+import { forwardRef } from '@googleforcreators/react';
 import {
   BUTTON_SIZES,
   BUTTON_TYPES,
@@ -47,22 +47,16 @@ const Label = styled(Headline).attrs({
   font-weight: ${({ theme }) => theme.typography.weight.regular};
 `;
 
-export function TopNavigation({ isOpen, onClose, label, popupId }) {
-  const buttonRef = useRef();
-  // focus the checklist on open
-  // Necessary because the checklist can be opened from the publish modal.
-  useEffect(() => {
-    if (isOpen) {
-      buttonRef.current.focus();
-    }
-  }, [isOpen]);
-
+export const TopNavigation = forwardRef(function TopNavigation(
+  { onClose, label, popupId },
+  ref
+) {
   return (
     <NavBar>
       <Label>{label}</Label>
       <TopNavButtons>
         <NavButton
-          ref={buttonRef}
+          ref={ref}
           aria-label={__('Close', 'web-stories')}
           onClick={() => {
             forceFocusCompanionToggle(popupId);
@@ -77,7 +71,7 @@ export function TopNavigation({ isOpen, onClose, label, popupId }) {
       </TopNavButtons>
     </NavBar>
   );
-}
+});
 
 TopNavigation.propTypes = {
   isOpen: PropTypes.bool,

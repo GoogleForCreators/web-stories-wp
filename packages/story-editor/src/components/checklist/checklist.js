@@ -65,15 +65,32 @@ const ThroughputPopup = forwardRef(function ThroughputPopup(
   { isOpen, children, close },
   ref
 ) {
-  const { isChecklistMounted, setIsChecklistMounted } = useChecklist(
+  const closeButtonRef = useRef();
+  const {
+    checklistFocused,
+    isChecklistMounted,
+    resetChecklistFocused,
+    setIsChecklistMounted,
+  } = useChecklist(
     ({
-      state: { isChecklistMounted },
-      actions: { setIsChecklistMounted },
+      state: { isChecklistMounted, checklistFocused },
+      actions: { setIsChecklistMounted, resetChecklistFocused },
     }) => ({
+      checklistFocused,
       isChecklistMounted,
+      resetChecklistFocused,
       setIsChecklistMounted,
     })
   );
+
+  // focus checklist
+  useEffect(() => {
+    if (checklistFocused && closeButtonRef.current) {
+      closeButtonRef.current.focus();
+    }
+
+    resetChecklistFocused();
+  }, [checklistFocused, resetChecklistFocused]);
 
   return (
     <Popup
@@ -87,10 +104,10 @@ const ThroughputPopup = forwardRef(function ThroughputPopup(
       {isChecklistMounted ? (
         <StyledNavigationWrapper ref={ref} isOpen={isOpen}>
           <TopNavigation
+            ref={closeButtonRef}
             onClose={close}
             label={CHECKLIST_TITLE}
             popupId={POPUP_ID}
-            isOpen={isOpen}
           />
           <Tablist
             id="pre-publish-checklist"
