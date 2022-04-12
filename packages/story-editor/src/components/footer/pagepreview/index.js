@@ -63,8 +63,10 @@ const Page = styled.button`
     border-style: solid;
     border-width: 1px;
     border-radius: 8px;
-    border-color: ${({ isActive, theme }) =>
-      isActive ? theme.colors.border.defaultActive : 'transparent'};
+    border-color: ${({ isActive, isInteractive, theme }) =>
+      isInteractive && isActive
+        ? theme.colors.border.defaultActive
+        : 'transparent'};
   }
 
   ${({ isInteractive, isActive, theme }) =>
