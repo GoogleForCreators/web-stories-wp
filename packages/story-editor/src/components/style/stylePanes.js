@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { useCallback } from '@googleforcreators/react';
+import { PanelSections } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -37,9 +38,9 @@ function StylePanes() {
     useDesignPanels();
 
   const getPanelsByType = useCallback(
-    (types, exclude = false) => {
+    (types) => {
       return panels
-        .filter(({ type }) => types.includes(type) === !exclude)
+        .filter(({ type }) => types.includes(type))
         .map(({ Panel, type }) => (
           <DesignPanel
             key={type}
@@ -66,11 +67,11 @@ function StylePanes() {
 
     switch (id) {
       case SELECTION.id:
-        return getPanelsByType(['link', 'animation'], true);
+        return getPanelsByType(PanelSections[id]);
       case LINK.id:
-        return getPanelsByType(['link']);
+        return getPanelsByType(PanelSections[id]);
       case ANIMATION.id:
-        return getPanelsByType(['animation']);
+        return getPanelsByType(PanelSections[id]);
       default:
         return null;
     }

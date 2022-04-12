@@ -19,9 +19,11 @@
  */
 import PanelTypes from './panelTypes';
 
-const ELEMENT_SECTION = 'element';
-const LINK_SECTION = 'link';
-const ANIMATION_SECTION = 'animation';
+const STYLE_PANE_IDS = {
+  SELECTION: 'selection',
+  LINK: 'link',
+  ANIMATION: 'animation',
+};
 
 const {
   ELEMENT_ALIGNMENT,
@@ -43,7 +45,7 @@ const {
 } = PanelTypes;
 
 const PanelSections = {
-  [ELEMENT_SECTION]: [
+  [STYLE_PANE_IDS.SELECTION]: [
     ELEMENT_ALIGNMENT,
     PAGE_BACKGROUND,
     PAGE_ATTACHMENT,
@@ -59,8 +61,8 @@ const PanelSections = {
     VIDEO_ACCESSIBILITY,
     PRODUCT,
   ],
-  [LINK_SECTION]: [LINK],
-  [ANIMATION_SECTION]: [ANIMATION],
+  [STYLE_PANE_IDS.LINK]: [LINK],
+  [STYLE_PANE_IDS.ANIMATION]: [ANIMATION],
 };
 
 export default PanelSections;
