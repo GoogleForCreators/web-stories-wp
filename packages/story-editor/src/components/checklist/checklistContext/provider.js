@@ -58,6 +58,7 @@ const ChecklistProvider = ({ children }) => {
       status: 'open',
     });
     setIsOpen(true);
+    // focus checklist even if checklist is already open
     setChecklistFocused(true);
   }, []);
 
