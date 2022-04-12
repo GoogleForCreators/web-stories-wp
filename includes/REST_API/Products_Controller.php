@@ -387,7 +387,7 @@ QUERY;
 				'productPriceCurrency' => get_woocommerce_currency(),
 				'productImages'        => $images,
 				'aggregateRating'      => [
-					'ratingValue' => $product->get_average_rating(),
+					'ratingValue' => (float) $product->get_average_rating(),
 					'reviewCount' => $product->get_rating_count(),
 					'reviewUrl'   => $product->get_permalink(),
 				],
