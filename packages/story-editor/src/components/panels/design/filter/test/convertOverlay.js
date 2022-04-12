@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { OverlayType } from '@googleforcreators/design-system';
+import { OverlayType } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies

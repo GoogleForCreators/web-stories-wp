@@ -18,7 +18,6 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { __ } from '@googleforcreators/i18n';
 import {
   useCallback,
   useLayoutEffect,
@@ -36,12 +35,7 @@ import {
   elementWithSize,
   elementWithRotation,
 } from '@googleforcreators/element-library';
-import {
-  FrameWithMask as WithMask,
-  getElementMask,
-  MaskTypes,
-} from '@googleforcreators/masks';
-import { useLiveRegion } from '@googleforcreators/design-system';
+import { FrameWithMask as WithMask } from '@googleforcreators/masks';
 
 /**
  * Internal dependencies
@@ -66,12 +60,9 @@ import { FOCUS_GROUPS, useFocusGroupRef } from './editLayerFocusManager';
 const Wrapper = styled.div`
   ${elementWithPosition}
   ${elementWithSize}
-	${elementWithRotation}
-  pointer-events: ${({ maskDisabled }) => (maskDisabled ? 'initial' : 'none')};
-
-  outline: 1px solid transparent;
+   ${elementWithRotation}
+   outline: 1px solid transparent;
   transition: outline-color 0.5s;
-
   &:focus,
   &:active,
   &:hover {
@@ -90,11 +81,6 @@ const EmptyFrame = styled.div`
 `;
 
 const NOOP = () => {};
-
-const FRAME_ELEMENT_MESSAGE = __(
-  'To exit the canvas area, press Escape. Press Tab to move to the next group or element.',
-  'web-stories'
-);
 
 function FrameElement({ id }) {
   const [isTransforming, setIsTransforming] = useState(false);
@@ -134,7 +120,6 @@ function FrameElement({ id }) {
   const combinedFocusGroupRef = useCombinedRefs(elementRef, focusGroupRef); // Only attach focus group ref to one element.
   const [hovering, setHovering] = useState(false);
   const { isRTL, styleConstants: { topOffset } = {} } = useConfig();
-  const speak = useLiveRegion();
 
   const {
     draggingResource,
@@ -196,49 +181,32 @@ function FrameElement({ id }) {
    * Using a live region because an `aria-label` would remove
    * any labels/content that would be read from children.
    */
-  const handleFocus = useCallback(() => {
-    speak(FRAME_ELEMENT_MESSAGE);
-  }, [speak]);
-
-  // For elements with no mask, handle events by the wrapper.
-  const mask = getElementMask(element);
-  const maskDisabled =
-    !mask?.type || (isBackground && mask.type !== MaskTypes.RECTANGLE);
-  const eventHandlers = {
-    onMouseDown: (evt) => {
+  const handleFocus = useCallback(
+    (evt) => {
       if (!isSelected) {
         handleSelectElement(id, evt);
       }
+    },
+    [handleSelectElement, id, isSelected]
+  );
+
+  const handleMouseDown = useCallback(
+    (evt) => {
+      if (!isSelected) {
+        handleSelectElement(id, evt);
+      }
+
       elementRef.current.focus({ preventScroll: true });
+
       if (!isBackground) {
         evt.stopPropagation();
       }
     },
-    onFocus: (evt) => {
-      if (!isSelected) {
-        handleSelectElement(id, evt);
-      }
-
-      handleFocus(evt);
-    },
-    onPointerEnter,
-    onPointerLeave,
-    onClick: isMedia ? handleMediaClick(id) : null,
-  };
-
-  const withMaskRef = useRef(null);
+    [handleSelectElement, id, isBackground, isSelected]
+  );
 
   usePerformanceTracking({
-    node: maskDisabled ? elementRef.current : null,
-    eventData: {
-      ...TRACKING_EVENTS.SELECT_ELEMENT,
-      label: element.type,
-    },
-    eventType: 'pointerdown',
-  });
-
-  usePerformanceTracking({
-    node: withMaskRef.current,
+    node: elementRef.current,
     eventData: {
       ...TRACKING_EVENTS.SELECT_ELEMENT,
       label: element.type,
@@ -264,18 +232,19 @@ function FrameElement({ id }) {
         data-element-id={id}
         {...box}
         tabIndex={-1}
+        role="presentation"
         hasMask={isMaskable}
         data-testid="frameElement"
-        maskDisabled={maskDisabled}
+        onMouseDown={handleMouseDown}
         onFocus={handleFocus}
-        {...(maskDisabled ? eventHandlers : null)}
+        onPointerEnter={onPointerEnter}
+        onPointerLeave={onPointerLeave}
+        onClick={isMedia ? handleMediaClick(id) : null}
       >
         <WithMask
-          ref={withMaskRef}
           element={element}
           fill
           flip={flip}
-          eventHandlers={!maskDisabled ? eventHandlers : null}
           draggingResource={draggingResource}
           activeDropTargetId={activeDropTargetId}
           isDropSource={isDropSource}
