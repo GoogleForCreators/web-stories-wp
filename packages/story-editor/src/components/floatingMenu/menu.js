@@ -76,7 +76,7 @@ const FloatingMenu = memo(
       updateSize();
       // If the menu children list changes, update the size again
       const observer = new MutationObserver(updateSize);
-      const menu = node.querySelector('[role=menu]');
+      const menu = node.querySelector('[role=toolbar]');
       observer.observe(menu, { childList: true });
       return () => observer.disconnect();
     }, [ref, selectionIdentifier]);
@@ -107,6 +107,8 @@ const FloatingMenu = memo(
               e.stopPropagation();
             }}
             popoverZIndex={Z_INDEX_FLOATING_MENU}
+            role="toolbar"
+            aria-orientation="horizontal"
           >
             <MenuSelector selectedElementType={selectedElementType} />
           </ContextMenu>
