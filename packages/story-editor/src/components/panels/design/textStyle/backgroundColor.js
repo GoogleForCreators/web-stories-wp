@@ -21,16 +21,16 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useCallback, useRef } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
-import {
-  PillGroup,
-  BACKGROUND_TEXT_MODE,
-} from '@googleforcreators/design-system';
+import { PillGroup } from '@googleforcreators/design-system';
+import { BACKGROUND_TEXT_MODE } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import { Color, Row } from '../../../form';
-import { useCommonColorValue, getCommonValue, focusStyle } from '../../shared';
+import { focusStyle } from '../../shared/styles';
+import useCommonColorValue from '../../shared/useCommonColorValue';
+import getCommonValue from '../../shared/getCommonValue';
 import { applyHiddenPadding, removeHiddenPadding } from './utils';
 
 const FillRow = styled(Row)`

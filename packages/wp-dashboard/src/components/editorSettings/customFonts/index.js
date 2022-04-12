@@ -36,7 +36,9 @@ import {
   Tooltip,
   themeHelpers,
   useSnackbar,
+  useLiveRegion,
 } from '@googleforcreators/design-system';
+
 import styled from 'styled-components';
 import { trackEvent, trackError } from '@googleforcreators/tracking';
 
@@ -171,6 +173,7 @@ function CustomFontsSettings({
   addCustomFont,
   deleteCustomFont,
 }) {
+  const speak = useLiveRegion();
   const [fontUrl, setFontUrl] = useState('');
   const [inputError, setInputError] = useState('');
   const [showDialog, setShowDialog] = useState(false);
@@ -198,6 +201,7 @@ function CustomFontsSettings({
   const handleDelete = useCallback(async () => {
     try {
       await deleteCustomFont(toDelete);
+      speak(__('Font deleted', 'web-stories'));
     } catch (err) {
       trackError('remove_custom_font', err?.message);
       showSnackbar({
@@ -210,7 +214,7 @@ function CustomFontsSettings({
       setShowDialog(false);
       setInputError('');
     }
-  }, [deleteCustomFont, toDelete, showSnackbar]);
+  }, [deleteCustomFont, toDelete, showSnackbar, speak]);
 
   const handleOnSave = useCallback(async () => {
     if (canSave) {
@@ -364,6 +368,7 @@ function CustomFontsSettings({
               }
             >
               {customFonts.map(({ id, family, url }, index) => (
+                // eslint-disable-next-line styled-components-a11y/click-events-have-key-events, styled-components-a11y/interactive-supports-focus -- keyboard handling is via the parent
                 <FontRow
                   id={`font-${id}`}
                   ref={
@@ -371,6 +376,9 @@ function CustomFontsSettings({
                   }
                   key={family}
                   role="option"
+                  onClick={() => {
+                    setCurrentFontsFocusIndex(index);
+                  }}
                   aria-selected={isListBoxActiveRow(index)}
                 >
                   <FontData>

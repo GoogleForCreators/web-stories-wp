@@ -21,12 +21,14 @@ export const ELEMENT_TYPES = {
   VIDEO: 'video',
   GIF: 'gif',
   STICKER: 'sticker',
+  PRODUCT: 'product',
 };
 
 export const MEDIA_ELEMENT_TYPES = [
   ELEMENT_TYPES.IMAGE,
   ELEMENT_TYPES.VIDEO,
   ELEMENT_TYPES.GIF,
+  ELEMENT_TYPES.PRODUCT,
 ];
 
 export const MULTIPLE_VALUE = '((MULTIPLE))';
@@ -69,4 +71,17 @@ export const TEXT_ELEMENT_DEFAULT_FONT = {
     hDes: -500,
     lGap: 0,
   },
+};
+
+export const BACKGROUND_TEXT_MODE = {
+  NONE: 'NONE',
+  FILL: 'FILL',
+  HIGHLIGHT: 'HIGHLIGHT',
+};
+
+export const OverlayType = {
+  NONE: 'none',
+  SOLID: 'solid',
+  LINEAR: 'linear',
+  RADIAL: 'radial',
 };

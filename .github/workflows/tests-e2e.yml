@@ -104,7 +104,7 @@ jobs:
         run: npm run workflow:build-plugin
 
       - name: Upload bundle
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: web-stories
           path: build/web-stories
@@ -147,7 +147,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Download bundle
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: web-stories
 

@@ -29,6 +29,7 @@ const TEXT_STYLE = 'textStyle';
 const VIDEO_OPTIONS = 'videoOptions';
 const VIDEO_ACCESSIBILITY = 'videoAccessibility';
 const ELEMENT_ALIGNMENT = 'elementAlignment';
+const PRODUCT = 'product';
 
 const PanelTypes = {
   ELEMENT_ALIGNMENT,
@@ -46,6 +47,7 @@ const PanelTypes = {
   LINK,
   IMAGE_ACCESSIBILITY,
   VIDEO_ACCESSIBILITY,
+  PRODUCT,
 };
 
 export default PanelTypes;

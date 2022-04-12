@@ -21,11 +21,8 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useRef, useMemo, useCallback } from '@googleforcreators/react';
 import { getMediaSizePositionProps } from '@googleforcreators/media';
-import {
-  CircularProgress,
-  getTransformFlip,
-} from '@googleforcreators/design-system';
-import { StoryPropTypes } from '@googleforcreators/elements';
+import { CircularProgress } from '@googleforcreators/design-system';
+import { StoryPropTypes, getTransformFlip } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -59,7 +56,15 @@ const Spinner = styled.div`
   align-items: center;
 `;
 
-function VideoTrim({ box, element, isRTL, topOffset, resource, setVideoNode }) {
+function VideoTrim({
+  box,
+  element,
+  isRTL,
+  topOffset,
+  resource,
+  setVideoNode,
+  getProxiedUrl,
+}) {
   const { width, height } = box;
   const { poster, tracks, isBackground, scale, flip, focalX, focalY } = element;
   const wrapperRef = useRef();
@@ -110,6 +115,13 @@ function VideoTrim({ box, element, isRTL, topOffset, resource, setVideoNode }) {
 
   videoProps.transformFlip = getTransformFlip(flip);
   videoProps.crossOrigin = 'anonymous';
+  const tracksFormatted = tracks.map((track) => {
+    const src = getProxiedUrl(track, track?.track);
+    return {
+      ...track,
+      track: src,
+    };
+  });
 
   return (
     <>
@@ -133,7 +145,7 @@ function VideoTrim({ box, element, isRTL, topOffset, resource, setVideoNode }) {
             {resource.src && (
               <source src={resource.src} type={resource.mimeType} />
             )}
-            <Captions tracks={tracks} />
+            <Captions tracks={tracksFormatted} />
           </Video>
         </MediaDisplay>
       </Wrapper>
@@ -158,6 +170,7 @@ VideoTrim.propTypes = {
   topOffset: PropTypes.number,
   resource: PropTypes.object,
   setVideoNode: PropTypes.func,
+  getProxiedUrl: PropTypes.func,
 };
 
 export default VideoTrim;

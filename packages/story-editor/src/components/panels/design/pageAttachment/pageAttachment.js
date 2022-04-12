@@ -70,11 +70,22 @@ const Space = styled.div`
   width: 20px;
 `;
 
+const HelperText = styled(Text).attrs({
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+})`
+  color: ${({ theme }) => theme.colors.fg.secondary};
+`;
+
 function PageAttachmentPanel() {
-  const { currentPage, updateCurrentPageProperties } = useStory((state) => ({
-    updateCurrentPageProperties: state.actions.updateCurrentPageProperties,
-    currentPage: state.state.currentPage,
-  }));
+  const { currentPage, updateCurrentPageProperties, hasProducts } = useStory(
+    ({ state, actions }) => ({
+      updateCurrentPageProperties: actions.updateCurrentPageProperties,
+      currentPage: state.currentPage,
+      hasProducts: state.currentPage.elements?.some(
+        ({ type, product }) => type === 'product' && product?.productId
+      ),
+    })
+  );
   const { setDisplayLinkGuidelines } = useCanvas((state) => ({
     setDisplayLinkGuidelines: state.actions.setDisplayLinkGuidelines,
   }));
@@ -90,9 +101,7 @@ function PageAttachmentPanel() {
   const [displayWarning, setDisplayWarning] = useState(false);
   const [fetchingMetadata, setFetchingMetadata] = useState(false);
 
-  const { getLinksInAttachmentArea } = useElementsWithLinks();
-  const linksInAttachmentArea = getLinksInAttachmentArea();
-  const hasLinksInAttachmentArea = linksInAttachmentArea.length > 0;
+  const { hasLinksInAttachmentArea } = useElementsWithLinks();
 
   // Stop displaying guidelines when unmounting.
   useEffect(() => {
@@ -232,6 +241,47 @@ function PageAttachmentPanel() {
 
   const checkboxId = `cb-${uuidv4()}`;
 
+  if (hasProducts) {
+    return (
+      <SimplePanel
+        name="pageAttachment"
+        title={__('Call to Action', 'web-stories')}
+        collapsedByDefault={false}
+      >
+        <Row>
+          <HelperText>
+            {__(
+              'Since there are products on this page, you cannot add a regular page attachment, but only customize the appearance of the shopping call to action.',
+              'web-stories'
+            )}
+          </HelperText>
+        </Row>
+        <StyledRow>
+          {/* The default is light theme, only if checked, use dark theme */}
+          <StyledCheckbox
+            id={checkboxId}
+            checked={theme === OUTLINK_THEME.DARK}
+            onChange={(evt) =>
+              updatePageAttachment({
+                theme: evt.target.checked
+                  ? OUTLINK_THEME.DARK
+                  : OUTLINK_THEME.LIGHT,
+              })
+            }
+          />
+          <Label htmlFor={checkboxId}>
+            <Text
+              as="span"
+              size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+            >
+              {__('Use dark theme', 'web-stories')}
+            </Text>
+          </Label>
+        </StyledRow>
+      </SimplePanel>
+    );
+  }
+
   const iconUrl = icon ? getProxiedUrl(pageAttachment, icon) : null;
 
   let hint;
@@ -244,10 +294,11 @@ function PageAttachmentPanel() {
         )
       : __('Invalid link', 'web-stories');
   }
+
   return (
     <SimplePanel
       name="pageAttachment"
-      title={__('Page Attachment', 'web-stories')}
+      title={__('Call to Action', 'web-stories')}
       collapsedByDefault={false}
     >
       <LinkInput

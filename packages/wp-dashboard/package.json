@@ -50,9 +50,9 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "@storybook/addon-essentials": "^6.4.13",
-    "@testing-library/react": "^12.1.4",
+    "@storybook/addon-essentials": "^6.4.20",
+    "@testing-library/react": "^12.1.5",
     "@testing-library/react-hooks": "^7.0.2",
-    "@testing-library/user-event": "^13.3.0"
+    "@testing-library/user-event": "^14.1.0"
   }
 }

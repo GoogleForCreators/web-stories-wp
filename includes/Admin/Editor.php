@@ -380,6 +380,7 @@ class Editor extends Service_Base implements HasRequirements {
 				'media'          => '/web-stories/v1/media/',
 				'hotlink'        => '/web-stories/v1/hotlink/validate/',
 				'publisherLogos' => '/web-stories/v1/publisher-logos/',
+				'products'       => '/web-stories/v1/products/',
 				'proxy'          => rest_url( '/web-stories/v1/hotlink/proxy/' ),
 				'link'           => '/web-stories/v1/link/',
 				'statusCheck'    => '/web-stories/v1/status-check/',
@@ -426,10 +427,6 @@ class Editor extends Service_Base implements HasRequirements {
 	 * @param int $story_id Post id of story.
 	 */
 	protected function setup_lock( int $story_id ): void {
-		if ( ! $this->experiments->is_experiment_enabled( 'enablePostLocking' ) ) {
-			return;
-		}
-
 		if ( ! $this->story_post_type->has_cap( 'edit_posts' ) ) {
 			return;
 		}

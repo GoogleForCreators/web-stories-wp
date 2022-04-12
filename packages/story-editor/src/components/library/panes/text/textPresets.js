@@ -19,8 +19,10 @@
  */
 import { _x } from '@googleforcreators/i18n';
 import { dataFontEm, PAGE_HEIGHT } from '@googleforcreators/units';
-import { BACKGROUND_TEXT_MODE } from '@googleforcreators/design-system';
-import { TEXT_ELEMENT_DEFAULT_FONT } from '@googleforcreators/elements';
+import {
+  TEXT_ELEMENT_DEFAULT_FONT,
+  BACKGROUND_TEXT_MODE,
+} from '@googleforcreators/elements';
 
 /**
  * Internal dependencies

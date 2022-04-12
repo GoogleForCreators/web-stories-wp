@@ -18,12 +18,14 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import { __ } from '@googleforcreators/i18n';
 import {
   useCallback,
   useLayoutEffect,
   useRef,
   useState,
   memo,
+  useCombinedRefs,
 } from '@googleforcreators/react';
 import { useUnits } from '@googleforcreators/units';
 import { useTransformHandler } from '@googleforcreators/transform';
@@ -39,6 +41,7 @@ import {
   getElementMask,
   MaskTypes,
 } from '@googleforcreators/masks';
+import { useLiveRegion } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -54,6 +57,7 @@ import WithLink from '../elementLink/frame';
 import useDoubleClick from '../../utils/useDoubleClick';
 import usePerformanceTracking from '../../utils/usePerformanceTracking';
 import { TRACKING_EVENTS } from '../../constants';
+import { FOCUS_GROUPS, useFocusGroupRef } from './editLayerFocusManager';
 
 // @todo: should the frame borders follow clip lines?
 
@@ -87,8 +91,14 @@ const EmptyFrame = styled.div`
 
 const NOOP = () => {};
 
+const FRAME_ELEMENT_MESSAGE = __(
+  'To exit the canvas area, press Escape. Press Tab to move to the next group or element.',
+  'web-stories'
+);
+
 function FrameElement({ id }) {
   const [isTransforming, setIsTransforming] = useState(false);
+  const focusGroupRef = useFocusGroupRef(FOCUS_GROUPS.ELEMENT_SELECTION);
 
   const {
     setNodeForElement,
@@ -121,8 +131,10 @@ function FrameElement({ id }) {
   const { type, flip } = element;
   const { Frame, isMaskable, Controls } = getDefinitionForType(type);
   const elementRef = useRef();
+  const combinedFocusGroupRef = useCombinedRefs(elementRef, focusGroupRef); // Only attach focus group ref to one element.
   const [hovering, setHovering] = useState(false);
   const { isRTL, styleConstants: { topOffset } = {} } = useConfig();
+  const speak = useLiveRegion();
 
   const {
     draggingResource,
@@ -178,6 +190,16 @@ function FrameElement({ id }) {
   );
   const handleMediaClick = useDoubleClick(NOOP, handleMediaDoubleClick);
 
+  /**
+   * Announce keyboard options on element.
+   *
+   * Using a live region because an `aria-label` would remove
+   * any labels/content that would be read from children.
+   */
+  const handleFocus = useCallback(() => {
+    speak(FRAME_ELEMENT_MESSAGE);
+  }, [speak]);
+
   // For elements with no mask, handle events by the wrapper.
   const mask = getElementMask(element);
   const maskDisabled =
@@ -196,6 +218,8 @@ function FrameElement({ id }) {
       if (!isSelected) {
         handleSelectElement(id, evt);
       }
+
+      handleFocus(evt);
     },
     onPointerEnter,
     onPointerLeave,
@@ -236,15 +260,14 @@ function FrameElement({ id }) {
         />
       )}
       <Wrapper
-        ref={elementRef}
+        ref={combinedFocusGroupRef}
         data-element-id={id}
         {...box}
-        // eslint-disable-next-line styled-components-a11y/no-noninteractive-tabindex -- Needed for being able to focus on the selected element on canvas, e.g. for entering edit mode.
-        tabIndex={0}
-        aria-labelledby={`layer-${id}`}
+        tabIndex={-1}
         hasMask={isMaskable}
         data-testid="frameElement"
         maskDisabled={maskDisabled}
+        onFocus={handleFocus}
         {...(maskDisabled ? eventHandlers : null)}
       >
         <WithMask

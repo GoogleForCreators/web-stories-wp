@@ -21,6 +21,7 @@ import {
   takeSnapshot,
   withUser,
   visitAdminPage,
+  publishStory,
 } from '@web-stories-wp/e2e-test-utils';
 
 describe('Get Started Story', () => {
@@ -48,6 +49,13 @@ describe('Get Started Story', () => {
         { timeout: 5000 } // requestIdleCallback in the carousel kicks in after 5s the latest.
       );
       await takeSnapshot(page, 'Get Started Story');
+      await publishStory();
+
+      await page.reload();
+      await expect(page).toMatchElement('input[placeholder="Add title"]');
+      await expect(page).toMatch(
+        /Tips to make the most of the Web Stories Editor/i
+      );
     });
   });
 
@@ -77,6 +85,13 @@ describe('Get Started Story', () => {
 
       await page.waitForSelector('[data-testid="mediaElement-image"]');
       await page.waitForSelector('[data-testid="frameElement"]');
+      await publishStory();
+
+      await page.reload();
+      await expect(page).toMatchElement('input[placeholder="Add title"]');
+      await expect(page).toMatch(
+        /Tips to make the most of the Web Stories Editor/i
+      );
     });
   });
 });

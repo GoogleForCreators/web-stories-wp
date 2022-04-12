@@ -31,6 +31,7 @@ parameters:
     - tests/phpstan/bootstrap.php
     - third-party/vendor/ampproject/amp-wp/includes/sanitizers/class-amp-base-sanitizer.php
     - third-party/vendor/ampproject/amp-wp/includes/sanitizers/class-amp-meta-sanitizer.php
+    - vendor/php-stubs/woocommerce-stubs/woocommerce-stubs.php
   dynamicConstantNames:
     - WEBSTORIES_DEV_MODE
     - WPCOM_IS_VIP_ENV

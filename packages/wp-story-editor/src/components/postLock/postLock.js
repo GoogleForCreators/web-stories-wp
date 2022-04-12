@@ -66,7 +66,7 @@ function PostLock() {
     })
   );
 
-  const { enablePostLocking, enablePostLockingTakeOver } = useFeatures();
+  const { enablePostLockingTakeOver } = useFeatures();
   const [isFirstTime, setIsFirstTime] = useState(true);
   const [user, setUser] = useState({});
   const [nonce, setNonce] = useState(firstNonce);
@@ -87,7 +87,7 @@ function PostLock() {
 
   // When async call only if dialog is true, current user is loaded and post locking is enabled.
   const doGetStoryLock = useCallback(() => {
-    if (enablePostLocking && showLockedDialog && currentUserLoaded) {
+    if (showLockedDialog && currentUserLoaded) {
       getStoryLockById(storyId, stories)
         .then(({ locked, nonce: newNonce, _embedded }) => {
           const lockAuthor = {
@@ -112,7 +112,6 @@ function PostLock() {
     storyId,
     stories,
     currentUser,
-    enablePostLocking,
     showLockedDialog,
     currentUserLoaded,
   ]);
@@ -124,23 +123,17 @@ function PostLock() {
   }, [doGetStoryLock, currentUserLoaded]);
 
   useEffect(() => {
-    if (enablePostLocking && showLockedDialog && currentUserLoaded) {
+    if (showLockedDialog && currentUserLoaded) {
       if (lockUser?.id && lockUser?.id !== currentUser.id) {
         setUser(lockUser);
       }
     }
-  }, [
-    lockUser,
-    currentUser,
-    currentUserLoaded,
-    enablePostLocking,
-    showLockedDialog,
-  ]);
+  }, [lockUser, currentUser, currentUserLoaded, showLockedDialog]);
 
   // Register an event on user navigating away from current tab to release / delete lock.
   useEffect(() => {
     function releasePostLock() {
-      if (enablePostLocking && showLockedDialog && user?.id && nonce) {
+      if (showLockedDialog && user?.id && nonce) {
         deleteStoryLockById(storyId, nonce, storyLocking);
       }
     }
@@ -150,7 +143,7 @@ function PostLock() {
     return () => {
       window.removeEventListener('beforeunload', releasePostLock);
     };
-  }, [storyId, enablePostLocking, showLockedDialog, user, nonce, storyLocking]);
+  }, [storyId, showLockedDialog, user, nonce, storyLocking]);
 
   // Register repeating callback to check lock every 150 seconds.
   useEffect(() => {
@@ -167,7 +160,7 @@ function PostLock() {
     return () => clearInterval(timeout);
   }, [postLockInterval, currentUserLoaded]);
 
-  if (!enablePostLocking || !showLockedDialog || !user) {
+  if (!showLockedDialog || !user) {
     return null;
   }
 

@@ -229,7 +229,7 @@ function DevTools() {
     };
     const [stateWithDummyResources, videosToReload] = isDummyResources
       ? replaceResourcesWithDummy(stateToRestore)
-      : [stateToRestore];
+      : [stateToRestore, []];
     restore(stateWithDummyResources);
     if (videosToReload.length > 0) {
       videosToReload.forEach((videoId) => {

@@ -22,7 +22,7 @@ import { theme as dsTheme } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
-import { ThumbnailWrapper } from '..';
+import ThumbnailWrapper from '../thumbnailWrapper';
 import { MAX_THUMBNAILS_DISPLAYED } from '../../../../checklistCard';
 
 const Wrapper = ({ children }) => (

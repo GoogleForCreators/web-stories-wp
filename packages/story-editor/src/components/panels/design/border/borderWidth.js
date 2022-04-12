@@ -29,7 +29,8 @@ import { canSupportMultiBorder } from '@googleforcreators/masks';
  */
 import { StackableGroup, StackableInput } from '../../../form/stackable';
 import Tooltip from '../../../tooltip';
-import { focusStyle, useCommonObjectValue } from '../../shared';
+import { focusStyle } from '../../shared/styles';
+import { useCommonObjectValue } from '../../shared';
 import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
 import { DEFAULT_BORDER } from './shared';
 

@@ -94,7 +94,7 @@ function arrange({
                 actions: {
                   showPriorityIssues: () => {},
                 },
-                state: { shouldReviewDialogBeSeen: false, checkpoint: 'all' },
+                state: { hasHighPriorityIssues: false, checkpoint: 'all' },
               }}
             >
               <Buttons />

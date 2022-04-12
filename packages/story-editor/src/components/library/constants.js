@@ -28,41 +28,49 @@ import { ShapesPane, ShapesIcon } from './panes/shapes';
 import { TextPane, TextIcon } from './panes/text';
 import { ElementsPane, ElementsIcon } from './panes/elements';
 import { PageTemplatesPane, PageTemplatesIcon } from './panes/pageTemplates';
+import { ShoppingIcon, ShoppingPane } from './panes/shopping';
+import { PANE_IDS } from './paneIds';
 
 export const MEDIA = {
   icon: MediaIcon,
   tooltip: __('Media', 'web-stories'),
   placement: TOOLTIP_PLACEMENT.BOTTOM_START,
   Pane: MediaPane,
-  id: 'media',
+  id: PANE_IDS.MEDIA,
 };
 export const MEDIA3P = {
   icon: Media3pIcon,
   tooltip: __('Third-party media', 'web-stories'),
   Pane: Media3pPane,
-  id: 'media3p',
+  id: PANE_IDS.MEDIA_3P,
 };
 export const TEXT = {
   icon: TextIcon,
   tooltip: __('Text', 'web-stories'),
   Pane: TextPane,
-  id: 'text',
+  id: PANE_IDS.TEXT,
 };
 export const SHAPES = {
   icon: ShapesIcon,
   tooltip: __('Shapes & Stickers', 'web-stories'),
   Pane: ShapesPane,
-  id: 'shapes',
+  id: PANE_IDS.SHAPES,
 };
 export const ELEMS = {
   icon: ElementsIcon,
   tooltip: __('Elements', 'web-stories'),
   Pane: ElementsPane,
-  id: 'elements',
+  id: PANE_IDS.ELEMENTS,
 };
 export const PAGE_TEMPLATES = {
   icon: PageTemplatesIcon,
-  tooltip: __('Page templates', 'web-stories'),
+  tooltip: __('Page Templates', 'web-stories'),
   Pane: PageTemplatesPane,
-  id: 'pageTemplates',
+  id: PANE_IDS.PAGE_TEMPLATES,
+};
+export const SHOPPING = {
+  icon: ShoppingIcon,
+  tooltip: __('Shopping', 'web-stories'),
+  Pane: ShoppingPane,
+  id: PANE_IDS.SHOPPING,
 };

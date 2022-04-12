@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,5 +14,12 @@
  * limitations under the License.
  */
 
-export { default as ThumbnailWrapper } from './thumbnailWrapper';
-export { default as VideoChecklistCard } from './videoChecklistCard';
+/**
+ * Internal dependencies
+ */
+export { default as Display } from './display';
+export { default as Output } from './output';
+export { default as LayerContent } from './layer';
+export { default as LayerIcon } from './icon';
+
+export * from './constants';

@@ -111,6 +111,10 @@ export class Media extends Container {
     super(node, path);
   }
 
+  get searchBar() {
+    return this.getByRole('searchbox');
+  }
+
   item(index) {
     return this.node.querySelectorAll('[data-testid^=mediaElement]')[index];
   }
