@@ -146,6 +146,7 @@ function TextAlign() {
     <>
       <Tooltip placement={TOOLTIP_PLACEMENT.BOTTOM} title={tooltip}>
         <StyledMenuButton
+          tabIndex={-1}
           ref={buttonRef}
           onClick={() => setMenuOpen((value) => !value)}
           aria-haspopup="menu"

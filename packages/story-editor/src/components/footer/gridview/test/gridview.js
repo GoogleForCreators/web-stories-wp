@@ -30,6 +30,23 @@ import StoryContext from '../../../../app/story/context';
 import GridView from '../gridView';
 import { noop } from '../../../../utils/noop';
 
+jest.mock('../../../../app/pageCanvas', () => {
+  const usePageCanvasMock = (selector) => {
+    return selector({
+      state: {
+        pageCanvasMap: {},
+      },
+      actions: {
+        generateDeferredPageCanvas: () => {},
+      },
+    });
+  };
+  return {
+    default: ({ children }) => children,
+    usePageCanvas: usePageCanvasMock,
+  };
+});
+
 function setupGridView() {
   const setCurrentPage = jest.fn();
   const arrangePage = jest.fn();

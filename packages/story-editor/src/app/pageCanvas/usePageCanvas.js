@@ -23,8 +23,8 @@ import { useContextSelector, identity } from '@googleforcreators/react';
  */
 import Context from './context';
 
-function useCalculateAccessibleTextColors(selector) {
+function usePageCanvas(selector) {
   return useContextSelector(Context, selector ?? identity);
 }
 
-export default useCalculateAccessibleTextColors;
+export default usePageCanvas;

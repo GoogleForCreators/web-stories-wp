@@ -38,7 +38,7 @@ function ToggleItalics() {
       Icon={Icons.LetterIItalic}
       title={__('Toggle italic', 'web-stories')}
       onClick={toggle}
-      tabIndex="0"
+      tabIndex={-1}
     />
   );
 }

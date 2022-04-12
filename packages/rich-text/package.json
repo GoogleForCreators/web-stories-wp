@@ -46,6 +46,6 @@
     "prop-types": "^15.7.2"
   },
   "devDependencies": {
-    "@testing-library/react": "^12.1.4"
+    "@testing-library/react": "^12.1.5"
   }
 }
