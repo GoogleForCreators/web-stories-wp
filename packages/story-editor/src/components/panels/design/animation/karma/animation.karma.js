@@ -52,6 +52,29 @@ describe('Animation Panel', function () {
     expect(panel).not.toBeNull();
   });
 
+  it('should not render the animation panel when multiple elements are selected.', async function () {
+    // add shape to canvas
+    await fixture.editor.library.shapesTab.click();
+    await fixture.events.click(fixture.editor.library.shapes.shape('Triangle'));
+
+    // add text to canvas
+    await fixture.editor.library.textTab.click();
+    await fixture.events.click(fixture.editor.library.text.preset('Paragraph'));
+    await fixture.editor.canvas.framesLayer.waitFocusedWithin();
+
+    // select both text and shape elements
+    await fixture.events.keyboard.down('Shift');
+    const triangle = fixture.editor.canvas.framesLayer.frames[1].node;
+    await fixture.events.click(triangle);
+    await fixture.events.keyboard.up('Shift');
+
+    await fixture.events.click(fixture.editor.sidebar.designTab);
+    const panel = await fixture.screen.queryByRole('region', {
+      name: /^Animation$/,
+    });
+    expect(panel).toBeNull();
+  });
+
   // TODO #6953
   // eslint-disable-next-line jasmine/no-disabled-tests
   xit('can click the animation chooser and select an effect.', async function () {

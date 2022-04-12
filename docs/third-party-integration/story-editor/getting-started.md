@@ -18,10 +18,10 @@ The easiest way of setting up a simple React project is by using [Create React A
 
 ### Step 2: Install dependencies
 
-For a minimal story editor, you only need to install a single package, `@googleforcreators/story-editor`.
+For a minimal story editor, you need to install three packages
 
 ```sh
-npm install @googleforcreators/story-editor
+npm install @googleforcreators/story-editor @googleforcreators/element-library @googleforcreators/elements
 ```
 
 ### Step 3: Use the `StoryEditor` component to render the editor

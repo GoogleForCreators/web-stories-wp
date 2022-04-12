@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,11 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-export * from './shared';
-export * from './media';
-export * from './utils/textMeasurements';
-export * from './text/util';
-export * from './constants';
-export { default as TextOutput, TextOutputWithUnits } from './text/output';
-export { default as elementTypes } from './elementTypes';
+export const DEFAULT_ATTRIBUTES_FOR_MEDIA = {
+  scale: 100,
+  focalX: 50,
+  focalY: 50,
+};

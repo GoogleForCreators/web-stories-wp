@@ -110,4 +110,43 @@ describe('PageMenu integration', () => {
       });
     });
   });
+
+  it('should render selection frame handles below page menu but allow click-through', async () => {
+    // Add image
+    const mediaItem = fixture.editor.library.media.item(0);
+    await fixture.events.mouse.clickOn(mediaItem, 20, 20);
+
+    // Press right-arrow 10 times to move it into correct location
+    await Array.from(Array(10)).reduce(
+      (p) => p.then(() => fixture.events.keyboard.press('right')),
+      Promise.resolve()
+    );
+
+    // Snapshot it
+    await fixture.snapshot();
+
+    // Now click the image link button to confirm that a quick-action
+    // button can receive pointer events
+    await fixture.events.click(
+      fixture.editor.canvas.quickActionMenu.addLinkButton
+    );
+    // Confirm by expecting link panel input to be focused
+    expect(fixture.editor.sidebar.designPanel.link.address).toBe(
+      document.activeElement
+    );
+
+    // Then drag right-handle of image to the left to confirm it
+    // can also receive pointer events
+    const image = fixture.editor.canvas.framesLayer.frames[1];
+    const widthBefore = image.node.getBoundingClientRect().width;
+    await fixture.events.mouse.seq(({ moveRel, moveBy, down, up }) => [
+      moveRel(image.node, '100%', '50%'),
+      down(),
+      moveBy(-100, 0, { steps: 10 }),
+      up(),
+    ]);
+    const widthAfter = image.node.getBoundingClientRect().width;
+    // Confirm by expecting frame width to have decreased
+    expect(widthAfter).toBeLessThan(widthBefore);
+  });
 });

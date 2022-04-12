@@ -4067,22 +4067,22 @@
         },
         {
             "name": "sniccowp/php-scoper-wordpress-excludes",
-            "version": "5.9.1",
+            "version": "5.9.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sniccowp/php-scoper-wordpress-excludes.git",
-                "reference": "31785d3723c518994cb20677d3ba97cb16d31504"
+                "reference": "e858817888b5c15380410c45c9b6fcfad2468488"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sniccowp/php-scoper-wordpress-excludes/zipball/31785d3723c518994cb20677d3ba97cb16d31504",
-                "reference": "31785d3723c518994cb20677d3ba97cb16d31504",
+                "url": "https://api.github.com/repos/sniccowp/php-scoper-wordpress-excludes/zipball/e858817888b5c15380410c45c9b6fcfad2468488",
+                "reference": "e858817888b5c15380410c45c9b6fcfad2468488",
                 "shasum": ""
             },
             "require-dev": {
                 "php": "^7.4",
                 "php-stubs/wordpress-globals": "0.2.0",
-                "php-stubs/wordpress-stubs": "5.9.1",
+                "php-stubs/wordpress-stubs": "5.9.3",
                 "sniccowp/php-scoper-excludes": "dev-master"
             },
             "type": "library",
@@ -4108,9 +4108,9 @@
             ],
             "support": {
                 "issues": "https://github.com/sniccowp/php-scoper-wordpress-excludes/issues",
-                "source": "https://github.com/sniccowp/php-scoper-wordpress-excludes/tree/5.9.1"
+                "source": "https://github.com/sniccowp/php-scoper-wordpress-excludes/tree/5.9.3"
             },
-            "time": "2022-02-24T01:09:26+00:00"
+            "time": "2022-04-07T01:23:03+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
@@ -5247,5 +5247,5 @@
     "platform-overrides": {
         "php": "7.2.24"
     },
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.3.0"
 }
