@@ -59,14 +59,10 @@ function OnPageAddedRegister({ currentStory, dispatchStoryEvent }) {
 
 OnPageAddedRegister.propTypes = {
   currentStory: PropTypes.shape({
-    story: PropTypes.shape({
-      pages: PropTypes.array,
-    }),
+    pages: PropTypes.array,
   }),
   prevStory: PropTypes.shape({
-    story: PropTypes.shape({
-      pages: PropTypes.array,
-    }),
+    pages: PropTypes.array,
   }),
   dispatchStoryEvent: PropTypes.func.isRequired,
 };

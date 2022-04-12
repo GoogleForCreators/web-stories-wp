@@ -18,6 +18,7 @@
  */
 import { useRef, useEffect } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
+import { StoryPropTypes } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -49,12 +50,12 @@ function OnInitialElementAddedRegister({ currentStory, dispatchStoryEvent }) {
 OnInitialElementAddedRegister.propTypes = {
   currentStory: PropTypes.shape({
     story: PropTypes.shape({
-      pages: PropTypes.array,
+      pages: PropTypes.arrayOf(StoryPropTypes.page),
     }),
   }),
   prevStory: PropTypes.shape({
     story: PropTypes.shape({
-      pages: PropTypes.array,
+      pages: PropTypes.arrayOf(StoryPropTypes.page),
     }),
   }),
   dispatchStoryEvent: PropTypes.func.isRequired,
