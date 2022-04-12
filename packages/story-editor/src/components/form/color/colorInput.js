@@ -169,6 +169,7 @@ const ColorInput = forwardRef(function ColorInput(
     pickerProps,
     spacing,
     tooltipPlacement,
+    ...props
   },
   ref
 ) {
@@ -217,6 +218,7 @@ const ColorInput = forwardRef(function ColorInput(
     'aria-label': label,
     onPointerEnter: () => loadReactColor(),
     onFocus: () => loadReactColor(),
+    tabIndex: props.tabIndex,
   };
 
   // Always hide color picker on unmount - note the double arrows
@@ -244,6 +246,7 @@ const ColorInput = forwardRef(function ColorInput(
             isIndeterminate={isMixed}
             placeholder={isMixed ? MULTIPLE_DISPLAY_VALUE : ''}
             containerStyleOverride={containerStyle}
+            {...props}
           />
           <ColorPreview>
             <Tooltip title={tooltip} hasTail placement={tooltipPlacement}>

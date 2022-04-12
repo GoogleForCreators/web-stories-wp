@@ -18,6 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import { sprintf, __ } from '@googleforcreators/i18n';
 import {
   useCallback,
   useLayoutEffect,
@@ -36,6 +37,11 @@ import {
   elementWithRotation,
 } from '@googleforcreators/element-library';
 import { FrameWithMask as WithMask } from '@googleforcreators/masks';
+import {
+  useKeyDownEffect,
+  useLiveRegion,
+  prettifyShortcut,
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -51,7 +57,11 @@ import WithLink from '../elementLink/frame';
 import useDoubleClick from '../../utils/useDoubleClick';
 import usePerformanceTracking from '../../utils/usePerformanceTracking';
 import { TRACKING_EVENTS } from '../../constants';
-import { FOCUS_GROUPS, useFocusGroupRef } from './editLayerFocusManager';
+import {
+  FOCUS_GROUPS,
+  useFocusGroupRef,
+  useEditLayerFocusManager,
+} from './editLayerFocusManager';
 
 // @todo: should the frame borders follow clip lines?
 
@@ -82,7 +92,21 @@ const EmptyFrame = styled.div`
 
 const NOOP = () => {};
 
+const FRAME_ELEMENT_MESSAGE = sprintf(
+  /* translators: 1: Ctrl Key 2: Alt Key */
+  __(
+    'To exit the canvas area, press Escape. Press Tab to move to the next group or element. To enter floating menu, press %1$s %2$s p.',
+    'web-stories'
+  ),
+  prettifyShortcut('ctrl'),
+  prettifyShortcut('alt')
+);
+
 function FrameElement({ id }) {
+  const speak = useLiveRegion();
+  const enterFocusGroup = useEditLayerFocusManager(
+    ({ enterFocusGroup }) => enterFocusGroup
+  );
   const [isTransforming, setIsTransforming] = useState(false);
   const focusGroupRef = useFocusGroupRef(FOCUS_GROUPS.ELEMENT_SELECTION);
 
@@ -186,8 +210,15 @@ function FrameElement({ id }) {
       if (!isSelected) {
         handleSelectElement(id, evt);
       }
+
+      // no floating menu on background, so no need to announce
+      // possible floating menu keyboard navigation commands
+      if (isBackground) {
+        return;
+      }
+      speak(FRAME_ELEMENT_MESSAGE);
     },
-    [handleSelectElement, id, isSelected]
+    [handleSelectElement, id, isBackground, isSelected, speak]
   );
 
   const handleMouseDown = useCallback(
@@ -213,6 +244,18 @@ function FrameElement({ id }) {
     },
     eventType: 'pointerdown',
   });
+
+  useKeyDownEffect(
+    elementRef,
+    { key: ['ctrl+alt+p'] },
+    () => {
+      enterFocusGroup({
+        groupId: FOCUS_GROUPS.EDIT_ELEMENT,
+        cleanup: () => elementRef.current?.focus(),
+      });
+    },
+    [enterFocusGroup]
+  );
 
   return (
     <WithLink element={element} active={isLinkActive} anchorRef={elementRef}>

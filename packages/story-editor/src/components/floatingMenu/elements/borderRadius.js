@@ -78,6 +78,7 @@ function BorderRadius() {
   return (
     <>
       <Input
+        tabIndex={-1}
         suffix={<Icons.Corner />}
         value={borderRadius.topLeft}
         aria-label={__('Corner Radius', 'web-stories')}
