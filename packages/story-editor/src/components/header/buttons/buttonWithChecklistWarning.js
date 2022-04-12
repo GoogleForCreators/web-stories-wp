@@ -27,7 +27,7 @@ import {
   BUTTON_VARIANTS,
   Tooltip,
 } from '@googleforcreators/design-system';
-import { useMemo } from '@googleforcreators/react';
+import { forwardRef, useMemo } from '@googleforcreators/react';
 
 /**
  * Internal dependencies
@@ -50,13 +50,10 @@ const Button = styled(DefaultButton)`
   }
 `;
 
-function InnerButton({
-  text,
-  checkpoint,
-  hasHighPriorityIssues = false,
-  onClick,
-  ...buttonProps
-}) {
+const InnerButton = forwardRef(function InnerButton(
+  { text, checkpoint, hasHighPriorityIssues = false, onClick, ...buttonProps },
+  ref
+) {
   const handleClick = (evt) => {
     // https://github.com/reactjs/react-modal/issues/680#issuecomment-413422345
     // React Modal restores input on last focused element on close.
@@ -68,6 +65,7 @@ function InnerButton({
 
   return (
     <Button
+      ref={ref}
       variant={BUTTON_VARIANTS.RECTANGLE}
       type={BUTTON_TYPES.PRIMARY}
       size={BUTTON_SIZES.SMALL}
@@ -78,7 +76,7 @@ function InnerButton({
       {hasHighPriorityIssues && <ChecklistIcon checkpoint={checkpoint} />}
     </Button>
   );
-}
+});
 
 InnerButton.propTypes = {
   checkpoint: PropTypes.oneOf(Object.values(PPC_CHECKPOINT_STATE)),
@@ -87,81 +85,85 @@ InnerButton.propTypes = {
   text: PropTypes.node.isRequired,
 };
 
-function ButtonWithChecklistWarning({
-  disabled,
-  hasFutureDate,
-  ...buttonProps
-}) {
-  const isUploading = useIsUploadingToStory();
-  const { isSaving, canPublish, status } = useStory(({ state }) => ({
-    isSaving: state.meta?.isSaving,
-    status: state.story.status,
-    canPublish: Boolean(state?.capabilities?.publish),
-  }));
+const ButtonWithChecklistWarning = forwardRef(
+  function ButtonWithChecklistWarning(
+    { disabled, hasFutureDate, ...buttonProps },
+    ref
+  ) {
+    const isUploading = useIsUploadingToStory();
+    const { isSaving, canPublish, status } = useStory(({ state }) => ({
+      isSaving: state.meta?.isSaving,
+      status: state.story.status,
+      canPublish: Boolean(state?.capabilities?.publish),
+    }));
 
-  const { checkpoint, hasHighPriorityIssues } = useCheckpoint(
-    ({ state: { checkpoint, hasHighPriorityIssues } }) => ({
-      checkpoint,
-      hasHighPriorityIssues,
-    })
-  );
-  const TOOLTIP_TEXT = {
-    [PPC_CHECKPOINT_STATE.ALL]: hasHighPriorityIssues
-      ? __(
-          'Make updates before publishing to improve discoverability and performance on search engines',
-          'web-stories'
-        )
-      : '',
-    [PPC_CHECKPOINT_STATE.ONLY_RECOMMENDED]: __(
-      'Review checklist to improve performance before publishing',
+    const { checkpoint, hasHighPriorityIssues } = useCheckpoint(
+      ({ state: { checkpoint, hasHighPriorityIssues } }) => ({
+        checkpoint,
+        hasHighPriorityIssues,
+      })
+    );
+    const TOOLTIP_TEXT = {
+      [PPC_CHECKPOINT_STATE.ALL]: hasHighPriorityIssues
+        ? __(
+            'Make updates before publishing to improve discoverability and performance on search engines',
+            'web-stories'
+          )
+        : '',
+      [PPC_CHECKPOINT_STATE.ONLY_RECOMMENDED]: __(
+        'Review checklist to improve performance before publishing',
+        'web-stories'
+      ),
+      [PPC_CHECKPOINT_STATE.UNAVAILABLE]: '',
+    };
+
+    const TOOLTIP_TEXT_UPLOADING = __(
+      'Saving is disabled due to media currently being uploaded.',
       'web-stories'
-    ),
-    [PPC_CHECKPOINT_STATE.UNAVAILABLE]: '',
-  };
+    );
 
-  const TOOLTIP_TEXT_UPLOADING = __(
-    'Saving is disabled due to media currently being uploaded.',
-    'web-stories'
-  );
+    const TOOLTIP_TEXT_REVIEW = __(
+      'Submit your work for review, and an Editor will be able to approve it for you.',
+      'web-stories'
+    );
 
-  const TOOLTIP_TEXT_REVIEW = __(
-    'Submit your work for review, and an Editor will be able to approve it for you.',
-    'web-stories'
-  );
+    let toolTip = isUploading
+      ? TOOLTIP_TEXT_UPLOADING
+      : TOOLTIP_TEXT[checkpoint];
 
-  let toolTip = isUploading ? TOOLTIP_TEXT_UPLOADING : TOOLTIP_TEXT[checkpoint];
+    if (!canPublish) {
+      toolTip = TOOLTIP_TEXT_REVIEW;
+    }
 
-  if (!canPublish) {
-    toolTip = TOOLTIP_TEXT_REVIEW;
+    const publishText = useMemo(
+      () =>
+        hasFutureDate && status !== 'private'
+          ? __('Schedule', 'web-stories')
+          : __('Publish', 'web-stories'),
+      [hasFutureDate, status]
+    );
+
+    const text = canPublish
+      ? publishText
+      : __('Submit for review', 'web-stories');
+    return (
+      <Tooltip
+        title={toolTip}
+        popupZIndexOverride={Z_INDEX_STORY_DETAILS}
+        hasTail
+      >
+        <InnerButton
+          ref={ref}
+          text={text}
+          disabled={disabled || isSaving || isUploading}
+          checkpoint={checkpoint}
+          hasHighPriorityIssues={hasHighPriorityIssues}
+          {...buttonProps}
+        />
+      </Tooltip>
+    );
   }
-
-  const publishText = useMemo(
-    () =>
-      hasFutureDate && status !== 'private'
-        ? __('Schedule', 'web-stories')
-        : __('Publish', 'web-stories'),
-    [hasFutureDate, status]
-  );
-
-  const text = canPublish
-    ? publishText
-    : __('Submit for review', 'web-stories');
-  return (
-    <Tooltip
-      title={toolTip}
-      popupZIndexOverride={Z_INDEX_STORY_DETAILS}
-      hasTail
-    >
-      <InnerButton
-        text={text}
-        disabled={disabled || isSaving || isUploading}
-        checkpoint={checkpoint}
-        hasHighPriorityIssues={hasHighPriorityIssues}
-        {...buttonProps}
-      />
-    </Tooltip>
-  );
-}
+);
 
 export default ButtonWithChecklistWarning;
 

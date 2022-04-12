@@ -57,7 +57,7 @@ function PublishModal({
 
   const handleReviewChecklist = useCallback(() => {
     trackEvent('review_prepublish_checklist');
-    onClose();
+    onClose({ focusPublishButton: false });
     openChecklist();
   }, [onClose, openChecklist]);
 
