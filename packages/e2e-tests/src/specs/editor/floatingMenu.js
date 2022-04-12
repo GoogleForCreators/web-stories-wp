@@ -65,21 +65,34 @@ describe('Floating Menu', () => {
         await insertButton.click();
 
         // Floating menu should show up
+        await page.waitForSelector('div[data-testid="context-menu-list"]');
         await expect(page).toMatchElement('div[data-testid="context-menu-list"]');
     });
 
     it('should display media3p floating menu', async () => {
         // Open a media3p tab
-        await expect(page).toClick('#library-tab-media3p');
+        const media3pSelector = '#library-tab-media3p';
 
-        // Add a media3p item
-        await expect(page).toClick('div[data-testid="mediaElement-image"]:first-child button');
+        await expect(page).toMatchElement(media3pSelector);
+        await expect(page).toClick(media3pSelector);
+
+        await expect(page).toMatchElement('button', { text: 'Image' });
+        await expect(page).toClick('button', { text: 'Image' });
+
+        await page.waitForSelector(
+            '#library-pane-media3p [data-testid="mediaElement-image"]'
+        );
+        // Clicking will only act on the first element.
+        await expect(page).toClick(
+            '#library-pane-media3p [data-testid="mediaElement-image"]'
+        );
         const insertButton = await page.waitForXPath(
             `//li//span[contains(text(), 'Insert image')]`
         );
         await insertButton.click();
 
         // Floating menu should show up
+        await page.waitForSelector('div[data-testid="context-menu-list"]');
         await expect(page).toMatchElement('div[data-testid="context-menu-list"]');
     });
 
