@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { within } from '@testing-library/react';
+import { waitFor, within } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -67,11 +67,14 @@ describe('Publish Story Modal', () => {
       const closeButton = await getPublishModalElement('button', /Close/);
       await fixture.events.click(closeButton);
 
-      publishModal = await fixture.screen.findByRole('dialog', {
-        name: /^Story details$/,
+      let publish;
+      await waitFor(async () => {
+        // modal may still be mounted, so wait until publish button is visible
+        // this is a `getBy` call, so it will throw an error if it fails
+        publish = await fixture.editor.titleBar.publish;
       });
 
-      expect(document.activeElement).toBe(fixture.editor.titleBar.publish);
+      expect(document.activeElement).toBe(publish);
     });
 
     it('should close the publish modal and open (and focus) the checklist when checklist button is clicked', async () => {
