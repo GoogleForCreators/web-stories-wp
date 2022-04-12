@@ -245,6 +245,7 @@ function FontPreview({ title, element, insertPreset, getPosition, index }) {
       onBlur={makeInactive}
       tabIndex={index === 0 ? 0 : -1}
       isTextSelected={isTextSelected}
+      data-testid="preview-text"
       aria-label={
         isTextSelected
           ? sprintf(
