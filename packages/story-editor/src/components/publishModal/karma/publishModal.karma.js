@@ -63,7 +63,18 @@ describe('Publish Story Modal', () => {
   });
 
   describe('Functionality', () => {
-    it('should close publish modal and open (and focus) the checklist when checklist button is clicked', async () => {
+    it('should close the publish modal and focus the publish button', async () => {
+      const closeButton = await getPublishModalElement('button', /Close/);
+      await fixture.events.click(closeButton);
+
+      publishModal = await fixture.screen.findByRole('dialog', {
+        name: /^Story details$/,
+      });
+
+      expect(document.activeElement).toBe(fixture.editor.titleBar.publish);
+    });
+
+    it('should close the publish modal and open (and focus) the checklist when checklist button is clicked', async () => {
       const checklistButton = await getPublishModalElement(
         'button',
         'Checklist'
