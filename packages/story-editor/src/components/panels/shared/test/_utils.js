@@ -28,7 +28,7 @@ import { useMemo } from '@googleforcreators/react';
 import theme from '../../../../theme';
 import useHandlers from '../../../../utils/useHandlers';
 import FormContext from '../../../form/context';
-import updateProperties from '../../../design/updateProperties';
+import updateProperties from '../../../style/updateProperties';
 
 function TestPanel({
   panelType,

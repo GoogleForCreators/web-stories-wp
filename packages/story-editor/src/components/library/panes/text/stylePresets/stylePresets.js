@@ -49,7 +49,7 @@ import StyleManager, {
 import useLibrary from '../../../useLibrary';
 import { areAllType } from '../../../../../utils/presetUtils';
 import useApplyStyle from '../../../../styleManager/useApplyStyle';
-import updateProperties from '../../../../design/updateProperties';
+import updateProperties from '../../../../style/updateProperties';
 import getUpdatedSizeAndPosition from '../../../../../utils/getUpdatedSizeAndPosition';
 import InsertionOverlay from '../../shared/insertionOverlay';
 import { Container } from '../../../common/section';

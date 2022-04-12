@@ -18,6 +18,7 @@
  */
 import { INSERT, DOCUMENT, STYLE } from '../../components/sidebar';
 import { PANE_IDS } from '../../components/library/paneIds';
+import { STYLE_PANE_IDS } from '../../components/style';
 
 /**
  * Highlight state object
@@ -88,10 +89,12 @@ export const STATES = {
   [keys.PAGE_BACKGROUND]: {
     focus: true,
     tab: STYLE,
+    section: STYLE_PANE_IDS.SELECTION,
   },
   [keys.ANIMATION]: {
     focus: true,
     tab: STYLE,
+    section: STYLE_PANE_IDS.ANIMATION,
   },
   [keys.FONT]: {
     focus: true,
@@ -100,6 +103,7 @@ export const STATES = {
   [keys.LINK]: {
     focus: true,
     tab: STYLE,
+    section: STYLE_PANE_IDS.LINK,
   },
   [keys.VIDEO_A11Y_POSTER]: {
     focus: true,
