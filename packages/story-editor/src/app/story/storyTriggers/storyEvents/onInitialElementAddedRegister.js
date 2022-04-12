@@ -50,12 +50,20 @@ function OnInitialElementAddedRegister({ currentStory, dispatchStoryEvent }) {
 OnInitialElementAddedRegister.propTypes = {
   currentStory: PropTypes.shape({
     story: PropTypes.shape({
-      pages: PropTypes.arrayOf(StoryPropTypes.page),
+      pages: PropTypes.arrayOf(
+        PropTypes.shape({
+          elements: PropTypes.arrayOf(PropTypes.shape(StoryPropTypes.element)),
+        })
+      ),
     }),
   }),
   prevStory: PropTypes.shape({
     story: PropTypes.shape({
-      pages: PropTypes.arrayOf(StoryPropTypes.page),
+      pages: PropTypes.arrayOf(
+        PropTypes.shape({
+          elements: PropTypes.arrayOf(PropTypes.shape(StoryPropTypes.element)),
+        })
+      ),
     }),
   }),
   dispatchStoryEvent: PropTypes.func.isRequired,
