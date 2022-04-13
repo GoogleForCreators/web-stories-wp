@@ -34,7 +34,7 @@ const IconButton = memo(
   forwardRef(function IconButton({ Icon, title, ...rest }, ref) {
     return (
       <Tooltip placement={TOOLTIP_PLACEMENT.BOTTOM} title={title}>
-        <ToggleButton ref={ref} tabIndex={-1} {...rest}>
+        <ToggleButton ref={ref} {...rest}>
           <ContextMenuComponents.MenuIcon title={title}>
             <Icon />
           </ContextMenuComponents.MenuIcon>

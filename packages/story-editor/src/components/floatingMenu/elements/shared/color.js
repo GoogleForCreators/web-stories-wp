@@ -48,7 +48,7 @@ function FloatingColor(props) {
       maxHeight={PICKER_MAX_HEIGHT}
       pickerPlacement={PLACEMENT.TOP_START}
       isInDesignMenu
-      shouldCloseOnSelection
+      // shouldCloseOnSelection enabling this will lose focus should the user be navigating via keyboard
       allowsGradient={allowsGradient}
       allowsSavedColors
       allowsSavedColorDeletion={false}

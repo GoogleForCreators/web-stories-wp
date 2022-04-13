@@ -37,6 +37,7 @@ import {
 } from '../../utils';
 import { useKeyDownEffect } from '../keyboard';
 import { useContextMenu } from './contextMenuProvider';
+import { NESTED_FREE_FORM_INPUT_CLASS } from './constants';
 
 export const CONTEXT_MENU_MIN_WIDTH = 200;
 const CONTEXT_MENU_MAX_WIDTH = 300;
@@ -97,13 +98,12 @@ function getFocusableChildren({ parent, isSubMenu, wrapperRole = 'menu' }) {
   if (isSubMenu) {
     return allButtons;
   }
-  // Skip considering the submenu, and the submenu items.
-  return allButtons.filter(
-    (elem) =>
-      !elem.matches(
-        `[role="${wrapperRole}"], [role="${wrapperRole}"] [role="${wrapperRole}"] *`
-      )
-  );
+  // Skip considering the submenu, and the submenu items as well as inputs which are focus traps (floating menu/toolbar)
+  return allButtons.filter((elem) => {
+    return !elem.matches(
+      `[role="${wrapperRole}"], [role="${wrapperRole}"] [role="menu"] *, .${NESTED_FREE_FORM_INPUT_CLASS}`
+    );
+  });
 }
 
 const Menu = forwardRef(
@@ -137,7 +137,6 @@ const Menu = forwardRef(
     const menuRef = useRef(null);
     const composedListRef = useCombinedRefs(mouseDownOutsideRef, menuRef, ref);
     const wrapperRole = props?.role || 'menu';
-
     /**
      * Focus the first element when the user focuses the wrapper
      * with their keyboard.
@@ -164,6 +163,21 @@ const Menu = forwardRef(
       [onFocus, wrapperRole]
     );
 
+    const getPrevIndex = useCallback(
+      (focusableChildren) => {
+        let prevIndex = focusableChildren.findIndex(
+          (element) => element.id === focusedId
+        );
+        // There are cases where the active element is in the present menu but the focusedId has been reset because of a popup interaction, in those cases we should double check the true focused id by looking at the active element id and comparing.
+        if (prevIndex === -1) {
+          prevIndex = focusableChildren.findIndex(
+            (element) => element.id === document.activeElement.id
+          );
+        }
+        return prevIndex;
+      },
+      [focusedId]
+    );
     /**
      * Allow navigation of the list using the UP and DOWN arrow keys.
      * Allow navigation between the parent menu and submenu with LEFT and RIGHT arrow keys.
@@ -186,9 +200,7 @@ const Menu = forwardRef(
           wrapperRole,
         });
 
-        let prevIndex = focusableChildren.findIndex(
-          (element) => element.id === focusedId
-        );
+        let prevIndex = getPrevIndex(focusableChildren);
 
         if (prevIndex === -1 && focusableChildren.length) {
           setFocusedId(focusableChildren[0].id);
@@ -202,7 +214,6 @@ const Menu = forwardRef(
         if ([keyBackward, keyForward].includes(key)) {
           const isAscending = keyBackward === key;
           let newIndex = prevIndex + (isAscending ? -1 : 1);
-
           if (newIndex === -1) {
             newIndex = focusableChildren.length - 1;
           }
@@ -210,8 +221,8 @@ const Menu = forwardRef(
           // Otherwise move to the next element or loop around the list.
           const newSelectedElement =
             focusableChildren[newIndex % focusableChildren.length];
-
           newSelectedElement?.focus();
+
           setFocusedId(newSelectedElement?.id || -1);
           return;
         }
@@ -230,15 +241,15 @@ const Menu = forwardRef(
         }
       },
       [
-        focusedId,
+        isSubMenu,
+        wrapperRole,
+        getPrevIndex,
+        isHorizontal,
+        isRTL,
         onDismiss,
         setFocusedId,
-        isRTL,
-        isSubMenu,
-        isHorizontal,
-        onCloseSubMenu,
         parentMenuRef,
-        wrapperRole,
+        onCloseSubMenu,
       ]
     );
 
@@ -249,7 +260,6 @@ const Menu = forwardRef(
           parent: menuRef.current,
           wrapperRole,
         });
-
         if (focusableChildren.length) {
           focusableChildren?.[0]?.focus();
           setFocusedId(focusableChildren?.[0]?.id);

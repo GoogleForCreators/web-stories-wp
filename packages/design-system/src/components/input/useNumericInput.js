@@ -36,8 +36,10 @@ export const useNumericInput = ({
   min,
   onChange,
   value,
+  ref,
 }) => {
-  const inputRef = useRef(null);
+  const _inputRef = useRef(null);
+  const inputRef = ref || _inputRef;
   const oldValue = useRef(value);
   const revertToOriginal = useRef(false);
   const [currentValue, setCurrentValue] = useState(value);

@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,20 +14,5 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import {
-  NumericInput,
-  NESTED_FREE_FORM_INPUT_CLASS,
-} from '@googleforcreators/design-system';
-import styled from 'styled-components';
-
-const Input = styled(NumericInput).attrs({
-  inputClassName: NESTED_FREE_FORM_INPUT_CLASS,
-})`
-  width: 70px;
-  flex: 0 0 70px;
-`;
-
-export default Input;
+// Some menus have text or numeric inputs that need to be nested in those cases, the nested input needs this class to be excluded from focusable menu content
+export const NESTED_FREE_FORM_INPUT_CLASS = 'nestedFreeFormInput';

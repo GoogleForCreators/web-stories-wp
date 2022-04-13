@@ -19,7 +19,12 @@
  */
 import styled from 'styled-components';
 import { __, _x } from '@googleforcreators/i18n';
-import { Icons, NumericInput } from '@googleforcreators/design-system';
+import {
+  Icons,
+  NumericInput,
+  NESTED_FREE_FORM_INPUT_CLASS,
+} from '@googleforcreators/design-system';
+import { useRef } from '@googleforcreators/react';
 import { trackEvent } from '@googleforcreators/tracking';
 
 /**
@@ -27,7 +32,11 @@ import { trackEvent } from '@googleforcreators/tracking';
  */
 import { useStory } from '../../../app';
 import { MIN_MAX } from '../../panels/design/sizePosition/opacity';
-import { useProperties } from './shared';
+import {
+  FocusTrapButton,
+  handleReturnTrappedFocus,
+  useProperties,
+} from './shared';
 
 const Input = styled(NumericInput)`
   width: 82px;
@@ -35,6 +44,8 @@ const Input = styled(NumericInput)`
 `;
 
 function LayerOpacity() {
+  const inputRef = useRef();
+  const buttonRef = useRef();
   const { opacity, type } = useProperties(['opacity', 'type']);
   const updateSelectedElements = useStory(
     (state) => state.actions.updateSelectedElements
@@ -53,17 +64,29 @@ function LayerOpacity() {
     });
   };
 
+  const inputLabel = __('Opacity in percent', 'web-stories');
   return (
-    <Input
-      tabIndex={-1}
-      suffix={<Icons.ColorDrop />}
-      unit={_x('%', 'Percentage', 'web-stories')}
-      value={opacity || 0}
-      aria-label={__('Opacity in percent', 'web-stories')}
-      onChange={handleOpacityChange}
-      min={MIN_MAX.OPACITY.MIN}
-      max={MIN_MAX.OPACITY.MAX}
-    />
+    <FocusTrapButton
+      ref={buttonRef}
+      inputRef={inputRef}
+      inputLabel={inputLabel}
+    >
+      <Input
+        ref={inputRef}
+        tabIndex={-1}
+        suffix={<Icons.ColorDrop />}
+        unit={_x('%', 'Percentage', 'web-stories')}
+        value={opacity || 0}
+        aria-label={inputLabel}
+        onChange={handleOpacityChange}
+        inputClassName={NESTED_FREE_FORM_INPUT_CLASS}
+        onKeyDown={(e) => {
+          handleReturnTrappedFocus(e, buttonRef);
+        }}
+        min={MIN_MAX.OPACITY.MIN}
+        max={MIN_MAX.OPACITY.MAX}
+      />
+    </FocusTrapButton>
   );
 }
 

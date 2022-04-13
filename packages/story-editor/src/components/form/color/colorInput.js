@@ -41,7 +41,7 @@ import {
   Popup,
   PLACEMENT,
 } from '@googleforcreators/design-system';
-
+import { v4 as uuidv4 } from 'uuid';
 /**
  * Internal dependencies
  */
@@ -257,7 +257,7 @@ const ColorInput = forwardRef(function ColorInput(
       ) : (
         // If not editable, the whole component is a button
         <Tooltip title={tooltip} hasTail placement={tooltipPlacement}>
-          <ColorButton ref={previewRef} {...buttonProps}>
+          <ColorButton ref={previewRef} {...buttonProps} id={uuidv4()}>
             <ColorPreview>
               <Swatch
                 isPreview
