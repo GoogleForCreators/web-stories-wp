@@ -17,18 +17,32 @@
 /**
  * External dependencies
  */
-import { forwardRef, useLayoutEffect, memo } from '@googleforcreators/react';
+import {
+  forwardRef,
+  useLayoutEffect,
+  useCallback,
+  memo,
+} from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
-import { ContextMenu } from '@googleforcreators/design-system';
+import { ContextMenu, useLiveRegion } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
  */
 import { Z_INDEX_FLOATING_MENU } from '../../constants/zIndex';
+import {
+  useFocusGroupRef,
+  FOCUS_GROUPS,
+} from '../canvas/editLayerFocusManager';
 import { FloatingMenuProvider } from './context';
 import MenuSelector from './menus';
+
+const FLOATING_MENU_MESSAGE = __(
+  'To exit the floating menu, press Escape.',
+  'web-stories'
+);
 
 const MenuWrapper = styled.section`
   display: flex;
@@ -43,6 +57,13 @@ const FloatingMenu = memo(
     { selectionIdentifier, selectedElementType, handleDismiss, visuallyHidden },
     ref
   ) {
+    const focusGroupRef = useFocusGroupRef(FOCUS_GROUPS.EDIT_ELEMENT);
+    const speak = useLiveRegion();
+
+    const announceKeyboardControls = useCallback(() => {
+      speak(FLOATING_MENU_MESSAGE);
+    }, [speak]);
+
     useLayoutEffect(() => {
       const node = ref.current;
       const updateSize = () => {
@@ -72,7 +93,10 @@ const FloatingMenu = memo(
             isHorizontal
             isSecondary
             isAlwaysVisible
-            disableControlledTabNavigation
+            tabIndex={-1}
+            ref={focusGroupRef}
+            dismissOnEscape={false}
+            onFocus={announceKeyboardControls}
             aria-label={__(
               'Design options for selected element',
               'web-stories'

@@ -17,7 +17,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useMemo } from '@googleforcreators/react';
+import { useMemo, forwardRef } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 /**
  * Internal dependencies
@@ -28,48 +28,53 @@ import Menu, { MenuPropTypes } from './menu';
 import AnimationContainer from './animationContainer';
 import { ContextMenuProvider } from './contextMenuProvider';
 
-const ContextMenu = ({
-  animate,
-  'aria-label': ariaLabel = __('Menu', 'web-stories'),
-  children,
-  id,
-  isAlwaysVisible,
-  isIconMenu = false,
-  isHorizontal = false,
-  isInline = false,
-  onDismiss = noop,
-  popoverZIndex,
-  ...props
-}) => {
-  const { isRTL } = props;
-  const Wrapper = useMemo(
-    () => (animate ? AnimationContainer : SmartPopover),
-    [animate]
-  );
+const ContextMenu = forwardRef(
+  (
+    {
+      animate,
+      'aria-label': ariaLabel = __('Menu', 'web-stories'),
+      children,
+      id,
+      isAlwaysVisible,
+      isIconMenu = false,
+      isHorizontal = false,
+      isInline = false,
+      onDismiss = noop,
+      popoverZIndex,
+      ...props
+    },
+    ref
+  ) => {
+    const { isRTL } = props;
+    const Wrapper = useMemo(
+      () => (animate ? AnimationContainer : SmartPopover),
+      [animate]
+    );
 
-  return (
-    <ContextMenuProvider
-      isIconMenu={isIconMenu}
-      isHorizontal={isHorizontal}
-      onDismiss={onDismiss}
-    >
-      <Wrapper
-        aria-label={ariaLabel}
-        isInline={isInline}
-        role={isAlwaysVisible ? null : 'dialog'}
-        isOpen={isAlwaysVisible || props.isOpen}
-        isRTL={isRTL}
-        popoverZIndex={popoverZIndex}
+    return (
+      <ContextMenuProvider
+        isIconMenu={isIconMenu}
+        isHorizontal={isHorizontal}
+        onDismiss={onDismiss}
       >
-        <Menu aria-expanded={props.isOpen} {...props}>
-          {children}
-        </Menu>
-        {/* <AnimationContainer /> has a <Shadow />. Don't double the shadow. */}
-        {!animate && <Shadow $isHorizontal={isHorizontal} />}
-      </Wrapper>
-    </ContextMenuProvider>
-  );
-};
+        <Wrapper
+          aria-label={ariaLabel}
+          isInline={isInline}
+          role={isAlwaysVisible ? null : 'dialog'}
+          isOpen={isAlwaysVisible || props.isOpen}
+          isRTL={isRTL}
+          popoverZIndex={popoverZIndex}
+        >
+          <Menu ref={ref} aria-expanded={props.isOpen} {...props}>
+            {children}
+          </Menu>
+          {/* <AnimationContainer /> has a <Shadow />. Don't double the shadow. */}
+          {!animate && <Shadow $isHorizontal={isHorizontal} />}
+        </Wrapper>
+      </ContextMenuProvider>
+    );
+  }
+);
 ContextMenu.propTypes = {
   ...MenuPropTypes,
   animate: PropTypes.bool,

@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import { waitFor } from '@testing-library/react';
 import { createSolid } from '@googleforcreators/patterns';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '@googleforcreators/elements';
 
@@ -78,7 +79,16 @@ describe('Carousel integration', () => {
   async function clickOnThumbnail(index) {
     await fixture.events.sleep(100);
     await fixture.editor.footer.carousel.waitReady();
-    const thumb = fixture.editor.footer.carousel.pages[index];
+
+    let thumb;
+    await waitFor(() => {
+      thumb = fixture.editor.footer.carousel.pages[index];
+
+      if (!thumb) {
+        throw new Error('cant access carousel before rendered');
+      }
+    });
+
     thumb.node.scrollIntoView();
     await fixture.events.mouse.clickOn(thumb.node, 5, 5);
   }

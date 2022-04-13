@@ -73,6 +73,7 @@ function FontSize() {
 
   return (
     <Input
+      tabIndex={-1}
       aria-label={__('Font size', 'web-stories')}
       isFloat
       value={fontSize}

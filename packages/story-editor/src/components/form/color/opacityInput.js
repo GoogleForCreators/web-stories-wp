@@ -43,7 +43,7 @@ const minimalInputContainerStyleOverride = css`
   padding-right: 6px;
 `;
 
-function OpacityInput({ value, onChange, isInDesignMenu }) {
+function OpacityInput({ value, onChange, isInDesignMenu, ...props }) {
   const [inputValue, setInputValue] = useState('');
 
   // Allow any input, but only persist non-NaN values up-chain
@@ -80,6 +80,7 @@ function OpacityInput({ value, onChange, isInDesignMenu }) {
       allowEmpty={false}
       isFloat={false}
       containerStyleOverride={containerStyle}
+      {...props}
     />
   );
 }

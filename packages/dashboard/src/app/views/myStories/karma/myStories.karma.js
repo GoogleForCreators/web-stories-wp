@@ -133,6 +133,33 @@ describe('CUJ: Creator can view their stories in grid view', () => {
     });
   });
 
+  describe('Creator should be prevented from performing basic updates on locked stories from dashboard', () => {
+    let utils;
+    let moreOptionsButton;
+
+    beforeEach(async () => {
+      const lockedStory = dashboardGridItems[1];
+      await fixture.events.hover(lockedStory);
+
+      utils = within(lockedStory);
+      moreOptionsButton = utils.getByRole('button', {
+        name: /^Context menu for/,
+      });
+
+      await fixture.events.click(moreOptionsButton);
+    });
+
+    it('should not Rename a locked story', () => {
+      const rename = utils.getByText(/^Rename/);
+      expect(rename.hasAttribute('disabled')).toBe(true);
+    });
+
+    it('should not delete a locked story', () => {
+      const deleteStory = utils.getByText(/^Delete/);
+      expect(deleteStory.hasAttribute('disabled')).toBe(true);
+    });
+  });
+
   describe('Creator should be able to perform basic updates to stories from dashboard', () => {
     let utils;
     let moreOptionsButton;
@@ -169,22 +196,6 @@ describe('CUJ: Creator can view their stories in grid view', () => {
       expect(
         utils.getByRole('heading', { level: 3, name: 'A New Title' })
       ).toBeTruthy();
-    });
-
-    it('should not Rename a locked story', async () => {
-      // get a locked story
-      const story = dashboardGridItems[1];
-      await fixture.events.hover(story);
-
-      const testUtils = within(story);
-      moreOptionsButton = testUtils.getByRole('button', {
-        name: /^Context menu for/,
-      });
-
-      await fixture.events.click(moreOptionsButton);
-
-      const rename = testUtils.getByText(/^Rename/);
-      expect(rename.hasAttribute('disabled')).toBe(true);
     });
 
     it('should Duplicate a story', async () => {
@@ -613,7 +624,7 @@ describe('CUJ: Creator can view their stories in grid view', () => {
         /story-editor-grid-link/
       );
 
-      const storyIndex = 1;
+      const storyIndex = 0;
       const selectedStory = allItemGridLinks[storyIndex];
       // focus the delete context menu item of the first story with the keyboard
       // test cancelling deletion of the second story (not the default first story)

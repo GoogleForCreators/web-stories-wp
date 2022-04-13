@@ -53,6 +53,7 @@ export const generateStoryMenu = ({ menuItems, story, isLocked }) => {
         extraProperties.openNewTab = true;
         break;
       case STORY_CONTEXT_MENU_ACTIONS.RENAME:
+      case STORY_CONTEXT_MENU_ACTIONS.DELETE:
         extraProperties.disabled = isLocked;
         break;
       default:
