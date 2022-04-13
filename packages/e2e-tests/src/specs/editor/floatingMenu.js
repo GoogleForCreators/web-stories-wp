@@ -19,24 +19,12 @@
  */
 import {
     createNewStory,
+    waitForCarousel
 } from '@web-stories-wp/e2e-test-utils';
 
 describe('Floating Menu', () => {
     beforeEach(async () => {
         await createNewStory();
-
-        // Wait for title input to load before continuing.
-        await page.waitForSelector('input[placeholder="Add title"]');
-
-
-        // Wait for skeleton thumbnails in the carousel to render which gives footer time to also render
-        await page.waitForFunction(
-            () =>
-                !document.querySelector(
-                    'li[data-testid^="carousel-page-preview-skeleton"]'
-                ),
-            { timeout: 10000 } // requestIdleCallback in the carousel kicks in after 5s the latest.
-        );
     });
 
     it('should display text floating menu', async () => {
