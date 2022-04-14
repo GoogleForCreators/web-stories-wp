@@ -387,7 +387,7 @@ function crossesDialogBoundary(target, keyTarget) {
  * @return {boolean} True if platform is a Mac.
  */
 export function isPlatformMacOS() {
-  const { platform } = window.navigator;
+  const { platform = '' } = globalThis.navigator || {};
   return platform.includes('Mac') || ['iPad', 'iPhone'].includes(platform);
 }
 
