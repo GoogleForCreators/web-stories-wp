@@ -61,18 +61,20 @@ function CanvasProvider({ children }) {
   // to multiple nodes.
   const clientRectObserver = useMemo(
     () =>
-      new window.IntersectionObserver((entries) => {
-        for (const entry of entries) {
-          if (!entry.target.dataset[RECT_OBSERVATION_KEY]) {
-            return;
-          }
-          setBoundingBoxes((boxes) => ({
-            ...boxes,
-            [entry.target.dataset[RECT_OBSERVATION_KEY]]:
-              entry.boundingClientRect,
-          }));
-        }
-      }),
+      typeof window !== 'undefined'
+        ? new window.IntersectionObserver((entries) => {
+            for (const entry of entries) {
+              if (!entry.target.dataset[RECT_OBSERVATION_KEY]) {
+                return;
+              }
+              setBoundingBoxes((boxes) => ({
+                ...boxes,
+                [entry.target.dataset[RECT_OBSERVATION_KEY]]:
+                  entry.boundingClientRect,
+              }));
+            }
+          })
+        : {},
     []
   );
   useEffect(() => () => clientRectObserver.disconnect(), [clientRectObserver]);
