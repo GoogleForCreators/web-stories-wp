@@ -16,7 +16,7 @@
 
 /* Source: https://github.com/behnammodi/polyfill/blob/master/window.polyfill.js */
 const requestIdleCallback =
-  window.requestIdleCallback ||
+  globalThis.requestIdleCallback ||
   function (callback, options) {
     options = options || {};
     const relaxation = 1;
@@ -37,7 +37,7 @@ const requestIdleCallback =
   };
 
 const cancelIdleCallback =
-  window.cancelIdleCallback ||
+  globalThis.cancelIdleCallback ||
   function (id) {
     clearTimeout(id);
   };

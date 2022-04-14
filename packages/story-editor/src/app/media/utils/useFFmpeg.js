@@ -143,7 +143,9 @@ function useFFmpeg() {
    *
    * @type {boolean} Whether the feature flag is enabled.
    */
-  const isCrossOriginIsolationEnabled = Boolean(window?.crossOriginIsolated);
+  const isCrossOriginIsolationEnabled = Boolean(
+    globalThis?.crossOriginIsolated
+  );
 
   const getFFmpegInstance = useCallback(
     async (file) => {

@@ -45,7 +45,7 @@ const {
   trackingIdGA4,
   appVersion,
   userProperties,
-} = window.webStoriesTrackingSettings || {};
+} = globalThis?.webStoriesTrackingSettings || {};
 
 export const config = {
   ...DEFAULT_CONFIG,
