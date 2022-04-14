@@ -37,10 +37,10 @@ function useFocusTrapping({ ref }) {
     const firstEl = focusableElements[0];
     const lastEl = focusableElements[focusableElements.length - 1];
 
-    if (!e.shiftKey && document.activeElement === lastEl) {
+    if (!e.shiftKey && globalThis.document?.activeElement === lastEl) {
       firstEl.focus();
       e.preventDefault();
-    } else if (e.shiftKey && document.activeElement === firstEl) {
+    } else if (e.shiftKey && globalThis.document?.activeElement === firstEl) {
       lastEl.focus();
       e.preventDefault();
     }

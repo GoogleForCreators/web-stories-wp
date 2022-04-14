@@ -56,8 +56,11 @@ const KeyboardOnlyOutline = () => {
     }
   };
 
-  document.addEventListener('keydown', handleKeydown, true);
-  document.addEventListener('mousedown', handleMousedown, true);
+  // @todo Should this be in useEffect ?
+  if (globalThis.document) {
+    document.addEventListener('keydown', handleKeydown, true);
+    document.addEventListener('mousedown', handleMousedown, true);
+  }
 
   useEffect(() => {
     return function cleanup() {
@@ -74,7 +77,9 @@ const KeyboardOnlyOutline = () => {
 };
 
 export function isKeyboardUser() {
-  return document.body.classList.contains(KEYBOARD_USER_CLASS);
+  return typeof document !== 'undefined'
+    ? document.body.classList.contains(KEYBOARD_USER_CLASS)
+    : false;
 }
 
 KeyboardOnlyOutline.propTypes = {};

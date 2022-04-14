@@ -21,7 +21,7 @@
  * @return {boolean} If native handling is expected.
  */
 function nativeCopyPasteExpected() {
-  const { activeElement } = document;
+  const { activeElement } = globalThis.document || {};
   const { tagName, type, contentEditable } = activeElement;
 
   // If it's an input in focus, do native handling.

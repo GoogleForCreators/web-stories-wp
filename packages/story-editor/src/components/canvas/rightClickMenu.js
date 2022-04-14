@@ -111,29 +111,31 @@ const RightClickMenu = () => {
     };
   }, [ref]);
 
-  return createPortal(
-    <StyleSheetManager stylisPlugins={[]}>
-      <RightClickMenuContainer position={menuPosition} ref={ref}>
-        <DirectionAware>
-          <ContextMenu
-            data-testid="right-click-context-menu"
-            isOpen={isMenuOpen}
-            onDismiss={onCloseMenu}
-            aria-label={__(
-              'Context Menu for the selected element',
-              'web-stories'
-            )}
-            maskRef={maskRef}
-            onMouseDown={(evt) => evt.stopPropagation()}
-            isRTL={isRTL}
-          >
-            <Menu parentMenuRef={ref} />
-          </ContextMenu>
-        </DirectionAware>
-      </RightClickMenuContainer>
-    </StyleSheetManager>,
-    document.body
-  );
+  return globalThis.document
+    ? createPortal(
+        <StyleSheetManager stylisPlugins={[]}>
+          <RightClickMenuContainer position={menuPosition} ref={ref}>
+            <DirectionAware>
+              <ContextMenu
+                data-testid="right-click-context-menu"
+                isOpen={isMenuOpen}
+                onDismiss={onCloseMenu}
+                aria-label={__(
+                  'Context Menu for the selected element',
+                  'web-stories'
+                )}
+                maskRef={maskRef}
+                onMouseDown={(evt) => evt.stopPropagation()}
+                isRTL={isRTL}
+              >
+                <Menu parentMenuRef={ref} />
+              </ContextMenu>
+            </DirectionAware>
+          </RightClickMenuContainer>
+        </StyleSheetManager>,
+        document.body
+      )
+    : null;
 };
 
 export default RightClickMenu;

@@ -68,7 +68,7 @@ function DateTime({
     date: selectedTime,
   });
 
-  const previousFocus = useRef(document.activeElement);
+  const previousFocus = useRef(globalThis.document?.activeElement);
   const handleClose = useCallback(
     (evt) => {
       if (previousFocus.current) {
