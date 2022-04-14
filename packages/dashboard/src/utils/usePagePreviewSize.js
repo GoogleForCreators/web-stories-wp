@@ -97,7 +97,7 @@ const sizeFromWidth = (
 const getContainerWidth = (windowWidth) => {
   // Because the dashboard has a min width (MIN_DASHBOARD_WIDTH) check to see if that min should be used or the actual space of the dashboard
   const isWindowSmallerThanMinDashboardWidth =
-    window.innerWidth < MIN_DASHBOARD_WIDTH;
+    globalThis.innerWidth < MIN_DASHBOARD_WIDTH;
   return isWindowSmallerThanMinDashboardWidth
     ? MIN_DASHBOARD_WIDTH
     : windowWidth;
@@ -110,13 +110,13 @@ export default function usePagePreviewSize(options = {}) {
   const dashboardContainerRef = useRef(document.getElementById(WPBODY_ID));
 
   // BP is contingent on the actual window size
-  const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
+  const [viewportWidth, setViewportWidth] = useState(globalThis.innerWidth);
 
   const [bp, setBp] = useState(getCurrentBp(viewportWidth));
 
   const [availableContainerSpace, setAvailableContainerSpace] = useState(
     getContainerWidth(
-      dashboardContainerRef.current?.offsetWidth || window.innerWidth
+      dashboardContainerRef.current?.offsetWidth || globalThis.innerWidth
     )
   );
 
