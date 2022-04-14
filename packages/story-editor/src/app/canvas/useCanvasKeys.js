@@ -153,15 +153,6 @@ function useCanvasKeys(ref) {
   ]);
 
   useGlobalKeyDownEffect(
-    'esc',
-    () => {
-      clearSelection();
-      clearTransforms();
-    },
-    [clearSelection, clearTransforms]
-  );
-
-  useGlobalKeyDownEffect(
     { key: ['mod+a'] },
     () => {
       const elementIds = currentPage.elements.map(({ id }) => id);
