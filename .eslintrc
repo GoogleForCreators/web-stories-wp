@@ -668,7 +668,9 @@
     {
       "files": [
         "packages/story-editor/src/**/*.js",
-        "packages/dashboard/src/**/*.js"
+        "packages/dashboard/src/**/*.js",
+        "packages/design-system/src/**/*.js",
+        "packages/element-library/src/**/*.js"
       ],
       "rules": {
         "no-restricted-imports": [
@@ -680,6 +682,30 @@
                   "**/*.css"
                 ],
                 "message": "css import is not allowed in story-editor and dashboard"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": [
+        "packages/story-editor/src/**/*.js",
+        "packages/dashboard/src/**/*.js",
+        "packages/design-system/src/**/*.js",
+        "packages/element-library/src/**/*.js"
+      ],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "paths": [
+              {
+                "name": "@googleforcreators/react",
+                "importNames": [
+                  "useLayoutEffect"
+                ],
+                "message": "Please import 'useIsomorphicLayoutEffect' from '@googleforcreators/react' instead."
               }
             ]
           }
