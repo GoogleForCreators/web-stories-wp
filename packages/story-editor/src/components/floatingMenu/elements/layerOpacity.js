@@ -22,7 +22,7 @@ import { __, _x } from '@googleforcreators/i18n';
 import {
   Icons,
   NumericInput,
-  NESTED_FREE_FORM_INPUT_CLASS,
+  CONTEXT_MENU_SKIP_ELEMENT,
 } from '@googleforcreators/design-system';
 import { useRef } from '@googleforcreators/react';
 import { trackEvent } from '@googleforcreators/tracking';
@@ -42,6 +42,8 @@ const Input = styled(NumericInput)`
   width: 82px;
   flex: 0 0 82px;
 `;
+
+const OPACITY_LABEL = __('Opacity in percent', 'web-stories');
 
 function LayerOpacity() {
   const inputRef = useRef();
@@ -64,12 +66,11 @@ function LayerOpacity() {
     });
   };
 
-  const inputLabel = __('Opacity in percent', 'web-stories');
   return (
     <FocusTrapButton
       ref={buttonRef}
       inputRef={inputRef}
-      inputLabel={inputLabel}
+      inputLabel={OPACITY_LABEL}
     >
       <Input
         ref={inputRef}
@@ -77,9 +78,9 @@ function LayerOpacity() {
         suffix={<Icons.ColorDrop />}
         unit={_x('%', 'Percentage', 'web-stories')}
         value={opacity || 0}
-        aria-label={inputLabel}
+        aria-label={OPACITY_LABEL}
         onChange={handleOpacityChange}
-        inputClassName={NESTED_FREE_FORM_INPUT_CLASS}
+        inputClassName={CONTEXT_MENU_SKIP_ELEMENT}
         onKeyDown={(e) => {
           handleReturnTrappedFocus(e, buttonRef);
         }}

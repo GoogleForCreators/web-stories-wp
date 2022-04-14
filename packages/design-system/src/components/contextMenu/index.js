@@ -16,4 +16,4 @@
 export { default as ContextMenu } from './contextMenu';
 export * as ContextMenuComponents from './components';
 export { MenuPropTypes, CONTEXT_MENU_MIN_WIDTH } from './menu';
-export { NESTED_FREE_FORM_INPUT_CLASS } from './constants';
+export { CONTEXT_MENU_SKIP_ELEMENT } from './constants';

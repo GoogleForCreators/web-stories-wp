@@ -23,7 +23,7 @@ import { useCallback, useRef } from '@googleforcreators/react';
 import { trackEvent } from '@googleforcreators/tracking';
 import {
   NumericInput,
-  NESTED_FREE_FORM_INPUT_CLASS,
+  CONTEXT_MENU_SKIP_ELEMENT,
 } from '@googleforcreators/design-system';
 
 /**
@@ -40,13 +40,13 @@ import { MIN_MAX } from '../../panels/design/textStyle/font';
 import { FocusTrapButton, handleReturnTrappedFocus } from './shared';
 
 const Input = styled(NumericInput).attrs({
-  inputClassName: NESTED_FREE_FORM_INPUT_CLASS,
+  inputClassName: CONTEXT_MENU_SKIP_ELEMENT,
 })`
   width: 50px;
   flex: 0 0 50px;
 `;
 
-const fontSizeLabel = __('Font size', 'web-stories');
+const FONT_SIZE_LABEL = __('Font size', 'web-stories');
 
 function FontSize() {
   const inputRef = useRef();
@@ -85,12 +85,12 @@ function FontSize() {
     <FocusTrapButton
       ref={buttonRef}
       inputRef={inputRef}
-      inputLabel={fontSizeLabel}
+      inputLabel={FONT_SIZE_LABEL}
     >
       <Input
         tabIndex={-1}
         ref={inputRef}
-        aria-label={fontSizeLabel}
+        aria-label={FONT_SIZE_LABEL}
         isFloat
         value={fontSize}
         onChange={(evt, value) => pushUpdate({ fontSize: value })}

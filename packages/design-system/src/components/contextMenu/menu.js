@@ -37,7 +37,7 @@ import {
 } from '../../utils';
 import { useKeyDownEffect } from '../keyboard';
 import { useContextMenu } from './contextMenuProvider';
-import { NESTED_FREE_FORM_INPUT_CLASS } from './constants';
+import { CONTEXT_MENU_SKIP_ELEMENT } from './constants';
 
 export const CONTEXT_MENU_MIN_WIDTH = 200;
 const CONTEXT_MENU_MAX_WIDTH = 300;
@@ -98,10 +98,10 @@ function getFocusableChildren({ parent, isSubMenu, wrapperRole = 'menu' }) {
   if (isSubMenu) {
     return allButtons;
   }
-  // Skip considering the submenu, and the submenu items as well as inputs which are focus traps (floating menu/toolbar)
+  // Skip considering the submenu, and the submenu items as well as inputs that are focus traps (floating menu/toolbar)
   return allButtons.filter((elem) => {
     return !elem.matches(
-      `[role="${wrapperRole}"], [role="${wrapperRole}"] [role="menu"] *, .${NESTED_FREE_FORM_INPUT_CLASS}`
+      `[role="${wrapperRole}"], [role="${wrapperRole}"] [role="menu"] *, .${CONTEXT_MENU_SKIP_ELEMENT}`
     );
   });
 }

@@ -20,7 +20,7 @@
 import { __ } from '@googleforcreators/i18n';
 import { useCallback, useRef } from '@googleforcreators/react';
 import { trackEvent } from '@googleforcreators/tracking';
-import { NESTED_FREE_FORM_INPUT_CLASS } from '@googleforcreators/design-system';
+import { CONTEXT_MENU_SKIP_ELEMENT } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -35,7 +35,7 @@ import {
   handleReturnTrappedColorFocus,
 } from './shared';
 
-const colorInputLabel = __('Text color', 'web-stories');
+const TEXT_COLOR_LABEL = __('Text color', 'web-stories');
 
 function TextColor() {
   const inputRef = useRef();
@@ -66,12 +66,12 @@ function TextColor() {
     <FocusTrapButton
       ref={buttonRef}
       inputRef={inputRef}
-      inputLabel={colorInputLabel}
+      inputLabel={TEXT_COLOR_LABEL}
     >
       <Color
         tabIndex={-1}
         ref={inputRef}
-        label={colorInputLabel}
+        label={TEXT_COLOR_LABEL}
         value={color}
         allowsSavedColors
         onChange={handleSetColor}
@@ -79,7 +79,7 @@ function TextColor() {
         hasEyedropper
         allowsOpacity
         allowsGradient={false}
-        className={NESTED_FREE_FORM_INPUT_CLASS}
+        className={CONTEXT_MENU_SKIP_ELEMENT}
         onKeyDown={(e, containerRef) =>
           handleReturnTrappedColorFocus(e, buttonRef, containerRef)
         }

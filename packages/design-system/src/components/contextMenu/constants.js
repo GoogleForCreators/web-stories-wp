@@ -15,4 +15,4 @@
  */
 
 // Some menus have text or numeric inputs that need to be nested in those cases, the nested input needs this class to be excluded from focusable menu content
-export const NESTED_FREE_FORM_INPUT_CLASS = 'nestedFreeFormInput';
+export const CONTEXT_MENU_SKIP_ELEMENT = 'context-menu-skip-element';

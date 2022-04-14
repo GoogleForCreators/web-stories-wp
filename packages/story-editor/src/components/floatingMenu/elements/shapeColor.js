@@ -20,7 +20,7 @@
 import { __ } from '@googleforcreators/i18n';
 import { useCallback, useRef } from '@googleforcreators/react';
 import { trackEvent } from '@googleforcreators/tracking';
-import { NESTED_FREE_FORM_INPUT_CLASS } from '@googleforcreators/design-system';
+import { CONTEXT_MENU_SKIP_ELEMENT } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
@@ -31,7 +31,7 @@ import {
   handleReturnTrappedColorFocus,
 } from './shared';
 
-const shapeColorLabel = __('Shape color', 'web-stories');
+const SHAPE_COLOR_LABEL = __('Shape color', 'web-stories');
 
 function ShapeColor() {
   const inputRef = useRef();
@@ -62,12 +62,12 @@ function ShapeColor() {
     <FocusTrapButton
       ref={buttonRef}
       inputRef={inputRef}
-      inputLabel={shapeColorLabel}
+      inputLabel={SHAPE_COLOR_LABEL}
     >
       <Color
         tabIndex={-1}
         ref={inputRef}
-        label={shapeColorLabel}
+        label={SHAPE_COLOR_LABEL}
         value={backgroundColor}
         allowsSavedColors
         onChange={pushUpdate}
@@ -75,7 +75,7 @@ function ShapeColor() {
         hasEyedropper
         allowsOpacity
         allowsGradient
-        className={NESTED_FREE_FORM_INPUT_CLASS}
+        className={CONTEXT_MENU_SKIP_ELEMENT}
         onKeyDown={(e, containerRef) =>
           handleReturnTrappedColorFocus(e, buttonRef, containerRef)
         }

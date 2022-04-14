@@ -58,8 +58,8 @@ function getHasBorderWidth(border) {
 
 const BLACK = { color: { r: 0, g: 0, b: 0 } };
 
-const widthInputLabel = __('Border width', 'web-stories');
-const colorInputLabel = __('Border color', 'web-stories');
+const WIDTH_LABEL = __('Border width', 'web-stories');
+const COLOR_LABEL = __('Border color', 'web-stories');
 
 function BorderWidthAndColor() {
   const inputRef = useRef();
@@ -136,14 +136,14 @@ function BorderWidthAndColor() {
       <FocusTrapButton
         ref={buttonRef}
         inputRef={inputRef}
-        inputLabel={widthInputLabel}
+        inputLabel={WIDTH_LABEL}
       >
         <Input
           tabIndex={-1}
           ref={inputRef}
           suffix={<Icons.BorderBox />}
           value={border.left || 0}
-          aria-label={widthInputLabel}
+          aria-label={WIDTH_LABEL}
           onChange={(_, value) => handleWidthChange(value)}
           onKeyDown={(e) => {
             handleReturnTrappedFocus(e, buttonRef);
@@ -155,7 +155,7 @@ function BorderWidthAndColor() {
           <Dash />
           <Color
             tabIndex={-1}
-            label={colorInputLabel}
+            label={COLOR_LABEL}
             value={border.color || BLACK}
             onChange={handleColorChange}
             hasInputs={false}
