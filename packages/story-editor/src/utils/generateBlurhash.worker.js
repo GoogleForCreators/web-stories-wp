@@ -35,7 +35,7 @@ const callback = function (event) {
   }
 };
 
-self.onmessage = callback;
+globalThis.onmessage = callback;
 
 // Only needed for Rollup, not webpack v4.
 export default { callback };
