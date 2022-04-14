@@ -111,6 +111,13 @@ function StyleProvider({ children }) {
     state.data.tabs.push(ANIMATION);
   }
 
+  // Reset the tab to Selection if the currently selected tab doesn't exist for the given selection.
+  useEffect(() => {
+    if (!state.data.tabs.find((t) => t.id === tab)) {
+      setTab(SELECTION.id);
+    }
+  }, [state.data.tabs, tab]);
+
   return <Context.Provider value={state}>{children}</Context.Provider>;
 }
 
