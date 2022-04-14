@@ -14,7 +14,8 @@
  * limitations under the License.
  */
 
-const contentBuffer = document.createElement('template');
+const contentBuffer =
+  typeof document !== 'undefined' ? document.createElement('template') : {}; // To handle SSR.
 
 export default function getValidHTML(string) {
   contentBuffer.innerHTML = string;

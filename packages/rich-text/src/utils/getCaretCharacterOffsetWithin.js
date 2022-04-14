@@ -38,8 +38,8 @@
  */
 function getCaretCharacterOffsetWithin(element, clientX, clientY) {
   const doc = element.ownerDocument || element.document;
-  const win = doc.defaultView || doc.parentWindow;
-  if (typeof win.getSelection !== 'undefined') {
+  const win = doc?.defaultView || doc?.parentWindow;
+  if (typeof win?.getSelection !== 'undefined') {
     let range;
     if (clientX && clientY) {
       if (doc.caretPositionFromPoint) {
