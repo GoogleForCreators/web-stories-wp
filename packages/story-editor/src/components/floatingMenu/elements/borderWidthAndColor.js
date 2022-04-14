@@ -139,7 +139,7 @@ function BorderWidthAndColor() {
         inputLabel={widthInputLabel}
       >
         <Input
-          // tabIndex={-1}
+          tabIndex={-1}
           ref={inputRef}
           suffix={<Icons.BorderBox />}
           value={border.left || 0}
@@ -154,7 +154,7 @@ function BorderWidthAndColor() {
         <>
           <Dash />
           <Color
-            // tabIndex={-1}
+            tabIndex={-1}
             label={colorInputLabel}
             value={border.color || BLACK}
             onChange={handleColorChange}
