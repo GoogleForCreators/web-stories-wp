@@ -18,7 +18,7 @@
  * External dependencies
  */
 import {
-  useLayoutEffect,
+  useIsomorphicLayoutEffect,
   useDebouncedCallback,
 } from '@googleforcreators/react';
 
@@ -40,7 +40,7 @@ function usePinchToZoom({ containerRef }) {
 
   const handleZoom = useDebouncedCallback((level) => setZoomLevel(level), 25);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (!containerRef.current) {
       return undefined;
     }

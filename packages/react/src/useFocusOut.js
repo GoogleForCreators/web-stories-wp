@@ -17,10 +17,10 @@
 /**
  * Internal dependencies
  */
-import { useLayoutEffect } from './react';
+import useIsomorphicLayoutEffect from './useIsomorphicLayoutEffect';
 
 function useFocusOut(ref, callback, deps) {
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const node = ref?.current;
     if (!node) {
       return undefined;
@@ -53,7 +53,6 @@ function useFocusOut(ref, callback, deps) {
       node.removeEventListener('focusout', onFocusOut);
       doc.removeEventListener('pointerdown', onDocumentClick, opts);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- Pass through provided deps.
   }, deps || []);
 }
 

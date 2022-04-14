@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { useLayoutEffect } from '@googleforcreators/react';
+import { useIsomorphicLayoutEffect } from '@googleforcreators/react';
 
 function useExpandAnimation({
   sectionRef,
@@ -30,7 +30,7 @@ function useExpandAnimation({
   // Handles expand and contract animation.
   // We calculate the actual height of the categories list, and set its explicit
   // height if it's expanded, in order to have a CSS height transition.
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (!sectionRef.current || !innerContainerRef.current) {
       return;
     }

@@ -19,7 +19,7 @@
 import {
   useCallback,
   useFocusOut,
-  useLayoutEffect,
+  useIsomorphicLayoutEffect,
   useRef,
 } from '@googleforcreators/react';
 import { trackClick, trackEvent } from '@googleforcreators/tracking';
@@ -95,7 +95,7 @@ function LeftRail() {
 
   useFocusOut(leftRailRef, handleSideBarClose, [sideBarVisible]);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (sideBarVisible && leftRailRef.current) {
       leftRailRef.current.focus();
     }

@@ -21,7 +21,7 @@ import styled, { css } from 'styled-components';
 import {
   useRef,
   useCallback,
-  useLayoutEffect,
+  useIsomorphicLayoutEffect,
   useState,
 } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
@@ -231,7 +231,7 @@ function Slider({
 
   const percentageVal = ((value - min) / (max - min)) * 100;
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (ref.current && !widthTracker) {
       const { width } = ref.current.getBoundingClientRect();
       setWidthTracker(width);

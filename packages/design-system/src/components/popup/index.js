@@ -19,7 +19,7 @@
  */
 import styled from 'styled-components';
 import {
-  useLayoutEffect,
+  useIsomorphicLayoutEffect,
   useEffect,
   useCallback,
   useState,
@@ -141,7 +141,7 @@ function Popup({
     }
   }, [popupState?.height, positionPopup]);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (!isOpen) {
       return undefined;
     }
@@ -155,7 +155,7 @@ function Popup({
     };
   }, [isOpen, positionPopup]);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (!isMounted.current) {
       return;
     }

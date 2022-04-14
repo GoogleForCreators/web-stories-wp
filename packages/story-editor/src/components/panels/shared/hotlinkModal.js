@@ -25,7 +25,7 @@ import {
   useCallback,
   useRef,
   useState,
-  useLayoutEffect,
+  useIsomorphicLayoutEffect,
 } from '@googleforcreators/react';
 import { trackError, trackEvent } from '@googleforcreators/tracking';
 import { withProtocol } from '@googleforcreators/url';
@@ -78,7 +78,7 @@ function HotlinkModal({
     );
   }
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     // Wait one tick to ensure the input has been loaded.
     const timeout = setTimeout(() => {
       if (isOpen && inputRef.current) {

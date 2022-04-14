@@ -22,7 +22,7 @@ import { v4 as uuidv4 } from 'uuid';
 import {
   useEffect,
   useRef,
-  useLayoutEffect,
+  useIsomorphicLayoutEffect,
   useState,
 } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
@@ -97,7 +97,7 @@ function ShortcutMenu() {
   );
 
   const [bottomOffset, setBottomOffset] = useState(0);
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const node = containerRef.current;
     if (!node) {
       return undefined;

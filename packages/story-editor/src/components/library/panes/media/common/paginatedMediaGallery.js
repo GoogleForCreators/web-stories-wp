@@ -21,7 +21,7 @@ import PropTypes from 'prop-types';
 import {
   useCallback,
   useEffect,
-  useLayoutEffect,
+  useIsomorphicLayoutEffect,
   useRef,
   useState,
   useDebouncedCallback,
@@ -130,7 +130,7 @@ function PaginatedMediaGallery({
 
   // After loading a next page, see if we need to load another,
   // ie. when the page of results isn't full.
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     async function loadNextPageIfNeededAfterGalleryRendering() {
       // Wait for <Gallery> to finish its render layout cycles first.
       await sleep(200);

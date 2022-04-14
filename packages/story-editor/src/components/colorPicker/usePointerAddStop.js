@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useLayoutEffect, useState } from '@googleforcreators/react';
+import { useIsomorphicLayoutEffect, useState } from '@googleforcreators/react';
 
 /**
  * Internal dependencies
@@ -27,7 +27,7 @@ import { getPageX } from './utils';
 
 function usePointerAddStop(ref, onAdd) {
   const [tempPointerPosition, setTempPointerPosition] = useState(null);
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const node = ref.current;
 
     const nodeLeftEdge = node.getBoundingClientRect().left;

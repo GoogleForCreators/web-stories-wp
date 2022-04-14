@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useLayoutEffect, useRef } from '@googleforcreators/react';
+import { useIsomorphicLayoutEffect, useRef } from '@googleforcreators/react';
 
 /**
  * Internal dependencies
@@ -27,7 +27,7 @@ import { getPageX, setPointerCapture, releasePointerCapture } from './utils';
 
 function usePointerMoveStop(ref, onMove) {
   const lastPageX = useRef(null);
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const node = ref.current;
     const onPointerMove = (evt) => {
       const relativeDeltaX = getPageX(evt) - lastPageX.current;

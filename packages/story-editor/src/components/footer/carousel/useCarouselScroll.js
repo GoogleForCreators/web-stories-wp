@@ -22,7 +22,7 @@ import {
   useRef,
   useState,
   useEffect,
-  useLayoutEffect,
+  useIsomorphicLayoutEffect,
 } from '@googleforcreators/react';
 
 /**
@@ -87,7 +87,7 @@ function useCarouselScroll({
 
   // This effects handles setting the scroll ratio, which is need to
   // enable and disable the scroll arrows correctly.
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (!hasOverflow || !listElement) {
       return undefined;
     }
@@ -121,7 +121,7 @@ function useCarouselScroll({
   // Note that it doesn't run just because the current page is updated (some element
   // added or removed to page). Only when the actual index for the current page is updated
   // (because a page is added or deleted or user navigate to another page), this runs.
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (!hasOverflow || !listElement) {
       return undefined;
     }

@@ -20,7 +20,7 @@
 import styled from 'styled-components';
 import {
   useEffect,
-  useLayoutEffect,
+  useIsomorphicLayoutEffect,
   useRef,
   useCallback,
   useMemo,
@@ -225,7 +225,7 @@ function TextEdit({
   };
 
   // Set focus when initially rendered.
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (editorRef.current) {
       editorRef.current.focus();
     }

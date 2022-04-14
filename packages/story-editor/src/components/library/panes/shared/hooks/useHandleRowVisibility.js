@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { useLayoutEffect } from '@googleforcreators/react';
+import { useIsomorphicLayoutEffect } from '@googleforcreators/react';
 
 function useHandleRowVisibility({
   innerContainerRef,
@@ -27,7 +27,7 @@ function useHandleRowVisibility({
   offsetSpacing = 0,
 }) {
   // Handles setting which row will be seen, by manipulating translateY.
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (!innerContainerRef.current) {
       return;
     }
@@ -49,7 +49,7 @@ function useHandleRowVisibility({
   ]);
 
   // Handles fading rows in and out depending on the selected item.
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (!innerContainerRef.current) {
       return;
     }

@@ -21,7 +21,7 @@ import styled from 'styled-components';
 import { sprintf, __ } from '@googleforcreators/i18n';
 import {
   useCallback,
-  useLayoutEffect,
+  useIsomorphicLayoutEffect,
   useRef,
   useState,
   memo,
@@ -173,7 +173,7 @@ function FrameElement({ id }) {
 
   const getBox = useUnits(({ actions }) => actions.getBox);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     setNodeForElement(id, elementRef.current);
   }, [id, setNodeForElement]);
   const box = getBox(element);

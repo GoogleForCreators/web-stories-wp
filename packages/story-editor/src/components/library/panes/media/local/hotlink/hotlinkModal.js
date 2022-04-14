@@ -23,7 +23,7 @@ import { Input } from '@googleforcreators/design-system';
 import {
   useState,
   useRef,
-  useLayoutEffect,
+  useIsomorphicLayoutEffect,
   useCallback,
   useMemo,
 } from '@googleforcreators/react';
@@ -68,7 +68,7 @@ function HotlinkModal({ isOpen, onClose }) {
       allowedMimeTypes.map((type) => getExtensionsFromMimeType(type)).flat(),
     [allowedMimeTypes]
   );
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     // Wait one tick to ensure the input has been loaded.
     const timeout = setTimeout(() => {
       if (isOpen && inputRef.current) {

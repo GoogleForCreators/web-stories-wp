@@ -19,7 +19,7 @@
  */
 import {
   forwardRef,
-  useLayoutEffect,
+  useIsomorphicLayoutEffect,
   useCallback,
   memo,
 } from '@googleforcreators/react';
@@ -64,7 +64,7 @@ const FloatingMenu = memo(
       speak(FLOATING_MENU_MESSAGE);
     }, [speak]);
 
-    useLayoutEffect(() => {
+    useIsomorphicLayoutEffect(() => {
       const node = ref.current;
       const updateSize = () => {
         node.style.width = '';

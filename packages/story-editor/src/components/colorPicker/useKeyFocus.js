@@ -17,7 +17,11 @@
 /**
  * External dependencies
  */
-import { useLayoutEffect, createRef, useMemo } from '@googleforcreators/react';
+import {
+  useIsomorphicLayoutEffect,
+  createRef,
+  useMemo,
+} from '@googleforcreators/react';
 
 function useKeyFocus(ref, stops, currentStopIndex) {
   const numStops = stops.length;
@@ -26,7 +30,7 @@ function useKeyFocus(ref, stops, currentStopIndex) {
     () => Array.from({ length: numStops }).map(createRef),
     [numStops]
   );
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (ref.current.contains(document.activeElement)) {
       stopRefs[currentStopIndex].current.focus();
     }

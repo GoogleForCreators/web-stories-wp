@@ -22,7 +22,7 @@ import {
   useRef,
   useState,
   useCallback,
-  useLayoutEffect,
+  useIsomorphicLayoutEffect,
   useFocusOut,
   forwardRef,
   memo,
@@ -142,7 +142,7 @@ const OptionList = forwardRef(function OptionList(
   );
 
   // Observe rendered font options
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const renderedOptions = optionsRef.current;
     if (onObserve) {
       renderedOptions.forEach((option) => option && observer.observe(option));

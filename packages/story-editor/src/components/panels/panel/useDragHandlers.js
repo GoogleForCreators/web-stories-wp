@@ -21,7 +21,7 @@ import {
   useRef,
   useState,
   useCallback,
-  useLayoutEffect,
+  useIsomorphicLayoutEffect,
 } from '@googleforcreators/react';
 
 function useDragHandlers(handle, onDrag, onDragEnd) {
@@ -41,7 +41,7 @@ function useDragHandlers(handle, onDrag, onDragEnd) {
   );
 
   // On pointer up, set dragging as false
-  // - will cause useLayoutEffect to unregister listeners.
+  // - will cause useIsomorphicLayoutEffect to unregister listeners.
   const handlePointerUp = useCallback(
     (evt) => {
       evt.target.releasePointerCapture(evt.pointerId);
@@ -52,7 +52,7 @@ function useDragHandlers(handle, onDrag, onDragEnd) {
   );
 
   // On pointer down, set dragging as true
-  // - will cause useLayoutEffect to register listeners.
+  // - will cause useIsomorphicLayoutEffect to register listeners.
   // Also record the initial vertical pointer position on the page.
   const handlePointerDown = useCallback((evt) => {
     evt.target.setPointerCapture(evt.pointerId);
@@ -63,7 +63,7 @@ function useDragHandlers(handle, onDrag, onDragEnd) {
   // On initial render *and* every time `isDragging` changes value,
   // register all relevant listeners. Note that all listeners registered
   // will be correctly unregistered due to the cleanup function.
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const element = handle.current;
     element.addEventListener('pointerdown', handlePointerDown);
 

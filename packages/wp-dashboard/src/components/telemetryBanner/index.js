@@ -19,7 +19,7 @@
  */
 import styled from 'styled-components';
 import {
-  useLayoutEffect,
+  useIsomorphicLayoutEffect,
   useRef,
   forwardRef,
   useEffect,
@@ -196,7 +196,7 @@ export function TelemetryBannerContainer(props) {
 
   const previousBannerVisible = useRef(bannerVisible);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (
       bannerVisible &&
       previousBannerVisible.current === false &&

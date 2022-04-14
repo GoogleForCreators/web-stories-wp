@@ -26,7 +26,7 @@ import {
 import { __ } from '@googleforcreators/i18n';
 import {
   useCallback,
-  useLayoutEffect,
+  useIsomorphicLayoutEffect,
   useRef,
   useState,
 } from '@googleforcreators/react';
@@ -70,7 +70,7 @@ function SavedTemplates({ pageSize, loadTemplates, isLoading, ...rest }) {
 
   // This is a workaround to force re-rendering for the virtual list to work and the parentRef being assigned correctly.
   // @todo Look into why does the ref not work as expected otherwise.
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     setShowDialog(false);
   }, []);
 

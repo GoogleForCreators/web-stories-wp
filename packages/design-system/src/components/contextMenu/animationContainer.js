@@ -19,7 +19,7 @@
 import PropTypes from 'prop-types';
 import {
   useEffect,
-  useLayoutEffect,
+  useIsomorphicLayoutEffect,
   useRef,
   useState,
 } from '@googleforcreators/react';
@@ -215,7 +215,7 @@ function AnimationContainer({ children, isOpen, ...props }) {
   const menuPositionRef = useRef(null);
   const menuTogglePositionRef = useRef(null);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (!isOpen) {
       setAlign(null);
       return;

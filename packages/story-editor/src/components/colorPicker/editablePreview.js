@@ -23,7 +23,7 @@ import {
   useCallback,
   useMemo,
   useRef,
-  useLayoutEffect,
+  useIsomorphicLayoutEffect,
   useState,
   lazy,
   Suspense,
@@ -104,7 +104,7 @@ function EditablePreview({ label, value, width, format, onChange }) {
     }
   };
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     // Wait one tick to ensure the input has been loaded.
     const timeout = setTimeout(() => {
       if (isEditing && editableRef.current) {
