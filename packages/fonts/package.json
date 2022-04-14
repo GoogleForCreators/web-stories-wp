@@ -26,7 +26,6 @@
     "node": ">= 12 || >= 14 || >= 16",
     "npm": ">= 7.3"
   },
-  "type": "module",
   "customExports": {
     "./fonts.json": {
       "default": "./src/fonts.json"
