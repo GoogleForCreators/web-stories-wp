@@ -32,3 +32,4 @@ export { default as useUnmount } from './useUnmount';
 export { default as useWhyDidYouUpdate } from './useWhyDidYouUpdate';
 export { default as useInitializedValue } from './useInitializedValue';
 export { default as shallowEqual } from './shallowEqual';
+export { default as useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
