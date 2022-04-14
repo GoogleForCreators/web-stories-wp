@@ -105,9 +105,11 @@ const getContainerWidth = (windowWidth) => {
 
 export default function usePagePreviewSize(options = {}) {
   const { thumbnailMode = false, isGrid } = options;
+  const container =
+    typeof document !== 'undefined' ? document.getElementById(WPBODY_ID) : null;
   // When the dashboard is pulled out of wordpress this id will need to be updated.
   // For now, we need to grab wordpress instead because of how the app's rendered
-  const dashboardContainerRef = useRef(document.getElementById(WPBODY_ID));
+  const dashboardContainerRef = useRef(container);
 
   // BP is contingent on the actual window size
   const [viewportWidth, setViewportWidth] = useState(globalThis.innerWidth);
