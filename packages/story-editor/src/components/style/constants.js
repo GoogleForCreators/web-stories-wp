@@ -34,26 +34,27 @@
  * External dependencies
  */
 import { __ } from '@googleforcreators/i18n';
-import { Icons } from '@googleforcreators/design-system';
+import { STYLE_PANE_IDS } from '@googleforcreators/design-system';
 
-export const STYLE_PANE_IDS = {
-  SELECTION: 'selection',
-  LINK: 'link',
-  ANIMATION: 'animation',
-};
+/**
+ * Internal dependencies
+ */
+import SelectionIcon from './selectionIcon';
+import LinkIcon from './linkIcon';
+import AnimationIcon from './animationIcon';
 
 export const SELECTION = {
   id: STYLE_PANE_IDS.SELECTION,
-  icon: Icons.Box4,
+  icon: SelectionIcon,
   tooltip: __('Selection', 'web-stories'),
 };
 export const LINK = {
   id: STYLE_PANE_IDS.LINK,
-  icon: Icons.Link,
+  icon: LinkIcon,
   tooltip: __('Link', 'web-stories'),
 };
 export const ANIMATION = {
   id: STYLE_PANE_IDS.ANIMATION,
-  icon: Icons.CircleSpeed,
+  icon: AnimationIcon,
   tooltip: __('Animation', 'web-stories'),
 };

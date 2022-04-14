@@ -24,6 +24,7 @@ import { PanelSections } from '@googleforcreators/design-system';
  * Internal dependencies
  */
 import { Pane, getTabId } from '../library/panes/shared';
+import paneId from '../library/panes/media/local/paneId';
 import useStyle from './useStyle';
 import { SELECTION, LINK, ANIMATION } from './constants';
 import DesignPanel from './designPanel';
@@ -38,8 +39,8 @@ function StylePanes() {
     useDesignPanels();
 
   const getPanelsByType = useCallback(
-    (types) => {
-      return panels
+    (types, paneProps) => {
+      const panelsList = panels
         .filter(({ type }) => types.includes(type))
         .map(({ Panel, type }) => (
           <DesignPanel
@@ -49,6 +50,11 @@ function StylePanes() {
             {...panelProperties}
           />
         ));
+      return (
+        <Pane id={paneId} {...paneProps}>
+          {panelsList}
+        </Pane>
+      );
     },
     [panels, createSubmitHandlerForPanel, panelProperties]
   );
@@ -67,11 +73,11 @@ function StylePanes() {
 
     switch (id) {
       case SELECTION.id:
-        return getPanelsByType(PanelSections[id]);
+        return getPanelsByType(PanelSections[id], paneProps);
       case LINK.id:
-        return getPanelsByType(PanelSections[id]);
+        return getPanelsByType(PanelSections[id], paneProps);
       case ANIMATION.id:
-        return getPanelsByType(PanelSections[id]);
+        return getPanelsByType(PanelSections[id], paneProps);
       default:
         return null;
     }

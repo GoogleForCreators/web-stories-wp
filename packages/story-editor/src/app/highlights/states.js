@@ -13,12 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * External dependencies
+ */
+import { STYLE_PANE_IDS } from '@googleforcreators/design-system';
+
 /**
  * Internal dependencies
  */
 import { INSERT, DOCUMENT, STYLE } from '../../components/sidebar';
 import { PANE_IDS } from '../../components/library/paneIds';
-import { STYLE_PANE_IDS } from '../../components/style/constants';
 
 /**
  * Highlight state object

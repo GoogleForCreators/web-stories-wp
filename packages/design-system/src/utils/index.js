@@ -26,5 +26,6 @@ export { default as objectWithout } from './objectWithout';
 export { default as getKeyboardMovement } from './getKeyboardMovement';
 export { default as PanelTypes } from './panelTypes';
 export { default as PanelSections } from './panelSections';
+export { STYLE_PANE_IDS } from './panelSections';
 export * from './constants';
 export * from './directions';

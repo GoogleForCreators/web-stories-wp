@@ -19,7 +19,6 @@
  */
 import PropTypes from 'prop-types';
 import { useState, useRef, useEffect, useMemo } from '@googleforcreators/react';
-import { Icons } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -28,6 +27,11 @@ import { useStory } from '../../app/story';
 import { useHighlights } from '../../app/highlights';
 import { SELECTION, LINK, ANIMATION } from './constants';
 import Context from './context';
+import TextSelectionIcon from './textSelectionIcon';
+import ImageSelectionIcon from './imageSelectionIcon';
+import VideoSelectionIcon from './videoSelectionIcon';
+import ShapeSelectionIcon from './shapeSelectionIcon';
+import MultiSelectionIcon from './multiSelectionIcon';
 
 const STYLE_TAB_IDS = new Set([SELECTION.id, LINK.id, ANIMATION.id]);
 
@@ -62,23 +66,23 @@ function StyleProvider({ children }) {
     []
   );
 
-  let selectionIcon = Icons.Dots;
+  let selectionIcon = MultiSelectionIcon;
   const icons = [...new Set(selectedElements.map(({ type }) => type))];
   if (icons.length === 1) {
     if (icons[0] === 'text') {
-      selectionIcon = Icons.LetterT;
+      selectionIcon = TextSelectionIcon;
     }
     if (icons[0] === 'image' || selectedElements[0].isBackground) {
-      selectionIcon = Icons.Picture;
+      selectionIcon = ImageSelectionIcon;
     }
     if (icons[0] === 'video') {
-      selectionIcon = Icons.Video;
+      selectionIcon = VideoSelectionIcon;
     }
     if (icons[0] === 'shape' || icons[0] === 'sticker') {
-      selectionIcon = Icons.Shapes;
+      selectionIcon = ShapeSelectionIcon;
     }
   } else {
-    selectionIcon = Icons.Dots;
+    selectionIcon = MultiSelectionIcon;
   }
 
   const state = {

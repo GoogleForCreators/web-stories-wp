@@ -15,22 +15,13 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import PanelTypes from './panelTypes';
+import { __ } from '@googleforcreators/i18n';
+import { Icons } from '@googleforcreators/design-system';
 
-export const STYLE_PANE_IDS = {
-  SELECTION: 'selection',
-  LINK: 'link',
-  ANIMATION: 'animation',
-};
+function ImageSelectionIcon() {
+  return <Icons.Picture title={__('Image selection', 'web-stories')} />;
+}
 
-const { LINK, ANIMATION, ...panelsExcludingLinkAndAnimation } = PanelTypes;
-
-const PanelSections = {
-  [STYLE_PANE_IDS.SELECTION]: Object.values(panelsExcludingLinkAndAnimation),
-  [STYLE_PANE_IDS.LINK]: [LINK],
-  [STYLE_PANE_IDS.ANIMATION]: [ANIMATION],
-};
-
-export default PanelSections;
+export default ImageSelectionIcon;
