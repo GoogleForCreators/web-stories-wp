@@ -50,7 +50,6 @@ const FloatingColor = forwardRef(function FloatingColor(props, ref) {
       maxHeight={PICKER_MAX_HEIGHT}
       pickerPlacement={PLACEMENT.TOP_START}
       isInDesignMenu
-      // shouldCloseOnSelection enabling this will lose focus should the user be navigating via keyboard
       allowsGradient={allowsGradient}
       allowsSavedColors
       allowsSavedColorDeletion={false}
