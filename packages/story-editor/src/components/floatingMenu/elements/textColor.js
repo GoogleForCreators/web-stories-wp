@@ -18,8 +18,9 @@
  * External dependencies
  */
 import { __ } from '@googleforcreators/i18n';
-import { useCallback } from '@googleforcreators/react';
+import { useCallback, useRef } from '@googleforcreators/react';
 import { trackEvent } from '@googleforcreators/tracking';
+import { NESTED_FREE_FORM_INPUT_CLASS } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -27,9 +28,18 @@ import { trackEvent } from '@googleforcreators/tracking';
 import useRichTextFormatting from '../../panels/design/textStyle/useRichTextFormatting';
 import updateProperties from '../../style/updateProperties';
 import { useStory } from '../../../app';
-import { Color, useProperties } from './shared';
+import {
+  Color,
+  useProperties,
+  FocusTrapButton,
+  handleReturnTrappedColorFocus,
+} from './shared';
+
+const colorInputLabel = __('Text color', 'web-stories');
 
 function TextColor() {
+  const inputRef = useRef();
+  const buttonRef = useRef();
   const { content } = useProperties(['content']);
   const updateSelectedElements = useStory(
     (state) => state.actions.updateSelectedElements
@@ -53,17 +63,28 @@ function TextColor() {
   } = useRichTextFormatting([{ content, type: 'text' }], pushUpdate);
 
   return (
-    <Color
-      tabIndex={-1}
-      label={__('Text color', 'web-stories')}
-      value={color}
-      allowsSavedColors
-      onChange={handleSetColor}
-      hasInputs={false}
-      hasEyedropper
-      allowsOpacity
-      allowsGradient={false}
-    />
+    <FocusTrapButton
+      ref={buttonRef}
+      inputRef={inputRef}
+      inputLabel={colorInputLabel}
+    >
+      <Color
+        tabIndex={-1}
+        ref={inputRef}
+        label={colorInputLabel}
+        value={color}
+        allowsSavedColors
+        onChange={handleSetColor}
+        hasInputs={false}
+        hasEyedropper
+        allowsOpacity
+        allowsGradient={false}
+        className={NESTED_FREE_FORM_INPUT_CLASS}
+        onKeyDown={(e, containerRef) =>
+          handleReturnTrappedColorFocus(e, buttonRef, containerRef)
+        }
+      />
+    </FocusTrapButton>
   );
 }
 

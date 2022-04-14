@@ -20,6 +20,7 @@
 import { PLACEMENT } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 import PropTypes from 'prop-types';
+import { forwardRef } from '@googleforcreators/react';
 
 /**
  * Internal dependencies
@@ -39,11 +40,12 @@ function getWidth(hasInputs, hasEyedropper) {
   );
 }
 
-function FloatingColor(props) {
+const FloatingColor = forwardRef(function FloatingColor(props, ref) {
   const { hasInputs, hasEyedropper, allowsGradient = true } = props;
   const width = getWidth(hasInputs, hasEyedropper);
   return (
     <Color
+      ref={ref}
       width={width}
       maxHeight={PICKER_MAX_HEIGHT}
       pickerPlacement={PLACEMENT.TOP_START}
@@ -57,7 +59,7 @@ function FloatingColor(props) {
       {...props}
     />
   );
-}
+});
 
 FloatingColor.propTypes = {
   hasInputs: PropTypes.bool,

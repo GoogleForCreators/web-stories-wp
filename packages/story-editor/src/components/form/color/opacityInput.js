@@ -23,6 +23,7 @@ import PropTypes from 'prop-types';
 import { _x, __ } from '@googleforcreators/i18n';
 import { PatternPropType } from '@googleforcreators/patterns';
 import { NumericInput, Icons } from '@googleforcreators/design-system';
+import { v4 as uuidv4 } from 'uuid';
 
 /**
  * Internal dependencies
@@ -80,6 +81,7 @@ function OpacityInput({ value, onChange, isInDesignMenu, ...props }) {
       allowEmpty={false}
       isFloat={false}
       containerStyleOverride={containerStyle}
+      id={uuidv4()}
       {...props}
     />
   );

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { forwardRef, useCallback } from '@googleforcreators/react';
+import { forwardRef, useCallback, useRef } from '@googleforcreators/react';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { __, sprintf } from '@googleforcreators/i18n';
@@ -31,6 +31,7 @@ import {
   PLACEMENT,
   TOOLTIP_PLACEMENT,
 } from '@googleforcreators/design-system';
+import { v4 as uuidv4 } from 'uuid';
 
 /**
  * Internal dependencies
@@ -110,12 +111,20 @@ const Color = forwardRef(function Color(
     hasInputs = true,
     width,
     tabIndex,
+    onKeyDown,
+    className,
   },
   ref
 ) {
+  const containerRef = useRef();
   const handleOpacityChange = useCallback(
     (newOpacity) => onChange(applyOpacityChange(value, newOpacity)),
     [value, onChange]
+  );
+  // For floating menu color inputs we need to see into the keydown event to escape the color input and return keyboard navigation to menu
+  const handleKeyDown = useCallback(
+    (e) => onKeyDown(e, containerRef),
+    [onKeyDown]
   );
 
   const containerLabel = sprintf(
@@ -147,6 +156,7 @@ const Color = forwardRef(function Color(
       aria-label={containerLabel}
       isInDesignMenu={isInDesignMenu}
       width={!ignoreSetWidth && width ? width : null}
+      ref={containerRef}
     >
       {hasEyedropper && (
         <Tooltip
@@ -159,10 +169,13 @@ const Color = forwardRef(function Color(
           }
         >
           <EyeDropperButton
+            id={uuidv4()}
             tabIndex={tabIndex}
+            className={className}
             aria-label={tooltip}
             onClick={initEyedropper()}
             onPointerEnter={initEyedropper(false)}
+            {...(onKeyDown && { onKeyDown: handleKeyDown })}
           >
             <Icons.Pipette />
           </EyeDropperButton>
@@ -174,7 +187,9 @@ const Color = forwardRef(function Color(
           <ColorInput
             ref={ref}
             tabIndex={tabIndex}
+            className={className}
             onChange={onChange}
+            {...(onKeyDown && { onKeyDown: handleKeyDown })}
             value={value}
             label={label}
             changedStyle={changedStyle}
@@ -202,8 +217,10 @@ const Color = forwardRef(function Color(
             <OpacityWrapper isInDesignMenu={isInDesignMenu}>
               <OpacityInput
                 tabIndex={tabIndex}
+                inputClassName={className}
                 value={value}
                 onChange={handleOpacityChange}
+                {...(onKeyDown && { onKeyDown: handleKeyDown })}
                 isInDesignMenu={isInDesignMenu}
               />
             </OpacityWrapper>

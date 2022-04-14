@@ -18,16 +18,25 @@
  * External dependencies
  */
 import { __ } from '@googleforcreators/i18n';
-import { useCallback } from '@googleforcreators/react';
+import { useCallback, useRef } from '@googleforcreators/react';
 import { trackEvent } from '@googleforcreators/tracking';
-
+import { NESTED_FREE_FORM_INPUT_CLASS } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
 import { useStory } from '../../../app';
-import { Color } from './shared';
+import {
+  Color,
+  FocusTrapButton,
+  handleReturnTrappedColorFocus,
+} from './shared';
+
+const shapeColorLabel = __('Shape color', 'web-stories');
 
 function ShapeColor() {
+  const inputRef = useRef();
+  const buttonRef = useRef();
+
   const { backgroundColor, updateSelectedElements } = useStory(
     ({ state, actions }) => ({
       backgroundColor: state.selectedElements[0].backgroundColor,
@@ -50,17 +59,28 @@ function ShapeColor() {
   );
 
   return (
-    <Color
-      tabIndex={-1}
-      label={__('Shape color', 'web-stories')}
-      value={backgroundColor}
-      allowsSavedColors
-      onChange={pushUpdate}
-      hasInputs
-      hasEyedropper
-      allowsOpacity
-      allowsGradient
-    />
+    <FocusTrapButton
+      ref={buttonRef}
+      inputRef={inputRef}
+      inputLabel={shapeColorLabel}
+    >
+      <Color
+        tabIndex={-1}
+        ref={inputRef}
+        label={shapeColorLabel}
+        value={backgroundColor}
+        allowsSavedColors
+        onChange={pushUpdate}
+        hasInputs
+        hasEyedropper
+        allowsOpacity
+        allowsGradient
+        className={NESTED_FREE_FORM_INPUT_CLASS}
+        onKeyDown={(e, containerRef) =>
+          handleReturnTrappedColorFocus(e, buttonRef, containerRef)
+        }
+      />
+    </FocusTrapButton>
   );
 }
 

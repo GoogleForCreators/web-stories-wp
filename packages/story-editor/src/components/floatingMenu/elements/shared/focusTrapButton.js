@@ -20,7 +20,11 @@
 
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Button, BUTTON_TYPES } from '@googleforcreators/design-system';
+import {
+  Button,
+  BUTTON_TYPES,
+  FOCUSABLE_SELECTORS,
+} from '@googleforcreators/design-system';
 import { forwardRef } from '@googleforcreators/react';
 import { __, sprintf } from '@googleforcreators/i18n';
 import { v4 as uuidv4 } from 'uuid';
@@ -46,6 +50,29 @@ export const handleReturnTrappedFocus = (e, buttonRef) => {
   }
 };
 
+export const handleReturnTrappedColorFocus = (e, buttonRef, containerRef) => {
+  if (e.key === 'Tab') {
+    // find focusable content in container, only pass if the active element is the last focusable element in the container.
+    const allFocusableChildren = Array.from(
+      containerRef.current.querySelectorAll(FOCUSABLE_SELECTORS.join(', '))
+    );
+    const prevIndex = allFocusableChildren.findIndex(
+      (element) => element.id === e.target.id
+    );
+    // The variant of the color input that text and shapes use focuses index 1 initially, so it wraps around to index 0 last. When 0 index is hit, we want to use the next tab to exit this trap and reenter the rest of the floating menu nav
+    if (prevIndex === 0) {
+      handleReturnTrappedFocus(e, buttonRef);
+    } else {
+      const nextIndex =
+        prevIndex + 1 < allFocusableChildren.length ? prevIndex + 1 : 0;
+
+      allFocusableChildren[nextIndex].focus();
+    }
+  } else {
+    e.stopPropagation();
+  }
+};
+
 const FocusTrapButton = forwardRef(function FocusTrapButton(
   { inputRef, inputLabel, children },
   ref
@@ -53,7 +80,7 @@ const FocusTrapButton = forwardRef(function FocusTrapButton(
   return (
     <_FocusTrapButton
       id={uuidv4()}
-      // tabIndex={-1}
+      tabIndex={-1}
       ref={ref}
       onClick={(e) => {
         e.stopPropagation();
