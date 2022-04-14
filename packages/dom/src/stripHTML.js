@@ -14,7 +14,8 @@
  * limitations under the License.
  */
 
-const buffer = document.createElement('div');
+const buffer =
+  typeof document !== 'undefined' ? document.createElement('div') : {};
 
 export default function stripHTML(string) {
   // @todo: implement a cheaper way to strip markup.
