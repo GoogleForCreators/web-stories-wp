@@ -277,7 +277,11 @@ const Menu = forwardRef(
         // Tabbing out from the list while using 'shift' would
         // focus the list element. Should just travel back to the previous
         // focusable element in the DOM
-        tabIndex={menuRef.current?.contains(document.activeElement) ? -1 : 0}
+        tabIndex={
+          menuRef.current?.contains(globalThis?.document?.activeElement)
+            ? -1
+            : 0
+        }
         onFocus={handleFocus}
         {...props}
       >

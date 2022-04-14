@@ -59,7 +59,8 @@ const globalRef = createRef();
 
 function setGlobalRef() {
   if (!globalRef.current) {
-    globalRef.current = document.documentElement;
+    globalRef.current =
+      typeof document !== 'undefined' ? document.documentElement : null;
   }
 }
 
