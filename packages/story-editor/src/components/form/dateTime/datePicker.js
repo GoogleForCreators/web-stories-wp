@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import 'react-calendar/dist/Calendar.css';
 import {
   useRef,
   useCallback,
