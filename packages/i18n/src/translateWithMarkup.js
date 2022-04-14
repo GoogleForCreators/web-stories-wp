@@ -120,8 +120,10 @@ function TranslateWithMarkup({ mapping = {}, children }) {
     );
   }
 
-  const node = new DOMParser().parseFromString(children, 'text/html').body
-    .firstChild;
+  const node =
+    typeof window !== 'undefined'
+      ? new DOMParser().parseFromString(children, 'text/html').body.firstChild
+      : null;
   return node
     ? transform(
         node,
