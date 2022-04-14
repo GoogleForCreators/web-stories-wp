@@ -109,7 +109,12 @@ export const ImageCapture = ({ videoRef, onCapture, onClear }) => {
 };
 
 ImageCapture.propTypes = {
-  videoRef: PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+  videoRef: PropTypes.shape({
+    current:
+      typeof Element !== 'undefined'
+        ? PropTypes.instanceOf(Element)
+        : PropTypes.any,
+  }), // To handle SSR
   onCapture: PropTypes.func.isRequired,
   onClear: PropTypes.oneOfType([PropTypes.func], null),
 };

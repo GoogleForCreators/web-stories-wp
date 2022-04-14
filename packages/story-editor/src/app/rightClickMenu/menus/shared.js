@@ -38,6 +38,11 @@ export const SUB_MENU_ARIA_LABEL = __('Select a layer', 'web-stories');
 export const MenuPropType = {
   parentMenuRef: PropTypes.oneOfType([
     PropTypes.func,
-    PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+    PropTypes.shape({
+      current:
+        typeof Element !== 'undefined'
+          ? PropTypes.instanceOf(Element)
+          : PropTypes.any,
+    }), // To handle in SSR.
   ]).isRequired,
 };

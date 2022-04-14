@@ -317,7 +317,12 @@ TabView.propTypes = {
   tabs: PropTypes.array.isRequired,
   tab: PropTypes.string.isRequired,
   tabRefs: PropTypes.objectOf(
-    PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+    PropTypes.shape({
+      current:
+        typeof Element !== 'undefined'
+          ? PropTypes.instanceOf(Element)
+          : PropTypes.any,
+    }) // To handle SSR
   ),
   label: PropTypes.string,
   shortcut: PropTypes.string,

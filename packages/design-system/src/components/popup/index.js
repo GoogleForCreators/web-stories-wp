@@ -190,9 +190,18 @@ function Popup({
 
 Popup.propTypes = {
   isRTL: PropTypes.bool,
-  anchor: PropTypes.shape({ current: PropTypes.instanceOf(Element) })
-    .isRequired,
-  dock: PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+  anchor: PropTypes.shape({
+    current:
+      typeof Element !== 'undefined'
+        ? PropTypes.instanceOf(Element)
+        : PropTypes.any,
+  }).isRequired,
+  dock: PropTypes.shape({
+    current:
+      typeof Element !== 'undefined'
+        ? PropTypes.instanceOf(Element)
+        : PropTypes.any,
+  }), // To handle SSR
   children: PropTypes.node,
   renderContents: PropTypes.func,
   placement: PropTypes.oneOf(Object.values(PLACEMENT)),
