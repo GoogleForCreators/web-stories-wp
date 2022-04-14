@@ -53,6 +53,7 @@ function useFocusOut(ref, callback, deps) {
       node.removeEventListener('focusout', onFocusOut);
       doc.removeEventListener('pointerdown', onDocumentClick, opts);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- Pass through provided deps.
   }, deps || []);
 }
 

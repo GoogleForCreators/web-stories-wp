@@ -175,6 +175,10 @@
           {
             "test": "useResizeEffect",
             "callbackIndex": 1
+          },
+          {
+            "test": "useIsomorphicLayoutEffect",
+            "callbackIndex": 0
           }
         ]
       }
