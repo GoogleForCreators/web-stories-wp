@@ -165,7 +165,7 @@ function Popup({
   }, [popupState, onPositionUpdate, refCallback]);
 
   useResizeEffect({ current: document.body }, positionPopup, [positionPopup]);
-  return popupState && isOpen
+  return popupState && isOpen && typeof document !== 'undefined'
     ? createPortal(
         <Container
           ref={popup}
