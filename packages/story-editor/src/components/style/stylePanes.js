@@ -19,6 +19,7 @@
  */
 import { useCallback } from '@googleforcreators/react';
 import { PanelSections } from '@googleforcreators/design-system';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
@@ -29,6 +30,12 @@ import useStyle from './useStyle';
 import { SELECTION, LINK, ANIMATION } from './constants';
 import DesignPanel from './designPanel';
 import useDesignPanels from './useDesignPanels';
+
+export const StyledPane = styled(Pane)`
+  height: 100%;
+  padding: 0;
+  overflow: hidden;
+`;
 
 function StylePanes() {
   const { tab, tabs } = useStyle((state) => ({
@@ -51,9 +58,9 @@ function StylePanes() {
           />
         ));
       return (
-        <Pane id={paneId} {...paneProps}>
+        <StyledPane id={paneId} {...paneProps}>
           {panelsList}
-        </Pane>
+        </StyledPane>
       );
     },
     [panels, createSubmitHandlerForPanel, panelProperties]
