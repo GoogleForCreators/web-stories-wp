@@ -123,37 +123,4 @@ describe('useCanvasKeys', function () {
 
     expect(deleteSelectedElements).toHaveBeenCalledWith();
   });
-
-  it('should deselect items when the "Escape" key is pressed.', () => {
-    const clearSelection = jest.fn();
-    const clearTransforms = jest.fn();
-
-    const { container } = render(
-      <TransformContext.Provider
-        value={{
-          actions: { clearTransforms },
-        }}
-      >
-        <StoryContext.Provider
-          value={{
-            state: {
-              currentPage: { elements: [{ id: '123' }] },
-              selectedElements: [{ id: '123' }],
-            },
-            actions: { clearSelection },
-          }}
-        >
-          <Canvas />
-        </StoryContext.Provider>
-      </TransformContext.Provider>
-    );
-
-    fireEvent.keyDown(container, {
-      key: 'Escape',
-      which: 27,
-    });
-
-    expect(clearSelection).toHaveBeenCalledWith();
-    expect(clearTransforms).toHaveBeenCalledWith();
-  });
 });
