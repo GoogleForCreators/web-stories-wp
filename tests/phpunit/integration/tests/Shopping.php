@@ -23,7 +23,7 @@ class Shopping extends TestCase
       ]
     ];
 
-    $this->assertJsonValueEquals($jsonDocument, '$.username', 'mhelmich1');
+    $this->assertJsonValueEquals($jsonDocument, '$.username', 'mhelmich');
     $this->assertJsonValueEquals($jsonDocument, '$.hobbies[*]', 'Open Source Software');
   }
 }
