@@ -88,7 +88,6 @@ describe('Page Attachment', () => {
   const setPageAttachmentLink = async (link) => {
     // Open style pane
     await fixture.events.click(fixture.editor.sidebar.designTab);
-    await fixture.events.click(fixture.editor.sidebar.designPanel.linkSection);
     const input = fixture.screen.getByLabelText(
       'Type an address to add a page attachment link'
     );
@@ -130,7 +129,6 @@ describe('Page Attachment', () => {
     it('it should display warning for a link in the Page Attachment Area', async () => {
       await addElement();
       await moveElementToBottom();
-
       await clickOnTarget(safezone);
       await setPageAttachmentLink('');
       const warning = fixture.screen.getByText(
@@ -158,6 +156,9 @@ describe('Page Attachment', () => {
       await addElement(false);
       await moveElementToBottom();
 
+      await fixture.events.click(
+        fixture.editor.sidebar.designPanel.linkSection
+      );
       const input = fixture.screen.getByLabelText('Element link');
       await fixture.events.click(input);
 

@@ -245,6 +245,9 @@ describe('Quick Actions integration', () => {
 
       // add animation to image
       await fixture.events.click(fixture.editor.sidebar.designTab);
+      await fixture.events.click(
+        fixture.editor.sidebar.designPanel.animationSection
+      );
       const effectChooserToggle =
         fixture.editor.sidebar.designPanel.animation.effectChooser;
 
@@ -272,6 +275,9 @@ describe('Quick Actions integration', () => {
 
       // apply filter
       await fixture.events.click(fixture.editor.sidebar.designTab);
+      await fixture.events.click(
+        fixture.editor.sidebar.designPanel.selectionSection
+      );
       await fixture.events.click(
         fixture.editor.sidebar.designPanel.filters.linear
       );
@@ -419,6 +425,9 @@ describe('Quick Actions integration', () => {
 
       // add animation to shape
       await fixture.events.click(fixture.editor.sidebar.designTab);
+      await fixture.events.click(
+        fixture.editor.sidebar.designPanel.animationSection
+      );
       const effectChooserToggle =
         fixture.editor.sidebar.designPanel.animation.effectChooser;
 
@@ -444,6 +453,9 @@ describe('Quick Actions integration', () => {
       });
 
       // add styles to the shape
+      await fixture.events.click(
+        fixture.editor.sidebar.designPanel.selectionSection
+      );
       await fixture.events.click(
         fixture.editor.sidebar.designPanel.sizePosition.opacity
       );
@@ -598,6 +610,9 @@ describe('Quick Actions integration', () => {
 
       // add animation to background image
       await fixture.events.click(fixture.editor.sidebar.designTab);
+      await fixture.events.click(
+        fixture.editor.sidebar.designPanel.animationSection
+      );
       const effectChooserToggle =
         fixture.editor.sidebar.designPanel.animation.effectChooser;
 
@@ -623,6 +638,9 @@ describe('Quick Actions integration', () => {
       });
 
       // apply filter
+      await fixture.events.click(
+        fixture.editor.sidebar.designPanel.selectionSection
+      );
       await fixture.events.click(
         fixture.editor.sidebar.designPanel.filters.linear
       );
@@ -765,6 +783,9 @@ describe('Quick Actions integration', () => {
 
       // add animation to text
       await fixture.events.click(fixture.editor.sidebar.designTab);
+      await fixture.events.click(
+        fixture.editor.sidebar.designPanel.animationSection
+      );
       const effectChooserToggle =
         fixture.editor.sidebar.designPanel.animation.effectChooser;
 
@@ -976,6 +997,9 @@ describe('Quick Actions integration', () => {
 
       // add animation to video
       await fixture.events.click(fixture.editor.sidebar.designTab);
+      await fixture.events.click(
+        fixture.editor.sidebar.designPanel.animationSection
+      );
       const effectChooserToggle =
         fixture.editor.sidebar.designPanel.animation.effectChooser;
 
@@ -1001,6 +1025,9 @@ describe('Quick Actions integration', () => {
       });
 
       // apply filter
+      await fixture.events.click(
+        fixture.editor.sidebar.designPanel.selectionSection
+      );
       await fixture.events.click(
         fixture.editor.sidebar.designPanel.filters.linear
       );
@@ -1144,6 +1171,9 @@ describe('Quick Actions integration', () => {
 
       // add animation to image
       await fixture.events.click(fixture.editor.sidebar.designTab);
+      await fixture.events.click(
+        fixture.editor.sidebar.designPanel.animationSection
+      );
       const effectChooserToggle =
         fixture.editor.sidebar.designPanel.animation.effectChooser;
 
@@ -1169,6 +1199,9 @@ describe('Quick Actions integration', () => {
       });
 
       // apply opacity
+      await fixture.events.click(
+        fixture.editor.sidebar.designPanel.selectionSection
+      );
       await fixture.events.click(
         fixture.editor.sidebar.designPanel.sizePosition.opacity
       );

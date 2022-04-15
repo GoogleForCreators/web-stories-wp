@@ -359,9 +359,15 @@ describe('Checklist integration', () => {
       name: /^Checklist$/,
     });
     await fixture.events.click(reviewButton);
-    // This is the initial load of the checklist tab so we need to wait for it to load
-    // before we can see tabs.
-    await fixture.events.sleep(300);
+
+    await waitFor(
+      () => {
+        if (!fixture.editor.checklist.issues) {
+          throw new Error('Checklist not visible yet');
+        }
+      },
+      { timeout: 2000 }
+    );
 
     expect(
       fixture.editor.checklist.issues.getAttribute('data-isexpanded')
