@@ -41,7 +41,6 @@ import { Text } from '../typography';
 import { RTL_PLACEMENT, PopupContainer } from '../popup/constants';
 import { getOffset, getTransforms } from '../popup/utils';
 import { noop } from '../../utils';
-// import TooltipPopup from './tooltipPopup';
 import { SvgForTail, Tail, SVG_TOOLTIP_TAIL_ID, TAIL_HEIGHT } from './tail';
 
 const SPACE_BETWEEN_TOOLTIP_AND_ELEMENT = TAIL_HEIGHT;
@@ -189,8 +188,8 @@ function Tooltip({
         dynamicPlacement.startsWith('bottom') &&
         neededVerticalSpace >= window.innerHeight;
 
-      const isOverFlowingLeft = left < leftOffset;
-      const isOverFlowingRight = right > offset.bodyRight - leftOffset;
+      const isOverFlowingLeft = left < (isRTL ? 0 : leftOffset);
+      const isOverFlowingRight = isRTL && right > offset.bodyRight - leftOffset;
 
       if (shouldMoveToTop) {
         if (dynamicPlacement.endsWith('-start')) {
@@ -200,11 +199,26 @@ function Tooltip({
         } else {
           setDynamicPlacement(PLACEMENT.TOP);
         }
-      } else if (isOverFlowingLeft && !isRTL) {
-        setDynamicOffset({
-          x: leftOffset - left,
-        });
-      } else if (isOverFlowingRight && isRTL) {
+      } else if (isOverFlowingLeft) {
+        // We can sometimes render a tooltip too far to the left, ie. in RTL mode.
+        // when that is the case, we can switch to placement-end and the tooltip will no longer get cutoff.
+        if (isRTL) {
+          if (dynamicPlacement.endsWith('-start')) {
+            setDynamicPlacement(dynamicPlacement.replace('-start', '-end'));
+          } else if (dynamicPlacement.startsWith('right')) {
+            setDynamicPlacement(dynamicPlacement.replace('right', 'left'));
+          } else if (
+            dynamicPlacement === PLACEMENT.BOTTOM ||
+            dynamicPlacement === PLACEMENT.TOP
+          ) {
+            setDynamicPlacement(`${dynamicPlacement}-end`);
+          }
+        } else {
+          setDynamicOffset({
+            x: leftOffset - left,
+          });
+        }
+      } else if (isOverFlowingRight) {
         setDynamicOffset({
           x: offset.bodyRight - right - leftOffset,
         });
@@ -284,6 +298,14 @@ function Tooltip({
     };
   }, []);
 
+  useEffect(() => {
+    isPopupMounted.current = true;
+
+    return () => {
+      isPopupMounted.current = false;
+    };
+  }, []);
+
   useLayoutEffect(() => {
     if (!isOpen) {
       return undefined;
@@ -348,7 +370,6 @@ function Tooltip({
               <TooltipContainer
                 className={className}
                 ref={tooltipRef}
-                placement={dynamicPlacement}
                 shown={shown}
               >
                 <TooltipText

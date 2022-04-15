@@ -34,7 +34,6 @@ import {
   BUTTON_TYPES,
   BUTTON_SIZES,
   BUTTON_VARIANTS,
-  Tooltip,
 } from '@googleforcreators/design-system';
 import { getDefinitionForType } from '@googleforcreators/elements';
 
@@ -52,6 +51,7 @@ import {
   TRACKING_EVENTS,
 } from '../../../../constants';
 import usePerformanceTracking from '../../../../utils/usePerformanceTracking';
+import Tooltip from '../../../tooltip';
 import usePresubmitHandlers from './usePresubmitHandlers';
 import { getMultiSelectionMinMaxXY, isNum } from './utils';
 import { MIN_MAX, DEFAULT_FLIP } from './constants';
