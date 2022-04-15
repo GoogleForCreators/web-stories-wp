@@ -88,6 +88,9 @@ describe('Link Panel', () => {
         }
       });
       await fixture.events.click(fixture.editor.sidebar.designTab);
+      await fixture.events.click(
+        fixture.editor.sidebar.designPanel.linkSection
+      );
       linkPanel = fixture.editor.sidebar.designPanel.link;
     });
 
