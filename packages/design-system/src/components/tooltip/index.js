@@ -31,12 +31,13 @@ import {
 /**
  * Internal dependencies
  */
-import { Popup, PLACEMENT } from '../popup';
+import { PLACEMENT } from '../popup';
 import { prettifyShortcut } from '../keyboard';
 import { THEME_CONSTANTS } from '../../theme';
 import { Text } from '../typography';
 import { RTL_PLACEMENT } from '../popup/constants';
 import { noop } from '../../utils';
+import TooltipPopup from './tooltipPopup';
 import { SvgForTail, Tail, SVG_TOOLTIP_TAIL_ID, TAIL_HEIGHT } from './tail';
 
 const SPACE_BETWEEN_TOOLTIP_AND_ELEMENT = TAIL_HEIGHT;
@@ -44,6 +45,8 @@ const SPACE_BETWEEN_TOOLTIP_AND_ELEMENT = TAIL_HEIGHT;
 const DELAY_MS = 1000;
 // For how many milliseconds will triggering another delayed tooltip show instantly?
 const REPEAT_DELAYED_MS = 500;
+// To account for the wp-admin sidenav
+const DEFAULT_LEFT_OFFSET = 0;
 
 const Wrapper = styled.div`
   position: relative;
@@ -60,6 +63,7 @@ const TooltipContainer = styled.div`
   transition: 0.4s opacity;
   opacity: ${({ shown }) => (shown ? 1 : 0)};
   pointer-events: ${({ shown }) => (shown ? 'all' : 'none')};
+  // TODO: hardcoded?
   z-index: 9999;
   border-radius: 4px;
   background-color: ${({ theme }) => theme.colors.inverted.bg.primary};
@@ -82,7 +86,6 @@ let lastVisibleDelayedTooltip = null;
  * @param {import('react').Node} props.children The children to be rendered
  * @param {import('react').RefObject<HTMLElement>} props.forceAnchorRef The ref of the anchor where the tooltip will be shown [optional]
  * @param {boolean} props.hasTail Should the tooltip show a tail
- * @param {boolean} props.isMirrored Should the tail placement be mirrored over the y-axis (for Right-to-Left)
  * @param {Function} props.onBlur Blur event callback function
  * @param {Function} props.onFocus Focus event callback function
  * @param {Function} props.onPointerEnter Pointer enter event callback function
@@ -98,8 +101,11 @@ let lastVisibleDelayedTooltip = null;
  * as perceived by the page because of scroll. This is really only true of dropDowns that
  * exist beyond the initial page scroll. Because the editor is a fixed view this only
  * comes up in peripheral pages (dashboard, settings).
+ * @param props.isRTL RTL flag from config
+ * @param props.leftOffset wp-admin bar width from config
  * @return {import('react').Component} Tooltip element
  */
+
 function Tooltip({
   title,
   shortcut,
@@ -111,11 +117,13 @@ function Tooltip({
   onFocus = noop,
   onBlur = noop,
   isDelayed = false,
-  forceAnchorRef = null,
-  tooltipProps = null,
+  forceAnchorRef = null, // needed for WithLink so that the url tooltip hovers over the element, and isn't anchored
+  // to the whole canvas
   className = null,
   popupZIndexOverride,
   ignoreMaxOffsetY = false,
+  isRTL,
+  leftOffset = DEFAULT_LEFT_OFFSET,
   ...props
 }) {
   const [shown, setShown] = useState(false);
@@ -125,14 +133,6 @@ function Tooltip({
   const placementRef = useRef(placement);
   const [dynamicPlacement, setDynamicPlacement] = useState(placement);
   const isMounted = useRef(false);
-
-  useEffect(() => {
-    isMounted.current = true;
-
-    return () => {
-      isMounted.current = false;
-    };
-  }, []);
 
   const spacing = useMemo(
     () => ({
@@ -147,40 +147,14 @@ function Tooltip({
     }),
     [placement]
   );
-  // We can sometimes render a tooltip too far to the left, ie. in RTL mode.
-  // when that is the case, we can switch to placement-start and the tooltip will no longer get cutoff.
-  const updatePlacement = useCallback(() => {
-    const currentPlacement = placementRef.current;
-    switch (currentPlacement) {
-      case PLACEMENT.BOTTOM_START:
-      case PLACEMENT.TOP_START:
-      case PLACEMENT.RIGHT_START:
-        // {placement}-START shouldn't ever appear in overflow so do nothing
-        break;
-      case PLACEMENT.BOTTOM_END:
-      case PLACEMENT.TOP_END:
-      case PLACEMENT.RIGHT_END:
-        setDynamicPlacement(currentPlacement.replace('-end', '-start'));
-        break;
-      case PLACEMENT.LEFT_END:
-        setDynamicPlacement(PLACEMENT.RIGHT_END);
-        break;
-      case PLACEMENT.LEFT_START:
-        setDynamicPlacement(PLACEMENT.RIGHT_START);
-        break;
-      case PLACEMENT.LEFT:
-        setDynamicPlacement(PLACEMENT.RIGHT);
-        break;
-      default:
-        setDynamicPlacement(`${currentPlacement}-start`);
-        break;
-    }
-  }, []);
 
   // When near the edge of the viewport we want to force the tooltip to a new placement as to not
   // cutoff the contents of the tooltip.
   const positionPlacement = useCallback(
     ({ offset }) => {
+      if (!offset.popupLeft) {
+        return;
+      }
       //  In order to check if there's an overlap with the window's bottom edge we need the overall height of the tooltip
       //  from the anchor's y position along with the amount of space between the anchor and the tooltip content.
       const neededVerticalSpace =
@@ -188,9 +162,7 @@ function Tooltip({
       const shouldMoveToTop =
         dynamicPlacement.startsWith('bottom') &&
         neededVerticalSpace >= window.innerHeight;
-      // check that the tooltip isn't cutoff on the left edge of the screen.
-      // right-cutoff is already taken care of with `getOffset`
-      const isOverFlowingLeft = offset.popupLeft < 0;
+
       if (shouldMoveToTop) {
         if (dynamicPlacement.endsWith('-start')) {
           setDynamicPlacement(PLACEMENT.TOP_START);
@@ -199,11 +171,9 @@ function Tooltip({
         } else {
           setDynamicPlacement(PLACEMENT.TOP);
         }
-      } else if (isOverFlowingLeft) {
-        updatePlacement();
       }
     },
-    [dynamicPlacement, updatePlacement]
+    [dynamicPlacement]
   );
 
   const positionArrow = useCallback(
@@ -270,6 +240,14 @@ function Tooltip({
     [onPointerLeave, resetPlacement, isDelayed, shown]
   );
 
+  useEffect(() => {
+    isMounted.current = true;
+
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
+
   return (
     <>
       <Wrapper
@@ -290,7 +268,7 @@ function Tooltip({
         {children}
       </Wrapper>
 
-      <Popup
+      <TooltipPopup
         anchor={forceAnchorRef || anchorRef}
         placement={dynamicPlacement}
         spacing={spacing}
@@ -299,13 +277,14 @@ function Tooltip({
         zIndex={popupZIndexOverride}
         noOverFlow
         ignoreMaxOffsetY={ignoreMaxOffsetY}
+        leftOffset={leftOffset}
+        isRTL={isRTL}
       >
         <TooltipContainer
           className={className}
           ref={tooltipRef}
           placement={dynamicPlacement}
           shown={shown}
-          {...tooltipProps}
         >
           <TooltipText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
             {shortcut ? `${title} (${prettifyShortcut(shortcut)})` : title}
@@ -324,7 +303,7 @@ function Tooltip({
             </>
           )}
         </TooltipContainer>
-      </Popup>
+      </TooltipPopup>
     </>
   );
 }
@@ -345,6 +324,8 @@ const TooltipPropTypes = {
   isDelayed: PropTypes.bool,
   popupZIndexOverride: PropTypes.number,
   ignoreMaxOffsetY: PropTypes.bool,
+  isRTL: PropTypes.bool,
+  leftOffset: PropTypes.number,
 };
 Tooltip.propTypes = TooltipPropTypes;
 

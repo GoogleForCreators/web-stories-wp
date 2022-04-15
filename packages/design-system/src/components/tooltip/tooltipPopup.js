@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,72 +32,56 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { noop } from '../../utils';
-import { getTransforms, getOffset } from './utils';
-import { PLACEMENT, PopupContainer } from './constants';
-const DEFAULT_TOPOFFSET = 0;
+import { getTransforms, getOffset } from '../popup/utils';
+import { PLACEMENT, PopupContainer } from '../popup/constants';
 const DEFAULT_POPUP_Z_INDEX = 2;
 
-function Popup({
-  isRTL = false,
+function TooltipPopup({
+  isRTL,
   anchor,
-  dock,
   children,
-  renderContents,
   placement = PLACEMENT.BOTTOM,
   spacing,
   isOpen,
-  invisible = false,
-  fillWidth = false,
-  fillHeight = false,
   onPositionUpdate = noop,
-  refCallback = noop,
-  topOffset = DEFAULT_TOPOFFSET,
   zIndex = DEFAULT_POPUP_Z_INDEX,
   noOverFlow = false,
   ignoreMaxOffsetY,
   resetXOffset = false,
+  leftOffset,
 }) {
   const [popupState, setPopupState] = useState(null);
   const isMounted = useRef(false);
   const popup = useRef(null);
 
-  const positionPopup = useCallback(
-    (evt) => {
-      if (!isMounted.current || !anchor?.current) {
-        return;
-      }
-      // If scrolling within the popup, ignore.
-      if (evt?.target?.nodeType && popup.current?.contains(evt.target)) {
-        return;
-      }
-      setPopupState({
-        offset: anchor.current
-          ? getOffset({
-              placement,
-              spacing,
-              anchor,
-              dock,
-              popup,
-              isRTL,
-              topOffset,
-              ignoreMaxOffsetY,
-              resetXOffset,
-            })
-          : {},
-        height: popup.current?.getBoundingClientRect()?.height,
-      });
-    },
-    [
-      anchor,
-      placement,
-      spacing,
-      dock,
-      isRTL,
-      topOffset,
-      ignoreMaxOffsetY,
-      resetXOffset,
-    ]
-  );
+  const positionPopup = useCallback(() => {
+    if (!isMounted.current || !anchor?.current) {
+      return;
+    }
+
+    setPopupState({
+      offset: anchor.current
+        ? getOffset({
+            placement,
+            spacing,
+            anchor,
+            popup,
+            isRTL,
+            ignoreMaxOffsetY,
+            resetXOffset,
+            leftOffset,
+          })
+        : {},
+    });
+  }, [
+    anchor,
+    placement,
+    spacing,
+    isRTL,
+    ignoreMaxOffsetY,
+    resetXOffset,
+    leftOffset,
+  ]);
 
   useEffect(() => {
     isMounted.current = true;
@@ -106,21 +90,12 @@ function Popup({
     };
   }, []);
 
-  useEffect(() => {
-    // If the popup height changes meanwhile, let's update the popup, too.
-    if (
-      popupState?.height &&
-      popupState.height !== popup.current?.getBoundingClientRect()?.height
-    ) {
-      positionPopup();
-    }
-  }, [popupState?.height, positionPopup]);
-
   useLayoutEffect(() => {
     if (!isOpen) {
       return undefined;
     }
     isMounted.current = true;
+
     positionPopup();
     // Adjust the position when scrolling.
     document.addEventListener('scroll', positionPopup, true);
@@ -134,54 +109,40 @@ function Popup({
     if (!isMounted.current) {
       return;
     }
-
     onPositionUpdate(popupState);
-    refCallback(popup);
-  }, [popupState, onPositionUpdate, refCallback]);
+  }, [popupState, onPositionUpdate]);
 
   useResizeEffect({ current: document.body }, positionPopup, [positionPopup]);
+
   return popupState && isOpen
     ? createPortal(
         <PopupContainer
           ref={popup}
-          fillWidth={fillWidth}
-          fillHeight={fillHeight}
           $offset={popupState.offset}
-          invisible={invisible}
-          topOffset={topOffset}
           noOverFlow={noOverFlow}
           zIndex={zIndex}
           transforms={getTransforms(placement, isRTL)}
         >
-          {renderContents
-            ? renderContents({ propagateDimensionChange: positionPopup })
-            : children}
+          {children}
         </PopupContainer>,
         document.body
       )
     : null;
 }
 
-Popup.propTypes = {
+TooltipPopup.propTypes = {
   isRTL: PropTypes.bool,
   anchor: PropTypes.shape({ current: PropTypes.instanceOf(Element) })
     .isRequired,
-  dock: PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
   children: PropTypes.node,
-  renderContents: PropTypes.func,
   placement: PropTypes.oneOf(Object.values(PLACEMENT)),
   spacing: PropTypes.object,
   isOpen: PropTypes.bool,
-  invisible: PropTypes.bool,
-  fillWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
-  fillHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
   onPositionUpdate: PropTypes.func,
-  refCallback: PropTypes.func,
-  topOffset: PropTypes.number,
   zIndex: PropTypes.number,
   noOverFlow: PropTypes.bool,
   ignoreMaxOffsetY: PropTypes.bool,
   resetXOffset: PropTypes.bool,
 };
 
-export { Popup, PLACEMENT };
+export default TooltipPopup;

@@ -25,7 +25,7 @@ import {
   BUTTON_TYPES,
   Icons,
   themeHelpers,
-  Tooltip,
+  TOOLTIP_PLACEMENT,
 } from '@googleforcreators/design-system';
 import { useRef, memo } from '@googleforcreators/react';
 import { getDefinitionForType } from '@googleforcreators/elements';
@@ -39,6 +39,7 @@ import { useStory } from '../../../../app';
 import useCORSProxy from '../../../../utils/useCORSProxy';
 import usePerformanceTracking from '../../../../utils/usePerformanceTracking';
 import { TRACKING_EVENTS } from '../../../../constants';
+import Tooltip from '../../../tooltip';
 import useLayerSelection from './useLayerSelection';
 import { LAYER_HEIGHT } from './constants';
 
@@ -327,6 +328,7 @@ function Layer({ element }) {
               title={__('Delete Layer', 'web-stories')}
               hasTail
               isDelayed
+              placement={TOOLTIP_PLACEMENT.BOTTOM_END}
             >
               <LayerAction
                 ref={deleteButtonRef}
@@ -342,6 +344,7 @@ function Layer({ element }) {
               title={__('Duplicate Layer', 'web-stories')}
               hasTail
               isDelayed
+              placement={TOOLTIP_PLACEMENT.BOTTOM_END}
             >
               <LayerAction
                 aria-label={__('Duplicate', 'web-stories')}

@@ -143,15 +143,7 @@ const Color = forwardRef(function Color(
       width={!ignoreSetWidth && width ? width : null}
     >
       {hasEyedropper && (
-        <Tooltip
-          title={tooltip}
-          hasTail
-          placement={
-            isInDesignMenu
-              ? TOOLTIP_PLACEMENT.BOTTOM
-              : TOOLTIP_PLACEMENT.BOTTOM_START
-          }
-        >
+        <Tooltip title={tooltip} hasTail placement={tooltipPlacement}>
           <EyeDropperButton
             id={uuidv4()}
             tabIndex={tabIndex}

@@ -106,6 +106,7 @@ export function getYOffset(placement, spacing = 0, anchorRect) {
  * off screen, eg. when in RTL. However, when using Popup directly, we can run into it being rendered off screen
  * when in RTL. Flag is sent via `Popup` which will determine whether or not we should force the X offset to zero
  * or width of popup.
+ * @param args.leftOffset defaults to 0, to account for wp-admin sidebar nav
  * @return {Offset} Popup offset.
  */
 export function getOffset({
@@ -115,9 +116,10 @@ export function getOffset({
   dock,
   popup,
   isRTL,
-  topOffset,
   ignoreMaxOffsetY,
   resetXOffset,
+  topOffset = 0,
+  leftOffset = 0,
 }) {
   const anchorRect = anchor.current.getBoundingClientRect();
   const bodyRect = document.body.getBoundingClientRect();
@@ -134,12 +136,19 @@ export function getOffset({
   const { x: spacingH = 0, y: spacingV = 0 } = spacing || {};
 
   // Horizontal
+  const leftEdgeOverlap =
+    !isRTL && popupRect?.left <= leftOffset ? leftOffset - popupRect.left : 0;
+
   const offsetX = () => {
-    if (resetXOffset && popupRect?.left <= 0) {
+    if (resetXOffset && popupRect?.left <= leftOffset) {
       return isRTL ? width : 0;
     }
-    return getXOffset(placement, spacingH, anchorRect, dockRect, isRTL);
+    return (
+      getXOffset(placement, spacingH, anchorRect, dockRect, isRTL) +
+      leftEdgeOverlap
+    );
   };
+
   const maxOffsetX = bodyRect.width - width - getXTransforms(placement) * width;
 
   // Vertical
