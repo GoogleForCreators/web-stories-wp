@@ -27,11 +27,11 @@ import { useStory } from '../../app/story';
 import { useHighlights } from '../../app/highlights';
 import { SELECTION, LINK, ANIMATION } from './constants';
 import Context from './context';
-import TextSelectionIcon from './textSelectionIcon';
-import ImageSelectionIcon from './imageSelectionIcon';
-import VideoSelectionIcon from './videoSelectionIcon';
-import ShapeSelectionIcon from './shapeSelectionIcon';
-import MultiSelectionIcon from './multiSelectionIcon';
+import TextSelectionIcon from './icons/textSelectionIcon';
+import ImageSelectionIcon from './icons/imageSelectionIcon';
+import VideoSelectionIcon from './icons/videoSelectionIcon';
+import ShapeSelectionIcon from './icons/shapeSelectionIcon';
+import MultiSelectionIcon from './icons/multiSelectionIcon';
 
 const STYLE_TAB_IDS = new Set([SELECTION.id, LINK.id, ANIMATION.id]);
 

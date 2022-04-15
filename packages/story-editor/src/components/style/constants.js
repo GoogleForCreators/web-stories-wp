@@ -39,9 +39,9 @@ import { STYLE_PANE_IDS } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
-import SelectionIcon from './selectionIcon';
-import LinkIcon from './linkIcon';
-import AnimationIcon from './animationIcon';
+import SelectionIcon from './icons/selectionIcon';
+import LinkIcon from './icons/linkIcon';
+import AnimationIcon from './icons/animationIcon';
 
 export const SELECTION = {
   id: STYLE_PANE_IDS.SELECTION,
