@@ -196,7 +196,7 @@ To configure the dashboard to your needs you can pass various config options to 
 - `containerID`
     - type: `string`
     - required: No
-    - description: The id of the upper dashboard container which defines the available space for dashboard.
+    - description: The id of the upper dashboard container which defines the available space for dashboard. If not defined `window.innerWidth` will be used for calculating the space.
 
 - `siteKitStatus`
     - type: `Object`
