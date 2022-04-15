@@ -24,8 +24,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { Pane, getTabId } from '../library/panes/shared';
-import paneId from '../library/panes/media/local/paneId';
+import { Pane, getTabId, getPaneId } from '../library/panes/shared';
 import useStyle from './useStyle';
 import { SELECTION, LINK, ANIMATION } from './constants';
 import DesignPanel from './designPanel';
@@ -58,7 +57,7 @@ function StylePanes() {
           />
         ));
       return (
-        <StyledPane id={paneId} {...paneProps}>
+        <StyledPane id={getPaneId(paneProps.key)} {...paneProps}>
           {panelsList}
         </StyledPane>
       );
