@@ -141,7 +141,9 @@ export function getOffset({
     return getXOffset(placement, spacingH, anchorRect, dockRect, isRTL);
   };
 
-  const maxOffsetX = bodyRect.width - width - getXTransforms(placement) * width;
+  const maxOffsetX = !isRTL
+    ? bodyRect.width - width - getXTransforms(placement) * width
+    : bodyRect.width - getXTransforms(placement) * width;
 
   // Vertical
   const offsetY = getYOffset(placement, spacingV, anchorRect);
@@ -158,5 +160,6 @@ export function getOffset({
     height: anchorRect.height,
     popupLeft: popupRect?.left,
     popupHeight: popupRect?.height,
+    bodyRight: bodyRect?.right,
   };
 }

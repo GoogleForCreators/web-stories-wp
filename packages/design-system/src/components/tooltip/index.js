@@ -106,7 +106,7 @@ let lastVisibleDelayedTooltip = null;
  * exist beyond the initial page scroll. Because the editor is a fixed view this only
  * comes up in peripheral pages (dashboard, settings).
  * @param props.isRTL RTL flag from config
- * @param props.leftOffset wp-admin bar width from config
+ * @param props.leftOffset wp-admin bar width from config, prevents overlap with side bar.
  * @return {import('react').Component} Tooltip element
  */
 
@@ -172,23 +172,15 @@ function Tooltip({
             popup,
             isRTL,
             ignoreMaxOffsetY,
-            leftOffset,
           })
         : {},
     });
-  }, [
-    dynamicPlacement,
-    spacing,
-    forceAnchorRef,
-    isRTL,
-    ignoreMaxOffsetY,
-    leftOffset,
-  ]);
+  }, [dynamicPlacement, spacing, forceAnchorRef, isRTL, ignoreMaxOffsetY]);
 
   // When near the edge of the viewport we want to force the tooltip to a new placement as to not
   // cutoff the contents of the tooltip.
   const positionPlacement = useCallback(
-    ({ offset }, { left, height }) => {
+    ({ offset }, { left, right, height }) => {
       //  In order to check if there's an overlap with the window's bottom edge we need the overall height of the tooltip
       //  from the anchor's y position along with the amount of space between the anchor and the tooltip content.
       const neededVerticalSpace =
@@ -198,6 +190,7 @@ function Tooltip({
         neededVerticalSpace >= window.innerHeight;
 
       const isOverFlowingLeft = left < leftOffset;
+      const isOverFlowingRight = right > offset.bodyRight - leftOffset;
 
       if (shouldMoveToTop) {
         if (dynamicPlacement.endsWith('-start')) {
@@ -210,6 +203,10 @@ function Tooltip({
       } else if (isOverFlowingLeft && !isRTL) {
         setDynamicOffset({
           x: leftOffset - left,
+        });
+      } else if (isOverFlowingRight && isRTL) {
+        setDynamicOffset({
+          x: offset.bodyRight - right - leftOffset,
         });
       }
     },

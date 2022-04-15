@@ -184,6 +184,7 @@ export const MediaInput = forwardRef(function Media(
     menuProps = {},
     imgProps = {},
     isRTL = false,
+    leftOffset = 0,
     ...rest
   },
   ref
@@ -224,6 +225,8 @@ export const MediaInput = forwardRef(function Media(
       {canUpload && (
         <Tooltip
           title={hasMenu ? null : __('Open media picker', 'web-stories')}
+          isRTL={isRTL}
+          leftOffset={leftOffset}
         >
           <Button
             ref={(node) => {
