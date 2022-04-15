@@ -87,8 +87,10 @@ MenuWrapper.propTypes = {
 /**
  * Extracts all focusable children from an html tree, optionally ignoring items from submenu.
  *
- * @param {HTMLElement} parent The parent to search
- * @param {boolean} isSubMenu If we're searching from submenu.
+ * @param {Object} props Props.
+ * @param {HTMLElement} props.parent The parent to search
+ * @param {boolean} props.isSubMenu If we're searching from submenu.
+ * @param {boolean} props.wrapperRole the role assigned to the parent menu (sometimes a toolbar not a menu).
  * @return {Array.<HTMLElement>} List of focusable elements
  */
 function getFocusableChildren({ parent, isSubMenu, wrapperRole = 'menu' }) {

@@ -120,7 +120,7 @@ export const useNumericInput = ({
     setCurrentValue(oldValue.current);
     revertToOriginal.current = true;
     inputRef && inputRef.current?.blur();
-  }, []);
+  }, [inputRef]);
 
   useEffect(() => {
     // update internal value when `value` prop changes
