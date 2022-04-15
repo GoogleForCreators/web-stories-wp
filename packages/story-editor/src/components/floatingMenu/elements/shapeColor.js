@@ -62,6 +62,7 @@ function ShapeColor() {
       allowsOpacity
       allowsGradient
       opacityFocusTrap
+      colorFocusTrap
     />
   );
 }

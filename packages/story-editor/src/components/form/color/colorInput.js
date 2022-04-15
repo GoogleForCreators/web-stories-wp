@@ -40,11 +40,16 @@ import {
   Icons,
   Popup,
   PLACEMENT,
+  CONTEXT_MENU_SKIP_ELEMENT,
 } from '@googleforcreators/design-system';
 import { v4 as uuidv4 } from 'uuid';
 /**
  * Internal dependencies
  */
+import {
+  FocusTrapButton,
+  handleReturnTrappedFocus,
+} from '../../floatingMenu/elements/shared';
 import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../constants';
 import ColorPicker from '../../colorPicker';
 import useSidebar from '../../sidebar/useSidebar';
@@ -169,10 +174,16 @@ const ColorInput = forwardRef(function ColorInput(
     pickerProps,
     spacing,
     tooltipPlacement,
+    colorFocusTrap,
     ...props
   },
   ref
 ) {
+  console.log({ ref });
+  const _inputRef = useRef();
+  const inputRef = ref || _inputRef;
+
+  const colorFocusTrapButtonRef = useRef();
   const isMixed = value === MULTIPLE_VALUE;
   value = isMixed ? '' : value;
 
@@ -183,7 +194,7 @@ const ColorInput = forwardRef(function ColorInput(
 
   const [pickerOpen, setPickerOpen] = useState(false);
   const _previewRef = useRef(null);
-  const previewRef = ref || _previewRef;
+  const previewRef = inputRef || _previewRef;
 
   const { isEyedropperActive } = useCanvas(
     ({ state: { isEyedropperActive } }) => ({
@@ -240,26 +251,47 @@ const ColorInput = forwardRef(function ColorInput(
         // If editable, only the visual preview component is a button
         // And the text is an input field
         <Preview ref={previewRef}>
-          <Input
-            ref={ref}
-            aria-label={label}
-            value={isMixed ? null : value}
-            onChange={onChange}
-            isIndeterminate={isMixed}
-            placeholder={isMixed ? MULTIPLE_DISPLAY_VALUE : ''}
-            containerStyleOverride={containerStyle}
-            id={uuidv4()}
-            inputClassName={props.className}
-            {...props}
-          />
+          {colorFocusTrap ? (
+            <FocusTrapButton
+              ref={colorFocusTrapButtonRef}
+              inputRef={inputRef}
+              inputLabel={label}
+            >
+              <Input
+                ref={inputRef}
+                aria-label={label}
+                value={isMixed ? null : value}
+                onChange={onChange}
+                isIndeterminate={isMixed}
+                placeholder={isMixed ? MULTIPLE_DISPLAY_VALUE : ''}
+                containerStyleOverride={containerStyle}
+                id={uuidv4()}
+                onKeyDown={(e) =>
+                  handleReturnTrappedFocus(e, colorFocusTrapButtonRef)
+                }
+                inputClassName={CONTEXT_MENU_SKIP_ELEMENT}
+                {...props}
+              />
+            </FocusTrapButton>
+          ) : (
+            <Input
+              ref={inputRef}
+              aria-label={label}
+              value={isMixed ? null : value}
+              onChange={onChange}
+              isIndeterminate={isMixed}
+              placeholder={isMixed ? MULTIPLE_DISPLAY_VALUE : ''}
+              containerStyleOverride={containerStyle}
+              id={uuidv4()}
+              {...props}
+            />
+          )}
           <ColorPreview>
             <Tooltip title={tooltip} hasTail placement={tooltipPlacement}>
               <StyledSwatch
                 isSmall
                 pattern={previewPattern}
                 id={uuidv4()}
-                className={props.className}
-                {...(props.onKeyDown && { onKeyDown: props.onKeyDown })}
                 {...buttonProps}
               />
             </Tooltip>
@@ -268,13 +300,7 @@ const ColorInput = forwardRef(function ColorInput(
       ) : (
         // If not editable, the whole component is a button
         <Tooltip title={tooltip} hasTail placement={tooltipPlacement}>
-          <ColorButton
-            ref={previewRef}
-            id={uuidv4()}
-            className={props.className}
-            {...(props.onKeyDown && { onKeyDown: props.onKeyDown })}
-            {...buttonProps}
-          >
+          <ColorButton ref={previewRef} id={uuidv4()} {...buttonProps}>
             <ColorPreview>
               <Swatch
                 isPreview
