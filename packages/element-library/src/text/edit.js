@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 import {
   useEffect,
   useLayoutEffect,
@@ -66,6 +66,16 @@ import {
   generateParagraphTextStyle,
   getHighlightLineheight,
 } from './util';
+
+// white-space: pre-wrap is hardcoded with an inline style inside draft-js,
+// but we can override it with a global important style on the proper element.
+// @see https://github.com/GoogleForCreators/web-stories-wp/pull/11262
+// @see https://github.com/facebook/draft-js/blob/d974abb0c2844bf99724aba9448df42a63291e0e/src/component/base/DraftEditor.react.js#L354
+const GlobalStyleOverride = createGlobalStyle`
+  .public-DraftEditor-content {
+    white-space: pre-line !important;
+  }
+`;
 
 // Wrapper bounds the text editor within the element bounds. The resize
 // logic updates the height of this element to show the new height based
@@ -392,6 +402,7 @@ function TextEdit({
       width={elementWidth}
       height={elementHeight}
     >
+      <GlobalStyleOverride />
       {/* eslint-disable-next-line styled-components-a11y/click-events-have-key-events, styled-components-a11y/no-static-element-interactions -- Needed here to ensure the editor keeps focus, e.g. after setting inline colour. */}
       <Wrapper
         ref={wrapperRef}
