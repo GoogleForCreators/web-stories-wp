@@ -273,6 +273,9 @@ describe('Link Panel', () => {
       await closePanel('Color');
       await closePanel('Border');
 
+      await fixture.events.click(
+        fixture.editor.sidebar.designPanel.linkSection
+      );
       linkPanel = fixture.editor.sidebar.designPanel.link;
       await fixture.events.click(linkPanel.address);
 
@@ -314,6 +317,9 @@ describe('Link Panel', () => {
       await moveElementToBottom(frame);
 
       await fixture.events.click(fixture.editor.sidebar.designTab);
+      await fixture.events.click(
+        fixture.editor.sidebar.designPanel.linkSection
+      );
       linkPanel = fixture.editor.sidebar.designPanel.link;
       await fixture.events.click(linkPanel.address);
 
@@ -367,6 +373,9 @@ describe('Link Panel', () => {
 
     it('should allow changing link for two elements at the same time', async () => {
       await fixture.events.click(fixture.editor.sidebar.designTab);
+      await fixture.events.click(
+        fixture.editor.sidebar.designPanel.linkSection
+      );
       linkPanel = fixture.editor.sidebar.designPanel.link;
       await fixture.events.click(linkPanel.address);
 
@@ -397,6 +406,9 @@ describe('Link Panel', () => {
         }
       });
       await fixture.events.click(fixture.editor.sidebar.designTab);
+      await fixture.events.click(
+        fixture.editor.sidebar.designPanel.linkSection
+      );
       linkPanel = fixture.editor.sidebar.designPanel.link;
       await fixture.events.click(linkPanel.address);
       await fixture.events.keyboard.type('http://google.com');
