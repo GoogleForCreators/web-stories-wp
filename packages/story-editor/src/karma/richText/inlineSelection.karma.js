@@ -399,10 +399,10 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
 
   describe('CUJ: Creator Can Style Text: Apply B, Set line height', () => {
     it('should apply global formats (here line height) even when a selection is present', async () => {
-      const getDisplayTextStyles = () => {
-        const displayNode = data.fixture.editor.canvas.displayLayer.display(
-          data.textId
-        ).node;
+      const getDisplayTextStyles = async () => {
+        const displayNode =
+          await data.fixture.editor.canvas.displayLayer.display(data.textId)
+            .node;
         const paragraph = displayNode.querySelector('p');
         return window.getComputedStyle(paragraph);
       };
