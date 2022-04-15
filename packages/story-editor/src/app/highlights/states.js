@@ -13,6 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * External dependencies
+ */
+import { STYLE_PANE_IDS } from '@googleforcreators/design-system';
+
 /**
  * Internal dependencies
  */
@@ -63,6 +69,7 @@ export const STATES = {
   [keys.STYLE_PANE]: {
     focus: true,
     tab: STYLE,
+    section: STYLE_PANE_IDS.SELECTION,
   },
 
   [keys.POSTER]: {
@@ -80,38 +87,47 @@ export const STATES = {
   [keys.CAPTIONS]: {
     focus: true,
     tab: STYLE,
+    section: STYLE_PANE_IDS.SELECTION,
   },
   [keys.ASSISTIVE_TEXT]: {
     focus: true,
     tab: STYLE,
+    section: STYLE_PANE_IDS.SELECTION,
   },
   [keys.PAGE_BACKGROUND]: {
     focus: true,
     tab: STYLE,
+    section: STYLE_PANE_IDS.SELECTION,
   },
   [keys.ANIMATION]: {
     focus: true,
     tab: STYLE,
+    section: STYLE_PANE_IDS.ANIMATION,
   },
   [keys.FONT]: {
     focus: true,
     tab: STYLE,
+    section: STYLE_PANE_IDS.SELECTION,
   },
   [keys.LINK]: {
     focus: true,
     tab: STYLE,
+    section: STYLE_PANE_IDS.LINK,
   },
   [keys.VIDEO_A11Y_POSTER]: {
     focus: true,
     tab: STYLE,
+    section: STYLE_PANE_IDS.SELECTION,
   },
   [keys.STYLE]: {
     focus: true,
     tab: STYLE,
+    section: STYLE_PANE_IDS.SELECTION,
   },
   [keys.TEXT_COLOR]: {
     focus: true,
     tab: STYLE,
+    section: STYLE_PANE_IDS.SELECTION,
   },
 
   // Library

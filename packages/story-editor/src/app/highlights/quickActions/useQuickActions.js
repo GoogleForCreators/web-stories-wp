@@ -38,7 +38,7 @@ import {
  */
 import states from '../states';
 import useHighlights from '../useHighlights';
-import updateProperties from '../../../components/design/updateProperties';
+import updateProperties from '../../../components/style/updateProperties';
 import { useHistory } from '../../history';
 import { useConfig } from '../../config';
 import { useLocalMedia, TRANSCODABLE_MIME_TYPES } from '../../media';

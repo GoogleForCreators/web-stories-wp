@@ -14,4 +14,14 @@
  * limitations under the License.
  */
 
-export { default } from './designInspector';
+/**
+ * External dependencies
+ */
+import { __ } from '@googleforcreators/i18n';
+import { Icons } from '@googleforcreators/design-system';
+
+function LinkIcon() {
+  return <Icons.Link title={__('Link', 'web-stories')} />;
+}
+
+export default LinkIcon;

@@ -41,6 +41,18 @@ export class DesignPanel extends Container {
     super(node, path);
   }
 
+  get selectionSection() {
+    return this.getByRole('tab', { name: /Selection/i });
+  }
+
+  get linkSection() {
+    return this.getByRole('tab', { name: /Link/ });
+  }
+
+  get animationSection() {
+    return this.getByRole('tab', { name: /Animation/ });
+  }
+
   get textStyle() {
     return this._get(
       this.getByRole('region', { name: 'Text' }),
