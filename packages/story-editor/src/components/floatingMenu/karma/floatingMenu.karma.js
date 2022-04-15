@@ -25,7 +25,7 @@ import { waitFor } from '@testing-library/react';
 import { Fixture } from '../../../karma';
 import { useStory } from '../../../app/story';
 
-describe('Design Menu: Navigation', () => {
+describe('Design Menu: Keyboard Navigation', () => {
   let fixture;
   let focusContainer;
 
@@ -65,8 +65,67 @@ describe('Design Menu: Navigation', () => {
     }
   }
 
+  async function focusFloatingMenu() {
+    await fixture.events.keyboard.shortcut('control+alt+p');
+  }
+
+  it('should never pass focus to floating menu when using keyboard from outside of canvas', async () => {
+    // add a shape to the canvas so that a floating menu is visible
+    await fixture.events.click(fixture.editor.library.shapesTab);
+    await waitFor(() => fixture.editor.library.shapes);
+
+    await fixture.events.click(
+      fixture.editor.library.shapes.shape('Rectangle')
+    );
+
+    const toolbar = fixture.screen.getByRole('toolbar');
+
+    // Now let's focus the footer and tab a few times. We should never run into the floating menu or its focusable content.
+
+    const { checklistToggle } = fixture.editor.footer;
+
+    await fixture.events.click(checklistToggle);
+    await fixture.events.sleep(300); // allow transition to play out
+    // close the checklist again, we're using it as a focus anchor
+    await fixture.events.click(checklistToggle);
+    // Floating menus are after the footer popups in the tab order, so if it was going to be selected it would happen after the footer content.
+    let count = 0;
+    while (count < 15) {
+      // eslint-disable-next-line no-await-in-loop -- need to await key press
+      await fixture.events.keyboard.press('tab');
+
+      expect(toolbar).not.toContain(document.activeElement);
+
+      count++;
+    }
+  });
+
   describe('For a rectangular shape', () => {
-    beforeEach(async () => {
+    it('should navigate into and out of floating menu by keyboard', async () => {
+      const elementUpdates = {
+        backgroundColor: {
+          keyboard: '787800',
+          result: {
+            r: 120,
+            g: 120,
+            b: 0,
+          },
+        },
+        backgroundOpacity: {
+          keyboard: '60',
+          result: { a: 0.6 },
+        },
+        borderRadius: {
+          keyboard: '4',
+          result: 4,
+        },
+        borderWidth: {
+          keyboard: '6',
+          result: 6,
+        },
+      };
+
+      // Add a shape to the canvas
       await fixture.events.click(fixture.editor.library.shapesTab);
       await waitFor(() => fixture.editor.library.shapes);
 
@@ -77,34 +136,37 @@ describe('Design Menu: Navigation', () => {
       await tabToCanvasFocusContainer();
       await fixture.events.keyboard.press('Enter');
       await fixture.events.keyboard.press('Tab');
-    });
 
-    it('should navigate into and out of floating menu by keyboard', async () => {
-      await fixture.events.keyboard.shortcut('control+alt+p');
+      await focusFloatingMenu();
 
       expect(document.activeElement.getAttribute('aria-label')).toBe(
         'Press Enter to edit Shape color'
       );
       // Enter the color focus group in the context menu (first item)
       await fixture.events.keyboard.press('Enter');
-      await fixture.events.keyboard.press('ArrowRight');
-
       // First focusable content is the color input
+
+      expect(document.activeElement.getAttribute('aria-label')).toBe(
+        'Shape color'
+      );
+      // Update the shape color to this nice green
+      await fixture.events.keyboard.type(
+        elementUpdates.backgroundColor.keyboard
+      );
+      // Arrow key doesn't do anything, color input is still active.
+      await fixture.events.keyboard.press('ArrowRight');
       expect(document.activeElement.getAttribute('aria-label')).toBe(
         'Shape color'
       );
 
-      await fixture.events.keyboard.press('ArrowRight');
-      // active element is still Shape color input
-      expect(document.activeElement.getAttribute('aria-label')).toBe(
-        'Shape color'
-      );
       // Tab to the button that opens color picker
       await fixture.events.keyboard.press('tab');
       // Tab to opacity
       await fixture.events.keyboard.press('tab');
       expect(document.activeElement.getAttribute('aria-label')).toBe('Opacity');
-      await fixture.events.keyboard.type('60');
+      await fixture.events.keyboard.type(
+        elementUpdates.backgroundOpacity.keyboard
+      );
       // Tab to eyedropper
       await fixture.events.keyboard.press('tab');
       // Tab out of focus trap and resume traversing menu
@@ -114,7 +176,7 @@ describe('Design Menu: Navigation', () => {
         'Press Enter to edit Corner Radius'
       );
       await fixture.events.keyboard.press('Enter');
-      await fixture.events.keyboard.type('4');
+      await fixture.events.keyboard.type(elementUpdates.borderRadius.keyboard);
       await fixture.events.keyboard.press('tab');
 
       // TODO buttons find what attribute????
@@ -135,7 +197,7 @@ describe('Design Menu: Navigation', () => {
       );
       // Give border a width
       await fixture.events.keyboard.press('Enter');
-      await fixture.events.keyboard.type('6');
+      await fixture.events.keyboard.type(elementUpdates.borderWidth.keyboard);
       await fixture.events.keyboard.press('tab');
       await fixture.events.keyboard.press('ArrowRight');
       expect(document.activeElement.getAttribute('aria-label')).toBe(
@@ -178,10 +240,19 @@ describe('Design Menu: Navigation', () => {
         useStory(({ state }) => state.currentPage.elements[1])
       );
 
-      expect(selectedElement.backgroundColor.color.a).toBe(0.6);
+      expect(selectedElement.backgroundColor.color).toEqual({
+        ...elementUpdates.backgroundColor.result,
+        ...elementUpdates.backgroundOpacity.result,
+      });
       expect(selectedElement.flip.vertical).toBe(true);
-      expect(selectedElement.borderRadius.topLeft).toBe(4);
-      expect(selectedElement.border.left).toBe(6);
+      expect(selectedElement.borderRadius.topLeft).toBe(
+        elementUpdates.borderRadius.result
+      );
+      expect(selectedElement.border.left).toBe(
+        elementUpdates.borderWidth.result
+      );
+      // we just want to know that the keyboard nav picked a non default color value;
+      expect(selectedElement.border.color.color).not.toBe({ r: 0, g: 0, b: 0 });
     });
   });
 });

@@ -19,7 +19,6 @@
  */
 import { render, fireEvent } from '@testing-library/react';
 import { useRef } from '@googleforcreators/react';
-import { TransformContext } from '@googleforcreators/transform';
 import { registerElementType } from '@googleforcreators/elements';
 import { elementTypes } from '@googleforcreators/element-library';
 
