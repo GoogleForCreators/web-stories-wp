@@ -17,7 +17,12 @@
 /**
  * External dependencies
  */
-import { useState, useCallback, useEffect } from '@googleforcreators/react';
+import {
+  useState,
+  useCallback,
+  useEffect,
+  forwardRef,
+} from '@googleforcreators/react';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { _x, __ } from '@googleforcreators/i18n';
@@ -44,7 +49,10 @@ const minimalInputContainerStyleOverride = css`
   padding-right: 6px;
 `;
 
-function OpacityInput({ value, onChange, isInDesignMenu, ...props }) {
+const OpacityInput = forwardRef(function OpacityInput(
+  { value, onChange, isInDesignMenu, ...props },
+  ref
+) {
   const [inputValue, setInputValue] = useState('');
 
   // Allow any input, but only persist non-NaN values up-chain
@@ -71,6 +79,7 @@ function OpacityInput({ value, onChange, isInDesignMenu, ...props }) {
 
   return (
     <Input
+      ref={ref}
       aria-label={__('Opacity', 'web-stories')}
       onChange={handleChange}
       value={inputValue}
@@ -85,7 +94,7 @@ function OpacityInput({ value, onChange, isInDesignMenu, ...props }) {
       {...props}
     />
   );
-}
+});
 
 OpacityInput.propTypes = {
   value: PropTypes.oneOfType([PatternPropType, PropTypes.string]),

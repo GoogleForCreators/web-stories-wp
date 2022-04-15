@@ -18,25 +18,17 @@
  * External dependencies
  */
 import { __ } from '@googleforcreators/i18n';
-import { useCallback, useRef } from '@googleforcreators/react';
+import { useCallback } from '@googleforcreators/react';
 import { trackEvent } from '@googleforcreators/tracking';
-import { CONTEXT_MENU_SKIP_ELEMENT } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
 import { useStory } from '../../../app';
-import {
-  Color,
-  FocusTrapButton,
-  handleReturnTrappedColorFocus,
-} from './shared';
+import { Color } from './shared';
 
 const SHAPE_COLOR_LABEL = __('Shape color', 'web-stories');
 
 function ShapeColor() {
-  const inputRef = useRef();
-  const buttonRef = useRef();
-
   const { backgroundColor, updateSelectedElements } = useStory(
     ({ state, actions }) => ({
       backgroundColor: state.selectedElements[0].backgroundColor,
@@ -59,28 +51,18 @@ function ShapeColor() {
   );
 
   return (
-    <FocusTrapButton
-      ref={buttonRef}
-      inputRef={inputRef}
-      inputLabel={SHAPE_COLOR_LABEL}
-    >
-      <Color
-        tabIndex={-1}
-        ref={inputRef}
-        label={SHAPE_COLOR_LABEL}
-        value={backgroundColor}
-        allowsSavedColors
-        onChange={pushUpdate}
-        hasInputs
-        hasEyedropper
-        allowsOpacity
-        allowsGradient
-        className={CONTEXT_MENU_SKIP_ELEMENT}
-        onKeyDown={(e, containerRef) =>
-          handleReturnTrappedColorFocus(e, buttonRef, containerRef)
-        }
-      />
-    </FocusTrapButton>
+    <Color
+      tabIndex={-1}
+      label={SHAPE_COLOR_LABEL}
+      value={backgroundColor}
+      allowsSavedColors
+      onChange={pushUpdate}
+      hasInputs
+      hasEyedropper
+      allowsOpacity
+      allowsGradient
+      opacityFocusTrap
+    />
   );
 }
 

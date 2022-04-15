@@ -20,18 +20,14 @@
 
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import {
-  Button,
-  BUTTON_TYPES,
-  FOCUSABLE_SELECTORS,
-} from '@googleforcreators/design-system';
+import { Button, BUTTON_TYPES } from '@googleforcreators/design-system';
 import { forwardRef } from '@googleforcreators/react';
 import { __, sprintf } from '@googleforcreators/i18n';
 import { v4 as uuidv4 } from 'uuid';
 
 const _FocusTrapButton = styled(Button).attrs({ type: BUTTON_TYPES.DEFAULT })`
   background-color: transparent;
-  display: flex;
+  display: inline;
   outline: none;
   margin: 0;
   padding: 0;
@@ -39,35 +35,10 @@ const _FocusTrapButton = styled(Button).attrs({ type: BUTTON_TYPES.DEFAULT })`
 `;
 
 export const handleReturnTrappedFocus = (e, buttonRef) => {
-  e.stopPropagation();
   // only bubble up for moving focus
   if (e.key === 'Tab') {
     e.preventDefault();
-
     buttonRef.current.focus();
-  } else {
-    e.stopPropagation();
-  }
-};
-
-export const handleReturnTrappedColorFocus = (e, buttonRef, containerRef) => {
-  if (e.key === 'Tab') {
-    // find focusable content in container, only pass if the active element is the last focusable element in the container.
-    const allFocusableChildren = Array.from(
-      containerRef.current.querySelectorAll(FOCUSABLE_SELECTORS.join(', '))
-    );
-    const prevIndex = allFocusableChildren.findIndex(
-      (element) => element.id === e.target.id
-    );
-    // The variant of the color input that text and shapes use focuses index 1 initially, so it wraps around to index 0 last. When 0 index is hit, we want to use the next tab to exit this trap and reenter the rest of the floating menu nav
-    if (prevIndex === 0) {
-      handleReturnTrappedFocus(e, buttonRef);
-    } else {
-      const nextIndex =
-        prevIndex + 1 < allFocusableChildren.length ? prevIndex + 1 : 0;
-
-      allFocusableChildren[nextIndex].focus();
-    }
   } else {
     e.stopPropagation();
   }

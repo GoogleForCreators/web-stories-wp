@@ -182,7 +182,8 @@ const ColorInput = forwardRef(function ColorInput(
   const previewText = getPreviewText(value);
 
   const [pickerOpen, setPickerOpen] = useState(false);
-  const previewRef = useRef(null);
+  const _previewRef = useRef(null);
+  const previewRef = ref || _previewRef;
 
   const { isEyedropperActive } = useCanvas(
     ({ state: { isEyedropperActive } }) => ({
@@ -213,10 +214,6 @@ const ColorInput = forwardRef(function ColorInput(
   const colorType = value?.type;
   // Allow editing always in case of solid color of if color type is missing (mixed)
   const isEditable = (!colorType || colorType === 'solid') && hasInputs;
-
-  // if onKeyDown is passed in that means we're hijacking the focus because the input is nested in a group within a menu, in that case we need the color button to use the ref passed from the floating menu so that focus attaches correctly in the group.
-  // would be great to find a better solution
-  const colorButtonRef = props.onKeyDown ? ref : previewRef;
 
   const buttonProps = {
     onClick: () => setPickerOpen(true),
@@ -272,7 +269,7 @@ const ColorInput = forwardRef(function ColorInput(
         // If not editable, the whole component is a button
         <Tooltip title={tooltip} hasTail placement={tooltipPlacement}>
           <ColorButton
-            ref={isEditable ? previewRef : colorButtonRef}
+            ref={previewRef}
             id={uuidv4()}
             className={props.className}
             {...(props.onKeyDown && { onKeyDown: props.onKeyDown })}
@@ -316,7 +313,7 @@ const ColorInput = forwardRef(function ColorInput(
       )}
       <Popup
         isRTL={isRTL}
-        anchor={isEditable ? previewRef : colorButtonRef}
+        anchor={previewRef}
         dock={isInDesignMenu ? null : sidebar}
         isOpen={pickerOpen}
         placement={dynamicPlacement}
