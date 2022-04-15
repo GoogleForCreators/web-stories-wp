@@ -49,11 +49,9 @@ function Popup({
   invisible = false,
   fillWidth = false,
   fillHeight = false,
-  onPositionUpdate = noop,
   refCallback = noop,
   topOffset = DEFAULT_TOPOFFSET,
   zIndex = DEFAULT_POPUP_Z_INDEX,
-  noOverFlow = false,
   ignoreMaxOffsetY,
   resetXOffset = false,
 }) {
@@ -135,9 +133,8 @@ function Popup({
       return;
     }
 
-    onPositionUpdate(popupState);
     refCallback(popup);
-  }, [popupState, onPositionUpdate, refCallback]);
+  }, [popupState, refCallback]);
 
   useResizeEffect({ current: document.body }, positionPopup, [positionPopup]);
   return popupState && isOpen
@@ -149,7 +146,6 @@ function Popup({
           $offset={popupState.offset}
           invisible={invisible}
           topOffset={topOffset}
-          noOverFlow={noOverFlow}
           zIndex={zIndex}
           transforms={getTransforms(placement, isRTL)}
         >
@@ -175,11 +171,9 @@ Popup.propTypes = {
   invisible: PropTypes.bool,
   fillWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
   fillHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
-  onPositionUpdate: PropTypes.func,
   refCallback: PropTypes.func,
   topOffset: PropTypes.number,
   zIndex: PropTypes.number,
-  noOverFlow: PropTypes.bool,
   ignoreMaxOffsetY: PropTypes.bool,
   resetXOffset: PropTypes.bool,
 };
