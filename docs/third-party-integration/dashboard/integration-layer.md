@@ -193,6 +193,11 @@ To configure the dashboard to your needs you can pass various config options to 
             - required: No
             - description: It defines the top bar height, which is used in calculation for placement of components. 
 
+- `containerID`
+    - type: `string`
+    - required: No
+    - description: The id of the upper dashboard container which defines the available space for dashboard.
+
 - `siteKitStatus`
     - type: `Object`
     - required: No
