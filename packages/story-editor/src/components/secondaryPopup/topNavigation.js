@@ -19,6 +19,7 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
+import { forwardRef } from '@googleforcreators/react';
 import {
   BUTTON_SIZES,
   BUTTON_TYPES,
@@ -46,12 +47,16 @@ const Label = styled(Headline).attrs({
   font-weight: ${({ theme }) => theme.typography.weight.regular};
 `;
 
-export function TopNavigation({ onClose, label, popupId }) {
+export const TopNavigation = forwardRef(function TopNavigation(
+  { onClose, label, popupId },
+  ref
+) {
   return (
     <NavBar>
       <Label>{label}</Label>
       <TopNavButtons>
         <NavButton
+          ref={ref}
           aria-label={__('Close', 'web-stories')}
           onClick={() => {
             forceFocusCompanionToggle(popupId);
@@ -66,9 +71,10 @@ export function TopNavigation({ onClose, label, popupId }) {
       </TopNavButtons>
     </NavBar>
   );
-}
+});
 
 TopNavigation.propTypes = {
+  isOpen: PropTypes.bool,
   onClose: PropTypes.func.isRequired,
   label: PropTypes.string.isRequired,
   popupId: PropTypes.string.isRequired,
