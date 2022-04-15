@@ -53,7 +53,7 @@
 .web-stories-list.is-carousel .amp-carousel-button-next,
 .web-stories-list.is-carousel .glider-prev,
 .web-stories-list.is-carousel .amp-carousel-button-prev {
-  background-image: url('../../icons/carousel-arrow.svg');
+  background-image: url('../../inline-icons/carousel-arrow.svg');
 }
 
 .web-stories-list.is-carousel .glider-next,

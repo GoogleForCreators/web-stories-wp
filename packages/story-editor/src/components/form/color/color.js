@@ -109,6 +109,7 @@ const Color = forwardRef(function Color(
     isInDesignMenu = false,
     hasInputs = true,
     width,
+    tabIndex,
   },
   ref
 ) {
@@ -158,6 +159,7 @@ const Color = forwardRef(function Color(
           }
         >
           <EyeDropperButton
+            tabIndex={tabIndex}
             aria-label={tooltip}
             onClick={initEyedropper()}
             onPointerEnter={initEyedropper(false)}
@@ -171,6 +173,7 @@ const Color = forwardRef(function Color(
         <InputWrapper hasInputs={hasInputs}>
           <ColorInput
             ref={ref}
+            tabIndex={tabIndex}
             onChange={onChange}
             value={value}
             label={label}
@@ -198,6 +201,7 @@ const Color = forwardRef(function Color(
             <Space />
             <OpacityWrapper isInDesignMenu={isInDesignMenu}>
               <OpacityInput
+                tabIndex={tabIndex}
                 value={value}
                 onChange={handleOpacityChange}
                 isInDesignMenu={isInDesignMenu}

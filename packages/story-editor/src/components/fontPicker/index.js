@@ -43,6 +43,7 @@ const FontPicker = forwardRef(function FontPicker(
     listStyleOverrides,
     containerStyleOverrides,
     className,
+    tabIndex,
   },
   ref
 ) {
@@ -154,6 +155,7 @@ const FontPicker = forwardRef(function FontPicker(
     <Datalist.DropDown
       ref={ref}
       zIndex={zIndex}
+      tabIndex={tabIndex}
       highlightStylesOverride={highlightStylesOverride}
       data-testid="font"
       title={__('Available font families', 'web-stories')}
@@ -189,6 +191,7 @@ FontPicker.propTypes = {
   listStyleOverrides: PropTypes.array,
   containerStyleOverrides: PropTypes.array,
   zIndex: PropTypes.number,
+  tabIndex: PropTypes.number,
 };
 
 export default FontPicker;

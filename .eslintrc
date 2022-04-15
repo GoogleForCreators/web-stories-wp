@@ -664,6 +664,27 @@
         "eslint-comments/no-unused-disable": "off",
         "eslint-comments/require-description": "off"
       }
+    },
+    {
+      "files": [
+        "packages/story-editor/src/**/*.js",
+        "packages/dashboard/src/**/*.js"
+      ],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": [
+              {
+                "group": [
+                  "**/*.css"
+                ],
+                "message": "css import is not allowed in story-editor and dashboard"
+              }
+            ]
+          }
+        ]
+      }
     }
   ]
 }

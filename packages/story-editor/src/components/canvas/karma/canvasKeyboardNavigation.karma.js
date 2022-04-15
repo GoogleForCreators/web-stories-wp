@@ -14,10 +14,16 @@
  * limitations under the License.
  */
 /**
+ * External dependencies
+ */
+import STICKERS from '@googleforcreators/stickers';
+/**
  * Internal dependencies
  */
 import { Fixture } from '../../../karma';
 import { useStory } from '../../../app/story';
+
+const stickerTestType = Object.keys(STICKERS)[0];
 
 describe('Canvas - keyboard navigation', () => {
   let fixture;
@@ -28,8 +34,6 @@ describe('Canvas - keyboard navigation', () => {
     await fixture.render();
 
     focusContainer = fixture.screen.getByTestId('canvas-focus-container');
-
-    await fixture.collapseHelpCenter();
   });
 
   afterEach(() => {
@@ -57,6 +61,10 @@ describe('Canvas - keyboard navigation', () => {
     if (count >= 15) {
       throw new Error('Could not find focus container.');
     }
+  }
+
+  function getActiveElementId() {
+    return document.activeElement.getAttribute('data-element-id');
   }
 
   it('should not focus the canvas while tabbing through the editor', async () => {
@@ -92,34 +100,15 @@ describe('Canvas - keyboard navigation', () => {
     // enter into the canvas
     await fixture.events.keyboard.press('Enter');
 
-    const {
-      state: {
-        currentPage: { elements },
-      },
-    } = await fixture.renderHook(() => useStory());
-
-    const backgroundElement = elements.find((element) => element.isBackground);
-
-    expect(document.activeElement.getAttribute('data-element-id')).toBe(
-      backgroundElement.id
+    const selectedElements = await fixture.renderHook(() =>
+      useStory(({ state }) => state.selectedElements)
     );
 
-    // verify cyclicity
-    await fixture.events.keyboard.press('tab');
-
-    // TODO: check selected elements instead https://github.com/GoogleForCreators/web-stories-wp/issues/11000
-    expect(document.activeElement.getAttribute('data-element-id')).not.toBe(
-      backgroundElement.id
-    );
-
-    // tab through each added element
-    await fixture.events.keyboard.press('tab');
-    await fixture.events.keyboard.press('tab');
-    await fixture.events.keyboard.press('tab');
-
-    // should be back to first added element
+    expect(selectedElements.length).toBe(1);
+    expect(selectedElements[0].isBackground).toBe(true);
+    // see that background element is selected & focused
     expect(document.activeElement.getAttribute('data-element-id')).toBe(
-      backgroundElement.id
+      selectedElements[0].id
     );
 
     // exit canvas
@@ -127,5 +116,88 @@ describe('Canvas - keyboard navigation', () => {
 
     // verify exit
     expect(document.activeElement).toBe(focusContainer);
+  });
+
+  it('should change element selection on focus and wrap around at the last element', async () => {
+    // add one of each element
+    // add text to canvas
+    await fixture.editor.library.textTab.click();
+    await fixture.events.click(fixture.editor.library.text.preset('Paragraph'));
+    // add shape to canvas
+    await fixture.editor.library.shapesTab.click();
+    await fixture.events.click(fixture.editor.library.shapes.shape('Triangle'));
+    // add sticker to canvas
+    await fixture.events.click(
+      fixture.editor.library.shapes.sticker(stickerTestType)
+    );
+    // add image to canvas
+    await fixture.editor.library.mediaTab.click();
+    await fixture.events.mouse.clickOn(
+      fixture.editor.library.media.item(0),
+      20,
+      20
+    );
+
+    await tabToCanvasFocusContainer();
+
+    // enter into the canvas
+    await fixture.events.keyboard.press('Enter');
+
+    let selectedElements = await fixture.renderHook(() =>
+      useStory(({ state }) => state.selectedElements)
+    );
+    expect(selectedElements.length).toBe(1);
+    expect(selectedElements[0].isBackground).toBe(true);
+
+    // tab to the text element
+    await fixture.events.keyboard.press('Tab');
+
+    selectedElements = await fixture.renderHook(() =>
+      useStory(({ state }) => state.selectedElements)
+    );
+    expect(selectedElements.length).toBe(1);
+    expect(selectedElements[0].type).toBe('text');
+
+    // tab to the shape element
+    await fixture.events.keyboard.press('Tab');
+
+    selectedElements = await fixture.renderHook(() =>
+      useStory(({ state }) => state.selectedElements)
+    );
+    // shape should be selected and receive focus
+    expect(selectedElements.length).toBe(1);
+    expect(selectedElements[0].type).toBe('shape');
+    expect(getActiveElementId()).toBe(selectedElements[0].id);
+
+    // tab to the sticker element
+    await fixture.events.keyboard.press('Tab');
+
+    selectedElements = await fixture.renderHook(() =>
+      useStory(({ state }) => state.selectedElements)
+    );
+    // sticker should be selected and receive focus
+    expect(selectedElements.length).toBe(1);
+    expect(selectedElements[0].type).toBe('sticker');
+    expect(getActiveElementId()).toBe(selectedElements[0].id);
+
+    // tab to the image element
+    await fixture.events.keyboard.press('Tab');
+
+    selectedElements = await fixture.renderHook(() =>
+      useStory(({ state }) => state.selectedElements)
+    );
+    // image should be selected and receive focus
+    expect(selectedElements.length).toBe(1);
+    expect(selectedElements[0].type).toBe('image');
+    expect(getActiveElementId()).toBe(selectedElements[0].id);
+
+    // verify cyclicality: wrap around to background element
+    await fixture.events.keyboard.press('Tab');
+
+    selectedElements = await fixture.renderHook(() =>
+      useStory(({ state }) => state.selectedElements)
+    );
+    expect(selectedElements.length).toBe(1);
+    expect(selectedElements[0].isBackground).toBe(true);
   });
 });

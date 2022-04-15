@@ -73,9 +73,7 @@ import {
 const Wrapper = styled.div`
   ${elementFillContent}
   ${elementWithBackgroundColor}
-
   --faux-selection-color: inherit;
-
   span {
     box-decoration-break: clone;
   }
@@ -87,7 +85,6 @@ const Wrapper = styled.div`
 const TextBox = styled.div`
   ${elementWithFont}
   ${elementWithTextParagraphStyle}
-
   opacity: ${({ opacity }) =>
     typeof opacity !== 'undefined' ? opacity / 100 : null};
   position: absolute;
