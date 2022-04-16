@@ -29,8 +29,6 @@ import updateProperties from '../../style/updateProperties';
 import { useStory } from '../../../app';
 import { Color, useProperties } from './shared';
 
-const TEXT_COLOR_LABEL = __('Text color', 'web-stories');
-
 function TextColor() {
   const { content } = useProperties(['content']);
   const updateSelectedElements = useStory(
@@ -57,7 +55,7 @@ function TextColor() {
   return (
     <Color
       tabIndex={-1}
-      label={TEXT_COLOR_LABEL}
+      label={__('Text color', 'web-stories')}
       value={color}
       allowsSavedColors
       onChange={handleSetColor}

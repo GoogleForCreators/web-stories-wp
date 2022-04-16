@@ -26,9 +26,9 @@ import { CONTEXT_MENU_SKIP_ELEMENT } from '@googleforcreators/design-system';
  * Internal dependencies
  */
 import {
-  FocusTrapButton,
+  default as FocusTrapButton,
   handleReturnTrappedFocus,
-} from '../../floatingMenu/elements/shared';
+} from '../../floatingMenu/elements/shared/focusTrapButton';
 import OpacityInput from './opacityInput';
 
 const Space = styled.div`
@@ -41,7 +41,7 @@ const OpacityWrapper = styled.div`
     isInDesignMenu ? `calc(39% - 10px)` : `calc(47% - 10px)`};
 `;
 
-export const ActiveOpacity = ({
+const ActiveOpacity = ({
   handleOpacityChange,
   isInDesignMenu,
   opacityFocusTrap,
@@ -94,3 +94,5 @@ ActiveOpacity.propTypes = {
   tabIndex: PropTypes.number,
   value: PropTypes.string,
 };
+
+export default ActiveOpacity;

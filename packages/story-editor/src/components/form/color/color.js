@@ -43,7 +43,7 @@ import { focusStyle } from '../../panels/shared/styles';
 
 import applyOpacityChange from './applyOpacityChange';
 import ColorInput from './colorInput';
-import { ActiveOpacity } from './activeOpacity';
+import ActiveOpacity from './activeOpacity';
 import { SPACING } from './constants';
 
 const containerCss = css`

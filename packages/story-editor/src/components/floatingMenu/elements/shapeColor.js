@@ -26,8 +26,6 @@ import { trackEvent } from '@googleforcreators/tracking';
 import { useStory } from '../../../app';
 import { Color } from './shared';
 
-const SHAPE_COLOR_LABEL = __('Shape color', 'web-stories');
-
 function ShapeColor() {
   const { backgroundColor, updateSelectedElements } = useStory(
     ({ state, actions }) => ({
@@ -53,7 +51,7 @@ function ShapeColor() {
   return (
     <Color
       tabIndex={-1}
-      label={SHAPE_COLOR_LABEL}
+      label={__('Shape color', 'web-stories')}
       value={backgroundColor}
       allowsSavedColors
       onChange={pushUpdate}

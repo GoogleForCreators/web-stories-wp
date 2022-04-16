@@ -20,7 +20,6 @@
 import { PLACEMENT } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 import PropTypes from 'prop-types';
-import { forwardRef } from '@googleforcreators/react';
 
 /**
  * Internal dependencies

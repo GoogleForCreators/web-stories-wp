@@ -47,9 +47,9 @@ import { v4 as uuidv4 } from 'uuid';
  * Internal dependencies
  */
 import {
-  FocusTrapButton,
+  default as FocusTrapButton,
   handleReturnTrappedFocus,
-} from '../../floatingMenu/elements/shared';
+} from '../../floatingMenu/elements/shared/focusTrapButton';
 import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../constants';
 import ColorPicker from '../../colorPicker';
 import useSidebar from '../../sidebar/useSidebar';

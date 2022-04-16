@@ -81,34 +81,48 @@ describe('Shape Design Menu: Keyboard Navigation', () => {
 
     await focusFloatingMenu(fixture);
 
+    // Eyedropper is first to focus in the menu
+    expect(document.activeElement.getAttribute('aria-label')).toBe(
+      'Pick a color from canvas'
+    );
+
+    await fixture.events.keyboard.press('ArrowRight');
     expect(document.activeElement.getAttribute('aria-label')).toBe(
       'Press Enter to edit Shape color'
     );
-    // Enter the color focus group in the context menu (first item)
+    // Press enter and update color hex
     await fixture.events.keyboard.press('Enter');
-    // First focusable content is the color input
-
-    expect(document.activeElement.getAttribute('aria-label')).toBe(
-      'Shape color'
-    );
-    // Update the shape color to this nice green
     await fixture.events.keyboard.type(elementUpdates.backgroundColor.keyboard);
-    // Arrow key doesn't do anything, color input is still active.
+    await fixture.events.keyboard.press('Tab');
+    // The square is green now, let's just make sure the color picker is navigable and then carry on.
     await fixture.events.keyboard.press('ArrowRight');
     expect(document.activeElement.getAttribute('aria-label')).toBe(
       'Shape color'
     );
+    await fixture.events.keyboard.press('Enter');
+    // Tab from dismiss to color picker
+    await fixture.events.keyboard.press('tab');
+    // Tab from color picker into swatches
+    await fixture.events.keyboard.press('tab');
+    // Navigate down one row and to the right once
+    await fixture.events.keyboard.press('ArrowDown');
+    await fixture.events.keyboard.press('ArrowRight');
+    // Back to the color input now
+    await fixture.events.keyboard.press('Esc');
+    expect(document.activeElement.getAttribute('aria-label')).toBe(
+      'Shape color'
+    );
+    await fixture.events.keyboard.press('ArrowRight');
 
-    // Tab to the button that opens color picker
-    await fixture.events.keyboard.press('tab');
     // Tab to opacity
-    await fixture.events.keyboard.press('tab');
-    expect(document.activeElement.getAttribute('aria-label')).toBe('Opacity');
+    expect(document.activeElement.getAttribute('aria-label')).toBe(
+      'Press Enter to edit Opacity'
+    );
+    await fixture.events.keyboard.press('Enter');
     await fixture.events.keyboard.type(
       elementUpdates.backgroundOpacity.keyboard
     );
-    // Tab to eyedropper
-    await fixture.events.keyboard.press('tab');
+
     // Tab out of focus trap and resume traversing menu
     await fixture.events.keyboard.press('tab');
     await fixture.events.keyboard.press('ArrowRight');
@@ -168,7 +182,11 @@ describe('Shape Design Menu: Keyboard Navigation', () => {
     await fixture.events.keyboard.press('ArrowRight');
     expect(document.activeElement.getAttribute('title')).toBe('Dismiss menu');
 
-    // Arrow right again and end up back on the color group
+    // Arrow right twice and end up back on the color input
+    await fixture.events.keyboard.press('ArrowRight');
+    expect(document.activeElement.getAttribute('aria-label')).toBe(
+      'Pick a color from canvas'
+    );
     await fixture.events.keyboard.press('ArrowRight');
     expect(document.activeElement.getAttribute('aria-label')).toBe(
       'Press Enter to edit Shape color'
