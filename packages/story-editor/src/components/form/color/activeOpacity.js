@@ -20,6 +20,7 @@
 import { useRef } from '@googleforcreators/react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { PatternPropType } from '@googleforcreators/patterns';
 import { __ } from '@googleforcreators/i18n';
 import { CONTEXT_MENU_SKIP_ELEMENT } from '@googleforcreators/design-system';
 /**
@@ -92,7 +93,7 @@ ActiveOpacity.propTypes = {
   isInDesignMenu: PropTypes.bool,
   opacityFocusTrap: PropTypes.bool,
   tabIndex: PropTypes.number,
-  value: PropTypes.string,
+  value: PropTypes.oneOfType([PatternPropType, PropTypes.string]),
 };
 
 export default ActiveOpacity;

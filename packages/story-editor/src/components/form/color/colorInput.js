@@ -174,14 +174,19 @@ const ColorInput = forwardRef(function ColorInput(
     pickerProps,
     spacing,
     tooltipPlacement,
-    colorFocusTrap,
+    colorFocusTrap = false,
     ...props
   },
   ref
 ) {
-  // if no ref is forwarded, set one - used to maintain focus in floating menus
-  const _inputRef = useRef();
-  const inputRef = ref || _inputRef;
+  /**
+   * isolate the ref used for color input that
+   * is nested in a focus trap(when colorFocusTrap is true).
+   * This preserves existing color input functionality outside
+   * of floating menu while letting floating menu use
+   * the logic for the color input and do its own thing with focus.
+   */
+  const focusTrapInputRef = useRef();
 
   const colorFocusTrapButtonRef = useRef();
   const isMixed = value === MULTIPLE_VALUE;
@@ -253,11 +258,11 @@ const ColorInput = forwardRef(function ColorInput(
           {colorFocusTrap ? (
             <FocusTrapButton
               ref={colorFocusTrapButtonRef}
-              inputRef={inputRef}
+              inputRef={focusTrapInputRef}
               inputLabel={label}
             >
               <Input
-                ref={inputRef}
+                ref={focusTrapInputRef}
                 aria-label={label}
                 value={isMixed ? null : value}
                 onChange={onChange}
@@ -274,7 +279,7 @@ const ColorInput = forwardRef(function ColorInput(
             </FocusTrapButton>
           ) : (
             <Input
-              ref={inputRef}
+              ref={ref}
               aria-label={label}
               value={isMixed ? null : value}
               onChange={onChange}
