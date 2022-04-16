@@ -179,7 +179,7 @@ const ColorInput = forwardRef(function ColorInput(
   },
   ref
 ) {
-  console.log({ ref });
+  // if no ref is forwarded, set one - used to maintain focus in floating menus
   const _inputRef = useRef();
   const inputRef = ref || _inputRef;
 
@@ -193,8 +193,7 @@ const ColorInput = forwardRef(function ColorInput(
   const previewText = getPreviewText(value);
 
   const [pickerOpen, setPickerOpen] = useState(false);
-  const _previewRef = useRef(null);
-  const previewRef = inputRef || _previewRef;
+  const previewRef = useRef(null);
 
   const { isEyedropperActive } = useCanvas(
     ({ state: { isEyedropperActive } }) => ({

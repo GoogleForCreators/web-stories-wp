@@ -40,12 +40,11 @@ function getWidth(hasInputs, hasEyedropper) {
   );
 }
 
-const FloatingColor = forwardRef(function FloatingColor(props, ref) {
+function FloatingColor(props) {
   const { hasInputs, hasEyedropper, allowsGradient = true } = props;
   const width = getWidth(hasInputs, hasEyedropper);
   return (
     <Color
-      ref={ref}
       width={width}
       maxHeight={PICKER_MAX_HEIGHT}
       pickerPlacement={PLACEMENT.TOP_START}
@@ -58,7 +57,7 @@ const FloatingColor = forwardRef(function FloatingColor(props, ref) {
       {...props}
     />
   );
-});
+}
 
 FloatingColor.propTypes = {
   hasInputs: PropTypes.bool,

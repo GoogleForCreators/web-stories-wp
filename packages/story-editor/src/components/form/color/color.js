@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { forwardRef, useCallback, useRef } from '@googleforcreators/react';
+import { forwardRef, useCallback } from '@googleforcreators/react';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { __, sprintf } from '@googleforcreators/i18n';
@@ -106,8 +106,6 @@ const Color = forwardRef(function Color(
   },
   ref
 ) {
-  const containerRef = useRef();
-
   const handleOpacityChange = useCallback(
     (newOpacity) => onChange(applyOpacityChange(value, newOpacity)),
     [value, onChange]
@@ -143,7 +141,6 @@ const Color = forwardRef(function Color(
       aria-label={containerLabel}
       isInDesignMenu={isInDesignMenu}
       width={!ignoreSetWidth && width ? width : null}
-      ref={containerRef}
     >
       {hasEyedropper && (
         <Tooltip
