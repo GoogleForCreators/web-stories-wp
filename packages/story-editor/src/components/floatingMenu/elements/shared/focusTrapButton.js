@@ -44,6 +44,30 @@ export const handleReturnTrappedFocus = (e, buttonRef) => {
   }
 };
 
+/**
+ * Intended as a last resort effort to wrangle nested inputs within a <ContextMenu>. Freeform inputs should be avoided within menus if at all possible. Because this is a last resort, it is a shared element in the floating menu not the design-system.
+ * When it's necessary, wrap the freeform input in the <FocusTrapButton> and pass the associated handleReturnTrappedFocus as onKeyDown of the designated input.
+ * You will also need to give the input the imported CONTEXT_MENU_SKIP_ELEMENT class from design system. This tells the context menu to ignore the input in its focusableChildren so it relies on the FocusTrapButton as the focusable element for that input. This allows the freeform inputs to be typed into and arrowed around and then tab to get back into the menu.
+ *
+ * **Sample Usage**
+ * ```js
+ *
+ * function SomeComponent() {
+ * const buttonRef = useRef();
+ * const inputRef = useRef();
+ *
+ * <FocusTrapButton ref={buttonRef} inputRef={inputRef} inputLabel='Font size'>
+ * <input ref={inputRef} aria-label="Font size" onKeyDown={(e) => handleReturnTrappedFocus(e, buttonRef)} inputClassName={CONTEXT_MENU_SKIP_ELEMENT} />
+ * </FocusTrapButton>
+ * }
+ * ```
+ *
+ * @param {Object} props Props.
+ * @param {Object} props.inputRef ref associated with input element
+ * @param {string} props.inputLabel label of the associated input, will be used to create "Press Enter to edit [inputLabel]"
+ * @param {Node} props.children children within wrapper
+ */
+
 const FocusTrapButton = forwardRef(function FocusTrapButton(
   { inputRef, inputLabel, children },
   ref
