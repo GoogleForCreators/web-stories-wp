@@ -14,5 +14,15 @@
  * limitations under the License.
  */
 
-// Some menus have text or numeric inputs that need to be nested in those cases, the nested input needs this class to be excluded from focusable menu content
+/**
+ * Some menus have text or numeric inputs nested within them.
+ * This pattern should be avoided, however sometimes it happens.
+ * When it does, CONTEXT_MENU_SKIP_ELEMENT should be attached to
+ * the nested natively focusable element (ie: an input)
+ * so that in /menu.js `getFocusableChildren` can remove these nested elements
+ * from its returned value. This allows a wrapper element (probably a button)
+ * to handle when to focus the input
+ * so that a keyboard user doesn't get trapped in the freeform input within a menu.
+ * Currently, this is used from within story-editor floatingMenu (see FocusTrapButton).
+ * */
 export const CONTEXT_MENU_SKIP_ELEMENT = 'context-menu-skip-element';
