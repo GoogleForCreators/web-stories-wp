@@ -38,7 +38,7 @@ function ToggleUnderline() {
       Icon={Icons.LetterUUnderline}
       title={__('Toggle underline', 'web-stories')}
       onClick={toggle}
-      tabIndex="0"
+      tabIndex={-1}
     />
   );
 }

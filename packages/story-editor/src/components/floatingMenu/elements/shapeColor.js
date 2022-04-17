@@ -51,6 +51,7 @@ function ShapeColor() {
 
   return (
     <Color
+      tabIndex={-1}
       label={__('Shape color', 'web-stories')}
       value={backgroundColor}
       allowsSavedColors

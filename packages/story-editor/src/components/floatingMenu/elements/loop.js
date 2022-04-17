@@ -47,7 +47,9 @@ function Loop() {
     });
   };
 
-  return <StyledLoopContent loop={loop} onChange={handleChange} />;
+  return (
+    <StyledLoopContent tabIndex={-1} loop={loop} onChange={handleChange} />
+  );
 }
 
 export default Loop;

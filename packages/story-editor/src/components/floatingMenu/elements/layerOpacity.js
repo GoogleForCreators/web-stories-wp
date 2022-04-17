@@ -55,6 +55,7 @@ function LayerOpacity() {
 
   return (
     <Input
+      tabIndex={-1}
       suffix={<Icons.ColorDrop />}
       unit={_x('%', 'Percentage', 'web-stories')}
       value={opacity || 0}

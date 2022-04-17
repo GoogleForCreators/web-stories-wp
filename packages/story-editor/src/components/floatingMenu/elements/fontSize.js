@@ -28,7 +28,7 @@ import { NumericInput } from '@googleforcreators/design-system';
  */
 import { useStory } from '../../../app';
 import getUpdatedSizeAndPosition from '../../../utils/getUpdatedSizeAndPosition';
-import updateProperties from '../../design/updateProperties';
+import updateProperties from '../../style/updateProperties';
 import {
   focusStyle,
   inputContainerStyleOverride,
@@ -73,6 +73,7 @@ function FontSize() {
 
   return (
     <Input
+      tabIndex={-1}
       aria-label={__('Font size', 'web-stories')}
       isFloat
       value={fontSize}

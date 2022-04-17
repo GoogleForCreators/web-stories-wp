@@ -24,9 +24,9 @@ import { generatePatternStyles } from '@googleforcreators/patterns';
 import { UnitsProvider } from '@googleforcreators/units';
 import {
   useState,
-  useRef,
-  useCallback,
   useEffect,
+  useCallback,
+  useMemo,
 } from '@googleforcreators/react';
 import { TransformProvider } from '@googleforcreators/transform';
 
@@ -34,10 +34,7 @@ import { TransformProvider } from '@googleforcreators/transform';
  * Internal dependencies
  */
 import StoryPropTypes from '../../../types';
-import {
-  requestIdleCallback,
-  cancelIdleCallback,
-} from '../../../utils/idleCallback';
+import { usePageCanvas } from '../../../app/pageCanvas';
 import DisplayElement from '../../canvas/displayElement';
 import usePerformanceTracking from '../../../utils/usePerformanceTracking';
 import { TRACKING_EVENTS } from '../../../constants';
@@ -66,8 +63,10 @@ const Page = styled.button`
     border-style: solid;
     border-width: 1px;
     border-radius: 8px;
-    border-color: ${({ isActive, theme }) =>
-      isActive ? theme.colors.border.defaultActive : 'transparent'};
+    border-color: ${({ isActive, isInteractive, theme }) =>
+      isInteractive && isActive
+        ? theme.colors.border.defaultActive
+        : 'transparent'};
   }
 
   ${({ isInteractive, isActive, theme }) =>
@@ -92,61 +91,52 @@ const PreviewWrapper = styled.div`
 `;
 
 const Image = styled.img`
+  position: absolute;
   width: 100%;
+  left: 0;
+
+  // image will always be vertically centered
+  // so we don't need to alter height of image
+  // when it's in the fullbleed ratio and the
+  // thumbnail is in the smaller ratio
+  top: 50%;
+  transform: translateY(-50%);
 `;
 
-// PagePreview is used in the editor's Carousel as well as in the Checklist and GridView
-function PagePreview({
-  page,
-  label,
-  isCacheable = false,
-  cachedImage = null,
-  setCachedImage = null,
-  ...props
-}) {
+function PagePreview({ page, label, ...props }) {
   const { backgroundColor } = page;
   const { width, height, isActive } = props;
 
+  const { pageCanvas, generateDeferredPageCanvas } = usePageCanvas(
+    ({ state, actions }) => ({
+      pageCanvas: state.pageCanvasMap[page.id],
+      generateDeferredPageCanvas: actions.generateDeferredPageCanvas,
+    })
+  );
   const [pageNode, setPageNode] = useState();
   const setPageRef = useCallback((node) => node && setPageNode(node), []);
-  const pageAtGenerationTime = useRef();
 
-  // Whenever the page is re-generated
-  // remove the old (and now stale) image blob
+  // Generate a canvas if we don't have one
   useEffect(() => {
-    if (isCacheable && isActive && pageAtGenerationTime.current !== page) {
-      setCachedImage({ pageId: page.id, cachedImage: null });
-      pageAtGenerationTime.current = null;
+    // Avoid frequent generation of active pages as well
+    // due to rapid cache invalidation from frequent updates
+    // to page.
+    if (isActive || pageCanvas) {
+      return;
     }
-  }, [page, setCachedImage, isActive, isCacheable]);
 
-  useEffect(() => {
-    // If this is not the active page, there is a page node, we
-    // don't already have a snapshot and thumbnail caching is active
-    if (isCacheable && !isActive && pageNode && !cachedImage) {
-      // Schedule an idle callback to actually generate the image
-      const id = requestIdleCallback(
-        () => {
-          import(
-            /* webpackChunkName: "chunk-html-to-image" */ 'html-to-image'
-          ).then((htmlToImage) => {
-            htmlToImage
-              .toJpeg(pageNode, { quality: 1 })
-              .then((image) =>
-                setCachedImage({ pageId: page.id, cachedImage: image })
-              );
-            pageAtGenerationTime.current = page;
-          });
-        },
-        { timeout: 5000 }
-      );
-      // If the page somehow regenerates before the snapshot is taken,
-      // make sure to cancel the old request
-      return () => cancelIdleCallback(id);
+    generateDeferredPageCanvas([page.id, page]);
+  }, [page, pageCanvas, isActive, generateDeferredPageCanvas]);
+
+  // Grab image off of canvas if we got a canvas
+  // from the cache
+  const pageImage = useMemo(() => {
+    if (!pageCanvas) {
+      return null;
     }
-    // Required because of eslint: consistent-return
-    return undefined;
-  }, [isCacheable, isActive, pageNode, cachedImage, setCachedImage, page]);
+
+    return pageCanvas.toDataURL('image/png');
+  }, [pageCanvas]);
 
   usePerformanceTracking({
     node: pageNode,
@@ -158,14 +148,8 @@ function PagePreview({
       <TransformProvider>
         <Page ref={setPageRef} aria-label={label} {...props}>
           <PreviewWrapper background={backgroundColor}>
-            {cachedImage ? (
-              <Image
-                src={cachedImage}
-                width={width}
-                height={height}
-                alt={label}
-                decoding="async"
-              />
+            {pageImage ? (
+              <Image src={pageImage} alt={label} decoding="async" />
             ) : (
               page.elements.map((element) => (
                 <DisplayElement
@@ -185,10 +169,6 @@ function PagePreview({
 PagePreview.propTypes = {
   page: StoryPropTypes.page.isRequired,
   label: PropTypes.string,
-  isCacheable: PropTypes.bool,
-  cachedImage: PropTypes.string,
-  setCachedImage: PropTypes.func,
-  pageImageData: PropTypes.string,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   isInteractive: PropTypes.bool,

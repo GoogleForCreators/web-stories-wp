@@ -122,6 +122,7 @@ function BorderWidthAndColor() {
   return (
     <Container>
       <Input
+        tabIndex={-1}
         suffix={<Icons.BorderBox />}
         value={border.left || 0}
         aria-label={__('Border width', 'web-stories')}
@@ -131,6 +132,7 @@ function BorderWidthAndColor() {
         <>
           <Dash />
           <Color
+            tabIndex={-1}
             label={__('Border color', 'web-stories')}
             value={border.color || BLACK}
             onChange={handleColorChange}
@@ -138,7 +140,6 @@ function BorderWidthAndColor() {
             hasEyedropper={false}
             allowsOpacity={canHaveBorderOpacity}
             allowsGradient={false}
-            pickerHasEyedropper={false} // override shared floating menu Color component TODO https://github.com/GoogleForCreators/web-stories-wp/issues/11024
             allowsSavedColors={false}
           />
         </>
