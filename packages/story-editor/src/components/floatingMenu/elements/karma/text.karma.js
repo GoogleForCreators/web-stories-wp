@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { waitFor } from '@testing-library/react';
+import { within } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -120,14 +120,14 @@ describe('Design Menu: Text Styles', () => {
         )
       );
 
-      await waitFor(() => {
-        const colorPicker = fixture.screen.queryByRole('dialog', {
-          name: /Color and gradient picker/,
-        });
-        if (colorPicker) {
-          throw new Error('color picker not closed');
-        }
+      const colorPicker = await fixture.screen.queryByRole('dialog', {
+        name: /Color and gradient picker/,
       });
+      const dismissPicker = within(colorPicker).queryByRole('button', {
+        name: 'Close',
+      });
+      await fixture.events.click(dismissPicker);
+
       // Click on background to exit edit mode.
       await fixture.events.mouse.clickOn(
         fixture.editor.canvas.framesLayer.frames[0].node,
