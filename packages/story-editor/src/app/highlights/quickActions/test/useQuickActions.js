@@ -35,6 +35,7 @@ import { useConfig, useLocalMedia } from '../../..';
 import useFFmpeg from '../../../media/utils/useFFmpeg';
 import { MediaPicker } from '../useQuickActions';
 import { noop } from '../../../../utils/noop';
+import useInsertElement from '../../../../components/canvas/useInsertElement';
 
 const {
   Bucket,
@@ -77,6 +78,8 @@ jest.mock('../../useHighlights', () => ({
 }));
 
 jest.mock('../../../../utils/useApplyTextAutoStyle');
+
+jest.mock('../../../../components/canvas/useInsertElement');
 
 jest.mock('@googleforcreators/design-system', () => ({
   ...jest.requireActual('@googleforcreators/design-system'),
@@ -291,6 +294,8 @@ const mockUseStory = useStory;
 const mockDispatchStoryEvent = jest.fn();
 const mockUpdateElementsById = jest.fn();
 const mockUseApplyTextAutoStyle = useApplyTextAutoStyle;
+const mockUseInsertElement = useInsertElement;
+const mockInsertElement = jest.fn();
 const mockUseConfig = useConfig;
 const mockUseLocalMedia = useLocalMedia;
 const mockResetWithFetch = jest.fn();
@@ -334,7 +339,7 @@ describe('useQuickActions', () => {
     mockUseApplyTextAutoStyle.mockImplementation(() => ({
       applyTextAutoStyle: jest.fn(),
     }));
-
+   
     mockUseStory.mockReturnValue({
       currentPage: {
         elements: [BACKGROUND_ELEMENT],
@@ -409,6 +414,7 @@ describe('useQuickActions', () => {
           },
         })
       );
+      mockUseInsertElement.mockReturnValue(mockInsertElement);
     });
 
     it('should return the quick actions', () => {
@@ -419,7 +425,7 @@ describe('useQuickActions', () => {
 
     it('should set the correct highlight', () => {
       const { result } = renderHook(() => useQuickActions());
-
+      
       result.current[0].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
         elementId: BACKGROUND_ELEMENT.id,
