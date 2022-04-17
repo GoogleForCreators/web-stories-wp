@@ -71,9 +71,6 @@ describe('Design Menu: Keyboard Navigation', () => {
     }
   });
 
-  // TODO
-  // it('should never pass focus to a floating menu when multiple elements are selected', () => {});
-
   it('should return focus to element on esc', async () => {
     const focusContainer = fixture.screen.getByTestId('canvas-focus-container');
     // add a shape to the canvas so that a floating menu is visible

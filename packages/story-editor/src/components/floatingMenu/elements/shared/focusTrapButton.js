@@ -27,7 +27,9 @@ import { v4 as uuidv4 } from 'uuid';
 
 const _FocusTrapButton = styled(Button).attrs({ type: BUTTON_TYPES.DEFAULT })`
   background-color: transparent;
-  display: inline;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
   outline: none;
   margin: 0;
   padding: 0;
