@@ -314,12 +314,17 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
       await addPreset('Paragraph');
       await verifyStaggeredPosition(PARAGRAPH_TEXT);
 
-      // Title 3 should be positioned in the default position again.
       await addPreset('Title 3');
       await verifyStaggeredPosition('Title 3');
 
+      await addPreset('Paragraph');
+      await verifyStaggeredPosition(PARAGRAPH_TEXT);
+
       await addPreset('Caption');
       await verifyStaggeredPosition('Caption');
+
+      await addPreset('Paragraph');
+      await verifyStaggeredPosition(PARAGRAPH_TEXT);
 
       await addPreset('Paragraph');
       await verifyDefaultPosition('Paragraph', PARAGRAPH_TEXT);
