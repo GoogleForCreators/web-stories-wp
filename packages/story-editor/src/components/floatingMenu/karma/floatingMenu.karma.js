@@ -89,10 +89,23 @@ describe('Design Menu: Keyboard Navigation', () => {
     await fixture.events.keyboard.press('Tab');
 
     await focusFloatingMenu(fixture);
+
+    // Eyedropper is first to focus in the menu
+    expect(document.activeElement.getAttribute('aria-label')).toBe(
+      'Pick a color from canvas'
+    );
+
+    // arrow right once to the shape color input
+    await fixture.events.keyboard.press('ArrowRight');
+    // arrow right again to color picker
     await fixture.events.keyboard.press('ArrowRight');
 
+    // arrow right again to opacity
     await fixture.events.keyboard.press('ArrowRight');
-
+    // arrow right to border radius
+    await fixture.events.keyboard.press('ArrowRight');
+    // arrow right again to flip
+    await fixture.events.keyboard.press('ArrowRight');
     expect(document.activeElement.getAttribute('title')).toBe(
       'Flip horizontally'
     );
