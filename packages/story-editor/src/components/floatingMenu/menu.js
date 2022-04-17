@@ -85,6 +85,7 @@ const FloatingMenu = memo(
       <MenuWrapper
         ref={ref}
         aria-label={__('Design menu', 'web-stories')}
+        data-testid="floating-menu"
         visuallyHidden={visuallyHidden}
       >
         <FloatingMenuProvider handleDismiss={handleDismiss}>

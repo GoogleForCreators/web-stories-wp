@@ -17,81 +17,86 @@
 /**
  * External dependencies
  */
-import {
-    createNewStory,
-    waitForCarousel
-} from '@web-stories-wp/e2e-test-utils';
+import { createNewStory } from '@web-stories-wp/e2e-test-utils';
 
 describe('Floating Menu', () => {
-    beforeEach(async () => {
-        await createNewStory();
+  const floatingMenu = 'section[data-testid="floating-menu"]';
+
+  beforeEach(async () => {
+    await createNewStory();
+  });
+
+  it('should display text floating menu', async () => {
+    // Open a text tab
+    await expect(page).toClick('#library-tab-text');
+
+    // Add a paragraph
+    await expect(page).toClick('button[data-testid="preview-text"] span', {
+      text: /^Paragraph/,
     });
 
-    it('should display text floating menu', async () => {
-        // Open a text tab
-        await expect(page).toClick('#library-tab-text');
+    // Floating menu should show up
+    await page.waitForSelector(floatingMenu);
+    await expect(page).toMatchElement(floatingMenu);
+  });
 
-        // Add a paragraph
-        await expect(page).toClick('button[data-testid="preview-text"] span', {
-            text: /^Paragraph/,
-        });
+  it('should display media floating menu', async () => {
+    // Open a media tab
+    await expect(page).toClick('#library-tab-media');
 
-        // Floating menu should show up
-        await expect(page).toMatchElement('div[data-testid="context-menu-list"]');
-    });
+    // Add a media item
+    await expect(page).toClick(
+      'div[data-testid="mediaElement-image"]:first-child button'
+    );
 
-    it('should display media floating menu', async () => {
-        // Open a media tab
-        await expect(page).toClick('#library-tab-media');
+    const insertButton = await page.waitForXPath(
+      `//li//span[contains(text(), 'Insert image')]`
+    );
+    await insertButton.click();
 
-        // Add a media item
-        await expect(page).toClick('div[data-testid="mediaElement-image"]:first-child button');
+    // Floating menu should show up
+    await page.waitForSelector(floatingMenu);
+    await expect(page).toMatchElement(floatingMenu);
+  });
 
-        const insertButton = await page.waitForXPath(
-            `//li//span[contains(text(), 'Insert image')]`
-        );
-        await insertButton.click();
+  it('should display media3p floating menu', async () => {
+    // Open a media3p tab
+    const media3pSelector = '#library-tab-media3p';
 
-        // Floating menu should show up
-        await page.waitForSelector('div[data-testid="context-menu-list"]');
-        await expect(page).toMatchElement('div[data-testid="context-menu-list"]');
-    });
+    await expect(page).toMatchElement(media3pSelector);
+    await expect(page).toClick(media3pSelector);
 
-    it('should display media3p floating menu', async () => {
-        // Open a media3p tab
-        const media3pSelector = '#library-tab-media3p';
+    await expect(page).toMatchElement('button', { text: 'Image' });
+    await expect(page).toClick('button', { text: 'Image' });
 
-        await expect(page).toMatchElement(media3pSelector);
-        await expect(page).toClick(media3pSelector);
+    await page.waitForSelector(
+      '#library-pane-media3p [data-testid="mediaElement-image"]'
+    );
+    // Clicking will only act on the first element.
+    await expect(page).toClick(
+      '#library-pane-media3p [data-testid="mediaElement-image"]'
+    );
+    const insertButton = await page.waitForXPath(
+      `//li//span[contains(text(), 'Insert image')]`
+    );
+    await insertButton.click();
 
-        await expect(page).toMatchElement('button', { text: 'Image' });
-        await expect(page).toClick('button', { text: 'Image' });
+    // Floating menu should show up
+    await page.waitForSelector(floatingMenu);
+    await expect(page).toMatchElement(floatingMenu);
+  });
 
-        await page.waitForSelector(
-            '#library-pane-media3p [data-testid="mediaElement-image"]'
-        );
-        // Clicking will only act on the first element.
-        await expect(page).toClick(
-            '#library-pane-media3p [data-testid="mediaElement-image"]'
-        );
-        const insertButton = await page.waitForXPath(
-            `//li//span[contains(text(), 'Insert image')]`
-        );
-        await insertButton.click();
+  it('should display shapes floating menu', async () => {
+    // Open a shapes tab
+    await expect(page).toClick('#library-tab-shapes');
 
-        // Floating menu should show up
-        await page.waitForSelector('div[data-testid="context-menu-list"]');
-        await expect(page).toMatchElement('div[data-testid="context-menu-list"]');
-    });
+    // Add a shape
+    await expect(page).toClick(
+      'div[data-testid="shapes-library-pane"] div:first-child'
+    );
 
-    it('should display shapes floating menu', async () => {
-        // Open a shapes tab
-        await expect(page).toClick('#library-tab-shapes');
-
-        // Add a shape
-        await expect(page).toClick('div[data-testid="shapes-library-pane"] div:first-child');
-
-        // Floating menu should show up
-        await expect(page).toMatchElement('div[data-testid="context-menu-list"]');
-    });
+    // Floating menu should show up
+    await page.waitForSelector(floatingMenu);
+    await expect(page).toMatchElement(floatingMenu);
+  });
 });
