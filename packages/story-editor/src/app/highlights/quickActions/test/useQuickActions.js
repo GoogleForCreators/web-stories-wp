@@ -339,7 +339,7 @@ describe('useQuickActions', () => {
     mockUseApplyTextAutoStyle.mockImplementation(() => ({
       applyTextAutoStyle: jest.fn(),
     }));
-   
+
     mockUseStory.mockReturnValue({
       currentPage: {
         elements: [BACKGROUND_ELEMENT],
@@ -425,7 +425,7 @@ describe('useQuickActions', () => {
 
     it('should set the correct highlight', () => {
       const { result } = renderHook(() => useQuickActions());
-      
+
       result.current[0].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
         elementId: BACKGROUND_ELEMENT.id,
