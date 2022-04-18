@@ -116,8 +116,6 @@ function Tooltip({
   hasTail,
   placement = PLACEMENT.BOTTOM,
   children,
-  onPointerEnter = noop,
-  onPointerLeave = noop,
   onFocus = noop,
   onBlur = noop,
   isDelayed = false,
@@ -239,46 +237,38 @@ function Tooltip({
     setDynamicPlacement(placementRef.current);
   }, 100);
   const delay = useRef();
-  const onHover = useCallback(
-    (evt) => {
-      const handle = () => {
-        if (!isMounted.current) {
-          return;
-        }
+  const onHover = useCallback(() => {
+    const handle = () => {
+      if (!isMounted.current) {
+        return;
+      }
 
-        setShown(true);
-        onPointerEnter(evt);
-      };
+      setShown(true);
+    };
 
-      if (isDelayed) {
-        const now = performance.now();
-        if (now - lastVisibleDelayedTooltip < REPEAT_DELAYED_MS) {
-          // Show instantly
-          handle();
-        }
-        clearTimeout(delay.current);
-        // Invoke in DELAY_MS
-        delay.current = setTimeout(handle, DELAY_MS);
-      } else {
+    if (isDelayed) {
+      const now = performance.now();
+      if (now - lastVisibleDelayedTooltip < REPEAT_DELAYED_MS) {
+        // Show instantly
         handle();
       }
-    },
-    [isDelayed, onPointerEnter]
-  );
-  const onHoverOut = useCallback(
-    (evt) => {
-      setShown(false);
-      onPointerLeave(evt);
-      resetPlacement();
-      if (isDelayed) {
-        clearTimeout(delay.current);
-        if (shown) {
-          lastVisibleDelayedTooltip = performance.now();
-        }
+      clearTimeout(delay.current);
+      // Invoke in DELAY_MS
+      delay.current = setTimeout(handle, DELAY_MS);
+    } else {
+      handle();
+    }
+  }, [isDelayed]);
+  const onHoverOut = useCallback(() => {
+    setShown(false);
+    resetPlacement();
+    if (isDelayed) {
+      clearTimeout(delay.current);
+      if (shown) {
+        lastVisibleDelayedTooltip = performance.now();
       }
-    },
-    [onPointerLeave, resetPlacement, isDelayed, shown]
-  );
+    }
+  }, [resetPlacement, isDelayed, shown]);
 
   useEffect(() => {
     isMounted.current = true;
@@ -403,8 +393,6 @@ const TooltipPropTypes = {
   placement: PropTypes.oneOf(Object.values(PLACEMENT)),
   onBlur: PropTypes.func,
   onFocus: PropTypes.func,
-  onPointerEnter: PropTypes.func,
-  onPointerLeave: PropTypes.func,
   shortcut: PropTypes.string,
   title: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
   forceAnchorRef: PropTypes.object,
