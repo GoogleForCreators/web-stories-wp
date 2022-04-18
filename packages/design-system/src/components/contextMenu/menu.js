@@ -90,10 +90,9 @@ MenuWrapper.propTypes = {
  * @param {Object} props Props.
  * @param {HTMLElement} props.parent The parent to search
  * @param {boolean} props.isSubMenu If we're searching from submenu.
- * @param {boolean} props.wrapperRole the role assigned to the parent menu (sometimes a toolbar not a menu).
  * @return {Array.<HTMLElement>} List of focusable elements
  */
-function getFocusableChildren({ parent, isSubMenu, wrapperRole = 'menu' }) {
+function getFocusableChildren({ parent, isSubMenu }) {
   const allButtons = Array.from(
     parent.querySelectorAll(FOCUSABLE_SELECTORS.join(', '))
   );
@@ -103,7 +102,7 @@ function getFocusableChildren({ parent, isSubMenu, wrapperRole = 'menu' }) {
   // Skip considering the submenu, and the submenu items as well as inputs that are focus traps (floating menu/toolbar)
   return allButtons.filter((elem) => {
     return !elem.matches(
-      `[role="${wrapperRole}"], [role="${wrapperRole}"] [role="menu"] *, .${CONTEXT_MENU_SKIP_ELEMENT}`
+      `[role="menu"], [role="menu"] [role="menu"] *, .${CONTEXT_MENU_SKIP_ELEMENT}`
     );
   });
 }
@@ -138,7 +137,6 @@ const Menu = forwardRef(
     });
     const menuRef = useRef(null);
     const composedListRef = useCombinedRefs(mouseDownOutsideRef, menuRef, ref);
-    const wrapperRole = props?.role || 'menu';
     /**
      * Focus the first element when the user focuses the wrapper
      * with their keyboard.
@@ -157,12 +155,11 @@ const Menu = forwardRef(
         if (menuRef.current === evt.target && isFocusOutsideMenu) {
           const focusableChildren = getFocusableChildren({
             parent: menuRef.current,
-            wrapperRole,
           });
           focusableChildren?.[0]?.focus();
         }
       },
-      [onFocus, wrapperRole]
+      [onFocus]
     );
 
     const getPrevIndex = useCallback(
@@ -199,7 +196,6 @@ const Menu = forwardRef(
         const focusableChildren = getFocusableChildren({
           parent: menuRef.current,
           isSubMenu,
-          wrapperRole,
         });
 
         let prevIndex = getPrevIndex(focusableChildren);
@@ -244,7 +240,6 @@ const Menu = forwardRef(
       },
       [
         isSubMenu,
-        wrapperRole,
         getPrevIndex,
         isHorizontal,
         isRTL,
@@ -260,14 +255,13 @@ const Menu = forwardRef(
       if (isOpen) {
         const focusableChildren = getFocusableChildren({
           parent: menuRef.current,
-          wrapperRole,
         });
         if (focusableChildren.length) {
           focusableChildren?.[0]?.focus();
           setFocusedId(focusableChildren?.[0]?.id);
         }
       }
-    }, [isOpen, setFocusedId, wrapperRole]);
+    }, [isOpen, setFocusedId]);
 
     const keySpec = useMemo(
       () =>
@@ -294,7 +288,7 @@ const Menu = forwardRef(
       <MenuWrapper
         ref={composedListRef}
         data-testid="context-menu-list"
-        role={wrapperRole}
+        role="menu"
         isIconMenu={isIconMenu}
         isHorizontal={isHorizontal}
         isSecondary={isSecondary}

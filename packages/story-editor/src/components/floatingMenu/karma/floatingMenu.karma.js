@@ -49,8 +49,6 @@ describe('Design Menu: Keyboard Navigation', () => {
       fixture.editor.library.shapes.shape('Rectangle')
     );
 
-    const toolbar = fixture.screen.getByRole('toolbar');
-
     // Now let's focus the footer and tab a few times. We should never run into the floating menu or its focusable content.
 
     const { checklistToggle } = fixture.editor.footer;
@@ -65,7 +63,9 @@ describe('Design Menu: Keyboard Navigation', () => {
       // eslint-disable-next-line no-await-in-loop -- need to await key press
       await fixture.events.keyboard.press('tab');
 
-      expect(toolbar).not.toContain(document.activeElement);
+      expect(fixture.editor.canvas.designMenu).not.toContain(
+        document.activeElement
+      );
 
       count++;
     }
