@@ -156,7 +156,7 @@
     "rollup-plugin-license": "^2.6.1",
     "rollup-plugin-terser": "^7.0.2",
     "rollup-plugin-web-worker-loader": "^1.6.1",
-    "rtlcss-webpack-plugin": "^4.0.6",
+    "rtlcss-webpack-plugin": "^4.0.7",
     "source-map-loader": "^3.0.1",
     "styled-components": "^5.3.5",
     "stylelint": "^14.6.1",
