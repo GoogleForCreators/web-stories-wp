@@ -20,7 +20,7 @@
 import { createNewStory } from '@web-stories-wp/e2e-test-utils';
 
 describe('Floating Menu', () => {
-  const floatingMenu = 'section[data-testid="floating-menu"]';
+  const floatingMenu = 'div[role="menu"]';
 
   beforeEach(async () => {
     await createNewStory();
@@ -31,7 +31,7 @@ describe('Floating Menu', () => {
     await expect(page).toClick('#library-tab-text');
 
     // Add a paragraph
-    await expect(page).toClick('button[data-testid="preview-text"] span', {
+    await expect(page).toClick('#library-pane-text button span', {
       text: /^Paragraph/,
     });
 
