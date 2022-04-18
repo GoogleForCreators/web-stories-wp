@@ -26,7 +26,7 @@ export class DesignMenu extends Container {
 
   get flipVertical() {
     return this._get(
-      this.getByRole('menuitem', { name: 'Flip vertically' }),
+      this.getByRole('button', { name: 'Flip vertically' }),
       'flipVertical',
       ToggleButton
     );
@@ -34,7 +34,7 @@ export class DesignMenu extends Container {
 
   get flipHorizontal() {
     return this._get(
-      this.getByRole('menuitem', { name: 'Flip horizontally' }),
+      this.getByRole('button', { name: 'Flip horizontally' }),
       'flipHorizontal',
       ToggleButton
     );
