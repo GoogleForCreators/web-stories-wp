@@ -97,7 +97,7 @@ let lastVisibleDelayedTooltip = null;
  * @param {string} props.placement Where to place the tooltip {@link: PLACEMENT}
  * @param {string} props.shortcut Shortcut text to display in tooltip
  * @param {import('react').ReactNode|string|null} props.title Text to display in tooltip
- * @param {Object} props.tooltipProps Props for <Tooltip /> component
+ * @param {Object} props.styleOverride Props to override styling, used for Slider
  * @param {string} props.className Classname.
  * @param {string} props.isDelayed If this tooltip is to be displayed instantly on hover (default) or by a short delay.
  * @param {number} props.popupZIndexOverride If present, passes an override for z-index to popup
@@ -128,6 +128,7 @@ function Tooltip({
   ignoreMaxOffsetY = false,
   isRTL,
   leftOffset = DEFAULT_LEFT_OFFSET,
+  styleOverride,
   ...props
 }) {
   const [shown, setShown] = useState(false);
@@ -361,6 +362,7 @@ function Tooltip({
                 ref={tooltipRef}
                 shown={shown}
                 zIndex={popupZIndexOverride || DEFAULT_POPUP_Z_INDEX}
+                {...styleOverride}
               >
                 <TooltipText
                   size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
@@ -406,7 +408,7 @@ const TooltipPropTypes = {
   shortcut: PropTypes.string,
   title: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
   forceAnchorRef: PropTypes.object,
-  tooltipProps: PropTypes.object,
+  styleOverride: PropTypes.object,
   className: PropTypes.string,
   isDelayed: PropTypes.bool,
   popupZIndexOverride: PropTypes.number,
