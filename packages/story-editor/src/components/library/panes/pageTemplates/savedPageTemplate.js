@@ -36,6 +36,7 @@ import styled from 'styled-components';
 import { generatePatternStyles } from '@googleforcreators/patterns';
 import { fetchRemoteBlob, blobToFile } from '@googleforcreators/media';
 import { trackError } from '@googleforcreators/tracking';
+import { UnitsProvider } from '@googleforcreators/units';
 
 /**
  * Internal dependencies
@@ -216,9 +217,16 @@ function SavedPageTemplate(
             draggable={false}
           />
         ) : (
-          page.elements.map((element) => (
-            <DisplayElement key={element.id} previewMode element={element} />
-          ))
+          <UnitsProvider
+            pageSize={{
+              height: pageSize.height,
+              width: pageSize.width,
+            }}
+          >
+            {page.elements.map((element) => (
+              <DisplayElement key={element.id} previewMode element={element} />
+            ))}
+          </UnitsProvider>
         )}
         {isActive && <InsertionOverlay showIcon={false} />}
         <ActionButton
