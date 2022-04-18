@@ -24,5 +24,5 @@
  * to handle when to focus the input
  * so that a keyboard user doesn't get trapped in the freeform input within a menu.
  * Currently, this is used from within story-editor floatingMenu (see FocusTrapButton).
- * */
+ */
 export const CONTEXT_MENU_SKIP_ELEMENT = 'context-menu-skip-element';

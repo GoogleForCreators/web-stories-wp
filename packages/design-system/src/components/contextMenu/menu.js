@@ -87,12 +87,11 @@ MenuWrapper.propTypes = {
 /**
  * Extracts all focusable children from an html tree, optionally ignoring items from submenu.
  *
- * @param {Object} props Props.
- * @param {HTMLElement} props.parent The parent to search
- * @param {boolean} props.isSubMenu If we're searching from submenu.
+ * @param {HTMLElement} parent The parent to search
+ * @param {boolean} isSubMenu If we're searching from submenu.
  * @return {Array.<HTMLElement>} List of focusable elements
  */
-function getFocusableChildren({ parent, isSubMenu }) {
+function getFocusableChildren(parent, isSubMenu) {
   const allButtons = Array.from(
     parent.querySelectorAll(FOCUSABLE_SELECTORS.join(', '))
   );
@@ -153,9 +152,7 @@ const Menu = forwardRef(
           ![...menuChildren].some((child) => child.contains(evt.target));
 
         if (menuRef.current === evt.target && isFocusOutsideMenu) {
-          const focusableChildren = getFocusableChildren({
-            parent: menuRef.current,
-          });
+          const focusableChildren = getFocusableChildren(menuRef.current);
           focusableChildren?.[0]?.focus();
         }
       },
@@ -193,10 +190,10 @@ const Menu = forwardRef(
           return;
         }
 
-        const focusableChildren = getFocusableChildren({
-          parent: menuRef.current,
-          isSubMenu,
-        });
+        const focusableChildren = getFocusableChildren(
+          menuRef.current,
+          isSubMenu
+        );
 
         let prevIndex = getPrevIndex(focusableChildren);
 
@@ -253,9 +250,7 @@ const Menu = forwardRef(
     // focus first focusable element on open
     useEffect(() => {
       if (isOpen) {
-        const focusableChildren = getFocusableChildren({
-          parent: menuRef.current,
-        });
+        const focusableChildren = getFocusableChildren(menuRef.current);
         if (focusableChildren.length) {
           focusableChildren?.[0]?.focus();
           setFocusedId(focusableChildren?.[0]?.id);

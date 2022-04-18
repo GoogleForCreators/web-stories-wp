@@ -71,7 +71,7 @@ export const handleReturnTrappedFocus = (e, buttonRef) => {
  * @param {Object} props Props.
  * @param {Object} props.inputRef ref associated with input element
  * @param {string} props.inputLabel label of the associated input, will be used to create "Press Enter to edit [inputLabel]"
- * @param {array} props.styleOverride css to override button styles. Useful when an input has a specific style that adjusts the width, like color opacity.
+ * @param {Array} props.styleOverride css to override button styles. Useful when an input has a specific style that adjusts the width, like color opacity.
  * @param {Node} props.children children within wrapper
  */
 
