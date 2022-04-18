@@ -111,9 +111,9 @@ function SavedPageTemplate(
   const queuePageImageGeneration = usePageDataUrls(
     ({ actions }) => actions.queuePageImageGeneration
   );
-  const pageDataUrl = usePageDataUrls(
-    ({ state: { dataUrls } }) => dataUrls[page.id]
-  );
+  const pageDataUrl =
+    usePageDataUrls(({ state: { dataUrls } }) => dataUrls[page.id]) ||
+    page.pregeneratedPageDataUrl;
   const [isActive, setIsActive] = useState(false);
 
   useFocusOut(ref, () => setIsActive(false), []);
