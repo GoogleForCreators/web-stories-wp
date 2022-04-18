@@ -19,7 +19,7 @@
  */
 
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Button, BUTTON_TYPES } from '@googleforcreators/design-system';
 import { forwardRef } from '@googleforcreators/react';
 import { __, sprintf } from '@googleforcreators/i18n';
@@ -34,7 +34,10 @@ const _FocusTrapButton = styled(Button).attrs({ type: BUTTON_TYPES.DEFAULT })`
   margin: 0;
   padding: 0;
   min-width: inherit;
-  ${({ styleOverride }) => styleOverride && styleOverride}
+  ${({ styleOverride }) =>
+    css`
+      ${styleOverride}
+    `}
 `;
 _FocusTrapButton.propTypes = {
   styleOverride: PropTypes.array,
