@@ -78,7 +78,7 @@ export class DesignMenu extends Container {
 
   textAlignOption(name) {
     const dialog = this.getByRole('dialog', { name: 'Text alignment options' });
-    return this.getByRoleIn(dialog, 'menuitem', { name });
+    return this.getByRoleIn(dialog, 'button', { name });
   }
 
   get fontSize() {
@@ -103,7 +103,7 @@ export class DesignMenu extends Container {
 
   get bold() {
     return this._get(
-      this.getByRole('menuitem', { name: /Toggle bold/ }),
+      this.getByRole('button', { name: /Toggle bold/ }),
       'toggleBold',
       ToggleButton
     );
@@ -111,7 +111,7 @@ export class DesignMenu extends Container {
 
   get italic() {
     return this._get(
-      this.getByRole('menuitem', { name: /Toggle italic/ }),
+      this.getByRole('button', { name: /Toggle italic/ }),
       'toggleItalic',
       ToggleButton
     );
@@ -119,7 +119,7 @@ export class DesignMenu extends Container {
 
   get underline() {
     return this._get(
-      this.getByRole('menuitem', { name: /Toggle underline/ }),
+      this.getByRole('button', { name: /Toggle underline/ }),
       'toggleUnderline',
       ToggleButton
     );
