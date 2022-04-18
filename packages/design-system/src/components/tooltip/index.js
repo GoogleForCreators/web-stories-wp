@@ -380,6 +380,7 @@ function Tooltip({
                     <Tail
                       placement={dynamicPlacement}
                       translateX={-dynamicOffset?.x || arrowDelta}
+                      isRTL={isRTL}
                     />
                   </>
                 )}
