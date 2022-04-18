@@ -51,6 +51,8 @@ const REPEAT_DELAYED_MS = 500;
 // To account for the wp-admin sidenav
 const DEFAULT_LEFT_OFFSET = 0;
 
+const DEFAULT_POPUP_Z_INDEX = 2;
+
 const Wrapper = styled.div`
   position: relative;
 `;
@@ -66,8 +68,7 @@ const TooltipContainer = styled.div`
   transition: 0.4s opacity;
   opacity: ${({ shown }) => (shown ? 1 : 0)};
   pointer-events: ${({ shown }) => (shown ? 'all' : 'none')};
-  // TODO: hardcoded?
-  z-index: 9999;
+  z-index: ${({ zIndex }) => zIndex};
   border-radius: 4px;
   background-color: ${({ theme }) => theme.colors.inverted.bg.primary};
 
@@ -352,13 +353,14 @@ function Tooltip({
                   : popupState.offset
               }
               noOverFlow
-              zIndex={999999999999}
+              zIndex={popupZIndexOverride || DEFAULT_POPUP_Z_INDEX}
               transforms={getTransforms(dynamicPlacement, isRTL)}
             >
               <TooltipContainer
                 className={className}
                 ref={tooltipRef}
                 shown={shown}
+                zIndex={popupZIndexOverride || DEFAULT_POPUP_Z_INDEX}
               >
                 <TooltipText
                   size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
