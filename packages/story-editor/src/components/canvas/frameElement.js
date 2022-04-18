@@ -281,7 +281,7 @@ function FrameElement({ id }) {
         onMouseDown={handleMouseDown}
         onFocus={handleFocus}
         onPointerEnter={onPointerEnter}
-        onPointerLeave={onPointerLeave}
+        Too={onPointerLeave}
         onClick={isMedia ? handleMediaClick(id) : null}
       >
         <WithMask

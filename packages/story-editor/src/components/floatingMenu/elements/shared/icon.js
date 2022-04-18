@@ -21,13 +21,13 @@ import PropTypes from 'prop-types';
 import { memo, forwardRef } from '@googleforcreators/react';
 import {
   ContextMenuComponents,
-  Tooltip,
   TOOLTIP_PLACEMENT,
 } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
  */
+import Tooltip from '../../../tooltip';
 import ToggleButton from './toggleButton';
 
 const IconButton = memo(

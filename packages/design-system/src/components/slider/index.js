@@ -254,6 +254,7 @@ function Slider({
       title={printValue}
       placement={PLACEMENT.TOP}
       forceAnchorRef={fakeThumbRef}
+      //TODO: is this component used? if so, add back tooltipProps and add isRTL and leftOffset
       tooltipProps={{
         style: {
           transform: `translate(${

@@ -41,6 +41,8 @@ export default function Tooltip({
       placement={derivedPlacement}
       isRTL={isRTL}
       leftOffset={leftOffset}
+      //TODO: https://github.com/GoogleForCreators/web-stories-wp/issues/11200
+      ignoreMaxOffsetY
       {...props}
     />
   );

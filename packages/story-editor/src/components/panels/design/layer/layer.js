@@ -328,7 +328,7 @@ function Layer({ element }) {
               title={__('Delete Layer', 'web-stories')}
               hasTail
               isDelayed
-              placement={TOOLTIP_PLACEMENT.BOTTOM_END}
+              placement={TOOLTIP_PLACEMENT.BOTTOM}
             >
               <LayerAction
                 ref={deleteButtonRef}
@@ -344,7 +344,7 @@ function Layer({ element }) {
               title={__('Duplicate Layer', 'web-stories')}
               hasTail
               isDelayed
-              placement={TOOLTIP_PLACEMENT.BOTTOM_END}
+              placement={TOOLTIP_PLACEMENT.BOTTOM}
             >
               <LayerAction
                 aria-label={__('Duplicate', 'web-stories')}
