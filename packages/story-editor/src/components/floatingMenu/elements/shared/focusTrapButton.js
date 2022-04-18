@@ -34,7 +34,11 @@ const _FocusTrapButton = styled(Button).attrs({ type: BUTTON_TYPES.DEFAULT })`
   margin: 0;
   padding: 0;
   min-width: inherit;
+  ${({ styleOverride }) => styleOverride && styleOverride}
 `;
+_FocusTrapButton.propTypes = {
+  styleOverride: PropTypes.array,
+};
 
 export const handleReturnTrappedFocus = (e, buttonRef) => {
   // only bubble up for moving focus
@@ -67,11 +71,12 @@ export const handleReturnTrappedFocus = (e, buttonRef) => {
  * @param {Object} props Props.
  * @param {Object} props.inputRef ref associated with input element
  * @param {string} props.inputLabel label of the associated input, will be used to create "Press Enter to edit [inputLabel]"
+ * @param {array} props.styleOverride css to override button styles. Useful when an input has a specific style that adjusts the width, like color opacity.
  * @param {Node} props.children children within wrapper
  */
 
 const FocusTrapButton = forwardRef(function FocusTrapButton(
-  { inputRef, inputLabel, children },
+  { inputRef, inputLabel, children, styleOverride },
   ref
 ) {
   return (
@@ -99,6 +104,7 @@ const FocusTrapButton = forwardRef(function FocusTrapButton(
         __('Press Enter to edit %s', 'web-stories'),
         inputLabel
       )}
+      styleOverride={styleOverride}
     >
       {children}
     </_FocusTrapButton>
@@ -111,4 +117,5 @@ FocusTrapButton.propTypes = {
   inputRef: PropTypes.object.isRequired,
   inputLabel: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
+  styleOverride: PropTypes.array,
 };

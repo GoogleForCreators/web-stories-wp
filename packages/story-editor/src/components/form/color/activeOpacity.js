@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useRef } from '@googleforcreators/react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { PatternPropType } from '@googleforcreators/patterns';
 import { __ } from '@googleforcreators/i18n';
@@ -39,7 +39,7 @@ const Space = styled.div`
 `;
 const OpacityWrapper = styled.div`
   width: ${({ isInDesignMenu }) =>
-    isInDesignMenu ? `calc(39% - 10px)` : `calc(47% - 10px)`};
+    isInDesignMenu ? 'calc(39% - 10px)' : 'calc(47% - 10px)'};
 `;
 
 const ActiveOpacity = ({
@@ -57,6 +57,9 @@ const ActiveOpacity = ({
       ref={opacityFocusTrapButtonRef}
       inputRef={opacityFocusTrapRef}
       inputLabel={__('Opacity', 'web-stories')}
+      styleOverride={css`
+        width: ${isInDesignMenu ? 'calc(39%)' : 'calc(47%)'};
+      `}
     >
       <Space />
       <OpacityWrapper isInDesignMenu={isInDesignMenu}>
