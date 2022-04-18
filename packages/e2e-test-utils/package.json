@@ -30,6 +30,6 @@
     "@wordpress/url": "^3.2.1"
   },
   "devDependencies": {
-    "@percy/puppeteer": "^2.0.0"
+    "@percy/puppeteer": "^2.0.1"
   }
 }
