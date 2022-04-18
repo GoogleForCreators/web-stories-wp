@@ -48,6 +48,9 @@ describe('Animation Panel', function () {
       }
     });
     await fixture.events.click(fixture.editor.sidebar.designTab);
+    await fixture.events.click(
+      fixture.editor.sidebar.designPanel.animationSection
+    );
     const panel = fixture.editor.sidebar.designPanel.animation;
     expect(panel).not.toBeNull();
   });
@@ -69,6 +72,9 @@ describe('Animation Panel', function () {
     await fixture.events.keyboard.up('Shift');
 
     await fixture.events.click(fixture.editor.sidebar.designTab);
+    await fixture.events.click(
+      fixture.editor.sidebar.designPanel.animationSection
+    );
     const panel = await fixture.screen.queryByRole('region', {
       name: /^Animation$/,
     });
@@ -86,6 +92,9 @@ describe('Animation Panel', function () {
       }
     });
     await fixture.events.click(fixture.editor.sidebar.designTab);
+    await fixture.events.click(
+      fixture.editor.sidebar.designPanel.animationSection
+    );
     const panel = fixture.editor.sidebar.designPanel.animation;
 
     const effectChooser = panel.effectChooser;
@@ -108,6 +117,9 @@ describe('Animation Panel', function () {
       }
     });
     await fixture.events.click(fixture.editor.sidebar.designTab);
+    await fixture.events.click(
+      fixture.editor.sidebar.designPanel.animationSection
+    );
     const panel = fixture.editor.sidebar.designPanel.animation;
 
     const effectChooser = panel.effectChooser;
@@ -135,6 +147,9 @@ describe('Animation Panel', function () {
       }
     });
     await fixture.events.click(fixture.editor.sidebar.designTab);
+    await fixture.events.click(
+      fixture.editor.sidebar.designPanel.animationSection
+    );
     const panel = fixture.editor.sidebar.designPanel.animation;
 
     const effectChooser = panel.effectChooser;

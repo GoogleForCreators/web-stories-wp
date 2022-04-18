@@ -877,6 +877,9 @@ describe('Right Click Menu integration', () => {
         );
 
         // add animation
+        await fixture.events.click(
+          fixture.editor.sidebar.designPanel.animationSection
+        );
         const effectChooserToggle =
           fixture.editor.sidebar.designPanel.animation.effectChooser;
 
@@ -905,6 +908,9 @@ describe('Right Click Menu integration', () => {
         );
 
         // add border
+        await fixture.events.click(
+          fixture.editor.sidebar.designPanel.selectionSection
+        );
         await fixture.events.click(
           fixture.editor.sidebar.designPanel.border.width()
         );
