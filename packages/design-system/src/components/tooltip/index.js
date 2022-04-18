@@ -180,6 +180,9 @@ function Tooltip({
   // cutoff the contents of the tooltip.
   const positionPlacement = useCallback(
     ({ offset }, { left, right, height }) => {
+      if (!offset) {
+        return;
+      }
       //  In order to check if there's an overlap with the window's bottom edge we need the overall height of the tooltip
       //  from the anchor's y position along with the amount of space between the anchor and the tooltip content.
       const neededVerticalSpace =
@@ -202,22 +205,9 @@ function Tooltip({
       } else if (isOverFlowingLeft) {
         // We can sometimes render a tooltip too far to the left, ie. in RTL mode.
         // when that is the case, we can switch to placement-end and the tooltip will no longer get cutoff.
-        if (isRTL) {
-          if (dynamicPlacement.endsWith('-start')) {
-            setDynamicPlacement(dynamicPlacement.replace('-start', '-end'));
-          } else if (dynamicPlacement.startsWith('right')) {
-            setDynamicPlacement(dynamicPlacement.replace('right', 'left'));
-          } else if (
-            dynamicPlacement === PLACEMENT.BOTTOM ||
-            dynamicPlacement === PLACEMENT.TOP
-          ) {
-            setDynamicPlacement(`${dynamicPlacement}-end`);
-          }
-        } else {
-          setDynamicOffset({
-            x: leftOffset - left,
-          });
-        }
+        setDynamicOffset({
+          x: (isRTL ? 0 : leftOffset) - left,
+        });
       } else if (isOverFlowingRight) {
         setDynamicOffset({
           x: offset.bodyRight - right - leftOffset,
@@ -227,23 +217,20 @@ function Tooltip({
     [dynamicPlacement, isRTL, leftOffset]
   );
 
-  const positionArrow = useCallback(
-    (popupDimensions) => {
-      const anchorElBoundingBox = anchorRef.current?.getBoundingClientRect();
-      const tooltipElBoundingBox = tooltipRef.current?.getBoundingClientRect();
-      if (!tooltipElBoundingBox || !anchorElBoundingBox) {
-        return;
-      }
-      positionPlacement(popupDimensions, tooltipElBoundingBox);
+  const positionArrow = useCallback(() => {
+    const anchorElBoundingBox = anchorRef.current?.getBoundingClientRect();
+    const tooltipElBoundingBox = tooltipRef.current?.getBoundingClientRect();
+    if (!tooltipElBoundingBox || !anchorElBoundingBox) {
+      return;
+    }
+    positionPlacement(popupState, tooltipElBoundingBox);
 
-      const delta =
-        getBoundingBoxCenter(anchorElBoundingBox) -
-        getBoundingBoxCenter(tooltipElBoundingBox);
+    const delta =
+      getBoundingBoxCenter(anchorElBoundingBox) -
+      getBoundingBoxCenter(tooltipElBoundingBox);
 
-      setArrowDelta(delta);
-    },
-    [positionPlacement]
-  );
+    setArrowDelta(delta);
+  }, [positionPlacement, popupState]);
 
   const resetPlacement = useDebouncedCallback(() => {
     setDynamicPlacement(placementRef.current);
@@ -326,8 +313,8 @@ function Tooltip({
       return;
     }
 
-    positionArrow(popupState);
-  }, [popupState, positionArrow]);
+    positionArrow();
+  }, [positionArrow]);
 
   useResizeEffect({ current: document.body }, positionPopup, [positionPopup]);
 
@@ -351,15 +338,15 @@ function Tooltip({
         {children}
       </Wrapper>
 
-      {popupState && isOpen
+      {popupState?.offset && isOpen
         ? createPortal(
             <PopupContainer
               ref={popup}
               $offset={
                 dynamicOffset
                   ? {
-                      ...popupState?.offset,
-                      x: popupState?.offset.x + dynamicOffset?.x,
+                      ...popupState.offset,
+                      x: popupState.offset.x + dynamicOffset?.x,
                     }
                   : popupState.offset
               }
@@ -391,7 +378,7 @@ function Tooltip({
                     </SvgForTail>
                     <Tail
                       placement={dynamicPlacement}
-                      translateX={arrowDelta}
+                      translateX={-dynamicOffset?.x || arrowDelta}
                     />
                   </>
                 )}
