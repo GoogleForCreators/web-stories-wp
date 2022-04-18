@@ -33,7 +33,7 @@ import useDesignPanels from './useDesignPanels';
 export const StyledPane = styled(Pane)`
   height: 100%;
   padding: 0;
-  overflow: hidden;
+  overflow-y: auto;
 `;
 
 function StylePanes() {
