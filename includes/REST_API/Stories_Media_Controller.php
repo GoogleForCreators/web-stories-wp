@@ -249,7 +249,7 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 	public function prime_post_caches( $posts ) {
 		$thumb_ids  = array_filter( array_map( 'get_post_thumbnail_id', $posts ) );
 		$parent_ids = array_filter( wp_list_pluck( $posts, 'post_parent' ) );
-		$post_ids   = array_merge( $thumb_ids, $parent_ids );
+		$post_ids   = array_unique( array_merge( $thumb_ids, $parent_ids ) );
 		if ( ! empty( $post_ids ) ) {
 			_prime_post_caches( $post_ids );
 		}
