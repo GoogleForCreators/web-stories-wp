@@ -25,7 +25,6 @@ import {
   BUTTON_TYPES,
   Icons,
   themeHelpers,
-  TOOLTIP_PLACEMENT,
 } from '@googleforcreators/design-system';
 import { useRef, memo } from '@googleforcreators/react';
 import { getDefinitionForType } from '@googleforcreators/elements';
@@ -328,7 +327,6 @@ function Layer({ element }) {
               title={__('Delete Layer', 'web-stories')}
               hasTail
               isDelayed
-              placement={TOOLTIP_PLACEMENT.BOTTOM}
             >
               <LayerAction
                 ref={deleteButtonRef}
@@ -344,7 +342,6 @@ function Layer({ element }) {
               title={__('Duplicate Layer', 'web-stories')}
               hasTail
               isDelayed
-              placement={TOOLTIP_PLACEMENT.BOTTOM}
             >
               <LayerAction
                 aria-label={__('Duplicate', 'web-stories')}

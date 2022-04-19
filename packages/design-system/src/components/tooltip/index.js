@@ -92,8 +92,6 @@ let lastVisibleDelayedTooltip = null;
  * @param {boolean} props.hasTail Should the tooltip show a tail
  * @param {Function} props.onBlur Blur event callback function
  * @param {Function} props.onFocus Focus event callback function
- * @param {Function} props.onPointerEnter Pointer enter event callback function
- * @param {Function} props.onPointerLeave Pointer leave event callback function
  * @param {string} props.placement Where to place the tooltip {@link: PLACEMENT}
  * @param {string} props.shortcut Shortcut text to display in tooltip
  * @param {import('react').ReactNode|string|null} props.title Text to display in tooltip

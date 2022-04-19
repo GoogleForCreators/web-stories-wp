@@ -158,8 +158,6 @@ export function getOffset({
       : Math.max(topOffset, Math.min(offsetY, maxOffsetY)),
     width: anchorRect.width,
     height: anchorRect.height,
-    popupLeft: popupRect?.left,
-    popupHeight: popupRect?.height,
     bodyRight: bodyRect?.right,
   };
 }

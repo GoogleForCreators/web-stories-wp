@@ -202,8 +202,9 @@ const FakeThumb = styled.div`
  * @param {number} props.max Maximum value
  * @param {number} props.thumbSize Thumb diameter in pixels if different from standard
  * @param {string} props.suffix Optional value suffix to be displayed in tooltip
- * @param {boolean} props.isRTL needed for tooltip placement
- * @param {number} props.leftOffset needed for tooltip placement
+ * @param {boolean} props.isRTL Needed for tooltip placement
+ * @param {number} props.leftOffset Needed for tooltip placement
+ * @param {number} props.popupZIndexOverride Needed for z index of tooltip
  * @return {Node} Range input component
  */
 function Slider({
@@ -217,6 +218,7 @@ function Slider({
   suffix = '',
   isRTL,
   leftOffset,
+  popupZIndexOverride,
   ...rest
 }) {
   const ref = useRef();
@@ -256,7 +258,7 @@ function Slider({
     <Tooltip
       title={printValue}
       placement={PLACEMENT.TOP}
-      popupZIndexOverride={11}
+      popupZIndexOverride={popupZIndexOverride}
       forceAnchorRef={fakeThumbRef}
       isRTL={isRTL}
       leftOffset={leftOffset}
@@ -305,6 +307,7 @@ Slider.propTypes = {
   suffix: PropTypes.string,
   isRTL: PropTypes.bool,
   leftOffset: PropTypes.number,
+  popupZIndexOverride: PropTypes.number,
 };
 
 export { Slider };

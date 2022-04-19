@@ -71,6 +71,6 @@ export const PopupContainer = styled.div.attrs(
   left: 0px;
   top: 0px;
   position: fixed;
-  ${({ noOverFlow }) => (noOverFlow ? '' : `overflow-y: auto;`)};
+  ${({ noOverFlow }) => (noOverFlow ? '' : 'overflow-y: auto;')};
   max-height: ${({ topOffset }) => `calc(100vh - ${topOffset}px)`};
 `;
