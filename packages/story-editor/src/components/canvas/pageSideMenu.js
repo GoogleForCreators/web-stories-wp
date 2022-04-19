@@ -121,6 +121,7 @@ function PageSideMenu() {
                         aria-label={label}
                         onClick={(evt) => {
                           onClick(evt);
+
                           externalOnClick(evt);
                         }}
                         {...quickAction}
