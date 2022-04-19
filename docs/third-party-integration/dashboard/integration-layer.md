@@ -193,7 +193,7 @@ To configure the dashboard to your needs you can pass various config options to 
             - required: No
             - description: It defines the top bar height, which is used in calculation for placement of components. 
 
-- `containerID`
+- `containerId`
     - type: `string`
     - required: No
     - description: The id of the upper dashboard container which defines the available space for dashboard. If not defined `window.innerWidth` will be used for calculating the space.

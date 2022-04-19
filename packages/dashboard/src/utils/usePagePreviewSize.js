@@ -105,8 +105,8 @@ const getContainerWidth = (windowWidth) => {
 
 export default function usePagePreviewSize(options = {}) {
   const { thumbnailMode = false, isGrid } = options;
-  const { containerID } = useConfig();
-  const dashboardContainerRef = useRef(document.getElementById(containerID));
+  const { containerId } = useConfig();
+  const dashboardContainerRef = useRef(document.getElementById(containerId));
 
   // BP is contingent on the actual window size
   const [viewportWidth, setViewportWidth] = useState(window.innerWidth);

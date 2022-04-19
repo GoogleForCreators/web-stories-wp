@@ -82,7 +82,7 @@ window.webStories.initializeStoryDashboard = (id, config) => {
     styleConstants: {
       topOffset: TOOLBAR_HEIGHT,
     },
-    containerID: 'wpbody',
+    containerId: 'wpbody',
   };
 
   render(
