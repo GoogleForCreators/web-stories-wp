@@ -243,8 +243,8 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 	/**
 	 * Prime post caches for attachments and parents.
 	 *
-	 * @param array $posts
-	 * @return array Array of posts.
+	 * @param WP_Post[] $posts Array of post objects.
+	 * @return mixed Array of posts.
 	 */
 	public function prime_post_caches( $posts ) {
 		$thumb_ids  = array_filter( array_map( 'get_post_thumbnail_id', $posts ) );
