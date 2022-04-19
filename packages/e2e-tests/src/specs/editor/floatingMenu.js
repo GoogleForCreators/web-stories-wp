@@ -20,7 +20,7 @@
 import { createNewStory } from '@web-stories-wp/e2e-test-utils';
 
 describe('Floating Menu', () => {
-  const floatingMenu = 'div[role="menu"]';
+  const floatingMenu = 'section[aria-label="Design menu"]';
 
   beforeEach(async () => {
     await createNewStory();
