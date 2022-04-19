@@ -105,7 +105,9 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
 	public function get_items( $request ) {
+		add_filter( 'posts_results', [ $this, 'prime_post_caches' ] );
 		$response = parent::get_items( $request );
+		remove_filter( 'posts_results', [ $this, 'prime_post_caches' ] );
 
 		if ( $request['_web_stories_envelope'] && ! is_wp_error( $response ) ) {
 			/**
@@ -236,6 +238,27 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 		}
 
 		return $this->get_post( $attachment_id );
+	}
+
+	/**
+	 * Prime post caches for attachments and parents.
+	 *
+	 * @param array $posts
+	 * @return array Array of posts.
+	 */
+	public function prime_post_caches( $posts ) {
+		$thumb_ids = array_filter( array_map( 'get_post_thumbnail_id', $posts ) );
+
+		if ( ! empty( $thumb_ids ) ) {
+			_prime_post_caches( $thumb_ids, true, true );
+		}
+
+		$parent_ids = array_filter( wp_list_pluck( $posts, 'post_parent') ) ;
+		if ( ! empty( $parent_ids ) ) {
+			_prime_post_caches( $parent_ids, false, true );
+		}
+
+		return $posts;
 	}
 
 	/**
