@@ -122,6 +122,8 @@ class Stories_Media_Controller extends DependencyInjectedRestTestCase {
 		parent::set_up();
 
 		$this->controller = $this->injector->make( \Google\Web_Stories\REST_API\Stories_Media_Controller::class );
+
+		wp_set_object_terms( self::$poster_attachment_id, 'poster-generation', $this->container->get( 'media.media_source' )->get_taxonomy_slug() );
 	}
 
 	/**
