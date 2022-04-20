@@ -17,6 +17,7 @@ packages
 patches
 plugin-assets
 public
+proto
 sitemap-generator
 static
 tests

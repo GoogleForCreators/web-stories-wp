@@ -1,0 +1,29 @@
+syntax = "proto2";
+package web_stories_editor;
+
+import "types.proto";
+import "element.proto";
+import "animation.proto";
+
+// A page in a story.
+message Page {
+  // Page ID: `<amp-story-page id={id}>`.
+  required string id = 1;
+
+  // The "fill" color of the page.
+  // Default: "no fill".
+  // TODO: rename to "fill"?
+  optional Pattern background_color = 2;
+
+  // The ID of the background element.
+  // TODO: we currently do not like this.
+  optional string background_element_id = 3;
+
+  // The background overlay. A screen shown over the background layer.
+  // See https://user-images.githubusercontent.com/726049/78398420-e75f6b80-75a7-11ea-9696-7368a51febf9.png.
+  optional BackgroundOverlayType background_overlay = 4 [default = NONE];
+
+  repeated Element elements = 5;
+
+  repeated Animation animations = 6;
+}

@@ -1,0 +1,143 @@
+syntax = "proto2";
+package web_stories_editor;
+
+message AttributionAuthor {
+  // Display name of the author.
+  required string display_name = 1;
+
+  // The author's profile or website.
+  optional string url = 2;
+}
+
+message Attribution {
+  // The optional author of the media object.
+  optional AttributionAuthor author = 1;
+
+  // The optional url to register the media usage.
+  optional string register_usage_url = 2;
+}
+
+message TrimData {
+  // ID of the original video.
+  required string original = 1;
+
+  // Time stamp of start time of new video. Example '00:01:02.345'.
+  required string start = 2;
+
+  // Time stamp of end time of new video. Example '00:01:02.345'.
+  required string end = 3;
+}
+
+message Output {
+  // The MIME type of the resource. E.g. "image/png".
+  required string mime_type = 1;
+
+  // The source URL of the resource.
+  required string src = 2;
+}
+
+message ResourceSize {
+  // The MIME type of the resource. E.g. "image/png".
+  required string mime_type = 1;
+
+  // The source URL of the resource.
+  required string source_url = 2;
+
+  // The natural width of the resource in physical pixels.
+  optional int32 width = 3;
+
+  // The natural height of the resource in physical pixels.
+  optional int32 height = 4;
+}
+
+// A media resource.
+message Resource {
+  enum ResourceType {
+    UNKNOWN = 0;
+    IMAGE = 1;
+    VIDEO = 2;
+    GIF = 3;
+    TRACK = 4;
+  }
+
+  // The resource ID.
+  // TODO: currently this value is local to the editor's media system.
+  required string id = 1;
+
+  // The type of the resource.
+  required ResourceType type = 2;
+
+  // The MIME type of the resource. E.g. "image/png".
+  required string mime_type = 3;
+
+  // The source URL of the resource.
+  required string src = 4;
+
+  // The "alt" text of the resource.
+  optional string alt = 6;
+
+  // The natural width of the resource in physical pixels.
+  optional int32 width = 7;
+
+  // The natural height of the resource in physical pixels.
+  optional int32 height = 8;
+
+  // The resource's average color.
+  optional string base_color = 9;
+
+  // BlurHash.
+  optional string blur_hash = 10;
+
+  // Whether the resource externally hosted.
+  optional bool is_external = 11 [default = false];
+
+  // Whether the resource is a placeholder.
+  optional bool is_placeholder = 12 [default = false];
+
+  // Whether the resource needs a CORS proxy.
+  optional bool needs_proxy = 13 [default = false];
+
+  // Resource creation date.
+  optional string creation_date = 14;
+
+  map<string, ResourceSize> sizes = 15;
+
+  optional Attribution attribution = 16;
+
+  // TODO: not sure if an extension or just optional fields are better here.
+  extensions 50 to max;
+}
+
+message VideoResource {
+  extend Resource {
+    // The resource's poster. Used only for video.
+    optional string poster = 50;
+
+    // The resource's poster ID.
+    // TODO: currently this value is local to the editor's media system.
+    optional string poster_id = 51;
+
+    // Length in seconds.
+    optional int32 length = 52;
+
+    // The formatted length, e.g. "01:17".
+    optional string length_formatted = 53;
+
+    // Whether the resource is considered to be already compressed.
+    optional bool is_optimized = 54 [default = false];
+
+    // Whether the resource is muted.
+    optional bool is_muted = 55 [default = false];
+
+    // Information about trimmed video and its original.
+    optional TrimData trim_data = 56;
+  }
+
+  extensions 70 to max;
+}
+
+message GifResource {
+  extend VideoResource {
+    optional Output output = 70;
+  }
+}

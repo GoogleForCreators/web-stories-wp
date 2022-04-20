@@ -1,0 +1,163 @@
+syntax = "proto2";
+package web_stories_editor;
+
+import "resource.proto";
+import "types.proto";
+
+// An element on a story page.
+message Element {
+  // Element ID.
+  required string id = 1;
+
+  // Element type.
+  required ElementType type = 2;
+
+  // Opacity: 0-100%.
+  required int32 opacity = 3 [default = 100];
+
+  // Box: {x, y, width, height} in px.
+  // The px coordinate system is 440x660.
+  required int32 x = 4;
+  required int32 y = 5;
+  required int32 width = 6;
+  required int32 height = 7;
+
+  // Rotation angle: 0-360deg.
+  required int32 rotation_angle = 8 [default = 0];
+
+  // Whether the element is locked for editing.
+  required bool is_locked = 12;
+
+  optional Link link = 9;
+
+  // The vertical/horizontal flip.
+  // Default: "no flip".
+  optional Flip flip = 10;
+
+  // The clipping mask of the element.
+  // Default: "no mask" or a simple rectangle mask.
+  optional Mask mask = 11;
+
+  // TODO: not sure if an extension or just optional fields are better here.
+  extensions 1000 to max;
+}
+
+// The Element with type = VIDEO|IMAGE.
+message MediaElement {
+  extend Element {
+    // The media resource.
+    optional Resource resource = 1000;
+
+    // The media %-scale in the element's box (width:height). 100% means
+    // that the media fits the box 1:1. 200% means that the media is twice
+    // as big as the box. Minimum value is 100%.
+    optional int32 scale = 1001 [default = 100];
+
+    // The focal point point of the media when scale is greater than 100%.
+    // The editor will try to position the scaled media's to make the focal
+    // point as close as possible to the box's center.
+    // The values are in 0-100% scale. 0% indicates top or left corner. 100%
+    // indicates bottom or right corner.
+    optional int32 focal_x = 1002 [default = 50];
+    optional int32 focal_y = 1003 [default = 50];
+
+    // The title override. See Resource.title.
+    optional string title = 1004;
+
+    // The alt override. See Resource.alt.
+    optional string alt = 1005;
+
+    // The poster override. See Resource.poster.
+    optional string poster = 1006;
+  }
+}
+
+// The Element with type = TEXT.
+message TextElement {
+  extend Element {
+    // The HTML content markup. Only safe tags are allowed such as
+    // `<strong>` and `<i>`. The HTML characters are escaped.
+    optional string content = 2000;
+
+    // The font family for Google Fonts.
+    // TODO: no way to customize the source of fonts. Consider adding either
+    // source (e.g. fonts.google.com) and/or the stylesheet URL.
+    optional string font_family = 2001;
+
+    // The fallback font families.
+    repeated string font_fallback = 2002;
+
+    // The font weight: 100-900.
+    optional int32 font_weight = 2003 [default = 400];
+
+    // The font size in the px coordinate system (440x660).
+    optional int32 font_size = 2004;
+
+    // The font style.
+    // TODO: do we need font-style? Or just `bool italic`?
+    optional FontStyle font_style = 2005 [default = NORMAL];
+
+    // The bold font style.
+    optional bool bold = 2006 [default = false];
+
+    // The line height. 1 indicates the line height equal to the font size.
+    optional float line_height = 2007 [default = 1.3];
+
+    // The letter spacing in %. 0% indicates normal spacing. 100% indicates
+    // the spacing equal to 1em.
+    optional int32 letter_spacing = 2008 [default = 0];
+
+    // Text alignment.
+    optional Alignment text_align = 2009 [default = INITIAL];
+
+    // Text decortation.
+    optional TextDecoration text_decoration = 2010;
+
+    // The text box padding.
+    // Default: 0.
+    optional Padding padding = 2011;
+
+    // The text color.
+    // TODO: rename to text_color?
+    optional Pattern color = 2012;
+
+    // The background text mode.
+    optional BackgroundTextMode background_text_mode = 2013;
+
+    // The "fill" or "highlight" color of the element depending on the
+    // `background_text_mode` value.
+    // Default: "no fill"/"no highlight".
+    optional Pattern background_color = 2014;
+  }
+}
+
+// The Element with type = SHAPE.
+message ShapeElement {
+  extend Element {
+    // The "fill" color of the shape.
+    // Default: "no fill".
+    // TODO: rename to "fill"?
+    optional Pattern background_color = 3001;
+  }
+}
+
+message StickerElement {
+  extend Element {
+    optional Sticker sticker = 40001;
+  }
+}
+
+message Sticker {
+  required string type = 1;
+}
+
+message ProductElement {
+  extend Element {
+    // Product data.
+    optional Product product = 5001;
+  }
+}
+
+message Product {
+  // TODO:
+}

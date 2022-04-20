@@ -1,0 +1,18 @@
+syntax = "proto2";
+package web_stories_editor;
+
+import "page.proto";
+
+message Metadata {
+  // Publisher name.
+  required string publisher = 1;
+}
+
+// A story.
+message Story {
+  required string title = 1 [default = ""];
+
+  repeated Page page = 2;
+
+  required Metadata metadata = 3;
+}

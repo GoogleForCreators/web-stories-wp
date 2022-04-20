@@ -1,0 +1,32 @@
+syntax = "proto2";
+package web_stories_editor;
+
+// The element type.
+enum AnimationType {
+  BLINK_ON = 0;
+  BOUNCE = 1;
+  FADE =2;
+  FLIP = 3;
+  FLOAT_ON = 4;
+  MOVE = 5;
+  PULSE = 6;
+  SPIN = 7;
+  ZOOM = 8;
+}
+
+message Animation {
+  // Animation ID.
+  required string id = 1;
+
+  // Target element IDs.
+  repeated string targets = 2;
+
+  // Animation type.
+  required AnimationType type = 3;
+
+  // Animation duration.
+  required int32 duration = 4;
+
+  // Animation delay.
+  required int32 delay = 5;
+}

@@ -1,0 +1,137 @@
+syntax = "proto2";
+package web_stories_editor;
+
+// The element type.
+enum ElementType {
+  UNKNOWN_ELEMENT_TYPE = 0;
+  IMAGE = 1;
+  VIDEO = 2;
+  TEXT = 3;
+  SHAPE = 4;
+  GIF = 5;
+  STICKER = 6;
+  PRODUCT = 7;
+}
+
+// The background overlay. A screen shown over the background layer.
+// See See https://user-images.githubusercontent.com/726049/78398420-e75f6b80-75a7-11ea-9696-7368a51febf9.png.
+enum BackgroundOverlayType {
+  UNKNOWN_BACKGROUND_OVERLAY = 0;
+  NONE = 1;
+  SOLID = 2;
+  LINEAR = 3;
+  RADIAL = 4;
+}
+
+// The font style.
+// TODO: do we need font-style? Or just `bool italic`?
+enum FontStyle {
+  UNKNOWN_FONT_STYLE = 0;
+  NORMAL = 1;
+  ITALIC = 2;
+}
+
+// The alignment options.
+// TODO: consider making this ltr/rtl agnostic.
+enum Alignment {
+  UNKNOWN_TEXT_ALIGN = 0;
+  INITIAL = 1;
+  LEFT = 2;
+  RIGHT = 3;
+  CENTER = 4;
+  JUSTIFY = 5;
+}
+
+enum TextDecoration {
+  UNKNOWN_TEXT_DECORATION = 0;
+}
+
+enum BackgroundTextMode {
+  UNKNOWN_BACKGROUND_TEXT_MODE = 0;
+  FILL = 2;
+  HIGHLIGHT = 3;
+}
+
+// The horizontal/vertical flip.
+message Flip {
+  required bool horizontal = 1 [default = false];
+  required bool vertical = 2 [default = false];
+}
+
+message Link {
+  required string url = 1;
+
+  optional string description = 2 [default = ""];
+
+  optional string icon = 3 [default = ""];
+}
+
+// The horizontal/vertical padding in px.
+message Padding {
+  required int32 horizontal = 1 [default = 0];
+  required int32 vertical = 2 [default = 0];
+}
+
+// The clipping mask.
+message Mask {
+  // Type identifier, e.g. "rect", "star".
+  // TODO: only meaningful in the scope of a particular editor. Might need
+  // to switch to a public URLs that host the masks on GitHub.
+  required string type = 1;
+
+  // The name of the mask, e.g. "Rectangle", "Star".
+  required string name = 2;
+
+  // SVG path declaration. E.g. "M 0,0 1,0 1,1 0,1 Z".
+  // See https://svgwg.org/svg2-draft/paths.html#DProperty
+  // Important: must be constructed with the basis of 0-1 coordinate system.
+  required string path = 3;
+
+  // The width/height natural aspect ratio of the masking shape. The value 1
+  // indicates the square shape. Values greater than 1 are wide shapes and
+  // smaller than 1 are tall shapes.
+  required float ratio = 4 [default = 1];
+}
+
+// The RGBA color definition.
+message Rgba {
+  required int32 r = 1;
+  required int32 g = 2;
+  required int32 b = 3;
+  required float a = 4 [default = 1];
+}
+
+// The color pattern.
+message Pattern {
+  enum Type {
+    UNKNOWN = 0;
+    SOLID = 1;
+    LINEAR = 2;
+    RADIAL = 3;
+    CONIC = 4;
+  }
+
+  required Type type = 1 [default = SOLID];
+
+  extensions 100 to max;
+}
+
+// Pattern with type = SOLID.
+// TODO: are optional fields or extensions better?
+message SolidPattern {
+  extend Pattern {
+    optional Rgba color = 101;
+  }
+}
+
+// Pattern with type = LINEAR|RADIAL|CONICAL.
+message GradientPattern {
+  message Stop {
+    required float position = 1;
+    required Rgba color = 2;
+  }
+  extend Pattern {
+    optional float alpha = 201 [default = 1];
+    repeated Stop stop = 202;
+  }
+}
