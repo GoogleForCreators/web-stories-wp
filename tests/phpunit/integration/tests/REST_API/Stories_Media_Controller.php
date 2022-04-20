@@ -189,6 +189,7 @@ class Stories_Media_Controller extends DependencyInjectedRestTestCase {
 		$result = $this->call_private_method( $this->controller, 'get_attached_post_ids', [ $posts ] );
 		$this->assertContains( self::$post_id, $result );
 		$this->assertContains( self::$poster_attachment_id, $result );
+		$this->assertNotContains( 0, $result );
 	}
 
 	/**
