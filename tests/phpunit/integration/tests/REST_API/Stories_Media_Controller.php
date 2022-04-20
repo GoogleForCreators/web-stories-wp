@@ -189,9 +189,33 @@ class Stories_Media_Controller extends DependencyInjectedRestTestCase {
 	public function test_get_attached_post_ids(): void {
 		$posts  = [ get_post( self::$mov_attachment_id ), get_post( self::$mp4_attachment_id ) ];
 		$result = $this->call_private_method( $this->controller, 'get_attached_post_ids', [ $posts ] );
-		$this->assertContains( self::$post_id, $result );
-		$this->assertContains( self::$poster_attachment_id, $result );
-		$this->assertNotContains( 0, $result );
+		$this->assertEqualSets( [ self::$post_id, self::$poster_attachment_id ], $result );
+	}
+
+	/**
+	 * @covers ::get_attached_post_ids
+	 */
+	public function test_get_attached_post_ids_empty(): void {
+		$posts  = [];
+		$result = $this->call_private_method( $this->controller, 'get_attached_post_ids', [ $posts ] );
+		$this->assertEqualSets( [], $result );
+	}
+
+	/**
+	 * @covers ::get_attached_post_ids
+	 */
+	public function test_get_attached_post_ids_on_parent(): void {
+		$poster_object = self::factory()->attachment->create_and_get(
+			[
+				'file'           => DIR_TESTDATA . '/images/canola.jpg',
+				'post_parent'    => 0,
+				'post_mime_type' => 'image/jpeg',
+				'post_title'     => 'Test Image',
+			]
+		);
+		$posts  = [ $poster_object ];
+		$result = $this->call_private_method( $this->controller, 'get_attached_post_ids', [ $posts ] );
+		$this->assertEqualSets( [], $result );
 	}
 
 	/**
