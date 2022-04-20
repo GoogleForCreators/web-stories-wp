@@ -39,7 +39,7 @@ import {
 } from '../button';
 import { Pencil } from '../../icons';
 import { Menu } from '../menu';
-import { Tooltip } from '../tooltip';
+import { BaseTooltip } from '../tooltip';
 import { PLACEMENT, Popup } from '../popup';
 import Landscape from './icons/landscape.svg';
 import { MEDIA_VARIANTS } from './constants';
@@ -223,7 +223,7 @@ export const MediaInput = forwardRef(function Media(
         </ImageWrapper>
       )}
       {canUpload && (
-        <Tooltip
+        <BaseTooltip
           title={hasMenu ? null : __('Open media picker', 'web-stories')}
           isRTL={isRTL}
           leftOffset={leftOffset}
@@ -252,7 +252,7 @@ export const MediaInput = forwardRef(function Media(
           >
             <Pencil />
           </Button>
-        </Tooltip>
+        </BaseTooltip>
       )}
       <Popup
         placement={PLACEMENT.BOTTOM_END}

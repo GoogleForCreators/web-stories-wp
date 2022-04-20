@@ -19,7 +19,7 @@
  */
 import {
   TOOLTIP_RTL_PLACEMENT,
-  Tooltip as BaseTooltip,
+  BaseTooltip,
   TooltipPropTypes,
   TOOLTIP_PLACEMENT,
 } from '@googleforcreators/design-system';

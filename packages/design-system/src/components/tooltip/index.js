@@ -105,10 +105,10 @@ let lastVisibleDelayedTooltip = null;
  * comes up in peripheral pages (dashboard, settings).
  * @param props.isRTL RTL flag from config
  * @param props.leftOffset wp-admin bar width from config, prevents overlap with side bar.
- * @return {import('react').Component} Tooltip element
+ * @return {import('react').Component} BaseTooltip element
  */
 
-function Tooltip({
+function BaseTooltip({
   title,
   shortcut,
   hasTail,
@@ -385,7 +385,7 @@ function Tooltip({
   );
 }
 
-const TooltipPropTypes = {
+const BaseTooltipPropTypes = {
   children: PropTypes.node.isRequired,
   hasTail: PropTypes.bool,
   placement: PropTypes.oneOf(Object.values(PLACEMENT)),
@@ -402,11 +402,11 @@ const TooltipPropTypes = {
   isRTL: PropTypes.bool,
   leftOffset: PropTypes.number,
 };
-Tooltip.propTypes = TooltipPropTypes;
+BaseTooltip.propTypes = BaseTooltipPropTypes;
 
 export {
-  Tooltip,
+  BaseTooltip,
   PLACEMENT as TOOLTIP_PLACEMENT,
   RTL_PLACEMENT as TOOLTIP_RTL_PLACEMENT,
-  TooltipPropTypes,
+  BaseTooltipPropTypes as TooltipPropTypes,
 };

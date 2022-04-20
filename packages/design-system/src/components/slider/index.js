@@ -30,7 +30,7 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { useKeyDownEffect } from '../keyboard';
-import { Tooltip } from '../tooltip';
+import { BaseTooltip } from '../tooltip';
 import { PLACEMENT } from '../popup';
 import { noop } from '../../utils';
 
@@ -255,7 +255,7 @@ function Slider({
 
   const printValue = `${value}${suffix}`;
   return (
-    <Tooltip
+    <BaseTooltip
       title={printValue}
       placement={PLACEMENT.TOP}
       popupZIndexOverride={popupZIndexOverride}
@@ -292,7 +292,7 @@ function Slider({
           thumbSize={thumbSize}
         />
       </Wrapper>
-    </Tooltip>
+    </BaseTooltip>
   );
 }
 
