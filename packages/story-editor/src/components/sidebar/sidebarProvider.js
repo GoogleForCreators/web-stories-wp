@@ -155,12 +155,19 @@ function SidebarProvider({ sidebarTabs, children }) {
           id: DOCUMENT,
           ...sidebarTabs.document,
         },
-        sidebarTabs?.publishModal && {
-          id: PUBLISH_MODAL_DOCUMENT,
-          ...sidebarTabs.publishModal,
-        },
       ].filter(Boolean),
     [sidebarTabs]
+  );
+
+  const data = useMemo(
+    () => ({
+      tabs,
+      modalSidebarTab: sidebarTabs?.publishModal && {
+        id: PUBLISH_MODAL_DOCUMENT,
+        ...sidebarTabs.publishModal,
+      },
+    }),
+    [tabs, sidebarTabs]
   );
 
   const state = {
@@ -179,9 +186,7 @@ function SidebarProvider({ sidebarTabs, children }) {
       loadUsers,
       setSidebarContentNode,
     },
-    data: {
-      tabs: tabs,
-    },
+    data,
   };
 
   return <Context.Provider value={state}>{children}</Context.Provider>;
