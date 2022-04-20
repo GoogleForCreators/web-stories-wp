@@ -213,8 +213,8 @@ class Stories_Media_Controller extends DependencyInjectedRestTestCase {
 				'post_title'     => 'Test Image',
 			]
 		);
-		$posts  = [ $poster_object ];
-		$result = $this->call_private_method( $this->controller, 'get_attached_post_ids', [ $posts ] );
+		$posts         = [ $poster_object ];
+		$result        = $this->call_private_method( $this->controller, 'get_attached_post_ids', [ $posts ] );
 		$this->assertEqualSets( [], $result );
 	}
 
