@@ -20,7 +20,7 @@ import styled from 'styled-components';
 import {
   THEME_CONSTANTS,
   Link,
-  Tooltip,
+  BaseTooltip,
   Text,
 } from '@googleforcreators/design-system';
 /**
@@ -183,9 +183,9 @@ export const _default = () => {
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"
               >
-                <Tooltip title="Optimize">
+                <BaseTooltip title="Optimize">
                   <StyledVideoOptimizationIcon />
-                </Tooltip>
+                </BaseTooltip>
               </Thumbnail>,
               <Thumbnail
                 key={2}
@@ -193,9 +193,9 @@ export const _default = () => {
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"
               >
-                <Tooltip title="Optimize">
+                <BaseTooltip title="Optimize">
                   <StyledVideoOptimizationIcon />
-                </Tooltip>
+                </BaseTooltip>
               </Thumbnail>,
               <Thumbnail
                 key={3}
@@ -203,9 +203,9 @@ export const _default = () => {
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"
               >
-                <Tooltip title="Optimize">
+                <BaseTooltip title="Optimize">
                   <StyledVideoOptimizationIcon />
-                </Tooltip>
+                </BaseTooltip>
               </Thumbnail>,
               <Thumbnail
                 key={4}
@@ -213,9 +213,9 @@ export const _default = () => {
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"
               >
-                <Tooltip title="Optimize">
+                <BaseTooltip title="Optimize">
                   <StyledVideoOptimizationIcon />
-                </Tooltip>
+                </BaseTooltip>
               </Thumbnail>,
             ]}
           />
@@ -261,9 +261,9 @@ export const _default = () => {
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"
               >
-                <Tooltip title="Optimize">
+                <BaseTooltip title="Optimize">
                   <StyledVideoOptimizationIcon />
-                </Tooltip>
+                </BaseTooltip>
               </Thumbnail>,
               <Thumbnail
                 key={2}
@@ -271,9 +271,9 @@ export const _default = () => {
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"
               >
-                <Tooltip title="Optimize">
+                <BaseTooltip title="Optimize">
                   <StyledVideoOptimizationIcon />
-                </Tooltip>
+                </BaseTooltip>
               </Thumbnail>,
               <Thumbnail
                 key={3}
@@ -281,9 +281,9 @@ export const _default = () => {
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"
               >
-                <Tooltip title="Optimize">
+                <BaseTooltip title="Optimize">
                   <StyledVideoOptimizationIcon />
-                </Tooltip>
+                </BaseTooltip>
               </Thumbnail>,
               <Thumbnail
                 key={4}
@@ -291,9 +291,9 @@ export const _default = () => {
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"
               >
-                <Tooltip title="Optimize">
+                <BaseTooltip title="Optimize">
                   <StyledVideoOptimizationIcon />
-                </Tooltip>
+                </BaseTooltip>
               </Thumbnail>,
             ]}
           />
@@ -402,9 +402,9 @@ export const _default = () => {
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"
               >
-                <Tooltip title="Optimize">
+                <BaseTooltip title="Optimize">
                   <StyledVideoOptimizationIcon />
-                </Tooltip>
+                </BaseTooltip>
               </Thumbnail>,
               <Thumbnail
                 key={2}
@@ -412,9 +412,9 @@ export const _default = () => {
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"
               >
-                <Tooltip title="Optimize">
+                <BaseTooltip title="Optimize">
                   <StyledVideoOptimizationIcon />
-                </Tooltip>
+                </BaseTooltip>
               </Thumbnail>,
               <Thumbnail
                 key={3}
@@ -422,9 +422,9 @@ export const _default = () => {
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"
               >
-                <Tooltip title="Optimize">
+                <BaseTooltip title="Optimize">
                   <StyledVideoOptimizationIcon />
-                </Tooltip>
+                </BaseTooltip>
               </Thumbnail>,
               <Thumbnail
                 key={4}
@@ -432,9 +432,9 @@ export const _default = () => {
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"
               >
-                <Tooltip title="Optimize">
+                <BaseTooltip title="Optimize">
                   <StyledVideoOptimizationIcon />
-                </Tooltip>
+                </BaseTooltip>
               </Thumbnail>,
             ]}
           />
@@ -536,9 +536,9 @@ export const _default = () => {
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"
               >
-                <Tooltip title="Optimize">
+                <BaseTooltip title="Optimize">
                   <StyledVideoOptimizationIcon />
-                </Tooltip>
+                </BaseTooltip>
               </Thumbnail>,
               <Thumbnail
                 key={2}
@@ -546,9 +546,9 @@ export const _default = () => {
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"
               >
-                <Tooltip title="Optimize">
+                <BaseTooltip title="Optimize">
                   <StyledVideoOptimizationIcon />
-                </Tooltip>
+                </BaseTooltip>
               </Thumbnail>,
               <Thumbnail
                 key={3}
@@ -556,9 +556,9 @@ export const _default = () => {
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"
               >
-                <Tooltip title="Optimize">
+                <BaseTooltip title="Optimize">
                   <StyledVideoOptimizationIcon />
-                </Tooltip>
+                </BaseTooltip>
               </Thumbnail>,
               <Thumbnail
                 key={4}
@@ -566,9 +566,9 @@ export const _default = () => {
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"
               >
-                <Tooltip title="Optimize">
+                <BaseTooltip title="Optimize">
                   <StyledVideoOptimizationIcon />
-                </Tooltip>
+                </BaseTooltip>
               </Thumbnail>,
             ]}
           />
@@ -671,9 +671,9 @@ export const _default = () => {
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"
               >
-                <Tooltip title="Optimize">
+                <BaseTooltip title="Optimize">
                   <StyledVideoOptimizationIcon />
-                </Tooltip>
+                </BaseTooltip>
               </Thumbnail>,
               <Thumbnail
                 key={2}
@@ -681,9 +681,9 @@ export const _default = () => {
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"
               >
-                <Tooltip title="Optimize">
+                <BaseTooltip title="Optimize">
                   <StyledVideoOptimizationIcon />
-                </Tooltip>
+                </BaseTooltip>
               </Thumbnail>,
               <Thumbnail
                 key={3}
@@ -691,9 +691,9 @@ export const _default = () => {
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"
               >
-                <Tooltip title="Optimize">
+                <BaseTooltip title="Optimize">
                   <StyledVideoOptimizationIcon />
-                </Tooltip>
+                </BaseTooltip>
               </Thumbnail>,
               <Thumbnail
                 key={4}
@@ -701,9 +701,9 @@ export const _default = () => {
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"
               >
-                <Tooltip title="Optimize">
+                <BaseTooltip title="Optimize">
                   <StyledVideoOptimizationIcon />
-                </Tooltip>
+                </BaseTooltip>
               </Thumbnail>,
             ]}
           />
