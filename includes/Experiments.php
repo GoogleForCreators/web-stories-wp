@@ -300,18 +300,6 @@ class Experiments extends Service_Base implements HasRequirements {
 				'default'     => true,
 			],
 			/**
-			 * Author: @spacedmonkey
-			 * Issue: #8821
-			 * Creation date: 2022-01-19
-			 */
-			[
-				'name'        => 'enhancedPageBackgroundAudio',
-				'label'       => __( 'Page Background Audio', 'web-stories' ),
-				'description' => __( 'Enable adding captions to background audio', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-			/**
 			 * Author: @barklund
 			 * Issue: #10112
 			 * Creation date: 2022-01-27
