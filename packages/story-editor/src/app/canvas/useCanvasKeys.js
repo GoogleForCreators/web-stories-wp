@@ -24,7 +24,6 @@ import {
   getKeyboardMovement,
 } from '@googleforcreators/design-system';
 import { STORY_ANIMATION_STATE } from '@googleforcreators/animation';
-import { useTransform } from '@googleforcreators/transform';
 import { getDefinitionForType } from '@googleforcreators/elements';
 
 /**
@@ -42,7 +41,6 @@ function useCanvasKeys(ref) {
     selectedElementIds,
     selectedElements,
     arrangeSelection,
-    clearSelection,
     deleteSelectedElements,
     duplicateElementsById,
     updateSelectedElements,
@@ -60,7 +58,6 @@ function useCanvasKeys(ref) {
       },
       actions: {
         arrangeSelection,
-        clearSelection,
         deleteSelectedElements,
         duplicateElementsById,
         updateSelectedElements,
@@ -73,7 +70,6 @@ function useCanvasKeys(ref) {
         selectedElementIds,
         selectedElements,
         arrangeSelection,
-        clearSelection,
         deleteSelectedElements,
         duplicateElementsById,
         updateSelectedElements,
@@ -83,10 +79,6 @@ function useCanvasKeys(ref) {
       };
     }
   );
-
-  const {
-    actions: { clearTransforms },
-  } = useTransform();
 
   const { isEditing, getNodeForElement, setEditingElement } = useCanvas(
     ({
@@ -151,15 +143,6 @@ function useCanvasKeys(ref) {
   useGlobalKeyDownEffect('delete', () => deleteSelectedElements(), [
     deleteSelectedElements,
   ]);
-
-  useGlobalKeyDownEffect(
-    'esc',
-    () => {
-      clearSelection();
-      clearTransforms();
-    },
-    [clearSelection, clearTransforms]
-  );
 
   useGlobalKeyDownEffect(
     { key: ['mod+a'] },

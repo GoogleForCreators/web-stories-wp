@@ -48,7 +48,6 @@ function FloatingColor(props) {
       maxHeight={PICKER_MAX_HEIGHT}
       pickerPlacement={PLACEMENT.TOP_START}
       isInDesignMenu
-      shouldCloseOnSelection
       allowsGradient={allowsGradient}
       allowsSavedColors
       allowsSavedColorDeletion={false}
