@@ -126,21 +126,20 @@ function BackgroundAudioPanelContent({
   );
 
   const onSelectHotlink = useCallback(
-    (media) => {
-      (async () => {
-        const { src, mimeType, needsProxy } = media;
-        const audioProxied = getProxiedUrl(media, src);
-        const videoEl = await preloadVideo(audioProxied);
-        const { length, lengthFormatted } = getVideoLength(videoEl);
+    async (media) => {
+      const { src, mimeType, needsProxy } = media;
+      const audioProxied = getProxiedUrl(media, src);
+      const videoEl = await preloadVideo(audioProxied);
+      const { length, lengthFormatted } = getVideoLength(videoEl);
 
-        onSelect({
-          src,
-          mimeType,
-          length,
-          lengthFormatted,
-          needsProxy,
-        });
-      })();
+      onSelect({
+        src,
+        mimeType,
+        length,
+        lengthFormatted,
+        needsProxy,
+      });
+      setIsOpen(false);
     },
     [getProxiedUrl, onSelect]
   );
