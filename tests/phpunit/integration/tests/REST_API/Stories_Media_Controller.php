@@ -33,6 +33,26 @@ class Stories_Media_Controller extends DependencyInjectedRestTestCase {
 	protected static $user_id;
 
 	/**
+	 * @var int
+	 */
+	protected static $poster_attachment_id;
+
+	/**
+	 * @var int
+	 */
+	protected static $mp4_attachment_id;
+
+	/**
+	 * @var int
+	 */
+	protected static $mov_attachment_id;
+
+	/**
+	 * @var int
+	 */
+	protected static $post_id;
+
+	/**
 	 * Test instance.
 	 *
 	 * @var \Google\Web_Stories\REST_API\Stories_Media_Controller
@@ -43,6 +63,22 @@ class Stories_Media_Controller extends DependencyInjectedRestTestCase {
 	 * @param $factory
 	 */
 	public static function wpSetUpBeforeClass( $factory ): void {
+
+		self::$user_id = $factory->user->create(
+			[
+				'role'         => 'administrator',
+				'display_name' => 'Andrea Adams',
+			]
+		);
+
+		self::$post_id = self::factory()->post->create(
+			[
+				'post_type'   => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_status' => 'publish',
+				'post_author' => self::$user_id,
+			]
+		);
+
 		$factory->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',
@@ -52,28 +88,32 @@ class Stories_Media_Controller extends DependencyInjectedRestTestCase {
 			]
 		);
 
-		$factory->attachment->create_object(
+		self::$mp4_attachment_id = $factory->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/uploads/test-video.mp4',
-				'post_parent'    => 0,
+				'post_parent'    => self::$post_id,
 				'post_mime_type' => 'video/mp4',
 				'post_title'     => 'Test Video',
 			]
 		);
 
-		$factory->attachment->create_object(
+		self::$poster_attachment_id = $factory->attachment->create_object(
 			[
-				'file'           => DIR_TESTDATA . '/uploads/test-video.mov',
+				'file'           => DIR_TESTDATA . '/images/canola.jpg',
 				'post_parent'    => 0,
-				'post_mime_type' => 'video/mov',
-				'post_title'     => 'Test Video Move',
+				'post_mime_type' => 'image/jpeg',
+				'post_title'     => 'Test Poster',
 			]
 		);
 
-		self::$user_id = $factory->user->create(
+		set_post_thumbnail( self::$mp4_attachment_id, self::$poster_attachment_id );
+
+		self::$mov_attachment_id = $factory->attachment->create_object(
 			[
-				'role'         => 'administrator',
-				'display_name' => 'Andrea Adams',
+				'file'           => DIR_TESTDATA . '/uploads/test-video.mov',
+				'post_parent'    => self::$post_id,
+				'post_mime_type' => 'video/mov',
+				'post_title'     => 'Test Video Move',
 			]
 		);
 	}
@@ -139,6 +179,16 @@ class Stories_Media_Controller extends DependencyInjectedRestTestCase {
 		$mime_type = wp_list_pluck( $data, 'mime_type' );
 		$this->assertNotContains( 'video/mov', $mime_type );
 		$this->assertContains( 'video/mp4', $mime_type );
+	}
+
+	/**
+	 * @covers ::get_attached_post_ids
+	 */
+	public function test_get_attached_post_ids(): void {
+		$posts  = [ get_post( self::$mov_attachment_id ), get_post( self::$mp4_attachment_id ) ];
+		$result = $this->call_private_method( $this->controller, 'get_attached_post_ids', [ $posts ] );
+		$this->assertContains( self::$post_id, $result );
+		$this->assertContains( self::$poster_attachment_id, $result );
 	}
 
 	/**
