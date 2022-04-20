@@ -35,7 +35,7 @@ import { useAPI } from '../../app/api';
 import { useStory } from '../../app/story';
 import { states, useHighlights } from '../../app/highlights';
 import Library from '../library';
-import DesignInspector from '../design';
+import Style from '../style';
 import { DOCUMENT, STYLE, PUBLISH_MODAL_DOCUMENT, INSERT } from './constants';
 import Context from './context';
 
@@ -160,7 +160,7 @@ function SidebarProvider({ sidebarTabs, children }) {
         {
           id: STYLE,
           title: __('Style', 'web-stories'),
-          Pane: DesignInspector,
+          Pane: Style,
         },
       ],
     },

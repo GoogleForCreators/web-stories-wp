@@ -25,8 +25,7 @@ import {
   useState,
   forwardRef,
 } from '@googleforcreators/react';
-import { StoryPropTypes } from '@googleforcreators/elements';
-import { getTransformFlip } from '@googleforcreators/design-system';
+import { StoryPropTypes, getTransformFlip } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -178,7 +177,6 @@ const WithMask = forwardRef(
       fill,
       style,
       children,
-      eventHandlers = null,
       flip,
       draggingResource,
       activeDropTargetId,
@@ -232,7 +230,6 @@ const WithMask = forwardRef(
           ...(!isBackground ? { clipPath: `url(#${maskId})` } : {}),
         }}
         {...rest}
-        {...eventHandlers}
         onPointerOver={() => setHover(true)}
         onPointerOut={() => setHover(false)}
       >
@@ -276,7 +273,6 @@ WithMask.propTypes = {
     vertical: PropTypes.bool,
     horizontal: PropTypes.bool,
   }),
-  eventHandlers: PropTypes.object,
   children: PropTypes.node.isRequired,
   draggingResource: PropTypes.object,
   activeDropTargetId: PropTypes.string,

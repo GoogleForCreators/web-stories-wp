@@ -23,11 +23,15 @@ import { memo, useRef, useCallback } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import { PAGE_WIDTH } from '@googleforcreators/units';
 import { STORY_ANIMATION_STATE } from '@googleforcreators/animation';
+import {
+  themeHelpers,
+  useKeyDownEffect,
+  useLiveRegion,
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
  */
-import { useKeyDownEffect } from '@googleforcreators/design-system';
 import { DESIGN_SPACE_MARGIN, STABLE_ARRAY } from '../../constants';
 import {
   useStory,
@@ -41,11 +45,35 @@ import { Layer, NavNextArea, NavPrevArea, PageArea } from './layout';
 import FrameElement from './frameElement';
 import Selection from './selection';
 import PageNav from './pagenav';
+import {
+  FOCUS_GROUPS,
+  useEditLayerFocusManager,
+} from './editLayerFocusManager';
 
 const FramesPageArea = styled(PageArea)`
   pointer-events: initial;
 `;
 const marginRatio = 100 * (DESIGN_SPACE_MARGIN / PAGE_WIDTH);
+
+const FocusContainer = styled.div`
+  // begin under header row
+  grid-row: 2 / -1;
+  grid-column: 1 / -1;
+  // show focus border by adding margin
+  margin: 5px;
+
+  ${themeHelpers.focusableOutlineCSS};
+`;
+
+const FOCUS_CONTAINER_MESSAGE = __(
+  'Canvas Area. To navigate into the page, press Enter.',
+  'web-stories'
+);
+
+const FRAME_ELEMENT_MESSAGE = __(
+  'To exit the canvas area, press Escape. Press Tab to move to the next group or element.',
+  'web-stories'
+);
 
 const DesignSpaceGuidelineBorder = styled.div`
   border: 1px solid ${({ theme }) => theme.colors.border.negativePress};
@@ -77,12 +105,6 @@ function DesignSpaceGuideline() {
 
 function FramesNavAndSelection({ children }) {
   const framesLayerRef = useRef(null);
-  // TODO: https://github.com/google/web-stories-wp/issues/10266
-  // refactor `useCanvasKeys`. This is the last hook causing extraneous re-renders in this component.
-  // - pulls most of state from useStory and only creates actions and attaches them to hot keys
-  // - extraneous re-renders in this component contribute only ~1ms to total re-render time,
-  //   so this is a high hanging fruit with little reward.
-  useCanvasKeys(framesLayerRef);
 
   const onOpenMenu = useRightClickMenu((state) => state.onOpenMenu);
 
@@ -163,8 +185,43 @@ function FrameElements() {
 }
 
 function FramesLayer() {
+  const canvasRef = useRef();
+  const speak = useLiveRegion();
+
+  const enterFocusGroup = useEditLayerFocusManager(
+    ({ enterFocusGroup }) => enterFocusGroup
+  );
+
+  // TODO: https://github.com/google/web-stories-wp/issues/10266
+  // refactor `useCanvasKeys`. This is the last hook causing extraneous re-renders in this component.
+  // - pulls most of state from useStory and only creates actions and attaches them to hot keys
+  // - extraneous re-renders in this component contribute only ~1ms to total re-render time,
+  //   so this is a high hanging fruit with little reward.
+  useCanvasKeys(canvasRef);
+
+  useKeyDownEffect(
+    canvasRef,
+    { key: ['enter'] },
+    () => {
+      enterFocusGroup({
+        groupId: FOCUS_GROUPS.ELEMENT_SELECTION,
+        cleanup: () => canvasRef.current?.focus(),
+      });
+      speak(FRAME_ELEMENT_MESSAGE);
+    },
+    [enterFocusGroup, speak]
+  );
+
   return (
     <FramesNavAndSelection>
+      <FocusContainer
+        role="region"
+        data-testid="canvas-focus-container"
+        ref={canvasRef}
+        aria-label={FOCUS_CONTAINER_MESSAGE}
+        // eslint-disable-next-line styled-components-a11y/no-noninteractive-tabindex -- Container used to separate elements from normal tab order.
+        tabIndex={0}
+      />
       <FrameElements />
     </FramesNavAndSelection>
   );

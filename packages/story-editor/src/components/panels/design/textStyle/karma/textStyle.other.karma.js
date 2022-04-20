@@ -139,7 +139,7 @@ describe('Text Style Panel', () => {
       await waitFor(
         async () => {
           const texts = await fixture.screen.findAllByText(
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+            'Fill in some text',
             { timeout: 2000 }
           );
           await expect(texts.length).toBeGreaterThan(1);
@@ -172,7 +172,7 @@ describe('Text Style Panel', () => {
           }
 
           expect(elements[1].content).toBe(
-            '<span style="color: #fff">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>'
+            '<span style="color: #fff">Fill in some text</span>'
           );
         },
         { timeout: 9000 }
@@ -199,9 +199,7 @@ describe('Text Style Panel', () => {
       await fixture.events.keyboard.type('4');
       await fixture.events.keyboard.press('tab');
 
-      const texts = await fixture.screen.findAllByText(
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
-      );
+      const texts = await fixture.screen.findAllByText('Fill in some text');
 
       // Display layer.
       const displayStyle = await waitFor(() =>

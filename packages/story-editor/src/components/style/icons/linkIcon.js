@@ -17,24 +17,11 @@
 /**
  * External dependencies
  */
-import { useReduction } from '@googleforcreators/react';
+import { __ } from '@googleforcreators/i18n';
+import { Icons } from '@googleforcreators/design-system';
 
-const imageCacheReducer = {
-  setCachedImage: (cachedImages, { payload: { pageId, cachedImage } }) => ({
-    ...cachedImages,
-    [pageId]: cachedImage,
-  }),
-};
-
-function useCarouselCache() {
-  const [cachedImages, { setCachedImage }] = useReduction(
-    {},
-    imageCacheReducer
-  );
-  return {
-    cachedImages,
-    setCachedImage,
-  };
+function LinkIcon() {
+  return <Icons.Link title={__('Link', 'web-stories')} />;
 }
 
-export default useCarouselCache;
+export default LinkIcon;

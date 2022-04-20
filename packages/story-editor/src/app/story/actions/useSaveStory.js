@@ -17,10 +17,11 @@
 /**
  * External dependencies
  */
-import { __ } from '@googleforcreators/i18n';
+import { __, _x, sprintf } from '@googleforcreators/i18n';
 import { useCallback, useState } from '@googleforcreators/react';
-import { getTimeTracker } from '@googleforcreators/tracking';
+import { getTimeTracker, trackError } from '@googleforcreators/tracking';
 import { useSnackbar } from '@googleforcreators/design-system';
+import { stripHTML } from '@googleforcreators/dom';
 
 /**
  * Internal dependencies
@@ -30,6 +31,13 @@ import { useConfig } from '../../config';
 import useRefreshPostEditURL from '../../../utils/useRefreshPostEditURL';
 import getStoryPropsToSave from '../utils/getStoryPropsToSave';
 import { useHistory } from '../../history';
+
+const HTTP_STATUS_DESCRIPTIONS = {
+  400: _x('Bad Request', 'HTTP status description', 'web-stories'),
+  401: _x('Unauthorized', 'HTTP status description', 'web-stories'),
+  403: _x('Forbidden', 'HTTP status description', 'web-stories'),
+  500: _x('Internal Server Error', 'HTTP status description', 'web-stories'),
+};
 
 /**
  * Custom hook to save story.
@@ -66,16 +74,21 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
 
       const trackTiming = getTimeTracker('load_save_story');
 
-      return saveStoryById({
-        storyId,
-        ...getStoryPropsToSave({
-          story,
-          pages,
-          metadata,
-          flags,
-        }),
-        ...props,
-      })
+      // Wrapping everything in a Promise so we can catch
+      // errors caused by getStoryPropsToSave() / getStoryMarkup().
+      return Promise.resolve()
+        .then(() =>
+          saveStoryById({
+            storyId,
+            ...getStoryPropsToSave({
+              story,
+              pages,
+              metadata,
+              flags,
+            }),
+            ...props,
+          })
+        )
         .then((data) => {
           const {
             status,
@@ -105,9 +118,46 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
           );
           setIsFreshlyPublished(!isStoryAlreadyPublished && isStoryPublished);
         })
-        .catch(() => {
+        .catch((err) => {
+          const description = err.message ? stripHTML(err.message) : null;
+          let message = __('Failed to save the story', 'web-stories');
+
+          if (description) {
+            message = sprintf(
+              /* translators: %s: error message */
+              __('Failed to save the story: %s', 'web-stories'),
+              description
+            );
+          }
+
+          if (
+            Object.prototype.hasOwnProperty.call(
+              HTTP_STATUS_DESCRIPTIONS,
+              err?.data?.status
+            )
+          ) {
+            if (description) {
+              message = sprintf(
+                /* translators: 1: error message. 2: status code */
+                __('Failed to save the story: %1$s (%2$s)', 'web-stories'),
+                description,
+                HTTP_STATUS_DESCRIPTIONS[err?.data?.status]
+              );
+            } else {
+              message = sprintf(
+                /* translators: %s: error message */
+                __('Failed to save the story: %s', 'web-stories'),
+                HTTP_STATUS_DESCRIPTIONS[err?.data?.status]
+              );
+            }
+          }
+
+          // eslint-disable-next-line no-console -- We want to surface this error.
+          console.log(__('Failed to save the story', 'web-stories'), err);
+          trackError('save_story', description);
+
           showSnackbar({
-            message: __('Failed to save the story', 'web-stories'),
+            message,
             dismissible: true,
           });
         })

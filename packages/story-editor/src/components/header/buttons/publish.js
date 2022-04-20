@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useState } from '@googleforcreators/react';
+import { useCallback, useRef, useState } from '@googleforcreators/react';
 import {
   toDate,
   isAfter,
@@ -58,6 +58,7 @@ function PublishButton({ forceIsSaving }) {
   );
 
   const [showDialog, setShowDialog] = useState(false);
+  const publishButtonRef = useRef();
 
   const refreshPostEditURL = useRefreshPostEditURL(storyId, editLink);
   // Offset the date by one minute to accommodate for network latency.
@@ -92,11 +93,18 @@ function PublishButton({ forceIsSaving }) {
     setShowDialog(true);
   }, [showPriorityIssues]);
 
-  const closeDialog = useCallback(() => setShowDialog(false), []);
+  const closeDialog = useCallback(({ focusPublishButton = true } = {}) => {
+    setShowDialog(false);
+
+    if (focusPublishButton) {
+      publishButtonRef.current.focus();
+    }
+  }, []);
 
   return (
     <>
       <ButtonWithChecklistWarning
+        ref={publishButtonRef}
         onClick={handlePublish}
         disabled={forceIsSaving}
         hasFutureDate={hasFutureDate}

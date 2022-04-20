@@ -2,7 +2,7 @@
   "name": "@googleforcreators/output",
   "description": "Package for Web Stories AMP output",
   "private": false,
-  "version": "0.1.202203241635",
+  "version": "0.1.202204141511",
   "author": {
     "name": "Google",
     "url": "https://creators.google/"
@@ -53,7 +53,7 @@
   "devDependencies": {
     "@googleforcreators/element-library": "*",
     "@googleforcreators/test-utils": "*",
-    "@testing-library/react": "^12.1.2",
+    "@testing-library/react": "^12.1.5",
     "flagged": "^2.0.3"
   }
 }

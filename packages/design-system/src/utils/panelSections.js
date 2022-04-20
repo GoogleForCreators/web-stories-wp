@@ -14,4 +14,23 @@
  * limitations under the License.
  */
 
-export { default } from './designInspector';
+/**
+ * Internal dependencies
+ */
+import PanelTypes from './panelTypes';
+
+export const STYLE_PANE_IDS = {
+  SELECTION: 'selection',
+  LINK: 'link',
+  ANIMATION: 'animation',
+};
+
+const { LINK, ANIMATION, ...panelsExcludingLinkAndAnimation } = PanelTypes;
+
+const PanelSections = {
+  [STYLE_PANE_IDS.SELECTION]: Object.values(panelsExcludingLinkAndAnimation),
+  [STYLE_PANE_IDS.LINK]: [LINK],
+  [STYLE_PANE_IDS.ANIMATION]: [ANIMATION],
+};
+
+export default PanelSections;

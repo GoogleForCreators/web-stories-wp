@@ -21,11 +21,8 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useRef, useMemo, useCallback } from '@googleforcreators/react';
 import { getMediaSizePositionProps } from '@googleforcreators/media';
-import {
-  CircularProgress,
-  getTransformFlip,
-} from '@googleforcreators/design-system';
-import { StoryPropTypes } from '@googleforcreators/elements';
+import { CircularProgress } from '@googleforcreators/design-system';
+import { StoryPropTypes, getTransformFlip } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies

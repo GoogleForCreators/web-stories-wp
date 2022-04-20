@@ -38,6 +38,7 @@ const containerStyleOverrides = css`
 function FontFamily() {
   return (
     <StyledFontPicker
+      tabIndex={-1}
       listStyleOverrides={listStyleOverrides}
       containerStyleOverrides={containerStyleOverrides}
     />

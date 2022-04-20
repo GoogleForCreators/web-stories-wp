@@ -46,6 +46,7 @@ const MenusWrapper = styled.section`
   z-index: ${Z_INDEX_CANVAS_SIDE_MENU};
   pointer-events: auto;
   min-height: 100%;
+  pointer-events: none;
   ${({ isZoomed, theme }) =>
     isZoomed &&
     `
@@ -64,6 +65,10 @@ const Divider = styled.div`
   background-color: ${({ theme }) => theme.colors.divider.primary};
 `;
 
+const StyledContextMenu = styled(ContextMenu)`
+  pointer-events: all;
+`;
+
 function PageSideMenu() {
   const { zoomSetting } = useLayout(({ state: { zoomSetting } }) => ({
     zoomSetting,
@@ -80,7 +85,7 @@ function PageSideMenu() {
       {
         // Dont render a menu wrapper if there are no quick actions
         quickActions.length ? (
-          <ContextMenu
+          <StyledContextMenu
             isInline
             isAlwaysVisible
             isIconMenu
@@ -116,6 +121,7 @@ function PageSideMenu() {
                         aria-label={label}
                         onClick={(evt) => {
                           onClick(evt);
+
                           externalOnClick(evt);
                         }}
                         {...quickAction}
@@ -145,7 +151,7 @@ function PageSideMenu() {
                 return action();
               }
             )}
-          </ContextMenu>
+          </StyledContextMenu>
         ) : null
       }
       {isZoomed && <Divider />}

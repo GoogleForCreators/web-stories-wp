@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,4 +14,14 @@
  * limitations under the License.
  */
 
-__webpack_public_path__ = window.webStories.publicPath;
+/**
+ * External dependencies
+ */
+import { __ } from '@googleforcreators/i18n';
+import { Icons } from '@googleforcreators/design-system';
+
+function ShapeSelectionIcon() {
+  return <Icons.Shapes title={__('Shape selection', 'web-stories')} />;
+}
+
+export default ShapeSelectionIcon;

@@ -76,9 +76,7 @@ describe('TextEdit integration', () => {
     });
 
     it('should render initial content', () => {
-      expect(frame.textContent).toEqual(
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
-      );
+      expect(frame.textContent).toEqual('Fill in some text');
     });
 
     it('should delete the element if content is empty', async () => {
@@ -157,13 +155,13 @@ describe('TextEdit integration', () => {
         // The element is still selected and updated.
         const storyContext = await fixture.renderHook(() => useStory());
         expect(storyContext.state.selectedElements[0].content).toEqual(
-          '<span style="font-weight: 700">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>'
+          '<span style="font-weight: 700">Fill in some text</span>'
         );
 
         // The content is updated in the frame.
         // @todo: What to do with `<p>` and containers?
         expect(frame.querySelector('p').innerHTML).toEqual(
-          '<span style="font-weight: 700">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>'
+          '<span style="font-weight: 700">Fill in some text</span>'
         );
       });
 

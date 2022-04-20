@@ -368,6 +368,7 @@ function CustomFontsSettings({
               }
             >
               {customFonts.map(({ id, family, url }, index) => (
+                // eslint-disable-next-line styled-components-a11y/click-events-have-key-events, styled-components-a11y/interactive-supports-focus -- keyboard handling is via the parent
                 <FontRow
                   id={`font-${id}`}
                   ref={
@@ -375,6 +376,9 @@ function CustomFontsSettings({
                   }
                   key={family}
                   role="option"
+                  onClick={() => {
+                    setCurrentFontsFocusIndex(index);
+                  }}
                   aria-selected={isListBoxActiveRow(index)}
                 >
                   <FontData>
