@@ -102,15 +102,15 @@ function BackgroundAudioPanelContent({
   );
 
   const onSelect = useCallback(
-    (media) => {
+    ({ src, id, mimeType, needsProxy, length, lengthFormatted }) => {
       const updatedBackgroundAudio = {
         resource: {
-          src: media.src,
-          id: media.id,
-          mimeType: media.mimeType,
-          length: media.length,
-          lengthFormatted: media.lengthFormatted,
-          needsProxy: false,
+          src,
+          id,
+          mimeType,
+          length,
+          lengthFormatted,
+          needsProxy,
         },
       };
 
@@ -128,20 +128,18 @@ function BackgroundAudioPanelContent({
   const onSelectHotlink = useCallback(
     (media) => {
       (async () => {
-        const audioProxied = getProxiedUrl(media, media.src);
+        const { src, mimeType, needsProxy } = media;
+        const audioProxied = getProxiedUrl(media, src);
         const videoEl = await preloadVideo(audioProxied);
         const { length, lengthFormatted } = getVideoLength(videoEl);
 
-        const newMedia = {
-          src: media.src,
-          id: media.id,
-          mimeType: media.mimeType,
+        onSelect({
+          src,
+          mimeType,
           length,
           lengthFormatted,
-          needsProxy: media.needsProxy,
-        };
-
-        onSelect(newMedia);
+          needsProxy,
+        });
       })();
     },
     [getProxiedUrl, onSelect]
@@ -245,7 +243,7 @@ function BackgroundAudioPanelContent({
                 size={BUTTON_SIZES.SMALL}
                 onClick={() => setIsOpen(true)}
               >
-                {__('Link to file', 'web-stories')}
+                {__('Link to audio file', 'web-stories')}
               </UploadButton>
               <HotlinkModal
                 title={__('Insert external background audio', 'web-stories')}
@@ -253,6 +251,8 @@ function BackgroundAudioPanelContent({
                 onSelect={onSelectHotlink}
                 onClose={() => setIsOpen(false)}
                 allowedFileTypes={allowedAudioFileTypes}
+                insertText={__('Use audio file', 'web-stories')}
+                insertingText={__('Selecting audio file', 'web-stories')}
               />
             </>
           )}

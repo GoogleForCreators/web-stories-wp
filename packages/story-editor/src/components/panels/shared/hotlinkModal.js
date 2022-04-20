@@ -20,7 +20,6 @@
 import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
 import { Input } from '@googleforcreators/design-system';
 import PropTypes from 'prop-types';
-import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components';
 import {
   useCallback,
@@ -52,6 +51,8 @@ function HotlinkModal({
   onClose,
   onSelect,
   allowedFileTypes = [],
+  insertText = __('Insert', 'web-stories'),
+  insertingText = __('Inserting…', 'web-stories'),
   title,
 }) {
   const [isInserting, setIsInserting] = useState(false);
@@ -66,9 +67,7 @@ function HotlinkModal({
   const { checkResourceAccess } = useCORSProxy();
 
   const isDisabled = errorMsg || !link || isInserting;
-  const primaryText = isInserting
-    ? __('Inserting…', 'web-stories')
-    : __('Insert', 'web-stories');
+  const primaryText = isInserting ? insertingText : insertText;
 
   let description = __('No file types are currently supported.', 'web-stories');
   if (allowedFileTypes.length) {
@@ -136,8 +135,7 @@ function HotlinkModal({
       });
 
       onSelect({
-        ...hotlinkInfo,
-        id: uuidv4(),
+        mimeType: hotlinkInfo.mimeType,
         src: link,
         needsProxy: shouldProxy,
       });
@@ -206,6 +204,8 @@ HotlinkModal.propTypes = {
   onSelect: PropTypes.func.isRequired,
   allowedFileTypes: PropTypes.array,
   title: PropTypes.string,
+  insertText: PropTypes.string,
+  insertingText: PropTypes.string,
 };
 
 export default HotlinkModal;

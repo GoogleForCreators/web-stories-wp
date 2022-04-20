@@ -27,6 +27,7 @@ import {
 } from '@web-stories-wp/e2e-test-utils';
 
 const VTT_URL = `${process.env.WP_BASE_URL}/wp-content/e2e-assets/test.vtt`;
+const MP3_URL = `${process.env.WP_BASE_URL}/wp-content/e2e-assets/audio.mp3`;
 
 describe('Background Audio', () => {
   let uploadedFiles;
@@ -160,60 +161,98 @@ describe('Background Audio', () => {
       await expect(page).toMatch('test.vtt');
     });
 
-    describe('Hotlink captions', () => {
-      withExperimentalFeatures(['captionHotlinking']);
+    describe('Hotlink', () => {
       withPlugin('e2e-tests-hotlink-hotwire');
+      describe('Audio file', () => {
+        withExperimentalFeatures(['audioHotlinking']);
+        it('should allow adding background audio', async () => {
+          await createNewStory();
 
-      it('should allow adding background audio with captions', async () => {
-        await createNewStory();
+          // Select the current page by clicking bg change quick action (because of empty state).
+          await expect(page).toClick('button', {
+            text: 'Change background color',
+          });
 
-        // Select the current page by clicking bg change quick action (because of empty state).
-        await expect(page).toClick('button', {
-          text: 'Change background color',
+          await expect(page).toMatch('Page Background Audio');
+
+          await expect(page).toClick('button', { text: 'Link to audio file' });
+
+          const dialogSelector = '.ReactModal__Content';
+
+          await page.waitForSelector(dialogSelector);
+
+          const dialog = await expect(page).toMatchElement(dialogSelector);
+
+          await page.keyboard.type(MP3_URL);
+
+          await expect(dialog).toClick('button', { text: 'Use audio file' });
+
+          await expect(page).not.toMatchElement(dialogSelector);
+
+          await expect(page).not.toMatchElement('button', {
+            text: 'Link to audio file',
+          });
         });
+      });
 
-        await expect(page).toMatch('Page Background Audio');
+      describe('Captions', () => {
+        withExperimentalFeatures(['captionHotlinking']);
 
-        await expect(page).toClick('button', { text: 'Upload an audio file' });
+        it('should allow adding background audio with captions', async () => {
+          await createNewStory();
 
-        await page.waitForSelector('.media-modal', {
-          visible: true,
-        });
+          // Select the current page by clicking bg change quick action (because of empty state).
+          await expect(page).toClick('button', {
+            text: 'Change background color',
+          });
 
-        await expect(page).toClick('.media-modal #menu-item-upload', {
-          text: 'Upload files',
-          visible: true,
-        });
+          await expect(page).toMatch('Page Background Audio');
 
-        const fileName = await uploadFile('audio.mp3');
-        uploadedFiles.push(fileName);
+          await expect(page).toClick('button', {
+            text: 'Upload an audio file',
+          });
 
-        await expect(page).toClick('button', { text: 'Select audio file' });
+          await page.waitForSelector('.media-modal', {
+            visible: true,
+          });
 
-        await page.waitForSelector('.media-modal', {
-          visible: false,
-        });
+          await expect(page).toClick('.media-modal #menu-item-upload', {
+            text: 'Upload files',
+            visible: true,
+          });
 
-        await expect(page).toMatch(fileName);
+          const fileName = await uploadFile('audio.mp3');
+          uploadedFiles.push(fileName);
 
-        await expect(page).toMatchElement('button[aria-label="Play"]');
+          await expect(page).toClick('button', { text: 'Select audio file' });
 
-        await expect(page).toClick('button', { text: 'Link to file' });
+          await page.waitForSelector('.media-modal', {
+            visible: false,
+          });
 
-        const dialogSelector = '.ReactModal__Content';
+          await expect(page).toMatch(fileName);
 
-        await page.waitForSelector(dialogSelector);
+          await expect(page).toMatchElement('button[aria-label="Play"]');
 
-        const dialog = await expect(page).toMatchElement(dialogSelector);
+          await expect(page).toClick('button', {
+            text: 'Link to caption file',
+          });
 
-        await page.keyboard.type(VTT_URL);
+          const dialogSelector = '.ReactModal__Content';
 
-        await expect(dialog).toClick('button', { text: 'Insert' });
+          await page.waitForSelector(dialogSelector);
 
-        await expect(page).not.toMatchElement(dialogSelector);
+          const dialog = await expect(page).toMatchElement(dialogSelector);
 
-        await expect(page).not.toMatchElement('button', {
-          text: 'Link to file',
+          await page.keyboard.type(VTT_URL);
+
+          await expect(dialog).toClick('button', { text: 'Use caption' });
+
+          await expect(page).not.toMatchElement(dialogSelector);
+
+          await expect(page).not.toMatchElement('button', {
+            text: 'Link to caption file',
+          });
         });
       });
     });
