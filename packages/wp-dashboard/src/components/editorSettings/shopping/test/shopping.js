@@ -24,6 +24,7 @@ import { fireEvent, screen } from '@testing-library/react';
  */
 import ShoppingSettings, { TEXT } from '..';
 import { renderWithProviders } from '../../../../testUtils';
+import { SHOPPING_PROVIDER_TYPE } from '../../../../constants';
 
 const updateSettings = jest.fn();
 
@@ -35,6 +36,7 @@ describe('Editor Settings: Shopping <Shopping />', function () {
   it('should render Shopify inputs and helper texts', function () {
     renderWithProviders(
       <ShoppingSettings
+        shoppingProvider={SHOPPING_PROVIDER_TYPE.SHOPIFY}
         shopifyHost="yourstore.myshopify.com"
         shopifyAccessToken=""
         updateSettings={updateSettings}
@@ -52,6 +54,7 @@ describe('Editor Settings: Shopping <Shopping />', function () {
   it('should update settings when pressing enter', function () {
     renderWithProviders(
       <ShoppingSettings
+        shoppingProvider={SHOPPING_PROVIDER_TYPE.SHOPIFY}
         shopifyHost="yourstore.myshopify.com"
         shopifyAccessToken=""
         updateSettings={updateSettings}
@@ -71,6 +74,7 @@ describe('Editor Settings: Shopping <Shopping />', function () {
   it('should update settings when clicking save button', function () {
     renderWithProviders(
       <ShoppingSettings
+        shoppingProvider={SHOPPING_PROVIDER_TYPE.SHOPIFY}
         shopifyHost="yourstore.myshopify.com"
         shopifyAccessToken=""
         updateSettings={updateSettings}
@@ -78,7 +82,7 @@ describe('Editor Settings: Shopping <Shopping />', function () {
     );
 
     const input = screen.getByLabelText('Shopify Domain');
-    const button = screen.getAllByRole('button')[0];
+    const button = screen.getByTestId('shopifyHostButton');
 
     fireEvent.change(input, { target: { value: 'mynewstore.myshopify.com' } });
     fireEvent.click(button);
