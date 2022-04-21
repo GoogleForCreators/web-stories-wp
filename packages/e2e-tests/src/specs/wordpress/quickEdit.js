@@ -24,8 +24,27 @@ import {
   visitAdminPage,
 } from '@web-stories-wp/e2e-test-utils';
 
+/**
+ * Internal dependencies
+ */
+import { addAllowedErrorMessage } from '../../config/bootstrap.js';
+
 describe('Quick Edit', () => {
   withUser('author', 'password');
+
+  let removeResourceErrorMessage;
+
+  beforeAll(() => {
+    // A temporary known issue in AMP. The fix has not landed in production yet.
+    // TODO: Remove after 2022-04-30 or so.
+    removeResourceErrorMessage = addAllowedErrorMessage(
+      'i.isSingleDoc is not a function'
+    );
+  });
+
+  afterAll(() => {
+    removeResourceErrorMessage();
+  });
 
   it('should save story without breaking markup', async () => {
     await createNewStory();
