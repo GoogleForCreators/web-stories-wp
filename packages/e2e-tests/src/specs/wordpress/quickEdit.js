@@ -60,8 +60,6 @@ describe('Quick Edit', () => {
 
     await expect(page).toMatch(storyTitleNew);
 
-    await page.hover(`#${elmId}`);
-
     await Promise.all([
       expect(page).toClick(`#${elmId} a`, { text: 'View' }),
       page.waitForNavigation(),
