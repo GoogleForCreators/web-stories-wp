@@ -341,7 +341,8 @@
         "packages/karma-*/**/*.js"
       ],
       "extends": [
-        "plugin:jasmine/recommended"
+        "plugin:jasmine/recommended",
+        "plugin:testing-library/react"
       ],
       "plugins": [
         "jsx-a11y",
@@ -355,6 +356,7 @@
       },
       "rules": {
         "eslint-comments/require-description": "off",
+        "testing-library/no-await-sync-events": "error",
         "testing-library/no-debugging-utils": "error",
         "testing-library/no-dom-import": "error",
         "jasmine/new-line-before-expect": "off",
