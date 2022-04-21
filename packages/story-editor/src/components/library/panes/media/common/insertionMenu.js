@@ -48,6 +48,7 @@ import useStory from '../../../../../app/story/useStory';
 import { ActionButton } from '../../shared';
 import useRovingTabIndex from '../../../../../utils/useRovingTabIndex';
 import useFocusCanvas from '../../../../canvas/useFocusCanvas';
+import { useConfig } from '../../../../../app';
 
 const DropDownContainer = styled.div`
   margin-top: 10px;
@@ -97,6 +98,8 @@ function InsertionMenu({
   setParentActive = noop,
   setParentInactive = noop,
 }) {
+  const { isRTL, styleConstants: { leftOffset } = {} } = useConfig();
+
   const insertButtonRef = useRef();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const onMenuOpen = useCallback((e) => {
@@ -187,6 +190,8 @@ function InsertionMenu({
           anchor={insertButtonRef}
           placement={PLACEMENT.BOTTOM_START}
           isOpen={isMenuOpen}
+          isRTL={isRTL}
+          leftOffset={leftOffset}
         >
           <DropDownContainer>
             <Menu

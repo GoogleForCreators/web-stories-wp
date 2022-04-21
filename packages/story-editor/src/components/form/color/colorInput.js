@@ -205,7 +205,7 @@ const ColorInput = forwardRef(function ColorInput(
       isEyedropperActive,
     })
   );
-  const { isRTL, styleConstants: { topOffset } = {} } = useConfig();
+  const { isRTL, styleConstants: { topOffset, leftOffset } = {} } = useConfig();
   const [dynamicPlacement, setDynamicPlacement] = useState(pickerPlacement);
 
   const {
@@ -343,6 +343,7 @@ const ColorInput = forwardRef(function ColorInput(
       )}
       <Popup
         isRTL={isRTL}
+        leftOffset={leftOffset}
         anchor={previewRef}
         dock={isInDesignMenu ? null : sidebar}
         isOpen={pickerOpen && !isEyedropperActive}
@@ -350,7 +351,6 @@ const ColorInput = forwardRef(function ColorInput(
         spacing={spacing}
         topOffset={topOffset}
         refCallback={positionPlacement}
-        resetXOffset
         renderContents={({ propagateDimensionChange }) => (
           <ColorPicker
             color={isMixed ? null : value}
