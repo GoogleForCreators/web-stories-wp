@@ -25,7 +25,7 @@ function wrapIndex(i, length) {
 }
 
 function createNavigateFocusGroup(uuid, focusGroup) {
-  function navigateActiveFocusGroup(step) {
+  function navigateFocusGroup(step) {
     if (!focusGroup) {
       return;
     }
@@ -42,7 +42,7 @@ function createNavigateFocusGroup(uuid, focusGroup) {
     node?.focus();
   }
 
-  return navigateActiveFocusGroup;
+  return navigateFocusGroup;
 }
 
 function KeyBindings({ uuid, node, focusGroup, exitFocusGroup }) {

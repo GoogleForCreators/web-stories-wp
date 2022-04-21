@@ -45,11 +45,6 @@ function EditLayerFocusManager({ children }) {
     [stateRef]
   );
 
-  const exitCurrentFocusGroup = useCallback(() => {
-    stateRef.current.cleanup?.();
-    actions.clearActiveGroup();
-  }, [actions, stateRef]);
-
   const focusGroups = Object.entries(state.focusGroups);
   const focusGroupCleanupCallbacks = state.cleanupCallbacks;
 
