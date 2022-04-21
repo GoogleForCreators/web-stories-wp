@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
 NVM_VERSION=`curl -Ls -w %{url_effective} -o /dev/null https://github.com/nvm-sh/nvm/releases/latest | rev | cut -d '/' -f 1 | rev`
 
 # Exit if any command fails
