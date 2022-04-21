@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
 import {
   useLayoutEffect,
   useEffect,
@@ -34,35 +33,10 @@ import PropTypes from 'prop-types';
  */
 import { noop } from '../../utils';
 import { getTransforms, getOffset } from './utils';
-import { PLACEMENT } from './constants';
+import { PLACEMENT, PopupContainer } from './constants';
 const DEFAULT_TOPOFFSET = 0;
 const DEFAULT_POPUP_Z_INDEX = 2;
-const Container = styled.div.attrs(
-  ({
-    $offset: { x, y, width, height },
-    fillWidth,
-    fillHeight,
-    placement,
-    isRTL,
-    invisible,
-    zIndex,
-  }) => ({
-    style: {
-      transform: `translate(${x}px, ${y}px) ${getTransforms(placement, isRTL)}`,
-      ...(fillWidth ? { width: `${width}px` } : {}),
-      ...(fillHeight ? { height: `${height}px` } : {}),
-      ...(invisible ? { visibility: 'hidden' } : {}),
-      zIndex,
-    },
-  })
-)`
-  /*! @noflip */
-  left: 0px;
-  top: 0px;
-  position: fixed;
-  ${({ noOverFlow }) => (noOverFlow ? '' : `overflow-y: auto;`)};
-  max-height: ${({ topOffset }) => `calc(100vh - ${topOffset}px)`};
-`;
+
 function Popup({
   isRTL = false,
   anchor,
@@ -75,24 +49,15 @@ function Popup({
   invisible = false,
   fillWidth = false,
   fillHeight = false,
-  onPositionUpdate = noop,
   refCallback = noop,
   topOffset = DEFAULT_TOPOFFSET,
   zIndex = DEFAULT_POPUP_Z_INDEX,
-  noOverFlow = false,
   ignoreMaxOffsetY,
   resetXOffset = false,
 }) {
   const [popupState, setPopupState] = useState(null);
   const isMounted = useRef(false);
   const popup = useRef(null);
-
-  useEffect(() => {
-    isMounted.current = true;
-    return () => {
-      isMounted.current = false;
-    };
-  }, []);
 
   const positionPopup = useCallback(
     (evt) => {
@@ -131,6 +96,14 @@ function Popup({
       resetXOffset,
     ]
   );
+
+  useEffect(() => {
+    isMounted.current = true;
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
+
   useEffect(() => {
     // If the popup height changes meanwhile, let's update the popup, too.
     if (
@@ -160,29 +133,26 @@ function Popup({
       return;
     }
 
-    onPositionUpdate(popupState);
     refCallback(popup);
-  }, [popupState, onPositionUpdate, refCallback]);
+  }, [popupState, refCallback]);
 
   useResizeEffect({ current: document.body }, positionPopup, [positionPopup]);
   return popupState && isOpen
     ? createPortal(
-        <Container
+        <PopupContainer
           ref={popup}
           fillWidth={fillWidth}
           fillHeight={fillHeight}
-          placement={placement}
           $offset={popupState.offset}
           invisible={invisible}
           topOffset={topOffset}
-          noOverFlow={noOverFlow}
-          isRTL={isRTL}
           zIndex={zIndex}
+          transforms={getTransforms(placement, isRTL)}
         >
           {renderContents
             ? renderContents({ propagateDimensionChange: positionPopup })
             : children}
-        </Container>,
+        </PopupContainer>,
         document.body
       )
     : null;
@@ -201,11 +171,9 @@ Popup.propTypes = {
   invisible: PropTypes.bool,
   fillWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
   fillHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
-  onPositionUpdate: PropTypes.func,
   refCallback: PropTypes.func,
   topOffset: PropTypes.number,
   zIndex: PropTypes.number,
-  noOverFlow: PropTypes.bool,
   ignoreMaxOffsetY: PropTypes.bool,
   resetXOffset: PropTypes.bool,
 };

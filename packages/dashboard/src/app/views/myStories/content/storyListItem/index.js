@@ -25,7 +25,6 @@ import {
   Headline,
   Text,
   THEME_CONSTANTS,
-  Tooltip,
 } from '@googleforcreators/design-system';
 
 /**
@@ -37,6 +36,7 @@ import {
   TableCell,
   TablePreviewCell,
   TableStatusCell,
+  Tooltip,
 } from '../../../../../components';
 import { generateStoryMenu } from '../../../../../components/popoverMenu/story-menu-generator';
 import { DISPLAY_STATUS, STORY_STATUS } from '../../../../../constants';

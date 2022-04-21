@@ -25,7 +25,6 @@ import {
   BUTTON_TYPES,
   Icons,
   themeHelpers,
-  Tooltip,
 } from '@googleforcreators/design-system';
 import { useRef, memo } from '@googleforcreators/react';
 import { getDefinitionForType } from '@googleforcreators/elements';
@@ -39,6 +38,7 @@ import { useStory } from '../../../../app';
 import useCORSProxy from '../../../../utils/useCORSProxy';
 import usePerformanceTracking from '../../../../utils/usePerformanceTracking';
 import { TRACKING_EVENTS } from '../../../../constants';
+import Tooltip from '../../../tooltip';
 import useLayerSelection from './useLayerSelection';
 import { LAYER_HEIGHT } from './constants';
 

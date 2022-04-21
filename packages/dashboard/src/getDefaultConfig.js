@@ -84,6 +84,7 @@ const getDefaultConfig = () => ({
   leftRailSecondaryNavigation: [],
   styleConstants: {
     topOffset: 0,
+    leftOffset: 0,
   },
 });
 
