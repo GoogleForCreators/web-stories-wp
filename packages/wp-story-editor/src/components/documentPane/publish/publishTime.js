@@ -63,7 +63,8 @@ function PublishTime() {
     })
   );
   const use12HourFormat = is12Hour();
-  const { isRTL } = useConfig();
+  const { isRTL, styleConstants: { leftOffset } = {} } = useConfig();
+
   /* translators: Date format, see https://www.php.net/manual/en/datetime.format.php */
   const shortDateFormat = __('d/m/Y', 'web-stories');
 
@@ -133,6 +134,7 @@ function PublishTime() {
       </Row>
       <Popup
         topOffset={TOOLBAR_HEIGHT}
+        leftOffset={leftOffset}
         anchor={dateFieldRef}
         isOpen={showDatePicker}
         isRTL={isRTL}

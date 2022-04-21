@@ -87,6 +87,8 @@ export const Search = ({
   popupFillWidth = DEFAULT_POPUP_FILL_WIDTH,
   popupZIndex,
   selectedValue = {},
+  isRTL,
+  leftOffset,
   ...rest
 }) => {
   const listId = useMemo(() => `list-${uuidv4()}`, []);
@@ -277,6 +279,8 @@ export const Search = ({
           placement={placement}
           fillWidth={popupFillWidth}
           zIndex={popupZIndex}
+          isRTL={isRTL}
+          leftOffset={leftOffset}
         >
           <Menu
             activeValue={activeOption?.value}
@@ -336,4 +340,5 @@ Search.propTypes = {
       PropTypes.number,
     ]),
   }),
+  leftOffset: PropTypes.number,
 };

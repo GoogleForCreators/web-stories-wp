@@ -81,7 +81,7 @@ function PresetPanel({ pushUpdate }) {
   } = useSidebar();
   const buttonRef = useRef(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const { isRTL, styleConstants: { topOffset } = {} } = useConfig();
+  const { isRTL, styleConstants: { leftOffset, topOffset } = {} } = useConfig();
   const hasPresets = textStyles.length > 0;
 
   const handleApplyStyle = useApplyStyle({ pushUpdate });
@@ -127,6 +127,7 @@ function PresetPanel({ pushUpdate }) {
           <Popup
             topOffset={topOffset}
             isRTL={isRTL}
+            leftOffset={leftOffset}
             anchor={buttonRef}
             dock={sidebar}
             isOpen={isPopupOpen}

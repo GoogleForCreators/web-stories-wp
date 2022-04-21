@@ -98,6 +98,8 @@ const Datalist = forwardRef(function Datalist(
     containerStyleOverrides,
     title,
     dropdownButtonLabel,
+    isRTL,
+    leftOffset,
     ...rest
   },
   ref
@@ -219,6 +221,8 @@ const Datalist = forwardRef(function Datalist(
           isOpen={isOpen}
           fillWidth={DEFAULT_WIDTH}
           zIndex={zIndex}
+          isRTL={isRTL}
+          leftOffset={leftOffset}
         >
           {list}
         </Popup>
@@ -251,6 +255,8 @@ Datalist.propTypes = {
   listStyleOverrides: PropTypes.array,
   title: PropTypes.string,
   dropdownButtonLabel: PropTypes.string,
+  isRTL: PropTypes.bool,
+  leftOffset: PropTypes.number,
 };
 
 export default Datalist;

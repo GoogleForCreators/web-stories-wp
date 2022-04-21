@@ -120,6 +120,7 @@ function PlayPauseButton({
   videoRef = null,
   isRTL,
   topOffset = 0,
+  leftOffset,
 }) {
   const hasVideoSrc = Boolean(element.resource.src);
   const isPlayAbove =
@@ -251,6 +252,7 @@ function PlayPauseButton({
           placement="top"
           spacing={playAboveSpacing}
           topOffset={topOffset}
+          leftOffset={leftOffset}
         >
           {children}
         </Popup>
@@ -294,6 +296,7 @@ PlayPauseButton.propTypes = {
   videoRef: PropTypes.object,
   isRTL: PropTypes.bool,
   topOffset: PropTypes.number,
+  leftOffset: PropTypes.number,
 };
 
 export default PlayPauseButton;

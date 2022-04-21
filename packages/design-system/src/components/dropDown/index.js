@@ -80,6 +80,8 @@ export const DropDown = forwardRef(
       isInline = false,
       selectedValue = '',
       className,
+      isRTL,
+      leftOffset,
       ...rest
     },
     ref
@@ -195,6 +197,8 @@ export const DropDown = forwardRef(
             fillWidth={popupFillWidth}
             zIndex={popupZIndex}
             ignoreMaxOffsetY
+            isRTL={isRTL}
+            leftOffset={leftOffset}
           >
             {menu}
           </Popup>
@@ -228,4 +232,5 @@ DropDown.propTypes = {
     PropTypes.bool,
     PropTypes.number,
   ]),
+  leftOffset: PropTypes.number,
 };

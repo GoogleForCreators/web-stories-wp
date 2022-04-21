@@ -144,7 +144,7 @@ function PageAttachment({ pageAttachment = {} }) {
     icon,
     theme,
   } = pageAttachment;
-  const { isRTL, styleConstants: { topOffset } = {} } = useConfig();
+  const { isRTL, styleConstants: { leftOffset, topOffset } = {} } = useConfig();
   const bgColor = theme === OUTLINK_THEME.DARK ? DARK_COLOR : LIGHT_COLOR;
   const fgColor = theme === OUTLINK_THEME.DARK ? LIGHT_COLOR : DARK_COLOR;
   return (
@@ -170,6 +170,7 @@ function PageAttachment({ pageAttachment = {} }) {
                 placement={PLACEMENT.LEFT}
                 spacing={spacing}
                 topOffset={topOffset}
+                leftOffset={leftOffset}
               >
                 <Tooltip>
                   {__(
