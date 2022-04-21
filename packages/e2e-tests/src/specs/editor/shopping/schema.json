@@ -19,7 +19,7 @@
     },
     "productPrice": {
       "description": "The price of the product, displayed on the tag.",
-      "type": "string"
+      "type": "number"
     },
     "productPriceCurrency": {
       "description": "The ISO 4217 currency code of the product price.",
