@@ -1399,9 +1399,7 @@ describe('Page output', () => {
       const { container } = render(<PageOutput {...props} />);
       const page = container.querySelector('amp-story-page');
       await expect(page).toBeInTheDocument();
-      expect(page).not.toContain(
-        'background-audio="https://example.com/audio.mp3"'
-      );
+      expect(page).not.toContain('background-audio=');
     });
 
     it('should use amp-video for non-looping background audio', async () => {
