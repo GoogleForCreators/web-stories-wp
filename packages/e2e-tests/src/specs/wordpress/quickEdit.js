@@ -56,15 +56,32 @@ describe('Quick Edit', () => {
     await page.type('input[name="post_title"]', ' - updated.');
     await expect(page).toClick('button', { text: 'Update' });
 
-    const storyTitleNew = 'Test quick edit – updated.';
+    // Wait for update to finish and for the Quick Edit form to close.
+    await page.waitForResponse(
+      (response) =>
+        // eslint-disable-next-line jest/no-conditional-in-test -- False positive
+        response.url().includes('admin-ajax.php') && response.status() === 200
+    );
+    await page.waitForSelector('.spinner', {
+      visible: false,
+    });
 
-    await expect(page).toMatch(storyTitleNew);
+    // After updating, the row for this story in the table will be slowly fading in
+    // using opacity set via the style attribute.
+    // Once finished, the style attribute will be empty.
+    await page.waitForSelector(`#${elmId}[style=""]`);
+
+    // The "Quick Edit" link will be focused after successful editing.
+    await expect(page).toMatchElement('button', { text: 'Quick Edit' });
+
+    await expect(page).toMatch('Test quick edit – updated.');
 
     await Promise.all([
       expect(page).toClick(`#${elmId} a`, { text: 'View' }),
       page.waitForNavigation(),
     ]);
 
+    // When the <amp-story> element exists we know that the output was not mangled.
     await expect(page).toMatchElement('amp-story');
   });
 });
