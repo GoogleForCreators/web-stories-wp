@@ -34,22 +34,15 @@ function EditLayerFocusManager({ children }) {
   stateRef.current = state;
 
   const enterFocusGroup = useCallback(
-    ({ groupId, cleanup }) => {
+    ({ groupId }) => {
       // grab the first node in the focus group & focus it
       const nodeTuple = stateRef.current.focusGroups?.[groupId]?.[0];
       if (nodeTuple) {
         const [, node] = nodeTuple;
         node.focus();
       }
-
-      // set the active group to register key bindings
-      // for this focus group
-      actions.setActiveGroup({
-        groupId,
-        cleanup,
-      });
     },
-    [actions, stateRef]
+    [stateRef]
   );
 
   const exitCurrentFocusGroup = useCallback(() => {
@@ -57,23 +50,30 @@ function EditLayerFocusManager({ children }) {
     actions.clearActiveGroup();
   }, [actions, stateRef]);
 
-  const activeFocusGroup = state.focusGroups[state.activeGroupKey];
+  const focusGroups = Object.entries(state.focusGroups);
+  const focusGroupCleanupCallbacks = state.cleanupCallbacks;
 
   return (
     <Context.Provider
-      value={{ enterFocusGroup, exitCurrentFocusGroup, actions }}
+      value={{
+        enterFocusGroup,
+        setFocusGroupCleanup: actions.setFocusGroupCleanup,
+        actions,
+      }}
     >
-      {activeFocusGroup?.map(
-        ([uuid, node]) =>
-          node && (
-            <KeyBindings
-              key={uuid}
-              uuid={uuid}
-              node={node}
-              activeFocusGroup={activeFocusGroup}
-              exitCurrentFocusGroup={exitCurrentFocusGroup}
-            />
-          )
+      {focusGroups.map(([groupId, focusGroup]) =>
+        focusGroup.map(
+          ([uuid, node]) =>
+            node && (
+              <KeyBindings
+                key={uuid}
+                uuid={uuid}
+                node={node}
+                focusGroup={focusGroup}
+                exitFocusGroup={focusGroupCleanupCallbacks[groupId]}
+              />
+            )
+        )
       )}
       {children}
     </Context.Provider>
