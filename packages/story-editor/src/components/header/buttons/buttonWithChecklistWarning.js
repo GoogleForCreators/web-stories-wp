@@ -25,7 +25,7 @@ import {
   BUTTON_SIZES,
   BUTTON_TYPES,
   BUTTON_VARIANTS,
-  Tooltip,
+  TOOLTIP_PLACEMENT,
 } from '@googleforcreators/design-system';
 import { forwardRef, useMemo } from '@googleforcreators/react';
 
@@ -40,6 +40,7 @@ import {
   PPC_CHECKPOINT_STATE,
   ChecklistIcon,
 } from '../../checklist';
+import Tooltip from '../../tooltip';
 
 const Button = styled(DefaultButton)`
   padding: 4px 6px;
@@ -151,6 +152,7 @@ const ButtonWithChecklistWarning = forwardRef(
         title={toolTip}
         popupZIndexOverride={Z_INDEX_STORY_DETAILS}
         hasTail
+        placement={TOOLTIP_PLACEMENT.BOTTOM_END}
       >
         <InnerButton
           ref={ref}

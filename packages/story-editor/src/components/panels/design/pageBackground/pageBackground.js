@@ -29,7 +29,6 @@ import {
   Icons,
   Text as DefaultText,
   THEME_CONSTANTS,
-  Tooltip,
 } from '@googleforcreators/design-system';
 import { trackEvent } from '@googleforcreators/tracking';
 import {
@@ -52,6 +51,7 @@ import { states, styles, useHighlights } from '../../../../app/highlights';
 import getElementProperties from '../../../canvas/utils/getElementProperties';
 import Warning from '../warning';
 import useCORSProxy from '../../../../utils/useCORSProxy';
+import Tooltip from '../../../tooltip';
 
 const DEFAULT_FLIP = { horizontal: false, vertical: false };
 

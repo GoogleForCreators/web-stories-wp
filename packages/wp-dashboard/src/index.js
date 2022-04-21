@@ -50,7 +50,11 @@ import '@wordpress/dom-ready'; // Just imported here so it's part of the bundle.
  */
 import * as apiCallbacks from './api';
 import { GlobalStyle } from './theme';
-import { LEFT_RAIL_SECONDARY_NAVIGATION, TOOLBAR_HEIGHT } from './constants';
+import {
+  LEFT_RAIL_SECONDARY_NAVIGATION,
+  TOOLBAR_HEIGHT,
+  MENU_FOLDED_WIDTH,
+} from './constants';
 import { Layout } from './components';
 
 window.webStories = window.webStories || {};
@@ -81,6 +85,7 @@ window.webStories.initializeStoryDashboard = (id, config) => {
     documentTitleSuffix: __('Web Stories \u2212 WordPress', 'web-stories'),
     styleConstants: {
       topOffset: TOOLBAR_HEIGHT,
+      leftOffset: MENU_FOLDED_WIDTH,
     },
     containerId: 'wpbody',
   };

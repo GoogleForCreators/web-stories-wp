@@ -30,7 +30,7 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { useKeyDownEffect } from '../keyboard';
-import { Tooltip } from '../tooltip';
+import { BaseTooltip } from '../tooltip';
 import { PLACEMENT } from '../popup';
 import { noop } from '../../utils';
 
@@ -202,6 +202,9 @@ const FakeThumb = styled.div`
  * @param {number} props.max Maximum value
  * @param {number} props.thumbSize Thumb diameter in pixels if different from standard
  * @param {string} props.suffix Optional value suffix to be displayed in tooltip
+ * @param {boolean} props.isRTL Needed for tooltip placement
+ * @param {number} props.leftOffset Needed for tooltip placement
+ * @param {number} props.popupZIndexOverride Needed for z index of tooltip
  * @return {Node} Range input component
  */
 function Slider({
@@ -213,6 +216,9 @@ function Slider({
   max = 500,
   thumbSize = DEFAULT_SIZE,
   suffix = '',
+  isRTL,
+  leftOffset,
+  popupZIndexOverride,
   ...rest
 }) {
   const ref = useRef();
@@ -248,13 +254,15 @@ function Slider({
   ]);
 
   const printValue = `${value}${suffix}`;
-
   return (
-    <Tooltip
+    <BaseTooltip
       title={printValue}
       placement={PLACEMENT.TOP}
+      popupZIndexOverride={popupZIndexOverride}
       forceAnchorRef={fakeThumbRef}
-      tooltipProps={{
+      isRTL={isRTL}
+      leftOffset={leftOffset}
+      styleOverride={{
         style: {
           transform: `translate(${
             ((widthTracker - thumbSize) * percentageVal) / 100
@@ -284,7 +292,7 @@ function Slider({
           thumbSize={thumbSize}
         />
       </Wrapper>
-    </Tooltip>
+    </BaseTooltip>
   );
 }
 
@@ -297,6 +305,9 @@ Slider.propTypes = {
   max: PropTypes.number,
   thumbSize: PropTypes.number,
   suffix: PropTypes.string,
+  isRTL: PropTypes.bool,
+  leftOffset: PropTypes.number,
+  popupZIndexOverride: PropTypes.number,
 };
 
 export { Slider };
