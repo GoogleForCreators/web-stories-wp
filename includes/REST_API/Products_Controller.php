@@ -163,8 +163,13 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 			return new WP_Error( 'unable_to_find_class', __( 'Unable to find class', 'web-stories' ), [ 'status' => 400 ] );
 		}
 
-		$search_term = \is_string( $request['search'] ) ? $request['search'] : '';
-		$result      = $query->get_product_by_search_term( $search_term );
+		/**
+		 * Request context.
+		 *
+		 * @var string $search_term
+		 */
+		$search_term = ! empty( $request['search'] ) ? $request['search'] : '';
+		$result      = $query->do_search( $search_term );
 		if ( is_wp_error( $result ) ) {
 			return $result;
 		}
@@ -240,10 +245,10 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 		}
 
 		if ( rest_is_field_included( 'aggregateRating.ratingValue', $fields ) ) {
-			$data['aggregateRating']['ratingValue'] = $product->get_aggregate_rating()->get_value();
+			$data['aggregateRating']['ratingValue'] = (float) $product->get_aggregate_rating()->get_value();
 		}
 		if ( rest_is_field_included( 'aggregateRating.reviewCount', $fields ) ) {
-			$data['aggregateRating']['reviewCount'] = $product->get_aggregate_rating()->get_count();
+			$data['aggregateRating']['reviewCount'] = (int) $product->get_aggregate_rating()->get_count();
 		}
 		if ( rest_is_field_included( 'aggregateRating.reviewUrl', $fields ) ) {
 			$data['aggregateRating']['reviewUrl'] = $product->get_aggregate_rating()->get_url();

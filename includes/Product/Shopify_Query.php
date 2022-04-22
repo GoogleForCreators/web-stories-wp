@@ -71,7 +71,7 @@ class Shopify_Query extends Query {
 	 * @param string $search_term Search term.
 	 * @return void|WP_Error
 	 */
-	public function get_product_by_search_term( string $search_term ) {
+	public function do_search( string $search_term ) {
 
 		/**
 		 * Filters the shopify products data TTL value.

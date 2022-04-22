@@ -41,7 +41,7 @@ class Woocommerce_Query extends Query {
 	 *
 	 * @param string $search_term Search term.
 	 */
-	public function get_product_by_search_term( string $search_term ): void {
+	public function do_search( string $search_term ): void {
 		$results = [];
 
 		/**
