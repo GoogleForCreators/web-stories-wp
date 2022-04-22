@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { useCallback } from '@googleforcreators/react';
-import { useGlobalKeyDownEffect } from '@googleforcreators/design-system';
 
 function useFocusCanvas() {
   /**
