@@ -34,7 +34,9 @@ Make sure to add `composer` to your `$PATH` if it is not already there. The loca
 ```bash
 sudo apt-get install make
 ```
+
 or
+
 ```bash
 sudo apt-get install build-essential
 ```
