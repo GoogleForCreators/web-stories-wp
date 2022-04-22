@@ -345,10 +345,9 @@ const ColorInput = forwardRef(function ColorInput(
         isRTL={isRTL}
         anchor={previewRef}
         dock={isInDesignMenu ? null : sidebar}
-        isOpen={pickerOpen}
+        isOpen={pickerOpen && !isEyedropperActive}
         placement={dynamicPlacement}
         spacing={spacing}
-        invisible={isEyedropperActive}
         topOffset={topOffset}
         refCallback={positionPlacement}
         resetXOffset
