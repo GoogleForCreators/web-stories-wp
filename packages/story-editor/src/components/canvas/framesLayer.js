@@ -26,6 +26,7 @@ import { STORY_ANIMATION_STATE } from '@googleforcreators/animation';
 import {
   themeHelpers,
   useKeyDownEffect,
+  useGlobalKeyDownEffect,
   useLiveRegion,
 } from '@googleforcreators/design-system';
 
@@ -194,6 +195,16 @@ function FramesLayer() {
       enterFocusGroup,
       setFocusGroupCleanup,
     })
+  );
+
+  useGlobalKeyDownEffect(
+    { key: 'mod+option+2', editable: true },
+    () => {
+      enterFocusGroup({
+        groupId: FOCUS_GROUPS.ELEMENT_SELECTION,
+      });
+    },
+    [enterFocusGroup]
   );
 
   // TODO: https://github.com/google/web-stories-wp/issues/10266

@@ -37,13 +37,6 @@ function useFocusCanvas() {
     });
   }, []);
 
-  // Globally listen for Cmd+Option+2 / Ctrl+Alt+2 for focus
-  useGlobalKeyDownEffect(
-    { key: 'mod+option+2', editable: true },
-    () => focusCanvas(true),
-    [focusCanvas]
-  );
-
   return focusCanvas;
 }
 
