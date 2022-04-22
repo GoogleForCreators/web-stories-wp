@@ -16,7 +16,10 @@
 /**
  * External dependencies
  */
-import { visitSettings } from '@web-stories-wp/e2e-test-utils';
+import {
+  visitSettings,
+  withExperimentalFeatures,
+} from '@web-stories-wp/e2e-test-utils';
 
 /**
  * Internal dependencies
@@ -24,9 +27,9 @@ import { visitSettings } from '@web-stories-wp/e2e-test-utils';
 import { shoppingProviderDropdownSelector } from '../../../../utils';
 
 describe('Admin User', () => {
+  withExperimentalFeatures(['shoppingIntegration']);
   it('should let me see and update shopping provider settings', async () => {
     await visitSettings();
-
     // Small trick to ensure we scroll to this input.
     const shoppingProviderDropdown = await page.$(
       shoppingProviderDropdownSelector
