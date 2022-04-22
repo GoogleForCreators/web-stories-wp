@@ -88,6 +88,36 @@ describe('Canvas - keyboard navigation', () => {
     );
   }
 
+  it('should focus the canvas with global keyboard shortcut mod+alt+2 (mod+option+2)', async () => {
+    // add some elements
+    // add text to canvas
+    await fixture.editor.library.textTab.click();
+    await fixture.events.click(fixture.editor.library.text.preset('Paragraph'));
+    // add shape to canvas
+    await fixture.editor.library.shapesTab.click();
+    await fixture.events.click(fixture.editor.library.shapes.shape('Triangle'));
+    // add image to canvas
+    await fixture.editor.library.mediaTab.click();
+    await fixture.events.mouse.clickOn(
+      fixture.editor.library.media.item(0),
+      20,
+      20
+    );
+
+    await fixture.events.keyboard.shortcut('mod+alt+2');
+
+    const selectedElements = await fixture.renderHook(() =>
+      useStory(({ state }) => state.selectedElements)
+    );
+
+    expect(selectedElements.length).toBe(1);
+    expect(selectedElements[0].isBackground).toBe(true);
+    // see that background element is selected & focused
+    expect(document.activeElement.getAttribute('data-element-id')).toBe(
+      selectedElements[0].id
+    );
+  });
+
   it('should not focus the canvas while tabbing through the editor', async () => {
     await tabToCanvasFocusContainer();
 
