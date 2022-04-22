@@ -67,6 +67,27 @@ describe('Canvas - keyboard navigation', () => {
     return document.activeElement.getAttribute('data-element-id');
   }
 
+  async function addElementsToCanvas() {
+    // add one of each element
+    // add text to canvas
+    await fixture.editor.library.textTab.click();
+    await fixture.events.click(fixture.editor.library.text.preset('Paragraph'));
+    // add shape to canvas
+    await fixture.editor.library.shapesTab.click();
+    await fixture.events.click(fixture.editor.library.shapes.shape('Triangle'));
+    // add sticker to canvas
+    await fixture.events.click(
+      fixture.editor.library.shapes.sticker(stickerTestType)
+    );
+    // add image to canvas
+    await fixture.editor.library.mediaTab.click();
+    await fixture.events.mouse.clickOn(
+      fixture.editor.library.media.item(0),
+      20,
+      20
+    );
+  }
+
   it('should not focus the canvas while tabbing through the editor', async () => {
     await tabToCanvasFocusContainer();
 
@@ -118,25 +139,8 @@ describe('Canvas - keyboard navigation', () => {
     expect(document.activeElement).toBe(focusContainer);
   });
 
-  it('should change element selection on focus and wrap around at the last element', async () => {
-    // add one of each element
-    // add text to canvas
-    await fixture.editor.library.textTab.click();
-    await fixture.events.click(fixture.editor.library.text.preset('Paragraph'));
-    // add shape to canvas
-    await fixture.editor.library.shapesTab.click();
-    await fixture.events.click(fixture.editor.library.shapes.shape('Triangle'));
-    // add sticker to canvas
-    await fixture.events.click(
-      fixture.editor.library.shapes.sticker(stickerTestType)
-    );
-    // add image to canvas
-    await fixture.editor.library.mediaTab.click();
-    await fixture.events.mouse.clickOn(
-      fixture.editor.library.media.item(0),
-      20,
-      20
-    );
+  it('should change element selection on focus and wrap around at the last element when only keyboard is used', async () => {
+    await addElementsToCanvas();
 
     await tabToCanvasFocusContainer();
 
@@ -153,6 +157,62 @@ describe('Canvas - keyboard navigation', () => {
     await fixture.events.keyboard.press('Tab');
 
     selectedElements = await fixture.renderHook(() =>
+      useStory(({ state }) => state.selectedElements)
+    );
+    expect(selectedElements.length).toBe(1);
+    expect(selectedElements[0].type).toBe('text');
+
+    // tab to the shape element
+    await fixture.events.keyboard.press('Tab');
+
+    selectedElements = await fixture.renderHook(() =>
+      useStory(({ state }) => state.selectedElements)
+    );
+    // shape should be selected and receive focus
+    expect(selectedElements.length).toBe(1);
+    expect(selectedElements[0].type).toBe('shape');
+    expect(getActiveElementId()).toBe(selectedElements[0].id);
+
+    // tab to the sticker element
+    await fixture.events.keyboard.press('Tab');
+
+    selectedElements = await fixture.renderHook(() =>
+      useStory(({ state }) => state.selectedElements)
+    );
+    // sticker should be selected and receive focus
+    expect(selectedElements.length).toBe(1);
+    expect(selectedElements[0].type).toBe('sticker');
+    expect(getActiveElementId()).toBe(selectedElements[0].id);
+
+    // tab to the image element
+    await fixture.events.keyboard.press('Tab');
+
+    selectedElements = await fixture.renderHook(() =>
+      useStory(({ state }) => state.selectedElements)
+    );
+    // image should be selected and receive focus
+    expect(selectedElements.length).toBe(1);
+    expect(selectedElements[0].type).toBe('image');
+    expect(getActiveElementId()).toBe(selectedElements[0].id);
+
+    // verify cyclicality: wrap around to background element
+    await fixture.events.keyboard.press('Tab');
+
+    selectedElements = await fixture.renderHook(() =>
+      useStory(({ state }) => state.selectedElements)
+    );
+    expect(selectedElements.length).toBe(1);
+    expect(selectedElements[0].isBackground).toBe(true);
+  });
+
+  it('should change element selection on focus and wrap around at the last element when mix of cursor and keyboard are used', async () => {
+    await addElementsToCanvas();
+
+    await fixture.events.click(
+      fixture.editor.canvas.framesLayer.frames[1].node
+    );
+
+    let selectedElements = await fixture.renderHook(() =>
       useStory(({ state }) => state.selectedElements)
     );
     expect(selectedElements.length).toBe(1);
