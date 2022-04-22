@@ -30,6 +30,7 @@ import Shape from './shape';
 import Sticker from './sticker';
 import Text from './text';
 import Video from './video';
+import Product from './product';
 
 const FloatingMenuSelector = memo(function FloatingMenuSelector({
   selectedElementType,
@@ -49,6 +50,8 @@ const FloatingMenuSelector = memo(function FloatingMenuSelector({
     case SELECTED_ELEMENT_TYPES.VIDEO:
       // eslint-disable-next-line jsx-a11y/media-has-caption -- False positive
       return <Video />;
+    case SELECTED_ELEMENT_TYPES.PRODUCT:
+      return <Product />;
     default:
       return null;
   }
