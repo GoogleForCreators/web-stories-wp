@@ -136,7 +136,7 @@ function OutputPage({
           >
             <div className="page-fullbleed-area" style={backgroundStyles}>
               <div className="page-safe-area">
-                <OutputElement element={backgroundElement} />
+                <OutputElement element={backgroundElement} flags={flags} />
                 {backgroundElement.overlay && (
                   <div
                     className="page-background-overlay-area"
@@ -156,7 +156,11 @@ function OutputPage({
           <div className="page-fullbleed-area">
             <div className="page-safe-area">
               {regularElements.map((element) => (
-                <OutputElement key={element.id} element={element} />
+                <OutputElement
+                  key={element.id}
+                  element={element}
+                  flags={flags}
+                />
               ))}
             </div>
           </div>

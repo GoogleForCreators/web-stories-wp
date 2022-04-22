@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import PropTypes from 'prop-types';
 import { isBlobURL } from '@googleforcreators/media';
 import { StoryPropTypes } from '@googleforcreators/elements';
 
@@ -30,7 +31,7 @@ function defaultForUndefined(value, def) {
   return value === undefined ? def : value;
 }
 
-function VideoOutput({ element, box }) {
+function VideoOutput({ element, box, flags }) {
   const { resource, loop, tracks } = element;
   const { isMuted, mimeType, src } = resource;
 
@@ -39,13 +40,13 @@ function VideoOutput({ element, box }) {
 
   const sourceProps = {
     type: mimeType,
-    src: !isBlobURL(src) ? src : '',
+    src: flags.allowBlobs || !isBlobURL(src) ? src : '',
   };
 
   const videoProps = {
     autoPlay: 'autoplay',
-    poster: !isBlobURL(poster) ? poster : '',
-    artwork: !isBlobURL(poster) ? poster : '',
+    poster: flags.allowBlobs || !isBlobURL(poster) ? poster : '',
+    artwork: flags.allowBlobs || !isBlobURL(poster) ? poster : '',
     title: alt,
     alt,
     layout: 'fill',
@@ -73,6 +74,7 @@ function VideoOutput({ element, box }) {
 VideoOutput.propTypes = {
   element: StoryPropTypes.elements.video.isRequired,
   box: StoryPropTypes.box.isRequired,
+  flags: PropTypes.object,
 };
 
 export default VideoOutput;

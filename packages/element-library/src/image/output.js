@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import PropTypes from 'prop-types';
 import { calculateSrcSet, isBlobURL } from '@googleforcreators/media';
 import {
   PAGE_WIDTH,
@@ -36,12 +37,12 @@ import MediaOutput from '../media/output';
  * @param {Object<*>} props Props.
  * @return {*} Rendered component.
  */
-function ImageOutput({ element, box }) {
+function ImageOutput({ element, box, flags }) {
   const { alt, isBackground, resource, width, height, scale } = element;
 
   const props = {
     layout: 'fill',
-    src: !isBlobURL(resource.src) ? resource.src : '',
+    src: flags.allowBlobs || !isBlobURL(resource.src) ? resource.src : '',
     alt: alt !== undefined ? alt : resource.alt,
   };
 
@@ -86,6 +87,7 @@ function ImageOutput({ element, box }) {
 ImageOutput.propTypes = {
   element: StoryPropTypes.elements.image.isRequired,
   box: StoryPropTypes.box.isRequired,
+  flags: PropTypes.object,
 };
 
 export default ImageOutput;

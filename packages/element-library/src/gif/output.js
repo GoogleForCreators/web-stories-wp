@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import PropTypes from 'prop-types';
 import { isBlobURL } from '@googleforcreators/media';
 import { StoryPropTypes } from '@googleforcreators/elements';
 
@@ -25,11 +26,15 @@ import { StoryPropTypes } from '@googleforcreators/elements';
  */
 import MediaOutput from '../media/output';
 
-function GifOutput({ element, box }) {
+function GifOutput({ element, box, flags }) {
   const { resource } = element;
 
-  const src = !isBlobURL(resource.output.src) ? resource.output.src : '';
-  const poster = !isBlobURL(resource.poster) ? resource.poster : '';
+  const src =
+    flags.allowBlobs || !isBlobURL(resource.output.src)
+      ? resource.output.src
+      : '';
+  const poster =
+    flags.allowBlobs || !isBlobURL(resource.poster) ? resource.poster : '';
 
   return (
     <MediaOutput element={element} box={box} data-leaf-element="true">
@@ -51,6 +56,7 @@ function GifOutput({ element, box }) {
 GifOutput.propTypes = {
   element: StoryPropTypes.elements.gif.isRequired,
   box: StoryPropTypes.box.isRequired,
+  flags: PropTypes.object,
 };
 
 export default GifOutput;
