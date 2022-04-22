@@ -85,12 +85,13 @@ describe('Quick Edit', () => {
       visible: false,
     });
 
-    // After updating, the row for this story in the table will be slowly fading in
-    // using opacity set via the style attribute.
-    // Once finished, the style attribute will be empty.
-    await page.waitForSelector(`#${elmId}[style=""]`);
-
+    // After updating, the row for this story in the table will be slowly fading in.
     // The "Quick Edit" link will be focused after successful editing.
+    // See https://github.com/WordPress/wordpress-develop/blob/6d23d07e8014f551d836c3876515c3cc2c5c594b/src/js/_enqueues/admin/inline-edit-post.js#L457-L463
+    await page.waitForFunction(
+      () => document.activeElement.innerHTML === 'Quick&nbsp;Edit'
+    );
+
     await expect(page).toMatchElement('button', { text: 'Quick Edit' });
 
     await expect(page).toMatch('Test quick edit – updated.');
