@@ -87,7 +87,7 @@ describe('Font Check Metrics', () => {
   beforeAll(async () => {
     await page.setRequestInterception(true);
     stopRequestInterception = addRequestInterception((request) => {
-      if (request.url().includes('web-stories//v1/fonts') && mockResponse) {
+      if (request.url().includes('web-stories/v1/fonts') && mockResponse) {
         request.respond(mockResponse);
         return;
       }
