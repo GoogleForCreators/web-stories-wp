@@ -114,33 +114,29 @@ describe('Font Check Metrics', () => {
       status: 200,
       contentType: 'application/json',
       body: JSON.stringify({
-        status: 200,
-        contentType: 'application/json',
-        body: JSON.stringify({
-          family: 'Rock Salt',
-          fallbacks: ['sans-serif'], // Original is "cursive"
-          weights: [900],
-          styles: ['italic'],
-          variants: [[0, 400]],
-          service: 'fonts.google.com',
-          metrics: {
-            upm: 200, // Original is 1024
-            asc: 1623,
-            des: -788,
-            tAsc: 824,
-            tDes: -240,
-            tLGap: 63,
-            wAsc: 1623,
-            wDes: 788,
-            xH: 833,
-            capH: 1154,
-            yMin: -787,
-            yMax: 1623,
-            hAsc: 1623,
-            hDes: -788,
-            lGap: 32,
-          },
-        }),
+        family: 'Rock Salt',
+        fallbacks: ['sans-serif'], // Original is "cursive"
+        weights: [900],
+        styles: ['italic'],
+        variants: [[0, 400]],
+        service: 'fonts.google.com',
+        metrics: {
+          upm: 200, // Original is 1024
+          asc: 1623,
+          des: -788,
+          tAsc: 824,
+          tDes: -240,
+          tLGap: 63,
+          wAsc: 1623,
+          wDes: 788,
+          xH: 833,
+          capH: 1154,
+          yMin: -787,
+          yMax: 1623,
+          hAsc: 1623,
+          hDes: -788,
+          lGap: 32,
+        },
       }),
     };
 
