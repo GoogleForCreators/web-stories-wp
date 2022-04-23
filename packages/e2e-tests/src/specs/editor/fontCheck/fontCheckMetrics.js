@@ -51,6 +51,35 @@ async function addStoryWithFont(title) {
   await publishStory();
 }
 
+async function toggleDevTools() {
+  // Cancel whatever current action to ensure the below shortcut works.
+  await page.keyboard.press('Escape');
+  await page.click('[aria-label="Web Stories Editor"]');
+
+  await page.keyboard.down('Meta');
+  await page.keyboard.down('Shift');
+  await page.keyboard.down('Alt');
+  await page.keyboard.down('J');
+  await page.keyboard.up('J');
+  await page.keyboard.up('Alt');
+  await page.keyboard.up('Shift');
+  await page.keyboard.up('Meta');
+}
+
+async function getCurrentStoryData() {
+  await toggleDevTools();
+
+  await page.waitForSelector('#web-stories-editor textarea');
+
+  const textareaContent = await page.evaluate(
+    () => document.querySelector('#web-stories-editor textarea').value
+  );
+
+  await toggleDevTools();
+
+  return JSON.parse(textareaContent);
+}
+
 describe('Font Check Metrics', () => {
   let stopRequestInterception;
   let mockResponse;
@@ -58,201 +87,98 @@ describe('Font Check Metrics', () => {
   beforeAll(async () => {
     await page.setRequestInterception(true);
     stopRequestInterception = addRequestInterception((request) => {
-      if (request.url().includes('/v1/fonts/') && mockResponse) {
+      if (request.url().includes('web-stories//v1/fonts') && mockResponse) {
         request.respond(mockResponse);
         return;
       }
 
-      request.continue();
+      stopRequestInterception();
     });
   });
 
-  afterAll(async () => {
-    await page.setRequestInterception(false);
-    stopRequestInterception();
+  afterEach(() => {
+    mockResponse = undefined;
   });
 
   it('should receive updated font metrics and not alter history', async () => {
     const storyTitle = 'Font Check Metrics';
     await addStoryWithFont(storyTitle);
-    const textElBefore = await expect(page).toMatchElement('p', {
-      text: 'Title 1',
-    });
-    const fontFamilyBefore = await page.evaluate(
-      (el) => getComputedStyle(el).font,
-      textElBefore
-    );
-    expect(fontFamilyBefore).toContain('Rock Salt');
-    expect(fontFamilyBefore).toContain('cursive');
 
-    mockResponse = [
-      {
-        family: 'Rock Salt',
-        fallbacks: ['sans-serif'],
-        weights: [900],
-        styles: ['italic'],
-        variants: [[0, 400]],
-        service: 'fonts.google.com',
-        metrics: {
-          upm: 200,
-          asc: 1623,
-          des: -788,
-          tAsc: 824,
-          tDes: -240,
-          tLGap: 63,
-          wAsc: 1623,
-          wDes: 788,
-          xH: 833,
-          capH: 1154,
-          yMin: -787,
-          yMax: 1623,
-          hAsc: 1623,
-          hDes: -788,
-          lGap: 32,
-        },
-      },
-    ];
+    const storyData = await getCurrentStoryData();
+    const fontBefore = storyData.pages[0].elements[1].font;
+    expect(fontBefore.family).toBe('Rock Salt');
+    expect(fontBefore.fallbacks).toIncludeAllMembers(['cursive']);
+    expect(fontBefore.metrics.upm).toBe(1024);
 
-    // force load updated metrics
-    await page.keyboard.down('Meta');
-    await page.keyboard.down('Alt');
-    await page.keyboard.down('Shift');
-    await page.keyboard.down('J');
-
-    const devToolsContent = {
-      current: 'debe7429-673b-40dd-aeaf-5a495ed90ac6',
-      selection: ['cdf47c87-385c-4485-b114-9bb608e535cd'],
-      story: {
-        globalStoryStyles: {
-          colors: [],
-          textStyles: [],
-        },
-      },
-      version: 41,
-      pages: [
-        {
-          elements: [
-            {
-              opacity: 100,
-              flip: {
-                vertical: false,
-                horizontal: false,
-              },
-              rotationAngle: 0,
-              lockAspectRatio: true,
-              x: 1,
-              y: 1,
-              width: 1,
-              height: 1,
-              mask: {
-                type: 'rectangle',
-              },
-              isBackground: true,
-              isDefaultBackground: true,
-              type: 'shape',
-              id: '6a1ffee7-f740-4691-9e01-eef62d6b31bf',
-            },
-            {
-              opacity: 100,
-              flip: {
-                vertical: false,
-                horizontal: false,
-              },
-              rotationAngle: 0,
-              lockAspectRatio: true,
-              backgroundTextMode: 'NONE',
-              font: {
-                family: 'Rock Salt',
-                fallbacks: ['sans-serif'],
-                weights: [400],
-                styles: ['regular'],
-                variants: [[0, 400]],
-                service: 'fonts.google.com',
-                metrics: {
-                  upm: 1024,
-                  asc: 1623,
-                  des: -788,
-                  tAsc: 824,
-                  tDes: -240,
-                  tLGap: 63,
-                  wAsc: 1623,
-                  wDes: 788,
-                  xH: 833,
-                  capH: 1154,
-                  yMin: -787,
-                  yMax: 1623,
-                  hAsc: 1623,
-                  hDes: -788,
-                  lGap: 32,
-                },
-              },
-              fontSize: 36,
-              backgroundColor: {
-                color: {
-                  r: 196,
-                  g: 196,
-                  b: 196,
-                },
-              },
-              lineHeight: 1.19,
-              textAlign: 'left',
-              padding: {
-                locked: true,
-                hasHiddenPadding: false,
-                horizontal: 0,
-                vertical: 0,
-              },
-              type: 'text',
-              content: 'Title 1',
-              borderRadius: {
-                locked: true,
-                topLeft: 2,
-                topRight: 2,
-                bottomRight: 2,
-                bottomLeft: 2,
-              },
-              x: 40,
-              y: 291,
-              width: 186,
-              height: 85,
-              scale: 100,
-              focalX: 50,
-              focalY: 50,
-              id: 'cdf47c87-385c-4485-b114-9bb608e535cd',
-            },
-          ],
-
-          type: 'page',
-          id: 'debe7429-673b-40dd-aeaf-5a495ed90ac6',
-        },
-      ],
+    mockResponse = {
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        status: 200,
+        contentType: 'application/json',
+        body: JSON.stringify({
+          family: 'Rock Salt',
+          fallbacks: ['sans-serif'], // Original is "cursive"
+          weights: [900],
+          styles: ['italic'],
+          variants: [[0, 400]],
+          service: 'fonts.google.com',
+          metrics: {
+            upm: 200, // Original is 1024
+            asc: 1623,
+            des: -788,
+            tAsc: 824,
+            tDes: -240,
+            tLGap: 63,
+            wAsc: 1623,
+            wDes: 788,
+            xH: 833,
+            capH: 1154,
+            yMin: -787,
+            yMax: 1623,
+            hAsc: 1623,
+            hDes: -788,
+            lGap: 32,
+          },
+        }),
+      }),
     };
 
-    await page.$eval(
-      'textArea[class^="devTools__Textarea"]',
-      (el, value) => (el.value = value),
-      JSON.stringify(devToolsContent, null, 4)
-    );
-    // this will be removed --- adding to verify the content was loaded
-    await page.waitForTimeout(10000);
-    await expect(page).toClick('[title="Load data from input"]');
-    // this will be removed --- verifying what happens after load is pressed
-    await page.waitForTimeout(10000);
-    const textElAfter = await expect(page).toMatchElement('p', {
-      text: 'Title 1',
-    });
+    await Promise.all([
+      page.waitForResponse(
+        (response) =>
+          //eslint-disable-next-line jest/no-conditional-in-test -- False positive.
+          response.url().includes('web-stories/v1/fonts') &&
+          response.status() === 200
+      ),
+      page.reload(),
+    ]);
 
-    const fontFamilyAfter = await page.evaluate(
-      (el) => getComputedStyle(el).font,
-      textElAfter
-    );
-    expect(fontFamilyAfter).toContain('Rock Salt');
-    expect(fontFamilyAfter).toContain('sans-serif');
+    const newStoryData = await getCurrentStoryData();
+    const fontAfter = newStoryData.pages[0].elements[1].font;
+    expect(fontAfter.family).toBe('Rock Salt');
+    expect(fontAfter.fallbacks).toIncludeAllMembers(['sans-serif']);
+    expect(fontAfter.metrics.upm).toBe(200);
     await expect(page).toMatchElement(
-      'button[aria-label="Undo Changes" disabled]'
+      'button[aria-label="Undo Changes"][disabled]'
     );
+
     await expect(page).toMatchElement(
-      'button[aria-label="Redo Changes" disabled]'
+      'button[aria-label="Redo Changes"][disabled]'
     );
+
+    const canUndo = await page.evaluate(
+      () =>
+        document.querySelector('button[aria-label="Undo Changes"]').disabled ===
+        false
+    );
+    await expect(canUndo).toBeFalse();
+
+    const canRedo = await page.evaluate(
+      () =>
+        document.querySelector('button[aria-label="Redo Changes"]').disabled ===
+        false
+    );
+    await expect(canRedo).toBeFalse();
   });
 });
