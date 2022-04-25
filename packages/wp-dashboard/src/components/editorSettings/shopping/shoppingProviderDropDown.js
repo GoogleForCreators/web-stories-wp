@@ -32,7 +32,7 @@ export const TEXT = {
 
 const OPTIONS = [
   {
-    label: _x('None', 'ad network', 'web-stories'),
+    label: _x('None', 'shopping provider', 'web-stories'),
     value: SHOPPING_PROVIDER_TYPE.NONE,
   },
   {
