@@ -42,7 +42,7 @@ function ImageOutput({ element, box, flags }) {
 
   const props = {
     layout: 'fill',
-    src: flags.allowBlobs || !isBlobURL(resource.src) ? resource.src : '',
+    src: flags?.allowBlobs || !isBlobURL(resource.src) ? resource.src : '',
     alt: alt !== undefined ? alt : resource.alt,
   };
 

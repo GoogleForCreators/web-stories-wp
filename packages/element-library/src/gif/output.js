@@ -30,11 +30,11 @@ function GifOutput({ element, box, flags }) {
   const { resource } = element;
 
   const src =
-    flags.allowBlobs || !isBlobURL(resource.output.src)
+    flags?.allowBlobs || !isBlobURL(resource.output.src)
       ? resource.output.src
       : '';
   const poster =
-    flags.allowBlobs || !isBlobURL(resource.poster) ? resource.poster : '';
+    flags?.allowBlobs || !isBlobURL(resource.poster) ? resource.poster : '';
 
   return (
     <MediaOutput element={element} box={box} data-leaf-element="true">

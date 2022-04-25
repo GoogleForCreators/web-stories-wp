@@ -40,13 +40,13 @@ function VideoOutput({ element, box, flags }) {
 
   const sourceProps = {
     type: mimeType,
-    src: flags.allowBlobs || !isBlobURL(src) ? src : '',
+    src: flags?.allowBlobs || !isBlobURL(src) ? src : '',
   };
 
   const videoProps = {
     autoPlay: 'autoplay',
-    poster: flags.allowBlobs || !isBlobURL(poster) ? poster : '',
-    artwork: flags.allowBlobs || !isBlobURL(poster) ? poster : '',
+    poster: flags?.allowBlobs || !isBlobURL(poster) ? poster : '',
+    artwork: flags?.allowBlobs || !isBlobURL(poster) ? poster : '',
     title: alt,
     alt,
     layout: 'fill',
