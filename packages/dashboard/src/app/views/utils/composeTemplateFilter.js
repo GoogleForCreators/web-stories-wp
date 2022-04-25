@@ -47,6 +47,7 @@ function composeTemplateFilter(filters) {
             return template.vertical
               .toLowerCase()
               .includes(filter.value.toLowerCase());
+
           case TEMPLATE_META_DATA_TYPES.TITLE:
             return template.title
               .toLowerCase()
