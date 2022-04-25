@@ -50,6 +50,6 @@
   },
   "devDependencies": {
     "@testing-library/react": "^12.1.5",
-    "@testing-library/react-hooks": "^7.0.2"
+    "@testing-library/react-hooks": "^8.0.0"
   }
 }

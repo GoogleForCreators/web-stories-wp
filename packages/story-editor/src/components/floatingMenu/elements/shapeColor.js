@@ -20,7 +20,6 @@
 import { __ } from '@googleforcreators/i18n';
 import { useCallback } from '@googleforcreators/react';
 import { trackEvent } from '@googleforcreators/tracking';
-
 /**
  * Internal dependencies
  */
@@ -60,6 +59,8 @@ function ShapeColor() {
       hasEyedropper
       allowsOpacity
       allowsGradient
+      opacityFocusTrap
+      colorFocusTrap
     />
   );
 }

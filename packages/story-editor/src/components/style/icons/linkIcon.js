@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,14 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
-import { OutputStory as storyPropType } from '@googleforcreators/output'; // @todo See issue #11015
+import { __ } from '@googleforcreators/i18n';
+import { Icons } from '@googleforcreators/design-system';
 
-export const registerPropTypes = {
-  currentStory: storyPropType,
-  previousStory: storyPropType,
-  dispatchStoryEvent: PropTypes.func.isRequired,
-};
+function LinkIcon() {
+  return <Icons.Link title={__('Link', 'web-stories')} />;
+}
+
+export default LinkIcon;

@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { Icons } from '@googleforcreators/design-system';
+import { useRef } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import { trackEvent } from '@googleforcreators/tracking';
 import styled from 'styled-components';
@@ -28,7 +29,13 @@ import { canSupportMultiBorder } from '@googleforcreators/masks';
  */
 import { useStory } from '../../../app';
 import { DEFAULT_BORDER } from '../../panels/design/border/shared';
-import { Input, Color, useProperties } from './shared';
+import {
+  Input,
+  Color,
+  useProperties,
+  FocusTrapButton,
+  handleReturnTrappedFocus,
+} from './shared';
 
 const Container = styled.div`
   display: flex;
@@ -51,7 +58,12 @@ function getHasBorderWidth(border) {
 
 const BLACK = { color: { r: 0, g: 0, b: 0 } };
 
+const WIDTH_LABEL = __('Border width', 'web-stories');
+const COLOR_LABEL = __('Border color', 'web-stories');
+
 function BorderWidthAndColor() {
+  const inputRef = useRef();
+  const buttonRef = useRef();
   // Note that "mask" never updates on an element,
   // so selecting it cannot cause re-renders
   // We need it to determine if border opacity is allowed.
@@ -121,19 +133,29 @@ function BorderWidthAndColor() {
 
   return (
     <Container>
-      <Input
-        tabIndex={-1}
-        suffix={<Icons.BorderBox />}
-        value={border.left || 0}
-        aria-label={__('Border width', 'web-stories')}
-        onChange={(_, value) => handleWidthChange(value)}
-      />
+      <FocusTrapButton
+        ref={buttonRef}
+        inputRef={inputRef}
+        inputLabel={WIDTH_LABEL}
+      >
+        <Input
+          tabIndex={-1}
+          ref={inputRef}
+          suffix={<Icons.BorderBox />}
+          value={border.left || 0}
+          aria-label={WIDTH_LABEL}
+          onChange={(_, value) => handleWidthChange(value)}
+          onKeyDown={(e) => {
+            handleReturnTrappedFocus(e, buttonRef);
+          }}
+        />
+      </FocusTrapButton>
       {hasBorderWidth && (
         <>
           <Dash />
           <Color
             tabIndex={-1}
-            label={__('Border color', 'web-stories')}
+            label={COLOR_LABEL}
             value={border.color || BLACK}
             onChange={handleColorChange}
             hasInputs={false}

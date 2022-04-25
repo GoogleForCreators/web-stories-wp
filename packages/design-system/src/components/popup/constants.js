@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
+import styled from 'styled-components';
+
 export const PLACEMENT = {
   // TOP
   TOP: 'top',
@@ -36,12 +41,12 @@ export const PLACEMENT = {
 export const RTL_PLACEMENT = {
   // TOP
   [PLACEMENT.TOP]: PLACEMENT.TOP,
-  [PLACEMENT.TOP_START]: PLACEMENT.TOP_END,
-  [PLACEMENT.TOP_END]: PLACEMENT.TOP_START,
+  [PLACEMENT.TOP_START]: PLACEMENT.TOP_START,
+  [PLACEMENT.TOP_END]: PLACEMENT.TOP_END,
   // BOTTOM
   [PLACEMENT.BOTTOM]: PLACEMENT.BOTTOM,
-  [PLACEMENT.BOTTOM_END]: PLACEMENT.BOTTOM_START,
-  [PLACEMENT.BOTTOM_START]: PLACEMENT.BOTTOM_END,
+  [PLACEMENT.BOTTOM_END]: PLACEMENT.BOTTOM_END,
+  [PLACEMENT.BOTTOM_START]: PLACEMENT.BOTTOM_START,
   // RIGHT
   [PLACEMENT.RIGHT]: PLACEMENT.LEFT,
   [PLACEMENT.RIGHT_START]: PLACEMENT.LEFT_START,
@@ -51,3 +56,21 @@ export const RTL_PLACEMENT = {
   [PLACEMENT.LEFT_START]: PLACEMENT.RIGHT_START,
   [PLACEMENT.LEFT_END]: PLACEMENT.RIGHT_END,
 };
+
+export const PopupContainer = styled.div.attrs(
+  ({ $offset: { x, y, width }, fillWidth, transforms, invisible, zIndex }) => ({
+    style: {
+      transform: `translate(${x}px, ${y}px) ${transforms}`,
+      ...(fillWidth ? { width: `${width}px` } : {}),
+      ...(invisible ? { visibility: 'hidden' } : {}),
+      zIndex,
+    },
+  })
+)`
+  /*! @noflip */
+  left: 0px;
+  top: 0px;
+  position: fixed;
+  ${({ noOverFlow }) => (noOverFlow ? '' : 'overflow-y: auto;')};
+  max-height: ${({ topOffset }) => `calc(100vh - ${topOffset}px)`};
+`;

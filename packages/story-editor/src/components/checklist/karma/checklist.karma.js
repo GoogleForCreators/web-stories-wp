@@ -353,15 +353,21 @@ describe('Checklist integration', () => {
   });
 
   it('should open the checklist after following "checklist" button in dialog on publishing story', async () => {
-    fixture.events.click(fixture.editor.titleBar.publish);
+    await fixture.events.click(fixture.editor.titleBar.publish);
 
     const reviewButton = await fixture.screen.getByRole('button', {
       name: /^Checklist$/,
     });
     await fixture.events.click(reviewButton);
-    // This is the initial load of the checklist tab so we need to wait for it to load
-    // before we can see tabs.
-    await fixture.events.sleep(300);
+
+    await waitFor(
+      () => {
+        if (!fixture.editor.checklist.issues) {
+          throw new Error('Checklist not visible yet');
+        }
+      },
+      { timeout: 2000 }
+    );
 
     expect(
       fixture.editor.checklist.issues.getAttribute('data-isexpanded')

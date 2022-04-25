@@ -115,9 +115,9 @@ export function getOffset({
   dock,
   popup,
   isRTL,
-  topOffset,
   ignoreMaxOffsetY,
   resetXOffset,
+  topOffset = 0,
 }) {
   const anchorRect = anchor.current.getBoundingClientRect();
   const bodyRect = document.body.getBoundingClientRect();
@@ -140,7 +140,10 @@ export function getOffset({
     }
     return getXOffset(placement, spacingH, anchorRect, dockRect, isRTL);
   };
-  const maxOffsetX = bodyRect.width - width - getXTransforms(placement) * width;
+
+  const maxOffsetX = !isRTL
+    ? bodyRect.width - width - getXTransforms(placement) * width
+    : bodyRect.width - getXTransforms(placement) * width;
 
   // Vertical
   const offsetY = getYOffset(placement, spacingV, anchorRect);
@@ -155,7 +158,6 @@ export function getOffset({
       : Math.max(topOffset, Math.min(offsetY, maxOffsetY)),
     width: anchorRect.width,
     height: anchorRect.height,
-    popupLeft: popupRect?.left,
-    popupHeight: popupRect?.height,
+    bodyRight: bodyRect?.right,
   };
 }

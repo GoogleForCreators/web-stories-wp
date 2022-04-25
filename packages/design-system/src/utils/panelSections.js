@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,4 +14,23 @@
  * limitations under the License.
  */
 
-__webpack_public_path__ = window.webStories.publicPath;
+/**
+ * Internal dependencies
+ */
+import PanelTypes from './panelTypes';
+
+export const STYLE_PANE_IDS = {
+  SELECTION: 'selection',
+  LINK: 'link',
+  ANIMATION: 'animation',
+};
+
+const { LINK, ANIMATION, ...panelsExcludingLinkAndAnimation } = PanelTypes;
+
+const PanelSections = {
+  [STYLE_PANE_IDS.SELECTION]: Object.values(panelsExcludingLinkAndAnimation),
+  [STYLE_PANE_IDS.LINK]: [LINK],
+  [STYLE_PANE_IDS.ANIMATION]: [ANIMATION],
+};
+
+export default PanelSections;
