@@ -192,7 +192,12 @@ function DisplayLayer() {
 
   const Overlay = useMemo(() => {
     if (hasProducts) {
-      return <ShoppingPageAttachment theme={pageAttachment.theme} />;
+      return (
+        <ShoppingPageAttachment
+          theme={pageAttachment.theme}
+          ctaText={pageAttachment.ctaText}
+        />
+      );
     }
 
     // Always render <PageAttachment> because the pageAttachmentContainer ref

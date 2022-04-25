@@ -18,10 +18,15 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import { __ } from '@googleforcreators/i18n';
 
-function ShoppingAttachment({ products, theme }) {
+function ShoppingAttachment({
+  products,
+  theme,
+  ctaText = __('Shop Now', 'web-stories'),
+}) {
   return (
-    <amp-story-shopping-attachment theme={theme}>
+    <amp-story-shopping-attachment theme={theme} ctaText={ctaText}>
       <script
         type="application/json"
         dangerouslySetInnerHTML={{
@@ -36,6 +41,7 @@ function ShoppingAttachment({ products, theme }) {
 
 ShoppingAttachment.propTypes = {
   theme: PropTypes.oneOf(['light', 'dark']),
+  ctaText: PropTypes.string,
   products: PropTypes.arrayOf(PropTypes.object),
 };
 
