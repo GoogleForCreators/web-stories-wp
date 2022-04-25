@@ -286,7 +286,8 @@ class Settings extends Service_Base {
 			[
 				'description'  => __( 'Shopping provider', 'web-stories' ),
 				'type'         => 'string',
-				'default'      => '',
+				'default'      => 'none',
+				'enum'         => [ 'none', 'woocommerce', 'shopify' ],
 				'show_in_rest' => true,
 			]
 		);
