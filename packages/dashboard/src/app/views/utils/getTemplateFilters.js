@@ -57,10 +57,17 @@ function getTemplateFilters(templates) {
       type: TEMPLATE_META_DATA_TYPES.VERTICAL,
     }));
 
+  const title = templatesArr.map(t => ({
+     label: t.title,
+     value: t.title,
+     type: TEMPLATE_META_DATA_TYPES.TITLE
+  }))
+
   return [
     ...uniqueEntriesByKey(tags, 'label'),
     ...uniqueEntriesByKey(colors, 'label'),
     ...uniqueEntriesByKey(verticals, 'label'),
+    ...uniqueEntriesByKey(title, 'label'),
   ];
 }
 

@@ -17,4 +17,5 @@ export const TEMPLATE_META_DATA_TYPES = {
   VERTICAL: 'VERTICAL',
   COLOR: 'COLOR',
   TAG: 'TAG',
+  TITLE: 'TITLE'
 };
