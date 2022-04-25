@@ -42,7 +42,7 @@ describe('composeTemplateFilter', () => {
         tags: ['red'],
         colors: [{ label: 'green' }],
         vertical: 'Books',
-        title: 'Book Title'
+        title: 'Book Title',
       })
     ).toBeTruthy();
 
@@ -52,7 +52,7 @@ describe('composeTemplateFilter', () => {
         tags: ['blue'],
         colors: [{ label: 'red' }],
         vertical: 'Books',
-        title: 'Book Title'
+        title: 'Book Title',
       })
     ).toBeTruthy();
 
@@ -62,7 +62,7 @@ describe('composeTemplateFilter', () => {
         tags: ['blue'],
         colors: [{ label: 'blue' }],
         vertical: 'Travel',
-        title: 'Travel Title'
+        title: 'Travel Title',
       })
     ).toBeTruthy();
 
@@ -72,7 +72,7 @@ describe('composeTemplateFilter', () => {
         tags: ['blue'],
         colors: [{ label: 'blue' }],
         vertical: 'Books',
-        title: 'Travel The World'
+        title: 'Travel The World',
       })
     ).toBeTruthy();
 
@@ -82,7 +82,7 @@ describe('composeTemplateFilter', () => {
         tags: ['blue'],
         colors: [{ label: 'blue' }],
         vertical: 'Books',
-        title: 'Book Title'
+        title: 'Book Title',
       })
     ).not.toBeTruthy();
   });

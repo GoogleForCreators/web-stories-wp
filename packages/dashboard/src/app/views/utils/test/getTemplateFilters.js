@@ -30,13 +30,13 @@ describe('getTemplateFilters', () => {
         ],
         tags: ['Greece', 'Italy', 'Spain'],
         vertical: 'Travel',
-        title: 'Travel The World'
+        title: 'Travel The World',
       },
       {
         colors: [{ family: 'red', label: 'red' }],
         tags: ['Reading', 'I might like tv better', 'red'],
         vertical: 'Books',
-        title: 'All the books'
+        title: 'All the books',
       },
     ];
     expect(getTemplateFilters(templates)).toStrictEqual([
@@ -70,12 +70,12 @@ describe('getTemplateFilters', () => {
       {
         label: 'Travel The World',
         value: 'Travel The World',
-        type: TEMPLATE_META_DATA_TYPES.TITLE
+        type: TEMPLATE_META_DATA_TYPES.TITLE,
       },
       {
         label: 'All the books',
         value: 'All the books',
-        type: TEMPLATE_META_DATA_TYPES.TITLE
+        type: TEMPLATE_META_DATA_TYPES.TITLE,
       },
     ]);
   });
