@@ -26,7 +26,7 @@ import {
  */
 import { shoppingProviderDropdownSelector } from '../../../../utils';
 
-describe('Admin User', () => {
+describe('Shopify settings', () => {
   withExperimentalFeatures(['shoppingIntegration']);
   it('should let me see and update shopping provider settings', async () => {
     await visitSettings();
