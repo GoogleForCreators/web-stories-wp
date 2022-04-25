@@ -25,6 +25,11 @@ import { isElementBelowLimit } from '@googleforcreators/elements';
  */
 import { useStory, useCanvas } from '../app';
 
+/**
+ * Custom hook to aid with detecting links conflicting with page attachments.
+ *
+ * @return {{hasElementsInAttachmentArea: boolean, isElementInAttachmentArea: (Object) => (boolean), hasLinksInAttachmentArea: boolean, hasInvalidLinkSelected: boolean}} Hook result.
+ */
 function useElementsWithLinks() {
   const { pageAttachmentContainer } = useCanvas((state) => ({
     pageAttachmentContainer: state.state.pageAttachmentContainer,
@@ -43,21 +48,27 @@ function useElementsWithLinks() {
     );
 
     return {
-      hasInvalidLinkSelected:
+      hasInvalidLinkSelected: Boolean(
         pageAttachmentContainer &&
-        hasPageAttachment &&
-        state.selectedElements.filter(elementHasLink).some(isElementBelowLimit),
-      hasLinksInAttachmentArea:
+          hasPageAttachment &&
+          state.selectedElements
+            .filter(elementHasLink)
+            .some(isElementBelowLimit)
+      ),
+      hasLinksInAttachmentArea: Boolean(
         pageAttachmentContainer &&
-        elementsWithLinks.filter((element) =>
-          isElementBelowLimit(element, true)
-        ),
-      hasElementsInAttachmentArea:
+          elementsWithLinks.some((element) =>
+            isElementBelowLimit(element, true)
+          )
+      ),
+      hasElementsInAttachmentArea: Boolean(
         pageAttachmentContainer &&
-        hasPageAttachment &&
-        state.selectedElements.filter((element) =>
-          isElementBelowLimit(element, true)
-        ),
+          hasPageAttachment &&
+          state.selectedElements.some((element) =>
+            isElementBelowLimit(element, true)
+          )
+      ),
+      hasPageAttachment,
     };
   });
 
@@ -66,11 +77,11 @@ function useElementsWithLinks() {
       if (!pageAttachmentContainer) {
         return false;
       }
-      // If there is no Page Attachment present, return.
+
       if (!hasPageAttachment) {
         return false;
       }
-      // If the node is inside the page attachment container.
+
       return isElementBelowLimit(element, false);
     },
     [pageAttachmentContainer, hasPageAttachment]
@@ -81,7 +92,6 @@ function useElementsWithLinks() {
     hasInvalidLinkSelected,
     isElementInAttachmentArea,
     hasElementsInAttachmentArea,
-    hasPageAttachment,
   };
 }
 
