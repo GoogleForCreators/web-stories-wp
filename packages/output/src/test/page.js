@@ -1505,6 +1505,10 @@ describe('Page output', () => {
         backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: 'bar',
+          pageAttachment: {
+            theme: 'light',
+            ctaText: 'Buy now',
+          },
           elements: [
             {
               id: 'el1',
@@ -1538,6 +1542,8 @@ describe('Page output', () => {
         'amp-story-shopping-attachment'
       );
       await expect(shoppingAttachment).toBeInTheDocument();
+      await expect(shoppingAttachment).toHaveAttribute('cta-text', 'Buy now');
+      await expect(shoppingAttachment).toHaveAttribute('theme', 'light');
     });
   });
 
