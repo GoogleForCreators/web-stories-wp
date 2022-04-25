@@ -21,12 +21,9 @@ import {
   withExperimentalFeatures,
 } from '@web-stories-wp/e2e-test-utils';
 
-/**
- * Internal dependencies
- */
-import { shoppingProviderDropdownSelector } from '../../../../utils';
-
 describe('Shopify settings', () => {
+  const shoppingProviderDropdownSelector =
+    'button[aria-label="Shopping provider"]';
   withExperimentalFeatures(['shoppingIntegration']);
   it('should let me see and update shopping provider settings', async () => {
     await visitSettings();

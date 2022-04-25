@@ -144,15 +144,16 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 		$results = [];
 
 		// TODO(#11154): Refactor to extract product query logic out of this controller.
-		$shopify_host         = $this->settings->get_setting( Settings::SETTING_NAME_SHOPIFY_HOST );
-		$shopify_access_token = $this->settings->get_setting( Settings::SETTING_NAME_SHOPIFY_ACCESS_TOKEN );
+		$shopping_provider = $this->settings->get_setting( Settings::SETTING_NAME_SHOPPING_PROVIDER);
 
-		if ( ! empty( $shopify_host ) && ! empty( $shopify_access_token ) ) {
-			return $this->get_items_shopify( $request );
+		if($shopping_provider === 'woocommerce'){
+			return $this->get_items_woocommerce( $request );
 		}
 
-		if ( function_exists( 'wc_get_products' ) ) {
-			return $this->get_items_woocommerce( $request );
+		if($shopping_provider === 'shopify'){
+			$shopify_host         = $this->settings->get_setting( Settings::SETTING_NAME_SHOPIFY_HOST );
+			$shopify_access_token = $this->settings->get_setting( Settings::SETTING_NAME_SHOPIFY_ACCESS_TOKEN );
+			return $this->get_items_shopify( $request );
 		}
 
 		return rest_ensure_response( $results );

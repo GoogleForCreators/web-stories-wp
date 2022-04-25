@@ -25,6 +25,3 @@ export const videoOptimizationCheckboxSelector =
 
 export const videoCacheCheckboxSelector =
   'input[data-testid="video-cache-settings-checkbox"]';
-
-export const shoppingProviderDropdownSelector =
-  'button[aria-label="Shopping provider"]';
