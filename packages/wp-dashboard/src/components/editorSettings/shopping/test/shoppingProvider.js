@@ -25,7 +25,7 @@ import ShoppingProviderDropDown from '..';
 import { SHOPPING_PROVIDER_TYPE } from '../../../../constants';
 import { renderWithProviders } from '../../../../testUtils';
 
-describe('Editor Settings: Shopping provider settings <ShoppingProviderDropDown />', function () {
+describe('Editor Settings: Shopping provider settings <ShoppingProviderDropDown />', () => {
   let provider;
   let mockUpdate;
 
