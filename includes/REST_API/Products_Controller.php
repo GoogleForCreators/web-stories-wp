@@ -157,8 +157,6 @@ class Products_Controller extends REST_Controller implements HasRequirements
         }
 
         if ($shopping_provider === 'shopify') {
-            $shopify_host         = $this->settings->get_setting(Settings::SETTING_NAME_SHOPIFY_HOST);
-            $shopify_access_token = $this->settings->get_setting(Settings::SETTING_NAME_SHOPIFY_ACCESS_TOKEN);
             return $this->get_items_shopify($request);
         }
 
