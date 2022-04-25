@@ -26,7 +26,7 @@ function ShoppingAttachment({
   ctaText = __('Shop Now', 'web-stories'),
 }) {
   return (
-    <amp-story-shopping-attachment theme={theme} ctaText={ctaText}>
+    <amp-story-shopping-attachment theme={theme} cta-text={ctaText}>
       <script
         type="application/json"
         dangerouslySetInnerHTML={{
