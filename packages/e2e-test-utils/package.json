@@ -27,7 +27,7 @@
   "main": "./src/index.js",
   "dependencies": {
     "@wordpress/e2e-test-utils": "^7.0.1",
-    "@wordpress/url": "^3.2.1"
+    "@wordpress/url": "^3.8.0"
   },
   "devDependencies": {
     "@percy/puppeteer": "^2.0.0"
