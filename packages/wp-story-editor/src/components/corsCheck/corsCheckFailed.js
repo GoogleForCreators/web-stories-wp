@@ -24,16 +24,12 @@ import { trackClick } from '@googleforcreators/tracking';
 import { Link, Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
 import { Dialog } from '@googleforcreators/story-editor';
 
-const SUPPORT_URL = __(
-  'https://wordpress.org/support/plugin/web-stories/',
-  'web-stories'
-);
-
-const CDN_URL = __('https://wp.stories.google/docs', 'web-stories');
+const DOCS_URL =
+  'https://wp.stories.google/docs/troubleshooting/common-issues/';
 
 function CorsCheckFailed({ isOpen, onClose }) {
-  const onSupportClick = useCallback((evt) => {
-    trackClick(evt, 'click_support_page');
+  const onDocsClick = useCallback((evt) => {
+    trackClick(evt, 'click_cors_check_docs');
   }, []);
 
   return (
@@ -51,24 +47,16 @@ function CorsCheckFailed({ isOpen, onClose }) {
             a: (
               <Link
                 size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-                href={CDN_URL}
+                href={DOCS_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-              />
-            ),
-            help: (
-              <Link
-                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-                href={SUPPORT_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={onSupportClick}
+                onClick={onDocsClick}
               />
             ),
           }}
         >
           {__(
-            'We detected a potential misconfiguration that prevents media items from loading correctly. This may be due to media being hosted on an external CDN. <a>Learn how to address this</a> or <help>submit a new support topic</help> for additional help.',
+            'We detected a potential misconfiguration that prevents media items from loading correctly. This may be due to media being hosted on an external CDN. <a>Learn how to address this</a>.',
             'web-stories'
           )}
         </TranslateWithMarkup>
