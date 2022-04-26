@@ -34,6 +34,7 @@ import * as schema from './schema.json';
 async function insertProduct(product) {
   await expect(page).toClick('[aria-controls="library-pane-shopping"]');
   await expect(page).toClick('[aria-label="Product"]');
+  await page.waitForSelector('[aria-label="Search"]');
   await page.type('[aria-label="Search"]', product);
   await page.keyboard.press('ArrowDown');
   await page.keyboard.press('Enter');
