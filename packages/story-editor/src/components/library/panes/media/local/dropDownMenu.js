@@ -39,7 +39,7 @@ import {
 /**
  * Internal dependencies
  */
-import { useLocalMedia, useConfig } from '../../../../../app';
+import { useLocalMedia } from '../../../../../app';
 import { ActionButton } from '../../shared';
 import useFocusCanvas from '../../../../canvas/useFocusCanvas';
 import useRovingTabIndex from '../../../../../utils/useRovingTabIndex';
@@ -114,7 +114,6 @@ function DropDownMenu({
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [showEditDialog, setShowEditDialog] = useState(false);
   const moreButtonRef = useRef();
-  const { isRTL, styleConstants: { leftOffset } = {} } = useConfig();
 
   const onClose = useCallback(() => {
     onMenuCancelled();
@@ -192,8 +191,6 @@ function DropDownMenu({
             anchor={moreButtonRef}
             placement={PLACEMENT.BOTTOM_START}
             isOpen={isMenuOpen}
-            isRTL={isRTL}
-            leftOffset={leftOffset}
           >
             <DropDownContainer>
               <Menu

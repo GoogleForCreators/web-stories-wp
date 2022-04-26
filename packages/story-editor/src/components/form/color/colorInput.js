@@ -41,6 +41,7 @@ import {
   Popup,
   PLACEMENT,
   CONTEXT_MENU_SKIP_ELEMENT,
+  usePopup,
 } from '@googleforcreators/design-system';
 import { v4 as uuidv4 } from 'uuid';
 /**
@@ -58,7 +59,7 @@ import {
   focusStyle,
   inputContainerStyleOverride,
 } from '../../panels/shared/styles';
-import { useCanvas, useConfig } from '../../../app';
+import { useCanvas } from '../../../app';
 
 const Preview = styled.div`
   height: 36px;
@@ -205,12 +206,13 @@ const ColorInput = forwardRef(function ColorInput(
       isEyedropperActive,
     })
   );
-  const { isRTL, styleConstants: { topOffset, leftOffset } = {} } = useConfig();
   const [dynamicPlacement, setDynamicPlacement] = useState(pickerPlacement);
 
   const {
     refs: { sidebar },
   } = useSidebar();
+
+  const { topOffset } = usePopup();
 
   const positionPlacement = useCallback(
     (popupRef) => {
@@ -342,14 +344,11 @@ const ColorInput = forwardRef(function ColorInput(
         </Tooltip>
       )}
       <Popup
-        isRTL={isRTL}
-        leftOffset={leftOffset}
         anchor={previewRef}
         dock={isInDesignMenu ? null : sidebar}
         isOpen={pickerOpen && !isEyedropperActive}
         placement={dynamicPlacement}
         spacing={spacing}
-        topOffset={topOffset}
         refCallback={positionPlacement}
         renderContents={({ propagateDimensionChange }) => (
           <ColorPicker

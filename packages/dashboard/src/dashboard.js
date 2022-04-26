@@ -20,6 +20,7 @@ import {
   lightMode,
   ModalGlobalStyle,
   SnackbarProvider,
+  PopupProvider,
   theme as externalDesignSystemTheme,
   ThemeGlobals,
   deepMerge,
@@ -43,12 +44,15 @@ import getDefaultConfig from './getDefaultConfig';
 
 function Dashboard({ config, children }) {
   const _config = deepMerge(getDefaultConfig(), config);
-  const { isRTL, flags } = _config;
   const activeTheme = {
     ...externalDesignSystemTheme,
     colors: lightMode,
   };
-
+  const {
+    isRTL,
+    flags,
+    styleConstants: { leftOffset, topOffset } = {},
+  } = _config;
   return (
     <FlagsProvider features={flags}>
       <StyleSheetManager stylisPlugins={isRTL ? [stylisRTLPlugin] : []}>
@@ -60,9 +64,17 @@ function Dashboard({ config, children }) {
               <NavProvider>
                 <RouterProvider>
                   <SnackbarProvider>
-                    <GlobalStyle />
-                    <KeyboardOnlyOutline />
-                    {children}
+                    <PopupProvider
+                      value={{
+                        isRTL,
+                        leftOffset,
+                        topOffset,
+                      }}
+                    >
+                      <GlobalStyle />
+                      <KeyboardOnlyOutline />
+                      {children}
+                    </PopupProvider>
                   </SnackbarProvider>
                 </RouterProvider>
               </NavProvider>

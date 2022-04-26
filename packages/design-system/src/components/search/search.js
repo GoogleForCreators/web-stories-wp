@@ -87,8 +87,6 @@ export const Search = ({
   popupFillWidth = DEFAULT_POPUP_FILL_WIDTH,
   popupZIndex,
   selectedValue = {},
-  isRTL,
-  leftOffset,
   ...rest
 }) => {
   const listId = useMemo(() => `list-${uuidv4()}`, []);
@@ -279,8 +277,6 @@ export const Search = ({
           placement={placement}
           fillWidth={popupFillWidth}
           zIndex={popupZIndex}
-          isRTL={isRTL}
-          leftOffset={leftOffset}
         >
           <Menu
             activeValue={activeOption?.value}
@@ -321,7 +317,6 @@ Search.propTypes = {
   handleSearchValueChange: PropTypes.func,
   hasError: PropTypes.bool,
   hint: PropTypes.string,
-  isRTL: PropTypes.bool,
   label: PropTypes.string,
   menuStylesOverride: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   onMenuItemClick: PropTypes.func,
@@ -340,5 +335,4 @@ Search.propTypes = {
       PropTypes.number,
     ]),
   }),
-  leftOffset: PropTypes.number,
 };

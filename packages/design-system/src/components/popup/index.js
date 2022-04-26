@@ -32,6 +32,7 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { noop } from '../../utils';
+import { usePopup } from '../../contexts';
 import { getTransforms, getOffset } from './utils';
 import { PLACEMENT, PopupContainer } from './constants';
 const DEFAULT_TOP_OFFSET = 0;
@@ -39,7 +40,6 @@ const DEFAULT_POPUP_Z_INDEX = 2;
 const DEFAULT_LEFT_OFFSET = 0;
 
 function Popup({
-  isRTL = false,
   anchor,
   dock,
   children,
@@ -49,11 +49,15 @@ function Popup({
   isOpen,
   fillWidth = false,
   refCallback = noop,
-  topOffset = DEFAULT_TOP_OFFSET,
-  leftOffset = DEFAULT_LEFT_OFFSET,
   zIndex = DEFAULT_POPUP_Z_INDEX,
   ignoreMaxOffsetY,
 }) {
+  const {
+    topOffset = DEFAULT_TOP_OFFSET,
+    leftOffset = DEFAULT_LEFT_OFFSET,
+    isRTL = false,
+  } = usePopup();
+
   const [popupState, setPopupState] = useState(null);
   const isMounted = useRef(false);
   const popup = useRef(null);
@@ -196,7 +200,6 @@ function Popup({
 }
 
 Popup.propTypes = {
-  isRTL: PropTypes.bool,
   anchor: PropTypes.shape({ current: PropTypes.instanceOf(Element) })
     .isRequired,
   dock: PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
@@ -207,8 +210,6 @@ Popup.propTypes = {
   isOpen: PropTypes.bool,
   fillWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
   refCallback: PropTypes.func,
-  topOffset: PropTypes.number,
-  leftOffset: PropTypes.number,
   zIndex: PropTypes.number,
   ignoreMaxOffsetY: PropTypes.bool,
 };

@@ -80,8 +80,6 @@ export const DropDown = forwardRef(
       isInline = false,
       selectedValue = '',
       className,
-      isRTL,
-      leftOffset,
       ...rest
     },
     ref
@@ -197,8 +195,6 @@ export const DropDown = forwardRef(
             fillWidth={popupFillWidth}
             zIndex={popupZIndex}
             ignoreMaxOffsetY
-            isRTL={isRTL}
-            leftOffset={leftOffset}
           >
             {menu}
           </Popup>
@@ -217,7 +213,6 @@ DropDown.propTypes = {
   hasError: PropTypes.bool,
   hint: PropTypes.string,
   isKeepMenuOpenOnSelection: PropTypes.bool,
-  isRTL: PropTypes.bool,
   menuStylesOverride: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   options: MENU_OPTIONS,
   onMenuItemClick: PropTypes.func,
@@ -232,5 +227,4 @@ DropDown.propTypes = {
     PropTypes.bool,
     PropTypes.number,
   ]),
-  leftOffset: PropTypes.number,
 };
