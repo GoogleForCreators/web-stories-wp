@@ -46,9 +46,7 @@ function Popup({
   placement = PLACEMENT.BOTTOM,
   spacing,
   isOpen,
-  invisible = false,
   fillWidth = false,
-  fillHeight = false,
   refCallback = noop,
   topOffset = DEFAULT_TOPOFFSET,
   zIndex = DEFAULT_POPUP_Z_INDEX,
@@ -142,9 +140,7 @@ function Popup({
         <PopupContainer
           ref={popup}
           fillWidth={fillWidth}
-          fillHeight={fillHeight}
           $offset={popupState.offset}
-          invisible={invisible}
           topOffset={topOffset}
           zIndex={zIndex}
           transforms={getTransforms(placement, isRTL)}
@@ -168,9 +164,7 @@ Popup.propTypes = {
   placement: PropTypes.oneOf(Object.values(PLACEMENT)),
   spacing: PropTypes.object,
   isOpen: PropTypes.bool,
-  invisible: PropTypes.bool,
   fillWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
-  fillHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
   refCallback: PropTypes.func,
   topOffset: PropTypes.number,
   zIndex: PropTypes.number,
