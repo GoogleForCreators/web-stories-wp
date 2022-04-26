@@ -15,10 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import PropTypes from 'prop-types';
-/**
  * Internal dependencies
  */
 import Context from './context';

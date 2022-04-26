@@ -41,7 +41,6 @@ import {
   Popup,
   PLACEMENT,
   CONTEXT_MENU_SKIP_ELEMENT,
-  usePopup,
 } from '@googleforcreators/design-system';
 import { v4 as uuidv4 } from 'uuid';
 /**
@@ -59,7 +58,7 @@ import {
   focusStyle,
   inputContainerStyleOverride,
 } from '../../panels/shared/styles';
-import { useCanvas } from '../../../app';
+import { useCanvas, useConfig } from '../../../app';
 
 const Preview = styled.div`
   height: 36px;
@@ -212,7 +211,7 @@ const ColorInput = forwardRef(function ColorInput(
     refs: { sidebar },
   } = useSidebar();
 
-  const { topOffset } = usePopup();
+  const { styleConstants: { topOffset } = {} } = useConfig();
 
   const positionPlacement = useCallback(
     (popupRef) => {
