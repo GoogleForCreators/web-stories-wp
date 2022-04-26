@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useMemo } from '@googleforcreators/react';
+import { useMemo, useStableCallback } from '@googleforcreators/react';
 import {
   PAGE_WIDTH,
   PAGE_HEIGHT,
@@ -84,14 +84,14 @@ function useAlignment({ selectedElements, updateElements, isFloatingMenu }) {
   const boundRect =
     selectedElements.length === 1 ? PAGE_RECT : getBoundRect(selectedElements);
 
-  const handleTrackEvent = (direction) => {
+  const handleTrackEvent = useStableCallback((direction) => {
     trackEvent(isFloatingMenu ? 'floating_menu' : 'design_panel', {
       name: `set_alignment_${direction}`,
       element: 'multiple',
     });
-  };
+  });
 
-  const handleAlign = (direction) => {
+  const handleAlign = useStableCallback((direction) => {
     handleTrackEvent(direction);
     updateElements((properties) => {
       const { id } = properties;
@@ -123,9 +123,9 @@ function useAlignment({ selectedElements, updateElements, isFloatingMenu }) {
             : boundRect.endY - height - offset,
       };
     });
-  };
+  });
 
-  const handleAlignCenter = () => {
+  const handleAlignCenter = useStableCallback(() => {
     handleTrackEvent('center');
     const centerX = (boundRect.endX + boundRect.startX) / 2;
     updateElements((properties) => {
@@ -134,9 +134,9 @@ function useAlignment({ selectedElements, updateElements, isFloatingMenu }) {
         x: centerX - width / 2,
       };
     });
-  };
+  });
 
-  const handleAlignMiddle = () => {
+  const handleAlignMiddle = useStableCallback(() => {
     handleTrackEvent('middle');
     const centerY = (boundRect.endY + boundRect.startY) / 2;
     updateElements((properties) => {
@@ -145,9 +145,9 @@ function useAlignment({ selectedElements, updateElements, isFloatingMenu }) {
         y: centerY - height / 2,
       };
     });
-  };
+  });
 
-  const handleHorizontalDistribution = () => {
+  const handleHorizontalDistribution = useStableCallback(() => {
     handleTrackEvent('horizontal_distribution');
     const sortedElementsWithFrame = [...selectedElementsWithFrame];
     sortedElementsWithFrame.sort(
@@ -176,9 +176,9 @@ function useAlignment({ selectedElements, updateElements, isFloatingMenu }) {
       offsetX += frameWidth + commonSpaceWidthPerElement;
     });
     updateElements(({ id }) => updatedX[id]);
-  };
+  });
 
-  const handleVerticalDistribution = () => {
+  const handleVerticalDistribution = useStableCallback(() => {
     handleTrackEvent('vertical_distribution');
     const sortedElementsWithFrame = [...selectedElementsWithFrame];
     sortedElementsWithFrame.sort(
@@ -207,16 +207,16 @@ function useAlignment({ selectedElements, updateElements, isFloatingMenu }) {
       offsetY += frameHeight + commonSpaceHeightPerElement;
     });
     updateElements(({ id }) => updatedY[id]);
-  };
+  });
 
   return {
     isDistributionEnabled,
-    handleAlignLeft: () => handleAlign(ALIGNMENT.LEFT),
+    handleAlignLeft: useStableCallback(() => handleAlign(ALIGNMENT.LEFT)),
     handleAlignCenter,
-    handleAlignRight: () => handleAlign(ALIGNMENT.RIGHT),
-    handleAlignTop: () => handleAlign(ALIGNMENT.TOP),
+    handleAlignRight: useStableCallback(() => handleAlign(ALIGNMENT.RIGHT)),
+    handleAlignTop: useStableCallback(() => handleAlign(ALIGNMENT.TOP)),
     handleAlignMiddle,
-    handleAlignBottom: () => handleAlign(ALIGNMENT.BOTTOM),
+    handleAlignBottom: useStableCallback(() => handleAlign(ALIGNMENT.BOTTOM)),
     handleHorizontalDistribution,
     handleVerticalDistribution,
   };

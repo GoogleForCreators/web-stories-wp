@@ -17,7 +17,13 @@
 /**
  * External dependencies
  */
-import { useRef, useCallback, useState } from '@googleforcreators/react';
+import {
+  useRef,
+  useCallback,
+  useState,
+  memo,
+  forwardRef,
+} from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
@@ -126,96 +132,19 @@ function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
   ]);
 
   return (
-    <StyledPanel
-      name="alignment"
-      canCollapse={false}
-      ariaLabel={__('Alignment', 'web-stories')}
-    >
-      <ElementRow ref={ref}>
-        <Tooltip title={__('Distribute horizontally', 'web-stories')}>
-          <AlignmentButton
-            disabled={!isDistributionEnabled}
-            onClick={handleHorizontalDistribution}
-            aria-label={__('Distribute horizontally', 'web-stories')}
-            id={alignmentButtonIds[0]}
-            onFocus={() => setCurrentButton(alignmentButtonIds[0])}
-          >
-            <Icons.DistributeHorizontal />
-          </AlignmentButton>
-        </Tooltip>
-        <Tooltip title={__('Distribute vertically', 'web-stories')}>
-          <AlignmentButton
-            disabled={!isDistributionEnabled}
-            onClick={handleVerticalDistribution}
-            aria-label={__('Distribute vertically', 'web-stories')}
-            id={alignmentButtonIds[1]}
-            onFocus={() => setCurrentButton(alignmentButtonIds[1])}
-          >
-            <Icons.DistributeVertical />
-          </AlignmentButton>
-        </Tooltip>
-        <Tooltip title={__('Align left', 'web-stories')}>
-          <AlignmentButton
-            onClick={handleAlignLeft}
-            aria-label={__('Align left', 'web-stories')}
-            id={alignmentButtonIds[2]}
-            onFocus={() => setCurrentButton(alignmentButtonIds[2])}
-          >
-            <Icons.AlignLeft />
-          </AlignmentButton>
-        </Tooltip>
-        <Tooltip title={__('Align center', 'web-stories')}>
-          <AlignmentButton
-            onClick={handleAlignCenter}
-            aria-label={__('Align center', 'web-stories')}
-            id={alignmentButtonIds[3]}
-            onFocus={() => setCurrentButton(alignmentButtonIds[3])}
-          >
-            <Icons.AlignCenter />
-          </AlignmentButton>
-        </Tooltip>
-        <Tooltip title={__('Align right', 'web-stories')}>
-          <AlignmentButton
-            onClick={handleAlignRight}
-            aria-label={__('Align right', 'web-stories')}
-            id={alignmentButtonIds[4]}
-            onFocus={() => setCurrentButton(alignmentButtonIds[4])}
-          >
-            <Icons.AlignRight />
-          </AlignmentButton>
-        </Tooltip>
-        <Tooltip title={__('Align top', 'web-stories')}>
-          <AlignmentButton
-            onClick={handleAlignTop}
-            aria-label={__('Align top', 'web-stories')}
-            id={alignmentButtonIds[5]}
-            onFocus={() => setCurrentButton(alignmentButtonIds[5])}
-          >
-            <Icons.AlignTop />
-          </AlignmentButton>
-        </Tooltip>
-        <Tooltip title={__('Align vertical center', 'web-stories')}>
-          <AlignmentButton
-            onClick={handleAlignMiddle}
-            aria-label={__('Align vertical center', 'web-stories')}
-            id={alignmentButtonIds[6]}
-            onFocus={() => setCurrentButton(alignmentButtonIds[6])}
-          >
-            <Icons.AlignMiddle />
-          </AlignmentButton>
-        </Tooltip>
-        <Tooltip title={__('Align bottom', 'web-stories')}>
-          <AlignmentButton
-            onClick={handleAlignBottom}
-            aria-label={__('Align bottom', 'web-stories')}
-            id={alignmentButtonIds[7]}
-            onFocus={() => setCurrentButton(alignmentButtonIds[7])}
-          >
-            <Icons.AlignBottom />
-          </AlignmentButton>
-        </Tooltip>
-      </ElementRow>
-    </StyledPanel>
+    <Controls
+      ref={ref}
+      handleAlignBottom={handleAlignBottom}
+      setCurrentButton={setCurrentButton}
+      handleHorizontalDistribution={handleHorizontalDistribution}
+      isDistributionEnabled={isDistributionEnabled}
+      handleVerticalDistribution={handleVerticalDistribution}
+      handleAlignLeft={handleAlignLeft}
+      handleAlignCenter={handleAlignCenter}
+      handleAlignRight={handleAlignRight}
+      handleAlignTop={handleAlignTop}
+      handleAlignMiddle={handleAlignMiddle}
+    />
   );
 }
 
@@ -225,3 +154,114 @@ ElementAlignmentPanel.propTypes = {
 };
 
 export default ElementAlignmentPanel;
+
+const Controls = memo(
+  forwardRef(function Controls(
+    {
+      handleAlignBottom,
+      setCurrentButton,
+      isDistributionEnabled,
+      handleHorizontalDistribution,
+      handleVerticalDistribution,
+      handleAlignLeft,
+      handleAlignCenter,
+      handleAlignRight,
+      handleAlignTop,
+      handleAlignMiddle,
+    },
+    ref
+  ) {
+    return (
+      <StyledPanel
+        name="alignment"
+        canCollapse={false}
+        ariaLabel={__('Alignment', 'web-stories')}
+      >
+        <ElementRow ref={ref}>
+          <Tooltip title={__('Distribute horizontally', 'web-stories')}>
+            <AlignmentButton
+              disabled={!isDistributionEnabled}
+              onClick={handleHorizontalDistribution}
+              aria-label={__('Distribute horizontally', 'web-stories')}
+              id={alignmentButtonIds[0]}
+              onFocus={() => setCurrentButton(alignmentButtonIds[0])}
+            >
+              <Icons.DistributeHorizontal />
+            </AlignmentButton>
+          </Tooltip>
+          <Tooltip title={__('Distribute vertically', 'web-stories')}>
+            <AlignmentButton
+              disabled={!isDistributionEnabled}
+              onClick={handleVerticalDistribution}
+              aria-label={__('Distribute vertically', 'web-stories')}
+              id={alignmentButtonIds[1]}
+              onFocus={() => setCurrentButton(alignmentButtonIds[1])}
+            >
+              <Icons.DistributeVertical />
+            </AlignmentButton>
+          </Tooltip>
+          <Tooltip title={__('Align left', 'web-stories')}>
+            <AlignmentButton
+              onClick={handleAlignLeft}
+              aria-label={__('Align left', 'web-stories')}
+              id={alignmentButtonIds[2]}
+              onFocus={() => setCurrentButton(alignmentButtonIds[2])}
+            >
+              <Icons.AlignLeft />
+            </AlignmentButton>
+          </Tooltip>
+          <Tooltip title={__('Align center', 'web-stories')}>
+            <AlignmentButton
+              onClick={handleAlignCenter}
+              aria-label={__('Align center', 'web-stories')}
+              id={alignmentButtonIds[3]}
+              onFocus={() => setCurrentButton(alignmentButtonIds[3])}
+            >
+              <Icons.AlignCenter />
+            </AlignmentButton>
+          </Tooltip>
+          <Tooltip title={__('Align right', 'web-stories')}>
+            <AlignmentButton
+              onClick={handleAlignRight}
+              aria-label={__('Align right', 'web-stories')}
+              id={alignmentButtonIds[4]}
+              onFocus={() => setCurrentButton(alignmentButtonIds[4])}
+            >
+              <Icons.AlignRight />
+            </AlignmentButton>
+          </Tooltip>
+          <Tooltip title={__('Align top', 'web-stories')}>
+            <AlignmentButton
+              onClick={handleAlignTop}
+              aria-label={__('Align top', 'web-stories')}
+              id={alignmentButtonIds[5]}
+              onFocus={() => setCurrentButton(alignmentButtonIds[5])}
+            >
+              <Icons.AlignTop />
+            </AlignmentButton>
+          </Tooltip>
+          <Tooltip title={__('Align vertical center', 'web-stories')}>
+            <AlignmentButton
+              onClick={handleAlignMiddle}
+              aria-label={__('Align vertical center', 'web-stories')}
+              id={alignmentButtonIds[6]}
+              onFocus={() => setCurrentButton(alignmentButtonIds[6])}
+            >
+              <Icons.AlignMiddle />
+            </AlignmentButton>
+          </Tooltip>
+          <Tooltip title={__('Align bottom', 'web-stories')}>
+            <AlignmentButton
+              onClick={handleAlignBottom}
+              aria-label={__('Align bottom', 'web-stories')}
+              id={alignmentButtonIds[7]}
+              onFocus={() => setCurrentButton(alignmentButtonIds[7])}
+            >
+              <Icons.AlignBottom />
+            </AlignmentButton>
+          </Tooltip>
+        </ElementRow>
+      </StyledPanel>
+    );
+  })
+);

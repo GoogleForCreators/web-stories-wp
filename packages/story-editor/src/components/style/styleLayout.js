@@ -81,9 +81,9 @@ function StyleLayout() {
     data: { tabs },
   } = useStyle();
 
-  const { selectedElementIds } = useStory(({ state }) => ({
-    selectedElementIds: state.selectedElementIds,
-  }));
+  const hasSelection = useStory(
+    ({ state }) => state.selectedElementIds?.length > 0
+  );
 
   const { highlight, resetHighlight } = useHighlights((state) => ({
     highlight: {
@@ -105,7 +105,7 @@ function StyleLayout() {
     [setTab, resetHighlight]
   );
 
-  if (selectedElementIds.length === 0) {
+  if (!hasSelection) {
     return (
       <NoSelection>
         <Note size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM}>
