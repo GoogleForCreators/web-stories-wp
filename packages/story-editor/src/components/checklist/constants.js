@@ -66,7 +66,7 @@ export const CATEGORY_LABELS = {
   [ISSUE_TYPES.PRIORITY]: __('Priority', 'web-stories'),
 };
 
-const DOCS_URL = 'https://wp.stories.google/docs/';
+const DOCS_URL = 'https://wp.stories.google/docs/faq/';
 
 // Event Tracking
 const onAmpErrorClick = (evt) => trackClick(evt, 'click_checklist_amp_test');

@@ -18,7 +18,7 @@
  */
 import { __ } from '@googleforcreators/i18n';
 
-const DOCS_URL = 'https://wp.stories.google/docs/';
+const DOCS_URL = 'https://wp.stories.google/docs/best-practices/';
 
 const KEYS = {
   EMBED_WEB_STORIES: 'embedWebStories',
