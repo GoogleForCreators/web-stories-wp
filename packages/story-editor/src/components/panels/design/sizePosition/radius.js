@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback } from '@googleforcreators/react';
+import { useCallback, memo } from '@googleforcreators/react';
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
 import { LockToggle, Icons } from '@googleforcreators/design-system';
@@ -28,7 +28,6 @@ import { canSupportMultiBorder } from '@googleforcreators/masks';
  * Internal dependencies
  */
 import { StackableGroup, StackableInput } from '../../../form/stackable';
-import useCommonObjectValue from '../../shared/useCommonObjectValue';
 import { focusStyle } from '../../shared/styles';
 import Tooltip from '../../../tooltip';
 import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
@@ -41,45 +40,11 @@ export const DEFAULT_BORDER_RADIUS = {
   locked: true,
 };
 
-const FlexContainer = styled.div`
-  display: flex;
-`;
+export function getIsBorderSupported(selectedElements) {
+  return selectedElements.every((el) => canSupportMultiBorder(el));
+}
 
-const LockContainer = styled.div`
-  position: relative;
-  display: flex;
-  align-items: center;
-  width: 32px;
-  margin-left: 8px;
-`;
-
-const StyledLockToggle = styled(LockToggle)`
-  ${focusStyle};
-`;
-
-const TopLeft = styled(Icons.Corner)`
-  transform: rotate(90deg);
-`;
-
-const TopRight = styled(Icons.Corner)`
-  transform: rotate(180deg);
-`;
-
-const BottomRight = styled(Icons.Corner)`
-  transform: rotate(270deg);
-`;
-
-function RadiusControls({ selectedElements, pushUpdateForObject }) {
-  const borderRadius = useCommonObjectValue(
-    selectedElements,
-    'borderRadius',
-    DEFAULT_BORDER_RADIUS
-  );
-
-  const allSupportBorder = selectedElements.every((el) =>
-    canSupportMultiBorder(el)
-  );
-
+function RadiusControls({ borderRadius, pushUpdateForObject }) {
   const lockRadius = borderRadius.locked === true;
 
   const handleChange = useCallback(
@@ -126,10 +91,6 @@ function RadiusControls({ selectedElements, pushUpdateForObject }) {
     },
     [pushUpdateForObject, borderRadius]
   );
-
-  if (!allSupportBorder) {
-    return null;
-  }
 
   const firstInputLabel = lockRadius
     ? __('Corner Radius', 'web-stories')
@@ -226,8 +187,36 @@ function RadiusControls({ selectedElements, pushUpdateForObject }) {
 }
 
 RadiusControls.propTypes = {
-  selectedElements: PropTypes.array.isRequired,
+  borderRadius: PropTypes.any,
   pushUpdateForObject: PropTypes.func.isRequired,
 };
 
-export default RadiusControls;
+export default memo(RadiusControls);
+
+const FlexContainer = styled.div`
+  display: flex;
+`;
+
+const LockContainer = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 32px;
+  margin-left: 8px;
+`;
+
+const StyledLockToggle = styled(LockToggle)`
+  ${focusStyle};
+`;
+
+const TopLeft = styled(Icons.Corner)`
+  transform: rotate(90deg);
+`;
+
+const TopRight = styled(Icons.Corner)`
+  transform: rotate(180deg);
+`;
+
+const BottomRight = styled(Icons.Corner)`
+  transform: rotate(270deg);
+`;

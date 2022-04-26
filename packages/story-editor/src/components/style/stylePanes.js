@@ -17,8 +17,8 @@
 /**
  * External dependencies
  */
-import { useCallback } from '@googleforcreators/react';
-import { PanelSections } from '@googleforcreators/design-system';
+import { useCallback, useMemo } from '@googleforcreators/react';
+import { PanelSections, PanelTypes } from '@googleforcreators/design-system';
 import styled from 'styled-components';
 
 /**
@@ -44,6 +44,15 @@ function StylePanes() {
   const { panels, createSubmitHandlerForPanel, panelProperties } =
     useDesignPanels();
 
+  const submitHandlerForPanel = useMemo(
+    () =>
+      Object.values(PanelTypes).reduce((handlers, type) => {
+        handlers[type] = createSubmitHandlerForPanel(type);
+        return handlers;
+      }, {}),
+    [createSubmitHandlerForPanel]
+  );
+
   const getPanelsByType = useCallback(
     (types, paneProps) => {
       const panelsList = panels
@@ -52,7 +61,7 @@ function StylePanes() {
           <DesignPanel
             key={type}
             panelType={Panel}
-            registerSubmitHandler={createSubmitHandlerForPanel(type)}
+            registerSubmitHandler={submitHandlerForPanel[type]}
             {...panelProperties}
           />
         ));
@@ -62,7 +71,7 @@ function StylePanes() {
         </StyledPane>
       );
     },
-    [panels, createSubmitHandlerForPanel, panelProperties]
+    [panels, submitHandlerForPanel, panelProperties]
   );
 
   return tabs.map(({ id }) => {

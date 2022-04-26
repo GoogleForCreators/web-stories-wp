@@ -20,7 +20,7 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { __ } from '@googleforcreators/i18n';
-import { useCallback } from '@googleforcreators/react';
+import { useCallback, memo } from '@googleforcreators/react';
 import {
   BUTTON_SIZES,
   BUTTON_VARIANTS,
@@ -109,4 +109,4 @@ FlipControls.propTypes = {
   onChange: PropTypes.func.isRequired,
 };
 
-export default FlipControls;
+export default memo(FlipControls);

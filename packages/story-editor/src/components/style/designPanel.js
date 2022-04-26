@@ -24,6 +24,7 @@ import {
   useMemo,
   useRef,
   useState,
+  useStableCallback,
 } from '@googleforcreators/react';
 
 /**
@@ -128,23 +129,20 @@ function DesignPanel({
     });
   }, []);
 
-  const pushUpdate = useCallback(
-    (update, submitArg = false) => {
-      setElementUpdates((prevUpdates) => {
-        const newUpdates = {};
-        selectedElements.forEach((element) => {
-          const prevUpdatedElement = { ...element, ...prevUpdates[element.id] };
-          const newUpdate = updateProperties(prevUpdatedElement, update, false);
-          newUpdates[element.id] = { ...prevUpdates[element.id], ...newUpdate };
-        });
-        return newUpdates;
+  const pushUpdate = useStableCallback((update, submitArg = false) => {
+    setElementUpdates((prevUpdates) => {
+      const newUpdates = {};
+      selectedElements.forEach((element) => {
+        const prevUpdatedElement = { ...element, ...prevUpdates[element.id] };
+        const newUpdate = updateProperties(prevUpdatedElement, update, false);
+        newUpdates[element.id] = { ...prevUpdates[element.id], ...newUpdate };
       });
-      if (submitArg) {
-        submit();
-      }
-    },
-    [selectedElements, submit]
-  );
+      return newUpdates;
+    });
+    if (submitArg) {
+      submit();
+    }
+  });
 
   const pushUpdateForObject = useCallback(
     (propertyName, update, defaultObject, submitArg = false) => {

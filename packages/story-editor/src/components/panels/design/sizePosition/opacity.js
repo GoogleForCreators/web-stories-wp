@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback } from '@googleforcreators/react';
+import { useCallback, memo } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { __, _x } from '@googleforcreators/i18n';
 import { Icons, NumericInput } from '@googleforcreators/design-system';
@@ -40,9 +40,11 @@ function defaultOpacity({ opacity }) {
   return typeof opacity !== 'undefined' ? opacity : MIN_MAX.OPACITY.MAX;
 }
 
-function OpacityControls({ selectedElements, pushUpdate }) {
-  const opacity = getCommonValue(selectedElements, defaultOpacity);
+export function getOpacityFromSelectedElements(selectedElements) {
+  return getCommonValue(selectedElements, defaultOpacity);
+}
 
+function OpacityControls({ opacity, pushUpdate }) {
   const handleChange = useCallback(
     (evt, value) => pushUpdate({ opacity: value ?? 100 }, true),
     [pushUpdate]
@@ -65,8 +67,8 @@ function OpacityControls({ selectedElements, pushUpdate }) {
 }
 
 OpacityControls.propTypes = {
-  selectedElements: PropTypes.array.isRequired,
+  opacity: PropTypes.any,
   pushUpdate: PropTypes.func.isRequired,
 };
 
-export default OpacityControls;
+export default memo(OpacityControls);

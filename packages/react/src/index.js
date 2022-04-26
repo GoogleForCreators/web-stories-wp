@@ -28,6 +28,7 @@ export { default as usePrevious } from './usePrevious';
 export { default as useReduction } from './useReduction';
 export { default as useResizeEffect } from './useResizeEffect';
 export { default as renderToStaticMarkup } from './renderToStaticMarkup';
+export { default as useStableCallback } from './useStableCallback';
 export { default as useUnmount } from './useUnmount';
 export { default as useWhyDidYouUpdate } from './useWhyDidYouUpdate';
 export { default as useInitializedValue } from './useInitializedValue';

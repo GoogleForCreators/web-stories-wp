@@ -19,7 +19,13 @@
  */
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import { useCallback, useMemo, useRef } from '@googleforcreators/react';
+import {
+  useCallback,
+  useMemo,
+  useRef,
+  memo,
+  useStableCallback,
+} from '@googleforcreators/react';
 import { __, _x } from '@googleforcreators/i18n';
 import stickers from '@googleforcreators/stickers';
 import {
@@ -55,8 +61,8 @@ import Tooltip from '../../../tooltip';
 import usePresubmitHandlers from './usePresubmitHandlers';
 import { getMultiSelectionMinMaxXY, isNum } from './utils';
 import { MIN_MAX, DEFAULT_FLIP } from './constants';
-import OpacityControls from './opacity';
-import RadiusControls from './radius';
+import OpacityControls, { getOpacityFromSelectedElements } from './opacity';
+import RadiusControls, { getIsBorderSupported } from './radius';
 
 const StyledLockToggle = styled(LockToggle)`
   ${focusStyle};
@@ -117,6 +123,150 @@ const StyledButton = styled(Button)`
 
   ${focusStyle};
 `;
+
+const PositionControls = memo(function PositionControls({
+  x,
+  y,
+  minMaxXY,
+  pushUpdate,
+  getMixedValueProps,
+}) {
+  return (
+    <>
+      <Area area="x">
+        <NumericInput
+          suffix={_x('X', 'Position on X axis', 'web-stories')}
+          value={x}
+          min={minMaxXY.minX}
+          max={minMaxXY.maxX}
+          onChange={(evt, value) => pushUpdate({ x: value }, true)}
+          aria-label={__('X position', 'web-stories')}
+          canBeNegative
+          {...getMixedValueProps(x)}
+          containerStyleOverride={inputContainerStyleOverride}
+        />
+      </Area>
+      <Area area="y">
+        <NumericInput
+          suffix={_x('Y', 'Position on Y axis', 'web-stories')}
+          value={y}
+          min={minMaxXY.minY}
+          max={minMaxXY.maxY}
+          onChange={(evt, value) => pushUpdate({ y: value }, true)}
+          aria-label={__('Y position', 'web-stories')}
+          canBeNegative
+          {...getMixedValueProps(y)}
+          containerStyleOverride={inputContainerStyleOverride}
+        />
+      </Area>
+    </>
+  );
+});
+
+const SizeControls = memo(function SizeControls({
+  width,
+  height,
+  lockAspectRatio,
+  origRatio,
+  pushUpdate,
+  getMixedValueProps,
+  getUpdateObject,
+  heightPlaceholder,
+  disableHeight,
+  isAspectAlwaysLocked,
+}) {
+  return (
+    <>
+      <Area area="w">
+        <NumericInput
+          suffix={_x('W', 'The Width dimension', 'web-stories')}
+          value={width}
+          min={MIN_MAX.WIDTH.MIN}
+          max={MIN_MAX.WIDTH.MAX}
+          onChange={(evt, value) => {
+            const newWidth = value;
+            let newHeight = height;
+            if (lockAspectRatio) {
+              if (newWidth === '') {
+                newHeight = '';
+              } else if (isNum(newWidth / origRatio)) {
+                newHeight = dataPixels(newWidth / origRatio);
+              }
+            }
+            pushUpdate((element) => {
+              // For stickers, we maintain aspect ratio of the sticker
+              // regardless of input and selected elements.
+              if (element?.type === 'sticker') {
+                const aspectRatio = getStickerAspectRatio(element);
+                return getUpdateObject(
+                  newWidth,
+                  Math.floor(newWidth / aspectRatio)
+                );
+              }
+              return getUpdateObject(newWidth, newHeight);
+            }, true);
+          }}
+          aria-label={__('Width', 'web-stories')}
+          {...getMixedValueProps(width)}
+          containerStyleOverride={inputContainerStyleOverride}
+        />
+      </Area>
+      <Area area="d">
+        <Dash />
+      </Area>
+      <Area area="h">
+        <NumericInput
+          suffix={_x('H', 'The Height dimension', 'web-stories')}
+          value={disableHeight ? '' : height}
+          disabled={disableHeight}
+          min={MIN_MAX.HEIGHT.MIN}
+          max={MIN_MAX.HEIGHT.MAX}
+          onChange={(evt, value) => {
+            const newHeight = value;
+            let newWidth = width;
+            if (lockAspectRatio) {
+              if (newHeight === '') {
+                newWidth = '';
+              } else if (isNum(newHeight * origRatio)) {
+                newWidth = dataPixels(newHeight * origRatio);
+              }
+            }
+            pushUpdate((element) => {
+              // For stickers, we maintain aspect ratio of the sticker
+              // regardless of input and selected elements.
+              if (element?.type === 'sticker') {
+                const aspectRatio = getStickerAspectRatio(element);
+                return getUpdateObject(
+                  Math.floor(newHeight * aspectRatio),
+                  newHeight
+                );
+              }
+              return getUpdateObject(newWidth, newHeight);
+            }, true);
+          }}
+          aria-label={__('Height', 'web-stories')}
+          isIndeterminate={MULTIPLE_VALUE === height}
+          placeholder={heightPlaceholder}
+          containerStyleOverride={inputContainerStyleOverride}
+        />
+      </Area>
+      <Area area="l">
+        <Tooltip title={__('Lock aspect ratio', 'web-stories')}>
+          <StyledLockToggle
+            aria-label={__('Lock aspect ratio', 'web-stories')}
+            title={__('Lock aspect ratio', 'web-stories')}
+            isLocked={lockAspectRatio || isAspectAlwaysLocked}
+            disabled={isAspectAlwaysLocked}
+            onClick={() =>
+              !isAspectAlwaysLocked &&
+              pushUpdate({ lockAspectRatio: !lockAspectRatio }, true)
+            }
+          />
+        </Tooltip>
+      </Area>
+    </>
+  );
+});
 
 function SizePositionPanel(props) {
   const {
@@ -199,7 +349,7 @@ function SizePositionPanel(props) {
       }
     : getMultiSelectionMinMaxXY(selectedElements);
 
-  const getUpdateObject = (nWidth, nHeight) =>
+  const getUpdateObject = useStableCallback((nWidth, nHeight) =>
     rawLockAspectRatio === MULTIPLE_VALUE
       ? {
           lockAspectRatio,
@@ -209,7 +359,8 @@ function SizePositionPanel(props) {
       : {
           height: nHeight,
           width: nWidth,
-        };
+        }
+  );
 
   usePresubmitHandlers(lockAspectRatio, height, width);
 
@@ -233,6 +384,12 @@ function SizePositionPanel(props) {
       placeholder: MULTIPLE_VALUE === value ? MULTIPLE_DISPLAY_VALUE : null,
     };
   }, []);
+
+  const onFlipChange = useCallback(
+    (value) => pushUpdateForObject('flip', value, DEFAULT_FLIP, true),
+    [pushUpdateForObject]
+  );
+
   return (
     <SimplePanel name="size" title={__('Selection', 'web-stories')}>
       <Grid
@@ -253,120 +410,26 @@ function SizePositionPanel(props) {
             </StyledButton>
           </Area>
         )}
-        <Area area="x">
-          <NumericInput
-            suffix={_x('X', 'Position on X axis', 'web-stories')}
-            value={x}
-            min={minMaxXY.minX}
-            max={minMaxXY.maxX}
-            onChange={(evt, value) => pushUpdate({ x: value }, true)}
-            aria-label={__('X position', 'web-stories')}
-            canBeNegative
-            {...getMixedValueProps(x)}
-            containerStyleOverride={inputContainerStyleOverride}
-          />
-        </Area>
-        <Area area="y">
-          <NumericInput
-            suffix={_x('Y', 'Position on Y axis', 'web-stories')}
-            value={y}
-            min={minMaxXY.minY}
-            max={minMaxXY.maxY}
-            onChange={(evt, value) => pushUpdate({ y: value }, true)}
-            aria-label={__('Y position', 'web-stories')}
-            canBeNegative
-            {...getMixedValueProps(y)}
-            containerStyleOverride={inputContainerStyleOverride}
-          />
-        </Area>
+        <PositionControls
+          x={x}
+          y={y}
+          minMaxXY={minMaxXY}
+          pushUpdate={pushUpdate}
+          getMixedValueProps={getMixedValueProps}
+        />
         {/** Width/height & lock ratio */}
-        <Area area="w">
-          <NumericInput
-            suffix={_x('W', 'The Width dimension', 'web-stories')}
-            value={width}
-            min={MIN_MAX.WIDTH.MIN}
-            max={MIN_MAX.WIDTH.MAX}
-            onChange={(evt, value) => {
-              const newWidth = value;
-              let newHeight = height;
-              if (lockAspectRatio) {
-                if (newWidth === '') {
-                  newHeight = '';
-                } else if (isNum(newWidth / origRatio)) {
-                  newHeight = dataPixels(newWidth / origRatio);
-                }
-              }
-              pushUpdate((element) => {
-                // For stickers, we maintain aspect ratio of the sticker
-                // regardless of input and selected elements.
-                if (element?.type === 'sticker') {
-                  const aspectRatio = getStickerAspectRatio(element);
-                  return getUpdateObject(
-                    newWidth,
-                    Math.floor(newWidth / aspectRatio)
-                  );
-                }
-                return getUpdateObject(newWidth, newHeight);
-              }, true);
-            }}
-            aria-label={__('Width', 'web-stories')}
-            {...getMixedValueProps(width)}
-            containerStyleOverride={inputContainerStyleOverride}
-          />
-        </Area>
-        <Area area="d">
-          <Dash />
-        </Area>
-        <Area area="h">
-          <NumericInput
-            suffix={_x('H', 'The Height dimension', 'web-stories')}
-            value={disableHeight ? '' : height}
-            disabled={disableHeight}
-            min={MIN_MAX.HEIGHT.MIN}
-            max={MIN_MAX.HEIGHT.MAX}
-            onChange={(evt, value) => {
-              const newHeight = value;
-              let newWidth = width;
-              if (lockAspectRatio) {
-                if (newHeight === '') {
-                  newWidth = '';
-                } else if (isNum(newHeight * origRatio)) {
-                  newWidth = dataPixels(newHeight * origRatio);
-                }
-              }
-              pushUpdate((element) => {
-                // For stickers, we maintain aspect ratio of the sticker
-                // regardless of input and selected elements.
-                if (element?.type === 'sticker') {
-                  const aspectRatio = getStickerAspectRatio(element);
-                  return getUpdateObject(
-                    Math.floor(newHeight * aspectRatio),
-                    newHeight
-                  );
-                }
-                return getUpdateObject(newWidth, newHeight);
-              }, true);
-            }}
-            aria-label={__('Height', 'web-stories')}
-            isIndeterminate={MULTIPLE_VALUE === height}
-            placeholder={heightPlaceholder}
-            containerStyleOverride={inputContainerStyleOverride}
-          />
-        </Area>
-        <Area area="l">
-          <Tooltip title={__('Lock aspect ratio', 'web-stories')}>
-            <StyledLockToggle
-              aria-label={__('Lock aspect ratio', 'web-stories')}
-              title={__('Lock aspect ratio', 'web-stories')}
-              isLocked={lockAspectRatio || isAspectAlwaysLocked}
-              disabled={isAspectAlwaysLocked}
-              onClick={() =>
-                !isAspectAlwaysLocked &&
-                pushUpdate({ lockAspectRatio: !lockAspectRatio }, true)
-              }
-            />
-          </Tooltip>
-        </Area>
+        <SizeControls
+          width={width}
+          height={height}
+          lockAspectRatio={lockAspectRatio}
+          origRatio={origRatio}
+          pushUpdate={pushUpdate}
+          getMixedValueProps={getMixedValueProps}
+          getUpdateObject={getUpdateObject}
+          heightPlaceholder={heightPlaceholder}
+          disableHeight={disableHeight}
+          isAspectAlwaysLocked={isAspectAlwaysLocked}
+        />
         <Area area="r">
           <NumericInput
             suffix={<Icons.Angle />}
@@ -385,19 +448,22 @@ function SizePositionPanel(props) {
         </Area>
         {canFlip && (
           <Area area="f">
-            <FlipControls
-              onChange={(value) =>
-                pushUpdateForObject('flip', value, DEFAULT_FLIP, true)
-              }
-              value={flip}
-            />
+            <FlipControls onChange={onFlipChange} value={flip} />
           </Area>
         )}
         <Area area="o">
-          <OpacityControls {...props} />
+          <OpacityControls
+            opacity={getOpacityFromSelectedElements(selectedElements)}
+            pushUpdate={pushUpdate}
+          />
         </Area>
         <Area area="c">
-          <RadiusControls {...props} />
+          {getIsBorderSupported(selectedElements) ? (
+            <RadiusControls
+              borderRadius={borderRadius}
+              pushUpdateForObject={pushUpdateForObject}
+            />
+          ) : null}
         </Area>
       </Grid>
     </SimplePanel>
