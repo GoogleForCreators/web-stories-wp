@@ -164,6 +164,15 @@ describe('useElementsWithLinks', () => {
       expect(result.current.hasElementsInAttachmentArea).toBeTrue();
     });
 
+    it('returns true if the selected elements are in the page attachment area and do not have links', () => {
+      const { result } = render({
+        pageAttachmentContainer: document.body,
+        pageAttachment: 'https://example.com',
+        selectedElements: [ELEMENT_BELOW_LIMIT],
+      });
+      expect(result.current.hasElementsInAttachmentArea).toBeTrue();
+    });
+
     it('returns false if there is no page attachment', () => {
       const { result } = render({
         pageAttachmentContainer: document.body,

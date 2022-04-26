@@ -65,7 +65,7 @@ function useElementsWithLinks() {
         pageAttachmentContainer &&
           hasPageAttachment &&
           state.selectedElements.some((element) =>
-            isElementBelowLimit(element, true)
+            isElementBelowLimit(element, false)
           )
       ),
       hasPageAttachment,
