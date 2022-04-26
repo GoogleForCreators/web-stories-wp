@@ -143,16 +143,15 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 	public function get_items($request) {
         // TODO(#11154): Refactor to extract product query logic out of this controller.
         $shopping_provider = $this->settings->get_setting( Settings::SETTING_NAME_SHOPPING_PROVIDER );
-
-        switch ( $shopping_provider ) {
+		switch ( $shopping_provider ) {
 			case 'woocommerce':
 				$response = $this->get_items_woocommerce( $request );
 				break;
 			case 'shopify':
 				$response = $this->get_items_shopify( $request );
 				break;
-		   	default:
-			 	$response = rest_ensure_response( [] );
+			default:
+			$response = rest_ensure_response( [] );
 		}
 		
 		return $response;
