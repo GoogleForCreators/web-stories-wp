@@ -384,7 +384,7 @@ QUERY;
 				'productId'            => 'wc-' . $product->get_id(),
 				'productTitle'         => $product->get_title(),
 				'productBrand'         => '', // TODO: Figure out how to best provide that.
-				 // TODO: Replace hardcoded value with real price as a number (AMP schema validation).
+				// TODO: Replace hardcoded value with real price as a number (AMP schema validation).
 				'productPrice'         => 10,
 				'productPriceCurrency' => get_woocommerce_currency(),
 				'productImages'        => $images,
