@@ -31,6 +31,15 @@ import {
  */
 import * as schema from './schema.json';
 
+async function insertProduct(product) {
+  await expect(page).toClick('[aria-controls="library-pane-shopping"]');
+  await expect(page).toClick('[aria-label="Product"]');
+  await page.type('[aria-label="Search"]', product);
+  await page.keyboard.press('ArrowDown');
+  await page.keyboard.press('Enter');
+  await expect(page).toClick('button', { text: 'Insert product' });
+}
+
 describe('Shopping', () => {
   minWPVersionRequired('5.8');
   describe('Shopping schema', () => {
@@ -38,11 +47,11 @@ describe('Shopping', () => {
     withPlugin('woocommerce');
     it('should should match a valid schema', async () => {
       await createNewStory();
-      await expect(page).toClick('[aria-controls="library-pane-shopping"]');
-      await page.type('[aria-label="Product"]', 'Hoodie with Zipper');
-      await page.keyboard.press('ArrowDown');
-      await page.keyboard.press('Enter');
-      await expect(page).toClick('button', { text: 'Insert product' });
+      await insertProduct('Cap');
+      await insertProduct('Hoodie with Zipper');
+      await insertProduct('Album');
+      await insertProduct('Sunglasses');
+
       await publishStory();
       const previewPage = await previewStory(page);
       await previewPage.waitForSelector('amp-story-shopping-attachment script');
@@ -57,8 +66,10 @@ describe('Shopping', () => {
 
       await page.bringToFront();
       await previewPage.close();
-      expect(data.items).toHaveLength(1);
-      expect(data.items[0]).toMatchSchema(schema);
+      expect(data.items).toHaveLength(4);
+      data.items.forEach((item) => {
+        expect(item).toMatchSchema(schema);
+      });
     });
   });
 });

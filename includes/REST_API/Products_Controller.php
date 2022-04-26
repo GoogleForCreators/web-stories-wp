@@ -314,7 +314,8 @@ QUERY;
 				'productBrand'         => $product['vendor'],
 				// TODO: Maybe eventually provide full price range.
 				// See https://github.com/ampproject/amphtml/issues/37957.
-				'productPrice'         => $product['priceRange']['minVariantPrice']['amount'],
+				// TODO: replace hardcoded value with real price as a number (AMP schema validation)
+				'productPrice'         => 10,
 				'productPriceCurrency' => $product['priceRange']['minVariantPrice']['currencyCode'],
 				'productImages'        => $images,
 				'productDetails'       => $product['description'],
@@ -383,7 +384,8 @@ QUERY;
 				'productId'            => 'wc-' . $product->get_id(),
 				'productTitle'         => $product->get_title(),
 				'productBrand'         => '', // TODO: Figure out how to best provide that.
-				'productPrice'         => $product->get_price(),
+				 // TODO: replace hardcoded value with real price as a number (AMP schema validation)
+				'productPrice'         => 10,
 				'productPriceCurrency' => get_woocommerce_currency(),
 				'productImages'        => $images,
 				'aggregateRating'      => [
