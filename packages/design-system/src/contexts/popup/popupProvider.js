@@ -23,16 +23,4 @@ import PropTypes from 'prop-types';
  */
 import Context from './context';
 
-function PopupProvider({ children, value }) {
-  return <Context.Provider value={value}>{children}</Context.Provider>;
-}
-
-PopupProvider.propTypes = {
-  children: PropTypes.node,
-  value: PropTypes.shape({
-    isRTL: PropTypes.bool,
-    leftOffset: PropTypes.number,
-  }),
-};
-
-export default PopupProvider;
+export default Context.Provider;
