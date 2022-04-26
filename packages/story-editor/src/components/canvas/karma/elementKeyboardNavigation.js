@@ -69,7 +69,7 @@ describe('Canvas Element - keyboard navigation', () => {
       // frame elements receive focus after adding the element through the library
       if (document.activeElement !== wrapperEl) {
         throw new Error(
-          'frame element wrapper has not recieved focus since adding new element'
+          'frame element wrapper has not received focus since adding new element'
         );
       }
     });
@@ -83,5 +83,14 @@ describe('Canvas Element - keyboard navigation', () => {
     // Use keyboard to navigate out of design menu
     await fixture.events.keyboard.press('Esc');
     expect(document.activeElement).toBe(wrapperEl);
+
+    // verify cyclicality: wrap around to background element
+    await fixture.events.keyboard.press('Tab');
+
+    const selectedElements = await fixture.renderHook(() =>
+      useStory(({ state }) => state.selectedElements)
+    );
+    expect(selectedElements.length).toBe(1);
+    expect(selectedElements[0].isBackground).toBe(true);
   });
 });

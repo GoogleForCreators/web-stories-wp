@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,11 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { default as validateAdManagerSlotIdFormat } from './validateAdManagerSlotIdFormat';
-export { default as validateAdSensePublisherIdFormat } from './validateAdSensePublisherIdFormat';
-export { default as validateAdSenseSlotIdFormat } from './validateAdSenseSlotIdFormat';
-export { default as validateGoogleAnalyticsIdFormat } from './validateGoogleAnalyticsIdFormat';
-export {
-  default as isValidShopifyHost,
-  hostPattern,
-} from './validateShopifyHost';
+/**
+ * Internal dependencies
+ */
+import { isValidShopifyHost } from '..';
+
+const hostToValidate = [
+  ['example.com', false],
+  ['https://webstories.myshopify.com', true],
+  ['webstories.myyshopify.com', false],
+  ['webstories.myshopify.com', true],
+];
+
+describe('isValidShopifyHost', () => {
+  it.each(hostToValidate)(
+    'should take " %s " and return as %p for shopify host',
+    (host, expected) => {
+      const bool = isValidShopifyHost(host);
+      expect(bool).toBe(expected);
+    }
+  );
+});

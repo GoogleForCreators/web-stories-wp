@@ -29,6 +29,18 @@ Install Composer by following [installation instructions](https://getcomposer.or
 
 Make sure to add `composer` to your `$PATH` if it is not already there. The local environment won't run unless `composer` is in your `$PATH`.
 
+**WSL users** may also need to install `make`.  On WSL Ubuntu you should be able to use:
+
+```bash
+sudo apt-get install make
+```
+
+or
+
+```bash
+sudo apt-get install build-essential
+```
+
 To install all the required composer packages, run:
 
 ```bash

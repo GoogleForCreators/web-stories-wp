@@ -33,6 +33,8 @@ export const defaultAttributes = {
 
 export const hasEditMode = false;
 
+export const hasDesignMenu = true;
+
 export const isMedia = false;
 
 export const canFlip = true;

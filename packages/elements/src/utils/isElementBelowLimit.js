@@ -30,6 +30,6 @@ function isElementBelowLimit(element, verifyLink = true) {
   const limit = FULLBLEED_HEIGHT * 0.8 - DANGER_ZONE_HEIGHT;
   const { x, y, width, height, rotationAngle } = element;
   const points = getCorners(rotationAngle, x, y, width, height);
-  return Object.keys(points).find((point) => points[point].y > limit);
+  return Boolean(Object.keys(points).find((point) => points[point].y > limit));
 }
 export default isElementBelowLimit;
