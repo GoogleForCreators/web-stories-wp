@@ -30,17 +30,33 @@ import {
   SettingHeading,
   TextInputHelperText,
 } from '../components';
+import { SHOPPING_PROVIDER_TYPE } from '../../../constants';
 import ShopifySettings from './shopify';
+import ShoppingProviderDropDown from './shoppingProviderDropDown';
 
 export const TEXT = {
   SECTION_HEADING: __('Shopping', 'web-stories'),
+  SHOPPING_PROVIDER_HELPER_MESSAGE: __(
+    'Once configured you can add products from this provider.',
+    'web-stories'
+  ),
   HELPER_MESSAGE: __(
-    'Connect your Shopify store so you can easily add products to your stories.',
+    'Connect your store so you can easily add products to your stories.',
     'web-stories'
   ),
 };
 
-function Shopping({ updateSettings, shopifyHost, shopifyAccessToken }) {
+function Shopping({
+  updateSettings,
+  shoppingProvider,
+  shopifyHost,
+  shopifyAccessToken,
+}) {
+  const handleUpdateShoppingProvider = useCallback(
+    (newValue) => updateSettings({ shoppingProvider: newValue }),
+    [updateSettings]
+  );
+
   const handleUpdateShopifyHost = useCallback(
     (newValue) => updateSettings({ shopifyHost: newValue }),
     [updateSettings]
@@ -64,12 +80,25 @@ function Shopping({ updateSettings, shopifyHost, shopifyAccessToken }) {
       </div>
 
       <div>
-        <ShopifySettings
-          handleUpdateHost={handleUpdateShopifyHost}
-          handleUpdateAccessToken={handleUpdateShopifyAccessToken}
-          host={shopifyHost}
-          accessToken={shopifyAccessToken}
+        <ShoppingProviderDropDown
+          shoppingProvider={shoppingProvider}
+          handleUpdate={handleUpdateShoppingProvider}
         />
+
+        <TextInputHelperText
+          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+        >
+          {TEXT.SHOPPING_PROVIDER_HELPER_MESSAGE}
+        </TextInputHelperText>
+
+        {shoppingProvider === SHOPPING_PROVIDER_TYPE.SHOPIFY && (
+          <ShopifySettings
+            handleUpdateHost={handleUpdateShopifyHost}
+            handleUpdateAccessToken={handleUpdateShopifyAccessToken}
+            host={shopifyHost}
+            accessToken={shopifyAccessToken}
+          />
+        )}
       </div>
     </MultilineForm>
   );
@@ -77,6 +106,7 @@ function Shopping({ updateSettings, shopifyHost, shopifyAccessToken }) {
 
 Shopping.propTypes = {
   updateSettings: PropTypes.func.isRequired,
+  shoppingProvider: PropTypes.string,
   shopifyHost: PropTypes.string,
   shopifyAccessToken: PropTypes.string,
 };
