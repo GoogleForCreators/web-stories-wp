@@ -47,7 +47,7 @@ describe('Design Menu: Keyboard Navigation', () => {
      * 1: image
      * 2: text
      * 3: shape
-     * */
+     */
     // add an image to the canvas first since that element is open in side panel by default
     await fixture.events.mouse.clickOn(
       fixture.editor.library.media.item(0),
