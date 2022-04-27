@@ -327,8 +327,7 @@ function Layer({ element }) {
           </LayerContentContainer>
           {element.isBackground && (
             <IconWrapper>
-              {/* Replace with filled lock once SVG is created */}
-              <Icons.LockClosed />
+              <Icons.LockFilledClosed />
             </IconWrapper>
           )}
           {element.isLocked && isLayerLockingEnabled && (
