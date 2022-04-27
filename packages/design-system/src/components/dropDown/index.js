@@ -213,7 +213,6 @@ DropDown.propTypes = {
   hasError: PropTypes.bool,
   hint: PropTypes.string,
   isKeepMenuOpenOnSelection: PropTypes.bool,
-  isRTL: PropTypes.bool,
   menuStylesOverride: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   options: MENU_OPTIONS,
   onMenuItemClick: PropTypes.func,

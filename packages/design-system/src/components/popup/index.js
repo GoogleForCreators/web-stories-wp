@@ -32,13 +32,14 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { noop } from '../../utils';
+import { usePopup } from '../../contexts';
 import { getTransforms, getOffset } from './utils';
 import { PLACEMENT, PopupContainer } from './constants';
-const DEFAULT_TOPOFFSET = 0;
+const DEFAULT_TOP_OFFSET = 0;
 const DEFAULT_POPUP_Z_INDEX = 2;
+const DEFAULT_LEFT_OFFSET = 0;
 
 function Popup({
-  isRTL = false,
   anchor,
   dock,
   children,
@@ -48,11 +49,15 @@ function Popup({
   isOpen,
   fillWidth = false,
   refCallback = noop,
-  topOffset = DEFAULT_TOPOFFSET,
   zIndex = DEFAULT_POPUP_Z_INDEX,
   ignoreMaxOffsetY,
-  resetXOffset = false,
 }) {
+  const {
+    topOffset = DEFAULT_TOP_OFFSET,
+    leftOffset = DEFAULT_LEFT_OFFSET,
+    isRTL = false,
+  } = usePopup();
+
   const [popupState, setPopupState] = useState(null);
   const isMounted = useRef(false);
   const popup = useRef(null);
@@ -66,21 +71,61 @@ function Popup({
       if (evt?.target?.nodeType && popup.current?.contains(evt.target)) {
         return;
       }
+      const offset = anchor.current
+        ? getOffset({
+            placement,
+            spacing,
+            anchor,
+            dock,
+            popup,
+            isRTL,
+            topOffset,
+            ignoreMaxOffsetY,
+          })
+        : {};
+      const { height, x, width, right } = popup.current
+        ? popup.current.getBoundingClientRect()
+        : {};
+
+      const updatedXOffset = () => {
+        // When in RTL the popup could render off the left side of the screen. If so, let's update the
+        // offset to keep it inbounds.
+        if (x < leftOffset) {
+          switch (placement) {
+            case PLACEMENT.BOTTOM_END:
+            case PLACEMENT.TOP_END:
+              return { ...offset, x: isRTL ? offset.x : width + leftOffset };
+            case PLACEMENT.LEFT_END:
+            case PLACEMENT.LEFT:
+            case PLACEMENT.LEFT_START:
+              // Left placement shouldn't be used if it renders off the left of the screen in LTR
+              return {
+                ...offset,
+                x: isRTL ? offset.x : width + -x - leftOffset,
+              };
+            case PLACEMENT.BOTTOM_START:
+            case PLACEMENT.TOP_START:
+            case PLACEMENT.RIGHT_END:
+            case PLACEMENT.RIGHT_START:
+            case PLACEMENT.RIGHT:
+              // These should only matter in the case of isRTL so we'll need the entire width of the popup as the offset
+              return { ...offset, x: width };
+            default:
+              return { ...offset, x: width / 2 + (isRTL ? 0 : leftOffset) };
+          }
+        }
+
+        if (isRTL && right > offset.bodyRight - leftOffset) {
+          // maxOffset should keep us inbounds, except in the case of RTL due to the admin-sidebar nav we could use another
+          // switch case here to make offset more precise, however the math below will always return the popup fully in screen.
+          return { ...offset, x: offset.bodyRight - width - leftOffset };
+        }
+
+        return null;
+      };
       setPopupState({
-        offset: anchor.current
-          ? getOffset({
-              placement,
-              spacing,
-              anchor,
-              dock,
-              popup,
-              isRTL,
-              topOffset,
-              ignoreMaxOffsetY,
-              resetXOffset,
-            })
-          : {},
-        height: popup.current?.getBoundingClientRect()?.height,
+        offset: updatedXOffset() || offset,
+        height,
       });
     },
     [
@@ -90,8 +135,8 @@ function Popup({
       dock,
       isRTL,
       topOffset,
+      leftOffset,
       ignoreMaxOffsetY,
-      resetXOffset,
     ]
   );
 
@@ -155,7 +200,6 @@ function Popup({
 }
 
 Popup.propTypes = {
-  isRTL: PropTypes.bool,
   anchor: PropTypes.shape({ current: PropTypes.instanceOf(Element) })
     .isRequired,
   dock: PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
@@ -166,10 +210,8 @@ Popup.propTypes = {
   isOpen: PropTypes.bool,
   fillWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
   refCallback: PropTypes.func,
-  topOffset: PropTypes.number,
   zIndex: PropTypes.number,
   ignoreMaxOffsetY: PropTypes.bool,
-  resetXOffset: PropTypes.bool,
 };
 
 export { Popup, PLACEMENT };

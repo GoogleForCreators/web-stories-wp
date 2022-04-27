@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-export { default as SnackbarContext } from './snackbar/context';
-export { default as SnackbarProvider } from './snackbar/snackbarProvider';
-export { useSnackbar } from './snackbar/useSnackbar';
-export { default as PopupContext } from './popup/context';
-export { default as PopupProvider } from './popup/popupProvider';
-export { usePopup } from './popup/usePopup';
+/**
+ * External dependencies
+ */
+import { createContext } from '@googleforcreators/react';
+
+export default createContext({});
