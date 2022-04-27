@@ -58,11 +58,10 @@ export const RTL_PLACEMENT = {
 };
 
 export const PopupContainer = styled.div.attrs(
-  ({ $offset: { x, y, width }, fillWidth, transforms, invisible, zIndex }) => ({
+  ({ $offset: { x, y, width }, fillWidth, transforms, zIndex }) => ({
     style: {
       transform: `translate(${x}px, ${y}px) ${transforms}`,
       ...(fillWidth ? { width: `${width}px` } : {}),
-      ...(invisible ? { visibility: 'hidden' } : {}),
       zIndex,
     },
   })

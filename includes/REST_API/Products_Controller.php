@@ -141,21 +141,20 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
 	public function get_items( $request ) {
-		$results = [];
-
 		// TODO(#11154): Refactor to extract product query logic out of this controller.
-		$shopify_host         = $this->settings->get_setting( Settings::SETTING_NAME_SHOPIFY_HOST );
-		$shopify_access_token = $this->settings->get_setting( Settings::SETTING_NAME_SHOPIFY_ACCESS_TOKEN );
-
-		if ( ! empty( $shopify_host ) && ! empty( $shopify_access_token ) ) {
-			return $this->get_items_shopify( $request );
+		$shopping_provider = $this->settings->get_setting( Settings::SETTING_NAME_SHOPPING_PROVIDER );
+		switch ( $shopping_provider ) {
+			case 'woocommerce':
+				$response = $this->get_items_woocommerce( $request );
+				break;
+			case 'shopify':
+				$response = $this->get_items_shopify( $request );
+				break;
+			default:
+				$response = rest_ensure_response( [] );
 		}
-
-		if ( function_exists( 'wc_get_products' ) ) {
-			return $this->get_items_woocommerce( $request );
-		}
-
-		return rest_ensure_response( $results );
+		
+		return $response;
 	}
 
 	/**

@@ -14,27 +14,8 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import Shopping from '..';
-import { SHOPPING_PROVIDER_TYPE } from '../../../../constants';
+export const hostPattern = /[\d\w-]+\.myshopify\.com/i;
 
-export default {
-  title: 'Dashboard/Views/EditorSettings/Shopping',
-  component: Shopping,
-  args: {
-    shoppingProvider: SHOPPING_PROVIDER_TYPE.NONE,
-    shopifyHost: 'yourstore.myshopify.com',
-    shopifyAccessToken: '',
-  },
-  argTypes: {
-    updateSettings: {
-      action: 'update settings',
-    },
-  },
-};
-
-export const _default = (args) => {
-  return <Shopping {...args} />;
-};
+export default function isValidShopifyHost(value = '') {
+  return Boolean(value.toLowerCase().match(hostPattern));
+}

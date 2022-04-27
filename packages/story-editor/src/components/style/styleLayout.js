@@ -85,22 +85,24 @@ function StyleLayout() {
     selectedElementIds: state.selectedElementIds,
   }));
 
-  const { highlight } = useHighlights((state) => ({
+  const { highlight, resetHighlight } = useHighlights((state) => ({
     highlight: {
       [SELECTION.id]: state[states.STYLE],
       [LINK.id]: state[states.STYLE],
       [ANIMATION.id]: state[states.STYLE],
     },
+    resetHighlight: state.onFocusOut,
   }));
 
   const onTabChange = useCallback(
     (id) => {
       setTab(id);
+      resetHighlight();
       trackEvent('style_tab_change', {
         name: id,
       });
     },
-    [setTab]
+    [setTab, resetHighlight]
   );
 
   if (selectedElementIds.length === 0) {
