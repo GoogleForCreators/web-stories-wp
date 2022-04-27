@@ -18,6 +18,16 @@
  */
 import visitSettings from './visitSettings';
 
+async function clearSearch() {
+  const hasText = await page.$eval(
+    '[aria-label="Product search"]',
+    (el) => el.value.length
+  );
+  if (hasText >= 1) {
+    await expect(page).toClick('[aria-label="Clear product search"]');
+  }
+}
+
 export const insertProduct = async (product) => {
   // Switch to the Products tab and wait for initial list of products to be fetched.
   await Promise.all([
@@ -29,14 +39,14 @@ export const insertProduct = async (product) => {
     expect(page).toClick('[aria-controls="library-pane-shopping"]'),
   ]);
 
-  // This clicks on the Product dropdown and waits for the dropdown menu to open.
-  await expect(page).toClick('[aria-label="Product"]');
-  await page.waitForSelector('[aria-label="Search"]');
-
-  await page.type('[aria-label="Search"]', product);
-  await page.keyboard.press('ArrowDown');
-  await page.keyboard.press('Enter');
-  await expect(page).toClick('button', { text: 'Insert product' });
+  await clearSearch();
+  await page.waitForSelector('[aria-label="Product search"]');
+  await page.focus('[aria-label="Product search"]');
+  await page.type('[aria-label="Product search"]', product);
+  expect(page).toClick(`[aria-label="Add ${product}"]`);
+  await page.waitForSelector(
+    '[aria-label="Design menu"] [aria-label="Product"]'
+  );
 };
 
 export const setShoppingProvider = async (provider) => {

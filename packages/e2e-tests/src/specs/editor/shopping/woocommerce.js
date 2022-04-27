@@ -49,7 +49,6 @@ describe('Shopping', () => {
         await insertProduct('Hoodie with Zipper');
         await insertProduct('Album');
         await insertProduct('Sunglasses');
-
         await publishStory();
         const previewPage = await previewStory(page);
         await previewPage.waitForSelector(
