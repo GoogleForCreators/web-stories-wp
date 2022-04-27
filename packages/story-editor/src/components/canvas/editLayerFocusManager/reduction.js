@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 const INITIAL_STATE = {
-  activeGroupKey: null,
   cleanup: null,
   focusGroups: {},
+  cleanupCallbacks: {},
 };
 
 const reduction = {
@@ -70,20 +70,15 @@ const reduction = {
     };
   },
 
-  setActiveGroup: (state, action) => {
+  setFocusGroupCleanup: (state, action) => {
     const { groupId, cleanup } = action.payload;
     return {
       ...state,
       activeGroupKey: groupId,
-      cleanup,
-    };
-  },
-
-  clearActiveGroup: (state) => {
-    return {
-      ...state,
-      activeGroupKey: null,
-      cleanup: null,
+      cleanupCallbacks: {
+        ...state.cleanupCallbacks,
+        [groupId]: cleanup,
+      },
     };
   },
 };

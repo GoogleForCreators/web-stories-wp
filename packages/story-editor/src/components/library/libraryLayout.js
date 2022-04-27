@@ -64,23 +64,25 @@ function LibraryLayout() {
     tabs: state.data.tabs,
   }));
 
-  const { highlight } = useHighlights((state) => ({
+  const { highlight, resetHighlight } = useHighlights((state) => ({
     highlight: {
       // Note that the distinct key sets e.g. MEDIA.id !== states.MEDIA.
       [MEDIA.id]: state[states.MEDIA],
       [MEDIA3P.id]: state[states.MEDIA3P],
       [TEXT.id]: state[states.TEXT_SET],
     },
+    resetHighlight: state.onFocusOut,
   }));
 
   const onTabChange = useCallback(
     (id) => {
       setTab(id);
+      resetHighlight();
       trackEvent('library_tab_change', {
         name: id,
       });
     },
-    [setTab]
+    [setTab, resetHighlight]
   );
 
   return (

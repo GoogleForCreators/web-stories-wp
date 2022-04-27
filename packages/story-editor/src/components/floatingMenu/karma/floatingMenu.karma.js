@@ -40,6 +40,33 @@ describe('Design Menu: Keyboard Navigation', () => {
     fixture.restore();
   });
 
+  async function addElementsToCanvas() {
+    /**
+     * Element order:
+     * 0: backgroundAudio
+     * 1: image
+     * 2: text
+     * 3: shape
+     * */
+    // add an image to the canvas first since that element is open in side panel by default
+    await fixture.events.mouse.clickOn(
+      fixture.editor.library.media.item(0),
+      20,
+      20
+    );
+    // next let's add a text element
+    await fixture.editor.library.textTab.click();
+    await fixture.events.click(fixture.editor.library.text.preset('Paragraph'));
+
+    // add now let's add a shape to the canvas - this is the floating menu that will be visible.
+    await fixture.events.click(fixture.editor.library.shapesTab);
+    await waitFor(() => fixture.editor.library.shapes);
+
+    await fixture.events.click(
+      fixture.editor.library.shapes.shape('Rectangle')
+    );
+  }
+
   it('should never pass focus to floating menu when using keyboard from outside of canvas', async () => {
     // add a shape to the canvas so that a floating menu is visible
     await fixture.events.click(fixture.editor.library.shapesTab);
@@ -71,18 +98,16 @@ describe('Design Menu: Keyboard Navigation', () => {
     }
   });
 
-  it('should return focus to element & maintain selection on esc', async () => {
+  it('should return focus to element & maintain selection on esc when only keyboard is used', async () => {
     const focusContainer = fixture.screen.getByTestId('canvas-focus-container');
-    // add a shape to the canvas so that a floating menu is visible
-    await fixture.events.click(fixture.editor.library.shapesTab);
-    await waitFor(() => fixture.editor.library.shapes);
 
-    await fixture.events.click(
-      fixture.editor.library.shapes.shape('Rectangle')
-    );
+    await addElementsToCanvas();
 
+    // let's make sure it's the shape menu we're interacting with, which is the 3rd element
     await tabToCanvasFocusContainer(focusContainer, fixture);
     await fixture.events.keyboard.press('Enter');
+    await fixture.events.keyboard.press('Tab');
+    await fixture.events.keyboard.press('Tab');
     await fixture.events.keyboard.press('Tab');
 
     await focusFloatingMenu(fixture);
@@ -110,21 +135,81 @@ describe('Design Menu: Keyboard Navigation', () => {
     // now go back to the element to move it around
     await fixture.events.keyboard.press('esc');
 
-    const selectedElement = await fixture.renderHook(() =>
-      useStory(({ state }) => state.currentPage.elements[1])
+    let selectedElements = await fixture.renderHook(() =>
+      useStory(({ state }) => state.selectedElements)
     );
-
-    expect(document.activeElement.getAttribute('data-element-id')).toBe(
-      selectedElement.id
-    );
-    expect(selectedElement.x).toBe(48);
+    expect(selectedElements.length).toBe(1);
+    expect(selectedElements[0].type).toBe('shape');
+    expect(selectedElements[0].x).toBe(48);
 
     // scoot the element to the right
     await fixture.events.keyboard.press('ArrowRight');
 
-    const updatedSelectedElement = await fixture.renderHook(() =>
-      useStory(({ state }) => state.currentPage.elements[1])
+    selectedElements = await fixture.renderHook(() =>
+      useStory(({ state }) => state.selectedElements)
     );
-    expect(updatedSelectedElement.x).toBe(58);
+    expect(selectedElements[0].x).toBe(58);
+
+    // now let's make sure that the canvas is still the active focus group
+    // and we can tab through layers without exiting the canvas ever.
+    await fixture.events.keyboard.press('Tab');
+
+    selectedElements = await fixture.renderHook(() =>
+      useStory(({ state }) => state.selectedElements)
+    );
+    expect(selectedElements[0].isBackground).toBe(true);
+
+    await fixture.events.keyboard.press('Tab');
+
+    selectedElements = await fixture.renderHook(() =>
+      useStory(({ state }) => state.selectedElements)
+    );
+    expect(selectedElements[0].type).toBe('image');
+  });
+
+  it('should return focus to element & maintain selection on esc when mix of cursor and keyboard are used', async () => {
+    await addElementsToCanvas();
+
+    // click on a flip so we know that the floating menu is focused via cursor
+    await fixture.events.click(
+      fixture.editor.canvas.designMenu.flipHorizontal.node
+    );
+    expect(document.activeElement.getAttribute('title')).toBe(
+      'Flip horizontally'
+    );
+
+    // now escape the floating menu via keyboard
+    await fixture.events.keyboard.press('esc');
+
+    let selectedElements = await fixture.renderHook(() =>
+      useStory(({ state }) => state.selectedElements)
+    );
+    expect(selectedElements.length).toBe(1);
+    expect(selectedElements[0].type).toBe('shape');
+    expect(selectedElements[0].x).toBe(48);
+
+    // scoot the element to the right
+    await fixture.events.keyboard.press('ArrowRight');
+
+    selectedElements = await fixture.renderHook(() =>
+      useStory(({ state }) => state.selectedElements)
+    );
+    expect(selectedElements[0].x).toBe(58);
+
+    // now let's make sure that the canvas is still the active focus group
+    // and we can tab through layers without exiting the canvas ever.
+    await fixture.events.keyboard.press('Tab');
+
+    selectedElements = await fixture.renderHook(() =>
+      useStory(({ state }) => state.selectedElements)
+    );
+    expect(selectedElements[0].isBackground).toBe(true);
+
+    await fixture.events.keyboard.press('Tab');
+
+    selectedElements = await fixture.renderHook(() =>
+      useStory(({ state }) => state.selectedElements)
+    );
+    expect(selectedElements[0].type).toBe('image');
   });
 });

@@ -2438,12 +2438,12 @@
       "tAsc": 900,
       "tDes": -350,
       "tLGap": 0,
-      "wAsc": 900,
-      "wDes": 350,
-      "xH": 237,
-      "capH": 636,
-      "yMin": -350,
-      "yMax": 900,
+      "wAsc": 1012,
+      "wDes": 355,
+      "xH": 280,
+      "capH": 660,
+      "yMin": -354,
+      "yMax": 1012,
       "hAsc": 900,
       "hDes": -350,
       "lGap": 0
@@ -18486,6 +18486,40 @@
     }
   },
   {
+    "family": "Libre Bodoni",
+    "fallbacks": ["serif"],
+    "weights": [400, 500, 600, 700],
+    "styles": ["regular", "italic"],
+    "variants": [
+      [0, 400],
+      [0, 500],
+      [0, 600],
+      [0, 700],
+      [1, 400],
+      [1, 500],
+      [1, 600],
+      [1, 700]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 924,
+      "des": -326,
+      "tAsc": 924,
+      "tDes": -326,
+      "tLGap": 0,
+      "wAsc": 1184,
+      "wDes": 326,
+      "xH": 450,
+      "capH": 754,
+      "yMin": -326,
+      "yMax": 1169,
+      "hAsc": 924,
+      "hDes": -326,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Libre Caslon Display",
     "fallbacks": ["serif"],
     "weights": [400],
@@ -32610,20 +32644,20 @@
     "service": "fonts.google.com",
     "metrics": {
       "upm": 1000,
-      "asc": 750,
-      "des": -250,
-      "tAsc": 750,
-      "tDes": -250,
-      "tLGap": 50,
+      "asc": 927,
+      "des": -244,
+      "tAsc": 927,
+      "tDes": -244,
+      "tLGap": 0,
       "wAsc": 1152,
       "wDes": 305,
       "xH": 508,
       "capH": 710,
       "yMin": -305,
       "yMax": 1152,
-      "hAsc": 750,
-      "hDes": -250,
-      "lGap": 50
+      "hAsc": 927,
+      "hDes": -244,
+      "lGap": 0
     }
   },
   {
@@ -36985,6 +37019,31 @@
     }
   },
   {
+    "family": "Tapestry",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 950,
+      "des": -300,
+      "tAsc": 950,
+      "tDes": -300,
+      "tLGap": 0,
+      "wAsc": 1025,
+      "wDes": 300,
+      "xH": 454,
+      "capH": 640,
+      "yMin": -286,
+      "yMax": 1016,
+      "hAsc": 950,
+      "hDes": -300,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Taprom",
     "fallbacks": ["cursive"],
     "weights": [400],
@@ -39037,6 +39096,31 @@
       "yMax": 994,
       "hAsc": 994,
       "hDes": -310,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Water Brush",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1000,
+      "des": -450,
+      "tAsc": 1000,
+      "tDes": -450,
+      "tLGap": 0,
+      "wAsc": 1165,
+      "wDes": 475,
+      "xH": 375,
+      "capH": 750,
+      "yMin": -472,
+      "yMax": 1152,
+      "hAsc": 1000,
+      "hDes": -450,
       "lGap": 0
     }
   },

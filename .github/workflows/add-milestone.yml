@@ -30,7 +30,7 @@ jobs:
         run: |
           echo "Getting list of releases from ZenHub"
 
-          RELEASES=$(curl -s -H "X-Authentication-Token: $ZENHUB_API_TOKEN" "https://api.zenhub.com/p1/repositories/${GITHUB_REPO_ID}/reports/releases")
+          RELEASES=$(curl -f -s -H "X-Authentication-Token: $ZENHUB_API_TOKEN" "https://api.zenhub.com/p1/repositories/${GITHUB_REPO_ID}/reports/releases")
           NEXT_RELEASE=$((echo $RELEASES ) | jq -r 'first(sort_by(.desired_end_date) | .[] | select( .state == "open" )) | .release_id')
 
           echo "Determined release with ID $NEXT_RELEASE to be the next one"
@@ -44,7 +44,7 @@ jobs:
         run: |
           echo "Adding PR $PR_NUMBER to release $RELEASE_ID"
 
-          curl -s -H "X-Authentication-Token: $ZENHUB_API_TOKEN" -H 'Content-Type: application/json' -X PATCH "https://api.zenhub.com/p1/reports/release/${RELEASE_ID}/issues" -d '{ "add_issues": [{ "repo_id": '"$GITHUB_REPO_ID"', "issue_number": '"$PR_NUMBER"' }], "remove_issues": [] }'
+          curl -f -s -H "X-Authentication-Token: $ZENHUB_API_TOKEN" -H 'Content-Type: application/json' -X PATCH "https://api.zenhub.com/p1/reports/release/${RELEASE_ID}/issues" -d '{ "add_issues": [{ "repo_id": '"$GITHUB_REPO_ID"', "issue_number": '"$PR_NUMBER"' }], "remove_issues": [] }'
         env:
           ZENHUB_API_TOKEN: ${{ secrets.ZENHUB_API_TOKEN }}
           RELEASE_ID: ${{ steps.release.outputs.release_id }}
@@ -81,7 +81,7 @@ jobs:
 
           while IFS= read -r ISSUE_NUMBER; do
             echo "Adding linked issue $ISSUE to release $RELEASE_ID"
-            curl -s -H "X-Authentication-Token: $ZENHUB_API_TOKEN" -H 'Content-Type: application/json' -X PATCH "https://api.zenhub.com/p1/reports/release/${RELEASE_ID}/issues" -d '{ "add_issues": [{ "repo_id": '"$GITHUB_REPO_ID"', "issue_number": '"$ISSUE_NUMBER"' }], "remove_issues": [] }'
+            curl -f -s -H "X-Authentication-Token: $ZENHUB_API_TOKEN" -H 'Content-Type: application/json' -X PATCH "https://api.zenhub.com/p1/reports/release/${RELEASE_ID}/issues" -d '{ "add_issues": [{ "repo_id": '"$GITHUB_REPO_ID"', "issue_number": '"$ISSUE_NUMBER"' }], "remove_issues": [] }'
           done <<< "$ISSUE_NUMBERS"
         env:
           ZENHUB_API_TOKEN: ${{ secrets.ZENHUB_API_TOKEN }}
