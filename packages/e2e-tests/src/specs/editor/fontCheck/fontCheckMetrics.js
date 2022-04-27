@@ -49,9 +49,12 @@ async function addStoryWithFont(title) {
   await createStoryWithTitle(title);
   await updateFont('Rock Salt');
   await publishStory();
+  await expect(page).toClick('li[role="tab"]', { text: 'Insert' });
 }
 
 async function toggleDevTools() {
+  const areDevToolsOpen = Boolean(await page.$('#web-stories-editor textarea'));
+
   // Cancel whatever current action to ensure the below shortcut works.
   await page.keyboard.press('Escape');
   await page.click('[aria-label="Web Stories Editor"]');
@@ -64,12 +67,15 @@ async function toggleDevTools() {
   await page.keyboard.up('Alt');
   await page.keyboard.up('Shift');
   await page.keyboard.up('Meta');
+
+  // Dev Tools were not open before, but now they should be open.
+  if (!areDevToolsOpen) {
+    await page.waitForSelector('#web-stories-editor textarea');
+  }
 }
 
 async function getCurrentStoryData() {
   await toggleDevTools();
-
-  await page.waitForSelector('#web-stories-editor textarea');
 
   const textareaContent = await page.evaluate(
     () => document.querySelector('#web-stories-editor textarea').value
@@ -90,14 +96,17 @@ describe('Font Check Metrics', () => {
       if (request.url().includes('web-stories/v1/fonts') && mockResponse) {
         request.respond(mockResponse);
         return;
-      } else {
-        request.continue();
       }
+
+      request.continue();
     });
   });
 
   afterEach(() => {
     mockResponse = undefined;
+  });
+
+  afterAll(() => {
     stopRequestInterception();
   });
 
