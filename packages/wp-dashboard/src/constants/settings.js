@@ -47,3 +47,9 @@ export const ARCHIVE_TYPE = {
   DISABLED: 'disabled',
   CUSTOM: 'custom',
 };
+
+export const SHOPPING_PROVIDER_TYPE = {
+  NONE: 'none',
+  WOOCOMMERCE: 'woocommerce',
+  SHOPIFY: 'shopify',
+};

@@ -18,11 +18,13 @@
  * Internal dependencies
  */
 import Shopping from '..';
+import { SHOPPING_PROVIDER_TYPE } from '../../../../constants';
 
 export default {
   title: 'Dashboard/Views/EditorSettings/Shopping',
   component: Shopping,
   args: {
+    shoppingProvider: SHOPPING_PROVIDER_TYPE.NONE,
     shopifyHost: 'yourstore.myshopify.com',
     shopifyAccessToken: '',
   },

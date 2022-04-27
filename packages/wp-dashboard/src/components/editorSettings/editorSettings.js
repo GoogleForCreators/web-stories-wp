@@ -71,6 +71,7 @@ function EditorSettings() {
     fetchPublisherLogos,
     removePublisherLogo,
     setPublisherLogoAsDefault,
+    shoppingProvider,
     shopifyHost,
     shopifyAccessToken,
   } = useEditorSettings(
@@ -98,6 +99,7 @@ function EditorSettings() {
           videoCache,
           archive,
           archivePageId,
+          shoppingProvider,
           shopifyHost,
           shopifyAccessToken,
         },
@@ -130,6 +132,7 @@ function EditorSettings() {
       removePublisherLogo,
       setPublisherLogoAsDefault,
       publisherLogos,
+      shoppingProvider,
       shopifyHost,
       shopifyAccessToken,
     })
@@ -384,6 +387,7 @@ function EditorSettings() {
                 {isShoppingEnabled && (
                   <Shopping
                     updateSettings={updateSettings}
+                    shoppingProvider={shoppingProvider}
                     shopifyHost={shopifyHost}
                     shopifyAccessToken={shopifyAccessToken}
                   />
