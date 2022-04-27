@@ -50,6 +50,7 @@ import '@wordpress/dom-ready'; // Just imported here so it's part of the bundle.
 import {
   Layout,
   PostPublishDialog,
+  PostReviewDialog,
   StatusCheck,
   CorsCheck,
   FontCheck,
@@ -103,6 +104,7 @@ window.webStories.initializeStoryEditor = (id, config, initialEdits) => {
         <GlobalStyle />
         <Layout />
         <PostPublishDialog />
+        <PostReviewDialog />
         <StatusCheck />
         <CorsCheck />
         <FontCheck />
