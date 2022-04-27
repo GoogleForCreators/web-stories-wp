@@ -60,6 +60,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
   const { showSnackbar } = useSnackbar();
   const [isSaving, setIsSaving] = useState(false);
   const [isFreshlyPublished, setIsFreshlyPublished] = useState(false);
+  const [isFreshlyPending, setIsFreshlyPending] = useState(false);
 
   const { editLink } = story;
   const refreshPostEditURL = useRefreshPostEditURL(storyId, editLink);
@@ -116,7 +117,9 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
           const isStoryPublished = ['publish', 'future', 'private'].includes(
             data.status
           );
+          const isStoryPending = ['pending'].includes(data.status);
           setIsFreshlyPublished(!isStoryAlreadyPublished && isStoryPublished);
+          setIsFreshlyPending(!isStoryAlreadyPublished && isStoryPending);
         })
         .catch((err) => {
           const description = err.message ? stripHTML(err.message) : null;
@@ -181,7 +184,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
     ]
   );
 
-  return { saveStory, isSaving, isFreshlyPublished };
+  return { saveStory, isSaving, isFreshlyPublished, isFreshlyPending };
 }
 
 export default useSaveStory;
