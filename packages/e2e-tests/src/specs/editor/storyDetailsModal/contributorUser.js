@@ -62,7 +62,6 @@ describe('Story Details Modal - Contributor User', () => {
 
     await expect(page).not.toMatchElement('div[aria-label="Story details"]');
     await expect(page).not.toMatch('Story published.');
-    await expect(page).not.toMatchElement('button', { text: 'Dismiss' });
   });
 
   it('should not be able to update Story visibility', async () => {
