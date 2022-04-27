@@ -48,7 +48,6 @@ describe('Shopping', () => {
     withPlugin('woocommerce');
     it('should should match a valid schema', async () => {
       await createNewStory();
-      await insertProduct('Cap');
       await insertProduct('Hoodie with Zipper');
       await insertProduct('Album');
       await insertProduct('Sunglasses');
@@ -67,8 +66,58 @@ describe('Shopping', () => {
 
       await page.bringToFront();
       await previewPage.close();
-      expect(data.items).toHaveLength(4);
-      data.items.forEach((item) => {
+      const { items } = data;
+      expect(items).toMatchInlineSnapshot(`
+        Array [
+          Object {
+            "aggregateRating": Object {
+              "ratingValue": 0,
+              "reviewCount": 0,
+              "reviewUrl": "http://localhost:8899/product/hoodie-with-zipper",
+            },
+            "productBrand": "",
+            "productDetails": "This is a simple product.",
+            "productId": "wc-44",
+            "productImages": Array [],
+            "productPrice": 45,
+            "productPriceCurrency": "USD",
+            "productTitle": "Hoodie with Zipper",
+            "productUrl": "http://localhost:8899/product/hoodie-with-zipper",
+          },
+          Object {
+            "aggregateRating": Object {
+              "ratingValue": 0,
+              "reviewCount": 0,
+              "reviewUrl": "http://localhost:8899/product/album",
+            },
+            "productBrand": "",
+            "productDetails": "This is a simple, virtual product.",
+            "productId": "wc-47",
+            "productImages": Array [],
+            "productPrice": 15,
+            "productPriceCurrency": "USD",
+            "productTitle": "Album",
+            "productUrl": "http://localhost:8899/product/album",
+          },
+          Object {
+            "aggregateRating": Object {
+              "ratingValue": 0,
+              "reviewCount": 0,
+              "reviewUrl": "http://localhost:8899/product/sunglasses",
+            },
+            "productBrand": "",
+            "productDetails": "This is a simple product.",
+            "productId": "wc-42",
+            "productImages": Array [],
+            "productPrice": 90,
+            "productPriceCurrency": "USD",
+            "productTitle": "Sunglasses",
+            "productUrl": "http://localhost:8899/product/sunglasses",
+          },
+        ]
+      `);
+      expect(items).toHaveLength(3);
+      items.forEach((item) => {
         expect(item).toMatchSchema(schema);
       });
     });
