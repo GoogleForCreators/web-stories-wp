@@ -90,14 +90,15 @@ describe('Font Check Metrics', () => {
       if (request.url().includes('web-stories/v1/fonts') && mockResponse) {
         request.respond(mockResponse);
         return;
+      } else {
+        request.continue();
       }
-
-      stopRequestInterception();
     });
   });
 
   afterEach(() => {
     mockResponse = undefined;
+    stopRequestInterception();
   });
 
   it('should receive updated font metrics and not alter history', async () => {
@@ -105,6 +106,7 @@ describe('Font Check Metrics', () => {
     await addStoryWithFont(storyTitle);
 
     const storyData = await getCurrentStoryData();
+
     const fontBefore = storyData.pages[0].elements[1].font;
     expect(fontBefore.family).toBe('Rock Salt');
     expect(fontBefore.fallbacks).toIncludeAllMembers(['cursive']);
