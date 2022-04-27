@@ -185,30 +185,13 @@ return [
 	'exclude-classes'   => $wp_classes,
 
 	'exclude-functions' => $wp_functions,
-	
-	// Currently exclude-wordpress-constants.json is empty [].
-	// Issue https://github.com/sniccowp/php-scoper-wordpress-excludes/issues/2 .
-	// If fixed we can remove the hardcoded WP constants.
-	
+
 	'exclude-constants' => array_merge(
 		$wp_constants,
 		[
-			'WP_CONTENT_DIR',
-			'WP_CONTENT_URL',
-			'ABSPATH',
-			'WPINC',
-			'WP_DEBUG_DISPLAY',
-			'WPMU_PLUGIN_DIR',
-			'WP_PLUGIN_DIR',
-			'WP_PLUGIN_URL',
-			'WPMU_PLUGIN_URL',
 			'AMP__FILE__',
 			'AMP__DIR__',
 			'AMP__VERSION',
-			'MINUTE_IN_SECONDS',
-			'HOUR_IN_SECONDS',
-			'DAY_IN_SECONDS',
-			'MONTH_IN_SECONDS',
 		]
 	),
 ];
