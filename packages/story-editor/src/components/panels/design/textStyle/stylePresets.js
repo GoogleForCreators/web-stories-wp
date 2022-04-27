@@ -36,7 +36,7 @@ import { useRef, useState } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
-import { useStory, useConfig } from '../../../../app';
+import { useStory } from '../../../../app';
 import { PRESET_TYPES } from '../../../../constants';
 import useAddPreset from '../../../../utils/useAddPreset';
 import useSidebar from '../../../sidebar/useSidebar';
@@ -81,7 +81,6 @@ function PresetPanel({ pushUpdate }) {
   } = useSidebar();
   const buttonRef = useRef(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const { isRTL, styleConstants: { topOffset } = {} } = useConfig();
   const hasPresets = textStyles.length > 0;
 
   const handleApplyStyle = useApplyStyle({ pushUpdate });
@@ -125,8 +124,6 @@ function PresetPanel({ pushUpdate }) {
             <Icons.ChevronDownSmall />
           </MoreButton>
           <Popup
-            topOffset={topOffset}
-            isRTL={isRTL}
             anchor={buttonRef}
             dock={sidebar}
             isOpen={isPopupOpen}

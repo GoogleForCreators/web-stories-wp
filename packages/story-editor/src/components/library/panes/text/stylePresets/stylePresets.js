@@ -37,7 +37,7 @@ import { getHTMLFormatters } from '@googleforcreators/rich-text';
 /**
  * Internal dependencies
  */
-import { useStory, useConfig } from '../../../../../app';
+import { useStory } from '../../../../../app';
 import { PRESET_TYPES } from '../../../../../constants';
 import useAddPreset from '../../../../../utils/useAddPreset';
 import { DEFAULT_PRESET } from '../textPresets';
@@ -108,7 +108,6 @@ function PresetPanel() {
   const buttonRef = useRef(null);
   const stylesRef = useRef(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const { isRTL, styleConstants: { topOffset } = {} } = useConfig();
   const hasPresets = textStyles.length > 0;
 
   const pushUpdate = useCallback(
@@ -208,8 +207,6 @@ function PresetPanel() {
             <Icons.ChevronDownSmall />
           </MoreButton>
           <Popup
-            topOffset={topOffset}
-            isRTL={isRTL}
             anchor={buttonRef}
             isOpen={isPopupOpen}
             placement={PLACEMENT.RIGHT_START}
