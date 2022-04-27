@@ -42,32 +42,50 @@ async function insertProduct(product) {
 }
 
 describe('Shopping', () => {
-  minWPVersionRequired('5.8');
-  describe('Shopping schema', () => {
-    withExperimentalFeatures(['shoppingIntegration']);
+  withExperimentalFeatures(['shoppingIntegration']);
+  minWPVersionRequired('5.8'); // WooCommerce requires WP 5.7+
+
+  describe('WooCommerce', () => {
     withPlugin('woocommerce');
-    it('should should match a valid schema', async () => {
-      await createNewStory();
-      await insertProduct('Hoodie with Zipper');
-      await insertProduct('Album');
-      await insertProduct('Sunglasses');
 
-      await publishStory();
-      const previewPage = await previewStory(page);
-      await previewPage.waitForSelector('amp-story-shopping-attachment script');
+    describe('Schema Validation', () => {
+      it('should match a valid schema', async () => {
+        await createNewStory();
+        await insertProduct('Hoodie with Zipper');
+        await insertProduct('Album');
+        await insertProduct('Sunglasses');
 
-      // pull product data from the DOM
-      const data = await previewPage.evaluate(() =>
-        JSON.parse(
-          document.querySelector('amp-story-shopping-attachment script')
-            .textContent
-        )
-      );
+        await publishStory();
+        const previewPage = await previewStory(page);
+        await previewPage.waitForSelector(
+          'amp-story-shopping-attachment script'
+        );
 
-      await page.bringToFront();
-      await previewPage.close();
-      const { items } = data;
-      expect(items).toMatchInlineSnapshot(`
+        // pull product data from the DOM
+        const data = await previewPage.evaluate(() =>
+          JSON.parse(
+            document.querySelector('amp-story-shopping-attachment script')
+              .textContent
+          )
+        );
+
+        await page.bringToFront();
+        await previewPage.close();
+        const { items } = data;
+
+        expect(items).toHaveLength(3);
+        items.forEach((item) => {
+          expect(item).toMatchSchema(schema);
+        });
+
+        // Since WooCommerce product IDs can change between test runs / setups,
+        // this changes them to something deterministic.
+        const normalizedItems = items.map((item) => ({
+          ...item,
+          productId: 'product-id',
+        }));
+
+        expect(normalizedItems).toMatchInlineSnapshot(`
         Array [
           Object {
             "aggregateRating": Object {
@@ -77,7 +95,7 @@ describe('Shopping', () => {
             },
             "productBrand": "",
             "productDetails": "This is a simple product.",
-            "productId": "wc-44",
+            "productId": "product-id",
             "productImages": Array [],
             "productPrice": 45,
             "productPriceCurrency": "USD",
@@ -92,7 +110,7 @@ describe('Shopping', () => {
             },
             "productBrand": "",
             "productDetails": "This is a simple, virtual product.",
-            "productId": "wc-47",
+            "productId": "product-id",
             "productImages": Array [],
             "productPrice": 15,
             "productPriceCurrency": "USD",
@@ -107,7 +125,7 @@ describe('Shopping', () => {
             },
             "productBrand": "",
             "productDetails": "This is a simple product.",
-            "productId": "wc-42",
+            "productId": "product-id",
             "productImages": Array [],
             "productPrice": 90,
             "productPriceCurrency": "USD",
@@ -116,9 +134,6 @@ describe('Shopping', () => {
           },
         ]
       `);
-      expect(items).toHaveLength(3);
-      items.forEach((item) => {
-        expect(item).toMatchSchema(schema);
       });
     });
   });
