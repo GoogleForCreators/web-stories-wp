@@ -175,6 +175,7 @@ class Plugin extends ServiceBasedPlugin {
 			Injector::class,
 			Integrations\Site_Kit::class,
 			Media\Types::class,
+			Shopping_Vendors::class,
 			Locale::class,
 			Settings::class,
 			Stories_Script_Data::class,
