@@ -34,9 +34,6 @@ import PostReviewDialog from '..';
 function setupButtons({ meta: extraMetaProps } = {}) {
   const storyContextValue = {
     state: {
-      capabilities: {
-        hasPublishAction: false,
-      },
       meta: { isSaving: false, isFreshlyPending: false, ...extraMetaProps },
       story: {
         status: 'draft',

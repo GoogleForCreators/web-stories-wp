@@ -37,7 +37,7 @@ function PostReviewDialog() {
 
   const [isOpen, setIsOpen] = useState(false);
 
-  useEffect(() => setIsOpen(Boolean(isFreshlyPending)), [isFreshlyPending]);
+  useEffect(() => setIsOpen(isFreshlyPending), [isFreshlyPending]);
 
   const onClose = useCallback(() => setIsOpen(false), []);
 

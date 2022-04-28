@@ -25,7 +25,7 @@ import { StoryContext } from '@googleforcreators/story-editor';
 import PostReviewDialog from '..';
 
 export default {
-  title: 'Stories Editor/Components/Dialog/Post-Review',
+  title: 'Stories Editor/Components/Dialog/Post-Review Submitted',
   component: PostReviewDialog,
 };
 
