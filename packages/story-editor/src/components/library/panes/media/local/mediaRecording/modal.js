@@ -25,6 +25,7 @@ import {
   THEME_CONSTANTS,
   BUTTON_TYPES,
   BUTTON_SIZES,
+  DropDown,
 } from '@googleforcreators/design-system';
 import {
   useState,
@@ -64,6 +65,72 @@ function Modal({ isOpen, onClose }) {
   const [isImageCapture, setIsImageCapture] = useState(false);
   const [enableVideo, setEnableVideo] = useState(true);
   const [enableAudio, setEnableAudio] = useState(true);
+  const [videoInput, setVideoInput] = useState(null);
+  const [audioInput, setAudioInput] = useState(null);
+  const [mediaDevices, setMediaDevices] = useState([]);
+
+  const updateMediaDevices = useCallback(async () => {
+    try {
+      const devices = await navigator.mediaDevices.enumerateDevices();
+      setMediaDevices(
+        devices.filter((device) => device.kind !== 'audiooutput')
+      );
+    } catch (err) {
+      // eslint-disable-next-line no-console -- TODO: Figure out error handling.
+      console.log(err);
+    }
+  }, []);
+
+  useEffect(() => {
+    const videoDeviceExists =
+      videoInput &&
+      mediaDevices.some((device) => device.deviceId === videoInput);
+
+    // Video device not set yet, or was detached. Choose first available video device.
+    if (!videoInput || !videoDeviceExists) {
+      setVideoInput(
+        mediaDevices.find((device) => device.kind === 'videoinput')?.deviceId
+      );
+    }
+
+    const audioDeviceExists =
+      audioInput &&
+      mediaDevices.some((device) => device.deviceId === audioInput);
+
+    // Audio device not set yet, or was detached. Choose first available audio device.
+    if (!audioInput || !audioDeviceExists) {
+      setAudioInput(
+        mediaDevices.find((device) => device.kind === 'audioinput')?.deviceId
+      );
+    }
+  }, [audioInput, mediaDevices, videoInput]);
+
+  useEffect(() => {
+    navigator.mediaDevices.addEventListener('devicechange', updateMediaDevices);
+
+    return () => {
+      navigator.mediaDevices.removeEventListener(
+        'devicechange',
+        updateMediaDevices
+      );
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- We only want to run it once.
+  }, []);
+
+  const videoInputs = mediaDevices
+    .filter((device) => device.kind === 'videoinput')
+    .map(({ deviceId, label }) => ({ value: deviceId, label }));
+  const audioInputs = mediaDevices
+    .filter((device) => device.kind === 'audioinput')
+    .map(({ deviceId, label }) => ({ value: deviceId, label }));
+
+  const onChangeVideoInput = useCallback((_event, value) => {
+    setVideoInput(value);
+  }, []);
+
+  const onChangeAudioInput = useCallback((_event, value) => {
+    setAudioInput(value);
+  }, []);
 
   const onStop = useCallback((blob) => {
     const f = blobToFile(blob, 'test-recording.webm', 'video/webm');
@@ -84,11 +151,17 @@ function Modal({ isOpen, onClose }) {
     recordScreen: false,
     blobOptions: { type: 'video/webm' },
     mediaStreamConstraints: {
-      audio: enableAudio,
-      video: enableVideo,
+      audio: audioInput && enableAudio ? { deviceId: audioInput } : enableAudio,
+      video: videoInput && enableVideo ? { deviceId: videoInput } : enableVideo,
     },
     onStop: onStop,
   });
+
+  useEffect(() => {
+    if (status === 'ready') {
+      updateMediaDevices();
+    }
+  }, [status, updateMediaDevices]);
 
   const handleClose = useCallback(() => {
     clearMediaStream();
@@ -187,6 +260,7 @@ function Modal({ isOpen, onClose }) {
         name={videoToggleId}
         checked={enableVideo}
         onChange={() => setEnableVideo((value) => !value)}
+        disabled={!videoInput}
       />
       <Text
         as="label"
@@ -201,7 +275,31 @@ function Modal({ isOpen, onClose }) {
         name={audioToggleId}
         checked={enableAudio}
         onChange={() => setEnableAudio((value) => !value)}
+        disabled={!audioInput}
       />
+
+      {videoInputs.length > 0 && (
+        <DropDown
+          ariaLabel={__('Video Input', 'web-stories')}
+          placeholder={__('Select Video Input', 'web-stories')}
+          options={videoInputs}
+          onMenuItemClick={onChangeVideoInput}
+          selectedValue={videoInput}
+          disabled={!enableVideo}
+          popupZIndex={11}
+        />
+      )}
+      {audioInputs.length > 0 && (
+        <DropDown
+          ariaLabel={__('Audio Input', 'web-stories')}
+          placeholder={__('Select Audio Input', 'web-stories')}
+          options={audioInputs}
+          onMenuItemClick={onChangeAudioInput}
+          selectedValue={audioInput}
+          disabled={!enableAudio}
+          popupZIndex={11}
+        />
+      )}
       <Button
         type={BUTTON_TYPES.PRIMARY}
         size={BUTTON_SIZES.SMALL}
