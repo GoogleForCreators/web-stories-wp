@@ -51,6 +51,7 @@ function Shopping({
   shoppingProvider,
   shopifyHost,
   shopifyAccessToken,
+  vendors,
 }) {
   const handleUpdateShoppingProvider = useCallback(
     (newValue) => updateSettings({ shoppingProvider: newValue }),
@@ -81,6 +82,7 @@ function Shopping({
 
       <div>
         <ShoppingProviderDropDown
+          vendors={vendors}
           shoppingProvider={shoppingProvider}
           handleUpdate={handleUpdateShoppingProvider}
         />
@@ -105,6 +107,7 @@ function Shopping({
 }
 
 Shopping.propTypes = {
+  vendor: PropTypes.object.isRequired,
   updateSettings: PropTypes.func.isRequired,
   shoppingProvider: PropTypes.string,
   shopifyHost: PropTypes.string,
