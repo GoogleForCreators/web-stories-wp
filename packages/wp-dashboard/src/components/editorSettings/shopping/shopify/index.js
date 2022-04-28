@@ -39,6 +39,8 @@ import {
   VisuallyHiddenLabel,
 } from '../../components';
 
+import { isValidShopifyHost, hostPattern } from '../../utils';
+
 export const TEXT = {
   HOST_CONTEXT: sprintf(
     /* translators: 1: first example. 2: second example. */
@@ -50,17 +52,22 @@ export const TEXT = {
     'www.',
     'yourstore.myshopify.com'
   ),
-  HOST_CONTEXT_LINK: __('https://example.com/todo', 'web-stories'),
+  HOST_CONTEXT_LINK: __(
+    'https://help.shopify.com/en/manual/domains',
+    'web-stories'
+  ),
   HOST_PLACEHOLDER: __('Enter your .myshopify.com domain', 'web-stories'),
   HOST_LABEL: __('Shopify Domain', 'web-stories'),
   ACCESS_TOKEN_CONTEXT: __('<a>Learn how to get one</a>.', 'web-stories'),
-  ACCESS_TOKEN_CONTEXT_LINK: __('https://example.com/todo', 'web-stories'),
+  ACCESS_TOKEN_CONTEXT_LINK: __(
+    'https://help.shopify.com/en/manual/apps/custom-apps#get-the-api-credentials-for-a-custom-app',
+    'web-stories'
+  ),
   ACCESS_TOKEN_PLACEHOLDER: __('Enter your API access token', 'web-stories'),
   ACCESS_TOKEN_LABEL: __('Storefront API Access Token', 'web-stories'),
   INPUT_ERROR: __('Invalid format', 'web-stories'),
   SUBMIT_BUTTON: __('Save', 'web-stories'),
 };
-
 function ShopifySettings({
   host: shopifyHost,
   accessToken: shopifyAccessToken,
@@ -88,11 +95,20 @@ function ShopifySettings({
 
   const onUpdateHost = useCallback((event) => {
     const { value } = event.target;
-
-    // TODO(#11157): Add input validation.
-    setHostInputError('');
-
     setHost(value);
+    if (value.length === 0 || isValidShopifyHost(value)) {
+      setHostInputError('');
+      return;
+    }
+    setHostInputError(TEXT.INPUT_ERROR);
+  }, []);
+
+  const onHostBlur = useCallback((event) => {
+    const { value } = event.target;
+    if (!isValidShopifyHost(value)) {
+      return;
+    }
+    setHost(value.match(hostPattern)[0]);
   }, []);
 
   const onSaveHost = useCallback(() => {
@@ -112,11 +128,9 @@ function ShopifySettings({
   );
 
   const onUpdateAccessToken = useCallback((event) => {
+    // @todo token verification see https://github.com/GoogleForCreators/web-stories-wp/pull/11218#discussion_r847495571
     const { value } = event.target;
-
-    // TODO(#11157): Add input validation.
     setAccessTokenInputError('');
-
     setAccessToken(value);
   }, []);
 
@@ -155,6 +169,7 @@ function ShopifySettings({
           value={host}
           onChange={onUpdateHost}
           onKeyDown={onKeyDownHost}
+          onBlur={onHostBlur}
           placeholder={TEXT.HOST_PLACEHOLDER}
           hasError={Boolean(hostInputError)}
           hint={hostInputError}

@@ -13,28 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * Internal dependencies
  */
-import Shopping from '..';
-import { SHOPPING_PROVIDER_TYPE } from '../../../../constants';
+import { isValidShopifyHost } from '..';
 
-export default {
-  title: 'Dashboard/Views/EditorSettings/Shopping',
-  component: Shopping,
-  args: {
-    shoppingProvider: SHOPPING_PROVIDER_TYPE.NONE,
-    shopifyHost: 'yourstore.myshopify.com',
-    shopifyAccessToken: '',
-  },
-  argTypes: {
-    updateSettings: {
-      action: 'update settings',
-    },
-  },
-};
+const hostToValidate = [
+  ['example.com', false],
+  ['https://webstories.myshopify.com', true],
+  ['webstories.myyshopify.com', false],
+  ['webstories.myshopify.com', true],
+];
 
-export const _default = (args) => {
-  return <Shopping {...args} />;
-};
+describe('isValidShopifyHost', () => {
+  it.each(hostToValidate)(
+    'should take " %s " and return as %p for shopify host',
+    (host, expected) => {
+      const bool = isValidShopifyHost(host);
+      expect(bool).toBe(expected);
+    }
+  );
+});
