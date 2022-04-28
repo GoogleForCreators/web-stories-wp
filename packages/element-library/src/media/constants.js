@@ -34,6 +34,8 @@ export const MEDIA_MASK_OPACITY = 0.4;
 
 export const hasEditMode = true;
 
+export const hasDesignMenu = true;
+
 export const isMedia = true;
 
 export const canFlip = true;

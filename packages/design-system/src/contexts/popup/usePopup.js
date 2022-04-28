@@ -15,26 +15,15 @@
  */
 
 /**
+ * External dependencies
+ */
+import { identity, useContextSelector } from '@googleforcreators/react';
+
+/**
  * Internal dependencies
  */
-import Shopping from '..';
-import { SHOPPING_PROVIDER_TYPE } from '../../../../constants';
+import Context from './context';
 
-export default {
-  title: 'Dashboard/Views/EditorSettings/Shopping',
-  component: Shopping,
-  args: {
-    shoppingProvider: SHOPPING_PROVIDER_TYPE.NONE,
-    shopifyHost: 'yourstore.myshopify.com',
-    shopifyAccessToken: '',
-  },
-  argTypes: {
-    updateSettings: {
-      action: 'update settings',
-    },
-  },
-};
-
-export const _default = (args) => {
-  return <Shopping {...args} />;
-};
+export function usePopup(selector) {
+  return useContextSelector(Context, selector ?? identity);
+}

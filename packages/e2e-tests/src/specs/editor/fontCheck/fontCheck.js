@@ -86,7 +86,8 @@ async function storyWithFontCheckDialog(title) {
   await page.waitForSelector('[role="dialog"]');
 }
 
-describe('Font Check', () => {
+// eslint-disable-next-line jest/no-disabled-tests -- TODO(#11361): Fix flakey tests
+describe.skip('Font Check', () => {
   beforeAll(async () => {
     await visitSettings();
     await removeAllFonts();

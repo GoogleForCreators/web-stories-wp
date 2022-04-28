@@ -149,20 +149,57 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 	 */
 	public function get_items( $request ) {
 		// TODO(#11154): Refactor to extract product query logic out of this controller.
-		$shopify_host         = $this->settings->get_setting( Settings::SETTING_NAME_SHOPIFY_HOST );
-		$shopify_access_token = $this->settings->get_setting( Settings::SETTING_NAME_SHOPIFY_ACCESS_TOKEN );
+		$shopping_provider = $this->settings->get_setting( Settings::SETTING_NAME_SHOPPING_PROVIDER );
+		switch ( $shopping_provider ) {
+			case 'woocommerce':
+				$query = $this->injector->make( Woocommerce_Query::class );
+				break;
+			case 'shopify':
+				$query = $this->injector->make( Shopify_Query::class );
+				break;
+			default:
+				$query = null;
 
-		$query = null;
-		if ( ! empty( $shopify_host ) && ! empty( $shopify_access_token ) ) {
-			$query = $this->injector->make( Shopify_Query::class );
-		} elseif ( function_exists( 'wc_get_products' ) ) {
-			$query = $this->injector->make( Woocommerce_Query::class );
 		}
 
 		if ( ! $query instanceof Product_Query ) {
 			return new WP_Error( 'unable_to_find_class', __( 'Unable to find class', 'web-stories' ), [ 'status' => 400 ] );
 		}
 
+		/**
+		 * Request context.
+		 *
+		 * @var string $search_term
+		 */
+		$search_term = ! empty( $request['search'] ) ? $request['search'] : '';
+		$result      = $query->do_search( $search_term );
+		if ( is_wp_error( $result ) ) {
+			return $result;
+		}
+		$query_result = $query->get_results();
+
+		$products = [];
+
+		foreach ( $query_result as $product ) {
+			$data       = $this->prepare_item_for_response( $product, $request );
+			$products[] = $this->prepare_response_for_collection( $data );
+		}
+
+		return rest_ensure_response( $products );
+	}
+
+	/**
+	 * Retrieves all Shopify products.
+	 *
+	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+	 *
+	 * @since 1.20.0
+	 *
+	 * @param WP_REST_Request $request Full details about the request.
+	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+	 */
+	protected function get_items_shopify( $request ) {
+>>>>>>> main
 		/**
 		 * Request context.
 		 *

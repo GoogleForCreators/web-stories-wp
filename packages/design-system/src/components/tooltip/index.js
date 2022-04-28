@@ -41,6 +41,7 @@ import { Text } from '../typography';
 import { RTL_PLACEMENT, PopupContainer } from '../popup/constants';
 import { getOffset, getTransforms } from '../popup/utils';
 import { noop } from '../../utils';
+import { usePopup } from '../../contexts';
 import { SvgForTail, Tail, SVG_TOOLTIP_TAIL_ID, TAIL_HEIGHT } from './tail';
 
 const SPACE_BETWEEN_TOOLTIP_AND_ELEMENT = TAIL_HEIGHT;
@@ -103,8 +104,6 @@ let lastVisibleDelayedTooltip = null;
  * as perceived by the page because of scroll. This is really only true of dropDowns that
  * exist beyond the initial page scroll. Because the editor is a fixed view this only
  * comes up in peripheral pages (dashboard, settings).
- * @param props.isRTL RTL flag from config
- * @param props.leftOffset wp-admin bar width from config, prevents overlap with side bar.
  * @return {import('react').Component} BaseTooltip element
  */
 
@@ -122,11 +121,10 @@ function BaseTooltip({
   className = null,
   popupZIndexOverride,
   ignoreMaxOffsetY = false,
-  isRTL,
-  leftOffset = DEFAULT_LEFT_OFFSET,
   styleOverride,
   ...props
 }) {
+  const { leftOffset = DEFAULT_LEFT_OFFSET, isRTL } = usePopup();
   const [shown, setShown] = useState(false);
   const [arrowDelta, setArrowDelta] = useState(null);
   const anchorRef = useRef(null);
@@ -399,8 +397,6 @@ const BaseTooltipPropTypes = {
   isDelayed: PropTypes.bool,
   popupZIndexOverride: PropTypes.number,
   ignoreMaxOffsetY: PropTypes.bool,
-  isRTL: PropTypes.bool,
-  leftOffset: PropTypes.number,
 };
 BaseTooltip.propTypes = BaseTooltipPropTypes;
 

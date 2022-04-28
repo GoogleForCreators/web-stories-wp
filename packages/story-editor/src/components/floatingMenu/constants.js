@@ -17,10 +17,24 @@
 /**
  * External dependencies
  */
-import { ELEMENT_TYPES } from '@googleforcreators/elements';
+import {
+  ELEMENT_TYPES,
+  getDefinitionForType,
+} from '@googleforcreators/elements';
 
 export const SELECTED_ELEMENT_TYPES = {
   ...ELEMENT_TYPES,
   MULTIPLE: 'multiple',
   NONE: 'none',
 };
+
+export function hasDesignMenu(type) {
+  switch (type) {
+    case SELECTED_ELEMENT_TYPES.MULTIPLE:
+      return true;
+    case SELECTED_ELEMENT_TYPES.NONE:
+      return false;
+    default:
+      return getDefinitionForType(type)?.hasDesignMenu;
+  }
+}

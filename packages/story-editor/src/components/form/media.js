@@ -48,8 +48,6 @@ const MediaInputField = ({
   onChange,
   forwardedRef,
   value,
-  isRTL,
-  leftOffset,
   ...rest
 }) => {
   const onMenuOption = useCallback(
@@ -76,8 +74,6 @@ const MediaInputField = ({
       openMediaPicker={open}
       ref={forwardedRef}
       value={value === MULTIPLE_VALUE ? null : value}
-      isRTL={isRTL}
-      leftOffset={leftOffset}
       {...rest}
     />
   );
@@ -100,11 +96,7 @@ function MediaInput(
   },
   forwardedRef
 ) {
-  const {
-    MediaUpload,
-    isRTL,
-    styleConstants: { leftOffset } = {},
-  } = useConfig();
+  const { MediaUpload } = useConfig();
 
   const renderMediaIcon = useCallback(
     (open) => {
@@ -131,13 +123,11 @@ function MediaInput(
           dropdownOptions={dropdownOptions}
           forwardedRef={forwardedRef}
           value={value}
-          isRTL={isRTL}
-          leftOffset={leftOffset}
           {...rest}
         />
       );
     },
-    [value, onChange, forwardedRef, isRTL, leftOffset, rest, menuOptions]
+    [value, onChange, forwardedRef, rest, menuOptions]
   );
 
   return (
@@ -164,8 +154,6 @@ MediaInputField.propTypes = {
     PropTypes.shape({ current: PropTypes.elementType }),
   ]),
   value: PropTypes.string,
-  isRTL: PropTypes.bool,
-  leftOffset: PropTypes.number,
 };
 
 MediaInput.propTypes = {
