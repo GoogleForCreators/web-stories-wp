@@ -423,6 +423,7 @@ class Dashboard extends Service_Base {
 		}
 		$mime_types               = $this->types->get_allowed_mime_types();
 		$allowed_image_mime_types = $mime_types['image'];
+		$vendors                  = wp_list_pluck( $this->shopping_vendors->get_vendors(), 'label' );
 
 		$settings = [
 			'isRTL'                   => is_rtl(),
@@ -445,7 +446,7 @@ class Dashboard extends Service_Base {
 				'pages'          => '/wp/v2/pages/',
 				'publisherLogos' => '/web-stories/v1/publisher-logos/',
 			],
-			'vendors'                 => $this->shopping_vendors->get_vender_labels(),
+			'vendors'                 => $vendors,
 			'maxUpload'               => $max_upload_size,
 			'maxUploadFormatted'      => size_format( $max_upload_size ),
 			'capabilities'            => [
