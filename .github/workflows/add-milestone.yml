@@ -79,6 +79,11 @@ jobs:
         run: |
           ISSUE_NUMBERS=$((echo $LINKED_ISSUES ) | jq '.repository.pullRequest.closingIssuesReferences.nodes | .[] | .number')
 
+          if [[ -z $ISSUE_NUMBERS ]]; then
+            echo "No linked issues, nothing to do"
+            exit 0
+          fi
+
           while IFS= read -r ISSUE_NUMBER; do
             echo "Adding linked issue $ISSUE to release $RELEASE_ID"
             curl -f -s -H "X-Authentication-Token: $ZENHUB_API_TOKEN" -H 'Content-Type: application/json' -X PATCH "https://api.zenhub.com/p1/reports/release/${RELEASE_ID}/issues" -d '{ "add_issues": [{ "repo_id": '"$GITHUB_REPO_ID"', "issue_number": '"$ISSUE_NUMBER"' }], "remove_issues": [] }'
