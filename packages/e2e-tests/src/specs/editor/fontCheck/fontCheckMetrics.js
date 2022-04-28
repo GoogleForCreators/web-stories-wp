@@ -49,7 +49,10 @@ async function addStoryWithFont(title) {
   await createStoryWithTitle(title);
   await updateFont('Rock Salt');
   await publishStory();
-  await expect(page).toClick('li[role="tab"]', { text: 'Insert' });
+  // Somehow reloading the page after creating the story here helps
+  // with making the test more stable, i.e. toggling dev tools
+  // works more reliably.
+  await page.reload();
 }
 
 async function toggleDevTools() {
