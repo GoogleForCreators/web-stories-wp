@@ -183,7 +183,7 @@ jobs:
         if: ( matrix.snapshots ) && ( github.event.pull_request.draft == false )
 
       - name: Run E2E tests
-        run: npm run test:e2e
+        run: npm run test:e2e packages/e2e-tests/src/specs/editor/fontCheck/fontCheckMetrics.js
         env:
           WP_VERSION: ${{ matrix.wp }}
           SHARD: ${{ matrix.shard }}

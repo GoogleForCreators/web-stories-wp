@@ -55,6 +55,13 @@ async function addStoryWithFont(title) {
   await page.reload();
 }
 
+function isPlatformMacOS() {
+  return page.evaluate(() => {
+    const { platform } = window.navigator;
+    return platform.includes('Mac') || ['iPad', 'iPhone'].includes(platform);
+  });
+}
+
 async function toggleDevTools() {
   const areDevToolsOpen = Boolean(await page.$('#web-stories-editor textarea'));
 
@@ -62,14 +69,16 @@ async function toggleDevTools() {
   await page.keyboard.press('Escape');
   await page.click('[aria-label="Web Stories Editor"]');
 
-  await page.keyboard.down('Meta');
+  const isMacOS = await isPlatformMacOS();
+
+  await page.keyboard.down(isMacOS ? 'Meta' : 'Control');
   await page.keyboard.down('Shift');
   await page.keyboard.down('Alt');
   await page.keyboard.down('J');
   await page.keyboard.up('J');
   await page.keyboard.up('Alt');
   await page.keyboard.up('Shift');
-  await page.keyboard.up('Meta');
+  await page.keyboard.down(isMacOS ? 'Meta' : 'Control');
 
   // Dev Tools were not open before, but now they should be open.
   if (!areDevToolsOpen) {
