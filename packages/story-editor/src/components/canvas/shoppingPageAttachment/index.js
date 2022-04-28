@@ -90,8 +90,7 @@ const TextWrapper = styled.span`
 const LIGHT_COLOR = '#FFFFFF';
 const DARK_COLOR = '#000000';
 
-function PageAttachment({ pageAttachment = {} }) {
-  const { ctaText = __('Shop Now', 'web-stories'), theme } = pageAttachment;
+function PageAttachment({ ctaText = __('Shop Now', 'web-stories'), theme }) {
   const arrowColor = theme === OUTLINK_THEME.DARK ? LIGHT_COLOR : DARK_COLOR;
   const fgColor = theme === OUTLINK_THEME.DARK ? DARK_COLOR : LIGHT_COLOR;
   return (
@@ -109,10 +108,8 @@ function PageAttachment({ pageAttachment = {} }) {
 }
 
 PageAttachment.propTypes = {
-  pageAttachment: PropTypes.shape({
-    ctaText: PropTypes.string,
-    theme: PropTypes.string,
-  }),
+  ctaText: PropTypes.string,
+  theme: PropTypes.string,
 };
 
 export default PageAttachment;

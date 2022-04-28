@@ -192,7 +192,7 @@ function DisplayLayer() {
 
   const Overlay = useMemo(() => {
     if (hasProducts) {
-      return <ShoppingPageAttachment pageAttachment={pageAttachment} />;
+      return <ShoppingPageAttachment {...pageAttachment} />;
     }
 
     // Always render <PageAttachment> because the pageAttachmentContainer ref
