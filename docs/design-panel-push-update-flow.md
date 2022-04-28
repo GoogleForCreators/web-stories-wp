@@ -1,0 +1,55 @@
+# Design Panel Element Update Data Flow
+Below is a rough outline of the data flow following input change updates in the design panel to how they update the element in the top level story provider. Most of this code can be found in `packages/story-editor/src/components/style/designPanel.js` :
+```mermaid
+flowchart TB
+    subgraph story_reducer[story reducer]
+        direction LR
+        subgraph ACTION
+            direction TB
+            L[UPDATE_ELEMENTS] --> M[Story Updated]
+        end
+    end
+    subgraph design_panels[StylePanels]
+        subgraph design_panel_state[State]
+            direction TB
+            design_panel_state_el_updates((elementUpdates Array))
+            design_panel_state_el_handlers((presubmitHandlers Array))
+        end
+        subgraph design_panel_callbacks[Callbacks]
+            direction LR
+            subgraph submit_handler[submit handler]
+                subgraph SUBMIT [ ]
+                    direction TB
+                    E[onSubmit] --> F[[internalSubmit]]
+                    F --> G[[apply presubmit element mutations on elementUpdates]]
+                    G --> H[[onSetProperties]]
+                    H --> I[updateElementsById]
+                end
+            end
+            subgraph submit_event[submit event]
+                subgraph DOM EVENT FIRED [ ]
+                    direction TB
+                    K{Dispatch Event - 'submit'}
+                end
+            end
+            subgraph push_update[pushUpdate called]
+                subgraph INPUT ONCHANGE[ ]
+                    direction TB
+                    A[pushUpdate or pushUpdateForObject] --> |update, submit| B[[setElementUpdates - Add update to update queue]]
+                    B -->|submit == false| C[elementUpdates - locally stored updates]
+                    B --> |submit == true| D[submit]
+                    D --> J[[setTimout to dispatch 'submit' event]]
+                end
+            end
+        end
+    end
+       push_update .-> submit_event
+       submit_event .-> submit_handler
+       design_panels .-> story_reducer
+```
+## Current Usage
+Most of the time, we are passing `submit` as `true` for the `pushUpdate(update, submit)` or `pushUpdateForObject(...)` callback args. The current setup is mainly used so the presubmit hooks that can alter an update to element before sending the element updates to the story reducer. Most precommit hooks do things like clamp a value within a certain range, or resize the text element depending on updates to text properties.
+
+## Suggested Path Moving Forward
+If we were to do any architectural shifts here, I think we could eliminate a significant level of abstraction. Right now we have an abstract design panel, and we pass an the current selected elements to `getDesignPanelsForSelection(selection)` to get the panels, we then pass each panel `selectedElements, selectedElementAnimations, etc`. Basically every panel needs access to every piece of story state any other panel might necessitate with this setup. Even if the panel only needs to know a specific derived piece of data from the selection.
+

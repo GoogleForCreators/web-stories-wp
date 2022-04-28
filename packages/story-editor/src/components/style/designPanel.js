@@ -43,6 +43,12 @@ const AutoSubmitButton = styled.input.attrs({ type: 'submit' })`
   display: none;
 `;
 
+/**
+ * NOTE: data flow for updating elements with pushUpdate documented in `docs/design-panel-push-update-flow.md`
+ *
+ * @param {any} props Design Panel Props
+ * @return {any} React Element
+ */
 function DesignPanel({
   panelType,
   selectedElements,
