@@ -21,7 +21,7 @@ flowchart TB
                 subgraph SUBMIT [ ]
                     direction TB
                     E[onSubmit] --> F[[internalSubmit]]
-                    F --> G[[apply presubmit element mutations on elementUpdates]]
+                    F --> G[[apply presubmit element mutations on all staged elementUpdates]]
                     G --> H[[onSetProperties]]
                     H --> I[updateElementsById]
                 end
@@ -48,8 +48,5 @@ flowchart TB
        design_panels .-> story_reducer
 ```
 ## Current Usage
-Most of the time, we are passing `submit` as `true` for the `pushUpdate(update, submit)` or `pushUpdateForObject(...)` callback args. The current setup is mainly used so the presubmit hooks that can alter an update to element before sending the element updates to the story reducer. Most precommit hooks do things like clamp a value within a certain range, or resize the text element depending on updates to text properties.
-
-## Suggested Path Moving Forward
-If we were to do any architectural shifts here, I think we could eliminate a significant level of abstraction. Right now we have an abstract design panel, and we pass an the current selected elements to `getDesignPanelsForSelection(selection)` to get the panels, we then pass each panel `selectedElements, selectedElementAnimations, etc`. Basically every panel needs access to every piece of story state any other panel might necessitate with this setup. Even if the panel only needs to know a specific derived piece of data from the selection.
+Most of the time, we are passing `submit` as `true` for the `pushUpdate(update, submit)` or `pushUpdateForObject(...)` callback args. The current setup is mainly used so the presubmit hooks can alter an update to an element before sending the element updates to the story reducer. Most precommit hooks do things like clamp a value within a certain range, or resize the text element depending on updates to text properties.
 
