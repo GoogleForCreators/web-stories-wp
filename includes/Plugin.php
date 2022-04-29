@@ -31,6 +31,7 @@ namespace Google\Web_Stories;
 use Google\Web_Stories\AMP\Output_Buffer;
 use Google\Web_Stories\Infrastructure\Injector;
 use Google\Web_Stories\Infrastructure\ServiceBasedPlugin;
+use Google\Web_Stories\Product\Shopping_Vendors;
 
 /**
  * Plugin class.

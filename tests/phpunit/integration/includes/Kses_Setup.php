@@ -18,7 +18,7 @@
 namespace Google\Web_Stories\Tests\Integration;
 
 use Google\Web_Stories\Infrastructure\Injector\SimpleInjector;
-use Google\Web_Stories\Shopping_Vendors;
+use Google\Web_Stories\Product\Shopping_Vendors;
 
 /**
  * Trait Kses_Setup

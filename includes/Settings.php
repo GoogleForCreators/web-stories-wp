@@ -28,6 +28,8 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Product\Shopping_Vendors;
+
 /**
  * Settings class.
  */

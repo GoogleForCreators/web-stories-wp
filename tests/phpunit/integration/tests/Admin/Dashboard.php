@@ -173,7 +173,7 @@ class Dashboard extends DependencyInjectedTestCase {
 		$post_type        = $this->injector->make( \Google\Web_Stories\Story_Post_Type::class );
 		$context          = $this->injector->make( \Google\Web_Stories\Context::class );
 		$types            = $this->injector->make( \Google\Web_Stories\Media\Types::class );
-		$shopping_vendors = $this->injector->make( \Google\Web_Stories\Shopping_Vendors::class );
+		$shopping_vendors = $this->injector->make( \Google\Web_Stories\Product\Shopping_Vendors::class );
 
 		$this->instance = new \Google\Web_Stories\Admin\Dashboard(
 			$experiments,
