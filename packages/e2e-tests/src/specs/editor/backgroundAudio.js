@@ -164,7 +164,7 @@ describe('Background Audio', () => {
 
     describe('Hotlink captions', () => {
       withExperimentalFeatures(['captionHotlinking']);
-      withPlugin('e2e-tests-hotlink-hotwire');
+      withPlugin('e2e-tests-hotlink');
 
       it('should allow adding background audio with captions', async () => {
         await createNewStory();
