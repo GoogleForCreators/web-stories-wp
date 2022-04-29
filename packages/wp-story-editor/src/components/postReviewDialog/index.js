@@ -26,11 +26,9 @@ function PostReviewDialog() {
   const { isFreshlyPending } = useStory(
     ({
       state: {
-        capabilities: { hasPublishAction },
         meta: { isFreshlyPending },
       },
     }) => ({
-      hasPublishAction,
       isFreshlyPending,
     })
   );
