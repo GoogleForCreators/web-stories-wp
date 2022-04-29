@@ -39,6 +39,13 @@ use Google\Web_Stories\Product\Woocommerce_Query;
 class Shopping_Vendors {
 
 	/**
+	 * Injector instance.
+	 *
+	 * @var Injector Injector instance.
+	 */
+	private $injector;
+
+	/**
 	 * Shopping_Vendors constructor.
 	 *
 	 * @since 1.20.0
