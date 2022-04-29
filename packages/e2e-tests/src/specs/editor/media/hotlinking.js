@@ -17,7 +17,11 @@
 /**
  * External dependencies
  */
-import { createNewStory, takeSnapshot } from '@web-stories-wp/e2e-test-utils';
+import {
+  createNewStory,
+  takeSnapshot,
+  withPlugin,
+} from '@web-stories-wp/e2e-test-utils';
 /**
  * Internal dependencies
  */
@@ -27,6 +31,8 @@ const IMAGE_URL_LOCAL = `${process.env.WP_BASE_URL}/wp-content/e2e-assets/exampl
 const IMAGE_URL_CORS_PROXY = 'https://wp.stories.google/e2e-tests/example.jpg';
 
 describe('Media Hotlinking', () => {
+  withPlugin('e2e-tests-hotlink');
+
   let removeCORSErrorMessage;
   let removeResourceErrorMessage;
 
