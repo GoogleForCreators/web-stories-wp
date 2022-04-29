@@ -61,6 +61,8 @@ function EditPanMoveable({
     moveableRef.current?.updateRect();
   });
 
+  useEffect(update, [update]);
+
   useKeyDownEffect(
     croppedMedia,
     { key: ['up', 'down', 'left', 'right'], shift: true },
@@ -102,14 +104,7 @@ function EditPanMoveable({
       draggable
       throttleDrag={0}
       onDrag={({ dist }) => {
-        let [tx, ty] = dist;
-        if (flip?.vertical) {
-          ty = -ty;
-        }
-        if (flip?.horizontal) {
-          tx = -tx;
-        }
-        translateRef.current = [tx, ty];
+        translateRef.current = dist;
         update();
       }}
       onDragEnd={() => {

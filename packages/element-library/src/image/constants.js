@@ -29,6 +29,7 @@ export {
   isMaskable,
   isMedia,
   hasEditMode,
+  hasDesignMenu,
   editModeGrayout,
   resizeRules,
 } from '../media/constants';

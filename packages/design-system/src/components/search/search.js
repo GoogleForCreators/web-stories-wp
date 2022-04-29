@@ -317,7 +317,6 @@ Search.propTypes = {
   handleSearchValueChange: PropTypes.func,
   hasError: PropTypes.bool,
   hint: PropTypes.string,
-  isRTL: PropTypes.bool,
   label: PropTypes.string,
   menuStylesOverride: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   onMenuItemClick: PropTypes.func,

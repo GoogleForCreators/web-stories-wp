@@ -26,12 +26,14 @@ import { STORY_ANIMATION_STATE } from '@googleforcreators/animation';
 import {
   themeHelpers,
   useKeyDownEffect,
+  useGlobalKeyDownEffect,
   useLiveRegion,
 } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
  */
+import { useEffect } from 'react';
 import { DESIGN_SPACE_MARGIN, STABLE_ARRAY } from '../../constants';
 import {
   useStory,
@@ -188,8 +190,21 @@ function FramesLayer() {
   const canvasRef = useRef();
   const speak = useLiveRegion();
 
-  const enterFocusGroup = useEditLayerFocusManager(
-    ({ enterFocusGroup }) => enterFocusGroup
+  const { enterFocusGroup, setFocusGroupCleanup } = useEditLayerFocusManager(
+    ({ enterFocusGroup, setFocusGroupCleanup }) => ({
+      enterFocusGroup,
+      setFocusGroupCleanup,
+    })
+  );
+
+  useGlobalKeyDownEffect(
+    { key: 'mod+option+2', editable: true },
+    () => {
+      enterFocusGroup({
+        groupId: FOCUS_GROUPS.ELEMENT_SELECTION,
+      });
+    },
+    [enterFocusGroup]
   );
 
   // TODO: https://github.com/google/web-stories-wp/issues/10266
@@ -205,12 +220,18 @@ function FramesLayer() {
     () => {
       enterFocusGroup({
         groupId: FOCUS_GROUPS.ELEMENT_SELECTION,
-        cleanup: () => canvasRef.current?.focus(),
       });
       speak(FRAME_ELEMENT_MESSAGE);
     },
     [enterFocusGroup, speak]
   );
+
+  useEffect(() => {
+    setFocusGroupCleanup({
+      groupId: FOCUS_GROUPS.ELEMENT_SELECTION,
+      cleanup: () => canvasRef.current?.focus(),
+    });
+  }, [setFocusGroupCleanup]);
 
   return (
     <FramesNavAndSelection>

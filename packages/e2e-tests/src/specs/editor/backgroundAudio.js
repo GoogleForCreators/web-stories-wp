@@ -24,6 +24,8 @@ import {
   takeSnapshot,
   withExperimentalFeatures,
   withPlugin,
+  insertStoryTitle,
+  publishStory,
 } from '@web-stories-wp/e2e-test-utils';
 
 const VTT_URL = `${process.env.WP_BASE_URL}/wp-content/e2e-assets/test.vtt`;
@@ -215,6 +217,37 @@ describe('Background Audio', () => {
         await expect(page).not.toMatchElement('button', {
           text: 'Link to file',
         });
+      });
+    });
+
+    describe('Add and remove background audio', () => {
+      // see: https://github.com/GoogleForCreators/web-stories-wp/issues/11229
+      it('should allow saving after deleting audio', async () => {
+        await createNewStory();
+        await insertStoryTitle('Add and delete background audio');
+        await expect(page).toClick('li[role="tab"]', { text: 'Document' });
+
+        // Toggle the panel which is collapsed by default.
+        await expect(page).toClick('[aria-label="Background Audio"]');
+        await expect(page).toClick('button', { text: 'Upload an audio file' });
+
+        await page.waitForSelector('.media-modal', {
+          visible: true,
+        });
+
+        await expect(page).toClick('.media-modal #menu-item-upload', {
+          text: 'Upload files',
+          visible: true,
+        });
+
+        const fileName = await uploadFile('audio.mp3');
+        uploadedFiles.push(fileName);
+
+        await expect(page).toClick('button', { text: 'Select audio file' });
+        await page.waitForSelector('.media-modal', { visible: false });
+        await expect(page).toMatch(fileName);
+        await expect(page).toClick('[aria-label="Remove file"]');
+        await publishStory();
       });
     });
   });
