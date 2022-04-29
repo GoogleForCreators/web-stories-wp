@@ -107,7 +107,7 @@ function Shopping({
 }
 
 Shopping.propTypes = {
-  vendor: PropTypes.object.isRequired,
+  vendors: PropTypes.object.isRequired,
   updateSettings: PropTypes.func.isRequired,
   shoppingProvider: PropTypes.string,
   shopifyHost: PropTypes.string,
