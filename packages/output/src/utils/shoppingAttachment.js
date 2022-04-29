@@ -18,15 +18,13 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { __ } from '@googleforcreators/i18n';
 
-function ShoppingAttachment({
-  products,
-  theme,
-  ctaText = __('Shop Now', 'web-stories'),
-}) {
+function ShoppingAttachment({ products, theme, ctaText }) {
   return (
-    <amp-story-shopping-attachment theme={theme} cta-text={ctaText}>
+    <amp-story-shopping-attachment
+      theme={theme}
+      cta-text={ctaText || undefined}
+    >
       <script
         type="application/json"
         dangerouslySetInnerHTML={{
