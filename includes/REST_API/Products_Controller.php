@@ -27,12 +27,9 @@
 namespace Google\Web_Stories\REST_API;
 
 use Google\Web_Stories\Infrastructure\HasRequirements;
-use Google\Web_Stories\Infrastructure\Injector;
-use Google\Web_Stories\Interfaces\Product_Query;
 use Google\Web_Stories\Model\Product;
-use Google\Web_Stories\Product\Shopify_Query;
-use Google\Web_Stories\Product\Woocommerce_Query;
 use Google\Web_Stories\Settings;
+use Google\Web_Stories\Shopping_Vendors;
 use Google\Web_Stories\Story_Post_Type;
 use WP_Error;
 use WP_REST_Request;
@@ -60,24 +57,25 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 	 */
 	private $story_post_type;
 
+
 	/**
-	 * Injector instance.
+	 * Shopping_Vendors instance.
 	 *
-	 * @var Injector Injector instance.
+	 * @var Shopping_Vendors Shopping_Vendors instance.
 	 */
-	private $injector;
+	private $shopping_vendors;
 
 	/**
 	 * Constructor.
 	 *
-	 * @param Settings        $settings Settings instance.
-	 * @param Story_Post_Type $story_post_type Story_Post_Type instance.
-	 * @param Injector        $injector Injector instance.
+	 * @param Settings         $settings Settings instance.
+	 * @param Story_Post_Type  $story_post_type Story_Post_Type instance.
+	 * @param Shopping_Vendors $shopping_vendors Shopping_Vendors instance.
 	 */
-	public function __construct( Settings $settings, Story_Post_Type $story_post_type, Injector $injector ) {
-		$this->settings        = $settings;
-		$this->story_post_type = $story_post_type;
-		$this->injector        = $injector;
+	public function __construct( Settings $settings, Story_Post_Type $story_post_type, Shopping_Vendors $shopping_vendors ) {
+		$this->settings         = $settings;
+		$this->story_post_type  = $story_post_type;
+		$this->shopping_vendors = $shopping_vendors;
 
 		$this->namespace = 'web-stories/v1';
 		$this->rest_base = 'products';
@@ -149,57 +147,18 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 	 */
 	public function get_items( $request ) {
 		// TODO(#11154): Refactor to extract product query logic out of this controller.
+		/**
+		 * Shopping provider.
+		 *
+		 * @var string $shopping_provider
+		 */
 		$shopping_provider = $this->settings->get_setting( Settings::SETTING_NAME_SHOPPING_PROVIDER );
-		switch ( $shopping_provider ) {
-			case 'woocommerce':
-				$query = $this->injector->make( Woocommerce_Query::class );
-				break;
-			case 'shopify':
-				$query = $this->injector->make( Shopify_Query::class );
-				break;
-			default:
-				$query = null;
+		$query             = $this->shopping_vendors->get_vendor_class( $shopping_provider );
 
-		}
-
-		if ( ! $query instanceof Product_Query ) {
+		if ( ! $query ) {
 			return new WP_Error( 'unable_to_find_class', __( 'Unable to find class', 'web-stories' ), [ 'status' => 400 ] );
 		}
 
-		/**
-		 * Request context.
-		 *
-		 * @var string $search_term
-		 */
-		$search_term = ! empty( $request['search'] ) ? $request['search'] : '';
-		$result      = $query->do_search( $search_term );
-		if ( is_wp_error( $result ) ) {
-			return $result;
-		}
-		$query_result = $query->get_results();
-
-		$products = [];
-
-		foreach ( $query_result as $product ) {
-			$data       = $this->prepare_item_for_response( $product, $request );
-			$products[] = $this->prepare_response_for_collection( $data );
-		}
-
-		return rest_ensure_response( $products );
-	}
-
-	/**
-	 * Retrieves all Shopify products.
-	 *
-	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
-	 *
-	 * @since 1.20.0
-	 *
-	 * @param WP_REST_Request $request Full details about the request.
-	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
-	 */
-	protected function get_items_shopify( $request ) {
->>>>>>> main
 		/**
 		 * Request context.
 		 *

@@ -17,6 +17,9 @@
 
 namespace Google\Web_Stories\Tests\Integration;
 
+use Google\Web_Stories\Infrastructure\Injector\SimpleInjector;
+use Google\Web_Stories\Shopping_Vendors;
+
 /**
  * Trait Kses_Setup
  *
@@ -32,10 +35,9 @@ trait Kses_Setup {
 	 * Setup KSES init class.
 	 */
 	protected function kses_int(): void {
-		$settings    = new \Google\Web_Stories\Settings();
-		$experiments = new \Google\Web_Stories\Experiments( $settings );
-		$this->kses  = new \Google\Web_Stories\KSES(
-			new \Google\Web_Stories\Story_Post_Type( $settings, $experiments )
+		$settings   = new \Google\Web_Stories\Settings( new Shopping_Vendors( new SimpleInjector() ) );
+		$this->kses = new \Google\Web_Stories\KSES(
+			new \Google\Web_Stories\Story_Post_Type( $settings )
 		);
 		$this->kses->register();
 	}

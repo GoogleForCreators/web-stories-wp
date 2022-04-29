@@ -148,6 +148,7 @@ function EditorSettings() {
     allowedImageMimeTypes,
     archiveURL,
     defaultArchiveURL,
+    vendors,
   } = useConfig();
 
   const {
@@ -390,6 +391,7 @@ function EditorSettings() {
                     shoppingProvider={shoppingProvider}
                     shopifyHost={shopifyHost}
                     shopifyAccessToken={shopifyAccessToken}
+                    vendors={vendors}
                   />
                 )}
               </>
