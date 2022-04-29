@@ -211,7 +211,7 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 		}
 
 		if ( rest_is_field_included( 'productPrice', $fields ) ) {
-			$data['productBrand'] = $product->get_price();
+			$data['productPrice'] = $product->get_price();
 		}
 
 		if ( rest_is_field_included( 'productCurrency', $fields ) ) {

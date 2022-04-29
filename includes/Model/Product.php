@@ -51,7 +51,7 @@ class Product {
 	/**
 	 * Product Price.
 	 *
-	 * @var string
+	 * @var float
 	 */
 	protected $price;
 	/**
@@ -124,7 +124,7 @@ class Product {
 	/**
 	 * Get price.
 	 */
-	public function get_price(): string {
+	public function get_price(): float {
 		return $this->price;
 	}
 

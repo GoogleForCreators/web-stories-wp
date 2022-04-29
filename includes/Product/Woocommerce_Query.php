@@ -97,7 +97,7 @@ class Woocommerce_Query extends Query {
 					'id'               => 'wc-' . $product->get_id(),
 					'title'            => $product->get_title(),
 					'brand'            => '', // TODO: Figure out how to best provide that.
-					'price'            => $product->get_price(),
+					'price'            => (float) $product->get_price(),
 					'price_currency'   => get_woocommerce_currency(),
 					'images'           => $images,
 					'aggregate_rating' => $rating,

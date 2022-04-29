@@ -218,7 +218,7 @@ QUERY;
 				'brand'            => $product['vendor'],
 				// TODO: Maybe eventually provide full price range.
 				// See https://github.com/ampproject/amphtml/issues/37957.
-				'price'            => $product['priceRange']['minVariantPrice']['amount'],
+				'price'            => (float) $product['priceRange']['minVariantPrice']['amount'],
 				'price_currency'   => $product['priceRange']['minVariantPrice']['currencyCode'],
 				'images'           => $images,
 				'aggregate_rating' => new Rating(),
