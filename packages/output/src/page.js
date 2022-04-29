@@ -189,11 +189,7 @@ function OutputPage({
       {/* <amp-story-page-outlink> needs to be the last child element */}
       {pageAttachment?.url && <Outlink {...pageAttachment} />}
       {products.length > 0 && flags?.shoppingIntegration && (
-        <ShoppingAttachment
-          products={products}
-          theme={pageAttachment?.theme}
-          ctaText={pageAttachment?.ctaText}
-        />
+        <ShoppingAttachment products={products} {...pageAttachment} />
       )}
     </amp-story-page>
   );
