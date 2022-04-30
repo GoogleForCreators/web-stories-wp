@@ -180,26 +180,12 @@ describe('Font Check Metrics', () => {
     expect(fontAfter.family).toBe('Rock Salt');
     expect(fontAfter.fallbacks).toIncludeAllMembers(['sans-serif']);
     expect(fontAfter.metrics.upm).toBe(200);
+
     await expect(page).toMatchElement(
       'button[aria-label="Undo Changes"][disabled]'
     );
-
     await expect(page).toMatchElement(
       'button[aria-label="Redo Changes"][disabled]'
     );
-
-    const canUndo = await page.evaluate(
-      () =>
-        document.querySelector('button[aria-label="Undo Changes"]').disabled ===
-        false
-    );
-    await expect(canUndo).toBeFalse();
-
-    const canRedo = await page.evaluate(
-      () =>
-        document.querySelector('button[aria-label="Redo Changes"]').disabled ===
-        false
-    );
-    await expect(canRedo).toBeFalse();
   });
 });
