@@ -25,6 +25,7 @@ export * from './components/previewPage';
 export * from './app/config';
 export * from './app/story';
 export * from './app/api';
+export * from './app/history';
 export * from './components/header';
 export * from './components/panels/document';
 export * from './components/form';
@@ -40,7 +41,6 @@ export { default as getStoryPropsToSave } from './app/story/utils/getStoryPropsT
 export { default as useRefreshPostEditURL } from './utils/useRefreshPostEditURL';
 export { default as FontContext } from './app/font/context';
 export { default as useLoadFontFiles } from './app/font/actions/useLoadFontFiles';
-export { HistoryProvider, useHistory } from './app/history';
 export { default as StoryPropTypes } from './types';
 export { GlobalStyle, default as theme } from './theme'; // @todo To be refactored.
 export { default as InterfaceSkeleton } from './components/layout';
