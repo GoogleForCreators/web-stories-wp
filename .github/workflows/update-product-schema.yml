@@ -1,4 +1,4 @@
-name: Update Google Fonts
+name: Update Product Schema
 
 on:
   workflow_dispatch:
@@ -13,7 +13,7 @@ env:
 
 jobs:
   update-fonts:
-    name: Update Google Fonts
+    name: Update Product Schema
     runs-on: ubuntu-latest
     timeout-minutes: 5
 
@@ -23,28 +23,18 @@ jobs:
         with:
           token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
 
-      - name: Setup Node
-        uses: actions/setup-node@v3
-        with:
-          node-version-file: '.nvmrc'
-          cache: npm
-
-      - name: Install dependencies
-        run: npm ci
-        env:
-          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
-
-      - name: Update list of Google Fonts
-        env:
-          GOOGLE_FONTS_API_KEY: ${{ secrets.GOOGLE_FONTS_API_KEY }}
-        run: npm run workflow:fonts
+      - name: Update Product Schema
+        run: |
+          curl -O -f https://raw.githubusercontent.com/ampproject/amphtml/main/examples/amp-story/shopping/product.schema.json
+          mv product.schema.json packages/e2e-tests/src/specs/editor/shopping/schema.json
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v4
         with:
           token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
-          commit-message: Update list of Google Fonts
-          title: Update list of Google Fonts
-          body: Fetched the currently available fonts on Google Fonts to update them in the project.
-          branch: update/google-fonts
+          commit-message: Update Product Schema
+          title: Update Product Schema
+          body: |
+            Fetched the current [product JSON schema](https://github.com/ampproject/amphtml/blob/main/examples/amp-story/shopping/product.schema.json) for `<amp-story-shopping>` to update it in the project.
+          branch: update/product-schema
           labels: Dependencies
