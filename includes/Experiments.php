@@ -343,6 +343,17 @@ class Experiments extends Service_Base implements HasRequirements {
 				'description' => __( 'Enable hotlinking of captions', 'web-stories' ),
 				'group'       => 'editor',
 			],
+			/**
+			 * Author: @barklund
+			 * Issue: #7332
+			 * Creation date: 2022-04-19
+			 */
+			[
+				'name'        => 'layerLocking',
+				'label'       => __( 'Layer locking', 'web-stories' ),
+				'description' => __( 'Enable layer locking', 'web-stories' ),
+				'group'       => 'editor',
+			],
 		];
 	}
 

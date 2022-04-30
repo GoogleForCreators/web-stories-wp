@@ -37,6 +37,7 @@ import {
   usePresetActions,
 } from '../hooks';
 import useLayerSelect from '../useLayerSelect';
+import { LayerLock } from '../items';
 import { useStory } from '../..';
 import useRightClickMenu from '../useRightClickMenu';
 import {
@@ -154,6 +155,8 @@ function TextMenu({ parentMenuRef }) {
           {RIGHT_CLICK_MENU_SHORTCUTS.BRING_TO_FRONT.display}
         </ContextMenuComponents.MenuShortcut>
       </ContextMenuComponents.MenuButton>
+
+      <LayerLock />
 
       <ContextMenuComponents.MenuSeparator />
 
