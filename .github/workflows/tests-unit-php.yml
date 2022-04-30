@@ -38,7 +38,7 @@ jobs:
   unit-php:
     name: PHP ${{ matrix.php }} - WP ${{ matrix.wp }}${{ matrix.experimental && ' (experimental)' || '' }}${{ matrix.coverage && ' (with coverage)' || '' }}${{ matrix.random && ' (in random order)' || '' }}
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20
     services:
       mysql:
         image: mariadb:latest
