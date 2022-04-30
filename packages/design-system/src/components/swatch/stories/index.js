@@ -23,7 +23,7 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { DarkThemeProvider } from '../../../storybookUtils';
-import { Tooltip } from '../../tooltip';
+import { BaseTooltip } from '../../tooltip';
 import { Text } from '../../typography';
 import { Cross, Pipette } from '../../../icons';
 import { Swatch } from '../swatch';
@@ -192,7 +192,7 @@ function _default(args) {
           <Row key={`${label}_tooltip`}>
             <Text>{`${label} + tooltips`}</Text>
             {VARIANTS.map(({ variant, Icon, ...props }) => (
-              <Tooltip title={variant} key={variant}>
+              <BaseTooltip title={variant} key={variant}>
                 <Cell>
                   <Swatch
                     pattern={pattern}
@@ -203,7 +203,7 @@ function _default(args) {
                     {Icon && <Icon />}
                   </Swatch>
                 </Cell>
-              </Tooltip>
+              </BaseTooltip>
             ))}
           </Row>
         ))}

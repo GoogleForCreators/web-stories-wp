@@ -19,17 +19,16 @@
  */
 import { sprintf, _n, __ } from '@googleforcreators/i18n';
 import styled from 'styled-components';
-
-/**
- * Internal dependencies
- */
 import { useCallback, useMemo, useReducer } from '@googleforcreators/react';
 import {
   Button,
   BUTTON_SIZES,
   BUTTON_TYPES,
-  Tooltip,
 } from '@googleforcreators/design-system';
+
+/**
+ * Internal dependencies
+ */
 import { useStory } from '../../../app/story';
 import { useLocalMedia } from '../../../app/media';
 import { MEDIA_VIDEO_DIMENSIONS_THRESHOLD } from '../../../constants';
@@ -46,6 +45,7 @@ import { StyledVideoOptimizationIcon } from '../../checklistCard/styles';
 import { useRegisterCheck } from '../countContext';
 import { useIsChecklistMounted } from '../popupMountedContext';
 import useFFmpeg from '../../../app/media/utils/useFFmpeg';
+import Tooltip from '../../tooltip';
 
 const OptimizeButton = styled(Button)`
   margin-top: 4px;

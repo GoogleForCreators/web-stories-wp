@@ -66,6 +66,8 @@ export const CATEGORY_LABELS = {
   [ISSUE_TYPES.PRIORITY]: __('Priority', 'web-stories'),
 };
 
+const DOCS_URL = 'https://wp.stories.google/docs/faq/';
+
 // Event Tracking
 const onAmpErrorClick = (evt) => trackClick(evt, 'click_checklist_amp_test');
 
@@ -499,7 +501,7 @@ export const PRIORITY_COPY = {
         mapping={{
           a: (
             <Link
-              href={__('https://wp.stories.google/docs/', 'web-stories')}
+              href={DOCS_URL}
               rel="noreferrer"
               target="_blank"
               onClick={onAmpErrorClick}

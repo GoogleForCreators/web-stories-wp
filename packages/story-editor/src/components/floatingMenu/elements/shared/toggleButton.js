@@ -34,6 +34,7 @@ const ToggleButton = forwardRef(function ToggleButton(
       ? {
           type: isToggled ? BUTTON_TYPES.SECONDARY : BUTTON_TYPES.TERTIARY,
           'aria-pressed': isToggled,
+          role: 'button',
         }
       : {};
 

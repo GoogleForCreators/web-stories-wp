@@ -115,6 +115,8 @@ class Story_Query {
 		 */
 		$result = $stories_query->query( $this->query_args );
 
+		update_post_thumbnail_cache( $stories_query );
+
 		return $result;
 	}
 

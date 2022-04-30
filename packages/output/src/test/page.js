@@ -1384,6 +1384,24 @@ describe('Page output', () => {
       );
     });
 
+    it('should not contain background audio if null', async () => {
+      const props = {
+        id: '123',
+        page: {
+          backgroundAudio: null,
+          id: '123',
+          elements: [],
+        },
+        autoAdvance: false,
+        defaultPageDuration: 7,
+      };
+
+      const { container } = render(<PageOutput {...props} />);
+      const page = container.querySelector('amp-story-page');
+      await expect(page).toBeInTheDocument();
+      expect(page).not.toContain('background-audio=');
+    });
+
     it('should use amp-video for non-looping background audio', async () => {
       const props = {
         id: '123',

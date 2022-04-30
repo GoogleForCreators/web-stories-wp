@@ -29,7 +29,7 @@ import {
  */
 import { useCanvas, useLayout, useStory, useTransform } from '../../app';
 import { FLOATING_MENU_DISTANCE } from '../../constants';
-import { SELECTED_ELEMENT_TYPES } from './constants';
+import { SELECTED_ELEMENT_TYPES, hasDesignMenu } from './constants';
 import FloatingMenu from './menu';
 
 function FloatingMenuLayer() {
@@ -97,10 +97,8 @@ function FloatingMenuLayer() {
     // frame will already be updating because of the resize, so a DOM mutation is incoming.
   }, [workspaceWidth, workspaceHeight]);
 
-  const hasMenu =
-    selectedElementType !== SELECTED_ELEMENT_TYPES.NONE &&
-    !isDismissed &&
-    moveable;
+  const selectedElementHasDesignMenu = hasDesignMenu(selectedElementType);
+  const hasMenu = selectedElementHasDesignMenu && !isDismissed && moveable;
 
   // Whenever moveable is set (because selection count changed between none, single, or multiple)
   useEffect(() => {

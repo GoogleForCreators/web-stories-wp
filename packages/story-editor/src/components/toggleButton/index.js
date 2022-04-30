@@ -25,11 +25,15 @@ import {
   BUTTON_SIZES,
   Text,
   TOOLTIP_PLACEMENT,
-  Tooltip,
   themeHelpers,
   THEME_CONSTANTS,
 } from '@googleforcreators/design-system';
 import { forwardRef } from '@googleforcreators/react';
+
+/**
+ * Internal dependencies
+ */
+import Tooltip from '../tooltip';
 
 const Button = styled(dsButton)`
   height: 36px;
