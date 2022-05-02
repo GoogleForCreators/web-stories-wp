@@ -344,6 +344,17 @@ class Experiments extends Service_Base implements HasRequirements {
 				'group'       => 'editor',
 			],
 			/**
+			 * Author: @spacedmonkey
+			 * Issue: #10888
+			 * Creation date: 2022-04-08
+			 */
+			[
+				'name'        => 'audioHotlinking',
+				'label'       => __( 'Audio hotlinking', 'web-stories' ),
+				'description' => __( 'Enable hotlinking background audio', 'web-stories' ),
+				'group'       => 'editor',
+			],
+			/**
 			 * Author: @barklund
 			 * Issue: #7332
 			 * Creation date: 2022-04-19
