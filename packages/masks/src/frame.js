@@ -101,15 +101,18 @@ function WithDropTarget({
 }) {
   const pathRef = useRef(null);
 
-  const { id, resource, isBackground } = element;
+  const { id, resource, isBackground, isLocked } = element;
   const mask = getElementMask(element);
 
   useEffect(() => {
+    if (isLocked) {
+      return undefined;
+    }
     registerDropTarget(id, pathRef.current);
     return () => {
       unregisterDropTarget(id);
     };
-  }, [id, registerDropTarget, unregisterDropTarget]);
+  }, [id, isLocked, registerDropTarget, unregisterDropTarget]);
 
   if (!mask) {
     return children;
@@ -117,11 +120,13 @@ function WithDropTarget({
 
   // Show an outline if hovering when not dragging
   // or if dragging another droppable element
-  const hasOutline =
+  const canHasOutline =
     (hover && !draggingResource) ||
     (Boolean(draggingResource) &&
       isDropSource(draggingResource.type) &&
       draggingResource !== resource);
+
+  const hasOutline = !isLocked && canHasOutline;
 
   const hasThinOutline = hasOutline && !isBackground;
   const hasBackgroundOutline = hasOutline && isBackground;
