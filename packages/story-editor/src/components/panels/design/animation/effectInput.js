@@ -156,6 +156,7 @@ EffectInput.propTypes = {
   field: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   disabledOptions: PropTypes.arrayOf(PropTypes.string),
+  disabled: PropTypes.bool,
   tooltip: PropTypes.string,
 };
 

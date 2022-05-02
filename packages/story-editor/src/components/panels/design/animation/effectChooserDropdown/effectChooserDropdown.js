@@ -188,6 +188,7 @@ EffectChooserDropdown.propTypes = {
       options: PropTypes.arrayOf(PropTypes.string),
     })
   ),
+  disabled: PropTypes.bool,
   selectButtonStylesOverride: PropTypes.oneOfType([
     PropTypes.object,
     PropTypes.array,
