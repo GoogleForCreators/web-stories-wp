@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback } from '@googleforcreators/react';
+import { useMemo, useCallback } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
@@ -28,6 +28,9 @@ import {
 } from '@googleforcreators/design-system';
 import {
   FIELD_TYPES,
+  DIRECTION,
+  ROTATION,
+  SCALE_DIRECTION,
   GeneralAnimationPropTypes,
   AnimationFormPropTypes,
 } from '@googleforcreators/animation';
@@ -74,12 +77,23 @@ function EffectInput({
   field,
   onChange,
   disabledOptions,
+  disabled = false,
   tooltip,
 }) {
   const directionControlOnChange = useCallback(
     (value) => onChange(value, true),
     [onChange]
   );
+
+  const options = useMemo(() => {
+    return disabled
+      ? [
+          ...Object.values(DIRECTION),
+          ...Object.values(ROTATION),
+          ...Object.values(SCALE_DIRECTION),
+        ]
+      : disabledOptions;
+  }, [disabledOptions, disabled]);
 
   const valueForField = effectConfig[field] ?? effectProps[field].defaultValue;
   const isFloat = effectProps[field].type === FIELD_TYPES.FLOAT;
@@ -91,7 +105,7 @@ function EffectInput({
             ({ name, ...rest }) => ({
               ...rest,
               label: name,
-              disabled: disabledOptions.includes(rest.value),
+              disabled: options.includes(rest.value),
             })
           )}
           placeholder={__('Select a value', 'web-stories')}
@@ -99,6 +113,7 @@ function EffectInput({
           isKeepMenuOpenOnSelection={false}
           selectedValue={valueForField}
           onMenuItemClick={(evt) => onChange(evt.target.value, true)}
+          disabled={disabled}
         />
       );
     case FIELD_TYPES.DIRECTION_PICKER:
@@ -107,7 +122,7 @@ function EffectInput({
           value={valueForField}
           directions={effectProps[field].values}
           onChange={directionControlOnChange}
-          disabled={disabledOptions}
+          disabled={options}
           tooltip={tooltip}
         />
       );
@@ -129,6 +144,7 @@ function EffectInput({
           }
           isFloat={isFloat}
           containerStyleOverride={inputContainerStyleOverride}
+          disabled={disabled}
         />
       );
   }

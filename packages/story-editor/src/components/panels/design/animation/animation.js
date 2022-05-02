@@ -50,6 +50,8 @@ import { SimplePanel } from '../../panel';
 import { states, styles, useHighlights } from '../../../../app/highlights';
 import EffectPanel, { getEffectName, getEffectDirection } from './effectPanel';
 import { EffectChooserDropdown } from './effectChooserDropdown';
+import { useStory } from '../../../../app';
+import Warning from '../warning';
 
 const ANIMATION_PROPERTY = 'animation';
 
@@ -78,6 +80,9 @@ function AnimationPanel({
   pushUpdateForObject,
   updateAnimationState,
 }) {
+  const { currentPageNumber } = useStory(
+    ({ state: { currentPageNumber } }) => ({ currentPageNumber })
+  );
   const playUpdatedAnimation = useRef(false);
 
   const { highlight, resetHighlight } = useHighlights((state) => ({
@@ -100,6 +105,11 @@ function AnimationPanel({
       }))
       .filter((a) => !a.delete);
   }, [selectedElements, selectedElementAnimations]);
+
+  const isFirstPage = useMemo(
+    () => currentPageNumber === 1,
+    [currentPageNumber]
+  );
 
   const handlePanelChange = useCallback(
     (animation, submitArg = false) => {
@@ -251,6 +261,7 @@ function AnimationPanel({
             direction={getEffectDirection(updatedAnimations[0])}
             selectedEffectType={updatedAnimations[0]?.type}
             selectButtonStylesOverride={highlight?.focus && styles.OUTLINE}
+            disabled={isFirstPage}
           />
         </StyledRow>
         {updatedAnimations[0] && (
@@ -258,9 +269,13 @@ function AnimationPanel({
             animation={updatedAnimations[0]}
             onChange={handlePanelChange}
             disabledTypeOptionsMap={disabledTypeOptionsMap}
+            disabled={isFirstPage}
           />
         )}
       </GroupWrapper>
+      {isFirstPage && (
+        <Warning message="Animations will not show up on the first page of a Story because of AMP restrictions." />
+      )}
     </SimplePanel>
   );
 }

@@ -86,6 +86,7 @@ function EffectPanel({
   animation: { id, type, ...config },
   onChange,
   disabledTypeOptionsMap,
+  disabled = false,
 }) {
   const { props } = getAnimationEffectProps(type);
 
@@ -128,6 +129,7 @@ function EffectPanel({
           handleInputChange({ [field]: value }, submitArg)
         }
         disabledOptions={disabledTypeOptionsMap[type]?.options || []}
+        disabled={disabled}
         tooltip={disabledTypeOptionsMap[type]?.tooltip}
       />
     </AnimationGridField>
