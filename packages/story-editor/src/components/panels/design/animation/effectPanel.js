@@ -147,6 +147,7 @@ EffectPanel.propTypes = {
       options: PropTypes.arrayOf(PropTypes.string),
     })
   ),
+  disabled: PropTypes.bool,
 };
 
 export default EffectPanel;

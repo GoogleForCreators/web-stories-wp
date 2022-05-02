@@ -45,13 +45,13 @@ import { progress } from '@googleforcreators/units';
  * Internal dependencies
  */
 import StoryPropTypes, { AnimationPropType } from '../../../../types';
+import { useStory } from '../../../../app';
+import Warning from '../warning';
 import { Row } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { states, styles, useHighlights } from '../../../../app/highlights';
 import EffectPanel, { getEffectName, getEffectDirection } from './effectPanel';
 import { EffectChooserDropdown } from './effectChooserDropdown';
-import { useStory } from '../../../../app';
-import Warning from '../warning';
 
 const ANIMATION_PROPERTY = 'animation';
 
@@ -80,8 +80,8 @@ function AnimationPanel({
   pushUpdateForObject,
   updateAnimationState,
 }) {
-  const { currentPageNumber } = useStory(
-    ({ state: { currentPageNumber } }) => ({ currentPageNumber })
+  const isFirstPage = useStory(
+    ({ state: { currentPageNumber } }) => currentPageNumber === 1
   );
   const playUpdatedAnimation = useRef(false);
 
@@ -105,11 +105,6 @@ function AnimationPanel({
       }))
       .filter((a) => !a.delete);
   }, [selectedElements, selectedElementAnimations]);
-
-  const isFirstPage = useMemo(
-    () => currentPageNumber === 1,
-    [currentPageNumber]
-  );
 
   const handlePanelChange = useCallback(
     (animation, submitArg = false) => {
