@@ -178,9 +178,10 @@ function FrameElement({ id }) {
   const onPointerEnter = () => setHovering(true);
   const onPointerLeave = () => setHovering(false);
 
-  const isLinkActive = useTransform(
+  const isAnythingTransforming = useTransform(
     ({ state }) => !isSelected && hovering && !state.isAnythingTransforming
   );
+  const isLinkActive = isAnythingTransforming && !isLocked;
 
   const getBox = useUnits(({ actions }) => actions.getBox);
 
