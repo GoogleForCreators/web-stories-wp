@@ -175,21 +175,26 @@ describe('Background Audio', () => {
             text: 'Change background color',
           });
 
+          await page.keyboard.press('Escape');
+
           await expect(page).toMatch('Page Background Audio');
 
           await expect(page).toClick('button', { text: 'Link to audio file' });
 
-          const dialogSelector = '.ReactModal__Content';
+          await page.waitForSelector('[role="dialog"]');
+          await expect(page).toMatch('Insert external background audio');
 
-          await page.waitForSelector(dialogSelector);
+          await expect(page).toMatchElement('[role="dialog"]');
 
-          const dialog = await expect(page).toMatchElement(dialogSelector);
+          await page.type('[role="dialog"] input[type="url"]', MP3_URL);
 
-          await page.keyboard.type(MP3_URL);
+          await expect(page).toClick('[role="dialog"] button', {
+            text: 'Use audio file',
+          });
 
-          await expect(dialog).toClick('button', { text: 'Use audio file' });
+          await page.screenshot({ path: 'build/audio-3.png' });
 
-          await expect(page).not.toMatchElement(dialogSelector);
+          await page.waitForSelector('audio source[src*="audio.mp3"]');
 
           await expect(page).not.toMatchElement('button', {
             text: 'Link to audio file',
@@ -207,6 +212,8 @@ describe('Background Audio', () => {
           await expect(page).toClick('button', {
             text: 'Change background color',
           });
+
+          await page.keyboard.press('Escape');
 
           await expect(page).toMatch('Page Background Audio');
 
@@ -240,21 +247,23 @@ describe('Background Audio', () => {
             text: 'Link to caption file',
           });
 
-          const dialogSelector = '.ReactModal__Content';
+          await page.waitForSelector('[role="dialog"]');
+          await expect(page).toMatch('Insert external captions');
 
-          await page.waitForSelector(dialogSelector);
+          await expect(page).toMatchElement('[role="dialog"]');
 
-          const dialog = await expect(page).toMatchElement(dialogSelector);
+          await page.type('[role="dialog"] input[type="url"]', VTT_URL);
 
-          await page.keyboard.type(VTT_URL);
+          await Promise.all([
+            expect(page).toClick('[role="dialog"] button', {
+              text: 'Use caption',
+            }),
+            expect(page).toMatchElement('[role="dialog"] button[disabled]', {
+              text: 'Selecting caption',
+            }),
+          ]);
 
-          await expect(dialog).toClick('button', { text: 'Use caption' });
-
-          await expect(page).not.toMatchElement(dialogSelector);
-
-          await expect(page).not.toMatchElement('button', {
-            text: 'Link to caption file',
-          });
+          await expect(page).toMatchElement('input[value="test.vtt"]');
         });
       });
     });
