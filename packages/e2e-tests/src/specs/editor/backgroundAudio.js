@@ -192,8 +192,6 @@ describe('Background Audio', () => {
             text: 'Use audio file',
           });
 
-          await page.screenshot({ path: 'build/audio-3.png' });
-
           await page.waitForSelector('audio source[src*="audio.mp3"]');
 
           await expect(page).not.toMatchElement('button', {
