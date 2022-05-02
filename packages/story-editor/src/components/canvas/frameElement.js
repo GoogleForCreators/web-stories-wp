@@ -71,15 +71,22 @@ import {
 const Wrapper = styled.div`
   ${elementWithPosition}
   ${elementWithSize}
-   ${elementWithRotation}
-   outline: 1px solid transparent;
+  ${elementWithRotation}
+  outline: 1px solid transparent;
   transition: outline-color 0.5s;
   &:focus,
-  &:active,
-  &:hover {
+  &:active {
     outline-color: ${({ theme, hasMask }) =>
       hasMask ? 'transparent' : theme.colors.border.selection};
   }
+  ${({ isLocked, hasMask, theme }) =>
+    !isLocked &&
+    !hasMask &&
+    `
+    &:hover {
+      outline-color: ${theme.colors.border.selection};
+    }
+  `}
 `;
 
 const EmptyFrame = styled.div`
@@ -142,7 +149,7 @@ function FrameElement({ id }) {
         isActive,
       };
     });
-  const { type, flip } = element;
+  const { type, flip, isLocked } = element;
   const { Frame, isMaskable, Controls } = getDefinitionForType(type);
   const elementRef = useRef();
   const combinedFocusGroupRef = useCombinedRefs(elementRef, focusGroupRef); // Only attach focus group ref to one element.
@@ -289,6 +296,7 @@ function FrameElement({ id }) {
         tabIndex={-1}
         role="presentation"
         hasMask={isMaskable}
+        isLocked={isLocked}
         data-testid="frameElement"
         onMouseDown={handleMouseDown}
         onFocus={handleFocus}
