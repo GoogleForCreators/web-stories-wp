@@ -87,6 +87,7 @@ const Wrapper = styled.div`
       outline-color: ${theme.colors.border.selection};
     }
   `}
+  ${({ isLocked }) => isLocked && `pointer-events: none;`}
 `;
 
 const EmptyFrame = styled.div`
@@ -314,6 +315,7 @@ function FrameElement({ id }) {
           isDropSource={isDropSource}
           registerDropTarget={registerDropTarget}
           unregisterDropTarget={unregisterDropTarget}
+          isSelected={isSelected}
         >
           {Frame ? (
             <Frame

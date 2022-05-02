@@ -60,7 +60,7 @@ const Filler = styled.svg`
 `;
 
 const FillerPath = styled.path`
-  pointer-events: all;
+  pointer-events: ${({ isClickable }) => (isClickable ? 'all' : 'none')};
 `;
 
 const DropTargetPath = styled.path`
@@ -186,6 +186,7 @@ const WithMask = forwardRef(
       draggingResource,
       activeDropTargetId,
       isDropSource,
+      isSelected = false,
       registerDropTarget,
       unregisterDropTarget,
       ...rest
@@ -193,7 +194,11 @@ const WithMask = forwardRef(
     ref
   ) => {
     const [hover, setHover] = useState(false);
-    const { isBackground } = element;
+    const { isBackground, isLocked } = element;
+
+    // Unlocked elements are always clickable,
+    // locked elements are only clickable if selected
+    const isClickable = !isLocked || isSelected;
 
     const dropTargets = {
       draggingResource,
@@ -255,16 +260,20 @@ const WithMask = forwardRef(
           height="100%"
           preserveAspectRatio="none"
         >
-          <FillerPath fill="none" d={mask?.path} />
+          <FillerPath isClickable={isClickable} fill="none" d={mask?.path} />
         </Filler>
-        <WithDropTarget
-          element={element}
-          hover={hover}
-          {...dropTargets}
-          {...rest}
-        >
-          {children}
-        </WithDropTarget>
+        {isClickable ? (
+          <WithDropTarget
+            element={element}
+            hover={hover}
+            {...dropTargets}
+            {...rest}
+          >
+            {children}
+          </WithDropTarget>
+        ) : (
+          children
+        )}
       </div>
     );
   }
@@ -282,6 +291,7 @@ WithMask.propTypes = {
   draggingResource: PropTypes.object,
   activeDropTargetId: PropTypes.string,
   isDropSource: PropTypes.func.isRequired,
+  isSelected: PropTypes.bool,
   registerDropTarget: PropTypes.func,
   unregisterDropTarget: PropTypes.func,
 };
