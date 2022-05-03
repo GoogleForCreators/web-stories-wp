@@ -292,7 +292,7 @@ describe('Text Style Panel', () => {
       // Timeout used for submitting / search update + 250ms (250 + 250).
       const TIMEOUT = 500;
       const openFontPicker = async () => {
-        const input = await fixture.screen.getByLabelText('Font family');
+        const input = fixture.screen.getByLabelText('Font family');
         await fixture.events.click(input);
       };
 
@@ -576,7 +576,7 @@ describe('Text Style Panel', () => {
         });
 
         it('should close the font picker with Esc', async () => {
-          const input = await fixture.screen.getByLabelText('Font family');
+          const input = fixture.screen.getByLabelText('Font family');
           expect(input.getAttribute('aria-expanded')).toBe('true');
           await fixture.events.keyboard.press('Esc');
           await waitForElementToBeRemoved(

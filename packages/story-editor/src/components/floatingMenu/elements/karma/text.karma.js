@@ -120,7 +120,7 @@ describe('Design Menu: Text Styles', () => {
         )
       );
 
-      const colorPicker = await fixture.screen.queryByRole('dialog', {
+      const colorPicker = fixture.screen.queryByRole('dialog', {
         name: /Color and gradient picker/,
       });
       const dismissPicker = within(colorPicker).queryByRole('button', {

@@ -355,7 +355,7 @@ describe('Checklist integration', () => {
   it('should open the checklist after following "checklist" button in dialog on publishing story', async () => {
     fixture.events.click(fixture.editor.titleBar.publish);
 
-    const reviewButton = await fixture.screen.getByRole('button', {
+    const reviewButton = fixture.screen.getByRole('button', {
       name: /^Checklist$/,
     });
     await fixture.events.click(reviewButton);
@@ -596,8 +596,8 @@ describe('Checklist integration - Card visibility', () => {
      *
      * @param {string} title Title of the card
      */
-    const checkIfCardDoesNotExist = async (title) => {
-      const card = await fixture.screen.queryByText(title);
+    const checkIfCardDoesNotExist = (title) => {
+      const card = fixture.screen.queryByText(title);
 
       expect(card).toBeNull();
     };
