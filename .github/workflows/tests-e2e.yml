@@ -148,13 +148,14 @@ jobs:
             shard: '2/4'
           - browser: 'chrome'
             wp: 'latest'
+            experimental: false
             snapshots: true
             shard: '3/4'
           - browser: 'chrome'
             wp: 'latest'
+            experimental: false
             snapshots: true
             shard: '4/4'
-
           - browser: 'firefox'
             wp: 'latest'
             experimental: true
