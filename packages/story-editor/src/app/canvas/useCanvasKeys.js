@@ -160,7 +160,8 @@ function useCanvasKeys(ref) {
       if (isEditing) {
         return;
       }
-      if (selectedElements?.[0]?.isBackground) {
+      const { isBackground, isLocked } = selectedElements?.[0] || {};
+      if (isBackground || isLocked) {
         return;
       }
       const { dx, dy } = getKeyboardMovement(key, shiftKey);
