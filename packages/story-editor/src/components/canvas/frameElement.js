@@ -87,7 +87,7 @@ const Wrapper = styled.div`
       outline-color: ${theme.colors.border.selection};
     }
   `}
-  ${({ isLocked }) => isLocked && `pointer-events: none;`}
+  ${({ isClickable }) => !isClickable && `pointer-events: none;`}
 `;
 
 const EmptyFrame = styled.div`
@@ -151,6 +151,11 @@ function FrameElement({ id }) {
       };
     });
   const { type, flip, isLocked } = element;
+
+  // Unlocked elements are always clickable,
+  // locked elements are only clickable if selected
+  const isClickable = !isLocked || isSelected;
+
   const { Frame, isMaskable, Controls } = getDefinitionForType(type);
   const elementRef = useRef();
   const combinedFocusGroupRef = useCombinedRefs(elementRef, focusGroupRef); // Only attach focus group ref to one element.
@@ -298,7 +303,7 @@ function FrameElement({ id }) {
         tabIndex={-1}
         role="presentation"
         hasMask={isMaskable}
-        isLocked={isLocked}
+        isClickable={isClickable}
         data-testid="frameElement"
         onMouseDown={handleMouseDown}
         onFocus={handleFocus}
