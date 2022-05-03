@@ -22,6 +22,7 @@ import {
   ContextMenuComponents,
 } from '@googleforcreators/design-system';
 import { useRef } from '@googleforcreators/react';
+
 /**
  * Internal dependencies
  */
@@ -38,6 +39,7 @@ import { useStory, useLocalMedia } from '../..';
 import useVideoTrim from '../../../components/videoTrim/useVideoTrim';
 import useRightClickMenu from '../useRightClickMenu';
 import useLayerSelect from '../useLayerSelect';
+import { LayerLock } from '../items';
 import {
   DEFAULT_DISPLACEMENT,
   MenuPropType,
@@ -179,6 +181,8 @@ function ForegroundMediaMenu({ parentMenuRef }) {
           {RIGHT_CLICK_MENU_SHORTCUTS.BRING_TO_FRONT.display}
         </ContextMenuComponents.MenuShortcut>
       </ContextMenuComponents.MenuButton>
+
+      <LayerLock />
 
       <ContextMenuComponents.MenuSeparator />
 

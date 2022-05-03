@@ -55,7 +55,6 @@ add_filter( 'pre_transient_web_stories_url_data_' . md5( content_url( '/e2e-asse
  * @return string
  */
 function filter_transient_jpg_file(): string {
-
 	$data = [
 		'ext'       => 'jpg',
 		'file_name' => 'example-1.jpg',
@@ -68,3 +67,22 @@ function filter_transient_jpg_file(): string {
 }
 
 add_filter( 'pre_transient_web_stories_url_data_' . md5( content_url( '/e2e-assets/example-1.jpg' ) ), __NAMESPACE__ . '\filter_transient_jpg_file', 20 );
+
+/**
+ * Hotwire the value of transient, so that a real request is not made.
+ *
+ * @return string
+ */
+function filter_transient_audio_file(): string {
+	$data = [
+		'ext'       => 'mp3',
+		'file_name' => 'audio.mp3',
+		'file_size' => '2000',
+		'mime_type' => 'audio/mpeg',
+		'type'      => 'audio',
+	];
+
+	return wp_json_encode( $data );
+}
+
+add_filter( 'pre_transient_web_stories_url_data_' . md5( content_url( '/e2e-assets/audio.mp3' ) ), __NAMESPACE__ . '\filter_transient_audio_file', 20 );

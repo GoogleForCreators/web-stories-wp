@@ -21,6 +21,7 @@ import { useCallback } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import { Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
 import styled from 'styled-components';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -40,6 +41,7 @@ function PageBackgroundAudioPanel() {
   const {
     capabilities: { hasUploadMediaAction },
   } = useConfig();
+  const enableAudioHotlinking = useFeature('audioHotlinking');
 
   const { backgroundAudio, currentPageId, updateCurrentPageProperties } =
     useStory((state) => ({
@@ -59,7 +61,7 @@ function PageBackgroundAudioPanel() {
     [updateCurrentPageProperties]
   );
 
-  if (!backgroundAudio && !hasUploadMediaAction) {
+  if (!backgroundAudio && !hasUploadMediaAction && !enableAudioHotlinking) {
     return null;
   }
 

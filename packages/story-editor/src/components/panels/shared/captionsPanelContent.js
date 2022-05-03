@@ -174,7 +174,7 @@ function CaptionsPanelContent({
                 size={BUTTON_SIZES.SMALL}
                 onClick={() => setIsOpen(true)}
               >
-                {__('Link to file', 'web-stories')}
+                {__('Link to caption file', 'web-stories')}
               </HotlinkButton>
               <HotlinkModal
                 title={__('Insert external captions', 'web-stories')}
@@ -182,6 +182,8 @@ function CaptionsPanelContent({
                 onSelect={onSelect}
                 onClose={() => setIsOpen(false)}
                 allowedFileTypes={allowedFileTypes}
+                insertText={__('Use caption', 'web-stories')}
+                insertingText={__('Selecting caption', 'web-stories')}
               />
             </>
           )}
