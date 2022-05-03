@@ -71,6 +71,12 @@ const StyledDropDown = styled(DropDown)`
   }
 `;
 
+const allAnimations = [
+  ...Object.values(DIRECTION),
+  ...Object.values(ROTATION),
+  ...Object.values(SCALE_DIRECTION),
+];
+
 function EffectInput({
   effectProps,
   effectConfig,
@@ -85,14 +91,8 @@ function EffectInput({
     [onChange]
   );
 
-  const options = useMemo(() => {
-    return disabled
-      ? [
-          ...Object.values(DIRECTION),
-          ...Object.values(ROTATION),
-          ...Object.values(SCALE_DIRECTION),
-        ]
-      : disabledOptions;
+  const _disabledOptions = useMemo(() => {
+    return disabled ? allAnimations : disabledOptions;
   }, [disabledOptions, disabled]);
 
   const valueForField = effectConfig[field] ?? effectProps[field].defaultValue;
@@ -105,7 +105,7 @@ function EffectInput({
             ({ name, ...rest }) => ({
               ...rest,
               label: name,
-              disabled: options.includes(rest.value),
+              disabled: disabled || disabledOptions.includes(rest.value),
             })
           )}
           placeholder={__('Select a value', 'web-stories')}
@@ -122,7 +122,7 @@ function EffectInput({
           value={valueForField}
           directions={effectProps[field].values}
           onChange={directionControlOnChange}
-          disabled={options}
+          disabled={_disabledOptions}
           tooltip={tooltip}
         />
       );
