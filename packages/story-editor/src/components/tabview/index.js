@@ -282,7 +282,7 @@ function TabView({
         <Tab
           key={id}
           ref={(node) => {
-            if (tabRefs) {
+            if (tabRefs?.[id]) {
               tabRefs[id].current = node;
             } else {
               internalTabRefs.current[id] = node;

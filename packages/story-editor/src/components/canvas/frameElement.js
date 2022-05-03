@@ -26,6 +26,7 @@ import {
   useState,
   memo,
   useCombinedRefs,
+  useEffect,
 } from '@googleforcreators/react';
 import { useUnits } from '@googleforcreators/units';
 import { useTransformHandler } from '@googleforcreators/transform';
@@ -104,8 +105,11 @@ const FRAME_ELEMENT_MESSAGE = sprintf(
 
 function FrameElement({ id }) {
   const speak = useLiveRegion();
-  const enterFocusGroup = useEditLayerFocusManager(
-    ({ enterFocusGroup }) => enterFocusGroup
+  const { enterFocusGroup, setFocusGroupCleanup } = useEditLayerFocusManager(
+    ({ enterFocusGroup, setFocusGroupCleanup }) => ({
+      enterFocusGroup,
+      setFocusGroupCleanup,
+    })
   );
   const [isTransforming, setIsTransforming] = useState(false);
   const focusGroupRef = useFocusGroupRef(FOCUS_GROUPS.ELEMENT_SELECTION);
@@ -251,11 +255,19 @@ function FrameElement({ id }) {
     () => {
       enterFocusGroup({
         groupId: FOCUS_GROUPS.EDIT_ELEMENT,
-        cleanup: () => elementRef.current?.focus(),
       });
     },
     [enterFocusGroup]
   );
+
+  useEffect(() => {
+    if (isSelected) {
+      setFocusGroupCleanup({
+        groupId: FOCUS_GROUPS.EDIT_ELEMENT,
+        cleanup: () => elementRef.current?.focus(),
+      });
+    }
+  }, [setFocusGroupCleanup, isSelected]);
 
   return (
     <WithLink element={element} active={isLinkActive} anchorRef={elementRef}>

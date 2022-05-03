@@ -51,6 +51,8 @@ function HotlinkModal({
   onClose,
   onSelect,
   allowedFileTypes = [],
+  insertText = __('Insert', 'web-stories'),
+  insertingText = __('Inserting…', 'web-stories'),
   title,
 }) {
   const [isInserting, setIsInserting] = useState(false);
@@ -65,9 +67,7 @@ function HotlinkModal({
   const { checkResourceAccess } = useCORSProxy();
 
   const isDisabled = errorMsg || !link || isInserting;
-  const primaryText = isInserting
-    ? __('Inserting…', 'web-stories')
-    : __('Insert', 'web-stories');
+  const primaryText = isInserting ? insertingText : insertText;
 
   let description = __('No file types are currently supported.', 'web-stories');
   if (allowedFileTypes.length) {
@@ -125,6 +125,12 @@ function HotlinkModal({
       const hotlinkInfo = await getHotlinkInfo(link);
       const shouldProxy = await checkResourceAccess(link);
 
+      await onSelect({
+        mimeType: hotlinkInfo.mimeType,
+        src: link,
+        needsProxy: shouldProxy,
+      });
+
       // After getting link metadata and before actual insertion
       // is a great opportunity to measure usage in a reasonably accurate way.
       trackEvent('hotlink_file', {
@@ -133,8 +139,6 @@ function HotlinkModal({
         file_type: hotlinkInfo.mimeType,
         needs_proxy: shouldProxy,
       });
-
-      onSelect({ src: link, needsProxy: shouldProxy });
     } catch (err) {
       trackError('hotlink_file', err?.message);
 
@@ -200,6 +204,8 @@ HotlinkModal.propTypes = {
   onSelect: PropTypes.func.isRequired,
   allowedFileTypes: PropTypes.array,
   title: PropTypes.string,
+  insertText: PropTypes.string,
+  insertingText: PropTypes.string,
 };
 
 export default HotlinkModal;

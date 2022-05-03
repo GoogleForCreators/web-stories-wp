@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { setDefaultOptions } from 'expect-puppeteer';
+import { matchers } from 'jest-json-schema';
 import { toBeValidAMP } from '@web-stories-wp/jest-puppeteer-amp';
 import {
   enablePageDialogAccept,
@@ -32,6 +33,8 @@ import {
 expect.extend({
   toBeValidAMP,
 });
+
+expect.extend(matchers);
 
 /**
  * Environment variables

@@ -38,3 +38,7 @@ export const Z_INDEX_NAV_LAYER = 5;
 // stacking context
 export const Z_INDEX_FOOTER = 3;
 export const Z_INDEX_HEAD_AREA = 3;
+
+// The Grid View component is a modal, the Slider that is used inside
+// needs to be pulled on top.
+export const Z_INDEX_GRID_VIEW_SLIDER = 11;

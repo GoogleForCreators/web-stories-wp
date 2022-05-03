@@ -222,8 +222,7 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
 
     it('should ensure staggered presets fit on the page', async () => {
       const POSITION_MARGIN = dataFontEm(1);
-      const PARAGRAPH_TEXT =
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
+      const PARAGRAPH_TEXT = 'Fill in some text';
       let lastY;
       let lastHeight;
       let nextY;
@@ -315,12 +314,17 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
       await addPreset('Paragraph');
       await verifyStaggeredPosition(PARAGRAPH_TEXT);
 
-      // Title 3 should be positioned in the default position again.
       await addPreset('Title 3');
       await verifyStaggeredPosition('Title 3');
 
+      await addPreset('Paragraph');
+      await verifyStaggeredPosition(PARAGRAPH_TEXT);
+
       await addPreset('Caption');
       await verifyStaggeredPosition('Caption');
+
+      await addPreset('Paragraph');
+      await verifyStaggeredPosition(PARAGRAPH_TEXT);
 
       await addPreset('Paragraph');
       await verifyDefaultPosition('Paragraph', PARAGRAPH_TEXT);
@@ -372,7 +376,7 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
 
       const [text1] = await getSelection();
       expect(text1.content).toEqual(
-        '<span style="color: #fff">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>'
+        '<span style="color: #fff">Fill in some text</span>'
       );
 
       // Select background for being able to insert another text.

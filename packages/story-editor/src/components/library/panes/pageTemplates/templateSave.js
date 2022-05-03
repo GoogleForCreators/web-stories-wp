@@ -34,9 +34,11 @@ import { DATA_VERSION } from '@googleforcreators/migration';
  * Internal dependencies
  */
 import { useAPI } from '../../../../app/api';
+import { usePageCanvas } from '../../../../app/pageCanvas';
 import { useStory } from '../../../../app/story';
 import { focusStyle } from '../../../panels/shared/styles';
 import isDefaultPage from '../../../../utils/isDefaultPage';
+import createThumbnailCanvasFromFullbleedCanvas from '../../../../utils/createThumbnailCanvasFromFullbleedCanvas';
 import Icon from './images/illustration.svg';
 
 const StyledText = styled(Text)`
@@ -105,6 +107,7 @@ function TemplateSave({ setShowDefaultTemplates, updateList }) {
   const { currentPage } = useStory(({ state: { currentPage } }) => ({
     currentPage,
   }));
+  const pageCanvasMap = usePageCanvas(({ state }) => state.pageCanvasMap);
 
   const isDisabled = useMemo(
     () => currentPage && isDefaultPage(currentPage),
@@ -119,6 +122,13 @@ function TemplateSave({ setShowDefaultTemplates, updateList }) {
       }
 
       let imageId;
+      let tmpPageDataUrl;
+      const currentPageCanvas = pageCanvasMap[currentPage.id];
+      if (currentPageCanvas) {
+        const thumbnailCanvas =
+          createThumbnailCanvasFromFullbleedCanvas(currentPageCanvas);
+        tmpPageDataUrl = thumbnailCanvas.toDataURL('image/jpeg');
+      }
 
       try {
         const { templateId, ...page } = currentPage;
@@ -131,6 +141,15 @@ function TemplateSave({ setShowDefaultTemplates, updateList }) {
           featured_media: imageId,
           title: null,
         });
+
+        // If we already have a data url for the page template, we'll
+        // pass it here and the <SavedPageTemplate /> component can be responsible
+        // for creating a resource from it on the WP backend and associating
+        // that resource with the template post
+        if (tmpPageDataUrl) {
+          addedTemplate.pregeneratedPageDataUrl = tmpPageDataUrl;
+        }
+
         updateList?.(addedTemplate);
         showSnackbar({
           message: __('Page Template saved.', 'web-stories'),
@@ -154,6 +173,7 @@ function TemplateSave({ setShowDefaultTemplates, updateList }) {
       setShowDefaultTemplates,
       showSnackbar,
       updateList,
+      pageCanvasMap,
     ]
   );
 

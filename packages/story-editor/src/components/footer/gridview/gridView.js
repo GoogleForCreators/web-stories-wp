@@ -47,6 +47,7 @@ import {
   ReorderableItem,
 } from '../../reorderable';
 import PagePreview from '../pagepreview';
+import { Z_INDEX_GRID_VIEW_SLIDER } from '../../../constants/zIndex';
 
 const MIN_GRID_GAP = 20;
 const LINE_HEIGHT = 64;
@@ -223,6 +224,7 @@ function GridView({ onClose }) {
           value={pagesPerRow}
           handleChange={(newValue) => setPagesPerRow(newValue)}
           aria-label={__('Pages per row', 'web-stories')}
+          popupZIndexOverride={Z_INDEX_GRID_VIEW_SLIDER}
         />
         <NoButton />
       </TopRow>

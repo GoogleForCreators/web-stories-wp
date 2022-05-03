@@ -2,7 +2,7 @@
   "name": "@googleforcreators/react",
   "description": "A tiny wrapper package that re-exports React and provides additional utilities and custom hooks.",
   "private": false,
-  "version": "0.1.202204141511",
+  "version": "0.1.202205021257",
   "author": {
     "name": "Google",
     "url": "https://creators.google/"
@@ -44,7 +44,7 @@
   },
   "devDependencies": {
     "@testing-library/react": "^12.1.5",
-    "@testing-library/react-hooks": "^7.0.2"
+    "@testing-library/react-hooks": "^8.0.0"
   },
   "peerDependencies": {
     "react": "^17.0.2",

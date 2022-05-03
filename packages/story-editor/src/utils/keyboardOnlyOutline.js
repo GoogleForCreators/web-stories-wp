@@ -56,13 +56,10 @@ const KeyboardOnlyOutline = () => {
     }
   };
 
-  // @todo Should this be in useEffect ?
-  if (globalThis.document) {
+  useEffect(() => {
     document.addEventListener('keydown', handleKeydown, true);
     document.addEventListener('mousedown', handleMousedown, true);
-  }
 
-  useEffect(() => {
     return function cleanup() {
       document.removeEventListener('keydown', handleKeydown, true);
       document.removeEventListener('mousedown', handleMousedown, true);

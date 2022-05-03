@@ -2,7 +2,7 @@
   "name": "@googleforcreators/design-system",
   "description": "Main UI components for the Web Stories editor and dashboard",
   "private": false,
-  "version": "0.1.202204141511",
+  "version": "0.1.202205021257",
   "author": {
     "name": "Google",
     "url": "https://creators.google/"
@@ -54,6 +54,6 @@
   "devDependencies": {
     "@storybook/addon-essentials": "^6.4.20",
     "@testing-library/react": "^12.1.5",
-    "@testing-library/react-hooks": "^7.0.2"
+    "@testing-library/react-hooks": "^8.0.0"
   }
 }

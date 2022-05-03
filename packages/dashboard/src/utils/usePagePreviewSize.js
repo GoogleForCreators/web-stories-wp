@@ -32,12 +32,12 @@ import { PAGE_RATIO } from '@googleforcreators/units';
 import {
   DASHBOARD_LEFT_NAV_WIDTH,
   MIN_DASHBOARD_WIDTH,
-  WPBODY_ID,
   VIEWPORT_BREAKPOINT,
   STORY_PREVIEW_WIDTH,
   GRID_SPACING,
   PAGE_WRAPPER,
 } from '../constants';
+import useConfig from '../app/config/useConfig';
 
 /**
  * Here we need to calculate height for every pagePreview in use.
@@ -105,11 +105,12 @@ const getContainerWidth = (windowWidth) => {
 
 export default function usePagePreviewSize(options = {}) {
   const { thumbnailMode = false, isGrid } = options;
-  const container =
-    typeof document !== 'undefined' ? document.getElementById(WPBODY_ID) : null;
-  // When the dashboard is pulled out of wordpress this id will need to be updated.
-  // For now, we need to grab wordpress instead because of how the app's rendered
-  const dashboardContainerRef = useRef(container);
+  const { containerId } = useConfig();
+  const dashboardContainerRef = useRef(
+    typeof document !== 'undefined'
+      ? document.getElementById(containerId)
+      : null
+  );
 
   // BP is contingent on the actual window size
   const [viewportWidth, setViewportWidth] = useState(globalThis.innerWidth);

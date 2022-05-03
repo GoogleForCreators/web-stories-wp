@@ -25,7 +25,7 @@ import { __ } from '@googleforcreators/i18n';
 /**
  * Internal dependencies
  */
-import { useCanvas, useConfig } from '../../../app';
+import { useCanvas } from '../../../app';
 import useElementsWithLinks from '../../../utils/useElementsWithLinks';
 import { OUTLINK_THEME } from '../../../constants';
 import DefaultIcon from './icons/defaultIcon.svg';
@@ -144,7 +144,6 @@ function PageAttachment({ pageAttachment = {} }) {
     icon,
     theme,
   } = pageAttachment;
-  const { isRTL, styleConstants: { topOffset } = {} } = useConfig();
   const bgColor = theme === OUTLINK_THEME.DARK ? DARK_COLOR : LIGHT_COLOR;
   const fgColor = theme === OUTLINK_THEME.DARK ? LIGHT_COLOR : DARK_COLOR;
   return (
@@ -164,12 +163,10 @@ function PageAttachment({ pageAttachment = {} }) {
             </OutlinkChip>
             {pageAttachmentContainer && hasInvalidLinkSelected && (
               <Popup
-                isRTL={isRTL}
                 anchor={{ current: pageAttachmentContainer }}
                 isOpen
                 placement={PLACEMENT.LEFT}
                 spacing={spacing}
-                topOffset={topOffset}
               >
                 <Tooltip>
                   {__(

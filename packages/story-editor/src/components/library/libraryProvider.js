@@ -182,7 +182,7 @@ function LibraryProvider({ children }) {
         setShouldUseSmartColor,
       },
       data: {
-        tabs: tabs,
+        tabs,
       },
     }),
     [

@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
 import {
   useIsomorphicLayoutEffect,
   useEffect,
@@ -33,38 +32,14 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { noop } from '../../utils';
+import { usePopup } from '../../contexts';
 import { getTransforms, getOffset } from './utils';
-import { PLACEMENT } from './constants';
-const DEFAULT_TOPOFFSET = 0;
+import { PLACEMENT, PopupContainer } from './constants';
+const DEFAULT_TOP_OFFSET = 0;
 const DEFAULT_POPUP_Z_INDEX = 2;
-const Container = styled.div.attrs(
-  ({
-    $offset: { x, y, width, height },
-    fillWidth,
-    fillHeight,
-    placement,
-    isRTL,
-    invisible,
-    zIndex,
-  }) => ({
-    style: {
-      transform: `translate(${x}px, ${y}px) ${getTransforms(placement, isRTL)}`,
-      ...(fillWidth ? { width: `${width}px` } : {}),
-      ...(fillHeight ? { height: `${height}px` } : {}),
-      ...(invisible ? { visibility: 'hidden' } : {}),
-      zIndex,
-    },
-  })
-)`
-  /*! @noflip */
-  left: 0px;
-  top: 0px;
-  position: fixed;
-  ${({ noOverFlow }) => (noOverFlow ? '' : `overflow-y: auto;`)};
-  max-height: ${({ topOffset }) => `calc(100vh - ${topOffset}px)`};
-`;
+const DEFAULT_LEFT_OFFSET = 0;
+
 function Popup({
-  isRTL = false,
   anchor,
   dock,
   children,
@@ -72,27 +47,20 @@ function Popup({
   placement = PLACEMENT.BOTTOM,
   spacing,
   isOpen,
-  invisible = false,
   fillWidth = false,
-  fillHeight = false,
-  onPositionUpdate = noop,
   refCallback = noop,
-  topOffset = DEFAULT_TOPOFFSET,
   zIndex = DEFAULT_POPUP_Z_INDEX,
-  noOverFlow = false,
   ignoreMaxOffsetY,
-  resetXOffset = false,
 }) {
+  const {
+    topOffset = DEFAULT_TOP_OFFSET,
+    leftOffset = DEFAULT_LEFT_OFFSET,
+    isRTL = false,
+  } = usePopup();
+
   const [popupState, setPopupState] = useState(null);
   const isMounted = useRef(false);
   const popup = useRef(null);
-
-  useEffect(() => {
-    isMounted.current = true;
-    return () => {
-      isMounted.current = false;
-    };
-  }, []);
 
   const positionPopup = useCallback(
     (evt) => {
@@ -103,21 +71,61 @@ function Popup({
       if (evt?.target?.nodeType && popup.current?.contains(evt.target)) {
         return;
       }
+      const offset = anchor.current
+        ? getOffset({
+            placement,
+            spacing,
+            anchor,
+            dock,
+            popup,
+            isRTL,
+            topOffset,
+            ignoreMaxOffsetY,
+          })
+        : {};
+      const { height, x, width, right } = popup.current
+        ? popup.current.getBoundingClientRect()
+        : {};
+
+      const updatedXOffset = () => {
+        // When in RTL the popup could render off the left side of the screen. If so, let's update the
+        // offset to keep it inbounds.
+        if (x < leftOffset) {
+          switch (placement) {
+            case PLACEMENT.BOTTOM_END:
+            case PLACEMENT.TOP_END:
+              return { ...offset, x: isRTL ? offset.x : width + leftOffset };
+            case PLACEMENT.LEFT_END:
+            case PLACEMENT.LEFT:
+            case PLACEMENT.LEFT_START:
+              // Left placement shouldn't be used if it renders off the left of the screen in LTR
+              return {
+                ...offset,
+                x: isRTL ? offset.x : width + -x - leftOffset,
+              };
+            case PLACEMENT.BOTTOM_START:
+            case PLACEMENT.TOP_START:
+            case PLACEMENT.RIGHT_END:
+            case PLACEMENT.RIGHT_START:
+            case PLACEMENT.RIGHT:
+              // These should only matter in the case of isRTL so we'll need the entire width of the popup as the offset
+              return { ...offset, x: width };
+            default:
+              return { ...offset, x: width / 2 + (isRTL ? 0 : leftOffset) };
+          }
+        }
+
+        if (isRTL && right > offset.bodyRight - leftOffset) {
+          // maxOffset should keep us inbounds, except in the case of RTL due to the admin-sidebar nav we could use another
+          // switch case here to make offset more precise, however the math below will always return the popup fully in screen.
+          return { ...offset, x: offset.bodyRight - width - leftOffset };
+        }
+
+        return null;
+      };
       setPopupState({
-        offset: anchor.current
-          ? getOffset({
-              placement,
-              spacing,
-              anchor,
-              dock,
-              popup,
-              isRTL,
-              topOffset,
-              ignoreMaxOffsetY,
-              resetXOffset,
-            })
-          : {},
-        height: popup.current?.getBoundingClientRect()?.height,
+        offset: updatedXOffset() || offset,
+        height,
       });
     },
     [
@@ -127,10 +135,18 @@ function Popup({
       dock,
       isRTL,
       topOffset,
+      leftOffset,
       ignoreMaxOffsetY,
-      resetXOffset,
     ]
   );
+
+  useEffect(() => {
+    isMounted.current = true;
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
+
   useEffect(() => {
     // If the popup height changes meanwhile, let's update the popup, too.
     if (
@@ -160,38 +176,32 @@ function Popup({
       return;
     }
 
-    onPositionUpdate(popupState);
     refCallback(popup);
-  }, [popupState, onPositionUpdate, refCallback]);
+  }, [popupState, refCallback]);
 
   useResizeEffect({ current: globalThis.document?.body }, positionPopup, [
     positionPopup,
   ]);
   return popupState && isOpen && globalThis.document
     ? createPortal(
-        <Container
+        <PopupContainer
           ref={popup}
           fillWidth={fillWidth}
-          fillHeight={fillHeight}
-          placement={placement}
           $offset={popupState.offset}
-          invisible={invisible}
           topOffset={topOffset}
-          noOverFlow={noOverFlow}
-          isRTL={isRTL}
           zIndex={zIndex}
+          transforms={getTransforms(placement, isRTL)}
         >
           {renderContents
             ? renderContents({ propagateDimensionChange: positionPopup })
             : children}
-        </Container>,
+        </PopupContainer>,
         document.body
       )
     : null;
 }
 
 Popup.propTypes = {
-  isRTL: PropTypes.bool,
   anchor: PropTypes.shape({
     current:
       typeof Element !== 'undefined'
@@ -209,16 +219,10 @@ Popup.propTypes = {
   placement: PropTypes.oneOf(Object.values(PLACEMENT)),
   spacing: PropTypes.object,
   isOpen: PropTypes.bool,
-  invisible: PropTypes.bool,
   fillWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
-  fillHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
-  onPositionUpdate: PropTypes.func,
   refCallback: PropTypes.func,
-  topOffset: PropTypes.number,
   zIndex: PropTypes.number,
-  noOverFlow: PropTypes.bool,
   ignoreMaxOffsetY: PropTypes.bool,
-  resetXOffset: PropTypes.bool,
 };
 
 export { Popup, PLACEMENT };

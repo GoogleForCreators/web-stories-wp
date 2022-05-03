@@ -51,8 +51,8 @@ function OutputPage({
     animations,
     elements,
     backgroundColor,
-    backgroundAudio = {},
-    pageAttachment = {},
+    backgroundAudio,
+    pageAttachment,
   } = page;
 
   const [backgroundElement, ...otherElements] = elements;
@@ -104,10 +104,10 @@ function OutputPage({
     )
     .map(({ id: videoId }) => `el-${videoId}-captions`);
 
-  const backgroundAudioSrc = backgroundAudio.resource?.src;
-  const hasBackgroundAudioCaptions = backgroundAudio.tracks?.length > 0;
+  const backgroundAudioSrc = backgroundAudio?.resource?.src;
+  const hasBackgroundAudioCaptions = backgroundAudio?.tracks?.length > 0;
   const hasNonLoopingBackgroundAudio =
-    false === backgroundAudio.loop && backgroundAudio.resource?.length;
+    false === backgroundAudio?.loop && backgroundAudio?.resource?.length;
   const needsEnhancedBackgroundAudio =
     hasBackgroundAudioCaptions || hasNonLoopingBackgroundAudio;
 
@@ -189,7 +189,7 @@ function OutputPage({
       {/* <amp-story-page-outlink> needs to be the last child element */}
       {pageAttachment?.url && <Outlink {...pageAttachment} />}
       {products.length > 0 && flags?.shoppingIntegration && (
-        <ShoppingAttachment products={products} theme={pageAttachment.theme} />
+        <ShoppingAttachment products={products} {...pageAttachment} />
       )}
     </amp-story-page>
   );

@@ -24,6 +24,7 @@ import PropTypes from 'prop-types';
 import {
   SnackbarProvider,
   ModalGlobalStyle,
+  PopupProvider,
   deepMerge,
 } from '@googleforcreators/design-system';
 import { FlagsProvider } from 'flagged';
@@ -59,7 +60,12 @@ import getDefaultConfig from './getDefaultConfig';
 
 function StoryEditor({ config, initialEdits, children }) {
   const _config = deepMerge(getDefaultConfig(), config);
-  const { storyId, isRTL, flags } = _config;
+  const {
+    storyId,
+    isRTL,
+    flags,
+    styleConstants: { leftOffset, topOffset } = {},
+  } = _config;
 
   return (
     <FlagsProvider features={flags}>
@@ -85,14 +91,22 @@ function StoryEditor({ config, initialEdits, children }) {
                                     <HelpCenterProvider>
                                       <PageCanvasProvider>
                                         <PageDataUrlProvider>
-                                          <GlobalStyle />
-                                          <DevTools />
-                                          <DefaultMoveableGlobalStyle />
-                                          <CropMoveableGlobalStyle />
-                                          <ModalGlobalStyle />
-                                          <CalendarStyle />
-                                          <KeyboardOnlyOutlines />
-                                          {children}
+                                          <PopupProvider
+                                            value={{
+                                              isRTL,
+                                              leftOffset,
+                                              topOffset,
+                                            }}
+                                          >
+                                            <GlobalStyle />
+                                            <DevTools />
+                                            <DefaultMoveableGlobalStyle />
+                                            <CropMoveableGlobalStyle />
+                                            <ModalGlobalStyle />
+                                            <CalendarStyle />
+                                            <KeyboardOnlyOutlines />
+                                            {children}
+                                          </PopupProvider>
                                         </PageDataUrlProvider>
                                       </PageCanvasProvider>
                                     </HelpCenterProvider>

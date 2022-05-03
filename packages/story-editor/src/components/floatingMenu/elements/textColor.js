@@ -25,7 +25,7 @@ import { trackEvent } from '@googleforcreators/tracking';
  * Internal dependencies
  */
 import useRichTextFormatting from '../../panels/design/textStyle/useRichTextFormatting';
-import updateProperties from '../../design/updateProperties';
+import updateProperties from '../../style/updateProperties';
 import { useStory } from '../../../app';
 import { Color, useProperties } from './shared';
 
