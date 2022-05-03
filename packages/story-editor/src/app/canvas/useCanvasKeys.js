@@ -235,7 +235,9 @@ function useCanvasKeys(ref) {
     { key: ['mod+k'] },
     (evt) => {
       evt.preventDefault();
-      if (currentPageNumber === 1) return;
+      if (currentPageNumber === 1) {
+        return;
+      }
       updateAnimationState({
         animationState: isPlaying
           ? STORY_ANIMATION_STATE.RESET
