@@ -68,7 +68,7 @@
     "@storybook/csf": "^0.0.1",
     "@storybook/manager-webpack5": "^6.4.20",
     "@storybook/react": "^6.4.20",
-    "@stylelint/postcss-css-in-js": "^0.37.2",
+    "@stylelint/postcss-css-in-js": "^0.37.3",
     "@svgr/rollup": "^6.2.0",
     "@svgr/webpack": "^6.2.0",
     "@testing-library/dom": "^8.13.0",
