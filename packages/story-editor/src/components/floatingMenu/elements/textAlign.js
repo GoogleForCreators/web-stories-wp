@@ -22,18 +22,17 @@ import {
   Icons,
   ContextMenu,
   ContextMenuComponents,
-  Tooltip,
   TOOLTIP_PLACEMENT,
   useKeyDownEffect,
 } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 import styled from 'styled-components';
 import { trackEvent } from '@googleforcreators/tracking';
-
 /**
  * Internal dependencies
  */
 import { useStory } from '../../../app';
+import Tooltip from '../../tooltip';
 import { IconButton, useProperties } from './shared';
 
 const OFFSET_X = -8;
@@ -146,6 +145,7 @@ function TextAlign() {
     <>
       <Tooltip placement={TOOLTIP_PLACEMENT.BOTTOM} title={tooltip}>
         <StyledMenuButton
+          tabIndex={-1}
           ref={buttonRef}
           onClick={() => setMenuOpen((value) => !value)}
           aria-haspopup="menu"

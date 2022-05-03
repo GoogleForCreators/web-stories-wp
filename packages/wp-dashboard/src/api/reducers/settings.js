@@ -16,7 +16,11 @@
 /**
  * Internal dependencies
  */
-import { AD_NETWORK_TYPE, ARCHIVE_TYPE } from '../../constants';
+import {
+  AD_NETWORK_TYPE,
+  ARCHIVE_TYPE,
+  SHOPPING_PROVIDER_TYPE,
+} from '../../constants';
 
 export const ACTION_TYPES = {
   UPDATE_SETTINGS_SUCCESS: 'update_settings_success',
@@ -38,6 +42,9 @@ export const defaultSettingsState = {
   archivePageId: 0,
   videoCache: false,
   settingSaved: false,
+  shoppingProvider: SHOPPING_PROVIDER_TYPE.NONE,
+  shopifyHost: '',
+  shopifyAccessToken: '',
 };
 
 function settingsReducer(state, action) {
@@ -71,6 +78,9 @@ function settingsReducer(state, action) {
         videoCache: action.payload.videoCache,
         archive: action.payload.archive,
         archivePageId: action.payload.archivePageId,
+        shoppingProvider: action.payload.shoppingProvider,
+        shopifyHost: action.payload.shopifyHost,
+        shopifyAccessToken: action.payload.shopifyAccessToken,
       };
     }
 

@@ -31,7 +31,6 @@ export {
 
 export { Checklist } from './checklist';
 export * from './checks';
-export { default as ReviewChecklistDialog } from './reviewChecklistDialog';
 export { default as ChecklistIcon } from './checklistIcon';
 export {
   PPC_CHECKPOINT_STATE,

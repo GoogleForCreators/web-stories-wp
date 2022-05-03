@@ -38,7 +38,8 @@ describe('Stories Dashboard', () => {
     await trashAllPosts('web-story');
   });
 
-  it('should delete story', async () => {
+  // eslint-disable-next-line jest/no-disabled-tests -- TODO(#11362): Fix flakey test
+  it.skip('should delete story', async () => {
     await expect(page).toMatchElement('h2', { text: 'Dashboard' });
     await page.hover(
       `[role="listitem"][aria-label="Details about ${storyName}"]`

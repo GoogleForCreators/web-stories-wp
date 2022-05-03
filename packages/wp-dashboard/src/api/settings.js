@@ -39,6 +39,9 @@ const transformSettingResponse = (response) => ({
   videoCache: response.web_stories_video_cache,
   archive: response.web_stories_archive,
   archivePageId: response.web_stories_archive_page_id,
+  shoppingProvider: response.web_stories_shopping_provider,
+  shopifyHost: response.web_stories_shopify_host,
+  shopifyAccessToken: response.web_stories_shopify_access_token,
 });
 
 /**
@@ -72,6 +75,9 @@ export function updateSettings(apiPath, queryParams) {
     videoCache,
     archive,
     archivePageId,
+    shoppingProvider,
+    shopifyHost,
+    shopifyAccessToken,
   } = queryParams;
 
   const query = {};
@@ -110,6 +116,18 @@ export function updateSettings(apiPath, queryParams) {
 
   if (archivePageId !== undefined) {
     query.web_stories_archive_page_id = archivePageId;
+  }
+
+  if (shoppingProvider !== undefined) {
+    query.web_stories_shopping_provider = shoppingProvider;
+  }
+
+  if (shopifyHost !== undefined) {
+    query.web_stories_shopify_host = shopifyHost;
+  }
+
+  if (shopifyAccessToken !== undefined) {
+    query.web_stories_shopify_access_token = shopifyAccessToken;
   }
 
   const path = addQueryArgs(apiPath, query);

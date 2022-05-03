@@ -38,6 +38,86 @@ import PageOutput from '../page';
 
 jest.mock('flagged');
 
+const PRODUCT_LAMP = {
+  productUrl: 'https://www.google.com',
+  productId: 'lamp',
+  productTitle: 'Brass Lamp',
+  productBrand: 'Lamp Co',
+  productPrice: 799.0,
+  productPriceCurrency: 'USD',
+  productImages: [
+    { url: '/examples/visual-tests/amp-story/img/cat1.jpg', alt: 'lamp 1' },
+    { url: '/examples/visual-tests/amp-story/img/cat1.jpg', alt: 'lamp 2' },
+    { url: '/examples/visual-tests/amp-story/img/cat1.jpg', alt: 'lamp 3' },
+    { url: '/examples/visual-tests/amp-story/img/cat1.jpg', alt: 'lamp 4' },
+    { url: '/examples/visual-tests/amp-story/img/cat1.jpg', alt: 'lamp 5' },
+    { url: '/examples/visual-tests/amp-story/img/cat1.jpg', alt: 'lamp 6' },
+  ],
+  aggregateRating: {
+    ratingValue: 4.4,
+    reviewCount: 89,
+    reviewUrl: 'https://www.google.com',
+  },
+  productDetails:
+    'One newline after this. \n Two newlines after this. \n\n  Five consecutive newlines after this, should become 2 newlines. \n\n\n\n\n Many consecutive newlines with different spacing and tabs after this, should become 2 newlines. \n          \n\n   \n  \n \n  \n \n I hope it works!',
+};
+
+const PRODUCT_ART = {
+  productUrl: 'https://www.google.com',
+  productId: 'art',
+  productTitle: 'Abstract Art',
+  productBrand: 'V. Artsy',
+  productPrice: 1200.0,
+  productPriceCurrency: 'INR',
+  productImages: [
+    { url: '/examples/visual-tests/amp-story/img/cat1.jpg', alt: 'art' },
+  ],
+  aggregateRating: {
+    ratingValue: 4.4,
+    reviewCount: 89,
+    reviewUrl: 'https://www.google.com',
+  },
+};
+
+const PRODUCT_CHAIR = {
+  productUrl: 'https://www.google.com',
+  productId: 'chair',
+  productTitle: 'Yellow chair',
+  productPrice: 1000.0,
+  productPriceCurrency: 'BRL',
+  productText: 'The perfectly imperfect yellow chair',
+  productImages: [
+    { url: '/examples/visual-tests/amp-story/img/cat1.jpg', alt: 'chair' },
+  ],
+  aggregateRating: {
+    ratingValue: 4.4,
+    reviewCount: 89,
+    reviewUrl: 'https://www.google.com',
+  },
+  productDetails:
+    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere error deserunt dignissimos in laborum ea molestias veritatis sint laudantium iusto expedita atque provident doloremque, ad voluptatem culpa adipisci.',
+};
+
+const PRODUCT_FLOWERS = {
+  productUrl: 'https://www.google.com',
+  productId: 'flowers',
+  productTitle: 'Flowers',
+  productBrand: 'Very Long Flower Company Name',
+  productPrice: 10.0,
+  productPriceCurrency: 'USD',
+  productIcon: '/examples/visual-tests/amp-story/img/shopping/icon.png',
+  productImages: [
+    { url: '/examples/visual-tests/amp-story/img/cat1.jpg', alt: 'flowers' },
+  ],
+  aggregateRating: {
+    ratingValue: 4.4,
+    reviewCount: 89,
+    reviewUrl: 'https://www.google.com',
+  },
+  productDetails:
+    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere error deserunt dignissimos in laborum ea molestias veritatis sint laudantium iusto expedita atque provident doloremque, ad voluptatem culpa adipisci.',
+};
+
 /* eslint-disable testing-library/no-node-access, testing-library/no-container */
 
 describe('Page output', () => {
@@ -1304,6 +1384,24 @@ describe('Page output', () => {
       );
     });
 
+    it('should not contain background audio if null', async () => {
+      const props = {
+        id: '123',
+        page: {
+          backgroundAudio: null,
+          id: '123',
+          elements: [],
+        },
+        autoAdvance: false,
+        defaultPageDuration: 7,
+      };
+
+      const { container } = render(<PageOutput {...props} />);
+      const page = container.querySelector('amp-story-page');
+      await expect(page).toBeInTheDocument();
+      expect(page).not.toContain('background-audio=');
+    });
+
     it('should use amp-video for non-looping background audio', async () => {
       const props = {
         id: '123',
@@ -1397,6 +1495,97 @@ describe('Page output', () => {
         layout="fixed-height"
       />
       `);
+    });
+  });
+
+  describe('Shopping', () => {
+    it('should render shopping attachment if there are products', async () => {
+      const props = {
+        id: 'foo',
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
+        page: {
+          id: 'bar',
+          elements: [
+            {
+              id: 'el1',
+              type: 'product',
+              x: 50,
+              y: 50,
+              width: 32,
+              height: 32,
+              rotationAngle: 0,
+              product: PRODUCT_LAMP,
+            },
+            {
+              id: 'el2',
+              type: 'product',
+              x: 100,
+              y: 100,
+              width: 32,
+              height: 32,
+              rotationAngle: 0,
+              product: PRODUCT_ART,
+            },
+          ],
+        },
+        flags: {
+          shoppingIntegration: true,
+        },
+      };
+
+      const { container } = render(<PageOutput {...props} />);
+      const shoppingAttachment = container.querySelector(
+        'amp-story-shopping-attachment'
+      );
+      await expect(shoppingAttachment).toBeInTheDocument();
+    });
+
+    it('should render shopping attachment with custom cta text if there are products', async () => {
+      const props = {
+        id: 'foo',
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
+        page: {
+          id: 'bar',
+          pageAttachment: {
+            theme: 'light',
+            ctaText: 'Buy now',
+          },
+          elements: [
+            {
+              id: 'el1',
+              type: 'product',
+              x: 50,
+              y: 50,
+              width: 32,
+              height: 32,
+              rotationAngle: 0,
+              product: PRODUCT_LAMP,
+            },
+            {
+              id: 'el2',
+              type: 'product',
+              x: 100,
+              y: 100,
+              width: 32,
+              height: 32,
+              rotationAngle: 0,
+              product: PRODUCT_ART,
+            },
+          ],
+        },
+        flags: {
+          shoppingIntegration: true,
+        },
+      };
+
+      const { container } = render(<PageOutput {...props} />);
+      const shoppingAttachment = container.querySelector(
+        'amp-story-shopping-attachment'
+      );
+
+      await expect(shoppingAttachment).toBeInTheDocument();
+      await expect(shoppingAttachment).toHaveAttribute('cta-text', 'Buy now');
+      await expect(shoppingAttachment).toHaveAttribute('theme', 'light');
     });
   });
 
@@ -1604,6 +1793,64 @@ describe('Page output', () => {
         },
         autoAdvance: true,
         defaultPageDuration: 11,
+      };
+
+      await expect(<PageOutput {...props} />).toBeValidAMPStoryPage();
+    });
+
+    // eslint-disable-next-line jest/no-disabled-tests -- TODO: Enable once stable.
+    it.skip('should produce valid output with shopping products', async () => {
+      const props = {
+        id: 'foo',
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
+        page: {
+          id: 'bar',
+          elements: [
+            {
+              id: 'el1',
+              type: 'product',
+              x: 50,
+              y: 50,
+              width: 32,
+              height: 32,
+              rotationAngle: 0,
+              product: PRODUCT_LAMP,
+            },
+            {
+              id: 'el2',
+              type: 'product',
+              x: 100,
+              y: 100,
+              width: 32,
+              height: 32,
+              rotationAngle: 0,
+              product: PRODUCT_ART,
+            },
+            {
+              id: 'el3',
+              type: 'product',
+              x: 150,
+              y: 150,
+              width: 32,
+              height: 32,
+              rotationAngle: 0,
+              product: PRODUCT_CHAIR,
+            },
+            {
+              id: 'el3',
+              type: 'product',
+              x: 200,
+              y: 200,
+              width: 32,
+              height: 32,
+              rotationAngle: 0,
+              product: PRODUCT_FLOWERS,
+            },
+          ],
+        },
+        flags: {
+          shoppingIntegration: true,
+        },
       };
 
       await expect(<PageOutput {...props} />).toBeValidAMPStoryPage();

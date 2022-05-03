@@ -23,10 +23,9 @@ import { getFocalFromOffset } from '@googleforcreators/media';
 import {
   useKeyDownEffect,
   getKeyboardMovement,
-  getTransformFlip,
 } from '@googleforcreators/design-system';
 import { Moveable } from '@googleforcreators/moveable';
-import { StoryPropTypes } from '@googleforcreators/elements';
+import { StoryPropTypes, getTransformFlip } from '@googleforcreators/elements';
 
 function EditPanMoveable({
   setProperties,
@@ -61,6 +60,8 @@ function EditPanMoveable({
   useEffect(() => {
     moveableRef.current?.updateRect();
   });
+
+  useEffect(update, [update]);
 
   useKeyDownEffect(
     croppedMedia,
@@ -103,14 +104,7 @@ function EditPanMoveable({
       draggable
       throttleDrag={0}
       onDrag={({ dist }) => {
-        let [tx, ty] = dist;
-        if (flip?.vertical) {
-          ty = -ty;
-        }
-        if (flip?.horizontal) {
-          tx = -tx;
-        }
-        translateRef.current = [tx, ty];
+        translateRef.current = dist;
         update();
       }}
       onDragEnd={() => {

@@ -19,7 +19,7 @@
  */
 import {
   TOOLTIP_RTL_PLACEMENT,
-  Tooltip as BaseTooltip,
+  BaseTooltip,
   TooltipPropTypes,
   TOOLTIP_PLACEMENT,
 } from '@googleforcreators/design-system';
@@ -37,7 +37,12 @@ export default function Tooltip({
   const derivedPlacement = isRTL ? TOOLTIP_RTL_PLACEMENT[placement] : placement;
 
   return (
-    <BaseTooltip placement={derivedPlacement} isMirrored={isRTL} {...props} />
+    <BaseTooltip
+      placement={derivedPlacement}
+      //TODO: https://github.com/GoogleForCreators/web-stories-wp/issues/11200
+      ignoreMaxOffsetY
+      {...props}
+    />
   );
 }
 Tooltip.propTypes = TooltipPropTypes;

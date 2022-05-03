@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Exit if any command fails.
 set -e
@@ -139,6 +139,15 @@ fi
 echo -e $(status_message "Installing and activating RTL Tester plugin...")
 wp plugin install rtl-tester --activate --force --quiet
 
+echo -e $(status_message "Installing WordPress importer...")
+wp plugin install wordpress-importer --activate --force --quiet
+
+# Only install woocommerce on latest version of WordPress.
+if [ "$WP_VERSION" == "latest" ]; then
+	echo -e $(status_message "Installing WooCommerce plugin...")
+	wp plugin install woocommerce --activate --force --quiet
+fi
+
 echo -e $(status_message "Installing AMP plugin...")
 wp plugin install amp --force --quiet
 
@@ -219,3 +228,11 @@ wp option patch insert web_stories_experiments enableSVG 0
 wp user list --format=yaml
 wp post list --post_type=attachment --format=yaml
 wp plugin list --format=yaml
+
+# Only install woocommerce on latest version of WordPress.
+if [ "$WP_VERSION" == "latest" ]; then
+	echo -e $(status_message "Import sample woocommerce products...")
+	wp import /var/www/html/wp-content/plugins/woocommerce/sample-data/sample_products.xml --authors=skip --quiet
+	# deactivate test etc... can activate as needed
+	wp plugin deactivate woocommerce 
+fi

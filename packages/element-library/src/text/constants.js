@@ -18,11 +18,11 @@
  * External dependencies
  */
 import { createSolid } from '@googleforcreators/patterns';
+import { PanelTypes } from '@googleforcreators/design-system';
 import {
-  PanelTypes,
+  TEXT_ELEMENT_DEFAULT_FONT,
   BACKGROUND_TEXT_MODE,
-} from '@googleforcreators/design-system';
-import { TEXT_ELEMENT_DEFAULT_FONT } from '@googleforcreators/elements';
+} from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -45,6 +45,8 @@ export const defaultAttributes = {
 };
 
 export const hasEditMode = true;
+
+export const hasDesignMenu = true;
 
 export const hasEditModeMoveable = true;
 

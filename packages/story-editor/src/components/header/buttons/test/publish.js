@@ -47,7 +47,7 @@ function arrange({
   checklist: extraChecklistProps,
 } = {}) {
   const saveStory = jest.fn();
-  const onPublishDialogChecklistRequest = jest.fn();
+  const handleReviewChecklist = jest.fn();
   const showPriorityIssues = jest.fn();
 
   useIsUploadingToStory.mockImplementation(() => extraMediaProps?.isUploading);
@@ -89,7 +89,7 @@ function arrange({
     },
     actions: {
       showPriorityIssues,
-      onPublishDialogChecklistRequest,
+      handleReviewChecklist,
     },
   };
   renderWithTheme(

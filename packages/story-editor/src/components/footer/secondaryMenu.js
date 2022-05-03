@@ -87,15 +87,16 @@ function SecondaryMenu({ menu }) {
       })
     );
 
-  const { onResetReviewDialogRequest, reviewDialogRequested } = useCheckpoint(
-    ({
-      actions: { onResetReviewDialogRequest },
-      state: { reviewDialogRequested },
-    }) => ({
-      reviewDialogRequested,
-      onResetReviewDialogRequest,
-    })
-  );
+  const { handleResetReviewChecklist, reviewChecklistRequested } =
+    useCheckpoint(
+      ({
+        actions: { handleResetReviewChecklist },
+        state: { reviewChecklistRequested },
+      }) => ({
+        reviewChecklistRequested,
+        handleResetReviewChecklist,
+      })
+    );
 
   const isActiveTrimOrEdit = useCanvas(
     ({
@@ -155,14 +156,14 @@ function SecondaryMenu({ menu }) {
   ]);
 
   useEffect(() => {
-    if (reviewDialogRequested) {
+    if (reviewChecklistRequested) {
       setPopupRef();
-      onResetReviewDialogRequest();
+      handleResetReviewChecklist();
       openChecklist();
     }
   }, [
-    reviewDialogRequested,
-    onResetReviewDialogRequest,
+    reviewChecklistRequested,
+    handleResetReviewChecklist,
     openChecklist,
     setPopupRef,
   ]);

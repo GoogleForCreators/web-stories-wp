@@ -25,11 +25,11 @@ import {
   BUTTON_TYPES,
   Icons,
   themeHelpers,
-  Tooltip,
 } from '@googleforcreators/design-system';
 import { useRef, memo } from '@googleforcreators/react';
 import { getDefinitionForType } from '@googleforcreators/elements';
 import { LayerText } from '@googleforcreators/element-library';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -39,22 +39,11 @@ import { useStory } from '../../../../app';
 import useCORSProxy from '../../../../utils/useCORSProxy';
 import usePerformanceTracking from '../../../../utils/usePerformanceTracking';
 import { TRACKING_EVENTS } from '../../../../constants';
+import Tooltip from '../../../tooltip';
 import useLayerSelection from './useLayerSelection';
 import { LAYER_HEIGHT } from './constants';
 
-const ActionsContainer = styled.div`
-  position: absolute;
-  display: none;
-  align-items: center;
-  height: 100%;
-  top: 0;
-  right: 0;
-  padding-right: 6px;
-  column-gap: 6px;
-
-  --background-color: ${({ theme }) => theme.colors.bg.secondary};
-  --background-color-opaque: ${({ theme }) =>
-    rgba(theme.colors.bg.secondary, 0)};
+const fadeOutCss = css`
   background-color: var(--background-color);
 
   ::before {
@@ -74,6 +63,19 @@ const ActionsContainer = styled.div`
   }
 `;
 
+const ActionsContainer = styled.div`
+  position: absolute;
+  display: none;
+  align-items: center;
+  height: 100%;
+  top: 0;
+  right: 0;
+  padding-right: 6px;
+  column-gap: 6px;
+
+  ${fadeOutCss}
+`;
+
 const LayerContainer = styled.div.attrs({
   // Because the layer panel is aria-hidden, we need something else to select by
   'data-testid': 'layer-option',
@@ -82,6 +84,10 @@ const LayerContainer = styled.div.attrs({
   height: ${LAYER_HEIGHT}px;
   width: 100%;
   overflow: hidden;
+
+  --background-color: ${({ theme }) => theme.colors.bg.secondary};
+  --background-color-opaque: ${({ theme }) =>
+    rgba(theme.colors.bg.secondary, 0)};
 
   :is(:hover, :focus-within) ${ActionsContainer} {
     display: inline-flex;
@@ -113,7 +119,8 @@ const LayerButton = styled(Button).attrs({
     isSelected &&
     css`
       background: ${theme.colors.interactiveBg.tertiaryPress};
-      + * {
+      &,
+      & + * {
         --background-color: ${theme.colors.interactiveBg.tertiaryPress};
         --background-color-opaque: ${rgba(
           theme.colors.interactiveBg.tertiaryPress,
@@ -126,6 +133,7 @@ const LayerButton = styled(Button).attrs({
   :hover {
     background: ${({ theme }) => theme.colors.interactiveBg.tertiaryHover};
   }
+  :hover,
   :hover + * {
     --background-color: ${({ theme }) =>
       theme.colors.interactiveBg.tertiaryHover};
@@ -136,6 +144,7 @@ const LayerButton = styled(Button).attrs({
   :active {
     background: ${({ theme }) => theme.colors.interactiveBg.tertiaryPress};
   }
+  :active,
   :active + * {
     --background-color: ${({ theme }) =>
       theme.colors.interactiveBg.tertiaryPress};
@@ -170,6 +179,8 @@ const IconWrapper = styled.div`
   right: 0;
   width: 32px;
   aspect-ratio: 1;
+
+  ${fadeOutCss}
 
   svg {
     position: relative;
@@ -253,16 +264,19 @@ function preventReorder(e) {
 }
 
 function Layer({ element }) {
+  const isLayerLockingEnabled = useFeature('layerLocking');
   const { LayerIcon, LayerContent } = getDefinitionForType(element.type);
   const { isSelected, handleClick } = useLayerSelection(element);
   const { isDefaultBackground } = element;
   const {
     duplicateElementsById,
+    updateElementById,
     deleteElementById,
     currentPageBackgroundColor,
   } = useStory(({ actions, state }) => ({
     duplicateElementsById: actions.duplicateElementsById,
     deleteElementById: actions.deleteElementById,
+    updateElementById: actions.updateElementById,
     currentPageBackgroundColor:
       !isDefaultBackground || state.currentPage?.backgroundColor,
   }));
@@ -281,6 +295,12 @@ function Layer({ element }) {
   });
 
   const layerId = `layer-${element.id}`;
+
+  const lockTitle = element.isLocked
+    ? __('Unlock Layer', 'web-stories')
+    : __('Lock Layer', 'web-stories');
+
+  const LockIcon = element.isLocked ? Icons.LockClosed : Icons.LockOpen;
 
   return (
     <LayerContainer>
@@ -307,56 +327,64 @@ function Layer({ element }) {
           </LayerContentContainer>
           {element.isBackground && (
             <IconWrapper>
+              <Icons.LockFilledClosed />
+            </IconWrapper>
+          )}
+          {element.isLocked && isLayerLockingEnabled && (
+            <IconWrapper>
               <Icons.LockClosed />
             </IconWrapper>
           )}
         </LayerDescription>
       </LayerButton>
-      <ActionsContainer>
-        {element.isBackground ? (
-          <LayerAction
-            aria-label={__('Locked', 'web-stories')}
-            aria-describedby={layerId}
-            disabled
+      {!element.isBackground && (
+        <ActionsContainer>
+          <Tooltip title={__('Delete Layer', 'web-stories')} hasTail isDelayed>
+            <LayerAction
+              ref={deleteButtonRef}
+              aria-label={__('Delete', 'web-stories')}
+              aria-describedby={layerId}
+              onPointerDown={preventReorder}
+              onClick={() => deleteElementById({ elementId: element.id })}
+            >
+              <Icons.Trash />
+            </LayerAction>
+          </Tooltip>
+          <Tooltip
+            title={__('Duplicate Layer', 'web-stories')}
+            hasTail
+            isDelayed
           >
-            <Icons.LockClosed />
-          </LayerAction>
-        ) : (
-          <>
-            <Tooltip
-              title={__('Delete Layer', 'web-stories')}
-              hasTail
-              isDelayed
+            <LayerAction
+              aria-label={__('Duplicate', 'web-stories')}
+              aria-describedby={layerId}
+              onPointerDown={preventReorder}
+              onClick={() =>
+                duplicateElementsById({ elementIds: [element.id] })
+              }
             >
+              <Icons.PagePlus />
+            </LayerAction>
+          </Tooltip>
+          {isLayerLockingEnabled && (
+            <Tooltip title={lockTitle} hasTail isDelayed>
               <LayerAction
-                ref={deleteButtonRef}
-                aria-label={__('Delete', 'web-stories')}
-                aria-describedby={layerId}
-                onPointerDown={preventReorder}
-                onClick={() => deleteElementById({ elementId: element.id })}
-              >
-                <Icons.Trash />
-              </LayerAction>
-            </Tooltip>
-            <Tooltip
-              title={__('Duplicate Layer', 'web-stories')}
-              hasTail
-              isDelayed
-            >
-              <LayerAction
-                aria-label={__('Duplicate', 'web-stories')}
+                aria-label={__('Lock/Unlock', 'web-stories')}
                 aria-describedby={layerId}
                 onPointerDown={preventReorder}
                 onClick={() =>
-                  duplicateElementsById({ elementIds: [element.id] })
+                  updateElementById({
+                    elementId: element.id,
+                    properties: { isLocked: !element.isLocked },
+                  })
                 }
               >
-                <Icons.PagePlus />
+                <LockIcon />
               </LayerAction>
             </Tooltip>
-          </>
-        )}
-      </ActionsContainer>
+          )}
+        </ActionsContainer>
+      )}
     </LayerContainer>
   );
 }

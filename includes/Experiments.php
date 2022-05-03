@@ -300,30 +300,6 @@ class Experiments extends Service_Base implements HasRequirements {
 				'default'     => true,
 			],
 			/**
-			 * Author: @miina
-			 * Issue: #9880
-			 * Creation date: 2021-12-15
-			 */
-			[
-				'name'        => 'customFonts',
-				'label'       => __( 'Custom Fonts', 'web-stories' ),
-				'description' => __( 'Enable adding custom fonts', 'web-stories' ),
-				'group'       => 'general',
-				'default'     => true,
-			],
-			/**
-			 * Author: @spacedmonkey
-			 * Issue: #8821
-			 * Creation date: 2022-01-19
-			 */
-			[
-				'name'        => 'enhancedPageBackgroundAudio',
-				'label'       => __( 'Page Background Audio', 'web-stories' ),
-				'description' => __( 'Enable adding captions to background audio', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-			/**
 			 * Author: @barklund
 			 * Issue: #10112
 			 * Creation date: 2022-01-27
@@ -347,6 +323,16 @@ class Experiments extends Service_Base implements HasRequirements {
 				'group'       => 'editor',
 			],
 			/**
+			 * Issue: #10846
+			 * Creation date: 2022-03-28
+			 */
+			[
+				'name'        => 'shoppingIntegration',
+				'label'       => __( 'Shopping', 'web-stories' ),
+				'description' => __( 'Enable shopping integration in the editor', 'web-stories' ),
+				'group'       => 'general',
+			],
+			/**
 			 * Author: @spacedmonkey
 			 * Issue: #11081
 			 * Creation date: 2022-03-30
@@ -355,6 +341,28 @@ class Experiments extends Service_Base implements HasRequirements {
 				'name'        => 'captionHotlinking',
 				'label'       => __( 'Caption hotlinking', 'web-stories' ),
 				'description' => __( 'Enable hotlinking of captions', 'web-stories' ),
+				'group'       => 'editor',
+			],
+			/**
+			 * Author: @spacedmonkey
+			 * Issue: #10888
+			 * Creation date: 2022-04-08
+			 */
+			[
+				'name'        => 'audioHotlinking',
+				'label'       => __( 'Audio hotlinking', 'web-stories' ),
+				'description' => __( 'Enable hotlinking background audio', 'web-stories' ),
+				'group'       => 'editor',
+			],
+			/**
+			 * Author: @barklund
+			 * Issue: #7332
+			 * Creation date: 2022-04-19
+			 */
+			[
+				'name'        => 'layerLocking',
+				'label'       => __( 'Layer locking', 'web-stories' ),
+				'description' => __( 'Enable layer locking', 'web-stories' ),
 				'group'       => 'editor',
 			],
 		];

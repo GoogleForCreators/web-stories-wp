@@ -27,6 +27,7 @@ import { useEscapeToBlurEffect } from '@googleforcreators/design-system';
  * Internal dependencies
  */
 import TabView from '../tabview';
+import useHighlights from '../../app/highlights/useHighlights';
 import useSidebar from './useSidebar';
 import SidebarContent from './sidebarContent';
 import { getTabId } from './utils';
@@ -52,21 +53,36 @@ const UnjustifiedTabView = styled(TabView)`
 `;
 
 function SidebarLayout() {
-  const {
-    state: { tab, tabRefs },
-    actions: { setSidebarContentNode, setTab },
-    refs: { sidebar },
-    data: { tabs },
-  } = useSidebar();
+  const { tab, tabRefs, setSidebarContentNode, setTab, sidebar, tabs } =
+    useSidebar(
+      ({
+        state: { tab, tabRefs },
+        actions: { setSidebarContentNode, setTab },
+        refs: { sidebar },
+        data: { tabs },
+      }) => ({
+        tab,
+        tabRefs,
+        setSidebarContentNode,
+        setTab,
+        sidebar,
+        tabs,
+      })
+    );
+
+  const { resetHighlight } = useHighlights((state) => ({
+    resetHighlight: state.onFocusOut,
+  }));
 
   const onTabChange = useCallback(
     (id) => {
       setTab(id);
+      resetHighlight();
       trackEvent('inspector_tab_change', {
         name: id,
       });
     },
-    [setTab]
+    [setTab, resetHighlight]
   );
 
   useEscapeToBlurEffect(sidebar);

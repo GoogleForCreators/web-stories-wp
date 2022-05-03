@@ -36,6 +36,7 @@ import BackgroundAudio from './utils/backgroundAudio';
 import getTextElementTagNames from './utils/getTextElementTagNames';
 import getAutoAdvanceAfter from './utils/getAutoAdvanceAfter';
 import Outlink from './utils/outlink';
+import ShoppingAttachment from './utils/shoppingAttachment';
 
 const ASPECT_RATIO = `${PAGE_WIDTH}:${PAGE_HEIGHT}`;
 
@@ -43,14 +44,15 @@ function OutputPage({
   page,
   autoAdvance = DEFAULT_AUTO_ADVANCE,
   defaultPageDuration = DEFAULT_PAGE_DURATION,
+  flags,
 }) {
   const {
     id,
     animations,
     elements,
     backgroundColor,
-    backgroundAudio = {},
-    pageAttachment = {},
+    backgroundAudio,
+    pageAttachment,
   } = page;
 
   const [backgroundElement, ...otherElements] = elements;
@@ -91,16 +93,21 @@ function OutputPage({
     return element;
   });
 
+  const products = elements
+    .filter(({ type }) => type === ELEMENT_TYPES.PRODUCT)
+    .map(({ product }) => product)
+    .filter(Boolean);
+
   const videoCaptions = elements
     .filter(
       ({ type, tracks }) => type === ELEMENT_TYPES.VIDEO && tracks?.length > 0
     )
     .map(({ id: videoId }) => `el-${videoId}-captions`);
 
-  const backgroundAudioSrc = backgroundAudio.resource?.src;
-  const hasBackgroundAudioCaptions = backgroundAudio.tracks?.length > 0;
+  const backgroundAudioSrc = backgroundAudio?.resource?.src;
+  const hasBackgroundAudioCaptions = backgroundAudio?.tracks?.length > 0;
   const hasNonLoopingBackgroundAudio =
-    false === backgroundAudio.loop && backgroundAudio.resource?.length;
+    false === backgroundAudio?.loop && backgroundAudio?.resource?.length;
   const needsEnhancedBackgroundAudio =
     hasBackgroundAudioCaptions || hasNonLoopingBackgroundAudio;
 
@@ -181,6 +188,9 @@ function OutputPage({
 
       {/* <amp-story-page-outlink> needs to be the last child element */}
       {pageAttachment?.url && <Outlink {...pageAttachment} />}
+      {products.length > 0 && flags?.shoppingIntegration && (
+        <ShoppingAttachment products={products} {...pageAttachment} />
+      )}
     </amp-story-page>
   );
 }

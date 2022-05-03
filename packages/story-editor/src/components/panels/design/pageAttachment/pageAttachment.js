@@ -70,11 +70,22 @@ const Space = styled.div`
   width: 20px;
 `;
 
+const HelperText = styled(Text).attrs({
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+})`
+  color: ${({ theme }) => theme.colors.fg.secondary};
+`;
+
 function PageAttachmentPanel() {
-  const { currentPage, updateCurrentPageProperties } = useStory((state) => ({
-    updateCurrentPageProperties: state.actions.updateCurrentPageProperties,
-    currentPage: state.state.currentPage,
-  }));
+  const { currentPage, updateCurrentPageProperties, hasProducts } = useStory(
+    ({ state, actions }) => ({
+      updateCurrentPageProperties: actions.updateCurrentPageProperties,
+      currentPage: state.currentPage,
+      hasProducts: state.currentPage.elements?.some(
+        ({ type, product }) => type === 'product' && product?.productId
+      ),
+    })
+  );
   const { setDisplayLinkGuidelines } = useCanvas((state) => ({
     setDisplayLinkGuidelines: state.actions.setDisplayLinkGuidelines,
   }));
@@ -83,7 +94,9 @@ function PageAttachmentPanel() {
   } = useAPI();
 
   const { pageAttachment = {} } = currentPage;
-  const defaultCTA = __('Learn more', 'web-stories');
+  const defaultCTA = hasProducts
+    ? __('Shop Now', 'web-stories')
+    : __('Learn more', 'web-stories');
   const { url, ctaText = defaultCTA, icon, theme, rel = [] } = pageAttachment;
   const [_ctaText, _setCtaText] = useState(ctaText);
   const [_url, _setUrl] = useState(url);
@@ -196,6 +209,15 @@ function PageAttachmentPanel() {
     [debouncedUpdate]
   );
 
+  const handleChangeTheme = useCallback(
+    (evt) => {
+      updatePageAttachment({
+        theme: evt.target.checked ? OUTLINK_THEME.DARK : OUTLINK_THEME.LIGHT,
+      });
+    },
+    [updatePageAttachment]
+  );
+
   const handleChangeIcon = useCallback(
     /**
      * Handle page attachment icon change.
@@ -242,31 +264,43 @@ function PageAttachmentPanel() {
         )
       : __('Invalid link', 'web-stories');
   }
+
   return (
     <SimplePanel
       name="pageAttachment"
-      title={__('Page Attachment', 'web-stories')}
+      title={__('Call to Action', 'web-stories')}
       collapsedByDefault={false}
     >
-      <LinkInput
-        onChange={(value) => handleChangeUrl(value?.trim())}
-        onBlur={() => {
-          debouncedUpdate.cancel();
-          updatePageAttachment({
-            url: _url?.trim().length ? withProtocol(_url.trim()) : '',
-          });
-        }}
-        onFocus={onFocus}
-        value={_url}
-        clear
-        aria-label={__(
-          'Type an address to add a page attachment link',
-          'web-stories'
-        )}
-        hasError={hasError}
-        hint={hint}
-      />
-      {hasValidUrl && (
+      {hasProducts ? (
+        <Row>
+          <HelperText>
+            {__(
+              'Since there are products on this page, you cannot add a regular page attachment, but only customize the appearance of the shopping call to action.',
+              'web-stories'
+            )}
+          </HelperText>
+        </Row>
+      ) : (
+        <LinkInput
+          onChange={(value) => handleChangeUrl(value?.trim())}
+          onBlur={() => {
+            debouncedUpdate.cancel();
+            updatePageAttachment({
+              url: _url?.trim().length ? withProtocol(_url.trim()) : '',
+            });
+          }}
+          onFocus={onFocus}
+          value={_url}
+          clear
+          aria-label={__(
+            'Type an address to add a page attachment link',
+            'web-stories'
+          )}
+          hasError={hasError}
+          hint={hint}
+        />
+      )}
+      {(hasValidUrl || hasProducts) && (
         <>
           <Row>
             <Input
@@ -282,13 +316,7 @@ function PageAttachmentPanel() {
             <StyledCheckbox
               id={checkboxId}
               checked={theme === OUTLINK_THEME.DARK}
-              onChange={(evt) =>
-                updatePageAttachment({
-                  theme: evt.target.checked
-                    ? OUTLINK_THEME.DARK
-                    : OUTLINK_THEME.LIGHT,
-                })
-              }
+              onChange={handleChangeTheme}
             />
             <Label htmlFor={checkboxId}>
               <Text
@@ -299,6 +327,10 @@ function PageAttachmentPanel() {
               </Text>
             </Label>
           </StyledRow>
+        </>
+      )}
+      {hasValidUrl && (
+        <>
           <StyledRow>
             <LinkIcon
               handleChange={handleChangeIcon}

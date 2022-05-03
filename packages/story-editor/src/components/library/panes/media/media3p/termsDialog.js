@@ -31,7 +31,7 @@ import {
  */
 import Dialog from '../../../../dialog';
 
-const TERMS_URL = 'https://wp.stories.google/docs#Terms';
+const TERMS_URL = 'https://wp.stories.google/docs/terms/';
 
 function TermsDialog() {
   const hasAcknowledgedTerms3p = localStore.getItemByKey(

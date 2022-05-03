@@ -18,6 +18,7 @@ export { default as createNewStory } from './createNewStory';
 export { default as previewStory } from './previewStory';
 export { default as visitDashboard } from './visitDashboard';
 export { default as visitSettings } from './visitSettings';
+export { default as addRequestInterception } from './addRequestInterception';
 export { default as withExperimentalFeatures } from './experimentalFeatures';
 export { default as withDisabledToolbarOnFrontend } from './toolbarProfileOption';
 export { default as withUser } from './withUser';

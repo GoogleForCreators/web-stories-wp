@@ -18,12 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import {
-  useCallback,
-  useEffect,
-  useState,
-  forwardRef,
-} from '@googleforcreators/react';
+import { useCallback, useEffect, forwardRef } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import styled from 'styled-components';
 import {
@@ -36,13 +31,10 @@ import { trackEvent } from '@googleforcreators/tracking';
 import {
   Row,
   SimplePanel,
-  ReviewChecklistDialog,
   useStory,
-  useCheckpoint,
   useRefreshPostEditURL,
   useIsUploadingToStory,
 } from '@googleforcreators/story-editor';
-import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -118,19 +110,6 @@ function StatusPanel({
       title,
       storyId,
       visibility,
-    })
-  );
-
-  const isUpdatedPublishModalEnabled = useFeature(
-    'enableUpdatedPublishStoryModal'
-  );
-
-  const [showReviewDialog, setShowReviewDialog] = useState(false);
-  const closeReviewDialog = useCallback(() => setShowReviewDialog(false), []);
-
-  const { shouldReviewDialogBeSeen } = useCheckpoint(
-    ({ state: { shouldReviewDialogBeSeen } }) => ({
-      shouldReviewDialogBeSeen,
     })
   );
 
@@ -242,16 +221,7 @@ function StatusPanel({
           break;
 
         case VISIBILITY.PRIVATE:
-          if (
-            !isUpdatedPublishModalEnabled &&
-            shouldReviewDialogBeSeen &&
-            !isAlreadyPublished
-          ) {
-            setShowReviewDialog(true);
-            properties.visibility = VISIBILITY.PRIVATE;
-          } else {
-            publishPrivately();
-          }
+          publishPrivately();
           return;
 
         case VISIBILITY.PASSWORD_PROTECTED:
@@ -273,56 +243,46 @@ function StatusPanel({
       password,
       updateStory,
       publishPrivately,
-      shouldReviewDialogBeSeen,
       isAlreadyPublished,
-      isUpdatedPublishModalEnabled,
     ]
   );
 
   return (
-    <>
-      <SimplePanel
-        name={nameOverride || 'status'}
-        title={__('Visibility', 'web-stories')}
-        canCollapse={canCollapse}
-        isPersistable={isPersistable}
-        collapsedByDefault={false}
-        {...rest}
-      >
-        <>
+    <SimplePanel
+      name={nameOverride || 'status'}
+      title={__('Visibility', 'web-stories')}
+      canCollapse={canCollapse}
+      isPersistable={isPersistable}
+      collapsedByDefault={false}
+      {...rest}
+    >
+      <>
+        <Row>
+          <DropDown
+            options={visibilityOptions}
+            selectedValue={visibility}
+            onMenuItemClick={handleChangeVisibility}
+            popupZIndex={popupZIndex}
+            disabled={visibilityOptions.length <= 1}
+            renderItem={RenderItemOverride}
+            hint={
+              visibilityOptions.find((option) => visibility === option.value)
+                ?.helper
+            }
+          />
+        </Row>
+        {visibility === VISIBILITY.PASSWORD_PROTECTED && (
           <Row>
-            <DropDown
-              options={visibilityOptions}
-              selectedValue={visibility}
-              onMenuItemClick={handleChangeVisibility}
-              popupZIndex={popupZIndex}
-              disabled={visibilityOptions.length <= 1}
-              renderItem={RenderItemOverride}
-              hint={
-                visibilityOptions.find((option) => visibility === option.value)
-                  ?.helper
-              }
+            <Input
+              aria-label={__('Password', 'web-stories')}
+              value={password}
+              onChange={handleChangePassword}
+              placeholder={__('Enter a password', 'web-stories')}
             />
           </Row>
-          {visibility === VISIBILITY.PASSWORD_PROTECTED && (
-            <Row>
-              <Input
-                aria-label={__('Password', 'web-stories')}
-                value={password}
-                onChange={handleChangePassword}
-                placeholder={__('Enter a password', 'web-stories')}
-              />
-            </Row>
-          )}
-        </>
-      </SimplePanel>
-      <ReviewChecklistDialog
-        isOpen={showReviewDialog}
-        onIgnore={publishPrivately}
-        onClose={closeReviewDialog}
-        onReview={closeReviewDialog}
-      />
-    </>
+        )}
+      </>
+    </SimplePanel>
   );
 }
 

@@ -39,12 +39,14 @@ import {
   useRichText,
 } from '@googleforcreators/rich-text';
 import { stripHTML } from '@googleforcreators/dom';
-import { BACKGROUND_TEXT_MODE } from '@googleforcreators/design-system';
 import {
   getBorderPositionCSS,
   shouldDisplayBorder,
 } from '@googleforcreators/masks';
-import { StoryPropTypes } from '@googleforcreators/elements';
+import {
+  StoryPropTypes,
+  BACKGROUND_TEXT_MODE,
+} from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -71,9 +73,7 @@ import {
 const Wrapper = styled.div`
   ${elementFillContent}
   ${elementWithBackgroundColor}
-
   --faux-selection-color: inherit;
-
   span {
     box-decoration-break: clone;
   }
@@ -85,7 +85,6 @@ const Wrapper = styled.div`
 const TextBox = styled.div`
   ${elementWithFont}
   ${elementWithTextParagraphStyle}
-
   opacity: ${({ opacity }) =>
     typeof opacity !== 'undefined' ? opacity / 100 : null};
   position: absolute;

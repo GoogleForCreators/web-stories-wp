@@ -21,4 +21,5 @@ export const PANE_IDS = {
   SHAPES: 'shapes',
   ELEMENTS: 'elements',
   PAGE_TEMPLATES: 'pageTemplates',
+  SHOPPING: 'shopping',
 };
