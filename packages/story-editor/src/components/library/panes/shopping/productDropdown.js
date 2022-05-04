@@ -67,9 +67,7 @@ function ProductDropdown({ product, setProduct }) {
     })();
   }, [getProducts]);
 
-  const onChange = ({ product: newProduct }) => {
-    setProduct(newProduct);
-  };
+  const onChange = ({ product: newProduct }) => setProduct(newProduct);
 
   const getProductsByQuery = useCallback(
     async (value) => {
