@@ -72,7 +72,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
       const isStoryAlreadyPublished = ['publish', 'future', 'private'].includes(
         story.status
       );
-      const isStoryAlreadyPending = ['pending'].includes(story.status);
+      const isStoryAlreadyPending = 'pending' === story.status;
       const trackTiming = getTimeTracker('load_save_story');
 
       // Wrapping everything in a Promise so we can catch
@@ -117,7 +117,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
           const isStoryPublished = ['publish', 'future', 'private'].includes(
             data.status
           );
-          const isStoryPending = ['pending'].includes(data.status);
+          const isStoryPending = 'pending' === data.status;
           setIsFreshlyPublished(!isStoryAlreadyPublished && isStoryPublished);
           setIsFreshlyPending(!isStoryAlreadyPending && isStoryPending);
         })
