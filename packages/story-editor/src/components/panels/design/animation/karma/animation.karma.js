@@ -39,7 +39,7 @@ describe('Animation Panel', function () {
     fixture.restore();
   });
 
-  async function getCurrntPage() {
+  async function getCurrentPage() {
     const {
       state: { currentPage },
     } = await fixture.renderHook(() => useStory());
@@ -228,10 +228,10 @@ describe('Animation Panel', function () {
   });
 
   it('should render the animation panel with inputs disabled when page becomes the first page', async function () {
-    const { id: firstPageId } = await getCurrntPage();
+    const { id: firstPageId } = await getCurrentPage();
     // create a new page with in the story
     await fixture.events.click(fixture.editor.canvas.pageActions.addPage);
-    const { id: secondPageId } = await getCurrntPage();
+    const { id: secondPageId } = await getCurrentPage();
 
     // add text to the canvas
     await fixture.editor.library.textTab.click();
@@ -266,14 +266,14 @@ describe('Animation Panel', function () {
     const pageAtIndex = fixture.editor.footer.carousel.pages[0].node;
     await fixture.events.click(pageAtIndex);
 
-    const { id: shouldBeFirstPageId } = await getCurrntPage();
+    const { id: shouldBeFirstPageId } = await getCurrentPage();
     expect(shouldBeFirstPageId).toBe(firstPageId);
 
     // delete the first page making the second page move to the first page
     await fixture.events.keyboard.down('del');
     await fixture.events.keyboard.up('del');
 
-    const { id: shouldBeSecondPageId } = await getCurrntPage();
+    const { id: shouldBeSecondPageId } = await getCurrentPage();
     expect(shouldBeSecondPageId).toBe(secondPageId);
 
     // select the text component in the canvas
