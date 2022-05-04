@@ -26,6 +26,8 @@ import {
   BUTTON_TYPES,
   BUTTON_SIZES,
   DropDown,
+  localStore,
+  LOCAL_STORAGE_PREFIX,
 } from '@googleforcreators/design-system';
 import {
   useState,
@@ -65,8 +67,12 @@ function Modal({ isOpen, onClose }) {
   const [isImageCapture, setIsImageCapture] = useState(false);
   const [enableVideo, setEnableVideo] = useState(true);
   const [enableAudio, setEnableAudio] = useState(true);
-  const [videoInput, setVideoInput] = useState(null);
-  const [audioInput, setAudioInput] = useState(null);
+  const [videoInput, setVideoInput] = useState(
+    localStore.getItemByKey(LOCAL_STORAGE_PREFIX.MEDIA_RECORDING_VIDEO_INPUT)
+  );
+  const [audioInput, setAudioInput] = useState(
+    localStore.getItemByKey(LOCAL_STORAGE_PREFIX.MEDIA_RECORDING_AUDIO_INPUT)
+  );
   const [mediaDevices, setMediaDevices] = useState([]);
 
   const updateMediaDevices = useCallback(async () => {
@@ -163,6 +169,10 @@ function Modal({ isOpen, onClose }) {
   const onChangeVideoInput = useCallback(
     (_event, value) => {
       setVideoInput(value);
+      localStore.setItemByKey(
+        LOCAL_STORAGE_PREFIX.MEDIA_RECORDING_VIDEO_INPUT,
+        value
+      );
 
       if (isRecording) {
         stopRecording();
@@ -175,6 +185,10 @@ function Modal({ isOpen, onClose }) {
   const onChangeAudioInput = useCallback(
     (_event, value) => {
       setAudioInput(value);
+      localStore.setItemByKey(
+        LOCAL_STORAGE_PREFIX.MEDIA_RECORDING_AUDIO_INPUT,
+        value
+      );
 
       if (isRecording) {
         stopRecording();
