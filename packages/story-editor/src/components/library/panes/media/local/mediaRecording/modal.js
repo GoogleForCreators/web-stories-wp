@@ -124,14 +124,6 @@ function Modal({ isOpen, onClose }) {
     .filter((device) => device.kind === 'audioinput')
     .map(({ deviceId, label }) => ({ value: deviceId, label }));
 
-  const onChangeVideoInput = useCallback((_event, value) => {
-    setVideoInput(value);
-  }, []);
-
-  const onChangeAudioInput = useCallback((_event, value) => {
-    setAudioInput(value);
-  }, []);
-
   const onStop = useCallback((blob) => {
     const f = blobToFile(blob, 'test-recording.webm', 'video/webm');
     setFile(f);
@@ -145,6 +137,7 @@ function Modal({ isOpen, onClose }) {
     stopRecording,
     startRecording,
     liveStream,
+    getMediaStream,
     clearMediaStream,
     clearMediaBlob,
   } = useMediaRecorder({
@@ -156,6 +149,40 @@ function Modal({ isOpen, onClose }) {
     },
     onStop: onStop,
   });
+
+  const isIdle = status === 'idle';
+  const isRecording = status === 'recording';
+
+  // Try to get permissions as soon as the modal opens.
+  useEffect(() => {
+    if (isOpen && isIdle) {
+      getMediaStream();
+    }
+  }, [isOpen, isIdle, getMediaStream]);
+
+  const onChangeVideoInput = useCallback(
+    (_event, value) => {
+      setVideoInput(value);
+
+      if (isRecording) {
+        stopRecording();
+        startRecording();
+      }
+    },
+    [stopRecording, startRecording, isRecording]
+  );
+
+  const onChangeAudioInput = useCallback(
+    (_event, value) => {
+      setAudioInput(value);
+
+      if (isRecording) {
+        stopRecording();
+        startRecording();
+      }
+    },
+    [stopRecording, startRecording, isRecording]
+  );
 
   useEffect(() => {
     if (status === 'ready') {
@@ -187,20 +214,18 @@ function Modal({ isOpen, onClose }) {
 
     // handling cleanup for Image capture
     // in this case we don't want onStop to override the file
-    if (status === 'recording') {
+    if (isRecording) {
       stopRecording();
       setIsImageCapture(false);
       setFile(null);
     }
-  }, [file, uploadWithPreview, onClose, status, stopRecording]);
+  }, [file, uploadWithPreview, onClose, isRecording, stopRecording]);
 
   useEffect(() => {
     if (videoRef.current && liveStream) {
       videoRef.current.srcObject = liveStream;
     }
   }, [liveStream]);
-
-  const isRecording = status === 'recording';
 
   const videoToggleId = useMemo(() => `toggle_${uuidv4()}`, []);
   const audioToggleId = useMemo(() => `toggle_${uuidv4()}`, []);
