@@ -19,6 +19,7 @@
  */
 import { Fixture } from '../../../../karma';
 import { useStory } from '../../../../app/story';
+import { tabToCanvasFocusContainer } from '../../../../components/floatingMenu/karma/utils';
 
 describe('Shopping integration', () => {
   let fixture;
@@ -62,7 +63,7 @@ describe('Shopping integration', () => {
     return storyContext.state.selectedElements[0];
   };
 
-  describe('Floating menu', () => {
+  describe('Product floating menu', () => {
     it('should render products menu', async () => {
       const productTitle = 'Album';
       await insertProduct(productTitle);
@@ -85,6 +86,26 @@ describe('Shopping integration', () => {
       const selectedElement = await getSelectedElement();
       await expect(selectedElement?.product?.productTitle).toBe(
         newProductTitle
+      );
+    });
+
+    it('should show floating menu when product is selected on canvas', async () => {
+      const productTitle = 'Single';
+      await insertProduct(productTitle);
+      const focusContainer = fixture.screen.getByTestId('canvas-focus-container');
+
+      // deselect the product
+      await fixture.events.click(focusContainer);
+      const canvasElement = await getSelectedElement()
+      await expect(canvasElement.isBackground).toBe(true);
+
+      // reselect the product
+      await tabToCanvasFocusContainer(focusContainer, fixture);
+      await fixture.events.keyboard.press('Enter');
+      await fixture.events.keyboard.press('Tab');
+      const selectedElement = await getSelectedElement();
+      await expect(selectedElement?.product?.productTitle).toBe(
+        productTitle
       );
     });
   });
