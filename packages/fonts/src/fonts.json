@@ -22886,6 +22886,37 @@
     }
   },
   {
+    "family": "Noto Emoji",
+    "fallbacks": ["sans-serif"],
+    "weights": [300, 400, 500, 600, 700],
+    "styles": ["regular"],
+    "variants": [
+      [0, 300],
+      [0, 400],
+      [0, 500],
+      [0, 600],
+      [0, 700]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 2048,
+      "asc": 1900,
+      "des": -500,
+      "tAsc": 1900,
+      "tDes": -500,
+      "tLGap": 0,
+      "wAsc": 1900,
+      "wDes": 500,
+      "xH": 0,
+      "capH": 1900,
+      "yMin": -390,
+      "yMax": 1790,
+      "hAsc": 1900,
+      "hDes": -500,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Noto Kufi Arabic",
     "fallbacks": ["sans-serif"],
     "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
@@ -31514,6 +31545,37 @@
       "yMax": 976,
       "hAsc": 976,
       "hDes": -284,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Radio Canada",
+    "fallbacks": ["sans-serif"],
+    "weights": [300, 400, 500, 600, 700],
+    "styles": ["regular"],
+    "variants": [
+      [0, 300],
+      [0, 400],
+      [0, 500],
+      [0, 600],
+      [0, 700]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 945,
+      "des": -255,
+      "tAsc": 945,
+      "tDes": -255,
+      "tLGap": 0,
+      "wAsc": 1193,
+      "wDes": 448,
+      "xH": 515,
+      "capH": 690,
+      "yMin": -288,
+      "yMax": 1152,
+      "hAsc": 945,
+      "hDes": -255,
       "lGap": 0
     }
   },

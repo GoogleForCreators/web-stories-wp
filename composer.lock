@@ -1533,24 +1533,24 @@
         },
         {
             "name": "php-stubs/woocommerce-stubs",
-            "version": "v6.0.0",
+            "version": "v6.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-stubs/woocommerce-stubs.git",
-                "reference": "65e6be8a1b74b7be5d0d5591262342ff116f93db"
+                "reference": "fa5da21d41cfead6210391c0879cee9225f29cdb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-stubs/woocommerce-stubs/zipball/65e6be8a1b74b7be5d0d5591262342ff116f93db",
-                "reference": "65e6be8a1b74b7be5d0d5591262342ff116f93db",
+                "url": "https://api.github.com/repos/php-stubs/woocommerce-stubs/zipball/fa5da21d41cfead6210391c0879cee9225f29cdb",
+                "reference": "fa5da21d41cfead6210391c0879cee9225f29cdb",
                 "shasum": ""
             },
             "require": {
                 "php-stubs/wordpress-stubs": "^5.3.0"
             },
             "require-dev": {
-                "giacocorsiglia/stubs-generator": "^0.5.0",
-                "php": "~7.1"
+                "php": "~7.1",
+                "php-stubs/generator": "^0.8.0"
             },
             "suggest": {
                 "symfony/polyfill-php73": "Symfony polyfill backporting some PHP 7.3+ features to lower PHP versions",
@@ -1571,9 +1571,9 @@
             ],
             "support": {
                 "issues": "https://github.com/php-stubs/woocommerce-stubs/issues",
-                "source": "https://github.com/php-stubs/woocommerce-stubs/tree/v6.0.0"
+                "source": "https://github.com/php-stubs/woocommerce-stubs/tree/v6.4.1"
             },
-            "time": "2022-01-04T22:00:24+00:00"
+            "time": "2022-04-30T07:39:42+00:00"
         },
         {
             "name": "php-stubs/wordpress-stubs",
