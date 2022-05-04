@@ -75,7 +75,7 @@ describe('Animation Panel', function () {
     await fixture.events.click(
       fixture.editor.sidebar.designPanel.animationSection
     );
-    const panel = await fixture.screen.queryByRole('region', {
+    const panel = fixture.screen.queryByRole('region', {
       name: /^Animation$/,
     });
     expect(panel).toBeNull();
@@ -100,7 +100,7 @@ describe('Animation Panel', function () {
     const effectChooser = panel.effectChooser;
     await fixture.events.click(effectChooser);
     await fixture.events.sleep(300);
-    const fadeIn = await fixture.screen.getByRole('option', {
+    const fadeIn = fixture.screen.getByRole('option', {
       name: /^"Fade In" Effect$/,
     });
     await fixture.events.click(fadeIn);

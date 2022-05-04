@@ -38,9 +38,7 @@ describe('CUJ: Creator can view their stories in grid view', () => {
   beforeEach(async () => {
     fixture = new Fixture();
     await fixture.render();
-    dashboardGridItems = await fixture.screen.getAllByTestId(
-      /^story-grid-item/
-    );
+    dashboardGridItems = fixture.screen.getAllByTestId(/^story-grid-item/);
   });
 
   afterEach(() => {
@@ -202,9 +200,7 @@ describe('CUJ: Creator can view their stories in grid view', () => {
       const duplicate = utils.getByText(/^Duplicate/);
       await fixture.events.click(duplicate);
 
-      const updatedStories = await fixture.screen.getAllByTestId(
-        /^story-grid-item/
-      );
+      const updatedStories = fixture.screen.getAllByTestId(/^story-grid-item/);
       const copiedStory = within(updatedStories[0]).getByRole('heading', {
         level: 3,
       });
@@ -340,7 +336,7 @@ describe('CUJ: Creator can view their stories in grid view', () => {
       // Wait for the debounce
       await fixture.events.sleep(300);
 
-      const searchOptions = await fixture.screen.getByRole('listbox');
+      const searchOptions = fixture.screen.getByRole('listbox');
       expect(searchOptions).toBeTruthy();
 
       const activeListItems = within(searchOptions).queryAllByRole('option');
@@ -383,16 +379,14 @@ describe('CUJ: Creator can view their stories in grid view', () => {
 
   describe('Creator can sort their stories', () => {
     let sortDropdown;
-    beforeEach(async () => {
-      sortDropdown = await fixture.screen.getByLabelText(
+    beforeEach(() => {
+      sortDropdown = fixture.screen.getByLabelText(
         'Choose sort option for display'
       );
     });
 
-    const getRenderedStoriesById = async () => {
-      const storyElements = await fixture.screen.getAllByTestId(
-        /^story-grid-item/
-      );
+    const getRenderedStoriesById = () => {
+      const storyElements = fixture.screen.getAllByTestId(/^story-grid-item/);
       const renderedStoriesById = storyElements.map(({ dataset }) =>
         Number(dataset['testid'].split('-').slice(-1)[0])
       );
@@ -414,7 +408,7 @@ describe('CUJ: Creator can view their stories in grid view', () => {
 
       await fixture.events.click(dateCreated);
 
-      const renderedStoriesById = await getRenderedStoriesById();
+      const renderedStoriesById = getRenderedStoriesById();
       const { storiesOrderById } = await getStoriesOrderById();
 
       expect(renderedStoriesById).toEqual(storiesOrderById);
@@ -422,7 +416,7 @@ describe('CUJ: Creator can view their stories in grid view', () => {
 
     it('should sort by Last Modified by default', async () => {
       const { storiesOrderById } = await getStoriesOrderById();
-      const renderedStoriesById = await getRenderedStoriesById();
+      const renderedStoriesById = getRenderedStoriesById();
 
       expect(renderedStoriesById).toEqual(storiesOrderById);
     });
@@ -440,7 +434,7 @@ describe('CUJ: Creator can view their stories in grid view', () => {
 
       await fixture.events.click(name);
 
-      const renderedStoriesById = await getRenderedStoriesById();
+      const renderedStoriesById = getRenderedStoriesById();
       const { storiesOrderById } = await getStoriesOrderById();
       expect(renderedStoriesById).toEqual(storiesOrderById);
     });
@@ -458,7 +452,7 @@ describe('CUJ: Creator can view their stories in grid view', () => {
 
       await fixture.events.click(createdBy);
 
-      const renderedStoriesById = await getRenderedStoriesById();
+      const renderedStoriesById = getRenderedStoriesById();
       const { storiesOrderById } = await getStoriesOrderById();
       expect(renderedStoriesById).toEqual(storiesOrderById);
     });
@@ -505,7 +499,7 @@ describe('CUJ: Creator can view their stories in grid view', () => {
     let storyCards = [];
 
     beforeEach(async () => {
-      storyCards = await fixture.screen.getAllByTestId(/story-context-button-/);
+      storyCards = fixture.screen.getAllByTestId(/story-context-button-/);
       await focusOnGridByKeyboard();
     });
 

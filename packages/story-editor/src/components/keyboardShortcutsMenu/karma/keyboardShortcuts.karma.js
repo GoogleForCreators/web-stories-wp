@@ -105,7 +105,7 @@ describe('Keyboard Shortcuts Menu', () => {
         expect(keyboardShortcutsMenu).toBeTruthy();
 
         const menu = within(keyboardShortcutsMenu);
-        const scrollableMenuArea = await menu.queryByRole('presentation');
+        const scrollableMenuArea = menu.queryByRole('presentation');
         // Click inside menu
         await fixture.events.click(scrollableMenuArea);
         // Give time for menu to process clicks
