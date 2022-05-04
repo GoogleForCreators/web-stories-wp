@@ -46,7 +46,7 @@ class Shopping_Vendors {
 	/**
 	 * Shopping_Vendors constructor.
 	 *
-	 * @since 1.20.0
+	 * @since 1.21.0
 	 *
 	 * @param Injector $injector Injector instance.
 	 */
@@ -63,7 +63,7 @@ class Shopping_Vendors {
 	 */
 	public function get_vendor_class( string $name ): ?Product_Query {
 		$vendors = $this->get_vendors();
-		if ( ! isset( $vendors[ $name ] ) || ! isset( $vendors[ $name ]['class'] ) ) {
+		if ( ! isset( $vendors[ $name ] ) || ! isset( $vendors[ $name ]['class'] ) || ! class_exists( $vendors[ $name ]['class'] ) ) {
 			return null;
 		}
 		/**

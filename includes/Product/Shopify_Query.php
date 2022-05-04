@@ -27,9 +27,7 @@
 namespace Google\Web_Stories\Product;
 
 use Google\Web_Stories\Interfaces\Product_Query;
-use Google\Web_Stories\Model\Image;
 use Google\Web_Stories\Model\Product;
-use Google\Web_Stories\Model\Rating;
 use Google\Web_Stories\Settings;
 use WP_Error;
 use WP_Http;
@@ -67,7 +65,7 @@ class Shopify_Query implements Product_Query {
 	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
 	 * @SuppressWarnings(PHPMD.NPathComplexity)
 	 *
-	 * @since 1.20.0
+	 * @since 1.21.0
 	 *
 	 * @param string $search_term Search term.
 	 * @return Product[]|WP_Error
@@ -75,9 +73,27 @@ class Shopify_Query implements Product_Query {
 	public function get_search( string $search_term ) {
 
 		/**
+		 * Shopify host.
+		 *
+		 * @var string $host
+		 */
+		$host = $this->settings->get_setting( Settings::SETTING_NAME_SHOPIFY_HOST );
+
+		/**
+		 * Shopify access token.
+		 *
+		 * @var string $access_token
+		 */
+		$access_token = $this->settings->get_setting( Settings::SETTING_NAME_SHOPIFY_ACCESS_TOKEN );
+
+		if ( empty( $host ) || empty( $access_token ) ) {
+			return new WP_Error( 'rest_unknown', __( 'Shopify access data required.', 'web-stories' ), [ 'status' => 400 ] );
+		}
+
+		/**
 		 * Filters the shopify products data TTL value.
 		 *
-		 * @since 1.20.0
+		 * @since 1.21.0
 		 *
 		 * @param int $time Time to live (in seconds). Default is 1 day.
 		 */
@@ -95,30 +111,11 @@ class Shopify_Query implements Product_Query {
 			$products = json_decode( $data, true );
 
 			if ( \is_array( $products ) ) {
-				$results = [];
-				foreach ( $products as $product ) {
-					$results[] = new Product( $product );
-				}
-				return $results;
+				return $products;
 			}
 		}
 
-		$results     = [];
-		$results_raw = [];
-
-		/**
-		 * Shopify host.
-		 *
-		 * @var string $host
-		 */
-		$host = $this->settings->get_setting( Settings::SETTING_NAME_SHOPIFY_HOST );
-
-		/**
-		 * Shopify access token.
-		 *
-		 * @var string $access_token
-		 */
-		$access_token = $this->settings->get_setting( Settings::SETTING_NAME_SHOPIFY_ACCESS_TOKEN );
+		$results = [];
 
 		// TODO(#11154): Maybe move to a class constant.
 		$api_version = '2022-01';
@@ -199,12 +196,10 @@ QUERY;
 
 			foreach ( $product['images']['edges'] as $image_edge ) {
 				$image    = $image_edge['node'];
-				$images[] = new Image(
-					[
-						'url' => $image['url'],
-						'alt' => $image['altText'],
-					]
-				);
+				$images[] = [
+					'url' => $image['url'],
+					'alt' => $image['altText'],
+				];
 			}
 
 			// URL is null if the resource is currently not published to the Online Store sales channel,
@@ -212,27 +207,30 @@ QUERY;
 			// In this case, we can fall back to a manually constructed product URL.
 			$product_url = $product['onlineStoreUrl'] ?? sprintf( 'https://%1$s/products/%2$s/', $host, $product['handle'] );
 
-			$product_array  = [
-				'id'               => $product['id'],
-				'title'            => $product['title'],
-				'brand'            => $product['vendor'],
-				// TODO: Maybe eventually provide full price range.
-				// See https://github.com/ampproject/amphtml/issues/37957.
-				'price'            => (float) $product['priceRange']['minVariantPrice']['amount'],
-				'price_currency'   => $product['priceRange']['minVariantPrice']['currencyCode'],
-				'images'           => $images,
-				'aggregate_rating' => new Rating(),
-				'details'          => $product['description'],
-				// URL is null if the resource is currently not published to the Online Store sales channel,
-				// or if the shop is password-protected.
-				'url'              => $product_url,
-			];
-			$product_object = new Product( $product_array );
-			$results_raw[]  = $product_array;
-			$results[]      = $product_object;
+			$results[] = new Product(
+				[
+					'id'              => $product['id'],
+					'title'           => $product['title'],
+					'brand'           => $product['vendor'],
+					// TODO: Maybe eventually provide full price range.
+					// See https://github.com/ampproject/amphtml/issues/37957.
+					'price'           => (float) $product['priceRange']['minVariantPrice']['amount'],
+					'price_currency'  => $product['priceRange']['minVariantPrice']['currencyCode'],
+					'images'          => $images,
+					'aggregateRating' => [
+						'ratingValue' => 0.0,
+						'reviewCount' => 0,
+						'reviewUrl'   => '',
+					],
+					'details'         => $product['description'],
+					// URL is null if the resource is currently not published to the Online Store sales channel,
+					// or if the shop is password-protected.
+					'url'             => $product_url,
+				]
+			);
 		}
 
-		set_transient( $cache_key, wp_json_encode( $results_raw ), $cache_ttl );
+		set_transient( $cache_key, wp_json_encode( $results ), $cache_ttl );
 
 		return $results;
 	}

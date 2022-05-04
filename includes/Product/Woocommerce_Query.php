@@ -27,9 +27,7 @@
 namespace Google\Web_Stories\Product;
 
 use Google\Web_Stories\Interfaces\Product_Query;
-use Google\Web_Stories\Model\Image;
 use Google\Web_Stories\Model\Product;
-use Google\Web_Stories\Model\Rating;
 use WP_Error;
 
 /**
@@ -39,7 +37,7 @@ class Woocommerce_Query implements Product_Query {
 	/**
 	 * Get products by search term.
 	 *
-	 * @since 1.20.0
+	 * @since 1.21.0
 	 *
 	 * @param string $search_term Search term.
 	 * @return Product[]|WP_Error
@@ -77,26 +75,18 @@ class Woocommerce_Query implements Product_Query {
 			_prime_post_caches( $product_image_ids, false, true );
 
 			$images = array_map(
-				static function( $image_id ) {
+				static function ( $image_id ) {
 					$url = wp_get_attachment_url( $image_id );
 					$alt = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
-
-					return new Image(
-						[
-							'url' => $url,
-							'alt' => $alt,
-						]
-					);
+					if ( empty( $alt ) ) {
+						$alt = '';
+					}
+					return [
+						'url' => $url,
+						'alt' => $alt,
+					];
 				},
 				$product_image_ids
-			);
-
-			$rating = new Rating(
-				[
-					'value' => $product->get_average_rating(),
-					'count' => $product->get_rating_count(),
-					'url'   => $product->get_permalink(),
-				]
 			);
 
 			$product_object = new Product(
@@ -108,7 +98,11 @@ class Woocommerce_Query implements Product_Query {
 					'price'            => (float) $product->get_price(),
 					'price_currency'   => get_woocommerce_currency(),
 					'images'           => $images,
-					'aggregate_rating' => $rating,
+					'aggregate_rating' => [
+						'ratingValue' => (float) $product->get_average_rating(),
+						'reviewCount' => $product->get_rating_count(),
+						'reviewUrl'   => $product->get_permalink(),
+					],
 					'details'          => wp_strip_all_tags( $product->get_short_description() ),
 					'url'              => $product->get_permalink(),
 				]

@@ -225,10 +225,10 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 			foreach ( $product->get_images() as $image ) {
 				$image_data = [];
 				if ( rest_is_field_included( 'productImages.url', $fields ) ) {
-					$image_data['url'] = $image->get_url();
+					$image_data['url'] = $image['url'];
 				}
 				if ( rest_is_field_included( 'productImages.alt', $fields ) ) {
-					$image_data['alt'] = $image->get_alt();
+					$image_data['alt'] = $image['alt'];
 				}
 				$data['productImages'][] = $image_data;
 			}
@@ -239,13 +239,13 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 		}
 
 		if ( rest_is_field_included( 'aggregateRating.ratingValue', $fields ) ) {
-			$data['aggregateRating']['ratingValue'] = (float) $product->get_aggregate_rating()->get_value();
+			$data['aggregateRating']['ratingValue'] = (float) $product->get_aggregate_rating()['rating_value'];
 		}
 		if ( rest_is_field_included( 'aggregateRating.reviewCount', $fields ) ) {
-			$data['aggregateRating']['reviewCount'] = (int) $product->get_aggregate_rating()->get_count();
+			$data['aggregateRating']['reviewCount'] = (int) $product->get_aggregate_rating()['review_count'];
 		}
 		if ( rest_is_field_included( 'aggregateRating.reviewUrl', $fields ) ) {
-			$data['aggregateRating']['reviewUrl'] = $product->get_aggregate_rating()->get_url();
+			$data['aggregateRating']['reviewUrl'] = $product->get_aggregate_rating()['review_url'];
 		}
 
 		/**

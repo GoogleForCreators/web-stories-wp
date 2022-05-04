@@ -20,7 +20,7 @@ namespace Google\Web_Stories\Tests\Integration;
 /**
  * @coversDefaultClass \Google\Web_Stories\Settings
  */
-class Settings  extends DependencyInjectedTestCase {
+class Settings extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::register
 	 */

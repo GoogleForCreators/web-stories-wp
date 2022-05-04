@@ -61,9 +61,9 @@ class Product {
 	 */
 	protected $price_currency;
 	/**
-	 * Product images as an array of Image objects.
+	 * Product images as an array.
 	 *
-	 * @var Image[]
+	 * @var array
 	 */
 	protected $images;
 	/**
@@ -81,7 +81,7 @@ class Product {
 	/**
 	 * Product rating.
 	 *
-	 * @var Rating
+	 * @var array
 	 */
 	protected $aggregate_rating;
 
@@ -138,7 +138,7 @@ class Product {
 	/**
 	 * Get images property.
 	 *
-	 * @return Image[]
+	 * @return array
 	 */
 	public function get_images(): array {
 		return $this->images;
@@ -161,7 +161,7 @@ class Product {
 	/**
 	 * Get rating.
 	 */
-	public function get_aggregate_rating(): Rating {
+	public function get_aggregate_rating(): array {
 		return $this->aggregate_rating;
 	}
 }
