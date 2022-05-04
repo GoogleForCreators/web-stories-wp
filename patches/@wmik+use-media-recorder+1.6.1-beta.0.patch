@@ -1,0 +1,18 @@
+diff --git a/node_modules/@wmik/use-media-recorder/index.js b/node_modules/@wmik/use-media-recorder/index.js
+index 316c6e3..b889361 100755
+--- a/node_modules/@wmik/use-media-recorder/index.js
++++ b/node_modules/@wmik/use-media-recorder/index.js
+@@ -186,6 +186,13 @@ function useMediaRecorder({
+ 
+   function handleStop() {
+     let [sampleChunk] = mediaChunks.current;
++
++    if(!sampleChunk) {
++      clearMediaBlob();
++      setStatus('stopped');
++      return;
++    }
++
+     let blobPropertyBag = Object.assign(
+       { type: sampleChunk.type },
+       blobOptions
