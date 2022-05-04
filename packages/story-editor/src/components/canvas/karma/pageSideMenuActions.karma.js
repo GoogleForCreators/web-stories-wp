@@ -33,7 +33,7 @@ describe('PageMenu integration', () => {
     fixture.restore();
   });
 
-  fit('should render selection render side menu with the animation play button disabled on the first page', async () => {
+  it('should render side menu with the animation play button disabled on the first page', async () => {
     // add a new page and a text component
     await fixture.events.click(fixture.editor.canvas.pageActions.addPage);
     await fixture.editor.library.textTab.click();
