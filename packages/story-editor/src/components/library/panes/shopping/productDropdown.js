@@ -55,7 +55,7 @@ function ProductDropdown({ product, setProduct }) {
   const onChange = ({ product: newProduct }) => setProduct(newProduct);
 
   const getProductsByQuery = useCallback(
-    async (value = "") => {
+    async (value = '') => {
       const products = await getProducts(value);
       return products.map((p) => ({
         name: p.productTitle,

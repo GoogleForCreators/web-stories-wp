@@ -22,7 +22,7 @@ import {
   minWPVersionRequired,
   withPlugin,
   insertProduct,
-  setShoppingProvider
+  setShoppingProvider,
 } from '@web-stories-wp/e2e-test-utils';
 
 describe('Shopping product', () => {

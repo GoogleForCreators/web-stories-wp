@@ -16,7 +16,10 @@
 /**
  * External dependencies
  */
-import { visitSettings } from '@web-stories-wp/e2e-test-utils';
+/**
+ * Internal dependencies
+ */
+import { visitSettings } from '.';
 
 export const insertProduct = async (product) => {
   // Switch to the Products tab and wait for initial list of products to be fetched.
