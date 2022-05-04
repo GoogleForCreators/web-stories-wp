@@ -40,6 +40,7 @@ const StyledCheckbox = styled(Checkbox)`
 const Wrapper = styled.div`
   display: flex;
   gap: 12px;
+  align-items: center;
 `;
 
 function LoopPanelContent({ loop, className = '', onChange, ...props }) {
@@ -53,11 +54,13 @@ function LoopPanelContent({ loop, className = '', onChange, ...props }) {
         onChange={onChange}
         {...props}
       />
-      <label htmlFor={checkboxId}>
-        <Text as="span" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-          {__('Loop', 'web-stories')}
-        </Text>
-      </label>
+      <Text
+        as="label"
+        size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+        htmlFor={checkboxId}
+      >
+        {__('Loop', 'web-stories')}
+      </Text>
     </Wrapper>
   );
 }

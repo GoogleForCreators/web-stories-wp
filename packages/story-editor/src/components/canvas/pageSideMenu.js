@@ -21,7 +21,6 @@ import {
   ContextMenu,
   ContextMenuComponents,
   noop,
-  Tooltip,
 } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 import styled from 'styled-components';
@@ -35,6 +34,7 @@ import { useLayout } from '../../app';
 import { MediaPicker, useQuickActions } from '../../app/highlights';
 import { ZOOM_SETTING } from '../../constants';
 import { Z_INDEX_CANVAS_SIDE_MENU } from '../../constants/zIndex';
+import Tooltip from '../tooltip';
 import PageMenu from './pagemenu/pageMenu';
 
 const MenusWrapper = styled.section`
@@ -121,6 +121,7 @@ function PageSideMenu() {
                         aria-label={label}
                         onClick={(evt) => {
                           onClick(evt);
+
                           externalOnClick(evt);
                         }}
                         {...quickAction}

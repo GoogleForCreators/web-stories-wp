@@ -21,7 +21,6 @@ import {
   Text,
   themeHelpers,
   THEME_CONSTANTS,
-  Tooltip,
   TOOLTIP_PLACEMENT,
 } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
@@ -33,6 +32,7 @@ import { v4 as uuidv4 } from 'uuid';
  * Internal dependencies
  */
 import { Z_INDEX_STORY_DETAILS } from '../../../constants/zIndex';
+import Tooltip from '../../tooltip';
 
 const Dismiss = styled.button`
   all: unset;

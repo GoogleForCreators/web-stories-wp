@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "ampproject/amp-toolbox",
-            "version": "0.11.0",
+            "version": "0.11.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ampproject/amp-toolbox-php.git",
-                "reference": "26efcaa5350b8998433d63bc6770dc6818971fd2"
+                "reference": "8392ee46e9e241081b8e9fb1f67c16124d2fcf99"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ampproject/amp-toolbox-php/zipball/26efcaa5350b8998433d63bc6770dc6818971fd2",
-                "reference": "26efcaa5350b8998433d63bc6770dc6818971fd2",
+                "url": "https://api.github.com/repos/ampproject/amp-toolbox-php/zipball/8392ee46e9e241081b8e9fb1f67c16124d2fcf99",
+                "reference": "8392ee46e9e241081b8e9fb1f67c16124d2fcf99",
                 "shasum": ""
             },
             "require": {
@@ -76,9 +76,9 @@
             "description": "A collection of AMP tools making it easier to publish and host AMP pages with PHP.",
             "support": {
                 "issues": "https://github.com/ampproject/amp-toolbox-php/issues",
-                "source": "https://github.com/ampproject/amp-toolbox-php/tree/0.11.0"
+                "source": "https://github.com/ampproject/amp-toolbox-php/tree/0.11.1"
             },
-            "time": "2022-04-01T07:16:35+00:00"
+            "time": "2022-04-08T05:35:07+00:00"
         },
         {
             "name": "ampproject/amp-wp",
@@ -86,16 +86,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ampproject/amp-wp",
-                "reference": "bbdde23bbd5e4dfde5b33ee275222c85f53a5277"
+                "reference": "f751041977ddd5e4e99c6cab548774f663dfa885"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ampproject/amp-wp/zipball/bbdde23bbd5e4dfde5b33ee275222c85f53a5277",
-                "reference": "bbdde23bbd5e4dfde5b33ee275222c85f53a5277",
+                "url": "https://api.github.com/repos/ampproject/amp-wp/zipball/f751041977ddd5e4e99c6cab548774f663dfa885",
+                "reference": "f751041977ddd5e4e99c6cab548774f663dfa885",
                 "shasum": ""
             },
             "require": {
-                "ampproject/amp-toolbox": "0.11.0",
+                "ampproject/amp-toolbox": "0.11.1",
                 "cweagans/composer-patches": "~1.0",
                 "ext-curl": "*",
                 "ext-date": "*",
@@ -194,7 +194,7 @@
             ],
             "description": "WordPress plugin for adding AMP support.",
             "homepage": "https://github.com/ampproject/amp-wp",
-            "time": "2022-04-06T20:55:11+00:00"
+            "time": "2022-04-26T07:52:53+00:00"
         },
         {
             "name": "civicrm/composer-downloads-plugin",
@@ -1533,24 +1533,24 @@
         },
         {
             "name": "php-stubs/woocommerce-stubs",
-            "version": "v6.0.0",
+            "version": "v6.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-stubs/woocommerce-stubs.git",
-                "reference": "65e6be8a1b74b7be5d0d5591262342ff116f93db"
+                "reference": "fa5da21d41cfead6210391c0879cee9225f29cdb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-stubs/woocommerce-stubs/zipball/65e6be8a1b74b7be5d0d5591262342ff116f93db",
-                "reference": "65e6be8a1b74b7be5d0d5591262342ff116f93db",
+                "url": "https://api.github.com/repos/php-stubs/woocommerce-stubs/zipball/fa5da21d41cfead6210391c0879cee9225f29cdb",
+                "reference": "fa5da21d41cfead6210391c0879cee9225f29cdb",
                 "shasum": ""
             },
             "require": {
                 "php-stubs/wordpress-stubs": "^5.3.0"
             },
             "require-dev": {
-                "giacocorsiglia/stubs-generator": "^0.5.0",
-                "php": "~7.1"
+                "php": "~7.1",
+                "php-stubs/generator": "^0.8.0"
             },
             "suggest": {
                 "symfony/polyfill-php73": "Symfony polyfill backporting some PHP 7.3+ features to lower PHP versions",
@@ -1571,9 +1571,9 @@
             ],
             "support": {
                 "issues": "https://github.com/php-stubs/woocommerce-stubs/issues",
-                "source": "https://github.com/php-stubs/woocommerce-stubs/tree/v6.0.0"
+                "source": "https://github.com/php-stubs/woocommerce-stubs/tree/v6.4.1"
             },
-            "time": "2022-01-04T22:00:24+00:00"
+            "time": "2022-04-30T07:39:42+00:00"
         },
         {
             "name": "php-stubs/wordpress-stubs",
@@ -2151,16 +2151,16 @@
         },
         {
             "name": "phpstan/phpdoc-parser",
-            "version": "1.4.2",
+            "version": "1.4.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpdoc-parser.git",
-                "reference": "4cb3021a4e10ffe3d5f94a4c34cf4b3f6de2fa3d"
+                "reference": "129a63b3bc7caeb593c224c41f420675e63cfefc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/4cb3021a4e10ffe3d5f94a4c34cf4b3f6de2fa3d",
-                "reference": "4cb3021a4e10ffe3d5f94a4c34cf4b3f6de2fa3d",
+                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/129a63b3bc7caeb593c224c41f420675e63cfefc",
+                "reference": "129a63b3bc7caeb593c224c41f420675e63cfefc",
                 "shasum": ""
             },
             "require": {
@@ -2189,22 +2189,22 @@
             "description": "PHPDoc parser with support for nullable, intersection and generic types",
             "support": {
                 "issues": "https://github.com/phpstan/phpdoc-parser/issues",
-                "source": "https://github.com/phpstan/phpdoc-parser/tree/1.4.2"
+                "source": "https://github.com/phpstan/phpdoc-parser/tree/1.4.5"
             },
-            "time": "2022-03-30T13:33:37+00:00"
+            "time": "2022-04-22T11:11:01+00:00"
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.5.4",
+            "version": "1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "bbf68cae24f6dc023c607ea0f87da55dd9d55c2b"
+                "reference": "b480ba2ae0699a72d43a340c20b9c00ede91ee3e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/bbf68cae24f6dc023c607ea0f87da55dd9d55c2b",
-                "reference": "bbf68cae24f6dc023c607ea0f87da55dd9d55c2b",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/b480ba2ae0699a72d43a340c20b9c00ede91ee3e",
+                "reference": "b480ba2ae0699a72d43a340c20b9c00ede91ee3e",
                 "shasum": ""
             },
             "require": {
@@ -2230,7 +2230,7 @@
             "description": "PHPStan - PHP Static Analysis Tool",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/1.5.4"
+                "source": "https://github.com/phpstan/phpstan/tree/1.6.0"
             },
             "funding": [
                 {
@@ -2250,7 +2250,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-04-03T12:39:00+00:00"
+            "time": "2022-04-26T05:43:03+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -2750,12 +2750,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "44e64dc3426a056b16041e56619b96619564b28d"
+                "reference": "e5e096c731d21614b952983804581389eb2a484f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/44e64dc3426a056b16041e56619b96619564b28d",
-                "reference": "44e64dc3426a056b16041e56619b96619564b28d",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/e5e096c731d21614b952983804581389eb2a484f",
+                "reference": "e5e096c731d21614b952983804581389eb2a484f",
                 "shasum": ""
             },
             "conflict": {
@@ -2785,7 +2785,7 @@
                 "bk2k/bootstrap-package": ">=7.1,<7.1.2|>=8,<8.0.8|>=9,<9.0.4|>=9.1,<9.1.3|>=10,<10.0.10|>=11,<11.0.3",
                 "bmarshall511/wordpress_zero_spam": "<5.2.13",
                 "bolt/bolt": "<3.7.2",
-                "bolt/core": "<4.1.13",
+                "bolt/core": "<=4.2",
                 "bottelet/flarepoint": "<2.2.1",
                 "brightlocal/phpwhois": "<=4.2.5",
                 "buddypress/buddypress": "<7.2.1",
@@ -2803,7 +2803,7 @@
                 "codeigniter/framework": "<=3.0.6",
                 "codeigniter4/framework": "<4.1.9",
                 "codiad/codiad": "<=2.8.4",
-                "composer/composer": "<1.10.23|>=2-alpha.1,<2.1.9",
+                "composer/composer": "<1.10.26|>=2-alpha.1,<2.2.12|>=2.3,<2.3.5",
                 "concrete5/concrete5": "<9",
                 "concrete5/core": "<8.5.7",
                 "contao-components/mediaelement": ">=2.14.2,<2.21.1",
@@ -2811,7 +2811,7 @@
                 "contao/core-bundle": "<4.9.18|>=4.10,<4.11.7|= 4.10.0",
                 "contao/listing-bundle": ">=4,<4.4.8",
                 "contao/managed-edition": "<=1.5",
-                "craftcms/cms": "<3.7.14",
+                "craftcms/cms": "<3.7.29",
                 "croogo/croogo": "<3.0.7",
                 "cuyz/valinor": ">=0.5,<0.7",
                 "datadog/dd-trace": ">=0.30,<0.30.2",
@@ -2873,6 +2873,7 @@
                 "friendsofsymfony/user-bundle": ">=1.2,<1.3.5",
                 "friendsoftypo3/mediace": ">=7.6.2,<7.6.5",
                 "froala/wysiwyg-editor": "<3.2.7",
+                "froxlor/froxlor": "<=0.10.22",
                 "fuel/core": "<1.8.1",
                 "gaoming13/wechat-php-sdk": "<=1.10.2",
                 "genix/cms": "<=1.1.11",
@@ -2900,7 +2901,7 @@
                 "illuminate/database": "<6.20.26|>=7,<7.30.5|>=8,<8.40",
                 "illuminate/encryption": ">=4,<=4.0.11|>=4.1,<=4.1.31|>=4.2,<=4.2.22|>=5,<=5.0.35|>=5.1,<=5.1.46|>=5.2,<=5.2.45|>=5.3,<=5.3.31|>=5.4,<=5.4.36|>=5.5,<5.5.40|>=5.6,<5.6.15",
                 "illuminate/view": "<6.20.42|>=7,<7.30.6|>=8,<8.75",
-                "impresscms/impresscms": "<1.4.3",
+                "impresscms/impresscms": "<=1.4.3",
                 "in2code/femanager": "<5.5.1|>=6,<6.3.1",
                 "intelliants/subrion": "<=4.2.1",
                 "ivankristianto/phpwhois": "<=4.3",
@@ -2923,6 +2924,7 @@
                 "laminas/laminas-http": "<2.14.2",
                 "laravel/fortify": "<1.11.1",
                 "laravel/framework": "<6.20.42|>=7,<7.30.6|>=8,<8.75",
+                "laravel/laravel": "<=5.8.38",
                 "laravel/socialite": ">=1,<1.0.99|>=2,<2.0.10",
                 "latte/latte": "<2.10.8",
                 "lavalite/cms": "<=5.8",
@@ -2997,13 +2999,13 @@
                 "phpoffice/phpspreadsheet": "<1.16",
                 "phpseclib/phpseclib": "<2.0.31|>=3,<3.0.7",
                 "phpservermon/phpservermon": "<=3.5.2",
-                "phpunit/phpunit": "<4.8.28|>=5,<5.6.3",
+                "phpunit/phpunit": ">=4.8.19,<4.8.28|>=5,<5.6.3",
                 "phpwhois/phpwhois": "<=4.2.5",
                 "phpxmlrpc/extras": "<0.6.1",
                 "pimcore/data-hub": "<1.2.4",
                 "pimcore/pimcore": "<10.4",
                 "pocketmine/bedrock-protocol": "<8.0.2",
-                "pocketmine/pocketmine-mp": "<4.2.4",
+                "pocketmine/pocketmine-mp": "<4.2.9",
                 "pressbooks/pressbooks": "<5.18",
                 "prestashop/autoupgrade": ">=4,<4.10.1",
                 "prestashop/contactform": ">1.0.1,<4.3",
@@ -3013,7 +3015,7 @@
                 "prestashop/ps_emailsubscription": "<2.6.1",
                 "prestashop/ps_facetedsearch": "<3.4.1",
                 "prestashop/ps_linklist": "<3.1",
-                "privatebin/privatebin": "<1.2.2|>=1.3,<1.3.2",
+                "privatebin/privatebin": "<1.4",
                 "propel/propel": ">=2-alpha.1,<=2-alpha.7",
                 "propel/propel1": ">=1,<=1.7.1",
                 "pterodactyl/panel": "<1.7",
@@ -3031,8 +3033,8 @@
                 "scheb/two-factor-bundle": ">=0,<3.26|>=4,<4.11",
                 "sensiolabs/connect": "<4.2.3",
                 "serluck/phpwhois": "<=4.2.6",
-                "shopware/core": "<=6.4.8.1",
-                "shopware/platform": "<=6.4.8.1",
+                "shopware/core": "<=6.4.9",
+                "shopware/platform": "<=6.4.9",
                 "shopware/production": "<=6.3.5.2",
                 "shopware/shopware": "<5.7.7",
                 "shopware/storefront": "<=6.4.8.1",
@@ -3056,7 +3058,7 @@
                 "simplito/elliptic-php": "<1.0.6",
                 "slim/slim": "<2.6",
                 "smarty/smarty": "<3.1.43|>=4,<4.0.3",
-                "snipe/snipe-it": "<= 6.0.0-RC-5|<5.3.11",
+                "snipe/snipe-it": "<5.4.2|>= 6.0.0-RC-1, <= 6.0.0-RC-5",
                 "socalnick/scn-social-auth": "<1.15.2",
                 "socialiteproviders/steam": "<1.1",
                 "spipu/html2pdf": "<5.2.4",
@@ -3109,6 +3111,7 @@
                 "symfony/yaml": ">=2,<2.0.22|>=2.1,<2.1.7",
                 "t3/dce": ">=2.2,<2.6.2",
                 "t3g/svg-sanitizer": "<1.0.3",
+                "tastyigniter/tastyigniter": "<3.3",
                 "tecnickcom/tcpdf": "<6.2.22",
                 "terminal42/contao-tablelookupwizard": "<3.3.5",
                 "thelia/backoffice-default-template": ">=2.1,<2.1.2",
@@ -3145,6 +3148,8 @@
                 "wikimedia/parsoid": "<0.12.2",
                 "willdurand/js-translation-bundle": "<2.1.1",
                 "wp-cli/wp-cli": "<2.5",
+                "wpanel/wpanel4-cms": "<=4.3.1",
+                "wwbn/avideo": "<=11.6",
                 "yeswiki/yeswiki": "<4.1",
                 "yetiforce/yetiforce-crm": "<=6.3",
                 "yidashi/yii2cmf": "<=2",
@@ -3220,7 +3225,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-04-06T19:03:57+00:00"
+            "time": "2022-04-22T22:04:12+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
@@ -4070,12 +4075,12 @@
             "version": "5.9.3",
             "source": {
                 "type": "git",
-                "url": "https://github.com/sniccowp/php-scoper-wordpress-excludes.git",
+                "url": "https://github.com/snicco/php-scoper-wordpress-excludes.git",
                 "reference": "e858817888b5c15380410c45c9b6fcfad2468488"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sniccowp/php-scoper-wordpress-excludes/zipball/e858817888b5c15380410c45c9b6fcfad2468488",
+                "url": "https://api.github.com/repos/snicco/php-scoper-wordpress-excludes/zipball/e858817888b5c15380410c45c9b6fcfad2468488",
                 "reference": "e858817888b5c15380410c45c9b6fcfad2468488",
                 "shasum": ""
             },
@@ -4107,8 +4112,8 @@
                 "wordpress"
             ],
             "support": {
-                "issues": "https://github.com/sniccowp/php-scoper-wordpress-excludes/issues",
-                "source": "https://github.com/sniccowp/php-scoper-wordpress-excludes/tree/5.9.3"
+                "issues": "https://github.com/snicco/php-scoper-wordpress-excludes/issues",
+                "source": "https://github.com/snicco/php-scoper-wordpress-excludes/tree/5.9.3"
             },
             "time": "2022-04-07T01:23:03+00:00"
         },

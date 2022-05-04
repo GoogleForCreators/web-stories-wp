@@ -1384,6 +1384,24 @@ describe('Page output', () => {
       );
     });
 
+    it('should not contain background audio if null', async () => {
+      const props = {
+        id: '123',
+        page: {
+          backgroundAudio: null,
+          id: '123',
+          elements: [],
+        },
+        autoAdvance: false,
+        defaultPageDuration: 7,
+      };
+
+      const { container } = render(<PageOutput {...props} />);
+      const page = container.querySelector('amp-story-page');
+      await expect(page).toBeInTheDocument();
+      expect(page).not.toContain('background-audio=');
+    });
+
     it('should use amp-video for non-looping background audio', async () => {
       const props = {
         id: '123',
@@ -1520,6 +1538,54 @@ describe('Page output', () => {
         'amp-story-shopping-attachment'
       );
       await expect(shoppingAttachment).toBeInTheDocument();
+    });
+
+    it('should render shopping attachment with custom cta text if there are products', async () => {
+      const props = {
+        id: 'foo',
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
+        page: {
+          id: 'bar',
+          pageAttachment: {
+            theme: 'light',
+            ctaText: 'Buy now',
+          },
+          elements: [
+            {
+              id: 'el1',
+              type: 'product',
+              x: 50,
+              y: 50,
+              width: 32,
+              height: 32,
+              rotationAngle: 0,
+              product: PRODUCT_LAMP,
+            },
+            {
+              id: 'el2',
+              type: 'product',
+              x: 100,
+              y: 100,
+              width: 32,
+              height: 32,
+              rotationAngle: 0,
+              product: PRODUCT_ART,
+            },
+          ],
+        },
+        flags: {
+          shoppingIntegration: true,
+        },
+      };
+
+      const { container } = render(<PageOutput {...props} />);
+      const shoppingAttachment = container.querySelector(
+        'amp-story-shopping-attachment'
+      );
+
+      await expect(shoppingAttachment).toBeInTheDocument();
+      await expect(shoppingAttachment).toHaveAttribute('cta-text', 'Buy now');
+      await expect(shoppingAttachment).toHaveAttribute('theme', 'light');
     });
   });
 

@@ -24,36 +24,33 @@ function wrapIndex(i, length) {
   return ((i % length) + length) % length;
 }
 
-function createNavigateActiveFocusGroup(uuid, activeFocusGroup) {
-  function navigateActiveFocusGroup(step) {
-    if (!activeFocusGroup) {
+function createNavigateFocusGroup(uuid, focusGroup) {
+  function navigateFocusGroup(step) {
+    if (!focusGroup) {
       return;
     }
 
-    const currentIndex = activeFocusGroup.findIndex(
+    const currentIndex = focusGroup.findIndex(
       (nodeTuple) => nodeTuple[0] === uuid
     );
     if (currentIndex === -1) {
       return;
     }
 
-    const nextIndex = wrapIndex(currentIndex + step, activeFocusGroup.length);
-    const [, node] = activeFocusGroup[nextIndex];
+    const nextIndex = wrapIndex(currentIndex + step, focusGroup.length);
+    const [, node] = focusGroup[nextIndex];
     node?.focus();
   }
 
-  return navigateActiveFocusGroup;
+  return navigateFocusGroup;
 }
 
-function KeyBindings({ uuid, node, activeFocusGroup, exitCurrentFocusGroup }) {
+function KeyBindings({ uuid, node, focusGroup, exitFocusGroup }) {
   const traverseFocusGroup = useCallback(
     (e) => {
       e.preventDefault();
 
-      const navigateFocusGroup = createNavigateActiveFocusGroup(
-        uuid,
-        activeFocusGroup
-      );
+      const navigateFocusGroup = createNavigateFocusGroup(uuid, focusGroup);
 
       if (e.shiftKey) {
         navigateFocusGroup(-1);
@@ -63,15 +60,15 @@ function KeyBindings({ uuid, node, activeFocusGroup, exitCurrentFocusGroup }) {
       navigateFocusGroup(1);
       return;
     },
-    [activeFocusGroup, uuid]
+    [focusGroup, uuid]
   );
 
-  const exitFocusGroup = useCallback(
+  const handleEsc = useCallback(
     (e) => {
       e.preventDefault();
-      exitCurrentFocusGroup();
+      exitFocusGroup();
     },
-    [exitCurrentFocusGroup]
+    [exitFocusGroup]
   );
 
   useKeyDownEffect(
@@ -84,8 +81,8 @@ function KeyBindings({ uuid, node, activeFocusGroup, exitCurrentFocusGroup }) {
   useKeyDownEffect(
     node,
     { key: ['esc'], allowDefault: true, editable: true },
-    exitFocusGroup,
-    [exitFocusGroup]
+    handleEsc,
+    [handleEsc]
   );
 
   return null;

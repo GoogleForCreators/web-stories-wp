@@ -12,6 +12,10 @@ jobs:
     name: Cleanup storage
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    if: >
+      github.event.pull_request.draft == false &&
+      github.event.pull_request.head.repo.fork == false &&
+      github.event.pull_request.user.login != 'dependabot[bot]'
     steps:
       - name: Setup Cloud SDK
         uses: google-github-actions/setup-gcloud@v0.6.0

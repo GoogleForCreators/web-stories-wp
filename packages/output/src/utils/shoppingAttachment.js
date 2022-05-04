@@ -19,9 +19,12 @@
  */
 import PropTypes from 'prop-types';
 
-function ShoppingAttachment({ products, theme }) {
+function ShoppingAttachment({ products, theme, ctaText }) {
   return (
-    <amp-story-shopping-attachment theme={theme}>
+    <amp-story-shopping-attachment
+      theme={theme}
+      cta-text={ctaText || undefined}
+    >
       <script
         type="application/json"
         dangerouslySetInnerHTML={{
@@ -36,6 +39,7 @@ function ShoppingAttachment({ products, theme }) {
 
 ShoppingAttachment.propTypes = {
   theme: PropTypes.oneOf(['light', 'dark']),
+  ctaText: PropTypes.string,
   products: PropTypes.arrayOf(PropTypes.object),
 };
 

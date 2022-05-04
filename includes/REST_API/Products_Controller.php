@@ -141,21 +141,20 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
 	public function get_items( $request ) {
-		$results = [];
-
 		// TODO(#11154): Refactor to extract product query logic out of this controller.
-		$shopify_host         = $this->settings->get_setting( Settings::SETTING_NAME_SHOPIFY_HOST );
-		$shopify_access_token = $this->settings->get_setting( Settings::SETTING_NAME_SHOPIFY_ACCESS_TOKEN );
-
-		if ( ! empty( $shopify_host ) && ! empty( $shopify_access_token ) ) {
-			return $this->get_items_shopify( $request );
+		$shopping_provider = $this->settings->get_setting( Settings::SETTING_NAME_SHOPPING_PROVIDER );
+		switch ( $shopping_provider ) {
+			case 'woocommerce':
+				$response = $this->get_items_woocommerce( $request );
+				break;
+			case 'shopify':
+				$response = $this->get_items_shopify( $request );
+				break;
+			default:
+				$response = rest_ensure_response( [] );
 		}
-
-		if ( function_exists( 'wc_get_products' ) ) {
-			return $this->get_items_woocommerce( $request );
-		}
-
-		return rest_ensure_response( $results );
+		
+		return $response;
 	}
 
 	/**
@@ -314,7 +313,7 @@ QUERY;
 				'productBrand'         => $product['vendor'],
 				// TODO: Maybe eventually provide full price range.
 				// See https://github.com/ampproject/amphtml/issues/37957.
-				'productPrice'         => $product['priceRange']['minVariantPrice']['amount'],
+				'productPrice'         => (float) $product['priceRange']['minVariantPrice']['amount'],
 				'productPriceCurrency' => $product['priceRange']['minVariantPrice']['currencyCode'],
 				'productImages'        => $images,
 				'productDetails'       => $product['description'],
@@ -383,11 +382,11 @@ QUERY;
 				'productId'            => 'wc-' . $product->get_id(),
 				'productTitle'         => $product->get_title(),
 				'productBrand'         => '', // TODO: Figure out how to best provide that.
-				'productPrice'         => $product->get_price(),
+				'productPrice'         => (float) $product->get_price(),
 				'productPriceCurrency' => get_woocommerce_currency(),
 				'productImages'        => $images,
 				'aggregateRating'      => [
-					'ratingValue' => $product->get_average_rating(),
+					'ratingValue' => (float) $product->get_average_rating(),
 					'reviewCount' => $product->get_rating_count(),
 					'reviewUrl'   => $product->get_permalink(),
 				],

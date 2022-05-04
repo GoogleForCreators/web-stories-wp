@@ -142,6 +142,7 @@ export const BaseInput = styled.input(
 export const Input = forwardRef(
   (
     {
+      inputClassName,
       className,
       disabled,
       hasError,
@@ -213,6 +214,7 @@ export const Input = forwardRef(
             }}
             value={displayedValue}
             hasSuffix={hasSuffix}
+            className={inputClassName}
             {...props}
           />
           {hasSuffix && (
