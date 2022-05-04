@@ -35,9 +35,7 @@ const FloatingProductMenu = memo(function FloatingProductMenu() {
     }));
 
   const setProduct = useCallback(
-    (product) => {
-      updateSelectedElements({ properties: { product } });
-    },
+    (product) => updateSelectedElements({ properties: { product } }),
     [updateSelectedElements]
   );
 
