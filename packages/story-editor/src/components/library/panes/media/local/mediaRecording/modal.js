@@ -35,6 +35,7 @@ import {
   useCallback,
   useMemo,
   useEffect,
+  usePrevious,
 } from '@googleforcreators/react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
@@ -82,7 +83,7 @@ function Modal({ isOpen, onClose }) {
         devices.filter((device) => device.kind !== 'audiooutput')
       );
     } catch (err) {
-      // eslint-disable-next-line no-console -- TODO: Figure out error handling.
+      // eslint-disable-next-line no-console -- TODO: Figure out error handling - UX pending.
       console.log(err);
     }
   }, []);
@@ -139,7 +140,11 @@ function Modal({ isOpen, onClose }) {
     setFile(f);
   }, []);
 
-  const uploadWithPreview = useUploadWithPreview();
+  const onError = (err) => {
+    // eslint-disable-next-line no-console -- TODO: Telemetry, notify user - UX pending.
+    console.log(err);
+  };
+
   const {
     error,
     status,
@@ -157,18 +162,48 @@ function Modal({ isOpen, onClose }) {
       audio: audioInput && enableAudio ? { deviceId: audioInput } : enableAudio,
       video: videoInput && enableVideo ? { deviceId: videoInput } : enableVideo,
     },
-    onStop: onStop,
+    onStop,
+    onError,
   });
 
-  const isIdle = status === 'idle';
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- Only run once.
+  useEffect(() => clearMediaStream, []);
+
+  const previouslyHadStream = usePrevious(Boolean(liveStream));
+  const hasStream = Boolean(liveStream);
+  const wasOpen = usePrevious(isOpen);
   const isRecording = status === 'recording';
+  const wasRecording = usePrevious(isRecording);
+
+  // Ensure the stream is refreshed after switching video or audio input
+  // (which clears the stream).
+  useEffect(() => {
+    if (
+      previouslyHadStream &&
+      !hasStream &&
+      !isImageCapture &&
+      !mediaBlob &&
+      !isRecording &&
+      !wasRecording
+    ) {
+      getMediaStream();
+    }
+  }, [
+    previouslyHadStream,
+    hasStream,
+    getMediaStream,
+    isImageCapture,
+    mediaBlob,
+    isRecording,
+    wasRecording,
+  ]);
 
   // Try to get permissions as soon as the modal opens.
   useEffect(() => {
-    if (isOpen && isIdle) {
+    if (isOpen && !wasOpen) {
       getMediaStream();
     }
-  }, [isOpen, isIdle, getMediaStream]);
+  }, [isOpen, wasOpen, getMediaStream]);
 
   const onChangeVideoInput = useCallback(
     (_event, value) => {
@@ -178,12 +213,17 @@ function Modal({ isOpen, onClose }) {
         value
       );
 
+      clearMediaStream();
+      clearMediaBlob();
+      if (videoRef.current) {
+        videoRef.current.srcObject = null;
+      }
+
       if (isRecording) {
         stopRecording();
-        startRecording();
       }
     },
-    [stopRecording, startRecording, isRecording]
+    [stopRecording, isRecording, clearMediaBlob, clearMediaStream]
   );
 
   const onChangeAudioInput = useCallback(
@@ -194,12 +234,14 @@ function Modal({ isOpen, onClose }) {
         value
       );
 
+      clearMediaStream();
+      clearMediaBlob();
+
       if (isRecording) {
         stopRecording();
-        startRecording();
       }
     },
-    [stopRecording, startRecording, isRecording]
+    [clearMediaBlob, clearMediaStream, isRecording, stopRecording]
   );
 
   useEffect(() => {
@@ -219,12 +261,21 @@ function Modal({ isOpen, onClose }) {
     setIsImageCapture(false);
   }, [clearMediaBlob, clearMediaStream, onClose]);
 
-  const onImageCapture = (f) => {
-    setFile(f);
-    setIsImageCapture(true);
-  };
+  const uploadWithPreview = useUploadWithPreview();
 
-  const onClearImageCapture = () => setIsImageCapture(false);
+  const onImageCapture = useCallback(
+    (f) => {
+      setFile(f);
+      setIsImageCapture(true);
+      stopRecording();
+    },
+    [stopRecording]
+  );
+
+  const onClearImageCapture = useCallback(() => {
+    setIsImageCapture(false);
+    getMediaStream();
+  }, [getMediaStream]);
 
   const onInsert = useCallback(() => {
     uploadWithPreview([file]);
@@ -259,7 +310,7 @@ function Modal({ isOpen, onClose }) {
       primaryText={primaryText}
       secondaryText={__('Cancel', 'web-stories')}
       primaryRest={{
-        disabled: status !== 'stopped' && isImageCapture === false,
+        disabled: status !== 'stopped' && !isImageCapture,
       }}
     >
       <Text>
@@ -272,17 +323,18 @@ function Modal({ isOpen, onClose }) {
       {!isImageCapture && (
         <VideoWrapper>
           {mediaBlob && !liveStream && (
-            <>
-              {/* eslint-disable-next-line jsx-a11y/media-has-caption, styled-components-a11y/media-has-caption -- No captions for video being recorded. */}
-              <Video src={URL.createObjectURL(mediaBlob)} autoPlay controls />
-            </>
+            <Video
+              src={URL.createObjectURL(mediaBlob)}
+              autoPlay
+              controls
+              muted
+            />
           )}
-          {/* eslint-disable-next-line jsx-a11y/media-has-caption, styled-components-a11y/media-has-caption -- No captions for video being recorded. */}
-          {!mediaBlob && liveStream && <Video ref={videoRef} autoPlay />}
+          {!mediaBlob && liveStream && <Video ref={videoRef} autoPlay muted />}
         </VideoWrapper>
       )}
 
-      {isRecording && (
+      {(isRecording || isImageCapture) && (
         <ImageCapture
           videoRef={videoRef}
           onCapture={onImageCapture}
