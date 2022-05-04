@@ -50,6 +50,11 @@ export {
   getSelectedFont,
   removeAllFonts,
 } from './customFonts';
+
+export {
+  insertProduct,
+  setShoppingProvider
+} from './shopping';
 export { setCurrentUser, getCurrentUser } from './user';
 export { default as activatePlugin } from './activatePlugin';
 export { default as deactivatePlugin } from './deactivatePlugin';

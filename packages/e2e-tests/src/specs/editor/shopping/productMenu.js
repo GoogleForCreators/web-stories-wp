@@ -21,12 +21,9 @@ import {
   withExperimentalFeatures,
   minWPVersionRequired,
   withPlugin,
+  insertProduct,
+  setShoppingProvider
 } from '@web-stories-wp/e2e-test-utils';
-
-/**
- * Internal dependencies
- */
-import { insertProduct, setShoppingProvider } from './testUtils';
 
 describe('Shopping product', () => {
   minWPVersionRequired('5.8');
