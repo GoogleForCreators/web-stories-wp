@@ -19,7 +19,7 @@
 /**
  * Internal dependencies
  */
-import { visitSettings } from '.';
+import visitSettings from './visitSettings';
 
 export const insertProduct = async (product) => {
   // Switch to the Products tab and wait for initial list of products to be fetched.

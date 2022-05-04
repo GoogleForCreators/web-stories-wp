@@ -69,8 +69,7 @@ function ProductDropdown({ product, setProduct }) {
   useEffect(() => {
     (async () => {
       setIsLoading(true);
-      const products = await getProductsByQuery();
-      setInitialOptions(products);
+      setInitialOptions(await getProductsByQuery());
       setIsLoading(false);
     })();
   }, [getProductsByQuery]);
