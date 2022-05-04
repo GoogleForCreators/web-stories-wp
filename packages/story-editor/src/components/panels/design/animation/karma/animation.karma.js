@@ -227,7 +227,7 @@ describe('Animation Panel', function () {
     expect(panel.effectChooser.disabled).toBeTrue();
   });
 
-  fit('should render the animation panel with inputs disabled when page becomes the first page', async function () {
+  it('should render the animation panel with inputs disabled when page becomes the first page', async function () {
     const { id: firstPageId } = await getCurrntPage();
     // create a new page with in the story
     await fixture.events.click(fixture.editor.canvas.pageActions.addPage);
