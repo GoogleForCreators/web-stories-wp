@@ -45,12 +45,12 @@ describe('Embedding hotlinked media', () => {
   }
 
   it('should not allow embedding media from an invalid link', async () => {
-    const button = await fixture.screen.getByRole('button', {
+    const button = fixture.screen.getByRole('button', {
       name: 'Insert by link',
     });
     await fixture.events.click(button);
-    const input = await fixture.screen.getByRole('textbox', { name: 'URL' });
-    const insertBtn = await fixture.screen.getByRole('button', {
+    const input = fixture.screen.getByRole('textbox', { name: 'URL' });
+    const insertBtn = fixture.screen.getByRole('button', {
       name: 'Insert',
     });
 
@@ -87,12 +87,12 @@ describe('Embedding hotlinked media', () => {
     const libraryElement = fixture.editor.library.media.item(0);
     const img = libraryElement.getElementsByTagName('img')[0];
 
-    const button = await fixture.screen.getByRole('button', {
+    const button = fixture.screen.getByRole('button', {
       name: 'Insert by link',
     });
     await fixture.events.click(button);
-    const input = await fixture.screen.getByRole('textbox', { name: 'URL' });
-    const insertBtn = await fixture.screen.getByRole('button', {
+    const input = fixture.screen.getByRole('textbox', { name: 'URL' });
+    const insertBtn = fixture.screen.getByRole('button', {
       name: 'Insert',
     });
     await fixture.events.click(input);
@@ -109,12 +109,12 @@ describe('Embedding hotlinked media', () => {
       throw new Error();
     });
 
-    const button = await fixture.screen.getByRole('button', {
+    const button = fixture.screen.getByRole('button', {
       name: 'Insert by link',
     });
     await fixture.events.click(button);
-    const input = await fixture.screen.getByRole('textbox', { name: 'URL' });
-    const insertBtn = await fixture.screen.getByRole('button', {
+    const input = fixture.screen.getByRole('textbox', { name: 'URL' });
+    const insertBtn = fixture.screen.getByRole('button', {
       name: 'Insert',
     });
     await fixture.events.click(input);

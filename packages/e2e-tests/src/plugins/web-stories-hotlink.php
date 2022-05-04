@@ -31,16 +31,17 @@
 
 namespace Google\Web_Stories\E2E\Hotlink;
 
-$url       = content_url( '/e2e-assets/test.vtt' );
-$cache_key = 'web_stories_url_data_' . md5( $url );
-$filter    = 'pre_transient_' . $cache_key;
+function get_filter_name( $url ){
+	$cache_key = 'web_stories_url_data_' . md5( $url );
+	return 'pre_transient_' . $cache_key;
+}
 
 /**
  * Hotwire the value of transient, so that a real request is not made.
  *
  * @return string
  */
-function filter_transient() {
+function filter_caption_transient() {
 	$data = [
 		'ext'       => 'vtt',
 		'file_name' => 'test.vtt',
@@ -51,5 +52,24 @@ function filter_transient() {
 
 	return wp_json_encode( $data );
 }
+$caption_filter_name = get_filter_name( content_url( '/e2e-assets/test.vtt' ) );
+add_filter( $caption_filter_name, __NAMESPACE__ . '\filter_caption_transient', 20 );
 
-add_filter( $filter, __NAMESPACE__ . '\filter_transient', 20 );
+/**
+ * Hotwire the value of transient, so that a real request is not made.
+ *
+ * @return string
+ */
+function filter_audio_transient() {
+	$data = [
+		'ext'       => 'mp3',
+		'file_name' => 'audio.mp3',
+		'file_size' => '2000',
+		'mime_type' => 'audio/mpeg',
+		'type'      => 'audio',
+	];
+
+	return wp_json_encode( $data );
+}
+$audio_filter_name = get_filter_name( content_url( '/e2e-assets/audio.mp3' ) );
+add_filter( $audio_filter_name, __NAMESPACE__ . '\filter_audio_transient', 20 );

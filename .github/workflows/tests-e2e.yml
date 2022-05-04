@@ -136,11 +136,19 @@ jobs:
           - browser: 'chrome'
             wp: 'latest'
             snapshots: true
-            shard: '1/2'
+            shard: '1/4'
           - browser: 'chrome'
             wp: 'latest'
             snapshots: true
-            shard: '2/2'
+            shard: '2/4'
+          - browser: 'chrome'
+            wp: 'latest'
+            snapshots: true
+            shard: '3/4'
+          - browser: 'chrome'
+            wp: 'latest'
+            snapshots: true
+            shard: '4/4'
 
     steps:
       - name: Checkout

@@ -31,11 +31,13 @@ import { FontCheckDialog } from './fontCheckDialog';
 
 export const FontCheck = () => {
   const { dashboardLink } = useConfig();
-  const { isStoryLoaded } = useStory(({ state: { pages } }) => ({
-    isStoryLoaded: pages.length > 0,
-  }));
-  const storyPages = useStory(({ state: { pages } }) => pages);
-
+  const { isStoryLoaded, storyPages, updateElementsByFontFamily } = useStory(
+    ({ state: { pages }, actions }) => ({
+      storyPages: pages,
+      updateElementsByFontFamily: actions.updateElementsByFontFamily,
+      isStoryLoaded: pages.length > 0,
+    })
+  );
   const {
     actions: { getFonts },
   } = useAPI();
@@ -49,25 +51,41 @@ export const FontCheck = () => {
 
   const closeDialog = () => setShowDialog(false);
 
-  useEffect(() => {
-    (async () => {
-      if (!isStoryLoaded) {
-        return;
-      }
+  useEffect(
+    () => {
+      (async () => {
+        if (!isStoryLoaded) {
+          return;
+        }
 
-      const inUseFonts = getInUseFontsForPages(storyPages);
-      const allFonts = await getFonts({ include: inUseFonts.join(',') });
+        const inUseFonts = getInUseFontsForPages(storyPages);
+        const allFonts = await getFonts({ include: inUseFonts.join(',') });
+        for (const fontFamily of inUseFonts) {
+          const matchedFont = allFonts.find(
+            (font) => font?.family === fontFamily
+          );
+          if (matchedFont) {
+            // ensure `in use` font element uses the latest metrics, weights etc...
+            updateElementsByFontFamily({
+              family: fontFamily,
+              properties: { font: matchedFont },
+            });
+          }
+        }
 
-      const diff = inUseFonts.filter(
-        (x) => !new Set(allFonts.map((font) => font.family)).has(x)
-      );
+        const diff = inUseFonts.filter(
+          (x) => !new Set(allFonts.map((font) => font.family)).has(x)
+        );
 
-      if (diff && diff.length >= 1) {
-        setShowDialog(true);
-        setMissingFont(diff[0]);
-      }
-    })();
-  }, [isStoryLoaded, storyPages, getFonts]);
+        if (diff && diff.length >= 1) {
+          setShowDialog(true);
+          setMissingFont(diff[0]);
+        }
+      })();
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- we only want to run this once after the story is loaded
+    [isStoryLoaded, updateElementsByFontFamily]
+  );
 
   return (
     <FontCheckDialog

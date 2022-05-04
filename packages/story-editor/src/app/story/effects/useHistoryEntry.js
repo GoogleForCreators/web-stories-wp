@@ -36,6 +36,11 @@ const ELEMENT_PROPS_TO_IGNORE = [
   'resource.isMuted',
   'resource.posterId',
   'resource.poster',
+  'resource.font.metrics',
+  'resource.font.weights',
+  'resource.font.variants',
+  'resource.font.fallbacks',
+  'resource.font.styles',
 ];
 
 // Record any change to core variables in history (history will know if it's a replay)
