@@ -52,25 +52,10 @@ function ProductDropdown({ product, setProduct }) {
     }) => isSaving
   );
 
-  useEffect(() => {
-    (async () => {
-      setIsLoading(true);
-      const products = await getProducts();
-      setInitialOptions(
-        products.map((p) => ({
-          name: p.productTitle,
-          id: p.productId,
-          product: p,
-        }))
-      );
-      setIsLoading(false);
-    })();
-  }, [getProducts]);
-
   const onChange = ({ product: newProduct }) => setProduct(newProduct);
 
   const getProductsByQuery = useCallback(
-    async (value) => {
+    async (value = "") => {
       const products = await getProducts(value);
       return products.map((p) => ({
         name: p.productTitle,
@@ -80,6 +65,15 @@ function ProductDropdown({ product, setProduct }) {
     },
     [getProducts]
   );
+
+  useEffect(() => {
+    (async () => {
+      setIsLoading(true);
+      const products = await getProductsByQuery();
+      setInitialOptions(products);
+      setIsLoading(false);
+    })();
+  }, [getProductsByQuery]);
 
   const dropDownParams = {
     hasSearch: true,
