@@ -40,7 +40,7 @@ describe('Shopify settings', () => {
       text: 'None',
     });
 
-    await expect(page).toClick('li', { text: 'Shopify' });
+    await expect(page).toClick('[role="listbox"] li', { text: 'Shopify' });
     await expect(page).toMatchElement(shoppingProviderDropdownSelector, {
       text: 'Shopify',
     });
@@ -49,7 +49,7 @@ describe('Shopify settings', () => {
     await expect(page).toClick(shoppingProviderDropdownSelector, {
       text: 'Shopify',
     });
-    await expect(page).toClick('li', { text: 'None' });
+    await expect(page).toClick('[role="listbox"] li', { text: 'None' });
     await expect(page).toMatchElement(shoppingProviderDropdownSelector, {
       text: 'None',
     });

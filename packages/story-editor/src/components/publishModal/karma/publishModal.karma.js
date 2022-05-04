@@ -84,7 +84,7 @@ describe('Publish Story Modal', () => {
       );
       await fixture.events.click(checklistButton);
 
-      const updatedPublishModal = await fixture.screen.queryByRole('dialog', {
+      const updatedPublishModal = fixture.screen.queryByRole('dialog', {
         name: /^Story details$/,
       });
 

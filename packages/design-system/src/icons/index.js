@@ -93,6 +93,7 @@ export { default as LetterTLargeLetterTSmall } from './letter_t_large_letter_t_s
 export { default as LetterUUnderline } from './letter_u_underline.svg';
 export { default as Link } from './link.svg';
 export { default as LockClosed } from './lock_closed.svg';
+export { default as LockFilledClosed } from './lock_filled_closed.svg';
 export { default as LockOpen } from './lock_open.svg';
 export { default as Magnifier } from './magnifier.svg';
 export { default as Media } from './media.svg';

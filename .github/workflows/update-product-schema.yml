@@ -1,0 +1,40 @@
+name: Update Product Schema
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 12 * * 1'
+
+env:
+  GIT_AUTHOR_EMAIL: 94923726+googleforcreators-bot@users.noreply.github.com
+  GIT_AUTHOR_NAME: googleforcreators-bot
+  GIT_COMMITTER_EMAIL: 94923726+googleforcreators-bot@users.noreply.github.com
+  GIT_COMMITTER_NAME: googleforcreators-bot
+
+jobs:
+  update-fonts:
+    name: Update Product Schema
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
+
+      - name: Update Product Schema
+        run: |
+          curl -O -f https://raw.githubusercontent.com/ampproject/amphtml/main/examples/amp-story/shopping/product.schema.json
+          mv product.schema.json packages/e2e-tests/src/specs/editor/shopping/schema.json
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v4
+        with:
+          token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
+          commit-message: Update Product Schema
+          title: Update Product Schema
+          body: |
+            Fetched the current [product JSON schema](https://github.com/ampproject/amphtml/blob/main/examples/amp-story/shopping/product.schema.json) for `<amp-story-shopping>` to update it in the project.
+          branch: update/product-schema
+          labels: Dependencies
