@@ -15,6 +15,10 @@
  */
 
 export { default as Color } from './color';
+export {
+  default as FocusTrapButton,
+  handleReturnTrappedFocus,
+} from './focusTrapButton';
 export { default as IconButton } from './icon';
 export { default as Input } from './input';
 export { default as Separator } from './separator';

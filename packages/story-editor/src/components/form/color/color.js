@@ -31,6 +31,7 @@ import {
   PLACEMENT,
   TOOLTIP_PLACEMENT,
 } from '@googleforcreators/design-system';
+import { v4 as uuidv4 } from 'uuid';
 
 /**
  * Internal dependencies
@@ -39,9 +40,10 @@ import { MULTIPLE_VALUE } from '../../../constants';
 import useEyedropper from '../../eyedropper';
 import Tooltip from '../../tooltip';
 import { focusStyle } from '../../panels/shared/styles';
+
 import applyOpacityChange from './applyOpacityChange';
-import OpacityInput from './opacityInput';
 import ColorInput from './colorInput';
+import ActiveOpacity from './activeOpacity';
 import { SPACING } from './constants';
 
 const containerCss = css`
@@ -64,20 +66,9 @@ const ColorInputsWrapper = styled.div`
   gap: ${({ isInDesignMenu }) => (isInDesignMenu ? 0 : 6)}px;
 `;
 
-const Space = styled.div`
-  width: 8px;
-  height: 1px;
-  background-color: ${({ theme }) => theme.colors.divider.primary};
-`;
-
 // 10px comes from divider / 2
 const InputWrapper = styled.div`
   ${({ hasInputs }) => hasInputs && `width: calc(53% - 10px);`}
-`;
-
-const OpacityWrapper = styled.div`
-  width: ${({ isInDesignMenu }) =>
-    isInDesignMenu ? `calc(39% - 10px)` : `calc(47% - 10px)`};
 `;
 
 const EyeDropperButton = styled(Button).attrs({
@@ -110,6 +101,8 @@ const Color = forwardRef(function Color(
     hasInputs = true,
     width,
     tabIndex,
+    opacityFocusTrap,
+    colorFocusTrap,
   },
   ref
 ) {
@@ -142,6 +135,7 @@ const Color = forwardRef(function Color(
   // When there's multiple colors the input displays "Mixed" (in english) and takes up a different amount of space.
   // By checking here to ignore that value based on mixed colors we prevent visual spill over of content.
   const ignoreSetWidth = width && value === MULTIPLE_VALUE;
+
   return (
     <Container
       aria-label={containerLabel}
@@ -159,6 +153,7 @@ const Color = forwardRef(function Color(
           }
         >
           <EyeDropperButton
+            id={uuidv4()}
             tabIndex={tabIndex}
             aria-label={tooltip}
             onClick={initEyedropper()}
@@ -185,6 +180,7 @@ const Color = forwardRef(function Color(
               isInDesignMenu ? SPACING.FLOATING_MENU : SPACING.DEFAULT_SIDEBAR
             }
             tooltipPlacement={tooltipPlacement}
+            colorFocusTrap={colorFocusTrap}
             pickerProps={{
               allowsGradient,
               allowsOpacity,
@@ -197,17 +193,13 @@ const Color = forwardRef(function Color(
           />
         </InputWrapper>
         {allowsOpacity && displayOpacity && (
-          <>
-            <Space />
-            <OpacityWrapper isInDesignMenu={isInDesignMenu}>
-              <OpacityInput
-                tabIndex={tabIndex}
-                value={value}
-                onChange={handleOpacityChange}
-                isInDesignMenu={isInDesignMenu}
-              />
-            </OpacityWrapper>
-          </>
+          <ActiveOpacity
+            handleOpacityChange={handleOpacityChange}
+            isInDesignMenu={isInDesignMenu}
+            opacityFocusTrap={opacityFocusTrap}
+            tabIndex={tabIndex}
+            value={value}
+          />
         )}
       </ColorInputsWrapper>
     </Container>

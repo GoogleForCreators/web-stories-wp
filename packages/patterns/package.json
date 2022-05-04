@@ -2,7 +2,7 @@
   "name": "@googleforcreators/patterns",
   "description": "Utility package to deal with color \"patterns\" like solid colors, and gradients.",
   "private": false,
-  "version": "0.1.202204141511",
+  "version": "0.1.202205021257",
   "author": {
     "name": "Google",
     "url": "https://creators.google/"

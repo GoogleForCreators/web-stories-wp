@@ -33,7 +33,6 @@ import {
   Icons,
   Text,
   THEME_CONSTANTS,
-  Tooltip,
   themeHelpers,
   useSnackbar,
   useLiveRegion,
@@ -41,6 +40,7 @@ import {
 
 import styled from 'styled-components';
 import { trackEvent, trackError } from '@googleforcreators/tracking';
+import { Tooltip } from '@googleforcreators/dashboard';
 
 /**
  * Internal dependencies
@@ -386,11 +386,7 @@ function CustomFontsSettings({
                     <Divider />
                     <FontUrl>{url}</FontUrl>
                   </FontData>
-                  <Tooltip
-                    ignoreMaxOffsetY
-                    hasTail
-                    title={__('Delete font', 'web-stories')}
-                  >
+                  <Tooltip hasTail title={__('Delete font', 'web-stories')}>
                     <DeleteButton
                       aria-label={sprintf(
                         /*translators: %s: font family. */

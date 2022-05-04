@@ -17,11 +17,12 @@
  * External dependencies
  */
 import { useRef, useEffect } from '@googleforcreators/react';
+import PropTypes from 'prop-types';
+import { StoryPropTypes } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
-import { registerPropTypes } from './propTypes';
 import { STORY_EVENTS } from './types';
 
 export function isNewStory(story) {
@@ -46,6 +47,26 @@ function OnInitialElementAddedRegister({ currentStory, dispatchStoryEvent }) {
   return null;
 }
 
-OnInitialElementAddedRegister.propType = registerPropTypes;
+OnInitialElementAddedRegister.propTypes = {
+  currentStory: PropTypes.shape({
+    story: PropTypes.shape({
+      pages: PropTypes.arrayOf(
+        PropTypes.shape({
+          elements: PropTypes.arrayOf(PropTypes.shape(StoryPropTypes.element)),
+        })
+      ),
+    }),
+  }),
+  prevStory: PropTypes.shape({
+    story: PropTypes.shape({
+      pages: PropTypes.arrayOf(
+        PropTypes.shape({
+          elements: PropTypes.arrayOf(PropTypes.shape(StoryPropTypes.element)),
+        })
+      ),
+    }),
+  }),
+  dispatchStoryEvent: PropTypes.func.isRequired,
+};
 
 export { OnInitialElementAddedRegister };

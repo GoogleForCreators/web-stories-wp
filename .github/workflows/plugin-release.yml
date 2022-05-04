@@ -25,6 +25,7 @@ env:
   GIT_AUTHOR_NAME: googleforcreators-bot
   GIT_COMMITTER_EMAIL: 94923726+googleforcreators-bot@users.noreply.github.com
   GIT_COMMITTER_NAME: googleforcreators-bot
+  GITHUB_REPO_ID: 235435637
 
 jobs:
   # Perform some sanity checks at the beginning to avoid surprises.
@@ -523,7 +524,7 @@ jobs:
         run: |
           echo "Getting list of releases from ZenHub"
 
-          RELEASES=$(curl -s -H "X-Authentication-Token: $ZENHUB_API_TOKEN" "https://api.zenhub.com/p1/repositories/${GITHUB_REPO_ID}/reports/releases")
+          RELEASES=$(curl -f -s -H "X-Authentication-Token: $ZENHUB_API_TOKEN" "https://api.zenhub.com/p1/repositories/${GITHUB_REPO_ID}/reports/releases")
           CURRENT_RELEASE=$((echo $RELEASES ) | jq -r "first(.[] | select( .title == \"$PLUGIN_VERSION\" )) | .release_id")
 
           if [[ -z $CURRENT_RELEASE ]]; then
@@ -532,7 +533,7 @@ jobs:
           else
             echo "Closing release report on ZenHub for release: $CURRENT_RELEASE"
 
-            curl -s -H "X-Authentication-Token: $ZENHUB_API_TOKEN" -H 'Content-Type: application/json' -X PATCH "https://api.zenhub.com/p1/reports/release/${CURRENT_RELEASE}" -d '{ "state": "closed" }'
+            curl -f -s -H "X-Authentication-Token: $ZENHUB_API_TOKEN" -H 'Content-Type: application/json' -X PATCH "https://api.zenhub.com/p1/reports/release/${CURRENT_RELEASE}" -d '{ "state": "closed" }'
           fi
         env:
           ZENHUB_API_TOKEN: ${{ secrets.ZENHUB_API_TOKEN }}

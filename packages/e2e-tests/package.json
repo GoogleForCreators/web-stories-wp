@@ -35,6 +35,7 @@
     "babel-jest": "^27.4.6",
     "expect-puppeteer": "^6.0.2",
     "jest-extended": "^2.0.0",
+    "jest-json-schema": "^6.1.0",
     "jest-puppeteer": "^6.1.0"
   },
   "peerDependencies": {

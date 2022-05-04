@@ -27,7 +27,6 @@ import {
   BUTTON_TYPES,
   BUTTON_VARIANTS,
   Icons,
-  Tooltip,
 } from '@googleforcreators/design-system';
 import {
   DIRECTION,
@@ -40,6 +39,7 @@ import {
  */
 import { useConfig } from '../../../../app/config';
 import useRadioNavigation from '../../../form/shared/useRadioNavigation';
+import Tooltip from '../../../tooltip';
 
 const StyledButton = styled(Button)`
   z-index: 0;

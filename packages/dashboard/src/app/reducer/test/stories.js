@@ -254,6 +254,47 @@ describe('storyReducer', () => {
     });
   });
 
+  it(`should update stories state when ${ACTION_TYPES.FETCH_STORIES_SUCCESS} is called and set totalPages to at least one`, () => {
+    const result = storyReducer(
+      { ...initialState },
+      {
+        type: ACTION_TYPES.FETCH_STORIES_SUCCESS,
+        payload: {
+          page: 1,
+          stories: {},
+          totalStoriesByStatus: {
+            all: 0,
+            [STORY_STATUS.DRAFT]: 0,
+            [STORY_STATUS.PUBLISH]: 0,
+            [STORY_STATUS.FUTURE]: 0,
+            [STORY_STATUS.PENDING]: 0,
+            [STORY_STATUS.PRIVATE]: 0,
+            [STORY_STATUS.PUBLISH]: 0,
+          },
+          totalPages: 0,
+          fetchedStoryIds: [],
+        },
+      }
+    );
+
+    expect(result).toMatchObject({
+      ...initialState,
+      storiesOrderById: [],
+      stories: {},
+      totalStoriesByStatus: {
+        all: 0,
+        [STORY_STATUS.DRAFT]: 0,
+        [STORY_STATUS.PUBLISH]: 0,
+        [STORY_STATUS.FUTURE]: 0,
+        [STORY_STATUS.PENDING]: 0,
+        [STORY_STATUS.PRIVATE]: 0,
+        [STORY_STATUS.PUBLISH]: 0,
+      },
+      totalPages: 1,
+      allPagesFetched: true,
+    });
+  });
+
   it(`should update isLoading when ${ACTION_TYPES.LOADING_STORIES} is called`, () => {
     const result = storyReducer(
       { ...initialState },
