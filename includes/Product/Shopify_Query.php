@@ -26,6 +26,7 @@
 
 namespace Google\Web_Stories\Product;
 
+use Google\Web_Stories\Interfaces\Product_Query;
 use Google\Web_Stories\Model\Image;
 use Google\Web_Stories\Model\Product;
 use Google\Web_Stories\Model\Rating;
@@ -42,7 +43,7 @@ use WP_Http;
  * @phpstan-type ShopifyGraphQLProduct array{id: string, handle: string, title: string, vendor: string, description: string, onlineStoreUrl?: string, images: array{edges: array{node: ShopifyGraphQLProductImage}[]}, priceRange: ShopifyGraphQLPriceRange}
  * @phpstan-type ShopifyGraphQLResponse array{errors?: ShopifyGraphQLError, data: array{products: array{edges: array{node: ShopifyGraphQLProduct}[]}}}
  */
-class Shopify_Query extends Query {
+class Shopify_Query implements Product_Query {
 
 	/**
 	 * Settings instance.
@@ -69,9 +70,9 @@ class Shopify_Query extends Query {
 	 * @since 1.20.0
 	 *
 	 * @param string $search_term Search term.
-	 * @return void|WP_Error
+	 * @return Product[]|WP_Error
 	 */
-	public function do_search( string $search_term ) {
+	public function get_search( string $search_term ) {
 
 		/**
 		 * Filters the shopify products data TTL value.
@@ -98,8 +99,7 @@ class Shopify_Query extends Query {
 				foreach ( $products as $product ) {
 					$results[] = new Product( $product );
 				}
-				$this->set_results( $results );
-				return;
+				return $results;
 			}
 		}
 
@@ -232,8 +232,8 @@ QUERY;
 			$results[]      = $product_object;
 		}
 
-		$this->set_results( $results );
-
 		set_transient( $cache_key, wp_json_encode( $results_raw ), $cache_ttl );
+
+		return $results;
 	}
 }

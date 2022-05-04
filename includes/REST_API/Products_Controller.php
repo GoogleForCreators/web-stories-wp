@@ -164,15 +164,13 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 		 *
 		 * @var string $search_term
 		 */
-		$search_term = ! empty( $request['search'] ) ? $request['search'] : '';
-		$result      = $query->do_search( $search_term );
-		if ( is_wp_error( $result ) ) {
-			return $result;
+		$search_term  = ! empty( $request['search'] ) ? $request['search'] : '';
+		$query_result = $query->get_search( $search_term );
+		if ( is_wp_error( $query_result ) ) {
+			return $query_result;
 		}
-		$query_result = $query->get_results();
 
 		$products = [];
-
 		foreach ( $query_result as $product ) {
 			$data       = $this->prepare_item_for_response( $product, $request );
 			$products[] = $this->prepare_response_for_collection( $data );

@@ -34,30 +34,12 @@ use WP_Error;
  */
 interface Product_Query {
 	/**
-	 * Get results.
-	 *
-	 * @since 1.20.0
-	 *
-	 * @return Product[]
-	 */
-	public function get_results(): array;
-
-	/**
-	 * Set results.
-	 *
-	 * @since 1.20.0
-	 *
-	 * @param Product[] $results Array of Products.
-	 */
-	public function set_results( array $results ): void;
-
-	/**
 	 * Get products by search term.
 	 *
 	 * @since 1.20.0
 	 *
 	 * @param string $search_term Search term.
-	 * @return void|WP_Error
+	 * @return Product[]|WP_Error
 	 */
-	public function do_search( string $search_term );
+	public function get_search( string $search_term );
 }

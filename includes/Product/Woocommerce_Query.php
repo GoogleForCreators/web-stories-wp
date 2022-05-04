@@ -26,22 +26,30 @@
 
 namespace Google\Web_Stories\Product;
 
+use Google\Web_Stories\Interfaces\Product_Query;
 use Google\Web_Stories\Model\Image;
 use Google\Web_Stories\Model\Product;
 use Google\Web_Stories\Model\Rating;
+use WP_Error;
 
 /**
  * Class Woocommerce_Query.
  */
-class Woocommerce_Query extends Query {
+class Woocommerce_Query implements Product_Query {
 	/**
 	 * Get products by search term.
 	 *
 	 * @since 1.20.0
 	 *
 	 * @param string $search_term Search term.
+	 * @return Product[]|WP_Error
 	 */
-	public function do_search( string $search_term ): void {
+	public function get_search( string $search_term ) {
+
+		if ( ! function_exists( 'wc_get_products' ) ) {
+			return new WP_Error( 'rest_unknown', __( 'Woocommerce is not installed.', 'web-stories' ), [ 'status' => 400 ] );
+		}
+
 		$results = [];
 
 		/**
@@ -109,6 +117,6 @@ class Woocommerce_Query extends Query {
 			$results[] = $product_object;
 		}
 
-		$this->set_results( $results );
+		return $results;
 	}
 }

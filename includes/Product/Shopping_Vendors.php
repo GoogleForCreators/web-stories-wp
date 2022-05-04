@@ -30,8 +30,6 @@ namespace Google\Web_Stories\Product;
 
 use Google\Web_Stories\Infrastructure\Injector;
 use Google\Web_Stories\Interfaces\Product_Query;
-use function apply_filters;
-use function Google\Web_Stories\__;
 
 /**
  * Class Shopping_Vendors.
