@@ -25,12 +25,16 @@ import { __ } from '@googleforcreators/i18n';
 import { useCallback, useEffect, useState } from '@googleforcreators/react';
 import { Datalist } from '@googleforcreators/design-system';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
 import { useStory, useAPI } from '../../../../app';
 
+const StyledDropDown = styled(Datalist.DropDown)`
+  width: 240px;
+`;
 function ProductDropdown({ product, setProduct }) {
   const isEnabled = useFeature('shoppingIntegration');
 
@@ -97,7 +101,7 @@ function ProductDropdown({ product, setProduct }) {
   }
 
   return (
-    <Datalist.DropDown
+    <StyledDropDown
       options={initialOptions}
       searchResultsLabel={__('Search results', 'web-stories')}
       aria-label={__('Product', 'web-stories')}
