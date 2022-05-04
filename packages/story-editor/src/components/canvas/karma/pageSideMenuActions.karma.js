@@ -64,7 +64,7 @@ describe('PageMenu integration', () => {
 
     // the play button should be visible once an animation is added
     // and be enabled if on any page other than the first page
-    let button = await fixture.screen.getByLabelText('Play Page Animations');
+    let button = fixture.screen.getByLabelText('Play Page Animations');
     expect(button.disabled).toBeFalsy();
 
     // switch to the first page delete it
@@ -75,7 +75,7 @@ describe('PageMenu integration', () => {
 
     // the second page should now be the first page
     // make sure the play button is visible and is disabled
-    button = await fixture.screen.getByLabelText('Page Animations Disabled');
+    button = fixture.screen.getByLabelText('Page Animations Disabled');
     expect(button.disabled).toBeTrue();
   });
 });

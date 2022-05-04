@@ -285,8 +285,8 @@ describe('Animation Panel', function () {
 
     // the animation information should still be present in the animation panel but not editable
     expect(effectChooser.disabled).toBeTrue();
-    const duration = await fixture.screen.getByLabelText('Duration');
-    const delay = await fixture.screen.getByLabelText('Delay');
+    const duration = fixture.screen.getByLabelText('Duration');
+    const delay = fixture.screen.getByLabelText('Delay');
     expect(duration.disabled).toBeTrue();
     expect(delay.disabled).toBeTrue();
 
