@@ -19,7 +19,7 @@
  */
 import { Fixture } from '../../../../karma';
 import { useStory } from '../../../../app/story';
-import { tabToCanvasFocusContainer } from '../../../../components/floatingMenu/karma/utils';
+import { tabToCanvasFocusContainer } from '../../karma/utils';
 
 describe('Shopping integration', () => {
   let fixture;
@@ -92,11 +92,13 @@ describe('Shopping integration', () => {
     it('should show floating menu when product is selected on canvas', async () => {
       const productTitle = 'Single';
       await insertProduct(productTitle);
-      const focusContainer = fixture.screen.getByTestId('canvas-focus-container');
+      const focusContainer = fixture.screen.getByTestId(
+        'canvas-focus-container'
+      );
 
       // deselect the product
       await fixture.events.click(focusContainer);
-      const canvasElement = await getSelectedElement()
+      const canvasElement = await getSelectedElement();
       await expect(canvasElement.isBackground).toBe(true);
 
       // reselect the product
@@ -104,9 +106,7 @@ describe('Shopping integration', () => {
       await fixture.events.keyboard.press('Enter');
       await fixture.events.keyboard.press('Tab');
       const selectedElement = await getSelectedElement();
-      await expect(selectedElement?.product?.productTitle).toBe(
-        productTitle
-      );
+      await expect(selectedElement?.product?.productTitle).toBe(productTitle);
     });
   });
 });
