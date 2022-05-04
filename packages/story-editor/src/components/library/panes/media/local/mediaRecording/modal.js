@@ -88,6 +88,10 @@ function Modal({ isOpen, onClose }) {
   }, []);
 
   useEffect(() => {
+    if (!mediaDevices.length) {
+      return;
+    }
+
     const videoDeviceExists =
       videoInput &&
       mediaDevices.some((device) => device.deviceId === videoInput);
