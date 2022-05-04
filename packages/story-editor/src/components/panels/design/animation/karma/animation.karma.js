@@ -227,14 +227,7 @@ describe('Animation Panel', function () {
     expect(panel.effectChooser.disabled).toBeTrue();
   });
 
-  it('should render the animation panel with inputs disabled when page becomes the first page', async function () {
-    // just a helper to get these
-    const getPanelAndEffectChooser = () => {
-      const panel = fixture.editor.sidebar.designPanel.animation;
-      const effectChooser = panel.effectChooser;
-      return [panel, effectChooser];
-    };
-
+  fit('should render the animation panel with inputs disabled when page becomes the first page', async function () {
     const { id: firstPageId } = await getCurrntPage();
     // create a new page with in the story
     await fixture.events.click(fixture.editor.canvas.pageActions.addPage);
@@ -257,7 +250,8 @@ describe('Animation Panel', function () {
 
     // get the second pages panel info
     // animations should be enabled on all pages other than the first page
-    let [panel, effectChooser] = getPanelAndEffectChooser();
+    let effectChooser =
+      fixture.editor.sidebar.designPanel.animation.effectChooser;
     expect(effectChooser.disabled).toBeFalsy();
 
     // set the text animation
@@ -287,7 +281,7 @@ describe('Animation Panel', function () {
       fixture.editor.canvas.framesLayer.frames[1].node
     );
 
-    [panel, effectChooser] = getPanelAndEffectChooser();
+    effectChooser = fixture.editor.sidebar.designPanel.animation.effectChooser;
 
     // the animation information should still be present in the animation panel but not editable
     expect(effectChooser.disabled).toBeTrue();

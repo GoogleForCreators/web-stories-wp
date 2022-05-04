@@ -15,10 +15,14 @@
  */
 
 /**
+ * External dependencies
+ */
+import { waitFor } from '@testing-library/react';
+
+/**
  * Internal dependencies
  */
 import { Fixture } from '../../../karma';
-import { waitFor } from '@testing-library/react';
 
 describe('PageMenu integration', () => {
   let fixture;
