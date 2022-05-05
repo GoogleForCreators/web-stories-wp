@@ -68,12 +68,12 @@ function ProductDropdown({ product, setProduct }) {
 
   useEffect(() => {
     (async () => {
-      setIsLoading(true);
       try {
-        setInitialOptions(await getProductsByQuery());
+        setIsLoading(true);
+        const products = await getProductsByQuery();
+        setInitialOptions(products);
       } catch (err) {
-        // eslint-disable-next-line no-console
-        console.log(err);
+        setInitialOptions([]);
       } finally {
         setIsLoading(false);
       }
