@@ -29,22 +29,27 @@ async function visitBlockWidgetScreen() {
   // Disable welcome guide if it is enabled.
   // The former selector is for WP < 5.9
   const isWelcomeGuideActive = await page.evaluate(() => {
-    return (
-      // WordPress < 5.9
-      wp.data
-        .select('core/edit-widgets')
-        ?.__unstableIsFeatureActive?.('welcomeGuide') ||
-      // WordPress 5.9
-      wp.data
-        .select('core/interface')
-        ?.isFeatureActive?.('core/edit-widgets', 'welcomeGuide') ||
-      // WordPress 6.0
-      Boolean(
+    if (wp.data.select('core/preferences')) {
+      return Boolean(
         wp.data
           .select('core/preferences')
           .get('core/edit-widgets', 'welcomeGuide')
-      )
-    );
+      );
+    }
+
+    if (wp.data.select('core/interface')) {
+      return wp.data
+        .select('core/interface')
+        ?.isFeatureActive?.('core/edit-widgets', 'welcomeGuide');
+    }
+
+    if (wp.data.select('core/edit-widgets')) {
+      return wp.data
+        .select('core/edit-widgets')
+        ?.__unstableIsFeatureActive?.('welcomeGuide');
+    }
+
+    return false;
   });
 
   if (isWelcomeGuideActive) {
