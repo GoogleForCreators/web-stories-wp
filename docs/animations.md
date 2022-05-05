@@ -74,7 +74,7 @@ Remnants of this scope change can be seen in the serializable animation objects 
 For the intial animation & template implementation we were supporting very complex animations for the templates. Creating these template animations necessitated an internal timeline tool to compose animation parts manually on each template. Since then, we've simplified animations for users and tried to make them parallel the AMP Story Animation presets
 
 If we do introduce an animation timeline to the editor in the future, here's the reference to the PR where we took out the internal timeline tool:
-https://github.com/GoogleForCreators/web-stories-wp/pull/7067
+[#7067](https://github.com/GoogleForCreators/web-stories-wp/pull/7067)
 
 The commit hash right before that PR to remove the tool on main is `9b202aa628c6e44`. If you get a local version of that commit hash running, you can view the internal animation timeline tool by opening up the dashboard and navigating to `/story-anim-tool` in the url bar.
 
