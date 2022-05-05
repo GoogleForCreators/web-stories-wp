@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,12 +13,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { default as PostPublishDialog } from './postPublishDialog';
-export { default as PostReviewDialog } from './postReviewDialog';
-export { default as Layout } from './layout';
-export { default as MediaUpload } from './mediaUpload';
-export { default as PostLock } from './postLock';
-export { default as StatusCheck } from './statusCheck';
-export { default as CorsCheck } from './corsCheck';
-export { default as FontCheck } from './fontCheck';
-export * from './metaBoxes';
+
+/**
+ * External dependencies
+ */
+import { StoryContext } from '@googleforcreators/story-editor';
+
+/**
+ * Internal dependencies
+ */
+import PostReviewDialog from '..';
+
+export default {
+  title: 'Stories Editor/Components/Dialog/Post-Review Submitted',
+  component: PostReviewDialog,
+};
+
+const storyContext = {
+  state: {
+    meta: {
+      isFreshlyPublished: true,
+    },
+  },
+};
+
+export const _default = () => {
+  return (
+    <StoryContext.Provider value={storyContext}>
+      <PostReviewDialog />
+    </StoryContext.Provider>
+  );
+};

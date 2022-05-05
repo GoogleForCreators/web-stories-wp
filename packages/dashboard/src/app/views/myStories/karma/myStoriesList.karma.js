@@ -138,7 +138,7 @@ describe('CUJ: Creator can view their stories in list view: ', () => {
 
       await fixture.events.click(rename);
 
-      const input = await utils.getByRole('textbox');
+      const input = utils.getByRole('textbox');
 
       const inputLength = input.value.length;
 
