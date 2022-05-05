@@ -17,20 +17,11 @@
  * External dependencies
  */
 import { __ } from '@googleforcreators/i18n';
-import { StoryPropTypes } from '@googleforcreators/elements';
 
-/**
- * Internal dependencies
- */
-import { LayerText } from '../shared';
-
-function GifLayerContent({ element }) {
+function getGifLayerText(element) {
   const { alt } = element?.resource || {};
 
-  return <LayerText>{alt || __('GIF', 'web-stories')}</LayerText>;
+  return alt || __('GIF', 'web-stories');
 }
-GifLayerContent.propTypes = {
-  element: StoryPropTypes.element.isRequired,
-};
 
-export default GifLayerContent;
+export default getGifLayerText;
