@@ -88,7 +88,7 @@ class Product {
 	/**
 	 * Product constructor.
 	 *
-	 * @since 1.20.0
+	 * @since 1.21.0
 	 *
 	 * @param array $product Array of attributes.
 	 */

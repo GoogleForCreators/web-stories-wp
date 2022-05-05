@@ -36,7 +36,7 @@ interface Product_Query {
 	/**
 	 * Get products by search term.
 	 *
-	 * @since 1.20.0
+	 * @since 1.21.0
 	 *
 	 * @param string $search_term Search term.
 	 * @return Product[]|WP_Error

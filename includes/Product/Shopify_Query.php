@@ -115,8 +115,6 @@ class Shopify_Query implements Product_Query {
 			}
 		}
 
-		$results = [];
-
 		// TODO(#11154): Maybe move to a class constant.
 		$api_version = '2022-01';
 
@@ -188,6 +186,8 @@ QUERY;
 		if ( isset( $result['errors'] ) ) {
 			return new WP_Error( 'rest_unknown', __( 'Error fetching products', 'web-stories' ), [ 'status' => 404 ] );
 		}
+
+		$results = [];
 
 		foreach ( $result['data']['products']['edges'] as $edge ) {
 			$product = $edge['node'];

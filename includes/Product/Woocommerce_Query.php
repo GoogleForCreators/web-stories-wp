@@ -65,29 +65,19 @@ class Woocommerce_Query implements Product_Query {
 			]
 		);
 
+		$products_image_ids = [];
 		foreach ( $products as $product ) {
-			$product_image_ids = $product->get_gallery_image_ids();
+			$product_image_ids[] = $product->get_gallery_image_ids();
+		}
+		$product_image_ids = array_merge( [], ...$products_image_ids );
+		/*
+		 * Warm the object cache with post and meta information for all found
+		 * images to avoid making individual database calls.
+		 */
+		_prime_post_caches( $product_image_ids, false, true );
 
-			/*
-			 * Warm the object cache with post and meta information for all found
-			 * images to avoid making individual database calls.
-			 */
-			_prime_post_caches( $product_image_ids, false, true );
-
-			$images = array_map(
-				static function ( $image_id ) {
-					$url = wp_get_attachment_url( $image_id );
-					$alt = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
-					if ( empty( $alt ) ) {
-						$alt = '';
-					}
-					return [
-						'url' => $url,
-						'alt' => $alt,
-					];
-				},
-				$product_image_ids
-			);
+		foreach ( $products as $product ) {
+			$images = array_map( [ $this, 'get_product_images' ], $product_image_ids );
 
 			$product_object = new Product(
 				[
@@ -112,5 +102,23 @@ class Woocommerce_Query implements Product_Query {
 		}
 
 		return $results;
+	}
+
+	/**
+	 * Get product image, url and alt.
+	 *
+	 * @since 1.21.0
+	 *
+	 * @param int $image_id Attachment ID.
+	 * @return array
+	 */
+	protected function get_product_images( int $image_id ): array {
+		$url = wp_get_attachment_url( $image_id );
+		$alt = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
+		if ( empty( $alt ) ) {
+			$alt = '';
+		}
+
+		return compact( 'url', 'alt' );
 	}
 }
