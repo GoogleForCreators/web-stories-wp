@@ -18,7 +18,12 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useEffect, forwardRef } from '@googleforcreators/react';
+import {
+  useCallback,
+  useEffect,
+  forwardRef,
+  useState,
+} from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import styled from 'styled-components';
 import {
@@ -92,11 +97,10 @@ function StatusPanel({
     editLink,
     title,
     storyId,
-    visibility,
   } = useStory(
     ({
       state: {
-        story: { status, password, editLink, title, storyId, visibility },
+        story: { status, password, editLink, title, storyId },
         capabilities,
       },
       actions: { updateStory, saveStory },
@@ -109,30 +113,23 @@ function StatusPanel({
       editLink,
       title,
       storyId,
-      visibility,
     })
   );
+
+  const [visibility, setVisibility] = useState(VISIBILITY.PUBLIC);
 
   const isUploading = useIsUploadingToStory();
 
   useEffect(() => {
     if (password) {
-      updateStory({
-        properties: { visibility: VISIBILITY.PASSWORD_PROTECTED },
-      });
+      setVisibility(VISIBILITY.PASSWORD_PROTECTED);
       return;
     }
 
     if (status === STATUS.PRIVATE) {
+      setVisibility(VISIBILITY.PRIVATE);
       updateStory({
         properties: { visibility: VISIBILITY.PRIVATE },
-      });
-      return;
-    }
-
-    if (!visibility) {
-      updateStory({
-        properties: { visibility: VISIBILITY.PUBLIC },
       });
       return;
     }
@@ -175,7 +172,6 @@ function StatusPanel({
     const properties = {
       status: STATUS.PRIVATE,
       password: '',
-      visibility: VISIBILITY.PRIVATE,
     };
 
     trackEvent('publish_story', {
@@ -184,6 +180,7 @@ function StatusPanel({
     });
     refreshPostEditURL();
 
+    setVisibility(VISIBILITY.PRIVATE);
     saveStory(properties);
   }, [title.length, refreshPostEditURL, saveStory]);
 
@@ -217,7 +214,7 @@ function StatusPanel({
           properties.status =
             visibility === VISIBILITY.PRIVATE ? STATUS.DRAFT : status;
           properties.password = '';
-          properties.visibility = VISIBILITY.PUBLIC;
+          setVisibility(VISIBILITY.PUBLIC);
           break;
 
         case VISIBILITY.PRIVATE:
@@ -228,7 +225,7 @@ function StatusPanel({
           properties.status =
             visibility === VISIBILITY.PRIVATE ? STATUS.DRAFT : status;
           properties.password = password || '';
-          properties.visibility = VISIBILITY.PASSWORD_PROTECTED;
+          setVisibility(VISIBILITY.PASSWORD_PROTECTED);
           break;
 
         default:
