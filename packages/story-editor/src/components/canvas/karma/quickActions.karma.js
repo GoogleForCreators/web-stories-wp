@@ -39,6 +39,8 @@ describe('Quick Actions integration', () => {
     fixture = new Fixture();
     await fixture.render();
     await fixture.collapseHelpCenter();
+    // #11321 adding/editing animations on the first page is disabled
+    await fixture.events.click(fixture.editor.canvas.pageActions.addPage);
   });
 
   afterEach(() => {
@@ -290,7 +292,7 @@ describe('Quick Actions integration', () => {
       await waitFor(async () => {
         const story = await fixture.renderHook(() =>
           useStory(({ state }) => ({
-            animations: state.pages[0].animations,
+            animations: state.pages[1].animations,
             selectedElement: state.selectedElements[0],
           }))
         );
@@ -315,7 +317,7 @@ describe('Quick Actions integration', () => {
       // verify that element has no animations or styles
       const { animations, selectedElement } = await fixture.renderHook(() =>
         useStory(({ state }) => ({
-          animations: state.pages[0].animations,
+          animations: state.pages[1].animations,
           selectedElement: state.selectedElements[0],
         }))
       );
@@ -345,7 +347,7 @@ describe('Quick Actions integration', () => {
         selectedElement: revertedSelectedElement,
       } = await fixture.renderHook(() =>
         useStory(({ state }) => ({
-          animations: state.pages[0].animations,
+          animations: state.pages[1].animations,
           selectedElement: state.selectedElements[0],
         }))
       );
@@ -470,7 +472,7 @@ describe('Quick Actions integration', () => {
       await waitFor(async () => {
         const story = await fixture.renderHook(() =>
           useStory(({ state }) => ({
-            animations: state.pages[0].animations,
+            animations: state.pages[1].animations,
             selectedElement: state.selectedElements[0],
           }))
         );
@@ -495,7 +497,7 @@ describe('Quick Actions integration', () => {
       // verify that element has no animations or styles
       const { animations, selectedElement } = await fixture.renderHook(() =>
         useStory(({ state }) => ({
-          animations: state.pages[0].animations,
+          animations: state.pages[1].animations,
           selectedElement: state.selectedElements[0],
         }))
       );
@@ -525,7 +527,7 @@ describe('Quick Actions integration', () => {
         selectedElement: revertedSelectedElement,
       } = await fixture.renderHook(() =>
         useStory(({ state }) => ({
-          animations: state.pages[0].animations,
+          animations: state.pages[1].animations,
           selectedElement: state.selectedElements[0],
         }))
       );
@@ -653,7 +655,7 @@ describe('Quick Actions integration', () => {
       await waitFor(async () => {
         const story = await fixture.renderHook(() =>
           useStory(({ state }) => ({
-            animations: state.pages[0].animations,
+            animations: state.pages[1].animations,
             selectedElement: state.selectedElements[0],
           }))
         );
@@ -678,7 +680,7 @@ describe('Quick Actions integration', () => {
       // verify that element has no animations or styles
       const { animations, selectedElement } = await fixture.renderHook(() =>
         useStory(({ state }) => ({
-          animations: state.pages[0].animations,
+          animations: state.pages[1].animations,
           selectedElement: state.selectedElements[0],
         }))
       );
@@ -707,7 +709,7 @@ describe('Quick Actions integration', () => {
         selectedElement: revertedSelectedElement,
       } = await fixture.renderHook(() =>
         useStory(({ state }) => ({
-          animations: state.pages[0].animations,
+          animations: state.pages[1].animations,
           selectedElement: state.selectedElements[0],
         }))
       );
@@ -817,7 +819,7 @@ describe('Quick Actions integration', () => {
       await waitFor(async () => {
         const story = await fixture.renderHook(() =>
           useStory(({ state }) => ({
-            animations: state.pages[0].animations,
+            animations: state.pages[1].animations,
           }))
         );
         ({ animations: originalAnimations } = story);
@@ -837,7 +839,7 @@ describe('Quick Actions integration', () => {
       // verify that element has no animations
       const { animations } = await fixture.renderHook(() =>
         useStory(({ state }) => ({
-          animations: state.pages[0].animations,
+          animations: state.pages[1].animations,
         }))
       );
       expect(animations.length).toBe(0);
@@ -862,7 +864,7 @@ describe('Quick Actions integration', () => {
       // Verify that new animations match original animation
       const { animations: revertedAnimations } = await fixture.renderHook(() =>
         useStory(({ state }) => ({
-          animations: state.pages[0].animations,
+          animations: state.pages[1].animations,
         }))
       );
       expect(revertedAnimations.length).toBe(1);
@@ -1040,7 +1042,7 @@ describe('Quick Actions integration', () => {
       await waitFor(async () => {
         const story = await fixture.renderHook(() =>
           useStory(({ state }) => ({
-            animations: state.pages[0].animations,
+            animations: state.pages[1].animations,
             selectedElement: state.selectedElements[0],
           }))
         );
@@ -1065,7 +1067,7 @@ describe('Quick Actions integration', () => {
       // verify that element has no animations or styles
       const { animations, selectedElement } = await fixture.renderHook(() =>
         useStory(({ state }) => ({
-          animations: state.pages[0].animations,
+          animations: state.pages[1].animations,
           selectedElement: state.selectedElements[0],
         }))
       );
@@ -1094,7 +1096,7 @@ describe('Quick Actions integration', () => {
         selectedElement: revertedSelectedElement,
       } = await fixture.renderHook(() =>
         useStory(({ state }) => ({
-          animations: state.pages[0].animations,
+          animations: state.pages[1].animations,
           selectedElement: state.selectedElements[0],
         }))
       );
@@ -1216,7 +1218,7 @@ describe('Quick Actions integration', () => {
       await waitFor(async () => {
         const story = await fixture.renderHook(() =>
           useStory(({ state }) => ({
-            animations: state.pages[0].animations,
+            animations: state.pages[1].animations,
             selectedElement: state.selectedElements[0],
           }))
         );
@@ -1241,7 +1243,7 @@ describe('Quick Actions integration', () => {
       // verify that element has no animations or styles
       const { animations, selectedElement } = await fixture.renderHook(() =>
         useStory(({ state }) => ({
-          animations: state.pages[0].animations,
+          animations: state.pages[1].animations,
           selectedElement: state.selectedElements[0],
         }))
       );
@@ -1270,7 +1272,7 @@ describe('Quick Actions integration', () => {
         selectedElement: revertedSelectedElement,
       } = await fixture.renderHook(() =>
         useStory(({ state }) => ({
-          animations: state.pages[0].animations,
+          animations: state.pages[1].animations,
           selectedElement: state.selectedElements[0],
         }))
       );
