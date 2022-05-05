@@ -98,6 +98,13 @@ class Shopping_Vendors {
 			],
 		];
 
+		/**
+		 * Filter the array of vendors. 
+		 *
+		 * @since 1.21.0
+		 *
+		 * @param array $vendors Associative array of vendor, including label and class.
+		 */
 		$vendors = apply_filters( 'web_stories_shopping_vendors', $vendors );
 
 		return $vendors;
