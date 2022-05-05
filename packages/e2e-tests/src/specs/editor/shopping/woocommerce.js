@@ -24,7 +24,7 @@ import {
   previewStory,
   withPlugin,
   insertProduct,
-  setShoppingProvider
+  setShoppingProvider,
 } from '@web-stories-wp/e2e-test-utils';
 
 /**

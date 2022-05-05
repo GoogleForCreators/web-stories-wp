@@ -77,7 +77,6 @@ function ProductDropdown({ product, setProduct }) {
       } finally {
         setIsLoading(false);
       }
-
     })();
   }, [getProductsByQuery]);
 
