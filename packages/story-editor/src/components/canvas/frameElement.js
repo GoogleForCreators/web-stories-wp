@@ -271,8 +271,10 @@ function FrameElement({ id }) {
 
   // translators: %s: Name of element
   const lockedElementText = __('Locked element: %s', 'web-stories');
+
   // translators: %s: Name of element
   const unlockedElementText = __('Element: %s', 'web-stories');
+
   const layerText = getLayerText(element);
   const elementText = element.isLocked
     ? lockedElementText
