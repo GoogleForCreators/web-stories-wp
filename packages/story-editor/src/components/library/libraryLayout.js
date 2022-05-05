@@ -30,7 +30,7 @@ import { states, useHighlights } from '../../app/highlights';
 import LibraryPanes from './libraryPanes';
 import useLibrary from './useLibrary';
 import { getTabId, getPaneId } from './panes/shared';
-import { MEDIA, MEDIA3P, TEXT } from './constants';
+import { MEDIA, MEDIA3P, TEXT, PAGE_TEMPLATES } from './constants';
 
 const Layout = styled.section.attrs({
   'aria-label': __('Library', 'web-stories'),
@@ -70,6 +70,7 @@ function LibraryLayout() {
       [MEDIA.id]: state[states.MEDIA],
       [MEDIA3P.id]: state[states.MEDIA3P],
       [TEXT.id]: state[states.TEXT_SET],
+      [PAGE_TEMPLATES.id]: state[states.PAGE_TEMPLATES],
     },
     resetHighlight: state.onFocusOut,
   }));

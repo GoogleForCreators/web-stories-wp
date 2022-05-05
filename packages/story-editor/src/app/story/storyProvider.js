@@ -114,12 +114,13 @@ function StoryProvider({ storyId, initialEdits, children }) {
   // (and it will have side-effects because saving can update url and status,
   //  thus the need for `updateStory`)
   const { updateStory } = api;
-  const { saveStory, isSaving, isFreshlyPublished } = useSaveStory({
-    storyId,
-    pages,
-    story,
-    updateStory,
-  });
+  const { saveStory, isSaving, isFreshlyPublished, isFreshlyPending } =
+    useSaveStory({
+      storyId,
+      pages,
+      story,
+      updateStory,
+    });
 
   const { autoSave, isAutoSaving } = useAutoSave({
     storyId,
@@ -146,6 +147,7 @@ function StoryProvider({ storyId, initialEdits, children }) {
         isSavingStory: isSaving,
         isAutoSavingStory: isAutoSaving,
         isFreshlyPublished,
+        isFreshlyPending,
       },
       copiedElementState,
     }),
@@ -165,6 +167,7 @@ function StoryProvider({ storyId, initialEdits, children }) {
       isSaving,
       isAutoSaving,
       isFreshlyPublished,
+      isFreshlyPending,
       copiedElementState,
     ]
   );

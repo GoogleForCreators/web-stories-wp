@@ -27,7 +27,7 @@
   "type": "module",
   "main": "./src/index.js",
   "dependencies": {
-    "@wordpress/dom-ready": "^3.2.1"
+    "@wordpress/dom-ready": "^3.7.0"
   },
   "devDependencies": {}
 }
