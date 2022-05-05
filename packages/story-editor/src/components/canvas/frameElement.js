@@ -191,7 +191,7 @@ function FrameElement({ id }) {
   });
 
   // Media needs separate handler for double click.
-  const { isMedia } = getDefinitionForType(type);
+  const { isMedia, getLayerText } = getDefinitionForType(type);
   const handleMediaDoubleClick = useCallback(
     (evt) => {
       if (!isSelected) {
@@ -269,6 +269,16 @@ function FrameElement({ id }) {
     }
   }, [setFocusGroupCleanup, isSelected]);
 
+  // translators: %s: Name of element
+  const lockedElementText = __('Locked element: %s', 'web-stories');
+  // translators: %s: Name of element
+  const unlockedElementText = __('Element: %s', 'web-stories');
+  const layerText = getLayerText(element);
+  const elementText = element.isLocked
+    ? lockedElementText
+    : unlockedElementText;
+  const elementLabel = sprintf(elementText, layerText);
+
   return (
     <WithLink element={element} active={isLinkActive} anchorRef={elementRef}>
       {Controls && (
@@ -282,12 +292,14 @@ function FrameElement({ id }) {
           isActive={isActive}
         />
       )}
+      {/* eslint-disable-next-line styled-components-a11y/click-events-have-key-events -- False positive */}
       <Wrapper
         ref={combinedFocusGroupRef}
         data-element-id={id}
         {...box}
         tabIndex={-1}
-        role="presentation"
+        role="button"
+        aria-label={elementLabel}
         hasMask={isMaskable}
         data-testid="frameElement"
         onMouseDown={handleMouseDown}
