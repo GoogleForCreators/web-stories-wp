@@ -10,12 +10,16 @@ Our serializable animation objects currently have this structure:
 
 ```js
 // sample animation object
-{
+const sampleAnimationObject = {
   id, // unique identifier for this animation
   type, // type of animation, `blink`, `bounce` etc.
   targets, // what elements in the story this animation is targeting
-  ...args // whatever args this type of animation takes ie `ease` | `duration`
-}
+
+  //...args, whatever args this type of animation takes ie `ease` | `duration`
+  ease,
+  panDir,
+  // etc
+};
 ```
 
 These objects are managed within the story reducer and passed to the animation provider. The animation provider then generates animations by passing this data to the function `AnimationPart(..)` located in `packages/animation/src/parts/index.js`. `AnimationPart(..)` maps the animations instanciation args to a generator function that will generate keyframes, WAAPI animation targets, AMP animation targets, etc.
