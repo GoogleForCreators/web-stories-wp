@@ -9,6 +9,7 @@ It's important to measure the performance of the app with the react production b
 To view any prior performance PRs, just search github pulls and issues for anything with the `performance` tag.
 
 The two main milestone audits exist here:
+
 - [Performance Report: January 2022 ](https://github.com/GoogleForCreators/web-stories-wp/issues/10158)
 - [Performance Report: April 2022](https://github.com/GoogleForCreators/web-stories-wp/issues/11263)
 
