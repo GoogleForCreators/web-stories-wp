@@ -55,12 +55,24 @@ async function visitBlockWidgetScreen() {
   if (isWelcomeGuideActive) {
     // The former action is for WP < 5.9
     await page.evaluate(() => {
-      wp.data
-        .dispatch('core/edit-widgets')
-        ?.__unstableToggleFeature?.('welcomeGuide');
-      wp.data
-        .dispatch('core/interface')
-        ?.toggleFeature?.('core/edit-widgets', 'welcomeGuide');
+      if (wp.data.select('core/preferences')) {
+        wp.data
+          .dispatch('core/preferences')
+          .toggle('core/edit-widgets', 'welcomeGuide');
+        return;
+      }
+      if (wp.data.select('core/interface')) {
+        wp.data
+          .dispatch('core/interface')
+          ?.toggleFeature?.('core/edit-widgets', 'welcomeGuide');
+        return;
+      }
+      if (wp.data.select('core/edit-widgets')) {
+        wp.data
+          .dispatch('core/edit-widgets')
+          ?.__unstableToggleFeature?.('welcomeGuide');
+        return;
+      }
     });
   }
 }
