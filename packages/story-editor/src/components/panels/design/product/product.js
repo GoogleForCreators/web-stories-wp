@@ -47,10 +47,7 @@ function ProductPanel({ selectedElements }) {
     >
       <Row>
         <HelperText>
-          {__(
-            'TODO: Provide opportunity to manually override information here.',
-            'web-stories'
-          )}
+          {'TODO: Provide opportunity to manually override information here.'}
         </HelperText>
       </Row>
     </SimplePanel>
