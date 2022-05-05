@@ -283,17 +283,18 @@ function FrameElement({ id }) {
     }
   }, [setFocusGroupCleanup, isSelected]);
 
-  // translators: %s: Name of element
-  const lockedElementText = __('Locked element: %s', 'web-stories');
-
-  // translators: %s: Name of element
-  const unlockedElementText = __('Element: %s', 'web-stories');
-
   const layerText = getLayerText(element);
-  const elementText = element.isLocked
-    ? lockedElementText
-    : unlockedElementText;
-  const elementLabel = sprintf(elementText, layerText);
+  const elementLabel = element.isLocked
+    ? sprintf(
+        // translators: %s: Name of element
+        __('Locked element: %s', 'web-stories'),
+        layerText
+      )
+    : sprintf(
+        // translators: %s: Name of element
+        __('Element: %s', 'web-stories'),
+        layerText
+      );
 
   return (
     <WithLink element={element} active={isLinkActive} anchorRef={elementRef}>
