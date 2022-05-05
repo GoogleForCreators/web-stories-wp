@@ -28,9 +28,9 @@ tmp_registry_log=`mktemp`
 
 echo "Registry output file: $tmp_registry_log"
 
-curdir=$(dirname "$(realpath $0)")
+curdir=$(dirname "$0")
 
-(cd && nohup npx verdaccio --config "$curdir/verdaccio-config.yml" &>$tmp_registry_log &)
+(nohup npx verdaccio --config "$curdir/verdaccio-config.yml" &>$tmp_registry_log &)
 
 npm i --global verdaccio-memory
 
