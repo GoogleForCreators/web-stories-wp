@@ -14,9 +14,6 @@
  * limitations under the License.
  */
 /**
- * External dependencies
- */
-/**
  * Internal dependencies
  */
 import visitSettings from './visitSettings';
