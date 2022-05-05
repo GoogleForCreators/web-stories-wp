@@ -36,7 +36,7 @@ const StyledDropDown = styled(Datalist.DropDown)`
   width: 240px;
 `;
 function ProductDropdown({ product, setProduct }) {
-  const isEnabled = useFeature('shoppingIntegration');
+  const isShoppingIntegrationEnabled = useFeature('shoppingIntegration');
 
   const [isLoading, setIsLoading] = useState(false);
   const [initialOptions, setInitialOptions] = useState([]);
@@ -93,7 +93,7 @@ function ProductDropdown({ product, setProduct }) {
     zIndex: 10,
   };
 
-  if (!isEnabled) {
+  if (!isShoppingIntegrationEnabled) {
     return null;
   }
 
