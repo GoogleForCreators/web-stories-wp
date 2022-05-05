@@ -23,13 +23,14 @@ import {
   minWPVersionRequired,
   previewStory,
   withPlugin,
+  insertProduct,
+  setShoppingProvider
 } from '@web-stories-wp/e2e-test-utils';
 
 /**
  * Internal dependencies
  */
 import * as schema from './schema.json';
-import { insertProduct, setShoppingProvider } from './testUtils';
 
 describe('Shopping', () => {
   withExperimentalFeatures(['shoppingIntegration']);
