@@ -28,7 +28,6 @@ import {
   setAppElement,
 } from '@googleforcreators/design-system';
 import { APIContext } from '@googleforcreators/story-editor';
-import { FlagsProvider } from 'flagged';
 import { renderWithTheme } from '@googleforcreators/test-utils';
 
 /**
@@ -55,15 +54,9 @@ function setup() {
   };
 
   return renderWithTheme(
-    <FlagsProvider
-      features={{
-        enableCORSCheck: true,
-      }}
-    >
-      <APIContext.Provider value={apiData}>
-        <CorsCheck />
-      </APIContext.Provider>
-    </FlagsProvider>
+    <APIContext.Provider value={apiData}>
+      <CorsCheck />
+    </APIContext.Provider>
   );
 }
 
