@@ -25,6 +25,8 @@ export * from './components/previewPage';
 export * from './app/config';
 export * from './app/story';
 export * from './app/api';
+export * from './app/media';
+export * from './app/history';
 export * from './components/header';
 export * from './components/panels/document';
 export * from './components/form';

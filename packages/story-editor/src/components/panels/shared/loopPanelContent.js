@@ -27,6 +27,7 @@ import {
 } from '@googleforcreators/design-system';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { useInitializedValue } from '@googleforcreators/react';
 
 const StyledCheckbox = styled(Checkbox)`
   ${({ theme }) => `
@@ -39,19 +40,27 @@ const StyledCheckbox = styled(Checkbox)`
 const Wrapper = styled.div`
   display: flex;
   gap: 12px;
+  align-items: center;
 `;
 
-function LoopPanelContent({ loop, className = '', onChange }) {
-  const checkboxId = `cb-${uuidv4()}`;
+function LoopPanelContent({ loop, className = '', onChange, ...props }) {
+  const checkboxId = useInitializedValue(() => `cb-${uuidv4()}`);
 
   return (
     <Wrapper className={className}>
-      <StyledCheckbox id={checkboxId} checked={loop} onChange={onChange} />
-      <label htmlFor={checkboxId}>
-        <Text as="span" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-          {__('Loop', 'web-stories')}
-        </Text>
-      </label>
+      <StyledCheckbox
+        id={checkboxId}
+        checked={loop}
+        onChange={onChange}
+        {...props}
+      />
+      <Text
+        as="label"
+        size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+        htmlFor={checkboxId}
+      >
+        {__('Loop', 'web-stories')}
+      </Text>
     </Wrapper>
   );
 }

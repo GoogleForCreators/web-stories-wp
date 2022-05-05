@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { __ } from '@googleforcreators/i18n';
+import { sprintf, __ } from '@googleforcreators/i18n';
 import {
   useCallback,
   useLayoutEffect,
@@ -26,6 +26,7 @@ import {
   useState,
   memo,
   useCombinedRefs,
+  useEffect,
 } from '@googleforcreators/react';
 import { useUnits } from '@googleforcreators/units';
 import { useTransformHandler } from '@googleforcreators/transform';
@@ -36,12 +37,12 @@ import {
   elementWithSize,
   elementWithRotation,
 } from '@googleforcreators/element-library';
+import { FrameWithMask as WithMask } from '@googleforcreators/masks';
 import {
-  FrameWithMask as WithMask,
-  getElementMask,
-  MaskTypes,
-} from '@googleforcreators/masks';
-import { useLiveRegion } from '@googleforcreators/design-system';
+  useKeyDownEffect,
+  useLiveRegion,
+  prettifyShortcut,
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -57,7 +58,11 @@ import WithLink from '../elementLink/frame';
 import useDoubleClick from '../../utils/useDoubleClick';
 import usePerformanceTracking from '../../utils/usePerformanceTracking';
 import { TRACKING_EVENTS } from '../../constants';
-import { FOCUS_GROUPS, useFocusGroupRef } from './editLayerFocusManager';
+import {
+  FOCUS_GROUPS,
+  useFocusGroupRef,
+  useEditLayerFocusManager,
+} from './editLayerFocusManager';
 
 // @todo: should the frame borders follow clip lines?
 
@@ -66,12 +71,9 @@ import { FOCUS_GROUPS, useFocusGroupRef } from './editLayerFocusManager';
 const Wrapper = styled.div`
   ${elementWithPosition}
   ${elementWithSize}
-	${elementWithRotation}
-  pointer-events: ${({ maskDisabled }) => (maskDisabled ? 'initial' : 'none')};
-
-  outline: 1px solid transparent;
+   ${elementWithRotation}
+   outline: 1px solid transparent;
   transition: outline-color 0.5s;
-
   &:focus,
   &:active,
   &:hover {
@@ -91,12 +93,24 @@ const EmptyFrame = styled.div`
 
 const NOOP = () => {};
 
-const FRAME_ELEMENT_MESSAGE = __(
-  'To exit the canvas area, press Escape. Press Tab to move to the next group or element.',
-  'web-stories'
+const FRAME_ELEMENT_MESSAGE = sprintf(
+  /* translators: 1: Ctrl Key 2: Alt Key */
+  __(
+    'To exit the canvas area, press Escape. Press Tab to move to the next group or element. To enter floating menu, press %1$s %2$s p.',
+    'web-stories'
+  ),
+  prettifyShortcut('ctrl'),
+  prettifyShortcut('alt')
 );
 
 function FrameElement({ id }) {
+  const speak = useLiveRegion();
+  const { enterFocusGroup, setFocusGroupCleanup } = useEditLayerFocusManager(
+    ({ enterFocusGroup, setFocusGroupCleanup }) => ({
+      enterFocusGroup,
+      setFocusGroupCleanup,
+    })
+  );
   const [isTransforming, setIsTransforming] = useState(false);
   const focusGroupRef = useFocusGroupRef(FOCUS_GROUPS.ELEMENT_SELECTION);
 
@@ -134,7 +148,6 @@ function FrameElement({ id }) {
   const combinedFocusGroupRef = useCombinedRefs(elementRef, focusGroupRef); // Only attach focus group ref to one element.
   const [hovering, setHovering] = useState(false);
   const { isRTL, styleConstants: { topOffset } = {} } = useConfig();
-  const speak = useLiveRegion();
 
   const {
     draggingResource,
@@ -196,40 +209,39 @@ function FrameElement({ id }) {
    * Using a live region because an `aria-label` would remove
    * any labels/content that would be read from children.
    */
-  const handleFocus = useCallback(() => {
-    speak(FRAME_ELEMENT_MESSAGE);
-  }, [speak]);
-
-  // For elements with no mask, handle events by the wrapper.
-  const mask = getElementMask(element);
-  const maskDisabled =
-    !mask?.type || (isBackground && mask.type !== MaskTypes.RECTANGLE);
-  const eventHandlers = {
-    onMouseDown: (evt) => {
+  const handleFocus = useCallback(
+    (evt) => {
       if (!isSelected) {
         handleSelectElement(id, evt);
       }
+
+      // no floating menu on background, so no need to announce
+      // possible floating menu keyboard navigation commands
+      if (isBackground) {
+        return;
+      }
+      speak(FRAME_ELEMENT_MESSAGE);
+    },
+    [handleSelectElement, id, isBackground, isSelected, speak]
+  );
+
+  const handleMouseDown = useCallback(
+    (evt) => {
+      if (!isSelected) {
+        handleSelectElement(id, evt);
+      }
+
       elementRef.current.focus({ preventScroll: true });
+
       if (!isBackground) {
         evt.stopPropagation();
       }
     },
-    onFocus: (evt) => {
-      if (!isSelected) {
-        handleSelectElement(id, evt);
-      }
-
-      handleFocus(evt);
-    },
-    onPointerEnter,
-    onPointerLeave,
-    onClick: isMedia ? handleMediaClick(id) : null,
-  };
-
-  const withMaskRef = useRef(null);
+    [handleSelectElement, id, isBackground, isSelected]
+  );
 
   usePerformanceTracking({
-    node: maskDisabled ? elementRef.current : null,
+    node: elementRef.current,
     eventData: {
       ...TRACKING_EVENTS.SELECT_ELEMENT,
       label: element.type,
@@ -237,14 +249,25 @@ function FrameElement({ id }) {
     eventType: 'pointerdown',
   });
 
-  usePerformanceTracking({
-    node: withMaskRef.current,
-    eventData: {
-      ...TRACKING_EVENTS.SELECT_ELEMENT,
-      label: element.type,
+  useKeyDownEffect(
+    elementRef,
+    { key: ['ctrl+alt+p'] },
+    () => {
+      enterFocusGroup({
+        groupId: FOCUS_GROUPS.EDIT_ELEMENT,
+      });
     },
-    eventType: 'pointerdown',
-  });
+    [enterFocusGroup]
+  );
+
+  useEffect(() => {
+    if (isSelected) {
+      setFocusGroupCleanup({
+        groupId: FOCUS_GROUPS.EDIT_ELEMENT,
+        cleanup: () => elementRef.current?.focus(),
+      });
+    }
+  }, [setFocusGroupCleanup, isSelected]);
 
   return (
     <WithLink element={element} active={isLinkActive} anchorRef={elementRef}>
@@ -264,18 +287,19 @@ function FrameElement({ id }) {
         data-element-id={id}
         {...box}
         tabIndex={-1}
+        role="presentation"
         hasMask={isMaskable}
         data-testid="frameElement"
-        maskDisabled={maskDisabled}
+        onMouseDown={handleMouseDown}
         onFocus={handleFocus}
-        {...(maskDisabled ? eventHandlers : null)}
+        onPointerEnter={onPointerEnter}
+        onPointerLeave={onPointerLeave}
+        onClick={isMedia ? handleMediaClick(id) : null}
       >
         <WithMask
-          ref={withMaskRef}
           element={element}
           fill
           flip={flip}
-          eventHandlers={!maskDisabled ? eventHandlers : null}
           draggingResource={draggingResource}
           activeDropTargetId={activeDropTargetId}
           isDropSource={isDropSource}

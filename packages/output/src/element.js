@@ -17,11 +17,12 @@
 /**
  * External dependencies
  */
+import PropTypes from 'prop-types';
 import { generatePatternStyles } from '@googleforcreators/patterns';
 import { getBox } from '@googleforcreators/units';
 import { StoryAnimation } from '@googleforcreators/animation';
-import { BACKGROUND_TEXT_MODE } from '@googleforcreators/design-system';
 import {
+  BACKGROUND_TEXT_MODE,
   getDefinitionForType,
   StoryPropTypes,
 } from '@googleforcreators/elements';
@@ -38,7 +39,7 @@ import {
  */
 import WithLink from './components/withLink';
 
-function OutputElement({ element }) {
+function OutputElement({ element, flags }) {
   const {
     id,
     opacity,
@@ -117,7 +118,7 @@ function OutputElement({ element }) {
               left: 0,
             }}
           >
-            <Output element={element} box={box} />
+            <Output element={element} box={box} flags={flags} />
           </WithLink>
           {overlay && (
             <div
@@ -133,6 +134,7 @@ function OutputElement({ element }) {
 
 OutputElement.propTypes = {
   element: StoryPropTypes.element.isRequired,
+  flags: PropTypes.object,
 };
 
 export default OutputElement;

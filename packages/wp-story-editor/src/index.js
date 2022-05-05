@@ -50,6 +50,7 @@ import '@wordpress/dom-ready'; // Just imported here so it's part of the bundle.
 import {
   Layout,
   PostPublishDialog,
+  PostReviewDialog,
   StatusCheck,
   CorsCheck,
   FontCheck,
@@ -58,7 +59,7 @@ import {
 } from './components';
 import * as apiCallbacks from './api';
 import { transformStoryResponse } from './api/utils';
-import { TIPS, TOOLBAR_HEIGHT, MENU_WIDTH } from './constants';
+import { TIPS, TOOLBAR_HEIGHT, MENU_FOLDED_WIDTH } from './constants';
 import { GlobalStyle } from './theme.js';
 
 window.webStories = window.webStories || {};
@@ -93,7 +94,7 @@ window.webStories.initializeStoryEditor = (id, config, initialEdits) => {
     MediaUpload,
     styleConstants: {
       topOffset: TOOLBAR_HEIGHT,
-      leftOffset: MENU_WIDTH,
+      leftOffset: MENU_FOLDED_WIDTH,
     },
   };
 
@@ -103,6 +104,7 @@ window.webStories.initializeStoryEditor = (id, config, initialEdits) => {
         <GlobalStyle />
         <Layout />
         <PostPublishDialog />
+        <PostReviewDialog />
         <StatusCheck />
         <CorsCheck />
         <FontCheck />

@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 export { default as PostPublishDialog } from './postPublishDialog';
+export { default as PostReviewDialog } from './postReviewDialog';
 export { default as Layout } from './layout';
 export { default as MediaUpload } from './mediaUpload';
 export { default as PostLock } from './postLock';

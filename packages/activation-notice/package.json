@@ -27,8 +27,8 @@
   "main": "./src/index.js",
   "dependencies": {
     "@googleforcreators/tracking": "*",
-    "@wordpress/element": "^4.0.0",
-    "@wordpress/i18n": "^4.3.0",
+    "@wordpress/element": "^4.5.0",
+    "@wordpress/i18n": "^4.7.0",
     "flagged": "^2.0.3",
     "polished": "^4.2.2",
     "prop-types": "^15.8.1",
@@ -37,6 +37,6 @@
   },
   "devDependencies": {
     "@storybook/addon-essentials": "^6.4.20",
-    "@testing-library/react": "^12.1.4"
+    "@testing-library/react": "^12.1.5"
   }
 }

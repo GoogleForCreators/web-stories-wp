@@ -138,7 +138,7 @@ describe('CUJ: Creator can view their stories in list view: ', () => {
 
       await fixture.events.click(rename);
 
-      const input = await utils.getByRole('textbox');
+      const input = utils.getByRole('textbox');
 
       const inputLength = input.value.length;
 
@@ -155,34 +155,6 @@ describe('CUJ: Creator can view their stories in list view: ', () => {
       await fixture.snapshot('Rename story');
 
       expect(utils.getByText(/^A New Title$/)).toBeTruthy();
-    });
-
-    it('should not Rename a locked story', async () => {
-      const { stories, storiesOrderById } = await getStoriesState();
-
-      const storiesSortedByModified = storiesOrderById.map((id) => stories[id]);
-
-      await clickListView();
-
-      // drop the header row using slice
-      const rows = fixture.screen.getAllByRole('row').slice(1);
-
-      const utils = within(rows[1]);
-
-      const titleCell = utils.getByRole('heading', {
-        name: new RegExp(`^${storiesSortedByModified[1].title}`),
-      });
-
-      await fixture.events.hover(titleCell);
-
-      const moreOptionsButton = utils.getByRole('button', {
-        name: /^Context menu for/,
-      });
-
-      await fixture.events.click(moreOptionsButton);
-
-      const rename = utils.getByText(/^Rename/);
-      expect(rename.hasAttribute('disabled')).toBe(true);
     });
 
     it('should Duplicate a story', async () => {
@@ -309,6 +281,62 @@ describe('CUJ: Creator can view their stories in list view: ', () => {
       rows = fixture.screen.getAllByRole('row').slice(1);
 
       expect(rows.length).toEqual(storiesSortedByModified.length);
+    });
+  });
+
+  describe('Creator should be prevented from performing basic updates on locked stories from dashboard list view', () => {
+    it('should not Rename a locked story', async () => {
+      const { stories, storiesOrderById } = await getStoriesState();
+
+      const storiesSortedByModified = storiesOrderById.map((id) => stories[id]);
+
+      await clickListView();
+
+      // drop the header row using slice
+      const rows = fixture.screen.getAllByRole('row').slice(1);
+
+      const utils = within(rows[1]);
+
+      const titleCell = utils.getByRole('heading', {
+        name: new RegExp(`^${storiesSortedByModified[1].title}`),
+      });
+
+      await fixture.events.hover(titleCell);
+
+      const moreOptionsButton = utils.getByRole('button', {
+        name: /^Context menu for/,
+      });
+
+      await fixture.events.click(moreOptionsButton);
+
+      const rename = utils.getByText(/^Rename/);
+      expect(rename.hasAttribute('disabled')).toBe(true);
+    });
+
+    it('should not Delete a locked story', async () => {
+      const { stories, storiesOrderById } = await getStoriesState();
+      const storiesSortedByModified = storiesOrderById.map((id) => stories[id]);
+
+      await clickListView();
+
+      // drop the header row using slice
+      const rows = fixture.screen.getAllByRole('row').slice(1);
+
+      const utils = within(rows[1]);
+      const titleCell = utils.getByRole('heading', {
+        name: new RegExp(`^${storiesSortedByModified[1].title}`),
+      });
+
+      await fixture.events.hover(titleCell);
+
+      const moreOptionsButton = utils.getByRole('button', {
+        name: /^Context menu for/,
+      });
+
+      await fixture.events.click(moreOptionsButton);
+
+      const deleteButton = utils.getByText(/^Delete/);
+      expect(deleteButton.hasAttribute('disabled')).toBe(true);
     });
   });
 

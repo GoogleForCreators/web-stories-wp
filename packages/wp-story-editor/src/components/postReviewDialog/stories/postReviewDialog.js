@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,4 +14,33 @@
  * limitations under the License.
  */
 
-__webpack_public_path__ = window.webStories.publicPath;
+/**
+ * External dependencies
+ */
+import { StoryContext } from '@googleforcreators/story-editor';
+
+/**
+ * Internal dependencies
+ */
+import PostReviewDialog from '..';
+
+export default {
+  title: 'Stories Editor/Components/Dialog/Post-Review Submitted',
+  component: PostReviewDialog,
+};
+
+const storyContext = {
+  state: {
+    meta: {
+      isFreshlyPublished: true,
+    },
+  },
+};
+
+export const _default = () => {
+  return (
+    <StoryContext.Provider value={storyContext}>
+      <PostReviewDialog />
+    </StoryContext.Provider>
+  );
+};

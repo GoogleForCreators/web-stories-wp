@@ -127,6 +127,9 @@ function sequencedForEach(htmlCollection, op) {
     xit('retains all foreground animations', async () => {
       // open effect
       await fixture.events.click(fixture.editor.sidebar.designTab);
+      await fixture.events.click(
+        fixture.editor.sidebar.designPanel.animationSection
+      );
       const effectChooserToggle =
         fixture.editor.sidebar.designPanel.animation.effectChooser;
       await fixture.events.click(effectChooserToggle, { clickCount: 1 });
@@ -220,6 +223,9 @@ describe('Background Copy & Paste', () => {
 
   const openEffectChooser = async () => {
     await fixture.events.click(fixture.editor.sidebar.designTab);
+    await fixture.events.click(
+      fixture.editor.sidebar.designPanel.animationSection
+    );
     const effectChooserToggle =
       fixture.editor.sidebar.designPanel.animation.effectChooser;
     await fixture.events.click(effectChooserToggle, { clickCount: 1 });

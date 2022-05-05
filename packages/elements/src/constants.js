@@ -72,3 +72,16 @@ export const TEXT_ELEMENT_DEFAULT_FONT = {
     lGap: 0,
   },
 };
+
+export const BACKGROUND_TEXT_MODE = {
+  NONE: 'NONE',
+  FILL: 'FILL',
+  HIGHLIGHT: 'HIGHLIGHT',
+};
+
+export const OverlayType = {
+  NONE: 'none',
+  SOLID: 'solid',
+  LINEAR: 'linear',
+  RADIAL: 'radial',
+};

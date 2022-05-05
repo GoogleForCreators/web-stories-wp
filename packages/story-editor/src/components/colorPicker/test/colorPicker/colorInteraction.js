@@ -18,11 +18,11 @@
  * External dependencies
  */
 import { fireEvent, screen } from '@testing-library/react';
+import { setAppElement } from '@googleforcreators/design-system';
 import {
-  setAppElement,
+  TEXT_ELEMENT_DEFAULT_FONT,
   BACKGROUND_TEXT_MODE,
-} from '@googleforcreators/design-system';
-import { TEXT_ELEMENT_DEFAULT_FONT } from '@googleforcreators/elements';
+} from '@googleforcreators/elements';
 import { renderWithTheme } from '@googleforcreators/test-utils';
 
 /**

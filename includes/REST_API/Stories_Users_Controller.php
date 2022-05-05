@@ -131,6 +131,9 @@ class Stories_Users_Controller extends WP_REST_Users_Controller implements Servi
 			unset( $prepared_args['who'] );
 		}
 
+		// Fix core issue, where user meta is not primed in WP_User_Query. See https://core.trac.wordpress.org/ticket/55594.
+		$prepared_args['fields'] = 'all_with_meta';
+
 		return $prepared_args;
 	}
 

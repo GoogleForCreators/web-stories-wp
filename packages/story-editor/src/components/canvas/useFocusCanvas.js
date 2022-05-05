@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { useCallback } from '@googleforcreators/react';
-import { useGlobalKeyDownEffect } from '@googleforcreators/design-system';
 
 function useFocusCanvas() {
   /**
@@ -36,13 +35,6 @@ function useFocusCanvas() {
       doc.dispatchEvent(evt);
     });
   }, []);
-
-  // Globally listen for Cmd+Option+2 / Ctrl+Alt+2 for focus
-  useGlobalKeyDownEffect(
-    { key: 'mod+option+2', editable: true },
-    () => focusCanvas(true),
-    [focusCanvas]
-  );
 
   return focusCanvas;
 }

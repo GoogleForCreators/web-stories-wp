@@ -14,4 +14,9 @@
  * limitations under the License.
  */
 
-export { default } from './designInspector';
+/**
+ * External dependencies
+ */
+import { createContext } from '@googleforcreators/react';
+
+export default createContext({ state: {}, actions: {}, tabs: {}, refs: {} });

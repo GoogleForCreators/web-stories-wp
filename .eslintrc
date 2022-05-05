@@ -355,6 +355,8 @@
       },
       "rules": {
         "eslint-comments/require-description": "off",
+        "testing-library/no-await-sync-events": "error",
+        "testing-library/no-await-sync-query": "error",
         "testing-library/no-debugging-utils": "error",
         "testing-library/no-dom-import": "error",
         "jasmine/new-line-before-expect": "off",
@@ -663,6 +665,27 @@
         "react/prop-types": "off",
         "eslint-comments/no-unused-disable": "off",
         "eslint-comments/require-description": "off"
+      }
+    },
+    {
+      "files": [
+        "packages/story-editor/src/**/*.js",
+        "packages/dashboard/src/**/*.js"
+      ],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": [
+              {
+                "group": [
+                  "**/*.css"
+                ],
+                "message": "css import is not allowed in story-editor and dashboard"
+              }
+            ]
+          }
+        ]
       }
     }
   ]

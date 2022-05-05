@@ -51,8 +51,8 @@ function OutputPage({
     animations,
     elements,
     backgroundColor,
-    backgroundAudio = {},
-    pageAttachment = {},
+    backgroundAudio,
+    pageAttachment,
   } = page;
 
   const [backgroundElement, ...otherElements] = elements;
@@ -104,10 +104,10 @@ function OutputPage({
     )
     .map(({ id: videoId }) => `el-${videoId}-captions`);
 
-  const backgroundAudioSrc = backgroundAudio.resource?.src;
-  const hasBackgroundAudioCaptions = backgroundAudio.tracks?.length > 0;
+  const backgroundAudioSrc = backgroundAudio?.resource?.src;
+  const hasBackgroundAudioCaptions = backgroundAudio?.tracks?.length > 0;
   const hasNonLoopingBackgroundAudio =
-    false === backgroundAudio.loop && backgroundAudio.resource?.length;
+    false === backgroundAudio?.loop && backgroundAudio?.resource?.length;
   const needsEnhancedBackgroundAudio =
     hasBackgroundAudioCaptions || hasNonLoopingBackgroundAudio;
 
@@ -136,7 +136,7 @@ function OutputPage({
           >
             <div className="page-fullbleed-area" style={backgroundStyles}>
               <div className="page-safe-area">
-                <OutputElement element={backgroundElement} />
+                <OutputElement element={backgroundElement} flags={flags} />
                 {backgroundElement.overlay && (
                   <div
                     className="page-background-overlay-area"
@@ -156,7 +156,11 @@ function OutputPage({
           <div className="page-fullbleed-area">
             <div className="page-safe-area">
               {regularElements.map((element) => (
-                <OutputElement key={element.id} element={element} />
+                <OutputElement
+                  key={element.id}
+                  element={element}
+                  flags={flags}
+                />
               ))}
             </div>
           </div>
@@ -189,7 +193,7 @@ function OutputPage({
       {/* <amp-story-page-outlink> needs to be the last child element */}
       {pageAttachment?.url && <Outlink {...pageAttachment} />}
       {products.length > 0 && flags?.shoppingIntegration && (
-        <ShoppingAttachment products={products} theme={pageAttachment.theme} />
+        <ShoppingAttachment products={products} {...pageAttachment} />
       )}
     </amp-story-page>
   );

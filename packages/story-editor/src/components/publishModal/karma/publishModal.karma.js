@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { within } from '@testing-library/react';
+import { waitFor, within } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -63,14 +63,28 @@ describe('Publish Story Modal', () => {
   });
 
   describe('Functionality', () => {
-    it('should close publish modal and open the checklist when checklist button is clicked', async () => {
+    it('should close the publish modal and focus the publish button', async () => {
+      const closeButton = await getPublishModalElement('button', /Close/);
+      await fixture.events.click(closeButton);
+
+      let publish;
+      await waitFor(async () => {
+        // modal may still be mounted, so wait until publish button is visible
+        // this is a `getBy` call, so it will throw an error if it fails
+        publish = await fixture.editor.titleBar.publish;
+      });
+
+      expect(document.activeElement).toBe(publish);
+    });
+
+    it('should close the publish modal and open (and focus) the checklist when checklist button is clicked', async () => {
       const checklistButton = await getPublishModalElement(
         'button',
         'Checklist'
       );
       await fixture.events.click(checklistButton);
 
-      const updatedPublishModal = await fixture.screen.queryByRole('dialog', {
+      const updatedPublishModal = fixture.screen.queryByRole('dialog', {
         name: /^Story details$/,
       });
 
@@ -78,6 +92,9 @@ describe('Publish Story Modal', () => {
       expect(
         fixture.editor.checklist.issues.getAttribute('data-isexpanded')
       ).toBe('true');
+
+      // Checklist should be focused
+      expect(document.activeElement).toBe(fixture.editor.checklist.closeButton);
     });
 
     it('should not update story permalink when title is updated if permalink already exists', async () => {

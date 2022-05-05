@@ -19,8 +19,10 @@
  */
 import { _x } from '@googleforcreators/i18n';
 import { dataFontEm, PAGE_HEIGHT } from '@googleforcreators/units';
-import { BACKGROUND_TEXT_MODE } from '@googleforcreators/design-system';
-import { TEXT_ELEMENT_DEFAULT_FONT } from '@googleforcreators/elements';
+import {
+  TEXT_ELEMENT_DEFAULT_FONT,
+  BACKGROUND_TEXT_MODE,
+} from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -60,11 +62,7 @@ const DEFAULT_TEXT_PADDING = {
 const DEFAULT_TEXT_ALIGN = 'left';
 
 const DEFAULT_PRESET = {
-  content: _x(
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    'text preset content',
-    'web-stories'
-  ),
+  content: _x('Fill in some text', 'text preset content', 'web-stories'),
   fontSize: dataFontEm(1.33),
   lineHeight: 1.2,
   x: DEFAULT_LEFT_MARGIN,

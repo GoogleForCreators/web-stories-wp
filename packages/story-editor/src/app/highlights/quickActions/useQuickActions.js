@@ -38,13 +38,15 @@ import {
  */
 import states from '../states';
 import useHighlights from '../useHighlights';
-import updateProperties from '../../../components/design/updateProperties';
+import updateProperties from '../../../components/style/updateProperties';
 import { useHistory } from '../../history';
 import { useConfig } from '../../config';
 import { useLocalMedia, TRANSCODABLE_MIME_TYPES } from '../../media';
 import { useStory, useStoryTriggersDispatch, STORY_EVENTS } from '../../story';
 import useApplyTextAutoStyle from '../../../utils/useApplyTextAutoStyle';
 import useFFmpeg from '../../media/utils/useFFmpeg';
+import useInsertElement from '../../../components/canvas/useInsertElement';
+import { DEFAULT_PRESET } from '../../../components/library/panes/text/textPresets';
 import { getResetProperties } from './utils';
 import { ACTIONS, RESET_PROPERTIES, RESET_DEFAULTS } from './constants';
 
@@ -422,6 +424,8 @@ const useQuickActions = () => {
     [handleFocusPanel]
   );
 
+  const insertElement = useInsertElement();
+
   const actionMenuProps = useMemo(
     () => ({
       tooltipPlacement: isRTL ? PLACEMENT.LEFT : PLACEMENT.RIGHT,
@@ -464,7 +468,7 @@ const useQuickActions = () => {
         label: ACTIONS.INSERT_TEXT.text,
         onClick: (evt) => {
           handleFocusTextSetsPanel()(evt);
-
+          insertElement('text', DEFAULT_PRESET);
           trackEvent('quick_action', {
             name: ACTIONS.INSERT_TEXT.trackingEventName,
             element: 'none',
@@ -479,6 +483,7 @@ const useQuickActions = () => {
     handleFocusMediaPanel,
     handleFocusPageBackground,
     handleFocusTextSetsPanel,
+    insertElement,
   ]);
 
   const resetProperties = useMemo(

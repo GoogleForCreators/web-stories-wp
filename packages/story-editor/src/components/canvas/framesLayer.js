@@ -23,14 +23,17 @@ import { memo, useRef, useCallback } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import { PAGE_WIDTH } from '@googleforcreators/units';
 import { STORY_ANIMATION_STATE } from '@googleforcreators/animation';
+import {
+  themeHelpers,
+  useKeyDownEffect,
+  useGlobalKeyDownEffect,
+  useLiveRegion,
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
  */
-import {
-  themeHelpers,
-  useKeyDownEffect,
-} from '@googleforcreators/design-system';
+import { useEffect } from 'react';
 import { DESIGN_SPACE_MARGIN, STABLE_ARRAY } from '../../constants';
 import {
   useStory,
@@ -65,7 +68,12 @@ const FocusContainer = styled.div`
 `;
 
 const FOCUS_CONTAINER_MESSAGE = __(
-  'Canvas Area. To navigate into the page, press Enter. Press Tab to move to the group or element.',
+  'Canvas Area. To navigate into the page, press Enter.',
+  'web-stories'
+);
+
+const FRAME_ELEMENT_MESSAGE = __(
+  'To exit the canvas area, press Escape. Press Tab to move to the next group or element.',
   'web-stories'
 );
 
@@ -180,8 +188,23 @@ function FrameElements() {
 
 function FramesLayer() {
   const canvasRef = useRef();
-  const enterFocusGroup = useEditLayerFocusManager(
-    ({ enterFocusGroup }) => enterFocusGroup
+  const speak = useLiveRegion();
+
+  const { enterFocusGroup, setFocusGroupCleanup } = useEditLayerFocusManager(
+    ({ enterFocusGroup, setFocusGroupCleanup }) => ({
+      enterFocusGroup,
+      setFocusGroupCleanup,
+    })
+  );
+
+  useGlobalKeyDownEffect(
+    { key: 'mod+option+2', editable: true },
+    () => {
+      enterFocusGroup({
+        groupId: FOCUS_GROUPS.ELEMENT_SELECTION,
+      });
+    },
+    [enterFocusGroup]
   );
 
   // TODO: https://github.com/google/web-stories-wp/issues/10266
@@ -197,11 +220,18 @@ function FramesLayer() {
     () => {
       enterFocusGroup({
         groupId: FOCUS_GROUPS.ELEMENT_SELECTION,
-        cleanup: () => canvasRef.current?.focus(),
       });
+      speak(FRAME_ELEMENT_MESSAGE);
     },
-    [enterFocusGroup]
+    [enterFocusGroup, speak]
   );
+
+  useEffect(() => {
+    setFocusGroupCleanup({
+      groupId: FOCUS_GROUPS.ELEMENT_SELECTION,
+      cleanup: () => canvasRef.current?.focus(),
+    });
+  }, [setFocusGroupCleanup]);
 
   return (
     <FramesNavAndSelection>

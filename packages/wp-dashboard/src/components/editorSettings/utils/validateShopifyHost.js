@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,27 +14,8 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import { useReduction } from '@googleforcreators/react';
+export const hostPattern = /[\d\w-]+\.myshopify\.com/i;
 
-const imageCacheReducer = {
-  setCachedImage: (cachedImages, { payload: { pageId, cachedImage } }) => ({
-    ...cachedImages,
-    [pageId]: cachedImage,
-  }),
-};
-
-function useCarouselCache() {
-  const [cachedImages, { setCachedImage }] = useReduction(
-    {},
-    imageCacheReducer
-  );
-  return {
-    cachedImages,
-    setCachedImage,
-  };
+export default function isValidShopifyHost(value = '') {
+  return Boolean(value.toLowerCase().match(hostPattern));
 }
-
-export default useCarouselCache;

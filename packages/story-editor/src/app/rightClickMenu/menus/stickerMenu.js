@@ -32,6 +32,7 @@ import {
 } from '../constants';
 import { useElementActions, useLayerActions } from '../hooks';
 import useLayerSelect from '../useLayerSelect';
+import { LayerLock } from '../items';
 import useRightClickMenu from '../useRightClickMenu';
 import {
   DEFAULT_DISPLACEMENT,
@@ -142,6 +143,8 @@ function StickerMenu({ parentMenuRef }) {
           {RIGHT_CLICK_MENU_SHORTCUTS.BRING_TO_FRONT.display}
         </ContextMenuComponents.MenuShortcut>
       </ContextMenuComponents.MenuButton>
+
+      <LayerLock />
     </>
   );
 }

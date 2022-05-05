@@ -48,8 +48,37 @@ describe('Animation Panel', function () {
       }
     });
     await fixture.events.click(fixture.editor.sidebar.designTab);
+    await fixture.events.click(
+      fixture.editor.sidebar.designPanel.animationSection
+    );
     const panel = fixture.editor.sidebar.designPanel.animation;
     expect(panel).not.toBeNull();
+  });
+
+  it('should not render the animation panel when multiple elements are selected.', async function () {
+    // add shape to canvas
+    await fixture.editor.library.shapesTab.click();
+    await fixture.events.click(fixture.editor.library.shapes.shape('Triangle'));
+
+    // add text to canvas
+    await fixture.editor.library.textTab.click();
+    await fixture.events.click(fixture.editor.library.text.preset('Paragraph'));
+    await fixture.editor.canvas.framesLayer.waitFocusedWithin();
+
+    // select both text and shape elements
+    await fixture.events.keyboard.down('Shift');
+    const triangle = fixture.editor.canvas.framesLayer.frames[1].node;
+    await fixture.events.click(triangle);
+    await fixture.events.keyboard.up('Shift');
+
+    await fixture.events.click(fixture.editor.sidebar.designTab);
+    await fixture.events.click(
+      fixture.editor.sidebar.designPanel.animationSection
+    );
+    const panel = fixture.screen.queryByRole('region', {
+      name: /^Animation$/,
+    });
+    expect(panel).toBeNull();
   });
 
   // TODO #6953
@@ -63,12 +92,15 @@ describe('Animation Panel', function () {
       }
     });
     await fixture.events.click(fixture.editor.sidebar.designTab);
+    await fixture.events.click(
+      fixture.editor.sidebar.designPanel.animationSection
+    );
     const panel = fixture.editor.sidebar.designPanel.animation;
 
     const effectChooser = panel.effectChooser;
     await fixture.events.click(effectChooser);
     await fixture.events.sleep(300);
-    const fadeIn = await fixture.screen.getByRole('option', {
+    const fadeIn = fixture.screen.getByRole('option', {
       name: /^"Fade In" Effect$/,
     });
     await fixture.events.click(fadeIn);
@@ -85,6 +117,9 @@ describe('Animation Panel', function () {
       }
     });
     await fixture.events.click(fixture.editor.sidebar.designTab);
+    await fixture.events.click(
+      fixture.editor.sidebar.designPanel.animationSection
+    );
     const panel = fixture.editor.sidebar.designPanel.animation;
 
     const effectChooser = panel.effectChooser;
@@ -112,6 +147,9 @@ describe('Animation Panel', function () {
       }
     });
     await fixture.events.click(fixture.editor.sidebar.designTab);
+    await fixture.events.click(
+      fixture.editor.sidebar.designPanel.animationSection
+    );
     const panel = fixture.editor.sidebar.designPanel.animation;
 
     const effectChooser = panel.effectChooser;

@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import 'react-calendar/dist/Calendar.css';
 import {
   useRef,
   useCallback,
@@ -31,13 +30,14 @@ import PropTypes from 'prop-types';
 import { _x } from '@googleforcreators/i18n';
 import { CircularProgress } from '@googleforcreators/design-system';
 
+/**
+ * Internal dependencies
+ */
+import CalendarWrapper from './calendarWrapper';
+
 const Calendar = lazy(() =>
   import(/* webpackChunkName: "chunk-react-calendar" */ 'react-calendar')
 );
-
-const CalendarWrapper = styled.div`
-  min-height: 236px;
-`;
 
 const FallbackCalendar = styled.div`
   height: 256px;

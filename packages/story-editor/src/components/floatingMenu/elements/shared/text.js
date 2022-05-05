@@ -31,7 +31,7 @@ const Button = styled(ContextMenuComponents.MenuButton)`
 
 const TextButton = memo(function TextButton({ text, ...rest }) {
   return (
-    <Button forcePadding {...rest}>
+    <Button forcePadding title={text} {...rest} tabIndex={-1}>
       {text}
     </Button>
   );

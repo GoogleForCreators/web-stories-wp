@@ -16,6 +16,7 @@
 /**
  * External dependencies
  */
+import { useEffect } from '@googleforcreators/react';
 import { render, fireEvent, screen } from '@testing-library/react';
 
 /**
@@ -51,15 +52,21 @@ describe('EditLayerFocusManager', () => {
   }
 
   function EnterFocusGroupTrigger({ cleanup = () => {}, ...props }) {
-    const enterFocusGroup = useEditLayerFocusManager(
-      (value) => value.enterFocusGroup
-    );
+    const { enterFocusGroup, setFocusGroupCleanup } =
+      useEditLayerFocusManager();
+
+    useEffect(() => {
+      setFocusGroupCleanup({
+        groupId: FOCUS_GROUP_ID,
+        cleanup,
+      });
+    }, [cleanup, setFocusGroupCleanup]);
+
     return (
       <button
         onClick={() => {
           enterFocusGroup({
             groupId: FOCUS_GROUP_ID,
-            cleanup,
           });
         }}
         {...props}
