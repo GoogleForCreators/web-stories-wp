@@ -687,6 +687,29 @@
           }
         ]
       }
+    },
+    {
+      "files": [
+        "packages/create-web-stories/boilerplate/**/*.js",
+        "packages/create-web-stories/shared/**/*.js"
+      ],
+      "rules": {
+        "no-console": "off",
+        "no-restricted-imports": "off",
+        "header/header": "off",
+        "import/no-extraneous-dependencies": "off",
+        "import/no-unresolved": "off",
+        "@wordpress/dependency-group": "off"
+      }
+    },
+    {
+      "files": [
+        "packages/create-web-stories/bin/**/*.js",
+        "packages/create-web-stories/shared/webpack-configs/**/*.js"
+      ],
+      "env": {
+        "node": true
+      }
     }
   ]
 }

@@ -10,4 +10,4 @@ import { render } from 'react-dom';
 import './assets/scss/style.scss';
 import App from 'app';
 
-render( <App/>, document.getElementById( 'app' ) );
+render(<App />, document.getElementById('app'));

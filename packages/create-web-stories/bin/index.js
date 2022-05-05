@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-
 /*
  * Copyright 2022 Google LLC
  *
@@ -14,6 +13,10 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ */
+
+/**
+ * External dependencies
  */
 import { program } from 'commander';
 import prompts from 'prompts';
@@ -153,6 +156,8 @@ if (boilerplate === 'none') {
           return craChoices;
         case SETUP_TYPES.CUSTOM:
           return customChoices;
+        default:
+          return [];
       }
     },
   });
@@ -173,7 +178,7 @@ if (boilerplate === 'none') {
   log('\n\n');
   log(LOGO, 'cyan');
   log('\n\n');
-  log( showPrompt ? WELCOME_MESSAGE : WELCOME_MESSAGE_SHORT, 'cyan');
+  log(showPrompt ? WELCOME_MESSAGE : WELCOME_MESSAGE_SHORT, 'cyan');
 
   if (showPrompt) {
     const response = await prompts(userPrompts, {

@@ -1,13 +1,13 @@
 /**
  * External dependencies.
  */
-import React from "react";
-import { hot } from "react-hot-loader";
+import React from 'react';
+import { hot } from 'react-hot-loader';
 
 /**
  * Internal dependencies.
  */
-import StoryDashboard from "./dashboard";
+import StoryDashboard from './dashboard';
 
 function App() {
   return <StoryDashboard />;

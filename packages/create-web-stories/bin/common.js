@@ -32,7 +32,7 @@ const __dirname = dirname(__filename);
 const wavingHand = String.fromCodePoint(0x1f44b);
 
 const LOGO = fse.readFileSync(path.join(__dirname, 'text-art.txt'));
-const WELCOME_MESSAGE_SHORT = `Hi! ${ wavingHand } Welcome to Web stories.`;
+const WELCOME_MESSAGE_SHORT = `Hi! ${wavingHand} Welcome to Web stories.`;
 const WELCOME_MESSAGE = `Hi! ${wavingHand} Welcome to Web stories. Let us help you try our story creation suite`;
 const BOILERPLATE_DIR_PATH = `../boilerplate`;
 const SHARED_DIR_PATH = '../shared';
@@ -40,6 +40,8 @@ const CONFIG_FILE = 'config.json';
 
 /**
  * Get boilerplate config.json data list.
+ *
+ * @return {Array} Configuration.
  */
 const getBoilerplateConfigList = () => {
   const boilerplateDir = path.join(__dirname, BOILERPLATE_DIR_PATH);
@@ -61,6 +63,7 @@ const getBoilerplateConfigList = () => {
  * Get boilerplate data.
  *
  * @param {string} boilerplateName Boilerplate name.
+ * @return {Object} Configuration.
  */
 const getBoilerplateConfig = (boilerplateName) => {
   return getBoilerplateConfigList().find(
@@ -108,6 +111,7 @@ function installDependenciesFromConfig(
  * Get boilerplate path.
  *
  * @param {string} boilerplateName Boilerplate name.
+ * @return {string} Boilerplate path.
  */
 function getBoilerplatePath(boilerplateName) {
   const boilerplateDir = path.join(__dirname, BOILERPLATE_DIR_PATH);
@@ -216,6 +220,7 @@ function replaceDir(sourcePath, destinationPath) {
  * @param {string} color Color supported by chalk.
  */
 function log(text, color = '') {
+  // eslint-disable-next-line no-console -- Needed here.
   console.log(color ? chalk[color](text) : text);
 }
 
@@ -224,6 +229,7 @@ function log(text, color = '') {
  *
  * @param {string} boilerplate Boilerplate.
  * @param {string} setupType Setup type
+ * @return {string} Boilerplate directory name.
  */
 function getBoilerplateName(boilerplate, setupType) {
   return boilerplate && setupType ? `${boilerplate}-${setupType}` : 'none';

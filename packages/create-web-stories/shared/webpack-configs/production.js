@@ -1,18 +1,18 @@
 /**
  * External dependencies.
  */
-const { merge } = require( 'webpack-merge' );
-const { resolve } = require( 'path' );
+const { resolve } = require('path');
+const { merge } = require('webpack-merge');
 
 /**
  * Internal dependencies.
  */
-const sharedConfig = require( './shared' );
+const sharedConfig = require('./shared');
 
-module.exports = merge( sharedConfig, {
+module.exports = merge(sharedConfig, {
   output: {
     filename: 'js/bundle.[contenthash].min.js',
-    path: resolve( __dirname, '../dist' ),
+    path: resolve(__dirname, '../dist'),
     publicPath: '/',
   },
   mode: 'production',
@@ -22,4 +22,4 @@ module.exports = merge( sharedConfig, {
     react: 'React',
     'react-dom': 'ReactDOM',
   },
-} );
+});

@@ -1,14 +1,14 @@
 /**
  * External dependencies.
  */
-const { merge } = require( 'webpack-merge' );
+const { merge } = require('webpack-merge');
 
 /**
  * Internal dependencies.
  */
-const sharedConfig = require( './shared' );
+const sharedConfig = require('./shared');
 
-module.exports = merge( sharedConfig, {
+module.exports = merge(sharedConfig, {
   resolve: {
     alias: {
       'react-dom': '@hot-loader/react-dom',
@@ -25,4 +25,4 @@ module.exports = merge( sharedConfig, {
   externals: {
     react: 'React',
   },
-} );
+});

@@ -12,9 +12,9 @@ import { registerElementType } from '@googleforcreators/elements';
 /**
  * Internal dependencies.
  */
-import { HeaderLayout } from './header';
 import { saveStoryById } from '../api/story-editor/story';
 import { LOCAL_STORAGE_CONTENT_KEY } from '../constants';
+import { HeaderLayout } from './header';
 
 function CustomEditor() {
   elementTypes.forEach(registerElementType);

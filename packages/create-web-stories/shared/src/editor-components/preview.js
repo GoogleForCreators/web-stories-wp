@@ -9,16 +9,18 @@ import { useEffect } from 'react';
 import { LOCAL_STORAGE_PREVIEW_MARKUP_KEY } from '../constants';
 
 function Preview() {
-  useEffect( () => {
-    const content = window.localStorage.getItem( LOCAL_STORAGE_PREVIEW_MARKUP_KEY );
+  useEffect(() => {
+    const content = window.localStorage.getItem(
+      LOCAL_STORAGE_PREVIEW_MARKUP_KEY
+    );
 
-    if ( content ) {
+    if (content) {
       document.open();
       // Note that using document.write is only for demonstration purposes and is not recommended for production.
-      document.write( content ); // lgtm [js/eval-like-call]
+      document.write(content); // lgtm [js/eval-like-call]
       document.close();
     }
-  }, [] );
+  }, []);
 
   return null;
 }

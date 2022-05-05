@@ -1,15 +1,15 @@
 /**
  * External dependencies.
  */
-import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { hot } from "react-hot-loader";
+import React from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { hot } from 'react-hot-loader';
 
 /**
  * Internal dependencies.
  */
-import Editor from "./components/story-editor";
-import Preview from "./components/preview";
+import Editor from './components/story-editor';
+import Preview from './components/preview';
 
 function App() {
   return (

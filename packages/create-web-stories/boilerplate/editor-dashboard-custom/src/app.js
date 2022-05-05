@@ -18,7 +18,7 @@ function App() {
       <div className="app">
         <Routes>
           <Route exact path="/" element={<StoryDashboard />} />
-          <Route path="editor" element={<Editor />}/>
+          <Route path="editor" element={<Editor />} />
           <Route path="preview" element={<Preview />} />
         </Routes>
       </div>

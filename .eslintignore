@@ -5,7 +5,6 @@
 **/assets/js/*.js
 **/packages/imgareaselect/src/index.js
 **/packages/migration/scripts/module.js
-**/packages/create-web-stories/*
 bin/build/*
 build/*
 !.storybook

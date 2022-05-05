@@ -1,36 +1,33 @@
 /**
  * External dependencies.
  */
-const { resolve } = require( 'path' );
-const HtmlWebpackPlugin = require( 'html-webpack-plugin' );
+const { resolve } = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: [
-    '@babel/polyfill',
-    './index.js',
-  ],
-  context: resolve( __dirname, '../src' ),
+  entry: ['@babel/polyfill', './index.js'],
+  context: resolve(__dirname, '../src'),
   resolve: {
-    extensions: [ '.js', '.jsx' ],
+    extensions: ['.js', '.jsx'],
   },
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/,
-        use: [ 'babel-loader' ],
+        use: ['babel-loader'],
         exclude: /node_modules/,
       },
       {
         test: /\.(scss|sass)$/,
-        use: [ 'style-loader', 'css-loader', 'sass-loader' ],
+        use: ['style-loader', 'css-loader', 'sass-loader'],
       },
       {
         test: /\.css$/,
-        use: [ 'style-loader', 'css-loader' ],
+        use: ['style-loader', 'css-loader'],
       },
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
-        use: [ 'file-loader', 'image-webpack-loader' ],
+        use: ['file-loader', 'image-webpack-loader'],
       },
     ],
   },
@@ -38,9 +35,9 @@ module.exports = {
     moduleIds: 'named',
   },
   plugins: [
-    new HtmlWebpackPlugin( {
-      template: 'index.html'
-    } )
+    new HtmlWebpackPlugin({
+      template: 'index.html',
+    }),
   ],
   performance: {
     hints: false,

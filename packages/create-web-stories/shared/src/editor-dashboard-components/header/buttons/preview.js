@@ -41,7 +41,7 @@ function PreviewButton() {
   const openPreviewLink = async () => {
     await saveStory();
 
-    const previewLink = window.origin + "/preview";
+    const previewLink = window.origin + '/preview';
     // Start a about:blank popup with waiting message until we complete
     // the saving operation. That way we will not bust the popup timeout.
     try {

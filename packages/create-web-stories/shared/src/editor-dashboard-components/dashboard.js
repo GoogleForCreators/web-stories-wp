@@ -8,30 +8,37 @@ import { setAppElement } from '@googleforcreators/design-system';
 /**
  * Internal dependencies.
  */
-import {LOCAL_STORAGE_CONTENT_KEY} from '../constants';
+import { LOCAL_STORAGE_CONTENT_KEY } from '../constants';
 import { fetchStories, updateStory, trashStory } from '../api/dashboard/story';
 
 function CustomDashboard() {
-  const content = JSON.parse(window.localStorage.getItem(LOCAL_STORAGE_CONTENT_KEY)) || {};
-  const newId = Object.keys(content).length ? Math.max(...Object.keys(content).map((x)=>{return parseInt(x)})) + 1 : 1;
+  const content =
+    JSON.parse(window.localStorage.getItem(LOCAL_STORAGE_CONTENT_KEY)) || {};
+  const newId = Object.keys(content).length
+    ? Math.max(
+        ...Object.keys(content).map((x) => {
+          return parseInt(x);
+        })
+      ) + 1
+    : 1;
   const appElement = document.getElementById('root');
 
   // see http://reactcommunity.org/react-modal/accessibility/
   setAppElement(appElement);
 
   const config = {
-    newStoryURL: '/editor?id='+newId,
+    newStoryURL: '/editor?id=' + newId,
     apiCallbacks: {
       fetchStories,
       updateStory,
-      trashStory
+      trashStory,
     },
   };
 
   return (
-      <Dashboard config={config}>
-        <InterfaceSkeleton/>
-      </Dashboard>
+    <Dashboard config={config}>
+      <InterfaceSkeleton />
+    </Dashboard>
   );
 }
 export default CustomDashboard;
