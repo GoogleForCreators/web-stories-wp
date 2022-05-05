@@ -164,7 +164,8 @@ describe('Background Audio', () => {
     });
 
     describe('Hotlink', () => {
-      withPlugin('e2e-tests-hotlink-hotwire');
+      withPlugin('e2e-tests-hotlink');
+
       describe('Audio file', () => {
         withExperimentalFeatures(['audioHotlinking']);
         it('should allow adding background audio', async () => {
