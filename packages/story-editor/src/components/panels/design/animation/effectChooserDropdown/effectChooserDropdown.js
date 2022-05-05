@@ -53,6 +53,7 @@ const EffectChooserDropdown = forwardRef(function EffectChooserDropdown(
     disabledTypeOptionsMap,
     direction,
     selectButtonStylesOverride,
+    disabled = false,
   },
   ref
 ) {
@@ -170,6 +171,7 @@ const EffectChooserDropdown = forwardRef(function EffectChooserDropdown(
       placement={expandedPlacement}
       isKeepMenuOpenOnSelection
       selectButtonStylesOverride={buttonStyleOverride}
+      disabled={disabled}
     />
   );
 });
@@ -186,6 +188,7 @@ EffectChooserDropdown.propTypes = {
       options: PropTypes.arrayOf(PropTypes.string),
     })
   ),
+  disabled: PropTypes.bool,
   selectButtonStylesOverride: PropTypes.oneOfType([
     PropTypes.object,
     PropTypes.array,
