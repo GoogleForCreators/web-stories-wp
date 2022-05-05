@@ -70,7 +70,7 @@ class Woocommerce_Query implements Product_Query {
 			$product_image_ids[] = $product->get_gallery_image_ids();
 		}
 		$products_image_ids = array_merge( [], ...$product_image_ids );
-		/*
+		/**
 		 * Warm the object cache with post and meta information for all found
 		 * images to avoid making individual database calls.
 		 */
