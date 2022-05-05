@@ -25,7 +25,7 @@ import chalk from 'chalk';
 /**
  * Internal dependencies
  */
-import { PRIVATE_REGISTRY_URL, REACT_SUPPORTED_VERSION } from './constants.js';
+import { REACT_SUPPORTED_VERSION } from './constants.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -76,31 +76,27 @@ const getBoilerplateConfig = (boilerplateName) => {
  *
  * @param {string} boilerplateName Boilerplate name.
  * @param {string} projectPath Project path.
- * @param {boolean} isPrivate Is private
+ * @param {string} registry Custom registry to use.
  */
-function installDependenciesFromConfig(
-  boilerplateName,
-  projectPath,
-  isPrivate
-) {
+function installDependenciesFromConfig(boilerplateName, projectPath, registry) {
   const config = getBoilerplateConfig(boilerplateName);
   const { dependencies, devDependencies } = config;
 
-  if (isPrivate) {
-    log(`\nUsing registry at url \`${PRIVATE_REGISTRY_URL}\`\n`);
+  if (registry) {
+    log(`\nUsing custom npm registry at URL \`${registry}\`\n`);
   }
 
-  const registry = isPrivate ? `--registry ${PRIVATE_REGISTRY_URL} ` : '';
+  const _registry = registry ? `--registry ${registry} ` : '';
 
   if (dependencies && dependencies.length) {
-    const command = `npm ${registry}i ` + dependencies.join(' ');
+    const command = `npm ${_registry}i ` + dependencies.join(' ');
     execSync(command, {
       cwd: projectPath,
     });
   }
 
   if (devDependencies && devDependencies.length) {
-    const command = `npm ${registry}i --save-dev` + devDependencies.join(' ');
+    const command = `npm ${_registry}i --save-dev` + devDependencies.join(' ');
     execSync(command, {
       cwd: projectPath,
     });
@@ -131,9 +127,9 @@ function getBoilerplatePath(boilerplateName) {
  *
  * @param {string} boilerplateName Boilerplate name.
  * @param {string} projectName Project name.
- * @param {boolean} isPrivate Is private.
+ * @param {string} registry Custom registry to use.
  */
-function scaffoldBoilerplateWithCRA(boilerplateName, projectName, isPrivate) {
+function scaffoldBoilerplateWithCRA(boilerplateName, projectName, registry) {
   const boilerplatePath = getBoilerplatePath(boilerplateName);
   const sharedPath = path.join(__dirname, SHARED_DIR_PATH);
   const projectPath = path.join(process.cwd(), projectName);
@@ -159,9 +155,10 @@ function scaffoldBoilerplateWithCRA(boilerplateName, projectName, isPrivate) {
   });
 
   // Install boilerplate dependencies listed in meta
-  installDependenciesFromConfig(boilerplateName, projectPath, isPrivate);
+  installDependenciesFromConfig(boilerplateName, projectPath, registry);
 
   // Downgrade react and react-dom to the supported version.
+  // See https://github.com/GoogleForCreators/web-stories-wp/issues/10945
   execSync(
     `npm i react@${REACT_SUPPORTED_VERSION} react-dom@${REACT_SUPPORTED_VERSION}`,
     {

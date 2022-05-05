@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export const PRIVATE_REGISTRY_URL = 'http://localhost:4873/';
 export const DEFAULT_PROJECT_NAME = 'web-stories';
 
 // React version currently supported by web-stories.
+// See https://github.com/GoogleForCreators/web-stories-wp/issues/10945
 export const REACT_SUPPORTED_VERSION = '17.0.2';
 
 export const SETUP_TYPES = {

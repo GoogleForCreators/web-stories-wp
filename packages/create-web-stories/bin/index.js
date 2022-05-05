@@ -42,23 +42,23 @@ import {
 } from './constants.js';
 
 program
-  .option('-p, --private', 'install from local registry')
-  .option('-n, --name <name>', 'project folder name', 'none')
+  .option('-r, --registry', 'Custom npm registry to use')
+  .option('-n, --name <name>', 'Project folder name', 'none')
   .option(
     '-t, --setupType <setup-type>',
-    'type of setup to use for scaffolding the project, pass 0 for CRA or 1 for custom setup',
+    'Type of setup to use for scaffolding the project, pass 0 for CRA or 1 for custom setup',
     'none'
   )
   .option(
     '-b, --boilerplate <boilerplate>',
-    'which boilerplate to use',
+    'Which boilerplate to use',
     'none'
   );
 
 program.parse(process.argv);
 
 const options = program.opts();
-const isPrivate = Boolean(options.private);
+const registry = options.registry;
 const boilerplate = options.boilerplate;
 let projectName = options.name;
 let setupType = options.setupType;
@@ -197,10 +197,10 @@ if (boilerplate === 'none') {
 
   switch (setupType) {
     case SETUP_TYPES.CRA:
-      scaffoldBoilerplateWithCRA(boilerplateName, projectName, isPrivate);
+      scaffoldBoilerplateWithCRA(boilerplateName, projectName, registry);
       break;
     case SETUP_TYPES.CUSTOM:
-      scaffoldBoilerplateCustom(boilerplateName, projectName, isPrivate);
+      scaffoldBoilerplateCustom(boilerplateName, projectName, registry);
       break;
     default:
       break;
