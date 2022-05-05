@@ -46,6 +46,7 @@ import { progress } from '@googleforcreators/units';
  */
 import StoryPropTypes, { AnimationPropType } from '../../../../types';
 import { useStory } from '../../../../app';
+import { DESIGN_COPY } from '../../../checklist';
 import Warning from '../warning';
 import { Row } from '../../../form';
 import { SimplePanel } from '../../panel';
@@ -269,7 +270,7 @@ function AnimationPanel({
         )}
       </GroupWrapper>
       {isFirstPage && (
-        <Warning message="Animations will not show up on the first page of a Story because of AMP restrictions." />
+        <Warning message={DESIGN_COPY.firstPageAnimation.animationPanel} />
       )}
     </SimplePanel>
   );
