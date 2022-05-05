@@ -90,9 +90,9 @@ class Woocommerce_Query implements Product_Query {
 					'price_currency'   => get_woocommerce_currency(),
 					'images'           => $images,
 					'aggregate_rating' => [
-						'ratingValue' => (float) $product->get_average_rating(),
-						'reviewCount' => $product->get_rating_count(),
-						'reviewUrl'   => $product->get_permalink(),
+						'rating_value' => (float) $product->get_average_rating(),
+						'review_count' => $product->get_rating_count(),
+						'review_url'   => $product->get_permalink(),
 					],
 					'details'          => wp_strip_all_tags( $product->get_short_description() ),
 					'url'              => $product->get_permalink(),

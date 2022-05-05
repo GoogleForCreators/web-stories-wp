@@ -35,55 +35,59 @@ class Product {
 	 *
 	 * @var string
 	 */
-	protected $id;
+	protected $id = '';
 	/**
 	 * Product title.
 	 *
 	 * @var string
 	 */
-	protected $title;
+	protected $title = '';
 	/**
 	 * Product brand.
 	 *
 	 * @var string
 	 */
-	protected $brand;
+	protected $brand = '';
 	/**
 	 * Product Price.
 	 *
 	 * @var float
 	 */
-	protected $price;
+	protected $price = 0.0;
 	/**
 	 * Product's price currency.
 	 *
 	 * @var string
 	 */
-	protected $price_currency;
+	protected $price_currency = '';
 	/**
 	 * Product images as an array.
 	 *
 	 * @var array
 	 */
-	protected $images;
+	protected $images = [];
 	/**
 	 * Product Details.
 	 *
 	 * @var string
 	 */
-	protected $details;
+	protected $details = '';
 	/**
 	 * Product url.
 	 *
 	 * @var string
 	 */
-	protected $url;
+	protected $url = '';
 	/**
 	 * Product rating.
 	 *
 	 * @var array
 	 */
-	protected $aggregate_rating;
+	protected $aggregate_rating = [
+		'rating_value' => 0.0,
+		'review_count' => 0,
+		'review_url'   => '',
+	];
 
 	/**
 	 * Product constructor.
@@ -102,6 +106,8 @@ class Product {
 
 	/**
 	 * Get id.
+	 *
+	 * @since 1.21.0
 	 */
 	public function get_id(): string {
 		return $this->id;
@@ -109,6 +115,8 @@ class Product {
 
 	/**
 	 * Get title.
+	 *
+	 * @since 1.21.0
 	 */
 	public function get_title(): string {
 		return $this->title;
@@ -116,6 +124,8 @@ class Product {
 
 	/**
 	 * Get brand.
+	 *
+	 * @since 1.21.0
 	 */
 	public function get_brand(): string {
 		return $this->brand;
@@ -123,6 +133,8 @@ class Product {
 
 	/**
 	 * Get price.
+	 *
+	 * @since 1.21.0
 	 */
 	public function get_price(): float {
 		return $this->price;
@@ -130,6 +142,8 @@ class Product {
 
 	/**
 	 * Get currency.
+	 *
+	 * @since 1.21.0
 	 */
 	public function get_price_currency(): string {
 		return $this->price_currency;
@@ -137,6 +151,8 @@ class Product {
 
 	/**
 	 * Get images property.
+	 *
+	 * @since 1.21.0
 	 *
 	 * @return array
 	 */
@@ -146,6 +162,8 @@ class Product {
 
 	/**
 	 * Get details.
+	 *
+	 * @since 1.21.0
 	 */
 	public function get_details(): string {
 		return $this->details;
@@ -153,6 +171,8 @@ class Product {
 
 	/**
 	 * Get url.
+	 *
+	 * @since 1.21.0
 	 */
 	public function get_url(): string {
 		return $this->url;
@@ -160,6 +180,8 @@ class Product {
 
 	/**
 	 * Get rating.
+	 *
+	 * @since 1.21.0
 	 */
 	public function get_aggregate_rating(): array {
 		return $this->aggregate_rating;

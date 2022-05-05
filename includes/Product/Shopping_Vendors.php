@@ -99,7 +99,7 @@ class Shopping_Vendors {
 		];
 
 		/**
-		 * Filter the array of vendors. 
+		 * Filter the array of vendors.
 		 *
 		 * @since 1.21.0
 		 *

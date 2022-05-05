@@ -217,11 +217,6 @@ QUERY;
 					'price'           => (float) $product['priceRange']['minVariantPrice']['amount'],
 					'price_currency'  => $product['priceRange']['minVariantPrice']['currencyCode'],
 					'images'          => $images,
-					'aggregateRating' => [
-						'ratingValue' => 0.0,
-						'reviewCount' => 0,
-						'reviewUrl'   => '',
-					],
 					'details'         => $product['description'],
 					// URL is null if the resource is currently not published to the Online Store sales channel,
 					// or if the shop is password-protected.
