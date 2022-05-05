@@ -30,12 +30,20 @@ async function visitBlockWidgetScreen() {
   // The former selector is for WP < 5.9
   const isWelcomeGuideActive = await page.evaluate(() => {
     return (
+      // WordPress < 5.9
       wp.data
         .select('core/edit-widgets')
         ?.__unstableIsFeatureActive?.('welcomeGuide') ||
+      // WordPress 5.9
       wp.data
         .select('core/interface')
-        ?.isFeatureActive?.('core/edit-widgets', 'welcomeGuide')
+        ?.isFeatureActive?.('core/edit-widgets', 'welcomeGuide') ||
+      // WordPress 6.0
+      Boolean(
+        wp.data
+          .select('core/preferences')
+          .get('core/edit-widgets', 'welcomeGuide')
+      )
     );
   });
 
