@@ -209,18 +209,18 @@ QUERY;
 
 			$results[] = new Product(
 				[
-					'id'              => $product['id'],
-					'title'           => $product['title'],
-					'brand'           => $product['vendor'],
+					'id'             => $product['id'],
+					'title'          => $product['title'],
+					'brand'          => $product['vendor'],
 					// TODO: Maybe eventually provide full price range.
 					// See https://github.com/ampproject/amphtml/issues/37957.
-					'price'           => (float) $product['priceRange']['minVariantPrice']['amount'],
-					'price_currency'  => $product['priceRange']['minVariantPrice']['currencyCode'],
-					'images'          => $images,
-					'details'         => $product['description'],
+					'price'          => (float) $product['priceRange']['minVariantPrice']['amount'],
+					'price_currency' => $product['priceRange']['minVariantPrice']['currencyCode'],
+					'images'         => $images,
+					'details'        => $product['description'],
 					// URL is null if the resource is currently not published to the Online Store sales channel,
 					// or if the shop is password-protected.
-					'url'             => $product_url,
+					'url'            => $product_url,
 				]
 			);
 		}
