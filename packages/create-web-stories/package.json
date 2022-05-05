@@ -2,7 +2,7 @@
   "name": "@googleforcreators/create-web-stories",
   "description": "Scaffold Web Stories editor and dashboard",
   "private": false,
-  "version": "0.1.202203241635",
+  "version": "0.1.202205051441",
   "author": {
     "name": "Google",
     "url": "https://creators.google/"
@@ -30,8 +30,8 @@
   },
   "dependencies": {
     "chalk": "^5.0.1",
-    "commander": "^9.0.0",
-    "fs-extra": "^10.0.1",
+    "commander": "^9.2.0",
+    "fs-extra": "^10.1.0",
     "prompts": "^2.4.2"
   },
   "devDependencies": {},
