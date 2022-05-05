@@ -65,19 +65,20 @@ class Woocommerce_Query implements Product_Query {
 			]
 		);
 
-		$products_image_ids = [];
+		$product_image_ids = [];
 		foreach ( $products as $product ) {
 			$product_image_ids[] = $product->get_gallery_image_ids();
 		}
-		$product_image_ids = array_merge( [], ...$products_image_ids );
+		$products_image_ids = array_merge( [], ...$product_image_ids );
 		/*
 		 * Warm the object cache with post and meta information for all found
 		 * images to avoid making individual database calls.
 		 */
-		_prime_post_caches( $product_image_ids, false, true );
+		_prime_post_caches( $products_image_ids, false, true );
 
 		foreach ( $products as $product ) {
-			$images = array_map( [ $this, 'get_product_images' ], $product_image_ids );
+			$product_image_ids = array_map( 'absint', $product->get_gallery_image_ids() );
+			$images            = array_map( [ $this, 'get_product_images' ], $product_image_ids );
 
 			$product_object = new Product(
 				[
