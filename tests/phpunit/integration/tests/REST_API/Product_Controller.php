@@ -19,7 +19,7 @@ namespace Google\Web_Stories\Tests\Integration\REST_API;
 
 use Google\Web_Stories\Settings;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedRestTestCase;
-use Google\Web_Stories\Tests\Integration\Mock_Vender;
+use Google\Web_Stories\Tests\Integration\Mock_Vendor_Setup;
 use WP_REST_Request;
 
 /**
@@ -28,6 +28,7 @@ use WP_REST_Request;
  * @coversDefaultClass \Google\Web_Stories\REST_API\Products_Controller
  */
 class Products_Controller extends DependencyInjectedRestTestCase {
+	use Mock_Vendor_Setup;
 
 	protected static $editor;
 	protected static $subscriber;
@@ -56,31 +57,16 @@ class Products_Controller extends DependencyInjectedRestTestCase {
 	public function set_up(): void {
 		parent::set_up();
 		update_option( Settings::SETTING_NAME_SHOPPING_PROVIDER, 'mock' );
-		add_filter( 'web_stories_shopping_vendors', [ $this, 'add_mock_vendor' ] );
+		$this->setup_vendors();
 
 		$this->controller = $this->injector->make( \Google\Web_Stories\REST_API\Products_Controller::class );
 	}
 
 	public function tear_down(): void {
 		delete_option( Settings::SETTING_NAME_SHOPPING_PROVIDER );
-		remove_filter( 'web_stories_shopping_vendors', [ $this, 'add_mock_vendor' ] );
+		$this->remove_vendors();
 
 		parent::tear_down();
-	}
-
-	/**
-	 * Add mock vendor to array with filter.
-	 *
-	 * @param array $vendors
-	 * @return array
-	 */
-	public function add_mock_vendor( $vendors ): array {
-		$vendors['mock'] = [
-			'label' => 'Mock',
-			'class' => Mock_Vender::class,
-		];
-
-		return $vendors;
 	}
 
 	/**
