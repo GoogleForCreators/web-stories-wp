@@ -35,7 +35,7 @@ trait Kses_Setup {
 	 * Setup KSES init class.
 	 */
 	protected function kses_int(): void {
-		$settings   = new \Google\Web_Stories\Settings( new Shopping_Vendors( new SimpleInjector() ) );
+		$settings        = $this->createMock( \Google\Web_Stories\Settings::class );
 		$this->kses = new \Google\Web_Stories\KSES(
 			new \Google\Web_Stories\Story_Post_Type( $settings )
 		);
