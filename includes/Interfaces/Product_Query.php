@@ -26,7 +26,7 @@
 
 namespace Google\Web_Stories\Interfaces;
 
-use Google\Web_Stories\Model\Product;
+use Google\Web_Stories\Product\Product;
 use WP_Error;
 
 /**

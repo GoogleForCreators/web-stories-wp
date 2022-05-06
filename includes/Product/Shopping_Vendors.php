@@ -73,6 +73,10 @@ class Shopping_Vendors {
 		 */
 		$query = $this->injector->make( $vendors[ $name ]['class'] );
 
+		if ( ! $query instanceof Product_Query ) {
+			return null;
+		}
+
 		return $query;
 	}
 

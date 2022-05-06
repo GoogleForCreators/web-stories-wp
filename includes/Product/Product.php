@@ -24,7 +24,7 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\Model;
+namespace Google\Web_Stories\Product;
 
 /**
  * Class Product

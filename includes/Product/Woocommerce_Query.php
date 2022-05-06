@@ -27,7 +27,6 @@
 namespace Google\Web_Stories\Product;
 
 use Google\Web_Stories\Interfaces\Product_Query;
-use Google\Web_Stories\Model\Product;
 use WP_Error;
 
 /**
