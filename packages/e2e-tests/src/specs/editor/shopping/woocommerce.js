@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * External dependencies
  */
@@ -24,34 +23,14 @@ import {
   minWPVersionRequired,
   previewStory,
   withPlugin,
-  visitSettings,
+  insertProduct,
+  setShoppingProvider,
 } from '@web-stories-wp/e2e-test-utils';
 
 /**
  * Internal dependencies
  */
 import * as schema from './schema.json';
-
-async function insertProduct(product) {
-  // Switch to the Products tab and wait for initial list of products to be fetched.
-  await Promise.all([
-    page.waitForResponse(
-      (response) =>
-        response.url().includes('web-stories/v1/products') &&
-        response.status() === 200
-    ),
-    expect(page).toClick('[aria-controls="library-pane-shopping"]'),
-  ]);
-
-  // This clicks on the Product dropdown and waits for the dropdown menu to open.
-  await expect(page).toClick('[aria-label="Product"]');
-  await page.waitForSelector('[aria-label="Search"]');
-
-  await page.type('[aria-label="Search"]', product);
-  await page.keyboard.press('ArrowDown');
-  await page.keyboard.press('Enter');
-  await expect(page).toClick('button', { text: 'Insert product' });
-}
 
 describe('Shopping', () => {
   withExperimentalFeatures(['shoppingIntegration']);
@@ -61,23 +40,7 @@ describe('Shopping', () => {
     withPlugin('woocommerce');
 
     beforeAll(async () => {
-      await visitSettings();
-
-      // Small trick to ensure we scroll to this input.
-      const shoppingProviderDropdown = await page.$(
-        'button[aria-label="Shopping provider"]'
-      );
-      await shoppingProviderDropdown.focus();
-
-      // eslint-disable-next-line jest/no-standalone-expect
-      await expect(page).toClick('button[aria-label="Shopping provider"]');
-      // eslint-disable-next-line jest/no-standalone-expect
-      await expect(page).toClick('[role="listbox"] li', {
-        text: 'WooCommerce',
-      });
-
-      // eslint-disable-next-line jest/no-standalone-expect
-      await expect(page).toMatch('Setting saved.');
+      await setShoppingProvider('WooCommerce');
     });
 
     describe('Schema Validation', () => {
