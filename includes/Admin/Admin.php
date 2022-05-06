@@ -158,6 +158,8 @@ class Admin extends Service_Base {
 			);
 		}
 
+		$story->set_poster_sizes( '' );
+		$story->set_poster_srcset( '' );
 		$renderer = new Image( $story );
 		$html     = $renderer->render( $args );
 

@@ -207,6 +207,28 @@ class Story {
 	}
 
 	/**
+	 * Setter for poster source set sizes.
+	 *
+	 * @since 1.21.0
+	 *
+	 * @param string $poster_sizes
+	 */
+	public function set_poster_sizes( string $poster_sizes ): void {
+		$this->poster_sizes = $poster_sizes;
+	}
+
+	/**
+	 * Setter for poster source set.
+	 *
+	 * @since 1.21.0
+	 *
+	 * @param string $poster_srcset
+	 */
+	public function set_poster_srcset( string $poster_srcset ): void {
+		$this->poster_srcset = $poster_srcset;
+	}
+
+	/**
 	 * Getter for poster source set sizes.
 	 *
 	 * @since 1.18.0
