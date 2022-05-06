@@ -29,8 +29,24 @@ import {
   takeSnapshot,
 } from '@web-stories-wp/e2e-test-utils';
 
+/**
+ * Internal dependencies
+ */
+import { addAllowedErrorMessage } from '../../config/bootstrap.js';
+
 describe('Web Stories Widget Block', () => {
-  minWPVersionRequired('5.8');
+  let removeErrorMessage;
+
+  beforeAll(() => {
+    // Known issue in WP 6.0 RC1, see https://github.com/GoogleForCreators/web-stories-wp/pull/11435
+    removeErrorMessage = addAllowedErrorMessage(
+      "Warning: Can't perform a React state update on an unmounted component."
+    );
+  });
+
+  afterAll(() => {
+    removeErrorMessage();
+  });
 
   afterEach(async () => {
     await deleteWidgets();

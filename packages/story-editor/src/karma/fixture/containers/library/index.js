@@ -77,6 +77,10 @@ export class Library extends Container {
     );
   }
 
+  get shoppingTab() {
+    return this.getByRole('tab', { name: /Shopping library/ });
+  }
+
   get pageTemplatesTab() {
     return this.getByRole('tab', { name: /Page templates library/ });
   }

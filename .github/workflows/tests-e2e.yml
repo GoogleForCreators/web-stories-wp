@@ -156,6 +156,16 @@ jobs:
             experimental: false
             snapshots: true
             shard: '4/4'
+          - browser: 'chrome'
+            wp: '6.0-RC1'
+            experimental: true
+            snapshots: false
+            shard: '1/2'
+          - browser: 'chrome'
+            wp: '6.0-RC1'
+            experimental: true
+            snapshots: false
+            shard: '2/2'
           - browser: 'firefox'
             wp: 'latest'
             experimental: true
