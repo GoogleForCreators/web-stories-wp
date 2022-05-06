@@ -31,7 +31,7 @@ import { useRegisterCheck } from '../countContext';
 import { useIsChecklistMounted } from '../popupMountedContext';
 
 export function firstPageAnimation(animations) {
-  return !!animations?.length;
+  return Boolean(animations?.length);
 }
 
 const FirstPageAnimation = () => {

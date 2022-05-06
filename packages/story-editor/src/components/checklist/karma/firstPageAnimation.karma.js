@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,7 +38,7 @@ describe('firstPageAnimation', function () {
     fixture.restore();
   });
 
-  fit('should see First Page Animation text in checklist design panel', async function () {
+  it('should see First Page Animation text in checklist design panel', async function () {
     // add a second page
     await fixture.events.click(fixture.editor.canvas.pageActions.addPage);
     await fixture.editor.library.textTab.click();
