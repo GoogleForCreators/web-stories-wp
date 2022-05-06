@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useMemo, useCallback } from '@googleforcreators/react';
+import { useCallback } from '@googleforcreators/react';
 import { Link, THEME_CONSTANTS } from '@googleforcreators/design-system';
 import { trackClick } from '@googleforcreators/tracking';
 
@@ -36,11 +36,8 @@ export function firstPageAnimation(animations) {
 
 const FirstPageAnimation = () => {
   const isChecklistMounted = useIsChecklistMounted();
-  const animations = useStory(({ state: { pages } }) => pages[0]?.animations);
-
-  const isRendered = useMemo(
-    () => firstPageAnimation(animations),
-    [animations]
+  const isRendered = useStory(({ state: { pages } }) =>
+    firstPageAnimation(pages[0]?.animations)
   );
 
   const onClick = useCallback((evt) => {
