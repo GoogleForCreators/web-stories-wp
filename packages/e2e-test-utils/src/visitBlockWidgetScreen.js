@@ -27,8 +27,8 @@ async function visitBlockWidgetScreen() {
   await visitAdminPage('widgets.php');
 
   // Disable welcome guide if it is enabled.
-  // The former selector is for WP < 5.9
   const isWelcomeGuideActive = await page.evaluate(() => {
+    // WordPress 6.0
     if (wp.data.select('core/preferences')) {
       return Boolean(
         wp.data
@@ -37,36 +37,45 @@ async function visitBlockWidgetScreen() {
       );
     }
 
+    // WordPress 5.9
     if (wp.data.select('core/interface')) {
       return wp.data
         .select('core/interface')
         ?.isFeatureActive?.('core/edit-widgets', 'welcomeGuide');
     }
 
+    // WordPress < 5.9
     if (wp.data.select('core/edit-widgets')) {
       return wp.data
         .select('core/edit-widgets')
         ?.__unstableIsFeatureActive?.('welcomeGuide');
     }
-
     return false;
   });
 
   if (isWelcomeGuideActive) {
-    // The former action is for WP < 5.9
     await page.evaluate(() => {
+      // WordPress 6.0
       if (wp.data.select('core/preferences')) {
         wp.data
           .dispatch('core/preferences')
           .toggle('core/edit-widgets', 'welcomeGuide');
         return;
       }
-      wp.data
-        .dispatch('core/edit-widgets')
-        ?.__unstableToggleFeature?.('welcomeGuide');
-      wp.data
-        .dispatch('core/interface')
-        ?.toggleFeature?.('core/edit-widgets', 'welcomeGuide');
+
+      // WordPress < 5.9
+      if (wp.data.dispatch('core/interface')) {
+        wp.data
+          .dispatch('core/interface')
+          ?.toggleFeature?.('core/edit-widgets', 'welcomeGuide');
+      }
+
+      // WordPress < 5.9
+      if (wp.data.dispatch('core/edit-widgets')) {
+        wp.data
+          .dispatch('core/edit-widgets')
+          ?.__unstableToggleFeature?.('welcomeGuide');
+      }
     });
   }
 }
