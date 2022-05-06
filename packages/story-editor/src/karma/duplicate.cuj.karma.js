@@ -27,7 +27,8 @@ describe('Duplicate Page', () => {
     fixture = new Fixture();
     await fixture.render();
     await fixture.collapseHelpCenter();
-
+    // #11321 adding/editing animations on the first page is disabled
+    await fixture.events.click(fixture.editor.canvas.pageActions.addPage);
     // Insert selected element to perform operations on.
     const insertElement = await fixture.renderHook(() => useInsertElement());
     await fixture.act(() =>
@@ -46,6 +47,9 @@ describe('Duplicate Page', () => {
   });
 
   it('should duplicate an animation', async () => {
+    const startPageIndex = await fixture.renderHook(() =>
+      useStory(({ state: { currentPageIndex } }) => currentPageIndex)
+    );
     // open effect chooser
     await fixture.events.click(fixture.editor.sidebar.designTab);
     await fixture.events.click(
@@ -67,7 +71,7 @@ describe('Duplicate Page', () => {
     const { animations: originalAnimations, elements: originalElements } =
       await fixture.renderHook(() =>
         useStory(({ state }) => ({
-          animations: state.pages[0].animations,
+          animations: state.pages[startPageIndex].animations,
           elements: state.currentPage.elements,
         }))
       );
@@ -95,8 +99,8 @@ describe('Duplicate Page', () => {
     // get the duplicated element
     const { animations, elements } = await fixture.renderHook(() =>
       useStory(({ state }) => ({
-        animations: state.pages[1].animations,
-        elements: state.pages[1].elements,
+        animations: state.pages[startPageIndex + 1].animations,
+        elements: state.pages[startPageIndex + 1].elements,
       }))
     );
     expect(animations.length).toBe(1);
