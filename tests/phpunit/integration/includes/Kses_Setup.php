@@ -17,9 +17,6 @@
 
 namespace Google\Web_Stories\Tests\Integration;
 
-use Google\Web_Stories\Infrastructure\Injector\SimpleInjector;
-use Google\Web_Stories\Product\Shopping_Vendors;
-
 /**
  * Trait Kses_Setup
  *
@@ -35,7 +32,7 @@ trait Kses_Setup {
 	 * Setup KSES init class.
 	 */
 	protected function kses_int(): void {
-		$settings        = $this->createMock( \Google\Web_Stories\Settings::class );
+		$settings   = $this->createMock( \Google\Web_Stories\Settings::class );
 		$this->kses = new \Google\Web_Stories\KSES(
 			new \Google\Web_Stories\Story_Post_Type( $settings )
 		);
