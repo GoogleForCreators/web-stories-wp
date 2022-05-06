@@ -18,7 +18,6 @@
  * External dependencies
  */
 import {
-  withExperimentalFeatures,
   createNewStory,
   takeSnapshot,
   withPlugin,
@@ -29,7 +28,6 @@ import {
 import { addAllowedErrorMessage } from '../../config/bootstrap.js';
 
 describe('CORS check', () => {
-  withExperimentalFeatures(['enableCORSCheck']);
   withPlugin('e2e-tests-cors-error');
 
   let removeCORSErrorMessage;

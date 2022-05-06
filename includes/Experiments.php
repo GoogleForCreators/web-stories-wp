@@ -288,18 +288,6 @@ class Experiments extends Service_Base implements HasRequirements {
 				'group'       => 'editor',
 			],
 			/**
-			 * Author: @spacedmonkey
-			 * Issue: #10706
-			 * Creation date: 2022-03-07
-			 */
-			[
-				'name'        => 'enableCORSCheck',
-				'label'       => __( 'CORS check', 'web-stories' ),
-				'description' => __( 'Add a check in the editor for CORS errors.', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-			/**
 			 * Author: @barklund
 			 * Issue: #10112
 			 * Creation date: 2022-01-27
