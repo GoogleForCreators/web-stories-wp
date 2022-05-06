@@ -108,7 +108,7 @@ function ImageDisplay({
         }
       });
     } else {
-      setSrc(resource.src);
+      setSrc(getProxiedUrl(resource, resource.src));
     }
     return () => {
       mounted = false;

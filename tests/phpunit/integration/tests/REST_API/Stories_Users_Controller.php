@@ -82,7 +82,8 @@ class Stories_Users_Controller extends DependencyInjectedRestTestCase {
 		$actual = $this->controller->filter_user_query( [ 'who' => 'authors' ] );
 		$this->assertEqualSets(
 			[
-				'who' => 'authors',
+				'who'    => 'authors',
+				'fields' => 'all_with_meta',
 			],
 			$actual
 		);
@@ -100,6 +101,7 @@ class Stories_Users_Controller extends DependencyInjectedRestTestCase {
 		$this->assertEqualSets(
 			[
 				'capabilities' => [ 'edit_web-stories' ],
+				'fields'       => 'all_with_meta',
 			],
 			$actual
 		);
@@ -118,6 +120,7 @@ class Stories_Users_Controller extends DependencyInjectedRestTestCase {
 		$this->assertEqualSets(
 			[
 				'capabilities' => [ 'edit_web-stories' ],
+				'fields'       => 'all_with_meta',
 			],
 			$actual
 		);
@@ -151,6 +154,7 @@ class Stories_Users_Controller extends DependencyInjectedRestTestCase {
 		$this->assertEqualSets(
 			[
 				'capabilities' => [ 'edit_posts', 'edit_web-stories' ],
+				'fields'       => 'all_with_meta',
 			],
 			$actual
 		);
@@ -163,6 +167,7 @@ class Stories_Users_Controller extends DependencyInjectedRestTestCase {
 		$args    = [
 			'orderby' => 'registered',
 			'order'   => 'ASC',
+			'fields'  => 'all_with_meta',
 		];
 		$results = $this->controller->filter_user_query( $args );
 		$this->assertEqualSets( $args, $results );

@@ -498,9 +498,7 @@ describe('Taxonomies Panel', () => {
       let currentStoryTerms = await getStoryTerms();
       const initialTagsLength = currentStoryTerms['web_story_tag'].length;
       const { tagsInput } = fixture.editor.sidebar.documentPanel.taxonomies;
-      const initialTokens = await fixture.screen.getAllByTestId(
-        /^flat-term-token/
-      );
+      const initialTokens = fixture.screen.getAllByTestId(/^flat-term-token/);
       // delete the first tag with keyboard navigation
       await fixture.events.focus(tagsInput);
       await fixture.events.keyboard.press('ArrowLeft');
