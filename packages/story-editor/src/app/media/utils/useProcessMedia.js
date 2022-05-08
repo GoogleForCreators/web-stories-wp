@@ -28,6 +28,7 @@ import {
  */
 import useAPI from '../../api/useAPI';
 import useStory from '../../story/useStory';
+import useMediaInfo from './useMediaInfo';
 
 function useProcessMedia({
   uploadMedia,
@@ -44,6 +45,7 @@ function useProcessMedia({
       updateElementById: state.actions.updateElementById,
     })
   );
+  const { getFileInfo, isConsideredOptimized } = useMediaInfo();
 
   const copyResourceData = useCallback(
     ({ oldResource, resource }) => {
@@ -184,6 +186,18 @@ function useProcessMedia({
           return;
         }
 
+        const fileInfo = await getFileInfo(file);
+
+        // Video meets criteria to be considered optimized,
+        // just mark it as such and call it a day.
+        if (isConsideredOptimized(fileInfo)) {
+          updateExistingElementsByResourceId(resourceId, { isOptimized: true });
+          updateMedia(resourceId, {
+            mediaSource: 'video-optimization',
+          });
+          return;
+        }
+
         await uploadMedia([file], {
           onUploadSuccess,
           onUploadError,
@@ -204,6 +218,9 @@ function useProcessMedia({
       postProcessingResource,
       getOptimizedMediaById,
       uploadMedia,
+      getFileInfo,
+      isConsideredOptimized,
+      updateMedia,
     ]
   );
 

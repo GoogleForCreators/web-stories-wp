@@ -73,6 +73,7 @@ describe('useMediaUploadQueue', () => {
               id: 456,
               foo: 'bar',
             }),
+            additionalData: {},
           }),
         ],
       });

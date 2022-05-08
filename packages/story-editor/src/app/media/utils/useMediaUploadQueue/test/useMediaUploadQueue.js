@@ -25,6 +25,7 @@ import { isAnimatedGif, createResource } from '@googleforcreators/media';
  */
 import useMediaUploadQueue from '..';
 import useFFmpeg from '../../useFFmpeg';
+import useMediaInfo from '../../useMediaInfo';
 import { ITEM_STATUS } from '../constants';
 
 const canTranscodeFile = (file) => {
@@ -50,6 +51,13 @@ jest.mock('../../useFFmpeg', () => ({
     trimVideo: getFileWithSleep,
     getFirstFrameOfVideo: jest.fn(),
     convertGifToVideo: getFileWithSleep,
+  })),
+}));
+
+jest.mock('../../useMediaInfo', () => ({
+  __esModule: true,
+  default: jest.fn(() => ({
+    getFileInfo: jest.fn(() => null),
   })),
 }));
 
@@ -120,6 +128,7 @@ describe('useMediaUploadQueue', () => {
 
   afterEach(() => {
     useFFmpeg.mockClear();
+    useMediaInfo.mockClear();
   });
 
   it('sets initial state for upload queue', async () => {
@@ -234,11 +243,11 @@ describe('useMediaUploadQueue', () => {
       })
     );
 
+    await waitFor(() => expect(result.current.state.isTranscoding).toBeTrue());
+
     const {
       resource: { id: resourceId },
     } = result.current.state.progress[0];
-
-    await waitFor(() => expect(result.current.state.isTranscoding).toBeTrue());
 
     expect(
       result.current.state.isCurrentResourceProcessing(resourceId)
@@ -264,10 +273,11 @@ describe('useMediaUploadQueue', () => {
       })
     );
 
+    await waitFor(() => expect(result.current.state.isMuting).toBeTrue());
+
     const {
       resource: { id: resourceId },
     } = result.current.state.progress[0];
-    await waitFor(() => expect(result.current.state.isMuting).toBeTrue());
 
     expect(
       result.current.state.isCurrentResourceProcessing(resourceId)

@@ -55,7 +55,7 @@ export function addItem(
       onUploadProgress,
       onUploadError,
       onUploadSuccess,
-      additionalData,
+      additionalData = {},
       posterFile,
       muteVideo,
       trimData,
