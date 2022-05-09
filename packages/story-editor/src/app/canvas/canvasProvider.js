@@ -163,6 +163,7 @@ function CanvasProvider({ children }) {
     ({ x: lx, y: ly, width: lw, height: lh }) => {
       const lassoP = createPolygon(0, lx, ly, lw, lh);
       const newSelectedElementIds = elements
+        // Skip background and locked elements
         .filter(({ isBackground, isLocked }) => !isBackground && !isLocked)
         .map(({ id, rotationAngle, x, y, width, height }) => {
           const elementP = createPolygon(rotationAngle, x, y, width, height);
