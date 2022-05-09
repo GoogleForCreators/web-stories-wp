@@ -26,6 +26,6 @@
   "type": "module",
   "main": "./src/index.js",
   "dependencies": {
-    "@jest/test-sequencer": "^27.5.0"
+    "@jest/test-sequencer": "^28.1.0"
   }
 }
