@@ -17,16 +17,15 @@
 /**
  * External dependencies
  */
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import {
   Button,
   BUTTON_SIZES,
   BUTTON_TYPES,
   BUTTON_VARIANTS,
-  Icons,
-  Input,
-  themeHelpers,
+  Text,
+  THEME_CONSTANTS,
 } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 import { useState, useMemo } from '@googleforcreators/react';
@@ -39,41 +38,20 @@ import { useFeature } from 'flagged';
 /**
  * Internal dependencies
  */
-import { Row } from '../../form';
-import Tooltip from '../../tooltip';
-import { useConfig } from '../../../app/config';
-import { MULTIPLE_DISPLAY_VALUE } from '../../../constants';
-import { focusStyle } from './styles';
+import { Row } from '../../../form';
+import { useConfig } from '../../../../app/config';
+import { MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
 import HotlinkModal from './hotlinkModal';
-
-const InputRow = styled.div`
-  display: flex;
-  flex-grow: 1;
-  margin-right: 8px;
-`;
+import FileRow from './fileRow';
 
 const ButtonRow = styled(Row)`
   gap: 12px;
 `;
 
-const StyledFileInput = styled(Input)(
-  ({ $isIndeterminate, theme }) => css`
-    ${focusStyle};
-    ${!$isIndeterminate &&
-    css`
-      * > input:disabled {
-        color: ${theme.colors.fg.primary};
-      }
-    `};
-  `
-);
-
-const StyledButton = styled(Button)`
-  ${({ theme }) =>
-    themeHelpers.focusableOutlineCSS(
-      theme.colors.border.focus,
-      theme.colors.bg.secondary
-    )};
+const FileName = styled(Text).attrs({
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+})`
+  color: ${({ theme }) => theme.colors.fg.primary};
 `;
 
 const HotlinkButton = styled(Button)`
@@ -87,14 +65,15 @@ function CaptionsPanelContent({
   handleChangeTrack,
   handleRemoveTrack,
   renderUploadButton,
-  clearFileText = __('Remove file', 'web-stories'),
+  removeItemLabel = __('Remove file', 'web-stories'),
 }) {
   const {
     allowedMimeTypes: { caption: allowedCaptionMimeTypes = [] },
     capabilities: { hasUploadMediaAction },
     MediaUpload,
   } = useConfig();
-  const [isOpen, setIsOpen] = useState(false);
+
+  const [isHotlinkDialogOpen, setIsHotlinkDialogOpen] = useState(false);
 
   const enableCaptionHotlinking = useFeature('captionHotlinking');
 
@@ -112,44 +91,52 @@ function CaptionsPanelContent({
 
   const onSelect = (track) => {
     handleChangeTrack(track);
-    setIsOpen(false);
+    setIsHotlinkDialogOpen(false);
   };
+
+  const options = [
+    hasUploadMediaAction && {
+      label: __('Upload a file', 'web-stories'),
+      value: 'upload',
+      onClick: () => {},
+      mediaPickerProps: {
+        onSelect: handleChangeTrack,
+        onSelectErrorMessage: __(
+          'Please choose a VTT file to use as caption.',
+          'web-stories'
+        ),
+        type: allowedCaptionMimeTypes,
+        title: captionText,
+        buttonInsertText: __('Select caption', 'web-stories'),
+      },
+    },
+    enableCaptionHotlinking && {
+      label: __('Link to a file', 'web-stories'),
+      value: 'hotlink',
+      onClick: () => {
+        setIsHotlinkDialogOpen(true);
+      },
+    },
+  ].filter(Boolean);
 
   return (
     <>
       {isIndeterminate && (
         <Row>
-          <StyledFileInput
-            value={MULTIPLE_DISPLAY_VALUE}
-            disabled
-            aria-label={__('Filename', 'web-stories')}
-            onChange={() => handleRemoveTrack()}
-            $isIndeterminate={isIndeterminate}
-          />
+          <FileName>{MULTIPLE_DISPLAY_VALUE}</FileName>
         </Row>
       )}
-      {tracks.map(({ id, trackName }) => (
-        <Row key={`row-filename-${id}`}>
-          <InputRow>
-            <StyledFileInput
-              value={trackName}
-              aria-label={__('Filename', 'web-stories')}
-              onChange={() => handleRemoveTrack(id)}
-              disabled
-            />
-          </InputRow>
-          <Tooltip hasTail title={clearFileText}>
-            <StyledButton
-              aria-label={clearFileText}
-              type={BUTTON_TYPES.TERTIARY}
-              size={BUTTON_SIZES.SMALL}
-              variant={BUTTON_VARIANTS.SQUARE}
-              onClick={() => handleRemoveTrack(id)}
-            >
-              <Icons.Trash />
-            </StyledButton>
-          </Tooltip>
-        </Row>
+      {tracks.map((track) => (
+        <FileRow
+          key={track.id}
+          id={track.id}
+          src={track.track}
+          title={track.track.split('/').pop()}
+          isExternal={!track.trackId}
+          options={options}
+          onRemove={handleRemoveTrack}
+          removeItemLabel={removeItemLabel}
+        />
       ))}
       {!tracks.length && !isIndeterminate && (
         <ButtonRow spaceBetween={false}>
@@ -167,27 +154,27 @@ function CaptionsPanelContent({
             />
           )}
           {enableCaptionHotlinking && (
-            <>
-              <HotlinkButton
-                variant={BUTTON_VARIANTS.RECTANGLE}
-                type={BUTTON_TYPES.SECONDARY}
-                size={BUTTON_SIZES.SMALL}
-                onClick={() => setIsOpen(true)}
-              >
-                {__('Link to caption file', 'web-stories')}
-              </HotlinkButton>
-              <HotlinkModal
-                title={__('Insert external captions', 'web-stories')}
-                isOpen={isOpen}
-                onSelect={onSelect}
-                onClose={() => setIsOpen(false)}
-                allowedFileTypes={allowedFileTypes}
-                insertText={__('Use caption', 'web-stories')}
-                insertingText={__('Selecting caption', 'web-stories')}
-              />
-            </>
+            <HotlinkButton
+              variant={BUTTON_VARIANTS.RECTANGLE}
+              type={BUTTON_TYPES.SECONDARY}
+              size={BUTTON_SIZES.SMALL}
+              onClick={() => setIsHotlinkDialogOpen(true)}
+            >
+              {__('Link to caption file', 'web-stories')}
+            </HotlinkButton>
           )}
         </ButtonRow>
+      )}
+      {enableCaptionHotlinking && (
+        <HotlinkModal
+          title={__('Insert external captions', 'web-stories')}
+          isOpen={isHotlinkDialogOpen}
+          onSelect={onSelect}
+          onClose={() => setIsHotlinkDialogOpen(false)}
+          allowedFileTypes={allowedFileTypes}
+          insertText={__('Use caption', 'web-stories')}
+          insertingText={__('Selecting caption', 'web-stories')}
+        />
       )}
     </>
   );
@@ -197,7 +184,7 @@ CaptionsPanelContent.propTypes = {
   isIndeterminate: PropTypes.bool,
   tracks: PropTypes.arrayOf(ResourcePropTypes.trackResource),
   captionText: PropTypes.string,
-  clearFileText: PropTypes.string,
+  removeItemLabel: PropTypes.string,
   handleChangeTrack: PropTypes.func,
   handleRemoveTrack: PropTypes.func,
   renderUploadButton: PropTypes.func,

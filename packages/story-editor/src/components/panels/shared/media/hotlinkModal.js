@@ -32,13 +32,13 @@ import { withProtocol } from '@googleforcreators/url';
 /**
  * Internal dependencies
  */
-import Dialog from '../../dialog';
+import Dialog from '../../../dialog';
 import {
   isValidUrlForHotlinking,
   getErrorMessage,
-} from '../../library/panes/media/local/hotlink/utils';
-import { useAPI } from '../../../app/api';
-import useCORSProxy from '../../../utils/useCORSProxy';
+} from '../../../library/panes/media/local/hotlink/utils';
+import { useAPI } from '../../../../app/api';
+import useCORSProxy from '../../../../utils/useCORSProxy';
 
 const InputWrapper = styled.form`
   margin: 16px 4px;

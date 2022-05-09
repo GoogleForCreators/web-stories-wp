@@ -24,7 +24,8 @@ import {
   BUTTON_SIZES,
   BUTTON_TYPES,
   BUTTON_VARIANTS,
-  Icons,
+  Text,
+  THEME_CONSTANTS,
   themeHelpers,
 } from '@googleforcreators/design-system';
 import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
@@ -42,15 +43,14 @@ import { useFeature } from 'flagged';
 /**
  * Internal dependencies
  */
-import { useConfig } from '../../../app';
-import { Z_INDEX_STORY_DETAILS } from '../../../constants/zIndex';
-import { Row } from '../../form';
-import AudioPlayer from '../../audioPlayer';
-import Tooltip from '../../tooltip';
-import useCORSProxy from '../../../utils/useCORSProxy';
+import { useConfig } from '../../../../app';
+import { Row } from '../../../form';
+import useCORSProxy from '../../../../utils/useCORSProxy';
 import CaptionsPanelContent from './captionsPanelContent';
 import LoopPanelContent from './loopPanelContent';
 import HotlinkModal from './hotlinkModal';
+import AudioPlayer from './audioPlayer';
+import FileRow from './fileRow';
 
 const StyledButton = styled(Button)`
   ${({ theme }) =>
@@ -68,6 +68,13 @@ const ButtonRow = styled(Row)`
   gap: 12px;
 `;
 
+const SectionHeading = styled(Text).attrs({
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+})`
+  font-weight: bold;
+  margin-bottom: 12px;
+`;
+
 function BackgroundAudioPanelContent({
   backgroundAudio,
   updateBackgroundAudio,
@@ -80,7 +87,7 @@ function BackgroundAudioPanelContent({
     capabilities: { hasUploadMediaAction },
     MediaUpload,
   } = useConfig();
-  const [isOpen, setIsOpen] = useState(false);
+  const [isHotlinkDialogOpen, setIsHotlinkDialogOpen] = useState(false);
   const enableAudioHotlinking = useFeature('audioHotlinking');
   const { getProxiedUrl } = useCORSProxy();
 
@@ -139,7 +146,7 @@ function BackgroundAudioPanelContent({
         lengthFormatted,
         needsProxy,
       });
-      setIsOpen(false);
+      setIsHotlinkDialogOpen(false);
     },
     [getProxiedUrl, onSelect]
   );
@@ -175,7 +182,7 @@ function BackgroundAudioPanelContent({
 
   const handleChangeTrack = useCallback(
     ({ src = '', id, needsProxy = false }) => {
-      const newTracks = {
+      const newTrack = {
         track: src,
         trackId: id,
         trackName: src.split('/').pop(),
@@ -185,9 +192,9 @@ function BackgroundAudioPanelContent({
         label: '',
         needsProxy,
       };
-      updateTracks([...tracks, newTracks]);
+      updateTracks([newTrack]);
     },
-    [tracks, updateTracks]
+    [updateTracks]
   );
 
   const renderUploadButton = useCallback(
@@ -204,8 +211,6 @@ function BackgroundAudioPanelContent({
     []
   );
 
-  const captionText = __('Upload audio captions', 'web-stories');
-
   const renderUploadCaptionButton = useCallback(
     (open) => (
       <UploadButton
@@ -214,11 +219,36 @@ function BackgroundAudioPanelContent({
         size={BUTTON_SIZES.SMALL}
         variant={BUTTON_VARIANTS.RECTANGLE}
       >
-        {captionText}
+        {__('Upload audio captions', 'web-stories')}
       </UploadButton>
     ),
-    [captionText]
+    []
   );
+
+  const options = [
+    {
+      label: __('Upload a file', 'web-stories'),
+      value: 'upload',
+      onClick: () => {},
+      mediaPickerProps: {
+        onSelect,
+        onSelectErrorMessage: __(
+          'Please choose a VTT file to use as caption.',
+          'web-stories'
+        ),
+        type: allowedAudioMimeTypes,
+        title: __('Upload an audio file', 'web-stories'),
+        buttonInsertText: __('Select audio file', 'web-stories'),
+      },
+    },
+    enableAudioHotlinking && {
+      label: __('Link to a file', 'web-stories'),
+      value: 'hotlink',
+      onClick: () => {
+        setIsHotlinkDialogOpen(true);
+      },
+    },
+  ].filter(Boolean);
 
   return (
     <>
@@ -235,72 +265,71 @@ function BackgroundAudioPanelContent({
             />
           )}
           {enableAudioHotlinking && (
-            <>
-              <UploadButton
-                variant={BUTTON_VARIANTS.RECTANGLE}
-                type={BUTTON_TYPES.SECONDARY}
-                size={BUTTON_SIZES.SMALL}
-                onClick={() => setIsOpen(true)}
-              >
-                {__('Link to audio file', 'web-stories')}
-              </UploadButton>
-              <HotlinkModal
-                title={__('Insert external background audio', 'web-stories')}
-                isOpen={isOpen}
-                onSelect={onSelectHotlink}
-                onClose={() => setIsOpen(false)}
-                allowedFileTypes={allowedAudioFileTypes}
-                insertText={__('Use audio file', 'web-stories')}
-                insertingText={__('Selecting audio file', 'web-stories')}
-              />
-            </>
+            <UploadButton
+              variant={BUTTON_VARIANTS.RECTANGLE}
+              type={BUTTON_TYPES.SECONDARY}
+              size={BUTTON_SIZES.SMALL}
+              onClick={() => setIsHotlinkDialogOpen(true)}
+            >
+              {__('Link to audio file', 'web-stories')}
+            </UploadButton>
           )}
         </ButtonRow>
       )}
       {resource?.src && (
         <>
-          <Row>
+          <FileRow
+            id={resource.id}
+            src={resource.src}
+            title={resource.src.split('/').pop()}
+            isExternal={!resource.id}
+            options={options}
+            onRemove={() => updateBackgroundAudio(null)}
+            removeItemLabel={__('Remove file', 'web-stories')}
+          >
             <AudioPlayer
-              title={resource?.src.substring(
-                resource?.src.lastIndexOf('/') + 1
-              )}
+              title={resource.src.substring(resource?.src.lastIndexOf('/') + 1)}
               src={audioSrcProxied}
-              mimeType={resource?.mimeType}
+              mimeType={resource.mimeType}
               tracks={tracks}
               audioId={audioId}
               loop={loop}
             />
-            <Tooltip
-              hasTail
-              title={__('Remove file', 'web-stories')}
-              popupZIndexOverride={Z_INDEX_STORY_DETAILS}
-            >
-              <StyledButton
-                aria-label={__('Remove file', 'web-stories')}
-                type={BUTTON_TYPES.TERTIARY}
-                size={BUTTON_SIZES.SMALL}
-                variant={BUTTON_VARIANTS.SQUARE}
-                onClick={() => updateBackgroundAudio(null)}
-              >
-                <Icons.Trash />
-              </StyledButton>
-            </Tooltip>
-          </Row>
+          </FileRow>
           {showCaptions && (
-            <CaptionsPanelContent
-              captionText={captionText}
-              tracks={tracks || []}
-              handleChangeTrack={handleChangeTrack}
-              handleRemoveTrack={handleRemoveTrack}
-              renderUploadButton={renderUploadCaptionButton}
-            />
+            <>
+              <SectionHeading>
+                {__('Caption and Subtitles', 'web-stories')}
+              </SectionHeading>
+              <CaptionsPanelContent
+                captionText={__('Upload a file', 'web-stories')}
+                tracks={tracks || []}
+                handleChangeTrack={handleChangeTrack}
+                handleRemoveTrack={handleRemoveTrack}
+                renderUploadButton={renderUploadCaptionButton}
+              />
+            </>
           )}
           {showLoopControl && resource?.length && (
-            <Row spaceBetween={false}>
-              <LoopPanelContent loop={loop} onChange={onChangeLoop} />
-            </Row>
+            <>
+              <SectionHeading>{__('Options', 'web-stories')}</SectionHeading>
+              <Row spaceBetween={false}>
+                <LoopPanelContent loop={loop} onChange={onChangeLoop} />
+              </Row>
+            </>
           )}
         </>
+      )}
+      {enableAudioHotlinking && (
+        <HotlinkModal
+          title={__('Insert external background audio', 'web-stories')}
+          isOpen={isHotlinkDialogOpen}
+          onSelect={onSelectHotlink}
+          onClose={() => setIsHotlinkDialogOpen(false)}
+          allowedFileTypes={allowedAudioFileTypes}
+          insertText={__('Use audio file', 'web-stories')}
+          insertingText={__('Selecting audio file', 'web-stories')}
+        />
       )}
     </>
   );
