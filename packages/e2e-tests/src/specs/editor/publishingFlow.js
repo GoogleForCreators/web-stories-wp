@@ -137,6 +137,9 @@ describe('Publishing Flow', () => {
     await expect(page).toMatch('Publishing Flow Test');
 
     await expect(getEditedPostContent()).resolves.toMatchSnapshot();
+    await expect(page).not.toMatch(
+      'This block contains unexpected or invalid content.'
+    );
 
     const postPermalink = await publishPost();
 
