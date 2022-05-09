@@ -20,7 +20,6 @@
 import {
   createNewStory,
   addRequestInterception,
-  publishPost,
   insertStoryTitle,
   withPlugin,
   publishStory,
@@ -136,7 +135,9 @@ describe('Publishing Flow', () => {
     await expect(page).toMatchElement('amp-story-player');
     await expect(page).toMatch('Publishing Flow Test');
 
-    await expect(getEditedPostContent()).resolves.toMatchSnapshot();
+    await expect(getEditedPostContent()).resolves.toMatch(
+      '<!-- wp:web-stories/embed'
+    );
     await expect(page).not.toMatch(
       'This block contains unexpected or invalid content.'
     );
@@ -180,11 +181,12 @@ describe('Publishing Flow', () => {
         (element) => element.value
       );
 
-      expect(textEditorContent).toMatchSnapshot();
+      expect(textEditorContent).toMatch('[web_stories_embed');
 
-      await expect(page).toClick('#publish');
       // Disable for https://github.com/googleforcreators/web-stories-wp/issues/6238
       /**
+      await expect(page).toClick('#publish');
+
       const btnTab = '#message a';
       await page.waitForSelector(btnTab);
       const postPermalink = await page.evaluate((selector) => {
