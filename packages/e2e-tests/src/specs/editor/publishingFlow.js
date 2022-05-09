@@ -140,7 +140,8 @@ describe('Publishing Flow', () => {
     await expect(page).not.toMatch(
       'This block contains unexpected or invalid content.'
     );
-
+    // Disable for https://github.com/googleforcreators/web-stories-wp/issues/6238
+    /**
     const postPermalink = await publishPost();
 
     expect(postPermalink).not.toBeNull();
@@ -152,6 +153,7 @@ describe('Publishing Flow', () => {
 
     await expect(page).toMatchElement('amp-story-player');
     await expect(page).toMatch('Publishing Flow Test');
+     */
   });
 
   describe('Classic Editor', () => {
@@ -181,7 +183,8 @@ describe('Publishing Flow', () => {
       expect(textEditorContent).toMatchSnapshot();
 
       await expect(page).toClick('#publish');
-
+      // Disable for https://github.com/googleforcreators/web-stories-wp/issues/6238
+      /**
       const btnTab = '#message a';
       await page.waitForSelector(btnTab);
       const postPermalink = await page.evaluate((selector) => {
@@ -198,6 +201,7 @@ describe('Publishing Flow', () => {
       await page.waitForSelector('amp-story-player');
       await expect(page).toMatchElement('amp-story-player');
       await expect(page).toMatch('Publishing Flow Test');
+       */
     });
   });
 });
