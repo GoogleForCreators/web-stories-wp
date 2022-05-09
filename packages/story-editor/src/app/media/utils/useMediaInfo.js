@@ -106,7 +106,7 @@ function useMediaInfo() {
               acc.fileSize = Number(track.FileSize);
               acc.format = track.Format.toLowerCase().replace('mpeg-4', 'mp4');
               acc.frameRate = Number(Number(track.FrameRate).toFixed(0));
-              acc.codec = track.CodecID.trim();
+              acc.codec = track.CodecID?.trim();
             }
 
             if (track['@type'] === 'Image' || track['@type'] === 'Video') {
