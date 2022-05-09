@@ -17,6 +17,10 @@
 
 namespace Google\Web_Stories\Tests\Integration;
 
+use Google\Web_Stories\Tests\Integration\Vendors\Mock_Vendor;
+use Google\Web_Stories\Tests\Integration\Vendors\Mock_Vendor_Error;
+use Google\Web_Stories\Tests\Integration\Vendors\Mock_Vendor_Invalid;
+
 /**
  * Trait Mock_Vendor_Setup
  */
@@ -43,16 +47,22 @@ trait Mock_Vendor_Setup {
 	 * @return array
 	 */
 	public function add_mock_vendor( $vendors ): array {
-		$vendors['mock'] = [
-			'label' => 'Mock',
-			'class' => Mock_Vendor::class,
+		return [
+			'none'    => [
+				'label' => 'None',
+			],
+			'mock'    => [
+				'label' => 'Mock',
+				'class' => Mock_Vendor::class,
+			],
+			'error'   => [
+				'label' => 'Error',
+				'class' => Mock_Vendor_Error::class,
+			],
+			'invalid' => [
+				'label' => 'invalid',
+				'class' => Mock_Vendor_Invalid::class,
+			],
 		];
-
-		$vendors['error'] = [
-			'label' => 'Error',
-			'class' => Mock_Vendor_Error::class,
-		];
-
-		return $vendors;
 	}
 }

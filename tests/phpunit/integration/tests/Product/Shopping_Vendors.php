@@ -52,6 +52,8 @@ class Shopping_Vendors extends DependencyInjectedTestCase {
 	public function test_get_vendors(): void {
 		$vendors = $this->shopping_vendors->get_vendors();
 		$this->assertArrayHasKey( 'mock', $vendors );
+		$this->assertArrayHasKey( 'error', $vendors );
+		$this->assertArrayHasKey( 'invalid', $vendors );
 	}
 
 	/**
@@ -67,6 +69,14 @@ class Shopping_Vendors extends DependencyInjectedTestCase {
 	 */
 	public function test_get_vendor_class_invalid(): void {
 		$query = $this->shopping_vendors->get_vendor_class( 'invalid' );
+		$this->assertNull( $query );
+	}
+
+	/**
+	 * @covers ::get_vendor_class
+	 */
+	public function test_get_vendor_class_none_exist(): void {
+		$query = $this->shopping_vendors->get_vendor_class( 'not_exists' );
 		$this->assertNull( $query );
 	}
 }

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\Tests\Integration;
+namespace Google\Web_Stories\Tests\Integration\Vendors;
 
 use Google\Web_Stories\Interfaces\Product_Query;
 use Google\Web_Stories\Product\Product;
