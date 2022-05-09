@@ -25,12 +25,23 @@ import {
   withPlugin,
   publishStory,
   getEditedPostContent,
+  uploadFile,
+  clickButton,
+  deleteMedia,
 } from '@web-stories-wp/e2e-test-utils';
 
-// Disable for https://github.com/googleforcreators/web-stories-wp/issues/6238
-// eslint-disable-next-line jest/no-disabled-tests
-describe.skip('Publishing Flow', () => {
+describe('Publishing Flow', () => {
   let stopRequestInterception;
+  let uploadedFiles;
+
+  beforeEach(() => (uploadedFiles = []));
+
+  afterEach(async () => {
+    for (const file of uploadedFiles) {
+      // eslint-disable-next-line no-await-in-loop
+      await deleteMedia(file);
+    }
+  });
 
   beforeAll(async () => {
     await page.setRequestInterception(true);
@@ -51,11 +62,38 @@ describe.skip('Publishing Flow', () => {
     stopRequestInterception();
   });
 
+  async function addPosterImage() {
+    await expect(page).toClick('li[role="tab"]', { text: 'Document' });
+
+    await expect(page).toMatchElement('button[aria-label="Poster image"]');
+
+    await expect(page).toClick('button[aria-label="Poster image"]');
+
+    await page.waitForSelector('.media-modal', {
+      visible: true,
+    });
+
+    await expect(page).toMatch('Select as poster image');
+
+    await expect(page).toClick('.media-modal #menu-item-upload', {
+      text: 'Upload files',
+      visible: true,
+    });
+
+    const filename = await uploadFile('example-4.png');
+    uploadedFiles.push(filename);
+
+    await clickButton('button.media-button-select');
+
+    await page.waitForSelector('[alt="Preview image"]');
+    await expect(page).toMatchElement('[alt="Preview image"]');
+  }
+
   it('should guide me towards creating a new post to embed my story', async () => {
     await createNewStory();
 
     await insertStoryTitle('Publishing Flow Test');
-
+    await addPosterImage();
     await publishStory(false);
 
     // Create new post and embed story.
@@ -120,7 +158,7 @@ describe.skip('Publishing Flow', () => {
       await createNewStory();
 
       await insertStoryTitle('Publishing Flow Test (Shortcode)');
-
+      await addPosterImage();
       await publishStory(false);
 
       // Create new post and embed story.
