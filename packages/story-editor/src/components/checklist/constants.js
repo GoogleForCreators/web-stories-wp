@@ -316,6 +316,18 @@ export const DESIGN_COPY = {
     ),
     footer: __('Shorter videos help readers navigate stories', 'web-stories'),
   },
+  firstPageAnimation: {
+    title: __('First Page Animations', 'web-stories'),
+    // @todo: get proper wording for checklist footer #11320
+    footer: __(
+      'Animations on the first page of a story are not supported for user experience and performance reasons.',
+      'web-stories'
+    ),
+    animationPanel: __(
+      'Animations on the first page of a story are not supported for user experience and performance reasons.',
+      'web-stories'
+    ),
+  },
 };
 
 export const PRIORITY_COPY = {

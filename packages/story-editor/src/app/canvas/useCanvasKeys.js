@@ -46,6 +46,7 @@ function useCanvasKeys(ref) {
     updateSelectedElements,
     setSelectedElementsById,
     currentPage,
+    currentPageNumber,
     animationState,
     updateAnimationState,
   } = useStory(
@@ -54,6 +55,7 @@ function useCanvasKeys(ref) {
         selectedElementIds,
         selectedElements,
         currentPage,
+        currentPageNumber,
         animationState,
       },
       actions: {
@@ -67,6 +69,7 @@ function useCanvasKeys(ref) {
     }) => {
       return {
         currentPage,
+        currentPageNumber,
         selectedElementIds,
         selectedElements,
         arrangeSelection,
@@ -233,7 +236,9 @@ function useCanvasKeys(ref) {
     { key: ['mod+k'] },
     (evt) => {
       evt.preventDefault();
-
+      if (currentPageNumber === 1) {
+        return;
+      }
       updateAnimationState({
         animationState: isPlaying
           ? STORY_ANIMATION_STATE.RESET
@@ -244,7 +249,7 @@ function useCanvasKeys(ref) {
         status: isPlaying ? 'stop' : 'play',
       });
     },
-    [isPlaying, updateAnimationState]
+    [isPlaying, updateAnimationState, currentPageNumber]
   );
 }
 

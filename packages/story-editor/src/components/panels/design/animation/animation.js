@@ -45,6 +45,9 @@ import { progress } from '@googleforcreators/units';
  * Internal dependencies
  */
 import StoryPropTypes, { AnimationPropType } from '../../../../types';
+import { useStory } from '../../../../app';
+import { DESIGN_COPY } from '../../../checklist';
+import Warning from '../warning';
 import { Row } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { states, styles, useHighlights } from '../../../../app/highlights';
@@ -78,6 +81,9 @@ function AnimationPanel({
   pushUpdateForObject,
   updateAnimationState,
 }) {
+  const isFirstPage = useStory(
+    ({ state: { currentPageNumber } }) => currentPageNumber === 1
+  );
   const playUpdatedAnimation = useRef(false);
 
   const { highlight, resetHighlight } = useHighlights((state) => ({
@@ -251,6 +257,7 @@ function AnimationPanel({
             direction={getEffectDirection(updatedAnimations[0])}
             selectedEffectType={updatedAnimations[0]?.type}
             selectButtonStylesOverride={highlight?.focus && styles.OUTLINE}
+            disabled={isFirstPage}
           />
         </StyledRow>
         {updatedAnimations[0] && (
@@ -258,9 +265,13 @@ function AnimationPanel({
             animation={updatedAnimations[0]}
             onChange={handlePanelChange}
             disabledTypeOptionsMap={disabledTypeOptionsMap}
+            disabled={isFirstPage}
           />
         )}
       </GroupWrapper>
+      {isFirstPage && (
+        <Warning message={DESIGN_COPY.firstPageAnimation.animationPanel} />
+      )}
     </SimplePanel>
   );
 }

@@ -19,14 +19,13 @@
  */
 import { useFeature } from 'flagged';
 import styled from 'styled-components';
-import { useCallback, useEffect, useState } from '@googleforcreators/react';
+import { useCallback, useState } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import {
   Button,
   BUTTON_VARIANTS,
   BUTTON_TYPES,
   BUTTON_SIZES,
-  Datalist,
   Text,
   THEME_CONSTANTS,
 } from '@googleforcreators/design-system';
@@ -34,11 +33,11 @@ import {
 /**
  * Internal dependencies
  */
-import { useStory, useAPI } from '../../../../app';
 import { Row } from '../../../form';
 import useLibrary from '../../useLibrary';
 import { Pane } from '../shared';
 import paneId from './paneId';
+import ProductDropdown from './productDropdown';
 
 const HelperText = styled(Text).attrs({
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
@@ -48,51 +47,7 @@ const HelperText = styled(Text).attrs({
 
 function ShoppingPane(props) {
   const isEnabled = useFeature('shoppingIntegration');
-  const {
-    actions: { getProducts },
-  } = useAPI();
-  const isSaving = useStory(
-    ({
-      state: {
-        meta: { isSaving },
-      },
-    }) => isSaving
-  );
-
   const [product, setProduct] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [initialOptions, setInitialOptions] = useState([]);
-
-  useEffect(() => {
-    (async () => {
-      setIsLoading(true);
-      const products = await getProducts();
-      setInitialOptions(
-        products.map((p) => ({
-          name: p.productTitle,
-          id: p.productId,
-          product: p,
-        }))
-      );
-      setIsLoading(false);
-    })();
-  }, [getProducts]);
-
-  const onChange = ({ product: newProduct }) => {
-    setProduct(newProduct);
-  };
-
-  const getProductsByQuery = useCallback(
-    async (value) => {
-      const products = await getProducts(value);
-      return products.map((p) => ({
-        name: p.productTitle,
-        id: p.productId,
-        product: p,
-      }));
-    },
-    [getProducts]
-  );
 
   const { insertElement } = useLibrary((state) => ({
     insertElement: state.actions.insertElement,
@@ -111,19 +66,6 @@ function ShoppingPane(props) {
     return null;
   }
 
-  const dropDownParams = {
-    hasSearch: true,
-    lightMode: true,
-    onChange,
-    getOptionsByQuery: getProductsByQuery,
-    selectedId: product?.productId,
-    dropDownLabel: __('Product', 'web-stories'),
-    placeholder: isLoading ? __('Loading…', 'web-stories') : '',
-    disabled: isLoading ? true : isSaving,
-    primaryOptions: isLoading ? [] : initialOptions,
-    zIndex: 10,
-  };
-
   return (
     <Pane id={paneId} {...props}>
       <Row>
@@ -135,12 +77,7 @@ function ShoppingPane(props) {
         </HelperText>
       </Row>
       <Row>
-        <Datalist.DropDown
-          options={initialOptions}
-          searchResultsLabel={__('Search results', 'web-stories')}
-          aria-label={__('Product', 'web-stories')}
-          {...dropDownParams}
-        />
+        <ProductDropdown product={product} setProduct={setProduct} />
       </Row>
       <Button
         variant={BUTTON_VARIANTS.RECTANGLE}
