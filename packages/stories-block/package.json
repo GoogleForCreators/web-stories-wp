@@ -41,7 +41,7 @@
     "@wordpress/date": "^4.2.2",
     "@wordpress/element": "^4.0.0",
     "@wordpress/i18n": "^4.3.0",
-    "@wordpress/icons": "^8.3.0",
+    "@wordpress/icons": "^8.4.0",
     "@wordpress/url": "^3.2.1",
     "@wordpress/viewport": "^4.5.0",
     "classnames": "^2.3.1",
