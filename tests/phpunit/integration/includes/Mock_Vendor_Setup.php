@@ -48,6 +48,11 @@ trait Mock_Vendor_Setup {
 			'class' => Mock_Vendor::class,
 		];
 
+		$vendors['error'] = [
+			'label' => 'Error',
+			'class' => Mock_Vendor_Error::class,
+		];
+
 		return $vendors;
 	}
 }

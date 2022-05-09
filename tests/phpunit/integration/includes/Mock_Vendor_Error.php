@@ -24,7 +24,7 @@ use WP_Error;
 /**
  *
  */
-class Mock_Vendor implements Product_Query {
+class Mock_Vendor_Error implements Product_Query {
 
 	/**
 	 * Get products by search term.
@@ -35,22 +35,6 @@ class Mock_Vendor implements Product_Query {
 	 * @return Product[]|WP_Error
 	 */
 	public function get_search( string $search_term ) {
-		$products = [];
-		for ( $x = 0; $x < 10; $x ++ ) {
-			$products[] = new Product(
-				[
-					'id'             => wp_unique_id(),
-					'title'          => 'Product ' . $x,
-					'brand'          => 'Google',
-					'price'          => 1.00 * $x,
-					'price_currency' => 'USD',
-					'images'         => [],
-					'details'        => 'Description',
-					'url'            => 'http://www.google.com/product/' . $x,
-				]
-			);
-		}
-
-		return $products;
+		return new WP_Error( 'mock_error', 'Mock error', [ 'status' => 400 ] );
 	}
 }

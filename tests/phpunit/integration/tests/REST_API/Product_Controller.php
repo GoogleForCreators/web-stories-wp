@@ -162,14 +162,31 @@ class Products_Controller extends DependencyInjectedRestTestCase {
 	 */
 	public function test_return_error(): void {
 		$this->controller->register();
-
+		update_option( Settings::SETTING_NAME_SHOPPING_PROVIDER, 'error' );
 		wp_set_current_user( self::$editor );
 		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/products' );
-		$request->set_param( 'search', 'error' );
+		$request->set_param( 'search', 'test' );
 		$response = rest_get_server()->dispatch( $request );
 
 
 		$this->assertErrorResponse( 'mock_error', $response, 400 );
+
+	}
+
+	/**
+	 * @covers ::get_items_permissions_check
+	 * @covers ::get_items
+	 */
+	public function test_return_none(): void {
+		$this->controller->register();
+		update_option( Settings::SETTING_NAME_SHOPPING_PROVIDER, 'none' );
+		wp_set_current_user( self::$editor );
+		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/products' );
+		$request->set_param( 'search', 'test' );
+		$response = rest_get_server()->dispatch( $request );
+
+
+		$this->assertErrorResponse( 'unable_to_find_class', $response, 400 );
 
 	}
 
