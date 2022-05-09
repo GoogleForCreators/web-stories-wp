@@ -58,6 +58,7 @@ jest.mock('../../useMediaInfo', () => ({
   __esModule: true,
   default: jest.fn(() => ({
     getFileInfo: jest.fn(() => null),
+    isConsideredOptimized: jest.fn(() => false),
   })),
 }));
 
@@ -301,11 +302,11 @@ describe('useMediaUploadQueue', () => {
       })
     );
 
+    await waitFor(() => expect(result.current.state.isTrimming).toBeTrue());
+
     const {
       resource: { id: resourceId },
     } = result.current.state.progress[0];
-
-    await waitFor(() => expect(result.current.state.isTrimming).toBeTrue());
 
     expect(
       result.current.state.isCurrentResourceProcessing(resourceId)
