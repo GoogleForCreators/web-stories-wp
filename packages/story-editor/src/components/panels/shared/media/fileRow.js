@@ -132,13 +132,7 @@ function FileRow({
             : __('Local file', 'web-stories')
         }
       >
-        {isExternal ? (
-          <Link href={src} rel="noreferrer" target="_blank">
-            <LinkIcon />
-          </Link>
-        ) : (
-          <UploadIcon />
-        )}
+        {isExternal ? <LinkIcon /> : <UploadIcon />}
       </Tooltip>
       <InputRow>
         <FileName>
