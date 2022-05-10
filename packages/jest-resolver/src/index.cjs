@@ -37,8 +37,8 @@ module.exports = (request, options) => {
       ...options,
       packageFilter: (pkg) => {
         if ('uuid' === pkg.name) {
-          delete pkg['exports'];
-          delete pkg['module'];
+          delete pkg.exports;
+          delete pkg.module;
         }
 
         return pkg;
@@ -55,11 +55,10 @@ module.exports = (request, options) => {
     ...options,
     packageFilter: (pkg) => {
       if (isLocalRepo(pkg.name)) {
-        return {
-          ...pkg,
-          // Alter the value of `main` before resolving the package
-          main: pkg.source || pkg.module || pkg.main,
-        };
+        delete pkg.exports;
+
+        // Alter the value of `main` before resolving the package
+        pkg.main = pkg.source || pkg.module || pkg.main;
       }
 
       return pkg;
