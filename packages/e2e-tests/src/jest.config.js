@@ -29,24 +29,24 @@ process.env.WP_PASSWORD = WP_PASSWORD;
 process.env.WP_BASE_URL = WP_BASE_URL;
 
 export default {
+  rootDir: '../../../',
   resolver: '@web-stories-wp/jest-resolver',
   preset: 'jest-puppeteer',
-  transform: {
-    '^.+\\.[jt]sx?$': 'babel-jest',
-  },
   testMatch: ['**/specs/**/*.[jt]s', '**/?(*.)spec.[jt]s'],
   testPathIgnorePatterns: [
     '<rootDir>/.git',
-    '<rootDir>/node_modules',
     '<rootDir>/build',
+    '<rootDir>/node_modules',
+    '<rootDir>/vendor',
   ],
   transformIgnorePatterns: ['node_modules'],
   setupFilesAfterEnv: [
     'jest-extended/all',
-    '<rootDir>/config/bootstrap.js',
+    '<rootDir>/packages/e2e-tests/src/config/bootstrap.js',
     '@wordpress/jest-puppeteer-axe',
     '@wordpress/jest-console',
     'expect-puppeteer',
   ],
+  modulePathIgnorePatterns: ['<rootDir>/build', '<rootDir>/vendor'],
   reporters: [['jest-silent-reporter', { useDots: true, showWarnings: true }]],
 };
