@@ -46,6 +46,21 @@ module.exports = (request, options) => {
     });
   }
 
+  // Similar workaround for react-colorful, which is used by @wordpress/components.
+  if ('react-colorful' === request) {
+    return options.defaultResolver(request, {
+      ...options,
+      packageFilter: (pkg) => {
+        if ('react-colorful' === pkg.name) {
+          delete pkg.exports;
+          delete pkg.module;
+        }
+
+        return pkg;
+      },
+    });
+  }
+
   if (!isLocalRepo(request)) {
     return options.defaultResolver(request, options);
   }
