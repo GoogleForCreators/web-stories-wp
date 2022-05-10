@@ -35,11 +35,6 @@ export default {
     '^.+\\.[jt]sx?$': 'babel-jest',
   },
   testMatch: ['**/specs/**/*.[jt]s', '**/?(*.)spec.[jt]s'],
-  // @jest/test-sequencer is the default.
-  testSequencer:
-    'true' === process.env.CI
-      ? '@web-stories-wp/jest-parallel-sequencer'
-      : undefined,
   testPathIgnorePatterns: [
     '<rootDir>/.git',
     '<rootDir>/node_modules',
