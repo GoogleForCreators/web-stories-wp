@@ -19,7 +19,6 @@
  */
 import {
   createNewStory,
-  addRequestInterception,
   insertStoryTitle,
   withPlugin,
   publishStory,
@@ -27,6 +26,7 @@ import {
   uploadFile,
   clickButton,
   deleteMedia,
+  publishPost,
 } from '@web-stories-wp/e2e-test-utils';
 /**
  * Internal dependencies
@@ -34,7 +34,6 @@ import {
 import { addAllowedErrorMessage } from '../../config/bootstrap.js';
 
 describe('Publishing Flow', () => {
-  let stopRequestInterception;
   let uploadedFiles;
   let removeCORSErrorMessage;
   let removeResourceErrorMessage;
@@ -48,34 +47,19 @@ describe('Publishing Flow', () => {
     }
   });
 
-  beforeAll(async () => {
-    await page.setRequestInterception(true);
-    stopRequestInterception = addRequestInterception((request) => {
-      if (request.url().startsWith('https://cdn.ampproject.org/')) {
-        request.respond({
-          status: 200,
-          body: '',
-        });
-      } else {
-        request.continue();
-      }
-    });
-    // Ignore CORS error, this is present in the test by design.
+  beforeAll(() => {
+    // Ignore CORS errors related to the AMP validator JS.
     removeCORSErrorMessage = addAllowedErrorMessage(
       'has been blocked by CORS policy'
     );
-    // Ignore resource failing to load. This is only present because of the CORS error.
     removeResourceErrorMessage = addAllowedErrorMessage(
       'Failed to load resource'
     );
   });
 
-  afterAll(async () => {
+  afterAll(() => {
     removeCORSErrorMessage();
     removeResourceErrorMessage();
-
-    await page.setRequestInterception(false);
-    stopRequestInterception();
   });
 
   async function addPosterImage() {
@@ -113,8 +97,10 @@ describe('Publishing Flow', () => {
     await publishStory(false);
 
     // Create new post and embed story.
-    await expect(page).toClick('a', { text: 'Add to new post' });
-    await page.waitForNavigation();
+    await Promise.all([
+      expect(page).toClick('a', { text: 'Add to new post' }),
+      page.waitForNavigation(),
+    ]);
 
     // See https://github.com/WordPress/gutenberg/blob/c31555d4cec541db929ee5f63b900c6577513272/packages/e2e-test-utils/src/create-new-post.js#L37-L63.
     await page.waitForSelector('.edit-post-layout');
@@ -148,18 +134,18 @@ describe('Publishing Flow', () => {
       await page.waitForSelector('body:not(.is-fullscreen-mode)');
     }
 
-    await page.waitForSelector('amp-story-player');
-    await expect(page).toMatchElement('amp-story-player');
-    await expect(page).toMatch('Publishing Flow Test');
-
     await expect(getEditedPostContent()).resolves.toMatch(
       '<!-- wp:web-stories/embed'
     );
     await expect(page).not.toMatch(
       'This block contains unexpected or invalid content.'
     );
-    // Disable for https://github.com/googleforcreators/web-stories-wp/issues/6238
-    /**
+
+    await page.waitForSelector('amp-story-player');
+
+    await expect(page).toMatchElement('amp-story-player');
+    await expect(page).toMatch('Publishing Flow Test');
+
     const postPermalink = await publishPost();
 
     expect(postPermalink).not.toBeNull();
@@ -171,7 +157,6 @@ describe('Publishing Flow', () => {
 
     await expect(page).toMatchElement('amp-story-player');
     await expect(page).toMatch('Publishing Flow Test');
-     */
   });
 
   describe('Classic Editor', () => {
@@ -200,8 +185,6 @@ describe('Publishing Flow', () => {
 
       expect(textEditorContent).toMatch('[web_stories_embed');
 
-      // Disable for https://github.com/googleforcreators/web-stories-wp/issues/6238
-      /**
       await expect(page).toClick('#publish');
 
       const btnTab = '#message a';
@@ -220,7 +203,6 @@ describe('Publishing Flow', () => {
       await page.waitForSelector('amp-story-player');
       await expect(page).toMatchElement('amp-story-player');
       await expect(page).toMatch('Publishing Flow Test');
-       */
     });
   });
 });
