@@ -25,7 +25,11 @@ import { trackClick } from '@googleforcreators/tracking';
  * Internal dependencies
  */
 import { useStory } from '../../../app';
-import { ChecklistCard, DefaultFooterText } from '../../checklistCard';
+import {
+  ChecklistCard,
+  DefaultFooterText,
+  DefaultCtaButton,
+} from '../../checklistCard';
 import { DESIGN_COPY } from '../constants';
 import { useRegisterCheck } from '../countContext';
 import { useIsChecklistMounted } from '../popupMountedContext';
@@ -36,9 +40,13 @@ export function firstPageAnimation(animations) {
 
 const FirstPageAnimation = () => {
   const isChecklistMounted = useIsChecklistMounted();
-  const isRendered = useStory(({ state: { pages } }) =>
-    firstPageAnimation(pages[0]?.animations)
+  const { updatePageProperties, firstPage } = useStory(
+    ({ actions: { updatePageProperties }, state: { pages } }) => ({
+      updatePageProperties,
+      firstPage: pages?.at(0),
+    })
   );
+  const isRendered = firstPageAnimation(firstPage?.animations);
 
   const onClick = useCallback((evt) => {
     trackClick(evt, 'click_checklist_cover_animations');
@@ -50,16 +58,31 @@ const FirstPageAnimation = () => {
   return isRendered && isChecklistMounted ? (
     <ChecklistCard
       title={title}
+      cta={
+        <DefaultCtaButton
+          aria-label={'Remove Animations'}
+          onClick={() =>
+            updatePageProperties({
+              pageId: firstPage?.id,
+              properties: { animations: [] },
+            })
+          }
+        >
+          {'Remove Animations'}
+        </DefaultCtaButton>
+      }
       footer={
         <>
           <DefaultFooterText>{footer}</DefaultFooterText>
-          <Link
-            onClick={onClick}
-            href="https://wp.stories.google/docs/how-to/animations/"
-            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-          >
-            {'Learn more'}
-          </Link>
+          <DefaultFooterText as="span">
+            <Link
+              onClick={onClick}
+              href="https://wp.stories.google/docs/how-to/animations/"
+              size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
+            >
+              {'Learn more'}
+            </Link>
+          </DefaultFooterText>
         </>
       }
     />
