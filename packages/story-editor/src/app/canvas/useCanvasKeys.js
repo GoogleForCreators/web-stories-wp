@@ -204,10 +204,10 @@ function useCanvasKeys(ref) {
         return;
       }
 
-      const { type, id } = selectedElements[0];
-      const { hasEditMode } = getDefinitionForType(type);
+      const { type, id, isLocked } = selectedElements[0];
+      const { hasEditMode, hasEditModeIfLocked } = getDefinitionForType(type);
       // Only handle Enter key for editable elements
-      if (!hasEditMode) {
+      if (!hasEditMode || (!hasEditModeIfLocked && isLocked)) {
         return;
       }
 
