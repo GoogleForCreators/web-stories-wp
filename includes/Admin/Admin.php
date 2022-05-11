@@ -137,8 +137,8 @@ class Admin extends Service_Base {
 			return $content;
 		}
 
-		if( ! $story->get_title() ){
-			$story->set_title( __('Web Story', 'web-stories') );
+		if ( ! $story->get_title() ) {
+			$story->set_title( __( 'Web Story', 'web-stories' ) );
 		}
 
 		$args = [
