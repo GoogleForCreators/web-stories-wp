@@ -64,4 +64,35 @@ describe('Canvas Keyboard Shortcuts', () => {
     await fixture.events.keyboard.shortcut('mod+a');
     expect(await getSelection()).toEqual([...elementIds]);
   });
+
+  it('should focus on the design panel link input when pressing mod+k shortcut', async () => {
+    const TEST_URL = 'https://test.com';
+
+    // select any or all elements on the page
+    await fixture.events.focus(fixture.editor.canvas.framesLayer.fullbleed);
+    await fixture.events.keyboard.shortcut('mod+a');
+
+    // press mod+k
+    await fixture.events.keyboard.shortcut('mod+k');
+
+    // expect to focus on design panel link input
+    expect(fixture.editor.sidebar.designPanel.link).not.toBeNull();
+
+    expect(document.activeElement).toEqual(
+      fixture.editor.sidebar.designPanel.link.address
+    );
+
+    // add url to the selectedElements
+    await fixture.events.keyboard.type(TEST_URL);
+    await fixture.events.keyboard.press('Enter');
+
+    // check the all the elements selected have to url
+    const { selectedElements } = await fixture.renderHook(() =>
+      useStory(({ state: selectedElements }) => selectedElements)
+    );
+
+    for (const element of selectedElements) {
+      expect(element.link.url).toBe(TEST_URL);
+    }
+  });
 });
