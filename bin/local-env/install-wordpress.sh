@@ -217,7 +217,6 @@ wp post meta add $WEBM_VIDEO_ID web_stories_poster_id $WEBM_VIDEO_POSTER_ID --qu
 wp media import /var/www/html/wp-content/e2e-assets/example-1.jpg --quiet
 wp media import /var/www/html/wp-content/e2e-assets/example-2.jpg --quiet
 wp media import /var/www/html/wp-content/e2e-assets/example-3.png --quiet
-wp media import /var/www/html/wp-content/e2e-assets/example-4.png --quiet
 
 # Ensures that the patch command below always works.
 wp option update web_stories_experiments '{}' --format=json

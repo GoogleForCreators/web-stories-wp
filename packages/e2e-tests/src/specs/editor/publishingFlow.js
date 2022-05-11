@@ -76,7 +76,7 @@ describe('Publishing Flow', () => {
     await expect(page).toMatch('Select as poster image');
 
     await expect(page).toClick(
-      '.attachments-browser .attachments .attachment[aria-label="example-4"]'
+      '.attachments-browser .attachments .attachment[aria-label="example-3"]'
     );
 
     await clickButton('button.media-button-select');
