@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\Tests\Integration\Vendors;
+namespace Google\Web_Stories\Tests\Integration\Shopping;
 
 use Google\Web_Stories\Product\Product;
 use WP_Error;

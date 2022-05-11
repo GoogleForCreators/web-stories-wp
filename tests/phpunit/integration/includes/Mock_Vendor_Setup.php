@@ -17,9 +17,9 @@
 
 namespace Google\Web_Stories\Tests\Integration;
 
-use Google\Web_Stories\Tests\Integration\Vendors\Mock_Vendor;
-use Google\Web_Stories\Tests\Integration\Vendors\Mock_Vendor_Error;
-use Google\Web_Stories\Tests\Integration\Vendors\Mock_Vendor_Invalid;
+use Google\Web_Stories\Tests\Integration\Shopping\Mock_Vendor;
+use Google\Web_Stories\Tests\Integration\Shopping\Mock_Vendor_Error;
+use Google\Web_Stories\Tests\Integration\Shopping\Mock_Vendor_Invalid;
 
 /**
  * Trait Mock_Vendor_Setup
