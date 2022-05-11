@@ -63,16 +63,13 @@ function setSelectedElements(state, { elementIds }) {
     }
   }
 
-  // If it's a multi-selection, filter out the background element and video placeholders.
+  // If it's a multi-selection, filter out the background element, locked elements,
+  // and video placeholders.
   const currentPage = state.pages.find(({ id }) => id === state.current);
+  const byId = (id) => currentPage.elements.find(({ id: i }) => i === id);
   const isNotBackgroundElement = (id) => currentPage.elements[0].id !== id;
-  const isNotLockedElement = (id) =>
-    !currentPage.elements.find(({ id: i }) => i === id).isLocked;
-  const isNotVideoPlaceholder = (id) => {
-    const element = currentPage.elements.find((element) => element.id === id);
-    const isVideoPlaceholder = element?.resource?.isPlaceholder;
-    return !isVideoPlaceholder;
-  };
+  const isNotLockedElement = (id) => !byId(id).isLocked;
+  const isNotVideoPlaceholder = (id) => !byId(id).resource?.isPlaceholder;
   const newSelection =
     uniqueElementIds.length > 1
       ? uniqueElementIds.filter(
