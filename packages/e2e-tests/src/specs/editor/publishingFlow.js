@@ -23,7 +23,7 @@ import {
   withPlugin,
   publishStory,
   getEditedPostContent,
-  uploadFile,
+  loadPostEditor,
   clickButton,
   deleteMedia,
   publishPost,
@@ -85,7 +85,7 @@ describe('Publishing Flow', () => {
     await expect(page).toMatchElement('[alt="Preview image"]');
   }
 
-  it('should guide me towards creating a new post to embed my story', async () => {
+  it('should guide me towards creating a new post to embed my story with poster', async () => {
     await createNewStory();
 
     await insertStoryTitle('Publishing Flow Test');
@@ -98,37 +98,7 @@ describe('Publishing Flow', () => {
       page.waitForNavigation(),
     ]);
 
-    // See https://github.com/WordPress/gutenberg/blob/c31555d4cec541db929ee5f63b900c6577513272/packages/e2e-test-utils/src/create-new-post.js#L37-L63.
-    await page.waitForSelector('.edit-post-layout');
-
-    // Disable Gutenberg's Welcome Guide if existing.
-    const isWelcomeGuideActive = await page.evaluate(() =>
-      wp.data.select('core/edit-post').isFeatureActive('welcomeGuide')
-    );
-
-    // eslint-disable-next-line jest/no-conditional-in-test
-    if (isWelcomeGuideActive) {
-      await page.evaluate(() =>
-        wp.data.dispatch('core/edit-post').toggleFeature('welcomeGuide')
-      );
-
-      await page.reload();
-      await page.waitForSelector('.edit-post-layout');
-    }
-
-    // Disable Gutenberg's full screen mode.
-    const isFullscreenMode = await page.evaluate(() =>
-      wp.data.select('core/edit-post').isFeatureActive('fullscreenMode')
-    );
-
-    // eslint-disable-next-line jest/no-conditional-in-test
-    if (isFullscreenMode) {
-      await page.evaluate(() =>
-        wp.data.dispatch('core/edit-post').toggleFeature('fullscreenMode')
-      );
-
-      await page.waitForSelector('body:not(.is-fullscreen-mode)');
-    }
+    await loadPostEditor();
 
     await expect(getEditedPostContent()).resolves.toMatch(
       '<!-- wp:web-stories/embed'
@@ -153,6 +123,28 @@ describe('Publishing Flow', () => {
 
     await expect(page).toMatchElement('amp-story-player');
     await expect(page).toMatch('Publishing Flow Test');
+  });
+
+  it('should guide me towards creating a new post to embed my story without poster', async () => {
+    await createNewStory();
+
+    await insertStoryTitle('Publishing Flow Test');
+    await publishStory(false);
+
+    // Create new post and embed story.
+    await Promise.all([
+      expect(page).toClick('a', { text: 'Add to new post' }),
+      page.waitForNavigation(),
+    ]);
+
+    await loadPostEditor();
+
+    await expect(getEditedPostContent()).resolves.toMatch(
+      '<!-- wp:web-stories/embed'
+    );
+    await expect(page).not.toMatch(
+      'This block contains unexpected or invalid content.'
+    );
   });
 
   describe('Classic Editor', () => {
