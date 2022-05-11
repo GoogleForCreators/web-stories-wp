@@ -75,13 +75,9 @@ describe('Publishing Flow', () => {
 
     await expect(page).toMatch('Select as poster image');
 
-    await expect(page).toClick('.media-modal #menu-item-upload', {
-      text: 'Upload files',
-      visible: true,
-    });
-
-    const filename = await uploadFile('example-4.png');
-    uploadedFiles.push(filename);
+    await expect(page).toClick(
+      '.attachments-browser .attachments .attachment[aria-label="example-4"]'
+    );
 
     await clickButton('button.media-button-select');
 
