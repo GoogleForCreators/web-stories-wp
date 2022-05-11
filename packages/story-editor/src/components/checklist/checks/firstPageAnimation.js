@@ -41,26 +41,25 @@ export function firstPageAnimation(animations) {
 const FirstPageAnimation = () => {
   const isChecklistMounted = useIsChecklistMounted();
 
-  const { updatePageProperties, page, id, animations } = useStory(
+  const { updatePageProperties, pageId, pageAnimations } = useStory(
     ({ actions: { updatePageProperties }, state: { pages } }) => {
       const page = pages?.at(0);
       return {
         updatePageProperties,
-        page,
-        id: page?.id,
-        animations: page?.animations,
+        pageId: page?.id,
+        pageAnimations: page?.animations,
       };
     }
   );
 
   const removeAnimations = useCallback(() => {
     updatePageProperties({
-      pageId: id,
+      pageId,
       properties: { animations: [] },
     });
   }, [id]);
 
-  const isRendered = firstPageAnimation(animations);
+  const isRendered = firstPageAnimation(pageAnimations);
 
   const onClick = useCallback((evt) => {
     trackClick(evt, 'click_checklist_cover_animations');
