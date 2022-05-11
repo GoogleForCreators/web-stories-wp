@@ -27,6 +27,11 @@ export default {
     shoppingProvider: SHOPPING_PROVIDER_TYPE.NONE,
     shopifyHost: 'yourstore.myshopify.com',
     shopifyAccessToken: '',
+    vendors: {
+      none: 'None',
+      shopify: 'Shopify',
+      woocommerce: 'WooCommerce',
+    },
   },
   argTypes: {
     updateSettings: {
