@@ -229,6 +229,17 @@ class Story {
 	}
 
 	/**
+	 * Setter for title.
+	 *
+	 * @since 1.21.0
+	 *
+	 * @param string $title Title.
+	 */
+	public function set_title( string $title ): void {
+		$this->title = $title;
+	}
+
+	/**
 	 * Getter for poster source set sizes.
 	 *
 	 * @since 1.18.0
