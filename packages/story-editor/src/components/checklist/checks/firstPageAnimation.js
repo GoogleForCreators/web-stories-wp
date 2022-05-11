@@ -40,13 +40,27 @@ export function firstPageAnimation(animations) {
 
 const FirstPageAnimation = () => {
   const isChecklistMounted = useIsChecklistMounted();
-  const { updatePageProperties, firstPage } = useStory(
-    ({ actions: { updatePageProperties }, state: { pages } }) => ({
-      updatePageProperties,
-      firstPage: pages?.at(0),
-    })
+
+  const { updatePageProperties, page, id, animations } = useStory(
+    ({ actions: { updatePageProperties }, state: { pages } }) => {
+      const page = pages?.at(0);
+      return {
+        updatePageProperties,
+        page,
+        id: page?.id,
+        animations: page?.animations,
+      };
+    }
   );
-  const isRendered = firstPageAnimation(firstPage?.animations);
+
+  const removeAnimations = useCallback(() => {
+    updatePageProperties({
+      pageId: id,
+      properties: { animations: [] },
+    });
+  }, [id]);
+
+  const isRendered = firstPageAnimation(animations);
 
   const onClick = useCallback((evt) => {
     trackClick(evt, 'click_checklist_cover_animations');
@@ -61,12 +75,7 @@ const FirstPageAnimation = () => {
       cta={
         <DefaultCtaButton
           aria-label={'Remove Animations'}
-          onClick={() =>
-            updatePageProperties({
-              pageId: firstPage?.id,
-              properties: { animations: [] },
-            })
-          }
+          onClick={removeAnimations}
         >
           {'Remove Animations'}
         </DefaultCtaButton>
