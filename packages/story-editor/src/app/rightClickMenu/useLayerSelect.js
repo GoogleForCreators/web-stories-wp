@@ -136,15 +136,17 @@ function useLayerSelect({ menuItemProps, menuPosition, isMenuOpen }) {
     }
     return intersectingElements.map((element) => {
       const { id, isBackground, type } = element;
-      const { LayerContent } = getDefinitionForType(type);
+      const { getLayerText } = getDefinitionForType(type);
       return {
         key: id,
         supportsIcon: true,
         icon: selectedElements[0].id === id ? <Icons.CheckmarkSmall /> : null,
-        label: isBackground ? (
-          <span>{__('Background', 'web-stories')}</span>
-        ) : (
-          <LayerContent element={element} />
+        label: (
+          <span>
+            {isBackground
+              ? __('Background', 'web-stories')
+              : getLayerText(element)}
+          </span>
         ),
         onClick: () => {
           setSelectedElementsById({ elementIds: [id] });
