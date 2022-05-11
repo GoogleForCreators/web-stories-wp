@@ -99,7 +99,7 @@ describe('firstPageAnimation', function () {
     );
   }
 
-  fit('should see First Page Animation text in checklist design panel', async function () {
+  it('should see First Page Animation text in checklist design panel', async function () {
     await openCheckList();
     // open the Design tab
     await fixture.events.click(fixture.editor.checklist.designTab);
@@ -111,7 +111,7 @@ describe('firstPageAnimation', function () {
     expect(seeFirstPageAnimationText).toBeDefined();
   });
 
-  fit('should remove all first page animations when "Remove Animations" button is clicked', async () => {
+  it('should remove all first page animations when "Remove Animations" button is clicked', async () => {
     // check for first page animations
     let page = await getCurrentPage();
     expect(page.animations.length).toBe(1);

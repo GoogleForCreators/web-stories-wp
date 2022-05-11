@@ -57,7 +57,7 @@ const FirstPageAnimation = () => {
       pageId,
       properties: { animations: [] },
     });
-  }, [id]);
+  }, [pageId]);
 
   const isRendered = firstPageAnimation(pageAnimations);
 
