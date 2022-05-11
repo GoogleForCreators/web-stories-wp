@@ -33,6 +33,9 @@ export function LayerText({ children }) {
     <StyledText
       forwardedAs="span"
       size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+      contentEditable="true"
+      suppressContentEditableWarning={true}
+      role="textbox"
     >
       {children}
     </StyledText>

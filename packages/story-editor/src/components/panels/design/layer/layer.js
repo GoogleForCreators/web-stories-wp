@@ -322,7 +322,29 @@ function Layer({ element }) {
             {element.isBackground ? (
               <LayerText>{__('Background', 'web-stories')}</LayerText>
             ) : (
-              <LayerContent element={element} />
+              element.layerTitle ? (
+                <div
+                  onInput={(evt) => {
+                    updateElementById({
+                      elementId: element.id,
+                      properties: { layerTitle: evt.currentTarget.textContent },
+                    })
+                  }}
+                >
+                  <LayerText>{element.layerTitle}</LayerText>
+                </div>
+              ) : (
+                <div
+                  onInput={(evt) => {
+                    updateElementById({
+                      elementId: element.id,
+                      properties: { layerTitle: evt.currentTarget.textContent },
+                    })
+                  }}
+                >
+                  <LayerContent element={element} />
+                </div>
+              )
             )}
           </LayerContentContainer>
           {element.isBackground && (
