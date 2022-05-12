@@ -67,7 +67,7 @@ const ReorderableLayer = memo(function ReorderableLayer({
       <LayerSeparator position={position + 1} />
       <ReorderableItem
         position={position}
-        onStartReordering={handleStartReordering(id)}
+        onStartReordering={handleStartReordering(element)}
         disabled={element.isBackground}
       >
         <Layer element={element} />
@@ -96,9 +96,12 @@ function LayerPanel({ layers }) {
 
   const focusCanvas = useFocusCanvas();
   const handleStartReordering = useCallback(
-    (id) => () => {
-      setSelectedElementsById({ elementIds: [id] });
-      focusCanvas();
+    (element) => () => {
+      setSelectedElementsById({ elementIds: [element.id] });
+
+      if (!element.isEditable) {
+        focusCanvas();
+      }
     },
     [setSelectedElementsById, focusCanvas]
   );
