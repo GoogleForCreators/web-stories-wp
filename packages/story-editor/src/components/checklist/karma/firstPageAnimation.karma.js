@@ -94,7 +94,7 @@ describe('firstPageAnimation', function () {
   }
 
   async function getCurrentPage() {
-    return await fixture.renderHook(() =>
+    return fixture.renderHook(() =>
       useStory(({ state: { currentPage } }) => currentPage)
     );
   }
