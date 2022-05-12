@@ -26,7 +26,11 @@ import { useStory } from '../../../../app';
 import useFocusCanvas from '../../../canvas/useFocusCanvas';
 
 function useLayerSelection(layer) {
-  const { id: elementId, isEditable: isEditable } = layer;
+  const { 
+    id: elementId, 
+    isEditable, 
+    isLocked, 
+    isBackground } = layer;
   const { isSelected, toggleLayer, updateElementById } = useStory(({ state, actions }) => ({
     isSelected: state.selectedElementIds.includes(elementId),
     toggleLayer: actions.toggleLayer,
@@ -45,7 +49,7 @@ function useLayerSelection(layer) {
         shiftKey: evt.shiftKey,
       });
 
-      if (evt.detail === 2) {
+      if (evt.detail === 2 && !isLocked && !isBackground) {
         updateElementById({
           elementId: elementId,
           properties: { isEditable: true },
