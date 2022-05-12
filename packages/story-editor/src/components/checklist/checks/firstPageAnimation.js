@@ -86,6 +86,7 @@ const FirstPageAnimation = () => {
           <DefaultFooterText as="span">
             <Link
               target="_blank"
+              rel="noreferrer"
               onClick={onClick}
               href="https://wp.stories.google/docs/how-to/animations/"
               size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
