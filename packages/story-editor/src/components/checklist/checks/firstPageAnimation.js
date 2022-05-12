@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import { __ } from '@googleforcreators/i18n';
 import { useCallback } from '@googleforcreators/react';
 import { Link, THEME_CONSTANTS } from '@googleforcreators/design-system';
 import { trackClick } from '@googleforcreators/tracking';
@@ -73,10 +74,10 @@ const FirstPageAnimation = () => {
       title={title}
       cta={
         <DefaultCtaButton
-          aria-label={'Remove Animations'}
+          aria-label={__('Remove Animations', 'web-stories')}
           onClick={removeAnimations}
         >
-          {'Remove Animations'}
+          {__('Remove Animations', 'web-stories')}
         </DefaultCtaButton>
       }
       footer={
@@ -84,11 +85,12 @@ const FirstPageAnimation = () => {
           <DefaultFooterText>{footer}</DefaultFooterText>
           <DefaultFooterText as="span">
             <Link
+              target="_blank"
               onClick={onClick}
               href="https://wp.stories.google/docs/how-to/animations/"
               size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
             >
-              {'Learn more'}
+              {__('Learn more', 'web-stories')}
             </Link>
           </DefaultFooterText>
         </>
