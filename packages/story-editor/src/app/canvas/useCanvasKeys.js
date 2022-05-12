@@ -238,7 +238,7 @@ function useCanvasKeys(ref) {
     STORY_ANIMATION_STATE.PLAYING_SELECTED,
   ].includes(animationState);
   useGlobalKeyDownEffect(
-    { key: ['mod+enter'] },
+    { key: ['mod+space'] },
     (evt) => {
       evt.preventDefault();
       if (currentPageNumber === 1) {
