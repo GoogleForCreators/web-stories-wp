@@ -94,10 +94,10 @@ describe('firstPageAnimation', function () {
   }
 
   async function getCurrentPage() {
-    const currentPage = await fixture.renderHook(() =>
+    const page = await fixture.renderHook(() =>
       useStory(({ state: { currentPage } }) => currentPage)
     );
-    return currentPage;
+    return page;
   }
 
   it('should see First Page Animation text in checklist design panel', async function () {
