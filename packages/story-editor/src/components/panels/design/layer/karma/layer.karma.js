@@ -34,11 +34,7 @@ describe('Layer Panel', () => {
   beforeEach(async () => {
     fixture = new Fixture();
     fixture.setFlags({ layerLocking: true });
-    try {
-      await fixture.render();
-    } catch {
-      // ignore
-    }
+    await fixture.render();
     await fixture.collapseHelpCenter();
     layerPanel = fixture.editor.footer.layerPanel;
     await fixture.events.click(layerPanel.togglePanel);
