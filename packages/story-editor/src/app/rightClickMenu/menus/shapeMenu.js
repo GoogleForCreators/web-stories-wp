@@ -158,7 +158,7 @@ function ShapeMenu({ parentMenuRef }) {
 
       <LayerName />
       <LayerLock />
-      
+
       <ContextMenuComponents.MenuSeparator />
 
       <ContextMenuComponents.MenuButton onClick={handleCopyStyles}>

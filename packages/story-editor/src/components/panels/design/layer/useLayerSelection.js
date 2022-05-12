@@ -26,16 +26,14 @@ import { useStory } from '../../../../app';
 import useFocusCanvas from '../../../canvas/useFocusCanvas';
 
 function useLayerSelection(layer) {
-  const { 
-    id: elementId, 
-    isEditable, 
-    isLocked, 
-    isBackground } = layer;
-  const { isSelected, toggleLayer, updateElementById } = useStory(({ state, actions }) => ({
-    isSelected: state.selectedElementIds.includes(elementId),
-    toggleLayer: actions.toggleLayer,
-    updateElementById: actions.updateElementById,
-  }));
+  const { id: elementId, isEditable, isLocked, isBackground } = layer;
+  const { isSelected, toggleLayer, updateElementById } = useStory(
+    ({ state, actions }) => ({
+      isSelected: state.selectedElementIds.includes(elementId),
+      toggleLayer: actions.toggleLayer,
+      updateElementById: actions.updateElementById,
+    })
+  );
 
   const focusCanvas = useFocusCanvas();
 
@@ -53,7 +51,7 @@ function useLayerSelection(layer) {
         updateElementById({
           elementId: elementId,
           properties: { isEditable: true },
-        })
+        });
       }
 
       // In any case, revert focus to selected element(s)
@@ -61,7 +59,15 @@ function useLayerSelection(layer) {
         focusCanvas();
       }
     },
-    [toggleLayer, elementId, focusCanvas]
+    [
+      toggleLayer,
+      elementId,
+      focusCanvas,
+      isBackground,
+      isEditable,
+      isLocked,
+      updateElementById,
+    ]
   );
 
   return { isSelected, handleClick };

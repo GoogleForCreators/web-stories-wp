@@ -34,11 +34,11 @@ export function LayerText({ isEditable, children }) {
       forwardedAs="span"
       size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
       contentEditable={isEditable ? 'true' : 'false'}
-      suppressContentEditableWarning={true}
+      suppressContentEditableWarning
       role="textbox"
     >
       {children}
     </StyledText>
   );
 }
-LayerText.propTypes = { children: PropTypes.node };
+LayerText.propTypes = { children: PropTypes.node, isEditable: PropTypes.bool };

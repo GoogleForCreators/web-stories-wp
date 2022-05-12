@@ -143,10 +143,9 @@ function StickerMenu({ parentMenuRef }) {
           {RIGHT_CLICK_MENU_SHORTCUTS.BRING_TO_FRONT.display}
         </ContextMenuComponents.MenuShortcut>
       </ContextMenuComponents.MenuButton>
-      
+
       <LayerName />
       <LayerLock />
-      
     </>
   );
 }

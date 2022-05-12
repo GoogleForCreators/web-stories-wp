@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { useState } from '@googleforcreators/react';
 import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
 import { __ } from '@googleforcreators/i18n';
@@ -26,9 +25,9 @@ import {
   BUTTON_TYPES,
   Icons,
   themeHelpers,
-  Input
+  Input,
 } from '@googleforcreators/design-system';
-import { useRef, memo } from '@googleforcreators/react';
+import { useRef, memo, useState } from '@googleforcreators/react';
 import { getDefinitionForType } from '@googleforcreators/elements';
 import { LayerText } from '@googleforcreators/element-library';
 import { useFeature } from 'flagged';
@@ -125,9 +124,9 @@ const LayerButton = styled(Button).attrs({
       & + * {
         --background-color: ${theme.colors.interactiveBg.tertiaryPress};
         --background-color-opaque: ${rgba(
-      theme.colors.interactiveBg.tertiaryPress,
-      0
-    )};
+          theme.colors.interactiveBg.tertiaryPress,
+          0
+        )};
         --selected-hover-color: ${theme.colors.interactiveBg.tertiaryHover};
       }
     `}
@@ -138,9 +137,9 @@ const LayerButton = styled(Button).attrs({
   :hover,
   :hover + * {
     --background-color: ${({ theme }) =>
-    theme.colors.interactiveBg.tertiaryHover};
+      theme.colors.interactiveBg.tertiaryHover};
     --background-color-opaque: ${({ theme }) =>
-    rgba(theme.colors.interactiveBg.tertiaryHover, 0)};
+      rgba(theme.colors.interactiveBg.tertiaryHover, 0)};
   }
 
   :active {
@@ -149,9 +148,9 @@ const LayerButton = styled(Button).attrs({
   :active,
   :active + * {
     --background-color: ${({ theme }) =>
-    theme.colors.interactiveBg.tertiaryPress};
+      theme.colors.interactiveBg.tertiaryPress};
     --background-color-opaque: ${({ theme }) =>
-    rgba(theme.colors.interactiveBg.tertiaryPress, 0)};
+      rgba(theme.colors.interactiveBg.tertiaryPress, 0)};
   }
 `;
 
@@ -162,7 +161,7 @@ const LayerInputWrapper = styled.div`
   width: 100%;
   padding-left: 12px;
   padding-right: 12px;
-    
+
   :hover {
     background: ${({ theme }) => theme.colors.interactiveBg.tertiaryHover};
   }
@@ -296,10 +295,10 @@ const LayerAction = styled(Button).attrs({
 
   :focus {
     ${({ theme }) =>
-    themeHelpers.focusCSS(
-      theme.colors.border.focus,
-      'var(--background-color)'
-    )}
+      themeHelpers.focusCSS(
+        theme.colors.border.focus,
+        'var(--background-color)'
+      )}
   }
 `;
 
@@ -309,8 +308,11 @@ function preventReorder(e) {
 }
 
 function Layer({ element }) {
-  const [layerName, setLayerName] = useState(element.layerName ?
-    element.layerName : __('Renaming a layer.', 'web-stories'));
+  const [layerName, setLayerName] = useState(
+    element.layerName
+      ? element.layerName
+      : __('Renaming a layer.', 'web-stories')
+  );
   const isLayerLockingEnabled = useFeature('layerLocking');
   const { LayerIcon, LayerContent } = getDefinitionForType(element.type);
   const { isSelected, handleClick } = useLayerSelection(element);
@@ -394,11 +396,12 @@ function Layer({ element }) {
               value={layerName}
               onChange={handleChange}
               onKeyDown={handleKeyDown}
-              onBlur={handleBlur} />
+              onBlur={handleBlur}
+            />
           </LayerInputDescription>
         </LayerInputWrapper>
-      ) :
-        (<LayerButton
+      ) : (
+        <LayerButton
           ref={layerRef}
           id={layerId}
           onClick={handleClick}
@@ -415,11 +418,10 @@ function Layer({ element }) {
             <LayerContentContainer>
               {element.isBackground ? (
                 <LayerText>{__('Background', 'web-stories')}</LayerText>
+              ) : element.layerName ? (
+                <LayerText>{element.layerName}</LayerText>
               ) : (
-                element.layerName ? (
-                  <LayerText>{element.layerName}</LayerText>
-                ) :
-                  (<LayerContent element={element} />)
+                <LayerContent element={element} />
               )}
             </LayerContentContainer>
             {element.isBackground && (
@@ -433,7 +435,8 @@ function Layer({ element }) {
               </IconWrapper>
             )}
           </LayerDescription>
-        </LayerButton>)}
+        </LayerButton>
+      )}
       {!element.isBackground && !element.isEditable && (
         <ActionsContainer>
           <Tooltip title={__('Delete Layer', 'web-stories')} hasTail isDelayed>
