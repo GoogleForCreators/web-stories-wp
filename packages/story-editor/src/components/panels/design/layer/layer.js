@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import { useState } from '@googleforcreators/react';
 import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
 import { __ } from '@googleforcreators/i18n';
@@ -25,6 +26,7 @@ import {
   BUTTON_TYPES,
   Icons,
   themeHelpers,
+  Input
 } from '@googleforcreators/design-system';
 import { useRef, memo } from '@googleforcreators/react';
 import { getDefinitionForType } from '@googleforcreators/elements';
@@ -123,9 +125,9 @@ const LayerButton = styled(Button).attrs({
       & + * {
         --background-color: ${theme.colors.interactiveBg.tertiaryPress};
         --background-color-opaque: ${rgba(
-          theme.colors.interactiveBg.tertiaryPress,
-          0
-        )};
+      theme.colors.interactiveBg.tertiaryPress,
+      0
+    )};
         --selected-hover-color: ${theme.colors.interactiveBg.tertiaryHover};
       }
     `}
@@ -136,10 +138,64 @@ const LayerButton = styled(Button).attrs({
   :hover,
   :hover + * {
     --background-color: ${({ theme }) =>
-      theme.colors.interactiveBg.tertiaryHover};
+    theme.colors.interactiveBg.tertiaryHover};
     --background-color-opaque: ${({ theme }) =>
-      rgba(theme.colors.interactiveBg.tertiaryHover, 0)};
+    rgba(theme.colors.interactiveBg.tertiaryHover, 0)};
   }
+
+  :active {
+    background: ${({ theme }) => theme.colors.interactiveBg.tertiaryPress};
+  }
+  :active,
+  :active + * {
+    --background-color: ${({ theme }) =>
+    theme.colors.interactiveBg.tertiaryPress};
+    --background-color-opaque: ${({ theme }) =>
+    rgba(theme.colors.interactiveBg.tertiaryPress, 0)};
+  }
+`;
+
+const LayerInputWrapper = styled.div`
+  position: relative;
+  display: grid;
+  grid-template-columns: 26px 1fr;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  align-items: center;
+  padding: 0;
+  background: transparent;
+  padding-left: 12px;
+`;
+
+const LayerInput = styled(Input)`
+  position: relative;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  align-items: center;
+  user-select: none;
+  border-radius: 0;
+  padding-left: 2px;
+  transition: revert;
+
+  ${({ isSelected, theme }) =>
+    isSelected &&
+    css`
+    background: ${theme.colors.interactiveBg.tertiaryPress};
+    &,
+    & + * {
+      --background-color: ${theme.colors.interactiveBg.tertiaryPress};
+      --background-color-opaque: ${rgba(
+      theme.colors.interactiveBg.tertiaryPress,
+      0
+    )};
+      --selected-hover-color: ${theme.colors.interactiveBg.tertiaryHover};
+    }
+  `}
 
   :active {
     background: ${({ theme }) => theme.colors.interactiveBg.tertiaryPress};
@@ -158,6 +214,17 @@ const LayerIconWrapper = styled.div`
   align-items: center;
   justify-content: flex-start;
   color: ${({ theme }) => theme.colors.fg.primary};
+
+  :hover {
+    background: ${({ theme }) => theme.colors.interactiveBg.tertiaryHover};
+  }
+  :hover,
+  :hover + * {
+    --background-color: ${({ theme }) =>
+      theme.colors.interactiveBg.tertiaryHover};
+    --background-color-opaque: ${({ theme }) =>
+      rgba(theme.colors.interactiveBg.tertiaryHover, 0)};
+  }
 `;
 
 const LayerDescription = styled.div`
@@ -251,10 +318,10 @@ const LayerAction = styled(Button).attrs({
 
   :focus {
     ${({ theme }) =>
-      themeHelpers.focusCSS(
-        theme.colors.border.focus,
-        'var(--background-color)'
-      )}
+    themeHelpers.focusCSS(
+      theme.colors.border.focus,
+      'var(--background-color)'
+    )}
   }
 `;
 
@@ -264,6 +331,8 @@ function preventReorder(e) {
 }
 
 function Layer({ element }) {
+  const [layerName, setLayerName] = useState(element.layerName ? 
+    element.layerName : __('Renaming a layer.', 'web-stories'));
   const isLayerLockingEnabled = useFeature('layerLocking');
   const { LayerIcon, LayerContent } = getDefinitionForType(element.type);
   const { isSelected, handleClick } = useLayerSelection(element);
@@ -301,64 +370,93 @@ function Layer({ element }) {
     : __('Lock Layer', 'web-stories');
 
   const LockIcon = element.isLocked ? Icons.LockClosed : Icons.LockOpen;
+
+  const handleChange = (evt) => {
+    setLayerName(evt.target.value);
+  };
+
+  const handleKeyDown = (evt) => {
+    if (evt.key === 'Escape') {
+      updateElementById({
+        elementId: element.id,
+        properties: { isEditable: false },
+      });
+    } 
+    
+    if (evt.key === 'Enter') {
+      updateElementById({
+        elementId: element.id,
+        properties: { isEditable: false, layerName: layerName },
+      });
+    }
+  };
+
+  const handleBlur = () => {
+    updateElementById({
+      elementId: element.id,
+      properties: { isEditable: false, layerName: layerName },
+    });
+  };
+
   return (
     <LayerContainer>
-      <LayerButton
-        ref={layerRef}
-        id={layerId}
-        onClick={handleClick}
-        isSelected={isSelected}
-      >
-        <LayerIconWrapper>
-          <LayerIcon
-            element={element}
-            getProxiedUrl={getProxiedUrl}
-            currentPageBackgroundColor={currentPageBackgroundColor}
-          />
-        </LayerIconWrapper>
-        <LayerDescription>
-          <LayerContentContainer>
-            {element.isBackground ? (
-              <LayerText>{__('Background', 'web-stories')}</LayerText>
-            ) : (
-              element.layerName ? (
-                <div
-                  onInput={(evt) => {
-                    updateElementById({
-                      elementId: element.id,
-                      properties: { layerName: evt.currentTarget.textContent },
-                    })
-                  }}
-                >
-                  <LayerText isEditable={element.isEditable}>{element.layerName}</LayerText>
-                </div>
+      {element.isEditable ? (
+        <LayerInputWrapper>
+          <LayerIconWrapper>
+            <LayerIcon
+              element={element}
+              getProxiedUrl={getProxiedUrl}
+              currentPageBackgroundColor={currentPageBackgroundColor}
+            />
+          </LayerIconWrapper>
+          <LayerDescription>
+            <LayerInput 
+              tabIndex={-1}
+              aria-label={__('Renaming a layer.', 'web-stories')}
+              value={layerName}
+              onChange={handleChange}
+              onKeyDown={handleKeyDown}
+              onBlur={handleBlur}  />
+          </LayerDescription>
+        </LayerInputWrapper>
+      ) :
+        (<LayerButton
+          ref={layerRef}
+          id={layerId}
+          onClick={handleClick}
+          isSelected={isSelected}
+        >
+          <LayerIconWrapper>
+            <LayerIcon
+              element={element}
+              getProxiedUrl={getProxiedUrl}
+              currentPageBackgroundColor={currentPageBackgroundColor}
+            />
+          </LayerIconWrapper>
+          <LayerDescription>
+            <LayerContentContainer>
+              {element.isBackground ? (
+                <LayerText>{__('Background', 'web-stories')}</LayerText>
               ) : (
-                <div
-                  onInput={(evt) => {
-                    updateElementById({
-                      elementId: element.id,
-                      properties: { layerName: evt.currentTarget.textContent },
-                    })
-                  }}
-                >
-                  <LayerContent element={element} />
-                </div>
-              )
+                element.layerName ? (
+                  <LayerText>{element.layerName}</LayerText>
+                ) :
+                  (<LayerContent element={element} />)
+              )}
+            </LayerContentContainer>
+            {element.isBackground && (
+              <IconWrapper>
+                <Icons.LockFilledClosed />
+              </IconWrapper>
             )}
-          </LayerContentContainer>
-          {element.isBackground && (
-            <IconWrapper>
-              <Icons.LockFilledClosed />
-            </IconWrapper>
-          )}
-          {element.isLocked && isLayerLockingEnabled && (
-            <IconWrapper>
-              <Icons.LockClosed />
-            </IconWrapper>
-          )}
-        </LayerDescription>
-      </LayerButton>
-      {!element.isBackground && (
+            {element.isLocked && isLayerLockingEnabled && (
+              <IconWrapper>
+                <Icons.LockClosed />
+              </IconWrapper>
+            )}
+          </LayerDescription>
+        </LayerButton>)}
+      {!element.isBackground && !element.isEditable && (
         <ActionsContainer>
           <Tooltip title={__('Delete Layer', 'web-stories')} hasTail isDelayed>
             <LayerAction
