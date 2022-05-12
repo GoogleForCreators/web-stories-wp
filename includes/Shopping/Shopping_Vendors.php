@@ -26,7 +26,7 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\Product;
+namespace Google\Web_Stories\Shopping;
 
 use Google\Web_Stories\Infrastructure\Injector;
 use Google\Web_Stories\Interfaces\Product_Query;

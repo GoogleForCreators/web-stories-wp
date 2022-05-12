@@ -36,7 +36,7 @@ use Google\Web_Stories\Font_Post_Type;
 use Google\Web_Stories\Integrations\Site_Kit;
 use Google\Web_Stories\Locale;
 use Google\Web_Stories\Media\Types;
-use Google\Web_Stories\Product\Shopping_Vendors;
+use Google\Web_Stories\Shopping\Shopping_Vendors;
 use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tracking;

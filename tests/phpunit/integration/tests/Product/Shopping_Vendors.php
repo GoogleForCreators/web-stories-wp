@@ -22,14 +22,14 @@ use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 use Google\Web_Stories\Tests\Integration\Mock_Vendor_Setup;
 
 /**
- * @coversDefaultClass \Google\Web_Stories\Product\Shopping_Vendors
+ * @coversDefaultClass \Google\Web_Stories\Shopping\Shopping_Vendors
  */
 class Shopping_Vendors extends DependencyInjectedTestCase {
 	use Mock_Vendor_Setup;
 	/**
 	 * Test instance.
 	 *
-	 * @var \Google\Web_Stories\Product\Shopping_Vendors
+	 * @var \Google\Web_Stories\Shopping\Shopping_Vendors
 	 */
 	private $shopping_vendors;
 
@@ -38,7 +38,7 @@ class Shopping_Vendors extends DependencyInjectedTestCase {
 		parent::set_up();
 		$this->setup_vendors();
 
-		$this->shopping_vendors = $this->injector->make( \Google\Web_Stories\Product\Shopping_Vendors::class );
+		$this->shopping_vendors = $this->injector->make( \Google\Web_Stories\Shopping\Shopping_Vendors::class );
 	}
 
 	public function tear_down(): void {

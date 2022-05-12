@@ -27,8 +27,8 @@
 namespace Google\Web_Stories\REST_API;
 
 use Google\Web_Stories\Infrastructure\HasRequirements;
-use Google\Web_Stories\Product\Product;
-use Google\Web_Stories\Product\Shopping_Vendors;
+use Google\Web_Stories\Shopping\Product;
+use Google\Web_Stories\Shopping\Shopping_Vendors;
 use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
 use WP_Error;

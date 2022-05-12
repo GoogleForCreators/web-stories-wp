@@ -17,7 +17,7 @@
 
 namespace Google\Web_Stories\Tests\Integration\Shopping;
 
-use Google\Web_Stories\Product\Product;
+use Google\Web_Stories\Shopping\Product;
 use WP_Error;
 
 /**

@@ -24,7 +24,7 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\Product;
+namespace Google\Web_Stories\Shopping;
 
 /**
  * Class Product
