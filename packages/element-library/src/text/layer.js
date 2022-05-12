@@ -24,10 +24,10 @@ import { stripHTML } from '@googleforcreators/dom';
  */
 import { LayerText } from '../shared';
 
-function TextLayerContent({ element: { content } }) {
+function TextLayerContent({ element: { content, isEditable } }) {
   // Remove all tags
   const rawContent = stripHTML(content);
-  return <LayerText>{rawContent}</LayerText>;
+  return <LayerText isEditable={isEditable}>{rawContent}</LayerText>;
 }
 
 TextLayerContent.propTypes = {

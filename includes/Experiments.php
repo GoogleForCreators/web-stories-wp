@@ -353,6 +353,17 @@ class Experiments extends Service_Base implements HasRequirements {
 				'description' => __( 'Enable layer locking', 'web-stories' ),
 				'group'       => 'editor',
 			],
+			/**
+			 * Author: @mariana-k
+			 * Issue: #9248
+			 * Creation date: 2022-05-12
+			 */
+			[
+				'name'        => 'layerNaming',
+				'label'       => __( 'Layer naming', 'web-stories' ),
+				'description' => __( 'Enable layer naming', 'web-stories' ),
+				'group'       => 'editor',
+			],
 		];
 	}
 

@@ -301,7 +301,6 @@ function Layer({ element }) {
     : __('Lock Layer', 'web-stories');
 
   const LockIcon = element.isLocked ? Icons.LockClosed : Icons.LockOpen;
-
   return (
     <LayerContainer>
       <LayerButton
@@ -322,23 +321,23 @@ function Layer({ element }) {
             {element.isBackground ? (
               <LayerText>{__('Background', 'web-stories')}</LayerText>
             ) : (
-              element.layerTitle ? (
+              element.layerName ? (
                 <div
                   onInput={(evt) => {
                     updateElementById({
                       elementId: element.id,
-                      properties: { layerTitle: evt.currentTarget.textContent },
+                      properties: { layerName: evt.currentTarget.textContent },
                     })
                   }}
                 >
-                  <LayerText>{element.layerTitle}</LayerText>
+                  <LayerText isEditable={element.isEditable}>{element.layerName}</LayerText>
                 </div>
               ) : (
                 <div
                   onInput={(evt) => {
                     updateElementById({
                       elementId: element.id,
-                      properties: { layerTitle: evt.currentTarget.textContent },
+                      properties: { layerName: evt.currentTarget.textContent },
                     })
                   }}
                 >

@@ -28,12 +28,12 @@ const StyledText = styled(Text)`
   max-width: 100%;
 `;
 
-export function LayerText({ children }) {
+export function LayerText(isEditable, { children }) {
   return (
     <StyledText
       forwardedAs="span"
       size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-      contentEditable="true"
+      contentEditable={isEditable ? 'true' : 'false'}
       suppressContentEditableWarning={true}
       role="textbox"
     >

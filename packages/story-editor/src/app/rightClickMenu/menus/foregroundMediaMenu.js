@@ -39,7 +39,7 @@ import { useStory, useLocalMedia } from '../..';
 import useVideoTrim from '../../../components/videoTrim/useVideoTrim';
 import useRightClickMenu from '../useRightClickMenu';
 import useLayerSelect from '../useLayerSelect';
-import { LayerLock } from '../items';
+import { LayerLock, LayerName } from '../items';
 import {
   DEFAULT_DISPLACEMENT,
   MenuPropType,
@@ -182,6 +182,7 @@ function ForegroundMediaMenu({ parentMenuRef }) {
         </ContextMenuComponents.MenuShortcut>
       </ContextMenuComponents.MenuButton>
 
+      <LayerName />
       <LayerLock />
 
       <ContextMenuComponents.MenuSeparator />

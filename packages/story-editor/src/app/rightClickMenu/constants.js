@@ -60,6 +60,7 @@ export const RIGHT_CLICK_MENU_LABELS = {
   DUPLICATE_ELEMENTS: (numElements = 1) =>
     _n('Duplicate Element', 'Duplicate Elements', numElements, 'web-stories'),
   LOCK_UNLOCK: __('Lock/Unlock', 'web-stories'),
+  RENAME_LAYER: __('Rename Layer', 'web-stories'),
   PASTE_IMAGE_STYLES: __('Paste Image Styles', 'web-stories'),
   PASTE_SHAPE_STYLES: __('Paste Shape Styles', 'web-stories'),
   PASTE_VIDEO_STYLES: __('Paste Video Styles', 'web-stories'),
