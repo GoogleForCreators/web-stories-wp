@@ -269,7 +269,7 @@ function useCanvasKeys(ref) {
         highlight: states.LINK,
       });
     },
-    [selectedElements]
+    [setHighlights, selectedElements]
   );
 }
 

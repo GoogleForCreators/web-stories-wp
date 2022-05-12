@@ -92,11 +92,11 @@ describe('Canvas Keyboard Shortcuts', () => {
     await fixture.events.keyboard.press('Enter');
 
     // check that all the elements selected have the url
-    const { selectedElements } = await fixture.renderHook(() =>
+    const { selectedElements: elements } = await fixture.renderHook(() =>
       useStory(({ state: selectedElements }) => selectedElements)
     );
 
-    for (const element of selectedElements) {
+    for (const element of elements) {
       expect(element.link.url).toBe(TEST_URL);
     }
   });
