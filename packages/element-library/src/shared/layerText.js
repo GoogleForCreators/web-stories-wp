@@ -28,7 +28,7 @@ const StyledText = styled(Text)`
   max-width: 100%;
 `;
 
-export function LayerText(isEditable, { children }) {
+export function LayerText({ isEditable, children }) {
   return (
     <StyledText
       forwardedAs="span"
