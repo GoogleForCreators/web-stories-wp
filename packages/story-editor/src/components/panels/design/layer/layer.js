@@ -156,56 +156,30 @@ const LayerButton = styled(Button).attrs({
 `;
 
 const LayerInputWrapper = styled.div`
-  position: relative;
   display: grid;
-  grid-template-columns: 26px 1fr;
+  grid-template-columns: 23px 1fr;
   height: 100%;
   width: 100%;
-  overflow: hidden;
-  align-items: center;
-  padding: 0;
-  background: transparent;
   padding-left: 12px;
+  padding-right: 12px;
+    
+  :hover {
+    background: ${({ theme }) => theme.colors.interactiveBg.tertiaryHover};
+  }
+  :hover,
+  :hover + * {
+    --background-color: ${({ theme }) =>
+      theme.colors.interactiveBg.tertiaryHover};
+    --background-color-opaque: ${({ theme }) =>
+      rgba(theme.colors.interactiveBg.tertiaryHover, 0)};
+  }
 `;
 
 const LayerInput = styled(Input)`
-  position: relative;
-  border: 0;
-  padding: 0;
-  background: transparent;
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
-  align-items: center;
-  user-select: none;
-  border-radius: 0;
-  padding-left: 2px;
-  transition: revert;
+  overflow: visible;
 
-  ${({ isSelected, theme }) =>
-    isSelected &&
-    css`
-    background: ${theme.colors.interactiveBg.tertiaryPress};
-    &,
-    & + * {
-      --background-color: ${theme.colors.interactiveBg.tertiaryPress};
-      --background-color-opaque: ${rgba(
-      theme.colors.interactiveBg.tertiaryPress,
-      0
-    )};
-      --selected-hover-color: ${theme.colors.interactiveBg.tertiaryHover};
-    }
-  `}
-
-  :active {
-    background: ${({ theme }) => theme.colors.interactiveBg.tertiaryPress};
-  }
-  :active,
-  :active + * {
-    --background-color: ${({ theme }) =>
-      theme.colors.interactiveBg.tertiaryPress};
-    --background-color-opaque: ${({ theme }) =>
-      rgba(theme.colors.interactiveBg.tertiaryPress, 0)};
+  div {
+    height: 100%;
   }
 `;
 
@@ -236,6 +210,10 @@ const LayerDescription = styled.div`
   margin-left: 0;
   text-align: left;
   color: ${({ theme }) => theme.colors.fg.primary};
+`;
+
+const LayerInputDescription = styled(LayerDescription)`
+  overflow: visible;
 `;
 
 const IconWrapper = styled.div`
@@ -331,7 +309,7 @@ function preventReorder(e) {
 }
 
 function Layer({ element }) {
-  const [layerName, setLayerName] = useState(element.layerName ? 
+  const [layerName, setLayerName] = useState(element.layerName ?
     element.layerName : __('Renaming a layer.', 'web-stories'));
   const isLayerLockingEnabled = useFeature('layerLocking');
   const { LayerIcon, LayerContent } = getDefinitionForType(element.type);
@@ -381,8 +359,8 @@ function Layer({ element }) {
         elementId: element.id,
         properties: { isEditable: false },
       });
-    } 
-    
+    }
+
     if (evt.key === 'Enter') {
       updateElementById({
         elementId: element.id,
@@ -409,15 +387,15 @@ function Layer({ element }) {
               currentPageBackgroundColor={currentPageBackgroundColor}
             />
           </LayerIconWrapper>
-          <LayerDescription>
-            <LayerInput 
+          <LayerInputDescription>
+            <LayerInput
               tabIndex={-1}
               aria-label={__('Renaming a layer.', 'web-stories')}
               value={layerName}
               onChange={handleChange}
               onKeyDown={handleKeyDown}
-              onBlur={handleBlur}  />
-          </LayerDescription>
+              onBlur={handleBlur} />
+          </LayerInputDescription>
         </LayerInputWrapper>
       ) :
         (<LayerButton
