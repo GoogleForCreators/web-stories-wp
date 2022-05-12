@@ -172,7 +172,7 @@ class Tracking extends Service_Base {
 	 * @return array User properties.
 	 */
 	private function get_user_properties(): array {
-		$role = ! empty( wp_get_current_user()->roles ) && array_key_exists(0, wp_get_current_user()->roles) ? wp_get_current_user()->roles[0] : ''; 
+		$role        = ! empty( wp_get_current_user()->roles ) && \array_key_exists( 0, wp_get_current_user()->roles ) ? wp_get_current_user()->roles[0] : ''; 
 		$experiments = implode( ',', $this->experiments->get_enabled_experiments() );
 
 		$active_plugins = [];
