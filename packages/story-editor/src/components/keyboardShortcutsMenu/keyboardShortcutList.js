@@ -111,7 +111,7 @@ const shortcuts = {
           shortcut: (
             <kbd>
               <kbd className="large-key">{prettifyShortcut('mod')}</kbd>
-              <kbd>{prettifyShortcut('Enter')}</kbd>
+              <LargeKey>{'Space'}</LargeKey>
             </kbd>
           ),
         },

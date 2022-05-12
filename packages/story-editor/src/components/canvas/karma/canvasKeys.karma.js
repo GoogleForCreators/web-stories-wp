@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { waitFor } from '@testing-library/react';
+
+/**
  * Internal dependencies
  */
 import { Fixture } from '../../../karma';
@@ -86,7 +91,7 @@ describe('Canvas Keyboard Shortcuts', () => {
     await fixture.events.keyboard.type(TEST_URL);
     await fixture.events.keyboard.press('Enter');
 
-    // check the all the elements selected have to url
+    // check that all the elements selected have the url
     const { selectedElements } = await fixture.renderHook(() =>
       useStory(({ state: selectedElements }) => selectedElements)
     );
@@ -94,5 +99,62 @@ describe('Canvas Keyboard Shortcuts', () => {
     for (const element of selectedElements) {
       expect(element.link.url).toBe(TEST_URL);
     }
+  });
+
+  it('should play pause animation when pressing mod+space shortcut', async () => {
+    // add a second page to allow for animations
+    await fixture.events.click(fixture.editor.canvas.pageActions.addPage);
+
+    // insert element
+    await insertMediaByIndex(0);
+
+    // add a long animation to the element
+    await waitFor(() => {
+      if (!fixture.editor.canvas.framesLayer.frames[1].node) {
+        throw new Error('node not ready');
+      }
+    });
+    await fixture.events.click(fixture.editor.sidebar.designTab);
+    await fixture.events.click(
+      fixture.editor.sidebar.designPanel.animationSection
+    );
+    const effectChooser =
+      fixture.editor.sidebar.designPanel.animation.effectChooser;
+    await fixture.events.click(effectChooser, { clickCount: 1 });
+    await fixture.events.click(
+      fixture.screen.getByRole('option', { name: /^"Fade In" Effect$/ })
+    );
+    // click to close
+    await fixture.events.click(effectChooser, { clickCount: 1 });
+    const duration = fixture.screen.getByLabelText('Duration');
+    await fixture.events.click(duration);
+    await fixture.events.keyboard.type('1000');
+    await fixture.events.keyboard.press('Enter');
+
+    // wait for initial animation
+    await fixture.events.sleep(1000);
+
+    // select the canvas
+    await fixture.events.click(
+      fixture.editor.canvas.framesLayer.frames[0].node
+    );
+
+    // check that 'Play Animation' toggle button is there
+    let toggle = fixture.screen.getByLabelText('Play Page Animations');
+    expect(toggle).toBeDefined();
+
+    // press mod+space
+    await fixture.events.keyboard.shortcut('mod+space');
+
+    // check that 'Stop Animation' toggle button is there
+    toggle = fixture.screen.getByLabelText('Stop Page Animations');
+    expect(toggle).toBeDefined();
+
+    // press mod+space
+    await fixture.events.keyboard.shortcut('mod+space');
+
+    // check that 'Play Animation' toggle button is there
+    toggle = fixture.screen.getByLabelText('Play Page Animations');
+    expect(toggle).toBeDefined();
   });
 });

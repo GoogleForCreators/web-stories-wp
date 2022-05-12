@@ -161,4 +161,32 @@ describe('useCanvasKeys', function () {
       highlight: 'LINK',
     });
   });
+
+  it('should should play/pause animation when mod+space is pressed.', () => {
+    const updateAnimationState = jest.fn();
+
+    const { container } = render(
+      <StoryContext.Provider
+        value={{
+          state: {
+            currentPageNumber: 2,
+            currentPage: { elements: [{ id: '123' }] },
+          },
+          actions: { updateAnimationState },
+        }}
+      >
+        <Canvas />
+      </StoryContext.Provider>
+    );
+
+    fireEvent.keyDown(container, {
+      key: 'Space',
+      which: 32,
+      ctrlKey: true,
+    });
+
+    expect(updateAnimationState).toHaveBeenCalledWith({
+      animationState: 'playing',
+    });
+  });
 });
