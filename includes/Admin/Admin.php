@@ -165,7 +165,7 @@ class Admin extends Service_Base {
 
 		return sprintf(
 			$content,
-			esc_url( $story->get_url() ),
+			$story->get_url(),
 			esc_js( $story->get_title() ),
 			esc_url( $story->get_poster_portrait() ),
 			absint( $args['width'] ),
