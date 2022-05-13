@@ -160,7 +160,7 @@ const LayerInputWrapper = styled.div`
   height: 100%;
   width: 100%;
   padding-left: 12px;
-  padding-right: 12px;
+  padding-right: 10px;
 
   :hover {
     background: ${({ theme }) => theme.colors.interactiveBg.tertiaryHover};
@@ -213,6 +213,7 @@ const LayerDescription = styled.div`
 
 const LayerInputDescription = styled(LayerDescription)`
   overflow: visible;
+  margin-left: 2px;
 `;
 
 const IconWrapper = styled.div`
