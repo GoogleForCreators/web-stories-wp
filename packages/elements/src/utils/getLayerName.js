@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,8 +19,31 @@
  */
 import { __ } from '@googleforcreators/i18n';
 
-function getProductLayerText(element) {
-  return element?.product?.productTitle || __('Product', 'web-stories');
+/**
+ * Internal dependencies
+ */
+import getDefinitionForType from './getDefinitionForType';
+
+/** @typedef {import('../types').Element} Element */
+
+/**
+ * Returns the layer name based on the element properties.
+ *
+ * @param {Element} element Element.
+ * @return {string} Layer name.
+ */
+function getLayerName(element) {
+  if (element.isBackground) {
+    return __('Background', 'web-stories');
+  }
+
+  /* TODO: Enable this when layers can have names:
+  if (element.layerName) {
+    return element.layerName;
+  }
+  */
+
+  return getDefinitionForType(element.type).getLayerText(element);
 }
 
-export default getProductLayerText;
+export default getLayerName;

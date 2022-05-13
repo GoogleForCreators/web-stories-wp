@@ -32639,6 +32639,31 @@
     }
   },
   {
+    "family": "Roboto Flex",
+    "fallbacks": ["sans-serif"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 2048,
+      "asc": 1900,
+      "des": -500,
+      "tAsc": 1900,
+      "tDes": -500,
+      "tLGap": 0,
+      "wAsc": 2461,
+      "wDes": 600,
+      "xH": 1052,
+      "capH": 1456,
+      "yMin": -600,
+      "yMax": 2461,
+      "hAsc": 1900,
+      "hDes": -500,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Roboto Mono",
     "fallbacks": ["monospace"],
     "weights": [100, 200, 300, 400, 500, 600, 700],

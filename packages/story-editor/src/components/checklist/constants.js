@@ -318,7 +318,6 @@ export const DESIGN_COPY = {
   },
   firstPageAnimation: {
     title: __('First Page Animations', 'web-stories'),
-    // @todo: get proper wording for checklist footer #11320
     footer: __(
       'Animations on the first page of a story are not supported for user experience and performance reasons.',
       'web-stories'

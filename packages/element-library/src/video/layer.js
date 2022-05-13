@@ -13,24 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
 import { __ } from '@googleforcreators/i18n';
-import { StoryPropTypes } from '@googleforcreators/elements';
 
-/**
- * Internal dependencies
- */
-import { LayerText } from '../shared';
-
-function VideoLayerContent({ element }) {
+function getVideoLayerText(element) {
   const { alt } = element?.resource || {};
 
-  return <LayerText>{alt || __('Video Content', 'web-stories')}</LayerText>;
+  return alt || __('Video Content', 'web-stories');
 }
-VideoLayerContent.propTypes = {
-  element: StoryPropTypes.element.isRequired,
-};
 
-export default VideoLayerContent;
+export default getVideoLayerText;

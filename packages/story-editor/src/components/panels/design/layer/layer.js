@@ -25,11 +25,14 @@ import {
   BUTTON_TYPES,
   Icons,
   themeHelpers,
-  Input,
+  Text,
+  THEME_CONSTANTS,
 } from '@googleforcreators/design-system';
 import { useRef, memo, useState } from '@googleforcreators/react';
-import { getDefinitionForType } from '@googleforcreators/elements';
-import { LayerText } from '@googleforcreators/element-library';
+import {
+  getDefinitionForType,
+  getLayerName,
+} from '@googleforcreators/elements';
 import { useFeature } from 'flagged';
 
 /**
@@ -216,6 +219,17 @@ const LayerInputDescription = styled(LayerDescription)`
   margin-left: 2px;
 `;
 
+const LayerText = styled(Text).attrs({
+  forwardedAs: 'span',
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+})`
+  color: inherit;
+  white-space: nowrap;
+  text-overflow: ' ';
+  overflow: hidden;
+  max-width: 100%;
+`;
+
 const IconWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -309,13 +323,13 @@ function preventReorder(e) {
 }
 
 function Layer({ element }) {
-  const [layerName, setLayerName] = useState(
+  const [currentLayerName, setCurrentLayerName] = useState(
     element.layerName
       ? element.layerName
       : __('Renaming a layer.', 'web-stories')
   );
   const isLayerLockingEnabled = useFeature('layerLocking');
-  const { LayerIcon, LayerContent } = getDefinitionForType(element.type);
+  const { LayerIcon } = getDefinitionForType(element.type);
   const { isSelected, handleClick } = useLayerSelection(element);
   const { isDefaultBackground } = element;
   const {
@@ -352,8 +366,10 @@ function Layer({ element }) {
 
   const LockIcon = element.isLocked ? Icons.LockClosed : Icons.LockOpen;
 
+  const layerName = getLayerName(element);
+
   const handleChange = (evt) => {
-    setLayerName(evt.target.value);
+    setCurrentLayerName(evt.target.value);
   };
 
   const handleKeyDown = (evt) => {
@@ -402,41 +418,35 @@ function Layer({ element }) {
           </LayerInputDescription>
         </LayerInputWrapper>
       ) : (
-        <LayerButton
-          ref={layerRef}
-          id={layerId}
-          onClick={handleClick}
-          isSelected={isSelected}
-        >
-          <LayerIconWrapper>
-            <LayerIcon
-              element={element}
-              getProxiedUrl={getProxiedUrl}
-              currentPageBackgroundColor={currentPageBackgroundColor}
-            />
-          </LayerIconWrapper>
-          <LayerDescription>
-            <LayerContentContainer>
-              {element.isBackground ? (
-                <LayerText>{__('Background', 'web-stories')}</LayerText>
-              ) : element.layerName ? (
-                <LayerText>{element.layerName}</LayerText>
-              ) : (
-                <LayerContent element={element} />
-              )}
-            </LayerContentContainer>
-            {element.isBackground && (
-              <IconWrapper>
-                <Icons.LockFilledClosed />
-              </IconWrapper>
-            )}
-            {element.isLocked && isLayerLockingEnabled && (
-              <IconWrapper>
-                <Icons.LockClosed />
-              </IconWrapper>
-            )}
-          </LayerDescription>
-        </LayerButton>
+      <LayerButton
+        ref={layerRef}
+        id={layerId}
+        onClick={handleClick}
+        isSelected={isSelected}
+      >
+        <LayerIconWrapper>
+          <LayerIcon
+            element={element}
+            getProxiedUrl={getProxiedUrl}
+            currentPageBackgroundColor={currentPageBackgroundColor}
+          />
+        </LayerIconWrapper>
+        <LayerDescription>
+          <LayerContentContainer>
+            <LayerText>{layerName}</LayerText>
+          </LayerContentContainer>
+          {element.isBackground && (
+            <IconWrapper>
+              <Icons.LockFilledClosed />
+            </IconWrapper>
+          )}
+          {element.isLocked && isLayerLockingEnabled && (
+            <IconWrapper aria-label={__('Locked', 'web-stories')}>
+              <Icons.LockClosed />
+            </IconWrapper>
+          )}
+        </LayerDescription>
+      </LayerButton>
       )}
       {!element.isBackground && !element.isRenamable && (
         <ActionsContainer>
