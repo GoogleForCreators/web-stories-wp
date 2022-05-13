@@ -28,15 +28,15 @@ const style = {
 
 const Noop = () => null;
 
-function StickerLayerContent({ element }) {
+function StickerLayerIcon({ element }) {
   const { sticker } = element;
   const Sticker = stickers[sticker.type]?.svg || Noop;
 
   return <Sticker style={style} />;
 }
 
-StickerLayerContent.propTypes = {
+StickerLayerIcon.propTypes = {
   element: StoryPropTypes.elements.sticker.isRequired,
 };
 
-export default StickerLayerContent;
+export default StickerLayerIcon;

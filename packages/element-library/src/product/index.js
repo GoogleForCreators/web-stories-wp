@@ -19,7 +19,7 @@
  */
 export { default as Display } from './display';
 export { default as Output } from './output';
-export { default as LayerContent } from './layer';
+export { default as getLayerText } from './layer';
 export { default as LayerIcon } from './icon';
 
 export * from './constants';
