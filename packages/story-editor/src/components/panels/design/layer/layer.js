@@ -29,7 +29,10 @@ import {
   THEME_CONSTANTS,
 } from '@googleforcreators/design-system';
 import { useRef, memo } from '@googleforcreators/react';
-import { getDefinitionForType } from '@googleforcreators/elements';
+import {
+  getDefinitionForType,
+  getLayerName,
+} from '@googleforcreators/elements';
 import { useFeature } from 'flagged';
 
 /**
@@ -277,7 +280,7 @@ function preventReorder(e) {
 
 function Layer({ element }) {
   const isLayerLockingEnabled = useFeature('layerLocking');
-  const { LayerIcon, getLayerText } = getDefinitionForType(element.type);
+  const { LayerIcon } = getDefinitionForType(element.type);
   const { isSelected, handleClick } = useLayerSelection(element);
   const { isDefaultBackground } = element;
   const {
@@ -314,9 +317,7 @@ function Layer({ element }) {
 
   const LockIcon = element.isLocked ? Icons.LockClosed : Icons.LockOpen;
 
-  const layerText = element.isBackground
-    ? __('Background', 'web-stories')
-    : getLayerText(element);
+  const layerName = getLayerName(element);
 
   return (
     <LayerContainer>
@@ -335,7 +336,7 @@ function Layer({ element }) {
         </LayerIconWrapper>
         <LayerDescription>
           <LayerContentContainer>
-            <LayerText>{layerText}</LayerText>
+            <LayerText>{layerName}</LayerText>
           </LayerContentContainer>
           {element.isBackground && (
             <IconWrapper>

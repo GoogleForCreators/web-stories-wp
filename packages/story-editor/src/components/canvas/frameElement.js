@@ -31,7 +31,10 @@ import {
 import { useUnits } from '@googleforcreators/units';
 import { useTransformHandler } from '@googleforcreators/transform';
 import PropTypes from 'prop-types';
-import { getDefinitionForType } from '@googleforcreators/elements';
+import {
+  getDefinitionForType,
+  getLayerName,
+} from '@googleforcreators/elements';
 import {
   elementWithPosition,
   elementWithSize,
@@ -191,7 +194,7 @@ function FrameElement({ id }) {
   });
 
   // Media needs separate handler for double click.
-  const { isMedia, getLayerText } = getDefinitionForType(type);
+  const { isMedia } = getDefinitionForType(type);
   const handleMediaDoubleClick = useCallback(
     (evt) => {
       if (!isSelected) {
@@ -269,17 +272,17 @@ function FrameElement({ id }) {
     }
   }, [setFocusGroupCleanup, isSelected]);
 
-  const layerText = getLayerText(element);
+  const layerName = getLayerName(element);
   const elementLabel = element.isLocked
     ? sprintf(
         // translators: %s: Name of element
         __('Locked element: %s', 'web-stories'),
-        layerText
+        layerName
       )
     : sprintf(
         // translators: %s: Name of element
         __('Element: %s', 'web-stories'),
-        layerText
+        layerName
       );
 
   return (
