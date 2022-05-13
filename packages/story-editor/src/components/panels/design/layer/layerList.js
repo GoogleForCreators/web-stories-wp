@@ -99,7 +99,7 @@ function LayerPanel({ layers }) {
     (element) => () => {
       setSelectedElementsById({ elementIds: [element.id] });
 
-      if (!element.isEditable) {
+      if (!element.isRenamable) {
         focusCanvas();
       }
     },

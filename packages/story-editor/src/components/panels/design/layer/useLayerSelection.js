@@ -26,7 +26,7 @@ import { useStory } from '../../../../app';
 import useFocusCanvas from '../../../canvas/useFocusCanvas';
 
 function useLayerSelection(layer) {
-  const { id: elementId, isEditable, isLocked, isBackground } = layer;
+  const { id: elementId, isRenamable, isLocked, isBackground } = layer;
   const { isSelected, toggleLayer, updateElementById } = useStory(
     ({ state, actions }) => ({
       isSelected: state.selectedElementIds.includes(elementId),
@@ -50,12 +50,12 @@ function useLayerSelection(layer) {
       if (evt.detail === 2 && !isLocked && !isBackground) {
         updateElementById({
           elementId: elementId,
-          properties: { isEditable: true },
+          properties: { isRenamable: true },
         });
       }
 
       // In any case, revert focus to selected element(s)
-      if (!isEditable) {
+      if (!isRenamable) {
         focusCanvas();
       }
     },
@@ -64,7 +64,7 @@ function useLayerSelection(layer) {
       elementId,
       focusCanvas,
       isBackground,
-      isEditable,
+      isRenamable,
       isLocked,
       updateElementById,
     ]

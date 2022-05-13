@@ -360,14 +360,14 @@ function Layer({ element }) {
     if (evt.key === 'Escape') {
       updateElementById({
         elementId: element.id,
-        properties: { isEditable: false },
+        properties: { isRenamable: false },
       });
     }
 
     if (evt.key === 'Enter') {
       updateElementById({
         elementId: element.id,
-        properties: { isEditable: false, layerName: layerName },
+        properties: { isRenamable: false, layerName: layerName },
       });
     }
   };
@@ -375,13 +375,13 @@ function Layer({ element }) {
   const handleBlur = () => {
     updateElementById({
       elementId: element.id,
-      properties: { isEditable: false, layerName: layerName },
+      properties: { isRenamable: false, layerName: layerName },
     });
   };
 
   return (
     <LayerContainer>
-      {element.isEditable ? (
+      {element.isRenamable ? (
         <LayerInputWrapper>
           <LayerIconWrapper>
             <LayerIcon
@@ -438,7 +438,7 @@ function Layer({ element }) {
           </LayerDescription>
         </LayerButton>
       )}
-      {!element.isBackground && !element.isEditable && (
+      {!element.isBackground && !element.isRenamable && (
         <ActionsContainer>
           <Tooltip title={__('Delete Layer', 'web-stories')} hasTail isDelayed>
             <LayerAction

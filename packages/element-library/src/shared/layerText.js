@@ -28,17 +28,14 @@ const StyledText = styled(Text)`
   max-width: 100%;
 `;
 
-export function LayerText({ isEditable, children }) {
+export function LayerText({ children }) {
   return (
     <StyledText
       forwardedAs="span"
       size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-      contentEditable={isEditable ? 'true' : 'false'}
-      suppressContentEditableWarning
-      role="textbox"
     >
       {children}
     </StyledText>
   );
 }
-LayerText.propTypes = { children: PropTypes.node, isEditable: PropTypes.bool };
+LayerText.propTypes = { children: PropTypes.node };

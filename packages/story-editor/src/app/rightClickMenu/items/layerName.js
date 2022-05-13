@@ -36,7 +36,7 @@ function LayerName() {
       updateSelectedElements({
         properties: (oldElement) => ({
           ...oldElement,
-          isEditable: oldElement.isLocked ? false : true,
+          isRenamable: true,
         }),
       }),
     [updateSelectedElements]
