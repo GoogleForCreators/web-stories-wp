@@ -37,11 +37,9 @@ function getLayerName(element) {
     return __('Background', 'web-stories');
   }
 
-  /* TODO: Enable this when layers can have names:
   if (element.layerName) {
     return element.layerName;
   }
-  */
 
   return getDefinitionForType(element.type).getLayerText(element);
 }

@@ -324,10 +324,9 @@ function preventReorder(e) {
 }
 
 function Layer({ element }) {
-  const [currentLayerName, setCurrentLayerName] = useState(
-    element.layerName
-      ? element.layerName
-      : __('Renaming a layer.', 'web-stories')
+  const layerName = getLayerName(element);
+  const [newLayerName, setNewLayerName] = useState(
+    layerName ? layerName : __('Renaming a layer.', 'web-stories')
   );
   const isLayerLockingEnabled = useFeature('layerLocking');
   const { LayerIcon } = getDefinitionForType(element.type);
@@ -367,10 +366,8 @@ function Layer({ element }) {
 
   const LockIcon = element.isLocked ? Icons.LockClosed : Icons.LockOpen;
 
-  const layerName = getLayerName(element);
-
   const handleChange = (evt) => {
-    setCurrentLayerName(evt.target.value);
+    setNewLayerName(evt.target.value);
   };
 
   const handleKeyDown = (evt) => {
@@ -384,7 +381,7 @@ function Layer({ element }) {
     if (evt.key === 'Enter') {
       updateElementById({
         elementId: element.id,
-        properties: { isRenamable: false, layerName: currentLayerName },
+        properties: { isRenamable: false, layerName: newLayerName },
       });
     }
   };
@@ -392,7 +389,7 @@ function Layer({ element }) {
   const handleBlur = () => {
     updateElementById({
       elementId: element.id,
-      properties: { isRenamable: false, layerName: currentLayerName },
+      properties: { isRenamable: false, layerName: newLayerName },
     });
   };
 
@@ -411,7 +408,7 @@ function Layer({ element }) {
             <LayerInput
               tabIndex={-1}
               aria-label={__('Renaming a layer.', 'web-stories')}
-              value={currentLayerName}
+              value={newLayerName}
               onChange={handleChange}
               onKeyDown={handleKeyDown}
               onBlur={handleBlur}
@@ -434,7 +431,7 @@ function Layer({ element }) {
           </LayerIconWrapper>
           <LayerDescription>
             <LayerContentContainer>
-              <LayerText>{element.layerName ? element.layerName : layerName}</LayerText>
+              <LayerText>{layerName}</LayerText>
             </LayerContentContainer>
             {element.isBackground && (
               <IconWrapper>
