@@ -13,12 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * External dependencies
  */
 import { useCallback } from '@googleforcreators/react';
-
 /**
  * Internal dependencies
  */
@@ -26,7 +24,7 @@ import { useStory } from '../../../../app';
 import useFocusCanvas from '../../../canvas/useFocusCanvas';
 
 function useLayerSelection(layer) {
-  const { id: elementId, isRenamable, isLocked, isBackground } = layer;
+  const { id: elementId, isRenamable } = layer;
   const { isSelected, toggleLayer, updateElementById } = useStory(
     ({ state, actions }) => ({
       isSelected: state.selectedElementIds.includes(elementId),
@@ -41,13 +39,16 @@ function useLayerSelection(layer) {
     (evt) => {
       evt.preventDefault();
       evt.stopPropagation();
+
+      const isDoubleClick = evt.detail === 2;
+
       toggleLayer({
         elementId,
         metaKey: evt.metaKey,
         shiftKey: evt.shiftKey,
       });
 
-      if (evt.detail === 2 && !isLocked && !isBackground) {
+      if (isDoubleClick) {
         updateElementById({
           elementId: elementId,
           properties: { isRenamable: true },
@@ -59,18 +60,9 @@ function useLayerSelection(layer) {
         focusCanvas();
       }
     },
-    [
-      toggleLayer,
-      elementId,
-      focusCanvas,
-      isBackground,
-      isRenamable,
-      isLocked,
-      updateElementById,
-    ]
+    [toggleLayer, elementId, focusCanvas, updateElementById, isRenamable]
   );
 
   return { isSelected, handleClick };
 }
-
 export default useLayerSelection;

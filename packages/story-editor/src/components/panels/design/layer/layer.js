@@ -27,6 +27,7 @@ import {
   themeHelpers,
   Text,
   THEME_CONSTANTS,
+  Input,
 } from '@googleforcreators/design-system';
 import { useRef, memo, useState } from '@googleforcreators/react';
 import {
@@ -383,7 +384,7 @@ function Layer({ element }) {
     if (evt.key === 'Enter') {
       updateElementById({
         elementId: element.id,
-        properties: { isRenamable: false, layerName: layerName },
+        properties: { isRenamable: false, layerName: currentLayerName },
       });
     }
   };
@@ -391,7 +392,7 @@ function Layer({ element }) {
   const handleBlur = () => {
     updateElementById({
       elementId: element.id,
-      properties: { isRenamable: false, layerName: layerName },
+      properties: { isRenamable: false, layerName: currentLayerName },
     });
   };
 
@@ -410,7 +411,7 @@ function Layer({ element }) {
             <LayerInput
               tabIndex={-1}
               aria-label={__('Renaming a layer.', 'web-stories')}
-              value={layerName}
+              value={currentLayerName}
               onChange={handleChange}
               onKeyDown={handleKeyDown}
               onBlur={handleBlur}
@@ -418,35 +419,35 @@ function Layer({ element }) {
           </LayerInputDescription>
         </LayerInputWrapper>
       ) : (
-      <LayerButton
-        ref={layerRef}
-        id={layerId}
-        onClick={handleClick}
-        isSelected={isSelected}
-      >
-        <LayerIconWrapper>
-          <LayerIcon
-            element={element}
-            getProxiedUrl={getProxiedUrl}
-            currentPageBackgroundColor={currentPageBackgroundColor}
-          />
-        </LayerIconWrapper>
-        <LayerDescription>
-          <LayerContentContainer>
-            <LayerText>{layerName}</LayerText>
-          </LayerContentContainer>
-          {element.isBackground && (
-            <IconWrapper>
-              <Icons.LockFilledClosed />
-            </IconWrapper>
-          )}
-          {element.isLocked && isLayerLockingEnabled && (
-            <IconWrapper aria-label={__('Locked', 'web-stories')}>
-              <Icons.LockClosed />
-            </IconWrapper>
-          )}
-        </LayerDescription>
-      </LayerButton>
+        <LayerButton
+          ref={layerRef}
+          id={layerId}
+          onClick={handleClick}
+          isSelected={isSelected}
+        >
+          <LayerIconWrapper>
+            <LayerIcon
+              element={element}
+              getProxiedUrl={getProxiedUrl}
+              currentPageBackgroundColor={currentPageBackgroundColor}
+            />
+          </LayerIconWrapper>
+          <LayerDescription>
+            <LayerContentContainer>
+              <LayerText>{element.layerName ? element.layerName : layerName}</LayerText>
+            </LayerContentContainer>
+            {element.isBackground && (
+              <IconWrapper>
+                <Icons.LockFilledClosed />
+              </IconWrapper>
+            )}
+            {element.isLocked && isLayerLockingEnabled && (
+              <IconWrapper aria-label={__('Locked', 'web-stories')}>
+                <Icons.LockClosed />
+              </IconWrapper>
+            )}
+          </LayerDescription>
+        </LayerButton>
       )}
       {!element.isBackground && !element.isRenamable && (
         <ActionsContainer>
