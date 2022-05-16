@@ -98,6 +98,9 @@ const ALLOWED_ERROR_MESSAGES = [
 
   // TODO(#9240): Fix usage in the web stories block.
   "select( 'core' ).getAuthors() is deprecated since version 5.9.",
+
+  // See https://www.chromestatus.com/feature/508239670987980
+  "Blocked attempt to show a 'beforeunload' confirmation panel for a frame that never had a user gesture since its load",
 ];
 
 export function addAllowedErrorMessage(message) {

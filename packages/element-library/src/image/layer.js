@@ -17,20 +17,11 @@
  * External dependencies
  */
 import { __ } from '@googleforcreators/i18n';
-import { StoryPropTypes } from '@googleforcreators/elements';
 
-/**
- * Internal dependencies
- */
-import { LayerText } from '../shared';
-
-function ImageLayerContent({ element }) {
+function getImageLayerText(element) {
   const { alt } = element?.resource || {};
 
-  return <LayerText>{alt || __('Image', 'web-stories')}</LayerText>;
+  return alt || __('Image', 'web-stories');
 }
-ImageLayerContent.propTypes = {
-  element: StoryPropTypes.element.isRequired,
-};
 
-export default ImageLayerContent;
+export default getImageLayerText;
