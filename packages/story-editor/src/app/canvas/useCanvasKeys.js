@@ -29,6 +29,8 @@ import { getDefinitionForType } from '@googleforcreators/elements';
 /**
  * Internal dependencies
  */
+import states from '../highlights/states';
+import useHighlights from '../highlights/useHighlights';
 import { useStory } from '../story';
 import { LAYER_DIRECTIONS } from '../../constants';
 import { useCanvas } from '.';
@@ -82,6 +84,10 @@ function useCanvasKeys(ref) {
       };
     }
   );
+
+  const { setHighlights } = useHighlights(({ setHighlights }) => ({
+    setHighlights,
+  }));
 
   const { isEditing, getNodeForElement, setEditingElement } = useCanvas(
     ({
@@ -233,7 +239,7 @@ function useCanvasKeys(ref) {
     STORY_ANIMATION_STATE.PLAYING_SELECTED,
   ].includes(animationState);
   useGlobalKeyDownEffect(
-    { key: ['mod+k'] },
+    { key: ['mod+space'] },
     (evt) => {
       evt.preventDefault();
       if (currentPageNumber === 1) {
@@ -250,6 +256,21 @@ function useCanvasKeys(ref) {
       });
     },
     [isPlaying, updateAnimationState, currentPageNumber]
+  );
+
+  useGlobalKeyDownEffect(
+    { key: ['mod+k'] },
+    (evt) => {
+      evt.preventDefault();
+      if (!selectedElements.length || selectedElements?.[0]?.isBackground) {
+        return;
+      }
+      setHighlights({
+        elements: selectedElements,
+        highlight: states.LINK,
+      });
+    },
+    [setHighlights, selectedElements]
   );
 }
 

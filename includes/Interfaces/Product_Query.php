@@ -1,4 +1,14 @@
-/*
+<?php
+/**
+ * Interface Product_Query
+ *
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
+ * @copyright 2022 Google LLC
+ * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
+ */
+
+/**
  * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,17 +23,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { default as getDefinitionForType } from './getDefinitionForType';
-export { default as createNewElement } from './createNewElement';
-export {
-  default as createPage,
-  DEFAULT_PAGE_BACKGROUND_COLOR,
-} from './createPage';
-export { default as duplicatePage } from './duplicatePage';
-export { default as isElementBelowLimit } from './isElementBelowLimit';
-export { default as getTransformFlip } from './getTransformFlip';
-export { default as getLayerName } from './getLayerName';
-export {
-  default as duplicateElement,
-  getOffsetCoordinates,
-} from './duplicateElement';
+
+namespace Google\Web_Stories\Interfaces;
+
+use Google\Web_Stories\Shopping\Product;
+use WP_Error;
+
+/**
+ * Interface Product_Query.
+ */
+interface Product_Query {
+	/**
+	 * Get products by search term.
+	 *
+	 * @since 1.21.0
+	 *
+	 * @param string $search_term Search term.
+	 * @return Product[]|WP_Error
+	 */
+	public function get_search( string $search_term );
+}
