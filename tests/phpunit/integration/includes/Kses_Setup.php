@@ -32,10 +32,9 @@ trait Kses_Setup {
 	 * Setup KSES init class.
 	 */
 	protected function kses_int(): void {
-		$settings    = new \Google\Web_Stories\Settings();
-		$experiments = new \Google\Web_Stories\Experiments( $settings );
-		$this->kses  = new \Google\Web_Stories\KSES(
-			new \Google\Web_Stories\Story_Post_Type( $settings, $experiments )
+		$settings   = $this->createMock( \Google\Web_Stories\Settings::class );
+		$this->kses = new \Google\Web_Stories\KSES(
+			new \Google\Web_Stories\Story_Post_Type( $settings )
 		);
 		$this->kses->register();
 	}

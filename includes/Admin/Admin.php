@@ -137,6 +137,10 @@ class Admin extends Service_Base {
 			return $content;
 		}
 
+		if ( ! $story->get_title() ) {
+			$story->set_title( __( 'Web Story', 'web-stories' ) );
+		}
+
 		$args = [
 			'align'  => 'none',
 			'height' => 600,
@@ -158,6 +162,8 @@ class Admin extends Service_Base {
 			);
 		}
 
+		$story->set_poster_sizes( '' );
+		$story->set_poster_srcset( '' );
 		$renderer = new Image( $story );
 		$html     = $renderer->render( $args );
 

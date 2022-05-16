@@ -173,12 +173,14 @@ function delete_posts(): void {
 function delete_terms(): void {
 	$taxonomies = [];
 
-	$settings  = new Settings();
-	$post_type = new Story_Post_Type( $settings );
+	$injector = Services::get_injector();
+	if ( ! method_exists( $injector, 'make' ) ) {
+		return;
+	}
 
-	$taxonomies[] = ( new Media_Source_Taxonomy( new Context( $post_type ) ) )->get_taxonomy_slug();
-	$taxonomies[] = ( new Category_Taxonomy( $post_type ) )->get_taxonomy_slug();
-	$taxonomies[] = ( new Tag_Taxonomy( $post_type ) )->get_taxonomy_slug();
+	$taxonomies[] = $injector->make( Media_Source_Taxonomy::class )->get_taxonomy_slug();
+	$taxonomies[] = $injector->make( Category_Taxonomy::class )->get_taxonomy_slug();
+	$taxonomies[] = $injector->make( Tag_Taxonomy::class )->get_taxonomy_slug();
 
 	$term_query = new WP_Term_Query();
 	$terms      = $term_query->query(
