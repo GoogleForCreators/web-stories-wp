@@ -47,10 +47,10 @@ describe('Shopping', () => {
       it('should match a valid schema', async () => {
         await createNewStory();
         await insertProduct('Hoodie with Zipper');
-        await insertProduct('Album');
-        await insertProduct('Sunglasses');
-        await publishStory();
+        await insertProduct('Album', false);
+        await insertProduct('Sunglasses', false);
         const previewPage = await previewStory(page);
+
         await previewPage.waitForSelector(
           'amp-story-shopping-attachment script'
         );
