@@ -18,15 +18,17 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Text } from '@googleforcreators/design-system';
+import { Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
  */
 import { useConfig } from '../../../../app/config';
 
-const StyledPrice = styled(Text)`
-  color: ${({ theme }) => theme.colors.fg.tertiary};
+const StyledPrice = styled(Text).attrs({
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+})`
+color: ${({ theme }) => theme.colors.fg.tertiary}
 `;
 
 function ProductPrice({ price, currency }) {
