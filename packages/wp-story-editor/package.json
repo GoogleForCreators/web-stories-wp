@@ -41,7 +41,7 @@
     "@googleforcreators/url": "*",
     "@web-stories-wp/wp-utils": "*",
     "@wordpress/api-fetch": "^6.4.0",
-    "@wordpress/dom-ready": "^3.7.0",
+    "@wordpress/dom-ready": "^3.8.0",
     "flagged": "^2.0.3",
     "polished": "^4.2.2",
     "react-calendar": "^3.7.0",

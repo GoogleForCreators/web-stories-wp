@@ -27,7 +27,7 @@
   "main": "./src/index.js",
   "dependencies": {
     "@web-stories-wp/glider": "*",
-    "@wordpress/dom-ready": "^3.7.0"
+    "@wordpress/dom-ready": "^3.8.0"
   },
   "devDependencies": {}
 }
