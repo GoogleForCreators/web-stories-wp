@@ -36,10 +36,7 @@ export default {
   },
   testMatch: ['**/specs/**/*.[jt]s', '**/?(*.)spec.[jt]s'],
   // @jest/test-sequencer is the default.
-  testSequencer:
-    'true' === process.env.CI
-      ? '@web-stories-wp/jest-parallel-sequencer'
-      : undefined,
+  testSequencer: undefined,
   testPathIgnorePatterns: [
     '<rootDir>/.git',
     '<rootDir>/node_modules',
