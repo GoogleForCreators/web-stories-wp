@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { __, _x } from '@googleforcreators/i18n';
+import { __ } from '@googleforcreators/i18n';
 import { DropDown } from '@googleforcreators/design-system';
 
 /**
@@ -30,21 +30,11 @@ export const TEXT = {
   SLOT_ID_LABEL: __('Shopping provider', 'web-stories'),
 };
 
-const OPTIONS = [
-  {
-    label: _x('None', 'shopping provider', 'web-stories'),
-    value: SHOPPING_PROVIDER_TYPE.NONE,
-  },
-  {
-    label: __('WooCommerce', 'web-stories'),
-    value: SHOPPING_PROVIDER_TYPE.WOOCOMMERCE,
-  },
-  {
-    label: __('Shopify', 'web-stories'),
-    value: SHOPPING_PROVIDER_TYPE.SHOPIFY,
-  },
-];
-function ShoppingProviderDropDown({ shoppingProvider, handleUpdate }) {
+function ShoppingProviderDropDown({ vendors, shoppingProvider, handleUpdate }) {
+  const OPTIONS = [];
+  Object.entries(vendors).forEach(([value, label]) =>
+    OPTIONS.push({ label, value })
+  );
   return (
     <DropDown
       ariaLabel={TEXT.SLOT_ID_LABEL}
@@ -58,6 +48,7 @@ function ShoppingProviderDropDown({ shoppingProvider, handleUpdate }) {
   );
 }
 ShoppingProviderDropDown.propTypes = {
+  vendors: PropTypes.object,
   handleUpdate: PropTypes.func,
   shoppingProvider: PropTypes.oneOf(Object.values(SHOPPING_PROVIDER_TYPE)),
 };

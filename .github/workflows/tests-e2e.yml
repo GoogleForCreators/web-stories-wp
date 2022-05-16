@@ -150,12 +150,12 @@ jobs:
             snapshots: true
             shard: '4/4'
           - browser: 'chrome'
-            wp: '6.0-RC1'
+            wp: '6.0-RC2'
             experimental: true
             snapshots: false
             shard: '1/2'
           - browser: 'chrome'
-            wp: '6.0-RC1'
+            wp: '6.0-RC2'
             experimental: true
             snapshots: false
             shard: '2/2'

@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-export { default as LayerContent } from './layer';
+export { default as getLayerText } from './layer';
 export { default as Output } from './output';
 export { default as LayerIcon } from './icon';
 export { default as Display } from './display';

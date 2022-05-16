@@ -26,6 +26,7 @@ const KEY_MAP = {
   META: 'Meta',
   RIGHT: 'ArrowRight',
   SHIFT: 'Shift',
+  SPACE: 'Space',
   TAB: 'Tab',
   UP: 'ArrowUp',
 };
