@@ -31,7 +31,10 @@ import {
 import { useUnits } from '@googleforcreators/units';
 import { useTransformHandler } from '@googleforcreators/transform';
 import PropTypes from 'prop-types';
-import { getDefinitionForType } from '@googleforcreators/elements';
+import {
+  getDefinitionForType,
+  getLayerName,
+} from '@googleforcreators/elements';
 import {
   elementWithPosition,
   elementWithSize,
@@ -269,6 +272,19 @@ function FrameElement({ id }) {
     }
   }, [setFocusGroupCleanup, isSelected]);
 
+  const layerName = getLayerName(element);
+  const elementLabel = element.isLocked
+    ? sprintf(
+        // translators: %s: Name of element
+        __('Locked element: %s', 'web-stories'),
+        layerName
+      )
+    : sprintf(
+        // translators: %s: Name of element
+        __('Element: %s', 'web-stories'),
+        layerName
+      );
+
   return (
     <WithLink element={element} active={isLinkActive} anchorRef={elementRef}>
       {Controls && (
@@ -282,12 +298,14 @@ function FrameElement({ id }) {
           isActive={isActive}
         />
       )}
+      {/* eslint-disable-next-line styled-components-a11y/click-events-have-key-events -- False positive */}
       <Wrapper
         ref={combinedFocusGroupRef}
         data-element-id={id}
         {...box}
         tabIndex={-1}
-        role="presentation"
+        role="button"
+        aria-label={elementLabel}
         hasMask={isMaskable}
         data-testid="frameElement"
         onMouseDown={handleMouseDown}

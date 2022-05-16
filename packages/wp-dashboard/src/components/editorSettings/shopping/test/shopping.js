@@ -28,6 +28,11 @@ import { renderWithProviders } from '../../../../testUtils';
 import { SHOPPING_PROVIDER_TYPE } from '../../../../constants';
 
 const updateSettings = jest.fn();
+const vendors = {
+  none: 'None',
+  shopify: 'Shopify',
+  woocommerce: 'WooCommerce',
+};
 
 describe('Editor Settings: Shopping <Shopping />', function () {
   beforeEach(() => {
@@ -41,6 +46,7 @@ describe('Editor Settings: Shopping <Shopping />', function () {
         shopifyHost="yourstore.myshopify.com"
         shopifyAccessToken=""
         updateSettings={updateSettings}
+        vendors={vendors}
       />
     );
 
@@ -59,6 +65,7 @@ describe('Editor Settings: Shopping <Shopping />', function () {
         shopifyHost="yourstore.myshopify.com"
         shopifyAccessToken=""
         updateSettings={updateSettings}
+        vendors={vendors}
       />
     );
 
@@ -79,6 +86,7 @@ describe('Editor Settings: Shopping <Shopping />', function () {
         shopifyHost="yourstore.myshopify.com"
         shopifyAccessToken=""
         updateSettings={updateSettings}
+        vendors={vendors}
       />
     );
 

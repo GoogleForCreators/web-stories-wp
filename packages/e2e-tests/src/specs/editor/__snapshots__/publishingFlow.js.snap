@@ -1,9 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`Publishing Flow Classic Editor should guide me towards creating a new post to embed my story 1`] = `"[web_stories_embed url=\\"http://localhost:8899/web-stories/publishing-flow-test-shortcode\\" title=\\"Publishing Flow Test (Shortcode)\\" poster=\\"\\" width=\\"360\\" height=\\"600\\" align=\\"none\\"]"`;
-
-exports[`Publishing Flow should guide me towards creating a new post to embed my story 1`] = `
-"<!-- wp:web-stories/embed {\\"blockType\\":\\"url\\",\\"url\\":\\"http://localhost:8899/web-stories/publishing-flow-test\\",\\"title\\":\\"Publishing Flow Test\\",\\"poster\\":\\"\\",\\"stories\\":[],\\"authors\\":[],\\"fieldState\\":{}} -->
-<div class=\\"wp-block-web-stories-embed alignnone\\"><a href=\\"http://localhost:8899/web-stories/publishing-flow-test\\">Publishing Flow Test</a></div>
-<!-- /wp:web-stories/embed -->"
-`;
