@@ -37,6 +37,7 @@ use Google\Web_Stories\Integrations\Site_Kit;
 use Google\Web_Stories\Locale;
 use Google\Web_Stories\Media\Types;
 use Google\Web_Stories\Service_Base;
+use Google\Web_Stories\Shopping\Shopping_Vendors;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tracking;
 
@@ -128,22 +129,30 @@ class Dashboard extends Service_Base {
 	private $types;
 
 	/**
+	 * Shopping_Vendors instance.
+	 *
+	 * @var Shopping_Vendors Shopping_Vendors instance.
+	 */
+	private $shopping_vendors;
+
+	/**
 	 * Dashboard constructor.
 	 *
 	 * @SuppressWarnings(PHPMD.ExcessiveParameterList)
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param Experiments     $experiments     Experiments instance.
-	 * @param Site_Kit        $site_kit        Site_Kit instance.
-	 * @param Decoder         $decoder         Decoder instance.
-	 * @param Locale          $locale          Locale instance.
-	 * @param Google_Fonts    $google_fonts    Google_Fonts instance.
-	 * @param Assets          $assets          Assets instance.
-	 * @param Font_Post_Type  $font_post_type  Font_Post_Type instance.
-	 * @param Story_Post_Type $story_post_type Story_Post_Type instance.
-	 * @param Context         $context         Context instance.
-	 * @param Types           $types           Types instance.
+	 * @param Experiments      $experiments      Experiments instance.
+	 * @param Site_Kit         $site_kit         Site_Kit instance.
+	 * @param Decoder          $decoder          Decoder instance.
+	 * @param Locale           $locale           Locale instance.
+	 * @param Google_Fonts     $google_fonts     Google_Fonts instance.
+	 * @param Assets           $assets           Assets instance.
+	 * @param Font_Post_Type   $font_post_type   Font_Post_Type instance.
+	 * @param Story_Post_Type  $story_post_type  Story_Post_Type instance.
+	 * @param Context          $context          Context instance.
+	 * @param Types            $types            Types instance.
+	 * @param Shopping_Vendors $shopping_vendors Shopping_Vendors instance.
 	 */
 	public function __construct(
 		Experiments $experiments,
@@ -155,18 +164,20 @@ class Dashboard extends Service_Base {
 		Font_Post_Type $font_post_type,
 		Story_Post_Type $story_post_type,
 		Context $context,
-		Types $types
+		Types $types,
+		Shopping_Vendors $shopping_vendors
 	) {
-		$this->experiments     = $experiments;
-		$this->decoder         = $decoder;
-		$this->site_kit        = $site_kit;
-		$this->locale          = $locale;
-		$this->google_fonts    = $google_fonts;
-		$this->assets          = $assets;
-		$this->font_post_type  = $font_post_type;
-		$this->story_post_type = $story_post_type;
-		$this->context         = $context;
-		$this->types           = $types;
+		$this->experiments      = $experiments;
+		$this->decoder          = $decoder;
+		$this->site_kit         = $site_kit;
+		$this->locale           = $locale;
+		$this->google_fonts     = $google_fonts;
+		$this->assets           = $assets;
+		$this->font_post_type   = $font_post_type;
+		$this->story_post_type  = $story_post_type;
+		$this->context          = $context;
+		$this->types            = $types;
+		$this->shopping_vendors = $shopping_vendors;
 	}
 
 	/**
@@ -412,6 +423,7 @@ class Dashboard extends Service_Base {
 		}
 		$mime_types               = $this->types->get_allowed_mime_types();
 		$allowed_image_mime_types = $mime_types['image'];
+		$vendors                  = wp_list_pluck( $this->shopping_vendors->get_vendors(), 'label' );
 
 		$settings = [
 			'isRTL'                   => is_rtl(),
@@ -434,6 +446,7 @@ class Dashboard extends Service_Base {
 				'pages'          => '/wp/v2/pages/',
 				'publisherLogos' => '/web-stories/v1/publisher-logos/',
 			],
+			'vendors'                 => $vendors,
 			'maxUpload'               => $max_upload_size,
 			'maxUploadFormatted'      => size_format( $max_upload_size ),
 			'capabilities'            => [
