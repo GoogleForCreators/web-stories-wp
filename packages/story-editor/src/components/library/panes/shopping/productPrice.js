@@ -28,7 +28,7 @@ import { useConfig } from '../../../../app/config';
 const StyledPrice = styled(Text).attrs({
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
 })`
-color: ${({ theme }) => theme.colors.fg.tertiary}
+  color: ${({ theme }) => theme.colors.fg.tertiary};
 `;
 
 function ProductPrice({ price, currency }) {

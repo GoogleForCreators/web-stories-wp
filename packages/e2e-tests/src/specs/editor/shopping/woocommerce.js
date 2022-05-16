@@ -19,7 +19,6 @@
 import {
   createNewStory,
   withExperimentalFeatures,
-  publishStory,
   minWPVersionRequired,
   previewStory,
   withPlugin,

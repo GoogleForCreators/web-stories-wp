@@ -52,7 +52,7 @@ export const insertProduct = async (product, clickOnTab = true) => {
         response.url().includes('web-stories/v1/products') &&
         response.status() === 200
     ),
-    await page.waitForSelector(`[aria-label="Add ${product}"]`)
+    await page.waitForSelector(`[aria-label="Add ${product}"]`),
   ]);
 
   expect(page).toClick(`[aria-label="Add ${product}"]`);
@@ -60,7 +60,8 @@ export const insertProduct = async (product, clickOnTab = true) => {
   await page.waitForTimeout(400);
 
   await page.waitForSelector(
-    '[aria-label="Design menu"] [aria-label="Product"]', { text: product }
+    '[aria-label="Design menu"] [aria-label="Product"]',
+    { text: product }
   );
 };
 
