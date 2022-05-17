@@ -29,7 +29,7 @@ import {
   THEME_CONSTANTS,
   Input,
 } from '@googleforcreators/design-system';
-import { useRef, memo, useState } from '@googleforcreators/react';
+import { useRef, memo, useState, useCallback } from '@googleforcreators/react';
 import {
   getDefinitionForType,
   getLayerName,
@@ -40,7 +40,7 @@ import { useFeature } from 'flagged';
  * Internal dependencies
  */
 import StoryPropTypes from '../../../../types';
-import { useStory } from '../../../../app';
+import { useStory, useCanvas } from '../../../../app';
 import useCORSProxy from '../../../../utils/useCORSProxy';
 import usePerformanceTracking from '../../../../utils/usePerformanceTracking';
 import { TRACKING_EVENTS } from '../../../../constants';
@@ -345,6 +345,13 @@ function Layer({ element }) {
       !isDefaultBackground || state.currentPage?.backgroundColor,
   }));
 
+  const { renamableLayer, setRenamableLayer } = useCanvas(
+    ({ state, actions }) => ({
+      renamableLayer: state.renamableLayer,
+      setRenamableLayer: actions.setRenamableLayer
+    })
+  );
+
   const { getProxiedUrl } = useCORSProxy();
   const layerRef = useRef(null);
   usePerformanceTracking({
@@ -370,32 +377,34 @@ function Layer({ element }) {
     setNewLayerName(evt.target.value);
   };
 
-  const handleKeyDown = (evt) => {
+  const handleKeyDown = useCallback(
+    (evt) => {
     if (evt.key === 'Escape') {
-      updateElementById({
-        elementId: element.id,
-        properties: { isRenamable: false },
-      });
+      setRenamableLayer({elementId: ''});
     }
 
     if (evt.key === 'Enter') {
+      setRenamableLayer({elementId: ''});
       updateElementById({
         elementId: element.id,
-        properties: { isRenamable: false, layerName: newLayerName },
+        properties: { layerName: newLayerName },
       });
     }
-  };
+  },
+  [setRenamableLayer, updateElementById]
+);
 
   const handleBlur = () => {
+    setRenamableLayer({elementId: ''});
     updateElementById({
       elementId: element.id,
-      properties: { isRenamable: false, layerName: newLayerName },
+      properties: { layerName: newLayerName },
     });
   };
 
   return (
     <LayerContainer>
-      {element.isRenamable ? (
+      {renamableLayer?.elementId === element.id ? (
         <LayerInputWrapper>
           <LayerIconWrapper>
             <LayerIcon
@@ -412,6 +421,7 @@ function Layer({ element }) {
               onChange={handleChange}
               onKeyDown={handleKeyDown}
               onBlur={handleBlur}
+              hasFocus={true}
             />
           </LayerInputDescription>
         </LayerInputWrapper>
@@ -446,7 +456,7 @@ function Layer({ element }) {
           </LayerDescription>
         </LayerButton>
       )}
-      {!element.isBackground && !element.isRenamable && (
+      {!element.isBackground && renamableLayer?.elementId === '' && (
         <ActionsContainer>
           <Tooltip title={__('Delete Layer', 'web-stories')} hasTail isDelayed>
             <LayerAction

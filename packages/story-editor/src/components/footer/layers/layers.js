@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useState, useRef } from '@googleforcreators/react';
+import { useState, useRef, useEffect } from '@googleforcreators/react';
 import { __, sprintf } from '@googleforcreators/i18n';
 import { PLACEMENT } from '@googleforcreators/design-system';
 /**
@@ -29,6 +29,7 @@ import { LayerPanel } from '../../panels/design';
 import useLayers from '../../panels/design/layer/useLayers';
 import Popup, { NavigationWrapper } from '../../secondaryPopup';
 import { ToggleButton } from '../../toggleButton';
+import { useCanvas } from '../../../app';
 
 const Container = styled.div`
   background-color: ${({ theme }) => theme.colors.bg.secondary};
@@ -43,7 +44,16 @@ function Layers() {
   const layersLength = useLayers().length;
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef();
+  const { renamableLayer } = useCanvas(
+    ({ state }) => ({
+      renamableLayer: state.renamableLayer,
+    })
+  );
 
+  useEffect(() => {
+    setIsOpen(true);
+  }, [renamableLayer]);
+  
   return (
     <>
       <Popup

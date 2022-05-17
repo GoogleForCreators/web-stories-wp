@@ -25,21 +25,26 @@ import { useFeature } from 'flagged';
  * Internal dependencies
  */
 import { RIGHT_CLICK_MENU_LABELS } from '../constants';
-import { useStory } from '../..';
+import { useCanvas, useStory } from '../..';
 
 function LayerName() {
-  const updateSelectedElements = useStory(
-    (ctx) => ctx.actions.updateSelectedElements
+  const { selectedElementIds } = useStory(
+    ({ state }) => ({
+      selectedElementIds: state.selectedElementIds,
+    })
   );
-  const toggleLayerNaming = useCallback(
-    () =>
-      updateSelectedElements({
-        properties: (oldElement) => ({
-          ...oldElement,
-          isRenamable: true,
-        }),
-      }),
-    [updateSelectedElements]
+  const { setRenamableLayer } = useCanvas(
+    ({ actions }) => ({
+      setRenamableLayer: actions.setRenamableLayer,
+    })
+  );
+  const enableLayerNaming = useCallback(
+    () => {
+      setRenamableLayer({
+        elementId: selectedElementIds[0],
+      })
+    },
+    [setRenamableLayer, selectedElementIds]
   );
 
   const isLayerNamingEnabled = useFeature('layerNaming');
@@ -51,7 +56,7 @@ function LayerName() {
   return (
     <>
       <ContextMenuComponents.MenuSeparator />
-      <ContextMenuComponents.MenuButton onClick={toggleLayerNaming}>
+      <ContextMenuComponents.MenuButton onClick={enableLayerNaming}>
         {RIGHT_CLICK_MENU_LABELS.RENAME_LAYER}
       </ContextMenuComponents.MenuButton>
     </>
