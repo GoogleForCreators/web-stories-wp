@@ -28,9 +28,10 @@ namespace Google\Web_Stories\REST_API;
 
 use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Settings;
+use Google\Web_Stories\Shopping\Product;
+use Google\Web_Stories\Shopping\Shopping_Vendors;
 use Google\Web_Stories\Story_Post_Type;
 use WP_Error;
-use WP_Http;
 use WP_REST_Request;
 use WP_REST_Response;
 use WP_REST_Server;
@@ -39,12 +40,6 @@ use WP_REST_Server;
  * Class to access publisher logos via the REST API.
  *
  * @since 1.20.0
- *
- * @phpstan-type ShopifyGraphQLError array{message: string, extensions: array{code: string, requestId: string}}[]
- * @phpstan-type ShopifyGraphQLPriceRange array{minVariantPrice: array{amount: int, currencyCode: string}}
- * @phpstan-type ShopifyGraphQLProductImage array{url: string, altText: string}
- * @phpstan-type ShopifyGraphQLProduct array{id: string, handle: string, title: string, vendor: string, description: string, onlineStoreUrl?: string, images: array{edges: array{node: ShopifyGraphQLProductImage}[]}, priceRange: ShopifyGraphQLPriceRange}
- * @phpstan-type ShopifyGraphQLResponse array{errors?: ShopifyGraphQLError, data: array{products: array{edges: array{node: ShopifyGraphQLProduct}[]}}}
  */
 class Products_Controller extends REST_Controller implements HasRequirements {
 
@@ -62,15 +57,25 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 	 */
 	private $story_post_type;
 
+
+	/**
+	 * Shopping_Vendors instance.
+	 *
+	 * @var Shopping_Vendors Shopping_Vendors instance.
+	 */
+	private $shopping_vendors;
+
 	/**
 	 * Constructor.
 	 *
-	 * @param Settings        $settings Settings instance.
-	 * @param Story_Post_Type $story_post_type Story_Post_Type instance.
+	 * @param Settings         $settings Settings instance.
+	 * @param Story_Post_Type  $story_post_type Story_Post_Type instance.
+	 * @param Shopping_Vendors $shopping_vendors Shopping_Vendors instance.
 	 */
-	public function __construct( Settings $settings, Story_Post_Type $story_post_type ) {
-		$this->settings        = $settings;
-		$this->story_post_type = $story_post_type;
+	public function __construct( Settings $settings, Story_Post_Type $story_post_type, Shopping_Vendors $shopping_vendors ) {
+		$this->settings         = $settings;
+		$this->story_post_type  = $story_post_type;
+		$this->shopping_vendors = $shopping_vendors;
 
 		$this->namespace = 'web-stories/v1';
 		$this->rest_base = 'products';
@@ -142,260 +147,124 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 	 */
 	public function get_items( $request ) {
 		// TODO(#11154): Refactor to extract product query logic out of this controller.
-		$shopping_provider = $this->settings->get_setting( Settings::SETTING_NAME_SHOPPING_PROVIDER );
-		switch ( $shopping_provider ) {
-			case 'woocommerce':
-				$response = $this->get_items_woocommerce( $request );
-				break;
-			case 'shopify':
-				$response = $this->get_items_shopify( $request );
-				break;
-			default:
-				$response = rest_ensure_response( [] );
-		}
-		
-		return $response;
-	}
-
-	/**
-	 * Retrieves all Shopify products.
-	 *
-	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
-	 *
-	 * @since 1.20.0
-	 *
-	 * @param WP_REST_Request $request Full details about the request.
-	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
-	 */
-	protected function get_items_shopify( $request ) {
 		/**
-		 * Search term.
+		 * Shopping provider.
+		 *
+		 * @var string $shopping_provider
+		 */
+		$shopping_provider = $this->settings->get_setting( Settings::SETTING_NAME_SHOPPING_PROVIDER );
+		$query             = $this->shopping_vendors->get_vendor_class( $shopping_provider );
+
+		if ( ! $query ) {
+			return new WP_Error( 'unable_to_find_class', __( 'Unable to find class', 'web-stories' ), [ 'status' => 400 ] );
+		}
+
+		/**
+		 * Request context.
 		 *
 		 * @var string $search_term
 		 */
-		$search_term = $request['search'];
-
-		/**
-		 * Filters the shopify products data TTL value.
-		 *
-		 * @since 1.20.0
-		 *
-		 * @param int $time Time to live (in seconds). Default is 1 day.
-		 * @param WP_REST_Request $request Full details about the request.
-		 */
-		$cache_ttl = apply_filters( 'web_stories_shopify_data_cache_ttl', DAY_IN_SECONDS, $request ); // TODO: lower default TTL.
-		$cache_key = ! empty( $request['search'] ) ? 'web_stories_shopify_data_' . md5( $search_term ) : 'web_stories_shopify_data_default';
-
-		$data = get_transient( $cache_key );
-
-		if ( \is_string( $data ) && ! empty( $data ) ) {
-			/**
-			 * Decoded cached products data.
-			 *
-			 * @var array|null $products
-			 */
-			$products = json_decode( $data, true );
-
-			if ( $products ) {
-				return rest_ensure_response( $products );
-			}
+		$search_term  = ! empty( $request['search'] ) ? $request['search'] : '';
+		$query_result = $query->get_search( $search_term );
+		if ( is_wp_error( $query_result ) ) {
+			return $query_result;
 		}
 
-		$results = [];
-
-		/**
-		 * Shopify host.
-		 *
-		 * @var string $host
-		 */
-		$host = $this->settings->get_setting( Settings::SETTING_NAME_SHOPIFY_HOST );
-
-		/**
-		 * Shopify access token.
-		 *
-		 * @var string $access_token
-		 */
-		$access_token = $this->settings->get_setting( Settings::SETTING_NAME_SHOPIFY_ACCESS_TOKEN );
-
-		// TODO(#11154): Maybe move to a class constant.
-		$api_version = '2022-01';
-
-		// TODO(#11154): Proper sanitization.
-		$url = sprintf(
-			'https://%1$s/api/%2$s/graphql.json',
-			$host,
-			$api_version
-		);
-
-		$search_string = empty( $search_term ) ? '*' : '*' . $search_term . '*';
-
-		// TODO(#11154): Support different sortKeys.
-		// Maybe use "available_for_sale:true AND " query to only show items in stock.
-		$query = <<<QUERY
-{
-  products(first: 100, sortKey: CREATED_AT, query: "title:$search_string") {
-    edges {
-      node {
-        id
-        handle
-        title
-        vendor
-        description
-        priceRange {
-          minVariantPrice {
-            amount
-            currencyCode
-          }
-        }
-        onlineStoreUrl
-        images(first: 10) {
-          edges {
-            node {
-              url
-              altText
-            }
-          }
-        }
-      }
-    }
-  }
-}
-QUERY;
-
-		$response = wp_remote_post(
-			$url,
-			[
-				'headers' => [
-					'Content-Type'                      => 'application/graphql',
-					'X-Shopify-Storefront-Access-Token' => $access_token,
-				],
-				'body'    => $query,
-			]
-		);
-
-		if ( WP_Http::OK !== wp_remote_retrieve_response_code( $response ) ) {
-			return new \WP_Error( 'rest_unknown', __( 'Error fetching products', 'web-stories' ), [ 'status' => 404 ] );
+		$products = [];
+		foreach ( $query_result as $product ) {
+			$data       = $this->prepare_item_for_response( $product, $request );
+			$products[] = $this->prepare_response_for_collection( $data );
 		}
 
-		/**
-		 * Shopify GraphQL API response.
-		 *
-		 * @var ShopifyGraphQLResponse $result
-		 */
-		$result = json_decode( wp_remote_retrieve_body( $response ), true );
-
-		// TODO: Error handling.
-		if ( isset( $result['errors'] ) ) {
-			return new \WP_Error( 'rest_unknown', __( 'Error fetching products', 'web-stories' ), [ 'status' => 404 ] );
-		}
-
-		foreach ( $result['data']['products']['edges'] as $edge ) {
-			$product = $edge['node'];
-
-			$images = [];
-
-			foreach ( $product['images']['edges'] as $image_edge ) {
-				$image    = $image_edge['node'];
-				$images[] = [
-					'url' => $image['url'],
-					'alt' => $image['altText'],
-				];
-			}
-
-			// URL is null if the resource is currently not published to the Online Store sales channel,
-			// or if the shop is password-protected.
-			// In this case, we can fall back to a manually constructed product URL.
-			$product_url = $product['onlineStoreUrl'] ?? sprintf( 'https://%1$s/products/%2$s/', $host, $product['handle'] );
-
-			$results[] = [
-				'productId'            => $product['id'],
-				'productTitle'         => $product['title'],
-				'productBrand'         => $product['vendor'],
-				// TODO: Maybe eventually provide full price range.
-				// See https://github.com/ampproject/amphtml/issues/37957.
-				'productPrice'         => (float) $product['priceRange']['minVariantPrice']['amount'],
-				'productPriceCurrency' => $product['priceRange']['minVariantPrice']['currencyCode'],
-				'productImages'        => $images,
-				'productDetails'       => $product['description'],
-				// URL is null if the resource is currently not published to the Online Store sales channel,
-				// or if the shop is password-protected.
-				'productUrl'           => $product_url,
-			];
-		}
-
-		set_transient( $cache_key, wp_json_encode( $results ), $cache_ttl );
-
-		return rest_ensure_response( $results );
+		return rest_ensure_response( $products );
 	}
 
-
 	/**
-	 * Retrieves all WooCommerce products.
+	 * Prepares a single post output for response.
+	 *
+	 * @SuppressWarnings(PHPMD.NPathComplexity)
 	 *
 	 * @since 1.20.0
 	 *
-	 * @param WP_REST_Request $request Full details about the request.
-	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+	 * @param Product         $item    Project object.
+	 * @param WP_REST_Request $request Request object.
+	 * @return WP_REST_Response Response object.
 	 */
-	protected function get_items_woocommerce( $request ) {
-		$results = [];
+	public function prepare_item_for_response( $item, $request ): WP_REST_Response {
+		$product = $item;
+		$fields  = $this->get_fields_for_response( $request );
 
-		/**
-		 * Products.
-		 *
-		 * @var \WC_Product[] $products
-		 */
-		$products = wc_get_products(
-			[
-				'status'  => 'publish',
-				'limit'   => 100,
-				'orderby' => 'date',
-				'order'   => 'DESC',
-				's'       => $request['search'],
-			]
-		);
+		$data = [];
 
-		foreach ( $products as $product ) {
-			$product_image_ids = $product->get_gallery_image_ids();
-
-			/*
-			 * Warm the object cache with post and meta information for all found
-			 * images to avoid making individual database calls.
-			 */
-			_prime_post_caches( $product_image_ids, false, true );
-
-			$images = array_map(
-				static function( $image_id ) {
-					$url = wp_get_attachment_url( $image_id );
-					$alt = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
-
-					return [
-						'url' => $url,
-						'alt' => $alt,
-					];
-				},
-				$product_image_ids
-			);
-
-			$results[] = [
-				// amp-story-shopping requires non-numeric IDs.
-				'productId'            => 'wc-' . $product->get_id(),
-				'productTitle'         => $product->get_title(),
-				'productBrand'         => '', // TODO: Figure out how to best provide that.
-				'productPrice'         => (float) $product->get_price(),
-				'productPriceCurrency' => get_woocommerce_currency(),
-				'productImages'        => $images,
-				'aggregateRating'      => [
-					'ratingValue' => (float) $product->get_average_rating(),
-					'reviewCount' => $product->get_rating_count(),
-					'reviewUrl'   => $product->get_permalink(),
-				],
-				'productDetails'       => wp_strip_all_tags( $product->get_short_description() ),
-				'productUrl'           => $product->get_permalink(),
-			];
+		if ( rest_is_field_included( 'productId', $fields ) ) {
+			$data['productId'] = $product->get_id();
 		}
 
-		return rest_ensure_response( $results );
+		if ( rest_is_field_included( 'productTitle', $fields ) ) {
+			$data['productTitle'] = $product->get_title();
+		}
+
+		if ( rest_is_field_included( 'productBrand', $fields ) ) {
+			$data['productBrand'] = $product->get_brand();
+		}
+
+		if ( rest_is_field_included( 'productPrice', $fields ) ) {
+			$data['productPrice'] = $product->get_price();
+		}
+
+		if ( rest_is_field_included( 'productCurrency', $fields ) ) {
+			$data['productCurrency'] = $product->get_price_currency();
+		}
+
+		if ( rest_is_field_included( 'productDetails', $fields ) ) {
+			$data['productDetails'] = $product->get_details();
+		}
+
+		if ( rest_is_field_included( 'productImages', $fields ) ) {
+			$data['productImages'] = [];
+			foreach ( $product->get_images() as $image ) {
+				$image_data = [];
+				if ( rest_is_field_included( 'productImages.url', $fields ) ) {
+					$image_data['url'] = $image['url'];
+				}
+				if ( rest_is_field_included( 'productImages.alt', $fields ) ) {
+					$image_data['alt'] = $image['alt'];
+				}
+				$data['productImages'][] = $image_data;
+			}
+		}
+
+		if ( rest_is_field_included( 'aggregateRating', $fields ) ) {
+			$data['aggregateRating'] = [];
+		}
+
+		if ( rest_is_field_included( 'aggregateRating.ratingValue', $fields ) ) {
+			$data['aggregateRating']['ratingValue'] = (float) $product->get_aggregate_rating()['rating_value'];
+		}
+		if ( rest_is_field_included( 'aggregateRating.reviewCount', $fields ) ) {
+			$data['aggregateRating']['reviewCount'] = (int) $product->get_aggregate_rating()['review_count'];
+		}
+		if ( rest_is_field_included( 'aggregateRating.reviewUrl', $fields ) ) {
+			$data['aggregateRating']['reviewUrl'] = $product->get_aggregate_rating()['review_url'];
+		}
+
+		/**
+		 * Request context.
+		 *
+		 * @var string $context
+		 */
+		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
+		$data    = $this->add_additional_fields_to_object( $data, $request );
+		$data    = $this->filter_response_by_context( $data, $context );
+
+		/**
+		 * Response object.
+		 *
+		 * @var WP_REST_Response $response
+		 */
+		$response = rest_ensure_response( $data );
+
+		return $response;
 	}
 
 	/**
@@ -454,12 +323,12 @@ QUERY;
 							'url' => [
 								'description' => __( 'Product image URL', 'web-stories' ),
 								'type'        => 'string',
+								'format'      => 'uri',
 								'context'     => [ 'view', 'edit', 'embed' ],
 							],
 							'alt' => [
 								'description' => __( 'Product image alt text', 'web-stories' ),
 								'type'        => 'string',
-								'format'      => 'uri',
 								'context'     => [ 'view', 'edit', 'embed' ],
 							],
 						],

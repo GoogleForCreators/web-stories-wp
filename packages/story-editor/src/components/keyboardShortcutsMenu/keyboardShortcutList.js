@@ -111,7 +111,7 @@ const shortcuts = {
           shortcut: (
             <kbd>
               <kbd className="large-key">{prettifyShortcut('mod')}</kbd>
-              <kbd>{'K'}</kbd>
+              <LargeKey>{'Space'}</LargeKey>
             </kbd>
           ),
         },
@@ -121,8 +121,6 @@ const shortcuts = {
       title: __('Text', 'web-stories'),
       commands: [
         {
-          // Not yet implemented
-          disabled: true,
           label: __('Insert/edit link', 'web-stories'),
           shortcut: (
             <kbd>

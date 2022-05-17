@@ -25,9 +25,16 @@ import { elementTypes } from '@googleforcreators/element-library';
 /**
  * Internal dependencies
  */
+import useHighlights from '../../../app/highlights/useHighlights';
 import useCanvasKeys from '../../../app/canvas/useCanvasKeys';
 import StoryContext from '../../../app/story/context.js';
 import CanvasContext from '../../../app/canvas/context.js';
+
+jest.mock('../../../app/highlights/useHighlights', () => ({
+  ...jest.requireActual('../../../app/highlights/useHighlights'),
+  __esModule: true,
+  default: jest.fn(),
+}));
 
 const Canvas = () => {
   const ref = useRef(null);
@@ -35,9 +42,15 @@ const Canvas = () => {
   return <div ref={ref} />;
 };
 
+const mockUseHighlights = useHighlights;
+const setHighlights = jest.fn();
+
 describe('useCanvasKeys', function () {
   beforeAll(() => {
     elementTypes.forEach(registerElementType);
+    mockUseHighlights.mockImplementation(() => ({
+      setHighlights,
+    }));
   });
 
   it('should select all elements and collect their IDs when mod+a is pressed.', () => {
@@ -121,5 +134,59 @@ describe('useCanvasKeys', function () {
     });
 
     expect(deleteSelectedElements).toHaveBeenCalledWith();
+  });
+
+  it('should open and focus the design panel link input when mod+k is pressed.', () => {
+    const { container } = render(
+      <StoryContext.Provider
+        value={{
+          actions: {},
+          state: {
+            selectedElements: [{ id: '123' }, { id: '456' }],
+          },
+        }}
+      >
+        <Canvas />
+      </StoryContext.Provider>
+    );
+
+    fireEvent.keyDown(container, {
+      key: 'k',
+      which: 75,
+      ctrlKey: true,
+    });
+
+    expect(setHighlights).toHaveBeenCalledWith({
+      elements: [{ id: '123' }, { id: '456' }],
+      highlight: 'LINK',
+    });
+  });
+
+  it('should should play/pause animation when mod+space is pressed.', () => {
+    const updateAnimationState = jest.fn();
+
+    const { container } = render(
+      <StoryContext.Provider
+        value={{
+          state: {
+            currentPageNumber: 2,
+            currentPage: { elements: [{ id: '123' }] },
+          },
+          actions: { updateAnimationState },
+        }}
+      >
+        <Canvas />
+      </StoryContext.Provider>
+    );
+
+    fireEvent.keyDown(container, {
+      key: 'Space',
+      which: 32,
+      ctrlKey: true,
+    });
+
+    expect(updateAnimationState).toHaveBeenCalledWith({
+      animationState: 'playing',
+    });
   });
 });

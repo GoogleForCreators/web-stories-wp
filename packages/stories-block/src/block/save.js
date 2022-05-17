@@ -43,7 +43,14 @@ function save({ attributes }) {
     <div className={`wp-block-web-stories-embed align${align}`}>
       <a href={url}>
         {poster ? (
-          <img alt={title} src={poster} width={width} height={height} />
+          <img
+            alt={title}
+            src={poster}
+            width={width}
+            height={height}
+            loading="lazy"
+            decoding="async"
+          />
         ) : (
           title
         )}

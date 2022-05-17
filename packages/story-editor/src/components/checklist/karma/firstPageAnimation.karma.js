@@ -24,6 +24,7 @@ import { waitFor } from '@testing-library/react';
  */
 import { Fixture } from '../../../karma';
 import { DESIGN_COPY } from '../constants';
+import { useStory } from '../../../app/story';
 
 describe('firstPageAnimation', function () {
   let fixture;
@@ -32,18 +33,24 @@ describe('firstPageAnimation', function () {
     fixture = new Fixture();
     await fixture.render();
     await fixture.collapseHelpCenter();
+
+    // adding animations to the first page
+    await addNewPage();
+    await addElementWithAnimation();
+    await removeFirstPage();
   });
 
   afterEach(() => {
     fixture.restore();
   });
 
-  it('should see First Page Animation text in checklist design panel', async function () {
-    // add a second page
+  async function addNewPage() {
     await fixture.events.click(fixture.editor.canvas.pageActions.addPage);
     await fixture.editor.library.textTab.click();
+  }
 
-    // add text component
+  async function addElementWithAnimation() {
+    // add element
     await fixture.events.click(fixture.editor.library.text.preset('Paragraph'));
     await waitFor(() => {
       if (!fixture.editor.canvas.framesLayer.frames[1].node) {
@@ -64,25 +71,37 @@ describe('firstPageAnimation', function () {
     await fixture.events.click(
       fixture.screen.getByRole('option', { name: /^"Fade In" Effect$/ })
     );
+  }
 
-    // move to the first page
-    const previousPageButton = fixture.screen.getByRole('button', {
-      name: /Previous Page/,
-    });
-    await fixture.events.click(previousPageButton, { clickCount: 1 });
+  async function removeFirstPage() {
+    // switch to the first page
+    const pageAtIndex = fixture.editor.footer.carousel.pages[0].node;
+    await fixture.events.click(pageAtIndex);
 
     // delete the first page making the second page move to the first page
     const deleteBtn = fixture.screen.getByRole('button', {
       name: /^Delete Page$/,
     });
     await fixture.events.click(deleteBtn);
+  }
 
+  async function openCheckList() {
     // now the checklist should have the FirstPageAnimation checklist item
     // open the checklist
     await fixture.events.click(fixture.editor.checklist.toggleButton);
     // wait for animation
     await fixture.events.sleep(500);
+  }
 
+  async function getCurrentPage() {
+    const page = await fixture.renderHook(() =>
+      useStory(({ state: { currentPage } }) => currentPage)
+    );
+    return page;
+  }
+
+  it('should see First Page Animation text in checklist design panel', async function () {
+    await openCheckList();
     // open the Design tab
     await fixture.events.click(fixture.editor.checklist.designTab);
     // check for firstPageAnimation footer
@@ -91,5 +110,27 @@ describe('firstPageAnimation', function () {
     );
 
     expect(seeFirstPageAnimationText).toBeDefined();
+  });
+
+  it('should remove all first page animations when "Remove Animations" button is clicked', async () => {
+    // check for first page animations
+    let page = await getCurrentPage();
+    expect(page.animations.length).toBe(1);
+    await openCheckList();
+
+    // check for remove animations button
+    const seeRemoveAnimations = fixture.screen.getByText(
+      new RegExp(`^Remove Animations`)
+    );
+    expect(seeRemoveAnimations).toBeDefined();
+
+    const removeAnimationsBtn = fixture.screen.getByRole('button', {
+      name: /^Remove Animations$/,
+    });
+
+    await fixture.events.click(removeAnimationsBtn);
+    page = await getCurrentPage();
+    // check that the first page animations are removed
+    expect(Boolean(page.animations?.length)).toBeFalsy();
   });
 });

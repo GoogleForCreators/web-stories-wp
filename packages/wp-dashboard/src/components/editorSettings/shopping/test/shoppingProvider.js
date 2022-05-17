@@ -21,9 +21,15 @@ import { screen } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import ShoppingProviderDropDown from '..';
+import ShoppingProviderDropDown from '../shoppingProviderDropDown';
 import { SHOPPING_PROVIDER_TYPE } from '../../../../constants';
 import { renderWithProviders } from '../../../../testUtils';
+
+const vendors = {
+  none: 'None',
+  shopify: 'Shopify',
+  woocommerce: 'WooCommerce',
+};
 
 describe('Editor Settings: Shopping provider settings <ShoppingProviderDropDown />', () => {
   let provider;
@@ -45,6 +51,7 @@ describe('Editor Settings: Shopping provider settings <ShoppingProviderDropDown 
       <ShoppingProviderDropDown
         shoppingProvider={provider}
         handleUpdate={mockUpdate}
+        vendors={vendors}
       />
     );
 
