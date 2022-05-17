@@ -104,11 +104,13 @@ describe('Shopping integration', () => {
 
       // check add / remove icons
       const checkIcon = fixture.querySelector(
-        `[aria-label="Remove ${productTitle}"] .check`
+        `[aria-label="Remove ${productTitle}"] svg[class^="productButton__Checkmark-"]`
       );
+
       const removeIcon = fixture.querySelector(
-        `[aria-label="Remove ${productTitle}"] .remove`
+        `[aria-label="Remove ${productTitle}"] svg[class^="productButton__Cross-"]`
       );
+
       expect(window.getComputedStyle(checkIcon).display).toBe('block');
       expect(window.getComputedStyle(removeIcon).display).toBe('none');
       await fixture.events.hover(product);
