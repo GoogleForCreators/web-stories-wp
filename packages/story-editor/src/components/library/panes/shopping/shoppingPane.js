@@ -177,8 +177,7 @@ function ShoppingPane(props) {
 
   const handleClearInput = useCallback(() => {
     setSearchTerm('');
-    getProductsByQuery();
-  }, [setSearchTerm, getProductsByQuery]);
+  }, [setSearchTerm]);
 
   if (!isShoppingIntegrationEnabled) {
     return null;
