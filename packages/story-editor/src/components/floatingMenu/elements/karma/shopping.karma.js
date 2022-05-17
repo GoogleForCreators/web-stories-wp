@@ -90,6 +90,9 @@ describe('Shopping integration', () => {
           '[aria-label="Design menu"] [aria-label="Product"]'
         )
       );
+      
+      // add a small delay for debounce search to catchup
+      await fixture.events.sleep(500);
 
       // check story `state`
       const selectedElement = await getSelectedElement();
