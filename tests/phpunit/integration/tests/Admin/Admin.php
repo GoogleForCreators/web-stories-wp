@@ -121,6 +121,27 @@ class Admin extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::prefill_post_content
 	 */
+	public function test_prefill_post_content_url_scheduled(): void {
+		wp_set_current_user( self::$admin_id );
+		$story_id = self::factory()->post->create(
+			[
+				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_status'  => 'future',
+				'post_title'   => 'Example',
+				'post_content' => '<html><head></head><body><amp-story standalone="" publisher="Web Stories" title="Example" poster-portrait-src="https://example.com/image.png"></amp-story></body></html>',
+			]
+		);
+
+		$_GET['from-web-story'] = $story_id;
+		$result                 = $this->instance->prefill_post_content( 'current', get_post( $story_id ) );
+		
+		$this->assertStringNotContainsString( '?post_type=web-story#038', $result );
+		$this->assertStringContainsString( 'http://example.org/?web-story=example', $result );
+	}
+
+	/**
+	 * @covers ::prefill_post_content
+	 */
 	public function test_prefill_post_content_invalid_user(): void {
 		wp_set_current_user( 0 );
 
