@@ -66,7 +66,6 @@ describe('Shopping', () => {
         await previewPage.close();
         const { items } = data;
 
-        // expect(items).toHaveLength(3);
         items.forEach((item) => {
           expect(item).toMatchSchema(schema);
         });

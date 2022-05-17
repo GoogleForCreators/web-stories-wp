@@ -156,6 +156,14 @@ function ShoppingPane(props) {
       );
       if (element) {
         deleteElementById({ elementId: element.elementId });
+
+        const PRODUCT_REMOVED_TEXT = sprintf(
+          /* translators: %s: product title. */
+          __('%s removed', 'web-stories'),
+          product?.productTitle
+        );
+
+        speak(PRODUCT_REMOVED_TEXT);
       }
     },
     [deleteElementById, currentPageProducts]

@@ -26,7 +26,7 @@ import { Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
 import { useConfig } from '../../../../app/config';
 
 const StyledPrice = styled(Text).attrs({
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL,
 })`
   color: ${({ theme }) => theme.colors.fg.tertiary};
 `;
