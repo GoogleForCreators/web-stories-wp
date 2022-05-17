@@ -166,7 +166,7 @@ function ShoppingPane(props) {
         speak(PRODUCT_REMOVED_TEXT);
       }
     },
-    [deleteElementById, currentPageProducts]
+    [deleteElementById, currentPageProducts, speak]
   );
 
   const onClick = useCallback(

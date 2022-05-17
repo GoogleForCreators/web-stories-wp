@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import {
   Icons,
   Button,

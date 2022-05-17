@@ -26,7 +26,7 @@ import { useStory } from '../../../../app/story';
 import { tabToCanvasFocusContainer } from '../../karma/utils';
 
 function isStoryEmpty() {
-  return Boolean(document.getElementById('emptystate-message')));
+  return Boolean(document.getElementById('emptystate-message'));
 }
 
 describe('Shopping integration', () => {
