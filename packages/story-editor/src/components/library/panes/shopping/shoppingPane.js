@@ -219,7 +219,7 @@ function ShoppingPane(props) {
             onPageProducts={currentPageProducts}
           />
         )}
-        {!isLoading && (products?.length === 0) & searchTerm?.length ? (
+        {!isLoading && products?.length === 0 ? (
           <HelperText>{__('No products found.', 'web-stories')}</HelperText>
         ) : null}
       </Section>
