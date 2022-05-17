@@ -42,7 +42,6 @@ class Woocommerce_Query implements Product_Query {
 	 * @return Product[]|WP_Error
 	 */
 	public function get_search( string $search_term ) {
-
 		if ( ! function_exists( 'wc_get_products' ) ) {
 			return new WP_Error( 'rest_unknown', __( 'Woocommerce is not installed.', 'web-stories' ), [ 'status' => 400 ] );
 		}
@@ -76,9 +75,23 @@ class Woocommerce_Query implements Product_Query {
 		_prime_post_caches( $products_image_ids, false, true );
 
 		foreach ( $products as $product ) {
-			$product_image_ids = array_map( 'absint', $product->get_gallery_image_ids() );
-			$images            = array_map( [ $this, 'get_product_images' ], $product_image_ids );
+			$product_image_ids = array_unique(
+				array_map(
+					'absint', 
+					array_merge(
+						[ $product->get_image_id() ],
+						$product->get_gallery_image_ids()
+					)
+				)
+			);
 
+			$images = array_map(
+				[ $this, 'get_product_images' ],
+				$product_image_ids
+			);
+
+			$images = array_filter( $images );
+			
 			$product_object = new Product(
 				[
 					// amp-story-shopping requires non-numeric IDs.
@@ -115,6 +128,11 @@ class Woocommerce_Query implements Product_Query {
 	protected function get_product_images( int $image_id ): array {
 		$url = wp_get_attachment_url( $image_id );
 		$alt = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
+		
+		if ( ! $url ) {
+			return [];
+		}
+		
 		if ( empty( $alt ) ) {
 			$alt = '';
 		}
