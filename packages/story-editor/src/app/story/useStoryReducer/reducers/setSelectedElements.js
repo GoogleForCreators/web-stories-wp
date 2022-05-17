@@ -33,6 +33,8 @@ import { intersect } from './utils';
  *
  * Duplicates will be removed from the given list of element ids.
  *
+ * Locked elements can never be part of a multi-selection, so remove those if so.
+ *
  * Current page and pages are unchanged.
  *
  * @param {Object} state Current state
@@ -61,18 +63,20 @@ function setSelectedElements(state, { elementIds }) {
     }
   }
 
-  // If it's a multi-selection, filter out the background element and video placeholders.
+  // If it's a multi-selection, filter out the background element, locked elements,
+  // and video placeholders.
   const currentPage = state.pages.find(({ id }) => id === state.current);
+  const byId = (id) => currentPage.elements.find(({ id: i }) => i === id);
   const isNotBackgroundElement = (id) => currentPage.elements[0].id !== id;
-  const isNotVideoPlaceholder = (id) => {
-    const element = currentPage.elements.find((element) => element.id === id);
-    const isVideoPlaceholder = element?.resource?.isPlaceholder;
-    return !isVideoPlaceholder;
-  };
+  const isNotLockedElement = (id) => !byId(id).isLocked;
+  const isNotVideoPlaceholder = (id) => !byId(id).resource?.isPlaceholder;
   const newSelection =
     uniqueElementIds.length > 1
       ? uniqueElementIds.filter(
-          (id) => isNotBackgroundElement(id) && isNotVideoPlaceholder(id)
+          (id) =>
+            isNotBackgroundElement(id) &&
+            isNotVideoPlaceholder(id) &&
+            isNotLockedElement(id)
         )
       : uniqueElementIds;
 
