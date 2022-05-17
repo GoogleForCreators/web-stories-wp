@@ -40,6 +40,7 @@ describe('Shopping integration', () => {
     await fixture.events.keyboard.press('tab');
     const searchInput = fixture.querySelector('[aria-label="Product search"]');
     await fixture.events.focus(searchInput);
+    await fixture.events.click(searchInput);
   }
 
   async function insertProduct(product) {
@@ -71,12 +72,14 @@ describe('Shopping integration', () => {
     return storyContext.state.selectedElements[0];
   };
 
-  describe('Shopping tab', () => {
+  fdescribe('Shopping tab', () => {
     it('should handle product search add and remove', async () => {
       const productTitle = 'Hoodie with Zipper';
       await focusProductSearchInput();
       expect(isStoryEmpty()).toEqual(true);
       await fixture.events.keyboard.type('hood');
+      // delay for search to catch-up
+      await fixture.events.sleep(400);
 
       const productButton = fixture.querySelector(
         `[aria-label="Add ${productTitle}"]`
