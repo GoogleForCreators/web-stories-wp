@@ -193,17 +193,24 @@ function ShoppingPane(props) {
             handleClearInput={handleClearInput}
           />
         </Row>
-        {isLoading || products?.length > 0 ? (
-          <ProductList
-            isLoading={isLoading}
-            isMenuFocused={isMenuFocused}
-            onClick={onClick}
-            products={products}
-            onPageProducts={currentPageProducts}
-          />
-        ) : searchTerm?.length ? (
+        {isLoading ? (
+              <Loading>
+                  <Spinner>
+                   <CircularProgress size={24} />
+               </Spinner>
+              </Loading>
+          )}
+          {!isLoading && products?.length > 0 ? (
+            <ProductList
+                isMenuFocused={isMenuFocused}
+                onClick={onClick}
+                products={products}
+                onPageProducts={currentPageProducts}
+               />
+         )};
+         {!isLoading && products?.length === 0 & searchTerm?.length ? (
           <HelperText>{__('No products found.', 'web-stories')}</HelperText>
-        ) : null}
+        )}
       </Section>
     </Pane>
   );
