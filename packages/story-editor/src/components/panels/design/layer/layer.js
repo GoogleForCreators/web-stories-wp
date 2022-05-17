@@ -419,6 +419,7 @@ function Layer({ element }) {
               onChange={handleChange}
               onKeyDown={handleKeyDown}
               onBlur={handleBlur}
+              hasFocus={true}
             />
           </LayerInputDescription>
         </LayerInputWrapper>

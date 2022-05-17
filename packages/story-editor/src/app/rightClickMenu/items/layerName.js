@@ -33,7 +33,7 @@ function LayerName() {
       selectedElementIds: state.selectedElementIds,
     })
   );
-  const { renamableLayer, setRenamableLayer } = useCanvas(
+  const { setRenamableLayer } = useCanvas(
     ({ state, actions }) => ({
       setRenamableLayer: actions.setRenamableLayer,
       renamableLayer: state.renamableLayer,
@@ -42,7 +42,7 @@ function LayerName() {
   const enableLayerNaming = useCallback(
     () => {
       setRenamableLayer({
-        elementId: renamableLayer?.elementId === '' ? selectedElementIds[0] : '',
+        elementId: selectedElementIds[0],
       });
     },
     [setRenamableLayer, selectedElementIds]
