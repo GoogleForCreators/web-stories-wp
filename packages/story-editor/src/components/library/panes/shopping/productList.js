@@ -76,7 +76,7 @@ function ProductList({
           >
             <Product
               product={product}
-              isOnPage={onPageProducts.find(
+              isOnPage={onPageProducts.some(
                 (item) => item.productId === product?.productId
               )}
               onClick={onClick}

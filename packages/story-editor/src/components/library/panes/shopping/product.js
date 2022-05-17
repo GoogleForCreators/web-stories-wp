@@ -61,7 +61,7 @@ Product.propTypes = {
   product: PropTypes.object.isRequired,
   onClick: PropTypes.func.isRequired,
   onFocus: PropTypes.func,
-  isOnPage: PropTypes.object,
+  isOnPage: PropTypes.bool,
 };
 
 export default Product;

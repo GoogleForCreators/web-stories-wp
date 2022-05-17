@@ -27,46 +27,39 @@ import {
 import { __, sprintf } from '@googleforcreators/i18n';
 import PropTypes from 'prop-types';
 
-const baseIcon = css`
-  width: 16px;
-  height: 16px;
+const Checkmark = styled(Icons.Checkmark)`
+  width: 16px !important;
+  height: 16px !important;
   border-radius: 100%;
   color: ${({ theme }) => theme.colors.interactiveBg.disable};
+  background-color: ${({ theme }) => theme.colors.fg.positive};
+`;
+
+const Cross = styled(Icons.Cross)`
+  width: 16px !important;
+  height: 16px !important;
+  border-radius: 100%;
+  color: ${({ theme }) => theme.colors.interactiveBg.disable};
+  background-color: ${({ theme }) => theme.colors.fg.negative};
+`;
+
+const StyledButton = styled(Button)`
+  ${Cross} {
+    display: none;
+  }
+
+  &:hover ${Checkmark}, &:focus-within ${Checkmark}, &:active ${Checkmark} {
+    display: none;
+  }
+
+  &:hover ${Cross}, &:focus-within ${Cross}, &:active ${Cross} {
+    display: block;
+  }
 `;
 
 const StyledActionsContainer = styled.div`
   margin-right: 10px;
-
-  .check {
-    ${baseIcon}
-    background-color: ${({ theme }) => theme.colors.fg.positive};
-  }
-
-  .remove {
-    ${baseIcon}
-    background-color: ${({ theme }) => theme.colors.fg.negative};
-    display: none;
-  }
-
-  button {
-    margin-right: 10px;
-    &:focus,
-    &:hover {
-      .remove {
-        display: block;
-      }
-      .check {
-        display: none;
-      }
-    }
-  }
 `;
-
-const onPageIcons = (
-  <>
-    <Icons.Checkmark className="check" /> <Icons.Cross className="remove" />
-  </>
-);
 function ProductButton({ product, onClick, onFocus, isOnPage }) {
   const ADD_PRODUCT_TEXT = sprintf(
     /* translators: %s: product title. */
@@ -82,7 +75,7 @@ function ProductButton({ product, onClick, onFocus, isOnPage }) {
 
   return (
     <StyledActionsContainer>
-      <Button
+      <StyledButton
         aria-label={isOnPage ? REMOVE_PRODUCT_TEXT : ADD_PRODUCT_TEXT}
         onClick={() => {
           onClick(product, isOnPage);
@@ -92,8 +85,15 @@ function ProductButton({ product, onClick, onFocus, isOnPage }) {
         variant={BUTTON_VARIANTS.SQUARE}
         onFocus={onFocus}
       >
-        {isOnPage ? onPageIcons : <Icons.PlusFilled />}
-      </Button>
+        {isOnPage ? (
+          <>
+            <Checkmark />
+            <Cross />
+          </>
+        ) : (
+          <Icons.PlusFilled />
+        )}
+      </StyledButton>
     </StyledActionsContainer>
   );
 }
@@ -102,7 +102,7 @@ ProductButton.propTypes = {
   product: PropTypes.object.isRequired,
   onClick: PropTypes.func,
   onFocus: PropTypes.func,
-  isOnPage: PropTypes.object,
+  isOnPage: PropTypes.bool,
 };
 
 export default ProductButton;
