@@ -129,7 +129,7 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 		if ( ! $this->story_post_type->has_cap( 'edit_posts' ) ) {
 			return new \WP_Error(
 				'rest_forbidden',
-				__( 'Sorry, you are not allowed to manage publisher logos.', 'web-stories' ),
+				__( 'Sorry, you are not allowed to manage products.', 'web-stories' ),
 				[ 'status' => rest_authorization_required_code() ]
 			);
 		}
@@ -200,6 +200,10 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 			$data['productId'] = $product->get_id();
 		}
 
+		if ( rest_is_field_included( 'productUrl', $fields ) ) {
+			$data['productUrl'] = $product->get_url();
+		}
+
 		if ( rest_is_field_included( 'productTitle', $fields ) ) {
 			$data['productTitle'] = $product->get_title();
 		}
@@ -212,8 +216,8 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 			$data['productPrice'] = $product->get_price();
 		}
 
-		if ( rest_is_field_included( 'productCurrency', $fields ) ) {
-			$data['productCurrency'] = $product->get_price_currency();
+		if ( rest_is_field_included( 'productPriceCurrency', $fields ) ) {
+			$data['productPriceCurrency'] = $product->get_price_currency();
 		}
 
 		if ( rest_is_field_included( 'productDetails', $fields ) ) {
@@ -270,6 +274,8 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 	/**
 	 * Retrieves the publisher logo's schema, conforming to JSON Schema.
 	 *
+	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+	 *
 	 * @since 1.20.0
 	 *
 	 * @return array Item schema data.
@@ -284,37 +290,44 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 			'title'      => 'publisher-logo',
 			'type'       => 'object',
 			'properties' => [
-				'productId'       => [
+				'productId'            => [
 					'description' => __( 'Product ID.', 'web-stories' ),
 					'type'        => 'integer',
 					'context'     => [ 'view', 'edit', 'embed' ],
 					'readonly'    => true,
 				],
-				'productTitle'    => [
+				'productUrl'           => [
+					'description' => __( 'Product URL.', 'web-stories' ),
+					'type'        => 'string',
+					'format'      => 'uri',
+					'context'     => [ 'view', 'edit', 'embed' ],
+					'readonly'    => true,
+				],
+				'productTitle'         => [
 					'description' => __( 'Product title.', 'web-stories' ),
 					'type'        => 'string',
 					'context'     => [ 'view', 'edit', 'embed' ],
 					'readonly'    => true,
 				],
-				'productBrand'    => [
+				'productBrand'         => [
 					'description' => __( 'Product brand.', 'web-stories' ),
 					'type'        => 'string',
 					'context'     => [ 'view', 'edit', 'embed' ],
 					'readonly'    => true,
 				],
-				'productPrice'    => [
+				'productPrice'         => [
 					'description' => __( 'Product price.', 'web-stories' ),
 					'type'        => 'string',
 					'context'     => [ 'view', 'edit', 'embed' ],
 					'readonly'    => true,
 				],
-				'productCurrency' => [
+				'productPriceCurrency' => [
 					'description' => __( 'Product currency.', 'web-stories' ),
 					'type'        => 'string',
 					'context'     => [ 'view', 'edit', 'embed' ],
 					'readonly'    => true,
 				],
-				'productImages'   => [
+				'productImages'        => [
 					'description' => __( 'Product brand.', 'web-stories' ),
 					'type'        => 'array',
 					'items'       => [
@@ -336,7 +349,7 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 					'context'     => [ 'view', 'edit', 'embed' ],
 					'readonly'    => true,
 				],
-				'aggregateRating' => [
+				'aggregateRating'      => [
 					'description' => __( 'Product rating.', 'web-stories' ),
 					'type'        => 'object',
 					'properties'  => [
@@ -360,7 +373,7 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 					'context'     => [ 'view', 'edit', 'embed' ],
 					'readonly'    => true,
 				],
-				'productDetails'  => [
+				'productDetails'       => [
 					'description' => __( 'Product description.', 'web-stories' ),
 					'type'        => 'string',
 					'context'     => [ 'view', 'edit', 'embed' ],
