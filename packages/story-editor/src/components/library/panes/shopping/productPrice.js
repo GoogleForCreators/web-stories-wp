@@ -36,7 +36,7 @@ function ProductPrice({ price, currency }) {
     locale: { locale },
   } = useConfig();
 
-  if (price) {
+  if (price && currency && locale) {
     return (
       <StyledPrice>
         {new Intl.NumberFormat(locale, {
