@@ -25,6 +25,9 @@ import {
   THEME_CONSTANTS,
   BUTTON_TYPES,
   BUTTON_SIZES,
+  DropDown,
+  localStore,
+  LOCAL_STORAGE_PREFIX,
 } from '@googleforcreators/design-system';
 import {
   useState,
@@ -32,6 +35,7 @@ import {
   useCallback,
   useMemo,
   useEffect,
+  usePrevious,
 } from '@googleforcreators/react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
@@ -64,13 +68,83 @@ function Modal({ isOpen, onClose }) {
   const [isImageCapture, setIsImageCapture] = useState(false);
   const [enableVideo, setEnableVideo] = useState(true);
   const [enableAudio, setEnableAudio] = useState(true);
+  const [videoInput, setVideoInput] = useState(
+    localStore.getItemByKey(LOCAL_STORAGE_PREFIX.MEDIA_RECORDING_VIDEO_INPUT)
+  );
+  const [audioInput, setAudioInput] = useState(
+    localStore.getItemByKey(LOCAL_STORAGE_PREFIX.MEDIA_RECORDING_AUDIO_INPUT)
+  );
+  const [mediaDevices, setMediaDevices] = useState([]);
+
+  const updateMediaDevices = useCallback(async () => {
+    try {
+      const devices = await navigator.mediaDevices.enumerateDevices();
+      setMediaDevices(
+        devices.filter((device) => device.kind !== 'audiooutput')
+      );
+    } catch (err) {
+      // eslint-disable-next-line no-console -- TODO: Figure out error handling - UX pending.
+      console.log(err);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!mediaDevices.length) {
+      return;
+    }
+
+    const videoDeviceExists =
+      videoInput &&
+      mediaDevices.some((device) => device.deviceId === videoInput);
+
+    // Video device not set yet, or was detached. Choose first available video device.
+    if (!videoInput || !videoDeviceExists) {
+      setVideoInput(
+        mediaDevices.find((device) => device.kind === 'videoinput')?.deviceId
+      );
+    }
+
+    const audioDeviceExists =
+      audioInput &&
+      mediaDevices.some((device) => device.deviceId === audioInput);
+
+    // Audio device not set yet, or was detached. Choose first available audio device.
+    if (!audioInput || !audioDeviceExists) {
+      setAudioInput(
+        mediaDevices.find((device) => device.kind === 'audioinput')?.deviceId
+      );
+    }
+  }, [audioInput, mediaDevices, videoInput]);
+
+  useEffect(() => {
+    navigator.mediaDevices.addEventListener('devicechange', updateMediaDevices);
+
+    return () => {
+      navigator.mediaDevices.removeEventListener(
+        'devicechange',
+        updateMediaDevices
+      );
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- We only want to run it once.
+  }, []);
+
+  const videoInputs = mediaDevices
+    .filter((device) => device.kind === 'videoinput')
+    .map(({ deviceId, label }) => ({ value: deviceId, label }));
+  const audioInputs = mediaDevices
+    .filter((device) => device.kind === 'audioinput')
+    .map(({ deviceId, label }) => ({ value: deviceId, label }));
 
   const onStop = useCallback((blob) => {
     const f = blobToFile(blob, 'test-recording.webm', 'video/webm');
     setFile(f);
   }, []);
 
-  const uploadWithPreview = useUploadWithPreview();
+  const onError = (err) => {
+    // eslint-disable-next-line no-console -- TODO: Telemetry, notify user - UX pending.
+    console.log(err);
+  };
+
   const {
     error,
     status,
@@ -78,17 +152,103 @@ function Modal({ isOpen, onClose }) {
     stopRecording,
     startRecording,
     liveStream,
+    getMediaStream,
     clearMediaStream,
     clearMediaBlob,
   } = useMediaRecorder({
     recordScreen: false,
     blobOptions: { type: 'video/webm' },
     mediaStreamConstraints: {
-      audio: enableAudio,
-      video: enableVideo,
+      audio: audioInput && enableAudio ? { deviceId: audioInput } : enableAudio,
+      video: videoInput && enableVideo ? { deviceId: videoInput } : enableVideo,
     },
-    onStop: onStop,
+    onStop,
+    onError,
   });
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- Only run once.
+  useEffect(() => clearMediaStream, []);
+
+  const previouslyHadStream = usePrevious(Boolean(liveStream));
+  const hasStream = Boolean(liveStream);
+  const wasOpen = usePrevious(isOpen);
+  const isRecording = status === 'recording';
+  const wasRecording = usePrevious(isRecording);
+
+  // Ensure the stream is refreshed after switching video or audio input
+  // (which clears the stream).
+  useEffect(() => {
+    if (
+      previouslyHadStream &&
+      !hasStream &&
+      !isImageCapture &&
+      !mediaBlob &&
+      !isRecording &&
+      !wasRecording
+    ) {
+      getMediaStream();
+    }
+  }, [
+    previouslyHadStream,
+    hasStream,
+    getMediaStream,
+    isImageCapture,
+    mediaBlob,
+    isRecording,
+    wasRecording,
+  ]);
+
+  // Try to get permissions as soon as the modal opens.
+  useEffect(() => {
+    if (isOpen && !wasOpen) {
+      getMediaStream();
+    }
+  }, [isOpen, wasOpen, getMediaStream]);
+
+  const onChangeVideoInput = useCallback(
+    (_event, value) => {
+      setVideoInput(value);
+      localStore.setItemByKey(
+        LOCAL_STORAGE_PREFIX.MEDIA_RECORDING_VIDEO_INPUT,
+        value
+      );
+
+      clearMediaStream();
+      clearMediaBlob();
+      if (videoRef.current) {
+        videoRef.current.srcObject = null;
+      }
+
+      if (isRecording) {
+        stopRecording();
+      }
+    },
+    [stopRecording, isRecording, clearMediaBlob, clearMediaStream]
+  );
+
+  const onChangeAudioInput = useCallback(
+    (_event, value) => {
+      setAudioInput(value);
+      localStore.setItemByKey(
+        LOCAL_STORAGE_PREFIX.MEDIA_RECORDING_AUDIO_INPUT,
+        value
+      );
+
+      clearMediaStream();
+      clearMediaBlob();
+
+      if (isRecording) {
+        stopRecording();
+      }
+    },
+    [clearMediaBlob, clearMediaStream, isRecording, stopRecording]
+  );
+
+  useEffect(() => {
+    if (status === 'ready') {
+      updateMediaDevices();
+    }
+  }, [status, updateMediaDevices]);
 
   const handleClose = useCallback(() => {
     clearMediaStream();
@@ -101,12 +261,21 @@ function Modal({ isOpen, onClose }) {
     setIsImageCapture(false);
   }, [clearMediaBlob, clearMediaStream, onClose]);
 
-  const onImageCapture = (f) => {
-    setFile(f);
-    setIsImageCapture(true);
-  };
+  const uploadWithPreview = useUploadWithPreview();
 
-  const onClearImageCapture = () => setIsImageCapture(false);
+  const onImageCapture = useCallback(
+    (f) => {
+      setFile(f);
+      setIsImageCapture(true);
+      stopRecording();
+    },
+    [stopRecording]
+  );
+
+  const onClearImageCapture = useCallback(() => {
+    setIsImageCapture(false);
+    getMediaStream();
+  }, [getMediaStream]);
 
   const onInsert = useCallback(() => {
     uploadWithPreview([file]);
@@ -114,20 +283,18 @@ function Modal({ isOpen, onClose }) {
 
     // handling cleanup for Image capture
     // in this case we don't want onStop to override the file
-    if (status === 'recording') {
+    if (isRecording) {
       stopRecording();
       setIsImageCapture(false);
       setFile(null);
     }
-  }, [file, uploadWithPreview, onClose, status, stopRecording]);
+  }, [file, uploadWithPreview, onClose, isRecording, stopRecording]);
 
   useEffect(() => {
     if (videoRef.current && liveStream) {
       videoRef.current.srcObject = liveStream;
     }
   }, [liveStream]);
-
-  const isRecording = status === 'recording';
 
   const videoToggleId = useMemo(() => `toggle_${uuidv4()}`, []);
   const audioToggleId = useMemo(() => `toggle_${uuidv4()}`, []);
@@ -143,7 +310,7 @@ function Modal({ isOpen, onClose }) {
       primaryText={primaryText}
       secondaryText={__('Cancel', 'web-stories')}
       primaryRest={{
-        disabled: status !== 'stopped' && isImageCapture === false,
+        disabled: status !== 'stopped' && !isImageCapture,
       }}
     >
       <Text>
@@ -156,17 +323,18 @@ function Modal({ isOpen, onClose }) {
       {!isImageCapture && (
         <VideoWrapper>
           {mediaBlob && !liveStream && (
-            <>
-              {/* eslint-disable-next-line jsx-a11y/media-has-caption, styled-components-a11y/media-has-caption -- No captions for video being recorded. */}
-              <Video src={URL.createObjectURL(mediaBlob)} autoPlay controls />
-            </>
+            <Video
+              src={URL.createObjectURL(mediaBlob)}
+              autoPlay
+              controls
+              muted
+            />
           )}
-          {/* eslint-disable-next-line jsx-a11y/media-has-caption, styled-components-a11y/media-has-caption -- No captions for video being recorded. */}
-          {!mediaBlob && liveStream && <Video ref={videoRef} autoPlay />}
+          {!mediaBlob && liveStream && <Video ref={videoRef} autoPlay muted />}
         </VideoWrapper>
       )}
 
-      {isRecording && (
+      {(isRecording || isImageCapture) && (
         <ImageCapture
           videoRef={videoRef}
           onCapture={onImageCapture}
@@ -187,6 +355,7 @@ function Modal({ isOpen, onClose }) {
         name={videoToggleId}
         checked={enableVideo}
         onChange={() => setEnableVideo((value) => !value)}
+        disabled={!videoInput}
       />
       <Text
         as="label"
@@ -201,7 +370,31 @@ function Modal({ isOpen, onClose }) {
         name={audioToggleId}
         checked={enableAudio}
         onChange={() => setEnableAudio((value) => !value)}
+        disabled={!audioInput}
       />
+
+      {videoInputs.length > 0 && (
+        <DropDown
+          ariaLabel={__('Video Input', 'web-stories')}
+          placeholder={__('Select Video Input', 'web-stories')}
+          options={videoInputs}
+          onMenuItemClick={onChangeVideoInput}
+          selectedValue={videoInput}
+          disabled={!enableVideo}
+          popupZIndex={11}
+        />
+      )}
+      {audioInputs.length > 0 && (
+        <DropDown
+          ariaLabel={__('Audio Input', 'web-stories')}
+          placeholder={__('Select Audio Input', 'web-stories')}
+          options={audioInputs}
+          onMenuItemClick={onChangeAudioInput}
+          selectedValue={audioInput}
+          disabled={!enableAudio}
+          popupZIndex={11}
+        />
+      )}
       <Button
         type={BUTTON_TYPES.PRIMARY}
         size={BUTTON_SIZES.SMALL}
