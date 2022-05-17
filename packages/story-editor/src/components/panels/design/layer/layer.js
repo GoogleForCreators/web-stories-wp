@@ -325,9 +325,7 @@ function preventReorder(e) {
 
 function Layer({ element }) {
   const layerName = getLayerName(element);
-  const [newLayerName, setNewLayerName] = useState(
-    layerName ? layerName : __('Renaming a layer.', 'web-stories')
-  );
+  const [newLayerName, setNewLayerName] = useState(layerName);
   const isLayerLockingEnabled = useFeature('layerLocking');
   const { LayerIcon } = getDefinitionForType(element.type);
   const { isSelected, handleClick } = useLayerSelection(element);
@@ -348,7 +346,7 @@ function Layer({ element }) {
   const { renamableLayer, setRenamableLayer } = useCanvas(
     ({ state, actions }) => ({
       renamableLayer: state.renamableLayer,
-      setRenamableLayer: actions.setRenamableLayer
+      setRenamableLayer: actions.setRenamableLayer,
     })
   );
 
@@ -379,23 +377,23 @@ function Layer({ element }) {
 
   const handleKeyDown = useCallback(
     (evt) => {
-    if (evt.key === 'Escape') {
-      setRenamableLayer({elementId: ''});
-    }
+      if (evt.key === 'Escape') {
+        setRenamableLayer({ elementId: '' });
+      }
 
-    if (evt.key === 'Enter') {
-      setRenamableLayer({elementId: ''});
-      updateElementById({
-        elementId: element.id,
-        properties: { layerName: newLayerName },
-      });
-    }
-  },
-  [setRenamableLayer, updateElementById]
-);
+      if (evt.key === 'Enter') {
+        setRenamableLayer({ elementId: '' });
+        updateElementById({
+          elementId: element.id,
+          properties: { layerName: newLayerName },
+        });
+      }
+    },
+    [setRenamableLayer, updateElementById, element.id, newLayerName]
+  );
 
   const handleBlur = () => {
-    setRenamableLayer({elementId: ''});
+    setRenamableLayer({ elementId: '' });
     updateElementById({
       elementId: element.id,
       properties: { layerName: newLayerName },
@@ -416,12 +414,11 @@ function Layer({ element }) {
           <LayerInputDescription>
             <LayerInput
               tabIndex={-1}
-              aria-label={__('Renaming a layer.', 'web-stories')}
+              aria-label={__('Layer Name', 'web-stories')}
               value={newLayerName}
               onChange={handleChange}
               onKeyDown={handleKeyDown}
               onBlur={handleBlur}
-              hasFocus={true}
             />
           </LayerInputDescription>
         </LayerInputWrapper>
