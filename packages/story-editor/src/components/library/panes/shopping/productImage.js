@@ -41,7 +41,7 @@ function ProductImage({ product }) {
   const imageSrc = product?.productImages[0]?.url || '';
   return imageSrc ? (
     <StyledImage
-      alt={product?.productTitle}
+      alt={product?.productImages[0]?.alt}
       src={imageSrc}
       loading="lazy"
       decoding="async"
