@@ -26,14 +26,14 @@
   display: none;
 }
 
+body.js.edit-story #wpcontent {
+  position: fixed;
+  width: calc(100% - 36px);
+}
+
 body.js.edit-story #wpcontent,
 body.js.edit-story #wpbody-content {
   padding: 0;
-}
-
-#wpcontent {
-  position: fixed;
-  width: calc(100% - 36px);
 }
 
 body.edit-story .web-stories-wp {
@@ -135,7 +135,7 @@ button {
 }
 
 @media screen and (max-width: 783px) {
-  #wpcontent {
+  body.js.edit-story #wpcontent {
     width: 100%;
   }
 }
