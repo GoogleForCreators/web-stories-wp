@@ -18,22 +18,9 @@
  * External dependencies
  */
 import { __ } from '@googleforcreators/i18n';
-import { StoryPropTypes } from '@googleforcreators/elements';
 
-/**
- * Internal dependencies
- */
-import { LayerText } from '../shared/layerText';
-
-function ProductLayerContent({ element }) {
-  return (
-    <LayerText>
-      {element?.product?.productTitle || __('Product', 'web-stories')}
-    </LayerText>
-  );
+function getProductLayerText(element) {
+  return element?.product?.productTitle || __('Product', 'web-stories');
 }
-ProductLayerContent.propTypes = {
-  element: StoryPropTypes.element.isRequired,
-};
 
-export default ProductLayerContent;
+export default getProductLayerText;

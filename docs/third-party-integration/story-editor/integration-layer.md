@@ -436,6 +436,7 @@ Design Checks :
 - `PageTooManyLinks`
 - `VideoElementResolution`
 - `ImageElementResolution`
+- `FirstPageAnimation`
 
 Priority Checks :
 

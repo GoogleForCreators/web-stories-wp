@@ -341,6 +341,7 @@ class Experiments extends Service_Base implements HasRequirements {
 				'label'       => __( 'Audio hotlinking', 'web-stories' ),
 				'description' => __( 'Enable hotlinking background audio', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 			/**
 			 * Author: @barklund

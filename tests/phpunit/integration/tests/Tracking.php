@@ -169,4 +169,35 @@ class Tracking extends DependencyInjectedTestCase {
 
 		$this->assertTrue( $tracking_allowed );
 	}
+
+	/**
+	 * @covers ::get_user_properties
+	 */
+	public function test_get_settings_user_malformed_roles(): void {
+		$user_id = self::factory()->user->create(
+			[
+				'role' => 'administrator',
+			]
+		);
+
+		wp_set_current_user( $user_id );
+
+		global $current_user;
+		$current_user->roles = [ 1 => 'administrator' ];
+
+		$this->site_kit->method( 'get_plugin_status' )->willReturn(
+			[
+				'installed'       => true,
+				'active'          => true,
+				'analyticsActive' => true,
+				'link'            => 'https://example.com',
+			]
+		);
+		$this->experiments->method( 'get_enabled_experiments' )
+			->willReturn( [ 'enableFoo', 'enableBar' ] );
+
+		$settings = $this->instance->get_settings();
+
+		$this->assertSame( 'administrator', $settings['userProperties']['userRole'] );
+	}
 }

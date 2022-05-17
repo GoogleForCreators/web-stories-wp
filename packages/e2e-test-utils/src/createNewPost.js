@@ -20,8 +20,8 @@ import { addQueryArgs } from '@wordpress/url';
 /**
  * Internal dependencies
  */
-
 import visitAdminPage from './visitAdminPage';
+import loadPostEditor from './loadPostEditor.js';
 /**
  * Creates new post.
  *
@@ -46,27 +46,6 @@ async function createNewPost({
     excerpt,
   }).slice(1);
   await visitAdminPage('post-new.php', query);
-  await page.waitForSelector('.edit-post-layout');
-  const isWelcomeGuideActive = await page.evaluate(() =>
-    wp.data.select('core/edit-post').isFeatureActive('welcomeGuide')
-  );
-  const isFullscreenMode = await page.evaluate(() =>
-    wp.data.select('core/edit-post').isFeatureActive('fullscreenMode')
-  );
-
-  if (showWelcomeGuide !== isWelcomeGuideActive) {
-    await page.evaluate(() =>
-      wp.data.dispatch('core/edit-post').toggleFeature('welcomeGuide')
-    );
-    await page.reload();
-    await page.waitForSelector('.edit-post-layout');
-  }
-
-  if (isFullscreenMode) {
-    await page.evaluate(() =>
-      wp.data.dispatch('core/edit-post').toggleFeature('fullscreenMode')
-    );
-    await page.waitForSelector('body:not(.is-fullscreen-mode)');
-  }
+  await loadPostEditor(showWelcomeGuide);
 }
 export default createNewPost;
