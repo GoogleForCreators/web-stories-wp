@@ -74,15 +74,23 @@ import {
 const Wrapper = styled.div`
   ${elementWithPosition}
   ${elementWithSize}
-   ${elementWithRotation}
-   outline: 1px solid transparent;
+  ${elementWithRotation}
+  outline: 1px solid transparent;
   transition: outline-color 0.5s;
   &:focus,
-  &:active,
-  &:hover {
+  &:active {
     outline-color: ${({ theme, hasMask }) =>
       hasMask ? 'transparent' : theme.colors.border.selection};
   }
+  ${({ isLocked, hasMask, theme }) =>
+    !isLocked &&
+    !hasMask &&
+    `
+    &:hover {
+      outline-color: ${theme.colors.border.selection};
+    }
+  `}
+  ${({ isClickable }) => !isClickable && `pointer-events: none;`}
 `;
 
 const EmptyFrame = styled.div`
@@ -145,7 +153,12 @@ function FrameElement({ id }) {
         isActive,
       };
     });
-  const { type, flip } = element;
+  const { type, flip, isLocked } = element;
+
+  // Unlocked elements are always clickable,
+  // locked elements are only clickable if selected
+  const isClickable = !isLocked || isSelected;
+
   const { Frame, isMaskable, Controls } = getDefinitionForType(type);
   const elementRef = useRef();
   const combinedFocusGroupRef = useCombinedRefs(elementRef, focusGroupRef); // Only attach focus group ref to one element.
@@ -174,9 +187,10 @@ function FrameElement({ id }) {
   const onPointerEnter = () => setHovering(true);
   const onPointerLeave = () => setHovering(false);
 
-  const isLinkActive = useTransform(
+  const isAnythingTransforming = useTransform(
     ({ state }) => !isSelected && hovering && !state.isAnythingTransforming
   );
+  const isLinkActive = isAnythingTransforming && !isLocked;
 
   const getBox = useUnits(({ actions }) => actions.getBox);
 
@@ -307,6 +321,7 @@ function FrameElement({ id }) {
         role="button"
         aria-label={elementLabel}
         hasMask={isMaskable}
+        isClickable={isClickable}
         data-testid="frameElement"
         onMouseDown={handleMouseDown}
         onFocus={handleFocus}
@@ -323,6 +338,7 @@ function FrameElement({ id }) {
           isDropSource={isDropSource}
           registerDropTarget={registerDropTarget}
           unregisterDropTarget={unregisterDropTarget}
+          isSelected={isSelected}
         >
           {Frame ? (
             <Frame
