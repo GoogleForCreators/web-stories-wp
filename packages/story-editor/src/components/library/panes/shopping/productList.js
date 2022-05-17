@@ -19,7 +19,6 @@
 import { useEffect } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { CircularProgress } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -39,17 +38,6 @@ const StyledListItem = styled.div`
   &:focus {
     background-color: ${({ theme }) => theme.colors.interactiveBg.disable};
   }
-`;
-
-const Loading = styled.div`
-  position: relative;
-  margin-left: 10px;
-  margin-top: 10px;
-`;
-
-const Spinner = styled.div`
-  position: absolute;
-  top: 0;
 `;
 
 function ProductList({
@@ -72,16 +60,6 @@ function ProductList({
     if (currentRowsRef.current[`row-${index}`] && evt.type === 'focus') {
       setCurrentFocusIndex(index);
     }
-  };
-
-  if (isLoading) {
-    return (
-      <Loading>
-        <Spinner>
-          <CircularProgress size={24} />
-        </Spinner>
-      </Loading>
-    );
   }
 
   return (

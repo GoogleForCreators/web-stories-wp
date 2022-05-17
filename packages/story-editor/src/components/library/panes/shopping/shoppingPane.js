@@ -30,6 +30,7 @@ import {
   THEME_CONSTANTS,
   SearchInput,
   useLiveRegion,
+  CircularProgress
 } from '@googleforcreators/design-system';
 
 /**
@@ -43,6 +44,17 @@ import { useStory } from '../../../../app/story';
 import useLibrary from '../../useLibrary';
 import paneId from './paneId';
 import ProductList from './productList';
+
+const Loading = styled.div`
+  position: relative;
+  margin-left: 10px;
+  margin-top: 10px;
+`;
+
+const Spinner = styled.div`
+  position: absolute;
+  top: 0;
+`;
 
 const HelperText = styled(Text).attrs({
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
@@ -96,7 +108,6 @@ function ShoppingPane(props) {
 
   const debouncedProductsQuery = useDebouncedCallback(getProductsByQuery, 300);
 
-  useEffect(() => getProductsByQuery(), [getProductsByQuery]);
   useEffect(
     () => debouncedProductsQuery(searchTerm),
     [searchTerm, debouncedProductsQuery]
@@ -193,24 +204,24 @@ function ShoppingPane(props) {
             handleClearInput={handleClearInput}
           />
         </Row>
-        {isLoading ? (
-              <Loading>
-                  <Spinner>
-                   <CircularProgress size={24} />
-               </Spinner>
-              </Loading>
-          )}
-          {!isLoading && products?.length > 0 ? (
-            <ProductList
-                isMenuFocused={isMenuFocused}
-                onClick={onClick}
-                products={products}
-                onPageProducts={currentPageProducts}
-               />
-         )};
-         {!isLoading && products?.length === 0 & searchTerm?.length ? (
+        {isLoading &&
+          <Loading>
+            <Spinner>
+              <CircularProgress size={24} />
+            </Spinner>
+          </Loading>
+        }
+        {!isLoading && products?.length > 0 &&
+          <ProductList
+            isMenuFocused={isMenuFocused}
+            onClick={onClick}
+            products={products}
+            onPageProducts={currentPageProducts}
+          />
+        }
+        {!isLoading && products?.length === 0 & searchTerm?.length ? (
           <HelperText>{__('No products found.', 'web-stories')}</HelperText>
-        )}
+        ) : null}
       </Section>
     </Pane>
   );
