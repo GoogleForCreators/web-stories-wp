@@ -24,8 +24,6 @@ const imgPlaceholder = css`
   margin-right: 10px;
   border-radius: 4px;
   background-color: ${({ theme }) => theme.colors.interactiveBg.disable};
-  min-width: 41px;
-  max-width: 41px;
   width: 41px;
   height: 41px;
 `;
