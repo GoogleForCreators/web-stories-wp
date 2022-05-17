@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,32 +13,39 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
 import { __ } from '@googleforcreators/i18n';
-import { useState } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
-
+import { useState } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
-import Dialog from '../../../../../hotlinkModal/hotlinkModal';
+import Dialog from '../../../hotlinkModal';
 import useInsert from './useInsert';
 
-function HotlinkModal({ isOpen, onClose }) {
-  const [errorMsg, setErrorMsg] = useState(false);
+function HotlinkModal({
+  isOpen,
+  onClose,
+  onSelect,
+  allowedFileTypes = [],
+  insertText = __('Insert', 'web-stories'),
+  insertingText = __('Inserting…', 'web-stories'),
+  title,
+}) {
   const [link, setLink] = useState('');
+  const [errorMsg, setErrorMsg] = useState(false);
 
-  const { onInsert, isInserting, setIsInserting, allowedFileTypes } = useInsert(
-    {
-      link,
-      setLink,
-      errorMsg,
-      setErrorMsg,
-      onClose,
-    }
-  );
+  const { onInsert, isInserting, setIsInserting } = useInsert({
+    link,
+    setLink,
+    errorMsg,
+    setErrorMsg,
+    onSelect,
+    allowedFileTypes,
+  });
 
   return (
     <Dialog
@@ -46,7 +53,9 @@ function HotlinkModal({ isOpen, onClose }) {
       isOpen={isOpen}
       onInsert={onInsert}
       allowedFileTypes={allowedFileTypes}
-      title={__('Insert external image or video', 'web-stories')}
+      title={title}
+      insertText={insertText}
+      insertingText={insertingText}
       isInserting={isInserting}
       setIsInserting={setIsInserting}
       link={link}
@@ -60,6 +69,11 @@ function HotlinkModal({ isOpen, onClose }) {
 HotlinkModal.propTypes = {
   onClose: PropTypes.func.isRequired,
   isOpen: PropTypes.bool.isRequired,
+  onSelect: PropTypes.func.isRequired,
+  allowedFileTypes: PropTypes.array,
+  title: PropTypes.string,
+  insertText: PropTypes.string,
+  insertingText: PropTypes.string,
 };
 
 export default HotlinkModal;

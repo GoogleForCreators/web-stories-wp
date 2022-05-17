@@ -21,24 +21,13 @@ import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
 import { Input } from '@googleforcreators/design-system';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import {
-  useCallback,
-  useRef,
-  useState,
-  useLayoutEffect,
-} from '@googleforcreators/react';
-import { trackError, trackEvent } from '@googleforcreators/tracking';
+import { useCallback, useRef, useLayoutEffect } from '@googleforcreators/react';
 import { withProtocol } from '@googleforcreators/url';
 /**
  * Internal dependencies
  */
-import Dialog from '../../dialog';
-import {
-  isValidUrlForHotlinking,
-  getErrorMessage,
-} from '../../library/panes/media/local/hotlink/utils';
-import { useAPI } from '../../../app/api';
-import useCORSProxy from '../../../utils/useCORSProxy';
+import Dialog from '../dialog';
+import { isValidUrlForHotlinking } from './utils';
 
 const InputWrapper = styled.form`
   margin: 16px 4px;
@@ -49,22 +38,19 @@ const InputWrapper = styled.form`
 function HotlinkModal({
   isOpen,
   onClose,
-  onSelect,
+  onInsert,
   allowedFileTypes = [],
   insertText = __('Insert', 'web-stories'),
   insertingText = __('Inserting…', 'web-stories'),
   title,
+  isInserting,
+  setIsInserting,
+  link,
+  setLink,
+  errorMsg,
+  setErrorMsg,
 }) {
-  const [isInserting, setIsInserting] = useState(false);
-  const [link, setLink] = useState('');
-  const [errorMsg, setErrorMsg] = useState(false);
   const inputRef = useRef(null);
-
-  const {
-    actions: { getHotlinkInfo },
-  } = useAPI();
-
-  const { checkResourceAccess } = useCORSProxy();
 
   const isDisabled = errorMsg || !link || isInserting;
   const primaryText = isInserting ? insertingText : insertText;
@@ -96,7 +82,7 @@ function HotlinkModal({
         setErrorMsg(__('Invalid link.', 'web-stories'));
       }
     }
-  }, [link]);
+  }, [link, setErrorMsg, setLink]);
 
   const onChange = useCallback(
     (value) => {
@@ -106,54 +92,8 @@ function HotlinkModal({
       }
       setLink(value);
     },
-    [setLink, errorMsg]
+    [errorMsg, setLink, setErrorMsg]
   );
-
-  const onInsert = useCallback(async () => {
-    if (!link) {
-      return;
-    }
-
-    if (!isValidUrlForHotlinking(link)) {
-      setErrorMsg(__('Invalid link.', 'web-stories'));
-      return;
-    }
-
-    setIsInserting(true);
-
-    try {
-      const hotlinkInfo = await getHotlinkInfo(link);
-      const shouldProxy = await checkResourceAccess(link);
-
-      await onSelect({
-        mimeType: hotlinkInfo.mimeType,
-        src: link,
-        needsProxy: shouldProxy,
-      });
-
-      // After getting link metadata and before actual insertion
-      // is a great opportunity to measure usage in a reasonably accurate way.
-      trackEvent('hotlink_file', {
-        event_label: link,
-        file_size: hotlinkInfo.fileSize,
-        file_type: hotlinkInfo.mimeType,
-        needs_proxy: shouldProxy,
-      });
-    } catch (err) {
-      trackError('hotlink_file', err?.message);
-
-      setErrorMsg(getErrorMessage(err.code, description));
-    } finally {
-      setIsInserting(false);
-    }
-  }, [
-    description,
-    onSelect,
-    link,
-    getHotlinkInfo,
-    setErrorMsg,
-    checkResourceAccess,
-  ]);
 
   const onSubmit = useCallback(
     (evt) => {
@@ -201,11 +141,17 @@ function HotlinkModal({
 HotlinkModal.propTypes = {
   onClose: PropTypes.func.isRequired,
   isOpen: PropTypes.bool.isRequired,
-  onSelect: PropTypes.func.isRequired,
+  onInsert: PropTypes.func.isRequired,
   allowedFileTypes: PropTypes.array,
   title: PropTypes.string,
   insertText: PropTypes.string,
   insertingText: PropTypes.string,
+  isInserting: PropTypes.bool,
+  setIsInserting: PropTypes.func,
+  link: PropTypes.string,
+  setLink: PropTypes.func,
+  errorMsg: PropTypes.string,
+  setErrorMsg: PropTypes.func,
 };
 
 export default HotlinkModal;

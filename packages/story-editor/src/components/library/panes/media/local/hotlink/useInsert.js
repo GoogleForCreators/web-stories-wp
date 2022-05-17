@@ -43,7 +43,10 @@ import { useConfig } from '../../../../../../app/config';
 import { useAPI } from '../../../../../../app/api';
 import useCORSProxy from '../../../../../../utils/useCORSProxy';
 import useDetectBaseColor from '../../../../../../app/media/utils/useDetectBaseColor';
-import { isValidUrlForHotlinking, getErrorMessage } from './utils';
+import {
+  isValidUrlForHotlinking,
+  getErrorMessage,
+} from '../../../../../hotlinkModal';
 
 function useInsert({ link, setLink, setErrorMsg, onClose }) {
   const { insertElement } = useLibrary((state) => ({
@@ -236,6 +239,7 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
     onInsert,
     isInserting,
     setIsInserting,
+    allowedFileTypes,
   };
 }
 
