@@ -139,7 +139,7 @@ function ShoppingPane(props) {
       });
 
       const PRODUCT_ADDED_TEXT = sprintf(
-        /* translators: %s: product title added to page.*/
+        /* translators: %s: product title. */
         __('%s added to page', 'web-stories'),
         product.productTitle
       );
