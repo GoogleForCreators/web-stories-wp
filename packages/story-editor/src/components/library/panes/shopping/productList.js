@@ -45,7 +45,6 @@ function ProductList({
   onPageProducts = [],
   onClick,
   isMenuFocused = true,
-  isLoading = false,
 }) {
   const { handleListNav, currentRowsRef, setCurrentFocusIndex } =
     useProductNavigation({ isMenuFocused, products });
@@ -60,7 +59,7 @@ function ProductList({
     if (currentRowsRef.current[`row-${index}`] && evt.type === 'focus') {
       setCurrentFocusIndex(index);
     }
-  }
+  };
 
   return (
     // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions -- list handles arrow up and arrow down
@@ -97,7 +96,6 @@ ProductList.propTypes = {
   onPageProducts: PropTypes.arrayOf(PropTypes.object),
   onClick: PropTypes.func.isRequired,
   isMenuFocused: PropTypes.bool,
-  isLoading: PropTypes.bool,
 };
 
 export default ProductList;

@@ -30,7 +30,7 @@ import {
   THEME_CONSTANTS,
   SearchInput,
   useLiveRegion,
-  CircularProgress
+  CircularProgress,
 } from '@googleforcreators/design-system';
 
 /**
@@ -204,22 +204,22 @@ function ShoppingPane(props) {
             handleClearInput={handleClearInput}
           />
         </Row>
-        {isLoading &&
+        {isLoading && (
           <Loading>
             <Spinner>
               <CircularProgress size={24} />
             </Spinner>
           </Loading>
-        }
-        {!isLoading && products?.length > 0 &&
+        )}
+        {!isLoading && products?.length > 0 && (
           <ProductList
             isMenuFocused={isMenuFocused}
             onClick={onClick}
             products={products}
             onPageProducts={currentPageProducts}
           />
-        }
-        {!isLoading && products?.length === 0 & searchTerm?.length ? (
+        )}
+        {!isLoading && (products?.length === 0) & searchTerm?.length ? (
           <HelperText>{__('No products found.', 'web-stories')}</HelperText>
         ) : null}
       </Section>

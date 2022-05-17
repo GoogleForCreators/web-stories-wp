@@ -79,7 +79,6 @@ describe('Shopping', () => {
           productId: 'product-id',
         }));
 
-
         expect(normalizedItems).toMatchInlineSnapshot(`
         Array [
           Object {
