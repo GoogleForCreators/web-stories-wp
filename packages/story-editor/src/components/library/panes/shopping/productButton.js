@@ -69,13 +69,13 @@ const onPageIcons = (
 );
 function ProductButton({ product, onClick, onFocus, isOnPage }) {
   const ADD_PRODUCT_TEXT = sprintf(
-    /* translators: %s: product title.*/
+    /* translators: %s: product title. */
     __('Add %s', 'web-stories'),
     product?.productTitle
   );
 
   const REMOVE_PRODUCT_TEXT = sprintf(
-    /* translators: %s: product title.*/
+    /* translators: %s: product title. */
     __('Remove %s', 'web-stories'),
     product?.productTitle
   );

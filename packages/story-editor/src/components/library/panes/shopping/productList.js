@@ -68,7 +68,7 @@ function ProductList({
         return (
           <StyledListItem
             role="listitem"
-            key={product?.productTitle}
+            key={product?.productId}
             tabIndex={-1}
             ref={
               (el) => (currentRowsRef.current[`row-${index}`] = el) // track the active row
