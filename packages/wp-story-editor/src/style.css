@@ -31,6 +31,11 @@ body.js.edit-story #wpbody-content {
   padding: 0;
 }
 
+#wpcontent {
+  position: fixed;
+  width: calc(100% - 36px);
+}
+
 body.edit-story .web-stories-wp {
   position: relative;
 }
@@ -127,4 +132,10 @@ body.edit-story #wpfooter {
 
 button {
   font-size: inherit;
+}
+
+@media screen and (max-width: 783px) {
+  #wpcontent {
+    width: 100%;
+  }
 }

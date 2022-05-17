@@ -166,11 +166,11 @@ function BaseTooltip({
             anchor: forceAnchorRef || anchorRef,
             popup,
             isRTL,
-            ignoreMaxOffsetY,
+            ignoreMaxOffsetY: true,
           })
         : {},
     });
-  }, [dynamicPlacement, spacing, forceAnchorRef, isRTL, ignoreMaxOffsetY]);
+  }, [dynamicPlacement, spacing, forceAnchorRef, isRTL]);
 
   // When near the edge of the viewport we want to force the tooltip to a new placement as to not
   // cutoff the contents of the tooltip.
