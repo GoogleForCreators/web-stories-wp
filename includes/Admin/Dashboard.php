@@ -289,9 +289,6 @@ class Dashboard extends Service_Base {
 		$rest_url = trailingslashit( $this->story_post_type->get_rest_url() );
 
 		$preload_paths = [
-			'/web-stories/v1/settings/',
-			'/web-stories/v1/publisher-logos/',
-			'/web-stories/v1/users/me/',
 			$rest_url . '?' . build_query(
 				[
 					'_embed'                => rawurlencode(
@@ -335,6 +332,9 @@ class Dashboard extends Service_Base {
 					),
 				]
 			),
+			'/web-stories/v1/settings/',
+			'/web-stories/v1/publisher-logos/',
+			'/web-stories/v1/users/me/',
 		];
 
 		/**
