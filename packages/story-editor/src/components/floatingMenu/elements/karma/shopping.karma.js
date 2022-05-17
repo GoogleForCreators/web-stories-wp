@@ -72,7 +72,7 @@ describe('Shopping integration', () => {
     return storyContext.state.selectedElements[0];
   };
 
-  fdescribe('Shopping tab', () => {
+  describe('Shopping tab', () => {
     it('should handle product search add and remove', async () => {
       const productTitle = 'Hoodie with Zipper';
       await focusProductSearchInput();
@@ -90,7 +90,7 @@ describe('Shopping integration', () => {
           '[aria-label="Design menu"] [aria-label="Product"]'
         )
       );
-      
+
       // add a small delay for debounce search to catchup
       await fixture.events.sleep(500);
 
