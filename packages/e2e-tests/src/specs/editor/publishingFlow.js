@@ -24,10 +24,10 @@ import {
   publishStory,
   getEditedPostContent,
   loadPostEditor,
-  clickButton,
   deleteMedia,
   publishPost,
 } from '@web-stories-wp/e2e-test-utils';
+
 /**
  * Internal dependencies
  */
@@ -73,13 +73,17 @@ describe('Publishing Flow', () => {
       visible: true,
     });
 
-    await expect(page).toMatch('Select as poster image');
+    await expect(page).toMatchElement('.media-toolbar-primary button', {
+      text: 'Select as poster image',
+    });
 
     await expect(page).toClick(
       '.attachments-browser .attachments .attachment[aria-label="example-3"]'
     );
 
-    await clickButton('button.media-button-select');
+    await expect(page).toClick('.media-toolbar-primary button', {
+      text: 'Select as poster image',
+    });
 
     await page.waitForSelector('[alt="Preview image"]');
     await expect(page).toMatchElement('[alt="Preview image"]');
