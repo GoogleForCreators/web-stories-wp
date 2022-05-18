@@ -44,19 +44,16 @@ function Layers() {
   const layersLength = useLayers().length;
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef();
-  const { renamableLayer } = useCanvas(
-    ({ state }) => ({
-      renamableLayer: state.renamableLayer,
-    })
-  );
+  const { renamableLayer } = useCanvas(({ state }) => ({
+    renamableLayer: state.renamableLayer,
+  }));
 
   useEffect(() => {
     if (renamableLayer) {
       setIsOpen(true);
     }
-   
   }, [renamableLayer]);
-  
+
   return (
     <>
       <Popup

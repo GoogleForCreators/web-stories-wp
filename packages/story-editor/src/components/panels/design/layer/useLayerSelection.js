@@ -25,13 +25,10 @@ import useFocusCanvas from '../../../canvas/useFocusCanvas';
 
 function useLayerSelection(layer) {
   const { id: elementId } = layer;
-  const { isSelected, toggleLayer, updateElementById } = useStory(
-    ({ state, actions }) => ({
-      isSelected: state.selectedElementIds.includes(elementId),
-      toggleLayer: actions.toggleLayer,
-      updateElementById: actions.updateElementById,
-    })
-  );
+  const { isSelected, toggleLayer } = useStory(({ state, actions }) => ({
+    isSelected: state.selectedElementIds.includes(elementId),
+    toggleLayer: actions.toggleLayer,
+  }));
   const { renamableLayer, setRenamableLayer } = useCanvas(
     ({ state, actions }) => ({
       renamableLayer: state.renamableLayer,
@@ -63,7 +60,7 @@ function useLayerSelection(layer) {
         focusCanvas();
       }
     },
-    [toggleLayer, elementId, focusCanvas, updateElementById, renamableLayer, setRenamableLayer]
+    [toggleLayer, elementId, focusCanvas, renamableLayer, setRenamableLayer]
   );
 
   return { isSelected, handleClick };
