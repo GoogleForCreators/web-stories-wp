@@ -65,6 +65,7 @@ const HelperText = styled(Text).attrs({
 function ShoppingPane(props) {
   const isShoppingIntegrationEnabled = useFeature('shoppingIntegration');
   const speak = useLiveRegion('assertive');
+  const [loaded, setLoaded] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [isMenuFocused, setIsMenuFocused] = useState(false);
@@ -91,6 +92,7 @@ function ShoppingPane(props) {
         setProducts([]);
       } finally {
         setIsLoading(false);
+        setLoaded(true);
       }
     },
     [getProducts]
@@ -218,7 +220,7 @@ function ShoppingPane(props) {
             </Spinner>
           </Loading>
         )}
-        {!isLoading && products?.length > 0 && (
+        {loaded && !isLoading && products?.length > 0 && (
           <ProductList
             isMenuFocused={isMenuFocused}
             onClick={onClick}
@@ -226,7 +228,7 @@ function ShoppingPane(props) {
             onPageProducts={currentPageProducts}
           />
         )}
-        {!isLoading && products?.length === 0 && (
+        {loaded && !isLoading && products?.length === 0 && (
           <HelperText>{__('No products found.', 'web-stories')}</HelperText>
         )}
       </Section>
