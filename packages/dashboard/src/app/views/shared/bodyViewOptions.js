@@ -69,6 +69,12 @@ const defaultAuthor = {
   queriedAuthors: [],
 };
 
+const defaultCategory = {
+  filterId: null,
+  toggleFilterId: noop,
+  queriedTaxonomy: [],
+};
+
 export default function BodyViewOptions({
   currentSort,
   handleLayoutSelect,
@@ -80,7 +86,9 @@ export default function BodyViewOptions({
   showSortDropdown,
   sortDropdownAriaLabel,
   showAuthorDropdown = false,
+  showCategoryDropdown = true,
   author = defaultAuthor,
+  //category= {},
   queryAuthorsBySearch = noop,
 }) {
   return (
@@ -91,6 +99,22 @@ export default function BodyViewOptions({
           <TranslateWithMarkup>{resultsLabel}</TranslateWithMarkup>
         </Text>
         <ControlsContainer>
+          {layoutStyle === VIEW_STYLE.GRID && showCategoryDropdown && (
+            <StorySortDropdownContainer>
+              <StyledDatalist
+                hasSearch
+                hasDropDownBorder
+                searchResultsLabel={__('Search results', 'web-stories')}
+                aria-label={__('Filter stories by category', 'web-stories')}
+                onChange={author.toggleFilterId}
+                getOptionsByQuery={queryAuthorsBySearch}
+                selectedId={author.filterId}
+                placeholder={__('Categories', 'web-stories')}
+                primaryOptions={author.queriedAuthors}
+                options={author.queriedAuthors}
+              />
+            </StorySortDropdownContainer>
+          )}
           {layoutStyle === VIEW_STYLE.GRID && showAuthorDropdown && (
             <StorySortDropdownContainer>
               <StyledDatalist
@@ -148,6 +172,8 @@ BodyViewOptions.propTypes = {
   showSortDropdown: PropTypes.bool,
   sortDropdownAriaLabel: PropTypes.string.isRequired,
   showAuthorDropdown: PropTypes.bool,
+  showCategoryDropdown: PropTypes.bool,
   author: AuthorPropTypes,
+  //category: PropTypes.object,
   queryAuthorsBySearch: PropTypes.func,
 };

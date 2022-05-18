@@ -14,21 +14,20 @@
  * limitations under the License.
  */
 /**
- * Internal dependencies
+ * WordPress dependencies
  */
-import { useConfig } from '../config';
+import apiFetch from '@wordpress/api-fetch';
 
-function useUsersApi() {
-  const {
-    apiCallbacks: { getAuthors, getCategories },
-  } = useConfig();
+/**
+ * External dependencies
+ */
+import { addQueryArgs } from '@googleforcreators/url';
 
-  return {
-    api: {
-      getAuthors,
-      getCategories,
-    },
-  };
+export function getCategories(config, search) {
+  return apiFetch({
+    path: addQueryArgs(config.api.categories, {
+      per_page: '100',
+      search,
+    }),
+  });
 }
-
-export default useUsersApi;

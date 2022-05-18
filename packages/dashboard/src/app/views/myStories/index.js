@@ -48,11 +48,12 @@ function MyStories() {
     totalPages,
     totalStoriesByStatus,
     getAuthors,
+    getCategories,
   } = useApi(
     ({
       actions: {
         storyApi: { duplicateStory, fetchStories, trashStory, updateStory },
-        usersApi: { getAuthors },
+        usersApi: { getAuthors, getCategories },
       },
       state: {
         stories: {
@@ -76,10 +77,10 @@ function MyStories() {
       totalPages,
       totalStoriesByStatus,
       getAuthors,
+      getCategories,
     })
   );
   const { apiCallbacks, canViewDefaultTemplates } = useConfig();
-
   const isMounted = useRef(false);
 
   useEffect(() => {
@@ -105,6 +106,7 @@ function MyStories() {
     totalPages,
   });
 
+  console.log(getCategories);
   const { setQueriedAuthors } = author;
   let queryAuthorsBySearch = useCallback(
     (authorSearchTerm) => {
@@ -164,6 +166,7 @@ function MyStories() {
   }, [stories, storiesOrderById]);
 
   const showAuthorDropdown = typeof getAuthors === 'function';
+  const showCategoryDropdown = typeof getCategories === 'function';
 
   return (
     <Layout.Provider>
@@ -178,6 +181,7 @@ function MyStories() {
         author={author}
         queryAuthorsBySearch={queryAuthorsBySearch}
         showAuthorDropdown={showAuthorDropdown}
+        showCategoryDropdown={showCategoryDropdown}
       />
 
       <Content
