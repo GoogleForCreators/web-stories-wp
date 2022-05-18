@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
+import { __ } from '@googleforcreators/i18n';
 import { Input } from '@googleforcreators/design-system';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -27,7 +27,7 @@ import { withProtocol } from '@googleforcreators/url';
  * Internal dependencies
  */
 import Dialog from '../dialog';
-import { isValidUrlForHotlinking } from './utils';
+import { getHotlinkDescription, isValidUrlForHotlinking } from './utils';
 
 const InputWrapper = styled.form`
   margin: 16px 4px;
@@ -55,14 +55,7 @@ function HotlinkModal({
   const isDisabled = errorMsg || !link || isInserting;
   const primaryText = isInserting ? insertingText : insertText;
 
-  let description = __('No file types are currently supported.', 'web-stories');
-  if (allowedFileTypes.length) {
-    description = sprintf(
-      /* translators: %s is a list of allowed file extensions. */
-      __('You can insert %s.', 'web-stories'),
-      translateToExclusiveList(allowedFileTypes)
-    );
-  }
+  const description = getHotlinkDescription(allowedFileTypes);
 
   useLayoutEffect(() => {
     // Wait one tick to ensure the input has been loaded.

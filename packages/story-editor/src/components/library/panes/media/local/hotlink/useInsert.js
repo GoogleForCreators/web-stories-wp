@@ -46,6 +46,7 @@ import useDetectBaseColor from '../../../../../../app/media/utils/useDetectBaseC
 import {
   isValidUrlForHotlinking,
   getErrorMessage,
+  getHotlinkDescription,
 } from '../../../../../hotlinkModal';
 
 function useInsert({ link, setLink, setErrorMsg, onClose }) {
@@ -213,17 +214,7 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
 
       trackError('hotlink_media', err?.message);
 
-      let description = __(
-        'No file types are currently supported.',
-        'web-stories'
-      );
-      if (allowedFileTypes.length) {
-        description = sprintf(
-          /* translators: %s is a list of allowed file extensions. */
-          __('You can insert %s.', 'web-stories'),
-          translateToExclusiveList(allowedFileTypes)
-        );
-      }
+      const description = getHotlinkDescription(allowedFileTypes);
       setErrorMsg(getErrorMessage(err.code, description));
     }
   }, [

@@ -17,13 +17,14 @@
  * External dependencies
  */
 import { useCallback, useState } from '@googleforcreators/react';
-import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
+import { __ } from '@googleforcreators/i18n';
 import { trackError, trackEvent } from '@googleforcreators/tracking';
 /**
  * Internal dependencies
  */
 import {
   getErrorMessage,
+  getHotlinkDescription,
   isValidUrlForHotlinking,
 } from '../../../hotlinkModal';
 import useCORSProxy from '../../../../utils/useCORSProxy';
@@ -38,14 +39,7 @@ function useInsert({ link, allowedFileTypes, setErrorMsg, onSelect }) {
 
   const { checkResourceAccess } = useCORSProxy();
 
-  let description = __('No file types are currently supported.', 'web-stories');
-  if (allowedFileTypes.length) {
-    description = sprintf(
-      /* translators: %s is a list of allowed file extensions. */
-      __('You can insert %s.', 'web-stories'),
-      translateToExclusiveList(allowedFileTypes)
-    );
-  }
+  const description = getHotlinkDescription(allowedFileTypes);
 
   const onInsert = useCallback(async () => {
     if (!link) {
