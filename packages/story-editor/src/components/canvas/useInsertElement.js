@@ -23,7 +23,7 @@ import { createNewElement } from '@googleforcreators/elements';
 /**
  * Internal dependencies
  */
-import { useStory, useCanvas } from '../../app';
+import { useStory } from '../../app';
 import { useLayout } from '../../app/layout';
 import { ZOOM_SETTING } from '../../constants';
 import useFocusCanvas from './useFocusCanvas';
@@ -41,10 +41,6 @@ function createElementForCanvas(type, props) {
 function useInsertElement() {
   const { addElement } = useStory(({ actions }) => ({
     addElement: actions.addElement,
-  }));
-
-  const { renamableLayer } = useCanvas(({ state }) => ({
-    renamableLayer: state.renamableLayer,
   }));
 
   const { setZoomSetting } = useLayout(({ actions: { setZoomSetting } }) => ({
@@ -74,13 +70,11 @@ function useInsertElement() {
         });
       }
 
-      if (renamableLayer) {
-        focusCanvas();
-      }
+      focusCanvas();
 
       return element;
     },
-    [addElement, focusCanvas, setZoomSetting, renamableLayer]
+    [addElement, focusCanvas, setZoomSetting]
   );
 
   return insertElement;
