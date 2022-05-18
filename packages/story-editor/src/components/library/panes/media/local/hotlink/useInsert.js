@@ -159,7 +159,7 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
 
         updateBaseColor(resource);
 
-        setErrorMsg(null);
+        setErrorMsg(false);
         setLink('');
         onClose();
       } catch (e) {

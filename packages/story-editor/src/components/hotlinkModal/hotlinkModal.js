@@ -79,9 +79,9 @@ function HotlinkModal({
 
   const onChange = useCallback(
     (value) => {
-      // Always set the error to null when changing.
+      // Always set the error to false when changing.
       if (errorMsg) {
-        setErrorMsg(null);
+        setErrorMsg(false);
       }
       setLink(value);
     },
@@ -143,7 +143,7 @@ HotlinkModal.propTypes = {
   setIsInserting: PropTypes.func,
   link: PropTypes.string,
   setLink: PropTypes.func,
-  errorMsg: PropTypes.string,
+  errorMsg: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   setErrorMsg: PropTypes.func,
 };
 
