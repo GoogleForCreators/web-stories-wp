@@ -30,7 +30,6 @@ describe('storyUpdates', () => {
       updateSlug({
         currentSlug: '',
         currentTitle: 'Top 10 Summer Sparkling Water Flavors',
-        storyId: 58,
         updateStory,
       });
 
@@ -39,11 +38,10 @@ describe('storyUpdates', () => {
       });
     });
 
-    it('should call fn with updated slug as story title when story id matches current slug and story title exists', () => {
+    it('should call fn with updated slug as story title when slug is empty and story title exists', () => {
       updateSlug({
-        currentSlug: '59',
+        currentSlug: '',
         currentTitle: 'Top 10 Summer Blockbusters',
-        storyId: 59,
         updateStory,
       });
 
@@ -52,16 +50,15 @@ describe('storyUpdates', () => {
       });
     });
 
-    it('should call fn with updated slug as story id when story id matches current slug and story title does not exist (fallback)', () => {
+    it('should call fn with empty slug when story title does not exist (fallback)', () => {
       updateSlug({
-        currentSlug: '59',
+        currentSlug: '',
         currentTitle: '',
-        storyId: 59,
         updateStory,
       });
 
       expect(updateStory).toHaveBeenCalledWith({
-        properties: { slug: 59 },
+        properties: { slug: '' },
       });
     });
 
@@ -69,7 +66,6 @@ describe('storyUpdates', () => {
       updateSlug({
         currentSlug: '10-reasons-to-go-for-a-walk',
         currentTitle: '',
-        storyId: 10,
         updateStory,
       });
 

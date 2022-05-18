@@ -60,7 +60,7 @@ const Filler = styled.svg`
 `;
 
 const FillerPath = styled.path`
-  pointer-events: all;
+  pointer-events: ${({ isClickable }) => (isClickable ? 'all' : 'none')};
 `;
 
 const DropTargetPath = styled.path`
@@ -101,15 +101,18 @@ function WithDropTarget({
 }) {
   const pathRef = useRef(null);
 
-  const { id, resource, isBackground } = element;
+  const { id, resource, isBackground, isLocked } = element;
   const mask = getElementMask(element);
 
   useEffect(() => {
+    if (isLocked) {
+      return undefined;
+    }
     registerDropTarget(id, pathRef.current);
     return () => {
       unregisterDropTarget(id);
     };
-  }, [id, registerDropTarget, unregisterDropTarget]);
+  }, [id, isLocked, registerDropTarget, unregisterDropTarget]);
 
   if (!mask) {
     return children;
@@ -117,11 +120,13 @@ function WithDropTarget({
 
   // Show an outline if hovering when not dragging
   // or if dragging another droppable element
-  const hasOutline =
+  const canHasOutline =
     (hover && !draggingResource) ||
     (Boolean(draggingResource) &&
       isDropSource(draggingResource.type) &&
       draggingResource !== resource);
+
+  const hasOutline = !isLocked && canHasOutline;
 
   const hasThinOutline = hasOutline && !isBackground;
   const hasBackgroundOutline = hasOutline && isBackground;
@@ -181,6 +186,7 @@ const WithMask = forwardRef(
       draggingResource,
       activeDropTargetId,
       isDropSource,
+      isSelected = false,
       registerDropTarget,
       unregisterDropTarget,
       ...rest
@@ -188,7 +194,11 @@ const WithMask = forwardRef(
     ref
   ) => {
     const [hover, setHover] = useState(false);
-    const { isBackground } = element;
+    const { isBackground, isLocked } = element;
+
+    // Unlocked elements are always clickable,
+    // locked elements are only clickable if selected
+    const isClickable = !isLocked || isSelected;
 
     const dropTargets = {
       draggingResource,
@@ -250,16 +260,20 @@ const WithMask = forwardRef(
           height="100%"
           preserveAspectRatio="none"
         >
-          <FillerPath fill="none" d={mask?.path} />
+          <FillerPath isClickable={isClickable} fill="none" d={mask?.path} />
         </Filler>
-        <WithDropTarget
-          element={element}
-          hover={hover}
-          {...dropTargets}
-          {...rest}
-        >
-          {children}
-        </WithDropTarget>
+        {isClickable ? (
+          <WithDropTarget
+            element={element}
+            hover={hover}
+            {...dropTargets}
+            {...rest}
+          >
+            {children}
+          </WithDropTarget>
+        ) : (
+          children
+        )}
       </div>
     );
   }
@@ -277,6 +291,7 @@ WithMask.propTypes = {
   draggingResource: PropTypes.object,
   activeDropTargetId: PropTypes.string,
   isDropSource: PropTypes.func.isRequired,
+  isSelected: PropTypes.bool,
   registerDropTarget: PropTypes.func,
   unregisterDropTarget: PropTypes.func,
 };
