@@ -117,6 +117,66 @@ describe('Layer Panel', () => {
     ).toBeTrue();
   });
 
+  fit('should be able to rename a layer by clicking Enter', async () => {
+    await fixture.events.click(fixture.editor.sidebar.insertTab);
+    await fixture.editor.library.textTab.click();
+    await fixture.events.click(fixture.editor.library.text.preset('Title 1'));
+
+    const titleLayer = layerPanel.getLayerByInnerText('Title 1');
+
+    await fixture.events.click(titleLayer, {clickCount: 2});
+    await fixture.events.keyboard.type('New Title Name');
+    await fixture.events.keyboard.press('Enter');
+
+    expect(
+      layerPanel.layers.filter((layer) => layer.innerText === 'New Title Name')?.length
+    ).toBe(1);
+    expect(
+      layerPanel.layers.filter((layer) => layer.innerText === 'Title 1')?.length
+    ).toBe(0);
+  });
+
+  fit('should be able to rename a layer on blur (e.g. clicking on another layer)', async () => {
+    await fixture.events.click(fixture.editor.sidebar.insertTab);
+    await fixture.editor.library.textTab.click();
+    await fixture.events.click(fixture.editor.library.text.preset('Title 1'));
+    
+    const titleLayer = layerPanel.getLayerByInnerText('Title 1');
+
+    await fixture.events.click(titleLayer, {clickCount: 2});
+    await fixture.events.keyboard.type('New Title Name');
+
+    const bgLayer = layerPanel.getLayerByInnerText('Background');
+
+    await fixture.events.click(bgLayer);
+
+    expect(
+      layerPanel.layers.filter((layer) => layer.innerText === 'New Title Name')?.length
+    ).toBe(1);
+    expect(
+      layerPanel.layers.filter((layer) => layer.innerText === 'Title 1')?.length
+    ).toBe(0);
+  });
+
+  fit('should be able to exit renaming a layer by clicking Esc', async () => {
+    await fixture.events.click(fixture.editor.sidebar.insertTab);
+    await fixture.editor.library.textTab.click();
+    await fixture.events.click(fixture.editor.library.text.preset('Title 1'));
+    
+    const titleLayer = layerPanel.getLayerByInnerText('Title 1');
+
+    await fixture.events.click(titleLayer, {clickCount: 2});
+    await fixture.events.keyboard.type('New Title Name');
+    await fixture.events.keyboard.press('Esc');
+
+    expect(
+      layerPanel.layers.filter((layer) => layer.innerText === 'New Title Name')?.length
+    ).toBe(0);
+    expect(
+      layerPanel.layers.filter((layer) => layer.innerText === 'Title 1')?.length
+    ).toBe(1);
+  });
+
   it('should be able to duplicate elements with duplicate action', async () => {
     await fixture.events.click(fixture.editor.sidebar.insertTab);
     await fixture.editor.library.textTab.click();
