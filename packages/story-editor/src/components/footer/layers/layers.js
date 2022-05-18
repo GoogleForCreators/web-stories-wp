@@ -51,7 +51,10 @@ function Layers() {
   );
 
   useEffect(() => {
-    setIsOpen(renamableLayer);
+    if (renamableLayer) {
+      setIsOpen(true);
+    }
+   
   }, [renamableLayer]);
   
   return (
