@@ -75,13 +75,12 @@ class Woocommerce_Query implements Product_Query {
 		_prime_post_caches( $products_image_ids, false, true );
 
 		foreach ( $products as $product ) {
-			$product_image_ids = $product->get_gallery_image_ids();
-			$product_image_ids[] = $product->get_image_id();
+			$product_image_ids = array_merge( [ $product->get_image_id() ], $product->get_gallery_image_ids() );
 			$product_image_ids = array_map( 'absint', $product_image_ids );
 			$product_image_ids = array_unique( array_filter( $product_image_ids ) );
 
 			$images = array_map(
-				[ $this, 'get_product_images' ],
+				[ $this, 'get_product_image' ],
 				$product_image_ids
 			);
 
@@ -120,7 +119,7 @@ class Woocommerce_Query implements Product_Query {
 	 * @param int $image_id Attachment ID.
 	 * @return array
 	 */
-	protected function get_product_images( int $image_id ): array {
+	protected function get_product_image( int $image_id ): array {
 		$url = wp_get_attachment_url( $image_id );
 		$alt = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
 		
