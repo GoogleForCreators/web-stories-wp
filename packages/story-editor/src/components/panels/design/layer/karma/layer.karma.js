@@ -117,7 +117,7 @@ describe('Layer Panel', () => {
     ).toBeTrue();
   });
 
-  fit('should be able to rename a layer by clicking Enter', async () => {
+  it('should be able to rename a layer by clicking Enter', async () => {
     await fixture.events.click(fixture.editor.sidebar.insertTab);
     await fixture.editor.library.textTab.click();
     await fixture.events.click(fixture.editor.library.text.preset('Title 1'));
@@ -136,7 +136,7 @@ describe('Layer Panel', () => {
     ).toBe(0);
   });
 
-  fit('should be able to rename a layer on blur (e.g. clicking on another layer)', async () => {
+  it('should be able to rename a layer on blur (e.g. clicking on another layer)', async () => {
     await fixture.events.click(fixture.editor.sidebar.insertTab);
     await fixture.editor.library.textTab.click();
     await fixture.events.click(fixture.editor.library.text.preset('Title 1'));
@@ -158,7 +158,7 @@ describe('Layer Panel', () => {
     ).toBe(0);
   });
 
-  fit('should be able to exit renaming a layer by clicking Esc', async () => {
+  it('should be able to exit renaming a layer by clicking Esc', async () => {
     await fixture.events.click(fixture.editor.sidebar.insertTab);
     await fixture.editor.library.textTab.click();
     await fixture.events.click(fixture.editor.library.text.preset('Title 1'));
