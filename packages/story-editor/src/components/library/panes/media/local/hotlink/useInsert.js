@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useCallback, useState, useMemo } from '@googleforcreators/react';
-import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
+import { __ } from '@googleforcreators/i18n';
 import {
   getImageFromVideo,
   seekVideo,
@@ -40,13 +40,13 @@ import {
   useUploadVideoFrame,
 } from '../../../../../../app/media/utils';
 import { useConfig } from '../../../../../../app/config';
-import { useAPI } from '../../../../../../app/api';
 import useCORSProxy from '../../../../../../utils/useCORSProxy';
 import useDetectBaseColor from '../../../../../../app/media/utils/useDetectBaseColor';
 import {
   isValidUrlForHotlinking,
   getErrorMessage,
   getHotlinkDescription,
+  useGetHotlinkData,
 } from '../../../../../hotlinkModal';
 
 function useInsert({ link, setLink, setErrorMsg, onClose }) {
@@ -75,15 +75,13 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
       allowedMimeTypes.map((type) => getExtensionsFromMimeType(type)).flat(),
     [allowedMimeTypes]
   );
-  const {
-    actions: { getHotlinkInfo },
-  } = useAPI();
+  const { getHotlinkData } = useGetHotlinkData();
   const { updateBaseColor } = useDetectBaseColor({});
 
   const [isInserting, setIsInserting] = useState(false);
 
   const { uploadVideoPoster } = useUploadVideoFrame({});
-  const { getProxiedUrl, checkResourceAccess } = useCORSProxy();
+  const { getProxiedUrl } = useCORSProxy();
 
   const insertMedia = useCallback(
     async (hotlinkData, needsProxy) => {
@@ -196,8 +194,7 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
     setIsInserting(true);
 
     try {
-      const hotlinkInfo = await getHotlinkInfo(link);
-      const shouldProxy = await checkResourceAccess(link);
+      const { hotlinkInfo, shouldProxy } = await getHotlinkData(link);
 
       // After getting link metadata and before actual insertion
       // is a great opportunity to measure usage in a reasonably accurate way.
@@ -217,14 +214,7 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
       const description = getHotlinkDescription(allowedFileTypes);
       setErrorMsg(getErrorMessage(err.code, description));
     }
-  }, [
-    allowedFileTypes,
-    link,
-    getHotlinkInfo,
-    setErrorMsg,
-    insertMedia,
-    checkResourceAccess,
-  ]);
+  }, [link, setErrorMsg, getHotlinkData, insertMedia, allowedFileTypes]);
 
   return {
     onInsert,

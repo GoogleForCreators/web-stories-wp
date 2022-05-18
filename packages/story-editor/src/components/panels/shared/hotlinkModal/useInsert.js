@@ -26,18 +26,13 @@ import {
   getErrorMessage,
   getHotlinkDescription,
   isValidUrlForHotlinking,
+  useGetHotlinkData,
 } from '../../../hotlinkModal';
-import useCORSProxy from '../../../../utils/useCORSProxy';
-import { useAPI } from '../../../../app/api';
 
 function useInsert({ link, allowedFileTypes, setErrorMsg, onSelect }) {
   const [isInserting, setIsInserting] = useState(false);
 
-  const {
-    actions: { getHotlinkInfo },
-  } = useAPI();
-
-  const { checkResourceAccess } = useCORSProxy();
+  const { getHotlinkData } = useGetHotlinkData();
 
   const description = getHotlinkDescription(allowedFileTypes);
 
@@ -54,8 +49,7 @@ function useInsert({ link, allowedFileTypes, setErrorMsg, onSelect }) {
     setIsInserting(true);
 
     try {
-      const hotlinkInfo = await getHotlinkInfo(link);
-      const shouldProxy = await checkResourceAccess(link);
+      const { hotlinkInfo, shouldProxy } = await getHotlinkData(link);
 
       await onSelect({
         mimeType: hotlinkInfo.mimeType,
@@ -78,14 +72,7 @@ function useInsert({ link, allowedFileTypes, setErrorMsg, onSelect }) {
     } finally {
       setIsInserting(false);
     }
-  }, [
-    description,
-    onSelect,
-    link,
-    getHotlinkInfo,
-    setErrorMsg,
-    checkResourceAccess,
-  ]);
+  }, [link, setErrorMsg, getHotlinkData, onSelect, description]);
 
   return {
     onInsert,
