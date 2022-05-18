@@ -433,6 +433,7 @@ class Dashboard extends Service_Base {
 				'settings'       => '/web-stories/v1/settings/',
 				'pages'          => '/wp/v2/pages/',
 				'publisherLogos' => '/web-stories/v1/publisher-logos/',
+				'categories'     => '/web-stories/v1/web_story_category/',
 			],
 			'maxUpload'               => $max_upload_size,
 			'maxUploadFormatted'      => size_format( $max_upload_size ),

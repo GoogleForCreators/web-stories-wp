@@ -31,7 +31,10 @@ import {
 /**
  * Internal dependencies
  */
-import { AuthorPropTypes } from '../../../utils/useStoryView.js';
+import {
+  AuthorPropTypes,
+  CategoryPropTypes,
+} from '../../../utils/useStoryView.js';
 import { StandardViewContentGutter, ViewStyleBar } from '../../../components';
 import { DROPDOWN_TYPES, VIEW_STYLE } from '../../../constants';
 
@@ -72,7 +75,7 @@ const defaultAuthor = {
 const defaultCategory = {
   filterId: null,
   toggleFilterId: noop,
-  queriedTaxonomy: [],
+  queriedCategories: [],
 };
 
 export default function BodyViewOptions({
@@ -88,8 +91,9 @@ export default function BodyViewOptions({
   showAuthorDropdown = false,
   showCategoryDropdown = true,
   author = defaultAuthor,
-  //category= {},
+  category = defaultCategory,
   queryAuthorsBySearch = noop,
+  queryCategoriesBySearch = noop,
 }) {
   return (
     <StandardViewContentGutter>
@@ -106,12 +110,12 @@ export default function BodyViewOptions({
                 hasDropDownBorder
                 searchResultsLabel={__('Search results', 'web-stories')}
                 aria-label={__('Filter stories by category', 'web-stories')}
-                onChange={author.toggleFilterId}
-                getOptionsByQuery={queryAuthorsBySearch}
-                selectedId={author.filterId}
+                onChange={category.toggleFilterId}
+                getOptionsByQuery={queryCategoriesBySearch}
+                selectedId={category.filterId}
                 placeholder={__('Categories', 'web-stories')}
-                primaryOptions={author.queriedAuthors}
-                options={author.queriedAuthors}
+                primaryOptions={category.queriedCategories}
+                options={category.queriedCategories}
               />
             </StorySortDropdownContainer>
           )}
@@ -174,6 +178,7 @@ BodyViewOptions.propTypes = {
   showAuthorDropdown: PropTypes.bool,
   showCategoryDropdown: PropTypes.bool,
   author: AuthorPropTypes,
-  //category: PropTypes.object,
+  category: CategoryPropTypes,
   queryAuthorsBySearch: PropTypes.func,
+  queryCategoriesBySearch: PropTypes.func,
 };

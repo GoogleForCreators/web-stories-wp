@@ -23,8 +23,14 @@ import apiFetch from '@wordpress/api-fetch';
  */
 import { addQueryArgs } from '@googleforcreators/url';
 
-export function getCategories(config, search) {
-  return apiFetch({
+/**
+ * Get story categories.
+ *
+ * @param {Object} config Configuration object.
+ * @return {Promise} Categories promise.
+ */
+export async function getCategories(config, search) {
+  return await apiFetch({
     path: addQueryArgs(config.api.categories, {
       per_page: '100',
       search,

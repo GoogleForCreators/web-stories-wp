@@ -48,6 +48,7 @@ import {
   SortPropTypes,
   ViewPropTypes,
   AuthorPropTypes,
+  CategoryPropTypes,
 } from '../../../../utils/useStoryView';
 import { useDashboardResultsLabel } from '../../../../utils';
 import { BodyViewOptions, PageHeading } from '../../shared';
@@ -72,7 +73,9 @@ function Header({
   totalStoriesByStatus,
   view,
   author,
+  category,
   queryAuthorsBySearch,
+  queryCategoriesBySearch,
   showAuthorDropdown,
 }) {
   const {
@@ -188,7 +191,9 @@ function Header({
         pageSortOptions={STORY_SORT_MENU_ITEMS}
         handleSortChange={onSortChange}
         author={author}
+        category={category}
         queryAuthorsBySearch={queryAuthorsBySearch}
+        queryCategoriesBySearch={queryCategoriesBySearch}
         sortDropdownAriaLabel={__(
           'Choose sort option for display',
           'web-stories'
@@ -207,7 +212,9 @@ Header.propTypes = {
   totalStoriesByStatus: TotalStoriesByStatusPropType,
   view: ViewPropTypes.isRequired,
   author: AuthorPropTypes,
+  category: CategoryPropTypes,
   queryAuthorsBySearch: PropTypes.func,
+  queryCategoriesBySearch: PropTypes.func,
   showAuthorDropdown: PropTypes.bool,
 };
 

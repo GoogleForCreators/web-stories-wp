@@ -100,14 +100,15 @@ function MyStories() {
     showStoriesWhileLoading,
     initialPageReady,
     author,
+    category,
   } = useStoryView({
     filters: STORY_STATUSES,
     isLoading,
     totalPages,
   });
 
-  console.log(getCategories);
   const { setQueriedAuthors } = author;
+  const { setQueriedCategories } = category;
   let queryAuthorsBySearch = useCallback(
     (authorSearchTerm) => {
       return getAuthors(authorSearchTerm).then((data) => {
@@ -131,13 +132,44 @@ function MyStories() {
     [getAuthors, setQueriedAuthors]
   );
 
+  let queryCategoriesBySearch = useCallback(
+    (categorySearchTerm) => {
+      return getCategories(categorySearchTerm).then((data) => {
+        if (!isMounted.current) {
+          return;
+        }
+
+        const categoryData = data.map(({ id, name }) => ({
+          id,
+          name,
+        }));
+        setQueriedCategories((current) => {
+          const existingIds = current.map(({ id }) => id);
+          const newCategories = categoryData.filter(
+            (category) => !existingIds.includes(category.id)
+          );
+          return [...current, ...newCategories];
+        });
+      });
+    },
+    [getCategories, setQueriedCategories]
+  );
+
   if (!getAuthors) {
     queryAuthorsBySearch = noop;
+  }
+
+  if (!getCategories) {
+    queryCategoriesBySearch = noop;
   }
 
   useEffect(() => {
     queryAuthorsBySearch();
   }, [queryAuthorsBySearch]);
+
+  useEffect(() => {
+    queryCategoriesBySearch();
+  }, [queryCategoriesBySearch]);
 
   useEffect(() => {
     fetchStories({
@@ -147,6 +179,7 @@ function MyStories() {
       sortOption: sort.value,
       status: filter.value,
       author: author.filterId,
+      category: category.filterId,
     });
   }, [
     fetchStories,
@@ -156,6 +189,7 @@ function MyStories() {
     sort.direction,
     sort.value,
     author.filterId,
+    category.filterId,
     apiCallbacks,
   ]);
 
@@ -179,7 +213,9 @@ function MyStories() {
         totalStoriesByStatus={totalStoriesByStatus}
         view={view}
         author={author}
+        category={category}
         queryAuthorsBySearch={queryAuthorsBySearch}
+        queryCategoriesBySearch={queryCategoriesBySearch}
         showAuthorDropdown={showAuthorDropdown}
         showCategoryDropdown={showCategoryDropdown}
       />

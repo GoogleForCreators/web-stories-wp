@@ -49,7 +49,9 @@ export default function useStoryView({
   const [page, setPage] = useState(1);
   const [searchKeyword, _setSearchKeyword] = useState('');
   const [authorFilterId, _setAuthorFilterId] = useState(null);
+  const [categoryFilterId, _setCategoryFilterId] = useState(null);
   const [queriedAuthors, setQueriedAuthors] = useState([]);
+  const [queriedCategories, setQueriedCategories] = useState([]);
   const showStoriesWhileLoading = useRef(false);
   const [initialPageReady, setInitialPageReady] = useState(false);
 
@@ -124,6 +126,10 @@ export default function useStoryView({
     _setAuthorFilterId((prevFilterId) => (prevFilterId === id ? null : id));
   }, []);
 
+  const toggleCategoryFilterId = useCallback(({ id }) => {
+    _setCategoryFilterId((prevFilterId) => (prevFilterId === id ? null : id));
+  }, []);
+
   useEffect(() => {
     if (searchKeyword.length) {
       trackEvent('search', {
@@ -184,6 +190,12 @@ export default function useStoryView({
         queriedAuthors,
         setQueriedAuthors,
       },
+      category: {
+        filterId: categoryFilterId,
+        toggleFilterId: toggleCategoryFilterId,
+        queriedCategories,
+        setQueriedCategories,
+      },
       initialPageReady,
       showStoriesWhileLoading,
     }),
@@ -203,9 +215,13 @@ export default function useStoryView({
       searchKeyword,
       setSearchKeyword,
       authorFilterId,
+      categoryFilterId,
       toggleAuthorFilterId,
+      toggleCategoryFilterId,
       queriedAuthors,
+      queriedCategories,
       setQueriedAuthors,
+      setQueriedCategories,
     ]
   );
 }
@@ -226,6 +242,18 @@ export const AuthorPropTypes = PropTypes.shape({
     })
   ).isRequired,
   setQueriedAuthors: PropTypes.func,
+});
+
+export const CategoryPropTypes = PropTypes.shape({
+  filterId: PropTypes.number,
+  toggleFilterId: PropTypes.func,
+  queriedCategories: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string,
+    })
+  ).isRequired,
+  setQueriedCategories: PropTypes.func,
 });
 
 export const FilterPropTypes = PropTypes.shape({
