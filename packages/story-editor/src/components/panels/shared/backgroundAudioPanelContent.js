@@ -295,7 +295,7 @@ function BackgroundAudioPanelContent({
               renderUploadButton={renderUploadCaptionButton}
             />
           )}
-          {showLoopControl && resource?.length && (
+          {showLoopControl && resource?.length > 0 && (
             <Row spaceBetween={false}>
               <LoopPanelContent loop={loop} onChange={onChangeLoop} />
             </Row>
