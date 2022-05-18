@@ -106,7 +106,7 @@ function LayerPanel({ layers }) {
     (element) => () => {
       setSelectedElementsById({ elementIds: [element.id] });
 
-      if (renamableLayer?.elementId === '') {
+      if (renamableLayer) {
         focusCanvas();
       }
     },

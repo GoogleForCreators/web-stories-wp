@@ -59,7 +59,7 @@ function useLayerSelection(layer) {
       }
 
       // In any case, revert focus to selected element(s)
-      if (renamableLayer?.elementId === '') {
+      if (renamableLayer) {
         focusCanvas();
       }
     },

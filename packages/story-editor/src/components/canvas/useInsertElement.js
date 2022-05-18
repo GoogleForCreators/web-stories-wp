@@ -76,7 +76,7 @@ function useInsertElement() {
         });
       }
 
-      if (renamableLayer?.elementId === '') {
+      if (renamableLayer) {
         focusCanvas();
       }
 
