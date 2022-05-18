@@ -226,7 +226,7 @@ function ShoppingPane(props) {
             onPageProducts={currentPageProducts}
           />
         )}
-        {!isLoading && products?.length === 0 && (
+        {!isLoading && products?.length === 0 && searchTerm?.length >= 1 && (
           <HelperText>{__('No products found.', 'web-stories')}</HelperText>
         )}
       </Section>

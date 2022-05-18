@@ -106,7 +106,7 @@ const products = [
 ];
 
 const configValue = {
-  locale: 'en-CA',
+  locale: 'en-US',
 };
 
 export default {
