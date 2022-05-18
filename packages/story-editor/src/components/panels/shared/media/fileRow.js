@@ -46,9 +46,7 @@ const InputRow = styled.div`
   text-overflow: ellipsis;
 `;
 
-const MoreIcon = styled(Icons.DotsFillSmall)`
-  width: 24px !important;
-  height: 24px !important;
+const ReplaceIcon = styled(Icons.Rotate)`
   vertical-align: bottom;
 `;
 
@@ -152,7 +150,7 @@ function FileRow({
             onMenuClose={onMenuClose}
             options={optionsWithGroup}
           >
-            <MoreIcon />
+            <ReplaceIcon />
           </DropDownMenu>
         </Tooltip>
       )}

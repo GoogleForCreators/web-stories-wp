@@ -44,6 +44,16 @@ import { Z_INDEX_STORY_DETAILS } from '../../../../constants/zIndex';
 import Tooltip from '../../../tooltip';
 import useCORSProxy from '../../../../utils/useCORSProxy';
 
+const Play = styled(Icons.PlayFilled)`
+  width: 30px !important;
+  height: 30px !important;
+`;
+
+const Stop = styled(Icons.StopFilled)`
+  width: 30px !important;
+  height: 30px !important;
+`;
+
 const StyledButton = styled(Button)`
   ${({ theme }) =>
     themeHelpers.focusableOutlineCSS(
@@ -167,7 +177,7 @@ function AudioPlayer({ src, mimeType, tracks = [], audioId, loop }) {
           aria-label={buttonTitle}
           onClick={handlePlayPause}
         >
-          {isPlaying ? <Icons.StopFilled /> : <Icons.PlayFilled />}
+          {isPlaying ? <Stop /> : <Play />}
         </StyledButton>
       </Tooltip>
     </Wrapper>
