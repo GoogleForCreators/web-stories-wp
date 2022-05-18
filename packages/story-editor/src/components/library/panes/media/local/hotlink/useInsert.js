@@ -75,6 +75,8 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
       allowedMimeTypes.map((type) => getExtensionsFromMimeType(type)).flat(),
     [allowedMimeTypes]
   );
+
+  const description = getHotlinkDescription(allowedFileTypes);
   const { getHotlinkData } = useGetHotlinkData();
   const { updateBaseColor } = useDetectBaseColor({});
 
@@ -211,10 +213,9 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
 
       trackError('hotlink_media', err?.message);
 
-      const description = getHotlinkDescription(allowedFileTypes);
       setErrorMsg(getErrorMessage(err.code, description));
     }
-  }, [link, setErrorMsg, getHotlinkData, insertMedia, allowedFileTypes]);
+  }, [link, setErrorMsg, getHotlinkData, insertMedia, description]);
 
   return {
     onInsert,
