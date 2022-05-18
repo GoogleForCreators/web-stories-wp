@@ -55,7 +55,7 @@ function useLayerSelection(layer) {
       });
 
       if (isDoubleClick) {
-        setRenamableLayer({elementId: elementId});
+        setRenamableLayer({ elementId: elementId });
       }
 
       // In any case, revert focus to selected element(s)
@@ -63,7 +63,7 @@ function useLayerSelection(layer) {
         focusCanvas();
       }
     },
-    [toggleLayer, elementId, focusCanvas, updateElementById, renamableLayer]
+    [toggleLayer, elementId, focusCanvas, updateElementById, renamableLayer, setRenamableLayer]
   );
 
   return { isSelected, handleClick };

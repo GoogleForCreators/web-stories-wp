@@ -28,25 +28,18 @@ import { RIGHT_CLICK_MENU_LABELS } from '../constants';
 import { useCanvas, useStory } from '../..';
 
 function LayerName() {
-  const { selectedElementIds } = useStory(
-    ({ state }) => ({
-      selectedElementIds: state.selectedElementIds,
-    })
-  );
-  const { setRenamableLayer } = useCanvas(
-    ({ state, actions }) => ({
-      setRenamableLayer: actions.setRenamableLayer,
-      renamableLayer: state.renamableLayer,
-    })
-  );
-  const enableLayerNaming = useCallback(
-    () => {
-      setRenamableLayer({
-        elementId: selectedElementIds[0],
-      });
-    },
-    [setRenamableLayer, selectedElementIds]
-  );
+  const { selectedElementIds } = useStory(({ state }) => ({
+    selectedElementIds: state.selectedElementIds,
+  }));
+  const { setRenamableLayer } = useCanvas(({ state, actions }) => ({
+    setRenamableLayer: actions.setRenamableLayer,
+    renamableLayer: state.renamableLayer,
+  }));
+  const enableLayerNaming = useCallback(() => {
+    setRenamableLayer({
+      elementId: selectedElementIds[0],
+    });
+  }, [setRenamableLayer, selectedElementIds]);
 
   const isLayerNamingEnabled = useFeature('layerNaming');
 

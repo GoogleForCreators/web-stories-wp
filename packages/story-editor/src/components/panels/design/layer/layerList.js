@@ -96,11 +96,9 @@ function LayerPanel({ layers }) {
   const numLayers = layers.length;
 
   const focusCanvas = useFocusCanvas();
-  const { renamableLayer } = useCanvas(
-    ({ state }) => ({
-      renamableLayer: state.renamableLayer,
-    })
-  );
+  const { renamableLayer } = useCanvas(({ state }) => ({
+    renamableLayer: state.renamableLayer,
+  }));
 
   const handleStartReordering = useCallback(
     (element) => () => {
@@ -110,7 +108,7 @@ function LayerPanel({ layers }) {
         focusCanvas();
       }
     },
-    [setSelectedElementsById, focusCanvas]
+    [setSelectedElementsById, focusCanvas, renamableLayer]
   );
 
   if (!numLayers) {

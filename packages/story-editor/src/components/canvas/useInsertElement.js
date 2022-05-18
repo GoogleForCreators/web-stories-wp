@@ -43,11 +43,9 @@ function useInsertElement() {
     addElement: actions.addElement,
   }));
 
-  const { renamableLayer } = useCanvas(
-    ({ state }) => ({
-      renamableLayer: state.renamableLayer,
-    })
-  );
+  const { renamableLayer } = useCanvas(({ state }) => ({
+    renamableLayer: state.renamableLayer,
+  }));
 
   const { setZoomSetting } = useLayout(({ actions: { setZoomSetting } }) => ({
     setZoomSetting,
@@ -82,7 +80,7 @@ function useInsertElement() {
 
       return element;
     },
-    [addElement, focusCanvas, setZoomSetting]
+    [addElement, focusCanvas, setZoomSetting, renamableLayer]
   );
 
   return insertElement;
