@@ -29,7 +29,7 @@ import { addQueryArgs } from '@googleforcreators/url';
  * @param {Object} config Configuration object.
  * @return {Promise} Categories promise.
  */
-export async function getCategories(config, search) {
+export function getCategories(config, search) {
   return apiFetch({
     path: addQueryArgs(config.api.categories, {
       per_page: '100',
