@@ -19,7 +19,7 @@ namespace Google\Web_Stories\Tests\Unit\Shopping;
 
 use Brain\Monkey;
 use Google\Web_Stories\Shopping\Woocommerce_Query;
-use Google\Web_Stories\Tests\Unit\TestCase;
+use Google\Web_Stories\Tests\Unit\DependencyInjectedTestCase;
 /**
  * @coversDefaultClass \Google\Web_Stories\Shopping\Woocommerce_Query
  */
