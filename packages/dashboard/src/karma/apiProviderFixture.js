@@ -152,7 +152,7 @@ function fetchStories(
     .filter(
       (story) =>
         typeof category !== 'number' ||
-        !!story.categories.find((c) => c.id === category)
+        Boolean(story.categories.find((c) => c.id === category))
     )
     .sort((a, b) => {
       let value;

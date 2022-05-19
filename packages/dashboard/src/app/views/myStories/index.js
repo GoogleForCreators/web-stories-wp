@@ -147,7 +147,7 @@ function MyStories() {
         setQueriedCategories((current) => {
           const existingIds = current.map(({ id }) => id);
           const newCategories = categoryData.filter(
-            (category) => !existingIds.includes(category.id)
+            (c) => !existingIds.includes(c.id)
           );
           return [...current, ...newCategories];
         });
