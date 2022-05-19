@@ -78,7 +78,7 @@ describe('Publishing Flow', () => {
     });
 
     await expect(page).toClick(
-      '.attachments-browser .attachments .attachment[aria-label="example-3"]'
+      '.attachments-browser .attachments .attachment[aria-label^="example-3"]'
     );
 
     await expect(page).toClick('.media-toolbar-primary button', {
