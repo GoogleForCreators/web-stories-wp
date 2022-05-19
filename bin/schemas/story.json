@@ -1,0 +1,846 @@
+{
+  "$id": "https://wp.stories.google/schema/story.json",
+  "type": "object",
+  "default": {},
+  "title": "Web Stories for WordPress Schema",
+  "required": ["version", "pages"],
+  "properties": {
+    "version": {
+      "type": "integer",
+      "default": 0,
+      "minimum": 0,
+      "title": "The story's data version",
+      "description": "Used for data migrations"
+    },
+    "pages": {
+      "type": "array",
+      "minItems": 1,
+      "title": "Story pages",
+      "description": "Holds individual pages of a story",
+      "items": {
+        "$ref": "#/$defs/page"
+      }
+    }
+  },
+  "$defs": {
+    "https": {
+      "type": "string",
+      "format": "uri-reference",
+      "pattern": "^(/|https://|https?://(127.0.0.1|([^/]+\\.)?localhost)(:[0-9]+)?/)"
+    },
+    "animation": {
+      "type": "object",
+      "title": "An animation",
+      "required": ["id", "type", "targets", "duration", "delay"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Animation ID"
+        },
+        "type": {
+          "type": "string",
+          "title": "Animation type",
+          "enum": [
+            "blinkOn",
+            "bounce",
+            "effect-background-pan",
+            "effect-background-pan-and-zoom",
+            "effect-background-zoom",
+            "effect-drop",
+            "effect-fade-in",
+            "effect-fly-in",
+            "effect-pan",
+            "effect-pulse",
+            "effect-rotate-in",
+            "effect-twirl-in",
+            "effect-whoosh-in",
+            "effect-zoom",
+            "fade",
+            "flip",
+            "floatOn",
+            "move",
+            "pulse",
+            "spin",
+            "zoom"
+          ]
+        },
+        "targets": {
+          "type": "array",
+          "title": "The targets Schema",
+          "items": {
+            "type": "string",
+            "title": "A Schema",
+            "examples": [
+              "d3c66373-d2ce-4295-bb5e-5e1ffe20aee9",
+              "2035c185-344a-4a74-80f4-001552afa5ac"
+            ]
+          },
+          "examples": [
+            ["d3c66373-d2ce-4295-bb5e-5e1ffe20aee9"],
+            ["2035c185-344a-4a74-80f4-001552afa5ac"]
+          ]
+        },
+        "panDir": {
+          "type": "string",
+          "title": "The panDir Schema",
+          "examples": ["leftToRight", "topToBottom"]
+        },
+        "duration": {
+          "type": "integer",
+          "title": "The duration Schema",
+          "examples": [3000, 4000]
+        },
+        "delay": {
+          "type": "integer",
+          "title": "The delay Schema",
+          "examples": [0]
+        },
+        "zoomDirection": {
+          "type": "string",
+          "default": "",
+          "title": "The zoomDirection Schema",
+          "examples": ["scaleIn"]
+        }
+      }
+    },
+    "element": {
+      "type": "object",
+      "title": "Base element",
+      "required": ["x", "y", "width", "height", "type", "id"],
+      "properties": {
+        "opacity": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100,
+          "default": 100,
+          "title": "Element opacity",
+          "$comment": "TODO: Set by default and make required"
+        },
+        "flip": {
+          "type": "object",
+          "title": "Flip setting",
+          "$comment": "TODO: Set by default and make required",
+          "required": ["vertical", "horizontal"],
+          "properties": {
+            "vertical": {
+              "type": "boolean",
+              "title": "Vertical flipping"
+            },
+            "horizontal": {
+              "type": "boolean",
+              "title": "Horizontal flipping"
+            }
+          }
+        },
+        "rotationAngle": {
+          "type": "integer",
+          "title": "Rotation angle",
+          "$comment": "TODO: Set by default and make required",
+          "minimum": -360,
+          "maximum": 360
+        },
+        "lockAspectRatio": {
+          "type": "boolean",
+          "title": "Whether aspect ratio is locked",
+          "$comment": "TODO: Set by default and make required"
+        },
+        "backgroundColor": {
+          "type": "object",
+          "title": "Background color",
+          "$ref": "#/$defs/pattern"
+        },
+        "x": {
+          "type": "number",
+          "title": "X position"
+        },
+        "y": {
+          "type": "number",
+          "title": "Y position"
+        },
+        "width": {
+          "type": "number",
+          "title": "Element width"
+        },
+        "height": {
+          "type": "number",
+          "title": "Element height"
+        },
+        "mask": {
+          "type": "object",
+          "title": "Element mask",
+          "required": ["type"],
+          "properties": {
+            "type": {
+              "type": "string",
+              "title": "Mask type",
+              "enum": [
+                "heart",
+                "star",
+                "circle",
+                "rectangle",
+                "triangle",
+                "rounded-rectangle",
+                "rounded-rectangle-2",
+                "pentagon",
+                "hexagon",
+                "cross",
+                "arrow",
+                "burst",
+                "bullseye",
+                "blob-1",
+                "blob-2",
+                "blob-3",
+                "blob-4",
+                "blob-5",
+                "blob-6",
+                "grid-1",
+                "grid-2",
+                "grid-3",
+                "grid-4",
+                "grid-5",
+                "grid-6",
+                "grid-7",
+                "grid-8",
+                "burst-outline",
+                "arrow-1",
+                "arrow-2",
+                "arrow-3",
+                "geography-1",
+                "twitter",
+                "instagram",
+                "facebook",
+                "youtube",
+                "brush-stroke-1",
+                "brush-stroke-2",
+                "chat-bubble",
+                "check-mark",
+                "new-music",
+                "music-note",
+                "fashion-arrow",
+                "fashion-arrow-2",
+                "wellbeing-arrow"
+              ]
+            },
+            "showInLibrary": {
+              "type": "boolean",
+              "$comment": "TODO: Remove / do not store"
+            },
+            "name": {
+              "type": "string",
+              "$comment": "TODO: Remove / do not store"
+            },
+            "path": {
+              "type": "string",
+              "$comment": "TODO: Remove / do not store"
+            },
+            "ratio": {
+              "type": "number",
+              "$comment": "TODO: Remove / do not store"
+            },
+            "supportsBorder": {
+              "type": "boolean",
+              "$comment": "TODO: Remove / do not store"
+            }
+          }
+        },
+        "type": {
+          "type": "string",
+          "title": "The element type",
+          "examples": ["image", "sticker", "text", "video", "shape"]
+        },
+        "id": {
+          "type": "string",
+          "title": "The id Schema"
+        },
+        "scale": {
+          "type": "number",
+          "title": "Scaling",
+          "minimum": 0
+        },
+        "focalX": {
+          "type": "number",
+          "title": "X axis focal point",
+          "minimum": 0
+        },
+        "focalY": {
+          "type": "number",
+          "title": "Y axis focal point",
+          "minimum": 0
+        },
+        "padding": {
+          "type": "object",
+          "title": "The padding Schema",
+          "required": [],
+          "properties": {
+            "horizontal": {
+              "type": "integer",
+              "title": "Horizontal padding"
+            },
+            "vertical": {
+              "type": "integer",
+              "title": "Vertical padding"
+            },
+            "locked": {
+              "type": "boolean",
+              "title": "Whether padding is locked"
+            },
+            "hasHiddenPadding": {
+              "type": "boolean",
+              "title": "Whether the element has hidden padding"
+            }
+          }
+        },
+        "borderRadius": {
+          "type": "object",
+          "title": "The borderRadius Schema",
+          "required": [
+            "locked",
+            "topLeft",
+            "topRight",
+            "bottomRight",
+            "bottomLeft"
+          ],
+          "properties": {
+            "locked": {
+              "type": "boolean",
+              "title": "The locked Schema",
+              "examples": [true]
+            },
+            "topLeft": {
+              "type": "integer",
+              "title": "The topLeft Schema",
+              "examples": [2]
+            },
+            "topRight": {
+              "type": "integer",
+              "title": "The topRight Schema",
+              "examples": [2]
+            },
+            "bottomRight": {
+              "type": "integer",
+              "title": "The bottomRight Schema",
+              "examples": [2]
+            },
+            "bottomLeft": {
+              "type": "integer",
+              "title": "The bottomLeft Schema",
+              "examples": [2]
+            }
+          }
+        },
+        "marginOffset": {
+          "type": "number",
+          "title": "The marginOffset Schema"
+        },
+        "basedOn": {
+          "type": "string",
+          "default": "",
+          "title": "Reference to the original element if this one was duplicated/copied",
+          "$comment": "TODO: Remove?"
+        },
+        "isBackground": {
+          "type": "boolean",
+          "title": "Whether it is the background element"
+        },
+        "isDefaultBackground": {
+          "type": "boolean",
+          "title": "Whether it is the default background"
+        },
+        "groupId": {
+          "type": "string",
+          "title": "Layer group ID"
+        }
+      }
+    },
+    "textElement": {
+      "type": "object",
+      "title": "Text element",
+      "allOf": [
+        {
+          "$ref": "#/$defs/element"
+        }
+      ],
+      "required": [
+        "backgroundTextMode",
+        "font",
+        "fontSize",
+        "lineHeight",
+        "textAlign",
+        "content",
+        "fontWeight"
+      ],
+      "properties": {
+        "backgroundTextMode": {
+          "type": "string",
+          "title": "Text background mode",
+          "enum": ["NONE", "FILL", "HIGHLIGHT"]
+        },
+        "font": {
+          "type": "object",
+          "title": "The font Schema",
+          "required": [
+            "family",
+            "service",
+            "fallbacks",
+            "weights",
+            "styles",
+            "variants",
+            "metrics"
+          ],
+          "properties": {
+            "family": {
+              "type": "string",
+              "title": "Font family"
+            },
+            "service": {
+              "type": "string",
+              "title": "Font provider",
+              "examples": ["fonts.google.com"]
+            },
+            "fallbacks": {
+              "type": "array",
+              "title": "Fallback fonts",
+              "items": {
+                "type": "string",
+                "title": "Font family"
+              },
+              "examples": [["sans-serif"], ["Helvetica", "sans-serif"]]
+            },
+            "weights": {
+              "type": "array",
+              "title": "Supported font weights",
+              "minItems": 1,
+              "items": {
+                "type": "integer",
+                "title": "Font weight",
+                "minimum": 100,
+                "maximum": 900
+              },
+              "examples": [[100, 300, 400, 500, 700, 900]]
+            },
+            "styles": {
+              "type": "array",
+              "title": "Support font styles",
+              "minItems": 1,
+              "items": {
+                "type": "string",
+                "title": "Font style",
+                "enum": ["italic", "regular"]
+              }
+            },
+            "variants": {
+              "type": "array",
+              "title": "Font variants",
+              "items": {
+                "type": "array",
+                "title": "Font variant",
+                "minItems": 2,
+                "maxItems": 2,
+                "items": {
+                  "type": "integer"
+                },
+                "examples": [
+                  [0, 100],
+                  [1, 500],
+                  [1, 700]
+                ]
+              }
+            },
+            "metrics": {
+              "type": "object",
+              "title": "Font metrics",
+              "required": [
+                "upm",
+                "asc",
+                "des",
+                "tAsc",
+                "tDes",
+                "tLGap",
+                "wAsc",
+                "wDes",
+                "xH",
+                "capH",
+                "yMin",
+                "yMax",
+                "hAsc",
+                "hDes",
+                "lGap"
+              ],
+              "properties": {
+                "upm": {
+                  "type": "integer"
+                },
+                "asc": {
+                  "type": "integer"
+                },
+                "des": {
+                  "type": "integer"
+                },
+                "tAsc": {
+                  "type": "integer"
+                },
+                "tDes": {
+                  "type": "integer"
+                },
+                "tLGap": {
+                  "type": "integer"
+                },
+                "wAsc": {
+                  "type": "integer"
+                },
+                "wDes": {
+                  "type": "integer"
+                },
+                "xH": {
+                  "type": "integer"
+                },
+                "capH": {
+                  "type": "integer"
+                },
+                "yMin": {
+                  "type": "integer"
+                },
+                "yMax": {
+                  "type": "integer"
+                },
+                "hAsc": {
+                  "type": "integer"
+                },
+                "hDes": {
+                  "type": "integer"
+                },
+                "lGap": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "fontSize": {
+          "type": "integer",
+          "title": "The fontSize Schema",
+          "examples": [40, 14, 19]
+        },
+        "lineHeight": {
+          "type": "number",
+          "title": "Line height"
+        },
+        "textAlign": {
+          "type": "string",
+          "title": "Text alignment",
+          "enum": ["initial", "left", "center", "right"]
+        },
+        "content": {
+          "type": "string",
+          "title": "The element's content. Can contain HTML."
+        },
+        "fontWeight": {
+          "type": "integer",
+          "minimum": 100,
+          "maximum": 900,
+          "title": "Font weight",
+          "$comment": "TODO: Outdated?"
+        }
+      }
+    },
+    "stickerElement": {
+      "type": "object",
+      "title": "Sticker element",
+      "allOf": [
+        {
+          "$ref": "#/$defs/element"
+        }
+      ],
+      "required": ["sticker"],
+      "properties": {
+        "sticker": {
+          "type": "object",
+          "title": "The sticker Schema",
+          "required": ["type"],
+          "properties": {
+            "type": {
+              "type": "string",
+              "title": "The type Schema"
+            }
+          }
+        }
+      }
+    },
+    "mediaElement": {
+      "type": "object",
+      "title": "Media element",
+      "allOf": [
+        {
+          "$ref": "#/$defs/element"
+        }
+      ],
+      "required": ["resource"],
+      "properties": {
+        "resource": {
+          "type": "object",
+          "title": "The resource Schema",
+          "required": [
+            "type",
+            "mimeType",
+            "src",
+            "width",
+            "height",
+            "id",
+            "alt",
+            "sizes"
+          ],
+          "properties": {
+            "type": {
+              "type": "string",
+              "title": "Resource type",
+              "enum": ["image", "video", "gif"]
+            },
+            "mimeType": {
+              "type": "string",
+              "title": "Mime type"
+            },
+            "src": {
+              "type": "string",
+              "title": "Media source"
+            },
+            "width": {
+              "type": "integer",
+              "title": "Media width",
+              "minimum": 1
+            },
+            "height": {
+              "type": "integer",
+              "title": "Media height",
+              "minimum": 1
+            },
+            "id": {
+              "type": "integer",
+              "title": "Resource ID"
+            },
+            "alt": {
+              "type": "string",
+              "title": "Alt text"
+            },
+            "sizes": {
+              "type": "array",
+              "title": "The sizes Schema",
+              "items": {},
+              "$comment": "TODO: Complete schema"
+            },
+            "isOptimized": {
+              "type": "boolean",
+              "title": "Whether the resource is considered optimized"
+            },
+            "baseColor": {
+              "type": "string",
+              "title": "Average/Base color",
+              "examples": ["#99684c", "#daa992"]
+            },
+            "isExternal": {
+              "type": "boolean",
+              "title": "Whether it is an external resource"
+            },
+            "creationDate": {
+              "type": "string",
+              "default": "",
+              "title": "Date the media file was uploaded",
+              "$comment": "TODO: Remove? Use date-time format and ajv-formats?"
+            },
+            "posterId": {
+              "type": "integer",
+              "default": 0,
+              "title": "ID of the resource's poster"
+            }
+          }
+        },
+        "overlay": {
+          "type": "object",
+          "$ref": "#/$defs/linearPattern"
+        }
+      }
+    },
+    "shapeElement": {
+      "type": "object",
+      "title": "Shape element",
+      "allOf": [
+        {
+          "$ref": "#/$defs/element"
+        }
+      ]
+    },
+    "pattern": {
+      "type": "object",
+      "oneOf": [
+        { "$ref": "#/$defs/solidPattern" },
+        { "$ref": "#/$defs/linearPattern" }
+      ]
+    },
+    "solidPattern": {
+      "type": "object",
+      "title": "Solid pattern",
+      "required": ["color"],
+      "properties": {
+        "color": {
+          "type": "object",
+          "title": "RGB(A) color",
+          "required": ["r", "g", "b"],
+          "properties": {
+            "r": {
+              "type": "integer",
+              "title": "Red",
+              "minimum": 0,
+              "maximum": 255
+            },
+            "g": {
+              "type": "integer",
+              "title": "Green",
+              "minimum": 0,
+              "maximum": 255
+            },
+            "b": {
+              "type": "integer",
+              "title": "Blue",
+              "minimum": 0,
+              "maximum": 255
+            },
+            "a": {
+              "type": "number",
+              "title": "Alpha",
+              "minimum": 0,
+              "maximum": 1
+            }
+          }
+        }
+      }
+    },
+    "linearPattern": {
+      "type": "object",
+      "title": "Linear color pattern",
+      "required": ["type", "stops"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["none", "solid", "linear", "radial"]
+        },
+        "stops": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/$defs/solidPattern"
+              }
+            ],
+            "properties": {
+              "position": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              }
+            }
+          }
+        },
+        "alpha": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "rotation": {
+          "type": "number",
+          "minimum": -360,
+          "maximum": 360
+        }
+      }
+    },
+    "pageTemplateType": {
+      "type": "string",
+      "title": "The pageTemplateType Schema",
+      "enum": [
+        "",
+        "cover",
+        "editorial",
+        "list",
+        "quote",
+        "section",
+        "table",
+        "steps"
+      ]
+    },
+    "page": {
+      "type": "object",
+      "title": "Individual Page",
+      "required": ["backgroundColor", "elements", "id", "type"],
+      "properties": {
+        "animations": {
+          "type": "array",
+          "title": "Animations on this page",
+          "items": {
+            "$ref": "#/$defs/animation"
+          }
+        },
+        "elements": {
+          "type": "array",
+          "minItems": 1,
+          "title": "The page's elements",
+          "items": {
+            "anyOf": [
+              { "$ref": "#/$defs/element" },
+              { "$ref": "#/$defs/mediaElement" },
+              { "$ref": "#/$defs/shapeElement" },
+              { "$ref": "#/$defs/stickerElement" }
+            ]
+          }
+        },
+        "backgroundColor": {
+          "type": "object",
+          "title": "Background color",
+          "$ref": "#/$defs/pattern"
+        },
+        "defaultBackgroundElement": {
+          "type": "object",
+          "title": "The default background element",
+          "oneOf": [
+            { "$ref": "#/$defs/mediaElement" },
+            { "$ref": "#/$defs/shapeElement" }
+          ],
+          "$comment": "TODO: Move to story element or remove?"
+        },
+        "id": {
+          "type": "string",
+          "title": "Page ID"
+        },
+        "pageTemplateType": {
+          "$ref": "#/$defs/pageTemplateType"
+        },
+        "type": {
+          "type": "string",
+          "title": "The type Schema",
+          "enum": ["page"],
+          "$comment": "TODO: Remove?"
+        },
+        "groups": {
+          "type": "object",
+          "title": "Layer groups",
+          "patternProperties": {
+            "^[\\w-]+": {
+              "type": "object",
+              "required": ["name", "isLocked"],
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "isLocked": {
+                  "type": "boolean"
+                },
+                "isCollapsed": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
