@@ -26,7 +26,7 @@ class Util {
 	 * @param mixed $obj Class we're working with.
 	 * @param mixed $name Method we're calling.
 	 * @param array $args Args for the method.
-	 * @return [type]
+	 * @return mixed
 	 */
 	public static function call_method( $obj, $name, array $args ) {
 		$class  = new \ReflectionClass( $obj );
