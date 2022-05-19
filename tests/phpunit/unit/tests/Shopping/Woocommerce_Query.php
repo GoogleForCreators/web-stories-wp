@@ -20,7 +20,9 @@ namespace Google\Web_Stories\Tests\Unit\Shopping;
 use Brain\Monkey;
 use Google\Web_Stories\Shopping\Woocommerce_Query;
 use Google\Web_Stories\Tests\Unit\TestCase;
-
+/**
+ * @coversDefaultClass \Google\Web_Stories\Shopping\Woocommerce_Query
+ */
 class Woocommerce_Query_Test extends TestCase {
 	
 	public function set_up(): void {
