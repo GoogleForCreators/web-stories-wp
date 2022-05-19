@@ -95,7 +95,7 @@ class Woocommerce_Query_Test extends TestCase {
 			]
 		);
 
-		$product_query = new Woocommerce_Query();
+		$product_query = $this->injector->make( \Google\Web_Stories\Shopping\Woocommerce_Query::class );
 		$results       = $product_query->get_search( 'hoodie' );
 
 		$this->assertEquals( $results[0]->get_images()[0]['url'], 'http://example.com/50' );
