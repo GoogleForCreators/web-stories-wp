@@ -124,12 +124,13 @@ describe('Layer Panel', () => {
 
     const titleLayer = layerPanel.getLayerByInnerText('Title 1');
 
-    await fixture.events.click(titleLayer, {clickCount: 2});
+    await fixture.events.click(titleLayer, { clickCount: 2 });
     await fixture.events.keyboard.type('New Title Name');
     await fixture.events.keyboard.press('Enter');
 
     expect(
-      layerPanel.layers.filter((layer) => layer.innerText === 'New Title Name')?.length
+      layerPanel.layers.filter((layer) => layer.innerText === 'New Title Name')
+        ?.length
     ).toBe(1);
     expect(
       layerPanel.layers.filter((layer) => layer.innerText === 'Title 1')?.length
@@ -140,10 +141,10 @@ describe('Layer Panel', () => {
     await fixture.events.click(fixture.editor.sidebar.insertTab);
     await fixture.editor.library.textTab.click();
     await fixture.events.click(fixture.editor.library.text.preset('Title 1'));
-    
+
     const titleLayer = layerPanel.getLayerByInnerText('Title 1');
 
-    await fixture.events.click(titleLayer, {clickCount: 2});
+    await fixture.events.click(titleLayer, { clickCount: 2 });
     await fixture.events.keyboard.type('New Title Name');
 
     const bgLayer = layerPanel.getLayerByInnerText('Background');
@@ -151,7 +152,8 @@ describe('Layer Panel', () => {
     await fixture.events.click(bgLayer);
 
     expect(
-      layerPanel.layers.filter((layer) => layer.innerText === 'New Title Name')?.length
+      layerPanel.layers.filter((layer) => layer.innerText === 'New Title Name')
+        ?.length
     ).toBe(1);
     expect(
       layerPanel.layers.filter((layer) => layer.innerText === 'Title 1')?.length
@@ -162,15 +164,16 @@ describe('Layer Panel', () => {
     await fixture.events.click(fixture.editor.sidebar.insertTab);
     await fixture.editor.library.textTab.click();
     await fixture.events.click(fixture.editor.library.text.preset('Title 1'));
-    
+
     const titleLayer = layerPanel.getLayerByInnerText('Title 1');
 
-    await fixture.events.click(titleLayer, {clickCount: 2});
+    await fixture.events.click(titleLayer, { clickCount: 2 });
     await fixture.events.keyboard.type('New Title Name');
     await fixture.events.keyboard.press('Esc');
 
     expect(
-      layerPanel.layers.filter((layer) => layer.innerText === 'New Title Name')?.length
+      layerPanel.layers.filter((layer) => layer.innerText === 'New Title Name')
+        ?.length
     ).toBe(0);
     expect(
       layerPanel.layers.filter((layer) => layer.innerText === 'Title 1')?.length
