@@ -494,7 +494,7 @@ describe('CUJ: Creator can view their stories in grid view', () => {
       }
     });
 
-    fit('should filter by category', async () => {
+    it('should filter by category', async () => {
       const { stories } = await getStoriesState();
       let renderedStoriesById = getRenderedStoriesById();
       // click the category toggle
