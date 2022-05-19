@@ -17,8 +17,13 @@
 /**
  * External dependencies
  */
-import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
-import { Input } from '@googleforcreators/design-system';
+import {
+  __,
+  sprintf,
+  translateToExclusiveList,
+  TranslateWithMarkup,
+} from '@googleforcreators/i18n';
+import { Input, Link, THEME_CONSTANTS } from '@googleforcreators/design-system';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import {
@@ -27,8 +32,13 @@ import {
   useState,
   useLayoutEffect,
 } from '@googleforcreators/react';
-import { trackError, trackEvent } from '@googleforcreators/tracking';
+import {
+  trackClick,
+  trackError,
+  trackEvent,
+} from '@googleforcreators/tracking';
 import { withProtocol } from '@googleforcreators/url';
+
 /**
  * Internal dependencies
  */
@@ -40,11 +50,38 @@ import {
 import { useAPI } from '../../../app/api';
 import useCORSProxy from '../../../utils/useCORSProxy';
 
+const DOCS_URL =
+  'https://wp.stories.google/docs/troubleshooting/common-issues/';
+
 const InputWrapper = styled.form`
   margin: 16px 4px;
   width: 470px;
   height: 100px;
 `;
+
+function CORSMessage() {
+  const onDocsClick = (evt) => trackClick(evt, 'click_cors_check_docs');
+  return (
+    <TranslateWithMarkup
+      mapping={{
+        a: (
+          <Link
+            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM}
+            href={DOCS_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={onDocsClick}
+          />
+        ),
+      }}
+    >
+      {__(
+        'Unable to load media. Make sure CORS is set up correctly for the file. <a>Learn more</a>.',
+        'web-stories'
+      )}
+    </TranslateWithMarkup>
+  );
+}
 
 function HotlinkModal({
   isOpen,
@@ -54,6 +91,7 @@ function HotlinkModal({
   insertText = __('Insert', 'web-stories'),
   insertingText = __('Inserting…', 'web-stories'),
   title,
+  canUseProxy = true,
 }) {
   const [isInserting, setIsInserting] = useState(false);
   const [link, setLink] = useState('');
@@ -125,6 +163,12 @@ function HotlinkModal({
       const hotlinkInfo = await getHotlinkInfo(link);
       const shouldProxy = await checkResourceAccess(link);
 
+      if (shouldProxy && !canUseProxy) {
+        setErrorMsg(<CORSMessage />);
+        setIsInserting(false);
+        return;
+      }
+
       await onSelect({
         mimeType: hotlinkInfo.mimeType,
         src: link,
@@ -147,12 +191,12 @@ function HotlinkModal({
       setIsInserting(false);
     }
   }, [
-    description,
-    onSelect,
     link,
     getHotlinkInfo,
-    setErrorMsg,
     checkResourceAccess,
+    canUseProxy,
+    onSelect,
+    description,
   ]);
 
   const onSubmit = useCallback(
@@ -186,8 +230,8 @@ function HotlinkModal({
           ref={inputRef}
           onChange={({ target: { value } }) => onChange(value)}
           value={link}
-          hint={errorMsg?.length ? errorMsg : description}
-          hasError={Boolean(errorMsg?.length)}
+          hint={errorMsg || description}
+          hasError={Boolean(errorMsg)}
           onBlur={onBlur}
           label={__('URL', 'web-stories')}
           type="url"
@@ -206,6 +250,7 @@ HotlinkModal.propTypes = {
   title: PropTypes.string,
   insertText: PropTypes.string,
   insertingText: PropTypes.string,
+  canUseProxy: PropTypes.bool,
 };
 
 export default HotlinkModal;

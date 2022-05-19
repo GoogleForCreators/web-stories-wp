@@ -43,6 +43,7 @@ function BackgroundAudio({ backgroundAudio, id }) {
         autoPlay="autoplay"
         layout="nodisplay"
         poster=""
+        crossorigin="anonymous"
         {...videoProps}
       >
         <source {...sourceProps} />
