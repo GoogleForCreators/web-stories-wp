@@ -221,7 +221,14 @@ class Link_Controller extends REST_Controller implements HasRequirements {
 			return rest_ensure_response( $response );
 		}
 
-		$doc = Document::fromHtml( $html );
+		try {
+			$doc = Document::fromHtml( $html );
+		} catch ( \DOMException $exception ) {
+			set_transient( $cache_key, wp_json_encode( $data ), $cache_ttl );
+			$response = $this->prepare_item_for_response( $data, $request );
+
+			return rest_ensure_response( $response );
+		}
 
 		if ( ! $doc ) {
 			set_transient( $cache_key, wp_json_encode( $data ), $cache_ttl );
