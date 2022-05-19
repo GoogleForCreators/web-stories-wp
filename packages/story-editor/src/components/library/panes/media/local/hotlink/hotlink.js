@@ -33,7 +33,8 @@ import { useState } from '@googleforcreators/react';
  */
 import { focusStyle } from '../../../../../panels/shared/styles';
 import Tooltip from '../../../../../tooltip';
-import HotlinkModal from './hotlinkModal';
+import HotlinkModal from '../../../../../hotlinkModal';
+import useInsert from './useInsert';
 
 const Button = styled(DefaultButton)`
   ${focusStyle};
@@ -43,6 +44,7 @@ const Button = styled(DefaultButton)`
 function Hotlink() {
   const [isOpen, setIsOpen] = useState(false);
   const label = __('Insert by link', 'web-stories');
+  const { allowedFileTypes, onSelect, onError } = useInsert({ setIsOpen });
   return (
     <>
       <Tooltip title={label}>
@@ -56,7 +58,14 @@ function Hotlink() {
           <Icons.Link />
         </Button>
       </Tooltip>
-      <HotlinkModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
+      <HotlinkModal
+        onClose={() => setIsOpen(false)}
+        isOpen={isOpen}
+        onError={onError}
+        onSelect={onSelect}
+        allowedFileTypes={allowedFileTypes}
+        title={__('Insert external image or video', 'web-stories')}
+      />
     </>
   );
 }

@@ -21,13 +21,12 @@ import { __ } from '@googleforcreators/i18n';
 import { Input } from '@googleforcreators/design-system';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useCallback, useRef, useLayoutEffect } from '@googleforcreators/react';
-import { withProtocol } from '@googleforcreators/url';
+import { useRef, useLayoutEffect } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
 import Dialog from '../dialog';
-import { getHotlinkDescription, isValidUrlForHotlinking } from './utils';
+import useHotlinkModal from './useHotlinkModal';
 
 const InputWrapper = styled.form`
   margin: 16px 4px;
@@ -38,24 +37,21 @@ const InputWrapper = styled.form`
 function HotlinkModal({
   isOpen,
   onClose,
-  onInsert,
+  onSelect,
+  onError,
   allowedFileTypes = [],
   insertText = __('Insert', 'web-stories'),
   insertingText = __('Inserting…', 'web-stories'),
   title,
-  isInserting,
-  setIsInserting,
-  link,
-  setLink,
-  errorMsg,
-  setErrorMsg,
 }) {
   const inputRef = useRef(null);
 
-  const isDisabled = errorMsg || !link || isInserting;
-  const primaryText = isInserting ? insertingText : insertText;
+  const {
+    action: { onSubmit, onBlur, onChange, onCloseDialog, onInsert },
+    state: { errorMsg, isInserting, link, description, isDisabled },
+  } = useHotlinkModal({ onClose, onSelect, allowedFileTypes, onError });
 
-  const description = getHotlinkDescription(allowedFileTypes);
+  const primaryText = isInserting ? insertingText : insertText;
 
   useLayoutEffect(() => {
     // Wait one tick to ensure the input has been loaded.
@@ -67,46 +63,9 @@ function HotlinkModal({
     return () => clearTimeout(timeout);
   }, [isOpen, inputRef]);
 
-  const onBlur = useCallback(() => {
-    if (link?.length > 0) {
-      const newLink = withProtocol(link);
-      setLink(newLink);
-      if (!isValidUrlForHotlinking(newLink)) {
-        setErrorMsg(__('Invalid link.', 'web-stories'));
-      }
-    }
-  }, [link, setErrorMsg, setLink]);
-
-  const onChange = useCallback(
-    (value) => {
-      // Always set the error to false when changing.
-      if (errorMsg) {
-        setErrorMsg(false);
-      }
-      setLink(value);
-    },
-    [errorMsg, setLink, setErrorMsg]
-  );
-
-  const onSubmit = useCallback(
-    (evt) => {
-      evt.preventDefault();
-
-      if (!isDisabled) {
-        onInsert();
-      }
-    },
-    [isDisabled, onInsert]
-  );
-
   return (
     <Dialog
-      onClose={() => {
-        onClose();
-        setLink('');
-        setErrorMsg(false);
-        setIsInserting(false);
-      }}
+      onClose={onCloseDialog}
       isOpen={isOpen}
       title={title}
       onPrimary={() => onInsert()}
@@ -117,7 +76,7 @@ function HotlinkModal({
       <InputWrapper onSubmit={onSubmit}>
         <Input
           ref={inputRef}
-          onChange={({ target: { value } }) => onChange(value)}
+          onChange={onChange}
           value={link}
           hint={errorMsg?.length ? errorMsg : description}
           hasError={Boolean(errorMsg?.length)}
@@ -132,19 +91,14 @@ function HotlinkModal({
 }
 
 HotlinkModal.propTypes = {
-  onClose: PropTypes.func.isRequired,
-  isOpen: PropTypes.bool.isRequired,
-  onInsert: PropTypes.func.isRequired,
   allowedFileTypes: PropTypes.array,
-  title: PropTypes.string,
   insertText: PropTypes.string,
   insertingText: PropTypes.string,
-  isInserting: PropTypes.bool,
-  setIsInserting: PropTypes.func,
-  link: PropTypes.string,
-  setLink: PropTypes.func,
-  errorMsg: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-  setErrorMsg: PropTypes.func,
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  onError: PropTypes.func,
+  onSelect: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
 };
 
 export default HotlinkModal;

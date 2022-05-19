@@ -15,4 +15,3 @@
  */
 export { default } from './hotlinkModal';
 export * from './utils';
-export { default as useGetHotlinkData } from './useGetHotlinkData';

@@ -17,50 +17,24 @@
 /**
  * Internal dependencies
  */
-import HotlinkModal from '../hotlink/hotlinkModal';
-import LibraryContext from '../../../../context';
-import ConfigContext from '../../../../../../app/config/context';
+import HotlinkModal from '../hotlinkModal';
 
 export default {
   title: 'Stories Editor/Components/Dialog/Insert Media By Link',
   component: HotlinkModal,
   args: {
     isOpen: true,
+    allowedFileTypes: ['mp3', 'm3a', 'aac', 'wav', 'oga', 'ogg'],
+    title: 'Insert external audio',
   },
   argTypes: {
     onClose: { action: 'closed' },
-    insertElement: { action: 'Insert media by link' },
+    onSelect: { action: 'select' },
+    onError: { action: 'error' },
   },
 };
 
 // eslint-disable-next-line react/prop-types
 export const _default = ({ insertElement, ...args }) => {
-  const libraryContext = {
-    actions: {
-      insertElement: insertElement(),
-    },
-  };
-  const configContext = {
-    allowedMimeTypes: {
-      audio: ['audio/mpeg', 'audio/aac', 'audio/wav', 'audio/ogg'],
-      image: [
-        'image/png',
-        'image/jpeg',
-        'image/jpg',
-        'image/gif',
-        'image/webp',
-      ],
-      caption: ['text/vtt'],
-      vector: [],
-      video: ['video/mp4', 'video/webm'],
-    },
-    capabilities: { hasUploadMediaAction: true },
-  };
-  return (
-    <ConfigContext.Provider value={configContext}>
-      <LibraryContext.Provider value={libraryContext}>
-        <HotlinkModal {...args} />
-      </LibraryContext.Provider>
-    </ConfigContext.Provider>
-  );
+  return <HotlinkModal {...args} />;
 };

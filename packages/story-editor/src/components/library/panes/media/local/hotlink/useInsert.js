@@ -17,8 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useState, useMemo } from '@googleforcreators/react';
-import { __ } from '@googleforcreators/i18n';
+import { useCallback, useMemo } from '@googleforcreators/react';
 import {
   getImageFromVideo,
   seekVideo,
@@ -42,14 +41,10 @@ import {
 import { useConfig } from '../../../../../../app/config';
 import useCORSProxy from '../../../../../../utils/useCORSProxy';
 import useDetectBaseColor from '../../../../../../app/media/utils/useDetectBaseColor';
-import {
-  isValidUrlForHotlinking,
-  getErrorMessage,
-  getHotlinkDescription,
-  useGetHotlinkData,
-} from '../../../../../hotlinkModal';
 
-function useInsert({ link, setLink, setErrorMsg, onClose }) {
+const eventName = 'hotlink_media';
+
+function useInsert({ setIsOpen }) {
   const { insertElement } = useLibrary((state) => ({
     insertElement: state.actions.insertElement,
   }));
@@ -75,19 +70,14 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
       allowedMimeTypes.map((type) => getExtensionsFromMimeType(type)).flat(),
     [allowedMimeTypes]
   );
-
-  const description = getHotlinkDescription(allowedFileTypes);
-  const { getHotlinkData } = useGetHotlinkData();
   const { updateBaseColor } = useDetectBaseColor({});
-
-  const [isInserting, setIsInserting] = useState(false);
 
   const { uploadVideoPoster } = useUploadVideoFrame({});
   const { getProxiedUrl } = useCORSProxy();
 
-  const insertMedia = useCallback(
-    async (hotlinkData, needsProxy) => {
-      const { ext, type, mimeType, fileName: originalFileName } = hotlinkData;
+  const onSelect = useCallback(
+    async ({ link, hotlinkInfo, needsProxy }) => {
+      const { ext, type, mimeType, fileName: originalFileName } = hotlinkInfo;
 
       const isVideo = type === 'video';
 
@@ -161,67 +151,35 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
 
         updateBaseColor(resource);
 
-        setErrorMsg(false);
-        setLink('');
-        onClose();
+        // After getting link metadata and before actual insertion
+        // is a great opportunity to measure usage in a reasonably accurate way.
+        trackEvent(eventName, {
+          event_label: link,
+          file_size: hotlinkInfo.fileSize,
+          file_type: hotlinkInfo.mimeType,
+          needs_proxy: needsProxy,
+        });
+        setIsOpen(false);
       } catch (e) {
-        setErrorMsg(getErrorMessage());
-      } finally {
-        setIsInserting(false);
+        // Do nothing for now
       }
     },
     [
-      hasUploadMediaAction,
-      insertElement,
-      link,
-      onClose,
-      setErrorMsg,
-      setLink,
-      uploadVideoPoster,
       getProxiedUrl,
+      insertElement,
       updateBaseColor,
+      setIsOpen,
+      hasUploadMediaAction,
+      uploadVideoPoster,
     ]
   );
 
-  const onInsert = useCallback(async () => {
-    if (!link) {
-      return;
-    }
-
-    if (!isValidUrlForHotlinking(link)) {
-      setErrorMsg(__('Invalid link.', 'web-stories'));
-      return;
-    }
-
-    setIsInserting(true);
-
-    try {
-      const { hotlinkInfo, shouldProxy } = await getHotlinkData(link);
-
-      // After getting link metadata and before actual insertion
-      // is a great opportunity to measure usage in a reasonably accurate way.
-      trackEvent('hotlink_media', {
-        event_label: link,
-        file_size: hotlinkInfo.fileSize,
-        file_type: hotlinkInfo.mimeType,
-        needs_proxy: shouldProxy,
-      });
-
-      await insertMedia(hotlinkInfo, shouldProxy);
-    } catch (err) {
-      setIsInserting(false);
-
-      trackError('hotlink_media', err?.message);
-
-      setErrorMsg(getErrorMessage(err.code, description));
-    }
-  }, [link, setErrorMsg, getHotlinkData, insertMedia, description]);
+  const onError = useCallback((err) => trackError(eventName, err?.message), []);
 
   return {
-    onInsert,
-    isInserting,
-    setIsInserting,
     allowedFileTypes,
+    onSelect,
+    onError,
   };
 }
 
