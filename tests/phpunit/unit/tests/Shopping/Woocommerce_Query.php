@@ -22,7 +22,7 @@ use Google\Web_Stories\Tests\Unit\DependencyInjectedTestCase;
 /**
  * @coversDefaultClass \Google\Web_Stories\Shopping\Woocommerce_Query
  */
-class Woocommerce_Query_Test extends TestCase {
+class Woocommerce_Query_Test extends DependencyInjectedTestCase {
 	
 	public function set_up(): void {
 		parent::set_up();
