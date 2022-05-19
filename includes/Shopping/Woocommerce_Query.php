@@ -133,11 +133,12 @@ class Woocommerce_Query implements Product_Query {
 	 */
 	protected function get_product_image( int $image_id ): array {
 		$url = wp_get_attachment_url( $image_id );
-		$alt = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
 		
 		if ( ! $url ) {
 			return [];
 		}
+
+		$alt = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
 		
 		if ( empty( $alt ) ) {
 			$alt = '';
