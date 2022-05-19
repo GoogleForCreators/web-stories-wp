@@ -65,9 +65,9 @@ class Woocommerce_Query implements Product_Query {
 
 		$product_image_ids = [];
 		foreach ( $products as $product ) {
-			$product_image_ids[] = array_merge( [ $product->get_image_id() ], $product->get_gallery_image_ids() );
+			$product_image_ids[] = $this->get_product_image_ids( $product );
 		}
-		$products_image_ids = array_unique( array_filter( array_merge( [], ...$product_image_ids ) ) );
+		$products_image_ids = array_merge( [], ...$product_image_ids );
 
 		/**
 		 * Warm the object cache with post and meta information for all found
@@ -77,16 +77,10 @@ class Woocommerce_Query implements Product_Query {
 
 		foreach ( $products as $product ) {
 			
-			$product_image_ids = array_merge( [ $product->get_image_id() ], $product->get_gallery_image_ids() );
-			$product_image_ids = array_map( 'absint', $product_image_ids );
-			$product_image_ids = array_unique( array_filter( $product_image_ids ) );
-
 			$images = array_map(
 				[ $this, 'get_product_image' ],
-				$product_image_ids
+				$this->get_product_image_ids( $product )
 			);
-
-			$images = array_filter( $images );
 			
 			$product_object = new Product(
 				[
@@ -111,6 +105,21 @@ class Woocommerce_Query implements Product_Query {
 		}
 
 		return $results;
+	}
+
+	/**
+	 * Get product image ids.
+	 *
+	 * @since 1.21.0
+	 *
+	 * @param Product $product WC product.
+	 * @return array
+	 */
+	protected function get_product_image_ids( $product ): array {
+		$product_image_ids = array_merge( [ $product->get_image_id() ], $product->get_gallery_image_ids() );
+		$product_image_ids = array_map( 'absint', $product_image_ids );
+		$product_image_ids = array_unique( array_filter( $product_image_ids ) );
+		return $product_image_ids;
 	}
 
 	/**
