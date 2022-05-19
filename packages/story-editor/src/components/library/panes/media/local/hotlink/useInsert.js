@@ -42,12 +42,6 @@ import {
 import { useConfig } from '../../../../../../app/config';
 import useCORSProxy from '../../../../../../utils/useCORSProxy';
 import useDetectBaseColor from '../../../../../../app/media/utils/useDetectBaseColor';
-import {
-  isValidUrlForHotlinking,
-  getErrorMessage,
-  getHotlinkDescription,
-  useGetHotlinkData,
-} from '../../../../../hotlinkModal';
 
 function useInsert({ link, setLink, setErrorMsg, onClose }) {
   const { insertElement } = useLibrary((state) => ({
@@ -76,8 +70,6 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
     [allowedMimeTypes]
   );
 
-  const description = getHotlinkDescription(allowedFileTypes);
-  const { getHotlinkData } = useGetHotlinkData();
   const { updateBaseColor } = useDetectBaseColor({});
 
   const [isInserting, setIsInserting] = useState(false);
@@ -165,7 +157,12 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
         setLink('');
         onClose();
       } catch (e) {
-        setErrorMsg(getErrorMessage());
+        setErrorMsg(
+          __(
+            'There was an error processing the file, please try again.',
+            'web-stories'
+          )
+        );
       } finally {
         setIsInserting(false);
       }
@@ -183,21 +180,13 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
     ]
   );
 
-  const onInsert = useCallback(async () => {
-    if (!link) {
-      return;
-    }
+  const onError = useCallback((err) => {
+    trackError('hotlink_media', err?.message);
+    setIsInserting(false);
+  }, []);
 
-    if (!isValidUrlForHotlinking(link)) {
-      setErrorMsg(__('Invalid link.', 'web-stories'));
-      return;
-    }
-
-    setIsInserting(true);
-
-    try {
-      const { hotlinkInfo, shouldProxy } = await getHotlinkData(link);
-
+  const onInsert = useCallback(
+    async (hotlinkInfo, shouldProxy) => {
       // After getting link metadata and before actual insertion
       // is a great opportunity to measure usage in a reasonably accurate way.
       trackEvent('hotlink_media', {
@@ -208,16 +197,12 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
       });
 
       await insertMedia(hotlinkInfo, shouldProxy);
-    } catch (err) {
-      setIsInserting(false);
-
-      trackError('hotlink_media', err?.message);
-
-      setErrorMsg(getErrorMessage(err.code, description));
-    }
-  }, [link, setErrorMsg, getHotlinkData, insertMedia, description]);
+    },
+    [link, insertMedia]
+  );
 
   return {
+    onError,
     onInsert,
     isInserting,
     setIsInserting,

@@ -30,21 +30,21 @@ function HotlinkModal({ isOpen, onClose }) {
   const [errorMsg, setErrorMsg] = useState(false);
   const [link, setLink] = useState('');
 
-  const { onInsert, isInserting, setIsInserting, allowedFileTypes } = useInsert(
-    {
+  const { onInsert, onError, isInserting, setIsInserting, allowedFileTypes } =
+    useInsert({
       link,
       setLink,
       errorMsg,
       setErrorMsg,
       onClose,
-    }
-  );
+    });
 
   return (
     <Dialog
       onClose={onClose}
       isOpen={isOpen}
       onInsert={onInsert}
+      onError={onError}
       allowedFileTypes={allowedFileTypes}
       title={__('Insert external image or video', 'web-stories')}
       isInserting={isInserting}

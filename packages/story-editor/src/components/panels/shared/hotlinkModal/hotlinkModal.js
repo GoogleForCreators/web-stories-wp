@@ -19,12 +19,13 @@
  */
 import { __ } from '@googleforcreators/i18n';
 import PropTypes from 'prop-types';
-import { useState } from '@googleforcreators/react';
+import { useState, useCallback } from '@googleforcreators/react';
+import { trackError, trackEvent } from '@googleforcreators/tracking';
+
 /**
  * Internal dependencies
  */
 import Dialog from '../../../hotlinkModal';
-import useInsert from './useInsert';
 
 function HotlinkModal({
   isOpen,
@@ -38,20 +39,41 @@ function HotlinkModal({
   const [link, setLink] = useState('');
   const [errorMsg, setErrorMsg] = useState(false);
 
-  const { onInsert, isInserting, setIsInserting } = useInsert({
-    link,
-    setLink,
-    errorMsg,
-    setErrorMsg,
-    onSelect,
-    allowedFileTypes,
-  });
+  const [isInserting, setIsInserting] = useState(false);
+
+  const onError = useCallback((err) => {
+    trackError('hotlink_file', err?.message);
+    setIsInserting(false);
+  }, []);
+
+  const onInsert = useCallback(
+    async (hotlinkInfo, shouldProxy) => {
+      await onSelect({
+        mimeType: hotlinkInfo.mimeType,
+        src: link,
+        needsProxy: shouldProxy,
+      });
+
+      // After getting link metadata and before actual insertion
+      // is a great opportunity to measure usage in a reasonably accurate way.
+      trackEvent('hotlink_file', {
+        event_label: link,
+        file_size: hotlinkInfo.fileSize,
+        file_type: hotlinkInfo.mimeType,
+        needs_proxy: shouldProxy,
+      });
+
+      setIsInserting(false);
+    },
+    [link, onSelect]
+  );
 
   return (
     <Dialog
       onClose={onClose}
       isOpen={isOpen}
       onInsert={onInsert}
+      onError={onError}
       allowedFileTypes={allowedFileTypes}
       title={title}
       insertText={insertText}

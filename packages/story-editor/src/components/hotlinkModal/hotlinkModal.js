@@ -23,11 +23,18 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useCallback, useRef, useLayoutEffect } from '@googleforcreators/react';
 import { withProtocol } from '@googleforcreators/url';
+
 /**
  * Internal dependencies
  */
+import { useAPI } from '../../app';
+import useCORSProxy from '../../utils/useCORSProxy';
 import Dialog from '../dialog';
-import { getHotlinkDescription, isValidUrlForHotlinking } from './utils';
+import {
+  getErrorMessage,
+  getHotlinkDescription,
+  isValidUrlForHotlinking,
+} from './utils';
 
 const InputWrapper = styled.form`
   margin: 16px 4px;
@@ -39,6 +46,7 @@ function HotlinkModal({
   isOpen,
   onClose,
   onInsert,
+  onError,
   allowedFileTypes = [],
   insertText = __('Insert', 'web-stories'),
   insertingText = __('Inserting…', 'web-stories'),
@@ -88,15 +96,49 @@ function HotlinkModal({
     [errorMsg, setLink, setErrorMsg]
   );
 
+  const {
+    actions: { getHotlinkInfo },
+  } = useAPI();
+
+  const { checkResourceAccess } = useCORSProxy();
+
   const onSubmit = useCallback(
-    (evt) => {
+    async (evt) => {
       evt.preventDefault();
 
-      if (!isDisabled) {
-        onInsert();
+      if (isDisabled || !link) {
+        return;
+      }
+
+      if (!isValidUrlForHotlinking(link)) {
+        setErrorMsg(__('Invalid link.', 'web-stories'));
+        return;
+      }
+
+      setIsInserting(true);
+
+      try {
+        const hotlinkInfo = await getHotlinkInfo(link);
+        const shouldProxy = await checkResourceAccess(link);
+
+        onInsert(hotlinkInfo, shouldProxy);
+      } catch (err) {
+        onError(err);
+
+        setErrorMsg(getErrorMessage(err.code, description));
       }
     },
-    [isDisabled, onInsert]
+    [
+      checkResourceAccess,
+      description,
+      getHotlinkInfo,
+      isDisabled,
+      link,
+      onError,
+      onInsert,
+      setErrorMsg,
+      setIsInserting,
+    ]
   );
 
   return (
@@ -109,7 +151,7 @@ function HotlinkModal({
       }}
       isOpen={isOpen}
       title={title}
-      onPrimary={() => onInsert()}
+      onPrimary={onSubmit}
       primaryText={primaryText}
       secondaryText={__('Cancel', 'web-stories')}
       primaryRest={{ disabled: isDisabled }}
@@ -135,6 +177,7 @@ HotlinkModal.propTypes = {
   onClose: PropTypes.func.isRequired,
   isOpen: PropTypes.bool.isRequired,
   onInsert: PropTypes.func.isRequired,
+  onError: PropTypes.func.isRequired,
   allowedFileTypes: PropTypes.array,
   title: PropTypes.string,
   insertText: PropTypes.string,

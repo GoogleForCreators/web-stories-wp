@@ -13,6 +13,5 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 export { default } from './hotlinkModal';
-export * from './utils';
-export { default as useGetHotlinkData } from './useGetHotlinkData';
