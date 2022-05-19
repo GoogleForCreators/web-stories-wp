@@ -18,19 +18,19 @@
 namespace Google\Web_Stories\Tests\Unit\Shopping;
 
 use Brain\Monkey;
-use Google\Web_Stories\Tests\Unit\DependencyInjectedTestCase;
+use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 /**
  * @coversDefaultClass \Google\Web_Stories\Shopping\Woocommerce_Query
  */
 class Woocommerce_Query_Test extends DependencyInjectedTestCase {
-	
+
 	public function set_up(): void {
 		parent::set_up();
 
 		$this->stubEscapeFunctions();
 
 		Monkey\Functions\stubs(
-			[   
+			[
 				'_prime_post_caches',
 				'get_post_meta',
 				'wp_strip_all_tags',
@@ -47,7 +47,7 @@ class Woocommerce_Query_Test extends DependencyInjectedTestCase {
 	public function test_products_image(): void {
 
 		Monkey\Functions\stubs(
-			[   
+			[
 				'wc_get_products'       => static function() {
 					return [
 						new Mock_Product(
@@ -59,7 +59,7 @@ class Woocommerce_Query_Test extends DependencyInjectedTestCase {
 									59,
 									60,
 								],
-							] 
+							]
 						),
 
 						new Mock_Product(
@@ -78,19 +78,19 @@ class Woocommerce_Query_Test extends DependencyInjectedTestCase {
 									72,
 									null,
 									76,
-									
+
 								],
-							] 
+							]
 						),
 					];
 				},
 				'wp_get_attachment_url' => static function( $id ) {
-					
+
 					if ( ! $id ) {
 						// id was passed as null to simulate missing post / attachment
 						return false;
 					}
-					
+
 					return sprintf( 'http://example.com/%s', $id );
 				},
 			]
