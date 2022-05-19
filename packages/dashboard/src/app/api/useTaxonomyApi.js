@@ -18,7 +18,7 @@
  */
 import { useConfig } from '../config';
 
-function useTaxonomiesApi() {
+function useTaxonomyApi() {
   const {
     apiCallbacks: { getCategories },
   } = useConfig();
@@ -30,4 +30,4 @@ function useTaxonomiesApi() {
   };
 }
 
-export default useTaxonomiesApi;
+export default useTaxonomyApi;

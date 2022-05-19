@@ -26,13 +26,13 @@ import { createContext } from '@googleforcreators/react';
 import useStoryApi from './useStoryApi';
 import useTemplateApi from './useTemplateApi';
 import useUsersApi from './useUsersApi';
-import useTaxonomiesApi from './useTaxonomiesApi';
+import useTaxonomyApi from './useTaxonomyApi';
 
 export const ApiContext = createContext({ state: {}, actions: {} });
 
 export default function ApiProvider({ children }) {
   const { api: usersApi } = useUsersApi();
-  const { api: taxonomyApi } = useTaxonomiesApi();
+  const { api: taxonomyApi } = useTaxonomyApi();
   const { templates, api: templateApi } = useTemplateApi();
   const { stories, api: storyApi } = useStoryApi();
 
