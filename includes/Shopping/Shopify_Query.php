@@ -41,7 +41,7 @@ use WP_Http;
  * @phpstan-type ShopifyGraphQLResponse array{errors?: ShopifyGraphQLError, data: array{products: array{edges: array{node: ShopifyGraphQLProduct}[]}}}
  */
 class Shopify_Query implements Product_Query {
-	const API_VERSION = '2022-01';
+	protected const API_VERSION = '2022-01';
 
 	/**
 	 * Settings instance.
