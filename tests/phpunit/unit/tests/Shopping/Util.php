@@ -28,7 +28,7 @@ class Util {
 	 * @param array $args Args for the method.
 	 * @return [type]
 	 */
-	public static function callMethod( $obj, $name, array $args ) {
+	public static function call_method( $obj, $name, array $args ) {
 		$class  = new \ReflectionClass( $obj );
 		$method = $class->getMethod( $name );
 		$method->setAccessible( true );

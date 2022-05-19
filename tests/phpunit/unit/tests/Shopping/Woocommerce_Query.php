@@ -124,7 +124,7 @@ class Woocommerce_Query_Test extends TestCase {
 			]
 		);
 
-		$ids = Util::callMethod(
+		$ids = Util::call_method(
 			$product_query,
 			'get_product_image_ids', 
 			[ $product ]
@@ -143,7 +143,7 @@ class Woocommerce_Query_Test extends TestCase {
 			]
 		);
 
-		$ids = Util::callMethod(
+		$ids = Util::call_method(
 			$product_query,
 			'get_product_image_ids', 
 			[ $product ]
@@ -173,7 +173,7 @@ class Woocommerce_Query_Test extends TestCase {
 
 		$product_query = new Woocommerce_Query();
 
-		$results = Util::callMethod(
+		$results = Util::call_method(
 			$product_query,
 			'get_product_image', 
 			[ 2 ]
