@@ -49,7 +49,7 @@ function HotlinkModal({
   const {
     action: { onSubmit, onBlur, onChange, onCloseDialog, onInsert },
     state: { errorMsg, isInserting, link, description, isDisabled },
-  } = useHotlinkModal({ onClose, onSelect, allowedFileTypes, onError });
+  } = useHotlinkModal({ allowedFileTypes, onClose, onError, onSelect });
 
   const primaryText = isInserting ? insertingText : insertText;
 
@@ -68,7 +68,7 @@ function HotlinkModal({
       onClose={onCloseDialog}
       isOpen={isOpen}
       title={title}
-      onPrimary={() => onInsert()}
+      onPrimary={onInsert}
       primaryText={primaryText}
       secondaryText={__('Cancel', 'web-stories')}
       primaryRest={{ disabled: isDisabled }}

@@ -14,4 +14,3 @@
  * limitations under the License.
  */
 export { default } from './hotlinkModal';
-export * from './utils';

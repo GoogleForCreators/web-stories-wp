@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo } from '@googleforcreators/react';
+import { useCallback, useMemo, useState } from '@googleforcreators/react';
 import {
   getImageFromVideo,
   seekVideo,
@@ -44,7 +44,8 @@ import useDetectBaseColor from '../../../../../../app/media/utils/useDetectBaseC
 
 const eventName = 'hotlink_media';
 
-function useInsert({ setIsOpen }) {
+function useInsert() {
+  const [isOpen, setIsOpen] = useState(false);
   const { insertElement } = useLibrary((state) => ({
     insertElement: state.actions.insertElement,
   }));
@@ -75,6 +76,8 @@ function useInsert({ setIsOpen }) {
   const { uploadVideoPoster } = useUploadVideoFrame({});
   const { getProxiedUrl } = useCORSProxy();
 
+  const onClick = () => setIsOpen(true);
+  const onClose = () => setIsOpen(false);
   const onSelect = useCallback(
     async ({ link, hotlinkInfo, needsProxy }) => {
       const { ext, type, mimeType, fileName: originalFileName } = hotlinkInfo;
@@ -168,7 +171,6 @@ function useInsert({ setIsOpen }) {
       getProxiedUrl,
       insertElement,
       updateBaseColor,
-      setIsOpen,
       hasUploadMediaAction,
       uploadVideoPoster,
     ]
@@ -177,9 +179,16 @@ function useInsert({ setIsOpen }) {
   const onError = useCallback((err) => trackError(eventName, err?.message), []);
 
   return {
-    allowedFileTypes,
-    onSelect,
-    onError,
+    action: {
+      onSelect,
+      onError,
+      onClick,
+      onClose,
+    },
+    state: {
+      allowedFileTypes,
+      isOpen,
+    },
   };
 }
 
