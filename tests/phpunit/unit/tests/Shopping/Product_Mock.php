@@ -26,7 +26,7 @@ class Product_Mock {
 	/**
 	 * @param mixed $data
 	 */
-	function __construct( $product_data ) {
+	public function __construct( $product_data ) {
 		$this->data = $product_data;
 	}
 	
