@@ -20,6 +20,7 @@ namespace Google\Web_Stories\Tests\Unit\Shopping;
 use Brain\Monkey;
 use Google\Web_Stories\Shopping\Woocommerce_Query;
 use Google\Web_Stories\Tests\Unit\TestCase;
+
 /**
  * @coversDefaultClass \Google\Web_Stories\Shopping\Woocommerce_Query
  */
@@ -100,9 +101,92 @@ class Woocommerce_Query_Test extends TestCase {
 		$product_query = new Woocommerce_Query();
 		$results       = $product_query->get_search( 'hoodie' );
 
-		$this->assertEquals( $results[0]->get_images()[0]['url'], 'http://example.com/50' );
-		$this->assertEquals( $results[0]->get_images()[3]['url'], 'http://example.com/60' );
-		$this->assertEquals( $results[2]->get_images()[1]['url'], 'http://example.com/72' );
-		$this->assertEquals( \count( $results[1]->get_images() ), 0 );
+		$this->assertEquals( 'http://example.com/50', $results[0]->get_images()[0]['url'] );
+		$this->assertEquals( 'http://example.com/60', $results[0]->get_images()[3]['url'] );
+		$this->assertEquals( 'http://example.com/72', $results[2]->get_images()[1]['url'] );
+		$this->assertEquals( 0, \count( $results[1]->get_images() ) );
+	}
+
+	/**
+	 * @covers ::get_product_image_ids
+	 */
+	public function test_get_product_image_ids(): void {
+
+		$product_query = new Woocommerce_Query();
+		$product       = new Mock_Product(
+			[
+				'id'                => '1',
+				'image_id'          => 50,
+				'gallery_image_ids' => [
+					51,
+					59,
+				],
+			]
+		);
+
+		$ids = Util::callMethod(
+			$product_query,
+			'get_product_image_ids', 
+			[ $product ]
+		);
+
+		$this->assertEquals( [ 50, 51, 59 ], $ids );
+
+		$product = new Mock_Product(
+			[
+				'id'                => '1',
+				'image_id'          => null,
+				'gallery_image_ids' => [
+					null,
+					27,
+				],
+			]
+		);
+
+		$ids = Util::callMethod(
+			$product_query,
+			'get_product_image_ids', 
+			[ $product ]
+		);
+		
+		$this->assertEquals( 1, \count( $ids ) );
+		$this->assertContains( 27, $ids );
+
+	}
+
+	/**
+	 * @covers ::get_product_image
+	 */
+	
+	public function test_get_product_image(): void {
+		Monkey\Functions\stubs(
+			[
+				'wp_get_attachment_url' => static function( $id ) {
+					return sprintf( 'http://example.com/%s', $id );
+				},
+				'get_post_meta'         => static function() {
+					return 'image alt';
+				},
+				
+			]
+		);
+
+		$product_query = new Woocommerce_Query();
+
+		$results = Util::callMethod(
+			$product_query,
+			'get_product_image', 
+			[ 2 ]
+		);
+
+
+		// $results       = $product_query->get_product_image( 2 );
+		$this->assertEquals(
+			[
+				'url' => 'http://example.com/2',
+				'alt' => 'image alt',
+			],
+			$results 
+		);
 	}
 }
