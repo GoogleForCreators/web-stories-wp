@@ -118,8 +118,7 @@ class Woocommerce_Query implements Product_Query {
 	protected function get_product_image_ids( $product ): array {
 		$product_image_ids = array_merge( [ $product->get_image_id() ], $product->get_gallery_image_ids() );
 		$product_image_ids = array_map( 'absint', $product_image_ids );
-		$product_image_ids = array_unique( array_filter( $product_image_ids ) );
-		return $product_image_ids;
+		return array_unique( array_filter( $product_image_ids ) );
 	}
 
 	/**
