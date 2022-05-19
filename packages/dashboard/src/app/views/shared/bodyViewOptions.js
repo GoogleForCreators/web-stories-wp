@@ -89,7 +89,7 @@ export default function BodyViewOptions({
   showSortDropdown,
   sortDropdownAriaLabel,
   showAuthorDropdown = false,
-  showCategoryDropdown = true,
+  showCategoryDropdown = false,
   author = defaultAuthor,
   category = defaultCategory,
   queryAuthorsBySearch = noop,

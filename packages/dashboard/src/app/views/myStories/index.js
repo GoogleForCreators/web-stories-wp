@@ -53,7 +53,8 @@ function MyStories() {
     ({
       actions: {
         storyApi: { duplicateStory, fetchStories, trashStory, updateStory },
-        usersApi: { getAuthors, getCategories },
+        usersApi: { getAuthors },
+        taxonomyApi: { getCategories },
       },
       state: {
         stories: {

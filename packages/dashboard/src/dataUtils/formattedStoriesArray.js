@@ -63,7 +63,7 @@ const formattedStoriesArray = [
     createdGmt: '2020-05-21T23:25:35.000Z',
     featuredMediaUrl: 'http://localhost:9876/__static__/featured-media-1.png',
     tags: [],
-    categories: [],
+    categories: [{ name: 'StarWars', id: 1 }],
     author: {
       name: 'Jango Fett',
       id: 1,

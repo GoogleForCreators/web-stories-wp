@@ -77,6 +77,7 @@ function Header({
   queryAuthorsBySearch,
   queryCategoriesBySearch,
   showAuthorDropdown,
+  showCategoryDropdown,
 }) {
   const {
     actions: { scrollToTop },
@@ -184,6 +185,7 @@ function Header({
         showGridToggle
         showSortDropdown
         showAuthorDropdown={showAuthorDropdown}
+        showCategoryDropdown={showCategoryDropdown}
         resultsLabel={resultsLabel}
         layoutStyle={view.style}
         handleLayoutSelect={view.toggleStyle}
@@ -216,6 +218,7 @@ Header.propTypes = {
   queryAuthorsBySearch: PropTypes.func,
   queryCategoriesBySearch: PropTypes.func,
   showAuthorDropdown: PropTypes.bool,
+  showCategoryDropdown: PropTypes.bool,
 };
 
 export default memo(Header);

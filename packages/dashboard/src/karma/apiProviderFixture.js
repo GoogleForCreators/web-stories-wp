@@ -74,6 +74,19 @@ export default function ApiProviderFixture({ children }) {
     []
   );
 
+  const taxonomyApi = useMemo(
+    () => ({
+      getCategories: () => {
+        const categories = [];
+        for (const story of formattedStoriesArray) {
+          categories.push(...story.categories);
+        }
+        return Promise.resolve(uniqueEntriesByKey(categories, 'id'));
+      },
+    }),
+    []
+  );
+
   const value = useMemo(
     () => ({
       state: {
@@ -84,9 +97,10 @@ export default function ApiProviderFixture({ children }) {
         storyApi,
         templateApi,
         usersApi,
+        taxonomyApi,
       },
     }),
-    [stories, templates, storyApi, templateApi, usersApi]
+    [stories, templates, storyApi, templateApi, usersApi, taxonomyApi]
   );
 
   return <ApiContext.Provider value={value}>{children}</ApiContext.Provider>;
@@ -121,6 +135,7 @@ function fetchStories(
     sortOption = STORY_SORT_OPTIONS.LAST_MODIFIED,
     sortDirection,
     author,
+    category,
   },
   currentState
 ) {
@@ -134,6 +149,11 @@ function fetchStories(
         title.toLowerCase().includes(searchTerm.toLowerCase())
     )
     .filter((story) => typeof author !== 'number' || story.author.id === author)
+    .filter(
+      (story) =>
+        typeof category !== 'number' ||
+        !!story.categories.find((c) => c.id === category)
+    )
     .sort((a, b) => {
       let value;
       switch (sortOption) {
