@@ -49,7 +49,7 @@ class Woocommerce_Query_Test extends TestCase {
 			[   
 				'wc_get_products'       => static function() {
 					return [
-						new Product_Mock(
+						new Mock_Product(
 							[
 								'id'                => '1',
 								'image_id'          => 50,
@@ -61,7 +61,7 @@ class Woocommerce_Query_Test extends TestCase {
 							] 
 						),
 
-						new Product_Mock(
+						new Mock_Product(
 							[
 								'id'                => '2',
 								'image_id'          => null,
@@ -69,7 +69,7 @@ class Woocommerce_Query_Test extends TestCase {
 							]
 						),
 
-						new Product_Mock(
+						new Mock_Product(
 							[
 								'id'                => '3',
 								'image_id'          => null,

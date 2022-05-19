@@ -18,10 +18,10 @@
 namespace Google\Web_Stories\Tests\Unit\Shopping;
 
 /**
- * Class Product_Mock.
+ * Class Mock_Product.
  * Mocks WooCommerce product methods as needed unit tests.
  */
-class Product_Mock {
+class Mock_Product {
 	
 	/**
 	 * @param mixed $data
