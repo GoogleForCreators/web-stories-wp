@@ -179,8 +179,6 @@ class Woocommerce_Query_Test extends TestCase {
 			[ 2 ]
 		);
 
-
-		// $results       = $product_query->get_product_image( 2 );
 		$this->assertEquals(
 			[
 				'url' => 'http://example.com/2',
