@@ -87,9 +87,16 @@ function useHotlinkModal({ onSelect, onClose, onError, allowedFileTypes }) {
 
     try {
       const hotlinkInfo = await getHotlinkInfo(link);
+      if (!allowedFileTypes.includes(hotlinkInfo?.ext)) {
+        const error = new Error(__('Invalid link.', 'web-stories'));
+        error.code = 'invalid_ext';
+        throw error;
+      }
       const needsProxy = await checkResourceAccess(link);
 
       await onSelect({ link, hotlinkInfo, needsProxy });
+      setLink('');
+      setErrorMsg(false);
     } catch (err) {
       if (onError) {
         onError(err);
@@ -101,6 +108,7 @@ function useHotlinkModal({ onSelect, onClose, onError, allowedFileTypes }) {
   }, [
     link,
     getHotlinkInfo,
+    allowedFileTypes,
     checkResourceAccess,
     onSelect,
     onError,

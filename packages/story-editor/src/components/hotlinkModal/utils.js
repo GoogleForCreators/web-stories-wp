@@ -41,6 +41,7 @@ export function getErrorMessage(code, description) {
     case 'rest_invalid_param':
     case 'rest_invalid_url':
       return __('Invalid link.', 'web-stories');
+    case 'invalid_ext':
     case 'rest_invalid_ext':
       return sprintf(
         /* translators: %s is the description with allowed file extensions. */
