@@ -18,11 +18,12 @@
 namespace Google\Web_Stories\Tests\Unit\Shopping;
 
 use Brain\Monkey;
-use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
+use Google\Web_Stories\Shopping\Woocommerce_Query;
+use Google\Web_Stories\Tests\Unit\TestCase;
 /**
  * @coversDefaultClass \Google\Web_Stories\Shopping\Woocommerce_Query
  */
-class Woocommerce_Query_Test extends DependencyInjectedTestCase {
+class Woocommerce_Query_Test extends TestCase {
 
 	public function set_up(): void {
 		parent::set_up();
@@ -96,7 +97,7 @@ class Woocommerce_Query_Test extends DependencyInjectedTestCase {
 			]
 		);
 
-		$product_query = $this->injector->make( \Google\Web_Stories\Shopping\Woocommerce_Query::class );
+		$product_query = new Woocommerce_Query();
 		$results       = $product_query->get_search( 'hoodie' );
 
 		$this->assertEquals( $results[0]->get_images()[0]['url'], 'http://example.com/50' );
