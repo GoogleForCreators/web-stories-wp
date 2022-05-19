@@ -310,7 +310,7 @@ function BackgroundAudioPanelContent({
               />
             </>
           )}
-          {showLoopControl && resource?.length && (
+          {showLoopControl && resource?.length > 0 && (
             <>
               <SectionHeading>{__('Options', 'web-stories')}</SectionHeading>
               <Row spaceBetween={false}>
