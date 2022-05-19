@@ -168,10 +168,10 @@ class Admin extends Service_Base {
 		$html     = $renderer->render( $args );
 
 		$content = '<!-- wp:web-stories/embed {"blockType":"url","url":"%1$s","title":"%2$s","poster":"%3$s","width":"%4$s","height":"%5$s","align":"%6$s","stories": [%7$s]} -->%8$s<!-- /wp:web-stories/embed -->';
-
+		// note $story->get_url should not be escaped here (esc_url()) see https://github.com/GoogleForCreators/web-stories-wp/issues/11371.
 		return sprintf(
 			$content,
-			esc_url( $story->get_url() ),
+			$story->get_url(),
 			esc_js( $story->get_title() ),
 			esc_url( $story->get_poster_portrait() ),
 			absint( $args['width'] ),
