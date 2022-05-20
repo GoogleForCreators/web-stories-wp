@@ -36,6 +36,7 @@ describe('Shopping product', () => {
 
     function isStoryEmpty() {
       return page.evaluate(() => {
+        // checks for a blank canvas / empty state i.e. no products exist
         if (document.getElementById('emptystate-message')) {
           return true;
         }
