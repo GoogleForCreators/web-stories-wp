@@ -79,6 +79,8 @@ describe('Publishing Flow', () => {
 
     await expect(page).toClick('button', { text: 'Media Library' });
 
+    await page.screenshot({ path: 'build/publishing-flow-poster.png' });
+
     await expect(page).toClick(
       '.attachments-browser .attachments .attachment[aria-label="example-3"]'
     );
@@ -91,7 +93,7 @@ describe('Publishing Flow', () => {
     await expect(page).toMatchElement('[alt="Preview image"]');
   }
 
-  it('should guide me towards creating a new post to embed my story with poster', async () => {
+  it.only('should guide me towards creating a new post to embed my story with poster', async () => {
     await createNewStory();
 
     await insertStoryTitle('Publishing Flow Test');

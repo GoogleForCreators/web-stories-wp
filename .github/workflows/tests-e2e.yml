@@ -132,33 +132,6 @@ jobs:
         snapshots: [false]
         # We want to split up the tests into 2 parts running in parallel.
         shard: ['1/2', '2/2']
-        include:
-          - browser: 'chrome'
-            wp: 'latest'
-            snapshots: true
-            shard: '1/4'
-          - browser: 'chrome'
-            wp: 'latest'
-            snapshots: true
-            shard: '2/4'
-          - browser: 'chrome'
-            wp: 'latest'
-            snapshots: true
-            shard: '3/4'
-          - browser: 'chrome'
-            wp: 'latest'
-            snapshots: true
-            shard: '4/4'
-          - browser: 'chrome'
-            wp: '6.0-RC3'
-            experimental: true
-            snapshots: false
-            shard: '1/2'
-          - browser: 'chrome'
-            wp: '6.0-RC3'
-            experimental: true
-            snapshots: false
-            shard: '2/2'
 
     steps:
       - name: Checkout
@@ -201,7 +174,9 @@ jobs:
         if: ( matrix.snapshots ) && ( github.event.pull_request.draft == false )
 
       - name: Run E2E tests
-        run: npm run test:e2e -- --shard=$SHARD
+        run: |
+          mkdir -p build
+          npm run test:e2e -- --shard=$SHARD
         env:
           WP_VERSION: ${{ matrix.wp }}
           SHARD: ${{ matrix.shard }}
@@ -212,6 +187,12 @@ jobs:
         if: always()
         env:
           COMPOSE_INTERACTIVE_NO_CLI: true
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: debug-screenshots
+          path: build/*.png
+          if-no-files-found: 'ignore'
 
   percy:
     name: Percy
