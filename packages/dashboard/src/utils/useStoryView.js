@@ -49,9 +49,9 @@ export default function useStoryView({
   const [page, setPage] = useState(1);
   const [searchKeyword, _setSearchKeyword] = useState('');
   const [authorFilterId, _setAuthorFilterId] = useState(null);
-  const [categoryFilterId, _setCategoryFilterId] = useState(null);
+  const [taxonomyFilterId, _setTaxonomyFilterId] = useState(null);
   const [queriedAuthors, setQueriedAuthors] = useState([]);
-  const [queriedCategories, setQueriedCategories] = useState([]);
+  const [queriedTaxonomies, setQueriedTaxonomies] = useState([]);
   const showStoriesWhileLoading = useRef(false);
   const [initialPageReady, setInitialPageReady] = useState(false);
 
@@ -126,8 +126,8 @@ export default function useStoryView({
     _setAuthorFilterId((prevFilterId) => (prevFilterId === id ? null : id));
   }, []);
 
-  const toggleCategoryFilterId = useCallback(({ id }) => {
-    _setCategoryFilterId((prevFilterId) => (prevFilterId === id ? null : id));
+  const toggleTaxonomyFilterId = useCallback(({ id }) => {
+    _setTaxonomyFilterId((prevFilterId) => (prevFilterId === id ? null : id));
   }, []);
 
   useEffect(() => {
@@ -190,11 +190,11 @@ export default function useStoryView({
         queriedAuthors,
         setQueriedAuthors,
       },
-      category: {
-        filterId: categoryFilterId,
-        toggleFilterId: toggleCategoryFilterId,
-        queriedCategories,
-        setQueriedCategories,
+      taxonomy: {
+        filterId: taxonomyFilterId,
+        toggleFilterId: toggleTaxonomyFilterId,
+        queriedTaxonomies,
+        setQueriedTaxonomies,
       },
       initialPageReady,
       showStoriesWhileLoading,
@@ -215,13 +215,13 @@ export default function useStoryView({
       searchKeyword,
       setSearchKeyword,
       authorFilterId,
-      categoryFilterId,
+      taxonomyFilterId,
       toggleAuthorFilterId,
-      toggleCategoryFilterId,
+      toggleTaxonomyFilterId,
       queriedAuthors,
-      queriedCategories,
+      queriedTaxonomies,
       setQueriedAuthors,
-      setQueriedCategories,
+      setQueriedTaxonomies,
     ]
   );
 }

@@ -48,13 +48,13 @@ function MyStories() {
     totalPages,
     totalStoriesByStatus,
     getAuthors,
-    getCategories,
+    getTaxonomies,
   } = useApi(
     ({
       actions: {
         storyApi: { duplicateStory, fetchStories, trashStory, updateStory },
         usersApi: { getAuthors },
-        taxonomyApi: { getCategories },
+        taxonomyApi: { getTaxonomies },
       },
       state: {
         stories: {
@@ -78,7 +78,7 @@ function MyStories() {
       totalPages,
       totalStoriesByStatus,
       getAuthors,
-      getCategories,
+      getTaxonomies,
     })
   );
   const { apiCallbacks, canViewDefaultTemplates } = useConfig();
@@ -101,15 +101,17 @@ function MyStories() {
     showStoriesWhileLoading,
     initialPageReady,
     author,
-    category,
+    taxonomy,
   } = useStoryView({
     filters: STORY_STATUSES,
     isLoading,
     totalPages,
   });
 
+  console.log('taxonomy', taxonomy);
   const { setQueriedAuthors } = author;
-  const { setQueriedCategories } = category;
+  // TODO: rename this to be queryHierarchicalTaxonomiesBySearch
+  const { setQueriedTaxonomies } = taxonomy;
   let queryAuthorsBySearch = useCallback(
     (authorSearchTerm) => {
       return getAuthors(authorSearchTerm).then((data) => {
@@ -133,35 +135,43 @@ function MyStories() {
     [getAuthors, setQueriedAuthors]
   );
 
-  let queryCategoriesBySearch = useCallback(
-    (categorySearchTerm) => {
-      return getCategories(categorySearchTerm).then((data) => {
+  // TODO: rename this to be queryHierarchicalTaxonomiesBySearch
+  let queryTaxonomiesBySearch = useCallback(
+    // TODO: In progress for the open PR of #11426
+    // Status: We're fetching data for taxonomies
+    // However, we need the actual data of taxonomies
+    // And we need to filter out things that aren't hierarchical
+    // That's the next step here - Sam
+    (taxonomiesSearchTerm) => {
+      return getTaxonomies(taxonomiesSearchTerm).then((data) => {
         if (!isMounted.current) {
           return;
         }
-
-        const categoryData = data.map(({ id, name }) => ({
-          id,
+        console.log('data returned from endpoint: ', data);
+        const taxonomyData = data.map(({ name, hierarchical }) => ({
           name,
+          hierarchical,
         }));
-        setQueriedCategories((current) => {
-          const existingIds = current.map(({ id }) => id);
-          const newCategories = categoryData.filter(
-            (c) => !existingIds.includes(c.id)
+        // the ID check will need to be scraped here
+        setQueriedTaxonomies((current) => {
+          const existingIds = current.map(({ hierarchical }) => hierarchical);
+          const newTaxonomies = taxonomyData.filter(
+            (t) => !existingIds.includes(t.id) || t?.hierarchical
           );
-          return [...current, ...newCategories];
+          console.log('newTaxonomies: ', newTaxonomies);
+          return [...current, ...newTaxonomies];
         });
       });
     },
-    [getCategories, setQueriedCategories]
+    [getTaxonomies, setQueriedTaxonomies]
   );
 
   if (!getAuthors) {
     queryAuthorsBySearch = noop;
   }
 
-  if (!getCategories) {
-    queryCategoriesBySearch = noop;
+  if (!getTaxonomies) {
+    queryTaxonomiesBySearch = noop;
   }
 
   useEffect(() => {
@@ -169,8 +179,8 @@ function MyStories() {
   }, [queryAuthorsBySearch]);
 
   useEffect(() => {
-    queryCategoriesBySearch();
-  }, [queryCategoriesBySearch]);
+    queryTaxonomiesBySearch();
+  }, [queryTaxonomiesBySearch]);
 
   useEffect(() => {
     fetchStories({
@@ -180,7 +190,7 @@ function MyStories() {
       sortOption: sort.value,
       status: filter.value,
       author: author.filterId,
-      category: category.filterId,
+      taxonomy: taxonomy.filterId,
     });
   }, [
     fetchStories,
@@ -190,7 +200,7 @@ function MyStories() {
     sort.direction,
     sort.value,
     author.filterId,
-    category.filterId,
+    taxonomy.filterId,
     apiCallbacks,
   ]);
 
@@ -201,7 +211,7 @@ function MyStories() {
   }, [stories, storiesOrderById]);
 
   const showAuthorDropdown = typeof getAuthors === 'function';
-  const showCategoryDropdown = typeof getCategories === 'function';
+  const showTaxonomyDropdown = typeof getTaxonomy === 'function';
 
   return (
     <Layout.Provider>
@@ -214,11 +224,11 @@ function MyStories() {
         totalStoriesByStatus={totalStoriesByStatus}
         view={view}
         author={author}
-        category={category}
+        taxonomy={taxonomy}
         queryAuthorsBySearch={queryAuthorsBySearch}
-        queryCategoriesBySearch={queryCategoriesBySearch}
+        queryTaxonomiesBySearch={queryTaxonomiesBySearch}
         showAuthorDropdown={showAuthorDropdown}
-        showCategoryDropdown={showCategoryDropdown}
+        showTaxonomyDropdown={showTaxonomyDropdown}
       />
 
       <Content

@@ -76,12 +76,12 @@ export default function ApiProviderFixture({ children }) {
 
   const taxonomyApi = useMemo(
     () => ({
-      getCategories: () => {
-        const categories = [];
+      getTaxonomies: () => {
+        const taxonomies = [];
         for (const story of formattedStoriesArray) {
-          categories.push(...story.categories);
+          taxonomies.push(...story.taxonomies);
         }
-        return Promise.resolve(uniqueEntriesByKey(categories, 'id'));
+        return Promise.resolve(uniqueEntriesByKey(taxonomies, 'id'));
       },
     }),
     []

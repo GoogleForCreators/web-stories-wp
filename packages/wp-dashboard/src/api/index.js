@@ -15,4 +15,4 @@
  */
 export * from './story';
 export * from './authors';
-export * from './categories';
+export * from './taxonomies';
