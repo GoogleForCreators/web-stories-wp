@@ -28,6 +28,7 @@ import {
   Text,
   THEME_CONSTANTS,
   themeHelpers,
+  useLiveRegion,
 } from '@googleforcreators/design-system';
 import { useState, useCallback } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
@@ -110,7 +111,10 @@ function FileRow({
       group: options,
     },
   ];
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const speak = useLiveRegion();
 
   const onMenuOpen = () => setIsMenuOpen(true);
   const onMenuClose = () => setIsMenuOpen(false);
@@ -122,16 +126,19 @@ function FileRow({
     [options]
   );
 
+  const onItemRemove = useCallback(() => {
+    onRemove(id);
+    speak(__('File removed', 'web-stories'));
+  }, [id, onRemove, speak]);
+
+  const label = isExternal
+    ? __('External file', 'web-stories')
+    : __('Local file', 'web-stories');
+
   return (
     <Row key={`row-filename-${id}`}>
-      <Tooltip
-        title={
-          isExternal
-            ? __('External file', 'web-stories')
-            : __('Local file', 'web-stories')
-        }
-      >
-        {isExternal ? <LinkIcon /> : <UploadIcon />}
+      <Tooltip title={label}>
+        {isExternal ? <LinkIcon title={label} /> : <UploadIcon title={label} />}
       </Tooltip>
       <InputRow>
         <FileName>
@@ -161,7 +168,7 @@ function FileRow({
           type={BUTTON_TYPES.TERTIARY}
           size={BUTTON_SIZES.SMALL}
           variant={BUTTON_VARIANTS.SQUARE}
-          onClick={() => onRemove(id)}
+          onClick={onItemRemove}
         >
           <Icons.Trash />
         </StyledButton>
