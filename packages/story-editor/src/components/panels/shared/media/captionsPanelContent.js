@@ -172,26 +172,14 @@ function CaptionsPanelContent({
             />
           )}
           {enableCaptionHotlinking && (
-            <>
-              <HotlinkButton
-                variant={BUTTON_VARIANTS.RECTANGLE}
-                type={BUTTON_TYPES.SECONDARY}
-                size={BUTTON_SIZES.SMALL}
-                onClick={() => setIsOpen(true)}
-              >
-                {__('Link to caption file', 'web-stories')}
-              </HotlinkButton>
-              <HotlinkModal
-                title={__('Insert external captions', 'web-stories')}
-                isOpen={isOpen}
-                onSelect={onSelect}
-                onError={onError}
-                onClose={() => setIsOpen(false)}
-                allowedFileTypes={allowedFileTypes}
-                insertText={__('Use caption', 'web-stories')}
-                insertingText={__('Selecting caption', 'web-stories')}
-              />
-            </>
+            <HotlinkButton
+              variant={BUTTON_VARIANTS.RECTANGLE}
+              type={BUTTON_TYPES.SECONDARY}
+              size={BUTTON_SIZES.SMALL}
+              onClick={() => setIsOpen(true)}
+            >
+              {__('Link to caption file', 'web-stories')}
+            </HotlinkButton>
           )}
         </ButtonRow>
       )}
