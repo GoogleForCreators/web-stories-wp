@@ -101,7 +101,7 @@ describe('Canvas Keyboard Shortcuts', () => {
     }
   });
 
-  it('should play pause animation when pressing mod+space shortcut', async () => {
+  it('should play pause animation when pressing mod+enter shortcut', async () => {
     // add a second page to allow for animations
     await fixture.events.click(fixture.editor.canvas.pageActions.addPage);
 
@@ -143,15 +143,15 @@ describe('Canvas Keyboard Shortcuts', () => {
     let toggle = fixture.screen.getByLabelText('Play Page Animations');
     expect(toggle).toBeDefined();
 
-    // press mod+space
-    await fixture.events.keyboard.shortcut('mod+space');
+    // press mod+enter
+    await fixture.events.keyboard.shortcut('mod+enter');
 
     // check that 'Stop Animation' toggle button is there
     toggle = fixture.screen.getByLabelText('Stop Page Animations');
     expect(toggle).toBeDefined();
 
-    // press mod+space
-    await fixture.events.keyboard.shortcut('mod+space');
+    // press mod+enter
+    await fixture.events.keyboard.shortcut('mod+enter');
 
     // check that 'Play Animation' toggle button is there
     toggle = fixture.screen.getByLabelText('Play Page Animations');
