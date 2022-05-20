@@ -39,16 +39,17 @@ import {
 import { v4 as uuidv4 } from 'uuid';
 import { BackgroundAudioPropType } from '@googleforcreators/elements';
 import { useFeature } from 'flagged';
+import { trackError, trackEvent } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies
  */
-import { useConfig } from '../../../../app';
+import { useConfig } from '../../../../app/config';
 import { Row } from '../../../form';
 import useCORSProxy from '../../../../utils/useCORSProxy';
+import HotlinkModal from '../../../hotlinkModal';
 import CaptionsPanelContent from './captionsPanelContent';
 import LoopPanelContent from './loopPanelContent';
-import HotlinkModal from './hotlinkModal';
 import AudioPlayer from './audioPlayer';
 import FileRow from './fileRow';
 
@@ -74,6 +75,7 @@ const SectionHeading = styled(Text).attrs({
   font-weight: bold;
   margin-bottom: 12px;
 `;
+const eventName = 'hotlink_audio';
 
 function BackgroundAudioPanelContent({
   backgroundAudio,
@@ -87,7 +89,7 @@ function BackgroundAudioPanelContent({
     capabilities: { hasUploadMediaAction },
     MediaUpload,
   } = useConfig();
-  const [isHotlinkDialogOpen, setIsHotlinkDialogOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const enableAudioHotlinking = useFeature('audioHotlinking');
   const enableCaptionHotlinking = useFeature('captionHotlinking');
   const { getProxiedUrl } = useCORSProxy();
@@ -137,23 +139,32 @@ function BackgroundAudioPanelContent({
   );
 
   const onSelectHotlink = useCallback(
-    async (media) => {
-      const { src, mimeType, needsProxy } = media;
-      const audioProxied = getProxiedUrl(media, src);
+    async ({ link, hotlinkInfo, needsProxy }) => {
+      const { mimeType } = hotlinkInfo;
+      const audioProxied = getProxiedUrl({ needsProxy }, link);
       const videoEl = await preloadVideo(audioProxied);
       const { length, lengthFormatted } = getVideoLength(videoEl);
 
       onSelect({
-        src,
+        src: link,
         mimeType,
         length,
         lengthFormatted,
         needsProxy,
       });
-      setIsHotlinkDialogOpen(false);
+      setIsOpen(false);
+      trackEvent(eventName, {
+        event_label: link,
+        file_size: hotlinkInfo.fileSize,
+        file_type: hotlinkInfo.mimeType,
+        needs_proxy: needsProxy,
+      });
+      setIsOpen(false);
     },
     [getProxiedUrl, onSelect]
   );
+
+  const onError = useCallback((err) => trackError(eventName, err?.message), []);
 
   const updateTracks = useCallback(
     (newTracks) => {
@@ -248,7 +259,7 @@ function BackgroundAudioPanelContent({
       label: __('Link to a file', 'web-stories'),
       value: 'hotlink',
       onClick: () => {
-        setIsHotlinkDialogOpen(true);
+        setIsOpen(true);
       },
     },
   ].filter(Boolean);
@@ -272,7 +283,7 @@ function BackgroundAudioPanelContent({
               variant={BUTTON_VARIANTS.RECTANGLE}
               type={BUTTON_TYPES.SECONDARY}
               size={BUTTON_SIZES.SMALL}
-              onClick={() => setIsHotlinkDialogOpen(true)}
+              onClick={() => setIsOpen(true)}
             >
               {__('Link to audio file', 'web-stories')}
             </UploadButton>
@@ -326,9 +337,10 @@ function BackgroundAudioPanelContent({
       {enableAudioHotlinking && (
         <HotlinkModal
           title={__('Insert external background audio', 'web-stories')}
-          isOpen={isHotlinkDialogOpen}
+          isOpen={isOpen}
+          onError={onError}
           onSelect={onSelectHotlink}
-          onClose={() => setIsHotlinkDialogOpen(false)}
+          onClose={() => setIsOpen(false)}
           allowedFileTypes={allowedAudioFileTypes}
           insertText={__('Use audio file', 'web-stories')}
           insertingText={__('Selecting audio file', 'web-stories')}

@@ -28,12 +28,13 @@ import {
   THEME_CONSTANTS,
 } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
-import { useState, useMemo } from '@googleforcreators/react';
+import { useState, useMemo, useCallback } from '@googleforcreators/react';
 import {
   getExtensionsFromMimeType,
   ResourcePropTypes,
 } from '@googleforcreators/media';
 import { useFeature } from 'flagged';
+import { trackError, trackEvent } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies
@@ -41,7 +42,7 @@ import { useFeature } from 'flagged';
 import { Row } from '../../../form';
 import { useConfig } from '../../../../app/config';
 import { MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
-import HotlinkModal from './hotlinkModal';
+import HotlinkModal from '../../../hotlinkModal';
 import FileRow from './fileRow';
 
 const ButtonRow = styled(Row)`
@@ -58,6 +59,8 @@ const HotlinkButton = styled(Button)`
   padding: 12px 8px;
 `;
 
+const eventName = 'hotlink_caption';
+
 function CaptionsPanelContent({
   isIndeterminate = false,
   tracks = [],
@@ -73,7 +76,7 @@ function CaptionsPanelContent({
     MediaUpload,
   } = useConfig();
 
-  const [isHotlinkDialogOpen, setIsHotlinkDialogOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const enableCaptionHotlinking = useFeature('captionHotlinking');
 
@@ -85,14 +88,29 @@ function CaptionsPanelContent({
     [allowedCaptionMimeTypes]
   );
 
+  const onSelect = useCallback(
+    ({ link, hotlinkInfo, needsProxy }) => {
+      const track = {
+        src: link,
+        needsProxy,
+      };
+      handleChangeTrack(track);
+      trackEvent(eventName, {
+        event_label: link,
+        file_size: hotlinkInfo.fileSize,
+        file_type: hotlinkInfo.mimeType,
+        needs_proxy: needsProxy,
+      });
+      setIsOpen(false);
+    },
+    [handleChangeTrack]
+  );
+
+  const onError = useCallback((err) => trackError(eventName, err?.message), []);
+
   if (!allowedCaptionMimeTypes?.length) {
     return null;
   }
-
-  const onSelect = (track) => {
-    handleChangeTrack(track);
-    setIsHotlinkDialogOpen(false);
-  };
 
   const options = [
     hasUploadMediaAction && {
@@ -114,7 +132,7 @@ function CaptionsPanelContent({
       label: __('Link to a file', 'web-stories'),
       value: 'hotlink',
       onClick: () => {
-        setIsHotlinkDialogOpen(true);
+        setIsOpen(true);
       },
     },
   ].filter(Boolean);
@@ -154,23 +172,36 @@ function CaptionsPanelContent({
             />
           )}
           {enableCaptionHotlinking && (
-            <HotlinkButton
-              variant={BUTTON_VARIANTS.RECTANGLE}
-              type={BUTTON_TYPES.SECONDARY}
-              size={BUTTON_SIZES.SMALL}
-              onClick={() => setIsHotlinkDialogOpen(true)}
-            >
-              {__('Link to caption file', 'web-stories')}
-            </HotlinkButton>
+            <>
+              <HotlinkButton
+                variant={BUTTON_VARIANTS.RECTANGLE}
+                type={BUTTON_TYPES.SECONDARY}
+                size={BUTTON_SIZES.SMALL}
+                onClick={() => setIsOpen(true)}
+              >
+                {__('Link to caption file', 'web-stories')}
+              </HotlinkButton>
+              <HotlinkModal
+                title={__('Insert external captions', 'web-stories')}
+                isOpen={isOpen}
+                onSelect={onSelect}
+                onError={onError}
+                onClose={() => setIsOpen(false)}
+                allowedFileTypes={allowedFileTypes}
+                insertText={__('Use caption', 'web-stories')}
+                insertingText={__('Selecting caption', 'web-stories')}
+              />
+            </>
           )}
         </ButtonRow>
       )}
       {enableCaptionHotlinking && (
         <HotlinkModal
           title={__('Insert external captions', 'web-stories')}
-          isOpen={isHotlinkDialogOpen}
+          isOpen={isOpen}
           onSelect={onSelect}
-          onClose={() => setIsHotlinkDialogOpen(false)}
+          onError={onError}
+          onClose={() => setIsOpen(false)}
           allowedFileTypes={allowedFileTypes}
           insertText={__('Use caption', 'web-stories')}
           insertingText={__('Selecting caption', 'web-stories')}
