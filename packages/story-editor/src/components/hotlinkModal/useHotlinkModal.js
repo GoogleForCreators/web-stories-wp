@@ -34,7 +34,7 @@ import {
 function useHotlinkModal({ onSelect, onClose, onError, allowedFileTypes }) {
   const [isInserting, setIsInserting] = useState(false);
   const [link, setLink] = useState('');
-  const [errorMsg, setErrorMsg] = useState(false);
+  const [errorMsg, setErrorMsg] = useState(null);
 
   const {
     actions: { getHotlinkInfo },
@@ -59,7 +59,7 @@ function useHotlinkModal({ onSelect, onClose, onError, allowedFileTypes }) {
     ({ target: { value } }) => {
       // Always set the error to false when changing.
       if (errorMsg) {
-        setErrorMsg(false);
+        setErrorMsg(null);
       }
       setLink(value);
     },
@@ -69,7 +69,7 @@ function useHotlinkModal({ onSelect, onClose, onError, allowedFileTypes }) {
   const onCloseDialog = useCallback(() => {
     onClose();
     setLink('');
-    setErrorMsg(false);
+    setErrorMsg(null);
     setIsInserting(false);
   }, [onClose]);
 
@@ -96,7 +96,7 @@ function useHotlinkModal({ onSelect, onClose, onError, allowedFileTypes }) {
 
       await onSelect({ link, hotlinkInfo, needsProxy });
       setLink('');
-      setErrorMsg(false);
+      setErrorMsg(null);
     } catch (err) {
       if (onError) {
         onError(err);
