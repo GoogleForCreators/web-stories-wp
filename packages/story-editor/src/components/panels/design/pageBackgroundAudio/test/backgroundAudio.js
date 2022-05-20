@@ -165,7 +165,6 @@ describe('BackgroundAudioPanel', () => {
           {
             track: 'https://example.com/track.vtt',
             trackId: 123,
-            trackName: 'track.vtt',
             id: 'rersd-fdfd-fdfd-fdfd',
             srcLang: '',
             label: '',
@@ -225,7 +224,6 @@ describe('BackgroundAudioPanel', () => {
           {
             track: 'https://example.com/track.vtt',
             trackId: 123,
-            trackName: 'track.vtt',
             id: 'rersd-fdfd-fdfd-fdfd',
             srcLang: '',
             label: '',

@@ -185,7 +185,6 @@ function BackgroundAudioPanelContent({
       const newTrack = {
         track: src,
         trackId: id,
-        trackName: src.split('/').pop(),
         id: uuidv4(),
         kind: 'captions',
         srclang: '',
