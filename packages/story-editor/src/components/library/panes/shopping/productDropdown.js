@@ -17,10 +17,6 @@
  * External dependencies
  */
 import { useFeature } from 'flagged';
-
-/**
- * External dependencies
- */
 import { __ } from '@googleforcreators/i18n';
 import { useCallback, useEffect, useState } from '@googleforcreators/react';
 import { Datalist } from '@googleforcreators/design-system';
