@@ -151,16 +151,17 @@ class Shopify_Query implements Product_Query {
 	 * @since 1.21.0
 	 *
 	 * @param string $search_term Search term to filter products by.
+	 * @param string $sort_by sort order for query.
 	 * @return string The assembled GraphQL query.
 	 */
-	protected function get_products_query( string $search_term ): string {
+	protected function get_products_query( string $search_term, string $sort_by = '' ): string {
 		$search_string = empty( $search_term ) ? '*' : '*' . $search_term . '*';
-
-		// TODO(#11154): Support different sortKeys.
-		// Maybe use "available_for_sale:true AND " query to only show items in stock.
+		$sort          = $this->parse_sort_by( $sort_by );
+		$sort_key      = $sort['sort_key'];
+		$reverse       = $sort['reverse'];
 		return <<<QUERY
 {
-  products(first: 100, sortKey: CREATED_AT, query: "title:$search_string") {
+  products(first: 100, sortKey: $sort_key, reverse: $reverse, query: "title:$search_string") {
     edges {
       node {
         id
@@ -198,9 +199,11 @@ QUERY;
 	 * @since 1.21.0
 	 *
 	 * @param string $search_term Search term to filter products by.
+	 * @param string $sort_by sort order for query.
 	 * @return array|WP_Error Response data or error object on failure.
 	 */
-	protected function fetch_remote_products( string $search_term ) {
+	protected function fetch_remote_products( string $search_term, string $sort_by = '' ) {
+		
 		/**
 		 * Filters the Shopify products data TTL value.
 		 *
@@ -209,7 +212,7 @@ QUERY;
 		 * @param int $time Time to live (in seconds). Default is 5 minutes.
 		 */
 		$cache_ttl = apply_filters( 'web_stories_shopify_data_cache_ttl', 5 * MINUTE_IN_SECONDS );
-		$cache_key = 'web_stories_shopify_data_' . md5( $search_term );
+		$cache_key = 'web_stories_shopify_data_' . md5( $search_term . '-' . $sort_by );
 
 		$data = get_transient( $cache_key );
 
@@ -217,8 +220,9 @@ QUERY;
 			return (array) json_decode( $data, true );
 		}
 
-		$query = $this->get_products_query( $search_term );
-		$body  = $this->execute_query( $query );
+		$query = $this->get_products_query( $search_term, $sort_by );
+
+		$body = $this->execute_query( $query );
 
 		if ( is_wp_error( $body ) ) {
 			return $body;
@@ -242,17 +246,20 @@ QUERY;
 		return $result;
 	}
 
+	
 	/**
 	 * Get products by search term.
 	 *
 	 * @since 1.21.0
 	 *
 	 * @param string $search_term Search term.
+	 * @param string $sort_by sort condition for product query.
 	 * @return Product[]|WP_Error
 	 */
-	public function get_search( string $search_term ) {
-		$result = $this->fetch_remote_products( $search_term );
-
+	public function get_search( string $search_term, string $sort_by = '' ) {
+		
+		$result = $this->fetch_remote_products( $search_term, $sort_by );
+		
 		if ( is_wp_error( $result ) ) {
 			return $result;
 		}
@@ -296,5 +303,36 @@ QUERY;
 		}
 
 		return $results;
+	}
+
+	/**
+	 * Parse sort type into array for product query
+	 *
+	 * @since 1.21.0
+	 *
+	 * @param string $sort_by sort condition for product query.
+	 * @return array
+	 */
+	protected function parse_sort_by( string $sort_by ): array {
+		
+		switch ( $sort_by ) {
+			case 'a-z':
+				$order = 'TITLE|false';
+				break;
+			case 'z-a':
+				$order = 'TITLE|true';
+				break;
+			case 'price-low':
+				$order = 'PRICE|false';
+				break;
+			case 'price-high':
+				$order = 'PRICE|true';
+				break;
+			default:
+				$order = 'CREATED_AT|false';
+		}
+		
+		list($sort_key, $reverse) = explode( '|', $order );
+		return compact( 'sort_key', 'reverse' );
 	}
 }

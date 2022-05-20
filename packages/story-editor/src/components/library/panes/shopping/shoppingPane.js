@@ -44,6 +44,7 @@ import { useStory } from '../../../../app/story';
 import useLibrary from '../../useLibrary';
 import paneId from './paneId';
 import ProductList from './productList';
+import ProductSort from './productSort';
 
 const Loading = styled.div`
   position: relative;
@@ -68,6 +69,8 @@ function ShoppingPane(props) {
   const [loaded, setLoaded] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [sortBy, setSortBy] = useState('recent');
+  const onSortBy = ({ id }) => setSortBy(id);
   const [isMenuFocused, setIsMenuFocused] = useState(false);
   const [products, setProducts] = useState([]);
   const {
@@ -84,10 +87,10 @@ function ShoppingPane(props) {
   }));
 
   const getProductsByQuery = useCallback(
-    async (value = '') => {
+    async (value = '', sort = '') => {
       try {
         setIsLoading(true);
-        setProducts(await getProducts(value));
+        setProducts(await getProducts(value, sort));
       } catch (err) {
         setProducts([]);
       } finally {
@@ -111,8 +114,8 @@ function ShoppingPane(props) {
   const debouncedProductsQuery = useDebouncedCallback(getProductsByQuery, 300);
 
   useEffect(
-    () => debouncedProductsQuery(searchTerm),
-    [searchTerm, debouncedProductsQuery]
+    () => debouncedProductsQuery(searchTerm, sortBy),
+    [searchTerm, sortBy, debouncedProductsQuery]
   );
 
   const handleInputKeyPress = useCallback((event) => {
@@ -212,6 +215,7 @@ function ShoppingPane(props) {
             clearId="clear-product-search"
             handleClearInput={handleClearInput}
           />
+          <ProductSort onChange={onSortBy} sortId={sortBy} />
         </Row>
         {isLoading && (
           <Loading>

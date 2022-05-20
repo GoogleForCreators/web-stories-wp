@@ -163,8 +163,15 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 		 *
 		 * @var string $search_term
 		 */
-		$search_term  = ! empty( $request['search'] ) ? $request['search'] : '';
-		$query_result = $query->get_search( $search_term );
+		$search_term = ! empty( $request['search'] ) ? $request['search'] : '';
+		
+		/**
+		 * Request context.
+		 *
+		 * @var string $sort_by
+		 */
+		$sort_by      = ! empty( $request['sort_by'] ) ? $request['sort_by'] : '';
+		$query_result = $query->get_search( $search_term, $sort_by );
 		if ( is_wp_error( $query_result ) ) {
 			return $query_result;
 		}

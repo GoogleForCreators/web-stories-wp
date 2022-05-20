@@ -184,12 +184,13 @@ class Shopify_Query extends DependencyInjectedTestCase {
 	 */
 	public function test_fetch_remote_products_returns_from_transient(): void {
 		$search_term = '';
+		$sort_by     = '';
 
 		update_option( Settings::SETTING_NAME_SHOPIFY_HOST, 'example.myshopify.com' );
 		update_option( Settings::SETTING_NAME_SHOPIFY_ACCESS_TOKEN, '1234' );
-		set_transient( 'web_stories_shopify_data_' . md5( $search_term ), wp_json_encode( [ 'data' => [ 'products' => [ 'edges' => [] ] ] ] ) );
+		set_transient( 'web_stories_shopify_data_' . md5( $search_term . '-' . $sort_by ), wp_json_encode( [ 'data' => [ 'products' => [ 'edges' => [] ] ] ] ) );
 
-		$actual = $this->instance->get_search( '' );
+		$actual = $this->instance->get_search( '', '' );
 
 		$this->assertNotWPError( $actual );
 		$this->assertSame( [], $actual );
@@ -288,4 +289,46 @@ class Shopify_Query extends DependencyInjectedTestCase {
 		$this->assertSame( 1, $this->request_count );
 		$this->assertStringContainsString( 'query: "title:*some search term*"', $this->request_body );
 	}
+
+	/**
+	 * @covers ::fetch_remote_products
+	 * @covers ::get_search
+	 * @covers ::get_products_query
+	 * @covers ::execute_query
+	 * @covers ::parse_sort_by
+	 */
+	public function test_get_search_sort_by_query(): void {
+		update_option( Settings::SETTING_NAME_SHOPIFY_HOST, 'example.myshopify.com' );
+		update_option( Settings::SETTING_NAME_SHOPIFY_ACCESS_TOKEN, '1234' );
+		add_filter( 'pre_http_request', [ $this, 'mock_response_no_results' ], 10, 2 );
+		
+		$actual = $this->instance->get_search( 'some search term', '' );
+		$this->assertNotWPError( $actual );
+		$this->assertStringContainsString( 'sortKey: CREATED_AT', $this->request_body );
+		$this->assertStringContainsString( 'reverse: false', $this->request_body );
+		
+		$actual = $this->instance->get_search( 'some search term', 'a-z' );
+		$this->assertNotWPError( $actual );
+		$this->assertStringContainsString( 'sortKey: TITLE', $this->request_body );
+		$this->assertStringContainsString( 'reverse: false', $this->request_body );
+
+		$actual = $this->instance->get_search( 'some search term', 'z-a' );
+		$this->assertNotWPError( $actual );
+		$this->assertStringContainsString( 'sortKey: TITLE', $this->request_body );
+		$this->assertStringContainsString( 'reverse: true', $this->request_body );
+
+		$actual = $this->instance->get_search( 'some search term', 'price-low' );
+		$this->assertNotWPError( $actual );
+		$this->assertStringContainsString( 'sortKey: PRICE', $this->request_body );
+		$this->assertStringContainsString( 'reverse: false', $this->request_body );
+		
+		$actual = $this->instance->get_search( 'some search term', 'price-high' );
+		$this->assertNotWPError( $actual );
+		$this->assertStringContainsString( 'sortKey: PRICE', $this->request_body );
+		$this->assertStringContainsString( 'reverse: true', $this->request_body );
+
+		remove_filter( 'pre_http_request', [ $this, 'mock_response_no_results' ] );
+	}
+
+
 }

@@ -39,9 +39,10 @@ class Woocommerce_Query implements Product_Query {
 	 * @since 1.21.0
 	 *
 	 * @param string $search_term Search term.
+	 * @param string $sort_by sort condition for product query.
 	 * @return Product[]|WP_Error
 	 */
-	public function get_search( string $search_term ) {
+	public function get_search( string $search_term, string $sort_by = '' ) {
 
 		if ( ! function_exists( 'wc_get_products' ) ) {
 			return new WP_Error( 'rest_unknown', __( 'Woocommerce is not installed.', 'web-stories' ), [ 'status' => 400 ] );
@@ -49,20 +50,28 @@ class Woocommerce_Query implements Product_Query {
 
 		$results = [];
 
+		$order_by = $this->parse_sort_by( $sort_by );
+
 		/**
 		 * Products.
 		 *
 		 * @var \WC_Product[] $products
 		 */
 		$products = wc_get_products(
-			[
-				'status'  => 'publish',
-				'limit'   => 100,
-				'orderby' => 'date',
-				'order'   => 'DESC',
-				's'       => $search_term,
-			]
+			array_merge(
+				[
+					'status' => 'publish',
+					'limit'  => 100,
+					's'      => $search_term,
+				],
+				$order_by
+			)
 		);
+
+		if ( 'price' === $order_by['orderby'] ) {
+			// @todo this only orders products based on wc_get_products previously called
+			$products = wc_products_array_orderby( $products, 'price', $order_by['order'] );
+		}
 
 		$product_image_ids = [];
 		foreach ( $products as $product ) {
@@ -106,6 +115,36 @@ class Woocommerce_Query implements Product_Query {
 		}
 
 		return $results;
+	}
+
+	/**
+	 * Parse sort type into array for product query
+	 *
+	 * @since 1.21.0
+	 *
+	 * @param string $sort_by sort condition for product query.
+	 * @return array
+	 */
+	protected function parse_sort_by( string $sort_by = '' ): array {
+		switch ( $sort_by ) {
+			case 'a-z':
+				$order = 'title|ASC';
+				break;
+			case 'z-a':
+				$order = 'title|DESC';
+				break;
+			case 'price-low':
+				$order = 'price|ASC';
+				break;
+			case 'price-high':
+				$order = 'price|DESC';
+				break;
+			default:
+				$order = 'date|ASC';
+		}
+
+		list($orderby, $order) = explode( '|', $order );
+		return compact( 'orderby', 'order' );
 	}
 
 	/**

@@ -31,9 +31,10 @@ class Mock_Vendor_Invalid {
 	 * @since 1.21.0
 	 *
 	 * @param string $search_term Search term.
+	 * @param string $sort_by sort order for query.
 	 * @return Product[]|WP_Error
 	 */
-	public function get_search( string $search_term ) {
+	public function get_search( string $search_term, string $sort_by ) {
 		$products = [];
 		for ( $x = 0; $x < 10; $x ++ ) {
 			$products[] = new Product(
