@@ -88,9 +88,9 @@ function useHotlinkModal({ onSelect, onClose, onError, allowedFileTypes }) {
     try {
       const hotlinkInfo = await getHotlinkInfo(link);
       if (!allowedFileTypes.includes(hotlinkInfo?.ext)) {
-        const error = new Error(__('Invalid link.', 'web-stories'));
-        error.code = 'invalid_ext';
-        throw error;
+        setErrorMsg(__('Invalid link.', 'web-stories'));
+        setIsInserting(false);
+        return;
       }
       const needsProxy = await checkResourceAccess(link);
 
