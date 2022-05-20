@@ -19,7 +19,6 @@
 import {
   createNewStory,
   withExperimentalFeatures,
-  publishStory,
   minWPVersionRequired,
   previewStory,
   withPlugin,
@@ -46,12 +45,11 @@ describe('Shopping', () => {
     describe('Schema Validation', () => {
       it('should match a valid schema', async () => {
         await createNewStory();
-        await insertProduct('Hoodie with Zipper');
-        await insertProduct('Album');
-        await insertProduct('Sunglasses');
-
-        await publishStory();
+        await insertProduct('Hoodie with Zipper', true);
+        await insertProduct('Album', false);
+        await insertProduct('Sunglasses', false);
         const previewPage = await previewStory(page);
+
         await previewPage.waitForSelector(
           'amp-story-shopping-attachment script'
         );
@@ -68,13 +66,13 @@ describe('Shopping', () => {
         await previewPage.close();
         const { items } = data;
 
-        expect(items).toHaveLength(3);
         items.forEach((item) => {
           expect(item).toMatchSchema(schema);
         });
 
         // Since WooCommerce product IDs can change between test runs / setups,
         // this changes them to something deterministic.
+
         const normalizedItems = items.map((item) => ({
           ...item,
           productId: 'product-id',

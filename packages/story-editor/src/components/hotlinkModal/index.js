@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,25 +13,4 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/**
- * External dependencies
- */
-import { __ } from '@googleforcreators/i18n';
-import styled from 'styled-components';
-
-/**
- * Internal dependencies
- */
-import Icon from './icons/shopping.svg';
-
-const StyledIcon = styled(Icon)`
-  width: 32px !important;
-  height: 32px !important;
-`;
-
-function ShoppingIcon() {
-  return <StyledIcon title={__('Shopping library', 'web-stories')} />;
-}
-
-export default ShoppingIcon;
+export { default } from './hotlinkModal';
