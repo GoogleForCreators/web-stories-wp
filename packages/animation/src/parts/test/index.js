@@ -84,7 +84,7 @@ describe('AnimationPart', () => {
       expect(duration).toBe(0);
       expect(delay).toBe(0);
     });
-    [1, 0].forEach((value) => {
+    [1, 0, 12, 51, 500, 2000].forEach((value) => {
       const { duration, delay } = sanitizeTimings({
         duration: value,
         delay: value,
