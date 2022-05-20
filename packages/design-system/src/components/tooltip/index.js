@@ -100,10 +100,6 @@ let lastVisibleDelayedTooltip = null;
  * @param {string} props.className Classname.
  * @param {string} props.isDelayed If this tooltip is to be displayed instantly on hover (default) or by a short delay.
  * @param {number} props.popupZIndexOverride If present, passes an override for z-index to popup
- * @param {boolean} props.ignoreMaxOffsetY  Defaults to false. Sometimes, we want the popup to respect the y value
- * as perceived by the page because of scroll. This is really only true of dropDowns that
- * exist beyond the initial page scroll. Because the editor is a fixed view this only
- * comes up in peripheral pages (dashboard, settings).
  * @return {import('react').Component} BaseTooltip element
  */
 
@@ -120,7 +116,6 @@ function BaseTooltip({
   // to the whole canvas
   className = null,
   popupZIndexOverride,
-  ignoreMaxOffsetY = false,
   styleOverride,
   ...props
 }) {
@@ -396,7 +391,6 @@ const BaseTooltipPropTypes = {
   className: PropTypes.string,
   isDelayed: PropTypes.bool,
   popupZIndexOverride: PropTypes.number,
-  ignoreMaxOffsetY: PropTypes.bool,
 };
 BaseTooltip.propTypes = BaseTooltipPropTypes;
 
