@@ -113,7 +113,7 @@ class Shopify_Query implements Product_Query {
 			return new WP_Error( 'rest_invalid_hostname', __( 'Invalid Shopify hostname.', 'web-stories' ), [ 'status' => 400 ] );
 		}
 
-		$url = esc_urL_raw(
+		$url = esc_url_raw(
 			sprintf(
 				'https://%1$s/api/%2$s/graphql.json',
 				$host,
