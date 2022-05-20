@@ -29,6 +29,7 @@
 namespace Google\Web_Stories;
 
 use Google\Web_Stories\Integrations\Site_Kit;
+use Google\Web_Stories\Integrations\Woocommerce;
 use Google\Web_Stories\User\Preferences;
 
 /**
@@ -86,28 +87,38 @@ class Tracking extends Service_Base {
 	private $preferences;
 
 	/**
+	 * Woocommerce instance.
+	 *
+	 * @var Woocommerce Woocommerce instance.
+	 */
+	private $woocommerce;
+
+	/**
 	 * Tracking constructor.
 	 *
 	 * @since 1.4.0
 	 *
 	 * @param Experiments $experiments Experiments instance.
-	 * @param Site_Kit    $site_kit Site_Kit instance.
-	 * @param Assets      $assets Assets instance.
-	 * @param Settings    $settings Settings instance.
+	 * @param Site_Kit    $site_kit    Site_Kit instance.
+	 * @param Assets      $assets      Assets instance.
+	 * @param Settings    $settings    Settings instance.
 	 * @param Preferences $preferences Preferences instance.
+	 * @param Woocommerce $woocommerce Woocommerce instance.
 	 */
 	public function __construct(
 		Experiments $experiments,
 		Site_Kit $site_kit,
 		Assets $assets,
 		Settings $settings,
-		Preferences $preferences
+		Preferences $preferences,
+		Woocommerce $woocommerce
 	) {
 		$this->assets      = $assets;
 		$this->experiments = $experiments;
 		$this->site_kit    = $site_kit;
 		$this->settings    = $settings;
 		$this->preferences = $preferences;
+		$this->woocommerce = $woocommerce;
 	}
 
 	/**
@@ -172,12 +183,13 @@ class Tracking extends Service_Base {
 	 * @return array User properties.
 	 */
 	private function get_user_properties(): array {
-		$role        = ! empty( wp_get_current_user()->roles ) && \is_array( wp_get_current_user()->roles ) ? array_shift( wp_get_current_user()->roles ) : ''; 
+		$role        = ! empty( wp_get_current_user()->roles ) && \is_array( wp_get_current_user()->roles ) ? array_shift( wp_get_current_user()->roles ) : '';
 		$experiments = implode( ',', $this->experiments->get_enabled_experiments() );
 
 		$active_plugins = [];
 
-		if ( class_exists( 'woocommerce' ) ) {
+		$woocommerce_status = $this->woocommerce->get_plugin_status();
+		if ( $woocommerce_status['active'] ) {
 			$active_plugins[] = 'woocommerce';
 		}
 
