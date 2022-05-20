@@ -89,6 +89,7 @@ function BackgroundAudioPanelContent({
   } = useConfig();
   const [isHotlinkDialogOpen, setIsHotlinkDialogOpen] = useState(false);
   const enableAudioHotlinking = useFeature('audioHotlinking');
+  const enableCaptionHotlinking = useFeature('captionHotlinking');
   const { getProxiedUrl } = useCORSProxy();
 
   const allowedAudioFileTypes = useMemo(
@@ -99,6 +100,9 @@ function BackgroundAudioPanelContent({
     [allowedAudioMimeTypes]
   );
   const { resource = {}, tracks = [], loop = true } = backgroundAudio || {};
+
+  const canManageCaptions =
+    tracks.length > 0 || hasUploadMediaAction || enableCaptionHotlinking;
 
   const audioSrcProxied = getProxiedUrl(resource, resource?.src);
 
@@ -295,7 +299,7 @@ function BackgroundAudioPanelContent({
               loop={loop}
             />
           </FileRow>
-          {showCaptions && (
+          {showCaptions && canManageCaptions && (
             <>
               <SectionHeading>
                 {__('Caption and Subtitles', 'web-stories')}
