@@ -142,18 +142,18 @@ function FileRow({
       </InputRow>
       {children}
       {options.length > 0 && (
-        <Tooltip title={__('Replace', 'web-stories')}>
-          <DropDownMenu
-            onMenuOpen={onMenuOpen}
-            isMenuOpen={isMenuOpen}
-            onMenuSelected={onMenuSelected}
-            display
-            onMenuClose={onMenuClose}
-            options={optionsWithGroup}
-          >
+        <DropDownMenu
+          onMenuOpen={onMenuOpen}
+          isMenuOpen={isMenuOpen}
+          onMenuSelected={onMenuSelected}
+          display
+          onMenuClose={onMenuClose}
+          options={optionsWithGroup}
+        >
+          <Tooltip title={__('Replace', 'web-stories')}>
             <ReplaceIcon />
-          </DropDownMenu>
-        </Tooltip>
+          </Tooltip>
+        </DropDownMenu>
       )}
       <Tooltip hasTail title={removeItemLabel}>
         <StyledButton
