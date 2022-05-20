@@ -157,7 +157,6 @@ class Woocommerce_Query_Test extends TestCase {
 	/**
 	 * @covers ::get_product_image
 	 */
-	
 	public function test_get_product_image(): void {
 		Monkey\Functions\stubs(
 			[
