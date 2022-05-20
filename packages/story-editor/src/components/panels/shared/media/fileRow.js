@@ -40,10 +40,9 @@ import Tooltip from '../../../tooltip';
 import DropDownMenu from './dropDownMenu';
 
 const InputRow = styled.div`
-  display: flex;
   flex-grow: 1;
   margin: 0 8px;
-  text-overflow: ellipsis;
+  min-width: 0;
 `;
 
 const ReplaceIcon = styled(Icons.Rotate)`
@@ -92,6 +91,8 @@ const FileName = styled(Text).attrs({
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
 })`
   color: ${({ theme }) => theme.colors.fg.primary};
+  text-overflow: ellipsis;
+  overflow: hidden;
 `;
 
 function FileRow({
