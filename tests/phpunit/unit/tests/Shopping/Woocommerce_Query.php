@@ -19,12 +19,15 @@ namespace Google\Web_Stories\Tests\Unit\Shopping;
 
 use Brain\Monkey;
 use Google\Web_Stories\Shopping\Woocommerce_Query;
+use Google\Web_Stories\Tests\Unit\Protected_Access;
 use Google\Web_Stories\Tests\Unit\TestCase;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Shopping\Woocommerce_Query
  */
 class Woocommerce_Query_Test extends TestCase {
+
+	use Protected_Access;
 
 	public function set_up(): void {
 		parent::set_up();
@@ -36,7 +39,7 @@ class Woocommerce_Query_Test extends TestCase {
 				'_prime_post_caches',
 				'get_post_meta',
 				'wp_strip_all_tags',
-				'get_woocommerce_currency' => static function() {
+				'get_woocommerce_currency' => static function () {
 					return 'USD';
 				},
 			]
@@ -47,10 +50,9 @@ class Woocommerce_Query_Test extends TestCase {
 	 * @covers ::get_search
 	 */
 	public function test_products_image(): void {
-
 		Monkey\Functions\stubs(
 			[
-				'wc_get_products'       => static function() {
+				'wc_get_products'       => static function () {
 					return [
 						new Mock_Product(
 							[
@@ -86,8 +88,7 @@ class Woocommerce_Query_Test extends TestCase {
 						),
 					];
 				},
-				'wp_get_attachment_url' => static function( $id ) {
-
+				'wp_get_attachment_url' => static function ( $id ) {
 					if ( ! $id ) {
 						// id was passed as null to simulate missing post / attachment
 						return false;
@@ -111,7 +112,6 @@ class Woocommerce_Query_Test extends TestCase {
 	 * @covers ::get_product_image_ids
 	 */
 	public function test_get_product_image_ids(): void {
-
 		$product_query = new Woocommerce_Query();
 		$product       = new Mock_Product(
 			[
@@ -124,11 +124,9 @@ class Woocommerce_Query_Test extends TestCase {
 			]
 		);
 
-		$ids = Util::call_method(
-			$product_query,
-			'get_product_image_ids', 
-			[ $product ]
-		);
+		$ids = $this->call_protected_method( $product_query, 'get_product_image_ids', [ $product ] );
+
+		
 
 		$this->assertEquals( [ 50, 51, 59 ], $ids );
 
@@ -143,27 +141,23 @@ class Woocommerce_Query_Test extends TestCase {
 			]
 		);
 
-		$ids = Util::call_method(
-			$product_query,
-			'get_product_image_ids', 
-			[ $product ]
-		);
+		$ids = $this->call_protected_method( $product_query, 'get_product_image_ids', [ $product ] );
 		
 		$this->assertEquals( 1, \count( $ids ) );
 		$this->assertContains( 27, $ids );
-
 	}
 
 	/**
 	 * @covers ::get_product_image
 	 */
+	
 	public function test_get_product_image(): void {
 		Monkey\Functions\stubs(
 			[
-				'wp_get_attachment_url' => static function( $id ) {
+				'wp_get_attachment_url' => static function ( $id ) {
 					return sprintf( 'http://example.com/%s', $id );
 				},
-				'get_post_meta'         => static function() {
+				'get_post_meta'         => static function () {
 					return 'image alt';
 				},
 				
@@ -172,18 +166,14 @@ class Woocommerce_Query_Test extends TestCase {
 
 		$product_query = new Woocommerce_Query();
 
-		$results = Util::call_method(
-			$product_query,
-			'get_product_image', 
-			[ 2 ]
-		);
+		$results = $this->call_protected_method( $product_query, 'get_product_image', [ 2 ] );
 
 		$this->assertEquals(
 			[
 				'url' => 'http://example.com/2',
 				'alt' => 'image alt',
 			],
-			$results 
+			$results
 		);
 	}
 }
