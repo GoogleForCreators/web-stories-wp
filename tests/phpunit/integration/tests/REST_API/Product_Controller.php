@@ -129,7 +129,6 @@ class Products_Controller extends DependencyInjectedRestTestCase {
 			$this->assertArrayHasKey( 'productTitle', $product );
 			$this->assertArrayHasKey( 'productBrand', $product );
 		}
-
 	}
 
 	/**
@@ -153,7 +152,6 @@ class Products_Controller extends DependencyInjectedRestTestCase {
 			$this->assertArrayNotHasKey( 'productTitle', $product );
 			$this->assertArrayNotHasKey( 'productBrand', $product );
 		}
-
 	}
 
 	/**
@@ -170,7 +168,6 @@ class Products_Controller extends DependencyInjectedRestTestCase {
 
 
 		$this->assertErrorResponse( 'mock_error', $response, 400 );
-
 	}
 
 	/**
@@ -185,9 +182,25 @@ class Products_Controller extends DependencyInjectedRestTestCase {
 		$request->set_param( 'search', 'test' );
 		$response = rest_get_server()->dispatch( $request );
 
-
 		$this->assertErrorResponse( 'unable_to_find_class', $response, 400 );
-
 	}
 
+	/**
+	 * @covers ::get_items
+	 */
+	public function test_json_schema_validation(): void {
+		$this->controller->register();
+
+		wp_set_current_user( self::$editor );
+		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/products' );
+		$request->set_param( 'search', 'test' );
+		$response = rest_get_server()->dispatch( $request );
+		$data     = $response->get_data();
+
+		$this->assertCount( 10, $data );
+
+		foreach ( $data as $product ) {
+			$this->assertMatchesProductSchema( $product );
+		}
+	}
 }

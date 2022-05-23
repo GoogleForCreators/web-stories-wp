@@ -26,10 +26,12 @@
 
 namespace Google\Web_Stories\Shopping;
 
+use JsonSerializable;
+
 /**
  * Class Product
  */
-class Product {
+class Product implements JsonSerializable {
 	/**
 	 * Product id.
 	 *
@@ -83,11 +85,7 @@ class Product {
 	 *
 	 * @var array
 	 */
-	protected $aggregate_rating = [
-		'rating_value' => 0.0,
-		'review_count' => 0,
-		'review_url'   => '',
-	];
+	protected $aggregate_rating;
 
 	/**
 	 * Product constructor.
@@ -183,7 +181,39 @@ class Product {
 	 *
 	 * @since 1.21.0
 	 */
-	public function get_aggregate_rating(): array {
+	public function get_aggregate_rating(): ?array {
 		return $this->aggregate_rating;
+	}
+
+	/**
+	 * Retrieves the response data for JSON serialization.
+	 *
+	 * @since 1.21.0
+	 *
+	 * @return mixed Any JSON-serializable value.
+	 */
+	public function jsonSerialize() { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName.MethodNameInvalid
+		$rating = $this->get_aggregate_rating();
+
+		$data = [
+			'productId'            => $this->get_id(),
+			'productTitle'         => $this->get_title(),
+			'productDetails'       => $this->get_details(),
+			'productBrand'         => $this->get_brand(),
+			'productUrl'           => $this->get_url(),
+			'productImages'        => $this->get_images(),
+			'productPrice'         => $this->get_price(),
+			'productPriceCurrency' => $this->get_price_currency(),
+		];
+
+		if ( $rating ) {
+			$data['aggregateRating'] = [
+				'ratingValue' => $rating['rating_value'],
+				'reviewCount' => $rating['review_count'],
+				'reviewUrl'   => $rating['review_url'],
+			];
+		}
+
+		return $data;
 	}
 }
