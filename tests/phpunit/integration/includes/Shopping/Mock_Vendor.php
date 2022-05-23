@@ -46,7 +46,7 @@ class Mock_Vendor implements Product_Query {
 					'price_currency' => 'USD',
 					'images'         => [],
 					'details'        => 'Description',
-					'url'            => 'http://www.google.com/product/' . $x,
+					'url'            => 'https://example.com/product/' . $x,
 				]
 			);
 		}

@@ -13,9 +13,4 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-export const hostPattern = /[\w-]+\.myshopify\.com/i;
-
-export default function isValidShopifyHost(value = '') {
-  return Boolean(value.toLowerCase().match(hostPattern));
-}
+export { default } from './hotlinkModal';

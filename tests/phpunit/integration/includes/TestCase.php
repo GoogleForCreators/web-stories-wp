@@ -50,4 +50,11 @@ abstract class TestCase extends PolyfilledTestCase {
 
 		parent::tear_down();
 	}
+
+	protected function assertMatchesProductSchema( $data ): void {
+		$schema = file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/schema.json' );
+		$schema = json_decode( $schema, true );
+
+		$this->assertTrue( rest_validate_value_from_schema( $data, $schema, 'product' ) );
+	}
 }
