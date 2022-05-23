@@ -26,6 +26,7 @@
 
 namespace Google\Web_Stories\Shopping;
 
+use Google\Web_Stories\Integrations\Woocommerce;
 use Google\Web_Stories\Interfaces\Product_Query;
 use WP_Error;
 
@@ -33,6 +34,22 @@ use WP_Error;
  * Class Woocommerce_Query.
  */
 class Woocommerce_Query implements Product_Query {
+	/**
+	 * Woocommerce instance.
+	 *
+	 * @var Woocommerce Woocommerce instance.
+	 */
+	private $woocommerce;
+
+	/**
+	 * Constructor.
+	 *
+	 * @param Woocommerce $woocommerce Woocommerce instance.
+	 */
+	public function __construct( Woocommerce $woocommerce ) {
+		$this->woocommerce = $woocommerce;
+	}
+
 	/**
 	 * Get products by search term.
 	 *
@@ -42,9 +59,10 @@ class Woocommerce_Query implements Product_Query {
 	 * @return Product[]|WP_Error
 	 */
 	public function get_search( string $search_term ) {
+		$status = $this->woocommerce->get_plugin_status();
 
-		if ( ! function_exists( 'wc_get_products' ) ) {
-			return new WP_Error( 'rest_unknown', __( 'Woocommerce is not installed.', 'web-stories' ), [ 'status' => 400 ] );
+		if ( ! $status['active'] ) {
+			return new WP_Error( 'rest_woocommerce_not_installed', __( 'Woocommerce is not installed.', 'web-stories' ), [ 'status' => 400 ] );
 		}
 
 		$results = [];

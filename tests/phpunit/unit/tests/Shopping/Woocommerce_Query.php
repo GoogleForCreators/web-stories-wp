@@ -28,6 +28,11 @@ use Google\Web_Stories\Tests\Unit\TestCase;
 class Woocommerce_Query extends TestCase {
 	use Private_Access;
 
+	/**
+	 * @var \Google\Web_Stories\Shopping\Woocommerce_Query
+	 */
+	private $instance;
+
 	public function set_up(): void {
 		parent::set_up();
 
@@ -43,6 +48,17 @@ class Woocommerce_Query extends TestCase {
 				},
 			]
 		);
+
+		$woocommerce = $this->createMock( \Google\Web_Stories\Integrations\Woocommerce::class );
+		$woocommerce->method( 'get_plugin_status' )->willReturn(
+			[
+				'installed' => true,
+				'active'    => true,
+				'canManage' => true,
+				'link'      => 'https://example.com',
+			]
+		);
+		$this->instance = new Query( $woocommerce );
 	}
 
 	/**
@@ -98,8 +114,7 @@ class Woocommerce_Query extends TestCase {
 			]
 		);
 
-		$product_query = new Query();
-		$results       = $product_query->get_search( 'hoodie' );
+		$results = $this->instance->get_search( 'hoodie' );
 
 		$this->assertEquals( 'http://example.com/50', $results[0]->get_images()[0]['url'] );
 		$this->assertEquals( 'http://example.com/60', $results[0]->get_images()[3]['url'] );
@@ -111,8 +126,7 @@ class Woocommerce_Query extends TestCase {
 	 * @covers ::get_product_image_ids
 	 */
 	public function test_get_product_image_ids(): void {
-		$product_query = new Query();
-		$product       = new Mock_Product(
+		$product = new Mock_Product(
 			[
 				'id'                => '1',
 				'image_id'          => 50,
@@ -123,7 +137,7 @@ class Woocommerce_Query extends TestCase {
 			]
 		);
 
-		$ids = $this->call_private_method( $product_query, 'get_product_image_ids', [ $product ] );
+		$ids = $this->call_private_method( $this->instance, 'get_product_image_ids', [ $product ] );
 
 		$this->assertEquals( [ 50, 51, 59 ], $ids );
 
@@ -138,7 +152,7 @@ class Woocommerce_Query extends TestCase {
 			]
 		);
 
-		$ids = $this->call_private_method( $product_query, 'get_product_image_ids', [ $product ] );
+		$ids = $this->call_private_method( $this->instance, 'get_product_image_ids', [ $product ] );
 
 		$this->assertEquals( 1, \count( $ids ) );
 		$this->assertContains( 27, $ids );
@@ -160,9 +174,7 @@ class Woocommerce_Query extends TestCase {
 			]
 		);
 
-		$product_query = new Query();
-
-		$results = $this->call_private_method( $product_query, 'get_product_image', [ 2 ] );
+		$results = $this->call_private_method( $this->instance, 'get_product_image', [ 2 ] );
 
 		$this->assertEquals(
 			[
