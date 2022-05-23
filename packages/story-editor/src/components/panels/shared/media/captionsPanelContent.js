@@ -193,6 +193,7 @@ function CaptionsPanelContent({
           allowedFileTypes={allowedFileTypes}
           insertText={__('Use caption', 'web-stories')}
           insertingText={__('Selecting caption', 'web-stories')}
+          canUseProxy={false}
         />
       )}
     </>

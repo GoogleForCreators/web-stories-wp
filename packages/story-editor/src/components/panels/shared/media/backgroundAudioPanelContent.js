@@ -344,6 +344,8 @@ function BackgroundAudioPanelContent({
           allowedFileTypes={allowedAudioFileTypes}
           insertText={__('Use audio file', 'web-stories')}
           insertingText={__('Selecting audio file', 'web-stories')}
+          // See https://github.com/GoogleForCreators/web-stories-wp/issues/11479
+          canUseProxy={!showCaptions && !showLoopControl}
         />
       )}
     </>
