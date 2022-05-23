@@ -75,7 +75,7 @@ describe('Lasso integration', () => {
   }
 
   it('should have the last element selected by default', async () => {
-    expect(await getSelection()).toEqual([element2.id]);
+    expect(await getSelection()).toEqual([element3.id]);
   });
 
   it('should select right on the top-left corner', async () => {
