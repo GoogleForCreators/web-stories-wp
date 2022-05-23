@@ -156,6 +156,7 @@ function FileRow({
           display
           onMenuClose={onMenuClose}
           options={optionsWithGroup}
+          ariaLabel={__('Replace file', 'web-stories')}
         >
           <Tooltip title={__('Replace', 'web-stories')}>
             <ReplaceIcon />

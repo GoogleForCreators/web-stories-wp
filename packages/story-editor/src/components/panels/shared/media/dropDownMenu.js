@@ -143,6 +143,7 @@ CustomItemRenderer.propTypes = {
  * @param {Function} props.setParentActive Sets the parent element active.
  * @param {Array} props.options Menu items.
  * @param {Object} props.children Children.
+ * @param {Object} props.ariaLabel ARIA label for the toggle button.
  * @return {null|*} Element or null.
  */
 function DropDownMenu({
@@ -154,6 +155,7 @@ function DropDownMenu({
   setParentActive = noop,
   options,
   children,
+  ariaLabel = __('More', 'web-stories'),
 }) {
   const MenuButtonRef = useRef();
 
@@ -191,7 +193,7 @@ function DropDownMenu({
         variant={BUTTON_VARIANTS.SQUARE}
         ref={MenuButtonRef}
         onClick={onMenuOpen}
-        aria-label={__('More', 'web-stories')}
+        aria-label={ariaLabel}
         aria-pressed={isMenuOpen}
         aria-haspopup
         aria-expanded={isMenuOpen}
@@ -235,6 +237,7 @@ DropDownMenu.propTypes = {
   setParentActive: PropTypes.func,
   options: PropTypes.array,
   children: PropTypes.node,
+  ariaLabel: PropTypes.string,
 };
 
 export default DropDownMenu;
