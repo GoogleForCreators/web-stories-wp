@@ -19,9 +19,7 @@
  */
 import { useCallback, useState } from '@googleforcreators/react';
 import { withProtocol } from '@googleforcreators/url';
-import { __, TranslateWithMarkup } from '@googleforcreators/i18n';
-import { Link, THEME_CONSTANTS } from '@googleforcreators/design-system';
-import { trackClick } from '@googleforcreators/tracking';
+import { __ } from '@googleforcreators/i18n';
 
 /**
  * Internal dependencies
@@ -32,34 +30,8 @@ import {
   getHotlinkDescription,
   isValidUrlForHotlinking,
   getErrorMessage,
+  CORSMessage,
 } from './utils';
-
-function CORSMessage() {
-  const onDocsClick = (evt) => trackClick(evt, 'click_cors_check_docs');
-  const DOCS_URL =
-    'https://wp.stories.google/docs/troubleshooting/common-issues/';
-
-  return (
-    <TranslateWithMarkup
-      mapping={{
-        a: (
-          <Link
-            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM}
-            href={DOCS_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={onDocsClick}
-          />
-        ),
-      }}
-    >
-      {__(
-        'Unable to load media. Make sure CORS is set up correctly for the file. <a>Learn more</a>.',
-        'web-stories'
-      )}
-    </TranslateWithMarkup>
-  );
-}
 
 function useHotlinkModal({
   onSelect,
