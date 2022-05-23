@@ -41,7 +41,7 @@
     "@googleforcreators/tracking": "*",
     "@googleforcreators/url": "*",
     "@web-stories-wp/wp-utils": "*",
-    "@wordpress/api-fetch": "^6.4.0",
+    "@wordpress/api-fetch": "^6.6.0",
     "@wordpress/dom-ready": "^3.7.0",
     "flagged": "^2.0.3",
     "opentype.js": "^1.3.4",
