@@ -178,7 +178,7 @@ class Shopify_Query implements Product_Query {
         images(first: 10) {
           edges {
             node {
-              url
+              url(transform:{maxWidth:1000,maxHeight:1000})
               altText
             }
           }
