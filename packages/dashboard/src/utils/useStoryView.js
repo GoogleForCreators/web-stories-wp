@@ -50,6 +50,7 @@ export default function useStoryView({
   const [searchKeyword, _setSearchKeyword] = useState('');
   const [authorFilterId, _setAuthorFilterId] = useState(null);
   const [taxonomyFilterId, _setTaxonomyFilterId] = useState(null);
+  const [taxonomyFilterSlug, _setTaxonomyFilterSlug] = useState(null);
   const [queriedAuthors, setQueriedAuthors] = useState([]);
   const [queriedTaxonomies, setQueriedTaxonomies] = useState([]);
   const showStoriesWhileLoading = useRef(false);
@@ -126,8 +127,15 @@ export default function useStoryView({
     _setAuthorFilterId((prevFilterId) => (prevFilterId === id ? null : id));
   }, []);
 
-  const toggleTaxonomyFilterId = useCallback(({ id }) => {
-    _setTaxonomyFilterId((prevFilterId) => (prevFilterId === id ? null : id));
+  const toggleTaxonomyFilterId = useCallback(({ id, taxonomy }) => {
+    _setTaxonomyFilterId((prevFilterId) => {
+      if (prevFilterId === id) {
+        return null;
+      } else {
+        _setTaxonomyFilterSlug(taxonomy);
+        return id;
+      }
+    });
   }, []);
 
   useEffect(() => {
@@ -192,6 +200,7 @@ export default function useStoryView({
       },
       taxonomy: {
         filterId: taxonomyFilterId,
+        filterSlug: taxonomyFilterSlug,
         toggleFilterId: toggleTaxonomyFilterId,
         queriedTaxonomies,
         setQueriedTaxonomies,
@@ -217,6 +226,7 @@ export default function useStoryView({
       authorFilterId,
       taxonomyFilterId,
       toggleAuthorFilterId,
+      toggleTaxonomyFilterId,
       toggleTaxonomyFilterId,
       queriedAuthors,
       queriedTaxonomies,

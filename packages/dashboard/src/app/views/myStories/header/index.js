@@ -73,11 +73,11 @@ function Header({
   totalStoriesByStatus,
   view,
   author,
-  category,
+  taxonomy,
   queryAuthorsBySearch,
-  queryCategoriesBySearch,
+  queryTaxonomiesBySearch,
   showAuthorDropdown,
-  showCategoryDropdown,
+  showTaxonomyDropdown,
 }) {
   const {
     actions: { scrollToTop },
@@ -185,7 +185,7 @@ function Header({
         showGridToggle
         showSortDropdown
         showAuthorDropdown={showAuthorDropdown}
-        showCategoryDropdown={showCategoryDropdown}
+        showTaxonomyDropdown={showTaxonomyDropdown}
         resultsLabel={resultsLabel}
         layoutStyle={view.style}
         handleLayoutSelect={view.toggleStyle}
@@ -193,9 +193,9 @@ function Header({
         pageSortOptions={STORY_SORT_MENU_ITEMS}
         handleSortChange={onSortChange}
         author={author}
-        category={category}
+        taxonomy={taxonomy}
         queryAuthorsBySearch={queryAuthorsBySearch}
-        queryCategoriesBySearch={queryCategoriesBySearch}
+        queryTaxonomiesBySearch={queryTaxonomiesBySearch}
         sortDropdownAriaLabel={__(
           'Choose sort option for display',
           'web-stories'
@@ -216,9 +216,9 @@ Header.propTypes = {
   author: AuthorPropTypes,
   category: CategoryPropTypes,
   queryAuthorsBySearch: PropTypes.func,
-  queryCategoriesBySearch: PropTypes.func,
+  queryTaxonomiesBySearch: PropTypes.func,
   showAuthorDropdown: PropTypes.bool,
-  showCategoryDropdown: PropTypes.bool,
+  showTaxonomyDropdown: PropTypes.bool,
 };
 
 export default memo(Header);

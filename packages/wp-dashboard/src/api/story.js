@@ -53,7 +53,7 @@ export function fetchStories(config, queryParams) {
     page = 1,
     perPage = STORIES_PER_REQUEST,
     author,
-    category,
+    taxonomy,
   } = queryParams;
 
   // Important: Keep in sync with REST API preloading definition.
@@ -69,7 +69,7 @@ export function fetchStories(config, queryParams) {
     status,
     _fields: STORY_FIELDS,
     author,
-    web_story_category: category,
+    [taxonomy.slug]: taxonomy.id,
   };
 
   return apiFetch({

@@ -72,10 +72,10 @@ const defaultAuthor = {
   queriedAuthors: [],
 };
 
-const defaultCategory = {
+const defaultTaxonomy = {
   filterId: null,
   toggleFilterId: noop,
-  queriedCategories: [],
+  queriedTaxonomies: [],
 };
 
 export default function BodyViewOptions({
@@ -89,11 +89,11 @@ export default function BodyViewOptions({
   showSortDropdown,
   sortDropdownAriaLabel,
   showAuthorDropdown = false,
-  showCategoryDropdown = false,
+  showTaxonomyDropdown = true,
   author = defaultAuthor,
-  category = defaultCategory,
+  taxonomy = defaultTaxonomy,
   queryAuthorsBySearch = noop,
-  queryCategoriesBySearch = noop,
+  queryTaxonomiesBySearch = noop,
 }) {
   return (
     <StandardViewContentGutter>
@@ -103,19 +103,19 @@ export default function BodyViewOptions({
           <TranslateWithMarkup>{resultsLabel}</TranslateWithMarkup>
         </Text>
         <ControlsContainer>
-          {layoutStyle === VIEW_STYLE.GRID && showCategoryDropdown && (
+          {layoutStyle === VIEW_STYLE.GRID && showTaxonomyDropdown && (
             <StorySortDropdownContainer>
               <StyledDatalist
                 hasSearch
                 hasDropDownBorder
                 searchResultsLabel={__('Search results', 'web-stories')}
-                aria-label={__('Filter stories by category', 'web-stories')}
-                onChange={category.toggleFilterId}
-                getOptionsByQuery={queryCategoriesBySearch}
-                selectedId={category.filterId}
-                placeholder={__('Categories', 'web-stories')}
-                primaryOptions={category.queriedCategories}
-                options={category.queriedCategories}
+                aria-label={__('Filter stories by taxonomy', 'web-stories')}
+                onChange={taxonomy.toggleFilterId}
+                getOptionsByQuery={queryTaxonomiesBySearch}
+                selectedId={taxonomy.filterId}
+                placeholder={__('Taxonomies', 'web-stories')}
+                primaryOptions={taxonomy.queriedTaxonomies}
+                options={taxonomy.queriedTaxonomies}
               />
             </StorySortDropdownContainer>
           )}
