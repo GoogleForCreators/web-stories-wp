@@ -142,7 +142,7 @@ function EditorSettings() {
 
   const {
     capabilities: { canUploadFiles, canManageSettings } = {},
-    plugins: { siteKit = {} },
+    plugins: { siteKit = {}, woocommerce = {} },
     maxUpload,
     maxUploadFormatted,
     allowedImageMimeTypes,
@@ -392,6 +392,7 @@ function EditorSettings() {
                     shopifyHost={shopifyHost}
                     shopifyAccessToken={shopifyAccessToken}
                     vendors={vendors}
+                    woocommerce={woocommerce}
                   />
                 )}
               </>

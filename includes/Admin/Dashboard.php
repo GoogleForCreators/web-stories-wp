@@ -465,7 +465,7 @@ class Dashboard extends Service_Base {
 				'canUploadFiles'    => current_user_can( 'upload_files' ),
 			],
 			'canViewDefaultTemplates' => true,
-			'plugins' => [
+			'plugins'                 => [
 				'siteKit'     => $this->site_kit->get_plugin_status(),
 				'woocommerce' => $this->woocommerce->get_plugin_status(),
 			],
