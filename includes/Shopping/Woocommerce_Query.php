@@ -113,7 +113,7 @@ class Woocommerce_Query implements Product_Query {
 	 *
 	 * @since 1.21.0
 	 *
-	 * @param \WC_Product $product
+	 * @param \WC_Product $product Product.
 	 * @return array
 	 */
 	protected function get_product_image_ids( $product ): array {
