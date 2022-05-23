@@ -162,7 +162,7 @@ describe('useCanvasKeys', function () {
     });
   });
 
-  it('should should play/pause animation when mod+space is pressed.', () => {
+  it('should should play/pause animation when mod+enter is pressed.', () => {
     const updateAnimationState = jest.fn();
 
     const { container } = render(
@@ -180,8 +180,8 @@ describe('useCanvasKeys', function () {
     );
 
     fireEvent.keyDown(container, {
-      key: 'Space',
-      which: 32,
+      key: 'Enter',
+      which: 13,
       ctrlKey: true,
     });
 

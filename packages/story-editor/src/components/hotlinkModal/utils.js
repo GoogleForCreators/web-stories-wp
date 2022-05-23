@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { __, sprintf } from '@googleforcreators/i18n';
+import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
 
 /**
  * Determine whether a URL is valid and acceptable for hotlinking.
@@ -53,4 +53,17 @@ export function getErrorMessage(code, description) {
         'web-stories'
       );
   }
+}
+
+export function getHotlinkDescription(allowedFileTypes) {
+  let description = __('No file types are currently supported.', 'web-stories');
+  if (allowedFileTypes.length) {
+    description = sprintf(
+      /* translators: %s is a list of allowed file extensions. */
+      __('You can insert %s.', 'web-stories'),
+      translateToExclusiveList(allowedFileTypes)
+    );
+  }
+
+  return description;
 }
