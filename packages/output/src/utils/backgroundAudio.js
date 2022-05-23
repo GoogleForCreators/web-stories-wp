@@ -30,6 +30,9 @@ function BackgroundAudio({ backgroundAudio, id }) {
     id: `page-${id}-background-audio`,
     // Actual <amp-story-captions> output happens in OutputPage.
     'captions-id': tracks?.length > 0 ? `el-${id}-captions` : undefined,
+    // See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/track#attr-src
+    // and https://github.com/GoogleForCreators/web-stories-wp/issues/11479
+    crossorigin: tracks?.length > 0 ? 'anonymous' : undefined,
   };
 
   const sourceProps = {
@@ -43,7 +46,6 @@ function BackgroundAudio({ backgroundAudio, id }) {
         autoPlay="autoplay"
         layout="nodisplay"
         poster=""
-        crossorigin="anonymous"
         {...videoProps}
       >
         <source {...sourceProps} />
