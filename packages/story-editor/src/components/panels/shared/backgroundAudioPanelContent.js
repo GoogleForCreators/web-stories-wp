@@ -38,7 +38,7 @@ import {
 import { v4 as uuidv4 } from 'uuid';
 import { BackgroundAudioPropType } from '@googleforcreators/elements';
 import { useFeature } from 'flagged';
-
+import { trackError, trackEvent } from '@googleforcreators/tracking';
 /**
  * Internal dependencies
  */
@@ -48,9 +48,9 @@ import { Row } from '../../form';
 import AudioPlayer from '../../audioPlayer';
 import Tooltip from '../../tooltip';
 import useCORSProxy from '../../../utils/useCORSProxy';
+import HotlinkModal from '../../hotlinkModal';
 import CaptionsPanelContent from './captionsPanelContent';
 import LoopPanelContent from './loopPanelContent';
-import HotlinkModal from './hotlinkModal';
 
 const StyledButton = styled(Button)`
   ${({ theme }) =>
@@ -67,6 +67,8 @@ const UploadButton = styled(StyledButton)`
 const ButtonRow = styled(Row)`
   gap: 12px;
 `;
+
+const eventName = 'hotlink_audio';
 
 function BackgroundAudioPanelContent({
   backgroundAudio,
@@ -126,23 +128,31 @@ function BackgroundAudioPanelContent({
   );
 
   const onSelectHotlink = useCallback(
-    async (media) => {
-      const { src, mimeType, needsProxy } = media;
-      const audioProxied = getProxiedUrl(media, src);
+    async ({ link, hotlinkInfo, needsProxy }) => {
+      const { mimeType } = hotlinkInfo;
+      const audioProxied = getProxiedUrl({ needsProxy }, link);
       const videoEl = await preloadVideo(audioProxied);
       const { length, lengthFormatted } = getVideoLength(videoEl);
 
       onSelect({
-        src,
+        src: link,
         mimeType,
         length,
         lengthFormatted,
         needsProxy,
       });
+      trackEvent(eventName, {
+        event_label: link,
+        file_size: hotlinkInfo.fileSize,
+        file_type: hotlinkInfo.mimeType,
+        needs_proxy: needsProxy,
+      });
       setIsOpen(false);
     },
     [getProxiedUrl, onSelect]
   );
+
+  const onError = useCallback((err) => trackError(eventName, err?.message), []);
 
   const updateTracks = useCallback(
     (newTracks) => {
@@ -247,6 +257,7 @@ function BackgroundAudioPanelContent({
               <HotlinkModal
                 title={__('Insert external background audio', 'web-stories')}
                 isOpen={isOpen}
+                onError={onError}
                 onSelect={onSelectHotlink}
                 onClose={() => setIsOpen(false)}
                 allowedFileTypes={allowedAudioFileTypes}
@@ -295,7 +306,7 @@ function BackgroundAudioPanelContent({
               renderUploadButton={renderUploadCaptionButton}
             />
           )}
-          {showLoopControl && resource?.length && (
+          {showLoopControl && resource?.length > 0 && (
             <Row spaceBetween={false}>
               <LoopPanelContent loop={loop} onChange={onChangeLoop} />
             </Row>

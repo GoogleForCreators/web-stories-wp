@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\Tests\Integration;
+namespace Google\Web_Stories\Tests\Shared;
 
 use ReflectionClass;
 use ReflectionException;

@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 202w Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\Tests\Integration\Product;
+namespace Google\Web_Stories\Tests\Integration\Shopping;
 
 use Google\Web_Stories\Interfaces\Product_Query;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
@@ -31,14 +31,13 @@ class Shopping_Vendors extends DependencyInjectedTestCase {
 	 *
 	 * @var \Google\Web_Stories\Shopping\Shopping_Vendors
 	 */
-	private $shopping_vendors;
-
+	private $instance;
 
 	public function set_up(): void {
 		parent::set_up();
 		$this->setup_vendors();
 
-		$this->shopping_vendors = $this->injector->make( \Google\Web_Stories\Shopping\Shopping_Vendors::class );
+		$this->instance = $this->injector->make( \Google\Web_Stories\Shopping\Shopping_Vendors::class );
 	}
 
 	public function tear_down(): void {
@@ -50,7 +49,7 @@ class Shopping_Vendors extends DependencyInjectedTestCase {
 	 * @covers ::get_vendors
 	 */
 	public function test_get_vendors(): void {
-		$vendors = $this->shopping_vendors->get_vendors();
+		$vendors = $this->instance->get_vendors();
 		$this->assertArrayHasKey( 'mock', $vendors );
 		$this->assertArrayHasKey( 'error', $vendors );
 		$this->assertArrayHasKey( 'invalid', $vendors );
@@ -60,7 +59,7 @@ class Shopping_Vendors extends DependencyInjectedTestCase {
 	 * @covers ::get_vendor_class
 	 */
 	public function test_get_vendor_class(): void {
-		$query = $this->shopping_vendors->get_vendor_class( 'mock' );
+		$query = $this->instance->get_vendor_class( 'mock' );
 		$this->assertInstanceOf( Product_Query::class, $query );
 	}
 
@@ -68,7 +67,7 @@ class Shopping_Vendors extends DependencyInjectedTestCase {
 	 * @covers ::get_vendor_class
 	 */
 	public function test_get_vendor_class_invalid(): void {
-		$query = $this->shopping_vendors->get_vendor_class( 'invalid' );
+		$query = $this->instance->get_vendor_class( 'invalid' );
 		$this->assertNull( $query );
 	}
 
@@ -76,7 +75,7 @@ class Shopping_Vendors extends DependencyInjectedTestCase {
 	 * @covers ::get_vendor_class
 	 */
 	public function test_get_vendor_class_none_exist(): void {
-		$query = $this->shopping_vendors->get_vendor_class( 'not_exists' );
+		$query = $this->instance->get_vendor_class( 'not_exists' );
 		$this->assertNull( $query );
 	}
 }

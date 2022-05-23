@@ -193,7 +193,8 @@ class Preferences extends DependencyInjectedTestCase {
 			$response = $response->as_error();
 		}
 
-		$this->assertWPError( $response, 'rest_cannot_edit' );
+		$this->assertWPError( $response );
+		$this->assertSame( 'rest_cannot_edit', $response->get_error_code() );
 		$data = $response->get_error_data();
 		$this->assertArrayHasKey( 'status', $data );
 		$this->assertEquals( 403, $data['status'] );
