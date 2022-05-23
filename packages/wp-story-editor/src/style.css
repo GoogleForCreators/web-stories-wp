@@ -145,7 +145,8 @@ button {
 }
 
 @media screen and (min-width: 783px) {
-  #adminmenuwrap, #adminmenuback {
+  #adminmenuwrap,
+  #adminmenuback {
     z-index: 0;
   }
   #adminmenuwrap:hover {
