@@ -77,12 +77,12 @@ class Woocommerce_Query implements Product_Query {
 		_prime_post_caches( $products_image_ids, false, true );
 
 		foreach ( $products as $product ) {
-			
+
 			$images = array_map(
 				[ $this, 'get_product_image' ],
 				$this->get_product_image_ids( $product )
 			);
-			
+
 			$product_object = new Product(
 				[
 					// amp-story-shopping requires non-numeric IDs.
@@ -113,7 +113,7 @@ class Woocommerce_Query implements Product_Query {
 	 *
 	 * @since 1.21.0
 	 *
-	 * @param \WC_Product $product 
+	 * @param \WC_Product $product
 	 * @return array
 	 */
 	protected function get_product_image_ids( $product ): array {
@@ -132,14 +132,14 @@ class Woocommerce_Query implements Product_Query {
 	 * @return array
 	 */
 	protected function get_product_image( int $image_id ): array {
-		$url = wp_get_attachment_url( $image_id );
-		
+		$url = wp_get_attachment_image_url( $image_id, 'large' );
+
 		if ( ! $url ) {
 			return [];
 		}
 
 		$alt = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
-		
+
 		if ( empty( $alt ) ) {
 			$alt = '';
 		}
