@@ -70,14 +70,19 @@ describe('Shopping', () => {
           expect(item).toMatchSchema(schema);
         });
 
-        // Since WooCommerce product IDs can change between test runs / setups,
-        // this changes them to something deterministic.
-
+        // Since product IDs and attachment URLs can change between test runs / setups,
+        // this changes them to something deterministic for the sake of this snapshot.
+        // Note: Could also be done with a custom snapshot serializer.
         const normalizedItems = items.map((item) => ({
           ...item,
           productId: 'product-id',
+          productImages: item.productImages.map((image) => ({
+            ...image,
+            url: 'product-image-url',
+          })),
         }));
 
+        // eslint-disable-next-line jest/no-large-snapshots
         expect(normalizedItems).toMatchInlineSnapshot(`
         Array [
           Object {
@@ -89,7 +94,12 @@ describe('Shopping', () => {
             "productBrand": "",
             "productDetails": "This is a simple product.",
             "productId": "product-id",
-            "productImages": Array [],
+            "productImages": Array [
+              Object {
+                "alt": "",
+                "url": "product-image-url",
+              },
+            ],
             "productPrice": 45,
             "productPriceCurrency": "USD",
             "productTitle": "Hoodie with Zipper",
@@ -104,7 +114,12 @@ describe('Shopping', () => {
             "productBrand": "",
             "productDetails": "This is a simple, virtual product.",
             "productId": "product-id",
-            "productImages": Array [],
+            "productImages": Array [
+              Object {
+                "alt": "",
+                "url": "product-image-url",
+              },
+            ],
             "productPrice": 15,
             "productPriceCurrency": "USD",
             "productTitle": "Album",
@@ -119,7 +134,12 @@ describe('Shopping', () => {
             "productBrand": "",
             "productDetails": "This is a simple product.",
             "productId": "product-id",
-            "productImages": Array [],
+            "productImages": Array [
+              Object {
+                "alt": "",
+                "url": "product-image-url",
+              },
+            ],
             "productPrice": 90,
             "productPriceCurrency": "USD",
             "productTitle": "Sunglasses",
