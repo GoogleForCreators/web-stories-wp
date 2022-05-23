@@ -33,7 +33,7 @@ import {
  */
 import {
   AuthorPropTypes,
-  CategoryPropTypes,
+  TaxonomyPropTypes,
 } from '../../../utils/useStoryView.js';
 import { StandardViewContentGutter, ViewStyleBar } from '../../../components';
 import { DROPDOWN_TYPES, VIEW_STYLE } from '../../../constants';
@@ -74,6 +74,7 @@ const defaultAuthor = {
 
 const defaultTaxonomy = {
   filterId: null,
+  filterSlug: null,
   toggleFilterId: noop,
   queriedTaxonomies: [],
 };
@@ -176,9 +177,9 @@ BodyViewOptions.propTypes = {
   showSortDropdown: PropTypes.bool,
   sortDropdownAriaLabel: PropTypes.string.isRequired,
   showAuthorDropdown: PropTypes.bool,
-  showCategoryDropdown: PropTypes.bool,
+  showTaxonomyDropdown: PropTypes.bool,
   author: AuthorPropTypes,
-  category: CategoryPropTypes,
+  taxonomy: TaxonomyPropTypes,
   queryAuthorsBySearch: PropTypes.func,
-  queryCategoriesBySearch: PropTypes.func,
+  queryTaxonomiesBySearch: PropTypes.func,
 };

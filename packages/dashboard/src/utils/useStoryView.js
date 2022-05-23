@@ -225,8 +225,8 @@ export default function useStoryView({
       setSearchKeyword,
       authorFilterId,
       taxonomyFilterId,
+      taxonomyFilterSlug,
       toggleAuthorFilterId,
-      toggleTaxonomyFilterId,
       toggleTaxonomyFilterId,
       queriedAuthors,
       queriedTaxonomies,
@@ -254,16 +254,18 @@ export const AuthorPropTypes = PropTypes.shape({
   setQueriedAuthors: PropTypes.func,
 });
 
-export const CategoryPropTypes = PropTypes.shape({
+export const TaxonomyPropTypes = PropTypes.shape({
   filterId: PropTypes.number,
+  filterSlug: PropTypes.string,
   toggleFilterId: PropTypes.func,
-  queriedCategories: PropTypes.arrayOf(
+  queriedTaxonomies: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number,
       name: PropTypes.string,
+      taxonomy: PropTypes.string,
     })
   ).isRequired,
-  setQueriedCategories: PropTypes.func,
+  setQueriedTaxonomies: PropTypes.func,
 });
 
 export const FilterPropTypes = PropTypes.shape({

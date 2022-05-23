@@ -48,7 +48,7 @@ import {
   SortPropTypes,
   ViewPropTypes,
   AuthorPropTypes,
-  CategoryPropTypes,
+  TaxonomyPropTypes,
 } from '../../../../utils/useStoryView';
 import { useDashboardResultsLabel } from '../../../../utils';
 import { BodyViewOptions, PageHeading } from '../../shared';
@@ -214,7 +214,7 @@ Header.propTypes = {
   totalStoriesByStatus: TotalStoriesByStatusPropType,
   view: ViewPropTypes.isRequired,
   author: AuthorPropTypes,
-  category: CategoryPropTypes,
+  taxonomy: TaxonomyPropTypes,
   queryAuthorsBySearch: PropTypes.func,
   queryTaxonomiesBySearch: PropTypes.func,
   showAuthorDropdown: PropTypes.bool,

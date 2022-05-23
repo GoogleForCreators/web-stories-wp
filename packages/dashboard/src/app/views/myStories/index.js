@@ -138,17 +138,18 @@ function MyStories() {
   );
 
   const fetchTaxonomies = useCallback(
-    async (taxonomiesData) => {
+    async (taxonomiesData, search) => {
       const toFetch = taxonomiesData.filter((t) => Boolean(t?.hierarchical));
       const promises = toFetch.map(
-        (t) => new Promise((res) => getTaxonomyTerm(t.url).then(res))
+        (t) =>
+          new Promise((res) => getTaxonomyTerm(t.url, { search }).then(res))
       );
       const data = await Promise.all(promises);
 
       const extraction = [];
       for (const arr of data) {
         extraction.push(
-          ...arr.map(({ id, name, taxonomy }) => ({ id, name, taxonomy }))
+          ...arr.map((t) => ({ id: t.id, name: t.name, taxonomy: t.taxonomy }))
         );
       }
       return extraction;
@@ -163,17 +164,36 @@ function MyStories() {
     // However, we need the actual data of taxonomies
     // And we need to filter out things that aren't hierarchical
     // That's the next step here - Sam
-    (taxonomiesSearchTerm) => {
+    (search) => {
       if (!isMounted.current) {
         return;
       }
-      let terms = taxonomies.current;
 
-      setQueriedTaxonomies((current) => {
-        return [...current, ...terms];
+      const taxonomyData = taxonomies.current.map(
+        ({ name, slug, hierarchical, restPath }) => ({
+          name,
+          slug,
+          hierarchical,
+          url: restPath,
+        })
+      );
+
+      return fetchTaxonomies(taxonomyData, search).then((data) => {
+        setQueriedTaxonomies((current) => {
+          const existing = current.map((t) => ({
+            id: t.id,
+            taxonomy: t.taxonomy,
+          }));
+          const newTaxonomies = data.filter((t) => {
+            return !existing.find(
+              (e) => e.id === t.id && e.taxonomy === t.taxonomy
+            );
+          });
+          return [...current, ...newTaxonomies];
+        });
       });
     },
-    [setQueriedTaxonomies]
+    [setQueriedTaxonomies, taxonomies.current]
   );
 
   if (!getAuthors) {
@@ -190,16 +210,7 @@ function MyStories() {
 
   useEffect(() => {
     const getTaxonomiesData = async () => {
-      const current = await getTaxonomies();
-      const taxonomyData = current.map(
-        ({ name, slug, hierarchical, restPath }) => ({
-          name,
-          slug,
-          hierarchical,
-          url: restPath,
-        })
-      );
-      taxonomies.current = await fetchTaxonomies(taxonomyData);
+      taxonomies.current = await getTaxonomies();
       queryTaxonomiesBySearch();
     };
     if (!taxonomies.current.length) {
