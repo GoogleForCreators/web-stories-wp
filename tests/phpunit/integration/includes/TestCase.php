@@ -12,6 +12,7 @@
 
 namespace Google\Web_Stories\Tests\Integration;
 
+use Google\Web_Stories\Tests\Shared\Private_Access;
 use Yoast\WPTestUtils\WPIntegration\TestCase as PolyfilledTestCase;
 
 /**
