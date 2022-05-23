@@ -240,7 +240,7 @@ function BackgroundAudioPanelContent({
   );
 
   const options = [
-    {
+    hasUploadMediaAction && {
       label: __('Upload a file', 'web-stories'),
       value: 'upload',
       onClick: () => {},
