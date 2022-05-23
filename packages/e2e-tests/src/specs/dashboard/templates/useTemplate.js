@@ -125,7 +125,7 @@ describe('Template', () => {
     it('should not render explore templates', async () => {
       await visitDashboard();
 
-      await expect(page).toMatch('Start telling Stories');
+      await expect(page).toMatchElement('h2', { text: 'Dashboard' });
 
       await expect(page).not.toMatchElement('a', {
         text: 'Explore Templates',

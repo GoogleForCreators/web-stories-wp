@@ -37,7 +37,7 @@ describe('Shopify settings', () => {
 
     // verify that the shopping provider settings can be changed
     await expect(page).toClick(shoppingProviderDropdownSelector, {
-      text: 'None',
+      text: /None|WooCommerce|Shopify/i,
     });
 
     await expect(page).toClick('[role="listbox"] li', { text: 'Shopify' });

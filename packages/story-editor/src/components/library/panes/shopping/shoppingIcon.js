@@ -26,8 +26,8 @@ import styled from 'styled-components';
 import Icon from './icons/shopping.svg';
 
 const StyledIcon = styled(Icon)`
-  width: 24px !important;
-  height: 24px !important;
+  width: 32px !important;
+  height: 32px !important;
 `;
 
 function ShoppingIcon() {

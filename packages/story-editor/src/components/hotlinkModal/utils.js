@@ -17,7 +17,14 @@
 /**
  * External dependencies
  */
-import { __, sprintf } from '@googleforcreators/i18n';
+import {
+  __,
+  sprintf,
+  translateToExclusiveList,
+  TranslateWithMarkup,
+} from '@googleforcreators/i18n';
+import { trackClick } from '@googleforcreators/tracking';
+import { Link, THEME_CONSTANTS } from '@googleforcreators/design-system';
 
 /**
  * Determine whether a URL is valid and acceptable for hotlinking.
@@ -53,4 +60,44 @@ export function getErrorMessage(code, description) {
         'web-stories'
       );
   }
+}
+
+export function getHotlinkDescription(allowedFileTypes) {
+  let description = __('No file types are currently supported.', 'web-stories');
+  if (allowedFileTypes.length) {
+    description = sprintf(
+      /* translators: %s is a list of allowed file extensions. */
+      __('You can insert %s.', 'web-stories'),
+      translateToExclusiveList(allowedFileTypes)
+    );
+  }
+
+  return description;
+}
+
+export function CORSMessage() {
+  const onDocsClick = (evt) => trackClick(evt, 'click_cors_check_docs');
+  const DOCS_URL =
+    'https://wp.stories.google/docs/troubleshooting/common-issues/';
+
+  return (
+    <TranslateWithMarkup
+      mapping={{
+        a: (
+          <Link
+            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM}
+            href={DOCS_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={onDocsClick}
+          />
+        ),
+      }}
+    >
+      {__(
+        'Unable to load media. Make sure CORS is set up correctly for the file. <a>Learn more</a>.',
+        'web-stories'
+      )}
+    </TranslateWithMarkup>
+  );
 }
