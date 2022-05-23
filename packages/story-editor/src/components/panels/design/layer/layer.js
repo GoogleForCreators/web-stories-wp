@@ -378,6 +378,7 @@ function Layer({ element }) {
   const handleKeyDown = useCallback(
     (evt) => {
       if (evt.key === 'Escape') {
+        setNewLayerName(layerName);
         setRenamableLayer(null);
       }
 
@@ -392,17 +393,22 @@ function Layer({ element }) {
     [setRenamableLayer, updateElementById, element.id, newLayerName]
   );
 
-  const handleBlur = () => {
-    setRenamableLayer(null);
-    updateElementById({
-      elementId: element.id,
-      properties: { layerName: newLayerName },
-    });
-  };
+  const handleBlur = useCallback(
+    () => {
+      setRenamableLayer(null);
+      updateElementById({
+        elementId: element.id,
+        properties: { layerName: newLayerName },
+      });
+  },
+    [setRenamableLayer, updateElementById, element.id, newLayerName]
+  );
+
+  const isLayerNamingEnabled = useFeature('layerNaming');
 
   return (
     <LayerContainer>
-      {renamableLayer?.elementId === element.id ? (
+      {renamableLayer?.elementId === element.id && isLayerNamingEnabled && !element.isBackground ? (
         <LayerInputWrapper>
           <LayerIconWrapper>
             <LayerIcon
@@ -454,7 +460,7 @@ function Layer({ element }) {
           </LayerDescription>
         </LayerButton>
       )}
-      {!element.isBackground && renamableLayer && (
+      {!element.isBackground && !renamableLayer && (
         <ActionsContainer>
           <Tooltip title={__('Delete Layer', 'web-stories')} hasTail isDelayed>
             <LayerAction

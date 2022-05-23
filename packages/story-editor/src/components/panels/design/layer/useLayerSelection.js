@@ -51,13 +51,13 @@ function useLayerSelection(layer) {
         shiftKey: evt.shiftKey,
       });
 
-      if (isDoubleClick) {
-        setRenamableLayer({ elementId: elementId });
-      }
-
-      // In any case, revert focus to selected element(s)
+      // If a layer is not renamable, revert focus to selected element(s)
       if (renamableLayer) {
         focusCanvas();
+      }
+
+      if (isDoubleClick) {
+        setRenamableLayer({ elementId: elementId });
       }
     },
     [toggleLayer, elementId, focusCanvas, renamableLayer, setRenamableLayer]
