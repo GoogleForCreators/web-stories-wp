@@ -28,7 +28,11 @@
 
 body.js.edit-story #wpcontent {
   position: fixed;
-  width: 100%;
+  width: calc(100% - 160px);
+}
+
+body.js.edit-story.folded #adminmenuback {
+  top: 32px;
 }
 
 body.js.edit-story #wpcontent,
@@ -137,6 +141,7 @@ button {
 @media screen and (max-width: 783px) {
   body.js.edit-story #wpcontent {
     position: relative;
+    width: 100%;
   }
   ul#adminmenu {
     overflow-y: scroll;
@@ -152,7 +157,7 @@ button {
   #adminmenuwrap:hover {
     z-index: 1;
   }
-  body.js.edit-story #wpcontent {
+  body.js.edit-story.folded #wpcontent {
     width: calc(100% - 36px);
   }
 }
