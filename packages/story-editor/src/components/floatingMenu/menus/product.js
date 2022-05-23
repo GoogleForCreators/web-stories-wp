@@ -18,6 +18,7 @@
  */
 import { __ } from '@googleforcreators/i18n';
 import { memo, useCallback } from '@googleforcreators/react';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
@@ -25,6 +26,10 @@ import { memo, useCallback } from '@googleforcreators/react';
 import { Separator, Dismiss, Trash } from '../elements';
 import { useStory } from '../../../app/story';
 import ProductDropdown from '../../library/panes/shopping/productDropdown';
+
+const StyledDropDown = styled(ProductDropdown)`
+  width: 240px;
+`;
 
 const FloatingProductMenu = memo(function FloatingProductMenu() {
   const { selectedElement, updateSelectedElements, deleteSelectedElements } =
@@ -41,7 +46,7 @@ const FloatingProductMenu = memo(function FloatingProductMenu() {
 
   return (
     <>
-      <ProductDropdown
+      <StyledDropDown
         product={selectedElement?.product}
         setProduct={setProduct}
       />

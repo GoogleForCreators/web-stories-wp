@@ -17,28 +17,31 @@
 /**
  * External dependencies
  */
-import { __ } from '@googleforcreators/i18n';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import { Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
+import { __ } from '@googleforcreators/i18n';
+import { Input } from '@googleforcreators/design-system';
+import { useCallback } from '@googleforcreators/react';
 
 /**
  * Internal dependencies
  */
 import { Row } from '../../../form';
 import { SimplePanel } from '../../panel';
+import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
+import ProductDropdown from '../../../library/panes/shopping/productDropdown';
+import { getCommonValue } from '../../shared';
+import { noop } from '../../../../utils/noop';
 
-const HelperText = styled(Text).attrs({
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
-})`
-  color: ${({ theme }) => theme.colors.fg.secondary};
-`;
+function ProductPanel({ selectedElements, pushUpdate }) {
+  const product = getCommonValue(selectedElements, 'product', []);
+  const isMultiple = product === MULTIPLE_VALUE;
 
-function ProductPanel({ selectedElements }) {
-  if (selectedElements.length !== 1) {
-    return null;
-  }
+  const setProduct = useCallback(
+    (newProduct) => pushUpdate({ product: newProduct }),
+    [pushUpdate]
+  );
 
+  // TODO: Provide opportunity to manually override information here.
   return (
     <SimplePanel
       name="product"
@@ -46,9 +49,17 @@ function ProductPanel({ selectedElements }) {
       collapsedByDefault={false}
     >
       <Row>
-        <HelperText>
-          {'TODO: Provide opportunity to manually override information here.'}
-        </HelperText>
+        {isMultiple && (
+          <Input onChange={noop} disabled value={MULTIPLE_DISPLAY_VALUE} />
+        )}
+        {!isMultiple && (
+          <ProductDropdown
+            product={
+              isMultiple ? MULTIPLE_DISPLAY_VALUE : selectedElements[0].product
+            }
+            setProduct={setProduct}
+          />
+        )}
       </Row>
     </SimplePanel>
   );
@@ -56,6 +67,7 @@ function ProductPanel({ selectedElements }) {
 
 ProductPanel.propTypes = {
   selectedElements: PropTypes.array,
+  pushUpdate: PropTypes.func,
 };
 
 export default ProductPanel;

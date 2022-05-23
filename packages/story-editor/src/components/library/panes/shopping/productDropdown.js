@@ -21,17 +21,15 @@ import { __ } from '@googleforcreators/i18n';
 import { useCallback, useEffect, useState } from '@googleforcreators/react';
 import { Datalist } from '@googleforcreators/design-system';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
 import { useStory, useAPI } from '../../../../app';
+import { MULTIPLE_VALUE } from '../../../../constants';
 
-const StyledDropDown = styled(Datalist.DropDown)`
-  width: 240px;
-`;
-function ProductDropdown({ product, setProduct }) {
+function ProductDropdown({ product, setProduct, ...rest }) {
+  const isIndeterminate = product === MULTIPLE_VALUE;
   const isShoppingIntegrationEnabled = useFeature('shoppingIntegration');
 
   const [isLoading, setIsLoading] = useState(false);
@@ -81,10 +79,10 @@ function ProductDropdown({ product, setProduct }) {
     lightMode: true,
     onChange,
     getOptionsByQuery: getProductsByQuery,
-    selectedId: product?.productId,
+    selectedId: isIndeterminate ? null : product?.productId,
     dropDownLabel: __('Product', 'web-stories'),
     placeholder: isLoading ? __('Loading…', 'web-stories') : '',
-    disabled: isLoading ? true : isSaving,
+    disabled: isLoading || isIndeterminate ? true : isSaving,
     primaryOptions: isLoading ? [] : initialOptions,
     zIndex: 10,
   };
@@ -94,11 +92,12 @@ function ProductDropdown({ product, setProduct }) {
   }
 
   return (
-    <StyledDropDown
+    <Datalist.DropDown
       options={initialOptions}
       searchResultsLabel={__('Search results', 'web-stories')}
       aria-label={__('Product', 'web-stories')}
       {...dropDownParams}
+      {...rest}
     />
   );
 }
