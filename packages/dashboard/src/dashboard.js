@@ -36,6 +36,7 @@ import { FlagsProvider } from 'flagged';
  */
 import { ConfigProvider } from './app/config';
 import ApiProvider from './app/api/apiProvider';
+import FiltersProvider from './app/views/myStories/filters/filtersProvider';
 import { NavProvider } from './components';
 import { RouterProvider } from './app/router';
 import { GlobalStyle } from './theme';
@@ -61,23 +62,25 @@ function Dashboard({ config, children }) {
           <ModalGlobalStyle />
           <ConfigProvider config={_config}>
             <ApiProvider>
-              <NavProvider>
-                <RouterProvider>
-                  <SnackbarProvider>
-                    <PopupProvider
-                      value={{
-                        isRTL,
-                        leftOffset,
-                        topOffset,
-                      }}
-                    >
-                      <GlobalStyle />
-                      <KeyboardOnlyOutline />
-                      {children}
-                    </PopupProvider>
-                  </SnackbarProvider>
-                </RouterProvider>
-              </NavProvider>
+              <FiltersProvider>
+                <NavProvider>
+                  <RouterProvider>
+                    <SnackbarProvider>
+                      <PopupProvider
+                        value={{
+                          isRTL,
+                          leftOffset,
+                          topOffset,
+                        }}
+                      >
+                        <GlobalStyle />
+                        <KeyboardOnlyOutline />
+                        {children}
+                      </PopupProvider>
+                    </SnackbarProvider>
+                  </RouterProvider>
+                </NavProvider>
+              </FiltersProvider>
             </ApiProvider>
           </ConfigProvider>
         </ThemeProvider>

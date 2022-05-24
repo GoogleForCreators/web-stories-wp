@@ -66,7 +66,7 @@ function add_taxonomies() {
 	);
 
 	register_taxonomy(
-		'story-vertical',
+		'story-verticals',
 		'web-story',
 		[
 			'description'  => 'Story Verticals',

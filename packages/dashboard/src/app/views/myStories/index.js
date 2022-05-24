@@ -31,6 +31,7 @@ import { ScrollToTop, Layout } from '../../../components';
 import { STORY_STATUSES } from '../../../constants';
 import { useStoryView, noop } from '../../../utils';
 import useApi from '../../api/useApi';
+import useFilters from './filters/useFilters';
 import { useConfig } from '../../config';
 import Content from './content';
 import Header from './header';
@@ -83,6 +84,9 @@ function MyStories() {
       getTaxonomyTerm,
     })
   );
+
+  const [{ taxonomy: tax }] = useFilters((state) => state);
+
   const { apiCallbacks, canViewDefaultTemplates } = useConfig();
   const isMounted = useRef(false);
   const taxonomies = useRef([]);
@@ -164,7 +168,7 @@ function MyStories() {
     // However, we need the actual data of taxonomies
     // And we need to filter out things that aren't hierarchical
     // That's the next step here - Sam
-    (search) => {
+    (taxonomySearchTerm) => {
       if (!isMounted.current) {
         return;
       }
@@ -178,7 +182,7 @@ function MyStories() {
         })
       );
 
-      return fetchTaxonomies(taxonomyData, search).then((data) => {
+      return fetchTaxonomies(taxonomyData, taxonomySearchTerm).then((data) => {
         setQueriedTaxonomies((current) => {
           const existing = current.map((t) => ({
             id: t.id,
@@ -193,7 +197,7 @@ function MyStories() {
         });
       });
     },
-    [setQueriedTaxonomies, taxonomies.current]
+    [setQueriedTaxonomies, fetchTaxonomies, taxonomies.current]
   );
 
   if (!getAuthors) {
@@ -228,7 +232,7 @@ function MyStories() {
       sortOption: sort.value,
       status: filter.value,
       author: author.filterId,
-      taxonomy: { id: taxonomy.filterId, slug: taxonomy.filterSlug },
+      taxonomy: { id: tax.filterId, slug: tax.filterSlug },
     });
   }, [
     fetchStories,
@@ -238,8 +242,8 @@ function MyStories() {
     sort.direction,
     sort.value,
     author.filterId,
-    taxonomy.filterId,
-    taxonomy.filterSlug,
+    tax.filterId,
+    tax.filterSlug,
     apiCallbacks,
   ]);
 
@@ -263,7 +267,7 @@ function MyStories() {
         totalStoriesByStatus={totalStoriesByStatus}
         view={view}
         author={author}
-        taxonomy={taxonomy}
+        taxonomy={tax}
         queryAuthorsBySearch={queryAuthorsBySearch}
         queryTaxonomiesBySearch={queryTaxonomiesBySearch}
         showAuthorDropdown={showAuthorDropdown}

@@ -37,6 +37,7 @@ import {
 } from '../../../utils/useStoryView.js';
 import { StandardViewContentGutter, ViewStyleBar } from '../../../components';
 import { DROPDOWN_TYPES, VIEW_STYLE } from '../../../constants';
+import useFilters from '../myStories/filters/useFilters.js';
 
 const DisplayFormatContainer = styled.div`
   height: 76px;
@@ -92,10 +93,13 @@ export default function BodyViewOptions({
   showAuthorDropdown = false,
   showTaxonomyDropdown = true,
   author = defaultAuthor,
-  taxonomy = defaultTaxonomy,
+  // taxonomy = defaultTaxonomy,
   queryAuthorsBySearch = noop,
   queryTaxonomiesBySearch = noop,
 }) {
+  const [{ taxonomy }, filterDispatch] = useFilters((state) => state);
+  console.log(taxonomy);
+  // const { taxonomy } = filterState;
   return (
     <StandardViewContentGutter>
       <BodyViewOptionsHeader id="body-view-options-header" />
@@ -111,8 +115,13 @@ export default function BodyViewOptions({
                 hasDropDownBorder
                 searchResultsLabel={__('Search results', 'web-stories')}
                 aria-label={__('Filter stories by taxonomy', 'web-stories')}
-                onChange={taxonomy.toggleFilterId}
-                getOptionsByQuery={queryTaxonomiesBySearch}
+                onChange={(evt) => {
+                  filterDispatch({
+                    type: 'UPDATE_TAXONOMY_ID',
+                    payload: { id: evt.id, slug: evt.taxonomy },
+                  });
+                }}
+                getOptionsByQuery={(search) => taxonomy.query(search)}
                 selectedId={taxonomy.filterId}
                 placeholder={__('Taxonomies', 'web-stories')}
                 primaryOptions={taxonomy.queriedTaxonomies}
@@ -179,7 +188,7 @@ BodyViewOptions.propTypes = {
   showAuthorDropdown: PropTypes.bool,
   showTaxonomyDropdown: PropTypes.bool,
   author: AuthorPropTypes,
-  taxonomy: TaxonomyPropTypes,
+  // taxonomy: TaxonomyPropTypes,
   queryAuthorsBySearch: PropTypes.func,
   queryTaxonomiesBySearch: PropTypes.func,
 };
