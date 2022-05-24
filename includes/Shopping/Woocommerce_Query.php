@@ -128,23 +128,37 @@ class Woocommerce_Query implements Product_Query {
 	protected function parse_sort_by( string $sort_by = '' ): array {
 		switch ( $sort_by ) {
 			case 'a-z':
-				$order = 'title|ASC';
+				$order = [
+					'orderby' => 'title',
+					'order'   => 'ASC',
+				];
 				break;
 			case 'z-a':
-				$order = 'title|DESC';
+				$order = [
+					'orderby' => 'title',
+					'order'   => 'DESC',
+				];
 				break;
 			case 'price-low':
-				$order = 'price|ASC';
+				$order = [
+					'orderby' => 'price',
+					'order'   => 'ASC',
+				];
 				break;
 			case 'price-high':
-				$order = 'price|DESC';
+				$order = [
+					'orderby' => 'price',
+					'order'   => 'DESC',
+				];
 				break;
 			default:
-				$order = 'date|ASC';
+				$order = [
+					'orderby' => 'date',
+					'order'   => 'ASC',
+				];
 		}
 
-		list($orderby, $order) = explode( '|', $order );
-		return compact( 'orderby', 'order' );
+		return $order;
 	}
 
 	/**

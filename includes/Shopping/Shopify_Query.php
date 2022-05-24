@@ -317,22 +317,36 @@ QUERY;
 		
 		switch ( $sort_by ) {
 			case 'a-z':
-				$order = 'TITLE|false';
+				$order = [
+					'sort_key' => 'TITLE',
+					'reverse'  => 'false',
+				];
 				break;
 			case 'z-a':
-				$order = 'TITLE|true';
+				$order = [
+					'sort_key' => 'TITLE',
+					'reverse'  => 'true',
+				];
 				break;
 			case 'price-low':
-				$order = 'PRICE|false';
+				$order = [
+					'sort_key' => 'PRICE',
+					'reverse'  => 'false',
+				];
 				break;
 			case 'price-high':
-				$order = 'PRICE|true';
+				$order = [
+					'sort_key' => 'PRICE',
+					'reverse'  => 'true',
+				];
 				break;
 			default:
-				$order = 'CREATED_AT|false';
+				$order = [
+					'sort_key' => 'CREATED_AT',
+					'reverse'  => 'false',
+				];
 		}
 		
-		list($sort_key, $reverse) = explode( '|', $order );
-		return compact( 'sort_key', 'reverse' );
+		return $order;
 	}
 }
