@@ -18,18 +18,18 @@
 namespace Google\Web_Stories\Tests\Unit\Shopping;
 
 use Brain\Monkey;
-use Google\Web_Stories\Shopping\Woocommerce_Query as Query;
+use Google\Web_Stories\Shopping\WooCommerce_Query as Query;
 use Google\Web_Stories\Tests\Shared\Private_Access;
 use Google\Web_Stories\Tests\Unit\TestCase;
 
 /**
- * @coversDefaultClass \Google\Web_Stories\Shopping\Woocommerce_Query
+ * @coversDefaultClass \Google\Web_Stories\Shopping\WooCommerce_Query
  */
 class Woocommerce_Query extends TestCase {
 	use Private_Access;
 
 	/**
-	 * @var \Google\Web_Stories\Shopping\Woocommerce_Query
+	 * @var \Google\Web_Stories\Shopping\WooCommerce_Query
 	 */
 	private $instance;
 

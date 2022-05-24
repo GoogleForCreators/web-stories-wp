@@ -1,6 +1,6 @@
 <?php
 /**
- * Class Woocommerce_Query
+ * Class WooCommerce_Query
  *
  * @link      https://github.com/googleforcreators/web-stories-wp
  *
@@ -31,9 +31,9 @@ use Google\Web_Stories\Interfaces\Product_Query;
 use WP_Error;
 
 /**
- * Class Woocommerce_Query.
+ * Class WooCommerce_Query.
  */
-class Woocommerce_Query implements Product_Query {
+class WooCommerce_Query implements Product_Query {
 	/**
 	 * WooCommerce instance.
 	 *
