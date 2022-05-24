@@ -213,7 +213,6 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
         <WithMask
           element={element}
           fill
-          box={box}
           style={{
             opacity: typeof opacity !== 'undefined' ? opacity / 100 : null,
             ...(shouldDisplayBorder(element)
@@ -243,7 +242,6 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
               <WithMask
                 element={replacementElement}
                 fill
-                box={box}
                 style={{
                   opacity: opacity ? opacity / 100 : null,
                 }}
