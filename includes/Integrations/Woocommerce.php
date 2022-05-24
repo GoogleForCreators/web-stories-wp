@@ -68,7 +68,7 @@ class Woocommerce {
 			$link = admin_url(
 				add_query_arg(
 					[
-						's'   => rawurlencode( __( 'Woocommerce', 'web-stories' ) ),
+						's'   => rawurlencode( __( 'WooCommerce', 'web-stories' ) ),
 						'tab' => 'search',
 					],
 					'plugin-install.php'

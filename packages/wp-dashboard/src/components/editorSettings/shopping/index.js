@@ -84,7 +84,7 @@ function Shopping({
   );
 
   const onWoocommerceClick = useCallback(
-    (evt) => trackClick(evt, 'click_site_kit_link'),
+    (evt) => trackClick(evt, 'click_woocommerce_link'),
     []
   );
 

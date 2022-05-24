@@ -62,7 +62,7 @@ class Woocommerce_Query implements Product_Query {
 		$status = $this->woocommerce->get_plugin_status();
 
 		if ( ! $status['active'] ) {
-			return new WP_Error( 'rest_woocommerce_not_installed', __( 'Woocommerce is not installed.', 'web-stories' ), [ 'status' => 400 ] );
+			return new WP_Error( 'rest_woocommerce_not_installed', __( 'WooCommerce is not installed.', 'web-stories' ), [ 'status' => 400 ] );
 		}
 
 		$results = [];
