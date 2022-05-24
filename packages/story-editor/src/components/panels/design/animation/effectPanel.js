@@ -86,6 +86,7 @@ function EffectPanel({
   animation: { id, type, ...config },
   onChange,
   disabledTypeOptionsMap,
+  disabled = false,
 }) {
   const { props } = getAnimationEffectProps(type);
 
@@ -125,9 +126,10 @@ function EffectPanel({
         effectConfig={config}
         field={field}
         onChange={(value, submitArg) =>
-          handleInputChange({ [field]: value }, submitArg)
+          handleInputChange({ [field]: Math.max(value, 0) }, submitArg)
         }
         disabledOptions={disabledTypeOptionsMap[type]?.options || []}
+        disabled={disabled}
         tooltip={disabledTypeOptionsMap[type]?.tooltip}
       />
     </AnimationGridField>
@@ -145,6 +147,7 @@ EffectPanel.propTypes = {
       options: PropTypes.arrayOf(PropTypes.string),
     })
   ),
+  disabled: PropTypes.bool,
 };
 
 export default EffectPanel;

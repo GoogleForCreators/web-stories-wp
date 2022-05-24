@@ -113,7 +113,7 @@ class Embed {
 			ob_start();
 			?>
 			<div class="<?php echo esc_attr( "$class web-stories-embed web-stories-embed-amp $align" ); ?>">
-				<div class="wp-block-embed__wrapper">
+				<div class="wp-block-embed__wrapper" style="<?php echo esc_attr( $wrapper_style ); ?>">
 					<amp-story-player
 						width="<?php echo esc_attr( $args['width'] ); ?>"
 						height="<?php echo esc_attr( $args['height'] ); ?>"

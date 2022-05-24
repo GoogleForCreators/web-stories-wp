@@ -17,8 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useState, useMemo } from '@googleforcreators/react';
-import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
+import { useCallback, useMemo, useState } from '@googleforcreators/react';
 import {
   getImageFromVideo,
   seekVideo,
@@ -40,12 +39,13 @@ import {
   useUploadVideoFrame,
 } from '../../../../../../app/media/utils';
 import { useConfig } from '../../../../../../app/config';
-import { useAPI } from '../../../../../../app/api';
 import useCORSProxy from '../../../../../../utils/useCORSProxy';
 import useDetectBaseColor from '../../../../../../app/media/utils/useDetectBaseColor';
-import { isValidUrlForHotlinking, getErrorMessage } from './utils';
 
-function useInsert({ link, setLink, setErrorMsg, onClose }) {
+const eventName = 'hotlink_media';
+
+function useInsert() {
+  const [isOpen, setIsOpen] = useState(false);
   const { insertElement } = useLibrary((state) => ({
     insertElement: state.actions.insertElement,
   }));
@@ -71,19 +71,16 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
       allowedMimeTypes.map((type) => getExtensionsFromMimeType(type)).flat(),
     [allowedMimeTypes]
   );
-  const {
-    actions: { getHotlinkInfo },
-  } = useAPI();
   const { updateBaseColor } = useDetectBaseColor({});
 
-  const [isInserting, setIsInserting] = useState(false);
-
   const { uploadVideoPoster } = useUploadVideoFrame({});
-  const { getProxiedUrl, checkResourceAccess } = useCORSProxy();
+  const { getProxiedUrl } = useCORSProxy();
 
-  const insertMedia = useCallback(
-    async (hotlinkData, needsProxy) => {
-      const { ext, type, mimeType, fileName: originalFileName } = hotlinkData;
+  const onClick = () => setIsOpen(true);
+  const onClose = () => setIsOpen(false);
+  const onSelect = useCallback(
+    async ({ link, hotlinkInfo, needsProxy }) => {
+      const { ext, type, mimeType, fileName: originalFileName } = hotlinkInfo;
 
       const isVideo = type === 'video';
 
@@ -157,85 +154,41 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
 
         updateBaseColor(resource);
 
-        setErrorMsg(null);
-        setLink('');
-        onClose();
+        // After getting link metadata and before actual insertion
+        // is a great opportunity to measure usage in a reasonably accurate way.
+        trackEvent(eventName, {
+          event_label: link,
+          file_size: hotlinkInfo.fileSize,
+          file_type: hotlinkInfo.mimeType,
+          needs_proxy: needsProxy,
+        });
+        setIsOpen(false);
       } catch (e) {
-        setErrorMsg(getErrorMessage());
-      } finally {
-        setIsInserting(false);
+        // Do nothing for now
       }
     },
     [
-      hasUploadMediaAction,
-      insertElement,
-      link,
-      onClose,
-      setErrorMsg,
-      setLink,
-      uploadVideoPoster,
       getProxiedUrl,
+      insertElement,
       updateBaseColor,
+      hasUploadMediaAction,
+      uploadVideoPoster,
     ]
   );
 
-  const onInsert = useCallback(async () => {
-    if (!link) {
-      return;
-    }
-
-    if (!isValidUrlForHotlinking(link)) {
-      setErrorMsg(__('Invalid link.', 'web-stories'));
-      return;
-    }
-
-    setIsInserting(true);
-
-    try {
-      const hotlinkInfo = await getHotlinkInfo(link);
-      const shouldProxy = await checkResourceAccess(link);
-
-      // After getting link metadata and before actual insertion
-      // is a great opportunity to measure usage in a reasonably accurate way.
-      trackEvent('hotlink_media', {
-        event_label: link,
-        file_size: hotlinkInfo.fileSize,
-        file_type: hotlinkInfo.mimeType,
-        needs_proxy: shouldProxy,
-      });
-
-      await insertMedia(hotlinkInfo, shouldProxy);
-    } catch (err) {
-      setIsInserting(false);
-
-      trackError('hotlink_media', err?.message);
-
-      let description = __(
-        'No file types are currently supported.',
-        'web-stories'
-      );
-      if (allowedFileTypes.length) {
-        description = sprintf(
-          /* translators: %s is a list of allowed file extensions. */
-          __('You can insert %s.', 'web-stories'),
-          translateToExclusiveList(allowedFileTypes)
-        );
-      }
-      setErrorMsg(getErrorMessage(err.code, description));
-    }
-  }, [
-    allowedFileTypes,
-    link,
-    getHotlinkInfo,
-    setErrorMsg,
-    insertMedia,
-    checkResourceAccess,
-  ]);
+  const onError = useCallback((err) => trackError(eventName, err?.message), []);
 
   return {
-    onInsert,
-    isInserting,
-    setIsInserting,
+    action: {
+      onSelect,
+      onError,
+      onClick,
+      onClose,
+    },
+    state: {
+      allowedFileTypes,
+      isOpen,
+    },
   };
 }
 

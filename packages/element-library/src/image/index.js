@@ -21,7 +21,7 @@ export { default as Edit } from './edit';
 export { default as Frame } from './frame';
 export { default as Output } from './output';
 export { default as LayerIcon } from './icon';
-export { default as LayerContent } from './layer';
+export { default as getLayerText } from './layer';
 export { default as Display } from '../media/imageDisplay';
 export { default as TextContent } from '../media/textContent';
 

@@ -868,6 +868,8 @@ describe('Right Click Menu integration', () => {
 
     describe('right click menu: copying and pasting styles', () => {
       it('should copy and paste styles', async () => {
+        // #11321 adding/editing animations on the first page is disabled
+        await fixture.events.click(fixture.editor.canvas.pageActions.addPage);
         const earthImage = await addEarthImage();
         const rangerImage = await addRangerImage();
 

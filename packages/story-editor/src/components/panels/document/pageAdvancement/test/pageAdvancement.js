@@ -98,20 +98,6 @@ describe('PageAdvancementPanel', () => {
       })
     );
 
-    updateStory.mockClear();
-    fireEvent.change(input, {
-      target: { value: '1' },
-    });
-    fireEvent.blur(input);
-
-    await waitFor(() => {
-      expect(updateStory).toHaveBeenCalledWith({
-        properties: {
-          defaultPageDuration: 1,
-        },
-      });
-    });
-
     expect(updateStory).toHaveBeenCalledTimes(1);
 
     fireEvent.change(input, {

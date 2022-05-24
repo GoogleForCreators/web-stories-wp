@@ -34,3 +34,4 @@ export { default as ToggleItalics } from './toggleItalics';
 export { default as ToggleUnderline } from './toggleUnderline';
 export { default as Trim } from './trim';
 export { Separator } from './shared';
+export { default as Trash } from './trash';

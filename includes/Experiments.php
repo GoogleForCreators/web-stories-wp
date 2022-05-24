@@ -288,18 +288,6 @@ class Experiments extends Service_Base implements HasRequirements {
 				'group'       => 'editor',
 			],
 			/**
-			 * Author: @spacedmonkey
-			 * Issue: #10706
-			 * Creation date: 2022-03-07
-			 */
-			[
-				'name'        => 'enableCORSCheck',
-				'label'       => __( 'CORS check', 'web-stories' ),
-				'description' => __( 'Add a check in the editor for CORS errors.', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-			/**
 			 * Author: @barklund
 			 * Issue: #10112
 			 * Creation date: 2022-01-27
@@ -342,6 +330,7 @@ class Experiments extends Service_Base implements HasRequirements {
 				'label'       => __( 'Caption hotlinking', 'web-stories' ),
 				'description' => __( 'Enable hotlinking of captions', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 			/**
 			 * Author: @spacedmonkey
@@ -353,6 +342,7 @@ class Experiments extends Service_Base implements HasRequirements {
 				'label'       => __( 'Audio hotlinking', 'web-stories' ),
 				'description' => __( 'Enable hotlinking background audio', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 			/**
 			 * Author: @barklund
@@ -364,6 +354,7 @@ class Experiments extends Service_Base implements HasRequirements {
 				'label'       => __( 'Layer locking', 'web-stories' ),
 				'description' => __( 'Enable layer locking', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 		];
 	}

@@ -49,6 +49,7 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 		'Cache-Control',
 		'Etag',
 		'Last-Modified',
+		'Content-Range',
 	];
 
 	/**
@@ -280,8 +281,6 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	 * @since 1.13.0
 	 *
 	 * @param WP_REST_Request $request Full data about the request.
-	 *
-	 * @todo Forward the Range request header.
 	 */
 	public function proxy_url( $request ): void {
 		/**
@@ -301,10 +300,14 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 		}
 
 		header( 'Cache-Control: max-age=3600' );
+		header( 'Accept-Ranges: bytes' );
 
 		$args = [
 			'timeout'  => 60, // phpcs:ignore WordPressVIPMinimum.Performance.RemoteRequestTimeout.timeout_timeout
 			'blocking' => false,
+			'headers'  => [
+				'Range' => $request->get_header( 'Range' ),
+			],
 		];
 
 		$http      = _wp_http_get_object();

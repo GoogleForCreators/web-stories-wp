@@ -45,16 +45,23 @@ async function publishPost() {
 
   if (prePublishChecksEnabled) {
     await openPublishPanel();
+
+    // Wait for the panel to fully slide in.
+    await page.waitForTimeout(500);
   }
 
   // Publish the post
   await page.click('.editor-post-publish-button');
 
   // Wait until the selector returns a truthy value.
-  await page.waitForFunction(() =>
-    wp.data.select('core/editor').getPermalink()
+  await page.waitForFunction(
+    () =>
+      wp.data.select('core/editor').getEditedPostAttribute('status') ===
+      'publish'
   );
   await page.setDefaultTimeout(3000);
+
+  await expect(page).toMatchElement('a', { text: 'View Post' });
 
   return page.evaluate(() => wp.data.select('core/editor').getPermalink());
 }

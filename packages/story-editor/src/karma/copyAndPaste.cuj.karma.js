@@ -236,9 +236,10 @@ describe('Background Copy & Paste', () => {
     await fixture.render();
     await fixture.collapseHelpCenter();
 
-    await fixture.events.click(fixture.editor.canvas.pageActions.addPage, {
-      clickCount: 1,
-    });
+    await fixture.events.click(fixture.editor.canvas.pageActions.addPage);
+    // #11321 adding/editing animations on the first page is disabled
+    // add a third page here to copy and paste between the second and third pages
+    await fixture.events.click(fixture.editor.canvas.pageActions.addPage);
 
     // Navigate back to previous page and add Background image
     await goToPreviousPage();
@@ -315,10 +316,10 @@ describe('Background Copy & Paste', () => {
       expect(copied.elementAnimations.length).toEqual(1);
       await fixture.events.clipboard.copy();
 
-      // Go to second page
+      // Go to third page
       await goToNextPage();
 
-      // Paste background with animation to second page
+      // Paste background with animation to third page
       await fixture.events.clipboard.paste();
       const pasted = await fixture.renderHook(() =>
         useStory(({ state }) => ({
