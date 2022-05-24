@@ -51,7 +51,9 @@ const Inner = styled.div`
   position: absolute;
   bottom: 0;
   width: 100%;
-  background: linear-gradient(0, rgba(0, 0, 0, 0.15), transparent) !important;
+  ${({ $hasGradient }) =>
+    $hasGradient &&
+    `background: linear-gradient(0, rgba(0, 0, 0, 0.15), transparent) !important`};
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -120,7 +122,7 @@ function PageAttachment({ ctaText = __('Shop Now', 'web-stories'), theme }) {
   return (
     <Wrapper role="presentation">
       <InnerWrap>
-        <Inner>
+        <Inner $hasGradient={theme !== OUTLINK_THEME.DARK}>
           <ArrowWrap bgColor={fgColor} $factor={dataToEditorY}>
             <ArrowBar fill={arrowColor} $factor={dataToEditorY} />
           </ArrowWrap>
