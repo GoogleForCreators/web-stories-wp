@@ -71,9 +71,9 @@ function ShoppingPane(props) {
   const [searchTerm, setSearchTerm] = useState('');
   const [orderby, setOrderby] = useState('date');
   const [order, setOrder] = useState('desc');
-  const onSortBy = ({ orderby, order }) => {
-    setOrderby(orderby);
-    setOrder(order);
+  const onSortBy = (option) => {
+    setOrderby(option?.orderby);
+    setOrder(option?.order);
   };
   const [isMenuFocused, setIsMenuFocused] = useState(false);
   const [products, setProducts] = useState([]);
@@ -91,10 +91,10 @@ function ShoppingPane(props) {
   }));
 
   const getProductsByQuery = useCallback(
-    async (value = '', orderby, order) => {
+    async (value = '', sortBy, sortOrder) => {
       try {
         setIsLoading(true);
-        setProducts(await getProducts(value, orderby, order));
+        setProducts(await getProducts(value, sortBy, sortOrder));
       } catch (err) {
         setProducts([]);
       } finally {
@@ -102,7 +102,7 @@ function ShoppingPane(props) {
         setLoaded(true);
       }
     },
-    [getProducts, orderby, order]
+    [getProducts]
   );
 
   const onSearch = useCallback(
