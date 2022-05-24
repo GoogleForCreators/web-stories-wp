@@ -22,9 +22,7 @@ import { __ } from '@googleforcreators/i18n';
 import { Datalist } from '@googleforcreators/design-system';
 import styled from 'styled-components';
 
-const StyledDropDown = styled(Datalist.DropDown)`
-  width: 170px;
-  height: 36px;
+const StyledContainer = styled.div`
   margin-left: 12px;
 `;
 
@@ -44,14 +42,15 @@ function SortDropdown({ onChange, sortId }) {
   ];
 
   return (
-    <StyledDropDown
-      activeItemRenderer={() => <span />}
-      dropDownLabel={__('Sort', 'web-stories')}
-      onChange={onChange}
-      selectedId={sortId}
-      options={options}
-      aria-label={__('Sort by', 'web-stories')}
-    />
+    <StyledContainer>
+      <Datalist.DropDown
+        dropDownLabel={__('Sort', 'web-stories')}
+        onChange={onChange}
+        selectedId={sortId}
+        options={options}
+        aria-label={__('Sort by', 'web-stories')}
+      />
+    </StyledContainer>
   );
 }
 
