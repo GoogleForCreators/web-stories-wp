@@ -21,6 +21,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { PLACEMENT, Popup } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
+import { useUnits } from '@googleforcreators/units';
 
 /**
  * Internal dependencies
@@ -70,10 +71,10 @@ const ArrowBar = styled(ArrowIcon)`
 `;
 
 const OutlinkChip = styled.div`
-  height: 36px;
+  height: ${({ $factor }) => $factor(36)}px;
   display: flex;
   position: relative;
-  padding: 10px 6px;
+  padding: ${({ $factor }) => $factor(10)}px ${({ $factor }) => $factor(6)}px;
   margin: 0 0 20px;
   max-width: calc(100% - 64px);
   border-radius: 30px;
@@ -84,7 +85,7 @@ const OutlinkChip = styled.div`
 
 const TextWrapper = styled.span`
   font-family: Roboto, sans-serif;
-  font-size: 16px;
+  font-size: ${({ $factor }) => $factor(16)}px;
   line-height: 18px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -136,6 +137,10 @@ function PageAttachment({ pageAttachment = {} }) {
     setPageAttachmentContainer: state.actions.setPageAttachmentContainer,
   }));
 
+  const { dataToEditorY } = useUnits(({ actions: { dataToEditorY } }) => ({
+    dataToEditorY,
+  }));
+
   const { hasInvalidLinkSelected } = useElementsWithLinks();
 
   const {
@@ -153,13 +158,19 @@ function PageAttachment({ pageAttachment = {} }) {
         {url?.length > 0 && (
           <>
             <ArrowBar fill={bgColor} />
-            <OutlinkChip bgColor={bgColor}>
+            <OutlinkChip bgColor={bgColor} $factor={dataToEditorY}>
               {icon ? (
                 <LinkImage icon={icon} />
               ) : (
-                <DefaultIcon fill={fgColor} width={24} height={24} />
+                <DefaultIcon
+                  fill={fgColor}
+                  width={dataToEditorY(24)}
+                  height={dataToEditorY(24)}
+                />
               )}
-              <TextWrapper fgColor={fgColor}>{ctaText}</TextWrapper>
+              <TextWrapper fgColor={fgColor} $factor={dataToEditorY}>
+                {ctaText}
+              </TextWrapper>
             </OutlinkChip>
             {pageAttachmentContainer && hasInvalidLinkSelected && (
               <Popup
