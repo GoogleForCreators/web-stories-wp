@@ -30,6 +30,8 @@ namespace Google\Web_Stories\Integrations;
  * Class WooCommerce.
  */
 class WooCommerce {
+	protected const PLUGIN = 'woocommerce/woocommerce.php';
+	
 	/**
 	 * Determines whether WooCommerce is active.
 	 *
@@ -49,8 +51,7 @@ class WooCommerce {
 	 * @return array Plugin status.
 	 */
 	public function get_plugin_status(): array {
-		$plugin       = 'woocommerce/woocommerce.php';
-		$is_installed = \array_key_exists( $plugin, get_plugins() );
+		$is_installed = \array_key_exists( self::PLUGIN, get_plugins() );
 		$is_active    = $this->is_plugin_active();
 		$can_manage   = false;
 		$link         = '';
@@ -61,7 +62,7 @@ class WooCommerce {
 				$link = admin_url( 'admin.php?page=wc-admin' );
 			}
 		} elseif ( $is_installed ) {
-			if ( current_user_can( 'activate_plugin', $plugin ) ) {
+			if ( current_user_can( 'activate_plugin', self::PLUGIN ) ) {
 				$link = admin_url( 'plugins.php' );
 			}
 		} elseif ( current_user_can( 'install_plugins' ) ) {
@@ -74,6 +75,8 @@ class WooCommerce {
 					'plugin-install.php'
 				)
 			);
+		} else {
+			$link = __( 'https://wordpress.org/plugins/woocommerce/', 'web-stories' );
 		}
 
 		return [
