@@ -50,7 +50,12 @@ function ProductPanel({ selectedElements, pushUpdate }) {
     >
       <Row>
         {isMultiple && (
-          <Input onChange={noop} disabled value={MULTIPLE_DISPLAY_VALUE} />
+          <Input
+            onChange={noop}
+            disabled
+            value={MULTIPLE_DISPLAY_VALUE}
+            aria-label={__('Product', 'web-stories')}
+          />
         )}
         {!isMultiple && (
           <ProductDropdown
