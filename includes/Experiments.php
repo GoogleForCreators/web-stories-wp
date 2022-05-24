@@ -319,6 +319,7 @@ class Experiments extends Service_Base implements HasRequirements {
 				'label'       => __( 'Shopping', 'web-stories' ),
 				'description' => __( 'Enable shopping integration in the editor', 'web-stories' ),
 				'group'       => 'general',
+				'default'     => true,
 			],
 			/**
 			 * Author: @spacedmonkey

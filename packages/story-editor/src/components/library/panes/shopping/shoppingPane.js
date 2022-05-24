@@ -69,8 +69,12 @@ function ShoppingPane(props) {
   const [loaded, setLoaded] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
-  const [sortBy, setSortBy] = useState('recent');
-  const onSortBy = ({ id }) => setSortBy(id);
+  const [orderby, setOrderby] = useState('date');
+  const [order, setOrder] = useState('desc');
+  const onSortBy = ({ orderby, order }) => {
+    setOrderby(orderby);
+    setOrder(order);
+  };
   const [isMenuFocused, setIsMenuFocused] = useState(false);
   const [products, setProducts] = useState([]);
   const {
@@ -87,10 +91,10 @@ function ShoppingPane(props) {
   }));
 
   const getProductsByQuery = useCallback(
-    async (value = '', sort = '') => {
+    async (value = '', orderby, order) => {
       try {
         setIsLoading(true);
-        setProducts(await getProducts(value, sort));
+        setProducts(await getProducts(value, orderby, order));
       } catch (err) {
         setProducts([]);
       } finally {
@@ -98,7 +102,7 @@ function ShoppingPane(props) {
         setLoaded(true);
       }
     },
-    [getProducts]
+    [getProducts, orderby, order]
   );
 
   const onSearch = useCallback(
@@ -114,8 +118,8 @@ function ShoppingPane(props) {
   const debouncedProductsQuery = useDebouncedCallback(getProductsByQuery, 300);
 
   useEffect(
-    () => debouncedProductsQuery(searchTerm, sortBy),
-    [searchTerm, sortBy, debouncedProductsQuery]
+    () => debouncedProductsQuery(searchTerm, orderby, order),
+    [searchTerm, orderby, order, debouncedProductsQuery]
   );
 
   const handleInputKeyPress = useCallback((event) => {
@@ -215,7 +219,7 @@ function ShoppingPane(props) {
             clearId="clear-product-search"
             handleClearInput={handleClearInput}
           />
-          <ProductSort onChange={onSortBy} sortId={sortBy} />
+          <ProductSort onChange={onSortBy} sortId={`${orderby}-${order}`} />
         </Row>
         {isLoading && (
           <Loading>

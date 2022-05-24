@@ -168,10 +168,19 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 		/**
 		 * Request context.
 		 *
-		 * @var string $sort_by
+		 * @var string $orderby
 		 */
-		$sort_by      = ! empty( $request['sort_by'] ) ? $request['sort_by'] : '';
-		$query_result = $query->get_search( $search_term, $sort_by );
+		$orderby = ! empty( $request['orderby'] ) ? $request['orderby'] : '';
+
+		/**
+		 * Request context.
+		 *
+		 * @var string $order
+		 */
+		$order = ! empty( $request['order'] ) ? $request['order'] : '';
+		
+		
+		$query_result = $query->get_search( $search_term, $orderby, $order );
 		if ( is_wp_error( $query_result ) ) {
 			return $query_result;
 		}
@@ -395,5 +404,36 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 		];
 
 		return $schema;
+	}
+
+	/**
+	 * Retrieves the query params for the products collection.
+	 *
+	 * @since 1.21.0
+	 *
+	 * @return array Collection parameters.
+	 */
+	public function get_collection_params(): array {
+		$query_params = parent::get_collection_params();
+
+		$query_params['orderby'] = [
+			'description' => __( 'Sort collection by product attribute.', 'web-stories' ),
+			'type'        => 'string',
+			'default'     => 'date',
+			'enum'        => [
+				'date',
+				'price',
+				'title',
+			],
+		];
+
+		$query_params['order'] = [
+			'description' => __( 'Order sort attribute ascending or descending.', 'web-stories' ),
+			'type'        => 'string',
+			'default'     => 'desc',
+			'enum'        => [ 'asc', 'desc' ],
+		];
+
+		return $query_params;
 	}
 }

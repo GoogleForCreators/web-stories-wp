@@ -184,11 +184,12 @@ class Shopify_Query extends DependencyInjectedTestCase {
 	 */
 	public function test_fetch_remote_products_returns_from_transient(): void {
 		$search_term = '';
-		$sort_by     = '';
+		$orderby     = '';
+		$order       = '';
 
 		update_option( Settings::SETTING_NAME_SHOPIFY_HOST, 'example.myshopify.com' );
 		update_option( Settings::SETTING_NAME_SHOPIFY_ACCESS_TOKEN, '1234' );
-		set_transient( 'web_stories_shopify_data_' . md5( $search_term . '-' . $sort_by ), wp_json_encode( [ 'data' => [ 'products' => [ 'edges' => [] ] ] ] ) );
+		set_transient( 'web_stories_shopify_data_' . md5( $search_term . '-' . $orderby . '-' . $order ), wp_json_encode( [ 'data' => [ 'products' => [ 'edges' => [] ] ] ] ) );
 
 		$actual = $this->instance->get_search( '', '' );
 
@@ -307,22 +308,22 @@ class Shopify_Query extends DependencyInjectedTestCase {
 		$this->assertStringContainsString( 'sortKey: CREATED_AT', $this->request_body );
 		$this->assertStringContainsString( 'reverse: false', $this->request_body );
 		
-		$actual = $this->instance->get_search( 'some search term', 'a-z' );
+		$actual = $this->instance->get_search( 'some search term', 'title', 'asc' );
 		$this->assertNotWPError( $actual );
 		$this->assertStringContainsString( 'sortKey: TITLE', $this->request_body );
 		$this->assertStringContainsString( 'reverse: false', $this->request_body );
 
-		$actual = $this->instance->get_search( 'some search term', 'z-a' );
+		$actual = $this->instance->get_search( 'some search term', 'title', 'desc' );
 		$this->assertNotWPError( $actual );
 		$this->assertStringContainsString( 'sortKey: TITLE', $this->request_body );
 		$this->assertStringContainsString( 'reverse: true', $this->request_body );
 
-		$actual = $this->instance->get_search( 'some search term', 'price-low' );
+		$actual = $this->instance->get_search( 'some search term', 'price', 'asc' );
 		$this->assertNotWPError( $actual );
 		$this->assertStringContainsString( 'sortKey: PRICE', $this->request_body );
 		$this->assertStringContainsString( 'reverse: false', $this->request_body );
 		
-		$actual = $this->instance->get_search( 'some search term', 'price-high' );
+		$actual = $this->instance->get_search( 'some search term', 'price', 'desc' );
 		$this->assertNotWPError( $actual );
 		$this->assertStringContainsString( 'sortKey: PRICE', $this->request_body );
 		$this->assertStringContainsString( 'reverse: true', $this->request_body );

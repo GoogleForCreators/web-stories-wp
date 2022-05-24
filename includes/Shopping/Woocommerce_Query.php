@@ -39,10 +39,11 @@ class Woocommerce_Query implements Product_Query {
 	 * @since 1.21.0
 	 *
 	 * @param string $search_term Search term.
-	 * @param string $sort_by sort condition for product query.
+	 * @param string $orderby Sort collection by product attribute.
+	 * @param string $order Order sort attribute ascending or descending.
 	 * @return Product[]|WP_Error
 	 */
-	public function get_search( string $search_term, string $sort_by = '' ) {
+	public function get_search( string $search_term, string $orderby, string $order ) {
 
 		if ( ! function_exists( 'wc_get_products' ) ) {
 			return new WP_Error( 'rest_unknown', __( 'Woocommerce is not installed.', 'web-stories' ), [ 'status' => 400 ] );
@@ -50,27 +51,24 @@ class Woocommerce_Query implements Product_Query {
 
 		$results = [];
 
-		$order_by = $this->parse_sort_by( $sort_by );
-
 		/**
 		 * Products.
 		 *
 		 * @var \WC_Product[] $products
 		 */
 		$products = wc_get_products(
-			array_merge(
-				[
-					'status' => 'publish',
-					'limit'  => 100,
-					's'      => $search_term,
-				],
-				$order_by
-			)
+			[
+				'status'  => 'publish',
+				'limit'   => 100,
+				's'       => $search_term,
+				'orderby' => $orderby,
+				'order'   => $order,
+			]
 		);
 
-		if ( 'price' === $order_by['orderby'] ) {
+		if ( 'price' === $orderby ) {
 			// @todo this only orders products based on wc_get_products previously called
-			$products = wc_products_array_orderby( $products, 'price', $order_by['order'] );
+			$products = wc_products_array_orderby( $products, 'price', $order );
 		}
 
 		$product_image_ids = [];
@@ -115,50 +113,6 @@ class Woocommerce_Query implements Product_Query {
 		}
 
 		return $results;
-	}
-
-	/**
-	 * Parse sort type into array for product query
-	 *
-	 * @since 1.21.0
-	 *
-	 * @param string $sort_by sort condition for product query.
-	 * @return array
-	 */
-	protected function parse_sort_by( string $sort_by = '' ): array {
-		switch ( $sort_by ) {
-			case 'a-z':
-				$order = [
-					'orderby' => 'title',
-					'order'   => 'ASC',
-				];
-				break;
-			case 'z-a':
-				$order = [
-					'orderby' => 'title',
-					'order'   => 'DESC',
-				];
-				break;
-			case 'price-low':
-				$order = [
-					'orderby' => 'price',
-					'order'   => 'ASC',
-				];
-				break;
-			case 'price-high':
-				$order = [
-					'orderby' => 'price',
-					'order'   => 'DESC',
-				];
-				break;
-			default:
-				$order = [
-					'orderby' => 'date',
-					'order'   => 'ASC',
-				];
-		}
-
-		return $order;
 	}
 
 	/**

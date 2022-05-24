@@ -151,17 +151,17 @@ class Shopify_Query implements Product_Query {
 	 * @since 1.21.0
 	 *
 	 * @param string $search_term Search term to filter products by.
-	 * @param string $sort_by sort order for query.
+	 * @param string $orderby Sort collection by product attribute.
+	 * @param string $order Order sort attribute ascending or descending.
 	 * @return string The assembled GraphQL query.
 	 */
-	protected function get_products_query( string $search_term, string $sort_by = '' ): string {
+	protected function get_products_query( string $search_term, string $orderby, string $order ): string {
 		$search_string = empty( $search_term ) ? '*' : '*' . $search_term . '*';
-		$sort          = $this->parse_sort_by( $sort_by );
-		$sort_key      = $sort['sort_key'];
-		$reverse       = $sort['reverse'];
+		$orderby = $orderby === 'date' ? 'CREATED_AT' : strtoupper( $orderby );
+		$order = $order === 'asc' ? 'false' : 'true';
 		return <<<QUERY
 {
-  products(first: 100, sortKey: $sort_key, reverse: $reverse, query: "title:$search_string") {
+  products(first: 100, sortKey: $orderby, reverse: $order, query: "title:$search_string") {
     edges {
       node {
         id
@@ -199,10 +199,11 @@ QUERY;
 	 * @since 1.21.0
 	 *
 	 * @param string $search_term Search term to filter products by.
-	 * @param string $sort_by sort order for query.
+	 * @param string $orderby sort field for query.
+	 * @param string $order ASC or DESC.
 	 * @return array|WP_Error Response data or error object on failure.
 	 */
-	protected function fetch_remote_products( string $search_term, string $sort_by = '' ) {
+	protected function fetch_remote_products( string $search_term, string $orderby = '', string $order = '' ) {
 		
 		/**
 		 * Filters the Shopify products data TTL value.
@@ -212,7 +213,7 @@ QUERY;
 		 * @param int $time Time to live (in seconds). Default is 5 minutes.
 		 */
 		$cache_ttl = apply_filters( 'web_stories_shopify_data_cache_ttl', 5 * MINUTE_IN_SECONDS );
-		$cache_key = 'web_stories_shopify_data_' . md5( $search_term . '-' . $sort_by );
+		$cache_key = 'web_stories_shopify_data_' . md5( $search_term . '-' . $orderby . '-' . $order );
 
 		$data = get_transient( $cache_key );
 
@@ -220,7 +221,7 @@ QUERY;
 			return (array) json_decode( $data, true );
 		}
 
-		$query = $this->get_products_query( $search_term, $sort_by );
+		$query = $this->get_products_query( $search_term, $orderby, $order );
 
 		$body = $this->execute_query( $query );
 
@@ -253,12 +254,13 @@ QUERY;
 	 * @since 1.21.0
 	 *
 	 * @param string $search_term Search term.
-	 * @param string $sort_by sort condition for product query.
+	 * @param string $orderby sort field for query.
+	 * @param string $order ASC or DESC.
 	 * @return Product[]|WP_Error
 	 */
-	public function get_search( string $search_term, string $sort_by = '' ) {
+	public function get_search( string $search_term, string $orderby, string $order ) {
 		
-		$result = $this->fetch_remote_products( $search_term, $sort_by );
+		$result = $this->fetch_remote_products( $search_term, $orderby, $order );
 		
 		if ( is_wp_error( $result ) ) {
 			return $result;
@@ -303,50 +305,5 @@ QUERY;
 		}
 
 		return $results;
-	}
-
-	/**
-	 * Parse sort type into array for product query
-	 *
-	 * @since 1.21.0
-	 *
-	 * @param string $sort_by sort condition for product query.
-	 * @return array
-	 */
-	protected function parse_sort_by( string $sort_by ): array {
-		
-		switch ( $sort_by ) {
-			case 'a-z':
-				$order = [
-					'sort_key' => 'TITLE',
-					'reverse'  => 'false',
-				];
-				break;
-			case 'z-a':
-				$order = [
-					'sort_key' => 'TITLE',
-					'reverse'  => 'true',
-				];
-				break;
-			case 'price-low':
-				$order = [
-					'sort_key' => 'PRICE',
-					'reverse'  => 'false',
-				];
-				break;
-			case 'price-high':
-				$order = [
-					'sort_key' => 'PRICE',
-					'reverse'  => 'true',
-				];
-				break;
-			default:
-				$order = [
-					'sort_key' => 'CREATED_AT',
-					'reverse'  => 'false',
-				];
-		}
-		
-		return $order;
 	}
 }

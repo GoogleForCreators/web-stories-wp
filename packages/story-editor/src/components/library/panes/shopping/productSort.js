@@ -34,11 +34,11 @@ function SortDropdown({ onChange, sortId }) {
   }
 
   const options = [
-    { id: 'recent', name: __('Recently Added', 'web-stories') },
-    { id: 'a-z', name: __('Alphabetical: A-Z', 'web-stories') },
-    { id: 'z-a', name: __('Alphabetical: Z-A', 'web-stories') },
-    { id: 'price-low', name: __('Price: low to high', 'web-stories') },
-    { id: 'price-high', name: __('Price: high to low', 'web-stories') },
+    { orderby: 'date', order: 'desc', name: __('Recently Added', 'web-stories') },
+    { orderby: 'title', order: 'asc', name: __('Alphabetical: A-Z', 'web-stories') },
+    { orderby: 'title', order: 'desc', name: __('Alphabetical: Z-A', 'web-stories') },
+    { orderby: 'price', order: 'asc', name: __('Price: low to high', 'web-stories') },
+    { orderby: 'price', order: 'desc', name: __('Price: high to low', 'web-stories') },
   ];
 
   return (
@@ -47,7 +47,7 @@ function SortDropdown({ onChange, sortId }) {
         dropDownLabel={__('Sort', 'web-stories')}
         onChange={onChange}
         selectedId={sortId}
-        options={options}
+        options={options.map((option) => ({ id: `${option.orderby}-${option.order}`, ...option }))}
         aria-label={__('Sort by', 'web-stories')}
       />
     </StyledContainer>
