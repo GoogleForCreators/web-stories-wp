@@ -43,7 +43,7 @@ class Woocommerce_Query implements Product_Query {
 	 * @param string $order Order sort attribute ascending or descending.
 	 * @return Product[]|WP_Error
 	 */
-	public function get_search( string $search_term, string $orderby, string $order ) {
+	public function get_search( string $search_term, string $orderby = 'date', string $order = 'desc' ) {
 
 		if ( ! function_exists( 'wc_get_products' ) ) {
 			return new WP_Error( 'rest_unknown', __( 'Woocommerce is not installed.', 'web-stories' ), [ 'status' => 400 ] );

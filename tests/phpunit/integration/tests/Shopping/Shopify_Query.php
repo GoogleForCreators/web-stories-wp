@@ -184,14 +184,14 @@ class Shopify_Query extends DependencyInjectedTestCase {
 	 */
 	public function test_fetch_remote_products_returns_from_transient(): void {
 		$search_term = '';
-		$orderby     = '';
-		$order       = '';
+		$orderby     = 'date';
+		$order       = 'desc';
 
 		update_option( Settings::SETTING_NAME_SHOPIFY_HOST, 'example.myshopify.com' );
 		update_option( Settings::SETTING_NAME_SHOPIFY_ACCESS_TOKEN, '1234' );
 		set_transient( 'web_stories_shopify_data_' . md5( $search_term . '-' . $orderby . '-' . $order ), wp_json_encode( [ 'data' => [ 'products' => [ 'edges' => [] ] ] ] ) );
 
-		$actual = $this->instance->get_search( '', '' );
+		$actual = $this->instance->get_search( '', $orderby, $order );
 
 		$this->assertNotWPError( $actual );
 		$this->assertSame( [], $actual );
@@ -280,7 +280,7 @@ class Shopify_Query extends DependencyInjectedTestCase {
 
 		add_filter( 'pre_http_request', [ $this, 'mock_response_no_results' ], 10, 2 );
 
-		$actual = $this->instance->get_search( 'some search term' );
+		$actual = $this->instance->get_search( 'some search term', '', '' );
 
 		remove_filter( 'pre_http_request', [ $this, 'mock_response_no_results' ] );
 
@@ -303,10 +303,10 @@ class Shopify_Query extends DependencyInjectedTestCase {
 		update_option( Settings::SETTING_NAME_SHOPIFY_ACCESS_TOKEN, '1234' );
 		add_filter( 'pre_http_request', [ $this, 'mock_response_no_results' ], 10, 2 );
 		
-		$actual = $this->instance->get_search( 'some search term', '' );
+		$actual = $this->instance->get_search( 'some search term' );
 		$this->assertNotWPError( $actual );
 		$this->assertStringContainsString( 'sortKey: CREATED_AT', $this->request_body );
-		$this->assertStringContainsString( 'reverse: false', $this->request_body );
+		$this->assertStringContainsString( 'reverse: true', $this->request_body );
 		
 		$actual = $this->instance->get_search( 'some search term', 'title', 'asc' );
 		$this->assertNotWPError( $actual );
