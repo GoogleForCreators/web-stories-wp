@@ -18,14 +18,13 @@
 namespace Google\Web_Stories\Tests\Unit\Shopping;
 
 use Brain\Monkey;
-use Google\Web_Stories\Shopping\WooCommerce_Query as Query;
 use Google\Web_Stories\Tests\Shared\Private_Access;
 use Google\Web_Stories\Tests\Unit\TestCase;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Shopping\WooCommerce_Query
  */
-class Woocommerce_Query extends TestCase {
+class WooCommerce_Query extends TestCase {
 	use Private_Access;
 
 	/**
@@ -58,7 +57,7 @@ class Woocommerce_Query extends TestCase {
 				'link'      => 'https://example.com',
 			]
 		);
-		$this->instance = new Query( $woocommerce );
+		$this->instance = new \Google\Web_Stories\Shopping\WooCommerce_Query( $woocommerce );
 	}
 
 	/**
