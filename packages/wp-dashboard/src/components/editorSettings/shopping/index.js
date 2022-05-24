@@ -54,7 +54,7 @@ export const TEXT = {
     'Activate <a>WooCommerce</a> to easily add shoppable products to Web Stories.',
     'web-stories'
   ),
-  WOOCOMMERCE_MANAGED: __(
+  WOOCOMMERCE_MANAGE: __(
     'Manage products in <a>WooCommerce</a> to make them available in Web Stories.',
     'web-stories'
   ),
@@ -96,7 +96,7 @@ function Shopping({
   } else if (active === false) {
     woocommerceMessage = TEXT.WOOCOMMERCE_ACTIVE;
   } else if (canManage === true) {
-    woocommerceMessage = TEXT.WOOCOMMERCE_MANAGED;
+    woocommerceMessage = TEXT.WOOCOMMERCE_MANAGE;
   }
 
   return (
