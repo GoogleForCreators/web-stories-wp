@@ -18,7 +18,7 @@
 namespace Google\Web_Stories\Tests\Integration;
 
 use Google\Web_Stories\Integrations\Site_Kit;
-use Google\Web_Stories\Integrations\Woocommerce;
+use Google\Web_Stories\Integrations\WooCommerce;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Tracking
@@ -32,7 +32,7 @@ class Tracking extends DependencyInjectedTestCase {
 	private $site_kit;
 
 	/**
-	 * @var Woocommerce
+	 * @var WooCommerce
 	 */
 	private $woocommerce;
 
@@ -62,7 +62,7 @@ class Tracking extends DependencyInjectedTestCase {
 		$assets            = $this->injector->make( \Google\Web_Stories\Assets::class );
 		$settings          = $this->injector->make( \Google\Web_Stories\Settings::class );
 		$preferences       = $this->injector->make( \Google\Web_Stories\User\Preferences::class );
-		$this->woocommerce = $this->createMock( \Google\Web_Stories\Integrations\Woocommerce::class );
+		$this->woocommerce = $this->createMock( \Google\Web_Stories\Integrations\WooCommerce::class );
 		$this->instance    = new \Google\Web_Stories\Tracking(
 			$this->experiments,
 			$this->site_kit,

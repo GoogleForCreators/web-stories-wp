@@ -49,7 +49,7 @@ class Woocommerce_Query extends TestCase {
 			]
 		);
 
-		$woocommerce = $this->createMock( \Google\Web_Stories\Integrations\Woocommerce::class );
+		$woocommerce = $this->createMock( \Google\Web_Stories\Integrations\WooCommerce::class );
 		$woocommerce->method( 'get_plugin_status' )->willReturn(
 			[
 				'installed' => true,

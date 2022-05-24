@@ -174,7 +174,7 @@ class Dashboard extends DependencyInjectedTestCase {
 		$context          = $this->injector->make( \Google\Web_Stories\Context::class );
 		$types            = $this->injector->make( \Google\Web_Stories\Media\Types::class );
 		$shopping_vendors = $this->injector->make( \Google\Web_Stories\Shopping\Shopping_Vendors::class );
-		$woocommerce      = $this->injector->make( \Google\Web_Stories\Integrations\Woocommerce::class );
+		$woocommerce      = $this->injector->make( \Google\Web_Stories\Integrations\WooCommerce::class );
 
 		$this->instance = new \Google\Web_Stories\Admin\Dashboard(
 			$experiments,

@@ -175,7 +175,7 @@ class Plugin extends ServiceBasedPlugin {
 			Story_Post_Type::class,
 			Injector::class,
 			Integrations\Site_Kit::class,
-			Integrations\Woocommerce::class,
+			Integrations\WooCommerce::class,
 			Media\Types::class,
 			Shopping_Vendors::class,
 			Locale::class,

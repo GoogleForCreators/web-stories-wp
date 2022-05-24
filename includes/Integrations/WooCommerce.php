@@ -1,6 +1,6 @@
 <?php
 /**
- * Class Woocommerce
+ * Class WooCommerce
  *
  * @link      https://github.com/googleforcreators/web-stories-wp
  *
@@ -27,22 +27,22 @@
 namespace Google\Web_Stories\Integrations;
 
 /**
- * Class Woocommerce.
+ * Class WooCommerce.
  */
-class Woocommerce {
+class WooCommerce {
 	/**
-	 * Determines whether Woocommerce is active.
+	 * Determines whether WooCommerce is active.
 	 *
 	 * @since 1.21.0
 	 *
-	 * @return bool Whether Woocommerce is active.
+	 * @return bool Whether WooCommerce is active.
 	 */
 	protected function is_plugin_active(): bool {
 		return class_exists( 'WooCommerce', false );
 	}
 
 	/**
-	 * Returns the Woocommerce plugin status.
+	 * Returns the WooCommerce plugin status.
 	 *
 	 * @since 1.21.0
 	 *

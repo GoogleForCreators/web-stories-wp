@@ -29,7 +29,7 @@
 namespace Google\Web_Stories;
 
 use Google\Web_Stories\Integrations\Site_Kit;
-use Google\Web_Stories\Integrations\Woocommerce;
+use Google\Web_Stories\Integrations\WooCommerce;
 use Google\Web_Stories\User\Preferences;
 
 /**
@@ -87,9 +87,9 @@ class Tracking extends Service_Base {
 	private $preferences;
 
 	/**
-	 * Woocommerce instance.
+	 * WooCommerce instance.
 	 *
-	 * @var Woocommerce Woocommerce instance.
+	 * @var WooCommerce WooCommerce instance.
 	 */
 	private $woocommerce;
 
@@ -103,7 +103,7 @@ class Tracking extends Service_Base {
 	 * @param Assets      $assets      Assets instance.
 	 * @param Settings    $settings    Settings instance.
 	 * @param Preferences $preferences Preferences instance.
-	 * @param Woocommerce $woocommerce Woocommerce instance.
+	 * @param WooCommerce $woocommerce WooCommerce instance.
 	 */
 	public function __construct(
 		Experiments $experiments,
@@ -111,7 +111,7 @@ class Tracking extends Service_Base {
 		Assets $assets,
 		Settings $settings,
 		Preferences $preferences,
-		Woocommerce $woocommerce
+		WooCommerce $woocommerce
 	) {
 		$this->assets      = $assets;
 		$this->experiments = $experiments;

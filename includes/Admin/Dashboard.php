@@ -34,7 +34,7 @@ use Google\Web_Stories\Decoder;
 use Google\Web_Stories\Experiments;
 use Google\Web_Stories\Font_Post_Type;
 use Google\Web_Stories\Integrations\Site_Kit;
-use Google\Web_Stories\Integrations\Woocommerce;
+use Google\Web_Stories\Integrations\WooCommerce;
 use Google\Web_Stories\Locale;
 use Google\Web_Stories\Media\Types;
 use Google\Web_Stories\Service_Base;
@@ -137,9 +137,9 @@ class Dashboard extends Service_Base {
 	private $shopping_vendors;
 
 	/**
-	 * Woocommerce instance.
+	 * WooCommerce instance.
 	 *
-	 * @var Woocommerce Woocommerce instance.
+	 * @var WooCommerce WooCommerce instance.
 	 */
 	private $woocommerce;
 
@@ -161,7 +161,7 @@ class Dashboard extends Service_Base {
 	 * @param Context          $context          Context instance.
 	 * @param Types            $types            Types instance.
 	 * @param Shopping_Vendors $shopping_vendors Shopping_Vendors instance.
-	 * @param Woocommerce      $woocommerce      Woocommerce instance.
+	 * @param WooCommerce      $woocommerce      WooCommerce instance.
 	 */
 	public function __construct(
 		Experiments $experiments,
@@ -175,7 +175,7 @@ class Dashboard extends Service_Base {
 		Context $context,
 		Types $types,
 		Shopping_Vendors $shopping_vendors,
-		Woocommerce $woocommerce
+		WooCommerce $woocommerce
 	) {
 		$this->experiments      = $experiments;
 		$this->decoder          = $decoder;

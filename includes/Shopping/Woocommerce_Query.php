@@ -26,7 +26,7 @@
 
 namespace Google\Web_Stories\Shopping;
 
-use Google\Web_Stories\Integrations\Woocommerce;
+use Google\Web_Stories\Integrations\WooCommerce;
 use Google\Web_Stories\Interfaces\Product_Query;
 use WP_Error;
 
@@ -35,18 +35,18 @@ use WP_Error;
  */
 class Woocommerce_Query implements Product_Query {
 	/**
-	 * Woocommerce instance.
+	 * WooCommerce instance.
 	 *
-	 * @var Woocommerce Woocommerce instance.
+	 * @var WooCommerce WooCommerce instance.
 	 */
 	private $woocommerce;
 
 	/**
 	 * Constructor.
 	 *
-	 * @param Woocommerce $woocommerce Woocommerce instance.
+	 * @param WooCommerce $woocommerce WooCommerce instance.
 	 */
-	public function __construct( Woocommerce $woocommerce ) {
+	public function __construct( WooCommerce $woocommerce ) {
 		$this->woocommerce = $woocommerce;
 	}
 
