@@ -31,7 +31,7 @@ namespace Google\Web_Stories\Integrations;
  */
 class WooCommerce {
 	protected const PLUGIN = 'woocommerce/woocommerce.php';
-	
+
 	/**
 	 * Determines whether WooCommerce is active.
 	 *
