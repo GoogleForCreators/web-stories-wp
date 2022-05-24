@@ -20,6 +20,7 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { __ } from '@googleforcreators/i18n';
+import { useUnits } from '@googleforcreators/units';
 
 /**
  * Internal dependencies
@@ -40,11 +41,30 @@ const Wrapper = styled.div`
   z-index: 3;
 `;
 
+const InnerWrap = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
+`;
+
+const Inner = styled.div`
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: linear-gradient(0, rgba(0, 0, 0, 0.15), transparent) !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
 const ArrowWrap = styled.div`
-  width: 32px;
-  height: 32px;
+  width: ${({ $factor }) => $factor(32)}px;
+  min-height: ${({ $factor }) => $factor(32)}px;
   border-radius: 50%;
   background: ${({ bgColor }) => bgColor};
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 // The CSS here is based on how it's displayed in the front-end, including static
@@ -52,18 +72,17 @@ const ArrowWrap = styled.div`
 const ArrowBar = styled(ArrowIcon)`
   display: block;
   cursor: pointer;
-  margin: 12px 0 0 6px;
   filter: drop-shadow(0px 2px 6px rgba(0, 0, 0, 0.3));
-  width: 20px;
-  height: 8px;
+  width: ${({ $factor }) => $factor(20)}px;
+  height: ${({ $factor }) => $factor(8)}px;
 `;
 
 const OutlinkChip = styled.div`
-  height: 36px;
+  height: ${({ $factor }) => $factor(36)}px;
   display: flex;
   position: relative;
-  padding: 10px 6px;
-  margin: 0 0 20px;
+  padding: ${({ $factor }) => $factor(10)}px ${({ $factor }) => $factor(6)}px;
+  margin: 0 0 ${({ $factor }) => $factor(20)}px;
   max-width: calc(100% - 64px);
   border-radius: 30px;
   place-items: center;
@@ -72,7 +91,7 @@ const OutlinkChip = styled.div`
 
 const TextWrapper = styled.span`
   font-family: Roboto, sans-serif;
-  font-size: 16px;
+  font-size: ${({ $factor }) => $factor(16)}px;
   line-height: 18px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -80,7 +99,7 @@ const TextWrapper = styled.span`
   position: relative;
   padding-inline-start: 6px;
   padding-inline-end: 8px;
-  height: 16px;
+  height: ${({ $factor }) => $factor(16)}px;
   letter-spacing: 0.3px;
   font-weight: 700;
   max-width: 210px;
@@ -93,16 +112,25 @@ const DARK_COLOR = '#000000';
 function PageAttachment({ ctaText = __('Shop Now', 'web-stories'), theme }) {
   const arrowColor = theme === OUTLINK_THEME.DARK ? LIGHT_COLOR : DARK_COLOR;
   const fgColor = theme === OUTLINK_THEME.DARK ? DARK_COLOR : LIGHT_COLOR;
+
+  const { dataToEditorY } = useUnits(({ actions: { dataToEditorY } }) => ({
+    dataToEditorY,
+  }));
+
   return (
     <Wrapper role="presentation">
-      <>
-        <ArrowWrap bgColor={fgColor}>
-          <ArrowBar fill={arrowColor} />
-        </ArrowWrap>
-        <OutlinkChip>
-          <TextWrapper fgColor={fgColor}>{ctaText}</TextWrapper>
-        </OutlinkChip>
-      </>
+      <InnerWrap>
+        <Inner>
+          <ArrowWrap bgColor={fgColor} $factor={dataToEditorY}>
+            <ArrowBar fill={arrowColor} $factor={dataToEditorY} />
+          </ArrowWrap>
+          <OutlinkChip $factor={dataToEditorY}>
+            <TextWrapper fgColor={fgColor} $factor={dataToEditorY}>
+              {ctaText}
+            </TextWrapper>
+          </OutlinkChip>
+        </Inner>
+      </InnerWrap>
     </Wrapper>
   );
 }
