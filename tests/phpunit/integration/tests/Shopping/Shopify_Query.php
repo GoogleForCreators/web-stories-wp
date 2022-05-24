@@ -280,7 +280,7 @@ class Shopify_Query extends DependencyInjectedTestCase {
 
 		add_filter( 'pre_http_request', [ $this, 'mock_response_no_results' ], 10, 2 );
 
-		$actual = $this->instance->get_search( 'some search term', '', '' );
+		$actual = $this->instance->get_search( 'some search term' );
 
 		remove_filter( 'pre_http_request', [ $this, 'mock_response_no_results' ] );
 
