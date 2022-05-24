@@ -66,7 +66,7 @@ describe('Editor Settings: Shopping <Shopping />', function () {
     expect(sectionHeader).toBeInTheDocument();
   });
 
-  it('should render Woocommerce inputs and helper texts', function () {
+  it('should render WooCommerce inputs and helper texts', function () {
     renderWithProviders(
       <ShoppingSettings
         shoppingProvider={SHOPPING_PROVIDER_TYPE.WOOCOMMERCE}
@@ -85,7 +85,7 @@ describe('Editor Settings: Shopping <Shopping />', function () {
     );
   });
 
-  it('should render Woocommerce inputs and activation message', function () {
+  it('should render WooCommerce inputs and activation message', function () {
     renderWithProviders(
       <ShoppingSettings
         shoppingProvider={SHOPPING_PROVIDER_TYPE.WOOCOMMERCE}
@@ -108,7 +108,7 @@ describe('Editor Settings: Shopping <Shopping />', function () {
     );
   });
 
-  it('should render Woocommerce  inputs and install message', function () {
+  it('should render WooCommerce  inputs and install message', function () {
     renderWithProviders(
       <ShoppingSettings
         shoppingProvider={SHOPPING_PROVIDER_TYPE.WOOCOMMERCE}
