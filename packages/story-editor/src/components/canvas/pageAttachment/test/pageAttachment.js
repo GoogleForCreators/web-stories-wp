@@ -19,6 +19,11 @@
  */
 import { screen } from '@testing-library/react';
 import { renderWithTheme } from '@googleforcreators/test-utils';
+import {
+  PAGE_HEIGHT,
+  PAGE_WIDTH,
+  UnitsProvider,
+} from '@googleforcreators/units';
 
 /**
  * Internal dependencies
@@ -54,7 +59,15 @@ function setup(props = {}) {
     <ConfigProvider config={getDefaultConfig()}>
       <StoryContext.Provider value={storyContext}>
         <CanvasContext.Provider value={canvasContext}>
-          <PageAttachment pageAttachment={pageAttachment} />
+          <UnitsProvider
+            pageSize={{
+              height: PAGE_HEIGHT,
+              width: PAGE_WIDTH,
+            }}
+            dataToEditorY={jest.fn()}
+          >
+            <PageAttachment pageAttachment={pageAttachment} />
+          </UnitsProvider>
         </CanvasContext.Provider>
       </StoryContext.Provider>
     </ConfigProvider>
