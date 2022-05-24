@@ -173,13 +173,13 @@ jobs:
             echo "Uploading new assets to new version."
             gsutil -m rsync -r -x '(^|/)\.' main gs://web-stories-wp-cdn-assets/$NEW_ASSETS_VERSION
 
-            rm -rf static/main/*
+            rm -rf main/*
 
             echo "Updating LATEST_ASSETS_VERSION Firebase env variable."
 
-            echo "LATEST_ASSETS_VERSION=$NEW_ASSETS_VERSION" > packages/functions/.env
+            echo "LATEST_ASSETS_VERSION=$NEW_ASSETS_VERSION" > ../../packages/functions/.env
 
-            git add packages/functions/.env
+            git add ../../packages/functions/.env
             git add .
             git status
             git commit -m "Preparing assets for plugin release $PLUGIN_VERSION"
