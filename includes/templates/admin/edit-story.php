@@ -39,7 +39,7 @@ $initial_edits     = [ 'story' => null ];
 $preload_paths = [
 	'/web-stories/v1/media/?' . build_query(
 		[
-			'context'               => 'edit',
+			'context'               => 'view',
 			'per_page'              => 50,
 			'page'                  => 1,
 			'_web_stories_envelope' => 'true',
@@ -69,7 +69,7 @@ $preload_paths = [
 	),
 	'/web-stories/v1/media/?' . build_query(
 		[
-			'context'  => 'edit',
+			'context'  => 'view',
 			'per_page' => 10,
 			'_fields'  => 'source_url',
 		]

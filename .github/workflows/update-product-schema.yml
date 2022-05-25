@@ -26,7 +26,8 @@ jobs:
       - name: Update Product Schema
         run: |
           curl -O -f https://raw.githubusercontent.com/ampproject/amphtml/main/examples/amp-story/shopping/product.schema.json
-          mv product.schema.json packages/e2e-tests/src/specs/editor/shopping/schema.json
+          cp product.schema.json packages/e2e-tests/src/specs/editor/shopping/schema.json
+          mv product.schema.json tests/phpunit/integration/data/schema.json
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v4

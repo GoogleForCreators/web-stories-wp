@@ -126,7 +126,7 @@ function EffectPanel({
         effectConfig={config}
         field={field}
         onChange={(value, submitArg) =>
-          handleInputChange({ [field]: value }, submitArg)
+          handleInputChange({ [field]: Math.max(value, 0) }, submitArg)
         }
         disabledOptions={disabledTypeOptionsMap[type]?.options || []}
         disabled={disabled}

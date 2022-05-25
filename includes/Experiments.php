@@ -330,6 +330,7 @@ class Experiments extends Service_Base implements HasRequirements {
 				'label'       => __( 'Caption hotlinking', 'web-stories' ),
 				'description' => __( 'Enable hotlinking of captions', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 			/**
 			 * Author: @spacedmonkey
@@ -341,6 +342,7 @@ class Experiments extends Service_Base implements HasRequirements {
 				'label'       => __( 'Audio hotlinking', 'web-stories' ),
 				'description' => __( 'Enable hotlinking background audio', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 			/**
 			 * Author: @barklund
@@ -352,6 +354,7 @@ class Experiments extends Service_Base implements HasRequirements {
 				'label'       => __( 'Layer locking', 'web-stories' ),
 				'description' => __( 'Enable layer locking', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 			/**
 			 * Author: @mariana-k

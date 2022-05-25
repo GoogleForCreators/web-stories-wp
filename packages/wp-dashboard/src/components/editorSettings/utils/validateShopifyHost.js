@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-export const hostPattern = /[\d\w-]+\.myshopify\.com/i;
+export const hostPattern = /[\w-]+\.myshopify\.com/i;
 
 export default function isValidShopifyHost(value = '') {
   return Boolean(value.toLowerCase().match(hostPattern));

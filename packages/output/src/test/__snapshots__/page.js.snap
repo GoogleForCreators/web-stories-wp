@@ -12,6 +12,7 @@ exports[`Page output background audio should add background audio as amp-video 2
 <amp-video
   autoplay="autoplay"
   captions-id="el-123-captions"
+  crossorigin="anonymous"
   id="page-123-background-audio"
   layout="nodisplay"
   loop="loop"
@@ -40,6 +41,28 @@ exports[`Page output background audio should use amp-video for non-looping backg
   <source
     src="https://example.com/audio.mp3"
     type="audio/mpeg"
+  />
+</amp-video>
+`;
+
+exports[`Page output background audio should use amp-video with crossorigin="anonymous" for background audio with tracks 1`] = `
+<amp-video
+  autoplay="autoplay"
+  captions-id="el-123-captions"
+  crossorigin="anonymous"
+  id="page-123-background-audio"
+  layout="nodisplay"
+  poster=""
+>
+  <source
+    src="https://example.com/audio.mp3"
+    type="audio/mpeg"
+  />
+  <track
+    default=""
+    kind="captions"
+    label=""
+    src="https://example.com/track.vtt"
   />
 </amp-video>
 `;

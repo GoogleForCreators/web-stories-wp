@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,31 +13,48 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * External dependencies
  */
 import { useFeature } from 'flagged';
 import styled from 'styled-components';
-import { useCallback, useState } from '@googleforcreators/react';
-import { __ } from '@googleforcreators/i18n';
 import {
-  Button,
-  BUTTON_VARIANTS,
-  BUTTON_TYPES,
-  BUTTON_SIZES,
+  useCallback,
+  useState,
+  useEffect,
+  useDebouncedCallback,
+} from '@googleforcreators/react';
+import { __, sprintf } from '@googleforcreators/i18n';
+import {
   Text,
   THEME_CONSTANTS,
+  SearchInput,
+  useLiveRegion,
+  CircularProgress,
 } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
  */
+import { Section } from '../../common';
+import { useAPI } from '../../../../app';
 import { Row } from '../../../form';
-import useLibrary from '../../useLibrary';
 import { Pane } from '../shared';
+import { useStory } from '../../../../app/story';
+import useLibrary from '../../useLibrary';
 import paneId from './paneId';
-import ProductDropdown from './productDropdown';
+import ProductList from './productList';
+
+const Loading = styled.div`
+  position: relative;
+  margin-left: 10px;
+  margin-top: 10px;
+`;
+
+const Spinner = styled.div`
+  position: absolute;
+  top: 0;
+`;
 
 const HelperText = styled(Text).attrs({
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
@@ -46,48 +63,175 @@ const HelperText = styled(Text).attrs({
 `;
 
 function ShoppingPane(props) {
-  const isEnabled = useFeature('shoppingIntegration');
-  const [product, setProduct] = useState(null);
+  const isShoppingIntegrationEnabled = useFeature('shoppingIntegration');
+  const speak = useLiveRegion('assertive');
+  const [loaded, setLoaded] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [isMenuFocused, setIsMenuFocused] = useState(false);
+  const [products, setProducts] = useState([]);
+  const {
+    actions: { getProducts },
+  } = useAPI();
+
+  const { currentPageProducts } = useStory(({ state: { currentPage } }) => ({
+    currentPageProducts: currentPage?.elements
+      ?.filter(({ type }) => type === 'product')
+      .map(({ id, product }) => ({
+        elementId: id,
+        productId: product?.productId,
+      })),
+  }));
+
+  const getProductsByQuery = useCallback(
+    async (value = '') => {
+      try {
+        setIsLoading(true);
+        setProducts(await getProducts(value));
+      } catch (err) {
+        setProducts([]);
+      } finally {
+        setIsLoading(false);
+        setLoaded(true);
+      }
+    },
+    [getProducts]
+  );
+
+  const onSearch = useCallback(
+    (evt) => {
+      const value = evt.target.value;
+      if (value !== searchTerm) {
+        setSearchTerm(value);
+      }
+    },
+    [searchTerm, setSearchTerm]
+  );
+
+  const debouncedProductsQuery = useDebouncedCallback(getProductsByQuery, 300);
+
+  useEffect(
+    () => debouncedProductsQuery(searchTerm),
+    [searchTerm, debouncedProductsQuery]
+  );
+
+  const handleInputKeyPress = useCallback((event) => {
+    const { key } = event;
+    if (key === 'ArrowDown' || key === 'Tab') {
+      setIsMenuFocused(true);
+    }
+  }, []);
+
+  const handleFocus = () => setIsMenuFocused(false);
+
+  const { deleteElementById } = useStory(({ actions }) => ({
+    deleteElementById: actions.deleteElementById,
+  }));
 
   const { insertElement } = useLibrary((state) => ({
     insertElement: state.actions.insertElement,
   }));
 
-  const insertProduct = useCallback(() => {
-    insertElement('product', {
-      width: 25,
-      height: 25,
-      product,
-    });
-    setProduct(null);
-  }, [insertElement, product]);
+  const insertProduct = useCallback(
+    (product) => {
+      insertElement('product', {
+        width: 25,
+        height: 25,
+        product,
+      });
 
-  if (!isEnabled) {
+      const PRODUCT_ADDED_TEXT = sprintf(
+        /* translators: %s: product title. */
+        __('%s added to page', 'web-stories'),
+        product.productTitle
+      );
+
+      speak(PRODUCT_ADDED_TEXT);
+    },
+    [insertElement, speak]
+  );
+
+  const deleteProduct = useCallback(
+    (product) => {
+      const element = currentPageProducts.find(
+        (item) => item.productId === product.productId
+      );
+      if (element) {
+        deleteElementById({ elementId: element.elementId });
+
+        const PRODUCT_REMOVED_TEXT = sprintf(
+          /* translators: %s: product title. */
+          __('%s removed', 'web-stories'),
+          product?.productTitle
+        );
+
+        speak(PRODUCT_REMOVED_TEXT);
+      }
+    },
+    [deleteElementById, currentPageProducts, speak]
+  );
+
+  const onClick = useCallback(
+    (product, onPage) =>
+      onPage ? deleteProduct(product) : insertProduct(product),
+    [deleteProduct, insertProduct]
+  );
+
+  const handleClearInput = useCallback(() => {
+    setSearchTerm('');
+  }, [setSearchTerm]);
+
+  if (!isShoppingIntegrationEnabled) {
     return null;
   }
 
   return (
     <Pane id={paneId} {...props}>
-      <Row>
-        <HelperText>
-          {__(
-            'Select a product to add to the page. It will be displayed as a "dot" on the page, as well as in the page attachment.',
-            'web-stories'
-          )}
-        </HelperText>
-      </Row>
-      <Row>
-        <ProductDropdown product={product} setProduct={setProduct} />
-      </Row>
-      <Button
-        variant={BUTTON_VARIANTS.RECTANGLE}
-        type={BUTTON_TYPES.SECONDARY}
-        size={BUTTON_SIZES.SMALL}
-        onClick={insertProduct}
-        disabled={!product}
+      <Section
+        data-testid="products-library-pane"
+        title={__('Products', 'web-stories')}
       >
-        {__('Insert product', 'web-stories')}
-      </Button>
+        <Row>
+          <HelperText>
+            {__(
+              'This will add products as a tappable dot on your story.',
+              'web-stories'
+            )}
+          </HelperText>
+        </Row>
+        <Row>
+          <SearchInput
+            aria-label={__('Product search', 'web-stories')}
+            inputValue={searchTerm}
+            onChange={onSearch}
+            placeholder={__('Search', 'web-stories')}
+            onKeyDown={handleInputKeyPress}
+            onFocus={handleFocus}
+            isOpen
+            ariaClearLabel={__('Clear product search', 'web-stories')}
+            clearId="clear-product-search"
+            handleClearInput={handleClearInput}
+          />
+        </Row>
+        {isLoading && (
+          <Loading>
+            <Spinner>
+              <CircularProgress size={24} />
+            </Spinner>
+          </Loading>
+        )}
+        {loaded && !isLoading && products?.length > 0 && (
+          <ProductList
+            isMenuFocused={isMenuFocused}
+            onClick={onClick}
+            products={products}
+            onPageProducts={currentPageProducts}
+          />
+        )}
+        {loaded && !isLoading && products?.length === 0 && (
+          <HelperText>{__('No products found.', 'web-stories')}</HelperText>
+        )}
+      </Section>
     </Pane>
   );
 }

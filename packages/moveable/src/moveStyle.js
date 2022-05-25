@@ -148,4 +148,8 @@ export const GlobalStyle = createGlobalStyle`
   .default-moveable.visually-hide-handles .moveable-control.moveable-sw {
     opacity: 0;
   }
+
+  .default-moveable.immoveable .moveable-line.moveable-direction {
+    cursor: default;
+  }
 `;

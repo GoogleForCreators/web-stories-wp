@@ -26,14 +26,14 @@ import {
   Icons,
 } from '@googleforcreators/design-system';
 import styled from 'styled-components';
-import { useState } from '@googleforcreators/react';
 
 /**
  * Internal dependencies
  */
 import { focusStyle } from '../../../../../panels/shared/styles';
 import Tooltip from '../../../../../tooltip';
-import HotlinkModal from './hotlinkModal';
+import HotlinkModal from '../../../../../hotlinkModal';
+import useInsert from './useInsert';
 
 const Button = styled(DefaultButton)`
   ${focusStyle};
@@ -41,8 +41,11 @@ const Button = styled(DefaultButton)`
 `;
 
 function Hotlink() {
-  const [isOpen, setIsOpen] = useState(false);
   const label = __('Insert by link', 'web-stories');
+  const {
+    action: { onSelect, onError, onClose, onClick },
+    state: { allowedFileTypes, isOpen },
+  } = useInsert();
   return (
     <>
       <Tooltip title={label}>
@@ -50,13 +53,20 @@ function Hotlink() {
           variant={BUTTON_VARIANTS.SQUARE}
           type={BUTTON_TYPES.SECONDARY}
           size={BUTTON_SIZES.SMALL}
-          onClick={() => setIsOpen(true)}
+          onClick={onClick}
           aria-label={label}
         >
           <Icons.Link />
         </Button>
       </Tooltip>
-      <HotlinkModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
+      <HotlinkModal
+        onClose={onClose}
+        isOpen={isOpen}
+        onError={onError}
+        onSelect={onSelect}
+        allowedFileTypes={allowedFileTypes}
+        title={__('Insert external image or video', 'web-stories')}
+      />
     </>
   );
 }

@@ -116,6 +116,7 @@ function MediaEdit({
     focalX,
     focalY,
     isBackground,
+    isLocked,
     type,
     borderRadius,
   } = element;
@@ -276,7 +277,7 @@ function MediaEdit({
         />
       )}
 
-      {!isBackground && cropBox && croppedMedia && (
+      {!isBackground && !isLocked && cropBox && croppedMedia && (
         <EditCropMoveable
           setProperties={updateLocalProperties}
           cropBox={cropBox}
