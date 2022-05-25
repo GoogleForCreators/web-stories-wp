@@ -14,15 +14,7 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import { identity, useContextSelector } from '@googleforcreators/react';
-/**
- * Internal dependencies
- */
-import { filterContext } from './provider';
-
-export default function useFilters(selector = identity) {
-  return useContextSelector(filterContext, selector);
-}
+export const SET_FILTER_OPTIONS = 'SET_FILTER_OPTIONS';
+export const SET_QUEIRED_FILTER_OPTIONS = 'SET_QUEIRED_FILTER_OPTIONS';
+export const UPDATE_FILTER = 'UPDATE_FILTER';
+export const TAXONOMY = 'taxonomy';

@@ -36,7 +36,7 @@ import { FlagsProvider } from 'flagged';
  */
 import { ConfigProvider } from './app/config';
 import ApiProvider from './app/api/apiProvider';
-import FiltersProvider from './app/views/myStories/filters/filtersProvider';
+import FiltersProvider from './app/views/myStories/filters/provider';
 import { NavProvider } from './components';
 import { RouterProvider } from './app/router';
 import { GlobalStyle } from './theme';
