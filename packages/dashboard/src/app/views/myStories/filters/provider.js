@@ -22,7 +22,9 @@ import {
   useReducer,
   useEffect,
   useCallback,
+  useMemo,
 } from '@googleforcreators/react';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
@@ -44,30 +46,38 @@ export default function FiltersProvider({ children }) {
 
   const updateFilter = useCallback((filter, value) => {
     dispatch({ type: types.UPDATE_FILTER, payload: { filter, value } });
-  });
+  }, []);
 
   const setFilterPrimaryOptions = useCallback((filter, value) => {
     dispatch({ type: types.SET_FILTER_OPTIONS, payload: { filter, value } });
-  });
+  }, []);
 
   const setFilterQueiredOptions = useCallback((filter, value) => {
     dispatch({
       type: types.SET_QUEIRED_FILTER_OPTIONS,
       payload: { filter, value },
     });
-  });
+  }, []);
+
+  const contextValue = useMemo(() => {
+    return { state, actions: { updateFilter } };
+  }, [state, updateFilter]);
 
   useEffect(() => {
     setFilterPrimaryOptions(types.TAXONOMY, taxonomy.primaryOptions);
-  }, [taxonomy.primaryOptions]);
+  }, [setFilterPrimaryOptions, taxonomy.primaryOptions]);
 
   useEffect(() => {
     setFilterQueiredOptions(types.TAXONOMY, taxonomy.queriedOptions);
-  }, [taxonomy.queriedOptions]);
+  }, [setFilterQueiredOptions, taxonomy.queriedOptions]);
 
   return (
-    <filterContext.Provider value={[state, { updateFilter }]}>
+    <filterContext.Provider value={contextValue}>
       {children}
     </filterContext.Provider>
   );
 }
+
+FiltersProvider.propTypes = {
+  children: PropTypes.node,
+};

@@ -33,8 +33,8 @@ import { clamp } from '@googleforcreators/units';
  */
 import { SORT_DIRECTION, STORY_SORT_OPTIONS, VIEW_STYLE } from '../constants';
 import { PageSizePropType } from '../types';
-import usePagePreviewSize from './usePagePreviewSize';
 import useFilters from '../app/views/myStories/filters/useFilters';
+import usePagePreviewSize from './usePagePreviewSize';
 
 export default function useStoryView({
   filters,
@@ -54,7 +54,7 @@ export default function useStoryView({
   const showStoriesWhileLoading = useRef(false);
   const [initialPageReady, setInitialPageReady] = useState(false);
 
-  const [{ taxonomy }] = useFilters((state) => state);
+  const { taxonomy } = useFilters(({ state: { taxonomy } }) => ({ taxonomy }));
 
   const { pageSize } = usePagePreviewSize({
     thumbnailMode: viewStyle === VIEW_STYLE.LIST,

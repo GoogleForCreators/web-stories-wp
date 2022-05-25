@@ -85,7 +85,12 @@ export default function BodyViewOptions({
   author = defaultAuthor,
   queryAuthorsBySearch = noop,
 }) {
-  const [{ taxonomy }, { updateFilter }] = useFilters((state) => state);
+  const { taxonomy, updateFilter } = useFilters(
+    ({ state: { taxonomy }, actions: { updateFilter } }) => ({
+      taxonomy,
+      updateFilter,
+    })
+  );
   return (
     <StandardViewContentGutter>
       <BodyViewOptionsHeader id="body-view-options-header" />

@@ -30,9 +30,9 @@ import {
 import { ScrollToTop, Layout } from '../../../components';
 import { STORY_STATUSES } from '../../../constants';
 import { useStoryView, noop } from '../../../utils';
+import { useConfig } from '../../config';
 import useApi from '../../api/useApi';
 import useFilters from './filters/useFilters';
-import { useConfig } from '../../config';
 import Content from './content';
 import Header from './header';
 
@@ -79,10 +79,9 @@ function MyStories() {
       getAuthors,
     })
   );
-  const [{ taxonomy }] = useFilters((state) => state);
+  const { taxonomy } = useFilters(({ state: { taxonomy } }) => ({ taxonomy }));
   const { apiCallbacks, canViewDefaultTemplates } = useConfig();
   const isMounted = useRef(false);
-  const taxonomies = useRef([]);
 
   useEffect(() => {
     isMounted.current = true;
