@@ -296,26 +296,26 @@ class Shopify_Query extends DependencyInjectedTestCase {
 	*/
 	public function data_test_get_search_sort_by_query(): array {
 		return [
-			'Default search' => [
+			'Default search'  => [
 				[ 'some search term', 'date', '' ],
-				['sortKey: CREATED_AT', 'reverse: true'],
+				[ 'sortKey: CREATED_AT', 'reverse: true' ],
 			],
-			'Sort title asc' => [
+			'Sort title asc'  => [
 				[ '', 'title', 'asc' ],
-				['sortKey: TITLE', 'reverse: false'],
+				[ 'sortKey: TITLE', 'reverse: false' ],
 			],
 			'Sort title desc' => [
 				[ '', 'title', 'desc' ],
-				['sortKey: TITLE', 'reverse: true'],
+				[ 'sortKey: TITLE', 'reverse: true' ],
 			],
-			'Sort price asc' => [
+			'Sort price asc'  => [
 				[ '', 'price', 'asc' ],
-				['sortKey: PRICE', 'reverse: false'],
+				[ 'sortKey: PRICE', 'reverse: false' ],
 			],
 			'Sort price desc' => [
 				[ '', 'price', 'desc' ],
-				['sortKey: PRICE', 'reverse: true'],
-			]
+				[ 'sortKey: PRICE', 'reverse: true' ],
+			],
 		];
 	}
 
