@@ -204,7 +204,7 @@ QUERY;
      *                        Accepts 'asc' (ascending) or 'desc' (descending).
 	 * @return array|WP_Error Response data or error object on failure.
 	 */
-	protected function fetch_remote_products( string $search_term, string $orderby = '', string $order = '' ) {
+	protected function fetch_remote_products( string $search_term, string $orderby, string $order ) {
 		
 		/**
 		 * Filters the Shopify products data TTL value.
