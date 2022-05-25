@@ -199,8 +199,9 @@ QUERY;
 	 * @since 1.21.0
 	 *
 	 * @param string $search_term Search term to filter products by.
-	 * @param string $orderby sort field for query.
-	 * @param string $order ASC or DESC.
+	 * @param string $orderby Sort retrieved products by parameter.
+	 * @param string $order   Whether to order products in ascending or descending order.
+     *                        Accepts 'asc' (ascending) or 'desc' (descending).
 	 * @return array|WP_Error Response data or error object on failure.
 	 */
 	protected function fetch_remote_products( string $search_term, string $orderby = '', string $order = '' ) {
