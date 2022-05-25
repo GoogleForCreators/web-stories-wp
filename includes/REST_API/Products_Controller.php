@@ -177,7 +177,7 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 		 *
 		 * @var string $order
 		 */
-		$order = ! empty( $request['order'] ) ? $request['order'] : '';
+		$order = ! empty( $request['order'] ) ? $request['order'] : 'desc';
 		
 		
 		$query_result = $query->get_search( $search_term, $orderby, $order );
