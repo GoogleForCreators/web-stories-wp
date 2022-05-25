@@ -170,7 +170,7 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 		 *
 		 * @var string $orderby
 		 */
-		$orderby = ! empty( $request['orderby'] ) ? $request['orderby'] : '';
+		$orderby = ! empty( $request['orderby'] ) ? $request['orderby'] : 'date';
 
 		/**
 		 * Request context.
