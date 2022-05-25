@@ -390,25 +390,24 @@ function Layer({ element }) {
         });
       }
     },
-    [setRenamableLayer, updateElementById, element.id, newLayerName]
+    [layerName, setRenamableLayer, updateElementById, element.id, newLayerName]
   );
 
-  const handleBlur = useCallback(
-    () => {
-      setRenamableLayer(null);
-      updateElementById({
-        elementId: element.id,
-        properties: { layerName: newLayerName },
-      });
-  },
-    [setRenamableLayer, updateElementById, element.id, newLayerName]
-  );
+  const handleBlur = useCallback(() => {
+    setRenamableLayer(null);
+    updateElementById({
+      elementId: element.id,
+      properties: { layerName: newLayerName },
+    });
+  }, [setRenamableLayer, updateElementById, element.id, newLayerName]);
 
   const isLayerNamingEnabled = useFeature('layerNaming');
 
   return (
     <LayerContainer>
-      {renamableLayer?.elementId === element.id && isLayerNamingEnabled && !element.isBackground ? (
+      {renamableLayer?.elementId === element.id &&
+      isLayerNamingEnabled &&
+      !element.isBackground ? (
         <LayerInputWrapper>
           <LayerIconWrapper>
             <LayerIcon
