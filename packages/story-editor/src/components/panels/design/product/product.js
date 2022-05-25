@@ -59,9 +59,7 @@ function ProductPanel({ selectedElements, pushUpdate }) {
         )}
         {!isMultiple && (
           <ProductDropdown
-            product={
-              isMultiple ? MULTIPLE_DISPLAY_VALUE : selectedElements[0].product
-            }
+            product={selectedElements[0].product}
             setProduct={setProduct}
           />
         )}

@@ -26,10 +26,8 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { useStory, useAPI } from '../../../../app';
-import { MULTIPLE_VALUE } from '../../../../constants';
 
 function ProductDropdown({ product, setProduct, ...rest }) {
-  const isIndeterminate = product === MULTIPLE_VALUE;
   const isShoppingIntegrationEnabled = useFeature('shoppingIntegration');
 
   const [isLoading, setIsLoading] = useState(false);
@@ -79,10 +77,10 @@ function ProductDropdown({ product, setProduct, ...rest }) {
     lightMode: true,
     onChange,
     getOptionsByQuery: getProductsByQuery,
-    selectedId: isIndeterminate ? null : product?.productId,
+    selectedId: product?.productId,
     dropDownLabel: __('Product', 'web-stories'),
     placeholder: isLoading ? __('Loading…', 'web-stories') : '',
-    disabled: isLoading || isIndeterminate ? true : isSaving,
+    disabled: isLoading ? true : isSaving,
     primaryOptions: isLoading ? [] : initialOptions,
     zIndex: 10,
   };
