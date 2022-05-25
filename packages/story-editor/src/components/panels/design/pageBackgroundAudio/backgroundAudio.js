@@ -29,7 +29,7 @@ import { useFeature } from 'flagged';
 import { useConfig, useStory } from '../../../../app';
 import { Row } from '../../../form';
 import { SimplePanel } from '../../panel';
-import BackgroundAudioPanelContent from '../../shared/backgroundAudioPanelContent';
+import BackgroundAudioPanelContent from '../../shared/media/backgroundAudioPanelContent';
 
 const HelperText = styled(Text).attrs({
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,

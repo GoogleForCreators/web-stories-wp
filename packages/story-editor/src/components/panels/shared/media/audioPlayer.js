@@ -40,9 +40,19 @@ import { ResourcePropTypes } from '@googleforcreators/media';
 /**
  * Internal dependencies
  */
-import { Z_INDEX_STORY_DETAILS } from '../../constants/zIndex';
-import Tooltip from '../tooltip';
-import useCORSProxy from '../../utils/useCORSProxy';
+import { Z_INDEX_STORY_DETAILS } from '../../../../constants/zIndex';
+import Tooltip from '../../../tooltip';
+import useCORSProxy from '../../../../utils/useCORSProxy';
+
+const Play = styled(Icons.PlayFilled)`
+  width: 30px !important;
+  height: 30px !important;
+`;
+
+const Stop = styled(Icons.StopFilled)`
+  width: 30px !important;
+  height: 30px !important;
+`;
 
 const StyledButton = styled(Button)`
   ${({ theme }) =>
@@ -54,13 +64,6 @@ const StyledButton = styled(Button)`
 
 const Wrapper = styled.div(
   ({ theme }) => css`
-    position: relative;
-    min-width: 40px;
-    width: 100%;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
     color: ${theme.colors.fg.primary};
 
     ${themeHelpers.expandPresetStyles({
@@ -78,7 +81,7 @@ const Audio = styled.audio`
   display: none;
 `;
 
-function AudioPlayer({ title, src, mimeType, tracks = [], audioId, loop }) {
+function AudioPlayer({ src, mimeType, tracks = [], audioId, loop }) {
   const [isPlaying, setIsPlaying] = useState(false);
 
   const playerRef = useRef();
@@ -86,6 +89,9 @@ function AudioPlayer({ title, src, mimeType, tracks = [], audioId, loop }) {
   const { getProxiedUrl } = useCORSProxy();
 
   const handlePlayPause = useCallback(() => {
+    /**
+     * @type {HTMLAudioElement}
+     */
     const player = playerRef.current;
 
     if (!player) {
@@ -100,6 +106,9 @@ function AudioPlayer({ title, src, mimeType, tracks = [], audioId, loop }) {
   }, [isPlaying]);
 
   useEffect(() => {
+    /**
+     * @type {HTMLAudioElement}
+     */
     const player = playerRef.current;
 
     if (!player) {
@@ -156,7 +165,6 @@ function AudioPlayer({ title, src, mimeType, tracks = [], audioId, loop }) {
             )
           )}
       </Audio>
-      <div>{title}</div>
       <Tooltip
         hasTail
         title={buttonTitle}
@@ -169,7 +177,7 @@ function AudioPlayer({ title, src, mimeType, tracks = [], audioId, loop }) {
           aria-label={buttonTitle}
           onClick={handlePlayPause}
         >
-          {isPlaying ? <Icons.StopFilled /> : <Icons.PlayFilled />}
+          {isPlaying ? <Stop /> : <Play />}
         </StyledButton>
       </Tooltip>
     </Wrapper>
@@ -177,7 +185,6 @@ function AudioPlayer({ title, src, mimeType, tracks = [], audioId, loop }) {
 }
 
 AudioPlayer.propTypes = {
-  title: PropTypes.string.isRequired,
   src: PropTypes.string.isRequired,
   mimeType: PropTypes.string.isRequired,
   audioId: PropTypes.string,

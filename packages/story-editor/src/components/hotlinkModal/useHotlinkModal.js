@@ -13,25 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
 import { useCallback, useState } from '@googleforcreators/react';
 import { withProtocol } from '@googleforcreators/url';
 import { __ } from '@googleforcreators/i18n';
+
 /**
  * Internal dependencies
  */
-
 import useCORSProxy from '../../utils/useCORSProxy';
 import useAPI from '../../app/api/useAPI';
 import {
   getHotlinkDescription,
   isValidUrlForHotlinking,
   getErrorMessage,
+  CORSMessage,
 } from './utils';
 
-function useHotlinkModal({ onSelect, onClose, onError, allowedFileTypes }) {
+function useHotlinkModal({
+  onSelect,
+  onClose,
+  onError,
+  allowedFileTypes,
+  canUseProxy,
+}) {
   const [isInserting, setIsInserting] = useState(false);
   const [link, setLink] = useState('');
   const [errorMsg, setErrorMsg] = useState(null);
@@ -89,10 +97,15 @@ function useHotlinkModal({ onSelect, onClose, onError, allowedFileTypes }) {
       const hotlinkInfo = await getHotlinkInfo(link);
       if (!allowedFileTypes.includes(hotlinkInfo?.ext)) {
         setErrorMsg(__('Invalid link.', 'web-stories'));
-        setIsInserting(false);
         return;
       }
+
       const needsProxy = await checkResourceAccess(link);
+
+      if (needsProxy && !canUseProxy) {
+        setErrorMsg(<CORSMessage />);
+        return;
+      }
 
       await onSelect({ link, hotlinkInfo, needsProxy });
       setLink('');
@@ -110,6 +123,7 @@ function useHotlinkModal({ onSelect, onClose, onError, allowedFileTypes }) {
     getHotlinkInfo,
     allowedFileTypes,
     checkResourceAccess,
+    canUseProxy,
     onSelect,
     onError,
     description,
