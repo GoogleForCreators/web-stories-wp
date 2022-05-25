@@ -115,7 +115,7 @@ const FillElement = styled.p.attrs(
       ? {
           style: {
             zIndex: 1,
-            whiteSpace: 'pre-wrap',
+            whiteSpace: 'pre-line',
             wordBreak: 'break-word',
             letterSpacing: 'normal',
             color: theme.colors.standard.black,
