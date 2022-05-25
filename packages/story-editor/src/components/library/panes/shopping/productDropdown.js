@@ -16,7 +16,6 @@
 /**
  * External dependencies
  */
-import { useFeature } from 'flagged';
 import { __ } from '@googleforcreators/i18n';
 import { useCallback, useEffect, useState } from '@googleforcreators/react';
 import { Datalist } from '@googleforcreators/design-system';
@@ -32,8 +31,6 @@ const StyledDropDown = styled(Datalist.DropDown)`
   width: 240px;
 `;
 function ProductDropdown({ product, setProduct }) {
-  const isShoppingIntegrationEnabled = useFeature('shoppingIntegration');
-
   const [isLoading, setIsLoading] = useState(false);
   const [initialOptions, setInitialOptions] = useState([]);
 
@@ -88,10 +85,6 @@ function ProductDropdown({ product, setProduct }) {
     primaryOptions: isLoading ? [] : initialOptions,
     zIndex: 10,
   };
-
-  if (!isShoppingIntegrationEnabled) {
-    return null;
-  }
 
   return (
     <StyledDropDown

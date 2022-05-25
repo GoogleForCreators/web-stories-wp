@@ -35,7 +35,7 @@ import { uniqueEntriesByKey } from '@googleforcreators/design-system';
  */
 import { useInsertElement, useInsertTextSet } from '../canvas';
 import { useHighlights } from '../../app/highlights';
-import { useConfig, useAPI } from '../../app';
+import { useConfig, useAPI, useStory } from '../../app';
 import Context from './context';
 import {
   ELEMS,
@@ -54,11 +54,22 @@ const LIBRARY_TAB_IDS = new Set(
 );
 
 function LibraryProvider({ children }) {
-  const { showMedia3p, canViewDefaultTemplates } = useConfig();
+  const { showMedia3p, shoppingProvider, canViewDefaultTemplates } =
+    useConfig();
   const {
     actions: { getMedia, getCustomPageTemplates },
   } = useAPI();
-  const isShoppingEnabled = useFeature('shoppingIntegration');
+
+  const { currentPageProducts } = useStory(({ state: { currentPage } }) => ({
+    currentPageProducts: currentPage?.elements?.filter(
+      ({ type }) => type === 'product'
+    ),
+  }));
+
+  const isShoppingIntegrationEnabled = useFeature('shoppingIntegration');
+  const isShoppingEnabled =
+    ('none' !== shoppingProvider && isShoppingIntegrationEnabled) ||
+    currentPageProducts?.length > 0;
   const showElementsTab = useFeature('showElementsTab');
 
   const supportsCustomTemplates = Boolean(getCustomPageTemplates);
