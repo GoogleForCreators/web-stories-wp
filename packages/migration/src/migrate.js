@@ -60,6 +60,7 @@ import backgroundAudioFormatting from './migrations/v0039_backgroundAudioFormatt
 import andadaFontToAndadaPro from './migrations/v0040_andadaFontToAndadaPro.js';
 import removeFontProperties from './migrations/v0041_removeFontProperties.js';
 import removeTrackName from './migrations/v0042_removeTrackName.js';
+import removeTagNames from './migrations/v0043_removeTagNames';
 
 const MIGRATIONS = {
   1: [storyDataArrayToObject],
@@ -104,6 +105,7 @@ const MIGRATIONS = {
   40: [andadaFontToAndadaPro],
   41: [removeFontProperties],
   42: [removeTrackName],
+  43: [removeTagNames],
 };
 
 export const DATA_VERSION = Math.max.apply(
