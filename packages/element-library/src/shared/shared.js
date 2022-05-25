@@ -85,7 +85,7 @@ export const elementWithBackgroundColor = css`
 `;
 
 export const elementWithFont = css`
-  white-space: pre-wrap;
+  white-space: pre-line;
   font-family: ${({ font }) => generateFontFamily(font)};
   overflow-wrap: break-word;
   word-break: break-word;
