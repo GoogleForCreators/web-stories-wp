@@ -157,11 +157,11 @@ class Shopify_Query implements Product_Query {
 	 */
 	protected function get_products_query( string $search_term, string $orderby, string $order ): string {
 		$search_string = empty( $search_term ) ? '*' : '*' . $search_term . '*';
-		$orderby       = 'date' === $orderby ? 'CREATED_AT' : strtoupper( $orderby );
-		$order         = 'asc' === $order ? 'false' : 'true';
+		$sortkey       = 'date' === $orderby ? 'CREATED_AT' : strtoupper( $orderby );
+		$reverse         = 'asc' === $order ? 'false' : 'true';
 		return <<<QUERY
 {
-  products(first: 100, sortKey: $orderby, reverse: $order, query: "title:$search_string") {
+  products(first: 100, sortKey: $sortkey, reverse: $reverse, query: "title:$search_string") {
     edges {
       node {
         id

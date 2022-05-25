@@ -16,7 +16,6 @@
 /**
  * External dependencies
  */
-import { useFeature } from 'flagged';
 import PropTypes from 'prop-types';
 import { __ } from '@googleforcreators/i18n';
 import { Datalist } from '@googleforcreators/design-system';
@@ -27,11 +26,6 @@ const StyledContainer = styled.div`
 `;
 
 function SortDropdown({ onChange, sortId }) {
-  const isShoppingIntegrationEnabled = useFeature('shoppingIntegration');
-
-  if (!isShoppingIntegrationEnabled) {
-    return null;
-  }
 
   const options = [
     {

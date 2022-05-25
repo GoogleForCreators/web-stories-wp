@@ -72,8 +72,8 @@ function ShoppingPane(props) {
   const [orderby, setOrderby] = useState('date');
   const [order, setOrder] = useState('desc');
   const onSortBy = (option) => {
-    setOrderby(option?.orderby);
-    setOrder(option?.order);
+    setOrderby(option.orderby);
+    setOrder(option.order);
   };
   const [isMenuFocused, setIsMenuFocused] = useState(false);
   const [products, setProducts] = useState([]);
