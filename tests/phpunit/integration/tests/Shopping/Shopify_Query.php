@@ -290,6 +290,34 @@ class Shopify_Query extends DependencyInjectedTestCase {
 		$this->assertSame( 1, $this->request_count );
 		$this->assertStringContainsString( 'query: "title:*some search term*"', $this->request_body );
 	}
+	
+	/**
+	* @dataProvider data_test_get_search_sort_by_query
+	*/
+	public function data_test_get_search_sort_by_query(): array {
+		return [
+			'Default search' => [
+				[ 'some search term', 'date', '' ],
+				['sortKey: CREATED_AT', 'reverse: true'],
+			],
+			'Sort title asc' => [
+				[ '', 'title', 'asc' ],
+				['sortKey: TITLE', 'reverse: false'],
+			],
+			'Sort title desc' => [
+				[ '', 'title', 'desc' ],
+				['sortKey: TITLE', 'reverse: true'],
+			],
+			'Sort price asc' => [
+				[ '', 'price', 'asc' ],
+				['sortKey: PRICE', 'reverse: false'],
+			],
+			'Sort price desc' => [
+				[ '', 'price', 'desc' ],
+				['sortKey: PRICE', 'reverse: true'],
+			]
+		];
+	}
 
 	/**
 	 * @covers ::fetch_remote_products
@@ -297,39 +325,16 @@ class Shopify_Query extends DependencyInjectedTestCase {
 	 * @covers ::get_products_query
 	 * @covers ::execute_query
 	 * @covers ::parse_sort_by
+	 * @dataProvider data_test_get_search_sort_by_query
 	 */
-	public function test_get_search_sort_by_query(): void {
+	public function test_get_search_sort_by_query( $args, $expected ): void {
 		update_option( Settings::SETTING_NAME_SHOPIFY_HOST, 'example.myshopify.com' );
 		update_option( Settings::SETTING_NAME_SHOPIFY_ACCESS_TOKEN, '1234' );
 		add_filter( 'pre_http_request', [ $this, 'mock_response_no_results' ], 10, 2 );
-		
-		$actual = $this->instance->get_search( 'some search term' );
-		$this->assertNotWPError( $actual );
-		$this->assertStringContainsString( 'sortKey: CREATED_AT', $this->request_body );
-		$this->assertStringContainsString( 'reverse: true', $this->request_body );
-		
-		$actual = $this->instance->get_search( 'some search term', 'title', 'asc' );
-		$this->assertNotWPError( $actual );
-		$this->assertStringContainsString( 'sortKey: TITLE', $this->request_body );
-		$this->assertStringContainsString( 'reverse: false', $this->request_body );
-
-		$actual = $this->instance->get_search( 'some search term', 'title', 'desc' );
-		$this->assertNotWPError( $actual );
-		$this->assertStringContainsString( 'sortKey: TITLE', $this->request_body );
-		$this->assertStringContainsString( 'reverse: true', $this->request_body );
-
-		$actual = $this->instance->get_search( 'some search term', 'price', 'asc' );
-		$this->assertNotWPError( $actual );
-		$this->assertStringContainsString( 'sortKey: PRICE', $this->request_body );
-		$this->assertStringContainsString( 'reverse: false', $this->request_body );
-		
-		$actual = $this->instance->get_search( 'some search term', 'price', 'desc' );
-		$this->assertNotWPError( $actual );
-		$this->assertStringContainsString( 'sortKey: PRICE', $this->request_body );
-		$this->assertStringContainsString( 'reverse: true', $this->request_body );
-
+		$actual = $this->instance->get_search( $args[0], $args[1], $args[2] );
 		remove_filter( 'pre_http_request', [ $this, 'mock_response_no_results' ] );
+		$this->assertNotWPError( $actual );
+		$this->assertStringContainsString( $expected[0], $this->request_body );
+		$this->assertStringContainsString( $expected[1], $this->request_body );
 	}
-
-
 }
