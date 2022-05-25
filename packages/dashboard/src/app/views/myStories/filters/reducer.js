@@ -25,20 +25,6 @@ import * as types from './types';
 
 const reducer = (state, { type, payload = {} }) => {
   switch (type) {
-    case types.SET_FILTER_OPTIONS: {
-      const { filter, value } = payload;
-      return {
-        ...state,
-        [filter]: { ...state[filter], primaryOptions: value },
-      };
-    }
-    case types.SET_QUEIRED_FILTER_OPTIONS: {
-      const { filter, value } = payload;
-      return {
-        ...state,
-        [filter]: { ...state[filter], queriedOptions: value },
-      };
-    }
     case types.UPDATE_FILTER: {
       const { filter, value } = payload;
       if (value.filterId && state[filter]?.filterId === value.filterId) {

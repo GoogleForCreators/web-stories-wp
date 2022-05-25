@@ -48,28 +48,16 @@ export default function FiltersProvider({ children }) {
     dispatch({ type: types.UPDATE_FILTER, payload: { filter, value } });
   }, []);
 
-  const setFilterPrimaryOptions = useCallback((filter, value) => {
-    dispatch({ type: types.SET_FILTER_OPTIONS, payload: { filter, value } });
-  }, []);
-
-  const setFilterQueiredOptions = useCallback((filter, value) => {
-    dispatch({
-      type: types.SET_QUEIRED_FILTER_OPTIONS,
-      payload: { filter, value },
-    });
-  }, []);
-
   const contextValue = useMemo(() => {
     return { state, actions: { updateFilter } };
   }, [state, updateFilter]);
 
   useEffect(() => {
-    setFilterPrimaryOptions(types.TAXONOMY, taxonomy.primaryOptions);
-  }, [setFilterPrimaryOptions, taxonomy.primaryOptions]);
-
-  useEffect(() => {
-    setFilterQueiredOptions(types.TAXONOMY, taxonomy.queriedOptions);
-  }, [setFilterQueiredOptions, taxonomy.queriedOptions]);
+    updateFilter(types.TAXONOMY, {
+      primaryOptions: taxonomy.primaryOptions,
+      queriedOptions: taxonomy.queriedOptions,
+    });
+  }, [updateFilter, taxonomy.primaryOptions, taxonomy.queriedOptions]);
 
   return (
     <filterContext.Provider value={contextValue}>

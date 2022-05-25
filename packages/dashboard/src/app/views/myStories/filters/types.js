@@ -14,7 +14,5 @@
  * limitations under the License.
  */
 
-export const SET_FILTER_OPTIONS = 'SET_FILTER_OPTIONS';
-export const SET_QUEIRED_FILTER_OPTIONS = 'SET_QUEIRED_FILTER_OPTIONS';
 export const UPDATE_FILTER = 'UPDATE_FILTER';
 export const TAXONOMY = 'taxonomy';
