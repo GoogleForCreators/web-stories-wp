@@ -26,7 +26,6 @@ const StyledContainer = styled.div`
 `;
 
 function SortDropdown({ onChange, sortId }) {
-
   const options = [
     {
       orderby: 'date',
