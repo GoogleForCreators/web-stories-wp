@@ -237,7 +237,7 @@ QUERY;
 				$error_code = $error['extensions']['code'];
 				$wp_error   = new WP_Error( 'rest_unknown', __( 'Error fetching products', 'web-stories' ), [ 'status' => 404 ] );
 				
-				// https://shopify.dev/api/storefront#status_and_error_codes
+				// https://shopify.dev/api/storefront#status_and_error_codes.
 				switch ( $error_code ) {
 					case 'THROTTLED':
 						$wp_error = new WP_Error( 'rest_exceeded_rate_limit. ', __( 'API rate limit exceeded.', 'web-stories' ), [ 'status' => 429 ] );
@@ -253,7 +253,7 @@ QUERY;
 						break;
 				}           
 			} catch ( \Exception $e ) { // phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedCatch
-				// no-op
+				// no-op.
 			}
 
 			return $wp_error;
