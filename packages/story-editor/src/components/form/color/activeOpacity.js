@@ -53,16 +53,20 @@ const ActiveOpacity = ({
   const opacityFocusTrapRef = useRef();
 
   return opacityFocusTrap ? (
-    <FocusTrapButton
-      ref={opacityFocusTrapButtonRef}
-      inputRef={opacityFocusTrapRef}
-      inputLabel={__('Opacity', 'web-stories')}
-      styleOverride={css`
-        width: ${isInDesignMenu ? 'calc(39%)' : 'calc(47%)'};
-      `}
-    >
+    <>
       <Space />
-      <OpacityWrapper isInDesignMenu={isInDesignMenu}>
+      <FocusTrapButton
+        ref={opacityFocusTrapButtonRef}
+        inputRef={opacityFocusTrapRef}
+        inputLabel={__('Opacity', 'web-stories')}
+        styleOverride={css`
+          width: ${isInDesignMenu ? 'calc(39%)' : 'calc(47%)'};
+          &::before: {
+            margin-left: 8px;
+          }
+        `}
+      >
+        <OpacityWrapper isInDesignMenu={isInDesignMenu}>
         <OpacityInput
           ref={opacityFocusTrapRef}
           tabIndex={tabIndex}
@@ -74,8 +78,9 @@ const ActiveOpacity = ({
             handleReturnTrappedFocus(e, opacityFocusTrapButtonRef)
           }
         />
-      </OpacityWrapper>
-    </FocusTrapButton>
+        </OpacityWrapper>
+      </FocusTrapButton>
+    </>
   ) : (
     <>
       <Space />
