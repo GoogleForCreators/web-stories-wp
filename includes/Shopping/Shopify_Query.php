@@ -260,7 +260,6 @@ QUERY;
 	 * @return Product[]|WP_Error
 	 */
 	public function get_search( string $search_term, string $orderby = 'date', string $order = 'desc' ) {
-		
 		$result = $this->fetch_remote_products( $search_term, $orderby, $order );
 		
 		if ( is_wp_error( $result ) ) {
