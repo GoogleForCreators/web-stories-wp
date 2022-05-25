@@ -146,7 +146,6 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
 	public function get_items( $request ) {
-		// TODO(#11154): Refactor to extract product query logic out of this controller.
 		/**
 		 * Shopping provider.
 		 *
@@ -238,18 +237,24 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 			}
 		}
 
-		if ( rest_is_field_included( 'aggregateRating', $fields ) ) {
-			$data['aggregateRating'] = [];
-		}
+		$rating = $product->get_aggregate_rating();
 
-		if ( rest_is_field_included( 'aggregateRating.ratingValue', $fields ) ) {
-			$data['aggregateRating']['ratingValue'] = (float) $product->get_aggregate_rating()['rating_value'];
-		}
-		if ( rest_is_field_included( 'aggregateRating.reviewCount', $fields ) ) {
-			$data['aggregateRating']['reviewCount'] = (int) $product->get_aggregate_rating()['review_count'];
-		}
-		if ( rest_is_field_included( 'aggregateRating.reviewUrl', $fields ) ) {
-			$data['aggregateRating']['reviewUrl'] = $product->get_aggregate_rating()['review_url'];
+		if ( $rating ) {
+			if ( rest_is_field_included( 'aggregateRating', $fields ) ) {
+				$data['aggregateRating'] = [];
+			}
+
+			if ( rest_is_field_included( 'aggregateRating.ratingValue', $fields ) ) {
+				$data['aggregateRating']['ratingValue'] = (float) $rating['rating_value'];
+			}
+
+			if ( rest_is_field_included( 'aggregateRating.reviewCount', $fields ) ) {
+				$data['aggregateRating']['reviewCount'] = (int) $rating['review_count'];
+			}
+
+			if ( rest_is_field_included( 'aggregateRating.reviewUrl', $fields ) ) {
+				$data['aggregateRating']['reviewUrl'] = $rating['review_url'];
+			}
 		}
 
 		/**

@@ -18,25 +18,51 @@
  */
 import visitSettings from './visitSettings';
 
-export const insertProduct = async (product) => {
-  // Switch to the Products tab and wait for initial list of products to be fetched.
+async function clearSearch() {
+  const hasText = await page.$eval(
+    '[aria-label="Product search"]',
+    (el) => el.value.length
+  );
+  if (hasText >= 1) {
+    await expect(page).toClick('[aria-label="Clear product search"]');
+  }
+}
+
+export const insertProduct = async (product, clickOnTab = true) => {
+  if (clickOnTab) {
+    // Switch to the Products tab and wait for initial list of products to be fetched.
+    await Promise.all([
+      page.waitForResponse(
+        (response) =>
+          response.url().includes('web-stories/v1/products') &&
+          response.status() === 200
+      ),
+      expect(page).toClick('[aria-controls="library-pane-shopping"]'),
+    ]);
+  }
+
+  await clearSearch();
+  await page.waitForSelector('[aria-label="Product search"]');
+  await page.focus('[aria-label="Product search"]');
+  await page.type('[aria-label="Product search"]', product);
+
   await Promise.all([
     page.waitForResponse(
       (response) =>
         response.url().includes('web-stories/v1/products') &&
         response.status() === 200
     ),
-    expect(page).toClick('[aria-controls="library-pane-shopping"]'),
+    await page.waitForSelector(`[aria-label="Add ${product}"]`),
   ]);
 
-  // This clicks on the Product dropdown and waits for the dropdown menu to open.
-  await expect(page).toClick('[aria-label="Product"]');
-  await page.waitForSelector('[aria-label="Search"]');
+  expect(page).toClick(`[aria-label="Add ${product}"]`);
 
-  await page.type('[aria-label="Search"]', product);
-  await page.keyboard.press('ArrowDown');
-  await page.keyboard.press('Enter');
-  await expect(page).toClick('button', { text: 'Insert product' });
+  await page.waitForTimeout(400);
+
+  await page.waitForSelector(
+    '[aria-label="Design menu"] [aria-label="Product"]',
+    { text: product }
+  );
 };
 
 export const setShoppingProvider = async (provider) => {

@@ -39,7 +39,7 @@ import { SimplePanel } from '../../panel';
 import { getCommonValue } from '../../shared';
 import { states, styles, useHighlights } from '../../../../app/highlights';
 import { useConfig } from '../../../../app';
-import CaptionsPanelContent from '../../shared/captionsPanelContent';
+import CaptionsPanelContent from '../../shared/media/captionsPanelContent';
 import { MULTIPLE_VALUE } from '../../../../constants';
 
 const StyledButton = styled(Button)`
@@ -96,10 +96,9 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
 
   const handleChangeTrack = useCallback(
     ({ src = '', id, needsProxy = false }) => {
-      const newTracks = {
+      const newTrack = {
         track: src,
         trackId: id,
-        trackName: src.split('/').pop(),
         id: uuidv4(),
         kind: 'captions',
         srclang: '',
@@ -107,9 +106,9 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
         needsProxy,
       };
 
-      pushUpdate({ tracks: [...tracks, newTracks] }, true);
+      pushUpdate({ tracks: [newTrack] }, true);
     },
-    [tracks, pushUpdate]
+    [pushUpdate]
   );
 
   const { highlight, resetHighlight } = useHighlights((state) => ({

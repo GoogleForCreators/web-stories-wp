@@ -16,7 +16,7 @@
 /**
  * Internal dependencies
  */
-import removeTagNames from '../v0042_removeTagNames';
+import removeTagNames from '../v0043_removeTagNames';
 
 describe('removeTagNames', () => {
   it('should remove tag names', () => {

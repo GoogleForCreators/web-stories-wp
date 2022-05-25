@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { screen } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 import { FIELD_TYPES } from '@googleforcreators/animation';
 import { renderWithTheme } from '@googleforcreators/test-utils';
 
@@ -56,5 +56,16 @@ describe('<EffectInput />', () => {
     const testInput = screen.getByDisplayValue(0);
     expect(testInput).toBeInTheDocument();
     expect(testInput).toHaveAttribute('aria-label', testFieldKey);
+  });
+
+  it('should reject negative values and replace with "0"', () => {
+    renderWithTheme(<EffectInput {...defaultProps} />);
+    const input = screen.getByLabelText(testFieldKey);
+    fireEvent.change(input, {
+      target: { value: '-1' },
+    });
+    // negative value should be reset to 0 on blur
+    fireEvent.blur(input);
+    expect(input.value).toBe('0');
   });
 });

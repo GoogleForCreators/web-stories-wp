@@ -98,7 +98,7 @@ class Shopping_Vendors {
 			],
 			'woocommerce' => [
 				'label' => __( 'WooCommerce', 'web-stories' ),
-				'class' => Woocommerce_Query::class,
+				'class' => WooCommerce_Query::class,
 			],
 		];
 
