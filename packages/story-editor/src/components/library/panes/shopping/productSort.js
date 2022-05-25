@@ -71,7 +71,7 @@ function SortDropdown({ onChange, sortId }) {
           id: `${option.orderby}-${option.order}`,
           ...option,
         }))}
-        aria-label={__('Sort by', 'web-stories')}
+        aria-label={__('Product sort options', 'web-stories')}
       />
     </StyledContainer>
   );
