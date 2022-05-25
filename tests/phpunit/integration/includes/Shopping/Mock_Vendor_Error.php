@@ -36,7 +36,7 @@ class Mock_Vendor_Error implements Product_Query {
 	 * @param string $order Order sort attribute ascending or descending.
 	 * @return Product[]|WP_Error
 	 */
-	public function get_search( string $search_term, string $orderby, $order ) {
+	public function get_search( string $search_term, string $orderby, string $order ) {
 		return new WP_Error( 'mock_error', 'Mock error', [ 'status' => 400 ] );
 	}
 }
