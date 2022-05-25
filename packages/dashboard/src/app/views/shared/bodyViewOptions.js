@@ -71,13 +71,6 @@ const defaultAuthor = {
   queriedAuthors: [],
 };
 
-const defaultTaxonomy = {
-  filterId: null,
-  filterSlug: null,
-  toggleFilterId: noop,
-  queriedTaxonomies: [],
-};
-
 export default function BodyViewOptions({
   currentSort,
   handleLayoutSelect,
@@ -89,7 +82,6 @@ export default function BodyViewOptions({
   showSortDropdown,
   sortDropdownAriaLabel,
   showAuthorDropdown = false,
-  showTaxonomyDropdown = true,
   author = defaultAuthor,
   queryAuthorsBySearch = noop,
 }) {
@@ -102,7 +94,7 @@ export default function BodyViewOptions({
           <TranslateWithMarkup>{resultsLabel}</TranslateWithMarkup>
         </Text>
         <ControlsContainer>
-          {layoutStyle === VIEW_STYLE.GRID && showTaxonomyDropdown && (
+          {layoutStyle === VIEW_STYLE.GRID && (
             <StorySortDropdownContainer>
               <StyledDatalist
                 hasSearch
@@ -180,9 +172,6 @@ BodyViewOptions.propTypes = {
   showSortDropdown: PropTypes.bool,
   sortDropdownAriaLabel: PropTypes.string.isRequired,
   showAuthorDropdown: PropTypes.bool,
-  showTaxonomyDropdown: PropTypes.bool,
   author: AuthorPropTypes,
-  // taxonomy: TaxonomyPropTypes,
   queryAuthorsBySearch: PropTypes.func,
-  queryTaxonomiesBySearch: PropTypes.func,
 };

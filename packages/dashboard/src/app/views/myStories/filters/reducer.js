@@ -41,6 +41,9 @@ const reducer = (state, { type, payload = {} }) => {
     }
     case types.UPDATE_FILTER: {
       const { filter, value } = payload;
+      if (value.filterId && state[filter]?.filterId === value.filterId) {
+        value.filterId = null;
+      }
       return {
         ...state,
         [filter]: { ...state[filter], ...value },

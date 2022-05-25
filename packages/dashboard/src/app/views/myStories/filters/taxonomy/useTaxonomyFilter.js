@@ -2,7 +2,6 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import useApi from '../../../../api/useApi';
 
 const useTaxonomyFilter = () => {
-  // all the taxonomy types should only need to fetch this once
   const taxonomies = useRef([]);
   const [cachedTaxonomies, _setCachedTaxonomies] = useState([]);
   const [queriedTaxonomies, setQueriedTaxonomies] = useState([]);
@@ -18,6 +17,7 @@ const useTaxonomyFilter = () => {
     })
   );
 
+  // keep track of the searched values
   const setCachedTaxonomies = useCallback(() => {
     _setCachedTaxonomies((current) => {
       const cached = current.map((c) => ({
@@ -32,45 +32,54 @@ const useTaxonomyFilter = () => {
     });
   }, [queriedTaxonomies]);
 
-  const fetchTaxonomies = useCallback(
+  const queryTaxonomies = useCallback(
     async (search) => {
+      // all the taxonomy types should only need to be fetch once
       if (!Boolean(taxonomies.current.length)) {
         const data = await getTaxonomies();
         taxonomies.current = data.filter(({ hierarchical }) =>
           Boolean(hierarchical)
         );
       }
+
+      // search within the taxonomies
       const slugToRestBase = {};
-      const promises = taxonomies.current.map((d) => {
-        if (!(d.slug in slugToRestBase)) {
-          slugToRestBase[d.slug] = d.restBase;
+      const promises = taxonomies.current.map((c) => {
+        if (!(c.slug in slugToRestBase)) {
+          slugToRestBase[c.slug] = c.restBase;
         }
         return new Promise((res) =>
-          getTaxonomyTerm(d.restPath, { search }).then(res)
+          getTaxonomyTerm(c.restPath, { search }).then(res)
         );
       });
       const fetched = await Promise.all(promises);
-      const extraction = fetched.reduce((pre, cur) => {
-        return [...pre, ...cur];
-      }, []);
-      setQueriedTaxonomies(
-        extraction.map((e) => ({
+
+      // flatten the taxonomy arrays
+      // restBase is needed for filtering
+      const extraction = fetched
+        .reduce((pre, cur) => {
+          return [...pre, ...cur];
+        }, [])
+        .map((e) => ({
           ...e,
           restBase: slugToRestBase[e.taxonomy],
-        }))
-      );
+        }));
+
+      setQueriedTaxonomies(extraction);
     },
     [getTaxonomies, getTaxonomyTerm, setQueriedTaxonomies]
   );
 
-  useEffect(() => [fetchTaxonomies()], [fetchTaxonomies]);
+  useEffect(() => {
+    queryTaxonomies();
+  }, [queryTaxonomies]);
 
   useEffect(() => {
     setCachedTaxonomies();
   }, [queriedTaxonomies]);
 
   return {
-    query: fetchTaxonomies,
+    query: queryTaxonomies,
     primaryOptions: cachedTaxonomies,
     queriedOptions: queriedTaxonomies,
   };

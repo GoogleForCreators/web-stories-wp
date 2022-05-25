@@ -28,7 +28,7 @@ import {
  * Internal dependencies
  */
 import reducer from './reducer';
-import useTaxonomyFilter from './taxonomy';
+import useTaxonomyFilter from './taxonomy/useTaxonomyFilter';
 import * as types from './types';
 
 export const filterContext = createContext({

@@ -49,14 +49,11 @@ function MyStories() {
     totalPages,
     totalStoriesByStatus,
     getAuthors,
-    getTaxonomies,
-    getTaxonomyTerm,
   } = useApi(
     ({
       actions: {
         storyApi: { duplicateStory, fetchStories, trashStory, updateStory },
         usersApi: { getAuthors },
-        taxonomyApi: { getTaxonomies, getTaxonomyTerm },
       },
       state: {
         stories: {
@@ -80,13 +77,9 @@ function MyStories() {
       totalPages,
       totalStoriesByStatus,
       getAuthors,
-      getTaxonomies,
-      getTaxonomyTerm,
     })
   );
-
-  const [{ taxonomy: tax }] = useFilters((state) => state);
-
+  const [{ taxonomy }] = useFilters((state) => state);
   const { apiCallbacks, canViewDefaultTemplates } = useConfig();
   const isMounted = useRef(false);
   const taxonomies = useRef([]);
@@ -108,7 +101,6 @@ function MyStories() {
     showStoriesWhileLoading,
     initialPageReady,
     author,
-    taxonomy,
   } = useStoryView({
     filters: STORY_STATUSES,
     isLoading,
@@ -116,8 +108,6 @@ function MyStories() {
   });
 
   const { setQueriedAuthors } = author;
-  // TODO: rename this to be queryHierarchicalTaxonomiesBySearch
-  const { setQueriedTaxonomies } = taxonomy;
   let queryAuthorsBySearch = useCallback(
     (authorSearchTerm) => {
       return getAuthors(authorSearchTerm).then((data) => {
@@ -141,88 +131,13 @@ function MyStories() {
     [getAuthors, setQueriedAuthors]
   );
 
-  const fetchTaxonomies = useCallback(
-    async (taxonomiesData, search) => {
-      const toFetch = taxonomiesData.filter((t) => Boolean(t?.hierarchical));
-      const promises = toFetch.map(
-        (t) =>
-          new Promise((res) => getTaxonomyTerm(t.url, { search }).then(res))
-      );
-      const data = await Promise.all(promises);
-
-      const extraction = [];
-      for (const arr of data) {
-        extraction.push(
-          ...arr.map((t) => ({ id: t.id, name: t.name, taxonomy: t.taxonomy }))
-        );
-      }
-      return extraction;
-    },
-    [getTaxonomyTerm]
-  );
-
-  // TODO: rename this to be queryHierarchicalTaxonomiesBySearch
-  let queryTaxonomiesBySearch = useCallback(
-    // TODO: In progress for the open PR of #11426
-    // Status: We're fetching data for taxonomies
-    // However, we need the actual data of taxonomies
-    // And we need to filter out things that aren't hierarchical
-    // That's the next step here - Sam
-    (taxonomySearchTerm) => {
-      if (!isMounted.current) {
-        return;
-      }
-
-      const taxonomyData = taxonomies.current.map(
-        ({ name, slug, hierarchical, restPath }) => ({
-          name,
-          slug,
-          hierarchical,
-          url: restPath,
-        })
-      );
-
-      return fetchTaxonomies(taxonomyData, taxonomySearchTerm).then((data) => {
-        setQueriedTaxonomies((current) => {
-          const existing = current.map((t) => ({
-            id: t.id,
-            taxonomy: t.taxonomy,
-          }));
-          const newTaxonomies = data.filter((t) => {
-            return !existing.find(
-              (e) => e.id === t.id && e.taxonomy === t.taxonomy
-            );
-          });
-          return [...current, ...newTaxonomies];
-        });
-      });
-    },
-    [setQueriedTaxonomies, fetchTaxonomies, taxonomies.current]
-  );
-
   if (!getAuthors) {
     queryAuthorsBySearch = noop;
-  }
-
-  if (!getTaxonomies) {
-    queryTaxonomiesBySearch = noop;
   }
 
   useEffect(() => {
     queryAuthorsBySearch();
   }, [queryAuthorsBySearch]);
-
-  useEffect(() => {
-    const getTaxonomiesData = async () => {
-      taxonomies.current = await getTaxonomies();
-      queryTaxonomiesBySearch();
-    };
-    if (!taxonomies.current.length) {
-      getTaxonomiesData();
-    } else {
-      queryTaxonomiesBySearch();
-    }
-  }, [getTaxonomies, fetchTaxonomies, queryTaxonomiesBySearch]);
 
   useEffect(() => {
     fetchStories({
@@ -232,7 +147,7 @@ function MyStories() {
       sortOption: sort.value,
       status: filter.value,
       author: author.filterId,
-      taxonomy: { id: tax.filterId, slug: tax.filterSlug },
+      taxonomy: { id: taxonomy.filterId, slug: taxonomy.filterSlug },
     });
   }, [
     fetchStories,
@@ -242,8 +157,8 @@ function MyStories() {
     sort.direction,
     sort.value,
     author.filterId,
-    tax.filterId,
-    tax.filterSlug,
+    taxonomy.filterId,
+    taxonomy.filterSlug,
     apiCallbacks,
   ]);
 
@@ -254,7 +169,6 @@ function MyStories() {
   }, [stories, storiesOrderById]);
 
   const showAuthorDropdown = typeof getAuthors === 'function';
-  const showTaxonomyDropdown = typeof getTaxonomies === 'function';
 
   return (
     <Layout.Provider>
@@ -267,11 +181,8 @@ function MyStories() {
         totalStoriesByStatus={totalStoriesByStatus}
         view={view}
         author={author}
-        taxonomy={tax}
         queryAuthorsBySearch={queryAuthorsBySearch}
-        queryTaxonomiesBySearch={queryTaxonomiesBySearch}
         showAuthorDropdown={showAuthorDropdown}
-        showTaxonomyDropdown={showTaxonomyDropdown}
       />
 
       <Content

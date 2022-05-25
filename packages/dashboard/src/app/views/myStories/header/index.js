@@ -48,7 +48,6 @@ import {
   SortPropTypes,
   ViewPropTypes,
   AuthorPropTypes,
-  TaxonomyPropTypes,
 } from '../../../../utils/useStoryView';
 import { useDashboardResultsLabel } from '../../../../utils';
 import { BodyViewOptions, PageHeading } from '../../shared';
@@ -73,11 +72,8 @@ function Header({
   totalStoriesByStatus,
   view,
   author,
-  taxonomy,
   queryAuthorsBySearch,
-  queryTaxonomiesBySearch,
   showAuthorDropdown,
-  showTaxonomyDropdown,
 }) {
   const {
     actions: { scrollToTop },
@@ -185,7 +181,6 @@ function Header({
         showGridToggle
         showSortDropdown
         showAuthorDropdown={showAuthorDropdown}
-        showTaxonomyDropdown={showTaxonomyDropdown}
         resultsLabel={resultsLabel}
         layoutStyle={view.style}
         handleLayoutSelect={view.toggleStyle}
@@ -193,9 +188,7 @@ function Header({
         pageSortOptions={STORY_SORT_MENU_ITEMS}
         handleSortChange={onSortChange}
         author={author}
-        taxonomy={taxonomy}
         queryAuthorsBySearch={queryAuthorsBySearch}
-        queryTaxonomiesBySearch={queryTaxonomiesBySearch}
         sortDropdownAriaLabel={__(
           'Choose sort option for display',
           'web-stories'
@@ -214,11 +207,8 @@ Header.propTypes = {
   totalStoriesByStatus: TotalStoriesByStatusPropType,
   view: ViewPropTypes.isRequired,
   author: AuthorPropTypes,
-  taxonomy: TaxonomyPropTypes,
   queryAuthorsBySearch: PropTypes.func,
-  queryTaxonomiesBySearch: PropTypes.func,
   showAuthorDropdown: PropTypes.bool,
-  showTaxonomyDropdown: PropTypes.bool,
 };
 
 export default memo(Header);

@@ -34,6 +34,7 @@ import { clamp } from '@googleforcreators/units';
 import { SORT_DIRECTION, STORY_SORT_OPTIONS, VIEW_STYLE } from '../constants';
 import { PageSizePropType } from '../types';
 import usePagePreviewSize from './usePagePreviewSize';
+import useFilters from '../app/views/myStories/filters/useFilters';
 
 export default function useStoryView({
   filters,
@@ -49,12 +50,11 @@ export default function useStoryView({
   const [page, setPage] = useState(1);
   const [searchKeyword, _setSearchKeyword] = useState('');
   const [authorFilterId, _setAuthorFilterId] = useState(null);
-  const [taxonomyFilterId, _setTaxonomyFilterId] = useState(null);
-  const [taxonomyFilterSlug, _setTaxonomyFilterSlug] = useState(null);
   const [queriedAuthors, setQueriedAuthors] = useState([]);
-  const [queriedTaxonomies, setQueriedTaxonomies] = useState([]);
   const showStoriesWhileLoading = useRef(false);
   const [initialPageReady, setInitialPageReady] = useState(false);
+
+  const [{ taxonomy }] = useFilters((state) => state);
 
   const { pageSize } = usePagePreviewSize({
     thumbnailMode: viewStyle === VIEW_STYLE.LIST,
@@ -127,17 +127,6 @@ export default function useStoryView({
     _setAuthorFilterId((prevFilterId) => (prevFilterId === id ? null : id));
   }, []);
 
-  const toggleTaxonomyFilterId = useCallback(({ id, taxonomy }) => {
-    _setTaxonomyFilterId((prevFilterId) => {
-      if (prevFilterId === id) {
-        return null;
-      } else {
-        _setTaxonomyFilterSlug(taxonomy);
-        return id;
-      }
-    });
-  }, []);
-
   useEffect(() => {
     if (searchKeyword.length) {
       trackEvent('search', {
@@ -145,12 +134,21 @@ export default function useStoryView({
         search_term: searchKeyword,
         search_filter: filter,
         search_author_filter: authorFilterId,
+        search_taxonomy_filter: taxonomy.filterId,
         search_order: sortDirection,
         search_orderby: sort,
         search_view: viewStyle,
       });
     }
-  }, [searchKeyword, filter, sortDirection, sort, viewStyle, authorFilterId]);
+  }, [
+    searchKeyword,
+    filter,
+    sortDirection,
+    sort,
+    viewStyle,
+    authorFilterId,
+    taxonomy.filterId,
+  ]);
 
   useEffect(() => {
     // reset ref state after request is finished
@@ -198,13 +196,6 @@ export default function useStoryView({
         queriedAuthors,
         setQueriedAuthors,
       },
-      taxonomy: {
-        filterId: taxonomyFilterId,
-        filterSlug: taxonomyFilterSlug,
-        toggleFilterId: toggleTaxonomyFilterId,
-        queriedTaxonomies,
-        setQueriedTaxonomies,
-      },
       initialPageReady,
       showStoriesWhileLoading,
     }),
@@ -224,14 +215,9 @@ export default function useStoryView({
       searchKeyword,
       setSearchKeyword,
       authorFilterId,
-      taxonomyFilterId,
-      taxonomyFilterSlug,
       toggleAuthorFilterId,
-      toggleTaxonomyFilterId,
       queriedAuthors,
-      queriedTaxonomies,
       setQueriedAuthors,
-      setQueriedTaxonomies,
     ]
   );
 }
@@ -252,20 +238,6 @@ export const AuthorPropTypes = PropTypes.shape({
     })
   ).isRequired,
   setQueriedAuthors: PropTypes.func,
-});
-
-export const TaxonomyPropTypes = PropTypes.shape({
-  filterId: PropTypes.number,
-  filterSlug: PropTypes.string,
-  toggleFilterId: PropTypes.func,
-  queriedTaxonomies: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number,
-      name: PropTypes.string,
-      taxonomy: PropTypes.string,
-    })
-  ).isRequired,
-  setQueriedTaxonomies: PropTypes.func,
 });
 
 export const FilterPropTypes = PropTypes.shape({
