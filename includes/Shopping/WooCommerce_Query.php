@@ -28,6 +28,7 @@ namespace Google\Web_Stories\Shopping;
 
 use Google\Web_Stories\Integrations\WooCommerce;
 use Google\Web_Stories\Interfaces\Product_Query;
+use WC_Query;
 use WP_Error;
 
 /**
@@ -70,25 +71,30 @@ class WooCommerce_Query implements Product_Query {
 
 		$results = [];
 
+		$wc_args = [];
+
+		if ( 'price' === $orderby ) {
+			$wc_query = new WC_Query();
+			$wc_args  = $wc_query->get_catalog_ordering_args( $orderby, strtoupper( $order ) );
+		}
+		
 		/**
 		 * Products.
 		 *
 		 * @var \WC_Product[] $products
 		 */
 		$products = wc_get_products(
-			[
-				'status'  => 'publish',
-				'limit'   => $per_page,
-				's'       => $search_term,
-				'orderby' => $orderby,
-				'order'   => $order,
-			]
+			array_merge(
+				[
+					'status'  => 'publish',
+					'limit'   => $per_page,
+					's'       => $search_term,
+					'orderby' => $orderby,
+					'order'   => $order,
+				], 
+				$wc_args
+			)
 		);
-
-		if ( 'price' === $orderby ) {
-			// @todo this only orders products based on wc_get_products previously called
-			$products = wc_products_array_orderby( $products, 'price', $order );
-		}
 
 		$product_image_ids = [];
 		foreach ( $products as $product ) {

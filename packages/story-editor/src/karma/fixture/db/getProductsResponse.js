@@ -188,3 +188,14 @@ export default [
     productUrl: 'http://localhost:10004/product/hoodie-with-logo/',
   },
 ];
+
+function compareStrings(key, order = 'asc') {
+  return (a, b) => {
+    const comparison = a[key].localeCompare(b[key]);
+    return order === 'desc' ? comparison * -1 : comparison;
+  };
+}
+
+export const sortStrings = (obj, key, order) => {
+  return obj.sort(compareStrings(key, order));
+};
