@@ -281,6 +281,7 @@ class Dashboard extends Service_Base {
 			'/web-stories/v1/settings/',
 			'/web-stories/v1/publisher-logos/',
 			'/web-stories/v1/users/me/',
+			'/web-stories/v1/taxonomies/',
 			$rest_url . '?' . build_query(
 				[
 					'_embed'                => rawurlencode(
