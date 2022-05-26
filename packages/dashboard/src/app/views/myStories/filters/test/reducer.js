@@ -41,7 +41,7 @@ describe('reducer', () => {
     expect(state.officers.filterId).toBe(112);
   });
 
-  it('should update set the filterId to null if the same filterId is givien', () => {
+  it('should update set the filterId to null if the same filterId is given', () => {
     const initial_state = {
       officers: {
         filterId: 117,
@@ -59,5 +59,25 @@ describe('reducer', () => {
 
     const state = reducer(initial_state, args);
     expect(state.officers.filterId).toBeNull();
+  });
+
+  it('should return state if no match on types is given', () => {
+    const initial_state = {
+      officers: {
+        filterId: 117,
+        name: 'John',
+      },
+    };
+
+    const args = {
+      type: 'THIS_WILL_MATCH_NOTHING',
+      payload: {
+        filter: 'officers',
+        value: { filterId: 117 },
+      },
+    };
+
+    const state = reducer(initial_state, args);
+    expect(state.officers.filterId).toBe(117);
   });
 });
