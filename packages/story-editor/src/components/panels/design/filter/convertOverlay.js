@@ -31,9 +31,9 @@ function convertToSolid(currentOverlay, currentType) {
       // converting from any gradient to SOLID
       // use "opaque'st" stop as primary color, but fix alpha at .3
       const { stops } = currentOverlay;
-      const stopsByAlpha = stops.sort(
-        (x, y) => (y.color.a ?? 1) - (x.color.a ?? 1)
-      );
+      const stopsByAlpha = stops
+        .slice()
+        .sort((x, y) => (y.color.a ?? 1) - (x.color.a ?? 1));
       const {
         color: { r, g, b },
       } = stopsByAlpha[0];
