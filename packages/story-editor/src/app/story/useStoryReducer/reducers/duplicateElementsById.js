@@ -40,6 +40,10 @@ function duplicateElementsById(state, { elementIds }) {
   const newPage = { ...oldPage };
   const newSelection = [];
 
+  const currentPageProductIds = oldPage?.elements
+    ?.filter(({ type }) => type === 'product')
+    .map(({ product }) => product?.productId);
+
   elementIds.forEach((elementId) => {
     const elementIndex = newPage.elements.findIndex(
       ({ id }) => id === elementId
@@ -52,6 +56,13 @@ function duplicateElementsById(state, { elementIds }) {
     const elementToDuplicate = newPage.elements[elementIndex];
 
     if (elementToDuplicate.isBackground) {
+      return;
+    }
+
+    if (
+      elementToDuplicate.type === 'product' &&
+      currentPageProductIds.includes(elementToDuplicate?.product?.productId)
+    ) {
       return;
     }
 

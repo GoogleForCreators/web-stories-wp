@@ -50,9 +50,24 @@ function addElements(state, { elements }) {
     return state;
   }
 
+  const currentPageProductIds = oldPage?.elements
+    ?.filter(({ type }) => type === 'product')
+    .map(({ product }) => product?.productId);
+
+  const newElementDuplicateID = newElements
+    .filter(
+      ({ type, product }) =>
+        type === 'product' && currentPageProductIds.includes(product?.productId)
+    )
+    .map(({ id }) => id);
+
+  const newElementNoDuplicateProducts = newElements.filter(
+    ({ id }) => newElementDuplicateID && !newElementDuplicateID.includes(id)
+  );
+
   const newPage = {
     ...oldPage,
-    elements: [...oldPage.elements, ...newElements],
+    elements: [...oldPage.elements, ...newElementNoDuplicateProducts],
   };
 
   const newPages = [
