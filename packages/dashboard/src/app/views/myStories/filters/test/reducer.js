@@ -61,23 +61,26 @@ describe('reducer', () => {
     expect(state.officers.filterId).toBeNull();
   });
 
-  it('should return state if no match on types is given', () => {
+  it('should return the state if dispatching an action thats not supported', () => {
     const initial_state = {
-      officers: {
-        filterId: 117,
-        name: 'John',
+      teams: {
+        filterId: 6,
+        name: 'Noble',
       },
     };
 
     const args = {
-      type: 'THIS_WILL_MATCH_NOTHING',
+      type: 'RENAME_TEAM',
       payload: {
-        filter: 'officers',
-        value: { filterId: 117 },
+        filter: 'teams',
+        name: 'Banished',
       },
     };
 
     const state = reducer(initial_state, args);
-    expect(state.officers.filterId).toBe(117);
+    expect(state.teams).toMatchObject({
+      filterId: 6,
+      name: 'Noble',
+    });
   });
 });
