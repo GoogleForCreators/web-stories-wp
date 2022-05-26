@@ -21,7 +21,6 @@ import { useCallback } from '@googleforcreators/react';
  * Internal dependencies
  */
 import { useStory, useCanvas } from '../../../../app';
-import useFocusCanvas from '../../../canvas/useFocusCanvas';
 
 function useLayerSelection(layer) {
   const { id: elementId } = layer;
@@ -29,21 +28,14 @@ function useLayerSelection(layer) {
     isSelected: state.selectedElementIds.includes(elementId),
     toggleLayer: actions.toggleLayer,
   }));
-  const { renamableLayer, setRenamableLayer } = useCanvas(
-    ({ state, actions }) => ({
-      renamableLayer: state.renamableLayer,
-      setRenamableLayer: actions.setRenamableLayer,
-    })
+  const setRenamableLayer = useCanvas(
+    ({ actions }) => actions.setRenamableLayer
   );
-
-  const focusCanvas = useFocusCanvas();
 
   const handleClick = useCallback(
     (evt) => {
       evt.preventDefault();
       evt.stopPropagation();
-
-      const isDoubleClick = evt.detail === 2;
 
       toggleLayer({
         elementId,
@@ -51,16 +43,12 @@ function useLayerSelection(layer) {
         shiftKey: evt.shiftKey,
       });
 
-      // If a layer is not renamable, revert focus to selected element(s)
-      if (renamableLayer) {
-        focusCanvas();
-      }
-
+      const isDoubleClick = evt.detail === 2;
       if (isDoubleClick) {
         setRenamableLayer({ elementId: elementId });
       }
     },
-    [toggleLayer, elementId, focusCanvas, renamableLayer, setRenamableLayer]
+    [toggleLayer, elementId, setRenamableLayer]
   );
 
   return { isSelected, handleClick };
