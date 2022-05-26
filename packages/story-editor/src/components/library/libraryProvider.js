@@ -240,6 +240,13 @@ function LibraryProvider({ children }) {
     };
   }, [tab, textSets]);
 
+  useEffect(() => {
+    // Set tab back to first tab if on shopping and shopping is disabled.
+    if (tab === SHOPPING.id && !isShoppingEnabled) {
+      setTab(tabs[0].id);
+    }
+  }, [isShoppingEnabled, tab, tabs]);
+
   return <Context.Provider value={state}>{children}</Context.Provider>;
 }
 
