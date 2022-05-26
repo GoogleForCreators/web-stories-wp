@@ -121,6 +121,31 @@ describe('Shopping integration', () => {
       await fixture.events.mouse.clickOn(product, 1, 1);
       expect(isStoryEmpty()).toEqual(true);
     });
+
+    it('should sort searched products', async () => {
+      await fixture.editor.library.shoppingTab.click();
+      await fixture.events.keyboard.press('tab');
+
+      const sortDropdown = fixture.querySelector(
+        '[aria-label="Product sort options"]'
+      );
+      await fixture.events.mouse.clickOn(sortDropdown, 1, 1);
+
+      const option = fixture.screen.getByRole('option', {
+        name: /^Alphabetical: Z-A/,
+      });
+
+      await fixture.events.mouse.clickOn(option, 1, 1);
+
+      // delay for search to catch-up
+      await fixture.events.sleep(400);
+
+      const firstOption = fixture.querySelector(
+        '[aria-label="Products list"] [role="listitem"]'
+      );
+
+      expect(firstOption.textContent).toContain('WordPress Pennant');
+    });
   });
 
   // eslint-disable-next-line jasmine/no-disabled-tests -- TODO: Fix broken test.

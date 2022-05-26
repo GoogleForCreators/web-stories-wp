@@ -44,7 +44,7 @@ import Layout from '../../components/layout';
 import formattedTemplatesArray from '../../dataUtils/formattedTemplatesArray';
 import { PRESET_TYPES } from '../../constants';
 import getMediaResponse from './db/getMediaResponse';
-import getProductsResponse from './db/getProductsResponse';
+import getProductsResponse, { sortStrings } from './db/getProductsResponse';
 import { Editor as EditorContainer } from './containers';
 import taxonomiesResponse from './db/getTaxonomiesResponse';
 import singleSavedTemplate from './db/singleSavedTemplate';
@@ -1106,13 +1106,19 @@ class APIProviderFixture {
         return asyncResponse(fonts);
       }, []);
 
-      const getProducts = useCallback((search) => {
+      const getProducts = useCallback((search, orderby, order) => {
         let products = getProductsResponse;
         if (search) {
           products = products.filter(({ productTitle }) =>
             productTitle.toLowerCase().includes(search.toLowerCase())
           );
         }
+
+        // handling title sorting (asc, desc) only here
+        if (orderby === 'title') {
+          products = sortStrings(products, 'productTitle', order);
+        }
+
         return products;
       }, []);
 
