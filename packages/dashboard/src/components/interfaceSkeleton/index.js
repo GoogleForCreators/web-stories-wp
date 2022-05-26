@@ -35,6 +35,7 @@ import { APP_ROUTES, ROUTE_TITLES } from '../../constants';
 import { Route, useRouteHistory } from '../../app/router';
 import { AppFrame, LeftRail, PageContent } from '../pageStructure';
 import useApiAlerts from '../../app/api/useApiAlerts';
+import FiltersProvider from '../../app/views/myStories/filters/provider';
 import useApi from '../../app/api/useApi';
 import { useConfig } from '../../app/config';
 
@@ -150,7 +151,11 @@ const InterfaceSkeleton = ({ additionalRoutes }) => {
             exact
             isDefault
             path={APP_ROUTES.DASHBOARD}
-            component={<MyStoriesView />}
+            component={
+              <FiltersProvider>
+                <MyStoriesView />
+              </FiltersProvider>
+            }
           />
           {canViewDefaultTemplates && (
             <Route

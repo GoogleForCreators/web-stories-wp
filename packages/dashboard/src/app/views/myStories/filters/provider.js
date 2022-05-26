@@ -35,6 +35,7 @@ import * as types from './types';
 
 export const filterContext = createContext({
   state: {},
+  actions: {},
 });
 
 export default function FiltersProvider({ children }) {

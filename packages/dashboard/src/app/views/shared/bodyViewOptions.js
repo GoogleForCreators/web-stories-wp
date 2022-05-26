@@ -99,7 +99,7 @@ export default function BodyViewOptions({
           <TranslateWithMarkup>{resultsLabel}</TranslateWithMarkup>
         </Text>
         <ControlsContainer>
-          {layoutStyle === VIEW_STYLE.GRID && (
+          {layoutStyle === VIEW_STYLE.GRID && updateFilter && (
             <StorySortDropdownContainer>
               <StyledDatalist
                 hasSearch
