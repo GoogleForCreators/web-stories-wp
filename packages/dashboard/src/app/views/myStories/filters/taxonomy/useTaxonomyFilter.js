@@ -76,9 +76,7 @@ const useTaxonomyFilter = () => {
         if (!(c.slug in slugToRestBase)) {
           slugToRestBase[c.slug] = c.restBase;
         }
-        return new Promise((res) =>
-          getTaxonomyTerm(c.restPath, { search }).then(res)
-        );
+        return getTaxonomyTerm(c.restPath, { search });
       });
       const fetched = await Promise.all(promises);
 

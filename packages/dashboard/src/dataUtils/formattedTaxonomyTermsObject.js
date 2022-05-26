@@ -15,7 +15,7 @@
  */
 
 const formattedTaxonomyTermsObject = {
-  web_stroy_category: [
+  web_story_category: [
     {
       count: 1,
       description: '',
@@ -27,7 +27,7 @@ const formattedTaxonomyTermsObject = {
       taxonomy: 'web_story_category',
     },
   ],
-  story_verticals: [
+  'story-verticals': [
     {
       count: 1,
       description: '',
@@ -40,7 +40,7 @@ const formattedTaxonomyTermsObject = {
     },
   ],
   web_story_tag: [],
-  story_colors: [],
+  'story-colors': [],
 };
 
 export default formattedTaxonomyTermsObject;
