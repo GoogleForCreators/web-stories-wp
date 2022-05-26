@@ -23,7 +23,7 @@ import { createNewElement } from '@googleforcreators/elements';
 /**
  * Internal dependencies
  */
-import { useStory } from '../../app';
+import { useStory } from '../../app/story';
 import { useLayout } from '../../app/layout';
 import { ZOOM_SETTING } from '../../constants';
 import useFocusCanvas from './useFocusCanvas';
