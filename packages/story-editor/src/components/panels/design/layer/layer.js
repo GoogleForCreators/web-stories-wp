@@ -29,7 +29,7 @@ import {
   THEME_CONSTANTS,
   Input,
 } from '@googleforcreators/design-system';
-import { useRef, memo, useState, useCallback } from '@googleforcreators/react';
+import { useRef, memo, useState } from '@googleforcreators/react';
 import {
   getDefinitionForType,
   getLayerName,
@@ -375,39 +375,40 @@ function Layer({ element }) {
     setNewLayerName(evt.target.value);
   };
 
-  const handleKeyDown = useCallback(
-    (evt) => {
-      if (evt.key === 'Escape') {
-        setNewLayerName(layerName);
-        setRenamableLayer(null);
-      }
+  const handleKeyDown = (evt) => {
+    if (evt.key === 'Escape') {
+      setNewLayerName(layerName);
+      setRenamableLayer(null);
+    }
 
-      if (evt.key === 'Enter') {
-        setRenamableLayer(null);
-        updateElementById({
-          elementId: element.id,
-          properties: { layerName: newLayerName },
-        });
-      }
-    },
-    [layerName, setRenamableLayer, updateElementById, element.id, newLayerName]
-  );
+    if (evt.key === 'Enter') {
+      setRenamableLayer(null);
+      updateElementById({
+        elementId: element.id,
+        properties: { layerName: newLayerName },
+      });
+    }
+  };
 
-  const handleBlur = useCallback(() => {
+  const handleBlur = () => {
     setRenamableLayer(null);
     updateElementById({
       elementId: element.id,
       properties: { layerName: newLayerName },
     });
-  }, [setRenamableLayer, updateElementById, element.id, newLayerName]);
+  };
+
+  // We need to prevent the pointer-down event from propagating to the
+  // reorderable when you click on the input. If not, the reorderable will
+  // move focus, which will blur the input, which will cancel renaming.
+  const stopPropagation = (evt) => evt.stopPropagation();
 
   const isLayerNamingEnabled = useFeature('layerNaming');
+  const isRenameable = renamableLayer?.elementId === element.id;
 
   return (
     <LayerContainer>
-      {renamableLayer?.elementId === element.id &&
-      isLayerNamingEnabled &&
-      !element.isBackground ? (
+      {isRenameable && isLayerNamingEnabled ? (
         <LayerInputWrapper>
           <LayerIconWrapper>
             <LayerIcon
@@ -424,6 +425,7 @@ function Layer({ element }) {
               onChange={handleChange}
               onKeyDown={handleKeyDown}
               onBlur={handleBlur}
+              onPointerDown={stopPropagation}
               hasFocus
             />
           </LayerInputDescription>
@@ -459,7 +461,7 @@ function Layer({ element }) {
           </LayerDescription>
         </LayerButton>
       )}
-      {!element.isBackground && !renamableLayer && (
+      {!element.isBackground && !isRenameable && (
         <ActionsContainer>
           <Tooltip title={__('Delete Layer', 'web-stories')} hasTail isDelayed>
             <LayerAction

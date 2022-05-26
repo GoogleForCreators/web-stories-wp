@@ -33,12 +33,12 @@ import getDefinitionForType from './getDefinitionForType';
  * @return {string} Layer name.
  */
 function getLayerName(element) {
-  if (element.isBackground) {
-    return __('Background', 'web-stories');
-  }
-
   if (element.layerName) {
     return element.layerName;
+  }
+
+  if (element.isBackground) {
+    return __('Background', 'web-stories');
   }
 
   return getDefinitionForType(element.type).getLayerText(element);
