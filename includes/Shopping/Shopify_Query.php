@@ -234,7 +234,7 @@ QUERY;
 		if ( isset( $result['errors'] ) ) {
 			try {
 				$error      = array_shift( $result['errors'] );
-				$error_code = $error['extensions']['code'];
+				$error_code = $error['extensions']['code'] ?? '';
 				$wp_error   = new WP_Error( 'rest_unknown', __( 'Error fetching products', 'web-stories' ), [ 'status' => 404 ] );
 				
 				// https://shopify.dev/api/storefront#status_and_error_codes.
