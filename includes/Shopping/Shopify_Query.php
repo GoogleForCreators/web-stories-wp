@@ -151,17 +151,18 @@ class Shopify_Query implements Product_Query {
 	 * @since 1.21.0
 	 *
 	 * @param string $search_term Search term to filter products by.
+	 * @param int    $per_page   Limit query.
 	 * @param string $orderby Sort collection by product attribute.
 	 * @param string $order Order sort attribute ascending or descending.
 	 * @return string The assembled GraphQL query.
 	 */
-	protected function get_products_query( string $search_term, string $orderby, string $order ): string {
+	protected function get_products_query( string $search_term, int $per_page, string $orderby, string $order ): string {
 		$search_string = empty( $search_term ) ? '*' : '*' . $search_term . '*';
 		$sortkey       = 'date' === $orderby ? 'CREATED_AT' : strtoupper( $orderby );
 		$reverse       = 'asc' === $order ? 'false' : 'true';
 		return <<<QUERY
 {
-  products(first: 100, sortKey: $sortkey, reverse: $reverse, query: "title:$search_string") {
+  products(first: $per_page, sortKey: $sortkey, reverse: $reverse, query: "title:$search_string") {
     edges {
       node {
         id
@@ -199,13 +200,14 @@ QUERY;
 	 * @since 1.21.0
 	 *
 	 * @param string $search_term Search term to filter products by.
+	 * @param int    $per_page   Limit query.
 	 * @param string $orderby Sort retrieved products by parameter.
 	 * @param string $order   Whether to order products in ascending or descending order.
 	 *                        Accepts 'asc' (ascending) or 'desc' (descending).
 	 * @return array|WP_Error Response data or error object on failure.
 	 */
-	protected function fetch_remote_products( string $search_term, string $orderby, string $order ) {
-		
+	protected function fetch_remote_products( string $search_term, int $per_page, string $orderby, string $order ) {
+
 		/**
 		 * Filters the Shopify products data TTL value.
 		 *
@@ -214,7 +216,7 @@ QUERY;
 		 * @param int $time Time to live (in seconds). Default is 5 minutes.
 		 */
 		$cache_ttl = apply_filters( 'web_stories_shopify_data_cache_ttl', 5 * MINUTE_IN_SECONDS );
-		$cache_key = 'web_stories_shopify_data_' . md5( $search_term . '-' . $orderby . '-' . $order );
+		$cache_key = 'web_stories_shopify_data_' . md5( $search_term . '-' . $per_page . '-' . $orderby . '-' . $order );
 
 		$data = get_transient( $cache_key );
 
@@ -222,7 +224,7 @@ QUERY;
 			return (array) json_decode( $data, true );
 		}
 
-		$query = $this->get_products_query( $search_term, $orderby, $order );
+		$query = $this->get_products_query( $search_term, $per_page, $orderby, $order );
 
 		$body = $this->execute_query( $query );
 
@@ -248,20 +250,21 @@ QUERY;
 		return $result;
 	}
 
-	
+
 	/**
 	 * Get products by search term.
 	 *
 	 * @since 1.21.0
 	 *
 	 * @param string $search_term Search term.
+	 * @param int    $per_page   Limit query.
 	 * @param string $orderby sort field for query.
 	 * @param string $order ASC or DESC.
 	 * @return Product[]|WP_Error
 	 */
-	public function get_search( string $search_term, string $orderby = 'date', string $order = 'desc' ) {
-		$result = $this->fetch_remote_products( $search_term, $orderby, $order );
-		
+	public function get_search( string $search_term, int $per_page = 100, string $orderby = 'date', string $order = 'desc' ) {
+		$result = $this->fetch_remote_products( $search_term, $per_page, $orderby, $order );
+
 		if ( is_wp_error( $result ) ) {
 			return $result;
 		}

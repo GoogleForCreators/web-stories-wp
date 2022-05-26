@@ -164,7 +164,7 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 		 * @var string $search_term
 		 */
 		$search_term = ! empty( $request['search'] ) ? $request['search'] : '';
-		
+
 		/**
 		 * Request context.
 		 *
@@ -175,12 +175,19 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 		/**
 		 * Request context.
 		 *
+		 * @var int $per_page
+		 */
+		$per_page = ! empty( $request['per_page'] ) ? $request['per_page'] : 100;
+
+		/**
+		 * Request context.
+		 *
 		 * @var string $order
 		 */
 		$order = ! empty( $request['order'] ) ? $request['order'] : 'desc';
-		
-		
-		$query_result = $query->get_search( $search_term, $orderby, $order );
+
+
+		$query_result = $query->get_search( $search_term, $per_page, $orderby, $order );
 		if ( is_wp_error( $query_result ) ) {
 			return $query_result;
 		}
@@ -415,6 +422,9 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 	 */
 	public function get_collection_params(): array {
 		$query_params = parent::get_collection_params();
+
+
+		$query_params['per_page']['default'] = 100;
 
 		$query_params['orderby'] = [
 			'description' => __( 'Sort collection by product attribute.', 'web-stories' ),

@@ -32,11 +32,12 @@ class Mock_Vendor_Error implements Product_Query {
 	 * @since 1.21.0
 	 *
 	 * @param string $search_term Search term.
+	 * @param int $per_page   Limit query
 	 * @param string $orderby Sort collection by product attribute.
 	 * @param string $order Order sort attribute ascending or descending.
 	 * @return Product[]|WP_Error
 	 */
-	public function get_search( string $search_term, string $orderby, string $order ) {
+	public function get_search( string $search_term, int $per_page, string $orderby, string $order ) {
 		return new WP_Error( 'mock_error', 'Mock error', [ 'status' => 400 ] );
 	}
 }

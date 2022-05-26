@@ -32,13 +32,14 @@ class Mock_Vendor implements Product_Query {
 	 * @since 1.21.0
 	 *
 	 * @param string $search_term Search term.
+	 * @param int $per_page   Limit query
 	 * @param string $orderby Sort collection by product attribute.
 	 * @param string $order Order sort attribute ascending or descending.
 	 * @return Product[]|WP_Error
 	 */
-	public function get_search( string $search_term, string $orderby, string $order ) {
+	public function get_search( string $search_term, int $per_page, string $orderby, string $order ) {
 		$products = [];
-		for ( $x = 0; $x < 10; $x ++ ) {
+		for ( $x = 0; $x < $per_page; $x ++ ) {
 			$products[] = new Product(
 				[
 					'id'             => wp_unique_id(),
