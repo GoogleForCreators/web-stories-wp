@@ -134,7 +134,7 @@ export default function useStoryView({
         search_term: searchKeyword,
         search_filter: filter,
         search_author_filter: authorFilterId,
-        search_taxonomy_filter: taxonomy.filterId,
+        search_taxonomy_filter: taxonomy?.filterId,
         search_order: sortDirection,
         search_orderby: sort,
         search_view: viewStyle,
@@ -147,7 +147,7 @@ export default function useStoryView({
     sort,
     viewStyle,
     authorFilterId,
-    taxonomy.filterId,
+    taxonomy?.filterId,
   ]);
 
   useEffect(() => {
