@@ -60,4 +60,27 @@ describe('reducer', () => {
     const state = reducer(initial_state, args);
     expect(state.officers.filterId).toBeNull();
   });
+
+  it('should return the state if dispatching an action thats not supported', () => {
+    const initial_state = {
+      teams: {
+        filterId: 6,
+        name: 'Noble',
+      },
+    };
+
+    const args = {
+      type: 'RENAME_TEAM',
+      payload: {
+        filter: 'teams',
+        name: 'Banished',
+      },
+    };
+
+    const state = reducer(initial_state, args);
+    expect(state.teams).toMatchObject({
+      filterId: 6,
+      name: 'Noble',
+    });
+  });
 });
