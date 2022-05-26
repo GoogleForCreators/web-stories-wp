@@ -28,6 +28,8 @@ import { uniqueEntriesByKey } from '@googleforcreators/design-system';
 import { ApiContext } from '../app/api/apiProvider';
 import { defaultStoriesState } from '../app/reducer/stories';
 import formattedStoriesArray from '../dataUtils/formattedStoriesArray';
+import formattedTaxonomiesArray from '../dataUtils/formattedTaxonomiesArray';
+import formattedTaxonomyTermsObject from '../dataUtils/formattedTaxonomyTermsObject';
 import formattedTemplatesArray from '../dataUtils/formattedTemplatesArray';
 import { STORY_STATUSES, STORY_SORT_OPTIONS } from '../constants/stories';
 import { groupTemplatesByTag } from '../testUtils';
@@ -77,11 +79,18 @@ export default function ApiProviderFixture({ children }) {
   const taxonomyApi = useMemo(
     () => ({
       getTaxonomies: () => {
-        const taxonomies = [];
-        for (const story of formattedStoriesArray) {
-          taxonomies.push(...story.taxonomies);
+        return Promise.resolve(formattedTaxonomiesArray);
+      },
+      getTaxonomyTerm: (path, args) => {
+        const { search } = args;
+        let response = formattedTaxonomyTermsObject[path];
+        if (search) {
+          response = response.filter((r) => {
+            const term = r.name.toLowerCase();
+            return term.length && term.includes(search.toLowerCase());
+          });
         }
-        return Promise.resolve(uniqueEntriesByKey(taxonomies, 'id'));
+        return Promise.resolve(response);
       },
     }),
     []
