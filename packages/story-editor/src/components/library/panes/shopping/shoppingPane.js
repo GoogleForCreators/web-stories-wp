@@ -115,19 +115,18 @@ function ShoppingPane(props) {
   const debouncedProductsQuery = useDebouncedCallback(getProductsByQuery, 300);
 
   useEffect(() => {
+    if (isShoppingEnabled) {
+      debouncedProductsQuery(searchTerm);
+    }
+  }, [debouncedProductsQuery, isShoppingEnabled, searchTerm]);
+
+  useEffect(() => {
     if (!isShoppingEnabled) {
       setProducts(currentPageProducts?.map(({ product }) => product));
       setIsLoading(false);
       setLoaded(true);
-      return;
     }
-    debouncedProductsQuery(searchTerm);
-  }, [
-    searchTerm,
-    debouncedProductsQuery,
-    isShoppingEnabled,
-    currentPageProducts,
-  ]);
+  }, [currentPageProducts, isShoppingEnabled]);
 
   const handleInputKeyPress = useCallback((event) => {
     const { key } = event;
