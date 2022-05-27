@@ -255,8 +255,9 @@ QUERY;
 	 * @since 1.21.0
 	 *
 	 * @param string $search_term Search term.
-	 * @param string $orderby sort field for query.
-	 * @param string $order ASC or DESC.
+	 * @param string $orderby Sort retrieved products by parameter. Default 'date'.
+	 * @param string $order   Whether to order products in ascending or descending order.
+	 *                        Accepts 'asc' (ascending) or 'desc' (descending). Default 'desc'.
 	 * @return Product[]|WP_Error
 	 */
 	public function get_search( string $search_term, string $orderby = 'date', string $order = 'desc' ) {
