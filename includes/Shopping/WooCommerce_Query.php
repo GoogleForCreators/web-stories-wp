@@ -61,10 +61,14 @@ class WooCommerce_Query implements Product_Query {
 	public function get_search( string $search_term ) {
 		$status = $this->woocommerce->get_plugin_status();
 
-		if ( ! $status['active'] ) {
+		if ( ! $status['installed'] ) {
 			return new WP_Error( 'rest_woocommerce_not_installed', __( 'WooCommerce is not installed.', 'web-stories' ), [ 'status' => 400 ] );
 		}
-
+	  
+		if ( ! $status['active'] ) {
+			return new WP_Error( 'rest_woocommerce_not_activated', __( 'WooCommerce is not activated.', 'web-stories' ), [ 'status' => 400 ] );
+		}
+		 
 		$results = [];
 
 		/**
