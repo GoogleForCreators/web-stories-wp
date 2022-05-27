@@ -78,6 +78,12 @@ export const HelperText = styled(Text)`
   color: ${({ theme }) => theme.colors.fg.tertiary};
 `;
 
+export const ConnectionHelperText = styled(Text)`
+  padding-top: 12px;
+  color: ${({ hasError, theme }) =>
+    hasError ? theme.colors.fg.negative : theme.colors.fg.tertiary};
+`;
+
 export const CenterMutedText = styled(Text)`
   color: ${({ theme }) => theme.colors.fg.tertiary};
   text-align: center;
@@ -177,6 +183,11 @@ export const LogoMenuButton = styled(Button).attrs({
 
 export const SaveButton = styled(Button)`
   height: 36px;
+`;
+
+export const TestConnectionButton = styled(Button)`
+  height: 36px;
+  margin-top: 12px;
 `;
 
 export const InlineForm = styled.div`
