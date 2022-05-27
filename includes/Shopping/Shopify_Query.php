@@ -232,33 +232,28 @@ QUERY;
 		$result = json_decode( $body, true );
 
 		if ( isset( $result['errors'] ) ) {
-			$wp_error = new WP_Error();
-
-			try {
-				$error      = array_shift( $result['errors'] );
-				$error_code = $error['extensions']['code'] ?? '';
-				
-				// https://shopify.dev/api/storefront#status_and_error_codes.
-				switch ( $error_code ) {
-					case 'THROTTLED':
-						$wp_error->add( 'rest_throttled', __( 'API rate limit exceeded. Try again later.', 'web-stories' ), [ 'status' => 429 ] );
-						break;
-					case 'ACCESS_DENIED':
-						$wp_error->add( 'rest_invalid_credentials', __( 'Invalid API credentials.', 'web-stories' ), [ 'status' => 401 ] );
-						break;
-					case 'SHOP_INACTIVE':
-						$wp_error->add( 'rest_inactive_shop', __( 'Inactive shop.', 'web-stories' ), [ 'status' => 403 ] );
-						break;
-					case 'INTERNAL_SERVER_ERROR':
-						$wp_error->add( 'rest_internal_error', __( 'The store experienced an internal server error', 'web-stories' ), [ 'status' => 500 ] );
-						break;
-					default:
-						$wp_error->add( 'rest_unknown', __( 'Error fetching products', 'web-stories' ), [ 'status' => 500 ] );
-				}           
-			} catch ( \Exception $e ) { // phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedCatch
-				// no-op.
-			}
-
+			$wp_error   = new WP_Error();
+			$error      = array_shift( $result['errors'] );
+			$error_code = $error['extensions']['code'] ?? '';
+			
+			// https://shopify.dev/api/storefront#status_and_error_codes.
+			switch ( $error_code ) {
+				case 'THROTTLED':
+					$wp_error->add( 'rest_throttled', __( 'API rate limit exceeded. Try again later.', 'web-stories' ), [ 'status' => 429 ] );
+					break;
+				case 'ACCESS_DENIED':
+					$wp_error->add( 'rest_invalid_credentials', __( 'Invalid API credentials.', 'web-stories' ), [ 'status' => 401 ] );
+					break;
+				case 'SHOP_INACTIVE':
+					$wp_error->add( 'rest_inactive_shop', __( 'Inactive shop.', 'web-stories' ), [ 'status' => 403 ] );
+					break;
+				case 'INTERNAL_SERVER_ERROR':
+					$wp_error->add( 'rest_internal_error', __( 'The store experienced an internal server error', 'web-stories' ), [ 'status' => 500 ] );
+					break;
+				default:
+					$wp_error->add( 'rest_unknown', __( 'Error fetching products', 'web-stories' ), [ 'status' => 500 ] );
+			}           
+		
 			return $wp_error;
 		}
 
