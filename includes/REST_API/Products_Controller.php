@@ -37,7 +37,7 @@ use WP_REST_Response;
 use WP_REST_Server;
 
 /**
- * Class to access publisher logos via the REST API.
+ * Class to access products via the REST API.
  *
  * @since 1.20.0
  */
@@ -277,7 +277,7 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 	}
 
 	/**
-	 * Retrieves the publisher logo's schema, conforming to JSON Schema.
+	 * Retrieves the product schema, conforming to JSON Schema.
 	 *
 	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
 	 *
@@ -292,7 +292,7 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 
 		$schema = [
 			'$schema'    => 'http://json-schema.org/draft-04/schema#',
-			'title'      => 'publisher-logo',
+			'title'      => 'product',
 			'type'       => 'object',
 			'properties' => [
 				'productId'            => [
