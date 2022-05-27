@@ -89,13 +89,6 @@ function ShoppingPane(props) {
 
   const getProductsByQuery = useCallback(
     async (value = '') => {
-      if (!isShoppingEnabled) {
-        setProducts(currentPageProducts?.map(({ product }) => product));
-        setIsLoading(false);
-        setLoaded(true);
-        return;
-      }
-
       try {
         setIsLoading(true);
         setProducts(await getProducts(value));
@@ -106,7 +99,7 @@ function ShoppingPane(props) {
         setLoaded(true);
       }
     },
-    [getProducts, isShoppingEnabled, currentPageProducts]
+    [getProducts]
   );
 
   const onSearch = useCallback(
@@ -121,10 +114,20 @@ function ShoppingPane(props) {
 
   const debouncedProductsQuery = useDebouncedCallback(getProductsByQuery, 300);
 
-  useEffect(
-    () => debouncedProductsQuery(searchTerm),
-    [searchTerm, debouncedProductsQuery]
-  );
+  useEffect(() => {
+    if (!isShoppingEnabled) {
+      setProducts(currentPageProducts?.map(({ product }) => product));
+      setIsLoading(false);
+      setLoaded(true);
+      return;
+    }
+    debouncedProductsQuery(searchTerm);
+  }, [
+    searchTerm,
+    debouncedProductsQuery,
+    isShoppingEnabled,
+    currentPageProducts,
+  ]);
 
   const handleInputKeyPress = useCallback((event) => {
     const { key } = event;
