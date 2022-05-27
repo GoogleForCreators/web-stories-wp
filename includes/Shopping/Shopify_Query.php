@@ -235,7 +235,7 @@ QUERY;
 			$wp_error = new WP_Error();
 			
 			foreach ( $result['errors'] as $error ) {
-				$error_code = $error['extensions']['code'] ?? '';
+				$error_code = $error['extensions']['code'];
 				// https://shopify.dev/api/storefront#status_and_error_codes.
 				switch ( $error_code ) {
 					case 'THROTTLED':
