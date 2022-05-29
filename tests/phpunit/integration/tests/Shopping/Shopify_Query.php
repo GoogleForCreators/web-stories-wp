@@ -314,15 +314,15 @@ class Shopify_Query extends DependencyInjectedTestCase {
 	*/
 	public function data_test_get_search_extensions_code_response(): array {
 		return [
-			'THROTTLED'     => [
+			'THROTTLED'             => [
 				'throttled',
 				'rest_throttled',
 			],
-			'ACCESS_DENIED' => [
+			'ACCESS_DENIED'         => [
 				'access_denied',
 				'rest_invalid_credentials',
 			],
-			'SHOP_INACTIVE' => [
+			'SHOP_INACTIVE'         => [
 				'shop_inactive',
 				'rest_inactive_shop',
 			],
@@ -331,7 +331,7 @@ class Shopify_Query extends DependencyInjectedTestCase {
 				'internal_server_error',
 				'rest_internal_error',
 			],
-			'UKKNOWN_ERROR' => [
+			'UKKNOWN_ERROR'         => [
 				'unknown',
 				'rest_unknown',
 			],
