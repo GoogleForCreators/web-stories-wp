@@ -111,6 +111,24 @@ class Shopify_Query extends DependencyInjectedTestCase {
 	}
 
 	/**
+	 * Mock THROTTLED response.
+	 *
+	 * @param mixed  $preempt Whether to preempt an HTTP request's return value. Default false.
+	 * @param mixed  $r       HTTP request arguments.
+	 * @return mixed Response data.
+	 */
+	public function mock_response_throttled( $preempt, $r ) {
+		++$this->request_count;
+		$this->request_body = $r['body'];
+		return [
+			'response' => [
+				'code' => 200,
+			],
+			'body'     => file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/shopify_response_throttled.json' ),
+		];
+	}
+
+	/**
 	 * Mock no results response.
 	 *
 	 * @param mixed  $preempt Whether to preempt an HTTP request's return value. Default false.
@@ -287,5 +305,25 @@ class Shopify_Query extends DependencyInjectedTestCase {
 		$this->assertCount( 0, $actual );
 		$this->assertSame( 1, $this->request_count );
 		$this->assertStringContainsString( 'query: "title:*some search term*"', $this->request_body );
+	}
+
+	/**
+	 * @covers ::fetch_remote_products
+	 * @covers ::get_search
+	 * @covers ::get_products_query
+	 * @covers ::execute_query
+	 */
+	public function test_get_search_throttled_response(): void {
+		update_option( Settings::SETTING_NAME_SHOPIFY_HOST, 'example.myshopify.com' );
+		update_option( Settings::SETTING_NAME_SHOPIFY_ACCESS_TOKEN, '1234' );
+
+		add_filter( 'pre_http_request', [ $this, 'mock_response_throttled' ], 10, 2 );
+
+		$actual = $this->instance->get_search( '' );
+
+		remove_filter( 'pre_http_request', [ $this, 'mock_response_throttled' ] );
+
+		$this->assertWPError( $actual );
+		$this->assertSame( 'rest_throttled', $actual->get_error_code() );
 	}
 }
