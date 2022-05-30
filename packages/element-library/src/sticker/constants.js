@@ -26,6 +26,7 @@ import { SHARED_DEFAULT_ATTRIBUTES } from '../shared';
 export const hasEditMode = false;
 
 export const hasDesignMenu = true;
+export const hasDuplicateMenu = true;
 
 export const isMedia = false;
 
