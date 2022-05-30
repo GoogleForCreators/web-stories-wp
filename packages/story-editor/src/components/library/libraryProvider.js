@@ -60,16 +60,14 @@ function LibraryProvider({ children }) {
     actions: { getMedia, getCustomPageTemplates },
   } = useAPI();
 
-  const { currentPageProducts } = useStory(({ state: { currentPage } }) => ({
-    currentPageProducts: currentPage?.elements?.filter(
-      ({ type }) => type === 'product'
-    ),
+  const { hasProducts } = useStory(({ state: { currentPage } }) => ({
+    hasProducts: currentPage?.elements?.some(({ type }) => type === 'product'),
   }));
 
   const isShoppingIntegrationEnabled = useFeature('shoppingIntegration');
   const isShoppingEnabled =
     ('none' !== shoppingProvider && isShoppingIntegrationEnabled) ||
-    currentPageProducts?.length > 0;
+    hasProducts;
   const showElementsTab = useFeature('showElementsTab');
 
   const supportsCustomTemplates = Boolean(getCustomPageTemplates);
