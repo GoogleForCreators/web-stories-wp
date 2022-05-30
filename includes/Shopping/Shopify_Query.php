@@ -223,8 +223,9 @@ QUERY;
 		 *
 		 * @param int $time Time to live (in seconds). Default is 5 minutes.
 		 */
-		$cache_ttl = apply_filters( 'web_stories_shopify_data_cache_ttl', 5 * MINUTE_IN_SECONDS );
-		$cache_key = 'web_stories_shopify_data_' . md5( $search_term . '-' . $after . '-' . $per_page . '-' . $orderby . '-' . $order );
+		$cache_ttl  = apply_filters( 'web_stories_shopify_data_cache_ttl', 5 * MINUTE_IN_SECONDS );
+		$cache_args = compact( 'search_term', 'after', 'per_page', 'orderby', 'order' );
+		$cache_key  = 'web_stories_shopify_data_' . md5( wp_json_encode( $cache_args ) );
 
 		$data = get_transient( $cache_key );
 

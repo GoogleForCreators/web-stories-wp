@@ -184,16 +184,19 @@ class Shopify_Query extends DependencyInjectedTestCase {
 	 */
 	public function test_fetch_remote_products_returns_from_transient(): void {
 		$search_term = '';
-		$page        = 1;
+		$after       = '';
 		$per_page    = 100;
 		$orderby     = 'date';
 		$order       = 'desc';
 
 		update_option( Settings::SETTING_NAME_SHOPIFY_HOST, 'example.myshopify.com' );
 		update_option( Settings::SETTING_NAME_SHOPIFY_ACCESS_TOKEN, '1234' );
-		set_transient( 'web_stories_shopify_data_' . md5( $search_term . '--' . $per_page . '-' . $orderby . '-' . $order ), wp_json_encode( [ 'data' => [ 'products' => [ 'edges' => [] ] ] ] ) );
 
-		$actual = $this->instance->get_search( '', $page, $per_page, $orderby, $order );
+		$cache_args = compact( 'search_term', 'after', 'per_page', 'orderby', 'order' );
+		$cache_key  = 'web_stories_shopify_data_' . md5( wp_json_encode( $cache_args ) );
+		set_transient( $cache_key, wp_json_encode( [ 'data' => [ 'products' => [ 'edges' => [] ] ] ] ) );
+
+		$actual = $this->instance->get_search( '', 1, $per_page, $orderby, $order );
 
 		$this->assertNotWPError( $actual );
 		$this->assertSame( [], $actual );
