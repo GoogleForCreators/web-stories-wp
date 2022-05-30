@@ -157,7 +157,7 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 		if ( ! $query ) {
 			$shopping_provider = \strval( $this->settings->get_setting( Settings::SETTING_NAME_SHOPPING_PROVIDER ) );
 			if ( 'none' === $shopping_provider ) {
-				return new WP_Error( 'rest_shopping_provider', __( 'Please setup shopping provider', 'web-stories' ), [ 'status' => 400 ] );
+				return new WP_Error( 'rest_no_shopping_provider', __( 'No shopping provider set up.', 'web-stories' ), [ 'status' => 400 ] );
 			}
 			$query = $this->shopping_vendors->get_vendor_class( $shopping_provider );
 			if ( ! $query ) {
