@@ -192,8 +192,8 @@ class Shopify_Query extends DependencyInjectedTestCase {
 		update_option( Settings::SETTING_NAME_SHOPIFY_HOST, 'example.myshopify.com' );
 		update_option( Settings::SETTING_NAME_SHOPIFY_ACCESS_TOKEN, '1234' );
 
-		$cache_args = compact( 'search_term', 'after', 'per_page', 'orderby', 'order' );
-		$cache_key  = 'web_stories_shopify_data_' . md5( wp_json_encode( $cache_args ) );
+		$cache_args = (string) wp_json_encode( compact( 'search_term', 'after', 'per_page', 'orderby', 'order' ) );
+		$cache_key  = 'web_stories_shopify_data_' . md5( $cache_args );
 		set_transient( $cache_key, wp_json_encode( [ 'data' => [ 'products' => [ 'edges' => [] ] ] ] ) );
 
 		$actual = $this->instance->get_search( '', 1, $per_page, $orderby, $order );
