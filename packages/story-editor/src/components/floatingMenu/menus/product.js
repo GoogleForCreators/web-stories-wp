@@ -18,12 +18,14 @@
  */
 import { __ } from '@googleforcreators/i18n';
 import { memo, useCallback } from '@googleforcreators/react';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
  */
 import { Separator, Dismiss, Trash } from '../elements';
 import { useStory } from '../../../app/story';
+import { useConfig } from '../../../app/config';
 import ProductDropdown from '../../library/panes/shopping/productDropdown';
 
 const FloatingProductMenu = memo(function FloatingProductMenu() {
@@ -34,6 +36,11 @@ const FloatingProductMenu = memo(function FloatingProductMenu() {
       deleteSelectedElements: actions.deleteSelectedElements,
     }));
 
+  const { shoppingProvider } = useConfig();
+  const isShoppingIntegrationEnabled = useFeature('shoppingIntegration');
+  const isShoppingEnabled =
+    'none' !== shoppingProvider && isShoppingIntegrationEnabled;
+
   const setProduct = useCallback(
     (product) => updateSelectedElements({ properties: { product } }),
     [updateSelectedElements]
@@ -41,11 +48,15 @@ const FloatingProductMenu = memo(function FloatingProductMenu() {
 
   return (
     <>
-      <ProductDropdown
-        product={selectedElement?.product}
-        setProduct={setProduct}
-      />
-      <Separator />
+      {isShoppingEnabled && (
+        <>
+          <ProductDropdown
+            product={selectedElement?.product}
+            setProduct={setProduct}
+          />
+          <Separator />
+        </>
+      )}
       <Trash
         title={__('Remove product', 'web-stories')}
         handleRemove={deleteSelectedElements}
