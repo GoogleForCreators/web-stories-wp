@@ -302,7 +302,7 @@ QUERY;
 	 * @param string $orderby Sort retrieved products by parameter. Default 'date'.
 	 * @param string $order   Whether to order products in ascending or descending order.
 	 *                        Accepts 'asc' (ascending) or 'desc' (descending). Default 'desc'.
-	 * @return Product[]|WP_Error
+	 * @return array|WP_Error
 	 */
 	public function get_search( string $search_term, int $page = 1, int $per_page = 100, string $orderby = 'date', string $order = 'desc' ) {
 		$result = $this->fetch_remote_products( $search_term, $page, $per_page, $orderby, $order );
@@ -311,7 +311,9 @@ QUERY;
 			return $result;
 		}
 
-		$results = [];
+		$products = [];
+
+		$has_next_page = $result['data']['products']['pageInfo']['hasNextPage'] ?? false;
 
 		foreach ( $result['data']['products']['edges'] as $edge ) {
 			$product = $edge['node'];
@@ -331,7 +333,7 @@ QUERY;
 			// In this case, we can fall back to a manually constructed product URL.
 			$product_url = $product['onlineStoreUrl'] ?? sprintf( 'https://%1$s/products/%2$s/', $this->get_host(), $product['handle'] );
 
-			$results[] = new Product(
+			$products[] = new Product(
 				[
 					'id'             => $product['id'],
 					'title'          => $product['title'],
@@ -349,6 +351,6 @@ QUERY;
 			);
 		}
 
-		return $results;
+		return compact( 'products', 'has_next_page' );
 	}
 }

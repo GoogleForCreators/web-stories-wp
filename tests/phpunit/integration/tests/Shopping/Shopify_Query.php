@@ -194,12 +194,30 @@ class Shopify_Query extends DependencyInjectedTestCase {
 
 		$cache_args = (string) wp_json_encode( compact( 'search_term', 'after', 'per_page', 'orderby', 'order' ) );
 		$cache_key  = 'web_stories_shopify_data_' . md5( $cache_args );
-		set_transient( $cache_key, wp_json_encode( [ 'data' => [ 'products' => [ 'edges' => [] ] ] ] ) );
+		set_transient(
+			$cache_key,
+			wp_json_encode(
+				[
+					'data' => [
+						'products' => [
+							'edges'    => [],
+							'pageInfo' => [ 'hasNextPage' => false ],
+						],
+					],
+				] 
+			) 
+		);
 
 		$actual = $this->instance->get_search( '', 1, $per_page, $orderby, $order );
 
 		$this->assertNotWPError( $actual );
-		$this->assertSame( [], $actual );
+		$this->assertSameSets(
+			[
+				'products'      => [],
+				'has_next_page' => false,
+			],
+			$actual 
+		);
 		$this->assertSame( 0, $this->request_count );
 	}
 
@@ -220,12 +238,13 @@ class Shopify_Query extends DependencyInjectedTestCase {
 		remove_filter( 'pre_http_request', [ $this, 'mock_response_default' ] );
 
 		$this->assertNotWPError( $actual );
-		$this->assertNotEmpty( $actual );
-		$this->assertCount( 3, $actual );
+		$this->assertArrayHasKey( 'products', $actual );
+		$this->assertNotEmpty( $actual['products'] );
+		$this->assertCount( 3, $actual['products'] );
 		$this->assertSame( 1, $this->request_count );
 		$this->assertStringContainsString( 'query: "title:*"', $this->request_body );
 
-		foreach ( $actual as $product ) {
+		foreach ( $actual['products'] as $product ) {
 			$this->assertInstanceOf( Product::class, $product );
 
 			$this->assertMatchesProductSchema( json_decode( wp_json_encode( $product ), true ) );
@@ -290,8 +309,9 @@ class Shopify_Query extends DependencyInjectedTestCase {
 		remove_filter( 'pre_http_request', [ $this, 'mock_response_no_results' ] );
 
 		$this->assertNotWPError( $actual );
-		$this->assertEmpty( $actual );
-		$this->assertCount( 0, $actual );
+		$this->assertArrayHasKey( 'products', $actual );
+		$this->assertEmpty( $actual['products'] );
+		$this->assertCount( 0, $actual['products'] );
 		$this->assertSame( 1, $this->request_count );
 		$this->assertStringContainsString( 'query: "title:*some search term*"', $this->request_body );
 	}

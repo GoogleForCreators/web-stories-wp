@@ -54,7 +54,7 @@ class Mock_Vendor implements Product_Query {
 				]
 			);
 		}
-
-		return $products;
+		$has_next_page = 1;
+		return compact( 'products', 'has_next_page' );
 	}
 }

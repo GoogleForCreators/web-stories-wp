@@ -195,19 +195,27 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 		 */
 		$order = ! empty( $request['order'] ) ? $request['order'] : 'desc';
 
-
 		$query_result = $query->get_search( $search_term, $page, $per_page, $orderby, $order );
 		if ( is_wp_error( $query_result ) ) {
 			return $query_result;
 		}
 
 		$products = [];
-		foreach ( $query_result as $product ) {
+		foreach ( $query_result['products'] as $product ) {
 			$data       = $this->prepare_item_for_response( $product, $request );
 			$products[] = $this->prepare_response_for_collection( $data );
 		}
 
-		return rest_ensure_response( $products );
+		/**
+		 * Response object.
+		 *
+		 * @var WP_REST_Response $response
+		 */
+		$response = rest_ensure_response( $products );
+
+		$response->header( 'X-WP-HAS-NEXT-PAGE', (string) $query_result['has_next_page'] );
+
+		return $response;
 	}
 
 	/**

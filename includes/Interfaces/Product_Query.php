@@ -26,7 +26,6 @@
 
 namespace Google\Web_Stories\Interfaces;
 
-use Google\Web_Stories\Shopping\Product;
 use WP_Error;
 
 /**
@@ -43,7 +42,7 @@ interface Product_Query {
 	 * @param int    $per_page   Limit query.
 	 * @param string $orderby Sort collection by product attribute.
 	 * @param string $order Order sort attribute ascending or descending.
-	 * @return Product[]|WP_Error
+	 * @return array|WP_Error
 	 */
 	public function get_search( string $search_term, int $page, int $per_page, string $orderby, string $order);
 }

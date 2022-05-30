@@ -54,6 +54,7 @@ class Mock_Vendor_Invalid {
 			);
 		}
 
-		return $products;
+		$has_next_page = 1;
+		return compact( 'products', 'has_next_page' );
 	}
 }
