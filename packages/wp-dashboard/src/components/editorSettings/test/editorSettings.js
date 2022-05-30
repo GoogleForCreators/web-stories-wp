@@ -123,6 +123,7 @@ function createProviderValues({
         pages: '/wp/v2/pages/',
         publisherLogos: '/web-stories/v1/publisher-logos/',
       },
+      plugins: { siteKit: {}, woocommerce: {} },
     },
     api: {
       state: {
