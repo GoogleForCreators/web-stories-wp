@@ -66,6 +66,12 @@ const ColorInputsWrapper = styled.div`
   gap: ${({ isInDesignMenu }) => (isInDesignMenu ? 0 : 6)}px;
 `;
 
+const Space = styled.div`
+  width: 8px;
+  height: 1px;
+  background-color: ${({ theme }) => theme.colors.divider.primary};
+`;
+
 // 10px comes from divider / 2
 const InputWrapper = styled.div`
   ${({ hasInputs }) => hasInputs && `width: calc(53% - 10px);`}
@@ -131,11 +137,6 @@ const Color = forwardRef(function Color(
       ? TOOLTIP_PLACEMENT.BOTTOM
       : TOOLTIP_PLACEMENT.BOTTOM_START;
 
-  const Space = styled.div`
-    width: 8px;
-    height: 1px;
-    background-color: ${({ theme }) => theme.colors.divider.primary};
-  `;
   // Sometimes there's more than 1 color to an element.
   // When there's multiple colors the input displays "Mixed" (in english) and takes up a different amount of space.
   // By checking here to ignore that value based on mixed colors we prevent visual spill over of content.
