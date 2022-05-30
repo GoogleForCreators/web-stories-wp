@@ -77,7 +77,7 @@ function ProductList({
             <Product
               product={product}
               isOnPage={onPageProducts.some(
-                (item) => item.productId === product?.productId
+                (item) => item.product.productId === product?.productId
               )}
               onClick={onClick}
               onFocus={(evt) => {

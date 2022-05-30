@@ -35,7 +35,7 @@ import { uniqueEntriesByKey } from '@googleforcreators/design-system';
  */
 import { useInsertElement, useInsertTextSet } from '../canvas';
 import { useHighlights } from '../../app/highlights';
-import { useConfig, useAPI } from '../../app';
+import { useConfig, useAPI, useStory } from '../../app';
 import Context from './context';
 import {
   ELEMS,
@@ -54,11 +54,20 @@ const LIBRARY_TAB_IDS = new Set(
 );
 
 function LibraryProvider({ children }) {
-  const { showMedia3p, canViewDefaultTemplates } = useConfig();
+  const { showMedia3p, shoppingProvider, canViewDefaultTemplates } =
+    useConfig();
   const {
     actions: { getMedia, getCustomPageTemplates },
   } = useAPI();
-  const isShoppingEnabled = useFeature('shoppingIntegration');
+
+  const { hasProducts } = useStory(({ state: { currentPage } }) => ({
+    hasProducts: currentPage?.elements?.some(({ type }) => type === 'product'),
+  }));
+
+  const isShoppingIntegrationEnabled = useFeature('shoppingIntegration');
+  const isShoppingEnabled =
+    ('none' !== shoppingProvider && isShoppingIntegrationEnabled) ||
+    hasProducts;
   const showElementsTab = useFeature('showElementsTab');
 
   const supportsCustomTemplates = Boolean(getCustomPageTemplates);
@@ -228,6 +237,13 @@ function LibraryProvider({ children }) {
       mounted = false;
     };
   }, [tab, textSets]);
+
+  useEffect(() => {
+    // Set tab back to first tab if on shopping and shopping is disabled.
+    if (tab === SHOPPING.id && !isShoppingEnabled) {
+      setTab(tabs[0].id);
+    }
+  }, [isShoppingEnabled, tab, tabs]);
 
   return <Context.Provider value={state}>{children}</Context.Provider>;
 }

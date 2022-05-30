@@ -16,9 +16,13 @@
 /**
  * External dependencies
  */
-import { useFeature } from 'flagged';
 import { __ } from '@googleforcreators/i18n';
-import { useCallback, useEffect, useState } from '@googleforcreators/react';
+import {
+  useCallback,
+  useEffect,
+  useState,
+  useMemo,
+} from '@googleforcreators/react';
 import { Datalist } from '@googleforcreators/design-system';
 import PropTypes from 'prop-types';
 
@@ -28,10 +32,12 @@ import PropTypes from 'prop-types';
 import { useStory, useAPI } from '../../../../app';
 
 function ProductDropdown({ product, setProduct, ...rest }) {
-  const isShoppingIntegrationEnabled = useFeature('shoppingIntegration');
-
+  const initialProducts = useMemo(
+    () => [{ id: product?.productId, name: product?.productTitle, product }],
+    [product]
+  );
   const [isLoading, setIsLoading] = useState(false);
-  const [initialOptions, setInitialOptions] = useState([]);
+  const [initialOptions, setInitialOptions] = useState(initialProducts);
 
   const {
     actions: { getProducts },
@@ -65,12 +71,12 @@ function ProductDropdown({ product, setProduct, ...rest }) {
         const products = await getProductsByQuery();
         setInitialOptions(products);
       } catch (err) {
-        setInitialOptions([]);
+        setInitialOptions(initialProducts);
       } finally {
         setIsLoading(false);
       }
     })();
-  }, [getProductsByQuery]);
+  }, [getProductsByQuery, initialProducts]);
 
   const dropDownParams = {
     hasSearch: true,
@@ -79,15 +85,10 @@ function ProductDropdown({ product, setProduct, ...rest }) {
     getOptionsByQuery: getProductsByQuery,
     selectedId: product?.productId,
     dropDownLabel: __('Product', 'web-stories'),
-    placeholder: isLoading ? __('Loading…', 'web-stories') : '',
-    disabled: isLoading ? true : isSaving,
-    primaryOptions: isLoading ? [] : initialOptions,
+    disabled: isSaving,
+    primaryOptions: isLoading ? initialProducts : initialOptions,
     zIndex: 10,
   };
-
-  if (!isShoppingIntegrationEnabled) {
-    return null;
-  }
 
   return (
     <Datalist.DropDown

@@ -142,7 +142,7 @@ function EditorSettings() {
 
   const {
     capabilities: { canUploadFiles, canManageSettings } = {},
-    siteKitStatus = {},
+    plugins: { siteKit = {}, woocommerce = {} },
     maxUpload,
     maxUploadFormatted,
     allowedImageMimeTypes,
@@ -332,7 +332,7 @@ function EditorSettings() {
                   handleUpdateAnalyticsId={handleUpdateGoogleAnalyticsId}
                   usingLegacyAnalytics={usingLegacyAnalytics}
                   handleMigrateLegacyAnalytics={handleMigrateLegacyAnalytics}
-                  siteKitStatus={siteKitStatus}
+                  siteKitStatus={siteKit}
                 />
                 <PublisherLogoSettings
                   onAddLogos={handleAddLogos}
@@ -383,7 +383,7 @@ function EditorSettings() {
                   publisherId={adSensePublisherId}
                   adSenseSlotId={adSenseSlotId}
                   adManagerSlotId={adManagerSlotId}
-                  siteKitStatus={siteKitStatus}
+                  siteKitStatus={siteKit}
                 />
                 {isShoppingEnabled && (
                   <Shopping
@@ -392,6 +392,7 @@ function EditorSettings() {
                     shopifyHost={shopifyHost}
                     shopifyAccessToken={shopifyAccessToken}
                     vendors={vendors}
+                    woocommerce={woocommerce}
                   />
                 )}
               </>

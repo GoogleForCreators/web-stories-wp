@@ -19,6 +19,7 @@
  */
 import { useKeyDownEffect } from '@googleforcreators/design-system';
 import { useCallback } from '@googleforcreators/react';
+import PropTypes from 'prop-types';
 
 function wrapIndex(i, length) {
   return ((i % length) + length) % length;
@@ -58,7 +59,6 @@ function KeyBindings({ uuid, node, focusGroup, exitFocusGroup }) {
       }
 
       navigateFocusGroup(1);
-      return;
     },
     [focusGroup, uuid]
   );
@@ -87,5 +87,15 @@ function KeyBindings({ uuid, node, focusGroup, exitFocusGroup }) {
 
   return null;
 }
+
+KeyBindings.propTypes = {
+  uuid: PropTypes.string.isRequired,
+  node:
+    typeof Element !== 'undefined'
+      ? PropTypes.instanceOf(Element).isRequired
+      : PropTypes.any.isRequired,
+  focusGroup: PropTypes.array.isRequired,
+  exitFocusGroup: PropTypes.func.isRequired,
+};
 
 export default KeyBindings;

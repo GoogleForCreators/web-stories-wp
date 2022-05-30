@@ -181,7 +181,7 @@ describe('Text/util', () => {
       );
       const expected = {
         dataToEditorY: dataToStyleY,
-        whiteSpace: 'pre-wrap',
+        whiteSpace: 'pre-line',
         overflowWrap: 'break-word',
         wordBreak: 'break-word',
         margin: '-1.4335558252427185% 0',
@@ -222,7 +222,7 @@ describe('Text/util', () => {
       );
       const expected = {
         dataToEditorY: dataToStyleY,
-        whiteSpace: 'pre-wrap',
+        whiteSpace: 'pre-line',
         overflowWrap: 'break-word',
         wordBreak: 'break-word',
         margin: '-1.4335558252427185% 0',
@@ -263,7 +263,7 @@ describe('Text/util', () => {
       );
       const expected = {
         dataToEditorY: dataToStyleY,
-        whiteSpace: 'pre-wrap',
+        whiteSpace: 'pre-line',
         overflowWrap: 'break-word',
         wordBreak: 'break-word',
         margin: '-1.4335558252427185% 0',

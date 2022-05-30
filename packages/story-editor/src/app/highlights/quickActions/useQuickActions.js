@@ -245,7 +245,6 @@ MediaPicker.propTypes = {
 const useQuickActions = () => {
   const {
     capabilities: { hasUploadMediaAction },
-    isRTL,
   } = useConfig();
   const dispatchStoryEvent = useStoryTriggersDispatch();
   const {
@@ -428,10 +427,11 @@ const useQuickActions = () => {
 
   const actionMenuProps = useMemo(
     () => ({
-      tooltipPlacement: isRTL ? PLACEMENT.LEFT : PLACEMENT.RIGHT,
+      // The <BaseTooltip> component will handle proper placement for RTL layout
+      tooltipPlacement: PLACEMENT.RIGHT,
       onMouseDown: handleMouseDown,
     }),
-    [handleMouseDown, isRTL]
+    [handleMouseDown]
   );
 
   const noElementSelectedActions = useMemo(() => {

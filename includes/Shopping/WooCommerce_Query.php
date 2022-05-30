@@ -1,6 +1,6 @@
 <?php
 /**
- * Class Woocommerce_Query
+ * Class WooCommerce_Query
  *
  * @link      https://github.com/googleforcreators/web-stories-wp
  *
@@ -26,13 +26,30 @@
 
 namespace Google\Web_Stories\Shopping;
 
+use Google\Web_Stories\Integrations\WooCommerce;
 use Google\Web_Stories\Interfaces\Product_Query;
 use WP_Error;
 
 /**
- * Class Woocommerce_Query.
+ * Class WooCommerce_Query.
  */
-class Woocommerce_Query implements Product_Query {
+class WooCommerce_Query implements Product_Query {
+	/**
+	 * WooCommerce instance.
+	 *
+	 * @var WooCommerce WooCommerce instance.
+	 */
+	private $woocommerce;
+
+	/**
+	 * Constructor.
+	 *
+	 * @param WooCommerce $woocommerce WooCommerce instance.
+	 */
+	public function __construct( WooCommerce $woocommerce ) {
+		$this->woocommerce = $woocommerce;
+	}
+
 	/**
 	 * Get products by search term.
 	 *
@@ -42,9 +59,10 @@ class Woocommerce_Query implements Product_Query {
 	 * @return Product[]|WP_Error
 	 */
 	public function get_search( string $search_term ) {
+		$status = $this->woocommerce->get_plugin_status();
 
-		if ( ! function_exists( 'wc_get_products' ) ) {
-			return new WP_Error( 'rest_unknown', __( 'Woocommerce is not installed.', 'web-stories' ), [ 'status' => 400 ] );
+		if ( ! $status['active'] ) {
+			return new WP_Error( 'rest_woocommerce_not_installed', __( 'WooCommerce is not installed.', 'web-stories' ), [ 'status' => 400 ] );
 		}
 
 		$results = [];
