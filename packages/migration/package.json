@@ -41,7 +41,7 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "@rollup/plugin-node-resolve": "^13.2.1",
+    "@rollup/plugin-node-resolve": "^13.3.0",
     "rollup": "^2.73.0"
   },
   "scripts": {
