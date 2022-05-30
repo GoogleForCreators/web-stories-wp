@@ -251,7 +251,7 @@ QUERY;
 						$wp_error->add( 'rest_internal_error', __( 'The store experienced an internal server error', 'web-stories' ), [ 'status' => 500 ] );
 						break;
 					default:
-						$wp_error->add( 'rest_unknown', __( 'Error fetching products', 'web-stories' ), [ 'status' => 500 ] );
+						$wp_error->add( 'rest_unknown', __( 'Error fetching products.', 'web-stories' ), [ 'status' => 500 ] );
 				}
 			}
 		
