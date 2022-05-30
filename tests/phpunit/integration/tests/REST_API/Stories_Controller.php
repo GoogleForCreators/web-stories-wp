@@ -283,6 +283,7 @@ class Stories_Controller extends RestTestCase {
 		$this->assertSame( '7', $headers['X-WP-Total'] );
 		$this->assertSame( '1', $headers['X-WP-TotalPages'] );
 	}
+
 	/**
 	 * @covers ::get_item
 	 * @covers ::prepare_item_for_response
@@ -392,6 +393,38 @@ class Stories_Controller extends RestTestCase {
 
 		$this->assertArrayHasKey( 'https://api.w.org/lockuser', $links );
 		$this->assertArrayHasKey( 'https://api.w.org/lock', $links );
+	}
+
+	/**
+	 * @link https://github.com/GoogleForCreators/web-stories-wp/issues/11403
+	 *
+	 * @covers ::get_item
+	 * @covers ::prepare_item_for_response
+	 */
+	public function test_get_item_auto_draft_no_date(): void {
+		$this->controller->register_routes();
+
+		wp_set_current_user( self::$user_id );
+		$story = self::factory()->post->create(
+			[
+				'post_type'   => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_status' => 'auto-draft',
+				'post_author' => self::$user_id,
+			]
+		);
+
+		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story/' . $story );
+		$request->set_param( 'context', 'edit' );
+		$response = rest_get_server()->dispatch( $request );
+		$data     = $response->get_data();
+		$this->assertArrayHasKey( 'date', $data );
+		$this->assertArrayHasKey( 'date_gmt', $data );
+		$this->assertArrayHasKey( 'modified', $data );
+		$this->assertArrayHasKey( 'modified_gmt', $data );
+		$this->assertNull( $data['date'] );
+		$this->assertNull( $data['date_gmt'] );
+		$this->assertNull( $data['modified'] );
+		$this->assertNull( $data['modified_gmt'] );
 	}
 
 	/**

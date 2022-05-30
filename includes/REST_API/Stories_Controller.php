@@ -132,6 +132,35 @@ class Stories_Controller extends Stories_Base_Controller {
 			$data['embed_post_link'] = add_query_arg( [ 'from-web-story' => $post->ID ], admin_url( 'post-new.php' ) );
 		}
 
+		/*
+		 * Internally, WordPress uses a special post_date_gmt value of 0000-00-00 00:00:00
+		 * to indicate that a draft's date is "floating" and should be updated whenever the post is saved.
+		 * This makes it much more difficult for API clients to know the correct date of a draft post.
+		 *
+		 * @link https://core.trac.wordpress.org/ticket/38883
+		 * @link https://github.com/GoogleForCreators/web-stories-wp/issues/11403
+		 */
+		if ( 'auto-draft' === $post->post_status ) {
+			if ( '0000-00-00 00:00:00' === $post->post_date_gmt ) {
+				if ( rest_is_field_included( 'date', $fields ) ) {
+					$data['date'] = null;
+				}
+				if ( rest_is_field_included( 'date_gmt', $fields ) ) {
+					$data['date_gmt'] = null;
+				}
+			}
+
+			if ( '0000-00-00 00:00:00' === $post->post_modified_gmt ) {
+				if ( rest_is_field_included( 'modified', $fields ) ) {
+					$data['modified'] = null;
+				}
+
+				if ( rest_is_field_included( 'modified_gmt', $fields ) ) {
+					$data['modified_gmt'] = null;
+				}
+			}
+		}
+
 		$data  = $this->filter_response_by_context( $data, $context );
 		$links = $response->get_links();
 
