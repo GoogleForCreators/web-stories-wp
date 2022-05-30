@@ -140,7 +140,7 @@ class Stories_Controller extends Stories_Base_Controller {
 		 * @link https://core.trac.wordpress.org/ticket/38883
 		 * @link https://github.com/GoogleForCreators/web-stories-wp/issues/11403
 		 */
-		if ( 'auto-draft' === $post->post_status ) {
+		if ( 'auto-draft' === $post->post_status || 'draft' === $post->post_status ) {
 			if ( '0000-00-00 00:00:00' === $post->post_date_gmt ) {
 				if ( rest_is_field_included( 'date', $fields ) ) {
 					$data['date'] = null;
