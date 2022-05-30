@@ -26,6 +26,15 @@
   display: none;
 }
 
+body.js.edit-story #wpcontent {
+  position: fixed;
+  width: calc(100% - 160px);
+}
+
+body.js.edit-story.folded #adminmenuback {
+  top: 32px;
+}
+
 body.js.edit-story #wpcontent,
 body.js.edit-story #wpbody-content {
   padding: 0;
@@ -127,4 +136,28 @@ body.edit-story #wpfooter {
 
 button {
   font-size: inherit;
+}
+
+@media screen and (max-width: 783px) {
+  body.js.edit-story #wpcontent {
+    position: relative;
+    width: 100%;
+  }
+  ul#adminmenu {
+    overflow-y: scroll;
+    height: 100vh;
+  }
+}
+
+@media screen and (min-width: 783px) {
+  #adminmenuwrap,
+  #adminmenuback {
+    z-index: 0;
+  }
+  #adminmenuwrap:hover {
+    z-index: 1;
+  }
+  body.js.edit-story.folded #wpcontent {
+    width: calc(100% - 36px);
+  }
 }

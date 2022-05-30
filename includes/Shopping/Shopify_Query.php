@@ -314,8 +314,9 @@ QUERY;
 	 * @param string $search_term Search term.
 	 * @param int    $page       Page Number.
 	 * @param int    $per_page   Limit query.
-	 * @param string $orderby sort field for query.
-	 * @param string $order ASC or DESC.
+	 * @param string $orderby Sort retrieved products by parameter. Default 'date'.
+	 * @param string $order   Whether to order products in ascending or descending order.
+	 *                        Accepts 'asc' (ascending) or 'desc' (descending). Default 'desc'.
 	 * @return Product[]|WP_Error
 	 */
 	public function get_search( string $search_term, int $page = 1, int $per_page = 100, string $orderby = 'date', string $order = 'desc' ) {
