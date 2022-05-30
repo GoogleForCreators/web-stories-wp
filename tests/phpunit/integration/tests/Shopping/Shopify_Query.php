@@ -191,7 +191,7 @@ class Shopify_Query extends DependencyInjectedTestCase {
 
 		update_option( Settings::SETTING_NAME_SHOPIFY_HOST, 'example.myshopify.com' );
 		update_option( Settings::SETTING_NAME_SHOPIFY_ACCESS_TOKEN, '1234' );
-		set_transient( 'web_stories_shopify_data_' . md5( $search_term . '-' . $page . '-' . $per_page . '-' . $orderby . '-' . $order ), wp_json_encode( [ 'data' => [ 'products' => [ 'edges' => [] ] ] ] ) );
+		set_transient( 'web_stories_shopify_data_' . md5( $search_term . '--' . $per_page . '-' . $orderby . '-' . $order ), wp_json_encode( [ 'data' => [ 'products' => [ 'edges' => [] ] ] ] ) );
 
 		$actual = $this->instance->get_search( '', $page, $per_page, $orderby, $order );
 
