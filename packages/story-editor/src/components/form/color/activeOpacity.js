@@ -32,11 +32,6 @@ import {
 } from '../../floatingMenu/elements/shared/focusTrapButton';
 import OpacityInput from './opacityInput';
 
-const Space = styled.div`
-  width: 8px;
-  height: 1px;
-  background-color: ${({ theme }) => theme.colors.divider.primary};
-`;
 const OpacityWrapper = styled.div`
   width: ${({ isInDesignMenu }) =>
     isInDesignMenu ? 'calc(39% - 10px)' : 'calc(47% - 10px)'};
@@ -53,20 +48,15 @@ const ActiveOpacity = ({
   const opacityFocusTrapRef = useRef();
 
   return opacityFocusTrap ? (
-    <>
-      <Space />
-      <FocusTrapButton
-        ref={opacityFocusTrapButtonRef}
-        inputRef={opacityFocusTrapRef}
-        inputLabel={__('Opacity', 'web-stories')}
-        styleOverride={css`
-          width: ${isInDesignMenu ? 'calc(39%)' : 'calc(47%)'};
-          &::before: {
-            margin-left: 8px;
-          }
-        `}
-      >
-        <OpacityWrapper isInDesignMenu={isInDesignMenu}>
+    <FocusTrapButton
+      ref={opacityFocusTrapButtonRef}
+      inputRef={opacityFocusTrapRef}
+      inputLabel={__('Opacity', 'web-stories')}
+      styleOverride={css`
+        width: ${isInDesignMenu ? 'calc(35%)' : 'calc(45%)'};
+      `}
+    >
+      <OpacityWrapper isInDesignMenu={isInDesignMenu}>
         <OpacityInput
           ref={opacityFocusTrapRef}
           tabIndex={tabIndex}
@@ -78,21 +68,17 @@ const ActiveOpacity = ({
             handleReturnTrappedFocus(e, opacityFocusTrapButtonRef)
           }
         />
-        </OpacityWrapper>
-      </FocusTrapButton>
-    </>
-  ) : (
-    <>
-      <Space />
-      <OpacityWrapper isInDesignMenu={isInDesignMenu}>
-        <OpacityInput
-          tabIndex={tabIndex}
-          value={value}
-          onChange={handleOpacityChange}
-          isInDesignMenu={isInDesignMenu}
-        />
       </OpacityWrapper>
-    </>
+    </FocusTrapButton>
+  ) : (
+    <OpacityWrapper isInDesignMenu={isInDesignMenu}>
+      <OpacityInput
+        tabIndex={tabIndex}
+        value={value}
+        onChange={handleOpacityChange}
+        isInDesignMenu={isInDesignMenu}
+      />
+    </OpacityWrapper>
   );
 };
 

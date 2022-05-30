@@ -131,6 +131,11 @@ const Color = forwardRef(function Color(
       ? TOOLTIP_PLACEMENT.BOTTOM
       : TOOLTIP_PLACEMENT.BOTTOM_START;
 
+  const Space = styled.div`
+    width: 8px;
+    height: 1px;
+    background-color: ${({ theme }) => theme.colors.divider.primary};
+  `;
   // Sometimes there's more than 1 color to an element.
   // When there's multiple colors the input displays "Mixed" (in english) and takes up a different amount of space.
   // By checking here to ignore that value based on mixed colors we prevent visual spill over of content.
@@ -193,13 +198,16 @@ const Color = forwardRef(function Color(
           />
         </InputWrapper>
         {allowsOpacity && displayOpacity && (
-          <ActiveOpacity
-            handleOpacityChange={handleOpacityChange}
-            isInDesignMenu={isInDesignMenu}
-            opacityFocusTrap={opacityFocusTrap}
-            tabIndex={tabIndex}
-            value={value}
-          />
+          <>
+            <Space />
+            <ActiveOpacity
+              handleOpacityChange={handleOpacityChange}
+              isInDesignMenu={isInDesignMenu}
+              opacityFocusTrap={opacityFocusTrap}
+              tabIndex={tabIndex}
+              value={value}
+            />
+          </>
         )}
       </ColorInputsWrapper>
     </Container>
