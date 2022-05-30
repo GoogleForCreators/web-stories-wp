@@ -91,7 +91,7 @@ describe('TextOutput', () => {
     expect(output.innerHTML).toBe('<span>Content</span>');
     expect(output).toHaveClass('fill text-wrapper', { exact: true });
     expect(output).toHaveStyle({
-      whiteSpace: 'pre-wrap',
+      whiteSpace: 'pre-line',
       padding: '0px',
       fontSize: '0.258900em',
       textAlign: 'left',
