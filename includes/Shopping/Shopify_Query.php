@@ -208,15 +208,14 @@ QUERY;
 	 * @since 1.21.0
 	 *
 	 * @param string $search_term Search term to filter products by.
-	 * @param int    $page    Page.
+	 * @param string $after    Pointer.
 	 * @param int    $per_page   Limit query.
 	 * @param string $orderby Sort retrieved products by parameter.
 	 * @param string $order   Whether to order products in ascending or descending order.
 	 *                        Accepts 'asc' (ascending) or 'desc' (descending).
 	 * @return array|WP_Error Response data or error object on failure.
 	 */
-	protected function fetch_remote_products( string $search_term, int $page, int $per_page, string $orderby, string $order ) {
-
+	protected function get_remote_products( string $search_term, string $after, int $per_page, string $orderby, string $order ) {
 		/**
 		 * Filters the Shopify products data TTL value.
 		 *
@@ -225,7 +224,7 @@ QUERY;
 		 * @param int $time Time to live (in seconds). Default is 5 minutes.
 		 */
 		$cache_ttl = apply_filters( 'web_stories_shopify_data_cache_ttl', 5 * MINUTE_IN_SECONDS );
-		$cache_key = 'web_stories_shopify_data_' . md5( $search_term . '-' . $page . '-' . $per_page . '-' . $orderby . '-' . $order );
+		$cache_key = 'web_stories_shopify_data_' . md5( $search_term . '-' . $after . '-' . $per_page . '-' . $orderby . '-' . $order );
 
 		$data = get_transient( $cache_key );
 
@@ -233,67 +232,12 @@ QUERY;
 			return (array) json_decode( $data, true );
 		}
 
-		$after = '';
-		if ( $page > 1 ) {
-			for ( $i = 1; $i < $page; $i ++ ) {
-				$query = $this->get_products_query( $search_term, $after, $per_page, $orderby, $order );
-				$body  = $this->execute_query( $query );
-				if ( is_wp_error( $body ) ) {
-					return $body;
-				}
-				$validate = $this->validate_request( $body );
-				if ( is_wp_error( $validate ) ) {
-					return $validate;
-				}
-				/**
-				 * Shopify GraphQL API response.
-				 *
-				 * @var ShopifyGraphQLResponse $result
-				 */
-				$result        = json_decode( $body, true );
-				$has_next_page = $result['data']['products']['pageInfo']['hasNextPage'];
-				if ( ! $has_next_page ) {
-					return new WP_Error( 'rest_no_page', __( 'Error fetching products', 'web-stories' ), [ 'status' => 404 ] );
-				}
-				$after = (string) $result['data']['products']['pageInfo']['endCursor'];
-			}
-		}
-
 		$query = $this->get_products_query( $search_term, $after, $per_page, $orderby, $order );
 		$body  = $this->execute_query( $query );
-
 		if ( is_wp_error( $body ) ) {
 			return $body;
 		}
 
-		$validate = $this->validate_request( $body );
-		if ( is_wp_error( $validate ) ) {
-			return $validate;
-		}
-
-		// TODO: Maybe cache errors too?
-		set_transient( $cache_key, $body, $cache_ttl );
-
-		/**
-		 * Shopify GraphQL API response.
-		 *
-		 * @var ShopifyGraphQLResponse $result
-		 */
-		$result = json_decode( $body, true );
-
-		return $result;
-	}
-
-
-	/**
-	 * Handle validation.
-	 *
-	 * @since 1.21.0
-	 *
-	 * @param string $body Body of request.
-	 * @return void|WP_Error
-	 */
-	protected function validate_request( $body ) {
 		/**
 		 * Shopify GraphQL API response.
 		 *
@@ -304,6 +248,46 @@ QUERY;
 		if ( isset( $result['errors'] ) ) {
 			return new WP_Error( 'rest_unknown', __( 'Error fetching products', 'web-stories' ), [ 'status' => 404 ] );
 		}
+
+		// TODO: Maybe cache errors too?
+		set_transient( $cache_key, $body, $cache_ttl );
+
+		return $result;
+	}
+
+	/**
+	 * Remotely fetches all products from the store.
+	 *
+	 * @since 1.21.0
+	 *
+	 * @param string $search_term Search term to filter products by.
+	 * @param int    $page       Page.
+	 * @param int    $per_page   Limit query.
+	 * @param string $orderby Sort retrieved products by parameter.
+	 * @param string $order   Whether to order products in ascending or descending order.
+	 *                        Accepts 'asc' (ascending) or 'desc' (descending).
+	 * @return array|WP_Error Response data or error object on failure.
+	 */
+	protected function fetch_remote_products( string $search_term, int $page, int $per_page, string $orderby, string $order ) {
+		$after = '';
+		if ( $page > 1 ) {
+			for ( $i = 1; $i < $page; $i ++ ) {
+				$result = $this->get_remote_products( $search_term, $after, $per_page, $orderby, $order );
+				if ( is_wp_error( $result ) ) {
+					return $result;
+				}
+
+				$has_next_page = $result['data']['products']['pageInfo']['hasNextPage'];
+				if ( ! $has_next_page ) {
+					return new WP_Error( 'rest_no_page', __( 'Error fetching products', 'web-stories' ), [ 'status' => 404 ] );
+				}
+				$after = (string) $result['data']['products']['pageInfo']['endCursor'];
+			}
+		}
+
+		$result = $this->get_remote_products( $search_term, $after, $per_page, $orderby, $order );
+
+		return $result;
 	}
 
 	/**
