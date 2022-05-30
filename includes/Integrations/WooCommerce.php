@@ -51,6 +51,10 @@ class WooCommerce {
 	 * @return array Plugin status.
 	 */
 	public function get_plugin_status(): array {
+		if ( ! function_exists( 'get_plugins' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/plugin.php';
+		}
+
 		$is_installed = \array_key_exists( self::PLUGIN, get_plugins() );
 		$is_active    = $this->is_plugin_active();
 		$can_manage   = false;
