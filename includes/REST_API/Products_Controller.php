@@ -140,6 +140,8 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 	/**
 	 * Retrieves all products.
 	 *
+	 * @SuppressWarnings(PHPMD.NPathComplexity)
+	 *
 	 * @since 1.20.0
 	 *
 	 * @param WP_REST_Request $request Full details about the request.
@@ -175,6 +177,13 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 		/**
 		 * Request context.
 		 *
+		 * @var int $page
+		 */
+		$page = ! empty( $request['page'] ) ? $request['page'] : 1;
+
+		/**
+		 * Request context.
+		 *
 		 * @var int $per_page
 		 */
 		$per_page = ! empty( $request['per_page'] ) ? $request['per_page'] : 100;
@@ -187,7 +196,7 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 		$order = ! empty( $request['order'] ) ? $request['order'] : 'desc';
 
 
-		$query_result = $query->get_search( $search_term, $per_page, $orderby, $order );
+		$query_result = $query->get_search( $search_term, $page, $per_page, $orderby, $order );
 		if ( is_wp_error( $query_result ) ) {
 			return $query_result;
 		}

@@ -184,15 +184,16 @@ class Shopify_Query extends DependencyInjectedTestCase {
 	 */
 	public function test_fetch_remote_products_returns_from_transient(): void {
 		$search_term = '';
+		$page        = 1;
 		$per_page    = 100;
 		$orderby     = 'date';
 		$order       = 'desc';
 
 		update_option( Settings::SETTING_NAME_SHOPIFY_HOST, 'example.myshopify.com' );
 		update_option( Settings::SETTING_NAME_SHOPIFY_ACCESS_TOKEN, '1234' );
-		set_transient( 'web_stories_shopify_data_' . md5( $search_term . '-' . $per_page . '-' . $orderby . '-' . $order ), wp_json_encode( [ 'data' => [ 'products' => [ 'edges' => [] ] ] ] ) );
+		set_transient( 'web_stories_shopify_data_' . md5( $search_term . '-' . $page . '-' . $per_page . '-' . $orderby . '-' . $order ), wp_json_encode( [ 'data' => [ 'products' => [ 'edges' => [] ] ] ] ) );
 
-		$actual = $this->instance->get_search( '', $per_page, $orderby, $order );
+		$actual = $this->instance->get_search( '', $page, $per_page, $orderby, $order );
 
 		$this->assertNotWPError( $actual );
 		$this->assertSame( [], $actual );
@@ -298,23 +299,23 @@ class Shopify_Query extends DependencyInjectedTestCase {
 	public function data_test_get_search_sort_by_query(): array {
 		return [
 			'Default search'  => [
-				[ 'some search term', 100, 'date', '' ],
+				[ 'some search term', 1, 100, 'date', '' ],
 				[ 'sortKey: CREATED_AT', 'reverse: true' ],
 			],
 			'Sort title asc'  => [
-				[ '', 100, 'title', 'asc' ],
+				[ '', 1, 100, 'title', 'asc' ],
 				[ 'sortKey: TITLE', 'reverse: false' ],
 			],
 			'Sort title desc' => [
-				[ '', 100, 'title', 'desc' ],
+				[ '', 1, 100, 'title', 'desc' ],
 				[ 'sortKey: TITLE', 'reverse: true' ],
 			],
 			'Sort price asc'  => [
-				[ '', 100, 'price', 'asc' ],
+				[ '', 1, 100, 'price', 'asc' ],
 				[ 'sortKey: PRICE', 'reverse: false' ],
 			],
 			'Sort price desc' => [
-				[ '', 100, 'price', 'desc' ],
+				[ '', 1, 100, 'price', 'desc' ],
 				[ 'sortKey: PRICE', 'reverse: true' ],
 			],
 		];

@@ -57,12 +57,13 @@ class WooCommerce_Query implements Product_Query {
 	 * @since 1.21.0
 	 *
 	 * @param string $search_term Search term.
+	 * @param int    $page       Page Number.
 	 * @param int    $per_page   Limit query.
 	 * @param string $orderby Sort collection by product attribute.
 	 * @param string $order Order sort attribute ascending or descending.
 	 * @return Product[]|WP_Error
 	 */
-	public function get_search( string $search_term, int $per_page = 100, string $orderby = 'date', string $order = 'desc' ) {
+	public function get_search( string $search_term, int $page = 1, int $per_page = 100, string $orderby = 'date', string $order = 'desc' ) {
 		$status = $this->woocommerce->get_plugin_status();
 
 		if ( ! $status['active'] ) {
@@ -77,7 +78,7 @@ class WooCommerce_Query implements Product_Query {
 			$wc_query = new WC_Query();
 			$wc_args  = $wc_query->get_catalog_ordering_args( $orderby, strtoupper( $order ) );
 		}
-		
+
 		/**
 		 * Products.
 		 *
@@ -87,11 +88,12 @@ class WooCommerce_Query implements Product_Query {
 			array_merge(
 				[
 					'status'  => 'publish',
+					'page'    => $page,
 					'limit'   => $per_page,
 					's'       => $search_term,
 					'orderby' => $orderby,
 					'order'   => $order,
-				], 
+				],
 				$wc_args
 			)
 		);
