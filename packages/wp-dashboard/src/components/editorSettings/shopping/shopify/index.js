@@ -312,7 +312,7 @@ function ShopifySettings({
         size={BUTTON_SIZES.SMALL}
         disabled={!canTestConnection()}
         onClick={onTestConnection}
-        data-testid="shopifyTestConnection"
+        data-testid="shopify-test-connection"
       >
         {isTestingConnection
           ? TEXT.CONNECTION_CHECKING
@@ -328,6 +328,7 @@ function ShopifySettings({
       )}
       {testConnectionStatus && (
         <ConnectionHelperText
+          data-testid="api-status"
           aria-label={__('API connection status', 'web-stories')}
           hasError={hasConnectionError}
           size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}

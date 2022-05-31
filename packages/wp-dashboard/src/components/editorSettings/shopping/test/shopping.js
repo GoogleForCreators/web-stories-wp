@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { fireEvent, screen } from '@testing-library/react';
+import { fireEvent, screen, act, getByText } from '@testing-library/react';
 import { ConfigProvider } from '@googleforcreators/dashboard';
 
 /**
@@ -206,7 +206,7 @@ describe('Editor Settings: Shopping <Shopping />', function () {
     });
   });
 
-  it('should render test api connection button', function () {
+  it('should render test api connection button', async function () {
     renderWithProviders(
       <ConfigProvider config={config}>
         <ShoppingSettings
@@ -220,7 +220,13 @@ describe('Editor Settings: Shopping <Shopping />', function () {
       </ConfigProvider>
     );
 
-    const input = screen.getByTestId('shopifyTestConnection');
+    const input = screen.getByTestId('shopify-test-connection');
     expect(input).toBeInTheDocument();
+
+    await act(async () => {
+      fireEvent.click(input);
+    });
+
+    expect(screen.getByTestId('api-status')).toHaveTextContent('Connection successful');
   });
 });
