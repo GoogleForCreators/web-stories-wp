@@ -66,7 +66,6 @@ WithMask.propTypes = {
   applyFlip: PropTypes.bool,
   fill: PropTypes.bool,
   children: PropTypes.node.isRequired,
-  box: StoryPropTypes.box.isRequired,
   previewMode: PropTypes.bool,
   responsiveBorder: PropTypes.object,
 };
