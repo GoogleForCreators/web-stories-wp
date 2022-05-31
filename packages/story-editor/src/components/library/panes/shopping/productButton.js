@@ -26,6 +26,10 @@ import {
 } from '@googleforcreators/design-system';
 import { __, sprintf } from '@googleforcreators/i18n';
 import PropTypes from 'prop-types';
+/**
+ * Internal dependencies
+ */
+import Tooltip from '../../../tooltip';
 
 const Checkmark = styled(Icons.Checkmark)`
   width: 16px !important;
@@ -60,6 +64,24 @@ const StyledButton = styled(Button)`
 const StyledActionsContainer = styled.div`
   margin-right: 10px;
 `;
+const TooltipWrapper = ({ hasImage, children }) => {
+  return !hasImage ? (
+    <Tooltip
+      hasTail
+      title={__('Products without images cannot be added.', 'web-stories')}
+    >
+      {children}
+    </Tooltip>
+  ) : (
+    children
+  );
+};
+
+TooltipWrapper.propTypes = {
+  hasImage: PropTypes.bool,
+  children: PropTypes.node,
+};
+
 function ProductButton({ product, onClick, onFocus, isOnPage }) {
   const ADD_PRODUCT_TEXT = sprintf(
     /* translators: %s: product title. */
@@ -67,34 +89,53 @@ function ProductButton({ product, onClick, onFocus, isOnPage }) {
     product?.productTitle
   );
 
+  const hasImage = product?.productImages && product?.productImages?.length;
   const REMOVE_PRODUCT_TEXT = sprintf(
     /* translators: %s: product title. */
     __('Remove %s', 'web-stories'),
     product?.productTitle
   );
 
+  const DISABLED_PRODUCT_TEXT = __(
+    'Products without images cannot be added.',
+    'web-stories'
+  );
+
+  const ariaLabel = () => {
+    if (!hasImage) {
+      return DISABLED_PRODUCT_TEXT;
+    }
+    if (isOnPage) {
+      return REMOVE_PRODUCT_TEXT;
+    }
+    return ADD_PRODUCT_TEXT;
+  };
+
   return (
-    <StyledActionsContainer>
-      <StyledButton
-        aria-label={isOnPage ? REMOVE_PRODUCT_TEXT : ADD_PRODUCT_TEXT}
-        onClick={() => {
-          onClick(product, isOnPage);
-        }}
-        type={BUTTON_TYPES.TERTIARY}
-        size={BUTTON_SIZES.SMALL}
-        variant={BUTTON_VARIANTS.SQUARE}
-        onFocus={onFocus}
-      >
-        {isOnPage ? (
-          <>
-            <Checkmark />
-            <Cross />
-          </>
-        ) : (
-          <Icons.PlusFilled />
-        )}
-      </StyledButton>
-    </StyledActionsContainer>
+    <TooltipWrapper hasImage={hasImage}>
+      <StyledActionsContainer>
+        <StyledButton
+          aria-label={ariaLabel()}
+          aria-disabled={hasImage ? false : true}
+          onClick={() => {
+            onClick(product, isOnPage);
+          }}
+          type={BUTTON_TYPES.TERTIARY}
+          size={BUTTON_SIZES.SMALL}
+          variant={BUTTON_VARIANTS.SQUARE}
+          onFocus={onFocus}
+        >
+          {isOnPage ? (
+            <>
+              <Checkmark />
+              <Cross />
+            </>
+          ) : (
+            <Icons.PlusFilled />
+          )}
+        </StyledButton>
+      </StyledActionsContainer>
+    </TooltipWrapper>
   );
 }
 

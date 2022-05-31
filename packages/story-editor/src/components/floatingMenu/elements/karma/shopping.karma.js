@@ -71,7 +71,7 @@ describe('Shopping integration', () => {
 
   describe('Shopping tab', () => {
     it('should handle product search add and remove', async () => {
-      const productTitle = 'Hoodie with Zipper';
+      const productTitle = 'Hoodie';
       await focusProductSearchInput();
       expect(isStoryEmpty()).toEqual(true);
       await fixture.events.keyboard.type('hood');
@@ -120,6 +120,20 @@ describe('Shopping integration', () => {
       // remove the product
       await fixture.events.mouse.clickOn(product, 1, 1);
       expect(isStoryEmpty()).toEqual(true);
+    });
+
+    it('should disable button if product lacks product image', async () => {
+      await focusProductSearchInput();
+      expect(isStoryEmpty()).toEqual(true);
+      await fixture.events.keyboard.type('WordPress');
+      // delay for search to catch-up
+      await fixture.events.sleep(400);
+
+      const productButton = fixture.querySelector(
+        '[aria-label="Products without images cannot be added."]'
+      );
+
+      await expect(productButton.getAttribute('aria-disabled')).toBe('true');
     });
   });
 
