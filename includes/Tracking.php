@@ -31,6 +31,7 @@ namespace Google\Web_Stories;
 use Google\Web_Stories\Integrations\Site_Kit;
 use Google\Web_Stories\Integrations\WooCommerce;
 use Google\Web_Stories\User\Preferences;
+use WP_User;
 
 /**
  * Tracking class.
@@ -183,8 +184,15 @@ class Tracking extends Service_Base {
 	 * @return array User properties.
 	 */
 	private function get_user_properties(): array {
-		$role        = ! empty( wp_get_current_user()->roles ) && \is_array( wp_get_current_user()->roles ) ? array_shift( wp_get_current_user()->roles ) : '';
-		$experiments = implode( ',', $this->experiments->get_enabled_experiments() );
+		/**
+		 * Current user.
+		 *
+		 * @var null|WP_User $current_user
+		 */
+		$current_user = wp_get_current_user();
+		$roles        = ( $current_user instanceof WP_User ) ? $current_user->roles : [];
+		$role         = ! empty( $roles ) && \is_array( $roles ) ? array_shift( $roles ) : '';
+		$experiments  = implode( ',', $this->experiments->get_enabled_experiments() );
 
 		$active_plugins = [];
 

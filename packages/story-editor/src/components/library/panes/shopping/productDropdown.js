@@ -16,7 +16,6 @@
 /**
  * External dependencies
  */
-import { useFeature } from 'flagged';
 import { __ } from '@googleforcreators/i18n';
 import {
   useCallback,
@@ -37,8 +36,6 @@ const StyledDropDown = styled(Datalist.DropDown)`
   width: 240px;
 `;
 function ProductDropdown({ product, setProduct }) {
-  const isShoppingIntegrationEnabled = useFeature('shoppingIntegration');
-
   const initialProducts = useMemo(
     () => [{ id: product?.productId, name: product?.productTitle, product }],
     [product]
@@ -96,10 +93,6 @@ function ProductDropdown({ product, setProduct }) {
     primaryOptions: isLoading ? initialProducts : initialOptions,
     zIndex: 10,
   };
-
-  if (!isShoppingIntegrationEnabled) {
-    return null;
-  }
 
   return (
     <StyledDropDown
