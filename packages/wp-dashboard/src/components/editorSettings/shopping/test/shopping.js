@@ -18,24 +18,18 @@
  * External dependencies
  */
 import { fireEvent, screen } from '@testing-library/react';
+import { ConfigProvider } from '@googleforcreators/dashboard';
 
 /**
  * Internal dependencies
  */
+
 import ShoppingSettings, { TEXT } from '..';
 import { TEXT as SETTINGS_TEXT } from '../shopify';
 import { renderWithProviders } from '../../../../testUtils';
 import { SHOPPING_PROVIDER_TYPE } from '../../../../constants';
-import { ConfigProvider } from '../../../../../../dashboard/src/app/config';
 
 const updateSettings = jest.fn();
-
-// @todo mock -- 
-/*
-const {
-    apiCallbacks: { getProducts },
-  } = useConfig();
-*/
 
 const vendors = {
   none: 'None',
@@ -50,9 +44,11 @@ const woocommerceDefault = {
   link: 'http://www.example.com',
 };
 
+const mockGetProducts = jest.fn();
+
 const config = {
   apiCallbacks: {
-    getProducts: jest.fn,
+    getProducts: mockGetProducts,
   },
 };
 
@@ -166,7 +162,7 @@ describe('Editor Settings: Shopping <Shopping />', function () {
           vendors={vendors}
           woocommerce={woocommerceDefault}
         />
-      </ConfigProvider >
+      </ConfigProvider>
     );
 
     const input = screen.getByLabelText('Shopify Domain');
@@ -227,5 +223,4 @@ describe('Editor Settings: Shopping <Shopping />', function () {
     const input = screen.getByTestId('shopifyTestConnection');
     expect(input).toBeInTheDocument();
   });
-
 });
