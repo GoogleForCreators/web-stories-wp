@@ -26,13 +26,30 @@ import * as types from './types';
 const reducer = (state, { type, payload = {} }) => {
   switch (type) {
     case types.UPDATE_FILTER: {
-      const { filter, value } = payload;
-      if (value.filterId && state[filter]?.filterId === value.filterId) {
+      const { key, value } = payload;
+      const filter = state.filters.find((f) => f.key === key);
+
+      // remove filter by value
+      if (value.filterId && filter?.filterId === value.filterId) {
         value.filterId = null;
       }
+
+      // replace old filter
+      const idx = state.filters.indexOf(filter);
+      const filters = [...state.filters];
+      filters[idx] = { ...filter, ...value };
+
       return {
         ...state,
-        [filter]: { ...state[filter], ...value },
+        filters,
+      };
+    }
+
+    case types.REGISTER_FILTERS: {
+      return {
+        ...state,
+        filtersInit: true,
+        filters: payload,
       };
     }
     default:

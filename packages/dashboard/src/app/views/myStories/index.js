@@ -79,7 +79,22 @@ function MyStories() {
       getAuthors,
     })
   );
-  const { taxonomy } = useFilters(({ state: { taxonomy } }) => ({ taxonomy }));
+  const { filters, filtersInit } = useFilters(
+    ({ state: { filters, filtersInit } }) => ({
+      filters,
+      filtersInit,
+    })
+  );
+
+  const _filters = useMemo(() => {
+    const filterObj = {};
+    for (const filter of filters) {
+      const { key, filterId } = filter;
+      filterObj[key] = filterId;
+    }
+    return JSON.stringify(filterObj);
+  }, [filters]);
+
   const { apiCallbacks, canViewDefaultTemplates } = useConfig();
   const isMounted = useRef(false);
 
@@ -139,6 +154,9 @@ function MyStories() {
   }, [queryAuthorsBySearch]);
 
   useEffect(() => {
+    if (!filtersInit) {
+      return;
+    }
     fetchStories({
       page: page.value,
       searchTerm: search.keyword,
@@ -146,7 +164,7 @@ function MyStories() {
       sortOption: sort.value,
       status: filter.value,
       author: author.filterId,
-      taxonomy: { id: taxonomy.filterId, slug: taxonomy.filterSlug },
+      filters: JSON.parse(_filters),
     });
   }, [
     fetchStories,
@@ -156,9 +174,8 @@ function MyStories() {
     sort.direction,
     sort.value,
     author.filterId,
-    taxonomy.filterId,
-    taxonomy.filterSlug,
     apiCallbacks,
+    _filters,
   ]);
 
   const orderedStories = useMemo(() => {

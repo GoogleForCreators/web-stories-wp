@@ -54,8 +54,6 @@ export default function useStoryView({
   const showStoriesWhileLoading = useRef(false);
   const [initialPageReady, setInitialPageReady] = useState(false);
 
-  const { taxonomy } = useFilters(({ state: { taxonomy } }) => ({ taxonomy }));
-
   const { pageSize } = usePagePreviewSize({
     thumbnailMode: viewStyle === VIEW_STYLE.LIST,
     isGrid: viewStyle === VIEW_STYLE.GRID,
@@ -134,21 +132,12 @@ export default function useStoryView({
         search_term: searchKeyword,
         search_filter: filter,
         search_author_filter: authorFilterId,
-        search_taxonomy_filter: taxonomy?.filterId,
         search_order: sortDirection,
         search_orderby: sort,
         search_view: viewStyle,
       });
     }
-  }, [
-    searchKeyword,
-    filter,
-    sortDirection,
-    sort,
-    viewStyle,
-    authorFilterId,
-    taxonomy?.filterId,
-  ]);
+  }, [searchKeyword, sortDirection, sort, viewStyle, authorFilterId]);
 
   useEffect(() => {
     // reset ref state after request is finished

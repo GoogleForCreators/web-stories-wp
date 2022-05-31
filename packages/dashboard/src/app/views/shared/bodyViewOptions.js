@@ -35,7 +35,6 @@ import { AuthorPropTypes } from '../../../utils/useStoryView.js';
 import { StandardViewContentGutter, ViewStyleBar } from '../../../components';
 import { DROPDOWN_TYPES, VIEW_STYLE } from '../../../constants';
 import useFilters from '../myStories/filters/useFilters';
-import { TAXONOMY } from '../myStories/filters/types';
 
 const DisplayFormatContainer = styled.div`
   height: 76px;
@@ -85,9 +84,9 @@ export default function BodyViewOptions({
   author = defaultAuthor,
   queryAuthorsBySearch = noop,
 }) {
-  const { taxonomy, updateFilter } = useFilters(
-    ({ state: { taxonomy }, actions: { updateFilter } }) => ({
-      taxonomy,
+  const { filters, updateFilter } = useFilters(
+    ({ state: { filters }, actions: { updateFilter } }) => ({
+      filters,
       updateFilter,
     })
   );
@@ -99,27 +98,30 @@ export default function BodyViewOptions({
           <TranslateWithMarkup>{resultsLabel}</TranslateWithMarkup>
         </Text>
         <ControlsContainer>
-          {layoutStyle === VIEW_STYLE.GRID && updateFilter && (
-            <StorySortDropdownContainer>
-              <StyledDatalist
-                hasSearch
-                hasDropDownBorder
-                searchResultsLabel={__('Search results', 'web-stories')}
-                aria-label={__('Filter stories by taxonomy', 'web-stories')}
-                onChange={({ id, restBase }) => {
-                  updateFilter(TAXONOMY, {
-                    filterId: id,
-                    filterSlug: restBase,
-                  });
-                }}
-                getOptionsByQuery={taxonomy.query}
-                selectedId={taxonomy.filterId}
-                placeholder={__('Taxonomies', 'web-stories')}
-                primaryOptions={taxonomy.primaryOptions}
-                options={taxonomy.queriedOptions}
-              />
-            </StorySortDropdownContainer>
-          )}
+          {layoutStyle === VIEW_STYLE.GRID && filters?.length
+            ? filters.map((filter) => (
+                <StorySortDropdownContainer key={filter.key}>
+                  <StyledDatalist
+                    hasSearch
+                    hasDropDownBorder
+                    searchResultsLabel={__('Search results', 'web-stories')}
+                    aria-label={__('Filter stories by taxonomy', 'web-stories')}
+                    onChange={({ id }) => {
+                      updateFilter(filter.key, {
+                        filterId: id,
+                      });
+                    }}
+                    getOptionsByQuery={async (search) => {
+                      await filter.query(filter, search);
+                    }}
+                    selectedId={filter.filterId}
+                    placeholder={__(filter.placeholder, 'web-stories')}
+                    primaryOptions={filter.primaryOptions}
+                    options={filter.queriedOptions}
+                  />
+                </StorySortDropdownContainer>
+              ))
+            : null}
           {layoutStyle === VIEW_STYLE.GRID && showAuthorDropdown && (
             <StorySortDropdownContainer>
               <StyledDatalist

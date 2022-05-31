@@ -39,26 +39,46 @@ export const filterContext = createContext({
 });
 
 export default function FiltersProvider({ children }) {
-  const taxonomy = useTaxonomyFilter();
+  const { taxonomies, queryTaxonomyTerm } = useTaxonomyFilter();
 
   const [state, dispatch] = useReducer(reducer, {
-    taxonomy,
+    filtersInit: false,
+    filters: [],
   });
 
-  const updateFilter = useCallback((filter, value) => {
-    dispatch({ type: types.UPDATE_FILTER, payload: { filter, value } });
+  const updateFilter = useCallback((key, value) => {
+    dispatch({ type: types.UPDATE_FILTER, payload: { key, value } });
   }, []);
 
+  const registerFilters = useCallback((payload) => {
+    dispatch({ type: types.REGISTER_FILTERS, payload });
+  }, []);
+
+  // register the filters in state
+  const initializeFilters = useCallback(() => {
+    const filters = taxonomies.map((taxonomy) => ({
+      key: taxonomy.restBase,
+      restPath: taxonomy.restPath,
+      placeholder: taxonomy.name,
+      filterId: null,
+      primaryOptions: taxonomy.data,
+      queriedOptions: taxonomy.data,
+      query: queryTaxonomyTerm,
+    }));
+
+    registerFilters(filters);
+  }, [taxonomies]);
+
   const contextValue = useMemo(() => {
-    return { state, actions: { updateFilter } };
+    return {
+      state,
+      actions: { updateFilter },
+    };
   }, [state, updateFilter]);
 
   useEffect(() => {
-    updateFilter(types.TAXONOMY, {
-      primaryOptions: taxonomy.primaryOptions,
-      queriedOptions: taxonomy.queriedOptions,
-    });
-  }, [updateFilter, taxonomy.primaryOptions, taxonomy.queriedOptions]);
+    initializeFilters();
+  }, [initializeFilters]);
 
   return (
     <filterContext.Provider value={contextValue}>

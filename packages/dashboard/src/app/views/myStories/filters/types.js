@@ -15,4 +15,4 @@
  */
 
 export const UPDATE_FILTER = 'UPDATE_FILTER';
-export const TAXONOMY = 'taxonomy';
+export const REGISTER_FILTERS = 'REGISTER_FILTERS';
