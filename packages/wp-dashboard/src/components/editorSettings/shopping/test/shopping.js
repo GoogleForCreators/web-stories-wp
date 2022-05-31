@@ -29,9 +29,12 @@ import { SHOPPING_PROVIDER_TYPE } from '../../../../constants';
 
 const updateSettings = jest.fn();
 
-jest.mock('@googleforcreators/dashboard', () => ({
-  apiCallbacks: { getProducts: jest.fn() }
-}));
+// @todo mock -- 
+/*
+const {
+    apiCallbacks: { getProducts },
+  } = useConfig();
+*/
 
 const vendors = {
   none: 'None',
@@ -200,7 +203,7 @@ describe('Editor Settings: Shopping <Shopping />', function () {
       />
     );
 
-    const input = screen.getByLabelText('Test connection');
+    const input = screen.getByTestId('shopifyTestConnection');
     expect(input).toBeInTheDocument();
   });
 
