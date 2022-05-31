@@ -81,6 +81,8 @@ class WooCommerce_Query implements Product_Query {
 
 
 		/**
+		 * Product query object. 
+		 *
 		 * @var \stdClass $product_query
 		 */
 		$product_query = wc_get_products(
