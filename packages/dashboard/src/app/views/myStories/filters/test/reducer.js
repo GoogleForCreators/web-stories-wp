@@ -41,7 +41,7 @@ describe('reducer', () => {
     expect(state.officers.filterId).toBe(112);
   });
 
-  it('should update set the filterId to null if the same filterId is givien', () => {
+  it('should update set the filterId to null if the same filterId is given', () => {
     const initial_state = {
       officers: {
         filterId: 117,
