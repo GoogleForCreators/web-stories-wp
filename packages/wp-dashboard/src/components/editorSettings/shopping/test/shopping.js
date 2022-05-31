@@ -26,6 +26,7 @@ import ShoppingSettings, { TEXT } from '..';
 import { TEXT as SETTINGS_TEXT } from '../shopify';
 import { renderWithProviders } from '../../../../testUtils';
 import { SHOPPING_PROVIDER_TYPE } from '../../../../constants';
+import { ConfigProvider } from '../../../../../../dashboard/src/app/config';
 
 const updateSettings = jest.fn();
 
@@ -49,6 +50,12 @@ const woocommerceDefault = {
   link: 'http://www.example.com',
 };
 
+const config = {
+  apiCallbacks: {
+    getProducts: jest.fn,
+  },
+};
+
 describe('Editor Settings: Shopping <Shopping />', function () {
   beforeEach(() => {
     updateSettings.mockReset();
@@ -56,14 +63,16 @@ describe('Editor Settings: Shopping <Shopping />', function () {
 
   it('should render Shopify inputs and helper texts', function () {
     renderWithProviders(
-      <ShoppingSettings
-        shoppingProvider={SHOPPING_PROVIDER_TYPE.SHOPIFY}
-        shopifyHost="yourstore.myshopify.com"
-        shopifyAccessToken=""
-        updateSettings={updateSettings}
-        vendors={vendors}
-        woocommerce={woocommerceDefault}
-      />
+      <ConfigProvider config={config}>
+        <ShoppingSettings
+          shoppingProvider={SHOPPING_PROVIDER_TYPE.SHOPIFY}
+          shopifyHost="yourstore.myshopify.com"
+          shopifyAccessToken=""
+          updateSettings={updateSettings}
+          vendors={vendors}
+          woocommerce={woocommerceDefault}
+        />
+      </ConfigProvider>
     );
 
     const input = screen.getByLabelText('Shopify Domain');
@@ -76,14 +85,16 @@ describe('Editor Settings: Shopping <Shopping />', function () {
 
   it('should render WooCommerce inputs and helper texts', function () {
     renderWithProviders(
-      <ShoppingSettings
-        shoppingProvider={SHOPPING_PROVIDER_TYPE.WOOCOMMERCE}
-        shopifyHost=""
-        shopifyAccessToken=""
-        updateSettings={updateSettings}
-        vendors={vendors}
-        woocommerce={woocommerceDefault}
-      />
+      <ConfigProvider config={config}>
+        <ShoppingSettings
+          shoppingProvider={SHOPPING_PROVIDER_TYPE.WOOCOMMERCE}
+          shopifyHost=""
+          shopifyAccessToken=""
+          updateSettings={updateSettings}
+          vendors={vendors}
+          woocommerce={woocommerceDefault}
+        />
+      </ConfigProvider>
     );
 
     const element = screen.getByTestId('woocommerceMessage');
@@ -95,18 +106,20 @@ describe('Editor Settings: Shopping <Shopping />', function () {
 
   it('should render WooCommerce inputs and activation message', function () {
     renderWithProviders(
-      <ShoppingSettings
-        shoppingProvider={SHOPPING_PROVIDER_TYPE.WOOCOMMERCE}
-        shopifyHost=""
-        shopifyAccessToken=""
-        updateSettings={updateSettings}
-        vendors={vendors}
-        woocommerce={{
-          ...woocommerceDefault,
-          active: false,
-          canManage: false,
-        }}
-      />
+      <ConfigProvider config={config}>
+        <ShoppingSettings
+          shoppingProvider={SHOPPING_PROVIDER_TYPE.WOOCOMMERCE}
+          shopifyHost=""
+          shopifyAccessToken=""
+          updateSettings={updateSettings}
+          vendors={vendors}
+          woocommerce={{
+            ...woocommerceDefault,
+            active: false,
+            canManage: false,
+          }}
+        />
+      </ConfigProvider>
     );
 
     const element = screen.getByTestId('woocommerceMessage');
@@ -118,19 +131,21 @@ describe('Editor Settings: Shopping <Shopping />', function () {
 
   it('should render WooCommerce  inputs and install message', function () {
     renderWithProviders(
-      <ShoppingSettings
-        shoppingProvider={SHOPPING_PROVIDER_TYPE.WOOCOMMERCE}
-        shopifyHost=""
-        shopifyAccessToken=""
-        updateSettings={updateSettings}
-        vendors={vendors}
-        woocommerce={{
-          installed: false,
-          active: false,
-          canManage: false,
-          link: 'http://www.example.com',
-        }}
-      />
+      <ConfigProvider config={config}>
+        <ShoppingSettings
+          shoppingProvider={SHOPPING_PROVIDER_TYPE.WOOCOMMERCE}
+          shopifyHost=""
+          shopifyAccessToken=""
+          updateSettings={updateSettings}
+          vendors={vendors}
+          woocommerce={{
+            installed: false,
+            active: false,
+            canManage: false,
+            link: 'http://www.example.com',
+          }}
+        />
+      </ConfigProvider>
     );
 
     const element = screen.getByTestId('woocommerceMessage');
@@ -142,14 +157,16 @@ describe('Editor Settings: Shopping <Shopping />', function () {
 
   it('should update settings when pressing enter', function () {
     renderWithProviders(
-      <ShoppingSettings
-        shoppingProvider={SHOPPING_PROVIDER_TYPE.SHOPIFY}
-        shopifyHost="yourstore.myshopify.com"
-        shopifyAccessToken=""
-        updateSettings={updateSettings}
-        vendors={vendors}
-        woocommerce={woocommerceDefault}
-      />
+      <ConfigProvider config={config}>
+        <ShoppingSettings
+          shoppingProvider={SHOPPING_PROVIDER_TYPE.SHOPIFY}
+          shopifyHost="yourstore.myshopify.com"
+          shopifyAccessToken=""
+          updateSettings={updateSettings}
+          vendors={vendors}
+          woocommerce={woocommerceDefault}
+        />
+      </ConfigProvider >
     );
 
     const input = screen.getByLabelText('Shopify Domain');
@@ -164,14 +181,16 @@ describe('Editor Settings: Shopping <Shopping />', function () {
 
   it('should update settings when clicking save button', function () {
     renderWithProviders(
-      <ShoppingSettings
-        shoppingProvider={SHOPPING_PROVIDER_TYPE.SHOPIFY}
-        shopifyHost="yourstore.myshopify.com"
-        shopifyAccessToken=""
-        updateSettings={updateSettings}
-        vendors={vendors}
-        woocommerce={woocommerceDefault}
-      />
+      <ConfigProvider config={config}>
+        <ShoppingSettings
+          shoppingProvider={SHOPPING_PROVIDER_TYPE.SHOPIFY}
+          shopifyHost="yourstore.myshopify.com"
+          shopifyAccessToken=""
+          updateSettings={updateSettings}
+          vendors={vendors}
+          woocommerce={woocommerceDefault}
+        />
+      </ConfigProvider>
     );
 
     const input = screen.getByLabelText('Shopify Domain');
@@ -193,14 +212,16 @@ describe('Editor Settings: Shopping <Shopping />', function () {
 
   it('should render test api connection button', function () {
     renderWithProviders(
-      <ShoppingSettings
-        shoppingProvider={SHOPPING_PROVIDER_TYPE.SHOPIFY}
-        shopifyHost="yourstore.myshopify.com"
-        shopifyAccessToken="123"
-        updateSettings={updateSettings}
-        vendors={vendors}
-        woocommerce={woocommerceDefault}
-      />
+      <ConfigProvider config={config}>
+        <ShoppingSettings
+          shoppingProvider={SHOPPING_PROVIDER_TYPE.SHOPIFY}
+          shopifyHost="yourstore.myshopify.com"
+          shopifyAccessToken="123"
+          updateSettings={updateSettings}
+          vendors={vendors}
+          woocommerce={woocommerceDefault}
+        />
+      </ConfigProvider>
     );
 
     const input = screen.getByTestId('shopifyTestConnection');
