@@ -186,6 +186,10 @@ class Site_Kit extends Service_Base {
 	 * @return array Plugin status.
 	 */
 	public function get_plugin_status(): array {
+		if ( ! function_exists( 'get_plugins' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/plugin.php';
+		}
+
 		$is_installed        = \array_key_exists( 'google-site-kit/google-site-kit.php', get_plugins() );
 		$is_active           = $this->is_plugin_active();
 		$is_analytics_active = $this->is_analytics_module_active();
