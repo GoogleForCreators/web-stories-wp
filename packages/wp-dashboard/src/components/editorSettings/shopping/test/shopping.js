@@ -28,6 +28,11 @@ import { renderWithProviders } from '../../../../testUtils';
 import { SHOPPING_PROVIDER_TYPE } from '../../../../constants';
 
 const updateSettings = jest.fn();
+
+jest.mock('@googleforcreators/dashboard', () => ({
+  apiCallbacks: { getProducts: jest.fn() }
+}));
+
 const vendors = {
   none: 'None',
   shopify: 'Shopify',
@@ -182,4 +187,21 @@ describe('Editor Settings: Shopping <Shopping />', function () {
       shopifyHost: 'mynewstore.myshopify.com',
     });
   });
+
+  it('should render test api connection button', function () {
+    renderWithProviders(
+      <ShoppingSettings
+        shoppingProvider={SHOPPING_PROVIDER_TYPE.SHOPIFY}
+        shopifyHost="yourstore.myshopify.com"
+        shopifyAccessToken="123"
+        updateSettings={updateSettings}
+        vendors={vendors}
+        woocommerce={woocommerceDefault}
+      />
+    );
+
+    const input = screen.getByLabelText('Test connection');
+    expect(input).toBeInTheDocument();
+  });
+
 });
