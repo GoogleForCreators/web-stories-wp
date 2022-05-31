@@ -213,7 +213,7 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 		 */
 		$response = rest_ensure_response( $products );
 
-		$response->header( 'X-WP-HAS-NEXT-PAGE', (string) $query_result['has_next_page'] );
+		$response->header( 'X-WP-HasNextPage', (string) $query_result['has_next_page'] );
 
 		return $response;
 	}
