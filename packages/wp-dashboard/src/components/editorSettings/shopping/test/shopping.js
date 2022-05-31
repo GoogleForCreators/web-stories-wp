@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { fireEvent, screen, act, getByText } from '@testing-library/react';
+import { fireEvent, screen, act } from '@testing-library/react';
 import { ConfigProvider } from '@googleforcreators/dashboard';
 
 /**
@@ -223,10 +223,13 @@ describe('Editor Settings: Shopping <Shopping />', function () {
     const input = screen.getByTestId('shopify-test-connection');
     expect(input).toBeInTheDocument();
 
+    // eslint-disable-next-line testing-library/no-unnecessary-act, require-await
     await act(async () => {
       fireEvent.click(input);
     });
 
-    expect(screen.getByTestId('api-status')).toHaveTextContent('Connection successful');
+    expect(screen.getByTestId('api-status')).toHaveTextContent(
+      'Connection successful'
+    );
   });
 });
