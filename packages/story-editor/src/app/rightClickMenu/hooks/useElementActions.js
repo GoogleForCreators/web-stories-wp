@@ -177,9 +177,16 @@ const useElementActions = () => {
    * @param {Object} image Element that the mask will be applied to.
    */
   const handleUseShapeAsMask = (shape, image) => {
-    // @todo
-    // eslint-disable-next-line no-console -- temp log.
-    console.log('apply mask using shape:', shape, 'image:', image);
+    updateElementsById({
+      elementIds: [image.id],
+      properties: (currentProperties) =>
+        updateProperties(
+          currentProperties,
+          {
+            mask: { type: shape?.mask?.type },
+          },
+        ),
+    });
   };
 
   /**
