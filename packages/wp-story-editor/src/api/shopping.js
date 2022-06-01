@@ -24,11 +24,13 @@ import apiFetch from '@wordpress/api-fetch';
  */
 import { addQueryArgs } from '@googleforcreators/url';
 
-export function getProducts(config, search) {
+export function getProducts(config, search, orderby, order) {
   return apiFetch({
     path: addQueryArgs(config.api.products, {
       per_page: 100,
       search,
+      orderby,
+      order,
     }),
   });
 }
