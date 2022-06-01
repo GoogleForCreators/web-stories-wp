@@ -66,7 +66,7 @@ class WooCommerce_Query implements Product_Query {
 		}
 	  
 		if ( ! $status['active'] ) {
-			return new WP_Error( 'rest_woocommerce_not_activated', __( 'WooCommerce is not activated.', 'web-stories' ), [ 'status' => 400 ] );
+			return new WP_Error( 'rest_woocommerce_not_activated', __( 'WooCommerce is not activated. Please activate it again try again.', 'web-stories' ), [ 'status' => 400 ] );
 		}
 		 
 		$results = [];
