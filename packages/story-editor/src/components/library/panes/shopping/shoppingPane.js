@@ -31,6 +31,7 @@ import {
   SearchInput,
   useLiveRegion,
   CircularProgress,
+  useSnackbar,
 } from '@googleforcreators/design-system';
 
 /**
@@ -64,6 +65,7 @@ const HelperText = styled(Text).attrs({
 `;
 
 function ShoppingPane(props) {
+  const { showSnackbar } = useSnackbar();
   const { shoppingProvider } = useConfig();
   const isShoppingIntegrationEnabled = useFeature('shoppingIntegration');
   const speak = useLiveRegion('assertive');
@@ -100,13 +102,14 @@ function ShoppingPane(props) {
         setIsLoading(true);
         setProducts(await getProducts(value, sortBy, sortOrder));
       } catch (err) {
+        showSnackbar({ message: err.message });
         setProducts([]);
       } finally {
         setIsLoading(false);
         setLoaded(true);
       }
     },
-    [getProducts]
+    [getProducts, showSnackbar]
   );
 
   const onSearch = useCallback(
