@@ -88,7 +88,6 @@ function OutputElement({ element, flags }) {
         <WithMask
           className={!isMaskable ? undefined : 'mask'}
           element={element}
-          box={box}
           id={'el-' + id}
           style={{
             ...(shouldDisplayBorder(element) ? getBorderStyle(element) : null),
