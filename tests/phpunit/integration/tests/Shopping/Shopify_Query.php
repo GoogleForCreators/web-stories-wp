@@ -51,6 +51,7 @@ class Shopify_Query extends DependencyInjectedTestCase {
 
 		$this->request_count = 0;
 		$this->request_body  = null;
+		$this->response_body = null;
 
 		$this->instance = $this->injector->make( \Google\Web_Stories\Shopping\Shopify_Query::class );
 	}
@@ -107,6 +108,24 @@ class Shopify_Query extends DependencyInjectedTestCase {
 			'response' => [
 				'code' => 404,
 			],
+		];
+	}
+
+	/**
+	 * Mock extensions[code] response.
+	 *
+	 * @param mixed  $preempt Whether to preempt an HTTP request's return value. Default false.
+	 * @param mixed  $r       HTTP request arguments.
+	 * @return mixed Response data.
+	 */
+	public function mock_response_extensions_code( $preempt, $r ) {
+		++$this->request_count;
+		$this->request_body = $r['body'];
+		return [
+			'response' => [
+				'code' => 200,
+			],
+			'body'     => $this->response_body,
 		];
 	}
 
@@ -267,7 +286,6 @@ class Shopify_Query extends DependencyInjectedTestCase {
 		$this->assertSame( 'rest_invalid_credentials', $actual->get_error_code() );
 	}
 
-
 	/**
 	 * @covers ::fetch_remote_products
 	 * @covers ::get_search
@@ -336,5 +354,57 @@ class Shopify_Query extends DependencyInjectedTestCase {
 		$this->assertNotWPError( $actual );
 		$this->assertStringContainsString( $expected[0], $this->request_body );
 		$this->assertStringContainsString( $expected[1], $this->request_body );
+	}
+
+	/**
+	* @dataProvider data_test_get_search_extensions_code_response
+	*/
+	public function data_test_get_search_extensions_code_response(): array {
+		return [
+			'THROTTLED'             => [
+				'throttled',
+				'rest_throttled',
+			],
+			'ACCESS_DENIED'         => [
+				'access_denied',
+				'rest_invalid_credentials',
+			],
+			'SHOP_INACTIVE'         => [
+				'shop_inactive',
+				'rest_inactive_shop',
+			],
+
+			'INTERNAL_SERVER_ERROR' => [
+				'internal_server_error',
+				'rest_internal_error',
+			],
+			'UKKNOWN_ERROR'         => [
+				'unknown',
+				'rest_unknown',
+			],
+		];
+	}
+
+	/**
+	 * @covers ::fetch_remote_products
+	 * @covers ::get_search
+	 * @covers ::get_products_query
+	 * @covers ::execute_query
+	 * @dataProvider data_test_get_search_extensions_code_response
+	 */
+	public function test_get_search_extensions_code_response( $args, $expected ): void {
+		update_option( Settings::SETTING_NAME_SHOPIFY_HOST, 'example.myshopify.com' );
+		update_option( Settings::SETTING_NAME_SHOPIFY_ACCESS_TOKEN, '1234' );
+
+		$this->response_body = file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/shopify_response_' . $args . '.json' );
+
+		add_filter( 'pre_http_request', [ $this, 'mock_response_extensions_code' ], 10, 2 );
+
+		$actual = $this->instance->get_search( '' );
+
+		remove_filter( 'pre_http_request', [ $this, 'mock_response_extensions_code' ] );
+
+		$this->assertWPError( $actual );
+		$this->assertSame( $expected, $actual->get_error_code() );
 	}
 }
