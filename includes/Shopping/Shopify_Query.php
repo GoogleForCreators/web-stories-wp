@@ -239,7 +239,7 @@ QUERY;
 				// https://shopify.dev/api/storefront#status_and_error_codes.
 				switch ( $error_code ) {
 					case 'THROTTLED':
-						$wp_error->add( 'rest_throttled', __( 'API rate limit exceeded. Try again later.', 'web-stories' ), [ 'status' => 429 ] );
+						$wp_error->add( 'rest_throttled', __( 'Shopify API rate limit exceeded. Try again later.', 'web-stories' ), [ 'status' => 429 ] );
 						break;
 					case 'ACCESS_DENIED':
 						$wp_error->add( 'rest_invalid_credentials', __( 'Invalid API credentials.', 'web-stories' ), [ 'status' => 401 ] );
