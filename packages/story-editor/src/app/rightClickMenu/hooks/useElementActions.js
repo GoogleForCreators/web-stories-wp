@@ -39,12 +39,14 @@ const useElementActions = () => {
     selectedElements,
     setBackgroundElement,
     updateElementsById,
+    deleteElementById,
   } = useStory(({ state, actions }) => ({
     clearBackgroundElement: actions.clearBackgroundElement,
     duplicateElementsById: actions.duplicateElementsById,
     selectedElements: state.selectedElements,
     setBackgroundElement: actions.setBackgroundElement,
     updateElementsById: actions.updateElementsById,
+    deleteElementById: actions.deleteElementById,
   }));
   const showSnackbar = useSnackbar((value) => value.showSnackbar);
   const setEditingElement = useCanvas(
@@ -180,13 +182,12 @@ const useElementActions = () => {
     updateElementsById({
       elementIds: [image.id],
       properties: (currentProperties) =>
-        updateProperties(
-          currentProperties,
-          {
-            mask: { type: shape?.mask?.type },
-          },
-        ),
+        updateProperties(currentProperties, {
+          mask: { type: shape?.mask?.type },
+        }),
     });
+
+    deleteElementById({ elementId: shape.id });
   };
 
   /**
