@@ -149,13 +149,38 @@ const useElementActions = () => {
   }, [selectedElements, setBackgroundElement, showSnackbar]);
 
   /**
-   * Set currently selected element as the page's background.
+   * Retrieve shape and image from selected elements.
    */
-  const handleUseShapeAsMask = useCallback(() => {
-    // @todo 
-    // ensure we have one image and one shape
-    // code to apply the mask
+  const shapeMaskElements = useCallback(() => {
+    if (selectedElements?.length > 2) {
+      return [];
+    }
+
+    let image, shape;
+
+    selectedElements.forEach((element) => {
+      element.type === 'shape' && (shape = element);
+      element.type === 'image' && (image = element);
+    });
+
+    if (shape && image) {
+      return [shape, image];
+    }
+
+    return [];
   }, [selectedElements]);
+
+  /**
+   * Apply shape mask to element.
+   *
+   * @param {Object} shape Element to use for the mask.
+   * @param {Object} image Element that the mask will be applied to.
+   */
+  const handleUseShapeAsMask = (shape, image) => {
+    // @todo
+    // eslint-disable-next-line no-console -- temp log.
+    console.log('apply mask using shape:', shape, 'image:', image);
+  };
 
   /**
    * Remove media from background and clear opacity and overlay.
@@ -212,6 +237,7 @@ const useElementActions = () => {
   ]);
 
   return {
+    shapeMaskElements,
     handleUseShapeAsMask,
     handleDuplicateSelectedElements,
     handleOpenScaleAndCrop,

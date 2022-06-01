@@ -25,23 +25,27 @@ import { RIGHT_CLICK_MENU_LABELS } from '../constants';
 import { useElementActions } from '../hooks';
 
 function MultipleElementsMenu() {
-  const { handleDuplicateSelectedElements, handleUseShapeAsMask } = useElementActions();
-
+  const {
+    handleDuplicateSelectedElements,
+    handleUseShapeAsMask,
+    shapeMaskElements,
+  } = useElementActions();
+  const maskElements = shapeMaskElements();
   return (
     <>
-      <ContextMenuComponents.MenuButton onClick={handleDuplicateSelectedElements}>
+      <ContextMenuComponents.MenuButton
+        onClick={handleDuplicateSelectedElements}
+      >
         {RIGHT_CLICK_MENU_LABELS.DUPLICATE_ELEMENTS(2)}
       </ContextMenuComponents.MenuButton>
 
-      { // @todo disable menu item if the right type of elements not selected}
-        <ContextMenuComponents.MenuButton
-          onClick={handleUseShapeAsMask}
-        >
-          {RIGHT_CLICK_MENU_LABELS.USE_SHAPE_AS_MASK}
-        </ContextMenuComponents.MenuButton>
+      <ContextMenuComponents.MenuButton
+        disabled={maskElements?.length !== 2}
+        onClick={() => handleUseShapeAsMask(...maskElements)}
+      >
+        {RIGHT_CLICK_MENU_LABELS.USE_SHAPE_AS_MASK}
+      </ContextMenuComponents.MenuButton>
     </>
-
-
   );
 }
 
