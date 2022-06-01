@@ -245,7 +245,7 @@ QUERY;
 						$wp_error->add( 'rest_invalid_credentials', __( 'Invalid Shopify API credentials provided.', 'web-stories' ), [ 'status' => 401 ] );
 						break;
 					case 'SHOP_INACTIVE':
-						$wp_error->add( 'rest_inactive_shop', __( 'Inactive shop.', 'web-stories' ), [ 'status' => 403 ] );
+						$wp_error->add( 'rest_inactive_shop', __( 'Inactive Shopify shop.', 'web-stories' ), [ 'status' => 403 ] );
 						break;
 					case 'INTERNAL_SERVER_ERROR':
 						$wp_error->add( 'rest_internal_error', __( 'Shopify experienced an internal server error.', 'web-stories' ), [ 'status' => 500 ] );
