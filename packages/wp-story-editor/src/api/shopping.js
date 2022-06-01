@@ -29,6 +29,8 @@ import apiFetch from '@wordpress/api-fetch';
  *
  * @param {Object} config Configuration object.
  * @param {string} search Search term.
+ * @param {string} orderby Order collection by product attribute.
+ * @param {string} order Sort attribute ascending or descending.
  * @return {Promise} The response from the API.
  */
 export function getProducts(config, search, orderby, order) {

@@ -199,7 +199,12 @@ function ShopifySettings({
     }
   }, [getProducts, speak]);
 
-  const canTestConnection = host && !hostInputError && accessToken && !accessTokenInputError && !isTestingConnection;
+  const canTestConnection =
+    host &&
+    !hostInputError &&
+    accessToken &&
+    !accessTokenInputError &&
+    !isTestingConnection;
 
   const handleClick = useCallback(
     (evt) => trackClick(evt, 'click_shopify_docs'),
