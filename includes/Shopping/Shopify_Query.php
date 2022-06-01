@@ -242,7 +242,7 @@ QUERY;
 						$wp_error->add( 'rest_throttled', __( 'Shopify API rate limit exceeded. Try again later.', 'web-stories' ), [ 'status' => 429 ] );
 						break;
 					case 'ACCESS_DENIED':
-						$wp_error->add( 'rest_invalid_credentials', __( 'Invalid API credentials.', 'web-stories' ), [ 'status' => 401 ] );
+						$wp_error->add( 'rest_invalid_credentials', __( 'Invalid Shopify API credentials provided.', 'web-stories' ), [ 'status' => 401 ] );
 						break;
 					case 'SHOP_INACTIVE':
 						$wp_error->add( 'rest_inactive_shop', __( 'Inactive shop.', 'web-stories' ), [ 'status' => 403 ] );
