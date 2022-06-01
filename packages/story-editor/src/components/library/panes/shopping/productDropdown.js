@@ -16,13 +16,13 @@
 /**
  * External dependencies
  */
-import { useFeature } from 'flagged';
-
-/**
- * External dependencies
- */
 import { __ } from '@googleforcreators/i18n';
-import { useCallback, useEffect, useState } from '@googleforcreators/react';
+import {
+  useCallback,
+  useEffect,
+  useState,
+  useMemo,
+} from '@googleforcreators/react';
 import { Datalist } from '@googleforcreators/design-system';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -36,10 +36,12 @@ const StyledDropDown = styled(Datalist.DropDown)`
   width: 240px;
 `;
 function ProductDropdown({ product, setProduct }) {
-  const isShoppingIntegrationEnabled = useFeature('shoppingIntegration');
-
+  const initialProducts = useMemo(
+    () => [{ id: product?.productId, name: product?.productTitle, product }],
+    [product]
+  );
   const [isLoading, setIsLoading] = useState(false);
-  const [initialOptions, setInitialOptions] = useState([]);
+  const [initialOptions, setInitialOptions] = useState(initialProducts);
 
   const {
     actions: { getProducts },
@@ -73,12 +75,12 @@ function ProductDropdown({ product, setProduct }) {
         const products = await getProductsByQuery();
         setInitialOptions(products);
       } catch (err) {
-        setInitialOptions([]);
+        setInitialOptions(initialProducts);
       } finally {
         setIsLoading(false);
       }
     })();
-  }, [getProductsByQuery]);
+  }, [getProductsByQuery, initialProducts]);
 
   const dropDownParams = {
     hasSearch: true,
@@ -87,15 +89,10 @@ function ProductDropdown({ product, setProduct }) {
     getOptionsByQuery: getProductsByQuery,
     selectedId: product?.productId,
     dropDownLabel: __('Product', 'web-stories'),
-    placeholder: isLoading ? __('Loading…', 'web-stories') : '',
-    disabled: isLoading ? true : isSaving,
-    primaryOptions: isLoading ? [] : initialOptions,
+    disabled: isSaving,
+    primaryOptions: isLoading ? initialProducts : initialOptions,
     zIndex: 10,
   };
-
-  if (!isShoppingIntegrationEnabled) {
-    return null;
-  }
 
   return (
     <StyledDropDown

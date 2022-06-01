@@ -39,7 +39,7 @@ import useVideoElementTranscoding from '../../../../app/media/utils/useVideoElem
 import { Row as DefaultRow } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { getCommonValue } from '../../shared';
-import LoopPanelContent from '../../shared/loopPanelContent';
+import LoopPanelContent from '../../shared/media/loopPanelContent';
 
 const Row = styled(DefaultRow)`
   margin-top: 2px;

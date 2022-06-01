@@ -46,7 +46,7 @@ const Element = styled.p`
 
 function TextFrame({
   element,
-  element: { id, content, ...rest },
+  element: { id, content, isLocked, ...rest },
   wrapperRef,
   setEditingElementWithState,
   isOnlySelectedElement,
@@ -77,7 +77,7 @@ function TextFrame({
     let clickCoordinates = null;
 
     const handleKeyDown = (evt) => {
-      if (evt.metaKey || evt.altKey || evt.ctrlKey) {
+      if (evt.metaKey || evt.altKey || evt.ctrlKey || isLocked) {
         // Some modifier (except shift) was pressed. Ignore and bubble
         return;
       }
@@ -104,6 +104,7 @@ function TextFrame({
 
     const handleMouseUp = (evt) => {
       if (
+        isLocked ||
         !clickCoordinates ||
         areEventsDragging(
           {
@@ -136,7 +137,13 @@ function TextFrame({
       elementNode.removeEventListener('mousedown', handleMouseDown);
       elementNode.removeEventListener('mouseup', handleMouseUp);
     };
-  }, [id, wrapperRef, isOnlySelectedElement, setEditingElementWithState]);
+  }, [
+    id,
+    wrapperRef,
+    isOnlySelectedElement,
+    setEditingElementWithState,
+    isLocked,
+  ]);
 
   // data-fix-caret is for allowing caretRangeFromPoint to work in Safari.
   // See https://github.com/googleforcreators/web-stories-wp/issues/7745.

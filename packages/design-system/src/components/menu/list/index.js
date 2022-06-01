@@ -18,3 +18,7 @@ export { default as DefaultListItem } from './defaultListItem';
 export { default as EmptyList } from './emptyList';
 export { default as List } from './list';
 export { default as ListGroupings } from './listGroupings';
+export {
+  ListItem as DefaultListItemInner,
+  ListItemLabelDisplayText as DefaultListItemLabelDisplayText,
+} from './components';

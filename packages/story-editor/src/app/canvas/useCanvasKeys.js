@@ -169,7 +169,8 @@ function useCanvasKeys(ref) {
       if (isEditing) {
         return;
       }
-      if (selectedElements?.[0]?.isBackground) {
+      const { isBackground, isLocked } = selectedElements?.[0] || {};
+      if (isBackground || isLocked) {
         return;
       }
       const { dx, dy } = getKeyboardMovement(key, shiftKey);
@@ -209,10 +210,10 @@ function useCanvasKeys(ref) {
         return;
       }
 
-      const { type, id } = selectedElements[0];
-      const { hasEditMode } = getDefinitionForType(type);
+      const { type, id, isLocked } = selectedElements[0];
+      const { hasEditMode, hasEditModeIfLocked } = getDefinitionForType(type);
       // Only handle Enter key for editable elements
-      if (!hasEditMode) {
+      if (!hasEditMode || (!hasEditModeIfLocked && isLocked)) {
         return;
       }
 
@@ -238,7 +239,7 @@ function useCanvasKeys(ref) {
     STORY_ANIMATION_STATE.PLAYING_SELECTED,
   ].includes(animationState);
   useGlobalKeyDownEffect(
-    { key: ['mod+space'] },
+    { key: ['mod+enter'] },
     (evt) => {
       evt.preventDefault();
       if (currentPageNumber === 1) {

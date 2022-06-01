@@ -122,4 +122,54 @@ describe('toggleElementInSelection', () => {
     expect(selection).not.toContain('e1');
     expect(selection).toContain('e2');
   });
+
+  it('should set selection to only new element if trying to add locked element to non-empty selection', () => {
+    const { restore, toggleElementInSelection } = setupReducer();
+
+    // Set an initial state.
+    restore({
+      pages: [
+        {
+          id: '111',
+          elements: [
+            { id: 'e1', isBackground: true },
+            { id: 'e2' },
+            { id: 'e3' },
+            { id: 'e4', isLocked: true },
+          ],
+        },
+      ],
+      current: '111',
+      selection: ['e2', 'e3'],
+    });
+
+    // Toggle e4
+    const onlyNewElement = toggleElementInSelection({ elementId: 'e4' });
+    expect(onlyNewElement.selection).toStrictEqual(['e4']);
+  });
+
+  it('should set selection to only new element if trying to add any element to selection of locked element', () => {
+    const { restore, toggleElementInSelection } = setupReducer();
+
+    // Set an initial state.
+    restore({
+      pages: [
+        {
+          id: '111',
+          elements: [
+            { id: 'e1', isBackground: true },
+            { id: 'e2' },
+            { id: 'e3' },
+            { id: 'e4', isLocked: true },
+          ],
+        },
+      ],
+      current: '111',
+      selection: ['e4'],
+    });
+
+    // Toggle e2
+    const onlyNewElement = toggleElementInSelection({ elementId: 'e2' });
+    expect(onlyNewElement.selection).toStrictEqual(['e2']);
+  });
 });

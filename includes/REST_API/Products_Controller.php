@@ -129,7 +129,7 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 		if ( ! $this->story_post_type->has_cap( 'edit_posts' ) ) {
 			return new \WP_Error(
 				'rest_forbidden',
-				__( 'Sorry, you are not allowed to manage publisher logos.', 'web-stories' ),
+				__( 'Sorry, you are not allowed to manage products.', 'web-stories' ),
 				[ 'status' => rest_authorization_required_code() ]
 			);
 		}
@@ -146,7 +146,6 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
 	public function get_items( $request ) {
-		// TODO(#11154): Refactor to extract product query logic out of this controller.
 		/**
 		 * Shopping provider.
 		 *
@@ -164,8 +163,24 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 		 *
 		 * @var string $search_term
 		 */
-		$search_term  = ! empty( $request['search'] ) ? $request['search'] : '';
-		$query_result = $query->get_search( $search_term );
+		$search_term = ! empty( $request['search'] ) ? $request['search'] : '';
+		
+		/**
+		 * Request context.
+		 *
+		 * @var string $orderby
+		 */
+		$orderby = ! empty( $request['orderby'] ) ? $request['orderby'] : 'date';
+
+		/**
+		 * Request context.
+		 *
+		 * @var string $order
+		 */
+		$order = ! empty( $request['order'] ) ? $request['order'] : 'desc';
+		
+		
+		$query_result = $query->get_search( $search_term, $orderby, $order );
 		if ( is_wp_error( $query_result ) ) {
 			return $query_result;
 		}
@@ -200,6 +215,10 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 			$data['productId'] = $product->get_id();
 		}
 
+		if ( rest_is_field_included( 'productUrl', $fields ) ) {
+			$data['productUrl'] = $product->get_url();
+		}
+
 		if ( rest_is_field_included( 'productTitle', $fields ) ) {
 			$data['productTitle'] = $product->get_title();
 		}
@@ -212,8 +231,8 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 			$data['productPrice'] = $product->get_price();
 		}
 
-		if ( rest_is_field_included( 'productCurrency', $fields ) ) {
-			$data['productCurrency'] = $product->get_price_currency();
+		if ( rest_is_field_included( 'productPriceCurrency', $fields ) ) {
+			$data['productPriceCurrency'] = $product->get_price_currency();
 		}
 
 		if ( rest_is_field_included( 'productDetails', $fields ) ) {
@@ -234,18 +253,24 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 			}
 		}
 
-		if ( rest_is_field_included( 'aggregateRating', $fields ) ) {
-			$data['aggregateRating'] = [];
-		}
+		$rating = $product->get_aggregate_rating();
 
-		if ( rest_is_field_included( 'aggregateRating.ratingValue', $fields ) ) {
-			$data['aggregateRating']['ratingValue'] = (float) $product->get_aggregate_rating()['rating_value'];
-		}
-		if ( rest_is_field_included( 'aggregateRating.reviewCount', $fields ) ) {
-			$data['aggregateRating']['reviewCount'] = (int) $product->get_aggregate_rating()['review_count'];
-		}
-		if ( rest_is_field_included( 'aggregateRating.reviewUrl', $fields ) ) {
-			$data['aggregateRating']['reviewUrl'] = $product->get_aggregate_rating()['review_url'];
+		if ( $rating ) {
+			if ( rest_is_field_included( 'aggregateRating', $fields ) ) {
+				$data['aggregateRating'] = [];
+			}
+
+			if ( rest_is_field_included( 'aggregateRating.ratingValue', $fields ) ) {
+				$data['aggregateRating']['ratingValue'] = (float) $rating['rating_value'];
+			}
+
+			if ( rest_is_field_included( 'aggregateRating.reviewCount', $fields ) ) {
+				$data['aggregateRating']['reviewCount'] = (int) $rating['review_count'];
+			}
+
+			if ( rest_is_field_included( 'aggregateRating.reviewUrl', $fields ) ) {
+				$data['aggregateRating']['reviewUrl'] = $rating['review_url'];
+			}
 		}
 
 		/**
@@ -270,6 +295,8 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 	/**
 	 * Retrieves the publisher logo's schema, conforming to JSON Schema.
 	 *
+	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+	 *
 	 * @since 1.20.0
 	 *
 	 * @return array Item schema data.
@@ -284,37 +311,44 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 			'title'      => 'publisher-logo',
 			'type'       => 'object',
 			'properties' => [
-				'productId'       => [
+				'productId'            => [
 					'description' => __( 'Product ID.', 'web-stories' ),
 					'type'        => 'integer',
 					'context'     => [ 'view', 'edit', 'embed' ],
 					'readonly'    => true,
 				],
-				'productTitle'    => [
+				'productUrl'           => [
+					'description' => __( 'Product URL.', 'web-stories' ),
+					'type'        => 'string',
+					'format'      => 'uri',
+					'context'     => [ 'view', 'edit', 'embed' ],
+					'readonly'    => true,
+				],
+				'productTitle'         => [
 					'description' => __( 'Product title.', 'web-stories' ),
 					'type'        => 'string',
 					'context'     => [ 'view', 'edit', 'embed' ],
 					'readonly'    => true,
 				],
-				'productBrand'    => [
+				'productBrand'         => [
 					'description' => __( 'Product brand.', 'web-stories' ),
 					'type'        => 'string',
 					'context'     => [ 'view', 'edit', 'embed' ],
 					'readonly'    => true,
 				],
-				'productPrice'    => [
+				'productPrice'         => [
 					'description' => __( 'Product price.', 'web-stories' ),
 					'type'        => 'string',
 					'context'     => [ 'view', 'edit', 'embed' ],
 					'readonly'    => true,
 				],
-				'productCurrency' => [
+				'productPriceCurrency' => [
 					'description' => __( 'Product currency.', 'web-stories' ),
 					'type'        => 'string',
 					'context'     => [ 'view', 'edit', 'embed' ],
 					'readonly'    => true,
 				],
-				'productImages'   => [
+				'productImages'        => [
 					'description' => __( 'Product brand.', 'web-stories' ),
 					'type'        => 'array',
 					'items'       => [
@@ -336,7 +370,7 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 					'context'     => [ 'view', 'edit', 'embed' ],
 					'readonly'    => true,
 				],
-				'aggregateRating' => [
+				'aggregateRating'      => [
 					'description' => __( 'Product rating.', 'web-stories' ),
 					'type'        => 'object',
 					'properties'  => [
@@ -360,7 +394,7 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 					'context'     => [ 'view', 'edit', 'embed' ],
 					'readonly'    => true,
 				],
-				'productDetails'  => [
+				'productDetails'       => [
 					'description' => __( 'Product description.', 'web-stories' ),
 					'type'        => 'string',
 					'context'     => [ 'view', 'edit', 'embed' ],
@@ -370,5 +404,36 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 		];
 
 		return $schema;
+	}
+
+	/**
+	 * Retrieves the query params for the products collection.
+	 *
+	 * @since 1.21.0
+	 *
+	 * @return array Collection parameters.
+	 */
+	public function get_collection_params(): array {
+		$query_params = parent::get_collection_params();
+
+		$query_params['orderby'] = [
+			'description' => __( 'Sort collection by product attribute.', 'web-stories' ),
+			'type'        => 'string',
+			'default'     => 'date',
+			'enum'        => [
+				'date',
+				'price',
+				'title',
+			],
+		];
+
+		$query_params['order'] = [
+			'description' => __( 'Order sort attribute ascending or descending.', 'web-stories' ),
+			'type'        => 'string',
+			'default'     => 'desc',
+			'enum'        => [ 'asc', 'desc' ],
+		];
+
+		return $query_params;
 	}
 }

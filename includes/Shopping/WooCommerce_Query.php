@@ -1,6 +1,6 @@
 <?php
 /**
- * Class Woocommerce_Query
+ * Class WooCommerce_Query
  *
  * @link      https://github.com/googleforcreators/web-stories-wp
  *
@@ -26,49 +26,81 @@
 
 namespace Google\Web_Stories\Shopping;
 
+use Google\Web_Stories\Integrations\WooCommerce;
 use Google\Web_Stories\Interfaces\Product_Query;
+use WC_Query;
 use WP_Error;
 
 /**
- * Class Woocommerce_Query.
+ * Class WooCommerce_Query.
  */
-class Woocommerce_Query implements Product_Query {
+class WooCommerce_Query implements Product_Query {
+	/**
+	 * WooCommerce instance.
+	 *
+	 * @var WooCommerce WooCommerce instance.
+	 */
+	private $woocommerce;
+
+	/**
+	 * Constructor.
+	 *
+	 * @param WooCommerce $woocommerce WooCommerce instance.
+	 */
+	public function __construct( WooCommerce $woocommerce ) {
+		$this->woocommerce = $woocommerce;
+	}
+
 	/**
 	 * Get products by search term.
 	 *
 	 * @since 1.21.0
 	 *
 	 * @param string $search_term Search term.
+	 * @param string $orderby Sort collection by product attribute.
+	 * @param string $order Order sort attribute ascending or descending.
 	 * @return Product[]|WP_Error
 	 */
-	public function get_search( string $search_term ) {
+	public function get_search( string $search_term, string $orderby = 'date', string $order = 'desc' ) {
+		$status = $this->woocommerce->get_plugin_status();
 
-		if ( ! function_exists( 'wc_get_products' ) ) {
-			return new WP_Error( 'rest_unknown', __( 'Woocommerce is not installed.', 'web-stories' ), [ 'status' => 400 ] );
+		if ( ! $status['active'] ) {
+			return new WP_Error( 'rest_woocommerce_not_installed', __( 'WooCommerce is not installed.', 'web-stories' ), [ 'status' => 400 ] );
 		}
 
 		$results = [];
 
+		$wc_args = [];
+
+		if ( 'price' === $orderby ) {
+			$wc_query = new WC_Query();
+			$wc_args  = $wc_query->get_catalog_ordering_args( $orderby, strtoupper( $order ) );
+		}
+		
 		/**
 		 * Products.
 		 *
 		 * @var \WC_Product[] $products
 		 */
 		$products = wc_get_products(
-			[
-				'status'  => 'publish',
-				'limit'   => 100,
-				'orderby' => 'date',
-				'order'   => 'DESC',
-				's'       => $search_term,
-			]
+			array_merge(
+				[
+					'status'  => 'publish',
+					'limit'   => 100,
+					's'       => $search_term,
+					'orderby' => $orderby,
+					'order'   => $order,
+				], 
+				$wc_args
+			)
 		);
 
 		$product_image_ids = [];
 		foreach ( $products as $product ) {
-			$product_image_ids[] = $product->get_gallery_image_ids();
+			$product_image_ids[] = $this->get_product_image_ids( $product );
 		}
 		$products_image_ids = array_merge( [], ...$product_image_ids );
+
 		/**
 		 * Warm the object cache with post and meta information for all found
 		 * images to avoid making individual database calls.
@@ -76,8 +108,11 @@ class Woocommerce_Query implements Product_Query {
 		_prime_post_caches( $products_image_ids, false, true );
 
 		foreach ( $products as $product ) {
-			$product_image_ids = array_map( 'absint', $product->get_gallery_image_ids() );
-			$images            = array_map( [ $this, 'get_product_images' ], $product_image_ids );
+
+			$images = array_map(
+				[ $this, 'get_product_image' ],
+				$this->get_product_image_ids( $product )
+			);
 
 			$product_object = new Product(
 				[
@@ -105,6 +140,21 @@ class Woocommerce_Query implements Product_Query {
 	}
 
 	/**
+	 * Get all product image ids (feature image + gallery_images).
+	 *
+	 * @since 1.21.0
+	 *
+	 * @param \WC_Product $product Product.
+	 * @return array
+	 */
+	protected function get_product_image_ids( $product ): array {
+		$product_image_ids = $product->get_gallery_image_ids();
+		array_unshift( $product_image_ids, $product->get_image_id() );
+		$product_image_ids = array_map( 'absint', $product_image_ids );
+		return array_unique( array_filter( $product_image_ids ) );
+	}
+
+	/**
 	 * Get product image, url and alt.
 	 *
 	 * @since 1.21.0
@@ -112,9 +162,15 @@ class Woocommerce_Query implements Product_Query {
 	 * @param int $image_id Attachment ID.
 	 * @return array
 	 */
-	protected function get_product_images( int $image_id ): array {
-		$url = wp_get_attachment_url( $image_id );
+	protected function get_product_image( int $image_id ): array {
+		$url = wp_get_attachment_image_url( $image_id, 'large' );
+
+		if ( ! $url ) {
+			return [];
+		}
+
 		$alt = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
+
 		if ( empty( $alt ) ) {
 			$alt = '';
 		}

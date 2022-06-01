@@ -34,6 +34,7 @@ use Google\Web_Stories\Decoder;
 use Google\Web_Stories\Experiments;
 use Google\Web_Stories\Font_Post_Type;
 use Google\Web_Stories\Integrations\Site_Kit;
+use Google\Web_Stories\Integrations\WooCommerce;
 use Google\Web_Stories\Locale;
 use Google\Web_Stories\Media\Types;
 use Google\Web_Stories\Service_Base;
@@ -136,6 +137,13 @@ class Dashboard extends Service_Base {
 	private $shopping_vendors;
 
 	/**
+	 * WooCommerce instance.
+	 *
+	 * @var WooCommerce WooCommerce instance.
+	 */
+	private $woocommerce;
+
+	/**
 	 * Dashboard constructor.
 	 *
 	 * @SuppressWarnings(PHPMD.ExcessiveParameterList)
@@ -153,6 +161,7 @@ class Dashboard extends Service_Base {
 	 * @param Context          $context          Context instance.
 	 * @param Types            $types            Types instance.
 	 * @param Shopping_Vendors $shopping_vendors Shopping_Vendors instance.
+	 * @param WooCommerce      $woocommerce      WooCommerce instance.
 	 */
 	public function __construct(
 		Experiments $experiments,
@@ -165,7 +174,8 @@ class Dashboard extends Service_Base {
 		Story_Post_Type $story_post_type,
 		Context $context,
 		Types $types,
-		Shopping_Vendors $shopping_vendors
+		Shopping_Vendors $shopping_vendors,
+		WooCommerce $woocommerce
 	) {
 		$this->experiments      = $experiments;
 		$this->decoder          = $decoder;
@@ -178,6 +188,7 @@ class Dashboard extends Service_Base {
 		$this->context          = $context;
 		$this->types            = $types;
 		$this->shopping_vendors = $shopping_vendors;
+		$this->woocommerce      = $woocommerce;
 	}
 
 	/**
@@ -454,7 +465,10 @@ class Dashboard extends Service_Base {
 				'canUploadFiles'    => current_user_can( 'upload_files' ),
 			],
 			'canViewDefaultTemplates' => true,
-			'siteKitStatus'           => $this->site_kit->get_plugin_status(),
+			'plugins'                 => [
+				'siteKit'     => $this->site_kit->get_plugin_status(),
+				'woocommerce' => $this->woocommerce->get_plugin_status(),
+			],
 			'flags'                   => array_merge(
 				$this->experiments->get_experiment_statuses( 'general' ),
 				$this->experiments->get_experiment_statuses( 'dashboard' )

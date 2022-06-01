@@ -34,6 +34,13 @@ const vendors = {
   woocommerce: 'WooCommerce',
 };
 
+const woocommerceDefault = {
+  installed: true,
+  active: true,
+  canManage: true,
+  link: 'http://www.example.com',
+};
+
 describe('Editor Settings: Shopping <Shopping />', function () {
   beforeEach(() => {
     updateSettings.mockReset();
@@ -47,6 +54,7 @@ describe('Editor Settings: Shopping <Shopping />', function () {
         shopifyAccessToken=""
         updateSettings={updateSettings}
         vendors={vendors}
+        woocommerce={woocommerceDefault}
       />
     );
 
@@ -58,6 +66,72 @@ describe('Editor Settings: Shopping <Shopping />', function () {
     expect(sectionHeader).toBeInTheDocument();
   });
 
+  it('should render WooCommerce inputs and helper texts', function () {
+    renderWithProviders(
+      <ShoppingSettings
+        shoppingProvider={SHOPPING_PROVIDER_TYPE.WOOCOMMERCE}
+        shopifyHost=""
+        shopifyAccessToken=""
+        updateSettings={updateSettings}
+        vendors={vendors}
+        woocommerce={woocommerceDefault}
+      />
+    );
+
+    const element = screen.getByTestId('woocommerceMessage');
+    expect(element).toBeInTheDocument();
+    expect(element).toHaveTextContent(
+      'Manage products in WooCommerce to make them available in Web Stories.'
+    );
+  });
+
+  it('should render WooCommerce inputs and activation message', function () {
+    renderWithProviders(
+      <ShoppingSettings
+        shoppingProvider={SHOPPING_PROVIDER_TYPE.WOOCOMMERCE}
+        shopifyHost=""
+        shopifyAccessToken=""
+        updateSettings={updateSettings}
+        vendors={vendors}
+        woocommerce={{
+          ...woocommerceDefault,
+          active: false,
+          canManage: false,
+        }}
+      />
+    );
+
+    const element = screen.getByTestId('woocommerceMessage');
+    expect(element).toBeInTheDocument();
+    expect(element).toHaveTextContent(
+      'Activate WooCommerce to easily add shoppable products to Web Stories.'
+    );
+  });
+
+  it('should render WooCommerce  inputs and install message', function () {
+    renderWithProviders(
+      <ShoppingSettings
+        shoppingProvider={SHOPPING_PROVIDER_TYPE.WOOCOMMERCE}
+        shopifyHost=""
+        shopifyAccessToken=""
+        updateSettings={updateSettings}
+        vendors={vendors}
+        woocommerce={{
+          installed: false,
+          active: false,
+          canManage: false,
+          link: 'http://www.example.com',
+        }}
+      />
+    );
+
+    const element = screen.getByTestId('woocommerceMessage');
+    expect(element).toBeInTheDocument();
+    expect(element).toHaveTextContent(
+      'Install WooCommerce to easily add shoppable products to Web Stories.'
+    );
+  });
+
   it('should update settings when pressing enter', function () {
     renderWithProviders(
       <ShoppingSettings
@@ -66,6 +140,7 @@ describe('Editor Settings: Shopping <Shopping />', function () {
         shopifyAccessToken=""
         updateSettings={updateSettings}
         vendors={vendors}
+        woocommerce={woocommerceDefault}
       />
     );
 
@@ -87,6 +162,7 @@ describe('Editor Settings: Shopping <Shopping />', function () {
         shopifyAccessToken=""
         updateSettings={updateSettings}
         vendors={vendors}
+        woocommerce={woocommerceDefault}
       />
     );
 
