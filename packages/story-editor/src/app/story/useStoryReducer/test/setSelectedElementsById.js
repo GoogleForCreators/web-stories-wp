@@ -175,6 +175,35 @@ describe('setSelectedElementsById', () => {
     expect(result.selection).toStrictEqual(['e2', 'e3']);
   });
 
+  it('should remove locked elements if included among other elements', () => {
+    const { restore, setSelectedElementsById } = setupReducer();
+
+    // Set an initial state.
+    restore({
+      pages: [
+        {
+          id: '111',
+          elements: [
+            { id: 'e1', isBackground: true },
+            { id: 'e2' },
+            { id: 'e3', isLocked: true },
+            { id: 'e4', isLocked: true },
+            { id: 'e5' },
+          ],
+        },
+      ],
+      current: '111',
+      selection: [],
+    });
+
+    // Try setting all but first element as selected
+    const result = setSelectedElementsById({
+      elementIds: ['e2', 'e5', 'e3', 'e4'],
+    });
+
+    expect(result.selection).toStrictEqual(['e2', 'e5']);
+  });
+
   it('should not update animationState if nothing has changed', () => {
     const { restore, setSelectedElementsById, updateAnimationState } =
       setupReducer();

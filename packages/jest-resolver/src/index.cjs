@@ -19,6 +19,48 @@ const isLocalRepo = (name) =>
 
 // See https://jestjs.io/docs/configuration#resolver-string
 module.exports = (request, options) => {
+  // Workaround for https://github.com/uuidjs/uuid/pull/616.
+  //
+  // jest-environment-jsdom 28+ tries to use browser exports instead of default exports,
+  // but uuid only offers an ESM browser export and not a CommonJS one. Jest does not yet
+  // support ESM modules natively, so this causes a Jest error related to trying to parse
+  // "export" syntax.
+  //
+  // This workaround prevents Jest from considering uuid's module-based exports at all;
+  // it falls back to uuid's CommonJS+node "main" property.
+  //
+  // Once we're able to migrate our Jest config to ESM and a browser crypto
+  // implementation is available for the browser+ESM version of uuid to use (eg, via
+  // https://github.com/jsdom/jsdom/pull/3352 or a similar polyfill), this can go away.
+  if ('uuid' === request) {
+    return options.defaultResolver(request, {
+      ...options,
+      packageFilter: (pkg) => {
+        if ('uuid' === pkg.name) {
+          delete pkg.exports;
+          delete pkg.module;
+        }
+
+        return pkg;
+      },
+    });
+  }
+
+  // Similar workaround for react-colorful, which is used by @wordpress/components.
+  if ('react-colorful' === request) {
+    return options.defaultResolver(request, {
+      ...options,
+      packageFilter: (pkg) => {
+        if ('react-colorful' === pkg.name) {
+          delete pkg.exports;
+          delete pkg.module;
+        }
+
+        return pkg;
+      },
+    });
+  }
+
   if (!isLocalRepo(request)) {
     return options.defaultResolver(request, options);
   }
@@ -28,11 +70,10 @@ module.exports = (request, options) => {
     ...options,
     packageFilter: (pkg) => {
       if (isLocalRepo(pkg.name)) {
-        return {
-          ...pkg,
-          // Alter the value of `main` before resolving the package
-          main: pkg.source || pkg.module || pkg.main,
-        };
+        delete pkg.exports;
+
+        // Alter the value of `main` before resolving the package
+        pkg.main = pkg.source || pkg.module || pkg.main;
       }
 
       return pkg;

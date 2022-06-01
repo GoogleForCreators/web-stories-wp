@@ -1,57 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`TermsDialog should render 1`] = `
-.c1 {
-  width: 12px;
-  margin-left: 0.5ch;
-  margin-bottom: 2px;
-  stroke-width: 0;
-  vertical-align: text-bottom;
-}
-
-.c0 {
-  font-family: 'Google Sans',sans-serif;
-  color: #131516;
-  margin: 0;
-  padding: 0;
-  font-family: 'Google Sans',sans-serif;
-  font-size: 14px;
-  font-weight: 700;
-  -webkit-letter-spacing: 0px;
-  -moz-letter-spacing: 0px;
-  -ms-letter-spacing: 0px;
-  letter-spacing: 0px;
-  line-height: 20px;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  color: #4F7ED9;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  cursor: pointer;
-  vertical-align: baseline;
-}
-
-.c0:focus {
-  box-shadow: none;
-}
-
-.c0:hover {
-  color: #476ABD;
-}
-
-.c0:focus {
-  color: #4F7ED9 !important;
-}
-
-.c0.focus-visible,
-.c0[data-focus-visible-added] {
-  outline: none;
-  box-shadow: 0px 0px 0 2px #FFF,0px 0px 0 4px #5D96EB;
-}
-
 <a
   aria-label="Learn more by visiting Web Stories for WordPress"
-  class="c0"
+  class="link__StyledAnchor-sc-i8gwd7-1 fHWKYX"
   href="https://wp.stories.google/docs/terms/"
   rel="noreferrer"
   target="_blank"
@@ -59,7 +11,7 @@ exports[`TermsDialog should render 1`] = `
   <span>
     Learn more.
     <span
-      class="c1"
+      class="link__StyledLaunch-sc-i8gwd7-0 iHzhnJ"
     />
   </span>
 </a>

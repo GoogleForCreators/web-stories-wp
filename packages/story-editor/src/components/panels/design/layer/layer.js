@@ -25,10 +25,14 @@ import {
   BUTTON_TYPES,
   Icons,
   themeHelpers,
+  Text,
+  THEME_CONSTANTS,
 } from '@googleforcreators/design-system';
 import { useRef, memo } from '@googleforcreators/react';
-import { getDefinitionForType } from '@googleforcreators/elements';
-import { LayerText } from '@googleforcreators/element-library';
+import {
+  getDefinitionForType,
+  getLayerName,
+} from '@googleforcreators/elements';
 import { useFeature } from 'flagged';
 
 /**
@@ -171,6 +175,17 @@ const LayerDescription = styled.div`
   color: ${({ theme }) => theme.colors.fg.primary};
 `;
 
+const LayerText = styled(Text).attrs({
+  forwardedAs: 'span',
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+})`
+  color: inherit;
+  white-space: nowrap;
+  text-overflow: ' ';
+  overflow: hidden;
+  max-width: 100%;
+`;
+
 const IconWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -265,7 +280,7 @@ function preventReorder(e) {
 
 function Layer({ element }) {
   const isLayerLockingEnabled = useFeature('layerLocking');
-  const { LayerIcon, LayerContent } = getDefinitionForType(element.type);
+  const { LayerIcon } = getDefinitionForType(element.type);
   const { isSelected, handleClick } = useLayerSelection(element);
   const { isDefaultBackground } = element;
   const {
@@ -302,6 +317,8 @@ function Layer({ element }) {
 
   const LockIcon = element.isLocked ? Icons.LockClosed : Icons.LockOpen;
 
+  const layerName = getLayerName(element);
+
   return (
     <LayerContainer>
       <LayerButton
@@ -319,11 +336,7 @@ function Layer({ element }) {
         </LayerIconWrapper>
         <LayerDescription>
           <LayerContentContainer>
-            {element.isBackground ? (
-              <LayerText>{__('Background', 'web-stories')}</LayerText>
-            ) : (
-              <LayerContent element={element} />
-            )}
+            <LayerText>{layerName}</LayerText>
           </LayerContentContainer>
           {element.isBackground && (
             <IconWrapper>
@@ -331,7 +344,7 @@ function Layer({ element }) {
             </IconWrapper>
           )}
           {element.isLocked && isLayerLockingEnabled && (
-            <IconWrapper>
+            <IconWrapper aria-label={__('Locked', 'web-stories')}>
               <Icons.LockClosed />
             </IconWrapper>
           )}

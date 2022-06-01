@@ -17,6 +17,7 @@
  * External dependencies
  */
 import { Icons } from '@googleforcreators/design-system';
+import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
 import PropTypes from 'prop-types';
 /**
@@ -27,12 +28,18 @@ import { ISSUE_TYPES } from '../../checklist/constants';
 import { useCategoryCount } from '../../checklist/countContext';
 import { ToggleButton } from '../../toggleButton';
 
+const MainIcon = styled(Icons.Checkbox)`
+  height: 32px;
+  width: auto;
+  display: block;
+`;
+
 const ChecklistButton = ({ handleReviewChecklist }) => {
   const priorityCount = useCategoryCount(ISSUE_TYPES.PRIORITY);
 
   return (
     <ToggleButton
-      MainIcon={Icons.Checkbox}
+      MainIcon={MainIcon}
       label={__('Checklist', 'web-stories')}
       aria-label={__('Checklist', 'web-stories')}
       popupZIndexOverride={Z_INDEX_STORY_DETAILS}

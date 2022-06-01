@@ -80,6 +80,66 @@ describe('toggleLayer', () => {
     });
   });
 
+  it('replaces selection if meta key is pressed but new layer is locked', () => {
+    const { restore, toggleLayer } = setupReducer();
+
+    // Set an initial state with a current page and some elements selected.
+    const initialState = restore({
+      pages: [
+        {
+          id: '111',
+          elements: [
+            { id: '1', isBackground: true },
+            { id: '2' },
+            { id: '3', isLocked: true },
+            { id: '4' },
+            { id: '5' },
+            { id: '6' },
+          ],
+        },
+      ],
+      current: '111',
+      selection: ['2', '5', '4', '6'],
+    });
+
+    const result = toggleLayer({ elementId: '3', metaKey: true });
+
+    expect(result).toStrictEqual({
+      ...initialState,
+      selection: ['3'],
+    });
+  });
+
+  it('replaces selection if meta key is pressed but old selection is locked', () => {
+    const { restore, toggleLayer } = setupReducer();
+
+    // Set an initial state with a current page and some elements selected.
+    const initialState = restore({
+      pages: [
+        {
+          id: '111',
+          elements: [
+            { id: '1', isBackground: true },
+            { id: '2' },
+            { id: '3', isLocked: true },
+            { id: '4' },
+            { id: '5' },
+            { id: '6' },
+          ],
+        },
+      ],
+      current: '111',
+      selection: ['3'],
+    });
+
+    const result = toggleLayer({ elementId: '4', metaKey: true });
+
+    expect(result).toStrictEqual({
+      ...initialState,
+      selection: ['4'],
+    });
+  });
+
   it('selects a single element if no special keys are pressed', () => {
     const { restore, toggleLayer } = setupReducer();
 
@@ -137,6 +197,37 @@ describe('toggleLayer', () => {
     expect(result).toStrictEqual({
       ...initialState,
       selection: ['3', '4', '5', '6'],
+    });
+  });
+
+  it('filters out locked elements when selecting a list of elements', () => {
+    const { restore, toggleLayer } = setupReducer();
+
+    // Set an initial state with a current page and some elements selected.
+    const initialState = restore({
+      pages: [
+        {
+          id: '111',
+          elements: [
+            { id: '1', isBackground: true },
+            { id: '2' },
+            { id: '3', isLocked: true },
+            { id: '4' },
+            { id: '5', isLocked: true },
+            { id: '6' },
+            { id: '7' },
+          ],
+        },
+      ],
+      current: '111',
+      selection: ['2', '6'],
+    });
+
+    const result = toggleLayer({ elementId: '7', shiftKey: true });
+
+    expect(result).toStrictEqual({
+      ...initialState,
+      selection: ['2', '4', '6', '7'],
     });
   });
 

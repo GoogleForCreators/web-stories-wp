@@ -13,25 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
-import { StoryPropTypes } from '@googleforcreators/elements';
 import { stripHTML } from '@googleforcreators/dom';
 
-/**
- * Internal dependencies
- */
-import { LayerText } from '../shared';
-
-function TextLayerContent({ element: { content } }) {
-  // Remove all tags
-  const rawContent = stripHTML(content);
-  return <LayerText>{rawContent}</LayerText>;
+function getTextLayerText({ content }) {
+  return stripHTML(content);
 }
 
-TextLayerContent.propTypes = {
-  element: StoryPropTypes.element.isRequired,
-};
-
-export default TextLayerContent;
+export default getTextLayerText;

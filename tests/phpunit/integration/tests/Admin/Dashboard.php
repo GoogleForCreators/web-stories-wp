@@ -165,14 +165,16 @@ class Dashboard extends DependencyInjectedTestCase {
 				]
 			);
 
-		$site_kit       = $this->injector->make( \Google\Web_Stories\Integrations\Site_Kit::class );
-		$decoder        = $this->injector->make( \Google\Web_Stories\Decoder::class );
-		$locale         = $this->injector->make( \Google\Web_Stories\Locale::class );
-		$google_fonts   = $this->injector->make( \Google\Web_Stories\Admin\Google_Fonts::class );
-		$font_post_type = $this->injector->make( \Google\Web_Stories\Font_Post_Type::class );
-		$post_type      = $this->injector->make( \Google\Web_Stories\Story_Post_Type::class );
-		$context        = $this->injector->make( \Google\Web_Stories\Context::class );
-		$types          = $this->injector->make( \Google\Web_Stories\Media\Types::class );
+		$site_kit         = $this->injector->make( \Google\Web_Stories\Integrations\Site_Kit::class );
+		$decoder          = $this->injector->make( \Google\Web_Stories\Decoder::class );
+		$locale           = $this->injector->make( \Google\Web_Stories\Locale::class );
+		$google_fonts     = $this->injector->make( \Google\Web_Stories\Admin\Google_Fonts::class );
+		$font_post_type   = $this->injector->make( \Google\Web_Stories\Font_Post_Type::class );
+		$post_type        = $this->injector->make( \Google\Web_Stories\Story_Post_Type::class );
+		$context          = $this->injector->make( \Google\Web_Stories\Context::class );
+		$types            = $this->injector->make( \Google\Web_Stories\Media\Types::class );
+		$shopping_vendors = $this->injector->make( \Google\Web_Stories\Shopping\Shopping_Vendors::class );
+		$woocommerce      = $this->injector->make( \Google\Web_Stories\Integrations\WooCommerce::class );
 
 		$this->instance = new \Google\Web_Stories\Admin\Dashboard(
 			$experiments,
@@ -184,7 +186,9 @@ class Dashboard extends DependencyInjectedTestCase {
 			$font_post_type,
 			$post_type,
 			$context,
-			$types
+			$types,
+			$shopping_vendors,
+			$woocommerce
 		);
 
 		$this->instance->add_menu_page();

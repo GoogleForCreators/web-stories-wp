@@ -24,7 +24,7 @@ import { trackEvent } from '@googleforcreators/tracking';
  * Internal dependencies
  */
 import { useStory } from '../../../app';
-import LoopPanelContent from '../../panels/shared/loopPanelContent';
+import LoopPanelContent from '../../panels/shared/media/loopPanelContent';
 import { useProperties } from './shared';
 
 const StyledLoopContent = styled(LoopPanelContent)`

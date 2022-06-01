@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { waitFor } from '@testing-library/react';
+import { waitFor, within } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -31,6 +31,7 @@ describe('CUJ: Creator can Transform an Element: Selection integration', () => {
 
   beforeEach(async () => {
     fixture = new Fixture();
+    fixture.setFlags({ layerLocking: true });
     await fixture.render();
     await fixture.collapseHelpCenter();
 
@@ -49,6 +50,11 @@ describe('CUJ: Creator can Transform an Element: Selection integration', () => {
   async function getSelection() {
     const storyContext = await fixture.renderHook(() => useStory());
     return storyContext.state.selectedElementIds;
+  }
+
+  async function getElements() {
+    const storyContext = await fixture.renderHook(() => useStory());
+    return storyContext.state.currentPage.elements;
   }
 
   async function setFontSize(size) {
@@ -89,6 +95,39 @@ describe('CUJ: Creator can Transform an Element: Selection integration', () => {
       up(),
     ]);
     expect(await getSelection()).toEqual([frame1.dataset.elementId]);
+  });
+
+  it('should click "through" a locked element', async () => {
+    await fixture.events.click(fixture.editor.canvas.pageActions.addPage);
+
+    await fixture.editor.library.textTab.click();
+    await fixture.events.click(fixture.editor.library.text.preset('Paragraph'));
+    await waitFor(() => {
+      const node = fixture.editor.canvas.framesLayer.frames[1].node;
+      if (!node) {
+        throw new Error('node not ready');
+      }
+      expect(node).toBeTruthy();
+    });
+    const elements = await getElements();
+
+    // Click on the background and confirm it is selected
+    const background = fixture.editor.canvas.framesLayer.frames[0].node;
+    await fixture.events.mouse.clickOn(background, 20, 20);
+    expect(await getSelection()).toEqual([elements[0].id]);
+
+    // Hover layer and enable lock
+    const layerPanel = fixture.editor.footer.layerPanel;
+    await fixture.events.click(layerPanel.togglePanel);
+    const paragraphLayer = layerPanel.getLayerByInnerText('Fill in some text');
+    await fixture.events.hover(paragraphLayer);
+    const lockButton = within(paragraphLayer).getByLabelText('Lock/Unlock');
+    await fixture.events.click(lockButton);
+
+    // Try to click on the text element
+    const frame1 = fixture.editor.canvas.framesLayer.frames[1].node;
+    await fixture.events.mouse.clickOn(frame1, 20, 20);
+    expect(await getSelection()).toEqual([elements[0].id]);
   });
 
   it('should show the selection lines when an element is being selected', async () => {

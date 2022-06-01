@@ -21,11 +21,13 @@ const KEY_MAP = {
   CONTROL: 'Control',
   CNTRL: 'Control',
   DOWN: 'ArrowDown',
+  ENTER: 'Enter',
   ESC: 'Escape',
   LEFT: 'ArrowLeft',
   META: 'Meta',
   RIGHT: 'ArrowRight',
   SHIFT: 'Shift',
+  SPACE: 'Space',
   TAB: 'Tab',
   UP: 'ArrowUp',
 };
