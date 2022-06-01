@@ -80,6 +80,13 @@ class WooCommerce_Query implements Product_Query {
 		}
 
 
+		$wc_args = [];
+
+		if ( 'price' === $orderby ) {
+			$wc_query = new WC_Query();
+			$wc_args  = $wc_query->get_catalog_ordering_args( $orderby, strtoupper( $order ) );
+		}
+		
 		/**
 		 * Product query object.
 		 *

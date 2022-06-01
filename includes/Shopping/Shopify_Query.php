@@ -255,6 +255,7 @@ QUERY;
 		return $result;
 	}
 
+	
 	/**
 	 * Remotely fetches all products from the store.
 	 *
@@ -305,7 +306,6 @@ QUERY;
 	 */
 	public function get_search( string $search_term, int $page = 1, int $per_page = 100, string $orderby = 'date', string $order = 'desc' ) {
 		$result = $this->fetch_remote_products( $search_term, $page, $per_page, $orderby, $order );
-
 		if ( is_wp_error( $result ) ) {
 			return $result;
 		}

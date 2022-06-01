@@ -21,9 +21,12 @@ import { waitFor } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { Fixture } from '../../../../karma';
-import { useStory } from '../../../../app/story';
-import { tabToCanvasFocusContainer } from '../../karma/utils';
+import { Fixture } from '../../../../../karma';
+import { useStory } from '../../../../../app/story';
+
+function isStoryEmpty() {
+  return Boolean(document.getElementById('emptystate-message'));
+}
 
 describe('Shopping integration', () => {
   let fixture;
@@ -34,20 +37,6 @@ describe('Shopping integration', () => {
     const searchInput = fixture.querySelector('[aria-label="Product search"]');
     await fixture.events.focus(searchInput);
     await fixture.events.click(searchInput);
-  }
-
-  async function insertProduct(product) {
-    await focusProductSearchInput();
-    await fixture.events.keyboard.type(product);
-    // allow some time for the debounced search to catch up
-    await fixture.events.sleep(400);
-    const productButton = fixture.querySelector(
-      `[aria-label="Add ${product}"]`
-    );
-    await fixture.events.click(productButton);
-    await waitFor(() =>
-      fixture.querySelector('[aria-label="Design menu"] [aria-label="Product"]')
-    );
   }
 
   beforeEach(async () => {
@@ -143,54 +132,6 @@ describe('Shopping integration', () => {
       );
 
       expect(firstOption.textContent).toContain('WordPress Pennant');
-    });
-  });
-
-
-  describe('Product floating menu', () => {
-    it('should render products menu', async () => {
-      const productTitle = 'Album';
-      await insertProduct(productTitle);
-      const selectedElement = await getSelectedElement();
-      await expect(selectedElement?.product?.productTitle).toBe(productTitle);
-    });
-
-    it('should update selected product via floating menu', async () => {
-      const productTitle = 'Beanie with Logo';
-      const newProductTitle = 'Single';
-      await insertProduct(productTitle);
-      await getSelectedElement();
-      const productSelector = fixture.querySelector(
-        '[aria-label="Design menu"] [aria-label="Product"]'
-      );
-      await fixture.events.mouse.clickOn(productSelector, 1, 1);
-      await fixture.events.keyboard.type(newProductTitle);
-      await fixture.events.keyboard.press('ArrowDown');
-      await fixture.events.keyboard.press('Enter');
-      const selectedElement = await getSelectedElement();
-      await expect(selectedElement?.product?.productTitle).toBe(
-        newProductTitle
-      );
-    });
-
-    it('should show floating menu when product is selected on canvas', async () => {
-      const productTitle = 'Single';
-      await insertProduct(productTitle);
-      const focusContainer = fixture.screen.getByTestId(
-        'canvas-focus-container'
-      );
-
-      // deselect the product
-      await fixture.events.click(focusContainer);
-      const canvasElement = await getSelectedElement();
-      await expect(canvasElement.isBackground).toBe(true);
-
-      // reselect the product
-      await tabToCanvasFocusContainer(focusContainer, fixture);
-      await fixture.events.keyboard.press('Enter');
-      await fixture.events.keyboard.press('Tab');
-      const selectedElement = await getSelectedElement();
-      await expect(selectedElement?.product?.productTitle).toBe(productTitle);
     });
   });
 });

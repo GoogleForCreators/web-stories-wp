@@ -166,7 +166,7 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 		 * @var string $search_term
 		 */
 		$search_term = ! empty( $request['search'] ) ? $request['search'] : '';
-
+    
 		/**
 		 * Request context.
 		 *
@@ -439,7 +439,6 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 	 */
 	public function get_collection_params(): array {
 		$query_params = parent::get_collection_params();
-
 
 		$query_params['per_page']['default'] = 100;
 

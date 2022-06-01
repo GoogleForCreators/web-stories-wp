@@ -207,7 +207,6 @@ class Shopify_Query extends DependencyInjectedTestCase {
 				] 
 			) 
 		);
-
 		$actual = $this->instance->get_search( '', 1, $per_page, $orderby, $order );
 
 		$this->assertNotWPError( $actual );

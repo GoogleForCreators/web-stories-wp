@@ -19,6 +19,7 @@
  */
 import styled, { css } from 'styled-components';
 import { forwardRef, useContext, createPortal } from '@googleforcreators/react';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
@@ -68,5 +69,12 @@ function InOverlayWithRef(
 }
 
 const InOverlay = forwardRef(InOverlayWithRef);
+
+InOverlayWithRef.propTypes = {
+  zIndex: PropTypes.number,
+  pointerEvents: PropTypes.string,
+  render: PropTypes.func,
+  children: PropTypes.node,
+};
 
 export default InOverlay;
