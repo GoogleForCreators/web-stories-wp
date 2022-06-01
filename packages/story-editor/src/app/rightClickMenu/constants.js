@@ -79,6 +79,7 @@ export const RIGHT_CLICK_MENU_LABELS = {
   SET_AS_PAGE_BACKGROUND: __('Set as Page Background', 'web-stories'),
   TRIM_VIDEO: __('Trim Video', 'web-stories'),
   UPLOAD_IMAGE_OR_VIDEO: __('Upload Image or Video', 'web-stories'),
+  USE_SHAPE_AS_MASK: __('Use Shape as a Mask', 'web-stories'),
 };
 
 const StyledKbd = styled(Text).attrs({

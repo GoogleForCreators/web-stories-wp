@@ -25,12 +25,23 @@ import { RIGHT_CLICK_MENU_LABELS } from '../constants';
 import { useElementActions } from '../hooks';
 
 function MultipleElementsMenu() {
-  const { handleDuplicateSelectedElements } = useElementActions();
+  const { handleDuplicateSelectedElements, handleUseShapeAsMask } = useElementActions();
 
   return (
-    <ContextMenuComponents.MenuButton onClick={handleDuplicateSelectedElements}>
-      {RIGHT_CLICK_MENU_LABELS.DUPLICATE_ELEMENTS(2)}
-    </ContextMenuComponents.MenuButton>
+    <>
+      <ContextMenuComponents.MenuButton onClick={handleDuplicateSelectedElements}>
+        {RIGHT_CLICK_MENU_LABELS.DUPLICATE_ELEMENTS(2)}
+      </ContextMenuComponents.MenuButton>
+
+      { // @todo disable menu item if the right type of elements not selected}
+        <ContextMenuComponents.MenuButton
+          onClick={handleUseShapeAsMask}
+        >
+          {RIGHT_CLICK_MENU_LABELS.USE_SHAPE_AS_MASK}
+        </ContextMenuComponents.MenuButton>
+    </>
+
+
   );
 }
 

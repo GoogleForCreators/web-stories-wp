@@ -149,6 +149,15 @@ const useElementActions = () => {
   }, [selectedElements, setBackgroundElement, showSnackbar]);
 
   /**
+   * Set currently selected element as the page's background.
+   */
+  const handleUseShapeAsMask = useCallback(() => {
+    // @todo 
+    // ensure we have one image and one shape
+    // code to apply the mask
+  }, [selectedElements]);
+
+  /**
    * Remove media from background and clear opacity and overlay.
    */
   const handleRemovePageBackground = useCallback(() => {
@@ -203,6 +212,7 @@ const useElementActions = () => {
   ]);
 
   return {
+    handleUseShapeAsMask,
     handleDuplicateSelectedElements,
     handleOpenScaleAndCrop,
     handleSetPageBackground,
