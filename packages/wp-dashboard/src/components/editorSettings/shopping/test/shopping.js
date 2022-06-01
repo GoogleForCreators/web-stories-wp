@@ -230,9 +230,5 @@ describe('Editor Settings: Shopping <Shopping />', function () {
         'Connection successful'
       );
     });
-
-    expect(screen.getByTestId('api-status')).toHaveTextContent(
-      'Connection successful'
-    );
   });
 });
