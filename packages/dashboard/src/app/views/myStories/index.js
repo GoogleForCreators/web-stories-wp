@@ -79,21 +79,19 @@ function MyStories() {
       getAuthors,
     })
   );
-  const { filters, filtersInit } = useFilters(
-    ({ state: { filters, filtersInit } }) => ({
+  const { filters, filtersLoading } = useFilters(
+    ({ state: { filters, filtersLoading } }) => ({
       filters,
-      filtersInit,
+      filtersLoading,
     })
   );
 
-  const _filters = useMemo(() => {
-    const filterObj = {};
-    for (const filter of filters) {
-      const { key, filterId } = filter;
-      filterObj[key] = filterId;
-    }
-    return JSON.stringify(filterObj);
-  }, [filters]);
+  const filterObj = {};
+  for (const filter of filters) {
+    const { key, filterId } = filter;
+    filterObj[key] = filterId;
+  }
+  const _filters = JSON.stringify(filterObj);
 
   const { apiCallbacks, canViewDefaultTemplates } = useConfig();
   const isMounted = useRef(false);
@@ -154,9 +152,6 @@ function MyStories() {
   }, [queryAuthorsBySearch]);
 
   useEffect(() => {
-    if (!filtersInit) {
-      return;
-    }
     fetchStories({
       page: page.value,
       searchTerm: search.keyword,
@@ -205,7 +200,10 @@ function MyStories() {
         allPagesFetched={allPagesFetched}
         canViewDefaultTemplates={canViewDefaultTemplates}
         filter={filter}
-        loading={{ isLoading, showStoriesWhileLoading }}
+        loading={{
+          isLoading: isLoading && filtersLoading,
+          showStoriesWhileLoading,
+        }}
         page={page}
         search={search}
         sort={sort}

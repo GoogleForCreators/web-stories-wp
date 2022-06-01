@@ -29,25 +29,23 @@ import {
  */
 import useApi from '../../../../api/useApi';
 
-const useTaxonomyFilter = () => {
+const useTaxonomyFilters = () => {
   const [taxonomies, setTaxonomies] = useState([]);
 
-  const { getTaxonomies, getTaxonomyTerm, fetchStories } = useApi(
+  const { getTaxonomies, getTaxonomyTerm } = useApi(
     ({
       actions: {
         taxonomyApi: { getTaxonomies, getTaxonomyTerm },
-        storyApi: { fetchStories },
       },
     }) => ({
       getTaxonomies,
       getTaxonomyTerm,
-      fetchStories,
     })
   );
 
   // query individual taxonomies
   // this is needed to init the primaryOptions
-  // and needed to search, queriedOptions
+  // and needed to search queriedOptions
   const queryTaxonomyTerm = useCallback(
     async (taxonomy, search) => {
       const { restBase, restPath } = taxonomy;
@@ -86,4 +84,4 @@ const useTaxonomyFilter = () => {
   );
 };
 
-export default useTaxonomyFilter;
+export default useTaxonomyFilters;

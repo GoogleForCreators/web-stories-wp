@@ -30,7 +30,7 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import reducer from './reducer';
-import useTaxonomyFilter from './taxonomy/useTaxonomyFilter';
+import useTaxonomyFilters from './taxonomy/useTaxonomyFilters';
 import * as types from './types';
 
 export const filterContext = createContext({
@@ -39,10 +39,10 @@ export const filterContext = createContext({
 });
 
 export default function FiltersProvider({ children }) {
-  const { taxonomies, queryTaxonomyTerm } = useTaxonomyFilter();
+  const { taxonomies, queryTaxonomyTerm } = useTaxonomyFilters();
 
   const [state, dispatch] = useReducer(reducer, {
-    filtersInit: false,
+    filtersLoading: true,
     filters: [],
   });
 

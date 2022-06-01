@@ -29,7 +29,7 @@ const reducer = (state, { type, payload = {} }) => {
       const { key, value } = payload;
       const filter = state.filters.find((f) => f.key === key);
 
-      // remove filter by value
+      // remove 'filter-by' value
       if (value.filterId && filter?.filterId === value.filterId) {
         value.filterId = null;
       }
@@ -48,7 +48,7 @@ const reducer = (state, { type, payload = {} }) => {
     case types.REGISTER_FILTERS: {
       return {
         ...state,
-        filtersInit: true,
+        filtersLoading: false,
         filters: payload,
       };
     }
