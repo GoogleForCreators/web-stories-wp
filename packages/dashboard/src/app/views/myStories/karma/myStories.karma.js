@@ -497,9 +497,9 @@ describe('CUJ: Creator can view their stories in grid view', () => {
     it('should filter by category', async () => {
       const { stories } = await getStoriesState();
       let renderedStoriesById = getRenderedStoriesById();
-      // click the category toggle
+      // click the category dropdown
       const categoryDropdown = fixture.screen.getByLabelText(
-        'Filter stories by category'
+        'Filter stories by Category'
       );
       expect(categoryDropdown).toBeTruthy();
       await fixture.events.click(categoryDropdown);

@@ -19,6 +19,11 @@ const formattedTaxonomiesArray = [
     description: '',
     hierarchical: true,
     name: 'Categories',
+    labels: {
+      searchItems: 'Search Categories',
+      singularName: 'Category',
+      allItems: 'All Categories',
+    },
     restBase: 'web_story_category',
     restNamespace: 'web-stories/v1',
     restPath: 'http://localhost:8899/wp-json/web-stories/v1/web_story_category',
@@ -39,6 +44,11 @@ const formattedTaxonomiesArray = [
     description: 'Story Verticals',
     hierarchical: true,
     name: 'Verticals',
+    labels: {
+      searchItems: 'Search Verticals',
+      singularName: 'Vertical',
+      allItems: 'All Verticals',
+    },
     restBase: 'story-verticals',
     restNamespace: 'wp/v2',
     restPath: 'http://localhost:8899/wp-json/wp/v2/story-verticals',

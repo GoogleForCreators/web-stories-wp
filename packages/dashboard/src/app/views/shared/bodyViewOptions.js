@@ -104,8 +104,14 @@ export default function BodyViewOptions({
                   <StyledDatalist
                     hasSearch
                     hasDropDownBorder
-                    searchResultsLabel={__('Search results', 'web-stories')}
-                    aria-label={__('Filter stories by taxonomy', 'web-stories')}
+                    searchResultsLabel={__(
+                      filter.labels.searchItems,
+                      'web-stories'
+                    )}
+                    aria-label={__(
+                      `Filter stories by ${filter.labels.singularName}`,
+                      'web-stories'
+                    )}
                     onChange={({ id }) => {
                       updateFilter(filter.key, {
                         filterId: id,
@@ -115,7 +121,7 @@ export default function BodyViewOptions({
                       await filter.query(filter, search);
                     }}
                     selectedId={filter.filterId}
-                    placeholder={__(filter.placeholder, 'web-stories')}
+                    placeholder={__(filter.labels.allItems, 'web-stories')}
                     primaryOptions={filter.primaryOptions}
                     options={filter.queriedOptions}
                   />

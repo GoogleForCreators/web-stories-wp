@@ -24,38 +24,47 @@ import { renderHook, act } from '@testing-library/react-hooks';
 import FiltersProvider from '../provider';
 import useFilters from '../useFilters';
 
-jest.mock('../taxonomy/useTaxonomyFilter', () => ({
+jest.mock('../taxonomy/useTaxonomyFilters', () => ({
   __esModule: true,
   default: function useTaxonomyFilter() {
     const react = jest.requireActual('react');
-    const [primaryOptions] = react.useState([]);
-    const [queriedOptions] = react.useState([]);
+    const [taxonomies] = react.useState([]);
     return {
-      query: () => Promise.resolve([]),
-      primaryOptions,
-      queriedOptions,
+      queryTaxonomyTerm: () => Promise.resolve([]),
+      taxonomies,
     };
   },
 }));
 
 describe('provider', () => {
-  it('should pass', () => {
+  it('should register filters and update filters', () => {
     const wrapper = ({ children }) => (
       <FiltersProvider>{children}</FiltersProvider>
     );
 
     const { result } = renderHook(() => useFilters(), { wrapper });
+    const filterKey = 'web_story_category';
 
+    // register filter
     act(() => {
-      result.current.actions.updateFilter('taxonomy', {
+      result.current.actions.registerFilters([
+        { key: filterKey, filterId: null },
+      ]);
+    });
+
+    let filter = result.current.state.filters.find((f) => f.key === filterKey);
+    expect(filter).toBeDefined();
+
+    // update the filter
+    act(() => {
+      result.current.actions.updateFilter(filterKey, {
         filterId: 1,
-        filterSlug: 'web_story_category',
       });
     });
 
-    expect(result.current.state.taxonomy).toMatchObject({
+    filter = result.current.state.filters.find((f) => f.key === filterKey);
+    expect(filter).toMatchObject({
       filterId: 1,
-      filterSlug: 'web_story_category',
     });
   });
 });

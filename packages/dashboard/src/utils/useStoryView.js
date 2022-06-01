@@ -33,7 +33,6 @@ import { clamp } from '@googleforcreators/units';
  */
 import { SORT_DIRECTION, STORY_SORT_OPTIONS, VIEW_STYLE } from '../constants';
 import { PageSizePropType } from '../types';
-import useFilters from '../app/views/myStories/filters/useFilters';
 import usePagePreviewSize from './usePagePreviewSize';
 
 export default function useStoryView({

@@ -59,7 +59,7 @@ export default function FiltersProvider({ children }) {
     const filters = taxonomies.map((taxonomy) => ({
       key: taxonomy.restBase,
       restPath: taxonomy.restPath,
-      placeholder: taxonomy.name,
+      labels: taxonomy.labels,
       filterId: null,
       primaryOptions: taxonomy.data,
       queriedOptions: taxonomy.data,
@@ -72,7 +72,7 @@ export default function FiltersProvider({ children }) {
   const contextValue = useMemo(() => {
     return {
       state,
-      actions: { updateFilter },
+      actions: { updateFilter, registerFilters },
     };
   }, [state, updateFilter]);
 

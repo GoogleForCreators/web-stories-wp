@@ -23,62 +23,74 @@ import * as types from '../types';
 describe('reducer', () => {
   it('should update the state', () => {
     const initial_state = {
-      officers: {
-        filterId: 117,
-        name: 'John',
-      },
+      filters: [
+        {
+          key: 'officers',
+          filterId: 117,
+          name: 'John',
+        },
+      ],
     };
 
     const args = {
       type: types.UPDATE_FILTER,
       payload: {
-        filter: 'officers',
+        key: 'officers',
         value: { filterId: 112 },
       },
     };
 
     const state = reducer(initial_state, args);
-    expect(state.officers.filterId).toBe(112);
+    const filter = state.filters.find((f) => f.key === 'officers');
+    expect(filter.filterId).toBe(112);
   });
 
   it('should update set the filterId to null if the same filterId is given', () => {
     const initial_state = {
-      officers: {
-        filterId: 117,
-        name: 'John',
-      },
+      filters: [
+        {
+          key: 'officers',
+          filterId: 117,
+          name: 'John',
+        },
+      ],
     };
 
     const args = {
       type: types.UPDATE_FILTER,
       payload: {
-        filter: 'officers',
+        key: 'officers',
         value: { filterId: 117 },
       },
     };
 
     const state = reducer(initial_state, args);
-    expect(state.officers.filterId).toBeNull();
+    const filter = state.filters.find((f) => f.key === 'officers');
+    expect(filter.filterId).toBeNull();
   });
 
   it('should return the state if dispatching an action thats not supported', () => {
     const initial_state = {
-      teams: {
-        filterId: 6,
-        name: 'Noble',
-      },
+      filters: [
+        {
+          key: 'teams',
+          filterId: 6,
+          name: 'Noble',
+        },
+      ],
     };
 
     const args = {
       type: 'RENAME_TEAM',
       payload: {
-        filter: 'teams',
+        key: 'teams',
         name: 'Banished',
       },
     };
 
     const state = reducer(initial_state, args);
-    expect(state.teams).toMatchObject({
+    const filter = state.filters.find((f) => f.key === 'teams');
+    expect(filter).toMatchObject({
       filterId: 6,
       name: 'Noble',
     });
