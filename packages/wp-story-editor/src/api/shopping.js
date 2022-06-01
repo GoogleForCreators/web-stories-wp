@@ -31,11 +31,13 @@ import apiFetch from '@wordpress/api-fetch';
  * @param {string} search Search term.
  * @return {Promise} The response from the API.
  */
-export function getProducts(config, search) {
+export function getProducts(config, search, orderby, order) {
   return apiFetch({
     path: addQueryArgs(config.api.products, {
       per_page: 100,
       search,
+      orderby,
+      order,
     }),
   });
 }
