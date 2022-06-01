@@ -373,8 +373,12 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 	 * @param string $html HTML document markup.
 	 * @return array|false Response data or false if document is not a story.
 	 */
-	private function get_data_from_document( $html ) {
-		$doc = Document::fromHtml( $html );
+	private function get_data_from_document( string $html ) {
+		try {
+			$doc = Document::fromHtml( $html );
+		} catch ( \DOMException $exception ) {
+			return false;
+		}
 
 		if ( ! $doc ) {
 			return false;

@@ -24,6 +24,7 @@ import { TEXT_ELEMENT_DEFAULT_FONT } from '@googleforcreators/elements';
  */
 import { Fixture } from '../../../../../karma';
 import { useInsertElement } from '../../../../canvas';
+import { useStory } from '../../../../../app/story';
 
 describe('Layer Panel', () => {
   let fixture;
@@ -32,6 +33,7 @@ describe('Layer Panel', () => {
 
   beforeEach(async () => {
     fixture = new Fixture();
+    fixture.setFlags({ layerLocking: true });
     await fixture.render();
     await fixture.collapseHelpCenter();
     layerPanel = fixture.editor.footer.layerPanel;
@@ -139,4 +141,54 @@ describe('Layer Panel', () => {
       layerPanel.layers.filter((layer) => layer.innerText === 'Title 1')?.length
     ).toBe(2);
   });
+
+  it('should be able to lock and unlock elements with lock action', async () => {
+    await fixture.events.click(fixture.editor.sidebar.insertTab);
+    await fixture.editor.library.textTab.click();
+    await fixture.events.click(fixture.editor.library.text.preset('Title 1'));
+    // Select background for being able to insert another text.
+    const bgLayer = layerPanel.getLayerByInnerText('Background');
+    await fixture.events.click(bgLayer);
+    await fixture.events.click(fixture.editor.library.text.preset('Title 2'));
+
+    await fixture.events.click(fixture.editor.sidebar.designTab);
+    expect(layerPanel.layers.length).toBe(3);
+    const elementALayer = layerPanel.getLayerByInnerText('Title 1');
+    const elementBLayer = layerPanel.getLayerByInnerText('Title 2');
+
+    // Hover layer, enable lock, and hover somewhere else
+    await fixture.events.hover(elementALayer);
+    const lockButton = within(elementALayer).getByLabelText('Lock/Unlock');
+    await fixture.events.click(lockButton);
+    await fixture.events.hover(elementBLayer);
+
+    // Check that lock is now permanently displayed and the element actually has a lock
+    const lockIcon = within(elementALayer).queryByLabelText('Locked');
+    expect(lockIcon).toBeDefined();
+    const elementsAfterLocking = await getElements();
+    const title1AfterLocking = elementsAfterLocking.find(({ content }) =>
+      content?.includes('Title 1')
+    );
+    expect(title1AfterLocking.isLocked).toBe(true);
+
+    // Hover layer, disable lock, and hover somewhere else
+    await fixture.events.hover(elementALayer);
+    const unlockButton = within(elementALayer).getByLabelText('Lock/Unlock');
+    await fixture.events.click(unlockButton);
+    await fixture.events.hover(elementBLayer);
+
+    // Check that lock is now permanently displayed and the element actually has a lock
+    const noLockIcon = within(elementALayer).queryByLabelText('Locked');
+    expect(noLockIcon).toBe(null);
+    const elementsAfterUnlocking = await getElements();
+    const title1AfterUnlocking = elementsAfterUnlocking.find(({ content }) =>
+      content?.includes('Title 1')
+    );
+    expect(title1AfterUnlocking.isLocked).not.toBe(true);
+  });
+
+  async function getElements() {
+    const storyContext = await fixture.renderHook(() => useStory());
+    return storyContext.state.currentPage.elements;
+  }
 });

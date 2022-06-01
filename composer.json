@@ -61,6 +61,7 @@
     "psr-4": {
       "Google\\Web_Stories\\Tests\\Integration\\": "tests/phpunit/integration/includes",
       "Google\\Web_Stories\\Tests\\Unit\\": "tests/phpunit/unit/includes",
+      "Google\\Web_Stories\\Tests\\Shared\\": "tests/phpunit/shared",
       "Google\\Web_Stories\\PHPStan\\": "tests/phpstan/src"
     }
   },

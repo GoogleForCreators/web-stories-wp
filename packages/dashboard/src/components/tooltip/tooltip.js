@@ -36,13 +36,6 @@ export default function Tooltip({
   const { isRTL } = useConfig();
   const derivedPlacement = isRTL ? TOOLTIP_RTL_PLACEMENT[placement] : placement;
 
-  return (
-    <BaseTooltip
-      placement={derivedPlacement}
-      //TODO: https://github.com/GoogleForCreators/web-stories-wp/issues/11200
-      ignoreMaxOffsetY
-      {...props}
-    />
-  );
+  return <BaseTooltip placement={derivedPlacement} {...props} />;
 }
 Tooltip.propTypes = TooltipPropTypes;

@@ -31,6 +31,7 @@ namespace Google\Web_Stories;
 use Google\Web_Stories\AMP\Output_Buffer;
 use Google\Web_Stories\Infrastructure\Injector;
 use Google\Web_Stories\Infrastructure\ServiceBasedPlugin;
+use Google\Web_Stories\Shopping\Shopping_Vendors;
 
 /**
  * Plugin class.
@@ -174,7 +175,9 @@ class Plugin extends ServiceBasedPlugin {
 			Story_Post_Type::class,
 			Injector::class,
 			Integrations\Site_Kit::class,
+			Integrations\WooCommerce::class,
 			Media\Types::class,
+			Shopping_Vendors::class,
 			Locale::class,
 			Settings::class,
 			Stories_Script_Data::class,

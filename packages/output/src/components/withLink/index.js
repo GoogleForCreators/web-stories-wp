@@ -27,7 +27,7 @@ function WithLink({ element, children, ...rest }) {
   if (!url) {
     return children;
   }
-  rel.push('noreferrer');
+  const clonedRel = rel.concat(['noreferrer']);
   const urlWithProtocol = withProtocol(url);
   return (
     // eslint-disable-next-line react/jsx-no-target-blank -- False positive
@@ -36,7 +36,7 @@ function WithLink({ element, children, ...rest }) {
       data-tooltip-icon={icon || undefined}
       data-tooltip-text={desc}
       target="_blank"
-      rel={rel.join(' ')}
+      rel={clonedRel.join(' ')}
       {...rest}
     >
       {children}

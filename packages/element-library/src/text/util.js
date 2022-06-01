@@ -46,7 +46,7 @@ export function generateParagraphTextStyle(
 
   return {
     dataToEditorY: dataToStyleY,
-    whiteSpace: 'pre-wrap',
+    whiteSpace: 'pre-line',
     overflowWrap: 'break-word',
     wordBreak: 'break-word',
     margin: `${dataToPaddingY(-marginOffset / 2)} 0`,

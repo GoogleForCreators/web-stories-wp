@@ -26,9 +26,11 @@ import { AnimationOutput, WithAnimation } from '../outputs';
 import getInitialStyleFromKeyframes from '../utils/getInitialStyleFromKeyframes';
 import { AMPAnimationProps } from './types';
 
-export const sanitizeTimings = (timings) => ({
-  ...timings,
-  easing: timings.easing || 'linear',
+export const sanitizeTimings = ({ easing, duration, delay, ...other }) => ({
+  ...other,
+  easing: easing || 'linear',
+  duration: !isNaN(Number(duration)) ? Math.max(duration, 0) : 0,
+  delay: !isNaN(Number(delay)) ? Math.max(delay, 0) : 0,
 });
 
 function SimpleAnimation(

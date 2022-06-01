@@ -138,7 +138,7 @@ export default function useSearch({
     if (isOpen.value && inputState.value?.length) {
       const message = options.length
         ? sprintf(
-            /* translators: %d number of options in dropdown */
+            /* translators: %d number of results. */
             _n(
               '%d result found.',
               '%d results found.',

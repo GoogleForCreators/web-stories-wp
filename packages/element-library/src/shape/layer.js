@@ -18,20 +18,10 @@
  */
 import { __ } from '@googleforcreators/i18n';
 import { getMaskByType } from '@googleforcreators/masks';
-import { StoryPropTypes } from '@googleforcreators/elements';
 
-/**
- * Internal dependencies
- */
-import { LayerText } from '../shared';
-
-function ShapeLayerContent({ element }) {
+function getShapeLayerText(element) {
   const maskDef = getMaskByType(element.mask.type);
-
-  return <LayerText>{maskDef.name || __('Shape', 'web-stories')}</LayerText>;
+  return maskDef.name || __('Shape', 'web-stories');
 }
-ShapeLayerContent.propTypes = {
-  element: StoryPropTypes.element.isRequired,
-};
 
-export default ShapeLayerContent;
+export default getShapeLayerText;
