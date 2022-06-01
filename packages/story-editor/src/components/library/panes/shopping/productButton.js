@@ -89,7 +89,7 @@ function ProductButton({ product, onClick, onFocus, isOnPage }) {
     product?.productTitle
   );
 
-  const hasImage = product?.productImages && product?.productImages?.length;
+  const hasImage = product?.productImages?.length;
   const REMOVE_PRODUCT_TEXT = sprintf(
     /* translators: %s: product title. */
     __('Remove %s', 'web-stories'),
@@ -101,21 +101,20 @@ function ProductButton({ product, onClick, onFocus, isOnPage }) {
     'web-stories'
   );
 
-  const ariaLabel = () => {
-    if (!hasImage) {
-      return DISABLED_PRODUCT_TEXT;
-    }
-    if (isOnPage) {
-      return REMOVE_PRODUCT_TEXT;
-    }
-    return ADD_PRODUCT_TEXT;
-  };
+  let ariaLabel = '';
+  if (!hasImage) {
+    ariaLabel = DISABLED_PRODUCT_TEXT;
+  } else if (isOnPage) {
+    ariaLabel = REMOVE_PRODUCT_TEXT;
+  } else {
+    ariaLabel = ADD_PRODUCT_TEXT;
+  }
 
   return (
     <TooltipWrapper hasImage={hasImage}>
       <StyledActionsContainer>
         <StyledButton
-          aria-label={ariaLabel()}
+          aria-label={ariaLabel}
           aria-disabled={hasImage ? false : true}
           onClick={() => {
             onClick(product, isOnPage);
