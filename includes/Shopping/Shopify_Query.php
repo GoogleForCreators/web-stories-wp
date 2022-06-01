@@ -237,9 +237,31 @@ QUERY;
 		 */
 		$result = json_decode( $body, true );
 
-		// TODO(#11268): Error handling.
 		if ( isset( $result['errors'] ) ) {
-			return new WP_Error( 'rest_unknown', __( 'Error fetching products', 'web-stories' ), [ 'status' => 404 ] );
+			$wp_error = new WP_Error();
+			
+			foreach ( $result['errors'] as $error ) {
+				$error_code = $error['extensions']['code'];
+				// https://shopify.dev/api/storefront#status_and_error_codes.
+				switch ( $error_code ) {
+					case 'THROTTLED':
+						$wp_error->add( 'rest_throttled', __( 'Shopify API rate limit exceeded. Try again later.', 'web-stories' ), [ 'status' => 429 ] );
+						break;
+					case 'ACCESS_DENIED':
+						$wp_error->add( 'rest_invalid_credentials', __( 'Invalid Shopify API credentials provided.', 'web-stories' ), [ 'status' => 401 ] );
+						break;
+					case 'SHOP_INACTIVE':
+						$wp_error->add( 'rest_inactive_shop', __( 'Inactive Shopify shop.', 'web-stories' ), [ 'status' => 403 ] );
+						break;
+					case 'INTERNAL_SERVER_ERROR':
+						$wp_error->add( 'rest_internal_error', __( 'Shopify experienced an internal server error.', 'web-stories' ), [ 'status' => 500 ] );
+						break;
+					default:
+						$wp_error->add( 'rest_unknown', __( 'Error fetching products from Shopify.', 'web-stories' ), [ 'status' => 500 ] );
+				}
+			}
+		
+			return $wp_error;
 		}
 
 		// TODO: Maybe cache errors too?
