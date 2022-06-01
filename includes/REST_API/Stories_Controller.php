@@ -311,9 +311,7 @@ class Stories_Controller extends Stories_Base_Controller {
 	 */
 	protected function get_attached_post_ids( array $posts ): array {
 		$thumb_ids     = array_filter( array_map( 'get_post_thumbnail_id', $posts ) );
-		$publisher_ids = array_filter( array_map( function ( $_post ) {
-			return (int) get_post_meta( $_post->ID, Story_Post_Type::PUBLISHER_LOGO_META_KEY, true );
-		}, $posts ) );
+		$publisher_ids = array_filter( array_map( [ $this, 'get_publisher_logo_id' ], $posts ) );
 
 		return array_unique( array_merge( $thumb_ids, $publisher_ids ) );
 	}
@@ -649,6 +647,20 @@ class Stories_Controller extends Stories_Base_Controller {
 	}
 
 	/**
+	 * Helper method to get publisher logo id.
+	 *
+	 * @since 1.21.0
+	 *
+	 * @param WP_Post $post Post Object.
+	 * @return int ID of attachment for publisher logo.
+	 */
+	private function get_publisher_logo_id( WP_Post $post ): int {
+		$publisher_logo_id = get_post_meta( $post->ID, Story_Post_Type::PUBLISHER_LOGO_META_KEY, true );
+
+		return is_numeric( $publisher_logo_id ) ? (int) $publisher_logo_id : 0;
+	}
+
+	/**
 	 * Adds a REST API link for the story's publisher logo.
 	 *
 	 * @since 1.12.0
@@ -658,12 +670,7 @@ class Stories_Controller extends Stories_Base_Controller {
 	 * @return array Modified list of links.
 	 */
 	private function add_publisher_logo_link( array $links, WP_Post $post ): array {
-		/**
-		 * Publisher logo ID.
-		 *
-		 * @var string|int $publisher_logo_id
-		 */
-		$publisher_logo_id = get_post_meta( $post->ID, Story_Post_Type::PUBLISHER_LOGO_META_KEY, true );
+		$publisher_logo_id = $this->get_publisher_logo_id( $post );
 
 		if ( $publisher_logo_id ) {
 			$links['https://api.w.org/publisherlogo'] = [
