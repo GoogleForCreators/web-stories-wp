@@ -18,7 +18,6 @@
 namespace Google\Web_Stories\Tests\Integration\Shopping;
 
 use Google\Web_Stories\Interfaces\Product_Query;
-use Google\Web_Stories\Shopping\Product;
 use WP_Error;
 
 /**

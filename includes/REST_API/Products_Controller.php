@@ -166,7 +166,7 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 		 * @var string $search_term
 		 */
 		$search_term = ! empty( $request['search'] ) ? $request['search'] : '';
-    
+	
 		/**
 		 * Request context.
 		 *
