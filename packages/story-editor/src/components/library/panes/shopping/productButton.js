@@ -89,7 +89,7 @@ function ProductButton({ product, onClick, onFocus, isOnPage }) {
     product?.productTitle
   );
 
-  const hasImage = product?.productImages?.length;
+  const hasImage = Boolean(product?.productImages?.length);
   const REMOVE_PRODUCT_TEXT = sprintf(
     /* translators: %s: product title. */
     __('Remove %s', 'web-stories'),
