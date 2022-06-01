@@ -58,7 +58,7 @@ class WooCommerce_Query implements Product_Query {
 	 *
 	 * @param string $search_term Search term.
 	 * @param int    $page        Number of page for paginated requests.
-	 * @param int    $per_page    Number of products to fetched.
+	 * @param int    $per_page    Number of products to be fetched.
 	 * @param string $orderby     Sort collection by product attribute.
 	 * @param string $order       Order sort attribute ascending or descending.
 	 * @return array|WP_Error
@@ -86,7 +86,7 @@ class WooCommerce_Query implements Product_Query {
 			$wc_query = new WC_Query();
 			$wc_args  = $wc_query->get_catalog_ordering_args( $orderby, strtoupper( $order ) );
 		}
-		
+
 		/**
 		 * Product query object.
 		 *

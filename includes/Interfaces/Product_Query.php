@@ -39,10 +39,10 @@ interface Product_Query {
 	 *
 	 * @param string $search_term Search term.
 	 * @param int    $page        Number of page for paginated requests.
-	 * @param int    $per_page    Number of products to fetched.
+	 * @param int    $per_page    Number of products to be fetched.
 	 * @param string $orderby     Sort collection by product attribute.
 	 * @param string $order       Order sort attribute ascending or descending.
 	 * @return array|WP_Error
 	 */
-	public function get_search( string $search_term, int $page, int $per_page, string $orderby, string $order);
+	public function get_search( string $search_term, int $page = 1, int $per_page = 100, string $orderby = 'date', string $order = 'desc' );
 }
