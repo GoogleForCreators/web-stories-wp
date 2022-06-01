@@ -150,12 +150,12 @@ class Shopify_Query implements Product_Query {
 	 *
 	 * @since 1.21.0
 	 *
-	 * @param string $search_term Search term to filter products by.
-	 * @param string $after   After node.
-	 * @param int    $per_page   Limit query.
-	 * @param string $orderby Sort collection by product attribute.
-	 * @param string $order Order sort attribute ascending or descending.
-	 * @return string The assembled GraphQL query.
+	 * @param string $search_term  Search term to filter products by.
+	 * @param string $after        The cursor to retrieve nodes after in the connection.
+	 * @param int    $per_page     The requested number of nodes per page.
+	 * @param string $orderby      Sort collection by product attribute.
+	 * @param string $order        Order sort attribute ascending or descending.
+	 * @return string              The assembled GraphQL query.
 	 */
 	protected function get_products_query( string $search_term, string $after, int $per_page, string $orderby, string $order ): string {
 		$search_string = empty( $search_term ) ? '*' : '*' . $search_term . '*';
@@ -206,13 +206,13 @@ QUERY;
 	 *
 	 * @since 1.21.0
 	 *
-	 * @param string $search_term Search term to filter products by.
-	 * @param string $after    Pointer.
-	 * @param int    $per_page   Limit query.
-	 * @param string $orderby Sort retrieved products by parameter.
-	 * @param string $order   Whether to order products in ascending or descending order.
-	 *                        Accepts 'asc' (ascending) or 'desc' (descending).
-	 * @return array|WP_Error Response data or error object on failure.
+	 * @param string $search_term  Search term to filter products by.
+	 * @param string $after        The cursor to retrieve nodes after in the connection.
+	 * @param int    $per_page     The requested number of nodes per page.
+	 * @param string $orderby      Sort retrieved products by parameter.
+	 * @param string $order        Whether to order products in ascending or descending order.
+	 *                             Accepts 'asc' (ascending) or 'desc' (descending).
+	 * @return array|WP_Error      Response data or error object on failure.
 	 */
 	protected function get_remote_products( string $search_term, string $after, int $per_page, string $orderby, string $order ) {
 		/**
@@ -261,11 +261,11 @@ QUERY;
 	 * @since 1.21.0
 	 *
 	 * @param string $search_term Search term to filter products by.
-	 * @param int    $page       Page.
-	 * @param int    $per_page   Limit query.
-	 * @param string $orderby Sort retrieved products by parameter.
-	 * @param string $order   Whether to order products in ascending or descending order.
-	 *                        Accepts 'asc' (ascending) or 'desc' (descending).
+	 * @param int    $page        Number of page for paginated requests.
+	 * @param int    $per_page    Number of products to fetched.
+	 * @param string $orderby     Sort retrieved products by parameter.
+	 * @param string $order       Whether to order products in ascending or descending order.
+	 *                            Accepts 'asc' (ascending) or 'desc' (descending).
 	 * @return array|WP_Error Response data or error object on failure.
 	 */
 	protected function fetch_remote_products( string $search_term, int $page, int $per_page, string $orderby, string $order ) {
@@ -279,7 +279,7 @@ QUERY;
 
 				$has_next_page = $result['data']['products']['pageInfo']['hasNextPage'];
 				if ( ! $has_next_page ) {
-					return new WP_Error( 'rest_no_page', __( 'Error fetching products', 'web-stories' ), [ 'status' => 404 ] );
+					return new WP_Error( 'rest_no_page', __( 'Error fetching products from Shopify.', 'web-stories' ), [ 'status' => 404 ] );
 				}
 				$after = (string) $result['data']['products']['pageInfo']['endCursor'];
 			}
@@ -296,11 +296,11 @@ QUERY;
 	 * @since 1.21.0
 	 *
 	 * @param string $search_term Search term.
-	 * @param int    $page       Page Number.
-	 * @param int    $per_page   Limit query.
-	 * @param string $orderby Sort retrieved products by parameter. Default 'date'.
-	 * @param string $order   Whether to order products in ascending or descending order.
-	 *                        Accepts 'asc' (ascending) or 'desc' (descending). Default 'desc'.
+	 * @param int    $page        Number of page for paginated requests.
+	 * @param int    $per_page    Number of products to fetched.
+	 * @param string $orderby     Sort retrieved products by parameter. Default 'date'.
+	 * @param string $order       Whether to order products in ascending or descending order.
+	 *                            Accepts 'asc' (ascending) or 'desc' (descending). Default 'desc'.
 	 * @return array|WP_Error
 	 */
 	public function get_search( string $search_term, int $page = 1, int $per_page = 100, string $orderby = 'date', string $order = 'desc' ) {

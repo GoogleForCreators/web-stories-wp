@@ -57,10 +57,10 @@ class WooCommerce_Query implements Product_Query {
 	 * @since 1.21.0
 	 *
 	 * @param string $search_term Search term.
-	 * @param int    $page       Page Number.
-	 * @param int    $per_page   Limit query.
-	 * @param string $orderby Sort collection by product attribute.
-	 * @param string $order Order sort attribute ascending or descending.
+	 * @param int    $page        Number of page for paginated requests.
+	 * @param int    $per_page    Number of products to fetched.
+	 * @param string $orderby     Sort collection by product attribute.
+	 * @param string $order       Order sort attribute ascending or descending.
 	 * @return array|WP_Error
 	 */
 	public function get_search( string $search_term, int $page = 1, int $per_page = 100, string $orderby = 'date', string $order = 'desc' ) {
@@ -81,7 +81,7 @@ class WooCommerce_Query implements Product_Query {
 
 
 		/**
-		 * Product query object. 
+		 * Product query object.
 		 *
 		 * @var \stdClass $product_query
 		 */
