@@ -25,10 +25,6 @@ import { Fixture } from '../../../../karma';
 import { useStory } from '../../../../app/story';
 import { tabToCanvasFocusContainer } from '../../karma/utils';
 
-function isStoryEmpty() {
-  return Boolean(document.getElementById('emptystate-message'));
-}
-
 describe('Shopping integration', () => {
   let fixture;
 
@@ -43,6 +39,8 @@ describe('Shopping integration', () => {
   async function insertProduct(product) {
     await focusProductSearchInput();
     await fixture.events.keyboard.type(product);
+    // allow some time for the debounced search to catch up
+    await fixture.events.sleep(400);
     const productButton = fixture.querySelector(
       `[aria-label="Add ${product}"]`
     );
@@ -69,62 +67,7 @@ describe('Shopping integration', () => {
     return storyContext.state.selectedElements[0];
   };
 
-  describe('Shopping tab', () => {
-    it('should handle product search add and remove', async () => {
-      const productTitle = 'Hoodie with Zipper';
-      await focusProductSearchInput();
-      expect(isStoryEmpty()).toEqual(true);
-      await fixture.events.keyboard.type('hood');
-      // delay for search to catch-up
-      await fixture.events.sleep(400);
-
-      const productButton = fixture.querySelector(
-        `[aria-label="Add ${productTitle}"]`
-      );
-      await fixture.events.click(productButton);
-      await waitFor(() =>
-        fixture.querySelector(
-          '[aria-label="Design menu"] [aria-label="Product"]'
-        )
-      );
-
-      // add a small delay for debounce search to catchup
-      await fixture.events.sleep(500);
-
-      // check story `state`
-      const selectedElement = await getSelectedElement();
-      expect(isStoryEmpty()).toEqual(false);
-      await expect(selectedElement?.product?.productTitle).toBe(productTitle);
-      await focusProductSearchInput();
-
-      // select the product add / remove button
-      const product = fixture.querySelector(
-        `[aria-label="Remove ${productTitle}"]`
-      );
-
-      // check add / remove icons
-      const checkIcon = fixture.querySelector(
-        `[aria-label="Remove ${productTitle}"] svg[class^="productButton__Checkmark-"]`
-      );
-
-      const removeIcon = fixture.querySelector(
-        `[aria-label="Remove ${productTitle}"] svg[class^="productButton__Cross-"]`
-      );
-
-      expect(window.getComputedStyle(checkIcon).display).toBe('block');
-      expect(window.getComputedStyle(removeIcon).display).toBe('none');
-      await fixture.events.hover(product);
-      expect(window.getComputedStyle(checkIcon).display).toBe('none');
-      expect(window.getComputedStyle(removeIcon).display).toBe('block');
-
-      // remove the product
-      await fixture.events.mouse.clickOn(product, 1, 1);
-      expect(isStoryEmpty()).toEqual(true);
-    });
-  });
-
-  // eslint-disable-next-line jasmine/no-disabled-tests -- TODO: Fix broken test.
-  xdescribe('Product floating menu', () => {
+  describe('Product floating menu', () => {
     it('should render products menu', async () => {
       const productTitle = 'Album';
       await insertProduct(productTitle);
