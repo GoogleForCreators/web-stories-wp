@@ -289,7 +289,7 @@ class Stories_Controller extends Stories_Base_Controller {
 	/**
 	 * Get an array of attached post objects.
 	 *
-	 * @since 1.21.0
+	 * @since 1.22.0
 	 *
 	 * @param WP_Post[] $posts Array of post objects.
 	 * @return int[] Array of post ids.
@@ -304,7 +304,7 @@ class Stories_Controller extends Stories_Base_Controller {
 	/**
 	 * Get an array of attached post objects.
 	 *
-	 * @since 1.21.0
+	 * @since 1.22.0
 	 *
 	 * @param WP_Post[] $posts Array of post objects.
 	 * @return int[] Array of post ids.
@@ -649,15 +649,20 @@ class Stories_Controller extends Stories_Base_Controller {
 	/**
 	 * Helper method to get publisher logo id.
 	 *
-	 * @since 1.21.0
+	 * @since 1.22.0
 	 *
 	 * @param WP_Post $post Post Object.
 	 * @return int ID of attachment for publisher logo.
 	 */
 	private function get_publisher_logo_id( WP_Post $post ): int {
+		/**
+		 * Publisher logo ID.
+		 *
+		 * @var string|int $publisher_logo_id
+		 */
 		$publisher_logo_id = get_post_meta( $post->ID, Story_Post_Type::PUBLISHER_LOGO_META_KEY, true );
 
-		return is_numeric( $publisher_logo_id ) ? (int) $publisher_logo_id : 0;
+		return (int) $publisher_logo_id;
 	}
 
 	/**
