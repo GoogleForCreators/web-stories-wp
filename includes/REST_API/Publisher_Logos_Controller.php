@@ -185,8 +185,8 @@ class Publisher_Logos_Controller extends REST_Controller implements HasRequireme
 	public function get_items( $request ) {
 		$publisher_logos_ids = (array) $this->settings->get_setting( $this->settings::SETTING_NAME_PUBLISHER_LOGOS, [] );
 		_prime_post_caches( $publisher_logos_ids );
-		$publisher_logos     = $this->filter_publisher_logos( $publisher_logos_ids );
-		$results             = [];
+		$publisher_logos = $this->filter_publisher_logos( $publisher_logos_ids );
+		$results         = [];
 
 		foreach ( $publisher_logos as $logo ) {
 			/**
