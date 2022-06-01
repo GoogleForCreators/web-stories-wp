@@ -154,16 +154,14 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 		$shopping_provider = $this->settings->get_setting( Settings::SETTING_NAME_SHOPPING_PROVIDER );
 		$query             = $this->shopping_vendors->get_vendor_class( $shopping_provider );
 
-		if ( ! $query ) {
-			if ( 'none' === $shopping_provider ) {
-				return new WP_Error( 'rest_shopping_provider', __( 'No shopping provider set up.', 'web-stories' ), [ 'status' => 400 ] );
-			}
-			$query = $this->shopping_vendors->get_vendor_class( $shopping_provider );
-			if ( ! $query ) {
-				return new WP_Error( 'rest_shopping_provider_not_found', __( 'Unable to find shopping integration.', 'web-stories' ), [ 'status' => 400 ] );
-			}
+		if ( 'none' === $shopping_provider ) {
+			return new WP_Error( 'rest_shopping_provider', __( 'No shopping provider set up.', 'web-stories' ), [ 'status' => 400 ] );
 		}
-
+			
+		if ( ! $query ) {
+			return new WP_Error( 'rest_shopping_provider_not_found', __( 'Unable to find shopping integration.', 'web-stories' ), [ 'status' => 400 ] );
+		}
+		
 		/**
 		 * Request context.
 		 *
