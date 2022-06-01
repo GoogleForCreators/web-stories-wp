@@ -199,17 +199,7 @@ function ShopifySettings({
     }
   }, [getProducts, speak]);
 
-  const canTestConnection = useCallback(() => {
-    const hasHost = hostInputError === '' && host !== '';
-    const hasToken = accessTokenInputError === '' && accessToken !== '';
-    return hasHost && hasToken && !isTestingConnection ? true : false;
-  }, [
-    host,
-    accessToken,
-    accessTokenInputError,
-    hostInputError,
-    isTestingConnection,
-  ]);
+  const canTestConnection = host && !hostInputError && accessToken && !accessTokenInputError && !isTestingConnection;
 
   const handleClick = useCallback(
     (evt) => trackClick(evt, 'click_shopify_docs'),
@@ -310,7 +300,7 @@ function ShopifySettings({
         onFocus={() => setTestConnectionStatus('')}
         type={BUTTON_TYPES.SECONDARY}
         size={BUTTON_SIZES.SMALL}
-        disabled={!canTestConnection()}
+        disabled={!canTestConnection}
         onClick={onTestConnection}
         data-testid="shopify-test-connection"
       >
