@@ -1,0 +1,14 @@
+{
+  "data": null,
+  "errors": [
+    {
+      "message": "Access denied error message.",
+      "locations": [{ "line": 1, "column": 1 }],
+      "path": ["products"],
+      "extensions": {
+        "code": "ACCESS_DENIED",
+        "documentation": "https://shopify.dev/api/usage/page"
+      }
+    }
+  ]
+}

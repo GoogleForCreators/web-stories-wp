@@ -31,6 +31,7 @@ import {
   SearchInput,
   useLiveRegion,
   CircularProgress,
+  useSnackbar,
 } from '@googleforcreators/design-system';
 
 /**
@@ -44,6 +45,7 @@ import { useStory } from '../../../../app/story';
 import useLibrary from '../../useLibrary';
 import paneId from './paneId';
 import ProductList from './productList';
+import ProductSort from './productSort';
 
 const Loading = styled.div`
   position: relative;
@@ -63,12 +65,19 @@ const HelperText = styled(Text).attrs({
 `;
 
 function ShoppingPane(props) {
+  const { showSnackbar } = useSnackbar();
   const { shoppingProvider } = useConfig();
   const isShoppingIntegrationEnabled = useFeature('shoppingIntegration');
   const speak = useLiveRegion('assertive');
   const [loaded, setLoaded] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [orderby, setOrderby] = useState('date');
+  const [order, setOrder] = useState('desc');
+  const onSortBy = (option) => {
+    setOrderby(option.orderby);
+    setOrder(option.order);
+  };
   const [isMenuFocused, setIsMenuFocused] = useState(false);
   const [products, setProducts] = useState([]);
   const {
@@ -88,18 +97,19 @@ function ShoppingPane(props) {
   }));
 
   const getProductsByQuery = useCallback(
-    async (value = '') => {
+    async (value = '', sortBy, sortOrder) => {
       try {
         setIsLoading(true);
-        setProducts(await getProducts(value));
+        setProducts(await getProducts(value, sortBy, sortOrder));
       } catch (err) {
+        showSnackbar({ message: err.message });
         setProducts([]);
       } finally {
         setIsLoading(false);
         setLoaded(true);
       }
     },
-    [getProducts]
+    [getProducts, showSnackbar]
   );
 
   const onSearch = useCallback(
@@ -116,9 +126,9 @@ function ShoppingPane(props) {
 
   useEffect(() => {
     if (isShoppingEnabled) {
-      debouncedProductsQuery(searchTerm);
+      debouncedProductsQuery(searchTerm, orderby, order);
     }
-  }, [debouncedProductsQuery, isShoppingEnabled, searchTerm]);
+  }, [debouncedProductsQuery, isShoppingEnabled, searchTerm, orderby, order]);
 
   useEffect(() => {
     if (!isShoppingEnabled) {
@@ -222,6 +232,7 @@ function ShoppingPane(props) {
               clearId="clear-product-search"
               handleClearInput={handleClearInput}
             />
+            <ProductSort onChange={onSortBy} sortId={`${orderby}-${order}`} />
           </Row>
         )}
         {isLoading && (

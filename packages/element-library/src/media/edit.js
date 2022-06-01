@@ -247,7 +247,7 @@ function MediaEdit({
         </FadedVideo>
       )}
       <CropBox ref={setCropBox} {...borderProps}>
-        <WithMask element={element} fill applyFlip={false} box={box}>
+        <WithMask element={element} fill applyFlip={false}>
           {/* eslint-disable-next-line styled-components-a11y/alt-text -- False positive. */}
           {isImage && <CropImage {...cropMediaProps} />}
           {isVideo && (
