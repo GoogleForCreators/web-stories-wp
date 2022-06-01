@@ -28,6 +28,7 @@ namespace Google\Web_Stories\Shopping;
 
 use Google\Web_Stories\Integrations\WooCommerce;
 use Google\Web_Stories\Interfaces\Product_Query;
+use WC_Query;
 use WP_Error;
 
 /**
@@ -56,9 +57,11 @@ class WooCommerce_Query implements Product_Query {
 	 * @since 1.21.0
 	 *
 	 * @param string $search_term Search term.
+	 * @param string $orderby Sort collection by product attribute.
+	 * @param string $order Order sort attribute ascending or descending.
 	 * @return Product[]|WP_Error
 	 */
-	public function get_search( string $search_term ) {
+	public function get_search( string $search_term, string $orderby = 'date', string $order = 'desc' ) {
 		$status = $this->woocommerce->get_plugin_status();
 
 		if ( ! $status['active'] ) {
@@ -67,19 +70,29 @@ class WooCommerce_Query implements Product_Query {
 
 		$results = [];
 
+		$wc_args = [];
+
+		if ( 'price' === $orderby ) {
+			$wc_query = new WC_Query();
+			$wc_args  = $wc_query->get_catalog_ordering_args( $orderby, strtoupper( $order ) );
+		}
+		
 		/**
 		 * Products.
 		 *
 		 * @var \WC_Product[] $products
 		 */
 		$products = wc_get_products(
-			[
-				'status'  => 'publish',
-				'limit'   => 100,
-				'orderby' => 'date',
-				'order'   => 'DESC',
-				's'       => $search_term,
-			]
+			array_merge(
+				[
+					'status'  => 'publish',
+					'limit'   => 100,
+					's'       => $search_term,
+					'orderby' => $orderby,
+					'order'   => $order,
+				], 
+				$wc_args
+			)
 		);
 
 		$product_image_ids = [];
