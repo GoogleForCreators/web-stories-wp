@@ -186,7 +186,7 @@ class Products_Controller extends DependencyInjectedRestTestCase {
 		$request->set_param( 'search', 'test' );
 		$response = rest_get_server()->dispatch( $request );
 
-		$this->assertErrorResponse( 'unable_to_find_class', $response, 400 );
+		$this->assertErrorResponse( 'rest_shopping_provider', $response, 400 );
 	}
 
 	/**
