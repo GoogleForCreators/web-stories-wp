@@ -58,7 +58,7 @@ function ForegroundMediaMenu({ parentMenuRef }) {
     handleOpenScaleAndCrop,
     handleSetPageBackground,
     hasShapeMask,
-    handleRemoveElementMask
+    handleRemoveElementMask,
   } = useElementActions();
   const {
     canElementMoveBackwards,
