@@ -36,6 +36,5 @@ export function getProducts(config, search) {
       per_page: 100,
       search,
     }),
-    cache: "no-cache",
   });
 }
