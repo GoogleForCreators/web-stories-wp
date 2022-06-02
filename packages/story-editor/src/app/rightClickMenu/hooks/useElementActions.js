@@ -20,6 +20,7 @@ import { useSnackbar } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 import { useCallback, useRef } from '@googleforcreators/react';
 import { trackEvent } from '@googleforcreators/tracking';
+import { MaskTypes } from "@googleforcreators/masks";
 /**
  * Internal dependencies
  */
@@ -190,6 +191,22 @@ const useElementActions = () => {
     deleteElementById({ elementId: shape.id });
   };
 
+  const hasShapeMask = selectedElements?.[0] && selectedElements[0].mask.type !== MaskTypes.RECTANGLE;
+
+  const handleRemoveElementMask = useCallback(() => {
+    const selectedElement = selectedElements?.[0];
+
+    if (!selectedElement) return;
+
+    updateElementsById({
+      elementIds: [selectedElement.id],
+      properties: (currentProperties) =>
+        updateProperties(currentProperties, {
+          mask: { type: MaskTypes.RECTANGLE },
+        }),
+    });
+  }, [selectedElements]);
+
   /**
    * Remove media from background and clear opacity and overlay.
    */
@@ -245,6 +262,8 @@ const useElementActions = () => {
   ]);
 
   return {
+    hasShapeMask,
+    handleRemoveElementMask,
     shapeMaskElements,
     handleUseShapeAsMask,
     handleDuplicateSelectedElements,

@@ -57,6 +57,8 @@ function ForegroundMediaMenu({ parentMenuRef }) {
     handleDuplicateSelectedElements,
     handleOpenScaleAndCrop,
     handleSetPageBackground,
+    hasShapeMask,
+    handleRemoveElementMask
   } = useElementActions();
   const {
     canElementMoveBackwards,
@@ -141,6 +143,13 @@ function ForegroundMediaMenu({ parentMenuRef }) {
         onClick={handleDuplicateSelectedElements}
       >
         {RIGHT_CLICK_MENU_LABELS.DUPLICATE_ELEMENTS(1)}
+      </ContextMenuComponents.MenuButton>
+
+      <ContextMenuComponents.MenuButton
+        disabled={!hasShapeMask}
+        onClick={handleRemoveElementMask}
+      >
+        {RIGHT_CLICK_MENU_LABELS.REMOVE_MASK}
       </ContextMenuComponents.MenuButton>
 
       <ContextMenuComponents.MenuSeparator />
