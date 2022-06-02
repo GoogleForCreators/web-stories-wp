@@ -29,7 +29,14 @@ import {
  */
 import useApi from '../../../../api/useApi';
 
-const useTaxonomyFilters = () => {
+/**
+ * Hook used for taxonomy filters logic
+ * Initilizes the taxonomy filters data
+ *
+ * @return {Array} [taxonomies, queryTaxonomyTerm] initial taxonomy filters data and a function to query the terms
+ */
+
+function useTaxonomyFilters() {
   const [taxonomies, setTaxonomies] = useState([]);
 
   const { getTaxonomies, getTaxonomyTerm } = useApi(
@@ -43,9 +50,14 @@ const useTaxonomyFilters = () => {
     })
   );
 
-  // query individual taxonomies
-  // this is needed to init the primaryOptions
-  // and needed to search queriedOptions
+  /**
+   * Query individual taxonomy data
+   * This is needed to initilize the primaryOptions and needed to search and set queriedOptions
+   *
+   * @param {Object} taxonomy object holding taxonomy data, including restBase and restPath used to fetch individual taxonomy terms
+   * @param {string|undefined} search string use to query taxonomy by name
+   * @return {Array} taxonomy terms
+   */
   const queryTaxonomyTerm = useCallback(
     async (taxonomy, search) => {
       const { restBase, restPath } = taxonomy;
@@ -59,16 +71,36 @@ const useTaxonomyFilters = () => {
     [getTaxonomyTerm]
   );
 
-  // query all the taxonomies
-  // this should only be needed once
+  /**
+   * Query all the taxonomies
+   * This should only be needed once get all the taxonomies and set individual term data
+   *
+   * @see queryTaxonomyTerm
+   */
   const queryTaxonomies = useCallback(async () => {
     const data = await getTaxonomies();
+    const promises = [];
     const hierarchicalTaxonomies = data.filter(({ hierarchical }) =>
       Boolean(hierarchical)
     );
 
     for (const taxonomy of hierarchicalTaxonomies) {
-      taxonomy.data = await queryTaxonomyTerm(taxonomy);
+      // initilize the data with an empty array
+      taxonomy.data = [];
+      promises.push(queryTaxonomyTerm(taxonomy));
+    }
+
+    const fetched = await Promise.all(promises);
+
+    for (const arr of fetched) {
+      // grab the first elements 'taxonomy' to map the array of terms back to the parent taxonomy
+      const key = arr.at(0)?.taxonomy;
+      if (key) {
+        const taxonomy = hierarchicalTaxonomies.find((h) => h.slug === key);
+        if (taxonomy) {
+          taxonomy.data = arr;
+        }
+      }
     }
 
     setTaxonomies(hierarchicalTaxonomies);
@@ -82,6 +114,6 @@ const useTaxonomyFilters = () => {
     () => ({ taxonomies, queryTaxonomyTerm }),
     [taxonomies, queryTaxonomyTerm]
   );
-};
+}
 
 export default useTaxonomyFilters;

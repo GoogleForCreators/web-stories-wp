@@ -21,32 +21,52 @@ import { renderHook, act } from '@testing-library/react-hooks';
 /**
  * Internal dependencies
  */
-import FiltersProvider from '../provider';
-import useTaxonomyFilter from '../taxonomy/useTaxonomyFilter';
+import useTaxonomyFilters from '../taxonomy/useTaxonomyFilters';
 
-jest.mock('../../../../api/useApi', () => ({
-  __esModule: true,
-  default: function useApi() {
-    return {
-      getTaxonomies: () => Promise.resolve([]),
-      getTaxonomyTerm: () => Promise.resolve([]),
-    };
-  },
-}));
+jest.mock('../../../../api/useApi', () => {
+  const getTaxonomies = () =>
+    Promise.resolve([
+      {
+        slug: 'tax1',
+        hierarchical: true,
+        restBase: 'tax1_Base',
+        restPath: 'tax1/path',
+      },
+      {
+        slug: 'tax2',
+        hierarchical: false,
+        restBase: 'tax2_Base',
+        restPath: 'tax2/path',
+      },
+    ]);
+  const getTaxonomyTerm = () => Promise.resolve([{ taxonomy: 'tax1' }]);
+  return {
+    __esModule: true,
+    default: function useApi() {
+      return {
+        getTaxonomies,
+        getTaxonomyTerm,
+      };
+    },
+  };
+});
 
-// seems like Im testing the useTaxonomyFilter hook here not the Provider
-describe('provider', () => {
-  it('should pass', () => {
-    const wrapper = ({ children }) => (
-      <FiltersProvider>{children}</FiltersProvider>
-    );
-    const { result } = renderHook(() => useTaxonomyFilter(), { wrapper });
-
-    act(async () => {
-      await result.current.queryTaxonomies();
-      expect(result.current.queriedTaxonomies).toBe([]);
+describe('useTaxonomyFilters', () => {
+  it('should initilize the hierarchial taxonomy filters data', async () => {
+    const { result } = renderHook(() => useTaxonomyFilters());
+    // flush promise queue
+    await act(() => Promise.resolve());
+    // taxonomies should only be hierarchical
+    expect(result.current.taxonomies).toHaveLength(1);
+    // getTaxonomyTerm should append the parent taxonomy restBase and restPath
+    expect(result.current.taxonomies.at(0)).toMatchObject({
+      data: [
+        {
+          taxonomy: 'tax1',
+          restBase: 'tax1_Base',
+          restPath: 'tax1/path',
+        },
+      ],
     });
-
-    expect(true).toBeTruthy();
   });
 });

@@ -69,6 +69,31 @@ describe('reducer', () => {
     expect(filter.filterId).toBeNull();
   });
 
+  it('should register filters in state, and set filtersLoading', () => {
+    const initial_state = {
+      filtersLoading: true,
+      filters: [],
+    };
+
+    const args = {
+      type: types.REGISTER_FILTERS,
+      payload: [
+        {
+          key: 'officers',
+          filterId: null,
+        },
+        {
+          key: 'teams',
+          filterId: null,
+        },
+      ],
+    };
+
+    const state = reducer(initial_state, args);
+    expect(state.filters.length).toBe(2);
+    expect(state.filtersLoading).toBeFalsy();
+  });
+
   it('should return the state if dispatching an action thats not supported', () => {
     const initial_state = {
       filters: [
