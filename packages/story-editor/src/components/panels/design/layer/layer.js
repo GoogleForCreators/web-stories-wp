@@ -414,7 +414,7 @@ function Layer({ element }) {
                 }
               >
                 {/* @todo --- need icon from design */}
-                <Icons.Eraser />
+                <Icons.CrossSmall />
               </LayerAction>
             </Tooltip>
           )}

@@ -30,7 +30,7 @@ function MultipleElementsMenu() {
     handleUseShapeAsMask,
     shapeMaskElements,
   } = useElementActions();
-  const maskElements = shapeMaskElements();
+  const [shape, image] = shapeMaskElements();
   return (
     <>
       <ContextMenuComponents.MenuButton
@@ -38,13 +38,14 @@ function MultipleElementsMenu() {
       >
         {RIGHT_CLICK_MENU_LABELS.DUPLICATE_ELEMENTS(2)}
       </ContextMenuComponents.MenuButton>
-
-      <ContextMenuComponents.MenuButton
-        disabled={maskElements?.length !== 2}
-        onClick={() => handleUseShapeAsMask(...maskElements)}
-      >
-        {RIGHT_CLICK_MENU_LABELS.USE_SHAPE_AS_MASK}
-      </ContextMenuComponents.MenuButton>
+      {/* only show if 1 shape and 1 image is selected */}
+      {shape && image && (
+        <ContextMenuComponents.MenuButton
+          onClick={() => handleUseShapeAsMask(shape, image)}
+        >
+          {RIGHT_CLICK_MENU_LABELS.USE_SHAPE_AS_MASK}
+        </ContextMenuComponents.MenuButton>
+      )}
     </>
   );
 }
