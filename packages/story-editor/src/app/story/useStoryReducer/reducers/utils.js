@@ -169,5 +169,6 @@ export function getAllProducts(pages) {
         ?.filter(({ type }) => type === 'product')
         .map(({ product }) => product);
     })
-    .flat().filter( Boolean )
+    .flat()
+    .filter(Boolean);
 }

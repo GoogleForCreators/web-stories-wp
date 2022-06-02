@@ -63,6 +63,7 @@ class Product_Meta extends Service_Base implements HasMeta {
 				'show_in_rest'   => [
 					'schema' => [
 						'type'                 => 'object',
+						'properties'           => [],
 						'additionalProperties' => true,
 					],
 				],
