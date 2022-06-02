@@ -40,14 +40,14 @@ const useElementActions = () => {
     selectedElements,
     setBackgroundElement,
     updateElementsById,
-    deleteElementById,
+    combineElements,
   } = useStory(({ state, actions }) => ({
     clearBackgroundElement: actions.clearBackgroundElement,
     duplicateElementsById: actions.duplicateElementsById,
     selectedElements: state.selectedElements,
     setBackgroundElement: actions.setBackgroundElement,
     updateElementsById: actions.updateElementsById,
-    deleteElementById: actions.deleteElementById,
+    combineElements: actions.combineElements,
   }));
   const showSnackbar = useSnackbar((value) => value.showSnackbar);
   const setEditingElement = useCanvas(
@@ -180,15 +180,10 @@ const useElementActions = () => {
    * @param {Object} image Element that the mask will be applied to.
    */
   const handleUseShapeAsMask = (shape, image) => {
-    updateElementsById({
-      elementIds: [image.id],
-      properties: (currentProperties) =>
-        updateProperties(currentProperties, {
-          mask: { type: shape?.mask?.type },
-        }),
+    combineElements({
+      firstElement: image,
+      secondId: shape.id,
     });
-
-    deleteElementById({ elementId: shape.id });
   };
 
   const hasShapeMask =
