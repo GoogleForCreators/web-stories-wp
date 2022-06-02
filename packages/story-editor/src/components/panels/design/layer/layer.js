@@ -38,6 +38,7 @@ import { useFeature } from 'flagged';
 /**
  * Internal dependencies
  */
+import { MaskTypes } from '@googleforcreators/masks';
 import StoryPropTypes from '../../../../types';
 import { useStory } from '../../../../app';
 import useCORSProxy from '../../../../utils/useCORSProxy';
@@ -309,6 +310,9 @@ function Layer({ element }) {
     eventData: { ...TRACKING_EVENTS.DELETE_ELEMENT, label: element.type },
   });
 
+  const hasShapeMask = element.mask.type !== MaskTypes.RECTANGLE;
+  const removeMaskTitle = __('Remove Mask', 'web-stories');
+
   const layerId = `layer-${element.id}`;
 
   const lockTitle = element.isLocked
@@ -393,6 +397,24 @@ function Layer({ element }) {
                 }
               >
                 <LockIcon />
+              </LayerAction>
+            </Tooltip>
+          )}
+
+          {hasShapeMask && (
+            <Tooltip title={removeMaskTitle} hasTail isDelayed>
+              <LayerAction
+                aria-label={removeMaskTitle}
+                aria-describedby={layerId}
+                onClick={() =>
+                  updateElementById({
+                    elementId: element.id,
+                    properties: { mask: { type: MaskTypes.RECTANGLE } },
+                  })
+                }
+              >
+                {/* @todo --- need icon from design */}
+                <Icons.Eraser />
               </LayerAction>
             </Tooltip>
           )}
