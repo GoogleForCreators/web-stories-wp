@@ -310,7 +310,7 @@ function Layer({ element }) {
     eventData: { ...TRACKING_EVENTS.DELETE_ELEMENT, label: element.type },
   });
 
-  const hasShapeMask = element.mask.type !== MaskTypes.RECTANGLE;
+  const hasShapeMask = element?.mask?.type !== MaskTypes.RECTANGLE;
   const removeMaskTitle = __('Remove Mask', 'web-stories');
 
   const layerId = `layer-${element.id}`;

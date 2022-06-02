@@ -188,7 +188,7 @@ const useElementActions = () => {
 
   const hasShapeMask =
     selectedElements?.[0] &&
-    selectedElements[0].mask.type !== MaskTypes.RECTANGLE;
+    selectedElements[0]?.mask?.type !== MaskTypes.RECTANGLE;
 
   const handleRemoveElementMask = useCallback(() => {
     const selectedElement = selectedElements?.[0];
