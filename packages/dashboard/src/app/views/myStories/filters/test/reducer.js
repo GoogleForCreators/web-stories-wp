@@ -77,20 +77,22 @@ describe('reducer', () => {
 
     const args = {
       type: types.REGISTER_FILTERS,
-      payload: [
-        {
-          key: 'officers',
-          filterId: null,
-        },
-        {
-          key: 'teams',
-          filterId: null,
-        },
-      ],
+      payload: {
+        value: [
+          {
+            key: 'officers',
+            filterId: null,
+          },
+          {
+            key: 'teams',
+            filterId: null,
+          },
+        ],
+      },
     };
 
     const state = reducer(initial_state, args);
-    expect(state.filters.length).toBe(2);
+    expect(state.filters).toHaveLength(2);
     expect(state.filtersLoading).toBeFalsy();
   });
 
@@ -119,5 +121,28 @@ describe('reducer', () => {
       filterId: 6,
       name: 'Noble',
     });
+  });
+
+  it('should return the state if no filter is found with the key', () => {
+    const initial_state = {
+      filters: [
+        {
+          key: 'teams',
+          filterId: 6,
+          name: 'Noble',
+        },
+      ],
+    };
+
+    const args = {
+      type: 'UPDATE_FILTER',
+      payload: {
+        key: 'officers',
+        name: 'Banished',
+      },
+    };
+
+    const state = reducer(initial_state, args);
+    expect(state).toMatchObject(initial_state);
   });
 });

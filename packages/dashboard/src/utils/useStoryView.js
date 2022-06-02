@@ -136,7 +136,7 @@ export default function useStoryView({
         search_view: viewStyle,
       });
     }
-  }, [searchKeyword, sortDirection, sort, viewStyle, authorFilterId]);
+  }, [searchKeyword, filter, sortDirection, sort, viewStyle, authorFilterId]);
 
   useEffect(() => {
     // reset ref state after request is finished
