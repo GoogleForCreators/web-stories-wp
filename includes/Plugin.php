@@ -107,6 +107,7 @@ class Plugin extends ServiceBasedPlugin {
 		'story_post_type'              => Story_Post_Type::class,
 		'story_shortcode'              => Shortcode\Stories_Shortcode::class,
 		'svg'                          => Media\SVG::class,
+		'product_meta'                 => Shopping\Product_Meta::class,
 		'tracking'                     => Tracking::class,
 		'tinymce'                      => Admin\TinyMCE::class,
 		'register.widget'              => Register_Widget::class,

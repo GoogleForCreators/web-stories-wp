@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { intersect } from './utils';
+import { getAllProducts, intersect } from './utils';
 
 /**
  * Delete elements by the given list of ids.
@@ -106,10 +106,13 @@ function deleteElements(state, { elementIds }) {
     ? state.selection.filter((id) => !validDeletionIds.includes(id))
     : state.selection;
 
+  const products = getAllProducts(newPages);
+
   return {
     ...state,
     pages: newPages,
     selection: newSelection,
+    products,
   };
 }
 

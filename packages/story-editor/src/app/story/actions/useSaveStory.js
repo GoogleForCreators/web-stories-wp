@@ -47,9 +47,10 @@ const HTTP_STATUS_DESCRIPTIONS = {
  * @param {Array} properties.pages Array of all pages.
  * @param {Object} properties.story Story-global properties.
  * @param {Function} properties.updateStory Function to update a story.
+ * @param {Array} properties.products Array of all products.
  * @return {Function} Function that can be called to save a story.
  */
-function useSaveStory({ storyId, pages, story, updateStory }) {
+function useSaveStory({ storyId, pages, story, updateStory, products }) {
   const {
     actions: { saveStoryById },
   } = useAPI();
@@ -86,6 +87,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
               pages,
               metadata,
               flags,
+              products,
             }),
             ...props,
           })
@@ -173,6 +175,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
     [
       story,
       pages,
+      products,
       metadata,
       saveStoryById,
       storyId,

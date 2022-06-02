@@ -117,6 +117,7 @@ $story_query_params = [
 				'permalink_template',
 				'style_presets',
 				'password',
+				'meta',
 			]
 		)
 	),

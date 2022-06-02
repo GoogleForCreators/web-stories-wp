@@ -31,6 +31,7 @@ export const STORY_FIELDS = [
   'permalink_template',
   'style_presets',
   'password',
+  'meta',
 ].join(',');
 
 export const STORY_EMBED =

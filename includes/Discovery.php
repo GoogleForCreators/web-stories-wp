@@ -31,6 +31,7 @@ namespace Google\Web_Stories;
 use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Media\Image_Sizes;
 use Google\Web_Stories\Model\Story;
+use Google\Web_Stories\Shopping\Product_Meta;
 use WP_Post;
 
 /**
@@ -218,6 +219,9 @@ class Discovery extends Service_Base implements HasRequirements {
 					'name'  => html_entity_decode( $post_author->display_name, ENT_QUOTES, get_bloginfo( 'charset' ) ),
 				];
 			}
+
+
+			$metadata = $this->get_product_data( $metadata, $post );
 		}
 
 		/**
@@ -229,6 +233,52 @@ class Discovery extends Service_Base implements HasRequirements {
 		 * @param WP_Post $post The current post object.
 		 */
 		return apply_filters( 'web_stories_story_schema_metadata', $metadata, $post );
+	}
+
+	/**
+	 * Get product schema data.
+	 *
+	 * @since 1.22.0
+	 *
+	 * @param array   $metadata The structured data.
+	 * @param WP_Post $post The current post object.
+	 * @return array
+	 */
+	protected function get_product_data( array $metadata, WP_Post $post ): array {
+		$products = get_post_meta( $post->ID, Product_Meta::PRODUCTS_POST_META_KEY, true );
+		if ( ! \is_array( $products ) ) {
+			return $metadata;
+		}
+		$product_data = [];
+		foreach ( $products as $product ) {
+			$data = [
+				'@type'     => 'Product',
+				'brand'     => $product['productBrand'],
+				'productID' => $product['productId'],
+				'url'       => $product['productUrl'],
+				'name'      => $product['productTitle'],
+			];
+			if ( $product['productImages'] ) {
+				$data['image'] = $product['productImages'][0]['url'];
+			}
+			if ( $product['aggregateRating'] ) {
+				$data['aggregateRating'] = [
+					'@type'       => 'AggregateRating',
+					'ratingValue' => $product['aggregateRating']['ratingValue'],
+					'reviewCount' => $product['aggregateRating']['reviewCount'],
+					'url'         => $product['aggregateRating']['reviewUrl'],
+				];
+			}
+			$product_data[] = $data;
+		}
+
+		$metadata['products'] = [
+			'@type'           => 'ItemList',
+			'numberOfItems'   => (string) \count( $products ),
+			'itemListElement' => $product_data,
+		];
+
+		return $metadata;
 	}
 
 	/**

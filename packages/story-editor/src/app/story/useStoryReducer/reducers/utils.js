@@ -160,3 +160,14 @@ export function exclusion(left = [], right = []) {
   const leftJoinKeys = left.map(({ id }) => id);
   return rightSet.filter(({ id }) => !leftJoinKeys.includes(id));
 }
+
+export function getAllProducts(pages) {
+  // TODO: de-duplicate products here.
+  return pages
+    .map((page) => {
+      return page?.elements
+        ?.filter(({ type }) => type === 'product')
+        .map(({ product }) => product);
+    })
+    .flat().filter( Boolean )
+}

@@ -77,6 +77,7 @@ describe('getStoryPropsToSave', () => {
       pages,
       ...neededProps,
       meta: {
+        web_stories_products: undefined,
         web_stories_publisher_logo: 1,
       },
     };

@@ -23,7 +23,7 @@ import { getStoryMarkup } from '@googleforcreators/output';
  */
 import objectPick from '../../../utils/objectPick';
 
-function getStoryPropsToSave({ story, pages, metadata, flags }) {
+function getStoryPropsToSave({ story, pages, metadata, flags, products }) {
   const { terms, ...propsFromStory } = objectPick(story, [
     'title',
     'status',
@@ -50,6 +50,7 @@ function getStoryPropsToSave({ story, pages, metadata, flags }) {
     ...terms,
     meta: {
       web_stories_publisher_logo: story.publisherLogo?.id,
+      web_stories_products: products,
     },
   };
 }

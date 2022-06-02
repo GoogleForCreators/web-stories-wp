@@ -30,6 +30,7 @@ const INITIAL_STATE = {
   pages: [],
   capabilities: {},
   current: null,
+  products: [],
   selection: [],
   story: {},
   animationState: STORY_ANIMATION_STATE.RESET,

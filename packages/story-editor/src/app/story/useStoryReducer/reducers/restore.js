@@ -15,6 +15,11 @@
  */
 
 /**
+ * Internal dependencies
+ */
+import { getAllProducts } from './utils';
+
+/**
  * Restore internal state completely from given state.
  *
  * Some validation is performed:
@@ -31,9 +36,13 @@
  * @param {Array} payload.selection Selection.
  * @param {Object} payload.story Story object.
  * @param {Object} payload.capabilities Capabilities object.
+ * @param {Array} payload.products Array of products.
  * @return {Object} New state
  */
-function restore(state, { pages, current, selection, story, capabilities }) {
+function restore(
+  state,
+  { pages, current, selection, story, capabilities, products }
+) {
   if (!Array.isArray(pages) || pages.length === 0) {
     return state;
   }
@@ -45,9 +54,11 @@ function restore(state, { pages, current, selection, story, capabilities }) {
     ? oldCurrent
     : pages[0].id;
   const newSelection = Array.isArray(selection) ? selection : [];
+  const newProducts = products ? products : getAllProducts(pages);
 
   return {
     pages,
+    products: newProducts,
     current: newCurrent,
     selection: newSelection,
     story: newStory,
