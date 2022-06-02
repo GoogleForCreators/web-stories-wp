@@ -245,17 +245,6 @@ class Experiments extends Service_Base implements HasRequirements {
 			],
 			/**
 			 * Author: @diegovar
-			 * Issue: #2616
-			 * Creation date: 2020-06-23
-			 */
-			[
-				'name'        => 'showElementsTab',
-				'label'       => __( 'Elements tab', 'web-stories' ),
-				'description' => __( 'Enable elements tab', 'web-stories' ),
-				'group'       => 'editor',
-			],
-			/**
-			 * Author: @diegovar
 			 * Issue: #3206
 			 * Creation date: 2020-07-15
 			 */
