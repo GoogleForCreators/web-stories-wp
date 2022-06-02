@@ -39,7 +39,8 @@ jest.mock('../../../../api/useApi', () => {
         restPath: 'tax2/path',
       },
     ]);
-  const getTaxonomyTerm = () => Promise.resolve([{ taxonomy: 'tax1' }]);
+  const getTaxonomyTerm = () =>
+    Promise.resolve([{ taxonomy: 'tax1', name: 'termName' }]);
   return {
     __esModule: true,
     default: function useApi() {
@@ -63,6 +64,7 @@ describe('useTaxonomyFilters', () => {
       data: [
         {
           taxonomy: 'tax1',
+          name: 'termName',
           restBase: 'tax1_Base',
           restPath: 'tax1/path',
         },

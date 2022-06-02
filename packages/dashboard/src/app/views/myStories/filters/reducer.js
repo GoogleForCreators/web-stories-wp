@@ -15,19 +15,31 @@
  */
 
 /**
- * External dependencies
- */
-
-/**
  * Internal dependencies
  */
 import * as types from './types';
+
+/**
+ * Update the filters state
+ *
+ * TODO: May need updating to handle all filter types within the dashboard.
+ *
+ * @param {Object} state Current state
+ * @param {Object} payload Action payload
+ * @param {string} payload.key Key for associated filter.
+ * @param {Object} payload.value Value to set on the filter.
+ * @return {Object} New state
+ */
 
 const reducer = (state, { type, payload = {} }) => {
   switch (type) {
     case types.UPDATE_FILTER: {
       const { key, value } = payload;
       const filter = state.filters.find((f) => f.key === key);
+
+      if (!filter) {
+        return state;
+      }
 
       // remove 'filter-by' value
       if (value.filterId && filter?.filterId === value.filterId) {
@@ -46,10 +58,11 @@ const reducer = (state, { type, payload = {} }) => {
     }
 
     case types.REGISTER_FILTERS: {
+      const { value } = payload;
       return {
         ...state,
         filtersLoading: false,
-        filters: payload,
+        filters: value,
       };
     }
     default:

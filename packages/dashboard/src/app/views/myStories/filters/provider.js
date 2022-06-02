@@ -26,6 +26,8 @@ import {
 } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 
+/** @typedef {import('react')} Node */
+
 /**
  * Internal dependencies
  */
@@ -38,7 +40,20 @@ export const filterContext = createContext({
   actions: {},
 });
 
+/**
+ * Keeps track of the current filters state.
+ *
+ * Each filter will have its own logic associated with
+ * initilization and how to query terms.
+ *
+ *
+ * @param {Object} root0 props for the provider
+ * @param {Node} root0.children the children to be rendered
+ * @return {Node} React node
+ */
+
 export default function FiltersProvider({ children }) {
+  // each filter type will have its own logic for initilizing and querying
   const { taxonomies, queryTaxonomyTerm } = useTaxonomyFilters();
 
   const [state, dispatch] = useReducer(reducer, {
@@ -46,15 +61,33 @@ export default function FiltersProvider({ children }) {
     filters: [],
   });
 
+  /**
+   * Dispatch UPDATE_FILTER with new data for a given filter
+   *
+   * @param {string} key key property on one of the filter objects
+   * @param {Object} value the properties with updated values
+   * @return {void}
+   */
   const updateFilter = useCallback((key, value) => {
     dispatch({ type: types.UPDATE_FILTER, payload: { key, value } });
   }, []);
 
-  const registerFilters = useCallback((payload) => {
-    dispatch({ type: types.REGISTER_FILTERS, payload });
+  /**
+   * Dispatch REGISTER_FILTERS with all the filters data
+   *
+   * @param {Array} payload array of filters data
+   * @return {void}
+   */
+  const registerFilters = useCallback((value) => {
+    dispatch({ type: types.REGISTER_FILTERS, payload: { value } });
   }, []);
 
-  // register the filters in state
+  /**
+   * Sets up the shape of the filters data
+   * and calls registerFilters with all filters.
+   *
+   * @return {void}
+   */
   const initializeFilters = useCallback(() => {
     const filters = taxonomies.map((taxonomy) => ({
       key: taxonomy.restBase,
@@ -67,14 +100,14 @@ export default function FiltersProvider({ children }) {
     }));
 
     registerFilters(filters);
-  }, [taxonomies]);
+  }, [taxonomies, registerFilters, queryTaxonomyTerm]);
 
   const contextValue = useMemo(() => {
     return {
       state,
       actions: { updateFilter, registerFilters },
     };
-  }, [state, updateFilter]);
+  }, [state, updateFilter, registerFilters]);
 
   useEffect(() => {
     initializeFilters();
