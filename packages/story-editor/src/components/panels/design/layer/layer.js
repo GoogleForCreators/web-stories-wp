@@ -215,7 +215,7 @@ const LayerDescription = styled.div`
   color: ${({ theme }) => theme.colors.fg.primary};
 `;
 
-const LayerInputDescription = styled(LayerDescription)`
+const LayerInputForm = styled(LayerDescription).attrs({ as: 'form' })`
   overflow: visible;
   margin-left: 2px;
 `;
@@ -380,22 +380,25 @@ function Layer({ element }) {
       setNewLayerName(layerName);
       setRenamableLayer(null);
     }
+  };
 
-    if (evt.key === 'Enter') {
-      setRenamableLayer(null);
+  const updateLayerName = () => {
+    setRenamableLayer(null);
+    const trimmedLayerName = newLayerName.trim();
+    // Don't update name if trimmed layer name is empty.
+    // This means that submitting an empty name will still exist renaming,
+    // and the layer name will revert to whatever it was beforem ignoring the empty input.
+    if (trimmedLayerName) {
       updateElementById({
         elementId: element.id,
-        properties: { layerName: newLayerName },
+        properties: { layerName: trimmedLayerName },
       });
     }
   };
 
-  const handleBlur = () => {
-    setRenamableLayer(null);
-    updateElementById({
-      elementId: element.id,
-      properties: { layerName: newLayerName },
-    });
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+    updateLayerName();
   };
 
   // We need to prevent the pointer-down event from propagating to the
@@ -417,18 +420,19 @@ function Layer({ element }) {
               currentPageBackgroundColor={currentPageBackgroundColor}
             />
           </LayerIconWrapper>
-          <LayerInputDescription>
+          <LayerInputForm onSubmit={handleSubmit}>
             <LayerInput
               tabIndex={-1}
               aria-label={__('Layer Name', 'web-stories')}
               value={newLayerName}
               onChange={handleChange}
               onKeyDown={handleKeyDown}
-              onBlur={handleBlur}
+              onBlur={updateLayerName}
               onPointerDown={stopPropagation}
               hasFocus
             />
-          </LayerInputDescription>
+            <button hidden />
+          </LayerInputForm>
         </LayerInputWrapper>
       ) : (
         <LayerButton
