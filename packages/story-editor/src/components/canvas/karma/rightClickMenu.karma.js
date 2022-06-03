@@ -179,6 +179,12 @@ describe('Right Click Menu integration', () => {
     });
   }
 
+  function useShapeAsMask() {
+    return fixture.screen.getByRole('menuitem', {
+      name: /^Use Shape as a Mask/i,
+    });
+  }
+
   function duplicateElements() {
     return fixture.screen.getByRole('menuitem', {
       name: /^Duplicate Element/i,
@@ -1350,6 +1356,59 @@ describe('Right Click Menu integration', () => {
       );
       expect(shapeElements.length).toBe(2);
       verifyElementDuplicated(shapeElements[0], shapeElements[1]);
+    });
+  });
+
+  fdescribe('right click menu: use shape mask', () => {
+    fit('mask image element', async () => {
+
+      const image = await addEarthImage();
+      const shape = await addShape({
+        backgroundColor: {
+          color: {
+            r: 203,
+            g: 103,
+            b: 103,
+          },
+        },
+      });
+
+      const imageFrame = fixture.editor.canvas.framesLayer.frame(image.id).node;
+      const shapeFrame = fixture.editor.canvas.framesLayer.frame(shape.id).node;
+
+      // select multiple targets
+      await clickOnTarget(imageFrame);
+      await clickOnTarget(shapeFrame, 'Shift');
+
+      // multiple elements should be selected
+      const { selectedElements } = await fixture.renderHook(
+        () =>
+          useStory(({ state }) => ({
+            selectedElements: state.selectedElements
+          }))
+      );
+
+      expect(selectedElements.length).toBe(2);
+
+      // open right click menu
+      await rightClickOnTarget(imageFrame);
+
+      // make image element
+      await fixture.events.click(useShapeAsMask());
+
+      await clickOnTarget(imageFrame);
+
+      // verify element(s)
+      const { selectedElement } = await fixture.renderHook(
+        () =>
+          useStory(({ state }) => ({
+            selectedElement: state.selectedElements[0]
+          }))
+      );
+
+      expect(selectedElement.mask.type).toEqual("heart");
+
+
     });
   });
 });
