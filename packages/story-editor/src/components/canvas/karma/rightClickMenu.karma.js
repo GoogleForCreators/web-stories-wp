@@ -185,6 +185,12 @@ describe('Right Click Menu integration', () => {
     });
   }
 
+  function removeShapeMask() {
+    return fixture.screen.getByRole('menuitem', {
+      name: /^Remove Mask/i,
+    });
+  }
+
   function duplicateElements() {
     return fixture.screen.getByRole('menuitem', {
       name: /^Duplicate Element/i,
@@ -1359,9 +1365,8 @@ describe('Right Click Menu integration', () => {
     });
   });
 
-  fdescribe('right click menu: use shape mask', () => {
-    fit('mask image element', async () => {
-
+  describe('right click menu: use shape mask', () => {
+    it('adds and removes mask from image element', async () => {
       const image = await addEarthImage();
       const shape = await addShape({
         backgroundColor: {
@@ -1376,7 +1381,7 @@ describe('Right Click Menu integration', () => {
       const imageFrame = fixture.editor.canvas.framesLayer.frame(image.id).node;
       const shapeFrame = fixture.editor.canvas.framesLayer.frame(shape.id).node;
 
-      // select multiple targets
+      // select shape and image targets
       await clickOnTarget(imageFrame);
       await clickOnTarget(shapeFrame, 'Shift');
 
@@ -1387,28 +1392,31 @@ describe('Right Click Menu integration', () => {
             selectedElements: state.selectedElements
           }))
       );
-
       expect(selectedElements.length).toBe(2);
-
-      // open right click menu
+      
+      // add shape mask
       await rightClickOnTarget(imageFrame);
-
-      // make image element
       await fixture.events.click(useShapeAsMask());
-
       await clickOnTarget(imageFrame);
-
-      // verify element(s)
       const { selectedElement } = await fixture.renderHook(
         () =>
           useStory(({ state }) => ({
             selectedElement: state.selectedElements[0]
           }))
       );
-
       expect(selectedElement.mask.type).toEqual("heart");
-
-
+      
+      // remove the mask
+      const maskedFrame = fixture.editor.canvas.framesLayer.frame(selectedElement.id).node;
+      await rightClickOnTarget(maskedFrame);
+      await fixture.events.click(removeShapeMask());
+      const { unmaskedElement } = await fixture.renderHook(
+        () =>
+          useStory(({ state }) => ({
+            unmaskedElement: state.selectedElements[0]
+          }))
+      );
+      expect(unmaskedElement.mask.type).toEqual("rectangle");
     });
   });
 });
