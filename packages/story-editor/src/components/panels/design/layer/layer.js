@@ -356,6 +356,23 @@ function Layer({ element }) {
       </LayerButton>
       {!element.isBackground && (
         <ActionsContainer>
+          {hasShapeMask && (
+            <Tooltip title={removeMaskTitle} hasTail isDelayed>
+              <LayerAction
+                aria-label={removeMaskTitle}
+                aria-describedby={layerId}
+                onClick={() =>
+                  updateElementById({
+                    elementId: element.id,
+                    properties: { mask: { type: MaskTypes.RECTANGLE } },
+                  })
+                }
+              >
+                {/* @todo --- need icon from design */}
+                <Icons.CrossSmall />
+              </LayerAction>
+            </Tooltip>
+          )}
           <Tooltip title={__('Delete Layer', 'web-stories')} hasTail isDelayed>
             <LayerAction
               ref={deleteButtonRef}
@@ -397,24 +414,6 @@ function Layer({ element }) {
                 }
               >
                 <LockIcon />
-              </LayerAction>
-            </Tooltip>
-          )}
-
-          {hasShapeMask && (
-            <Tooltip title={removeMaskTitle} hasTail isDelayed>
-              <LayerAction
-                aria-label={removeMaskTitle}
-                aria-describedby={layerId}
-                onClick={() =>
-                  updateElementById({
-                    elementId: element.id,
-                    properties: { mask: { type: MaskTypes.RECTANGLE } },
-                  })
-                }
-              >
-                {/* @todo --- need icon from design */}
-                <Icons.CrossSmall />
               </LayerAction>
             </Tooltip>
           )}

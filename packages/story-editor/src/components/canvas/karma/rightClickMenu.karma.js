@@ -1386,37 +1386,36 @@ describe('Right Click Menu integration', () => {
       await clickOnTarget(shapeFrame, 'Shift');
 
       // multiple elements should be selected
-      const { selectedElements } = await fixture.renderHook(
-        () =>
-          useStory(({ state }) => ({
-            selectedElements: state.selectedElements
-          }))
+      const { selectedElements } = await fixture.renderHook(() =>
+        useStory(({ state }) => ({
+          selectedElements: state.selectedElements,
+        }))
       );
       expect(selectedElements.length).toBe(2);
-      
+
       // add shape mask
       await rightClickOnTarget(imageFrame);
       await fixture.events.click(useShapeAsMask());
       await clickOnTarget(imageFrame);
-      const { selectedElement } = await fixture.renderHook(
-        () =>
-          useStory(({ state }) => ({
-            selectedElement: state.selectedElements[0]
-          }))
+      const { selectedElement } = await fixture.renderHook(() =>
+        useStory(({ state }) => ({
+          selectedElement: state.selectedElements[0],
+        }))
       );
-      expect(selectedElement.mask.type).toEqual("heart");
-      
+      expect(selectedElement.mask.type).toEqual('heart');
+
       // remove the mask
-      const maskedFrame = fixture.editor.canvas.framesLayer.frame(selectedElement.id).node;
+      const maskedFrame = fixture.editor.canvas.framesLayer.frame(
+        selectedElement.id
+      ).node;
       await rightClickOnTarget(maskedFrame);
       await fixture.events.click(removeShapeMask());
-      const { unmaskedElement } = await fixture.renderHook(
-        () =>
-          useStory(({ state }) => ({
-            unmaskedElement: state.selectedElements[0]
-          }))
+      const { unmaskedElement } = await fixture.renderHook(() =>
+        useStory(({ state }) => ({
+          unmaskedElement: state.selectedElements[0],
+        }))
       );
-      expect(unmaskedElement.mask.type).toEqual("rectangle");
+      expect(unmaskedElement.mask.type).toEqual('rectangle');
     });
   });
 });
