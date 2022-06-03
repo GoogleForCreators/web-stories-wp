@@ -187,7 +187,7 @@ function ShopifySettings({
     setIsTestingConnection(true);
     speak(TEXT.CONNECTION_CHECKING);
     try {
-      await getProducts();
+      await getProducts(new Date().getTime()); // @todo temp fix for cache busting the product query
       setTestConnectionStatus(TEXT.CONNECTION_SUCCESS);
       speak(TEXT.CONNECTION_SUCCESS);
     } catch (e) {
