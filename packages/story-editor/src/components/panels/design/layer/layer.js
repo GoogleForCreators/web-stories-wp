@@ -128,9 +128,9 @@ const LayerButton = styled(Button).attrs({
       & + * {
         --background-color: ${theme.colors.interactiveBg.tertiaryPress};
         --background-color-opaque: ${rgba(
-      theme.colors.interactiveBg.tertiaryPress,
-      0
-    )};
+          theme.colors.interactiveBg.tertiaryPress,
+          0
+        )};
         --selected-hover-color: ${theme.colors.interactiveBg.tertiaryHover};
       }
     `}
@@ -141,9 +141,9 @@ const LayerButton = styled(Button).attrs({
   :hover,
   :hover + * {
     --background-color: ${({ theme }) =>
-    theme.colors.interactiveBg.tertiaryHover};
+      theme.colors.interactiveBg.tertiaryHover};
     --background-color-opaque: ${({ theme }) =>
-    rgba(theme.colors.interactiveBg.tertiaryHover, 0)};
+      rgba(theme.colors.interactiveBg.tertiaryHover, 0)};
   }
 
   :active {
@@ -152,9 +152,9 @@ const LayerButton = styled(Button).attrs({
   :active,
   :active + * {
     --background-color: ${({ theme }) =>
-    theme.colors.interactiveBg.tertiaryPress};
+      theme.colors.interactiveBg.tertiaryPress};
     --background-color-opaque: ${({ theme }) =>
-    rgba(theme.colors.interactiveBg.tertiaryPress, 0)};
+      rgba(theme.colors.interactiveBg.tertiaryPress, 0)};
   }
 `;
 
@@ -267,10 +267,10 @@ const LayerAction = styled(Button).attrs({
 
   :focus {
     ${({ theme }) =>
-    themeHelpers.focusCSS(
-      theme.colors.border.focus,
-      'var(--background-color)'
-    )}
+      themeHelpers.focusCSS(
+        theme.colors.border.focus,
+        'var(--background-color)'
+      )}
   }
 `;
 
@@ -278,10 +278,13 @@ function preventReorder(e) {
   e.stopPropagation();
   e.preventDefault();
 }
-
 function Layer({ element }) {
   const isLayerLockingEnabled = useFeature('layerLocking');
-  const { LayerIcon } = getDefinitionForType(element.type);
+  const hasShapeMask =
+    element?.type === 'image' && element?.mask?.type !== MaskTypes.RECTANGLE;
+  const { LayerIcon } = getDefinitionForType(
+    hasShapeMask ? 'shape' : element.type
+  );
   const { isSelected, handleClick } = useLayerSelection(element);
   const { isDefaultBackground } = element;
   const {
@@ -310,19 +313,17 @@ function Layer({ element }) {
     eventData: { ...TRACKING_EVENTS.DELETE_ELEMENT, label: element.type },
   });
 
-  const hasShapeMask = element?.type === "image" && element?.mask?.type !== MaskTypes.RECTANGLE;
-  const removeMaskTitle = __('Remove Mask', 'web-stories');
-
   const layerId = `layer-${element.id}`;
 
   const lockTitle = element.isLocked
     ? __('Unlock Layer', 'web-stories')
     : __('Lock Layer', 'web-stories');
 
+  const removeMaskTitle = __('Remove Mask', 'web-stories');
+
   const LockIcon = element.isLocked ? Icons.LockClosed : Icons.LockOpen;
 
   const layerName = getLayerName(element);
-
   return (
     <LayerContainer>
       <LayerButton
@@ -368,7 +369,6 @@ function Layer({ element }) {
                   })
                 }
               >
-                {/* @todo --- need icon from design */}
                 <Icons.CrossSmall />
               </LayerAction>
             </Tooltip>
