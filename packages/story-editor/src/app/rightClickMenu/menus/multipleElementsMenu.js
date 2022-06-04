@@ -30,7 +30,7 @@ function MultipleElementsMenu() {
     handleUseShapeAsMask,
     shapeMaskElements,
   } = useElementActions();
-  const [shape, image] = shapeMaskElements();
+  const { shape, image } = shapeMaskElements();
   return (
     <>
       <ContextMenuComponents.MenuButton

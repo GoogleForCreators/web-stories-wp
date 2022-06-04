@@ -156,7 +156,7 @@ const useElementActions = () => {
    */
   const shapeMaskElements = useCallback(() => {
     if (selectedElements?.length > 2) {
-      return [];
+      return {};
     }
 
     let image, shape;
@@ -167,10 +167,10 @@ const useElementActions = () => {
     });
 
     if (shape && image) {
-      return [shape, image];
+      return { shape, image };
     }
 
-    return [];
+    return {};
   }, [selectedElements]);
 
   /**
@@ -188,6 +188,7 @@ const useElementActions = () => {
 
   const hasShapeMask =
     selectedElements?.[0] &&
+    selectedElements[0]?.type === "image" &&
     selectedElements[0]?.mask?.type !== MaskTypes.RECTANGLE;
 
   const handleRemoveElementMask = useCallback(() => {
