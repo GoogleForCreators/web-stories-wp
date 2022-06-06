@@ -33,8 +33,8 @@ import useApi from '../../../../api/useApi';
 export const getFilterPlaceholder = (filter) => {
   return sprintf(
     /* translators: 1: Filter plural label. */
-    __('%1$s ', 'web-stories'),
-    filter.labels.allItems
+    __('All %1$s', 'web-stories'),
+    filter.labels.name
   );
 };
 
@@ -49,7 +49,7 @@ export const getFilterAriaLabel = (filter) => {
 export const getFilterSearchResultsLabel = (filter) => {
   return sprintf(
     /* translators: 1: Filter search items label. */
-    __('%1$s ', 'web-stories'),
+    __('Search %1$s Results', 'web-stories'),
     filter.labels.searchItems
   );
 };
