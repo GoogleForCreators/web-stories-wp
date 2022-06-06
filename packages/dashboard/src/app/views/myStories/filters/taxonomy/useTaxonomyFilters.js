@@ -23,7 +23,6 @@ import {
   useState,
   useMemo,
 } from '@googleforcreators/react';
-import { __, sprintf } from '@googleforcreators/i18n';
 
 /**
  * Internal dependencies
@@ -31,27 +30,17 @@ import { __, sprintf } from '@googleforcreators/i18n';
 import useApi from '../../../../api/useApi';
 
 export const getFilterPlaceholder = (filter) => {
-  return sprintf(
-    /* translators: 1: Filter plural label. */
-    __('All %1$s', 'web-stories'),
-    filter.labels.name
-  );
+  return filter.labels?.allItems || filter.labels?.name || filter.key;
 };
 
 export const getFilterAriaLabel = (filter) => {
-  return sprintf(
-    /* translators: 1: Filter singular label. */
-    __('Filter stories by %1$s', 'web-stories'),
-    filter.labels.singularName
-  );
+  return filter.labels?.singularName || filter.labels?.name || filter.key;
 };
 
 export const getFilterSearchResultsLabel = (filter) => {
-  return sprintf(
-    /* translators: 1: Filter search items label. */
-    __('%1$s Result', 'web-stories'),
-    filter.labels.searchItems
-  );
+  return filter.labels?.searchItems || filter.labels?.name
+    ? `Search ${filter.labels.name}`
+    : 'Search Taxonomy';
 };
 
 /**
