@@ -104,6 +104,35 @@ const EmptyFrame = styled.div`
 
 const NOOP = () => { };
 
+function calcBoxWithBorder(box, element) {
+
+  if (!element?.border) {
+    return box;
+  }
+
+  // updates box to accommodate for border
+  // see: https://github.com/GoogleForCreators/web-stories-wp/issues/5325
+
+  const boxWithBorder = { ...box };
+  const type = element?.type;
+
+  let { top, left, bottom, right } = element?.border;
+
+  // for shapes use half the amount
+  if (type == "shape") {
+    top = top / 2;
+    left = left / 2;
+    bottom = bottom / 2;
+    right = right / 2;
+  }
+
+  boxWithBorder.x = box.x - right;
+  boxWithBorder.y = box.y - top;
+  boxWithBorder.width = box.width + (right + left);
+  boxWithBorder.height = box.height + (top + bottom);
+  return boxWithBorder;
+}
+
 const FRAME_ELEMENT_MESSAGE = sprintf(
   /* translators: 1: Ctrl Key 2: Alt Key */
   __(
@@ -197,15 +226,7 @@ function FrameElement({ id }) {
   useLayoutEffect(() => {
     setNodeForElement(id, elementRef.current);
   }, [id, setNodeForElement]);
-  let box = getBox(element);
-
-  if (element?.border) {
-    const { top, bottom, right, left } = element?.border;
-    box.x = box.x - right;
-    box.y = box.y - top;
-    box.width = box.width + (right + left);
-    box.height = box.height + (top + bottom);
-  }
+  const box = calcBoxWithBorder(getBox(element), element);
 
   useTransformHandler(id, (transform) => {
     const target = elementRef.current;
