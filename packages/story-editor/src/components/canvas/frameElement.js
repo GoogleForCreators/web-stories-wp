@@ -80,7 +80,7 @@ const Wrapper = styled.div`
   &:focus,
   &:active {
     outline-color: ${({ theme, hasMask }) =>
-      hasMask ? 'transparent' : theme.colors.border.selection};
+    hasMask ? 'transparent' : theme.colors.border.selection};
   }
   ${({ isLocked, hasMask, theme }) =>
     !isLocked &&
@@ -102,7 +102,7 @@ const EmptyFrame = styled.div`
   pointer-events: none;
 `;
 
-const NOOP = () => {};
+const NOOP = () => { };
 
 const FRAME_ELEMENT_MESSAGE = sprintf(
   /* translators: 1: Ctrl Key 2: Alt Key */
@@ -197,7 +197,15 @@ function FrameElement({ id }) {
   useLayoutEffect(() => {
     setNodeForElement(id, elementRef.current);
   }, [id, setNodeForElement]);
-  const box = getBox(element);
+  let box = getBox(element);
+
+  if (element?.border) {
+    const { top, bottom, right, left } = element?.border;
+    box.x = box.x - right;
+    box.y = box.y - top;
+    box.width = box.width + (right + left);
+    box.height = box.height + (top + bottom);
+  }
 
   useTransformHandler(id, (transform) => {
     const target = elementRef.current;
@@ -289,15 +297,15 @@ function FrameElement({ id }) {
   const layerName = getLayerName(element);
   const elementLabel = element.isLocked
     ? sprintf(
-        // translators: %s: Name of element
-        __('Locked element: %s', 'web-stories'),
-        layerName
-      )
+      // translators: %s: Name of element
+      __('Locked element: %s', 'web-stories'),
+      layerName
+    )
     : sprintf(
-        // translators: %s: Name of element
-        __('Element: %s', 'web-stories'),
-        layerName
-      );
+      // translators: %s: Name of element
+      __('Element: %s', 'web-stories'),
+      layerName
+    );
 
   return (
     <WithLink element={element} active={isLinkActive} anchorRef={elementRef}>
