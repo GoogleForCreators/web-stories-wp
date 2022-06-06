@@ -24,12 +24,9 @@ import styled from 'styled-components';
 export const POPOVER_Z_INDEX = 9991;
 
 export const Popover = styled.div`
-  --translate-x: calc(var(--delta-x, 0) * 1px);
-  --translate-y: calc(var(--delta-y, 0) * 1px);
   display: ${({ isOpen }) => (isOpen ? 'block' : 'none')};
   position: ${({ isInline }) => (isInline ? 'relative' : 'absolute')};
   z-index: ${({ popoverZIndex }) => popoverZIndex};
-  transform: translate(var(--translate-x), var(--translate-y));
 `;
 Popover.defaultProps = {
   popoverZIndex: POPOVER_Z_INDEX,
