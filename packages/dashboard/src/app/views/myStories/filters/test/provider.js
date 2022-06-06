@@ -24,17 +24,21 @@ import { renderHook, act } from '@testing-library/react-hooks';
 import FiltersProvider from '../provider';
 import useFilters from '../useFilters';
 
-jest.mock('../taxonomy/useTaxonomyFilters', () => ({
-  __esModule: true,
-  default: function useTaxonomyFilter() {
-    const react = jest.requireActual('react');
-    const [taxonomies] = react.useState([]);
-    return {
-      queryTaxonomyTerm: () => Promise.resolve([]),
-      taxonomies,
-    };
-  },
-}));
+jest.mock('../taxonomy/useTaxonomyFilters', () => {
+  const initializeTaxonomyFilters = () => [];
+  return {
+    __esModule: true,
+    default: function useTaxonomyFilter() {
+      const react = jest.requireActual('react');
+      const [taxonomies] = react.useState([]);
+
+      return {
+        taxonomies,
+        initializeTaxonomyFilters,
+      };
+    },
+  };
+});
 
 describe('provider', () => {
   it('should register filters and update filters', () => {

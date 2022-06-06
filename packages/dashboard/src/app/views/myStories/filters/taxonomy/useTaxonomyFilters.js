@@ -49,7 +49,7 @@ export const getFilterAriaLabel = (filter) => {
 export const getFilterSearchResultsLabel = (filter) => {
   return sprintf(
     /* translators: 1: Filter search items label. */
-    __('Search %1$s Results', 'web-stories'),
+    __('%1$s Result', 'web-stories'),
     filter.labels.searchItems
   );
 };
