@@ -32,24 +32,24 @@ import useApi from '../../../../api/useApi';
 
 export const getFilterPlaceholder = (filter) => {
   return sprintf(
-    /* translators: %s: Filter plural label. */
-    __('%s ', 'web-stories'),
+    /* translators: 1: Filter plural label. */
+    __('%1$s ', 'web-stories'),
     filter.labels.allItems
   );
 };
 
 export const getFilterAriaLabel = (filter) => {
   return sprintf(
-    /* translators: %s: Filter singular label. */
-    __('Filter stories by %s', 'web-stories'),
+    /* translators: 1: Filter singular label. */
+    __('Filter stories by %1$s', 'web-stories'),
     filter.labels.singularName
   );
 };
 
 export const getFilterSearchResultsLabel = (filter) => {
   return sprintf(
-    /* translators: %s: Filter search items label. */
-    __('%s ', 'web-stories'),
+    /* translators: 1: Filter search items label. */
+    __('%1$s ', 'web-stories'),
     filter.labels.searchItems
   );
 };
