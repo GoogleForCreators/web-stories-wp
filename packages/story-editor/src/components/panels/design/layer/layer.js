@@ -318,7 +318,9 @@ function Layer({ element }) {
   const LockIcon = element.isLocked ? Icons.LockClosed : Icons.LockOpen;
 
   const layerName = getLayerName(element);
-
+  const layerGroupName = element.groupId
+    ? `${__('Group', 'web-stories')} ${element.groupId.substr(-3)}: `
+    : null;
   return (
     <LayerContainer>
       <LayerButton
@@ -336,6 +338,7 @@ function Layer({ element }) {
         </LayerIconWrapper>
         <LayerDescription>
           <LayerContentContainer>
+            <LayerText>{layerGroupName}</LayerText>
             <LayerText>{layerName}</LayerText>
           </LayerContentContainer>
           {element.isBackground && (

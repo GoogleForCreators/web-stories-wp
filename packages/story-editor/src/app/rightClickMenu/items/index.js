@@ -15,3 +15,4 @@
  */
 
 export { default as LayerLock } from './layerLock';
+export { default as LayerUngroup } from './layerUngroup';

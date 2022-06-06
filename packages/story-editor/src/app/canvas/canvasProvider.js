@@ -129,9 +129,12 @@ function CanvasProvider({ children }) {
       }
       lastSelectedElementId.current = elId;
       if (evt.shiftKey) {
-        toggleElementInSelection({ elementId: elId });
+        toggleElementInSelection({ elementId: elId, withLinked: !evt.altKey });
       } else {
-        setSelectedElementsById({ elementIds: [elId] });
+        setSelectedElementsById({
+          elementIds: [elId],
+          withLinked: !evt.altKey,
+        });
       }
       evt.currentTarget.focus({ preventScroll: true });
       if (backgroundElementId !== elId) {
