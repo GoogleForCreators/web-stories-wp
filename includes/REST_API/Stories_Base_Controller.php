@@ -327,9 +327,13 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 			$tax       = $taxonomy_obj->name;
 			$tax_base  = ! empty( $taxonomy_obj->rest_base ) ? $taxonomy_obj->rest_base : $tax;
 
+			$queryParams = [ 
+				'post' => $post->ID,
+				'per_page' => 100
+			];
+
 			$terms_url = add_query_arg(
-				'post',
-				$post->ID,
+				$queryParams,
 				rest_url( sprintf( '%s/%s', $namespace, $tax_base ) )
 			);
 
