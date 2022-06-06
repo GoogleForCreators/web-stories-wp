@@ -125,7 +125,7 @@ function calcBoxWithBorder(box, element) {
     right = right / 2;
   }
 
-  boxWithBorder.x = box.x - right;
+  boxWithBorder.x = box.x - left;
   boxWithBorder.y = box.y - top;
   boxWithBorder.width = box.width + (right + left);
   boxWithBorder.height = box.height + (top + bottom);
