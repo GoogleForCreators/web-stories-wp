@@ -19,6 +19,7 @@
 import { useEffect } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { __ } from '@googleforcreators/i18n';
 
 /**
  * Internal dependencies
@@ -63,7 +64,11 @@ function ProductList({
 
   return (
     // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions -- list handles arrow up and arrow down
-    <div role="list" onKeyDown={handleListNav}>
+    <div
+      aria-label={__('Products list', 'web-stories')}
+      role="list"
+      onKeyDown={handleListNav}
+    >
       {products.map((product, index) => {
         return (
           <StyledListItem
@@ -77,7 +82,7 @@ function ProductList({
             <Product
               product={product}
               isOnPage={onPageProducts.some(
-                (item) => item.productId === product?.productId
+                (item) => item.product.productId === product?.productId
               )}
               onClick={onClick}
               onFocus={(evt) => {

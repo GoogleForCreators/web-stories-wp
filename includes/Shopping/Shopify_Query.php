@@ -151,16 +151,17 @@ class Shopify_Query implements Product_Query {
 	 * @since 1.21.0
 	 *
 	 * @param string $search_term Search term to filter products by.
+	 * @param string $orderby Sort collection by product attribute.
+	 * @param string $order Order sort attribute ascending or descending.
 	 * @return string The assembled GraphQL query.
 	 */
-	protected function get_products_query( string $search_term ): string {
+	protected function get_products_query( string $search_term, string $orderby, string $order ): string {
 		$search_string = empty( $search_term ) ? '*' : '*' . $search_term . '*';
-
-		// TODO(#11154): Support different sortKeys.
-		// Maybe use "available_for_sale:true AND " query to only show items in stock.
+		$sortkey       = 'date' === $orderby ? 'CREATED_AT' : strtoupper( $orderby );
+		$reverse       = 'asc' === $order ? 'false' : 'true';
 		return <<<QUERY
 {
-  products(first: 100, sortKey: CREATED_AT, query: "title:$search_string") {
+  products(first: 100, sortKey: $sortkey, reverse: $reverse, query: "title:$search_string") {
     edges {
       node {
         id
@@ -198,9 +199,13 @@ QUERY;
 	 * @since 1.21.0
 	 *
 	 * @param string $search_term Search term to filter products by.
+	 * @param string $orderby Sort retrieved products by parameter.
+	 * @param string $order   Whether to order products in ascending or descending order.
+	 *                        Accepts 'asc' (ascending) or 'desc' (descending).
 	 * @return array|WP_Error Response data or error object on failure.
 	 */
-	protected function fetch_remote_products( string $search_term ) {
+	protected function fetch_remote_products( string $search_term, string $orderby, string $order ) {
+		
 		/**
 		 * Filters the Shopify products data TTL value.
 		 *
@@ -209,7 +214,7 @@ QUERY;
 		 * @param int $time Time to live (in seconds). Default is 5 minutes.
 		 */
 		$cache_ttl = apply_filters( 'web_stories_shopify_data_cache_ttl', 5 * MINUTE_IN_SECONDS );
-		$cache_key = 'web_stories_shopify_data_' . md5( $search_term );
+		$cache_key = 'web_stories_shopify_data_' . md5( $search_term . '-' . $orderby . '-' . $order );
 
 		$data = get_transient( $cache_key );
 
@@ -217,8 +222,9 @@ QUERY;
 			return (array) json_decode( $data, true );
 		}
 
-		$query = $this->get_products_query( $search_term );
-		$body  = $this->execute_query( $query );
+		$query = $this->get_products_query( $search_term, $orderby, $order );
+
+		$body = $this->execute_query( $query );
 
 		if ( is_wp_error( $body ) ) {
 			return $body;
@@ -231,9 +237,31 @@ QUERY;
 		 */
 		$result = json_decode( $body, true );
 
-		// TODO(#11268): Error handling.
 		if ( isset( $result['errors'] ) ) {
-			return new WP_Error( 'rest_unknown', __( 'Error fetching products', 'web-stories' ), [ 'status' => 404 ] );
+			$wp_error = new WP_Error();
+			
+			foreach ( $result['errors'] as $error ) {
+				$error_code = $error['extensions']['code'];
+				// https://shopify.dev/api/storefront#status_and_error_codes.
+				switch ( $error_code ) {
+					case 'THROTTLED':
+						$wp_error->add( 'rest_throttled', __( 'Shopify API rate limit exceeded. Try again later.', 'web-stories' ), [ 'status' => 429 ] );
+						break;
+					case 'ACCESS_DENIED':
+						$wp_error->add( 'rest_invalid_credentials', __( 'Invalid Shopify API credentials provided.', 'web-stories' ), [ 'status' => 401 ] );
+						break;
+					case 'SHOP_INACTIVE':
+						$wp_error->add( 'rest_inactive_shop', __( 'Inactive Shopify shop.', 'web-stories' ), [ 'status' => 403 ] );
+						break;
+					case 'INTERNAL_SERVER_ERROR':
+						$wp_error->add( 'rest_internal_error', __( 'Shopify experienced an internal server error.', 'web-stories' ), [ 'status' => 500 ] );
+						break;
+					default:
+						$wp_error->add( 'rest_unknown', __( 'Error fetching products from Shopify.', 'web-stories' ), [ 'status' => 500 ] );
+				}
+			}
+		
+			return $wp_error;
 		}
 
 		// TODO: Maybe cache errors too?
@@ -242,17 +270,21 @@ QUERY;
 		return $result;
 	}
 
+	
 	/**
 	 * Get products by search term.
 	 *
 	 * @since 1.21.0
 	 *
 	 * @param string $search_term Search term.
+	 * @param string $orderby Sort retrieved products by parameter. Default 'date'.
+	 * @param string $order   Whether to order products in ascending or descending order.
+	 *                        Accepts 'asc' (ascending) or 'desc' (descending). Default 'desc'.
 	 * @return Product[]|WP_Error
 	 */
-	public function get_search( string $search_term ) {
-		$result = $this->fetch_remote_products( $search_term );
-
+	public function get_search( string $search_term, string $orderby = 'date', string $order = 'desc' ) {
+		$result = $this->fetch_remote_products( $search_term, $orderby, $order );
+		
 		if ( is_wp_error( $result ) ) {
 			return $result;
 		}

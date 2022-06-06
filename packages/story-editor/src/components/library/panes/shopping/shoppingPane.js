@@ -31,19 +31,21 @@ import {
   SearchInput,
   useLiveRegion,
   CircularProgress,
+  useSnackbar,
 } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
  */
 import { Section } from '../../common';
-import { useAPI } from '../../../../app';
+import { useAPI, useConfig } from '../../../../app';
 import { Row } from '../../../form';
 import { Pane } from '../shared';
 import { useStory } from '../../../../app/story';
 import useLibrary from '../../useLibrary';
 import paneId from './paneId';
 import ProductList from './productList';
+import ProductSort from './productSort';
 
 const Loading = styled.div`
   position: relative;
@@ -63,39 +65,51 @@ const HelperText = styled(Text).attrs({
 `;
 
 function ShoppingPane(props) {
+  const { showSnackbar } = useSnackbar();
+  const { shoppingProvider } = useConfig();
   const isShoppingIntegrationEnabled = useFeature('shoppingIntegration');
   const speak = useLiveRegion('assertive');
   const [loaded, setLoaded] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [orderby, setOrderby] = useState('date');
+  const [order, setOrder] = useState('desc');
+  const onSortBy = (option) => {
+    setOrderby(option.orderby);
+    setOrder(option.order);
+  };
   const [isMenuFocused, setIsMenuFocused] = useState(false);
   const [products, setProducts] = useState([]);
   const {
     actions: { getProducts },
   } = useAPI();
 
+  const isShoppingEnabled =
+    'none' !== shoppingProvider && isShoppingIntegrationEnabled;
+
   const { currentPageProducts } = useStory(({ state: { currentPage } }) => ({
     currentPageProducts: currentPage?.elements
       ?.filter(({ type }) => type === 'product')
       .map(({ id, product }) => ({
         elementId: id,
-        productId: product?.productId,
+        product,
       })),
   }));
 
   const getProductsByQuery = useCallback(
-    async (value = '') => {
+    async (value = '', sortBy, sortOrder) => {
       try {
         setIsLoading(true);
-        setProducts(await getProducts(value));
+        setProducts(await getProducts(value, sortBy, sortOrder));
       } catch (err) {
+        showSnackbar({ message: err.message });
         setProducts([]);
       } finally {
         setIsLoading(false);
         setLoaded(true);
       }
     },
-    [getProducts]
+    [getProducts, showSnackbar]
   );
 
   const onSearch = useCallback(
@@ -110,10 +124,19 @@ function ShoppingPane(props) {
 
   const debouncedProductsQuery = useDebouncedCallback(getProductsByQuery, 300);
 
-  useEffect(
-    () => debouncedProductsQuery(searchTerm),
-    [searchTerm, debouncedProductsQuery]
-  );
+  useEffect(() => {
+    if (isShoppingEnabled) {
+      debouncedProductsQuery(searchTerm, orderby, order);
+    }
+  }, [debouncedProductsQuery, isShoppingEnabled, searchTerm, orderby, order]);
+
+  useEffect(() => {
+    if (!isShoppingEnabled) {
+      setProducts(currentPageProducts?.map(({ product }) => product));
+      setIsLoading(false);
+      setLoaded(true);
+    }
+  }, [currentPageProducts, isShoppingEnabled]);
 
   const handleInputKeyPress = useCallback((event) => {
     const { key } = event;
@@ -154,7 +177,7 @@ function ShoppingPane(props) {
   const deleteProduct = useCallback(
     (product) => {
       const element = currentPageProducts.find(
-        (item) => item.productId === product.productId
+        (item) => item.product.productId === product.productId
       );
       if (element) {
         deleteElementById({ elementId: element.elementId });
@@ -181,10 +204,6 @@ function ShoppingPane(props) {
     setSearchTerm('');
   }, [setSearchTerm]);
 
-  if (!isShoppingIntegrationEnabled) {
-    return null;
-  }
-
   return (
     <Pane id={paneId} {...props}>
       <Section
@@ -199,20 +218,23 @@ function ShoppingPane(props) {
             )}
           </HelperText>
         </Row>
-        <Row>
-          <SearchInput
-            aria-label={__('Product search', 'web-stories')}
-            inputValue={searchTerm}
-            onChange={onSearch}
-            placeholder={__('Search', 'web-stories')}
-            onKeyDown={handleInputKeyPress}
-            onFocus={handleFocus}
-            isOpen
-            ariaClearLabel={__('Clear product search', 'web-stories')}
-            clearId="clear-product-search"
-            handleClearInput={handleClearInput}
-          />
-        </Row>
+        {isShoppingEnabled && (
+          <Row>
+            <SearchInput
+              aria-label={__('Product search', 'web-stories')}
+              inputValue={searchTerm}
+              onChange={onSearch}
+              placeholder={__('Search', 'web-stories')}
+              onKeyDown={handleInputKeyPress}
+              onFocus={handleFocus}
+              isOpen
+              ariaClearLabel={__('Clear product search', 'web-stories')}
+              clearId="clear-product-search"
+              handleClearInput={handleClearInput}
+            />
+            <ProductSort onChange={onSortBy} sortId={`${orderby}-${order}`} />
+          </Row>
+        )}
         {isLoading && (
           <Loading>
             <Spinner>
