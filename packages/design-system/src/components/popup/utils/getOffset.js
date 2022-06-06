@@ -98,6 +98,8 @@ export function getYOffset(placement, spacing = 0, anchorRect) {
  * @param {MutableRefObject<HTMLElement>} args.popup Popup element.
  * @param {boolean} args.isRTL isRTL.
  * @param {number} args.topOffset Header Offset.
+ * @param {boolean} args.offsetOverride Defaults to false. Mainly used for Dropdowns that do not need to stay on
+ * the screen at all times like a popup needs to.  The x and y offset of the popup will stay in line with the anchorRect
  * @param {boolean} args.ignoreMaxOffsetY Defaults to false. Sometimes, we want the popup to respect the y value
  * as perceived by the page because of scroll. This is really only true of dropDowns that
  * exist beyond the initial page scroll. Because the editor is a fixed view this only

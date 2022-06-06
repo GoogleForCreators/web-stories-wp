@@ -215,6 +215,7 @@ Popup.propTypes = {
   refCallback: PropTypes.func,
   zIndex: PropTypes.number,
   ignoreMaxOffsetY: PropTypes.bool,
+  offsetOverride: PropTypes.bool,
 };
 
 export { Popup, PLACEMENT };
