@@ -98,6 +98,7 @@ const Datalist = forwardRef(function Datalist(
     containerStyleOverrides,
     title,
     dropdownButtonLabel,
+    offsetOverride = false,
     ...rest
   },
   ref
@@ -219,6 +220,7 @@ const Datalist = forwardRef(function Datalist(
           isOpen={isOpen}
           fillWidth={DEFAULT_WIDTH}
           zIndex={zIndex}
+          offsetOverride={offsetOverride}
         >
           {list}
         </Popup>

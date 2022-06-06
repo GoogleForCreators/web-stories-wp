@@ -112,6 +112,7 @@ export function getOffset({
   popup,
   isRTL,
   ignoreMaxOffsetY,
+  offsetOverride,
   topOffset = 0,
 }) {
   const anchorRect = anchor.current.getBoundingClientRect();
@@ -140,14 +141,24 @@ export function getOffset({
   const maxOffsetY =
     bodyRect.height + bodyRect.y - height - getYTransforms(placement) * height;
 
-  // Clamp values
-  return {
-    x: Math.max(0, Math.min(offsetX, maxOffsetX)),
-    y: ignoreMaxOffsetY
-      ? offsetY
-      : Math.max(topOffset, Math.min(offsetY, maxOffsetY)),
+  const offset = {
     width: anchorRect.width,
     height: anchorRect.height,
     bodyRight: bodyRect?.right,
   };
+
+  // Clamp values
+  return offsetOverride
+    ? {
+        x: offsetX,
+        y: offsetY,
+        ...offset,
+      }
+    : {
+        x: Math.max(0, Math.min(offsetX, maxOffsetX)),
+        y: ignoreMaxOffsetY
+          ? offsetY
+          : Math.max(topOffset, Math.min(offsetY, maxOffsetY)),
+        ...offset,
+      };
 }
