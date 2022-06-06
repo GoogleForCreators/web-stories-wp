@@ -25,6 +25,7 @@ describe('Element border click', () => {
 
   beforeEach(async () => {
     fixture = new Fixture();
+    fixture.setFlags({ floatingMenu: true });
     await fixture.render();
     await fixture.collapseHelpCenter();
 
@@ -57,12 +58,19 @@ describe('Element border click', () => {
     await fixture.events.keyboard.type('20');
     await fixture.events.keyboard.press('tab');
 
-    // @todo click on background canvas
-    // click image
+    // click away from image
+    const input = fixture.screen.getByRole('textbox', {
+      name: 'Story title',
+    });
+
+    await fixture.events.click(input);
+
+    // click on edge of image frame
     const imageFrame = fixture.editor.canvas.framesLayer.frame(image.id).node;
-    const { x, y } = imageFrame.getBoundingClientRect();
-    await fixture.events.mouse.click(x + 1, y + 1);
-    // @todo -- test if floating menu is available
-    // or something to indicate the image has a selection
+    await fixture.events.mouse.clickOn(imageFrame, 0, 0);
+
+    // check if design menu for element is available
+    // to see if the the click worked
+    expect(fixture.editor.canvas.designMenu.borderWidth.value).toBe('20');
   });
 });
