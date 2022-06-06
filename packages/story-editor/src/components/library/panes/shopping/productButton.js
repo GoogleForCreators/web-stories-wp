@@ -110,15 +110,26 @@ function ProductButton({ product, onClick, onFocus, isOnPage }) {
     ariaLabel = ADD_PRODUCT_TEXT;
   }
 
+  const noop = () => {};
+
   return (
     <TooltipWrapper hasImage={hasImage}>
       <StyledActionsContainer>
         <StyledButton
           aria-label={ariaLabel}
           aria-disabled={hasImage ? false : true}
-          onClick={() => {
-            onClick(product, isOnPage);
-          }}
+          // Note for below:
+          // In order to support focus for accessibility
+          // we have to utilize `noop` for the onClick
+          // as `disabled` will disable the ability to focus
+          // and tab order does not accomplish the same
+          onClick={
+            hasImage
+              ? () => {
+                  onClick(product, isOnPage);
+                }
+              : noop
+          }
           type={BUTTON_TYPES.TERTIARY}
           size={BUTTON_SIZES.SMALL}
           variant={BUTTON_VARIANTS.SQUARE}
