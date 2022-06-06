@@ -242,10 +242,15 @@ function FrameElement({ id }) {
     [handleSelectElement, id, isBackground, isSelected, speak]
   );
 
+  const { clearTransforms } = useTransform((state) => ({
+    clearTransforms: state.actions.clearTransforms,
+  }));
+
   const handleMouseDown = useCallback(
     (evt) => {
       if (!isSelected) {
         handleSelectElement(id, evt);
+        clearTransforms();
       }
 
       elementRef.current.focus({ preventScroll: true });
@@ -254,7 +259,7 @@ function FrameElement({ id }) {
         evt.stopPropagation();
       }
     },
-    [handleSelectElement, id, isBackground, isSelected]
+    [handleSelectElement, id, isBackground, isSelected, clearTransforms]
   );
 
   usePerformanceTracking({
