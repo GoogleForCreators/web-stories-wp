@@ -54,7 +54,7 @@ export const filterContext = createContext({
 
 export default function FiltersProvider({ children }) {
   // each filter type will have its own logic for initilizing and querying
-  const { taxonomies, queryTaxonomyTerm } = useTaxonomyFilters();
+  const { initializeTaxonomyFilters } = useTaxonomyFilters();
 
   const [state, dispatch] = useReducer(reducer, {
     filtersLoading: true,
@@ -89,18 +89,10 @@ export default function FiltersProvider({ children }) {
    * @return {void}
    */
   const initializeFilters = useCallback(() => {
-    const filters = taxonomies.map((taxonomy) => ({
-      key: taxonomy.restBase,
-      restPath: taxonomy.restPath,
-      labels: taxonomy.labels,
-      filterId: null,
-      primaryOptions: taxonomy.data,
-      queriedOptions: taxonomy.data,
-      query: queryTaxonomyTerm,
-    }));
+    const filters = initializeTaxonomyFilters();
 
     registerFilters(filters);
-  }, [taxonomies, registerFilters, queryTaxonomyTerm]);
+  }, [registerFilters, initializeTaxonomyFilters]);
 
   const contextValue = useMemo(() => {
     return {

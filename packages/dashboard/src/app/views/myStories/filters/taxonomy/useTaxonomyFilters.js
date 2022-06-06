@@ -23,11 +23,36 @@ import {
   useState,
   useMemo,
 } from '@googleforcreators/react';
+import { __, sprintf } from '@googleforcreators/i18n';
 
 /**
  * Internal dependencies
  */
 import useApi from '../../../../api/useApi';
+
+export const getFilterPlaceholder = (filter) => {
+  return sprintf(
+    /* translators: %s: Filter plural label. */
+    __('%s ', 'web-stories'),
+    filter.labels.allItems
+  );
+};
+
+export const getFilterAriaLabel = (filter) => {
+  return sprintf(
+    /* translators: %s: Filter singular label. */
+    __('Filter stories by %s', 'web-stories'),
+    filter.labels.singularName
+  );
+};
+
+export const getFilterSearchResultsLabel = (filter) => {
+  return sprintf(
+    /* translators: %s: Filter search items label. */
+    __('%s ', 'web-stories'),
+    filter.labels.searchItems
+  );
+};
 
 /**
  * Hook used for taxonomy filters logic
@@ -106,13 +131,28 @@ function useTaxonomyFilters() {
     setTaxonomies(hierarchicalTaxonomies);
   }, [setTaxonomies, getTaxonomies, queryTaxonomyTerm]);
 
+  const initializeTaxonomyFilters = useCallback(() => {
+    return taxonomies.map((taxonomy) => ({
+      key: taxonomy.restBase,
+      restPath: taxonomy.restPath,
+      labels: taxonomy.labels,
+      filterId: null,
+      primaryOptions: taxonomy.data,
+      queriedOptions: taxonomy.data,
+      query: queryTaxonomyTerm,
+      placeholder: getFilterPlaceholder(taxonomy),
+      ariaLabel: getFilterAriaLabel(taxonomy),
+      searchResultsLabel: getFilterSearchResultsLabel(taxonomy),
+    }));
+  }, [queryTaxonomyTerm, taxonomies]);
+
   useEffect(() => {
     queryTaxonomies();
   }, [queryTaxonomies]);
 
   return useMemo(
-    () => ({ taxonomies, queryTaxonomyTerm }),
-    [taxonomies, queryTaxonomyTerm]
+    () => ({ taxonomies, initializeTaxonomyFilters }),
+    [taxonomies, initializeTaxonomyFilters]
   );
 }
 

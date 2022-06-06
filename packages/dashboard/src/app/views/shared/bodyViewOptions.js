@@ -19,7 +19,7 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { TranslateWithMarkup, __, sprintf } from '@googleforcreators/i18n';
+import { TranslateWithMarkup, __ } from '@googleforcreators/i18n';
 import {
   Text,
   THEME_CONSTANTS,
@@ -104,16 +104,8 @@ export default function BodyViewOptions({
                   <StyledDatalist
                     hasSearch
                     hasDropDownBorder
-                    searchResultsLabel={sprintf(
-                      /* translators: %s: Filter search items label. */
-                      __('%s ', 'web-stories'),
-                      filter.labels.searchItems
-                    )}
-                    aria-label={sprintf(
-                      /* translators: %s: Filter singular label. */
-                      __('Filter stories by %s', 'web-stories'),
-                      filter.labels.singularName
-                    )}
+                    searchResultsLabel={filter.searchResultsLabel}
+                    aria-label={filter.ariaLabel}
                     onChange={({ id }) => {
                       updateFilter(filter.key, {
                         filterId: id,
@@ -123,11 +115,7 @@ export default function BodyViewOptions({
                       await filter.query(filter, search);
                     }}
                     selectedId={filter.filterId}
-                    placeholder={sprintf(
-                      /* translators: %s: Filter plural label. */
-                      __('%s ', 'web-stories'),
-                      filter.labels.allItems
-                    )}
+                    placeholder={filter.placeholder}
                     primaryOptions={filter.primaryOptions}
                     options={filter.queriedOptions}
                   />
