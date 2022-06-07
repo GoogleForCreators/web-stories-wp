@@ -28,7 +28,7 @@ import {
   Text,
   THEME_CONSTANTS,
 } from '@googleforcreators/design-system';
-import { useRef, memo } from '@googleforcreators/react';
+import { useRef, memo, useCallback } from '@googleforcreators/react';
 import {
   getDefinitionForType,
   getLayerName,
@@ -47,6 +47,7 @@ import { TRACKING_EVENTS } from '../../../../constants';
 import Tooltip from '../../../tooltip';
 import useLayerSelection from './useLayerSelection';
 import { LAYER_HEIGHT } from './constants';
+import useInsertElement from '../../../../components/canvas/useInsertElement';
 
 const fadeOutCss = css`
   background-color: var(--background-color);
@@ -327,6 +328,22 @@ function Layer({ element }) {
 
   const LockIcon = element.isLocked ? Icons.LockClosed : Icons.LockOpen;
 
+  const insertElement = useInsertElement();
+
+  const removeMask = useCallback(() => {
+    // @todo --- restore original shape properties
+    insertElement("shape", {
+      "mask": {
+        "type": element.mask.type
+      },
+    });
+
+    updateElementById({
+      elementId: element.id,
+      properties: { mask: { type: MaskTypes.RECTANGLE } },
+    })
+  }, [element]);
+
   const layerName = getLayerName(element);
   return (
     <LayerContainer>
@@ -370,12 +387,7 @@ function Layer({ element }) {
               <LayerAction
                 aria-label={removeMaskTitle}
                 aria-describedby={layerId}
-                onClick={() =>
-                  updateElementById({
-                    elementId: element.id,
-                    properties: { mask: { type: MaskTypes.RECTANGLE } },
-                  })
-                }
+                onClick={removeMask}
               >
                 <Icons.RemoveMask />
               </LayerAction>
@@ -414,12 +426,12 @@ function Layer({ element }) {
                 aria-label={__('Lock/Unlock', 'web-stories')}
                 aria-describedby={layerId}
                 onPointerDown={preventReorder}
-                onClick={() =>
+                onClick={() => {
                   updateElementById({
                     elementId: element.id,
                     properties: { isLocked: !element.isLocked },
                   })
-                }
+                }}
               >
                 <LockIcon />
               </LayerAction>

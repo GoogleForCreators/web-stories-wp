@@ -26,6 +26,7 @@ import { MaskTypes } from '@googleforcreators/masks';
  */
 import { useCanvas, useHistory, useStory } from '../..';
 import updateProperties from '../../../components/style/updateProperties';
+import useInsertElement from '../../../components/canvas/useInsertElement';
 import { UNDO_HELP_TEXT } from './constants';
 
 /**
@@ -40,6 +41,7 @@ const useElementActions = () => {
     selectedElements,
     setBackgroundElement,
     updateElementsById,
+    updateElementById,
     combineElements,
   } = useStory(({ state, actions }) => ({
     clearBackgroundElement: actions.clearBackgroundElement,
@@ -47,6 +49,7 @@ const useElementActions = () => {
     selectedElements: state.selectedElements,
     setBackgroundElement: actions.setBackgroundElement,
     updateElementsById: actions.updateElementsById,
+    updateElementById: actions.updateElementById,
     combineElements: actions.combineElements,
   }));
   const showSnackbar = useSnackbar((value) => value.showSnackbar);
@@ -58,6 +61,8 @@ const useElementActions = () => {
   // Needed to not pass stale refs of `undo` to snackbar
   const undoRef = useRef(undo);
   undoRef.current = undo;
+
+  const insertElement = useInsertElement();
 
   /**
    * Duplicate all selected elements.
@@ -179,6 +184,7 @@ const useElementActions = () => {
    * @param {Object} shape Element to use for the mask.
    * @param {Object} image Element that the mask will be applied to.
    */
+
   const handleUseShapeAsMask = (shape, image) => {
     combineElements({
       firstElement: image,
@@ -192,20 +198,25 @@ const useElementActions = () => {
     selectedElements[0]?.mask?.type !== MaskTypes.RECTANGLE;
 
   const handleRemoveElementMask = useCallback(() => {
-    const selectedElement = selectedElements?.[0];
+    const element = selectedElements?.[0];
 
-    if (!selectedElement) {
+    if (!element) {
       return;
     }
 
-    updateElementsById({
-      elementIds: [selectedElement.id],
-      properties: (currentProperties) =>
-        updateProperties(currentProperties, {
-          mask: { type: MaskTypes.RECTANGLE },
-        }),
+     // @todo --- restore original shape properties
+    insertElement("shape", {
+      "mask": {
+        "type": element.mask.type
+      },
     });
-  }, [selectedElements, updateElementsById]);
+
+    updateElementById({
+      elementId: element.id,
+      properties: { mask: { type: MaskTypes.RECTANGLE } },
+    });
+
+  }, [selectedElements, updateElementById]);
 
   /**
    * Remove media from background and clear opacity and overlay.
