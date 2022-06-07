@@ -25,34 +25,36 @@ import { useFeature } from 'flagged';
  * Internal dependencies
  */
 import { RIGHT_CLICK_MENU_LABELS } from '../constants';
-import { useStory } from '../..';
+import { useCanvas, useStory } from '../..';
 
-function LayerLock() {
-  const updateSelectedElements = useStory(
-    (ctx) => ctx.actions.updateSelectedElements
-  );
-  const toggleLayerLock = useCallback(
-    () =>
-      updateSelectedElements({
-        properties: (oldElement) => ({
-          ...oldElement,
-          isLocked: !oldElement.isLocked,
-        }),
-      }),
-    [updateSelectedElements]
-  );
+function LayerName() {
+  const { selectedElementIds } = useStory(({ state }) => ({
+    selectedElementIds: state.selectedElementIds,
+  }));
+  const { setRenamableLayer } = useCanvas(({ state, actions }) => ({
+    setRenamableLayer: actions.setRenamableLayer,
+    renamableLayer: state.renamableLayer,
+  }));
+  const enableLayerNaming = useCallback(() => {
+    setRenamableLayer({
+      elementId: selectedElementIds[0],
+    });
+  }, [setRenamableLayer, selectedElementIds]);
 
-  const isLayerLockingEnabled = useFeature('layerLocking');
+  const isLayerNamingEnabled = useFeature('layerNaming');
 
-  if (!isLayerLockingEnabled) {
+  if (!isLayerNamingEnabled) {
     return null;
   }
 
   return (
-    <ContextMenuComponents.MenuButton onClick={toggleLayerLock}>
-      {RIGHT_CLICK_MENU_LABELS.LOCK_UNLOCK}
-    </ContextMenuComponents.MenuButton>
+    <>
+      <ContextMenuComponents.MenuSeparator />
+      <ContextMenuComponents.MenuButton onClick={enableLayerNaming}>
+        {RIGHT_CLICK_MENU_LABELS.RENAME_LAYER}
+      </ContextMenuComponents.MenuButton>
+    </>
   );
 }
 
-export default LayerLock;
+export default LayerName;
