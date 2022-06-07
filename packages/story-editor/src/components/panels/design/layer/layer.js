@@ -369,7 +369,7 @@ function Layer({ element }) {
                   })
                 }
               >
-                <Icons.CrossSmall />
+                <Icons.RemoveMask />
               </LayerAction>
             </Tooltip>
           )}
