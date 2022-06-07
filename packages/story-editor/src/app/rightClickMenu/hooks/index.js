@@ -19,3 +19,4 @@ export { default as useElementActions } from './useElementActions';
 export { default as useLayerActions } from './useLayerActions';
 export { default as usePageActions } from './usePageActions';
 export { default as usePresetActions } from './usePresetActions';
+export { default as useShapeMask } from './useShapeMask';

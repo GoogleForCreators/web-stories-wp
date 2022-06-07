@@ -34,6 +34,7 @@ import {
   useCopyPasteActions,
   useElementActions,
   useLayerActions,
+  useShapeMask,
 } from '../hooks';
 import { useStory, useLocalMedia } from '../..';
 import useVideoTrim from '../../../components/videoTrim/useVideoTrim';
@@ -56,9 +57,7 @@ function ForegroundMediaMenu({ parentMenuRef }) {
   const {
     handleDuplicateSelectedElements,
     handleOpenScaleAndCrop,
-    handleSetPageBackground,
-    hasShapeMask,
-    handleRemoveElementMask,
+    handleSetPageBackground
   } = useElementActions();
   const {
     canElementMoveBackwards,
@@ -68,6 +67,11 @@ function ForegroundMediaMenu({ parentMenuRef }) {
     handleBringForward,
     handleBringToFront,
   } = useLayerActions();
+
+  const {
+    hasShapeMask,
+    handleRemoveElementMask,
+  } = useShapeMask();
 
   const canTranscodeResource = useLocalMedia(
     (value) => value.state.canTranscodeResource
@@ -146,7 +150,7 @@ function ForegroundMediaMenu({ parentMenuRef }) {
       </ContextMenuComponents.MenuButton>
 
       <ContextMenuComponents.MenuButton
-        disabled={!hasShapeMask}
+        disabled={!hasShapeMask(selectedElement)}
         onClick={handleRemoveElementMask}
       >
         {RIGHT_CLICK_MENU_LABELS.REMOVE_MASK}

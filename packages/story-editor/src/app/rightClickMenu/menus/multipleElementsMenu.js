@@ -22,14 +22,18 @@ import { ContextMenuComponents } from '@googleforcreators/design-system';
  * Internal dependencies
  */
 import { RIGHT_CLICK_MENU_LABELS } from '../constants';
-import { useElementActions } from '../hooks';
+import { useElementActions, useShapeMask } from '../hooks';
 
 function MultipleElementsMenu() {
   const {
     handleDuplicateSelectedElements,
+  } = useElementActions();
+
+  const {
     handleUseShapeAsMask,
     shapeMaskElements,
-  } = useElementActions();
+  } = useShapeMask();
+
   const { shape, image } = shapeMaskElements();
   return (
     <>

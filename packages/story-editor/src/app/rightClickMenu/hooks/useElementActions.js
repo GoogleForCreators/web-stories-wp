@@ -20,7 +20,6 @@ import { useSnackbar } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 import { useCallback, useRef } from '@googleforcreators/react';
 import { trackEvent } from '@googleforcreators/tracking';
-import { MaskTypes } from '@googleforcreators/masks';
 /**
  * Internal dependencies
  */
@@ -41,16 +40,12 @@ const useElementActions = () => {
     selectedElements,
     setBackgroundElement,
     updateElementsById,
-    updateElementById,
-    combineElements,
   } = useStory(({ state, actions }) => ({
     clearBackgroundElement: actions.clearBackgroundElement,
     duplicateElementsById: actions.duplicateElementsById,
     selectedElements: state.selectedElements,
     setBackgroundElement: actions.setBackgroundElement,
     updateElementsById: actions.updateElementsById,
-    updateElementById: actions.updateElementById,
-    combineElements: actions.combineElements,
   }));
   const showSnackbar = useSnackbar((value) => value.showSnackbar);
   const setEditingElement = useCanvas(
@@ -61,8 +56,6 @@ const useElementActions = () => {
   // Needed to not pass stale refs of `undo` to snackbar
   const undoRef = useRef(undo);
   undoRef.current = undo;
-
-  const insertElement = useInsertElement();
 
   /**
    * Duplicate all selected elements.
@@ -157,67 +150,6 @@ const useElementActions = () => {
   }, [selectedElements, setBackgroundElement, showSnackbar]);
 
   /**
-   * Retrieve shape and image from selected elements.
-   */
-  const shapeMaskElements = useCallback(() => {
-    if (selectedElements?.length > 2) {
-      return {};
-    }
-
-    let image, shape;
-
-    selectedElements.forEach((element) => {
-      element.type === 'shape' && (shape = element);
-      element.type === 'image' && (image = element);
-    });
-
-    if (shape && image) {
-      return { shape, image };
-    }
-
-    return {};
-  }, [selectedElements]);
-
-  /**
-   * Apply shape mask to element.
-   *
-   * @param {Object} shape Element to use for the mask.
-   * @param {Object} image Element that the mask will be applied to.
-   */
-
-  const handleUseShapeAsMask = (shape, image) => {
-    combineElements({
-      firstElement: image,
-      secondId: shape.id,
-    });
-  };
-
-  const hasShapeMask =
-    selectedElements?.[0] &&
-    selectedElements[0]?.type === 'image' &&
-    selectedElements[0]?.mask?.type !== MaskTypes.RECTANGLE;
-
-  const handleRemoveElementMask = useCallback(() => {
-    const element = selectedElements?.[0];
-
-    if (!element) {
-      return;
-    }
-
-    // @todo --- restore original shape properties
-    insertElement('shape', {
-      mask: {
-        type: element.mask.type,
-      },
-    });
-
-    updateElementById({
-      elementId: element.id,
-      properties: { mask: { type: MaskTypes.RECTANGLE } },
-    });
-  }, [selectedElements, insertElement, updateElementById]);
-
-  /**
    * Remove media from background and clear opacity and overlay.
    */
   const handleRemovePageBackground = useCallback(() => {
@@ -272,10 +204,6 @@ const useElementActions = () => {
   ]);
 
   return {
-    hasShapeMask,
-    handleRemoveElementMask,
-    shapeMaskElements,
-    handleUseShapeAsMask,
     handleDuplicateSelectedElements,
     handleOpenScaleAndCrop,
     handleSetPageBackground,
