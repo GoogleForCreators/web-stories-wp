@@ -34,7 +34,9 @@ export const getFilterPlaceholder = (filter) => {
 };
 
 export const getFilterAriaLabel = (filter) => {
-  return filter.labels?.singularName || filter.labels?.name || filter.restBase;
+  const ariaLable =
+    filter.labels?.singularName || filter.labels?.name || filter.restBase;
+  return `Filter stories by ${ariaLable}`;
 };
 
 export const getFilterSearchResultsLabel = (filter) => {
