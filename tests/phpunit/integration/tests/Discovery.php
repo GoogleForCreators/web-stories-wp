@@ -17,6 +17,7 @@
 
 namespace Google\Web_Stories\Tests\Integration;
 
+use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Settings;
 
 /**
@@ -84,6 +85,34 @@ class Discovery extends DependencyInjectedTestCase {
 				'post_title'     => 'Test Image',
 			]
 		);
+
+		$product_data = [
+			[
+				'aggregateRating'      => [
+					'ratingValue' => 0,
+					'reviewCount' => 0,
+					'reviewUrl'   => 'http://www.example.com/product/t-shirt-with-logo',
+				],
+				'ratingValue'          => 0,
+				'reviewCount'          => 0,
+				'reviewUrl'            => 'http://www.example.com/product/t-shirt-with-logo',
+				'productBrand'         => 'Google',
+				'productDetails'       => 'This is a simple product.',
+				'productId'            => 'wc-36',
+				'productImages'        => [
+					[
+						'url' => 'http://www.example.com/wp-content/uploads/2019/01/t-shirt-with-logo-1-4.jpg',
+						'alt' => '',
+					],
+				],
+				'productPrice'         => 18,
+				'productPriceCurrency' => 'USD',
+				'productTitle'         => 'T-Shirt with Logo',
+				'productUrl'           => 'http://www.example.com/product/t-shirt-with-logo',
+			],
+		];
+
+		add_post_meta( self::$story_id, \Google\Web_Stories\Shopping\Product_Meta::PRODUCTS_POST_META_KEY, $product_data );
 
 		wp_maybe_generate_attachment_metadata( get_post( self::$attachment_id ) );
 		set_post_thumbnail( self::$story_id, self::$attachment_id );
@@ -240,5 +269,56 @@ class Discovery extends DependencyInjectedTestCase {
 	public function test_get_poster_no(): void {
 		$result = $this->call_private_method( $this->instance, 'get_poster', [ -99 ] );
 		$this->assertFalse( $result );
+	}
+
+	/**
+	 * @covers ::get_product_data
+	 */
+	public function test_get_product_data(): void {
+		$story = new Story();
+		$story->load_from_post( get_post( self::$story_id ) );
+
+		$result = $this->call_private_method( $this->instance, 'get_product_data', [ $story ] );
+
+		$expected = [
+			'products' =>
+				[
+
+					'@type'           => 'ItemList',
+					'numberOfItems'   => '1',
+					'itemListElement' =>
+						[
+							[
+								'@type'           => 'Product',
+								'brand'           => 'Google',
+								'productID'       => 'wc-36',
+								'url'             => 'http://www.example.com/product/t-shirt-with-logo',
+								'name'            => 'T-Shirt with Logo',
+								'image'           => 'http://www.example.com/wp-content/uploads/2019/01/t-shirt-with-logo-1-4.jpg',
+								'aggregateRating' => [
+									'@type'       => 'AggregateRating',
+									'ratingValue' => 0,
+									'reviewCount' => 0,
+									'url'         => 'http://www.example.com/product/t-shirt-with-logo',
+								],
+							],
+						],
+				],
+		];
+
+		$this->assertEqualSets( $expected, $result );
+	}
+
+	/**
+	 * @covers ::get_product_data
+	 */
+	public function test_get_product_data_empty_story(): void {
+		$story = new Story();
+
+		$result = $this->call_private_method( $this->instance, 'get_product_data', [ $story ] );
+
+		$expected = [];
+
+		$this->assertEqualSets( $expected, $result );
 	}
 }

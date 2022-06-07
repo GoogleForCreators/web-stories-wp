@@ -67,17 +67,18 @@ describe('getStoryPropsToSave', () => {
     };
     const pages = [{ id: '1' }, { id: '2' }];
     const metadata = {};
+    const products = [];
     getStoryMarkup.mockImplementation(() => {
       return 'Hello World!';
     });
-    const props = getStoryPropsToSave({ story, pages, metadata });
+    const props = getStoryPropsToSave({ story, pages, metadata, products });
 
     const expected = {
       content: 'Hello World!',
       pages,
       ...neededProps,
       meta: {
-        web_stories_products: undefined,
+        web_stories_products: [],
         web_stories_publisher_logo: 1,
       },
     };

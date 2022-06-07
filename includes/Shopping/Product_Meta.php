@@ -39,6 +39,36 @@ class Product_Meta extends Service_Base implements HasMeta {
 	 */
 	public const PRODUCTS_POST_META_KEY = 'web_stories_products';
 
+
+	/**
+	 * Story_Post_Type instance.
+	 *
+	 * @var Story_Post_Type Story_Post_Type instance.
+	 */
+	private $story_post_type;
+
+	/**
+	 * Constructor.
+	 *
+	 * @param Story_Post_Type $story_post_type Story_Post_Type instance.
+	 */
+	public function __construct( Story_Post_Type $story_post_type ) {
+		$this->story_post_type = $story_post_type;
+	}
+
+	/**
+	 * Get the list of service IDs required for this service to be registered.
+	 *
+	 * Needed because the story post type needs to be registered first.
+	 *
+	 * @since 1.22.0
+	 *
+	 * @return string[] List of required services.
+	 */
+	public static function get_requirements(): array {
+		return [ 'story_post_type' ];
+	}
+
 	/**
 	 * Init.
 	 *
@@ -69,7 +99,7 @@ class Product_Meta extends Service_Base implements HasMeta {
 				],
 				'default'        => [],
 				'single'         => true,
-				'object_subtype' => Story_Post_Type::POST_TYPE_SLUG,
+				'object_subtype' => $this->story_post_type::POST_TYPE_SLUG,
 			]
 		);
 	}

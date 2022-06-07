@@ -50,7 +50,7 @@ function getStoryPropsToSave({ story, pages, metadata, flags, products }) {
     ...terms,
     meta: {
       web_stories_publisher_logo: story.publisherLogo?.id,
-      web_stories_products: products,
+      web_stories_products: products || [],
     },
   };
 }

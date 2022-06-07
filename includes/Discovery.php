@@ -47,12 +47,21 @@ class Discovery extends Service_Base implements HasRequirements {
 	private $story_post_type;
 
 	/**
+	 * Product_Meta instance.
+	 *
+	 * @var Product_Meta Product_Meta instance.
+	 */
+	private $product_meta;
+
+	/**
 	 * Constructor.
 	 *
 	 * @param Story_Post_Type $story_post_type Story_Post_Type instance.
+	 * @param Product_Meta    $product_meta Product_Meta instance.
 	 */
-	public function __construct( Story_Post_Type $story_post_type ) {
+	public function __construct( Story_Post_Type $story_post_type, Product_Meta $product_meta ) {
 		$this->story_post_type = $story_post_type;
+		$this->product_meta    = $product_meta;
 	}
 
 	/**
@@ -65,7 +74,7 @@ class Discovery extends Service_Base implements HasRequirements {
 	 * @return string[] List of required services.
 	 */
 	public static function get_requirements(): array {
-		return [ 'story_post_type' ];
+		return [ 'story_post_type', 'product_meta' ];
 	}
 
 	/**
@@ -221,7 +230,8 @@ class Discovery extends Service_Base implements HasRequirements {
 			}
 
 
-			$metadata = $this->get_product_data( $metadata, $post );
+			$product_metadata = $this->get_product_data( $story );
+			$metadata         = array_merge( $product_metadata, $metadata );
 		}
 
 		/**
@@ -240,45 +250,49 @@ class Discovery extends Service_Base implements HasRequirements {
 	 *
 	 * @since 1.22.0
 	 *
-	 * @param array   $metadata The structured data.
-	 * @param WP_Post $post The current post object.
+	 * @param Story $story Story object.
 	 * @return array
 	 */
-	protected function get_product_data( array $metadata, WP_Post $post ): array {
-		$products = get_post_meta( $post->ID, Product_Meta::PRODUCTS_POST_META_KEY, true );
+	protected function get_product_data( Story $story ): array {
+		/**
+		 * Product data.
+		 *
+		 * @var array|false $products
+		 */
+		$products = get_post_meta( $story->get_id(), $this->product_meta::PRODUCTS_POST_META_KEY, true );
 		if ( ! \is_array( $products ) ) {
-			return $metadata;
+			return [];
 		}
 		$product_data = [];
 		foreach ( $products as $product ) {
 			$data = [
 				'@type'     => 'Product',
-				'brand'     => $product['productBrand'],
-				'productID' => $product['productId'],
-				'url'       => $product['productUrl'],
-				'name'      => $product['productTitle'],
+				'brand'     => $product['productBrand'] ?? '',
+				'productID' => $product['productId'] ?? '',
+				'url'       => $product['productUrl'] ?? '',
+				'name'      => $product['productTitle'] ?? '',
 			];
-			if ( $product['productImages'] ) {
+			if ( isset( $product['productImages'] ) && $product['productImages'] ) {
 				$data['image'] = $product['productImages'][0]['url'];
 			}
-			if ( $product['aggregateRating'] ) {
+			if ( isset( $product['aggregateRating'] ) && $product['aggregateRating'] ) {
 				$data['aggregateRating'] = [
 					'@type'       => 'AggregateRating',
-					'ratingValue' => $product['aggregateRating']['ratingValue'],
-					'reviewCount' => $product['aggregateRating']['reviewCount'],
-					'url'         => $product['aggregateRating']['reviewUrl'],
+					'ratingValue' => $product['aggregateRating']['ratingValue'] ?? 0,
+					'reviewCount' => $product['aggregateRating']['reviewCount'] ?? 0,
+					'url'         => $product['aggregateRating']['reviewUrl'] ?? '',
 				];
 			}
 			$product_data[] = $data;
 		}
 
-		$metadata['products'] = [
-			'@type'           => 'ItemList',
-			'numberOfItems'   => (string) \count( $products ),
-			'itemListElement' => $product_data,
+		return [
+			'products' => [
+				'@type'           => 'ItemList',
+				'numberOfItems'   => (string) \count( $products ),
+				'itemListElement' => $product_data,
+			],
 		];
-
-		return $metadata;
 	}
 
 	/**
