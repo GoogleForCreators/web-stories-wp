@@ -42,6 +42,7 @@ function useLayerSelection(layer) {
         elementId,
         metaKey: evt.metaKey,
         shiftKey: evt.shiftKey,
+        withLinked: true,
       });
 
       // In any case, revert focus to selected element(s)

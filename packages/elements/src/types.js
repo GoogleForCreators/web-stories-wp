@@ -82,6 +82,7 @@ StoryPropTypes.flip = PropTypes.shape({
 
 const StoryElementPropTypes = {
   id: PropTypes.string.isRequired,
+  groupId: PropTypes.string,
   type: PropTypes.string.isRequired,
   x: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired,

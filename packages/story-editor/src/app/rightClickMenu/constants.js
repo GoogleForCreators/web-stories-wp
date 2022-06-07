@@ -59,6 +59,9 @@ export const RIGHT_CLICK_MENU_LABELS = {
   DUPLICATE_PAGE: __('Duplicate Page', 'web-stories'),
   DUPLICATE_ELEMENTS: (numElements = 1) =>
     _n('Duplicate Element', 'Duplicate Elements', numElements, 'web-stories'),
+  GROUP_LAYERS: __('Group Layers', 'web-stories'),
+  UNGROUP_LAYERS: __('Ungroup Layers', 'web-stories'),
+  UNGROUP_LAYER: __('Remove from Group', 'web-stories'),
   LOCK_UNLOCK: __('Lock/Unlock', 'web-stories'),
   PASTE_IMAGE_STYLES: __('Paste Image Styles', 'web-stories'),
   PASTE_SHAPE_STYLES: __('Paste Shape Styles', 'web-stories'),
