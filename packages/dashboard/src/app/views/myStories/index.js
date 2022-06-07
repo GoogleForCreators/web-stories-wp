@@ -79,19 +79,14 @@ function MyStories() {
       getAuthors,
     })
   );
-  const { filters, filtersLoading } = useFilters(
-    ({ state: { filters, filtersLoading } }) => ({
-      filters,
+  const { filtersLoading, getFiltersObject } = useFilters(
+    ({ state: { filtersLoading }, actions: { getFiltersObject } }) => ({
       filtersLoading,
+      getFiltersObject,
     })
   );
 
-  const filterObj = {};
-  for (const filter of filters) {
-    const { key, filterId } = filter;
-    filterObj[key] = filterId;
-  }
-  const _filters = JSON.stringify(filterObj);
+  const _filters = JSON.stringify(getFiltersObject());
 
   const { apiCallbacks, canViewDefaultTemplates } = useConfig();
   const isMounted = useRef(false);

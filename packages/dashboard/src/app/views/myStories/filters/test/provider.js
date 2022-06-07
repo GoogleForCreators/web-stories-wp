@@ -59,6 +59,11 @@ describe('provider', () => {
     let filter = result.current.state.filters.find((f) => f.key === filterKey);
     expect(filter).toBeDefined();
 
+    let filterObj = result.current.actions.getFiltersObject();
+    expect(filterObj).toMatchObject({
+      [filterKey]: null,
+    });
+
     // update the filter
     act(() => {
       result.current.actions.updateFilter(filterKey, {
@@ -69,6 +74,11 @@ describe('provider', () => {
     filter = result.current.state.filters.find((f) => f.key === filterKey);
     expect(filter).toMatchObject({
       filterId: 1,
+    });
+
+    filterObj = result.current.actions.getFiltersObject();
+    expect(filterObj).toMatchObject({
+      [filterKey]: 1,
     });
   });
 });

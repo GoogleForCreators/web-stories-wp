@@ -94,12 +94,27 @@ export default function FiltersProvider({ children }) {
     registerFilters(filters);
   }, [registerFilters, initializeTaxonomyFilters]);
 
+  /**
+   * Returns a object where the keys are the filter keys
+   * and the values are the filterId
+   *
+   * @return {Object}
+   */
+  const getFiltersObject = useCallback(() => {
+    const filterObj = {};
+    for (const filter of state.filters) {
+      const { key, filterId } = filter;
+      filterObj[key] = filterId;
+    }
+    return filterObj;
+  }, [state.filters]);
+
   const contextValue = useMemo(() => {
     return {
       state,
-      actions: { updateFilter, registerFilters },
+      actions: { updateFilter, registerFilters, getFiltersObject },
     };
-  }, [state, updateFilter, registerFilters]);
+  }, [state, updateFilter, registerFilters, getFiltersObject]);
 
   useEffect(() => {
     initializeFilters();

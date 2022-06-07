@@ -30,17 +30,18 @@ import {
 import useApi from '../../../../api/useApi';
 
 export const getFilterPlaceholder = (filter) => {
-  return filter.labels?.allItems || filter.labels?.name || filter.key;
+  return filter.labels?.allItems || filter.labels?.name || filter.restBase;
 };
 
 export const getFilterAriaLabel = (filter) => {
-  return filter.labels?.singularName || filter.labels?.name || filter.key;
+  return filter.labels?.singularName || filter.labels?.name || filter.restBase;
 };
 
 export const getFilterSearchResultsLabel = (filter) => {
-  return filter.labels?.searchItems || filter.labels?.name
-    ? `Search ${filter.labels.name}`
-    : 'Search Taxonomy';
+  return (
+    filter.labels?.searchItems ||
+    (filter.labels?.name ? `Search ${filter.labels.name}` : 'Search Taxonomy')
+  );
 };
 
 /**
