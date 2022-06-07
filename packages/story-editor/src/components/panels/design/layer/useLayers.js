@@ -21,13 +21,17 @@ import { useStory } from '../../../../app';
 import { STABLE_ARRAY } from '../../../../constants';
 
 function useLayers() {
-  const elementIds = useStory(
+  const elements = useStory(
     ({ state }) =>
-      state.currentPage?.elements?.map((el) => el.id) || STABLE_ARRAY
+      state.currentPage?.elements?.map(({ id, groupId }) => ({
+        id,
+        groupId,
+      })) || STABLE_ARRAY
   );
 
-  const layers = elementIds.map((id, index) => ({
+  const layers = elements.map(({ id, groupId }, index) => ({
     id,
+    groupId,
     position: index,
   }));
   layers.reverse();

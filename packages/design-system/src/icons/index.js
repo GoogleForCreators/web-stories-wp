@@ -76,6 +76,7 @@ export { default as ExclamationTriangle } from './exclamation_triangle.svg';
 export { default as Eye } from './eye.svg';
 export { default as FloppyDisk } from './floppy_disk.svg';
 export { default as GearWithGauge } from './gear_with_gauge.svg';
+export { default as Group } from './group.svg';
 export { default as Keyboard } from './keyboard.svg';
 export { default as Launch } from './launch.svg';
 export { default as LetterAHeight } from './letter_a_height.svg';

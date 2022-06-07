@@ -117,7 +117,7 @@ const LayerButton = styled(Button).attrs({
   align-items: center;
   user-select: none;
   border-radius: 0;
-  padding-left: 12px;
+  padding-left: ${({ isNested }) => (isNested ? 30 : 12)}px;
   transition: revert;
 
   ${({ isSelected, theme }) =>
@@ -415,6 +415,8 @@ function Layer({ element }) {
     ? `${__('Group', 'web-stories')} ${element.groupId.substr(-3)}: `
     : null;
 
+  const isNested = element.groupId;
+
   return (
     <LayerContainer>
       {isRenameable && isLayerNamingEnabled ? (
@@ -446,6 +448,7 @@ function Layer({ element }) {
           id={layerId}
           onClick={handleClick}
           isSelected={isSelected}
+          isNested={isNested}
         >
           <LayerIconWrapper>
             <LayerIcon

@@ -34,6 +34,7 @@ import { useRightClickMenu, useStory, useCanvas } from '../../../../app';
 import useFocusCanvas from '../../../canvas/useFocusCanvas';
 import { LAYER_HEIGHT } from './constants';
 import Layer from './layer';
+import ReorderableGroup from './reorderableGroup';
 
 const LayerList = styled(Reorderable).attrs({
   'aria-orientation': 'vertical',
@@ -115,6 +116,21 @@ function LayerPanel({ layers }) {
     return null;
   }
 
+  const layersWithGroups = [];
+  const alreadyAddedGroupIds = [];
+  for (const layer of layers) {
+    if (layer.groupId && !alreadyAddedGroupIds.includes(layer.groupId)) {
+      const group = {
+        groupId: layer.groupId,
+        position: layer.position,
+        name: layer.groupId,
+      };
+      layersWithGroups.push({ group });
+      alreadyAddedGroupIds.push(group.groupId);
+    }
+    layersWithGroups.push({ layer });
+  }
+
   return (
     <LayerList
       onContextMenu={onOpenMenu}
@@ -127,14 +143,28 @@ function LayerPanel({ layers }) {
       mode={'vertical'}
       getItemSize={() => LAYER_HEIGHT}
     >
-      {layers.map((layer) => (
-        <ReorderableLayer
-          key={layer.id}
-          id={layer.id}
-          position={layer.position}
-          handleStartReordering={handleStartReordering}
-        />
-      ))}
+      {layersWithGroups.map(({ layer, group }) => {
+        if (group) {
+          return (
+            <ReorderableGroup
+              key={group.groupId}
+              groupId={group.groupId}
+              position={group.position}
+              name={group.name}
+              handleStartReordering={handleStartReordering}
+            />
+          );
+        }
+
+        return (
+          <ReorderableLayer
+            key={layer.id}
+            id={layer.id}
+            position={layer.position}
+            handleStartReordering={handleStartReordering}
+          />
+        );
+      })}
     </LayerList>
   );
 }
