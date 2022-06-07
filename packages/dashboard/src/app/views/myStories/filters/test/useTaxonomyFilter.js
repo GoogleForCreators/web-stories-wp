@@ -111,19 +111,21 @@ describe('useTaxonomyFilters', () => {
         // Base case, no labels given
         const filter1 = filters.at(0);
         expect(filter1.placeholder).toBe(t1.restBase);
-        expect(filter1.ariaLabel).toBe(t1.restBase);
+        expect(filter1.ariaLabel).toBe(`Filter stories by ${t1.restBase}`);
         expect(filter1.searchResultsLabel).toBe('Search Taxonomy');
 
         // Only name is given
         const filter3 = filters.at(1);
         expect(filter3.placeholder).toBe(t3.labels.name);
-        expect(filter3.ariaLabel).toBe(t3.labels.name);
+        expect(filter3.ariaLabel).toBe(`Filter stories by ${t3.labels.name}`);
         expect(filter3.searchResultsLabel).toBe(`Search ${t3.labels.name}`);
 
         // All necessary labels given
         const filter4 = filters.at(2);
         expect(filter4.placeholder).toBe(t4.labels.allItems);
-        expect(filter4.ariaLabel).toBe(t4.labels.singularName);
+        expect(filter4.ariaLabel).toBe(
+          `Filter stories by ${t4.labels.singularName}`
+        );
         expect(filter4.searchResultsLabel).toBe(t4.labels.searchItems);
       });
     });
