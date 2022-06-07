@@ -25,7 +25,6 @@ import { trackEvent } from '@googleforcreators/tracking';
  */
 import { useCanvas, useHistory, useStory } from '../..';
 import updateProperties from '../../../components/style/updateProperties';
-import useInsertElement from '../../../components/canvas/useInsertElement';
 import { UNDO_HELP_TEXT } from './constants';
 
 /**

@@ -25,14 +25,9 @@ import { RIGHT_CLICK_MENU_LABELS } from '../constants';
 import { useElementActions, useShapeMask } from '../hooks';
 
 function MultipleElementsMenu() {
-  const {
-    handleDuplicateSelectedElements,
-  } = useElementActions();
+  const { handleDuplicateSelectedElements } = useElementActions();
 
-  const {
-    handleUseShapeAsMask,
-    shapeMaskElements,
-  } = useShapeMask();
+  const { handleUseShapeAsMask, shapeMaskElements } = useShapeMask();
 
   const { shape, image } = shapeMaskElements();
   return (

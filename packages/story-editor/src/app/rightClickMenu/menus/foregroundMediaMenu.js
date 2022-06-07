@@ -57,7 +57,7 @@ function ForegroundMediaMenu({ parentMenuRef }) {
   const {
     handleDuplicateSelectedElements,
     handleOpenScaleAndCrop,
-    handleSetPageBackground
+    handleSetPageBackground,
   } = useElementActions();
   const {
     canElementMoveBackwards,
@@ -68,10 +68,7 @@ function ForegroundMediaMenu({ parentMenuRef }) {
     handleBringToFront,
   } = useLayerActions();
 
-  const {
-    hasShapeMask,
-    handleRemoveElementMask,
-  } = useShapeMask();
+  const { hasShapeMask, handleRemoveElementMask } = useShapeMask();
 
   const canTranscodeResource = useLocalMedia(
     (value) => value.state.canTranscodeResource
