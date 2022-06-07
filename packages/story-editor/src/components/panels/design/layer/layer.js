@@ -45,9 +45,9 @@ import useCORSProxy from '../../../../utils/useCORSProxy';
 import usePerformanceTracking from '../../../../utils/usePerformanceTracking';
 import { TRACKING_EVENTS } from '../../../../constants';
 import Tooltip from '../../../tooltip';
+import useInsertElement from '../../../canvas/useInsertElement';
 import useLayerSelection from './useLayerSelection';
 import { LAYER_HEIGHT } from './constants';
-import useInsertElement from '../../../../components/canvas/useInsertElement';
 
 const fadeOutCss = css`
   background-color: var(--background-color);
@@ -129,9 +129,9 @@ const LayerButton = styled(Button).attrs({
       & + * {
         --background-color: ${theme.colors.interactiveBg.tertiaryPress};
         --background-color-opaque: ${rgba(
-      theme.colors.interactiveBg.tertiaryPress,
-      0
-    )};
+          theme.colors.interactiveBg.tertiaryPress,
+          0
+        )};
         --selected-hover-color: ${theme.colors.interactiveBg.tertiaryHover};
       }
     `}
@@ -142,9 +142,9 @@ const LayerButton = styled(Button).attrs({
   :hover,
   :hover + * {
     --background-color: ${({ theme }) =>
-    theme.colors.interactiveBg.tertiaryHover};
+      theme.colors.interactiveBg.tertiaryHover};
     --background-color-opaque: ${({ theme }) =>
-    rgba(theme.colors.interactiveBg.tertiaryHover, 0)};
+      rgba(theme.colors.interactiveBg.tertiaryHover, 0)};
   }
 
   :active {
@@ -153,9 +153,9 @@ const LayerButton = styled(Button).attrs({
   :active,
   :active + * {
     --background-color: ${({ theme }) =>
-    theme.colors.interactiveBg.tertiaryPress};
+      theme.colors.interactiveBg.tertiaryPress};
     --background-color-opaque: ${({ theme }) =>
-    rgba(theme.colors.interactiveBg.tertiaryPress, 0)};
+      rgba(theme.colors.interactiveBg.tertiaryPress, 0)};
   }
 `;
 
@@ -268,10 +268,10 @@ const LayerAction = styled(Button).attrs({
 
   :focus {
     ${({ theme }) =>
-    themeHelpers.focusCSS(
-      theme.colors.border.focus,
-      'var(--background-color)'
-    )}
+      themeHelpers.focusCSS(
+        theme.colors.border.focus,
+        'var(--background-color)'
+      )}
   }
 `;
 
@@ -332,17 +332,17 @@ function Layer({ element }) {
 
   const removeMask = useCallback(() => {
     // @todo --- restore original shape properties
-    insertElement("shape", {
-      "mask": {
-        "type": element.mask.type
+    insertElement('shape', {
+      mask: {
+        type: element.mask.type,
       },
     });
 
     updateElementById({
       elementId: element.id,
       properties: { mask: { type: MaskTypes.RECTANGLE } },
-    })
-  }, [element]);
+    });
+  }, [element, insertElement, updateElementById]);
 
   const layerName = getLayerName(element);
   return (
@@ -354,9 +354,13 @@ function Layer({ element }) {
         isSelected={isSelected}
       >
         <LayerIconWrapper>
-          <div style={{
-            ...(hasShapeMask ? { position: "relative", clipPath: `url(#${maskId})` } : {}),
-          }}>
+          <div
+            style={{
+              ...(hasShapeMask
+                ? { position: 'relative', clipPath: `url(#${maskId})` }
+                : {}),
+            }}
+          >
             <LayerIcon
               element={element}
               getProxiedUrl={getProxiedUrl}
@@ -430,7 +434,7 @@ function Layer({ element }) {
                   updateElementById({
                     elementId: element.id,
                     properties: { isLocked: !element.isLocked },
-                  })
+                  });
                 }}
               >
                 <LockIcon />

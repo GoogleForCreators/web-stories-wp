@@ -204,10 +204,10 @@ const useElementActions = () => {
       return;
     }
 
-     // @todo --- restore original shape properties
-    insertElement("shape", {
-      "mask": {
-        "type": element.mask.type
+    // @todo --- restore original shape properties
+    insertElement('shape', {
+      mask: {
+        type: element.mask.type,
       },
     });
 
@@ -215,8 +215,7 @@ const useElementActions = () => {
       elementId: element.id,
       properties: { mask: { type: MaskTypes.RECTANGLE } },
     });
-
-  }, [selectedElements, updateElementById]);
+  }, [selectedElements, insertElement, updateElementById]);
 
   /**
    * Remove media from background and clear opacity and overlay.
