@@ -15,6 +15,11 @@
  */
 
 /**
+ * Internal dependencies
+ */
+import { getAllProducts } from './utils';
+
+/**
  * Delete page by id or delete current page if no id given.
  *
  * If another page than current page is deleted, it will remain current page.
@@ -57,11 +62,14 @@ function deletePage(state, { pageId }) {
     newCurrent = newPages[newCurrentIndex].id;
   }
 
+  const products = getAllProducts(newPages);
+
   return {
     ...state,
     pages: newPages,
     current: newCurrent,
     selection: [],
+    products,
   };
 }
 

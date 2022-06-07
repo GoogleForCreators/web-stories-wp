@@ -276,7 +276,7 @@ class Discovery extends DependencyInjectedTestCase {
 	 */
 	public function test_get_product_data(): void {
 		$story = new Story();
-		$story->load_from_post( get_post( self::$story_id ) );
+		$story->load_from_post( self::$story_id );
 
 		$result = $this->call_private_method( $this->instance, 'get_product_data', [ $story ] );
 

@@ -24,6 +24,7 @@ import {
   getAbsolutePosition,
   objectWithout,
   exclusion,
+  getAllProducts,
 } from '../utils';
 import { LAYER_DIRECTIONS } from '../../../../../constants';
 
@@ -227,5 +228,53 @@ describe('exclusion', () => {
     const left = [{ id: 'a' }, { id: 'b' }, { id: 'c' }];
     const right = [{ id: 'a' }, { id: 'b' }, { id: 'c' }];
     expect(exclusion(left, right)).toStrictEqual([]);
+  });
+});
+
+describe('getAllProducts', () => {
+  it('should return empty', () => {
+    expect(getAllProducts([])).toStrictEqual([]);
+  });
+
+  it('should return a product', () => {
+    expect(
+      getAllProducts([
+        {
+          elements: [
+            {
+              type: 'product',
+              product: { id: 'b' },
+            },
+          ],
+        },
+      ])
+    ).toStrictEqual([{ id: 'b' }]);
+  });
+
+  it('should return unique products', () => {
+    expect(
+      getAllProducts([
+        {
+          elements: [
+            {
+              type: 'product',
+              product: { id: 'a' },
+            },
+            {
+              type: 'product',
+              product: { id: 'b' },
+            },
+          ],
+        },
+        {
+          elements: [
+            {
+              type: 'product',
+              product: { id: 'b' },
+            },
+          ],
+        },
+      ])
+    ).toStrictEqual([{ id: 'a' }, { id: 'b' }]);
   });
 });

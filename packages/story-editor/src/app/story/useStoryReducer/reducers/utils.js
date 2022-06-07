@@ -162,13 +162,15 @@ export function exclusion(left = [], right = []) {
 }
 
 export function getAllProducts(pages) {
-  // TODO: de-duplicate products here.
-  return pages
-    .map((page) => {
-      return page?.elements
+  const products = pages
+    .map((page) =>
+      page?.elements
         ?.filter(({ type }) => type === 'product')
-        .map(({ product }) => product);
-    })
+        .map(({ product }) => product)
+    )
     .flat()
     .filter(Boolean);
+
+  const list = products.map((product) => JSON.stringify(product));
+  return Array.from(new Set(list)).map((product) => JSON.parse(product));
 }
