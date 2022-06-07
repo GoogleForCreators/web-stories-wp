@@ -411,6 +411,10 @@ function Layer({ element }) {
   const isLayerNamingEnabled = useFeature('layerNaming');
   const isRenameable = renamableLayer?.elementId === element.id;
 
+  const layerGroupName = element.groupId
+    ? `${__('Group', 'web-stories')} ${element.groupId.substr(-3)}: `
+    : null;
+
   return (
     <LayerContainer>
       {isRenameable && isLayerNamingEnabled ? (
@@ -452,6 +456,7 @@ function Layer({ element }) {
           </LayerIconWrapper>
           <LayerDescription>
             <LayerContentContainer>
+              <LayerText>{layerGroupName}</LayerText>
               <LayerText>{layerName}</LayerText>
             </LayerContentContainer>
             {element.isBackground && (

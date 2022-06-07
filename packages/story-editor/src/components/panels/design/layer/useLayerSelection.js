@@ -41,6 +41,7 @@ function useLayerSelection(layer) {
         elementId,
         metaKey: evt.metaKey,
         shiftKey: evt.shiftKey,
+        withLinked: true,
       });
 
       const isDoubleClick = evt.detail === 2;
