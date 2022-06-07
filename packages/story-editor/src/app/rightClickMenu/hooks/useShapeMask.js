@@ -33,7 +33,9 @@ const useShapeMask = () => {
       combineElements: actions.combineElements,
     })
   );
+
   const insertElement = useInsertElement();
+
   const hasShapeMask = (element) =>
     element &&
     element?.type === 'image' &&
@@ -67,44 +69,46 @@ const useShapeMask = () => {
    * @param {Object} shape Element to use for the mask.
    * @param {Object} image Element that the mask will be applied to.
    */
-  const handleUseShapeAsMask = (shape, image) => {
+  const addShapeMask = (shape, image) => {
     combineElements({
       firstElement: image,
       secondId: shape.id,
     });
   };
 
-  const handleRemoveElementMask = useCallback(() => {
-    const element = selectedElements?.[0];
+  const removeShapeMask = useCallback(
+    (element) => {
+      if (!element) {
+        return;
+      }
 
-    if (!element) {
-      return;
-    }
+      const { x, y, width, height, scale, rotationAngle } = element;
 
-    const { x, y, width, height, scale, rotationAngle } = element;
-    insertElement('shape', {
-      x,
-      y,
-      width,
-      height,
-      scale,
-      rotationAngle,
-      mask: {
-        type: element.mask.type,
-      },
-    });
+      insertElement('shape', {
+        x,
+        y,
+        width,
+        height,
+        scale,
+        rotationAngle,
+        mask: {
+          type: element.mask.type,
+        },
+      });
 
-    updateElementById({
-      elementId: element.id,
-      properties: { mask: { type: MaskTypes.RECTANGLE } },
-    });
-  }, [selectedElements, insertElement, updateElementById]);
+      updateElementById({
+        elementId: element.id,
+        properties: { mask: { type: MaskTypes.RECTANGLE } },
+      });
+    },
+    [insertElement, updateElementById]
+  );
 
   return {
     hasShapeMask,
     shapeMaskElements,
-    handleUseShapeAsMask,
-    handleRemoveElementMask,
+    addShapeMask,
+    removeShapeMask,
   };
 };
 

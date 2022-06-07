@@ -26,9 +26,7 @@ import { useElementActions, useShapeMask } from '../hooks';
 
 function MultipleElementsMenu() {
   const { handleDuplicateSelectedElements } = useElementActions();
-
-  const { handleUseShapeAsMask, shapeMaskElements } = useShapeMask();
-
+  const { addShapeMask, shapeMaskElements } = useShapeMask();
   const { shape, image } = shapeMaskElements();
   return (
     <>
@@ -40,7 +38,7 @@ function MultipleElementsMenu() {
       {/* only show if 1 shape and 1 image is selected */}
       {shape && image && (
         <ContextMenuComponents.MenuButton
-          onClick={() => handleUseShapeAsMask(shape, image)}
+          onClick={() => addShapeMask(shape, image)}
         >
           {RIGHT_CLICK_MENU_LABELS.USE_SHAPE_AS_MASK}
         </ContextMenuComponents.MenuButton>

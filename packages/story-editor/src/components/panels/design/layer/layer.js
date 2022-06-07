@@ -28,7 +28,7 @@ import {
   Text,
   THEME_CONSTANTS,
 } from '@googleforcreators/design-system';
-import { useRef, memo, useCallback } from '@googleforcreators/react';
+import { useRef, memo } from '@googleforcreators/react';
 import {
   getDefinitionForType,
   getLayerName,
@@ -38,14 +38,13 @@ import { useFeature } from 'flagged';
 /**
  * Internal dependencies
  */
-import { MaskTypes } from '@googleforcreators/masks';
 import StoryPropTypes from '../../../../types';
 import { useStory } from '../../../../app';
 import useCORSProxy from '../../../../utils/useCORSProxy';
 import usePerformanceTracking from '../../../../utils/usePerformanceTracking';
 import { TRACKING_EVENTS } from '../../../../constants';
 import Tooltip from '../../../tooltip';
-import useInsertElement from '../../../canvas/useInsertElement';
+import { useShapeMask } from '../../../../app/rightClickMenu/hooks';
 import useLayerSelection from './useLayerSelection';
 import { LAYER_HEIGHT } from './constants';
 
@@ -281,11 +280,12 @@ function preventReorder(e) {
 }
 function Layer({ element }) {
   const isLayerLockingEnabled = useFeature('layerLocking');
-  const hasShapeMask =
-    element?.type === 'image' && element?.mask?.type !== MaskTypes.RECTANGLE;
+
+  const { hasShapeMask, removeShapeMask } = useShapeMask();
+  const hasMask = hasShapeMask(element);
 
   let maskId = null;
-  if (hasShapeMask) {
+  if (hasMask) {
     maskId = `mask-${element?.mask?.type}-${element.id}-frame`;
   }
 
@@ -328,22 +328,6 @@ function Layer({ element }) {
 
   const LockIcon = element.isLocked ? Icons.LockClosed : Icons.LockOpen;
 
-  const insertElement = useInsertElement();
-
-  const removeMask = useCallback(() => {
-    // @todo --- restore original shape properties
-    insertElement('shape', {
-      mask: {
-        type: element.mask.type,
-      },
-    });
-
-    updateElementById({
-      elementId: element.id,
-      properties: { mask: { type: MaskTypes.RECTANGLE } },
-    });
-  }, [element, insertElement, updateElementById]);
-
   const layerName = getLayerName(element);
   return (
     <LayerContainer>
@@ -356,7 +340,7 @@ function Layer({ element }) {
         <LayerIconWrapper>
           <div
             style={{
-              ...(hasShapeMask
+              ...(hasMask
                 ? { position: 'relative', clipPath: `url(#${maskId})` }
                 : {}),
             }}
@@ -391,7 +375,7 @@ function Layer({ element }) {
               <LayerAction
                 aria-label={removeMaskTitle}
                 aria-describedby={layerId}
-                onClick={removeMask}
+                onClick={() => removeShapeMask(element)}
               >
                 <Icons.RemoveMask />
               </LayerAction>
