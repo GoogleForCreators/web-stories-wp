@@ -128,9 +128,9 @@ const LayerButton = styled(Button).attrs({
       & + * {
         --background-color: ${theme.colors.interactiveBg.tertiaryPress};
         --background-color-opaque: ${rgba(
-          theme.colors.interactiveBg.tertiaryPress,
-          0
-        )};
+      theme.colors.interactiveBg.tertiaryPress,
+      0
+    )};
         --selected-hover-color: ${theme.colors.interactiveBg.tertiaryHover};
       }
     `}
@@ -141,9 +141,9 @@ const LayerButton = styled(Button).attrs({
   :hover,
   :hover + * {
     --background-color: ${({ theme }) =>
-      theme.colors.interactiveBg.tertiaryHover};
+    theme.colors.interactiveBg.tertiaryHover};
     --background-color-opaque: ${({ theme }) =>
-      rgba(theme.colors.interactiveBg.tertiaryHover, 0)};
+    rgba(theme.colors.interactiveBg.tertiaryHover, 0)};
   }
 
   :active {
@@ -152,9 +152,9 @@ const LayerButton = styled(Button).attrs({
   :active,
   :active + * {
     --background-color: ${({ theme }) =>
-      theme.colors.interactiveBg.tertiaryPress};
+    theme.colors.interactiveBg.tertiaryPress};
     --background-color-opaque: ${({ theme }) =>
-      rgba(theme.colors.interactiveBg.tertiaryPress, 0)};
+    rgba(theme.colors.interactiveBg.tertiaryPress, 0)};
   }
 `;
 
@@ -267,10 +267,10 @@ const LayerAction = styled(Button).attrs({
 
   :focus {
     ${({ theme }) =>
-      themeHelpers.focusCSS(
-        theme.colors.border.focus,
-        'var(--background-color)'
-      )}
+    themeHelpers.focusCSS(
+      theme.colors.border.focus,
+      'var(--background-color)'
+    )}
   }
 `;
 
@@ -282,9 +282,13 @@ function Layer({ element }) {
   const isLayerLockingEnabled = useFeature('layerLocking');
   const hasShapeMask =
     element?.type === 'image' && element?.mask?.type !== MaskTypes.RECTANGLE;
-  const { LayerIcon } = getDefinitionForType(
-    hasShapeMask ? 'shape' : element.type
-  );
+
+  let maskId = null;
+  if (hasShapeMask) {
+    maskId = `mask-${element?.mask?.type}-${element.id}-frame`;
+  }
+
+  const { LayerIcon } = getDefinitionForType(element.type);
   const { isSelected, handleClick } = useLayerSelection(element);
   const { isDefaultBackground } = element;
   const {
@@ -333,11 +337,15 @@ function Layer({ element }) {
         isSelected={isSelected}
       >
         <LayerIconWrapper>
-          <LayerIcon
-            element={element}
-            getProxiedUrl={getProxiedUrl}
-            currentPageBackgroundColor={currentPageBackgroundColor}
-          />
+          <div style={{
+            ...(hasShapeMask ? { position: "relative", clipPath: `url(#${maskId})` } : {}),
+          }}>
+            <LayerIcon
+              element={element}
+              getProxiedUrl={getProxiedUrl}
+              currentPageBackgroundColor={currentPageBackgroundColor}
+            />
+          </div>
         </LayerIconWrapper>
         <LayerDescription>
           <LayerContentContainer>
