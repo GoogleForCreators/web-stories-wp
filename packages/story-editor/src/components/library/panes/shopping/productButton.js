@@ -64,12 +64,15 @@ const StyledButton = styled(Button)`
 const StyledActionsContainer = styled.div`
   margin-right: 10px;
 `;
+
+const DISABLED_PRODUCT_TEXT = __(
+  'Products without images cannot be added.',
+  'web-stories'
+);
+
 const TooltipWrapper = ({ hasImage, children }) => {
   return !hasImage ? (
-    <Tooltip
-      hasTail
-      title={__('Products without images cannot be added.', 'web-stories')}
-    >
+    <Tooltip hasTail title={DISABLED_PRODUCT_TEXT}>
       {children}
     </Tooltip>
   ) : (
@@ -96,11 +99,6 @@ function ProductButton({ product, onClick, onFocus, isOnPage }) {
     product?.productTitle
   );
 
-  const DISABLED_PRODUCT_TEXT = __(
-    'Products without images cannot be added.',
-    'web-stories'
-  );
-
   let ariaLabel = '';
   if (!hasImage) {
     ariaLabel = DISABLED_PRODUCT_TEXT;
@@ -117,7 +115,7 @@ function ProductButton({ product, onClick, onFocus, isOnPage }) {
       <StyledActionsContainer>
         <StyledButton
           aria-label={ariaLabel}
-          aria-disabled={hasImage ? false : true}
+          aria-disabled={!hasImage}
           // Note for below:
           // In order to support focus for accessibility
           // we have to utilize `noop` for the onClick
