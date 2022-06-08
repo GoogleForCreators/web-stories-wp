@@ -107,6 +107,11 @@ function useTaxonomyFilters() {
     setTaxonomies(hierarchicalTaxonomies);
   }, [setTaxonomies, getTaxonomies, queryTaxonomyTerms]);
 
+  /**
+   * Sets up the shape of the taxonomy filters data
+   *
+   * @return {Array} taxonomies filter data
+   */
   const initializeTaxonomyFilters = useCallback(() => {
     return taxonomies.map((taxonomy) => ({
       key: taxonomy.restBase,
