@@ -29,7 +29,7 @@
  * @param {Object} state Current state
  * @param {Object} payload Action payload
  * @param {string} payload.elementId Id to either add or remove from selection.
- * @param payload.withLinked
+ * @param {boolean} payload.withLinked With linked.
  * @return {Object} New state
  */
 function toggleElement(state, { elementId, withLinked = false }) {

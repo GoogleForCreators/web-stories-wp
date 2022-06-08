@@ -67,7 +67,8 @@ class WooCommerce_Query extends TestCase {
 		Monkey\Functions\stubs(
 			[
 				'wc_get_products'             => static function () {
-					return [
+					$object   = new \stdClass();
+					$products = [
 						new Mock_Product(
 							[
 								'id'                => '1',
@@ -101,6 +102,9 @@ class WooCommerce_Query extends TestCase {
 							]
 						),
 					];
+					$object->products      = $products;
+					$object->max_num_pages = 1;
+					return $object;
 				},
 				'wp_get_attachment_image_url' => static function ( $id ) {
 					if ( ! $id ) {
@@ -114,11 +118,10 @@ class WooCommerce_Query extends TestCase {
 		);
 
 		$results = $this->instance->get_search( 'hoodie' );
-
-		$this->assertEquals( 'http://example.com/50', $results[0]->get_images()[0]['url'] );
-		$this->assertEquals( 'http://example.com/60', $results[0]->get_images()[3]['url'] );
-		$this->assertEquals( 'http://example.com/72', $results[2]->get_images()[1]['url'] );
-		$this->assertEquals( 0, \count( $results[1]->get_images() ) );
+		$this->assertEquals( 'http://example.com/50', $results['products'][0]->get_images()[0]['url'] );
+		$this->assertEquals( 'http://example.com/60', $results['products'][0]->get_images()[3]['url'] );
+		$this->assertEquals( 'http://example.com/72', $results['products'][2]->get_images()[1]['url'] );
+		$this->assertEquals( 0, \count( $results['products'][1]->get_images() ) );
 	}
 
 	/**
