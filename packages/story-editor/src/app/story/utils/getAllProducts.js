@@ -22,15 +22,17 @@ import { ELEMENT_TYPES } from '@googleforcreators/elements';
 function getAllProducts(pages) {
   const products = [];
   const productIds = [];
-  pages.map(({ elements }) =>
-    elements
-      .filter(({ type }) => type === ELEMENT_TYPES.PRODUCT)
-      .map(({ product }) => {
-        if (product && !productIds.includes(product?.productId)) {
-          products.push(product);
-          productIds.push(product?.productId);
-        }
-      })
+  pages.forEach(({ elements }) =>
+    elements.forEach(({ product, type }) => {
+      if (
+        type === ELEMENT_TYPES.PRODUCT &&
+        product &&
+        !productIds.includes(product?.productId)
+      ) {
+        products.push(product);
+        productIds.push(product?.productId);
+      }
+    })
   );
 
   return products;
