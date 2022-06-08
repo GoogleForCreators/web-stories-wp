@@ -6962,6 +6962,36 @@
     }
   },
   {
+    "family": "Charis SIL",
+    "fallbacks": ["serif"],
+    "weights": [400, 700],
+    "styles": ["regular", "italic"],
+    "variants": [
+      [0, 400],
+      [1, 400],
+      [0, 700],
+      [1, 700]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 2048,
+      "asc": 2450,
+      "des": -900,
+      "tAsc": 2450,
+      "tDes": -900,
+      "tLGap": 0,
+      "wAsc": 2450,
+      "wDes": 900,
+      "xH": 987,
+      "capH": 1374,
+      "yMin": -1092,
+      "yMax": 2600,
+      "hAsc": 2450,
+      "hDes": -900,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Charm",
     "fallbacks": ["cursive"],
     "weights": [400, 700],
@@ -12311,6 +12341,36 @@
     }
   },
   {
+    "family": "Gentium Plus",
+    "fallbacks": ["serif"],
+    "weights": [400, 700],
+    "styles": ["regular", "italic"],
+    "variants": [
+      [0, 400],
+      [1, 400],
+      [0, 700],
+      [1, 700]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 2048,
+      "asc": 2250,
+      "des": -750,
+      "tAsc": 2250,
+      "tDes": -750,
+      "tLGap": 0,
+      "wAsc": 2250,
+      "wDes": 750,
+      "xH": 930,
+      "capH": 1260,
+      "yMin": -950,
+      "yMax": 2600,
+      "hAsc": 2250,
+      "hDes": -750,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Geo",
     "fallbacks": ["sans-serif"],
     "weights": [400],
@@ -15726,6 +15786,31 @@
     }
   },
   {
+    "family": "Joan",
+    "fallbacks": ["serif"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1000,
+      "des": -292,
+      "tAsc": 1000,
+      "tDes": -292,
+      "tLGap": 0,
+      "wAsc": 1117,
+      "wDes": 589,
+      "xH": 456,
+      "capH": 707,
+      "yMin": -589,
+      "yMax": 1117,
+      "hAsc": 1000,
+      "hDes": -292,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Jockey One",
     "fallbacks": ["sans-serif"],
     "weights": [400],
@@ -16721,6 +16806,31 @@
       "yMax": 2450,
       "hAsc": 2500,
       "hDes": -1200,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Kdam Thmor Pro",
+    "fallbacks": ["sans-serif"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1146,
+      "des": -400,
+      "tAsc": 1146,
+      "tDes": -400,
+      "tLGap": 0,
+      "wAsc": 1146,
+      "wDes": 550,
+      "xH": 612,
+      "capH": 793,
+      "yMin": -550,
+      "yMax": 1146,
+      "hAsc": 1146,
+      "hDes": -400,
       "lGap": 0
     }
   },
@@ -28589,6 +28699,31 @@
     }
   },
   {
+    "family": "Nuosu SIL",
+    "fallbacks": ["serif"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 2048,
+      "asc": 2200,
+      "des": -500,
+      "tAsc": 2200,
+      "tDes": -500,
+      "tLGap": 0,
+      "wAsc": 2200,
+      "wDes": 500,
+      "xH": 1000,
+      "capH": 1800,
+      "yMin": -549,
+      "yMax": 2150,
+      "hAsc": 2200,
+      "hDes": -500,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Odibee Sans",
     "fallbacks": ["cursive"],
     "weights": [400],
@@ -29611,12 +29746,12 @@
       "tAsc": 1145,
       "tDes": -274,
       "tLGap": 0,
-      "wAsc": 1145,
-      "wDes": 274,
+      "wAsc": 1225,
+      "wDes": 326,
       "xH": 689,
       "capH": 889,
-      "yMin": -274,
-      "yMax": 1145,
+      "yMin": -326,
+      "yMax": 1225,
       "hAsc": 1145,
       "hDes": -274,
       "lGap": 0
@@ -31252,7 +31387,7 @@
       "xH": 1034,
       "capH": 1446,
       "yMin": -480,
-      "yMax": 2174,
+      "yMax": 2050,
       "hAsc": 1900,
       "hDes": -450,
       "lGap": 0
@@ -37166,6 +37301,34 @@
     "weights": [400, 700],
     "styles": ["italic", "regular"],
     "service": "system"
+  },
+  {
+    "family": "Tai Heritage Pro",
+    "fallbacks": ["serif"],
+    "weights": [400, 700],
+    "styles": ["regular"],
+    "variants": [
+      [0, 400],
+      [0, 700]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 2048,
+      "asc": 2700,
+      "des": -1600,
+      "tAsc": 2700,
+      "tDes": -1600,
+      "tLGap": 0,
+      "wAsc": 2700,
+      "wDes": 1600,
+      "xH": 1150,
+      "capH": 1700,
+      "yMin": -1546,
+      "yMax": 2775,
+      "hAsc": 2700,
+      "hDes": -1600,
+      "lGap": 0
+    }
   },
   {
     "family": "Tajawal",

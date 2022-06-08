@@ -169,8 +169,11 @@ const arrangeSelection =
 
 const setSelectedElementsById =
   (dispatch) =>
-  ({ elementIds }) =>
-    dispatch({ type: types.SET_SELECTED_ELEMENTS, payload: { elementIds } });
+  ({ elementIds, withLinked }) =>
+    dispatch({
+      type: types.SET_SELECTED_ELEMENTS,
+      payload: { elementIds, withLinked },
+    });
 
 const clearSelection = (dispatch) => () =>
   dispatch({ type: types.SET_SELECTED_ELEMENTS, payload: { elementIds: [] } });
@@ -187,10 +190,10 @@ const removeElementFromSelection =
 
 const toggleElementInSelection =
   (dispatch) =>
-  ({ elementId }) =>
+  ({ elementId, withLinked }) =>
     dispatch({
       type: types.TOGGLE_ELEMENT_IN_SELECTION,
-      payload: { elementId },
+      payload: { elementId, withLinked },
     });
 
 const updateStory =

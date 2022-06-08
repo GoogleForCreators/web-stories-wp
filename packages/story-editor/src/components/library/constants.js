@@ -27,7 +27,6 @@ import { MediaPane, MediaIcon } from './panes/media/local';
 import { Media3pPane, Media3pIcon } from './panes/media/media3p';
 import { ShapesPane, ShapesIcon } from './panes/shapes';
 import { TextPane, TextIcon } from './panes/text';
-import { ElementsPane, ElementsIcon } from './panes/elements';
 import { PageTemplatesPane, PageTemplatesIcon } from './panes/pageTemplates';
 import { ShoppingIcon, ShoppingPane } from './panes/shopping';
 import { PANE_IDS } from './paneIds';
@@ -56,12 +55,6 @@ export const SHAPES = {
   tooltip: __('Shapes & Stickers', 'web-stories'),
   Pane: ShapesPane,
   id: PANE_IDS.SHAPES,
-};
-export const ELEMS = {
-  icon: ElementsIcon,
-  tooltip: __('Elements', 'web-stories'),
-  Pane: ElementsPane,
-  id: PANE_IDS.ELEMENTS,
 };
 export const PAGE_TEMPLATES = {
   icon: PageTemplatesIcon,
