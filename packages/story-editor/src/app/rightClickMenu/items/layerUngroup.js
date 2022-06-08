@@ -27,32 +27,36 @@ import { useFeature } from 'flagged';
 import { RIGHT_CLICK_MENU_LABELS } from '../constants';
 import { useStory } from '../..';
 
-function LayerLock() {
-  const updateSelectedElements = useStory(
-    (ctx) => ctx.actions.updateSelectedElements
+function LayerUngroup() {
+  const { updateSelectedElements, selectedElements } = useStory(
+    ({ state, actions }) => ({
+      updateSelectedElements: actions.updateSelectedElements,
+      selectedElements: state.selectedElements,
+    })
   );
-  const toggleLayerLock = useCallback(
+  const handleLayerUngroup = useCallback(
     () =>
       updateSelectedElements({
         properties: (oldElement) => ({
           ...oldElement,
-          isLocked: !oldElement.isLocked,
+          groupId: null,
         }),
       }),
     [updateSelectedElements]
   );
 
-  const isLayerLockingEnabled = useFeature('layerLocking');
+  const isLayerGroupingEnabled = useFeature('layerGrouping');
+  const isLayerInGroup = selectedElements.some((el) => el.groupId);
 
-  if (!isLayerLockingEnabled) {
+  if (!isLayerGroupingEnabled || !isLayerInGroup) {
     return null;
   }
 
   return (
-    <ContextMenuComponents.MenuButton onClick={toggleLayerLock}>
-      {RIGHT_CLICK_MENU_LABELS.LOCK_UNLOCK}
+    <ContextMenuComponents.MenuButton onClick={handleLayerUngroup}>
+      {RIGHT_CLICK_MENU_LABELS.UNGROUP_LAYER}
     </ContextMenuComponents.MenuButton>
   );
 }
 
-export default LayerLock;
+export default LayerUngroup;
