@@ -230,8 +230,11 @@ class Discovery extends Service_Base implements HasRequirements {
 			}
 
 
-			$product_metadata = $this->get_product_data( $story );
-			$metadata         = array_merge( $product_metadata, $metadata );
+			$products         = $this->product_meta->get_products( $post->ID );
+			$product_metadata = $this->get_product_data( $products );
+			if ( $product_metadata ) {
+				$metadata = array_merge( $product_metadata, $metadata );
+			}
 		}
 
 		/**
@@ -250,17 +253,11 @@ class Discovery extends Service_Base implements HasRequirements {
 	 *
 	 * @since 1.22.0
 	 *
-	 * @param Story $story Story object.
+	 * @param array $products Array of products.
 	 * @return array
 	 */
-	protected function get_product_data( Story $story ): array {
-		/**
-		 * Product data.
-		 *
-		 * @var array|false $products
-		 */
-		$products = get_post_meta( $story->get_id(), $this->product_meta::PRODUCTS_POST_META_KEY, true );
-		if ( ! \is_array( $products ) ) {
+	protected function get_product_data( array $products ): array {
+		if ( ! $products ) {
 			return [];
 		}
 		$product_data = [];

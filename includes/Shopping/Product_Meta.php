@@ -37,7 +37,7 @@ class Product_Meta extends Service_Base implements HasMeta {
 	/**
 	 * The products meta key.
 	 */
-	public const PRODUCTS_POST_META_KEY = 'web_stories_products';
+	private const PRODUCTS_POST_META_KEY = 'web_stories_products';
 
 
 	/**
@@ -102,6 +102,28 @@ class Product_Meta extends Service_Base implements HasMeta {
 				'object_subtype' => $this->story_post_type::POST_TYPE_SLUG,
 			]
 		);
+	}
+
+	/**
+	 * Get array of products from story ID.
+	 *
+	 * @since 1.22.0
+	 *
+	 * @param int $story_id ID of story.
+	 * @return array
+	 */
+	public function get_products( int $story_id ): array {
+		/**
+		 * Product data.
+		 *
+		 * @var array|false $products
+		 */
+		$products = get_post_meta( $story_id, $this::PRODUCTS_POST_META_KEY, true );
+		if ( ! \is_array( $products ) ) {
+			return [];
+		}
+
+		return $products;
 	}
 
 }
