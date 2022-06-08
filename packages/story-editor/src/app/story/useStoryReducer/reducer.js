@@ -123,6 +123,14 @@ function reducer(state, { type, payload }) {
       return reducers.updateElementsByFontFamily(state, payload);
     }
 
+    case types.ADD_GROUP: {
+      return reducers.addGroup(state, payload);
+    }
+
+    case types.UPDATE_GROUP: {
+      return reducers.updateGroup(state, payload);
+    }
+
     default:
       return state;
   }

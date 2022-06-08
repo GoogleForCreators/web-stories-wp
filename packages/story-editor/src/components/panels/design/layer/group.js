@@ -35,6 +35,7 @@ import { useFeature } from 'flagged';
  * Internal dependencies
  */
 import PropTypes from 'prop-types';
+import { useStory } from '../../../../app';
 import Tooltip from '../../../tooltip';
 import { LAYER_HEIGHT } from './constants';
 
@@ -277,26 +278,12 @@ function preventReorder(e) {
 
 function Group({ groupId }) {
   const isLayerLockingEnabled = useFeature('layerLocking');
-  //const { isSelected, handleClick } = useLayerSelection(element);
-  // const {
-  //   duplicateElementsById,
-  //   updateElementById,
-  //   deleteElementById,
-  //   currentPageBackgroundColor,
-  // } = useStory(({ actions, state }) => ({
-  //   duplicateElementsById: actions.duplicateElementsById,
-  //   deleteElementById: actions.deleteElementById,
-  //   updateElementById: actions.updateElementById,
-  //   currentPageBackgroundColor:
-  //     !isDefaultBackground || state.currentPage?.backgroundColor,
-  // }));
+  const { groups, updateGroupById } = useStory(({ actions, state }) => ({
+    groups: state.currentPage.groups,
+    updateGroupById: actions.updateGroupById,
+  }));
 
-  const group = {
-    groupId,
-    name: groupId,
-    isLocked: false,
-  };
-
+  const group = groups[groupId];
   const groupRef = useRef(null);
   const deleteButtonRef = useRef(null);
   const groupDomId = `group-${groupId}`;
@@ -360,12 +347,12 @@ function Group({ groupId }) {
               aria-label={__('Lock/Unlock', 'web-stories')}
               aria-describedby={groupDomId}
               onPointerDown={preventReorder}
-              // onClick={() =>
-              //   updateElementById({
-              //     elementId: element.id,
-              //     properties: { isLocked: !element.isLocked },
-              //   })
-              // }
+              onClick={() =>
+                updateGroupById({
+                  groupId,
+                  properties: { isLocked: !group.isLocked },
+                })
+              }
             >
               <LockIcon />
             </LayerAction>

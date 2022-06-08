@@ -27,6 +27,7 @@ import { v4 as uuidv4 } from 'uuid';
  */
 import { useCanvas, useHistory, useStory } from '../..';
 import updateProperties from '../../../components/style/updateProperties';
+import generateGroupName from '../../../utils/generateGroupName';
 import { UNDO_HELP_TEXT } from './constants';
 
 /**
@@ -41,12 +42,16 @@ const useElementActions = () => {
     selectedElements,
     setBackgroundElement,
     updateElementsById,
+    addGroup,
+    groups,
   } = useStory(({ state, actions }) => ({
     clearBackgroundElement: actions.clearBackgroundElement,
     duplicateElementsById: actions.duplicateElementsById,
     selectedElements: state.selectedElements,
     setBackgroundElement: actions.setBackgroundElement,
     updateElementsById: actions.updateElementsById,
+    addGroup: actions.addGroup,
+    groups: state.currentPage.groups,
   }));
   const showSnackbar = useSnackbar((value) => value.showSnackbar);
   const setEditingElement = useCanvas(
@@ -99,6 +104,8 @@ const useElementActions = () => {
     }
 
     const groupId = uuidv4();
+    const name = generateGroupName(groups);
+    addGroup({ groupId, name });
     updateElementsById({
       elementIds: selectedElements.map(({ id }) => id),
       properties: (currentProperties) =>
@@ -110,7 +117,7 @@ const useElementActions = () => {
           /* commitValues */ true
         ),
     });
-  }, [selectedElements, updateElementsById]);
+  }, [selectedElements, updateElementsById, addGroup, groups]);
 
   const handleUngroupSelectedElements = useCallback(() => {
     if (!selectedElements.length) {

@@ -53,10 +53,14 @@ export const ADD_ANIMATIONS = 'ADD_ANIMATIONS';
 // Manipulate entire internal state.
 export const RESTORE = 'RESTORE';
 
-// Reserved property names for pages and elements.
-export const PAGE_RESERVED_PROPERTIES = ['id', 'elements'];
+// Reserved property names for pages, elements and groups.
+export const PAGE_RESERVED_PROPERTIES = ['id', 'elements', 'groups'];
 export const ELEMENT_RESERVED_PROPERTIES = [
   'id',
   'isBackground',
   'isDefaultBackground',
 ];
+
+// Layer groups
+export const ADD_GROUP = 'ADD_GROUP';
+export const UPDATE_GROUP = 'UPDATE_GROUP';

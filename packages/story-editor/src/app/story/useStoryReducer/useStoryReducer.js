@@ -28,7 +28,6 @@ import reducer from './reducer';
 
 const INITIAL_STATE = {
   pages: [],
-  groups: {},
   capabilities: {},
   current: null,
   selection: [],

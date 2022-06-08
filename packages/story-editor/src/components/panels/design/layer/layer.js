@@ -498,7 +498,7 @@ function Layer({ element }) {
               <Icons.PagePlus />
             </LayerAction>
           </Tooltip>
-          {isLayerLockingEnabled && (
+          {isLayerLockingEnabled && !isNested && (
             <Tooltip title={lockTitle} hasTail isDelayed>
               <LayerAction
                 aria-label={__('Lock/Unlock', 'web-stories')}

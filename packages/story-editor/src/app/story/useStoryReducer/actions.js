@@ -235,6 +235,19 @@ const updateElementsByFontFamily =
       payload: { family, properties },
     });
 
+const addGroup =
+  (dispatch) =>
+  ({ id, name }) =>
+    dispatch({ type: types.ADD_GROUP, payload: { id, name } });
+
+const updateGroupById =
+  (dispatch) =>
+  ({ groupId, properties }) =>
+    dispatch({
+      type: types.UPDATE_GROUP,
+      payload: { groupId, properties },
+    });
+
 export const exposedActions = {
   addPage,
   addPageAt,
@@ -271,6 +284,8 @@ export const exposedActions = {
   updateStory,
   toggleLayer,
   updateElementsByFontFamily,
+  addGroup,
+  updateGroupById,
 };
 
 // Internal actions
