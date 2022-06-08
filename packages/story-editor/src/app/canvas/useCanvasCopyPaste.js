@@ -21,6 +21,7 @@ import { useCallback, useBatchingCallback } from '@googleforcreators/react';
 import { usePasteTextContent } from '@googleforcreators/rich-text';
 import { __, sprintf } from '@googleforcreators/i18n';
 import { useSnackbar } from '@googleforcreators/design-system';
+import { ELEMENT_TYPES } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -56,7 +57,7 @@ function useCanvasGlobalKeys() {
         deleteSelectedElements,
         selectedElementAnimations,
         currentPageProductIds: currentPage?.elements
-          ?.filter(({ type }) => type === 'product')
+          ?.filter(({ type }) => type === ELEMENT_TYPES.PRODUCT)
           .map(({ product }) => product?.productId),
       };
     }

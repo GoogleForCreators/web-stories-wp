@@ -25,7 +25,10 @@ import {
   useSnackbar,
 } from '@googleforcreators/design-system';
 import { STORY_ANIMATION_STATE } from '@googleforcreators/animation';
-import { getDefinitionForType } from '@googleforcreators/elements';
+import {
+  getDefinitionForType,
+  ELEMENT_TYPES,
+} from '@googleforcreators/elements';
 import { __, sprintf } from '@googleforcreators/i18n';
 
 /**
@@ -85,7 +88,7 @@ function useCanvasKeys(ref) {
         animationState,
         updateAnimationState,
         currentPageProductIds: currentPage?.elements
-          ?.filter(({ type }) => type === 'product')
+          ?.filter(({ type }) => type === ELEMENT_TYPES.PRODUCT)
           .map(({ product }) => product?.productId),
       };
     }
