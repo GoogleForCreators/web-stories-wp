@@ -345,6 +345,28 @@ class Experiments extends Service_Base implements HasRequirements {
 				'group'       => 'editor',
 				'default'     => true,
 			],
+			/**
+			 * Author: @merapi
+			 * Issue: #9244
+			 * Creation date: 2022-05-04
+			 */
+			[
+				'name'        => 'layerGrouping',
+				'label'       => __( 'Layer grouping', 'web-stories' ),
+				'description' => __( 'Enable layer grouping', 'web-stories' ),
+				'group'       => 'editor',
+			],
+			/**
+			 * Author: @mariana-k
+			 * Issue: #9248
+			 * Creation date: 2022-05-12
+			 */
+			[
+				'name'        => 'layerNaming',
+				'label'       => __( 'Layer naming', 'web-stories' ),
+				'description' => __( 'Enable layer naming', 'web-stories' ),
+				'group'       => 'editor',
+			],
 		];
 	}
 

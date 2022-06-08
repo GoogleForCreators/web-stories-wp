@@ -18,16 +18,32 @@
  * External dependencies
  */
 import { ContextMenuComponents } from '@googleforcreators/design-system';
+import { useFeature } from 'flagged';
+
 /**
  * Internal dependencies
  */
 import { RIGHT_CLICK_MENU_LABELS } from '../constants';
 import { useElementActions, useShapeMask } from '../hooks';
+import { useStory } from '../..';
 
 function MultipleElementsMenu() {
-  const { handleDuplicateSelectedElements } = useElementActions();
+  const {
+    handleDuplicateSelectedElements,
+    handleGroupSelectedElements,
+    handleUngroupSelectedElements,
+  } = useElementActions();
   const { addShapeMask, shapeMaskElements } = useShapeMask();
   const { shape, image } = shapeMaskElements();
+  const isLayerGroupingEnabled = useFeature('layerGrouping');
+  const { selectedElements } = useStory(({ state }) => ({
+    selectedElements: state.selectedElements,
+  }));
+  const isGroupSelected = selectedElements.some((el) => el.groupId);
+  const isOnlyGroupSelected = selectedElements.every(
+    (el) => el.groupId && el.groupId === selectedElements[0].groupId
+  );
+
   return (
     <>
       <ContextMenuComponents.MenuButton
@@ -41,6 +57,18 @@ function MultipleElementsMenu() {
           onClick={() => addShapeMask(shape, image)}
         >
           {RIGHT_CLICK_MENU_LABELS.USE_SHAPE_AS_MASK}
+        </ContextMenuComponents.MenuButton>
+      )}
+      {isLayerGroupingEnabled && !isOnlyGroupSelected && (
+        <ContextMenuComponents.MenuButton onClick={handleGroupSelectedElements}>
+          {RIGHT_CLICK_MENU_LABELS.GROUP_LAYERS}
+        </ContextMenuComponents.MenuButton>
+      )}
+      {isLayerGroupingEnabled && isGroupSelected && (
+        <ContextMenuComponents.MenuButton
+          onClick={handleUngroupSelectedElements}
+        >
+          {RIGHT_CLICK_MENU_LABELS.UNGROUP_LAYERS}
         </ContextMenuComponents.MenuButton>
       )}
     </>

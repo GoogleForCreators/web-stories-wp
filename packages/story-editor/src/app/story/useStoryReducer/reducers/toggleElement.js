@@ -29,9 +29,10 @@
  * @param {Object} state Current state
  * @param {Object} payload Action payload
  * @param {string} payload.elementId Id to either add or remove from selection.
+ * @param payload.withLinked
  * @return {Object} New state
  */
-function toggleElement(state, { elementId }) {
+function toggleElement(state, { elementId, withLinked = false }) {
   if (!elementId) {
     return state;
   }
@@ -41,6 +42,20 @@ function toggleElement(state, { elementId }) {
   const backgroundElementId = currentPage.elements[0].id;
   const isBackgroundElement = backgroundElementId === elementId;
   const hasExistingSelection = state.selection.length > 0;
+
+  const elementGroupId = currentPage.elements.find(
+    ({ id }) => id === elementId
+  )?.groupId;
+  let allIds = [elementId];
+
+  if (elementGroupId && withLinked) {
+    const elementsFromGroups = currentPage.elements.filter(
+      ({ groupId }) => elementGroupId === groupId
+    );
+    const elementsIdsFromGroups = elementsFromGroups.map(({ id }) => id);
+    const selectionWithGroups = state.selection.concat(elementsIdsFromGroups);
+    allIds = allIds.concat(selectionWithGroups);
+  }
 
   // If it wasn't selected, we're adding the element to the selection.
   if (!wasSelected) {
@@ -66,20 +81,20 @@ function toggleElement(state, { elementId }) {
     if (resultIsOnlyNewElement) {
       return {
         ...state,
-        selection: [elementId],
+        selection: allIds,
       };
     }
 
     return {
       ...state,
-      selection: [...state.selection, elementId],
+      selection: [...state.selection, ...allIds],
     };
   }
 
   // Otherwise just filter out from current selection
   return {
     ...state,
-    selection: state.selection.filter((id) => id !== elementId),
+    selection: state.selection.filter((id) => !allIds.includes(id)),
   };
 }
 
