@@ -48,7 +48,7 @@ import Tooltip from '../../../tooltip';
 import useShapeMask from '../../../../utils/useShapeMask';
 import useLayerSelection from './useLayerSelection';
 import { LAYER_HEIGHT } from './constants';
-import ShapeMaskWrapper from "./shapeMaskWrapper";
+import ShapeMaskWrapper from './shapeMaskWrapper';
 
 const fadeOutCss = css`
   background-color: var(--background-color);
@@ -130,9 +130,9 @@ const LayerButton = styled(Button).attrs({
       & + * {
         --background-color: ${theme.colors.interactiveBg.tertiaryPress};
         --background-color-opaque: ${rgba(
-      theme.colors.interactiveBg.tertiaryPress,
-      0
-    )};
+          theme.colors.interactiveBg.tertiaryPress,
+          0
+        )};
         --selected-hover-color: ${theme.colors.interactiveBg.tertiaryHover};
       }
     `}
@@ -143,9 +143,9 @@ const LayerButton = styled(Button).attrs({
   :hover,
   :hover + * {
     --background-color: ${({ theme }) =>
-    theme.colors.interactiveBg.tertiaryHover};
+      theme.colors.interactiveBg.tertiaryHover};
     --background-color-opaque: ${({ theme }) =>
-    rgba(theme.colors.interactiveBg.tertiaryHover, 0)};
+      rgba(theme.colors.interactiveBg.tertiaryHover, 0)};
   }
 
   :active {
@@ -154,9 +154,9 @@ const LayerButton = styled(Button).attrs({
   :active,
   :active + * {
     --background-color: ${({ theme }) =>
-    theme.colors.interactiveBg.tertiaryPress};
+      theme.colors.interactiveBg.tertiaryPress};
     --background-color-opaque: ${({ theme }) =>
-    rgba(theme.colors.interactiveBg.tertiaryPress, 0)};
+      rgba(theme.colors.interactiveBg.tertiaryPress, 0)};
   }
 `;
 
@@ -174,9 +174,9 @@ const LayerInputWrapper = styled.div`
   :hover,
   :hover + * {
     --background-color: ${({ theme }) =>
-    theme.colors.interactiveBg.tertiaryHover};
+      theme.colors.interactiveBg.tertiaryHover};
     --background-color-opaque: ${({ theme }) =>
-    rgba(theme.colors.interactiveBg.tertiaryHover, 0)};
+      rgba(theme.colors.interactiveBg.tertiaryHover, 0)};
   }
 `;
 
@@ -200,9 +200,9 @@ const LayerIconWrapper = styled.div`
   :hover,
   :hover + * {
     --background-color: ${({ theme }) =>
-    theme.colors.interactiveBg.tertiaryHover};
+      theme.colors.interactiveBg.tertiaryHover};
     --background-color-opaque: ${({ theme }) =>
-    rgba(theme.colors.interactiveBg.tertiaryHover, 0)};
+      rgba(theme.colors.interactiveBg.tertiaryHover, 0)};
   }
 `;
 
@@ -313,10 +313,10 @@ const LayerAction = styled(Button).attrs({
 
   :focus {
     ${({ theme }) =>
-    themeHelpers.focusCSS(
-      theme.colors.border.focus,
-      'var(--background-color)'
-    )}
+      themeHelpers.focusCSS(
+        theme.colors.border.focus,
+        'var(--background-color)'
+      )}
   }
 `;
 

@@ -17,7 +17,6 @@
  * External dependencies
  */
 import { useCallback } from '@googleforcreators/react';
-import { MaskTypes } from '@googleforcreators/masks';
 
 /**
  * Internal dependencies
@@ -25,52 +24,52 @@ import { MaskTypes } from '@googleforcreators/masks';
 import { useStory } from '../app';
 
 const useShapeMaskElements = () => {
-    const { selectedElements, combineElements } = useStory(
-        ({ state, actions }) => ({
-            selectedElements: state.selectedElements,
-            combineElements: actions.combineElements,
-        })
-    );
+  const { selectedElements, combineElements } = useStory(
+    ({ state, actions }) => ({
+      selectedElements: state.selectedElements,
+      combineElements: actions.combineElements,
+    })
+  );
 
-    /**
-     * Retrieve shape and image from selected elements.
-     */
-    const getShapeMaskElements = useCallback(() => {
-        if (selectedElements?.length > 2) {
-            return {};
-        }
+  /**
+   * Retrieve shape and image from selected elements.
+   */
+  const getShapeMaskElements = useCallback(() => {
+    if (selectedElements?.length > 2) {
+      return {};
+    }
 
-        let image, shape;
+    let image, shape;
 
-        selectedElements.forEach((element) => {
-            element.type === 'shape' && (shape = element);
-            element.type === 'image' && (image = element);
-        });
+    selectedElements.forEach((element) => {
+      element.type === 'shape' && (shape = element);
+      element.type === 'image' && (image = element);
+    });
 
-        if (shape && image) {
-            return { shape, image };
-        }
+    if (shape && image) {
+      return { shape, image };
+    }
 
-        return {};
-    }, [selectedElements]);
+    return {};
+  }, [selectedElements]);
 
-    /**
-     * Apply shape mask to element.
-     *
-     * @param {Object} shape Element to use for the mask.
-     * @param {Object} image Element that the mask will be applied to.
-     */
-    const addShapeMask = (shape, image) => {
-        combineElements({
-            firstElement: image,
-            secondId: shape.id,
-        });
-    };
+  /**
+   * Apply shape mask to element.
+   *
+   * @param {Object} shape Element to use for the mask.
+   * @param {Object} image Element that the mask will be applied to.
+   */
+  const addShapeMask = (shape, image) => {
+    combineElements({
+      firstElement: image,
+      secondId: shape.id,
+    });
+  };
 
-    return {
-        getShapeMaskElements,
-        addShapeMask
-    };
+  return {
+    getShapeMaskElements,
+    addShapeMask,
+  };
 };
 
 export default useShapeMaskElements;

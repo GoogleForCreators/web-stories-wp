@@ -24,15 +24,13 @@ import { MaskTypes } from '@googleforcreators/masks';
  */
 import { useStory } from '../app';
 import useInsertElement from '../components/canvas/useInsertElement';
-import objectPick from '../utils/objectPick';
+import objectPick from './objectPick';
 
 const useShapeMask = (element) => {
-  const { updateElementById, } = useStory(
-    ({ actions }) => ({
-      updateElementById: actions.updateElementById,
-      combineElements: actions.combineElements,
-    })
-  );
+  const { updateElementById } = useStory(({ actions }) => ({
+    updateElementById: actions.updateElementById,
+    combineElements: actions.combineElements,
+  }));
 
   const insertElement = useInsertElement();
 
@@ -42,7 +40,6 @@ const useShapeMask = (element) => {
     element?.mask?.type !== MaskTypes.RECTANGLE;
 
   const removeShapeMask = useCallback(() => {
-
     if (!element) {
       return;
     }
@@ -60,9 +57,7 @@ const useShapeMask = (element) => {
       elementId: element.id,
       properties: { mask: { type: MaskTypes.RECTANGLE } },
     });
-  },
-    [insertElement, updateElementById]
-  );
+  }, [element, insertElement, updateElementById]);
 
   return {
     hasShapeMask,
