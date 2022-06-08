@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { getAllProducts, isInsideRange, moveArrayElement } from './utils';
+import { isInsideRange, moveArrayElement } from './utils';
 
 /**
  * Move page in page order with the given id to the given position.
@@ -56,12 +56,9 @@ function arrangePage(state, { pageId, position }) {
 
   const newPages = moveArrayElement(state.pages, pageIndex, position);
 
-  const products = getAllProducts(newPages);
-
   return {
     ...state,
     pages: newPages,
-    products,
   };
 }
 

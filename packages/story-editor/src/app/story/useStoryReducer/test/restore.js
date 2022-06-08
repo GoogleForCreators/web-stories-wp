@@ -39,7 +39,6 @@ describe('restore', () => {
       copiedElementState: {},
       pages,
       selection: [],
-      products: [],
       current: '123',
       story: {},
     });
@@ -105,7 +104,6 @@ describe('restore', () => {
       copiedElementState: {},
       pages: [],
       selection: [],
-      products: [],
       current: null,
       story: {},
     });
@@ -124,7 +122,6 @@ describe('restore', () => {
       copiedElementState: {},
       pages: [],
       selection: [],
-      products: [],
       current: null,
       story: {},
     });
@@ -159,7 +156,6 @@ describe('restore', () => {
       copiedElementState: {},
       pages,
       selection: [],
-      products: [],
       current: '123',
       story: {},
     });
@@ -182,7 +178,6 @@ describe('restore', () => {
     expect(result).toStrictEqual({
       animationState: STORY_ANIMATION_STATE.RESET,
       capabilities: {},
-      products: [],
       copiedElementState: {},
       ...storyWithNoCurrentPage,
       ...currentPage,
@@ -207,7 +202,6 @@ describe('restore', () => {
     expect(result).toStrictEqual({
       animationState: STORY_ANIMATION_STATE.RESET,
       capabilities: {},
-      products: [],
       copiedElementState: {},
       ...storyWithNoCurrentPage,
       current: '111',

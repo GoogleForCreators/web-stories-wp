@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { exclusion, getAllProducts } from './utils';
+import { exclusion } from './utils';
 
 /**
  * Add elements to current page.
@@ -63,13 +63,10 @@ function addElements(state, { elements }) {
 
   const newSelection = newElements.map(({ id }) => id);
 
-  const products = getAllProducts(newPages);
-
   return {
     ...state,
     pages: newPages,
     selection: newSelection,
-    products,
   };
 }
 

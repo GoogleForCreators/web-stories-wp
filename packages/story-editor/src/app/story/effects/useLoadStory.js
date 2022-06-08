@@ -53,7 +53,6 @@ function loadStory(storyId, post, restore, clearHistory) {
     featuredMedia,
     publisherLogo,
     taxonomies,
-    products,
     terms,
   } = post;
 
@@ -124,7 +123,6 @@ function loadStory(storyId, post, restore, clearHistory) {
   // TODO read current page and selection from deeplink?
   restore({
     pages,
-    products,
     story,
     selection: [],
     current: null, // will be set to first page by `restore`

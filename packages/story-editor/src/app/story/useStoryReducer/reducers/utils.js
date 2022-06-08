@@ -160,17 +160,3 @@ export function exclusion(left = [], right = []) {
   const leftJoinKeys = left.map(({ id }) => id);
   return rightSet.filter(({ id }) => !leftJoinKeys.includes(id));
 }
-
-export function getAllProducts(pages) {
-  const products = pages
-    .map((page) =>
-      page?.elements
-        ?.filter(({ type }) => type === 'product')
-        .map(({ product }) => product)
-    )
-    .flat()
-    .filter(Boolean);
-
-  const list = products.map((product) => JSON.stringify(product));
-  return Array.from(new Set(list)).map((product) => JSON.parse(product));
-}
