@@ -1386,10 +1386,8 @@ describe('Right Click Menu integration', () => {
       await clickOnTarget(shapeFrame, 'Shift');
 
       // multiple elements should be selected
-      const { selectedElements } = await fixture.renderHook(() =>
-        useStory(({ state }) => ({
-          selectedElements: state.selectedElements,
-        }))
+      const selectedElements = await fixture.renderHook(() =>
+        useStory(({ state }) => state.selectedElements)
       );
       expect(selectedElements.length).toBe(2);
 

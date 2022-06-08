@@ -34,8 +34,8 @@ function MultipleElementsMenu() {
     handleGroupSelectedElements,
     handleUngroupSelectedElements,
   } = useElementActions();
-  const { addShapeMask, shapeMaskElements } = useShapeMask();
-  const { shape, image } = shapeMaskElements();
+  const { addShapeMask, getShapeMaskElements } = useShapeMask();
+  const { shape, image } = getShapeMaskElements();
   const isLayerGroupingEnabled = useFeature('layerGrouping');
   const { selectedElements } = useStory(({ state }) => ({
     selectedElements: state.selectedElements,

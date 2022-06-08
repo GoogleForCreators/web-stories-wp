@@ -48,6 +48,7 @@ import Tooltip from '../../../tooltip';
 import useShapeMask from '../../../../utils/useShapeMask';
 import useLayerSelection from './useLayerSelection';
 import { LAYER_HEIGHT } from './constants';
+import ShapeMaskWrapper from "./shapeMaskWrapper";
 
 const fadeOutCss = css`
   background-color: var(--background-color);
@@ -129,9 +130,9 @@ const LayerButton = styled(Button).attrs({
       & + * {
         --background-color: ${theme.colors.interactiveBg.tertiaryPress};
         --background-color-opaque: ${rgba(
-          theme.colors.interactiveBg.tertiaryPress,
-          0
-        )};
+      theme.colors.interactiveBg.tertiaryPress,
+      0
+    )};
         --selected-hover-color: ${theme.colors.interactiveBg.tertiaryHover};
       }
     `}
@@ -142,9 +143,9 @@ const LayerButton = styled(Button).attrs({
   :hover,
   :hover + * {
     --background-color: ${({ theme }) =>
-      theme.colors.interactiveBg.tertiaryHover};
+    theme.colors.interactiveBg.tertiaryHover};
     --background-color-opaque: ${({ theme }) =>
-      rgba(theme.colors.interactiveBg.tertiaryHover, 0)};
+    rgba(theme.colors.interactiveBg.tertiaryHover, 0)};
   }
 
   :active {
@@ -153,9 +154,9 @@ const LayerButton = styled(Button).attrs({
   :active,
   :active + * {
     --background-color: ${({ theme }) =>
-      theme.colors.interactiveBg.tertiaryPress};
+    theme.colors.interactiveBg.tertiaryPress};
     --background-color-opaque: ${({ theme }) =>
-      rgba(theme.colors.interactiveBg.tertiaryPress, 0)};
+    rgba(theme.colors.interactiveBg.tertiaryPress, 0)};
   }
 `;
 
@@ -173,9 +174,9 @@ const LayerInputWrapper = styled.div`
   :hover,
   :hover + * {
     --background-color: ${({ theme }) =>
-      theme.colors.interactiveBg.tertiaryHover};
+    theme.colors.interactiveBg.tertiaryHover};
     --background-color-opaque: ${({ theme }) =>
-      rgba(theme.colors.interactiveBg.tertiaryHover, 0)};
+    rgba(theme.colors.interactiveBg.tertiaryHover, 0)};
   }
 `;
 
@@ -199,9 +200,9 @@ const LayerIconWrapper = styled.div`
   :hover,
   :hover + * {
     --background-color: ${({ theme }) =>
-      theme.colors.interactiveBg.tertiaryHover};
+    theme.colors.interactiveBg.tertiaryHover};
     --background-color-opaque: ${({ theme }) =>
-      rgba(theme.colors.interactiveBg.tertiaryHover, 0)};
+    rgba(theme.colors.interactiveBg.tertiaryHover, 0)};
   }
 `;
 
@@ -268,11 +269,11 @@ const LayerAction = styled(Button).attrs({
   padding: 0;
 
   /*
-    * all of our Icons right now have an embedded padding,
-    * however the new designs just disregard this embedded
-    * padding, so to accommodate, we'll make the icon its
-    * intended size and manually center it within the button.
-    */
+  * all of our Icons right now have an embedded padding,
+  * however the new designs just disregard this embedded
+  * padding, so to accommodate, we'll make the icon its
+  * intended size and manually center it within the button.
+  */
   svg {
     position: absolute;
     width: 32px;
@@ -283,9 +284,9 @@ const LayerAction = styled(Button).attrs({
   }
 
   /*
-    * override base button background color so we can receive the
-    * proper background color from the parent.
-    */
+  * override base button background color so we can receive the
+  * proper background color from the parent.
+  */
   && {
     transition: revert;
     background: var(--background-color);
@@ -312,10 +313,10 @@ const LayerAction = styled(Button).attrs({
 
   :focus {
     ${({ theme }) =>
-      themeHelpers.focusCSS(
-        theme.colors.border.focus,
-        'var(--background-color)'
-      )}
+    themeHelpers.focusCSS(
+      theme.colors.border.focus,
+      'var(--background-color)'
+    )}
   }
 `;
 
@@ -354,12 +355,6 @@ function Layer({ element }) {
   const { hasShapeMask, removeShapeMask } = useShapeMask();
   const hasMask = hasShapeMask(element);
   const removeMaskTitle = __('Remove Mask', 'web-stories');
-
-  let maskId = null;
-  if (hasMask) {
-    maskId = `mask-${element?.mask?.type}-${element.id}-frame`;
-  }
-
   const { getProxiedUrl } = useCORSProxy();
   const layerRef = useRef(null);
   usePerformanceTracking({
@@ -430,19 +425,13 @@ function Layer({ element }) {
       {isRenameable && isLayerNamingEnabled ? (
         <LayerInputWrapper>
           <LayerIconWrapper>
-            <div
-              style={{
-                ...(hasMask
-                  ? { position: 'relative', clipPath: `url(#${maskId})` }
-                  : {}),
-              }}
-            >
+            <ShapeMaskWrapper element={element}>
               <LayerIcon
                 element={element}
                 getProxiedUrl={getProxiedUrl}
                 currentPageBackgroundColor={currentPageBackgroundColor}
               />
-            </div>
+            </ShapeMaskWrapper>
           </LayerIconWrapper>
           <LayerInputForm onSubmit={handleSubmit}>
             <LayerInput
@@ -466,19 +455,13 @@ function Layer({ element }) {
           isSelected={isSelected}
         >
           <LayerIconWrapper>
-            <div
-              style={{
-                ...(hasMask
-                  ? { position: 'relative', clipPath: `url(#${maskId})` }
-                  : {}),
-              }}
-            >
+            <ShapeMaskWrapper element={element}>
               <LayerIcon
                 element={element}
                 getProxiedUrl={getProxiedUrl}
                 currentPageBackgroundColor={currentPageBackgroundColor}
               />
-            </div>
+            </ShapeMaskWrapper>
           </LayerIconWrapper>
           <LayerDescription>
             <LayerContentContainer>

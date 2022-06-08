@@ -24,6 +24,7 @@ import { MaskTypes } from '@googleforcreators/masks';
  */
 import { useStory } from '../app';
 import useInsertElement from '../components/canvas/useInsertElement';
+import objectPick from '../utils/objectPick';
 
 const useShapeMask = () => {
   const { selectedElements, updateElementById, combineElements } = useStory(
@@ -44,7 +45,7 @@ const useShapeMask = () => {
   /**
    * Retrieve shape and image from selected elements.
    */
-  const shapeMaskElements = useCallback(() => {
+  const getShapeMaskElements = useCallback(() => {
     if (selectedElements?.length > 2) {
       return {};
     }
@@ -82,15 +83,10 @@ const useShapeMask = () => {
         return;
       }
 
-      const { x, y, width, height, scale, rotationAngle } = element;
-
+      const SHAPE_PROPS = ['x', 'y', 'width', 'height', 'scale', 'rotationAngle'];
+      const shapeProps = objectPick(element, SHAPE_PROPS);
       insertElement('shape', {
-        x,
-        y,
-        width,
-        height,
-        scale,
-        rotationAngle,
+        ...shapeProps,
         mask: {
           type: element.mask.type,
         },
@@ -106,7 +102,7 @@ const useShapeMask = () => {
 
   return {
     hasShapeMask,
-    shapeMaskElements,
+    getShapeMaskElements,
     addShapeMask,
     removeShapeMask,
   };
