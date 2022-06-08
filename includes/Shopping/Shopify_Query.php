@@ -307,9 +307,7 @@ QUERY;
 			}
 		}
 
-		$result = $this->get_remote_products( $search_term, $after, $per_page, $orderby, $order );
-
-		return $result;
+		return $this->get_remote_products( $search_term, $after, $per_page, $orderby, $order );
 	}
 
 	/**
