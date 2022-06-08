@@ -278,7 +278,7 @@ QUERY;
 	/**
 	 * Get cache key for properties.
 	 *
-	 * @since 1.21.0
+	 * @since 1.22.0
 	 *
 	 * @param string $search_term  Search term to filter products by.
 	 * @param string $after        The cursor to retrieve nodes after in the connection.
@@ -296,7 +296,7 @@ QUERY;
 	/**
 	 * Remotely fetches all products from the store.
 	 *
-	 * @since 1.21.0
+	 * @since 1.22.0
 	 *
 	 * @param string $search_term Search term to filter products by.
 	 * @param int    $page        Number of page for paginated requests.
