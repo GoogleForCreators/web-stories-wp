@@ -34,9 +34,8 @@ const useShapeMask = (element) => {
 
   const insertElement = useInsertElement();
 
-  const hasShapeMask = element &&
-    element?.type === 'image' &&
-    element?.mask?.type !== MaskTypes.RECTANGLE;
+  const hasShapeMask =
+    element?.type === 'image' && element?.mask?.type !== MaskTypes.RECTANGLE;
 
   const removeShapeMask = useCallback(() => {
     if (!element) {
