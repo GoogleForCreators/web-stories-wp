@@ -69,26 +69,24 @@ class WooCommerce_Query implements Product_Query {
 		if ( ! $status['installed'] ) {
 			return new WP_Error( 'rest_woocommerce_not_installed', __( 'WooCommerce is not installed.', 'web-stories' ), [ 'status' => 400 ] );
 		}
-	  
+
 		if ( ! $status['active'] ) {
 			return new WP_Error( 'rest_woocommerce_not_activated', __( 'WooCommerce is not activated. Please activate it again try again.', 'web-stories' ), [ 'status' => 400 ] );
 		}
-		 
-		$products = [];
 
-		$wc_args = [];
-
+		$args = [
+			'status'   => 'publish',
+			'page'     => $page,
+			'limit'    => $per_page,
+			's'        => $search_term,
+			'orderby'  => $orderby,
+			'order'    => $order,
+			'paginate' => true,
+		];
 		if ( 'price' === $orderby ) {
 			$wc_query = new WC_Query();
 			$wc_args  = $wc_query->get_catalog_ordering_args( $orderby, strtoupper( $order ) );
-		}
-
-
-		$wc_args = [];
-
-		if ( 'price' === $orderby ) {
-			$wc_query = new WC_Query();
-			$wc_args  = $wc_query->get_catalog_ordering_args( $orderby, strtoupper( $order ) );
+			$args     = array_merge( $args, $wc_args );
 		}
 
 		/**
@@ -96,20 +94,7 @@ class WooCommerce_Query implements Product_Query {
 		 *
 		 * @var \stdClass $product_query
 		 */
-		$product_query = wc_get_products(
-			array_merge(
-				[
-					'status'   => 'publish',
-					'page'     => $page,
-					'limit'    => $per_page,
-					's'        => $search_term,
-					'orderby'  => $orderby,
-					'order'    => $order,
-					'paginate' => true,
-				],
-				$wc_args
-			)
-		);
+		$product_query = wc_get_products( $args );
 
 		$has_next_page = ( $product_query->max_num_pages > $page );
 
@@ -132,6 +117,7 @@ class WooCommerce_Query implements Product_Query {
 		 */
 		_prime_post_caches( $products_image_ids, false, true );
 
+		$products = [];
 		foreach ( $wc_products as $product ) {
 
 			$images = array_map(
