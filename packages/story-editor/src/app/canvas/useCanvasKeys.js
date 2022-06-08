@@ -22,9 +22,11 @@ import { trackEvent } from '@googleforcreators/tracking';
 import {
   useGlobalKeyDownEffect,
   getKeyboardMovement,
+  useSnackbar,
 } from '@googleforcreators/design-system';
 import { STORY_ANIMATION_STATE } from '@googleforcreators/animation';
 import { getDefinitionForType } from '@googleforcreators/elements';
+import { __, sprintf } from '@googleforcreators/i18n';
 
 /**
  * Internal dependencies
@@ -51,6 +53,7 @@ function useCanvasKeys(ref) {
     currentPageNumber,
     animationState,
     updateAnimationState,
+    currentPageProductIds,
   } = useStory(
     ({
       state: {
@@ -81,9 +84,14 @@ function useCanvasKeys(ref) {
         setSelectedElementsById,
         animationState,
         updateAnimationState,
+        currentPageProductIds: currentPage?.elements
+          ?.filter(({ type }) => type === 'product')
+          .map(({ product }) => product?.productId),
       };
     }
   );
+
+  const showSnackbar = useSnackbar(({ showSnackbar }) => showSnackbar);
 
   const { setHighlights } = useHighlights(({ setHighlights }) => ({
     setHighlights,
@@ -227,10 +235,32 @@ function useCanvasKeys(ref) {
       return;
     }
 
+    for (const { type, product } of selectedElements) {
+      if (
+        type === 'product' &&
+        product?.productId &&
+        currentPageProductIds.includes(product.productId)
+      ) {
+        showSnackbar({
+          message: sprintf(
+            /* translators: %s: product title. */
+            __('Product "%s" already exists on the page.', 'web-stories'),
+            product.productTitle
+          ),
+          timeout: 1000,
+        });
+      }
+    }
+
     duplicateElementsById({
       elementIds: selectedElements.map((element) => element.id),
     });
-  }, [duplicateElementsById, selectedElements]);
+  }, [
+    duplicateElementsById,
+    selectedElements,
+    currentPageProductIds,
+    showSnackbar,
+  ]);
 
   useGlobalKeyDownEffect('clone', () => cloneHandler(), [cloneHandler]);
 
