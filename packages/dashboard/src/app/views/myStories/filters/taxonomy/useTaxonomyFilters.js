@@ -118,14 +118,17 @@ function useTaxonomyFilters() {
       query: queryTaxonomyTerms,
       placeholder: sprintf(
         /* translators: All Taxonomies label*/
+        '%s',
         taxonomy.labels.allItems
       ),
       ariaLabel: sprintf(
         /* translators: Filter by Taxonomy label*/
+        '%s',
         taxonomy.labels.filterByItem
       ),
       searchResultsLabel: sprintf(
         /* translators: Search Taxonomy label*/
+        '%s',
         taxonomy.labels.searchItems
       ),
     }));
