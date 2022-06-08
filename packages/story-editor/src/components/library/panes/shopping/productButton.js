@@ -30,6 +30,7 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import Tooltip from '../../../tooltip';
+import { noop } from '../../../../utils/noop';
 
 const Checkmark = styled(Icons.Checkmark)`
   width: 16px !important;
@@ -107,8 +108,6 @@ function ProductButton({ product, onClick, onFocus, isOnPage }) {
   } else {
     ariaLabel = ADD_PRODUCT_TEXT;
   }
-
-  const noop = () => {};
 
   return (
     <TooltipWrapper hasImage={hasImage}>
