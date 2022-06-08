@@ -27,8 +27,9 @@ import {
   themeHelpers,
   Text,
   THEME_CONSTANTS,
+  Input,
 } from '@googleforcreators/design-system';
-import { useRef, memo } from '@googleforcreators/react';
+import { useRef, memo, useState } from '@googleforcreators/react';
 import {
   getDefinitionForType,
   getLayerName,
@@ -39,7 +40,7 @@ import { useFeature } from 'flagged';
  * Internal dependencies
  */
 import StoryPropTypes from '../../../../types';
-import { useStory } from '../../../../app';
+import { useStory, useCanvas } from '../../../../app';
 import useCORSProxy from '../../../../utils/useCORSProxy';
 import usePerformanceTracking from '../../../../utils/usePerformanceTracking';
 import { TRACKING_EVENTS } from '../../../../constants';
@@ -157,11 +158,50 @@ const LayerButton = styled(Button).attrs({
   }
 `;
 
+const LayerInputWrapper = styled.div`
+  display: grid;
+  grid-template-columns: 23px 1fr;
+  height: 100%;
+  width: 100%;
+  padding-left: 12px;
+  padding-right: 10px;
+
+  :hover {
+    background: ${({ theme }) => theme.colors.interactiveBg.tertiaryHover};
+  }
+  :hover,
+  :hover + * {
+    --background-color: ${({ theme }) =>
+      theme.colors.interactiveBg.tertiaryHover};
+    --background-color-opaque: ${({ theme }) =>
+      rgba(theme.colors.interactiveBg.tertiaryHover, 0)};
+  }
+`;
+
+const LayerInput = styled(Input)`
+  overflow: visible;
+
+  div {
+    height: 100%;
+  }
+`;
+
 const LayerIconWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
   color: ${({ theme }) => theme.colors.fg.primary};
+
+  :hover {
+    background: ${({ theme }) => theme.colors.interactiveBg.tertiaryHover};
+  }
+  :hover,
+  :hover + * {
+    --background-color: ${({ theme }) =>
+      theme.colors.interactiveBg.tertiaryHover};
+    --background-color-opaque: ${({ theme }) =>
+      rgba(theme.colors.interactiveBg.tertiaryHover, 0)};
+  }
 `;
 
 const LayerDescription = styled.div`
@@ -173,6 +213,11 @@ const LayerDescription = styled.div`
   margin-left: 0;
   text-align: left;
   color: ${({ theme }) => theme.colors.fg.primary};
+`;
+
+const LayerInputForm = styled(LayerDescription).attrs({ as: 'form' })`
+  overflow: visible;
+  margin-left: 2px;
 `;
 
 const LayerText = styled(Text).attrs({
@@ -279,6 +324,8 @@ function preventReorder(e) {
 }
 
 function Layer({ element }) {
+  const layerName = getLayerName(element);
+  const [newLayerName, setNewLayerName] = useState(layerName);
   const isLayerLockingEnabled = useFeature('layerLocking');
   const { LayerIcon, hasDuplicateMenu } = getDefinitionForType(element.type);
   const { isSelected, handleClick } = useLayerSelection(element);
@@ -295,6 +342,13 @@ function Layer({ element }) {
     currentPageBackgroundColor:
       !isDefaultBackground || state.currentPage?.backgroundColor,
   }));
+
+  const { renamableLayer, setRenamableLayer } = useCanvas(
+    ({ state, actions }) => ({
+      renamableLayer: state.renamableLayer,
+      setRenamableLayer: actions.setRenamableLayer,
+    })
+  );
 
   const { getProxiedUrl } = useCORSProxy();
   const layerRef = useRef(null);
@@ -317,40 +371,108 @@ function Layer({ element }) {
 
   const LockIcon = element.isLocked ? Icons.LockClosed : Icons.LockOpen;
 
-  const layerName = getLayerName(element);
+  const handleChange = (evt) => {
+    setNewLayerName(evt.target.value);
+  };
+
+  const handleKeyDown = (evt) => {
+    if (evt.key === 'Escape') {
+      setNewLayerName(layerName);
+      setRenamableLayer(null);
+    }
+  };
+
+  const updateLayerName = () => {
+    setRenamableLayer(null);
+    const trimmedLayerName = newLayerName.trim();
+    // Don't update name if trimmed layer name is empty.
+    // This means that submitting an empty name will exit renaming, and the
+    // layer name will revert to whatever it was before, ignoring the empty input.
+    if (!trimmedLayerName) {
+      setNewLayerName(layerName);
+    } else {
+      updateElementById({
+        elementId: element.id,
+        properties: { layerName: trimmedLayerName },
+      });
+    }
+  };
+
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+    updateLayerName();
+  };
+
+  // We need to prevent the pointer-down event from propagating to the
+  // reorderable when you click on the input. If not, the reorderable will
+  // move focus, which will blur the input, which will cancel renaming.
+  const stopPropagation = (evt) => evt.stopPropagation();
+
+  const isLayerNamingEnabled = useFeature('layerNaming');
+  const isRenameable = renamableLayer?.elementId === element.id;
+
+  const layerGroupName = element.groupId
+    ? `${__('Group', 'web-stories')} ${element.groupId.substr(-3)}: `
+    : null;
 
   return (
     <LayerContainer>
-      <LayerButton
-        ref={layerRef}
-        id={layerId}
-        onClick={handleClick}
-        isSelected={isSelected}
-      >
-        <LayerIconWrapper>
-          <LayerIcon
-            element={element}
-            getProxiedUrl={getProxiedUrl}
-            currentPageBackgroundColor={currentPageBackgroundColor}
-          />
-        </LayerIconWrapper>
-        <LayerDescription>
-          <LayerContentContainer>
-            <LayerText>{layerName}</LayerText>
-          </LayerContentContainer>
-          {element.isBackground && (
-            <IconWrapper>
-              <Icons.LockFilledClosed />
-            </IconWrapper>
-          )}
-          {element.isLocked && isLayerLockingEnabled && (
-            <IconWrapper aria-label={__('Locked', 'web-stories')}>
-              <Icons.LockClosed />
-            </IconWrapper>
-          )}
-        </LayerDescription>
-      </LayerButton>
-      {!element.isBackground && (
+      {isRenameable && isLayerNamingEnabled ? (
+        <LayerInputWrapper>
+          <LayerIconWrapper>
+            <LayerIcon
+              element={element}
+              getProxiedUrl={getProxiedUrl}
+              currentPageBackgroundColor={currentPageBackgroundColor}
+            />
+          </LayerIconWrapper>
+          <LayerInputForm onSubmit={handleSubmit}>
+            <LayerInput
+              tabIndex={-1}
+              aria-label={__('Layer Name', 'web-stories')}
+              value={newLayerName}
+              onChange={handleChange}
+              onKeyDown={handleKeyDown}
+              onBlur={updateLayerName}
+              onPointerDown={stopPropagation}
+              hasFocus
+            />
+            <button hidden />
+          </LayerInputForm>
+        </LayerInputWrapper>
+      ) : (
+        <LayerButton
+          ref={layerRef}
+          id={layerId}
+          onClick={handleClick}
+          isSelected={isSelected}
+        >
+          <LayerIconWrapper>
+            <LayerIcon
+              element={element}
+              getProxiedUrl={getProxiedUrl}
+              currentPageBackgroundColor={currentPageBackgroundColor}
+            />
+          </LayerIconWrapper>
+          <LayerDescription>
+            <LayerContentContainer>
+              <LayerText>{layerGroupName}</LayerText>
+              <LayerText>{layerName}</LayerText>
+            </LayerContentContainer>
+            {element.isBackground && (
+              <IconWrapper>
+                <Icons.LockFilledClosed />
+              </IconWrapper>
+            )}
+            {element.isLocked && isLayerLockingEnabled && (
+              <IconWrapper aria-label={__('Locked', 'web-stories')}>
+                <Icons.LockClosed />
+              </IconWrapper>
+            )}
+          </LayerDescription>
+        </LayerButton>
+      )}
+      {!element.isBackground && !isRenameable && (
         <ActionsContainer>
           <Tooltip title={__('Delete Layer', 'web-stories')} hasTail isDelayed>
             <LayerAction
