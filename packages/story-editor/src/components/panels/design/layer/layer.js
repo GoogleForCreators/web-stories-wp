@@ -352,8 +352,7 @@ function Layer({ element }) {
     })
   );
 
-  const { hasShapeMask, removeShapeMask } = useShapeMask();
-  const hasMask = hasShapeMask(element);
+  const { hasShapeMask, removeShapeMask } = useShapeMask(element);
   const removeMaskTitle = __('Remove Mask', 'web-stories');
   const { getProxiedUrl } = useCORSProxy();
   const layerRef = useRef(null);
@@ -483,12 +482,12 @@ function Layer({ element }) {
       )}
       {!element.isBackground && !isRenameable && (
         <ActionsContainer>
-          {hasMask && (
+          {hasShapeMask && (
             <Tooltip title={removeMaskTitle} hasTail isDelayed>
               <LayerAction
                 aria-label={removeMaskTitle}
                 aria-describedby={layerId}
-                onClick={() => removeShapeMask(element)}
+                onClick={removeShapeMask}
               >
                 <Icons.RemoveMask />
               </LayerAction>

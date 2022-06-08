@@ -25,7 +25,7 @@ import { useFeature } from 'flagged';
  */
 import { RIGHT_CLICK_MENU_LABELS } from '../constants';
 import { useElementActions } from '../hooks';
-import useShapeMask from '../../../utils/useShapeMask';
+import useShapeMaskElements from '../../../utils/useShapeMaskElements';
 import { useStory } from '../..';
 
 function MultipleElementsMenu() {
@@ -34,7 +34,7 @@ function MultipleElementsMenu() {
     handleGroupSelectedElements,
     handleUngroupSelectedElements,
   } = useElementActions();
-  const { addShapeMask, getShapeMaskElements } = useShapeMask();
+  const { addShapeMask, getShapeMaskElements } = useShapeMaskElements();
   const { shape, image } = getShapeMaskElements();
   const isLayerGroupingEnabled = useFeature('layerGrouping');
   const { selectedElements } = useStory(({ state }) => ({

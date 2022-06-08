@@ -26,10 +26,9 @@ import { useStory } from '../app';
 import useInsertElement from '../components/canvas/useInsertElement';
 import objectPick from '../utils/objectPick';
 
-const useShapeMask = () => {
-  const { selectedElements, updateElementById, combineElements } = useStory(
-    ({ state, actions }) => ({
-      selectedElements: state.selectedElements,
+const useShapeMask = (element) => {
+  const { updateElementById, } = useStory(
+    ({ actions }) => ({
       updateElementById: actions.updateElementById,
       combineElements: actions.combineElements,
     })
@@ -37,73 +36,36 @@ const useShapeMask = () => {
 
   const insertElement = useInsertElement();
 
-  const hasShapeMask = (element) =>
+  const hasShapeMask = () =>
     element &&
     element?.type === 'image' &&
     element?.mask?.type !== MaskTypes.RECTANGLE;
 
-  /**
-   * Retrieve shape and image from selected elements.
-   */
-  const getShapeMaskElements = useCallback(() => {
-    if (selectedElements?.length > 2) {
-      return {};
+  const removeShapeMask = useCallback(() => {
+
+    if (!element) {
+      return;
     }
 
-    let image, shape;
-
-    selectedElements.forEach((element) => {
-      element.type === 'shape' && (shape = element);
-      element.type === 'image' && (image = element);
+    const SHAPE_PROPS = ['x', 'y', 'width', 'height', 'scale', 'rotationAngle'];
+    const shapeProps = objectPick(element, SHAPE_PROPS);
+    insertElement('shape', {
+      ...shapeProps,
+      mask: {
+        type: element.mask.type,
+      },
     });
 
-    if (shape && image) {
-      return { shape, image };
-    }
-
-    return {};
-  }, [selectedElements]);
-
-  /**
-   * Apply shape mask to element.
-   *
-   * @param {Object} shape Element to use for the mask.
-   * @param {Object} image Element that the mask will be applied to.
-   */
-  const addShapeMask = (shape, image) => {
-    combineElements({
-      firstElement: image,
-      secondId: shape.id,
+    updateElementById({
+      elementId: element.id,
+      properties: { mask: { type: MaskTypes.RECTANGLE } },
     });
-  };
-
-  const removeShapeMask = useCallback(
-    (element) => {
-      if (!element) {
-        return;
-      }
-
-      const SHAPE_PROPS = ['x', 'y', 'width', 'height', 'scale', 'rotationAngle'];
-      const shapeProps = objectPick(element, SHAPE_PROPS);
-      insertElement('shape', {
-        ...shapeProps,
-        mask: {
-          type: element.mask.type,
-        },
-      });
-
-      updateElementById({
-        elementId: element.id,
-        properties: { mask: { type: MaskTypes.RECTANGLE } },
-      });
-    },
+  },
     [insertElement, updateElementById]
   );
 
   return {
     hasShapeMask,
-    getShapeMaskElements,
-    addShapeMask,
     removeShapeMask,
   };
 };

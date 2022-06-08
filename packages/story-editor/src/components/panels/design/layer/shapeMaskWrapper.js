@@ -13,10 +13,9 @@ const MaskedIconWrapper = styled.div`
 `;
 
 function ShapeMaskWrapper({ element, children }) {
-    const { hasShapeMask } = useShapeMask();
-    const hasMask = hasShapeMask(element);
+    const { hasShapeMask } = useShapeMask(element);
 
-    if (!hasMask) {
+    if (!hasShapeMask) {
         return children;
     }
 

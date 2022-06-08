@@ -68,7 +68,7 @@ function ForegroundMediaMenu({ parentMenuRef }) {
     handleBringToFront,
   } = useLayerActions();
 
-  const { hasShapeMask, removeShapeMask } = useShapeMask();
+  const { hasShapeMask, removeShapeMask } = useShapeMask(selectedElement);
 
   const canTranscodeResource = useLocalMedia(
     (value) => value.state.canTranscodeResource
@@ -147,8 +147,8 @@ function ForegroundMediaMenu({ parentMenuRef }) {
       </ContextMenuComponents.MenuButton>
 
       <ContextMenuComponents.MenuButton
-        disabled={!hasShapeMask(selectedElement)}
-        onClick={() => removeShapeMask(selectedElement)}
+        disabled={!hasShapeMask}
+        onClick={removeShapeMask}
       >
         {RIGHT_CLICK_MENU_LABELS.REMOVE_MASK}
       </ContextMenuComponents.MenuButton>
