@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import { sprintf } from '@googleforcreators/i18n';
 import {
   useCallback,
   useEffect,
@@ -115,9 +116,18 @@ function useTaxonomyFilters() {
       primaryOptions: taxonomy.data,
       queriedOptions: taxonomy.data,
       query: queryTaxonomyTerms,
-      placeholder: taxonomy.labels.allItems,
-      ariaLabel: taxonomy.labels.filterByItem,
-      searchResultsLabel: taxonomy.labels.searchItems,
+      placeholder: sprintf(
+        /* translators: All Taxonomies label*/
+        taxonomy.labels.allItems
+      ),
+      ariaLabel: sprintf(
+        /* translators: Filter by Taxonomy label*/
+        taxonomy.labels.filterByItem
+      ),
+      searchResultsLabel: sprintf(
+        /* translators: Search Taxonomy label*/
+        taxonomy.labels.searchItems
+      ),
     }));
   }, [queryTaxonomyTerms, taxonomies]);
 
