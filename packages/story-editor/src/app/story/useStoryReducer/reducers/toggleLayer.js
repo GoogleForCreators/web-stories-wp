@@ -19,16 +19,20 @@
 import toggleElement from './toggleElement';
 import setSelectedElements from './setSelectedElements';
 
-function toggleLayer(state, { elementId, metaKey, shiftKey }) {
+function toggleLayer(
+  state,
+  { elementId, metaKey, shiftKey, withLinked = false }
+) {
   // Meta pressed. Toggle this layer in the selection.
   if (metaKey) {
-    return toggleElement(state, { elementId });
+    return toggleElement(state, { elementId, withLinked });
   }
 
   // No special key pressed - just selected this layer and nothing else.
   if (state.selection.length <= 0 || !shiftKey) {
     return setSelectedElements(state, {
       elementIds: [elementId],
+      withLinked,
     });
   }
 
@@ -49,6 +53,7 @@ function toggleLayer(state, { elementId, metaKey, shiftKey }) {
 
   return setSelectedElements(state, {
     elementIds,
+    withLinked,
   });
 }
 

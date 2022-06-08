@@ -183,7 +183,14 @@ class Publisher_Logos_Controller extends REST_Controller implements HasRequireme
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
 	public function get_items( $request ) {
-		$publisher_logos = $this->filter_publisher_logos( (array) $this->settings->get_setting( $this->settings::SETTING_NAME_PUBLISHER_LOGOS, [] ) );
+		/**
+		 * Publisher logo IDs.
+		 *
+		 * @var int[] $publisher_logos_ids
+		 */
+		$publisher_logos_ids = $this->settings->get_setting( $this->settings::SETTING_NAME_PUBLISHER_LOGOS, [] );
+		_prime_post_caches( $publisher_logos_ids );
+		$publisher_logos = $this->filter_publisher_logos( $publisher_logos_ids );
 		$results         = [];
 
 		foreach ( $publisher_logos as $logo ) {
