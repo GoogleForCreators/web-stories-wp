@@ -223,18 +223,18 @@ class Shopify_Query extends DependencyInjectedTestCase {
 							'pageInfo' => [ 'hasNextPage' => false ],
 						],
 					],
-				] 
-			) 
+				]
+			)
 		);
 		$actual = $this->instance->get_search( '', 1, $per_page, $orderby, $order );
 
 		$this->assertNotWPError( $actual );
-		$this->assertSameSets(
+		$this->assertEqualSets(
 			[
 				'products'      => [],
 				'has_next_page' => false,
 			],
-			$actual 
+			$actual
 		);
 		$this->assertSame( 0, $this->request_count );
 	}
