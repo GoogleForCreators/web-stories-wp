@@ -51,6 +51,7 @@ function Popup({
   refCallback = noop,
   zIndex = DEFAULT_POPUP_Z_INDEX,
   ignoreMaxOffsetY,
+  offsetOverride = false,
 }) {
   const {
     topOffset = DEFAULT_TOP_OFFSET,
@@ -81,6 +82,7 @@ function Popup({
             isRTL,
             topOffset,
             ignoreMaxOffsetY,
+            offsetOverride,
           })
         : {};
       const { height, x, width, right } = popup.current
@@ -137,6 +139,7 @@ function Popup({
       topOffset,
       leftOffset,
       ignoreMaxOffsetY,
+      offsetOverride,
     ]
   );
 
@@ -212,6 +215,7 @@ Popup.propTypes = {
   refCallback: PropTypes.func,
   zIndex: PropTypes.number,
   ignoreMaxOffsetY: PropTypes.bool,
+  offsetOverride: PropTypes.bool,
 };
 
 export { Popup, PLACEMENT };
