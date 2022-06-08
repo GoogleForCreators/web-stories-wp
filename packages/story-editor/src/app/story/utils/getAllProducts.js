@@ -13,18 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * External dependencies
+ */
+import { ELEMENT_TYPES } from '@googleforcreators/elements';
+
 function getAllProducts(pages) {
   const products = pages
     .map((page) =>
       page?.elements
-        ?.filter(({ type }) => type === 'product')
+        ?.filter(({ type }) => type === ELEMENT_TYPES.PRODUCT)
         .map(({ product }) => product)
     )
     .flat()
-    .filter(Boolean);
+    .filter(Boolean)
+    .map((product) => JSON.stringify(product));
 
-  const list = products.map((product) => JSON.stringify(product));
-  return Array.from(new Set(list)).map((product) => JSON.parse(product));
+  return Array.from(new Set(products)).map((product) => JSON.parse(product));
 }
 
 export default getAllProducts;
