@@ -250,7 +250,6 @@ function useCanvasKeys(ref) {
             __('Product "%s" already exists on the page.', 'web-stories'),
             product.productTitle
           ),
-          timeout: 1000,
         });
       }
     }
