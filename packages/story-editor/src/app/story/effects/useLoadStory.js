@@ -56,7 +56,11 @@ function loadStory(storyId, post, restore, clearHistory) {
     terms,
   } = post;
 
-  const date = origDate === modified ? null : origDate;
+  const date =
+    ['draft', 'auto-draft', 'pending'].includes(status) &&
+    (origDate === modified || !origDate)
+      ? null
+      : origDate;
 
   const [prefix, suffix] = permalinkTemplate
     ? permalinkTemplate.split(/%(?:postname|pagename)%/)
