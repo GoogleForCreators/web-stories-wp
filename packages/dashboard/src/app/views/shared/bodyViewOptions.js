@@ -118,6 +118,7 @@ export default function BodyViewOptions({
                     placeholder={filter.placeholder}
                     primaryOptions={filter.primaryOptions}
                     options={filter.queriedOptions}
+                    offsetOverride
                   />
                 </StorySortDropdownContainer>
               ))
