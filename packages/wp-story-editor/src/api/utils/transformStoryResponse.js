@@ -19,7 +19,7 @@
 import { snakeToCamelCaseObjectKeys } from '@web-stories-wp/wp-utils';
 
 function transformStoryResponse(post) {
-  const { _embedded: embedded = {}, _links: links = {}, meta, ...rest } = post;
+  const { _embedded: embedded = {}, _links: links = {}, ...rest } = post;
 
   // TODO: Make author, lockUser, etc. null if absent, instead of these "empty" objects.
   const story = {
@@ -36,7 +36,6 @@ function transformStoryResponse(post) {
         avatar: embedded?.['wp:lockuser']?.[0].avatar_urls?.['96'] || '',
       },
     },
-    products: meta?.['web_stories_products'] || [],
     featuredMedia: {
       id: embedded?.['wp:featuredmedia']?.[0].id || 0,
       height: embedded?.['wp:featuredmedia']?.[0]?.media_details?.height || 0,

@@ -52,7 +52,6 @@ function StoryProvider({ storyId, initialEdits, children }) {
     animationState,
     capabilities,
     copiedElementState,
-    products,
   } = reducerState;
 
   useEffect(() => setHashPageId(current), [current, setHashPageId]);
@@ -121,7 +120,6 @@ function StoryProvider({ storyId, initialEdits, children }) {
       pages,
       story,
       updateStory,
-      products,
     });
 
   const { autoSave, isAutoSaving } = useAutoSave({
