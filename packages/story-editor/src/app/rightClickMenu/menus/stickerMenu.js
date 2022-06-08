@@ -32,7 +32,7 @@ import {
 } from '../constants';
 import { useElementActions, useLayerActions } from '../hooks';
 import useLayerSelect from '../useLayerSelect';
-import { LayerLock } from '../items';
+import { LayerLock, LayerName, LayerUngroup } from '../items';
 import useRightClickMenu from '../useRightClickMenu';
 import {
   DEFAULT_DISPLACEMENT,
@@ -144,7 +144,9 @@ function StickerMenu({ parentMenuRef }) {
         </ContextMenuComponents.MenuShortcut>
       </ContextMenuComponents.MenuButton>
 
+      <LayerName />
       <LayerLock />
+      <LayerUngroup />
     </>
   );
 }

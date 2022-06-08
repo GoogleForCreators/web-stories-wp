@@ -48,7 +48,7 @@ function useAlignment({ selectedElements, updateElements, isFloatingMenu }) {
   const selectedElementsWithFrame = useMemo(
     () =>
       selectedElements.map((item) => {
-        const { id, x, y, width, height, rotationAngle } = item;
+        const { id, groupId, x, y, width, height, rotationAngle } = item;
         let frameX = x;
         let frameY = y;
         let frameWidth = width;
@@ -68,6 +68,7 @@ function useAlignment({ selectedElements, updateElements, isFloatingMenu }) {
         }
         return {
           id,
+          groupId,
           x,
           y,
           width,
@@ -80,9 +81,17 @@ function useAlignment({ selectedElements, updateElements, isFloatingMenu }) {
       }),
     [selectedElements]
   );
-  // Set boundRect with pageSize when there is only one element selected
+  // Set boundRect with pageSize when there is only one element selected or only group is selected
+  const selectedGroupId = selectedElements[0].groupId;
+  const isOnlyGroupSelected =
+    selectedGroupId &&
+    selectedElements.every(
+      (el) => el.groupId && el.groupId === selectedGroupId
+    );
   const boundRect =
-    selectedElements.length === 1 ? PAGE_RECT : getBoundRect(selectedElements);
+    selectedElements.length === 1 || isOnlyGroupSelected
+      ? PAGE_RECT
+      : getBoundRect(selectedElements);
 
   const handleTrackEvent = (direction) => {
     trackEvent(isFloatingMenu ? 'floating_menu' : 'design_panel', {
@@ -94,7 +103,10 @@ function useAlignment({ selectedElements, updateElements, isFloatingMenu }) {
   const handleAlign = (direction) => {
     handleTrackEvent(direction);
     updateElements((properties) => {
-      const { id } = properties;
+      const { id, groupId } = properties;
+      const groupRect = groupId
+        ? getBoundRect(selectedElements.filter((el) => el.groupId === groupId))
+        : null;
 
       const element = selectedElementsWithFrame.find((item) => item.id === id);
       const {
@@ -107,20 +119,28 @@ function useAlignment({ selectedElements, updateElements, isFloatingMenu }) {
         direction === ALIGNMENT.LEFT || direction === ALIGNMENT.RIGHT
           ? (frameWidth - width) / 2
           : (frameHeight - height) / 2;
+      const offsetInGroup = groupId
+        ? direction === ALIGNMENT.LEFT || direction === ALIGNMENT.RIGHT
+          ? element.frameX - groupRect.startX
+          : element.frameY - groupRect.startY
+        : 0;
+
+      const calcWidth = groupId ? groupRect.width : width;
+      const calcHeight = groupId ? groupRect.height : height;
 
       if (direction === ALIGNMENT.LEFT || direction === ALIGNMENT.RIGHT) {
         return {
           x:
             direction === ALIGNMENT.LEFT
-              ? boundRect.startX + offset
-              : boundRect.endX - width - offset,
+              ? boundRect.startX + offset + offsetInGroup
+              : boundRect.endX - calcWidth - offset + offsetInGroup,
         };
       }
       return {
         y:
           direction === ALIGNMENT.TOP
-            ? boundRect.startY + offset
-            : boundRect.endY - height - offset,
+            ? boundRect.startY + offset + offsetInGroup
+            : boundRect.endY - calcHeight - offset + offsetInGroup,
       };
     });
   };
@@ -129,9 +149,15 @@ function useAlignment({ selectedElements, updateElements, isFloatingMenu }) {
     handleTrackEvent('center');
     const centerX = (boundRect.endX + boundRect.startX) / 2;
     updateElements((properties) => {
-      const { width } = properties;
+      const { id, width, groupId } = properties;
+      const groupRect = groupId
+        ? getBoundRect(selectedElements.filter((el) => el.groupId === groupId))
+        : null;
+      const calcWidth = groupId ? groupRect.width : width;
+      const element = selectedElementsWithFrame.find((item) => item.id === id);
+      const offsetInGroup = groupId ? element.frameX - groupRect.startX : 0;
       return {
-        x: centerX - width / 2,
+        x: centerX - calcWidth / 2 + offsetInGroup,
       };
     });
   };
@@ -140,9 +166,15 @@ function useAlignment({ selectedElements, updateElements, isFloatingMenu }) {
     handleTrackEvent('middle');
     const centerY = (boundRect.endY + boundRect.startY) / 2;
     updateElements((properties) => {
-      const { height } = properties;
+      const { id, height, groupId } = properties;
+      const groupRect = groupId
+        ? getBoundRect(selectedElements.filter((el) => el.groupId === groupId))
+        : null;
+      const calcHeight = groupId ? groupRect.height : height;
+      const element = selectedElementsWithFrame.find((item) => item.id === id);
+      const offsetInGroup = groupId ? element.frameY - groupRect.startY : 0;
       return {
-        y: centerY - height / 2,
+        y: centerY - calcHeight / 2 + offsetInGroup,
       };
     });
   };
