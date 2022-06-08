@@ -145,7 +145,6 @@ class Stories_Taxonomies_Controller extends WP_REST_Taxonomies_Controller implem
 		$query_params['hierarchical'] = [
 			'description' => __( 'Whether to show only hierarchical taxonomies.', 'web-stories' ),
 			'type'        => 'boolean',
-			'default'     => false,
 		];
 
 		return $query_params;
