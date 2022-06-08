@@ -116,13 +116,15 @@ class Products_Controller extends DependencyInjectedRestTestCase {
 	public function test_permission(): void {
 		$this->controller->register();
 
+		$per_page = 10;
 		wp_set_current_user( self::$editor );
 		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/products' );
 		$request->set_param( 'search', 'test' );
+		$request->set_param( 'per_page', $per_page );
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
 
-		$this->assertCount( 10, $data );
+		$this->assertCount( $per_page, $data );
 
 		foreach ( $data as $product ) {
 			$this->assertArrayHasKey( 'productId', $product );
@@ -138,14 +140,16 @@ class Products_Controller extends DependencyInjectedRestTestCase {
 	public function test_fields(): void {
 		$this->controller->register();
 
+		$per_page = 10;
 		wp_set_current_user( self::$editor );
 		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/products' );
 		$request->set_param( 'search', 'test' );
 		$request->set_param( '_fields', 'productId' );
+		$request->set_param( 'per_page', $per_page );
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
 
-		$this->assertCount( 10, $data );
+		$this->assertCount( $per_page, $data );
 
 		foreach ( $data as $product ) {
 			$this->assertArrayHasKey( 'productId', $product );
@@ -190,14 +194,15 @@ class Products_Controller extends DependencyInjectedRestTestCase {
 	 */
 	public function test_json_schema_validation(): void {
 		$this->controller->register();
-
+		$per_page = 10;
 		wp_set_current_user( self::$editor );
 		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/products' );
 		$request->set_param( 'search', 'test' );
+		$request->set_param( 'per_page', $per_page );
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
 
-		$this->assertCount( 10, $data );
+		$this->assertCount( $per_page, $data );
 
 		foreach ( $data as $product ) {
 			$this->assertMatchesProductSchema( $product );

@@ -203,17 +203,48 @@ class Shopify_Query extends DependencyInjectedTestCase {
 	 */
 	public function test_fetch_remote_products_returns_from_transient(): void {
 		$search_term = '';
+		$after       = '';
+		$per_page    = 100;
 		$orderby     = 'date';
 		$order       = 'desc';
 
 		update_option( Settings::SETTING_NAME_SHOPIFY_HOST, 'example.myshopify.com' );
 		update_option( Settings::SETTING_NAME_SHOPIFY_ACCESS_TOKEN, '1234' );
-		set_transient( 'web_stories_shopify_data_' . md5( $search_term . '-' . $orderby . '-' . $order ), wp_json_encode( [ 'data' => [ 'products' => [ 'edges' => [] ] ] ] ) );
 
-		$actual = $this->instance->get_search( '', $orderby, $order );
+		$cache_key = $this->call_private_method(
+			$this->instance,
+			'get_cache_key',
+			[
+				$search_term,
+				$after,
+				$per_page,
+				$orderby,
+				$order,
+			] 
+		);
+		set_transient(
+			$cache_key,
+			wp_json_encode(
+				[
+					'data' => [
+						'products' => [
+							'edges'    => [],
+							'pageInfo' => [ 'hasNextPage' => false ],
+						],
+					],
+				]
+			)
+		);
+		$actual = $this->instance->get_search( $search_term, 1, $per_page, $orderby, $order );
 
 		$this->assertNotWPError( $actual );
-		$this->assertSame( [], $actual );
+		$this->assertEqualSets(
+			[
+				'products'      => [],
+				'has_next_page' => false,
+			],
+			$actual
+		);
 		$this->assertSame( 0, $this->request_count );
 	}
 
@@ -234,12 +265,13 @@ class Shopify_Query extends DependencyInjectedTestCase {
 		remove_filter( 'pre_http_request', [ $this, 'mock_response_default' ] );
 
 		$this->assertNotWPError( $actual );
-		$this->assertNotEmpty( $actual );
-		$this->assertCount( 3, $actual );
+		$this->assertArrayHasKey( 'products', $actual );
+		$this->assertNotEmpty( $actual['products'] );
+		$this->assertCount( 3, $actual['products'] );
 		$this->assertSame( 1, $this->request_count );
 		$this->assertStringContainsString( 'query: "title:*"', $this->request_body );
 
-		foreach ( $actual as $product ) {
+		foreach ( $actual['products'] as $product ) {
 			$this->assertInstanceOf( Product::class, $product );
 
 			$this->assertMatchesProductSchema( json_decode( wp_json_encode( $product ), true ) );
@@ -303,35 +335,36 @@ class Shopify_Query extends DependencyInjectedTestCase {
 		remove_filter( 'pre_http_request', [ $this, 'mock_response_no_results' ] );
 
 		$this->assertNotWPError( $actual );
-		$this->assertEmpty( $actual );
-		$this->assertCount( 0, $actual );
+		$this->assertArrayHasKey( 'products', $actual );
+		$this->assertEmpty( $actual['products'] );
+		$this->assertCount( 0, $actual['products'] );
 		$this->assertSame( 1, $this->request_count );
 		$this->assertStringContainsString( 'query: "title:*some search term*"', $this->request_body );
 	}
-	
+
 	/**
 	* @dataProvider data_test_get_search_sort_by_query
 	*/
 	public function data_test_get_search_sort_by_query(): array {
 		return [
 			'Default search'  => [
-				[ 'some search term', 'date', '' ],
+				[ 'some search term', 1, 100, 'date', '' ],
 				[ 'sortKey: CREATED_AT', 'reverse: true' ],
 			],
 			'Sort title asc'  => [
-				[ '', 'title', 'asc' ],
+				[ '', 1, 100, 'title', 'asc' ],
 				[ 'sortKey: TITLE', 'reverse: false' ],
 			],
 			'Sort title desc' => [
-				[ '', 'title', 'desc' ],
+				[ '', 1, 100, 'title', 'desc' ],
 				[ 'sortKey: TITLE', 'reverse: true' ],
 			],
 			'Sort price asc'  => [
-				[ '', 'price', 'asc' ],
+				[ '', 1, 100, 'price', 'asc' ],
 				[ 'sortKey: PRICE', 'reverse: false' ],
 			],
 			'Sort price desc' => [
-				[ '', 'price', 'desc' ],
+				[ '', 1, 100, 'price', 'desc' ],
 				[ 'sortKey: PRICE', 'reverse: true' ],
 			],
 		];
@@ -349,7 +382,7 @@ class Shopify_Query extends DependencyInjectedTestCase {
 		update_option( Settings::SETTING_NAME_SHOPIFY_HOST, 'example.myshopify.com' );
 		update_option( Settings::SETTING_NAME_SHOPIFY_ACCESS_TOKEN, '1234' );
 		add_filter( 'pre_http_request', [ $this, 'mock_response_no_results' ], 10, 2 );
-		$actual = $this->instance->get_search( $args[0], $args[1], $args[2] );
+		$actual = $this->instance->get_search( ...$args );
 		remove_filter( 'pre_http_request', [ $this, 'mock_response_no_results' ] );
 		$this->assertNotWPError( $actual );
 		$this->assertStringContainsString( $expected[0], $this->request_body );
