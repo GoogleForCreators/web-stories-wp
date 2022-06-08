@@ -104,6 +104,7 @@ export default function BodyViewOptions({
                 placeholder={__('Author', 'web-stories')}
                 primaryOptions={author.queriedAuthors}
                 options={author.queriedAuthors}
+                offsetOverride
               />
             </StorySortDropdownContainer>
           )}

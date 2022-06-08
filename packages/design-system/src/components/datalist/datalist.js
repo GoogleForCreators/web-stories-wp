@@ -72,6 +72,7 @@ const Container = styled.div`
  * @param {number} props.zIndex an override for default zIndex of popup
  * @param {string} props.title The title of the dialog (popup) container of the list.
  * @param {string} props.dropdownButtonLabel The label attached to the unexpanded datalist (button)
+ * @param {boolean} props.offsetOverride override popup offsets updates, use x and y offset based on anchor
  * @return {*} Render.
  */
 const Datalist = forwardRef(function Datalist(
@@ -98,6 +99,7 @@ const Datalist = forwardRef(function Datalist(
     containerStyleOverrides,
     title,
     dropdownButtonLabel,
+    offsetOverride = false,
     ...rest
   },
   ref
@@ -219,6 +221,7 @@ const Datalist = forwardRef(function Datalist(
           isOpen={isOpen}
           fillWidth={DEFAULT_WIDTH}
           zIndex={zIndex}
+          offsetOverride={offsetOverride}
         >
           {list}
         </Popup>
@@ -251,6 +254,7 @@ Datalist.propTypes = {
   listStyleOverrides: PropTypes.array,
   title: PropTypes.string,
   dropdownButtonLabel: PropTypes.string,
+  offsetOverride: PropTypes.bool,
 };
 
 export default Datalist;
