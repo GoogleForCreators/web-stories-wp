@@ -269,11 +269,11 @@ const LayerAction = styled(Button).attrs({
   padding: 0;
 
   /*
-  * all of our Icons right now have an embedded padding,
-  * however the new designs just disregard this embedded
-  * padding, so to accommodate, we'll make the icon its
-  * intended size and manually center it within the button.
-  */
+   * all of our Icons right now have an embedded padding,
+   * however the new designs just disregard this embedded
+   * padding, so to accommodate, we'll make the icon its
+   * intended size and manually center it within the button.
+   */
   svg {
     position: absolute;
     width: 32px;
@@ -284,9 +284,9 @@ const LayerAction = styled(Button).attrs({
   }
 
   /*
-  * override base button background color so we can receive the
-  * proper background color from the parent.
-  */
+   * override base button background color so we can receive the
+   * proper background color from the parent.
+   */
   && {
     transition: revert;
     background: var(--background-color);
