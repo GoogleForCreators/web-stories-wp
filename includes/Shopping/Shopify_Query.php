@@ -246,7 +246,6 @@ QUERY;
 		$result = json_decode( $body, true );
 		if ( isset( $result['errors'] ) ) {
 			$wp_error = new WP_Error();
-			
 			foreach ( $result['errors'] as $error ) {
 				$error_code = $error['extensions']['code'];
 				// https://shopify.dev/api/storefront#status_and_error_codes.
@@ -267,7 +266,7 @@ QUERY;
 						$wp_error->add( 'rest_unknown', __( 'Error fetching products from Shopify.', 'web-stories' ), [ 'status' => 500 ] );
 				}
 			}
-		
+
 			return $wp_error;
 		}
 
@@ -293,6 +292,7 @@ QUERY;
 	protected function fetch_remote_products( string $search_term, int $page, int $per_page, string $orderby, string $order ) {
 		$after = '';
 		if ( $page > 1 ) {
+			// Loop around all the pages, getting the endCursor of each page, until you get the last one.
 			for ( $i = 1; $i < $page; $i ++ ) {
 				$result = $this->get_remote_products( $search_term, $after, $per_page, $orderby, $order );
 				if ( is_wp_error( $result ) ) {
