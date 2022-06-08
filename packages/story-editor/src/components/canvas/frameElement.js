@@ -80,7 +80,7 @@ const Wrapper = styled.div`
   &:focus,
   &:active {
     outline-color: ${({ theme, hasMask }) =>
-      hasMask ? 'transparent' : theme.colors.border.selection};
+    hasMask ? 'transparent' : theme.colors.border.selection};
   }
   ${({ isLocked, hasMask, theme }) =>
     !isLocked &&
@@ -102,7 +102,7 @@ const EmptyFrame = styled.div`
   pointer-events: none;
 `;
 
-const NOOP = () => {};
+const NOOP = () => { };
 
 function calcBoxWithBorder(box, element) {
   if (!element?.border) {
@@ -117,8 +117,7 @@ function calcBoxWithBorder(box, element) {
 
   let { top, left, bottom, right } = element.border;
 
-  // for shapes use half the amount
-  if (type && type == 'shape') {
+  if (type && type == 'shape' && element?.mask?.type !== "rectangle") {
     top = top / 2;
     left = left / 2;
     bottom = bottom / 2;
@@ -317,15 +316,15 @@ function FrameElement({ id }) {
   const layerName = getLayerName(element);
   const elementLabel = element.isLocked
     ? sprintf(
-        // translators: %s: Name of element
-        __('Locked element: %s', 'web-stories'),
-        layerName
-      )
+      // translators: %s: Name of element
+      __('Locked element: %s', 'web-stories'),
+      layerName
+    )
     : sprintf(
-        // translators: %s: Name of element
-        __('Element: %s', 'web-stories'),
-        layerName
-      );
+      // translators: %s: Name of element
+      __('Element: %s', 'web-stories'),
+      layerName
+    );
 
   return (
     <WithLink element={element} active={isLinkActive} anchorRef={elementRef}>
