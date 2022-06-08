@@ -240,7 +240,7 @@ function useCanvasKeys(ref) {
 
     for (const { type, product } of selectedElements) {
       if (
-        type === 'product' &&
+        type === ELEMENT_TYPES.PRODUCT &&
         product?.productId &&
         currentPageProductIds.includes(product.productId)
       ) {

@@ -105,7 +105,7 @@ function useCanvasGlobalKeys() {
 
       for (const { type, product } of elements) {
         if (
-          type === 'product' &&
+          type === ELEMENT_TYPES.PRODUCT &&
           product?.productId &&
           currentPageProductIds.includes(product.productId)
         ) {
