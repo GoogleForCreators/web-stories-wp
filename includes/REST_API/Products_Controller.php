@@ -37,7 +37,7 @@ use WP_REST_Response;
 use WP_REST_Server;
 
 /**
- * Class to access publisher logos via the REST API.
+ * Class to access products via the REST API.
  *
  * @since 1.20.0
  */
@@ -154,10 +154,14 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 		$shopping_provider = $this->settings->get_setting( Settings::SETTING_NAME_SHOPPING_PROVIDER );
 		$query             = $this->shopping_vendors->get_vendor_class( $shopping_provider );
 
-		if ( ! $query ) {
-			return new WP_Error( 'unable_to_find_class', __( 'Unable to find class', 'web-stories' ), [ 'status' => 400 ] );
+		if ( 'none' === $shopping_provider ) {
+			return new WP_Error( 'rest_shopping_provider', __( 'No shopping provider set up.', 'web-stories' ), [ 'status' => 400 ] );
 		}
-
+			
+		if ( ! $query ) {
+			return new WP_Error( 'rest_shopping_provider_not_found', __( 'Unable to find shopping integration.', 'web-stories' ), [ 'status' => 400 ] );
+		}
+		
 		/**
 		 * Request context.
 		 *
@@ -293,7 +297,7 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 	}
 
 	/**
-	 * Retrieves the publisher logo's schema, conforming to JSON Schema.
+	 * Retrieves the product schema, conforming to JSON Schema.
 	 *
 	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
 	 *
@@ -308,7 +312,7 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 
 		$schema = [
 			'$schema'    => 'http://json-schema.org/draft-04/schema#',
-			'title'      => 'publisher-logo',
+			'title'      => 'product',
 			'type'       => 'object',
 			'properties' => [
 				'productId'            => [

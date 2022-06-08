@@ -25,7 +25,11 @@ import {
   BUTTON_SIZES,
   BUTTON_TYPES,
   THEME_CONSTANTS,
+  CircularProgress,
+  useLiveRegion,
 } from '@googleforcreators/design-system';
+import { useConfig } from '@googleforcreators/dashboard';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
@@ -34,12 +38,24 @@ import {
   InlineForm,
   InlineLink,
   SaveButton,
+  TestConnectionButton,
   SettingsTextInput,
   TextInputHelperText,
   VisuallyHiddenLabel,
+  ConnectionHelperText,
 } from '../../components';
 
 import { isValidShopifyHost, hostPattern } from '../../utils';
+
+const Loading = styled.div`
+  position: relative;
+  margin-top: 10px;
+`;
+
+const Spinner = styled.div`
+  position: absolute;
+  top: 0;
+`;
 
 export const TEXT = {
   HOST_CONTEXT: sprintf(
@@ -67,6 +83,13 @@ export const TEXT = {
   ACCESS_TOKEN_LABEL: __('Storefront API Access Token', 'web-stories'),
   INPUT_ERROR: __('Invalid format', 'web-stories'),
   SUBMIT_BUTTON: __('Save', 'web-stories'),
+  CONNECTION_TEST_BUTTON: __('Test connection', 'web-stories'),
+  CONNECTION_CHECKING: __('Testing connection…', 'web-stories'),
+  CONNECTION_SUCCESS: __('Connection successful', 'web-stories'),
+  CONNECTION_ERROR_DEFAULT: __(
+    'Connection failed. Please try again.',
+    'web-stories'
+  ),
 };
 function ShopifySettings({
   host: shopifyHost,
@@ -74,6 +97,7 @@ function ShopifySettings({
   handleUpdateHost,
   handleUpdateAccessToken,
 }) {
+  const speak = useLiveRegion();
   const [host, setHost] = useState(shopifyHost);
   const [hostInputError, setHostInputError] = useState('');
   const canSaveHost = host !== shopifyHost && !hostInputError;
@@ -84,6 +108,14 @@ function ShopifySettings({
   const canSaveAccessToken =
     accessToken !== shopifyAccessToken && !accessTokenInputError;
   const disableAccessTokenSaveButton = !canSaveAccessToken;
+
+  const {
+    apiCallbacks: { getProducts },
+  } = useConfig();
+
+  const [isTestingConnection, setIsTestingConnection] = useState(false);
+  const [testConnectionStatus, setTestConnectionStatus] = useState('');
+  const [hasConnectionError, setHasConnectionError] = useState(false);
 
   useEffect(() => {
     setHost(shopifyHost);
@@ -149,6 +181,30 @@ function ShopifySettings({
     },
     [onSaveAccessToken]
   );
+
+  const onTestConnection = useCallback(async () => {
+    setHasConnectionError(false);
+    setIsTestingConnection(true);
+    speak(TEXT.CONNECTION_CHECKING);
+    try {
+      await getProducts(new Date().getTime()); // @todo temp fix for cache busting the product query
+      setTestConnectionStatus(TEXT.CONNECTION_SUCCESS);
+      speak(TEXT.CONNECTION_SUCCESS);
+    } catch (e) {
+      setHasConnectionError(true);
+      setTestConnectionStatus(TEXT.CONNECTION_ERROR_DEFAULT);
+      speak(TEXT.CONNECTION_ERROR_DEFAULT);
+    } finally {
+      setIsTestingConnection(false);
+    }
+  }, [getProducts, speak]);
+
+  const canTestConnection =
+    host &&
+    !hostInputError &&
+    accessToken &&
+    !accessTokenInputError &&
+    !isTestingConnection;
 
   const handleClick = useCallback(
     (evt) => trackClick(evt, 'click_shopify_docs'),
@@ -244,6 +300,36 @@ function ShopifySettings({
           {TEXT.ACCESS_TOKEN_CONTEXT}
         </TranslateWithMarkup>
       </TextInputHelperText>
+
+      <TestConnectionButton
+        onFocus={() => setTestConnectionStatus('')}
+        type={BUTTON_TYPES.SECONDARY}
+        size={BUTTON_SIZES.SMALL}
+        disabled={!canTestConnection}
+        onClick={onTestConnection}
+      >
+        {isTestingConnection
+          ? TEXT.CONNECTION_CHECKING
+          : TEXT.CONNECTION_TEST_BUTTON}
+      </TestConnectionButton>
+
+      {isTestingConnection && (
+        <Loading>
+          <Spinner>
+            <CircularProgress size={24} />
+          </Spinner>
+        </Loading>
+      )}
+      {testConnectionStatus && (
+        <ConnectionHelperText
+          data-testid="api-status"
+          aria-label={__('API connection status', 'web-stories')}
+          hasError={hasConnectionError}
+          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+        >
+          {testConnectionStatus}
+        </ConnectionHelperText>
+      )}
     </>
   );
 }

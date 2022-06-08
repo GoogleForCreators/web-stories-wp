@@ -463,6 +463,7 @@ class Dashboard extends Service_Base {
 				'pages'          => '/wp/v2/pages/',
 				'publisherLogos' => '/web-stories/v1/publisher-logos/',
 				'taxonomies'     => '/web-stories/v1/taxonomies/',
+				'products'       => '/web-stories/v1/products/',
 			],
 			'vendors'                 => $vendors,
 			'maxUpload'               => $max_upload_size,

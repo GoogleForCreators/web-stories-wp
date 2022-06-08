@@ -66,6 +66,12 @@ const ColorInputsWrapper = styled.div`
   gap: ${({ isInDesignMenu }) => (isInDesignMenu ? 0 : 6)}px;
 `;
 
+const Space = styled.div`
+  width: 8px;
+  height: 1px;
+  background-color: ${({ theme }) => theme.colors.divider.primary};
+`;
+
 // 10px comes from divider / 2
 const InputWrapper = styled.div`
   ${({ hasInputs }) => hasInputs && `width: calc(53% - 10px);`}
@@ -193,13 +199,16 @@ const Color = forwardRef(function Color(
           />
         </InputWrapper>
         {allowsOpacity && displayOpacity && (
-          <ActiveOpacity
-            handleOpacityChange={handleOpacityChange}
-            isInDesignMenu={isInDesignMenu}
-            opacityFocusTrap={opacityFocusTrap}
-            tabIndex={tabIndex}
-            value={value}
-          />
+          <>
+            <Space />
+            <ActiveOpacity
+              handleOpacityChange={handleOpacityChange}
+              isInDesignMenu={isInDesignMenu}
+              opacityFocusTrap={opacityFocusTrap}
+              tabIndex={tabIndex}
+              value={value}
+            />
+          </>
         )}
       </ColorInputsWrapper>
     </Container>
