@@ -24,7 +24,8 @@ import { useFeature } from 'flagged';
  * Internal dependencies
  */
 import { RIGHT_CLICK_MENU_LABELS } from '../constants';
-import { useElementActions, useShapeMask } from '../hooks';
+import { useElementActions } from '../hooks';
+import useShapeMask from '../../../utils/useShapeMask';
 import { useStory } from '../..';
 
 function MultipleElementsMenu() {

@@ -34,8 +34,8 @@ import {
   useCopyPasteActions,
   useElementActions,
   useLayerActions,
-  useShapeMask,
 } from '../hooks';
+import useShapeMask from '../../../utils/useShapeMask';
 import { useStory, useLocalMedia } from '../..';
 import useVideoTrim from '../../../components/videoTrim/useVideoTrim';
 import useRightClickMenu from '../useRightClickMenu';

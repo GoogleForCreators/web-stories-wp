@@ -22,8 +22,8 @@ import { MaskTypes } from '@googleforcreators/masks';
 /**
  * Internal dependencies
  */
-import { useStory } from '../..';
-import useInsertElement from '../../../components/canvas/useInsertElement';
+import { useStory } from '../app';
+import useInsertElement from '../components/canvas/useInsertElement';
 
 const useShapeMask = () => {
   const { selectedElements, updateElementById, combineElements } = useStory(

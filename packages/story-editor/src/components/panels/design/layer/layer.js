@@ -45,7 +45,7 @@ import useCORSProxy from '../../../../utils/useCORSProxy';
 import usePerformanceTracking from '../../../../utils/usePerformanceTracking';
 import { TRACKING_EVENTS } from '../../../../constants';
 import Tooltip from '../../../tooltip';
-import { useShapeMask } from '../../../../app/rightClickMenu/hooks';
+import useShapeMask from '../../../../utils/useShapeMask';
 import useLayerSelection from './useLayerSelection';
 import { LAYER_HEIGHT } from './constants';
 
@@ -500,7 +500,7 @@ function Layer({ element }) {
       )}
       {!element.isBackground && !isRenameable && (
         <ActionsContainer>
-          {hasShapeMask && (
+          {hasMask && (
             <Tooltip title={removeMaskTitle} hasTail isDelayed>
               <LayerAction
                 aria-label={removeMaskTitle}
