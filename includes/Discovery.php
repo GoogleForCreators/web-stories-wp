@@ -275,7 +275,7 @@ class Discovery extends Service_Base implements HasRequirements {
 			if ( isset( $product['productImages'] ) && $product['productImages'] ) {
 				$data['image'] = $product['productImages'][0]['url'];
 			}
-			if ( isset( $product['aggregateRating'] ) && $product['aggregateRating'] ) {
+			if ( ! empty( $product['aggregateRating']['reviewCount'] ) ) {
 				$data['aggregateRating'] = [
 					'@type'       => 'AggregateRating',
 					'ratingValue' => $product['aggregateRating']['ratingValue'] ?? 0,
@@ -287,7 +287,7 @@ class Discovery extends Service_Base implements HasRequirements {
 		}
 
 		return [
-			'products' => [
+			'mainEntity' => [
 				'@type'           => 'ItemList',
 				'numberOfItems'   => (string) \count( $products ),
 				'itemListElement' => $product_data,
