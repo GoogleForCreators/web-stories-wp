@@ -38,10 +38,10 @@ use WP_Http;
  * @phpstan-type ShopifyGraphQLPriceRange array{minVariantPrice: array{amount: int, currencyCode: string}}
  * @phpstan-type ShopifyGraphQLProductImage array{url: string, altText: string}
  * @phpstan-type ShopifyGraphQLProduct array{id: string, handle: string, title: string, vendor: string, description: string, onlineStoreUrl?: string, images: array{edges: array{node: ShopifyGraphQLProductImage}[]}, priceRange: ShopifyGraphQLPriceRange}
- * @phpstan-type ShopifyGraphQLResponse array{errors?: ShopifyGraphQLError, data: array{products: array{edges: array{node: ShopifyGraphQLProduct}[]}}}
+ * @phpstan-type ShopifyGraphQLResponse array{errors?: ShopifyGraphQLError, data: array{products: array{edges: array{node: ShopifyGraphQLProduct}[], pageInfo: array{hasNextPage: bool, endCursor: string}}}}
  */
 class Shopify_Query implements Product_Query {
-	protected const API_VERSION = '2022-01';
+	protected const API_VERSION = '2022-04';
 
 	/**
 	 * Settings instance.
@@ -150,17 +150,22 @@ class Shopify_Query implements Product_Query {
 	 *
 	 * @since 1.21.0
 	 *
-	 * @param string $search_term Search term to filter products by.
-	 * @return string The assembled GraphQL query.
+	 * @param string $search_term  Search term to filter products by.
+	 * @param string $after        The cursor to retrieve nodes after in the connection.
+	 * @param int    $per_page     Number of products to be fetched.
+	 * @param string $orderby      Sort collection by product attribute.
+	 * @param string $order        Order sort attribute ascending or descending.
+	 * @return string              The assembled GraphQL query.
 	 */
-	protected function get_products_query( string $search_term ): string {
+	protected function get_products_query( string $search_term, string $after, int $per_page, string $orderby, string $order ): string {
 		$search_string = empty( $search_term ) ? '*' : '*' . $search_term . '*';
+		$sortkey       = 'date' === $orderby ? 'CREATED_AT' : strtoupper( $orderby );
+		$reverse       = 'asc' === $order ? 'false' : 'true';
+		$after         = empty( $after ) ? 'null' : sprintf( '"%s"', $after );
 
-		// TODO(#11154): Support different sortKeys.
-		// Maybe use "available_for_sale:true AND " query to only show items in stock.
 		return <<<QUERY
 {
-  products(first: 100, sortKey: CREATED_AT, query: "title:$search_string") {
+  products(first: $per_page, after: $after, sortKey: $sortkey, reverse: $reverse, query: "title:$search_string") {
     edges {
       node {
         id
@@ -185,6 +190,10 @@ class Shopify_Query implements Product_Query {
         }
       }
     }
+    pageInfo {
+       hasNextPage
+       endCursor
+    }
   }
 }
 QUERY;
@@ -197,10 +206,15 @@ QUERY;
 	 *
 	 * @since 1.21.0
 	 *
-	 * @param string $search_term Search term to filter products by.
-	 * @return array|WP_Error Response data or error object on failure.
+	 * @param string $search_term  Search term to filter products by.
+	 * @param string $after        The cursor to retrieve nodes after in the connection.
+	 * @param int    $per_page     Number of products to be fetched.
+	 * @param string $orderby      Sort retrieved products by parameter.
+	 * @param string $order        Whether to order products in ascending or descending order.
+	 *                             Accepts 'asc' (ascending) or 'desc' (descending).
+	 * @return array|WP_Error      Response data or error object on failure.
 	 */
-	protected function fetch_remote_products( string $search_term ) {
+	protected function get_remote_products( string $search_term, string $after, int $per_page, string $orderby, string $order ) {
 		/**
 		 * Filters the Shopify products data TTL value.
 		 *
@@ -209,7 +223,7 @@ QUERY;
 		 * @param int $time Time to live (in seconds). Default is 5 minutes.
 		 */
 		$cache_ttl = apply_filters( 'web_stories_shopify_data_cache_ttl', 5 * MINUTE_IN_SECONDS );
-		$cache_key = 'web_stories_shopify_data_' . md5( $search_term );
+		$cache_key = $this->get_cache_key( $search_term, $after, $per_page, $orderby, $order );
 
 		$data = get_transient( $cache_key );
 
@@ -217,9 +231,8 @@ QUERY;
 			return (array) json_decode( $data, true );
 		}
 
-		$query = $this->get_products_query( $search_term );
+		$query = $this->get_products_query( $search_term, $after, $per_page, $orderby, $order );
 		$body  = $this->execute_query( $query );
-
 		if ( is_wp_error( $body ) ) {
 			return $body;
 		}
@@ -230,10 +243,30 @@ QUERY;
 		 * @var ShopifyGraphQLResponse $result
 		 */
 		$result = json_decode( $body, true );
-
-		// TODO(#11268): Error handling.
 		if ( isset( $result['errors'] ) ) {
-			return new WP_Error( 'rest_unknown', __( 'Error fetching products', 'web-stories' ), [ 'status' => 404 ] );
+			$wp_error = new WP_Error();
+			foreach ( $result['errors'] as $error ) {
+				$error_code = $error['extensions']['code'];
+				// https://shopify.dev/api/storefront#status_and_error_codes.
+				switch ( $error_code ) {
+					case 'THROTTLED':
+						$wp_error->add( 'rest_throttled', __( 'Shopify API rate limit exceeded. Try again later.', 'web-stories' ), [ 'status' => 429 ] );
+						break;
+					case 'ACCESS_DENIED':
+						$wp_error->add( 'rest_invalid_credentials', __( 'Invalid Shopify API credentials provided.', 'web-stories' ), [ 'status' => 401 ] );
+						break;
+					case 'SHOP_INACTIVE':
+						$wp_error->add( 'rest_inactive_shop', __( 'Inactive Shopify shop.', 'web-stories' ), [ 'status' => 403 ] );
+						break;
+					case 'INTERNAL_SERVER_ERROR':
+						$wp_error->add( 'rest_internal_error', __( 'Shopify experienced an internal server error.', 'web-stories' ), [ 'status' => 500 ] );
+						break;
+					default:
+						$wp_error->add( 'rest_unknown', __( 'Error fetching products from Shopify.', 'web-stories' ), [ 'status' => 500 ] );
+				}
+			}
+
+			return $wp_error;
 		}
 
 		// TODO: Maybe cache errors too?
@@ -243,21 +276,79 @@ QUERY;
 	}
 
 	/**
+	 * Get cache key for properties.
+	 *
+	 * @since 1.22.0
+	 *
+	 * @param string $search_term  Search term to filter products by.
+	 * @param string $after        The cursor to retrieve nodes after in the connection.
+	 * @param int    $per_page     Number of products to be fetched.
+	 * @param string $orderby      Sort retrieved products by parameter.
+	 * @param string $order        Whether to order products in ascending or descending order.
+	 *                             Accepts 'asc' (ascending) or 'desc' (descending).
+	 */
+	protected function get_cache_key( $search_term, $after, $per_page, $orderby, $order ): string {
+		$cache_args = (string) wp_json_encode( compact( 'search_term', 'after', 'per_page', 'orderby', 'order' ) );
+
+		return 'web_stories_shopify_data_' . md5( $cache_args );
+	}
+
+	/**
+	 * Remotely fetches all products from the store.
+	 *
+	 * @since 1.22.0
+	 *
+	 * @param string $search_term Search term to filter products by.
+	 * @param int    $page        Number of page for paginated requests.
+	 * @param int    $per_page    Number of products to be fetched.
+	 * @param string $orderby     Sort retrieved products by parameter.
+	 * @param string $order       Whether to order products in ascending or descending order.
+	 *                            Accepts 'asc' (ascending) or 'desc' (descending).
+	 * @return array|WP_Error Response data or error object on failure.
+	 */
+	protected function fetch_remote_products( string $search_term, int $page, int $per_page, string $orderby, string $order ) {
+		$after = '';
+		if ( $page > 1 ) {
+			// Loop around all the pages, getting the endCursor of each page, until you get the last one.
+			for ( $i = 1; $i < $page; $i ++ ) {
+				$result = $this->get_remote_products( $search_term, $after, $per_page, $orderby, $order );
+				if ( is_wp_error( $result ) ) {
+					return $result;
+				}
+
+				$has_next_page = $result['data']['products']['pageInfo']['hasNextPage'];
+				if ( ! $has_next_page ) {
+					return new WP_Error( 'rest_no_page', __( 'Error fetching products from Shopify.', 'web-stories' ), [ 'status' => 404 ] );
+				}
+				$after = (string) $result['data']['products']['pageInfo']['endCursor'];
+			}
+		}
+
+		return $this->get_remote_products( $search_term, $after, $per_page, $orderby, $order );
+	}
+
+	/**
 	 * Get products by search term.
 	 *
 	 * @since 1.21.0
 	 *
 	 * @param string $search_term Search term.
-	 * @return Product[]|WP_Error
+	 * @param int    $page        Number of page for paginated requests.
+	 * @param int    $per_page    Number of products to be fetched.
+	 * @param string $orderby     Sort retrieved products by parameter. Default 'date'.
+	 * @param string $order       Whether to order products in ascending or descending order.
+	 *                            Accepts 'asc' (ascending) or 'desc' (descending). Default 'desc'.
+	 * @return array|WP_Error
 	 */
-	public function get_search( string $search_term ) {
-		$result = $this->fetch_remote_products( $search_term );
-
+	public function get_search( string $search_term, int $page = 1, int $per_page = 100, string $orderby = 'date', string $order = 'desc' ) {
+		$result = $this->fetch_remote_products( $search_term, $page, $per_page, $orderby, $order );
 		if ( is_wp_error( $result ) ) {
 			return $result;
 		}
 
-		$results = [];
+		$products = [];
+
+		$has_next_page = $result['data']['products']['pageInfo']['hasNextPage'] ?? false;
 
 		foreach ( $result['data']['products']['edges'] as $edge ) {
 			$product = $edge['node'];
@@ -277,7 +368,7 @@ QUERY;
 			// In this case, we can fall back to a manually constructed product URL.
 			$product_url = $product['onlineStoreUrl'] ?? sprintf( 'https://%1$s/products/%2$s/', $this->get_host(), $product['handle'] );
 
-			$results[] = new Product(
+			$products[] = new Product(
 				[
 					'id'             => $product['id'],
 					'title'          => $product['title'],
@@ -295,6 +386,6 @@ QUERY;
 			);
 		}
 
-		return $results;
+		return compact( 'products', 'has_next_page' );
 	}
 }

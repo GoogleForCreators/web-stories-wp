@@ -24,6 +24,7 @@ import {
   BUTTON_VARIANTS,
   BUTTON_TYPES,
   BUTTON_SIZES,
+  PLACEMENT,
 } from '@googleforcreators/design-system';
 import { forwardRef } from '@googleforcreators/react';
 
@@ -41,7 +42,12 @@ function PageMenuButtonWithRef(
   forwardedRef
 ) {
   return (
-    <Tooltip title={title} shortcut={shortcut} hasTail>
+    <Tooltip
+      title={title}
+      shortcut={shortcut}
+      placement={PLACEMENT.RIGHT}
+      hasTail
+    >
       <StyledButton
         variant={BUTTON_VARIANTS.SQUARE}
         type={BUTTON_TYPES.SECONDARY}

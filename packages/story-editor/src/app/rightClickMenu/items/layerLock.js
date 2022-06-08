@@ -49,12 +49,9 @@ function LayerLock() {
   }
 
   return (
-    <>
-      <ContextMenuComponents.MenuSeparator />
-      <ContextMenuComponents.MenuButton onClick={toggleLayerLock}>
-        {RIGHT_CLICK_MENU_LABELS.LOCK_UNLOCK}
-      </ContextMenuComponents.MenuButton>
-    </>
+    <ContextMenuComponents.MenuButton onClick={toggleLayerLock}>
+      {RIGHT_CLICK_MENU_LABELS.LOCK_UNLOCK}
+    </ContextMenuComponents.MenuButton>
   );
 }
 

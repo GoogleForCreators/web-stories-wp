@@ -15,20 +15,31 @@
  */
 
 /**
+ * External dependencies
+ */
+import { addQueryArgs } from '@googleforcreators/url';
+
+/**
  * WordPress dependencies
  */
 import apiFetch from '@wordpress/api-fetch';
 
 /**
- * External dependencies
+ * Get products
+ *
+ * @param {Object} config Configuration object.
+ * @param {string} search Search term.
+ * @param {string} orderby Order collection by product attribute.
+ * @param {string} order Sort attribute ascending or descending.
+ * @return {Promise} The response from the API.
  */
-import { addQueryArgs } from '@googleforcreators/url';
-
-export function getProducts(config, search) {
+export function getProducts(config, search, orderby, order) {
   return apiFetch({
     path: addQueryArgs(config.api.products, {
       per_page: 100,
       search,
+      orderby,
+      order,
     }),
   });
 }

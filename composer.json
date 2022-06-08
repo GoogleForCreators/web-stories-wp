@@ -30,7 +30,7 @@
     "roave/security-advisories": "dev-latest",
     "sirbrillig/phpcs-variable-analysis": "^2.8",
     "slevomat/coding-standard": "^7.0.18",
-    "sniccowp/php-scoper-wordpress-excludes": "^5.9",
+    "sniccowp/php-scoper-wordpress-excludes": "^6.0",
     "szepeviktor/phpstan-wordpress": "^1.0",
     "wp-coding-standards/wpcs": "^2.3",
     "yoast/wp-test-utils": "^1.0.0"
