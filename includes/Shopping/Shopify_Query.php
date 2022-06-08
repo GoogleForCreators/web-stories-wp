@@ -222,9 +222,8 @@ QUERY;
 		 *
 		 * @param int $time Time to live (in seconds). Default is 5 minutes.
 		 */
-		$cache_ttl  = apply_filters( 'web_stories_shopify_data_cache_ttl', 5 * MINUTE_IN_SECONDS );
-		$cache_args = (string) wp_json_encode( compact( 'search_term', 'after', 'per_page', 'orderby', 'order' ) );
-		$cache_key  = 'web_stories_shopify_data_' . md5( $cache_args );
+		$cache_ttl = apply_filters( 'web_stories_shopify_data_cache_ttl', 5 * MINUTE_IN_SECONDS );
+		$cache_key = $this->get_cache_key( $search_term, $after, $per_page, $orderby, $order );
 
 		$data = get_transient( $cache_key );
 
@@ -274,6 +273,24 @@ QUERY;
 		set_transient( $cache_key, $body, $cache_ttl );
 
 		return $result;
+	}
+
+	/**
+	 * Get cache key for properties.
+	 *
+	 * @since 1.21.0
+	 *
+	 * @param string $search_term  Search term to filter products by.
+	 * @param string $after        The cursor to retrieve nodes after in the connection.
+	 * @param int    $per_page     Number of products to be fetched.
+	 * @param string $orderby      Sort retrieved products by parameter.
+	 * @param string $order        Whether to order products in ascending or descending order.
+	 *                             Accepts 'asc' (ascending) or 'desc' (descending).
+	 */
+	protected function get_cache_key( $search_term, $after, $per_page, $orderby, $order ): string {
+		$cache_args = (string) wp_json_encode( compact( 'search_term', 'after', 'per_page', 'orderby', 'order' ) );
+
+		return 'web_stories_shopify_data_' . md5( $cache_args );
 	}
 
 	/**
