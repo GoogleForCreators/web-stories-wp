@@ -20,17 +20,20 @@
 import { ELEMENT_TYPES } from '@googleforcreators/elements';
 
 function getAllProducts(pages) {
-  const products = pages
-    .map((page) =>
-      page?.elements
-        ?.filter(({ type }) => type === ELEMENT_TYPES.PRODUCT)
-        .map(({ product }) => product)
-    )
-    .flat()
-    .filter(Boolean)
-    .map((product) => JSON.stringify(product));
+  const products = [];
+  const productIds = [];
+  pages.map(({ elements }) =>
+    elements
+      .filter(({ type }) => type === ELEMENT_TYPES.PRODUCT)
+      .map(({ product }) => {
+        if (product && !productIds.includes(product?.productId)) {
+          products.push(product);
+          productIds.push(product?.productId);
+        }
+      })
+  );
 
-  return Array.from(new Set(products)).map((product) => JSON.parse(product));
+  return products;
 }
 
 export default getAllProducts;

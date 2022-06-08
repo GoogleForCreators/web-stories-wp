@@ -30,12 +30,12 @@ describe('getAllProducts', () => {
           elements: [
             {
               type: 'product',
-              product: { id: 'b' },
+              product: { productId: 'b' },
             },
           ],
         },
       ])
-    ).toStrictEqual([{ id: 'b' }]);
+    ).toStrictEqual([{ productId: 'b' }]);
   });
 
   it('should return unique products', () => {
@@ -45,11 +45,11 @@ describe('getAllProducts', () => {
           elements: [
             {
               type: 'product',
-              product: { id: 'a' },
+              product: { productId: 'a' },
             },
             {
               type: 'product',
-              product: { id: 'b' },
+              product: { productId: 'b' },
             },
           ],
         },
@@ -57,11 +57,11 @@ describe('getAllProducts', () => {
           elements: [
             {
               type: 'product',
-              product: { id: 'b' },
+              product: { productId: 'b' },
             },
           ],
         },
       ])
-    ).toStrictEqual([{ id: 'a' }, { id: 'b' }]);
+    ).toStrictEqual([{ productId: 'a' }, { productId: 'b' }]);
   });
 });
