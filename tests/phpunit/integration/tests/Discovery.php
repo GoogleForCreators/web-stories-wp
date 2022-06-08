@@ -301,6 +301,13 @@ class Discovery extends DependencyInjectedTestCase {
 									'reviewCount' => 1,
 									'url'         => 'http://www.example.com/product/t-shirt-with-logo',
 								],
+								'offers'    => [
+									[
+										'@type'         => 'Offer',
+										'price'         =>  18,
+										'priceCurrency' => 'USD',
+									],
+								],
 							],
 						],
 				],
