@@ -46,7 +46,7 @@ import usePerformanceTracking from '../../../../utils/usePerformanceTracking';
 import { TRACKING_EVENTS } from '../../../../constants';
 import Tooltip from '../../../tooltip';
 import useLayerSelection from './useLayerSelection';
-import { LAYER_HEIGHT } from './constants';
+import { LAYER_HEIGHT, NESTED_PX } from './constants';
 
 const fadeOutCss = css`
   background-color: var(--background-color);
@@ -117,7 +117,7 @@ const LayerButton = styled(Button).attrs({
   align-items: center;
   user-select: none;
   border-radius: 0;
-  padding-left: ${({ isNested }) => (isNested ? 30 : 12)}px;
+  padding-left: ${({ isNested }) => (isNested ? NESTED_PX : 12)}px;
   transition: revert;
 
   ${({ isSelected, theme }) =>
@@ -163,7 +163,7 @@ const LayerInputWrapper = styled.div`
   grid-template-columns: 23px 1fr;
   height: 100%;
   width: 100%;
-  padding-left: 12px;
+  padding-left: ${({ isNested }) => (isNested ? NESTED_PX : 12)}px;
   padding-right: 10px;
 
   :hover {
@@ -217,7 +217,6 @@ const LayerDescription = styled.div`
 
 const LayerInputForm = styled(LayerDescription).attrs({ as: 'form' })`
   overflow: visible;
-  margin-left: 2px;
 `;
 
 const LayerText = styled(Text).attrs({
@@ -410,17 +409,12 @@ function Layer({ element }) {
 
   const isLayerNamingEnabled = useFeature('layerNaming');
   const isRenameable = renamableLayer?.elementId === element.id;
-
-  const layerGroupName = element.groupId
-    ? `${__('Group', 'web-stories')} ${element.groupId.substr(-3)}: `
-    : null;
-
   const isNested = element.groupId;
 
   return (
     <LayerContainer>
       {isRenameable && isLayerNamingEnabled ? (
-        <LayerInputWrapper>
+        <LayerInputWrapper isNested={isNested}>
           <LayerIconWrapper>
             <LayerIcon
               element={element}
@@ -459,7 +453,7 @@ function Layer({ element }) {
           </LayerIconWrapper>
           <LayerDescription>
             <LayerContentContainer>
-              <LayerText>{layerGroupName}</LayerText>
+              {/*<LayerText>{element.groupId.substr(0, 8)}</LayerText>*/}
               <LayerText>{layerName}</LayerText>
             </LayerContentContainer>
             {element.isBackground && (
