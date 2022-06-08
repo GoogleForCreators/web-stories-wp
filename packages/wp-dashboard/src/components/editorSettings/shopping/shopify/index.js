@@ -307,7 +307,6 @@ function ShopifySettings({
         size={BUTTON_SIZES.SMALL}
         disabled={!canTestConnection}
         onClick={onTestConnection}
-        data-testid="shopify-test-connection"
       >
         {isTestingConnection
           ? TEXT.CONNECTION_CHECKING

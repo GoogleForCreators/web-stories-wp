@@ -220,7 +220,8 @@ describe('Editor Settings: Shopping <Shopping />', function () {
       </ConfigProvider>
     );
 
-    const input = screen.getByTestId('shopify-test-connection');
+    const input = screen.getByRole('button', { name: 'Test connection' });
+
     expect(input).toBeInTheDocument();
 
     fireEvent.click(input);

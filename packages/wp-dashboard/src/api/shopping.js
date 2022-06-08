@@ -33,7 +33,7 @@ import { addQueryArgs } from '@googleforcreators/url';
 export function getProducts(config, search) {
   return apiFetch({
     path: addQueryArgs(config.api.products, {
-      per_page: 100,
+      per_page: 1,
       search,
     }),
   });
