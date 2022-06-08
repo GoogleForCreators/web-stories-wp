@@ -271,6 +271,13 @@ class Discovery extends Service_Base implements HasRequirements {
 				'productID' => $product['productId'] ?? '',
 				'url'       => $product['productUrl'] ?? '',
 				'name'      => $product['productTitle'] ?? '',
+				'offers'    => [
+					[
+						'@type'         => 'Offer',
+						'price'         => $product['productPrice'] ?? 0,
+						'priceCurrency' => $product['productPriceCurrency'] ?? '',
+					],
+				],
 			];
 			if ( isset( $product['productImages'] ) && $product['productImages'] ) {
 				$data['image'] = $product['productImages'][0]['url'];
