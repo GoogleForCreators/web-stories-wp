@@ -40,7 +40,7 @@ import { intersect } from './utils';
  * @param {Object} state Current state
  * @param {Object} payload Action payload
  * @param {Array.<string>} payload.elementIds Object with properties of new page
- * @param payload.withLinked
+ * @param {boolean} payload.withLinked With linked.
  * @return {Object} New state
  */
 function setSelectedElements(state, { elementIds, withLinked = false }) {
