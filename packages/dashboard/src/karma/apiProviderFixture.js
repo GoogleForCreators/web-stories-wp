@@ -81,7 +81,7 @@ export default function ApiProviderFixture({ children }) {
       getTaxonomies: () => {
         return Promise.resolve(formattedTaxonomiesArray);
       },
-      getTaxonomyTerm: (path, args) => {
+      getTaxonomyTerms: (path, args) => {
         const restBase = path.split('/').pop();
         const { search } = args;
         let response = formattedTaxonomyTermsObject[restBase];

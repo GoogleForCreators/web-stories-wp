@@ -29,70 +29,53 @@ import {
  */
 import useApi from '../../../../api/useApi';
 
-export const getFilterPlaceholder = (filter) => {
-  return filter.labels?.allItems || filter.labels?.name || filter.restBase;
-};
-
-export const getFilterAriaLabel = (filter) => {
-  const ariaLable =
-    filter.labels?.singularName || filter.labels?.name || filter.restBase;
-  return `Filter stories by ${ariaLable}`;
-};
-
-export const getFilterSearchResultsLabel = (filter) => {
-  return (
-    filter.labels?.searchItems ||
-    (filter.labels?.name ? `Search ${filter.labels.name}` : 'Search Taxonomy')
-  );
-};
-
 /**
- * Hook used for taxonomy filters logic
- * Initilizes the taxonomy filters data
+ * Hook used for taxonomy filters logic.
+ * Initializes the taxonomy filters data.
  *
- * @return {Array} [taxonomies, queryTaxonomyTerm] initial taxonomy filters data and a function to query the terms
+ * @return {Array} [taxonomies, queryTaxonomyTerms] initial taxonomy filters data and a function to query the terms.
  */
 
 function useTaxonomyFilters() {
   const [taxonomies, setTaxonomies] = useState([]);
 
-  const { getTaxonomies, getTaxonomyTerm } = useApi(
+  const { getTaxonomies, getTaxonomyTerms } = useApi(
     ({
       actions: {
-        taxonomyApi: { getTaxonomies, getTaxonomyTerm },
+        taxonomyApi: { getTaxonomies, getTaxonomyTerms },
       },
     }) => ({
       getTaxonomies,
-      getTaxonomyTerm,
+      getTaxonomyTerms,
     })
   );
 
   /**
-   * Query individual taxonomy data
-   * This is needed to initilize the primaryOptions and needed to search and set queriedOptions
+   * Query individual taxonomy data.
+   * This is needed to initialize the primaryOptions and needed to search and set queriedOptions.
    *
    * @param {Object} taxonomy object holding taxonomy data, including restBase and restPath used to fetch individual taxonomy terms
-   * @param {string|undefined} search string use to query taxonomy by name
+   * @param {string} search string use to query taxonomy by name
    * @return {Array} taxonomy terms
    */
-  const queryTaxonomyTerm = useCallback(
+  const queryTaxonomyTerms = useCallback(
     async (taxonomy, search) => {
       const { restBase, restPath } = taxonomy;
-      const terms = await getTaxonomyTerm(restPath, { search });
+      const terms = await getTaxonomyTerms(restPath, { search, per_page: -1 });
       return terms.map((t) => ({
         ...t,
         restBase,
         restPath,
       }));
     },
-    [getTaxonomyTerm]
+    [getTaxonomyTerms]
   );
 
   /**
-   * Query all the taxonomies
-   * This should only be needed once get all the taxonomies and set individual term data
+   * Query all the taxonomies.
+   * This should only be needed once get all the taxonomies and set individual term data.
    *
-   * @see queryTaxonomyTerm
+   * @see queryTaxonomyTerms
    */
   const queryTaxonomies = useCallback(async () => {
     const data = await getTaxonomies();
@@ -102,9 +85,9 @@ function useTaxonomyFilters() {
     );
 
     for (const taxonomy of hierarchicalTaxonomies) {
-      // initilize the data with an empty array
+      // initialize the data with an empty array
       taxonomy.data = [];
-      promises.push(queryTaxonomyTerm(taxonomy));
+      promises.push(queryTaxonomyTerms(taxonomy));
     }
 
     const fetched = await Promise.all(promises);
@@ -121,7 +104,7 @@ function useTaxonomyFilters() {
     }
 
     setTaxonomies(hierarchicalTaxonomies);
-  }, [setTaxonomies, getTaxonomies, queryTaxonomyTerm]);
+  }, [setTaxonomies, getTaxonomies, queryTaxonomyTerms]);
 
   const initializeTaxonomyFilters = useCallback(() => {
     return taxonomies.map((taxonomy) => ({
@@ -131,12 +114,12 @@ function useTaxonomyFilters() {
       filterId: null,
       primaryOptions: taxonomy.data,
       queriedOptions: taxonomy.data,
-      query: queryTaxonomyTerm,
-      placeholder: getFilterPlaceholder(taxonomy),
-      ariaLabel: getFilterAriaLabel(taxonomy),
-      searchResultsLabel: getFilterSearchResultsLabel(taxonomy),
+      query: queryTaxonomyTerms,
+      placeholder: taxonomy.labels.allItems,
+      ariaLabel: taxonomy.labels.filterByItem,
+      searchResultsLabel: taxonomy.labels.searchItems,
     }));
-  }, [queryTaxonomyTerm, taxonomies]);
+  }, [queryTaxonomyTerms, taxonomies]);
 
   useEffect(() => {
     queryTaxonomies();

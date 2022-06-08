@@ -20,13 +20,13 @@ import { useConfig } from '../config';
 
 function useTaxonomyApi() {
   const {
-    apiCallbacks: { getTaxonomies, getTaxonomyTerm },
+    apiCallbacks: { getTaxonomies, getTaxonomyTerms },
   } = useConfig();
 
   return {
     api: {
       getTaxonomies,
-      getTaxonomyTerm,
+      getTaxonomyTerms,
     },
   };
 }

@@ -56,7 +56,7 @@ export async function getTaxonomies(config) {
  * @return {Promise} Term promise.
  */
 
-export function getTaxonomyTerm(config, endpoint, args = {}) {
+export function getTaxonomyTerms(config, endpoint, args = {}) {
   return apiFetch({
     url: addQueryArgs(endpoint, args),
   });

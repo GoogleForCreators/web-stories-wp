@@ -104,7 +104,9 @@ export default function FiltersProvider({ children }) {
     const filterObj = {};
     for (const filter of state.filters) {
       const { key, filterId } = filter;
-      filterObj[key] = filterId;
+      if (filterId) {
+        filterObj[key] = filterId;
+      }
     }
     return filterObj;
   }, [state.filters]);

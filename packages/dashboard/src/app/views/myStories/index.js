@@ -86,8 +86,6 @@ function MyStories() {
     })
   );
 
-  const _filters = JSON.stringify(getFiltersObject());
-
   const { apiCallbacks, canViewDefaultTemplates } = useConfig();
   const isMounted = useRef(false);
 
@@ -154,7 +152,7 @@ function MyStories() {
       sortOption: sort.value,
       status: filter.value,
       author: author.filterId,
-      filters: JSON.parse(_filters),
+      filters: getFiltersObject(),
     });
   }, [
     fetchStories,
@@ -165,7 +163,7 @@ function MyStories() {
     sort.value,
     author.filterId,
     apiCallbacks,
-    _filters,
+    getFiltersObject,
   ]);
 
   const orderedStories = useMemo(() => {
