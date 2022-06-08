@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { duplicateElement } from '@googleforcreators/elements';
+import { duplicateElement, ELEMENT_TYPES } from '@googleforcreators/elements';
 
 /**
  * Duplicate all elements specified by `elementIds` on the current page.
@@ -40,10 +40,6 @@ function duplicateElementsById(state, { elementIds }) {
   const newPage = { ...oldPage };
   const newSelection = [];
 
-  const currentPageProductIds = oldPage?.elements
-    ?.filter(({ type }) => type === 'product')
-    .map(({ product }) => product?.productId);
-
   elementIds.forEach((elementId) => {
     const elementIndex = newPage.elements.findIndex(
       ({ id }) => id === elementId
@@ -59,10 +55,7 @@ function duplicateElementsById(state, { elementIds }) {
       return;
     }
 
-    if (
-      elementToDuplicate.type === 'product' &&
-      currentPageProductIds.includes(elementToDuplicate?.product?.productId)
-    ) {
+    if (elementToDuplicate.type === ELEMENT_TYPES.PRODUCT) {
       return;
     }
 

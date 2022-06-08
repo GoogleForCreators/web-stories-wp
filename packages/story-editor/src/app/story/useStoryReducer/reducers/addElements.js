@@ -15,6 +15,10 @@
  */
 
 /**
+ * External dependencies
+ */
+import { ELEMENT_TYPES } from '@googleforcreators/elements';
+/**
  * Internal dependencies
  */
 import { exclusion } from './utils';
@@ -51,13 +55,14 @@ function addElements(state, { elements }) {
   }
 
   const currentPageProductIds = oldPage?.elements
-    ?.filter(({ type }) => type === 'product')
+    ?.filter(({ type }) => type === ELEMENT_TYPES.PRODUCT)
     .map(({ product }) => product?.productId);
 
   const newElementDuplicateID = newElements
     .filter(
       ({ type, product }) =>
-        type === 'product' && currentPageProductIds.includes(product?.productId)
+        type === ELEMENT_TYPES.PRODUCT &&
+        currentPageProductIds.includes(product?.productId)
     )
     .map(({ id }) => id);
 
