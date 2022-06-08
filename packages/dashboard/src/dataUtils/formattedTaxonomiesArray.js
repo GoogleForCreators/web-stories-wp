@@ -21,7 +21,7 @@ const formattedTaxonomiesArray = [
     name: 'Categories',
     labels: {
       searchItems: 'Search Categories',
-      singularName: 'Category',
+      filterByItem: 'Filter by category',
       allItems: 'All Categories',
     },
     restBase: 'web_story_category',
