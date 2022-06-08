@@ -89,8 +89,8 @@ class Discovery extends DependencyInjectedTestCase {
 		$product_data = [
 			[
 				'aggregateRating'      => [
-					'ratingValue' => 0,
-					'reviewCount' => 0,
+					'ratingValue' => 5,
+					'reviewCount' => 1,
 					'reviewUrl'   => 'http://www.example.com/product/t-shirt-with-logo',
 				],
 				'ratingValue'          => 0,
@@ -297,8 +297,8 @@ class Discovery extends DependencyInjectedTestCase {
 								'image'           => 'http://www.example.com/wp-content/uploads/2019/01/t-shirt-with-logo-1-4.jpg',
 								'aggregateRating' => [
 									'@type'       => 'AggregateRating',
-									'ratingValue' => 0,
-									'reviewCount' => 0,
+									'ratingValue' => 5,
+									'reviewCount' => 1,
 									'url'         => 'http://www.example.com/product/t-shirt-with-logo',
 								],
 							],
