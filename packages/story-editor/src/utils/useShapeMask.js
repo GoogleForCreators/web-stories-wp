@@ -34,8 +34,7 @@ const useShapeMask = (element) => {
 
   const insertElement = useInsertElement();
 
-  const hasShapeMask = () =>
-    element &&
+  const hasShapeMask = element &&
     element?.type === 'image' &&
     element?.mask?.type !== MaskTypes.RECTANGLE;
 
