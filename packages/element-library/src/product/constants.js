@@ -37,6 +37,8 @@ export const hasEditMode = false;
 
 export const hasDesignMenu = true;
 
+export const hasDuplicateMenu = false;
+
 export const isMedia = false;
 
 export const canFlip = true;
