@@ -94,11 +94,11 @@ class KSES extends Service_Base implements HasRequirements {
 	 *
 	 * @since 1.22.0
 	 *
-	 * @param string $post_type   Post type slug.
-	 * @param string $post_parent Parent post type slug.
+	 * @param string   $post_type   Post type slug.
+	 * @param int|null $post_parent Parent post ID.
 	 * @return bool Whether the user can edit the provided post type.
 	 */
-	private function is_allowed_post_type( string $post_type, string $post_parent ): bool {
+	private function is_allowed_post_type( string $post_type, ?int $post_parent ): bool {
 		if ( $this->story_post_type->get_slug() === $post_type && $this->story_post_type->has_cap( 'edit_posts' ) ) {
 			return true;
 		}
