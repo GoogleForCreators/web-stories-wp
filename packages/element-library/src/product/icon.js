@@ -26,7 +26,7 @@ import { Icons } from '@googleforcreators/design-system';
 import VisibleImage from '../shared/visibleImage';
 
 function ProductLayerIcon({ element: { product } }) {
-  const productImage = product?.productImages?.[0];
+  const productImage = product?.productImages?.[0] || {};
   const { url, alt } = productImage;
   if (!url) {
     return <Icons.Shopping width={21} height={21} title="" />;
