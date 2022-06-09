@@ -180,7 +180,7 @@ function createProviderValues({
         fontsApi: {
           addCustomFont: mockAddCustomFont,
           deleteCustomFont: mockDeleteCustomFont,
-          fetchCustomFonts:  mockFetchCustomFonts,
+          fetchCustomFonts: mockFetchCustomFonts,
         },
       },
     },
