@@ -31,6 +31,7 @@ namespace Google\Web_Stories;
 use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Media\Image_Sizes;
 use Google\Web_Stories\Model\Story;
+use Google\Web_Stories\Shopping\Product_Meta;
 use WP_Post;
 
 /**
@@ -46,12 +47,21 @@ class Discovery extends Service_Base implements HasRequirements {
 	private $story_post_type;
 
 	/**
+	 * Product_Meta instance.
+	 *
+	 * @var Product_Meta Product_Meta instance.
+	 */
+	private $product_meta;
+
+	/**
 	 * Constructor.
 	 *
 	 * @param Story_Post_Type $story_post_type Story_Post_Type instance.
+	 * @param Product_Meta    $product_meta Product_Meta instance.
 	 */
-	public function __construct( Story_Post_Type $story_post_type ) {
+	public function __construct( Story_Post_Type $story_post_type, Product_Meta $product_meta ) {
 		$this->story_post_type = $story_post_type;
+		$this->product_meta    = $product_meta;
 	}
 
 	/**
@@ -64,7 +74,7 @@ class Discovery extends Service_Base implements HasRequirements {
 	 * @return string[] List of required services.
 	 */
 	public static function get_requirements(): array {
-		return [ 'story_post_type' ];
+		return [ 'story_post_type', 'product_meta' ];
 	}
 
 	/**
@@ -218,6 +228,13 @@ class Discovery extends Service_Base implements HasRequirements {
 					'name'  => html_entity_decode( $post_author->display_name, ENT_QUOTES, get_bloginfo( 'charset' ) ),
 				];
 			}
+
+
+			$products         = $this->product_meta->get_products( $post->ID );
+			$product_metadata = $this->get_product_data( $products );
+			if ( $product_metadata ) {
+				$metadata = array_merge( $product_metadata, $metadata );
+			}
 		}
 
 		/**
@@ -229,6 +246,58 @@ class Discovery extends Service_Base implements HasRequirements {
 		 * @param WP_Post $post The current post object.
 		 */
 		return apply_filters( 'web_stories_story_schema_metadata', $metadata, $post );
+	}
+
+	/**
+	 * Get product schema data.
+	 *
+	 * @since 1.22.0
+	 *
+	 * @param array $products Array of products.
+	 * @return array
+	 */
+	protected function get_product_data( array $products ): array {
+		if ( ! $products ) {
+			return [];
+		}
+		$product_data = [];
+		foreach ( $products as $product ) {
+			$data = [
+				'@type'       => 'Product',
+				'brand'       => $product['productBrand'] ?? '',
+				'productID'   => $product['productId'] ?? '',
+				'url'         => $product['productUrl'] ?? '',
+				'name'        => $product['productTitle'] ?? '',
+				'description' => $product['productDetails'] ?? '',
+				'offers'      => [
+					[
+						'@type'         => 'Offer',
+						'price'         => $product['productPrice'] ?? 0,
+						'priceCurrency' => $product['productPriceCurrency'] ?? '',
+					],
+				],
+			];
+			if ( isset( $product['productImages'] ) && $product['productImages'] ) {
+				$data['image'] = $product['productImages'][0]['url'];
+			}
+			if ( ! empty( $product['aggregateRating']['reviewCount'] ) ) {
+				$data['aggregateRating'] = [
+					'@type'       => 'AggregateRating',
+					'ratingValue' => $product['aggregateRating']['ratingValue'] ?? 0,
+					'reviewCount' => $product['aggregateRating']['reviewCount'] ?? 0,
+					'url'         => $product['aggregateRating']['reviewUrl'] ?? '',
+				];
+			}
+			$product_data[] = $data;
+		}
+
+		return [
+			'mainEntity' => [
+				'@type'           => 'ItemList',
+				'numberOfItems'   => (string) \count( $products ),
+				'itemListElement' => $product_data,
+			],
+		];
 	}
 
 	/**
