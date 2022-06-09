@@ -118,7 +118,7 @@ class Product_Meta extends Service_Base implements HasMeta {
 		 *
 		 * @var array|false $products
 		 */
-		$products = get_post_meta( $story_id, $this::PRODUCTS_POST_META_KEY, true );
+		$products = get_post_meta( $story_id, self::PRODUCTS_POST_META_KEY, true );
 		if ( ! \is_array( $products ) ) {
 			return [];
 		}
