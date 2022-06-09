@@ -21,7 +21,7 @@ import { StoryPropTypes } from '@googleforcreators/elements';
 /**
  * Internal dependencies
  */
-import VisibleImage from '../media/visibleImage';
+import VisibleImage from '../shared/visibleImage';
 
 function GifLayerIcon({
   element: {
