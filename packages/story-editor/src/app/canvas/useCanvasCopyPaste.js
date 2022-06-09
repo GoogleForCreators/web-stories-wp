@@ -19,6 +19,9 @@
  */
 import { useCallback, useBatchingCallback } from '@googleforcreators/react';
 import { usePasteTextContent } from '@googleforcreators/rich-text';
+import { __, sprintf } from '@googleforcreators/i18n';
+import { useSnackbar } from '@googleforcreators/design-system';
+import { ELEMENT_TYPES } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -42,6 +45,7 @@ function useCanvasGlobalKeys() {
     selectedElements,
     deleteSelectedElements,
     selectedElementAnimations,
+    currentPageProductIds,
   } = useStory(
     ({
       state: { currentPage, selectedElements, selectedElementAnimations },
@@ -52,9 +56,14 @@ function useCanvasGlobalKeys() {
         selectedElements,
         deleteSelectedElements,
         selectedElementAnimations,
+        currentPageProductIds: currentPage?.elements
+          ?.filter(({ type }) => type === ELEMENT_TYPES.PRODUCT)
+          .map(({ product }) => product?.productId),
       };
     }
   );
+
+  const showSnackbar = useSnackbar(({ showSnackbar }) => showSnackbar);
 
   const uploadWithPreview = useUploadWithPreview();
   const insertElement = useInsertElement();
@@ -93,9 +102,26 @@ function useCanvasGlobalKeys() {
         content,
         currentPage
       );
+
+      for (const { type, product } of elements) {
+        if (
+          type === ELEMENT_TYPES.PRODUCT &&
+          product?.productId &&
+          currentPageProductIds.includes(product.productId)
+        ) {
+          showSnackbar({
+            message: sprintf(
+              /* translators: %s: product title. */
+              __('Product "%s" already exists on the page.', 'web-stories'),
+              product.productTitle
+            ),
+          });
+        }
+      }
+
       return addPastedElements(elements, animations);
     },
-    [addPastedElements, currentPage]
+    [addPastedElements, currentPage, showSnackbar, currentPageProductIds]
   );
 
   const pasteHandler = useCallback(
