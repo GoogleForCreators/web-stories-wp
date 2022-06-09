@@ -88,6 +88,14 @@ const Input = styled.input.attrs({
     display: none;
   }
 
+  &::-webkit-input-placeholder {
+    /* Chrome/Opera/Safari */
+    text-overflow: ellipsis;
+  }
+  &::-moz-placeholder {
+    /* Firefox 19+ */
+    text-overflow: ellipsis;
+  }
   &::-webkit-search-decoration,
   &::-webkit-search-cancel-button,
   &::-webkit-search-results-button,
@@ -107,6 +115,7 @@ const SearchInput = forwardRef(function SearchInput(
     value,
     onChange,
     focusFontListFirstOption = noop,
+    placeholder,
     ...rest
   },
   ref
@@ -133,7 +142,7 @@ const SearchInput = forwardRef(function SearchInput(
         aria-expanded={isExpanded}
         value={value}
         onKeyDown={handleKeyPress}
-        placeholder={__('Search', 'web-stories')}
+        placeholder={placeholder || __('Search', 'web-stories')}
         onChange={onChange}
         aria-label={__('Search', 'web-stories')}
         {...rest}
@@ -157,6 +166,7 @@ SearchInput.propTypes = {
   onClose: PropTypes.func,
   focusFontListFirstOption: PropTypes.func,
   listId: PropTypes.string,
+  placeholder: PropTypes.string,
 };
 
 export default SearchInput;

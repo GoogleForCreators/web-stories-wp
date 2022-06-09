@@ -104,7 +104,7 @@ export default function BodyViewOptions({
                   <StyledDatalist
                     hasSearch
                     hasDropDownBorder
-                    searchResultsLabel={filter.searchResultsLabel}
+                    searchResultsLabel={__('Search results', 'web-stories')}
                     aria-label={filter.ariaLabel}
                     onChange={({ id }) => {
                       updateFilter(filter.key, {
@@ -118,6 +118,8 @@ export default function BodyViewOptions({
                     placeholder={filter.placeholder}
                     primaryOptions={filter.primaryOptions}
                     options={filter.queriedOptions}
+                    noMatchesFoundLabel={filter.noMatchesFoundLabel}
+                    searchPlaceholder={filter.searchPlaceholder}
                     offsetOverride
                   />
                 </StorySortDropdownContainer>
@@ -133,9 +135,11 @@ export default function BodyViewOptions({
                 onChange={author.toggleFilterId}
                 getOptionsByQuery={queryAuthorsBySearch}
                 selectedId={author.filterId}
-                placeholder={__('Author', 'web-stories')}
+                placeholder={__('All Authors', 'web-stories')}
                 primaryOptions={author.queriedAuthors}
                 options={author.queriedAuthors}
+                noMatchesFoundLabel={__('No authors found', 'web-stories')}
+                searchPlaceholder={__('Search authors', 'web-stories')}
                 offsetOverride
               />
             </StorySortDropdownContainer>

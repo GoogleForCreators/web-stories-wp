@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { sprintf } from '@googleforcreators/i18n';
 import {
   useCallback,
   useEffect,
@@ -79,13 +78,10 @@ function useTaxonomyFilters() {
    * @see queryTaxonomyTerms
    */
   const queryTaxonomies = useCallback(async () => {
-    const data = await getTaxonomies();
+    const data = await getTaxonomies({ hierarchical: true });
     const promises = [];
-    const hierarchicalTaxonomies = data.filter(({ hierarchical }) =>
-      Boolean(hierarchical)
-    );
 
-    for (const taxonomy of hierarchicalTaxonomies) {
+    for (const taxonomy of data) {
       // initialize the data with an empty array
       taxonomy.data = [];
       promises.push(queryTaxonomyTerms(taxonomy));
@@ -97,14 +93,14 @@ function useTaxonomyFilters() {
       // grab the first elements 'taxonomy' to map the array of terms back to the parent taxonomy
       const key = arr.at(0)?.taxonomy;
       if (key) {
-        const taxonomy = hierarchicalTaxonomies.find((h) => h.slug === key);
+        const taxonomy = data.find((h) => h.slug === key);
         if (taxonomy) {
           taxonomy.data = arr;
         }
       }
     }
 
-    setTaxonomies(hierarchicalTaxonomies);
+    setTaxonomies(data);
   }, [setTaxonomies, getTaxonomies, queryTaxonomyTerms]);
 
   /**
@@ -121,21 +117,10 @@ function useTaxonomyFilters() {
       primaryOptions: taxonomy.data,
       queriedOptions: taxonomy.data,
       query: queryTaxonomyTerms,
-      placeholder: sprintf(
-        /* translators: All Taxonomies label*/
-        '%s',
-        taxonomy.labels.allItems
-      ),
-      ariaLabel: sprintf(
-        /* translators: Filter by Taxonomy label*/
-        '%s',
-        taxonomy.labels.filterByItem
-      ),
-      searchResultsLabel: sprintf(
-        /* translators: Search Taxonomy label*/
-        '%s',
-        taxonomy.labels.searchItems
-      ),
+      placeholder: taxonomy.labels.allItems,
+      ariaLabel: taxonomy.labels.filterByItem,
+      noMatchesFoundLabel: taxonomy.labels.notFound,
+      searchPlaceholder: taxonomy.labels.searchItems,
     }));
   }, [queryTaxonomyTerms, taxonomies]);
 

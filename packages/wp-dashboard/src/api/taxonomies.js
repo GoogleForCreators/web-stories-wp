@@ -31,11 +31,12 @@ import { snakeToCamelCaseObjectKeys } from '@web-stories-wp/wp-utils';
  * @return {Promise} Taxonomies promise.
  */
 
-export async function getTaxonomies(config) {
+export async function getTaxonomies(config, args = {}) {
   const result = await apiFetch({
     path: addQueryArgs(config.api.taxonomies, {
       type: 'web-story',
       context: 'edit',
+      ...args,
     }),
   });
 
