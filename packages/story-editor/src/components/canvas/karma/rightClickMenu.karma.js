@@ -1395,11 +1395,13 @@ describe('Right Click Menu integration', () => {
       await rightClickOnTarget(imageFrame);
       await fixture.events.click(useShapeAsMask());
       await clickOnTarget(imageFrame);
+
       const { selectedElement } = await fixture.renderHook(() =>
         useStory(({ state }) => ({
           selectedElement: state.selectedElements[0],
         }))
       );
+
       expect(selectedElement.mask.type).toEqual('heart');
 
       // remove the mask
@@ -1408,12 +1410,20 @@ describe('Right Click Menu integration', () => {
       ).node;
       await rightClickOnTarget(maskedFrame);
       await fixture.events.click(removeShapeMask());
+
+      // click on the now "detached" mask
+      await clickOnTarget(imageFrame);
+      
+      // delete the "detached" mask
+      await fixture.events.keyboard.press('del');
+      
       const { unmaskedElement } = await fixture.renderHook(() =>
         useStory(({ state }) => ({
-          unmaskedElement: state.selectedElements[0],
+          unmaskedElement: state.currentPage.elements[1],
         }))
       );
-      expect(unmaskedElement.mask.type).toEqual('rectangle');
+
+       expect(unmaskedElement.mask.type).toEqual('rectangle');
     });
   });
 });
