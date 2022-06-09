@@ -19,15 +19,9 @@
  */
 import { __ } from '@googleforcreators/i18n';
 import { Icons } from '@googleforcreators/design-system';
-import styled from 'styled-components';
-
-const StyledIcon = styled(Icons.Shopping)`
-  width: 32px !important;
-  height: 32px !important;
-`;
 
 function ShoppingIcon() {
-  return <StyledIcon title={__('Shopping library', 'web-stories')} />;
+  return <Icons.Shopping title={__('Shopping library', 'web-stories')} />;
 }
 
 export default ShoppingIcon;
