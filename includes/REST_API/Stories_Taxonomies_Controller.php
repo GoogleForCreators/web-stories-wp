@@ -99,9 +99,16 @@ class Stories_Taxonomies_Controller extends WP_REST_Taxonomies_Controller implem
 		$registered = $this->get_collection_params();
 
 		if ( isset( $registered['type'] ) && ! empty( $request['type'] ) ) {
-			$taxonomies = get_object_taxonomies( $request['type'], 'objects' );
+			/**
+			 * Object type.
+			 *
+			 * @var string Object type.
+			 */
+			$type = $request['type'];
+
+			$taxonomies = get_object_taxonomies( $type, 'objects' );
 		} else {
-			$taxonomies = get_taxonomies( '', 'objects' );
+			$taxonomies = get_taxonomies( [], 'objects' );
 		}
 
 		if ( isset( $registered['hierarchical'], $request['hierarchical'] ) ) {
@@ -110,6 +117,11 @@ class Stories_Taxonomies_Controller extends WP_REST_Taxonomies_Controller implem
 
 		$data = [];
 
+		/**
+		 * Taxonomy.
+		 *
+		 * @var WP_Taxonomy $value
+		 */
 		foreach ( $taxonomies as $tax_type => $value ) {
 			if ( empty( $value->show_in_rest ) || ( 'edit' === $request['context'] && ! current_user_can( $value->cap->assign_terms ) ) ) {
 				continue;
