@@ -29,7 +29,7 @@ function ProductLayerIcon({ element: { product } }) {
   const productImage = product?.productImages?.[0] || {};
   const { url, alt } = productImage;
   if (!url) {
-    return <Icons.Shopping width={21} height={21} title="" />;
+    return <Icons.Shopping width={21} height={21} aria-hidden />;
   }
   return <VisibleImage src={url} alt={alt} height={21} width={21} />;
 }
