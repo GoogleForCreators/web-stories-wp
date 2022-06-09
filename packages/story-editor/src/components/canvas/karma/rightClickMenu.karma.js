@@ -1413,17 +1413,17 @@ describe('Right Click Menu integration', () => {
 
       // click on the now "detached" mask
       await clickOnTarget(imageFrame);
-      
+
       // delete the "detached" mask
       await fixture.events.keyboard.press('del');
-      
+
       const { unmaskedElement } = await fixture.renderHook(() =>
         useStory(({ state }) => ({
           unmaskedElement: state.currentPage.elements[1],
         }))
       );
 
-       expect(unmaskedElement.mask.type).toEqual('rectangle');
+      expect(unmaskedElement.mask.type).toEqual('rectangle');
     });
   });
 });
