@@ -88,6 +88,9 @@ const Input = styled.input.attrs({
     display: none;
   }
 
+  &:placeholder-shown {
+    text-overflow: ellipsis;
+  }
   &::-webkit-input-placeholder {
     /* Chrome/Opera/Safari */
     text-overflow: ellipsis;

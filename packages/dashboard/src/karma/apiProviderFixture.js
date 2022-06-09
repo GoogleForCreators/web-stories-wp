@@ -78,7 +78,12 @@ export default function ApiProviderFixture({ children }) {
 
   const taxonomyApi = useMemo(
     () => ({
-      getTaxonomies: () => {
+      getTaxonomies: (args) => {
+        if (args.hierarchical) {
+          return Promise.resolve(
+            formattedTaxonomiesArray.filter((f) => f.hierarchical)
+          );
+        }
         return Promise.resolve(formattedTaxonomiesArray);
       },
       getTaxonomyTerms: (path, args) => {
