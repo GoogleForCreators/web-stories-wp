@@ -44,7 +44,7 @@ function BackgroundAudio({ backgroundAudio, id }) {
     <amp-story-grid-layer template="fill">
       <amp-video
         autoPlay="autoplay"
-        // Not using nolayout here, because it might cause the audio to
+        // Not using "nodisplay" here, because it might cause the audio to
         // not actually load at all.
         // The good thing is that even with a layout, there's nothing visible
         // on the screen because it's an audio file and not a video.
