@@ -23,8 +23,23 @@ import { ELEMENT_TYPES } from '@googleforcreators/elements';
 import getAllProducts from '../getAllProducts';
 
 describe('getAllProducts', () => {
-  it('should return empty', () => {
+  it('should return empty array', () => {
     expect(getAllProducts([])).toStrictEqual([]);
+  });
+
+  it('should return empty array as type not product', () => {
+    expect(
+      getAllProducts([
+        {
+          elements: [
+            {
+              type: ELEMENT_TYPES.TEXT,
+              content: '<span style="font-style: italic">Hello</span>',
+            },
+          ],
+        },
+      ])
+    ).toStrictEqual([]);
   });
 
   it('should return a product', () => {
@@ -35,6 +50,10 @@ describe('getAllProducts', () => {
             {
               type: ELEMENT_TYPES.PRODUCT,
               product: { productId: 'b' },
+            },
+            {
+              type: ELEMENT_TYPES.TEXT,
+              content: '<span style="font-style: italic">Hello</span>',
             },
           ],
         },
@@ -54,6 +73,10 @@ describe('getAllProducts', () => {
             {
               type: ELEMENT_TYPES.PRODUCT,
               product: { productId: 'b' },
+            },
+            {
+              type: ELEMENT_TYPES.TEXT,
+              content: '<span style="font-style: italic">Hello</span>',
             },
           ],
         },
