@@ -263,12 +263,13 @@ class Discovery extends Service_Base implements HasRequirements {
 		$product_data = [];
 		foreach ( $products as $product ) {
 			$data = [
-				'@type'     => 'Product',
-				'brand'     => $product['productBrand'] ?? '',
-				'productID' => $product['productId'] ?? '',
-				'url'       => $product['productUrl'] ?? '',
-				'name'      => $product['productTitle'] ?? '',
-				'offers'    => [
+				'@type'       => 'Product',
+				'brand'       => $product['productBrand'] ?? '',
+				'productID'   => $product['productId'] ?? '',
+				'url'         => $product['productUrl'] ?? '',
+				'name'        => $product['productTitle'] ?? '',
+				'description' => $product['productDetails'] ?? '',
+				'offers'      => [
 					[
 						'@type'         => 'Offer',
 						'price'         => $product['productPrice'] ?? 0,
