@@ -32,11 +32,15 @@ class Mock_Vendor implements Product_Query {
 	 * @since 1.21.0
 	 *
 	 * @param string $search_term Search term.
-	 * @return Product[]|WP_Error
+	 * @param int    $page        Number of page for paginated requests.
+	 * @param int    $per_page    Number of products to be fetched.
+	 * @param string $orderby     Sort collection by product attribute.
+	 * @param string $order       Order sort attribute ascending or descending.
+	 * @return array|WP_Error
 	 */
-	public function get_search( string $search_term ) {
+	public function get_search( string $search_term, int $page = 1, int $per_page = 100, string $orderby = 'date', string $order = 'desc' ) {
 		$products = [];
-		for ( $x = 0; $x < 10; $x ++ ) {
+		for ( $x = 0; $x < $per_page; $x ++ ) {
 			$products[] = new Product(
 				[
 					'id'             => wp_unique_id(),
@@ -50,7 +54,7 @@ class Mock_Vendor implements Product_Query {
 				]
 			);
 		}
-
-		return $products;
+		$has_next_page = false;
+		return compact( 'products', 'has_next_page' );
 	}
 }

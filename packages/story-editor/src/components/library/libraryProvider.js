@@ -29,6 +29,7 @@ import { useFeature } from 'flagged';
 import { getTimeTracker, trackEvent } from '@googleforcreators/tracking';
 import { loadTextSets } from '@googleforcreators/text-sets';
 import { uniqueEntriesByKey } from '@googleforcreators/design-system';
+import { ELEMENT_TYPES } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -38,7 +39,6 @@ import { useHighlights } from '../../app/highlights';
 import { useConfig, useAPI, useStory } from '../../app';
 import Context from './context';
 import {
-  ELEMS,
   MEDIA,
   MEDIA3P,
   PAGE_TEMPLATES,
@@ -48,9 +48,7 @@ import {
 } from './constants';
 
 const LIBRARY_TAB_IDS = new Set(
-  [ELEMS, MEDIA, MEDIA3P, PAGE_TEMPLATES, SHAPES, TEXT, SHOPPING].map(
-    (tab) => tab.id
-  )
+  [MEDIA, MEDIA3P, PAGE_TEMPLATES, SHAPES, TEXT, SHOPPING].map((tab) => tab.id)
 );
 
 function LibraryProvider({ children }) {
@@ -61,14 +59,15 @@ function LibraryProvider({ children }) {
   } = useAPI();
 
   const { hasProducts } = useStory(({ state: { currentPage } }) => ({
-    hasProducts: currentPage?.elements?.some(({ type }) => type === 'product'),
+    hasProducts: currentPage?.elements?.some(
+      ({ type }) => type === ELEMENT_TYPES.PRODUCT
+    ),
   }));
 
   const isShoppingIntegrationEnabled = useFeature('shoppingIntegration');
   const isShoppingEnabled =
     ('none' !== shoppingProvider && isShoppingIntegrationEnabled) ||
     hasProducts;
-  const showElementsTab = useFeature('showElementsTab');
 
   const supportsCustomTemplates = Boolean(getCustomPageTemplates);
   const showPageTemplates = canViewDefaultTemplates || supportsCustomTemplates;
@@ -116,17 +115,10 @@ function LibraryProvider({ children }) {
         showMedia3p && MEDIA3P,
         TEXT,
         SHAPES,
-        showElementsTab && ELEMS,
         isShoppingEnabled && SHOPPING,
         showPageTemplates && PAGE_TEMPLATES,
       ].filter(Boolean),
-    [
-      showMedia3p,
-      showElementsTab,
-      showMedia,
-      showPageTemplates,
-      isShoppingEnabled,
-    ]
+    [showMedia3p, showMedia, showPageTemplates, isShoppingEnabled]
   );
 
   const [tab, setTab] = useState(tabs[0].id);
@@ -152,7 +144,6 @@ function LibraryProvider({ children }) {
   const media3pTabRef = useRef(null);
   const textTabRef = useRef(null);
   const shapesTabRef = useRef(null);
-  const elementsTabRef = useRef(null);
   const pageTemplatesTabRef = useRef(null);
   const shoppingRef = useRef(null);
 
@@ -162,7 +153,6 @@ function LibraryProvider({ children }) {
       [MEDIA3P.id]: media3pTabRef,
       [TEXT.id]: textTabRef,
       [SHAPES.id]: shapesTabRef,
-      [ELEMS.id]: elementsTabRef,
       [PAGE_TEMPLATES.id]: pageTemplatesTabRef,
       [SHOPPING.id]: shoppingRef,
     }),

@@ -37,7 +37,7 @@ use WP_REST_Response;
 use WP_REST_Server;
 
 /**
- * Class to access publisher logos via the REST API.
+ * Class to access products via the REST API.
  *
  * @since 1.20.0
  */
@@ -140,6 +140,8 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 	/**
 	 * Retrieves all products.
 	 *
+	 * @SuppressWarnings(PHPMD.NPathComplexity)
+	 *
 	 * @since 1.20.0
 	 *
 	 * @param WP_REST_Request $request Full details about the request.
@@ -154,28 +156,70 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 		$shopping_provider = $this->settings->get_setting( Settings::SETTING_NAME_SHOPPING_PROVIDER );
 		$query             = $this->shopping_vendors->get_vendor_class( $shopping_provider );
 
-		if ( ! $query ) {
-			return new WP_Error( 'unable_to_find_class', __( 'Unable to find class', 'web-stories' ), [ 'status' => 400 ] );
+		if ( 'none' === $shopping_provider ) {
+			return new WP_Error( 'rest_shopping_provider', __( 'No shopping provider set up.', 'web-stories' ), [ 'status' => 400 ] );
 		}
-
+			
+		if ( ! $query ) {
+			return new WP_Error( 'rest_shopping_provider_not_found', __( 'Unable to find shopping integration.', 'web-stories' ), [ 'status' => 400 ] );
+		}
+		
 		/**
 		 * Request context.
 		 *
 		 * @var string $search_term
 		 */
-		$search_term  = ! empty( $request['search'] ) ? $request['search'] : '';
-		$query_result = $query->get_search( $search_term );
+		$search_term = ! empty( $request['search'] ) ? $request['search'] : '';
+	
+		/**
+		 * Request context.
+		 *
+		 * @var string $orderby
+		 */
+		$orderby = ! empty( $request['orderby'] ) ? $request['orderby'] : 'date';
+
+		/**
+		 * Request context.
+		 *
+		 * @var int $page
+		 */
+		$page = ! empty( $request['page'] ) ? $request['page'] : 1;
+
+		/**
+		 * Request context.
+		 *
+		 * @var int $per_page
+		 */
+		$per_page = ! empty( $request['per_page'] ) ? $request['per_page'] : 100;
+
+		/**
+		 * Request context.
+		 *
+		 * @var string $order
+		 */
+		$order = ! empty( $request['order'] ) ? $request['order'] : 'desc';
+
+		$query_result = $query->get_search( $search_term, $page, $per_page, $orderby, $order );
 		if ( is_wp_error( $query_result ) ) {
 			return $query_result;
 		}
 
 		$products = [];
-		foreach ( $query_result as $product ) {
+		foreach ( $query_result['products'] as $product ) {
 			$data       = $this->prepare_item_for_response( $product, $request );
 			$products[] = $this->prepare_response_for_collection( $data );
 		}
 
-		return rest_ensure_response( $products );
+		/**
+		 * Response object.
+		 *
+		 * @var WP_REST_Response $response
+		 */
+		$response = rest_ensure_response( $products );
+
+		$response->header( 'X-WP-HasNextPage', (string) $query_result['has_next_page'] );
+
+		return $response;
 	}
 
 	/**
@@ -277,7 +321,7 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 	}
 
 	/**
-	 * Retrieves the publisher logo's schema, conforming to JSON Schema.
+	 * Retrieves the product schema, conforming to JSON Schema.
 	 *
 	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
 	 *
@@ -292,7 +336,7 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 
 		$schema = [
 			'$schema'    => 'http://json-schema.org/draft-04/schema#',
-			'title'      => 'publisher-logo',
+			'title'      => 'product',
 			'type'       => 'object',
 			'properties' => [
 				'productId'            => [
@@ -388,5 +432,38 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 		];
 
 		return $schema;
+	}
+
+	/**
+	 * Retrieves the query params for the products collection.
+	 *
+	 * @since 1.21.0
+	 *
+	 * @return array Collection parameters.
+	 */
+	public function get_collection_params(): array {
+		$query_params = parent::get_collection_params();
+
+		$query_params['per_page']['default'] = 100;
+
+		$query_params['orderby'] = [
+			'description' => __( 'Sort collection by product attribute.', 'web-stories' ),
+			'type'        => 'string',
+			'default'     => 'date',
+			'enum'        => [
+				'date',
+				'price',
+				'title',
+			],
+		];
+
+		$query_params['order'] = [
+			'description' => __( 'Order sort attribute ascending or descending.', 'web-stories' ),
+			'type'        => 'string',
+			'default'     => 'desc',
+			'enum'        => [ 'asc', 'desc' ],
+		];
+
+		return $query_params;
 	}
 }
