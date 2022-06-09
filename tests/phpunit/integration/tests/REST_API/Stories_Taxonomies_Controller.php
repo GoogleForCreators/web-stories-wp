@@ -60,9 +60,18 @@ class Stories_Taxonomies_Controller extends DependencyInjectedRestTestCase {
 		$request  = new WP_REST_Request( WP_REST_Server::READABLE, '/web-stories/v1/taxonomies' );
 		$response = rest_get_server()->dispatch( $request );
 
-		$this->assertFalse( $response->is_error() );
+		$request->set_param( 'hierarchical', false );
+		$response_flat = rest_get_server()->dispatch( $request );
 
-		$this->assertCount( 7, $response->get_data() );
+		$request->set_param( 'hierarchical', true );
+		$response_hierarchical = rest_get_server()->dispatch( $request );
+
+		$this->assertFalse( $response->is_error() );
+		$this->assertNotEmpty( $response->get_data() );
+		$this->assertCount( 
+			\count( $response_hierarchical->get_data() ) + \count( $response_flat->get_data() ),
+			$response->get_data()
+		);
 	}
 
 	/**
