@@ -32,9 +32,11 @@ trait Kses_Setup {
 	 * Setup KSES init class.
 	 */
 	protected function kses_int(): void {
-		$settings   = $this->createMock( \Google\Web_Stories\Settings::class );
-		$this->kses = new \Google\Web_Stories\KSES(
-			new \Google\Web_Stories\Story_Post_Type( $settings )
+		$settings        = $this->createMock( \Google\Web_Stories\Settings::class );
+		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $settings );
+		$this->kses      = new \Google\Web_Stories\KSES(
+			$story_post_type,
+			new \Google\Web_Stories\Page_Template_Post_Type( $story_post_type )
 		);
 		$this->kses->register();
 	}
@@ -45,8 +47,8 @@ trait Kses_Setup {
 	protected function kses_remove_filters(): void {
 		if ( ! current_user_can( 'unfiltered_html' ) ) {
 			remove_filter( 'safe_style_css', [ $this->kses, 'filter_safe_style_css' ] );
-			remove_filter( 'wp_kses_allowed_html', [ $this->kses, 'filter_kses_allowed_html' ], 10 );
-			remove_filter( 'content_save_pre', [ $this->kseshis, 'filter_content_save_pre_before_kses' ], 0 );
+			remove_filter( 'wp_kses_allowed_html', [ $this->kses, 'filter_kses_allowed_html' ] );
+			remove_filter( 'content_save_pre', [ $this->kses, 'filter_content_save_pre_before_kses' ], 0 );
 			remove_filter( 'content_save_pre', [ $this->kses, 'filter_content_save_pre_after_kses' ], 20 );
 		}
 		kses_init();
