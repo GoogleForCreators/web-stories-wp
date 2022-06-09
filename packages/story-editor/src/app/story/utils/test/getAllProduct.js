@@ -14,6 +14,10 @@
  * limitations under the License.
  */
 /**
+ * External dependencies
+ */
+import { ELEMENT_TYPES } from '@googleforcreators/elements';
+/**
  * Internal dependencies
  */
 import getAllProducts from '../getAllProducts';
@@ -29,7 +33,7 @@ describe('getAllProducts', () => {
         {
           elements: [
             {
-              type: 'product',
+              type: ELEMENT_TYPES.PRODUCT,
               product: { productId: 'b' },
             },
           ],
@@ -44,11 +48,11 @@ describe('getAllProducts', () => {
         {
           elements: [
             {
-              type: 'product',
+              type: ELEMENT_TYPES.PRODUCT,
               product: { productId: 'a' },
             },
             {
-              type: 'product',
+              type: ELEMENT_TYPES.PRODUCT,
               product: { productId: 'b' },
             },
           ],
@@ -56,7 +60,7 @@ describe('getAllProducts', () => {
         {
           elements: [
             {
-              type: 'product',
+              type: ELEMENT_TYPES.PRODUCT,
               product: { productId: 'b' },
             },
           ],
