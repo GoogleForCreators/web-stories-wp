@@ -34,8 +34,7 @@ function MultipleElementsMenu() {
     handleGroupSelectedElements,
     handleUngroupSelectedElements,
   } = useElementActions();
-  const { addShapeMask, getShapeMaskElements } = useShapeMaskElements();
-  const { shape, image } = getShapeMaskElements();
+  const { canMergeIntoMask, mergeIntoMask } = useShapeMaskElements();
   const isLayerGroupingEnabled = useFeature('layerGrouping');
   const { selectedElements } = useStory(({ state }) => ({
     selectedElements: state.selectedElements,
@@ -53,10 +52,8 @@ function MultipleElementsMenu() {
         {RIGHT_CLICK_MENU_LABELS.DUPLICATE_ELEMENTS(2)}
       </ContextMenuComponents.MenuButton>
       {/* only show if 1 shape and 1 image is selected */}
-      {shape && image && (
-        <ContextMenuComponents.MenuButton
-          onClick={() => addShapeMask(shape, image)}
-        >
+      {canMergeIntoMask && (
+        <ContextMenuComponents.MenuButton onClick={mergeIntoMask}>
           {RIGHT_CLICK_MENU_LABELS.USE_SHAPE_AS_MASK}
         </ContextMenuComponents.MenuButton>
       )}

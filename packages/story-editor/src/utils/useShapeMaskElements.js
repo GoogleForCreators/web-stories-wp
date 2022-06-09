@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { useCallback } from '@googleforcreators/react';
+import { useState, useEffect } from '@googleforcreators/react';
 
 /**
  * Internal dependencies
@@ -31,12 +31,16 @@ const useShapeMaskElements = () => {
     })
   );
 
+  const [shapeMaskElements, setShapeMaskElements] = useState({});
+  const [canMergeIntoMask, setCanMergeIntoMask] = useState(false);
+
   /**
-   * Retrieve shape and image from selected elements.
+   * Get shape and image from selected elements.
    */
-  const getShapeMaskElements = useCallback(() => {
+  useEffect(() => {
     if (selectedElements?.length > 2) {
-      return {};
+      setCanMergeIntoMask(false);
+      return;
     }
 
     let image, shape;
@@ -47,28 +51,31 @@ const useShapeMaskElements = () => {
     });
 
     if (shape && image) {
-      return { shape, image };
+      setCanMergeIntoMask(true);
+      setShapeMaskElements({ shape, image });
+      return;
     }
 
-    return {};
+    setCanMergeIntoMask(false);
   }, [selectedElements]);
 
   /**
    * Apply shape mask to element.
-   *
-   * @param {Object} shape Element to use for the mask.
-   * @param {Object} image Element that the mask will be applied to.
    */
-  const addShapeMask = (shape, image) => {
-    combineElements({
-      firstElement: image,
-      secondId: shape.id,
-    });
+  const mergeIntoMask = () => {
+    const { image, shape } = shapeMaskElements;
+
+    if (image && shape) {
+      combineElements({
+        firstElement: image,
+        secondId: shape.id,
+      });
+    }
   };
 
   return {
-    getShapeMaskElements,
-    addShapeMask,
+    canMergeIntoMask,
+    mergeIntoMask,
   };
 };
 
