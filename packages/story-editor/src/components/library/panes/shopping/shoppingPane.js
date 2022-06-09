@@ -33,6 +33,7 @@ import {
   CircularProgress,
   useSnackbar,
 } from '@googleforcreators/design-system';
+import { ELEMENT_TYPES } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -89,7 +90,7 @@ function ShoppingPane(props) {
 
   const { currentPageProducts } = useStory(({ state: { currentPage } }) => ({
     currentPageProducts: currentPage?.elements
-      ?.filter(({ type }) => type === 'product')
+      ?.filter(({ type }) => type === ELEMENT_TYPES.PRODUCT)
       .map(({ id, product }) => ({
         elementId: id,
         product,
@@ -157,7 +158,7 @@ function ShoppingPane(props) {
 
   const insertProduct = useCallback(
     (product) => {
-      insertElement('product', {
+      insertElement(ELEMENT_TYPES.PRODUCT, {
         width: 25,
         height: 25,
         product,
