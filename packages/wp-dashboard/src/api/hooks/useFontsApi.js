@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useState } from '@googleforcreators/react';
+import { useCallback, useState } from '@googleforcreators/react';
 import { useConfig } from '@googleforcreators/dashboard';
 
 /**
