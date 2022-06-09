@@ -50,12 +50,6 @@ export default function useFontsApi() {
     }
   }, [fontsApiPath]);
 
-  useEffect(() => {
-    if (null === customFonts) {
-      fetchCustomFonts();
-    }
-  }, [fetchCustomFonts, customFonts]);
-
   const deleteCustomFont = useCallback(
     async (id) => {
       const response = await deleteCustomFontCallback(fontsApiPath, id);
@@ -79,6 +73,6 @@ export default function useFontsApi() {
 
   return {
     customFonts,
-    api: { addCustomFont, deleteCustomFont },
+    api: { addCustomFont, deleteCustomFont, fetchCustomFonts },
   };
 }

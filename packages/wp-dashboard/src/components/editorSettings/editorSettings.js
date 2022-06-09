@@ -66,6 +66,7 @@ function EditorSettings() {
     customFonts,
     addCustomFont,
     deleteCustomFont,
+    fetchCustomFonts,
     publisherLogos,
     addPublisherLogo,
     fetchPublisherLogos,
@@ -77,7 +78,7 @@ function EditorSettings() {
   } = useEditorSettings(
     ({
       actions: {
-        fontsApi: { addCustomFont, deleteCustomFont },
+        fontsApi: { addCustomFont, deleteCustomFont, fetchCustomFonts },
         settingsApi: { fetchSettings, updateSettings },
         pagesApi: { searchPages, getPageById },
         mediaApi: { uploadMedia },
@@ -127,6 +128,7 @@ function EditorSettings() {
       customFonts,
       addCustomFont,
       deleteCustomFont,
+      fetchCustomFonts,
       fetchPublisherLogos,
       addPublisherLogo,
       removePublisherLogo,
@@ -169,8 +171,9 @@ function EditorSettings() {
     if (canManageSettings) {
       fetchSettings();
       fetchPublisherLogos();
+      fetchCustomFonts();
     }
-  }, [fetchSettings, fetchPublisherLogos, canManageSettings]);
+  }, [fetchSettings, fetchPublisherLogos, canManageSettings, fetchCustomFonts]);
 
   useEffect(() => {
     if (newlyCreatedMediaIds.length > 0) {
@@ -224,21 +227,21 @@ function EditorSettings() {
         const errorText =
           files.length === 1
             ? sprintf(
-                /* translators: %s: max upload size for media */
-                __(
-                  'Sorry, this file is too big. Make sure your logo is under %s.',
-                  'web-stories'
-                ),
-                maxUploadFormatted
-              )
+              /* translators: %s: max upload size for media */
+              __(
+                'Sorry, this file is too big. Make sure your logo is under %s.',
+                'web-stories'
+              ),
+              maxUploadFormatted
+            )
             : sprintf(
-                /* translators: %s: max upload size for media */
-                __(
-                  'Sorry, one or more of these files are too big. Make sure your logos are all under %s.',
-                  'web-stories'
-                ),
-                maxUploadFormatted
-              );
+              /* translators: %s: max upload size for media */
+              __(
+                'Sorry, one or more of these files are too big. Make sure your logos are all under %s.',
+                'web-stories'
+              ),
+              maxUploadFormatted
+            );
         return setMediaError(errorText);
       }
 
@@ -246,13 +249,13 @@ function EditorSettings() {
         const errorText =
           files.length === 1
             ? __(
-                'Sorry, this file type is not supported. Only jpg, png, and static gifs are supported for publisher logos.',
-                'web-stories'
-              )
+              'Sorry, this file type is not supported. Only jpg, png, and static gifs are supported for publisher logos.',
+              'web-stories'
+            )
             : __(
-                'Sorry, one or more of these files are of an unsupported file type. Only jpg, png, and static gifs are supported for publisher logos.',
-                'web-stories'
-              );
+              'Sorry, one or more of these files are of an unsupported file type. Only jpg, png, and static gifs are supported for publisher logos.',
+              'web-stories'
+            );
         return setMediaError(errorText);
       }
 
@@ -264,13 +267,13 @@ function EditorSettings() {
         const errorText =
           files.length === 1
             ? __(
-                'Sorry, there was an error processing your upload. Please try again.',
-                'web-stories'
-              )
+              'Sorry, there was an error processing your upload. Please try again.',
+              'web-stories'
+            )
             : __(
-                'Sorry, there was an error processing one or more of your uploads. Please try again.',
-                'web-stories'
-              );
+              'Sorry, there was an error processing one or more of your uploads. Please try again.',
+              'web-stories'
+            );
         return setMediaError(errorText);
       }
 
@@ -283,21 +286,21 @@ function EditorSettings() {
         const errorText =
           files.length === 1
             ? sprintf(
-                /* translators: 1 = minimum width, 2 = minimum height */
-                __(
-                  'Sorry, this file is too small. Make sure your logo is larger than %s.',
-                  'web-stories'
-                ),
-                sprintf('%1$dx%2$dpx', MIN_IMG_WIDTH, MIN_IMG_HEIGHT)
-              )
+              /* translators: 1 = minimum width, 2 = minimum height */
+              __(
+                'Sorry, this file is too small. Make sure your logo is larger than %s.',
+                'web-stories'
+              ),
+              sprintf('%1$dx%2$dpx', MIN_IMG_WIDTH, MIN_IMG_HEIGHT)
+            )
             : sprintf(
-                /* translators: %s: image dimensions in pixels. */
-                __(
-                  'Sorry, one or more files are too small. Make sure your logos are all larger than %s.',
-                  'web-stories'
-                ),
-                sprintf('%1$dx%2$dpx', MIN_IMG_WIDTH, MIN_IMG_HEIGHT)
-              );
+              /* translators: %s: image dimensions in pixels. */
+              __(
+                'Sorry, one or more files are too small. Make sure your logos are all larger than %s.',
+                'web-stories'
+              ),
+              sprintf('%1$dx%2$dpx', MIN_IMG_WIDTH, MIN_IMG_HEIGHT)
+            );
         return setMediaError(errorText);
       }
 
