@@ -90,18 +90,36 @@ class KSES extends Service_Base implements HasRequirements {
 	}
 
 	/**
-	 * Checks whether user has capability to edit the post type.
+	 * Checks whether the post type is correct and user has capability to edit it.
 	 *
 	 * @since 1.22.0
 	 *
-	 * @param string $post_type Post type slug.
+	 * @param string $post_type   Post type slug.
+	 * @param string $post_parent Parent post type slug.
 	 * @return bool Whether the user can edit the provided post type.
 	 */
-	private function has_capability( string $post_type ): bool {
-		return (
-			( $this->story_post_type->get_slug() === $post_type && $this->story_post_type->has_cap( 'edit_posts' ) ) ||
-			( $this->page_template_post_type->get_slug() === $post_type && $this->page_template_post_type->has_cap( 'edit_posts' ) )
-		);
+	private function is_allowed_post_type( string $post_type, string $post_parent ): bool {
+		if ( $this->story_post_type->get_slug() === $post_type && $this->story_post_type->has_cap( 'edit_posts' ) ) {
+			return true;
+		}
+
+		if ( $this->page_template_post_type->get_slug() === $post_type && $this->page_template_post_type->has_cap( 'edit_posts' ) ) {
+			return true;
+		}
+
+		// For story autosaves.
+		if (
+			(
+				'revision' === $post_type &&
+				! empty( $post_parent ) &&
+				get_post_type( $post_parent ) === $this->story_post_type->get_slug()
+			) &&
+			$this->story_post_type->has_cap( 'edit_posts' )
+		) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
@@ -141,20 +159,7 @@ class KSES extends Service_Base implements HasRequirements {
 			return $data;
 		}
 
-		$supported_post_types = [ $this->story_post_type->get_slug(), $this->page_template_post_type->get_slug() ];
-
-		if (
-			! \in_array( $data['post_type'], $supported_post_types, true ) && !
-			(
-				'revision' === $data['post_type'] &&
-				! empty( $data['post_parent'] ) &&
-				get_post_type( $data['post_parent'] ) === $this->story_post_type->get_slug()
-			)
-		) {
-			return $data;
-		}
-
-		if ( ! $this->has_capability( $data['post_type'] ) ) {
+		if ( ! $this->is_allowed_post_type( $data['post_type'], $data['post_parent'] ) ) {
 			return $data;
 		}
 
