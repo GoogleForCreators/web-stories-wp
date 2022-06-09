@@ -264,7 +264,12 @@ function PublishPanel({ nameOverride }) {
       ? __('Select logo', 'web-stories')
       : __('No logo', 'web-stories');
     return publisherLogo.id ? (
-      <LogoImg src={publisherLogo.url} alt="" />
+      <LogoImg
+        src={publisherLogo.url}
+        alt=""
+        decoding="async"
+        crossOrigin="anonymous"
+      />
     ) : (
       <Text as="span" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
         {displayText}
