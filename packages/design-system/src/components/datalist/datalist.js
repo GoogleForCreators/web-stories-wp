@@ -99,6 +99,7 @@ const Datalist = forwardRef(function Datalist(
     containerStyleOverrides,
     title,
     dropdownButtonLabel,
+    className,
     offsetOverride = false,
     noMatchesFoundLabel,
     searchPlaceholder,
@@ -204,7 +205,7 @@ const Datalist = forwardRef(function Datalist(
   const selectedOption = primaryOptions.find(({ id }) => id === selectedId);
   // In case of isInline, the list is displayed with 'absolute' positioning instead of using a separate popup.
   return (
-    <Container>
+    <Container className={className}>
       <DropDownSelect
         aria-pressed={isOpen}
         aria-haspopup

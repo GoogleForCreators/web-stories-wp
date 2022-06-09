@@ -32,6 +32,7 @@ import {
   STORY_ANIMATION_STATE,
   useStoryAnimationContext,
 } from '@googleforcreators/animation';
+import { ELEMENT_TYPES } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -169,7 +170,8 @@ function DisplayLayer() {
         isBackgroundSelected: state.selectedElements?.[0]?.isBackground,
         pageAttachment: state.currentPage?.pageAttachment || {},
         hasProducts: state.currentPage.elements?.some(
-          ({ type, product }) => type === 'product' && product?.productId
+          ({ type, product }) =>
+            type === ELEMENT_TYPES.PRODUCT && product?.productId
         ),
       };
     });

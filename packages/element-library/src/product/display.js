@@ -49,8 +49,8 @@ const animateInSequenceBefore = keyframes`
 `;
 
 const pulseDotBefore = keyframes`
-0% {
-    animation-timing-function: cubic-bezier(.83,0,.71,.99);
+  0% {
+    animation-timing-function: cubic-bezier(.83, 0, .71, .99);
     transform: scale(1);
   }
   40% {
@@ -62,10 +62,10 @@ const pulseDotBefore = keyframes`
   100% {
     transform: scale(1);
   }
-  `;
+`;
 
 const animateInSequenceAfter = keyframes`
-0% {
+  0% {
     animation-timing-function: cubic-bezier(.85, 0, .15, 1);
     transform: scale(0);
   }
@@ -78,7 +78,7 @@ const animateInSequenceAfter = keyframes`
 `;
 
 const pulseDotAfter = keyframes`
-0% {
+  0% {
     animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
     transform: scale(1);
   }

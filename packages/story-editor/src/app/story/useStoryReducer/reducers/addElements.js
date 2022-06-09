@@ -15,6 +15,10 @@
  */
 
 /**
+ * External dependencies
+ */
+import { ELEMENT_TYPES } from '@googleforcreators/elements';
+/**
  * Internal dependencies
  */
 import { exclusion } from './utils';
@@ -50,9 +54,25 @@ function addElements(state, { elements }) {
     return state;
   }
 
+  const currentPageProductIds = oldPage?.elements
+    ?.filter(({ type }) => type === ELEMENT_TYPES.PRODUCT)
+    .map(({ product }) => product?.productId);
+
+  const newElementDuplicateID = newElements
+    .filter(
+      ({ type, product }) =>
+        type === ELEMENT_TYPES.PRODUCT &&
+        currentPageProductIds.includes(product?.productId)
+    )
+    .map(({ id }) => id);
+
+  const newElementNoDuplicateProducts = newElements.filter(
+    ({ id }) => newElementDuplicateID && !newElementDuplicateID.includes(id)
+  );
+
   const newPage = {
     ...oldPage,
-    elements: [...oldPage.elements, ...newElements],
+    elements: [...oldPage.elements, ...newElementNoDuplicateProducts],
   };
 
   const newPages = [

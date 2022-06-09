@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { duplicateElement } from '@googleforcreators/elements';
+import { duplicateElement, ELEMENT_TYPES } from '@googleforcreators/elements';
 
 /**
  * Duplicate all elements specified by `elementIds` on the current page.
@@ -52,6 +52,10 @@ function duplicateElementsById(state, { elementIds }) {
     const elementToDuplicate = newPage.elements[elementIndex];
 
     if (elementToDuplicate.isBackground) {
+      return;
+    }
+
+    if (elementToDuplicate.type === ELEMENT_TYPES.PRODUCT) {
       return;
     }
 

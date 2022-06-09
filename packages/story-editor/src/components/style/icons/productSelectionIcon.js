@@ -18,10 +18,16 @@
  * External dependencies
  */
 import { __ } from '@googleforcreators/i18n';
+import styled from 'styled-components';
 import { Icons } from '@googleforcreators/design-system';
 
-function ShoppingIcon() {
-  return <Icons.Shopping title={__('Shopping library', 'web-stories')} />;
+const StyledIcon = styled(Icons.Shopping)`
+  width: 32px !important;
+  height: 32px !important;
+`;
+
+function ProductSelectionIcon() {
+  return <StyledIcon title={__('Product selection', 'web-stories')} />;
 }
 
-export default ShoppingIcon;
+export default ProductSelectionIcon;

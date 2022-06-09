@@ -29,6 +29,7 @@ import { useFeature } from 'flagged';
 import { getTimeTracker, trackEvent } from '@googleforcreators/tracking';
 import { loadTextSets } from '@googleforcreators/text-sets';
 import { uniqueEntriesByKey } from '@googleforcreators/design-system';
+import { ELEMENT_TYPES } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -58,7 +59,9 @@ function LibraryProvider({ children }) {
   } = useAPI();
 
   const { hasProducts } = useStory(({ state: { currentPage } }) => ({
-    hasProducts: currentPage?.elements?.some(({ type }) => type === 'product'),
+    hasProducts: currentPage?.elements?.some(
+      ({ type }) => type === ELEMENT_TYPES.PRODUCT
+    ),
   }));
 
   const isShoppingIntegrationEnabled = useFeature('shoppingIntegration');

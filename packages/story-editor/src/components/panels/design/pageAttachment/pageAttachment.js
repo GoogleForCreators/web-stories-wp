@@ -38,6 +38,7 @@ import {
 } from '@googleforcreators/design-system';
 import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components';
+import { ELEMENT_TYPES } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -82,7 +83,8 @@ function PageAttachmentPanel() {
       updateCurrentPageProperties: actions.updateCurrentPageProperties,
       currentPage: state.currentPage,
       hasProducts: state.currentPage.elements?.some(
-        ({ type, product }) => type === 'product' && product?.productId
+        ({ type, product }) =>
+          type === ELEMENT_TYPES.PRODUCT && product?.productId
       ),
     })
   );

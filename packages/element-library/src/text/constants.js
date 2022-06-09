@@ -49,6 +49,7 @@ export const hasEditMode = true;
 export const hasDesignMenu = true;
 
 export const hasEditModeMoveable = true;
+export const hasDuplicateMenu = true;
 
 export const isMedia = false;
 
