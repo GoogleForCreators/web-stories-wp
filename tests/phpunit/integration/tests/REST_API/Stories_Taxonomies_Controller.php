@@ -77,7 +77,7 @@ class Stories_Taxonomies_Controller extends DependencyInjectedRestTestCase {
 		$response = rest_get_server()->dispatch( $request );
 
 		$this->assertFalse( $response->is_error() );
-		$this->assertCount( 5, $response->get_data() );
+		$this->assertNotEmpty( $response->get_data() );
 
 		$hierarchical_values = wp_list_pluck( array_values( $response->get_data() ), 'hierarchical' );
 
@@ -98,7 +98,7 @@ class Stories_Taxonomies_Controller extends DependencyInjectedRestTestCase {
 		$response = rest_get_server()->dispatch( $request );
 
 		$this->assertFalse( $response->is_error() );
-		$this->assertCount( 2, $response->get_data() );
+		$this->assertNotEmpty( $response->get_data() );
 
 		$hierarchical_values = wp_list_pluck( array_values( $response->get_data() ), 'hierarchical' );
 
