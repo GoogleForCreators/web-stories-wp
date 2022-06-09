@@ -50,4 +50,60 @@ class Stories_Taxonomies_Controller extends DependencyInjectedRestTestCase {
 		$this->assertArrayHasKey( 'https://api.w.org/items', $links );
 		$this->assertStringContainsString( 'web-stories/v1', $links['https://api.w.org/items'][0]['href'] );
 	}
+
+	/**
+	 * @covers ::get_items
+	 */
+	public function test_get_items(): void {
+		$this->controller->register();
+
+		$request  = new WP_REST_Request( WP_REST_Server::READABLE, '/web-stories/v1/taxonomies' );
+		$response = rest_get_server()->dispatch( $request );
+
+		$this->assertFalse( $response->is_error() );
+
+		$this->assertCount( 7, $response->get_data() );
+	}
+
+	/**
+	 * @covers ::get_items
+	 * @covers ::get_collection_params
+	 */
+	public function test_get_items_hierarchical_false(): void {
+		$this->controller->register();
+
+		$request = new WP_REST_Request( WP_REST_Server::READABLE, '/web-stories/v1/taxonomies' );
+		$request->set_param( 'hierarchical', false );
+		$response = rest_get_server()->dispatch( $request );
+
+		$this->assertFalse( $response->is_error() );
+		$this->assertCount( 5, $response->get_data() );
+
+		$hierarchical_values = wp_list_pluck( array_values( $response->get_data() ), 'hierarchical' );
+
+		foreach ( $hierarchical_values as $hierarchical ) {
+			$this->assertFalse( $hierarchical );
+		}
+	}
+
+	/**
+	 * @covers ::get_items
+	 * @covers ::get_collection_params
+	 */
+	public function test_get_items_hierarchical_true(): void {
+		$this->controller->register();
+
+		$request = new WP_REST_Request( WP_REST_Server::READABLE, '/web-stories/v1/taxonomies' );
+		$request->set_param( 'hierarchical', true );
+		$response = rest_get_server()->dispatch( $request );
+
+		$this->assertFalse( $response->is_error() );
+		$this->assertCount( 2, $response->get_data() );
+
+		$hierarchical_values = wp_list_pluck( array_values( $response->get_data() ), 'hierarchical' );
+
+		foreach ( $hierarchical_values as $hierarchical ) {
+			$this->assertTrue( $hierarchical );
+		}
+	}
 }
