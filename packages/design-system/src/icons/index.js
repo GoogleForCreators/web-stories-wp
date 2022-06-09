@@ -122,6 +122,7 @@ export { default as QuestionMarkOutline } from './question_mark_outline.svg';
 export { default as Rotate } from './rotate.svg';
 export { default as Scissors } from './scissors.svg';
 export { default as Shapes } from './shapes.svg';
+export { default as Shopping } from './shopping.svg';
 export { default as Sparkles } from './sparkles.svg';
 export { default as StopFilled } from './stop_filled.svg';
 export { default as StopOutline } from './stop_outline.svg';
