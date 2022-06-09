@@ -23,7 +23,7 @@ function getAllProducts(pages) {
   const products = [];
   const productIds = [];
   pages.forEach(({ elements }) =>
-    elements?.forEach(({ product, type }) => {
+    elements.forEach(({ product, type }) => {
       if (
         type === ELEMENT_TYPES.PRODUCT &&
         product &&
