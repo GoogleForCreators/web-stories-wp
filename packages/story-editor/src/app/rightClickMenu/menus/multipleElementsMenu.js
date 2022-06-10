@@ -51,7 +51,7 @@ function MultipleElementsMenu() {
       >
         {RIGHT_CLICK_MENU_LABELS.DUPLICATE_ELEMENTS(2)}
       </ContextMenuComponents.MenuButton>
-      {/* only show if 1 shape and 1 image is selected */}
+      {/* only show if 1 shape and 1 media element is selected */}
       {canMergeIntoMask && (
         <ContextMenuComponents.MenuButton onClick={mergeIntoMask}>
           {RIGHT_CLICK_MENU_LABELS.USE_SHAPE_AS_MASK}

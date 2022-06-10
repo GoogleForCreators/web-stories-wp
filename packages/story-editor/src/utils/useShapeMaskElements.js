@@ -17,6 +17,7 @@
  * External dependencies
  */
 import { useState, useEffect } from '@googleforcreators/react';
+import { getDefinitionForType } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -43,16 +44,17 @@ const useShapeMaskElements = () => {
       return;
     }
 
-    let image, shape;
+    let target, shape;
 
     selectedElements.forEach((element) => {
+      const { isMedia } = getDefinitionForType(element.type);
       element.type === 'shape' && (shape = element);
-      element.type === 'image' && (image = element);
+      isMedia && (target = element);
     });
 
-    if (shape && image) {
+    if (shape && target) {
       setCanMergeIntoMask(true);
-      setShapeMaskElements({ shape, image });
+      setShapeMaskElements({ shape, target });
       return;
     }
 
@@ -63,11 +65,11 @@ const useShapeMaskElements = () => {
    * Apply shape mask to element.
    */
   const mergeIntoMask = () => {
-    const { image, shape } = shapeMaskElements;
+    const { target, shape } = shapeMaskElements;
 
-    if (image && shape) {
+    if (target && shape) {
       combineElements({
-        firstElement: image,
+        firstElement: target,
         secondId: shape.id,
       });
     }
