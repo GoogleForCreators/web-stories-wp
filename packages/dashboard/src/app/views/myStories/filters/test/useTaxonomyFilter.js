@@ -24,8 +24,8 @@ import { renderHook, act } from '@testing-library/react-hooks';
 import useTaxonomyFilters from '../taxonomy/useTaxonomyFilters';
 
 jest.mock('../../../../api/useApi', () => {
-  const getTaxonomies = () =>
-    Promise.resolve([
+  const getTaxonomies = (args) => {
+    const taxonomies = [
       {
         slug: 'tax1',
         hierarchical: true,
@@ -35,6 +35,7 @@ jest.mock('../../../../api/useApi', () => {
           filterByItem: 'Filter by tax1',
           allItems: 'All Tax1',
           searchItems: 'Search Tax1',
+          notFound: 'No tax1s found',
         },
       },
       {
@@ -52,9 +53,14 @@ jest.mock('../../../../api/useApi', () => {
           filterByItem: 'Filter by tax3',
           allItems: 'All Tax3',
           searchItems: 'Search Tax3',
+          notFound: 'No tax3s found',
         },
       },
-    ]);
+    ];
+    return Promise.resolve(
+      args.hierarchical ? taxonomies.filter((t) => t.hierarchical) : taxonomies
+    );
+  };
   const getTaxonomyTerms = (restPath) =>
     restPath === 'tax1/path'
       ? Promise.resolve([{ taxonomy: 'tax1', name: 'termName' }])
@@ -105,7 +111,8 @@ describe('useTaxonomyFilters', () => {
         const filter1 = filters.at(0);
         expect(filter1.placeholder).toBe('All Tax1');
         expect(filter1.ariaLabel).toBe(`Filter by tax1`);
-        expect(filter1.searchResultsLabel).toBe('Search Tax1');
+        expect(filter1.noMatchesFoundLabel).toBe('No tax1s found');
+        expect(filter1.searchPlaceholder).toBe('Search Tax1');
       });
     });
   });

@@ -185,4 +185,5 @@ BodyViewOptions.propTypes = {
   showAuthorDropdown: PropTypes.bool,
   author: AuthorPropTypes,
   queryAuthorsBySearch: PropTypes.func,
+  filters: PropTypes.array,
 };
