@@ -40,13 +40,6 @@ function useUploadWithPreview() {
     deleteElementsByResourceId: state.actions.deleteElementsByResourceId,
   }));
 
-  const onUploadStart = useCallback(
-    ({ resource }) => {
-      insertElement(resource.type, { resource });
-    },
-    [insertElement]
-  );
-
   const onUploadProgress = useCallback(
     ({ id, resource }) => {
       updateElementDimensions({ id, resource });
@@ -70,20 +63,25 @@ function useUploadWithPreview() {
   );
 
   const uploadWithPreview = useCallback(
-    (files) => {
+    (files, insertAsBackground = false, args = {}) => {
+      const onUploadStart = ({ resource }) => {
+        insertElement(resource.type, { resource }, insertAsBackground);
+      };
+
       uploadMedia(files, {
         onUploadStart,
         onUploadProgress,
         onUploadError,
         onUploadSuccess,
+        ...args,
       });
     },
     [
       uploadMedia,
-      onUploadStart,
       onUploadProgress,
       onUploadError,
       onUploadSuccess,
+      insertElement,
     ]
   );
 

@@ -26,6 +26,7 @@ import { RichTextProvider } from '@googleforcreators/rich-text';
 import Sidebar from '../sidebar';
 import Canvas from '../canvas';
 import { VideoTrimProvider } from '../videoTrim';
+import { MediaRecordingProvider } from '../mediaRecording';
 import ErrorBoundary from '../errorBoundary';
 import { useCanvas } from '../../app';
 import { CanvasArea, SidebarArea } from './layout';
@@ -37,18 +38,20 @@ function Workspace({ header, footer }) {
 
   return (
     <VideoTrimProvider>
-      <RichTextProvider editingState={editingElementState}>
-        <SidebarArea>
-          <ErrorBoundary>
-            <Sidebar />
-          </ErrorBoundary>
-        </SidebarArea>
-        <CanvasArea>
-          <ErrorBoundary>
-            <Canvas header={header} footer={footer} />
-          </ErrorBoundary>
-        </CanvasArea>
-      </RichTextProvider>
+      <MediaRecordingProvider>
+        <RichTextProvider editingState={editingElementState}>
+          <SidebarArea>
+            <ErrorBoundary>
+              <Sidebar />
+            </ErrorBoundary>
+          </SidebarArea>
+          <CanvasArea>
+            <ErrorBoundary>
+              <Canvas header={header} footer={footer} />
+            </ErrorBoundary>
+          </CanvasArea>
+        </RichTextProvider>
+      </MediaRecordingProvider>
     </VideoTrimProvider>
   );
 }

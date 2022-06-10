@@ -31,6 +31,10 @@ export const Z_INDEX_EDIT_LAYER = 3;
 // floating menu layer & edit layer
 export const Z_INDEX_NAV_LAYER = 5;
 
+// Media recording mode should overlay most things, but not the side menu.
+export const Z_INDEX_RECORDING_MODE = 6;
+export const Z_INDEX_CANVAS_SIDE_MENU_RECORDING_MODE = 7;
+
 // idk why these are defined in here. they're used throughout parts of the
 // codebase, but they're not in the same stacking as the other layers in this
 // file. Keeping them in here to avoid regressions in the codebase, but

@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
 import {
   Button as DefaultButton,
@@ -25,15 +26,15 @@ import {
   BUTTON_VARIANTS,
   Icons,
 } from '@googleforcreators/design-system';
-import styled from 'styled-components';
-import { useState } from '@googleforcreators/react';
+import { useCallback } from '@googleforcreators/react';
+import { trackEvent } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies
  */
 import { focusStyle } from '../../../../../panels/shared/styles';
 import Tooltip from '../../../../../tooltip';
-import Modal from './modal';
+import useMediaRecording from '../../../../../mediaRecording/useMediaRecording';
 
 const Button = styled(DefaultButton)`
   ${focusStyle};
@@ -46,23 +47,35 @@ const Camera = styled(Icons.Camera)`
 `;
 
 function MediaRecording() {
-  const [isOpen, setIsOpen] = useState(false);
-  const label = __('Record audio/video', 'web-stories');
+  const { isInRecordingMode, toggleRecordingMode } = useMediaRecording(
+    ({ state: { isInRecordingMode }, actions: { toggleRecordingMode } }) => ({
+      isInRecordingMode,
+      toggleRecordingMode,
+    })
+  );
+
+  const onClick = useCallback(() => {
+    trackEvent('media_recording_toggled', {
+      status: isInRecordingMode ? 'closed' : 'open',
+    });
+    toggleRecordingMode();
+  }, [isInRecordingMode, toggleRecordingMode]);
+
+  const label = __('Record Video', 'web-stories');
   return (
-    <>
-      <Tooltip title={label}>
-        <Button
-          variant={BUTTON_VARIANTS.SQUARE}
-          type={BUTTON_TYPES.SECONDARY}
-          size={BUTTON_SIZES.SMALL}
-          onClick={() => setIsOpen(true)}
-          aria-label={label}
-        >
-          <Camera />
-        </Button>
-      </Tooltip>
-      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} />
-    </>
+    <Tooltip title={label}>
+      <Button
+        variant={BUTTON_VARIANTS.SQUARE}
+        type={BUTTON_TYPES.SECONDARY}
+        size={BUTTON_SIZES.SMALL}
+        onClick={onClick}
+        aria-label={label}
+        aria-pressed={isInRecordingMode}
+        isToggled={isInRecordingMode}
+      >
+        <Camera />
+      </Button>
+    </Tooltip>
   );
 }
 
