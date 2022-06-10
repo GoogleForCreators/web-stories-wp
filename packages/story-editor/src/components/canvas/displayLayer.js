@@ -46,7 +46,8 @@ import {
 import { STABLE_ARRAY } from '../../constants';
 import StoryPropTypes from '../../types';
 import DisplayElement from './displayElement';
-import { Layer, PageArea } from './layout';
+import ExtraPages from './extraPages';
+import { Layer, PageArea, PageBeforeArea, PageAfterArea } from './layout';
 import PageAttachment from './pageAttachment';
 import ShoppingPageAttachment from './shoppingPageAttachment';
 import { MediaCaptionsLayer } from './mediaCaptions';
@@ -209,6 +210,9 @@ function DisplayLayer() {
         pointerEvents="none"
         aria-label={_x('Display layer', 'compound noun', 'web-stories')}
       >
+        <PageBeforeArea>
+          <ExtraPages isPrevious />
+        </PageBeforeArea>
         <DisplayPageArea
           ref={useCombinedRefs(setPageContainer, boundingBoxTrackingRef)}
           fullbleedRef={setFullbleedContainer}
@@ -226,6 +230,9 @@ function DisplayLayer() {
             editingElement={editingElement}
           />
         </DisplayPageArea>
+        <PageAfterArea>
+          <ExtraPages />
+        </PageAfterArea>
         <MediaCaptionsLayer />
       </Layer>
     </StoryAnimations>
