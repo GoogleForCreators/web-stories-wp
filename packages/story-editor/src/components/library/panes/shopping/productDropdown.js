@@ -25,17 +25,13 @@ import {
 } from '@googleforcreators/react';
 import { Datalist } from '@googleforcreators/design-system';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
 import { useStory, useAPI } from '../../../../app';
 
-const StyledDropDown = styled(Datalist.DropDown)`
-  width: 240px;
-`;
-function ProductDropdown({ product, setProduct }) {
+function ProductDropdown({ product, setProduct, ...rest }) {
   const initialProducts = useMemo(
     () => [{ id: product?.productId, name: product?.productTitle, product }],
     [product]
@@ -95,11 +91,12 @@ function ProductDropdown({ product, setProduct }) {
   };
 
   return (
-    <StyledDropDown
+    <Datalist.DropDown
       options={initialOptions}
       searchResultsLabel={__('Search results', 'web-stories')}
       aria-label={__('Product', 'web-stories')}
       {...dropDownParams}
+      {...rest}
     />
   );
 }

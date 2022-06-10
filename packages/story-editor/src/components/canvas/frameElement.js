@@ -105,13 +105,12 @@ const EmptyFrame = styled.div`
 const NOOP = () => {};
 
 const FRAME_ELEMENT_MESSAGE = sprintf(
-  /* translators: 1: Ctrl Key 2: Alt Key */
+  /* translators: %s: Ctrl+Alt+P keyboard shortcut. */
   __(
-    'To exit the canvas area, press Escape. Press Tab to move to the next group or element. To enter floating menu, press %1$s %2$s p.',
+    'To exit the canvas area, press Escape. Press Tab to move to the next group or element. To enter floating menu, press %s.',
     'web-stories'
   ),
-  prettifyShortcut('ctrl'),
-  prettifyShortcut('alt')
+  prettifyShortcut('ctrl+alt+p')
 );
 
 function FrameElement({ id }) {
