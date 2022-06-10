@@ -83,13 +83,11 @@ export default function BodyViewOptions({
   showAuthorDropdown = false,
   author = defaultAuthor,
   queryAuthorsBySearch = noop,
+  filters = [],
 }) {
-  const { filters, updateFilter } = useFilters(
-    ({ state: { filters }, actions: { updateFilter } }) => ({
-      filters,
-      updateFilter,
-    })
-  );
+  const { updateFilter } = useFilters(({ actions: { updateFilter } }) => ({
+    updateFilter,
+  }));
   return (
     <StandardViewContentGutter>
       <BodyViewOptionsHeader id="body-view-options-header" />

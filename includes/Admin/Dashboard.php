@@ -307,6 +307,7 @@ class Dashboard extends Service_Base {
 				[
 					'type'    => $this->story_post_type->get_slug(),
 					'context' => 'edit',
+					'hierarchical' => 'true'
 				]
 			),
 			$rest_url . '?' . build_query(

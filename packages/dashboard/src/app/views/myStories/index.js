@@ -79,8 +79,12 @@ function MyStories() {
       getAuthors,
     })
   );
-  const { filtersLoading, getFiltersObject } = useFilters(
-    ({ state: { filtersLoading }, actions: { getFiltersObject } }) => ({
+  const { filters, filtersLoading, getFiltersObject } = useFilters(
+    ({
+      state: { filters, filtersLoading },
+      actions: { getFiltersObject },
+    }) => ({
+      filters,
       filtersLoading,
       getFiltersObject,
     })
@@ -179,6 +183,7 @@ function MyStories() {
       <Header
         initialPageReady={initialPageReady}
         filter={filter}
+        filters={filters}
         search={search}
         sort={sort}
         stories={orderedStories}
