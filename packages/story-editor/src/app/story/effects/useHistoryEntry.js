@@ -36,6 +36,7 @@ const ELEMENT_PROPS_TO_IGNORE = [
   'resource.isMuted',
   'resource.posterId',
   'resource.poster',
+  'resource.isOptimized',
   'resource.font.metrics',
   'resource.font.weights',
   'resource.font.variants',
@@ -103,6 +104,16 @@ function useHistoryEntry({ story, current, pages, selection, capabilities }) {
         skipAddingEntry =
           JSON.stringify(adjustedPages) === JSON.stringify(adjustedEntryPages);
       }
+
+      // skip entries that have a blob url
+      // https://github.com/GoogleForCreators/web-stories-wp/issues/10289
+      pages.map((page) => {
+        page.elements.forEach((element) => {
+          if (element?.resource?.src.includes('blob:')) {
+            skipAddingEntry = true;
+          }
+        });
+      });
     }
 
     if (!skipAddingEntry) {
