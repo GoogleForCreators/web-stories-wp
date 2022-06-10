@@ -19,6 +19,7 @@
  */
 import cloneDeep from 'clone-deep';
 import { useEffect, useRef } from '@googleforcreators/react';
+import { isBlobURL } from '@googleforcreators/media';
 
 /**
  * Internal dependencies
@@ -109,7 +110,7 @@ function useHistoryEntry({ story, current, pages, selection, capabilities }) {
       // https://github.com/GoogleForCreators/web-stories-wp/issues/10289
       pages.map((page) => {
         page.elements.forEach((element) => {
-          if (element?.resource?.src.includes('blob:')) {
+          if (isBlobURL(element?.resource?.src)) {
             skipAddingEntry = true;
           }
         });
