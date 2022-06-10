@@ -79,7 +79,7 @@ export function getCustomPageTemplates(config, page = 1) {
  */
 export function addPageTemplate(config, data) {
   return apiFetch({
-    path: `${config.api.pageTemplates}/`,
+    path: config.api.pageTemplates,
     data: {
       ...data,
       status: 'publish',

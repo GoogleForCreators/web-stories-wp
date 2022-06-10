@@ -33,7 +33,7 @@ function loadStory(storyId, post, restore, clearHistory) {
     title: { raw: title = '' } = {},
     status,
     slug,
-    date,
+    date: origDate,
     modified,
     excerpt: { raw: excerpt = '' } = {},
     link,
@@ -55,6 +55,12 @@ function loadStory(storyId, post, restore, clearHistory) {
     taxonomies,
     terms,
   } = post;
+
+  const date =
+    ['draft', 'auto-draft', 'pending'].includes(status) &&
+    (origDate === modified || !origDate)
+      ? null
+      : origDate;
 
   const [prefix, suffix] = permalinkTemplate
     ? permalinkTemplate.split(/%(?:postname|pagename)%/)
