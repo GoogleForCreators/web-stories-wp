@@ -124,15 +124,6 @@ function useHistoryEntry({ story, current, pages, selection, capabilities }) {
     }
 
     if (!skipAddingEntry) {
-
-      console.log({
-        story,
-        current: currentPageIndexRef.current,
-        selection: selectedElementIdsRef.current,
-        pages,
-        capabilities,
-      });
-
       stateToHistory({
         story,
         current: currentPageIndexRef.current,
