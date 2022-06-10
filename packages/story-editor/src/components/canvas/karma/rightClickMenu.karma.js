@@ -187,7 +187,7 @@ describe('Right Click Menu integration', () => {
 
   function removeShapeMask() {
     return fixture.screen.getByRole('menuitem', {
-      name: /^Remove Mask/i,
+      name: /^Unmask/i,
     });
   }
 

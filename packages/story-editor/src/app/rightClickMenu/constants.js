@@ -84,7 +84,7 @@ export const RIGHT_CLICK_MENU_LABELS = {
   TRIM_VIDEO: __('Trim Video', 'web-stories'),
   UPLOAD_IMAGE_OR_VIDEO: __('Upload Image or Video', 'web-stories'),
   USE_SHAPE_AS_MASK: __('Use Shape as a Mask', 'web-stories'),
-  REMOVE_MASK: __('Remove Mask', 'web-stories'),
+  REMOVE_MASK: __('Unmask', 'web-stories'),
 };
 
 const StyledKbd = styled(Text).attrs({

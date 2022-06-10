@@ -353,7 +353,7 @@ function Layer({ element }) {
   );
 
   const { hasShapeMask, removeShapeMask } = useShapeMask(element);
-  const removeMaskTitle = __('Remove Mask', 'web-stories');
+  const removeMaskTitle = __('Unmask', 'web-stories');
   const { getProxiedUrl } = useCORSProxy();
   const layerRef = useRef(null);
   usePerformanceTracking({
