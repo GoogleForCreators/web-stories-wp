@@ -146,12 +146,11 @@ function ForegroundMediaMenu({ parentMenuRef }) {
         {RIGHT_CLICK_MENU_LABELS.DUPLICATE_ELEMENTS(1)}
       </ContextMenuComponents.MenuButton>
 
-      <ContextMenuComponents.MenuButton
-        disabled={!hasShapeMask}
-        onClick={removeShapeMask}
-      >
-        {RIGHT_CLICK_MENU_LABELS.REMOVE_MASK}
-      </ContextMenuComponents.MenuButton>
+      {hasShapeMask && (
+        <ContextMenuComponents.MenuButton onClick={removeShapeMask}>
+          {RIGHT_CLICK_MENU_LABELS.REMOVE_MASK}
+        </ContextMenuComponents.MenuButton>
+      )}
 
       <ContextMenuComponents.MenuSeparator />
 
