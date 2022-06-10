@@ -37,12 +37,18 @@ const ELEMENT_PROPS_TO_IGNORE = [
   'resource.isMuted',
   'resource.posterId',
   'resource.poster',
-  'resource.isOptimized',
   'resource.font.metrics',
   'resource.font.weights',
   'resource.font.variants',
   'resource.font.fallbacks',
   'resource.font.styles',
+  'resource.isOptimized',
+  'resource.length',
+  'resource.lengthFormatted',
+  'resource.trimData.original',
+  'resource.trimData.start',
+  'resource.trimData.end',
+  'resource.creationDate',
 ];
 
 // Record any change to core variables in history (history will know if it's a replay)
@@ -118,6 +124,15 @@ function useHistoryEntry({ story, current, pages, selection, capabilities }) {
     }
 
     if (!skipAddingEntry) {
+
+      console.log({
+        story,
+        current: currentPageIndexRef.current,
+        selection: selectedElementIdsRef.current,
+        pages,
+        capabilities,
+      });
+
       stateToHistory({
         story,
         current: currentPageIndexRef.current,
