@@ -18,6 +18,7 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { generateMaskId } from '@googleforcreators/masks';
 /**
  * Internal dependencies
  */
@@ -36,9 +37,11 @@ function ShapeMaskWrapper({ element, children }) {
     return children;
   }
 
-  const maskId = `mask-${element?.mask?.type}-${element.id}-frame`;
-
-  return <MaskedIconWrapper maskId={maskId}>{children}</MaskedIconWrapper>;
+  return (
+    <MaskedIconWrapper maskId={generateMaskId(element, 'frame')}>
+      {children}
+    </MaskedIconWrapper>
+  );
 }
 
 export default ShapeMaskWrapper;
