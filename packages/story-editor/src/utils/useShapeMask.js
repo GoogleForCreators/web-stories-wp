@@ -18,6 +18,7 @@
  */
 import { useCallback } from '@googleforcreators/react';
 import { MaskTypes } from '@googleforcreators/masks';
+import { getDefinitionForType } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -33,9 +34,8 @@ const useShapeMask = (element) => {
   }));
 
   const insertElement = useInsertElement();
-
-  const hasShapeMask =
-    element?.type === 'image' && element?.mask?.type !== MaskTypes.RECTANGLE;
+  const { isMedia } = getDefinitionForType(element.type);
+  const hasShapeMask = isMedia && element?.mask?.type !== MaskTypes.RECTANGLE;
 
   const removeShapeMask = useCallback(() => {
     if (!element) {
