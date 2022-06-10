@@ -75,7 +75,17 @@ export default [
     productBrand: '',
     productPrice: 18,
     productPriceCurrency: 'USD',
-    productImages: [],
+    productImages: [
+      {
+        url: 'http://example.com/belt-2-2.jpg',
+        alt: '',
+      },
+      {
+        url: 'http://example.com/beanie-2-2.jpg',
+        alt: '',
+      },
+      { url: false, alt: '' },
+    ],
     aggregateRating: {
       ratingValue: 0,
       reviewCount: 0,
@@ -90,7 +100,16 @@ export default [
     productBrand: '',
     productPrice: 15,
     productPriceCurrency: 'USD',
-    productImages: [],
+    productImages: [
+      {
+        url: 'http://example.com/belt-2-2.jpg',
+        alt: '',
+      },
+      {
+        url: 'http://example.com/beanie-2-2.jpg',
+        alt: '',
+      },
+    ],
     aggregateRating: {
       ratingValue: 0,
       reviewCount: 0,
@@ -105,7 +124,16 @@ export default [
     productBrand: '',
     productPrice: 2,
     productPriceCurrency: 'USD',
-    productImages: [],
+    productImages: [
+      {
+        url: 'http://example.com/belt-2-2.jpg',
+        alt: '',
+      },
+      {
+        url: 'http://example.com/beanie-2-2.jpg',
+        alt: '',
+      },
+    ],
     aggregateRating: {
       ratingValue: 0,
       reviewCount: 0,
