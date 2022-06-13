@@ -26,7 +26,7 @@
   "type": "module",
   "main": "./src/index.js",
   "dependencies": {
-    "@wordpress/e2e-test-utils": "^7.3.0",
+    "@wordpress/e2e-test-utils": "^7.6.0",
     "@wordpress/url": "^3.8.0"
   },
   "devDependencies": {
