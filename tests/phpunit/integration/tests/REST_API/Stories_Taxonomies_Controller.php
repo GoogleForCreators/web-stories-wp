@@ -90,34 +90,14 @@ class Stories_Taxonomies_Controller extends DependencyInjectedRestTestCase {
 	/**
 	 * @covers ::get_items
 	 * @covers ::get_collection_params
+	 * @dataProvider data_show_ui
 	 */
-	public function test_get_items_hierarchical_false(): void {
-		$this->controller->register();
-
-		$request = new WP_REST_Request( WP_REST_Server::READABLE, '/web-stories/v1/taxonomies' );
-		$request->set_param( 'hierarchical', false );
-		$response = rest_get_server()->dispatch( $request );
-
-		$this->assertFalse( $response->is_error() );
-		$this->assertNotEmpty( $response->get_data() );
-
-		$hierarchical_values = wp_list_pluck( array_values( $response->get_data() ), 'hierarchical' );
-
-		foreach ( $hierarchical_values as $hierarchical ) {
-			$this->assertFalse( $hierarchical );
-		}
-	}
-
-	/**
-	 * @covers ::get_items
-	 * @covers ::get_collection_params
-	 */
-	public function test_get_items_show_ui_false(): void {
+	public function test_get_items_show_ui( $show_ui ): void {
 		wp_set_current_user( self::$admin_id );
 		$this->controller->register();
 
 		$request = new WP_REST_Request( WP_REST_Server::READABLE, '/web-stories/v1/taxonomies' );
-		$request->set_param( 'show_ui', false );
+		$request->set_param( 'show_ui', $show_ui );
 		$request->set_param( 'context', 'edit' );
 		$response = rest_get_server()->dispatch( $request );
 
@@ -127,28 +107,39 @@ class Stories_Taxonomies_Controller extends DependencyInjectedRestTestCase {
 		foreach ( $data as $tax ) {
 			$this->assertArrayHasKey( 'visibility', $tax );
 			$this->assertArrayHasKey( 'show_ui', $tax['visibility'] );
-			$this->assertFalse( $tax['visibility']['show_ui'] );
+			$this->assertSame( $show_ui, $tax['visibility']['show_ui'] );
 		}
 	}
 
 	/**
 	 * @covers ::get_items
 	 * @covers ::get_collection_params
+	 * @dataProvider data_show_ui
 	 */
-	public function test_get_items_hierarchical_true(): void {
+	public function test_get_items_hierarchical( $hierarchical ): void {
 		$this->controller->register();
 
 		$request = new WP_REST_Request( WP_REST_Server::READABLE, '/web-stories/v1/taxonomies' );
-		$request->set_param( 'hierarchical', true );
+		$request->set_param( 'hierarchical', $hierarchical );
 		$response = rest_get_server()->dispatch( $request );
 
 		$this->assertFalse( $response->is_error() );
-		$this->assertNotEmpty( $response->get_data() );
-
-		$hierarchical_values = wp_list_pluck( array_values( $response->get_data() ), 'hierarchical' );
-
-		foreach ( $hierarchical_values as $hierarchical ) {
-			$this->assertTrue( $hierarchical );
+		$data = $response->get_data();
+		$this->assertNotEmpty( $data );
+		foreach ( $data as $tax ) {
+			$this->assertArrayHasKey( 'hierarchical', $tax );
+			$this->assertSame( $hierarchical, $tax['hierarchical'] );
 		}
 	}
+
+	/**
+	 * @return array
+	 */
+	public function data_show_ui(){
+		return [
+			'true' => [ true ],
+			'false' => [ false ],
+		];
+	}
+
 }
