@@ -179,6 +179,18 @@ describe('Right Click Menu integration', () => {
     });
   }
 
+  function useShapeAsMask() {
+    return fixture.screen.getByRole('menuitem', {
+      name: /^Use Shape as a Mask/i,
+    });
+  }
+
+  function removeShapeMask() {
+    return fixture.screen.getByRole('menuitem', {
+      name: /^Unmask/i,
+    });
+  }
+
   function duplicateElements() {
     return fixture.screen.getByRole('menuitem', {
       name: /^Duplicate Element/i,
@@ -1350,6 +1362,68 @@ describe('Right Click Menu integration', () => {
       );
       expect(shapeElements.length).toBe(2);
       verifyElementDuplicated(shapeElements[0], shapeElements[1]);
+    });
+  });
+
+  describe('right click menu: use shape mask', () => {
+    it('adds and removes mask from image element', async () => {
+      const image = await addEarthImage();
+      const shape = await addShape({
+        backgroundColor: {
+          color: {
+            r: 203,
+            g: 103,
+            b: 103,
+          },
+        },
+      });
+
+      const imageFrame = fixture.editor.canvas.framesLayer.frame(image.id).node;
+      const shapeFrame = fixture.editor.canvas.framesLayer.frame(shape.id).node;
+
+      // select shape and image targets
+      await clickOnTarget(imageFrame);
+      await clickOnTarget(shapeFrame, 'Shift');
+
+      // multiple elements should be selected
+      const selectedElements = await fixture.renderHook(() =>
+        useStory(({ state }) => state.selectedElements)
+      );
+      expect(selectedElements.length).toBe(2);
+
+      // add shape mask
+      await rightClickOnTarget(imageFrame);
+      await fixture.events.click(useShapeAsMask());
+      await clickOnTarget(imageFrame);
+
+      const { selectedElement } = await fixture.renderHook(() =>
+        useStory(({ state }) => ({
+          selectedElement: state.selectedElements[0],
+        }))
+      );
+
+      expect(selectedElement.mask.type).toEqual('heart');
+
+      // remove the mask
+      const maskedFrame = fixture.editor.canvas.framesLayer.frame(
+        selectedElement.id
+      ).node;
+      await rightClickOnTarget(maskedFrame);
+      await fixture.events.click(removeShapeMask());
+
+      // click on the now "detached" mask
+      await clickOnTarget(imageFrame);
+
+      // delete the "detached" mask
+      await fixture.events.keyboard.press('del');
+
+      const { unmaskedElement } = await fixture.renderHook(() =>
+        useStory(({ state }) => ({
+          unmaskedElement: state.currentPage.elements[1],
+        }))
+      );
+
+      expect(unmaskedElement.mask.type).toEqual('rectangle');
     });
   });
 });
