@@ -31,7 +31,7 @@ import { StoryPropTypes, getTransformFlip } from '@googleforcreators/elements';
  * Internal dependencies
  */
 import { MaskTypes } from './constants';
-import { getElementMask } from './masks';
+import { getElementMask, generateMaskId } from './masks';
 
 const FILL_STYLE = {
   position: 'absolute',
@@ -227,8 +227,7 @@ const WithMask = forwardRef(
 
     // @todo: Chrome cannot do inline clip-path using data: URLs.
     // See https://bugs.chromium.org/p/chromium/issues/detail?id=1041024.
-
-    const maskId = `mask-${mask.type}-${element.id}-frame`;
+    const maskId = generateMaskId(element, 'frame');
 
     return (
       <div
