@@ -49,7 +49,7 @@ function RouterProvider({ children, ...props }) {
     props.history || (globalThis.document && createHashHistory())
   ); // createHashHistory internally uses document.
   const [currentPath, setCurrentPath] = useState(
-    history.current?.location?.pathname
+    history.current?.location?.pathname || ''
   );
   const [availableRoutes, setAvailableRoutes] = useState([]);
   const defaultRoute = APP_ROUTES.DASHBOARD;
