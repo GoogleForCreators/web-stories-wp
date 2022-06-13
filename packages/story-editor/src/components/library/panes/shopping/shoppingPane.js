@@ -155,6 +155,7 @@ function ShoppingPane(props) {
     setOrderby(option.orderby);
     setOrder(option.order);
     setPage(1);
+    setLoaded(false);
   };
 
   const handleInputKeyPress = useCallback((event) => {
@@ -170,6 +171,7 @@ function ShoppingPane(props) {
       if (value !== searchTerm) {
         setSearchTerm(value);
         setPage(1);
+        setLoaded(false);
       }
     },
     [searchTerm, setSearchTerm]
@@ -223,6 +225,7 @@ function ShoppingPane(props) {
   const handleClearInput = useCallback(() => {
     setSearchTerm('');
     setPage(1);
+    setLoaded(false);
   }, [setSearchTerm]);
 
   const onLoadMore = useCallback(() => {
@@ -270,7 +273,7 @@ function ShoppingPane(props) {
             <LoadingSpinner animationSize={50} circleSize={6} />
           </LoadingContainer>
         )}
-        {products?.length > 0 && (
+        {loaded && products?.length > 0 && (
           <>
             <ProductList
               isMenuFocused={isMenuFocused}
