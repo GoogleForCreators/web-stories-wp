@@ -139,3 +139,4 @@ export { default as TrashFilledSmall } from './trash_filled_small.svg';
 export { default as TurningLine } from './turning_line.svg';
 export { default as Union } from './union.svg';
 export { default as Video } from './video.svg';
+export { default as RemoveMask } from './remove_mask.svg';
