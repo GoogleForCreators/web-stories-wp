@@ -25,7 +25,7 @@ import { useEffect, useRef } from '@googleforcreators/react';
  */
 import { useHistory } from '../../history';
 import deleteNestedKeys from '../utils/deleteNestedKeys';
-import skipBlobUrls from '../utils/skipBlobUrls';
+import pageContainsBlobUrl from '../utils/pageContainsBlobUrl';
 
 // Changes to these properties of elements do not create a new history entry
 // if only one (or multiple) of these properties change but nothing else changes.
@@ -112,7 +112,7 @@ function useHistoryEntry({ story, current, pages, selection, capabilities }) {
           JSON.stringify(adjustedPages) === JSON.stringify(adjustedEntryPages);
       }
 
-      if (skipBlobUrls(pages)) {
+      if (pageContainsBlobUrl(pages)) {
         skipAddingEntry = true;
       }
     }
