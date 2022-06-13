@@ -22,7 +22,6 @@ import {
   useEffect,
   useState,
   useMemo,
-  useRef,
 } from '@googleforcreators/react';
 
 /**
@@ -39,7 +38,6 @@ import useApi from '../../../../api/useApi';
 
 function useTaxonomyFilters() {
   const [taxonomies, setTaxonomies] = useState([]);
-  const termPromises = useRef([]);
 
   const { getTaxonomies, getTaxonomyTerms } = useApi(
     ({
@@ -57,23 +55,25 @@ function useTaxonomyFilters() {
    *
    * @return {void}
    */
-  const _setTaxonomiesTermData = useCallback(async () => {
-    const fetched = await Promise.all(termPromises.current);
-    const taxonomyObject = {};
-    for (const arr of fetched) {
-      // grab the first elements 'taxonomy' which should map to the parents 'slug'
-      const key = arr[0]?.taxonomy;
-      if (key) {
-        taxonomyObject[key] = arr;
+  const _setTaxonomiesTermData = useCallback(
+    (terms) => {
+      const taxonomyObject = {};
+      for (const arr of terms) {
+        // grab the first elements 'taxonomy' which should map to the parents 'slug'
+        const key = arr[0]?.taxonomy;
+        if (key) {
+          taxonomyObject[key] = arr;
+        }
       }
-    }
-    setTaxonomies((prevTaxonomies) =>
-      prevTaxonomies.map((c) => ({
-        ...c,
-        data: taxonomyObject[c.slug] || [],
-      }))
-    );
-  }, [setTaxonomies]);
+      setTaxonomies((prevTaxonomies) =>
+        prevTaxonomies.map((taxonomy) => ({
+          ...taxonomy,
+          data: taxonomyObject[taxonomy.slug] || [],
+        }))
+      );
+    },
+    [setTaxonomies]
+  );
 
   /**
    * Query individual taxonomy data.
@@ -104,14 +104,26 @@ function useTaxonomyFilters() {
    */
   const queryTaxonomies = useCallback(async () => {
     const data = await getTaxonomies({ hierarchical: true });
-
+    const promises = [];
     for (const taxonomy of data) {
       // initialize the data with an empty array
       taxonomy.data = [];
-      termPromises.current.push(queryTaxonomyTerms(taxonomy));
+      // fetch each taxonomies terms
+      promises.push(queryTaxonomyTerms(taxonomy));
     }
     setTaxonomies(data);
-  }, [setTaxonomies, getTaxonomies, queryTaxonomyTerms]);
+
+    // once the taxonomies terms have been fetched
+    // set the terms data on the parent taxonomy
+    Promise.all(promises).then((terms) => {
+      _setTaxonomiesTermData(terms);
+    });
+  }, [
+    setTaxonomies,
+    getTaxonomies,
+    queryTaxonomyTerms,
+    _setTaxonomiesTermData,
+  ]);
 
   /**
    * Sets up the shape of the taxonomy filters data
@@ -135,12 +147,8 @@ function useTaxonomyFilters() {
   }, [queryTaxonomyTerms, taxonomies]);
 
   useEffect(() => {
-    const initialize = async () => {
-      await queryTaxonomies();
-      _setTaxonomiesTermData();
-    };
-    initialize();
-  }, [queryTaxonomies, _setTaxonomiesTermData]);
+    queryTaxonomies();
+  }, [queryTaxonomies]);
 
   return useMemo(
     () => ({ taxonomies, initializeTaxonomyFilters }),
