@@ -66,7 +66,7 @@ function KeyBindings({ uuid, node, focusGroup, exitFocusGroup }) {
   const handleEsc = useCallback(
     (e) => {
       e.preventDefault();
-      exitFocusGroup();
+      exitFocusGroup?.();
     },
     [exitFocusGroup]
   );
@@ -95,7 +95,7 @@ KeyBindings.propTypes = {
       ? PropTypes.instanceOf(Element).isRequired
       : PropTypes.any.isRequired,
   focusGroup: PropTypes.array.isRequired,
-  exitFocusGroup: PropTypes.func.isRequired,
+  exitFocusGroup: PropTypes.func,
 };
 
 export default KeyBindings;
