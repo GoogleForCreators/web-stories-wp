@@ -162,7 +162,7 @@ class Stories_Taxonomies_Controller extends WP_REST_Taxonomies_Controller implem
 		];
 
 		$query_params['show_ui'] = [
-			'description' => __( 'Whether to show only show in ui taxonomies.', 'web-stories' ),
+			'description' => __( 'Whether to show only show taxonomies that allow a UI in the admin.', 'web-stories' ),
 			'type'        => 'boolean',
 		];
 
