@@ -114,7 +114,7 @@ function ShoppingPane(props) {
 
   const searchProductsWithTelemetry = useCallback(
     (value = '', sortBy, sortOrder) => {
-      searchProducts((value = ''), sortBy, sortOrder);
+      searchProducts(value, sortBy, sortOrder);
       trackEvent('search', {
         search_type: 'products',
         search_term: value,
