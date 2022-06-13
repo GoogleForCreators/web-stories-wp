@@ -63,7 +63,8 @@ export function resolveRoute(route) {
      * If the url has no root append it to the current route and create
      * a nested root within the context of the dashboard app.
      */
-    return `${globalThis.location?.hash}/${route}`;
+    const hash = globalThis.location?.hash || '';
+    return `${hash}/${route}`;
   }
 }
 
