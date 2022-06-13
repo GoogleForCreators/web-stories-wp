@@ -22,11 +22,13 @@ import { ContextMenuComponents } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
+import { useFeature } from 'flagged';
 import { RIGHT_CLICK_MENU_LABELS } from '../constants';
 import { states, useHighlights } from '../../highlights';
 import { MediaUploadButton } from '../../../components/form';
 import useOnMediaSelect from '../../../components/library/panes/media/local/useOnMediaSelect';
 import LibraryProvider from '../../../components/library/libraryProvider';
+import { useMediaRecording } from '../../../components/mediaRecording';
 import { MenuPropType } from './shared';
 
 const MediaButton = () => {
@@ -48,6 +50,10 @@ function EmptyStateMenu() {
   const { setHighlights } = useHighlights(({ setHighlights }) => ({
     setHighlights,
   }));
+  const enableMediaRecording = useFeature('mediaRecording');
+  const { toggleRecordingMode } = useMediaRecording(({ actions }) => ({
+    toggleRecordingMode: actions.toggleRecordingMode,
+  }));
 
   return (
     <>
@@ -63,6 +69,11 @@ function EmptyStateMenu() {
       <LibraryProvider>
         <MediaButton />
       </LibraryProvider>
+      {enableMediaRecording && (
+        <ContextMenuComponents.MenuButton onClick={toggleRecordingMode}>
+          {RIGHT_CLICK_MENU_LABELS.RECORD_VIDEO}
+        </ContextMenuComponents.MenuButton>
+      )}
       <ContextMenuComponents.MenuButton
         onClick={() => {
           setHighlights({
