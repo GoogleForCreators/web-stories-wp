@@ -297,22 +297,7 @@
       "backgroundColor": { "color": { "r": 21, "g": 28, "b": 35 } },
       "type": "page",
       "id": "32902389-0b53-4c6f-84db-96cfab05c0fc",
-      "animations": [
-        {
-          "id": "eb8e1d8a-52bc-4296-a838-621d1f1c63da",
-          "type": "effect-fade-in",
-          "targets": ["488359ff-1e82-46b4-a74b-1b6593450c80"],
-          "duration": 2000,
-          "delay": 250
-        },
-        {
-          "id": "d446a241-cbde-4b74-8ce3-52714720e026",
-          "type": "effect-fade-in",
-          "targets": ["3b0d63b8-6a9d-420a-a172-c7ec19ca3754"],
-          "duration": 2000,
-          "delay": 500
-        }
-      ],
+      "animations": [],
       "pageTemplateType": "cover"
     },
     {

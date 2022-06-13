@@ -404,64 +404,7 @@
       "backgroundColor": { "color": { "r": 37, "g": 42, "b": 58 } },
       "type": "page",
       "id": "acef1172-8528-42e0-b0da-e88f8a946feb",
-      "animations": [
-        {
-          "id": "512e0dc1-4e6a-46e9-b314-61e79f2ee200",
-          "type": "effect-fade-in",
-          "targets": ["6fefb92d-01c8-4864-bcc5-3672c2a4dbd5"],
-          "duration": 2000,
-          "delay": 600
-        },
-        {
-          "id": "7092d7ab-a2fa-4f5c-8f52-e25b013da709",
-          "type": "effect-fade-in",
-          "targets": ["b04c0272-848d-460b-b5b5-4147eb0e7d9f"],
-          "duration": 2000,
-          "delay": 900
-        },
-        {
-          "id": "26d29044-d54e-458c-a563-8dde126d6bd4",
-          "type": "effect-fade-in",
-          "targets": ["e21e5054-939f-4fbd-8f50-66407a76ca2a"],
-          "duration": 2000,
-          "delay": 300
-        },
-        {
-          "id": "14881382-3d4d-4b66-87fb-9067db8cebe0",
-          "type": "effect-fade-in",
-          "targets": ["f3a16675-1450-4499-88d7-44a94c089a19"],
-          "duration": 1000,
-          "delay": 250
-        },
-        {
-          "id": "7d66ee45-7cc7-433f-9e1e-7cd5b56d9e22",
-          "type": "effect-fade-in",
-          "targets": ["33bc0ba3-8cb5-4caa-be61-8ead46a2b7f6"],
-          "duration": 1000,
-          "delay": 300
-        },
-        {
-          "id": "20f34c84-12de-4db0-a4eb-9730e1b8ff53",
-          "type": "effect-fade-in",
-          "targets": ["1fa37f0f-9d6b-4889-ab5a-cff421340ba3"],
-          "duration": 1000,
-          "delay": 350
-        },
-        {
-          "id": "8d667553-300b-4504-897c-9cff4bedf30b",
-          "type": "effect-fade-in",
-          "targets": ["27b5b56f-ec86-495d-a190-faeb2cc36879"],
-          "duration": 1000,
-          "delay": 400
-        },
-        {
-          "id": "e6f58beb-49d1-471e-a1a6-aced639bda06",
-          "type": "effect-fade-in",
-          "targets": ["3ce384ee-0f05-4a8e-8aef-f7c2f4401086"],
-          "duration": 2000,
-          "delay": 250
-        }
-      ],
+      "animations": [],
       "pageTemplateType": "cover"
     },
     {
