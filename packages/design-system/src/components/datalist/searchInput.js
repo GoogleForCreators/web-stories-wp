@@ -118,7 +118,7 @@ const SearchInput = forwardRef(function SearchInput(
     value,
     onChange,
     focusFontListFirstOption = noop,
-    placeholder,
+    placeholder = __('Search', 'web-stories'),
     ...rest
   },
   ref
@@ -145,7 +145,7 @@ const SearchInput = forwardRef(function SearchInput(
         aria-expanded={isExpanded}
         value={value}
         onKeyDown={handleKeyPress}
-        placeholder={placeholder || __('Search', 'web-stories')}
+        placeholder={placeholder}
         onChange={onChange}
         aria-label={__('Search', 'web-stories')}
         {...rest}

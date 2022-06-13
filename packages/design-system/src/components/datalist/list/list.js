@@ -73,7 +73,7 @@ const OptionList = forwardRef(function OptionList(
     focusSearch = noop,
     listId,
     listStyleOverrides,
-    noMatchesFoundLabel,
+    noMatchesFoundLabel = __('No matches found', 'web-stories'),
   },
   listRef
 ) {
@@ -229,9 +229,7 @@ const OptionList = forwardRef(function OptionList(
   }, [focusTrigger]);
 
   return filteredOptions.length <= 0 ? (
-    <NoResult>
-      {noMatchesFoundLabel || __('No matches found', 'web-stories')}
-    </NoResult>
+    <NoResult>{noMatchesFoundLabel}</NoResult>
   ) : (
     <List
       ref={listRef}
