@@ -19,13 +19,13 @@
  */
 import cloneDeep from 'clone-deep';
 import { useEffect, useRef } from '@googleforcreators/react';
-import { isBlobURL } from '@googleforcreators/media';
 
 /**
  * Internal dependencies
  */
 import { useHistory } from '../../history';
 import deleteNestedKeys from '../utils/deleteNestedKeys';
+import skipBlobUrls from '../utils/skipBlobUrls';
 
 // Changes to these properties of elements do not create a new history entry
 // if only one (or multiple) of these properties change but nothing else changes.
@@ -106,15 +106,9 @@ function useHistoryEntry({ story, current, pages, selection, capabilities }) {
           JSON.stringify(adjustedPages) === JSON.stringify(adjustedEntryPages);
       }
 
-      // skip entries that have a blob url
-      // https://github.com/GoogleForCreators/web-stories-wp/issues/10289
-      pages.map((page) => {
-        page.elements.forEach((element) => {
-          if (isBlobURL(element?.resource?.src)) {
-            skipAddingEntry = true;
-          }
-        });
-      });
+      if (skipBlobUrls(pages)) {
+        skipAddingEntry = true;
+      }
     }
 
     if (!skipAddingEntry) {
