@@ -56,3 +56,5 @@ export { default as updateStory } from './updateStory';
 // Layer groups.
 export { default as addGroup } from './addGroup';
 export { default as updateGroup } from './updateGroup';
+export { default as deleteGroup } from './deleteGroup';
+export { default as duplicateGroup } from './duplicateGroup';

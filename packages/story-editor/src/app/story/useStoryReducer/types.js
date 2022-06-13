@@ -64,3 +64,5 @@ export const ELEMENT_RESERVED_PROPERTIES = [
 // Layer groups
 export const ADD_GROUP = 'ADD_GROUP';
 export const UPDATE_GROUP = 'UPDATE_GROUP';
+export const DELETE_GROUP = 'DELETE_GROUP';
+export const DUPLICATE_GROUP = 'DUPLICATE_GROUP';

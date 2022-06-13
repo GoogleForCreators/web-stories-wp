@@ -363,8 +363,13 @@ function Layer({ element }) {
   });
 
   const layerId = `layer-${element.id}`;
+  const isNested = element.groupId;
 
-  const lockTitle = element.isLocked
+  const lockTitle = isNested
+    ? element.isLocked
+      ? __('Group is Locked', 'web-stories')
+      : __('Group is Unlocked', 'web-stories')
+    : element.isLocked
     ? __('Unlock Layer', 'web-stories')
     : __('Lock Layer', 'web-stories');
 
@@ -409,10 +414,10 @@ function Layer({ element }) {
 
   const isLayerNamingEnabled = useFeature('layerNaming');
   const isRenameable = renamableLayer?.elementId === element.id;
-  const isNested = element.groupId;
 
   return (
     <LayerContainer>
+      {element.position}
       {isRenameable && isLayerNamingEnabled ? (
         <LayerInputWrapper isNested={isNested}>
           <LayerIconWrapper>
@@ -453,7 +458,6 @@ function Layer({ element }) {
           </LayerIconWrapper>
           <LayerDescription>
             <LayerContentContainer>
-              {/*<LayerText>{element.groupId.substr(0, 8)}</LayerText>*/}
               <LayerText>{layerName}</LayerText>
             </LayerContentContainer>
             {element.isBackground && (
@@ -463,7 +467,7 @@ function Layer({ element }) {
             )}
             {element.isLocked && isLayerLockingEnabled && (
               <IconWrapper aria-label={__('Locked', 'web-stories')}>
-                <Icons.LockClosed />
+                {isNested ? <Icons.LockFilledClosed /> : <Icons.LockClosed />}
               </IconWrapper>
             )}
           </LayerDescription>
@@ -498,11 +502,12 @@ function Layer({ element }) {
               <Icons.PagePlus />
             </LayerAction>
           </Tooltip>
-          {isLayerLockingEnabled && !isNested && (
+          {isLayerLockingEnabled && (
             <Tooltip title={lockTitle} hasTail isDelayed>
               <LayerAction
                 aria-label={__('Lock/Unlock', 'web-stories')}
                 aria-describedby={layerId}
+                disabled={isNested}
                 onPointerDown={preventReorder}
                 onClick={() =>
                   updateElementById({
@@ -511,7 +516,7 @@ function Layer({ element }) {
                   })
                 }
               >
-                <LockIcon />
+                {isNested ? <Icons.LockFilledClosed /> : <LockIcon />}
               </LayerAction>
             </Tooltip>
           )}

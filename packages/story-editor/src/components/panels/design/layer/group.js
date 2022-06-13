@@ -27,17 +27,21 @@ import {
   themeHelpers,
   Text,
   THEME_CONSTANTS,
+  Input,
 } from '@googleforcreators/design-system';
-import { useRef, memo } from '@googleforcreators/react';
+import { useRef, memo, useState } from '@googleforcreators/react';
 import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
  */
 import PropTypes from 'prop-types';
-import { useStory } from '../../../../app';
+import { v4 as uuidv4 } from 'uuid';
+import { useCanvas, useStory } from '../../../../app';
 import Tooltip from '../../../tooltip';
-import { LAYER_HEIGHT } from './constants';
+import generateGroupName from '../../../../utils/generateGroupName';
+import { LAYER_HEIGHT, NESTED_PX } from './constants';
+import useGroupSelection from './useGroupSelection';
 
 const fadeOutCss = css`
   background-color: var(--background-color);
@@ -271,6 +275,38 @@ const LayerAction = styled(Button).attrs({
   }
 `;
 
+const LayerInputWrapper = styled.div`
+  display: grid;
+  grid-template-columns: 23px 1fr;
+  height: 100%;
+  width: 100%;
+  padding-left: ${({ isNested }) => (isNested ? NESTED_PX : 12)}px;
+  padding-right: 10px;
+
+  :hover {
+    background: ${({ theme }) => theme.colors.interactiveBg.tertiaryHover};
+  }
+  :hover,
+  :hover + * {
+    --background-color: ${({ theme }) =>
+      theme.colors.interactiveBg.tertiaryHover};
+    --background-color-opaque: ${({ theme }) =>
+      rgba(theme.colors.interactiveBg.tertiaryHover, 0)};
+  }
+`;
+
+const LayerInputForm = styled(LayerDescription).attrs({ as: 'form' })`
+  overflow: visible;
+`;
+
+const LayerInput = styled(Input)`
+  overflow: visible;
+
+  div {
+    height: 100%;
+  }
+`;
+
 function preventReorder(e) {
   e.stopPropagation();
   e.preventDefault();
@@ -278,9 +314,22 @@ function preventReorder(e) {
 
 function Group({ groupId }) {
   const isLayerLockingEnabled = useFeature('layerLocking');
-  const { groups, updateGroupById } = useStory(({ actions, state }) => ({
+  const {
+    groups,
+    updateGroupById,
+    deleteGroupAndElementsById,
+    updateElementsById,
+    duplicateGroupById,
+    groupLayers,
+  } = useStory(({ actions, state }) => ({
     groups: state.currentPage.groups,
     updateGroupById: actions.updateGroupById,
+    deleteGroupAndElementsById: actions.deleteGroupAndElementsById,
+    updateElementsById: actions.updateElementsById,
+    duplicateGroupById: actions.duplicateGroupById,
+    groupLayers: state.currentPage.elements.filter(
+      (el) => el.groupId === groupId
+    ),
   }));
 
   const group = groups[groupId];
@@ -294,71 +343,164 @@ function Group({ groupId }) {
 
   const LockIcon = group.isLocked ? Icons.LockClosed : Icons.LockOpen;
 
+  const layerName = group.name;
+  const [newLayerName, setNewLayerName] = useState(layerName);
+  const { isSelected, handleClick } = useGroupSelection(groupId);
+  const isLayerNamingEnabled = useFeature('layerNaming');
+  const { renamableLayer, setRenamableLayer } = useCanvas(
+    ({ state, actions }) => ({
+      renamableLayer: state.renamableLayer,
+      setRenamableLayer: actions.setRenamableLayer,
+    })
+  );
+  const isRenameable = renamableLayer?.elementId === groupId;
+
+  const handleChange = (evt) => {
+    setNewLayerName(evt.target.value);
+  };
+
+  const handleKeyDown = (evt) => {
+    if (evt.key === 'Escape') {
+      setNewLayerName(layerName);
+      setRenamableLayer(null);
+    }
+  };
+
+  const updateLayerName = () => {
+    setRenamableLayer(null);
+    const trimmedLayerName = newLayerName.trim();
+    // Don't update name if trimmed layer name is empty.
+    // This means that submitting an empty name will exit renaming, and the
+    // layer name will revert to whatever it was before, ignoring the empty input.
+    if (!trimmedLayerName) {
+      setNewLayerName(layerName);
+    } else {
+      updateGroupById({
+        groupId,
+        properties: {
+          name: trimmedLayerName,
+        },
+      });
+    }
+  };
+
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+    updateLayerName();
+  };
+
+  // We need to prevent the pointer-down event from propagating to the
+  // reorderable when you click on the input. If not, the reorderable will
+  // move focus, which will blur the input, which will cancel renaming.
+  const stopPropagation = (evt) => evt.stopPropagation();
+
+  const handleLockGroup = () => {
+    updateGroupById({
+      groupId,
+      properties: { isLocked: !group.isLocked },
+    });
+    updateElementsById({
+      elementIds: groupLayers.map((layer) => layer.id),
+      properties: { isLocked: !group.isLocked },
+    });
+  };
+
+  const handleDuplicateGroup = () => {
+    const newGroupId = uuidv4();
+    const newGroupName = generateGroupName(groups, group.name);
+    duplicateGroupById({
+      oldGroupId: groupId,
+      groupId: newGroupId,
+      name: newGroupName,
+    });
+  };
+
   return (
     <LayerContainer>
-      <LayerButton
-        ref={groupRef}
-        id={groupDomId}
-        //onClick={handleClick}
-        //isSelected={isSelected}
-      >
-        <GroupIconsWrapper>
-          <Icons.ChevronDown />
-          <Icons.Group />
-        </GroupIconsWrapper>
-        <LayerDescription>
-          <LayerContentContainer>
-            <LayerText>{group.name}</LayerText>
-          </LayerContentContainer>
-          {group.isLocked && isLayerLockingEnabled && (
-            <IconWrapper aria-label={__('Locked', 'web-stories')}>
-              <Icons.LockClosed />
-            </IconWrapper>
-          )}
-        </LayerDescription>
-      </LayerButton>
-      <ActionsContainer>
-        <Tooltip title={__('Delete Layer', 'web-stories')} hasTail isDelayed>
-          <LayerAction
-            ref={deleteButtonRef}
-            aria-label={__('Delete', 'web-stories')}
-            aria-describedby={groupDomId}
-            onPointerDown={preventReorder}
-            //onClick={() => deleteElementById({ elementId: element.id })}
-          >
-            <Icons.Trash />
-          </LayerAction>
-        </Tooltip>
-        <Tooltip title={__('Duplicate Layer', 'web-stories')} hasTail isDelayed>
-          <LayerAction
-            aria-label={__('Duplicate', 'web-stories')}
-            aria-describedby={groupDomId}
-            onPointerDown={preventReorder}
-            // onClick={() =>
-            //   duplicateElementsById({ elementIds: [element.id] })
-            // }
-          >
-            <Icons.PagePlus />
-          </LayerAction>
-        </Tooltip>
-        {isLayerLockingEnabled && (
-          <Tooltip title={lockTitle} hasTail isDelayed>
+      {isRenameable && isLayerNamingEnabled ? (
+        <LayerInputWrapper>
+          <GroupIconsWrapper>
+            <Icons.ChevronDown />
+            <Icons.Group />
+          </GroupIconsWrapper>
+          <LayerInputForm onSubmit={handleSubmit}>
+            <LayerInput
+              tabIndex={-1}
+              aria-label={__('Layer Name', 'web-stories')}
+              value={newLayerName}
+              onChange={handleChange}
+              onKeyDown={handleKeyDown}
+              onBlur={updateLayerName}
+              onPointerDown={stopPropagation}
+              hasFocus
+            />
+            <button hidden />
+          </LayerInputForm>
+        </LayerInputWrapper>
+      ) : (
+        <LayerButton
+          ref={groupRef}
+          id={groupDomId}
+          onClick={handleClick}
+          isSelected={isSelected}
+        >
+          <GroupIconsWrapper>
+            <Icons.ChevronDown />
+            <Icons.Group />
+          </GroupIconsWrapper>
+          <LayerDescription>
+            <LayerContentContainer>
+              <LayerText>{group.name}</LayerText>
+            </LayerContentContainer>
+            {group.isLocked && isLayerLockingEnabled && (
+              <IconWrapper aria-label={__('Locked', 'web-stories')}>
+                <Icons.LockClosed />
+              </IconWrapper>
+            )}
+          </LayerDescription>
+        </LayerButton>
+      )}
+      {!isRenameable && (
+        <ActionsContainer>
+          <Tooltip title={__('Delete Group', 'web-stories')} hasTail isDelayed>
             <LayerAction
-              aria-label={__('Lock/Unlock', 'web-stories')}
+              ref={deleteButtonRef}
+              aria-label={__('Delete', 'web-stories')}
               aria-describedby={groupDomId}
               onPointerDown={preventReorder}
-              onClick={() =>
-                updateGroupById({
-                  groupId,
-                  properties: { isLocked: !group.isLocked },
-                })
-              }
+              onClick={() => deleteGroupAndElementsById({ groupId })}
             >
-              <LockIcon />
+              <Icons.Trash />
             </LayerAction>
           </Tooltip>
-        )}
-      </ActionsContainer>
+          <Tooltip
+            title={__('Duplicate Group', 'web-stories')}
+            hasTail
+            isDelayed
+          >
+            <LayerAction
+              aria-label={__('Duplicate', 'web-stories')}
+              aria-describedby={groupDomId}
+              onPointerDown={preventReorder}
+              onClick={handleDuplicateGroup}
+            >
+              <Icons.PagePlus />
+            </LayerAction>
+          </Tooltip>
+          {isLayerLockingEnabled && (
+            <Tooltip title={lockTitle} hasTail isDelayed>
+              <LayerAction
+                aria-label={__('Lock/Unlock', 'web-stories')}
+                aria-describedby={groupDomId}
+                onPointerDown={preventReorder}
+                onClick={handleLockGroup}
+              >
+                <LockIcon />
+              </LayerAction>
+            </Tooltip>
+          )}
+        </ActionsContainer>
+      )}
     </LayerContainer>
   );
 }

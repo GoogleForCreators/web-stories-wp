@@ -131,6 +131,14 @@ function reducer(state, { type, payload }) {
       return reducers.updateGroup(state, payload);
     }
 
+    case types.DELETE_GROUP: {
+      return reducers.deleteGroup(state, payload);
+    }
+
+    case types.DUPLICATE_GROUP: {
+      return reducers.duplicateGroup(state, payload);
+    }
+
     default:
       return state;
   }

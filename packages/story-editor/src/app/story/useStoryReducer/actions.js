@@ -216,10 +216,10 @@ const addAnimations =
 
 const toggleLayer =
   (dispatch) =>
-  ({ metaKey, shiftKey, elementId }) =>
+  ({ metaKey, shiftKey, elementId, withLinked }) =>
     dispatch({
       type: types.TOGGLE_LAYER,
-      payload: { metaKey, shiftKey, elementId },
+      payload: { metaKey, shiftKey, elementId, withLinked },
     });
 
 const copySelectedElement = (dispatch) => () =>
@@ -237,8 +237,8 @@ const updateElementsByFontFamily =
 
 const addGroup =
   (dispatch) =>
-  ({ id, name }) =>
-    dispatch({ type: types.ADD_GROUP, payload: { id, name } });
+  ({ groupId, name }) =>
+    dispatch({ type: types.ADD_GROUP, payload: { groupId, name } });
 
 const updateGroupById =
   (dispatch) =>
@@ -246,6 +246,30 @@ const updateGroupById =
     dispatch({
       type: types.UPDATE_GROUP,
       payload: { groupId, properties },
+    });
+
+const deleteGroupById =
+  (dispatch) =>
+  ({ groupId }) =>
+    dispatch({
+      type: types.DELETE_GROUP,
+      payload: { groupId },
+    });
+
+const deleteGroupAndElementsById =
+  (dispatch) =>
+  ({ groupId }) =>
+    dispatch({
+      type: types.DELETE_GROUP,
+      payload: { groupId, includeElements: true },
+    });
+
+const duplicateGroupById =
+  (dispatch) =>
+  ({ groupId, name, oldGroupId }) =>
+    dispatch({
+      type: types.DUPLICATE_GROUP,
+      payload: { groupId, name, oldGroupId },
     });
 
 export const exposedActions = {
@@ -286,6 +310,9 @@ export const exposedActions = {
   updateElementsByFontFamily,
   addGroup,
   updateGroupById,
+  deleteGroupById,
+  deleteGroupAndElementsById,
+  duplicateGroupById,
 };
 
 // Internal actions

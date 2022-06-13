@@ -44,6 +44,8 @@ const useElementActions = () => {
     updateElementsById,
     addGroup,
     groups,
+    elements,
+    arrangeElement,
   } = useStory(({ state, actions }) => ({
     clearBackgroundElement: actions.clearBackgroundElement,
     duplicateElementsById: actions.duplicateElementsById,
@@ -52,6 +54,8 @@ const useElementActions = () => {
     updateElementsById: actions.updateElementsById,
     addGroup: actions.addGroup,
     groups: state.currentPage.groups,
+    elements: state.currentPage?.elements || [],
+    arrangeElement: actions.arrangeElement,
   }));
   const showSnackbar = useSnackbar((value) => value.showSnackbar);
   const setEditingElement = useCanvas(
@@ -117,7 +121,30 @@ const useElementActions = () => {
           /* commitValues */ true
         ),
     });
-  }, [selectedElements, updateElementsById, addGroup, groups]);
+    // Fix the order
+    const elementFromGroupWithHighestPosition = Math.max(
+      ...selectedElements.map((el) =>
+        elements.findIndex(({ id }) => id === el?.id)
+      )
+    );
+    for (const [index, element] of selectedElements.reverse().entries()) {
+      const position = elements.findIndex(({ id }) => id === element?.id);
+      if (position !== elementFromGroupWithHighestPosition) {
+        const newPosition = elementFromGroupWithHighestPosition - index;
+        arrangeElement({
+          elementId: element.id,
+          position: newPosition,
+        });
+      }
+    }
+  }, [
+    selectedElements,
+    updateElementsById,
+    addGroup,
+    groups,
+    arrangeElement,
+    elements,
+  ]);
 
   const handleUngroupSelectedElements = useCallback(() => {
     if (!selectedElements.length) {

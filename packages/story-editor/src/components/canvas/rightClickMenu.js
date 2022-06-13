@@ -40,6 +40,7 @@ import {
   ShapeMenu,
   StickerMenu,
   TextMenu,
+  GroupMenu,
 } from '../../app/rightClickMenu';
 import isEmptyStory from '../../app/story/utils/isEmptyStory';
 import EmptyStateMenu from '../../app/rightClickMenu/menus/emptyStateMenu';
@@ -74,6 +75,13 @@ const RightClickMenu = () => {
   const Menu = useMemo(() => {
     if (isThisEmptyStory) {
       return EmptyStateMenu;
+    }
+
+    const isOnlyGroupSelected = selectedElements.every(
+      (el) => el.groupId && el.groupId === selectedElements[0].groupId
+    );
+    if (isOnlyGroupSelected) {
+      return GroupMenu;
     }
 
     if (selectedElements.length > 1) {
