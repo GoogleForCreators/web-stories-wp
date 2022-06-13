@@ -235,7 +235,8 @@ function ShoppingPane(props) {
 
   const handleClearInput = useCallback(() => {
     setSearchTerm('');
-  }, [setSearchTerm]);
+    debouncedProductsQuery('', orderby, order);
+  }, [debouncedProductsQuery, order, orderby]);
 
   return (
     <Pane id={paneId} {...props}>
