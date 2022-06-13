@@ -157,22 +157,16 @@ const GroupIconsWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
-
-  //width: 21px;
-
-  //svg {
-  //  width: 21px;
-  //  height: auto;
-  //}
+  min-width:36px;
 `;
 
 const LayerDescription = styled.div`
   position: relative;
-  width: 100%;
+  max-width: 100%;
   overflow: hidden;
   display: flex;
   align-items: center;
-  margin-left: 0;
+  margin-left: 12px;
   text-align: left;
   color: ${({ theme }) => theme.colors.fg.primary};
 `;
