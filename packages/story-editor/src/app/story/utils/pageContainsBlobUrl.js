@@ -21,7 +21,7 @@ import { isBlobURL } from '@googleforcreators/media';
 function pageContainsBlobUrl(pages) {
   // skip entries that have a blob url
   // https://github.com/GoogleForCreators/web-stories-wp/issues/10289
-  return pages.map((page) => {
+  const result = pages.map((page) => {
     return page.elements.some((element) => {
       if (
         isBlobURL(element?.resource?.src) ||
@@ -30,7 +30,9 @@ function pageContainsBlobUrl(pages) {
         return true;
       }
     });
-  })[0];
+  });
+
+  return result.includes(true);
 }
 
 export default pageContainsBlobUrl;
