@@ -34,7 +34,7 @@ const LayerSeparator = styled(ReorderableSeparator)`
   padding: ${LAYER_HEIGHT / 2}px 0;
 `;
 
-const ReorderableGroup = memo(function ReorderableLayer({
+const ReorderableGroup = memo(function ReorderableGroup({
   groupId,
   position,
   handleStartReordering,
