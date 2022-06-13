@@ -166,7 +166,7 @@ function ShoppingPane(props) {
       searchProducts(searchTerm, page, orderby, order);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps -- Only run once on mount.
-  }, [searchProducts, isShoppingEnabled]);
+  }, [isShoppingEnabled]);
 
   useEffect(() => {
     if (!isShoppingEnabled) {
@@ -252,9 +252,11 @@ function ShoppingPane(props) {
 
   const onLoadMore = useCallback(() => {
     if (canLoadMore) {
-      setPage(page + 1);
+      const newPage = page + 1;
+      setPage(newPage);
+      debouncedProductsQuery(searchTerm, newPage, orderby, order);
     }
-  }, [canLoadMore, page]);
+  }, [canLoadMore, debouncedProductsQuery, order, orderby, page, searchTerm]);
 
   const allDataLoadedMessage =
     page > 1 ? __('No more products', 'web-stories') : '';
