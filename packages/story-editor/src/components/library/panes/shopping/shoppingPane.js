@@ -30,8 +30,9 @@ import {
   THEME_CONSTANTS,
   SearchInput,
   useLiveRegion,
-  CircularProgress,
   useSnackbar,
+  InfiniteScroller,
+  LoadingSpinner,
 } from '@googleforcreators/design-system';
 import { ELEMENT_TYPES } from '@googleforcreators/elements';
 
@@ -48,15 +49,9 @@ import paneId from './paneId';
 import ProductList from './productList';
 import ProductSort from './productSort';
 
-const Loading = styled.div`
-  position: relative;
-  margin-left: 10px;
-  margin-top: 10px;
-`;
-
-const Spinner = styled.div`
-  position: absolute;
-  top: 0;
+const LoadingContainer = styled.div`
+  display: flex;
+  justify-content: center;
 `;
 
 const HelperText = styled(Text).attrs({
@@ -72,64 +67,79 @@ function ShoppingPane(props) {
   const speak = useLiveRegion('assertive');
   const [loaded, setLoaded] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [canLoadMore, setCanLoadMore] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [page, setPage] = useState(1);
   const [orderby, setOrderby] = useState('date');
   const [order, setOrder] = useState('desc');
-  const onSortBy = (option) => {
-    setOrderby(option.orderby);
-    setOrder(option.order);
-  };
   const [isMenuFocused, setIsMenuFocused] = useState(false);
   const [products, setProducts] = useState([]);
   const {
     actions: { getProducts },
   } = useAPI();
 
-  const isShoppingEnabled =
-    'none' !== shoppingProvider && isShoppingIntegrationEnabled;
+  const { currentPageProducts, deleteElementById } = useStory(
+    ({ actions, state: { currentPage } }) => ({
+      currentPageProducts: currentPage?.elements
+        ?.filter(({ type }) => type === ELEMENT_TYPES.PRODUCT)
+        .map(({ id, product }) => ({
+          elementId: id,
+          product,
+        })),
+      deleteElementById: actions.deleteElementById,
+    })
+  );
 
-  const { currentPageProducts } = useStory(({ state: { currentPage } }) => ({
-    currentPageProducts: currentPage?.elements
-      ?.filter(({ type }) => type === ELEMENT_TYPES.PRODUCT)
-      .map(({ id, product }) => ({
-        elementId: id,
-        product,
-      })),
+  const { insertElement } = useLibrary((state) => ({
+    insertElement: state.actions.insertElement,
   }));
 
   const getProductsByQuery = useCallback(
-    async (value = '', sortBy, sortOrder) => {
+    async (value = '', _page = 1, sortBy, sortOrder) => {
       try {
         setIsLoading(true);
-        setProducts(await getProducts(value, sortBy, sortOrder));
+        const { products: _products, hasNextPage } = await getProducts(
+          value,
+          _page,
+          sortBy,
+          sortOrder
+        );
+        if (_page === 1) {
+          setProducts(_products);
+        } else {
+          setProducts([...products, ..._products]);
+        }
+        setCanLoadMore(hasNextPage);
       } catch (err) {
         showSnackbar({ message: err.message });
         setProducts([]);
+        setCanLoadMore(false);
+        setPage(1);
       } finally {
         setIsLoading(false);
         setLoaded(true);
       }
     },
-    [getProducts, showSnackbar]
-  );
-
-  const onSearch = useCallback(
-    (evt) => {
-      const value = evt.target.value;
-      if (value !== searchTerm) {
-        setSearchTerm(value);
-      }
-    },
-    [searchTerm, setSearchTerm]
+    [getProducts, products, showSnackbar]
   );
 
   const debouncedProductsQuery = useDebouncedCallback(getProductsByQuery, 300);
 
+  const isShoppingEnabled =
+    'none' !== shoppingProvider && isShoppingIntegrationEnabled;
+
   useEffect(() => {
     if (isShoppingEnabled) {
-      debouncedProductsQuery(searchTerm, orderby, order);
+      debouncedProductsQuery(searchTerm, page, orderby, order);
     }
-  }, [debouncedProductsQuery, isShoppingEnabled, searchTerm, orderby, order]);
+  }, [
+    debouncedProductsQuery,
+    isShoppingEnabled,
+    searchTerm,
+    orderby,
+    order,
+    page,
+  ]);
 
   useEffect(() => {
     if (!isShoppingEnabled) {
@@ -139,6 +149,14 @@ function ShoppingPane(props) {
     }
   }, [currentPageProducts, isShoppingEnabled]);
 
+  const handleFocus = () => setIsMenuFocused(false);
+
+  const onSortBy = (option) => {
+    setOrderby(option.orderby);
+    setOrder(option.order);
+    setPage(1);
+  };
+
   const handleInputKeyPress = useCallback((event) => {
     const { key } = event;
     if (key === 'ArrowDown' || key === 'Tab') {
@@ -146,15 +164,16 @@ function ShoppingPane(props) {
     }
   }, []);
 
-  const handleFocus = () => setIsMenuFocused(false);
-
-  const { deleteElementById } = useStory(({ actions }) => ({
-    deleteElementById: actions.deleteElementById,
-  }));
-
-  const { insertElement } = useLibrary((state) => ({
-    insertElement: state.actions.insertElement,
-  }));
+  const onSearch = useCallback(
+    (evt) => {
+      const value = evt.target.value;
+      if (value !== searchTerm) {
+        setSearchTerm(value);
+        setPage(1);
+      }
+    },
+    [searchTerm, setSearchTerm]
+  );
 
   const insertProduct = useCallback(
     (product) => {
@@ -203,7 +222,17 @@ function ShoppingPane(props) {
 
   const handleClearInput = useCallback(() => {
     setSearchTerm('');
+    setPage(1);
   }, [setSearchTerm]);
+
+  const onLoadMore = useCallback(() => {
+    if (canLoadMore) {
+      setPage(page + 1);
+    }
+  }, [canLoadMore, page]);
+
+  const allDataLoadedMessage =
+    page > 1 ? __('No more products', 'web-stories') : '';
 
   return (
     <Pane id={paneId} {...props}>
@@ -236,20 +265,31 @@ function ShoppingPane(props) {
             <ProductSort onChange={onSortBy} sortId={`${orderby}-${order}`} />
           </Row>
         )}
-        {isLoading && (
-          <Loading>
-            <Spinner>
-              <CircularProgress size={24} />
-            </Spinner>
-          </Loading>
+        {!loaded && isLoading && (
+          <LoadingContainer>
+            <LoadingSpinner animationSize={50} circleSize={6} />
+          </LoadingContainer>
         )}
-        {loaded && !isLoading && products?.length > 0 && (
-          <ProductList
-            isMenuFocused={isMenuFocused}
-            onClick={onClick}
-            products={products}
-            onPageProducts={currentPageProducts}
-          />
+        {products?.length > 0 && (
+          <>
+            <ProductList
+              isMenuFocused={isMenuFocused}
+              onClick={onClick}
+              products={products}
+              onPageProducts={currentPageProducts}
+            />
+            <InfiniteScroller
+              allDataLoadedMessage={allDataLoadedMessage}
+              allDataLoadedAriaMessage={__(
+                'Products are loaded',
+                'web-stories'
+              )}
+              onLoadMore={onLoadMore}
+              canLoadMore={canLoadMore}
+              isLoading={isLoading}
+              loadingAriaMessage={__('Loading more products', 'web-stories')}
+            />
+          </>
         )}
         {loaded && !isLoading && products?.length === 0 && (
           <HelperText>{__('No products found.', 'web-stories')}</HelperText>
