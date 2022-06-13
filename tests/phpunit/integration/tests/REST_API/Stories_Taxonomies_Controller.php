@@ -22,7 +22,20 @@ class Stories_Taxonomies_Controller extends DependencyInjectedRestTestCase {
 	 */
 	private $controller;
 
+	/**
+	 * Admin user for test.
+	 *
+	 * @var int
+	 */
+	protected static $admin_id;
+
 	public static function wpSetUpBeforeClass( $factory ): void {
+		self::$admin_id = $factory->user->create(
+			[
+				'role' => 'administrator',
+			]
+		);
+
 		self::$taxonomy_object = new DummyTaxonomy();
 		self::$taxonomy_object->register_taxonomy();
 	}
@@ -100,20 +113,22 @@ class Stories_Taxonomies_Controller extends DependencyInjectedRestTestCase {
 	 * @covers ::get_collection_params
 	 */
 	public function test_get_items_show_ui_false(): void {
+		wp_set_current_user( self::$admin_id );
 		$this->controller->register();
 
 		$request = new WP_REST_Request( WP_REST_Server::READABLE, '/web-stories/v1/taxonomies' );
 		$request->set_param( 'show_ui', false );
-		$request->set_param( 'type', 'attachment' );
+		$request->set_param( 'context', 'edit' );
 		$response = rest_get_server()->dispatch( $request );
 
 		$this->assertFalse( $response->is_error() );
 		$data = $response->get_data();
 		$this->assertNotEmpty( $data );
-		$this->assertCount( 1, $data );
-		$this->assertArrayHasKey( 'web_story_media_source', $data );
-		$this->assertArrayHasKey( 'name', $data['web_story_media_source'] );
-		$this->assertSame( 'Source', $data['web_story_media_source']['name'] );
+		foreach ( $data as $tax ) {
+			$this->assertArrayHasKey( 'visibility', $tax );
+			$this->assertArrayHasKey( 'show_ui', $tax['visibility'] );
+			$this->assertFalse( $tax['visibility']['show_ui'] );
+		}
 	}
 
 	/**
