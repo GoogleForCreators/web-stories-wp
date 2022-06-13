@@ -688,10 +688,19 @@
     },
     {
       "files": [
-        "packages/story-editor/src/**/*.js",
-        "packages/dashboard/src/**/*.js",
-        "packages/design-system/src/**/*.js",
-        "packages/element-library/src/**/*.js"
+        "packages/**/*.js"
+      ],
+      "excludedFiles": [
+        "packages/activation-notice/*.js",
+        "packages/jest-amp/*.js",
+        "packages/karma-fixture/*.js",
+        "packages/react/*.js",
+        "packages/stories-block/*.js",
+        "packages/test-utils/*.js",
+        "packages/tinymce-button/*.js",
+        "packages/wp-dashboard/*.js",
+        "packages/wp-story-editor/*.js",
+        "packages/wp-utils/*.js"
       ],
       "rules": {
         "no-restricted-imports": [
