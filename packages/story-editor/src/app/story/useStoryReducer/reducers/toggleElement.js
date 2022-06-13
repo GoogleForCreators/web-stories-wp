@@ -75,7 +75,7 @@ function toggleElement(state, { elementId, withLinked = false }) {
     const oldElement = getElementById(state.selection[0]);
     const newElement = getElementById(elementId);
     const resultIsOnlyNewElement =
-      selectionWasOnlyBackground || oldElement.isLocked || newElement.isLocked;
+      selectionWasOnlyBackground || oldElement?.isLocked || newElement.isLocked;
 
     // If either of those, return a new selection of only the new element
     if (resultIsOnlyNewElement) {
