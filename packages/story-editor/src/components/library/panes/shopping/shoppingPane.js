@@ -233,7 +233,7 @@ function ShoppingPane(props) {
               clearId="clear-product-search"
               handleClearInput={handleClearInput}
             />
-            <ProductSort onChange={onSortBy} sortId={`${orderby}-${order}`} />
+            <ProductSort onChange={onSortBy} value={`${orderby}-${order}`} />
           </Row>
         )}
         {isLoading && (
