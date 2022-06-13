@@ -35,6 +35,7 @@ import {
   LoadingSpinner,
 } from '@googleforcreators/design-system';
 import { ELEMENT_TYPES } from '@googleforcreators/elements';
+import { trackError, trackEvent } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies
@@ -78,8 +79,8 @@ function ShoppingPane(props) {
     actions: { getProducts },
   } = useAPI();
 
-  const { currentPageProducts, deleteElementById } = useStory(
-    ({ actions, state: { currentPage } }) => ({
+  const { currentPageProducts, deleteElementById, currentPageNumber } =
+    useStory(({ actions, state: { currentPage, currentPageNumber } }) => ({
       currentPageProducts: currentPage?.elements
         ?.filter(({ type }) => type === ELEMENT_TYPES.PRODUCT)
         .map(({ id, product }) => ({
@@ -87,14 +88,14 @@ function ShoppingPane(props) {
           product,
         })),
       deleteElementById: actions.deleteElementById,
-    })
-  );
+      currentPageNumber,
+    }));
 
   const { insertElement } = useLibrary((state) => ({
     insertElement: state.actions.insertElement,
   }));
 
-  const getProductsByQuery = useCallback(
+  const searchProducts = useCallback(
     async (value = '', _page = 1, sortBy, sortOrder) => {
       try {
         setIsLoading(true);
@@ -111,6 +112,7 @@ function ShoppingPane(props) {
         }
         setCanLoadMore(hasNextPage);
       } catch (err) {
+        trackError('search_products', err?.message);
         showSnackbar({ message: err.message });
         setProducts([]);
         setCanLoadMore(false);
@@ -123,23 +125,48 @@ function ShoppingPane(props) {
     [getProducts, products, showSnackbar]
   );
 
-  const debouncedProductsQuery = useDebouncedCallback(getProductsByQuery, 300);
+  const searchProductsWithTelemetry = useCallback(
+    (value = '', _page, sortBy, sortOrder) => {
+      searchProducts(value, _page, sortBy, sortOrder);
+      trackEvent('search', {
+        search_type: 'products',
+        search_term: value,
+        search_order: sortOrder,
+        search_orderby: sortBy,
+        search_page: _page,
+        search_provider: shoppingProvider,
+      });
+    },
+    [searchProducts, shoppingProvider]
+  );
+
+  const debouncedProductsQuery = useDebouncedCallback(
+    searchProductsWithTelemetry,
+    300
+  );
+
+  const onSearch = useCallback(
+    (evt) => {
+      const value = evt.target.value;
+      if (value !== searchTerm) {
+        setSearchTerm(value);
+        setPage(1);
+        setLoaded(false);
+        debouncedProductsQuery(value, 1, orderby, order);
+      }
+    },
+    [debouncedProductsQuery, order, orderby, searchTerm]
+  );
 
   const isShoppingEnabled =
     'none' !== shoppingProvider && isShoppingIntegrationEnabled;
 
   useEffect(() => {
     if (isShoppingEnabled) {
-      debouncedProductsQuery(searchTerm, page, orderby, order);
+      searchProducts(searchTerm, page, orderby, order);
     }
-  }, [
-    debouncedProductsQuery,
-    isShoppingEnabled,
-    searchTerm,
-    orderby,
-    order,
-    page,
-  ]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- Only run once on mount.
+  }, [searchProducts, isShoppingEnabled]);
 
   useEffect(() => {
     if (!isShoppingEnabled) {
@@ -156,6 +183,7 @@ function ShoppingPane(props) {
     setOrder(option.order);
     setPage(1);
     setLoaded(false);
+    debouncedProductsQuery(searchTerm, 1, option.orderby, option.order);
   };
 
   const handleInputKeyPress = useCallback((event) => {
@@ -165,24 +193,17 @@ function ShoppingPane(props) {
     }
   }, []);
 
-  const onSearch = useCallback(
-    (evt) => {
-      const value = evt.target.value;
-      if (value !== searchTerm) {
-        setSearchTerm(value);
-        setPage(1);
-        setLoaded(false);
-      }
-    },
-    [searchTerm, setSearchTerm]
-  );
-
   const insertProduct = useCallback(
     (product) => {
       insertElement(ELEMENT_TYPES.PRODUCT, {
         width: 25,
         height: 25,
         product,
+      });
+
+      trackEvent('insert_product', {
+        page: currentPageNumber,
+        provider: shoppingProvider,
       });
 
       const PRODUCT_ADDED_TEXT = sprintf(
@@ -193,7 +214,7 @@ function ShoppingPane(props) {
 
       speak(PRODUCT_ADDED_TEXT);
     },
-    [insertElement, speak]
+    [insertElement, speak, currentPageNumber, shoppingProvider]
   );
 
   const deleteProduct = useCallback(
@@ -226,7 +247,8 @@ function ShoppingPane(props) {
     setSearchTerm('');
     setPage(1);
     setLoaded(false);
-  }, [setSearchTerm]);
+    debouncedProductsQuery('', 1, orderby, order);
+  }, [debouncedProductsQuery, order, orderby]);
 
   const onLoadMore = useCallback(() => {
     if (canLoadMore) {
