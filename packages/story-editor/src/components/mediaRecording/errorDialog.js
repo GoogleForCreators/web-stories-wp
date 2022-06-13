@@ -18,14 +18,13 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { ThemeProvider } from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 import {
   Icons,
   lightMode,
   theme as dsTheme,
-  THEME_CONSTANTS,
 } from '@googleforcreators/design-system';
-import { __ } from '@googleforcreators/i18n';
+import { __, sprintf } from '@googleforcreators/i18n';
 
 /**
  * Internal dependencies
@@ -38,23 +37,45 @@ import {
   DisplayPageArea,
   Wrapper,
 } from './components';
-import SettingsModal from './settingsModal';
 import useMediaRecording from './useMediaRecording';
 
-function ErrorMessage({ error }) {
+const StyledHeading = styled(MessageHeading)`
+  display: flex;
+  align-items: center;
+`;
+
+function ErrorMessage({ error, hasVideo }) {
+  let errorMessage = error?.message;
+
+  // Use some more human-readable error messages for most common scenarios.
+  // See https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia#exceptions
+  if (error?.name === 'NotAllowedError') {
+    errorMessage = __('Permission denied', 'web-stories');
+  } else if (
+    !hasVideo ||
+    error?.name === 'NotFoundError' ||
+    error?.name === 'OverConstrainedError'
+  ) {
+    errorMessage = __('No camera found', 'web-stories');
+  }
+
   return (
     <MessageWrap>
-      <Icons.ExclamationTriangle />
       <ThemeProvider theme={{ ...dsTheme, colors: lightMode }}>
-        <MessageHeading size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+        <StyledHeading>
+          <Icons.ExclamationTriangle size={32} height={32} aria-hidden />
           {__('Error', 'web-stories')}
-        </MessageHeading>
-        <MessageText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-          {__('Could not initialize recording', 'web-stories')}
+        </StyledHeading>
+        <MessageText>
+          {__('Could not initialize recording.', 'web-stories')}
         </MessageText>
-        {error && (
-          <MessageText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-            {error.message}
+        {errorMessage && (
+          <MessageText>
+            {sprintf(
+              /* translators: %s: error message. */
+              __('Reason: %s', 'web-stories'),
+              errorMessage
+            )}
           </MessageText>
         )}
       </ThemeProvider>
@@ -64,25 +85,25 @@ function ErrorMessage({ error }) {
 
 ErrorMessage.propTypes = {
   error: PropTypes.shape({
+    name: PropTypes.string,
     message: PropTypes.string,
   }),
+  hasVideo: PropTypes.bool.isRequired,
 };
 
 function ErrorDialog() {
-  const { error } = useMediaRecording(({ state }) => ({
+  const { error, hasVideo } = useMediaRecording(({ state }) => ({
     error: state.error,
+    hasVideo: Boolean(state.videoInput),
   }));
   return (
-    <>
-      <LayerWithGrayout>
-        <DisplayPageArea withSafezone={false} showOverflow>
-          <Wrapper>
-            <ErrorMessage error={error} />
-          </Wrapper>
-        </DisplayPageArea>
-      </LayerWithGrayout>
-      <SettingsModal />
-    </>
+    <LayerWithGrayout>
+      <DisplayPageArea withSafezone={false} showOverflow>
+        <Wrapper>
+          <ErrorMessage error={error} hasVideo={hasVideo} />
+        </Wrapper>
+      </DisplayPageArea>
+    </LayerWithGrayout>
   );
 }
 

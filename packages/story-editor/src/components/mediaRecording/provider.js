@@ -138,7 +138,7 @@ function MediaRecordingProvider({ children }) {
   } = useMediaRecorder({
     recordScreen: false,
     mediaStreamConstraints: {
-      audio: audioInput && hasAudio ? { deviceId: audioInput } : hasAudio,
+      audio: audioInput && hasAudio ? { deviceId: audioInput } : false,
       video: videoInput ? { deviceId: videoInput } : true,
     },
     onStop,
@@ -200,9 +200,7 @@ function MediaRecordingProvider({ children }) {
     // Anyway, this stops the camera/mic from being used.
     if (liveStream) {
       liveStream.getTracks().forEach((track) => {
-        if (track.readyState === 'live') {
-          track.stop();
-        }
+        track.stop();
       });
     }
 

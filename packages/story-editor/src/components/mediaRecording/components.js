@@ -36,21 +36,18 @@ export const MessageWrap = styled.div`
   height: 100%;
   justify-content: center;
   text-align: center;
-  svg {
-    pointer-events: none;
-  }
-
-  p {
-    margin-top: 14px;
-  }
 `;
 
 export const MessageHeading = styled(Text).attrs({
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM,
-})``;
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_LARGE,
+})`
+  margin: 0 0 14px;
+`;
 
-export const MessageText = styled(Text)`
-  margin-bottom: 14px;
+export const MessageText = styled(Text).attrs({
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+})`
+  margin: 0 0 14px;
 `;
 
 export const LayerWithGrayout = withOverlay(styled(Layer)`

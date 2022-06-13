@@ -18,17 +18,12 @@
  * External dependencies
  */
 import { ThemeProvider } from 'styled-components';
-import {
-  lightMode,
-  theme as dsTheme,
-  THEME_CONSTANTS,
-} from '@googleforcreators/design-system';
+import { lightMode, theme as dsTheme } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 
 /**
  * Internal dependencies
  */
-import SettingsModal from './settingsModal';
 import {
   DisplayPageArea,
   LayerWithGrayout,
@@ -42,13 +37,11 @@ function IntroMessage() {
   return (
     <MessageWrap>
       <ThemeProvider theme={{ ...dsTheme, colors: lightMode }}>
-        <MessageHeading size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-          {__('Media Recording', 'web-stories')}
-        </MessageHeading>
+        <MessageHeading>{__('Media Recording', 'web-stories')}</MessageHeading>
 
-        <MessageText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+        <MessageText>
           {__(
-            'To get started, you need to allow access to your camera and micrphone.',
+            'To get started, you need to allow access to your camera and microphone.',
             'web-stories'
           )}
         </MessageText>
@@ -59,16 +52,13 @@ function IntroMessage() {
 
 function PermissionsDialog() {
   return (
-    <>
-      <LayerWithGrayout>
-        <DisplayPageArea withSafezone={false} showOverflow>
-          <Wrapper>
-            <IntroMessage />
-          </Wrapper>
-        </DisplayPageArea>
-      </LayerWithGrayout>
-      <SettingsModal />
-    </>
+    <LayerWithGrayout>
+      <DisplayPageArea withSafezone={false} showOverflow>
+        <Wrapper>
+          <IntroMessage />
+        </Wrapper>
+      </DisplayPageArea>
+    </LayerWithGrayout>
   );
 }
 
