@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { __ } from '@googleforcreators/i18n';
 import {
   useEffect,
   useRef,
@@ -26,12 +25,13 @@ import {
 } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import {
-  LoadingSpinner,
-  Text,
-  THEME_CONSTANTS,
-  themeHelpers,
-} from '@googleforcreators/design-system';
+
+/**
+ * Internal dependencies
+ */
+import { THEME_CONSTANTS, themeHelpers } from '../../theme';
+import { LoadingSpinner } from '../loadingSpinner';
+import { Text } from '../typography';
 
 const ScrollMessage = styled.div`
   width: 100%;
@@ -89,12 +89,12 @@ const loadReducer = (state, action) => {
 };
 
 const InfiniteScroller = ({
-  allDataLoadedMessage = __('No more stories', 'web-stories'),
-  allDataLoadedAriaMessage = __('All stories are loaded', 'web-stories'),
+  allDataLoadedMessage,
+  allDataLoadedAriaMessage,
   onLoadMore,
   canLoadMore,
   isLoading,
-  loadingAriaMessage = __('Loading more stories', 'web-stories'),
+  loadingAriaMessage,
 }) => {
   const loadingRef = useRef(null);
   const onLoadMoreRef = useRef(onLoadMore);
@@ -167,6 +167,9 @@ const InfiniteScroller = ({
     }
 
     if (!canLoadMore) {
+      if (!allDataLoadedMessage) {
+        return null;
+      }
       return (
         <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
           {allDataLoadedMessage}
