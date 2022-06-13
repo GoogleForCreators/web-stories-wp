@@ -21,16 +21,17 @@
  * @param {Object} payload Action payload
  * @param {Object} payload.groupId Group id
  * @param {Object} payload.name Group name
+ * @param {Object} payload.isLocked Is group locked
  * @return {Object} New state
  */
-function addGroup(state, { groupId, name }) {
+function addGroup(state, { groupId, name, isLocked = false }) {
   const pageIndex = state.pages.findIndex(({ id }) => id === state.current);
 
   const updatedGroups = {
     ...state.pages[pageIndex].groups,
     [groupId]: {
       name,
-      isLocked: false,
+      isLocked,
     },
   };
 

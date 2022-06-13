@@ -412,6 +412,7 @@ function Group({ groupId }) {
       oldGroupId: groupId,
       groupId: newGroupId,
       name: newGroupName,
+      isLocked: group.isLocked,
     });
   };
 

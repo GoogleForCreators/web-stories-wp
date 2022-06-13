@@ -266,10 +266,10 @@ const deleteGroupAndElementsById =
 
 const duplicateGroupById =
   (dispatch) =>
-  ({ groupId, name, oldGroupId }) =>
+  ({ groupId, name, oldGroupId, isLocked }) =>
     dispatch({
       type: types.DUPLICATE_GROUP,
-      payload: { groupId, name, oldGroupId },
+      payload: { groupId, name, oldGroupId, isLocked },
     });
 
 export const exposedActions = {

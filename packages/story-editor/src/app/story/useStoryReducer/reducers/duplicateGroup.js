@@ -32,11 +32,12 @@ import arrangeElement from './arrangeElement';
  * @param {string} payload.oldGroupId Id of a group to duplicate.
  * @param {string} payload.groupId New group id.
  * @param {string} payload.name New group name.
+ * @param {string} payload.isLocked Is group locked.
  * @return {Object} New state
  */
-function duplicateGroup(state, { oldGroupId, groupId, name }) {
+function duplicateGroup(state, { oldGroupId, groupId, name, isLocked }) {
   // Add group.
-  const stateWithGroup = addGroup(state, { groupId, name });
+  const stateWithGroup = addGroup(state, { groupId, name, isLocked });
   const pageIndex = stateWithGroup.pages.findIndex(
     ({ id }) => id === stateWithGroup.current
   );
