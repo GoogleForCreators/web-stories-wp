@@ -45,14 +45,26 @@ class KSES extends Service_Base implements HasRequirements {
 	private $story_post_type;
 
 	/**
+	 * Page_Template_Post_Type instance.
+	 *
+	 * @var Page_Template_Post_Type Page_Template_Post_Type instance.
+	 */
+	private $page_template_post_type;
+
+	/**
 	 * KSES constructor.
 	 *
 	 * @since 1.12.0
 	 *
-	 * @param Story_Post_Type $story_post_type Story_Post_Type instance.
+	 * @param Story_Post_Type         $story_post_type         Story_Post_Type instance.
+	 * @param Page_Template_Post_Type $page_template_post_type Page_Template_Post_Type instance.
 	 */
-	public function __construct( Story_Post_Type $story_post_type ) {
-		$this->story_post_type = $story_post_type;
+	public function __construct(
+		Story_Post_Type $story_post_type,
+		Page_Template_Post_Type $page_template_post_type
+	) {
+		$this->story_post_type         = $story_post_type;
+		$this->page_template_post_type = $page_template_post_type;
 	}
 
 	/**
@@ -74,7 +86,55 @@ class KSES extends Service_Base implements HasRequirements {
 	 * @return string[] List of required services.
 	 */
 	public static function get_requirements(): array {
-		return [ 'story_post_type' ];
+		return [ 'story_post_type', 'page_template_post_type' ];
+	}
+
+	/**
+	 * Checks whether the post type is correct and user has capability to edit it.
+	 *
+	 * @since 1.22.0
+	 *
+	 * @param string   $post_type   Post type slug.
+	 * @param int|null $post_parent Parent post ID.
+	 * @return bool Whether the user can edit the provided post type.
+	 */
+	private function is_allowed_post_type( string $post_type, ?int $post_parent ): bool {
+		if ( $this->story_post_type->get_slug() === $post_type && $this->story_post_type->has_cap( 'edit_posts' ) ) {
+			return true;
+		}
+
+		if ( $this->page_template_post_type->get_slug() === $post_type && $this->page_template_post_type->has_cap( 'edit_posts' ) ) {
+			return true;
+		}
+
+		// For story autosaves.
+		if (
+			(
+				'revision' === $post_type &&
+				! empty( $post_parent ) &&
+				get_post_type( $post_parent ) === $this->story_post_type->get_slug()
+			) &&
+			$this->story_post_type->has_cap( 'edit_posts' )
+		) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Filters story data.
+	 *
+	 * Provides simple sanity check to ensure story data is valid JSON.
+	 *
+	 * @since 1.22.0
+	 *
+	 * @param string $story_data JSON-encoded story data.
+	 * @return string Sanitized & slashed story data.
+	 */
+	private function filter_story_data( string $story_data ): string {
+		$decoded = json_decode( (string) wp_unslash( $story_data ), true );
+		return null === $decoded ? '' : wp_slash( (string) wp_json_encode( $decoded ) );
 	}
 
 	/**
@@ -99,40 +159,26 @@ class KSES extends Service_Base implements HasRequirements {
 			return $data;
 		}
 
-		if (
-			( $this->story_post_type->get_slug() !== $data['post_type'] ) && !
-			(
-				'revision' === $data['post_type'] &&
-				! empty( $data['post_parent'] ) &&
-				get_post_type( $data['post_parent'] ) === $this->story_post_type->get_slug()
-			)
-		) {
+		if ( ! $this->is_allowed_post_type( $data['post_type'], $data['post_parent'] ) ) {
 			return $data;
 		}
 
-		if ( ! $this->story_post_type->has_cap( 'edit_posts' ) ) {
-			return $data;
-		}
-
-		// Simple sanity check to ensure story data is valid JSON.
 		if ( isset( $unsanitized_postarr['post_content_filtered'] ) ) {
-			$story_data                    = json_decode( (string) wp_unslash( $unsanitized_postarr['post_content_filtered'] ), true );
-			$data['post_content_filtered'] = null === $story_data ? '' : wp_slash( (string) wp_json_encode( $story_data ) );
+			$data['post_content_filtered'] = $this->filter_story_data( $unsanitized_postarr['post_content_filtered'] );
 		}
 
-		if ( ! isset( $unsanitized_postarr['post_content'] ) ) {
-			return $data;
+		if ( isset( $unsanitized_postarr['post_content'] ) ) {
+			add_filter( 'safe_style_css', [ $this, 'filter_safe_style_css' ] );
+			add_filter( 'wp_kses_allowed_html', [ $this, 'filter_kses_allowed_html' ], 10, 2 );
+
+			$unsanitized_postarr['post_content'] = $this->filter_content_save_pre_before_kses( $unsanitized_postarr['post_content'] );
+
+			$data['post_content'] = wp_filter_post_kses( $unsanitized_postarr['post_content'] );
+			$data['post_content'] = $this->filter_content_save_pre_after_kses( $data['post_content'] );
+
+			remove_filter( 'safe_style_css', [ $this, 'filter_safe_style_css' ] );
+			remove_filter( 'wp_kses_allowed_html', [ $this, 'filter_kses_allowed_html' ] );
 		}
-
-		add_filter( 'safe_style_css', [ $this, 'filter_safe_style_css' ] );
-		add_filter( 'wp_kses_allowed_html', [ $this, 'filter_kses_allowed_html' ], 10, 2 );
-
-		$unsanitized_postarr['post_content'] = $this->filter_content_save_pre_before_kses( $unsanitized_postarr['post_content'] );
-		$data['post_content']                = wp_filter_post_kses( $unsanitized_postarr['post_content'] );
-		$data['post_content']                = $this->filter_content_save_pre_after_kses( $data['post_content'] );
-
-		remove_filter( 'safe_style_css', [ $this, 'filter_safe_style_css' ] );
-		remove_filter( 'wp_kses_allowed_html', [ $this, 'filter_kses_allowed_html' ] );
 
 		return $data;
 	}

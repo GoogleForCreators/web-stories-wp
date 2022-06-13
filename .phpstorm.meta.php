@@ -45,6 +45,7 @@ namespace PHPSTORM_META {
 			'page_template_post_type'      => \Google\Web_Stories\Page_Template_Post_Type::class,
 			'plugin_row_meta'              => \Google\Web_Stories\Admin\PluginRowMeta::class,
 			'plugin_action_links'          => \Google\Web_Stories\Admin\PluginActionLinks::class,
+			'product_meta'                 => \Google\Web_Stories\Shopping\Product_Meta::class,
 			'meta_boxes'                   => \Google\Web_Stories\Admin\Meta_Boxes::class,
 			'settings'                     => \Google\Web_Stories\Settings::class,
 			'site_health'                  => \Google\Web_Stories\Admin\Site_Health::class,

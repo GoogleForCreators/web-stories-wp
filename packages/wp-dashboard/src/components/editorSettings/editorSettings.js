@@ -66,6 +66,7 @@ function EditorSettings() {
     customFonts,
     addCustomFont,
     deleteCustomFont,
+    fetchCustomFonts,
     publisherLogos,
     addPublisherLogo,
     fetchPublisherLogos,
@@ -77,7 +78,7 @@ function EditorSettings() {
   } = useEditorSettings(
     ({
       actions: {
-        fontsApi: { addCustomFont, deleteCustomFont },
+        fontsApi: { addCustomFont, deleteCustomFont, fetchCustomFonts },
         settingsApi: { fetchSettings, updateSettings },
         pagesApi: { searchPages, getPageById },
         mediaApi: { uploadMedia },
@@ -127,6 +128,7 @@ function EditorSettings() {
       customFonts,
       addCustomFont,
       deleteCustomFont,
+      fetchCustomFonts,
       fetchPublisherLogos,
       addPublisherLogo,
       removePublisherLogo,
@@ -169,8 +171,9 @@ function EditorSettings() {
     if (canManageSettings) {
       fetchSettings();
       fetchPublisherLogos();
+      fetchCustomFonts();
     }
-  }, [fetchSettings, fetchPublisherLogos, canManageSettings]);
+  }, [fetchSettings, fetchPublisherLogos, canManageSettings, fetchCustomFonts]);
 
   useEffect(() => {
     if (newlyCreatedMediaIds.length > 0) {

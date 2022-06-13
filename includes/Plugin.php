@@ -91,6 +91,7 @@ class Plugin extends ServiceBasedPlugin {
 		'page_template_post_type'      => Page_Template_Post_Type::class,
 		'plugin_row_meta'              => Admin\PluginRowMeta::class,
 		'plugin_action_links'          => Admin\PluginActionLinks::class,
+		'product_meta'                 => Shopping\Product_Meta::class,
 		'media.base_color'             => Media\Base_Color::class,
 		'media.blurhash'               => Media\Blurhash::class,
 		'media.image_sizes'            => Media\Image_Sizes::class,

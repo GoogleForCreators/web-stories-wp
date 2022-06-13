@@ -15,3 +15,4 @@
  */
 export * from './story';
 export * from './authors';
+export * from './shopping';

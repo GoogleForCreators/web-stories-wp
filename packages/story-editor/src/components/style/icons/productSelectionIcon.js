@@ -18,19 +18,16 @@
  * External dependencies
  */
 import { __ } from '@googleforcreators/i18n';
+import styled from 'styled-components';
+import { Icons } from '@googleforcreators/design-system';
 
-/**
- * Internal dependencies
- */
-import { Pane } from '../shared';
-import paneId from './paneId';
+const StyledIcon = styled(Icons.Shopping)`
+  width: 32px !important;
+  height: 32px !important;
+`;
 
-function ElementsPane(props) {
-  return (
-    <Pane id={paneId} {...props}>
-      {__('Still empty', 'web-stories')}
-    </Pane>
-  );
+function ProductSelectionIcon() {
+  return <StyledIcon title={__('Product selection', 'web-stories')} />;
 }
 
-export default ElementsPane;
+export default ProductSelectionIcon;

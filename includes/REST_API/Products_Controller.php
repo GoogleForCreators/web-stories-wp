@@ -140,6 +140,8 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 	/**
 	 * Retrieves all products.
 	 *
+	 * @SuppressWarnings(PHPMD.NPathComplexity)
+	 *
 	 * @since 1.20.0
 	 *
 	 * @param WP_REST_Request $request Full details about the request.
@@ -168,7 +170,7 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 		 * @var string $search_term
 		 */
 		$search_term = ! empty( $request['search'] ) ? $request['search'] : '';
-		
+	
 		/**
 		 * Request context.
 		 *
@@ -179,23 +181,45 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 		/**
 		 * Request context.
 		 *
+		 * @var int $page
+		 */
+		$page = ! empty( $request['page'] ) ? $request['page'] : 1;
+
+		/**
+		 * Request context.
+		 *
+		 * @var int $per_page
+		 */
+		$per_page = ! empty( $request['per_page'] ) ? $request['per_page'] : 100;
+
+		/**
+		 * Request context.
+		 *
 		 * @var string $order
 		 */
 		$order = ! empty( $request['order'] ) ? $request['order'] : 'desc';
-		
-		
-		$query_result = $query->get_search( $search_term, $orderby, $order );
+
+		$query_result = $query->get_search( $search_term, $page, $per_page, $orderby, $order );
 		if ( is_wp_error( $query_result ) ) {
 			return $query_result;
 		}
 
 		$products = [];
-		foreach ( $query_result as $product ) {
+		foreach ( $query_result['products'] as $product ) {
 			$data       = $this->prepare_item_for_response( $product, $request );
 			$products[] = $this->prepare_response_for_collection( $data );
 		}
 
-		return rest_ensure_response( $products );
+		/**
+		 * Response object.
+		 *
+		 * @var WP_REST_Response $response
+		 */
+		$response = rest_ensure_response( $products );
+
+		$response->header( 'X-WP-HasNextPage', (string) $query_result['has_next_page'] );
+
+		return $response;
 	}
 
 	/**
@@ -419,6 +443,8 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 	 */
 	public function get_collection_params(): array {
 		$query_params = parent::get_collection_params();
+
+		$query_params['per_page']['default'] = 100;
 
 		$query_params['orderby'] = [
 			'description' => __( 'Sort collection by product attribute.', 'web-stories' ),

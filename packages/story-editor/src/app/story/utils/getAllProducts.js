@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,8 +15,27 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { getPaneId } from '../shared';
+import { ELEMENT_TYPES } from '@googleforcreators/elements';
 
-export default getPaneId('elements');
+function getAllProducts(pages) {
+  const products = [];
+  const productIds = [];
+  pages.forEach(({ elements }) =>
+    elements.forEach(({ product, type }) => {
+      if (
+        type === ELEMENT_TYPES.PRODUCT &&
+        product &&
+        !productIds.includes(product?.productId)
+      ) {
+        products.push(product);
+        productIds.push(product?.productId);
+      }
+    })
+  );
+
+  return products;
+}
+
+export default getAllProducts;
