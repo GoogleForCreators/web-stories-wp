@@ -26,8 +26,7 @@ import Worker from './generateBlurhash.worker';
 
 const getImageData = (image) => {
   const { width, height } = image;
-  const canvas =
-    typeof document !== 'undefined' ? document.createElement('canvas') : {};
+  const canvas = document.createElement('canvas');
   canvas.width = width;
   canvas.height = height;
 

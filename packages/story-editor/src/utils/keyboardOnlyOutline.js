@@ -74,9 +74,7 @@ const KeyboardOnlyOutline = () => {
 };
 
 export function isKeyboardUser() {
-  return typeof document !== 'undefined'
-    ? document.body.classList.contains(KEYBOARD_USER_CLASS)
-    : false;
+  return document.body.classList.contains(KEYBOARD_USER_CLASS);
 }
 
 KeyboardOnlyOutline.propTypes = {};
