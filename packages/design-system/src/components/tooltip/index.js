@@ -301,7 +301,9 @@ function BaseTooltip({
     positionArrow();
   }, [positionArrow]);
 
-  useResizeEffect({ current: document.body }, positionPopup, [positionPopup]);
+  useResizeEffect({ current: globalThis.document?.body }, positionPopup, [
+    positionPopup,
+  ]);
 
   return (
     <>
