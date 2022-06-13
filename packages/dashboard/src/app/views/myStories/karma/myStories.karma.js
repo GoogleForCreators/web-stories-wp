@@ -493,6 +493,40 @@ describe('CUJ: Creator can view their stories in grid view', () => {
         expect(authorEl).toBeDefined();
       }
     });
+
+    it('should filter by category', async () => {
+      const { stories } = await getStoriesState();
+      let renderedStoriesById = getRenderedStoriesById();
+      // click the category dropdown
+      const categoryDropdown =
+        fixture.screen.getByLabelText('Filter by category');
+      expect(categoryDropdown).toBeTruthy();
+      await fixture.events.click(categoryDropdown);
+
+      // find all category filters
+      const categorySelect = await fixture.screen.findByLabelText(
+        new RegExp(`^Option List Selector$`)
+      );
+      expect(categorySelect).toBeTruthy();
+
+      // click the first category
+      const firstCategory = within(categorySelect).getAllByRole('option')?.[0];
+      expect(firstCategory).toBeTruthy();
+      const firstCategoryName = firstCategory.innerText;
+      await fixture.events.click(firstCategory);
+
+      // Check that not all the stories have the first category originally
+      const found = renderedStoriesById.map(
+        (id) => !stories[id].categories.includes(firstCategoryName)
+      );
+      expect(found.length).toBeGreaterThan(0);
+
+      // see that all rendered stories have the selected category
+      renderedStoriesById = getRenderedStoriesById();
+      renderedStoriesById.every((id) =>
+        stories[id].categories.includes(firstCategoryName)
+      );
+    });
   });
 
   describe('Creator can navigate and use the Dashboard via keyboard', () => {
