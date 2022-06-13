@@ -45,8 +45,10 @@ import useCORSProxy from '../../../../utils/useCORSProxy';
 import usePerformanceTracking from '../../../../utils/usePerformanceTracking';
 import { TRACKING_EVENTS } from '../../../../constants';
 import Tooltip from '../../../tooltip';
+import useShapeMask from '../../../../utils/useShapeMask';
 import useLayerSelection from './useLayerSelection';
 import { LAYER_HEIGHT } from './constants';
+import ShapeMaskWrapper from './shapeMaskWrapper';
 
 const fadeOutCss = css`
   background-color: var(--background-color);
@@ -350,6 +352,8 @@ function Layer({ element }) {
     })
   );
 
+  const { hasShapeMask, removeShapeMask } = useShapeMask(element);
+  const removeMaskTitle = __('Unmask', 'web-stories');
   const { getProxiedUrl } = useCORSProxy();
   const layerRef = useRef(null);
   usePerformanceTracking({
@@ -420,11 +424,13 @@ function Layer({ element }) {
       {isRenameable && isLayerNamingEnabled ? (
         <LayerInputWrapper>
           <LayerIconWrapper>
-            <LayerIcon
-              element={element}
-              getProxiedUrl={getProxiedUrl}
-              currentPageBackgroundColor={currentPageBackgroundColor}
-            />
+            <ShapeMaskWrapper element={element}>
+              <LayerIcon
+                element={element}
+                getProxiedUrl={getProxiedUrl}
+                currentPageBackgroundColor={currentPageBackgroundColor}
+              />
+            </ShapeMaskWrapper>
           </LayerIconWrapper>
           <LayerInputForm onSubmit={handleSubmit}>
             <LayerInput
@@ -448,11 +454,13 @@ function Layer({ element }) {
           isSelected={isSelected}
         >
           <LayerIconWrapper>
-            <LayerIcon
-              element={element}
-              getProxiedUrl={getProxiedUrl}
-              currentPageBackgroundColor={currentPageBackgroundColor}
-            />
+            <ShapeMaskWrapper element={element}>
+              <LayerIcon
+                element={element}
+                getProxiedUrl={getProxiedUrl}
+                currentPageBackgroundColor={currentPageBackgroundColor}
+              />
+            </ShapeMaskWrapper>
           </LayerIconWrapper>
           <LayerDescription>
             <LayerContentContainer>
@@ -474,6 +482,17 @@ function Layer({ element }) {
       )}
       {!element.isBackground && !isRenameable && (
         <ActionsContainer>
+          {hasShapeMask && (
+            <Tooltip title={removeMaskTitle} hasTail isDelayed>
+              <LayerAction
+                aria-label={removeMaskTitle}
+                aria-describedby={layerId}
+                onClick={removeShapeMask}
+              >
+                <Icons.RemoveMask />
+              </LayerAction>
+            </Tooltip>
+          )}
           <Tooltip title={__('Delete Layer', 'web-stories')} hasTail isDelayed>
             <LayerAction
               ref={deleteButtonRef}

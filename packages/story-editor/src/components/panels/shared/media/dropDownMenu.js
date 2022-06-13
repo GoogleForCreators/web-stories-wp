@@ -29,10 +29,11 @@ import { __ } from '@googleforcreators/i18n';
 import { v4 as uuidv4 } from 'uuid';
 import {
   Menu,
-  PLACEMENT,
   Popup,
   useKeyDownEffect,
   noop,
+  PLACEMENT,
+  Icons,
   Button,
   BUTTON_VARIANTS,
   BUTTON_TYPES,
@@ -66,9 +67,13 @@ const MenuContainer = styled.div`
 const menuStylesOverride = css`
   min-width: 160px;
   margin-top: 0;
-  li {
-    display: block;
-  }
+`;
+
+const ActiveIcon = styled(Icons.CheckmarkSmall)`
+  position: absolute;
+  left: 4px;
+  top: 50%;
+  transform: translateY(-50%);
 `;
 
 // This is used for nested roving tab index to detect parent siblings.
@@ -116,6 +121,14 @@ const CustomItemRenderer = forwardRef(function CustomItemRenderer(
       disabled={option.disabled}
       aria-disabled={option.disabled}
     >
+      {isSelected && (
+        <ActiveIcon
+          data-testid={'dropdownMenuItem_active_icon'}
+          aria-label={__('Selected', 'web-stories')}
+          width={32}
+          height={32}
+        />
+      )}
       <DefaultListItemLabelDisplayText
         forwardedAs="span"
         size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
@@ -143,7 +156,8 @@ CustomItemRenderer.propTypes = {
  * @param {Function} props.setParentActive Sets the parent element active.
  * @param {Array} props.options Menu items.
  * @param {Object} props.children Children.
- * @param {Object} props.ariaLabel ARIA label for the toggle button.
+ * @param {string} props.ariaLabel ARIA label for the toggle button.
+ * @param {string} props.className Class name.
  * @return {null|*} Element or null.
  */
 function DropDownMenu({
@@ -156,6 +170,8 @@ function DropDownMenu({
   options,
   children,
   ariaLabel = __('More', 'web-stories'),
+  className,
+  ...rest
 }) {
   const MenuButtonRef = useRef();
 
@@ -186,7 +202,7 @@ function DropDownMenu({
 
   // Keep icon and menu displayed if menu is open (even if user's mouse leaves the area).
   return (
-    <MenuContainer>
+    <MenuContainer className={className}>
       <MenuButton
         type={BUTTON_TYPES.TERTIARY}
         size={BUTTON_SIZES.SMALL}
@@ -220,6 +236,7 @@ function DropDownMenu({
               hasMenuRole
               menuStylesOverride={menuStylesOverride}
               renderItem={CustomItemRenderer}
+              {...rest}
             />
           </DropDownContainer>
         </Popup>
@@ -238,6 +255,7 @@ DropDownMenu.propTypes = {
   options: PropTypes.array,
   children: PropTypes.node,
   ariaLabel: PropTypes.string,
+  className: PropTypes.string,
 };
 
 export default DropDownMenu;
