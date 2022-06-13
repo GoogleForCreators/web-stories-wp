@@ -31,11 +31,12 @@ const LandmarksWrapper = styled.dl`
   padding: 16px 24px;
   display: flex;
   justify-content: space-between;
+  user-select: text;
 `;
 
 const Landmark = styled.div`
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column;
 `;
 
 const Label = styled(Text).attrs({
@@ -53,10 +54,10 @@ function LandmarkShortcuts() {
     <LandmarksWrapper>
       {landmarks.map(({ label, shortcut }) => (
         <Landmark key={label}>
+          <ShortcutLabel keys={shortcut} />
           <dt>
             <Label>{label}</Label>
           </dt>
-          <ShortcutLabel keys={shortcut} />
         </Landmark>
       ))}
     </LandmarksWrapper>
