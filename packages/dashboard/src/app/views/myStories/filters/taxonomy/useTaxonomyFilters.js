@@ -34,7 +34,7 @@ import useApi from '../../../../api/useApi';
  * Hook used for taxonomy filters logic.
  * Initializes the taxonomy filters data.
  *
- * @return {Array} [taxonomies, queryTaxonomyTerms] initial taxonomy filters data and a function to query the terms.
+ * @return {Object} {taxonomies, initializeTaxonomyFilters} taxonomies and a function to shape the taxonoimes filter data.
  */
 
 function useTaxonomyFilters() {
@@ -62,20 +62,17 @@ function useTaxonomyFilters() {
     const taxonomyObject = {};
     for (const arr of fetched) {
       // grab the first elements 'taxonomy' which should map to the parents 'slug'
-      const key = arr.at(0)?.taxonomy;
+      const key = arr[0]?.taxonomy;
       if (key) {
         taxonomyObject[key] = arr;
       }
     }
-    setTaxonomies((current) => {
-      return current.map((c) => {
-        const data = taxonomyObject[c.slug] || [];
-        return {
-          ...c,
-          data,
-        };
-      });
-    });
+    setTaxonomies((prevTaxonomies) =>
+      prevTaxonomies.map((c) => ({
+        ...c,
+        data: taxonomyObject[c.slug] || [],
+      }))
+    );
   }, [setTaxonomies]);
 
   /**
