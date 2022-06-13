@@ -326,7 +326,7 @@ function Layer({ element }) {
   const layerName = getLayerName(element);
   const [newLayerName, setNewLayerName] = useState(layerName);
   const isLayerLockingEnabled = useFeature('layerLocking');
-  const { LayerIcon } = getDefinitionForType(element.type);
+  const { LayerIcon, hasDuplicateMenu } = getDefinitionForType(element.type);
   const { isSelected, handleClick } = useLayerSelection(element);
   const { isDefaultBackground } = element;
   const {
@@ -486,22 +486,24 @@ function Layer({ element }) {
               <Icons.Trash />
             </LayerAction>
           </Tooltip>
-          <Tooltip
-            title={__('Duplicate Layer', 'web-stories')}
-            hasTail
-            isDelayed
-          >
-            <LayerAction
-              aria-label={__('Duplicate', 'web-stories')}
-              aria-describedby={layerId}
-              onPointerDown={preventReorder}
-              onClick={() =>
-                duplicateElementsById({ elementIds: [element.id] })
-              }
+          {hasDuplicateMenu && (
+            <Tooltip
+              title={__('Duplicate Layer', 'web-stories')}
+              hasTail
+              isDelayed
             >
-              <Icons.PagePlus />
-            </LayerAction>
-          </Tooltip>
+              <LayerAction
+                aria-label={__('Duplicate', 'web-stories')}
+                aria-describedby={layerId}
+                onPointerDown={preventReorder}
+                onClick={() =>
+                  duplicateElementsById({ elementIds: [element.id] })
+                }
+              >
+                <Icons.PagePlus />
+              </LayerAction>
+            </Tooltip>
+          )}
           {isLayerLockingEnabled && (
             <Tooltip title={lockTitle} hasTail isDelayed>
               <LayerAction

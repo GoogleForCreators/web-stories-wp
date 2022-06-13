@@ -65,7 +65,10 @@ describe('getStoryPropsToSave', () => {
       ...neededProps,
       ...extraProps,
     };
-    const pages = [{ id: '1' }, { id: '2' }];
+    const pages = [
+      { id: '1', elements: [] },
+      { id: '2', elements: [] },
+    ];
     const metadata = {};
     getStoryMarkup.mockImplementation(() => {
       return 'Hello World!';
@@ -77,6 +80,7 @@ describe('getStoryPropsToSave', () => {
       pages,
       ...neededProps,
       meta: {
+        web_stories_products: [],
         web_stories_publisher_logo: 1,
       },
     };

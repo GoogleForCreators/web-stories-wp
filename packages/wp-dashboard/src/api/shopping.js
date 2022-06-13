@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,15 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * WordPress dependencies
+ */
+import apiFetch from '@wordpress/api-fetch';
 
 /**
  * External dependencies
  */
-import { __ } from '@googleforcreators/i18n';
-import { Icons } from '@googleforcreators/design-system';
+import { addQueryArgs } from '@googleforcreators/url';
 
-function ShoppingIcon() {
-  return <Icons.Shopping title={__('Shopping library', 'web-stories')} />;
+/**
+ * Get products.
+ *
+ * @param {Object} config Configuation object.
+ * @param {string} search Search term.
+ * @return {Promise} Request promise.
+ */
+export function getProducts(config, search) {
+  return apiFetch({
+    path: addQueryArgs(config.api.products, {
+      per_page: 1,
+      search,
+    }),
+  });
 }
-
-export default ShoppingIcon;

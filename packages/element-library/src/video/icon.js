@@ -25,7 +25,7 @@ import { StoryPropTypes } from '@googleforcreators/elements';
  * Internal dependencies
  */
 import VideoImage from '../media/videoImage';
-import VisibleImage from '../media/visibleImage';
+import VisibleImage from '../shared/visibleImage';
 
 function VideoLayerIcon({
   element: {
