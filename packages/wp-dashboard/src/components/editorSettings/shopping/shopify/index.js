@@ -17,10 +17,15 @@
 /**
  * External dependencies
  */
-import { useState, useCallback, useEffect } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
+import { useState, useCallback, useEffect } from '@googleforcreators/react';
 import { __, sprintf, TranslateWithMarkup } from '@googleforcreators/i18n';
-import { trackClick } from '@googleforcreators/tracking';
+import {
+  trackClick,
+  trackError,
+  trackEvent,
+} from '@googleforcreators/tracking';
 import {
   BUTTON_SIZES,
   BUTTON_TYPES,
@@ -29,7 +34,6 @@ import {
   useLiveRegion,
 } from '@googleforcreators/design-system';
 import { useConfig } from '@googleforcreators/dashboard';
-import styled from 'styled-components';
 
 /**
  * Internal dependencies
@@ -186,11 +190,15 @@ function ShopifySettings({
     setHasConnectionError(false);
     setIsTestingConnection(true);
     speak(TEXT.CONNECTION_CHECKING);
+
+    trackEvent('test_shopping_connection');
+
     try {
       await getProducts(new Date().getTime()); // @todo temp fix for cache busting the product query
       setTestConnectionStatus(TEXT.CONNECTION_SUCCESS);
       speak(TEXT.CONNECTION_SUCCESS);
     } catch (e) {
+      trackError('test_shopping_connection', e?.message);
       setHasConnectionError(true);
       setTestConnectionStatus(TEXT.CONNECTION_ERROR_DEFAULT);
       speak(TEXT.CONNECTION_ERROR_DEFAULT);
