@@ -35,6 +35,7 @@ import {
   useElementActions,
   useLayerActions,
 } from '../hooks';
+import useShapeMask from '../../../utils/useShapeMask';
 import { useStory, useLocalMedia } from '../..';
 import useVideoTrim from '../../../components/videoTrim/useVideoTrim';
 import useRightClickMenu from '../useRightClickMenu';
@@ -66,6 +67,8 @@ function ForegroundMediaMenu({ parentMenuRef }) {
     handleBringForward,
     handleBringToFront,
   } = useLayerActions();
+
+  const { hasShapeMask, removeShapeMask } = useShapeMask(selectedElement);
 
   const canTranscodeResource = useLocalMedia(
     (value) => value.state.canTranscodeResource
@@ -142,6 +145,12 @@ function ForegroundMediaMenu({ parentMenuRef }) {
       >
         {RIGHT_CLICK_MENU_LABELS.DUPLICATE_ELEMENTS(1)}
       </ContextMenuComponents.MenuButton>
+
+      {hasShapeMask && (
+        <ContextMenuComponents.MenuButton onClick={removeShapeMask}>
+          {RIGHT_CLICK_MENU_LABELS.REMOVE_MASK}
+        </ContextMenuComponents.MenuButton>
+      )}
 
       <ContextMenuComponents.MenuSeparator />
 
