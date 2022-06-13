@@ -101,6 +101,8 @@ const Datalist = forwardRef(function Datalist(
     dropdownButtonLabel,
     className,
     offsetOverride = false,
+    noMatchesFoundLabel,
+    searchPlaceholder,
     ...rest
   },
   ref
@@ -155,6 +157,7 @@ const Datalist = forwardRef(function Datalist(
       title={title}
       hasDropDownBorder={hasDropDownBorder}
       containerStyleOverrides={containerStyleOverrides}
+      placeholder={searchPlaceholder}
       renderContents={({
         searchKeyword,
         setIsExpanded,
@@ -180,6 +183,7 @@ const Datalist = forwardRef(function Datalist(
           focusSearch={focusSearch}
           renderer={renderer}
           listStyleOverrides={listStyleOverrides}
+          noMatchesFoundLabel={noMatchesFoundLabel}
         />
       )}
     />
