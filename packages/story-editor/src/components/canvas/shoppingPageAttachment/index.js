@@ -95,7 +95,6 @@ const TextWrapper = styled.span`
   font-family: Roboto, sans-serif;
   font-size: ${({ $factor }) => $factor(16)}px;
   line-height: 18px;
-  overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   position: relative;
