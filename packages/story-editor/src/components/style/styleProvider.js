@@ -32,6 +32,7 @@ import ImageSelectionIcon from './icons/imageSelectionIcon';
 import VideoSelectionIcon from './icons/videoSelectionIcon';
 import ShapeSelectionIcon from './icons/shapeSelectionIcon';
 import MultiSelectionIcon from './icons/multiSelectionIcon';
+import ProductSelectionIcon from './icons/productSelectionIcon';
 
 const STYLE_TAB_IDS = new Set([SELECTION.id, LINK.id, ANIMATION.id]);
 
@@ -81,6 +82,9 @@ function StyleProvider({ children }) {
     if (icons[0] === 'shape' || icons[0] === 'sticker') {
       selectionIcon = ShapeSelectionIcon;
     }
+    if (icons[0] === 'product') {
+      selectionIcon = ProductSelectionIcon;
+    }
   } else {
     selectionIcon = MultiSelectionIcon;
   }
@@ -104,10 +108,16 @@ function StyleProvider({ children }) {
   const isBackgroundSelected =
     selectedElements[0]?.isBackground ||
     selectedElements[0]?.isDefaultBackground;
-  if (!isBackgroundSelected) {
+
+  const hasProductsSelected = selectedElements.some(
+    ({ type }) => type === 'product'
+  );
+
+  if (!isBackgroundSelected && !hasProductsSelected) {
     state.data.tabs.push(LINK);
   }
-  if (!selectedElements[0]?.isDefaultBackground) {
+
+  if (!selectedElements[0]?.isDefaultBackground && !hasProductsSelected) {
     state.data.tabs.push(ANIMATION);
   }
 

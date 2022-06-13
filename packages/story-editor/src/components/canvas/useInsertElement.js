@@ -69,7 +69,9 @@ function useInsertElement() {
           }
         });
       }
+
       focusCanvas();
+
       return element;
     },
     [addElement, focusCanvas, setZoomSetting]

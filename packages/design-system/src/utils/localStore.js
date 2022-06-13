@@ -34,6 +34,8 @@ export const LOCAL_STORAGE_PREFIX = {
   BACKGROUND_IS_SET_DIALOG_DISMISSED:
     'web_stories_background_is_set_dialog_dismissed',
   CORS_CHECK_DIALOG_DISMISSED: 'web_stories_cors_check_dialog_dismissed',
+  MEDIA_RECORDING_AUDIO_INPUT: 'web_stories_media_recording_audio_input',
+  MEDIA_RECORDING_VIDEO_INPUT: 'web_stories_media_recording_video_input',
 };
 
 function getItemByKey(key) {

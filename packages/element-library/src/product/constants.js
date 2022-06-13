@@ -35,7 +35,9 @@ export const defaultAttributes = {
 
 export const hasEditMode = false;
 
-export const hasDesignMenu = false;
+export const hasDesignMenu = true;
+
+export const hasDuplicateMenu = false;
 
 export const isMedia = false;
 

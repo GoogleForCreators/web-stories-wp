@@ -245,17 +245,6 @@ class Experiments extends Service_Base implements HasRequirements {
 			],
 			/**
 			 * Author: @diegovar
-			 * Issue: #2616
-			 * Creation date: 2020-06-23
-			 */
-			[
-				'name'        => 'showElementsTab',
-				'label'       => __( 'Elements tab', 'web-stories' ),
-				'description' => __( 'Enable elements tab', 'web-stories' ),
-				'group'       => 'editor',
-			],
-			/**
-			 * Author: @diegovar
 			 * Issue: #3206
 			 * Creation date: 2020-07-15
 			 */
@@ -286,18 +275,6 @@ class Experiments extends Service_Base implements HasRequirements {
 				'label'       => __( 'Story locking take over', 'web-stories' ),
 				'description' => __( 'Allow locked stories to be taken over by another author', 'web-stories' ),
 				'group'       => 'editor',
-			],
-			/**
-			 * Author: @spacedmonkey
-			 * Issue: #10706
-			 * Creation date: 2022-03-07
-			 */
-			[
-				'name'        => 'enableCORSCheck',
-				'label'       => __( 'CORS check', 'web-stories' ),
-				'description' => __( 'Add a check in the editor for CORS errors.', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
 			],
 			/**
 			 * Author: @barklund
@@ -342,6 +319,7 @@ class Experiments extends Service_Base implements HasRequirements {
 				'label'       => __( 'Caption hotlinking', 'web-stories' ),
 				'description' => __( 'Enable hotlinking of captions', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 			/**
 			 * Author: @spacedmonkey
@@ -353,6 +331,7 @@ class Experiments extends Service_Base implements HasRequirements {
 				'label'       => __( 'Audio hotlinking', 'web-stories' ),
 				'description' => __( 'Enable hotlinking background audio', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 			/**
 			 * Author: @barklund
@@ -363,6 +342,29 @@ class Experiments extends Service_Base implements HasRequirements {
 				'name'        => 'layerLocking',
 				'label'       => __( 'Layer locking', 'web-stories' ),
 				'description' => __( 'Enable layer locking', 'web-stories' ),
+				'group'       => 'editor',
+				'default'     => true,
+			],
+			/**
+			 * Author: @merapi
+			 * Issue: #9244
+			 * Creation date: 2022-05-04
+			 */
+			[
+				'name'        => 'layerGrouping',
+				'label'       => __( 'Layer grouping', 'web-stories' ),
+				'description' => __( 'Enable layer grouping', 'web-stories' ),
+				'group'       => 'editor',
+			],
+			/**
+			 * Author: @mariana-k
+			 * Issue: #9248
+			 * Creation date: 2022-05-12
+			 */
+			[
+				'name'        => 'layerNaming',
+				'label'       => __( 'Layer naming', 'web-stories' ),
+				'description' => __( 'Enable layer naming', 'web-stories' ),
 				'group'       => 'editor',
 			],
 		];

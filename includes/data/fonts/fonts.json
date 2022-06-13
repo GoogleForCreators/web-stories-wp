@@ -1376,9 +1376,14 @@
   {
     "family": "Andika",
     "fallbacks": ["sans-serif"],
-    "weights": [400],
-    "styles": ["regular"],
-    "variants": [[0, 400]],
+    "weights": [400, 700],
+    "styles": ["regular", "italic"],
+    "variants": [
+      [0, 400],
+      [1, 400],
+      [0, 700],
+      [1, 700]
+    ],
     "service": "fonts.google.com",
     "metrics": {
       "upm": 2048,
@@ -1392,7 +1397,7 @@
       "xH": 1040,
       "capH": 1485,
       "yMin": -1148,
-      "yMax": 2810,
+      "yMax": 2620,
       "hAsc": 2500,
       "hDes": -800,
       "lGap": 0
@@ -5313,6 +5318,56 @@
     }
   },
   {
+    "family": "Blaka",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 932,
+      "des": -235,
+      "tAsc": 932,
+      "tDes": -235,
+      "tLGap": 0,
+      "wAsc": 970,
+      "wDes": 400,
+      "xH": 500,
+      "capH": 666,
+      "yMin": -400,
+      "yMax": 933,
+      "hAsc": 932,
+      "hDes": -235,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Blaka Hollow",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 932,
+      "des": -235,
+      "tAsc": 932,
+      "tDes": -235,
+      "tLGap": 0,
+      "wAsc": 970,
+      "wDes": 400,
+      "xH": 500,
+      "capH": 666,
+      "yMin": -400,
+      "yMax": 933,
+      "hAsc": 932,
+      "hDes": -235,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Blinker",
     "fallbacks": ["sans-serif"],
     "weights": [100, 200, 300, 400, 600, 700, 800, 900],
@@ -6907,6 +6962,36 @@
     }
   },
   {
+    "family": "Charis SIL",
+    "fallbacks": ["serif"],
+    "weights": [400, 700],
+    "styles": ["regular", "italic"],
+    "variants": [
+      [0, 400],
+      [1, 400],
+      [0, 700],
+      [1, 700]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 2048,
+      "asc": 2450,
+      "des": -900,
+      "tAsc": 2450,
+      "tDes": -900,
+      "tLGap": 0,
+      "wAsc": 2450,
+      "wDes": 900,
+      "xH": 987,
+      "capH": 1374,
+      "yMin": -1092,
+      "yMax": 2600,
+      "hAsc": 2450,
+      "hDes": -900,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Charm",
     "fallbacks": ["cursive"],
     "weights": [400, 700],
@@ -8435,6 +8520,38 @@
       "yMax": 984,
       "hAsc": 918,
       "hDes": -220,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Crimson Text",
+    "fallbacks": ["serif"],
+    "weights": [400, 600, 700],
+    "styles": ["regular", "italic"],
+    "variants": [
+      [0, 400],
+      [1, 400],
+      [0, 600],
+      [1, 600],
+      [0, 700],
+      [1, 700]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1024,
+      "asc": 972,
+      "des": -359,
+      "tAsc": 972,
+      "tDes": -359,
+      "tLGap": 0,
+      "wAsc": 1106,
+      "wDes": 297,
+      "xH": 430,
+      "capH": 656,
+      "yMin": -297,
+      "yMax": 1038,
+      "hAsc": 972,
+      "hDes": -359,
       "lGap": 0
     }
   },
@@ -12224,6 +12341,36 @@
     }
   },
   {
+    "family": "Gentium Plus",
+    "fallbacks": ["serif"],
+    "weights": [400, 700],
+    "styles": ["regular", "italic"],
+    "variants": [
+      [0, 400],
+      [1, 400],
+      [0, 700],
+      [1, 700]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 2048,
+      "asc": 2250,
+      "des": -750,
+      "tAsc": 2250,
+      "tDes": -750,
+      "tLGap": 0,
+      "wAsc": 2250,
+      "wDes": 750,
+      "xH": 930,
+      "capH": 1260,
+      "yMin": -950,
+      "yMax": 2600,
+      "hAsc": 2250,
+      "hDes": -750,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Geo",
     "fallbacks": ["sans-serif"],
     "weights": [400],
@@ -15639,6 +15786,31 @@
     }
   },
   {
+    "family": "Joan",
+    "fallbacks": ["serif"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1000,
+      "des": -292,
+      "tAsc": 1000,
+      "tDes": -292,
+      "tLGap": 0,
+      "wAsc": 1117,
+      "wDes": 589,
+      "xH": 456,
+      "capH": 707,
+      "yMin": -589,
+      "yMax": 1117,
+      "hAsc": 1000,
+      "hDes": -292,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Jockey One",
     "fallbacks": ["sans-serif"],
     "weights": [400],
@@ -16634,6 +16806,31 @@
       "yMax": 2450,
       "hAsc": 2500,
       "hDes": -1200,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Kdam Thmor Pro",
+    "fallbacks": ["sans-serif"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1146,
+      "des": -400,
+      "tAsc": 1146,
+      "tDes": -400,
+      "tLGap": 0,
+      "wAsc": 1146,
+      "wDes": 550,
+      "xH": 612,
+      "capH": 793,
+      "yMin": -550,
+      "yMax": 1146,
+      "hAsc": 1146,
+      "hDes": -400,
       "lGap": 0
     }
   },
@@ -28502,6 +28699,31 @@
     }
   },
   {
+    "family": "Nuosu SIL",
+    "fallbacks": ["serif"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 2048,
+      "asc": 2200,
+      "des": -500,
+      "tAsc": 2200,
+      "tDes": -500,
+      "tLGap": 0,
+      "wAsc": 2200,
+      "wDes": 500,
+      "xH": 1000,
+      "capH": 1800,
+      "yMin": -549,
+      "yMax": 2150,
+      "hAsc": 2200,
+      "hDes": -500,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Odibee Sans",
     "fallbacks": ["cursive"],
     "weights": [400],
@@ -29524,12 +29746,12 @@
       "tAsc": 1145,
       "tDes": -274,
       "tLGap": 0,
-      "wAsc": 1145,
-      "wDes": 274,
+      "wAsc": 1225,
+      "wDes": 326,
       "xH": 689,
       "capH": 889,
-      "yMin": -274,
-      "yMax": 1145,
+      "yMin": -326,
+      "yMax": 1225,
       "hAsc": 1145,
       "hDes": -274,
       "lGap": 0
@@ -31165,7 +31387,7 @@
       "xH": 1034,
       "capH": 1446,
       "yMin": -480,
-      "yMax": 2174,
+      "yMax": 2050,
       "hAsc": 1900,
       "hDes": -450,
       "lGap": 0
@@ -31552,13 +31774,18 @@
     "family": "Radio Canada",
     "fallbacks": ["sans-serif"],
     "weights": [300, 400, 500, 600, 700],
-    "styles": ["regular"],
+    "styles": ["regular", "italic"],
     "variants": [
       [0, 300],
       [0, 400],
       [0, 500],
       [0, 600],
-      [0, 700]
+      [0, 700],
+      [1, 300],
+      [1, 400],
+      [1, 500],
+      [1, 600],
+      [1, 700]
     ],
     "service": "fonts.google.com",
     "metrics": {
@@ -32633,6 +32860,31 @@
       "capH": 1456,
       "yMin": -555,
       "yMax": 2163,
+      "hAsc": 1900,
+      "hDes": -500,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Roboto Flex",
+    "fallbacks": ["sans-serif"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 2048,
+      "asc": 1900,
+      "des": -500,
+      "tAsc": 1900,
+      "tDes": -500,
+      "tLGap": 0,
+      "wAsc": 2461,
+      "wDes": 600,
+      "xH": 1052,
+      "capH": 1456,
+      "yMin": -600,
+      "yMax": 2461,
       "hAsc": 1900,
       "hDes": -500,
       "lGap": 0
@@ -36074,19 +36326,50 @@
     "service": "fonts.google.com",
     "metrics": {
       "upm": 2000,
-      "asc": 1912,
-      "des": -458,
-      "tAsc": 1912,
-      "tDes": -458,
+      "asc": 1927,
+      "des": -473,
+      "tAsc": 1927,
+      "tDes": -473,
       "tLGap": 0,
-      "wAsc": 2012,
+      "wAsc": 2024,
       "wDes": 605,
       "xH": 1091,
       "capH": 1454,
       "yMin": -503,
       "yMax": 1978,
-      "hAsc": 1912,
-      "hDes": -458,
+      "hAsc": 1927,
+      "hDes": -473,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Spline Sans Mono",
+    "fallbacks": ["monospace"],
+    "weights": [300, 400, 500, 600, 700],
+    "styles": ["regular"],
+    "variants": [
+      [0, 300],
+      [0, 400],
+      [0, 500],
+      [0, 600],
+      [0, 700]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 2000,
+      "asc": 1927,
+      "des": -473,
+      "tAsc": 1927,
+      "tDes": -473,
+      "tLGap": 0,
+      "wAsc": 2024,
+      "wDes": 605,
+      "xH": 1091,
+      "capH": 1454,
+      "yMin": -548,
+      "yMax": 1993,
+      "hAsc": 1927,
+      "hDes": -473,
       "lGap": 0
     }
   },
@@ -37020,6 +37303,34 @@
     "service": "system"
   },
   {
+    "family": "Tai Heritage Pro",
+    "fallbacks": ["serif"],
+    "weights": [400, 700],
+    "styles": ["regular"],
+    "variants": [
+      [0, 400],
+      [0, 700]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 2048,
+      "asc": 2700,
+      "des": -1600,
+      "tAsc": 2700,
+      "tDes": -1600,
+      "tLGap": 0,
+      "wAsc": 2700,
+      "wDes": 1600,
+      "xH": 1150,
+      "capH": 1700,
+      "yMin": -1546,
+      "yMax": 2775,
+      "hAsc": 2700,
+      "hDes": -1600,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Tajawal",
     "fallbacks": ["sans-serif"],
     "weights": [200, 300, 400, 500, 700, 800, 900],
@@ -37600,6 +37911,230 @@
       "hAsc": 1825,
       "hDes": -443,
       "lGap": 87
+    }
+  },
+  {
+    "family": "Tiro Bangla",
+    "fallbacks": ["serif"],
+    "weights": [400],
+    "styles": ["regular", "italic"],
+    "variants": [
+      [0, 400],
+      [1, 400]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 755,
+      "des": -245,
+      "tAsc": 755,
+      "tDes": -245,
+      "tLGap": 330,
+      "wAsc": 1091,
+      "wDes": 430,
+      "xH": 475,
+      "capH": 699,
+      "yMin": -430,
+      "yMax": 1091,
+      "hAsc": 755,
+      "hDes": -245,
+      "lGap": 330
+    }
+  },
+  {
+    "family": "Tiro Devanagari Hindi",
+    "fallbacks": ["serif"],
+    "weights": [400],
+    "styles": ["regular", "italic"],
+    "variants": [
+      [0, 400],
+      [1, 400]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 755,
+      "des": -245,
+      "tAsc": 755,
+      "tDes": -245,
+      "tLGap": 330,
+      "wAsc": 1091,
+      "wDes": 501,
+      "xH": 478,
+      "capH": 699,
+      "yMin": -501,
+      "yMax": 1091,
+      "hAsc": 755,
+      "hDes": -245,
+      "lGap": 330
+    }
+  },
+  {
+    "family": "Tiro Devanagari Marathi",
+    "fallbacks": ["serif"],
+    "weights": [400],
+    "styles": ["regular", "italic"],
+    "variants": [
+      [0, 400],
+      [1, 400]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 755,
+      "des": -245,
+      "tAsc": 755,
+      "tDes": -245,
+      "tLGap": 330,
+      "wAsc": 1091,
+      "wDes": 501,
+      "xH": 478,
+      "capH": 699,
+      "yMin": -501,
+      "yMax": 1091,
+      "hAsc": 755,
+      "hDes": -245,
+      "lGap": 330
+    }
+  },
+  {
+    "family": "Tiro Devanagari Sanskrit",
+    "fallbacks": ["serif"],
+    "weights": [400],
+    "styles": ["regular", "italic"],
+    "variants": [
+      [0, 400],
+      [1, 400]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 755,
+      "des": -245,
+      "tAsc": 755,
+      "tDes": -245,
+      "tLGap": 330,
+      "wAsc": 1091,
+      "wDes": 545,
+      "xH": 478,
+      "capH": 699,
+      "yMin": -545,
+      "yMax": 1091,
+      "hAsc": 755,
+      "hDes": -245,
+      "lGap": 330
+    }
+  },
+  {
+    "family": "Tiro Gurmukhi",
+    "fallbacks": ["serif"],
+    "weights": [400],
+    "styles": ["regular", "italic"],
+    "variants": [
+      [0, 400],
+      [1, 400]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 755,
+      "des": -245,
+      "tAsc": 755,
+      "tDes": -245,
+      "tLGap": 250,
+      "wAsc": 1447,
+      "wDes": 430,
+      "xH": 475,
+      "capH": 699,
+      "yMin": -430,
+      "yMax": 1447,
+      "hAsc": 755,
+      "hDes": -245,
+      "lGap": 250
+    }
+  },
+  {
+    "family": "Tiro Kannada",
+    "fallbacks": ["serif"],
+    "weights": [400],
+    "styles": ["regular", "italic"],
+    "variants": [
+      [0, 400],
+      [1, 400]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 755,
+      "des": -245,
+      "tAsc": 755,
+      "tDes": -245,
+      "tLGap": 794,
+      "wAsc": 1091,
+      "wDes": 694,
+      "xH": 475,
+      "capH": 699,
+      "yMin": -694,
+      "yMax": 1091,
+      "hAsc": 755,
+      "hDes": -245,
+      "lGap": 794
+    }
+  },
+  {
+    "family": "Tiro Tamil",
+    "fallbacks": ["serif"],
+    "weights": [400],
+    "styles": ["regular", "italic"],
+    "variants": [
+      [0, 400],
+      [1, 400]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 755,
+      "des": -245,
+      "tAsc": 755,
+      "tDes": -245,
+      "tLGap": 436,
+      "wAsc": 1091,
+      "wDes": 430,
+      "xH": 478,
+      "capH": 699,
+      "yMin": -430,
+      "yMax": 1091,
+      "hAsc": 755,
+      "hDes": -245,
+      "lGap": 436
+    }
+  },
+  {
+    "family": "Tiro Telugu",
+    "fallbacks": ["serif"],
+    "weights": [400],
+    "styles": ["regular", "italic"],
+    "variants": [
+      [0, 400],
+      [1, 400]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 755,
+      "des": -245,
+      "tAsc": 755,
+      "tDes": -245,
+      "tLGap": 794,
+      "wAsc": 1189,
+      "wDes": 563,
+      "xH": 478,
+      "capH": 699,
+      "yMin": -563,
+      "yMax": 1189,
+      "hAsc": 755,
+      "hDes": -245,
+      "lGap": 794
     }
   },
   {

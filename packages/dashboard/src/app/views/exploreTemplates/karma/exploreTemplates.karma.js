@@ -211,7 +211,7 @@ describe('Grid view', () => {
       expect(filterableTagTemplate).toBeDefined();
 
       // Clear input
-      const clearInput = await fixture.screen.getByLabelText('Clear Search');
+      const clearInput = fixture.screen.getByLabelText('Clear Search');
       await fixture.events.click(clearInput);
 
       // Filter by Color

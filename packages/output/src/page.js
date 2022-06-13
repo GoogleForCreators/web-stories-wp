@@ -78,19 +78,29 @@ function OutputPage({
   );
 
   const regularElements = otherElements.map((element) => {
-    const { id: elementId, type, tagName = 'auto' } = element;
+    // Check if we need to change anything in this element
 
-    if ('text' === type && 'auto' === tagName) {
-      element.tagName = tagNamesMap.get(elementId);
-    }
-
-    // Remove invalid links.
+    // Text elements need a tag name
+    const needsTagName = 'text' === element.type;
+    // Invalid links must be removed
     // TODO: this should come from the pre-publish checklist in the future.
-    if (pageAttachment?.url && isElementBelowLimit(element)) {
-      delete element.link;
+    const hasIllegalLink = pageAttachment?.url && isElementBelowLimit(element);
+    const requiresChange = needsTagName || hasIllegalLink;
+
+    // If neither change needed, return original
+    if (!requiresChange) {
+      return element;
     }
 
-    return element;
+    // At least one change needed, create shallow clone and modify that
+    const newElement = { ...element };
+    if (needsTagName) {
+      newElement.tagName = tagNamesMap.get(element.id);
+    }
+    if (hasIllegalLink) {
+      delete newElement.link;
+    }
+    return newElement;
   });
 
   const products = elements
@@ -136,7 +146,7 @@ function OutputPage({
           >
             <div className="page-fullbleed-area" style={backgroundStyles}>
               <div className="page-safe-area">
-                <OutputElement element={backgroundElement} />
+                <OutputElement element={backgroundElement} flags={flags} />
                 {backgroundElement.overlay && (
                   <div
                     className="page-background-overlay-area"
@@ -156,7 +166,11 @@ function OutputPage({
           <div className="page-fullbleed-area">
             <div className="page-safe-area">
               {regularElements.map((element) => (
-                <OutputElement key={element.id} element={element} />
+                <OutputElement
+                  key={element.id}
+                  element={element}
+                  flags={flags}
+                />
               ))}
             </div>
           </div>

@@ -359,6 +359,8 @@
       },
       "rules": {
         "eslint-comments/require-description": "off",
+        "testing-library/no-await-sync-events": "error",
+        "testing-library/no-await-sync-query": "error",
         "testing-library/no-debugging-utils": "error",
         "testing-library/no-dom-import": "error",
         "jasmine/new-line-before-expect": "off",
@@ -474,14 +476,6 @@
         "import/no-useless-path-segments": ["error", {
           "noUselessIndex": false
         }]
-      }
-    },
-    {
-      "files": [
-        "packages/jest-parallel-sequencer/**/*.js"
-      ],
-      "env": {
-        "node": true
       }
     },
     {

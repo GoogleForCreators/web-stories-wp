@@ -160,7 +160,6 @@ describe('statusPanel', () => {
     expect(saveStory).toHaveBeenCalledWith({
       status: STATUS.PRIVATE,
       password: '',
-      visibility: VISIBILITY.PRIVATE,
     });
   });
 
@@ -200,7 +199,6 @@ describe('statusPanel', () => {
       properties: {
         status: 'draft',
         password: '',
-        visibility: VISIBILITY.PUBLIC,
       },
     });
   });

@@ -55,6 +55,7 @@ function CanvasProvider({ children }) {
   const [eyedropperPixelData, setEyedropperPixelData] = useState(null);
   const [isEyedropperActive, setIsEyedropperActive] = useState(null);
   const [eyedropperCallback, setEyedropperCallback] = useState(null);
+  const [renamableLayer, setRenamableLayer] = useState(null);
 
   // IntersectionObserver tracks clientRects which is what we need here.
   // different from use case of useIntersectionEffect because this is extensible
@@ -131,9 +132,12 @@ function CanvasProvider({ children }) {
       }
       lastSelectedElementId.current = elId;
       if (evt.shiftKey) {
-        toggleElementInSelection({ elementId: elId });
+        toggleElementInSelection({ elementId: elId, withLinked: !evt.altKey });
       } else {
-        setSelectedElementsById({ elementIds: [elId] });
+        setSelectedElementsById({
+          elementIds: [elId],
+          withLinked: !evt.altKey,
+        });
       }
       evt.currentTarget.focus({ preventScroll: true });
       if (backgroundElementId !== elId) {
@@ -165,7 +169,8 @@ function CanvasProvider({ children }) {
     ({ x: lx, y: ly, width: lw, height: lh }) => {
       const lassoP = createPolygon(0, lx, ly, lw, lh);
       const newSelectedElementIds = elements
-        .filter(({ isBackground }) => !isBackground)
+        // Skip background and locked elements
+        .filter(({ isBackground, isLocked }) => !isBackground && !isLocked)
         .map(({ id, rotationAngle, x, y, width, height }) => {
           const elementP = createPolygon(rotationAngle, x, y, width, height);
           return SAT.testPolygonPolygon(lassoP, elementP) ? id : null;
@@ -218,6 +223,7 @@ function CanvasProvider({ children }) {
         boundingBoxes,
         clientRectObserver,
         onMoveableMount,
+        renamableLayer,
       },
       actions: {
         setPageContainer,
@@ -238,6 +244,7 @@ function CanvasProvider({ children }) {
         setEyedropperImg,
         setEyedropperPixelData,
         setMoveableMount,
+        setRenamableLayer,
       },
     }),
     [
@@ -257,6 +264,7 @@ function CanvasProvider({ children }) {
       eyedropperPixelData,
       boundingBoxes,
       clientRectObserver,
+      renamableLayer,
       getNodeForElement,
       setNodeForElement,
       setEditingElementWithoutState,
@@ -266,6 +274,7 @@ function CanvasProvider({ children }) {
       selectIntersection,
       onMoveableMount,
       setMoveableMount,
+      setRenamableLayer,
     ]
   );
   return (

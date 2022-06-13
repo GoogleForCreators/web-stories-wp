@@ -54,7 +54,6 @@ ResourcePropTypes.trackResource = PropTypes.shape({
   id: PropTypes.string.isRequired,
   track: PropTypes.string.isRequired,
   trackId: PropTypes.number,
-  trackName: PropTypes.string.isRequired,
   kind: PropTypes.string,
   srclang: PropTypes.string,
   label: PropTypes.string,

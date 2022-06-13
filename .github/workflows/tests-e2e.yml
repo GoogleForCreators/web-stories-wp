@@ -182,7 +182,7 @@ jobs:
         if: ( matrix.snapshots ) && ( github.event.pull_request.draft == false )
 
       - name: Run E2E tests with percy
-        run: npm run test:e2e:percy
+        run: npm run test:e2e:percy -- --shard=$SHARD
         env:
           PERCY_TOKEN: ${{ secrets.PERCY_TOKEN_E2E }}
           WP_VERSION: ${{ matrix.wp }}
@@ -191,7 +191,7 @@ jobs:
         if: ( matrix.snapshots ) && ( github.event.pull_request.draft == false )
 
       - name: Run E2E tests
-        run: npm run test:e2e
+        run: npm run test:e2e -- --shard=$SHARD
         env:
           WP_VERSION: ${{ matrix.wp }}
           SHARD: ${{ matrix.shard }}

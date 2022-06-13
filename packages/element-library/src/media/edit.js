@@ -116,6 +116,7 @@ function MediaEdit({
     focalX,
     focalY,
     isBackground,
+    isLocked,
     type,
     borderRadius,
   } = element;
@@ -246,7 +247,7 @@ function MediaEdit({
         </FadedVideo>
       )}
       <CropBox ref={setCropBox} {...borderProps}>
-        <WithMask element={element} fill applyFlip={false} box={box}>
+        <WithMask element={element} fill applyFlip={false}>
           {/* eslint-disable-next-line styled-components-a11y/alt-text -- False positive. */}
           {isImage && <CropImage {...cropMediaProps} />}
           {isVideo && (
@@ -276,7 +277,7 @@ function MediaEdit({
         />
       )}
 
-      {!isBackground && cropBox && croppedMedia && (
+      {!isBackground && !isLocked && cropBox && croppedMedia && (
         <EditCropMoveable
           setProperties={updateLocalProperties}
           cropBox={cropBox}

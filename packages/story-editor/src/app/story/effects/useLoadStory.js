@@ -33,7 +33,7 @@ function loadStory(storyId, post, restore, clearHistory) {
     title: { raw: title = '' } = {},
     status,
     slug,
-    date,
+    date: origDate,
     modified,
     excerpt: { raw: excerpt = '' } = {},
     link,
@@ -55,6 +55,12 @@ function loadStory(storyId, post, restore, clearHistory) {
     taxonomies,
     terms,
   } = post;
+
+  const date =
+    ['draft', 'auto-draft', 'pending'].includes(status) &&
+    (origDate === modified || !origDate)
+      ? null
+      : origDate;
 
   const [prefix, suffix] = permalinkTemplate
     ? permalinkTemplate.split(/%(?:postname|pagename)%/)
@@ -79,18 +85,14 @@ function loadStory(storyId, post, restore, clearHistory) {
 
   // Initialize color/style presets, if missing.
   // Otherwise ensure the saved presets are unique.
-  if (!globalStoryStyles.colors) {
-    globalStoryStyles.colors = [];
-  } else {
-    globalStoryStyles.colors = getUniquePresets(globalStoryStyles.colors);
-  }
-  if (!globalStoryStyles.textStyles) {
-    globalStoryStyles.textStyles = [];
-  } else {
-    globalStoryStyles.textStyles = getUniquePresets(
-      globalStoryStyles.textStyles
-    );
-  }
+  const newGlobalStoryStyles = {
+    colors: globalStoryStyles.colors
+      ? getUniquePresets(globalStoryStyles.colors)
+      : [],
+    textStyles: globalStoryStyles.textStyles
+      ? getUniquePresets(globalStoryStyles.textStyles)
+      : [],
+  };
 
   // Set story-global variables.
   const story = {
@@ -116,7 +118,7 @@ function loadStory(storyId, post, restore, clearHistory) {
         ? getUniquePresets(storyData.currentStoryStyles.colors)
         : [],
     },
-    globalStoryStyles,
+    globalStoryStyles: newGlobalStoryStyles,
     autoAdvance: storyData?.autoAdvance,
     defaultPageDuration: storyData?.defaultPageDuration,
     backgroundAudio: storyData?.backgroundAudio,

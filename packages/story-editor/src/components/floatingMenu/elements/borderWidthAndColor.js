@@ -78,13 +78,13 @@ function BorderWidthAndColor() {
   );
   // We only allow editing the current border width, if all borders are identical
   const hasUniformBorder =
-    border.left === border.right &&
-    border.left === border.top &&
-    border.left === border.bottom;
+    border?.left === border?.right &&
+    border?.left === border?.top &&
+    border?.left === border?.bottom;
 
   // Border width and color inputs should only be rendered if all sides of the border are the same.
   // Both checks are needed since not all shaped have lockedWidth eg. circles.
-  if (!border.lockedWidth && !hasUniformBorder) {
+  if (!border?.lockedWidth && !hasUniformBorder) {
     return null;
   }
 
@@ -104,7 +104,7 @@ function BorderWidthAndColor() {
       properties: ({ border: oldBorder }) => ({
         border: {
           locked: true,
-          color: border.color,
+          color: border?.color,
           ...oldBorder,
           left: value,
           right: value,
@@ -142,7 +142,7 @@ function BorderWidthAndColor() {
           tabIndex={-1}
           ref={inputRef}
           suffix={<Icons.BorderBox />}
-          value={border.left || 0}
+          value={border?.left || 0}
           aria-label={WIDTH_LABEL}
           onChange={(_, value) => handleWidthChange(value)}
           onKeyDown={(e) => {
@@ -156,7 +156,7 @@ function BorderWidthAndColor() {
           <Color
             tabIndex={-1}
             label={COLOR_LABEL}
-            value={border.color || BLACK}
+            value={border?.color || BLACK}
             onChange={handleColorChange}
             hasInputs={false}
             hasEyedropper={false}

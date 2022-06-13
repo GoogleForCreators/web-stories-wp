@@ -153,6 +153,8 @@ const Menu = forwardRef(
 
         if (menuRef.current === evt.target && isFocusOutsideMenu) {
           const focusableChildren = getFocusableChildren(menuRef.current);
+          // used to shift focus outline correctly
+          document.dispatchEvent(new KeyboardEvent('keydown', { key: 'tab' }));
           focusableChildren?.[0]?.focus();
         }
       },

@@ -29,6 +29,8 @@ export {
   isMaskable,
   isMedia,
   hasEditMode,
+  hasEditModeIfLocked,
+  hasDuplicateMenu,
   hasDesignMenu,
   editModeGrayout,
   resizeRules,

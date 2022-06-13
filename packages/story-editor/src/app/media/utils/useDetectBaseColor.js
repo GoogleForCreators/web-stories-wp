@@ -68,7 +68,9 @@ function useDetectBaseColor({ updateMediaElement }) {
           }
         }
       } catch (error) {
-        // Do nothing for now.
+        // This might happen as an author when trying to updateMedia() that
+        // was uploaded by someone else.
+        // Do nothing with the error for now.
       }
     },
     [
@@ -87,11 +89,18 @@ function useDetectBaseColor({ updateMediaElement }) {
       if (type === 'image') {
         imageSrc = getSmallestUrlForWidth(0, resource);
       } else if (!isExternal) {
-        const posterResource = getPosterMediaById
-          ? await getPosterMediaById(id)
-          : null;
-        if (posterResource) {
-          imageSrc = getSmallestUrlForWidth(0, posterResource);
+        try {
+          const posterResource = getPosterMediaById
+            ? await getPosterMediaById(id)
+            : null;
+          if (posterResource) {
+            imageSrc = getSmallestUrlForWidth(0, posterResource);
+          }
+        } catch (error) {
+          // The user might not have the permission to access the video with context=edit.
+          // This might happen as an author when the video
+          // was uploaded by someone else.
+          // Do nothing with the error for now.
         }
       }
 

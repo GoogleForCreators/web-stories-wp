@@ -129,6 +129,7 @@ Route.propTypes = {
   component: PropTypes.node.isRequired,
   path: PropTypes.string.isRequired,
   exact: PropTypes.bool,
+  isDefault: PropTypes.bool,
 };
 
 export default Route;

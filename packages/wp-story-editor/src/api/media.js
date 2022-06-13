@@ -35,7 +35,7 @@ export function getMedia(
   { mediaType, searchTerm, pagingNum, cacheBust }
 ) {
   let path = addQueryArgs(config.api.media, {
-    context: 'edit',
+    context: 'view',
     per_page: 50,
     page: pagingNum,
     _web_stories_envelope: true,
@@ -72,7 +72,7 @@ export function getMedia(
 // Important: Keep in sync with REST API preloading definition.
 export function getMediaForCorsCheck(config) {
   const path = addQueryArgs(config.api.media, {
-    context: 'edit',
+    context: 'view',
     per_page: 10,
     _fields: 'source_url',
   });
@@ -91,7 +91,7 @@ export function getMediaForCorsCheck(config) {
  */
 export function getMediaById(config, mediaId) {
   const path = addQueryArgs(`${config.api.media}${mediaId}/`, {
-    context: 'edit',
+    context: 'view',
     _fields: MEDIA_FIELDS,
   });
 
@@ -107,7 +107,7 @@ export function getMediaById(config, mediaId) {
  */
 export async function getMutedMediaById(config, mediaId) {
   const path = addQueryArgs(`${config.api.media}${mediaId}/`, {
-    context: 'edit',
+    context: 'view',
     _fields: 'meta.web_stories_muted_id',
   });
 
@@ -129,7 +129,7 @@ export async function getMutedMediaById(config, mediaId) {
  */
 export async function getOptimizedMediaById(config, mediaId) {
   const path = addQueryArgs(`${config.api.media}${mediaId}/`, {
-    context: 'edit',
+    context: 'view',
     _fields: 'meta.web_stories_optimized_id',
   });
 
@@ -151,7 +151,7 @@ export async function getOptimizedMediaById(config, mediaId) {
  */
 export async function getPosterMediaById(config, mediaId) {
   const path = addQueryArgs(`${config.api.media}${mediaId}/`, {
-    context: 'edit',
+    context: 'view',
     _fields: 'featured_media',
   });
 

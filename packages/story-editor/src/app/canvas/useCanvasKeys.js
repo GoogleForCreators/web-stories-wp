@@ -22,13 +22,20 @@ import { trackEvent } from '@googleforcreators/tracking';
 import {
   useGlobalKeyDownEffect,
   getKeyboardMovement,
+  useSnackbar,
 } from '@googleforcreators/design-system';
 import { STORY_ANIMATION_STATE } from '@googleforcreators/animation';
-import { getDefinitionForType } from '@googleforcreators/elements';
+import {
+  getDefinitionForType,
+  ELEMENT_TYPES,
+} from '@googleforcreators/elements';
+import { __, sprintf } from '@googleforcreators/i18n';
 
 /**
  * Internal dependencies
  */
+import states from '../highlights/states';
+import useHighlights from '../highlights/useHighlights';
 import { useStory } from '../story';
 import { LAYER_DIRECTIONS } from '../../constants';
 import { useCanvas } from '.';
@@ -46,14 +53,17 @@ function useCanvasKeys(ref) {
     updateSelectedElements,
     setSelectedElementsById,
     currentPage,
+    currentPageNumber,
     animationState,
     updateAnimationState,
+    currentPageProductIds,
   } = useStory(
     ({
       state: {
         selectedElementIds,
         selectedElements,
         currentPage,
+        currentPageNumber,
         animationState,
       },
       actions: {
@@ -67,6 +77,7 @@ function useCanvasKeys(ref) {
     }) => {
       return {
         currentPage,
+        currentPageNumber,
         selectedElementIds,
         selectedElements,
         arrangeSelection,
@@ -76,9 +87,18 @@ function useCanvasKeys(ref) {
         setSelectedElementsById,
         animationState,
         updateAnimationState,
+        currentPageProductIds: currentPage?.elements
+          ?.filter(({ type }) => type === ELEMENT_TYPES.PRODUCT)
+          .map(({ product }) => product?.productId),
       };
     }
   );
+
+  const showSnackbar = useSnackbar(({ showSnackbar }) => showSnackbar);
+
+  const { setHighlights } = useHighlights(({ setHighlights }) => ({
+    setHighlights,
+  }));
 
   const { isEditing, getNodeForElement, setEditingElement } = useCanvas(
     ({
@@ -160,7 +180,8 @@ function useCanvasKeys(ref) {
       if (isEditing) {
         return;
       }
-      if (selectedElements?.[0]?.isBackground) {
+      const { isBackground, isLocked } = selectedElements?.[0] || {};
+      if (isBackground || isLocked) {
         return;
       }
       const { dx, dy } = getKeyboardMovement(key, shiftKey);
@@ -200,10 +221,10 @@ function useCanvasKeys(ref) {
         return;
       }
 
-      const { type, id } = selectedElements[0];
-      const { hasEditMode } = getDefinitionForType(type);
+      const { type, id, isLocked } = selectedElements[0];
+      const { hasEditMode, hasEditModeIfLocked } = getDefinitionForType(type);
       // Only handle Enter key for editable elements
-      if (!hasEditMode) {
+      if (!hasEditMode || (!hasEditModeIfLocked && isLocked)) {
         return;
       }
 
@@ -217,10 +238,31 @@ function useCanvasKeys(ref) {
       return;
     }
 
+    for (const { type, product } of selectedElements) {
+      if (
+        type === ELEMENT_TYPES.PRODUCT &&
+        product?.productId &&
+        currentPageProductIds.includes(product.productId)
+      ) {
+        showSnackbar({
+          message: sprintf(
+            /* translators: %s: product title. */
+            __('Product "%s" already exists on the page.', 'web-stories'),
+            product.productTitle
+          ),
+        });
+      }
+    }
+
     duplicateElementsById({
       elementIds: selectedElements.map((element) => element.id),
     });
-  }, [duplicateElementsById, selectedElements]);
+  }, [
+    duplicateElementsById,
+    selectedElements,
+    currentPageProductIds,
+    showSnackbar,
+  ]);
 
   useGlobalKeyDownEffect('clone', () => cloneHandler(), [cloneHandler]);
 
@@ -229,10 +271,12 @@ function useCanvasKeys(ref) {
     STORY_ANIMATION_STATE.PLAYING_SELECTED,
   ].includes(animationState);
   useGlobalKeyDownEffect(
-    { key: ['mod+k'] },
+    { key: ['mod+enter'] },
     (evt) => {
       evt.preventDefault();
-
+      if (currentPageNumber === 1) {
+        return;
+      }
       updateAnimationState({
         animationState: isPlaying
           ? STORY_ANIMATION_STATE.RESET
@@ -243,7 +287,22 @@ function useCanvasKeys(ref) {
         status: isPlaying ? 'stop' : 'play',
       });
     },
-    [isPlaying, updateAnimationState]
+    [isPlaying, updateAnimationState, currentPageNumber]
+  );
+
+  useGlobalKeyDownEffect(
+    { key: ['mod+k'] },
+    (evt) => {
+      evt.preventDefault();
+      if (!selectedElements.length || selectedElements?.[0]?.isBackground) {
+        return;
+      }
+      setHighlights({
+        elements: selectedElements,
+        highlight: states.LINK,
+      });
+    },
+    [setHighlights, selectedElements]
   );
 }
 
