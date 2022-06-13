@@ -106,7 +106,7 @@ function useTaxonomyFilters() {
    * @see queryTaxonomyTerms
    */
   const queryTaxonomies = useCallback(async () => {
-    const data = await getTaxonomies({ hierarchical: true });
+    const data = await getTaxonomies({ hierarchical: true, show_ui: true });
 
     for (const taxonomy of data) {
       // initialize the data with an empty array

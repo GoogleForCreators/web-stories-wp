@@ -68,7 +68,7 @@ class Stories_Taxonomies_Controller extends DependencyInjectedRestTestCase {
 
 		$this->assertFalse( $response->is_error() );
 		$this->assertNotEmpty( $response->get_data() );
-		$this->assertCount( 
+		$this->assertCount(
 			\count( $response_hierarchical->get_data() ) + \count( $response_flat->get_data() ),
 			$response->get_data()
 		);
@@ -93,6 +93,27 @@ class Stories_Taxonomies_Controller extends DependencyInjectedRestTestCase {
 		foreach ( $hierarchical_values as $hierarchical ) {
 			$this->assertFalse( $hierarchical );
 		}
+	}
+
+	/**
+	 * @covers ::get_items
+	 * @covers ::get_collection_params
+	 */
+	public function test_get_items_show_ui_false(): void {
+		$this->controller->register();
+
+		$request = new WP_REST_Request( WP_REST_Server::READABLE, '/web-stories/v1/taxonomies' );
+		$request->set_param( 'show_ui', false );
+		$request->set_param( 'type', 'attachment' );
+		$response = rest_get_server()->dispatch( $request );
+
+		$this->assertFalse( $response->is_error() );
+		$data = $response->get_data();
+		$this->assertNotEmpty( $data );
+		$this->assertCount( 1, $data );
+		$this->assertArrayHasKey( 'web_story_media_source', $data );
+		$this->assertArrayHasKey( 'name', $data['web_story_media_source'] );
+		$this->assertSame( 'Source', $data['web_story_media_source']['name'] );
 	}
 
 	/**
