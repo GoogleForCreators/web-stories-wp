@@ -68,7 +68,6 @@ function ShoppingPane(props) {
   const { shoppingProvider } = useConfig();
   const isShoppingIntegrationEnabled = useFeature('shoppingIntegration');
   const speak = useLiveRegion('assertive');
-  const [loaded, setLoaded] = useState(false);
   const {
     actions: { getProducts },
   } = useAPI();
@@ -89,6 +88,7 @@ function ShoppingPane(props) {
     insertElement: state.actions.insertElement,
   }));
 
+  const [loaded, setLoaded] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [canLoadMore, setCanLoadMore] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
