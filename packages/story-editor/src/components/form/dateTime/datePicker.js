@@ -69,7 +69,9 @@ function DatePicker({ currentDate, onChange, onViewChange }) {
             '.react-calendar__navigation button'
           ),
         ];
-        navButtons[0].tabIndex = '0';
+        if (navButtons[0]) {
+          navButtons[0].tabIndex = '0';
+        }
         navButtons.shift();
         for (const btn of navButtons) {
           btn.tabIndex = '-1';
@@ -98,8 +100,10 @@ function DatePicker({ currentDate, onChange, onViewChange }) {
         }
         if (!foundActive) {
           // Assume first as active.
-          buttons[0].tabIndex = '0';
-          buttons[0].focus();
+          if (buttons[0]) {
+            buttons[0].tabIndex = '0';
+            buttons[0].focus();
+          }
         }
       }
     },
