@@ -122,7 +122,7 @@ describe('Shopping integration', () => {
       await expect(productButton.getAttribute('aria-disabled')).toBe('true');
     });
 
-    it('should sort searched products', async () => {
+    fit('should sort searched products', async () => {
       await fixture.editor.library.shoppingTab.click();
       await fixture.events.keyboard.press('tab');
 
@@ -131,7 +131,7 @@ describe('Shopping integration', () => {
       );
       await fixture.events.mouse.clickOn(sortDropdown, 1, 1);
 
-      const option = fixture.screen.getByRole('option', {
+      const option = fixture.screen.getByRole('menuitem', {
         name: /^Alphabetical: Z-A/,
       });
 
