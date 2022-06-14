@@ -37,10 +37,7 @@ function useLoadFontFiles() {
     const handle = cleanForSlug(family);
     const elementId = `web-stories-${handle}-font-css`;
 
-    const hasFontLink = () =>
-      typeof document !== 'undefined'
-        ? document.getElementById(elementId)
-        : null;
+    const hasFontLink = () => document.getElementById(elementId);
 
     if (hasFontLink()) {
       return;
