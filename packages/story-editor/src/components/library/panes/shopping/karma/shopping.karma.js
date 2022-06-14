@@ -122,7 +122,7 @@ describe('Shopping integration', () => {
       await expect(productButton.getAttribute('aria-disabled')).toBe('true');
     });
 
-    fit('should sort searched products', async () => {
+    it('should sort searched products', async () => {
       await fixture.editor.library.shoppingTab.click();
       await fixture.events.keyboard.press('tab');
 
