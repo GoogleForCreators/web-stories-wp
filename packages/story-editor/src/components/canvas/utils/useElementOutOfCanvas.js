@@ -17,11 +17,14 @@
  * Internal dependencies
  */
 import isTargetOutOfContainer from '../../../utils/isTargetOutOfContainer';
-import { useStory, useCanvas } from '../../../app';
+import { useStory, useCanvas, useTransform } from '../../../app';
 
 function useElementOutOfCanvas() {
   const { deleteSelectedElements } = useStory((state) => ({
     deleteSelectedElements: state.actions.deleteSelectedElements,
+  }));
+  const { clearTransforms } = useTransform((state) => ({
+    clearTransforms: state.actions.clearTransforms,
   }));
   const { fullbleedContainer } = useCanvas(
     ({ state: { fullbleedContainer } }) => ({
@@ -33,6 +36,7 @@ function useElementOutOfCanvas() {
   const handleElementOutOfCanvas = (target) => {
     if (isTargetOutOfContainer(target, fullbleedContainer)) {
       deleteSelectedElements();
+      clearTransforms();
       return true;
     }
     return false;

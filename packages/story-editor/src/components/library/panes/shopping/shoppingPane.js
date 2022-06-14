@@ -34,6 +34,7 @@ import {
   useSnackbar,
 } from '@googleforcreators/design-system';
 import { ELEMENT_TYPES } from '@googleforcreators/elements';
+import { trackError, trackEvent } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies
@@ -75,10 +76,7 @@ function ShoppingPane(props) {
   const [searchTerm, setSearchTerm] = useState('');
   const [orderby, setOrderby] = useState('date');
   const [order, setOrder] = useState('desc');
-  const onSortBy = (option) => {
-    setOrderby(option.orderby);
-    setOrder(option.order);
-  };
+
   const [isMenuFocused, setIsMenuFocused] = useState(false);
   const [products, setProducts] = useState([]);
   const {
@@ -97,12 +95,13 @@ function ShoppingPane(props) {
       })),
   }));
 
-  const getProductsByQuery = useCallback(
+  const searchProducts = useCallback(
     async (value = '', sortBy, sortOrder) => {
       try {
         setIsLoading(true);
         setProducts(await getProducts(value, sortBy, sortOrder));
       } catch (err) {
+        trackError('search_products', err?.message);
         showSnackbar({ message: err.message });
         setProducts([]);
       } finally {
@@ -113,23 +112,48 @@ function ShoppingPane(props) {
     [getProducts, showSnackbar]
   );
 
+  const searchProductsWithTelemetry = useCallback(
+    (value = '', sortBy, sortOrder) => {
+      searchProducts(value, sortBy, sortOrder);
+      trackEvent('search', {
+        search_type: 'products',
+        search_term: value,
+        search_order: sortOrder,
+        search_orderby: sortBy,
+        search_provider: shoppingProvider,
+      });
+    },
+    [searchProducts, shoppingProvider]
+  );
+
+  const debouncedProductsQuery = useDebouncedCallback(
+    searchProductsWithTelemetry,
+    300
+  );
+
   const onSearch = useCallback(
     (evt) => {
       const value = evt.target.value;
       if (value !== searchTerm) {
         setSearchTerm(value);
+        debouncedProductsQuery(value, orderby, order);
       }
     },
-    [searchTerm, setSearchTerm]
+    [debouncedProductsQuery, order, orderby, searchTerm]
   );
 
-  const debouncedProductsQuery = useDebouncedCallback(getProductsByQuery, 300);
+  const onSortBy = (option) => {
+    setOrderby(option.orderby);
+    setOrder(option.order);
+    debouncedProductsQuery(searchTerm, option.orderby, option.order);
+  };
 
   useEffect(() => {
     if (isShoppingEnabled) {
-      debouncedProductsQuery(searchTerm, orderby, order);
+      searchProducts(searchTerm, orderby, order);
     }
-  }, [debouncedProductsQuery, isShoppingEnabled, searchTerm, orderby, order]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- Only run once on mount.
+  }, [searchProducts, isShoppingEnabled]);
 
   useEffect(() => {
     if (!isShoppingEnabled) {
@@ -148,9 +172,12 @@ function ShoppingPane(props) {
 
   const handleFocus = () => setIsMenuFocused(false);
 
-  const { deleteElementById } = useStory(({ actions }) => ({
-    deleteElementById: actions.deleteElementById,
-  }));
+  const { deleteElementById, currentPageNumber } = useStory(
+    ({ state, actions }) => ({
+      currentPageNumber: state.currentPageNumber,
+      deleteElementById: actions.deleteElementById,
+    })
+  );
 
   const { insertElement } = useLibrary((state) => ({
     insertElement: state.actions.insertElement,
@@ -164,6 +191,11 @@ function ShoppingPane(props) {
         product,
       });
 
+      trackEvent('insert_product', {
+        page: currentPageNumber,
+        provider: shoppingProvider,
+      });
+
       const PRODUCT_ADDED_TEXT = sprintf(
         /* translators: %s: product title. */
         __('%s added to page', 'web-stories'),
@@ -172,7 +204,7 @@ function ShoppingPane(props) {
 
       speak(PRODUCT_ADDED_TEXT);
     },
-    [insertElement, speak]
+    [insertElement, speak, currentPageNumber, shoppingProvider]
   );
 
   const deleteProduct = useCallback(
@@ -203,7 +235,8 @@ function ShoppingPane(props) {
 
   const handleClearInput = useCallback(() => {
     setSearchTerm('');
-  }, [setSearchTerm]);
+    debouncedProductsQuery('', orderby, order);
+  }, [debouncedProductsQuery, order, orderby]);
 
   return (
     <Pane id={paneId} {...props}>
@@ -233,7 +266,7 @@ function ShoppingPane(props) {
               clearId="clear-product-search"
               handleClearInput={handleClearInput}
             />
-            <ProductSort onChange={onSortBy} sortId={`${orderby}-${order}`} />
+            <ProductSort onChange={onSortBy} value={`${orderby}-${order}`} />
           </Row>
         )}
         {isLoading && (
