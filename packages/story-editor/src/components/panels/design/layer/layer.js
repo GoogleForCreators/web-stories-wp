@@ -336,10 +336,12 @@ function Layer({ element }) {
     updateElementById,
     deleteElementById,
     currentPageBackgroundColor,
+    groups,
   } = useStory(({ actions, state }) => ({
     duplicateElementsById: actions.duplicateElementsById,
     deleteElementById: actions.deleteElementById,
     updateElementById: actions.updateElementById,
+    groups: state.currentPage.groups,
     currentPageBackgroundColor:
       !isDefaultBackground || state.currentPage?.backgroundColor,
   }));
@@ -418,8 +420,9 @@ function Layer({ element }) {
 
   const isLayerNamingEnabled = useFeature('layerNaming');
   const isRenameable = renamableLayer?.elementId === element.id;
+  const group = groups[element.groupId];
 
-  return (
+  return group?.isCollapsed ? null : (
     <LayerContainer>
       {isRenameable && isLayerNamingEnabled ? (
         <LayerInputWrapper isNested={isNested}>

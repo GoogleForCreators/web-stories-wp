@@ -407,15 +407,27 @@ function Group({ groupId }) {
       groupId: newGroupId,
       name: newGroupName,
       isLocked: group.isLocked,
+      isCollapsed: group.isCollapsed,
     });
   };
+  const handleGroupArrowClick = () => {
+    updateGroupById({
+      groupId,
+      properties: { isCollapsed: !group.isCollapsed },
+    });
+  };
+  const isCollapsed = group.isCollapsed;
+  const GroupArrowIcon = isCollapsed
+    ? Icons.ChevronRightSmall
+    : Icons.ChevronDown;
+  const GroupArrow = <GroupArrowIcon onClick={handleGroupArrowClick} />;
 
   return (
     <LayerContainer>
       {isRenameable && isLayerNamingEnabled ? (
         <LayerInputWrapper>
           <GroupIconsWrapper>
-            <Icons.ChevronDown />
+            {GroupArrow}
             <Icons.Group />
           </GroupIconsWrapper>
           <LayerInputForm onSubmit={handleSubmit}>
@@ -440,7 +452,7 @@ function Group({ groupId }) {
           isSelected={isSelected}
         >
           <GroupIconsWrapper>
-            <Icons.ChevronDown />
+            {GroupArrow}
             <Icons.Group />
           </GroupIconsWrapper>
           <LayerDescription>
