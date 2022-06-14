@@ -61,20 +61,14 @@ const HelperText = styled(Text).attrs({
   color: ${({ theme }) => theme.colors.fg.secondary};
 `;
 
+const loadingSpinnerProps = { animationSize: 25, circleSize: 3 };
+
 function ShoppingPane(props) {
   const { showSnackbar } = useSnackbar();
   const { shoppingProvider } = useConfig();
   const isShoppingIntegrationEnabled = useFeature('shoppingIntegration');
   const speak = useLiveRegion('assertive');
   const [loaded, setLoaded] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [canLoadMore, setCanLoadMore] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [page, setPage] = useState(1);
-  const [orderby, setOrderby] = useState('date');
-  const [order, setOrder] = useState('desc');
-  const [isMenuFocused, setIsMenuFocused] = useState(false);
-  const [products, setProducts] = useState([]);
   const {
     actions: { getProducts },
   } = useAPI();
@@ -95,22 +89,32 @@ function ShoppingPane(props) {
     insertElement: state.actions.insertElement,
   }));
 
+  const [isLoading, setIsLoading] = useState(false);
+  const [canLoadMore, setCanLoadMore] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [page, setPage] = useState(1);
+  const [orderby, setOrderby] = useState('date');
+  const [order, setOrder] = useState('desc');
+  const [isMenuFocused, setIsMenuFocused] = useState(false);
+  const [products, setProducts] = useState([]);
+
   const searchProducts = useCallback(
     async (value = '', _page = 1, sortBy, sortOrder) => {
+      setIsLoading(true);
+      setPage(_page);
+      if (_page === 1) {
+        setLoaded(false);
+      }
       try {
-        setIsLoading(true);
-        setPage(_page);
         const { products: _products, hasNextPage } = await getProducts(
           value,
           _page,
           sortBy,
           sortOrder
         );
-        if (_page === 1) {
-          setProducts(_products);
-        } else {
-          setProducts([...products, ..._products]);
-        }
+        const newProducts =
+          _page === 1 ? _products : [...products, ..._products];
+        setProducts(newProducts);
         setCanLoadMore(hasNextPage);
       } catch (err) {
         trackError('search_products', err?.message);
@@ -150,7 +154,6 @@ function ShoppingPane(props) {
       const value = evt.target.value;
       if (value !== searchTerm) {
         setSearchTerm(value);
-        setLoaded(false);
         debouncedProductsQuery(value, 1, orderby, order);
       }
     },
@@ -177,12 +180,14 @@ function ShoppingPane(props) {
 
   const handleFocus = () => setIsMenuFocused(false);
 
-  const onSortBy = (option) => {
-    setOrderby(option.orderby);
-    setOrder(option.order);
-    setLoaded(false);
-    debouncedProductsQuery(searchTerm, 1, option.orderby, option.order);
-  };
+  const onSortBy = useCallback(
+    (option) => {
+      setOrderby(option.orderby);
+      setOrder(option.order);
+      debouncedProductsQuery(searchTerm, 1, option.orderby, option.order);
+    },
+    [debouncedProductsQuery, searchTerm]
+  );
 
   const handleInputKeyPress = useCallback((event) => {
     const { key } = event;
@@ -243,21 +248,17 @@ function ShoppingPane(props) {
 
   const handleClearInput = useCallback(() => {
     setSearchTerm('');
-    setLoaded(false);
     debouncedProductsQuery('', 1, orderby, order);
   }, [debouncedProductsQuery, order, orderby]);
 
   const onLoadMore = useCallback(() => {
     if (canLoadMore) {
-      const newPage = page + 1;
-      searchProducts(searchTerm, newPage, orderby, order);
+      searchProducts(searchTerm, page + 1, orderby, order);
     }
   }, [canLoadMore, searchProducts, order, orderby, page, searchTerm]);
 
   const allDataLoadedMessage =
     page > 1 ? __('No more products', 'web-stories') : '';
-
-  const loadingSpinnerProps = { animationSize: 25, circleSize: 3 };
 
   return (
     <Pane id={paneId} {...props}>
