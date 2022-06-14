@@ -141,8 +141,7 @@ function Media3pApiProvider({ children }) {
    * @param {Object} obj - An object with the options.
    * @param {string} obj.registerUsageUrl The url to be called to register the
    * usage.
-   * @return {Promise<undefined>} An object with the category
-   * resources.
+   * @return {Promise<void>}
    */
   async function registerUsage({ registerUsageUrl }) {
     await apiFetcher.registerUsage({ registerUsageUrl });

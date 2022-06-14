@@ -81,9 +81,13 @@ function ProviderPanel({ providerType, isActive, searchTerm, ...rest }) {
   const handleRegisterUsage = useCallback(
     (resource) => {
       if (resource?.attribution?.registerUsageUrl) {
-        registerUsage({
-          registerUsageUrl: resource.attribution.registerUsageUrl,
-        });
+        try {
+          registerUsage({
+            registerUsageUrl: resource.attribution.registerUsageUrl,
+          });
+        } catch {
+          // Not interested in the errors here.
+        }
       }
     },
     [registerUsage]
