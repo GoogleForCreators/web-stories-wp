@@ -32,10 +32,6 @@ export default {
   },
 };
 
-// export const _default = (args) => {
-//   return <MediaRecordingContext.Provider value={{}}><PermissionsDialog {...args} /></MediaRecordingContext.Provider>;
-// };
-
 export const _default = (args) => {
   return <PermissionsDialog {...args} />;
 };
