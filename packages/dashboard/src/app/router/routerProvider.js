@@ -30,6 +30,7 @@ import { createHashHistory } from 'history';
  * Internal dependencies
  */
 import { APP_ROUTES } from '../../constants';
+import { noop } from '../../utils';
 
 export const RouterContext = createContext({ state: {}, actions: {} });
 
@@ -86,7 +87,7 @@ function RouterProvider({ children, ...props }) {
       },
       actions: {
         push: history.current?.push,
-        replace: history.current?.replace,
+        replace: history.current?.replace || noop,
         setAvailableRoutes,
       },
     }),
