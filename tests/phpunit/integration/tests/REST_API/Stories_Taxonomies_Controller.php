@@ -135,9 +135,9 @@ class Stories_Taxonomies_Controller extends DependencyInjectedRestTestCase {
 	/**
 	 * @return array
 	 */
-	public function data_show_ui(){
+	public function data_show_ui(): array {
 		return [
-			'true' => [ true ],
+			'true'  => [ true ],
 			'false' => [ false ],
 		];
 	}
