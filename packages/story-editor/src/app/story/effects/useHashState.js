@@ -19,9 +19,7 @@
 import { useEffect, useState } from '@googleforcreators/react';
 
 export function hashToParams(hash) {
-  return new URLSearchParams(
-    hash && hash.startsWith('#') ? hash.substr(1) : hash
-  );
+  return new URLSearchParams(hash?.startsWith('#') ? hash.substr(1) : hash);
 }
 
 /**
