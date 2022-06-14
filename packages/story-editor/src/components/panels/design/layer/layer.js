@@ -341,7 +341,7 @@ function Layer({ element }) {
     duplicateElementsById: actions.duplicateElementsById,
     deleteElementById: actions.deleteElementById,
     updateElementById: actions.updateElementById,
-    groups: state.currentPage.groups,
+    groups: state.currentPage?.groups || {},
     currentPageBackgroundColor:
       !isDefaultBackground || state.currentPage?.backgroundColor,
   }));
