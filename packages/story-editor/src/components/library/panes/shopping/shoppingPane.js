@@ -133,7 +133,6 @@ function ShoppingPane(props) {
         search_term: value,
         search_order: sortOrder,
         search_orderby: sortBy,
-        search_page: _page,
         search_provider: shoppingProvider,
       });
     },
@@ -254,9 +253,9 @@ function ShoppingPane(props) {
     if (canLoadMore) {
       const newPage = page + 1;
       setPage(newPage);
-      debouncedProductsQuery(searchTerm, newPage, orderby, order);
+      searchProducts(searchTerm, newPage, orderby, order);
     }
-  }, [canLoadMore, debouncedProductsQuery, order, orderby, page, searchTerm]);
+  }, [canLoadMore, searchProducts, order, orderby, page, searchTerm]);
 
   const allDataLoadedMessage =
     page > 1 ? __('No more products', 'web-stories') : '';
