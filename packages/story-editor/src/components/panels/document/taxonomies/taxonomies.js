@@ -48,15 +48,12 @@ function TaxonomiesPanel({ nameOverride, ...props }) {
     return null;
   }
 
-  const availableTaxonomies = taxonomies.filter((taxonomy) => {
-    const isVisible = taxonomy?.visibility?.show_ui;
-    const canAssignTerms = Boolean(
+  const availableTaxonomies = taxonomies.filter((taxonomy) =>
+    Boolean(
       capabilities[`assign-${taxonomy?.restBase}`] ||
         capabilities[`assign-${taxonomy?.slug}`]
-    );
-
-    return isVisible && canAssignTerms;
-  });
+    )
+  );
 
   if (availableTaxonomies.length === 0) {
     return null;

@@ -131,7 +131,7 @@ describe('Shopping integration', () => {
       );
       await fixture.events.mouse.clickOn(sortDropdown, 1, 1);
 
-      const option = fixture.screen.getByRole('option', {
+      const option = fixture.screen.getByRole('menuitem', {
         name: /^Alphabetical: Z-A/,
       });
 
