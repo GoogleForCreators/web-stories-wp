@@ -717,7 +717,7 @@ class APIProviderFixture {
             id: 1,
             trackingOptin: false,
             onboarding: {},
-            mediaOptimization: true,
+            mediaOptimization: false,
           }),
         []
       );
@@ -728,7 +728,7 @@ class APIProviderFixture {
             id: 1,
             trackingOptin: false,
             onboarding: {},
-            mediaOptimization: true,
+            mediaOptimization: false,
           }),
         []
       );

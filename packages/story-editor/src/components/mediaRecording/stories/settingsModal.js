@@ -42,7 +42,7 @@ export default {
       {
         kind: 'audioinput',
         deviceId: 'audio-a',
-        label: 'Video Device A',
+        label: 'Audio Device A',
       },
       {
         kind: 'audioinput',

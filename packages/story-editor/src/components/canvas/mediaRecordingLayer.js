@@ -131,7 +131,11 @@ function MediaRecordingLayer() {
     }
 
     const blob = await getImageFromVideo(streamRef.current);
-    setMediaBlobUrl(createBlob(blob));
+    try {
+      setMediaBlobUrl(createBlob(blob));
+    } catch (e) {
+      // Do nothing.
+    }
 
     const imageFile = blobToFile(
       blob,
@@ -198,7 +202,7 @@ function MediaRecordingLayer() {
 
   return (
     <>
-      <LayerWithGrayout>
+      <LayerWithGrayout aria-label={__('Media Recording layer', 'web-stories')}>
         <PageTitleArea>
           <DurationIndicator />
         </PageTitleArea>

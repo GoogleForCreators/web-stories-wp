@@ -114,7 +114,11 @@ function MediaRecordingProvider({ children }) {
   const [mediaBlobUrl, setMediaBlobUrl] = useState();
 
   const onStop = useCallback((blob) => {
-    setMediaBlobUrl(createBlob(blob));
+    try {
+      setMediaBlobUrl(createBlob(blob));
+    } catch (e) {
+      // Do nothing.
+    }
     const f = blobToFile(
       blob,
       `webcam-capture-${format(new Date(), 'Y-m-d-H-i')}.mp4`,

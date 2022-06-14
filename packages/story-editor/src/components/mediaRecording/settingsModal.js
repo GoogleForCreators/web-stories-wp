@@ -134,6 +134,7 @@ function SettingsModal() {
     <Dialog
       onClose={onClose}
       isOpen={isSettingsOpen}
+      contentLabel={__('Media Recording Options', 'web-stories')}
       title={__('Options', 'web-stories')}
       onPrimary={onSaveChanges}
       primaryText={__('Save', 'web-stories')}
