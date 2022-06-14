@@ -128,6 +128,7 @@ export { default as Scissors } from './scissors.svg';
 export { default as Settings } from './settings.svg';
 export { default as Shapes } from './shapes.svg';
 export { default as Shopping } from './shopping.svg';
+export { default as Sort } from './sort.svg';
 export { default as Sparkles } from './sparkles.svg';
 export { default as StopFilled } from './stop_filled.svg';
 export { default as StopOutline } from './stop_outline.svg';

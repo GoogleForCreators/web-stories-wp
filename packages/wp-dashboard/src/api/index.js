@@ -15,4 +15,5 @@
  */
 export * from './story';
 export * from './authors';
+export * from './taxonomies';
 export * from './shopping';

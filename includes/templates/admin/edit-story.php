@@ -84,6 +84,7 @@ $preload_paths = [
 	'/web-stories/v1/taxonomies/?' . build_query(
 		[
 			'context' => 'edit',
+			'show_ui' => 'true',
 			'type'    => $post_type_object->name,
 		]
 	),
