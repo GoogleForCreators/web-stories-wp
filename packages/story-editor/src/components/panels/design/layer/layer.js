@@ -422,6 +422,7 @@ function Layer({ element }) {
   const isRenameable = renamableLayer?.elementId === element.id;
   const group = groups[element.groupId];
 
+  // Done like this because of no-unused-vars-before-return
   return group?.isCollapsed ? null : (
     <LayerContainer>
       {isRenameable && isLayerNamingEnabled ? (
