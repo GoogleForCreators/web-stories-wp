@@ -37,7 +37,7 @@ import apiFetch from '@wordpress/api-fetch';
 export async function getProducts(config, search, page, orderby, order) {
   const response = await apiFetch({
     path: addQueryArgs(config.api.products, {
-      per_page: 100,
+      per_page: 50,
       page,
       search,
       orderby,
