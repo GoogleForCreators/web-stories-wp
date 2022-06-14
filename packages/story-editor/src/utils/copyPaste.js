@@ -76,6 +76,7 @@ export function processPastedElements(content, currentPage) {
         ...foundElementsAndAnimations.elements,
         ...processedPayload.elements,
       ],
+      groups: payload.groups,
     };
     return foundElementsAndAnimations;
   }
@@ -88,9 +89,16 @@ export function processPastedElements(content, currentPage) {
  * @param {Object} page Page which all the elements belong to.
  * @param {Array} elements Array of story elements.
  * @param {Array} animations Array of story animations.
+ * @param {Array} groups Array of page groups used in the elements.
  * @param {Object} evt Copy/cut event object.
  */
-export function addElementsToClipboard(page, elements, animations, evt) {
+export function addElementsToClipboard(
+  page,
+  elements,
+  animations,
+  groups,
+  evt
+) {
   if (!elements.length || !evt) {
     return;
   }
@@ -109,6 +117,7 @@ export function addElementsToClipboard(page, elements, animations, evt) {
       id: undefined,
     })),
     animations,
+    groups,
   };
   const serializedPayload = JSON.stringify(payload).replace(
     /--/g,
