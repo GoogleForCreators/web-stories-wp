@@ -146,4 +146,52 @@ describe('addElementToSelection', () => {
     expect(selection).not.toContain('e1');
     expect(selection).toContain('e2');
   });
+
+  it('should replace selection if adding locked element to non-empty selection', () => {
+    const { restore, addElementToSelection } = setupReducer();
+
+    // Set an initial state.
+    restore({
+      pages: [
+        {
+          id: '111',
+          elements: [
+            { id: 'e1', isBackground: true },
+            { id: 'e2' },
+            { id: 'e3' },
+            { id: 'e4', isLocked: true },
+          ],
+        },
+      ],
+      current: '111',
+      selection: ['e2', 'e3'],
+    });
+
+    const replacedSelection = addElementToSelection({ elementId: 'e4' });
+    expect(replacedSelection.selection).toStrictEqual(['e4']);
+  });
+
+  it('should remove locked element from selection if adding a new one', () => {
+    const { restore, addElementToSelection } = setupReducer();
+
+    // Set an initial state with bg element selected
+    restore({
+      pages: [
+        {
+          id: '111',
+          elements: [
+            { id: 'e1', isBackground: true },
+            { id: 'e2', isLocked: true },
+            { id: 'e3' },
+          ],
+        },
+      ],
+      current: '111',
+      selection: ['e2'],
+    });
+
+    // Add a new element to selection - should expunge locked element from selection
+    const { selection } = addElementToSelection({ elementId: 'e3' });
+    expect(selection).toStrictEqual(['e3']);
+  });
 });

@@ -18,19 +18,58 @@
  * External dependencies
  */
 import { ContextMenuComponents } from '@googleforcreators/design-system';
+import { useFeature } from 'flagged';
+
 /**
  * Internal dependencies
  */
 import { RIGHT_CLICK_MENU_LABELS } from '../constants';
 import { useElementActions } from '../hooks';
+import useShapeMaskElements from '../../../utils/useShapeMaskElements';
+import { useStory } from '../..';
 
 function MultipleElementsMenu() {
-  const { handleDuplicateSelectedElements } = useElementActions();
+  const {
+    handleDuplicateSelectedElements,
+    handleGroupSelectedElements,
+    handleUngroupSelectedElements,
+  } = useElementActions();
+  const { canMergeIntoMask, mergeIntoMask } = useShapeMaskElements();
+  const isLayerGroupingEnabled = useFeature('layerGrouping');
+  const { selectedElements } = useStory(({ state }) => ({
+    selectedElements: state.selectedElements,
+  }));
+  const isGroupSelected = selectedElements.some((el) => el.groupId);
+  const isOnlyGroupSelected = selectedElements.every(
+    (el) => el.groupId && el.groupId === selectedElements[0].groupId
+  );
 
   return (
-    <ContextMenuComponents.MenuButton onClick={handleDuplicateSelectedElements}>
-      {RIGHT_CLICK_MENU_LABELS.DUPLICATE_ELEMENTS(2)}
-    </ContextMenuComponents.MenuButton>
+    <>
+      <ContextMenuComponents.MenuButton
+        onClick={handleDuplicateSelectedElements}
+      >
+        {RIGHT_CLICK_MENU_LABELS.DUPLICATE_ELEMENTS(2)}
+      </ContextMenuComponents.MenuButton>
+      {/* only show if 1 shape and 1 media element is selected */}
+      {canMergeIntoMask && (
+        <ContextMenuComponents.MenuButton onClick={mergeIntoMask}>
+          {RIGHT_CLICK_MENU_LABELS.USE_SHAPE_AS_MASK}
+        </ContextMenuComponents.MenuButton>
+      )}
+      {isLayerGroupingEnabled && !isOnlyGroupSelected && (
+        <ContextMenuComponents.MenuButton onClick={handleGroupSelectedElements}>
+          {RIGHT_CLICK_MENU_LABELS.GROUP_LAYERS}
+        </ContextMenuComponents.MenuButton>
+      )}
+      {isLayerGroupingEnabled && isGroupSelected && (
+        <ContextMenuComponents.MenuButton
+          onClick={handleUngroupSelectedElements}
+        >
+          {RIGHT_CLICK_MENU_LABELS.UNGROUP_LAYERS}
+        </ContextMenuComponents.MenuButton>
+      )}
+    </>
   );
 }
 

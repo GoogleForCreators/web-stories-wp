@@ -156,16 +156,6 @@ jobs:
             experimental: false
             snapshots: true
             shard: '4/4'
-          - browser: 'chrome'
-            wp: '6.0-RC1'
-            experimental: true
-            snapshots: false
-            shard: '1/2'
-          - browser: 'chrome'
-            wp: '6.0-RC1'
-            experimental: true
-            snapshots: false
-            shard: '2/2'
           - browser: 'firefox'
             wp: 'latest'
             experimental: true
@@ -209,7 +199,7 @@ jobs:
         if: ( matrix.snapshots ) && ( github.event.pull_request.draft == false )
 
       - name: Run E2E tests with percy
-        run: npm run test:e2e:percy
+        run: npm run test:e2e:percy -- --shard=$SHARD
         env:
           PERCY_TOKEN: ${{ secrets.PERCY_TOKEN_E2E }}
           PUPPETEER_PRODUCT: ${{ matrix.browser }}
@@ -219,7 +209,7 @@ jobs:
         if: ( matrix.snapshots ) && ( github.event.pull_request.draft == false )
 
       - name: Run E2E tests
-        run: npm run test:e2e
+        run: npm run test:e2e -- --shard=$SHARD
         env:
           PUPPETEER_PRODUCT: ${{ matrix.browser }}
           WP_VERSION: ${{ matrix.wp }}

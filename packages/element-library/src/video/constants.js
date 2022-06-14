@@ -33,6 +33,8 @@ export {
   isMaskable,
   isMedia,
   hasEditMode,
+  hasDuplicateMenu,
+  hasEditModeIfLocked,
   hasDesignMenu,
   editModeGrayout,
 } from '../media/constants';

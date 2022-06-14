@@ -18,21 +18,10 @@
  */
 import { __ } from '@googleforcreators/i18n';
 import stickers from '@googleforcreators/stickers';
-import { StoryPropTypes } from '@googleforcreators/elements';
 
-/**
- * Internal dependencies
- */
-import { LayerText } from '../shared';
-
-function StickerLayerContent({ element }) {
+function getStickerLayerText(element) {
   const { sticker } = element;
-  const layerTitle =
-    stickers[sticker?.type]?.title || __('Sticker', 'web-stories');
-  return <LayerText>{layerTitle}</LayerText>;
+  return stickers[sticker?.type]?.title || __('Sticker', 'web-stories');
 }
-StickerLayerContent.propTypes = {
-  element: StoryPropTypes.element.isRequired,
-};
 
-export default StickerLayerContent;
+export default getStickerLayerText;

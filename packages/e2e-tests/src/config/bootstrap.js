@@ -157,6 +157,9 @@ const ALLOWED_ERROR_MESSAGES_CHROME = [
   // non - unique IDs.
   // See: https://core.trac.wordpress.org/ticket/23165
   'elements with non-unique id #_wpnonce',
+
+  // See https://www.chromestatus.com/feature/508239670987980
+  "Blocked attempt to show a 'beforeunload' confirmation panel for a frame that never had a user gesture since its load",
 ];
 
 /**

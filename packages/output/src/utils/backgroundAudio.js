@@ -30,6 +30,9 @@ function BackgroundAudio({ backgroundAudio, id }) {
     id: `page-${id}-background-audio`,
     // Actual <amp-story-captions> output happens in OutputPage.
     'captions-id': tracks?.length > 0 ? `el-${id}-captions` : undefined,
+    // See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/track#attr-src
+    // and https://github.com/GoogleForCreators/web-stories-wp/issues/11479
+    crossorigin: tracks?.length > 0 ? 'anonymous' : undefined,
   };
 
   const sourceProps = {
@@ -41,7 +44,13 @@ function BackgroundAudio({ backgroundAudio, id }) {
     <amp-story-grid-layer template="fill">
       <amp-video
         autoPlay="autoplay"
-        layout="nodisplay"
+        // Not using "nodisplay" here, because it might cause the audio to
+        // not actually load at all.
+        // The good thing is that even with a layout, there's nothing visible
+        // on the screen because it's an audio file and not a video.
+        layout="fixed"
+        width="1"
+        height="1"
         poster=""
         {...videoProps}
       >

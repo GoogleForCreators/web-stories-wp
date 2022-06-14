@@ -266,7 +266,7 @@ describe('Background Audio', () => {
             }),
           ]);
 
-          await expect(page).toMatchElement('input[value="test.vtt"]');
+          await expect(page).toMatch('test.vtt');
         });
       });
     });

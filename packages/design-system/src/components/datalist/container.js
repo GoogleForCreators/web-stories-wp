@@ -79,6 +79,7 @@ const OptionsContainer = forwardRef(function OptionsContainer(
     hasDropDownBorder = false,
     containerStyleOverrides,
     title,
+    placeholder,
   },
   inputRef
 ) {
@@ -132,6 +133,7 @@ const OptionsContainer = forwardRef(function OptionsContainer(
           isExpanded={isExpanded}
           focusFontListFirstOption={() => setTrigger((v) => v + 1)}
           aria-owns={listId}
+          placeholder={placeholder}
         />
       )}
       {renderContents({
@@ -154,6 +156,7 @@ OptionsContainer.propTypes = {
   isInline: PropTypes.bool,
   hasDropDownBorder: PropTypes.bool,
   title: PropTypes.string,
+  placeholder: PropTypes.string,
 };
 
 export default OptionsContainer;

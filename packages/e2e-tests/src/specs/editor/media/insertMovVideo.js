@@ -18,7 +18,6 @@
  * External dependencies
  */
 import {
-  clickButton,
   createNewStory,
   deleteMedia,
   skipSuiteOnFirefox,
@@ -97,7 +96,7 @@ describe('Handling .mov files', () => {
       const fileName = await uploadFile('small-video.mov', false);
       uploadedFiles.push(fileName);
 
-      await clickButton(
+      await expect(page).toClick(
         '.attachments-browser .attachments .attachment:first-of-type'
       );
 

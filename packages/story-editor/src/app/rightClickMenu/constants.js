@@ -59,7 +59,11 @@ export const RIGHT_CLICK_MENU_LABELS = {
   DUPLICATE_PAGE: __('Duplicate Page', 'web-stories'),
   DUPLICATE_ELEMENTS: (numElements = 1) =>
     _n('Duplicate Element', 'Duplicate Elements', numElements, 'web-stories'),
+  GROUP_LAYERS: __('Group Layers', 'web-stories'),
+  UNGROUP_LAYERS: __('Ungroup Layers', 'web-stories'),
+  UNGROUP_LAYER: __('Remove from Group', 'web-stories'),
   LOCK_UNLOCK: __('Lock/Unlock', 'web-stories'),
+  RENAME_LAYER: __('Rename Layer', 'web-stories'),
   PASTE_IMAGE_STYLES: __('Paste Image Styles', 'web-stories'),
   PASTE_SHAPE_STYLES: __('Paste Shape Styles', 'web-stories'),
   PASTE_VIDEO_STYLES: __('Paste Video Styles', 'web-stories'),
@@ -79,6 +83,8 @@ export const RIGHT_CLICK_MENU_LABELS = {
   SET_AS_PAGE_BACKGROUND: __('Set as Page Background', 'web-stories'),
   TRIM_VIDEO: __('Trim Video', 'web-stories'),
   UPLOAD_IMAGE_OR_VIDEO: __('Upload Image or Video', 'web-stories'),
+  USE_SHAPE_AS_MASK: __('Use Shape as a Mask', 'web-stories'),
+  REMOVE_MASK: __('Unmask', 'web-stories'),
 };
 
 const StyledKbd = styled(Text).attrs({

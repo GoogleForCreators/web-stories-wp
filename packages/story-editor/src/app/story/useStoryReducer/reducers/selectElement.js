@@ -30,8 +30,9 @@ function selectElement(state, { elementId }) {
   }
 
   const currentPage = state.pages.find(({ id }) => id === state.current);
+  const byId = (i) => currentPage.elements.find(({ id }) => id === i);
   const isBackgroundElement = currentPage.elements[0].id === elementId;
-  const element = currentPage.elements.find(({ id }) => id === elementId);
+  const element = byId(elementId);
   const isVideoPlaceholder = element?.resource?.isPlaceholder;
   const hasExistingSelection = state.selection.length > 0;
 
@@ -41,8 +42,12 @@ function selectElement(state, { elementId }) {
     return state;
   }
 
-  // If bg element was already the (only) selection, set selection to new element only
-  if (state.selection.includes(currentPage.elements[0].id)) {
+  // If background element or locked element was already the (only) selection,
+  // or the new element is locked, set selection to new element only
+  const isLockedElement = element?.isLocked;
+  const wasBackground = state.selection.includes(currentPage.elements[0].id);
+  const wasLockedElement = state.selection.some((id) => byId(id).isLocked);
+  if (wasBackground || isLockedElement || wasLockedElement) {
     return {
       ...state,
       selection: [elementId],

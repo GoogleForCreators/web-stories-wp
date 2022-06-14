@@ -34,6 +34,7 @@ import {
 import { AuthorPropTypes } from '../../../utils/useStoryView.js';
 import { StandardViewContentGutter, ViewStyleBar } from '../../../components';
 import { DROPDOWN_TYPES, VIEW_STYLE } from '../../../constants';
+import useFilters from '../myStories/filters/useFilters';
 
 const DisplayFormatContainer = styled.div`
   height: 76px;
@@ -82,7 +83,11 @@ export default function BodyViewOptions({
   showAuthorDropdown = false,
   author = defaultAuthor,
   queryAuthorsBySearch = noop,
+  filters = [],
 }) {
+  const { updateFilter } = useFilters(({ actions: { updateFilter } }) => ({
+    updateFilter,
+  }));
   return (
     <StandardViewContentGutter>
       <BodyViewOptionsHeader id="body-view-options-header" />
@@ -91,6 +96,33 @@ export default function BodyViewOptions({
           <TranslateWithMarkup>{resultsLabel}</TranslateWithMarkup>
         </Text>
         <ControlsContainer>
+          {layoutStyle === VIEW_STYLE.GRID && filters?.length
+            ? filters.map((filter) => (
+                <StorySortDropdownContainer key={filter.key}>
+                  <StyledDatalist
+                    hasSearch
+                    hasDropDownBorder
+                    searchResultsLabel={__('Search results', 'web-stories')}
+                    aria-label={filter.ariaLabel}
+                    onChange={({ id }) => {
+                      updateFilter(filter.key, {
+                        filterId: id,
+                      });
+                    }}
+                    getOptionsByQuery={async (search) => {
+                      await filter.query(filter, search);
+                    }}
+                    selectedId={filter.filterId}
+                    placeholder={filter.placeholder}
+                    primaryOptions={filter.primaryOptions}
+                    options={filter.queriedOptions}
+                    noMatchesFoundLabel={filter.noMatchesFoundLabel}
+                    searchPlaceholder={filter.searchPlaceholder}
+                    offsetOverride
+                  />
+                </StorySortDropdownContainer>
+              ))
+            : null}
           {layoutStyle === VIEW_STYLE.GRID && showAuthorDropdown && (
             <StorySortDropdownContainer>
               <StyledDatalist
@@ -101,9 +133,12 @@ export default function BodyViewOptions({
                 onChange={author.toggleFilterId}
                 getOptionsByQuery={queryAuthorsBySearch}
                 selectedId={author.filterId}
-                placeholder={__('Author', 'web-stories')}
+                placeholder={__('All Authors', 'web-stories')}
                 primaryOptions={author.queriedAuthors}
                 options={author.queriedAuthors}
+                noMatchesFoundLabel={__('No authors found', 'web-stories')}
+                searchPlaceholder={__('Search authors', 'web-stories')}
+                offsetOverride
               />
             </StorySortDropdownContainer>
           )}
@@ -150,4 +185,5 @@ BodyViewOptions.propTypes = {
   showAuthorDropdown: PropTypes.bool,
   author: AuthorPropTypes,
   queryAuthorsBySearch: PropTypes.func,
+  filters: PropTypes.array,
 };

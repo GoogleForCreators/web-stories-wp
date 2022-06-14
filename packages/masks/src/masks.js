@@ -45,6 +45,11 @@ export function getMaskByType(type) {
   return MASKS.find((mask) => mask.type === type) || DEFAULT_MASK;
 }
 
+export function generateMaskId(element, postfix) {
+  const maskDef = getMaskByType(element?.mask?.type);
+  return `mask-${maskDef.type}-${element.id}-${postfix}`;
+}
+
 function getDefaultElementMask(type) {
   if (!type) {
     return null;

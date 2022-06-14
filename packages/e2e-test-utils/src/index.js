@@ -31,7 +31,6 @@ export { default as publishStory } from './publishStory';
 export { default as addTextElement } from './addTextElement';
 export { default as insertStoryTitle } from './insertStoryTitle';
 export { default as setAnalyticsCode } from './setAnalyticsCode';
-export { default as clickButton } from './clickButton';
 export { default as uploadFile } from './uploadFile';
 export { default as uploadMedia } from './uploadMedia';
 export { default as uploadPublisherLogo } from './uploadPublisherLogo';
@@ -61,6 +60,7 @@ export * from './conditions';
 export { default as disableCheckbox } from './disableCheckbox';
 export { default as enableCheckbox } from './enableCheckbox';
 export { default as takeSnapshot } from './takeSnapshot';
+export { default as loadPostEditor } from './loadPostEditor.js';
 export { default as uploadPublisherLogoEditor } from './uploadPublisherLogoEditor';
 export { default as editStoryWithTitle } from './editStoryWithTitle';
 export {
