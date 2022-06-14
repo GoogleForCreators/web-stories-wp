@@ -99,6 +99,7 @@ function ShoppingPane(props) {
     async (value = '', _page = 1, sortBy, sortOrder) => {
       try {
         setIsLoading(true);
+        setPage(_page);
         const { products: _products, hasNextPage } = await getProducts(
           value,
           _page,
@@ -115,8 +116,8 @@ function ShoppingPane(props) {
         trackError('search_products', err?.message);
         showSnackbar({ message: err.message });
         setProducts([]);
-        setCanLoadMore(false);
         setPage(1);
+        setCanLoadMore(false);
       } finally {
         setIsLoading(false);
         setLoaded(true);
@@ -149,7 +150,6 @@ function ShoppingPane(props) {
       const value = evt.target.value;
       if (value !== searchTerm) {
         setSearchTerm(value);
-        setPage(1);
         setLoaded(false);
         debouncedProductsQuery(value, 1, orderby, order);
       }
@@ -180,7 +180,6 @@ function ShoppingPane(props) {
   const onSortBy = (option) => {
     setOrderby(option.orderby);
     setOrder(option.order);
-    setPage(1);
     setLoaded(false);
     debouncedProductsQuery(searchTerm, 1, option.orderby, option.order);
   };
@@ -244,7 +243,6 @@ function ShoppingPane(props) {
 
   const handleClearInput = useCallback(() => {
     setSearchTerm('');
-    setPage(1);
     setLoaded(false);
     debouncedProductsQuery('', 1, orderby, order);
   }, [debouncedProductsQuery, order, orderby]);
@@ -252,13 +250,14 @@ function ShoppingPane(props) {
   const onLoadMore = useCallback(() => {
     if (canLoadMore) {
       const newPage = page + 1;
-      setPage(newPage);
       searchProducts(searchTerm, newPage, orderby, order);
     }
   }, [canLoadMore, searchProducts, order, orderby, page, searchTerm]);
 
   const allDataLoadedMessage =
     page > 1 ? __('No more products', 'web-stories') : '';
+
+  const loadingSpinnerProps = { animationSize: 25, circleSize: 3 };
 
   return (
     <Pane id={paneId} {...props}>
@@ -293,7 +292,7 @@ function ShoppingPane(props) {
         )}
         {!loaded && isLoading && (
           <LoadingContainer>
-            <LoadingSpinner animationSize={50} circleSize={6} />
+            <LoadingSpinner {...loadingSpinnerProps} />
           </LoadingContainer>
         )}
         {loaded && products?.length > 0 && (
@@ -313,6 +312,7 @@ function ShoppingPane(props) {
               onLoadMore={onLoadMore}
               canLoadMore={canLoadMore}
               isLoading={isLoading}
+              loadingSpinnerProps={loadingSpinnerProps}
               loadingAriaMessage={__('Loading more products', 'web-stories')}
             />
           </>

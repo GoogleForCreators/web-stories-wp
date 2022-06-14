@@ -95,6 +95,7 @@ const InfiniteScroller = ({
   canLoadMore,
   isLoading,
   loadingAriaMessage,
+  loadingSpinnerProps = { animationSize: 50, circleSize: 6 },
 }) => {
   const loadingRef = useRef(null);
   const onLoadMoreRef = useRef(onLoadMore);
@@ -179,7 +180,7 @@ const InfiniteScroller = ({
 
     return (
       <LoadingContainer>
-        <LoadingSpinner animationSize={50} circleSize={6} />
+        <LoadingSpinner {...loadingSpinnerProps} />
       </LoadingContainer>
     );
   }, [allDataLoadedMessage, canLoadMore, loadState]);
@@ -201,5 +202,9 @@ InfiniteScroller.propTypes = {
   allDataLoadedAriaMessage: PropTypes.string,
   canLoadMore: PropTypes.bool,
   loadingAriaMessage: PropTypes.string,
+  loadingSpinnerProps: PropTypes.shape({
+    animationSize: PropTypes.number,
+    circleSize: PropTypes.number,
+  }),
 };
 export default InfiniteScroller;
