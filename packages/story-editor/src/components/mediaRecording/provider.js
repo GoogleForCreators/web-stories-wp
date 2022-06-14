@@ -61,6 +61,11 @@ function MediaRecordingProvider({ children }) {
   const [file, setFile] = useState(null);
 
   const updateMediaDevices = useCallback(async () => {
+    // navigator.mediaDevices is undefined in insecure browsing contexts.
+    if (!navigator.mediaDevices) {
+      return;
+    }
+
     try {
       const devices = await navigator.mediaDevices.enumerateDevices();
       setMediaDevices(
@@ -100,10 +105,14 @@ function MediaRecordingProvider({ children }) {
   }, [audioInput, mediaDevices, videoInput]);
 
   useEffect(() => {
-    navigator.mediaDevices.addEventListener('devicechange', updateMediaDevices);
+    // navigator.mediaDevices is undefined in insecure browsing contexts.
+    navigator.mediaDevices?.addEventListener(
+      'devicechange',
+      updateMediaDevices
+    );
 
     return () => {
-      navigator.mediaDevices.removeEventListener(
+      navigator.mediaDevices?.removeEventListener(
         'devicechange',
         updateMediaDevices
       );
