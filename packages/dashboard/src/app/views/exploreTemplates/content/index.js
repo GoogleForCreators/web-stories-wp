@@ -27,6 +27,7 @@ import {
   Headline,
   LoadingSpinner,
   THEME_CONSTANTS,
+  InfiniteScroller,
 } from '@googleforcreators/design-system';
 
 /**
@@ -34,7 +35,6 @@ import {
  */
 import { useConfig } from '../../../config';
 import {
-  InfiniteScroller,
   Layout,
   StandardViewContentGutter,
   LoadingContainer,
