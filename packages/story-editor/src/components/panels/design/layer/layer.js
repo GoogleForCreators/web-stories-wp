@@ -29,7 +29,7 @@ import {
   THEME_CONSTANTS,
   Input,
 } from '@googleforcreators/design-system';
-import { useRef, memo, useState } from '@googleforcreators/react';
+import { useRef, memo, useState, useEffect } from '@googleforcreators/react';
 import {
   getDefinitionForType,
   getLayerName,
@@ -351,6 +351,10 @@ function Layer({ element }) {
       setRenamableLayer: actions.setRenamableLayer,
     })
   );
+
+  useEffect(() => {
+    setNewLayerName(layerName);
+  }, [layerName]);
 
   const { hasShapeMask, removeShapeMask } = useShapeMask(element);
   const removeMaskTitle = __('Unmask', 'web-stories');
