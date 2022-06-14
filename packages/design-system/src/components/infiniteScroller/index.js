@@ -183,7 +183,7 @@ const InfiniteScroller = ({
         <LoadingSpinner {...loadingSpinnerProps} />
       </LoadingContainer>
     );
-  }, [allDataLoadedMessage, canLoadMore, loadState]);
+  }, [allDataLoadedMessage, canLoadMore, loadState, loadingSpinnerProps]);
 
   return (
     <ScrollMessage data-testid="load-more-on-scroll" ref={loadingRef}>
