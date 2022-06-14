@@ -42,14 +42,12 @@ export async function getProducts(config, search, page, orderby, order) {
       search,
       orderby,
       order,
-      _envelope: true,
+      _web_stories_envelope: true,
     }),
   });
 
-  const data = {
+  return {
     products: response?.body,
     hasNextPage: response?.headers['X-WP-HasNextPage'] === 'true',
   };
-
-  return data;
 }
