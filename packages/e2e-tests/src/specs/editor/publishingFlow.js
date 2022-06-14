@@ -123,9 +123,7 @@ describe('Publishing Flow', () => {
     expect(postPermalink).not.toBeNull();
     expect(postPermalink).toStrictEqual(expect.any(String));
 
-    await page.goto(postPermalink, {
-      waitUntil: 'networkidle2',
-    });
+    await page.goto(postPermalink);
 
     await expect(page).toMatchElement('amp-story-player');
     await expect(page).toMatch('Publishing Flow Test');
@@ -164,8 +162,10 @@ describe('Publishing Flow', () => {
       await publishStory(false);
 
       // Create new post and embed story.
-      await expect(page).toClick('a', { text: 'Add to new post' });
-      await page.waitForNavigation();
+      await Promise.all([
+        expect(page).toClick('a', { text: 'Add to new post' }),
+        page.waitForNavigation(),
+      ]);
 
       await expect(page).toMatch('Publishing Flow Test');
 
@@ -190,9 +190,7 @@ describe('Publishing Flow', () => {
       expect(postPermalink).not.toBeNull();
       expect(postPermalink).toStrictEqual(expect.any(String));
 
-      await page.goto(postPermalink, {
-        waitUntil: 'networkidle2',
-      });
+      await page.goto(postPermalink);
 
       await page.waitForSelector('amp-story-player');
       await expect(page).toMatchElement('amp-story-player');
