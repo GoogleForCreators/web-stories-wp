@@ -157,7 +157,7 @@ const GroupIconsWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  min-width:36px;
+  min-width: 36px;
 `;
 
 const LayerDescription = styled.div`

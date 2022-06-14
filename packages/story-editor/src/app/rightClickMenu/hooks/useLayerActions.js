@@ -63,8 +63,14 @@ const useLayerActions = () => {
       return;
     }
 
+    const reversedElements = [...elements].reverse();
+    const backwardPositionSkipGroups = reversedElements.findIndex(
+      (el, position) =>
+        (position < elementPosition && !el.groupId) ||
+        position === elements.length - 1
+    );
     const newPosition =
-      elementPosition === 1 ? elementPosition : elementPosition - 1;
+      elementPosition === 1 ? elementPosition : backwardPositionSkipGroups;
 
     arrangeElement({
       elementId: selectedElement.id,
@@ -81,6 +87,7 @@ const useLayerActions = () => {
     canElementMoveBackwards,
     elementPosition,
     selectedElement,
+    elements,
   ]);
 
   /**
@@ -110,10 +117,15 @@ const useLayerActions = () => {
       return;
     }
 
+    const forwardPositionSkipGroups = elements.findIndex(
+      (el, position) =>
+        (position > elementPosition && !el.groupId) ||
+        position === elements.length - 1
+    );
     const newPosition =
       elementPosition >= elements.length - 1
         ? elementPosition
-        : elementPosition + 1;
+        : forwardPositionSkipGroups;
 
     arrangeElement({
       elementId: selectedElement.id,

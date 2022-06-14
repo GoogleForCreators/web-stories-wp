@@ -32,6 +32,7 @@ import {
 } from '../../../reorderable';
 import { useRightClickMenu, useStory, useCanvas } from '../../../../app';
 import useFocusCanvas from '../../../canvas/useFocusCanvas';
+import updateProperties from '../../../style/updateProperties';
 import { LAYER_HEIGHT } from './constants';
 import Layer from './layer';
 import ReorderableGroup from './reorderableGroup';
@@ -85,12 +86,12 @@ ReorderableLayer.propTypes = {
 };
 
 function LayerPanel({ layers }) {
-  const { arrangeElement, setSelectedElementsById } = useStory(
-    ({ actions }) => ({
+  const { arrangeElement, setSelectedElementsById, updateElementsById } =
+    useStory(({ actions }) => ({
       arrangeElement: actions.arrangeElement,
       setSelectedElementsById: actions.setSelectedElementsById,
-    })
-  );
+      updateElementsById: actions.updateElementsById,
+    }));
 
   const onOpenMenu = useRightClickMenu((value) => value.onOpenMenu);
 
@@ -131,15 +132,35 @@ function LayerPanel({ layers }) {
     layersWithGroups.push({ layer });
   }
 
+  const handlePositionChange = (oldPos, newPos) => {
+    const element = layers.find((layer) => layer.position === oldPos);
+    const targetElement = layers.find((layer) => layer.position === newPos);
+    const elementId = element.id;
+    arrangeElement({
+      elementId,
+      position: newPos,
+    });
+    const groupId = targetElement.groupId;
+    if (groupId !== element.groupId) {
+      const elementIds = [elementId];
+      updateElementsById({
+        elementIds,
+        properties: (currentProperties) =>
+          updateProperties(
+            currentProperties,
+            {
+              groupId,
+            },
+            /* commitValues */ true
+          ),
+      });
+    }
+  };
+
   return (
     <LayerList
       onContextMenu={onOpenMenu}
-      onPositionChange={(oldPos, newPos) =>
-        arrangeElement({
-          elementId: layers.find((layer) => layer.position === oldPos).id,
-          position: newPos,
-        })
-      }
+      onPositionChange={handlePositionChange}
       mode={'vertical'}
       getItemSize={() => LAYER_HEIGHT}
     >
