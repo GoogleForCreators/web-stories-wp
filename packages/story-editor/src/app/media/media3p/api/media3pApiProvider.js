@@ -143,8 +143,8 @@ function Media3pApiProvider({ children }) {
    * usage.
    * @return {Promise<void>}
    */
-  async function registerUsage({ registerUsageUrl }) {
-    await apiFetcher.registerUsage({ registerUsageUrl });
+  function registerUsage({ registerUsageUrl }) {
+    return apiFetcher.registerUsage({ registerUsageUrl });
   }
 
   /**
