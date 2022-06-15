@@ -54,6 +54,10 @@ export const filterContext = createContext({
  */
 
 export default function FiltersProvider({ children }) {
+  // each filter type will have its own logic for initilizing and querying
+  const { initializeTaxonomyFilters } = useTaxonomyFilters();
+  const { initializeAuthorFilter } = useAuthorFilter();
+
   const [state, dispatch] = useReducer(reducer, {
     filtersLoading: true,
     filters: [],
@@ -79,10 +83,6 @@ export default function FiltersProvider({ children }) {
   const registerFilters = useCallback((value) => {
     dispatch({ type: types.REGISTER_FILTERS, payload: { value } });
   }, []);
-
-  // each filter type will have its own logic for initilizing and querying
-  const { initializeTaxonomyFilters } = useTaxonomyFilters();
-  const { initializeAuthorFilter } = useAuthorFilter();
 
   /**
    * Sets up the shape of the filters data

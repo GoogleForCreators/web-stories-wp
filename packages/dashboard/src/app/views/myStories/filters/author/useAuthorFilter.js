@@ -30,6 +30,13 @@ import { __ } from '@googleforcreators/i18n';
  */
 import useApi from '../../../../api/useApi';
 
+/**
+ * Hook used for Author filter logic.
+ * Initializes the author filters data.
+ *
+ * @return {Object} {authors, initializeAuthorFilter} authors and a function to shape the author filter data.
+ */
+
 function useAuthorFilter() {
   const [authors, setAuthors] = useState([]);
 
@@ -63,7 +70,7 @@ function useAuthorFilter() {
   );
 
   /**
-   * Sets author data
+   * Sets author data.
    *
    * @see queryAuthors
    * @return {void}
@@ -74,9 +81,9 @@ function useAuthorFilter() {
   }, [queryAuthors]);
 
   /**
-   * Sets up the shape of the author filter data
+   * Sets up the shape of the author filter data.
    *
-   * @return {Array} taxonomies filter data
+   * @return {Object} author filter data
    */
   const initializeAuthorFilter = useCallback(() => {
     return {
