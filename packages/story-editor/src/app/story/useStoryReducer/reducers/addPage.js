@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { produce } from 'immer';
+
+/**
  * Internal dependencies
  */
 import { isInsideRange } from './utils';
@@ -36,31 +41,22 @@ import { isInsideRange } from './utils';
  * @param {Object} payload.position Position at which to insert the new page. If null, insert after current
  * @return {Object} New state
  */
-function addPage(state, { page, position }) {
+const addPage = produce((draft, { page, position }) => {
+  // Ensure new page has at least one element
+  if (!page.elements?.length) {
+    return;
+  }
+
   const isWithinBounds =
-    position !== null && isInsideRange(position, 0, state.pages.length - 1);
-  const currentPageIndex = state.pages.findIndex(
-    ({ id }) => id === state.current
+    position !== null && isInsideRange(position, 0, draft.pages.length - 1);
+  const currentPageIndex = draft.pages.findIndex(
+    ({ id }) => id === draft.current
   );
   const insertionPoint = isWithinBounds ? position : currentPageIndex + 1;
 
-  const { id } = page;
-
-  // Ensure new page has at least one element
-  if (!page.elements?.length) {
-    return state;
-  }
-
-  return {
-    ...state,
-    pages: [
-      ...state.pages.slice(0, insertionPoint),
-      page,
-      ...state.pages.slice(insertionPoint),
-    ],
-    current: id,
-    selection: [page.elements[0].id],
-  };
-}
+  draft.pages.splice(insertionPoint, 0, page);
+  draft.current = page.id;
+  draft.selection = [page.elements[0].id];
+});
 
 export default addPage;

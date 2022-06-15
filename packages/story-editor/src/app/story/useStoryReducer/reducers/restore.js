@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { produce } from 'immer';
+
+/**
  * Restore internal state completely from given state.
  *
  * Some validation is performed:
@@ -33,28 +38,31 @@
  * @param {Object} payload.capabilities Capabilities object.
  * @return {Object} New state
  */
-function restore(state, { pages, current, selection, story, capabilities }) {
-  if (!Array.isArray(pages) || pages.length === 0) {
-    return state;
+const restore = produce(
+  (draft, { pages, current, selection, story, capabilities }) => {
+    if (!Array.isArray(pages) || pages.length === 0) {
+      return undefined;
+    }
+
+    const newStory = typeof story === 'object' ? story : {};
+    const newCapabilities =
+      typeof capabilities === 'object' ? capabilities : {};
+    const oldCurrent = current ?? draft.current;
+    const newCurrent = pages.some(({ id }) => id === oldCurrent)
+      ? oldCurrent
+      : pages[0].id;
+    const newSelection = Array.isArray(selection) ? selection : [];
+
+    return {
+      pages,
+      current: newCurrent,
+      selection: newSelection,
+      story: newStory,
+      animationState: draft.animationState,
+      capabilities: newCapabilities,
+      copiedElementState: {},
+    };
   }
-
-  const newStory = typeof story === 'object' ? story : {};
-  const newCapabilities = typeof capabilities === 'object' ? capabilities : {};
-  const oldCurrent = current ?? state.current;
-  const newCurrent = pages.some(({ id }) => id === oldCurrent)
-    ? oldCurrent
-    : pages[0].id;
-  const newSelection = Array.isArray(selection) ? selection : [];
-
-  return {
-    pages,
-    current: newCurrent,
-    selection: newSelection,
-    story: newStory,
-    animationState: state.animationState,
-    capabilities: newCapabilities,
-    copiedElementState: {},
-  };
-}
+);
 
 export default restore;

@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { ELEMENT_TYPES } from '@googleforcreators/elements';
+import { produce } from 'immer';
 /**
  * Internal dependencies
  */
@@ -41,20 +42,19 @@ import { exclusion } from './utils';
  * @param {Array.<Object>} payload.elements Elements to insert on the given page.
  * @return {Object} New state
  */
-function addElements(state, { elements }) {
+const addElements = produce((draft, { elements }) => {
   if (!Array.isArray(elements)) {
-    return state;
+    return;
   }
 
-  const pageIndex = state.pages.findIndex(({ id }) => id === state.current);
-  const oldPage = state.pages[pageIndex];
-  const newElements = exclusion(oldPage.elements, elements);
+  const page = draft.pages.find(({ id }) => id === draft.current);
+  const newElements = exclusion(page.elements, elements);
 
   if (newElements.length === 0) {
-    return state;
+    return;
   }
 
-  const currentPageProductIds = oldPage?.elements
+  const currentPageProductIds = page.elements
     ?.filter(({ type }) => type === ELEMENT_TYPES.PRODUCT)
     .map(({ product }) => product?.productId);
 
@@ -70,24 +70,8 @@ function addElements(state, { elements }) {
     ({ id }) => newElementDuplicateID && !newElementDuplicateID.includes(id)
   );
 
-  const newPage = {
-    ...oldPage,
-    elements: [...oldPage.elements, ...newElementNoDuplicateProducts],
-  };
-
-  const newPages = [
-    ...state.pages.slice(0, pageIndex),
-    newPage,
-    ...state.pages.slice(pageIndex + 1),
-  ];
-
-  const newSelection = newElements.map(({ id }) => id);
-
-  return {
-    ...state,
-    pages: newPages,
-    selection: newSelection,
-  };
-}
+  page.elements = page.elements.concat(newElementNoDuplicateProducts);
+  draft.selection = newElements.map(({ id }) => id);
+});
 
 export default addElements;

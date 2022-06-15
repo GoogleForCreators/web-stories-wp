@@ -15,9 +15,13 @@
  */
 
 /**
+ * External dependencies
+ */
+import { produce } from 'immer';
+
+/**
  * Internal dependencies
  */
-import objectWithout from '../../../../utils/objectWithout';
 import { moveArrayElement, removeAnimationsWithElementIds } from './utils';
 
 /**
@@ -37,36 +41,23 @@ import { moveArrayElement, removeAnimationsWithElementIds } from './utils';
  * @param {number} payload.elementId Element id to set as background on the current page.
  * @return {Object} New state
  */
-function setBackgroundElement(state, { elementId }) {
-  const pageIndex = state.pages.findIndex(({ id }) => id === state.current);
-
-  const page = state.pages[pageIndex];
+const setBackgroundElement = produce((draft, { elementId }) => {
+  const page = draft.pages.find(({ id }) => id === draft.current);
   const currentBackgroundElement = page.elements[0];
-
-  let newPage;
-  let newSelection = state.selection;
 
   // If new id is null, clear background attribute and proceed
   if (elementId === null) {
     if (currentBackgroundElement.isDefaultBackground) {
       // Nothing to do here, we can't unset default background
-      return state;
+      return;
     }
 
-    const defaultBackgroundElement = page.defaultBackgroundElement;
-
     // Unset isBackground for the element, too.
-    const elementsWithoutBackground = page.elements.map((element) => {
-      if (element.isBackground) {
-        return objectWithout(element, ['isBackground']);
-      }
-      return element;
+    page.elements.forEach((element) => {
+      delete element.isBackground;
     });
-    newPage = {
-      ...page,
-      elements: [defaultBackgroundElement, ...elementsWithoutBackground],
-    };
-    newSelection = [defaultBackgroundElement.id];
+    page.elements.unshift(page.defaultBackgroundElement);
+    draft.selection = [page.defaultBackgroundElement.id];
   } else {
     // Does the element even exist or is it already background
     const elementPosition = page.elements.findIndex(
@@ -75,54 +66,43 @@ function setBackgroundElement(state, { elementId }) {
     const isBackground = elementPosition === 0;
     const exists = elementPosition !== -1;
     if (!exists || isBackground) {
-      return state;
+      return;
     }
 
     // If current bg is default, save it as such
     const wasDefault = currentBackgroundElement.isDefaultBackground;
-    const defaultBackgroundElement = wasDefault
-      ? currentBackgroundElement
-      : page.defaultBackgroundElement;
+    if (wasDefault) {
+      page.defaultBackgroundElement = currentBackgroundElement;
+    }
 
     // Slice first element out and update position
-    const pageElements = page.elements.slice(1);
+    page.elements.splice(0, 1);
     const currentPosition = elementPosition - 1;
 
     // Also remove old element from selection
-    if (state.selection.includes(currentBackgroundElement.id)) {
-      newSelection = state.selection.filter(
+    if (draft.selection.includes(currentBackgroundElement.id)) {
+      draft.selection = draft.selection.filter(
         (id) => id !== currentBackgroundElement.id
       );
     }
 
     // Reorder elements and set element opacity to 100% because backgrounds
     // cannot be transparent.
-    const newElements = moveArrayElement(pageElements, currentPosition, 0).map(
-      (element) => {
-        // Set isBackground for the element.
-        if (element.id === elementId) {
-          return {
-            ...element,
-            isBackground: true,
-            ...(Object.prototype.hasOwnProperty.call(element, 'opacity') && {
-              opacity: 100,
-            }),
-          };
+    page.elements = moveArrayElement(page.elements, currentPosition, 0);
+    page.elements.forEach((element) => {
+      // Set isBackground for the element.
+      if (element.id === elementId) {
+        element.isBackground = true;
+        if (Object.prototype.hasOwnProperty.call(element, 'opacity')) {
+          element.opacity = 100;
         }
-        return element;
       }
-    );
+    });
 
     //  remove new element from selection if there's more than one element there
-    if (state.selection.includes(elementId) && state.selection.length > 1) {
-      newSelection = state.selection.filter((id) => id !== elementId);
+    if (draft.selection.includes(elementId) && draft.selection.length > 1) {
+      draft.selection = draft.selection.filter((id) => id !== elementId);
     }
-
-    newPage = {
-      ...page,
-      defaultBackgroundElement,
-      elements: newElements,
-    };
   }
 
   // Remove any applied background animations
@@ -130,22 +110,10 @@ function setBackgroundElement(state, { elementId }) {
   const backgroundElementId = page.elements.find(
     (element) => element.isBackground
   );
-  const newAnimations = removeAnimationsWithElementIds(page.animations, [
+  page.animations = removeAnimationsWithElementIds(page.animations, [
     elementId,
     backgroundElementId.id,
   ]);
-
-  const newPages = [
-    ...state.pages.slice(0, pageIndex),
-    { ...newPage, animations: newAnimations || [] },
-    ...state.pages.slice(pageIndex + 1),
-  ];
-
-  return {
-    ...state,
-    pages: newPages,
-    selection: newSelection,
-  };
-}
+});
 
 export default setBackgroundElement;

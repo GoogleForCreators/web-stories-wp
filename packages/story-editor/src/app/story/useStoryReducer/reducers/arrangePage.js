@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { produce } from 'immer';
+
+/**
  * Internal dependencies
  */
 import { isInsideRange, moveArrayElement } from './utils';
@@ -37,29 +42,24 @@ import { isInsideRange, moveArrayElement } from './utils';
  * @param {number} payload.position Index of where page should be moved to.
  * @return {Object} New state
  */
-function arrangePage(state, { pageId, position }) {
+const arrangePage = produce((draft, { pageId, position }) => {
   // Abort if there's less than two elements (nothing to rearrange)
-  if (state.pages.length < 2) {
-    return state;
+  if (draft.pages.length < 2) {
+    return;
   }
 
-  const pageIndex = state.pages.findIndex(({ id }) => id === pageId);
+  const pageIndex = draft.pages.findIndex(({ id }) => id === pageId);
   const isTargetWithinBounds = isInsideRange(
     position,
     0,
-    state.pages.length - 1
+    draft.pages.length - 1
   );
   const isSimilar = pageIndex === position;
   if (pageIndex === -1 || !isTargetWithinBounds || isSimilar) {
-    return state;
+    return;
   }
 
-  const newPages = moveArrayElement(state.pages, pageIndex, position);
-
-  return {
-    ...state,
-    pages: newPages,
-  };
-}
+  draft.pages = moveArrayElement(draft.pages, pageIndex, position);
+});
 
 export default arrangePage;

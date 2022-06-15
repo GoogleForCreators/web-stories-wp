@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { produce } from 'immer';
+
+/**
  * Internal dependencies
  */
 import { exclusion } from './utils';
@@ -35,35 +40,19 @@ import { exclusion } from './utils';
  * @param {Array.<Object>} payload.animations Elements to insert on the given page.
  * @return {Object} New state
  */
-function addAnimations(state, { animations }) {
+const addAnimations = produce((draft, { animations }) => {
   if (!Array.isArray(animations)) {
-    return state;
+    return;
   }
 
-  const pageIndex = state.pages.findIndex(({ id }) => id === state.current);
-  const oldPage = state.pages[pageIndex];
-  const oldPageAnimations = oldPage.animations || [];
-  const newAnimations = exclusion(oldPageAnimations, animations);
+  const page = draft.pages.find(({ id }) => id === draft.current);
 
-  if (newAnimations.length === 0) {
-    return state;
+  if (!page.animations) {
+    page.animations = [];
   }
-
-  const newPage = {
-    ...oldPage,
-    animations: [...oldPageAnimations, ...newAnimations],
-  };
-
-  const newPages = [
-    ...state.pages.slice(0, pageIndex),
-    newPage,
-    ...state.pages.slice(pageIndex + 1),
-  ];
-
-  return {
-    ...state,
-    pages: newPages,
-  };
-}
+  page.animations = page.animations.concat(
+    exclusion(page.animations, animations)
+  );
+});
 
 export default addAnimations;

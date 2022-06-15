@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { produce } from 'immer';
+
+/**
  * Delete page by id or delete current page if no id given.
  *
  * If another page than current page is deleted, it will remain current page.
@@ -31,38 +36,27 @@
  * @param {number} payload.pageId Page id to delete. If null, delete current page
  * @return {Object} New state
  */
-function deletePage(state, { pageId }) {
-  if (state.pages.length <= 1) {
-    return state;
+const deletePage = produce((draft, { pageId }) => {
+  if (draft.pages.length <= 1) {
+    return;
   }
 
-  const idToDelete = pageId === null ? state.current : pageId;
+  const idToDelete = pageId === null ? draft.current : pageId;
 
-  const pageIndex = state.pages.findIndex(({ id }) => id === idToDelete);
-
+  const pageIndex = draft.pages.findIndex(({ id }) => id === idToDelete);
   if (pageIndex === -1) {
-    return state;
+    return;
   }
 
-  const newPages = [
-    ...state.pages.slice(0, pageIndex),
-    ...state.pages.slice(pageIndex + 1),
-  ];
+  draft.pages.splice(pageIndex, 1);
 
-  let newCurrent = state.current;
-
-  if (idToDelete === state.current) {
-    // Current page is at the same index unless it's off the end of the array
-    const newCurrentIndex = Math.min(newPages.length - 1, pageIndex);
-    newCurrent = newPages[newCurrentIndex].id;
+  if (idToDelete === draft.current) {
+    // New current page is at the same index unless it's off the end of the array
+    const newCurrentIndex = Math.min(draft.pages.length - 1, pageIndex);
+    draft.current = draft.pages[newCurrentIndex].id;
   }
 
-  return {
-    ...state,
-    pages: newPages,
-    current: newCurrent,
-    selection: [],
-  };
-}
+  draft.selection = [];
+});
 
 export default deletePage;

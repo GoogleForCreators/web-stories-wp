@@ -28,17 +28,44 @@ describe('deleteElementsByResourceId', () => {
       pages: [
         {
           id: '111',
+          defaultBackgroundElement: {
+            id: '1',
+            isDefaultBackground: true,
+            isBackground: true,
+          },
           elements: [
-            { id: '123', resource: { type: 'video', id: '10' } },
-            { id: '456', resource: { type: 'video', id: '10' } },
-            { id: '789', resource: { type: 'image', id: '11' } },
+            {
+              id: '123',
+              resource: { type: 'video', id: '10' },
+              isBackground: true,
+            },
+            {
+              id: '456',
+              resource: { type: 'video', id: '10' },
+            },
+            {
+              id: '789',
+              resource: { type: 'image', id: '11' },
+            },
           ],
         },
         {
           id: '222',
+          defaultBackgroundElement: {
+            id: '2',
+            isDefaultBackground: true,
+            isBackground: true,
+          },
           elements: [
-            { id: '123', resource: { type: 'video', id: '10' } },
-            { id: '456', resource: { type: 'image', id: '11' } },
+            {
+              id: '123',
+              resource: { type: 'video', id: '10' },
+              isBackground: true,
+            },
+            {
+              id: '456',
+              resource: { type: 'image', id: '11' },
+            },
           ],
         },
       ],
@@ -49,14 +76,26 @@ describe('deleteElementsByResourceId', () => {
       id: '10',
     });
 
-    expect(result.pages).toStrictEqual([
+    expect(result.pages[0].elements).toStrictEqual([
       {
-        id: '111',
-        elements: [{ id: '789', resource: { type: 'image', id: '11' } }],
+        id: '1',
+        isDefaultBackground: true,
+        isBackground: true,
       },
       {
-        id: '222',
-        elements: [{ id: '456', resource: { type: 'image', id: '11' } }],
+        id: '789',
+        resource: { type: 'image', id: '11' },
+      },
+    ]);
+    expect(result.pages[1].elements).toStrictEqual([
+      {
+        id: '2',
+        isDefaultBackground: true,
+        isBackground: true,
+      },
+      {
+        id: '456',
+        resource: { type: 'image', id: '11' },
       },
     ]);
   });

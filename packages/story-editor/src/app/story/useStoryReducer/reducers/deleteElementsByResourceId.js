@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { produce } from 'immer';
+
+/**
  * Delete elements by the given resource id.
  *
  * Contrary to deleteElements this works across all pages, not just the current one.
@@ -28,70 +33,50 @@
  * @param {string|null} payload.id id Delete all elements with this resource id
  * @return {Object} New state
  */
-function deleteElementsByResourceId(state, { id }) {
+const deleteElementsByResourceId = produce((draft, { id }) => {
   if (id === null) {
-    return state;
+    return;
   }
 
-  const hasElementWithResourceId = state.pages.some((page) =>
+  const hasElementWithResourceId = draft.pages.some((page) =>
     page.elements.some((element) => element.resource?.id === id)
   );
 
   if (!hasElementWithResourceId) {
-    return state;
+    return;
   }
 
   const idsToDelete = [];
 
-  const newPages = state.pages.map((page) => {
+  draft.pages.forEach((page) => {
     const { elements, animations } = page;
 
     const isDeletingBackground = elements[0].resource?.id === id;
-    const backgroundIsDefault = elements[0].isDefaultBackground;
 
-    let newElements = elements.map((element) => {
+    page.elements = elements.filter((element) => {
       const { id: elementId, resource } = element;
-      if (resource?.id !== id) {
-        return element;
+      if (resource?.id === id) {
+        idsToDelete.push(elementId);
+        return false;
       }
-
-      if (isDeletingBackground && backgroundIsDefault) {
-        return element;
-      }
-
-      idsToDelete.push(elementId);
-
-      return undefined;
+      return true;
     });
 
-    if (isDeletingBackground && !backgroundIsDefault) {
-      newElements = [page.defaultBackgroundElement, ...newElements];
+    if (isDeletingBackground) {
+      page.elements.unshift(page.defaultBackgroundElement);
     }
 
-    newElements = newElements.filter(Boolean);
-
     // Remove animations associated with elements
-    const oldAnimations = animations || [];
-    const newAnimations = oldAnimations.filter((anim) =>
-      anim.targets.some((elementId) => !idsToDelete.includes(elementId))
-    );
-
-    return {
-      ...page,
-      elements: newElements,
-      ...(oldAnimations.length > 0 ? { animations: newAnimations } : {}),
-    };
+    if (animations) {
+      page.animations = animations.filter((anim) =>
+        anim.targets.some((elementId) => !idsToDelete.includes(elementId))
+      );
+    }
   });
 
-  const newSelection = state.selection.filter(
+  draft.selection = draft.selection.filter(
     (selectedId) => !idsToDelete.includes(selectedId)
   );
-
-  return {
-    ...state,
-    pages: newPages,
-    selection: newSelection,
-  };
-}
+});
 
 export default deleteElementsByResourceId;

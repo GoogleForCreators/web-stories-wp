@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { produce } from 'immer';
+
+/**
  * Internal dependencies
  */
 import { getAbsolutePosition, moveArrayElement } from './utils';
@@ -51,20 +56,18 @@ import { getAbsolutePosition, moveArrayElement } from './utils';
  * @param {number|string} payload.position New position of element to move
  * @return {Object} New state
  */
-function arrangeElement(state, { elementId, position }) {
-  if (elementId === null && state.selection.length !== 1) {
-    return state;
+const arrangeElement = produce((draft, { elementId, position }) => {
+  if (elementId === null && draft.selection.length !== 1) {
+    return;
   }
 
-  const idToArrange = elementId !== null ? elementId : state.selection[0];
+  const idToArrange = elementId !== null ? elementId : draft.selection[0];
 
-  const pageIndex = state.pages.findIndex(({ id }) => id === state.current);
-
-  const page = state.pages[pageIndex];
+  const page = draft.pages.find(({ id }) => id === draft.current);
 
   // Abort if there's less than three elements (nothing to rearrange as first is bg)
   if (page.elements.length < 3) {
-    return state;
+    return;
   }
 
   const currentPosition = page.elements.findIndex(
@@ -72,7 +75,7 @@ function arrangeElement(state, { elementId, position }) {
   );
 
   if (currentPosition === -1 || page.elements[0].id === idToArrange) {
-    return state;
+    return;
   }
 
   const minPosition = 1;
@@ -86,28 +89,10 @@ function arrangeElement(state, { elementId, position }) {
 
   // If it's already there, do nothing.
   if (currentPosition === newPosition) {
-    return state;
+    return;
   }
 
-  const newElements = moveArrayElement(
-    page.elements,
-    currentPosition,
-    newPosition
-  );
-
-  const newPages = [
-    ...state.pages.slice(0, pageIndex),
-    {
-      ...page,
-      elements: newElements,
-    },
-    ...state.pages.slice(pageIndex + 1),
-  ];
-
-  return {
-    ...state,
-    pages: newPages,
-  };
-}
+  page.elements = moveArrayElement(page.elements, currentPosition, newPosition);
+});
 
 export default arrangeElement;
