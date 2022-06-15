@@ -27,5 +27,13 @@ export { default as VideoMode } from './videoMode';
 export { default as ProgressBar } from './progressBar';
 export { default as Countdown } from './countdown';
 export { default as DurationIndicator } from './durationIndicator';
+export { default as PlayPauseButton } from './playPauseButton';
 export * from './constants';
-export { LayerWithGrayout, DisplayPageArea, Wrapper } from './components';
+export {
+  LayerWithGrayout,
+  DisplayPageArea,
+  Wrapper,
+  VideoWrapper,
+  Video,
+  Photo,
+} from './components';

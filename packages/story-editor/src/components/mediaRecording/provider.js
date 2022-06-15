@@ -37,7 +37,11 @@ import { format } from '@googleforcreators/date';
  * Internal dependencies
  */
 import MediaRecordingContext from './context';
-import { MAX_RECORDING_DURATION_IN_SECONDS } from './constants';
+import {
+  MAX_RECORDING_DURATION_IN_SECONDS,
+  VIDEO_FILE_TYPE,
+  VIDEO_MIME_TYPE,
+} from './constants';
 
 function MediaRecordingProvider({ children }) {
   const [isInRecordingMode, setIsInRecordingMode] = useState(false);
@@ -59,22 +63,6 @@ function MediaRecordingProvider({ children }) {
   const [mediaDevices, setMediaDevices] = useState([]);
 
   const [file, setFile] = useState(null);
-
-  const updateMediaDevices = useCallback(async () => {
-    // navigator.mediaDevices is undefined in insecure browsing contexts.
-    if (!navigator.mediaDevices) {
-      return;
-    }
-
-    try {
-      const devices = await navigator.mediaDevices.enumerateDevices();
-      setMediaDevices(
-        devices.filter((device) => device.kind !== 'audiooutput')
-      );
-    } catch (err) {
-      // Do nothing for now.
-    }
-  }, []);
 
   useEffect(() => {
     if (!mediaDevices.length) {
@@ -104,22 +92,6 @@ function MediaRecordingProvider({ children }) {
     }
   }, [audioInput, mediaDevices, videoInput]);
 
-  useEffect(() => {
-    // navigator.mediaDevices is undefined in insecure browsing contexts.
-    navigator.mediaDevices?.addEventListener(
-      'devicechange',
-      updateMediaDevices
-    );
-
-    return () => {
-      navigator.mediaDevices?.removeEventListener(
-        'devicechange',
-        updateMediaDevices
-      );
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- We only want to run it once.
-  }, []);
-
   const [mediaBlobUrl, setMediaBlobUrl] = useState();
 
   const onStop = useCallback((blob) => {
@@ -130,8 +102,8 @@ function MediaRecordingProvider({ children }) {
     }
     const f = blobToFile(
       blob,
-      `webcam-capture-${format(new Date(), 'Y-m-d-H-i')}.mp4`,
-      'video/mp4'
+      `webcam-capture-${format(new Date(), 'Y-m-d-H-i')}.${VIDEO_FILE_TYPE}`,
+      VIDEO_MIME_TYPE
     );
     setFile(f);
   }, []);
@@ -156,6 +128,42 @@ function MediaRecordingProvider({ children }) {
     },
     onStop,
   });
+
+  const updateMediaDevices = useCallback(async () => {
+    // navigator.mediaDevices is undefined in insecure browsing contexts.
+    if (!navigator.mediaDevices) {
+      return;
+    }
+
+    try {
+      const devices = await navigator.mediaDevices.enumerateDevices();
+      setMediaDevices(
+        devices.filter((device) => device.kind !== 'audiooutput')
+      );
+    } catch (err) {
+      // Do nothing for now.
+    }
+  }, []);
+
+  useEffect(() => {
+    // navigator.mediaDevices is undefined in insecure browsing contexts.
+    if (!navigator.mediaDevices) {
+      return undefined;
+    }
+
+    // Note: Safari will fire the devicechange event right after granting permissions,
+    // and then calling enumerateDevices() will trigger another permission prompt.
+    // TODO: Figure out a good way to work around that.
+    navigator.mediaDevices.addEventListener('devicechange', updateMediaDevices);
+
+    return () => {
+      navigator.mediaDevices.removeEventListener(
+        'devicechange',
+        updateMediaDevices
+      );
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- We only want to run it once.
+  }, []);
 
   const toggleAudio = useCallback(() => {
     setHasAudio(!hasAudio);
@@ -202,12 +210,7 @@ function MediaRecordingProvider({ children }) {
     }
   }, [duration, stopRecording]);
 
-  const resetState = useCallback(() => {
-    setFile(null);
-    setIsGif(false);
-    setMediaBlobUrl(null);
-    setCountdown(0);
-
+  const resetStream = useCallback(() => {
     // clearMediaStream() is supposed to do this, but it doesn't have an effect.
     // Probably because liveStream is a new MediaStream instance.
     // Anyway, this stops the camera/mic from being used.
@@ -220,6 +223,15 @@ function MediaRecordingProvider({ children }) {
     clearMediaBlob();
     clearMediaStream();
   }, [clearMediaBlob, clearMediaStream, liveStream]);
+
+  const resetState = useCallback(() => {
+    setFile(null);
+    setIsGif(false);
+    setMediaBlobUrl(null);
+    setCountdown(0);
+
+    resetStream();
+  }, [resetStream]);
 
   const toggleRecordingMode = useCallback(() => {
     setIsInRecordingMode((state) => !state);
@@ -277,6 +289,7 @@ function MediaRecordingProvider({ children }) {
         setDuration,
         setCountdown,
         resetState,
+        resetStream,
       },
     }),
     [
@@ -310,6 +323,7 @@ function MediaRecordingProvider({ children }) {
       muteAudio,
       unMuteAudio,
       resetState,
+      resetStream,
     ]
   );
 

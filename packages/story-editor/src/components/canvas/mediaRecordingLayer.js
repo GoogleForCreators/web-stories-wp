@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
 import {
   useCallback,
@@ -46,36 +45,17 @@ import {
   DurationIndicator,
   Footer,
   SettingsModal,
+  PlayPauseButton,
   LayerWithGrayout,
   DisplayPageArea,
   Wrapper,
+  PHOTO_MIME_TYPE,
+  PHOTO_FILE_TYPE,
+  VideoWrapper,
+  Video,
+  Photo,
 } from '../mediaRecording';
 import { PageTitleArea } from './layout';
-
-const VideoWrapper = styled.div`
-  width: 100%;
-  height: 100%;
-  background: #000;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-`;
-
-const Video = styled.video`
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 5px;
-`;
-
-const Photo = styled.img`
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 5px;
-`;
 
 function MediaRecordingLayer() {
   const {
@@ -94,6 +74,7 @@ function MediaRecordingLayer() {
     isImageCapture,
     audioInput,
     videoInput,
+    resetStream,
   } = useMediaRecording(({ state, actions }) => ({
     status: state.status,
     liveStream: state.liveStream,
@@ -112,6 +93,7 @@ function MediaRecordingLayer() {
     getMediaStream: actions.getMediaStream,
     setFile: actions.setFile,
     setMediaBlobUrl: actions.setMediaBlobUrl,
+    resetStream: actions.resetStream,
   }));
 
   const streamRef = useRef();
@@ -139,11 +121,12 @@ function MediaRecordingLayer() {
 
     const imageFile = blobToFile(
       blob,
-      `image-capture-${format(new Date(), 'Y-m-d-H-i')}.jpeg`,
-      'image/jpeg'
+      `image-capture-${format(new Date(), 'Y-m-d-H-i')}.${PHOTO_FILE_TYPE}`,
+      PHOTO_MIME_TYPE
     );
     setFile(imageFile);
-  }, [setFile, setMediaBlobUrl]);
+    resetStream();
+  }, [resetStream, setFile, setMediaBlobUrl]);
 
   const debouncedCaptureImage = useDebouncedCallback(captureImage, 3000);
 
@@ -153,12 +136,6 @@ function MediaRecordingLayer() {
       videoRef.current.play().catch(() => {});
     }
   }, [toggleIsGif]);
-
-  // Try to get permissions as soon as dialog opens.
-  useEffect(() => {
-    getMediaStream();
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- Only run once.
-  }, []);
 
   useEffect(() => {
     if (
@@ -216,16 +193,17 @@ function MediaRecordingLayer() {
                 <VideoWrapper>
                   {mediaBlobUrl && (
                     <>
-                      {/* eslint-disable-next-line styled-components-a11y/media-has-caption,jsx-a11y/media-has-caption -- We don't have tracks for this. */}
+                      {/* eslint-disable-next-line jsx-a11y/media-has-caption -- We don't have tracks for this. */}
                       <Video
                         ref={videoRef}
                         src={mediaBlobUrl}
                         autoPlay
-                        controls={!isGif}
                         muted={isMuted}
                         loop={isGif}
                         disablePictureInPicture
+                        tabIndex={0}
                       />
+                      {!isGif && <PlayPauseButton videoRef={videoRef} />}
                     </>
                   )}
                   {!mediaBlob && liveStream && (
@@ -242,6 +220,7 @@ function MediaRecordingLayer() {
             {isImageCapture && (
               <VideoWrapper>
                 <Photo
+                  decoding="async"
                   src={mediaBlobUrl}
                   alt={__('Image capture', 'web-stories')}
                 />

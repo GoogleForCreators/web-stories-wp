@@ -40,11 +40,15 @@ const StyledSwitch = styled(Switch)`
 
 const CameraIcon = styled(Icons.Camera).attrs({
   title: __('Use as video', 'web-stories'),
-})``;
+})`
+  flex: 1;
+`;
 
 const GifIcon = styled(Icons.Gif).attrs({
   title: __('Use as GIF', 'web-stories'),
-})``;
+})`
+  flex: 1;
+`;
 
 function VideoMode({ value, onChange }) {
   return (

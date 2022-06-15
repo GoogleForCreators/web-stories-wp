@@ -28,10 +28,12 @@ import {
 } from '@googleforcreators/design-system';
 import { useCallback, useDebouncedCallback } from '@googleforcreators/react';
 import { trackEvent } from '@googleforcreators/tracking';
+import { getVideoLengthDisplay } from '@googleforcreators/media';
 
 /**
  * Internal dependencies
  */
+import getResourceFromLocalFile from '../../app/media/utils/getResourceFromLocalFile';
 import { Z_INDEX_RECORDING_MODE } from '../../constants/zIndex';
 import { FooterArea } from '../canvas/layout';
 import useUploadWithPreview from '../canvas/useUploadWithPreview';
@@ -144,9 +146,9 @@ function Footer({ captureImage }) {
 
   const uploadWithPreview = useUploadWithPreview();
 
-  const onRetry = useCallback(() => {
+  const onRetry = useCallback(async () => {
     resetState();
-    getMediaStream();
+    await getMediaStream();
 
     trackEvent('media_recording_retry');
   }, [getMediaStream, resetState]);
@@ -168,9 +170,16 @@ function Footer({ captureImage }) {
 
   const isRecording = 'recording' === status;
 
-  const onInsert = useCallback(() => {
+  const onInsert = useCallback(async () => {
     const args = {
       additionalData: {},
+    };
+    const { resource, posterFile } = await getResourceFromLocalFile(file);
+
+    // Provide video duration
+    args.resource = {
+      ...resource,
+      alt: __('Camera Capture', 'web-stories'),
     };
 
     if (file.type.startsWith('video')) {
@@ -179,6 +188,11 @@ function Footer({ captureImage }) {
       if (isGif) {
         args.additionalData.mediaSource = 'gif-conversion';
       }
+
+      args.resource.length = duration;
+      args.resource.lengthFormatted = getVideoLengthDisplay(duration);
+      args.resource.isMuted = isMuted;
+      args.posterFile = posterFile;
     }
 
     uploadWithPreview([file], true, args);
@@ -197,17 +211,21 @@ function Footer({ captureImage }) {
       duration,
     });
   }, [
-    isMuted,
-    isGif,
-    uploadWithPreview,
     file,
+    uploadWithPreview,
     toggleRecordingMode,
     isRecording,
+    isGif,
     duration,
+    isMuted,
     stopRecording,
     setMediaBlobUrl,
     setFile,
   ]);
+
+  if ('acquiring_media' === status) {
+    return null;
+  }
 
   return (
     <StyledFooter showOverflow>

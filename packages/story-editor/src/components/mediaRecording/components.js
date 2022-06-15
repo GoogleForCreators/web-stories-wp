@@ -70,3 +70,29 @@ export const Wrapper = styled.div`
   right: 0;
   cursor: default;
 `;
+
+export const VideoWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  background: #000;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const Photo = styled.img`
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 5px;
+`;
+
+export const Video = styled.video`
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 5px;
+`;
