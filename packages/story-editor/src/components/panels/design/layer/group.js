@@ -157,7 +157,36 @@ const GroupIconsWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  min-width: 36px;
+  width: 48px;
+
+  svg {
+    position: relative;
+    display: block;
+    width: 100%;
+    color: ${({ theme }) => theme.colors.fg.secondary};
+  }
+
+  /*
+  * moves the click target + positioning to the left
+  * this ensures a better click target for 
+  * the arrow expand collapse state
+  */
+  transform: translateX(-12px);
+`;
+
+const ChevronDown = styled(Icons.ChevronDown)`
+  min-width: 32px;
+  min-height: 32px;
+`;
+
+const ChevronRight = styled(Icons.ChevronDown)`
+  /*
+  * Using ChevronDown and rotating it here 
+  * vs ChevronRightSmall to keep consistent sizing between states
+  */
+  min-width: 32px;
+  min-height: 32px;
+  transform: rotate(-90deg);
 `;
 
 const LayerDescription = styled.div`
@@ -417,10 +446,9 @@ function Group({ groupId }) {
     });
   };
   const isCollapsed = group.isCollapsed;
-  const GroupArrowIcon = isCollapsed
-    ? Icons.ChevronRightSmall
-    : Icons.ChevronDown;
-  const GroupArrow = <GroupArrowIcon onClick={handleGroupArrowClick} />;
+  const GroupArrow = isCollapsed
+    ? <ChevronRight onClick={handleGroupArrowClick} />
+    : <ChevronDown  onClick={handleGroupArrowClick} />
 
   return (
     <LayerContainer>
