@@ -14,13 +14,33 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
+import { __, sprintf } from '@googleforcreators/i18n';
+
 function generateGroupName(groups, name) {
   // TODO: use groups to check for next nr
   if (!name) {
-    const nr = 1;
-    return `Group ${nr}`;
+    const groupNumber = 1;
+    return sprintf(
+      /* translators: %d: group number. */
+      __(
+        'Group %d',
+        'web-stories'
+      ),
+      groupNumber
+    );
   }
-  return `${name} Copy`;
+
+  return sprintf(
+    /* translators: %s: name of layer. */
+    __(
+      '%s Copy',
+      'web-stories'
+    ),
+    layerName
+  );
 }
 
 export default generateGroupName;
