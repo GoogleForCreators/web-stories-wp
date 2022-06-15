@@ -21,6 +21,7 @@ import styled from 'styled-components';
 import { memo } from '@googleforcreators/react';
 import { PAGE_RATIO } from '@googleforcreators/units';
 import PropTypes from 'prop-types';
+import { __, sprintf } from '@googleforcreators/i18n';
 
 /**
  * Internal dependencies
@@ -53,7 +54,15 @@ const ExtraPage = styled.li`
   height: 100%;
   border-radius: 4px;
   background-color: white;
-  opacity: 0.7;
+
+  opacity: 0.5;
+  transition: opacity 0.2s ease;
+  &:hover {
+    opacity: 1;
+  }
+`;
+const ExtraPagePreview = styled(PagePreview)`
+  cursor: pointer;
 `;
 
 function range(from, to) {
@@ -83,8 +92,12 @@ function getPagesToShow({
 }
 
 function ExtraPages({ isPrevious = false }) {
-  const { currentPageIndex, pages } = useStory(
-    ({ state: { pages, currentPageIndex } }) => ({ currentPageIndex, pages })
+  const { currentPageIndex, pages, setCurrentPage } = useStory(
+    ({ state: { pages, currentPageIndex }, actions: { setCurrentPage } }) => ({
+      currentPageIndex,
+      pages,
+      setCurrentPage,
+    })
   );
   const { hasExtraPages, extraPageWidth, extraPageCount } = useLayout(
     ({ state: { hasExtraPages, extraPageWidth, extraPageCount } }) => ({
@@ -110,6 +123,8 @@ function ExtraPages({ isPrevious = false }) {
   const listWidth = pagesToShow.length * extraPageWidth;
   const extraPageHeight = (extraPageWidth - GAP) / PAGE_RATIO;
 
+  const clickPage = (pageId) => () => setCurrentPage({ pageId });
+
   return (
     <ExtraPageWrapper isPrevious={isPrevious}>
       <ExtraPageList
@@ -119,9 +134,14 @@ function ExtraPages({ isPrevious = false }) {
       >
         {pagesToShow.map((pageNum) => (
           <ExtraPage key={pageNum} extraPageWidth={extraPageWidth}>
-            <PagePreview
-              role="presentation"
+            <ExtraPagePreview
               page={pages[pageNum]}
+              onClick={clickPage(pages[pageNum].id)}
+              aria-label={sprintf(
+                /* translators: %s: Page number */
+                __('Go to page %s', 'web-stories'),
+                pageNum + 1
+              )}
               width={extraPageWidth - GAP}
               height={extraPageHeight}
             />
