@@ -119,8 +119,10 @@ function ShoppingPane(props) {
       } catch (err) {
         trackError('search_products', err?.message);
         showSnackbar({ message: err.message });
-        setProducts([]);
-        setPage(1);
+        if (_page === 1) {
+          setProducts([]);
+          setPage(1);
+        }
         setCanLoadMore(false);
       } finally {
         setIsLoading(false);
