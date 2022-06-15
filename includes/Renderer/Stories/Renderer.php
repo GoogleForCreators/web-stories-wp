@@ -217,6 +217,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @return bool|float|int|string|void|null
 	 */
+	#[\ReturnTypeWillChange]
 	public function key() {
 		return $this->position;
 	}

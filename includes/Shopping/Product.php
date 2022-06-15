@@ -192,6 +192,7 @@ class Product implements JsonSerializable {
 	 *
 	 * @return mixed Any JSON-serializable value.
 	 */
+	#[\ReturnTypeWillChange]
 	public function jsonSerialize() { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName.MethodNameInvalid
 		$rating = $this->get_aggregate_rating();
 
