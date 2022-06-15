@@ -72,12 +72,9 @@ function MyStories() {
     })
   );
   const { filters, getFiltersObject } = useFilters(
-    ({
-      state: { filters, filtersLoading },
-      actions: { getFiltersObject },
-    }) => ({
+    ({ state: { filters }, actions: { getFiltersObject } }) => ({
       filters,
-      filtersLoading,
+
       getFiltersObject,
     })
   );

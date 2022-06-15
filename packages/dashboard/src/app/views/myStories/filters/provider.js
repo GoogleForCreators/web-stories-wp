@@ -33,7 +33,7 @@ import PropTypes from 'prop-types';
  */
 import reducer from './reducer';
 import useTaxonomyFilters from './taxonomy/useTaxonomyFilters';
-import useAuthorFilter from './authors/useAuthorFilter';
+import useAuthorFilter from './author/useAuthorFilter';
 import * as types from './types';
 
 export const filterContext = createContext({
@@ -54,10 +54,6 @@ export const filterContext = createContext({
  */
 
 export default function FiltersProvider({ children }) {
-  // each filter type will have its own logic for initilizing and querying
-  const { initializeTaxonomyFilters } = useTaxonomyFilters();
-  const { initializeAutherFilter } = useAuthorFilter();
-
   const [state, dispatch] = useReducer(reducer, {
     filtersLoading: true,
     filters: [],
@@ -84,6 +80,10 @@ export default function FiltersProvider({ children }) {
     dispatch({ type: types.REGISTER_FILTERS, payload: { value } });
   }, []);
 
+  // each filter type will have its own logic for initilizing and querying
+  const { initializeTaxonomyFilters } = useTaxonomyFilters();
+  const { initializeAuthorFilter } = useAuthorFilter();
+
   /**
    * Sets up the shape of the filters data
    * and calls registerFilters with all filters.
@@ -92,12 +92,12 @@ export default function FiltersProvider({ children }) {
    */
   const initializeFilters = useCallback(() => {
     const taxonomies = initializeTaxonomyFilters();
-    const author = initializeAutherFilter();
+    const author = initializeAuthorFilter();
 
     const filters = [...taxonomies, author];
 
     registerFilters(filters);
-  }, [registerFilters, initializeTaxonomyFilters, initializeAutherFilter]);
+  }, [registerFilters, initializeAuthorFilter, initializeTaxonomyFilters]);
 
   /**
    * Returns a object where the keys are the filter keys

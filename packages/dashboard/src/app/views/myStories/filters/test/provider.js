@@ -40,6 +40,18 @@ jest.mock('../taxonomy/useTaxonomyFilters', () => {
   };
 });
 
+jest.mock('../author/useAuthorFilter', () => {
+  const initializeAuthorFilter = () => [];
+  return {
+    __esModule: true,
+    default: function useAuthorFilter() {
+      return {
+        initializeAuthorFilter,
+      };
+    },
+  };
+});
+
 describe('provider', () => {
   it('should register filters and update filters', () => {
     const wrapper = ({ children }) => (

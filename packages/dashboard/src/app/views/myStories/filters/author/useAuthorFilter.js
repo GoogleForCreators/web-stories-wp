@@ -43,25 +43,42 @@ function useAuthorFilter() {
     })
   );
 
+  /**
+   * Query all the authors.
+   * Initializes the primaryOptions and used to search and set queriedOptions.
+   *
+   * @param {Object} filter author filter data
+   * @param {string} search string use to query author by name
+   * @return {Array} taxonomy terms
+   */
   const queryAuthors = useCallback(
     async (filter, search) => {
       const data = await getAuthors(search);
-
-      const userData = data.map(({ id, name }) => ({
+      return data.map(({ id, name }) => ({
         id,
         name,
       }));
-      return userData;
     },
     [getAuthors]
   );
 
+  /**
+   * Sets author data
+   *
+   * @see queryAuthors
+   * @return {void}
+   */
   const _setAuthors = useCallback(async () => {
     const data = await queryAuthors();
     setAuthors(data);
-  }, [setAuthors, queryAuthors]);
+  }, [queryAuthors]);
 
-  const initializeAutherFilter = useCallback(() => {
+  /**
+   * Sets up the shape of the author filter data
+   *
+   * @return {Array} taxonomies filter data
+   */
+  const initializeAuthorFilter = useCallback(() => {
     return {
       key: 'author',
       query: queryAuthors,
@@ -77,7 +94,10 @@ function useAuthorFilter() {
     _setAuthors();
   }, [_setAuthors]);
 
-  return useMemo(() => ({ initializeAutherFilter }), [initializeAutherFilter]);
+  return useMemo(
+    () => ({ authors, initializeAuthorFilter }),
+    [authors, initializeAuthorFilter]
+  );
 }
 
 export default useAuthorFilter;
