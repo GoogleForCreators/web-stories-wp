@@ -308,15 +308,7 @@
         "type": "shape",
         "id": "e0ad34a8-c0a4-4888-853b-b708485b61d4"
       },
-      "animations": [
-        {
-          "id": "53be4bcb-6693-4e9c-8f9f-d8c1f2e065be",
-          "type": "effect-fade-in",
-          "targets": ["78e7271d-a523-4873-9481-aeb7eaa6da91"],
-          "duration": 1000,
-          "delay": 200
-        }
-      ],
+      "animations": [],
       "pageTemplateType": "cover"
     },
     {

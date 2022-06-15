@@ -386,61 +386,7 @@
       "backgroundColor": { "color": { "r": 245, "g": 244, "b": 238 } },
       "type": "page",
       "id": "e2d8f340-b4d4-4fd9-9858-6db7e5a90ad8",
-      "animations": [
-        {
-          "id": "2e648599-06e9-4c87-9941-2179f3f2a216",
-          "type": "effect-fly-in",
-          "targets": ["62fca869-b824-4364-ae38-21932b519f27"],
-          "flyInDir": "bottomToTop",
-          "duration": 600,
-          "delay": 300
-        },
-        {
-          "id": "ac6405f5-89b0-40b0-9aaa-9e1841fa5ab6",
-          "type": "effect-fly-in",
-          "targets": ["0e2c1625-4aac-4476-8b1d-84c9fbfd90b7"],
-          "flyInDir": "bottomToTop",
-          "duration": 600,
-          "delay": 200
-        },
-        {
-          "id": "db789657-e2c0-4dcc-9290-48ef5b9f7c17",
-          "type": "effect-fly-in",
-          "targets": ["7e7f69f3-472e-42cf-863f-989c27ece528"],
-          "flyInDir": "bottomToTop",
-          "duration": 600,
-          "delay": 100
-        },
-        {
-          "id": "28788fb0-1809-48d4-b7ab-24ed6c981d85",
-          "type": "effect-fly-in",
-          "targets": ["e13185ca-4f74-4957-b149-6a0939ee4950"],
-          "flyInDir": "bottomToTop",
-          "duration": 600,
-          "delay": 0
-        },
-        {
-          "id": "8ed44161-bd2e-45e6-b434-6ad2fd999ba6",
-          "type": "effect-fade-in",
-          "targets": ["73929614-83f4-446e-883c-376f0fbdb2be"],
-          "duration": 2000,
-          "delay": 500
-        },
-        {
-          "id": "98cad868-84e5-43bf-b698-e04993ae890e",
-          "type": "effect-fade-in",
-          "targets": ["9c7df34e-1209-4a82-a973-20154a455d87"],
-          "duration": 4000,
-          "delay": 1000
-        },
-        {
-          "id": "dd65ff74-8694-4825-bfc9-e14f80b82651",
-          "type": "effect-fade-in",
-          "targets": ["270cd27c-03e7-4f73-82b5-5e72204452e2"],
-          "duration": 4000,
-          "delay": 1000
-        }
-      ],
+      "animations": [],
       "pageTemplateType": "cover"
     },
     {
