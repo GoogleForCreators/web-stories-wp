@@ -120,7 +120,7 @@
     "phpcbf": "phpcbf --severity=1",
     "phpcs": "phpcs --severity=1",
     "phpmd": "phpmd . text phpmd.xml",
-    "phpstan": "phpstan analyse --memory-limit=512M",
+    "phpstan": "phpstan analyse --memory-limit=2048M",
     "prefix-dependencies": [
       "php-scoper add-prefix --output-dir=./third-party --force --quiet",
       "echo '{ \"autoload\": { \"classmap\": [\"\"] } }' > ./third-party/composer.json",

@@ -51,11 +51,11 @@ class Embed_Shortcode extends Embed_Base {
 	 *
 	 * @since 1.1.0
 	 *
-	 * @param array  $attributes Shortcode attributes.
-	 * @param string $content Shortcode content.
+	 * @param array<string, int|string> $attributes Shortcode attributes.
+	 * @param string                    $content Shortcode content.
 	 * @return string Rendered Shortcode
 	 */
-	public function render_shortcode( array $attributes, $content ): string { // phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable
+	public function render_shortcode( array $attributes, string $content ): string { // phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable
 		$attributes = shortcode_atts( $this->default_attrs(), $attributes, self::SHORTCODE_NAME );
 
 		$attributes['class'] = 'wp-shortcode-web-stories-embed';

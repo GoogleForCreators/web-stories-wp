@@ -55,7 +55,7 @@ class Dashboard extends Service_Base {
 	/**
 	 * Admin page hook suffixes.
 	 *
-	 * @var array List of the admin pages' hook_suffix values.
+	 * @var array<string,string|bool> List of the admin pages' hook_suffix values.
 	 */
 	private $hook_suffix = [];
 
@@ -210,9 +210,9 @@ class Dashboard extends Service_Base {
 	 * @since 1.0.0
 	 *
 	 * @param string $key The current admin page key.
-	 * @return string|false|null The dashboard page's hook_suffix, or false if the user does not have the capability required.
+	 * @return bool|string The dashboard page's hook_suffix, or false if the user does not have the capability required.
 	 */
-	public function get_hook_suffix( $key ) {
+	public function get_hook_suffix( string $key ) {
 		return $this->hook_suffix[ $key ] ?? false;
 	}
 
@@ -273,7 +273,11 @@ class Dashboard extends Service_Base {
 			return;
 		}
 
-		$page = sanitize_text_field( (string) wp_unslash( $_GET['page'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		/**
+		 * @var string $page
+		 */
+		$page = $_GET['page']; // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		$page = sanitize_text_field( (string) wp_unslash( $page ) );
 
 		if ( 'admin.php' === $pagenow && 'stories-dashboard' === $page ) {
 			wp_safe_redirect(
@@ -423,7 +427,7 @@ class Dashboard extends Service_Base {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @return array
+	 * @return array<string,bool|string|int|array<string,mixed>>
 	 */
 	public function get_dashboard_settings(): array {
 		$new_story_url = admin_url(

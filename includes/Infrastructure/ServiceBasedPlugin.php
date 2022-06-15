@@ -74,7 +74,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 	/**
 	 * ServiceContainer.
 	 *
-	 * @var ServiceContainer
+	 * @var ServiceContainer<Service>
 	 */
 	protected $service_container;
 
@@ -83,17 +83,12 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 *
 	 * @since 1.6.0
 	 *
-	 * @param bool|null             $enable_filters    Optional. Whether to
-	 *                                                 enable filtering of the
-	 *                                                 injector configuration.
-	 * @param Injector|null         $injector          Optional. Injector
-	 *                                                 instance to use.
-	 * @param ServiceContainer|null $service_container Optional. Service
-	 *                                                 container instance to
-	 *                                                 use.
+	 * @param bool|null                      $enable_filters    Optional. Whether to enable filtering of the injector configuration.
+	 * @param Injector|null                  $injector          Optional. Injector instance to use.
+	 * @param ServiceContainer<Service>|null $service_container Optional. Service container instance to use.
 	 */
 	public function __construct(
-		$enable_filters = null,
+		?bool $enable_filters = null,
 		?Injector $injector = null,
 		?ServiceContainer $service_container = null
 	) {
@@ -254,10 +249,10 @@ abstract class ServiceBasedPlugin implements Plugin {
 			 * This can be used to add services to the service container for
 			 * this plugin.
 			 *
-			 * @param array<string> $services Associative array of identifier =>
-			 *                                class mappings. The provided
-			 *                                classes need to implement the
-			 *                                Service interface.
+			 * @param array<string, string> $services Associative array of identifier =>
+			 *                                        class mappings. The provided
+			 *                                        classes need to implement the
+			 *                                        Service interface.
 			 */
 			$filtered_services = apply_filters(
 				static::HOOK_PREFIX . static::SERVICES_FILTER,
@@ -459,9 +454,8 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 *
 	 * @since 1.6.0
 	 *
-	 * @param mixed    $services Services to validate.
-	 * @param string[] $fallback Fallback value to use if $services is not
-	 *                           salvageable.
+	 * @param array<int|string, string|class-string> $services Services to validate.
+	 * @param string[]                               $fallback Fallback value to use if $services is not salvageable.
 	 * @return string[] Validated array of service mappings.
 	 */
 	protected function validate_services( $services, $fallback ): array {
@@ -582,7 +576,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 *
 	 * @since 1.6.0
 	 *
-	 * @return ServiceContainer Service container of the plugin.
+	 * @return ServiceContainer<Service> Service container of the plugin.
 	 */
 	public function get_container(): ServiceContainer {
 		return $this->service_container;

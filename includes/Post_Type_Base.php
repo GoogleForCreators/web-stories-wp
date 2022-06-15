@@ -40,6 +40,50 @@ use WP_Site;
 
 /**
  * Class Post_Type_Base.
+ *
+ * @phpstan-type PostTypeArgs array{
+ *   label?: string,
+ *   labels?: string[],
+ *   description?: string,
+ *   public?: bool,
+ *   hierarchical?: bool,
+ *   exclude_from_search?: bool,
+ *   publicly_queryable?: bool,
+ *   show_ui?: bool,
+ *   show_in_menu?: bool|string,
+ *   show_in_nav_menus?: bool,
+ *   show_in_admin_bar?: bool,
+ *   show_in_rest?: bool,
+ *   rest_base?: string,
+ *   rest_namespace?: string,
+ *   rest_controller_class?: string,
+ *   menu_position?: int,
+ *   menu_icon?: string,
+ *   capability_type?: string|array{0: string, 1: string},
+ *   capabilities?: array<string, string|false>,
+ *   map_meta_cap?: bool,
+ *   supports?: array<int, string|array<string, mixed>>,
+ *   register_meta_box_cb?: callable,
+ *   taxonomies?: string[],
+ *   has_archive?: bool|string,
+ *   rewrite?: bool|array{
+ *     slug?: string,
+ *     with_front?: bool,
+ *     feeds?: bool,
+ *     pages?: bool,
+ *     ep_mask?: int
+ *   },
+ *   query_var?: string|bool,
+ *   can_export?: bool,
+ *   delete_with_user?: bool,
+ *   template?: array<int, array{
+ *     name: string,
+ *     attributes?: array<string, mixed>
+ *   }>,
+ *   template_lock?: string|false,
+ *   _builtin?: bool,
+ *   _edit_link?: string
+ * }
  */
 abstract class Post_Type_Base extends Service_Base implements PluginActivationAware, PluginDeactivationAware, SiteInitializationAware {
 
@@ -122,7 +166,9 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 	 *
 	 * @since 1.14.0
 	 *
-	 * @return array
+	 * @return array<string, mixed> Post type args.
+	 *
+	 * @phpstan-return PostTypeArgs
 	 */
 	abstract protected function get_args(): array;
 

@@ -34,6 +34,8 @@ use WP_Query;
 
 /**
  * Class Media_Source_Taxonomy
+ *
+ * @phpstan-import-type TaxonomyArgs from \Google\Web_Stories\Taxonomy\Taxonomy_Base
  */
 class Media_Source_Taxonomy extends Taxonomy_Base {
 	/**
@@ -95,7 +97,9 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 	 *
 	 * @since 1.12.0
 	 *
-	 * @return array
+	 * @return array<string,mixed> Taxonomy args.
+	 *
+	 * @phpstan-return TaxonomyArgs
 	 */
 	protected function taxonomy_args(): array {
 		return [
@@ -163,7 +167,7 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param array $prepared Prepared data before response.
+	 * @param array<string, mixed> $prepared Prepared data before response.
 	 */
 	public function get_callback_media_source( $prepared ): string {
 		$id = $prepared['id'];
@@ -197,8 +201,8 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 	/**
 	 * Returns the tax query needed to exclude generated video poster images and source videos.
 	 *
-	 * @param array $args Existing WP_Query args.
-	 * @return array  Tax query arg.
+	 * @param array<string, mixed> $args Existing WP_Query args.
+	 * @return array<string, mixed> Tax query arg.
 	 */
 	private function get_exclude_tax_query( array $args ): array {
 		$tax_query = ! empty( $args['tax_query'] ) ? $args['tax_query'] : [];
@@ -249,8 +253,8 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 	 *
 	 * @since 1.10.0
 	 *
-	 * @param array|mixed $args Query args.
-	 * @return array|mixed Filtered query args.
+	 * @param array<string, mixed>|mixed $args Query args.
+	 * @return array<string, mixed>|mixed Filtered query args.
 	 */
 	public function filter_ajax_query_attachments_args( $args ) {
 		if ( ! \is_array( $args ) ) {
@@ -285,8 +289,8 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 	 *
 	 * @since 1.10.0
 	 *
-	 * @param array|mixed $args Query args.
-	 * @return array|mixed Filtered query args.
+	 * @param array<string, mixed>|mixed $args Query args.
+	 * @return array<string, mixed>|mixed Filtered query args.
 	 */
 	public function filter_rest_generated_media_attachments( $args ) {
 		if ( ! \is_array( $args ) ) {

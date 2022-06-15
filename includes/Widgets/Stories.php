@@ -31,6 +31,18 @@ use WP_Widget;
  * Class Stories
  *
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
+ *
+ * @phpstan-type InputArgs array{
+ *   type?: string,
+ *   id?: string,
+ *   name?: string,
+ *   label?: string,
+ *   value?: string|bool|int,
+ *   classname?: string,
+ *   wrapper_class?: string,
+ *   label_before?: bool,
+ *   attributes?: array<string,string|int>
+ * }
  */
 class Stories extends WP_Widget {
 
@@ -39,7 +51,7 @@ class Stories extends WP_Widget {
 	/**
 	 * Widget args.
 	 *
-	 * @var array
+	 * @var array<string,string>
 	 */
 	public $args = [
 		'before_title'  => '<h4 class="widgettitle web-stories-widget-title">',
@@ -99,8 +111,8 @@ class Stories extends WP_Widget {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param array $args Widget args.
-	 * @param array $instance Widget instance.
+	 * @param array<string,string>          $args Widget args.
+	 * @param array<string,string|int|bool> $instance Widget instance.
 	 *
      * phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 	 */
@@ -157,14 +169,14 @@ class Stories extends WP_Widget {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param array $instance Widget instance.
+	 * @param array<string,string|int|bool> $instance Widget instance.
 	 */
 	public function form( $instance ): string {
 		$this->enqueue_scripts();
 
 		$instance = wp_parse_args( $instance, $this->default_values() );
 
-		$title              = $instance['title'];
+		$title              = (string) $instance['title'];
 		$view_types         = $this->stories_script_data->get_layouts();
 		$current_view_type  = (string) $instance['view_type'];
 		$show_title         = ! empty( $instance['show_title'] );
@@ -172,7 +184,7 @@ class Stories extends WP_Widget {
 		$show_date          = ! empty( $instance['show_date'] );
 		$show_excerpt       = ! empty( $instance['show_excerpt'] );
 		$show_archive_link  = ! empty( $instance['show_archive_link'] );
-		$archive_link_label = $instance['archive_link_label'];
+		$archive_link_label = (string) $instance['archive_link_label'];
 		$circle_size        = (int) $instance['circle_size'];
 		$sharp_corners      = (int) $instance['sharp_corners'];
 		$image_alignment    = (string) $instance['image_alignment'];
@@ -398,9 +410,9 @@ class Stories extends WP_Widget {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param array $new_instance New instance.
-	 * @param array $old_instance Old instance.
-	 * @return array
+	 * @param array<string,string|int|bool> $new_instance New instance.
+	 * @param array<string,string|int|bool> $old_instance Old instance.
+	 * @return array<string,string|int|bool>
 	 */
 	public function update( $new_instance, $old_instance ): array {
 		$instance = [];
@@ -431,7 +443,7 @@ class Stories extends WP_Widget {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @return array
+	 * @return array<string,string|int> Default values.
 	 */
 	private function default_values(): array {
 		return [
@@ -478,7 +490,7 @@ class Stories extends WP_Widget {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param array $args Field args.
+	 * @param array<string,string|array<string,string>> $args Field args.
 	 */
 	private function dropdown( array $args ): void {
 		$args = wp_parse_args(
@@ -524,7 +536,7 @@ class Stories extends WP_Widget {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param array $args Field args.
+	 * @param array<string,mixed> $args Field args.
 	 */
 	private function radio( array $args ): void {
 		$args = wp_parse_args(
@@ -572,6 +584,8 @@ class Stories extends WP_Widget {
 	 * @since 1.5.0
 	 *
 	 * @param array $args Field args.
+	 *
+	 * @phpstan-param InputArgs $args
 	 */
 	private function input( array $args ): void {
 		$args = wp_parse_args(
@@ -585,6 +599,7 @@ class Stories extends WP_Widget {
 				'classname'     => 'widefat',
 				'wrapper_class' => 'web-stories-field-wrapper',
 				'label_before'  => false,
+				'attributes'    => [],
 			]
 		);
 
@@ -599,6 +614,9 @@ class Stories extends WP_Widget {
 			$extra_attrs = '';
 
 			if ( ! empty( $args['attributes'] ) && \is_array( $args['attributes'] ) ) {
+				/**
+				 * @var string $attr_val
+				 */
 				foreach ( $args['attributes'] as $attr_key => $attr_val ) {
 					$extra_attrs .= sprintf( ' %1s=%2s', $attr_key, esc_attr( $attr_val ) );
 				}
@@ -634,7 +652,7 @@ class Stories extends WP_Widget {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param array $args Label args.
+	 * @param array<string,mixed> $args Label args.
 	 */
 	private function label( array $args ): string {
 		$args = wp_parse_args(

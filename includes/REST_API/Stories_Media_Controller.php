@@ -113,7 +113,7 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 			/**
 			 * Embed directive.
 			 *
-			 * @var string|array $embed
+			 * @var string|string[] $embed
 			 */
 			$embed    = $request['_embed'] ?? false;
 			$embed    = $embed ? rest_parse_embed_param( $embed ) : false;
@@ -160,7 +160,7 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 		/**
 		 * Response data.
 		 *
-		 * @var array $data
+		 * @var array<string,mixed> $data
 		 */
 		$data = $response->get_data();
 
@@ -277,7 +277,7 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 	 *
 	 * @since 1.0.0
 	 *
-	 * @return array Collection parameters.
+	 * @return array<string, array<string, mixed>> Collection parameters.
 	 */
 	public function get_collection_params(): array {
 		$query_params = parent::get_collection_params();
@@ -296,9 +296,9 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 	 *
 	 * @since 1.2.0
 	 *
-	 * @param array           $prepared_args Optional. Array of prepared arguments. Default empty array.
-	 * @param WP_REST_Request $request       Optional. Request to prepare items for.
-	 * @return array Array of query arguments.
+	 * @param array<string,mixed> $prepared_args Optional. Array of prepared arguments. Default empty array.
+	 * @param WP_REST_Request     $request       Optional. Request to prepare items for.
+	 * @return array<string, mixed> Array of query arguments.
 	 */
 	protected function prepare_items_query( $prepared_args = [], $request = null ): array {
 		$query_args = parent::prepare_items_query( $prepared_args, $request );
@@ -360,7 +360,7 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 	 * @since 1.12.0
 	 *
 	 * @param WP_Post $post Post object.
-	 * @return array Links for the given post.
+	 * @return array<string,array{href?: string, taxonomy?: string, embeddable?: bool}> Links for the given post.
 	 */
 	protected function prepare_links( $post ): array {
 		$links = parent::prepare_links( $post );
@@ -374,9 +374,9 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 	 *
 	 * @since 1.12.0
 	 *
-	 * @param array   $links Links for the given post.
-	 * @param WP_Post $post Post object.
-	 * @return array Modified list of links.
+	 * @param array<string, array{href?: string, taxonomy?: string, embeddable?: bool}> $links Links for the given post.
+	 * @param WP_Post                                                                   $post Post object.
+	 * @return array<string, array<string, array{href?: string, taxonomy: string, embeddable: bool}|bool|string>> Modified list of links.
 	 */
 	private function add_taxonomy_links( array $links, WP_Post $post ): array {
 		$taxonomies = get_object_taxonomies( $post->post_type, 'objects' );
@@ -425,7 +425,7 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 	 *
 	 * @since 1.10.0
 	 *
-	 * @return array Item schema as an array.
+	 * @return array<string, string|array<string, array<string,string|string[]>>> Item schema data.
 	 */
 	public function get_item_schema(): array {
 		if ( $this->schema ) {
@@ -458,7 +458,7 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 	 *
 	 * @since 1.2.0
 	 *
-	 * @return array Array of supported media types.
+	 * @return array<string, string[]> Array of supported media types.
 	 */
 	protected function get_media_types(): array {
 		$mime_type = $this->types->get_allowed_mime_types();

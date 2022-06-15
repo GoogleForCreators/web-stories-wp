@@ -40,6 +40,44 @@ use WP_Error;
  * Class customizer settings.
  *
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
+ *
+ * @phpstan-type ThemeSupport array{
+ *   customizer: array{
+ *     view_type: array{default: string, enabled: string[]},
+ *     title: array{default: bool, enabled: bool},
+ *     excerpt: array{default: bool, enabled: bool},
+ *     author: array{default: bool, enabled: bool},
+ *     date: array{default: bool, enabled: bool},
+ *     show_archive_link: array{default: bool, enabled: bool},
+ *     archive_link: array{default: bool|string, enabled: bool|string, label: string},
+ *     sharp_corners: array{default: bool, enabled: bool},
+ *     order: array{default: string},
+ *     orderby: array{default: string},
+ *     circle_size: array{default: int},
+ *     number_of_stories: array{default: int},
+ *     number_of_columns: array{default: int},
+ *     image_alignment: array{default: string}
+ *   }
+ * }
+ *
+ * @phpstan-type StoryAttributes array{
+ *   view_type?: string,
+ *   number_of_columns?: int,
+ *   show_title?: bool,
+ *   show_author?: bool,
+ *   show_date?: bool,
+ *   show_archive_link?: bool|string,
+ *   show_excerpt?: bool,
+ *   image_alignment?: string,
+ *   class?: string,
+ *   show_stories?: bool|string,
+ *   archive_link_label?: string,
+ *   circle_size?: int,
+ *   sharp_corners?: bool,
+ *   order?: string,
+ *   orderby?: string,
+ *   number_of_stories?: int
+ * }
  */
 class Customizer extends Service_Base implements Conditional {
 
@@ -488,8 +526,8 @@ class Customizer extends Service_Base implements Conditional {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param array $view_type View type to check.
-	 * @return array An array of view type choices.
+	 * @param array<string,mixed> $view_type View type to check.
+	 * @return array<string,mixed> An array of view type choices.
 	 */
 	private function get_view_type_choices( array $view_type ): array {
 		$view_type_choices = $this->stories_script_data->get_layouts();
@@ -570,6 +608,12 @@ class Customizer extends Service_Base implements Conditional {
 	 * @since 1.5.0
 	 */
 	public function render_stories(): string {
+		/**
+		 * Render options.
+		 *
+		 * @var array<string,string|bool> $options
+		 * @phpstan-var StoryAttributes
+		 */
 		$options = (array) $this->settings->get_setting( self::STORY_OPTION );
 
 		if ( empty( $options['show_stories'] ) || true !== $options['show_stories'] ) {
@@ -599,9 +643,7 @@ class Customizer extends Service_Base implements Conditional {
 			'order'          => isset( $options['order'] ) ? (string) $options['order'] : $theme_support['order']['default'],
 		];
 
-		$stories = new Story_Query( $story_attributes, $query_arguments );
-
-		return $stories->render();
+		return ( new Story_Query( $story_attributes, $query_arguments ) )->render();
 	}
 
 	/**
@@ -613,16 +655,20 @@ class Customizer extends Service_Base implements Conditional {
 	 *
 	 * @see wp_parse_args()
 	 *
-	 * @param array $args      Value to merge with $defaults.
-	 * @param array $defaults Optional. Array that serves as the defaults. Default empty array.
-	 * @return array Merged user defined values with defaults.
+	 * @param array<string, mixed>                                                           $args     Value to merge with $defaults.
+	 * @param array<string, array<string, array<string, array<int,string>|bool|int|string>>> $defaults Optional. Array that serves as the defaults. Default empty array.
+	 * @return array<string, mixed> Merged user defined values with defaults.
 	 */
 	private function parse_args( array $args, array $defaults = [] ): array {
 		$parsed_args = $defaults;
 
 		foreach ( $args as $key => $value ) {
 			if ( \is_array( $value ) && isset( $parsed_args[ $key ] ) ) {
-				$parsed_args[ $key ] = $this->parse_args( $value, $parsed_args[ $key ] );
+				/**
+				 * @var array<string, array<string, array<string, array<int,string>|bool|int|string>>> $def
+				 */
+				$def                 = $parsed_args[ $key ];
+				$parsed_args[ $key ] = $this->parse_args( $value, $def );
 			} else {
 				$parsed_args[ $key ] = $value;
 			}
@@ -636,13 +682,15 @@ class Customizer extends Service_Base implements Conditional {
 	 *
 	 * @since 1.14.0
 	 *
-	 * @return array
+	 * @return array Theme support configuration
+	 *
+	 * @phpstan-return ThemeSupport
 	 */
 	public function get_stories_theme_support(): array {
 		/**
 		 * Theme support configuration.
 		 *
-		 * @var array $support
+		 * @var ThemeSupport[] $support
 		 */
 		$support = get_theme_support( 'web-stories' );
 		$support = isset( $support[0] ) && \is_array( $support[0] ) ? $support[0] : [];
@@ -701,6 +749,9 @@ class Customizer extends Service_Base implements Conditional {
 			],
 		];
 
+		/**
+		 * @var ThemeSupport $support
+		 */
 		$support = $this->parse_args( $support, $default_support );
 
 		return $support;

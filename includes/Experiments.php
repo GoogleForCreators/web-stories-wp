@@ -32,6 +32,14 @@ use Google\Web_Stories\Infrastructure\HasRequirements;
  * Experiments class.
  *
  * Allows turning flags on/off via the admin UI.
+ *
+ * @phpstan-type Experiment array{
+ *   name: string,
+ *   label: string,
+ *   description: string,
+ *   group: string,
+ *   default?: bool
+ * }
  */
 class Experiments extends Service_Base implements HasRequirements {
 	/**
@@ -160,6 +168,8 @@ class Experiments extends Service_Base implements HasRequirements {
 	 *     @type string $label   Experiment label.
 	 *     @type bool   $default Whether the experiment is enabled by default.
 	 * }
+	 *
+	 * @phpstan-param array{id: string, label: string, default: bool} $args
 	 */
 	public function display_experiment_field( array $args ): void {
 		$is_enabled_by_default = ! empty( $args['default'] );
@@ -200,7 +210,7 @@ class Experiments extends Service_Base implements HasRequirements {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @return array List of experiment groups
+	 * @return array<string,string> List of experiment groups
 	 */
 	public function get_experiment_groups(): array {
 		return [
@@ -218,6 +228,8 @@ class Experiments extends Service_Base implements HasRequirements {
 	 * @since 1.0.0
 	 *
 	 * @return array List of experiments by group.
+	 *
+	 * @phpstan-return Experiment[]
 	 */
 	public function get_experiments(): array {
 		return [
@@ -377,9 +389,12 @@ class Experiments extends Service_Base implements HasRequirements {
 	 * @since 1.0.0
 	 *
 	 * @param string $group Experiments group name.
-	 * @return array Experiment statuses with name as key and status as value.
+	 * @return array<string,bool> Experiment statuses with name as key and status as value.
 	 */
 	public function get_experiment_statuses( string $group ): array {
+		/**
+		 * @phpstan-var Experiment[]
+		 */
 		$experiments = wp_list_filter( $this->get_experiments(), [ 'group' => $group ] );
 
 		if ( empty( $experiments ) ) {
@@ -402,6 +417,8 @@ class Experiments extends Service_Base implements HasRequirements {
 	 *
 	 * @param string $name Experiment name.
 	 * @return array|null Experiment if found, null otherwise.
+	 *
+	 * @phpstan-return Experiment|null
 	 */
 	protected function get_experiment( string $name ): ?array {
 		$experiment = wp_list_filter( $this->get_experiments(), [ 'name' => $name ] );
@@ -431,6 +448,7 @@ class Experiments extends Service_Base implements HasRequirements {
 		 * List of enabled experiments.
 		 *
 		 * @var array<string, array> $experiments
+		 * @phpstan-var Experiment[]
 		 */
 		$experiments = $this->settings->get_setting( $this->settings::SETTING_NAME_EXPERIMENTS, [] );
 		return ! empty( $experiments[ $name ] );
@@ -441,7 +459,7 @@ class Experiments extends Service_Base implements HasRequirements {
 	 *
 	 * @since 1.4.0
 	 *
-	 * @return array List of all enabled experiments.
+	 * @return string[] List of all enabled experiments.
 	 */
 	public function get_enabled_experiments(): array {
 		$experiments = array_filter(

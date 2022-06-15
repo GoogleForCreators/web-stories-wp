@@ -45,7 +45,7 @@ class Stories_Controller extends Stories_Base_Controller {
 	/**
 	 * Query args.
 	 *
-	 * @var array
+	 * @var array<string,mixed>
 	 */
 	private $args = [];
 
@@ -92,7 +92,7 @@ class Stories_Controller extends Stories_Base_Controller {
 		/**
 		 * Response data.
 		 *
-		 * @var array $data
+		 * @var array<string,mixed> $data
 		 */
 		$data = $response->get_data();
 
@@ -185,7 +185,7 @@ class Stories_Controller extends Stories_Base_Controller {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @return array Item schema as an array.
+	 * @return array<string, string|array<string, array<string,string|string[]>>> Item schema data.
 	 */
 	public function get_item_schema(): array {
 		if ( $this->schema ) {
@@ -238,9 +238,9 @@ class Stories_Controller extends Stories_Base_Controller {
 	 *
 	 * @param string[] $clauses Associative array of the clauses for the query.
 	 * @param WP_Query $query   The WP_Query instance.
-	 * @return array Filtered query clauses.
+	 * @return string[] Filtered query clauses.
 	 */
-	public function filter_posts_clauses( $clauses, $query ): array {
+	public function filter_posts_clauses( $clauses, WP_Query $query ): array {
 		global $wpdb;
 
 		if ( $this->post_type !== $query->get( 'post_type' ) ) {
@@ -271,9 +271,9 @@ class Stories_Controller extends Stories_Base_Controller {
 	 * @since 1.21.0
 	 *
 	 * @param WP_Post[] $posts Array of post objects.
-	 * @return mixed Array of posts.
+	 * @return WP_Post[] Array of posts.
 	 */
-	public function prime_post_caches( $posts ) {
+	public function prime_post_caches( $posts ): array {
 		$post_ids = $this->get_attached_post_ids( $posts );
 		if ( ! empty( $post_ids ) ) {
 			_prime_post_caches( $post_ids );
@@ -319,9 +319,9 @@ class Stories_Controller extends Stories_Base_Controller {
 	/**
 	 * Filter the query to cache the value to a class property.
 	 *
-	 * @param array           $args    WP_Query arguments.
-	 * @param WP_REST_Request $request Full details about the request.
-	 * @return array Current args.
+	 * @param array<string, mixed> $args    WP_Query arguments.
+	 * @param WP_REST_Request      $request Full details about the request.
+	 * @return array<string, mixed> Current args.
 	 */
 	public function filter_query( $args, $request ): array {
 		$this->args = $this->prepare_tax_query( $args, $request );
@@ -362,7 +362,7 @@ class Stories_Controller extends Stories_Base_Controller {
 			/**
 			 * Embed directive.
 			 *
-			 * @var string|array $embed
+			 * @var string|string[] $embed
 			 */
 			$embed    = $request['_embed'];
 			$embed    = $embed ? rest_parse_embed_param( $embed ) : false;
@@ -379,9 +379,9 @@ class Stories_Controller extends Stories_Base_Controller {
 	 *
 	 * @since 1.12.0
 	 *
-	 * @param array           $args    WP_Query arguments.
-	 * @param WP_REST_Request $request Full details about the request.
-	 * @return array Updated query arguments.
+	 * @param array<string, mixed> $args    WP_Query arguments.
+	 * @param WP_REST_Request      $request Full details about the request.
+	 * @return array<string, mixed> Updated query arguments.
 	 *
 	 * @todo Remove this method once WordPress 5.7 becomes minimum required version.
 	 */
@@ -403,14 +403,14 @@ class Stories_Controller extends Stories_Base_Controller {
 			/**
 			 * List of term IDs to include.
 			 *
-			 * @var array $tax_include
+			 * @var array{terms?: string[], include_children?: bool, operator?: string}|string[] $tax_include
 			 */
 			$tax_include = $request[ $base ] ?? [];
 
 			/**
 			 * List of term IDs to exclude.
 			 *
-			 * @var array $tax_exclude
+			 * @var array{terms?: string[], include_children?: bool, operator?: string}|string[] $tax_exclude
 			 */
 			$tax_exclude = $request[ $base . '_exclude' ] ?? [];
 
@@ -559,7 +559,7 @@ class Stories_Controller extends Stories_Base_Controller {
 	 * Prepares links for the request.
 	 *
 	 * @param WP_Post $post Post object.
-	 * @return array Links for the given post.
+	 * @return array<string,array{href?: string, embeddable?: bool}> Links for the given post.
 	 */
 	protected function prepare_links( $post ): array {
 		// Workaround so that WP_REST_Posts_Controller::prepare_links() does not call wp_get_post_revisions(),
@@ -580,7 +580,7 @@ class Stories_Controller extends Stories_Base_Controller {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @return array Collection parameters.
+	 * @return array<string, array<string, mixed>> Collection parameters.
 	 */
 	public function get_collection_params(): array {
 		$query_params = parent::get_collection_params();
@@ -609,9 +609,9 @@ class Stories_Controller extends Stories_Base_Controller {
 	 *
 	 * @since 1.12.0
 	 *
-	 * @param array   $links Links for the given post.
-	 * @param WP_Post $post Post object.
-	 * @return array Modified list of links.
+	 * @param array<string, array{href?: string, embeddable?: bool}> $links Links for the given post.
+	 * @param WP_Post                                                $post Post object.
+	 * @return array<string, array{href?: string, embeddable?: bool}> Modified list of links.
 	 */
 	private function add_post_locking_link( array $links, WP_Post $post ): array {
 		$base     = sprintf( '%s/%s', $this->namespace, $this->rest_base );
@@ -670,9 +670,9 @@ class Stories_Controller extends Stories_Base_Controller {
 	 *
 	 * @since 1.12.0
 	 *
-	 * @param array   $links Links for the given post.
-	 * @param WP_Post $post Post object.
-	 * @return array Modified list of links.
+	 * @param array<string, array{href?: string, embeddable?: bool}> $links Links for the given post.
+	 * @param WP_Post                                                $post Post object.
+	 * @return array<string, array{href?: string, embeddable?: bool}> Modified list of links.
 	 */
 	private function add_publisher_logo_link( array $links, WP_Post $post ): array {
 		$publisher_logo_id = $this->get_publisher_logo_id( $post );

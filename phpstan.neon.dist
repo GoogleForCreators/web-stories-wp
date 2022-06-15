@@ -8,6 +8,9 @@ services:
     tags:
       - phpstan.broker.dynamicStaticMethodReturnTypeExtension
 
+includes:
+	- vendor/phpstan/phpstan/conf/bleedingEdge.neon
+
 parameters:
   level: 9
   inferPrivatePropertyTypeFromConstructor: true
@@ -38,9 +41,3 @@ parameters:
     - IS_WPCOM
     - GOOGLESITEKIT_VERSION
     - AMP__VERSION
-  ignoreErrors:
-    # Uses func_get_args()
-    - '#^Function apply_filters(_ref_array)? invoked with [34567] parameters, 2 required\.$#'
-
-    # Core issue - https://core.trac.wordpress.org/ticket/54015
-    - '#^Parameter \#2 \$embed of method WP_REST_Server::envelope_response\(\) expects bool, array<string>\|bool given.$#'

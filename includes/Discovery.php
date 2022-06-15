@@ -36,6 +36,8 @@ use WP_Post;
 
 /**
  * Discovery class.
+ *
+ * @phpstan-import-type ProductData from \Google\Web_Stories\Shopping\Product
  */
 class Discovery extends Service_Base implements HasRequirements {
 
@@ -170,7 +172,7 @@ class Discovery extends Service_Base implements HasRequirements {
 	 *
 	 * @see https://developers.google.com/search/docs/guides/enable-web-stories
 	 *
-	 * @return array $metadata All schema.org metadata for the post.
+	 * @return array<string,mixed> $metadata All schema.org metadata for the post.
 	 */
 	protected function get_schemaorg_metadata(): array {
 		/**
@@ -196,7 +198,7 @@ class Discovery extends Service_Base implements HasRequirements {
 			$size   = $story->get_publisher_logo_size();
 			$poster = $story->get_poster_portrait();
 
-			if ( ! empty( $url ) && ! empty( $size ) ) {
+			if ( ! empty( $url ) ) {
 				$metadata['publisher']['logo'] = [
 					'@type'  => 'ImageObject',
 					'url'    => $url,
@@ -230,6 +232,9 @@ class Discovery extends Service_Base implements HasRequirements {
 			}
 
 
+			/**
+			 * @phpstan-var ProductData[] $products
+			 */
 			$products         = $this->product_meta->get_products( $post->ID );
 			$product_metadata = $this->get_product_data( $products );
 			if ( $product_metadata ) {
@@ -253,8 +258,10 @@ class Discovery extends Service_Base implements HasRequirements {
 	 *
 	 * @since 1.22.0
 	 *
-	 * @param array $products Array of products.
-	 * @return array
+	 * @param array<int, array<string, mixed>> $products Array of products.
+	 * @return array<string, array<string, array<int, array<string, mixed>>|string>>
+	 *
+	 * @phpstan-param ProductData[] $products
 	 */
 	protected function get_product_data( array $products ): array {
 		if ( ! $products ) {
@@ -284,7 +291,7 @@ class Discovery extends Service_Base implements HasRequirements {
 				$data['aggregateRating'] = [
 					'@type'       => 'AggregateRating',
 					'ratingValue' => $product['aggregateRating']['ratingValue'] ?? 0,
-					'reviewCount' => $product['aggregateRating']['reviewCount'] ?? 0,
+					'reviewCount' => $product['aggregateRating']['reviewCount'],
 					'url'         => $product['aggregateRating']['reviewUrl'] ?? '',
 				];
 			}
@@ -320,6 +327,9 @@ class Discovery extends Service_Base implements HasRequirements {
 
 		$metadata = $this->get_open_graph_metadata();
 
+		/**
+		 * @var string $value
+		 */
 		foreach ( $metadata as $name => $value ) {
 			printf( '<meta property="%s" content="%s" />', esc_attr( $name ), esc_attr( $value ) );
 		}
@@ -330,7 +340,7 @@ class Discovery extends Service_Base implements HasRequirements {
 	 *
 	 * @since 1.3.0
 	 *
-	 * @return array
+	 * @return array<string, string|int>
 	 */
 	protected function get_open_graph_metadata(): array {
 		$metadata = [
@@ -402,7 +412,7 @@ class Discovery extends Service_Base implements HasRequirements {
 	 *
 	 * @since 1.3.0
 	 *
-	 * @return array
+	 * @return array<string, string> Twitter card metadata.
 	 */
 	protected function get_twitter_metadata(): array {
 		$metadata = [
@@ -474,11 +484,13 @@ class Discovery extends Service_Base implements HasRequirements {
 	/**
 	 * Helper to get poster image.
 	 *
+	 * @since 1.3.0
+	 *
 	 * @param int|WP_Post $post Post object to check for poster image attached.
 	 * @param string      $size Image size, default to full.
-	 * @return array|false
+	 * @return array{src?: string, width?: int, height?: int}|false Poster image data.
 	 */
-	protected function get_poster( $post, $size = 'full' ) {
+	protected function get_poster( $post, string $size = 'full' ) {
 		if ( ! has_post_thumbnail( $post ) ) {
 			return false;
 		}

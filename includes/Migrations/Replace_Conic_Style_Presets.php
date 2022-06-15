@@ -30,6 +30,17 @@ use Google\Web_Stories\Story_Post_Type;
 
 /**
  * Class Replace_Conic_Style_Presets
+ *
+ * @phpstan-type Color array{
+ *   type?: string
+ * }
+ * @phpstan-type StylePresets array{
+ *   fillColors: Color[],
+ *   textStyles: array<int, array{
+ *     backgroundColor?: Color
+ *   }>,
+ *   textColors: mixed,
+ * }
  */
 class Replace_Conic_Style_Presets extends Migrate_Base {
 	/**
@@ -38,6 +49,10 @@ class Replace_Conic_Style_Presets extends Migrate_Base {
 	 * @since 1.7.0
 	 */
 	public function migrate(): void {
+		/**
+		 * @var array|null $style_presets
+		 * @phpstan-var StylePresets|null $style_presets
+		 */
 		$style_presets = get_option( Story_Post_Type::STYLE_PRESETS_OPTION, false );
 		// Nothing to do if style presets don't exist.
 		if ( ! $style_presets || ! \is_array( $style_presets ) ) {

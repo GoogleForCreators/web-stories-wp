@@ -169,9 +169,9 @@ add_action( 'init', __NAMESPACE__ . '\load_functions' );
  * @link https://core.trac.wordpress.org/ticket/51636
  * @see \rest_preload_api_request
  *
- * @param array        $memo Reduce accumulator.
- * @param string|array $path REST API path to preload.
- * @return array Modified reduce accumulator.
+ * @param array<string, array{body: string, headers: array<string,string>}|array<string, array{body: string, headers: array<string,string>}>> $memo Reduce accumulator.
+ * @param string|array<int, string>                                                                                                           $path REST API path to preload.
+ * @return array<string, array{body: string, headers: array<string,string>}|array<string, array{body: string, headers: array<string,string>}>> Modified reduce accumulator.
  */
 function rest_preload_api_request( $memo, $path ): array {
 	// array_reduce() doesn't support passing an array in PHP 5.2,
@@ -198,12 +198,15 @@ function rest_preload_api_request( $memo, $path ): array {
 		}
 	}
 
+	/**
+	 * @var array{path:string, query?: string} URL parts.
+	 */
 	$path_parts = wp_parse_url( (string) $path );
 	if ( ! \is_array( $path_parts ) ) {
 		return $memo;
 	}
 
-	$request = new WP_REST_Request( $method, untrailingslashit( (string) $path_parts['path'] ) );
+	$request = new WP_REST_Request( $method, untrailingslashit( $path_parts['path'] ) );
 	if ( ! empty( $path_parts['query'] ) ) {
 		$query_params = [];
 		parse_str( $path_parts['query'], $query_params );
@@ -216,7 +219,7 @@ function rest_preload_api_request( $memo, $path ): array {
 		/**
 		 * Embed directive.
 		 *
-		 * @var string|array $embed
+		 * @var string|string[] $embed
 		 */
 		$embed = $request['_embed'] ?? false;
 		$embed = $embed ? rest_parse_embed_param( $embed ) : false;

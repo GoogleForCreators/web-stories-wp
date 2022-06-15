@@ -144,7 +144,7 @@ class Muting extends Service_Base implements HasMeta {
 	 *
 	 * @since 1.10.0
 	 *
-	 * @param array $prepared Array of data to add to.
+	 * @param array<string, mixed> $prepared Array of data to add to.
 	 */
 	public function get_callback_is_muted( $prepared ): ?bool {
 		/**
@@ -175,7 +175,6 @@ class Muting extends Service_Base implements HasMeta {
 	 *
 	 * @param mixed    $value  Value to updated.
 	 * @param \WP_Post $object Post object to be updated.
-	 * @return bool|WP_Error
 	 */
 	public function update_callback_is_muted( $value, $object ) {
 		$object_id = $object->ID;

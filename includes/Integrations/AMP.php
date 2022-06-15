@@ -230,8 +230,8 @@ class AMP extends Service_Base implements HasRequirements {
 	 *
 	 * @link https://github.com/ampproject/amp-wp/blob/c6aed8f/includes/validation/class-amp-validation-manager.php#L1777-L1809
 	 *
-	 * @param null|bool $sanitized Whether sanitized. Null means sanitization is not overridden.
-	 * @param array     $error Validation error being sanitized.
+	 * @param null|bool                                                        $sanitized Whether sanitized. Null means sanitization is not overridden.
+	 * @param array{node_type?: int, node_name?: string, parent_name?: string} $error     Validation error being sanitized.
 	 * @return null|bool Whether sanitized.
 	 */
 	public function filter_amp_validation_error_sanitized( $sanitized, $error ): ?bool {
@@ -327,12 +327,9 @@ class AMP extends Service_Base implements HasRequirements {
 		}
 
 		if (
-			is_admin()
-			&&
-			isset( $_GET['action'], $_GET['post'] )
-			&&
-			'amp_validate' === $_GET['action']
-			&&
+			is_admin() &&
+			isset( $_GET['action'], $_GET['post'] ) &&
+			'amp_validate' === $_GET['action'] &&
 			get_post_type( (int) $_GET['post'] ) === self::AMP_VALIDATED_URL_POST_TYPE
 		) {
 			return $this->get_validated_url_post_type( (int) $_GET['post'] );
@@ -353,8 +350,14 @@ class AMP extends Service_Base implements HasRequirements {
 			return $current_screen_post_type;
 		}
 
-		if ( isset( $_SERVER['REQUEST_URI'] ) && false !== strpos( (string) wp_unslash( $_SERVER['REQUEST_URI'] ), $this->story_post_type->get_rest_url() ) ) {
-			return $this->story_post_type->get_slug();
+		if ( isset( $_SERVER['REQUEST_URI'] ) ) {
+			/**
+			 * @var string
+			 */
+			$request_uri = $_SERVER['REQUEST_URI'];
+			if ( false !== strpos( (string) wp_unslash( $request_uri ), $this->story_post_type->get_rest_url() ) ) {
+				return $this->story_post_type->get_slug();
+			}
 		}
 
 		// phpcs:enable WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
@@ -387,7 +390,7 @@ class AMP extends Service_Base implements HasRequirements {
 		/**
 		 * AMP queried object.
 		 *
-		 * @var array|string $queried_object
+		 * @var array{type?: string, id?: int|string}|string $queried_object
 		 */
 		$queried_object = get_post_meta( $post->ID, '_amp_queried_object', true );
 

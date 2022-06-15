@@ -32,6 +32,13 @@ use Google\Web_Stories\Service_Base;
 
 /**
  * Class Site_Kit.
+ *
+ * @phpstan-type GtagOpt array{
+ *   vars: array{
+ *     gtag_id?: string
+ *   },
+ *   triggers?: array<string, mixed>
+ * }
  */
 class Site_Kit extends Service_Base {
 	/**
@@ -123,6 +130,8 @@ class Site_Kit extends Service_Base {
 	 *
 	 * @param array|mixed $gtag_opt Array of gtag configuration options.
 	 * @return array|mixed Modified configuration options.
+	 *
+	 * @phpstan-param GtagOpt $gtag_opt
 	 */
 	public function filter_site_kit_gtag_opt( $gtag_opt ) {
 		if (
@@ -156,19 +165,29 @@ class Site_Kit extends Service_Base {
 	 *
 	 * @see \Google\Site_Kit\Core\Modules\Modules::get_active_modules_option
 	 *
-	 * @return array List of active module slugs.
+	 * @return string[] List of active module slugs.
 	 */
 	protected function get_site_kit_active_modules_option(): array {
 		if ( ! $this->is_plugin_active() ) {
 			return [];
 		}
 
+		/**
+		 * Option value.
+		 *
+		 * @var string[]|false $option
+		 */
 		$option = get_option( 'googlesitekit_active_modules' );
 
 		if ( \is_array( $option ) ) {
 			return $option;
 		}
 
+		/**
+		 * Legacy option value.
+		 *
+		 * @var string[]|false $legacy_option
+		 */
 		$legacy_option = get_option( 'googlesitekit-active-modules' );
 
 		if ( \is_array( $legacy_option ) ) {
@@ -183,7 +202,7 @@ class Site_Kit extends Service_Base {
 	 *
 	 * @since 1.2.0
 	 *
-	 * @return array Plugin status.
+	 * @return array{installed: bool, active: bool, analyticsActive: bool, adsenseActive: bool, analyticsLink: string, adsenseLink: string} Plugin status.
 	 */
 	public function get_plugin_status(): array {
 		if ( ! function_exists( 'get_plugins' ) ) {

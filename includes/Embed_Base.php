@@ -115,8 +115,8 @@ abstract class Embed_Base extends Service_Base {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param array|string $allowed_tags Allowed tags.
-	 * @return array|string Allowed tags.
+	 * @param array<string, array<string,bool>>|mixed $allowed_tags Allowed tags.
+	 * @return array<string, array<string,bool>>|mixed Allowed tags.
 	 */
 	public function filter_kses_allowed_html( $allowed_tags ) {
 		if ( ! \is_array( $allowed_tags ) ) {
@@ -137,7 +137,7 @@ abstract class Embed_Base extends Service_Base {
 	 *
 	 * @since 1.1.0
 	 *
-	 * @return array
+	 * @return array<string, string|int> Default attributes.
 	 */
 	protected function default_attrs(): array {
 		$attrs = [
@@ -164,7 +164,7 @@ abstract class Embed_Base extends Service_Base {
 	 *
 	 * @since 1.1.0
 	 *
-	 * @param array $attributes Embed render attributes.
+	 * @param array<string, string> $attributes Embed render attributes.
 	 * @return string Rendered embed output.
 	 */
 	public function render( array $attributes ): string {

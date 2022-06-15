@@ -31,6 +31,8 @@ use Google\Web_Stories\REST_API\Page_Template_Controller;
 
 /**
  * Class Page_Template_Post_Type.
+ *
+ * @phpstan-import-type PostTypeArgs from \Google\Web_Stories\Post_Type_Base
  */
 class Page_Template_Post_Type extends Post_Type_Base implements HasRequirements {
 
@@ -81,7 +83,9 @@ class Page_Template_Post_Type extends Post_Type_Base implements HasRequirements 
 	 *
 	 * @since 1.14.0
 	 *
-	 * @return array
+	 * @return array<string, mixed> Post type args.
+	 *
+	 * @phpstan-return PostTypeArgs
 	 */
 	protected function get_args(): array {
 		$edit_posts   = $this->story_post_type->get_cap_name( 'edit_posts' );

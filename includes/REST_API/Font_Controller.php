@@ -37,6 +37,26 @@ use WP_REST_Server;
 
 /**
  * Font_Controller class.
+ *
+ * @phpstan-type SchemaEntry array{
+ *   description: string,
+ *   type: string,
+ *   context: string[],
+ *   default?: mixed,
+ * }
+ * @phpstan-type Schema array{
+ *   properties: array{
+ *     family?: SchemaEntry,
+ *     fallbacks?: SchemaEntry,
+ *     weights?: SchemaEntry,
+ *     styles?: SchemaEntry,
+ *     variants?: SchemaEntry,
+ *     service?: SchemaEntry,
+ *     metrics?: SchemaEntry,
+ *     id?: SchemaEntry,
+ *     url?: SchemaEntry
+ *   }
+ * }
  */
 class Font_Controller extends WP_REST_Posts_Controller {
 	/**
@@ -110,7 +130,7 @@ class Font_Controller extends WP_REST_Posts_Controller {
 	 *
 	 * @since 1.16.0
 	 *
-	 * @return array List of Google fonts.
+	 * @return array<int, mixed> List of Google fonts.
 	 */
 	protected function get_builtin_fonts(): array {
 		$file = WEBSTORIES_PLUGIN_DIR_PATH . 'includes/data/fonts/fonts.json';
@@ -128,7 +148,7 @@ class Font_Controller extends WP_REST_Posts_Controller {
 		/**
 		 * List of Google Fonts.
 		 *
-		 * @var array|null $fonts
+		 * @var array<int, mixed>|null $fonts
 		 */
 		$fonts = json_decode( $content, true );
 
@@ -145,7 +165,7 @@ class Font_Controller extends WP_REST_Posts_Controller {
 	 * @since 1.16.0
 	 *
 	 * @param WP_REST_Request $request Full details about the request.
-	 * @return array List of custom fonts.
+	 * @return array<int, array<string, mixed> List of custom fonts.
 	 */
 	protected function get_custom_fonts( $request ): array {
 		// Retrieve the list of registered collection query parameters.
@@ -498,7 +518,7 @@ class Font_Controller extends WP_REST_Posts_Controller {
 	 *
 	 * @since 1.16.0
 	 *
-	 * @return array Collection parameters.
+	 * @return array<string, array<string, mixed>> Collection parameters.
 	 */
 	public function get_collection_params(): array {
 		$query_params = parent::get_collection_params();
@@ -543,10 +563,18 @@ class Font_Controller extends WP_REST_Posts_Controller {
 	 * @since 1.16.0
 	 *
 	 * @return array Item schema data.
+	 *
+	 * @phpstan-return Schema
 	 */
 	public function get_item_schema(): array {
 		if ( $this->schema ) {
-			return $this->add_additional_fields_schema( $this->schema );
+			/**
+			 * Schema.
+			 *
+			 * @phpstan-var Schema $schema
+			 */
+			$schema = $this->add_additional_fields_schema( $this->schema );
+			return $schema;
 		}
 
 		$schema = [
@@ -638,6 +666,10 @@ class Font_Controller extends WP_REST_Posts_Controller {
 
 		$this->schema = $schema;
 
-		return $this->add_additional_fields_schema( $this->schema );
+		/**
+		 * @phpstan-var Schema
+		 */
+		$schema = $this->add_additional_fields_schema( $this->schema );
+		return $schema;
 	}
 }

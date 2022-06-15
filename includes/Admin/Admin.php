@@ -114,15 +114,20 @@ class Admin extends Service_Base {
 	 * @since 1.0.0
 	 *
 	 * @param string|mixed $content Default post content.
-	 * @param \WP_Post     $post    Post object.
+	 * @param WP_Post      $post    Post object.
 	 * @return string|mixed Pre-filled post content if applicable, or the default content otherwise.
 	 */
-	public function prefill_post_content( $content, $post ) {
+	public function prefill_post_content( $content, WP_Post $post ) {
 		if ( ! isset( $_GET['from-web-story'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return $content;
 		}
 
-		$post_id = absint( sanitize_text_field( (string) wp_unslash( $_GET['from-web-story'] ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		/**
+		 * @var string $from_web_story
+		 */
+		$from_web_story = $_GET['from-web-story']; // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+
+		$post_id = absint( sanitize_text_field( (string) wp_unslash( $from_web_story ) ) );
 
 		if ( ! $post_id || Story_Post_Type::POST_TYPE_SLUG !== get_post_type( $post_id ) ) {
 			return $content;
@@ -195,7 +200,12 @@ class Admin extends Service_Base {
 			return $title;
 		}
 
-		$post_id = absint( sanitize_text_field( (string) wp_unslash( $_GET['from-web-story'] ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		/**
+		 * @var string $from_web_story
+		 */
+		$from_web_story = $_GET['from-web-story']; // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+
+		$post_id = absint( sanitize_text_field( (string) wp_unslash( $from_web_story ) ) );
 
 		if ( ! $post_id ) {
 			return $title;
