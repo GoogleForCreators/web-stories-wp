@@ -25,7 +25,6 @@ import {
   THEME_CONSTANTS,
   DropDown,
   Datalist,
-  noop,
 } from '@googleforcreators/design-system';
 
 /**
@@ -64,12 +63,6 @@ const StyledDatalist = styled(Datalist.DropDown)`
   width: 150px;
 `;
 
-const defaultAuthor = {
-  filterId: null,
-  toggleFilterId: noop,
-  queriedAuthors: [],
-};
-
 export default function BodyViewOptions({
   currentSort,
   handleLayoutSelect,
@@ -80,9 +73,6 @@ export default function BodyViewOptions({
   showGridToggle,
   showSortDropdown,
   sortDropdownAriaLabel,
-  showAuthorDropdown = false,
-  author = defaultAuthor,
-  queryAuthorsBySearch = noop,
   filters = [],
 }) {
   const { updateFilter } = useFilters(({ actions: { updateFilter } }) => ({
@@ -109,13 +99,10 @@ export default function BodyViewOptions({
                         filterId: id,
                       });
                     }}
-                    getOptionsByQuery={async (search) => {
-                      await filter.query(filter, search);
-                    }}
+                    getOptionsByQuery={(search) => filter.query(filter, search)}
                     selectedId={filter.filterId}
                     placeholder={filter.placeholder}
                     primaryOptions={filter.primaryOptions}
-                    options={filter.queriedOptions}
                     noMatchesFoundLabel={filter.noMatchesFoundLabel}
                     searchPlaceholder={filter.searchPlaceholder}
                     offsetOverride
@@ -123,25 +110,6 @@ export default function BodyViewOptions({
                 </StorySortDropdownContainer>
               ))
             : null}
-          {layoutStyle === VIEW_STYLE.GRID && showAuthorDropdown && (
-            <StorySortDropdownContainer>
-              <StyledDatalist
-                hasSearch
-                hasDropDownBorder
-                searchResultsLabel={__('Search results', 'web-stories')}
-                aria-label={__('Filter stories by author', 'web-stories')}
-                onChange={author.toggleFilterId}
-                getOptionsByQuery={queryAuthorsBySearch}
-                selectedId={author.filterId}
-                placeholder={__('All Authors', 'web-stories')}
-                primaryOptions={author.queriedAuthors}
-                options={author.queriedAuthors}
-                noMatchesFoundLabel={__('No authors found', 'web-stories')}
-                searchPlaceholder={__('Search authors', 'web-stories')}
-                offsetOverride
-              />
-            </StorySortDropdownContainer>
-          )}
           {layoutStyle === VIEW_STYLE.GRID && showSortDropdown && (
             <StorySortDropdownContainer>
               <StyledDropDown
@@ -182,8 +150,5 @@ BodyViewOptions.propTypes = {
   showGridToggle: PropTypes.bool,
   showSortDropdown: PropTypes.bool,
   sortDropdownAriaLabel: PropTypes.string.isRequired,
-  showAuthorDropdown: PropTypes.bool,
-  author: AuthorPropTypes,
-  queryAuthorsBySearch: PropTypes.func,
   filters: PropTypes.array,
 };

@@ -33,6 +33,7 @@ import PropTypes from 'prop-types';
  */
 import reducer from './reducer';
 import useTaxonomyFilters from './taxonomy/useTaxonomyFilters';
+import useAuthorFilter from './authors/useAuthorFilter';
 import * as types from './types';
 
 export const filterContext = createContext({
@@ -55,6 +56,7 @@ export const filterContext = createContext({
 export default function FiltersProvider({ children }) {
   // each filter type will have its own logic for initilizing and querying
   const { initializeTaxonomyFilters } = useTaxonomyFilters();
+  const { initializeAutherFilter } = useAuthorFilter();
 
   const [state, dispatch] = useReducer(reducer, {
     filtersLoading: true,
@@ -89,10 +91,13 @@ export default function FiltersProvider({ children }) {
    * @return {void}
    */
   const initializeFilters = useCallback(() => {
-    const filters = initializeTaxonomyFilters();
+    const taxonomies = initializeTaxonomyFilters();
+    const author = initializeAutherFilter();
+
+    const filters = [...taxonomies, author];
 
     registerFilters(filters);
-  }, [registerFilters, initializeTaxonomyFilters]);
+  }, [registerFilters, initializeTaxonomyFilters, initializeAutherFilter]);
 
   /**
    * Returns a object where the keys are the filter keys

@@ -137,7 +137,6 @@ function useTaxonomyFilters() {
       labels: taxonomy.labels,
       filterId: null,
       primaryOptions: taxonomy.data,
-      queriedOptions: taxonomy.data,
       query: queryTaxonomyTerms,
       placeholder: taxonomy.labels.allItems,
       ariaLabel: taxonomy.labels.filterByItem,

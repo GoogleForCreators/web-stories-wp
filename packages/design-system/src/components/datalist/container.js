@@ -25,6 +25,7 @@ import {
   useFocusOut,
   useMemo,
   forwardRef,
+  useDebouncedCallback,
 } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
@@ -96,9 +97,15 @@ const OptionsContainer = forwardRef(function OptionsContainer(
     []
   );
 
+  const debounceHandleLoadOptions = useDebouncedCallback(() => {
+    getOptionsByQuery(searchKeyword).then((res) => {
+      setQueriedOptions(res);
+    });
+  }, 500);
+
   const handleLoadOptions = useCallback(() => {
-    getOptionsByQuery(searchKeyword).then(setQueriedOptions);
-  }, [getOptionsByQuery, searchKeyword]);
+    debounceHandleLoadOptions();
+  }, [debounceHandleLoadOptions]);
 
   useEffect(() => {
     if (getOptionsByQuery && isKeywordFilterable(searchKeyword)) {
