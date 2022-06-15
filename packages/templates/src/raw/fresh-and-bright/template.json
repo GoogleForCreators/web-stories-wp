@@ -115,25 +115,7 @@
           "id": "9f187764-e909-416f-8820-9d24ac15f192"
         }
       ],
-      "animations": [
-        {
-          "id": "265b4c7e-94ab-4461-9404-dfbbb7975f55",
-          "type": "effect-pulse",
-          "targets": ["25b6f99b-3f69-4351-9e18-31b8ef1d1a61"],
-          "scale": 0.15,
-          "iterations": 1,
-          "duration": 1400,
-          "delay": 480
-        },
-        {
-          "id": "819f408a-195a-4d7b-8b51-d8546a4c37ca",
-          "type": "effect-background-zoom",
-          "targets": ["9ecb248e-2adc-4834-a270-01325263a30e"],
-          "zoomDirection": "scaleOut",
-          "duration": 800,
-          "delay": 0
-        }
-      ],
+      "animations": [],
       "type": "page",
       "id": "17fa9c85-89c7-47d0-a7a8-29f6ef56e161",
       "defaultBackgroundElement": {

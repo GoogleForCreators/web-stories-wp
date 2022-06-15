@@ -120,23 +120,7 @@
           "padding": { "horizontal": 0, "vertical": 0 }
         }
       ],
-      "animations": [
-        {
-          "id": "0eb53e85-68f2-40d1-9a0a-6fd4389d01d3",
-          "type": "effect-fly-in",
-          "targets": ["be108bc9-3a51-48c4-b495-24be6163e44c"],
-          "flyInDir": "bottomToTop",
-          "duration": 1400,
-          "delay": 250
-        },
-        {
-          "id": "e026f02d-a8d0-4cd9-8147-dc73c611bdf6",
-          "type": "effect-fade-in",
-          "targets": ["8f4fcc58-2834-46af-a2cb-64e139f333d5"],
-          "duration": 3000,
-          "delay": 100
-        }
-      ],
+      "animations": [],
       "type": "page",
       "id": "dd6a669f-ff4b-4633-8eb4-c601e98b40f1",
       "backgroundColor": { "color": { "r": 58, "g": 86, "b": 110 } },
