@@ -30,7 +30,7 @@ import {
   ReorderableSeparator,
   ReorderableItem,
 } from '../../../reorderable';
-import { useRightClickMenu, useStory } from '../../../../app';
+import { useRightClickMenu, useStory, useCanvas } from '../../../../app';
 import useFocusCanvas from '../../../canvas/useFocusCanvas';
 import { LAYER_HEIGHT } from './constants';
 import Layer from './layer';
@@ -62,12 +62,13 @@ const ReorderableLayer = memo(function ReorderableLayer({
   const element = useStory(({ state }) =>
     state.currentPage?.elements.find((el) => el.id === id)
   );
+
   return element ? (
     <Fragment key={id}>
       <LayerSeparator position={position + 1} />
       <ReorderableItem
         position={position}
-        onStartReordering={handleStartReordering(id)}
+        onStartReordering={handleStartReordering(element)}
         disabled={element.isBackground}
       >
         <Layer element={element} />
@@ -95,12 +96,19 @@ function LayerPanel({ layers }) {
   const numLayers = layers.length;
 
   const focusCanvas = useFocusCanvas();
+  const { renamableLayer } = useCanvas(({ state }) => ({
+    renamableLayer: state.renamableLayer,
+  }));
+
   const handleStartReordering = useCallback(
-    (id) => () => {
-      setSelectedElementsById({ elementIds: [id] });
-      focusCanvas();
+    (element) => () => {
+      setSelectedElementsById({ elementIds: [element.id] });
+
+      if (renamableLayer) {
+        focusCanvas();
+      }
     },
-    [setSelectedElementsById, focusCanvas]
+    [setSelectedElementsById, focusCanvas, renamableLayer]
   );
 
   if (!numLayers) {

@@ -35,6 +35,7 @@ import { APP_ROUTES, ROUTE_TITLES } from '../../constants';
 import { Route, useRouteHistory } from '../../app/router';
 import { AppFrame, LeftRail, PageContent } from '../pageStructure';
 import useApiAlerts from '../../app/api/useApiAlerts';
+import FiltersProvider from '../../app/views/myStories/filters/provider';
 import useApi from '../../app/api/useApi';
 import { useConfig } from '../../app/config';
 
@@ -145,24 +146,26 @@ const InterfaceSkeleton = ({ additionalRoutes }) => {
     <>
       <AppFrame>
         <LeftRail />
-        <PageContent>
-          <Route
-            exact
-            isDefault
-            path={APP_ROUTES.DASHBOARD}
-            component={<MyStoriesView />}
-          />
-          {canViewDefaultTemplates && (
+        <FiltersProvider>
+          <PageContent>
             <Route
-              path={APP_ROUTES.TEMPLATES_GALLERY}
-              component={<ExploreTemplatesView />}
+              exact
+              isDefault
+              path={APP_ROUTES.DASHBOARD}
+              component={<MyStoriesView />}
             />
-          )}
-          {additionalRoutes &&
-            additionalRoutes.map((routeProps) => (
-              <Route key={routeProps.path} {...routeProps} />
-            ))}
-        </PageContent>
+            {canViewDefaultTemplates && (
+              <Route
+                path={APP_ROUTES.TEMPLATES_GALLERY}
+                component={<ExploreTemplatesView />}
+              />
+            )}
+            {additionalRoutes &&
+              additionalRoutes.map((routeProps) => (
+                <Route key={routeProps.path} {...routeProps} />
+              ))}
+          </PageContent>
+        </FiltersProvider>
       </AppFrame>
       <Snackbar.Container
         notifications={currentSnacks}

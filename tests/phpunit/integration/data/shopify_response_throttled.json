@@ -1,0 +1,14 @@
+{
+  "data": null,
+  "errors": [
+    {
+      "message": "Throttled error message.",
+      "locations": [{ "line": 1, "column": 1 }],
+      "path": ["products"],
+      "extensions": {
+        "code": "THROTTLED",
+        "documentation": "https://shopify.dev/api/usage/page"
+      }
+    }
+  ]
+}

@@ -53,6 +53,7 @@ const getStorySaveData = (
     backgroundAudio,
     content,
     author,
+    products,
     ...rest
   },
   encodeMarkup
@@ -70,6 +71,7 @@ const getStorySaveData = (
     style_presets: globalStoryStyles,
     meta: {
       web_stories_publisher_logo: publisherLogo?.id,
+      web_stories_products: products,
     },
     publisher_logo: publisherLogo,
     content: encodeMarkup ? base64Encode(content) : content,

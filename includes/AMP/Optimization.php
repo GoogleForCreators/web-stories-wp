@@ -38,6 +38,7 @@ use Google\Web_Stories_Dependencies\AmpProject\Optimizer\LocalFallback;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\TransformationEngine;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\AmpRuntimeCss;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\AmpStoryCssOptimizer;
+use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\MinifyHtml;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\OptimizeAmpBind;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\OptimizeHeroImages;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\RewriteAmpUrls;
@@ -163,6 +164,10 @@ class Optimization {
 			Configuration::KEY_TRANSFORMERS => $transformers,
 			AmpStoryCssOptimizer::class     => [
 				AmpStoryCssOptimizerConfiguration::OPTIMIZE_AMP_STORY => true,
+			],
+			MinifyHtml::class               => [
+				// Prevents issues with rounding floats, relevant for things like shopping (product prices).
+				Configuration\MinifyHtmlConfiguration::MINIFY_JSON => false,
 			],
 		];
 

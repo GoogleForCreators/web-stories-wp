@@ -25,6 +25,7 @@ import {
   VideoElementResolution,
   ImageElementResolution,
   StoryPagesCount,
+  FirstPageAnimation,
 } from '@googleforcreators/story-editor';
 
 function Design() {
@@ -37,6 +38,7 @@ function Design() {
       <PageTooMuchText />
       <PageTooLittleText />
       <PageTooManyLinks />
+      <FirstPageAnimation />
       {hasUploadMediaAction && <VideoElementResolution />}
       {hasUploadMediaAction && <ImageElementResolution />}
     </>

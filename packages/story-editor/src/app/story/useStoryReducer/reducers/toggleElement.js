@@ -21,14 +21,18 @@
  *
  * Otherwise add the given id to the current selection.
  *
+ * If old selection was a single element, that is locked, and/or if new
+ * element is locked, create new selection of only the new element.
+ *
  * If no id is given, do nothing.
  *
  * @param {Object} state Current state
  * @param {Object} payload Action payload
  * @param {string} payload.elementId Id to either add or remove from selection.
+ * @param {boolean} payload.withLinked With linked.
  * @return {Object} New state
  */
-function toggleElement(state, { elementId }) {
+function toggleElement(state, { elementId, withLinked = false }) {
   if (!elementId) {
     return state;
   }
@@ -39,6 +43,20 @@ function toggleElement(state, { elementId }) {
   const isBackgroundElement = backgroundElementId === elementId;
   const hasExistingSelection = state.selection.length > 0;
 
+  const elementGroupId = currentPage.elements.find(
+    ({ id }) => id === elementId
+  )?.groupId;
+  let allIds = [elementId];
+
+  if (elementGroupId && withLinked) {
+    const elementsFromGroups = currentPage.elements.filter(
+      ({ groupId }) => elementGroupId === groupId
+    );
+    const elementsIdsFromGroups = elementsFromGroups.map(({ id }) => id);
+    const selectionWithGroups = state.selection.concat(elementsIdsFromGroups);
+    allIds = allIds.concat(selectionWithGroups);
+  }
+
   // If it wasn't selected, we're adding the element to the selection.
   if (!wasSelected) {
     // The bg element can't be added to non-empty selection
@@ -46,24 +64,37 @@ function toggleElement(state, { elementId }) {
       return state;
     }
 
-    // If bg element was already the (only) selection, set selection to new element only
-    if (state.selection.includes(backgroundElementId)) {
+    // The resulting selection will be only the new element under three circumstances:
+    // * if old selection was just the background element
+    // * if old selection was just a locked element
+    // * if new selection is a locked element
+    const selectionWasOnlyBackground =
+      state.selection.includes(backgroundElementId);
+    const getElementById = (byId) =>
+      currentPage.elements.find(({ id }) => id === byId);
+    const oldElement = getElementById(state.selection[0]);
+    const newElement = getElementById(elementId);
+    const resultIsOnlyNewElement =
+      selectionWasOnlyBackground || oldElement.isLocked || newElement.isLocked;
+
+    // If either of those, return a new selection of only the new element
+    if (resultIsOnlyNewElement) {
       return {
         ...state,
-        selection: [elementId],
+        selection: allIds,
       };
     }
 
     return {
       ...state,
-      selection: [...state.selection, elementId],
+      selection: [...state.selection, ...allIds],
     };
   }
 
   // Otherwise just filter out from current selection
   return {
     ...state,
-    selection: state.selection.filter((id) => id !== elementId),
+    selection: state.selection.filter((id) => !allIds.includes(id)),
   };
 }
 

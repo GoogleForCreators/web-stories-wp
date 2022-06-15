@@ -110,7 +110,11 @@ function FramesNavAndSelection({ children }) {
 
   const onOpenMenu = useRightClickMenu((state) => state.onOpenMenu);
 
-  useKeyDownEffect(framesLayerRef, 'mod+alt+shift+m', onOpenMenu);
+  useKeyDownEffect(framesLayerRef, 'mod+alt+shift+m', (evt) => {
+    // used to shift focus outline correctly
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'tab' }));
+    onOpenMenu(evt);
+  });
 
   return (
     <Layer

@@ -1435,6 +1435,50 @@ describe('Page output', () => {
         'background-audio="https://example.com/audio.mp3"'
       );
     });
+
+    it('should use amp-video with crossorigin="anonymous" for background audio with tracks', async () => {
+      const props = {
+        id: '123',
+        page: {
+          backgroundAudio: {
+            resource: {
+              src: 'https://example.com/audio.mp3',
+              id: 123,
+              mimeType: 'audio/mpeg',
+              length: 100,
+              lengthFormatted: '1:40',
+            },
+            tracks: [
+              {
+                track: 'https://example.com/track.vtt',
+                trackId: 123,
+                trackName: 'track.vtt',
+                id: 'rersd-fdfd-fdfd-fdfd',
+                srcLang: '',
+                label: '',
+                kind: 'captions',
+              },
+            ],
+            loop: false,
+          },
+          id: '123',
+          elements: [],
+        },
+        autoAdvance: false,
+        defaultPageDuration: 7,
+      };
+
+      const { container } = render(<PageOutput {...props} />);
+      const video = container.querySelector('amp-video');
+      await expect(video).toBeInTheDocument();
+      expect(video).toMatchSnapshot();
+
+      const page = container.querySelector('amp-story-page');
+      await expect(page).toBeInTheDocument();
+      expect(page).not.toContain(
+        'background-audio="https://example.com/audio.mp3"'
+      );
+    });
   });
 
   describe('video captions', () => {
@@ -1486,9 +1530,9 @@ describe('Page output', () => {
       };
 
       const { container } = render(<PageOutput {...props} />);
-      const video = container.querySelector('amp-story-captions');
-      await expect(video).toBeInTheDocument();
-      expect(video).toMatchInlineSnapshot(`
+      const captions = container.querySelector('amp-story-captions');
+      await expect(captions).toBeInTheDocument();
+      expect(captions).toMatchInlineSnapshot(`
       <amp-story-captions
         height="100"
         id="el-baz-captions"

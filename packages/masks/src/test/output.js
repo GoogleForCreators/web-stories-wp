@@ -44,7 +44,6 @@ describe('WithMask', () => {
         width: 1080,
         rotationAngle: 0,
       },
-      box: { width: 1080, height: 1920, x: 50, y: 100, rotationAngle: 0 },
     };
 
     await expect(
@@ -81,7 +80,6 @@ describe('WithMask', () => {
           style: {},
         },
       },
-      box: { width: 1080, height: 1920, x: 50, y: 100, rotationAngle: 0 },
     };
 
     const content = renderToStaticMarkup(
@@ -120,7 +118,6 @@ describe('WithMask', () => {
           style: {},
         },
       },
-      box: { width: 1080, height: 1920, x: 50, y: 100, rotationAngle: 0 },
     };
 
     const content = renderToStaticMarkup(
@@ -157,7 +154,6 @@ describe('WithMask', () => {
           type: MaskTypes.RECTANGLE,
         },
       },
-      box: { width: 1080, height: 1920, x: 50, y: 100, rotationAngle: 0 },
     };
 
     const content = renderToStaticMarkup(
@@ -194,7 +190,6 @@ describe('WithMask', () => {
           type: MaskTypes.RECTANGLE,
         },
       },
-      box: { width: 1080, height: 1920, x: 50, y: 100, rotationAngle: 0 },
     };
 
     const content = renderToStaticMarkup(
@@ -233,7 +228,6 @@ describe('WithMask', () => {
             style: {},
           },
         },
-        box: { width: 1080, height: 1920, x: 50, y: 100, rotationAngle: 0 },
       };
 
       await expect(

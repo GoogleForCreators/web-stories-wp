@@ -92,6 +92,7 @@ const mockRemovePublisherLogo = jest.fn();
 const mockSetPublisherLogoAsDefault = jest.fn();
 const mockAddCustomFont = jest.fn();
 const mockDeleteCustomFont = jest.fn();
+const mockFetchCustomFonts = jest.fn();
 
 function createProviderValues({
   canUploadFiles,
@@ -123,6 +124,7 @@ function createProviderValues({
         pages: '/wp/v2/pages/',
         publisherLogos: '/web-stories/v1/publisher-logos/',
       },
+      plugins: { siteKit: {}, woocommerce: {} },
     },
     api: {
       state: {
@@ -178,6 +180,7 @@ function createProviderValues({
         fontsApi: {
           addCustomFont: mockAddCustomFont,
           deleteCustomFont: mockDeleteCustomFont,
+          fetchCustomFonts: mockFetchCustomFonts,
         },
       },
     },

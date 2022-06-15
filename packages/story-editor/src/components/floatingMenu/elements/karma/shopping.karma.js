@@ -15,6 +15,10 @@
  */
 
 /**
+ * External dependencies
+ */
+import { waitFor } from '@testing-library/react';
+/**
  * Internal dependencies
  */
 import { Fixture } from '../../../../karma';
@@ -24,26 +28,26 @@ import { tabToCanvasFocusContainer } from '../../karma/utils';
 describe('Shopping integration', () => {
   let fixture;
 
-  async function insertProduct(product) {
+  async function focusProductSearchInput() {
     await fixture.editor.library.shoppingTab.click();
     await fixture.events.keyboard.press('tab');
-
-    expect(document.activeElement.getAttribute('aria-label')).toBe('Product');
-    const productBtn = fixture.screen.getByRole('button', {
-      name: /Product/,
-    });
-    await fixture.events.click(productBtn);
-
-    const searchInput = fixture.screen.getByPlaceholderText('Search');
+    const searchInput = fixture.querySelector('[aria-label="Product search"]');
     await fixture.events.focus(searchInput);
-    await fixture.events.keyboard.type(product);
-    await fixture.events.keyboard.press('ArrowDown');
-    await fixture.events.keyboard.press('Enter');
+    await fixture.events.click(searchInput);
+  }
 
-    const insertProductBtn = fixture.screen.getByRole('button', {
-      name: /Insert product/,
-    });
-    await fixture.events.click(insertProductBtn);
+  async function insertProduct(product) {
+    await focusProductSearchInput();
+    await fixture.events.keyboard.type(product);
+    // allow some time for the debounced search to catch up
+    await fixture.events.sleep(400);
+    const productButton = fixture.querySelector(
+      `[aria-label="Add ${product}"]`
+    );
+    await fixture.events.click(productButton);
+    await waitFor(() =>
+      fixture.querySelector('[aria-label="Design menu"] [aria-label="Product"]')
+    );
   }
 
   beforeEach(async () => {

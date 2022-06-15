@@ -31,7 +31,10 @@ import {
 import { useUnits } from '@googleforcreators/units';
 import { useTransformHandler } from '@googleforcreators/transform';
 import PropTypes from 'prop-types';
-import { getDefinitionForType } from '@googleforcreators/elements';
+import {
+  getDefinitionForType,
+  getLayerName,
+} from '@googleforcreators/elements';
 import {
   elementWithPosition,
   elementWithSize,
@@ -71,15 +74,23 @@ import {
 const Wrapper = styled.div`
   ${elementWithPosition}
   ${elementWithSize}
-   ${elementWithRotation}
-   outline: 1px solid transparent;
+  ${elementWithRotation}
+  outline: 1px solid transparent;
   transition: outline-color 0.5s;
   &:focus,
-  &:active,
-  &:hover {
+  &:active {
     outline-color: ${({ theme, hasMask }) =>
       hasMask ? 'transparent' : theme.colors.border.selection};
   }
+  ${({ isLocked, hasMask, theme }) =>
+    !isLocked &&
+    !hasMask &&
+    `
+    &:hover {
+      outline-color: ${theme.colors.border.selection};
+    }
+  `}
+  ${({ isClickable }) => !isClickable && `pointer-events: none;`}
 `;
 
 const EmptyFrame = styled.div`
@@ -94,13 +105,12 @@ const EmptyFrame = styled.div`
 const NOOP = () => {};
 
 const FRAME_ELEMENT_MESSAGE = sprintf(
-  /* translators: 1: Ctrl Key 2: Alt Key */
+  /* translators: %s: Ctrl+Alt+P keyboard shortcut. */
   __(
-    'To exit the canvas area, press Escape. Press Tab to move to the next group or element. To enter floating menu, press %1$s %2$s p.',
+    'To exit the canvas area, press Escape. Press Tab to move to the next group or element. To enter floating menu, press %s.',
     'web-stories'
   ),
-  prettifyShortcut('ctrl'),
-  prettifyShortcut('alt')
+  prettifyShortcut('ctrl+alt+p')
 );
 
 function FrameElement({ id }) {
@@ -142,7 +152,12 @@ function FrameElement({ id }) {
         isActive,
       };
     });
-  const { type, flip } = element;
+  const { type, flip, isLocked } = element;
+
+  // Unlocked elements are always clickable,
+  // locked elements are only clickable if selected
+  const isClickable = !isLocked || isSelected;
+
   const { Frame, isMaskable, Controls } = getDefinitionForType(type);
   const elementRef = useRef();
   const combinedFocusGroupRef = useCombinedRefs(elementRef, focusGroupRef); // Only attach focus group ref to one element.
@@ -171,9 +186,10 @@ function FrameElement({ id }) {
   const onPointerEnter = () => setHovering(true);
   const onPointerLeave = () => setHovering(false);
 
-  const isLinkActive = useTransform(
+  const isAnythingTransforming = useTransform(
     ({ state }) => !isSelected && hovering && !state.isAnythingTransforming
   );
+  const isLinkActive = isAnythingTransforming && !isLocked;
 
   const getBox = useUnits(({ actions }) => actions.getBox);
 
@@ -225,10 +241,15 @@ function FrameElement({ id }) {
     [handleSelectElement, id, isBackground, isSelected, speak]
   );
 
+  const { clearTransforms } = useTransform((state) => ({
+    clearTransforms: state.actions.clearTransforms,
+  }));
+
   const handleMouseDown = useCallback(
     (evt) => {
       if (!isSelected) {
         handleSelectElement(id, evt);
+        clearTransforms();
       }
 
       elementRef.current.focus({ preventScroll: true });
@@ -237,7 +258,7 @@ function FrameElement({ id }) {
         evt.stopPropagation();
       }
     },
-    [handleSelectElement, id, isBackground, isSelected]
+    [handleSelectElement, id, isBackground, isSelected, clearTransforms]
   );
 
   usePerformanceTracking({
@@ -269,6 +290,19 @@ function FrameElement({ id }) {
     }
   }, [setFocusGroupCleanup, isSelected]);
 
+  const layerName = getLayerName(element);
+  const elementLabel = element.isLocked
+    ? sprintf(
+        // translators: %s: Name of element
+        __('Locked element: %s', 'web-stories'),
+        layerName
+      )
+    : sprintf(
+        // translators: %s: Name of element
+        __('Element: %s', 'web-stories'),
+        layerName
+      );
+
   return (
     <WithLink element={element} active={isLinkActive} anchorRef={elementRef}>
       {Controls && (
@@ -282,13 +316,16 @@ function FrameElement({ id }) {
           isActive={isActive}
         />
       )}
+      {/* eslint-disable-next-line styled-components-a11y/click-events-have-key-events -- False positive */}
       <Wrapper
         ref={combinedFocusGroupRef}
         data-element-id={id}
         {...box}
         tabIndex={-1}
-        role="presentation"
+        role="button"
+        aria-label={elementLabel}
         hasMask={isMaskable}
+        isClickable={isClickable}
         data-testid="frameElement"
         onMouseDown={handleMouseDown}
         onFocus={handleFocus}
@@ -305,6 +342,7 @@ function FrameElement({ id }) {
           isDropSource={isDropSource}
           registerDropTarget={registerDropTarget}
           unregisterDropTarget={unregisterDropTarget}
+          isSelected={isSelected}
         >
           {Frame ? (
             <Frame

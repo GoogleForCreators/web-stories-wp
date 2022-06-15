@@ -165,7 +165,6 @@ describe('BackgroundAudioPanel', () => {
           {
             track: 'https://example.com/track.vtt',
             trackId: 123,
-            trackName: 'track.vtt',
             id: 'rersd-fdfd-fdfd-fdfd',
             srcLang: '',
             label: '',
@@ -175,8 +174,7 @@ describe('BackgroundAudioPanel', () => {
         loop: true,
       },
     });
-    const input = screen.getByRole('textbox', { name: 'Filename' });
-    expect(input).toHaveValue('track.vtt');
+    expect(screen.getByText('track.vtt')).toBeInTheDocument();
   });
 
   it('should render upload button for captions', () => {
@@ -226,7 +224,6 @@ describe('BackgroundAudioPanel', () => {
           {
             track: 'https://example.com/track.vtt',
             trackId: 123,
-            trackName: 'track.vtt',
             id: 'rersd-fdfd-fdfd-fdfd',
             srcLang: '',
             label: '',
@@ -237,7 +234,7 @@ describe('BackgroundAudioPanel', () => {
       },
       hasUploadMediaAction: false,
     });
-    const input = screen.getByRole('textbox', { name: 'Filename' });
-    expect(input).toHaveValue('track.vtt');
+
+    expect(screen.getByText('track.vtt')).toBeInTheDocument();
   });
 });

@@ -25,23 +25,30 @@ import {
   BUTTON_TYPES,
   Icons,
   themeHelpers,
+  Text,
+  THEME_CONSTANTS,
+  Input,
 } from '@googleforcreators/design-system';
-import { useRef, memo } from '@googleforcreators/react';
-import { getDefinitionForType } from '@googleforcreators/elements';
-import { LayerText } from '@googleforcreators/element-library';
+import { useRef, memo, useState } from '@googleforcreators/react';
+import {
+  getDefinitionForType,
+  getLayerName,
+} from '@googleforcreators/elements';
 import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
  */
 import StoryPropTypes from '../../../../types';
-import { useStory } from '../../../../app';
+import { useStory, useCanvas } from '../../../../app';
 import useCORSProxy from '../../../../utils/useCORSProxy';
 import usePerformanceTracking from '../../../../utils/usePerformanceTracking';
 import { TRACKING_EVENTS } from '../../../../constants';
 import Tooltip from '../../../tooltip';
+import useShapeMask from '../../../../utils/useShapeMask';
 import useLayerSelection from './useLayerSelection';
 import { LAYER_HEIGHT } from './constants';
+import ShapeMaskWrapper from './shapeMaskWrapper';
 
 const fadeOutCss = css`
   background-color: var(--background-color);
@@ -153,11 +160,50 @@ const LayerButton = styled(Button).attrs({
   }
 `;
 
+const LayerInputWrapper = styled.div`
+  display: grid;
+  grid-template-columns: 23px 1fr;
+  height: 100%;
+  width: 100%;
+  padding-left: 12px;
+  padding-right: 10px;
+
+  :hover {
+    background: ${({ theme }) => theme.colors.interactiveBg.tertiaryHover};
+  }
+  :hover,
+  :hover + * {
+    --background-color: ${({ theme }) =>
+      theme.colors.interactiveBg.tertiaryHover};
+    --background-color-opaque: ${({ theme }) =>
+      rgba(theme.colors.interactiveBg.tertiaryHover, 0)};
+  }
+`;
+
+const LayerInput = styled(Input)`
+  overflow: visible;
+
+  div {
+    height: 100%;
+  }
+`;
+
 const LayerIconWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
   color: ${({ theme }) => theme.colors.fg.primary};
+
+  :hover {
+    background: ${({ theme }) => theme.colors.interactiveBg.tertiaryHover};
+  }
+  :hover,
+  :hover + * {
+    --background-color: ${({ theme }) =>
+      theme.colors.interactiveBg.tertiaryHover};
+    --background-color-opaque: ${({ theme }) =>
+      rgba(theme.colors.interactiveBg.tertiaryHover, 0)};
+  }
 `;
 
 const LayerDescription = styled.div`
@@ -169,6 +215,22 @@ const LayerDescription = styled.div`
   margin-left: 0;
   text-align: left;
   color: ${({ theme }) => theme.colors.fg.primary};
+`;
+
+const LayerInputForm = styled(LayerDescription).attrs({ as: 'form' })`
+  overflow: visible;
+  margin-left: 2px;
+`;
+
+const LayerText = styled(Text).attrs({
+  forwardedAs: 'span',
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+})`
+  color: inherit;
+  white-space: nowrap;
+  text-overflow: ' ';
+  overflow: hidden;
+  max-width: 100%;
 `;
 
 const IconWrapper = styled.div`
@@ -264,8 +326,10 @@ function preventReorder(e) {
 }
 
 function Layer({ element }) {
+  const layerName = getLayerName(element);
+  const [newLayerName, setNewLayerName] = useState(layerName);
   const isLayerLockingEnabled = useFeature('layerLocking');
-  const { LayerIcon, LayerContent } = getDefinitionForType(element.type);
+  const { LayerIcon, hasDuplicateMenu } = getDefinitionForType(element.type);
   const { isSelected, handleClick } = useLayerSelection(element);
   const { isDefaultBackground } = element;
   const {
@@ -281,6 +345,15 @@ function Layer({ element }) {
       !isDefaultBackground || state.currentPage?.backgroundColor,
   }));
 
+  const { renamableLayer, setRenamableLayer } = useCanvas(
+    ({ state, actions }) => ({
+      renamableLayer: state.renamableLayer,
+      setRenamableLayer: actions.setRenamableLayer,
+    })
+  );
+
+  const { hasShapeMask, removeShapeMask } = useShapeMask(element);
+  const removeMaskTitle = __('Unmask', 'web-stories');
   const { getProxiedUrl } = useCORSProxy();
   const layerRef = useRef(null);
   usePerformanceTracking({
@@ -302,43 +375,124 @@ function Layer({ element }) {
 
   const LockIcon = element.isLocked ? Icons.LockClosed : Icons.LockOpen;
 
+  const handleChange = (evt) => {
+    setNewLayerName(evt.target.value);
+  };
+
+  const handleKeyDown = (evt) => {
+    if (evt.key === 'Escape') {
+      setNewLayerName(layerName);
+      setRenamableLayer(null);
+    }
+  };
+
+  const updateLayerName = () => {
+    setRenamableLayer(null);
+    const trimmedLayerName = newLayerName.trim();
+    // Don't update name if trimmed layer name is empty.
+    // This means that submitting an empty name will exit renaming, and the
+    // layer name will revert to whatever it was before, ignoring the empty input.
+    if (!trimmedLayerName) {
+      setNewLayerName(layerName);
+    } else {
+      updateElementById({
+        elementId: element.id,
+        properties: { layerName: trimmedLayerName },
+      });
+    }
+  };
+
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+    updateLayerName();
+  };
+
+  // We need to prevent the pointer-down event from propagating to the
+  // reorderable when you click on the input. If not, the reorderable will
+  // move focus, which will blur the input, which will cancel renaming.
+  const stopPropagation = (evt) => evt.stopPropagation();
+
+  const isLayerNamingEnabled = useFeature('layerNaming');
+  const isRenameable = renamableLayer?.elementId === element.id;
+
+  const layerGroupName = element.groupId
+    ? `${__('Group', 'web-stories')} ${element.groupId.substr(-3)}: `
+    : null;
+
   return (
     <LayerContainer>
-      <LayerButton
-        ref={layerRef}
-        id={layerId}
-        onClick={handleClick}
-        isSelected={isSelected}
-      >
-        <LayerIconWrapper>
-          <LayerIcon
-            element={element}
-            getProxiedUrl={getProxiedUrl}
-            currentPageBackgroundColor={currentPageBackgroundColor}
-          />
-        </LayerIconWrapper>
-        <LayerDescription>
-          <LayerContentContainer>
-            {element.isBackground ? (
-              <LayerText>{__('Background', 'web-stories')}</LayerText>
-            ) : (
-              <LayerContent element={element} />
+      {isRenameable && isLayerNamingEnabled ? (
+        <LayerInputWrapper>
+          <LayerIconWrapper>
+            <ShapeMaskWrapper element={element}>
+              <LayerIcon
+                element={element}
+                getProxiedUrl={getProxiedUrl}
+                currentPageBackgroundColor={currentPageBackgroundColor}
+              />
+            </ShapeMaskWrapper>
+          </LayerIconWrapper>
+          <LayerInputForm onSubmit={handleSubmit}>
+            <LayerInput
+              tabIndex={-1}
+              aria-label={__('Layer Name', 'web-stories')}
+              value={newLayerName}
+              onChange={handleChange}
+              onKeyDown={handleKeyDown}
+              onBlur={updateLayerName}
+              onPointerDown={stopPropagation}
+              hasFocus
+            />
+            <button hidden />
+          </LayerInputForm>
+        </LayerInputWrapper>
+      ) : (
+        <LayerButton
+          ref={layerRef}
+          id={layerId}
+          onClick={handleClick}
+          isSelected={isSelected}
+        >
+          <LayerIconWrapper>
+            <ShapeMaskWrapper element={element}>
+              <LayerIcon
+                element={element}
+                getProxiedUrl={getProxiedUrl}
+                currentPageBackgroundColor={currentPageBackgroundColor}
+              />
+            </ShapeMaskWrapper>
+          </LayerIconWrapper>
+          <LayerDescription>
+            <LayerContentContainer>
+              <LayerText>{layerGroupName}</LayerText>
+              <LayerText>{layerName}</LayerText>
+            </LayerContentContainer>
+            {element.isBackground && (
+              <IconWrapper>
+                <Icons.LockFilledClosed />
+              </IconWrapper>
             )}
-          </LayerContentContainer>
-          {element.isBackground && (
-            <IconWrapper>
-              <Icons.LockFilledClosed />
-            </IconWrapper>
-          )}
-          {element.isLocked && isLayerLockingEnabled && (
-            <IconWrapper>
-              <Icons.LockClosed />
-            </IconWrapper>
-          )}
-        </LayerDescription>
-      </LayerButton>
-      {!element.isBackground && (
+            {element.isLocked && isLayerLockingEnabled && (
+              <IconWrapper aria-label={__('Locked', 'web-stories')}>
+                <Icons.LockClosed />
+              </IconWrapper>
+            )}
+          </LayerDescription>
+        </LayerButton>
+      )}
+      {!element.isBackground && !isRenameable && (
         <ActionsContainer>
+          {hasShapeMask && (
+            <Tooltip title={removeMaskTitle} hasTail isDelayed>
+              <LayerAction
+                aria-label={removeMaskTitle}
+                aria-describedby={layerId}
+                onClick={removeShapeMask}
+              >
+                <Icons.RemoveMask />
+              </LayerAction>
+            </Tooltip>
+          )}
           <Tooltip title={__('Delete Layer', 'web-stories')} hasTail isDelayed>
             <LayerAction
               ref={deleteButtonRef}
@@ -350,22 +504,24 @@ function Layer({ element }) {
               <Icons.Trash />
             </LayerAction>
           </Tooltip>
-          <Tooltip
-            title={__('Duplicate Layer', 'web-stories')}
-            hasTail
-            isDelayed
-          >
-            <LayerAction
-              aria-label={__('Duplicate', 'web-stories')}
-              aria-describedby={layerId}
-              onPointerDown={preventReorder}
-              onClick={() =>
-                duplicateElementsById({ elementIds: [element.id] })
-              }
+          {hasDuplicateMenu && (
+            <Tooltip
+              title={__('Duplicate Layer', 'web-stories')}
+              hasTail
+              isDelayed
             >
-              <Icons.PagePlus />
-            </LayerAction>
-          </Tooltip>
+              <LayerAction
+                aria-label={__('Duplicate', 'web-stories')}
+                aria-describedby={layerId}
+                onPointerDown={preventReorder}
+                onClick={() =>
+                  duplicateElementsById({ elementIds: [element.id] })
+                }
+              >
+                <Icons.PagePlus />
+              </LayerAction>
+            </Tooltip>
+          )}
           {isLayerLockingEnabled && (
             <Tooltip title={lockTitle} hasTail isDelayed>
               <LayerAction
