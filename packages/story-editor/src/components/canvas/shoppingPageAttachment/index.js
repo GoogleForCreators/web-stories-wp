@@ -110,7 +110,7 @@ const TextWrapper = styled.span`
 const LIGHT_COLOR = '#FFFFFF';
 const DARK_COLOR = '#000000';
 
-function PageAttachment({ ctaText = __('Shop Now', 'web-stories'), theme }) {
+function PageAttachment({ ctaText, theme }) {
   const arrowColor = theme === OUTLINK_THEME.DARK ? LIGHT_COLOR : DARK_COLOR;
   const fgColor = theme === OUTLINK_THEME.DARK ? DARK_COLOR : LIGHT_COLOR;
 
@@ -127,7 +127,7 @@ function PageAttachment({ ctaText = __('Shop Now', 'web-stories'), theme }) {
           </ArrowWrap>
           <OutlinkChip $factor={dataToEditorY}>
             <TextWrapper fgColor={fgColor} $factor={dataToEditorY}>
-              {ctaText}
+              {ctaText || __('Shop Now', 'web-stories')}
             </TextWrapper>
           </OutlinkChip>
         </Inner>
