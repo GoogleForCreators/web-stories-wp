@@ -39,7 +39,7 @@ const ExtraPageWrapper = styled.div`
   align-items: center;
   height: 100%;
 `;
-const ExtraPageList = styled.ul`
+const ExtraPageList = styled.ol`
   display: flex;
   flex-direction: ${({ isPrevious }) => (isPrevious ? 'row-reverse' : 'row')};
   width: ${({ listWidth }) => listWidth}px;
