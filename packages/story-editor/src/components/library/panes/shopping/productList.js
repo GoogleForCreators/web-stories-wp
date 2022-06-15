@@ -32,13 +32,8 @@ const StyledListItem = styled.div`
   width: 100%;
   padding: 5px 0;
   align-items: center;
-  border-bottom: 2px solid ${({ theme }) => theme.colors.divider.tertiary};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.divider.tertiary};
   transition: background-color ease-in-out 300ms;
-  &:focus-within,
-  &:hover,
-  &:focus {
-    background-color: ${({ theme }) => theme.colors.interactiveBg.disable};
-  }
 `;
 
 function ProductList({
