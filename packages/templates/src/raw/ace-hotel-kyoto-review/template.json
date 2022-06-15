@@ -263,16 +263,7 @@
       "backgroundColor": { "color": { "r": 25, "g": 88, "b": 77 } },
       "type": "page",
       "id": "da3808b7-6397-435a-8a2d-93f756672665",
-      "animations": [
-        {
-          "id": "80dd3a87-c2d8-4a3b-aeb0-673e6521f6b5",
-          "type": "effect-fly-in",
-          "targets": ["3ce61444-e401-490f-b9f1-f775b3d0244f"],
-          "flyInDir": "leftToRight",
-          "duration": 2500,
-          "delay": 0
-        }
-      ],
+      "animations": [],
       "pageTemplateType": "cover"
     },
     {

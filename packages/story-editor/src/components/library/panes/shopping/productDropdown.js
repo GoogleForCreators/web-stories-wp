@@ -54,7 +54,7 @@ function ProductDropdown({ product, setProduct, ...rest }) {
 
   const getProductsByQuery = useCallback(
     async (value = '') => {
-      const products = await getProducts(value);
+      const { products } = await getProducts(value);
       return products.map((p) => ({
         name: p.productTitle,
         id: p.productId,

@@ -197,30 +197,7 @@
           "type": "text"
         }
       ],
-      "animations": [
-        {
-          "id": "c2821faa-931c-4b1b-a024-7e75fcb63dfb",
-          "type": "effect-zoom",
-          "scaleDirection": "scaleIn",
-          "duration": 2000,
-          "delay": 0,
-          "targets": ["045aa174-4326-485e-ab49-061d5d7f517c"]
-        },
-        {
-          "id": "20a58822-2cc6-48a2-a720-bb3e59b91949",
-          "type": "effect-fade-in",
-          "targets": ["49925035-6a2a-40dd-89c8-3b37174f7620"],
-          "duration": 1200,
-          "delay": 0
-        },
-        {
-          "id": "e965660a-978b-4814-9eab-e8003d7bf7f9",
-          "type": "effect-fade-in",
-          "targets": ["6815fa2d-5446-4838-b840-c8ea6853a48f"],
-          "duration": 1200,
-          "delay": 0
-        }
-      ],
+      "animations": [],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "id": "e5a0040d-67df-47af-b227-f31db2882ec3",

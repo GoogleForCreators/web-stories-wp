@@ -103,17 +103,7 @@
           "id": "898ed4f5-c704-459c-be51-be8daeaab737"
         }
       ],
-      "animations": [
-        {
-          "id": "fca50a39-d9f7-4d63-a7e9-96a2f1045321",
-          "type": "effect-pulse",
-          "targets": ["9fc66e49-85dd-477d-8bb9-30ae259bc7fe"],
-          "scale": 0.05,
-          "iterations": 3,
-          "duration": 600,
-          "delay": 0
-        }
-      ],
+      "animations": [],
       "type": "page",
       "id": "2572f4a4-bb11-47e2-9f77-b8371aeabe49",
       "backgroundColor": { "color": { "r": 180, "g": 17, "b": 31 } },
