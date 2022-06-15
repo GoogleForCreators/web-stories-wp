@@ -71,8 +71,8 @@ describe('provider', () => {
     let filter = result.current.state.filters.find((f) => f.key === filterKey);
     expect(filter).toBeDefined();
 
-    // filters with null filterId's should not be in the filters object
-    let filterObj = result.current.actions.getFiltersObject();
+    // filters with falsy filterId's should not be in the filters object
+    let filterObj = result.current.state.filtersObject;
     expect(filterObj).toMatchObject({});
 
     // update the filter
@@ -87,7 +87,7 @@ describe('provider', () => {
       filterId: 1,
     });
 
-    filterObj = result.current.actions.getFiltersObject();
+    filterObj = result.current.state.filtersObject;
     expect(filterObj).toMatchObject({
       [filterKey]: 1,
     });

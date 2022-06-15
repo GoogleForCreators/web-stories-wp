@@ -71,11 +71,10 @@ function MyStories() {
       totalStoriesByStatus,
     })
   );
-  const { filters, getFiltersObject } = useFilters(
-    ({ state: { filters }, actions: { getFiltersObject } }) => ({
+  const { filters, filtersObject } = useFilters(
+    ({ state: { filters, filtersObject } }) => ({
       filters,
-
-      getFiltersObject,
+      filtersObject,
     })
   );
 
@@ -111,7 +110,7 @@ function MyStories() {
       sortDirection: sort.direction,
       sortOption: sort.value,
       status: filter.value,
-      filters: getFiltersObject(),
+      filters: filtersObject,
     });
   }, [
     fetchStories,
@@ -121,7 +120,7 @@ function MyStories() {
     sort.direction,
     sort.value,
     apiCallbacks,
-    getFiltersObject,
+    filtersObject,
   ]);
 
   const orderedStories = useMemo(() => {

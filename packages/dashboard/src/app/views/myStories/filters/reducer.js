@@ -51,9 +51,18 @@ const reducer = (state, { type, payload = {} }) => {
       const filters = [...state.filters];
       filters[idx] = { ...filter, ...value };
 
+      // update filtersObject
+      const filtersObject = {};
+      for (const f of filters) {
+        if (f.filterId) {
+          filtersObject[f.key] = f.filterId;
+        }
+      }
+
       return {
         ...state,
         filters,
+        filtersObject,
       };
     }
 
@@ -61,7 +70,6 @@ const reducer = (state, { type, payload = {} }) => {
       const { value } = payload;
       return {
         ...state,
-        filtersLoading: false,
         filters: value,
       };
     }

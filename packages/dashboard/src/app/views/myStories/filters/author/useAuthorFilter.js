@@ -56,7 +56,7 @@ function useAuthorFilter() {
    *
    * @param {Object} filter author filter data
    * @param {string} search string use to query author by name
-   * @return {Array} taxonomy terms
+   * @return {Array} author data
    */
   const queryAuthors = useCallback(
     async (filter, search) => {
