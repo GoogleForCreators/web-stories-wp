@@ -58,7 +58,7 @@ describe('Shopping integration', () => {
 
   describe('Shopping tab', () => {
     it('should handle product search add and remove', async () => {
-      const productTitle = 'Hoodie with Zipper';
+      const productTitle = 'Hoodie';
       await focusProductSearchInput();
       expect(isStoryEmpty()).toEqual(true);
       await fixture.events.keyboard.type('hood');
@@ -109,6 +109,19 @@ describe('Shopping integration', () => {
       expect(isStoryEmpty()).toEqual(true);
     });
 
+    it('should disable button if product lacks product image', async () => {
+      await focusProductSearchInput();
+      await fixture.events.keyboard.type('WordPress');
+      // delay for search to catch-up
+      await fixture.events.sleep(400);
+
+      const productButton = fixture.querySelector(
+        '[aria-label="Products without images cannot be added."]'
+      );
+
+      await expect(productButton.getAttribute('aria-disabled')).toBe('true');
+    });
+
     it('should sort searched products', async () => {
       await fixture.editor.library.shoppingTab.click();
       await fixture.events.keyboard.press('tab');
@@ -118,7 +131,7 @@ describe('Shopping integration', () => {
       );
       await fixture.events.mouse.clickOn(sortDropdown, 1, 1);
 
-      const option = fixture.screen.getByRole('option', {
+      const option = fixture.screen.getByRole('menuitem', {
         name: /^Alphabetical: Z-A/,
       });
 

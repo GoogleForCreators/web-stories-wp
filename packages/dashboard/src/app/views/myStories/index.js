@@ -30,8 +30,9 @@ import {
 import { ScrollToTop, Layout } from '../../../components';
 import { STORY_STATUSES } from '../../../constants';
 import { useStoryView, noop } from '../../../utils';
-import useApi from '../../api/useApi';
 import { useConfig } from '../../config';
+import useApi from '../../api/useApi';
+import useFilters from './filters/useFilters';
 import Content from './content';
 import Header from './header';
 
@@ -78,8 +79,18 @@ function MyStories() {
       getAuthors,
     })
   );
-  const { apiCallbacks, canViewDefaultTemplates } = useConfig();
+  const { filters, filtersLoading, getFiltersObject } = useFilters(
+    ({
+      state: { filters, filtersLoading },
+      actions: { getFiltersObject },
+    }) => ({
+      filters,
+      filtersLoading,
+      getFiltersObject,
+    })
+  );
 
+  const { apiCallbacks, canViewDefaultTemplates } = useConfig();
   const isMounted = useRef(false);
 
   useEffect(() => {
@@ -145,6 +156,7 @@ function MyStories() {
       sortOption: sort.value,
       status: filter.value,
       author: author.filterId,
+      filters: getFiltersObject(),
     });
   }, [
     fetchStories,
@@ -155,6 +167,7 @@ function MyStories() {
     sort.value,
     author.filterId,
     apiCallbacks,
+    getFiltersObject,
   ]);
 
   const orderedStories = useMemo(() => {
@@ -170,6 +183,7 @@ function MyStories() {
       <Header
         initialPageReady={initialPageReady}
         filter={filter}
+        filters={filters}
         search={search}
         sort={sort}
         stories={orderedStories}
@@ -184,7 +198,10 @@ function MyStories() {
         allPagesFetched={allPagesFetched}
         canViewDefaultTemplates={canViewDefaultTemplates}
         filter={filter}
-        loading={{ isLoading, showStoriesWhileLoading }}
+        loading={{
+          isLoading: isLoading && filtersLoading,
+          showStoriesWhileLoading,
+        }}
         page={page}
         search={search}
         sort={sort}

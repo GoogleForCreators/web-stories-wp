@@ -35,7 +35,6 @@ export default function WithMask({
   element,
   fill,
   skipDefaultMask = false,
-  box,
   ...rest
 }) {
   const getBorderWidth = () => element.border?.left;
@@ -62,6 +61,5 @@ WithMask.propTypes = {
   style: PropTypes.object,
   fill: PropTypes.bool,
   children: PropTypes.node.isRequired,
-  box: StoryPropTypes.box.isRequired,
   skipDefaultMask: PropTypes.bool,
 };
