@@ -373,7 +373,7 @@ describe('Right Click Menu integration', () => {
   /**
    * Add product to canvas
    *
-   * @param productPartial Object with product properties to override defaults.
+   * @param {Object} productPartial Object with product properties to override defaults.
    * @return {Object} the product element
    */
   function addProduct(productPartial = {}) {
