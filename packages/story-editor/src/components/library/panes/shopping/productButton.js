@@ -24,13 +24,14 @@ import {
   BUTTON_SIZES,
   BUTTON_VARIANTS,
 } from '@googleforcreators/design-system';
-import { __, sprintf } from '@googleforcreators/i18n';
+import { __, _n, sprintf } from '@googleforcreators/i18n';
 import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
 import Tooltip from '../../../tooltip';
 import { noop } from '../../../../utils/noop';
+import { MAX_PRODUCTS_PER_PAGE } from '../../../../constants';
 
 const Checkmark = styled(Icons.Checkmark)`
   width: 16px !important;
@@ -66,27 +67,47 @@ const StyledActionsContainer = styled.div`
   margin-right: 10px;
 `;
 
-const DISABLED_PRODUCT_TEXT = __(
+const DISABLED_PRODUCT_TEXT = sprintf(
+  /* translators: %s: max number of products. */
+  _n(
+    'Only %d item can be added per page.',
+    'Only %d items can be added per page.',
+    MAX_PRODUCTS_PER_PAGE,
+    'web-stories'
+  ),
+  MAX_PRODUCTS_PER_PAGE
+);
+
+const DISABLED_PRODUCT_IMAGE_TEXT = __(
   'Products without images cannot be added.',
   'web-stories'
 );
 
-const TooltipWrapper = ({ hasImage, children }) => {
-  return !hasImage ? (
-    <Tooltip hasTail title={DISABLED_PRODUCT_TEXT}>
-      {children}
-    </Tooltip>
-  ) : (
-    children
-  );
+const TooltipWrapper = ({ hasImage, disabled, children }) => {
+  if (!hasImage) {
+    return (
+      <Tooltip hasTail title={DISABLED_PRODUCT_IMAGE_TEXT}>
+        {children}
+      </Tooltip>
+    );
+  } else if (disabled) {
+    return (
+      <Tooltip hasTail title={DISABLED_PRODUCT_TEXT}>
+        {children}
+      </Tooltip>
+    );
+  } else {
+    return children;
+  }
 };
 
 TooltipWrapper.propTypes = {
+  disabled: PropTypes.bool,
   hasImage: PropTypes.bool,
   children: PropTypes.node,
 };
 
-function ProductButton({ product, onClick, onFocus, isOnPage }) {
+function ProductButton({ product, onClick, onFocus, isOnPage, canAddMore }) {
   const ADD_PRODUCT_TEXT = sprintf(
     /* translators: %s: product title. */
     __('Add %s', 'web-stories'),
@@ -100,28 +121,32 @@ function ProductButton({ product, onClick, onFocus, isOnPage }) {
     product?.productTitle
   );
 
+  const disabled = !isOnPage && !canAddMore;
+
   let ariaLabel = '';
   if (!hasImage) {
-    ariaLabel = DISABLED_PRODUCT_TEXT;
+    ariaLabel = DISABLED_PRODUCT_IMAGE_TEXT;
   } else if (isOnPage) {
     ariaLabel = REMOVE_PRODUCT_TEXT;
+  } else if (disabled) {
+    ariaLabel = DISABLED_PRODUCT_TEXT;
   } else {
     ariaLabel = ADD_PRODUCT_TEXT;
   }
 
   return (
-    <TooltipWrapper hasImage={hasImage}>
+    <TooltipWrapper hasImage={hasImage} disabled={disabled}>
       <StyledActionsContainer>
         <StyledButton
           aria-label={ariaLabel}
-          aria-disabled={!hasImage}
+          aria-disabled={!hasImage || disabled}
           // Note for below:
           // In order to support focus for accessibility
           // we have to utilize `noop` for the onClick
           // as `disabled` will disable the ability to focus
           // and tab order does not accomplish the same
           onClick={
-            hasImage
+            hasImage && !disabled
               ? () => {
                   onClick(product, isOnPage);
                 }
@@ -151,6 +176,7 @@ ProductButton.propTypes = {
   onClick: PropTypes.func,
   onFocus: PropTypes.func,
   isOnPage: PropTypes.bool,
+  canAddMore: PropTypes.bool,
 };
 
 export default ProductButton;
