@@ -49,7 +49,7 @@ export const filterContext = createContext({
  *
  * state.filters should be used for UI.
  * state.filtersObject should hold the key value pairs associated with filtering query params
- * eg {authors: 44} where 'author' is whats being filtered on and '44' is the authors ID
+ * eg {author: 44} where 'author' is whats being filtered on and '44' is the authors ID
  * thats being filtering for.
  *
  * @param {Object} root0 props for the provider
@@ -59,8 +59,8 @@ export const filterContext = createContext({
 
 export default function FiltersProvider({ children }) {
   // each filter type will have its own logic for initilizing and querying
-  const { initializeTaxonomyFilters } = useTaxonomyFilters();
-  const { initializeAuthorFilter } = useAuthorFilter();
+  const initializeTaxonomyFilters = useTaxonomyFilters();
+  const initializeAuthorFilter = useAuthorFilter();
 
   const [state, dispatch] = useReducer(reducer, {
     filters: [],

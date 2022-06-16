@@ -103,17 +103,13 @@ const OptionsContainer = forwardRef(function OptionsContainer(
     });
   }, 500);
 
-  const handleLoadOptions = useCallback(() => {
-    debounceHandleLoadOptions();
-  }, [debounceHandleLoadOptions]);
-
   useEffect(() => {
     if (getOptionsByQuery && isKeywordFilterable(searchKeyword)) {
-      handleLoadOptions();
+      debounceHandleLoadOptions();
     } else {
       setQueriedOptions(null);
     }
-  }, [getOptionsByQuery, searchKeyword, handleLoadOptions]);
+  }, [getOptionsByQuery, searchKeyword, debounceHandleLoadOptions]);
 
   useEffect(() => {
     if (isOpen) {

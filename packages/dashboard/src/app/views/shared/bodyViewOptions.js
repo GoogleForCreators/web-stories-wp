@@ -30,7 +30,6 @@ import {
 /**
  * Internal dependencies
  */
-import { AuthorPropTypes } from '../../../utils/useStoryView.js';
 import { StandardViewContentGutter, ViewStyleBar } from '../../../components';
 import { DROPDOWN_TYPES, VIEW_STYLE } from '../../../constants';
 import useFilters from '../myStories/filters/useFilters';
@@ -78,6 +77,7 @@ export default function BodyViewOptions({
   const { updateFilter } = useFilters(({ actions: { updateFilter } }) => ({
     updateFilter,
   }));
+
   return (
     <StandardViewContentGutter>
       <BodyViewOptionsHeader id="body-view-options-header" />
@@ -99,10 +99,10 @@ export default function BodyViewOptions({
                         filterId: id,
                       });
                     }}
-                    getOptionsByQuery={(search) => filter.query(filter, search)}
+                    getOptionsByQuery={filter.query}
+                    getPrimaryOptions={filter.getPrimaryOptions}
                     selectedId={filter.filterId}
                     placeholder={filter.placeholder}
-                    primaryOptions={filter.primaryOptions}
                     noMatchesFoundLabel={filter.noMatchesFoundLabel}
                     searchPlaceholder={filter.searchPlaceholder}
                     offsetOverride

@@ -68,9 +68,14 @@ const reducer = (state, { type, payload = {} }) => {
 
     case types.REGISTER_FILTERS: {
       const { value } = payload;
+      const currentFilters = state.filters.map((f) => f.key);
+      const newFilters = value.filter((v) => !currentFilters.includes(v.key));
+      if (!newFilters.length) {
+        return state;
+      }
       return {
         ...state,
-        filters: value,
+        filters: [...newFilters, ...state.filters],
       };
     }
     default:

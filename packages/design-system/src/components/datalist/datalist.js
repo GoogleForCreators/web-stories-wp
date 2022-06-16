@@ -23,6 +23,7 @@ import {
   useRef,
   forwardRef,
   useDebouncedCallback,
+  useEffect,
 } from '@googleforcreators/react';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
@@ -84,7 +85,7 @@ const Datalist = forwardRef(function Datalist(
     hasSearch = false,
     getOptionsByQuery,
     onObserve,
-    primaryOptions,
+    primaryOptions = [],
     primaryLabel,
     priorityOptionGroups,
     searchResultsLabel,
@@ -103,6 +104,7 @@ const Datalist = forwardRef(function Datalist(
     offsetOverride = false,
     noMatchesFoundLabel,
     searchPlaceholder,
+    getPrimaryOptions,
     ...rest
   },
   ref
@@ -121,6 +123,7 @@ const Datalist = forwardRef(function Datalist(
   const internalRef = useRef();
 
   const [isOpen, setIsOpen] = useState(false);
+  const [_primaryOptions, _setPrimaryOptions] = useState([]);
 
   const closeDropDown = useCallback(() => {
     setIsOpen(false);
@@ -176,7 +179,7 @@ const Datalist = forwardRef(function Datalist(
           focusTrigger={trigger}
           onObserve={onObserve}
           options={options || queriedOptions}
-          primaryOptions={primaryOptions}
+          primaryOptions={_primaryOptions}
           primaryLabel={primaryLabel}
           priorityOptionGroups={priorityOptionGroups}
           searchResultsLabel={searchResultsLabel}
@@ -202,7 +205,23 @@ const Datalist = forwardRef(function Datalist(
     [ref]
   );
 
-  const selectedOption = primaryOptions.find(({ id }) => id === selectedId);
+  // Logic for fetching primaryOptions
+  useEffect(() => {
+    if (getPrimaryOptions) {
+      getPrimaryOptions().then((res) => {
+        _setPrimaryOptions(res);
+      });
+    } else {
+      _setPrimaryOptions(primaryOptions);
+    }
+  }, [
+    _setPrimaryOptions,
+    getOptionsByQuery,
+    getPrimaryOptions,
+    primaryOptions,
+  ]);
+
+  const selectedOption = _primaryOptions.find(({ id }) => id === selectedId);
   // In case of isInline, the list is displayed with 'absolute' positioning instead of using a separate popup.
   return (
     <Container className={className}>

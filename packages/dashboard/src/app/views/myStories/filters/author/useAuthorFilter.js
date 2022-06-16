@@ -17,12 +17,7 @@
 /**
  * External dependencies
  */
-import {
-  useCallback,
-  useEffect,
-  useState,
-  useMemo,
-} from '@googleforcreators/react';
+import { useCallback } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 
 /**
@@ -30,16 +25,16 @@ import { __ } from '@googleforcreators/i18n';
  */
 import useApi from '../../../../api/useApi';
 
+let cachedPrimaryOptions = null;
+
 /**
  * Hook used for Author filter logic.
  * Initializes the author filters data.
  *
- * @return {Object} {authors, initializeAuthorFilter} authors and a function to shape the author filter data.
+ * @return {Function} initializeAuthorFilter function to shape the author filter data.
  */
 
 function useAuthorFilter() {
-  const [authors, setAuthors] = useState([]);
-
   const { getAuthors } = useApi(
     ({
       actions: {
@@ -70,14 +65,18 @@ function useAuthorFilter() {
   );
 
   /**
-   * Sets author data.
+   * Get author filters primaryOptions. Cache for later use.
+   * This is needed to initialize the primaryOptions.
+   * See design-system/src/component/datalist
    *
    * @see queryAuthors
-   * @return {void}
+   * @return {Array} cached authors terms
    */
-  const _setAuthors = useCallback(async () => {
-    const data = await queryAuthors();
-    setAuthors(data);
+  const getPrimaryOptions = useCallback(async () => {
+    if (!cachedPrimaryOptions) {
+      cachedPrimaryOptions = await queryAuthors();
+    }
+    return cachedPrimaryOptions;
   }, [queryAuthors]);
 
   /**
@@ -88,23 +87,16 @@ function useAuthorFilter() {
   const initializeAuthorFilter = useCallback(() => {
     return {
       key: 'author',
-      query: queryAuthors,
-      primaryOptions: authors,
       ariaLabel: __('Filter stories by author', 'web-stories'),
       placeholder: __('All Authors', 'web-stories'),
       searchPlaceholder: __('Search authors', 'web-stories'),
       noMatchesFoundLabel: __('No authors found', 'web-stories'),
+      query: queryAuthors,
+      getPrimaryOptions,
     };
-  }, [queryAuthors, authors]);
+  }, [queryAuthors, getPrimaryOptions]);
 
-  useEffect(() => {
-    _setAuthors();
-  }, [_setAuthors]);
-
-  return useMemo(
-    () => ({ authors, initializeAuthorFilter }),
-    [authors, initializeAuthorFilter]
-  );
+  return initializeAuthorFilter;
 }
 
 export default useAuthorFilter;
