@@ -197,7 +197,7 @@ describe('removeAnimationsWithElementIds', () => {
     expect(removeAnimationsWithElementIds()).toStrictEqual([]);
   });
 
-  it('should return all animations of no ids passed in', () => {
+  it('should return all animations if no ids passed in', () => {
     const animations = [{ id: 'a', targets: ['e1'] }];
     expect(removeAnimationsWithElementIds(animations)).toStrictEqual(
       animations
