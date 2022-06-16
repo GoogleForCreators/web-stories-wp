@@ -45,6 +45,7 @@ function ProductImage({ product }) {
       src={imageSrc}
       loading="lazy"
       decoding="async"
+      draggable={false}
       crossOrigin="anonymous"
     />
   ) : (
