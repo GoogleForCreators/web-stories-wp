@@ -75,16 +75,19 @@ function addElements(state, { elements }) {
     ({ type }) => type === ELEMENT_TYPES.PRODUCT
   );
 
+  const newElementProductsFiltered =
+    currentPageProductIds.length + newElementProducts.length <=
+    MAX_PRODUCTS_PER_PAGE
+      ? newElementProducts
+      : [];
+
   const newElementNoProducts = newElementNoDuplicateProducts.filter(
     ({ type }) => type !== ELEMENT_TYPES.PRODUCT
   );
 
   const newPageElements = [
     ...newElementNoProducts,
-    ...newElementProducts.slice(
-      0,
-      MAX_PRODUCTS_PER_PAGE - currentPageProductIds.length
-    ),
+    ...newElementProductsFiltered,
   ];
 
   const newPage = {

@@ -144,7 +144,7 @@ describe('addElements', () => {
     expect(result.selection).toStrictEqual(['124']);
   });
 
-  it('should only allow 6 products', () => {
+  it('should allow adding 6 products', () => {
     const { restore, addElements } = setupReducer();
 
     // Set an initial state with a current page and other elements.
@@ -168,8 +168,6 @@ describe('addElements', () => {
         { id: '125', product: { productId: 3 }, type: 'product' },
         { id: '126', product: { productId: 4 }, type: 'product' },
         { id: '127', product: { productId: 5 }, type: 'product' },
-        { id: '128', product: { productId: 6 }, type: 'product' },
-        { id: '129', product: { productId: 7 }, type: 'product' },
         { id: '130', type: 'image' },
       ],
     });
@@ -197,7 +195,7 @@ describe('addElements', () => {
     ]);
   });
 
-  it('should only allow 6 products with duplicates', () => {
+  it('should not allow adding more than 6 products', () => {
     const { restore, addElements } = setupReducer();
 
     // Set an initial state with a current page and other elements.
@@ -208,8 +206,6 @@ describe('addElements', () => {
           elements: [
             { id: '000' },
             { id: '122', product: { productId: 0 }, type: 'product' },
-            { id: '123', product: { productId: 1 }, type: 'product' },
-            { id: '124', product: { productId: 2 }, type: 'product' },
           ],
         },
       ],
@@ -234,14 +230,55 @@ describe('addElements', () => {
       elements: [
         { id: '000' },
         { id: '122', product: { productId: 0 }, type: 'product' },
+        { id: '130', type: 'image' },
+      ],
+    });
+    expect(result.selection).toStrictEqual(['130']);
+  });
+
+  it('should only allow 6 products with duplicates', () => {
+    const { restore, addElements } = setupReducer();
+
+    // Set an initial state with a current page and other elements.
+    restore({
+      pages: [
+        {
+          id: '111',
+          elements: [
+            { id: '000' },
+            { id: '123', product: { productId: 1 }, type: 'product' },
+            { id: '124', product: { productId: 2 }, type: 'product' },
+          ],
+        },
+      ],
+      current: '111',
+    });
+
+    const result = addElements({
+      elements: [
+        { id: '123', product: { productId: 1 }, type: 'product' },
+        { id: '124', product: { productId: 2 }, type: 'product' },
+        { id: '125', product: { productId: 3 }, type: 'product' },
+        { id: '126', product: { productId: 4 }, type: 'product' },
+        { id: '127', product: { productId: 5 }, type: 'product' },
+        { id: '128', product: { productId: 6 }, type: 'product' },
+        { id: '130', type: 'image' },
+      ],
+    });
+
+    expect(result.pages[0]).toStrictEqual({
+      id: '111',
+      elements: [
+        { id: '000' },
         { id: '123', product: { productId: 1 }, type: 'product' },
         { id: '124', product: { productId: 2 }, type: 'product' },
         { id: '130', type: 'image' },
         { id: '125', product: { productId: 3 }, type: 'product' },
         { id: '126', product: { productId: 4 }, type: 'product' },
         { id: '127', product: { productId: 5 }, type: 'product' },
+        { id: '128', product: { productId: 6 }, type: 'product' },
       ],
     });
-    expect(result.selection).toStrictEqual(['130', '125', '126', '127']);
+    expect(result.selection).toStrictEqual(['130', '125', '126', '127', '128']);
   });
 });
