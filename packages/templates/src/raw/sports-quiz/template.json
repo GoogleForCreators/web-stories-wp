@@ -257,40 +257,7 @@
           "type": "text"
         }
       ],
-      "animations": [
-        {
-          "id": "d737e6c0-c774-4fcc-90c0-8a8f7ec0c9c9",
-          "type": "effect-fly-in",
-          "targets": ["60afc5ad-d6cd-435f-a1e1-e73404a58dcd"],
-          "flyInDir": "bottomToTop",
-          "duration": 1200,
-          "delay": 0
-        },
-        {
-          "id": "b83d6ba9-e3fc-49e5-b5fa-a54a0e41f350",
-          "type": "effect-fly-in",
-          "targets": ["eba1ce7d-a9c6-4909-8fe5-b6eb1c8b4999"],
-          "flyInDir": "bottomToTop",
-          "duration": 1200,
-          "delay": 0
-        },
-        {
-          "id": "70c7a3a7-dd38-494b-9e61-b191b767e032",
-          "type": "effect-fly-in",
-          "targets": ["9e6c1333-5fe1-4561-b08f-550f3fa74593"],
-          "flyInDir": "leftToRight",
-          "duration": 1200,
-          "delay": 300
-        },
-        {
-          "id": "fa226695-e59e-4afb-88bb-5af108eba218",
-          "type": "effect-fly-in",
-          "targets": ["1ac4e0a4-88ad-4fa3-81f8-7ef7dbf0c003"],
-          "flyInDir": "leftToRight",
-          "duration": 1200,
-          "delay": 300
-        }
-      ],
+      "animations": [],
       "backgroundColor": { "color": { "r": 68, "g": 35, "b": 131 } },
       "type": "page",
       "id": "d16d2719-b94a-46d4-94c1-f3f863bc5b3d",
