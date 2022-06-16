@@ -21,6 +21,7 @@ import { ELEMENT_TYPES } from '@googleforcreators/elements';
 /**
  * Internal dependencies
  */
+import { MAX_PRODUCTS_PER_PAGE } from '../../../../constants';
 import { exclusion } from './utils';
 
 /**
@@ -80,7 +81,10 @@ function addElements(state, { elements }) {
 
   const newPageElements = [
     ...newElementNoProducts,
-    ...newElementProducts.slice(0, 6 - currentPageProductIds.length),
+    ...newElementProducts.slice(
+      0,
+      MAX_PRODUCTS_PER_PAGE - currentPageProductIds.length
+    ),
   ];
 
   const newPage = {
