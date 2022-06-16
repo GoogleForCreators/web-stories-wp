@@ -36,9 +36,9 @@ function useReordering(onPositionChange, numChildren) {
   const handleStartReordering = useCallback(
     ({ position: currentPos, onStartReordering = () => {} }) =>
       (evt) => {
-        // Only allow reordering with non-modified left-click on non-background element.
+        // Only allow reordering with non-modified left-click.
         // Modified (shift+ or meta+) clicks are for selection.
-        // Right-clicks (button===2) are for context menu
+        // Right-clicks (button===2) are for context menu.
         if (!evt.shiftKey && !evt.metaKey && evt.button === 0) {
           onStartReordering();
           setCurrentPosition(currentPos);
