@@ -243,19 +243,9 @@ function ShoppingPane(props) {
   );
 
   const onClick = useCallback(
-    (product, onPage) => {
-      if (onPage) {
-        deleteProduct(product);
-      } else {
-        if (currentPageProducts.length >= 6) {
-          showSnackbar({
-            message: __('Only 6 items can be added per page.', 'web-stories'),
-          });
-        }
-        insertProduct(product);
-      }
-    },
-    [currentPageProducts, deleteProduct, insertProduct, showSnackbar]
+    (product, onPage) =>
+      onPage ? deleteProduct(product) : insertProduct(product),
+    [deleteProduct, insertProduct]
   );
 
   const handleClearInput = useCallback(() => {
