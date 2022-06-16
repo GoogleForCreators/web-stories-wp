@@ -19,27 +19,35 @@
  */
 import { __, sprintf } from '@googleforcreators/i18n';
 
+export function getNextGroupNumber(groups) {
+  const nums = [0];
+  const defaultName = __('Group', 'web-stories');
+  for (const prop in groups) {
+    if (!Object.prototype.hasOwnProperty.call(groups[prop], 'name')) {
+      continue;
+    }
+    const parts = groups[prop]?.name.split(' ');
+    if (parts[0] === defaultName && parts[1]) {
+      nums.push(Number(parts[1]));
+    }
+  }
+  return Math.max(...nums) + 1;
+}
+
 function generateGroupName(groups, name) {
-  // TODO: use groups to check for next nr
   if (!name) {
-    const groupNumber = 1;
+    const groupNumber = getNextGroupNumber(groups);
     return sprintf(
       /* translators: %d: group number. */
-      __(
-        'Group %d',
-        'web-stories'
-      ),
+      __('Group %d', 'web-stories'),
       groupNumber
     );
   }
 
   return sprintf(
     /* translators: %s: name of layer. */
-    __(
-      '%s Copy',
-      'web-stories'
-    ),
-    layerName
+    __('%s Copy', 'web-stories'),
+    name
   );
 }
 

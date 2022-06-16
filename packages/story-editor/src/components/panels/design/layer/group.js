@@ -446,9 +446,11 @@ function Group({ groupId }) {
     });
   };
   const isCollapsed = group.isCollapsed;
-  const GroupArrow = isCollapsed
-    ? <ChevronRight onClick={handleGroupArrowClick} />
-    : <ChevronDown  onClick={handleGroupArrowClick} />
+  const GroupArrow = isCollapsed ? (
+    <ChevronRight onClick={handleGroupArrowClick} />
+  ) : (
+    <ChevronDown onClick={handleGroupArrowClick} />
+  );
 
   return (
     <LayerContainer>
