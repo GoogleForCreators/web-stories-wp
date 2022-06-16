@@ -19,7 +19,7 @@
  */
 import { useCallback, useBatchingCallback } from '@googleforcreators/react';
 import { usePasteTextContent } from '@googleforcreators/rich-text';
-import { __, sprintf } from '@googleforcreators/i18n';
+import { __, _n, sprintf } from '@googleforcreators/i18n';
 import { useSnackbar } from '@googleforcreators/design-system';
 import { ELEMENT_TYPES } from '@googleforcreators/elements';
 
@@ -35,6 +35,7 @@ import {
 import useUploadWithPreview from '../../components/canvas/useUploadWithPreview';
 import useInsertElement from '../../components/canvas/useInsertElement';
 import { DEFAULT_PRESET } from '../../components/library/panes/text/textPresets';
+import { MAX_PRODUCTS_PER_PAGE } from '../../constants';
 import useAddPastedElements from './useAddPastedElements';
 
 function useCanvasGlobalKeys() {
@@ -108,11 +109,21 @@ function useCanvasGlobalKeys() {
       );
 
       if (
-        currentPageProductIds.length >= 6 ||
-        newProductElements.length + currentPageProductIds.length > 6
+        currentPageProductIds.length >= MAX_PRODUCTS_PER_PAGE ||
+        newProductElements.length + currentPageProductIds.length >
+          MAX_PRODUCTS_PER_PAGE
       ) {
         showSnackbar({
-          message: __('Only 6 items can be added per page.', 'web-stories'),
+          message: sprintf(
+            /* translators: %s: max number of products. */
+            _n(
+              'Only %d item can be added per page.',
+              'Only %d items cans be added per page.',
+              MAX_PRODUCTS_PER_PAGE,
+              'web-stories'
+            ),
+            MAX_PRODUCTS_PER_PAGE
+          ),
         });
       }
 
