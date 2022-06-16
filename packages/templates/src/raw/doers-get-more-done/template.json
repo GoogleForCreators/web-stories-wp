@@ -120,24 +120,7 @@
           "id": "4baca404-e3f5-41d6-b4b0-36e2ecaee696"
         }
       ],
-      "animations": [
-        {
-          "id": "a8999305-4627-4178-a503-4ef3ca840e8e",
-          "type": "effect-fly-in",
-          "targets": ["4e256c35-5e30-45f5-9095-d8ce0a230b21"],
-          "flyInDir": "bottomToTop",
-          "duration": 1000,
-          "delay": 0
-        },
-        {
-          "id": "7d2b1997-86ab-46e1-8d63-43003b447711",
-          "type": "effect-fly-in",
-          "targets": ["b8f9eb9a-5007-4642-aca3-750cdb7c7463"],
-          "flyInDir": "topToBottom",
-          "duration": 600,
-          "delay": 400
-        }
-      ],
+      "animations": [],
       "type": "page",
       "id": "d47afc22-71b7-4303-9917-96f9a31ad38a",
       "backgroundOverlay": "none",

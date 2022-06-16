@@ -271,31 +271,7 @@
         "type": "shape",
         "id": "f35e71dc-82b5-4b6c-b34a-96b614e20921"
       },
-      "animations": [
-        {
-          "id": "52863f97-9dbe-4c48-9983-380764bc092f",
-          "type": "effect-fade-in",
-          "targets": ["080b6375-2871-41d7-9ca3-3c7e6cb1c3df"],
-          "duration": 1000,
-          "delay": 200
-        },
-        {
-          "id": "c0f637dd-3697-4961-a89b-d1fb3538dcaa",
-          "type": "effect-fly-in",
-          "targets": ["bb82bfe7-21df-41fb-931e-0ae8360a0588"],
-          "flyInDir": "leftToRight",
-          "duration": 1600,
-          "delay": 0
-        },
-        {
-          "id": "dd8b9742-a62c-48a4-bdd1-3d8b8a8f22e3",
-          "type": "effect-fly-in",
-          "targets": ["7cff4dc0-6d11-4c1c-9feb-65772e3c0353"],
-          "flyInDir": "bottomToTop",
-          "duration": 1000,
-          "delay": 0
-        }
-      ],
+      "animations": [],
       "pageTemplateType": "cover"
     },
     {
