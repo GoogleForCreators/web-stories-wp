@@ -56,13 +56,19 @@ const DisplayPageArea = styled(PageArea)`
 `;
 
 function DisplayPage({ pageElements, editingElement }) {
+  const siblingCount = pageElements.length - 1;
   return pageElements
     ? pageElements.map((element) => {
         if (editingElement === element.id) {
           return null;
         }
         return (
-          <DisplayElement key={element.id} element={element} isAnimatable />
+          <DisplayElement
+            key={element.id}
+            element={element}
+            isAnimatable
+            siblingCount={siblingCount}
+          />
         );
       })
     : null;

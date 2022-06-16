@@ -142,7 +142,7 @@ const ShoppingTagDot = styled.div`
   }
 `;
 
-function ProductDisplay({ element }) {
+function ProductDisplay({ element, siblingCount }) {
   const { id, width: elementWidth, height: elementHeight } = element;
 
   const ref = useRef(null);
@@ -151,6 +151,7 @@ function ProductDisplay({ element }) {
   return (
     <Element ref={ref} width={elementWidth} height={elementHeight}>
       <ShoppingTagDot
+        key={`dots-${siblingCount}`}
         elementWidth={elementWidth}
         elementHeight={elementHeight}
       />
