@@ -106,8 +106,12 @@ AnimationWrapper.propTypes = {
   id: PropTypes.string,
 };
 
-function DisplayElement({ element, previewMode, isAnimatable = false, siblingCount = 0 }) {
-  
+function DisplayElement({
+  element,
+  previewMode,
+  isAnimatable = false,
+  siblingCount = 0,
+}) {
   const { getBox, dataToEditorX } = useUnits((state) => ({
     getBox: state.actions.getBox,
     dataToEditorX: state.actions.dataToEditorX,
@@ -275,6 +279,7 @@ function DisplayElement({ element, previewMode, isAnimatable = false, siblingCou
 DisplayElement.propTypes = {
   previewMode: PropTypes.bool,
   element: StoryPropTypes.element.isRequired,
+  siblingCount: PropTypes.number,
   isAnimatable: PropTypes.bool,
 };
 

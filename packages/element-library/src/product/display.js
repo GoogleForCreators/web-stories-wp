@@ -24,6 +24,7 @@ import {
   generatePatternStyles,
 } from '@googleforcreators/patterns';
 import { StoryPropTypes } from '@googleforcreators/elements';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
@@ -161,6 +162,7 @@ function ProductDisplay({ element, siblingCount }) {
 
 ProductDisplay.propTypes = {
   element: StoryPropTypes.elements.shape.isRequired,
+  siblingCount: PropTypes.number,
 };
 
 export default ProductDisplay;
