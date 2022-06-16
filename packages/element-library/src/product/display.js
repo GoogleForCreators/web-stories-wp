@@ -152,7 +152,7 @@ function ProductDisplay({ element, siblingCount }) {
   return (
     <Element ref={ref} width={elementWidth} height={elementHeight}>
       <ShoppingTagDot
-        key={`dots-${siblingCount}`}
+        key={`dots-${siblingCount}`} /* see: https://github.com/GoogleForCreators/web-stories-wp/issues/11705 */
         elementWidth={elementWidth}
         elementHeight={elementHeight}
       />
