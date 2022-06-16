@@ -68,7 +68,7 @@ const StyledActionsContainer = styled.div`
 `;
 
 const DISABLED_PRODUCT_TEXT = sprintf(
-  /* translators: %s: max number of products. */
+  /* translators: %d: max number of products. */
   _n(
     'Only %d item can be added per page.',
     'Only %d items can be added per page.',
