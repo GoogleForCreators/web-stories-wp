@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook, waitFor } from '@testing-library/react';
 import { ConfigContext } from '@googleforcreators/story-editor';
 
 /**
@@ -100,7 +100,7 @@ describe('useSaveMetaBoxes', () => {
       isAutoSavingStory: false,
     };
 
-    const { rerender, waitForNextUpdate, result } = render({
+    const { rerender, result } = render({
       configValue,
       isEnabled: true,
       ...hookProps,
@@ -110,7 +110,8 @@ describe('useSaveMetaBoxes', () => {
     rerender({ ...hookProps, isSavingStory: false });
 
     expect(result.current.state.isSavingMetaBoxes).toBeTrue();
-    await waitForNextUpdate();
-    expect(result.current.state.isSavingMetaBoxes).toBeFalse();
+    await waitFor(() => {
+      expect(result.current.state.isSavingMetaBoxes).toBeFalse();
+    });
   });
 });

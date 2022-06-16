@@ -63,6 +63,7 @@
         "dependencies",
         "devDependencies",
         "peerDependencies",
+        "overrides",
         "bin",
         "scripts"
       ]

@@ -60,12 +60,11 @@ function Popup({
   } = usePopup();
 
   const [popupState, setPopupState] = useState(null);
-  const isMounted = useRef(false);
   const popup = useRef(null);
 
   const positionPopup = useCallback(
     (evt) => {
-      if (!isMounted.current || !anchor?.current) {
+      if (!anchor?.current) {
         return;
       }
       // If scrolling within the popup, ignore.
@@ -144,13 +143,6 @@ function Popup({
   );
 
   useEffect(() => {
-    isMounted.current = true;
-    return () => {
-      isMounted.current = false;
-    };
-  }, []);
-
-  useEffect(() => {
     // If the popup height changes meanwhile, let's update the popup, too.
     if (
       popupState?.height &&
@@ -164,21 +156,15 @@ function Popup({
     if (!isOpen) {
       return undefined;
     }
-    isMounted.current = true;
     positionPopup();
     // Adjust the position when scrolling.
     document.addEventListener('scroll', positionPopup, true);
     return () => {
       document.removeEventListener('scroll', positionPopup, true);
-      isMounted.current = false;
     };
   }, [isOpen, positionPopup]);
 
   useLayoutEffect(() => {
-    if (!isMounted.current) {
-      return;
-    }
-
     refCallback(popup);
   }, [popupState, refCallback]);
 

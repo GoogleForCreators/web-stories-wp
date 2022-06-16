@@ -17,7 +17,8 @@
 /**
  * External dependencies
  */
-import { useBatchingCallback } from '@googleforcreators/react';
+import { useCallback } from '@googleforcreators/react';
+
 /**
  * Internal dependencies
  */
@@ -55,7 +56,7 @@ function useAddPastedElements() {
     }
   );
 
-  const addPastedElements = useBatchingCallback(
+  const addPastedElements = useCallback(
     (elements, animations = []) => {
       if (elements.length === 0) {
         return false;

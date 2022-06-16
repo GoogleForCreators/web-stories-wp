@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { render } from '@testing-library/react';
+
+/**
  * Internal dependencies
  */
 import {
@@ -23,7 +28,6 @@ import {
 } from '../../styleManipulation';
 import { NONE, ITALIC } from '../../customConstants';
 import formatter from '../italic';
-import { getDOMElement } from './_utils';
 
 jest.mock('../../styleManipulation', () => {
   return {
@@ -33,6 +37,11 @@ jest.mock('../../styleManipulation', () => {
 });
 
 const { elementToStyle, stylesToCSS, getters, setters } = formatter;
+
+function setupFormatter(element) {
+  const { container } = render(element);
+  return elementToStyle(container.firstChild);
+}
 
 describe('Italic formatter', () => {
   beforeAll(() => {
@@ -45,10 +54,6 @@ describe('Italic formatter', () => {
   });
 
   describe('elementToStyle', () => {
-    function setupFormatter(element) {
-      return elementToStyle(getDOMElement(element));
-    }
-
     it('should ignore non-span elements', () => {
       const element = <div />;
       const style = setupFormatter(element);
@@ -87,6 +92,11 @@ describe('Italic formatter', () => {
   });
 
   describe('getters', () => {
+    function setupGetter(styleArray) {
+      getPrefixStylesInSelection.mockImplementationOnce(() => styleArray);
+      return getters.isItalic({});
+    }
+
     it('should contain isItalic property with getter', () => {
       expect(getters).toContainAllKeys(['isItalic']);
       expect(getters.isItalic).toStrictEqual(expect.any(Function));
@@ -98,26 +108,21 @@ describe('Italic formatter', () => {
       expect(getPrefixStylesInSelection).toHaveBeenCalledWith(state, ITALIC);
     });
 
-    function setupFormatter(styleArray) {
-      getPrefixStylesInSelection.mockImplementationOnce(() => styleArray);
-      return getters.isItalic({});
-    }
-
     it('should return false if both italic and non-italic', () => {
       const styles = [NONE, ITALIC];
-      const result = setupFormatter(styles);
+      const result = setupGetter(styles);
       expect(result).toBe(false);
     });
 
     it('should return false if no style matches', () => {
       const styles = [NONE];
-      const result = setupFormatter(styles);
+      const result = setupGetter(styles);
       expect(result).toBe(false);
     });
 
     it('should return true if only italic', () => {
       const styles = [ITALIC];
-      const result = setupFormatter(styles);
+      const result = setupGetter(styles);
       expect(result).toBe(true);
     });
   });

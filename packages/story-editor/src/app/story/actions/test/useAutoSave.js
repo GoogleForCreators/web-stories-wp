@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { renderHook, act } from '@testing-library/react-hooks';
+import { renderHook, act } from '@testing-library/react';
 import { getStoryMarkup } from '@googleforcreators/output';
 
 /**

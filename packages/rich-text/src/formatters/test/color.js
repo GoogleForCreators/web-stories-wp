@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { createSolid } from '@googleforcreators/patterns';
+import { render } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -28,7 +29,6 @@ import {
 } from '../../styleManipulation';
 import { NONE, COLOR, MULTIPLE_VALUE } from '../../customConstants';
 import formatter from '../color';
-import { getDOMElement } from './_utils';
 
 jest.mock('../../styleManipulation', () => {
   return {
@@ -38,6 +38,11 @@ jest.mock('../../styleManipulation', () => {
 });
 
 const { elementToStyle, stylesToCSS, getters, setters } = formatter;
+
+function setupFormatter(element) {
+  const { container } = render(element);
+  return elementToStyle(container.firstChild);
+}
 
 describe('Color formatter', () => {
   beforeAll(() => {
@@ -50,10 +55,6 @@ describe('Color formatter', () => {
   });
 
   describe('elementToStyle', () => {
-    function setupFormatter(element) {
-      return elementToStyle(getDOMElement(element));
-    }
-
     it('should ignore non-span elements', () => {
       const element = <div />;
       const style = setupFormatter(element);
@@ -106,6 +107,11 @@ describe('Color formatter', () => {
   });
 
   describe('getters', () => {
+    function setupGetter(styleArray) {
+      getPrefixStylesInSelection.mockImplementationOnce(() => styleArray);
+      return getters.color({});
+    }
+
     it('should contain color property with getter', () => {
       expect(getters).toContainAllKeys(['color']);
       expect(getters.color).toStrictEqual(expect.any(Function));
@@ -117,26 +123,21 @@ describe('Color formatter', () => {
       expect(getPrefixStylesInSelection).toHaveBeenCalledWith(state, COLOR);
     });
 
-    function setupFormatter(styleArray) {
-      getPrefixStylesInSelection.mockImplementationOnce(() => styleArray);
-      return getters.color({});
-    }
-
     it('should return multiple if more than one style matches', () => {
       const styles = [`${COLOR}-ff000064`, `${COLOR}-ffff0064`];
-      const result = setupFormatter(styles);
+      const result = setupGetter(styles);
       expect(result).toBe(MULTIPLE_VALUE);
     });
 
     it('should return default black if no style matches', () => {
       const styles = [NONE];
-      const result = setupFormatter(styles);
+      const result = setupGetter(styles);
       expect(result).toStrictEqual(createSolid(0, 0, 0));
     });
 
     it('should return parsed color if exactly one style matches', () => {
       const styles = [`${COLOR}-ffff0032`];
-      const result = setupFormatter(styles);
+      const result = setupGetter(styles);
       expect(result).toStrictEqual(createSolid(255, 255, 0, 0.5));
     });
   });

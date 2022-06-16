@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import { useFeature } from 'flagged';
-import { renderHook, act } from '@testing-library/react-hooks';
+import { renderHook, act } from '@testing-library/react';
 
 /**
  * Internal dependencies

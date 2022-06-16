@@ -20,7 +20,7 @@
 import { theme as ds_theme } from '@googleforcreators/design-system';
 import {
   forwardRef,
-  render,
+  createRoot,
   unmountComponentAtNode,
 } from '@googleforcreators/react';
 import {
@@ -152,7 +152,9 @@ async function storyPageToNode(page, width, opts = {}) {
       resolve(htmlNode);
     };
 
-    render(
+    const root = createRoot(bufferRoot);
+
+    root.render(
       <PageWithDependencies
         ref={resolverRef}
         page={page}
@@ -160,8 +162,7 @@ async function storyPageToNode(page, width, opts = {}) {
         height={height}
         containerHeight={containerHeight}
         renderFullHeightThumb={renderFullHeightThumb}
-      />,
-      bufferRoot
+      />
     );
   });
 

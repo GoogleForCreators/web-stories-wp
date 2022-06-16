@@ -126,7 +126,6 @@ function BaseTooltip({
   const tooltipRef = useRef(null);
   const placementRef = useRef(placement);
   const [dynamicPlacement, setDynamicPlacement] = useState(placement);
-  const isMounted = useRef(false);
 
   const [popupState, setPopupState] = useState(null);
   const isPopupMounted = useRef(false);
@@ -231,10 +230,6 @@ function BaseTooltip({
   const delay = useRef();
   const onHover = useCallback(() => {
     const handle = () => {
-      if (!isMounted.current) {
-        return;
-      }
-
       setShown(true);
     };
 
@@ -261,14 +256,6 @@ function BaseTooltip({
       }
     }
   }, [resetPlacement, isDelayed, shown]);
-
-  useEffect(() => {
-    isMounted.current = true;
-
-    return () => {
-      isMounted.current = false;
-    };
-  }, []);
 
   useEffect(() => {
     isPopupMounted.current = true;

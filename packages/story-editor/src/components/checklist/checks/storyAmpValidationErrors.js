@@ -99,20 +99,14 @@ const StoryAmpValidationErrors = () => {
   // Allows us to just track status and link, puts the story in line with what the outcome would be if the user was testing their
   // story link in the recommended test/amp site.
   useEffect(() => {
-    let isMounted = true;
     if (!isSaving) {
       getStoryAmpValidationErrors({ link, status }).then((hasErrors) => {
-        if (isMounted) {
-          setIsRendered(hasErrors);
-          if (hasErrors && !ampValidationErrorsRef?.current) {
-            ampValidationErrorsRef.current = true;
-          }
+        setIsRendered(hasErrors);
+        if (hasErrors && !ampValidationErrorsRef?.current) {
+          ampValidationErrorsRef.current = true;
         }
       });
     }
-    return () => {
-      isMounted = false;
-    };
   }, [link, status, isSaving]);
 
   useEffect(() => {

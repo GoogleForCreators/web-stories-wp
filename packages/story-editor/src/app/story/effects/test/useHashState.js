@@ -31,7 +31,7 @@
 /**
  * External dependencies
  */
-import { act, renderHook } from '@testing-library/react-hooks';
+import { act, renderHook } from '@testing-library/react';
 
 /**
  * Internal dependencies

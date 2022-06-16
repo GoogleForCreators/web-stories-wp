@@ -32,7 +32,7 @@ import './setLocaleData';
  */
 import { Dashboard } from '@googleforcreators/dashboard';
 import { setAppElement } from '@googleforcreators/design-system';
-import { StrictMode, render } from '@googleforcreators/react';
+import { StrictMode, createRoot } from '@googleforcreators/react';
 import { updateSettings } from '@googleforcreators/date';
 import { initializeTracking } from '@googleforcreators/tracking';
 import { bindToCallbacks } from '@web-stories-wp/wp-utils';
@@ -90,13 +90,14 @@ window.webStories.initializeStoryDashboard = (id, config) => {
     containerId: 'wpbody',
   };
 
-  render(
+  const root = createRoot(appElement);
+
+  root.render(
     <StrictMode>
       <Dashboard config={dashboardConfig}>
         <GlobalStyle />
         <Layout />
       </Dashboard>
-    </StrictMode>,
-    appElement
+    </StrictMode>
   );
 };

@@ -42,14 +42,13 @@
     "@googleforcreators/media": "*",
     "@googleforcreators/react": "*",
     "@googleforcreators/units": "*",
-    "flagged": "^2.0.3",
+    "flagged": "^2.0.4",
     "prop-types": "^15.8.1",
     "styled-components": "^5.3.3",
     "uuid": "^8.3.2",
     "web-animations-js": "^2.3.2"
   },
   "devDependencies": {
-    "@testing-library/react": "^12.1.5",
-    "@testing-library/react-hooks": "^8.0.0"
+    "@testing-library/react": "^13.3.0"
   }
 }

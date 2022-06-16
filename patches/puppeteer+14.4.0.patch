@@ -1,0 +1,28 @@
+diff --git a/node_modules/puppeteer/lib/cjs/puppeteer/common/ExecutionContext.js b/node_modules/puppeteer/lib/cjs/puppeteer/common/ExecutionContext.js
+index 2575887..59aa8d0 100644
+--- a/node_modules/puppeteer/lib/cjs/puppeteer/common/ExecutionContext.js
++++ b/node_modules/puppeteer/lib/cjs/puppeteer/common/ExecutionContext.js
+@@ -231,8 +231,10 @@ _ExecutionContext_instances = new WeakSet(), _ExecutionContext_evaluate = async
+             userGesture: true,
+         })
+             .catch(rewriteError);
+-        if (exceptionDetails)
++        if (exceptionDetails) {
++            console.log('Evaluation failed for the following function: ', pageFunction);
+             throw new Error('Evaluation failed: ' + helper_js_1.helper.getExceptionMessage(exceptionDetails));
++        }
+         return returnByValue
+             ? helper_js_1.helper.valueFromRemoteObject(remoteObject)
+             : (0, JSHandle_js_1._createJSHandle)(this, remoteObject);
+@@ -278,8 +280,10 @@ _ExecutionContext_instances = new WeakSet(), _ExecutionContext_evaluate = async
+         throw error;
+     }
+     const { exceptionDetails, result: remoteObject } = await callFunctionOnPromise.catch(rewriteError);
+-    if (exceptionDetails)
++    if (exceptionDetails) {
++        console.log('Evaluation failed for the following function: ', functionText);
+         throw new Error('Evaluation failed: ' + helper_js_1.helper.getExceptionMessage(exceptionDetails));
++    }
+     return returnByValue
+         ? helper_js_1.helper.valueFromRemoteObject(remoteObject)
+         : (0, JSHandle_js_1._createJSHandle)(this, remoteObject);

@@ -13,10 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react';
+
 /**
  * Internal dependencies
  */
@@ -24,7 +26,7 @@ import LayoutProvider from '../provider';
 import useLayoutContext from '../useLayoutContext';
 
 describe('useLayoutContext()', () => {
-  it('should throw an error if used oustide Layout.Provider', () => {
+  it('should throw an error if used outside Layout.Provider', () => {
     expect(() => {
       const {
         // eslint-disable-next-line no-unused-vars

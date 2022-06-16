@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { waitFor } from '@testing-library/react';
+import { act, waitFor } from '@testing-library/react';
 import { firePointerEvent } from '@googleforcreators/test-utils';
 
 /**
@@ -47,49 +47,57 @@ describe('<ColorPicker /> when adding a stop with a pointer device', () => {
     await waitFor(() => expect(getGradientStops()).toHaveLength(2));
 
     // No temp stop visible initially
-    expect(getTempGradientStop()).not.toBeInTheDocument();
+    await waitFor(() => expect(getTempGradientStop()).not.toBeInTheDocument());
 
     // Hover gradient line at 20% mark
-    firePointerEvent.pointerMove(getGradientLine(), {
-      clientX: OFFSET20,
+    act(() => {
+      firePointerEvent.pointerMove(getGradientLine(), {
+        clientX: OFFSET20,
+      });
     });
 
     // Expect a temp stop be added at 20%
-    expect(getTempGradientStop()).toBeInTheDocument();
-    expect(getTempGradientStop()).toHaveAttribute(
-      'aria-label',
-      // Due to rounding, the stop might be reported as being at 21%
-      expect.stringMatching(/temporary gradient stop at 2[01]%/i)
+    await waitFor(() => expect(getTempGradientStop()).toBeInTheDocument());
+    await waitFor(() =>
+      expect(getTempGradientStop()).toHaveAttribute(
+        'aria-label',
+        // Due to rounding, the stop might be reported as being at 21%
+        expect.stringMatching(/temporary gradient stop at 2[01]%/i)
+      )
     );
 
     // Click gradient line at 20% mark
-    firePointerEvent.pointerDown(getGradientLine(), {
-      clientX: OFFSET20,
+    act(() => {
+      firePointerEvent.pointerDown(getGradientLine(), {
+        clientX: OFFSET20,
+      });
     });
 
     // Temp stop should be removed now
-    expect(getTempGradientStop()).not.toBeInTheDocument();
+    await waitFor(() => expect(getTempGradientStop()).not.toBeInTheDocument());
 
     // 3 stops should be visible
-    expect(getGradientStops()).toHaveLength(3);
+    await waitFor(() => expect(getGradientStops()).toHaveLength(3));
 
     // And gradient should now have an extra stop
     // Note that actual color is not tested here - see tests of insertStop and useColor for that
-    expect(onChange).toHaveBeenCalledWith({
-      type: 'linear',
-      stops: [
-        { color: { r: 0, g: 255, b: 0, a: 0.4 }, position: 0 },
-        {
-          color: {
-            r: expect.any(Number),
-            g: expect.any(Number),
-            b: expect.any(Number),
-            a: expect.any(Number),
+    await waitFor(() => {
+      expect(onChange).toHaveBeenCalledWith({
+        type: 'linear',
+        stops: [
+          { color: { r: 0, g: 255, b: 0, a: 0.4 }, position: 0 },
+          {
+            color: {
+              r: expect.any(Number),
+              g: expect.any(Number),
+              b: expect.any(Number),
+              a: expect.any(Number),
+            },
+            position: expect.closeTo(0.8, 1),
           },
-          position: expect.closeTo(0.8, 1),
-        },
-        { color: { r: 255, g: 0, b: 255, a: 0.8 }, position: 1 },
-      ],
+          { color: { r: 255, g: 0, b: 255, a: 0.8 }, position: 1 },
+        ],
+      });
     });
   });
 

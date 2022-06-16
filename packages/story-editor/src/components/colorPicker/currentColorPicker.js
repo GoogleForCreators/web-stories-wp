@@ -20,7 +20,6 @@
 import {
   useCallback,
   useEffect,
-  useRef,
   useState,
   lazy,
   Suspense,
@@ -262,22 +261,12 @@ CurrentColorPicker.defaultProps = {
 const DynamicImportWrapper = () => {
   return (...args) => {
     function DynamicFetcher(props) {
-      const isMounted = useRef(false);
       const [Picker, setPicker] = useState(null);
 
       useEffect(() => {
-        isMounted.current = true;
         import(/* webpackChunkName: "chunk-react-color" */ 'react-color').then(
-          ({ CustomPicker }) => {
-            if (isMounted.current) {
-              setPicker({ component: CustomPicker(...args) });
-            }
-          }
+          ({ CustomPicker }) => setPicker({ component: CustomPicker(...args) })
         );
-
-        return () => {
-          isMounted.current = false;
-        };
       }, []);
 
       return Picker ? (

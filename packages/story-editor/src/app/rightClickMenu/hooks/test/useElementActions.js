@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useSnackbar } from '@googleforcreators/design-system';
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react';
 /**
  * Internal dependencies
  */

@@ -55,6 +55,7 @@ module.exports = {
   framework: '@storybook/react',
   core: {
     builder: 'webpack5',
+    disableTelemetry: true,
   },
   //eslint-disable-next-line require-await -- Negligible.
   webpackFinal: async (config) => {
@@ -219,40 +220,6 @@ module.exports = {
         },
       }
     );
-
-    /*
-    Webpack + Storybook 6.4 - webpack crashing due to plugins
-    that are compiled to CJS while project uses ESM.
-    TODO: 10696: Remove with storybook 6.5
-    */
-    // https://github.com/storybookjs/storybook/issues/14877#issuecomment-1000441696
-
-    // Find the plugin instance that needs to be mutated
-    const virtualModulesPlugin = config.plugins.find(
-      (plugin) => plugin.constructor.name === 'VirtualModulesPlugin'
-    );
-
-    // Change the file extension to .cjs for all files that end with "generated-stories-entry.js"
-    virtualModulesPlugin._staticModules = Object.fromEntries(
-      Object.entries(virtualModulesPlugin._staticModules).map(
-        ([key, value]) => {
-          if (key.endsWith('generated-stories-entry.js')) {
-            return [replaceFileExtension(key, '.cjs'), value];
-          }
-          return [key, value];
-        }
-      )
-    );
-
-    // Change the entry points to point to the appropriate .cjs files
-    config.entry = config.entry.map((entry) => {
-      if (entry.endsWith('generated-stories-entry.js')) {
-        return replaceFileExtension(entry, '.cjs');
-      }
-      return entry;
-    });
-
-    /* End storybook 6.4 non .cjs extension patch */
 
     return config;
   },

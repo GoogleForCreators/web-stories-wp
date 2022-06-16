@@ -20,7 +20,6 @@ export * from './context';
 export * from './react';
 export * from './react-dom';
 
-export { default as useBatchingCallback } from './useBatchingCallback';
 export { default as useCombinedRefs } from './useCombinedRefs';
 export { default as useContextSelector } from './useContextSelector';
 export { default as useFocusOut } from './useFocusOut';

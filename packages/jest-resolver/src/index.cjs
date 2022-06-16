@@ -32,33 +32,27 @@ module.exports = (request, options) => {
   // Once we're able to migrate our Jest config to ESM and a browser crypto
   // implementation is available for the browser+ESM version of uuid to use (eg, via
   // https://github.com/jsdom/jsdom/pull/3352 or a similar polyfill), this can go away.
-  if ('uuid' === request) {
-    return options.defaultResolver(request, {
-      ...options,
-      packageFilter: (pkg) => {
-        if ('uuid' === pkg.name) {
-          delete pkg.exports;
-          delete pkg.module;
-        }
+  const packages = [
+    'uuid',
+    // Used by @wordpress/components.
+    'react-colorful',
+    // Used by /packages/react.
+    'use-debounce',
+  ]
+  for ( const p of packages ) {
+    if (p === request) {
+      return options.defaultResolver(request, {
+        ...options,
+        packageFilter: (pkg) => {
+          if (p === pkg.name) {
+            delete pkg.exports;
+            delete pkg.module;
+          }
 
-        return pkg;
-      },
-    });
-  }
-
-  // Similar workaround for react-colorful, which is used by @wordpress/components.
-  if ('react-colorful' === request) {
-    return options.defaultResolver(request, {
-      ...options,
-      packageFilter: (pkg) => {
-        if ('react-colorful' === pkg.name) {
-          delete pkg.exports;
-          delete pkg.module;
-        }
-
-        return pkg;
-      },
-    });
+          return pkg;
+        },
+      });
+    }
   }
 
   if (!isLocalRepo(request)) {

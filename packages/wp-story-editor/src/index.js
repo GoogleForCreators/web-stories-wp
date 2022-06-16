@@ -32,7 +32,7 @@ import './setLocaleData';
  */
 import { StoryEditor } from '@googleforcreators/story-editor';
 import { setAppElement } from '@googleforcreators/design-system';
-import { StrictMode, render } from '@googleforcreators/react';
+import { StrictMode, createRoot } from '@googleforcreators/react';
 import { updateSettings } from '@googleforcreators/date';
 import { initializeTracking } from '@googleforcreators/tracking';
 import { bindToCallbacks } from '@web-stories-wp/wp-utils';
@@ -98,7 +98,9 @@ window.webStories.initializeStoryEditor = (id, config, initialEdits) => {
     },
   };
 
-  render(
+  const root = createRoot(appElement);
+
+  root.render(
     <StrictMode>
       <StoryEditor config={editorConfig} initialEdits={initialEdits}>
         <GlobalStyle />
@@ -110,7 +112,6 @@ window.webStories.initializeStoryEditor = (id, config, initialEdits) => {
         <FontCheck />
         <PostLock />
       </StoryEditor>
-    </StrictMode>,
-    appElement
+    </StrictMode>
   );
 };

@@ -24,7 +24,6 @@ import {
   createRef,
   useState,
   useContext,
-  useBatchingCallback,
   useCallback,
 } from '@googleforcreators/react';
 /**
@@ -86,7 +85,7 @@ function useKeyEffectInternal(
 ) {
   const { keys } = useContext(Context);
   //eslint-disable-next-line react-hooks/exhaustive-deps -- Pass through provided deps.
-  const batchingCallback = useBatchingCallback(callback, deps || []);
+  const batchingCallback = useCallback(callback, deps || []);
   useEffect(
     () => {
       const node =

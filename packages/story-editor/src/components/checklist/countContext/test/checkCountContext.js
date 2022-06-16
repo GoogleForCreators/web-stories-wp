@@ -18,8 +18,7 @@
  * External dependencies
  */
 import { useContext } from '@googleforcreators/react';
-import { render } from '@testing-library/react';
-import { act, renderHook } from '@testing-library/react-hooks';
+import { act, renderHook, render } from '@testing-library/react';
 
 /**
  * Internal dependencies

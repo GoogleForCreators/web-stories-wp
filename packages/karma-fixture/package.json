@@ -28,6 +28,6 @@
     "@googleforcreators/react": "*"
   },
   "devDependencies": {
-    "@testing-library/react": "^12.1.5"
+    "@testing-library/react": "^13.3.0"
   }
 }

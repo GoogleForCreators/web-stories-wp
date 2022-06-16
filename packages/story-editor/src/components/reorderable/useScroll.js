@@ -17,12 +17,7 @@
 /**
  * External dependencies
  */
-import {
-  useState,
-  useCallback,
-  useEffect,
-  useBatchingCallback,
-} from '@googleforcreators/react';
+import { useState, useCallback, useEffect } from '@googleforcreators/react';
 
 const SCROLL_PERCENT = 0.2;
 const MAX_SCROLL_STEP = 10;
@@ -32,7 +27,7 @@ function useScroll(mode = 'horizontal', isReordering, scrollTarget, size) {
   const [hasScrollBelow, setHasScrollBelow] = useState(false);
   const [scrollDirection, setScrollDirection] = useState(0);
 
-  const updateScrollMarkers = useBatchingCallback(() => {
+  const updateScrollMarkers = useCallback(() => {
     const node = scrollTarget.current;
     if (!node) {
       return;

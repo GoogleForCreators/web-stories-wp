@@ -19,7 +19,6 @@
  */
 import {
   useCallback,
-  useEffect,
   useMemo,
   useReducer,
   useRef,
@@ -42,16 +41,6 @@ const useStoryApi = () => {
   const [state, dispatch] = useReducer(storyReducer, defaultStoriesState);
   const { apiCallbacks } = useConfig();
 
-  const isMounted = useRef(false);
-
-  useEffect(() => {
-    isMounted.current = true;
-
-    return () => {
-      isMounted.current = false;
-    };
-  }, []);
-
   const fetchStories = useCallback(
     async (queryParams) => {
       dispatch({
@@ -59,7 +48,6 @@ const useStoryApi = () => {
         payload: true,
       });
 
-      // eslint-disable-next-line @wordpress/no-unused-vars-before-return -- False positive because of the finally().
       const trackTiming = getTimeTracker('load_stories');
 
       try {
@@ -68,10 +56,6 @@ const useStoryApi = () => {
         // which may ( or may not ) cause some regression. @todo Reflect on fetchedStoryIds again in next phase.
         const { stories, fetchedStoryIds, totalPages, totalStoriesByStatus } =
           await apiCallbacks.fetchStories(queryParams);
-
-        if (!isMounted.current) {
-          return;
-        }
 
         // Hook into first fetch of story statuses.
         if (isInitialFetch.current) {

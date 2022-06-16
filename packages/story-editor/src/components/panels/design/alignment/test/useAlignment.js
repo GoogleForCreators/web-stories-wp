@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react';
 import { PAGE_WIDTH, PAGE_HEIGHT } from '@googleforcreators/units';
 
 /**

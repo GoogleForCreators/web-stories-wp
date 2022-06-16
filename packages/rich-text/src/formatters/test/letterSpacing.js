@@ -13,6 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * External dependencies
+ */
+import { render } from '@testing-library/react';
+
 /**
  * Internal dependencies
  */
@@ -22,7 +28,6 @@ import {
 } from '../../styleManipulation';
 import { NONE, LETTERSPACING, MULTIPLE_VALUE } from '../../customConstants';
 import formatter from '../letterSpacing';
-import { getDOMElement } from './_utils';
 
 jest.mock('../../styleManipulation', () => {
   return {
@@ -32,6 +37,11 @@ jest.mock('../../styleManipulation', () => {
 });
 
 const { elementToStyle, stylesToCSS, getters, setters } = formatter;
+
+function setupFormatter(element) {
+  const { container } = render(element);
+  return elementToStyle(container.firstChild);
+}
 
 describe('Color formatter', () => {
   beforeAll(() => {
@@ -44,10 +54,6 @@ describe('Color formatter', () => {
   });
 
   describe('elementToStyle', () => {
-    function setupFormatter(element) {
-      return elementToStyle(getDOMElement(element));
-    }
-
     it('should ignore non-span elements', () => {
       const element = <div />;
       const style = setupFormatter(element);
@@ -98,6 +104,11 @@ describe('Color formatter', () => {
   });
 
   describe('getters', () => {
+    function setupGetter(styleArray) {
+      getPrefixStylesInSelection.mockImplementationOnce(() => styleArray);
+      return getters.letterSpacing({});
+    }
+
     it('should contain letterSpacing property with getter', () => {
       expect(getters).toContainAllKeys(['letterSpacing']);
       expect(getters.letterSpacing).toStrictEqual(expect.any(Function));
@@ -112,26 +123,21 @@ describe('Color formatter', () => {
       );
     });
 
-    function setupFormatter(styleArray) {
-      getPrefixStylesInSelection.mockImplementationOnce(() => styleArray);
-      return getters.letterSpacing({});
-    }
-
     it('should return multiple if more than one style matches', () => {
       const styles = [`${LETTERSPACING}-150`, `${LETTERSPACING}-N100`];
-      const result = setupFormatter(styles);
+      const result = setupGetter(styles);
       expect(result).toBe(MULTIPLE_VALUE);
     });
 
     it('should return default 0 if no style matches', () => {
       const styles = [NONE];
-      const result = setupFormatter(styles);
+      const result = setupGetter(styles);
       expect(result).toBe(0);
     });
 
     it('should return parsed letter spacing if exactly one style matches', () => {
       const styles = [`${LETTERSPACING}-34`];
-      const result = setupFormatter(styles);
+      const result = setupGetter(styles);
       expect(result).toBe(34);
     });
   });

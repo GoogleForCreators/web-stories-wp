@@ -17,12 +17,7 @@
 /**
  * External dependencies
  */
-import {
-  useEffect,
-  useMemo,
-  useCallback,
-  useRef,
-} from '@googleforcreators/react';
+import { useEffect, useMemo, useCallback } from '@googleforcreators/react';
 
 /**
  * Internal dependencies
@@ -91,16 +86,6 @@ function MyStories() {
   );
 
   const { apiCallbacks, canViewDefaultTemplates } = useConfig();
-  const isMounted = useRef(false);
-
-  useEffect(() => {
-    isMounted.current = true;
-
-    return () => {
-      isMounted.current = false;
-    };
-  }, []);
-
   const {
     filter,
     page,
@@ -120,10 +105,6 @@ function MyStories() {
   let queryAuthorsBySearch = useCallback(
     (authorSearchTerm) => {
       return getAuthors(authorSearchTerm).then((data) => {
-        if (!isMounted.current) {
-          return;
-        }
-
         const userData = data.map(({ id, name }) => ({
           id,
           name,

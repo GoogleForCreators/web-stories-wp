@@ -42,15 +42,14 @@
     "@web-stories-wp/wp-utils": "*",
     "@wordpress/api-fetch": "^6.4.0",
     "@wordpress/dom-ready": "^3.7.0",
-    "flagged": "^2.0.3",
+    "flagged": "^2.0.4",
     "polished": "^4.2.2",
     "react-calendar": "^3.7.0",
     "styled-components": "^5.3.3"
   },
   "devDependencies": {
     "@googleforcreators/test-utils": "*",
-    "@testing-library/react": "^12.1.5",
-    "@testing-library/react-hooks": "^8.0.0",
+    "@testing-library/react": "^13.3.0",
     "mockdate": "^3.0.5",
     "prop-types": "^15.8.1"
   }

@@ -17,8 +17,7 @@
 /**
  * External dependencies
  */
-import { renderHook } from '@testing-library/react-hooks';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, renderHook } from '@testing-library/react';
 import { Icons, useSnackbar } from '@googleforcreators/design-system';
 
 /**

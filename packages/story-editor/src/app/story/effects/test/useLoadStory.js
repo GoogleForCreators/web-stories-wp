@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react';
 import PropTypes from 'prop-types';
 import { registerElementType } from '@googleforcreators/elements';
 import { elementTypes } from '@googleforcreators/element-library';

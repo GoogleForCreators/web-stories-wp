@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
+import { TextDecoder, TextEncoder } from 'util';
+
 global.webStories = {};
 global.webStoriesBlockSettings = {
   config: {
@@ -87,3 +92,7 @@ File.prototype.arrayBuffer = () =>
 Object.defineProperty(HTMLMediaElement.prototype, 'muted', {
   set: () => {},
 });
+
+// Needed for react-dom's renderToStaticMarkup()
+global.TextEncoder = TextEncoder;
+global.TextDecoder = TextDecoder;

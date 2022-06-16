@@ -231,7 +231,8 @@ function HierarchicalTermSelector({
         node.removeEventListener('keypress', handleEnter);
       };
     }
-    return null;
+
+    return undefined;
   }, [handleSubmit, formRef]);
 
   useEffect(() => {

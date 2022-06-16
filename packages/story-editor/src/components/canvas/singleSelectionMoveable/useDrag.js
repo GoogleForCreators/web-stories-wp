@@ -18,7 +18,8 @@
  * External dependencies
  */
 import { useUnits } from '@googleforcreators/units';
-import { useBatchingCallback } from '@googleforcreators/react';
+import { useCallback } from '@googleforcreators/react';
+
 /**
  * Internal dependencies
  */
@@ -62,7 +63,7 @@ function useSingleSelectionDrag({
     })
   );
 
-  const resetDragging = useBatchingCallback(
+  const resetDragging = useCallback(
     (target) => {
       setIsDragging(false);
       setDraggingResource(null);

@@ -84,7 +84,6 @@ function useMediaUploadQueue() {
     updateMediaElement: noop,
   });
 
-  const isMounted = useRef(false);
   const currentTranscodingItem = useRef(null);
   const currentPosterGenerationItem = useRef(null);
 
@@ -122,10 +121,6 @@ function useMediaUploadQueue() {
           try {
             const { resource: newResource, posterFile } =
               await getResourceFromLocalFile(file);
-
-            if (!isMounted.current) {
-              return;
-            }
 
             replacePlaceholderResource({
               id,
@@ -178,10 +173,6 @@ function useMediaUploadQueue() {
               height,
             };
 
-            if (!isMounted.current) {
-              return;
-            }
-
             replacePlaceholderResource({
               id,
               resource: newResource,
@@ -213,10 +204,6 @@ function useMediaUploadQueue() {
       try {
         const newFile = await convertGifToVideo(file);
 
-        if (!isMounted.current) {
-          return;
-        }
-
         additionalData.mediaSource = 'gif-conversion';
         additionalData.isMuted = true;
         finishTranscoding({ id, file: newFile, additionalData });
@@ -240,10 +227,6 @@ function useMediaUploadQueue() {
 
       try {
         const newFile = await trimVideo(file, trimData.start, trimData.end);
-
-        if (!isMounted.current) {
-          return;
-        }
 
         additionalData.meta = {
           ...additionalData.meta,
@@ -271,10 +254,6 @@ function useMediaUploadQueue() {
       try {
         const newFile = await stripAudioFromVideo(file);
 
-        if (!isMounted.current) {
-          return;
-        }
-
         additionalData.isMuted = true;
         finishMuting({ id, file: newFile, additionalData });
       } catch (error) {
@@ -297,10 +276,6 @@ function useMediaUploadQueue() {
 
       try {
         const newFile = await transcodeVideo(file);
-
-        if (!isMounted.current) {
-          return;
-        }
 
         additionalData.mediaSource = 'video-optimization';
         finishTranscoding({ id, file: newFile, additionalData });
@@ -327,10 +302,6 @@ function useMediaUploadQueue() {
       // The final poster will be uploaded later by uploadVideoPoster().
       let newResource = await uploadFile(file, additionalData);
 
-      if (!isMounted.current) {
-        return;
-      }
-
       // If we don't have a poster yet (e.g. after converting a GIF),
       // try to generate one now.
       if (!resource.poster && !posterFile) {
@@ -348,10 +319,6 @@ function useMediaUploadQueue() {
           posterFileName,
           posterFile
         );
-
-        if (!isMounted.current) {
-          return;
-        }
 
         newResource = {
           ...newResource,
@@ -374,10 +341,6 @@ function useMediaUploadQueue() {
     async (item) => {
       const { id, file, additionalData = {} } = item;
       const resource = await uploadFile(file, additionalData);
-
-      if (!isMounted.current) {
-        return;
-      }
 
       finishUploading({
         id,
@@ -541,14 +504,6 @@ function useMediaUploadQueue() {
       uploadItem(item);
     });
   }, [state.queue, uploadItem]);
-
-  useEffect(() => {
-    isMounted.current = true;
-
-    return () => {
-      isMounted.current = false;
-    };
-  }, []);
 
   return useMemo(() => {
     /**

@@ -13,6 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * External dependencies
+ */
+import { render } from '@testing-library/react';
+
 /**
  * Internal dependencies
  */
@@ -22,7 +28,6 @@ import {
 } from '../../styleManipulation';
 import { NONE, WEIGHT, MULTIPLE_VALUE } from '../../customConstants';
 import formatter from '../weight';
-import { getDOMElement } from './_utils';
 
 jest.mock('../../styleManipulation', () => {
   return {
@@ -32,6 +37,11 @@ jest.mock('../../styleManipulation', () => {
 });
 
 const { elementToStyle, stylesToCSS, getters, setters } = formatter;
+
+function setupFormatter(element) {
+  const { container } = render(element);
+  return elementToStyle(container.firstChild);
+}
 
 describe('Color formatter', () => {
   beforeAll(() => {
@@ -44,10 +54,6 @@ describe('Color formatter', () => {
   });
 
   describe('elementToStyle', () => {
-    function setupFormatter(element) {
-      return elementToStyle(getDOMElement(element));
-    }
-
     it('should ignore non-span elements', () => {
       const element = <div />;
       const style = setupFormatter(element);

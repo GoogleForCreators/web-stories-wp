@@ -53,7 +53,7 @@
   "devDependencies": {
     "@googleforcreators/element-library": "*",
     "@googleforcreators/test-utils": "*",
-    "@testing-library/react": "^12.1.5",
+    "@testing-library/react": "^13.3.0",
     "flagged": "^2.0.3"
   }
 }

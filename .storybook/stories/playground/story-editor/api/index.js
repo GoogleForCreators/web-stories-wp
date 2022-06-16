@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export * from './fonts';
-export * from './media';
-export * from './story';
+
+export { getFonts } from './fonts';
+export { getMedia } from './media';
+export { saveStoryById } from './story';

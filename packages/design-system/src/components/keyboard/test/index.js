@@ -19,8 +19,7 @@
 /**
  * External dependencies
  */
-import { fireEvent } from '@testing-library/react';
-import { renderHook, cleanup, act } from '@testing-library/react-hooks';
+import { fireEvent, renderHook, cleanup, act } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -32,13 +31,13 @@ const keys = {
   b: { key: 'b', which: 66 },
 };
 
-/** @typedef {import('@testing-library/react-hooks').HookResult} HookResult */
+/** @typedef {import('@testing-library/react').RenderHookResult} RenderHookResult */
 
 /**
  * Runs tests simulating a key being held down for useIsKeyPressed
  * and useGlobalIsKeyPressed.
  *
- * @param {HookResult<boolean>} result Hook result.
+ * @param {RenderHookResult<boolean>} result Hook result.
  * @param {Node} node Node.
  * @param {Object<{key: string, which: number}>} key Key object.
  * @param {boolean} [shouldRegister=true] Whether the key press is registered by
