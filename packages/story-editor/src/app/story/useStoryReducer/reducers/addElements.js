@@ -70,9 +70,22 @@ function addElements(state, { elements }) {
     ({ id }) => newElementDuplicateID && !newElementDuplicateID.includes(id)
   );
 
+  const newElementProducts = newElementNoDuplicateProducts.filter(
+    ({ type }) => type === ELEMENT_TYPES.PRODUCT
+  );
+
+  const newElementNoProducts = newElementNoDuplicateProducts.filter(
+    ({ type }) => type !== ELEMENT_TYPES.PRODUCT
+  );
+
+  const newPageElements = [
+    ...newElementNoProducts,
+    ...newElementProducts.slice(0, 6 - currentPageProductIds.length),
+  ];
+
   const newPage = {
     ...oldPage,
-    elements: [...oldPage.elements, ...newElementNoDuplicateProducts],
+    elements: [...oldPage.elements, ...newPageElements],
   };
 
   const newPages = [
@@ -81,7 +94,7 @@ function addElements(state, { elements }) {
     ...state.pages.slice(pageIndex + 1),
   ];
 
-  const newSelection = newElements.map(({ id }) => id);
+  const newSelection = newPageElements.map(({ id }) => id);
 
   return {
     ...state,

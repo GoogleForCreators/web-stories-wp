@@ -103,6 +103,19 @@ function useCanvasGlobalKeys() {
         currentPage
       );
 
+      const newProductElements = elements.filter(
+        ({ type }) => type === ELEMENT_TYPES.PRODUCT
+      );
+
+      if (
+        currentPageProductIds.length >= 6 ||
+        newProductElements.length + currentPageProductIds.length > 6
+      ) {
+        showSnackbar({
+          message: __('Only 6 items can be added per page.', 'web-stories'),
+        });
+      }
+
       for (const { type, product } of elements) {
         if (
           type === ELEMENT_TYPES.PRODUCT &&
