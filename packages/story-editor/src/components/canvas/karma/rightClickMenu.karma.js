@@ -34,6 +34,7 @@ describe('Right Click Menu integration', () => {
 
   beforeEach(async () => {
     fixture = new Fixture();
+    fixture.setFlags({ shoppingIntegration: true });
     await fixture.render();
     await fixture.collapseHelpCenter();
     await fixture.events.click(fixture.editor.footer.layerPanel.togglePanel);
@@ -365,6 +366,28 @@ describe('Right Click Menu integration', () => {
         },
         link: null,
         ...shapePartial,
+      })
+    );
+  }
+
+  /**
+   * Add product to canvas
+   *
+   * @param {Object} productPartial Object with product properties to override defaults.
+   * @return {Object} the product element
+   */
+  function addProduct(productPartial = {}) {
+    return fixture.act(() =>
+      insertElement('product', {
+        x: 10,
+        y: 10,
+        width: 50,
+        height: 50,
+        product: {
+          productId: 'kt-38',
+          productTitle: 'Logo Collection',
+        },
+        ...productPartial,
       })
     );
   }
@@ -1424,6 +1447,27 @@ describe('Right Click Menu integration', () => {
       );
 
       expect(unmaskedElement.mask.type).toEqual('rectangle');
+    });
+  });
+
+  describe('right click menu: product', () => {
+    it('product has right click menu', async () => {
+      const product = await addProduct({});
+      const productElement = fixture.editor.canvas.framesLayer.frame(
+        product.id
+      ).node;
+      await rightClickOnTarget(productElement);
+      await fixture.events.click(selectLayerButton());
+
+      const productItem = fixture.screen.getByRole('menuitem', {
+        name: /^Logo Collection$/,
+      });
+
+      expect(productItem).toBeDefined();
+      expect(sendBackward().disabled).toBeTrue();
+      expect(sendToBack().disabled).toBeTrue();
+      expect(bringForward().disabled).toBeTrue();
+      expect(bringToFront().disabled).toBeTrue();
     });
   });
 });
