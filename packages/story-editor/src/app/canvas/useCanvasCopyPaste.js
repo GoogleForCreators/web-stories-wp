@@ -118,7 +118,7 @@ function useCanvasGlobalKeys() {
             /* translators: %d: max number of products. */
             _n(
               'Only %d item can be added per page.',
-              'Only %d items cans be added per page.',
+              'Only %d items can be added per page.',
               MAX_PRODUCTS_PER_PAGE,
               'web-stories'
             ),

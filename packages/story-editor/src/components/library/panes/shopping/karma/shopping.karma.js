@@ -134,7 +134,7 @@ describe('Shopping integration', () => {
       await expect(productButton.getAttribute('aria-disabled')).toBe('true');
     });
 
-    it('should disable button if product more than 6 product', async () => {
+    it('should disable button if there are more than 6 products on the page', async () => {
       await insertProduct('Hoodie');
       await insertProduct('Big Logo Collection');
       await insertProduct('Logo Collection');
