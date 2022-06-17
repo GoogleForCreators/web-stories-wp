@@ -44,7 +44,7 @@ describe('copySelectedElement', () => {
     expect(result).toStrictEqual(initialState);
   });
 
-  it("copies an element's styles and animations", () => {
+  it('copies the styles of an element and animations', () => {
     const { restore, copySelectedElement } = setupReducer();
 
     // Set an initial state with a current page.
@@ -96,7 +96,7 @@ describe('copySelectedElement', () => {
     });
   });
 
-  it("copies an element's styles if no animations", () => {
+  it('copies the styles of an element if no animations', () => {
     const { restore, copySelectedElement } = setupReducer();
 
     // Set an initial state with a current page.
