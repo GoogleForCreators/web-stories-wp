@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { useState, useRef, useEffect } from '@googleforcreators/react';
 import { __, sprintf } from '@googleforcreators/i18n';
 import { PLACEMENT } from '@googleforcreators/design-system';
