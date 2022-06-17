@@ -42,6 +42,7 @@ const useElementActions = () => {
     selectedElements,
     setBackgroundElement,
     updateElementsById,
+    deleteGroupById,
     addGroup,
     groups,
     elements,
@@ -53,6 +54,7 @@ const useElementActions = () => {
     setBackgroundElement: actions.setBackgroundElement,
     updateElementsById: actions.updateElementsById,
     addGroup: actions.addGroup,
+    deleteGroupById: actions.deleteGroupById,
     groups: state.currentPage.groups,
     elements: state.currentPage?.elements || [],
     arrangeElement: actions.arrangeElement,
@@ -151,6 +153,9 @@ const useElementActions = () => {
       return;
     }
 
+    // this will remove the group but keep the elements
+    deleteGroupById({ groupId: selectedElements[0]?.groupId });
+
     updateElementsById({
       elementIds: selectedElements.map(({ id }) => id),
       properties: (currentProperties) =>
@@ -162,7 +167,7 @@ const useElementActions = () => {
           /* commitValues */ true
         ),
     });
-  }, [selectedElements, updateElementsById]);
+  }, [selectedElements, updateElementsById, deleteGroupById]);
 
   /**
    * Set element as the element being 'edited'.
