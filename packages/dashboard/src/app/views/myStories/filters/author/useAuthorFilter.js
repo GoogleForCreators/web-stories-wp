@@ -70,7 +70,7 @@ function useAuthorFilter() {
    * See design-system/src/component/datalist
    *
    * @see queryAuthors
-   * @return {Array} cached authors terms
+   * @return {Promise<Array>} cached authors terms
    */
   const getPrimaryOptions = useCallback(async () => {
     if (!cachedPrimaryOptions) {

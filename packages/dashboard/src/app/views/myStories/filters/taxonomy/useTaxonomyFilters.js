@@ -75,7 +75,7 @@ function useTaxonomyFilters() {
    * @see queryTaxonomyTerms
    * @param {Object} taxonomy object holding taxonomy data,
    * including restBase and restPath used to fetch individual taxonomy terms
-   * @return {Array} cached taxonomy terms
+   * @return {Promise<Array>} cached taxonomy terms
    */
   const getPrimaryOptions = useCallback(
     async (taxonomy) => {

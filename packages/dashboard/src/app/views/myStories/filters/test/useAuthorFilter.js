@@ -44,32 +44,35 @@ jest.mock('../../../../api/useApi', () => {
 
 describe('useAuthorFilter', () => {
   it('should set authors to return value of getAuthors', async () => {
-    const { result } = renderHook(() => useAuthorFilter());
+    const {
+      result: { current: initializeAuthorFilter },
+    } = renderHook(() => useAuthorFilter());
     // flush promise queue
     await act(() => Promise.resolve());
-
-    expect(result.current.authors).toHaveLength(1);
+    const filter = initializeAuthorFilter();
+    const authors = await filter.getPrimaryOptions();
+    expect(authors).toHaveLength(1);
+    expect(authors.at(0)).toMatchObject({
+      id: 1,
+      name: 'admin',
+    });
   });
 
   describe('initializeAuthorFilter', () => {
     it('should initilize author filter data', async () => {
-      const { result } = renderHook(() => useAuthorFilter());
+      const {
+        result: { current: initializeAuthorFilter },
+      } = renderHook(() => useAuthorFilter());
       // flush promise queue
       await act(() => Promise.resolve());
 
       // initialize filter
       act(() => {
-        const authorFilter = result.current.initializeAuthorFilter();
-        expect(authorFilter.primaryOptions).toHaveLength(1);
-        expect(authorFilter.primaryOptions[0]).toMatchObject({
-          id: 1,
-          name: 'admin',
-        });
-
-        expect(authorFilter.placeholder).toBe('All Authors');
-        expect(authorFilter.ariaLabel).toBe(`Filter stories by author`);
-        expect(authorFilter.noMatchesFoundLabel).toBe('No authors found');
-        expect(authorFilter.searchPlaceholder).toBe('Search authors');
+        const filter = initializeAuthorFilter();
+        expect(filter.placeholder).toBe('All Authors');
+        expect(filter.ariaLabel).toBe(`Filter stories by author`);
+        expect(filter.noMatchesFoundLabel).toBe('No authors found');
+        expect(filter.searchPlaceholder).toBe('Search authors');
       });
     });
   });
