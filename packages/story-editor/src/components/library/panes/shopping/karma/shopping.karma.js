@@ -41,6 +41,33 @@ describe('Shopping integration', () => {
     await fixture.events.click(searchInput);
   }
 
+  async function insertProduct(productTitle) {
+    await searchProduct(productTitle);
+
+    const productButton = fixture.querySelector(
+      `[aria-label="Add ${productTitle}"]`
+    );
+    await fixture.events.click(productButton);
+    await waitFor(() => fixture.querySelector(dropDownSelector));
+
+    await clearSearch();
+  }
+
+  async function searchProduct(productTitle) {
+    await focusProductSearchInput();
+    await fixture.events.keyboard.type(productTitle);
+    // delay for search to catch-up
+    await fixture.events.sleep(400);
+  }
+
+  async function clearSearch() {
+    await focusProductSearchInput();
+    const clearSearchButton = fixture.querySelector(
+      `[aria-label="Clear product search"]`
+    );
+    await fixture.events.click(clearSearchButton);
+  }
+
   beforeEach(async () => {
     fixture = new Fixture();
     fixture.setFlags({ shoppingIntegration: true });
@@ -60,18 +87,9 @@ describe('Shopping integration', () => {
 
   describe('Shopping tab', () => {
     it('should handle product search add and remove', async () => {
-      const productTitle = 'Hoodie';
-      await focusProductSearchInput();
       expect(isStoryEmpty()).toEqual(true);
-      await fixture.events.keyboard.type('hood');
-      // delay for search to catch-up
-      await fixture.events.sleep(400);
-
-      const productButton = fixture.querySelector(
-        `[aria-label="Add ${productTitle}"]`
-      );
-      await fixture.events.click(productButton);
-      await waitFor(() => fixture.querySelector(dropDownSelector));
+      const productTitle = 'Hoodie';
+      await insertProduct(productTitle);
 
       // add a small delay for debounce search to catchup
       await fixture.events.sleep(500);
@@ -108,18 +126,9 @@ describe('Shopping integration', () => {
     });
 
     it('should hide product lacking product image in dropdown', async () => {
-      const productTitle = 'Hoodie';
-      await focusProductSearchInput();
       expect(isStoryEmpty()).toEqual(true);
-      await fixture.events.keyboard.type('hood');
-      // delay for search to catch-up
-      await fixture.events.sleep(400);
-
-      const productButton = fixture.querySelector(
-        `[aria-label="Add ${productTitle}"]`
-      );
-      await fixture.events.click(productButton);
-      await waitFor(() => fixture.querySelector(dropDownSelector));
+      const productTitle = 'Hoodie';
+      await insertProduct(productTitle);
 
       // check story `state`
       const selectedElement = await getSelectedElement();
@@ -132,34 +141,11 @@ describe('Shopping integration', () => {
     });
 
     it('should hide product lacking duplicate products in dropdown', async () => {
-      const product1Title = 'Album';
-      await focusProductSearchInput();
       expect(isStoryEmpty()).toEqual(true);
-      await fixture.events.keyboard.type('album');
-      // delay for search to catch-up
-      await fixture.events.sleep(400);
-
-      const product1Button = fixture.querySelector(
-        `[aria-label="Add ${product1Title}"]`
-      );
-      await fixture.events.click(product1Button);
-      await waitFor(() => fixture.querySelector(dropDownSelector));
+      await insertProduct('Album');
 
       const product2Title = 'Hoodie';
-      await focusProductSearchInput();
-      const clearSearch = fixture.querySelector(
-        `[aria-label="Clear product search"]`
-      );
-      await fixture.events.click(clearSearch);
-      await fixture.events.keyboard.type('hood');
-      // delay for search to catch-up
-      await fixture.events.sleep(400);
-
-      const product2Button = fixture.querySelector(
-        `[aria-label="Add ${product2Title}"]`
-      );
-      await fixture.events.click(product2Button);
-      await waitFor(() => fixture.querySelector(dropDownSelector));
+      await insertProduct(product2Title);
 
       // check story `state`
       const selectedElement = await getSelectedElement();
@@ -172,10 +158,7 @@ describe('Shopping integration', () => {
     });
 
     it('should disable button if product lacks product image', async () => {
-      await focusProductSearchInput();
-      await fixture.events.keyboard.type('WordPress');
-      // delay for search to catch-up
-      await fixture.events.sleep(400);
+      await searchProduct('WordPress');
 
       const productButton = fixture.querySelector(
         '[aria-label="Products without images cannot be added."]'
