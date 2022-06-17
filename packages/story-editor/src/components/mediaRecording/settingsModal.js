@@ -66,13 +66,8 @@ function SettingsModal() {
   const [localVideoInput, setLocalVideoInput] = useState(videoInput);
   const [localAudioInput, setLocalAudioInput] = useState(audioInput);
 
-  useEffect(() => {
-    setLocalVideoInput(videoInput);
-  }, [videoInput]);
-
-  useEffect(() => {
-    setLocalAudioInput(audioInput);
-  }, [audioInput]);
+  useEffect(() => setLocalVideoInput(videoInput), [videoInput]);
+  useEffect(() => setLocalAudioInput(audioInput), [audioInput]);
 
   const onSaveChanges = useCallback(() => {
     toggleSettings();
