@@ -92,7 +92,7 @@ function useTaxonomyFilters() {
    * Query all the taxonomies.
    * Sets up the shape of the taxonomy filters data
    *
-   * @return {Array} taxonomies filter data
+   * @return {Promise<Array>} taxonomies filter data
    */
   const initializeTaxonomyFilters = useCallback(async () => {
     const taxonomies = await getTaxonomies({

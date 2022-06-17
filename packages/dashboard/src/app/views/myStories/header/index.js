@@ -47,7 +47,6 @@ import {
   SearchPropTypes,
   SortPropTypes,
   ViewPropTypes,
-  AuthorPropTypes,
 } from '../../../../utils/useStoryView';
 import { useDashboardResultsLabel } from '../../../../utils';
 import { BodyViewOptions, PageHeading } from '../../shared';
@@ -72,9 +71,6 @@ function Header({
   stories,
   totalStoriesByStatus,
   view,
-  author,
-  queryAuthorsBySearch,
-  showAuthorDropdown,
 }) {
   const {
     actions: { scrollToTop },

@@ -98,8 +98,11 @@ export default function FiltersProvider({ children }) {
     const taxonomies = await initializeTaxonomyFilters();
     const author = initializeAuthorFilter();
 
-    const filters = [...taxonomies, author];
-    registerFilters(filters);
+    const filters = [...taxonomies, author].filter((f) => Boolean(f));
+
+    if (filters.length) {
+      registerFilters(filters);
+    }
   }, [registerFilters, initializeAuthorFilter, initializeTaxonomyFilters]);
 
   const contextValue = useMemo(() => {
