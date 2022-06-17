@@ -52,6 +52,7 @@ function Content({
   allPagesFetched,
   canViewDefaultTemplates,
   filter,
+  filtersObject,
   loading,
   page,
   search,
@@ -86,15 +87,8 @@ function Content({
               size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
               as="h3"
             >
-              {search?.keyword
-                ? sprintf(
-                    /* translators: %s: search term. */
-                    __(
-                      'Sorry, we couldn\'t find any results matching "%s"',
-                      'web-stories'
-                    ),
-                    search.keyword
-                  )
+              {search?.keyword || Boolean(Object.keys(filtersObject))
+                ? __("Sorry, we couldn't find any results.", 'web-stories')
                 : __('Start telling Stories.', 'web-stories')}
             </Headline>
             {!search?.keyword && canViewDefaultTemplates && (
@@ -117,6 +111,7 @@ Content.propTypes = {
   allPagesFetched: PropTypes.bool,
   canViewDefaultTemplates: PropTypes.bool,
   filter: FilterPropTypes,
+  filtersObject: PropTypes.object,
   loading: PropTypes.shape({
     isLoading: PropTypes.bool,
     showStoriesWhileLoading: ShowStoriesWhileLoadingPropType,
