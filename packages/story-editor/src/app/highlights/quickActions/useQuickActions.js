@@ -186,9 +186,17 @@ export const MediaPicker = ({ render, ...props }) => {
 
         postProcessingResource(resource);
       } catch (e) {
+        const thumbnailSrc =
+          resource && ['video', 'gif'].includes(resource.type)
+            ? resource.poster
+            : resource.src;
         showSnackbar({
           message: e.message,
           dismissable: true,
+          thumbnail: thumbnailSrc && {
+            src: thumbnailSrc,
+            alt: resource?.alt,
+          },
         });
       }
     },

@@ -139,9 +139,17 @@ function MediaUploadButton({ onInsert, renderButton, buttonInsertText }) {
 
         postProcessingResource(resource);
       } catch (e) {
+        const thumbnailSrc =
+          resource && ['video', 'gif'].includes(resource.type)
+            ? resource.poster
+            : resource.src;
         showSnackbar({
           message: e.message,
           dismissible: true,
+          thumbnail: thumbnailSrc && {
+            src: thumbnailSrc,
+            alt: resource?.alt,
+          },
         });
       }
     },
