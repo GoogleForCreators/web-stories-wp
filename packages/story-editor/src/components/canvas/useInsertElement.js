@@ -40,10 +40,10 @@ function createElementForCanvas(type, props) {
 
 function useInsertElement() {
   const { addElement, combineElements, backgroundElementId } = useStory(
-    (state) => ({
-      addElement: state.actions.addElement,
-      combineElements: state.actions.combineElements,
-      backgroundElementId: state.state.currentPage?.elements?.[0]?.id,
+    ({ state, actions }) => ({
+      addElement: actions.addElement,
+      combineElements: actions.combineElements,
+      backgroundElementId: state.currentPage?.elements?.[0]?.id,
     })
   );
 
