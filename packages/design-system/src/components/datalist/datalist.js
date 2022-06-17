@@ -24,6 +24,7 @@ import {
   forwardRef,
   useDebouncedCallback,
   useEffect,
+  useLayoutEffect,
 } from '@googleforcreators/react';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
@@ -85,7 +86,7 @@ const Datalist = forwardRef(function Datalist(
     hasSearch = false,
     getOptionsByQuery,
     onObserve,
-    primaryOptions = [],
+    primaryOptions,
     primaryLabel,
     priorityOptionGroups,
     searchResultsLabel,
@@ -211,7 +212,7 @@ const Datalist = forwardRef(function Datalist(
       getPrimaryOptions().then((res) => {
         _setPrimaryOptions(res);
       });
-    } else {
+    } else if (primaryOptions) {
       _setPrimaryOptions(primaryOptions);
     }
   }, [

@@ -94,12 +94,11 @@ export default function FiltersProvider({ children }) {
    *
    * @return {void}
    */
-  const initializeFilters = useCallback(() => {
-    const taxonomies = initializeTaxonomyFilters();
+  const initializeFilters = useCallback(async () => {
+    const taxonomies = await initializeTaxonomyFilters();
     const author = initializeAuthorFilter();
 
     const filters = [...taxonomies, author];
-
     registerFilters(filters);
   }, [registerFilters, initializeAuthorFilter, initializeTaxonomyFilters]);
 

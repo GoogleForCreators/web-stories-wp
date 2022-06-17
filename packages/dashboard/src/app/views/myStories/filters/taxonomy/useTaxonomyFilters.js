@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useState } from '@googleforcreators/react';
+import { useCallback } from '@googleforcreators/react';
 
 /**
  * Internal dependencies
@@ -34,8 +34,6 @@ const cachedPrimaryOptions = {};
  */
 
 function useTaxonomyFilters() {
-  const [taxonomies, setTaxonomies] = useState([]);
-
   const { getTaxonomies, getTaxonomyTerms } = useApi(
     ({
       actions: {
@@ -92,19 +90,15 @@ function useTaxonomyFilters() {
 
   /**
    * Query all the taxonomies.
-   * This should only be needed once to get all the taxonomies.
-   *
-   */
-  const queryTaxonomies = useCallback(async () => {
-    setTaxonomies(await getTaxonomies({ hierarchical: true, show_ui: true }));
-  }, [getTaxonomies]);
-
-  /**
    * Sets up the shape of the taxonomy filters data
    *
    * @return {Array} taxonomies filter data
    */
-  const initializeTaxonomyFilters = useCallback(() => {
+  const initializeTaxonomyFilters = useCallback(async () => {
+    const taxonomies = await getTaxonomies({
+      hierarchical: true,
+      show_ui: true,
+    });
     return taxonomies.map((taxonomy) => ({
       key: taxonomy.restBase,
       restPath: taxonomy.restPath,
@@ -115,11 +109,7 @@ function useTaxonomyFilters() {
       query: (search) => queryTaxonomyTerms(taxonomy, search),
       getPrimaryOptions: () => getPrimaryOptions(taxonomy),
     }));
-  }, [queryTaxonomyTerms, getPrimaryOptions, taxonomies]);
-
-  useEffect(() => {
-    queryTaxonomies();
-  }, [queryTaxonomies]);
+  }, [queryTaxonomyTerms, getPrimaryOptions, getTaxonomies]);
 
   return initializeTaxonomyFilters;
 }
