@@ -168,11 +168,13 @@ function Footer({ captureImage }) {
     debouncedStartRecording();
   }, [debouncedStartRecording, setCountdown, setDuration]);
 
-  const isRecording = 'recording' === status;
+  const isRecording = ['recording', 'stopping', 'stopped'].includes(status);
 
   const onInsert = useCallback(async () => {
     const args = {
-      additionalData: {},
+      additionalData: {
+        mediaSource: 'recording',
+      },
     };
     const { resource, posterFile } = await getResourceFromLocalFile(file);
 
@@ -184,10 +186,7 @@ function Footer({ captureImage }) {
 
     if (file.type.startsWith('video')) {
       args.additionalData.isMuted = isMuted;
-
-      if (isGif) {
-        args.additionalData.mediaSource = 'gif-conversion';
-      }
+      args.additionalData.isGif = isGif;
 
       args.resource.length = duration;
       args.resource.lengthFormatted = getVideoLengthDisplay(duration);
@@ -208,6 +207,7 @@ function Footer({ captureImage }) {
 
     trackEvent('media_recording_capture', {
       type: isGif ? 'gif' : 'video',
+      muted: isMuted,
       duration,
     });
   }, [

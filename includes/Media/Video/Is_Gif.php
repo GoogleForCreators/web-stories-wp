@@ -1,15 +1,15 @@
 <?php
 /**
- * Class Blurhash
+ * Class Is_Gif
  *
  * @link      https://github.com/googleforcreators/web-stories-wp
  *
- * @copyright 2021 Google LLC
+ * @copyright 2022 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  */
 
 /**
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,51 +24,46 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\Media;
+namespace Google\Web_Stories\Media\Video;
 
 use Google\Web_Stories\Infrastructure\HasMeta;
 use Google\Web_Stories\Service_Base;
 
 /**
- * Class Blurhash
+ * Class Is_Gif
  */
-class Blurhash extends Service_Base implements HasMeta {
-
+class Is_Gif extends Service_Base implements HasMeta {
 	/**
-	 * The blurhash meta key.
+	 * The post meta key.
 	 */
-	public const BLURHASH_POST_META_KEY = 'web_stories_blurhash';
+	public const IS_GIF_POST_META_KEY = 'web_stories_is_gif';
 
 	/**
 	 * Init.
 	 *
-	 * @since 1.16.0
+	 * @since 1.23.0
 	 */
 	public function register(): void {
 		$this->register_meta();
-
-		add_filter( 'wp_prepare_attachment_for_js', [ $this, 'wp_prepare_attachment_for_js' ] );
 	}
 
 	/**
-	 * Register meta
+	 * Register post meta
 	 *
-	 * @since 1.16.0
+	 * @since 1.23.0
 	 */
 	public function register_meta(): void {
-		register_meta(
-			'post',
-			self::BLURHASH_POST_META_KEY,
+		register_post_meta(
+			'attachment',
+			self::IS_GIF_POST_META_KEY,
 			[
-				'type'           => 'string',
-				'description'    => __( 'Attachment BlurHash', 'web-stories' ),
-				'show_in_rest'   => [
-					'schema' => [
-						'type' => 'string',
-					],
-				],
-				'single'         => true,
-				'object_subtype' => 'attachment',
+				'sanitize_callback' => 'rest_sanitize_boolean',
+				'type'              => 'boolean',
+				'description'       => __( 'Whether the video is to be considered a GIF', 'web-stories' ),
+				'show_in_rest'      => true,
+				'default'           => false,
+				'single'            => true,
+				'object_subtype'    => 'attachment',
 			]
 		);
 	}
@@ -76,7 +71,7 @@ class Blurhash extends Service_Base implements HasMeta {
 	/**
 	 * Filters the attachment data prepared for JavaScript.
 	 *
-	 * @since 1.16.0
+	 * @since 1.23.0
 	 *
 	 * @param array|mixed $response Array of prepared attachment data.
 	 * @return array|mixed Response data.
@@ -86,7 +81,12 @@ class Blurhash extends Service_Base implements HasMeta {
 			return $response;
 		}
 
-		$response[ self::BLURHASH_POST_META_KEY ] = get_post_meta( $response['id'], self::BLURHASH_POST_META_KEY, true );
+		/**
+		 * @var int $post_id
+		 */
+		$post_id = $response['id'];
+
+		$response[ self::IS_GIF_POST_META_KEY ] = get_post_meta( $post_id, self::IS_GIF_POST_META_KEY, true );
 
 		return $response;
 	}

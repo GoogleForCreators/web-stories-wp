@@ -69,27 +69,17 @@ function MediaRecordingProvider({ children }) {
       return;
     }
 
-    const videoDeviceExists =
-      videoInput &&
-      mediaDevices.some((device) => device.deviceId === videoInput);
-
     // Video device not set yet, or was detached. Choose first available video device.
-    if (!videoInput || !videoDeviceExists) {
-      setVideoInput(
+    setVideoInput(
+      mediaDevices.find((device) => device.deviceId === videoInput)?.deviceId ||
         mediaDevices.find((device) => device.kind === 'videoinput')?.deviceId
-      );
-    }
-
-    const audioDeviceExists =
-      audioInput &&
-      mediaDevices.some((device) => device.deviceId === audioInput);
+    );
 
     // Audio device not set yet, or was detached. Choose first available audio device.
-    if (!audioInput || !audioDeviceExists) {
-      setAudioInput(
+    setAudioInput(
+      mediaDevices.find((device) => device.deviceId === audioInput)?.deviceId ||
         mediaDevices.find((device) => device.kind === 'audioinput')?.deviceId
-      );
-    }
+    );
   }, [audioInput, mediaDevices, videoInput]);
 
   const [mediaBlobUrl, setMediaBlobUrl] = useState();
@@ -215,9 +205,7 @@ function MediaRecordingProvider({ children }) {
     // Probably because liveStream is a new MediaStream instance.
     // Anyway, this stops the camera/mic from being used.
     if (liveStream) {
-      liveStream.getTracks().forEach((track) => {
-        track.stop();
-      });
+      liveStream.getTracks().forEach((track) => track.stop());
     }
 
     clearMediaBlob();

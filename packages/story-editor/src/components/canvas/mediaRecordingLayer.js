@@ -21,7 +21,6 @@ import { __ } from '@googleforcreators/i18n';
 import {
   useCallback,
   useEffect,
-  usePrevious,
   useRef,
   useDebouncedCallback,
 } from '@googleforcreators/react';
@@ -91,6 +90,7 @@ function MediaRecordingLayer() {
     toggleIsGif: actions.toggleIsGif,
     updateMediaDevices: actions.updateMediaDevices,
     getMediaStream: actions.getMediaStream,
+    clearMediaStream: actions.clearMediaStream,
     setFile: actions.setFile,
     setMediaBlobUrl: actions.setMediaBlobUrl,
     resetStream: actions.resetStream,
@@ -101,9 +101,6 @@ function MediaRecordingLayer() {
 
   const isReady = 'ready' === status;
   const isFailed = 'failed' === status;
-
-  const previousAudioInput = usePrevious(audioInput);
-  const previousVideoInput = usePrevious(videoInput);
 
   const isMuted = !hasAudio || isGif;
 
@@ -138,19 +135,10 @@ function MediaRecordingLayer() {
   }, [toggleIsGif]);
 
   useEffect(() => {
-    if (
-      previousAudioInput !== audioInput ||
-      previousVideoInput !== videoInput
-    ) {
-      getMediaStream();
-    }
-  }, [
-    audioInput,
-    getMediaStream,
-    previousAudioInput,
-    previousVideoInput,
-    videoInput,
-  ]);
+    resetStream();
+    getMediaStream();
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- Only want to act on actual input changes.
+  }, [audioInput, videoInput]);
 
   useEffect(() => {
     if (isReady) {

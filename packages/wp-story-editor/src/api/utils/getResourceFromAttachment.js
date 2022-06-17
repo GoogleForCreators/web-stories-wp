@@ -25,6 +25,10 @@ import {
 import { snakeToCamelCaseObjectKeys } from '@web-stories-wp/wp-utils';
 
 /**
+ * @typedef {import('@googleforcreators/media').Resource} Resource
+ */
+
+/**
  * MediaDetails object.
  *
  * @typedef {Object} MediaDetails Media details object.
@@ -181,13 +185,16 @@ function getGifResourceFromAttachment(attachment) {
  * Generates a resource object from a WordPress attachment.
  *
  * @param {WPAttachment} attachment WP Attachment object.
- * @return {import('./createResource').Resource} Resource object.
+ * @return {Resource} Resource object.
  */
 function getResourceFromAttachment(attachment) {
-  const { mime_type: mimeType, web_stories_media_source: mediaSource } =
-    attachment;
+  const {
+    mime_type: mimeType,
+    web_stories_media_source: mediaSource,
+    meta: { web_stories_is_gif: isGif = false } = {},
+  } = attachment;
 
-  if ('gif-conversion' === mediaSource) {
+  if ('gif-conversion' === mediaSource || isGif) {
     return getGifResourceFromAttachment(attachment);
   }
 

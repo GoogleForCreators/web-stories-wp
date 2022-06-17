@@ -299,7 +299,7 @@ function useUploadMedia({
           }
 
           // Treat incoming video as a gif if wanted, used by media recording.
-          if (additionalData?.mediaSource === 'gif-conversion') {
+          if (additionalData?.isGif) {
             resource = {
               ...resource,
               type: 'gif',
