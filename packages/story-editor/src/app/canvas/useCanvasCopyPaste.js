@@ -129,17 +129,23 @@ function useCanvasGlobalKeys() {
           ),
         });
       } else {
-        newProductsFromElements.forEach(({ productId, productTitle }) => {
-          if (currentPageProductIds.includes(productId)) {
-            showSnackbar({
-              message: sprintf(
-                /* translators: %s: product title. */
-                __('Product "%s" already exists on the page.', 'web-stories'),
-                productTitle
-              ),
-            });
+        newProductsFromElements.forEach(
+          ({ productId, productTitle, productImages }) => {
+            if (currentPageProductIds.includes(productId)) {
+              showSnackbar({
+                message: sprintf(
+                  /* translators: %s: product title. */
+                  __('Product "%s" already exists on the page.', 'web-stories'),
+                  productTitle
+                ),
+                thumbnail: productImages && {
+                  src: productImages[0].url,
+                  alt: productImages[0].alt,
+                },
+              });
+            }
           }
-        });
+        );
       }
 
       return addPastedElements(elements, animations);
