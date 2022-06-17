@@ -104,13 +104,16 @@ function useCanvasGlobalKeys() {
         currentPage
       );
 
-      const newProductElements = elements.filter(
-        ({ type }) => type === ELEMENT_TYPES.PRODUCT
-      );
+      const newProductsFromElements = elements
+        .filter(
+          ({ type, product }) =>
+            type === ELEMENT_TYPES.PRODUCT && product?.productId
+        )
+        .map(({ product }) => product);
 
       if (
         currentPageProductIds.length >= MAX_PRODUCTS_PER_PAGE ||
-        newProductElements.length + currentPageProductIds.length >
+        newProductsFromElements.length + currentPageProductIds.length >
           MAX_PRODUCTS_PER_PAGE
       ) {
         showSnackbar({
@@ -125,22 +128,18 @@ function useCanvasGlobalKeys() {
             MAX_PRODUCTS_PER_PAGE
           ),
         });
-      }
-
-      for (const { type, product } of elements) {
-        if (
-          type === ELEMENT_TYPES.PRODUCT &&
-          product?.productId &&
-          currentPageProductIds.includes(product.productId)
-        ) {
-          showSnackbar({
-            message: sprintf(
-              /* translators: %s: product title. */
-              __('Product "%s" already exists on the page.', 'web-stories'),
-              product.productTitle
-            ),
-          });
-        }
+      } else {
+        newProductsFromElements.forEach(({ productId, productTitle }) => {
+          if (currentPageProductIds.includes(productId)) {
+            showSnackbar({
+              message: sprintf(
+                /* translators: %s: product title. */
+                __('Product "%s" already exists on the page.', 'web-stories'),
+                productTitle
+              ),
+            });
+          }
+        });
       }
 
       return addPastedElements(elements, animations);
