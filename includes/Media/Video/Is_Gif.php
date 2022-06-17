@@ -82,6 +82,8 @@ class Is_Gif extends Service_Base implements HasMeta {
 		}
 
 		/**
+		 * Post ID.
+		 *
 		 * @var int $post_id
 		 */
 		$post_id = $response['id'];
