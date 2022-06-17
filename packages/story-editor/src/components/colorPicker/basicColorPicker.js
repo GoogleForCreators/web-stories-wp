@@ -31,6 +31,7 @@ import {
   localStore,
   LOCAL_STORAGE_PREFIX,
   themeHelpers,
+  noop
 } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 import { useState } from '@googleforcreators/react';
@@ -40,6 +41,7 @@ import { useState } from '@googleforcreators/react';
  */
 import useStory from '../../app/story/useStory';
 import useEyedropper from '../eyedropper';
+import useEyeDropperApi from '../eyedropper/useEyeDropperApi';
 import { BASIC_COLORS, CONFIRMATION_DIALOG_STORAGE_KEY } from './constants';
 import Header from './header';
 import BasicColorList from './basicColorList';
@@ -127,6 +129,10 @@ function BasicColorPicker({
     onChange: (newColor) => handleColorChange({ color: newColor }),
   });
 
+  const { isEyeDropperApiSupported, openEyeDropper } = useEyeDropperApi({
+    onChange: (newColor) => handleColorChange({ color: newColor }),
+  });
+
   const { deleteLocalColor, deleteGlobalColor } = useDeleteColor({
     onEmpty: () => setIsEditMode(false),
   });
@@ -187,8 +193,10 @@ function BasicColorPicker({
               type={BUTTON_TYPES.QUATERNARY}
               size={BUTTON_SIZES.SMALL}
               aria-label={__('Pick a color from canvas', 'web-stories')}
-              onClick={initEyedropper()}
-              onPointerEnter={initEyedropper(false)}
+              onClick={
+                isEyeDropperApiSupported ? openEyeDropper : initEyedropper()
+              }
+              onPointerEnter={isEyeDropperApiSupported ? noop : initEyedropper(false)}
             >
               <Icons.Pipette />
             </Button>

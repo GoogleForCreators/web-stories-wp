@@ -35,6 +35,7 @@ import {
   BUTTON_VARIANTS,
   BUTTON_TYPES,
   CircularProgress,
+  noop
 } from '@googleforcreators/design-system';
 
 const Saturation = lazy(() =>
@@ -57,6 +58,7 @@ const Alpha = lazy(() =>
  * Internal dependencies
  */
 import useEyedropper from '../eyedropper';
+import useEyeDropperApi from '../eyedropper/useEyeDropperApi';
 import Pointer from './pointer';
 import EditablePreview from './editablePreview';
 
@@ -159,6 +161,10 @@ function CurrentColorPicker({
     onChange,
   });
 
+  const { isEyeDropperApiSupported, openEyeDropper } = useEyeDropperApi({
+    onChange: (color) => onChange({ color }),
+  });
+
   return (
     <>
       <Suspense fallback={null}>
@@ -213,8 +219,10 @@ function CurrentColorPicker({
             type={BUTTON_TYPES.QUATERNARY}
             size={BUTTON_SIZES.SMALL}
             aria-label={__('Pick a color from canvas', 'web-stories')}
-            onClick={initEyedropper()}
-            onPointerEnter={initEyedropper(false)}
+            onClick={
+              isEyeDropperApiSupported ? openEyeDropper : initEyedropper()
+            }
+            onPointerEnter={isEyeDropperApiSupported ? noop : initEyedropper(false)}
           >
             <Icons.Pipette />
           </Button>

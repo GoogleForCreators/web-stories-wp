@@ -30,6 +30,7 @@ import {
   Icons,
   PLACEMENT,
   TOOLTIP_PLACEMENT,
+  noop
 } from '@googleforcreators/design-system';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -38,6 +39,7 @@ import { v4 as uuidv4 } from 'uuid';
  */
 import { MULTIPLE_VALUE } from '../../../constants';
 import useEyedropper from '../../eyedropper';
+import useEyeDropperApi from '../../eyedropper/useEyeDropperApi';
 import Tooltip from '../../tooltip';
 import { focusStyle } from '../../panels/shared/styles';
 
@@ -130,6 +132,11 @@ const Color = forwardRef(function Color(
   const { initEyedropper } = useEyedropper({
     onChange: (color) => onChange({ color }),
   });
+
+  const { isEyeDropperApiSupported, openEyeDropper } = useEyeDropperApi({
+    onChange: (color) => onChange({ color }),
+  });
+
   const tooltip = __('Pick a color from canvas', 'web-stories');
 
   const tooltipPlacement =
@@ -162,8 +169,10 @@ const Color = forwardRef(function Color(
             id={uuidv4()}
             tabIndex={tabIndex}
             aria-label={tooltip}
-            onClick={initEyedropper()}
-            onPointerEnter={initEyedropper(false)}
+            onClick={
+              isEyeDropperApiSupported ? openEyeDropper : initEyedropper()
+            }
+            onPointerEnter={isEyeDropperApiSupported ? noop : initEyedropper(false)}
           >
             <Icons.Pipette />
           </EyeDropperButton>
