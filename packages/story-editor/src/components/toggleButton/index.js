@@ -20,6 +20,7 @@ import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import {
   Button as dsButton,
+  BUTTON_TRANSITION_TIMING,
   BUTTON_TYPES,
   BUTTON_VARIANTS,
   BUTTON_SIZES,
@@ -27,6 +28,9 @@ import {
   TOOLTIP_PLACEMENT,
   themeHelpers,
   THEME_CONSTANTS,
+  theme as dsTheme,
+  Icons,
+  resolveSizeUnits,
 } from '@googleforcreators/design-system';
 import { forwardRef } from '@googleforcreators/react';
 
@@ -35,57 +39,135 @@ import { forwardRef } from '@googleforcreators/react';
  */
 import Tooltip from '../tooltip';
 
-const Button = styled(dsButton)`
-  height: 36px;
-  width: ${({ isSquare }) => (isSquare ? 36 : 58)}px;
-  display: inline-block;
-  border: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
-  padding: 2px 0;
-  color: ${({ theme }) => theme.colors.fg.primary};
-  ${({ isOpen, theme }) =>
-    isOpen &&
-    css`
-      border-color: ${theme.colors.bg.secondary};
-      background-color: ${theme.colors.bg.secondary};
-    `}
-  ${({ hasText, theme }) =>
-    hasText &&
-    css`
-      padding: 2px 0 2px 8px;
-      width: auto;
-      ${themeHelpers.expandPresetStyles({
-        preset: {
-          ...theme.typography.presets.paragraph[
-            THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL
-          ],
-        },
-        theme,
-      })};
+const buttonSize = 36;
 
-      span {
-        padding-left: 6px;
-      }
-    `}
+const Button = styled(dsButton)`
+  width: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-width: 1px;
+  border-style: solid;
+  padding: 0 10px;
+  white-space: nowrap;
+  // Handle props-dependent styling in one place
+  ${({ isOpen, hasText, $size = buttonSize, theme }) => css`
+    height: ${resolveSizeUnits($size)};
+    min-width: ${resolveSizeUnits($size)};
+    color: ${theme.colors.fg.primary};
+    border-color: ${
+      isOpen ? theme.colors.bg.secondary : theme.colors.border.defaultNormal
+    };
+    background-color: ${
+      isOpen ? theme.colors.bg.secondary : theme.colors.bg.primary
+    };
+    ${
+      hasText &&
+      css`
+        ${themeHelpers.expandPresetStyles({
+          preset: {
+            ...theme.typography.presets.paragraph[
+              THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL
+            ],
+          },
+          theme,
+        })};
+
+        .badge {
+          margin: 0 8px;
+        }
+      `
+    }
+
+    .badge.open,
+    &:hover .badge,
+    &:focus .badge {
+      background-color: ${theme.colors.bg.quaternary};
+    }
+
+  }`}
+
+  .badge {
+    transition: background-color ${BUTTON_TRANSITION_TIMING};
+  }
+
+  // Margin is set to -8px to compensate for empty space
+  // around the actual icon graphic in the svg
+  svg.main-icon {
+    height: 32px;
+    width: auto;
+    margin: -8px;
+    display: block;
+  }
 `;
 Button.propTypes = {
   hasText: PropTypes.bool,
   isOpen: PropTypes.bool,
+  $size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 };
 
-const Wrapper = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-`;
+// `badgeSize` is the default height and min-width of the badge circle/oval
+// Hard-coded here, but can be overridden by `$size` prop in the component
+const badgeSize = 22;
 
-const NotificationCount = styled(Text).attrs({ as: 'span' })`
-  margin: -2px 0 -2px;
-  padding-right: 6px;
-  line-height: 20px;
-  color: ${({ theme }) => theme.colors.violet[20]};
+// Defaults for badge come from typography.presets.label.small
+const badgeText =
+  dsTheme.typography.presets.label[
+    THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL
+  ];
+
+// TODO: Extract `CountBadge` to its own component
+// Props prefixed with `$` won't leak into element attributes
+// (`theme` is handled internally by Styled Components)
+// padding and border-radius properties use css `calc()` so units
+// other than px can be used for $size and still display correctly
+const CountBadge = styled(Text).attrs({ as: 'span', className: 'badge' })`
+  ${({ $size = badgeSize, $fontSize = badgeText.size, theme }) => css`
+    min-width: ${resolveSizeUnits($size)};
+    width: auto;
+    height: ${resolveSizeUnits($size)};
+    padding: 0 calc(${resolveSizeUnits($size)} / 4);
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: ${theme.colors.fg.primary};
+    background-color: ${theme.colors.bg.tertiary};
+    border-radius: calc(${resolveSizeUnits($size)} / 2);
+    font-size: ${resolveSizeUnits($fontSize)};
+    line-height: 0;
+  `}
 `;
+CountBadge.propTypes = {
+  $size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  $fontSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+};
+
+const DisclosureIcon = styled(Icons.ChevronDownSmall)(
+  ({ theme }) => css`
+    height: 32px;
+    width: auto;
+    margin: 0 -10px;
+    color: ${theme.colors.fg.secondary};
+    transition: transform 100ms;
+
+    &.open {
+      transform: rotate(180deg);
+    }
+  `
+);
+
+// TODO: Extract 'Disclosure' to its own component
+export const Disclosure = ({ className = '', isOpen = false, ...other }) => (
+  <DisclosureIcon
+    className={`${className} ${isOpen ? 'open' : ''}`.trim()}
+    {...other}
+  />
+);
+Disclosure.propTypes = {
+  className: PropTypes.string,
+  isOpen: PropTypes.bool,
+};
 
 export const ToggleButton = forwardRef(
   (
@@ -97,6 +179,7 @@ export const ToggleButton = forwardRef(
       label,
       shortcut,
       popupZIndexOverride,
+      hasMenuList = false,
       ...rest
     },
     ref
@@ -124,13 +207,14 @@ export const ToggleButton = forwardRef(
           size={BUTTON_SIZES.MEDIUM}
           {...rest}
         >
-          <Wrapper>
-            {MainIcon && <MainIcon />}
-            {copy}
-            {hasNotifications && (
-              <NotificationCount>{notificationCount}</NotificationCount>
-            )}
-          </Wrapper>
+          {MainIcon && <MainIcon className={'main-icon'} />}
+          {copy}
+          {hasNotifications && (
+            <CountBadge className={isOpen ? 'open' : ''}>
+              {notificationCount}
+            </CountBadge>
+          )}
+          {hasMenuList && <Disclosure isOpen={isOpen} />}
         </Button>
       </Tooltip>
     );
@@ -147,4 +231,5 @@ ToggleButton.propTypes = {
   notificationCount: PropTypes.number,
   shortcut: PropTypes.string,
   popupZIndexOverride: PropTypes.number,
+  hasMenuList: PropTypes.bool,
 };
