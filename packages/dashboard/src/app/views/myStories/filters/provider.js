@@ -50,7 +50,7 @@ export const filterContext = createContext({
  * state.filters should be used for UI.
  * state.filtersObject should hold the key value pairs associated with filtering query params
  * eg {author: 44} where 'author' is whats being filtered on and '44' is the authors ID
- * thats being filtering for.
+ * thats being filtered for.
  *
  * @param {Object} root0 props for the provider
  * @param {Node} root0.children the children to be rendered
