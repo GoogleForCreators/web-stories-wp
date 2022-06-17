@@ -140,7 +140,7 @@ describe('Dashboard <Content />', function () {
     expect(screen.getByText('Start telling Stories.')).toBeInTheDocument();
   });
 
-  it('should show "Sorry, we couldn\'t find any results matching "scooby dooby doo" if no stories are found for a search query are present.', function () {
+  it('should show "Sorry, we couldn\'t find any results. if no stories are found for a search query are present.', function () {
     renderWithProviders(
       <SnackbarProvider>
         <LayoutProvider>
@@ -166,9 +166,7 @@ describe('Dashboard <Content />', function () {
     );
 
     expect(
-      screen.getByText(
-        'Sorry, we couldn\'t find any results matching "scooby dooby doo"'
-      )
+      screen.getByText("Sorry, we couldn't find any results.")
     ).toBeInTheDocument();
   });
 });
