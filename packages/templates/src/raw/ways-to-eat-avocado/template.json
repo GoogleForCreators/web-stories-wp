@@ -427,64 +427,7 @@
       "backgroundColor": { "color": { "r": 242, "g": 242, "b": 242 } },
       "type": "page",
       "id": "8ab426f5-d4a4-4347-94d0-35e946676428",
-      "animations": [
-        {
-          "id": "e517a5e2-3e5d-4af6-b2e3-744c55f20e41",
-          "type": "effect-fly-in",
-          "targets": ["872240f2-2e0b-48ab-88a4-11acfb93c817"],
-          "flyInDir": "leftToRight",
-          "duration": 1000,
-          "delay": 0
-        },
-        {
-          "id": "fa822061-76cf-40e7-a8ac-2a788a408bd5",
-          "type": "effect-fly-in",
-          "targets": ["5b467e75-c0e6-4170-81bc-40da76fd44ba"],
-          "flyInDir": "topToBottom",
-          "duration": 1000,
-          "delay": 50
-        },
-        {
-          "id": "8c948103-786b-4609-9825-3145ded93a04",
-          "type": "effect-fly-in",
-          "targets": ["ccd3c484-df39-40c5-b016-420a743613c4"],
-          "flyInDir": "leftToRight",
-          "duration": 1000,
-          "delay": 100
-        },
-        {
-          "id": "f824da6c-6eab-4602-a6b1-7deaec704801",
-          "type": "effect-fly-in",
-          "targets": ["7ccd9289-481b-40fb-abd0-9c359b3a66ab"],
-          "flyInDir": "rightToLeft",
-          "duration": 1000,
-          "delay": 150
-        },
-        {
-          "id": "4fd3d3dd-94d2-47eb-8a0a-70906f0d0178",
-          "type": "effect-fly-in",
-          "targets": ["74a2ddbf-c69d-42b7-a3c8-d1e8139f1af6"],
-          "flyInDir": "rightToLeft",
-          "duration": 1000,
-          "delay": 150
-        },
-        {
-          "id": "a1d1c8ba-3604-4684-a5f7-e4d189cb8bb5",
-          "type": "effect-fly-in",
-          "targets": ["79fa8adc-0125-42ae-8b51-2778da2be497"],
-          "flyInDir": "rightToLeft",
-          "duration": 1000,
-          "delay": 150
-        },
-        {
-          "id": "ef6ab733-c1ba-4609-87bd-805e8cae2e42",
-          "type": "effect-fly-in",
-          "targets": ["d82f1093-bc73-465b-913d-061deb133a12"],
-          "flyInDir": "rightToLeft",
-          "duration": 1000,
-          "delay": 150
-        }
-      ],
+      "animations": [],
       "pageTemplateType": "cover"
     },
     {

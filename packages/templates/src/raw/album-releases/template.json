@@ -189,24 +189,7 @@
       "backgroundColor": { "color": { "r": 18, "g": 32, "b": 54 } },
       "type": "page",
       "id": "eff1d1ce-14d8-454c-a770-2cdf0d3c154f",
-      "animations": [
-        {
-          "id": "47e3bced-4e5c-4564-bf7c-ca43dff4a9c6",
-          "type": "effect-fly-in",
-          "targets": ["8ce9bdf4-f6f1-4045-a288-eb90dd64aaf7"],
-          "flyInDir": "rightToLeft",
-          "duration": 2000,
-          "delay": 0
-        },
-        {
-          "id": "63599ff7-c69e-4134-8fb2-1fb033da2b90",
-          "type": "effect-fly-in",
-          "targets": ["2813cfb7-ec17-411f-963e-bd038b45d9c7"],
-          "flyInDir": "rightToLeft",
-          "duration": 1600,
-          "delay": 200
-        }
-      ],
+      "animations": [],
       "pageTemplateType": "cover"
     },
     {

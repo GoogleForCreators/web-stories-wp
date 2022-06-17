@@ -178,16 +178,7 @@
           "padding": { "horizontal": 0, "vertical": 0 }
         }
       ],
-      "animations": [
-        {
-          "id": "b0d04998-f1ec-4cfa-9d58-a6ad26c913ca",
-          "type": "effect-fly-in",
-          "targets": ["dd32270f-eb83-45ff-917b-edf80e86b024"],
-          "flyInDir": "topToBottom",
-          "duration": 2000,
-          "delay": 100
-        }
-      ],
+      "animations": [],
       "type": "page",
       "id": "80cd76d6-6c52-4892-98d7-f414dbb7619e",
       "backgroundColor": { "color": { "r": 31, "g": 42, "b": 46 } },

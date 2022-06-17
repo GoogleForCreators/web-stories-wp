@@ -505,70 +505,7 @@
           "type": "text"
         }
       ],
-      "animations": [
-        {
-          "id": "09c5e02e-7da6-4216-aea5-691be3ed13bc",
-          "type": "effect-fly-in",
-          "targets": ["64b35e74-ddac-484f-affb-60c2ca646824"],
-          "flyInDir": "rightToLeft",
-          "duration": 2000,
-          "delay": 0
-        },
-        {
-          "id": "2697c48c-9547-4510-b0b4-be94cb1c7a70",
-          "type": "effect-fly-in",
-          "targets": ["5516447e-18cd-4ecd-a76c-140029547b89"],
-          "flyInDir": "rightToLeft",
-          "duration": 2000,
-          "delay": 0
-        },
-        {
-          "id": "d0af5095-8e2b-4e28-9890-3baf49279a71",
-          "type": "effect-fly-in",
-          "targets": ["50548434-d1d7-4699-b5f7-9cf582a6eccd"],
-          "flyInDir": "rightToLeft",
-          "duration": 2000,
-          "delay": 0
-        },
-        {
-          "id": "fb4efdcb-e58e-46d7-bb9f-313846a5e762",
-          "type": "effect-fly-in",
-          "targets": ["3cccfd70-c5ed-4e0a-84f8-8356b205e519"],
-          "flyInDir": "rightToLeft",
-          "duration": 2000,
-          "delay": 0
-        },
-        {
-          "id": "4b09e4ab-dcff-4fd9-aa01-42189bb21784",
-          "type": "effect-fly-in",
-          "targets": ["fdd58d7f-a517-4b39-b1d2-293d57ada467"],
-          "flyInDir": "bottomToTop",
-          "duration": 2000,
-          "delay": 0
-        },
-        {
-          "id": "dece6843-c519-4c2b-b87a-89147896a042",
-          "type": "effect-fade-in",
-          "targets": ["71847b2f-57b4-4a06-9a2d-471ee92eb0fe"],
-          "duration": 2000,
-          "delay": 0
-        },
-        {
-          "id": "2e4d5707-d65a-4cfe-8cb5-4e5913601706",
-          "type": "effect-fly-in",
-          "targets": ["e6faaf99-9591-482a-90f6-c89ee6f7850b"],
-          "flyInDir": "leftToRight",
-          "duration": 2000,
-          "delay": 0
-        },
-        {
-          "id": "0a48ebd5-45cc-4d55-9c8f-d0a84277f3c5",
-          "type": "effect-fade-in",
-          "targets": ["be6b55fc-a396-4cfb-8e1b-4e5eb8c963cd"],
-          "duration": 2000,
-          "delay": 1200
-        }
-      ],
+      "animations": [],
       "backgroundColor": { "color": { "r": 242, "g": 242, "b": 242 } },
       "type": "page",
       "id": "12b85089-b491-41fa-8762-0286f2d49f05",
