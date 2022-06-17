@@ -170,6 +170,9 @@ function useUploadMedia({
         updateMediaElement({ id: previousResourceId, data: resource });
       }
 
+      // onUploadSuccess typically calls postProcessingResource, which
+      // will cause things like base color and BlurHash generation to run
+      // twice for a given resource.
       if (onUploadSuccess) {
         onUploadSuccess({ id: resourceId, resource: resource });
         if (previousResourceId) {
