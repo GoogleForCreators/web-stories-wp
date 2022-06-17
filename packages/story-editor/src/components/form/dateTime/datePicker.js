@@ -28,7 +28,7 @@ import {
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { _x } from '@googleforcreators/i18n';
-import { weekStartsOn } from '@googleforcreators/date';
+import { getOptions } from '@googleforcreators/date';
 import { CircularProgress } from '@googleforcreators/design-system';
 
 /**
@@ -117,8 +117,8 @@ function DatePicker({ currentDate, onChange, onViewChange }) {
       clearTimeout(timeout);
     };
   }, [updateTabIndexes]);
-  const _weekStartsOn = weekStartsOn();
-  const calendarType = getCalenderType(_weekStartsOn);
+  const { weekStartsOn } = getOptions();
+  const calendarType = getCalenderType(weekStartsOn);
   return (
     <Suspense
       fallback={
