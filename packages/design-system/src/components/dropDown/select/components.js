@@ -91,26 +91,29 @@ SelectButton.propTypes = {
   isOpen: PropTypes.bool,
 };
 
-export const ChevronWrap = styled.div(
-  ({ theme, isOpen }) => css`
-    color: ${theme.colors.fg.secondary};
-    width: 32px;
+const DisclosureIcon = styled(ChevronDownSmall)(
+  ({ theme }) => css`
     height: 32px;
+    width: auto;
+    color: ${theme.colors.fg.secondary};
+    transition: transform 100ms;
 
-    ${isOpen &&
-    css`
+    &.open {
       transform: rotate(180deg);
-    `}
+    }
   `
 );
-ChevronWrap.propTypes = {
+
+export const Disclosure = ({ className = '', isOpen = false, ...other }) => (
+  <DisclosureIcon
+    className={`${className} ${isOpen ? 'open' : ''}`.trim()}
+    {...other}
+  />
+);
+Disclosure.propTypes = {
+  className: PropTypes.string,
   isOpen: PropTypes.bool,
 };
-
-export const StyledChevron = styled(ChevronDownSmall)`
-  width: 32px;
-  height: auto;
-`;
 
 export const Value = styled(Text)`
   max-width: 100%;

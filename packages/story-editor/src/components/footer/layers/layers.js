@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { useState, useRef, useEffect } from '@googleforcreators/react';
 import { __, sprintf } from '@googleforcreators/i18n';
 import { PLACEMENT } from '@googleforcreators/design-system';
@@ -40,6 +40,12 @@ const Container = styled.div`
 const StyledNavigationWrapper = styled(NavigationWrapper)`
   width: 260px;
 `;
+
+// Set a min-width to prevent shifting with double-digit layer count
+const buttonStyle = {
+  minWidth: 120,
+};
+
 function Layers() {
   const layersLength = useLayers().length;
   const [isOpen, setIsOpen] = useState(false);
@@ -68,6 +74,7 @@ function Layers() {
         </StyledNavigationWrapper>
       </Popup>
       <ToggleButton
+        hasMenuList
         isOpen={isOpen}
         notificationCount={layersLength}
         copy={__('Layers', 'web-stories')}
@@ -77,6 +84,7 @@ function Layers() {
           __('Layers (%d)', 'web-stories'),
           layersLength
         )}
+        style={buttonStyle}
       />
     </>
   );

@@ -26,8 +26,7 @@ import PropTypes from 'prop-types';
 import { THEME_CONSTANTS } from '../../../theme';
 import {
   SelectButton,
-  ChevronWrap,
-  StyledChevron,
+  Disclosure,
   Value,
   LabelText,
   Label,
@@ -81,9 +80,7 @@ const DropDownSelect = (
           </LabelText>
         )}
 
-        <ChevronWrap isOpen={isOpen}>
-          <StyledChevron />
-        </ChevronWrap>
+        <Disclosure isOpen={isOpen} />
       </Label>
     </SelectButton>
   );
