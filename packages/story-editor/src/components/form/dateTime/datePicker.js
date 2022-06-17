@@ -28,6 +28,7 @@ import {
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { _x } from '@googleforcreators/i18n';
+import { getOptions } from '@googleforcreators/date';
 import { CircularProgress } from '@googleforcreators/design-system';
 
 /**
@@ -116,6 +117,11 @@ function DatePicker({ currentDate, onChange, onViewChange }) {
     };
   }, [updateTabIndexes]);
 
+  const options = getOptions();
+  const {
+    locale: { code: locale },
+  } = options;
+
   return (
     <Suspense
       fallback={
@@ -127,6 +133,7 @@ function DatePicker({ currentDate, onChange, onViewChange }) {
       <CalendarWrapper ref={nodeRef}>
         <Calendar
           value={value}
+          locale={locale}
           onChange={handleOnChange}
           onViewChange={onViewChange}
           onActiveStartDateChange={() => updateTabIndexes(true /* Set focus */)}
