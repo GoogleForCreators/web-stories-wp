@@ -19,14 +19,19 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { __ } from '@googleforcreators/i18n';
+import { __, _n, sprintf } from '@googleforcreators/i18n';
 import {
   Button,
   BUTTON_SIZES,
   BUTTON_TYPES,
   Icons,
+  useLiveRegion,
 } from '@googleforcreators/design-system';
-import { useCallback, useDebouncedCallback } from '@googleforcreators/react';
+import {
+  useCallback,
+  useDebouncedCallback,
+  useState,
+} from '@googleforcreators/react';
 import { trackEvent } from '@googleforcreators/tracking';
 import { getVideoLengthDisplay } from '@googleforcreators/media';
 
@@ -105,7 +110,7 @@ const RetryButton = styled(Button).attrs({
   margin-right: 20px;
 `;
 
-function Footer({ captureImage }) {
+function Footer({ captureImage, videoRef }) {
   const {
     status,
     file,
@@ -146,6 +151,8 @@ function Footer({ captureImage }) {
 
   const uploadWithPreview = useUploadWithPreview();
 
+  const speak = useLiveRegion();
+
   const onRetry = useCallback(async () => {
     resetState();
     await getMediaStream();
@@ -154,23 +161,54 @@ function Footer({ captureImage }) {
   }, [getMediaStream, resetState]);
 
   const onCapture = useCallback(() => {
+    speak(
+      sprintf(
+        /* translators: %d: countdown time in seconds. */
+        _n(
+          'Taking photo in %d second',
+          'Taking photo in %d seconds',
+          COUNTDOWN_TIME_IN_SECONDS,
+          'web-stories'
+        ),
+        COUNTDOWN_TIME_IN_SECONDS
+      )
+    );
+
     setCountdown(COUNTDOWN_TIME_IN_SECONDS);
     captureImage();
 
     trackEvent('media_recording_capture', { type: 'image' });
-  }, [captureImage, setCountdown]);
+  }, [captureImage, setCountdown, speak]);
 
   const debouncedStartRecording = useDebouncedCallback(startRecording, 3000);
 
   const onStart = useCallback(() => {
+    speak(
+      sprintf(
+        /* translators: %d: countdown time in seconds. */
+        _n(
+          'Starting recording in %d second',
+          'Starting recording in %d seconds',
+          COUNTDOWN_TIME_IN_SECONDS,
+          'web-stories'
+        ),
+        COUNTDOWN_TIME_IN_SECONDS
+      )
+    );
+
     setDuration(0);
     setCountdown(COUNTDOWN_TIME_IN_SECONDS);
     debouncedStartRecording();
-  }, [debouncedStartRecording, setCountdown, setDuration]);
+  }, [debouncedStartRecording, setCountdown, setDuration, speak]);
+
+  const [isInserting, setIsInserting] = useState(false);
 
   const isRecording = ['recording', 'stopping', 'stopped'].includes(status);
 
   const onInsert = useCallback(async () => {
+    setIsInserting(true);
+    speak(__('Inserting…', 'web-stories'));
+
     const args = {
       additionalData: {
         mediaSource: 'recording',
@@ -178,7 +216,6 @@ function Footer({ captureImage }) {
     };
     const { resource, posterFile } = await getResourceFromLocalFile(file);
 
-    // Provide video duration
     args.resource = {
       ...resource,
       alt: __('Camera Capture', 'web-stories'),
@@ -188,19 +225,22 @@ function Footer({ captureImage }) {
       args.additionalData.isMuted = isMuted;
       args.additionalData.isGif = isGif;
 
-      args.resource.length = duration;
-      args.resource.lengthFormatted = getVideoLengthDisplay(duration);
+      // Get length from the video blob on screen and fall back
+      // to the duration in state if needed.
+      const length = videoRef.current?.duration || duration;
+      args.resource.length = length;
+      args.resource.lengthFormatted = getVideoLengthDisplay(length);
+
+      args.resource.isOptimized = true;
       args.resource.isMuted = isMuted;
       args.posterFile = posterFile;
     }
 
     uploadWithPreview([file], true, args);
-    toggleRecordingMode();
 
     // handling cleanup for Image capture
     // in this case we don't want onStop to override the file
     if (isRecording) {
-      stopRecording();
       setMediaBlobUrl(null);
       setFile(null);
     }
@@ -210,7 +250,12 @@ function Footer({ captureImage }) {
       muted: isMuted,
       duration,
     });
+
+    setIsInserting(false);
+
+    toggleRecordingMode();
   }, [
+    videoRef,
     file,
     uploadWithPreview,
     toggleRecordingMode,
@@ -218,9 +263,9 @@ function Footer({ captureImage }) {
     isGif,
     duration,
     isMuted,
-    stopRecording,
     setMediaBlobUrl,
     setFile,
+    speak,
   ]);
 
   if ('acquiring_media' === status) {
@@ -231,11 +276,13 @@ function Footer({ captureImage }) {
     <StyledFooter showOverflow>
       {hasMediaToInsert && (
         <>
-          <RetryButton onClick={onRetry}>
+          <RetryButton onClick={onRetry} disabled={isInserting}>
             {__('Retry', 'web-stories')}
           </RetryButton>
-          <InsertButton onClick={onInsert}>
-            {__('Insert', 'web-stories')}
+          <InsertButton onClick={onInsert} disabled={isInserting}>
+            {isInserting
+              ? __('Inserting…', 'web-stories')
+              : __('Insert', 'web-stories')}
           </InsertButton>
         </>
       )}
@@ -266,6 +313,7 @@ function Footer({ captureImage }) {
 
 Footer.propTypes = {
   captureImage: PropTypes.func.isRequired,
+  videoRef: PropTypes.object,
 };
 
 export default Footer;

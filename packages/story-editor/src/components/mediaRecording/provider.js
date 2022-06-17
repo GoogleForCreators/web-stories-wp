@@ -29,9 +29,13 @@ import {
 import {
   LOCAL_STORAGE_PREFIX,
   localStore,
+  useLiveRegion,
+  useSnackbar,
 } from '@googleforcreators/design-system';
 import { blobToFile, createBlob, revokeBlob } from '@googleforcreators/media';
 import { format } from '@googleforcreators/date';
+import { __ } from '@googleforcreators/i18n';
+import { trackError } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies
@@ -84,25 +88,37 @@ function MediaRecordingProvider({ children }) {
 
   const [mediaBlobUrl, setMediaBlobUrl] = useState();
 
-  const onStop = useCallback((blob) => {
-    try {
-      setMediaBlobUrl(createBlob(blob));
-    } catch (e) {
-      // Do nothing.
-    }
-    const f = blobToFile(
-      blob,
-      `webcam-capture-${format(new Date(), 'Y-m-d-H-i')}.${VIDEO_FILE_TYPE}`,
-      VIDEO_MIME_TYPE
-    );
-    setFile(f);
-  }, []);
+  const { showSnackbar } = useSnackbar();
+
+  const onStop = useCallback(
+    (blob) => {
+      try {
+        setMediaBlobUrl(createBlob(blob));
+      } catch (e) {
+        trackError('media_recording_capture', e.message);
+        showSnackbar({
+          message: __(
+            ' There was an error taking a photo. Please try a gain.',
+            'web-stories'
+          ),
+          dismissable: true,
+        });
+      }
+      const f = blobToFile(
+        blob,
+        `webcam-capture-${format(new Date(), 'Y-m-d-H-i')}.${VIDEO_FILE_TYPE}`,
+        VIDEO_MIME_TYPE
+      );
+      setFile(f);
+    },
+    [showSnackbar]
+  );
 
   const {
     error,
     status,
     mediaBlob,
-    stopRecording,
+    stopRecording: originalStopRecording,
     startRecording,
     liveStream,
     getMediaStream,
@@ -118,6 +134,13 @@ function MediaRecordingProvider({ children }) {
     },
     onStop,
   });
+
+  const speak = useLiveRegion();
+
+  const stopRecording = useCallback(() => {
+    originalStopRecording();
+    speak(__('Recording stopped', 'web-stories'));
+  }, [originalStopRecording, speak]);
 
   const updateMediaDevices = useCallback(async () => {
     // navigator.mediaDevices is undefined in insecure browsing contexts.
@@ -226,13 +249,12 @@ function MediaRecordingProvider({ children }) {
     resetState();
   }, [resetState]);
 
-  const toggleSettings = useCallback(() => {
-    setIsSettingsOpen((state) => !state);
-  }, []);
+  const toggleSettings = useCallback(
+    () => setIsSettingsOpen((state) => !state),
+    []
+  );
 
-  const toggleIsGif = useCallback(() => {
-    setIsGif((state) => !state);
-  }, []);
+  const toggleIsGif = useCallback(() => setIsGif((state) => !state), []);
 
   const isCountingDown = countdown > 0;
   const wasCountingDown = usePrevious(isCountingDown);

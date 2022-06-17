@@ -30,6 +30,8 @@ import {
   getImageFromVideo,
 } from '@googleforcreators/media';
 import { format } from '@googleforcreators/date';
+import { useSnackbar } from '@googleforcreators/design-system';
+import { trackError } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies
@@ -104,16 +106,28 @@ function MediaRecordingLayer() {
 
   const isMuted = !hasAudio || isGif;
 
+  const { showSnackbar } = useSnackbar();
+
   const captureImage = useCallback(async () => {
     if (!streamRef.current) {
       return;
     }
 
-    const blob = await getImageFromVideo(streamRef.current);
+    let blob;
+
     try {
+      blob = await getImageFromVideo(streamRef.current);
       setMediaBlobUrl(createBlob(blob));
     } catch (e) {
-      // Do nothing.
+      trackError('media_recording_capture', e.message);
+
+      showSnackbar({
+        message: __(
+          ' There was an error taking a photo. Please try a gain.',
+          'web-stories'
+        ),
+        dismissable: true,
+      });
     }
 
     const imageFile = blobToFile(
@@ -123,7 +137,7 @@ function MediaRecordingLayer() {
     );
     setFile(imageFile);
     resetStream();
-  }, [resetStream, setFile, setMediaBlobUrl]);
+  }, [resetStream, setFile, setMediaBlobUrl, showSnackbar]);
 
   const debouncedCaptureImage = useDebouncedCallback(captureImage, 3000);
 
@@ -185,22 +199,15 @@ function MediaRecordingLayer() {
                       <Video
                         ref={videoRef}
                         src={mediaBlobUrl}
-                        autoPlay
                         muted={isMuted}
                         loop={isGif}
-                        disablePictureInPicture
                         tabIndex={0}
                       />
                       {!isGif && <PlayPauseButton videoRef={videoRef} />}
                     </>
                   )}
-                  {!mediaBlob && liveStream && (
-                    <Video
-                      ref={streamRef}
-                      autoPlay
-                      muted
-                      disablePictureInPicture
-                    />
+                  {!mediaBlob && !mediaBlobUrl && liveStream && (
+                    <Video ref={streamRef} muted />
                   )}
                 </VideoWrapper>
               </>
@@ -218,7 +225,7 @@ function MediaRecordingLayer() {
           <ProgressBar />
           <Countdown />
         </DisplayPageArea>
-        <Footer captureImage={debouncedCaptureImage} />
+        <Footer captureImage={debouncedCaptureImage} videoRef={videoRef} />
       </LayerWithGrayout>
       <SettingsModal />
     </>

@@ -178,12 +178,12 @@ export function uploadMedia(config, file, additionalData) {
     mediaId,
     storyId,
     templateId,
-    isMuted = false,
+    isMuted,
     mediaSource,
     trimData,
     baseColor,
     blurHash,
-    isGif = false,
+    isGif,
   } = additionalData;
 
   const wpKeysMapping = {
@@ -194,10 +194,13 @@ export function uploadMedia(config, file, additionalData) {
     web_stories_trim_data: trimData,
     web_stories_base_color: baseColor,
     web_stories_blurhash: blurHash,
-    meta: {
-      web_stories_is_gif: isGif,
-    },
   };
+
+  if (isGif !== undefined) {
+    wpKeysMapping.meta = {
+      web_stories_is_gif: isGif,
+    };
+  }
 
   Object.entries(wpKeysMapping).forEach(([key, value]) => {
     if (value === undefined) {

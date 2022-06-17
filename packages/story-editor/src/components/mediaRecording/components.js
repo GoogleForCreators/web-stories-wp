@@ -51,7 +51,7 @@ export const MessageText = styled(Text).attrs({
 `;
 
 export const LayerWithGrayout = withOverlay(styled(Layer)`
-  background-color: ${({ theme }) => theme.colors.opacity.overlayDark};
+  background-color: ${({ theme }) => theme.colors.opacity.overlayExtraDark};
   z-index: ${Z_INDEX_RECORDING_MODE};
 `);
 
@@ -89,7 +89,10 @@ export const Photo = styled.img`
   border-radius: 5px;
 `;
 
-export const Video = styled.video`
+export const Video = styled.video.attrs({
+  autoPlay: true,
+  disablePictureInPicture: true,
+})`
   display: block;
   width: 100%;
   height: 100%;
