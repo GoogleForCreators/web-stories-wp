@@ -41,4 +41,5 @@ export { default as formatDate } from './formatDate';
 export { default as formatTime } from './formatTime';
 export { default as toUTCDate } from './toUTCDate';
 export { default as is12Hour } from './is12Hour';
+export { default as weekStartsOn } from './weekStartsOn';
 export { default as getOptions } from './getOptions';
