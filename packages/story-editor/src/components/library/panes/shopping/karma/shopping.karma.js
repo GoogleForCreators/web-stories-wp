@@ -28,6 +28,8 @@ function isStoryEmpty() {
   return Boolean(document.getElementById('emptystate-message'));
 }
 
+const dropDownSelector = '[aria-label="Design menu"] [aria-label="Product"]';
+
 describe('Shopping integration', () => {
   let fixture;
 
@@ -46,9 +48,7 @@ describe('Shopping integration', () => {
       `[aria-label="Add ${productTitle}"]`
     );
     await fixture.events.click(productButton);
-    await waitFor(() =>
-      fixture.querySelector('[aria-label="Design menu"] [aria-label="Product"]')
-    );
+    await waitFor(() => fixture.querySelector(dropDownSelector));
 
     await clearSearch();
   }
@@ -87,6 +87,7 @@ describe('Shopping integration', () => {
 
   describe('Shopping tab', () => {
     it('should handle product search add and remove', async () => {
+      expect(isStoryEmpty()).toEqual(true);
       const productTitle = 'Hoodie';
       await insertProduct(productTitle);
 
@@ -122,6 +123,38 @@ describe('Shopping integration', () => {
       // remove the product
       await fixture.events.mouse.clickOn(product, 1, 1);
       expect(isStoryEmpty()).toEqual(true);
+    });
+
+    it('should hide product lacking product image in dropdown', async () => {
+      expect(isStoryEmpty()).toEqual(true);
+      const productTitle = 'Hoodie';
+      await insertProduct(productTitle);
+
+      // check story `state`
+      const selectedElement = await getSelectedElement();
+      expect(isStoryEmpty()).toEqual(false);
+      await expect(selectedElement?.product?.productTitle).toBe(productTitle);
+      const dropDown = fixture.querySelector(dropDownSelector);
+      await fixture.events.click(dropDown);
+      await fixture.events.keyboard.type('WordPress');
+      expect(fixture.screen.getByText('No matches found')).toBeDefined();
+    });
+
+    it('should hide product lacking duplicate products in dropdown', async () => {
+      expect(isStoryEmpty()).toEqual(true);
+      await insertProduct('Album');
+
+      const product2Title = 'Hoodie';
+      await insertProduct(product2Title);
+
+      // check story `state`
+      const selectedElement = await getSelectedElement();
+      expect(isStoryEmpty()).toEqual(false);
+      await expect(selectedElement?.product?.productTitle).toBe(product2Title);
+      const dropDown = fixture.querySelector(dropDownSelector);
+      await fixture.events.click(dropDown);
+      await fixture.events.keyboard.type('album');
+      expect(fixture.screen.getByText('No matches found')).toBeDefined();
     });
 
     it('should disable button if product lacks product image', async () => {
