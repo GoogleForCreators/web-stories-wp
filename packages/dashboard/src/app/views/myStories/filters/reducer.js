@@ -35,27 +35,27 @@ const reducer = (state, { type, payload = {} }) => {
   switch (type) {
     case types.UPDATE_FILTER: {
       const { key, value } = payload;
-      const filter = state.filters.find((f) => f.key === key);
+      const _filter = state.filters.find((filter) => filter.key === key);
 
-      if (!filter) {
+      if (!_filter) {
         return state;
       }
 
       // remove 'filter-by' value
-      if (value.filterId && filter?.filterId === value.filterId) {
+      if (value.filterId && _filter?.filterId === value.filterId) {
         value.filterId = null;
       }
 
       // replace old filter
-      const idx = state.filters.indexOf(filter);
+      const idx = state.filters.indexOf(_filter);
       const filters = [...state.filters];
-      filters[idx] = { ...filter, ...value };
+      filters[idx] = { ..._filter, ...value };
 
       // update filtersObject
       const filtersObject = {};
-      for (const f of filters) {
-        if (f.filterId) {
-          filtersObject[f.key] = f.filterId;
+      for (const filter of filters) {
+        if (filter.filterId) {
+          filtersObject[filter.key] = filter.filterId;
         }
       }
 
@@ -68,8 +68,10 @@ const reducer = (state, { type, payload = {} }) => {
 
     case types.REGISTER_FILTERS: {
       const { value } = payload;
-      const currentFilters = state.filters.map((f) => f.key);
-      const newFilters = value.filter((v) => !currentFilters.includes(v.key));
+      const currentFilters = state.filters.map((filter) => filter.key);
+      const newFilters = value.filter(
+        (filter) => !currentFilters.includes(filter.key)
+      );
       if (!newFilters.length) {
         return state;
       }

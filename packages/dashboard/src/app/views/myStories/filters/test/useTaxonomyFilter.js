@@ -58,7 +58,9 @@ jest.mock('../../../../api/useApi', () => {
       },
     ];
     return Promise.resolve(
-      args.hierarchical ? taxonomies.filter((t) => t.hierarchical) : taxonomies
+      args.hierarchical
+        ? taxonomies.filter((taxonomy) => taxonomy.hierarchical)
+        : taxonomies
     );
   };
   const getTaxonomyTerms = (restPath, args) => {
@@ -71,7 +73,7 @@ jest.mock('../../../../api/useApi', () => {
     };
     let terms = fakeAPI[restPath];
     if (args.search) {
-      terms = terms.filter((t) => t.name.includes(args.search));
+      terms = terms.filter((term) => term.name.includes(args.search));
     }
 
     return Promise.resolve(terms);

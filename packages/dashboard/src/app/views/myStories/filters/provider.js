@@ -98,7 +98,7 @@ export default function FiltersProvider({ children }) {
     const taxonomies = await initializeTaxonomyFilters();
     const author = initializeAuthorFilter();
 
-    const filters = [...taxonomies, author].filter((f) => Boolean(f));
+    const filters = [...taxonomies, author].filter((filter) => Boolean(filter));
 
     if (filters.length) {
       registerFilters(filters);
