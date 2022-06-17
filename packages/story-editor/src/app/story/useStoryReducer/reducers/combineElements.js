@@ -96,7 +96,7 @@ function combineElements(
     'poster',
   ];
 
-  // If the element we're dropping into is not background, maintain link, too.
+  // If the element we're dropping into is not background, maintain link and border.
   if (!secondElement.isBackground) {
     propsFromFirst.push('link');
     propsFromFirst.push('border');
@@ -104,7 +104,7 @@ function combineElements(
       propsFromFirst.push('borderRadius');
     }
   } else {
-    // If we're dropping into background, maintain the flip and overlay, too.
+    // If we're dropping into background, maintain the flip and overlay.
     propsFromFirst.push('flip');
     propsFromFirst.push('overlay');
   }
