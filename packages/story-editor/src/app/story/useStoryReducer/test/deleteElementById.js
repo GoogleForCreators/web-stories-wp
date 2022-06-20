@@ -129,4 +129,34 @@ describe('deleteElementById', () => {
       { id: '456' },
     ]);
   });
+
+  it('should delete the given element and any animations belonging to it', () => {
+    const { restore, deleteElementById } = setupReducer();
+
+    // Set an initial state with a current page with two elements.
+    restore({
+      pages: [
+        {
+          id: '111',
+          animations: [
+            { id: 'a', targets: ['456'] },
+            { id: 'b', targets: ['123'] },
+          ],
+          elements: [{ id: '123' }, { id: '456' }],
+        },
+      ],
+      current: '111',
+      selection: [],
+    });
+
+    const result = deleteElementById({ elementId: '456' });
+
+    expect(result.pages).toStrictEqual([
+      {
+        id: '111',
+        animations: [{ id: 'b', targets: ['123'] }],
+        elements: [{ id: '123' }],
+      },
+    ]);
+  });
 });
