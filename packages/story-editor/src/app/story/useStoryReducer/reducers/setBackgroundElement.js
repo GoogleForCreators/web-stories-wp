@@ -137,7 +137,7 @@ function setBackgroundElement(state, { elementId }) {
 
   const newPages = [
     ...state.pages.slice(0, pageIndex),
-    { ...newPage, animations: newAnimations || [] },
+    { ...newPage, animations: newAnimations },
     ...state.pages.slice(pageIndex + 1),
   ];
 
