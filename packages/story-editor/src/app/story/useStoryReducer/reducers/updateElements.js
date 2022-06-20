@@ -23,7 +23,7 @@ import { produce } from 'immer';
 /**
  * Internal dependencies
  */
-import { updateElementWithUpdater, updateAnimations, intersect } from './utils';
+import { updateElementWithUpdater, updateAnimations } from './utils';
 
 /**
  * Update elements by the given list of ids with the given properties.
@@ -59,24 +59,8 @@ const updateElements = produce(
     }
 
     const idsToUpdate = elementIds === null ? draft.selection : elementIds;
-
-    if (idsToUpdate.length === 0) {
-      return;
-    }
-
     const page = draft.pages.find(({ id }) => id === draft.current);
-
-    const pageElementIds = page.elements.map(({ id }) => id);
-
-    // Nothing to update?
-    const hasAnythingToUpdate =
-      intersect(pageElementIds, idsToUpdate).length > 0;
-    if (!hasAnythingToUpdate) {
-      return;
-    }
-
     const animationLookup = {};
-
     page.elements
       .filter(({ id }) => idsToUpdate.includes(id))
       .forEach((element) => {
