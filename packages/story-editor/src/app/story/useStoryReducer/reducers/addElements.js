@@ -70,10 +70,6 @@ function addElements(state, { elements }) {
   const newElementNoDuplicateProducts = newElements.filter(
     ({ id }) => newElementDuplicateID && !newElementDuplicateID.includes(id)
   );
-  
-  if (newElementNoDuplicateProducts.length === 0) {
-    return state;
-  }
 
   const newElementProducts = newElementNoDuplicateProducts.filter(
     ({ type }) => type === ELEMENT_TYPES.PRODUCT
@@ -94,6 +90,9 @@ function addElements(state, { elements }) {
     ...newElementProductsFiltered,
   ];
 
+  if (newPageElements.length === 0) {
+    return state;
+  }
 
   const newPage = {
     ...oldPage,
