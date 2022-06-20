@@ -1533,23 +1533,23 @@
         },
         {
             "name": "php-stubs/woocommerce-stubs",
-            "version": "v6.4.1",
+            "version": "v6.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-stubs/woocommerce-stubs.git",
-                "reference": "fa5da21d41cfead6210391c0879cee9225f29cdb"
+                "reference": "d8823d39795df6995b938a245795edfc230d80bf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-stubs/woocommerce-stubs/zipball/fa5da21d41cfead6210391c0879cee9225f29cdb",
-                "reference": "fa5da21d41cfead6210391c0879cee9225f29cdb",
+                "url": "https://api.github.com/repos/php-stubs/woocommerce-stubs/zipball/d8823d39795df6995b938a245795edfc230d80bf",
+                "reference": "d8823d39795df6995b938a245795edfc230d80bf",
                 "shasum": ""
             },
             "require": {
-                "php-stubs/wordpress-stubs": "^5.3.0"
+                "php-stubs/wordpress-stubs": "^5.3 || ^6.0"
             },
             "require-dev": {
-                "php": "~7.1",
+                "php": "~7.1 || ~8.0",
                 "php-stubs/generator": "^0.8.0"
             },
             "suggest": {
@@ -1571,9 +1571,9 @@
             ],
             "support": {
                 "issues": "https://github.com/php-stubs/woocommerce-stubs/issues",
-                "source": "https://github.com/php-stubs/woocommerce-stubs/tree/v6.4.1"
+                "source": "https://github.com/php-stubs/woocommerce-stubs/tree/v6.6.0"
             },
-            "time": "2022-04-30T07:39:42+00:00"
+            "time": "2022-06-14T17:22:10+00:00"
         },
         {
             "name": "php-stubs/wordpress-stubs",
