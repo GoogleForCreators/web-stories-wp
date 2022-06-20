@@ -13,23 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export function getCalenderType(weekStartsOn) {
-  let calenderType;
-  switch (weekStartsOn) {
-    case 0:
-      calenderType = 'US';
-      break;
-    case 1:
-      calenderType = 'ISO 8601';
-      break;
-    case 5:
-      calenderType = 'Hebrew';
-      break;
-    case 6:
-      calenderType = 'Arabic';
-      break;
-    default:
-      calenderType = 'ISO 8601';
-  }
-  return calenderType;
+export function getCalendarType(weekStartsOn) {
+  const calendarTypes = {
+    0: 'US',
+    1: 'ISO 8601',
+    5: 'Hebrew',
+    6: 'Arabic',
+  };
+  return calendarTypes[weekStartsOn] || 'ISO 8601';
 }

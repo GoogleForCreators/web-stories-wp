@@ -35,7 +35,7 @@ import { CircularProgress } from '@googleforcreators/design-system';
  * Internal dependencies
  */
 import CalendarWrapper from './calendarWrapper';
-import { getCalenderType } from './utils';
+import { getCalendarType } from './utils';
 
 const Calendar = lazy(() =>
   import(/* webpackChunkName: "chunk-react-calendar" */ 'react-calendar')
@@ -118,7 +118,7 @@ function DatePicker({ currentDate, onChange, onViewChange }) {
     };
   }, [updateTabIndexes]);
   const { weekStartsOn } = getOptions();
-  const calendarType = getCalenderType(weekStartsOn);
+  const calendarType = getCalendarType(weekStartsOn);
   return (
     <Suspense
       fallback={
