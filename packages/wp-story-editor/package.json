@@ -50,7 +50,7 @@
   "devDependencies": {
     "@googleforcreators/test-utils": "*",
     "@testing-library/react": "^12.1.5",
-    "@testing-library/react-hooks": "^8.0.0",
+    "@testing-library/react-hooks": "^8.0.1",
     "mockdate": "^3.0.5",
     "prop-types": "^15.8.1"
   }

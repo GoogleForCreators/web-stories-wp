@@ -58,7 +58,7 @@
     "@googleforcreators/karma-fixture": "*",
     "@storybook/addon-essentials": "^6.4.20",
     "@testing-library/react": "^12.1.5",
-    "@testing-library/react-hooks": "^8.0.0",
+    "@testing-library/react-hooks": "^8.0.1",
     "@testing-library/user-event": "^14.2.0",
     "jest": "^28.1.1",
     "react": "^17.0.2"
