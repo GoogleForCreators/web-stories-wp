@@ -114,11 +114,9 @@ jobs:
       - name: Version bumps
         id: version_bumps
         run: |
-          OUTPUT=$(npm version --no-git-tag-version --workspaces "0.1.$(date -u +%Y%m%d%H%M)")
-          # Workaround: `npm version` returns the new version for *every* package.
-          # Just grab the very last one from the last line, since they all should be identical anyway.
-          # We then use this to manually commit and tag the version bump
-          NEW_VERSION="${OUTPUT##*$'\n'}"
+          NEW_VERSION_RAW="0.1.$(date -u +%Y%m%d%H%M)";
+          NEW_VERSION="v$NEW_VERSION_RAW"
+          npm version --no-git-tag-version --workspaces $NEW_VERSION_RAW
 
           # Undo changes to all the private packages.
           for package_file in ./packages/*/package.json; do

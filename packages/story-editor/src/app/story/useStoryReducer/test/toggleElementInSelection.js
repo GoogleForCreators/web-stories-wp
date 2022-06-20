@@ -50,6 +50,45 @@ describe('toggleElementInSelection', () => {
     expect(secondResult.selection).toContain('e3');
   });
 
+  it('should add/remove all elements from same group in selection', () => {
+    const { restore, toggleElementInSelection } = setupReducer();
+
+    // Set an initial state.
+    const initialState = restore({
+      pages: [
+        {
+          id: '111',
+          elements: [
+            { id: 'e1', isBackground: true },
+            { id: 'e2', groupId: 'g1' },
+            { id: 'e3', groupId: 'g1' },
+            { id: 'e4', groupId: 'g2' },
+          ],
+        },
+      ],
+      current: '111',
+      selection: ['e2', 'e4'],
+    });
+
+    expect(initialState.selection).toContain('e2');
+
+    // Toggle element e2 with linked - which would remove it from selection
+    const firstResult = toggleElementInSelection({
+      elementId: 'e2',
+      withLinked: true,
+    });
+    expect(firstResult.selection).not.toContain('e2');
+
+    // Toggle element e2 with linked again - which would add it
+    // *and* group member e3 to selection
+    const secondResult = toggleElementInSelection({
+      elementId: 'e2',
+      withLinked: true,
+    });
+    expect(secondResult.selection).toContain('e2');
+    expect(secondResult.selection).toContain('e3');
+  });
+
   it('should ignore missing element id', () => {
     const { restore, toggleElementInSelection } = setupReducer();
 

@@ -50,6 +50,63 @@ describe('setSelectedElementsById', () => {
     expect(result.selection).toStrictEqual(['e2', 'e3']);
   });
 
+  it('should be able to get element ids from callback', () => {
+    const { restore, setSelectedElementsById } = setupReducer();
+
+    // Set an initial state.
+    restore({
+      pages: [
+        {
+          id: '111',
+          elements: [
+            { id: 'e1', isBackground: true },
+            { id: 'e2' },
+            { id: 'e3' },
+            { id: 'e4' },
+          ],
+        },
+      ],
+      current: '111',
+      selection: ['e2', 'e4'],
+    });
+
+    // Select element 3 in a callback
+    const elementIds = jest.fn().mockImplementation(() => ['e3']);
+    const result = setSelectedElementsById({ elementIds });
+
+    expect(result.selection).toStrictEqual(['e3']);
+    expect(elementIds).toHaveBeenCalledWith(['e2', 'e4']);
+  });
+
+  it('should update selection to include all elements in the same group', () => {
+    const { restore, setSelectedElementsById } = setupReducer();
+
+    // Set an initial state.
+    restore({
+      pages: [
+        {
+          id: '111',
+          elements: [
+            { id: 'e1', isBackground: true },
+            { id: 'e2', groupId: 'g1' },
+            { id: 'e3', groupId: 'g1' },
+            { id: 'e4', groupId: 'g2' },
+          ],
+        },
+      ],
+      current: '111',
+      selection: ['e4'],
+    });
+
+    // Select element 2 (which is in the same group as 3)
+    const result = setSelectedElementsById({
+      elementIds: ['e2'],
+      withLinked: true,
+    });
+
+    expect(result.selection).toStrictEqual(['e2', 'e3']);
+  });
+
   it('should remove duplicates', () => {
     const { restore, setSelectedElementsById } = setupReducer();
 
