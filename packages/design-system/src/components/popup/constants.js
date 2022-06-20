@@ -58,13 +58,28 @@ export const RTL_PLACEMENT = {
 };
 
 export const PopupContainer = styled.div.attrs(
-  ({ $offset: { x, y, width }, fillWidth, transforms, zIndex }) => ({
-    style: {
-      transform: `translate(${x}px, ${y}px) ${transforms}`,
-      ...(fillWidth ? { width: `${width}px` } : {}),
-      zIndex,
-    },
-  })
+  ({ $offset: { x, y, width }, fillWidth, transforms, zIndex, maxWidth }) => {
+    // set the width properties
+    const widthProp = {};
+    if (fillWidth) {
+      if (maxWidth) {
+        widthProp.minWidth = `${width}px`;
+      } else {
+        widthProp.width = `${width}px`;
+      }
+    }
+    if (maxWidth && !widthProp.width) {
+      widthProp.maxWidth = `${maxWidth}px`;
+    }
+
+    return {
+      style: {
+        transform: `translate(${x}px, ${y}px) ${transforms}`,
+        ...widthProp,
+        zIndex,
+      },
+    };
+  }
 )`
   /*! @noflip */
   left: 0px;

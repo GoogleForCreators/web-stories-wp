@@ -44,7 +44,7 @@ const focusStyle = css`
     )};
 `;
 
-const DEFAULT_WIDTH = 240;
+const DEFAULT_WIDTH = 350;
 
 const Container = styled.div`
   display: flex;
@@ -224,9 +224,10 @@ const Datalist = forwardRef(function Datalist(
         <Popup
           anchor={internalRef}
           isOpen={isOpen}
-          fillWidth={DEFAULT_WIDTH}
           zIndex={zIndex}
           offsetOverride={offsetOverride}
+          maxWidth={DEFAULT_WIDTH}
+          fillWidth
         >
           {list}
         </Popup>

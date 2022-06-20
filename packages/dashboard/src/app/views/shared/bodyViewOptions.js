@@ -37,9 +37,10 @@ import { DROPDOWN_TYPES, VIEW_STYLE } from '../../../constants';
 import useFilters from '../myStories/filters/useFilters';
 
 const DisplayFormatContainer = styled.div`
-  height: 76px;
-  display: flex;
-  justify-content: space-between;
+  min-height: 76px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  justify-content: start;
   align-items: center;
   margin-top: -10px;
 `;
@@ -51,8 +52,10 @@ const StorySortDropdownContainer = styled.div`
 
 const ControlsContainer = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-wrap: wrap;
+  margin: 1rem 0;
+  row-gap: 1rem;
+  justify-self: end;
 `;
 
 const StyledDropDown = styled(DropDown)`
@@ -61,7 +64,7 @@ const StyledDropDown = styled(DropDown)`
 
 const BodyViewOptionsHeader = styled.div``;
 const StyledDatalist = styled(Datalist.DropDown)`
-  width: 150px;
+  max-width: 350px;
 `;
 
 const defaultAuthor = {
@@ -96,7 +99,7 @@ export default function BodyViewOptions({
           <TranslateWithMarkup>{resultsLabel}</TranslateWithMarkup>
         </Text>
         <ControlsContainer>
-          {layoutStyle === VIEW_STYLE.GRID && filters?.length
+          {filters?.length
             ? filters.map((filter) => (
                 <StorySortDropdownContainer key={filter.key}>
                   <StyledDatalist
@@ -119,6 +122,7 @@ export default function BodyViewOptions({
                     noMatchesFoundLabel={filter.noMatchesFoundLabel}
                     searchPlaceholder={filter.searchPlaceholder}
                     offsetOverride
+                    listStyleOverrides={['max-width: 350px']}
                   />
                 </StorySortDropdownContainer>
               ))
@@ -142,7 +146,7 @@ export default function BodyViewOptions({
               />
             </StorySortDropdownContainer>
           )}
-          {layoutStyle === VIEW_STYLE.GRID && showSortDropdown && (
+          {showSortDropdown && (
             <StorySortDropdownContainer>
               <StyledDropDown
                 ariaLabel={sortDropdownAriaLabel}
@@ -153,15 +157,13 @@ export default function BodyViewOptions({
               />
             </StorySortDropdownContainer>
           )}
-          {showGridToggle && (
-            <ControlsContainer>
-              <ViewStyleBar
-                layoutStyle={layoutStyle}
-                onPress={handleLayoutSelect}
-              />
-            </ControlsContainer>
-          )}
         </ControlsContainer>
+        {showGridToggle && (
+          <ViewStyleBar
+            layoutStyle={layoutStyle}
+            onPress={handleLayoutSelect}
+          />
+        )}
       </DisplayFormatContainer>
     </StandardViewContentGutter>
   );
