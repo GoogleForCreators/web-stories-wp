@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c9dd0611becf05c2030b74eb77756311",
+    "content-hash": "7630de5eec28096a2820fa5f1c9292f0",
     "packages": [
         {
             "name": "ampproject/amp-toolbox",
@@ -4028,16 +4028,16 @@
         },
         {
             "name": "slevomat/coding-standard",
-            "version": "dev-master",
+            "version": "8.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/slevomat/coding-standard.git",
-                "reference": "05a9c980646b0dc84777d29cdd2922ff25f4d3db"
+                "reference": "84cc1693467996d0fc0838d4d4594eb9890ab295"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/slevomat/coding-standard/zipball/05a9c980646b0dc84777d29cdd2922ff25f4d3db",
-                "reference": "05a9c980646b0dc84777d29cdd2922ff25f4d3db",
+                "url": "https://api.github.com/repos/slevomat/coding-standard/zipball/84cc1693467996d0fc0838d4d4594eb9890ab295",
+                "reference": "84cc1693467996d0fc0838d4d4594eb9890ab295",
                 "shasum": ""
             },
             "require": {
@@ -4055,7 +4055,6 @@
                 "phpstan/phpstan-strict-rules": "1.2.3",
                 "phpunit/phpunit": "7.5.20|8.5.21|9.5.20"
             },
-            "default-branch": true,
             "type": "phpcodesniffer-standard",
             "extra": {
                 "branch-alias": {
@@ -4074,7 +4073,7 @@
             "description": "Slevomat Coding Standard for PHP_CodeSniffer complements Consistence Coding Standard by providing sniffs with additional checks.",
             "support": {
                 "issues": "https://github.com/slevomat/coding-standard/issues",
-                "source": "https://github.com/slevomat/coding-standard/tree/master"
+                "source": "https://github.com/slevomat/coding-standard/tree/8.0.0"
             },
             "funding": [
                 {
@@ -4086,7 +4085,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-06-20T14:02:18+00:00"
+            "time": "2022-06-17T13:13:47+00:00"
         },
         {
             "name": "sniccowp/php-scoper-wordpress-excludes",
@@ -5256,7 +5255,6 @@
     "stability-flags": {
         "ampproject/amp-wp": 20,
         "roave/security-advisories": 20,
-        "slevomat/coding-standard": 20,
         "szepeviktor/phpstan-wordpress": 20
     },
     "prefer-stable": true,
