@@ -138,7 +138,7 @@ function useCanvasGlobalKeys() {
                   __('Product "%s" already exists on the page.', 'web-stories'),
                   productTitle
                 ),
-                thumbnail: productImages && {
+                thumbnail: productImages?.[0]?.url && {
                   src: productImages[0].url,
                   alt: productImages[0].alt,
                 },
