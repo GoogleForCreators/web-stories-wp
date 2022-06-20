@@ -29,6 +29,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { _x } from '@googleforcreators/i18n';
 import { CircularProgress } from '@googleforcreators/design-system';
+import { format, formatDate } from '@googleforcreators/date';
 
 /**
  * Internal dependencies
@@ -150,6 +151,13 @@ function DatePicker({ currentDate, onChange, onViewChange }) {
             'This label can apply to month, year and/or decade',
             'web-stories'
           )}
+          formatDay={(locale, date) => format(date, 'd')}
+          formatWeekday={(locale, date) => format(date, 'l')}
+          formatLongDate={(locale, date) => formatDate(date)}
+          formatMonth={(locale, date) => format(date, 'F')}
+          formatMonthYear={(locale, date) => format(date, 'F Y')}
+          formatShortWeekday={(locale, date) => format(date, 'D')}
+          formatYear={(locale, date) => format(date, 'Y')}
         />
       </CalendarWrapper>
     </Suspense>
