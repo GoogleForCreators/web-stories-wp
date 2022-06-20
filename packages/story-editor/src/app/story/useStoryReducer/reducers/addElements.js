@@ -70,6 +70,10 @@ const addElements = produce((draft, { elements }) => {
     ({ id }) => newElementDuplicateID && !newElementDuplicateID.includes(id)
   );
 
+  if (newElementNoDuplicateProducts.length === 0) {
+    return;
+  }
+
   page.elements = page.elements.concat(newElementNoDuplicateProducts);
   draft.selection = newElements.map(({ id }) => id);
 });

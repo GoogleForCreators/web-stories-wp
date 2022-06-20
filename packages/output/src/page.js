@@ -52,7 +52,8 @@ function OutputPage({
     elements,
     backgroundColor,
     backgroundAudio,
-    pageAttachment,
+    pageAttachment = {},
+    shoppingAttachment = {},
   } = page;
 
   const [backgroundElement, ...otherElements] = elements;
@@ -107,6 +108,9 @@ function OutputPage({
     .filter(({ type }) => type === ELEMENT_TYPES.PRODUCT)
     .map(({ product }) => product)
     .filter(Boolean);
+
+  const hasProducts = products.length > 0 && flags?.shoppingIntegration;
+  const hasPageAttachment = pageAttachment?.url && !hasProducts;
 
   const videoCaptions = elements
     .filter(
@@ -201,9 +205,9 @@ function OutputPage({
       )}
 
       {/* <amp-story-page-outlink> needs to be the last child element */}
-      {pageAttachment?.url && <Outlink {...pageAttachment} />}
-      {products.length > 0 && flags?.shoppingIntegration && (
-        <ShoppingAttachment products={products} {...pageAttachment} />
+      {hasPageAttachment && <Outlink {...pageAttachment} />}
+      {hasProducts && (
+        <ShoppingAttachment products={products} {...shoppingAttachment} />
       )}
     </amp-story-page>
   );

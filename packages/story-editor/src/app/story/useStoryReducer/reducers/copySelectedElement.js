@@ -59,11 +59,6 @@ const copySelectedElement = produce((draft) => {
   const page = draft.pages.find(({ id }) => id === draft.current);
   const element = page.elements.find(({ id }) => id === draft.selection[0]);
 
-  // Do nothing if element does not exist on the current page
-  if (!element) {
-    return;
-  }
-
   // find related animations
   const elementAnimations = (page.animations || []).filter(({ targets }) =>
     targets.includes(element.id)

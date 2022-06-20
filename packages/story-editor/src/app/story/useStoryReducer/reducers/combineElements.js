@@ -18,10 +18,7 @@
  * External dependencies
  */
 import { v4 as uuidv4 } from 'uuid';
-import {
-  canSupportMultiBorder,
-  canMaskHaveBorder,
-} from '@googleforcreators/masks';
+import { canSupportMultiBorder } from '@googleforcreators/masks';
 import { DEFAULT_ATTRIBUTES_FOR_MEDIA } from '@googleforcreators/element-library';
 import { produce } from 'immer';
 
@@ -95,15 +92,12 @@ const combineElements = produce(
       'poster',
     ];
 
-    // If the element we're dropping into is not background, maintain link, too.
+    // If the element we're dropping into is not background, maintain link and border.
     if (!secondElement.isBackground) {
       propsFromFirst.push('link');
-      // If relevant, maintain border, too.
-      if (canMaskHaveBorder(secondElement)) {
-        propsFromFirst.push('border');
-        if (canSupportMultiBorder(secondElement)) {
-          propsFromFirst.push('borderRadius');
-        }
+      propsFromFirst.push('border');
+      if (canSupportMultiBorder(secondElement)) {
+        propsFromFirst.push('borderRadius');
       }
     } else {
       // If we're dropping into background, maintain the flip and overlay, too.
