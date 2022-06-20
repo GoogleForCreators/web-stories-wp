@@ -32,7 +32,7 @@
   "dependencies": {
     "@googleforcreators/tracking": "*",
     "@web-stories-wp/glider": "*",
-    "@wordpress/api-fetch": "^6.4.0",
+    "@wordpress/api-fetch": "^6.8.0",
     "@wordpress/block-editor": "^8.6.0",
     "@wordpress/blocks": "^11.6.0",
     "@wordpress/components": "^19.4.0",
