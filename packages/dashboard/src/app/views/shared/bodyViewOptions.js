@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { TranslateWithMarkup, __ } from '@googleforcreators/i18n';
 import {
@@ -122,7 +122,9 @@ export default function BodyViewOptions({
                     noMatchesFoundLabel={filter.noMatchesFoundLabel}
                     searchPlaceholder={filter.searchPlaceholder}
                     offsetOverride
-                    listStyleOverrides={['max-width: 350px']}
+                    containerStyleOverrides={css`
+                      flex-direction: column;
+                    `}
                   />
                 </StorySortDropdownContainer>
               ))

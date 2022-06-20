@@ -39,7 +39,7 @@ import { isKeywordFilterable } from './utils';
 const Container = styled.div`
   position: relative;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   flex-wrap: wrap;
   width: 100%;
   min-width: 120px;

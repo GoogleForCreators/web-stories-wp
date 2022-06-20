@@ -61,13 +61,20 @@ export const PopupContainer = styled.div.attrs(
   ({ $offset: { x, y, width }, fillWidth, transforms, zIndex, maxWidth }) => {
     // set the width properties
     const widthProp = {};
+
+    // fillWidth should expand the PopupContainer width to the offset.width
     if (fillWidth) {
+      // if maxWidth is given with fillWidth, set the PopupContainers min-width
+      // to offset.width to ensure the PopupContainer does not get any smaller
+      // than offset.width
       if (maxWidth) {
         widthProp.minWidth = `${width}px`;
       } else {
         widthProp.width = `${width}px`;
       }
     }
+    // if maxWidth is given and the width propery hasn't been set
+    // set the PopupContainers max-width
     if (maxWidth && !widthProp.width) {
       widthProp.maxWidth = `${maxWidth}px`;
     }
