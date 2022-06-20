@@ -33,7 +33,10 @@ import {
   useState,
 } from '@googleforcreators/react';
 import { trackEvent } from '@googleforcreators/tracking';
-import { getVideoLength } from '@googleforcreators/media';
+import {
+  getVideoLength,
+  getVideoLengthDisplay,
+} from '@googleforcreators/media';
 
 /**
  * Internal dependencies
@@ -229,12 +232,12 @@ function Footer({ captureImage, videoRef }) {
       args.additionalData.isGif = isGif;
 
       // Get length from the video blob on screen and fall back
-      // to the duration in state if needed.
-      const { length, lengthFormatted } = getVideoLength(
-        videoRef.current || { duration }
-      );
-      args.resource.length = length;
-      args.resource.lengthFormatted = lengthFormatted;
+      // to the duration in state if needed since it's not super reliable.
+      const { length, lengthFormatted } = getVideoLength(videoRef.current);
+      args.resource.length = length || duration;
+      args.resource.lengthFormatted = length
+        ? lengthFormatted
+        : getVideoLengthDisplay(duration);
 
       args.resource.isOptimized = true;
       args.resource.isMuted = isMuted;
