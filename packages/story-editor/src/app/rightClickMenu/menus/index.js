@@ -21,3 +21,4 @@ export { default as ShapeMenu } from './shapeMenu';
 export { default as StickerMenu } from './stickerMenu';
 export { default as TextMenu } from './textMenu';
 export { default as GroupMenu } from './groupMenu';
+export { default as ProductMenu } from './productMenu';

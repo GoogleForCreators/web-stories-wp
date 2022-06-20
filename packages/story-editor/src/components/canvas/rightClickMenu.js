@@ -40,6 +40,7 @@ import {
   ShapeMenu,
   StickerMenu,
   TextMenu,
+  ProductMenu,
 } from '../../app/rightClickMenu';
 import isEmptyStory from '../../app/story/utils/isEmptyStory';
 import EmptyStateMenu from '../../app/rightClickMenu/menus/emptyStateMenu';
@@ -105,6 +106,8 @@ const RightClickMenu = () => {
         return TextMenu;
       case ELEMENT_TYPES.STICKER:
         return StickerMenu;
+      case ELEMENT_TYPES.PRODUCT:
+        return ProductMenu;
       default:
         return PageMenu;
     }
