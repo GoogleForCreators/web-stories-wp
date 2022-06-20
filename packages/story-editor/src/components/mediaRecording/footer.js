@@ -212,12 +212,15 @@ function Footer({ captureImage, videoRef }) {
     const args = {
       additionalData: {
         mediaSource: 'recording',
+        // Used for uploading via uploadFile().
+        altText: __('Camera Capture', 'web-stories'),
       },
     };
     const { resource, posterFile } = await getResourceFromLocalFile(file);
 
     args.resource = {
       ...resource,
+      // Used for displaying the recorded file on canvas in the meantime.
       alt: __('Camera Capture', 'web-stories'),
     };
 

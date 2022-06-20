@@ -184,6 +184,7 @@ export function uploadMedia(config, file, additionalData) {
     baseColor,
     blurHash,
     isGif,
+    altText,
   } = additionalData;
 
   const wpKeysMapping = {
@@ -194,6 +195,7 @@ export function uploadMedia(config, file, additionalData) {
     web_stories_trim_data: trimData,
     web_stories_base_color: baseColor,
     web_stories_blurhash: blurHash,
+    alt_text: altText,
   };
 
   if (isGif !== undefined) {
