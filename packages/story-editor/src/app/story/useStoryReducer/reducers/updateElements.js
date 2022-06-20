@@ -80,6 +80,8 @@ const updateElements = produce(
     page.elements
       .filter(({ id }) => idsToUpdate.includes(id))
       .forEach((element) => {
+        // Update function will update the element inline unless there's an animation update.
+        // If so, the element will remain unchanged, and the animation will be returned instead.
         const animation = updateElementWithUpdater(
           element,
           propertiesOrUpdater
