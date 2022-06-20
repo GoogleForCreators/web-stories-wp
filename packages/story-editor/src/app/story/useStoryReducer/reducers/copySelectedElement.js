@@ -50,21 +50,9 @@ function copySelectedElement(state) {
     return state;
   }
 
-  // Do nothing if no elementId
   const elementId = state.selection[0];
-  if (!elementId) {
-    return state;
-  }
-
   const page = state.pages.find(({ id }) => id === state.current);
-
   const elementIndex = page.elements.findIndex(({ id }) => id === elementId);
-
-  // Do nothing if element does not exist on the current page
-  if (elementIndex === -1) {
-    return state;
-  }
-
   const element = page.elements[elementIndex];
 
   // find related animations

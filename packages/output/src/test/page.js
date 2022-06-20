@@ -1590,7 +1590,7 @@ describe('Page output', () => {
         backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: 'bar',
-          pageAttachment: {
+          shoppingAttachment: {
             theme: 'light',
             ctaText: 'Buy now',
           },
@@ -1630,6 +1630,53 @@ describe('Page output', () => {
       await expect(shoppingAttachment).toBeInTheDocument();
       await expect(shoppingAttachment).toHaveAttribute('cta-text', 'Buy now');
       await expect(shoppingAttachment).toHaveAttribute('theme', 'light');
+    });
+
+    it('should not render page attachment if there are products', async () => {
+      const props = {
+        id: 'foo',
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
+        page: {
+          id: 'bar',
+          elements: [
+            {
+              id: 'el1',
+              type: 'product',
+              x: 50,
+              y: 50,
+              width: 32,
+              height: 32,
+              rotationAngle: 0,
+              product: PRODUCT_LAMP,
+            },
+            {
+              id: 'el2',
+              type: 'product',
+              x: 100,
+              y: 100,
+              width: 32,
+              height: 32,
+              rotationAngle: 0,
+              product: PRODUCT_ART,
+            },
+          ],
+          pageAttachment: {
+            url: 'http://example.com',
+            ctaText: 'Click me!',
+          },
+        },
+        flags: {
+          shoppingIntegration: true,
+        },
+      };
+
+      const { container } = render(<PageOutput {...props} />);
+      const shoppingAttachment = container.querySelector(
+        'amp-story-shopping-attachment'
+      );
+      await expect(shoppingAttachment).toBeInTheDocument();
+      const pageOutlink = container.querySelector('amp-story-page-outlink');
+      await expect(pageOutlink).not.toBeInTheDocument();
     });
   });
 

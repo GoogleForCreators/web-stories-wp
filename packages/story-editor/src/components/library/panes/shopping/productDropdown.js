@@ -24,6 +24,7 @@ import {
   useMemo,
 } from '@googleforcreators/react';
 import { Datalist } from '@googleforcreators/design-system';
+import { ELEMENT_TYPES } from '@googleforcreators/elements';
 import PropTypes from 'prop-types';
 
 /**
@@ -42,12 +43,19 @@ function ProductDropdown({ product, setProduct, ...rest }) {
   const {
     actions: { getProducts },
   } = useAPI();
-  const isSaving = useStory(
+  const { isSaving, currentPageProductIds } = useStory(
     ({
       state: {
         meta: { isSaving },
+        currentPage,
       },
-    }) => isSaving
+    }) => ({
+      isSaving,
+      currentPageProductIds: currentPage?.elements
+        ?.filter(({ type }) => type === ELEMENT_TYPES.PRODUCT)
+        .filter(({ product: p }) => p.productId !== product.productId)
+        .map(({ product: p }) => p?.productId),
+    })
   );
 
   const onChange = ({ product: newProduct }) => setProduct(newProduct);
@@ -55,13 +63,19 @@ function ProductDropdown({ product, setProduct, ...rest }) {
   const getProductsByQuery = useCallback(
     async (value = '') => {
       const { products } = await getProducts(value);
-      return products.map((p) => ({
-        name: p.productTitle,
-        id: p.productId,
-        product: p,
-      }));
+      return products
+        .filter(
+          (p) =>
+            p.productImages.length &&
+            !currentPageProductIds.includes(p.productId)
+        )
+        .map((p) => ({
+          name: p.productTitle,
+          id: p.productId,
+          product: p,
+        }));
     },
-    [getProducts]
+    [currentPageProductIds, getProducts]
   );
 
   useEffect(() => {
@@ -76,7 +90,8 @@ function ProductDropdown({ product, setProduct, ...rest }) {
         setIsLoading(false);
       }
     })();
-  }, [getProductsByQuery, initialProducts]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- Stop getProductsByQuery from re-render.
+  }, [initialProducts]);
 
   const dropDownParams = {
     hasSearch: true,
