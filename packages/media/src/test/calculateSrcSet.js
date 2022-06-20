@@ -133,21 +133,26 @@ describe('calculateSrcSet', () => {
     expect(srcSet).toBe('large%20url 300w,medium%20url 200w,small%20url 100w');
   });
 
-  it('should encode already encoded URLs', () => {
+  it('should not encode already encoded URLs', () => {
     const resource = {
       src: 'default-url',
       width: 500,
       height: 500,
       sizes: {
-        img1: { width: 100, height: 100, sourceUrl: 'small%20url' },
-        img2: { width: 200, height: 200, sourceUrl: 'medium%20url' },
-        img3: { width: 300, height: 300, sourceUrl: 'large%20url' },
+        img1: {
+          width: 100,
+          height: 100,
+          sourceUrl:
+            'https://firebasestorage.googleapis.com/v0/b/c-dashboard-d4a82.appspot.com/o/media%2FNurUn5ekSeOkSCfk1yPIkg17buI3%2Fimages%2F1650068451121-omid-armin-nACf6L_pXq8-unsplash.jpeg?alt=media&token=edc4dfd7-6ac1-44a0-83b7-1aa99a3adad3',
+        },
+        img2: { width: 200, height: 200, sourceUrl: 'medium%2Furl' },
+        img3: { width: 300, height: 300, sourceUrl: 'large%2Furl' },
       },
     };
 
     const srcSet = calculateSrcSet(resource);
     expect(srcSet).toBe(
-      'large%2520url 300w,medium%2520url 200w,small%2520url 100w'
+      'large%2Furl 300w,medium%2Furl 200w,https://firebasestorage.googleapis.com/v0/b/c-dashboard-d4a82.appspot.com/o/media%2FNurUn5ekSeOkSCfk1yPIkg17buI3%2Fimages%2F1650068451121-omid-armin-nACf6L_pXq8-unsplash.jpeg?alt=media&token=edc4dfd7-6ac1-44a0-83b7-1aa99a3adad3 100w'
     );
   });
 
