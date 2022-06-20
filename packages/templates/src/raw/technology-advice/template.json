@@ -273,22 +273,7 @@
       "backgroundColor": { "color": { "r": 222, "g": 222, "b": 222 } },
       "type": "page",
       "id": "7739dc34-fa9c-4527-8556-56a3d20b255a",
-      "animations": [
-        {
-          "id": "1b2226a8-88e3-4d79-a713-8a6562fb7887",
-          "type": "effect-fade-in",
-          "targets": ["93d8d962-f3c4-4d52-9301-cc609c08083c"],
-          "duration": 2000,
-          "delay": 250
-        },
-        {
-          "id": "ef3a2cf5-15f0-41dd-8b3b-3459153ae70e",
-          "type": "effect-fade-in",
-          "targets": ["4c188b55-5c84-423a-8ba8-c3aeae17c101"],
-          "duration": 2000,
-          "delay": 500
-        }
-      ],
+      "animations": [],
       "pageTemplateType": "cover"
     },
     {

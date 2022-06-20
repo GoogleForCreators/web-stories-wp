@@ -92,6 +92,7 @@ const mockRemovePublisherLogo = jest.fn();
 const mockSetPublisherLogoAsDefault = jest.fn();
 const mockAddCustomFont = jest.fn();
 const mockDeleteCustomFont = jest.fn();
+const mockFetchCustomFonts = jest.fn();
 
 function createProviderValues({
   canUploadFiles,
@@ -179,6 +180,7 @@ function createProviderValues({
         fontsApi: {
           addCustomFont: mockAddCustomFont,
           deleteCustomFont: mockDeleteCustomFont,
+          fetchCustomFonts: mockFetchCustomFonts,
         },
       },
     },

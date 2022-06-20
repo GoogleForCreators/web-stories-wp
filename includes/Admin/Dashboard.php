@@ -303,6 +303,14 @@ class Dashboard extends Service_Base {
 			'/web-stories/v1/settings/',
 			'/web-stories/v1/publisher-logos/',
 			'/web-stories/v1/users/me/',
+			'/web-stories/v1/taxonomies/?' . build_query(
+				[
+					'type'         => $this->story_post_type->get_slug(),
+					'context'      => 'edit',
+					'hierarchical' => 'true',
+					'show_ui'      => 'true',
+				]
+			),
 			$rest_url . '?' . build_query(
 				[
 					'_embed'                => rawurlencode(
@@ -456,6 +464,7 @@ class Dashboard extends Service_Base {
 				'settings'       => '/web-stories/v1/settings/',
 				'pages'          => '/wp/v2/pages/',
 				'publisherLogos' => '/web-stories/v1/publisher-logos/',
+				'taxonomies'     => '/web-stories/v1/taxonomies/',
 				'products'       => '/web-stories/v1/products/',
 			],
 			'vendors'                 => $vendors,

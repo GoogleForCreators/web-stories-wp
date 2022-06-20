@@ -79,10 +79,10 @@ function ShortcutMenuSection({ title, commands }) {
       <List title={title}>
         {commands.map(({ label, shortcut }) => (
           <ListRow key={label}>
+            <ShortcutLabel keys={shortcut} alignment={'left'} />
             <dt>
               <Label>{label}</Label>
             </dt>
-            <ShortcutLabel keys={shortcut} alignment={'left'} />
           </ListRow>
         ))}
       </List>

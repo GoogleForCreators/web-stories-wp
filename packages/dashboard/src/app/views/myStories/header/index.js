@@ -65,6 +65,7 @@ const StyledPill = styled(Pill)`
 `;
 function Header({
   filter,
+  filters,
   initialPageReady,
   search,
   sort,
@@ -179,6 +180,7 @@ function Header({
 
       <BodyViewOptions
         showGridToggle
+        filters={filters}
         showSortDropdown
         showAuthorDropdown={showAuthorDropdown}
         resultsLabel={resultsLabel}
@@ -209,6 +211,7 @@ Header.propTypes = {
   author: AuthorPropTypes,
   queryAuthorsBySearch: PropTypes.func,
   showAuthorDropdown: PropTypes.bool,
+  filters: PropTypes.array,
 };
 
 export default memo(Header);

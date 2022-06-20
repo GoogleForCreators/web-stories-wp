@@ -313,23 +313,7 @@
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "id": "58d5729f-4584-4416-8c59-938c142f4fe6",
-      "animations": [
-        {
-          "id": "1b3ba52b-ed68-4efa-8c01-8b1f7312ac4b",
-          "type": "effect-fly-in",
-          "targets": ["56b3420e-ee0a-472f-9b3a-23452b35ee20"],
-          "flyInDir": "leftToRight",
-          "duration": 1000,
-          "delay": 0
-        },
-        {
-          "id": "9c23ea3f-0590-462d-806a-174821c14d88",
-          "type": "effect-fade-in",
-          "targets": ["fd4219e8-f495-48c7-9b72-f6538f71daa8"],
-          "duration": 1500,
-          "delay": 500
-        }
-      ],
+      "animations": [],
       "pageTemplateType": "cover"
     },
     {

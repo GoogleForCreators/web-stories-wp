@@ -29,17 +29,25 @@ import apiFetch from '@wordpress/api-fetch';
  *
  * @param {Object} config Configuration object.
  * @param {string} search Search term.
+ * @param {number} page Page number.
  * @param {string} orderby Order collection by product attribute.
  * @param {string} order Sort attribute ascending or descending.
  * @return {Promise} The response from the API.
  */
-export function getProducts(config, search, orderby, order) {
-  return apiFetch({
+export async function getProducts(config, search, page, orderby, order) {
+  const response = await apiFetch({
     path: addQueryArgs(config.api.products, {
-      per_page: 100,
+      per_page: 50,
+      page,
       search,
       orderby,
       order,
+      _web_stories_envelope: true,
     }),
   });
+
+  return {
+    products: response?.body,
+    hasNextPage: response?.headers['X-WP-HasNextPage'] === 'true',
+  };
 }

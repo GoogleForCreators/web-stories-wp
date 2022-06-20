@@ -29,6 +29,10 @@ const ContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin: 0 24px 24px;
+
+  * {
+    user-select: text;
+  }
 `;
 
 function RegularShortcuts() {

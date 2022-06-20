@@ -25,6 +25,7 @@ import { useEffect, useRef } from '@googleforcreators/react';
  */
 import { useHistory } from '../../history';
 import deleteNestedKeys from '../utils/deleteNestedKeys';
+import pageContainsBlobUrl from '../utils/pageContainsBlobUrl';
 
 // Changes to these properties of elements do not create a new history entry
 // if only one (or multiple) of these properties change but nothing else changes.
@@ -41,6 +42,13 @@ const ELEMENT_PROPS_TO_IGNORE = [
   'resource.font.variants',
   'resource.font.fallbacks',
   'resource.font.styles',
+  'resource.isOptimized',
+  'resource.length',
+  'resource.lengthFormatted',
+  'resource.trimData.original',
+  'resource.trimData.start',
+  'resource.trimData.end',
+  'resource.creationDate',
 ];
 
 // Record any change to core variables in history (history will know if it's a replay)
@@ -102,6 +110,10 @@ function useHistoryEntry({ story, current, pages, selection, capabilities }) {
         // Is so, let's skip adding a history entry.
         skipAddingEntry =
           JSON.stringify(adjustedPages) === JSON.stringify(adjustedEntryPages);
+      }
+
+      if (pageContainsBlobUrl(pages)) {
+        skipAddingEntry = true;
       }
     }
 
