@@ -38,6 +38,15 @@ use WP_REST_Response;
  *
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  *
+ * @phpstan-type AttachmentData array{
+ *   media_details?: array{
+ *     length?: int,
+ *     length_formatted?: string
+ *   },
+ *   url?: string,
+ *   featured_media_src?: string
+ * }
+ *
  * @phpstan-type EnhancedAttachmentMetadata array{
  *   width: int,
  *   height: int,
@@ -156,6 +165,12 @@ class Jetpack extends Service_Base {
 		if ( ! \is_array( $mime_types ) ) {
 			return $mime_types;
 		}
+
+		/**
+		 * Mime types config.
+		 *
+		 * @var array{video?: string[]} $mime_types
+		 */
 		$mime_types['video'][] = self::VIDEOPRESS_MIME_TYPE;
 
 		return $mime_types;
@@ -195,6 +210,9 @@ class Jetpack extends Service_Base {
 	 * @param array|mixed $data   Array of prepared attachment data. @see wp_prepare_attachment_for_js().
 	 * @param WP_Post     $attachment Attachment object.
 	 * @return array|mixed
+	 *
+	 * @phpstan-param AttachmentData $data
+	 * @phpstan-return AttachmentData|mixed
 	 */
 	public function filter_admin_ajax_response( $data, $attachment ) {
 		if ( self::VIDEOPRESS_MIME_TYPE !== $attachment->post_mime_type ) {
@@ -261,7 +279,7 @@ class Jetpack extends Service_Base {
 		/**
 		 * Response data.
 		 *
-		 * @var array<string, string|array|bool> $data
+		 * @var array<string, string|array<string, int|string>|bool> $data
 		 */
 		$data = $response->get_data();
 

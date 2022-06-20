@@ -46,6 +46,26 @@ use Google\Web_Stories\Tracking;
  *   poster?: string,
  *   width?: int,
  *   height?: int,
+ *   align?: string,
+ *   stories?: int[],
+ *   viewType?: string,
+ *   numOfStories?: int,
+ *   numOfColumns?: int,
+ *   circleSize?: int,
+ *   imageAlignment?: string,
+ *   orderby?: string,
+ *   order?: string,
+ *   archiveLinkLabel?: string,
+ *   authors?: int[],
+ *   fieldState?: array<string, mixed>
+ * }
+ * @phpstan-type BlockAttributesWithDefaults array{
+ *   blockType?: string,
+ *   url?: string,
+ *   title?: string,
+ *   poster?: string,
+ *   width?: int,
+ *   height?: int,
  *   align: string,
  *   stories?: int[],
  *   viewType: string,
@@ -280,7 +300,7 @@ class Web_Stories_Block extends Embed_Base {
 	 * @param array<string, mixed> $attributes Block attributes.
 	 * @return string Rendered block type output.
 	 *
-	 * @phpstan-param BlockAttributes $attributes
+	 * @phpstan-param BlockAttributesWithDefaults $attributes
 	 */
 	public function render_block( array $attributes ): string {
 		if ( false === $this->initialize_block_attributes( $attributes ) ) {
@@ -377,8 +397,13 @@ class Web_Stories_Block extends Embed_Base {
 			$query_args['posts_per_page'] = $attributes['numOfStories'];
 		}
 
-		$query_args['order']   = strtoupper( $attributes['order'] );
-		$query_args['orderby'] = 'title' === $attributes['orderby'] ? 'post_title' : 'post_date';
+		if ( ! empty( $attributes['order'] ) ) {
+			$query_args['order'] = strtoupper( $attributes['order'] );
+		}
+
+		if ( ! empty( $attributes['orderby'] ) ) {
+			$query_args['orderby'] = 'title' === $attributes['orderby'] ? 'post_title' : 'post_date';
+		}
 
 		if ( ! empty( $attributes['authors'] ) && \is_array( $attributes['authors'] ) ) {
 			$query_args['author__in'] = $attributes['authors'];

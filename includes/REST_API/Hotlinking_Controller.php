@@ -44,11 +44,11 @@ use WP_REST_Server;
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  *
  * @phpstan-type LinkData array{
- *   ext: string,
- *   file_name: string,
- *   file_size: int,
- *   mime_type: string,
- *   type: string
+ *   ext?: string,
+ *   file_name?: string,
+ *   file_size?: int,
+ *   mime_type?: string,
+ *   type?: string
  * }
  *
  * @phpstan-type SchemaEntry array{
@@ -396,7 +396,7 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	 * @param string               $url  Request URL.
 	 * @param array<string, mixed> $args Request args.
 	 */
-	private function proxy_url_fallback( array $url, array $args ): void {
+	private function proxy_url_fallback( string $url, array $args ): void {
 		$response = wp_safe_remote_get( $url, $args );
 		$status   = wp_remote_retrieve_response_code( $response );
 
@@ -529,7 +529,9 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 		$this->schema = $schema;
 
 		/**
-		 * @phpstan-var Schema
+		 * Schema.
+		 *
+		 * @phpstan-var Schema $schema
 		 */
 		$schema = $this->add_additional_fields_schema( $this->schema );
 		return $schema;
@@ -636,7 +638,7 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	 *
 	 * @since 1.19.0
 	 *
-	 * @return array<string, array> List of allowed mime types.
+	 * @return array<string, string[]> List of allowed mime types.
 	 */
 	protected function get_allowed_mime_types(): array {
 		$mime_type = $this->types->get_allowed_mime_types();

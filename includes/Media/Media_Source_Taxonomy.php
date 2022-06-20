@@ -170,6 +170,11 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 	 * @param array<string, mixed> $prepared Prepared data before response.
 	 */
 	public function get_callback_media_source( $prepared ): string {
+		/**
+		 * Taxonomy ID.
+		 *
+		 * @var int $id
+		 */
 		$id = $prepared['id'];
 
 		$terms = get_the_terms( $id, $this->taxonomy_slug );
@@ -202,9 +207,14 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 	 * Returns the tax query needed to exclude generated video poster images and source videos.
 	 *
 	 * @param array<string, mixed> $args Existing WP_Query args.
-	 * @return array<string, mixed> Tax query arg.
+	 * @return array<int|string, mixed> Tax query arg.
 	 */
 	private function get_exclude_tax_query( array $args ): array {
+		/**
+		 * Tax query.
+		 *
+		 * @var array<int|string, mixed> $tax_query
+		 */
 		$tax_query = ! empty( $args['tax_query'] ) ? $args['tax_query'] : [];
 
 		/**

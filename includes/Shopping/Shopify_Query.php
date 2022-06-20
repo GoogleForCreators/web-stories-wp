@@ -268,7 +268,9 @@ QUERY;
 
 		if ( \is_string( $data ) && ! empty( $data ) ) {
 			/**
-			 * @var ShopifyGraphQLResponse
+			 * Cached response.
+			 *
+			 * @phpstan-var ShopifyGraphQLResponse $cached_result
 			 */
 			$cached_result = (array) json_decode( $data, true );
 			return $cached_result;

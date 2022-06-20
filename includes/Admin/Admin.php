@@ -123,6 +123,8 @@ class Admin extends Service_Base {
 		}
 
 		/**
+		 * Story ID.
+		 *
 		 * @var string $from_web_story
 		 */
 		$from_web_story = $_GET['from-web-story']; // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
@@ -201,6 +203,8 @@ class Admin extends Service_Base {
 		}
 
 		/**
+		 * Story ID.
+		 *
 		 * @var string $from_web_story
 		 */
 		$from_web_story = $_GET['from-web-story']; // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized

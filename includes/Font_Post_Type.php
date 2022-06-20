@@ -78,6 +78,11 @@ class Font_Post_Type extends Post_Type_Base implements HasRequirements {
 	 * @phpstan-return PostTypeArgs
 	 */
 	protected function get_args(): array {
+		/**
+		 * The edit_posts capability.
+		 *
+		 * @var string $edit_posts
+		 */
 		$edit_posts = $this->story_post_type->get_cap_name( 'edit_posts' );
 
 		// Only admins are allowed to modify custom fonts,

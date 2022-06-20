@@ -164,7 +164,7 @@ abstract class Embed_Base extends Service_Base {
 	 *
 	 * @since 1.1.0
 	 *
-	 * @param array<string, string> $attributes Embed render attributes.
+	 * @param array<string, string|int> $attributes Embed render attributes.
 	 * @return string Rendered embed output.
 	 */
 	public function render( array $attributes ): string {

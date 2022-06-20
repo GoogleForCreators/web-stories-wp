@@ -244,7 +244,9 @@ class Stories_Autosaves_Controller extends WP_REST_Autosaves_Controller implemen
 		$this->schema = $autosaves_schema;
 
 		/**
-		 * @phpstan-var Schema
+		 * Schema.
+		 *
+		 * @phpstan-var Schema $schema
 		 */
 		$schema = $this->add_additional_fields_schema( $this->schema );
 		return $schema;

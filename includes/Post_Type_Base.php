@@ -60,7 +60,7 @@ use WP_Site;
  *   menu_position?: int,
  *   menu_icon?: string,
  *   capability_type?: string|array{0: string, 1: string},
- *   capabilities?: array<string, string|false>,
+ *   capabilities?: array<string, string>,
  *   map_meta_cap?: bool,
  *   supports?: array<int, string|array<string, mixed>>,
  *   register_meta_box_cb?: callable,

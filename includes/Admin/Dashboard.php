@@ -274,6 +274,8 @@ class Dashboard extends Service_Base {
 		}
 
 		/**
+		 * Page slug.
+		 *
 		 * @var string $page
 		 */
 		$page = $_GET['page']; // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized

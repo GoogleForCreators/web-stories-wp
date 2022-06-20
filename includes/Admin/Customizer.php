@@ -665,6 +665,8 @@ class Customizer extends Service_Base implements Conditional {
 		foreach ( $args as $key => $value ) {
 			if ( \is_array( $value ) && isset( $parsed_args[ $key ] ) ) {
 				/**
+				 * Default value.
+				 *
 				 * @var array<string, array<string, array<string, array<int,string>|bool|int|string>>> $def
 				 */
 				$def                 = $parsed_args[ $key ];
@@ -750,6 +752,8 @@ class Customizer extends Service_Base implements Conditional {
 		];
 
 		/**
+		 * Theme support config.
+		 *
 		 * @var ThemeSupport $support
 		 */
 		$support = $this->parse_args( $support, $default_support );

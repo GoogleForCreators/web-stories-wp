@@ -393,6 +393,8 @@ class Experiments extends Service_Base implements HasRequirements {
 	 */
 	public function get_experiment_statuses( string $group ): array {
 		/**
+		 * List of experiments.
+		 *
 		 * @phpstan-var Experiment[]
 		 */
 		$experiments = wp_list_filter( $this->get_experiments(), [ 'group' => $group ] );

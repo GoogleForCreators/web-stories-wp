@@ -49,7 +49,25 @@ use WP_Query;
  *   circle_size?: int,
  *   sharp_corners?: bool,
  *   order?: string,
- *   orderby?: string
+ *   orderby?: string,
+ *   align?: string
+ * }
+ * @phpstan-type StoryAttributesWithDefaults array{
+ *   view_type: string,
+ *   number_of_columns: int,
+ *   show_title: bool,
+ *   show_author: bool,
+ *   show_date: bool,
+ *   show_archive_link: bool|string,
+ *   show_excerpt: bool,
+ *   image_alignment: string,
+ *   class: string,
+ *   archive_link_label: string,
+ *   circle_size: int,
+ *   sharp_corners: bool,
+ *   order?: string,
+ *   orderby?: string,
+ *   align?: string
  * }
  */
 class Story_Query {
@@ -183,6 +201,8 @@ class Story_Query {
 	 * @since 1.5.0
 	 *
 	 * @return array<string, string|int|bool> An array of story attributes.
+	 *
+	 * @phpstan-return StoryAttributesWithDefaults
 	 */
 	public function get_story_attributes(): array {
 		$default_attributes = [
@@ -200,6 +220,13 @@ class Story_Query {
 			'circle_size'        => 150,
 		];
 
-		return wp_parse_args( $this->story_attributes, $default_attributes );
+		/**
+		 * Attributes with defaults applied.
+		 *
+		 * @phpstan-var StoryAttributesWithDefaults $attributes
+		 */
+		$attributes = wp_parse_args( $this->story_attributes, $default_attributes );
+
+		return $attributes;
 	}
 }

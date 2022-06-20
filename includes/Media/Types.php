@@ -90,7 +90,7 @@ class Types {
 		 *
 		 * @since 1.0.0
 		 *
-		 * @param string[] $default_allowed_mime_types Associative array of allowed mime types per media type (image, audio, video).
+		 * @param array<string, string[]> $default_allowed_mime_types Associative array of allowed mime types per media type (image, audio, video).
 		 */
 		$allowed_mime_types = apply_filters( 'web_stories_allowed_mime_types', $default_allowed_mime_types );
 

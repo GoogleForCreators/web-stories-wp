@@ -615,6 +615,8 @@ class Stories extends WP_Widget {
 
 			if ( ! empty( $args['attributes'] ) && \is_array( $args['attributes'] ) ) {
 				/**
+				 * Value.
+				 *
 				 * @var string $attr_val
 				 */
 				foreach ( $args['attributes'] as $attr_key => $attr_val ) {

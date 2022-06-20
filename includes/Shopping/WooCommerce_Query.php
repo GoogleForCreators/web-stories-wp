@@ -181,6 +181,8 @@ class WooCommerce_Query implements Product_Query {
 		}
 
 		/**
+		 * Alt text.
+		 *
 		 * @var string $alt
 		 */
 		$alt = get_post_meta( $image_id, '_wp_attachment_image_alt', true );

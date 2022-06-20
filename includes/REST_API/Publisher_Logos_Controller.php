@@ -39,6 +39,8 @@ use WP_REST_Server;
  * Class to access publisher logos via the REST API.
  *
  * @since 1.12.0
+ *
+ * @phpstan-import-type Links from \Google\Web_Stories\REST_API\Stories_Base_Controller
  */
 class Publisher_Logos_Controller extends REST_Controller implements HasRequirements {
 
@@ -224,6 +226,8 @@ class Publisher_Logos_Controller extends REST_Controller implements HasRequireme
 	 */
 	public function create_item( $request ) {
 		/**
+		 * List of publisher logos.
+		 *
 		 * @var int[] $publisher_logos
 		 */
 		$publisher_logos = $this->settings->get_setting( $this->settings::SETTING_NAME_PUBLISHER_LOGOS, [] );
@@ -325,6 +329,8 @@ class Publisher_Logos_Controller extends REST_Controller implements HasRequireme
 		$prepared = $this->prepare_item_for_response( $post, $request );
 
 		/**
+		 * List of publisher logos.
+		 *
 		 * @var int[] $publisher_logos
 		 */
 		$publisher_logos = $this->settings->get_setting( $this->settings::SETTING_NAME_PUBLISHER_LOGOS, [] );
@@ -389,6 +395,8 @@ class Publisher_Logos_Controller extends REST_Controller implements HasRequireme
 	 */
 	protected function get_publisher_logo( $id ) {
 		/**
+		 * List of publisher logos.
+		 *
 		 * @var int[] $publisher_logos
 		 */
 		$publisher_logos = $this->settings->get_setting( $this->settings::SETTING_NAME_PUBLISHER_LOGOS, [] );
@@ -468,7 +476,9 @@ class Publisher_Logos_Controller extends REST_Controller implements HasRequireme
 	 * @since 1.12.0
 	 *
 	 * @param WP_Post $post Post object.
-	 * @return array{self: array{href?: string}, collection: array{href: string}} Links for the given post.
+	 * @return array Links for the given post.
+	 *
+	 * @phpstan-return Links
 	 */
 	protected function prepare_links( $post ): array {
 		$base = sprintf( '%s/%s', $this->namespace, $this->rest_base );

@@ -118,7 +118,9 @@ class Page_Template_Controller extends Stories_Base_Controller {
 		}
 
 		/**
-		 * @phpstan-var Schema
+		 * Schema.
+		 *
+		 * @phpstan-var Schema $schema
 		 */
 		$schema = parent::get_item_schema();
 
@@ -130,7 +132,9 @@ class Page_Template_Controller extends Stories_Base_Controller {
 		$this->schema = $schema;
 
 		/**
-		 * @phpstan-var Schema
+		 * Schema.
+		 *
+		 * @phpstan-var Schema $schema
 		 */
 		$schema = $this->add_additional_fields_schema( $this->schema );
 		return $schema;

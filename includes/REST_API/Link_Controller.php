@@ -428,7 +428,9 @@ class Link_Controller extends REST_Controller implements HasRequirements {
 		$this->schema = $schema;
 
 		/**
-		 * @phpstan-var Schema
+		 * Schema
+		 *
+		 * @phpstan-var Schema $schema
 		 */
 		$schema = $this->add_additional_fields_schema( $this->schema );
 		return $schema;

@@ -39,6 +39,8 @@ use WP_REST_Response;
 
 /**
  * Stories_Media_Controller class.
+ *
+ * @phpstan-import-type Links from \Google\Web_Stories\REST_API\Stories_Base_Controller
  */
 class Stories_Media_Controller extends WP_REST_Attachments_Controller implements Service, Delayed, Registerable {
 	/**
@@ -360,7 +362,9 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 	 * @since 1.12.0
 	 *
 	 * @param WP_Post $post Post object.
-	 * @return array<string,array{href?: string, taxonomy?: string, embeddable?: bool}> Links for the given post.
+	 * @return array Links for the given post.
+	 *
+	 * @phpstan-return Links
 	 */
 	protected function prepare_links( $post ): array {
 		$links = parent::prepare_links( $post );
@@ -374,9 +378,12 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 	 *
 	 * @since 1.12.0
 	 *
-	 * @param array<string, array{href?: string, taxonomy?: string, embeddable?: bool}> $links Links for the given post.
-	 * @param WP_Post                                                                   $post Post object.
-	 * @return array<string, array<string, array{href?: string, taxonomy: string, embeddable: bool}|bool|string>> Modified list of links.
+	 * @param array   $links Links for the given post.
+	 * @param WP_Post $post  Post object.
+	 * @return array Modified list of links.
+	 *
+	 * @phpstan-param Links $links
+	 * @phpstan-return Links
 	 */
 	private function add_taxonomy_links( array $links, WP_Post $post ): array {
 		$taxonomies = get_object_taxonomies( $post->post_type, 'objects' );

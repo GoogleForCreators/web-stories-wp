@@ -40,6 +40,12 @@ use WP_REST_Response;
  *
  * Override the WP_REST_Posts_Controller class to add `post_content_filtered` to REST request.
  *
+ * @phpstan-type Link array{
+ *   href?: string,
+ *   embeddable?: bool,
+ *   taxonomy?: string
+ * }
+ * @phpstan-type Links array<string, Link|Link[]>
  * @phpstan-type SchemaEntry array{
  *   description: string,
  *   type: string,
@@ -280,7 +286,9 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 		$this->schema = $schema;
 
 		/**
-		 * @phpstan-var Schema
+		 * Schema.
+		 *
+		 * @phpstan-var Schema $schema
 		 */
 		$schema = $this->add_additional_fields_schema( $this->schema );
 		return $schema;
@@ -294,7 +302,9 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	 * @since 1.10.0
 	 *
 	 * @param WP_Post $post Post object.
-	 * @return array<string,array{href?: string, embeddable?: bool}> Links for the given post.
+	 * @return array Links for the given post.
+	 *
+	 * @phpstan-return Links
 	 */
 	protected function prepare_links( $post ): array {
 		$links = parent::prepare_links( $post );
@@ -336,9 +346,12 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	 *
 	 * @since 1.12.0
 	 *
-	 * @param array<string,array{href?: string, embeddable?: bool}> $links Links for the given post.
-	 * @param WP_Post                                               $post  Post object.
-	 * @return array<string,array{href?: string, embeddable?: bool, taxonomy?: string}> Modified list of links.
+	 * @param array   $links Links for the given post.
+	 * @param WP_Post $post  Post object.
+	 * @return array Modified list of links.
+	 *
+	 * @phpstan-param Links $links
+	 * @phpstan-return Links
 	 */
 	private function add_taxonomy_links( array $links, WP_Post $post ): array {
 		$taxonomies = get_object_taxonomies( $post->post_type, 'objects' );

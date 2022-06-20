@@ -101,9 +101,9 @@ class Story {
 	 * Publisher logo size.
 	 *
 	 * @var int[]
-	 * @phpstan-var array{0: int, 1: int}
+	 * @phpstan-var array{0?: int, 1?: int}
 	 */
-	protected $publisher_logo_size;
+	protected $publisher_logo_size = [];
 
 	/**
 	 * Poster url - portrait.
@@ -368,7 +368,7 @@ class Story {
 	 *     @type int    $2 Image height in pixels.
 	 * }
 	 *
-	 * @phpstan-return array{0: int, 1: int}
+	 * @phpstan-return array{0?: int, 1?: int}
 	 */
 	public function get_publisher_logo_size(): array {
 		/**

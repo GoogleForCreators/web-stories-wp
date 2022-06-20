@@ -198,7 +198,7 @@ class Discovery extends Service_Base implements HasRequirements {
 			$size   = $story->get_publisher_logo_size();
 			$poster = $story->get_poster_portrait();
 
-			if ( ! empty( $url ) ) {
+			if ( ! empty( $url ) && ! empty( $size ) ) {
 				$metadata['publisher']['logo'] = [
 					'@type'  => 'ImageObject',
 					'url'    => $url,
@@ -233,6 +233,8 @@ class Discovery extends Service_Base implements HasRequirements {
 
 
 			/**
+			 * List of products.
+			 *
 			 * @phpstan-var ProductData[] $products
 			 */
 			$products         = $this->product_meta->get_products( $post->ID );
@@ -327,11 +329,8 @@ class Discovery extends Service_Base implements HasRequirements {
 
 		$metadata = $this->get_open_graph_metadata();
 
-		/**
-		 * @var string $value
-		 */
 		foreach ( $metadata as $name => $value ) {
-			printf( '<meta property="%s" content="%s" />', esc_attr( $name ), esc_attr( $value ) );
+			printf( '<meta property="%s" content="%s" />', esc_attr( $name ), esc_attr( (string) $value ) );
 		}
 	}
 

@@ -40,6 +40,18 @@ use WP_Post;
  * Class AMP.
  *
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
+ *
+ * @phpstan-type AMPOptions array{
+ *   theme_support?: string,
+ *   supported_post_types?: string[],
+ *   supported_templates?: string[]
+ * }
+ *
+ * @phpstan-type AMPSanitizers array{
+ *   AMP_Style_Sanitizer?: array{
+ *     dynamic_element_selectors?: string[]
+ *   }
+ * }
  */
 class AMP extends Service_Base implements HasRequirements {
 	/**
@@ -125,6 +137,8 @@ class AMP extends Service_Base implements HasRequirements {
 	 *
 	 * @param array|mixed $options Options.
 	 * @return array|mixed Filtered options.
+	 *
+	 * @phpstan-param AMPOptions $options
 	 */
 	public function filter_amp_options( $options ) {
 		if ( ! \is_array( $options ) ) {
@@ -172,6 +186,9 @@ class AMP extends Service_Base implements HasRequirements {
 	 *
 	 * @param array|mixed $sanitizers Sanitizers.
 	 * @return array|mixed Sanitizers.
+	 *
+	 * @phpstan-param AMPSanitizers|mixed $sanitizers
+	 * @phpstan-return AMPSanitizers|mixed
 	 */
 	public function add_amp_content_sanitizers( $sanitizers ) {
 		if ( ! $this->context->is_web_story() ) {
@@ -186,6 +203,12 @@ class AMP extends Service_Base implements HasRequirements {
 		if ( ! \is_array( $sanitizers ) ) {
 			return $sanitizers;
 		}
+
+		/**
+		 * AMP sanitizer configuration.
+		 *
+		 * @phpstan-var AMPSanitizers $sanitizers
+		 */
 
 		$video_cache_enabled = (bool) $this->settings->get_setting( $this->settings::SETTING_NAME_VIDEO_CACHE );
 
@@ -327,12 +350,20 @@ class AMP extends Service_Base implements HasRequirements {
 		}
 
 		if (
-			is_admin() &&
 			isset( $_GET['action'], $_GET['post'] ) &&
 			'amp_validate' === $_GET['action'] &&
-			get_post_type( (int) $_GET['post'] ) === self::AMP_VALIDATED_URL_POST_TYPE
+			is_admin()
 		) {
-			return $this->get_validated_url_post_type( (int) $_GET['post'] );
+			/**
+			 * Post ID.
+			 *
+			 * @var string|int $post_id
+			 */
+			$post_id = $_GET['post'];
+
+			if ( get_post_type( (int) $post_id ) === self::AMP_VALIDATED_URL_POST_TYPE ) {
+				return $this->get_validated_url_post_type( (int) $post_id );
+			}
 		}
 
 		$current_screen_post_type = $this->context->get_screen_post_type();
@@ -352,7 +383,9 @@ class AMP extends Service_Base implements HasRequirements {
 
 		if ( isset( $_SERVER['REQUEST_URI'] ) ) {
 			/**
-			 * @var string
+			 * Request URI.
+			 *
+			 * @var string $request_uri
 			 */
 			$request_uri = $_SERVER['REQUEST_URI'];
 			if ( false !== strpos( (string) wp_unslash( $request_uri ), $this->story_post_type->get_rest_url() ) ) {

@@ -424,7 +424,7 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 	 * @param string                        $attribute Attribute name.
 	 * @return string|false Attribute content on success, false otherwise.
 	 */
-	protected function get_dom_attribute_content( $query, string $attribute ): string|bool {
+	protected function get_dom_attribute_content( $query, string $attribute ) {
 		if ( ! $query instanceof DOMNodeList || 0 === $query->length ) {
 			return false;
 		}
@@ -491,8 +491,10 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 	 */
 	public function get_item_schema(): array {
 		if ( $this->schema ) {
-			/**			 * @
-			 * @phpstan-var Schema
+			/**
+			 * Schema.
+			 *
+			 * @phpstan-var Schema $schema
 			 */
 			$schema = $this->add_additional_fields_schema( $this->schema );
 			return $schema;
@@ -520,7 +522,9 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 		$this->schema = $schema;
 
 		/**
-		 * @phpstan-var Schema
+		 * Schema.
+		 *
+		 * @phpstan-var Schema $schema
 		 */
 		$schema = $this->add_additional_fields_schema( $this->schema );
 		return $schema;

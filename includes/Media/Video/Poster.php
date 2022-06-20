@@ -199,7 +199,7 @@ class Poster extends Service_Base implements HasMeta {
 	 * @since 1.0.0
 	 *
 	 * @param int $thumbnail_id Attachment ID.
-	 * @return array
+	 * @return array{src?: string, width?: int, height?: int, generated?: bool}
 	 */
 	public function get_thumbnail_data( int $thumbnail_id ): array {
 		$img_src = wp_get_attachment_image_src( $thumbnail_id, 'full' );

@@ -31,6 +31,8 @@ use WP_Post;
  *
  * @param array<string, string|int|bool> $attrs Arguments for displaying stories.
  * @param array<string, string|int|bool> $query_args Query arguments for stories.
+ *
+ * @phpstan-param array{view_type?: string, number_of_columns?: int, show_title?: bool, show_author?: bool, show_date?: bool, show_archive_link?: bool|string, show_excerpt?: bool, image_alignment?: string, class?: string, archive_link_label?: string, circle_size?: int, sharp_corners?: bool, order?: string, orderby?: string} $attrs
  */
 function render_stories( array $attrs = [], array $query_args = [] ): void {
 	$stories_obj = new Story_Query( $attrs, $query_args );
@@ -46,6 +48,8 @@ function render_stories( array $attrs = [], array $query_args = [] ): void {
  * @param array<string, string|int|bool> $attrs Arguments for displaying stories.
  * @param array<string, string|int|bool> $query_args Query arguments for stories.
  * @return WP_Post[]
+ *
+ * @phpstan-param array{view_type?: string, number_of_columns?: int, show_title?: bool, show_author?: bool, show_date?: bool, show_archive_link?: bool|string, show_excerpt?: bool, image_alignment?: string, class?: string, archive_link_label?: string, circle_size?: int, sharp_corners?: bool, order?: string, orderby?: string} $attrs
  */
 function get_stories( array $attrs = [], array $query_args = [] ): array {
 	return ( new Story_Query( $attrs, $query_args ) )->get_stories();

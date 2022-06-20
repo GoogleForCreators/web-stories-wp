@@ -546,10 +546,10 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 *
 	 * @since 1.6.0
 	 *
-	 * @param string              $id ID of the service to register.
-	 * @param class-string|object $class Class of the service to register.
+	 * @param string                       $id    ID of the service to register.
+	 * @param HasRequirements|class-string $class Class of the service to register.
 	 */
-	protected function maybe_register_service( $id, $class ): void {
+	protected function maybe_register_service( string $id, $class ): void {
 		// Ensure we don't register the same service more than once.
 		if ( $this->service_container->has( $id ) ) {
 			return;
@@ -589,7 +589,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 *
 	 * @throws InvalidService If the service could not be properly instantiated.
 	 *
-	 * @param string|class-string|object $class Service class to instantiate.
+	 * @param class-string|object $class Service class to instantiate.
 	 * @return Service Instantiated service.
 	 */
 	protected function instantiate_service( $class ): Service {
@@ -662,10 +662,10 @@ abstract class ServiceBasedPlugin implements Plugin {
 			 *
 			 * This can be used to override scalar values.
 			 *
-			 * @param array<array> $arguments Associative array of class =>
-			 *                                arguments mappings. The arguments
-			 *                                array maps argument names to
-			 *                                values.
+			 * @param array<class-string, mixed> $arguments Associative array of class =>
+			 *                                              arguments mappings. The arguments
+			 *                                              array maps argument names to
+			 *                                              values.
 			 */
 			$arguments = apply_filters(
 				static::HOOK_PREFIX . static::ARGUMENTS_FILTER,
@@ -708,6 +708,11 @@ abstract class ServiceBasedPlugin implements Plugin {
 			$injector = $injector->bind( $from, $to );
 		}
 
+		/**
+		 * Argument mape.
+		 *
+		 * @var array<class-string, array<string|callable|class-string>> $arguments
+		 */
 		foreach ( $arguments as $class => $argument_map ) {
 			$class = $this->maybe_resolve( $class );
 
@@ -776,8 +781,8 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 *
 	 * @since 1.6.0
 	 *
-	 * @return array<array> Associative array of arrays mapping argument names
-	 *                      to argument values.
+	 * @return array<class-string, mixed> Associative array of arrays mapping argument names
+	 *                                    to argument values.
 	 */
 	protected function get_arguments(): array {
 		return [];

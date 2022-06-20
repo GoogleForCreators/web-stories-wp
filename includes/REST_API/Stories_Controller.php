@@ -39,6 +39,13 @@ use WP_REST_Response;
  * Stories_Controller class.
  *
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
+ *
+ * @phpstan-type QueryArgs array{
+ *   posts_per_page?: int,
+ *   post_status?: string[],
+ *   tax_query?: array<int|'relation', mixed>
+ * }
+ * @phpstan-import-type Links from \Google\Web_Stories\REST_API\Stories_Base_Controller
  */
 class Stories_Controller extends Stories_Base_Controller {
 
@@ -46,6 +53,7 @@ class Stories_Controller extends Stories_Base_Controller {
 	 * Query args.
 	 *
 	 * @var array<string,mixed>
+	 * @phpstan-var QueryArgs
 	 */
 	private $args = [];
 
@@ -322,6 +330,8 @@ class Stories_Controller extends Stories_Base_Controller {
 	 * @param array<string, mixed> $args    WP_Query arguments.
 	 * @param WP_REST_Request      $request Full details about the request.
 	 * @return array<string, mixed> Current args.
+	 *
+	 * @phpstan-param QueryArgs $args
 	 */
 	public function filter_query( $args, $request ): array {
 		$this->args = $this->prepare_tax_query( $args, $request );
@@ -384,6 +394,9 @@ class Stories_Controller extends Stories_Base_Controller {
 	 * @return array<string, mixed> Updated query arguments.
 	 *
 	 * @todo Remove this method once WordPress 5.7 becomes minimum required version.
+	 *
+	 * @phpstan-param QueryArgs $args
+	 * @phpstan-return QueryArgs
 	 */
 	private function prepare_tax_query( array $args, WP_REST_Request $request ): array {
 		$relation = $request['tax_relation'];
@@ -527,7 +540,7 @@ class Stories_Controller extends Stories_Base_Controller {
 			$posts_query->query( $query_args );
 			$statuses_count[ $key ] = absint( $posts_query->found_posts );
 			$statuses_count['all'] += $statuses_count[ $key ];
-			if ( \in_array( $status, $this->args['post_status'], true ) ) {
+			if ( \in_array( $status, $this->args['post_status'] ?? [], true ) ) {
 				$total_posts += $statuses_count[ $key ];
 			}
 		}
@@ -539,7 +552,7 @@ class Stories_Controller extends Stories_Base_Controller {
 		}
 
 		$page      = (int) $posts_query->query_vars['paged'];
-		$max_pages = ceil( $total_posts / (int) $this->args['posts_per_page'] );
+		$max_pages = ceil( $total_posts / (int) ( $this->args['posts_per_page'] ?? 10 ) );
 
 		if ( $page > $max_pages && $total_posts > 0 ) {
 			return new \WP_Error(
@@ -559,7 +572,9 @@ class Stories_Controller extends Stories_Base_Controller {
 	 * Prepares links for the request.
 	 *
 	 * @param WP_Post $post Post object.
-	 * @return array<string,array{href?: string, embeddable?: bool}> Links for the given post.
+	 * @return array Links for the given post.
+	 *
+	 * @phpstan-return Links
 	 */
 	protected function prepare_links( $post ): array {
 		// Workaround so that WP_REST_Posts_Controller::prepare_links() does not call wp_get_post_revisions(),
@@ -609,9 +624,12 @@ class Stories_Controller extends Stories_Base_Controller {
 	 *
 	 * @since 1.12.0
 	 *
-	 * @param array<string, array{href?: string, embeddable?: bool}> $links Links for the given post.
-	 * @param WP_Post                                                $post Post object.
-	 * @return array<string, array{href?: string, embeddable?: bool}> Modified list of links.
+	 * @param array   $links Links for the given post.
+	 * @param WP_Post $post  Post object.
+	 * @return array Modified list of links.
+	 *
+	 * @phpstan-param Links $links
+	 * @phpstan-return Links
 	 */
 	private function add_post_locking_link( array $links, WP_Post $post ): array {
 		$base     = sprintf( '%s/%s', $this->namespace, $this->rest_base );
@@ -670,9 +688,12 @@ class Stories_Controller extends Stories_Base_Controller {
 	 *
 	 * @since 1.12.0
 	 *
-	 * @param array<string, array{href?: string, embeddable?: bool}> $links Links for the given post.
-	 * @param WP_Post                                                $post Post object.
-	 * @return array<string, array{href?: string, embeddable?: bool}> Modified list of links.
+	 * @param array   $links Links for the given post.
+	 * @param WP_Post $post Post object.
+	 * @return array Modified list of links.
+	 *
+	 * @phpstan-param Links $links
+	 * @phpstan-return Links
 	 */
 	private function add_publisher_logo_link( array $links, WP_Post $post ): array {
 		$publisher_logo_id = $this->get_publisher_logo_id( $post );

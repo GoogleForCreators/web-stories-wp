@@ -466,11 +466,10 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		}
 
 		if ( ! empty( $this->attributes['image_alignment'] ) && ( 'right' === $this->attributes['image_alignment'] ) ) {
-			$single_story_classes[] = sprintf( 'image-align-right' );
+			$single_story_classes[] = 'image-align-right';
 		}
 
-		$single_story_classes = array_filter( $single_story_classes );
-		$classes              = implode( ' ', $single_story_classes );
+		$classes = implode( ' ', $single_story_classes );
 
 		/**
 		 * Filters the web stories renderer single story classes.
