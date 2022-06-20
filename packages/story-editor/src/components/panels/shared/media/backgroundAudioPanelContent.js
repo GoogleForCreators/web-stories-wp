@@ -29,7 +29,12 @@ import {
   themeHelpers,
 } from '@googleforcreators/design-system';
 import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
-import { useCallback, useMemo, useState } from '@googleforcreators/react';
+import {
+  useCallback,
+  useMemo,
+  useState,
+  useRef,
+} from '@googleforcreators/react';
 import {
   ResourcePropTypes,
   getExtensionsFromMimeType,
@@ -102,6 +107,8 @@ function BackgroundAudioPanelContent({
     [allowedAudioMimeTypes]
   );
   const { resource = {}, tracks = [], loop = true } = backgroundAudio || {};
+
+  const playerRef = useRef();
 
   const canManageCaptions =
     tracks.length > 0 || hasUploadMediaAction || enableCaptionHotlinking;
@@ -298,7 +305,13 @@ function BackgroundAudioPanelContent({
             title={resource.src.split('/').pop()}
             isExternal={!resource.id}
             options={options}
-            onRemove={() => updateBackgroundAudio(null)}
+            onRemove={() => {
+              if (playerRef.current) {
+                playerRef.current.pause();
+              }
+
+              updateBackgroundAudio(null);
+            }}
             removeItemLabel={__('Remove file', 'web-stories')}
           >
             <AudioPlayer
@@ -307,6 +320,7 @@ function BackgroundAudioPanelContent({
               mimeType={resource.mimeType}
               tracks={tracks}
               audioId={audioId}
+              playerRef={playerRef}
               loop={loop}
             />
           </FileRow>
