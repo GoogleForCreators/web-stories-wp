@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import { useFeature } from 'flagged';
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
 import {
@@ -35,6 +36,7 @@ import { trackEvent } from '@googleforcreators/tracking';
 import { focusStyle } from '../../../../../panels/shared/styles';
 import Tooltip from '../../../../../tooltip';
 import useMediaRecording from '../../../../../mediaRecording/useMediaRecording';
+import useFFmpeg from '../../../../../../app/media/utils/useFFmpeg';
 
 const Button = styled(DefaultButton)`
   ${focusStyle};
@@ -54,12 +56,27 @@ function MediaRecording() {
     })
   );
 
+  const enableMediaRecording = useFeature('mediaRecording');
+  const { isTranscodingEnabled } = useFFmpeg();
+
   const onClick = useCallback(() => {
     trackEvent('media_recording_toggled', {
       status: isInRecordingMode ? 'closed' : 'open',
     });
     toggleRecordingMode();
   }, [isInRecordingMode, toggleRecordingMode]);
+
+  if (!enableMediaRecording) {
+    return null;
+  }
+
+  // Media recording requires video optimization to be enabled,
+  // since it's the only reliable way to ensure the recorded video
+  // can be played in all browsers.
+  // `isTranscodingEnabled` already checks for `hasUploadMediaAction`
+  if (!isTranscodingEnabled) {
+    return null;
+  }
 
   const label = __('Record Video', 'web-stories');
   return (

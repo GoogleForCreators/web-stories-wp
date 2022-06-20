@@ -134,8 +134,6 @@ function MediaPane(props) {
     }
   );
 
-  const enableMediaRecording = useFeature('mediaRecording');
-
   const {
     capabilities: { hasUploadMediaAction },
   } = useConfig();
@@ -227,9 +225,8 @@ function MediaPane(props) {
             )}
             {!isSearching && (
               <ButtonsWrapper>
-                {enableMediaRecording && hasUploadMediaAction && (
-                  <MediaRecording />
-                )}
+                {/* MediaRecording already checks for permissions */}
+                <MediaRecording />
                 <LinkInsertion />
                 {hasUploadMediaAction && (
                   <Tooltip title={__('Upload', 'web-stories')}>

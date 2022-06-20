@@ -29,6 +29,7 @@ import { MediaUploadButton } from '../../../components/form';
 import useOnMediaSelect from '../../../components/library/panes/media/local/useOnMediaSelect';
 import LibraryProvider from '../../../components/library/libraryProvider';
 import { useMediaRecording } from '../../../components/mediaRecording';
+import useFFmpeg from '../../media/utils/useFFmpeg';
 import { MenuPropType } from './shared';
 
 const MediaButton = () => {
@@ -50,10 +51,11 @@ function EmptyStateMenu() {
   const { setHighlights } = useHighlights(({ setHighlights }) => ({
     setHighlights,
   }));
-  const enableMediaRecording = useFeature('mediaRecording');
   const { toggleRecordingMode } = useMediaRecording(({ actions }) => ({
     toggleRecordingMode: actions.toggleRecordingMode,
   }));
+  const enableMediaRecording = useFeature('mediaRecording');
+  const { isTranscodingEnabled } = useFFmpeg();
 
   return (
     <>
@@ -69,7 +71,8 @@ function EmptyStateMenu() {
       <LibraryProvider>
         <MediaButton />
       </LibraryProvider>
-      {enableMediaRecording && (
+      {/* `isTranscodingEnabled` already checks for `hasUploadMediaAction` */}
+      {enableMediaRecording && isTranscodingEnabled && (
         <ContextMenuComponents.MenuButton onClick={toggleRecordingMode}>
           {RIGHT_CLICK_MENU_LABELS.RECORD_VIDEO}
         </ContextMenuComponents.MenuButton>
