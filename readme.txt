@@ -2,7 +2,7 @@
 
 Contributors:      google
 Tested up to:      6.0
-Requires at least: 5.5
+Requires at least: 5.7
 Stable tag:        V.V.V
 License:           Apache License 2.0
 License URI:       https://www.apache.org/licenses/LICENSE-2.0
