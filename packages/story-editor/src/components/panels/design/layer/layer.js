@@ -29,7 +29,7 @@ import {
   THEME_CONSTANTS,
   Input,
 } from '@googleforcreators/design-system';
-import { useRef, memo, useState } from '@googleforcreators/react';
+import { useRef, memo, useState, useEffect } from '@googleforcreators/react';
 import {
   getDefinitionForType,
   getLayerName,
@@ -353,6 +353,10 @@ function Layer({ element }) {
     })
   );
 
+  useEffect(() => {
+    setNewLayerName(layerName);
+  }, [layerName]);
+
   const { hasShapeMask, removeShapeMask } = useShapeMask(element);
   const removeMaskTitle = __('Unmask', 'web-stories');
   const { getProxiedUrl } = useCORSProxy();
@@ -395,12 +399,8 @@ function Layer({ element }) {
   const updateLayerName = () => {
     setRenamableLayer(null);
     const trimmedLayerName = newLayerName.trim();
-    // Don't update name if trimmed layer name is empty.
-    // This means that submitting an empty name will exit renaming, and the
-    // layer name will revert to whatever it was before, ignoring the empty input.
-    if (!trimmedLayerName) {
-      setNewLayerName(layerName);
-    } else {
+    // Only update name if trimmed layer name is not empty.
+    if (trimmedLayerName) {
       updateElementById({
         elementId: element.id,
         properties: { layerName: trimmedLayerName },
