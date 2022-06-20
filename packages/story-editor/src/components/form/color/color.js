@@ -30,7 +30,7 @@ import {
   Icons,
   PLACEMENT,
   TOOLTIP_PLACEMENT,
-  noop
+  noop,
 } from '@googleforcreators/design-system';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -172,7 +172,9 @@ const Color = forwardRef(function Color(
             onClick={
               isEyeDropperApiSupported ? openEyeDropper : initEyedropper()
             }
-            onPointerEnter={isEyeDropperApiSupported ? noop : initEyedropper(false)}
+            onPointerEnter={
+              isEyeDropperApiSupported ? noop : initEyedropper(false)
+            }
           >
             <Icons.Pipette />
           </EyeDropperButton>

@@ -31,7 +31,7 @@ import {
   localStore,
   LOCAL_STORAGE_PREFIX,
   themeHelpers,
-  noop
+  noop,
 } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 import { useState } from '@googleforcreators/react';
@@ -196,7 +196,9 @@ function BasicColorPicker({
               onClick={
                 isEyeDropperApiSupported ? openEyeDropper : initEyedropper()
               }
-              onPointerEnter={isEyeDropperApiSupported ? noop : initEyedropper(false)}
+              onPointerEnter={
+                isEyeDropperApiSupported ? noop : initEyedropper(false)
+              }
             >
               <Icons.Pipette />
             </Button>

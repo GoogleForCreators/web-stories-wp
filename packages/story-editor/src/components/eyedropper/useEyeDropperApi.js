@@ -17,7 +17,7 @@
  * External dependencies
  */
 import { useEffect, useCallback, useRef } from 'react';
-import { getSolidFromHex } from "@googleforcreators/patterns";
+import { getSolidFromHex } from '@googleforcreators/patterns';
 
 function useEyeDropperApi({ onChange }) {
   const isEyeDropperApiSupported =

@@ -35,7 +35,7 @@ import {
   BUTTON_VARIANTS,
   BUTTON_TYPES,
   CircularProgress,
-  noop
+  noop,
 } from '@googleforcreators/design-system';
 
 const Saturation = lazy(() =>
@@ -222,7 +222,9 @@ function CurrentColorPicker({
             onClick={
               isEyeDropperApiSupported ? openEyeDropper : initEyedropper()
             }
-            onPointerEnter={isEyeDropperApiSupported ? noop : initEyedropper(false)}
+            onPointerEnter={
+              isEyeDropperApiSupported ? noop : initEyedropper(false)
+            }
           >
             <Icons.Pipette />
           </Button>
