@@ -17,6 +17,9 @@
 /**
  * External dependencies
  */
+import { StyleSheetManager } from 'styled-components';
+import stylisRTLPlugin from 'stylis-plugin-rtl';
+Object.defineProperty(stylisRTLPlugin, 'name', { value: 'stylisRTLPlugin' });
 import { __ } from '@googleforcreators/i18n';
 import {
   useCallback,
@@ -36,6 +39,7 @@ import { trackError } from '@googleforcreators/tracking';
 /**
  * Internal dependencies
  */
+import useConfig from '../../app/config/useConfig';
 import {
   useMediaRecording,
   PermissionsDialog,
@@ -59,6 +63,8 @@ import {
 import { PageTitleArea } from './layout';
 
 function MediaRecordingLayer() {
+  const { isRTL } = useConfig();
+
   const {
     updateMediaDevices,
     status,
@@ -180,55 +186,61 @@ function MediaRecordingLayer() {
   }
 
   return (
-    <>
-      <LayerWithGrayout aria-label={__('Media Recording layer', 'web-stories')}>
-        <PageTitleArea>
-          <DurationIndicator />
-        </PageTitleArea>
-        <DisplayPageArea withSafezone={false} showOverflow>
-          <Wrapper>
-            {!isImageCapture && (
-              <>
-                {mediaBlobUrl && (
-                  <VideoMode value={!isGif} onChange={onToggleVideoMode} />
-                )}
-                <VideoWrapper>
+    // CanvasLayout disables stylisRTLPlugin, but for this subtree we want it again
+    // to make RTL work automatically.
+    <StyleSheetManager stylisPlugins={isRTL ? [stylisRTLPlugin] : []}>
+      <>
+        <LayerWithGrayout
+          aria-label={__('Media Recording layer', 'web-stories')}
+        >
+          <PageTitleArea>
+            <DurationIndicator />
+          </PageTitleArea>
+          <DisplayPageArea withSafezone={false} showOverflow>
+            <Wrapper>
+              {!isImageCapture && (
+                <>
                   {mediaBlobUrl && (
-                    <>
-                      {/* eslint-disable-next-line jsx-a11y/media-has-caption -- We don't have tracks for this. */}
-                      <Video
-                        ref={videoRef}
-                        src={mediaBlobUrl}
-                        muted={isMuted}
-                        loop={isGif}
-                        tabIndex={0}
-                      />
-                      {!isGif && <PlayPauseButton videoRef={videoRef} />}
-                    </>
+                    <VideoMode value={!isGif} onChange={onToggleVideoMode} />
                   )}
-                  {!mediaBlob && !mediaBlobUrl && liveStream && (
-                    <Video ref={streamRef} muted />
-                  )}
+                  <VideoWrapper>
+                    {mediaBlobUrl && (
+                      <>
+                        {/* eslint-disable-next-line jsx-a11y/media-has-caption -- We don't have tracks for this. */}
+                        <Video
+                          ref={videoRef}
+                          src={mediaBlobUrl}
+                          muted={isMuted}
+                          loop={isGif}
+                          tabIndex={0}
+                        />
+                        {!isGif && <PlayPauseButton videoRef={videoRef} />}
+                      </>
+                    )}
+                    {!mediaBlob && !mediaBlobUrl && liveStream && (
+                      <Video ref={streamRef} muted />
+                    )}
+                  </VideoWrapper>
+                </>
+              )}
+              {isImageCapture && (
+                <VideoWrapper>
+                  <Photo
+                    decoding="async"
+                    src={mediaBlobUrl}
+                    alt={__('Image capture', 'web-stories')}
+                  />
                 </VideoWrapper>
-              </>
-            )}
-            {isImageCapture && (
-              <VideoWrapper>
-                <Photo
-                  decoding="async"
-                  src={mediaBlobUrl}
-                  alt={__('Image capture', 'web-stories')}
-                />
-              </VideoWrapper>
-            )}
-          </Wrapper>
-          <ProgressBar />
-          <Countdown />
-        </DisplayPageArea>
-        <Footer captureImage={debouncedCaptureImage} videoRef={videoRef} />
-      </LayerWithGrayout>
-      <SettingsModal />
-    </>
+              )}
+            </Wrapper>
+            <ProgressBar />
+            <Countdown />
+          </DisplayPageArea>
+          <Footer captureImage={debouncedCaptureImage} videoRef={videoRef} />
+        </LayerWithGrayout>
+        <SettingsModal />
+      </>
+    </StyleSheetManager>
   );
 }
 
