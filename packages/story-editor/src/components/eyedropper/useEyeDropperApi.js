@@ -17,23 +17,7 @@
  * External dependencies
  */
 import { useEffect, useCallback, useRef } from 'react';
-
-// https://codesandbox.io/s/restless-wildflower-g6z22m?file=/src/useEyeDropper.js
-
-function hexToRgbA(hex) {
-  let c;
-  if (/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
-    c = hex.substring(1).split('');
-    c = '0x' + c.join('');
-    return {
-      r: (c >> 16) & 255,
-      g: (c >> 8) & 255,
-      b: c & 255,
-      a: 1,
-    };
-  }
-  throw new Error(`Unable to convert to hex ${hex}`);
-}
+import { getSolidFromHex } from "@googleforcreators/patterns";
 
 function useEyeDropperApi({ onChange }) {
   const isEyeDropperApiSupported =
@@ -55,8 +39,7 @@ function useEyeDropperApi({ onChange }) {
     eyeDropper.current
       .open()
       .then((result) => {
-        const rgba = hexToRgbA(result.sRGBHex);
-        onChange(rgba);
+        onChange(getSolidFromHex(result.sRGBHex.substring(1)).color);
       })
       .catch((e) => {
         //eslint-disable-next-line no-console -- Surface error for debugging.
