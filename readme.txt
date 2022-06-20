@@ -109,6 +109,15 @@ Web Stories are powered by [AMP](https://amp.dev/), which adds some restrictions
 
 For the plugin's full changelog, please see [the Releases page on GitHub](https://github.com/googleforcreators/web-stories-wp/releases).
 
+= 1.22.0 =
+
+**Release Date:** June 21, 2022.
+
+* New feature: you can now add shoppable products from WooCommerce and Shopify to your stories
+* New feature: added support for grouping, masking, and naming layers on the canvas
+* New feature: added support for filtering stories by category on the dashboard
+* Bug fixes and performance improvements.
+
 = 1.21.1 =
 
 **Release Date:** June 1, 2022.
@@ -126,16 +135,11 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 * Enhancement: improved user feedback when submitting a story for review
 * Bug fixes and performance improvements.
 
-= 1.20.0 =
-
-**Release Date:** April 26, 2022.
-
-* Enhancement: added support for adding new text elements from the Quick Actions menu
-* Enhancement: continued overhauling the sidebar and splitting it up into separate sections
-* Enhancement: improved keyboard navigation on the canvas
-* Bug fixes and performance improvements.
-
 == Upgrade Notice ==
+
+= 1.22.0 =
+
+This release brings shopping support, layers grouping/masking/naming, and category filtering on the dashboard.
 
 = 1.21.1 =
 
@@ -144,7 +148,3 @@ This releases fixes an issue related to roles and capabilities that caused inter
 = 1.21.0 =
 
 This release includes WordPress 6.0 compatibility, audio and captions hotlinking, the ability to lock individual layers, as well as various bug fixes and performance improvements.
-
-= 1.20.0 =
-
-Various improvements to the workspace UI, as well as various bug fixes and performance improvements.
