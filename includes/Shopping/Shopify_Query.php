@@ -46,7 +46,7 @@ use WP_Http;
  * }
  * @phpstan-type ShopifyGraphQLProductImage array{
  *   url: string,
- *   altText: string
+ *   altText?: string
  * }
  * @phpstan-type ShopifyGraphQLProduct array{
  *   id: string,
@@ -407,7 +407,7 @@ QUERY;
 				$image    = $image_edge['node'];
 				$images[] = [
 					'url' => $image['url'],
-					'alt' => $image['altText'],
+					'alt' => $image['altText'] ?? '',
 				];
 			}
 
