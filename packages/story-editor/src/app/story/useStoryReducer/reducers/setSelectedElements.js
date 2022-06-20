@@ -18,6 +18,8 @@
  * External dependencies
  */
 import { STORY_ANIMATION_STATE } from '@googleforcreators/animation';
+import { produce, current } from 'immer';
+
 /**
  * Internal dependencies
  */
@@ -43,63 +45,64 @@ import { intersect } from './utils';
  * @param {boolean} payload.withLinked With linked.
  * @return {Object} New state
  */
-function setSelectedElements(state, { elementIds, withLinked = false }) {
-  const newElementIds =
-    typeof elementIds === 'function' ? elementIds(state.selection) : elementIds;
+const setSelectedElements = produce(
+  (draft, { elementIds, withLinked = false }) => {
+    const newElementIds =
+      typeof elementIds === 'function'
+        ? elementIds(current(draft.selection))
+        : elementIds;
 
-  if (!Array.isArray(newElementIds)) {
-    return state;
-  }
-
-  const currentPage = state.pages.find(({ id }) => id === state.current);
-  let allIds = newElementIds;
-
-  if (withLinked) {
-    const elements = currentPage.elements.filter(({ id }) =>
-      newElementIds.includes(id)
-    );
-    const groupIds = elements.map(({ groupId }) => groupId).filter(Boolean);
-    const elementsFromGroups = currentPage.elements.filter(({ groupId }) =>
-      groupIds.includes(groupId)
-    );
-    const elementsIdsFromGroups = elementsFromGroups.map(({ id }) => id);
-    allIds = allIds.concat(elementsIdsFromGroups);
-  }
-
-  const uniqueElementIds = [...new Set(allIds)];
-
-  // They can only be similar if they have the same length
-  if (state.selection.length === uniqueElementIds.length) {
-    // If intersection of the two lists has the same length as the old list,
-    // nothing will change.
-    // NB: this assumes selection is always without duplicates.
-    const commonElements = intersect(state.selection, uniqueElementIds);
-    if (commonElements.length === state.selection.length) {
-      return state;
+    if (!Array.isArray(newElementIds)) {
+      return;
     }
+
+    const currentPage = draft.pages.find(({ id }) => id === draft.current);
+    let allIds = newElementIds;
+
+    if (withLinked) {
+      const elements = currentPage.elements.filter(({ id }) =>
+        newElementIds.includes(id)
+      );
+      const groupIds = elements.map(({ groupId }) => groupId).filter(Boolean);
+      const elementsFromGroups = currentPage.elements.filter(({ groupId }) =>
+        groupIds.includes(groupId)
+      );
+      const elementsIdsFromGroups = elementsFromGroups.map(({ id }) => id);
+      allIds = allIds.concat(elementsIdsFromGroups);
+    }
+
+    const uniqueElementIds = [...new Set(allIds)];
+
+    // They can only be similar if they have the same length
+    if (draft.selection.length === uniqueElementIds.length) {
+      // If intersection of the two lists has the same length as the old list,
+      // nothing will change.
+      // NB: this assumes selection is always without duplicates.
+      const commonElements = intersect(draft.selection, uniqueElementIds);
+      if (commonElements.length === draft.selection.length) {
+        return;
+      }
+    }
+
+    // If it's a multi-selection, filter out the background element, locked elements,
+    // and video placeholders.
+    const byId = (id) => currentPage.elements.find(({ id: i }) => i === id);
+    const isNotBackgroundElement = (id) => currentPage.elements[0].id !== id;
+    const isNotLockedElement = (id) => !byId(id).isLocked;
+    const isNotVideoPlaceholder = (id) => !byId(id).resource?.isPlaceholder;
+    const newSelection =
+      uniqueElementIds.length > 1
+        ? uniqueElementIds.filter(
+            (id) =>
+              isNotBackgroundElement(id) &&
+              isNotVideoPlaceholder(id) &&
+              isNotLockedElement(id)
+          )
+        : uniqueElementIds;
+
+    draft.animationState = STORY_ANIMATION_STATE.RESET;
+    draft.selection = newSelection;
   }
-
-  // If it's a multi-selection, filter out the background element, locked elements,
-  // and video placeholders.
-  const byId = (id) => currentPage.elements.find(({ id: i }) => i === id);
-  const isNotBackgroundElement = (id) => currentPage.elements[0].id !== id;
-  const isNotLockedElement = (id) => !byId(id).isLocked;
-  const isNotVideoPlaceholder = (id) => !byId(id).resource?.isPlaceholder;
-  const newSelection =
-    uniqueElementIds.length > 1
-      ? uniqueElementIds.filter(
-          (id) =>
-            isNotBackgroundElement(id) &&
-            isNotVideoPlaceholder(id) &&
-            isNotLockedElement(id)
-        )
-      : uniqueElementIds;
-
-  return {
-    ...state,
-    animationState: STORY_ANIMATION_STATE.RESET,
-    selection: newSelection,
-  };
-}
+);
 
 export default setSelectedElements;

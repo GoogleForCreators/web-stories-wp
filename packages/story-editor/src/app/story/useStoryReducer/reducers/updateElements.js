@@ -18,6 +18,8 @@
  * External dependencies
  */
 import { STORY_ANIMATION_STATE } from '@googleforcreators/animation';
+import { produce } from 'immer';
+
 /**
  * Internal dependencies
  */
@@ -44,96 +46,61 @@ import { updateElementWithUpdater, updateAnimations, intersect } from './utils';
  * a function to calculate new values based on the current properties.
  * @return {Object} New state
  */
-function updateElements(
-  state,
-  { elementIds, properties: propertiesOrUpdater }
-) {
-  if (
-    [
-      STORY_ANIMATION_STATE.PLAYING,
-      STORY_ANIMATION_STATE.PLAYING_SELECTED,
-      STORY_ANIMATION_STATE.SCRUBBING,
-    ].includes(state.animationState)
-  ) {
-    return state;
-  }
-
-  const idsToUpdate = elementIds === null ? state.selection : elementIds;
-
-  if (idsToUpdate.length === 0) {
-    return state;
-  }
-
-  const pageIndex = state.pages.findIndex(({ id }) => id === state.current);
-
-  const oldPage = state.pages[pageIndex];
-  const pageElementIds = oldPage.elements.map(({ id }) => id);
-
-  // Nothing to update?
-  const hasAnythingToUpdate = intersect(pageElementIds, idsToUpdate).length > 0;
-  if (!hasAnythingToUpdate) {
-    return state;
-  }
-
-  const animationLookup = oldPage.elements.reduce(
-    (animationLookup, element) => {
-      if (!idsToUpdate.includes(element.id)) {
-        return animationLookup;
-      }
-      const { animation, ...elem } = updateElementWithUpdater(
-        element,
-        propertiesOrUpdater
-      );
-      const animLookup = animation
-        ? { [animation.id]: { ...animation, targets: [elem.id] } }
-        : {};
-      return {
-        ...animationLookup,
-        ...animLookup,
-      };
-    },
-    {}
-  );
-
-  const updatedElements = oldPage.elements.reduce((elements, element) => {
-    if (!idsToUpdate.includes(element.id)) {
-      return [...elements, element];
+const updateElements = produce(
+  (draft, { elementIds, properties: propertiesOrUpdater }) => {
+    if (
+      [
+        STORY_ANIMATION_STATE.PLAYING,
+        STORY_ANIMATION_STATE.PLAYING_SELECTED,
+        STORY_ANIMATION_STATE.SCRUBBING,
+      ].includes(draft.animationState)
+    ) {
+      return;
     }
-    const { animation, ...elem } = updateElementWithUpdater(
-      element,
-      propertiesOrUpdater
-    );
-    return [...elements, elem];
-  }, []);
 
-  const isAnimationUpdate = Object.keys(animationLookup).length > 0;
-  const newAnimations = isAnimationUpdate
-    ? updateAnimations(oldPage.animations || [], animationLookup)
-    : oldPage.animations;
+    const idsToUpdate = elementIds === null ? draft.selection : elementIds;
 
-  // Element properties are not updating if it is an animation update.
-  // Keep the same reference to elements if they are not updating.
-  const updatedAnimationsProperty = newAnimations && {
-    animations: newAnimations,
-  };
-  const updatedElementsProperty = { elements: updatedElements };
-  const newPage = {
-    ...oldPage,
-    ...(isAnimationUpdate
-      ? updatedAnimationsProperty
-      : updatedElementsProperty),
-  };
+    if (idsToUpdate.length === 0) {
+      return;
+    }
 
-  const newPages = [
-    ...state.pages.slice(0, pageIndex),
-    newPage,
-    ...state.pages.slice(pageIndex + 1),
-  ];
+    const page = draft.pages.find(({ id }) => id === draft.current);
 
-  return {
-    ...state,
-    pages: newPages,
-  };
-}
+    const pageElementIds = page.elements.map(({ id }) => id);
+
+    // Nothing to update?
+    const hasAnythingToUpdate =
+      intersect(pageElementIds, idsToUpdate).length > 0;
+    if (!hasAnythingToUpdate) {
+      return;
+    }
+
+    const animationLookup = {};
+
+    page.elements
+      .filter(({ id }) => idsToUpdate.includes(id))
+      .forEach((element) => {
+        const animation = updateElementWithUpdater(
+          element,
+          propertiesOrUpdater
+        );
+        if (animation) {
+          animationLookup[animation.id] = {
+            ...animation,
+            targets: [element.id],
+          };
+        }
+      });
+
+    const isAnimationUpdate = Object.keys(animationLookup).length > 0;
+
+    if (isAnimationUpdate) {
+      page.animations = updateAnimations(
+        page.animations || [],
+        animationLookup
+      );
+    }
+  }
+);
 
 export default updateElements;

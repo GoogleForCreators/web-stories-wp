@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { produce } from 'immer';
+
+/**
  * Set current page to the given id.
  *
  * If id doesn't match an existing page, nothing happens.
@@ -26,20 +31,15 @@
  * @param {number} payload.pageId Page id to set as current page
  * @return {Object} New state
  */
-function setCurrentPage(state, { pageId }) {
-  if (!state.pages.some(({ id }) => id === pageId)) {
-    return state;
+const setCurrentPage = produce((draft, { pageId }) => {
+  const pageExists = draft.pages.some(({ id }) => id === pageId);
+  const pageIsAlreadyCurrent = draft.current === pageId;
+  if (!pageExists || pageIsAlreadyCurrent) {
+    return;
   }
 
-  if (state.current === pageId) {
-    return state;
-  }
-
-  return {
-    ...state,
-    current: pageId,
-    selection: [],
-  };
-}
+  draft.current = pageId;
+  draft.selection = [];
+});
 
 export default setCurrentPage;

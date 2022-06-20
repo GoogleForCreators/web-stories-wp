@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { produce } from 'immer';
+
+/**
  * Internal dependencies
  */
 import { updateElementWithUpdater } from './utils';
@@ -39,42 +44,20 @@ import { updateElementWithUpdater } from './utils';
  * a function to update based on the current properties.
  * @return {Object} New state
  */
-function updateElementsByFontFamily(
-  state,
-  { family, properties: propertiesOrUpdater }
-) {
-  if (!family) {
-    return state;
-  }
+const updateElementsByFontFamily = produce(
+  (draft, { family, properties: propertiesOrUpdater }) => {
+    if (!family) {
+      return;
+    }
 
-  const hasElementWithFontFamily = state.pages.some((page) =>
-    page.elements.some((element) => {
-      return element.type === 'text' && element?.font?.family === family;
-    })
-  );
-
-  if (!hasElementWithFontFamily) {
-    return state;
-  }
-
-  const updatedPages = state.pages.map((page) => {
-    const updatedElements = page.elements.map((element) => {
-      if (element?.font?.family === family) {
-        return updateElementWithUpdater(element, propertiesOrUpdater);
-      }
-      return element;
+    draft.pages.forEach((page) => {
+      page.elements
+        .filter(({ font }) => font?.family === family)
+        .forEach((element) =>
+          updateElementWithUpdater(element, propertiesOrUpdater)
+        );
     });
-
-    return {
-      ...page,
-      elements: updatedElements,
-    };
-  });
-
-  return {
-    ...state,
-    pages: updatedPages,
-  };
-}
+  }
+);
 
 export default updateElementsByFontFamily;

@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { produce } from 'immer';
+
+/**
  * Internal dependencies
  */
 import { PAGE_RESERVED_PROPERTIES } from '../types';
@@ -33,31 +38,14 @@ import { objectWithout } from './utils';
  * @param {number} payload.properties Object with properties to set for given page.
  * @return {Object} New state
  */
-function updatePage(state, { pageId, properties }) {
-  const idToUpdate = pageId === null ? state.current : pageId;
-
-  const pageIndex = state.pages.findIndex(({ id }) => id === idToUpdate);
-  if (pageIndex === -1) {
-    return state;
+const updatePage = produce((draft, { pageId, properties }) => {
+  const idToUpdate = pageId === null ? draft.current : pageId;
+  const page = draft.pages.find(({ id }) => id === idToUpdate);
+  if (!page) {
+    return;
   }
-
   const allowedProperties = objectWithout(properties, PAGE_RESERVED_PROPERTIES);
-
-  const newPage = {
-    ...state.pages[pageIndex],
-    ...allowedProperties,
-  };
-
-  const newPages = [
-    ...state.pages.slice(0, pageIndex),
-    newPage,
-    ...state.pages.slice(pageIndex + 1),
-  ];
-
-  return {
-    ...state,
-    pages: newPages,
-  };
-}
+  Object.assign(page, allowedProperties);
+});
 
 export default updatePage;

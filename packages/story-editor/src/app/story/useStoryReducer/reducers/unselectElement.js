@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { produce } from 'immer';
+
+/**
  * Remove the given id from the current selection.
  *
  * If no id is given or id is not in the current selection, nothing happens.
@@ -24,15 +29,12 @@
  * @param {string} payload.elementId Element id to remove from the current selection.
  * @return {Object} New state
  */
-function unselectElement(state, { elementId }) {
-  if (!elementId || !state.selection.includes(elementId)) {
-    return state;
+const unselectElement = produce((draft, { elementId }) => {
+  const index = draft.selection.indexOf(elementId);
+  if (index === -1) {
+    return;
   }
-
-  return {
-    ...state,
-    selection: state.selection.filter((id) => id !== elementId),
-  };
-}
+  draft.selection.splice(index, 1);
+});
 
 export default unselectElement;

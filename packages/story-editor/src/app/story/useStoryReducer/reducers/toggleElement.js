@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { produce } from 'immer';
+
+/**
  * Toggle element id in selection.
  *
  * If the given id is currently selected, remove it from selection.
@@ -32,16 +37,16 @@
  * @param {boolean} payload.withLinked With linked.
  * @return {Object} New state
  */
-function toggleElement(state, { elementId, withLinked = false }) {
+const toggleElement = produce((draft, { elementId, withLinked = false }) => {
   if (!elementId) {
-    return state;
+    return;
   }
 
-  const wasSelected = state.selection.includes(elementId);
-  const currentPage = state.pages.find(({ id }) => id === state.current);
+  const wasSelected = draft.selection.includes(elementId);
+  const currentPage = draft.pages.find(({ id }) => id === draft.current);
   const backgroundElementId = currentPage.elements[0].id;
   const isBackgroundElement = backgroundElementId === elementId;
-  const hasExistingSelection = state.selection.length > 0;
+  const hasExistingSelection = draft.selection.length > 0;
 
   const elementGroupId = currentPage.elements.find(
     ({ id }) => id === elementId
@@ -53,15 +58,15 @@ function toggleElement(state, { elementId, withLinked = false }) {
       ({ groupId }) => elementGroupId === groupId
     );
     const elementsIdsFromGroups = elementsFromGroups.map(({ id }) => id);
-    const selectionWithGroups = state.selection.concat(elementsIdsFromGroups);
+    const selectionWithGroups = draft.selection.concat(elementsIdsFromGroups);
     allIds = allIds.concat(selectionWithGroups);
   }
 
-  // If it wasn't selected, we're adding the element to the selection.
+  // If it wasn't selected, we're adding the element(s) to the selection.
   if (!wasSelected) {
     // The bg element can't be added to non-empty selection
     if (isBackgroundElement && hasExistingSelection) {
-      return state;
+      return;
     }
 
     // The resulting selection will be only the new element under three circumstances:
@@ -69,36 +74,30 @@ function toggleElement(state, { elementId, withLinked = false }) {
     // * if old selection was just a locked element
     // * if new selection is a locked element
     const selectionWasOnlyBackground =
-      state.selection.includes(backgroundElementId);
+      draft.selection.includes(backgroundElementId);
     const getElementById = (byId) =>
       currentPage.elements.find(({ id }) => id === byId);
     const oldElementIsLocked =
-      state.selection.length > 0
-        ? getElementById(state.selection[0]).isLocked
+      draft.selection.length > 0
+        ? getElementById(draft.selection[0]).isLocked
         : false;
     const newElement = getElementById(elementId);
     const resultIsOnlyNewElement =
       selectionWasOnlyBackground || oldElementIsLocked || newElement.isLocked;
 
-    // If either of those, return a new selection of only the new element
+    // If either of those, return a selection with only the new element(s)
     if (resultIsOnlyNewElement) {
-      return {
-        ...state,
-        selection: allIds,
-      };
+      draft.selection = allIds;
+      return;
     }
 
-    return {
-      ...state,
-      selection: [...state.selection, ...allIds],
-    };
+    // Otherwise add the new element(s) to the existing selection and make unique
+    draft.selection = [...new Set(draft.selection.concat(allIds))];
+    return;
   }
 
-  // Otherwise just filter out from current selection
-  return {
-    ...state,
-    selection: state.selection.filter((id) => !allIds.includes(id)),
-  };
-}
+  // Otherwise we're removing from selection, so just filter out from current selection
+  draft.selection = draft.selection.filter((id) => !allIds.includes(id));
+});
 
 export default toggleElement;

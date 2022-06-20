@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { produce } from 'immer';
+
+/**
  * Update the story animation state to play, pause, scrub or reset
  * active pages animations.
  *
@@ -23,15 +28,8 @@
  * @param {string} payload.animationState STORY_ANIMATION_STATE state to update to.
  * @return {Object} New state
  */
-function updateAnimationState(state, { animationState }) {
-  if (state.animationState === animationState) {
-    return state;
-  }
-
-  return {
-    ...state,
-    animationState,
-  };
-}
+const updateAnimationState = produce((draft, { animationState }) => {
+  draft.animationState = animationState;
+});
 
 export default updateAnimationState;

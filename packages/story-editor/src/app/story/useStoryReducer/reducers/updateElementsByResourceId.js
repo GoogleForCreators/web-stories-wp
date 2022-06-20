@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { produce } from 'immer';
+
+/**
  * Internal dependencies
  */
 import { updateElementWithUpdater } from './utils';
@@ -39,40 +44,20 @@ import { updateElementWithUpdater } from './utils';
  * a function to calculate new values based on the current properties.
  * @return {Object} New state
  */
-function updateElementsByResourceId(
-  state,
-  { id, properties: propertiesOrUpdater }
-) {
-  if (!id) {
-    return state;
-  }
+const updateElementsByResourceId = produce(
+  (draft, { id, properties: propertiesOrUpdater }) => {
+    if (!id) {
+      return;
+    }
 
-  const hasElementWithResourceId = state.pages.some((page) =>
-    page.elements.some((element) => element.resource?.id === id)
-  );
-
-  if (!hasElementWithResourceId) {
-    return state;
-  }
-
-  const updatedPages = state.pages.map((page) => {
-    const updatedElements = page.elements.map((element) => {
-      if (element.resource?.id === id) {
-        return updateElementWithUpdater(element, propertiesOrUpdater);
-      }
-      return element;
+    draft.pages.forEach((page) => {
+      page.elements
+        .filter(({ resource }) => resource?.id === id)
+        .forEach((element) =>
+          updateElementWithUpdater(element, propertiesOrUpdater)
+        );
     });
-
-    return {
-      ...page,
-      elements: updatedElements,
-    };
-  });
-
-  return {
-    ...state,
-    pages: updatedPages,
-  };
-}
+  }
+);
 
 export default updateElementsByResourceId;
