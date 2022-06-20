@@ -54,9 +54,9 @@ const selectElement = produce((draft, { elementId }) => {
   const wasLockedElement = draft.selection.some((id) => byId(id).isLocked);
   if (wasBackground || isLockedElement || wasLockedElement) {
     draft.selection = [elementId];
+  } else {
+    draft.selection.push(elementId);
   }
-
-  draft.selection.push(elementId);
 });
 
 export default selectElement;
