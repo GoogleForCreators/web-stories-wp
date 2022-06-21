@@ -59,7 +59,7 @@ describe('useAuthorFilter', () => {
   });
 
   describe('initializeAuthorFilter', () => {
-    it('should initilize author filter data', async () => {
+    it('should initialize author filter data', async () => {
       const {
         result: { current: initializeAuthorFilter },
       } = renderHook(() => useAuthorFilter());
