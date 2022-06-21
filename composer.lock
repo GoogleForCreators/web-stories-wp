@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7630de5eec28096a2820fa5f1c9292f0",
+    "content-hash": "192dab79df5b491c393382e162174978",
     "packages": [
         {
             "name": "ampproject/amp-toolbox",
@@ -4897,16 +4897,16 @@
         },
         {
             "name": "szepeviktor/phpstan-wordpress",
-            "version": "dev-master",
+            "version": "v1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/szepeviktor/phpstan-wordpress.git",
-                "reference": "01b3175efd4dc6d07654b99510d704b439c2f585"
+                "reference": "e487dc725845ac914681e148d0e8ac479ad887ec"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/szepeviktor/phpstan-wordpress/zipball/01b3175efd4dc6d07654b99510d704b439c2f585",
-                "reference": "01b3175efd4dc6d07654b99510d704b439c2f585",
+                "url": "https://api.github.com/repos/szepeviktor/phpstan-wordpress/zipball/e487dc725845ac914681e148d0e8ac479ad887ec",
+                "reference": "e487dc725845ac914681e148d0e8ac479ad887ec",
                 "shasum": ""
             },
             "require": {
@@ -4923,7 +4923,6 @@
                 "phpunit/phpunit": "^8 || ^9",
                 "szepeviktor/phpcs-psr-12-neutron-hybrid-ruleset": "^0.6"
             },
-            "default-branch": true,
             "type": "phpstan-extension",
             "extra": {
                 "phpstan": {
@@ -4951,7 +4950,7 @@
             ],
             "support": {
                 "issues": "https://github.com/szepeviktor/phpstan-wordpress/issues",
-                "source": "https://github.com/szepeviktor/phpstan-wordpress/tree/master"
+                "source": "https://github.com/szepeviktor/phpstan-wordpress/tree/v1.1.2"
             },
             "funding": [
                 {
@@ -4959,7 +4958,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2022-06-01T20:36:37+00:00"
+            "time": "2022-06-21T10:51:00+00:00"
         },
         {
             "name": "theseer/tokenizer",
@@ -5254,8 +5253,7 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "ampproject/amp-wp": 20,
-        "roave/security-advisories": 20,
-        "szepeviktor/phpstan-wordpress": 20
+        "roave/security-advisories": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
