@@ -37,7 +37,7 @@ class Locale {
 	 *
 	 * @since 1.1.0
 	 *
-	 * @return array Locale settings.
+	 * @return array<string,mixed> Locale settings.
 	 */
 	public function get_locale_settings(): array {
 		global $wp_locale;

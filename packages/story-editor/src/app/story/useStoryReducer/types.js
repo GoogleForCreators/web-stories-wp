@@ -28,6 +28,7 @@ export const UPDATE_ELEMENTS_BY_RESOURCE_ID = 'UPDATE_ELEMENTS_BY_RESOURCE_ID';
 export const DELETE_ELEMENTS_BY_RESOURCE_ID = 'DELETE_ELEMENTS_BY_RESOURCE_ID';
 export const SET_BACKGROUND_ELEMENT = 'SET_BACKGROUND_ELEMENT';
 export const ARRANGE_ELEMENT = 'ARRANGE_ELEMENT';
+export const ARRANGE_GROUP = 'ARRANGE_GROUP';
 export const COMBINE_ELEMENTS = 'COMBINE_ELEMENTS';
 export const DUPLICATE_ELEMENTS_BY_ID = 'DUPLICATE_ELEMENTS_BY_ID';
 export const COPY_SELECTED_ELEMENT = 'COPY_SELECTED_ELEMENT';
@@ -53,10 +54,16 @@ export const ADD_ANIMATIONS = 'ADD_ANIMATIONS';
 // Manipulate entire internal state.
 export const RESTORE = 'RESTORE';
 
-// Reserved property names for pages and elements.
-export const PAGE_RESERVED_PROPERTIES = ['id', 'elements'];
+// Reserved property names for pages, elements and groups.
+export const PAGE_RESERVED_PROPERTIES = ['id', 'elements', 'groups'];
 export const ELEMENT_RESERVED_PROPERTIES = [
   'id',
   'isBackground',
   'isDefaultBackground',
 ];
+
+// Layer groups
+export const ADD_GROUP = 'ADD_GROUP';
+export const UPDATE_GROUP = 'UPDATE_GROUP';
+export const DELETE_GROUP = 'DELETE_GROUP';
+export const DUPLICATE_GROUP = 'DUPLICATE_GROUP';
