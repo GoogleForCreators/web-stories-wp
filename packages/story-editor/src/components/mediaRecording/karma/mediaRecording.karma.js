@@ -78,6 +78,8 @@ describe('Media Recording', () => {
       mediaDevices
     );
 
+    spyOnProperty(window, 'crossOriginIsolated', 'get').and.returnValue(true);
+
     fixture = new Fixture();
     fixture.setFlags({
       mediaRecording: true,
