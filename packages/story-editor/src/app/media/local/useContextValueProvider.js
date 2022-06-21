@@ -65,10 +65,6 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     removeAudioProcessing,
     setPosterProcessing,
     removePosterProcessing,
-    setBaseColorProcessing,
-    removeBaseColorProcessing,
-    setBlurhashProcessing,
-    removeBlurhashProcessing,
     updateMediaElement,
     deleteMediaElement,
   } = reducerActions;
@@ -231,44 +227,6 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     [setAudioProcessing, updateVideoIsMuted, removeAudioProcessing]
   );
 
-  const processMediaBaseColor = useCallback(
-    (resource) => {
-      const { baseColorProcessed, baseColorProcessing } = stateRef.current;
-      const { id } = resource;
-
-      (async () => {
-        // Simple way to prevent double-uploading.
-        if (
-          baseColorProcessed.includes(id) ||
-          baseColorProcessing.includes(id)
-        ) {
-          return;
-        }
-        setBaseColorProcessing({ id });
-        await updateBaseColor(resource);
-        removeBaseColorProcessing({ id });
-      })();
-    },
-    [setBaseColorProcessing, updateBaseColor, removeBaseColorProcessing]
-  );
-
-  const processMediaBlurhash = useCallback(
-    (resource) => {
-      const { blurHashProcessed, blurHashProcessing } = stateRef.current;
-      const { id } = resource;
-      (async () => {
-        // Simple way to prevent double-uploading.
-        if (blurHashProcessed.includes(id) || blurHashProcessing.includes(id)) {
-          return;
-        }
-        setBlurhashProcessing({ id });
-        await updateBlurHash({ resource });
-        removeBlurhashProcessing({ id });
-      })();
-    },
-    [stateRef, setBlurhashProcessing, updateBlurHash, removeBlurhashProcessing]
-  );
-
   const postProcessingResource = useCallback(
     (resource) => {
       if (!resource) {
@@ -307,17 +265,17 @@ export default function useContextValueProvider(reducerState, reducerActions) {
       const imageSrc =
         type === 'image' ? getSmallestUrlForWidth(0, resource) : poster;
       if (imageSrc && !baseColor) {
-        processMediaBaseColor(resource);
+        updateBaseColor(resource);
       }
       if (imageSrc && !blurHash) {
-        processMediaBlurhash(resource);
+        updateBlurHash(resource);
       }
     },
     [
       canTranscodeResource,
       allowedVideoMimeTypes,
-      processMediaBaseColor,
-      processMediaBlurhash,
+      updateBaseColor,
+      updateBlurHash,
       processVideoAudio,
       uploadVideoPoster,
       hasUploadMediaAction,
@@ -373,6 +331,8 @@ export default function useContextValueProvider(reducerState, reducerActions) {
       optimizeGif,
       muteExistingVideo,
       trimExistingVideo,
+      updateBaseColor,
+      updateBlurHash,
     },
   };
 }

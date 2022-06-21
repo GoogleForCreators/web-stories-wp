@@ -33,6 +33,7 @@ import {
   useLayout,
 } from '../../app';
 import { FloatingMenuLayer } from '../floatingMenu';
+import { useMediaRecording } from '../mediaRecording';
 import EditLayer from './editLayer';
 import DisplayLayer from './displayLayer';
 import FramesLayer from './framesLayer';
@@ -44,6 +45,7 @@ import CanvasElementDropzone from './canvasElementDropzone';
 import EyedropperLayer from './eyedropperLayer';
 import EmptyStateLayer from './emptyStateLayer';
 import EditLayerFocusManager from './editLayerFocusManager';
+import MediaRecordingLayer from './mediaRecordingLayer';
 
 // data-fix-caret is for allowing caretRangeFromPoint to work in Safari.
 // See https://github.com/googleforcreators/web-stories-wp/issues/7745.
@@ -84,6 +86,10 @@ function CanvasLayout({ header, footer }) {
     })
   );
 
+  const { isInRecordingMode } = useMediaRecording(
+    ({ state: { isInRecordingMode } }) => ({ isInRecordingMode })
+  );
+
   const isFloatingMenuEnabled = useFeature('floatingMenu');
 
   // If we don't have proper canvas dimensions yet, don't bother rendering element layers.
@@ -100,14 +106,19 @@ function CanvasLayout({ header, footer }) {
           <CanvasUploadDropTarget>
             <CanvasElementDropzone>
               <SelectionCanvas>
-                {hasDimensions && <DisplayLayer />}
-                {hasDimensions && <FramesLayer />}
+                {hasDimensions && !isInRecordingMode && <DisplayLayer />}
+                {hasDimensions && !isInRecordingMode && <FramesLayer />}
                 <NavLayer header={header} footer={footer} />
               </SelectionCanvas>
               <EditLayer />
-              <EyedropperLayer />
-              <EmptyStateLayer />
-              {isFloatingMenuEnabled && <FloatingMenuLayer />}
+              {!isInRecordingMode && (
+                <>
+                  <EyedropperLayer />
+                  <EmptyStateLayer />
+                  {isFloatingMenuEnabled && <FloatingMenuLayer />}
+                </>
+              )}
+              {isInRecordingMode && <MediaRecordingLayer />}
             </CanvasElementDropzone>
           </CanvasUploadDropTarget>
         </Background>

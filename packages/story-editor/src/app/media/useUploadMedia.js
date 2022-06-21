@@ -170,6 +170,9 @@ function useUploadMedia({
         updateMediaElement({ id: previousResourceId, data: resource });
       }
 
+      // onUploadSuccess typically calls postProcessingResource, which
+      // will cause things like base color and BlurHash generation to run
+      // twice for a given resource.
       if (onUploadSuccess) {
         onUploadSuccess({ id: resourceId, resource: resource });
         if (previousResourceId) {
@@ -236,7 +239,7 @@ function useUploadMedia({
      * @param {Function} args.onUploadError Callback for when upload fails.
      * @param {Function} args.onUploadSuccess Callback for when upload succeeds.
      * @param {Object} args.additionalData Object of additionalData.
-     * @param {boolean} args.muteVideo Should the video being transcoded, should also be muted.
+     * @param {boolean} args.muteVideo If passing a video, should it be muted.
      * @param {import('@googleforcreators/media').TrimData} args.trimData Trim data.
      * @param {import('@googleforcreators/media').Resource} args.resource Resource object.
      * @param {Blob} args.posterFile Blob object of poster.
@@ -296,6 +299,19 @@ function useUploadMedia({
               await getResourceFromLocalFile(file);
             posterFile = newPosterFile;
             resource = newResource;
+          }
+
+          // Treat incoming video as a gif if wanted, used by media recording.
+          if (additionalData?.isGif) {
+            resource = {
+              ...resource,
+              type: 'gif',
+              mimeType: 'image/gif',
+              output: {
+                mimeType: resource.mimeType,
+                src: resource.src,
+              },
+            };
           }
 
           addItem({

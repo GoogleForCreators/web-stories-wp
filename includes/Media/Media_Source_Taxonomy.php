@@ -137,6 +137,7 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 						'source-image',
 						'gif-conversion',
 						'page-template',
+						'recording',
 					],
 					'context'     => [ 'view', 'edit', 'embed' ],
 				],
