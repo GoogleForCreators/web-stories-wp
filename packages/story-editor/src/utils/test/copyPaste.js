@@ -236,7 +236,7 @@ describe('copyPaste utils', () => {
           id: '1',
         },
       ];
-      addElementsToClipboard(PAGE, elements, [], evt);
+      addElementsToClipboard(PAGE, elements, [], {}, evt);
 
       expect(setData).toHaveBeenCalledTimes(2);
       expect(setData).toHaveBeenCalledWith('text/plain', 'Fill in some text');
@@ -258,7 +258,7 @@ describe('copyPaste utils', () => {
           isDefaultBackground: true,
         },
       ];
-      addElementsToClipboard(PAGE, elements, [], evt);
+      addElementsToClipboard(PAGE, elements, [], {}, evt);
 
       expect(setData).toHaveBeenCalledTimes(2);
       expect(setData).toHaveBeenCalledWith('text/plain', 'shape');
@@ -284,7 +284,7 @@ describe('copyPaste utils', () => {
           id: '1',
         },
       ];
-      addElementsToClipboard(PAGE, elements, [], evt);
+      addElementsToClipboard(PAGE, elements, [], {}, evt);
 
       expect(setData).toHaveBeenCalledTimes(2);
       expect(setData).toHaveBeenCalledWith('text/plain', 'shape');
@@ -312,7 +312,7 @@ describe('copyPaste utils', () => {
           type: 'ANIMATION_TYPE',
         },
       ];
-      addElementsToClipboard(PAGE, elements, animations, evt);
+      addElementsToClipboard(PAGE, elements, animations, {}, evt);
 
       expect(setData).toHaveBeenCalledTimes(2);
       expect(setData).toHaveBeenCalledWith('text/plain', 'shape');
@@ -329,7 +329,7 @@ describe('copyPaste utils', () => {
           setData,
         },
       };
-      addElementsToClipboard(PAGE, [], [], evt);
+      addElementsToClipboard(PAGE, [], [], {}, evt);
       expect(setData).toHaveBeenCalledTimes(0);
     });
   });
