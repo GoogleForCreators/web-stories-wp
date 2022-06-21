@@ -61,8 +61,17 @@ function DisplayPage({ pageElements, editingElement }) {
         if (editingElement === element.id) {
           return null;
         }
+
+        const siblingCount =
+          pageElements.filter(({ type }) => type === element.type).length - 1;
+
         return (
-          <DisplayElement key={element.id} element={element} isAnimatable />
+          <DisplayElement
+            key={element.id}
+            element={element}
+            isAnimatable
+            siblingCount={siblingCount}
+          />
         );
       })
     : null;
