@@ -108,7 +108,9 @@ async function getAMPValidationErrors(string, optimize = true) {
     completeString = await ampOptimizer.transformHtml(completeString, params);
   }
 
-  const validator = await amphtmlValidator.getInstance();
+  const validator = await amphtmlValidator.getInstance(
+    process.env.AMP_VALIDATOR_FILE
+  );
   const { errors } = validator.validateString(completeString);
 
   const errorMessages = [];
