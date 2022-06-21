@@ -20,7 +20,7 @@
     "url": "https://github.com/googleforcreators/web-stories-wp/issues"
   },
   "engines": {
-    "node": ">= 12 || >= 14 || >= 16",
+    "node": ">= 12 || >= 14 || >= 16 || >= 18",
     "npm": ">= 7.3"
   },
   "main": "./src/index.cjs",
