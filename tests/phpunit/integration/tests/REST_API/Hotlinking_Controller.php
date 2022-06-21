@@ -93,14 +93,15 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 	 * @param string $url     The request URL.
 	 * @return array|WP_Error Response data.
 	 */
-	public function mock_http_request( $preempt, $r, $url ) {
+	public function mock_http_request( $preempt, $r, string $url ) {
 		++ $this->request_count;
 
 		if ( false !== strpos( $url, self::URL_INVALID ) ) {
 			return $preempt;
 		}
 
-		if ( self::URL_VALID === $url ) {
+		// URL_VALID
+		if ( 'http://93.184.216.34/test.jpg' === $url ) {
 			return [
 				'headers'  => [
 					'content-type'   => 'image/jpeg',
@@ -110,7 +111,8 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 			];
 		}
 
-		if ( self::URL_SVG === $url ) {
+		// URL_SVG
+		if ( 'https://93.184.216.34/test.svg' === $url ) {
 			return [
 				'headers'  => [
 					'content-type'   => 'image/svg+xml',
@@ -120,7 +122,8 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 			];
 		}
 
-		if ( self::URL_WITH_CHARSET === $url ) {
+		// URL_WITH_CHARSET
+		if ( 'https://93.184.216.34/test.png' === $url ) {
 			return [
 				'headers'  => [
 					'content-type'   => 'image/png; charset=utf-8',
@@ -130,7 +133,8 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 			];
 		}
 
-		if ( self::URL_404 === $url ) {
+		// URL_404
+		if ( 'https://93.184.216.34/404/test.jpg' === $url ) {
 			return [
 				'headers'  => [
 					'content-type'   => 'image/jpeg',
@@ -140,7 +144,8 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 			];
 		}
 
-		if ( self::URL_500 === $url ) {
+		// URL_500
+		if ( 'https://93.184.216.34.com/500/test.jpg' === $url ) {
 			return [
 				'headers'  => [
 					'content-type'   => 'image/jpeg',
@@ -165,50 +170,50 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 	}
 
 	/**
-	 * @covers ::validate_url
+	 * @covers ::validate_callback
 	 */
 	public function test_validate_url(): void {
-		$result = $this->controller->validate_url( self::URL_VALID );
+		$result = $this->controller->validate_callback( self::URL_VALID );
 		$this->assertTrue( $result );
 	}
 
 	/**
-	 * @covers ::validate_url
+	 * @covers ::validate_callback
 	 */
 	public function test_validate_url_empty(): void {
-		$result = $this->controller->validate_url( '' );
+		$result = $this->controller->validate_callback( '' );
 		$this->assertErrorResponse( 'rest_invalid_url', $result, 400 );
 	}
 
 	/**
-	 * @covers ::validate_url
+	 * @covers ::validate_callback
 	 */
 	public function test_validate_url_domain(): void {
-		$result = $this->controller->validate_url( self::URL_DOMAIN );
-		$this->assertErrorResponse( 'rest_invalid_url_path', $result, 400 );
+		$result = $this->controller->validate_callback( self::URL_DOMAIN );
+		$this->assertErrorResponse( 'rest_invalid_url', $result, 400 );
 	}
 
 	/**
-	 * @covers ::validate_url
+	 * @covers ::validate_callback
 	 */
 	public function test_validate_url_path(): void {
-		$result = $this->controller->validate_url( self::URL_PATH );
+		$result = $this->controller->validate_callback( self::URL_PATH );
 		$this->assertErrorResponse( 'rest_invalid_url', $result, 400 );
 	}
 
 	/**
-	 * @covers ::validate_url
+	 * @covers ::validate_callback
 	 */
 	public function test_validate_url_invalid(): void {
-		$result = $this->controller->validate_url( '-1' );
+		$result = $this->controller->validate_callback( '-1' );
 		$this->assertErrorResponse( 'rest_invalid_url', $result, 400 );
 	}
 
 	/**
-	 * @covers ::validate_url
+	 * @covers ::validate_callback
 	 */
 	public function test_validate_url_invalid2(): void {
-		$result = $this->controller->validate_url( 'wibble' );
+		$result = $this->controller->validate_callback( 'wibble' );
 		$this->assertErrorResponse( 'rest_invalid_url', $result, 400 );
 	}
 
@@ -250,7 +255,7 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 
 		$this->assertEquals( 403, $response->get_status() );
 		$data = $response->get_data();
-		$this->assertEquals( $data['code'], 'rest_forbidden' );
+		$this->assertEquals( 'rest_forbidden', $data['code'] );
 	}
 
 	public function test_url_invalid_url(): void {
@@ -281,8 +286,9 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 		$data     = $response->get_data();
 
 		$this->assertEquals( 0, $this->request_count );
+		$this->assertTrue( $response->is_error() );
 		$this->assertEquals( 400, $response->get_status() );
-		$this->assertEquals( $data['code'], 'rest_invalid_param' );
+		$this->assertEquals( 'rest_invalid_param', $data['code'] );
 	}
 
 	/**
@@ -297,6 +303,8 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 		$request->set_param( 'url', self::URL_VALID );
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
+
+		$this->assertFalse( $response->is_error() );
 		$this->assertEqualSets(
 			[
 				'ext'       => 'jpg',
@@ -320,7 +328,10 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 		$request = new WP_REST_Request( WP_REST_Server::READABLE, self::REST_URL );
 		$request->set_param( 'url', self::URL_VALID );
 		$response = rest_get_server()->dispatch( $request );
+
+		$this->assertFalse( $response->is_error() );
 		$this->assertEquals( 1, $this->request_count );
+
 		$data = $response->get_data();
 		$this->assertEqualSets(
 			[
@@ -332,8 +343,12 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 			],
 			$data
 		);
+
 		$response = rest_get_server()->dispatch( $request );
+
+		$this->assertFalse( $response->is_error() );
 		$this->assertEquals( 1, $this->request_count );
+
 		$data = $response->get_data();
 		$this->assertEqualSets(
 			[
@@ -403,6 +418,8 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 		$request->set_param( 'url', self::URL_WITH_CHARSET );
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
+
+		$this->assertFalse( $response->is_error() );
 		$this->assertEqualSets(
 			[
 				'ext'       => 'png',
@@ -431,5 +448,153 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 		$this->assertArrayHasKey( 'caption', $mime_types );
 		$this->assertArrayHasKey( 'video', $mime_types );
 		$this->assertSame( 'text/vtt', $mime_types['caption'][0] );
+	}
+
+	/**
+	 * Test that validate_url validates URLs.
+	 *
+	 * @param string       $url            The URL to validate.
+	 * @param string       $expected       Expected result.
+	 * @param false|string $cb_safe_ports  The name of the callback to http_allowed_safe_ports or false if none.
+	 *                                     Default false.
+	 *
+	 * @dataProvider data_validate_url_should_validate
+	 * @covers ::validate_url
+	 */
+	public function test_validate_url_should_validate( string $url, string $expected, $cb_safe_ports = false ): void {
+		if ( $cb_safe_ports ) {
+			add_filter( 'http_allowed_safe_ports', [ $this, $cb_safe_ports ] );
+		}
+
+		$this->assertSame( $expected, $this->call_private_method( $this->controller, 'validate_url', [ $url ] ) );
+	}
+
+	/**
+	 * Data provider.
+	 *
+	 * @return array
+	 */
+	public function data_validate_url_should_validate(): array {
+		return [
+			'no port specified'                 => [
+				'url'      => 'http://example.com/caniload.php',
+				'expected' => 'http://93.184.216.34/caniload.php',
+			],
+			'a port considered safe by default' => [
+				'url'      => 'https://example.com:8080/caniload.php',
+				'expected' => 'https://93.184.216.34:8080/caniload.php',
+			],
+			'a port considered safe by filter'  => [
+				'url'           => 'https://example.com:81/caniload.php',
+				'expected'      => 'https://93.184.216.34:81/caniload.php',
+				'cb_safe_ports' => 'callback_custom_safe_ports',
+			],
+		];
+	}
+
+	/**
+	 * Tests that validate_url validates a url that uses an unsafe port
+	 * but which matches the host and port used by the site's home url.
+	 *
+	 * @covers ::validate_url
+	 */
+	public function test_validate_url_should_validate_with_an_unsafe_port_when_the_host_and_port_match_the_home_url(): void {
+		$original_home    = get_option( 'home' );
+		$home_parsed      = wp_parse_url( $original_home );
+		$home_scheme_host = implode( '://', \array_slice( $home_parsed, 0, 2 ) );
+		$home_modified    = $home_scheme_host . ':83';
+
+		update_option( 'home', $home_modified );
+
+		$url = $home_modified . '/caniload.php';
+
+		$actual = $this->call_private_method( $this->controller, 'validate_url', [ $url ] );
+
+		update_option( 'home', $original_home );
+
+		$this->assertSame( $url, $actual );
+	}
+
+	/**
+	 * Test that validate_url does not validate invalid URLs.
+	 *
+	 * @param string       $url            The URL to validate.
+	 * @param false|string $cb_safe_ports  The name of the callback to http_allowed_safe_ports or false if none.
+	 *                                     Default false.
+	 * @param bool         $external_host  Whether or not the host is external.
+	 *                                     Default false.
+	 *
+	 * @dataProvider data_validate_url_should_not_validate
+	 * @covers ::validate_url
+	 */
+	public function test_validate_url_should_not_validate( string $url, $cb_safe_ports = false, bool $external_host = false ): void {
+		if ( $external_host ) {
+			add_filter( 'http_request_host_is_external', '__return_true' );
+		}
+
+		if ( $cb_safe_ports ) {
+			add_filter( 'http_allowed_safe_ports', [ $this, $cb_safe_ports ] );
+		}
+
+		$this->assertFalse( $this->call_private_method( $this->controller, 'validate_url', [ $url ] ) );
+	}
+
+	/**
+	 * Data provider.
+	 *
+	 * @return array
+	 */
+	public function data_validate_url_should_not_validate(): array {
+		return [
+			'url as string 0'                              => [
+				'url' => '0',
+			],
+			'url as string 1'                              => [
+				'url' => '1',
+			],
+			'an empty url'                                 => [
+				'url' => '',
+			],
+			'a url with a non-http/https protocol'         => [
+				'url' => 'ftp://example.com:81/caniload.php',
+			],
+			'a malformed url'                              => [
+				'url' => 'http:///example.com:81/caniload.php',
+			],
+			'a host that cannot be parsed'                 => [
+				'url' => 'http:example.com/caniload.php',
+			],
+			'login information'                            => [
+				'url' => 'http://user:pass@example.com/caniload.php',
+			],
+			'a host with invalid characters'               => [
+				'url' => 'http://[exam]ple.com/caniload.php',
+			],
+			'a host whose IPv4 address cannot be resolved' => [
+				'url' => 'http://exampleeeee.com/caniload.php',
+			],
+			'an external request when not allowed'         => [
+				'url' => 'http://192.168.0.1/caniload.php',
+			],
+			'a port not considered safe by default'        => [
+				'url' => 'https://example.com:81/caniload.php',
+			],
+			'a port not considered safe by filter'         => [
+				'url'           => 'https://example.com:82/caniload.php',
+				'cb_safe_ports' => 'callback_custom_safe_ports',
+			],
+			'all safe ports removed by filter'             => [
+				'url'           => 'https://example.com:81/caniload.php',
+				'cb_safe_ports' => 'callback_remove_safe_ports',
+			],
+		];
+	}
+
+	public function callback_custom_safe_ports(): array {
+		return [ 81, 444, 8081 ];
+	}
+
+	public function callback_remove_safe_ports(): array {
+		return [];
 	}
 }
