@@ -22,11 +22,61 @@ export default [
     productPriceCurrency: 'USD',
     productImages: [
       {
-        url: 'http://example.com/belt-2-2.jpg',
+        url: 'http://localhost:9876/__static__/beach.jpg',
         alt: '',
       },
       {
-        url: 'http://example.com/beanie-2-2.jpg',
+        url: 'http://localhost:9876/__static__/beach.jpg',
+        alt: '',
+      },
+      { url: false, alt: '' },
+    ],
+    aggregateRating: {
+      ratingValue: 0,
+      reviewCount: 0,
+      reviewUrl: 'http://example.com/product/logo-collection',
+    },
+    productDetails: 'This is a grouped product.',
+    productUrl: 'http://example.com/product/logo-collection',
+  },
+  {
+    productId: 'kt-138',
+    productTitle: 'Big Logo Collection',
+    productBrand: '',
+    productPrice: 28,
+    productPriceCurrency: 'USD',
+    productImages: [
+      {
+        url: 'http://localhost:9876/__static__/beach.jpg',
+        alt: '',
+      },
+      {
+        url: 'http://localhost:9876/__static__/beach.jpg',
+        alt: '',
+      },
+      { url: false, alt: '' },
+    ],
+    aggregateRating: {
+      ratingValue: 0,
+      reviewCount: 0,
+      reviewUrl: 'http://example.com/product/logo-collection',
+    },
+    productDetails: 'This is a grouped product.',
+    productUrl: 'http://example.com/product/logo-collection',
+  },
+  {
+    productId: 'kt-139',
+    productTitle: 'Massive Logo Collection',
+    productBrand: '',
+    productPrice: 58,
+    productPriceCurrency: 'USD',
+    productImages: [
+      {
+        url: 'http://localhost:9876/__static__/beach.jpg',
+        alt: '',
+      },
+      {
+        url: 'http://localhost:9876/__static__/beach.jpg',
         alt: '',
       },
       { url: false, alt: '' },
@@ -77,11 +127,11 @@ export default [
     productPriceCurrency: 'USD',
     productImages: [
       {
-        url: 'http://example.com/belt-2-2.jpg',
+        url: 'http://localhost:9876/__static__/beach.jpg',
         alt: '',
       },
       {
-        url: 'http://example.com/beanie-2-2.jpg',
+        url: 'http://localhost:9876/__static__/beach.jpg',
         alt: '',
       },
       { url: false, alt: '' },
@@ -102,11 +152,11 @@ export default [
     productPriceCurrency: 'USD',
     productImages: [
       {
-        url: 'http://example.com/belt-2-2.jpg',
+        url: 'http://localhost:9876/__static__/beach.jpg',
         alt: '',
       },
       {
-        url: 'http://example.com/beanie-2-2.jpg',
+        url: 'http://localhost:9876/__static__/beach.jpg',
         alt: '',
       },
     ],
@@ -126,11 +176,11 @@ export default [
     productPriceCurrency: 'USD',
     productImages: [
       {
-        url: 'http://example.com/belt-2-2.jpg',
+        url: 'http://localhost:9876/__static__/beach.jpg',
         alt: '',
       },
       {
-        url: 'http://example.com/beanie-2-2.jpg',
+        url: 'http://localhost:9876/__static__/beach.jpg',
         alt: '',
       },
     ],
@@ -180,15 +230,15 @@ export default [
     productPriceCurrency: 'USD',
     productImages: [
       {
-        url: 'http://localhost:10004/wp-content/uploads/2022/04/hoodie-blue-1.jpg',
+        url: 'http://localhost:9876/__static__/saturn.jpg',
         alt: '',
       },
       {
-        url: 'http://localhost:10004/wp-content/uploads/2022/04/hoodie-green-1.jpg',
+        url: 'http://localhost:9876/__static__/saturn.jpg',
         alt: '',
       },
       {
-        url: 'http://localhost:10004/wp-content/uploads/2022/04/hoodie-with-logo-2.jpg',
+        url: 'http://localhost:9876/__static__/saturn.jpg',
         alt: '',
       },
     ],
