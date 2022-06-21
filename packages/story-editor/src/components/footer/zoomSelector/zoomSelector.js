@@ -128,7 +128,7 @@ function ZoomSelector() {
       selectedValue={zoomSetting}
       popupFillWidth={false}
       selectButtonStylesOverride={selectButtonCSS}
-      className={'zoom-selector-dropdown'}
+      className="zoom-selector-dropdown"
     />
   );
 }
