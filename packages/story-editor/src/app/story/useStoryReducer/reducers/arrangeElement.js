@@ -20,7 +20,7 @@
 import { getAbsolutePosition, moveArrayElement } from './utils';
 
 /**
- * Move element in element order on the current page.
+ * Move element in element order on the current page (optionally handle group id when moved in the Layers Panel).
  *
  * If no element is given, check if selection only has one element, and if so, use that.
  * If no element is given and selection is empty or has multiple elements, state is unchanged.
@@ -49,9 +49,10 @@ import { getAbsolutePosition, moveArrayElement } from './utils';
  * @param {Object} payload Action payload
  * @param {string} payload.elementId Id of element to move
  * @param {number|string} payload.position New position of element to move
+ * @param {string|boolean} payload.groupId New group id (when moving in the Layers Panel), false to skip updating.
  * @return {Object} New state
  */
-function arrangeElement(state, { elementId, position }) {
+function arrangeElement(state, { elementId, position, groupId = false }) {
   if (elementId === null && state.selection.length !== 1) {
     return state;
   }
@@ -84,13 +85,22 @@ function arrangeElement(state, { elementId, position }) {
     desiredPosition: position,
   });
 
+  const currentGroupId = page.elements[currentPosition].groupId;
   // If it's already there, do nothing.
-  if (currentPosition === newPosition) {
+  if (currentPosition === newPosition && currentGroupId === groupId) {
     return state;
   }
 
+  const newPageElements = [...page.elements];
+  newPageElements[currentPosition] = {
+    ...newPageElements[currentPosition],
+  };
+  if (groupId !== false) {
+    newPageElements[currentPosition].groupId = groupId;
+  }
+
   const newElements = moveArrayElement(
-    page.elements,
+    newPageElements,
     currentPosition,
     newPosition
   );

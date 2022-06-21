@@ -39,12 +39,15 @@ const ReorderableGroup = memo(function ReorderableGroup({
   position,
   handleStartReordering,
 }) {
+  // This is counterintuitive but the top separator is outside of the group header.
+  const separatorGroupId = null;
   return (
     <Fragment key={groupId}>
-      <LayerSeparator position={position + 1} />
+      <LayerSeparator groupId={separatorGroupId} position={position + 1} />
       <ReorderableItem
         position={position}
-        onStartReordering={handleStartReordering(groupId)}
+        data={{ group: groupId }}
+        onStartReordering={handleStartReordering({ id: groupId })}
       >
         <Group groupId={groupId} />
       </ReorderableItem>

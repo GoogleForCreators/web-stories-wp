@@ -75,6 +75,10 @@ function reducer(state, { type, payload }) {
       return reducers.arrangeElement(state, payload);
     }
 
+    case types.ARRANGE_GROUP: {
+      return reducers.arrangeGroup(state, payload);
+    }
+
     case types.SET_SELECTED_ELEMENTS: {
       return reducers.setSelectedElements(state, payload);
     }

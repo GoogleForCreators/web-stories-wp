@@ -156,8 +156,16 @@ const clearBackgroundElement = (dispatch) => () =>
 
 const arrangeElement =
   (dispatch) =>
-  ({ elementId, position }) =>
-    dispatch({ type: types.ARRANGE_ELEMENT, payload: { elementId, position } });
+  ({ elementId, position, groupId }) =>
+    dispatch({
+      type: types.ARRANGE_ELEMENT,
+      payload: { elementId, position, groupId },
+    });
+
+const arrangeGroup =
+  (dispatch) =>
+  ({ groupId, position }) =>
+    dispatch({ type: types.ARRANGE_GROUP, payload: { groupId, position } });
 
 const arrangeSelection =
   (dispatch) =>
@@ -297,6 +305,7 @@ export const exposedActions = {
   setBackgroundElement,
   clearBackgroundElement,
   arrangeElement,
+  arrangeGroup,
   arrangeSelection,
   setSelectedElementsById,
   clearSelection,

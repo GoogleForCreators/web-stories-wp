@@ -32,7 +32,6 @@ import {
 } from '../../../reorderable';
 import { useRightClickMenu, useStory, useCanvas } from '../../../../app';
 import useFocusCanvas from '../../../canvas/useFocusCanvas';
-import updateProperties from '../../../style/updateProperties';
 import { LAYER_HEIGHT } from './constants';
 import Layer from './layer';
 import ReorderableGroup from './reorderableGroup';
@@ -59,15 +58,22 @@ const LayerSeparator = styled(ReorderableSeparator)`
 const ReorderableLayer = memo(function ReorderableLayer({
   id,
   position,
+  nestedOffset,
+  nestedOffsetCalcFunc,
   handleStartReordering,
 }) {
   const element = useStory(({ state }) =>
     state.currentPage?.elements.find((el) => el.id === id)
   );
-
   return element ? (
     <Fragment key={id}>
-      <LayerSeparator position={position + 1} />
+      <LayerSeparator
+        groupId={element.groupId}
+        nestedOffset={nestedOffset}
+        nestedOffsetCalcFunc={nestedOffsetCalcFunc}
+        position={position + 1}
+        isNested={element.groupId}
+      />
       <ReorderableItem
         position={position}
         onStartReordering={handleStartReordering(element)}
@@ -86,12 +92,13 @@ ReorderableLayer.propTypes = {
 };
 
 function LayerPanel({ layers }) {
-  const { arrangeElement, setSelectedElementsById, updateElementsById } =
-    useStory(({ actions }) => ({
+  const { arrangeElement, arrangeGroup, setSelectedElementsById } = useStory(
+    ({ actions }) => ({
       arrangeElement: actions.arrangeElement,
+      arrangeGroup: actions.arrangeGroup,
       setSelectedElementsById: actions.setSelectedElementsById,
-      updateElementsById: actions.updateElementsById,
-    }));
+    })
+  );
 
   const onOpenMenu = useRightClickMenu((value) => value.onOpenMenu);
 
@@ -132,27 +139,39 @@ function LayerPanel({ layers }) {
     layersWithGroups.push({ layer });
   }
 
-  const handlePositionChange = (oldPos, newPos) => {
-    const element = layers.find((layer) => layer.position === oldPos);
-    const targetElement = layers.find((layer) => layer.position === newPos);
-    const elementId = element.id;
-    arrangeElement({
-      elementId,
+  // Upper half will move the layer inside the group, lower - outside.
+  const nestedOffsetCalcFunc = (evt) => evt.offsetY < LAYER_HEIGHT / 1.7;
+
+  const handlePositionChange = (oldPosObj, newPosObj, evt) => {
+    const { position: oldPos } = oldPosObj;
+    const {
       position: newPos,
-    });
-    const groupId = targetElement.groupId;
-    if (groupId !== element.groupId) {
-      const elementIds = [elementId];
-      updateElementsById({
-        elementIds,
-        properties: (currentProperties) =>
-          updateProperties(
-            currentProperties,
-            {
-              groupId,
-            },
-            /* commitValues */ true
-          ),
+      data: { groupId: newGroupId },
+    } = newPosObj;
+    const offsetTopHalf = nestedOffsetCalcFunc(evt); // Only relevant if isNewPosLastInGroup
+    const oldPosElement = layers.find((layer) => layer.position === oldPos);
+    const elementAboveNewPos = layers.find(
+      (layer) => layer.position === (newPos <= 2 ? 1 : newPos + 1)
+    ); // Above in LP is below in array.
+
+    let groupId = newGroupId;
+    if (offsetTopHalf && elementAboveNewPos?.groupId) {
+      groupId = elementAboveNewPos.groupId;
+    }
+
+    if (oldPosObj.data?.group) {
+      // We are holding the whole group.
+      if (!newPosObj.data?.groupId) {
+        arrangeGroup({
+          groupId: oldPosObj.data.group,
+          position: newPos,
+        });
+      }
+    } else {
+      arrangeElement({
+        elementId: oldPosElement.id,
+        position: newPos,
+        groupId,
       });
     }
   };
@@ -164,7 +183,7 @@ function LayerPanel({ layers }) {
       mode={'vertical'}
       getItemSize={() => LAYER_HEIGHT}
     >
-      {layersWithGroups.map(({ layer, group }) => {
+      {layersWithGroups.map(({ layer, group }, index) => {
         if (group) {
           return (
             <ReorderableGroup
@@ -176,12 +195,16 @@ function LayerPanel({ layers }) {
             />
           );
         }
-
+        // We only want to check this drop position offset for the first layer after the group (separator is above the layer).
+        const isFirstLayerAfterGroup =
+          index > 0 ? layersWithGroups[index - 1].layer?.groupId : false;
         return (
           <ReorderableLayer
             key={layer.id}
             id={layer.id}
             position={layer.position}
+            nestedOffset={isFirstLayerAfterGroup}
+            nestedOffsetCalcFunc={nestedOffsetCalcFunc}
             handleStartReordering={handleStartReordering}
           />
         );

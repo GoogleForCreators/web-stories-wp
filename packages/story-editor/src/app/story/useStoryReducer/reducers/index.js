@@ -28,6 +28,7 @@ export { default as updateElementsByResourceId } from './updateElementsByResourc
 export { default as deleteElementsByResourceId } from './deleteElementsByResourceId';
 export { default as setBackgroundElement } from './setBackgroundElement';
 export { default as arrangeElement } from './arrangeElement';
+export { default as arrangeGroup } from './arrangeGroup';
 export { default as combineElements } from './combineElements';
 export { default as duplicateElementsById } from './duplicateElementsById';
 export { default as copySelectedElement } from './copySelectedElement';
