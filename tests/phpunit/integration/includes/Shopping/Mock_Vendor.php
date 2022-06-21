@@ -48,7 +48,12 @@ class Mock_Vendor implements Product_Query {
 					'brand'          => 'Google',
 					'price'          => 1.00 * $x,
 					'price_currency' => 'USD',
-					'images'         => [],
+					'images'         => [
+						[
+							'url' => "https://example.com/product/$x.png",
+							'alt' => '',
+						],
+					],
 					'details'        => 'Description',
 					'url'            => 'https://example.com/product/' . $x,
 				]

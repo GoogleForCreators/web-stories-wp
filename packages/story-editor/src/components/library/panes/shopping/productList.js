@@ -24,6 +24,7 @@ import { __ } from '@googleforcreators/i18n';
 /**
  * Internal dependencies
  */
+import { MAX_PRODUCTS_PER_PAGE } from '../../../../constants';
 import useProductNavigation from './useProductNavigation';
 import Product from './product';
 
@@ -32,13 +33,8 @@ const StyledListItem = styled.div`
   width: 100%;
   padding: 5px 0;
   align-items: center;
-  border-bottom: 2px solid ${({ theme }) => theme.colors.divider.tertiary};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.divider.tertiary};
   transition: background-color ease-in-out 300ms;
-  &:focus-within,
-  &:hover,
-  &:focus {
-    background-color: ${({ theme }) => theme.colors.interactiveBg.disable};
-  }
 `;
 
 function ProductList({
@@ -62,6 +58,7 @@ function ProductList({
     }
   };
 
+  const canAddMore = onPageProducts.length < MAX_PRODUCTS_PER_PAGE;
   return (
     // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions -- list handles arrow up and arrow down
     <div
@@ -81,6 +78,7 @@ function ProductList({
           >
             <Product
               product={product}
+              canAddMore={canAddMore}
               isOnPage={onPageProducts.some(
                 (item) => item.product.productId === product?.productId
               )}

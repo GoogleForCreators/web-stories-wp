@@ -51,6 +51,14 @@ describe('raw template files', () => {
       expect(templateContent).not.toContain('\u2028');
     });
 
+    // @see https://github.com/googleforcreators/web-stories-wp/issues/11648
+    it('should not contain first page animations', () => {
+      const { pages } = templateData;
+      const firstPage = pages[0];
+      const { animations = [] } = firstPage;
+      expect(animations).toHaveLength(0);
+    });
+
     // @see https://github.com/googleforcreators/web-stories-wp/pull/4516
     // @see https://github.com/googleforcreators/web-stories-wp/pull/6159
     it('should contain replaceable URLs', () => {
