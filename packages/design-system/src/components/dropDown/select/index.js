@@ -37,6 +37,7 @@ const DropDownSelect = (
     isOpen,
     onSelectClick,
     placeholder = '',
+    direction = 'down',
     ...rest
   },
   ref
@@ -75,7 +76,7 @@ const DropDownSelect = (
           </LabelText>
         )}
 
-        <Disclosure direction="down" isOpen={isOpen} />
+        <Disclosure direction={direction} isOpen={isOpen} />
       </Label>
     </SelectButton>
   );
@@ -92,4 +93,5 @@ DropDownSelect.propTypes = {
   disabled: PropTypes.bool,
   hasError: PropTypes.bool,
   isOpen: PropTypes.bool,
+  direction: PropTypes.string,
 };
