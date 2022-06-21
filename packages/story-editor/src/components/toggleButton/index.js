@@ -24,12 +24,12 @@ import {
   BUTTON_TYPES,
   BUTTON_VARIANTS,
   BUTTON_SIZES,
+  Disclosure,
   Text,
   TOOLTIP_PLACEMENT,
   themeHelpers,
   THEME_CONSTANTS,
   theme as dsTheme,
-  Icons,
   resolveSizeUnits,
 } from '@googleforcreators/design-system';
 import { forwardRef } from '@googleforcreators/react';
@@ -143,32 +143,6 @@ CountBadge.propTypes = {
   $fontSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 };
 
-const DisclosureIcon = styled(Icons.ChevronDownSmall)(
-  ({ theme }) => css`
-    height: 32px;
-    width: auto;
-    margin: 0 -10px;
-    color: ${theme.colors.fg.secondary};
-    transition: transform 100ms;
-
-    &.open {
-      transform: rotate(180deg);
-    }
-  `
-);
-
-// TODO: Extract 'Disclosure' to its own component
-export const Disclosure = ({ className = '', isOpen = false, ...other }) => (
-  <DisclosureIcon
-    className={`${className} ${isOpen ? 'open' : ''}`.trim()}
-    {...other}
-  />
-);
-Disclosure.propTypes = {
-  className: PropTypes.string,
-  isOpen: PropTypes.bool,
-};
-
 export const ToggleButton = forwardRef(
   (
     {
@@ -214,7 +188,7 @@ export const ToggleButton = forwardRef(
               {notificationCount}
             </CountBadge>
           )}
-          {hasMenuList && <Disclosure isOpen={isOpen} />}
+          {hasMenuList && <Disclosure direction="down" isOpen={isOpen} />}
         </Button>
       </Tooltip>
     );

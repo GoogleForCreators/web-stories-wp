@@ -23,7 +23,6 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { ChevronDownSmall } from '../../../icons';
 import { themeHelpers } from '../../../theme';
 import { Text } from '../../typography';
 
@@ -88,30 +87,6 @@ export const SelectButton = styled.button(
 
 SelectButton.propTypes = {
   hasError: PropTypes.bool,
-  isOpen: PropTypes.bool,
-};
-
-const DisclosureIcon = styled(ChevronDownSmall)(
-  ({ theme }) => css`
-    height: 32px;
-    width: auto;
-    color: ${theme.colors.fg.secondary};
-    transition: transform 100ms;
-
-    &.open {
-      transform: rotate(180deg);
-    }
-  `
-);
-
-export const Disclosure = ({ className = '', isOpen = false, ...other }) => (
-  <DisclosureIcon
-    className={`${className} ${isOpen ? 'open' : ''}`.trim()}
-    {...other}
-  />
-);
-Disclosure.propTypes = {
-  className: PropTypes.string,
   isOpen: PropTypes.bool,
 };
 
