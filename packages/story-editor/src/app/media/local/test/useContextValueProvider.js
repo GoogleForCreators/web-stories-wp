@@ -198,6 +198,38 @@ describe('useContextValueProvider', () => {
     useUploadVideoFrame.mockImplementation(() => useUploadVideoFrameResult);
   });
 
+  it('resetWithFetch calls getMedia with cacheBust:true and then fetchMediaSuccess', async () => {
+    // Set up and make initial call to useContextValueProvider (which calls
+    // getMedia and fetchMediaSuccess once). Sets an empty media state.
+    const getMedia = jest.fn(() =>
+      Promise.resolve({
+        data: [],
+        headers: GET_MEDIA_RESPONSE_HEADER,
+      })
+    );
+    const apiState = {
+      actions: {
+        getMedia,
+      },
+    };
+    const configState = {
+      api: {},
+      allowedMimeTypes: {
+        image: [],
+        vector: [],
+        video: [],
+        caption: [],
+        audio: [],
+      },
+      capabilities: { hasUploadMediaAction: true },
+    };
+    const { result } = renderAllProviders({
+      reducerState,
+      reducerActions,
+      configState,
+      apiState,
+    });
+
     // This promise will only complete when the "done()" callback is called
     // (see reducerActions.fetchMediaSuccess mock implementation in Promise).
     await new Promise((done) => {
@@ -219,7 +251,7 @@ describe('useContextValueProvider', () => {
     expect(getMedia).toHaveBeenNthCalledWith(2, {
       mediaType: '',
       searchTerm: '',
-      pagingNum: 1
+      pagingNum: 1,
     });
 
     expect(reducerActions.fetchMediaSuccess).toHaveBeenNthCalledWith(2, {
