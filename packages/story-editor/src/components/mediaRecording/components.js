@@ -36,6 +36,7 @@ export const MessageWrap = styled.div`
   height: 100%;
   justify-content: center;
   text-align: center;
+  user-select: text;
 `;
 
 export const MessageHeading = styled(Text).attrs({
