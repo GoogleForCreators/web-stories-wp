@@ -68,6 +68,7 @@ function MediaRecordingLayer() {
   const {
     updateMediaDevices,
     status,
+    error,
     mediaBlob,
     mediaBlobUrl,
     setMediaBlobUrl,
@@ -84,6 +85,7 @@ function MediaRecordingLayer() {
     resetStream,
   } = useMediaRecording(({ state, actions }) => ({
     status: state.status,
+    error: state.error,
     liveStream: state.liveStream,
     mediaBlob: state.mediaBlob,
     mediaBlobUrl: state.mediaBlobUrl,
@@ -108,7 +110,7 @@ function MediaRecordingLayer() {
   const videoRef = useRef();
 
   const isReady = 'ready' === status;
-  const isFailed = 'failed' === status;
+  const isFailed = 'failed' === status || Boolean(error);
 
   const isMuted = !hasAudio || isGif;
 
