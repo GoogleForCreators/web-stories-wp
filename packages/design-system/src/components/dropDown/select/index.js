@@ -24,13 +24,8 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { THEME_CONSTANTS } from '../../../theme';
-import {
-  SelectButton,
-  Disclosure,
-  Value,
-  LabelText,
-  Label,
-} from './components';
+import { Disclosure } from '../../disclosure';
+import { SelectButton, Value, LabelText, Label } from './components';
 
 const DropDownSelect = (
   {
@@ -80,7 +75,7 @@ const DropDownSelect = (
           </LabelText>
         )}
 
-        <Disclosure isOpen={isOpen} />
+        <Disclosure direction="down" isOpen={isOpen} />
       </Label>
     </SelectButton>
   );
