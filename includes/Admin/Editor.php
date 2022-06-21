@@ -316,7 +316,7 @@ class Editor extends Service_Base implements HasRequirements {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @return array
+	 * @return array<string,mixed> Editor settings.
 	 */
 	public function get_editor_settings(): array {
 		$post                 = get_post();

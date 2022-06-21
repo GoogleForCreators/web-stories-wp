@@ -161,7 +161,7 @@ class Tracking extends Service_Base {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @return array Tracking settings.
+	 * @return array<string, array<string, bool|int|string>|bool|string> Tracking settings.
 	 */
 	public function get_settings(): array {
 		return [
@@ -181,7 +181,7 @@ class Tracking extends Service_Base {
 	 *
 	 * @since 1.4.0
 	 *
-	 * @return array User properties.
+	 * @return array<string, string|int|bool> User properties.
 	 */
 	private function get_user_properties(): array {
 		/**

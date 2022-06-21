@@ -144,7 +144,7 @@ class Shopify_Query extends DependencyInjectedTestCase {
 			'response' => [
 				'code' => 200,
 			],
-			'body'     => wp_json_encode( [ 'data' => [ 'products' => [ 'edges' => [] ] ] ] ),
+			'body'     => file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/shopify_response_empty_search.json' ),
 		];
 	}
 
@@ -220,7 +220,7 @@ class Shopify_Query extends DependencyInjectedTestCase {
 				$per_page,
 				$orderby,
 				$order,
-			] 
+			]
 		);
 		set_transient(
 			$cache_key,

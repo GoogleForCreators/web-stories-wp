@@ -156,8 +156,16 @@ const clearBackgroundElement = (dispatch) => () =>
 
 const arrangeElement =
   (dispatch) =>
-  ({ elementId, position }) =>
-    dispatch({ type: types.ARRANGE_ELEMENT, payload: { elementId, position } });
+  ({ elementId, position, groupId }) =>
+    dispatch({
+      type: types.ARRANGE_ELEMENT,
+      payload: { elementId, position, groupId },
+    });
+
+const arrangeGroup =
+  (dispatch) =>
+  ({ groupId, position }) =>
+    dispatch({ type: types.ARRANGE_GROUP, payload: { groupId, position } });
 
 const arrangeSelection =
   (dispatch) =>
@@ -216,10 +224,10 @@ const addAnimations =
 
 const toggleLayer =
   (dispatch) =>
-  ({ metaKey, shiftKey, elementId }) =>
+  ({ metaKey, shiftKey, elementId, withLinked }) =>
     dispatch({
       type: types.TOGGLE_LAYER,
-      payload: { metaKey, shiftKey, elementId },
+      payload: { metaKey, shiftKey, elementId, withLinked },
     });
 
 const copySelectedElement = (dispatch) => () =>
@@ -233,6 +241,43 @@ const updateElementsByFontFamily =
     dispatch({
       type: types.UPDATE_ELEMENTS_BY_FONT_FAMILY,
       payload: { family, properties },
+    });
+
+const addGroup =
+  (dispatch) =>
+  ({ groupId, name }) =>
+    dispatch({ type: types.ADD_GROUP, payload: { groupId, name } });
+
+const updateGroupById =
+  (dispatch) =>
+  ({ groupId, properties }) =>
+    dispatch({
+      type: types.UPDATE_GROUP,
+      payload: { groupId, properties },
+    });
+
+const deleteGroupById =
+  (dispatch) =>
+  ({ groupId }) =>
+    dispatch({
+      type: types.DELETE_GROUP,
+      payload: { groupId },
+    });
+
+const deleteGroupAndElementsById =
+  (dispatch) =>
+  ({ groupId }) =>
+    dispatch({
+      type: types.DELETE_GROUP,
+      payload: { groupId, includeElements: true },
+    });
+
+const duplicateGroupById =
+  (dispatch) =>
+  ({ groupId, name, oldGroupId, isLocked }) =>
+    dispatch({
+      type: types.DUPLICATE_GROUP,
+      payload: { groupId, name, oldGroupId, isLocked },
     });
 
 export const exposedActions = {
@@ -260,6 +305,7 @@ export const exposedActions = {
   setBackgroundElement,
   clearBackgroundElement,
   arrangeElement,
+  arrangeGroup,
   arrangeSelection,
   setSelectedElementsById,
   clearSelection,
@@ -271,6 +317,11 @@ export const exposedActions = {
   updateStory,
   toggleLayer,
   updateElementsByFontFamily,
+  addGroup,
+  updateGroupById,
+  deleteGroupById,
+  deleteGroupAndElementsById,
+  duplicateGroupById,
 };
 
 // Internal actions

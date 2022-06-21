@@ -35,8 +35,8 @@ class Types {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param array $mime_types Array of mime types.
-	 * @return array
+	 * @param string[] $mime_types Array of mime types.
+	 * @return string[]
 	 */
 	public function get_file_type_exts( array $mime_types = [] ): array {
 		$allowed_file_types = [];
@@ -57,7 +57,7 @@ class Types {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @return array<string, array> List of allowed mime types.
+	 * @return array<string, string[]> List of allowed mime types.
 	 */
 	public function get_allowed_mime_types(): array {
 		$default_allowed_mime_types = [
@@ -90,10 +90,15 @@ class Types {
 		 *
 		 * @since 1.0.0
 		 *
-		 * @param array $default_allowed_mime_types Associative array of allowed mime types per media type (image, audio, video).
+		 * @param array<string, string[]> $default_allowed_mime_types Associative array of allowed mime types per media type (image, audio, video).
 		 */
 		$allowed_mime_types = apply_filters( 'web_stories_allowed_mime_types', $default_allowed_mime_types );
 
+		/**
+		 * Media type.
+		 *
+		 * @var string $media_type
+		 */
 		foreach ( array_keys( $default_allowed_mime_types ) as $media_type ) {
 			if ( ! \is_array( $allowed_mime_types[ $media_type ] ) || empty( $allowed_mime_types[ $media_type ] ) ) {
 				$allowed_mime_types[ $media_type ] = $default_allowed_mime_types[ $media_type ];

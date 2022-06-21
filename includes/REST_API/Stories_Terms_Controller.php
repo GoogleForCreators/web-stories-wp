@@ -67,7 +67,7 @@ class Stories_Terms_Controller extends WP_REST_Terms_Controller {
 	 * @since 1.12.0
 	 *
 	 * @param WP_Term $term Term object.
-	 * @return array Links for the given term.
+	 * @return array<string, array{href?: string, taxonomy?: string, embeddable?: bool}> Links for the given term.
 	 */
 	protected function prepare_links( $term ): array {
 		$links          = parent::prepare_links( $term );

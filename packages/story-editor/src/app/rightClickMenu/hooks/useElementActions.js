@@ -27,6 +27,7 @@ import { v4 as uuidv4 } from 'uuid';
  */
 import { useCanvas, useHistory, useStory } from '../..';
 import updateProperties from '../../../components/style/updateProperties';
+import generateGroupName from '../../../utils/generateGroupName';
 import { UNDO_HELP_TEXT } from './constants';
 
 /**
@@ -41,12 +42,22 @@ const useElementActions = () => {
     selectedElements,
     setBackgroundElement,
     updateElementsById,
+    deleteGroupById,
+    addGroup,
+    groups,
+    elements,
+    arrangeElement,
   } = useStory(({ state, actions }) => ({
     clearBackgroundElement: actions.clearBackgroundElement,
     duplicateElementsById: actions.duplicateElementsById,
     selectedElements: state.selectedElements,
     setBackgroundElement: actions.setBackgroundElement,
     updateElementsById: actions.updateElementsById,
+    addGroup: actions.addGroup,
+    deleteGroupById: actions.deleteGroupById,
+    groups: state.currentPage.groups,
+    elements: state.currentPage?.elements || [],
+    arrangeElement: actions.arrangeElement,
   }));
   const showSnackbar = useSnackbar((value) => value.showSnackbar);
   const setEditingElement = useCanvas(
@@ -99,6 +110,8 @@ const useElementActions = () => {
     }
 
     const groupId = uuidv4();
+    const name = generateGroupName(groups);
+    addGroup({ groupId, name });
     updateElementsById({
       elementIds: selectedElements.map(({ id }) => id),
       properties: (currentProperties) =>
@@ -110,12 +123,38 @@ const useElementActions = () => {
           /* commitValues */ true
         ),
     });
-  }, [selectedElements, updateElementsById]);
+    // Fix the order
+    const elementFromGroupWithHighestPosition = Math.max(
+      ...selectedElements.map((el) =>
+        elements.findIndex(({ id }) => id === el?.id)
+      )
+    );
+    for (const [index, element] of selectedElements.reverse().entries()) {
+      const position = elements.findIndex(({ id }) => id === element?.id);
+      if (position !== elementFromGroupWithHighestPosition) {
+        const newPosition = elementFromGroupWithHighestPosition - index;
+        arrangeElement({
+          elementId: element.id,
+          position: newPosition,
+        });
+      }
+    }
+  }, [
+    selectedElements,
+    updateElementsById,
+    addGroup,
+    groups,
+    arrangeElement,
+    elements,
+  ]);
 
   const handleUngroupSelectedElements = useCallback(() => {
     if (!selectedElements.length) {
       return;
     }
+
+    // this will remove the group but keep the elements
+    deleteGroupById({ groupId: selectedElements[0]?.groupId });
 
     updateElementsById({
       elementIds: selectedElements.map(({ id }) => id),
@@ -128,7 +167,7 @@ const useElementActions = () => {
           /* commitValues */ true
         ),
     });
-  }, [selectedElements, updateElementsById]);
+  }, [selectedElements, updateElementsById, deleteGroupById]);
 
   /**
    * Set element as the element being 'edited'.
