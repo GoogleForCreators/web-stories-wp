@@ -36,12 +36,13 @@ const StyledTitle = styled(Text).attrs({
 })`
   color: ${({ theme }) => theme.colors.fg.primary};
 `;
-function Product({ product, onClick, onFocus, isOnPage }) {
+function Product({ product, onClick, onFocus, isOnPage, canAddMore }) {
   return (
     <>
       <ProductButton
         product={product}
         isOnPage={isOnPage}
+        canAddMore={canAddMore}
         onClick={onClick}
         onFocus={onFocus}
       />
@@ -62,6 +63,7 @@ Product.propTypes = {
   onClick: PropTypes.func.isRequired,
   onFocus: PropTypes.func,
   isOnPage: PropTypes.bool,
+  canAddMore: PropTypes.bool,
 };
 
 export default Product;

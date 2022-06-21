@@ -24,6 +24,7 @@ import { __ } from '@googleforcreators/i18n';
 /**
  * Internal dependencies
  */
+import { MAX_PRODUCTS_PER_PAGE } from '../../../../constants';
 import useProductNavigation from './useProductNavigation';
 import Product from './product';
 
@@ -57,6 +58,7 @@ function ProductList({
     }
   };
 
+  const canAddMore = onPageProducts.length < MAX_PRODUCTS_PER_PAGE;
   return (
     // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions -- list handles arrow up and arrow down
     <div
@@ -76,6 +78,7 @@ function ProductList({
           >
             <Product
               product={product}
+              canAddMore={canAddMore}
               isOnPage={onPageProducts.some(
                 (item) => item.product.productId === product?.productId
               )}

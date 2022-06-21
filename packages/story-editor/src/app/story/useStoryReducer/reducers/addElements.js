@@ -21,6 +21,7 @@ import { ELEMENT_TYPES } from '@googleforcreators/elements';
 /**
  * Internal dependencies
  */
+import { MAX_PRODUCTS_PER_PAGE } from '../../../../constants';
 import { exclusion } from './utils';
 
 /**
@@ -70,13 +71,32 @@ function addElements(state, { elements }) {
     ({ id }) => newElementDuplicateID && !newElementDuplicateID.includes(id)
   );
 
-  if (newElementNoDuplicateProducts.length === 0) {
+  const newElementProducts = newElementNoDuplicateProducts.filter(
+    ({ type }) => type === ELEMENT_TYPES.PRODUCT
+  );
+
+  const newElementProductsFiltered =
+    currentPageProductIds.length + newElementProducts.length <=
+    MAX_PRODUCTS_PER_PAGE
+      ? newElementProducts
+      : [];
+
+  const newElementNoProducts = newElementNoDuplicateProducts.filter(
+    ({ type }) => type !== ELEMENT_TYPES.PRODUCT
+  );
+
+  const newPageElements = [
+    ...newElementNoProducts,
+    ...newElementProductsFiltered,
+  ];
+
+  if (newPageElements.length === 0) {
     return state;
   }
 
   const newPage = {
     ...oldPage,
-    elements: [...oldPage.elements, ...newElementNoDuplicateProducts],
+    elements: [...oldPage.elements, ...newPageElements],
   };
 
   const newPages = [
@@ -85,7 +105,7 @@ function addElements(state, { elements }) {
     ...state.pages.slice(pageIndex + 1),
   ];
 
-  const newSelection = newElementNoDuplicateProducts.map(({ id }) => id);
+  const newSelection = newPageElements.map(({ id }) => id);
 
   return {
     ...state,
