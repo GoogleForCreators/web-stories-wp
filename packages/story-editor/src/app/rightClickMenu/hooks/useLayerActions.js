@@ -63,12 +63,8 @@ const useLayerActions = () => {
       return;
     }
 
-    const reversedElements = [...elements].reverse();
-    const backwardPositionSkipGroups = reversedElements.findLastIndex(
-      (el, i) => {
-        const position = elements.length - i;
-        return position > elementPosition && !el.groupId;
-      }
+    const backwardPositionSkipGroups = elements.findLastIndex(
+      (el, position) => position < elementPosition && !el.groupId
     );
     const newPosition =
       elementPosition === 1 ? elementPosition : backwardPositionSkipGroups;
