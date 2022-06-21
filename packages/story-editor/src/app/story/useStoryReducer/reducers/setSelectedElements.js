@@ -40,7 +40,7 @@ import { intersect } from './utils';
  * @param {Object} state Current state
  * @param {Object} payload Action payload
  * @param {Array.<string>} payload.elementIds Object with properties of new page
- * @param {boolean} payload.withLinked With linked.
+ * @param {boolean} payload.withLinked Include elements from the group?
  * @return {Object} New state
  */
 function setSelectedElements(state, { elementIds, withLinked = false }) {
@@ -79,14 +79,14 @@ function setSelectedElements(state, { elementIds, withLinked = false }) {
     }
   }
 
-  // If it's a multi-selection, filter out the background element, locked elements,
+  // If it's a multi-selection (and not group selection), filter out the background element, locked elements,
   // and video placeholders.
   const byId = (id) => currentPage.elements.find(({ id: i }) => i === id);
   const isNotBackgroundElement = (id) => currentPage.elements[0].id !== id;
   const isNotLockedElement = (id) => !byId(id).isLocked;
   const isNotVideoPlaceholder = (id) => !byId(id).resource?.isPlaceholder;
   const newSelection =
-    uniqueElementIds.length > 1
+    uniqueElementIds.length > 1 && !withLinked
       ? uniqueElementIds.filter(
           (id) =>
             isNotBackgroundElement(id) &&

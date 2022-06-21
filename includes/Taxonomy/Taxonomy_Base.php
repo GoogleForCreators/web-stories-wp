@@ -34,6 +34,43 @@ use WP_Site;
 
 /**
  * Taxonomy_Base class
+ *
+ * @phpstan-type TaxonomyArgs array{
+ *   labels?: string[],
+ *   description?: string,
+ *   public?: bool,
+ *   publicly_queryable?: bool,
+ *   hierarchical?: bool,
+ *   show_ui?: bool,
+ *   show_in_menu?: bool,
+ *   show_in_nav_menus?: bool,
+ *   show_in_rest?: bool,
+ *   rest_base?: string,
+ *   rest_namespace?: string,
+ *   rest_controller_class?: string,
+ *   show_tagcloud?: bool,
+ *   show_in_quick_edit?: bool,
+ *   show_admin_column?: bool,
+ *   meta_box_cb?: bool|callable,
+ *   meta_box_sanitize_cb?: callable,
+ *   capabilities?: string[],
+ *   rewrite?: bool|array{
+ *     slug?: string,
+ *     with_front?: bool,
+ *     hierarchical?: bool,
+ *     ep_mask?: int
+ *   },
+ *   query_var?: string|bool,
+ *   update_count_callback?: callable,
+ *   default_term?: string|array{
+ *     name?: string,
+ *     slug?: string,
+ *     description?: string
+ *   },
+ *   sort?: bool,
+ *   args?: array<string, mixed>,
+ *   _builtin?: bool,
+ * }
  */
 abstract class Taxonomy_Base extends Service_Base implements PluginActivationAware, PluginDeactivationAware, SiteInitializationAware {
 
@@ -59,7 +96,7 @@ abstract class Taxonomy_Base extends Service_Base implements PluginActivationAwa
 	/**
 	 * Object type or array of object types with which the taxonomy should be associated.
 	 *
-	 * @var array|string
+	 * @var string[]|string
 	 */
 	protected $taxonomy_post_type;
 
@@ -95,7 +132,7 @@ abstract class Taxonomy_Base extends Service_Base implements PluginActivationAwa
 	 *
 	 * @since 1.12.0
 	 *
-	 * @return array
+	 * @return TaxonomyArgs Taxonomy args.
 	 */
 	abstract protected function taxonomy_args(): array;
 

@@ -54,6 +54,14 @@ export class Canvas extends Container {
     );
   }
 
+  get mediaRecordingLayer() {
+    return this._get(
+      this.getByRole('region', { name: /^Media Recording layer$/i }),
+      'mediaRecordingLayer',
+      MediaRecordingLayer
+    );
+  }
+
   get header() {
     return this._get(
       this.getAllByRole('group', { name: 'Story canvas header' })[0],
@@ -219,6 +227,70 @@ class EditLayer extends AbstractLayer {
 
   get sizeSlider() {
     return this.getByRole('slider');
+  }
+}
+
+class MediaRecordingSettings extends Container {
+  constructor(node, path) {
+    super(node, path);
+  }
+
+  get videoInput() {
+    return this.getByRole('button', { name: 'Video Input' });
+  }
+
+  get audioInput() {
+    return this.getByRole('button', { name: 'Audio Input' });
+  }
+
+  get cancel() {
+    return this.getByRole('button', { name: 'Cancel' });
+  }
+
+  get save() {
+    return this.getByRole('button', { name: 'Save' });
+  }
+}
+
+class MediaRecordingLayer extends Container {
+  constructor(node, path) {
+    super(node, path);
+  }
+
+  get recordVideo() {
+    return this.getByRole('button', { name: 'Record Video' });
+  }
+
+  get takePhoto() {
+    return this.getByRole('button', { name: 'Take a photo' });
+  }
+
+  get stopRecording() {
+    return this.getByRole('button', { name: 'Stop Recording' });
+  }
+
+  get insert() {
+    return this.getByRole('button', { name: 'Insert' });
+  }
+
+  get retry() {
+    return this.getByRole('button', { name: 'Retry' });
+  }
+
+  get previewVideo() {
+    return this.getByRole('video');
+  }
+
+  get previewImage() {
+    return this.getByRole('img');
+  }
+
+  get settingsDialog() {
+    return this._get(
+      this.getByRole('dialog', { name: /^Media Recording Options$/ }),
+      'mediaRecordingSettings',
+      MediaRecordingSettings
+    );
   }
 }
 

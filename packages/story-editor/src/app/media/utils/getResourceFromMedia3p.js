@@ -17,7 +17,11 @@
 /**
  * External dependencies
  */
-import { createResource } from '@googleforcreators/media';
+import {
+  createResource,
+  getVideoLengthDisplay,
+} from '@googleforcreators/media';
+
 /**
  * Internal dependencies
  */
@@ -253,12 +257,6 @@ function getAttributionFromMedia3p(m) {
   );
 }
 
-function formatVideoLength(length) {
-  const minutes = Math.floor(length / 60);
-  const seconds = Math.floor(length % 60);
-  return minutes + ':' + seconds.toString().padStart(2, '0');
-}
-
 function getImageResourceFromMedia3p(m) {
   const imageUrls = getImageUrls(m);
   return createResource({
@@ -294,7 +292,7 @@ function getVideoResourceFromMedia3p(m) {
     height: videoUrls.full.height,
     poster: m.imageUrls[0].url,
     length,
-    lengthFormatted: formatVideoLength(length),
+    lengthFormatted: getVideoLengthDisplay(length),
     alt: m.description || m.title || m.name,
     isExternal: true,
     isPlaceholder: false,

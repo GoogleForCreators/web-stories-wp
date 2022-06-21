@@ -29,7 +29,8 @@ namespace Google\Web_Stories\Integrations;
 /**
  * Class WooCommerce.
  */
-class WooCommerce {
+class
+WooCommerce {
 	protected const PLUGIN = 'woocommerce/woocommerce.php';
 
 	/**
@@ -48,7 +49,7 @@ class WooCommerce {
 	 *
 	 * @since 1.21.0
 	 *
-	 * @return array Plugin status.
+	 * @return array{installed: bool, active: bool, canManage: bool, link: string} Plugin status.
 	 */
 	public function get_plugin_status(): array {
 		if ( ! function_exists( 'get_plugins' ) ) {
