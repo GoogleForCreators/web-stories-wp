@@ -39,7 +39,7 @@ export const SelectButton = styled.button(
     border: 1px solid
       ${theme.colors.border[isOpen ? 'defaultActive' : 'defaultNormal']};
 
-    padding: 8px 0 8px 12px;
+    padding: 8px 12px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -105,7 +105,7 @@ export const LabelText = styled(Text)`
   padding-right: 8px;
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: hidden;
+  text-overflow: clip;
 `;
 
 export const Label = styled.span`
