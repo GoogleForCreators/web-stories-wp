@@ -697,6 +697,41 @@ describe('combineElements', () => {
       });
     });
   });
+
+  describe('combine elements with animations', () => {
+    it('should by default remove animations only from the original element', () => {
+      const { restore, combineElements } = setupReducer();
+
+      const state = getDefaultState7();
+      restore(state);
+
+      // Combine element 456 into 789
+      const result = combineElements({
+        firstElement: state.pages[0].elements[1],
+        secondId: '789',
+      });
+
+      expect(result.pages[0].animations).toStrictEqual([
+        { id: 'b', targets: ['789'] },
+      ]);
+    });
+
+    it('should remove animations from both elements if instructed', () => {
+      const { restore, combineElements } = setupReducer();
+
+      const state = getDefaultState7();
+      restore(state);
+
+      // Combine element 456 into 789 with retain elements flag set to false
+      const result = combineElements({
+        firstElement: state.pages[0].elements[1],
+        secondId: '789',
+        shouldRetainAnimations: false,
+      });
+
+      expect(result.pages[0].animations).toStrictEqual([]);
+    });
+  });
 });
 
 function getDefaultState1() {
@@ -1000,6 +1035,51 @@ function getDefaultState6() {
               bottomRight: 1,
               bottomLeft: 1,
             },
+          },
+        ],
+      },
+    ],
+    current: '111',
+  };
+}
+
+// State with background element, 1 media element, 1 shape, and animations on both latter elements
+function getDefaultState7() {
+  return {
+    pages: [
+      {
+        id: '111',
+        animations: [
+          { id: 'a', targets: ['456'] },
+          { id: 'b', targets: ['789'] },
+        ],
+        elements: [
+          {
+            id: '123',
+            type: 'image',
+            overlay: { color: { r: 0, g: 0, b: 0 } },
+            isBackground: true,
+            x: 1,
+            y: 1,
+            width: 1,
+            height: 1,
+          },
+          {
+            id: '456',
+            type: 'image',
+            resource: { type: 'image', src: '1' },
+            x: 10,
+            y: 10,
+            width: 10,
+            height: 10,
+          },
+          {
+            id: '789',
+            type: 'shape',
+            x: 10,
+            y: 10,
+            width: 10,
+            height: 10,
           },
         ],
       },

@@ -77,6 +77,22 @@ const fetchStories = () => {
   return Promise.resolve(response);
 };
 
+// mock filter api calls
+const getTaxonomies = () =>
+  Promise.resolve([
+    {
+      restBase: '',
+      restPath: '',
+      labels: {
+        allItems: 'All Categories',
+        notFound: 'No categories found',
+        searchItems: 'Search Categories',
+      },
+    },
+  ]);
+const getTaxonomyTerms = () => Promise.resolve([{ name: 'Food', id: 1 }]);
+const getAuthors = () => Promise.resolve([{ name: 'Author', id: 1 }]);
+
 /**
  * Clears url hash ( Required only for storybook )
  * Dashboard uses # for checking route path and story-editor uses #page,
@@ -99,6 +115,9 @@ export const _default = () => {
     newStoryURL: linkHrefTo('Playground/Stories Editor', 'default'),
     apiCallbacks: {
       fetchStories,
+      getTaxonomies,
+      getTaxonomyTerms,
+      getAuthors,
     },
   };
 

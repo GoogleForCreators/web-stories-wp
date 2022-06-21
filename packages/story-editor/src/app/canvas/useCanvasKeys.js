@@ -239,17 +239,22 @@ function useCanvasKeys(ref) {
     }
 
     for (const { type, product } of selectedElements) {
+      const { productId, productTitle, productImages } = product || {};
       if (
         type === ELEMENT_TYPES.PRODUCT &&
-        product?.productId &&
-        currentPageProductIds.includes(product.productId)
+        productId &&
+        currentPageProductIds.includes(productId)
       ) {
         showSnackbar({
           message: sprintf(
             /* translators: %s: product title. */
             __('Product "%s" already exists on the page.', 'web-stories'),
-            product.productTitle
+            productTitle
           ),
+          thumbnail: productImages?.[0]?.url && {
+            src: productImages[0].url,
+            alt: productImages[0].alt,
+          },
         });
       }
     }

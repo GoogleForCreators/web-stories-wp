@@ -25,6 +25,7 @@ import {
   BUTTON_TYPES,
   Headline,
   THEME_CONSTANTS,
+  InfiniteScroller,
 } from '@googleforcreators/design-system';
 
 /**
@@ -32,11 +33,7 @@ import {
  */
 import { resolveRoute } from '../../../router';
 import { APP_ROUTES } from '../../../../constants';
-import {
-  InfiniteScroller,
-  Layout,
-  StandardViewContentGutter,
-} from '../../../../components';
+import { Layout, StandardViewContentGutter } from '../../../../components';
 import { StoriesPropType, StoryActionsPropType } from '../../../../types';
 import {
   FilterPropTypes,
@@ -78,6 +75,11 @@ function Content({
               canLoadMore={!allPagesFetched}
               isLoading={loading?.isLoading}
               allDataLoadedMessage={__('No more stories', 'web-stories')}
+              allDataLoadedAriaMessage={__(
+                'All stories are loaded',
+                'web-stories'
+              )}
+              loadingAriaMessage={__('Loading more stories', 'web-stories')}
               onLoadMore={page.requestNextPage}
             />
           </>

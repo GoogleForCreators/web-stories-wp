@@ -20,3 +20,4 @@ export { default as PageMenu } from './pageMenu';
 export { default as ShapeMenu } from './shapeMenu';
 export { default as StickerMenu } from './stickerMenu';
 export { default as TextMenu } from './textMenu';
+export { default as ProductMenu } from './productMenu';

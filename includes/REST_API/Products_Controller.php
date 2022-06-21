@@ -159,18 +159,18 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 		if ( 'none' === $shopping_provider ) {
 			return new WP_Error( 'rest_shopping_provider', __( 'No shopping provider set up.', 'web-stories' ), [ 'status' => 400 ] );
 		}
-			
+
 		if ( ! $query ) {
 			return new WP_Error( 'rest_shopping_provider_not_found', __( 'Unable to find shopping integration.', 'web-stories' ), [ 'status' => 400 ] );
 		}
-		
+
 		/**
 		 * Request context.
 		 *
 		 * @var string $search_term
 		 */
 		$search_term = ! empty( $request['search'] ) ? $request['search'] : '';
-	
+
 		/**
 		 * Request context.
 		 *
@@ -217,7 +217,18 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 		 */
 		$response = rest_ensure_response( $products );
 
-		$response->header( 'X-WP-HasNextPage', (string) $query_result['has_next_page'] );
+		$response->header( 'X-WP-HasNextPage', $query_result['has_next_page'] ? 'true' : 'false' );
+
+		if ( $request['_web_stories_envelope'] ) {
+			/**
+			 * Embed directive.
+			 *
+			 * @var string|array $embed
+			 */
+			$embed    = $request['_embed'] ?? false;
+			$embed    = $embed ? rest_parse_embed_param( $embed ) : false;
+			$response = rest_get_server()->envelope_response( $response, $embed );
+		}
 
 		return $response;
 	}
@@ -462,6 +473,12 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 			'type'        => 'string',
 			'default'     => 'desc',
 			'enum'        => [ 'asc', 'desc' ],
+		];
+
+		$query_params['_web_stories_envelope'] = [
+			'description' => __( 'Envelope request for preloading.', 'web-stories' ),
+			'type'        => 'boolean',
+			'default'     => false,
 		];
 
 		return $query_params;

@@ -35,18 +35,22 @@ describe('Page Attachment', () => {
     await fixture.events.mouse.click(x + width / 2, y + height / 2);
   };
 
+  const selectPage = async () => {
+    // Select page by clicking on the background element
+    await fixture.events.mouse.clickOn(
+      fixture.editor.canvas.framesLayer.frames[0].node,
+      10,
+      10
+    );
+  };
+
   beforeEach(async () => {
     fixture = new Fixture();
     await fixture.render();
     await fixture.collapseHelpCenter();
 
     // Select Page by default.
-    // Click the background element
-    await fixture.events.mouse.clickOn(
-      fixture.editor.canvas.framesLayer.frames[0].node,
-      10,
-      10
-    );
+    await selectPage();
   });
 
   afterEach(() => {
@@ -101,7 +105,7 @@ describe('Page Attachment', () => {
   };
 
   const setCtaText = async (text) => {
-    const input = fixture.screen.getByLabelText('Page Attachment CTA text');
+    const input = fixture.screen.getByLabelText('Call to Action text');
     await fixture.events.click(input, { clickCount: 3 });
     await fixture.events.keyboard.type(text);
     await fixture.events.keyboard.press('tab');
@@ -180,6 +184,108 @@ describe('Page Attachment', () => {
         },
       } = await fixture.renderHook(() => useStory());
       expect(link).toBeUndefined();
+    });
+  });
+
+  describe('CUJ: Creator can Add a Page Attachment: Shopping Attachment', () => {
+    it('it should allow changing the CTA text', async () => {
+      const insertElement = await fixture.renderHook(() => useInsertElement());
+      await fixture.act(() =>
+        insertElement('product', {
+          x: 10,
+          y: 10,
+          width: 50,
+          height: 50,
+          product: {
+            productId: 'foobar',
+          },
+        })
+      );
+
+      await selectPage();
+
+      await fixture.events.click(fixture.editor.sidebar.designTab);
+      await setCtaText('Click me!');
+      const ctaText = fixture.screen.getByText('Click me!');
+      expect(ctaText).toBeDefined();
+    });
+
+    it('it should allow using dark theme for the shopping ttachment', async () => {
+      const insertElement = await fixture.renderHook(() => useInsertElement());
+      await fixture.act(() =>
+        insertElement('product', {
+          x: 10,
+          y: 10,
+          width: 50,
+          height: 50,
+          product: {
+            productId: 'foobar',
+          },
+        })
+      );
+
+      await selectPage();
+
+      await fixture.events.click(fixture.editor.sidebar.designTab);
+      const input = fixture.screen.getByLabelText('Use dark theme');
+      await fixture.events.click(input);
+
+      const storyContext = await fixture.renderHook(() => useStory());
+      expect(storyContext.state.currentPage.shoppingAttachment.theme).toEqual(
+        'dark'
+      );
+    });
+
+    it('it should not allow adding a page attachment if there are products', async () => {
+      const insertElement = await fixture.renderHook(() => useInsertElement());
+      await fixture.act(() =>
+        insertElement('product', {
+          x: 10,
+          y: 10,
+          width: 50,
+          height: 50,
+          product: {
+            productId: 'foobar',
+          },
+        })
+      );
+
+      await selectPage();
+
+      await fixture.events.click(fixture.editor.sidebar.designTab);
+      expect(
+        fixture.screen.queryByLabelText(
+          'Type an address to add a page attachment link'
+        )
+      ).toBeNull();
+    });
+
+    it('it should not use page attachment CTA text for shopping attachment', async () => {
+      await setPageAttachmentLink('http://example.com');
+      await setCtaText('Click me!');
+
+      const insertElement = await fixture.renderHook(() => useInsertElement());
+      await fixture.act(() =>
+        insertElement('product', {
+          x: 10,
+          y: 10,
+          width: 50,
+          height: 50,
+          product: {
+            productId: 'foobar',
+          },
+        })
+      );
+
+      await selectPage();
+
+      await setCtaText('Shop me!');
+
+      await fixture.events.click(fixture.editor.sidebar.designTab);
+      expect(fixture.screen.queryByText('Click me!')).toBeNull();
+
+      const ctaText = fixture.screen.getByText('Shop me!');
+      expect(ctaText).toBeDefined();
     });
   });
 });
