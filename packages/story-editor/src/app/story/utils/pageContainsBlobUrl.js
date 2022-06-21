@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,22 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
- * Update story properties.
- *
- * No validation is performed and existing values are overwritten.
- *
- * @param {Object} state Current state
- * @param {Object} payload Action payload
- * @param {Object | Function} payload.reducer reducer to apply to state
- * @return {Object} New state
+ * External dependencies
  */
-function updateStateWithReducer(state, { reducer }) {
-  if (typeof reducer !== 'function') {
-    return state;
-  }
-  return reducer(state);
+import { isBlobURL } from '@googleforcreators/media';
+
+function pageContainsBlobUrl(pages) {
+  // skip entries that have a blob url
+  // https://github.com/GoogleForCreators/web-stories-wp/issues/10289
+  return pages.some((page) =>
+    page.elements.some(
+      (element) =>
+        isBlobURL(element?.resource?.src) ||
+        isBlobURL(element?.resource?.poster)
+    )
+  );
 }
 
-export default updateStateWithReducer;
+export default pageContainsBlobUrl;

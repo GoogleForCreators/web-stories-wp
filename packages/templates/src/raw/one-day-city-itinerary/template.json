@@ -219,16 +219,7 @@
         "type": "shape",
         "id": "3e997ccb-11df-4886-af13-49736e79b954"
       },
-      "animations": [
-        {
-          "id": "a86f4963-b46c-45bc-9c1b-bf71ef378d9b",
-          "type": "effect-background-pan",
-          "targets": ["eb99f440-ff97-40f9-89ce-8f3a34f494b2"],
-          "panDir": "rightToLeft",
-          "duration": 4000,
-          "delay": 0
-        }
-      ],
+      "animations": [],
       "pageTemplateType": "cover"
     },
     {

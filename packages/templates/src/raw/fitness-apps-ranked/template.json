@@ -311,32 +311,7 @@
         "type": "shape",
         "id": "5edb73ba-001a-4a24-aad0-c791a64088e6"
       },
-      "animations": [
-        {
-          "id": "368591f4-8e16-4093-ad55-ffe6d6019b66",
-          "type": "effect-fly-in",
-          "targets": ["87486d08-73e9-4ed8-8d18-3fdc0c7bd51b"],
-          "flyInDir": "leftToRight",
-          "duration": 1000,
-          "delay": 0
-        },
-        {
-          "id": "3383b800-6753-4f14-a4d3-532f8c4f5def",
-          "type": "effect-fly-in",
-          "targets": ["33a1ce8a-1602-41d0-abf3-99c96e9a58d7"],
-          "flyInDir": "leftToRight",
-          "duration": 1000,
-          "delay": 150
-        },
-        {
-          "id": "20471346-69f8-4723-84ca-47dec8e3c495",
-          "type": "effect-whoosh-in",
-          "targets": ["b75958ad-f27d-4a49-a159-034521643cbd"],
-          "whooshInDir": "leftToRight",
-          "duration": 1000,
-          "delay": 0
-        }
-      ],
+      "animations": [],
       "pageTemplateType": "cover"
     },
     {
