@@ -22,14 +22,22 @@ import { useCallback } from '@googleforcreators/react';
  */
 import { useStory, useCanvas } from '../../../../app';
 
-function useLayerSelection(layer) {
-  const { id: elementId } = layer;
-  const { isSelected, toggleLayer } = useStory(({ state, actions }) => ({
-    isSelected: state.selectedElementIds.includes(elementId),
-    toggleLayer: actions.toggleLayer,
-  }));
+function useGroupSelection(groupId) {
+  const { toggleLayer, groupLayers, selectedElementIds } = useStory(
+    ({ state, actions }) => ({
+      groupLayers: state.currentPage.elements.filter(
+        (el) => el.groupId === groupId
+      ),
+      selectedElementIds: state.selectedElementIds,
+      toggleLayer: actions.toggleLayer,
+    })
+  );
   const setRenamableLayer = useCanvas(
     ({ actions }) => actions.setRenamableLayer
+  );
+
+  const isSelected = groupLayers.every((gl) =>
+    selectedElementIds.includes(gl.id)
   );
 
   const handleClick = useCallback(
@@ -37,21 +45,22 @@ function useLayerSelection(layer) {
       evt.preventDefault();
       evt.stopPropagation();
 
+      // Utilize the withLinked option and use only first layer id
       toggleLayer({
-        elementId,
+        elementId: groupLayers[0].id,
         metaKey: evt.metaKey,
         shiftKey: evt.shiftKey,
-        withLinked: false,
+        withLinked: true,
       });
 
       const isDoubleClick = evt.detail === 2;
       if (isDoubleClick) {
-        setRenamableLayer({ elementId: elementId });
+        setRenamableLayer({ elementId: groupId });
       }
     },
-    [toggleLayer, elementId, setRenamableLayer]
+    [toggleLayer, groupLayers, setRenamableLayer, groupId]
   );
 
   return { isSelected, handleClick };
 }
-export default useLayerSelection;
+export default useGroupSelection;

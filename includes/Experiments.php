@@ -356,6 +356,7 @@ class Experiments extends Service_Base implements HasRequirements {
 				'label'       => __( 'Layer grouping', 'web-stories' ),
 				'description' => __( 'Enable layer grouping', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 			/**
 			 * Author: @mariana-k
@@ -367,6 +368,7 @@ class Experiments extends Service_Base implements HasRequirements {
 				'label'       => __( 'Layer naming', 'web-stories' ),
 				'description' => __( 'Enable layer naming', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 		];
 	}
