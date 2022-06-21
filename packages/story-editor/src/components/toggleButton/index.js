@@ -20,7 +20,6 @@ import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import {
   Button as dsButton,
-  BUTTON_TRANSITION_TIMING,
   BUTTON_TYPES,
   BUTTON_VARIANTS,
   BUTTON_SIZES,
@@ -30,7 +29,6 @@ import {
   themeHelpers,
   THEME_CONSTANTS,
   theme as dsTheme,
-  resolveSizeUnits,
 } from '@googleforcreators/design-system';
 import { forwardRef } from '@googleforcreators/react';
 
@@ -39,7 +37,7 @@ import { forwardRef } from '@googleforcreators/react';
  */
 import Tooltip from '../tooltip';
 
-const buttonSize = 36;
+const buttonHeight = 36;
 
 const Button = styled(dsButton)`
   width: auto;
@@ -51,9 +49,9 @@ const Button = styled(dsButton)`
   padding: 0 10px;
   white-space: nowrap;
   // Handle props-dependent styling in one place
-  ${({ isOpen, hasText, $size = buttonSize, theme }) => css`
-    height: ${resolveSizeUnits($size)};
-    min-width: ${resolveSizeUnits($size)};
+  ${({ isOpen, hasText, height = buttonHeight, theme }) => css`
+    height: ${height}px;
+    min-width: ${height}px;
     color: ${theme.colors.fg.primary};
     border-color: ${
       isOpen ? theme.colors.bg.secondary : theme.colors.border.defaultNormal
@@ -72,29 +70,19 @@ const Button = styled(dsButton)`
           },
           theme,
         })};
-
-        .badge {
-          margin: 0 8px;
-        }
       `
     }
-
-    .badge.open,
-    &:hover .badge,
-    &:focus .badge {
-      background-color: ${theme.colors.bg.quaternary};
-    }
-
   }`}
 
-  .badge {
-    transition: background-color ${BUTTON_TRANSITION_TIMING};
+  // This should be sufficient to ensure proper spacing of button content
+  > :not(svg):last-child {
+    margin-right: 0;
   }
 
   // Margin is set to -8px to compensate for empty space
   // around the actual icon graphic in the svg
-  svg.main-icon {
-    height: 32px;
+  .main-icon {
+    height: ${THEME_CONSTANTS.ICON_SIZE}px;
     width: auto;
     margin: -8px;
     display: block;
@@ -103,11 +91,11 @@ const Button = styled(dsButton)`
 Button.propTypes = {
   hasText: PropTypes.bool,
   isOpen: PropTypes.bool,
-  $size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 };
 
 // `badgeSize` is the default height and min-width of the badge circle/oval
-// Hard-coded here, but can be overridden by `$size` prop in the component
+// Hard-coded here, but can be overridden by `size` prop in the component
 const badgeSize = 22;
 
 // Defaults for badge come from typography.presets.label.small
@@ -116,31 +104,27 @@ const badgeText =
     THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL
   ];
 
-// TODO: Extract `CountBadge` to its own component
-// Props prefixed with `$` won't leak into element attributes
-// (`theme` is handled internally by Styled Components)
-// padding and border-radius properties use css `calc()` so units
-// other than px can be used for $size and still display correctly
-const CountBadge = styled(Text).attrs({ as: 'span', className: 'badge' })`
-  ${({ $size = badgeSize, $fontSize = badgeText.size, theme }) => css`
-    min-width: ${resolveSizeUnits($size)};
+// TODO: Extract `CountBadge` to its own component?
+const CountBadge = styled(Text).attrs({ as: 'span' })`
+  ${({ size = badgeSize, fontSize = badgeText.size, theme }) => css`
+    min-width: ${size}px;
     width: auto;
-    height: ${resolveSizeUnits($size)};
-    padding: 0 calc(${resolveSizeUnits($size)} / 4);
-    margin-left: 10px;
+    height: ${size}px;
+    padding: 0 ${size / 4}px;
+    margin: 0 8px;
     display: flex;
     align-items: center;
     justify-content: center;
     color: ${theme.colors.fg.primary};
-    background-color: ${theme.colors.bg.tertiary};
-    border-radius: calc(${resolveSizeUnits($size)} / 2);
-    font-size: ${resolveSizeUnits($fontSize)};
+    background-color: ${theme.colors.bg.quaternary};
+    border-radius: 9999px;
+    font-size: ${fontSize}px;
     line-height: 0;
   `}
 `;
 CountBadge.propTypes = {
-  $size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  $fontSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  fontSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 };
 
 export const ToggleButton = forwardRef(
@@ -181,13 +165,9 @@ export const ToggleButton = forwardRef(
           size={BUTTON_SIZES.MEDIUM}
           {...rest}
         >
-          {MainIcon && <MainIcon className={'main-icon'} />}
+          {MainIcon && <MainIcon className="main-icon" />}
           {copy}
-          {hasNotifications && (
-            <CountBadge className={isOpen ? 'open' : ''}>
-              {notificationCount}
-            </CountBadge>
-          )}
+          {hasNotifications && <CountBadge>{notificationCount}</CountBadge>}
           {hasMenuList && <Disclosure direction="down" isOpen={isOpen} />}
         </Button>
       </Tooltip>

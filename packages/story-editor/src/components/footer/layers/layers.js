@@ -41,11 +41,6 @@ const StyledNavigationWrapper = styled(NavigationWrapper)`
   width: 260px;
 `;
 
-// Set a min-width to prevent shifting with double-digit layer count
-const buttonStyle = {
-  minWidth: 120,
-};
-
 function Layers() {
   const layersLength = useLayers().length;
   const [isOpen, setIsOpen] = useState(false);
@@ -84,7 +79,6 @@ function Layers() {
           __('Layers (%d)', 'web-stories'),
           layersLength
         )}
-        style={buttonStyle}
       />
     </>
   );
