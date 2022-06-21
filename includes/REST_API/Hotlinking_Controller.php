@@ -42,6 +42,16 @@ use WP_REST_Server;
  * API endpoint for pinging and hotlinking media URLs.
  *
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
+ *
+ * @phpstan-type URLParts array{
+ *   scheme?: string,
+ *   user?: string,
+ *   pass?: string,
+ *   host?: string,
+ *   port?: int,
+ *   path?: string,
+ *   query?: string
+ * }
  */
 class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	public const PROXY_HEADERS_ALLOWLIST = [
@@ -582,6 +592,12 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 			return false;
 		}
 
+		/**
+		 * URL parts.
+		 *
+		 * @var array|false $parsed_url
+		 * @phpstan-var URLParts|false $parsed_url
+		 */
 		$parsed_url = wp_parse_url( $url );
 		if ( ! $parsed_url || ! isset( $parsed_url['host'], $parsed_url['scheme'] ) ) {
 			return false;
@@ -602,6 +618,12 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 		 */
 		$home_url = get_option( 'home' );
 
+		/**
+		 * URL parts of home URL.
+		 *
+		 * @var array|false $parsed_home
+		 * @phpstan-var URLParts|false $parsed_home
+		 */
 		$parsed_home = wp_parse_url( $home_url );
 
 		if ( ! $parsed_home ) {
@@ -652,7 +674,7 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 			return $validated_url;
 		}
 
-		if ( $same_host && isset( $parsed_home['port'], $parsed_url['port'] ) && $parsed_home['port'] === $parsed_url['port'] ) {
+		if ( $same_host && isset( $parsed_home['port'] ) && $parsed_home['port'] === $parsed_url['port'] ) {
 			return $validated_url;
 		}
 
