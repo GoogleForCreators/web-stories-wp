@@ -101,7 +101,7 @@ function ReorderableSeparator({
 ReorderableSeparator.propTypes = {
   position: PropTypes.number.isRequired,
   groupId: PropTypes.string,
-  isNested: PropTypes.bool,
+  isNested: PropTypes.string,
   nestedOffset: PropTypes.bool,
   nestedOffsetCalcFunc: PropTypes.func,
   children: PropTypes.oneOfType([

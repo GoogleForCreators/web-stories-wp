@@ -23,6 +23,11 @@ import {
   duplicateElement,
 } from '@googleforcreators/elements';
 
+/**
+ * Internal dependencies
+ */
+import generateGroupName from './generateGroupName';
+
 const DOUBLE_DASH_ESCAPE = '_DOUBLEDASH_';
 
 /**
@@ -67,6 +72,11 @@ export function processPastedElements(content, currentPage) {
       { animations: [], elements: [] }
     );
 
+    const groups = { ...payload.groups };
+    for (const prop of Object.keys(groups)) {
+      groups[prop].name = generateGroupName(groups, groups[prop].name);
+    }
+
     foundElementsAndAnimations = {
       animations: [
         ...foundElementsAndAnimations.animations,
@@ -76,7 +86,7 @@ export function processPastedElements(content, currentPage) {
         ...foundElementsAndAnimations.elements,
         ...processedPayload.elements,
       ],
-      groups: payload.groups,
+      groups: groups,
     };
     return foundElementsAndAnimations;
   }
