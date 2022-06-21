@@ -31,20 +31,18 @@ function useEyeDropperApi({ onChange }) {
     }
   }, [isEyeDropperApiSupported]);
 
-  const openEyeDropper = useCallback(() => {
+  const openEyeDropper = useCallback(async () => {
     if (!eyeDropper.current || !isEyeDropperApiSupported) {
       return;
     }
 
-    eyeDropper.current
-      .open()
-      .then((result) => {
-        onChange(getSolidFromHex(result.sRGBHex.substring(1)).color);
-      })
-      .catch((e) => {
-        //eslint-disable-next-line no-console -- Surface error for debugging.
-        console.log(e.message);
-      });
+    try {
+      const { sRGBHex } = await eyeDropper.current.open();
+      onChange(getSolidFromHex(sRGBHex.substring(1)).color);
+    } catch (e) {
+      //eslint-disable-next-line no-console -- Surface error for debugging.
+      console.log(e.message);
+    };
   }, [eyeDropper, isEyeDropperApiSupported, onChange]);
 
   return { isEyeDropperApiSupported, openEyeDropper };
