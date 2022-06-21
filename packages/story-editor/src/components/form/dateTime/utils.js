@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,22 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/**
- * Update story properties.
- *
- * No validation is performed and existing values are overwritten.
- *
- * @param {Object} state Current state
- * @param {Object} payload Action payload
- * @param {Object | Function} payload.reducer reducer to apply to state
- * @return {Object} New state
- */
-function updateStateWithReducer(state, { reducer }) {
-  if (typeof reducer !== 'function') {
-    return state;
-  }
-  return reducer(state);
+export function getCalendarType(weekStartsOn) {
+  const calendarTypes = {
+    0: 'US',
+    1: 'ISO 8601',
+    5: 'Hebrew',
+    6: 'Arabic',
+  };
+  return calendarTypes[weekStartsOn] || 'ISO 8601';
 }
-
-export default updateStateWithReducer;
