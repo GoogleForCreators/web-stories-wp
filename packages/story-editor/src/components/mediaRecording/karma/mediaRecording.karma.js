@@ -129,7 +129,38 @@ describe('Media Recording', () => {
       ).toBeNull();
     });
 
-    it('should record a video', async () => {
+    it('should error when trying to record a video', async () => {
+      await fixture.events.click(fixture.editor.library.media.mediaRecording);
+      await waitFor(() => {
+        expect(fixture.editor.canvas.mediaRecordingLayer).not.toBeNull();
+      });
+      expect(
+        fixture.editor.canvas.mediaRecordingLayer.recordVideo
+      ).not.toBeNull();
+      expect(
+        fixture.editor.canvas.mediaRecordingLayer.takePhoto
+      ).not.toBeNull();
+
+      await fixture.snapshot();
+
+      await fixture.events.click(
+        fixture.editor.canvas.mediaRecordingLayer.recordVideo
+      );
+
+      expect(
+        fixture.editor.canvas.quickActionMenu.optionsButton.disabled
+      ).toBeTrue();
+
+      await fixture.events.sleep((COUNTDOWN_TIME_IN_SECONDS + 1) * 1000);
+
+      const errorMessage = fixture.screen.queryByText(
+        'Could not initialize recording.'
+      );
+      expect(errorMessage).toBeTruthy();
+    });
+
+    // eslint-disable-next-line jasmine/no-disabled-tests -- MediaRecorder does not seem to work in tests.
+    xit('should record a video', async () => {
       await fixture.events.click(fixture.editor.library.media.mediaRecording);
       await waitFor(() => {
         expect(fixture.editor.canvas.mediaRecordingLayer).not.toBeNull();
