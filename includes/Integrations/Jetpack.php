@@ -38,13 +38,35 @@ use WP_REST_Response;
  *
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  *
- * @phpstan-type EnhancedAttachmentMetadata false|array{
+ * @phpstan-type AttachmentData array{
+ *   media_details?: array{
+ *     length?: int,
+ *     length_formatted?: string
+ *   },
+ *   url?: string,
+ *   featured_media_src?: string
+ * }
+ *
+ * @phpstan-type EnhancedAttachmentMetadata array{
  *   width: int,
  *   height: int,
  *   file: string,
- *   sizes: array,
- *   image_meta: array,
- *   videopress: array,
+ *   sizes: mixed,
+ *   image_meta: mixed,
+ *   videopress?: array{
+ *     duration: int,
+ *     poster: string,
+ *     width: int,
+ *     height: int,
+ *     file_url_base?: array{
+ *       https: string
+ *     },
+ *     files?: array{
+ *       hd?: array{
+ *         mp4?: string
+ *       }
+ *     }
+ *   }
  * }
  */
 class Jetpack extends Service_Base {
@@ -136,13 +158,19 @@ class Jetpack extends Service_Base {
 	 *
 	 * @since 1.7.2
 	 *
-	 * @param array|mixed $mime_types Associative array of allowed mime types per media type (image, audio, video).
-	 * @return array|mixed
+	 * @param array{video?: string[]}|mixed $mime_types Associative array of allowed mime types per media type (image, audio, video).
+	 * @return array{video?: string[]}|mixed
 	 */
 	public function add_videopress( $mime_types ) {
 		if ( ! \is_array( $mime_types ) ) {
 			return $mime_types;
 		}
+
+		/**
+		 * Mime types config.
+		 *
+		 * @var array{video?: string[]} $mime_types
+		 */
 		$mime_types['video'][] = self::VIDEOPRESS_MIME_TYPE;
 
 		return $mime_types;
@@ -182,6 +210,9 @@ class Jetpack extends Service_Base {
 	 * @param array|mixed $data   Array of prepared attachment data. @see wp_prepare_attachment_for_js().
 	 * @param WP_Post     $attachment Attachment object.
 	 * @return array|mixed
+	 *
+	 * @phpstan-param AttachmentData $data
+	 * @phpstan-return AttachmentData|mixed
 	 */
 	public function filter_admin_ajax_response( $data, $attachment ) {
 		if ( self::VIDEOPRESS_MIME_TYPE !== $attachment->post_mime_type ) {
@@ -202,7 +233,8 @@ class Jetpack extends Service_Base {
 		/**
 		 * Jetpack adds an additional field to regular attachment metadata.
 		 *
-		 * @var EnhancedAttachmentMetadata $metadata
+		 * @var array $metadata
+		 * @phpstan-var EnhancedAttachmentMetadata|false $metadata
 		 */
 		$metadata = wp_get_attachment_metadata( $attachment->ID );
 
@@ -247,7 +279,7 @@ class Jetpack extends Service_Base {
 		/**
 		 * Response data.
 		 *
-		 * @var array<string, string|array|bool> $data
+		 * @var array<string, string|array<string, int|string>|bool> $data
 		 */
 		$data = $response->get_data();
 
@@ -260,7 +292,7 @@ class Jetpack extends Service_Base {
 		/**
 		 * Jetpack adds an additional field to regular attachment metadata.
 		 *
-		 * @var EnhancedAttachmentMetadata $metadata
+		 * @var EnhancedAttachmentMetadata|false $metadata
 		 */
 		$metadata = wp_get_attachment_metadata( $post->ID );
 

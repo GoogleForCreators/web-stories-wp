@@ -43,6 +43,8 @@ use WP_Post;
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  *
+ * @phpstan-import-type StoryAttributes from \Google\Web_Stories\Story_Query
+ *
  * @implements Iterator<int, Story>
  */
 abstract class Renderer implements RenderingInterface, Iterator {
@@ -99,14 +101,15 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	/**
 	 * Story attributes
 	 *
-	 * @var array An array of story attributes.
+	 * @var array<string, string|int|bool> An array of story attributes.
+	 * @phpstan-var StoryAttributes
 	 */
 	protected $attributes = [];
 
 	/**
 	 * Story posts.
 	 *
-	 * @var array An array of story posts.
+	 * @var Story[] An array of story posts.
 	 */
 	protected $stories = [];
 
@@ -172,7 +175,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param array $args Array of rendering arguments.
+	 * @param array<string,mixed> $args Array of rendering arguments.
 	 * @return string
 	 */
 	public function render( array $args = [] ): string {
@@ -217,6 +220,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @return bool|float|int|string|void|null
 	 */
+	#[\ReturnTypeWillChange]
 	public function key() {
 		return $this->position;
 	}
@@ -366,8 +370,11 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 * @return void
 	 */
 	protected function maybe_render_archive_link(): void {
-
-		if ( empty( $this->attributes['show_archive_link'] ) || true !== $this->attributes['show_archive_link'] ) {
+		if (
+			empty( $this->attributes['show_archive_link'] ) ||
+			true !== $this->attributes['show_archive_link'] ||
+			empty( $this->attributes['archive_link_label'] )
+		) {
 			return;
 		}
 
@@ -459,11 +466,10 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		}
 
 		if ( ! empty( $this->attributes['image_alignment'] ) && ( 'right' === $this->attributes['image_alignment'] ) ) {
-			$single_story_classes[] = sprintf( 'image-align-right' );
+			$single_story_classes[] = 'image-align-right';
 		}
 
-		$single_story_classes = array_filter( $single_story_classes );
-		$classes              = implode( ' ', $single_story_classes );
+		$classes = implode( ' ', $single_story_classes );
 
 		/**
 		 * Filters the web stories renderer single story classes.
@@ -483,7 +489,9 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 * @return string Style string.
 	 */
 	protected function get_container_styles(): string {
-		$story_styles  = $this->is_view_type( 'circles' ) ? sprintf( '--ws-circle-size:%1$dpx', $this->attributes['circle_size'] ) : '';
+		$story_styles  = ! empty( $this->attributes['circle_size'] ) && $this->is_view_type( 'circles' ) ?
+			sprintf( '--ws-circle-size:%1$dpx', $this->attributes['circle_size'] ) :
+			'';
 		$story_styles .= $this->is_view_type( 'carousel' ) ? sprintf( '--ws-story-max-width:%1$dpx', $this->width ) : '';
 
 		/**
@@ -667,13 +675,13 @@ abstract class Renderer implements RenderingInterface, Iterator {
 
 		?>
 		<div class="web-stories-list__story-content-overlay">
-			<?php if ( $this->attributes['show_title'] ) { ?>
+			<?php if ( ! empty( $this->attributes['show_title'] ) ) { ?>
 				<div class="story-content-overlay__title">
 					<?php echo esc_html( $story->get_title() ); ?>
 				</div>
 			<?php } ?>
 
-			<?php if ( $this->attributes['show_excerpt'] ) { ?>
+			<?php if ( ! empty( $this->attributes['show_excerpt'] ) ) { ?>
 				<div class="story-content-overlay__excerpt">
 					<?php echo esc_html( $story->get_excerpt() ); ?>
 				</div>

@@ -115,8 +115,8 @@ class Stories_Users_Controller extends WP_REST_Users_Controller implements Servi
 	 *
 	 * @since 1.16.0
 	 *
-	 * @param array $prepared_args Array of arguments for WP_User_Query.
-	 * @return array Filtered args.
+	 * @param array{who?: string, capabilities?: string[]} $prepared_args Array of arguments for WP_User_Query.
+	 * @return array<string,mixed> Filtered args.
 	 */
 	public function filter_user_query( $prepared_args ): array {
 		$registered = $this->get_collection_params();

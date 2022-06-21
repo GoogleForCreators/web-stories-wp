@@ -41,6 +41,16 @@ use WP_REST_Server;
  * API endpoint to allow parsing of metadata from a URL
  *
  * Class Link_Controller
+ *
+ * @phpstan-type SchemaEntry array{
+ *   description: string,
+ *   type: string,
+ *   context: string[],
+ *   default?: mixed,
+ * }
+ * @phpstan-type Schema array{
+ *   properties: array<string, SchemaEntry>
+ * }
  */
 class Link_Controller extends REST_Controller implements HasRequirements {
 
@@ -143,7 +153,7 @@ class Link_Controller extends REST_Controller implements HasRequirements {
 			/**
 			 * Decoded cached link data.
 			 *
-			 * @var array|null $link
+			 * @var array{title: string, image: string, description: string}|null $link
 			 */
 			$link = json_decode( $data, true );
 
@@ -341,8 +351,8 @@ class Link_Controller extends REST_Controller implements HasRequirements {
 	 *
 	 * @since 1.10.0
 	 *
-	 * @param array           $link Link value, default to false is not set.
-	 * @param WP_REST_Request $request Request object.
+	 * @param array{title: string, image: string, description: string} $link Link value, default to false is not set.
+	 * @param WP_REST_Request                                          $request Request object.
 	 * @return WP_REST_Response|WP_Error Response object.
 	 */
 	public function prepare_item_for_response( $link, $request ) {
@@ -353,7 +363,7 @@ class Link_Controller extends REST_Controller implements HasRequirements {
 
 		$check_fields = array_keys( $link );
 		foreach ( $check_fields as $check_field ) {
-			if ( rest_is_field_included( $check_field, $fields ) ) {
+			if ( ! empty( $schema['properties'][ $check_field ] ) && rest_is_field_included( $check_field, $fields ) ) {
 				$data[ $check_field ] = rest_sanitize_value_from_schema( $link[ $check_field ], $schema['properties'][ $check_field ] );
 			}
 		}
@@ -377,10 +387,18 @@ class Link_Controller extends REST_Controller implements HasRequirements {
 	 * @since 1.10.0
 	 *
 	 * @return array Item schema data.
+	 *
+	 * @phpstan-return Schema
 	 */
 	public function get_item_schema(): array {
 		if ( $this->schema ) {
-			return $this->add_additional_fields_schema( $this->schema );
+			/**
+			 * Schema.
+			 *
+			 * @phpstan-var Schema $schema
+			 */
+			$schema = $this->add_additional_fields_schema( $this->schema );
+			return $schema;
 		}
 
 		$schema = [
@@ -409,7 +427,13 @@ class Link_Controller extends REST_Controller implements HasRequirements {
 
 		$this->schema = $schema;
 
-		return $this->add_additional_fields_schema( $this->schema );
+		/**
+		 * Schema
+		 *
+		 * @phpstan-var Schema $schema
+		 */
+		$schema = $this->add_additional_fields_schema( $this->schema );
+		return $schema;
 	}
 
 	/**
