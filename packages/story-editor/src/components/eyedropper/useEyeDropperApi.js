@@ -42,7 +42,7 @@ function useEyeDropperApi({ onChange }) {
     } catch (e) {
       //eslint-disable-next-line no-console -- Surface error for debugging.
       console.log(e.message);
-    };
+    }
   }, [eyeDropper, isEyeDropperApiSupported, onChange]);
 
   return { isEyeDropperApiSupported, openEyeDropper };
