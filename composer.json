@@ -29,7 +29,7 @@
     "phpstan/extension-installer": "^1.1",
     "roave/security-advisories": "dev-latest",
     "sirbrillig/phpcs-variable-analysis": "^2.8",
-    "slevomat/coding-standard": "^7.0.18",
+    "slevomat/coding-standard": "^8.0.0",
     "sniccowp/php-scoper-wordpress-excludes": "^6.0",
     "szepeviktor/phpstan-wordpress": "^1.0",
     "wp-coding-standards/wpcs": "^2.3",
