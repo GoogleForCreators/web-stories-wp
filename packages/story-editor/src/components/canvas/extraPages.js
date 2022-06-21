@@ -140,7 +140,7 @@ function ExtraPages({ isPrevious = false }) {
               page={pages[pageNum]}
               onClick={clickPage(pages[pageNum].id)}
               aria-label={sprintf(
-                /* translators: %s: Page number */
+                /* translators: %s: page number. */
                 __('Go to page %s', 'web-stories'),
                 pageNum + 1
               )}
