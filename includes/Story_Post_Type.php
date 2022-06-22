@@ -33,6 +33,8 @@ use WP_Post;
 
 /**
  * Class Story_Post_Type.
+ *
+ * @phpstan-import-type PostTypeArgs from \Google\Web_Stories\Post_Type_Base
  */
 class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta {
 
@@ -123,7 +125,9 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 	 *
 	 * @since 1.12.0
 	 *
-	 * @return array
+	 * @return array<string, mixed> Post type args.
+	 *
+	 * @phpstan-return PostTypeArgs
 	 */
 	protected function get_args(): array {
 		return [
@@ -227,11 +231,11 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param array|mixed $fields Array of allowed revision fields.
-	 * @param array       $story  Story post array.
+	 * @param array|mixed         $fields Array of allowed revision fields.
+	 * @param array<string,mixed> $story  Story post array.
 	 * @return array|mixed Array of allowed fields.
 	 */
-	public function filter_revision_fields( $fields, $story ) {
+	public function filter_revision_fields( $fields, array $story ) {
 		if ( ! \is_array( $fields ) ) {
 			return $fields;
 		}

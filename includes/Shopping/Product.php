@@ -30,6 +30,26 @@ use JsonSerializable;
 
 /**
  * Class Product
+ *
+ * @phpstan-type ProductImage array{
+ *   url: string,
+ *   alt: string
+ * }
+ * @phpstan-type ProductData array{
+ *   productId?: string,
+ *   productTitle?: string,
+ *   productDetails?: string,
+ *   productBrand?: string,
+ *   productUrl?: string,
+ *   productImages?: ProductImage[],
+ *   productPrice?: float,
+ *   productPriceCurrency?: string,
+ *   aggregateRating?: array{
+ *     ratingValue?: float,
+ *     reviewCount?: int,
+ *     reviewUrl?: string
+ *   }
+ * }
  */
 class Product implements JsonSerializable {
 	/**
@@ -62,28 +82,33 @@ class Product implements JsonSerializable {
 	 * @var string
 	 */
 	protected $price_currency = '';
+
 	/**
 	 * Product images as an array.
 	 *
-	 * @var array
+	 * @var array{url: string, alt: string}[]
+	 * @phpstan-var ProductImage[]
 	 */
 	protected $images = [];
+
 	/**
 	 * Product Details.
 	 *
 	 * @var string
 	 */
 	protected $details = '';
+
 	/**
 	 * Product url.
 	 *
 	 * @var string
 	 */
 	protected $url = '';
+
 	/**
 	 * Product rating.
 	 *
-	 * @var array
+	 * @var array{rating_value: float, review_count: int, review_url: string}
 	 */
 	protected $aggregate_rating;
 
@@ -92,7 +117,7 @@ class Product implements JsonSerializable {
 	 *
 	 * @since 1.21.0
 	 *
-	 * @param array $product Array of attributes.
+	 * @param array<string,mixed> $product Array of attributes.
 	 */
 	public function __construct( array $product = [] ) {
 		foreach ( $product as $key => $value ) {
@@ -152,7 +177,7 @@ class Product implements JsonSerializable {
 	 *
 	 * @since 1.21.0
 	 *
-	 * @return array
+	 * @return array{url: string, alt: string}[]
 	 */
 	public function get_images(): array {
 		return $this->images;
@@ -180,6 +205,8 @@ class Product implements JsonSerializable {
 	 * Get rating.
 	 *
 	 * @since 1.21.0
+	 *
+	 * @return array{rating_value: float, review_count: int, review_url: string}
 	 */
 	public function get_aggregate_rating(): ?array {
 		return $this->aggregate_rating;
@@ -192,6 +219,7 @@ class Product implements JsonSerializable {
 	 *
 	 * @return mixed Any JSON-serializable value.
 	 */
+	#[\ReturnTypeWillChange]
 	public function jsonSerialize() { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName.MethodNameInvalid
 		$rating = $this->get_aggregate_rating();
 

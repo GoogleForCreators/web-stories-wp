@@ -22,7 +22,11 @@ import { produce } from 'immer';
 /**
  * Internal dependencies
  */
+import { MAX_PRODUCTS_PER_PAGE } from '../../../../constants';
 import { exclusion } from './utils';
+
+const isProduct = ({ type }) => type === ELEMENT_TYPES.PRODUCT;
+const isNotProduct = ({ type }) => type !== ELEMENT_TYPES.PRODUCT;
 
 /**
  * Add elements to current page.
@@ -54,28 +58,42 @@ const addElements = produce((draft, { elements }) => {
     return;
   }
 
-  const currentPageProductIds = page.elements
-    ?.filter(({ type }) => type === ELEMENT_TYPES.PRODUCT)
-    .map(({ product }) => product?.productId);
+  // If an element is added, the id is added to this array
+  const addedIds = [];
 
-  const newElementDuplicateID = newElements
-    .filter(
-      ({ type, product }) =>
-        type === ELEMENT_TYPES.PRODUCT &&
-        currentPageProductIds.includes(product?.productId)
-    )
-    .map(({ id }) => id);
-
-  const newElementNoDuplicateProducts = newElements.filter(
-    ({ id }) => newElementDuplicateID && !newElementDuplicateID.includes(id)
-  );
-
-  if (newElementNoDuplicateProducts.length === 0) {
-    return;
+  // Always add non-products if any
+  const nonProducts = newElements.filter(isNotProduct);
+  if (nonProducts.length) {
+    page.elements = page.elements.concat(nonProducts);
+    addedIds.push(...nonProducts.map(({ id }) => id));
   }
 
-  page.elements = page.elements.concat(newElementNoDuplicateProducts);
-  draft.selection = newElements.map(({ id }) => id);
+  // For products, first filter out products that already exist on the page
+  const newProducts = newElements.filter(isProduct);
+  if (newProducts.length) {
+    const currentProducts = page.elements
+      .filter(isProduct)
+      .map(({ product }) => product?.productId);
+
+    const uniqueProducts = newProducts.filter(
+      ({ product }) => !currentProducts.includes(product?.productId)
+    );
+
+    // Then, if the number of products after adding these would still be within
+    // the limit, add them all, otherwise add none
+    if (
+      currentProducts.length + uniqueProducts.length <=
+      MAX_PRODUCTS_PER_PAGE
+    ) {
+      page.elements = page.elements.concat(uniqueProducts);
+      addedIds.push(...uniqueProducts.map(({ id }) => id));
+    }
+  }
+
+  // If any elements were added, update selection to match the ids of those
+  if (addedIds.length > 0) {
+    draft.selection = addedIds;
+  }
 });
 
 export default addElements;

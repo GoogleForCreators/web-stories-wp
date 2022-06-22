@@ -28,12 +28,14 @@ import {
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { _x } from '@googleforcreators/i18n';
+import { getOptions } from '@googleforcreators/date';
 import { CircularProgress } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
  */
 import CalendarWrapper from './calendarWrapper';
+import { getCalendarType } from './utils';
 
 const Calendar = lazy(() =>
   import(/* webpackChunkName: "chunk-react-calendar" */ 'react-calendar')
@@ -115,7 +117,8 @@ function DatePicker({ currentDate, onChange, onViewChange }) {
       clearTimeout(timeout);
     };
   }, [updateTabIndexes]);
-
+  const { weekStartsOn } = getOptions();
+  const calendarType = getCalendarType(weekStartsOn);
   return (
     <Suspense
       fallback={
@@ -127,6 +130,7 @@ function DatePicker({ currentDate, onChange, onViewChange }) {
       <CalendarWrapper ref={nodeRef}>
         <Calendar
           value={value}
+          calendarType={calendarType}
           onChange={handleOnChange}
           onViewChange={onViewChange}
           onActiveStartDateChange={() => updateTabIndexes(true /* Set focus */)}

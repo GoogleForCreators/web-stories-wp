@@ -22,7 +22,7 @@ import getVideoLengthDisplay from './getVideoLengthDisplay';
 /**
  * Get video length from a video.
  *
- * @param {HTMLVideoElement} video Video element.
+ * @param {HTMLVideoElement | Object<{duration: number}>} video Video element.
  * @return {Object<{length: number, lengthFormatted: string}>} Video length information.
  */
 function getVideoLength(video) {

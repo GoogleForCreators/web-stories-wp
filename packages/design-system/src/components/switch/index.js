@@ -33,7 +33,7 @@ const VALUES = {
   OFF: 'OFF',
 };
 
-const VisuallyHiddenRadioGroupLabel = styled.h3`
+const VisuallyHiddenRadioGroupLabel = styled.p`
   ${themeHelpers.visuallyHidden};
 `;
 
@@ -236,9 +236,9 @@ export const SwitchPropTypes = {
   groupLabel: PropTypes.string.isRequired,
   id: PropTypes.string,
   name: PropTypes.string.isRequired,
-  offLabel: PropTypes.string.isRequired,
+  offLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
   onChange: PropTypes.func.isRequired,
-  onLabel: PropTypes.string.isRequired,
+  onLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
   value: PropTypes.bool,
 };
 Switch.propTypes = SwitchPropTypes;

@@ -34,11 +34,48 @@ use WP_Http;
 /**
  * Class Shopify_Query
  *
- * @phpstan-type ShopifyGraphQLError array{message: string, extensions: array{code: string, requestId: string}}[]
- * @phpstan-type ShopifyGraphQLPriceRange array{minVariantPrice: array{amount: int, currencyCode: string}}
- * @phpstan-type ShopifyGraphQLProductImage array{url: string, altText: string}
- * @phpstan-type ShopifyGraphQLProduct array{id: string, handle: string, title: string, vendor: string, description: string, onlineStoreUrl?: string, images: array{edges: array{node: ShopifyGraphQLProductImage}[]}, priceRange: ShopifyGraphQLPriceRange}
- * @phpstan-type ShopifyGraphQLResponse array{errors?: ShopifyGraphQLError, data: array{products: array{edges: array{node: ShopifyGraphQLProduct}[], pageInfo: array{hasNextPage: bool, endCursor: string}}}}
+ * @phpstan-type ShopifyGraphQLError array{
+ *   message: string,
+ *   extensions: array{code: string, requestId: string}
+ * }[]
+ * @phpstan-type ShopifyGraphQLPriceRange array{
+ *   minVariantPrice: array{
+ *     amount: int,
+ *     currencyCode: string
+ *   }
+ * }
+ * @phpstan-type ShopifyGraphQLProductImage array{
+ *   url: string,
+ *   altText?: string
+ * }
+ * @phpstan-type ShopifyGraphQLProduct array{
+ *   id: string,
+ *   handle: string,
+ *   title: string,
+ *   vendor: string,
+ *   description: string,
+ *   onlineStoreUrl?: string,
+ *   images: array{
+ *     edges: array{
+ *       node: ShopifyGraphQLProductImage
+ *     }[]
+ *   },
+ *   priceRange: ShopifyGraphQLPriceRange
+ * }
+ * @phpstan-type ShopifyGraphQLResponse array{
+ *   errors?: ShopifyGraphQLError,
+ *   data: array{
+ *     products: array{
+ *       edges: array{
+ *         node: ShopifyGraphQLProduct
+ *       }[],
+ *       pageInfo: array{
+ *         hasNextPage: bool,
+ *         endCursor: string
+ *       }
+ *     }
+ *   }
+ * }
  */
 class Shopify_Query implements Product_Query {
 	protected const API_VERSION = '2022-04';
@@ -213,6 +250,8 @@ QUERY;
 	 * @param string $order        Whether to order products in ascending or descending order.
 	 *                             Accepts 'asc' (ascending) or 'desc' (descending).
 	 * @return array|WP_Error      Response data or error object on failure.
+	 *
+	 * @phpstan-return ShopifyGraphQLResponse|WP_Error
 	 */
 	protected function get_remote_products( string $search_term, string $after, int $per_page, string $orderby, string $order ) {
 		/**
@@ -228,7 +267,13 @@ QUERY;
 		$data = get_transient( $cache_key );
 
 		if ( \is_string( $data ) && ! empty( $data ) ) {
-			return (array) json_decode( $data, true );
+			/**
+			 * Cached response.
+			 *
+			 * @phpstan-var ShopifyGraphQLResponse $cached_result
+			 */
+			$cached_result = (array) json_decode( $data, true );
+			return $cached_result;
 		}
 
 		$query = $this->get_products_query( $search_term, $after, $per_page, $orderby, $order );
@@ -240,7 +285,8 @@ QUERY;
 		/**
 		 * Shopify GraphQL API response.
 		 *
-		 * @var ShopifyGraphQLResponse $result
+		 * @var array $result
+		 * @phpstan-var ShopifyGraphQLResponse $result
 		 */
 		$result = json_decode( $body, true );
 		if ( isset( $result['errors'] ) ) {
@@ -305,6 +351,8 @@ QUERY;
 	 * @param string $order       Whether to order products in ascending or descending order.
 	 *                            Accepts 'asc' (ascending) or 'desc' (descending).
 	 * @return array|WP_Error Response data or error object on failure.
+	 *
+	 * @phpstan-return ShopifyGraphQLResponse|WP_Error
 	 */
 	protected function fetch_remote_products( string $search_term, int $page, int $per_page, string $orderby, string $order ) {
 		$after = '';
@@ -338,7 +386,7 @@ QUERY;
 	 * @param string $orderby     Sort retrieved products by parameter. Default 'date'.
 	 * @param string $order       Whether to order products in ascending or descending order.
 	 *                            Accepts 'asc' (ascending) or 'desc' (descending). Default 'desc'.
-	 * @return array|WP_Error
+	 * @return array{products: array<Product>, has_next_page: bool}|WP_Error
 	 */
 	public function get_search( string $search_term, int $page = 1, int $per_page = 100, string $orderby = 'date', string $order = 'desc' ) {
 		$result = $this->fetch_remote_products( $search_term, $page, $per_page, $orderby, $order );
@@ -348,7 +396,7 @@ QUERY;
 
 		$products = [];
 
-		$has_next_page = $result['data']['products']['pageInfo']['hasNextPage'] ?? false;
+		$has_next_page = $result['data']['products']['pageInfo']['hasNextPage'];
 
 		foreach ( $result['data']['products']['edges'] as $edge ) {
 			$product = $edge['node'];

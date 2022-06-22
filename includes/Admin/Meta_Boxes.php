@@ -132,7 +132,7 @@ class Meta_Boxes extends Service_Base {
 	 *
 	 * @see the_block_editor_meta_boxes()
 	 *
-	 * @return array List of meta boxes per location.
+	 * @return array<string, array<int, array{id: string, title: string}>> List of meta boxes per location.
 	 */
 	public function get_meta_boxes_per_location(): array {
 		global $wp_meta_boxes;

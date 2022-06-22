@@ -34,7 +34,7 @@ import { produce } from 'immer';
  * @param {Object} state Current state
  * @param {Object} payload Action payload
  * @param {string} payload.elementId Id to either add or remove from selection.
- * @param {boolean} payload.withLinked With linked.
+ * @param {boolean} payload.withLinked Include elements from the group?
  * @return {Object} New state
  */
 const toggleElement = produce((draft, { elementId, withLinked = false }) => {
