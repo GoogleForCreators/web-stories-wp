@@ -246,6 +246,13 @@ function BackgroundAudioPanelContent({
     []
   );
 
+  const handleRemove = useCallback(() => {
+    if (playerRef.current) {
+      playerRef.current.pause();
+    }
+    updateBackgroundAudio(null);
+  }, []);
+
   const options = [
     hasUploadMediaAction && {
       label: __('Upload a file', 'web-stories'),
@@ -305,13 +312,7 @@ function BackgroundAudioPanelContent({
             title={resource.src.split('/').pop()}
             isExternal={!resource.id}
             options={options}
-            onRemove={() => {
-              if (playerRef.current) {
-                playerRef.current.pause();
-              }
-
-              updateBackgroundAudio(null);
-            }}
+            onRemove={handleRemove}
             removeItemLabel={__('Remove file', 'web-stories')}
           >
             <AudioPlayer
