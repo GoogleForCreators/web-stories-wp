@@ -254,6 +254,7 @@ export const MediaInput = forwardRef(function Media(
         placement={PLACEMENT.BOTTOM_END}
         anchor={internalRef}
         isOpen={isMenuOpen}
+        zIndex={11}
       >
         <Menu
           parentId={buttonId}
