@@ -251,7 +251,7 @@ function BackgroundAudioPanelContent({
       playerRef.current.pause();
     }
     updateBackgroundAudio(null);
-  }, []);
+  }, [updateBackgroundAudio, playerRef]);
 
   const options = [
     hasUploadMediaAction && {
