@@ -21,7 +21,7 @@ import { getSolidFromHex } from '@googleforcreators/patterns';
 
 function useEyeDropperApi({ onChange }) {
   const isEyeDropperApiSupported =
-    (typeof window !== 'undefined') & ('EyeDropper' in window);
+    (typeof window !== 'undefined') && ('EyeDropper' in window);
 
   const eyeDropper = useRef(false);
 
