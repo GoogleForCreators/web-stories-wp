@@ -44,6 +44,7 @@ function HotlinkModal({
   insertingText = __('Inserting…', 'web-stories'),
   title,
   canUseProxy = true,
+  defaultErrorMsg = null,
 }) {
   const inputRef = useRef(null);
 
@@ -85,8 +86,8 @@ function HotlinkModal({
           ref={inputRef}
           onChange={onChange}
           value={link}
-          hint={errorMsg || description}
-          hasError={Boolean(errorMsg)}
+          hint={defaultErrorMsg || errorMsg || description}
+          hasError={Boolean(defaultErrorMsg) || Boolean(errorMsg)}
           onBlur={onBlur}
           label={__('URL', 'web-stories')}
           type="url"
@@ -107,6 +108,7 @@ HotlinkModal.propTypes = {
   onSelect: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
   canUseProxy: PropTypes.bool,
+  defaultErrorMsg: PropTypes.string,
 };
 
 export default HotlinkModal;
