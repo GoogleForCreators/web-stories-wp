@@ -31,6 +31,7 @@ export default function reshapeStoryObject(originalStoryData) {
     link,
     preview_link: previewLink,
     edit_link: editStoryLink,
+    meta: { web_stories_poster: poster = {} },
     _embedded: {
       author = [{ name: '', id: 0 }],
       'wp:featuredmedia': featuredMedia = [{ source_url: '' }],
@@ -70,10 +71,11 @@ export default function reshapeStoryObject(originalStoryData) {
       avatar: lockUser[0]?.avatar_urls?.['96'] || null,
     },
     bottomTargetAction: editStoryLink,
-    featuredMediaUrl,
+    featuredMediaUrl: poster ? poster?.url : featuredMediaUrl,
     editStoryLink,
     previewLink,
     link,
     capabilities,
+    poster,
   };
 }

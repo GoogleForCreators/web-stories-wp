@@ -22,6 +22,7 @@ export const STORY_FIELDS = [
   'modified',
   'modified_gmt',
   'link',
+  'meta',
   'preview_link',
   'edit_link',
   // _web_stories_envelope will add these fields, we need them too.

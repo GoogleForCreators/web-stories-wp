@@ -67,11 +67,18 @@ const getStorySaveData = (
       currentStoryStyles,
       backgroundAudio,
     },
-    featured_media: featuredMedia.id,
+    featured_media: !featuredMedia.isExternal ? featuredMedia.id : null,
     style_presets: globalStoryStyles,
     meta: {
       web_stories_publisher_logo: publisherLogo?.id,
       web_stories_products: products,
+      web_stories_poster: featuredMedia.isExternal
+        ? {
+            url: featuredMedia.url,
+            width: featuredMedia.width,
+            height: featuredMedia.height,
+          }
+        : {},
     },
     publisher_logo: publisherLogo,
     content: encodeMarkup ? base64Encode(content) : content,
@@ -101,6 +108,7 @@ export function saveStoryById(config, story) {
       'preview_link',
       'edit_link',
       'embed_post_link',
+      'meta',
     ].join(','),
     _embed: STORY_EMBED,
   });
@@ -110,15 +118,17 @@ export function saveStoryById(config, story) {
     data: storySaveData,
     method: 'POST',
   }).then((data) => {
-    const { _embedded: embedded = {}, ...rest } = data;
-
+    const { _embedded: embedded = {}, meta, ...rest } = data;
+    const poster = meta['web_stories_poster'];
+    const featuredmedia = embedded?.['wp:featuredmedia']?.[0];
     return {
       ...snakeToCamelCaseObjectKeys(rest),
       featuredMedia: {
-        id: embedded?.['wp:featuredmedia']?.[0].id || 0,
-        height: embedded?.['wp:featuredmedia']?.[0]?.media_details?.height || 0,
-        width: embedded?.['wp:featuredmedia']?.[0]?.media_details?.width || 0,
-        url: embedded?.['wp:featuredmedia']?.[0]?.source_url || '',
+        id: featuredmedia?.id || 0,
+        height: poster?.height || featuredmedia?.media_details?.height || 0,
+        width: poster?.width || featuredmedia?.media_details?.width || 0,
+        url: poster?.url || featuredmedia?.source_url || '',
+        isExternal: Boolean(poster),
       },
     };
   });
