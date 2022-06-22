@@ -176,7 +176,10 @@ function CanvasProvider({ children }) {
           return SAT.testPolygonPolygon(lassoP, elementP) ? id : null;
         })
         .filter((id) => id);
-      setSelectedElementsById({ elementIds: newSelectedElementIds });
+      setSelectedElementsById({
+        elementIds: newSelectedElementIds,
+        withLinked: true,
+      });
     },
     [elements, setSelectedElementsById]
   );

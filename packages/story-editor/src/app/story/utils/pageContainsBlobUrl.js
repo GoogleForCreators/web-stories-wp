@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,18 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-function removeBlurhashProcessing(state, { id }) {
-  if (!id || !state.blurHashProcessing.includes(id)) {
-    return state;
-  }
-  const currentProcessing = [...state.blurHashProcessing];
-  const blurHashProcessing = currentProcessing.filter((e) => e !== id);
+/**
+ * External dependencies
+ */
+import { isBlobURL } from '@googleforcreators/media';
 
-  return {
-    ...state,
-    blurHashProcessing,
-    blurHashProcessed: [...state.blurHashProcessed, id],
-  };
+function pageContainsBlobUrl(pages) {
+  // skip entries that have a blob url
+  // https://github.com/GoogleForCreators/web-stories-wp/issues/10289
+  return pages.some((page) =>
+    page.elements.some(
+      (element) =>
+        isBlobURL(element?.resource?.src) ||
+        isBlobURL(element?.resource?.poster)
+    )
+  );
 }
 
-export default removeBlurhashProcessing;
+export default pageContainsBlobUrl;

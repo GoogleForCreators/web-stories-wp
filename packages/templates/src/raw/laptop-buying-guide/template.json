@@ -351,25 +351,7 @@
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "id": "1cc6d76a-3b98-40d7-958f-7bab37485254",
-      "animations": [
-        {
-          "id": "69539df0-0c8f-4471-a11b-e0fec238f13c",
-          "type": "effect-pulse",
-          "targets": ["8ea78e0d-d479-4079-96a0-980e10930b0e"],
-          "scale": 0.07,
-          "iterations": 1,
-          "duration": 1200,
-          "delay": 200
-        },
-        {
-          "id": "2a8ea866-d3c9-4155-85e2-8ebcb678b7e9",
-          "type": "effect-whoosh-in",
-          "whooshInDir": "rightToLeft",
-          "duration": 600,
-          "delay": 0,
-          "targets": ["b828e719-9522-422e-9bf8-0582e922f76f"]
-        }
-      ],
+      "animations": [],
       "pageTemplateType": "cover"
     },
     {

@@ -73,6 +73,7 @@ const OptionList = forwardRef(function OptionList(
     focusSearch = noop,
     listId,
     listStyleOverrides,
+    noMatchesFoundLabel = __('No matches found', 'web-stories'),
   },
   listRef
 ) {
@@ -228,7 +229,7 @@ const OptionList = forwardRef(function OptionList(
   }, [focusTrigger]);
 
   return filteredOptions.length <= 0 ? (
-    <NoResult>{__('No matches found', 'web-stories')}</NoResult>
+    <NoResult>{noMatchesFoundLabel}</NoResult>
   ) : (
     <List
       ref={listRef}
@@ -298,6 +299,7 @@ OptionList.propTypes = {
   listId: PropTypes.string.isRequired,
   focusSearch: PropTypes.func,
   listStyleOverrides: PropTypes.array,
+  noMatchesFoundLabel: PropTypes.string,
 };
 
 export default memo(OptionList);

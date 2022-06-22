@@ -29,7 +29,7 @@ import {
   THEME_CONSTANTS,
   Input,
 } from '@googleforcreators/design-system';
-import { useRef, memo, useState } from '@googleforcreators/react';
+import { useRef, memo, useState, useEffect } from '@googleforcreators/react';
 import {
   getDefinitionForType,
   getLayerName,
@@ -45,8 +45,10 @@ import useCORSProxy from '../../../../utils/useCORSProxy';
 import usePerformanceTracking from '../../../../utils/usePerformanceTracking';
 import { TRACKING_EVENTS } from '../../../../constants';
 import Tooltip from '../../../tooltip';
+import useShapeMask from '../../../../utils/useShapeMask';
 import useLayerSelection from './useLayerSelection';
-import { LAYER_HEIGHT } from './constants';
+import ShapeMaskWrapper from './shapeMaskWrapper';
+import { LAYER_HEIGHT, NESTED_PX } from './constants';
 
 const fadeOutCss = css`
   background-color: var(--background-color);
@@ -117,7 +119,7 @@ const LayerButton = styled(Button).attrs({
   align-items: center;
   user-select: none;
   border-radius: 0;
-  padding-left: 12px;
+  padding-left: ${({ isNested }) => (isNested ? NESTED_PX : 12)}px;
   transition: revert;
 
   ${({ isSelected, theme }) =>
@@ -163,7 +165,7 @@ const LayerInputWrapper = styled.div`
   grid-template-columns: 23px 1fr;
   height: 100%;
   width: 100%;
-  padding-left: 12px;
+  padding-left: ${({ isNested }) => (isNested ? NESTED_PX : 12)}px;
   padding-right: 10px;
 
   :hover {
@@ -217,7 +219,6 @@ const LayerDescription = styled.div`
 
 const LayerInputForm = styled(LayerDescription).attrs({ as: 'form' })`
   overflow: visible;
-  margin-left: 2px;
 `;
 
 const LayerText = styled(Text).attrs({
@@ -335,10 +336,12 @@ function Layer({ element }) {
     updateElementById,
     deleteElementById,
     currentPageBackgroundColor,
+    groups,
   } = useStory(({ actions, state }) => ({
     duplicateElementsById: actions.duplicateElementsById,
     deleteElementById: actions.deleteElementById,
     updateElementById: actions.updateElementById,
+    groups: state.currentPage?.groups || {},
     currentPageBackgroundColor:
       !isDefaultBackground || state.currentPage?.backgroundColor,
   }));
@@ -350,6 +353,12 @@ function Layer({ element }) {
     })
   );
 
+  useEffect(() => {
+    setNewLayerName(layerName);
+  }, [layerName]);
+
+  const { hasShapeMask, removeShapeMask } = useShapeMask(element);
+  const removeMaskTitle = __('Unmask', 'web-stories');
   const { getProxiedUrl } = useCORSProxy();
   const layerRef = useRef(null);
   usePerformanceTracking({
@@ -364,8 +373,13 @@ function Layer({ element }) {
   });
 
   const layerId = `layer-${element.id}`;
+  const isNested = element.groupId;
 
-  const lockTitle = element.isLocked
+  const lockTitle = isNested
+    ? element.isLocked
+      ? __('Group is Locked', 'web-stories')
+      : __('Group is Unlocked', 'web-stories')
+    : element.isLocked
     ? __('Unlock Layer', 'web-stories')
     : __('Lock Layer', 'web-stories');
 
@@ -385,12 +399,8 @@ function Layer({ element }) {
   const updateLayerName = () => {
     setRenamableLayer(null);
     const trimmedLayerName = newLayerName.trim();
-    // Don't update name if trimmed layer name is empty.
-    // This means that submitting an empty name will exit renaming, and the
-    // layer name will revert to whatever it was before, ignoring the empty input.
-    if (!trimmedLayerName) {
-      setNewLayerName(layerName);
-    } else {
+    // Only update name if trimmed layer name is not empty.
+    if (trimmedLayerName) {
       updateElementById({
         elementId: element.id,
         properties: { layerName: trimmedLayerName },
@@ -410,21 +420,21 @@ function Layer({ element }) {
 
   const isLayerNamingEnabled = useFeature('layerNaming');
   const isRenameable = renamableLayer?.elementId === element.id;
+  const group = groups[element.groupId];
 
-  const layerGroupName = element.groupId
-    ? `${__('Group', 'web-stories')} ${element.groupId.substr(-3)}: `
-    : null;
-
-  return (
+  // Done like this because of no-unused-vars-before-return
+  return group?.isCollapsed ? null : (
     <LayerContainer>
       {isRenameable && isLayerNamingEnabled ? (
-        <LayerInputWrapper>
+        <LayerInputWrapper isNested={isNested}>
           <LayerIconWrapper>
-            <LayerIcon
-              element={element}
-              getProxiedUrl={getProxiedUrl}
-              currentPageBackgroundColor={currentPageBackgroundColor}
-            />
+            <ShapeMaskWrapper element={element}>
+              <LayerIcon
+                element={element}
+                getProxiedUrl={getProxiedUrl}
+                currentPageBackgroundColor={currentPageBackgroundColor}
+              />
+            </ShapeMaskWrapper>
           </LayerIconWrapper>
           <LayerInputForm onSubmit={handleSubmit}>
             <LayerInput
@@ -446,17 +456,19 @@ function Layer({ element }) {
           id={layerId}
           onClick={handleClick}
           isSelected={isSelected}
+          isNested={isNested}
         >
           <LayerIconWrapper>
-            <LayerIcon
-              element={element}
-              getProxiedUrl={getProxiedUrl}
-              currentPageBackgroundColor={currentPageBackgroundColor}
-            />
+            <ShapeMaskWrapper element={element}>
+              <LayerIcon
+                element={element}
+                getProxiedUrl={getProxiedUrl}
+                currentPageBackgroundColor={currentPageBackgroundColor}
+              />
+            </ShapeMaskWrapper>
           </LayerIconWrapper>
           <LayerDescription>
             <LayerContentContainer>
-              <LayerText>{layerGroupName}</LayerText>
               <LayerText>{layerName}</LayerText>
             </LayerContentContainer>
             {element.isBackground && (
@@ -466,7 +478,7 @@ function Layer({ element }) {
             )}
             {element.isLocked && isLayerLockingEnabled && (
               <IconWrapper aria-label={__('Locked', 'web-stories')}>
-                <Icons.LockClosed />
+                {isNested ? <Icons.LockFilledClosed /> : <Icons.LockClosed />}
               </IconWrapper>
             )}
           </LayerDescription>
@@ -474,6 +486,17 @@ function Layer({ element }) {
       )}
       {!element.isBackground && !isRenameable && (
         <ActionsContainer>
+          {hasShapeMask && (
+            <Tooltip title={removeMaskTitle} hasTail isDelayed>
+              <LayerAction
+                aria-label={removeMaskTitle}
+                aria-describedby={layerId}
+                onClick={removeShapeMask}
+              >
+                <Icons.RemoveMask />
+              </LayerAction>
+            </Tooltip>
+          )}
           <Tooltip title={__('Delete Layer', 'web-stories')} hasTail isDelayed>
             <LayerAction
               ref={deleteButtonRef}
@@ -508,6 +531,7 @@ function Layer({ element }) {
               <LayerAction
                 aria-label={__('Lock/Unlock', 'web-stories')}
                 aria-describedby={layerId}
+                disabled={isNested}
                 onPointerDown={preventReorder}
                 onClick={() =>
                   updateElementById({
@@ -516,7 +540,7 @@ function Layer({ element }) {
                   })
                 }
               >
-                <LockIcon />
+                {isNested ? <Icons.LockFilledClosed /> : <LockIcon />}
               </LayerAction>
             </Tooltip>
           )}

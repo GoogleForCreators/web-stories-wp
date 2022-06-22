@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,21 +14,12 @@
  * limitations under the License.
  */
 
-/**
- * Update story properties.
- *
- * No validation is performed and existing values are overwritten.
- *
- * @param {Object} state Current state
- * @param {Object} payload Action payload
- * @param {Object | Function} payload.reducer reducer to apply to state
- * @return {Object} New state
- */
-function updateStateWithReducer(state, { reducer }) {
-  if (typeof reducer !== 'function') {
-    return state;
-  }
-  return reducer(state);
-}
+export const MAX_RECORDING_DURATION_IN_SECONDS = 120;
+export const MAX_RECORDING_DURATION_IN_MINUTES = 2;
+export const COUNTDOWN_TIME_IN_SECONDS = 3;
 
-export default updateStateWithReducer;
+export const VIDEO_MIME_TYPE = 'video/mp4';
+export const VIDEO_FILE_TYPE = 'mp4';
+
+export const PHOTO_MIME_TYPE = 'image/jpeg';
+export const PHOTO_FILE_TYPE = 'jpeg';

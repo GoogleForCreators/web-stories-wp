@@ -26,12 +26,13 @@ import styled from 'styled-components';
 import InfiniteScroller from '..';
 
 export default {
-  title: 'Dashboard/Components/InfiniteScroller',
+  title: 'DesignSystem/Components/InfiniteScroller',
   component: InfiniteScroller,
   args: {
-    loadingMessage:
+    loadingAriaMessage:
       'Data is loading - please note, interesection observers and storybook do not play nicely in firefox.',
     allDataLoadedMessage: 'all data is loaded',
+    allDataLoadedAriaMessage: 'all data is loaded',
   },
   parameters: {
     controls: {

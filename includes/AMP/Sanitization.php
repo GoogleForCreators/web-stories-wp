@@ -27,6 +27,7 @@
 namespace Google\Web_Stories\AMP;
 
 use DOMElement;
+use DOMNode;
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
@@ -98,10 +99,10 @@ class Sanitization {
 	 * @link https://github.com/ampproject/amp-wp/blob/2.1.3/includes/class-amp-theme-support.php#L1381-L1594
 	 * @see \AMP_Theme_Support::ensure_required_markup
 	 *
-	 * @param Document $document Document instance.
-	 * @param array    $scripts List of found scripts.
+	 * @param Document             $document Document instance.
+	 * @param array<string,string> $scripts  List of found scripts.
 	 */
-	protected function ensure_required_markup( $document, array $scripts ): void {
+	protected function ensure_required_markup( Document $document, array $scripts ): void {
 		/**
 		 * Link elements.
 		 *
@@ -321,7 +322,7 @@ class Sanitization {
 	 * @link https://github.com/ampproject/amp-wp/blob/2.1.3/includes/amp-helper-functions.php#L876-L941
 	 * @see amp_register_default_scripts
 	 *
-	 * @return array List of extensions and their URLs.
+	 * @return array<string,string> List of extensions and their URLs.
 	 */
 	protected function get_extension_sources(): array {
 		$specs = [];
@@ -390,7 +391,7 @@ class Sanitization {
 	 * @see amp_get_content_sanitizers
 	 * @see AMP_Validation_Manager::filter_sanitizer_args
 	 *
-	 * @return array Sanitizers.
+	 * @return array<string,array<string,bool|string[]|string>> Sanitizers.
 	 */
 	protected function get_sanitizers(): array {
 		// This fallback to get_permalink() ensures that there's a canonical link
@@ -513,8 +514,8 @@ class Sanitization {
 	 *
 	 * @see AMP_Validation_Error_Taxonomy::get_validation_error_sanitization
 	 *
-	 * @param array $error Error info, especially code.
-	 * @param array $data Additional data, including the node.
+	 * @param array{code: string}              $error Error info, especially code.
+	 * @param array{node?: DOMElement|DOMNode} $data Additional data, including the node.
 	 * @return bool Whether the validation error should be sanitized.
 	 */
 	public function validation_error_callback( array $error, array $data = [] ): bool {

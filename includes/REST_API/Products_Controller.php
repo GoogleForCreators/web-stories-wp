@@ -40,6 +40,27 @@ use WP_REST_Server;
  * Class to access products via the REST API.
  *
  * @since 1.20.0
+ *
+ * @phpstan-type SchemaEntry array{
+ *   description: string,
+ *   type: string,
+ *   context: string[],
+ *   default?: mixed,
+ * }
+ *
+ * @phpstan-type Schema array{
+ *   properties: array{
+ *     productId?: SchemaEntry,
+ *     productUrl?: SchemaEntry,
+ *     productTitle?: SchemaEntry,
+ *     productBrand?: SchemaEntry,
+ *     productPrice?: SchemaEntry,
+ *     productPriceCurrency?: SchemaEntry,
+ *     productImages?: SchemaEntry,
+ *     aggregateRating?: SchemaEntry,
+ *     productDetails?: SchemaEntry
+ *   }
+ * }
  */
 class Products_Controller extends REST_Controller implements HasRequirements {
 
@@ -159,18 +180,18 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 		if ( 'none' === $shopping_provider ) {
 			return new WP_Error( 'rest_shopping_provider', __( 'No shopping provider set up.', 'web-stories' ), [ 'status' => 400 ] );
 		}
-			
+
 		if ( ! $query ) {
 			return new WP_Error( 'rest_shopping_provider_not_found', __( 'Unable to find shopping integration.', 'web-stories' ), [ 'status' => 400 ] );
 		}
-		
+
 		/**
 		 * Request context.
 		 *
 		 * @var string $search_term
 		 */
 		$search_term = ! empty( $request['search'] ) ? $request['search'] : '';
-	
+
 		/**
 		 * Request context.
 		 *
@@ -217,7 +238,18 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 		 */
 		$response = rest_ensure_response( $products );
 
-		$response->header( 'X-WP-HasNextPage', (string) $query_result['has_next_page'] );
+		$response->header( 'X-WP-HasNextPage', $query_result['has_next_page'] ? 'true' : 'false' );
+
+		if ( $request['_web_stories_envelope'] ) {
+			/**
+			 * Embed directive.
+			 *
+			 * @var string|string[] $embed
+			 */
+			$embed    = $request['_embed'] ?? false;
+			$embed    = $embed ? rest_parse_embed_param( $embed ) : false;
+			$response = rest_get_server()->envelope_response( $response, $embed );
+		}
 
 		return $response;
 	}
@@ -269,6 +301,7 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 
 		if ( rest_is_field_included( 'productImages', $fields ) ) {
 			$data['productImages'] = [];
+
 			foreach ( $product->get_images() as $image ) {
 				$image_data = [];
 				if ( rest_is_field_included( 'productImages.url', $fields ) ) {
@@ -328,10 +361,18 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 	 * @since 1.20.0
 	 *
 	 * @return array Item schema data.
+	 *
+	 * @phpstan-return Schema
 	 */
 	public function get_item_schema(): array {
 		if ( $this->schema ) {
-			return $this->add_additional_fields_schema( $this->schema );
+			/**
+			 * Schema.
+			 *
+			 * @phpstan-var Schema $schema
+			 */
+			$schema = $this->add_additional_fields_schema( $this->schema );
+			return $schema;
 		}
 
 		$schema = [
@@ -431,6 +472,14 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 			],
 		];
 
+		$this->schema = $schema;
+
+		/**
+		 * Schema.
+		 *
+		 * @phpstan-var Schema $schema
+		 */
+		$schema = $this->add_additional_fields_schema( $this->schema );
 		return $schema;
 	}
 
@@ -439,7 +488,7 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 	 *
 	 * @since 1.21.0
 	 *
-	 * @return array Collection parameters.
+	 * @return array<string, array<string, mixed>> Collection parameters.
 	 */
 	public function get_collection_params(): array {
 		$query_params = parent::get_collection_params();
@@ -462,6 +511,12 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 			'type'        => 'string',
 			'default'     => 'desc',
 			'enum'        => [ 'asc', 'desc' ],
+		];
+
+		$query_params['_web_stories_envelope'] = [
+			'description' => __( 'Envelope request for preloading.', 'web-stories' ),
+			'type'        => 'boolean',
+			'default'     => false,
 		];
 
 		return $query_params;

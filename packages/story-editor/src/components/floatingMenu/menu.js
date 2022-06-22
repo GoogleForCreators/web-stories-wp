@@ -48,7 +48,8 @@ const MenuWrapper = styled.section`
   display: flex;
   position: absolute;
   z-index: ${Z_INDEX_FLOATING_MENU};
-  opacity: ${({ visuallyHidden }) => (visuallyHidden ? 0 : 1)};
+  visibility: ${({ visuallyHidden }) =>
+    visuallyHidden ? 'hidden' : 'visible'};
   transition: 140ms opacity;
 `;
 

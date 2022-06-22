@@ -325,30 +325,7 @@
           "type": "text"
         }
       ],
-      "animations": [
-        {
-          "id": "0e3c06a7-cb32-40e0-a08f-961bdc5ea790",
-          "type": "effect-fly-in",
-          "targets": ["99377bf6-8aaa-4faa-b639-386bf4e72eb5"],
-          "flyInDir": "leftToRight",
-          "duration": 1200,
-          "delay": 0
-        },
-        {
-          "id": "0c55f078-d371-494d-8485-855a85a2e785",
-          "type": "effect-fade-in",
-          "targets": ["e8b8be9b-825e-4ba3-9204-9020e01f9c28"],
-          "duration": 1200,
-          "delay": 1200
-        },
-        {
-          "id": "33ec1d95-d164-40fe-9ded-70ec3f6ea4a3",
-          "type": "effect-fade-in",
-          "targets": ["c8e63fad-0c15-41f2-8fe5-51fcdce97f0c"],
-          "duration": 1200,
-          "delay": 1200
-        }
-      ],
+      "animations": [],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "id": "0b2ff5e9-0446-48c0-be8c-61adf75ba2fc",

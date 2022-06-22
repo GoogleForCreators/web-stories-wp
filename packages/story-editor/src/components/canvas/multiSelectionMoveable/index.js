@@ -20,10 +20,10 @@
 import PropTypes from 'prop-types';
 import {
   forwardRef,
-  useRef,
-  useEffect,
-  useState,
   useCombinedRefs,
+  useEffect,
+  useRef,
+  useState,
 } from '@googleforcreators/react';
 import { useUnits } from '@googleforcreators/units';
 import { useTransform } from '@googleforcreators/transform';
@@ -33,7 +33,8 @@ import { getDefinitionForType } from '@googleforcreators/elements';
 /**
  * Internal dependencies
  */
-import { useStory, useCanvas, useLayout } from '../../../app';
+import classnames from 'classnames';
+import { useCanvas, useLayout, useStory } from '../../../app';
 import objectWithout from '../../../utils/objectWithout';
 import isTargetOutOfContainer from '../../../utils/isTargetOutOfContainer';
 import useSnapping from '../utils/useSnapping';
@@ -50,6 +51,9 @@ const MultiSelectionMoveable = forwardRef(function MultiSelectionMoveable(
   ref
 ) {
   const moveable = useRef();
+  const [isDragging, setIsDragging] = useState(false);
+  const isAnyLayerLocked = selectedElements.some((el) => el.isLocked);
+  const actionsEnabled = !isAnyLayerLocked;
 
   const { updateElementsById, deleteElementsById, backgroundElement } =
     useStory((state) => ({
@@ -99,8 +103,6 @@ const MultiSelectionMoveable = forwardRef(function MultiSelectionMoveable(
     updateForResizeEvent: getDefinitionForType(element.type)
       .updateForResizeEvent,
   }));
-
-  const [isDragging, setIsDragging] = useState(false);
 
   /**
    * Set style to the element.
@@ -244,18 +246,23 @@ const MultiSelectionMoveable = forwardRef(function MultiSelectionMoveable(
     return null;
   }
 
+  const classNames = classnames('default-moveable', {
+    'hide-handles': isDragging,
+    immoveable: isAnyLayerLocked,
+  });
+
   return (
     <Moveable
       {...props}
-      className="default-moveable"
+      className={classNames}
       ref={combinedRef}
       zIndex={0}
       target={targetList.map(({ node }) => node)}
-      draggable
-      resizable
-      rotatable
       renderDirections={CORNER_HANDLES}
       {...dragProps}
+      draggable={actionsEnabled}
+      resizable={actionsEnabled}
+      rotatable={actionsEnabled}
       {...rotateProps}
       {...resizeProps}
       {...snapProps}

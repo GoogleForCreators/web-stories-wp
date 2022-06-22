@@ -21,7 +21,7 @@ import PropTypes from 'prop-types';
 import { useCallback } from '@googleforcreators/react';
 import { __, TranslateWithMarkup } from '@googleforcreators/i18n';
 import { THEME_CONSTANTS } from '@googleforcreators/design-system';
-import { trackClick } from '@googleforcreators/tracking';
+import { trackClick, trackEvent } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies
@@ -69,7 +69,12 @@ function Shopping({
   woocommerce,
 }) {
   const handleUpdateShoppingProvider = useCallback(
-    (newValue) => updateSettings({ shoppingProvider: newValue }),
+    (newValue) => {
+      updateSettings({ shoppingProvider: newValue });
+      trackEvent('change_shopping_provider', {
+        name: newValue,
+      });
+    },
     [updateSettings]
   );
 

@@ -427,40 +427,7 @@
       "backgroundColor": { "color": { "r": 255, "g": 191, "b": 11 } },
       "type": "page",
       "id": "a2b16ddc-2786-458a-a8e3-8ad0cd34aa31",
-      "animations": [
-        {
-          "id": "91fbe854-ed6c-4dc4-a6a1-2d5c4aa1a900",
-          "type": "effect-fly-in",
-          "targets": ["46740eba-44b0-4afb-96d3-d8c645de91b6"],
-          "flyInDir": "leftToRight",
-          "duration": 2000,
-          "delay": 0
-        },
-        {
-          "id": "fc801d7c-0077-40fb-8067-a32052cb4c02",
-          "type": "effect-zoom",
-          "targets": ["40a6f116-13f9-4091-b364-9ae673d43f60"],
-          "scaleDirection": "scaleIn",
-          "duration": 300,
-          "delay": 0
-        },
-        {
-          "id": "d088962a-ffbc-4a5b-a76a-e2f04f4253be",
-          "type": "effect-zoom",
-          "targets": ["e8c24d48-b29d-4948-9cbd-dbc0c9b3fbc3"],
-          "scaleDirection": "scaleIn",
-          "duration": 300,
-          "delay": 0
-        },
-        {
-          "id": "74586883-99be-4162-8ab2-f07d38de2fe7",
-          "type": "effect-zoom",
-          "targets": ["587f4a17-7803-45a3-8edf-eb12dd3a704b"],
-          "scaleDirection": "scaleIn",
-          "duration": 300,
-          "delay": 0
-        }
-      ],
+      "animations": [],
       "pageTemplateType": "cover"
     },
     {
