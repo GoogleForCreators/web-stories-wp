@@ -115,6 +115,7 @@ describe('useAutoSave', () => {
       pages,
       content: 'Hello World!',
       meta: {
+        web_stories_poster: {},
         web_stories_publisher_logo: 1,
         web_stories_products: [],
       },

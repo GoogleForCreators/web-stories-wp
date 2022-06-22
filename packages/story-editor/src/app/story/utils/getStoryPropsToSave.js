@@ -25,7 +25,7 @@ import objectPick from '../../../utils/objectPick';
 import getAllProdcuts from './getAllProducts';
 
 function getStoryPropsToSave({ story, pages, metadata, flags }) {
-  const { terms, ...propsFromStory } = objectPick(story, [
+  const { terms, featuredMedia, ...propsFromStory } = objectPick(story, [
     'title',
     'status',
     'author',
@@ -49,9 +49,17 @@ function getStoryPropsToSave({ story, pages, metadata, flags }) {
     pages,
     ...propsFromStory,
     ...terms,
+    featuredMedia,
     meta: {
       web_stories_publisher_logo: story.publisherLogo?.id,
       web_stories_products: products,
+      web_stories_poster: featuredMedia.isExternal
+        ? {
+            url: featuredMedia.url,
+            width: featuredMedia.width,
+            height: featuredMedia.height,
+          }
+        : {},
     },
   };
 }
