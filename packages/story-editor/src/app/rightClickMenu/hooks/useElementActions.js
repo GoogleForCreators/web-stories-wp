@@ -136,7 +136,6 @@ const useElementActions = () => {
         arrangeElement({
           elementId: element.id,
           position: newPosition,
-          groupId,
         });
       }
     }

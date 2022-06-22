@@ -134,7 +134,6 @@ function duplicateGroup(state, { oldGroupId, groupId, name, isLocked }) {
       finalState = arrangeElement(finalState, {
         elementId: element.id,
         position: newPosition,
-        groupId,
       });
     }
   }
