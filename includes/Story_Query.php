@@ -34,6 +34,41 @@ use WP_Query;
 
 /**
  * Stories class.
+ *
+ * @phpstan-type StoryAttributes array{
+ *   view_type?: string,
+ *   number_of_columns?: int,
+ *   show_title?: bool,
+ *   show_author?: bool,
+ *   show_date?: bool,
+ *   show_archive_link?: bool|string,
+ *   show_excerpt?: bool,
+ *   image_alignment?: string,
+ *   class?: string,
+ *   archive_link_label?: string,
+ *   circle_size?: int,
+ *   sharp_corners?: bool,
+ *   order?: string,
+ *   orderby?: string,
+ *   align?: string
+ * }
+ * @phpstan-type StoryAttributesWithDefaults array{
+ *   view_type: string,
+ *   number_of_columns: int,
+ *   show_title: bool,
+ *   show_author: bool,
+ *   show_date: bool,
+ *   show_archive_link: bool|string,
+ *   show_excerpt: bool,
+ *   image_alignment: string,
+ *   class: string,
+ *   archive_link_label: string,
+ *   circle_size: int,
+ *   sharp_corners: bool,
+ *   order?: string,
+ *   orderby?: string,
+ *   align?: string
+ * }
  */
 class Story_Query {
 	/**
@@ -41,7 +76,7 @@ class Story_Query {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @var array An array of story attributes.
+	 * @var array<string, mixed> An array of story attributes.
 	 */
 	protected $story_attributes = [];
 
@@ -50,7 +85,7 @@ class Story_Query {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @var array An array of query arguments.
+	 * @var array<string, mixed> An array of query arguments.
 	 */
 	protected $query_args = [];
 
@@ -68,21 +103,23 @@ class Story_Query {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param array $story_attributes          {
-	 *                                         An array of story attributes.
+	 * @param array                $story_attributes {
+	 *                   An array of story attributes.
 	 *
-	 *     @type string $view_type                 Stories View type. Default circles.
-	 *     @type int    $number_of_columns         Number of columns to show in grid view. Default 2.
-	 *     @type bool   $show_title                Whether to show story title or not. Default false.
-	 *     @type bool   $show_author               Whether to show story author or not. Default false.
-	 *     @type bool   $show_date                 Whether to show story date or not. Default false.
-	 *     @type bool   $show_archive_link Whether to show view all link or not. Default false.
-	 *     @type string $archive_link_label     The label for view all link. Default 'View all stories'.
-	 *     @type string $image_alignment The list mode image alignment. Default 'left'.
-	 *     @type string $class                     Additional CSS classes for the container. Default empty string.
+	 *     @type string $view_type          Stories View type. Default circles.
+	 *     @type int    $number_of_columns  Number of columns to show in grid view. Default 2.
+	 *     @type bool   $show_title         Whether to show story title or not. Default false.
+	 *     @type bool   $show_author        Whether to show story author or not. Default false.
+	 *     @type bool   $show_date          Whether to show story date or not. Default false.
+	 *     @type bool   $show_archive_link  Whether to show view all link or not. Default false.
+	 *     @type string $archive_link_label The label for view all link. Default 'View all stories'.
+	 *     @type string $image_alignment    The list mode image alignment. Default 'left'.
+	 *     @type string $class              Additional CSS classes for the container. Default empty string.
 	 * }
-	 * @param array $query_args           An array of query arguments for story. @see WP_Query::parse_query() for
-	 *                                         all available arguments.
+	 * @param array<string, mixed> $query_args An array of query arguments for story. {@see WP_Query::parse_query()} for
+	 *                          all available arguments.
+	 *
+	 * @phpstan-param StoryAttributes $story_attributes
 	 */
 	public function __construct( array $story_attributes = [], array $query_args = [] ) {
 		$this->story_attributes = $story_attributes;
@@ -163,7 +200,9 @@ class Story_Query {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @return array An array of story attributes.
+	 * @return array<string, string|int|bool> An array of story attributes.
+	 *
+	 * @phpstan-return StoryAttributesWithDefaults
 	 */
 	public function get_story_attributes(): array {
 		$default_attributes = [
@@ -181,6 +220,13 @@ class Story_Query {
 			'circle_size'        => 150,
 		];
 
-		return wp_parse_args( $this->story_attributes, $default_attributes );
+		/**
+		 * Attributes with defaults applied.
+		 *
+		 * @phpstan-var StoryAttributesWithDefaults $attributes
+		 */
+		$attributes = wp_parse_args( $this->story_attributes, $default_attributes );
+
+		return $attributes;
 	}
 }

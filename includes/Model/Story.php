@@ -100,7 +100,8 @@ class Story {
 	/**
 	 * Publisher logo size.
 	 *
-	 * @var array
+	 * @var int[]
+	 * @phpstan-var array{0?: int, 1?: int}
 	 */
 	protected $publisher_logo_size = [];
 
@@ -130,7 +131,7 @@ class Story {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param array $story Array of attributes.
+	 * @param array<string,mixed> $story Array of attributes.
 	 */
 	public function __construct( array $story = [] ) {
 		foreach ( $story as $key => $value ) {
@@ -366,6 +367,8 @@ class Story {
 	 *     @type int    $1 Image width in pixels.
 	 *     @type int    $2 Image height in pixels.
 	 * }
+	 *
+	 * @phpstan-return array{0?: int, 1?: int}
 	 */
 	public function get_publisher_logo_size(): array {
 		/**

@@ -152,11 +152,16 @@ function useProcessMedia({
           isOptimized: false,
         });
 
-      const onUploadSuccess = ({ resource }) => {
+      const onUploadSuccess = ({ id, resource }) => {
         copyResourceData({ oldResource, resource });
         updateOldTranscodedObject(resourceId, resource.id, 'source-video');
         deleteMediaElement({ id: resourceId });
-        postProcessingResource(resource);
+
+        // onUploadSuccess is also called with previousResourceId,
+        // for which we don't need to run this.
+        if (id === resource.id) {
+          postProcessingResource(resource);
+        }
       };
 
       // TODO: Confirm which properties exactly need to be updated.
@@ -235,7 +240,7 @@ function useProcessMedia({
           trimData: oldResource.trimData || {},
         });
 
-      const onUploadSuccess = ({ resource }) => {
+      const onUploadSuccess = ({ id, resource }) => {
         const oldCanvasResource = {
           alt: oldResource.alt,
           id: canvasResourceId,
@@ -245,7 +250,12 @@ function useProcessMedia({
           oldResource: oldCanvasResource,
           resource,
         });
-        postProcessingResource(resource);
+
+        // onUploadSuccess is also called with previousResourceId,
+        // for which we don't need to run this.
+        if (id === resource.id) {
+          postProcessingResource(resource);
+        }
       };
 
       const onUploadProgress = ({ resource }) => {
@@ -318,10 +328,15 @@ function useProcessMedia({
         });
       };
 
-      const onUploadSuccess = ({ resource }) => {
+      const onUploadSuccess = ({ id, resource }) => {
         copyResourceData({ oldResource, resource });
         updateOldMutedObject(oldResource.id, resource.id);
-        postProcessingResource(resource);
+
+        // onUploadSuccess is also called with previousResourceId,
+        // for which we don't need to run this.
+        if (id === resource.id) {
+          postProcessingResource(resource);
+        }
       };
 
       // TODO: Confirm which properties exactly need to be updated.
@@ -394,11 +409,16 @@ function useProcessMedia({
     ({ resource: oldResource }) => {
       const { id: resourceId, src: url, mimeType } = oldResource;
 
-      const onUploadSuccess = ({ resource }) => {
+      const onUploadSuccess = ({ id, resource }) => {
         copyResourceData({ oldResource, resource });
         updateOldTranscodedObject(oldResource.id, resource.id, 'source-image');
         deleteMediaElement({ id: oldResource.id });
-        postProcessingResource(resource);
+
+        // onUploadSuccess is also called with previousResourceId,
+        // for which we don't need to run this.
+        if (id === resource.id) {
+          postProcessingResource(resource);
+        }
       };
 
       // TODO: Confirm which properties exactly need to be updated.
