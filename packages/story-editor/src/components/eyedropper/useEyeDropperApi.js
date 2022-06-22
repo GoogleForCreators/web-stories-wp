@@ -18,8 +18,9 @@
  */
 import { useEffect, useCallback, useRef } from 'react';
 import { getSolidFromHex } from '@googleforcreators/patterns';
+import { noop } from '@googleforcreators/design-system';
 
-function useEyeDropperApi({ onChange, handleClose }) {
+function useEyeDropperApi({ onChange = noop, handleClose = noop }) {
   const isEyeDropperApiSupported =
     typeof window !== 'undefined' && 'EyeDropper' in window;
   const eyeDropper = useRef(null);

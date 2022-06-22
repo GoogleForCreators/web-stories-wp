@@ -24,7 +24,6 @@ import { FULLBLEED_RATIO } from '@googleforcreators/units';
 import {
   useGlobalKeyDownEffect,
   CircularProgress,
-  noop,
 } from '@googleforcreators/design-system';
 
 /**
@@ -143,10 +142,7 @@ function EyedropperLayer() {
     })
   );
 
-  const { isEyeDropperApiSupported } = useEyeDropperApi({
-    onChange: noop,
-    onClose: noop,
-  });
+  const { isEyeDropperApiSupported } = useEyeDropperApi({});
 
   const { pageWidth } = useLayout(({ state: { pageWidth } }) => ({
     pageWidth,
