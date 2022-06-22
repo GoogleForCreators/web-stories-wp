@@ -57,55 +57,53 @@ import { getAbsolutePosition, moveArrayElement } from './utils';
  * @param {string|boolean} payload.groupId New group id (when moving in the Layers Panel), false to skip updating.
  * @return {Object} New state
  */
-const arrangeElement = produce(
-  (draft, { elementId, position, groupId = false }) => {
-    if (elementId === null && draft.selection.length !== 1) {
-      return;
-    }
-
-    const idToArrange = elementId !== null ? elementId : draft.selection[0];
-
-    const page = draft.pages.find(({ id }) => id === draft.current);
-
-    // Abort if there's less than three elements (nothing to rearrange as first is bg)
-    if (page.elements.length < 3) {
-      return;
-    }
-
-    const currentPosition = page.elements.findIndex(
-      ({ id }) => id === idToArrange
-    );
-
-    if (currentPosition === -1 || page.elements[0].id === idToArrange) {
-      return;
-    }
-
-    const minPosition = 1;
-    const maxPosition = page.elements.length - 1;
-    const newPosition = getAbsolutePosition({
-      currentPosition,
-      minPosition,
-      maxPosition,
-      desiredPosition: position,
-    });
-
-    const currentGroupId = page.elements[currentPosition].groupId;
-
-    // If it's already there, do nothing.
-    if (currentPosition === newPosition && currentGroupId === groupId) {
-      return;
-    }
-
-    // Add group id to current element
-    page.elements[currentPosition].groupId = groupId;
-
-    // Then reorder
-    page.elements = moveArrayElement(
-      page.elements,
-      currentPosition,
-      newPosition
-    );
+const arrangeElement = produce((draft, { elementId, position, groupId }) => {
+  if (elementId === null && draft.selection.length !== 1) {
+    return;
   }
-);
+
+  const idToArrange = elementId !== null ? elementId : draft.selection[0];
+
+  const page = draft.pages.find(({ id }) => id === draft.current);
+
+  // Abort if there's less than three elements (nothing to rearrange as first is bg)
+  if (page.elements.length < 3) {
+    return;
+  }
+
+  const currentPosition = page.elements.findIndex(
+    ({ id }) => id === idToArrange
+  );
+
+  if (currentPosition === -1 || page.elements[0].id === idToArrange) {
+    return;
+  }
+
+  const minPosition = 1;
+  const maxPosition = page.elements.length - 1;
+  const newPosition = getAbsolutePosition({
+    currentPosition,
+    minPosition,
+    maxPosition,
+    desiredPosition: position,
+  });
+
+  const currentGroupId = page.elements[currentPosition].groupId;
+
+  // If it's already there, do nothing.
+  if (currentPosition === newPosition && currentGroupId === groupId) {
+    return;
+  }
+
+  // Update group id on current element
+  if (groupId) {
+    page.elements[currentPosition].groupId = groupId;
+  } else {
+    delete page.elements[currentPosition].groupId;
+  }
+
+  // Then reorder
+  page.elements = moveArrayElement(page.elements, currentPosition, newPosition);
+});
 
 export default arrangeElement;
