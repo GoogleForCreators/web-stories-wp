@@ -36,11 +36,26 @@ import arrangeElement from './arrangeElement';
  * @return {Object} New state
  */
 function duplicateGroup(state, { oldGroupId, groupId, name, isLocked }) {
+  if (!oldGroupId || !groupId || !name) {
+    return state;
+  }
+
+  // Check that old group exists
+  const pageIndex = state.pages.findIndex(({ id }) => id === state.current);
+  if (!state.pages[pageIndex].groups?.[oldGroupId]) {
+    return state;
+  }
+
+  // Check that old group has members
+  const hasMembers = state.pages[pageIndex].elements.some(
+    (el) => el.groupId === oldGroupId
+  );
+  if (!hasMembers) {
+    return state;
+  }
+
   // Add group.
   const stateWithGroup = addGroup(state, { groupId, name, isLocked });
-  const pageIndex = stateWithGroup.pages.findIndex(
-    ({ id }) => id === stateWithGroup.current
-  );
   const oldPage = stateWithGroup.pages[pageIndex];
   const newSelection = [];
   const newPage = { ...oldPage };
@@ -53,21 +68,24 @@ function duplicateGroup(state, { oldGroupId, groupId, name, isLocked }) {
       ({ id }) => id === elementId
     );
 
-    if (elementIndex < 0) {
-      return;
-    }
-
     const elementToDuplicate = newPage.elements[elementIndex];
 
     if (elementToDuplicate.isBackground) {
-      return;
+      return state;
     }
 
-    const { element, elementAnimations } = duplicateElement({
-      element: elementToDuplicate,
-      animations: oldPage.animations,
-      existingElements: oldPage.elements,
-    });
+    let duplicationResult;
+    try {
+      duplicationResult = duplicateElement({
+        element: elementToDuplicate,
+        animations: oldPage.animations,
+        existingElements: oldPage.elements,
+      });
+    } catch (e) {
+      return state;
+    }
+
+    const { element, elementAnimations } = duplicationResult;
 
     element.groupId = groupId;
     newSelection.push(element.id);
@@ -80,7 +98,7 @@ function duplicateGroup(state, { oldGroupId, groupId, name, isLocked }) {
       ...newPage.elements.slice(elementIndex + 1),
     ];
 
-    return;
+    return state;
   });
 
   // Do nothing if no new elements

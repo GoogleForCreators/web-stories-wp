@@ -29,7 +29,14 @@ import deleteElements from './deleteElements';
  * @return {Object} New state
  */
 function deleteGroup(state, { groupId, includeElements = false }) {
+  if (!groupId) {
+    return state;
+  }
+
   const pageIndex = state.pages.findIndex(({ id }) => id === state.current);
+  if (!state.pages[pageIndex].groups?.[groupId]) {
+    return state;
+  }
 
   const updatedGroups = {
     ...state.pages[pageIndex].groups,

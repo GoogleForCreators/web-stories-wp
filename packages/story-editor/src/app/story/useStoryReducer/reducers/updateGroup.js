@@ -24,7 +24,16 @@
  * @return {Object} New state
  */
 function updateGroup(state, { groupId, properties }) {
+  if (!groupId) {
+    return state;
+  }
+
   const pageIndex = state.pages.findIndex(({ id }) => id === state.current);
+
+  // Should only update existing groups
+  if (!state.pages[pageIndex].groups?.[groupId]) {
+    return state;
+  }
 
   const updatedGroups = {
     ...state.pages[pageIndex].groups,

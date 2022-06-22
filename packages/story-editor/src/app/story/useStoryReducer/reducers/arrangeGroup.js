@@ -29,14 +29,21 @@ import { getAbsolutePosition } from './utils';
  * @return {Object} New state
  */
 function arrangeGroup(state, { groupId, position }) {
+  if (!groupId) {
+    return state;
+  }
+
   const pageIndex = state.pages.findIndex(({ id }) => id === state.current);
   const page = state.pages[pageIndex];
-  const groupStartIndex = page.elements.findIndex(
-    (el) => el.groupId === groupId
-  );
-  const groupEndIndex = page.elements.findLastIndex(
-    (el) => el.groupId === groupId
-  );
+  const isInGroup = (el) => el.groupId === groupId;
+
+  const hasElementsInGroup = page.elements.some(isInGroup);
+  if (!page.groups?.[groupId] || !hasElementsInGroup) {
+    return state;
+  }
+
+  const groupStartIndex = page.elements.findIndex(isInGroup);
+  const groupEndIndex = page.elements.findLastIndex(isInGroup);
 
   const pageElements = [...page.elements];
   const groupSlice = pageElements.slice(groupStartIndex, groupEndIndex + 1);

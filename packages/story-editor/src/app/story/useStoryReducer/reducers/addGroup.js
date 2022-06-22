@@ -25,6 +25,10 @@
  * @return {Object} New state
  */
 function addGroup(state, { groupId, name, isLocked = false }) {
+  if (!groupId || !name) {
+    return state;
+  }
+
   const pageIndex = state.pages.findIndex(({ id }) => id === state.current);
 
   const updatedGroups = {
