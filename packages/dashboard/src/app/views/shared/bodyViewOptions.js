@@ -40,7 +40,7 @@ const DisplayFormatContainer = styled.div`
   display: grid;
   gap: 1rem;
   min-height: 76px;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: 1fr auto auto;
   justify-content: start;
   align-items: center;
   margin-top: -10px;
