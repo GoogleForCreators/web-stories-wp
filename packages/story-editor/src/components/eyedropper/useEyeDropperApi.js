@@ -23,7 +23,7 @@ function useEyeDropperApi({ onChange }) {
   const isEyeDropperApiSupported =
     (typeof window !== 'undefined') && ('EyeDropper' in window);
 
-  const eyeDropper = useRef(false);
+  const eyeDropper = useRef(null);
 
   useEffect(() => {
     if (isEyeDropperApiSupported && !eyeDropper.current) {
