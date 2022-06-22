@@ -185,7 +185,7 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
           ariaLabel={__('Video poster', 'web-stories')}
           menuOptions={menuOptions}
           imgProps={cropParams}
-          canUpload={hasUploadMediaAction}
+          canUpload={hasUploadMediaAction || enablePosterHotlinking}
         />
         <InputsWrapper>
           <StyledText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
