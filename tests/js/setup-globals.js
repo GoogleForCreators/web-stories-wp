@@ -73,19 +73,17 @@ global.matchMedia = jest.fn().mockImplementation((query) => ({
   dispatchEvent: jest.fn(),
 }));
 
-if (typeof window !== 'undefined') { // To prevent breaking tests in @jest-environment node
-  // jsdom doesn't support these, so we stub them to make tests work as expected.
-  window.HTMLMediaElement.prototype.load = () => undefined;
-  window.HTMLMediaElement.prototype.play = () => Promise.resolve();
-  window.HTMLMediaElement.prototype.pause = () => undefined;
-  File.prototype.arrayBuffer = () =>
-    new Promise((resolve) => resolve(new ArrayBuffer(0)));
+// jsdom doesn't support these, so we stub them to make tests work as expected.
+window.HTMLMediaElement.prototype.load = () => undefined;
+window.HTMLMediaElement.prototype.play = () => Promise.resolve();
+window.HTMLMediaElement.prototype.pause = () => undefined;
+File.prototype.arrayBuffer = () =>
+  new Promise((resolve) => resolve(new ArrayBuffer(0)));
 
-  // Prevent React warnings when setting the `muted` attribute on `<video>` elements.
-  // See https://github.com/testing-library/react-testing-library/issues/470
-  // See https://github.com/facebook/react/issues/10389
-
-  Object.defineProperty(HTMLMediaElement.prototype, 'muted', {
-    set: () => {},
-  });
-}
+// Prevent React warnings when setting the `muted` attribute on `<video>` elements.
+// See https://github.com/testing-library/react-testing-library/issues/470
+// See https://github.com/facebook/react/issues/10389
+// eslint-disable-next-line jest/require-hook -- test-setup
+Object.defineProperty(HTMLMediaElement.prototype, 'muted', {
+  set: () => {},
+});
