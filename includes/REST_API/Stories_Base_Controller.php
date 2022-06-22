@@ -245,7 +245,32 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 			$request->set_param( 'featured_media', $thumbnail_id );
 		}
 
+		$meta = $this->get_register_meta( $original_post );
+		if ( $meta ) {
+			$request->set_param( 'meta', $meta );
+		}
+
 		return parent::create_item( $request );
+	}
+
+	/**
+	 * Get registered post meta.
+	 *
+	 * @since 1.22
+	 *
+	 * @param WP_Post $original_post Post Object.
+	 * @return array
+	 */
+	protected function get_register_meta( WP_Post $original_post ): array {
+		$meta_keys = get_registered_meta_keys( 'post', get_post_type( $original_post ) );
+		$meta      = [];
+		foreach ( $meta_keys as $key => $settings ) {
+			if ( $settings['show_in_rest'] ) {
+				$meta[ $key ] = get_post_meta( $original_post->ID, $key, $settings['single'] );
+			}
+		}
+
+		return $meta;
 	}
 
 	/**
