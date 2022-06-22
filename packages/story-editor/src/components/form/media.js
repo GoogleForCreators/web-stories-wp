@@ -154,7 +154,7 @@ function MediaInput(
       const resource = await getResourceFromUrl(resourceLike);
       resource.src = link;
 
-      if (cropParams?.height && cropParams?.height !== resource.height) {
+      if (cropParams?.height && cropParams?.height !== resource?.height) {
         setDefaultErrorMsg(
           sprintf(
             /* translators: 1: supplied height. 2: desired height */
@@ -162,14 +162,14 @@ function MediaInput(
               'Invalid image height supplied %1$d when %2$d is required.',
               'web-stories'
             ),
-            cropParams?.height,
-            resource.height
+            resource.height,
+            cropParams.height
           )
         );
         return;
       }
 
-      if (cropParams?.width && cropParams?.width !== resource.width) {
+      if (cropParams?.width && cropParams?.width !== resource?.width) {
         setDefaultErrorMsg(
           sprintf(
             /* translators: 1: supplied width. 2: desired width */
@@ -177,8 +177,8 @@ function MediaInput(
               'Invalid image width supplied %1$d when %2$d is required.',
               'web-stories'
             ),
-            cropParams?.width,
-            resource.width
+            resource.width,
+            cropParams?.width
           )
         );
         return;
