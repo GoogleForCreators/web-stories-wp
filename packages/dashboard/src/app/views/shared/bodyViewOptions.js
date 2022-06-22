@@ -37,8 +37,9 @@ import { DROPDOWN_TYPES, VIEW_STYLE } from '../../../constants';
 import useFilters from '../myStories/filters/useFilters';
 
 const DisplayFormatContainer = styled.div`
-  min-height: 76px;
   display: grid;
+  gap: 1rem;
+  min-height: 76px;
   grid-template-columns: auto 1fr auto;
   justify-content: start;
   align-items: center;
