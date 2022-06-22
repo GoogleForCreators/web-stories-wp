@@ -19,10 +19,9 @@
 import { useEffect, useCallback, useRef } from 'react';
 import { getSolidFromHex } from '@googleforcreators/patterns';
 
-function useEyeDropperApi({ onChange }) {
+function useEyeDropperApi({ onChange, handleClose }) {
   const isEyeDropperApiSupported =
     typeof window !== 'undefined' && 'EyeDropper' in window;
-
   const eyeDropper = useRef(null);
 
   useEffect(() => {
@@ -38,12 +37,13 @@ function useEyeDropperApi({ onChange }) {
 
     try {
       const { sRGBHex } = await eyeDropper.current.open();
-      onChange({ color: getSolidFromHex(sRGBHex.substring(1)).color });
+      onChange(getSolidFromHex(sRGBHex.substring(1)).color);
+      handleClose();
     } catch (e) {
       //eslint-disable-next-line no-console -- Surface error for debugging.
       console.log(e.message);
     }
-  }, [eyeDropper, isEyeDropperApiSupported, onChange]);
+  }, [eyeDropper, isEyeDropperApiSupported, onChange, handleClose]);
 
   return { isEyeDropperApiSupported, openEyeDropper };
 }

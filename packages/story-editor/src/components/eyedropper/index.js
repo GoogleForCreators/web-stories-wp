@@ -55,6 +55,9 @@ export default ({ onChange }) => {
 
   const { isEyeDropperApiSupported, openEyeDropper } = useEyeDropperApi({
     onChange,
+    handleClose: useCallback(() => {
+      setIsEyedropperActive(false);
+    }, [setIsEyedropperActive]),
   });
 
   const { zoomSetting, setZoomSetting } = useLayout(
@@ -69,6 +72,7 @@ export default ({ onChange }) => {
       async () => {
         if (isEyeDropperApiSupported) {
           if (resetZoom) {
+            setIsEyedropperActive(true);
             openEyeDropper();
           }
 
@@ -121,7 +125,7 @@ export default ({ onChange }) => {
         }
 
         setEyedropperCallback(() => (rgbObject) => {
-          onChange({ color: rgbObject });
+          onChange(rgbObject);
           setIsEyedropperActive(false);
           setEyedropperImg(null);
           setEyedropperPixelData(null);

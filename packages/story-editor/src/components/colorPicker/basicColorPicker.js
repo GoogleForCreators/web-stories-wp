@@ -33,7 +33,7 @@ import {
   themeHelpers,
 } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
-import { useState } from '@googleforcreators/react';
+import { useState, useCallback } from '@googleforcreators/react';
 
 /**
  * Internal dependencies
@@ -123,7 +123,12 @@ function BasicColorPicker({
   const [toDelete, setToDelete] = useState(null);
   const hasPresets = storyColors.length > 0 || savedColors.length > 0;
 
-  const { initEyedropper } = useEyedropper({ onChange: handleColorChange });
+  const { initEyedropper } = useEyedropper({
+    onChange: useCallback(
+      (newColor) => handleColorChange({ color: newColor }),
+      [handleColorChange]
+    ),
+  });
 
   const { deleteLocalColor, deleteGlobalColor } = useDeleteColor({
     onEmpty: () => setIsEditMode(false),
