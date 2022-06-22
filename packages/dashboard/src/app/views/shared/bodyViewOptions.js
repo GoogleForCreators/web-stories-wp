@@ -101,7 +101,10 @@ export default function BodyViewOptions({
         <ControlsContainer>
           {filters?.length
             ? filters.map((filter) => (
-                <StorySortDropdownContainer key={filter.key}>
+                <StorySortDropdownContainer
+                  key={filter.key}
+                  title={filter.placeholder}
+                >
                   <StyledDatalist
                     hasSearch
                     hasDropDownBorder
