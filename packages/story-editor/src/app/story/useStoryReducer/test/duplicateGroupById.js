@@ -225,7 +225,7 @@ describe('duplicateGroupById', () => {
             basedOn: '234',
             type: 'shape',
             border: { width: 1 },
-            //groupId: 'g3', // <--- This fail if added - no group id is present on this element
+            groupId: 'g3',
           }),
           expect.objectContaining({
             id: expect.any(String),
