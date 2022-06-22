@@ -28,15 +28,14 @@ namespace Google\Web_Stories\Infrastructure;
  * @since 1.6.0
  */
 interface Instantiator {
-
 	/**
 	 * Make an object instance out of an interface or class.
 	 *
 	 * @since 1.6.0
 	 *
-	 * @param string $class        Class to make an object instance out of.
-	 * @param array  $dependencies Optional. Dependencies of the class.
+	 * @param string            $class        Class to make an object instance out of.
+	 * @param array<int, mixed> $dependencies Optional. Dependencies of the class.
 	 * @return object Instantiated object.
 	 */
-	public function instantiate( $class, $dependencies = [] ): object;
+	public function instantiate( string $class, array $dependencies = [] ): object;
 }

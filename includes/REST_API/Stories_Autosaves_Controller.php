@@ -40,6 +40,8 @@ use WP_REST_Server;
 
 /**
  * Stories_Autosaves_Controller class.
+ *
+ * @phpstan-import-type Schema from \Google\Web_Stories\REST_API\Stories_Base_Controller
  */
 class Stories_Autosaves_Controller extends WP_REST_Autosaves_Controller implements Service, Delayed, Registerable, HasRequirements {
 
@@ -184,11 +186,11 @@ class Stories_Autosaves_Controller extends WP_REST_Autosaves_Controller implemen
 		/**
 		 * Response data.
 		 *
-		 * @var array $data
+		 * @var array<string,mixed> $data
 		 */
 		$data = $response->get_data();
 
-		if ( rest_is_field_included( 'story_data', $fields ) ) {
+		if ( ! empty( $schema['properties']['story_data'] ) && rest_is_field_included( 'story_data', $fields ) ) {
 			$post_story_data    = json_decode( $post->post_content_filtered, true );
 			$data['story_data'] = rest_sanitize_value_from_schema( $post_story_data, $schema['properties']['story_data'] );
 		}
@@ -219,11 +221,19 @@ class Stories_Autosaves_Controller extends WP_REST_Autosaves_Controller implemen
 	 *
 	 * @since 1.0.0
 	 *
-	 * @return array Item schema as an array.
+	 * @return array Item schema data.
+	 *
+	 * @phpstan-return Schema
 	 */
 	public function get_item_schema(): array {
 		if ( $this->schema ) {
-			return $this->add_additional_fields_schema( $this->schema );
+			/**
+			 * Schema.
+			 *
+			 * @phpstan-var Schema $schema
+			 */
+			$schema = $this->add_additional_fields_schema( $this->schema );
+			return $schema;
 		}
 
 		$autosaves_schema = parent::get_item_schema();
@@ -233,6 +243,12 @@ class Stories_Autosaves_Controller extends WP_REST_Autosaves_Controller implemen
 
 		$this->schema = $autosaves_schema;
 
-		return $this->add_additional_fields_schema( $this->schema );
+		/**
+		 * Schema.
+		 *
+		 * @phpstan-var Schema $schema
+		 */
+		$schema = $this->add_additional_fields_schema( $this->schema );
+		return $schema;
 	}
 }

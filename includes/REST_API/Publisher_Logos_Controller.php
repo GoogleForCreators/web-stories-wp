@@ -39,6 +39,8 @@ use WP_REST_Server;
  * Class to access publisher logos via the REST API.
  *
  * @since 1.12.0
+ *
+ * @phpstan-import-type Links from \Google\Web_Stories\REST_API\Stories_Base_Controller
  */
 class Publisher_Logos_Controller extends REST_Controller implements HasRequirements {
 
@@ -223,7 +225,13 @@ class Publisher_Logos_Controller extends REST_Controller implements HasRequireme
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
 	public function create_item( $request ) {
-		$publisher_logos = $this->filter_publisher_logos( (array) $this->settings->get_setting( $this->settings::SETTING_NAME_PUBLISHER_LOGOS, [] ) );
+		/**
+		 * List of publisher logos.
+		 *
+		 * @var int[] $publisher_logos
+		 */
+		$publisher_logos = $this->settings->get_setting( $this->settings::SETTING_NAME_PUBLISHER_LOGOS, [] );
+		$publisher_logos = $this->filter_publisher_logos( $publisher_logos );
 
 		/**
 		 * Publisher logo ID(s).
@@ -320,7 +328,13 @@ class Publisher_Logos_Controller extends REST_Controller implements HasRequireme
 
 		$prepared = $this->prepare_item_for_response( $post, $request );
 
-		$publisher_logos = $this->filter_publisher_logos( (array) $this->settings->get_setting( $this->settings::SETTING_NAME_PUBLISHER_LOGOS, [] ) );
+		/**
+		 * List of publisher logos.
+		 *
+		 * @var int[] $publisher_logos
+		 */
+		$publisher_logos = $this->settings->get_setting( $this->settings::SETTING_NAME_PUBLISHER_LOGOS, [] );
+		$publisher_logos = $this->filter_publisher_logos( $publisher_logos );
 		$publisher_logos = array_values( array_diff( $publisher_logos, [ $post->ID ] ) );
 
 		$active_publisher_logo_id = absint( $this->settings->get_setting( $this->settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO ) );
@@ -380,7 +394,13 @@ class Publisher_Logos_Controller extends REST_Controller implements HasRequireme
 	 * @return WP_Post|WP_Error Post object if ID is valid, WP_Error otherwise.
 	 */
 	protected function get_publisher_logo( $id ) {
-		$publisher_logos = $this->filter_publisher_logos( (array) $this->settings->get_setting( $this->settings::SETTING_NAME_PUBLISHER_LOGOS, [] ) );
+		/**
+		 * List of publisher logos.
+		 *
+		 * @var int[] $publisher_logos
+		 */
+		$publisher_logos = $this->settings->get_setting( $this->settings::SETTING_NAME_PUBLISHER_LOGOS, [] );
+		$publisher_logos = $this->filter_publisher_logos( $publisher_logos );
 
 		$post = get_post( $id );
 
@@ -457,6 +477,8 @@ class Publisher_Logos_Controller extends REST_Controller implements HasRequireme
 	 *
 	 * @param WP_Post $post Post object.
 	 * @return array Links for the given post.
+	 *
+	 * @phpstan-return Links
 	 */
 	protected function prepare_links( $post ): array {
 		$base = sprintf( '%s/%s', $this->namespace, $this->rest_base );
@@ -479,7 +501,7 @@ class Publisher_Logos_Controller extends REST_Controller implements HasRequireme
 	 *
 	 * @since 1.12.0
 	 *
-	 * @return array Item schema data.
+	 * @return array<string, array<string, array<string, array<int, string>|bool|string>>|string> Item schema data.
 	 */
 	public function get_item_schema(): array {
 		if ( $this->schema ) {

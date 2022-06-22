@@ -27,7 +27,7 @@ final class Services {
 	/**
 	 * Service container object instance.
 	 *
-	 * @var ServiceContainer
+	 * @var ServiceContainer<Service>
 	 */
 	private static $container;
 
@@ -45,7 +45,7 @@ final class Services {
 	 *
 	 * @param string $service Service ID to retrieve.
 	 */
-	public static function get( $service ): Service {
+	public static function get( string $service ): Service {
 		return self::get_container()->get( $service );
 	}
 
@@ -56,7 +56,7 @@ final class Services {
 	 *
 	 * @param string $service Service ID to retrieve.
 	 */
-	public static function has( $service ): bool {
+	public static function has( string $service ): bool {
 		return self::get_container()->has( $service );
 	}
 
@@ -80,7 +80,7 @@ final class Services {
 	 *
 	 * @since 1.6.0
 	 *
-	 * @return ServiceContainer Service container object instance.
+	 * @return ServiceContainer<Service> Service container object instance.
 	 */
 	public static function get_container(): ServiceContainer {
 		if ( null === self::$container ) {

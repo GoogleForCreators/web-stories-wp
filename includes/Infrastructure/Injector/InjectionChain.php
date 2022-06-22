@@ -33,7 +33,7 @@ final class InjectionChain {
 	/**
 	 * Chain.
 	 *
-	 * @var array<string>
+	 * @var string[]
 	 */
 	private $chain = [];
 
@@ -52,7 +52,7 @@ final class InjectionChain {
 	 * @param string $class Class to add to injection chain.
 	 * @return self Modified injection chain.
 	 */
-	public function add_to_chain( $class ): self {
+	public function add_to_chain( string $class ): self {
 		$new_chain          = clone $this;
 		$new_chain->chain[] = $class;
 
@@ -67,7 +67,7 @@ final class InjectionChain {
 	 * @param string $resolution Resolution to add.
 	 * @return self Modified injection chain.
 	 */
-	public function add_resolution( $resolution ): self {
+	public function add_resolution( string $resolution ): self {
 		$new_chain                             = clone $this;
 		$new_chain->resolutions[ $resolution ] = true;
 
@@ -98,7 +98,7 @@ final class InjectionChain {
 	 *
 	 * @since 1.6.0
 	 *
-	 * @return array Chain of injections.
+	 * @return string[] Chain of injections.
 	 */
 	public function get_chain(): array {
 		return \array_reverse( $this->chain );
@@ -112,7 +112,7 @@ final class InjectionChain {
 	 * @param string $resolution Resolution to check for.
 	 * @return bool Whether the resolution was found.
 	 */
-	public function has_resolution( $resolution ): bool {
+	public function has_resolution( string $resolution ): bool {
 		return \array_key_exists( $resolution, $this->resolutions );
 	}
 
@@ -124,7 +124,7 @@ final class InjectionChain {
 	 * @param string $class Class to check.
 	 * @return bool Whether the given class is already part of the chain.
 	 */
-	public function is_in_chain( $class ): bool {
+	public function is_in_chain( string $class ): bool {
 		return \in_array( $class, $this->chain, true );
 	}
 }

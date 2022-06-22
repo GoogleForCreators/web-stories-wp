@@ -68,15 +68,7 @@ const products = [
     productPriceCurrency: 'USD',
     productImages: [
       {
-        url: 'http://localhost:10004/wp-content/uploads/2022/04/hoodie-blue-1.jpg',
-        alt: '',
-      },
-      {
-        url: 'http://localhost:10004/wp-content/uploads/2022/04/hoodie-green-1.jpg',
-        alt: '',
-      },
-      {
-        url: 'http://localhost:10004/wp-content/uploads/2022/04/hoodie-with-logo-2.jpg',
+        url: 'https://wp.stories.google/static/main/images/templates/fresh-and-bright/page1_bg-alt.png',
         alt: '',
       },
     ],
@@ -112,17 +104,24 @@ const configValue = {
 export default {
   title: 'Stories Editor/Components/ProductList',
   component: ProductList,
+  args: {
+    products,
+    isMenuFocused: true,
+    onPageProducts: [],
+  },
+  argTypes: {
+    onClick: { action: 'button clicked' },
+  },
 };
 
-export const PageWithProducts = () => {
+export const PageWithProducts = (args) => {
   return (
     <ConfigContext.Provider value={configValue}>
       <Container>
         <ProductList
-          products={products}
+          {...args}
           onPageProducts={[
-            { elementId: '123', productId: 'sb-36' },
-            { elementId: '123', productId: 'sb-39' },
+            { elementId: '123', product: { productId: 'sb-38' } },
           ]}
         />
       </Container>
@@ -130,11 +129,11 @@ export const PageWithProducts = () => {
   );
 };
 
-export const _default = () => {
+export const _default = (args) => {
   return (
     <ConfigContext.Provider value={configValue}>
       <Container>
-        <ProductList products={products} />
+        <ProductList {...args} />
       </Container>
     </ConfigContext.Provider>
   );

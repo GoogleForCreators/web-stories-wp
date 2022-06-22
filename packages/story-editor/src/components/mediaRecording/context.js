@@ -15,20 +15,10 @@
  */
 
 /**
- * Update story properties.
- *
- * No validation is performed and existing values are overwritten.
- *
- * @param {Object} state Current state
- * @param {Object} payload Action payload
- * @param {Object | Function} payload.reducer reducer to apply to state
- * @return {Object} New state
+ * External dependencies
  */
-function updateStateWithReducer(state, { reducer }) {
-  if (typeof reducer !== 'function') {
-    return state;
-  }
-  return reducer(state);
-}
+import { createContext } from '@googleforcreators/react';
 
-export default updateStateWithReducer;
+const MediaRecordingContext = createContext({ state: {}, actions: {} });
+
+export default MediaRecordingContext;

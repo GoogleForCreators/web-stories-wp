@@ -85,7 +85,7 @@ class Shopping_Vendors {
 	 *
 	 * @since 1.21.0
 	 *
-	 * @return array Array of vendors.
+	 * @return array<string,array{label: string, class?: class-string}> Array of vendors.
 	 */
 	public function get_vendors(): array {
 		$vendors = [
