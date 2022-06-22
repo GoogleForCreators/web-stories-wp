@@ -188,6 +188,16 @@ class Story {
 		}
 
 		/**
+		 * Poster.
+		 *
+		 * @var array{url:string} $poster
+		 */
+		$poster = get_post_meta( $post->ID, Story_Post_Type::POSTER_META_KEY, true );
+		if ( $poster ) {
+			$this->poster_portrait = $poster['url'];
+		}
+
+		/**
 		 * Publisher logo ID.
 		 *
 		 * @var string|int $publisher_logo_id
