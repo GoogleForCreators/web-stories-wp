@@ -157,13 +157,8 @@ function CurrentColorPicker({
     [rgb, onChange]
   );
 
-  const { initEyedropper } = useEyedropper({
-    onChange,
-  });
-
-  const { isEyeDropperApiSupported, openEyeDropper } = useEyeDropperApi({
-    onChange: (color) => onChange({ color }),
-  });
+  const { initEyedropper } = useEyedropper({ onChange });
+  const { isEyeDropperApiSupported, openEyeDropper } = useEyeDropperApi({ onChange });
 
   return (
     <>

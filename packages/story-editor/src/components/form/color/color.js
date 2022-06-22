@@ -129,13 +129,8 @@ const Color = forwardRef(function Color(
   const displayOpacity =
     value !== MULTIPLE_VALUE && Boolean(getPreviewText(value)) && hasInputs;
 
-  const { initEyedropper } = useEyedropper({
-    onChange: (color) => onChange({ color }),
-  });
-
-  const { isEyeDropperApiSupported, openEyeDropper } = useEyeDropperApi({
-    onChange: (color) => onChange({ color }),
-  });
+  const { initEyedropper } = useEyedropper({ onChange });
+  const { isEyeDropperApiSupported, openEyeDropper } = useEyeDropperApi({ onChange });
 
   const tooltip = __('Pick a color from canvas', 'web-stories');
 

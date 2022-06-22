@@ -125,13 +125,8 @@ function BasicColorPicker({
   const [toDelete, setToDelete] = useState(null);
   const hasPresets = storyColors.length > 0 || savedColors.length > 0;
 
-  const { initEyedropper } = useEyedropper({
-    onChange: (newColor) => handleColorChange({ color: newColor }),
-  });
-
-  const { isEyeDropperApiSupported, openEyeDropper } = useEyeDropperApi({
-    onChange: (newColor) => handleColorChange({ color: newColor }),
-  });
+  const { initEyedropper } = useEyedropper({ onChange: handleColorChange });
+  const { isEyeDropperApiSupported, openEyeDropper } = useEyeDropperApi({ onChange: handleColorChange });
 
   const { deleteLocalColor, deleteGlobalColor } = useDeleteColor({
     onEmpty: () => setIsEditMode(false),

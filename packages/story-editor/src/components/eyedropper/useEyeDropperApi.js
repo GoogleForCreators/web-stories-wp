@@ -32,13 +32,14 @@ function useEyeDropperApi({ onChange }) {
   }, [isEyeDropperApiSupported]);
 
   const openEyeDropper = useCallback(async () => {
+
     if (!eyeDropper.current || !isEyeDropperApiSupported) {
       return;
     }
 
     try {
       const { sRGBHex } = await eyeDropper.current.open();
-      onChange(getSolidFromHex(sRGBHex.substring(1)).color);
+      onChange({ color: getSolidFromHex(sRGBHex.substring(1)).color });
     } catch (e) {
       //eslint-disable-next-line no-console -- Surface error for debugging.
       console.log(e.message);

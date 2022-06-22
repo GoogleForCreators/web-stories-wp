@@ -107,7 +107,7 @@ export default ({ onChange }) => {
         }
 
         setEyedropperCallback(() => (rgbObject) => {
-          onChange(rgbObject);
+          onChange({ color: rgbObject });
           setIsEyedropperActive(false);
           setEyedropperImg(null);
           setEyedropperPixelData(null);
