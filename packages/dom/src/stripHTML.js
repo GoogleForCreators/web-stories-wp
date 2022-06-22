@@ -17,6 +17,7 @@
 const buffer =
   typeof document !== 'undefined' ? document.createElement('div') : {};
 
+// @todo Find a way to strip HTML in SSR too.
 export default function stripHTML(string) {
   // @todo: implement a cheaper way to strip markup.
   buffer.innerHTML = string;
