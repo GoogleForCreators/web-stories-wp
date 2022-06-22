@@ -239,7 +239,7 @@ function useCanvasKeys(ref) {
     }
 
     for (const { type, product } of selectedElements) {
-      const { productId, productTitle, productImages } = product;
+      const { productId, productTitle, productImages } = product || {};
       if (
         type === ELEMENT_TYPES.PRODUCT &&
         productId &&

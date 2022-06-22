@@ -127,8 +127,8 @@ class SVG extends Service_Base {
 	 *
 	 * @since 1.3.0
 	 *
-	 * @param array $mime_types Mime types keyed by the file extension regex corresponding to those types.
-	 * @return array
+	 * @param array<string, string> $mime_types Mime types keyed by the file extension regex corresponding to those types.
+	 * @return array<string, string>
 	 */
 	public function upload_mimes_add_svg( array $mime_types ): array {
 		// allow SVG file upload.
@@ -143,9 +143,9 @@ class SVG extends Service_Base {
 	 *
 	 * @since 1.3.0
 	 *
-	 * @param string[] $mime_types     Mime types keyed by the file extension regex
-	 *                                 corresponding to those types.
-	 * @return array
+	 * @param string[] $mime_types Mime types keyed by the file extension regex
+	 *                             corresponding to those types.
+	 * @return array<string, string>
 	 */
 	public function mime_types_add_svg( array $mime_types ): array {
 		// allow SVG files.
@@ -159,8 +159,8 @@ class SVG extends Service_Base {
 	 *
 	 * @since 1.3.0
 	 *
-	 * @param array $mime_types Associative array of allowed mime types per media type (image, audio, video).
-	 * @return array
+	 * @param array<string, string[]> $mime_types Associative array of allowed mime types per media type (image, audio, video).
+	 * @return array<string, string[]>
 	 */
 	public function web_stories_allowed_mime_types( array $mime_types ): array {
 		$mime_types['vector'][] = self::MIME_TYPE;
@@ -191,13 +191,13 @@ class SVG extends Service_Base {
 	 *
 	 * @since 1.3.0
 	 *
-	 * @param array  $metadata      An array of attachment meta data.
-	 * @param int    $attachment_id Current attachment ID.
-	 * @param string $context       Additional context. Can be 'create' when metadata was initially created for new
-	 *                              attachment.
-	 * @return array
+	 * @param array<string,mixed> $metadata      An array of attachment meta data.
+	 * @param int                 $attachment_id Current attachment ID.
+	 * @param string              $context       Additional context. Can be 'create' when metadata
+	 *                                           was initially created for new attachment.
+	 * @return array<string,mixed> Filtered metadata.
 	 */
-	public function wp_generate_attachment_metadata( $metadata, $attachment_id, $context ): array {
+	public function wp_generate_attachment_metadata( array $metadata, int $attachment_id, string $context ): array {
 		if ( 'create' !== $context ) {
 			return $metadata;
 		}
@@ -235,13 +235,16 @@ class SVG extends Service_Base {
 	 * @param array $upload {
 	 *      Array of upload data.
 	 *
-	 *      @type string $file   Filename of the newly-uploaded file.
-	 *      @type string $url    URL of the newly-uploaded file.
-	 *      @type string $type   Mime type of the newly-uploaded file.
+	 *      @type string $file     Filename of the newly-uploaded file.
+	 *      @type string $url      URL of the newly-uploaded file.
+	 *      @type string $type     Mime type of the newly-uploaded file.
+	 *      @type string $tmp_name Temporary file name.
 	 * }
 	 * @return string[]
+	 *
+	 * @phpstan-param array{file: string, url: string, type: string, tmp_name: string} $upload
 	 */
-	public function wp_handle_upload( $upload ): array {
+	public function wp_handle_upload( array $upload ): array {
 		if ( self::MIME_TYPE !== $upload['type'] ) {
 			return $upload;
 		}
@@ -269,6 +272,8 @@ class SVG extends Service_Base {
 	 *
 	 * @param string $file Path to SVG file.
 	 * @return array|WP_Error
+	 *
+	 * @phpstan-return array{width: int, height: int}|WP_Error
 	 */
 	protected function get_svg_size( string $file ) {
 		$svg = $this->get_svg_data( $file );
@@ -343,7 +348,9 @@ class SVG extends Service_Base {
 	 *                                               $file being in a tmp directory).
 	 * @param string[]    $mimes                     Array of mime types keyed by their file extension regex.
 	 * @param string|bool $real_mime                 The actual mime type or false if the type cannot be determined.
-	 * @return array
+	 * @return array{ext?: string, type?: string, proper_filename?: bool}
+	 *
+	 * @phpstan-param array{ext?: string, type?: string, proper_filename?: bool} $wp_check_filetype_and_ext
 	 */
 	public function wp_check_filetype_and_ext( $wp_check_filetype_and_ext, $file, $filename, $mimes, $real_mime ): array {
 		if ( 'image/svg' === $real_mime ) {

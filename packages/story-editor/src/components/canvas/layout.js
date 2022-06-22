@@ -75,6 +75,7 @@ const LayerGrid = styled.section`
     c = canvas page
     m = page action menu
     w = workspace footer
+    t = canvas page title
 
     Also note that we need to specify all the widths and heights
     even though some of the elements could just use the size that
@@ -84,7 +85,7 @@ const LayerGrid = styled.section`
   */
   grid:
     'h h h h h h h' ${HEADER_HEIGHT}px
-    '. . . . . . .' minmax(16px, 1fr)
+    '. . . t . . .' minmax(16px, 1fr)
     'p b . c . f n' var(--viewport-height-px)
     '. . . . . . .' 1fr
     'w w w w w w w' ${({ footerHeight }) => footerHeight}px
@@ -140,6 +141,15 @@ const PageAreaContainer = styled(Area).attrs({
         100% - ${hasHorizontalOverflow ? themeHelpers.SCROLLBAR_WIDTH : 0}px
       );
     `}
+`;
+
+const PageTitleContainer = styled(Area).attrs({
+  area: 't',
+})`
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Layer = forwardRef(function Layer({ children, ...rest }, ref) {
@@ -478,6 +488,7 @@ export {
   PageArea,
   PageBeforeArea,
   PageAfterArea,
+  PageTitleContainer as PageTitleArea,
   HeadArea,
   MenuArea,
   NavPrevArea,

@@ -37,6 +37,18 @@ use WP_REST_Server;
  * API endpoint check status.
  *
  * Class Status_Check_Controller
+ *
+ * @phpstan-type SchemaEntry array{
+ *   description: string,
+ *   type: string,
+ *   context: string[],
+ *   default?: mixed,
+ * }
+ * @phpstan-type Schema array{
+ *   properties: array{
+ *     success?: SchemaEntry,
+ *   }
+ * }
  */
 class Status_Check_Controller extends REST_Controller implements HasRequirements {
 
@@ -121,18 +133,18 @@ class Status_Check_Controller extends REST_Controller implements HasRequirements
 	 *
 	 * @since 1.10.0
 	 *
-	 * @param array           $status    Status array.
-	 * @param WP_REST_Request $request Request object.
+	 * @param array{success: bool} $item    Status array.
+	 * @param WP_REST_Request      $request Request object.
 	 * @return WP_REST_Response|WP_Error Response object.
 	 */
-	public function prepare_item_for_response( $status, $request ) {
+	public function prepare_item_for_response( $item, $request ) {
 		$fields = $this->get_fields_for_response( $request );
 		$schema = $this->get_item_schema();
 
 		$data = [];
 
-		if ( rest_is_field_included( 'success', $fields ) ) {
-			$data['success'] = rest_sanitize_value_from_schema( $status['success'], $schema['properties']['success'] );
+		if ( ! empty( $schema['properties']['success'] ) && rest_is_field_included( 'success', $fields ) ) {
+			$data['success'] = rest_sanitize_value_from_schema( $item['success'], $schema['properties']['success'] );
 		}
 
 		/**
@@ -152,11 +164,19 @@ class Status_Check_Controller extends REST_Controller implements HasRequirements
 	 *
 	 * @since 1.10.0
 	 *
-	 * @return array Item schema as an array.
+	 * @return array Item schema data.
+	 *
+	 * @phpstan-return Schema
 	 */
 	public function get_item_schema(): array {
 		if ( $this->schema ) {
-			return $this->add_additional_fields_schema( $this->schema );
+			/**
+			 * Schema.
+			 *
+			 * @phpstan-var Schema $schema
+			 */
+			$schema = $this->add_additional_fields_schema( $this->schema );
+			return $schema;
 		}
 
 		$schema = [
@@ -174,7 +194,13 @@ class Status_Check_Controller extends REST_Controller implements HasRequirements
 
 		$this->schema = $schema;
 
-		return $this->add_additional_fields_schema( $this->schema );
+		/**
+		 * Schema.
+		 *
+		 * @phpstan-var Schema $schema
+		 */
+		$schema = $this->add_additional_fields_schema( $this->schema );
+		return $schema;
 	}
 
 	/**

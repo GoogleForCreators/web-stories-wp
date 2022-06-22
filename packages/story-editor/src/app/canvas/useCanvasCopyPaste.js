@@ -46,17 +46,28 @@ function useCanvasGlobalKeys() {
     selectedElements,
     deleteSelectedElements,
     selectedElementAnimations,
+    selectedElementsGroups,
     currentPageProductIds,
   } = useStory(
     ({
       state: { currentPage, selectedElements, selectedElementAnimations },
       actions: { deleteSelectedElements },
     }) => {
+      const selectedElementsGroupsIds = selectedElements
+        .map((el) => el.groupId)
+        .filter(Boolean);
+      const selectedElementsGroupsEntries = Object.entries(
+        currentPage?.groups || {}
+      ).filter(([groupId]) => selectedElementsGroupsIds.includes(groupId));
+      const selectedElementsGroups = Object.fromEntries(
+        selectedElementsGroupsEntries
+      );
       return {
         currentPage,
         selectedElements,
         deleteSelectedElements,
         selectedElementAnimations,
+        selectedElementsGroups,
         currentPageProductIds: currentPage?.elements
           ?.filter(({ type }) => type === ELEMENT_TYPES.PRODUCT)
           .map(({ product }) => product?.productId),
@@ -81,6 +92,7 @@ function useCanvasGlobalKeys() {
         currentPage,
         selectedElements,
         selectedElementAnimations,
+        selectedElementsGroups,
         evt
       );
 
@@ -94,12 +106,13 @@ function useCanvasGlobalKeys() {
       deleteSelectedElements,
       selectedElements,
       selectedElementAnimations,
+      selectedElementsGroups,
     ]
   );
 
   const elementPasteHandler = useBatchingCallback(
     (content) => {
-      const { elements, animations } = processPastedElements(
+      const { elements, animations, groups } = processPastedElements(
         content,
         currentPage
       );
@@ -148,7 +161,7 @@ function useCanvasGlobalKeys() {
         );
       }
 
-      return addPastedElements(elements, animations);
+      return addPastedElements(elements, animations, groups);
     },
     [addPastedElements, currentPage, showSnackbar, currentPageProductIds]
   );
