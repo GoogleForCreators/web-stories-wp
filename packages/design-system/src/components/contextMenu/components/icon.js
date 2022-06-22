@@ -26,6 +26,13 @@ import { VisuallyHidden } from '../../visuallyHidden';
 const IconWrapper = styled.div`
   width: 32px;
   height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  > * {
+    flex: 1;
+  }
 `;
 
 /**

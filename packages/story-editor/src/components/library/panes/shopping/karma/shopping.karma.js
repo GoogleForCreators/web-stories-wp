@@ -167,6 +167,22 @@ describe('Shopping integration', () => {
       await expect(productButton.getAttribute('aria-disabled')).toBe('true');
     });
 
+    it('should disable button if there are more than 6 products on the page', async () => {
+      await insertProduct('Hoodie');
+      await insertProduct('Big Logo Collection');
+      await insertProduct('Logo Collection');
+      await insertProduct('Beanie with Logo');
+      await insertProduct('Album');
+      await insertProduct('Single');
+
+      await searchProduct('Massive Logo Collection');
+
+      const disabledButton = fixture.querySelector(
+        '[aria-label="Only 6 items can be added per page."]'
+      );
+      expect(disabledButton).toBeDefined();
+    });
+
     it('should sort searched products', async () => {
       await fixture.editor.library.shoppingTab.click();
       await fixture.events.keyboard.press('tab');

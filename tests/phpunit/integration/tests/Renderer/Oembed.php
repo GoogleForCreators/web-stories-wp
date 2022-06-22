@@ -84,20 +84,6 @@ class Oembed extends TestCase {
 	}
 
 	/**
-	 * @covers ::get_embed_height_width
-	 */
-	public function test_get_embed_height_width_invalid(): void {
-		$renderer = new \Google\Web_Stories\Renderer\Oembed();
-		$actual   = $this->call_private_method( $renderer, 'get_embed_height_width', [ 'invalid' ] );
-		$expected = [
-			'width'  => 200,
-			'height' => 334,
-		];
-
-		$this->assertEqualSets( $expected, $actual );
-	}
-
-	/**
 	 * @covers ::filter_oembed_response_data
 	 */
 	public function test_filter_oembed_response_data(): void {

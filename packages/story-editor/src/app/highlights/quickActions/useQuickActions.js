@@ -21,17 +21,18 @@ import PropTypes from 'prop-types';
 import { useCallback, useMemo, useRef } from '@googleforcreators/react';
 import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
 import {
+  Icons,
+  PLACEMENT,
   prettifyShortcut,
   useSnackbar,
-  PLACEMENT,
-  Icons,
 } from '@googleforcreators/design-system';
 import { trackEvent } from '@googleforcreators/tracking';
 import { ELEMENT_TYPES } from '@googleforcreators/elements';
 import {
-  resourceList,
   getExtensionsFromMimeType,
+  resourceList,
 } from '@googleforcreators/media';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
@@ -41,14 +42,15 @@ import useHighlights from '../useHighlights';
 import updateProperties from '../../../components/style/updateProperties';
 import { useHistory } from '../../history';
 import { useConfig } from '../../config';
-import { useLocalMedia, TRANSCODABLE_MIME_TYPES } from '../../media';
-import { useStory, useStoryTriggersDispatch, STORY_EVENTS } from '../../story';
+import { TRANSCODABLE_MIME_TYPES, useLocalMedia } from '../../media';
+import { STORY_EVENTS, useStory, useStoryTriggersDispatch } from '../../story';
 import useApplyTextAutoStyle from '../../../utils/useApplyTextAutoStyle';
 import useFFmpeg from '../../media/utils/useFFmpeg';
 import useInsertElement from '../../../components/canvas/useInsertElement';
 import { DEFAULT_PRESET } from '../../../components/library/panes/text/textPresets';
+import { useMediaRecording } from '../../../components/mediaRecording';
 import { getResetProperties } from './utils';
-import { ACTIONS, RESET_PROPERTIES, RESET_DEFAULTS } from './constants';
+import { ACTIONS, RESET_DEFAULTS, RESET_PROPERTIES } from './constants';
 
 const UNDO_HELP_TEXT = sprintf(
   /* translators: %s: Ctrl/Cmd + Z keyboard shortcut */
@@ -66,7 +68,24 @@ const {
   Media,
   PictureSwap,
   Captions,
+  Cross,
+  Settings,
 } = Icons;
+
+const StyledSettings = styled(Settings).attrs({
+  width: 24,
+  height: 24,
+})``;
+
+const Mic = styled(Icons.Mic).attrs({
+  width: 24,
+  height: 24,
+})``;
+
+const MicOff = styled(Icons.MicOff).attrs({
+  width: 24,
+  height: 24,
+})``;
 
 export const MediaPicker = ({ render, ...props }) => {
   const {
@@ -279,6 +298,29 @@ const useQuickActions = () => {
   const showSnackbar = useSnackbar(({ showSnackbar }) => showSnackbar);
   const { setHighlights } = useHighlights(({ setHighlights }) => ({
     setHighlights,
+  }));
+
+  const {
+    isInRecordingMode,
+    toggleRecordingMode,
+    toggleAudio,
+    hasAudio,
+    toggleSettings,
+    audioInput,
+    isReady,
+  } = useMediaRecording(({ state, actions }) => ({
+    isInRecordingMode: state.isInRecordingMode,
+    hasAudio: state.hasAudio,
+    audioInput: state.audioInput,
+    isReady:
+      state.status === 'ready' &&
+      !state.file?.type?.startsWith('image') &&
+      !state.isCountingDown,
+    toggleRecordingMode: actions.toggleRecordingMode,
+    toggleAudio: actions.toggleAudio,
+    toggleSettings: actions.toggleSettings,
+    muteAudio: actions.muteAudio,
+    unMuteAudio: actions.unMuteAudio,
   }));
 
   const undoRef = useRef(undo);
@@ -724,6 +766,60 @@ const useQuickActions = () => {
     selectedElement,
     showClearAction,
   ]);
+
+  const mediaRecordingActions = useMemo(() => {
+    return [
+      {
+        Icon: Cross,
+        label: __('Close', 'web-stories'),
+        onClick: () => {
+          trackEvent('media_recording_mode_toggled', {
+            status: 'closed',
+          });
+          toggleRecordingMode();
+        },
+        ...actionMenuProps,
+      },
+      {
+        Icon: StyledSettings,
+        label: __('Options', 'web-stories'),
+        onClick: () => {
+          trackEvent('media_recording_open_settings');
+          toggleSettings();
+        },
+        disabled: !isReady,
+        separator: 'top',
+        ...actionMenuProps,
+      },
+      audioInput && {
+        Icon: hasAudio ? Mic : MicOff,
+        label: hasAudio
+          ? __('Disable Audio', 'web-stories')
+          : __('Enable Audio', 'web-stories'),
+        onClick: () => {
+          trackEvent('media_recording_audio_toggled', {
+            status: hasAudio ? 'muted' : 'unmuted',
+          });
+          toggleAudio();
+        },
+        disabled: !isReady,
+        ...actionMenuProps,
+      },
+    ].filter(Boolean);
+  }, [
+    actionMenuProps,
+    audioInput,
+    hasAudio,
+    toggleAudio,
+    toggleRecordingMode,
+    toggleSettings,
+    isReady,
+  ]);
+
+  // Return special actions for media recording mode.
+  if (isInRecordingMode) {
+    return mediaRecordingActions;
+  }
 
   // Hide menu if there are multiple elements selected
   if (selectedElements.length > 1) {

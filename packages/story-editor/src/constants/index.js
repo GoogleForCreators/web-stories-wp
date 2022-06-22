@@ -28,6 +28,7 @@ export const PAGE_NAV_PADDING = 60;
 export const PAGE_NAV_BUTTON_SIZE = 40;
 export const PAGE_NAV_WIDTH = PAGE_NAV_PADDING + PAGE_NAV_BUTTON_SIZE;
 export const FLOATING_MENU_DISTANCE = 10;
+export const MAX_PRODUCTS_PER_PAGE = 6;
 
 export const ZOOM_SETTING = {
   FILL: 'FILL',

@@ -29,7 +29,7 @@
  * @param {Object} state Current state
  * @param {Object} payload Action payload
  * @param {string} payload.elementId Id to either add or remove from selection.
- * @param {boolean} payload.withLinked With linked.
+ * @param {boolean} payload.withLinked Include elements from the group?
  * @return {Object} New state
  */
 function toggleElement(state, { elementId, withLinked = false }) {
@@ -72,10 +72,13 @@ function toggleElement(state, { elementId, withLinked = false }) {
       state.selection.includes(backgroundElementId);
     const getElementById = (byId) =>
       currentPage.elements.find(({ id }) => id === byId);
-    const oldElement = getElementById(state.selection[0]);
+    const oldElementIsLocked =
+      state.selection.length > 0
+        ? getElementById(state.selection[0]).isLocked
+        : false;
     const newElement = getElementById(elementId);
     const resultIsOnlyNewElement =
-      selectionWasOnlyBackground || oldElement.isLocked || newElement.isLocked;
+      selectionWasOnlyBackground || oldElementIsLocked || newElement.isLocked;
 
     // If either of those, return a new selection of only the new element
     if (resultIsOnlyNewElement) {

@@ -61,8 +61,17 @@ function DisplayPage({ pageElements, editingElement }) {
         if (editingElement === element.id) {
           return null;
         }
+
+        const siblingCount =
+          pageElements.filter(({ type }) => type === element.type).length - 1;
+
         return (
-          <DisplayElement key={element.id} element={element} isAnimatable />
+          <DisplayElement
+            key={element.id}
+            element={element}
+            isAnimatable
+            siblingCount={siblingCount}
+          />
         );
       })
     : null;
@@ -162,19 +171,26 @@ StoryAnimations.propTypes = {
 };
 
 function DisplayLayer() {
-  const { backgroundColor, isBackgroundSelected, pageAttachment, hasProducts } =
-    useStory(({ state }) => {
-      return {
-        hasCurrentPage: Boolean(state.currentPage),
-        backgroundColor: state.currentPage?.backgroundColor,
-        isBackgroundSelected: state.selectedElements?.[0]?.isBackground,
-        pageAttachment: state.currentPage?.pageAttachment || {},
-        hasProducts: state.currentPage.elements?.some(
-          ({ type, product }) =>
-            type === ELEMENT_TYPES.PRODUCT && product?.productId
-        ),
-      };
-    });
+  const {
+    backgroundColor,
+    isBackgroundSelected,
+    pageAttachment,
+    shoppingAttachment,
+    hasProducts,
+  } = useStory(({ state }) => {
+    return {
+      hasCurrentPage: Boolean(state.currentPage),
+      backgroundColor: state.currentPage?.backgroundColor,
+      isBackgroundSelected: state.selectedElements?.[0]?.isBackground,
+      pageAttachment: state.currentPage?.pageAttachment || {},
+      shoppingAttachment: state.currentPage?.shoppingAttachment || {},
+      hasProducts: state.currentPage.elements?.some(
+        ({ type, product }) =>
+          type === ELEMENT_TYPES.PRODUCT && product?.productId
+      ),
+    };
+  });
+
   // Have page elements shallowly equaled for scenarios like animation
   // updates where elements don't change, but we get a new page elements
   // array
@@ -194,13 +210,13 @@ function DisplayLayer() {
 
   const Overlay = useMemo(() => {
     if (hasProducts) {
-      return <ShoppingPageAttachment {...pageAttachment} />;
+      return <ShoppingPageAttachment {...shoppingAttachment} />;
     }
 
     // Always render <PageAttachment> because the pageAttachmentContainer ref
     // is needed in the page attachment panel and the useElementsWithLinks hook.
     return <PageAttachment pageAttachment={pageAttachment} />;
-  }, [pageAttachment, hasProducts]);
+  }, [hasProducts, pageAttachment, shoppingAttachment]);
 
   return (
     <StoryAnimations>

@@ -18,6 +18,8 @@
  * External dependencies
  */
 import { useBatchingCallback } from '@googleforcreators/react';
+import { v4 as uuidv4 } from 'uuid';
+
 /**
  * Internal dependencies
  */
@@ -27,6 +29,7 @@ function useAddPastedElements() {
   const {
     currentPage,
     addElements,
+    addGroup,
     updateCurrentPageProperties,
     deleteElementById,
     combineElements,
@@ -36,6 +39,7 @@ function useAddPastedElements() {
       state: { currentPage },
       actions: {
         addElements,
+        addGroup,
         deleteSelectedElements,
         updateCurrentPageProperties,
         deleteElementById,
@@ -46,6 +50,7 @@ function useAddPastedElements() {
       return {
         currentPage,
         addElements,
+        addGroup,
         deleteSelectedElements,
         updateCurrentPageProperties,
         deleteElementById,
@@ -56,7 +61,7 @@ function useAddPastedElements() {
   );
 
   const addPastedElements = useBatchingCallback(
-    (elements, animations = []) => {
+    (elements, animations = [], groups = {}) => {
       if (elements.length === 0) {
         return false;
       }
@@ -102,8 +107,35 @@ function useAddPastedElements() {
       const nonBackgroundElements = elements.filter(
         ({ isBackground }) => !isBackground
       );
-      if (nonBackgroundElements.length) {
-        addElements({ elements: nonBackgroundElements });
+      const groupsEntries = Object.entries(groups);
+      const newGroups = groupsEntries.map(([oldGroupId, group]) => {
+        const newGroupId = uuidv4();
+        return [[oldGroupId, newGroupId], group];
+      });
+      const nonBackgroundElementsWithNewGroups = nonBackgroundElements.map(
+        (el) => {
+          if (!el.groupId) {
+            return el;
+          }
+          const newGroup = newGroups.find(
+            ([[oldGroupId]]) => oldGroupId === el.groupId
+          );
+          const [[, newGroupId]] = newGroup;
+          return {
+            ...el,
+            groupId: newGroupId,
+          };
+        }
+      );
+      if (nonBackgroundElementsWithNewGroups.length) {
+        addElements({ elements: nonBackgroundElementsWithNewGroups });
+      }
+
+      if (newGroups.length) {
+        for (const newGroup of newGroups) {
+          const [[, newGroupId], group] = newGroup;
+          addGroup({ groupId: newGroupId, name: group.name });
+        }
       }
 
       // Add any animations associated with the new elements
@@ -113,6 +145,7 @@ function useAddPastedElements() {
     },
     [
       addElements,
+      addGroup,
       currentPage,
       updateCurrentPageProperties,
       combineElements,
