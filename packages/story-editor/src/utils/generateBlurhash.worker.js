@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
@@ -20,6 +21,11 @@ import { encode } from 'blurhash';
 
 const callback = function (event) {
   const { image, width, height, componentX, componentY } = event.data;
+
+  // Bail early if the message is not for us.
+  if (!image) {
+    return;
+  }
 
   try {
     const blurHash = encode(image, width, height, componentX, componentY);
@@ -35,7 +41,7 @@ const callback = function (event) {
   }
 };
 
-self.onmessage = callback;
+self.addEventListener('message', callback);
 
 // Only needed for Rollup, not webpack v4.
 export default { callback };
