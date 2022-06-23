@@ -131,7 +131,7 @@ describe('useAutoSave', () => {
     expect(autoSaveById).toHaveBeenCalledWith(expected);
   });
 
-  it('should properly call autoSaveById when using autoSave', () => {
+  it('should properly call autoSaveById when using autoSave with custom poster', () => {
     getStoryMarkup.mockImplementation(() => {
       return 'Hello World!';
     });

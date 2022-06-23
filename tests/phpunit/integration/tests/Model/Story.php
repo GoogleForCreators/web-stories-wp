@@ -112,7 +112,7 @@ class Story extends TestCase {
 				'url'    => 'http://www.example.com/image.png',
 				'height' => 1000,
 				'width'  => 1000,
-			] 
+			]
 		);
 
 		$story = new \Google\Web_Stories\Model\Story();
@@ -121,7 +121,7 @@ class Story extends TestCase {
 		$this->assertEquals( $story->get_title(), 'test title' );
 		$this->assertEquals( $story->get_url(), get_permalink( $post ) );
 		$this->assertEquals( 'http://www.example.com/image.png', $story->get_poster_portrait() );
-		$this->assertEqualSets( [], $story->get_poster_sizes() );
+		$this->assertEqualSets( [ 1000, 1000 ], $story->get_poster_portrait_size() );
 		$this->assertEmpty( $story->get_poster_srcset() );
 	}
 

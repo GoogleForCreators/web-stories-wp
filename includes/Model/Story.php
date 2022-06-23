@@ -199,10 +199,10 @@ class Story {
 		/**
 		 * Poster.
 		 *
-		 * @var array{url:string, width: number, height: number} $poster
+		 * @var array{url?:string, width?: number, height?: number} $poster
 		 */
 		$poster = get_post_meta( $post->ID, Story_Post_Type::POSTER_META_KEY, true );
-		if ( $poster ) {
+		if ( isset( $poster['url'] ) && $poster['url'] ) {
 			$this->poster_portrait      = $poster['url'];
 			$this->poster_portrait_size = [ $poster['width'], $poster['height'] ];
 		}

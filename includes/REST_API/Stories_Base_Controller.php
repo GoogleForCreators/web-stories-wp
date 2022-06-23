@@ -262,10 +262,13 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	 * @return array
 	 */
 	protected function get_register_meta( WP_Post $original_post ): array {
+		/**
+		 * @var array $meta_keys
+		 */
 		$meta_keys = get_registered_meta_keys( 'post', get_post_type( $original_post ) );
 		$meta      = [];
 		foreach ( $meta_keys as $key => $settings ) {
-			if ( $settings['show_in_rest'] ) {
+			if ( isset( $settings['show_in_rest'] ) && $settings['show_in_rest'] ) {
 				$meta[ $key ] = get_post_meta( $original_post->ID, $key, $settings['single'] );
 			}
 		}
