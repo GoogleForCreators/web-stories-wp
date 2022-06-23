@@ -199,10 +199,10 @@ class Story {
 		/**
 		 * Poster.
 		 *
-		 * @var array{url?:string, width?: number, height?: number} $poster
+		 * @var array{url?:string, width?: int, height?: int}|false $poster
 		 */
 		$poster = get_post_meta( $post->ID, Story_Post_Type::POSTER_META_KEY, true );
-		if ( isset( $poster['url'] ) && $poster['url'] ) {
+		if ( $poster ) {
 			$this->poster_portrait      = $poster['url'];
 			$this->poster_portrait_size = [ $poster['width'], $poster['height'] ];
 		}
@@ -415,13 +415,15 @@ class Story {
 	 * @since 1.22.0
 	 *
 	 * @return array {
-	 *     Poster protrait logo size.
+	 *     Poster portrait logo size.
 	 *
 	 *     Array of image data, or empty array if no image is available.
 	 *
 	 *     @type int    $1 Image width in pixels.
 	 *     @type int    $2 Image height in pixels.
 	 * }
+	 *
+	 * @phpstan-return array{0?: int, 1?: int}
 	 */
 	public function get_poster_portrait_size(): array {
 		return $this->poster_portrait_size;

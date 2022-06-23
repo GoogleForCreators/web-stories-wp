@@ -38,6 +38,8 @@ use WP_REST_Response;
 /**
  * Stories_Base_Controller class.
  *
+ * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
+ *
  * Override the WP_REST_Posts_Controller class to add `post_content_filtered` to REST request.
  *
  * @phpstan-type Link array{
@@ -57,6 +59,13 @@ use WP_REST_Response;
  *     content?: SchemaEntry,
  *     story_data?: SchemaEntry
  *   }
+ * }
+ *  @phpstan-type Meta_Key array{
+ *      show_in_rest: bool|array,
+ *      single: bool|array,
+ * }
+ * @phpstan-type Meta_Keys array{
+ *   meta_key: Meta_Key
  * }
  */
 class Stories_Base_Controller extends WP_REST_Posts_Controller {
@@ -259,17 +268,25 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	 * @since 1.22
 	 *
 	 * @param WP_Post $original_post Post Object.
-	 * @return array
+	 * @return array<string, mixed> $meta
 	 */
 	protected function get_register_meta( WP_Post $original_post ): array {
-		/**
-		 * @var array $meta_keys
+		/*
+		 *
+		 * @since 1.22.0
+		 *
+		 * @var array<string,Meta_Key> $meta_keys
+		 *
+		 * @phpstan-var Meta_Keys
 		 */
-		$meta_keys = get_registered_meta_keys( 'post', get_post_type( $original_post ) );
+		$meta_keys = get_registered_meta_keys( 'post', $this->post_type );
 		$meta      = [];
 		foreach ( $meta_keys as $key => $settings ) {
-			if ( isset( $settings['show_in_rest'] ) && $settings['show_in_rest'] ) {
-				$meta[ $key ] = get_post_meta( $original_post->ID, $key, $settings['single'] );
+			if ( ! \is_array( $settings ) ) {
+				continue;
+			}
+			if ( $settings['show_in_rest'] ) {
+				$meta[ $key ] = get_post_meta( $original_post->ID, $key, (bool) $settings['single'] );
 			}
 		}
 
