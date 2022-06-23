@@ -101,13 +101,13 @@ describe('Custom Fonts', () => {
     await addCustomFont(OPEN_SANS_CONDENSED_BOLD_URL);
     await addCustomFont(OPEN_SANS_CONDENSED_LIGHT_URL);
 
-    const font = await page.$("div[role=listbox] [role=option]:last-child");
+    const font = await page.$('div[role=listbox] [role=option]:last-child');
     await font.click();
     const ariaSelected = await page.evaluate((el) => {
       return el.getAttribute('aria-selected');
     }, font);
-    
-    expect(ariaSelected).toStrictEqual("true");
+
+    expect(ariaSelected).toBe('true');
   });
 
   it('should show error on trying add font twice', async () => {
