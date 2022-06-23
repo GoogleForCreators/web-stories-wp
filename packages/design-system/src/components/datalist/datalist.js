@@ -44,7 +44,7 @@ const focusStyle = css`
     )};
 `;
 
-const DEFAULT_WIDTH = 350;
+const DEFAULT_WIDTH = 240;
 
 const Container = styled.div`
   display: flex;
@@ -73,6 +73,7 @@ const Container = styled.div`
  * @param {string} props.title The title of the dialog (popup) container of the list.
  * @param {string} props.dropdownButtonLabel The label attached to the unexpanded datalist (button)
  * @param {boolean} props.offsetOverride override popup offsets updates, use x and y offset based on anchor
+ * @param {number} props.maxWidth sets a max-width on the Popup component
  * @return {*} Render.
  */
 const Datalist = forwardRef(function Datalist(
@@ -103,6 +104,7 @@ const Datalist = forwardRef(function Datalist(
     offsetOverride = false,
     noMatchesFoundLabel,
     searchPlaceholder,
+    maxWidth,
     ...rest
   },
   ref
@@ -226,7 +228,7 @@ const Datalist = forwardRef(function Datalist(
           isOpen={isOpen}
           zIndex={zIndex}
           offsetOverride={offsetOverride}
-          maxWidth={DEFAULT_WIDTH}
+          maxWidth={maxWidth || DEFAULT_WIDTH}
           fillWidth
         >
           {list}
@@ -261,6 +263,7 @@ Datalist.propTypes = {
   title: PropTypes.string,
   dropdownButtonLabel: PropTypes.string,
   offsetOverride: PropTypes.bool,
+  maxWidth: PropTypes.number,
 };
 
 export default Datalist;
