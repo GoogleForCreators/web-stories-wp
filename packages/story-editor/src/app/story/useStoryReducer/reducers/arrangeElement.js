@@ -46,6 +46,10 @@ import { getAbsolutePosition, moveArrayElement } from './utils';
  *
  * If element is already at the desired position, state is unchanged.
  *
+ * If group is set to a specific id, that id is enforced and will be copied to group.
+ * If group is set to null or undefined, group is required to not be present and will be removed.
+ * If group is unset or set to false, group will be ignored whether set or not and will not be changed or removed.
+ *
  * Selection and current page is unchanged.
  *
  * TODO: Handle multi-element re-order when UX and priority is finalized.
