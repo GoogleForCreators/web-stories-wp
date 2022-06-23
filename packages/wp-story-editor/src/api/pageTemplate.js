@@ -45,6 +45,7 @@ function transformResponse(template) {
     height: embedded?.['wp:featuredmedia']?.[0]?.media_details?.height || 0,
     width: embedded?.['wp:featuredmedia']?.[0]?.media_details?.width || 0,
     url: embedded?.['wp:featuredmedia']?.[0]?.source_url || '',
+    isExternal: false,
   };
 
   return { id: templateId, elements: [], ...story_data, templateId, image };

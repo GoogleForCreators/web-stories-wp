@@ -111,6 +111,7 @@ $story_query_params = [
 				'modified',
 				'excerpt',
 				'link',
+				'meta',
 				'story_data',
 				'preview_link',
 				'edit_link',

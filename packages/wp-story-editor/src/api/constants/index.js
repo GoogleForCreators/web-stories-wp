@@ -24,6 +24,7 @@ export const STORY_FIELDS = [
   'modified',
   'excerpt',
   'link',
+  'meta',
   'story_data',
   'preview_link',
   'edit_link',
