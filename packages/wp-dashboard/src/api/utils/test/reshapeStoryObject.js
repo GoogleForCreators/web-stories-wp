@@ -42,6 +42,9 @@ describe('reshapeStoryObject', () => {
       template: '',
       categories: [],
       tags: [],
+      meta: {
+        web_stories_poster: {},
+      },
       _embedded: {
         'wp:featuredmedia': [
           {

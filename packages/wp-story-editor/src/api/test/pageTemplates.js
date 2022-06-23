@@ -63,13 +63,13 @@ describe('pageTemplates', () => {
           {
             elements: [{ id: 'foo' }],
             id: 'page-id',
-            image: { height: 0, id: 0, url: '', width: 0 },
+            image: { height: 0, id: 0, url: '', width: 0, isExternal: false },
             templateId: 123,
           },
           {
             elements: [],
             id: 456,
-            image: { height: 0, id: 0, url: '', width: 0 },
+            image: { height: 0, id: 0, url: '', width: 0, isExternal: false },
             templateId: 456,
           },
         ],
