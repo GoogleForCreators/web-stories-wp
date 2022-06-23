@@ -26,29 +26,32 @@ import { THEME_CONSTANTS } from '../../theme';
 import { ChevronDownSmall } from '../../icons';
 
 const rotate = {
-  up: ['0', '180deg'],
-  down: ['180deg', '0'],
-  left: ['-90deg', '90deg'],
-  right: ['90deg', '-90deg'],
+  up: [180, 0],
+  down: [0, 180],
+  left: [-90, 0],
+  right: [90, 0],
 };
 
 /**
- * Simple component that shows a chevron icon when and rotates 180 degrees
- * when controlled contents are shown (open)
+ * Simple component that shows a chevron icon which rotates when
+ * controlled contents are shown (open). Values for `direction` prop of
+ * 'up' or 'down' rotate icon 180deg, and 'right' or 'left' rotate down.
  *
  * @param {Object} [props] All props.
  * @param {string} [props.direction] Initial direction of chevron icon
  * @param {number|string} [props.duration] Transition duration
  * @param {boolean} [props.isOpen] Rotates icon when true
- * @return {*} Disclosure icon
+ * @param {number[]} [props.rotation] Tuple of start and stop rotation values in degrees
+ * @return {*} Disclosure icon component
  */
 export const Disclosure = ({
   direction = 'down',
   duration = 0,
   isOpen = false,
+  rotation,
   ...rest
 }) => {
-  const [whenOpen, whenClosed] = rotate[direction];
+  const [whenClosed, whenOpen] = rotation ?? rotate[direction];
 
   const iconStyle = css`
     height: ${THEME_CONSTANTS.ICON_SIZE}px;
@@ -56,7 +59,7 @@ export const Disclosure = ({
     margin: 0 -10px;
     color: ${({ theme }) => theme.colors.fg.secondary};
     transition: transform ${duration};
-    transform: rotate(${isOpen ? whenOpen : whenClosed});
+    transform: rotate(${isOpen ? whenOpen : whenClosed}deg);
   `;
 
   return <ChevronDownSmall css={iconStyle} {...rest} />;
@@ -66,4 +69,5 @@ Disclosure.propTypes = {
   direction: PropTypes.oneOf(Object.keys(rotate)),
   duration: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   isOpen: PropTypes.bool,
+  rotation: PropTypes.arrayOf(PropTypes.number),
 };
