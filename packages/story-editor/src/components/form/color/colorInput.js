@@ -37,8 +37,8 @@ import {
   Text,
   THEME_CONSTANTS,
   Swatch,
-  Icons,
   Popup,
+  Disclosure,
   PLACEMENT,
   CONTEXT_MENU_SKIP_ELEMENT,
 } from '@googleforcreators/design-system';
@@ -89,44 +89,35 @@ const buttonAttrs = {
   type: 'button', // avoid submitting forms
 };
 
-const colorStyles = css`
-  position: absolute;
-  top: 0;
-  left: 0;
-  border-radius: 50px;
-  width: 24px;
-  height: 24px;
-`;
-
-const buttonStyle = css`
-  overflow: hidden;
-  border: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
-  outline: none;
-  background: transparent;
-`;
-
 const minimalInputContainerStyleOverride = css`
   ${inputContainerStyleOverride};
   padding-right: 6px;
 `;
 
 const ColorButton = styled(Preview).attrs(buttonAttrs)`
-  border-radius: 4px;
-  ${buttonStyle}
   display: flex;
+  overflow: hidden;
+  border: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
+  border-radius: 4px;
+  outline: none;
+  background: transparent;
+
   &:focus {
-    box-shadow: 0px 0px 0 2px ${({ theme }) => theme.colors.bg.primary},
-      0px 0px 0 4px ${({ theme }) => theme.colors.border.focus};
+    box-shadow: 0 0 0 2px ${({ theme }) => theme.colors.bg.primary},
+      0 0 0 4px ${({ theme }) => theme.colors.border.focus};
     border-color: ${({ theme }) => theme.colors.border.defaultHover};
   }
 `;
 
 const ColorPreview = styled.div`
-  ${colorStyles}
+  position: absolute;
   top: 6px;
   left: 6px;
   padding: 0;
+  width: 24px;
+  height: 24px;
   background: transparent;
+  border-radius: 50px;
   cursor: pointer;
 `;
 
@@ -146,17 +137,13 @@ const StyledSwatch = styled(Swatch)`
   ${focusStyle};
 `;
 
-const ChevronContainer = styled.div`
+const DisclosureContainer = styled.div`
   width: ${({ isSmall }) => (isSmall ? '28px' : '58px')};
+  padding-right: 8px;
   display: flex;
   justify-content: ${({ isSmall }) => (isSmall ? 'center' : 'flex-end')};
   align-items: center;
   align-self: center;
-
-  svg {
-    width: 24px;
-    height: 24px;
-  }
 `;
 
 const loadReactColor = () =>
@@ -334,9 +321,9 @@ const ColorInput = forwardRef(function ColorInput(
                     </Text>
                   </MixedLabel>
                 )}
-                <ChevronContainer isSmall={isMixed}>
-                  <Icons.ChevronDown />
-                </ChevronContainer>
+                <DisclosureContainer isSmall={isMixed}>
+                  <Disclosure isOpen={pickerOpen} />
+                </DisclosureContainer>
               </>
             )}
           </ColorButton>
