@@ -181,7 +181,6 @@ export const createStoryFromTemplate = async (config, template) => {
     status: 'auto-draft',
     meta: {
       web_stories_publisher_logo: story.publisherLogo.id,
-      web_stories_poster: story.poster,
     },
   };
 
