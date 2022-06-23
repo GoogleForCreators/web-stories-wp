@@ -37,27 +37,27 @@ import { updateElementWithUpdater } from './utils';
  *
  * Current selection and page is unchanged.
  *
- * @param {Object} state Current state
+ * @param {Object} draft Current state
  * @param {Object} payload Action payload
  * @param {string|null} payload.family Update all elements with this font family
  * @param {Object|function(Object):Object} payload.properties font / properties to set on all the given elements or
  * a function to update based on the current properties.
- * @return {Object} New state
  */
-const updateElementsByFontFamily = produce(
-  (draft, { family, properties: propertiesOrUpdater }) => {
-    if (!family) {
-      return;
-    }
-
-    draft.pages.forEach((page) => {
-      page.elements
-        .filter(({ font }) => font?.family === family)
-        .forEach((element) =>
-          updateElementWithUpdater(element, propertiesOrUpdater)
-        );
-    });
+export const updateElementsByFontFamily = (
+  draft,
+  { family, properties: propertiesOrUpdater }
+) => {
+  if (!family) {
+    return;
   }
-);
 
-export default updateElementsByFontFamily;
+  draft.pages.forEach((page) => {
+    page.elements
+      .filter(({ font }) => font?.family === family)
+      .forEach((element) =>
+        updateElementWithUpdater(element, propertiesOrUpdater)
+      );
+  });
+};
+
+export default produce(updateElementsByFontFamily);

@@ -39,72 +39,72 @@ import { intersect } from './utils';
  *
  * Current page and pages are unchanged.
  *
- * @param {Object} state Current state
+ * @param {Object} draft Current state
  * @param {Object} payload Action payload
  * @param {Array.<string>} payload.elementIds Object with properties of new page
  * @param {boolean} payload.withLinked Include elements from the group?
- * @return {Object} New state
  */
-const setSelectedElements = produce(
-  (draft, { elementIds, withLinked = false }) => {
-    const newElementIds =
-      typeof elementIds === 'function'
-        ? elementIds(current(draft.selection))
-        : elementIds;
+export const setSelectedElements = (
+  draft,
+  { elementIds, withLinked = false }
+) => {
+  const newElementIds =
+    typeof elementIds === 'function'
+      ? elementIds(current(draft.selection))
+      : elementIds;
 
-    if (!Array.isArray(newElementIds)) {
+  if (!Array.isArray(newElementIds)) {
+    return;
+  }
+
+  const currentPage = draft.pages.find(({ id }) => id === draft.current);
+  let allIds = newElementIds;
+
+  if (withLinked) {
+    const elements = currentPage.elements.filter(({ id }) =>
+      newElementIds.includes(id)
+    );
+    const groupIds = elements.map(({ groupId }) => groupId).filter(Boolean);
+    const elementsFromGroups = currentPage.elements.filter(({ groupId }) =>
+      groupIds.includes(groupId)
+    );
+    const elementsIdsFromGroups = elementsFromGroups.map(({ id }) => id);
+    allIds = allIds.concat(elementsIdsFromGroups);
+  }
+
+  const uniqueElementIds = [...new Set(allIds)];
+
+  // They can only be similar if they have the same length
+  if (draft.selection.length === uniqueElementIds.length) {
+    // If intersection of the two lists has the same length as the old list,
+    // nothing will change.
+    // NB: this assumes selection is always without duplicates.
+    const commonElements = intersect(draft.selection, uniqueElementIds);
+    if (commonElements.length === draft.selection.length) {
       return;
     }
-
-    const currentPage = draft.pages.find(({ id }) => id === draft.current);
-    let allIds = newElementIds;
-
-    if (withLinked) {
-      const elements = currentPage.elements.filter(({ id }) =>
-        newElementIds.includes(id)
-      );
-      const groupIds = elements.map(({ groupId }) => groupId).filter(Boolean);
-      const elementsFromGroups = currentPage.elements.filter(({ groupId }) =>
-        groupIds.includes(groupId)
-      );
-      const elementsIdsFromGroups = elementsFromGroups.map(({ id }) => id);
-      allIds = allIds.concat(elementsIdsFromGroups);
-    }
-
-    const uniqueElementIds = [...new Set(allIds)];
-
-    // They can only be similar if they have the same length
-    if (draft.selection.length === uniqueElementIds.length) {
-      // If intersection of the two lists has the same length as the old list,
-      // nothing will change.
-      // NB: this assumes selection is always without duplicates.
-      const commonElements = intersect(draft.selection, uniqueElementIds);
-      if (commonElements.length === draft.selection.length) {
-        return;
-      }
-    }
-
-    // If it's a non-group multi-selection, filter out the background element,
-    // locked elements, and video placeholders.
-    const byId = (id) => currentPage.elements.find(({ id: i }) => i === id);
-    const isMultiSelection = uniqueElementIds.length > 1;
-    const isGroupSelection = withLinked;
-    const isNotBackgroundElement = (id) => currentPage.elements[0].id !== id;
-    const isNotLockedElement = (id) => !byId(id).isLocked;
-    const isNotVideoPlaceholder = (id) => !byId(id).resource?.isPlaceholder;
-    const newSelection =
-      isMultiSelection && !isGroupSelection
-        ? uniqueElementIds.filter(
-            (id) =>
-              isNotBackgroundElement(id) &&
-              isNotVideoPlaceholder(id) &&
-              isNotLockedElement(id)
-          )
-        : uniqueElementIds;
-
-    draft.animationState = STORY_ANIMATION_STATE.RESET;
-    draft.selection = newSelection;
   }
-);
 
-export default setSelectedElements;
+  // If it's a non-group multi-selection, filter out the background element,
+  // locked elements, and video placeholders.
+  const byId = (id) => currentPage.elements.find(({ id: i }) => i === id);
+  const isMultiSelection = uniqueElementIds.length > 1;
+  const isGroupSelection = withLinked;
+  const isNotBackgroundElement = (id) => currentPage.elements[0].id !== id;
+  const isNotLockedElement = (id) => !byId(id).isLocked;
+  const isNotVideoPlaceholder = (id) => !byId(id).resource?.isPlaceholder;
+  const newSelection =
+    isMultiSelection && !isGroupSelection
+      ? uniqueElementIds.filter(
+          (id) =>
+            isNotBackgroundElement(id) &&
+            isNotVideoPlaceholder(id) &&
+            isNotLockedElement(id)
+        )
+      : uniqueElementIds;
+
+  draft.animationState = STORY_ANIMATION_STATE.RESET;
+  draft.selection = newSelection;
+};
+
+export default produce(setSelectedElements);

@@ -31,13 +31,12 @@ import { produce } from 'immer';
  *
  * If no id is given, do nothing.
  *
- * @param {Object} state Current state
+ * @param {Object} draft Current state
  * @param {Object} payload Action payload
  * @param {string} payload.elementId Id to either add or remove from selection.
  * @param {boolean} payload.withLinked Include elements from the group?
- * @return {Object} New state
  */
-const toggleElement = produce((draft, { elementId, withLinked = false }) => {
+export const toggleElement = (draft, { elementId, withLinked = false }) => {
   if (!elementId) {
     return;
   }
@@ -98,6 +97,6 @@ const toggleElement = produce((draft, { elementId, withLinked = false }) => {
 
   // Otherwise we're removing from selection, so just filter out from current selection
   draft.selection = draft.selection.filter((id) => !allIds.includes(id));
-});
+};
 
-export default toggleElement;
+export default produce(toggleElement);

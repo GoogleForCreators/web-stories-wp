@@ -24,17 +24,16 @@ import { produce } from 'immer';
  *
  * If no id is given or id is not in the current selection, nothing happens.
  *
- * @param {Object} state Current state
+ * @param {Object} draft Current state
  * @param {Object} payload Action payload
  * @param {string} payload.elementId Element id to remove from the current selection.
- * @return {Object} New state
  */
-const unselectElement = produce((draft, { elementId }) => {
+export const unselectElement = (draft, { elementId }) => {
   const index = draft.selection.indexOf(elementId);
   if (index === -1) {
     return;
   }
   draft.selection.splice(index, 1);
-});
+};
 
-export default unselectElement;
+export default produce(unselectElement);

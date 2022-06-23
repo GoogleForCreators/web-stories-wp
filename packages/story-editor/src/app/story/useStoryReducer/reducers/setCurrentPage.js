@@ -26,12 +26,11 @@ import { produce } from 'immer';
  *
  * If page is changed, selection is cleared
  *
- * @param {Object} state Current state
+ * @param {Object} draft Current state
  * @param {Object} payload Action payload
  * @param {number} payload.pageId Page id to set as current page
- * @return {Object} New state
  */
-const setCurrentPage = produce((draft, { pageId }) => {
+export const setCurrentPage = (draft, { pageId }) => {
   const pageExists = draft.pages.some(({ id }) => id === pageId);
   const pageIsAlreadyCurrent = draft.current === pageId;
   if (!pageExists || pageIsAlreadyCurrent) {
@@ -40,6 +39,6 @@ const setCurrentPage = produce((draft, { pageId }) => {
 
   draft.current = pageId;
   draft.selection = [];
-});
+};
 
-export default setCurrentPage;
+export default produce(setCurrentPage);

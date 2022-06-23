@@ -23,13 +23,12 @@ import { produce } from 'immer';
  * Update the story animation state to play, pause, scrub or reset
  * active pages animations.
  *
- * @param {Object} state Current state
+ * @param {Object} draft Current state
  * @param {Object} payload Action payload
  * @param {string} payload.animationState STORY_ANIMATION_STATE state to update to.
- * @return {Object} New state
  */
-const updateAnimationState = produce((draft, { animationState }) => {
+export const updateAnimationState = (draft, { animationState }) => {
   draft.animationState = animationState;
-});
+};
 
-export default updateAnimationState;
+export default produce(updateAnimationState);

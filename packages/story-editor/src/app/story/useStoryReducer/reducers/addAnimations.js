@@ -35,12 +35,11 @@ import { exclusion } from './utils';
  *
  * Animations will be added to the end of the list of animations on the current page.
  *
- * @param {Object} state Current state
+ * @param {Object} draft Current state
  * @param {Object} payload Action payload
  * @param {Array.<Object>} payload.animations Elements to insert on the given page.
- * @return {Object} New state
  */
-const addAnimations = produce((draft, { animations }) => {
+export const addAnimations = (draft, { animations }) => {
   if (!Array.isArray(animations)) {
     return;
   }
@@ -53,6 +52,6 @@ const addAnimations = produce((draft, { animations }) => {
   page.animations = page.animations.concat(
     exclusion(page.animations, animations)
   );
-});
+};
 
-export default addAnimations;
+export default produce(addAnimations);

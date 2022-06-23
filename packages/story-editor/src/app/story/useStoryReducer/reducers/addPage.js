@@ -35,13 +35,12 @@ import { isInsideRange } from './utils';
  *
  * Selection is cleared.
  *
- * @param {Object} state Current state
+ * @param {Object} draft Current state
  * @param {Object} payload Action payload
  * @param {Object} payload.page Object with properties of new page
  * @param {Object} payload.position Position at which to insert the new page. If null, insert after current
- * @return {Object} New state
  */
-const addPage = produce((draft, { page, position }) => {
+export const addPage = (draft, { page, position }) => {
   // Ensure new page has at least one element
   if (!page.elements?.length) {
     return;
@@ -57,6 +56,6 @@ const addPage = produce((draft, { page, position }) => {
   draft.pages.splice(insertionPoint, 0, page);
   draft.current = page.id;
   draft.selection = [page.elements[0].id];
-});
+};
 
-export default addPage;
+export default produce(addPage);

@@ -28,12 +28,11 @@ import { produce } from 'immer';
  *
  * If no element with the given resource id is found, state is changed.
  *
- * @param {Object} state Current state
+ * @param {Object} draft Current state
  * @param {Object} payload Action payload
  * @param {string|null} payload.id id Delete all elements with this resource id
- * @return {Object} New state
  */
-const deleteElementsByResourceId = produce((draft, { id }) => {
+export const deleteElementsByResourceId = (draft, { id }) => {
   if (id === null) {
     return;
   }
@@ -77,6 +76,6 @@ const deleteElementsByResourceId = produce((draft, { id }) => {
   draft.selection = draft.selection.filter(
     (selectedId) => !idsToDelete.includes(selectedId)
   );
-});
+};
 
-export default deleteElementsByResourceId;
+export default produce(deleteElementsByResourceId);

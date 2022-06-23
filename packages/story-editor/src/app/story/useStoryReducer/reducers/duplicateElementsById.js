@@ -26,12 +26,11 @@ import { produce } from 'immer';
  *
  * If given `elementIds` are not a list, do nothing.
  *
- * @param {Object} state Current state
+ * @param {Object} draft Current state
  * @param {Object} payload Action payload
  * @param {Array.<string>} payload.elementIds Array of ids of elements to duplicate.
- * @return {Object} New state
  */
-const duplicateElementsById = produce((draft, { elementIds }) => {
+export const duplicateElementsById = (draft, { elementIds }) => {
   if (!Array.isArray(elementIds)) {
     return;
   }
@@ -74,6 +73,6 @@ const duplicateElementsById = produce((draft, { elementIds }) => {
     }
     page.elements.splice(elementIndex + 1, 0, element);
   });
-});
+};
 
-export default duplicateElementsById;
+export default produce(duplicateElementsById);

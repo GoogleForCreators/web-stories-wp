@@ -47,94 +47,94 @@ import { removeAnimationsWithElementIds } from './utils';
  *
  * Updates selection to only include the second item after merge.
  *
- * @param {Object} state Current state
+ * @param {Object} draft Current state
  * @param {Object} payload Action payload
  * @param {string} payload.firstElement Element with properties to merge
  * @param {string} payload.secondId Element to add properties to
  * @param {boolean} payload.shouldRetainAnimations Is called from copy and paste
- * @return {Object} New state
  */
-const combineElements = produce(
-  (draft, { firstElement, secondId, shouldRetainAnimations = true }) => {
-    if (!firstElement || !secondId) {
-      return;
-    }
-    const firstId = firstElement.id;
-    const element = firstElement;
-
-    const page = draft.pages.find(({ id }) => id === draft.current);
-
-    const secondElementPosition = page.elements.findIndex(
-      ({ id }) => id === secondId
-    );
-    const secondElement = page.elements[secondElementPosition];
-
-    if (!element || !element.resource || !secondElement) {
-      return;
-    }
-
-    if (secondElement.isDefaultBackground) {
-      page.defaultBackgroundElement = {
-        ...secondElement,
-        // But generate a new ID for this temp background element
-        id: uuidv4(),
-      };
-    }
-
-    const propsFromFirst = [
-      'alt',
-      'type',
-      'resource',
-      'scale',
-      'focalX',
-      'focalY',
-      'tracks',
-      'poster',
-    ];
-
-    // If the element we're dropping into is not background, maintain link and border.
-    if (!secondElement.isBackground) {
-      propsFromFirst.push('link');
-      propsFromFirst.push('border');
-      if (canSupportMultiBorder(secondElement)) {
-        propsFromFirst.push('borderRadius');
-      }
-    } else {
-      // If we're dropping into background, maintain the flip and overlay, too.
-      // Only copy position properties for backgrounds, as they're ignored while being background
-      // For non-backgrounds, elements should keep original positions from secondElement
-      propsFromFirst.push('flip', 'overlay', 'width', 'height', 'x', 'y');
-    }
-
-    const newElement = {
-      // First copy everything from existing element except if it was default background
-      ...objectWithout(secondElement, ['isDefaultBackground']),
-      // Then set sensible default attributes
-      ...DEFAULT_ATTRIBUTES_FOR_MEDIA,
-      // Then copy all relevant attributes from new element
-      ...objectPick(element, propsFromFirst),
-    };
-
-    // Elements are now
-    page.elements = page.elements
-      // Remove first element if combining from existing id
-      .filter(({ id }) => id !== firstId)
-      // Update reference to second element
-      .map((el) => (el.id === secondId ? newElement : el));
-
-    // First element should always be the image getting applied to
-    // new element. We want to remove any animations it has. Second
-    // element should be an element with or without animations that
-    // we want to retain.
-    //
-    // We want different behavior for copy and paste where we
-    // replace the element's animation with any coming from the
-    // newly pasted element.
-    page.animations = removeAnimationsWithElementIds(
-      page.animations,
-      shouldRetainAnimations ? [firstId] : [firstId, secondId]
-    );
+export const combineElements = (
+  draft,
+  { firstElement, secondId, shouldRetainAnimations = true }
+) => {
+  if (!firstElement || !secondId) {
+    return;
   }
-);
+  const firstId = firstElement.id;
+  const element = firstElement;
 
-export default combineElements;
+  const page = draft.pages.find(({ id }) => id === draft.current);
+
+  const secondElementPosition = page.elements.findIndex(
+    ({ id }) => id === secondId
+  );
+  const secondElement = page.elements[secondElementPosition];
+
+  if (!element || !element.resource || !secondElement) {
+    return;
+  }
+
+  if (secondElement.isDefaultBackground) {
+    page.defaultBackgroundElement = {
+      ...secondElement,
+      // But generate a new ID for this temp background element
+      id: uuidv4(),
+    };
+  }
+
+  const propsFromFirst = [
+    'alt',
+    'type',
+    'resource',
+    'scale',
+    'focalX',
+    'focalY',
+    'tracks',
+    'poster',
+  ];
+
+  // If the element we're dropping into is not background, maintain link and border.
+  if (!secondElement.isBackground) {
+    propsFromFirst.push('link');
+    propsFromFirst.push('border');
+    if (canSupportMultiBorder(secondElement)) {
+      propsFromFirst.push('borderRadius');
+    }
+  } else {
+    // If we're dropping into background, maintain the flip and overlay, too.
+    // Only copy position properties for backgrounds, as they're ignored while being background
+    // For non-backgrounds, elements should keep original positions from secondElement
+    propsFromFirst.push('flip', 'overlay', 'width', 'height', 'x', 'y');
+  }
+
+  const newElement = {
+    // First copy everything from existing element except if it was default background
+    ...objectWithout(secondElement, ['isDefaultBackground']),
+    // Then set sensible default attributes
+    ...DEFAULT_ATTRIBUTES_FOR_MEDIA,
+    // Then copy all relevant attributes from new element
+    ...objectPick(element, propsFromFirst),
+  };
+
+  // Elements are now
+  page.elements = page.elements
+    // Remove first element if combining from existing id
+    .filter(({ id }) => id !== firstId)
+    // Update reference to second element
+    .map((el) => (el.id === secondId ? newElement : el));
+
+  // First element should always be the image getting applied to
+  // new element. We want to remove any animations it has. Second
+  // element should be an element with or without animations that
+  // we want to retain.
+  //
+  // We want different behavior for copy and paste where we
+  // replace the element's animation with any coming from the
+  // newly pasted element.
+  page.animations = removeAnimationsWithElementIds(
+    page.animations,
+    shouldRetainAnimations ? [firstId] : [firstId, secondId]
+  );
+};
+
+export default produce(combineElements);

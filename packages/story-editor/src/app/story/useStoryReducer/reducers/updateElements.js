@@ -39,54 +39,48 @@ import { updateElementWithUpdater, updateAnimations } from './utils';
  *
  * Current selection and page is unchanged.
  *
- * @param {Object} state Current state
+ * @param {Object} draft Current state
  * @param {Object} payload Action payload
  * @param {Array.<string>} payload.elementIds List of elements to update
  * @param {Object|function(Object):Object} payload.properties Properties to set on all the given elements or
  * a function to calculate new values based on the current properties.
- * @return {Object} New state
  */
-const updateElements = produce(
-  (draft, { elementIds, properties: propertiesOrUpdater }) => {
-    if (
-      [
-        STORY_ANIMATION_STATE.PLAYING,
-        STORY_ANIMATION_STATE.PLAYING_SELECTED,
-        STORY_ANIMATION_STATE.SCRUBBING,
-      ].includes(draft.animationState)
-    ) {
-      return;
-    }
-
-    const idsToUpdate = elementIds === null ? draft.selection : elementIds;
-    const page = draft.pages.find(({ id }) => id === draft.current);
-    const animationLookup = {};
-    page.elements
-      .filter(({ id }) => idsToUpdate.includes(id))
-      .forEach((element) => {
-        // Update function will update the element inline unless there's an animation update.
-        // If so, the element will remain unchanged, and the animation will be returned instead.
-        const animation = updateElementWithUpdater(
-          element,
-          propertiesOrUpdater
-        );
-        if (animation) {
-          animationLookup[animation.id] = {
-            ...animation,
-            targets: [element.id],
-          };
-        }
-      });
-
-    const isAnimationUpdate = Object.keys(animationLookup).length > 0;
-
-    if (isAnimationUpdate) {
-      page.animations = updateAnimations(
-        page.animations || [],
-        animationLookup
-      );
-    }
+export const updateElements = (
+  draft,
+  { elementIds, properties: propertiesOrUpdater }
+) => {
+  if (
+    [
+      STORY_ANIMATION_STATE.PLAYING,
+      STORY_ANIMATION_STATE.PLAYING_SELECTED,
+      STORY_ANIMATION_STATE.SCRUBBING,
+    ].includes(draft.animationState)
+  ) {
+    return;
   }
-);
 
-export default updateElements;
+  const idsToUpdate = elementIds === null ? draft.selection : elementIds;
+  const page = draft.pages.find(({ id }) => id === draft.current);
+  const animationLookup = {};
+  page.elements
+    .filter(({ id }) => idsToUpdate.includes(id))
+    .forEach((element) => {
+      // Update function will update the element inline unless there's an animation update.
+      // If so, the element will remain unchanged, and the animation will be returned instead.
+      const animation = updateElementWithUpdater(element, propertiesOrUpdater);
+      if (animation) {
+        animationLookup[animation.id] = {
+          ...animation,
+          targets: [element.id],
+        };
+      }
+    });
+
+  const isAnimationUpdate = Object.keys(animationLookup).length > 0;
+
+  if (isAnimationUpdate) {
+    page.animations = updateAnimations(page.animations || [], animationLookup);
+  }
+};
+
+export default produce(updateElements);

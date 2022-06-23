@@ -32,13 +32,12 @@ import { objectWithout } from './utils';
  *
  * Current page and selection is unchanged.
  *
- * @param {Object} state Current state
+ * @param {Object} draft Current state
  * @param {Object} payload Action payload
  * @param {number} payload.pageId Page index to update. If null, update current page.
  * @param {number} payload.properties Object with properties to set for given page.
- * @return {Object} New state
  */
-const updatePage = produce((draft, { pageId, properties }) => {
+export const updatePage = (draft, { pageId, properties }) => {
   const idToUpdate = pageId === null ? draft.current : pageId;
   const page = draft.pages.find(({ id }) => id === idToUpdate);
   if (!page) {
@@ -46,6 +45,6 @@ const updatePage = produce((draft, { pageId, properties }) => {
   }
   const allowedProperties = objectWithout(properties, PAGE_RESERVED_PROPERTIES);
   Object.assign(page, allowedProperties);
-});
+};
 
-export default updatePage;
+export default produce(updatePage);

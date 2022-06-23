@@ -24,12 +24,11 @@ import { produce, current } from 'immer';
  *
  * No validation is performed and existing values are overwritten.
  *
- * @param {Object} state Current state
+ * @param {Object} draft Current state
  * @param {Object} payload Action payload
  * @param {Object | Function} payload.properties Object with story properties to set.
- * @return {Object} New state
  */
-const updateStory = produce((draft, { properties }) => {
+export const updateStory = (draft, { properties }) => {
   // If properties is a callback, replace story with callback response
   if (typeof properties === 'function') {
     draft.story = properties(current(draft.story));
@@ -38,6 +37,6 @@ const updateStory = produce((draft, { properties }) => {
 
   // Otherwise copy all the properties into the existing story object
   Object.assign(draft.story, properties);
-});
+};
 
-export default updateStory;
+export default produce(updateStory);

@@ -31,12 +31,11 @@ import { produce } from 'immer';
  *
  * If a page is deleted, selection is cleared.
  *
- * @param {Object} state Current state
+ * @param {Object} draft Current state
  * @param {Object} payload Action payload
  * @param {number} payload.pageId Page id to delete. If null, delete current page
- * @return {Object} New state
  */
-const deletePage = produce((draft, { pageId }) => {
+export const deletePage = (draft, { pageId }) => {
   if (draft.pages.length <= 1) {
     return;
   }
@@ -57,6 +56,6 @@ const deletePage = produce((draft, { pageId }) => {
   }
 
   draft.selection = [];
-});
+};
 
-export default deletePage;
+export default produce(deletePage);

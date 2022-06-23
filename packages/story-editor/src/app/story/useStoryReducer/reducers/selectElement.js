@@ -24,12 +24,11 @@ import { produce } from 'immer';
  *
  * If no id is given or id is already in the current selection, nothing happens.
  *
- * @param {Object} state Current state
+ * @param {Object} draft Current state
  * @param {Object} payload Action payload
  * @param {string} payload.elementId Element id to add to the current selection.
- * @return {Object} New state
  */
-const selectElement = produce((draft, { elementId }) => {
+export const selectElement = (draft, { elementId }) => {
   if (!elementId || draft.selection.includes(elementId)) {
     return;
   }
@@ -57,6 +56,6 @@ const selectElement = produce((draft, { elementId }) => {
   } else {
     draft.selection.push(elementId);
   }
-});
+};
 
-export default selectElement;
+export default produce(selectElement);

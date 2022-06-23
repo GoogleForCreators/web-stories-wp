@@ -22,44 +22,47 @@ import { produce } from 'immer';
 /**
  * Internal dependencies
  */
-import toggleElement from './toggleElement';
-import setSelectedElements from './setSelectedElements';
+import { toggleElement } from './toggleElement';
+import { setSelectedElements } from './setSelectedElements';
 
-const toggleLayer = produce(
-  (draft, { elementId, metaKey, shiftKey, withLinked = false }) => {
-    // Meta pressed. Toggle this layer in the selection.
-    if (metaKey) {
-      return toggleElement(draft, { elementId, withLinked });
-    }
+export const toggleLayer = (
+  draft,
+  { elementId, metaKey, shiftKey, withLinked = false }
+) => {
+  // Meta pressed. Toggle this layer in the selection.
+  if (metaKey) {
+    toggleElement(draft, { elementId, withLinked });
+    return;
+  }
 
-    // No special key pressed - just selected this layer and nothing else.
-    if (draft.selection.length <= 0 || !shiftKey) {
-      return setSelectedElements(draft, {
-        elementIds: [elementId],
-        withLinked,
-      });
-    }
-
-    // Shift key pressed with any element selected:
-    // select everything between this layer and the first selected layer
-    const firstId = draft.selection[0];
-    const currentPage = draft.pages.find(({ id }) => id === draft.current);
-    const pageElementIds = currentPage.elements.map((el) => el.id);
-    const firstIndex = pageElementIds.findIndex((id) => id === firstId);
-    const clickedIndex = pageElementIds.findIndex((id) => id === elementId);
-    const lowerIndex = Math.min(firstIndex, clickedIndex);
-    const higherIndex = Math.max(firstIndex, clickedIndex);
-    const elementIds = pageElementIds.slice(lowerIndex, higherIndex + 1);
-    // reverse selection if firstId isn't first anymore
-    if (firstId !== elementIds[0]) {
-      elementIds.reverse();
-    }
-
-    return setSelectedElements(draft, {
-      elementIds,
+  // No special key pressed - just selected this layer and nothing else.
+  if (draft.selection.length <= 0 || !shiftKey) {
+    setSelectedElements(draft, {
+      elementIds: [elementId],
       withLinked,
     });
+    return;
   }
-);
 
-export default toggleLayer;
+  // Shift key pressed with any element selected:
+  // select everything between this layer and the first selected layer
+  const firstId = draft.selection[0];
+  const currentPage = draft.pages.find(({ id }) => id === draft.current);
+  const pageElementIds = currentPage.elements.map((el) => el.id);
+  const firstIndex = pageElementIds.findIndex((id) => id === firstId);
+  const clickedIndex = pageElementIds.findIndex((id) => id === elementId);
+  const lowerIndex = Math.min(firstIndex, clickedIndex);
+  const higherIndex = Math.max(firstIndex, clickedIndex);
+  const elementIds = pageElementIds.slice(lowerIndex, higherIndex + 1);
+  // reverse selection if firstId isn't first anymore
+  if (firstId !== elementIds[0]) {
+    elementIds.reverse();
+  }
+
+  setSelectedElements(draft, {
+    elementIds,
+    withLinked,
+  });
+};
+
+export default produce(toggleLayer);

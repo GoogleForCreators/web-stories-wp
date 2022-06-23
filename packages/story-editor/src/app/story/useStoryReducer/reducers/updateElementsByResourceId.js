@@ -37,27 +37,27 @@ import { updateElementWithUpdater } from './utils';
  *
  * Current selection and page is unchanged.
  *
- * @param {Object} state Current state
+ * @param {Object} draft Current state
  * @param {Object} payload Action payload
  * @param {string|null} payload.id id Update all elements with this resource id
  * @param {Object|function(Object):Object} payload.properties Properties to set on all the given elements or
  * a function to calculate new values based on the current properties.
- * @return {Object} New state
  */
-const updateElementsByResourceId = produce(
-  (draft, { id, properties: propertiesOrUpdater }) => {
-    if (!id) {
-      return;
-    }
-
-    draft.pages.forEach((page) => {
-      page.elements
-        .filter(({ resource }) => resource?.id === id)
-        .forEach((element) =>
-          updateElementWithUpdater(element, propertiesOrUpdater)
-        );
-    });
+export const updateElementsByResourceId = (
+  draft,
+  { id, properties: propertiesOrUpdater }
+) => {
+  if (!id) {
+    return;
   }
-);
 
-export default updateElementsByResourceId;
+  draft.pages.forEach((page) => {
+    page.elements
+      .filter(({ resource }) => resource?.id === id)
+      .forEach((element) =>
+        updateElementWithUpdater(element, propertiesOrUpdater)
+      );
+  });
+};
+
+export default produce(updateElementsByResourceId);

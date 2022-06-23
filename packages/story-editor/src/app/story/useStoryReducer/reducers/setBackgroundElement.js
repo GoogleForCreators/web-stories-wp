@@ -36,12 +36,11 @@ import { moveArrayElement, removeAnimationsWithElementIds } from './utils';
  * Default background element can never be "set to nothing" - only replaced by another
  * element.
  *
- * @param {Object} state Current state
+ * @param {Object} draft Current state
  * @param {Object} payload Action payload
  * @param {number} payload.elementId Element id to set as background on the current page.
- * @return {Object} New state
  */
-const setBackgroundElement = produce((draft, { elementId }) => {
+export const setBackgroundElement = (draft, { elementId }) => {
   const page = draft.pages.find(({ id }) => id === draft.current);
   const currentBackgroundElement = page.elements[0];
 
@@ -114,6 +113,6 @@ const setBackgroundElement = produce((draft, { elementId }) => {
     elementId,
     backgroundElementId.id,
   ]);
-});
+};
 
-export default setBackgroundElement;
+export default produce(setBackgroundElement);

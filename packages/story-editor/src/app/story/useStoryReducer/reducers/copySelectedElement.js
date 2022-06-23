@@ -47,10 +47,9 @@ export const ATTRIBUTES_TO_COPY = [
  * Copies the styles and animations of the selected element
  * on the current page.
  *
- * @param {Object} state Current state
- * @return {Object} New state
+ * @param {Object} draft Current state
  */
-const copySelectedElement = produce((draft) => {
+export const copySelectedElement = (draft) => {
   // we can only copy one element and it has to exist
   if (draft.selection?.length !== 1 || !draft.selection[0]) {
     return;
@@ -72,6 +71,6 @@ const copySelectedElement = produce((draft) => {
     styles: copiedStyles,
     type: element.type,
   };
-});
+};
 
-export default copySelectedElement;
+export default produce(copySelectedElement);

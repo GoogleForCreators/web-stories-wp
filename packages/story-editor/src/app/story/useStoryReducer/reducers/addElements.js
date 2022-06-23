@@ -42,12 +42,11 @@ const isNotProduct = ({ type }) => type !== ELEMENT_TYPES.PRODUCT;
  *
  * Selection is set to be exactly the new elements.
  *
- * @param {Object} state Current state
+ * @param {Object} draft Current state
  * @param {Object} payload Action payload
  * @param {Array.<Object>} payload.elements Elements to insert on the given page.
- * @return {Object} New state
  */
-const addElements = produce((draft, { elements }) => {
+export const addElements = (draft, { elements }) => {
   if (!Array.isArray(elements)) {
     return;
   }
@@ -95,6 +94,6 @@ const addElements = produce((draft, { elements }) => {
   if (addedIds.length > 0) {
     draft.selection = addedIds;
   }
-});
+};
 
-export default addElements;
+export default produce(addElements);
