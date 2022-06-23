@@ -111,6 +111,8 @@ const Input = styled.input.attrs({
   }
 `;
 
+const MAX_INPUT_SIZE = 35;
+
 const SearchInput = forwardRef(function SearchInput(
   {
     isExpanded,
@@ -146,7 +148,7 @@ const SearchInput = forwardRef(function SearchInput(
         value={value}
         onKeyDown={handleKeyPress}
         placeholder={placeholder}
-        size={Math.min(placeholder.length, 35)}
+        size={Math.min(placeholder.length, MAX_INPUT_SIZE)}
         onChange={onChange}
         aria-label={__('Search', 'web-stories')}
         {...rest}
