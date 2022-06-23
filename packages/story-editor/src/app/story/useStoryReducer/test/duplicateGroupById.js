@@ -159,32 +159,6 @@ describe('duplicateGroupById', () => {
     expect(result).toBe(initialState);
   });
 
-  it('should do nothing if element has invalid type', () => {
-    const { restore, duplicateGroupById } = setupReducer();
-
-    const initialState = restore({
-      pages: [
-        {
-          id: '111',
-          elements: [
-            { id: '123', isBackground: true },
-            { id: '234', type: 'invalid-type', groupId: 'g1' },
-          ],
-          groups: { g1: { name: 'Group 1' } },
-        },
-      ],
-      current: '111',
-    });
-
-    const result = duplicateGroupById({
-      oldGroupId: 'g1',
-      groupId: 'g2',
-      name: 'Group 1 Copy',
-    });
-
-    expect(result).toBe(initialState);
-  });
-
   it('should make a duplicate with all elements', () => {
     const { restore, duplicateGroupById } = setupReducer();
 
@@ -216,6 +190,84 @@ describe('duplicateGroupById', () => {
 
     expect(result.pages[0]).toStrictEqual(
       expect.objectContaining({
+        elements: [
+          { id: '123', isBackground: true },
+          { id: '234', type: 'shape', border: { width: 1 }, groupId: 'g1' },
+          { id: '345', type: 'shape', border: { width: 3 }, groupId: 'g1' },
+          expect.objectContaining({
+            id: expect.any(String),
+            basedOn: '234',
+            type: 'shape',
+            border: { width: 1 },
+            groupId: 'g3',
+          }),
+          expect.objectContaining({
+            id: expect.any(String),
+            basedOn: '345',
+            type: 'shape',
+            border: { width: 3 },
+            groupId: 'g3',
+          }),
+          {
+            id: '456',
+            groupId: 'g2',
+          },
+          {
+            id: '567',
+          },
+        ],
+        groups: {
+          g1: { name: 'Group 1', isLocked: false },
+          g2: { name: 'Group 2', isLocked: false },
+          g3: { name: 'Group 1 Copy', isLocked: false },
+        },
+      })
+    );
+  });
+
+  it('should append new animations to existing', () => {
+    const { restore, duplicateGroupById } = setupReducer();
+
+    restore({
+      pages: [
+        {
+          id: '111',
+          animations: [
+            { id: 'a1', targets: ['234'], x: 1 },
+            { id: 'a2', targets: ['234'], x: 2 },
+            { id: 'a3', targets: ['456'], x: 3 },
+          ],
+          elements: [
+            { id: '123', isBackground: true },
+            { id: '234', type: 'shape', border: { width: 1 }, groupId: 'g1' },
+            { id: '345', type: 'shape', border: { width: 3 }, groupId: 'g1' },
+            { id: '456', groupId: 'g2' },
+            { id: '567' },
+          ],
+          groups: {
+            g1: { name: 'Group 1', isLocked: false },
+            g2: { name: 'Group 2', isLocked: false },
+          },
+        },
+      ],
+      current: '111',
+    });
+
+    const result = duplicateGroupById({
+      oldGroupId: 'g1',
+      groupId: 'g3',
+      name: 'Group 1 Copy',
+    });
+
+    expect(result.pages[0]).toStrictEqual(
+      expect.objectContaining({
+        animations: [
+          { id: 'a1', targets: ['234'], x: 1 },
+          { id: 'a2', targets: ['234'], x: 2 },
+          { id: 'a3', targets: ['456'], x: 3 },
+          { id: expect.any(String), targets: [expect.any(String)], x: 1 },
+          { id: expect.any(String), targets: [expect.any(String)], x: 2 },
+        ],
         elements: [
           { id: '123', isBackground: true },
           { id: '234', type: 'shape', border: { width: 1 }, groupId: 'g1' },

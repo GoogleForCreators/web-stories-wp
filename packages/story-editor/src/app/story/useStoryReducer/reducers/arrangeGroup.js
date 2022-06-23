@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { produce } from 'immer';
+
+/**
  * Internal dependencies
  */
 import { getAbsolutePosition } from './utils';
@@ -22,58 +27,49 @@ import { getAbsolutePosition } from './utils';
 /**
  * Move group to a new position
  *
- * @param {Object} state Current state
+ * @param {Object} draft Current state
  * @param {Object} payload Action payload
  * @param {string} payload.groupId Id of group to move
  * @param {number|string} payload.position New position
- * @return {Object} New state
  */
-function arrangeGroup(state, { groupId, position }) {
+export const arrangeGroup = (draft, { groupId, position }) => {
   if (!groupId) {
-    return state;
+    return;
   }
 
-  const pageIndex = state.pages.findIndex(({ id }) => id === state.current);
-  const page = state.pages[pageIndex];
+  const { elements, groups } = draft.pages.find(
+    ({ id }) => id === draft.current
+  );
   const isInGroup = (el) => el.groupId === groupId;
 
-  const hasElementsInGroup = page.elements.some(isInGroup);
-  if (!page.groups?.[groupId] || !hasElementsInGroup) {
-    return state;
+  // If group doesn't exist or doesn't have any elements, abort
+  if (!groups?.[groupId] || !elements.some(isInGroup)) {
+    return;
   }
 
-  const groupStartIndex = page.elements.findIndex(isInGroup);
-  const groupEndIndex = page.elements.findLastIndex(isInGroup);
+  // Find group position in elements array
+  const groupStartIndex = elements.findIndex(isInGroup);
+  const groupEndIndex = elements.findLastIndex(isInGroup);
+  const groupSize = groupEndIndex - groupStartIndex + 1;
 
-  const pageElements = [...page.elements];
-  const groupSlice = pageElements.slice(groupStartIndex, groupEndIndex + 1);
-  const newPageElements = [
-    ...pageElements.slice(0, groupStartIndex),
-    ...pageElements.slice(groupEndIndex + 1),
-  ];
+  // Splice out the entire group and replace with dummy entry
+  const groupSlice = elements.splice(groupStartIndex, groupSize, 'dummy');
+
+  // Dummy entry is needed to calculate the new position as if the group is one entry
   const minPosition = 1;
-  const maxPosition = page.elements.length - 1;
+  const maxPosition = elements.length - 1;
   const newPosition = getAbsolutePosition({
-    currentPosition: position - 1,
+    currentPosition: groupStartIndex,
     minPosition,
     maxPosition,
-    desiredPosition: position - 1,
+    desiredPosition: position,
   });
-  newPageElements.splice(newPosition, 0, ...groupSlice);
 
-  const newPages = [
-    ...state.pages.slice(0, pageIndex),
-    {
-      ...page,
-      elements: newPageElements,
-    },
-    ...state.pages.slice(pageIndex + 1),
-  ];
+  // remove the dummy entry
+  elements.splice(elements.indexOf('dummy'), 1);
 
-  return {
-    ...state,
-    pages: newPages,
-  };
-}
+  // Insert the new elements at position
+  elements.splice(newPosition, 0, ...groupSlice);
+};
 
-export default arrangeGroup;
+export default produce(arrangeGroup);

@@ -42,12 +42,11 @@ import { intersect } from './utils';
  *
  * Current page is unchanged.
  *
- * @param {Object} state Current state
+ * @param {Object} draft Current state
  * @param {Object} payload Action payload
  * @param {Array.<string>} payload.elementIds List of ids of elements to delete.
- * @return {Object} New state
  */
-const deleteElements = produce((draft, { elementIds }) => {
+export const deleteElements = (draft, { elementIds }) => {
   const idsToDelete = elementIds === null ? draft.selection : elementIds;
 
   if (idsToDelete.length === 0) {
@@ -94,6 +93,6 @@ const deleteElements = produce((draft, { elementIds }) => {
   draft.selection = draft.selection.filter(
     (id) => !validDeletionIds.includes(id)
   );
-});
+};
 
-export default deleteElements;
+export default produce(deleteElements);

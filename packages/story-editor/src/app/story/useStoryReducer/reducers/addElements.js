@@ -19,6 +19,7 @@
  */
 import { ELEMENT_TYPES } from '@googleforcreators/elements';
 import { produce } from 'immer';
+
 /**
  * Internal dependencies
  */

@@ -127,4 +127,37 @@ describe('arrangeGroup', () => {
       { id: '345', groupId: 'g1' },
     ]);
   });
+
+  it('should move all elements of group to new position even if backwards', () => {
+    const { restore, arrangeGroup } = setupReducer();
+
+    restore({
+      pages: [
+        {
+          id: '111',
+          elements: [
+            { id: '123', isBackground: true },
+            { id: '234', groupId: 'g1' },
+            { id: '345', groupId: 'g1' },
+            { id: '456' },
+            { id: '567', groupId: 'g2' },
+            { id: '678', groupId: 'g2' },
+          ],
+          groups: { g1: { name: 'Group 1' }, g2: { name: 'Group 2' } },
+        },
+      ],
+      current: '111',
+    });
+
+    const result = arrangeGroup({ groupId: 'g2', position: 3 });
+
+    expect(result.pages[0].elements).toStrictEqual([
+      { id: '123', isBackground: true },
+      { id: '234', groupId: 'g1' },
+      { id: '345', groupId: 'g1' },
+      { id: '567', groupId: 'g2' },
+      { id: '678', groupId: 'g2' },
+      { id: '456' },
+    ]);
+  });
 });
