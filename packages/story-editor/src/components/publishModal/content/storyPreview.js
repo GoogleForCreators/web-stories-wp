@@ -311,7 +311,10 @@ const StoryPreview = () => {
                       'Using image as poster image',
                       'web-stories'
                     )}
-                    buttonInsertText={__('Select as poster image', 'web-stories')}
+                    buttonInsertText={__(
+                      'Select as poster image',
+                      'web-stories'
+                    )}
                     type={allowedImageMimeTypes}
                     ariaLabel={__('Poster image', 'web-stories')}
                     onChangeErrorText={posterErrorMessage}
@@ -324,7 +327,7 @@ const StoryPreview = () => {
                       height: 853,
                     }}
                   />
-              )}
+                )}
               </ScrimTop>
               <ScrimBottom>
                 {title && (
