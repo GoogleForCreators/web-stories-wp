@@ -271,7 +271,7 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 		 * @var array<string, mixed> $meta_keys
 		 */
 		$meta_keys = get_registered_meta_keys( 'post', $this->post_type );
-		$meta = [];
+		$meta      = [];
 		foreach ( $meta_keys as $key => $settings ) {
 			/* @phpstan-ignore-next-line */
 			if ( \is_array( $settings ) && $settings['show_in_rest'] ) {
