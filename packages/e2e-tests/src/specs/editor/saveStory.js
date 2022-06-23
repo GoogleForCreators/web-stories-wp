@@ -63,13 +63,6 @@ describe('Saving Story', () => {
     mockResponse = undefined;
   });
 
-  it('should display published dialog', async () => {
-    await createNewStory();
-    await insertStoryTitle('Test story');
-    await publishStory();
-    await expect(page).toMatch('Story published.');
-  });
-
   it('should display detailed error snackbar message', async () => {
     mockResponse = {
       status: 500,
