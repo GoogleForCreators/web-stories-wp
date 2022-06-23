@@ -101,6 +101,7 @@ class Plugin extends ServiceBasedPlugin {
 		'media.video.optimization'     => Media\Video\Optimization::class,
 		'media.video.poster'           => Media\Video\Poster::class,
 		'media.video.trimming'         => Media\Video\Trimming::class,
+		'media.video.is_gif'           => Media\Video\Is_Gif::class,
 		'meta_boxes'                   => Admin\Meta_Boxes::class,
 		'settings'                     => Settings::class,
 		'site_health'                  => Admin\Site_Health::class,

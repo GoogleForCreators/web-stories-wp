@@ -33,6 +33,7 @@ import { trackError, trackEvent } from '@googleforcreators/tracking';
  * Internal dependencies
  */
 import useLibrary from '../../../../useLibrary';
+import useLocalMedia from '../../../../../../app/media/local/useLocalMedia';
 import getResourceFromUrl from '../../../../../../app/media/utils/getResourceFromUrl';
 import {
   getPosterName,
@@ -40,7 +41,6 @@ import {
 } from '../../../../../../app/media/utils';
 import { useConfig } from '../../../../../../app/config';
 import useCORSProxy from '../../../../../../utils/useCORSProxy';
-import useDetectBaseColor from '../../../../../../app/media/utils/useDetectBaseColor';
 
 const eventName = 'hotlink_media';
 
@@ -57,6 +57,11 @@ function useInsert() {
       video: allowedVideoMimeTypes,
     },
   } = useConfig();
+  const { updateBaseColor } = useLocalMedia(
+    ({ actions: { updateBaseColor } }) => ({
+      updateBaseColor,
+    })
+  );
 
   const allowedMimeTypes = useMemo(
     () => [
@@ -71,7 +76,6 @@ function useInsert() {
       allowedMimeTypes.map((type) => getExtensionsFromMimeType(type)).flat(),
     [allowedMimeTypes]
   );
-  const { updateBaseColor } = useDetectBaseColor({});
 
   const { uploadVideoPoster } = useUploadVideoFrame({});
   const { getProxiedUrl } = useCORSProxy();

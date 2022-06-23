@@ -33,8 +33,12 @@ import { Fragment } from '@googleforcreators/react';
 import { useLayout } from '../../app';
 import { MediaPicker, useQuickActions } from '../../app/highlights';
 import { ZOOM_SETTING } from '../../constants';
-import { Z_INDEX_CANVAS_SIDE_MENU } from '../../constants/zIndex';
+import {
+  Z_INDEX_CANVAS_SIDE_MENU,
+  Z_INDEX_CANVAS_SIDE_MENU_RECORDING_MODE,
+} from '../../constants/zIndex';
 import Tooltip from '../tooltip';
+import { useMediaRecording } from '../mediaRecording';
 import PageMenu from './pagemenu/pageMenu';
 
 const MenusWrapper = styled.section`
@@ -43,7 +47,7 @@ const MenusWrapper = styled.section`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  z-index: ${Z_INDEX_CANVAS_SIDE_MENU};
+  z-index: ${({ $zIndex }) => $zIndex};
   pointer-events: auto;
   min-height: 100%;
   pointer-events: none;
@@ -75,12 +79,21 @@ function PageSideMenu() {
   }));
   const quickActions = useQuickActions();
 
+  const { isInRecordingMode } = useMediaRecording(
+    ({ state: { isInRecordingMode } }) => ({ isInRecordingMode })
+  );
+
   const isZoomed = zoomSetting !== ZOOM_SETTING.FIT;
 
   return (
     <MenusWrapper
       aria-label={__('Page side menu', 'web-stories')}
       isZoomed={isZoomed}
+      $zIndex={
+        isInRecordingMode
+          ? Z_INDEX_CANVAS_SIDE_MENU_RECORDING_MODE
+          : Z_INDEX_CANVAS_SIDE_MENU
+      }
     >
       {
         // Dont render a menu wrapper if there are no quick actions
@@ -154,8 +167,12 @@ function PageSideMenu() {
           </StyledContextMenu>
         ) : null
       }
-      {isZoomed && <Divider />}
-      <PageMenu />
+      {!isInRecordingMode && (
+        <>
+          {isZoomed && <Divider />}
+          <PageMenu />
+        </>
+      )}
     </MenusWrapper>
   );
 }

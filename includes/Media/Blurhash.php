@@ -61,7 +61,7 @@ class Blurhash extends Service_Base implements HasMeta {
 			self::BLURHASH_POST_META_KEY,
 			[
 				'type'           => 'string',
-				'description'    => __( 'Attachment blurhash', 'web-stories' ),
+				'description'    => __( 'Attachment BlurHash', 'web-stories' ),
 				'show_in_rest'   => [
 					'schema' => [
 						'type' => 'string',
@@ -79,7 +79,7 @@ class Blurhash extends Service_Base implements HasMeta {
 	 * @since 1.16.0
 	 *
 	 * @param array|mixed $response Array of prepared attachment data.
-	 * @return array|mixed $response;
+	 * @return array|mixed Response data.
 	 */
 	public function wp_prepare_attachment_for_js( $response ) {
 		if ( ! \is_array( $response ) ) {

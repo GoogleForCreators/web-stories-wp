@@ -17,9 +17,10 @@
 /**
  * External dependencies
  */
-import { useCallback } from '@googleforcreators/react';
+import { useCallback, useReduction } from '@googleforcreators/react';
 import { getSmallestUrlForWidth } from '@googleforcreators/media';
 import { trackError } from '@googleforcreators/tracking';
+
 /**
  * Internal dependencies
  */
@@ -28,6 +29,36 @@ import { useStory } from '../../story';
 import { useConfig } from '../../config';
 import useCORSProxy from '../../../utils/useCORSProxy';
 import getBlurHashFromImage from '../../../utils/getBlurHashFromImage';
+
+const reducer = {
+  addProcessing: (state, { payload }) => {
+    if (!payload || state.processing.includes(payload)) {
+      return state;
+    }
+    return {
+      ...state,
+      processing: [...state.processing, payload],
+    };
+  },
+  removeProcessing: (state, { payload }) => {
+    if (!payload || !state.processing.includes(payload)) {
+      return state;
+    }
+    const currentProcessing = [...state.processing];
+    const processing = currentProcessing.filter((e) => e !== payload);
+
+    return {
+      ...state,
+      processing,
+      processed: [...state.processed, payload],
+    };
+  },
+};
+
+const INITIAL_STATE = {
+  processed: [],
+  processing: [],
+};
 
 function useDetectBlurHash({ updateMediaElement }) {
   const {
@@ -40,6 +71,10 @@ function useDetectBlurHash({ updateMediaElement }) {
     capabilities: { hasUploadMediaAction },
   } = useConfig();
   const { getProxiedUrl } = useCORSProxy();
+
+  const [state, actions] = useReduction(INITIAL_STATE, reducer);
+  const { processed, processing } = state;
+  const { addProcessing, removeProcessing } = actions;
 
   const saveBlurHash = useCallback(
     /**
@@ -81,7 +116,7 @@ function useDetectBlurHash({ updateMediaElement }) {
   );
 
   const updateBlurHash = useCallback(
-    async ({ resource }) => {
+    async (resource) => {
       const { type, poster, id, isExternal } = resource;
       let imageSrc = poster;
 
@@ -117,8 +152,24 @@ function useDetectBlurHash({ updateMediaElement }) {
     [getProxiedUrl, getPosterMediaById, saveBlurHash]
   );
 
+  const maybeUpdateBlurHash = useCallback(
+    async (resource) => {
+      const { id } = resource;
+
+      // Simple way to prevent double-uploading.
+      if (processed.includes(id) || processing.includes(id)) {
+        return;
+      }
+
+      addProcessing(id);
+      await updateBlurHash(resource);
+      removeProcessing(id);
+    },
+    [addProcessing, processed, processing, removeProcessing, updateBlurHash]
+  );
+
   return {
-    updateBlurHash,
+    updateBlurHash: maybeUpdateBlurHash,
   };
 }
 
