@@ -20,6 +20,7 @@
 import {
   createNewStory,
   takeSnapshot,
+  withExperimentalFeatures,
   withPlugin,
 } from '@web-stories-wp/e2e-test-utils';
 /**
@@ -27,7 +28,7 @@ import {
  */
 import { addAllowedErrorMessage } from '../../../config/bootstrap.js';
 
-const IMAGE_URL_LOCAL = `${process.env.WP_BASE_URL}/wp-content/e2e-assets/example-1.jpg`;
+const IMAGE_URL_LOCAL = `${process.env.WP_BASE_URL}/wp-content/e2e-assets/example-3.png`;
 const IMAGE_URL_CORS_PROXY = 'https://wp.stories.google/e2e-tests/example.jpg';
 
 describe('Media Hotlinking', () => {
@@ -112,5 +113,37 @@ describe('Media Hotlinking', () => {
     await expect(page).not.toMatchElement(`img[src="${IMAGE_URL_CORS_PROXY}"]`);
 
     await takeSnapshot(page, 'Media Hotlinking - with CORS');
+  });
+
+  describe('Poster Hotlinking', () => {
+    withExperimentalFeatures(['posterHotlinking']);
+    it('should insert an external poster via proxy', async () => {
+      await createNewStory();
+
+      await expect(page).toClick('li[role="tab"]', { text: 'Document' });
+      await expect(page).toMatchElement('button[aria-label="Poster image"]');
+
+      await expect(page).toClick('button[aria-label="Poster image"]');
+      await expect(page).toClick('[role="menuitem"]', {
+        text: 'Link to a file',
+      });
+      await page.waitForSelector('[role="dialog"]');
+      await expect(page).toMatch('Use external image as poster image');
+
+      await page.type('input[type="url"]', IMAGE_URL_LOCAL);
+
+      await expect(page).toMatchElement(
+        '[role="dialog"] button:not([disabled])',
+        {
+          text: 'Use image as poster image',
+        }
+      );
+
+      await expect(page).toClick('[role="dialog"] button', {
+        text: 'Use image as poster image',
+      });
+
+      await expect(page).toMatchElement(`img[src="${IMAGE_URL_LOCAL}"]`);
+    });
   });
 });
