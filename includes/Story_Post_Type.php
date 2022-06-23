@@ -230,7 +230,7 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 						'type'       => 'object',
 						'properties' => [
 							'height' => [
-								'type'        => 'number',
+								'type'        => 'integer',
 								'description' => __( 'Poster height', 'web-stories' ),
 							],
 							'url'    => [
@@ -240,7 +240,7 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 							],
 							'width'  => [
 								'description' => __( 'Poster width.', 'web-stories' ),
-								'type'        => 'number',
+								'type'        => 'integer',
 							],
 						],
 
