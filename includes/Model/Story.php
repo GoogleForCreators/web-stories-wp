@@ -106,6 +106,14 @@ class Story {
 	protected $publisher_logo_size = [];
 
 	/**
+	 * Poster portrait logo size.
+	 *
+	 * @var int[]
+	 * @phpstan-var array{0?: int, 1?: int}
+	 */
+	protected $poster_portrait_size = [];
+
+	/**
 	 * Poster url - portrait.
 	 *
 	 * @var string
@@ -177,6 +185,7 @@ class Story {
 			if ( $poster_src ) {
 				[ $poster_url, $width, $height ] = $poster_src;
 				$this->poster_portrait           = $poster_url;
+				$this->poster_portrait_size      = [ $width, $height ];
 
 				$size_array = [ (int) $width, (int) $height ];
 				$image_meta = wp_get_attachment_metadata( $thumbnail_id );
@@ -190,11 +199,12 @@ class Story {
 		/**
 		 * Poster.
 		 *
-		 * @var array{url:string} $poster
+		 * @var array{url:string, width: number, height: number} $poster
 		 */
 		$poster = get_post_meta( $post->ID, Story_Post_Type::POSTER_META_KEY, true );
 		if ( $poster ) {
-			$this->poster_portrait = $poster['url'];
+			$this->poster_portrait      = $poster['url'];
+			$this->poster_portrait_size = [ $poster['width'], $poster['height'] ];
 		}
 
 		/**
@@ -397,5 +407,23 @@ class Story {
 		 * @param int|null $id   Story ID if available.
 		 */
 		return apply_filters( 'web_stories_publisher_logo_size', $this->publisher_logo_size, $this->id );
+	}
+
+	/**
+	 * Get poster portrait size.
+	 *
+	 * @since 1.22.0
+	 *
+	 * @return array {
+	 *     Poster protrait logo size.
+	 *
+	 *     Array of image data, or empty array if no image is available.
+	 *
+	 *     @type int    $1 Image width in pixels.
+	 *     @type int    $2 Image height in pixels.
+	 * }
+	 */
+	public function get_poster_portrait_size(): array {
+		return $this->poster_portrait_size;
 	}
 }

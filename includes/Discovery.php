@@ -29,7 +29,6 @@
 namespace Google\Web_Stories;
 
 use Google\Web_Stories\Infrastructure\HasRequirements;
-use Google\Web_Stories\Media\Image_Sizes;
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Shopping\Product_Meta;
 use WP_Post;
@@ -194,10 +193,8 @@ class Discovery extends Service_Base implements HasRequirements {
 		];
 
 		if ( $post instanceof WP_Post ) {
-			$url    = $story->get_publisher_logo_url();
-			$size   = $story->get_publisher_logo_size();
-			$poster = $story->get_poster_portrait();
-
+			$url  = $story->get_publisher_logo_url();
+			$size = $story->get_publisher_logo_size();
 			if ( ! empty( $url ) && ! empty( $size ) ) {
 				$metadata['publisher']['logo'] = [
 					'@type'  => 'ImageObject',
@@ -207,8 +204,16 @@ class Discovery extends Service_Base implements HasRequirements {
 				];
 			}
 
-			if ( $poster ) {
-				$metadata['image'] = $poster;
+			$poster      = $story->get_poster_portrait();
+			$poster_size = $story->get_poster_portrait_size();
+			if ( $poster && $poster_size ) {
+				$metadata['image'] = [
+					'@type'  => 'ImageObject',
+					'url'    => $poster,
+					'width'  => $poster_size[0],
+					'height' => $poster_size[1],
+				];
+
 			}
 
 			$metadata = array_merge(
@@ -356,18 +361,22 @@ class Discovery extends Service_Base implements HasRequirements {
 
 		if ( $post instanceof WP_Post ) {
 
+			$story = new Story();
+			$story->load_from_post( $post );
+
 			$metadata['og:type']                = 'article';
-			$metadata['og:title']               = get_the_title( $post );
-			$metadata['og:url']                 = get_permalink( $post );
+			$metadata['og:title']               = $story->get_title();
+			$metadata['og:url']                 = $story->get_url();
 			$metadata['og:description']         = wp_strip_all_tags( get_the_excerpt( $post ) );
 			$metadata['article:published_time'] = (string) get_the_date( 'c', $post );
 			$metadata['article:modified_time']  = (string) get_the_modified_date( 'c', $post );
 
-			$poster = $this->get_poster( $post );
-			if ( $poster ) {
-				$metadata['og:image']        = esc_url( $poster['src'] );
-				$metadata['og:image:width']  = (int) $poster['width'];
-				$metadata['og:image:height'] = (int) $poster['height'];
+			$poster_url   = $story->get_poster_portrait();
+			$poster_sizes = $story->get_poster_portrait_size();
+			if ( $poster_url && $poster_sizes ) {
+				$metadata['og:image']        = esc_url( $poster_url );
+				$metadata['og:image:width']  = (int) $poster_sizes[0];
+				$metadata['og:image:height'] = (int) $poster_sizes[1];
 			}
 		}
 
@@ -426,11 +435,12 @@ class Discovery extends Service_Base implements HasRequirements {
 		$post = get_queried_object();
 
 		if ( $post instanceof WP_Post ) {
-			$poster = $this->get_poster( $post, Image_Sizes::POSTER_PORTRAIT_IMAGE_SIZE );
+			$story = new Story();
+			$story->load_from_post( $post );
+			$poster = $story->get_poster_portrait();
 			if ( $poster ) {
-				$metadata['twitter:image']     = esc_url( $poster['src'] );
-				$metadata['twitter:image:alt'] = get_the_title( $post );
-
+				$metadata['twitter:image']     = esc_url( $poster );
+				$metadata['twitter:image:alt'] = $story->get_title();
 			}
 		}
 
@@ -478,34 +488,5 @@ class Discovery extends Service_Base implements HasRequirements {
 			esc_attr( $title ),
 			esc_url( $feed )
 		);
-	}
-
-	/**
-	 * Helper to get poster image.
-	 *
-	 * @since 1.3.0
-	 *
-	 * @param int|WP_Post $post Post object to check for poster image attached.
-	 * @param string      $size Image size, default to full.
-	 * @return array{src?: string, width?: int, height?: int}|false Poster image data.
-	 */
-	protected function get_poster( $post, string $size = 'full' ) {
-		if ( ! has_post_thumbnail( $post ) ) {
-			return false;
-		}
-
-		$poster_id = (int) get_post_thumbnail_id( $post );
-		$image     = wp_get_attachment_image_src( $poster_id, $size );
-
-		if ( ! $image ) {
-			return false;
-		}
-
-		[ $src, $width, $height ] = $image;
-
-		$poster = compact( 'src', 'width', 'height' );
-		$poster = array_filter( $poster );
-
-		return $poster;
 	}
 }
