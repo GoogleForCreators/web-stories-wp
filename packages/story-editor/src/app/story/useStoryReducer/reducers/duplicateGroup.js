@@ -62,35 +62,27 @@ export const duplicateGroup = (
     return;
   }
 
-  // Create a list of the new elements to insert
-  const newElements = members
-    .map((oldElement) => {
-      const { element, elementAnimations } = duplicateElement({
-        element: oldElement,
-        animations: page.animations,
-        existingElements: page.elements,
-      });
-
-      element.groupId = groupId;
-
-      if (elementAnimations.length) {
-        // If duplicated element has animations, so does existing, so animations
-        // array already exists
-        page.animations.push(...elementAnimations);
-      }
-
-      return element;
-    })
-    // Some duplication might have failed, just filter them out
-    .filter(Boolean);
-
-  // Do nothing if no new elements
-  if (!newElements.length) {
-    return;
-  }
-
   // Add group
   addGroup(draft, { groupId, name, isLocked });
+
+  // Create a list of the new elements to insert
+  const newElements = members.map((oldElement) => {
+    const { element, elementAnimations } = duplicateElement({
+      element: oldElement,
+      animations: page.animations,
+      existingElements: page.elements,
+    });
+
+    element.groupId = groupId;
+
+    if (elementAnimations.length) {
+      // If duplicated element has animations, so does existing, so animations
+      // array already exists
+      page.animations.push(...elementAnimations);
+    }
+
+    return element;
+  });
 
   // Insert the new elements at the right position
   const lastIndexOfOldGroup = page.elements.findLastIndex(isInGroup);
