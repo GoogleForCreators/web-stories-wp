@@ -18,28 +18,20 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import {
-  useCallback,
-  forwardRef,
-  useState,
-  useMemo,
-} from '@googleforcreators/react';
-import { __, sprintf } from '@googleforcreators/i18n';
+import { useCallback, forwardRef } from '@googleforcreators/react';
+import { __ } from '@googleforcreators/i18n';
 import styled from 'styled-components';
 import {
   MediaInput as Input,
   themeHelpers,
 } from '@googleforcreators/design-system';
-import { getExtensionsFromMimeType } from '@googleforcreators/media';
-import { v4 as uuidv4 } from 'uuid';
 /**
  * Internal dependencies
  */
 import { useConfig } from '../../app';
 import { MULTIPLE_VALUE } from '../../constants';
 import HotlinkModal from '../hotlinkModal';
-import getResourceFromUrl from '../../app/media/utils/getResourceFromUrl';
-import useCORSProxy from '../../utils/useCORSProxy';
+import useHotlink from './useHotlink';
 
 const StyledInput = styled(Input)`
   button:focus {
@@ -114,82 +106,10 @@ function MediaInput(
   forwardedRef
 ) {
   const { MediaUpload } = useConfig();
-  const [isOpen, setIsOpen] = useState(false);
-  const [defaultErrorMsg, setDefaultErrorMsg] = useState(null);
-
-  const openHotlink = () => setIsOpen(true);
-  const onCloseHotlink = () => {
-    setIsOpen(false);
-    setDefaultErrorMsg(null);
-  };
-  const allowedFileTypes = useMemo(
-    () =>
-      Array.isArray(type)
-        ? type.map((_type) => getExtensionsFromMimeType(_type)).flat()
-        : [],
-    [type]
-  );
-
-  const { getProxiedUrl } = useCORSProxy();
-
-  const onSelect = useCallback(
-    async ({ link, hotlinkInfo, needsProxy }) => {
-      const { mimeType, fileName: originalFileName } = hotlinkInfo;
-
-      const proxiedUrl = needsProxy
-        ? getProxiedUrl({ needsProxy }, link)
-        : link;
-
-      const resourceLike = {
-        id: uuidv4(),
-        src: proxiedUrl,
-        mimeType,
-        needsProxy,
-        alt: originalFileName,
-      };
-
-      // Passing the potentially proxied URL here just so that
-      // metadata retrieval works as expected (if still needed after the above).
-      // Afterwards, overriding `src` again to ensure we store the original URL.
-      const resource = await getResourceFromUrl(resourceLike);
-      resource.src = link;
-
-      if (cropParams?.height && cropParams?.height !== resource?.height) {
-        setDefaultErrorMsg(
-          sprintf(
-            /* translators: 1: supplied height. 2: desired height */
-            __(
-              'Invalid image height supplied %1$d when %2$d is required.',
-              'web-stories'
-            ),
-            resource.height,
-            cropParams.height
-          )
-        );
-        return;
-      }
-
-      if (cropParams?.width && cropParams?.width !== resource?.width) {
-        setDefaultErrorMsg(
-          sprintf(
-            /* translators: 1: supplied width. 2: desired width */
-            __(
-              'Invalid image width supplied %1$d when %2$d is required.',
-              'web-stories'
-            ),
-            resource.width,
-            cropParams?.width
-          )
-        );
-        return;
-      }
-
-      onChange(resource);
-
-      setIsOpen(false);
-    },
-    [cropParams, getProxiedUrl, onChange]
-  );
+  const {
+    actions: { onSelect, openHotlink, onCloseHotlink },
+    state: { allowedFileTypes, isOpen, defaultErrorMsg },
+  } = useHotlink({ onChange, cropParams, type });
 
   const renderMediaIcon = useCallback(
     (open) => {
@@ -222,7 +142,7 @@ function MediaInput(
         />
       );
     },
-    [value, onChange, forwardedRef, rest, menuOptions]
+    [value, openHotlink, onChange, forwardedRef, rest, menuOptions]
   );
 
   return (
