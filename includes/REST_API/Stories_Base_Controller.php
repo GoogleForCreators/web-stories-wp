@@ -60,13 +60,6 @@ use WP_REST_Response;
  *     story_data?: SchemaEntry
  *   }
  * }
- *  @phpstan-type Meta_Key array{
- *      show_in_rest: bool|array,
- *      single: bool|array,
- * }
- * @phpstan-type Meta_Keys array{
- *   meta_key: Meta_Key
- * }
  */
 class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	/**
@@ -275,17 +268,13 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 		 *
 		 * @since 1.22.0
 		 *
-		 * @var array<string,Meta_Key> $meta_keys
-		 *
-		 * @phpstan-var Meta_Keys
+		 * @var array<string, mixed> $meta_keys
 		 */
 		$meta_keys = get_registered_meta_keys( 'post', $this->post_type );
-		$meta      = [];
+		$meta = [];
 		foreach ( $meta_keys as $key => $settings ) {
-			if ( ! \is_array( $settings ) ) {
-				continue;
-			}
-			if ( $settings['show_in_rest'] ) {
+			/* @phpstan-ignore-next-line */
+			if ( \is_array( $settings ) && $settings['show_in_rest'] ) {
 				$meta[ $key ] = get_post_meta( $original_post->ID, $key, (bool) $settings['single'] );
 			}
 		}
