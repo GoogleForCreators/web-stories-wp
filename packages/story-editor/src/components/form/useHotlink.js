@@ -24,8 +24,9 @@ import { v4 as uuidv4 } from 'uuid';
  * Internal dependencies
  */
 import getResourceFromUrl from '../../app/media/utils/getResourceFromUrl';
+import useCORSProxy from '../../utils/useCORSProxy';
 
-function useHotlink({ onChange, type }) {
+function useHotlink({ onChange, type, canUseProxy }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const openHotlink = () => setIsOpen(true);
@@ -38,24 +39,30 @@ function useHotlink({ onChange, type }) {
     [type]
   );
 
+  const { getProxiedUrl } = useCORSProxy();
+
   const onSelect = useCallback(
     async ({ link, hotlinkInfo, needsProxy }) => {
       const { mimeType, fileName: originalFileName } = hotlinkInfo;
 
+      const proxiedUrl =
+        needsProxy && canUseProxy ? getProxiedUrl({ needsProxy }, link) : link;
+
       const resourceLike = {
         id: uuidv4(),
-        src: link,
+        src: proxiedUrl,
         mimeType,
         needsProxy,
         alt: originalFileName,
       };
 
       const resource = await getResourceFromUrl(resourceLike);
+      resource.src = link;
       onChange(resource);
 
       setIsOpen(false);
     },
-    [onChange]
+    [canUseProxy, getProxiedUrl, onChange]
   );
 
   return {

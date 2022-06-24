@@ -109,7 +109,11 @@ function useHotlinkModal({
         return;
       }
 
-      if (requiredImgDimensions?.height && requiredImgDimensions?.width) {
+      if (
+        'image' === hotlinkInfo?.type &&
+        requiredImgDimensions?.height &&
+        requiredImgDimensions?.width
+      ) {
         const proxiedUrl = needsProxy
           ? getProxiedUrl({ needsProxy }, link)
           : link;
