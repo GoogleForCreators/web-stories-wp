@@ -28,21 +28,53 @@ import { RIGHT_CLICK_MENU_LABELS } from '../constants';
 import { useStory } from '../..';
 
 function LayerUngroup() {
-  const { updateSelectedElements, selectedElements } = useStory(
+  const { updateSelectedElements, selectedElements, arrangeElement, elements } = useStory(
     ({ state, actions }) => ({
       updateSelectedElements: actions.updateSelectedElements,
       selectedElements: state.selectedElements,
+      arrangeElement: actions.arrangeElement,
+      elements: state.currentPage?.elements || [],
     })
   );
   const handleLayerUngroup = useCallback(
-    () =>
+    () => {
       updateSelectedElements({
         properties: (oldElement) => ({
           ...oldElement,
           groupId: null,
         }),
-      }),
-    [updateSelectedElements]
+      })
+
+      const oldElement = selectedElements[0];
+      let count = 0;
+      let currentPosition = 0;
+      let counter = 0;
+
+      for (const [key, value] of Object.entries(elements)) {
+
+        if (elements[key].id === oldElement.id) {
+          currentPosition = counter;
+        }
+
+        if (elements[key].groupId === oldElement.groupId
+          && elements[key].id != oldElement.id
+          && currentPosition === 0) {
+          count++;
+        }
+
+        if (currentPosition === 0) {
+          counter++;
+        }
+      }
+
+      arrangeElement({
+        elementId: selectedElements[0].id,
+        position: currentPosition + count,
+      });
+
+    }
+    ,
+    [updateSelectedElements, arrangeElement]
   );
 
   const isLayerGroupingEnabled = useFeature('layerGrouping');
