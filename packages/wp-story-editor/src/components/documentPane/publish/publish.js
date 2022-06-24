@@ -288,7 +288,6 @@ function PublishPanel({ nameOverride }) {
     </Datalist.Option>
   );
   const publisherLogosWithUploadOption = [...publisherLogos];
-  const menuOptions = [];
   if (hasUploadMediaAction) {
     const cropParams = {
       width: 96,
@@ -307,12 +306,10 @@ function PublishPanel({ nameOverride }) {
     );
   }
 
-  if (enablePosterHotlinking) {
-    if (hasUploadMediaAction) {
-      menuOptions.push('upload');
-    }
-    menuOptions.push('hotlink');
-  }
+  const menuOptions = [
+    enablePosterHotlinking && hasUploadMediaAction && 'upload',
+    enablePosterHotlinking && 'hotlink',
+  ].filter(Boolean);
 
   return (
     <Panel

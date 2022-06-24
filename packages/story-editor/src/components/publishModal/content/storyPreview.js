@@ -250,14 +250,11 @@ const StoryPreview = () => {
       translateToExclusiveList(allowedImageFileTypes)
     );
   }
-  const menuOptions = [];
 
-  if (enablePosterHotlinking) {
-    if (hasUploadMediaAction) {
-      menuOptions.push('upload');
-    }
-    menuOptions.push('hotlink');
-  }
+  const menuOptions = [
+    enablePosterHotlinking && hasUploadMediaAction && 'upload',
+    enablePosterHotlinking && 'hotlink',
+  ].filter(Boolean);
 
   return (
     <>
