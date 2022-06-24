@@ -78,7 +78,7 @@ const getStorySaveData = (
             width: featuredMedia.width,
             height: featuredMedia.height,
           }
-        : {},
+        : undefined,
     },
     publisher_logo: publisherLogo,
     content: encodeMarkup ? base64Encode(content) : content,
