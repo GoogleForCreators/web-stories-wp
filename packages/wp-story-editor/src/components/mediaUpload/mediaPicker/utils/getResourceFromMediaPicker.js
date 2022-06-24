@@ -82,7 +82,7 @@ const getResourceFromMediaPicker = (mediaPickerEl) => {
     sizes,
     local: false,
     isExternal: false,
-    isOptimized: 'video-optimization' === mediaSource,
+    isOptimized: ['video-optimization', 'recording'].includes(mediaSource),
     isMuted,
     trimData,
   });

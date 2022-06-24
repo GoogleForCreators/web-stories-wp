@@ -29,7 +29,7 @@ import MultiSelectionMoveable from './multiSelectionMoveable';
 function Selection(props) {
   const isBackground = useStory(({ state }) => {
     return (
-      state.selectedElements[0]?.id === state.currentPage.elements?.[0]?.id
+      state.selectedElements[0]?.id === state.currentPage?.elements?.[0]?.id
     );
   });
   const { selectedElements, isAnimating } = useStory((state) => ({

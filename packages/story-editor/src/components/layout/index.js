@@ -38,6 +38,7 @@ import { ChecklistCheckpointProvider } from '../checklist';
 import { RightClickMenuProvider } from '../../app/rightClickMenu';
 import RightClickMenu from '../canvas/rightClickMenu';
 import SidebarProvider from '../sidebar/sidebarProvider';
+import { MediaRecordingProvider } from '../mediaRecording';
 
 const Editor = withOverlay(styled.section.attrs({
   'aria-label': __('Web Stories Editor', 'web-stories'),
@@ -77,8 +78,10 @@ function Layout({ header, footer = {}, sidebarTabs, children }) {
               <Editor zIndex={3}>
                 <CanvasProvider>
                   <RightClickMenuProvider>
-                    <Workspace header={header} footer={footer} />
-                    <RightClickMenu />
+                    <MediaRecordingProvider>
+                      <Workspace header={header} footer={footer} />
+                      <RightClickMenu />
+                    </MediaRecordingProvider>
                   </RightClickMenuProvider>
                 </CanvasProvider>
                 {children}

@@ -31,7 +31,7 @@ import {
  * Internal dependencies
  */
 import { StandardViewContentGutter, ViewStyleBar } from '../../../components';
-import { DROPDOWN_TYPES, VIEW_STYLE } from '../../../constants';
+import { DROPDOWN_TYPES } from '../../../constants';
 import useFilters from '../myStories/filters/useFilters';
 
 const DisplayFormatContainer = styled.div`
@@ -86,7 +86,7 @@ export default function BodyViewOptions({
           <TranslateWithMarkup>{resultsLabel}</TranslateWithMarkup>
         </Text>
         <ControlsContainer>
-          {layoutStyle === VIEW_STYLE.GRID && filters?.length
+          {filters?.length
             ? filters.map((filter) => (
                 <StorySortDropdownContainer key={filter.key}>
                   <StyledDatalist
@@ -110,7 +110,7 @@ export default function BodyViewOptions({
                 </StorySortDropdownContainer>
               ))
             : null}
-          {layoutStyle === VIEW_STYLE.GRID && showSortDropdown && (
+          {showSortDropdown && (
             <StorySortDropdownContainer>
               <StyledDropDown
                 ariaLabel={sortDropdownAriaLabel}

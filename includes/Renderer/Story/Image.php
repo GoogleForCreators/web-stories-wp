@@ -56,7 +56,7 @@ class Image {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param array $args Array of Argument to render.
+	 * @param array<string,string|int> $args Array of Argument to render.
 	 * @return string Rendered block type output.
 	 */
 	public function render( array $args = [] ): string {

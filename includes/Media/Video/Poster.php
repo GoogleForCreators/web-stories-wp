@@ -148,10 +148,15 @@ class Poster extends Service_Base implements HasMeta {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param array $prepared Prepared data before response.
-	 * @return array
+	 * @param array<string, mixed> $prepared Prepared data before response.
+	 * @return array<string, mixed>
 	 */
 	public function get_callback_featured_media_src( $prepared ): array {
+		/**
+		 * Featured media ID.
+		 *
+		 * @var int|null $id
+		 */
 		$id    = $prepared['featured_media'] ?? null;
 		$image = [];
 		if ( $id ) {
@@ -166,11 +171,11 @@ class Poster extends Service_Base implements HasMeta {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param array|mixed $response   Array of prepared attachment data.
-	 * @param WP_Post     $attachment Attachment object.
-	 * @return array|mixed $response;
+	 * @param array<string, mixed>|mixed $response   Array of prepared attachment data.
+	 * @param WP_Post                    $attachment Attachment object.
+	 * @return array<string, mixed>|mixed $response;
 	 */
-	public function wp_prepare_attachment_for_js( $response, $attachment ) {
+	public function wp_prepare_attachment_for_js( $response, WP_Post $attachment ) {
 		if ( ! \is_array( $response ) ) {
 			return $response;
 		}
@@ -194,7 +199,7 @@ class Poster extends Service_Base implements HasMeta {
 	 * @since 1.0.0
 	 *
 	 * @param int $thumbnail_id Attachment ID.
-	 * @return array
+	 * @return array{src?: string, width?: int, height?: int, generated?: bool}
 	 */
 	public function get_thumbnail_data( int $thumbnail_id ): array {
 		$img_src = wp_get_attachment_image_src( $thumbnail_id, 'full' );
