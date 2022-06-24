@@ -23,6 +23,7 @@ import { getExtensionsFromMimeType } from '@googleforcreators/media';
 import { useCallback, useMemo } from '@googleforcreators/react';
 import styled from 'styled-components';
 import { Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -63,6 +64,7 @@ const StyledText = styled(Text)`
 `;
 
 function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
+  const enablePosterHotlinking = useFeature('posterHotlinking');
   const resource = useCommonObjectValue(
     selectedElements,
     'resource',
@@ -77,6 +79,14 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
     allowedMimeTypes: { image: allowedImageMimeTypes },
     capabilities: { hasUploadMediaAction },
   } = useConfig();
+
+  const menuOptions = enablePosterHotlinking
+    ? ['hotlink', 'reset']
+    : ['edit', 'reset'];
+
+  if (enablePosterHotlinking && hasUploadMediaAction) {
+    menuOptions.unshift('upload');
+  }
 
   const allowedImageFileTypes = useMemo(
     () =>
@@ -164,13 +174,19 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
           onChange={handleChangePoster}
           onChangeErrorText={posterErrorMessage}
           title={__('Select as video poster', 'web-stories')}
+          hotlinkTitle={__('Use external image as video poster', 'web-stories')}
+          hotlinkInsertText={__('Use image as video poster', 'web-stories')}
+          hotlinkInsertingText={__(
+            'Using image as video poster',
+            'web-stories'
+          )}
           buttonInsertText={__('Set as video poster', 'web-stories')}
           alt={__('Preview poster image', 'web-stories')}
           type={allowedImageMimeTypes}
           ariaLabel={__('Video poster', 'web-stories')}
-          menuOptions={['edit', 'reset']}
+          menuOptions={menuOptions}
           imgProps={cropParams}
-          canUpload={hasUploadMediaAction}
+          canUpload={hasUploadMediaAction || enablePosterHotlinking}
         />
         <InputsWrapper>
           <StyledText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
