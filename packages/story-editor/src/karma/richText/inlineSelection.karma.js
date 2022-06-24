@@ -15,11 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { waitFor } from '@testing-library/react';
-
-/**
  * Internal dependencies
  */
 import { Fixture } from '../fixture';
@@ -406,22 +401,14 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
   describe('CUJ: Creator Can Style Text: Apply B, Set line height', () => {
     it('should apply global formats (here line height) even when a selection is present', async () => {
       const { displayLayer } = data.fixture.editor.canvas;
-      const getDisplayTextStyles = async () => {
-        await waitFor(
-          () => {
-            const displayElement = displayLayer.display(data.textId);
-            expect(displayElement).not.toBe(null);
-          },
-          { container: displayLayer.node, timeout: 5000 }
-        );
+      const getDisplayTextStyles = () => {
         const displayNode = displayLayer.display(data.textId).node;
         const paragraph = displayNode.querySelector('p');
         return window.getComputedStyle(paragraph);
       };
 
       await data.fixture.events.click(data.fixture.editor.sidebar.designTab);
-      const initalStyles = await getDisplayTextStyles();
-      const initialLineHeight = parseFloat(initalStyles.lineHeight);
+      const initialLineHeight = parseFloat(getDisplayTextStyles().lineHeight);
 
       const { lineHeight } = data.fixture.editor.sidebar.designPanel.textStyle;
 
@@ -445,8 +432,7 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
       expect(getTextContent()).toBe('Fill in some text');
 
       // Expect line height to have changed
-      const styles = await getDisplayTextStyles();
-      const currentLineHeight = parseFloat(styles.lineHeight);
+      const currentLineHeight = parseFloat(getDisplayTextStyles().lineHeight);
       expect(currentLineHeight).not.toBe(initialLineHeight);
     });
   });
