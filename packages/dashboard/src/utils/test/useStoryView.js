@@ -79,6 +79,26 @@ describe('useStoryView()', function () {
     expect(result.current.page.value).toBe(1);
   });
 
+  it('should set the new filters when passed and reset the page.', function () {
+    const { result } = renderHook(
+      () => useStoryView({ statusFilters: STORY_STATUSES, totalPages: 2 }),
+      {}
+    );
+
+    act(() => {
+      result.current.page.requestNextPage();
+    });
+    expect(result.current.page.value).toBe(2);
+
+    act(() => {
+      result.current.filters.set({ web_story_category: 45 });
+    });
+    expect(result.current.filters.value).toMatchObject({
+      web_story_category: 45,
+    });
+    expect(result.current.page.value).toBe(1);
+  });
+
   it('should set the new search keyword when typed and reset the page.', function () {
     const { result } = renderHook(
       () => useStoryView({ statusFilters: STORY_STATUSES, totalPages: 2 }),
