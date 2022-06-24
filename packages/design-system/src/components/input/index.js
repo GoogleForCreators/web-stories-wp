@@ -239,7 +239,7 @@ export const InputPropTypes = {
   className: PropTypes.string,
   disabled: PropTypes.bool,
   hasError: PropTypes.bool,
-  hint: PropTypes.string,
+  hint: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   id: PropTypes.string,
   label: labelAccessibilityValidator,
   onBlur: PropTypes.func,
