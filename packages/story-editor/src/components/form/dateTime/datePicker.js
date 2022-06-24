@@ -28,9 +28,8 @@ import {
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { _x } from '@googleforcreators/i18n';
-import { getOptions } from '@googleforcreators/date';
+import { getOptions, format, formatDate } from '@googleforcreators/date';
 import { CircularProgress } from '@googleforcreators/design-system';
-import { format, formatDate } from '@googleforcreators/date';
 
 /**
  * Internal dependencies
