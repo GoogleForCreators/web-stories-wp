@@ -92,6 +92,146 @@ describe('useMediaInfo', () => {
         mimeType: 'video/quicktime',
       });
     });
+
+    it('should return file info for muted mp4 file', async () => {
+      const { result } = arrange();
+
+      analyzeData.mockImplementationOnce(() =>
+        Promise.resolve(
+          JSON.stringify({
+            media: {
+              track: [
+                {
+                  '@type': 'General',
+                  VideoCount: 1,
+                  Format: 'MPEG-4',
+                  Format_Profile: 'Base Media',
+                  CodecID: 'mp42',
+                  CodecID_Compatible: 'mp41/isom',
+                  FileSize: 301084,
+                  Duration: 18.0,
+                  OverallBitRate: 133815,
+                  FrameRate: 20.0,
+                  FrameCount: 360,
+                  StreamSize: 2233,
+                  HeaderSize: 64,
+                  DataSize: 298867,
+                  FooterSize: 2153,
+                  IsStreamable: false,
+                },
+                {
+                  '@type': 'Video',
+                  Format: 'AVC',
+                  CodecID: 'avc1',
+                  Duration: 18.0,
+                  BitRate: 132823,
+                  Width: 1920,
+                  Height: 1080,
+                  FrameRate: 20.0,
+                  ColorSpace: 'YUV',
+                },
+              ],
+            },
+          })
+        )
+      );
+
+      const fileInfo = await result.current.getFileInfo(
+        new File(['foo'], 'foo.mp4', {
+          type: 'video/mp4',
+        })
+      );
+
+      expect(fileInfo).toMatchObject({
+        isMuted: true,
+        mimeType: 'video/mp4',
+        fileSize: 301084,
+        format: 'mp4',
+        frameRate: 20,
+        codec: 'mp42',
+        width: 1920,
+        height: 1080,
+        colorSpace: 'YUV',
+        duration: 18,
+        videoCodec: 'avc',
+      });
+    });
+
+    it('should return file info for webm file', async () => {
+      const { result } = arrange();
+
+      analyzeData.mockImplementationOnce(() =>
+        Promise.resolve(
+          JSON.stringify({
+            media: {
+              track: [
+                {
+                  '@type': 'General',
+                  VideoCount: 1,
+                  AudioCount: 1,
+                  Format: 'WebM',
+                  Format_Version: 4,
+                  FileSize: 226548,
+                  Duration: 5.568,
+                  OverallBitRate: 325500,
+                  FrameRate: 30.0,
+                  FrameCount: 167,
+                  IsStreamable: true,
+                },
+                {
+                  '@type': 'Video',
+                  StreamOrder: 0,
+                  Format: 'VP9',
+                  CodecID: 'V_VP9',
+                  Duration: 5.567,
+                  Width: 560,
+                  Height: 320,
+                  PixelAspectRatio: 1.0,
+                  DisplayAspectRatio: 1.75,
+                  FrameRate_Mode: 'CFR',
+                  FrameRate: 30.0,
+                  FrameCount: 167,
+                  Default: true,
+                  Forced: false,
+                },
+                {
+                  '@type': 'Audio',
+                  StreamOrder: 1,
+                  Format: 'Opus',
+                  CodecID: 'A_OPUS',
+                  Duration: 5.568,
+                  Channels: 1,
+                  ChannelPositions: 'Front: C',
+                  SamplingRate: 48000,
+                  SamplingCount: 267264,
+                },
+              ],
+            },
+          })
+        )
+      );
+
+      const fileInfo = await result.current.getFileInfo(
+        new File(['foo'], 'foo.webm', {
+          type: 'video/webm',
+        })
+      );
+
+      expect(fileInfo).toMatchObject({
+        isMuted: false,
+        mimeType: 'video/webm',
+        fileSize: 226548,
+        format: 'webm',
+        frameRate: 30,
+        codec: undefined,
+        width: 560,
+        height: 320,
+        colorSpace: undefined,
+        duration: 5.567,
+        videoCodec: 'vp9',
+        audioCodec: 'opus',
+      });
+    });
   });
 
   describe('isConsideredOptimized', () => {
