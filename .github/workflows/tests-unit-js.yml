@@ -68,8 +68,9 @@ jobs:
       - name: Download AMP validator JS
         id: amp_validator
         run: |
-          cd $RUNNER_TEMP && curl -O -f https://cdn.ampproject.org/v0/validator_wasm.js
-          echo "::set-output name=validator_file::${$RUNNER_TEMP}/validator_wasm.js"
+          cd $RUNNER_TEMP && curl -O -f -s S https://cdn.ampproject.org/v0/validator_wasm.js
+          AMP_VALIDATOR_FILE="${RUNNER_TEMP}/validator_wasm.js"
+          echo "::set-output name=validator_file::$AMP_VALIDATOR_FILE"
 
       - name: Run JavaScript unit tests
         run: npm run test:js -- --runInBand --ci --cacheDirectory="$HOME/.jest-cache" --collectCoverage --shard=$SHARD
