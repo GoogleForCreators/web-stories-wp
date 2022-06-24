@@ -277,7 +277,12 @@ function useMediaUploadQueue() {
       try {
         const newFile = await transcodeVideo(file);
 
-        additionalData.mediaSource = 'video-optimization';
+        // Do not override pre-existing mediaSource if provided,
+        // for example by media recording.
+        if (!additionalData.mediaSource) {
+          additionalData.mediaSource = 'video-optimization';
+        }
+
         finishTranscoding({ id, file: newFile, additionalData });
       } catch (error) {
         // Cancel uploading if there were any errors.

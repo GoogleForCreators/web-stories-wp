@@ -15,3 +15,4 @@
  */
 
 export const LAYER_HEIGHT = 35;
+export const NESTED_PX = 30;

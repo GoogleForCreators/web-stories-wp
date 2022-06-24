@@ -24,7 +24,7 @@ import { useEffect, useMemo, useCallback } from '@googleforcreators/react';
  */
 import { ScrollToTop, Layout } from '../../../components';
 import { STORY_STATUSES } from '../../../constants';
-import { useStoryView, noop } from '../../../utils';
+import { useStoryView } from '../../../utils';
 import { useConfig } from '../../config';
 import useApi from '../../api/useApi';
 import useFilters from './filters/useFilters';
@@ -43,12 +43,10 @@ function MyStories() {
     storiesOrderById,
     totalPages,
     totalStoriesByStatus,
-    getAuthors,
   } = useApi(
     ({
       actions: {
         storyApi: { duplicateStory, fetchStories, trashStory, updateStory },
-        usersApi: { getAuthors },
       },
       state: {
         stories: {
@@ -71,17 +69,12 @@ function MyStories() {
       storiesOrderById,
       totalPages,
       totalStoriesByStatus,
-      getAuthors,
     })
   );
-  const { filters, filtersLoading, getFiltersObject } = useFilters(
-    ({
-      state: { filters, filtersLoading },
-      actions: { getFiltersObject },
-    }) => ({
+  const { filters, filtersObject } = useFilters(
+    ({ state: { filters, filtersObject } }) => ({
       filters,
-      filtersLoading,
-      getFiltersObject,
+      filtersObject,
     })
   );
 
@@ -94,40 +87,11 @@ function MyStories() {
     view,
     showStoriesWhileLoading,
     initialPageReady,
-    author,
   } = useStoryView({
     filters: STORY_STATUSES,
     isLoading,
     totalPages,
   });
-
-  const { setQueriedAuthors } = author;
-  let queryAuthorsBySearch = useCallback(
-    (authorSearchTerm) => {
-      return getAuthors(authorSearchTerm).then((data) => {
-        const userData = data.map(({ id, name }) => ({
-          id,
-          name,
-        }));
-        setQueriedAuthors((existingUsers) => {
-          const existingUsersIds = existingUsers.map(({ id }) => id);
-          const newUsers = userData.filter(
-            (newUser) => !existingUsersIds.includes(newUser.id)
-          );
-          return [...existingUsers, ...newUsers];
-        });
-      });
-    },
-    [getAuthors, setQueriedAuthors]
-  );
-
-  if (!getAuthors) {
-    queryAuthorsBySearch = noop;
-  }
-
-  useEffect(() => {
-    queryAuthorsBySearch();
-  }, [queryAuthorsBySearch]);
 
   useEffect(() => {
     fetchStories({
@@ -136,8 +100,7 @@ function MyStories() {
       sortDirection: sort.direction,
       sortOption: sort.value,
       status: filter.value,
-      author: author.filterId,
-      filters: getFiltersObject(),
+      filters: filtersObject,
     });
   }, [
     fetchStories,
@@ -146,9 +109,8 @@ function MyStories() {
     search.keyword,
     sort.direction,
     sort.value,
-    author.filterId,
     apiCallbacks,
-    getFiltersObject,
+    filtersObject,
   ]);
 
   const orderedStories = useMemo(() => {
@@ -156,8 +118,6 @@ function MyStories() {
       return stories[storyId];
     });
   }, [stories, storiesOrderById]);
-
-  const showAuthorDropdown = typeof getAuthors === 'function';
 
   return (
     <Layout.Provider>
@@ -170,9 +130,6 @@ function MyStories() {
         stories={orderedStories}
         totalStoriesByStatus={totalStoriesByStatus}
         view={view}
-        author={author}
-        queryAuthorsBySearch={queryAuthorsBySearch}
-        showAuthorDropdown={showAuthorDropdown}
       />
 
       <Content
@@ -180,7 +137,7 @@ function MyStories() {
         canViewDefaultTemplates={canViewDefaultTemplates}
         filter={filter}
         loading={{
-          isLoading: isLoading && filtersLoading,
+          isLoading: isLoading,
           showStoriesWhileLoading,
         }}
         page={page}

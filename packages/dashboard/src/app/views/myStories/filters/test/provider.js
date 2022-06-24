@@ -25,17 +25,21 @@ import FiltersProvider from '../provider';
 import useFilters from '../useFilters';
 
 jest.mock('../taxonomy/useTaxonomyFilters', () => {
-  const initializeTaxonomyFilters = () => [];
+  const initializeTaxonomyFilters = () => Promise.resolve([]);
   return {
     __esModule: true,
     default: function useTaxonomyFilter() {
-      const react = jest.requireActual('react');
-      const [taxonomies] = react.useState([]);
+      return initializeTaxonomyFilters;
+    },
+  };
+});
 
-      return {
-        taxonomies,
-        initializeTaxonomyFilters,
-      };
+jest.mock('../author/useAuthorFilter', () => {
+  const initializeAuthorFilter = () => null;
+  return {
+    __esModule: true,
+    default: function useAuthorFilter() {
+      return initializeAuthorFilter;
     },
   };
 });
@@ -56,11 +60,18 @@ describe('provider', () => {
       ]);
     });
 
+    // shouldn't be able to register filters with the same key
+    act(() => {
+      result.current.actions.registerFilters([{ key: filterKey, filterId: 1 }]);
+    });
+
+    expect(result.current.state.filters).toHaveLength(1);
     let filter = result.current.state.filters.find((f) => f.key === filterKey);
     expect(filter).toBeDefined();
+    expect(filter.filterId).toBeNull();
 
-    // filters with null filterId's should not be in the filters object
-    let filterObj = result.current.actions.getFiltersObject();
+    // filters with falsy filterId's should not be in the filters object
+    let filterObj = result.current.state.filtersObject;
     expect(filterObj).toMatchObject({});
 
     // update the filter
@@ -75,7 +86,7 @@ describe('provider', () => {
       filterId: 1,
     });
 
-    filterObj = result.current.actions.getFiltersObject();
+    filterObj = result.current.state.filtersObject;
     expect(filterObj).toMatchObject({
       [filterKey]: 1,
     });

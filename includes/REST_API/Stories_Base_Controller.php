@@ -39,6 +39,25 @@ use WP_REST_Response;
  * Stories_Base_Controller class.
  *
  * Override the WP_REST_Posts_Controller class to add `post_content_filtered` to REST request.
+ *
+ * @phpstan-type Link array{
+ *   href?: string,
+ *   embeddable?: bool,
+ *   taxonomy?: string
+ * }
+ * @phpstan-type Links array<string, Link|Link[]>
+ * @phpstan-type SchemaEntry array{
+ *   description: string,
+ *   type: string,
+ *   context: string[],
+ *   default?: mixed,
+ * }
+ * @phpstan-type Schema array{
+ *   properties: array{
+ *     content?: SchemaEntry,
+ *     story_data?: SchemaEntry
+ *   }
+ * }
  */
 class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	/**
@@ -86,7 +105,13 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 			return $prepared_post;
 		}
 
+		/**
+		 * Schema.
+		 *
+		 * @phpstan-var Schema $schema
+		 */
 		$schema = $this->get_item_schema();
+
 		// Post content.
 		if ( ! empty( $schema['properties']['content'] ) ) {
 
@@ -125,16 +150,22 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	public function prepare_item_for_response( $post, $request ): WP_REST_Response {
 		$response = parent::prepare_item_for_response( $post, $request );
 		$fields   = $this->get_fields_for_response( $request );
-		$schema   = $this->get_item_schema();
+
+		/**
+		 * Schema.
+		 *
+		 * @phpstan-var Schema $schema
+		 */
+		$schema = $this->get_item_schema();
 
 		/**
 		 * Response data.
 		 *
-		 * @var array $data
+		 * @var array<string,mixed> $data
 		 */
 		$data = $response->get_data();
 
-		if ( rest_is_field_included( 'story_data', $fields ) ) {
+		if ( ! empty( $schema['properties']['story_data'] ) && rest_is_field_included( 'story_data', $fields ) ) {
 			$post_story_data    = json_decode( $post->post_content_filtered, true );
 			$data['story_data'] = rest_sanitize_value_from_schema( $post_story_data, $schema['properties']['story_data'] );
 		}
@@ -222,11 +253,19 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @return array Item schema as an array.
+	 * @return array Item schema data.
+	 *
+	 * @phpstan-return Schema
 	 */
 	public function get_item_schema(): array {
 		if ( $this->schema ) {
-			return $this->add_additional_fields_schema( $this->schema );
+			/**
+			 * Schema.
+			 *
+			 * @phpstan-var Schema $schema
+			 */
+			$schema = $this->add_additional_fields_schema( $this->schema );
+			return $schema;
 		}
 
 		$schema = parent::get_item_schema();
@@ -246,7 +285,13 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 
 		$this->schema = $schema;
 
-		return $this->add_additional_fields_schema( $this->schema );
+		/**
+		 * Schema.
+		 *
+		 * @phpstan-var Schema $schema
+		 */
+		$schema = $this->add_additional_fields_schema( $this->schema );
+		return $schema;
 	}
 
 	/**
@@ -258,6 +303,8 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	 *
 	 * @param WP_Post $post Post object.
 	 * @return array Links for the given post.
+	 *
+	 * @phpstan-return Links
 	 */
 	protected function prepare_links( $post ): array {
 		$links = parent::prepare_links( $post );
@@ -300,8 +347,11 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	 * @since 1.12.0
 	 *
 	 * @param array   $links Links for the given post.
-	 * @param WP_Post $post Post object.
+	 * @param WP_Post $post  Post object.
 	 * @return array Modified list of links.
+	 *
+	 * @phpstan-param Links $links
+	 * @phpstan-return Links
 	 */
 	private function add_taxonomy_links( array $links, WP_Post $post ): array {
 		$taxonomies = get_object_taxonomies( $post->post_type, 'objects' );
@@ -309,6 +359,7 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 		if ( empty( $taxonomies ) ) {
 			return $links;
 		}
+
 		$links['https://api.w.org/term'] = [];
 
 		foreach ( $taxonomies as $taxonomy_obj ) {
@@ -327,7 +378,7 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 			$tax       = $taxonomy_obj->name;
 			$tax_base  = ! empty( $taxonomy_obj->rest_base ) ? $taxonomy_obj->rest_base : $tax;
 
-			$query_params = [ 
+			$query_params = [
 				'post'     => $post->ID,
 				'per_page' => 100,
 			];
@@ -343,6 +394,7 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 				'embeddable' => true,
 			];
 		}
+
 		return $links;
 	}
 
@@ -353,7 +405,7 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	 *
 	 * @param WP_Post         $post    Post object.
 	 * @param WP_REST_Request $request Request object.
-	 * @return array List of link relations.
+	 * @return string[] List of link relations.
 	 */
 	protected function get_available_actions( $post, $request ): array {
 		$rels = parent::get_available_actions( $post, $request );

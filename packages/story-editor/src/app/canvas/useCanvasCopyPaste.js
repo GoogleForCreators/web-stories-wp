@@ -19,7 +19,7 @@
  */
 import { useCallback } from '@googleforcreators/react';
 import { usePasteTextContent } from '@googleforcreators/rich-text';
-import { __, sprintf } from '@googleforcreators/i18n';
+import { __, _n, sprintf } from '@googleforcreators/i18n';
 import { useSnackbar } from '@googleforcreators/design-system';
 import { ELEMENT_TYPES } from '@googleforcreators/elements';
 
@@ -35,6 +35,7 @@ import {
 import useUploadWithPreview from '../../components/canvas/useUploadWithPreview';
 import useInsertElement from '../../components/canvas/useInsertElement';
 import { DEFAULT_PRESET } from '../../components/library/panes/text/textPresets';
+import { MAX_PRODUCTS_PER_PAGE } from '../../constants';
 import useAddPastedElements from './useAddPastedElements';
 
 function useCanvasGlobalKeys() {
@@ -45,17 +46,28 @@ function useCanvasGlobalKeys() {
     selectedElements,
     deleteSelectedElements,
     selectedElementAnimations,
+    selectedElementsGroups,
     currentPageProductIds,
   } = useStory(
     ({
       state: { currentPage, selectedElements, selectedElementAnimations },
       actions: { deleteSelectedElements },
     }) => {
+      const selectedElementsGroupsIds = selectedElements
+        .map((el) => el.groupId)
+        .filter(Boolean);
+      const selectedElementsGroupsEntries = Object.entries(
+        currentPage?.groups || {}
+      ).filter(([groupId]) => selectedElementsGroupsIds.includes(groupId));
+      const selectedElementsGroups = Object.fromEntries(
+        selectedElementsGroupsEntries
+      );
       return {
         currentPage,
         selectedElements,
         deleteSelectedElements,
         selectedElementAnimations,
+        selectedElementsGroups,
         currentPageProductIds: currentPage?.elements
           ?.filter(({ type }) => type === ELEMENT_TYPES.PRODUCT)
           .map(({ product }) => product?.productId),
@@ -80,6 +92,7 @@ function useCanvasGlobalKeys() {
         currentPage,
         selectedElements,
         selectedElementAnimations,
+        selectedElementsGroups,
         evt
       );
 
@@ -93,33 +106,62 @@ function useCanvasGlobalKeys() {
       deleteSelectedElements,
       selectedElements,
       selectedElementAnimations,
+      selectedElementsGroups,
     ]
   );
 
   const elementPasteHandler = useCallback(
     (content) => {
-      const { elements, animations } = processPastedElements(
+      const { elements, animations, groups } = processPastedElements(
         content,
         currentPage
       );
 
-      for (const { type, product } of elements) {
-        if (
-          type === ELEMENT_TYPES.PRODUCT &&
-          product?.productId &&
-          currentPageProductIds.includes(product.productId)
-        ) {
-          showSnackbar({
-            message: sprintf(
-              /* translators: %s: product title. */
-              __('Product "%s" already exists on the page.', 'web-stories'),
-              product.productTitle
+      const newProductsFromElements = elements
+        .filter(
+          ({ type, product }) =>
+            type === ELEMENT_TYPES.PRODUCT && product?.productId
+        )
+        .map(({ product }) => product);
+
+      if (
+        currentPageProductIds.length >= MAX_PRODUCTS_PER_PAGE ||
+        newProductsFromElements.length + currentPageProductIds.length >
+          MAX_PRODUCTS_PER_PAGE
+      ) {
+        showSnackbar({
+          message: sprintf(
+            /* translators: %d: max number of products. */
+            _n(
+              'Only %d item can be added per page.',
+              'Only %d items can be added per page.',
+              MAX_PRODUCTS_PER_PAGE,
+              'web-stories'
             ),
-          });
-        }
+            MAX_PRODUCTS_PER_PAGE
+          ),
+        });
+      } else {
+        newProductsFromElements.forEach(
+          ({ productId, productTitle, productImages }) => {
+            if (currentPageProductIds.includes(productId)) {
+              showSnackbar({
+                message: sprintf(
+                  /* translators: %s: product title. */
+                  __('Product "%s" already exists on the page.', 'web-stories'),
+                  productTitle
+                ),
+                thumbnail: productImages?.[0]?.url && {
+                  src: productImages[0].url,
+                  alt: productImages[0].alt,
+                },
+              });
+            }
+          }
+        );
       }
 
-      return addPastedElements(elements, animations);
+      return addPastedElements(elements, animations, groups);
     },
     [addPastedElements, currentPage, showSnackbar, currentPageProductIds]
   );

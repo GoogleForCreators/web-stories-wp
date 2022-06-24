@@ -45,6 +45,17 @@ use WP_REST_Server;
  * API endpoint to facilitate embedding web stories.
  *
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
+ *
+ * @phpstan-type SchemaEntry array{
+ *   description: string,
+ *   type: string,
+ *   context: string[],
+ *   default?: mixed,
+ * }
+ *
+ * @phpstan-type Schema array{
+ *   properties: array<string, SchemaEntry>
+ * }
  */
 class Embed_Controller extends REST_Controller implements HasRequirements {
 
@@ -147,7 +158,7 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 			/**
 			 * Decoded cached embed data.
 			 *
-			 * @var array|null $embed
+			 * @var array<string,mixed>|null $embed
 			 */
 			$embed = json_decode( $data, true );
 
@@ -176,7 +187,7 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 		 *
 		 * @since 1.0.0
 		 *
-		 * @param array $args Arguments used for the HTTP request
+		 * @param array<string,mixed> $args Arguments used for the HTTP request
 		 * @param string $url The attempted URL.
 		 */
 		$args = apply_filters( 'web_stories_embed_data_request_args', $args, $url );
@@ -212,10 +223,10 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param string $url  The URL that should be inspected for metadata.
-	 * @return array|false Story metadata if the URL does belong to the current site. False otherwise.
+	 * @param string $url The URL that should be inspected for metadata.
+	 * @return array{title: string, poster: string}|false Story metadata if the URL does belong to the current site. False otherwise.
 	 */
-	private function get_data_from_post( $url ) {
+	private function get_data_from_post( string $url ) {
 		$post = $this->url_to_post( $url );
 
 		if ( ! $post || $this->story_post_type->get_slug() !== $post->post_type ) {
@@ -250,7 +261,7 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 			/**
 			 * URL parts.
 			 *
-			 * @var array|false $url_parts
+			 * @var array<string, string>|false $url_parts
 			 */
 			$url_parts = wp_parse_url( $url );
 			if ( ! $url_parts ) {
@@ -371,7 +382,7 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 	 * @since 1.0.0
 	 *
 	 * @param string $html HTML document markup.
-	 * @return array|false Response data or false if document is not a story.
+	 * @return array{title: string, poster: string}|false Response data or false if document is not a story.
 	 */
 	private function get_data_from_document( string $html ) {
 		try {
@@ -409,7 +420,7 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param DOMNodeList<DOMElement>|false $query XPath query result.
+	 * @param DOMNodeList<DOMElement>|false $query     XPath query result.
 	 * @param string                        $attribute Attribute name.
 	 * @return string|false Attribute content on success, false otherwise.
 	 */
@@ -437,8 +448,8 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 	 *
 	 * @since 1.10.0
 	 *
-	 * @param array|false     $embed Embed value, default to false is not set.
-	 * @param WP_REST_Request $request Request object.
+	 * @param array<string, mixed>|false $embed Embed value, default to false is not set.
+	 * @param WP_REST_Request            $request Request object.
 	 * @return WP_REST_Response|WP_Error Response object.
 	 */
 	public function prepare_item_for_response( $embed, $request ) {
@@ -450,7 +461,7 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 		if ( \is_array( $embed ) ) {
 			$check_fields = array_keys( $embed );
 			foreach ( $check_fields as $check_field ) {
-				if ( rest_is_field_included( $check_field, $fields ) ) {
+				if ( ! empty( $schema['properties'][ $check_field ] ) && rest_is_field_included( $check_field, $fields ) ) {
 					$data[ $check_field ] = rest_sanitize_value_from_schema( $embed[ $check_field ], $schema['properties'][ $check_field ] );
 				}
 			}
@@ -475,10 +486,18 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 	 * @since 1.10.0
 	 *
 	 * @return array Item schema data.
+	 *
+	 * @phpstan-return Schema
 	 */
 	public function get_item_schema(): array {
 		if ( $this->schema ) {
-			return $this->add_additional_fields_schema( $this->schema );
+			/**
+			 * Schema.
+			 *
+			 * @phpstan-var Schema $schema
+			 */
+			$schema = $this->add_additional_fields_schema( $this->schema );
+			return $schema;
 		}
 
 		$schema = [
@@ -502,7 +521,13 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 
 		$this->schema = $schema;
 
-		return $this->add_additional_fields_schema( $this->schema );
+		/**
+		 * Schema.
+		 *
+		 * @phpstan-var Schema $schema
+		 */
+		$schema = $this->add_additional_fields_schema( $this->schema );
+		return $schema;
 	}
 
 	/**

@@ -212,7 +212,7 @@ class Stories_Lock_Controller extends REST_Controller implements HasRequirements
 	 * Get the lock, if the ID is valid.
 	 *
 	 * @param int $post_id Supplied ID.
-	 * @return array|false Lock data or false.
+	 * @return array{time?: int, user?: int}|false Lock data or false.
 	 */
 	protected function get_lock( int $post_id ) {
 		/**
@@ -225,7 +225,10 @@ class Stories_Lock_Controller extends REST_Controller implements HasRequirements
 		if ( ! empty( $lock ) ) {
 			[ $time, $user ] = explode( ':', $lock );
 			if ( $time && $user ) {
-				return compact( 'time', 'user' );
+				return [
+					'time' => (int) $time,
+					'user' => (int) $user,
+				];
 			}
 		}
 
@@ -288,11 +291,11 @@ class Stories_Lock_Controller extends REST_Controller implements HasRequirements
 	 *
 	 * @since 1.6.0
 	 *
-	 * @param array|false     $lock Lock value, default to false is not set.
-	 * @param WP_REST_Request $request Request object.
+	 * @param array{time?: int, user?: int}|false $item Lock value, default to false is not set.
+	 * @param WP_REST_Request                     $request Request object.
 	 * @return WP_REST_Response|WP_Error Response object.
 	 */
-	public function prepare_item_for_response( $lock, $request ) {
+	public function prepare_item_for_response( $item, $request ) {
 		$fields = $this->get_fields_for_response( $request );
 		$schema = $this->get_item_schema();
 
@@ -304,15 +307,15 @@ class Stories_Lock_Controller extends REST_Controller implements HasRequirements
 			'nonce'  => $nonce,
 		];
 
-		if ( ! empty( $lock ) ) {
+		if ( ! empty( $item ) ) {
 			/** This filter is documented in wp-admin/includes/ajax-actions.php */
 			$time_window = apply_filters( 'wp_check_post_lock_window', 150 );
 
-			if ( $lock['time'] && $lock['time'] > time() - $time_window ) {
+			if ( $item['time'] && $item['time'] > time() - $time_window ) {
 				$lock_data = [
 					'locked' => true,
-					'time'   => $lock['time'],
-					'user'   => (int) $lock['user'],
+					'time'   => $item['time'],
+					'user'   => (int) $item['user'],
 					'nonce'  => $nonce,
 				];
 			}
@@ -321,7 +324,7 @@ class Stories_Lock_Controller extends REST_Controller implements HasRequirements
 		$data         = [];
 		$check_fields = array_keys( $lock_data );
 		foreach ( $check_fields as $check_field ) {
-			if ( rest_is_field_included( $check_field, $fields ) ) {
+			if ( ! empty( $schema['properties'][ $check_field ] ) && rest_is_field_included( $check_field, $fields ) ) {
 				$data[ $check_field ] = rest_sanitize_value_from_schema( $lock_data[ $check_field ], $schema['properties'][ $check_field ] );
 			}
 		}
@@ -349,7 +352,7 @@ class Stories_Lock_Controller extends REST_Controller implements HasRequirements
 		 */
 		$post_id = $request['id'];
 
-		$response->add_links( $this->prepare_links( $lock, $post_id ) );
+		$response->add_links( $this->prepare_links( $item, $post_id ) );
 
 		$post_type = $this->story_post_type->get_slug();
 
@@ -361,20 +364,20 @@ class Stories_Lock_Controller extends REST_Controller implements HasRequirements
 		 * @since 1.6.0
 		 *
 		 * @param WP_REST_Response $response The response object.
-		 * @param array|false      $lock     Lock array if available.
+		 * @param array|false      $item     Lock array if available.
 		 * @param WP_REST_Request  $request  Request object.
 		 */
-		return apply_filters( "rest_prepare_{$post_type}_lock", $response, $lock, $request );
+		return apply_filters( "rest_prepare_{$post_type}_lock", $response, $item, $request );
 	}
 
 	/**
 	 * Prepares links for the request.
 	 *
-	 * @param array|false $lock Lock state.
-	 * @param int         $post_id Post object ID.
-	 * @return array Links for the given term.
+	 * @param array{time?: int, user?: int}|false $lock Lock state.
+	 * @param int                                 $post_id Post object ID.
+	 * @return array{self: array{href?: string}, author?: array{href: string, embeddable: true}} Links for the given term.
 	 */
-	protected function prepare_links( $lock, $post_id ): array {
+	protected function prepare_links( $lock, int $post_id ): array {
 		$base  = $this->namespace . '/' . $this->rest_base;
 		$links = [
 			'self' => [
@@ -402,7 +405,7 @@ class Stories_Lock_Controller extends REST_Controller implements HasRequirements
 	 *
 	 * @since 1.6.0
 	 *
-	 * @return array Item schema data.
+	 * @return array<string, string|array<string, array<string,string|string[]>>> Item schema data.
 	 */
 	public function get_item_schema(): array {
 		if ( $this->schema ) {

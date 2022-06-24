@@ -47,15 +47,10 @@ function deleteElementsByResourceId(state, { id }) {
     const { elements, animations } = page;
 
     const isDeletingBackground = elements[0].resource?.id === id;
-    const backgroundIsDefault = elements[0].isDefaultBackground;
 
     let newElements = elements.map((element) => {
       const { id: elementId, resource } = element;
       if (resource?.id !== id) {
-        return element;
-      }
-
-      if (isDeletingBackground && backgroundIsDefault) {
         return element;
       }
 
@@ -64,7 +59,7 @@ function deleteElementsByResourceId(state, { id }) {
       return undefined;
     });
 
-    if (isDeletingBackground && !backgroundIsDefault) {
+    if (isDeletingBackground) {
       newElements = [page.defaultBackgroundElement, ...newElements];
     }
 
