@@ -39,9 +39,13 @@ function createElementForCanvas(type, props) {
 }
 
 function useInsertElement() {
-  const { addElement } = useStory(({ actions }) => ({
-    addElement: actions.addElement,
-  }));
+  const { addElement, combineElements, backgroundElementId } = useStory(
+    ({ state, actions }) => ({
+      addElement: actions.addElement,
+      combineElements: actions.combineElements,
+      backgroundElementId: state.currentPage?.elements?.[0]?.id,
+    })
+  );
 
   const { setZoomSetting } = useLayout(({ actions: { setZoomSetting } }) => ({
     setZoomSetting,
@@ -52,18 +56,28 @@ function useInsertElement() {
   /**
    * @param {string} type The element's type.
    * @param {Object} props The element's initial properties.
+   * @param {boolean} insertAsBackground Whether to insert the element as a background element.
    */
   const insertElement = useCallback(
-    (type, props) => {
+    (type, props, insertAsBackground = false) => {
       setZoomSetting(ZOOM_SETTING.FIT);
       const element = createElementForCanvas(type, props);
       const { id, resource } = element;
       addElement({ element });
 
+      if (insertAsBackground) {
+        combineElements({
+          firstElement: element,
+          secondId: backgroundElementId,
+        });
+      }
+
+      const elementId = insertAsBackground ? backgroundElementId : id;
+
       // Auto-play on insert.
       if (type === 'video' && resource?.src && !resource.isPlaceholder) {
         setTimeout(() => {
-          const videoEl = document.getElementById(`video-${id}`);
+          const videoEl = document.getElementById(`video-${elementId}`);
           if (videoEl) {
             videoEl.play().catch(() => {});
           }
@@ -74,7 +88,13 @@ function useInsertElement() {
 
       return element;
     },
-    [addElement, focusCanvas, setZoomSetting]
+    [
+      addElement,
+      backgroundElementId,
+      combineElements,
+      focusCanvas,
+      setZoomSetting,
+    ]
   );
 
   return insertElement;
