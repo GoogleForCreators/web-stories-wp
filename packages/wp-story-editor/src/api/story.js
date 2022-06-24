@@ -108,7 +108,7 @@ export function saveStoryById(config, story) {
       'preview_link',
       'edit_link',
       'embed_post_link',
-      'meta',
+      'meta.web_stories_poster',
     ].join(','),
     _embed: STORY_EMBED,
   });
