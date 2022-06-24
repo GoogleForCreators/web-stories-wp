@@ -68,18 +68,12 @@ function LinkIcon({ handleChange, icon, isLoading = false, ...rest }) {
     return message;
   }, [allowedImageFileTypes]);
 
-  const menuOptions = [];
-
-  if (hasUploadMediaAction) {
-    const uploadOption = enablePosterHotlinking ? 'upload' : 'edit';
-    menuOptions.push(uploadOption);
-  }
-  if (enablePosterHotlinking) {
-    menuOptions.push('hotlink');
-  }
-  if (icon) {
-    menuOptions.push('remove');
-  }
+  const menuOptions = [
+    enablePosterHotlinking && hasUploadMediaAction && 'upload',
+    !enablePosterHotlinking && hasUploadMediaAction && 'edit',
+    enablePosterHotlinking && 'hotlink',
+    icon && 'reset',
+  ].filter(Boolean);
 
   return (
     <StyledMedia
