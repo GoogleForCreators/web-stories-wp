@@ -33,7 +33,7 @@ import {
  */
 import { AuthorPropTypes } from '../../../utils/useStoryView.js';
 import { StandardViewContentGutter, ViewStyleBar } from '../../../components';
-import { DROPDOWN_TYPES, VIEW_STYLE } from '../../../constants';
+import { DROPDOWN_TYPES } from '../../../constants';
 import useFilters from '../myStories/filters/useFilters';
 
 const FILTER_MAX_WIDTH = 350;
@@ -136,7 +136,7 @@ export default function BodyViewOptions({
                 </StorySortDropdownContainer>
               ))
             : null}
-          {layoutStyle === VIEW_STYLE.GRID && showAuthorDropdown && (
+          {showAuthorDropdown && (
             <StorySortDropdownContainer>
               <StyledDatalist
                 hasSearch
