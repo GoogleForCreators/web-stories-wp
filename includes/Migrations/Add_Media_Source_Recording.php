@@ -1,5 +1,15 @@
-/*
- * Copyright 2021 Google LLC
+<?php
+/**
+ * Class Add_Media_Source_Recording
+ *
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
+ * @copyright 2022 Google LLC
+ * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
+ */
+
+/**
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,13 +23,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-function addBaseColorProcessing(state, { id }) {
-  if (!id || state.baseColorProcessing.includes(id)) {
-    return state;
-  }
-  return {
-    ...state,
-    baseColorProcessing: [...state.baseColorProcessing, id],
-  };
+
+namespace Google\Web_Stories\Migrations;
+
+/**
+ * Class Add_Media_Source_Recording
+ */
+class Add_Media_Source_Recording extends Add_Media_Source {
+	/**
+	 * Term name.
+	 *
+	 * @since 1.23.0
+	 */
+	protected function get_term(): string {
+		return 'recording';
+	}
 }
-export default addBaseColorProcessing;

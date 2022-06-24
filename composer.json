@@ -31,7 +31,7 @@
     "sirbrillig/phpcs-variable-analysis": "^2.8",
     "slevomat/coding-standard": "^8.0.0",
     "sniccowp/php-scoper-wordpress-excludes": "^6.0",
-    "szepeviktor/phpstan-wordpress": "^1.0",
+    "szepeviktor/phpstan-wordpress": "^v1.1.2",
     "wp-coding-standards/wpcs": "^2.3",
     "yoast/wp-test-utils": "^1.0.0"
   },
@@ -120,7 +120,7 @@
     "phpcbf": "phpcbf --severity=1",
     "phpcs": "phpcs --severity=1",
     "phpmd": "phpmd . text phpmd.xml",
-    "phpstan": "phpstan analyse --memory-limit=512M",
+    "phpstan": "phpstan analyse --memory-limit=2048M",
     "prefix-dependencies": [
       "php-scoper add-prefix --output-dir=./third-party --force --quiet",
       "echo '{ \"autoload\": { \"classmap\": [\"\"] } }' > ./third-party/composer.json",

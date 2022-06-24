@@ -231,7 +231,7 @@ function GridView({ onClose }) {
       <Wrapper
         aria-label={__('Grid View Pages List', 'web-stories')}
         ref={wrapperRef}
-        onPositionChange={(oldPos, newPos) => {
+        onPositionChange={({ position: oldPos }, { position: newPos }) => {
           const pageId = pages[oldPos].id;
           arrangePage({ pageId, position: newPos });
           setCurrentPage({ pageId });
