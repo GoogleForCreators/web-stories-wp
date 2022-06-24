@@ -80,13 +80,12 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
     capabilities: { hasUploadMediaAction },
   } = useConfig();
 
-  const menuOptions = enablePosterHotlinking
-    ? ['hotlink', 'reset']
-    : ['edit', 'reset'];
-
-  if (enablePosterHotlinking && hasUploadMediaAction) {
-    menuOptions.unshift('upload');
-  }
+  const menuOptions = [
+    enablePosterHotlinking && hasUploadMediaAction && 'upload',
+    !enablePosterHotlinking && hasUploadMediaAction && 'edit',
+    enablePosterHotlinking && 'hotlink',
+    'reset',
+  ].filter(Boolean);
 
   const allowedImageFileTypes = useMemo(
     () =>
