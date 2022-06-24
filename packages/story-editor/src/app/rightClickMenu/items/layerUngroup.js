@@ -28,54 +28,49 @@ import { RIGHT_CLICK_MENU_LABELS } from '../constants';
 import { useStory } from '../..';
 
 function LayerUngroup() {
-  const { updateSelectedElements, selectedElements, arrangeElement, elements } = useStory(
-    ({ state, actions }) => ({
+  const { updateSelectedElements, selectedElements, arrangeElement, elements } =
+    useStory(({ state, actions }) => ({
       updateSelectedElements: actions.updateSelectedElements,
       selectedElements: state.selectedElements,
       arrangeElement: actions.arrangeElement,
       elements: state.currentPage?.elements || [],
-    })
-  );
-  const handleLayerUngroup = useCallback(
-    () => {
-      updateSelectedElements({
-        properties: (oldElement) => ({
-          ...oldElement,
-          groupId: null,
-        }),
-      })
+    }));
+  const handleLayerUngroup = useCallback(() => {
+    updateSelectedElements({
+      properties: (oldElement) => ({
+        ...oldElement,
+        groupId: null,
+      }),
+    });
 
-      const oldElement = selectedElements[0];
-      let count = 0;
-      let currentPosition = 0;
-      let counter = 0;
+    const oldElement = selectedElements[0];
+    let count = 0;
+    let currentPosition = 0;
+    let counter = 0;
 
-      for (const [key, value] of Object.entries(elements)) {
-
-        if (elements[key].id === oldElement.id) {
-          currentPosition = counter;
-        }
-
-        if (elements[key].groupId === oldElement.groupId
-          && elements[key].id != oldElement.id
-          && currentPosition === 0) {
-          count++;
-        }
-
-        if (currentPosition === 0) {
-          counter++;
-        }
+    for (const [key] of Object.entries(elements)) {
+      if (elements[key].id === oldElement.id) {
+        currentPosition = counter;
       }
 
-      arrangeElement({
-        elementId: selectedElements[0].id,
-        position: currentPosition + count,
-      });
+      if (
+        elements[key].groupId === oldElement.groupId &&
+        elements[key].id != oldElement.id &&
+        currentPosition === 0
+      ) {
+        count++;
+      }
 
+      if (currentPosition === 0) {
+        counter++;
+      }
     }
-    ,
-    [updateSelectedElements, arrangeElement]
-  );
+
+    arrangeElement({
+      elementId: selectedElements[0].id,
+      position: currentPosition + count,
+    });
+  }, [updateSelectedElements, arrangeElement, elements, selectedElements]);
 
   const isLayerGroupingEnabled = useFeature('layerGrouping');
   const isLayerInGroup = selectedElements.some((el) => el.groupId);
