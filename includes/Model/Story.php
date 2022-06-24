@@ -204,7 +204,7 @@ class Story {
 		$poster = get_post_meta( $post->ID, Story_Post_Type::POSTER_META_KEY, true );
 		if ( $poster ) {
 			$this->poster_portrait      = $poster['url'];
-			$this->poster_portrait_size = [ $poster['width'], $poster['height'] ];
+			$this->poster_portrait_size = [ (int) $poster['width'], (int) $poster['height'] ];
 		}
 
 		/**
