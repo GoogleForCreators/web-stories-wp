@@ -17,7 +17,6 @@
  * External dependencies
  */
 import { useCallback, useMemo, useState } from '@googleforcreators/react';
-import { __, sprintf } from '@googleforcreators/i18n';
 import { getExtensionsFromMimeType } from '@googleforcreators/media';
 import { v4 as uuidv4 } from 'uuid';
 /**
