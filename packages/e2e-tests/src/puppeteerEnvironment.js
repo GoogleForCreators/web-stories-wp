@@ -29,7 +29,7 @@ class PuppeteerEnvironment extends OriginalEnvironment {
     await super.setup();
 
     try {
-      await mkdir(ARTIFACTS_PATH);
+      await mkdir(ARTIFACTS_PATH, { recursive: true });
     } catch (err) {
       if (err.code !== 'EEXIST') {
         throw err;
