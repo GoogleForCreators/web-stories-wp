@@ -21,6 +21,7 @@ import styled from 'styled-components';
 import { useMemo } from '@googleforcreators/react';
 import { getExtensionsFromMimeType } from '@googleforcreators/media';
 import PropTypes from 'prop-types';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -36,6 +37,7 @@ const StyledMedia = styled(Media)`
 `;
 
 function LinkIcon({ handleChange, icon, isLoading = false, ...rest }) {
+  const enablePosterHotlinking = useFeature('posterHotlinking');
   const {
     allowedMimeTypes: { image: allowedImageMimeTypes },
     capabilities: { hasUploadMediaAction },
@@ -66,7 +68,18 @@ function LinkIcon({ handleChange, icon, isLoading = false, ...rest }) {
     return message;
   }, [allowedImageFileTypes]);
 
-  const options = hasUploadMediaAction ? ['edit', 'remove'] : ['remove'];
+  const menuOptions = [];
+
+  if (hasUploadMediaAction) {
+    const uploadOption = enablePosterHotlinking ? 'upload' : 'edit';
+    menuOptions.push(uploadOption);
+  }
+  if (enablePosterHotlinking) {
+    menuOptions.push('hotlink');
+  }
+  if (icon) {
+    menuOptions.push('remove');
+  }
 
   return (
     <StyledMedia
@@ -80,11 +93,18 @@ function LinkIcon({ handleChange, icon, isLoading = false, ...rest }) {
       title={__('Select as link icon', 'web-stories')}
       ariaLabel={__('Edit link icon', 'web-stories')}
       buttonInsertText={__('Select as link icon', 'web-stories')}
+      hotlinkTitle={__('Use external image as link icon', 'web-stories')}
+      hotlinkInsertText={__('Use image as link icon', 'web-stories')}
+      hotlinkInsertingText={__('Using image as link icon', 'web-stories')}
       type={allowedImageMimeTypes}
       isLoading={isLoading}
       variant={MEDIA_VARIANTS.CIRCLE}
-      canUpload={(icon && !hasUploadMediaAction) || hasUploadMediaAction}
-      menuOptions={icon ? options : []}
+      canUpload={
+        (icon && !hasUploadMediaAction) ||
+        hasUploadMediaAction ||
+        enablePosterHotlinking
+      }
+      menuOptions={menuOptions}
       {...rest}
     />
   );
