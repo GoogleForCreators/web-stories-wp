@@ -247,7 +247,7 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 			$request->set_param( 'featured_media', $thumbnail_id );
 		}
 
-		$meta = $this->get_register_meta( $original_post );
+		$meta = $this->get_registered_meta( $original_post );
 		if ( $meta ) {
 			$request->set_param( 'meta', $meta );
 		}
@@ -263,7 +263,7 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	 * @param WP_Post $original_post Post Object.
 	 * @return array<string, mixed> $meta
 	 */
-	protected function get_register_meta( WP_Post $original_post ): array {
+	protected function get_registered_meta( WP_Post $original_post ): array {
 		/*
 		 *
 		 * @since 1.22.0
