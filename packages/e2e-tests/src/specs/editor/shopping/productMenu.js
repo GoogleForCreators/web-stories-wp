@@ -18,7 +18,6 @@
  */
 import {
   createNewStory,
-  withExperimentalFeatures,
   minWPVersionRequired,
   withPlugin,
   insertProduct,
@@ -28,7 +27,6 @@ import {
 describe('Shopping product', () => {
   minWPVersionRequired('5.8');
   describe('Product menu', () => {
-    withExperimentalFeatures(['shoppingIntegration']);
     withPlugin('woocommerce');
     beforeAll(async () => {
       await setShoppingProvider('WooCommerce');

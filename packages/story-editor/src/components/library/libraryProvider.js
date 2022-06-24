@@ -25,7 +25,6 @@ import {
   useState,
   useCallback,
 } from '@googleforcreators/react';
-import { useFeature } from 'flagged';
 import { getTimeTracker, trackEvent } from '@googleforcreators/tracking';
 import { loadTextSets } from '@googleforcreators/text-sets';
 import { uniqueEntriesByKey } from '@googleforcreators/design-system';
@@ -64,10 +63,7 @@ function LibraryProvider({ children }) {
     ),
   }));
 
-  const isShoppingIntegrationEnabled = useFeature('shoppingIntegration');
-  const isShoppingEnabled =
-    ('none' !== shoppingProvider && isShoppingIntegrationEnabled) ||
-    hasProducts;
+  const isShoppingEnabled = 'none' !== shoppingProvider || hasProducts;
 
   const supportsCustomTemplates = Boolean(getCustomPageTemplates);
   const showPageTemplates = canViewDefaultTemplates || supportsCustomTemplates;

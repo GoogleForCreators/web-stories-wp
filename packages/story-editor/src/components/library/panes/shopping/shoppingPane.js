@@ -16,7 +16,6 @@
 /**
  * External dependencies
  */
-import { useFeature } from 'flagged';
 import styled from 'styled-components';
 import {
   useCallback,
@@ -66,7 +65,6 @@ const loadingSpinnerProps = { animationSize: 25, circleSize: 3 };
 function ShoppingPane(props) {
   const { showSnackbar } = useSnackbar();
   const { shoppingProvider } = useConfig();
-  const isShoppingIntegrationEnabled = useFeature('shoppingIntegration');
   const speak = useLiveRegion('assertive');
   const {
     actions: { getProducts },
@@ -162,23 +160,16 @@ function ShoppingPane(props) {
     [debouncedProductsQuery, order, orderby, searchTerm]
   );
 
-  const isShoppingEnabled =
-    'none' !== shoppingProvider && isShoppingIntegrationEnabled;
-
   useEffect(() => {
-    if (isShoppingEnabled) {
-      searchProducts(searchTerm, page, orderby, order);
-    }
+    searchProducts(searchTerm, page, orderby, order);
     // eslint-disable-next-line react-hooks/exhaustive-deps -- Only run once on mount.
-  }, [isShoppingEnabled]);
+  }, []);
 
   useEffect(() => {
-    if (!isShoppingEnabled) {
-      setProducts(currentPageProducts?.map(({ product }) => product));
-      setIsLoading(false);
-      setLoaded(true);
-    }
-  }, [currentPageProducts, isShoppingEnabled]);
+    setProducts(currentPageProducts?.map(({ product }) => product));
+    setIsLoading(false);
+    setLoaded(true);
+  }, [currentPageProducts]);
 
   const handleFocus = () => setIsMenuFocused(false);
 
@@ -276,23 +267,21 @@ function ShoppingPane(props) {
             )}
           </HelperText>
         </Row>
-        {isShoppingEnabled && (
-          <Row>
-            <SearchInput
-              aria-label={__('Product search', 'web-stories')}
-              inputValue={searchTerm}
-              onChange={onSearch}
-              placeholder={__('Search', 'web-stories')}
-              onKeyDown={handleInputKeyPress}
-              onFocus={handleFocus}
-              isOpen
-              ariaClearLabel={__('Clear product search', 'web-stories')}
-              clearId="clear-product-search"
-              handleClearInput={handleClearInput}
-            />
-            <ProductSort onChange={onSortBy} value={`${orderby}-${order}`} />
-          </Row>
-        )}
+        <Row>
+          <SearchInput
+            aria-label={__('Product search', 'web-stories')}
+            inputValue={searchTerm}
+            onChange={onSearch}
+            placeholder={__('Search', 'web-stories')}
+            onKeyDown={handleInputKeyPress}
+            onFocus={handleFocus}
+            isOpen
+            ariaClearLabel={__('Clear product search', 'web-stories')}
+            clearId="clear-product-search"
+            handleClearInput={handleClearInput}
+          />
+          <ProductSort onChange={onSortBy} value={`${orderby}-${order}`} />
+        </Row>
         {!loaded && isLoading && (
           <LoadingContainer>
             <LoadingSpinner {...loadingSpinnerProps} />

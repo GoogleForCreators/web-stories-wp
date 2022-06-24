@@ -109,7 +109,7 @@ function OutputPage({
     .map(({ product }) => product)
     .filter(Boolean);
 
-  const hasProducts = products.length > 0 && flags?.shoppingIntegration;
+  const hasProducts = products.length > 0;
   const hasPageAttachment = pageAttachment?.url && !hasProducts;
 
   const videoCaptions = elements
