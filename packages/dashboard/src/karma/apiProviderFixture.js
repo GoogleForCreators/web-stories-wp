@@ -149,13 +149,13 @@ function fetchStories(
     searchTerm = '',
     sortOption = STORY_SORT_OPTIONS.LAST_MODIFIED,
     sortDirection,
-    author,
-    category,
+    filters,
   },
   currentState
 ) {
   const storiesState = currentState ? { ...currentState } : getStoriesState();
   const statuses = status.split(',');
+  const { author, web_story_category } = filters;
 
   storiesState.storiesOrderById = Object.values(storiesState.stories)
     .filter(
@@ -167,7 +167,7 @@ function fetchStories(
     .filter(
       (story) =>
         typeof category !== 'number' ||
-        Boolean(story.categories.find((c) => c.id === category))
+        Boolean(story.categories.find((c) => c.id === web_story_category))
     )
     .sort((a, b) => {
       let value;
