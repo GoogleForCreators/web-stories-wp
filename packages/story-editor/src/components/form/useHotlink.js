@@ -25,15 +25,11 @@ import { v4 as uuidv4 } from 'uuid';
  */
 import getResourceFromUrl from '../../app/media/utils/getResourceFromUrl';
 
-function useHotlink({ onChange, cropParams, type }) {
+function useHotlink({ onChange, type }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [defaultErrorMsg, setDefaultErrorMsg] = useState(null);
 
   const openHotlink = () => setIsOpen(true);
-  const onCloseHotlink = () => {
-    setIsOpen(false);
-    setDefaultErrorMsg(null);
-  };
+  const onCloseHotlink = () => setIsOpen(false);
   const allowedFileTypes = useMemo(
     () =>
       Array.isArray(type)
@@ -55,42 +51,11 @@ function useHotlink({ onChange, cropParams, type }) {
       };
 
       const resource = await getResourceFromUrl(resourceLike);
-
-      if (cropParams?.height && cropParams?.height !== resource?.height) {
-        setDefaultErrorMsg(
-          sprintf(
-            /* translators: 1: supplied height. 2: desired height */
-            __(
-              'Invalid image height supplied %1$d when %2$d is required.',
-              'web-stories'
-            ),
-            resource.height,
-            cropParams.height
-          )
-        );
-        return;
-      }
-
-      if (cropParams?.width && cropParams?.width !== resource?.width) {
-        setDefaultErrorMsg(
-          sprintf(
-            /* translators: 1: supplied width. 2: desired width */
-            __(
-              'Invalid image width supplied %1$d when %2$d is required.',
-              'web-stories'
-            ),
-            resource.width,
-            cropParams?.width
-          )
-        );
-        return;
-      }
-
       onChange(resource);
 
       setIsOpen(false);
     },
-    [cropParams, onChange]
+    [onChange]
   );
 
   return {
@@ -102,7 +67,6 @@ function useHotlink({ onChange, cropParams, type }) {
     state: {
       allowedFileTypes,
       isOpen,
-      defaultErrorMsg,
     },
   };
 }

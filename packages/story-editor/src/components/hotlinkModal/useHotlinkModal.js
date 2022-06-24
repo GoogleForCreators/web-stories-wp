@@ -19,11 +19,12 @@
  */
 import { useCallback, useState } from '@googleforcreators/react';
 import { withProtocol } from '@googleforcreators/url';
-import { __ } from '@googleforcreators/i18n';
+import { __, sprintf } from '@googleforcreators/i18n';
 
 /**
  * Internal dependencies
  */
+import { getImageDimensions } from '@googleforcreators/media';
 import useCORSProxy from '../../utils/useCORSProxy';
 import useAPI from '../../app/api/useAPI';
 import {
@@ -39,6 +40,7 @@ function useHotlinkModal({
   onError,
   allowedFileTypes,
   canUseProxy,
+  requiredImgDimensions = {},
 }) {
   const [isInserting, setIsInserting] = useState(false);
   const [link, setLink] = useState('');
@@ -48,7 +50,7 @@ function useHotlinkModal({
     actions: { getHotlinkInfo },
   } = useAPI();
 
-  const { checkResourceAccess } = useCORSProxy();
+  const { checkResourceAccess, getProxiedUrl } = useCORSProxy();
 
   const isDisabled = errorMsg || !link || isInserting;
   const description = getHotlinkDescription(allowedFileTypes);
@@ -107,6 +109,35 @@ function useHotlinkModal({
         return;
       }
 
+      if (requiredImgDimensions?.height && requiredImgDimensions?.width) {
+        const proxiedUrl = needsProxy
+          ? getProxiedUrl({ needsProxy }, link)
+          : link;
+
+        const dimensions = await getImageDimensions(proxiedUrl);
+        if (
+          (requiredImgDimensions?.height &&
+            requiredImgDimensions?.height !== dimensions.height) ||
+          (requiredImgDimensions?.width &&
+            requiredImgDimensions?.width !== dimensions.width)
+        ) {
+          setErrorMsg(
+            sprintf(
+              /* translators: 1: supplied width. 2: supplied height. 3: desired width. 4: desired height */
+              __(
+                'Invalid image height supplied %1$d x %2$d when %3$d x %4$d is required.',
+                'web-stories'
+              ),
+              dimensions.width,
+              dimensions.height,
+              requiredImgDimensions.width,
+              requiredImgDimensions.height
+            )
+          );
+          return;
+        }
+      }
+
       await onSelect({ link, hotlinkInfo, needsProxy });
       setLink('');
       setErrorMsg(null);
@@ -124,7 +155,9 @@ function useHotlinkModal({
     allowedFileTypes,
     checkResourceAccess,
     canUseProxy,
+    requiredImgDimensions,
     onSelect,
+    getProxiedUrl,
     onError,
     description,
   ]);

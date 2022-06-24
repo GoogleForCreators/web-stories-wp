@@ -108,8 +108,8 @@ function MediaInput(
   const { MediaUpload } = useConfig();
   const {
     actions: { onSelect, openHotlink, onCloseHotlink },
-    state: { allowedFileTypes, isOpen, defaultErrorMsg },
-  } = useHotlink({ onChange, cropParams, type });
+    state: { allowedFileTypes, isOpen },
+  } = useHotlink({ onChange, type });
 
   const renderMediaIcon = useCallback(
     (open) => {
@@ -155,8 +155,8 @@ function MediaInput(
         insertText={hotlinkInsertText}
         insertingText={hotlinkInsertingText}
         allowedFileTypes={allowedFileTypes}
-        defaultErrorMsg={defaultErrorMsg}
         canUseProxy={false}
+        requiredImgDimensions={cropParams}
       />
       <MediaUpload
         title={title}
