@@ -375,8 +375,8 @@ class Discovery extends Service_Base implements HasRequirements {
 			$poster_sizes = $story->get_poster_portrait_size();
 			if ( $poster_url && $poster_sizes ) {
 				$metadata['og:image']        = esc_url( $poster_url );
-				$metadata['og:image:width']  = (int) $poster_sizes[0];
-				$metadata['og:image:height'] = (int) $poster_sizes[1];
+				$metadata['og:image:width']  = $poster_sizes[0];
+				$metadata['og:image:height'] = $poster_sizes[1];
 			}
 		}
 

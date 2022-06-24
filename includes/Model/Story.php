@@ -185,7 +185,7 @@ class Story {
 			if ( $poster_src ) {
 				[ $poster_url, $width, $height ] = $poster_src;
 				$this->poster_portrait           = $poster_url;
-				$this->poster_portrait_size      = [ $width, $height ];
+				$this->poster_portrait_size      = [ (int) $width, (int) $height ];
 
 				$size_array = [ (int) $width, (int) $height ];
 				$image_meta = wp_get_attachment_metadata( $thumbnail_id );
