@@ -325,6 +325,19 @@ class Stories_Controller extends Stories_Base_Controller {
 	}
 
 	/**
+	 * Filter the query to cache the value to a class property.
+	 *
+	 * @param array<string, mixed> $args    WP_Query arguments.
+	 * @return array<string, mixed> Current args.
+	 *
+	 * @phpstan-param QueryArgs $args
+	 */
+	public function filter_query( $args ): array {
+		$this->args = $args;
+
+		return $args;
+	}
+	/**
 	 * Retrieves a collection of web stories.
 	 *
 	 * @since 1.0.0
@@ -333,11 +346,13 @@ class Stories_Controller extends Stories_Base_Controller {
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
 	public function get_items( $request ) {
+		add_filter( "rest_{$this->post_type}_query", [ $this, 'filter_query' ], 100, 1 );
 		add_filter( 'posts_clauses', [ $this, 'filter_posts_clauses' ], 10, 2 );
 		add_filter( 'posts_results', [ $this, 'prime_post_caches' ] );
 		$response = parent::get_items( $request );
 		remove_filter( 'posts_results', [ $this, 'prime_post_caches' ] );
 		remove_filter( 'posts_clauses', [ $this, 'filter_posts_clauses' ], 10 );
+		remove_filter( "rest_{$this->post_type}_query", [ $this, 'filter_query' ], 100 );
 
 		if ( is_wp_error( $response ) ) {
 			return $response;
