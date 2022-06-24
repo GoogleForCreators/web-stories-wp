@@ -204,6 +204,14 @@ jobs:
         env:
           COMPOSE_INTERACTIVE_NO_CLI: true
 
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: failures-artifacts
+          path: build/e2e-artifacts
+          if-no-files-found: ignore
+
   percy:
     name: Percy
     runs-on: ubuntu-latest
