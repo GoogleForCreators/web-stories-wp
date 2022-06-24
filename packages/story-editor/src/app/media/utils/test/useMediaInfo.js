@@ -93,4 +93,34 @@ describe('useMediaInfo', () => {
       });
     });
   });
+
+  describe('isConsideredOptimized', () => {
+    it('should reject false-y fileInfo', () => {
+      const { result } = arrange();
+
+      const actual = result.current.isConsideredOptimized(null);
+      expect(actual).toBeFalse();
+    });
+
+    it.each`
+      fileSize     | width   | height  | mimeType             | expected
+      ${2_000_000} | ${1280} | ${720}  | ${'video/mp4'}       | ${true}
+      ${2_000_000} | ${1280} | ${720}  | ${'video/webm'}      | ${true}
+      ${9_000_000} | ${1280} | ${720}  | ${'video/mp4'}       | ${false}
+      ${9_000_000} | ${1280} | ${720}  | ${'video/webm'}      | ${false}
+      ${2_000_000} | ${9000} | ${720}  | ${'video/mp4'}       | ${false}
+      ${2_000_000} | ${9000} | ${720}  | ${'video/webm'}      | ${false}
+      ${2_000_000} | ${1280} | ${9000} | ${'video/mp4'}       | ${false}
+      ${2_000_000} | ${1280} | ${9000} | ${'video/webm'}      | ${false}
+      ${2_000_000} | ${1280} | ${720}  | ${'video/quicktime'} | ${false}
+    `(
+      'returns $expected for fileSize: $fileSize, dimensions: $widthx$height, mimeType: $mimeType',
+      ({ expected, ...fileInfo }) => {
+        const { result } = arrange();
+
+        const actual = result.current.isConsideredOptimized(fileInfo);
+        expect(actual).toStrictEqual(expected);
+      }
+    );
+  });
 });

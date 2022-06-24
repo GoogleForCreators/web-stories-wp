@@ -23,7 +23,10 @@ import { getTimeTracker, trackError } from '@googleforcreators/tracking';
  * Internal dependencies
  */
 import { useConfig } from '../../config';
-import { MEDIA_VIDEO_DIMENSIONS_THRESHOLD } from '../../../constants';
+import {
+  MEDIA_VIDEO_DIMENSIONS_THRESHOLD,
+  MEDIA_VIDEO_FILE_SIZE_THRESHOLD,
+} from '../../../constants';
 
 function loadScriptOnce(url) {
   if (document.querySelector(`script[src="${url}"]`)) {
@@ -155,7 +158,8 @@ function useMediaInfo() {
       return false;
     }
 
-    const hasSmallFileSize = fileInfo.fileSize < 5_000_000;
+    const hasSmallFileSize =
+      fileInfo.fileSize < MEDIA_VIDEO_FILE_SIZE_THRESHOLD;
     const hasSmallDimensions =
       fileInfo.width * fileInfo.height <=
       MEDIA_VIDEO_DIMENSIONS_THRESHOLD.WIDTH *
