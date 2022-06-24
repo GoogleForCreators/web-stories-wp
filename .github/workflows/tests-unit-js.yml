@@ -65,13 +65,6 @@ jobs:
         env:
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
 
-      - name: Download AMP validator JS
-        id: amp_validator
-        run: |
-          TMPDIR=${TMPDIR-/tmp}
-          (cd $TMPDIR && curl -O -f https://cdn.ampproject.org/v0/validator_wasm.js)
-          echo "::set-output name=validator_file::${TMPDIR}/validator_wasm.js"
-
       - name: Run JavaScript unit tests
         run: npm run test:js -- --runInBand --ci --cacheDirectory="$HOME/.jest-cache" --collectCoverage --shard=$SHARD
         env:
