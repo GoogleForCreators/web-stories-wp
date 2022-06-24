@@ -258,15 +258,16 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	/**
 	 * Get registered post meta.
 	 *
-	 * @since 1.22
+	 * @since 1.23.0
 	 *
 	 * @param WP_Post $original_post Post Object.
 	 * @return array<string, mixed> $meta
 	 */
 	protected function get_registered_meta( WP_Post $original_post ): array {
 		/*
+		 * Retrieves a list of registered meta keys for an object type.
 		 *
-		 * @since 1.22.0
+		 * @since 1.23.0
 		 *
 		 * @var array<string, mixed> $meta_keys
 		 */

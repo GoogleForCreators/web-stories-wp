@@ -412,7 +412,7 @@ class Story {
 	/**
 	 * Get poster portrait size.
 	 *
-	 * @since 1.22.0
+	 * @since 1.23.0
 	 *
 	 * @return array {
 	 *     Poster portrait logo size.
