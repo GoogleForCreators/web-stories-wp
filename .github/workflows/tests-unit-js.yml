@@ -65,12 +65,17 @@ jobs:
         env:
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
 
-      - name: Run JavaScript unit tests
+      - name: Download AMP validator JS
+        id: amp_validator
         run: |
-          TMPDIR=$RUNNER_TEMP
-          npm run test:js -- --runInBand --ci --cacheDirectory="$HOME/.jest-cache" --collectCoverage --shard=$SHARD
+          cd $RUNNER_TEMP && curl -O -f https://cdn.ampproject.org/v0/validator_wasm.js
+          echo "::set-output name=validator_file::${$RUNNER_TEMP}/validator_wasm.js"
+
+      - name: Run JavaScript unit tests
+        run: npm run test:js -- --runInBand --ci --cacheDirectory="$HOME/.jest-cache" --collectCoverage --shard=$SHARD
         env:
           SHARD: ${{ matrix.shard }}
+          AMP_VALIDATOR_FILE: ${{ steps.amp_validator.outputs.validator_file }}
 
       - name: Upload code coverage report
         uses: codecov/codecov-action@v3.1.0
