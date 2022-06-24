@@ -33,6 +33,7 @@ import PropTypes from 'prop-types';
  */
 import reducer from './reducer';
 import useTaxonomyFilters from './taxonomy/useTaxonomyFilters';
+import useAuthorFilter from './author/useAuthorFilter';
 import * as types from './types';
 
 export const filterContext = createContext({
@@ -46,6 +47,10 @@ export const filterContext = createContext({
  * Each filter will have its own logic associated with
  * initilization and how to query terms.
  *
+ * state.filters should be used for UI.
+ * state.filtersObject should hold the key value pairs associated with filtering query params
+ * eg {author: 44} where 'author' is whats being filtered on and '44' is the authors ID
+ * thats being filtered for.
  *
  * @param {Object} root0 props for the provider
  * @param {Node} root0.children the children to be rendered
@@ -54,11 +59,12 @@ export const filterContext = createContext({
 
 export default function FiltersProvider({ children }) {
   // each filter type will have its own logic for initilizing and querying
-  const { initializeTaxonomyFilters } = useTaxonomyFilters();
+  const initializeTaxonomyFilters = useTaxonomyFilters();
+  const initializeAuthorFilter = useAuthorFilter();
 
   const [state, dispatch] = useReducer(reducer, {
-    filtersLoading: true,
     filters: [],
+    filtersObject: {},
   });
 
   /**
@@ -88,35 +94,23 @@ export default function FiltersProvider({ children }) {
    *
    * @return {void}
    */
-  const initializeFilters = useCallback(() => {
-    const filters = initializeTaxonomyFilters();
+  const initializeFilters = useCallback(async () => {
+    const taxonomies = await initializeTaxonomyFilters();
+    const author = initializeAuthorFilter();
 
-    registerFilters(filters);
-  }, [registerFilters, initializeTaxonomyFilters]);
+    const filters = [...taxonomies, author].filter((filter) => Boolean(filter));
 
-  /**
-   * Returns a object where the keys are the filter keys
-   * and the values are the filterId
-   *
-   * @return {Object}
-   */
-  const getFiltersObject = useCallback(() => {
-    const filterObj = {};
-    for (const filter of state.filters) {
-      const { key, filterId } = filter;
-      if (filterId) {
-        filterObj[key] = filterId;
-      }
+    if (filters.length) {
+      registerFilters(filters);
     }
-    return filterObj;
-  }, [state.filters]);
+  }, [registerFilters, initializeAuthorFilter, initializeTaxonomyFilters]);
 
   const contextValue = useMemo(() => {
     return {
       state,
-      actions: { updateFilter, registerFilters, getFiltersObject },
+      actions: { updateFilter, registerFilters },
     };
-  }, [state, updateFilter, registerFilters, getFiltersObject]);
+  }, [state, updateFilter, registerFilters]);
 
   useEffect(() => {
     initializeFilters();
