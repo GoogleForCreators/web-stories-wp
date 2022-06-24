@@ -60,6 +60,15 @@ use WP_REST_Response;
  *     story_data?: SchemaEntry
  *   }
  * }
+ * @phpstan-type RegisteredMetadata array{
+ *   type: string,
+ *   description: string,
+ *   single: bool,
+ *   sanitize_callback?: callable,
+ *   auth_callback: callable,
+ *   show_in_rest: bool|array{schema: array<string, mixed>},
+ *   default?: mixed
+ * }
  */
 class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	/**
@@ -264,19 +273,17 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	 * @return array<string, mixed> $meta
 	 */
 	protected function get_registered_meta( WP_Post $original_post ): array {
-		/*
-		 * Retrieves a list of registered meta keys for an object type.
-		 *
-		 * @since 1.23.0
-		 *
-		 * @var array<string, mixed> $meta_keys
-		 */
 		$meta_keys = get_registered_meta_keys( 'post', $this->post_type );
 		$meta      = [];
+		/**
+		 * Meta key settings.
+		 *
+		 * @var array $settings
+		 * @phpstan-var RegisteredMetadata $settings
+		 */
 		foreach ( $meta_keys as $key => $settings ) {
-			/* @phpstan-ignore-next-line */
-			if ( \is_array( $settings ) && $settings['show_in_rest'] ) {
-				$meta[ $key ] = get_post_meta( $original_post->ID, $key, (bool) $settings['single'] );
+			if ( $settings['show_in_rest'] ) {
+				$meta[ $key ] = get_post_meta( $original_post->ID, $key, $settings['single'] );
 			}
 		}
 
