@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,14 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-function addBlurhashProcessing(state, { id }) {
-  if (!id || state.blurHashProcessing.includes(id)) {
-    return state;
-  }
-  return {
-    ...state,
-    blurHashProcessing: [...state.blurHashProcessing, id],
-  };
-}
+/**
+ * Internal dependencies
+ */
+import PermissionsDialog from '../permissionsDialog';
 
-export default addBlurhashProcessing;
+export default {
+  title: 'Stories Editor/Components/Media Recording/Permissions Dialog',
+  component: PermissionsDialog,
+  args: {
+    adNetwork: 'foo',
+  },
+  argTypes: {
+    adNetwork: {
+      options: [],
+      control: 'select',
+    },
+  },
+};
+
+export const _default = (args) => {
+  return <PermissionsDialog {...args} />;
+};

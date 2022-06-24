@@ -20,6 +20,23 @@
 import aspectRatiosApproximatelyMatch from './aspectRatiosApproximatelyMatch';
 
 /**
+ * Encodes a text string as a valid Uniform Resource Identifier (URI)
+ *
+ * Only encodes strings that do not look like they're already encoded,
+ * by first looking for the percentage sign character.
+ *
+ * @param {string} str A value representing an encoded URI.
+ * @return {string} Encoded URI
+ */
+function maybeEncodeURI(str) {
+  if (str.includes('%')) {
+    return str;
+  }
+
+  return encodeURI(str);
+}
+
+/**
  * Returns a valid srcSet attribute value for the given media resource.
  *
  * @param {import('@googleforcreators/media').Resource} resource The resource.
@@ -47,7 +64,8 @@ function calculateSrcSet(resource) {
       )
       .filter((s) => s && s.sourceUrl && s.width)
       .map(
-        (s) => `${encodeURI(s.sourceUrl).replaceAll(',', '%2C')} ${s.width}w`
+        (s) =>
+          `${maybeEncodeURI(s.sourceUrl).replaceAll(',', '%2C')} ${s.width}w`
       )
       .join(',')
   );

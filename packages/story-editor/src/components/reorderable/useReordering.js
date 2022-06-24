@@ -34,13 +34,17 @@ function useReordering(onPositionChange, numChildren) {
 
   const speak = useLiveRegion('assertive');
   const handleStartReordering = useCallback(
-    ({ position: currentPos, onStartReordering = () => {} }) =>
+    ({ position: currentPos, data = {}, onStartReordering = () => {} }) =>
       (evt) => {
-        // Only allow reordering with non-modified click on non-background element.
-        // Modified (shift+ or meta+) clicks are for selection.
-        if (!evt.shiftKey && !evt.metaKey) {
+        // Only allow reordering with non-modified left-click.
+        // Modified (shift, meta, alt, ctrl) clicks are for selection.
+        const isModified =
+          evt.shiftKey || evt.metaKey || evt.ctrlKey || evt.altKey;
+        // Right-clicks (button===2) are for context menu.
+        const isLeftButton = evt.button === 0;
+        if (!isModified && isLeftButton) {
           onStartReordering();
-          setCurrentPosition(currentPos);
+          setCurrentPosition({ position: currentPos, data });
           setDragTarget(evt.target);
         }
       },
@@ -62,8 +66,14 @@ function useReordering(onPositionChange, numChildren) {
       if (separator.current !== null) {
         const newPosition = separator.current;
         const position =
-          newPosition > currentPosition ? newPosition - 1 : newPosition;
-        onPositionChange(currentPosition, position);
+          newPosition.position > currentPosition.position
+            ? newPosition.position - 1
+            : newPosition.position;
+        onPositionChange(
+          currentPosition,
+          { ...separator.current, position },
+          evt
+        );
       }
       setDragTarget(null);
     };
@@ -101,7 +111,7 @@ function useReordering(onPositionChange, numChildren) {
 
   useEffect(() => {
     if (isReordering && currentSeparator) {
-      const position = numChildren - currentSeparator;
+      const position = numChildren - currentSeparator.position;
       const message = sprintf(
         /* translators: %d: new position. */
         __(

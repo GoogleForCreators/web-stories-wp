@@ -143,12 +143,7 @@ function PageAttachment({ pageAttachment = {} }) {
 
   const { hasInvalidLinkSelected } = useElementsWithLinks();
 
-  const {
-    ctaText = __('Learn more', 'web-stories'),
-    url,
-    icon,
-    theme,
-  } = pageAttachment;
+  const { ctaText, url, icon, theme } = pageAttachment;
   const bgColor = theme === OUTLINK_THEME.DARK ? DARK_COLOR : LIGHT_COLOR;
   const fgColor = theme === OUTLINK_THEME.DARK ? LIGHT_COLOR : DARK_COLOR;
   return (
@@ -169,7 +164,7 @@ function PageAttachment({ pageAttachment = {} }) {
                 />
               )}
               <TextWrapper fgColor={fgColor} $factor={dataToEditorY}>
-                {ctaText}
+                {ctaText || __('Learn more', 'web-stories')}
               </TextWrapper>
             </OutlinkChip>
             {pageAttachmentContainer && hasInvalidLinkSelected && (
@@ -200,6 +195,7 @@ PageAttachment.propTypes = {
     ctaText: PropTypes.string,
     icon: PropTypes.string,
     theme: PropTypes.string,
+    rel: PropTypes.arrayOf(PropTypes.string),
   }),
 };
 

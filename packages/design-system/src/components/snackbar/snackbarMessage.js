@@ -236,6 +236,8 @@ const SnackbarMessage = ({
       {thumbnail && (
         <ThumbnailWrapper hasAction={hasAction}>
           <Thumbnail
+            decoding="async"
+            crossOrigin="anonymous"
             src={thumbnail.src}
             alt={thumbnail.alt}
             status={thumbnail.status}

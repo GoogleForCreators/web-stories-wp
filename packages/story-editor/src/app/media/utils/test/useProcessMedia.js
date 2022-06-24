@@ -79,7 +79,7 @@ const uploadMedia = (
     type: 'gif',
   };
   if (onUploadSuccess) {
-    onUploadSuccess({ resource });
+    onUploadSuccess({ resource, id: 2 });
   }
   if (onUploadStart) {
     onUploadStart({ resource });
