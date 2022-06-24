@@ -39,7 +39,7 @@ class Product_Meta extends Service_Base implements HasMeta {
 	/**
 	 * The products meta key.
 	 */
-	public const PRODUCTS_POST_META_KEY = 'web_stories_products';
+	private const PRODUCTS_POST_META_KEY = 'web_stories_products';
 
 
 	/**
