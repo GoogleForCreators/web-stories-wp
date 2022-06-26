@@ -25,7 +25,10 @@ import { renderHook } from '@testing-library/react-hooks';
 import { ConfigProvider } from '../../../config';
 import useMediaInfo from '../useMediaInfo';
 
-jest.mock('@googleforcreators/tracking');
+jest.mock('@googleforcreators/tracking', () => ({
+  trackEvent: jest.fn(),
+  getTimeTracker: jest.fn(() => jest.fn()),
+}));
 
 function arrange() {
   const configState = {
