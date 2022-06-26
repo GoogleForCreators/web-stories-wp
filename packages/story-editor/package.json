@@ -90,15 +90,15 @@
   "devDependencies": {
     "@googleforcreators/karma-fixture": "*",
     "@googleforcreators/test-utils": "*",
-    "@testing-library/dom": "^8.13.0",
+    "@testing-library/dom": "^8.14.0",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
-    "@testing-library/user-event": "^14.2.0",
+    "@testing-library/user-event": "^14.2.1",
     "jest": "^28.1.1",
     "jest-axe": "^6.0.0",
     "jest-matcher-deep-close-to": "^3.0.2",
     "mockdate": "^3.0.5",
-    "react": "^18.2.0",
+    "react": "^18.0.0",
     "react-moveable": "^0.30.3"
   }
 }

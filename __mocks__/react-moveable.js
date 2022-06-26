@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+// eslint-disable-next-line import/no-extraneous-dependencies -- Available via react-moveable itself.
 import { forwardRef } from 'react';
 
 // eslint-disable-next-line no-unused-vars

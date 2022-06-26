@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+// eslint-disable-next-line import/no-extraneous-dependencies -- Available via storybook itself.
 import { useEffect } from 'react';
 
 /**

@@ -36,6 +36,6 @@
     "stylis-plugin-rtl": "^1.0.0"
   },
   "devDependencies": {
-    "@testing-library/react": "^12.1.5"
+    "@testing-library/react": "^13.3.0"
   }
 }

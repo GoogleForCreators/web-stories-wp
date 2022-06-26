@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { renderToStaticMarkup } from '@googleforcreators/react';
+import { renderToStaticMarkup } from 'react-dom/server';
 
 /**
  * Internal dependencies

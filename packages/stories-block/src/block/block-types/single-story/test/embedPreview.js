@@ -17,7 +17,13 @@
 /**
  * External dependencies
  */
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import {
+  render,
+  screen,
+  fireEvent,
+  waitFor,
+  act,
+} from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -71,7 +77,9 @@ describe('EmbedPreview', () => {
   it('should remove overlay on player focus', async () => {
     render(<EmbedPreview url={url} title={title} isSelected />);
     const player = screen.getByTestId('amp-story-player');
-    player.focus();
+    await act(() => {
+      player.focus();
+    });
     await waitFor(() =>
       expect(screen.getByTestId('amp-story-player')).toHaveFocus()
     );

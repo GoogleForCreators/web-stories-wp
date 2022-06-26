@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+// eslint-disable-next-line import/no-extraneous-dependencies -- Available via @wordpress/element itself.
 import {
   Children,
   cloneElement,
@@ -43,6 +44,7 @@ import {
   Suspense,
   Context,
 } from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies -- Available via @wordpress/element itself.
 import { render, createPortal } from 'react-dom';
 
 const Platform = {

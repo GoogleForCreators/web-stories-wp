@@ -38,8 +38,9 @@ module.exports = (request, options) => {
     'react-colorful',
     // Used by /packages/react.
     'use-debounce',
-  ]
-  for ( const p of packages ) {
+  ];
+
+  for (const p of packages) {
     if (p === request) {
       return options.defaultResolver(request, {
         ...options,

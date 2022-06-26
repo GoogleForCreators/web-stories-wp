@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+// eslint-disable-next-line import/no-extraneous-dependencies -- Available via storybook itself.
 import { useRef } from 'react';
 import { toId } from '@storybook/csf';
 import { Dashboard, InterfaceSkeleton } from '@googleforcreators/dashboard';
