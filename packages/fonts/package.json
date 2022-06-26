@@ -2,7 +2,7 @@
   "name": "@googleforcreators/fonts",
   "description": "A list of curated font names as well as all current Google Fonts including their font metrics.",
   "private": false,
-  "version": "0.1.202205021257",
+  "version": "0.1.202206201534",
   "author": {
     "name": "Google",
     "url": "https://creators.google/"
@@ -52,7 +52,7 @@
     "access": "public"
   },
   "devDependencies": {
-    "got": "^11.8.3",
+    "got": "^11.8.5",
     "opentype.js": "^1.3.4"
   },
   "scripts": {

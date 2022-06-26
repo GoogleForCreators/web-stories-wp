@@ -1106,7 +1106,7 @@ class APIProviderFixture {
         return asyncResponse(fonts);
       }, []);
 
-      const getProducts = useCallback((search, orderby, order) => {
+      const getProducts = useCallback((search, page, orderby, order) => {
         let products = getProductsResponse;
         if (search) {
           products = products.filter(({ productTitle }) =>
@@ -1119,7 +1119,7 @@ class APIProviderFixture {
           products = sortStrings(products, 'productTitle', order);
         }
 
-        return products;
+        return { products, hasNextPage: false };
       }, []);
 
       const state = {

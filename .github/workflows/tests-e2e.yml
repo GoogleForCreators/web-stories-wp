@@ -130,7 +130,7 @@ jobs:
       matrix:
         # TODO: add back Firefox once support is more mature.
         browser: ['chrome']
-        wp: ['5.5']
+        wp: ['5.7']
         snapshots: [false]
         experimental: [false]
         # We want to split up the tests into 2 parts running in parallel.
@@ -206,6 +206,7 @@ jobs:
           WP_VERSION: ${{ matrix.wp }}
           PERCY_BROWSER_EXECUTABLE: ${{ steps.chromium_path.outputs.chromium_path }}
           PERCY_PARALLEL_NONCE: ${{ needs.nonce.outputs.result }}
+          SHARD: ${{ matrix.shard }}
         if: ( matrix.snapshots ) && ( github.event.pull_request.draft == false )
 
       - name: Run E2E tests
@@ -221,6 +222,14 @@ jobs:
         if: always()
         env:
           COMPOSE_INTERACTIVE_NO_CLI: true
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: failures-artifacts
+          path: build/e2e-artifacts
+          if-no-files-found: ignore
 
   percy:
     name: Percy

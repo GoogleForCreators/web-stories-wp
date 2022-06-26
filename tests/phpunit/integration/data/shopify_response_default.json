@@ -98,7 +98,11 @@
             }
           }
         }
-      ]
+      ],
+      "pageInfo": {
+        "hasNextPage": true,
+        "endCursor": "eyJsYXN0X2lkIjo5ODk1Mjc5MDQzLCJsYXN0X3ZhbHVlIjoiMjAxNy0wNC0xMCAxOTowMjoyNC4wMDAwMDAifQ=="
+      }
     }
   }
 }

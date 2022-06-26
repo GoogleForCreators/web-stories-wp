@@ -26,6 +26,7 @@ To add a new template to the editor:
 
 1. Don't upload SVGs as images. SVGs should only be added as stickers in step (1).
 2. Avoid "`-<number>`" suffixes on images and videos e.g. `some_image-1.png`. See [details below](#filenames-for-images-and-videos).
+3. Don't add animations to the first page.  First page animations are not supported by AMP. [More details](https://wp.stories.google/docs/how-to/animations/#First-Page)
 
 ## Detailed steps
 

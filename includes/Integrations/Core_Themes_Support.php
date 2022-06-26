@@ -40,7 +40,7 @@ class Core_Themes_Support extends Service_Base {
 	/**
 	 * Default array of core themes to add support to.
 	 *
-	 * @var array
+	 * @var string[]
 	 */
 	protected static $supported_themes = [
 		'twentytwentyone',
@@ -138,7 +138,7 @@ class Core_Themes_Support extends Service_Base {
 		/**
 		 * Customizer options.
 		 *
-		 * @var array $options
+		 * @var array<string, mixed> $options
 		 */
 		$options = get_option( Customizer::STORY_OPTION, [] );
 

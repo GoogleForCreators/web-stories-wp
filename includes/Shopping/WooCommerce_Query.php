@@ -61,7 +61,7 @@ class WooCommerce_Query implements Product_Query {
 	 * @param int    $per_page    Number of products to be fetched.
 	 * @param string $orderby     Sort collection by product attribute.
 	 * @param string $order       Order sort attribute ascending or descending.
-	 * @return array|WP_Error
+	 * @return array{products: array<Product>, has_next_page: bool}|WP_Error
 	 */
 	public function get_search( string $search_term, int $page = 1, int $per_page = 100, string $orderby = 'date', string $order = 'desc' ) {
 		$status = $this->woocommerce->get_plugin_status();
@@ -156,7 +156,7 @@ class WooCommerce_Query implements Product_Query {
 	 * @since 1.21.0
 	 *
 	 * @param \WC_Product $product Product.
-	 * @return array
+	 * @return int[]
 	 */
 	protected function get_product_image_ids( $product ): array {
 		$product_image_ids = $product->get_gallery_image_ids();
@@ -171,7 +171,7 @@ class WooCommerce_Query implements Product_Query {
 	 * @since 1.21.0
 	 *
 	 * @param int $image_id Attachment ID.
-	 * @return array
+	 * @return array{url?: string, alt?: string}
 	 */
 	protected function get_product_image( int $image_id ): array {
 		$url = wp_get_attachment_image_url( $image_id, 'large' );
@@ -180,6 +180,11 @@ class WooCommerce_Query implements Product_Query {
 			return [];
 		}
 
+		/**
+		 * Alt text.
+		 *
+		 * @var string $alt
+		 */
 		$alt = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
 
 		if ( empty( $alt ) ) {

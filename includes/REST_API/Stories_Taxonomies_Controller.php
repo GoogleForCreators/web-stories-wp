@@ -111,10 +111,12 @@ class Stories_Taxonomies_Controller extends WP_REST_Taxonomies_Controller implem
 			$taxonomies = get_taxonomies( [], 'objects' );
 		}
 
-		if ( isset( $registered['hierarchical'], $request['hierarchical'] ) ) {
-			$taxonomies = wp_filter_object_list( $taxonomies, [ 'hierarchical' => (bool) $request['hierarchical'] ] );
+		$filters = [ 'hierarchical', 'show_ui' ];
+		foreach ( $filters as $filter ) {
+			if ( isset( $registered[ $filter ], $request[ $filter ] ) ) {
+				$taxonomies = wp_filter_object_list( $taxonomies, [ $filter => (bool) $request[ $filter ] ] );
+			}
 		}
-
 		$data = [];
 
 		/**
@@ -147,7 +149,7 @@ class Stories_Taxonomies_Controller extends WP_REST_Taxonomies_Controller implem
 	 *
 	 * @since 1.22.0
 	 *
-	 * @return array Collection parameters.
+	 * @return array<string, array<string, mixed>> Collection parameters.
 	 */
 	public function get_collection_params(): array {
 		$query_params = parent::get_collection_params();
@@ -156,6 +158,11 @@ class Stories_Taxonomies_Controller extends WP_REST_Taxonomies_Controller implem
 
 		$query_params['hierarchical'] = [
 			'description' => __( 'Whether to show only hierarchical taxonomies.', 'web-stories' ),
+			'type'        => 'boolean',
+		];
+
+		$query_params['show_ui'] = [
+			'description' => __( 'Whether to show only show taxonomies that allow a UI in the admin.', 'web-stories' ),
 			'type'        => 'boolean',
 		];
 

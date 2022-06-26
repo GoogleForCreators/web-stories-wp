@@ -94,7 +94,7 @@ function CarouselProvider({ availableSpace, children }) {
   );
 
   const rearrangePages = useCallback(
-    (oldPos, newPos) => {
+    ({ position: oldPos }, { position: newPos }) => {
       const pageId = pageIds[oldPos];
       arrangePage({ pageId, position: newPos });
       setCurrentPage({ pageId });

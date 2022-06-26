@@ -75,6 +75,10 @@ function reducer(state, { type, payload }) {
       return reducers.arrangeElement(state, payload);
     }
 
+    case types.ARRANGE_GROUP: {
+      return reducers.arrangeGroup(state, payload);
+    }
+
     case types.SET_SELECTED_ELEMENTS: {
       return reducers.setSelectedElements(state, payload);
     }
@@ -121,6 +125,22 @@ function reducer(state, { type, payload }) {
 
     case types.UPDATE_ELEMENTS_BY_FONT_FAMILY: {
       return reducers.updateElementsByFontFamily(state, payload);
+    }
+
+    case types.ADD_GROUP: {
+      return reducers.addGroup(state, payload);
+    }
+
+    case types.UPDATE_GROUP: {
+      return reducers.updateGroup(state, payload);
+    }
+
+    case types.DELETE_GROUP: {
+      return reducers.deleteGroup(state, payload);
+    }
+
+    case types.DUPLICATE_GROUP: {
+      return reducers.duplicateGroup(state, payload);
     }
 
     default:

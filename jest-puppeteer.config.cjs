@@ -38,4 +38,5 @@ module.exports = {
     args: 'chrome' === PUPPETEER_PRODUCT ? ARGS_CHROME : ARGS_FIREFOX,
   },
   extraPrefsFirefox: {},
+  exitOnPageError: false,
 };
