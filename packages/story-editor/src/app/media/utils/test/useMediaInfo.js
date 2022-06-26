@@ -25,6 +25,8 @@ import { renderHook } from '@testing-library/react-hooks';
 import { ConfigProvider } from '../../../config';
 import useMediaInfo from '../useMediaInfo';
 
+jest.mock('@googleforcreators/tracking');
+
 function arrange() {
   const configState = {
     mediainfoUrl: 'https://example.com',

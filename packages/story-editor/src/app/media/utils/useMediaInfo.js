@@ -17,7 +17,11 @@
  * External dependencies
  */
 import { useCallback, useMemo } from '@googleforcreators/react';
-import { getTimeTracker, trackError } from '@googleforcreators/tracking';
+import {
+  getTimeTracker,
+  trackError,
+  trackEvent,
+} from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies
@@ -166,11 +170,21 @@ function useMediaInfo() {
         MEDIA_VIDEO_DIMENSIONS_THRESHOLD.HEIGHT;
 
     // Video is small enough and has an allowed mime type, upload straight away.
-    return (
+    const result =
       hasSmallFileSize &&
       hasSmallDimensions &&
-      ['video/webm', 'video/mp4'].includes(fileInfo.mimeType)
-    );
+      ['video/webm', 'video/mp4'].includes(fileInfo.mimeType);
+
+    trackEvent('mediainfo_is_optimized', {
+      result,
+      file_size: fileInfo.fileSize,
+      file_type: fileInfo.mimeType,
+      width: fileInfo.width,
+      height: fileInfo.height,
+      duration: fileInfo.duration,
+    });
+
+    return result;
   }, []);
 
   return useMemo(
