@@ -440,7 +440,11 @@ function useMediaUploadQueue() {
           item.additionalData.isMuted = fileInfo.isMuted;
 
           if (isConsideredOptimized(fileInfo)) {
-            item.additionalData.mediaSource = 'video-optimization';
+            // Do not override pre-existing mediaSource if provided,
+            // for example by media recording.
+            if (!item.additionalData.mediaSource) {
+              item.additionalData.mediaSource = 'video-optimization';
+            }
 
             uploadItem(item);
 
