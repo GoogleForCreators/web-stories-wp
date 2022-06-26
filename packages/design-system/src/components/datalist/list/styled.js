@@ -44,6 +44,7 @@ export const List = styled.div`
 
 export const Group = styled.ul`
   margin: 0;
+  padding: 0;
 `;
 
 export const GroupLabel = styled.li`
