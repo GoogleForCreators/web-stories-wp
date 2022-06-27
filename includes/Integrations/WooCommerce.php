@@ -29,8 +29,10 @@ namespace Google\Web_Stories\Integrations;
 /**
  * Class WooCommerce.
  */
-class
-WooCommerce {
+class WooCommerce {
+	/**
+	 * Main plugin file.
+	 */
 	protected const PLUGIN = 'woocommerce/woocommerce.php';
 
 	/**

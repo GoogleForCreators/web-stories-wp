@@ -354,7 +354,7 @@ class Experiments extends Service_Base implements HasRequirements {
 			[
 				'name'        => 'posterHotlinking',
 				'label'       => __( 'Poster hotlinking', 'web-stories' ),
-				'description' => __( 'Enable hotlinking poster', 'web-stories' ),
+				'description' => __( 'Enable story poster hotlinking', 'web-stories' ),
 				'group'       => 'editor',
 			],
 			/**

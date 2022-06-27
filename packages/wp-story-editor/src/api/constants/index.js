@@ -24,7 +24,7 @@ export const STORY_FIELDS = [
   'modified',
   'excerpt',
   'link',
-  'meta',
+  'meta.web_stories_poster',
   'story_data',
   'preview_link',
   'edit_link',

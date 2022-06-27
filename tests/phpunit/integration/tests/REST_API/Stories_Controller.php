@@ -684,6 +684,7 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 
 	/**
 	 * @covers ::create_item
+	 * @covers ::get_registered_meta
 	 */
 	public function test_create_item_duplicate_id(): void {
 		$this->controller->register_routes();
@@ -746,6 +747,7 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 
 	/**
 	 * @covers ::create_item
+	 * @covers ::get_registered_meta
 	 */
 	public function test_create_item_duplicate_id_invalid_meta(): void {
 		$this->controller->register_routes();

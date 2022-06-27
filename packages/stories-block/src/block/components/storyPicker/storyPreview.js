@@ -71,10 +71,9 @@ function StoryPreview({
     }
   }, [story.status, displayDate]);
 
-  const poster = story.meta['web_stories_poster'];
-  const featuredmedia = story._embedded?.['wp:featuredmedia']?.[0];
-
-  const posterImage = poster?.url ? poster.url : featuredmedia?.source_url;
+  const externalPoster = story.meta['web_stories_poster']?.url;
+  const featuredImage = story._embedded?.['wp:featuredmedia']?.[0]?.source_url;
+  const posterImage = externalPoster || featuredImage;
 
   return (
     <div className="web-stories-story-preview-card">

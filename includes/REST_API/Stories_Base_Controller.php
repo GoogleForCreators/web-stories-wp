@@ -60,6 +60,15 @@ use WP_REST_Response;
  *     story_data?: SchemaEntry
  *   }
  * }
+ * @phpstan-type RegisteredMetadata array{
+ *   type: string,
+ *   description: string,
+ *   single: bool,
+ *   sanitize_callback?: callable,
+ *   auth_callback: callable,
+ *   show_in_rest: bool|array{schema: array<string, mixed>},
+ *   default?: mixed
+ * }
  */
 class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	/**
@@ -247,7 +256,7 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 			$request->set_param( 'featured_media', $thumbnail_id );
 		}
 
-		$meta = $this->get_register_meta( $original_post );
+		$meta = $this->get_registered_meta( $original_post );
 		if ( $meta ) {
 			$request->set_param( 'meta', $meta );
 		}
@@ -258,24 +267,23 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	/**
 	 * Get registered post meta.
 	 *
-	 * @since 1.22
+	 * @since 1.23.0
 	 *
 	 * @param WP_Post $original_post Post Object.
 	 * @return array<string, mixed> $meta
 	 */
-	protected function get_register_meta( WP_Post $original_post ): array {
-		/*
-		 *
-		 * @since 1.22.0
-		 *
-		 * @var array<string, mixed> $meta_keys
-		 */
+	protected function get_registered_meta( WP_Post $original_post ): array {
 		$meta_keys = get_registered_meta_keys( 'post', $this->post_type );
 		$meta      = [];
+		/**
+		 * Meta key settings.
+		 *
+		 * @var array $settings
+		 * @phpstan-var RegisteredMetadata $settings
+		 */
 		foreach ( $meta_keys as $key => $settings ) {
-			/* @phpstan-ignore-next-line */
-			if ( \is_array( $settings ) && $settings['show_in_rest'] ) {
-				$meta[ $key ] = get_post_meta( $original_post->ID, $key, (bool) $settings['single'] );
+			if ( $settings['show_in_rest'] ) {
+				$meta[ $key ] = get_post_meta( $original_post->ID, $key, $settings['single'] );
 			}
 		}
 

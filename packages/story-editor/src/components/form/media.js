@@ -101,6 +101,7 @@ function MediaInput(
     type = 'image',
     value,
     cropParams,
+    canUseProxy = false,
     ...rest
   },
   forwardedRef
@@ -108,8 +109,8 @@ function MediaInput(
   const { MediaUpload } = useConfig();
   const {
     actions: { onSelect, openHotlink, onCloseHotlink },
-    state: { allowedFileTypes, isOpen, defaultErrorMsg },
-  } = useHotlink({ onChange, cropParams, type });
+    state: { allowedFileTypes, isOpen },
+  } = useHotlink({ onChange, type, canUseProxy });
 
   const renderMediaIcon = useCallback(
     (open) => {
@@ -155,8 +156,8 @@ function MediaInput(
         insertText={hotlinkInsertText}
         insertingText={hotlinkInsertingText}
         allowedFileTypes={allowedFileTypes}
-        defaultErrorMsg={defaultErrorMsg}
-        canUseProxy={false}
+        canUseProxy={canUseProxy}
+        requiredImgDimensions={cropParams}
       />
       <MediaUpload
         title={title}
@@ -199,6 +200,7 @@ MediaInput.propTypes = {
     PropTypes.arrayOf(PropTypes.string),
   ]),
   cropParams: PropTypes.object,
+  canUseProxy: PropTypes.bool,
   title: PropTypes.string,
   value: PropTypes.string,
 };

@@ -86,7 +86,7 @@ describe('getStoryPropsToSave', () => {
       pages,
       ...neededProps,
       meta: {
-        web_stories_poster: {},
+        web_stories_poster: undefined,
         web_stories_products: [],
         web_stories_publisher_logo: 1,
       },

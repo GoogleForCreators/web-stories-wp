@@ -59,7 +59,7 @@ function getStoryPropsToSave({ story, pages, metadata, flags }) {
             width: featuredMedia.width,
             height: featuredMedia.height,
           }
-        : {},
+        : undefined,
     },
   };
 }
