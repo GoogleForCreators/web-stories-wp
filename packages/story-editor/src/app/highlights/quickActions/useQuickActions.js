@@ -268,17 +268,24 @@ const useQuickActions = () => {
   const dispatchStoryEvent = useStoryTriggersDispatch();
   const {
     backgroundElement,
+    currentPageNumber,
     selectedElementAnimations,
     selectedElements,
     updateElementsById,
   } = useStory(
     ({
-      state: { currentPage, selectedElementAnimations, selectedElements },
+      state: {
+        currentPage,
+        currentPageNumber,
+        selectedElementAnimations,
+        selectedElements,
+      },
       actions: { updateElementsById },
     }) => ({
       backgroundElement: currentPage?.elements.find(
         (element) => element.isBackground
       ),
+      currentPageNumber,
       selectedElementAnimations,
       selectedElements,
       updateElementsById,
@@ -532,11 +539,16 @@ const useQuickActions = () => {
     () => getResetProperties(selectedElement, selectedElementAnimations),
     [selectedElement, selectedElementAnimations]
   );
+
   const showClearAction = resetProperties.length > 0;
 
   const foregroundCommonActions = useMemo(() => {
-    const baseActions = [
-      {
+    const commonActions = [];
+
+    // Don't show the 'Add animation' button on the first page
+    if (currentPageNumber > 1) {
+      // 'Add animation' button
+      commonActions.push({
         Icon: CircleSpeed,
         label: ACTIONS.ADD_ANIMATION.text,
         onClick: (evt) => {
@@ -548,43 +560,50 @@ const useQuickActions = () => {
           });
         },
         ...actionMenuProps,
-      },
-      {
-        Icon: Link,
-        label: ACTIONS.ADD_LINK.text,
-        onClick: (evt) => {
-          handleFocusLinkPanel()(evt);
+      });
+    }
 
-          trackEvent('quick_action', {
-            name: ACTIONS.ADD_LINK.trackingEventName,
-            element: selectedElement?.type,
-          });
-        },
-        ...actionMenuProps,
-      },
-    ];
-
-    const clearAction = {
-      Icon: Eraser,
-      label: ACTIONS.RESET_ELEMENT.text,
-      onClick: () => {
-        handleElementReset({
-          elementId: selectedElement?.id,
-          resetProperties,
-          elementType: selectedElement?.type,
-        });
+    // 'Add link' button is always rendered
+    commonActions.push({
+      Icon: Link,
+      label: ACTIONS.ADD_LINK.text,
+      onClick: (evt) => {
+        handleFocusLinkPanel()(evt);
 
         trackEvent('quick_action', {
-          name: ACTIONS.RESET_ELEMENT.trackingEventName,
+          name: ACTIONS.ADD_LINK.trackingEventName,
           element: selectedElement?.type,
         });
       },
-      separator: 'top',
       ...actionMenuProps,
-    };
+    });
 
-    return showClearAction ? [...baseActions, clearAction] : baseActions;
+    // Only show 'Reset element' button for modified elements
+    if (showClearAction) {
+      // 'Reset element' button
+      commonActions.push({
+        Icon: Eraser,
+        label: ACTIONS.RESET_ELEMENT.text,
+        onClick: () => {
+          handleElementReset({
+            elementId: selectedElement?.id,
+            resetProperties,
+            elementType: selectedElement?.type,
+          });
+
+          trackEvent('quick_action', {
+            name: ACTIONS.RESET_ELEMENT.trackingEventName,
+            element: selectedElement?.type,
+          });
+        },
+        separator: 'top',
+        ...actionMenuProps,
+      });
+    }
+
+    return commonActions;
   }, [
+    currentPageNumber,
     handleFocusAnimationPanel,
     selectedElement?.id,
     selectedElement?.type,

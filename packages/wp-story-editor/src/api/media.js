@@ -30,10 +30,7 @@ import { flattenFormData, getResourceFromAttachment } from './utils';
 import { MEDIA_FIELDS } from './constants';
 
 // Important: Keep in sync with REST API preloading definition.
-export function getMedia(
-  config,
-  { mediaType, searchTerm, pagingNum, cacheBust }
-) {
+export function getMedia(config, { mediaType, searchTerm, pagingNum }) {
   let path = addQueryArgs(config.api.media, {
     context: 'view',
     per_page: 50,
@@ -48,15 +45,6 @@ export function getMedia(
 
   if (searchTerm) {
     path = addQueryArgs(path, { search: searchTerm });
-  }
-
-  // cacheBusting is due to the preloading logic preloading and caching
-  // some requests. (see preload_paths in Dashboard.php)
-  // Adding cache_bust forces the path to look different from the preloaded
-  // paths and hence skipping the cache. (cache_bust itself doesn't do
-  // anything)
-  if (cacheBust) {
-    path = addQueryArgs(path, { cache_bust: true });
   }
 
   return apiFetch({ path }).then(({ body: attachments, headers }) => ({
