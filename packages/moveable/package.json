@@ -2,7 +2,7 @@
   "name": "@googleforcreators/moveable",
   "description": "Provides a wrapper around react-moveable.",
   "private": false,
-  "version": "0.1.202206201534",
+  "version": "0.1.202206271222",
   "author": {
     "name": "Google",
     "url": "https://creators.google/"
