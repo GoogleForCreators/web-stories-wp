@@ -90,7 +90,8 @@ function MyStories() {
   }, []);
 
   const {
-    filter,
+    filter: statusFilter,
+    filters: dropDownFilters,
     page,
     search,
     sort,
@@ -98,7 +99,8 @@ function MyStories() {
     showStoriesWhileLoading,
     initialPageReady,
   } = useStoryView({
-    filters: STORY_STATUSES,
+    statusFilters: STORY_STATUSES,
+    filtersObject,
     isLoading,
     totalPages,
   });
@@ -109,18 +111,18 @@ function MyStories() {
       searchTerm: search.keyword,
       sortDirection: sort.direction,
       sortOption: sort.value,
-      status: filter.value,
-      filters: filtersObject,
+      status: statusFilter.value,
+      filters: dropDownFilters.value,
     });
   }, [
     fetchStories,
-    filter.value,
+    statusFilter.value,
+    dropDownFilters.value,
     page.value,
     search.keyword,
     sort.direction,
     sort.value,
     apiCallbacks,
-    filtersObject,
   ]);
 
   const orderedStories = useMemo(() => {
@@ -133,7 +135,7 @@ function MyStories() {
     <Layout.Provider>
       <Header
         initialPageReady={initialPageReady}
-        filter={filter}
+        filter={statusFilter}
         filters={filters}
         search={search}
         sort={sort}
@@ -145,7 +147,7 @@ function MyStories() {
       <Content
         allPagesFetched={allPagesFetched}
         canViewDefaultTemplates={canViewDefaultTemplates}
-        filter={filter}
+        filter={statusFilter}
         filtersObject={filtersObject}
         loading={{
           isLoading: isLoading,

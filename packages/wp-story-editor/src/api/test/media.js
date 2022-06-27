@@ -29,7 +29,7 @@ import { bindToCallbacks } from '@web-stories-wp/wp-utils';
  */
 import * as apiCallbacks from '..';
 import { flattenFormData } from '../utils';
-import { GET_MEDIA_RESPONSE_HEADER, GET_MEDIA_RESPONSE_BODY } from './_utils';
+import { GET_MEDIA_RESPONSE_BODY } from './_utils';
 
 jest.mock('@wordpress/api-fetch');
 
@@ -38,30 +38,6 @@ describe('Media API Callbacks', () => {
     jest.clearAllMocks();
   });
   const MEDIA_PATH = `/web-stories/v1/media/`;
-
-  it('getMedia with cacheBust:true should call api with &cache_bust=true', () => {
-    apiFetch.mockReturnValue(
-      Promise.resolve({
-        body: GET_MEDIA_RESPONSE_BODY,
-        headers: GET_MEDIA_RESPONSE_HEADER,
-      })
-    );
-    const { getMedia } = bindToCallbacks(apiCallbacks, {
-      api: { media: MEDIA_PATH },
-    });
-    getMedia({
-      mediaType: '',
-      searchTerm: '',
-      pagingNum: 1,
-      cacheBust: true,
-    });
-
-    expect(apiFetch).toHaveBeenCalledWith(
-      expect.objectContaining({
-        path: expect.stringMatching('&cache_bust=true'),
-      })
-    );
-  });
 
   it('updateMedia maps arguments to expected format', () => {
     apiFetch.mockReturnValue(Promise.resolve(GET_MEDIA_RESPONSE_BODY[0]));
