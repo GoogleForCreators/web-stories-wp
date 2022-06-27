@@ -101,7 +101,7 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 		}
 
 		// URL_VALID
-		if ( 'http://93.184.216.34/test.jpg' === $url ) {
+		if ( self::URL_VALID === $url ) {
 			return [
 				'headers'  => [
 					'content-type'   => 'image/jpeg',
@@ -111,8 +111,7 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 			];
 		}
 
-		// URL_SVG
-		if ( 'https://93.184.216.34/test.svg' === $url ) {
+		if ( self::URL_SVG === $url ) {
 			return [
 				'headers'  => [
 					'content-type'   => 'image/svg+xml',
@@ -122,8 +121,7 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 			];
 		}
 
-		// URL_WITH_CHARSET
-		if ( 'https://93.184.216.34/test.png' === $url ) {
+		if ( self::URL_WITH_CHARSET === $url ) {
 			return [
 				'headers'  => [
 					'content-type'   => 'image/png; charset=utf-8',
@@ -133,8 +131,7 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 			];
 		}
 
-		// URL_404
-		if ( 'https://93.184.216.34/404/test.jpg' === $url ) {
+		if ( self::URL_404 === $url ) {
 			return [
 				'headers'  => [
 					'content-type'   => 'image/jpeg',
@@ -478,15 +475,15 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 		return [
 			'no port specified'                 => [
 				'url'      => 'http://example.com/caniload.php',
-				'expected' => 'http://93.184.216.34/caniload.php',
+				'expected' => '93.184.216.34',
 			],
 			'a port considered safe by default' => [
 				'url'      => 'https://example.com:8080/caniload.php',
-				'expected' => 'https://93.184.216.34:8080/caniload.php',
+				'expected' => '93.184.216.34',
 			],
 			'a port considered safe by filter'  => [
 				'url'           => 'https://example.com:81/caniload.php',
-				'expected'      => 'https://93.184.216.34:81/caniload.php',
+				'expected'      => '93.184.216.34',
 				'cb_safe_ports' => 'callback_custom_safe_ports',
 			],
 		];
