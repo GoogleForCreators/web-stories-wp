@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { __, sprintf } from '@googleforcreators/i18n';
+import { sprintf, __ } from '@googleforcreators/i18n';
 import {
   Button,
   BUTTON_SIZES,
@@ -45,10 +45,29 @@ import {
 import { EmptyContentMessage } from '../../shared';
 import StoriesView from './storiesView';
 
+function NoAvailableContent({ keyword, filtersObject }) {
+  if (keyword) {
+    return sprintf(
+      /* translators: %s: search term. */
+      __('Sorry, we couldn\'t find any results matching "%s"', 'web-stories'),
+      keyword
+    );
+  } else if (Object.keys(filtersObject).length !== 0) {
+    return __("Sorry, we couldn't find any results", 'web-stories');
+  } else {
+    return __('Start telling Stories.', 'web-stories');
+  }
+}
+NoAvailableContent.propTypes = {
+  filtersObject: PropTypes.object,
+  keyword: PropTypes.string,
+};
+
 function Content({
   allPagesFetched,
   canViewDefaultTemplates,
   filter,
+  filtersObject = {},
   loading,
   page,
   search,
@@ -88,27 +107,23 @@ function Content({
               size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
               as="h3"
             >
-              {search?.keyword
-                ? sprintf(
-                    /* translators: %s: search term. */
-                    __(
-                      'Sorry, we couldn\'t find any results matching "%s"',
-                      'web-stories'
-                    ),
-                    search.keyword
-                  )
-                : __('Start telling Stories.', 'web-stories')}
+              <NoAvailableContent
+                keyword={search?.keyword}
+                filtersObject={filtersObject}
+              />
             </Headline>
-            {!search?.keyword && canViewDefaultTemplates && (
-              <Button
-                type={BUTTON_TYPES.PRIMARY}
-                size={BUTTON_SIZES.MEDIUM}
-                as="a"
-                href={resolveRoute(APP_ROUTES.TEMPLATES_GALLERY)}
-              >
-                {__('Explore Templates', 'web-stories')}
-              </Button>
-            )}
+            {!search?.keyword &&
+              Object.keys(filtersObject).length === 0 &&
+              canViewDefaultTemplates && (
+                <Button
+                  type={BUTTON_TYPES.PRIMARY}
+                  size={BUTTON_SIZES.MEDIUM}
+                  as="a"
+                  href={resolveRoute(APP_ROUTES.TEMPLATES_GALLERY)}
+                >
+                  {__('Explore Templates', 'web-stories')}
+                </Button>
+              )}
           </EmptyContentMessage>
         )}
       </StandardViewContentGutter>
@@ -119,6 +134,7 @@ Content.propTypes = {
   allPagesFetched: PropTypes.bool,
   canViewDefaultTemplates: PropTypes.bool,
   filter: FilterPropTypes,
+  filtersObject: PropTypes.object,
   loading: PropTypes.shape({
     isLoading: PropTypes.bool,
     showStoriesWhileLoading: ShowStoriesWhileLoadingPropType,
