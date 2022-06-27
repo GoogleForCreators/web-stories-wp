@@ -328,13 +328,12 @@ class Stories_Controller extends Stories_Base_Controller {
 	 * Filter the query to cache the value to a class property.
 	 *
 	 * @param array<string, mixed> $args    WP_Query arguments.
-	 * @param WP_REST_Request      $request Full details about the request.
 	 * @return array<string, mixed> Current args.
 	 *
 	 * @phpstan-param QueryArgs $args
 	 */
-	public function filter_query( $args, $request ): array {
-		$this->args = $this->prepare_tax_query( $args, $request );
+	public function filter_query( $args ): array {
+		$this->args = $args;
 
 		return $args;
 	}
@@ -347,7 +346,7 @@ class Stories_Controller extends Stories_Base_Controller {
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
 	public function get_items( $request ) {
-		add_filter( "rest_{$this->post_type}_query", [ $this, 'filter_query' ], 100, 2 );
+		add_filter( "rest_{$this->post_type}_query", [ $this, 'filter_query' ], 100, 1 );
 		add_filter( 'posts_clauses', [ $this, 'filter_posts_clauses' ], 10, 2 );
 		add_filter( 'posts_results', [ $this, 'prime_post_caches' ] );
 		$response = parent::get_items( $request );
@@ -380,104 +379,6 @@ class Stories_Controller extends Stories_Base_Controller {
 		}
 
 		return $response;
-	}
-
-	/**
-	 * Prepares the 'tax_query' for a collection of posts.
-	 *
-	 * @SuppressWarnings(PHPMD.NPathComplexity)
-	 *
-	 * @since 1.12.0
-	 *
-	 * @param array<string, mixed> $args    WP_Query arguments.
-	 * @param WP_REST_Request      $request Full details about the request.
-	 * @return array<string, mixed> Updated query arguments.
-	 *
-	 * @todo Remove this method once WordPress 5.7 becomes minimum required version.
-	 *
-	 * @phpstan-param QueryArgs $args
-	 * @phpstan-return QueryArgs
-	 */
-	private function prepare_tax_query( array $args, WP_REST_Request $request ): array {
-		$relation = $request['tax_relation'];
-
-		if ( $relation ) {
-			$args['tax_query'] = [ 'relation' => $relation ]; // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
-		}
-
-		$taxonomies = wp_list_filter(
-			get_object_taxonomies( $this->post_type, 'objects' ),
-			[ 'show_in_rest' => true ]
-		);
-
-		foreach ( $taxonomies as $taxonomy ) {
-			$base = ! empty( $taxonomy->rest_base ) ? $taxonomy->rest_base : $taxonomy->name;
-
-			/**
-			 * List of term IDs to include.
-			 *
-			 * @var array{terms?: string[], include_children?: bool, operator?: string}|string[] $tax_include
-			 */
-			$tax_include = $request[ $base ] ?? [];
-
-			/**
-			 * List of term IDs to exclude.
-			 *
-			 * @var array{terms?: string[], include_children?: bool, operator?: string}|string[] $tax_exclude
-			 */
-			$tax_exclude = $request[ $base . '_exclude' ] ?? [];
-
-			if ( $tax_include ) {
-				$terms            = [];
-				$include_children = false;
-				$operator         = 'IN';
-
-				if ( rest_is_array( $tax_include ) ) {
-					$terms = $tax_include;
-				} elseif ( rest_is_object( $tax_include ) ) {
-					$terms            = empty( $tax_include['terms'] ) ? [] : $tax_include['terms'];
-					$include_children = ! empty( $tax_include['include_children'] );
-
-					if ( isset( $tax_include['operator'] ) && 'AND' === $tax_include['operator'] ) {
-						$operator = 'AND';
-					}
-				}
-
-				if ( $terms ) {
-					$args['tax_query'][] = [
-						'taxonomy'         => $taxonomy->name,
-						'field'            => 'term_id',
-						'terms'            => $terms,
-						'include_children' => $include_children,
-						'operator'         => $operator,
-					];
-				}
-			}
-
-			if ( $tax_exclude ) {
-				$terms            = [];
-				$include_children = false;
-
-				if ( rest_is_array( $tax_exclude ) ) {
-					$terms = $tax_exclude;
-				} elseif ( rest_is_object( $tax_exclude ) ) {
-					$terms            = empty( $tax_exclude['terms'] ) ? [] : $tax_exclude['terms'];
-					$include_children = ! empty( $tax_exclude['include_children'] );
-				}
-
-				if ( $terms ) {
-					$args['tax_query'][] = [
-						'taxonomy'         => $taxonomy->name,
-						'field'            => 'term_id',
-						'terms'            => $terms,
-						'include_children' => $include_children,
-						'operator'         => 'NOT IN',
-					];
-				}
-			}
-		}
-
-		return $args;
 	}
 
 	/**
