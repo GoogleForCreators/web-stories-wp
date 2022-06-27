@@ -68,7 +68,7 @@ function LinkIcon({ handleChange, icon, isLoading = false, ...rest }) {
     return message;
   }, [allowedImageFileTypes]);
 
-  const menuOptions = [
+  const options = [
     enablePosterHotlinking && hasUploadMediaAction && 'upload',
     !enablePosterHotlinking && hasUploadMediaAction && 'edit',
     enablePosterHotlinking && 'hotlink',
@@ -93,12 +93,8 @@ function LinkIcon({ handleChange, icon, isLoading = false, ...rest }) {
       type={allowedImageMimeTypes}
       isLoading={isLoading}
       variant={MEDIA_VARIANTS.CIRCLE}
-      canUpload={
-        (icon && !hasUploadMediaAction) ||
-        hasUploadMediaAction ||
-        enablePosterHotlinking
-      }
-      menuOptions={menuOptions}
+      canUpload={options.length !== 0}
+      menuOptions={options}
       {...rest}
     />
   );
