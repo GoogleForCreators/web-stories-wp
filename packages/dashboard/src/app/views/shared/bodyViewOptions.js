@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { TranslateWithMarkup, __ } from '@googleforcreators/i18n';
 import {
@@ -34,10 +34,14 @@ import { StandardViewContentGutter, ViewStyleBar } from '../../../components';
 import { DROPDOWN_TYPES } from '../../../constants';
 import useFilters from '../myStories/filters/useFilters';
 
+const FILTER_MAX_WIDTH = 350;
+
 const DisplayFormatContainer = styled.div`
-  height: 76px;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  gap: 1rem;
+  min-height: 76px;
+  grid-template-columns: 1fr auto auto;
+  justify-content: start;
   align-items: center;
   margin-top: -10px;
 `;
@@ -49,8 +53,10 @@ const StorySortDropdownContainer = styled.div`
 
 const ControlsContainer = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-wrap: wrap;
+  margin: 1rem 0;
+  row-gap: 1rem;
+  justify-self: end;
 `;
 
 const StyledDropDown = styled(DropDown)`
@@ -59,7 +65,7 @@ const StyledDropDown = styled(DropDown)`
 
 const BodyViewOptionsHeader = styled.div``;
 const StyledDatalist = styled(Datalist.DropDown)`
-  width: 150px;
+  max-width: ${FILTER_MAX_WIDTH}px;
 `;
 
 export default function BodyViewOptions({
@@ -88,7 +94,10 @@ export default function BodyViewOptions({
         <ControlsContainer>
           {filters?.length
             ? filters.map((filter) => (
-                <StorySortDropdownContainer key={filter.key}>
+                <StorySortDropdownContainer
+                  key={filter.key}
+                  title={filter.placeholder}
+                >
                   <StyledDatalist
                     hasSearch
                     hasDropDownBorder
@@ -106,6 +115,10 @@ export default function BodyViewOptions({
                     noMatchesFoundLabel={filter.noMatchesFoundLabel}
                     searchPlaceholder={filter.searchPlaceholder}
                     offsetOverride
+                    maxWidth={FILTER_MAX_WIDTH}
+                    containerStyleOverrides={css`
+                      flex-direction: column;
+                    `}
                   />
                 </StorySortDropdownContainer>
               ))
@@ -121,15 +134,13 @@ export default function BodyViewOptions({
               />
             </StorySortDropdownContainer>
           )}
-          {showGridToggle && (
-            <ControlsContainer>
-              <ViewStyleBar
-                layoutStyle={layoutStyle}
-                onPress={handleLayoutSelect}
-              />
-            </ControlsContainer>
-          )}
         </ControlsContainer>
+        {showGridToggle && (
+          <ViewStyleBar
+            layoutStyle={layoutStyle}
+            onPress={handleLayoutSelect}
+          />
+        )}
       </DisplayFormatContainer>
     </StandardViewContentGutter>
   );
