@@ -169,13 +169,15 @@ function ShoppingPane(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps -- Only run once on mount.
   }, [isShoppingEnabled]);
 
+  const numProducts = products.length;
+
   useEffect(() => {
-    if (!isShoppingEnabled && products.length === 0) {
+    if (!isShoppingEnabled && numProducts === 0) {
       setProducts(currentPageProducts?.map(({ product }) => product));
       setIsLoading(false);
       setLoaded(true);
     }
-  }, [currentPageProducts, isShoppingEnabled, products]);
+  }, [currentPageProducts, isShoppingEnabled, numProducts]);
 
   const handleFocus = () => setIsMenuFocused(false);
 
