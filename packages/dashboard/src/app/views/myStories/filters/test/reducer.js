@@ -69,9 +69,8 @@ describe('reducer', () => {
     expect(filter.filterId).toBeNull();
   });
 
-  it('should register filters in state, and set filtersLoading', () => {
+  it('should register filters in state', () => {
     const initial_state = {
-      filtersLoading: true,
       filters: [],
     };
 
@@ -93,7 +92,6 @@ describe('reducer', () => {
 
     const state = reducer(initial_state, args);
     expect(state.filters).toHaveLength(2);
-    expect(state.filtersLoading).toBeFalsy();
   });
 
   it('should return the state if dispatching an action thats not supported', () => {

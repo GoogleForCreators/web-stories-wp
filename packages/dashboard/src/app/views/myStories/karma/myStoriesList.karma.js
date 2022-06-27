@@ -469,7 +469,9 @@ describe('CUJ: Creator can view their stories in list view: ', () => {
       expect(rowModifiedValues).toEqual(storieModifiedSortedByModified);
 
       // sort ascending
-      const lastModifiedHeader = fixture.screen.getByText(/^Last Modified/);
+      const [table] = fixture.screen.getAllByTestId('story-list-view');
+      const utils = within(table);
+      const lastModifiedHeader = utils.getByText(/^Last Modified/);
 
       await fixture.events.click(lastModifiedHeader);
 
@@ -608,7 +610,9 @@ describe('CUJ: Creator can view their stories in list view: ', () => {
       expect(rowModifiedValues).toEqual(storieModifiedSortedByModified);
 
       // sort ascending
-      const lastModifiedHeader = fixture.screen.getByText(/^Last Modified/);
+      const [table] = fixture.screen.getAllByTestId('story-list-view');
+      const utils = within(table);
+      const lastModifiedHeader = utils.getByText(/^Last Modified/);
 
       await fixture.events.focus(lastModifiedHeader);
       await fixture.events.keyboard.press('Enter');
@@ -633,7 +637,9 @@ describe('CUJ: Creator can view their stories in list view: ', () => {
       await clickListView();
 
       // place focus on last modified header
-      const lastModifiedHeader = fixture.screen.getByText(/^Last Modified/);
+      const [table] = fixture.screen.getAllByTestId('story-list-view');
+      const utils = within(table);
+      const lastModifiedHeader = utils.getByText(/^Last Modified/);
       await fixture.events.focus(lastModifiedHeader);
     });
 

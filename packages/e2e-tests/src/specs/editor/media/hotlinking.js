@@ -115,7 +115,7 @@ describe('Media Hotlinking', () => {
     await takeSnapshot(page, 'Media Hotlinking - with CORS');
   });
 
-  describe('Poster Hotlinking', () => {
+  describe('Story Poster', () => {
     withExperimentalFeatures(['posterHotlinking']);
     it('should insert an external poster via proxy', async () => {
       await createNewStory();

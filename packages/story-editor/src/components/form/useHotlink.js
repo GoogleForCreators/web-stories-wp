@@ -17,23 +17,19 @@
  * External dependencies
  */
 import { useCallback, useMemo, useState } from '@googleforcreators/react';
-import { __, sprintf } from '@googleforcreators/i18n';
 import { getExtensionsFromMimeType } from '@googleforcreators/media';
 import { v4 as uuidv4 } from 'uuid';
 /**
  * Internal dependencies
  */
 import getResourceFromUrl from '../../app/media/utils/getResourceFromUrl';
+import useCORSProxy from '../../utils/useCORSProxy';
 
-function useHotlink({ onChange, cropParams, type }) {
+function useHotlink({ onChange, type, canUseProxy }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [defaultErrorMsg, setDefaultErrorMsg] = useState(null);
 
   const openHotlink = () => setIsOpen(true);
-  const onCloseHotlink = () => {
-    setIsOpen(false);
-    setDefaultErrorMsg(null);
-  };
+  const onCloseHotlink = () => setIsOpen(false);
   const allowedFileTypes = useMemo(
     () =>
       Array.isArray(type)
@@ -42,55 +38,32 @@ function useHotlink({ onChange, cropParams, type }) {
     [type]
   );
 
+  const { getProxiedUrl } = useCORSProxy();
+
   const onSelect = useCallback(
     async ({ link, hotlinkInfo, needsProxy }) => {
       const { mimeType, fileName: originalFileName } = hotlinkInfo;
 
+      const proxiedUrl =
+        needsProxy && canUseProxy ? getProxiedUrl({ needsProxy }, link) : link;
+
       const resourceLike = {
         id: uuidv4(),
-        src: link,
+        src: proxiedUrl,
         mimeType,
         needsProxy,
         alt: originalFileName,
+        height: hotlinkInfo?.height,
+        width: hotlinkInfo?.width,
       };
 
       const resource = await getResourceFromUrl(resourceLike);
-
-      if (cropParams?.height && cropParams?.height !== resource?.height) {
-        setDefaultErrorMsg(
-          sprintf(
-            /* translators: 1: supplied height. 2: desired height */
-            __(
-              'Invalid image height supplied %1$d when %2$d is required.',
-              'web-stories'
-            ),
-            resource.height,
-            cropParams.height
-          )
-        );
-        return;
-      }
-
-      if (cropParams?.width && cropParams?.width !== resource?.width) {
-        setDefaultErrorMsg(
-          sprintf(
-            /* translators: 1: supplied width. 2: desired width */
-            __(
-              'Invalid image width supplied %1$d when %2$d is required.',
-              'web-stories'
-            ),
-            resource.width,
-            cropParams?.width
-          )
-        );
-        return;
-      }
-
+      resource.src = link;
       onChange(resource);
 
       setIsOpen(false);
     },
-    [cropParams, onChange]
+    [canUseProxy, getProxiedUrl, onChange]
   );
 
   return {
@@ -102,7 +75,6 @@ function useHotlink({ onChange, cropParams, type }) {
     state: {
       allowedFileTypes,
       isOpen,
-      defaultErrorMsg,
     },
   };
 }
