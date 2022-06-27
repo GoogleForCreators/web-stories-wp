@@ -72,7 +72,7 @@ function LinkIcon({ handleChange, icon, isLoading = false, ...rest }) {
     enablePosterHotlinking && hasUploadMediaAction && 'upload',
     !enablePosterHotlinking && hasUploadMediaAction && 'edit',
     enablePosterHotlinking && 'hotlink',
-    icon && 'reset',
+    icon && 'remove',
   ].filter(Boolean);
 
   return (
