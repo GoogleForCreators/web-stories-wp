@@ -175,7 +175,7 @@ function ShoppingPane(props) {
       setIsLoading(false);
       setLoaded(true);
     }
-  }, [currentPageProducts, isShoppingEnabled, products.length]);
+  }, [currentPageProducts, isShoppingEnabled, products]);
 
   const handleFocus = () => setIsMenuFocused(false);
 
