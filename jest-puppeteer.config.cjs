@@ -32,4 +32,5 @@ module.exports = {
     product: PUPPETEER_PRODUCT,
     args: ['--window-size=1600,1000'], // Same as in percy.config.yml.
   },
+  exitOnPageError: false,
 };

@@ -120,13 +120,12 @@ function PlayPauseButton({
   videoRef = null,
   isRTL,
 }) {
-  const hasVideoSrc = Boolean(element.resource.src);
   const isPlayAbove =
     element.width < PLAY_ABOVE_BREAKPOINT_WIDTH ||
     element.height < PLAY_ABOVE_BREAKPOINT_HEIGHT;
   const [hovering, setHovering] = useState(false);
   const [showControls, setShowControls] = useState(true);
-  const [isPlaying, setIsPlaying] = useState(!isTransforming && hasVideoSrc);
+  const [isPlaying, setIsPlaying] = useState(false);
   const { id } = element;
   const getVideoNode = useCallback(
     () =>

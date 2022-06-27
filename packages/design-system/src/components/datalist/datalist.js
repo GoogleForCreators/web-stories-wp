@@ -74,6 +74,7 @@ const Container = styled.div`
  * @param {string} props.title The title of the dialog (popup) container of the list.
  * @param {string} props.dropdownButtonLabel The label attached to the unexpanded datalist (button)
  * @param {boolean} props.offsetOverride override popup offsets updates, use x and y offset based on anchor
+ * @param {number} props.maxWidth sets a max-width on the Popup component
  * @return {*} Render.
  */
 const Datalist = forwardRef(function Datalist(
@@ -104,6 +105,7 @@ const Datalist = forwardRef(function Datalist(
     offsetOverride = false,
     noMatchesFoundLabel,
     searchPlaceholder,
+    maxWidth,
     getPrimaryOptions,
     ...rest
   },
@@ -243,9 +245,10 @@ const Datalist = forwardRef(function Datalist(
         <Popup
           anchor={internalRef}
           isOpen={isOpen}
-          fillWidth={DEFAULT_WIDTH}
           zIndex={zIndex}
           offsetOverride={offsetOverride}
+          maxWidth={maxWidth || DEFAULT_WIDTH}
+          fillWidth
         >
           {list}
         </Popup>
@@ -279,6 +282,8 @@ Datalist.propTypes = {
   title: PropTypes.string,
   dropdownButtonLabel: PropTypes.string,
   offsetOverride: PropTypes.bool,
+  maxWidth: PropTypes.number,
+  getPrimaryOptions: PropTypes.func,
 };
 
 export default Datalist;
