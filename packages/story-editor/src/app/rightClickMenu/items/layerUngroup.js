@@ -46,23 +46,18 @@ function LayerUngroup() {
     const oldElement = selectedElements[0];
     let count = 0;
     let currentPosition = 0;
-    let counter = 0;
 
-    for (const [key] of Object.entries(elements)) {
-      if (elements[key].id === oldElement.id) {
-        currentPosition = counter;
+    for (const [index] of Object.entries(elements)) {
+      if (elements[index].id === oldElement.id) {
+        currentPosition = Number(index);
       }
 
       if (
-        elements[key].groupId === oldElement.groupId &&
-        elements[key].id != oldElement.id &&
+        elements[index].groupId === oldElement.groupId &&
+        elements[index].id != oldElement.id &&
         currentPosition === 0
       ) {
         count++;
-      }
-
-      if (currentPosition === 0) {
-        counter++;
       }
     }
 
