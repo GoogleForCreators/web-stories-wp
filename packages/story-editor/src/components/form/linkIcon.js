@@ -37,7 +37,7 @@ const StyledMedia = styled(Media)`
 `;
 
 function LinkIcon({ handleChange, icon, isLoading = false, ...rest }) {
-  const enablePosterHotlinking = useFeature('posterHotlinking');
+  const enableHotlinking = useFeature('linkIconHotlinking');
   const {
     allowedMimeTypes: { image: allowedImageMimeTypes },
     capabilities: { hasUploadMediaAction },
@@ -69,9 +69,9 @@ function LinkIcon({ handleChange, icon, isLoading = false, ...rest }) {
   }, [allowedImageFileTypes]);
 
   const options = [
-    enablePosterHotlinking && hasUploadMediaAction && 'upload',
-    !enablePosterHotlinking && hasUploadMediaAction && 'edit',
-    enablePosterHotlinking && 'hotlink',
+    enableHotlinking && hasUploadMediaAction && 'upload',
+    !enableHotlinking && hasUploadMediaAction && 'edit',
+    enableHotlinking && 'hotlink',
     icon && 'remove',
   ].filter(Boolean);
 
