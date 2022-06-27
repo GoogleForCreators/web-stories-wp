@@ -42,7 +42,7 @@
     "@googleforcreators/url": "*",
     "@web-stories-wp/wp-utils": "*",
     "@wordpress/api-fetch": "^6.4.0",
-    "@wordpress/dom-ready": "^3.7.0",
+    "@wordpress/dom-ready": "^3.11.0",
     "flagged": "^2.0.3",
     "opentype.js": "^1.3.4",
     "prop-types": "^15.8.1",
