@@ -88,7 +88,6 @@ export default function useContextValueProvider(reducerState, reducerActions) {
         searchTerm: currentSearchTerm = '',
         pageToken: p = 1,
         mediaType: currentMediaType,
-        cacheBust: cacheBust,
       } = {},
       callback
     ) => {
@@ -103,7 +102,6 @@ export default function useContextValueProvider(reducerState, reducerActions) {
           currentMediaType === LOCAL_MEDIA_TYPE_ALL ? '' : currentMediaType,
         searchTerm: currentSearchTerm,
         pagingNum: p,
-        cacheBust: cacheBust,
       })
         .then(({ data, headers }) => {
           if (!isMounted.current) {
@@ -182,10 +180,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     resetFilters();
     const isFirstPage = !stateRef.current.pageToken;
     if (!currentMediaType && !stateRef.current.searchTerm && isFirstPage) {
-      fetchMedia(
-        { mediaType: currentMediaType, cacheBust: true },
-        fetchMediaSuccess
-      );
+      fetchMedia({ mediaType: currentMediaType }, fetchMediaSuccess);
     }
   }, [fetchMedia, fetchMediaSuccess, resetFilters]);
 
