@@ -269,6 +269,7 @@ const StoryPreview = () => {
           {featuredMedia?.url ? (
             <Image
               crossOrigin="anonymous"
+              decoding="async"
               src={featuredMedia.url}
               width={featuredMedia.width}
               height={featuredMedia.height}
@@ -285,6 +286,7 @@ const StoryPreview = () => {
                 {publisherLogo?.url?.length > 0 && (
                   <PublisherLogo
                     crossOrigin="anonymous"
+                    decoding="async"
                     width={publisherLogo.width}
                     height={publisherLogo.height}
                     src={publisherLogo.url}
