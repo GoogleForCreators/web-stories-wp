@@ -166,7 +166,11 @@ function EyedropperLayer() {
 
   useGlobalKeyDownEffect('esc', closeEyedropper);
 
-  if (isEyedropperActive && !isEyeDropperApiSupported && !img) {
+  if (isEyeDropperApiSupported) {
+    return null;
+  }
+
+  if (isEyedropperActive && !img) {
     return (
       <>
         {/* eslint-disable-next-line styled-components-a11y/click-events-have-key-events, styled-components-a11y/no-static-element-interactions -- No keyboard navigation for Eyedropper. */}
@@ -275,21 +279,17 @@ function EyedropperLayer() {
       <DisplayPageArea withSafezone={false} showOverflow>
         {/* eslint-disable-next-line styled-components-a11y/click-events-have-key-events, styled-components-a11y/no-static-element-interactions -- No pixel-by-pixel keyboard navigation. */}
         <EyedropperCanvas ref={eyedropperCanvas} onClick={onClick}>
-          {!isEyeDropperApiSupported && (
-            <>
-              <CanvasImage ref={imgRef} src={img} alt="" />
-              <Magnifier ref={magnifierInfo}>
-                <Circle>
-                  <canvas
-                    ref={magnifier}
-                    width={MAGNIFIER_SIZE}
-                    height={MAGNIFIER_SIZE}
-                  />
-                </Circle>
-                <ColorInfo ref={magnifierColor} />
-              </Magnifier>
-            </>
-          )}
+          <CanvasImage ref={imgRef} src={img} alt="" />
+          <Magnifier ref={magnifierInfo}>
+            <Circle>
+              <canvas
+                ref={magnifier}
+                width={MAGNIFIER_SIZE}
+                height={MAGNIFIER_SIZE}
+              />
+            </Circle>
+            <ColorInfo ref={magnifierColor} />
+          </Magnifier>
         </EyedropperCanvas>
       </DisplayPageArea>
     </EyedropperBackground>
