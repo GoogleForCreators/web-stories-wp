@@ -2,7 +2,7 @@
   "name": "@googleforcreators/date",
   "description": "Date-handling package, a tiny wrapper around date-fns.",
   "private": false,
-  "version": "0.1.202206201534",
+  "version": "0.1.202206271222",
   "author": {
     "name": "Google",
     "url": "https://creators.google/"
