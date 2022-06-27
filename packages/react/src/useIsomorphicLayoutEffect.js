@@ -23,7 +23,8 @@ import { useEffect, useLayoutEffect } from './react';
  *
  * @see https://reactjs.org/docs/hooks-reference.html#uselayouteffect
  */
-const useIsomorphicLayoutEffect =
-  typeof window !== 'undefined' ? useLayoutEffect : useEffect;
+const useIsomorphicLayoutEffect = globalThis.window
+  ? useLayoutEffect
+  : useEffect;
 
 export default useIsomorphicLayoutEffect;

@@ -62,7 +62,7 @@ function CanvasProvider({ children }) {
   // to multiple nodes.
   const clientRectObserver = useMemo(
     () =>
-      typeof window !== 'undefined'
+      globalThis.window
         ? new window.IntersectionObserver((entries) => {
             for (const entry of entries) {
               if (!entry.target.dataset[RECT_OBSERVATION_KEY]) {

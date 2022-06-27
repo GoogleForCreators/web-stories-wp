@@ -121,10 +121,9 @@ function TranslateWithMarkup({ mapping = {}, children }) {
   }
 
   // @todo Find a way to parse HTML in SSR too.
-  const node =
-    typeof window !== 'undefined'
-      ? new DOMParser().parseFromString(children, 'text/html').body.firstChild
-      : null;
+  const node = globalThis.window
+    ? new DOMParser().parseFromString(children, 'text/html').body.firstChild
+    : null;
   return node
     ? transform(
         node,

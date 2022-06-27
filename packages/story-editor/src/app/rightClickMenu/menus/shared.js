@@ -39,10 +39,9 @@ export const MenuPropType = {
   parentMenuRef: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.shape({
-      current:
-        typeof Element !== 'undefined'
-          ? PropTypes.instanceOf(Element)
-          : PropTypes.any,
+      current: globalThis.Element
+        ? PropTypes.instanceOf(Element)
+        : PropTypes.any,
     }), // To handle in SSR.
   ]).isRequired,
 };

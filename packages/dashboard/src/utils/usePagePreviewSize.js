@@ -107,9 +107,7 @@ export default function usePagePreviewSize(options = {}) {
   const { thumbnailMode = false, isGrid } = options;
   const { containerId } = useConfig();
   const dashboardContainerRef = useRef(
-    typeof document !== 'undefined'
-      ? document.getElementById(containerId)
-      : null
+    globalThis?.document?.getElementById(containerId) || null
   );
 
   // BP is contingent on the actual window size

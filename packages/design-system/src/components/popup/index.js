@@ -206,16 +206,14 @@ function Popup({
 
 Popup.propTypes = {
   anchor: PropTypes.shape({
-    current:
-      typeof Element !== 'undefined'
-        ? PropTypes.instanceOf(Element)
-        : PropTypes.any,
+    current: globalThis.Element
+      ? PropTypes.instanceOf(globalThis.Element)
+      : PropTypes.any,
   }).isRequired,
   dock: PropTypes.shape({
-    current:
-      typeof Element !== 'undefined'
-        ? PropTypes.instanceOf(Element)
-        : PropTypes.any,
+    current: globalThis.Element
+      ? PropTypes.instanceOf(globalThis.Element)
+      : PropTypes.any,
   }), // To handle SSR
   children: PropTypes.node,
   renderContents: PropTypes.func,

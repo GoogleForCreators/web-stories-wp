@@ -91,9 +91,8 @@ export function calculateFitTextFontSize(element, width, height) {
 }
 
 function getOrCreateMeasurer(element) {
-  let measurerNode =
-    typeof document !== 'undefined' ? document.body[MEASURER_NODE] : null;
-  if (!measurerNode) {
+  let measurerNode = globalThis?.document?.body[MEASURER_NODE] || null;
+  if (globalThis?.document && !measurerNode) {
     measurerNode = document.createElement('div');
     measurerNode.id = '__web-stories-text-measurer';
     measurerNode.className = 'web-stories-content';

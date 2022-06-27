@@ -14,8 +14,7 @@
  * limitations under the License.
  */
 
-const buffer =
-  typeof document !== 'undefined' ? document.createElement('div') : {};
+const buffer = globalThis?.document?.createElement('div') || {};
 
 // @todo Find a way to strip HTML in SSR too.
 export default function stripHTML(string) {

@@ -14,8 +14,7 @@
  * limitations under the License.
  */
 
-const buffer =
-  typeof document !== 'undefined' ? document.createElement('div') : {};
+const buffer = globalThis?.document?.createElement('div') || {};
 
 export default function escapeHTML(string) {
   // @todo: implement a cheaper way to escape HTML characters.

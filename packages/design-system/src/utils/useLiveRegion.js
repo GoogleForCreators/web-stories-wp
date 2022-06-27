@@ -44,9 +44,7 @@ function useLiveRegion(politeness = 'polite') {
     const containerId = 'web-stories-aria-live-region-' + politeness;
 
     const existingContainer =
-      typeof document !== 'undefined'
-        ? document.getElementById(containerId)
-        : null;
+      globalThis?.document?.getElementById(containerId) || null;
 
     if (existingContainer) {
       elementRef.current = existingContainer;
@@ -55,8 +53,7 @@ function useLiveRegion(politeness = 'polite') {
       };
     }
 
-    const container =
-      typeof document !== 'undefined' ? document.createElement('div') : null;
+    const container = globalThis?.document?.createElement('div') || null;
     container.id = containerId;
     container.className = 'web-stories-aria-live-region';
 
@@ -78,16 +75,12 @@ function useLiveRegion(politeness = 'polite') {
     container.setAttribute('aria-relevant', 'additions text');
     container.setAttribute('aria-atomic', 'true');
 
-    if (globalThis.document) {
-      document.body.appendChild(container);
-    }
+    globalThis?.document?.body?.appendChild(container);
 
     elementRef.current = container;
 
     return () => {
-      if (globalThis.document) {
-        document.body.removeChild(container);
-      }
+      globalThis?.document?.body?.removeChild(container);
       elementRef.current = null;
     };
   }, [politeness]);
