@@ -48,7 +48,7 @@ const Layout = styled.section.attrs({
 
 const TabsArea = styled.nav.attrs({
   'aria-label': __('Style tabs', 'web-stories'),
-});
+})``;
 
 const UnjustifiedTabView = styled(TabView)`
   justify-content: center;

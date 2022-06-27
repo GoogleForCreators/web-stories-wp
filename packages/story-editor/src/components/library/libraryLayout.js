@@ -47,7 +47,7 @@ const Layout = styled.section.attrs({
 // @todo Verify that L10N works with the translation happening here.
 const TabsArea = styled.nav.attrs({
   'aria-label': __('Library tabs', 'web-stories'),
-});
+})``;
 
 const LibraryPaneContainer = styled.div`
   height: 100%;
