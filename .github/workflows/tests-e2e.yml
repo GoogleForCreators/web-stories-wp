@@ -128,7 +128,7 @@ jobs:
       matrix:
         # TODO: add back Firefox once support is more mature.
         browser: ['chrome']
-        wp: ['5.5']
+        wp: ['5.7']
         snapshots: [false]
         # We want to split up the tests into 2 parts running in parallel.
         shard: ['1/2', '2/2']
@@ -203,6 +203,14 @@ jobs:
         if: always()
         env:
           COMPOSE_INTERACTIVE_NO_CLI: true
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: failures-artifacts
+          path: build/e2e-artifacts
+          if-no-files-found: ignore
 
   percy:
     name: Percy

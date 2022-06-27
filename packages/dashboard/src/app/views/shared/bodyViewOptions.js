@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { TranslateWithMarkup, __ } from '@googleforcreators/i18n';
 import {
@@ -25,21 +25,23 @@ import {
   THEME_CONSTANTS,
   DropDown,
   Datalist,
-  noop,
 } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
  */
-import { AuthorPropTypes } from '../../../utils/useStoryView.js';
 import { StandardViewContentGutter, ViewStyleBar } from '../../../components';
-import { DROPDOWN_TYPES, VIEW_STYLE } from '../../../constants';
+import { DROPDOWN_TYPES } from '../../../constants';
 import useFilters from '../myStories/filters/useFilters';
 
+const FILTER_MAX_WIDTH = 350;
+
 const DisplayFormatContainer = styled.div`
-  height: 76px;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  gap: 1rem;
+  min-height: 76px;
+  grid-template-columns: 1fr auto auto;
+  justify-content: start;
   align-items: center;
   margin-top: -10px;
 `;
@@ -51,8 +53,10 @@ const StorySortDropdownContainer = styled.div`
 
 const ControlsContainer = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-wrap: wrap;
+  margin: 1rem 0;
+  row-gap: 1rem;
+  justify-self: end;
 `;
 
 const StyledDropDown = styled(DropDown)`
@@ -61,14 +65,8 @@ const StyledDropDown = styled(DropDown)`
 
 const BodyViewOptionsHeader = styled.div``;
 const StyledDatalist = styled(Datalist.DropDown)`
-  width: 150px;
+  max-width: ${FILTER_MAX_WIDTH}px;
 `;
-
-const defaultAuthor = {
-  filterId: null,
-  toggleFilterId: noop,
-  queriedAuthors: [],
-};
 
 export default function BodyViewOptions({
   currentSort,
@@ -80,14 +78,12 @@ export default function BodyViewOptions({
   showGridToggle,
   showSortDropdown,
   sortDropdownAriaLabel,
-  showAuthorDropdown = false,
-  author = defaultAuthor,
-  queryAuthorsBySearch = noop,
   filters = [],
 }) {
   const { updateFilter } = useFilters(({ actions: { updateFilter } }) => ({
     updateFilter,
   }));
+
   return (
     <StandardViewContentGutter>
       <BodyViewOptionsHeader id="body-view-options-header" />
@@ -96,9 +92,12 @@ export default function BodyViewOptions({
           <TranslateWithMarkup>{resultsLabel}</TranslateWithMarkup>
         </Text>
         <ControlsContainer>
-          {layoutStyle === VIEW_STYLE.GRID && filters?.length
+          {filters?.length
             ? filters.map((filter) => (
-                <StorySortDropdownContainer key={filter.key}>
+                <StorySortDropdownContainer
+                  key={filter.key}
+                  title={filter.placeholder}
+                >
                   <StyledDatalist
                     hasSearch
                     hasDropDownBorder
@@ -109,40 +108,22 @@ export default function BodyViewOptions({
                         filterId: id,
                       });
                     }}
-                    getOptionsByQuery={async (search) => {
-                      await filter.query(filter, search);
-                    }}
+                    getOptionsByQuery={filter.query}
+                    getPrimaryOptions={filter.getPrimaryOptions}
                     selectedId={filter.filterId}
                     placeholder={filter.placeholder}
-                    primaryOptions={filter.primaryOptions}
-                    options={filter.queriedOptions}
                     noMatchesFoundLabel={filter.noMatchesFoundLabel}
                     searchPlaceholder={filter.searchPlaceholder}
                     offsetOverride
+                    maxWidth={FILTER_MAX_WIDTH}
+                    containerStyleOverrides={css`
+                      flex-direction: column;
+                    `}
                   />
                 </StorySortDropdownContainer>
               ))
             : null}
-          {layoutStyle === VIEW_STYLE.GRID && showAuthorDropdown && (
-            <StorySortDropdownContainer>
-              <StyledDatalist
-                hasSearch
-                hasDropDownBorder
-                searchResultsLabel={__('Search results', 'web-stories')}
-                aria-label={__('Filter stories by author', 'web-stories')}
-                onChange={author.toggleFilterId}
-                getOptionsByQuery={queryAuthorsBySearch}
-                selectedId={author.filterId}
-                placeholder={__('All Authors', 'web-stories')}
-                primaryOptions={author.queriedAuthors}
-                options={author.queriedAuthors}
-                noMatchesFoundLabel={__('No authors found', 'web-stories')}
-                searchPlaceholder={__('Search authors', 'web-stories')}
-                offsetOverride
-              />
-            </StorySortDropdownContainer>
-          )}
-          {layoutStyle === VIEW_STYLE.GRID && showSortDropdown && (
+          {showSortDropdown && (
             <StorySortDropdownContainer>
               <StyledDropDown
                 ariaLabel={sortDropdownAriaLabel}
@@ -153,15 +134,13 @@ export default function BodyViewOptions({
               />
             </StorySortDropdownContainer>
           )}
-          {showGridToggle && (
-            <ControlsContainer>
-              <ViewStyleBar
-                layoutStyle={layoutStyle}
-                onPress={handleLayoutSelect}
-              />
-            </ControlsContainer>
-          )}
         </ControlsContainer>
+        {showGridToggle && (
+          <ViewStyleBar
+            layoutStyle={layoutStyle}
+            onPress={handleLayoutSelect}
+          />
+        )}
       </DisplayFormatContainer>
     </StandardViewContentGutter>
   );
@@ -182,8 +161,5 @@ BodyViewOptions.propTypes = {
   showGridToggle: PropTypes.bool,
   showSortDropdown: PropTypes.bool,
   sortDropdownAriaLabel: PropTypes.string.isRequired,
-  showAuthorDropdown: PropTypes.bool,
-  author: AuthorPropTypes,
-  queryAuthorsBySearch: PropTypes.func,
   filters: PropTypes.array,
 };

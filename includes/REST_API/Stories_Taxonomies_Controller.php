@@ -149,7 +149,7 @@ class Stories_Taxonomies_Controller extends WP_REST_Taxonomies_Controller implem
 	 *
 	 * @since 1.22.0
 	 *
-	 * @return array Collection parameters.
+	 * @return array<string, array<string, mixed>> Collection parameters.
 	 */
 	public function get_collection_params(): array {
 		$query_params = parent::get_collection_params();

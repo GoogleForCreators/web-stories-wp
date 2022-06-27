@@ -37,6 +37,48 @@ use Google\Web_Stories\Tracking;
 
 /**
  * Latest Stories block class.
+ *
+ * @phpstan-import-type StoryAttributes from \Google\Web_Stories\Story_Query
+ * @phpstan-type BlockAttributes array{
+ *   blockType?: string,
+ *   url?: string,
+ *   title?: string,
+ *   poster?: string,
+ *   width?: int,
+ *   height?: int,
+ *   align?: string,
+ *   stories?: int[],
+ *   viewType?: string,
+ *   numOfStories?: int,
+ *   numOfColumns?: int,
+ *   circleSize?: int,
+ *   imageAlignment?: string,
+ *   orderby?: string,
+ *   order?: string,
+ *   archiveLinkLabel?: string,
+ *   authors?: int[],
+ *   fieldState?: array<string, mixed>
+ * }
+ * @phpstan-type BlockAttributesWithDefaults array{
+ *   blockType?: string,
+ *   url?: string,
+ *   title?: string,
+ *   poster?: string,
+ *   width?: int,
+ *   height?: int,
+ *   align: string,
+ *   stories?: int[],
+ *   viewType: string,
+ *   numOfStories?: int,
+ *   numOfColumns: int,
+ *   circleSize: int,
+ *   imageAlignment: string,
+ *   orderby: string,
+ *   order: string,
+ *   archiveLinkLabel: string,
+ *   authors?: int[],
+ *   fieldState?: array<string, mixed>
+ * }
  */
 class Web_Stories_Block extends Embed_Base {
 
@@ -49,8 +91,9 @@ class Web_Stories_Block extends Embed_Base {
 	 * Current block's block attributes.
 	 *
 	 * @var array Block Attributes.
+	 * @phpstan-var BlockAttributes
 	 */
-	protected $block_attributes = [];
+	protected $block_attributes;
 
 	/**
 	 * Maximum number of stories users can select
@@ -207,7 +250,7 @@ class Web_Stories_Block extends Embed_Base {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @return array Script settings.
+	 * @return array<string, mixed> Script settings.
 	 */
 	private function get_script_settings(): array {
 		$settings = [
@@ -226,7 +269,7 @@ class Web_Stories_Block extends Embed_Base {
 		/**
 		 * Filters settings passed to the web stories block.
 		 *
-		 * @param array $settings Array of settings passed to web stories block.
+		 * @param array<string, mixed> $settings Array of settings passed to web stories block.
 		 */
 		return apply_filters( 'web_stories_block_settings', $settings );
 	}
@@ -238,9 +281,11 @@ class Web_Stories_Block extends Embed_Base {
 	 *
 	 * @param array $block_attributes Array containing block attributes.
 	 * @return bool Whether or not block attributes have been initialized with given value.
+	 *
+	 * @phpstan-param BlockAttributes $block_attributes
 	 */
 	protected function initialize_block_attributes( array $block_attributes = [] ): bool {
-		if ( ! empty( $block_attributes ) && \is_array( $block_attributes ) ) {
+		if ( ! empty( $block_attributes ) ) {
 			$this->block_attributes = $block_attributes;
 			return true;
 		}
@@ -252,11 +297,12 @@ class Web_Stories_Block extends Embed_Base {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param array $attributes Block attributes.
-	 * @return string Rendered block type output.*
+	 * @param array<string, mixed> $attributes Block attributes.
+	 * @return string Rendered block type output.
+	 *
+	 * @phpstan-param BlockAttributesWithDefaults $attributes
 	 */
 	public function render_block( array $attributes ): string {
-
 		if ( false === $this->initialize_block_attributes( $attributes ) ) {
 			return '';
 		}
@@ -273,11 +319,14 @@ class Web_Stories_Block extends Embed_Base {
 				'number_of_columns'  => $attributes['numOfColumns'],
 			];
 
+			/**
+			 * Story Attributes.
+			 *
+			 * @phpstan-var StoryAttributes $story_attributes
+			 */
 			$story_attributes = array_merge( $story_attributes, $this->get_mapped_field_states() );
 
-			$stories = new Story_Query( $story_attributes, $this->get_query_args() );
-
-			return $stories->render();
+			return ( new Story_Query( $story_attributes, $this->get_query_args() ) )->render();
 		}
 
 		// Embedding a single story by URL.
@@ -293,7 +342,7 @@ class Web_Stories_Block extends Embed_Base {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function get_mapped_field_states(): array {
 		$controls = [
@@ -321,10 +370,9 @@ class Web_Stories_Block extends Embed_Base {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @return array Query arguments.
+	 * @return array<string, mixed> Query arguments.
 	 */
 	protected function get_query_args(): array {
-
 		$attributes = $this->block_attributes;
 
 		$query_args = [
@@ -349,8 +397,13 @@ class Web_Stories_Block extends Embed_Base {
 			$query_args['posts_per_page'] = $attributes['numOfStories'];
 		}
 
-		$query_args['order']   = strtoupper( $attributes['order'] );
-		$query_args['orderby'] = 'title' === $attributes['orderby'] ? 'post_title' : 'post_date';
+		if ( ! empty( $attributes['order'] ) ) {
+			$query_args['order'] = strtoupper( $attributes['order'] );
+		}
+
+		if ( ! empty( $attributes['orderby'] ) ) {
+			$query_args['orderby'] = 'title' === $attributes['orderby'] ? 'post_title' : 'post_date';
+		}
 
 		if ( ! empty( $attributes['authors'] ) && \is_array( $attributes['authors'] ) ) {
 			$query_args['author__in'] = $attributes['authors'];

@@ -2,7 +2,7 @@
   "name": "@googleforcreators/story-editor",
   "description": "The core Web Stories editor web application, which is platform-agnostic.",
   "private": false,
-  "version": "0.1.202206201534",
+  "version": "0.1.202206271222",
   "author": {
     "name": "Google",
     "url": "https://creators.google/"
@@ -61,7 +61,7 @@
     "@googleforcreators/transform": "*",
     "@googleforcreators/units": "*",
     "@googleforcreators/url": "*",
-    "@wmik/use-media-recorder": "^1.6.2-beta.0",
+    "@wmik/use-media-recorder": "^1.6.3-beta.0",
     "blurhash": "^1.1.5",
     "classnames": "^2.3.1",
     "clone-deep": "^4.0.1",

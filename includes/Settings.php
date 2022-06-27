@@ -344,13 +344,13 @@ class Settings extends Service_Base {
 	 *
 	 * @param string $key Setting key.
 	 * @param mixed  $default Optional. Default value to return if the option does not exist.
-	 * @return string|array|bool Setting value.
+	 * @return string|array<int|string,mixed>|bool Setting value.
 	 */
-	public function get_setting( $key, $default = false ) {
+	public function get_setting( string $key, $default = false ) {
 		/**
 		 * Setting value.
 		 *
-		 * @var string|array|bool
+		 * @var string|array<int|string,mixed>|bool
 		 */
 		return get_option( $key, $default );
 	}
@@ -364,7 +364,7 @@ class Settings extends Service_Base {
 	 * @param mixed  $value Setting value.
 	 * @return mixed Setting value.
 	 */
-	public function update_setting( $key, $value ) {
+	public function update_setting( string $key, $value ) {
 		return update_option( $key, $value );
 	}
 }

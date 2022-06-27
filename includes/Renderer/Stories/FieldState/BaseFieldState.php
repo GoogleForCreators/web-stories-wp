@@ -203,10 +203,10 @@ class BaseFieldState implements FieldState {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param array $args Arguments to build field.
+	 * @param array<string,bool|string> $args Arguments to build field.
 	 * @return BaseField
 	 */
-	protected function prepare_field( array $args ) {
+	protected function prepare_field( array $args ): BaseField {
 		return new BaseField( $args );
 	}
 
