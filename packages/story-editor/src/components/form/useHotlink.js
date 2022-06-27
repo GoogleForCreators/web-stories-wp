@@ -53,6 +53,8 @@ function useHotlink({ onChange, type, canUseProxy }) {
         mimeType,
         needsProxy,
         alt: originalFileName,
+        height: hotlinkInfo?.height,
+        width: hotlinkInfo?.width,
       };
 
       const resource = await getResourceFromUrl(resourceLike);

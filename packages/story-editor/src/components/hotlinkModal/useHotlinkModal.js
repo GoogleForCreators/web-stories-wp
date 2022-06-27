@@ -140,6 +140,8 @@ function useHotlinkModal({
           );
           return;
         }
+        hotlinkInfo.width = dimensions.width;
+        hotlinkInfo.height = dimensions.height;
       }
 
       await onSelect({ link, hotlinkInfo, needsProxy });
