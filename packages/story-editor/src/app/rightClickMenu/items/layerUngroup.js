@@ -47,7 +47,7 @@ function LayerUngroup() {
     let count = 0;
     let currentPosition = 0;
 
-    for (const [index] of Object.entries(elements)) {
+    for (const [index] of Object.entries(elements).reverse()) {
       if (elements[index].id === oldElement.id) {
         currentPosition = Number(index);
       }
