@@ -64,7 +64,7 @@ const StyledText = styled(Text)`
 `;
 
 function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
-  const enablePosterHotlinking = useFeature('posterHotlinking');
+  const enablePosterHotlinking = useFeature('videoPosterHotlinking');
   const resource = useCommonObjectValue(
     selectedElements,
     'resource',
