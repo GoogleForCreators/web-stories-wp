@@ -16,6 +16,7 @@
 
 export { default as firePointerEvent } from './firePointerEvent';
 export { default as renderWithTheme } from './renderWithTheme';
+export { default as resolvablePromise } from './resolvablePromise';
 export * from './queryByAriaLabel';
 export * from './queryByAutoAdvanceAfter';
 export * from './queryById';

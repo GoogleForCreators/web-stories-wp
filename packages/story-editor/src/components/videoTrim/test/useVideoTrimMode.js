@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { renderHook, act, waitFor } from '@testing-library/react';
+import { resolvablePromise } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
@@ -137,7 +138,7 @@ describe('useVideoTrimMode', () => {
   });
 
   it('should not allow trim mode if transcoding is not supported', () => {
-    mockTranscodingEnabled.mockImplementationOnce(() => false);
+    mockTranscodingEnabled.mockImplementation(() => false);
     const { result } = setup();
 
     expect(result.current.hasTrimMode).toBe(false);
@@ -187,9 +188,10 @@ describe('useVideoTrimMode', () => {
   it('should enter edit mode for trimmed video with working original', async () => {
     const originalId = 'video456';
     const originalResource = { id: originalId };
+    const originalRequest = resolvablePromise();
     const mockGetMediaById = jest
       .fn()
-      .mockImplementation(() => Promise.resolve(originalResource));
+      .mockImplementation(() => originalRequest.promise);
     const { result, setEditingElementWithState, getMediaById } = setup({
       mockGetMediaById,
       element: {
@@ -203,7 +205,8 @@ describe('useVideoTrimMode', () => {
       },
     });
 
-    act(() => result.current.toggleTrimMode());
+    await act(() => result.current.toggleTrimMode());
+    await act(() => originalRequest.resolve(originalResource));
 
     await waitFor(() => {
       expect(getMediaById).toHaveBeenCalledWith(originalId);
@@ -226,9 +229,10 @@ describe('useVideoTrimMode', () => {
 
   it('should enter edit mode for trimmed video with broken original', async () => {
     const originalId = 'video456';
+    const originalRequest = resolvablePromise();
     const mockGetMediaById = jest
       .fn()
-      .mockImplementation(() => Promise.reject(new Error('404')));
+      .mockImplementation(() => originalRequest.promise);
 
     const { result, setEditingElementWithState, getMediaById } = setup({
       mockGetMediaById,
@@ -243,7 +247,8 @@ describe('useVideoTrimMode', () => {
       },
     });
 
-    act(() => result.current.toggleTrimMode());
+    await act(() => result.current.toggleTrimMode());
+    await act(() => originalRequest.reject(new Error('404')));
 
     await waitFor(() => {
       expect(getMediaById).toHaveBeenCalledWith(originalId);
