@@ -62,6 +62,10 @@ const StyledLockToggle = styled(LockToggle)`
   ${focusStyle};
 `;
 
+const stackableGroupStyleOverride = css`
+  max-width: none;
+`;
+
 function getStickerAspectRatio(element) {
   return stickers?.[element?.sticker?.type].aspectRatio || 1;
 }
@@ -397,7 +401,10 @@ function SizePositionPanel(props) {
           <OpacityControls {...props} />
         </Area>
         <Area area="c">
-          <RadiusControls {...props} />
+          <RadiusControls
+            stackableGroupStyleOverride={stackableGroupStyleOverride}
+            {...props}
+          />
         </Area>
       </Grid>
     </SimplePanel>
