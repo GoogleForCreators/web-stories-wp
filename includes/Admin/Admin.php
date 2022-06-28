@@ -244,7 +244,7 @@ class Admin extends Service_Base {
 	 * @return string[] updated media states.
 	 */
 	public function media_states( $media_states, $post ): array {
-		$active_publisher_logo = (int) get_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
+		$active_publisher_logo = absint( get_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO ) );
 		if ( $post->ID === $active_publisher_logo ) {
 			$media_states[] = __( 'Web Stories Publisher Logo', 'web-stories' );
 		}
