@@ -82,7 +82,7 @@ function Content({
         {stories.length > 0 ? (
           <>
             <StoriesView
-              filterValue={filter.value}
+              filterValue={filter}
               sort={sort}
               storyActions={storyActions}
               stories={stories}
@@ -133,7 +133,7 @@ function Content({
 Content.propTypes = {
   allPagesFetched: PropTypes.bool,
   canViewDefaultTemplates: PropTypes.bool,
-  filter: FilterPropTypes,
+  filter: PropTypes.string,
   filtersObject: PropTypes.object,
   loading: PropTypes.shape({
     isLoading: PropTypes.bool,

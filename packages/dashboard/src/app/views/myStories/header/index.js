@@ -24,17 +24,14 @@ import {
   useDebouncedCallback,
 } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
-import { __, sprintf } from '@googleforcreators/i18n';
+import { __ } from '@googleforcreators/i18n';
 import { trackEvent } from '@googleforcreators/tracking';
-import styled from 'styled-components';
-import { Pill } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
 import { useLayoutContext } from '../../../../components';
 import {
   DASHBOARD_VIEWS,
-  STORY_STATUSES,
   STORY_SORT_MENU_ITEMS,
   TEXT_INPUT_DEBOUNCE,
 } from '../../../../constants';
@@ -43,7 +40,6 @@ import {
   TotalStoriesByStatusPropType,
 } from '../../../../types';
 import {
-  FilterPropTypes,
   SearchPropTypes,
   SortPropTypes,
   ViewPropTypes,
@@ -51,20 +47,10 @@ import {
 import { useDashboardResultsLabel } from '../../../../utils';
 import { BodyViewOptions, PageHeading } from '../../shared';
 import { getSearchOptions } from '../../utils';
+import useFilters from '../filters/useFilters';
+import StoryStatusToggle from './StoryStatusToggle';
 
-const StyledPill = styled(Pill)`
-  margin: 0 2px;
-  white-space: nowrap;
-
-  & > span {
-    padding-left: 8px;
-    color: ${({ theme, isActive }) =>
-      isActive ? theme.colors.gray[20] : theme.colors.fg.tertiary};
-  }
-`;
 function Header({
-  filter,
-  filters,
   initialPageReady,
   search,
   sort,
@@ -80,67 +66,35 @@ function Header({
 
   const searchOptions = useMemo(() => getSearchOptions(stories), [stories]);
 
-  const resultsLabel = useDashboardResultsLabel({
-    currentFilter: filter.value,
-    isActiveSearch: Boolean(search.keyword),
-    totalResults: (filter.value.split(',') || []).reduce(
-      (totalResults, filterKey) =>
-        (totalResults += totalStoriesByStatus[filterKey] || 0),
-      0
-    ),
-    view: DASHBOARD_VIEWS.DASHBOARD,
-  });
+  const { filters } = useFilters(({ state: { filters } }) => ({ filters }));
+  const [dropDownFilters, statusFilter] = useMemo(() => {
+    const _dropDownFilters = [];
+    let _statusFilter;
+    for (const filter of filters) {
+      if (filter.key === 'status') {
+        _statusFilter = filter;
+        continue;
+      }
+      _dropDownFilters.push(filter);
+    }
+    return [_dropDownFilters, _statusFilter];
+  }, [filters]);
 
-  const handleClick = useCallback(
-    (filterValue) => {
-      filter.set(filterValue);
-      scrollToTop();
-    },
-    [filter, scrollToTop]
+  const totalResults = useMemo(
+    () =>
+      (statusFilter?.filterId.split(',') || []).reduce(
+        (total, filterKey) => (total += totalStoriesByStatus[filterKey] || 0),
+        0
+      ),
+    [statusFilter?.filterId, totalStoriesByStatus]
   );
 
-  const HeaderToggleButtons = useMemo(() => {
-    if (
-      !initialPageReady ||
-      (totalStoriesByStatus && Object.keys(totalStoriesByStatus).length === 0)
-    ) {
-      return null;
-    }
-
-    return (
-      <>
-        {STORY_STATUSES.map((storyStatus) => {
-          const { label, status, value } = storyStatus;
-          if (!(status in totalStoriesByStatus)) {
-            return null;
-          }
-
-          const count = totalStoriesByStatus[status];
-          if (count === 0) {
-            return null;
-          }
-
-          const ariaLabel = sprintf(
-            /* translators: %s is story status */
-            __('Filter stories by %s', 'web-stories'),
-            label
-          );
-          return (
-            <StyledPill
-              key={value}
-              onClick={() => handleClick(value)}
-              isActive={filter.value === value}
-              disabled={count <= 0}
-              aria-label={ariaLabel}
-            >
-              {label}
-              {count && <span>{count}</span>}
-            </StyledPill>
-          );
-        }).filter(Boolean)}
-      </>
-    );
-  }, [totalStoriesByStatus, filter.value, initialPageReady, handleClick]);
+  const resultsLabel = useDashboardResultsLabel({
+    currentFilter: statusFilter?.filterId,
+    isActiveSearch: Boolean(search.keyword),
+    totalResults,
+    view: DASHBOARD_VIEWS.DASHBOARD,
+  });
 
   const onSortChange = useCallback(
     (newSort) => {
@@ -171,12 +125,16 @@ function Header({
         searchValue={search.keyword}
         onClear={clearSearch}
       >
-        {HeaderToggleButtons}
+        <StoryStatusToggle
+          initialPageReady={initialPageReady}
+          totalStoriesByStatus={totalStoriesByStatus}
+          totalStories={totalResults}
+        />
       </PageHeading>
 
       <BodyViewOptions
         showGridToggle
-        filters={filters}
+        filters={dropDownFilters}
         showSortDropdown
         resultsLabel={resultsLabel}
         layoutStyle={view.style}
@@ -194,14 +152,14 @@ function Header({
 }
 
 Header.propTypes = {
-  filter: FilterPropTypes.isRequired,
+  // filter: FilterPropTypes.isRequired,
   initialPageReady: PropTypes.bool,
   search: SearchPropTypes.isRequired,
   sort: SortPropTypes.isRequired,
   stories: StoriesPropType,
   totalStoriesByStatus: TotalStoriesByStatusPropType,
   view: ViewPropTypes.isRequired,
-  filters: PropTypes.array,
+  // filters: PropTypes.array,
 };
 
 export default memo(Header);

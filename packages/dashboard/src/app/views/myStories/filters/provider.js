@@ -31,6 +31,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
+import { STORY_STATUS } from '../../../../constants';
 import reducer from './reducer';
 import useTaxonomyFilters from './taxonomy/useTaxonomyFilters';
 import useAuthorFilter from './author/useAuthorFilter';
@@ -64,7 +65,7 @@ export default function FiltersProvider({ children }) {
 
   const [state, dispatch] = useReducer(reducer, {
     filters: [],
-    filtersObject: {},
+    filtersObject: { status: STORY_STATUS.ALL },
   });
 
   /**

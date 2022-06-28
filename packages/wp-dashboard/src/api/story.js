@@ -46,13 +46,11 @@ import { reshapeStoryObject } from './utils';
  */
 export function fetchStories(config, queryParams) {
   const {
-    status = STORY_STATUS.ALL,
     sortOption = STORY_SORT_OPTIONS.LAST_MODIFIED,
     sortDirection,
     searchTerm,
     page = 1,
     perPage = STORIES_PER_REQUEST,
-    author,
     filters = {},
   } = queryParams;
 
@@ -66,9 +64,7 @@ export function fetchStories(config, queryParams) {
     page,
     per_page: perPage,
     order: sortDirection || ORDER_BY_SORT[sortOption],
-    status,
     _fields: STORY_FIELDS,
-    author,
     ...filters,
   };
 

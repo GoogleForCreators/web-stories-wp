@@ -71,12 +71,9 @@ function MyStories() {
       totalStoriesByStatus,
     })
   );
-  const { filters, filtersObject } = useFilters(
-    ({ state: { filters, filtersObject } }) => ({
-      filters,
-      filtersObject,
-    })
-  );
+  const { filtersObject } = useFilters(({ state: { filtersObject } }) => ({
+    filtersObject,
+  }));
 
   const { apiCallbacks, canViewDefaultTemplates } = useConfig();
   const isMounted = useRef(false);
@@ -90,8 +87,6 @@ function MyStories() {
   }, []);
 
   const {
-    filter: statusFilter,
-    filters: dropDownFilters,
     page,
     search,
     sort,
@@ -111,13 +106,11 @@ function MyStories() {
       searchTerm: search.keyword,
       sortDirection: sort.direction,
       sortOption: sort.value,
-      status: statusFilter.value,
-      filters: dropDownFilters.value,
+      filters: filtersObject,
     });
   }, [
     fetchStories,
-    statusFilter.value,
-    dropDownFilters.value,
+    filtersObject,
     page.value,
     search.keyword,
     sort.direction,
@@ -135,8 +128,6 @@ function MyStories() {
     <Layout.Provider>
       <Header
         initialPageReady={initialPageReady}
-        filter={statusFilter}
-        filters={filters}
         search={search}
         sort={sort}
         stories={orderedStories}
@@ -147,7 +138,7 @@ function MyStories() {
       <Content
         allPagesFetched={allPagesFetched}
         canViewDefaultTemplates={canViewDefaultTemplates}
-        filter={statusFilter}
+        filter={filtersObject.status}
         filtersObject={filtersObject}
         loading={{
           isLoading: isLoading,
