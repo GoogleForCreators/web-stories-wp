@@ -135,7 +135,13 @@ describe('Story Details Modal - Admin User', () => {
       await page.keyboard.type('auth');
 
       // wait for search results
-      await page.waitForTimeout(1000);
+      await page.waitForResponse(
+        (response) =>
+          //eslint-disable-next-line jest/no-conditional-in-test
+          response.url().includes('web-stories/v1/users') &&
+          response.url().includes('search=auth') &&
+          response.status() === 200
+      );
 
       const optionListAfterSearch = await authorDropDownOptions.$$eval(
         'li[role="option"]',
