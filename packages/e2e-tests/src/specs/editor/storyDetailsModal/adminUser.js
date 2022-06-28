@@ -135,7 +135,7 @@ describe('Story Details Modal - Admin User', () => {
       await page.keyboard.type('auth');
 
       // wait for search results
-      await page.waitForTimeout(400);
+      await page.waitForTimeout(1000);
 
       const optionListAfterSearch = await authorDropDownOptions.$$eval(
         'li[role="option"]',
