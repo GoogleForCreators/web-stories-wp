@@ -135,6 +135,9 @@ export const combineElements = (
     page.animations,
     shouldRetainAnimations ? [firstId] : [firstId, secondId]
   );
+
+  // Selection is always just second id
+  draft.selection = [secondId];
 };
 
 export default produce(combineElements);

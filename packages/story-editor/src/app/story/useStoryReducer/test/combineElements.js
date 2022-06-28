@@ -194,6 +194,36 @@ describe('combineElements', () => {
     ]);
   });
 
+  it('should preserve selection if first element was selected and second was background', () => {
+    const { restore, combineElements } = setupReducer();
+
+    const state = getDefaultState1();
+    restore(state);
+
+    // Combine element 456 into 123
+    const result = combineElements({
+      firstElement: state.pages[0].elements[1],
+      secondId: '123',
+    });
+
+    expect(result.selection).toStrictEqual(['123']);
+  });
+
+  it('should preserve selection if first element was selected and second was not background', () => {
+    const { restore, combineElements } = setupReducer();
+
+    const state = getDefaultState1();
+    restore(state);
+
+    // Combine element 456 into 789
+    const result = combineElements({
+      firstElement: state.pages[0].elements[1],
+      secondId: '789',
+    });
+
+    expect(result.selection).toStrictEqual(['789']);
+  });
+
   it('should keep the poster of the first video', () => {
     const { restore, combineElements } = setupReducer();
 
@@ -780,6 +810,7 @@ function getDefaultState1() {
       },
     ],
     current: '111',
+    selection: ['456'],
   };
 }
 
