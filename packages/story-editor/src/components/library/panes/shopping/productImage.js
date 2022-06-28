@@ -18,6 +18,7 @@
  */
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
+import { Image } from '@googleforcreators/design-system';
 
 const imgPlaceholder = css`
   display: block;
@@ -32,7 +33,7 @@ const StyledImgPlaceHolder = styled.div`
   ${imgPlaceholder}
 `;
 
-const StyledImage = styled.img`
+const StyledImage = styled(Image)`
   ${imgPlaceholder}
   object-fit: cover;
 `;
@@ -44,9 +45,7 @@ function ProductImage({ product }) {
       alt={product?.productImages[0]?.alt}
       src={imageSrc}
       loading="lazy"
-      decoding="async"
       draggable={false}
-      crossOrigin="anonymous"
     />
   ) : (
     <StyledImgPlaceHolder />

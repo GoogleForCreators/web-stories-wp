@@ -32,6 +32,7 @@ import { Cross, CheckmarkSmall, ExclamationOutline } from '../../icons';
 import { Text } from '../typography';
 import { focusableOutlineCSS } from '../../theme/helpers';
 import { noop } from '../../utils';
+import { Image } from '../image';
 import {
   Placement,
   AUTO_REMOVE_MESSAGE_TIME_INTERVAL_MAX,
@@ -86,7 +87,7 @@ const ThumbnailWrapper = styled.div`
   margin-right: ${({ hasAction }) => (hasAction ? 16 : 0)}px;
 `;
 
-const Thumbnail = styled.img`
+const Thumbnail = styled(Image)`
   max-height: 45px;
   max-width: 45px;
   min-height: ${(45 * 2) / 3}px;
@@ -236,8 +237,6 @@ const SnackbarMessage = ({
       {thumbnail && (
         <ThumbnailWrapper hasAction={hasAction}>
           <Thumbnail
-            decoding="async"
-            crossOrigin="anonymous"
             src={thumbnail.src}
             alt={thumbnail.alt}
             status={thumbnail.status}

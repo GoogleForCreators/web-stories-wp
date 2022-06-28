@@ -22,6 +22,7 @@ import {
   Icons,
   THEME_CONSTANTS,
   Text,
+  Image,
 } from '@googleforcreators/design-system';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -128,7 +129,7 @@ export const DetailCopy = styled(Text).attrs({
 `;
 
 // specifications for exposing a locked story
-export const LockAvatar = styled.img`
+export const LockAvatar = styled(Image)`
   height: 40px;
   width: 40px;
   border: ${({ theme }) =>

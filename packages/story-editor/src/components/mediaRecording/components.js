@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
+import { Image, Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
 import { withOverlay } from '@googleforcreators/moveable';
 
 /**
@@ -82,7 +82,7 @@ export const VideoWrapper = styled.div`
   justify-content: center;
 `;
 
-export const Photo = styled.img`
+export const Photo = styled(Image)`
   display: block;
   width: 100%;
   height: 100%;

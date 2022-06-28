@@ -22,6 +22,7 @@ import {
   Button,
   BUTTON_SIZES,
   BUTTON_TYPES,
+  Image,
   noop,
 } from '@googleforcreators/design-system';
 import { forwardRef } from '@googleforcreators/react';
@@ -90,10 +91,9 @@ const TemplateGridItem = forwardRef(
             <PicturePoster>
               <source srcSet={posterSrc?.webp} type="image/webp" />
               <source srcSet={posterSrc?.png} type="image/png" />
-              <img
+              <Image
                 src={posterSrc?.png}
                 alt={posterAltText}
-                decoding="async"
                 width={DEFAULT_GRID_IMG_WIDTH}
                 height={DEFAULT_GRID_IMG_HEIGHT}
               />

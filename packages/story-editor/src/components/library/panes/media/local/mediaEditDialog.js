@@ -28,6 +28,7 @@ import {
   ResourcePropTypes,
 } from '@googleforcreators/media';
 import {
+  Image as RawImage,
   Text,
   TextArea,
   THEME_CONSTANTS,
@@ -49,7 +50,7 @@ const styledMediaThumbnail = css`
   margin-right: 28px;
 `;
 
-const Image = styled.img`
+const Image = styled(RawImage)`
   ${styledMediaThumbnail}
 `;
 
@@ -150,8 +151,6 @@ function MediaEditDialog({ resource, onClose }) {
             src={getSmallestUrlForWidth(THUMBNAIL_WIDTH, resource)}
             alt={alt}
             loading={'lazy'}
-            crossOrigin="anonymous"
-            decoding="async"
           />
         ) : (
           <Video

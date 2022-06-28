@@ -29,7 +29,7 @@ import {
   useMemo,
 } from '@googleforcreators/react';
 import { TransformProvider } from '@googleforcreators/transform';
-
+import { Image as RawImage } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
@@ -90,7 +90,7 @@ const PreviewWrapper = styled.div`
   ${({ background }) => generatePatternStyles(background)}
 `;
 
-const Image = styled.img`
+const Image = styled(RawImage)`
   position: absolute;
   width: 100%;
   left: 0;
@@ -149,7 +149,7 @@ function PagePreview({ page, label, ...props }) {
         <Page ref={setPageRef} aria-label={label} {...props}>
           <PreviewWrapper background={backgroundColor}>
             {pageImage ? (
-              <Image src={pageImage} alt={label} decoding="async" />
+              <Image src={pageImage} alt={label} />
             ) : (
               page.elements.map((element) => (
                 <DisplayElement

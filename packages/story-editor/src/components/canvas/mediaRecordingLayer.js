@@ -228,7 +228,6 @@ function MediaRecordingLayer() {
               {isImageCapture && (
                 <VideoWrapper>
                   <Photo
-                    decoding="async"
                     src={mediaBlobUrl}
                     alt={__('Image capture', 'web-stories')}
                   />

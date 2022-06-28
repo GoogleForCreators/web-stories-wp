@@ -21,7 +21,7 @@ import styled from 'styled-components';
 import { rgba } from 'polished';
 import PropTypes from 'prop-types';
 import { __ } from '@googleforcreators/i18n';
-import { TOOLTIP_PLACEMENT } from '@googleforcreators/design-system';
+import { TOOLTIP_PLACEMENT, Image } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -49,7 +49,7 @@ const IconWrapper = styled.div`
   display: inline-block;
 `;
 
-const BrandIcon = styled.img`
+const BrandIcon = styled(Image)`
   width: 100%;
   height: 100%;
   border: none;

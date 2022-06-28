@@ -37,6 +37,7 @@ import {
   shouldDisplayBorder,
 } from '@googleforcreators/masks';
 import { StoryPropTypes, getTransformFlip } from '@googleforcreators/elements';
+import { Image as RawImage } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -65,7 +66,7 @@ const fadedMediaCSS = css`
   ${elementWithFlip}
 `;
 
-const FadedImage = styled.img`
+const FadedImage = styled(RawImage)`
   ${fadedMediaCSS}
 `;
 
@@ -88,7 +89,7 @@ const cropMediaCSS = css`
       : null};
 `;
 
-const CropImage = styled.img`
+const CropImage = styled(RawImage)`
   ${cropMediaCSS}
 `;
 
@@ -233,7 +234,6 @@ function MediaEdit({
   return (
     <Element ref={elementRef}>
       {isImage && (
-        /* eslint-disable-next-line styled-components-a11y/alt-text -- False positive. */
         <FadedImage
           {...fadedMediaProps}
           src={url}
@@ -248,7 +248,7 @@ function MediaEdit({
       )}
       <CropBox ref={setCropBox} {...borderProps}>
         <WithMask element={element} fill applyFlip={false}>
-          {/* eslint-disable-next-line styled-components-a11y/alt-text -- False positive. */}
+          {}
           {isImage && <CropImage {...cropMediaProps} />}
           {isVideo && (
             /*eslint-disable-next-line styled-components-a11y/media-has-caption,jsx-a11y/media-has-caption -- Tracks might not exist. Also, unwanted in edit mode. */

@@ -26,6 +26,7 @@ import {
   BUTTON_TYPES,
   THEME_CONSTANTS,
   Text,
+  Image,
   themeHelpers,
   ThemeGlobals,
 } from '@googleforcreators/design-system';
@@ -69,7 +70,7 @@ const TemplateTitleContainer = styled(PageTemplateTitleContainer)`
   }
 `;
 
-const PosterImg = styled.img`
+const PosterImg = styled(Image)`
   display: block;
   width: 100%;
 `;
@@ -107,8 +108,6 @@ const DefaultPageTemplate = forwardRef(
                 __('Snapshot of page template for %1$s', 'web-stories'),
                 page.title
               )}
-              crossOrigin="anonymous"
-              decoding="async"
               draggable={false}
             />
           )}

@@ -21,6 +21,7 @@ import {
   Icons,
   themeHelpers,
   useKeyDownEffect,
+  Image,
 } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 import {
@@ -54,7 +55,7 @@ import { ActionButton } from '../shared';
 import useRovingTabIndex from '../../../../utils/useRovingTabIndex';
 import useLibrary from '../../useLibrary';
 
-const TemplateImage = styled.img`
+const TemplateImage = styled(Image)`
   width: 100%;
   height: auto;
 `;

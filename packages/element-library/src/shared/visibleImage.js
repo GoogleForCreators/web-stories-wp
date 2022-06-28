@@ -19,8 +19,9 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { Image as RawImage } from '@googleforcreators/design-system';
 
-const Image = styled.img`
+const Image = styled(RawImage)`
   display: block;
   height: 21px;
   width: 21px;
@@ -31,7 +32,7 @@ const Image = styled.img`
 function VisibleImage({ ...attrs }) {
   // The image is purely decorative by default, because the alt text is already used
   // for the layer description. Hence using alt="" to avoid repetition.
-  return <Image alt="" {...attrs} decoding="async" crossOrigin="anonymous" />;
+  return <Image alt="" {...attrs} />;
 }
 
 VisibleImage.propTypes = {

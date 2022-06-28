@@ -29,6 +29,7 @@ import {
   Text,
   THEME_CONSTANTS,
   noop,
+  Image as RawImage,
 } from '@googleforcreators/design-system';
 
 /**
@@ -47,7 +48,7 @@ const styledTiles = css`
   opacity: 0;
 `;
 
-const Image = styled.img`
+const Image = styled(RawImage)`
   ${styledTiles}
 `;
 
@@ -85,7 +86,7 @@ const Duration = styled(Text).attrs({
   display: block;
 `;
 
-const CloneImg = styled.img`
+const CloneImg = styled(RawImage)`
   opacity: 0;
   width: ${({ width }) => `${width}px`};
   height: ${({ height }) => `${height}px`};
@@ -184,7 +185,6 @@ function InnerElement({
     ...commonProps,
     onLoad: makeMediaVisible,
     loading: 'lazy',
-    decoding: 'async',
     draggable: false,
   };
 
@@ -210,14 +210,13 @@ function InnerElement({
 
   if (type === ContentType.IMAGE) {
     // eslint-disable-next-line styled-components-a11y/alt-text -- False positive.
-    media = <Image key={src} {...imageProps} ref={mediaElement} />;
+    media = <Image key={src} ref={mediaElement} {...imageProps} />;
     cloneProps.src = thumbnailURL;
   } else if ([ContentType.VIDEO, ContentType.GIF].includes(type)) {
     media = (
       <>
         {poster && !active ? (
-          /* eslint-disable-next-line styled-components-a11y/alt-text -- False positive. */
-          <Image key={src} {...imageProps} ref={mediaElement} />
+          <Image key={src} ref={mediaElement} {...imageProps} />
         ) : (
           // eslint-disable-next-line jsx-a11y/media-has-caption,styled-components-a11y/media-has-caption -- No captions/tracks because video is muted.
           <Video key={src} {...videoProps} ref={mediaElement}>

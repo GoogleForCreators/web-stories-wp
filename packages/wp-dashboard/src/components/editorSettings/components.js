@@ -27,6 +27,7 @@ import {
   Input,
   Link,
   Text,
+  Image,
   THEME_CONSTANTS,
   themeHelpers,
 } from '@googleforcreators/design-system';
@@ -155,7 +156,7 @@ export const GridItemButton = styled.button`
   ${themeHelpers.focusableOutlineCSS};
 `;
 
-export const Logo = styled.img`
+export const Logo = styled(Image)`
   object-fit: cover;
   width: 100%;
   height: 100%;

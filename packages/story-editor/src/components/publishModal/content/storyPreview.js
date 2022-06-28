@@ -23,6 +23,7 @@ import {
   Text,
   THEME_CONSTANTS,
   MEDIA_VARIANTS,
+  Image as RawImage,
 } from '@googleforcreators/design-system';
 import { useCallback, useMemo } from '@googleforcreators/react';
 import { PAGE_RATIO } from '@googleforcreators/units';
@@ -58,7 +59,7 @@ PreviewContainer.propTypes = {
 };
 
 // In ascending order, the featured image is set as the full available 2:3 space.
-export const Image = styled.img`
+export const Image = styled(RawImage)`
   height: 100%;
   width: 100%;
   display: block;
@@ -126,7 +127,7 @@ const ScrimTop = styled.div`
   width: 100%;
 `;
 // Publisher logo border radius and box shadow are outside of theme to match Search Cover Preview
-const PublisherLogo = styled.img`
+const PublisherLogo = styled(RawImage)`
   grid-area: publisherLogo;
   height: 24px;
   width: 24px;
@@ -260,7 +261,6 @@ const StoryPreview = () => {
         <PreviewContainer width={mediaWidth} height={mediaHeight}>
           {featuredMedia?.url ? (
             <Image
-              crossOrigin="anonymous"
               src={featuredMedia.url}
               width={featuredMedia.width}
               height={featuredMedia.height}
@@ -276,7 +276,6 @@ const StoryPreview = () => {
               <ScrimTop>
                 {publisherLogo?.url?.length > 0 && (
                   <PublisherLogo
-                    crossOrigin="anonymous"
                     width={publisherLogo.width}
                     height={publisherLogo.height}
                     src={publisherLogo.url}

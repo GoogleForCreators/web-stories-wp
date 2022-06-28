@@ -22,6 +22,7 @@ import PropTypes from 'prop-types';
 import { useRef } from '@googleforcreators/react';
 import { getMediaSizePositionProps } from '@googleforcreators/media';
 import { StoryPropTypes } from '@googleforcreators/elements';
+import { Image as RawImage } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -37,7 +38,7 @@ const Video = styled.video`
   ${videoWithScale}
 `;
 
-const Image = styled.img`
+const Image = styled(RawImage)`
   position: absolute;
   max-height: initial;
   object-fit: contain;

@@ -31,6 +31,7 @@ import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
 import {
   Link,
   Text,
+  Image,
   THEME_CONSTANTS,
   Icons,
   Datalist,
@@ -109,7 +110,7 @@ const DropdownWrapper = styled.div`
   margin-top: 3px;
 `;
 
-const LogoImg = styled.img`
+const LogoImg = styled(Image)`
   object-fit: cover;
   width: 100%;
   height: 100%;
@@ -249,12 +250,7 @@ function PublishPanel({ nameOverride }) {
       }
       return (
         <Datalist.Option value={option.id} ref={ref} {...rest}>
-          <LogoImg
-            src={option.url}
-            alt=""
-            decoding="async"
-            crossOrigin="anonymous"
-          />
+          <LogoImg src={option.url} alt="" />
         </Datalist.Option>
       );
     }
@@ -264,12 +260,7 @@ function PublishPanel({ nameOverride }) {
       ? __('Select logo', 'web-stories')
       : __('No logo', 'web-stories');
     return publisherLogo.id ? (
-      <LogoImg
-        src={publisherLogo.url}
-        alt=""
-        decoding="async"
-        crossOrigin="anonymous"
-      />
+      <LogoImg src={publisherLogo.url} alt="" />
     ) : (
       <Text as="span" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
         {displayText}

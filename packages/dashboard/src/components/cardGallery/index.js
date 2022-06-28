@@ -26,7 +26,7 @@ import {
   useState,
 } from '@googleforcreators/react';
 import { __, sprintf } from '@googleforcreators/i18n';
-import { useGridViewKeys } from '@googleforcreators/design-system';
+import { useGridViewKeys, Image } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -121,9 +121,8 @@ function CardGallery({ galleryPosters, isRTL, galleryLabel }) {
             <picture>
               <source srcSet={poster.webp} type="image/webp" />
               <source srcSet={poster.png} type="image/png" />
-              <img
+              <Image
                 src={poster.png}
-                decoding="async"
                 alt={getPosterAltCopy(pageNumber)}
                 width={DEFAULT_GRID_IMG_WIDTH}
                 height={DEFAULT_GRID_IMG_HEIGHT}
@@ -162,9 +161,8 @@ function CardGallery({ galleryPosters, isRTL, galleryLabel }) {
               srcSet={galleryPosters[selectedGridItemIndex].png}
               type="image/png"
             />
-            <img
+            <Image
               src={galleryPosters[selectedGridItemIndex].png}
-              decoding="async"
               alt={sprintf(
                 /* translators: %s: active preview page number */
                 __('Active Page Preview - Page %s', 'web-stories'),

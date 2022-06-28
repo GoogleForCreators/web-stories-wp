@@ -24,6 +24,7 @@ import { FULLBLEED_RATIO } from '@googleforcreators/units';
 import {
   useGlobalKeyDownEffect,
   CircularProgress,
+  Image,
 } from '@googleforcreators/design-system';
 
 /**
@@ -101,7 +102,7 @@ const Center = styled.div`
   align-items: center;
 `;
 
-const CanvasImage = styled.img`
+const CanvasImage = styled(Image)`
   width: 100%;
 `;
 

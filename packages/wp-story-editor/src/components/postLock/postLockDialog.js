@@ -105,14 +105,7 @@ function PostLockDialog({
     >
       <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
         {user?.avatar && (
-          <Img
-            src={user.avatar}
-            alt={user.name}
-            height={48}
-            width={48}
-            crossOrigin="anonymous"
-            decoding="async"
-          />
+          <Img src={user.avatar} alt={user.name} height={48} width={48} />
         )}
         {dialogContent}
       </Text>

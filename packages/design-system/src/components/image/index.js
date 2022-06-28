@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,9 +17,23 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { Image } from '@googleforcreators/design-system';
+import PropTypes from 'prop-types';
+import { forwardRef } from '@googleforcreators/react';
 
-export const Img = styled(Image)`
-  float: left;
-  margin: 0px 10px 10px 0px;
-`;
+const Img = styled.img``;
+
+export const Image = forwardRef(({ alt, ...attrs }, ref) => {
+  return (
+    <Img
+      alt={alt}
+      ref={ref}
+      decoding="async"
+      crossOrigin="anonymous"
+      {...attrs}
+    />
+  );
+});
+
+Image.propTypes = {
+  alt: PropTypes.string,
+};

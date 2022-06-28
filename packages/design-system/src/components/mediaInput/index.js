@@ -41,6 +41,7 @@ import { Pencil } from '../../icons';
 import { Menu } from '../menu';
 import { BaseTooltip } from '../tooltip';
 import { PLACEMENT, Popup } from '../popup';
+import { Image } from '../image';
 import Landscape from './icons/landscape.svg';
 import { MEDIA_VARIANTS } from './constants';
 
@@ -81,7 +82,7 @@ const DefaultImage = styled(Landscape)`
   color: ${({ theme }) => theme.colors.standard.white};
 `;
 
-const Img = styled.img`
+const Img = styled(Image)`
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -207,8 +208,6 @@ export const MediaInput = forwardRef(function Media(
             <Img
               src={value}
               alt={alt}
-              crossOrigin="anonymous"
-              decoding="async"
               width={imgProps?.width || null}
               height={imgProps?.height || null}
             />

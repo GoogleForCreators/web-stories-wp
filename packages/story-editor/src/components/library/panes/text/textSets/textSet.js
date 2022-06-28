@@ -26,6 +26,7 @@ import {
   BUTTON_TRANSITION_TIMING,
   ThemeGlobals,
   themeHelpers,
+  Image,
 } from '@googleforcreators/design-system';
 
 /**
@@ -71,7 +72,7 @@ const TextSetItem = styled.button`
   }
 `;
 
-const TextSetImg = styled.img`
+const TextSetImg = styled(Image)`
   width: ${TEXT_SET_SIZE}px;
   height: ${TEXT_SET_SIZE}px;
 `;
@@ -139,12 +140,7 @@ function TextSet(
       {...rest}
     >
       {renderImages ? (
-        <TextSetImg
-          src={`${cdnURL}images/text-sets/${id}.png`}
-          alt=""
-          crossOrigin="anonymous"
-          decoding="async"
-        />
+        <TextSetImg src={`${cdnURL}images/text-sets/${id}.png`} />
       ) : (
         <TextSetElements isForDisplay elements={elements} />
       )}

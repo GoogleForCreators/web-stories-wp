@@ -28,6 +28,7 @@ import {
   getSmallestUrlForWidth,
 } from '@googleforcreators/media';
 import { StoryPropTypes } from '@googleforcreators/elements';
+import { Image } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -36,7 +37,7 @@ import { noop } from '../utils/noop';
 import { mediaWithScale } from './util';
 import MediaDisplay from './display';
 
-const Img = styled.img`
+const Img = styled(Image)`
   position: absolute;
   ${mediaWithScale}
 `;
