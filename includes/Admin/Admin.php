@@ -32,6 +32,7 @@ use Google\Web_Stories\Context;
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Renderer\Story\Image;
 use Google\Web_Stories\Service_Base;
+use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
 use WP_Post;
 
@@ -39,6 +40,7 @@ use WP_Post;
  * Admin class.
  */
 class Admin extends Service_Base {
+
 	/**
 	 * Context instance.
 	 *
@@ -64,6 +66,8 @@ class Admin extends Service_Base {
 		add_filter( 'admin_body_class', [ $this, 'admin_body_class' ], 99 );
 		add_filter( 'default_content', [ $this, 'prefill_post_content' ], 10, 2 );
 		add_filter( 'default_title', [ $this, 'prefill_post_title' ] );
+		add_filter( 'default_title', [ $this, 'prefill_post_title' ] );
+		add_filter( 'display_media_states', [ $this, 'media_states' ], 10, 2 );
 	}
 
 	/**
@@ -155,7 +159,6 @@ class Admin extends Service_Base {
 		];
 
 		if ( ! use_block_editor_for_post( $post ) ) {
-
 			$content = '[web_stories_embed url="%1$s" title="%2$s" poster="%3$s" width="%4$s" height="%5$s" align="%6$s"]';
 
 			return sprintf(
@@ -228,5 +231,23 @@ class Admin extends Service_Base {
 		// Not using get_the_title() because we need the raw title.
 		// Otherwise it runs through wptexturize() and the like, which we want to avoid.
 		return $post->post_title;
+	}
+
+	
+	/**
+	 * Adds active publisher logo to media state output.
+	 *
+	 * @since 1.2.2
+	 *
+	 * @param string[] $media_states Array of media states.
+	 * @param WP_Post  $post    Post object.
+	 * @return string[] updated media states.
+	 */
+	public function media_states( $media_states, $post ): array {
+		$active_publisher_logo = (int) get_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
+		if ( $post->ID === $active_publisher_logo ) {
+			$media_states[] = __( 'Web Stories Publisher Logo', 'web-stories' );
+		}
+		return $media_states;
 	}
 }
