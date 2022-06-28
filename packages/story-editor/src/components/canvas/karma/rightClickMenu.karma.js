@@ -34,6 +34,7 @@ describe('Right Click Menu integration', () => {
 
   beforeEach(async () => {
     fixture = new Fixture();
+    fixture.setFlags({ shoppingIntegration: true });
     await fixture.render();
     await fixture.collapseHelpCenter();
     await fixture.events.click(fixture.editor.footer.layerPanel.togglePanel);
@@ -176,6 +177,18 @@ describe('Right Click Menu integration', () => {
   function addToSavedColors() {
     return fixture.screen.getByRole('menuitem', {
       name: /^Add Color to/i,
+    });
+  }
+
+  function useShapeAsMask() {
+    return fixture.screen.getByRole('menuitem', {
+      name: /^Use Shape as a Mask/i,
+    });
+  }
+
+  function removeShapeMask() {
+    return fixture.screen.getByRole('menuitem', {
+      name: /^Unmask/i,
     });
   }
 
@@ -353,6 +366,28 @@ describe('Right Click Menu integration', () => {
         },
         link: null,
         ...shapePartial,
+      })
+    );
+  }
+
+  /**
+   * Add product to canvas
+   *
+   * @param {Object} productPartial Object with product properties to override defaults.
+   * @return {Object} the product element
+   */
+  function addProduct(productPartial = {}) {
+    return fixture.act(() =>
+      insertElement('product', {
+        x: 10,
+        y: 10,
+        width: 50,
+        height: 50,
+        product: {
+          productId: 'kt-38',
+          productTitle: 'Logo Collection',
+        },
+        ...productPartial,
       })
     );
   }
@@ -868,6 +903,8 @@ describe('Right Click Menu integration', () => {
 
     describe('right click menu: copying and pasting styles', () => {
       it('should copy and paste styles', async () => {
+        // #11321 adding/editing animations on the first page is disabled
+        await fixture.events.click(fixture.editor.canvas.pageActions.addPage);
         const earthImage = await addEarthImage();
         const rangerImage = await addRangerImage();
 
@@ -1348,6 +1385,89 @@ describe('Right Click Menu integration', () => {
       );
       expect(shapeElements.length).toBe(2);
       verifyElementDuplicated(shapeElements[0], shapeElements[1]);
+    });
+  });
+
+  describe('right click menu: use shape mask', () => {
+    it('adds and removes mask from image element', async () => {
+      const image = await addEarthImage();
+      const shape = await addShape({
+        backgroundColor: {
+          color: {
+            r: 203,
+            g: 103,
+            b: 103,
+          },
+        },
+      });
+
+      const imageFrame = fixture.editor.canvas.framesLayer.frame(image.id).node;
+      const shapeFrame = fixture.editor.canvas.framesLayer.frame(shape.id).node;
+
+      // select shape and image targets
+      await clickOnTarget(imageFrame);
+      await clickOnTarget(shapeFrame, 'Shift');
+
+      // multiple elements should be selected
+      const selectedElements = await fixture.renderHook(() =>
+        useStory(({ state }) => state.selectedElements)
+      );
+      expect(selectedElements.length).toBe(2);
+
+      // add shape mask
+      await rightClickOnTarget(imageFrame);
+      await fixture.events.click(useShapeAsMask());
+      await clickOnTarget(imageFrame);
+
+      const { selectedElement } = await fixture.renderHook(() =>
+        useStory(({ state }) => ({
+          selectedElement: state.selectedElements[0],
+        }))
+      );
+
+      expect(selectedElement.mask.type).toEqual('heart');
+
+      // remove the mask
+      const maskedFrame = fixture.editor.canvas.framesLayer.frame(
+        selectedElement.id
+      ).node;
+      await rightClickOnTarget(maskedFrame);
+      await fixture.events.click(removeShapeMask());
+
+      // click on the now "detached" mask
+      await clickOnTarget(imageFrame);
+
+      // delete the "detached" mask
+      await fixture.events.keyboard.press('del');
+
+      const { unmaskedElement } = await fixture.renderHook(() =>
+        useStory(({ state }) => ({
+          unmaskedElement: state.currentPage.elements[1],
+        }))
+      );
+
+      expect(unmaskedElement.mask.type).toEqual('rectangle');
+    });
+  });
+
+  describe('right click menu: product', () => {
+    it('product has right click menu', async () => {
+      const product = await addProduct({});
+      const productElement = fixture.editor.canvas.framesLayer.frame(
+        product.id
+      ).node;
+      await rightClickOnTarget(productElement);
+      await fixture.events.click(selectLayerButton());
+
+      const productItem = fixture.screen.getByRole('menuitem', {
+        name: /^Logo Collection$/,
+      });
+
+      expect(productItem).toBeDefined();
+      expect(sendBackward().disabled).toBeTrue();
+      expect(sendToBack().disabled).toBeTrue();
+      expect(bringForward().disabled).toBeTrue();
+      expect(bringToFront().disabled).toBeTrue();
     });
   });
 });

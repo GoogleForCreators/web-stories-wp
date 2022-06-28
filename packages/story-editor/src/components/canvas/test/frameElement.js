@@ -72,7 +72,10 @@ describe('FrameElement selection', () => {
     // Fire a mousedown event.
     const wrapper = container.querySelector('[data-element-id="1"]');
     fireEvent.mouseDown(wrapper);
-    expect(setSelectedElementsById).toHaveBeenCalledWith({ elementIds: ['1'] });
+    expect(setSelectedElementsById).toHaveBeenCalledWith({
+      elementIds: ['1'],
+      withLinked: true,
+    });
   });
 
   it('should select unselected element on focus', () => {
@@ -98,7 +101,10 @@ describe('FrameElement selection', () => {
     // Fire a mousedown event.
     const wrapper = container.querySelector('[data-element-id="1"]');
     fireEvent.focus(wrapper);
-    expect(setSelectedElementsById).toHaveBeenCalledWith({ elementIds: ['1'] });
+    expect(setSelectedElementsById).toHaveBeenCalledWith({
+      elementIds: ['1'],
+      withLinked: true,
+    });
   });
 
   it('should not select on mousedown if already selected', () => {
@@ -156,7 +162,10 @@ describe('FrameElement selection', () => {
     // Fire a mousedown event with shift.
     const wrapper = container.querySelector('[data-element-id="1"]');
     fireEvent.mouseDown(wrapper, { shiftKey: true });
-    expect(toggleElementInSelection).toHaveBeenCalledWith({ elementId: '1' });
+    expect(toggleElementInSelection).toHaveBeenCalledWith({
+      elementId: '1',
+      withLinked: true,
+    });
   });
 });
 

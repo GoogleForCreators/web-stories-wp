@@ -52,7 +52,8 @@ function OutputPage({
     elements,
     backgroundColor,
     backgroundAudio,
-    pageAttachment,
+    pageAttachment = {},
+    shoppingAttachment = {},
   } = page;
 
   const [backgroundElement, ...otherElements] = elements;
@@ -78,25 +79,38 @@ function OutputPage({
   );
 
   const regularElements = otherElements.map((element) => {
-    const { id: elementId, type, tagName = 'auto' } = element;
+    // Check if we need to change anything in this element
 
-    if ('text' === type && 'auto' === tagName) {
-      element.tagName = tagNamesMap.get(elementId);
-    }
-
-    // Remove invalid links.
+    // Text elements need a tag name
+    const needsTagName = 'text' === element.type;
+    // Invalid links must be removed
     // TODO: this should come from the pre-publish checklist in the future.
-    if (pageAttachment?.url && isElementBelowLimit(element)) {
-      delete element.link;
+    const hasIllegalLink = pageAttachment?.url && isElementBelowLimit(element);
+    const requiresChange = needsTagName || hasIllegalLink;
+
+    // If neither change needed, return original
+    if (!requiresChange) {
+      return element;
     }
 
-    return element;
+    // At least one change needed, create shallow clone and modify that
+    const newElement = { ...element };
+    if (needsTagName) {
+      newElement.tagName = tagNamesMap.get(element.id);
+    }
+    if (hasIllegalLink) {
+      delete newElement.link;
+    }
+    return newElement;
   });
 
   const products = elements
     .filter(({ type }) => type === ELEMENT_TYPES.PRODUCT)
     .map(({ product }) => product)
     .filter(Boolean);
+
+  const hasProducts = products.length > 0 && flags?.shoppingIntegration;
+  const hasPageAttachment = pageAttachment?.url && !hasProducts;
 
   const videoCaptions = elements
     .filter(
@@ -191,9 +205,9 @@ function OutputPage({
       )}
 
       {/* <amp-story-page-outlink> needs to be the last child element */}
-      {pageAttachment?.url && <Outlink {...pageAttachment} />}
-      {products.length > 0 && flags?.shoppingIntegration && (
-        <ShoppingAttachment products={products} {...pageAttachment} />
+      {hasPageAttachment && <Outlink {...pageAttachment} />}
+      {hasProducts && (
+        <ShoppingAttachment products={products} {...shoppingAttachment} />
       )}
     </amp-story-page>
   );

@@ -37,6 +37,7 @@ use Google\Web_Stories\Media\Types;
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Page_Template_Post_Type;
 use Google\Web_Stories\Service_Base;
+use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tracking;
 use WP_Post;
@@ -134,6 +135,13 @@ class Editor extends Service_Base implements HasRequirements {
 	private $types;
 
 	/**
+	 * Settings instance.
+	 *
+	 * @var Settings Settings instance.
+	 */
+	private $settings;
+
+	/**
 	 * Dashboard constructor.
 	 *
 	 * @SuppressWarnings(PHPMD.ExcessiveParameterList)
@@ -151,6 +159,7 @@ class Editor extends Service_Base implements HasRequirements {
 	 * @param Font_Post_Type          $font_post_type          Font_Post_Type instance.
 	 * @param Context                 $context                 Context instance.
 	 * @param Types                   $types                   Types instance.
+	 * @param Settings                $settings                Settings instance.
 	 */
 	public function __construct(
 		Experiments $experiments,
@@ -163,7 +172,8 @@ class Editor extends Service_Base implements HasRequirements {
 		Page_Template_Post_Type $page_template_post_type,
 		Font_Post_Type $font_post_type,
 		Context $context,
-		Types $types
+		Types $types,
+		Settings $settings
 	) {
 		$this->experiments             = $experiments;
 		$this->meta_boxes              = $meta_boxes;
@@ -176,6 +186,7 @@ class Editor extends Service_Base implements HasRequirements {
 		$this->font_post_type          = $font_post_type;
 		$this->context                 = $context;
 		$this->types                   = $types;
+		$this->settings                = $settings;
 	}
 
 	/**
@@ -305,7 +316,7 @@ class Editor extends Service_Base implements HasRequirements {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @return array
+	 * @return array<string,mixed> Editor settings.
 	 */
 	public function get_editor_settings(): array {
 		$post                 = get_post();
@@ -355,6 +366,8 @@ class Editor extends Service_Base implements HasRequirements {
 		// See https://github.com/GoogleForCreators/web-stories-wp/issues/10809.
 		$publisher_name = html_entity_decode( $story->get_publisher_name(), ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401 );
 
+		$shopping_provider = $this->settings->get_setting( $this->settings::SETTING_NAME_SHOPPING_PROVIDER );
+
 		$settings = [
 			'autoSaveInterval'        => \defined( 'AUTOSAVE_INTERVAL' ) ? AUTOSAVE_INTERVAL : null,
 			'isRTL'                   => is_rtl(),
@@ -400,6 +413,7 @@ class Editor extends Service_Base implements HasRequirements {
 			'version'                 => WEBSTORIES_VERSION,
 			'nonce'                   => $nonce,
 			'showMedia3p'             => true,
+			'shoppingProvider'        => $shopping_provider,
 			'encodeMarkup'            => $this->decoder->supports_decoding(),
 			'metaBoxes'               => $this->meta_boxes->get_meta_boxes_per_location(),
 			'ffmpegCoreUrl'           => trailingslashit( WEBSTORIES_CDN_URL ) . 'js/@ffmpeg/core@0.10.0/dist/ffmpeg-core.js',

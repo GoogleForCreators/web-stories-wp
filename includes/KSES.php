@@ -34,6 +34,13 @@ use Google\Web_Stories\Infrastructure\HasRequirements;
  * Provides KSES utility methods to override the ones from core.
  *
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
+ *
+ * @phpstan-type PostData array{
+ *   post_parent: int,
+ *   post_type: string,
+ *   post_content?: string,
+ *   post_content_filtered?: string
+ * }
  */
 class KSES extends Service_Base implements HasRequirements {
 
@@ -45,14 +52,26 @@ class KSES extends Service_Base implements HasRequirements {
 	private $story_post_type;
 
 	/**
+	 * Page_Template_Post_Type instance.
+	 *
+	 * @var Page_Template_Post_Type Page_Template_Post_Type instance.
+	 */
+	private $page_template_post_type;
+
+	/**
 	 * KSES constructor.
 	 *
 	 * @since 1.12.0
 	 *
-	 * @param Story_Post_Type $story_post_type Story_Post_Type instance.
+	 * @param Story_Post_Type         $story_post_type         Story_Post_Type instance.
+	 * @param Page_Template_Post_Type $page_template_post_type Page_Template_Post_Type instance.
 	 */
-	public function __construct( Story_Post_Type $story_post_type ) {
-		$this->story_post_type = $story_post_type;
+	public function __construct(
+		Story_Post_Type $story_post_type,
+		Page_Template_Post_Type $page_template_post_type
+	) {
+		$this->story_post_type         = $story_post_type;
+		$this->page_template_post_type = $page_template_post_type;
 	}
 
 	/**
@@ -74,7 +93,55 @@ class KSES extends Service_Base implements HasRequirements {
 	 * @return string[] List of required services.
 	 */
 	public static function get_requirements(): array {
-		return [ 'story_post_type' ];
+		return [ 'story_post_type', 'page_template_post_type' ];
+	}
+
+	/**
+	 * Checks whether the post type is correct and user has capability to edit it.
+	 *
+	 * @since 1.22.0
+	 *
+	 * @param string   $post_type   Post type slug.
+	 * @param int|null $post_parent Parent post ID.
+	 * @return bool Whether the user can edit the provided post type.
+	 */
+	private function is_allowed_post_type( string $post_type, ?int $post_parent ): bool {
+		if ( $this->story_post_type->get_slug() === $post_type && $this->story_post_type->has_cap( 'edit_posts' ) ) {
+			return true;
+		}
+
+		if ( $this->page_template_post_type->get_slug() === $post_type && $this->page_template_post_type->has_cap( 'edit_posts' ) ) {
+			return true;
+		}
+
+		// For story autosaves.
+		if (
+			(
+				'revision' === $post_type &&
+				! empty( $post_parent ) &&
+				get_post_type( $post_parent ) === $this->story_post_type->get_slug()
+			) &&
+			$this->story_post_type->has_cap( 'edit_posts' )
+		) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Filters story data.
+	 *
+	 * Provides simple sanity check to ensure story data is valid JSON.
+	 *
+	 * @since 1.22.0
+	 *
+	 * @param string $story_data JSON-encoded story data.
+	 * @return string Sanitized & slashed story data.
+	 */
+	private function filter_story_data( string $story_data ): string {
+		$decoded = json_decode( (string) wp_unslash( $story_data ), true );
+		return null === $decoded ? '' : wp_slash( (string) wp_json_encode( $decoded ) );
 	}
 
 	/**
@@ -88,51 +155,40 @@ class KSES extends Service_Base implements HasRequirements {
 	 *
 	 * @since 1.8.0
 	 *
-	 * @param array|mixed $data                An array of slashed, sanitized, and processed post data.
-	 * @param array       $postarr             An array of sanitized (and slashed) but otherwise unmodified post data.
-	 * @param array       $unsanitized_postarr An array of slashed yet *unsanitized* and unprocessed post data as
+	 * @param array<string,mixed>|mixed $data                An array of slashed, sanitized, and processed post data.
+	 * @param array<string,mixed>       $postarr             An array of sanitized (and slashed) but otherwise unmodified post data.
+	 * @param array<string,mixed>       $unsanitized_postarr An array of slashed yet *unsanitized* and unprocessed post data as
 	 *                                         originally passed to wp_insert_post().
-	 * @return array|mixed Filtered post data.
+	 * @return array<string,mixed>|mixed Filtered post data.
+	 *
+	 * @phpstan-param PostData $data
+	 * @phpstan-param PostData $unsanitized_postarr
 	 */
 	public function filter_insert_post_data( $data, $postarr, $unsanitized_postarr ) {
 		if ( ! \is_array( $data ) || current_user_can( 'unfiltered_html' ) ) {
 			return $data;
 		}
 
-		if (
-			( $this->story_post_type->get_slug() !== $data['post_type'] ) && !
-			(
-				'revision' === $data['post_type'] &&
-				! empty( $data['post_parent'] ) &&
-				get_post_type( $data['post_parent'] ) === $this->story_post_type->get_slug()
-			)
-		) {
+		if ( ! $this->is_allowed_post_type( $data['post_type'], $data['post_parent'] ) ) {
 			return $data;
 		}
 
-		if ( ! $this->story_post_type->has_cap( 'edit_posts' ) ) {
-			return $data;
-		}
-
-		// Simple sanity check to ensure story data is valid JSON.
 		if ( isset( $unsanitized_postarr['post_content_filtered'] ) ) {
-			$story_data                    = json_decode( (string) wp_unslash( $unsanitized_postarr['post_content_filtered'] ), true );
-			$data['post_content_filtered'] = null === $story_data ? '' : wp_slash( (string) wp_json_encode( $story_data ) );
+			$data['post_content_filtered'] = $this->filter_story_data( $unsanitized_postarr['post_content_filtered'] );
 		}
 
-		if ( ! isset( $unsanitized_postarr['post_content'] ) ) {
-			return $data;
+		if ( isset( $unsanitized_postarr['post_content'] ) ) {
+			add_filter( 'safe_style_css', [ $this, 'filter_safe_style_css' ] );
+			add_filter( 'wp_kses_allowed_html', [ $this, 'filter_kses_allowed_html' ], 10, 2 );
+
+			$unsanitized_postarr['post_content'] = $this->filter_content_save_pre_before_kses( $unsanitized_postarr['post_content'] );
+
+			$data['post_content'] = wp_filter_post_kses( $unsanitized_postarr['post_content'] );
+			$data['post_content'] = $this->filter_content_save_pre_after_kses( $data['post_content'] );
+
+			remove_filter( 'safe_style_css', [ $this, 'filter_safe_style_css' ] );
+			remove_filter( 'wp_kses_allowed_html', [ $this, 'filter_kses_allowed_html' ] );
 		}
-
-		add_filter( 'safe_style_css', [ $this, 'filter_safe_style_css' ] );
-		add_filter( 'wp_kses_allowed_html', [ $this, 'filter_kses_allowed_html' ], 10, 2 );
-
-		$unsanitized_postarr['post_content'] = $this->filter_content_save_pre_before_kses( $unsanitized_postarr['post_content'] );
-		$data['post_content']                = wp_filter_post_kses( $unsanitized_postarr['post_content'] );
-		$data['post_content']                = $this->filter_content_save_pre_after_kses( $data['post_content'] );
-
-		remove_filter( 'safe_style_css', [ $this, 'filter_safe_style_css' ] );
-		remove_filter( 'wp_kses_allowed_html', [ $this, 'filter_kses_allowed_html' ] );
 
 		return $data;
 	}
@@ -143,7 +199,7 @@ class KSES extends Service_Base implements HasRequirements {
 	 * @since 1.0.0
 	 *
 	 * @param string[]|mixed $attr Array of allowed CSS attributes.
-	 * @return array|mixed Filtered list of CSS attributes.
+	 * @return string[]|mixed Filtered list of CSS attributes.
 	 */
 	public function filter_safe_style_css( $attr ) {
 		if ( ! \is_array( $attr ) ) {
@@ -495,8 +551,8 @@ class KSES extends Service_Base implements HasRequirements {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param array|mixed $allowed_tags Allowed tags.
-	 * @return array|mixed Allowed tags.
+	 * @param array<string, array<string,bool>>|mixed $allowed_tags Allowed tags.
+	 * @return array<string, array<string,bool>>|mixed Allowed tags.
 	 */
 	public function filter_kses_allowed_html( $allowed_tags ) {
 		if ( ! \is_array( $allowed_tags ) ) {
@@ -725,8 +781,8 @@ class KSES extends Service_Base implements HasRequirements {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param array ...$arrays [optional] Variable list of arrays to recursively merge.
-	 * @return array An array of values resulted from merging the arguments together.
+	 * @param array<int|string,mixed> ...$arrays [optional] Variable list of arrays to recursively merge.
+	 * @return array<int|string,mixed> An array of values resulted from merging the arguments together.
 	 */
 	protected function array_merge_recursive_distinct( array ...$arrays ): array {
 		if ( \count( $arrays ) < 2 ) {
@@ -759,8 +815,8 @@ class KSES extends Service_Base implements HasRequirements {
 	 *
 	 * @see _wp_add_global_attributes
 	 *
-	 * @param array $value An array of attributes.
-	 * @return array The array of attributes with global attributes added.
+	 * @param array<string,bool> $value An array of attributes.
+	 * @return array<string,bool> The array of attributes with global attributes added.
 	 */
 	protected function add_global_attributes( $value ): array {
 		$global_attributes = [

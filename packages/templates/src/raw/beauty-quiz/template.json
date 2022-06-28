@@ -1,5 +1,5 @@
 {
-  "version": 41,
+  "version": 43,
   "pages": [
     {
       "elements": [
@@ -193,16 +193,7 @@
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "id": "9182a7be-e7cb-4206-bee1-09ec8ecbba01",
-      "animations": [
-        {
-          "id": "0c61ca9b-f49a-4473-80ea-e8c4f9cedb27",
-          "type": "effect-background-pan",
-          "targets": ["d3c66373-d2ce-4295-bb5e-5e1ffe20aee9"],
-          "panDir": "leftToRight",
-          "duration": 3000,
-          "delay": 0
-        }
-      ],
+      "animations": [],
       "defaultBackgroundElement": {
         "opacity": 100,
         "flip": { "vertical": false, "horizontal": false },

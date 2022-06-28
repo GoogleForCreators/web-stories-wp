@@ -69,7 +69,11 @@ const BottomRight = styled(Icons.Corner)`
   transform: rotate(270deg);
 `;
 
-function RadiusControls({ selectedElements, pushUpdateForObject }) {
+function RadiusControls({
+  selectedElements,
+  pushUpdateForObject,
+  stackableGroupStyleOverride,
+}) {
   const borderRadius = useCommonObjectValue(
     selectedElements,
     'borderRadius',
@@ -137,7 +141,10 @@ function RadiusControls({ selectedElements, pushUpdateForObject }) {
 
   return (
     <FlexContainer>
-      <StackableGroup locked={lockRadius}>
+      <StackableGroup
+        stackableGroupStyleOverride={stackableGroupStyleOverride}
+        locked={lockRadius}
+      >
         <StackableInput
           suffix={<TopLeft />}
           value={
@@ -228,6 +235,7 @@ function RadiusControls({ selectedElements, pushUpdateForObject }) {
 RadiusControls.propTypes = {
   selectedElements: PropTypes.array.isRequired,
   pushUpdateForObject: PropTypes.func.isRequired,
+  stackableGroupStyleOverride: PropTypes.array,
 };
 
 export default RadiusControls;

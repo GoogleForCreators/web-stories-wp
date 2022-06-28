@@ -114,15 +114,22 @@ class Admin extends Service_Base {
 	 * @since 1.0.0
 	 *
 	 * @param string|mixed $content Default post content.
-	 * @param \WP_Post     $post    Post object.
+	 * @param WP_Post      $post    Post object.
 	 * @return string|mixed Pre-filled post content if applicable, or the default content otherwise.
 	 */
-	public function prefill_post_content( $content, $post ) {
+	public function prefill_post_content( $content, WP_Post $post ) {
 		if ( ! isset( $_GET['from-web-story'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return $content;
 		}
 
-		$post_id = absint( sanitize_text_field( (string) wp_unslash( $_GET['from-web-story'] ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		/**
+		 * Story ID.
+		 *
+		 * @var string $from_web_story
+		 */
+		$from_web_story = $_GET['from-web-story']; // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+
+		$post_id = absint( sanitize_text_field( (string) wp_unslash( $from_web_story ) ) );
 
 		if ( ! $post_id || Story_Post_Type::POST_TYPE_SLUG !== get_post_type( $post_id ) ) {
 			return $content;
@@ -135,6 +142,10 @@ class Admin extends Service_Base {
 		$story = new Story();
 		if ( ! $story->load_from_post( $post_id ) ) {
 			return $content;
+		}
+
+		if ( ! $story->get_title() ) {
+			$story->set_title( __( 'Web Story', 'web-stories' ) );
 		}
 
 		$args = [
@@ -158,14 +169,16 @@ class Admin extends Service_Base {
 			);
 		}
 
+		$story->set_poster_sizes( '' );
+		$story->set_poster_srcset( '' );
 		$renderer = new Image( $story );
 		$html     = $renderer->render( $args );
 
 		$content = '<!-- wp:web-stories/embed {"blockType":"url","url":"%1$s","title":"%2$s","poster":"%3$s","width":"%4$s","height":"%5$s","align":"%6$s","stories": [%7$s]} -->%8$s<!-- /wp:web-stories/embed -->';
-
+		// note $story->get_url should not be escaped here (esc_url()) see https://github.com/GoogleForCreators/web-stories-wp/issues/11371.
 		return sprintf(
 			$content,
-			esc_url( $story->get_url() ),
+			$story->get_url(),
 			esc_js( $story->get_title() ),
 			esc_url( $story->get_poster_portrait() ),
 			absint( $args['width'] ),
@@ -189,7 +202,14 @@ class Admin extends Service_Base {
 			return $title;
 		}
 
-		$post_id = absint( sanitize_text_field( (string) wp_unslash( $_GET['from-web-story'] ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		/**
+		 * Story ID.
+		 *
+		 * @var string $from_web_story
+		 */
+		$from_web_story = $_GET['from-web-story']; // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+
+		$post_id = absint( sanitize_text_field( (string) wp_unslash( $from_web_story ) ) );
 
 		if ( ! $post_id ) {
 			return $title;

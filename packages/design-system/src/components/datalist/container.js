@@ -25,6 +25,7 @@ import {
   useFocusOut,
   useMemo,
   forwardRef,
+  useDebouncedCallback,
 } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
@@ -79,6 +80,7 @@ const OptionsContainer = forwardRef(function OptionsContainer(
     hasDropDownBorder = false,
     containerStyleOverrides,
     title,
+    placeholder,
   },
   inputRef
 ) {
@@ -95,17 +97,19 @@ const OptionsContainer = forwardRef(function OptionsContainer(
     []
   );
 
-  const handleLoadOptions = useCallback(() => {
-    getOptionsByQuery(searchKeyword).then(setQueriedOptions);
-  }, [getOptionsByQuery, searchKeyword]);
+  const debounceHandleLoadOptions = useDebouncedCallback(() => {
+    getOptionsByQuery(searchKeyword).then((res) => {
+      setQueriedOptions(res);
+    });
+  }, 500);
 
   useEffect(() => {
     if (getOptionsByQuery && isKeywordFilterable(searchKeyword)) {
-      handleLoadOptions();
+      debounceHandleLoadOptions();
     } else {
       setQueriedOptions(null);
     }
-  }, [getOptionsByQuery, searchKeyword, handleLoadOptions]);
+  }, [getOptionsByQuery, searchKeyword, debounceHandleLoadOptions]);
 
   useEffect(() => {
     if (isOpen) {
@@ -132,6 +136,7 @@ const OptionsContainer = forwardRef(function OptionsContainer(
           isExpanded={isExpanded}
           focusFontListFirstOption={() => setTrigger((v) => v + 1)}
           aria-owns={listId}
+          placeholder={placeholder}
         />
       )}
       {renderContents({
@@ -154,6 +159,7 @@ OptionsContainer.propTypes = {
   isInline: PropTypes.bool,
   hasDropDownBorder: PropTypes.bool,
   title: PropTypes.string,
+  placeholder: PropTypes.string,
 };
 
 export default OptionsContainer;

@@ -1,5 +1,5 @@
 {
-  "version": 41,
+  "version": 43,
   "pages": [
     {
       "elements": [
@@ -286,40 +286,7 @@
           "type": "image"
         }
       ],
-      "animations": [
-        {
-          "id": "9745b3e3-b734-4fa5-ac50-eb11775ff7bb",
-          "type": "effect-fly-in",
-          "targets": ["ee0e83dd-a941-4ea7-a298-b325f98b1c63"],
-          "flyInDir": "leftToRight",
-          "duration": 2000,
-          "delay": 0
-        },
-        {
-          "id": "0e61a0d1-a7b5-4465-bf2b-b8fb34d072d8",
-          "type": "effect-fly-in",
-          "targets": ["a2998fed-80ac-44b7-aabe-dade59949ce1"],
-          "flyInDir": "leftToRight",
-          "duration": 2000,
-          "delay": 100
-        },
-        {
-          "id": "8941f494-3eb7-4ae7-8f2c-21b11cd56ff6",
-          "type": "effect-fly-in",
-          "targets": ["633c9283-8ef8-41eb-b3a7-9373c86e4fc3"],
-          "flyInDir": "leftToRight",
-          "duration": 2000,
-          "delay": 100
-        },
-        {
-          "id": "f7b2a009-7e79-4ad8-b722-85a473517db8",
-          "type": "effect-fly-in",
-          "targets": ["8f0263c1-0944-408f-8d4d-5d38e9316efe"],
-          "flyInDir": "rightToLeft",
-          "duration": 2000,
-          "delay": 100
-        }
-      ],
+      "animations": [],
       "backgroundColor": { "color": { "r": 47, "g": 47, "b": 55 } },
       "type": "page",
       "id": "444c59da-134a-4945-b8aa-f0e59aae33b7",

@@ -28,7 +28,7 @@ import { __ } from '@googleforcreators/i18n';
 import { Icons } from '@googleforcreators/design-system';
 import { trackEvent } from '@googleforcreators/tracking';
 import styled from 'styled-components';
-import { getDefinitionForType } from '@googleforcreators/elements';
+import { getLayerName } from '@googleforcreators/elements';
 import { useUnits } from '@googleforcreators/units';
 
 /**
@@ -136,16 +136,11 @@ function useLayerSelect({ menuItemProps, menuPosition, isMenuOpen }) {
     }
     return intersectingElements.map((element) => {
       const { id, isBackground, type } = element;
-      const { LayerContent } = getDefinitionForType(type);
       return {
         key: id,
         supportsIcon: true,
         icon: selectedElements[0].id === id ? <Icons.CheckmarkSmall /> : null,
-        label: isBackground ? (
-          <span>{__('Background', 'web-stories')}</span>
-        ) : (
-          <LayerContent element={element} />
-        ),
+        label: <span>{getLayerName(element)}</span>,
         onClick: () => {
           setSelectedElementsById({ elementIds: [id] });
           trackEvent('context_menu_action', {

@@ -316,6 +316,17 @@ export const DESIGN_COPY = {
     ),
     footer: __('Shorter videos help readers navigate stories', 'web-stories'),
   },
+  firstPageAnimation: {
+    title: __('First Page Animations', 'web-stories'),
+    footer: __(
+      'Animations on the first page of a story are not supported for user experience and performance reasons.',
+      'web-stories'
+    ),
+    animationPanel: __(
+      'Animations on the first page of a story are not supported for user experience and performance reasons.',
+      'web-stories'
+    ),
+  },
 };
 
 export const PRIORITY_COPY = {

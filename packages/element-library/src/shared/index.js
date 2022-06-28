@@ -16,5 +16,4 @@
 
 export * from './constants';
 export * from './shared';
-export { LayerText } from './layerText';
 export { default as useColorTransformHandler } from './useColorTransformHandler';

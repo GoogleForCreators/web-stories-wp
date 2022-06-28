@@ -1,5 +1,5 @@
 {
-  "version": 41,
+  "version": 43,
   "pages": [
     {
       "elements": [
@@ -144,16 +144,7 @@
           "id": "a6b25c2c-a676-404b-ab44-5bd5b49598f5"
         }
       ],
-      "animations": [
-        {
-          "id": "afdf7b28-ea7e-4753-8111-50d060582ef9",
-          "type": "effect-background-zoom",
-          "zoomDirection": "scaleOut",
-          "duration": 1000,
-          "delay": 0,
-          "targets": ["ca140433-52d1-4423-896f-2e5c856cb22f"]
-        }
-      ],
+      "animations": [],
       "type": "page",
       "id": "fca5c47a-e26f-4feb-b2a3-f6d8b6c68996",
       "defaultBackgroundElement": {

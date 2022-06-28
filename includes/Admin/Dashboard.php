@@ -34,9 +34,11 @@ use Google\Web_Stories\Decoder;
 use Google\Web_Stories\Experiments;
 use Google\Web_Stories\Font_Post_Type;
 use Google\Web_Stories\Integrations\Site_Kit;
+use Google\Web_Stories\Integrations\WooCommerce;
 use Google\Web_Stories\Locale;
 use Google\Web_Stories\Media\Types;
 use Google\Web_Stories\Service_Base;
+use Google\Web_Stories\Shopping\Shopping_Vendors;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tracking;
 
@@ -53,7 +55,7 @@ class Dashboard extends Service_Base {
 	/**
 	 * Admin page hook suffixes.
 	 *
-	 * @var array List of the admin pages' hook_suffix values.
+	 * @var array<string,string|bool> List of the admin pages' hook_suffix values.
 	 */
 	private $hook_suffix = [];
 
@@ -128,22 +130,38 @@ class Dashboard extends Service_Base {
 	private $types;
 
 	/**
+	 * Shopping_Vendors instance.
+	 *
+	 * @var Shopping_Vendors Shopping_Vendors instance.
+	 */
+	private $shopping_vendors;
+
+	/**
+	 * WooCommerce instance.
+	 *
+	 * @var WooCommerce WooCommerce instance.
+	 */
+	private $woocommerce;
+
+	/**
 	 * Dashboard constructor.
 	 *
 	 * @SuppressWarnings(PHPMD.ExcessiveParameterList)
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param Experiments     $experiments     Experiments instance.
-	 * @param Site_Kit        $site_kit        Site_Kit instance.
-	 * @param Decoder         $decoder         Decoder instance.
-	 * @param Locale          $locale          Locale instance.
-	 * @param Google_Fonts    $google_fonts    Google_Fonts instance.
-	 * @param Assets          $assets          Assets instance.
-	 * @param Font_Post_Type  $font_post_type  Font_Post_Type instance.
-	 * @param Story_Post_Type $story_post_type Story_Post_Type instance.
-	 * @param Context         $context         Context instance.
-	 * @param Types           $types           Types instance.
+	 * @param Experiments      $experiments      Experiments instance.
+	 * @param Site_Kit         $site_kit         Site_Kit instance.
+	 * @param Decoder          $decoder          Decoder instance.
+	 * @param Locale           $locale           Locale instance.
+	 * @param Google_Fonts     $google_fonts     Google_Fonts instance.
+	 * @param Assets           $assets           Assets instance.
+	 * @param Font_Post_Type   $font_post_type   Font_Post_Type instance.
+	 * @param Story_Post_Type  $story_post_type  Story_Post_Type instance.
+	 * @param Context          $context          Context instance.
+	 * @param Types            $types            Types instance.
+	 * @param Shopping_Vendors $shopping_vendors Shopping_Vendors instance.
+	 * @param WooCommerce      $woocommerce      WooCommerce instance.
 	 */
 	public function __construct(
 		Experiments $experiments,
@@ -155,18 +173,22 @@ class Dashboard extends Service_Base {
 		Font_Post_Type $font_post_type,
 		Story_Post_Type $story_post_type,
 		Context $context,
-		Types $types
+		Types $types,
+		Shopping_Vendors $shopping_vendors,
+		WooCommerce $woocommerce
 	) {
-		$this->experiments     = $experiments;
-		$this->decoder         = $decoder;
-		$this->site_kit        = $site_kit;
-		$this->locale          = $locale;
-		$this->google_fonts    = $google_fonts;
-		$this->assets          = $assets;
-		$this->font_post_type  = $font_post_type;
-		$this->story_post_type = $story_post_type;
-		$this->context         = $context;
-		$this->types           = $types;
+		$this->experiments      = $experiments;
+		$this->decoder          = $decoder;
+		$this->site_kit         = $site_kit;
+		$this->locale           = $locale;
+		$this->google_fonts     = $google_fonts;
+		$this->assets           = $assets;
+		$this->font_post_type   = $font_post_type;
+		$this->story_post_type  = $story_post_type;
+		$this->context          = $context;
+		$this->types            = $types;
+		$this->shopping_vendors = $shopping_vendors;
+		$this->woocommerce      = $woocommerce;
 	}
 
 	/**
@@ -188,9 +210,9 @@ class Dashboard extends Service_Base {
 	 * @since 1.0.0
 	 *
 	 * @param string $key The current admin page key.
-	 * @return string|false|null The dashboard page's hook_suffix, or false if the user does not have the capability required.
+	 * @return bool|string The dashboard page's hook_suffix, or false if the user does not have the capability required.
 	 */
-	public function get_hook_suffix( $key ) {
+	public function get_hook_suffix( string $key ) {
 		return $this->hook_suffix[ $key ] ?? false;
 	}
 
@@ -251,7 +273,13 @@ class Dashboard extends Service_Base {
 			return;
 		}
 
-		$page = sanitize_text_field( (string) wp_unslash( $_GET['page'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		/**
+		 * Page slug.
+		 *
+		 * @var string $page
+		 */
+		$page = $_GET['page']; // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		$page = sanitize_text_field( (string) wp_unslash( $page ) );
 
 		if ( 'admin.php' === $pagenow && 'stories-dashboard' === $page ) {
 			wp_safe_redirect(
@@ -281,6 +309,14 @@ class Dashboard extends Service_Base {
 			'/web-stories/v1/settings/',
 			'/web-stories/v1/publisher-logos/',
 			'/web-stories/v1/users/me/',
+			'/web-stories/v1/taxonomies/?' . build_query(
+				[
+					'type'         => $this->story_post_type->get_slug(),
+					'context'      => 'edit',
+					'hierarchical' => 'true',
+					'show_ui'      => 'true',
+				]
+			),
 			$rest_url . '?' . build_query(
 				[
 					'_embed'                => rawurlencode(
@@ -393,7 +429,7 @@ class Dashboard extends Service_Base {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @return array
+	 * @return array<string,bool|string|int|array<string,mixed>>
 	 */
 	public function get_dashboard_settings(): array {
 		$new_story_url = admin_url(
@@ -412,6 +448,7 @@ class Dashboard extends Service_Base {
 		}
 		$mime_types               = $this->types->get_allowed_mime_types();
 		$allowed_image_mime_types = $mime_types['image'];
+		$vendors                  = wp_list_pluck( $this->shopping_vendors->get_vendors(), 'label' );
 
 		$settings = [
 			'isRTL'                   => is_rtl(),
@@ -433,7 +470,10 @@ class Dashboard extends Service_Base {
 				'settings'       => '/web-stories/v1/settings/',
 				'pages'          => '/wp/v2/pages/',
 				'publisherLogos' => '/web-stories/v1/publisher-logos/',
+				'taxonomies'     => '/web-stories/v1/taxonomies/',
+				'products'       => '/web-stories/v1/products/',
 			],
+			'vendors'                 => $vendors,
 			'maxUpload'               => $max_upload_size,
 			'maxUploadFormatted'      => size_format( $max_upload_size ),
 			'capabilities'            => [
@@ -441,7 +481,10 @@ class Dashboard extends Service_Base {
 				'canUploadFiles'    => current_user_can( 'upload_files' ),
 			],
 			'canViewDefaultTemplates' => true,
-			'siteKitStatus'           => $this->site_kit->get_plugin_status(),
+			'plugins'                 => [
+				'siteKit'     => $this->site_kit->get_plugin_status(),
+				'woocommerce' => $this->woocommerce->get_plugin_status(),
+			],
 			'flags'                   => array_merge(
 				$this->experiments->get_experiment_statuses( 'general' ),
 				$this->experiments->get_experiment_statuses( 'dashboard' )

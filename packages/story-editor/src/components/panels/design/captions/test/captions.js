@@ -104,7 +104,7 @@ describe('Panels/Captions', () => {
         tracks: ['Some track here'],
       },
     ]);
-    const input = screen.getByRole('textbox', { name: 'Filename' });
-    expect(input).toHaveValue(MULTIPLE_DISPLAY_VALUE);
+
+    expect(screen.getByText(MULTIPLE_DISPLAY_VALUE)).toBeInTheDocument();
   });
 });

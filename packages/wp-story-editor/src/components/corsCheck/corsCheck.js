@@ -23,7 +23,6 @@ import {
   localStore,
 } from '@googleforcreators/design-system';
 import { trackError } from '@googleforcreators/tracking';
-import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -37,7 +36,6 @@ function CorsCheck() {
   const {
     actions: { getMediaForCorsCheck },
   } = useAPI();
-  const enableCORSCheck = useFeature('enableCORSCheck');
 
   const closeDialog = useCallback(() => {
     setShowDialog(false);
@@ -47,7 +45,7 @@ function CorsCheck() {
   const isDialogDismissed = Boolean(localStore.getItemByKey(storageKey));
   useEffect(() => {
     (async () => {
-      if (!enableCORSCheck || isDialogDismissed) {
+      if (isDialogDismissed) {
         return;
       }
       let mediaItems;

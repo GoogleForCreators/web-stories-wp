@@ -25,23 +25,30 @@ import {
   BUTTON_TYPES,
   Icons,
   themeHelpers,
+  Text,
+  THEME_CONSTANTS,
+  Input,
 } from '@googleforcreators/design-system';
-import { useRef, memo } from '@googleforcreators/react';
-import { getDefinitionForType } from '@googleforcreators/elements';
-import { LayerText } from '@googleforcreators/element-library';
+import { useRef, memo, useState, useEffect } from '@googleforcreators/react';
+import {
+  getDefinitionForType,
+  getLayerName,
+} from '@googleforcreators/elements';
 import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
  */
 import StoryPropTypes from '../../../../types';
-import { useStory } from '../../../../app';
+import { useStory, useCanvas } from '../../../../app';
 import useCORSProxy from '../../../../utils/useCORSProxy';
 import usePerformanceTracking from '../../../../utils/usePerformanceTracking';
 import { TRACKING_EVENTS } from '../../../../constants';
 import Tooltip from '../../../tooltip';
+import useShapeMask from '../../../../utils/useShapeMask';
 import useLayerSelection from './useLayerSelection';
-import { LAYER_HEIGHT } from './constants';
+import ShapeMaskWrapper from './shapeMaskWrapper';
+import { LAYER_HEIGHT, NESTED_PX } from './constants';
 
 const fadeOutCss = css`
   background-color: var(--background-color);
@@ -112,7 +119,7 @@ const LayerButton = styled(Button).attrs({
   align-items: center;
   user-select: none;
   border-radius: 0;
-  padding-left: 12px;
+  padding-left: ${({ isNested }) => (isNested ? NESTED_PX : 12)}px;
   transition: revert;
 
   ${({ isSelected, theme }) =>
@@ -153,11 +160,50 @@ const LayerButton = styled(Button).attrs({
   }
 `;
 
+const LayerInputWrapper = styled.div`
+  display: grid;
+  grid-template-columns: 23px 1fr;
+  height: 100%;
+  width: 100%;
+  padding-left: ${({ isNested }) => (isNested ? NESTED_PX : 12)}px;
+  padding-right: 10px;
+
+  :hover {
+    background: ${({ theme }) => theme.colors.interactiveBg.tertiaryHover};
+  }
+  :hover,
+  :hover + * {
+    --background-color: ${({ theme }) =>
+      theme.colors.interactiveBg.tertiaryHover};
+    --background-color-opaque: ${({ theme }) =>
+      rgba(theme.colors.interactiveBg.tertiaryHover, 0)};
+  }
+`;
+
+const LayerInput = styled(Input)`
+  overflow: visible;
+
+  div {
+    height: 100%;
+  }
+`;
+
 const LayerIconWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
   color: ${({ theme }) => theme.colors.fg.primary};
+
+  :hover {
+    background: ${({ theme }) => theme.colors.interactiveBg.tertiaryHover};
+  }
+  :hover,
+  :hover + * {
+    --background-color: ${({ theme }) =>
+      theme.colors.interactiveBg.tertiaryHover};
+    --background-color-opaque: ${({ theme }) =>
+      rgba(theme.colors.interactiveBg.tertiaryHover, 0)};
+  }
 `;
 
 const LayerDescription = styled.div`
@@ -169,6 +215,21 @@ const LayerDescription = styled.div`
   margin-left: 0;
   text-align: left;
   color: ${({ theme }) => theme.colors.fg.primary};
+`;
+
+const LayerInputForm = styled(LayerDescription).attrs({ as: 'form' })`
+  overflow: visible;
+`;
+
+const LayerText = styled(Text).attrs({
+  forwardedAs: 'span',
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+})`
+  color: inherit;
+  white-space: nowrap;
+  text-overflow: ' ';
+  overflow: hidden;
+  max-width: 100%;
 `;
 
 const IconWrapper = styled.div`
@@ -264,8 +325,10 @@ function preventReorder(e) {
 }
 
 function Layer({ element }) {
+  const layerName = getLayerName(element);
+  const [newLayerName, setNewLayerName] = useState(layerName);
   const isLayerLockingEnabled = useFeature('layerLocking');
-  const { LayerIcon, LayerContent } = getDefinitionForType(element.type);
+  const { LayerIcon, hasDuplicateMenu } = getDefinitionForType(element.type);
   const { isSelected, handleClick } = useLayerSelection(element);
   const { isDefaultBackground } = element;
   const {
@@ -273,14 +336,29 @@ function Layer({ element }) {
     updateElementById,
     deleteElementById,
     currentPageBackgroundColor,
+    groups,
   } = useStory(({ actions, state }) => ({
     duplicateElementsById: actions.duplicateElementsById,
     deleteElementById: actions.deleteElementById,
     updateElementById: actions.updateElementById,
+    groups: state.currentPage?.groups || {},
     currentPageBackgroundColor:
       !isDefaultBackground || state.currentPage?.backgroundColor,
   }));
 
+  const { renamableLayer, setRenamableLayer } = useCanvas(
+    ({ state, actions }) => ({
+      renamableLayer: state.renamableLayer,
+      setRenamableLayer: actions.setRenamableLayer,
+    })
+  );
+
+  useEffect(() => {
+    setNewLayerName(layerName);
+  }, [layerName]);
+
+  const { hasShapeMask, removeShapeMask } = useShapeMask(element);
+  const removeMaskTitle = __('Unmask', 'web-stories');
   const { getProxiedUrl } = useCORSProxy();
   const layerRef = useRef(null);
   usePerformanceTracking({
@@ -295,50 +373,130 @@ function Layer({ element }) {
   });
 
   const layerId = `layer-${element.id}`;
+  const isNested = element.groupId;
 
-  const lockTitle = element.isLocked
+  const lockTitle = isNested
+    ? element.isLocked
+      ? __('Group is Locked', 'web-stories')
+      : __('Group is Unlocked', 'web-stories')
+    : element.isLocked
     ? __('Unlock Layer', 'web-stories')
     : __('Lock Layer', 'web-stories');
 
   const LockIcon = element.isLocked ? Icons.LockClosed : Icons.LockOpen;
 
-  return (
+  const handleChange = (evt) => {
+    setNewLayerName(evt.target.value);
+  };
+
+  const handleKeyDown = (evt) => {
+    if (evt.key === 'Escape') {
+      setNewLayerName(layerName);
+      setRenamableLayer(null);
+    }
+  };
+
+  const updateLayerName = () => {
+    setRenamableLayer(null);
+    const trimmedLayerName = newLayerName.trim();
+    // Only update name if trimmed layer name is not empty.
+    if (trimmedLayerName) {
+      updateElementById({
+        elementId: element.id,
+        properties: { layerName: trimmedLayerName },
+      });
+    }
+  };
+
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+    updateLayerName();
+  };
+
+  // We need to prevent the pointer-down event from propagating to the
+  // reorderable when you click on the input. If not, the reorderable will
+  // move focus, which will blur the input, which will cancel renaming.
+  const stopPropagation = (evt) => evt.stopPropagation();
+
+  const isLayerNamingEnabled = useFeature('layerNaming');
+  const isRenameable = renamableLayer?.elementId === element.id;
+  const group = groups[element.groupId];
+
+  // Done like this because of no-unused-vars-before-return
+  return group?.isCollapsed ? null : (
     <LayerContainer>
-      <LayerButton
-        ref={layerRef}
-        id={layerId}
-        onClick={handleClick}
-        isSelected={isSelected}
-      >
-        <LayerIconWrapper>
-          <LayerIcon
-            element={element}
-            getProxiedUrl={getProxiedUrl}
-            currentPageBackgroundColor={currentPageBackgroundColor}
-          />
-        </LayerIconWrapper>
-        <LayerDescription>
-          <LayerContentContainer>
-            {element.isBackground ? (
-              <LayerText>{__('Background', 'web-stories')}</LayerText>
-            ) : (
-              <LayerContent element={element} />
+      {isRenameable && isLayerNamingEnabled ? (
+        <LayerInputWrapper isNested={isNested}>
+          <LayerIconWrapper>
+            <ShapeMaskWrapper element={element}>
+              <LayerIcon
+                element={element}
+                getProxiedUrl={getProxiedUrl}
+                currentPageBackgroundColor={currentPageBackgroundColor}
+              />
+            </ShapeMaskWrapper>
+          </LayerIconWrapper>
+          <LayerInputForm onSubmit={handleSubmit}>
+            <LayerInput
+              tabIndex={-1}
+              aria-label={__('Layer Name', 'web-stories')}
+              value={newLayerName}
+              onChange={handleChange}
+              onKeyDown={handleKeyDown}
+              onBlur={updateLayerName}
+              onPointerDown={stopPropagation}
+              hasFocus
+            />
+            <button hidden />
+          </LayerInputForm>
+        </LayerInputWrapper>
+      ) : (
+        <LayerButton
+          ref={layerRef}
+          id={layerId}
+          onClick={handleClick}
+          isSelected={isSelected}
+          isNested={isNested}
+        >
+          <LayerIconWrapper>
+            <ShapeMaskWrapper element={element}>
+              <LayerIcon
+                element={element}
+                getProxiedUrl={getProxiedUrl}
+                currentPageBackgroundColor={currentPageBackgroundColor}
+              />
+            </ShapeMaskWrapper>
+          </LayerIconWrapper>
+          <LayerDescription>
+            <LayerContentContainer>
+              <LayerText>{layerName}</LayerText>
+            </LayerContentContainer>
+            {element.isBackground && (
+              <IconWrapper>
+                <Icons.LockFilledClosed />
+              </IconWrapper>
             )}
-          </LayerContentContainer>
-          {element.isBackground && (
-            <IconWrapper>
-              <Icons.LockFilledClosed />
-            </IconWrapper>
-          )}
-          {element.isLocked && isLayerLockingEnabled && (
-            <IconWrapper>
-              <Icons.LockClosed />
-            </IconWrapper>
-          )}
-        </LayerDescription>
-      </LayerButton>
-      {!element.isBackground && (
+            {element.isLocked && isLayerLockingEnabled && (
+              <IconWrapper aria-label={__('Locked', 'web-stories')}>
+                {isNested ? <Icons.LockFilledClosed /> : <Icons.LockClosed />}
+              </IconWrapper>
+            )}
+          </LayerDescription>
+        </LayerButton>
+      )}
+      {!element.isBackground && !isRenameable && (
         <ActionsContainer>
+          {hasShapeMask && (
+            <Tooltip title={removeMaskTitle} hasTail isDelayed>
+              <LayerAction
+                aria-label={removeMaskTitle}
+                aria-describedby={layerId}
+                onClick={removeShapeMask}
+              >
+                <Icons.RemoveMask />
+              </LayerAction>
+            </Tooltip>
+          )}
           <Tooltip title={__('Delete Layer', 'web-stories')} hasTail isDelayed>
             <LayerAction
               ref={deleteButtonRef}
@@ -350,27 +508,30 @@ function Layer({ element }) {
               <Icons.Trash />
             </LayerAction>
           </Tooltip>
-          <Tooltip
-            title={__('Duplicate Layer', 'web-stories')}
-            hasTail
-            isDelayed
-          >
-            <LayerAction
-              aria-label={__('Duplicate', 'web-stories')}
-              aria-describedby={layerId}
-              onPointerDown={preventReorder}
-              onClick={() =>
-                duplicateElementsById({ elementIds: [element.id] })
-              }
+          {hasDuplicateMenu && (
+            <Tooltip
+              title={__('Duplicate Layer', 'web-stories')}
+              hasTail
+              isDelayed
             >
-              <Icons.PagePlus />
-            </LayerAction>
-          </Tooltip>
+              <LayerAction
+                aria-label={__('Duplicate', 'web-stories')}
+                aria-describedby={layerId}
+                onPointerDown={preventReorder}
+                onClick={() =>
+                  duplicateElementsById({ elementIds: [element.id] })
+                }
+              >
+                <Icons.PagePlus />
+              </LayerAction>
+            </Tooltip>
+          )}
           {isLayerLockingEnabled && (
             <Tooltip title={lockTitle} hasTail isDelayed>
               <LayerAction
                 aria-label={__('Lock/Unlock', 'web-stories')}
                 aria-describedby={layerId}
+                disabled={isNested}
                 onPointerDown={preventReorder}
                 onClick={() =>
                   updateElementById({
@@ -379,7 +540,7 @@ function Layer({ element }) {
                   })
                 }
               >
-                <LockIcon />
+                {isNested ? <Icons.LockFilledClosed /> : <LockIcon />}
               </LayerAction>
             </Tooltip>
           )}

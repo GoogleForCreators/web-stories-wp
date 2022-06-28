@@ -36,6 +36,7 @@ export async function getTaxonomies(config) {
     path: addQueryArgs(config.api.taxonomies, {
       type: config.postType,
       context: 'edit',
+      show_ui: 'true',
     }),
   });
 

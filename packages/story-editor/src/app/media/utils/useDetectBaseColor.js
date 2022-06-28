@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback } from '@googleforcreators/react';
+import { useCallback, useReduction } from '@googleforcreators/react';
 import { getSmallestUrlForWidth } from '@googleforcreators/media';
 /**
  * Internal dependencies
@@ -27,6 +27,36 @@ import { useStory } from '../../story';
 import { useConfig } from '../../config';
 import getMediaBaseColor from '../../../utils/getMediaBaseColor';
 import useCORSProxy from '../../../utils/useCORSProxy';
+
+const reducer = {
+  addProcessing: (state, { payload }) => {
+    if (!payload || state.processing.includes(payload)) {
+      return state;
+    }
+    return {
+      ...state,
+      processing: [...state.processing, payload],
+    };
+  },
+  removeProcessing: (state, { payload }) => {
+    if (!payload || !state.processing.includes(payload)) {
+      return state;
+    }
+    const currentProcessing = [...state.processing];
+    const processing = currentProcessing.filter((e) => e !== payload);
+
+    return {
+      ...state,
+      processing,
+      processed: [...state.processed, payload],
+    };
+  },
+};
+
+const INITIAL_STATE = {
+  processed: [],
+  processing: [],
+};
 
 function useDetectBaseColor({ updateMediaElement }) {
   const {
@@ -39,6 +69,10 @@ function useDetectBaseColor({ updateMediaElement }) {
     capabilities: { hasUploadMediaAction },
   } = useConfig();
   const { getProxiedUrl } = useCORSProxy();
+
+  const [state, actions] = useReduction(INITIAL_STATE, reducer);
+  const { processed, processing } = state;
+  const { addProcessing, removeProcessing } = actions;
 
   const saveBaseColor = useCallback(
     /**
@@ -68,7 +102,9 @@ function useDetectBaseColor({ updateMediaElement }) {
           }
         }
       } catch (error) {
-        // Do nothing for now.
+        // This might happen as an author when trying to updateMedia() that
+        // was uploaded by someone else.
+        // Do nothing with the error for now.
       }
     },
     [
@@ -87,11 +123,18 @@ function useDetectBaseColor({ updateMediaElement }) {
       if (type === 'image') {
         imageSrc = getSmallestUrlForWidth(0, resource);
       } else if (!isExternal) {
-        const posterResource = getPosterMediaById
-          ? await getPosterMediaById(id)
-          : null;
-        if (posterResource) {
-          imageSrc = getSmallestUrlForWidth(0, posterResource);
+        try {
+          const posterResource = getPosterMediaById
+            ? await getPosterMediaById(id)
+            : null;
+          if (posterResource) {
+            imageSrc = getSmallestUrlForWidth(0, posterResource);
+          }
+        } catch (error) {
+          // The user might not have the permission to access the video with context=edit.
+          // This might happen as an author when the video
+          // was uploaded by someone else.
+          // Do nothing with the error for now.
         }
       }
 
@@ -109,8 +152,24 @@ function useDetectBaseColor({ updateMediaElement }) {
     [getProxiedUrl, getPosterMediaById, saveBaseColor]
   );
 
+  const maybeUpdateBaseColor = useCallback(
+    async (resource) => {
+      const { id } = resource;
+
+      // Simple way to prevent double-uploading.
+      if (processed.includes(id) || processing.includes(id)) {
+        return;
+      }
+
+      addProcessing(id);
+      await updateBaseColor(resource);
+      removeProcessing(id);
+    },
+    [addProcessing, processed, processing, removeProcessing, updateBaseColor]
+  );
+
   return {
-    updateBaseColor,
+    updateBaseColor: maybeUpdateBaseColor,
   };
 }
 

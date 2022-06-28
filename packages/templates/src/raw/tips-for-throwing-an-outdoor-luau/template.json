@@ -1,5 +1,5 @@
 {
-  "version": 41,
+  "version": 43,
   "pages": [
     {
       "elements": [
@@ -329,53 +329,7 @@
         "type": "shape",
         "id": "c0bb0984-50ae-493e-a0f6-3ce9cc00dfcd"
       },
-      "animations": [
-        {
-          "id": "72c9ee5d-df2b-49af-bd43-b50667303f19",
-          "type": "effect-zoom",
-          "targets": ["71a34778-58f1-4f26-afb0-4e8f502df2bf"],
-          "scaleDirection": "scaleIn",
-          "duration": 750,
-          "delay": 0
-        },
-        {
-          "id": "3981357e-aa05-48ea-91eb-e53b85e896b9",
-          "type": "effect-fade-in",
-          "targets": ["0a5f0ed4-e8f9-4fd2-add8-177d89e97b15"],
-          "duration": 1500,
-          "delay": 0
-        },
-        {
-          "id": "ed616286-7881-47c9-bb2c-384c30a4d753",
-          "type": "effect-fly-in",
-          "targets": ["9d6198b0-aae1-4d69-b480-52202b511192"],
-          "flyInDir": "rightToLeft",
-          "duration": 1500,
-          "delay": 0
-        },
-        {
-          "id": "e63d36b4-6000-46f0-bf3e-d516d9f9a19f",
-          "type": "effect-fly-in",
-          "targets": ["298312ec-78a8-4abf-af99-29f217fc4cb8"],
-          "flyInDir": "leftToRight",
-          "duration": 750,
-          "delay": 0
-        },
-        {
-          "id": "64f6bb5b-b87c-41dc-99ef-06488fe1cc02",
-          "type": "effect-fade-in",
-          "targets": ["3e8cbf15-8932-4912-bcc4-26e5c0186dbf"],
-          "duration": 1500,
-          "delay": 0
-        },
-        {
-          "id": "66e9c6a0-8d28-4ad3-ac45-e47d0ceb709c",
-          "type": "effect-fade-in",
-          "targets": ["c753ede0-0d43-4a37-979f-555026dfd008"],
-          "duration": 1500,
-          "delay": 0
-        }
-      ],
+      "animations": [],
       "pageTemplateType": "cover"
     },
     {

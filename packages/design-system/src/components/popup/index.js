@@ -51,6 +51,8 @@ function Popup({
   refCallback = noop,
   zIndex = DEFAULT_POPUP_Z_INDEX,
   ignoreMaxOffsetY,
+  offsetOverride = false,
+  maxWidth,
 }) {
   const {
     topOffset = DEFAULT_TOP_OFFSET,
@@ -81,6 +83,7 @@ function Popup({
             isRTL,
             topOffset,
             ignoreMaxOffsetY,
+            offsetOverride,
           })
         : {};
       const { height, x, width, right } = popup.current
@@ -90,7 +93,7 @@ function Popup({
       const updatedXOffset = () => {
         // When in RTL the popup could render off the left side of the screen. If so, let's update the
         // offset to keep it inbounds.
-        if (x < leftOffset) {
+        if (x <= leftOffset) {
           switch (placement) {
             case PLACEMENT.BOTTOM_END:
             case PLACEMENT.TOP_END:
@@ -115,7 +118,7 @@ function Popup({
           }
         }
 
-        if (isRTL && right > offset.bodyRight - leftOffset) {
+        if (isRTL && right >= offset.bodyRight - leftOffset) {
           // maxOffset should keep us inbounds, except in the case of RTL due to the admin-sidebar nav we could use another
           // switch case here to make offset more precise, however the math below will always return the popup fully in screen.
           return { ...offset, x: offset.bodyRight - width - leftOffset };
@@ -137,6 +140,7 @@ function Popup({
       topOffset,
       leftOffset,
       ignoreMaxOffsetY,
+      offsetOverride,
     ]
   );
 
@@ -185,6 +189,7 @@ function Popup({
         <PopupContainer
           ref={popup}
           fillWidth={fillWidth}
+          maxWidth={maxWidth}
           $offset={popupState.offset}
           topOffset={topOffset}
           zIndex={zIndex}
@@ -212,6 +217,8 @@ Popup.propTypes = {
   refCallback: PropTypes.func,
   zIndex: PropTypes.number,
   ignoreMaxOffsetY: PropTypes.bool,
+  offsetOverride: PropTypes.bool,
+  maxWidth: PropTypes.number,
 };
 
 export { Popup, PLACEMENT };

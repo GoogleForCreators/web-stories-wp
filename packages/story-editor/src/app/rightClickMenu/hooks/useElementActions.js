@@ -20,11 +20,14 @@ import { useSnackbar } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 import { useCallback, useRef } from '@googleforcreators/react';
 import { trackEvent } from '@googleforcreators/tracking';
+import { v4 as uuidv4 } from 'uuid';
+
 /**
  * Internal dependencies
  */
 import { useCanvas, useHistory, useStory } from '../..';
 import updateProperties from '../../../components/style/updateProperties';
+import generateGroupName from '../../../utils/generateGroupName';
 import { UNDO_HELP_TEXT } from './constants';
 
 /**
@@ -39,12 +42,22 @@ const useElementActions = () => {
     selectedElements,
     setBackgroundElement,
     updateElementsById,
+    deleteGroupById,
+    addGroup,
+    groups,
+    elements,
+    arrangeElement,
   } = useStory(({ state, actions }) => ({
     clearBackgroundElement: actions.clearBackgroundElement,
     duplicateElementsById: actions.duplicateElementsById,
     selectedElements: state.selectedElements,
     setBackgroundElement: actions.setBackgroundElement,
     updateElementsById: actions.updateElementsById,
+    addGroup: actions.addGroup,
+    deleteGroupById: actions.deleteGroupById,
+    groups: state.currentPage.groups,
+    elements: state.currentPage?.elements || [],
+    arrangeElement: actions.arrangeElement,
   }));
   const showSnackbar = useSnackbar((value) => value.showSnackbar);
   const setEditingElement = useCanvas(
@@ -90,6 +103,71 @@ const useElementActions = () => {
       elements: selectedElements.map((element) => element.type),
     });
   }, [duplicateElementsById, selectedElements, showSnackbar]);
+
+  const handleGroupSelectedElements = useCallback(() => {
+    if (!selectedElements.length) {
+      return;
+    }
+
+    const groupId = uuidv4();
+    const name = generateGroupName(groups);
+    addGroup({ groupId, name });
+    updateElementsById({
+      elementIds: selectedElements.map(({ id }) => id),
+      properties: (currentProperties) =>
+        updateProperties(
+          currentProperties,
+          {
+            groupId,
+          },
+          /* commitValues */ true
+        ),
+    });
+    // Fix the order
+    const elementFromGroupWithHighestPosition = Math.max(
+      ...selectedElements.map((el) =>
+        elements.findIndex(({ id }) => id === el?.id)
+      )
+    );
+    for (const [index, element] of selectedElements.reverse().entries()) {
+      const position = elements.findIndex(({ id }) => id === element?.id);
+      if (position !== elementFromGroupWithHighestPosition) {
+        const newPosition = elementFromGroupWithHighestPosition - index;
+        arrangeElement({
+          elementId: element.id,
+          position: newPosition,
+        });
+      }
+    }
+  }, [
+    selectedElements,
+    updateElementsById,
+    addGroup,
+    groups,
+    arrangeElement,
+    elements,
+  ]);
+
+  const handleUngroupSelectedElements = useCallback(() => {
+    if (!selectedElements.length) {
+      return;
+    }
+
+    // this will remove the group but keep the elements
+    deleteGroupById({ groupId: selectedElements[0]?.groupId });
+
+    updateElementsById({
+      elementIds: selectedElements.map(({ id }) => id),
+      properties: (currentProperties) =>
+        updateProperties(
+          currentProperties,
+          {
+            groupId: null,
+          },
+          /* commitValues */ true
+        ),
+    });
+  }, [selectedElements, updateElementsById, deleteGroupById]);
 
   /**
    * Set element as the element being 'edited'.
@@ -204,6 +282,8 @@ const useElementActions = () => {
 
   return {
     handleDuplicateSelectedElements,
+    handleGroupSelectedElements,
+    handleUngroupSelectedElements,
     handleOpenScaleAndCrop,
     handleSetPageBackground,
     handleRemovePageBackground,

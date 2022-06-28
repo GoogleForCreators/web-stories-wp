@@ -1,5 +1,5 @@
 {
-  "version": 41,
+  "version": 43,
   "pages": [
     {
       "elements": [
@@ -201,31 +201,7 @@
           "type": "image"
         }
       ],
-      "animations": [
-        {
-          "id": "5a23bdd9-e06e-4ad0-bbfe-a52876ce682c",
-          "type": "effect-fly-in",
-          "targets": ["0bfeec41-0b6e-4426-81cf-9b2089ab5fb2"],
-          "flyInDir": "bottomToTop",
-          "duration": 2000,
-          "delay": 0
-        },
-        {
-          "id": "1c574a89-38af-479b-9aef-433b7116a901",
-          "type": "effect-fly-in",
-          "targets": ["10c12b78-df3a-4a93-b387-8ec6d0fe72e9"],
-          "flyInDir": "bottomToTop",
-          "duration": 1500,
-          "delay": 0
-        },
-        {
-          "id": "7e0863c0-e8f0-4ed0-bf44-1ba10d90a089",
-          "type": "effect-fade-in",
-          "targets": ["2c255ab5-4add-444f-a350-4ab163df674b"],
-          "duration": 2000,
-          "delay": 800
-        }
-      ],
+      "animations": [],
       "backgroundColor": { "color": { "r": 49, "g": 56, "b": 49 } },
       "type": "page",
       "id": "e9a82cb4-df90-48d7-be12-bf3a9a6a353d",

@@ -18,6 +18,7 @@
 namespace Google\Web_Stories\Tests\Integration;
 
 use Google\Web_Stories\Integrations\Site_Kit;
+use Google\Web_Stories\Integrations\WooCommerce;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Tracking
@@ -29,6 +30,11 @@ class Tracking extends DependencyInjectedTestCase {
 	 * @var Site_Kit
 	 */
 	private $site_kit;
+
+	/**
+	 * @var WooCommerce
+	 */
+	private $woocommerce;
 
 	/**
 	 * @var \Google\Web_Stories\Experiments
@@ -56,12 +62,14 @@ class Tracking extends DependencyInjectedTestCase {
 		$assets            = $this->injector->make( \Google\Web_Stories\Assets::class );
 		$settings          = $this->injector->make( \Google\Web_Stories\Settings::class );
 		$preferences       = $this->injector->make( \Google\Web_Stories\User\Preferences::class );
+		$this->woocommerce = $this->createMock( \Google\Web_Stories\Integrations\WooCommerce::class );
 		$this->instance    = new \Google\Web_Stories\Tracking(
 			$this->experiments,
 			$this->site_kit,
 			$assets,
 			$settings,
-			$preferences
+			$preferences,
+			$this->woocommerce
 		);
 	}
 
@@ -75,6 +83,14 @@ class Tracking extends DependencyInjectedTestCase {
 				'active'          => true,
 				'analyticsActive' => true,
 				'link'            => 'https://example.com',
+			]
+		);
+		$this->woocommerce->method( 'get_plugin_status' )->willReturn(
+			[
+				'installed' => true,
+				'active'    => true,
+				'canManage' => true,
+				'link'      => 'https://example.com',
 			]
 		);
 		$this->experiments->method( 'get_enabled_experiments' )
@@ -100,6 +116,14 @@ class Tracking extends DependencyInjectedTestCase {
 				'active'          => true,
 				'analyticsActive' => true,
 				'link'            => 'https://example.com',
+			]
+		);
+		$this->woocommerce->method( 'get_plugin_status' )->willReturn(
+			[
+				'installed' => true,
+				'active'    => true,
+				'canManage' => true,
+				'link'      => 'https://example.com',
 			]
 		);
 		$this->experiments->method( 'get_enabled_experiments' )
@@ -159,6 +183,14 @@ class Tracking extends DependencyInjectedTestCase {
 				'link'            => 'https://example.com',
 			]
 		);
+		$this->woocommerce->method( 'get_plugin_status' )->willReturn(
+			[
+				'installed' => true,
+				'active'    => true,
+				'canManage' => true,
+				'link'      => 'https://example.com',
+			]
+		);
 		$this->experiments->method( 'get_enabled_experiments' )
 					->willReturn( [ 'enableFoo', 'enableBar' ] );
 
@@ -168,5 +200,77 @@ class Tracking extends DependencyInjectedTestCase {
 		delete_user_meta( get_current_user_id(), \Google\Web_Stories\User\Preferences::OPTIN_META_KEY );
 
 		$this->assertTrue( $tracking_allowed );
+	}
+
+	/**
+	 * @covers ::get_settings
+	 */
+	public function test_get_settings_with_woo(): void {
+		wp_set_current_user( self::$user_id );
+
+		$this->site_kit->method( 'get_plugin_status' )->willReturn(
+			[
+				'installed'       => true,
+				'active'          => true,
+				'analyticsActive' => true,
+				'link'            => 'https://example.com',
+			]
+		);
+
+		$this->woocommerce->method( 'get_plugin_status' )->willReturn(
+			[
+				'installed' => true,
+				'active'    => true,
+				'canManage' => true,
+				'link'      => 'https://example.com',
+			]
+		);
+		$this->experiments->method( 'get_enabled_experiments' )->willReturn( [ 'enableFoo', 'enableBar' ] );
+
+		$settings = $this->instance->get_settings();
+
+
+		$this->assertArrayHasKey( 'activePlugins', $settings['userProperties'] );
+		$this->assertIsString( $settings['userProperties']['activePlugins'] );
+		$this->assertStringContainsString( 'woocommerce', $settings['userProperties']['activePlugins'] );
+	}
+
+	/**
+	 * @covers ::get_user_properties
+	 */
+	public function test_get_settings_user_malformed_roles(): void {
+		$user_id = self::factory()->user->create(
+			[
+				'role' => 'administrator',
+			]
+		);
+
+		wp_set_current_user( $user_id );
+
+		global $current_user;
+		$current_user->roles = [ 1 => 'administrator' ];
+
+		$this->site_kit->method( 'get_plugin_status' )->willReturn(
+			[
+				'installed'       => true,
+				'active'          => true,
+				'analyticsActive' => true,
+				'link'            => 'https://example.com',
+			]
+		);
+		$this->woocommerce->method( 'get_plugin_status' )->willReturn(
+			[
+				'installed' => true,
+				'active'    => true,
+				'canManage' => true,
+				'link'      => 'https://example.com',
+			]
+		);
+		$this->experiments->method( 'get_enabled_experiments' )
+			->willReturn( [ 'enableFoo', 'enableBar' ] );
+
+		$settings = $this->instance->get_settings();
+
+		$this->assertSame( 'administrator', $settings['userProperties']['userRole'] );
 	}
 }

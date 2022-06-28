@@ -44,6 +44,7 @@ export const List = styled.div`
 
 export const Group = styled.ul`
   margin: 0;
+  padding: 0;
 `;
 
 export const GroupLabel = styled.li`
@@ -60,9 +61,8 @@ export const Option = styled.li.attrs(({ fontFamily }) => ({
   display: flex;
   align-items: center;
   position: relative;
-  padding: 8px 16px;
+  padding: 6px 16px;
   margin: 6px 0 0 0;
-  line-height: 1;
   cursor: pointer;
   background-clip: padding-box;
   color: ${({ theme }) => theme.colors.fg.primary};
@@ -70,6 +70,9 @@ export const Option = styled.li.attrs(({ fontFamily }) => ({
 
   ${themeHelpers.expandTextPreset(({ label }, { SMALL }) => label[SMALL])}
   ${themeHelpers.focusableOutlineCSS}
+
+  /* override preset line-height to avoid letters being cut off */
+  line-height: 16px;
 
   :first-of-type {
     margin-top: 0;

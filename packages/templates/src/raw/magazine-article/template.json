@@ -1,5 +1,5 @@
 {
-  "version": 41,
+  "version": 43,
   "pages": [
     {
       "elements": [
@@ -334,39 +334,7 @@
       "backgroundColor": { "color": { "r": 0, "g": 0, "b": 0 } },
       "type": "page",
       "id": "0ae62c1d-aeb1-4308-a532-dc00885410d2",
-      "animations": [
-        {
-          "id": "43ab1cc9-09a1-4bdb-94b8-2c2846f01bb7",
-          "type": "effect-fly-in",
-          "targets": ["e39615c4-be0a-45e8-abb1-77a17312c38e"],
-          "flyInDir": "leftToRight",
-          "duration": 2000,
-          "delay": 0
-        },
-        {
-          "id": "94218e75-f360-4d13-93a6-369ba4c2ff32",
-          "type": "effect-fly-in",
-          "targets": ["e402376a-138c-4ba7-8093-d4cd607d1b80"],
-          "flyInDir": "rightToLeft",
-          "duration": 6000,
-          "delay": 0
-        },
-        {
-          "id": "dc57dc50-3394-4a42-80b5-d68d7e36cc8c",
-          "type": "effect-fly-in",
-          "targets": ["3178fe32-e693-4ac6-bd35-76543bf19ded"],
-          "flyInDir": "leftToRight",
-          "duration": 1000,
-          "delay": 0
-        },
-        {
-          "id": "29baaa98-544a-4a96-80af-5097e6ee7529",
-          "type": "effect-fade-in",
-          "targets": ["eb0caa01-f3f2-4732-ba5e-c443975f14eb"],
-          "duration": 2000,
-          "delay": 500
-        }
-      ],
+      "animations": [],
       "pageTemplateType": "cover"
     },
     {

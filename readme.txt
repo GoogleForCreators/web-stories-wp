@@ -1,8 +1,8 @@
 === Web Stories ===
 
 Contributors:      google
-Tested up to:      5.9
-Requires at least: 5.5
+Tested up to:      6.0
+Requires at least: 5.7
 Stable tag:        V.V.V
 License:           Apache License 2.0
 License URI:       https://www.apache.org/licenses/LICENSE-2.0
@@ -109,44 +109,42 @@ Web Stories are powered by [AMP](https://amp.dev/), which adds some restrictions
 
 For the plugin's full changelog, please see [the Releases page on GitHub](https://github.com/googleforcreators/web-stories-wp/releases).
 
-= 1.20.0 =
+= 1.22.0 =
 
-**Release Date:** April 26, 2022.
+**Release Date:** June 21, 2022.
 
-* Enhancement: added support for adding new text elements from the Quick Actions menu
-* Enhancement: continued overhauling the sidebar and splitting it up into separate sections
-* Enhancement: improved keyboard navigation on the canvas
+* New feature: you can now add shoppable products from WooCommerce and Shopify to your stories
+* New feature: added support for grouping, masking, and naming layers on the canvas
+* New feature: added support for filtering stories by category on the dashboard
 * Bug fixes and performance improvements.
 
-= 1.19.0 =
+= 1.21.1 =
 
-**Release Date:** March 29, 2022.
+**Release Date:** June 1, 2022.
 
-* New feature: floating menu bar for easier editing.
-* New feature: support for adding captions and disabling looping for page background audio.
-* New feature: ability to upload custom fonts.
-* New feature: story locking, displaying a message if someone else is already editing a story.
-* Enhancement: overhauled workspace, consolidating sidebar to create more space for the canvas.
-* Enhancement: make it easier to apply saved styles.
-* Enhancement: add detection for possible server misconfiguration related to CORS.
+* Fixes an issue related to roles and capabilities that caused interference with other plugins.
+
+= 1.21.0 =
+
+**Release Date:** May 24, 2022.
+
+* Enhancement: verified compatibility with WordPress 6.0
+* Enhancement: added support for hotlinking background audio and caption files
+* Enhancement: added support for locking layers/elements on the canvas
+* Enhancement: added warning when using animations on the first page of a story
+* Enhancement: improved user feedback when submitting a story for review
 * Bug fixes and performance improvements.
-
-= 1.18.1 =
-
-**Release Date:** March 8, 2022.
-
-* Fixes an issue where adding video captions did not work.
 
 == Upgrade Notice ==
 
-= 1.20.0 =
+= 1.22.0 =
 
-Various improvements to the workspace UI, as well as various bug fixes and performance improvements.
+This release brings shopping support, layers grouping/masking/naming, and category filtering on the dashboard.
 
-= 1.19.0 =
+= 1.21.1 =
 
-Feature-packed release bringing you a revamped workspace UI with a consolidated sidebar, floating menu bar, background audio captions, custom fonts, and much more!
+This releases fixes an issue related to roles and capabilities that caused interference with other plugins.
 
-= 1.18.1 =
+= 1.21.0 =
 
-This release fixes an issue where adding video captions did not work.
+This release includes WordPress 6.0 compatibility, audio and captions hotlinking, the ability to lock individual layers, as well as various bug fixes and performance improvements.

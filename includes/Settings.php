@@ -28,6 +28,8 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Shopping\Shopping_Vendors;
+
 /**
  * Settings class.
  */
@@ -106,7 +108,7 @@ class Settings extends Service_Base {
 	 * Shopping provider, e.g. woocommerce or shopify
 	 */
 	public const SETTING_NAME_SHOPPING_PROVIDER = 'web_stories_shopping_provider';
-	
+
 	/**
 	 * Shopify store URL, e.g. acme-store.myshopify.com.
 	 */
@@ -116,6 +118,22 @@ class Settings extends Service_Base {
 	 * Shopify Storefront API access token.
 	 */
 	public const SETTING_NAME_SHOPIFY_ACCESS_TOKEN = 'web_stories_shopify_access_token';
+
+	/**
+	 * Shopping_Vendors instance.
+	 *
+	 * @var Shopping_Vendors Shopping_Vendors instance.
+	 */
+	private $shopping_vendors;
+
+	/**
+	 * Constructor.
+	 *
+	 * @param Shopping_Vendors $shopping_vendors Shopping_Vendors instance.
+	 */
+	public function __construct( Shopping_Vendors $shopping_vendors ) {
+		$this->shopping_vendors = $shopping_vendors;
+	}
 
 	/**
 	 * Register settings.
@@ -280,6 +298,8 @@ class Settings extends Service_Base {
 			]
 		);
 
+		$vendors        = $this->shopping_vendors->get_vendors();
+		$vendor_options = array_keys( $vendors );
 		register_setting(
 			self::SETTING_GROUP,
 			self::SETTING_NAME_SHOPPING_PROVIDER,
@@ -287,7 +307,7 @@ class Settings extends Service_Base {
 				'description'  => __( 'Shopping provider', 'web-stories' ),
 				'type'         => 'string',
 				'default'      => 'none',
-				'enum'         => [ 'none', 'woocommerce', 'shopify' ],
+				'enum'         => $vendor_options,
 				'show_in_rest' => true,
 			]
 		);
@@ -324,13 +344,13 @@ class Settings extends Service_Base {
 	 *
 	 * @param string $key Setting key.
 	 * @param mixed  $default Optional. Default value to return if the option does not exist.
-	 * @return string|array|bool Setting value.
+	 * @return string|array<int|string,mixed>|bool Setting value.
 	 */
-	public function get_setting( $key, $default = false ) {
+	public function get_setting( string $key, $default = false ) {
 		/**
 		 * Setting value.
 		 *
-		 * @var string|array|bool
+		 * @var string|array<int|string,mixed>|bool
 		 */
 		return get_option( $key, $default );
 	}
@@ -344,7 +364,7 @@ class Settings extends Service_Base {
 	 * @param mixed  $value Setting value.
 	 * @return mixed Setting value.
 	 */
-	public function update_setting( $key, $value ) {
+	public function update_setting( string $key, $value ) {
 		return update_option( $key, $value );
 	}
 }

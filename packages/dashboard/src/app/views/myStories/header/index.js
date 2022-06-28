@@ -47,7 +47,6 @@ import {
   SearchPropTypes,
   SortPropTypes,
   ViewPropTypes,
-  AuthorPropTypes,
 } from '../../../../utils/useStoryView';
 import { useDashboardResultsLabel } from '../../../../utils';
 import { BodyViewOptions, PageHeading } from '../../shared';
@@ -65,15 +64,13 @@ const StyledPill = styled(Pill)`
 `;
 function Header({
   filter,
+  filters,
   initialPageReady,
   search,
   sort,
   stories,
   totalStoriesByStatus,
   view,
-  author,
-  queryAuthorsBySearch,
-  showAuthorDropdown,
 }) {
   const {
     actions: { scrollToTop },
@@ -179,16 +176,14 @@ function Header({
 
       <BodyViewOptions
         showGridToggle
+        filters={filters}
         showSortDropdown
-        showAuthorDropdown={showAuthorDropdown}
         resultsLabel={resultsLabel}
         layoutStyle={view.style}
         handleLayoutSelect={view.toggleStyle}
         currentSort={sort.value}
         pageSortOptions={STORY_SORT_MENU_ITEMS}
         handleSortChange={onSortChange}
-        author={author}
-        queryAuthorsBySearch={queryAuthorsBySearch}
         sortDropdownAriaLabel={__(
           'Choose sort option for display',
           'web-stories'
@@ -206,9 +201,7 @@ Header.propTypes = {
   stories: StoriesPropType,
   totalStoriesByStatus: TotalStoriesByStatusPropType,
   view: ViewPropTypes.isRequired,
-  author: AuthorPropTypes,
-  queryAuthorsBySearch: PropTypes.func,
-  showAuthorDropdown: PropTypes.bool,
+  filters: PropTypes.array,
 };
 
 export default memo(Header);

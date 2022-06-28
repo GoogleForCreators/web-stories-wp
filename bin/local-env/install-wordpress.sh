@@ -234,5 +234,5 @@ if [ "$WP_VERSION" == "latest" ]; then
 	echo -e $(status_message "Import sample woocommerce products...")
 	wp import /var/www/html/wp-content/plugins/woocommerce/sample-data/sample_products.xml --authors=skip --quiet
 	# deactivate test etc... can activate as needed
-	wp plugin deactivate woocommerce 
+	wp plugin deactivate woocommerce
 fi

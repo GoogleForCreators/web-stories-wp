@@ -96,7 +96,7 @@ function TextSetsPane({ paneRef }) {
   const storyPages = useStory(({ state: { pages } }) => pages);
 
   const [selectedCat, setSelectedCat] = useState(
-    localStore.getItemByKey(`${LOCAL_STORAGE_PREFIX.TEXT_SET_SETTINGS}`)
+    localStore.getItemByKey(LOCAL_STORAGE_PREFIX.TEXT_SET_SETTINGS)
       ?.selectedCategory
   );
 
@@ -171,7 +171,7 @@ function TextSetsPane({ paneRef }) {
               CATEGORIES[selectedCategory]
             )
       );
-      localStore.setItemByKey(`${LOCAL_STORAGE_PREFIX.TEXT_SET_SETTINGS}`, {
+      localStore.setItemByKey(LOCAL_STORAGE_PREFIX.TEXT_SET_SETTINGS, {
         selectedCategory,
       });
       trackChange.current = true;

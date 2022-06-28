@@ -100,7 +100,8 @@ class Story {
 	/**
 	 * Publisher logo size.
 	 *
-	 * @var array
+	 * @var int[]
+	 * @phpstan-var array{0?: int, 1?: int}
 	 */
 	protected $publisher_logo_size = [];
 
@@ -130,7 +131,7 @@ class Story {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param array $story Array of attributes.
+	 * @param array<string,mixed> $story Array of attributes.
 	 */
 	public function __construct( array $story = [] ) {
 		foreach ( $story as $key => $value ) {
@@ -204,6 +205,39 @@ class Story {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Setter for poster set sizes.
+	 *
+	 * @since 1.21.0
+	 *
+	 * @param string $poster_sizes Poster sizes.
+	 */
+	public function set_poster_sizes( string $poster_sizes ): void {
+		$this->poster_sizes = $poster_sizes;
+	}
+
+	/**
+	 * Setter for poster source set.
+	 *
+	 * @since 1.21.0
+	 *
+	 * @param string $poster_srcset Poster source set.
+	 */
+	public function set_poster_srcset( string $poster_srcset ): void {
+		$this->poster_srcset = $poster_srcset;
+	}
+
+	/**
+	 * Setter for title.
+	 *
+	 * @since 1.21.0
+	 *
+	 * @param string $title Title.
+	 */
+	public function set_title( string $title ): void {
+		$this->title = $title;
 	}
 
 	/**
@@ -333,6 +367,8 @@ class Story {
 	 *     @type int    $1 Image width in pixels.
 	 *     @type int    $2 Image height in pixels.
 	 * }
+	 *
+	 * @phpstan-return array{0?: int, 1?: int}
 	 */
 	public function get_publisher_logo_size(): array {
 		/**

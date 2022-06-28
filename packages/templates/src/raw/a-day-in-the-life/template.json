@@ -1,5 +1,5 @@
 {
-  "version": 41,
+  "version": 43,
   "pages": [
     {
       "elements": [
@@ -199,15 +199,7 @@
           "type": "text"
         }
       ],
-      "animations": [
-        {
-          "id": "756cda7e-a6b6-433a-9be1-0bad2c112d3d",
-          "type": "effect-fade-in",
-          "targets": ["57828597-1338-4b6f-b2c7-60339643bc9f"],
-          "duration": 2000,
-          "delay": 0
-        }
-      ],
+      "animations": [],
       "backgroundColor": { "color": { "r": 57, "g": 57, "b": 57 } },
       "type": "page",
       "id": "7b18ade0-d74d-41b9-81b6-50a65422db76",

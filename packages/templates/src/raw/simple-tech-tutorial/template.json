@@ -1,5 +1,5 @@
 {
-  "version": 41,
+  "version": 43,
   "pages": [
     {
       "elements": [
@@ -198,16 +198,7 @@
           "type": "image"
         }
       ],
-      "animations": [
-        {
-          "id": "55dd9528-0f50-43bc-bffd-981a5857ceda",
-          "type": "effect-fly-in",
-          "targets": ["d4a05a81-32bd-4590-98f9-bd0a02bbdce7"],
-          "flyInDir": "leftToRight",
-          "duration": 2000,
-          "delay": 0
-        }
-      ],
+      "animations": [],
       "backgroundColor": { "color": { "r": 0, "g": 145, "b": 202 } },
       "type": "page",
       "id": "0277a411-0108-4e6b-8e52-6341a77c7851",

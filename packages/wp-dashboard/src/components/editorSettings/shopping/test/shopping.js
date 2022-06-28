@@ -17,17 +17,40 @@
 /**
  * External dependencies
  */
-import { fireEvent, screen } from '@testing-library/react';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
+import { ConfigProvider } from '@googleforcreators/dashboard';
 
 /**
  * Internal dependencies
  */
+
 import ShoppingSettings, { TEXT } from '..';
 import { TEXT as SETTINGS_TEXT } from '../shopify';
 import { renderWithProviders } from '../../../../testUtils';
 import { SHOPPING_PROVIDER_TYPE } from '../../../../constants';
 
 const updateSettings = jest.fn();
+
+const vendors = {
+  none: 'None',
+  shopify: 'Shopify',
+  woocommerce: 'WooCommerce',
+};
+
+const woocommerceDefault = {
+  installed: true,
+  active: true,
+  canManage: true,
+  link: 'http://www.example.com',
+};
+
+const mockGetProducts = jest.fn();
+
+const config = {
+  apiCallbacks: {
+    getProducts: mockGetProducts,
+  },
+};
 
 describe('Editor Settings: Shopping <Shopping />', function () {
   beforeEach(() => {
@@ -36,12 +59,16 @@ describe('Editor Settings: Shopping <Shopping />', function () {
 
   it('should render Shopify inputs and helper texts', function () {
     renderWithProviders(
-      <ShoppingSettings
-        shoppingProvider={SHOPPING_PROVIDER_TYPE.SHOPIFY}
-        shopifyHost="yourstore.myshopify.com"
-        shopifyAccessToken=""
-        updateSettings={updateSettings}
-      />
+      <ConfigProvider config={config}>
+        <ShoppingSettings
+          shoppingProvider={SHOPPING_PROVIDER_TYPE.SHOPIFY}
+          shopifyHost="yourstore.myshopify.com"
+          shopifyAccessToken=""
+          updateSettings={updateSettings}
+          vendors={vendors}
+          woocommerce={woocommerceDefault}
+        />
+      </ConfigProvider>
     );
 
     const input = screen.getByLabelText('Shopify Domain');
@@ -52,14 +79,90 @@ describe('Editor Settings: Shopping <Shopping />', function () {
     expect(sectionHeader).toBeInTheDocument();
   });
 
+  it('should render WooCommerce inputs and helper texts', function () {
+    renderWithProviders(
+      <ConfigProvider config={config}>
+        <ShoppingSettings
+          shoppingProvider={SHOPPING_PROVIDER_TYPE.WOOCOMMERCE}
+          shopifyHost=""
+          shopifyAccessToken=""
+          updateSettings={updateSettings}
+          vendors={vendors}
+          woocommerce={woocommerceDefault}
+        />
+      </ConfigProvider>
+    );
+
+    const element = screen.getByTestId('woocommerceMessage');
+    expect(element).toBeInTheDocument();
+    expect(element).toHaveTextContent(
+      'Manage products in WooCommerce to make them available in Web Stories.'
+    );
+  });
+
+  it('should render WooCommerce inputs and activation message', function () {
+    renderWithProviders(
+      <ConfigProvider config={config}>
+        <ShoppingSettings
+          shoppingProvider={SHOPPING_PROVIDER_TYPE.WOOCOMMERCE}
+          shopifyHost=""
+          shopifyAccessToken=""
+          updateSettings={updateSettings}
+          vendors={vendors}
+          woocommerce={{
+            ...woocommerceDefault,
+            active: false,
+            canManage: false,
+          }}
+        />
+      </ConfigProvider>
+    );
+
+    const element = screen.getByTestId('woocommerceMessage');
+    expect(element).toBeInTheDocument();
+    expect(element).toHaveTextContent(
+      'Activate WooCommerce to easily add shoppable products to Web Stories.'
+    );
+  });
+
+  it('should render WooCommerce  inputs and install message', function () {
+    renderWithProviders(
+      <ConfigProvider config={config}>
+        <ShoppingSettings
+          shoppingProvider={SHOPPING_PROVIDER_TYPE.WOOCOMMERCE}
+          shopifyHost=""
+          shopifyAccessToken=""
+          updateSettings={updateSettings}
+          vendors={vendors}
+          woocommerce={{
+            installed: false,
+            active: false,
+            canManage: false,
+            link: 'http://www.example.com',
+          }}
+        />
+      </ConfigProvider>
+    );
+
+    const element = screen.getByTestId('woocommerceMessage');
+    expect(element).toBeInTheDocument();
+    expect(element).toHaveTextContent(
+      'Install WooCommerce to easily add shoppable products to Web Stories.'
+    );
+  });
+
   it('should update settings when pressing enter', function () {
     renderWithProviders(
-      <ShoppingSettings
-        shoppingProvider={SHOPPING_PROVIDER_TYPE.SHOPIFY}
-        shopifyHost="yourstore.myshopify.com"
-        shopifyAccessToken=""
-        updateSettings={updateSettings}
-      />
+      <ConfigProvider config={config}>
+        <ShoppingSettings
+          shoppingProvider={SHOPPING_PROVIDER_TYPE.SHOPIFY}
+          shopifyHost="yourstore.myshopify.com"
+          shopifyAccessToken=""
+          updateSettings={updateSettings}
+          vendors={vendors}
+          woocommerce={woocommerceDefault}
+        />
+      </ConfigProvider>
     );
 
     const input = screen.getByLabelText('Shopify Domain');
@@ -74,12 +177,16 @@ describe('Editor Settings: Shopping <Shopping />', function () {
 
   it('should update settings when clicking save button', function () {
     renderWithProviders(
-      <ShoppingSettings
-        shoppingProvider={SHOPPING_PROVIDER_TYPE.SHOPIFY}
-        shopifyHost="yourstore.myshopify.com"
-        shopifyAccessToken=""
-        updateSettings={updateSettings}
-      />
+      <ConfigProvider config={config}>
+        <ShoppingSettings
+          shoppingProvider={SHOPPING_PROVIDER_TYPE.SHOPIFY}
+          shopifyHost="yourstore.myshopify.com"
+          shopifyAccessToken=""
+          updateSettings={updateSettings}
+          vendors={vendors}
+          woocommerce={woocommerceDefault}
+        />
+      </ConfigProvider>
     );
 
     const input = screen.getByLabelText('Shopify Domain');
@@ -96,6 +203,33 @@ describe('Editor Settings: Shopping <Shopping />', function () {
     fireEvent.click(button);
     expect(updateSettings).toHaveBeenCalledWith({
       shopifyHost: 'mynewstore.myshopify.com',
+    });
+  });
+
+  it('should render test api connection button', async function () {
+    renderWithProviders(
+      <ConfigProvider config={config}>
+        <ShoppingSettings
+          shoppingProvider={SHOPPING_PROVIDER_TYPE.SHOPIFY}
+          shopifyHost="yourstore.myshopify.com"
+          shopifyAccessToken="123"
+          updateSettings={updateSettings}
+          vendors={vendors}
+          woocommerce={woocommerceDefault}
+        />
+      </ConfigProvider>
+    );
+
+    const input = screen.getByRole('button', { name: 'Test connection' });
+
+    expect(input).toBeInTheDocument();
+
+    fireEvent.click(input);
+
+    await waitFor(() => {
+      expect(screen.getByTestId('api-status')).toHaveTextContent(
+        'Connection successful'
+      );
     });
   });
 });

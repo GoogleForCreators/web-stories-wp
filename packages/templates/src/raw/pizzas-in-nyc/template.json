@@ -1,5 +1,5 @@
 {
-  "version": 41,
+  "version": 43,
   "pages": [
     {
       "elements": [
@@ -185,16 +185,7 @@
         "type": "shape",
         "id": "bbdc08c8-4ad8-4ed6-8040-f87a30b56f16"
       },
-      "animations": [
-        {
-          "id": "ad3a4737-88b3-428a-830f-28de828a1311",
-          "type": "effect-background-zoom",
-          "targets": ["e1ad4031-41f3-46c8-8dfd-ff7cc349f27f"],
-          "zoomDirection": "scaleIn",
-          "duration": 2500,
-          "delay": 0
-        }
-      ],
+      "animations": [],
       "pageTemplateType": "cover"
     },
     {

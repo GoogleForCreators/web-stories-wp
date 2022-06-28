@@ -28,6 +28,8 @@ import { uniqueEntriesByKey } from '@googleforcreators/design-system';
 import { ApiContext } from '../app/api/apiProvider';
 import { defaultStoriesState } from '../app/reducer/stories';
 import formattedStoriesArray from '../dataUtils/formattedStoriesArray';
+import formattedTaxonomiesArray from '../dataUtils/formattedTaxonomiesArray';
+import formattedTaxonomyTermsObject from '../dataUtils/formattedTaxonomyTermsObject';
 import formattedTemplatesArray from '../dataUtils/formattedTemplatesArray';
 import { STORY_STATUSES, STORY_SORT_OPTIONS } from '../constants/stories';
 import { groupTemplatesByTag } from '../testUtils';
@@ -74,6 +76,32 @@ export default function ApiProviderFixture({ children }) {
     []
   );
 
+  const taxonomyApi = useMemo(
+    () => ({
+      getTaxonomies: (args) => {
+        if (args.hierarchical) {
+          return Promise.resolve(
+            formattedTaxonomiesArray.filter((f) => f.hierarchical)
+          );
+        }
+        return Promise.resolve(formattedTaxonomiesArray);
+      },
+      getTaxonomyTerms: (path, args) => {
+        const restBase = path.split('/').pop();
+        const { search } = args;
+        let response = formattedTaxonomyTermsObject[restBase];
+        if (search) {
+          response = response.filter((r) => {
+            const term = r.name.toLowerCase();
+            return term.length && term.includes(search.toLowerCase());
+          });
+        }
+        return Promise.resolve(response);
+      },
+    }),
+    []
+  );
+
   const value = useMemo(
     () => ({
       state: {
@@ -84,9 +112,10 @@ export default function ApiProviderFixture({ children }) {
         storyApi,
         templateApi,
         usersApi,
+        taxonomyApi,
       },
     }),
-    [stories, templates, storyApi, templateApi, usersApi]
+    [stories, templates, storyApi, templateApi, usersApi, taxonomyApi]
   );
 
   return <ApiContext.Provider value={value}>{children}</ApiContext.Provider>;
@@ -120,12 +149,13 @@ function fetchStories(
     searchTerm = '',
     sortOption = STORY_SORT_OPTIONS.LAST_MODIFIED,
     sortDirection,
-    author,
+    filters,
   },
   currentState
 ) {
   const storiesState = currentState ? { ...currentState } : getStoriesState();
   const statuses = status.split(',');
+  const { author, web_story_category } = filters;
 
   storiesState.storiesOrderById = Object.values(storiesState.stories)
     .filter(
@@ -134,6 +164,11 @@ function fetchStories(
         title.toLowerCase().includes(searchTerm.toLowerCase())
     )
     .filter((story) => typeof author !== 'number' || story.author.id === author)
+    .filter(
+      (story) =>
+        typeof category !== 'number' ||
+        Boolean(story.categories.find((c) => c.id === web_story_category))
+    )
     .sort((a, b) => {
       let value;
       switch (sortOption) {

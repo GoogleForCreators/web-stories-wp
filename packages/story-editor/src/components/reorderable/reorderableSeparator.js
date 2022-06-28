@@ -19,17 +19,19 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { useCallback, useRef } from '@googleforcreators/react';
+import { useCallback, useRef, useState } from '@googleforcreators/react';
 
 /**
  * Internal dependencies
  */
+import { NESTED_PX } from '../panels/design/layer/constants';
 import useReorderable from './useReorderable';
 
 const Wrapper = styled.div`
   opacity: 0;
   position: relative;
-  z-index: ${({ isReordering }) => (isReordering ? 2 : -1)};
+  z-index: ${({ isReordering, isNested }) =>
+    isReordering ? (isNested ? 3 : 2) : -1};
 
   &:hover {
     opacity: ${({ isReordering }) => (isReordering ? 1 : 0)};
@@ -41,10 +43,22 @@ const Line = styled.div`
   margin: 0 0 -4px;
   background: ${({ theme }) => theme.colors.accent.secondary};
   width: 100%;
+  ${({ isNested }) => isNested && `margin-left: ${NESTED_PX}px;`}
+  width: ${({ isNested }) =>
+    isNested ? `calc(100% - ${NESTED_PX}px)` : '100%'}
 `;
 
-function ReorderableSeparator({ position, children = <Line />, ...props }) {
+function ReorderableSeparator({
+  position,
+  groupId = null,
+  isNested = false,
+  nestedOffset = false,
+  nestedOffsetCalcFunc = () => {},
+  children = null,
+  ...props
+}) {
   const separatorRef = useRef(null);
+  const [isTempNested, setIsTempNested] = useState(false);
 
   const { isReordering, setCurrentSeparator } = useReorderable(
     ({ state, actions }) => ({
@@ -56,14 +70,27 @@ function ReorderableSeparator({ position, children = <Line />, ...props }) {
     if (!isReordering) {
       return;
     }
-    setCurrentSeparator(position);
-  }, [setCurrentSeparator, isReordering, position]);
+    setCurrentSeparator({ position, data: { groupId } });
+  }, [setCurrentSeparator, isReordering, position, groupId]);
+
+  const handlePointerMove = (evt) => {
+    if (!nestedOffset) {
+      return;
+    }
+    setIsTempNested(nestedOffsetCalcFunc(evt.nativeEvent));
+  };
+
+  if (children === null) {
+    children = <Line isNested={isNested || isTempNested} />;
+  }
 
   return (
     <Wrapper
       onPointerOver={handlePointerEnter}
+      onPointerMove={handlePointerMove}
       ref={separatorRef}
       isReordering={isReordering}
+      isNested={isNested || isTempNested}
       {...props}
     >
       {children}
@@ -73,6 +100,10 @@ function ReorderableSeparator({ position, children = <Line />, ...props }) {
 
 ReorderableSeparator.propTypes = {
   position: PropTypes.number.isRequired,
+  groupId: PropTypes.string,
+  isNested: PropTypes.string,
+  nestedOffset: PropTypes.bool,
+  nestedOffsetCalcFunc: PropTypes.func,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,

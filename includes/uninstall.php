@@ -29,6 +29,7 @@ namespace Google\Web_Stories;
 use Google\Web_Stories\Media\Base_Color;
 use Google\Web_Stories\Media\Blurhash;
 use Google\Web_Stories\Media\Media_Source_Taxonomy;
+use Google\Web_Stories\Media\Video\Is_Gif;
 use Google\Web_Stories\Media\Video\Muting;
 use Google\Web_Stories\Media\Video\Optimization;
 use Google\Web_Stories\Media\Video\Poster;
@@ -128,6 +129,7 @@ function delete_stories_post_meta(): void {
 	delete_post_meta_by_key( Muting::IS_MUTED_POST_META_KEY );
 	delete_post_meta_by_key( Trimming::TRIM_POST_META_KEY );
 	delete_post_meta_by_key( Blurhash::BLURHASH_POST_META_KEY );
+	delete_post_meta_by_key( Is_Gif::IS_GIF_POST_META_KEY );
 }
 
 /**
@@ -173,12 +175,14 @@ function delete_posts(): void {
 function delete_terms(): void {
 	$taxonomies = [];
 
-	$settings  = new Settings();
-	$post_type = new Story_Post_Type( $settings );
+	$injector = Services::get_injector();
+	if ( ! method_exists( $injector, 'make' ) ) {
+		return;
+	}
 
-	$taxonomies[] = ( new Media_Source_Taxonomy( new Context( $post_type ) ) )->get_taxonomy_slug();
-	$taxonomies[] = ( new Category_Taxonomy( $post_type ) )->get_taxonomy_slug();
-	$taxonomies[] = ( new Tag_Taxonomy( $post_type ) )->get_taxonomy_slug();
+	$taxonomies[] = $injector->make( Media_Source_Taxonomy::class )->get_taxonomy_slug();
+	$taxonomies[] = $injector->make( Category_Taxonomy::class )->get_taxonomy_slug();
+	$taxonomies[] = $injector->make( Tag_Taxonomy::class )->get_taxonomy_slug();
 
 	$term_query = new WP_Term_Query();
 	$terms      = $term_query->query(

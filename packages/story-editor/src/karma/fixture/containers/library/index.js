@@ -77,6 +77,10 @@ export class Library extends Container {
     );
   }
 
+  get shoppingTab() {
+    return this.getByRole('tab', { name: /Shopping library/ });
+  }
+
   get pageTemplatesTab() {
     return this.getByRole('tab', { name: /Page templates library/ });
   }
@@ -109,6 +113,12 @@ export class Shapes extends Container {
 export class Media extends Container {
   constructor(node, path) {
     super(node, path);
+  }
+
+  get mediaRecording() {
+    return this.getByRole('button', {
+      name: 'Record Video',
+    });
   }
 
   get searchBar() {

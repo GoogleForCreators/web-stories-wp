@@ -31,10 +31,13 @@ namespace Google\Web_Stories;
 use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Media\Image_Sizes;
 use Google\Web_Stories\Model\Story;
+use Google\Web_Stories\Shopping\Product_Meta;
 use WP_Post;
 
 /**
  * Discovery class.
+ *
+ * @phpstan-import-type ProductData from \Google\Web_Stories\Shopping\Product
  */
 class Discovery extends Service_Base implements HasRequirements {
 
@@ -46,12 +49,21 @@ class Discovery extends Service_Base implements HasRequirements {
 	private $story_post_type;
 
 	/**
+	 * Product_Meta instance.
+	 *
+	 * @var Product_Meta Product_Meta instance.
+	 */
+	private $product_meta;
+
+	/**
 	 * Constructor.
 	 *
 	 * @param Story_Post_Type $story_post_type Story_Post_Type instance.
+	 * @param Product_Meta    $product_meta Product_Meta instance.
 	 */
-	public function __construct( Story_Post_Type $story_post_type ) {
+	public function __construct( Story_Post_Type $story_post_type, Product_Meta $product_meta ) {
 		$this->story_post_type = $story_post_type;
+		$this->product_meta    = $product_meta;
 	}
 
 	/**
@@ -64,7 +76,7 @@ class Discovery extends Service_Base implements HasRequirements {
 	 * @return string[] List of required services.
 	 */
 	public static function get_requirements(): array {
-		return [ 'story_post_type' ];
+		return [ 'story_post_type', 'product_meta' ];
 	}
 
 	/**
@@ -94,12 +106,7 @@ class Discovery extends Service_Base implements HasRequirements {
 		add_action( 'web_stories_story_head', 'wp_shortlink_wp_head', 10, 0 );
 		add_action( 'web_stories_story_head', 'wp_site_icon', 99 );
 		add_action( 'web_stories_story_head', 'wp_oembed_add_discovery_links' );
-		// Add support for WP 5.7. See https://core.trac.wordpress.org/ticket/51511.
-		if ( function_exists( '\wp_robots' ) ) {
-			add_action( 'web_stories_story_head', 'wp_robots', 1 );
-		} else {
-			add_action( 'web_stories_story_head', 'noindex', 1 );
-		}
+		add_action( 'web_stories_story_head', 'wp_robots', 1 );
 	}
 
 	/**
@@ -160,7 +167,7 @@ class Discovery extends Service_Base implements HasRequirements {
 	 *
 	 * @see https://developers.google.com/search/docs/guides/enable-web-stories
 	 *
-	 * @return array $metadata All schema.org metadata for the post.
+	 * @return array<string,mixed> $metadata All schema.org metadata for the post.
 	 */
 	protected function get_schemaorg_metadata(): array {
 		/**
@@ -218,6 +225,18 @@ class Discovery extends Service_Base implements HasRequirements {
 					'name'  => html_entity_decode( $post_author->display_name, ENT_QUOTES, get_bloginfo( 'charset' ) ),
 				];
 			}
+
+
+			/**
+			 * List of products.
+			 *
+			 * @phpstan-var ProductData[] $products
+			 */
+			$products         = $this->product_meta->get_products( $post->ID );
+			$product_metadata = $this->get_product_data( $products );
+			if ( $product_metadata ) {
+				$metadata = array_merge( $product_metadata, $metadata );
+			}
 		}
 
 		/**
@@ -229,6 +248,60 @@ class Discovery extends Service_Base implements HasRequirements {
 		 * @param WP_Post $post The current post object.
 		 */
 		return apply_filters( 'web_stories_story_schema_metadata', $metadata, $post );
+	}
+
+	/**
+	 * Get product schema data.
+	 *
+	 * @since 1.22.0
+	 *
+	 * @param array<int, array<string, mixed>> $products Array of products.
+	 * @return array<string, array<string, array<int, array<string, mixed>>|string>>
+	 *
+	 * @phpstan-param ProductData[] $products
+	 */
+	protected function get_product_data( array $products ): array {
+		if ( ! $products ) {
+			return [];
+		}
+		$product_data = [];
+		foreach ( $products as $product ) {
+			$data = [
+				'@type'       => 'Product',
+				'brand'       => $product['productBrand'] ?? '',
+				'productID'   => $product['productId'] ?? '',
+				'url'         => $product['productUrl'] ?? '',
+				'name'        => $product['productTitle'] ?? '',
+				'description' => $product['productDetails'] ?? '',
+				'offers'      => [
+					[
+						'@type'         => 'Offer',
+						'price'         => $product['productPrice'] ?? 0,
+						'priceCurrency' => $product['productPriceCurrency'] ?? '',
+					],
+				],
+			];
+			if ( isset( $product['productImages'] ) && $product['productImages'] ) {
+				$data['image'] = $product['productImages'][0]['url'];
+			}
+			if ( ! empty( $product['aggregateRating']['reviewCount'] ) ) {
+				$data['aggregateRating'] = [
+					'@type'       => 'AggregateRating',
+					'ratingValue' => $product['aggregateRating']['ratingValue'] ?? 0,
+					'reviewCount' => $product['aggregateRating']['reviewCount'],
+					'url'         => $product['aggregateRating']['reviewUrl'] ?? '',
+				];
+			}
+			$product_data[] = $data;
+		}
+
+		return [
+			'mainEntity' => [
+				'@type'           => 'ItemList',
+				'numberOfItems'   => (string) \count( $products ),
+				'itemListElement' => $product_data,
+			],
+		];
 	}
 
 	/**
@@ -252,7 +325,7 @@ class Discovery extends Service_Base implements HasRequirements {
 		$metadata = $this->get_open_graph_metadata();
 
 		foreach ( $metadata as $name => $value ) {
-			printf( '<meta property="%s" content="%s" />', esc_attr( $name ), esc_attr( $value ) );
+			printf( '<meta property="%s" content="%s" />', esc_attr( $name ), esc_attr( (string) $value ) );
 		}
 	}
 
@@ -261,7 +334,7 @@ class Discovery extends Service_Base implements HasRequirements {
 	 *
 	 * @since 1.3.0
 	 *
-	 * @return array
+	 * @return array<string, string|int>
 	 */
 	protected function get_open_graph_metadata(): array {
 		$metadata = [
@@ -333,7 +406,7 @@ class Discovery extends Service_Base implements HasRequirements {
 	 *
 	 * @since 1.3.0
 	 *
-	 * @return array
+	 * @return array<string, string> Twitter card metadata.
 	 */
 	protected function get_twitter_metadata(): array {
 		$metadata = [
@@ -405,11 +478,13 @@ class Discovery extends Service_Base implements HasRequirements {
 	/**
 	 * Helper to get poster image.
 	 *
+	 * @since 1.3.0
+	 *
 	 * @param int|WP_Post $post Post object to check for poster image attached.
 	 * @param string      $size Image size, default to full.
-	 * @return array|false
+	 * @return array{src?: string, width?: int, height?: int}|false Poster image data.
 	 */
-	protected function get_poster( $post, $size = 'full' ) {
+	protected function get_poster( $post, string $size = 'full' ) {
 		if ( ! has_post_thumbnail( $post ) ) {
 			return false;
 		}

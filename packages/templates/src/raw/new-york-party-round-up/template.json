@@ -1,5 +1,5 @@
 {
-  "version": 41,
+  "version": 43,
   "pages": [
     {
       "elements": [
@@ -267,23 +267,7 @@
         "type": "shape",
         "id": "bfce4d10-0344-400a-af65-36d474c79205"
       },
-      "animations": [
-        {
-          "id": "1fe3a670-3a40-4792-b8f8-6005bf93ad7b",
-          "type": "effect-fly-in",
-          "targets": ["cc93ee81-bd40-4d9d-96ef-6428c5e756c3"],
-          "flyInDir": "rightToLeft",
-          "duration": 1500,
-          "delay": 0
-        },
-        {
-          "id": "ab3f08e2-a30a-4cb9-8507-9d09a664e62b",
-          "type": "effect-fade-in",
-          "duration": 600,
-          "delay": 0,
-          "targets": ["428fbbc8-3611-417c-bdf1-972ff17841ef"]
-        }
-      ],
+      "animations": [],
       "pageTemplateType": "cover"
     },
     {

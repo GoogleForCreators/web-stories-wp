@@ -66,6 +66,7 @@ function EditorSettings() {
     customFonts,
     addCustomFont,
     deleteCustomFont,
+    fetchCustomFonts,
     publisherLogos,
     addPublisherLogo,
     fetchPublisherLogos,
@@ -77,7 +78,7 @@ function EditorSettings() {
   } = useEditorSettings(
     ({
       actions: {
-        fontsApi: { addCustomFont, deleteCustomFont },
+        fontsApi: { addCustomFont, deleteCustomFont, fetchCustomFonts },
         settingsApi: { fetchSettings, updateSettings },
         pagesApi: { searchPages, getPageById },
         mediaApi: { uploadMedia },
@@ -127,6 +128,7 @@ function EditorSettings() {
       customFonts,
       addCustomFont,
       deleteCustomFont,
+      fetchCustomFonts,
       fetchPublisherLogos,
       addPublisherLogo,
       removePublisherLogo,
@@ -142,12 +144,13 @@ function EditorSettings() {
 
   const {
     capabilities: { canUploadFiles, canManageSettings } = {},
-    siteKitStatus = {},
+    plugins: { siteKit = {}, woocommerce = {} },
     maxUpload,
     maxUploadFormatted,
     allowedImageMimeTypes,
     archiveURL,
     defaultArchiveURL,
+    vendors,
   } = useConfig();
 
   const {
@@ -168,8 +171,9 @@ function EditorSettings() {
     if (canManageSettings) {
       fetchSettings();
       fetchPublisherLogos();
+      fetchCustomFonts();
     }
-  }, [fetchSettings, fetchPublisherLogos, canManageSettings]);
+  }, [fetchSettings, fetchPublisherLogos, canManageSettings, fetchCustomFonts]);
 
   useEffect(() => {
     if (newlyCreatedMediaIds.length > 0) {
@@ -331,7 +335,7 @@ function EditorSettings() {
                   handleUpdateAnalyticsId={handleUpdateGoogleAnalyticsId}
                   usingLegacyAnalytics={usingLegacyAnalytics}
                   handleMigrateLegacyAnalytics={handleMigrateLegacyAnalytics}
-                  siteKitStatus={siteKitStatus}
+                  siteKitStatus={siteKit}
                 />
                 <PublisherLogoSettings
                   onAddLogos={handleAddLogos}
@@ -382,7 +386,7 @@ function EditorSettings() {
                   publisherId={adSensePublisherId}
                   adSenseSlotId={adSenseSlotId}
                   adManagerSlotId={adManagerSlotId}
-                  siteKitStatus={siteKitStatus}
+                  siteKitStatus={siteKit}
                 />
                 {isShoppingEnabled && (
                   <Shopping
@@ -390,6 +394,8 @@ function EditorSettings() {
                     shoppingProvider={shoppingProvider}
                     shopifyHost={shopifyHost}
                     shopifyAccessToken={shopifyAccessToken}
+                    vendors={vendors}
+                    woocommerce={woocommerce}
                   />
                 )}
               </>

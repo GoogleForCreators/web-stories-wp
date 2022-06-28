@@ -15,8 +15,13 @@
  */
 
 /**
+ * External dependencies
+ */
+import { ELEMENT_TYPES } from '@googleforcreators/elements';
+/**
  * Internal dependencies
  */
+import { MAX_PRODUCTS_PER_PAGE } from '../../../../constants';
 import { exclusion } from './utils';
 
 /**
@@ -50,9 +55,48 @@ function addElements(state, { elements }) {
     return state;
   }
 
+  const currentPageProductIds = oldPage?.elements
+    ?.filter(({ type }) => type === ELEMENT_TYPES.PRODUCT)
+    .map(({ product }) => product?.productId);
+
+  const newElementDuplicateID = newElements
+    .filter(
+      ({ type, product }) =>
+        type === ELEMENT_TYPES.PRODUCT &&
+        currentPageProductIds.includes(product?.productId)
+    )
+    .map(({ id }) => id);
+
+  const newElementNoDuplicateProducts = newElements.filter(
+    ({ id }) => newElementDuplicateID && !newElementDuplicateID.includes(id)
+  );
+
+  const newElementProducts = newElementNoDuplicateProducts.filter(
+    ({ type }) => type === ELEMENT_TYPES.PRODUCT
+  );
+
+  const newElementProductsFiltered =
+    currentPageProductIds.length + newElementProducts.length <=
+    MAX_PRODUCTS_PER_PAGE
+      ? newElementProducts
+      : [];
+
+  const newElementNoProducts = newElementNoDuplicateProducts.filter(
+    ({ type }) => type !== ELEMENT_TYPES.PRODUCT
+  );
+
+  const newPageElements = [
+    ...newElementNoProducts,
+    ...newElementProductsFiltered,
+  ];
+
+  if (newPageElements.length === 0) {
+    return state;
+  }
+
   const newPage = {
     ...oldPage,
-    elements: [...oldPage.elements, ...newElements],
+    elements: [...oldPage.elements, ...newPageElements],
   };
 
   const newPages = [
@@ -61,7 +105,7 @@ function addElements(state, { elements }) {
     ...state.pages.slice(pageIndex + 1),
   ];
 
-  const newSelection = newElements.map(({ id }) => id);
+  const newSelection = newPageElements.map(({ id }) => id);
 
   return {
     ...state,

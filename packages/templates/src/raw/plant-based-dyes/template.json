@@ -1,5 +1,5 @@
 {
-  "version": 41,
+  "version": 43,
   "pages": [
     {
       "elements": [
@@ -253,15 +253,7 @@
       "backgroundColor": { "color": { "r": 243, "g": 233, "b": 212 } },
       "type": "page",
       "id": "c4b1095e-77fa-4627-8459-e61d9168d6d8",
-      "animations": [
-        {
-          "id": "bb6187f6-c9ea-4860-863e-c765e750f6a8",
-          "type": "effect-fade-in",
-          "targets": ["8762d1df-b171-4594-b8e4-6ec9eaca6955"],
-          "duration": 1600,
-          "delay": 0
-        }
-      ],
+      "animations": [],
       "pageTemplateType": "cover"
     },
     {
