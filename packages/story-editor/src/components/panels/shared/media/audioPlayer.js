@@ -19,12 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import {
-  useState,
-  useCallback,
-  useRef,
-  useEffect,
-} from '@googleforcreators/react';
+import { useState, useCallback, useEffect } from '@googleforcreators/react';
 import {
   THEME_CONSTANTS,
   themeHelpers,
@@ -81,10 +76,8 @@ const Audio = styled.audio`
   display: none;
 `;
 
-function AudioPlayer({ src, mimeType, tracks = [], audioId, loop }) {
+function AudioPlayer({ src, mimeType, tracks = [], audioId, loop, playerRef }) {
   const [isPlaying, setIsPlaying] = useState(false);
-
-  const playerRef = useRef();
 
   const { getProxiedUrl } = useCORSProxy();
 
@@ -103,7 +96,7 @@ function AudioPlayer({ src, mimeType, tracks = [], audioId, loop }) {
     } else {
       player.play().catch(() => {});
     }
-  }, [isPlaying]);
+  }, [isPlaying, playerRef]);
 
   useEffect(() => {
     /**
@@ -190,6 +183,8 @@ AudioPlayer.propTypes = {
   audioId: PropTypes.string,
   loop: PropTypes.bool,
   tracks: PropTypes.arrayOf(ResourcePropTypes.trackResource),
+  playerRef: PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+    .isRequired,
 };
 
 export default AudioPlayer;

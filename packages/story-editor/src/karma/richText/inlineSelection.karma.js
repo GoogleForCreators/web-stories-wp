@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * Internal dependencies
  */
@@ -399,10 +400,9 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
 
   describe('CUJ: Creator Can Style Text: Apply B, Set line height', () => {
     it('should apply global formats (here line height) even when a selection is present', async () => {
-      const getDisplayTextStyles = async () => {
-        const displayNode =
-          await data.fixture.editor.canvas.displayLayer.display(data.textId)
-            .node;
+      const { displayLayer } = data.fixture.editor.canvas;
+      const getDisplayTextStyles = () => {
+        const displayNode = displayLayer.display(data.textId).node;
         const paragraph = displayNode.querySelector('p');
         return window.getComputedStyle(paragraph);
       };
@@ -424,13 +424,9 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
       await data.fixture.events.keyboard.press('Enter');
       await data.fixture.events.keyboard.press('Escape');
 
-      // Exit edit-mode
+      // Exit edit-mode by refocusing text field and pressing Esc
+      await setSelection(1, 2);
       await data.fixture.events.keyboard.press('Escape');
-      await data.fixture.events.mouse.clickOn(
-        data.fixture.editor.canvas.framesLayer.container,
-        5,
-        5
-      );
 
       // Expect text content to be unchanged
       expect(getTextContent()).toBe('Fill in some text');
