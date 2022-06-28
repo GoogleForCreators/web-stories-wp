@@ -21,17 +21,18 @@ import PropTypes from 'prop-types';
 import { useCallback, useMemo, useRef } from '@googleforcreators/react';
 import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
 import {
+  Icons,
+  PLACEMENT,
   prettifyShortcut,
   useSnackbar,
-  PLACEMENT,
-  Icons,
 } from '@googleforcreators/design-system';
 import { trackEvent } from '@googleforcreators/tracking';
 import { ELEMENT_TYPES } from '@googleforcreators/elements';
 import {
-  resourceList,
   getExtensionsFromMimeType,
+  resourceList,
 } from '@googleforcreators/media';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
@@ -41,14 +42,15 @@ import useHighlights from '../useHighlights';
 import updateProperties from '../../../components/style/updateProperties';
 import { useHistory } from '../../history';
 import { useConfig } from '../../config';
-import { useLocalMedia, TRANSCODABLE_MIME_TYPES } from '../../media';
-import { useStory, useStoryTriggersDispatch, STORY_EVENTS } from '../../story';
+import { TRANSCODABLE_MIME_TYPES, useLocalMedia } from '../../media';
+import { STORY_EVENTS, useStory, useStoryTriggersDispatch } from '../../story';
 import useApplyTextAutoStyle from '../../../utils/useApplyTextAutoStyle';
 import useFFmpeg from '../../media/utils/useFFmpeg';
 import useInsertElement from '../../../components/canvas/useInsertElement';
 import { DEFAULT_PRESET } from '../../../components/library/panes/text/textPresets';
+import { useMediaRecording } from '../../../components/mediaRecording';
 import { getResetProperties } from './utils';
-import { ACTIONS, RESET_PROPERTIES, RESET_DEFAULTS } from './constants';
+import { ACTIONS, RESET_DEFAULTS, RESET_PROPERTIES } from './constants';
 
 const UNDO_HELP_TEXT = sprintf(
   /* translators: %s: Ctrl/Cmd + Z keyboard shortcut */
@@ -66,7 +68,24 @@ const {
   Media,
   PictureSwap,
   Captions,
+  Cross,
+  Settings,
 } = Icons;
+
+const StyledSettings = styled(Settings).attrs({
+  width: 24,
+  height: 24,
+})``;
+
+const Mic = styled(Icons.Mic).attrs({
+  width: 24,
+  height: 24,
+})``;
+
+const MicOff = styled(Icons.MicOff).attrs({
+  width: 24,
+  height: 24,
+})``;
 
 export const MediaPicker = ({ render, ...props }) => {
   const {
@@ -249,17 +268,24 @@ const useQuickActions = () => {
   const dispatchStoryEvent = useStoryTriggersDispatch();
   const {
     backgroundElement,
+    currentPageNumber,
     selectedElementAnimations,
     selectedElements,
     updateElementsById,
   } = useStory(
     ({
-      state: { currentPage, selectedElementAnimations, selectedElements },
+      state: {
+        currentPage,
+        currentPageNumber,
+        selectedElementAnimations,
+        selectedElements,
+      },
       actions: { updateElementsById },
     }) => ({
       backgroundElement: currentPage?.elements.find(
         (element) => element.isBackground
       ),
+      currentPageNumber,
       selectedElementAnimations,
       selectedElements,
       updateElementsById,
@@ -271,6 +297,29 @@ const useQuickActions = () => {
   const showSnackbar = useSnackbar(({ showSnackbar }) => showSnackbar);
   const { setHighlights } = useHighlights(({ setHighlights }) => ({
     setHighlights,
+  }));
+
+  const {
+    isInRecordingMode,
+    toggleRecordingMode,
+    toggleAudio,
+    hasAudio,
+    toggleSettings,
+    audioInput,
+    isReady,
+  } = useMediaRecording(({ state, actions }) => ({
+    isInRecordingMode: state.isInRecordingMode,
+    hasAudio: state.hasAudio,
+    audioInput: state.audioInput,
+    isReady:
+      state.status === 'ready' &&
+      !state.file?.type?.startsWith('image') &&
+      !state.isCountingDown,
+    toggleRecordingMode: actions.toggleRecordingMode,
+    toggleAudio: actions.toggleAudio,
+    toggleSettings: actions.toggleSettings,
+    muteAudio: actions.muteAudio,
+    unMuteAudio: actions.unMuteAudio,
   }));
 
   const undoRef = useRef(undo);
@@ -490,11 +539,16 @@ const useQuickActions = () => {
     () => getResetProperties(selectedElement, selectedElementAnimations),
     [selectedElement, selectedElementAnimations]
   );
+
   const showClearAction = resetProperties.length > 0;
 
   const foregroundCommonActions = useMemo(() => {
-    const baseActions = [
-      {
+    const commonActions = [];
+
+    // Don't show the 'Add animation' button on the first page
+    if (currentPageNumber > 1) {
+      // 'Add animation' button
+      commonActions.push({
         Icon: CircleSpeed,
         label: ACTIONS.ADD_ANIMATION.text,
         onClick: (evt) => {
@@ -506,43 +560,50 @@ const useQuickActions = () => {
           });
         },
         ...actionMenuProps,
-      },
-      {
-        Icon: Link,
-        label: ACTIONS.ADD_LINK.text,
-        onClick: (evt) => {
-          handleFocusLinkPanel()(evt);
+      });
+    }
 
-          trackEvent('quick_action', {
-            name: ACTIONS.ADD_LINK.trackingEventName,
-            element: selectedElement?.type,
-          });
-        },
-        ...actionMenuProps,
-      },
-    ];
-
-    const clearAction = {
-      Icon: Eraser,
-      label: ACTIONS.RESET_ELEMENT.text,
-      onClick: () => {
-        handleElementReset({
-          elementId: selectedElement?.id,
-          resetProperties,
-          elementType: selectedElement?.type,
-        });
+    // 'Add link' button is always rendered
+    commonActions.push({
+      Icon: Link,
+      label: ACTIONS.ADD_LINK.text,
+      onClick: (evt) => {
+        handleFocusLinkPanel()(evt);
 
         trackEvent('quick_action', {
-          name: ACTIONS.RESET_ELEMENT.trackingEventName,
+          name: ACTIONS.ADD_LINK.trackingEventName,
           element: selectedElement?.type,
         });
       },
-      separator: 'top',
       ...actionMenuProps,
-    };
+    });
 
-    return showClearAction ? [...baseActions, clearAction] : baseActions;
+    // Only show 'Reset element' button for modified elements
+    if (showClearAction) {
+      // 'Reset element' button
+      commonActions.push({
+        Icon: Eraser,
+        label: ACTIONS.RESET_ELEMENT.text,
+        onClick: () => {
+          handleElementReset({
+            elementId: selectedElement?.id,
+            resetProperties,
+            elementType: selectedElement?.type,
+          });
+
+          trackEvent('quick_action', {
+            name: ACTIONS.RESET_ELEMENT.trackingEventName,
+            element: selectedElement?.type,
+          });
+        },
+        separator: 'top',
+        ...actionMenuProps,
+      });
+    }
+
+    return commonActions;
   }, [
+    currentPageNumber,
     handleFocusAnimationPanel,
     selectedElement?.id,
     selectedElement?.type,
@@ -716,6 +777,60 @@ const useQuickActions = () => {
     selectedElement,
     showClearAction,
   ]);
+
+  const mediaRecordingActions = useMemo(() => {
+    return [
+      {
+        Icon: Cross,
+        label: __('Close', 'web-stories'),
+        onClick: () => {
+          trackEvent('media_recording_mode_toggled', {
+            status: 'closed',
+          });
+          toggleRecordingMode();
+        },
+        ...actionMenuProps,
+      },
+      {
+        Icon: StyledSettings,
+        label: __('Options', 'web-stories'),
+        onClick: () => {
+          trackEvent('media_recording_open_settings');
+          toggleSettings();
+        },
+        disabled: !isReady,
+        separator: 'top',
+        ...actionMenuProps,
+      },
+      audioInput && {
+        Icon: hasAudio ? Mic : MicOff,
+        label: hasAudio
+          ? __('Disable Audio', 'web-stories')
+          : __('Enable Audio', 'web-stories'),
+        onClick: () => {
+          trackEvent('media_recording_audio_toggled', {
+            status: hasAudio ? 'muted' : 'unmuted',
+          });
+          toggleAudio();
+        },
+        disabled: !isReady,
+        ...actionMenuProps,
+      },
+    ].filter(Boolean);
+  }, [
+    actionMenuProps,
+    audioInput,
+    hasAudio,
+    toggleAudio,
+    toggleRecordingMode,
+    toggleSettings,
+    isReady,
+  ]);
+
+  // Return special actions for media recording mode.
+  if (isInRecordingMode) {
+    return mediaRecordingActions;
+  }
 
   // Hide menu if there are multiple elements selected
   if (selectedElements.length > 1) {

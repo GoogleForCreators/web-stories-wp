@@ -17,28 +17,23 @@
 /**
  * External dependencies
  */
-import {
-  useCallback,
-  useEffect,
-  useState,
-  useMemo,
-} from '@googleforcreators/react';
+import { useCallback } from '@googleforcreators/react';
 
 /**
  * Internal dependencies
  */
 import useApi from '../../../../api/useApi';
 
+const cachedPrimaryOptions = {};
+
 /**
  * Hook used for taxonomy filters logic.
  * Initializes the taxonomy filters data.
  *
- * @return {Object} {taxonomies, initializeTaxonomyFilters} taxonomies and a function to shape the taxonoimes filter data.
+ * @return {Object} initializeTaxonomyFilters taxonomies and a function to shape the taxonoimes filter data.
  */
 
 function useTaxonomyFilters() {
-  const [taxonomies, setTaxonomies] = useState([]);
-
   const { getTaxonomies, getTaxonomyTerms } = useApi(
     ({
       actions: {
@@ -51,35 +46,11 @@ function useTaxonomyFilters() {
   );
 
   /**
-   * Maps the fetched taxonomy data back to parent taxonomy.
-   *
-   * @return {void}
-   */
-  const _setTaxonomiesTermData = useCallback(
-    (terms) => {
-      const taxonomyObject = {};
-      for (const arr of terms) {
-        // grab the first elements 'taxonomy' which should map to the parents 'slug'
-        const key = arr[0]?.taxonomy;
-        if (key) {
-          taxonomyObject[key] = arr;
-        }
-      }
-      setTaxonomies((prevTaxonomies) =>
-        prevTaxonomies.map((taxonomy) => ({
-          ...taxonomy,
-          data: taxonomyObject[taxonomy.slug] || [],
-        }))
-      );
-    },
-    [setTaxonomies]
-  );
-
-  /**
    * Query individual taxonomy data.
    * This is needed to initialize the primaryOptions and needed to search and set queriedOptions.
    *
-   * @param {Object} taxonomy object holding taxonomy data, including restBase and restPath used to fetch individual taxonomy terms
+   * @param {Object} taxonomy object holding taxonomy data,
+   * including restBase and restPath used to fetch individual taxonomy terms
    * @param {string} search string use to query taxonomy by name
    * @return {Array} taxonomy terms
    */
@@ -97,63 +68,50 @@ function useTaxonomyFilters() {
   );
 
   /**
-   * Query all the taxonomies.
-   * This should only be needed once get all the taxonomies and set individual term data.
+   * Get taxonomy terms for a given taxonomy. Cache for later use.
+   * This is needed to initialize the primaryOptions.
+   * See design-system/src/component/datalist
    *
    * @see queryTaxonomyTerms
+   * @param {Object} taxonomy object holding taxonomy data,
+   * including restBase and restPath used to fetch individual taxonomy terms
+   * @return {Promise<Array>} cached taxonomy terms
    */
-  const queryTaxonomies = useCallback(async () => {
-    const data = await getTaxonomies({ hierarchical: true, show_ui: true });
-    const promises = [];
-    for (const taxonomy of data) {
-      // initialize the data with an empty array
-      taxonomy.data = [];
-      // fetch each taxonomies terms
-      promises.push(queryTaxonomyTerms(taxonomy));
-    }
-    setTaxonomies(data);
-
-    // once the taxonomies terms have been fetched
-    // set the terms data on the parent taxonomy
-    Promise.all(promises).then((terms) => {
-      _setTaxonomiesTermData(terms);
-    });
-  }, [
-    setTaxonomies,
-    getTaxonomies,
-    queryTaxonomyTerms,
-    _setTaxonomiesTermData,
-  ]);
+  const getPrimaryOptions = useCallback(
+    async (taxonomy) => {
+      const { restBase } = taxonomy;
+      if (!cachedPrimaryOptions[restBase]) {
+        cachedPrimaryOptions[restBase] = await queryTaxonomyTerms(taxonomy);
+      }
+      return cachedPrimaryOptions[restBase];
+    },
+    [queryTaxonomyTerms]
+  );
 
   /**
+   * Query all the taxonomies.
    * Sets up the shape of the taxonomy filters data
    *
-   * @return {Array} taxonomies filter data
+   * @return {Promise<Array>} taxonomies filter data
    */
-  const initializeTaxonomyFilters = useCallback(() => {
+  const initializeTaxonomyFilters = useCallback(async () => {
+    const taxonomies = await getTaxonomies({
+      hierarchical: true,
+      show_ui: true,
+    });
     return taxonomies.map((taxonomy) => ({
       key: taxonomy.restBase,
       restPath: taxonomy.restPath,
-      labels: taxonomy.labels,
-      filterId: null,
-      primaryOptions: taxonomy.data,
-      queriedOptions: taxonomy.data,
-      query: queryTaxonomyTerms,
       placeholder: taxonomy.labels.allItems,
       ariaLabel: taxonomy.labels.filterByItem,
       noMatchesFoundLabel: taxonomy.labels.notFound,
       searchPlaceholder: taxonomy.labels.searchItems,
+      query: (search) => queryTaxonomyTerms(taxonomy, search),
+      getPrimaryOptions: () => getPrimaryOptions(taxonomy),
     }));
-  }, [queryTaxonomyTerms, taxonomies]);
+  }, [queryTaxonomyTerms, getPrimaryOptions, getTaxonomies]);
 
-  useEffect(() => {
-    queryTaxonomies();
-  }, [queryTaxonomies]);
-
-  return useMemo(
-    () => ({ taxonomies, initializeTaxonomyFilters }),
-    [taxonomies, initializeTaxonomyFilters]
-  );
+  return initializeTaxonomyFilters;
 }
 
 export default useTaxonomyFilters;

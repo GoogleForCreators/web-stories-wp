@@ -23,7 +23,6 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { ChevronDownSmall } from '../../../icons';
 import { themeHelpers } from '../../../theme';
 import { Text } from '../../typography';
 
@@ -40,7 +39,7 @@ export const SelectButton = styled.button(
     border: 1px solid
       ${theme.colors.border[isOpen ? 'defaultActive' : 'defaultNormal']};
 
-    padding: 8px 0 8px 12px;
+    padding: 8px 12px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -91,27 +90,6 @@ SelectButton.propTypes = {
   isOpen: PropTypes.bool,
 };
 
-export const ChevronWrap = styled.div(
-  ({ theme, isOpen }) => css`
-    color: ${theme.colors.fg.secondary};
-    width: 32px;
-    height: 32px;
-
-    ${isOpen &&
-    css`
-      transform: rotate(180deg);
-    `}
-  `
-);
-ChevronWrap.propTypes = {
-  isOpen: PropTypes.bool,
-};
-
-export const StyledChevron = styled(ChevronDownSmall)`
-  width: 32px;
-  height: auto;
-`;
-
 export const Value = styled(Text)`
   max-width: 100%;
   padding-right: 8px;
@@ -127,7 +105,7 @@ export const LabelText = styled(Text)`
   padding-right: 8px;
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: hidden;
+  text-overflow: clip;
 `;
 
 export const Label = styled.span`

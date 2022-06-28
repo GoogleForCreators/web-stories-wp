@@ -2,7 +2,7 @@
   "name": "@googleforcreators/tracking",
   "description": "Utility package for telemetry in the Web Stories editor, powered by Google Analytics.",
   "private": false,
-  "version": "0.1.202206201534",
+  "version": "0.1.202206271222",
   "author": {
     "name": "Google",
     "url": "https://creators.google/"

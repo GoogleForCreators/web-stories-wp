@@ -115,6 +115,12 @@ export class Media extends Container {
     super(node, path);
   }
 
+  get mediaRecording() {
+    return this.getByRole('button', {
+      name: 'Record Video',
+    });
+  }
+
   get searchBar() {
     return this.getByRole('searchbox');
   }

@@ -33,27 +33,14 @@ import { isKeyboardUser } from '../../utils/keyboardOnlyOutline';
 import Popup from '../secondaryPopup';
 import { ToggleButton } from '../toggleButton';
 import DirectionAware from '../directionAware';
-import { KEYBOARD_SHORTCUTS_PADDING } from '../footer/constants';
 import ShortcutMenu from './shortcutMenu';
 import { TOGGLE_SHORTCUTS_MENU } from './constants';
 import { useKeyboardShortcutsMenu } from './keyboardShortcutsMenuContext';
 
-const StyledToggleButton = styled(ToggleButton)`
-  padding-left: ${KEYBOARD_SHORTCUTS_PADDING}px;
-  padding-right: ${KEYBOARD_SHORTCUTS_PADDING}px;
-  width: auto;
-  display: block;
-  background-color: ${({ theme }) => theme.colors.bg.primary};
-`;
-
 const Wrapper = styled.div`
   z-index: ${Z_INDEX_FOOTER};
 `;
-const MainIcon = styled(Icons.Keyboard)`
-  height: 32px;
-  width: auto;
-  display: block;
-`;
+
 function KeyboardShortcutsMenu() {
   const anchorRef = useRef();
   const wrapperRef = useRef();
@@ -86,14 +73,14 @@ function KeyboardShortcutsMenu() {
           <ShortcutMenu toggleMenu={toggle} />
         </Popup>
 
-        <StyledToggleButton
+        <ToggleButton
           ref={anchorRef}
           isOpen={isOpen}
           aria-owns="keyboard_shortcut_menu"
           onClick={toggle}
           aria-label={__('Keyboard Shortcuts', 'web-stories')}
           label={__('Keyboard Shortcuts', 'web-stories')}
-          MainIcon={MainIcon}
+          MainIcon={Icons.Keyboard}
           shortcut="mod+/"
         />
       </Wrapper>

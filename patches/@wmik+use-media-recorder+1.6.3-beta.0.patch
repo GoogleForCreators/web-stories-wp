@@ -1,0 +1,23 @@
+diff --git a/node_modules/@wmik/use-media-recorder/index.js b/node_modules/@wmik/use-media-recorder/index.js
+index 7e8fd25..726b428 100755
+--- a/node_modules/@wmik/use-media-recorder/index.js
++++ b/node_modules/@wmik/use-media-recorder/index.js
+@@ -171,9 +171,15 @@ function useMediaRecorder({
+       );
+       mediaRecorder.current.addEventListener('stop', handleStop);
+       mediaRecorder.current.addEventListener('error', handleError);
+-      mediaRecorder.current.start(timeSlice);
+-      setStatus('recording');
+-      onStart();
++
++      // See https://github.com/wmik/use-media-recorder/issues/29
++      try {
++        mediaRecorder.current.start(timeSlice);
++        setStatus('recording');
++        onStart();
++      } catch (error) {
++        handleError({ error });
++      }
+     }
+   }
+ 
