@@ -392,6 +392,15 @@
     },
     {
       "files": [
+        "packages/jest-amp/src/**/*.js",
+        "packages/jest-puppeteer-amp/src/**/*.js"
+      ],
+      "env": {
+        "node": true
+      }
+    },
+    {
+      "files": [
         "packages/e2e-test-utils/**/*.js",
         "packages/e2e-tests/src/**/*.js"
       ],
