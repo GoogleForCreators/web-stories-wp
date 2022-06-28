@@ -25,7 +25,6 @@ import PropTypes from 'prop-types';
 import { THEME_CONSTANTS } from '../../theme';
 import { ChevronDownSmall } from '../../icons';
 
-// TODO: Account for RTL layout for 'left' and 'right'?
 const rotate = {
   up: [180, 0],
   down: [0, 180],
