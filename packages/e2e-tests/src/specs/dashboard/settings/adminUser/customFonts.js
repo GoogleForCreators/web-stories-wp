@@ -96,20 +96,6 @@ describe('Custom Fonts', () => {
     await takeSnapshot(page, 'Custom Fonts Settings');
   });
 
-  it('should select font when clicked', async () => {
-    await addCustomFont(OPEN_SANS_CONDENSED_LIGHT_ITALIC_URL);
-    await addCustomFont(OPEN_SANS_CONDENSED_BOLD_URL);
-    await addCustomFont(OPEN_SANS_CONDENSED_LIGHT_URL);
-
-    const font = await page.$('div[role=listbox] [role=option]:last-child');
-    await font.click();
-    const ariaSelected = await page.evaluate((el) => {
-      return el.getAttribute('aria-selected');
-    }, font);
-
-    expect(ariaSelected).toBe('true');
-  });
-
   it('should show error on trying add font twice', async () => {
     await addCustomFont(OPEN_SANS_CONDENSED_LIGHT_URL);
     await addCustomFont(OPEN_SANS_CONDENSED_LIGHT_URL);
