@@ -34,7 +34,6 @@ describe('Right Click Menu integration', () => {
 
   beforeEach(async () => {
     fixture = new Fixture();
-    fixture.setFlags({ shoppingIntegration: true });
     await fixture.render();
     await fixture.collapseHelpCenter();
     await fixture.events.click(fixture.editor.footer.layerPanel.togglePanel);
