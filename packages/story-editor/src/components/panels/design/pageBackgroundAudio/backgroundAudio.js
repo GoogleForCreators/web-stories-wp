@@ -21,12 +21,11 @@ import { useCallback } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import { Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
 import styled from 'styled-components';
-import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
  */
-import { useConfig, useStory } from '../../../../app';
+import { useStory } from '../../../../app';
 import { Row } from '../../../form';
 import { SimplePanel } from '../../panel';
 import BackgroundAudioPanelContent from '../../shared/media/backgroundAudioPanelContent';
@@ -38,11 +37,6 @@ const HelperText = styled(Text).attrs({
 `;
 
 function PageBackgroundAudioPanel() {
-  const {
-    capabilities: { hasUploadMediaAction },
-  } = useConfig();
-  const enableAudioHotlinking = useFeature('audioHotlinking');
-
   const { backgroundAudio, currentPageId, updateCurrentPageProperties } =
     useStory((state) => ({
       updateCurrentPageProperties: state.actions.updateCurrentPageProperties,
@@ -60,10 +54,6 @@ function PageBackgroundAudioPanel() {
     },
     [updateCurrentPageProperties]
   );
-
-  if (!backgroundAudio && !hasUploadMediaAction && !enableAudioHotlinking) {
-    return null;
-  }
 
   return (
     <SimplePanel
