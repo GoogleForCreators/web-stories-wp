@@ -22,7 +22,18 @@ use Google\Web_Stories\Tests\Integration\TestCase;
 /**
  * @coversDefaultClass \Google\Web_Stories\Integrations\ShortPixel
  */
-class ShortPixel extends TestCase {
+class ShortPixel extends DependencyInjectedTestCase {
+
+	/**
+	 * @var \Google\Web_Stories\Integrations\ShortPixel
+	 */
+	private $instance;
+
+	public function set_up(): void {
+		parent::set_up();
+
+		$this->instance = $this->injector->make( \Google\Web_Stories\Integrations\ShortPixel::class );
+	}
 	/**
 	 * @covers ::register
 	 */
