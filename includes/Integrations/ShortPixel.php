@@ -39,7 +39,7 @@ class ShortPixel extends Service_Base {
 	 * @since 1.23.0
 	 */
 	public function register(): void {
-		add_filter( 'shortpixel_image_urls', [ $this, 'image_urls' ], 10, 2 );
+		add_filter( 'shortpixel_image_urls', [ $this, 'image_urls' ], 10, 1 );
 	}
 
 	/**
@@ -48,11 +48,10 @@ class ShortPixel extends Service_Base {
 	 * @since 1.23.0
 	 *
 	 * @param string[] $urls  Urls that will be sent to optimisation.
-	 * @param int      $post_id Post ID.
 	 * @return string[] The filtered Urls.
 	 */
-	public function image_urls( $urls, $post_id ): array {
-		if ( str_contains( $urls[0], 'web-stories-page-template' ) ) {
+	public function image_urls( $urls ): array {
+		if ( false !== strpos( $urls[0], 'web-stories-page-template' ) ) {
 			return [];
 		}
 		return $urls;

@@ -39,7 +39,7 @@ class ShortPixel extends TestCase {
 		$short_pixel = new \Google\Web_Stories\Integrations\ShortPixel();
 		$urls        = [ 'http://localhost:8899/wp-content/uploads/2022/03/web-stories-page-template-768.jpg' ];
 		$result      = $short_pixel->image_urls( $urls, 10 );
-		$this->assertSame( $result, [] );
+		$this->assertEqualSets( [], $result );
 	}
 
 	/**
@@ -50,6 +50,6 @@ class ShortPixel extends TestCase {
 		/* given a non "page-template" image the urls should pass thru */
 		$urls   = [ 'http://localhost:8899/wp-content/uploads/2022/03/example-750.jpg' ];
 		$result = $short_pixel->image_urls( $urls, 10 );
-		$this->assertSame( $result, $urls );
+		$this->assertEqualSets( $urls, $result );
 	}
 }
