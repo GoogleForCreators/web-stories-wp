@@ -47,6 +47,7 @@ import {
   STORY_STATUS,
 } from '../../../../../constants';
 import { useConfig } from '../../../../config';
+import useFilters from '../../filters/useFilters';
 import { StoryListItem } from '../storyListItem';
 import {
   ArrowIcon,
@@ -70,12 +71,16 @@ export default function StoryListView({
   stories,
   storyMenu,
   storySort,
-  storyStatus,
 }) {
   const {
     userId,
     styleConstants: { topOffset },
   } = useConfig();
+
+  const { storyStatus } = useFilters(({ state: { filters } }) => {
+    const statusFilter = filters.filter((f) => f.key === 'status');
+    return { storyStatus: statusFilter?.filterId };
+  });
 
   const onSortTitleSelected = useCallback(
     (newStorySort) => {
@@ -267,6 +272,5 @@ StoryListView.propTypes = {
   sortDirection: PropTypes.string.isRequired,
   storyMenu: StoryMenuPropType.isRequired,
   storySort: PropTypes.string.isRequired,
-  storyStatus: PropTypes.oneOf(Object.values(STORY_STATUS)),
   stories: StoriesPropType,
 };

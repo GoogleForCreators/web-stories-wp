@@ -53,14 +53,7 @@ import ListView from '../listView';
 import StoryGridView from '../storyGridView';
 
 const ACTIVE_DIALOG_DELETE_STORY = 'DELETE_STORY';
-function StoriesView({
-  filterValue,
-  loading,
-  sort,
-  storyActions,
-  stories,
-  view,
-}) {
+function StoriesView({ loading, sort, storyActions, stories, view }) {
   const [contextMenuId, setContextMenuId] = useState(-1);
   const [titleRenameId, setTitleRenameId] = useState(-1);
 
@@ -226,7 +219,6 @@ function StoriesView({
           stories={stories}
           storyMenu={storyMenu}
           storySort={sort.value}
-          storyStatus={filterValue}
         />
       );
     }
@@ -254,7 +246,6 @@ function StoriesView({
     return null;
   }, [
     loading,
-    filterValue,
     renameStory,
     returnStoryFocusId,
     sort,
@@ -312,7 +303,6 @@ function StoriesView({
 }
 
 StoriesView.propTypes = {
-  filterValue: PropTypes.string,
   loading: PropTypes.shape({
     isLoading: PropTypes.bool,
     showStoriesWhileLoading: ShowStoriesWhileLoadingPropType,

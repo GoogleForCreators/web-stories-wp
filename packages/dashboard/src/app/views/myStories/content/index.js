@@ -36,7 +36,6 @@ import { APP_ROUTES } from '../../../../constants';
 import { Layout, StandardViewContentGutter } from '../../../../components';
 import { StoriesPropType, StoryActionsPropType } from '../../../../types';
 import {
-  FilterPropTypes,
   ViewPropTypes,
   PagePropTypes,
   SortPropTypes,
@@ -66,7 +65,6 @@ NoAvailableContent.propTypes = {
 function Content({
   allPagesFetched,
   canViewDefaultTemplates,
-  filter,
   filtersObject = {},
   loading,
   page,
@@ -82,7 +80,6 @@ function Content({
         {stories.length > 0 ? (
           <>
             <StoriesView
-              filterValue={filter}
               sort={sort}
               storyActions={storyActions}
               stories={stories}
@@ -133,7 +130,6 @@ function Content({
 Content.propTypes = {
   allPagesFetched: PropTypes.bool,
   canViewDefaultTemplates: PropTypes.bool,
-  filter: PropTypes.string,
   filtersObject: PropTypes.object,
   loading: PropTypes.shape({
     isLoading: PropTypes.bool,
