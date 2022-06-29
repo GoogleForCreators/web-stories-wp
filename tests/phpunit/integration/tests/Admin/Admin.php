@@ -245,7 +245,7 @@ class Admin extends DependencyInjectedTestCase {
 	 */
 	public function test_media_states_with_active_logo(): void {
 		$post = self::factory()->post->create_and_get( [] );
-		update_option( $this->settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO, $post->ID );
+		$this->settings->update_setting( $this->settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO, $post->ID );
 		$result = $this->instance->media_states( [], $post );
 		$this->assertSame( 'Web Stories Publisher Logo', $result[0] );
 	}
