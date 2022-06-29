@@ -55,16 +55,22 @@ export function fetchStories(config, queryParams) {
   } = queryParams;
 
   // Important: Keep in sync with REST API preloading definition.
-  const query = {
+  // TODO: check backend preload
+  const _defaultPreload = {
     _embed: STORY_EMBED,
     context: 'edit',
     _web_stories_envelope: true,
+    _fields: STORY_FIELDS,
+    status: STORY_STATUS.ALL,
+  };
+
+  const query = {
+    ..._defaultPreload,
     search: searchTerm || undefined,
     orderby: sortOption,
     page,
     per_page: perPage,
     order: sortDirection || ORDER_BY_SORT[sortOption],
-    _fields: STORY_FIELDS,
     ...filters,
   };
 

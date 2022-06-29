@@ -17,17 +17,17 @@
 /**
  * External dependencies
  */
-import { useEffect, useMemo } from 'react';
-import styled from 'styled-components';
+import { useCallback, useEffect, useMemo } from 'react';
 import { Pill } from '@googleforcreators/design-system';
 import { __, sprintf } from '@googleforcreators/i18n';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
-import { STORY_STATUS, STORY_STATUSES } from '../../../../constants';
 import useFilters from '../filters/useFilters';
+import { STORY_STATUS, STORY_STATUSES } from '../../../../constants';
 import { TotalStoriesByStatusPropType } from '../../../../types';
 
 const StyledPill = styled(Pill)`
@@ -41,13 +41,25 @@ const StyledPill = styled(Pill)`
   }
 `;
 
-function StoryStatusToggle({ initialPageReady, totalStoriesByStatus }) {
-  const { filters, updateFilter, registerFilters } = useFilters(
-    ({ state: { filters }, actions: { updateFilter, registerFilters } }) => ({
-      filters,
+function StoryStatusToggle({
+  initialPageReady,
+  totalStoriesByStatus,
+  currentStatus,
+}) {
+  const { updateFilter, registerFilters } = useFilters(
+    ({ actions: { updateFilter, registerFilters } }) => ({
       updateFilter,
       registerFilters,
     })
+  );
+
+  const handleStatusChange = useCallback(
+    (value) => {
+      if (currentStatus !== value) {
+        updateFilter('status', { filterId: value });
+      }
+    },
+    [currentStatus, updateFilter]
   );
 
   useEffect(() => {
@@ -59,11 +71,9 @@ function StoryStatusToggle({ initialPageReady, totalStoriesByStatus }) {
     ]);
   }, [registerFilters]);
 
-  const statusFilter = useMemo(
-    () => filters.find((filter) => filter.key === 'status'),
-    [filters]
-  );
-
+  /**
+   * The total stories based on the given filters
+   */
   const totalStories = useMemo(
     () =>
       Object.keys(totalStoriesByStatus).reduce(
@@ -73,12 +83,16 @@ function StoryStatusToggle({ initialPageReady, totalStoriesByStatus }) {
     [totalStoriesByStatus]
   );
 
+  /**
+   * Set up the status data for the UI.
+   * Only show statuses that correlate to the filtered stories, and the current status.
+   */
   const statuses = useMemo(() => {
     return STORY_STATUSES.filter(({ status }) => {
       return (
         (Boolean(status in totalStoriesByStatus) &&
           totalStoriesByStatus[status] > 0) ||
-        status === statusFilter?.filterId
+        status === currentStatus
       );
     }).map(({ label, status, value }) => {
       const count = totalStoriesByStatus[status];
@@ -88,10 +102,10 @@ function StoryStatusToggle({ initialPageReady, totalStoriesByStatus }) {
         __('Filter stories by %s', 'web-stories'),
         label
       );
-      const isActive = statusFilter?.filterId === value;
+      const isActive = currentStatus === value;
       return { ariaLabel, disabled, isActive, value, label, count };
     });
-  }, [totalStoriesByStatus, statusFilter]);
+  }, [totalStoriesByStatus, currentStatus]);
 
   if (
     !initialPageReady ||
@@ -103,16 +117,12 @@ function StoryStatusToggle({ initialPageReady, totalStoriesByStatus }) {
 
   return (
     <>
-      {statuses
-        .map(({ ariaLabel, disabled, isActive, value, label, count }) => {
+      {statuses.map(
+        ({ ariaLabel, disabled, isActive, value, label, count }) => {
           return (
             <StyledPill
               key={value}
-              onClick={() => {
-                if (statusFilter.filterId !== value) {
-                  updateFilter('status', { filterId: value });
-                }
-              }}
+              onClick={() => handleStatusChange(value)}
               isActive={isActive}
               disabled={disabled}
               aria-label={ariaLabel}
@@ -121,8 +131,8 @@ function StoryStatusToggle({ initialPageReady, totalStoriesByStatus }) {
               <span>{count}</span>
             </StyledPill>
           );
-        })
-        .filter(Boolean)}
+        }
+      )}
     </>
   );
 }
@@ -130,6 +140,7 @@ function StoryStatusToggle({ initialPageReady, totalStoriesByStatus }) {
 StoryStatusToggle.propTypes = {
   initialPageReady: PropTypes.bool,
   totalStoriesByStatus: TotalStoriesByStatusPropType,
+  currentStatus: PropTypes.string,
 };
 
 export default StoryStatusToggle;

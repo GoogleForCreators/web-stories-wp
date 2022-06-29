@@ -65,7 +65,7 @@ export default function FiltersProvider({ children }) {
 
   const [state, dispatch] = useReducer(reducer, {
     filters: [],
-    filtersObject: { status: STORY_STATUS.ALL },
+    filtersObject: {},
   });
 
   /**

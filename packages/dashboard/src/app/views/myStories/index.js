@@ -138,7 +138,7 @@ function MyStories() {
       <Content
         allPagesFetched={allPagesFetched}
         canViewDefaultTemplates={canViewDefaultTemplates}
-        filter={filtersObject.status}
+        filter={filtersObject?.status}
         filtersObject={filtersObject}
         loading={{
           isLoading: isLoading,

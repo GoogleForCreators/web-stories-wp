@@ -48,7 +48,7 @@ import { useDashboardResultsLabel } from '../../../../utils';
 import { BodyViewOptions, PageHeading } from '../../shared';
 import { getSearchOptions } from '../../utils';
 import useFilters from '../filters/useFilters';
-import StoryStatusToggle from './StoryStatusToggle';
+import StoryStatusToggle from './storyStatusToggle';
 
 function Header({
   initialPageReady,
@@ -128,7 +128,7 @@ function Header({
         <StoryStatusToggle
           initialPageReady={initialPageReady}
           totalStoriesByStatus={totalStoriesByStatus}
-          totalStories={totalResults}
+          currentStatus={statusFilter?.filterId}
         />
       </PageHeading>
 
@@ -152,14 +152,12 @@ function Header({
 }
 
 Header.propTypes = {
-  // filter: FilterPropTypes.isRequired,
   initialPageReady: PropTypes.bool,
   search: SearchPropTypes.isRequired,
   sort: SortPropTypes.isRequired,
   stories: StoriesPropType,
   totalStoriesByStatus: TotalStoriesByStatusPropType,
   view: ViewPropTypes.isRequired,
-  // filters: PropTypes.array,
 };
 
 export default memo(Header);
