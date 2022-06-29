@@ -42,6 +42,13 @@ use WP_Post;
 class Admin extends Service_Base {
 
 	/**
+	 * Settings instance.
+	 *
+	 * @var Settings Settings instance.
+	 */
+	private $settings;
+
+	/**
 	 * Context instance.
 	 *
 	 * @var Context Context instance.
@@ -51,10 +58,12 @@ class Admin extends Service_Base {
 	/**
 	 * Single constructor.
 	 *
-	 * @param Context $context Context instance.
+	 * @param Settings $settings Settings instance.
+	 * @param Context  $context Context instance.
 	 */
-	public function __construct( Context $context ) {
-		$this->context = $context;
+	public function __construct( Settings $settings, Context $context ) {
+		$this->settings = $settings;
+		$this->context  = $context;
 	}
 
 	/**
@@ -231,7 +240,6 @@ class Admin extends Service_Base {
 		// Otherwise it runs through wptexturize() and the like, which we want to avoid.
 		return $post->post_title;
 	}
-
 	
 	/**
 	 * Adds active publisher logo to media state output.
@@ -243,8 +251,9 @@ class Admin extends Service_Base {
 	 * @return string[] updated media states.
 	 */
 	public function media_states( $media_states, $post ): array {
-		$active_publisher_logo = absint( get_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO ) );
-		if ( $post->ID === $active_publisher_logo ) {
+		$active_publisher_logo_id = absint( $this->settings->get_setting( $this->settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO ) ); 
+		
+		if ( $post->ID === $active_publisher_logo_id ) {
 			$media_states[] = __( 'Web Stories Publisher Logo', 'web-stories' );
 		}
 		return $media_states;
