@@ -26,6 +26,13 @@ use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 class Admin extends DependencyInjectedTestCase {
 
 	/**
+	 * Settings for test.
+	 * 
+	 * @var \Google\Web_Stories\Settings
+	 */
+	private $settings;
+	
+	/**
 	 * Admin user for test.
 	 *
 	 * @var int
@@ -47,6 +54,7 @@ class Admin extends DependencyInjectedTestCase {
 	protected static $post_id;
 
 	public static function wpSetUpBeforeClass( $factory ): void {
+		
 		self::$admin_id = $factory->user->create(
 			[ 'role' => 'administrator' ]
 		);
@@ -80,7 +88,7 @@ class Admin extends DependencyInjectedTestCase {
 
 	public function set_up(): void {
 		parent::set_up();
-
+		$this->settings = $this->injector->make( \Google\Web_Stories\Settings::class );
 		$this->instance = $this->injector->make( \Google\Web_Stories\Admin\Admin::class );
 	}
 
@@ -221,5 +229,24 @@ class Admin extends DependencyInjectedTestCase {
 		);
 
 		$this->assertSame( 'Story - Test', $result );
+	}
+
+	/**
+	 * @covers ::media_states
+	 */
+	public function test_media_states_no_active_logo(): void {
+		$post   = self::factory()->post->create_and_get( [] );
+		$result = $this->instance->media_states( [], $post );
+		$this->assertSame( [], $result );
+	}
+
+	/**
+	 * @covers ::media_states
+	 */
+	public function test_media_states_with_active_logo(): void {
+		$post = self::factory()->post->create_and_get( [] );
+		update_option( $this->settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO, $post->ID );
+		$result = $this->instance->media_states( [], $post );
+		$this->assertSame( 'Web Stories Publisher Logo', $result[0] );
 	}
 }
