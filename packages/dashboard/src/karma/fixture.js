@@ -96,6 +96,7 @@ export const FIXTURE_DEFAULT_CONFIG = {
     fetchStories: noop,
     createStoryFromTemplate: noop,
   },
+  vendors: { none: 'None', shopify: 'Shopify', woocommerce: 'WooCommerce' },
 };
 
 export default class Fixture {
