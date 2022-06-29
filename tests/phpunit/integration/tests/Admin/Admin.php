@@ -237,7 +237,7 @@ class Admin extends DependencyInjectedTestCase {
 	public function test_media_states_no_active_logo(): void {
 		$post   = self::factory()->post->create_and_get( [] );
 		$result = $this->instance->media_states( [], $post );
-		$this->assertSame( [], $result );
+		$this->assertEqualSets( [], $result );
 	}
 
 	/**
