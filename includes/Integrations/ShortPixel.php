@@ -52,7 +52,7 @@ class ShortPixel extends Service_Base {
 	 */
 	public function image_urls( $urls ): array {
 		if ( empty( $urls ) ) {
-			 return $urls;
+			return $urls;
 		}
 
 		$match = array_filter(
