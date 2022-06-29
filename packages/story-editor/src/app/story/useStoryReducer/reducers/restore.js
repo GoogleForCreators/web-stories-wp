@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { produce } from 'immer';
+
+/**
  * Restore internal state completely from given state.
  *
  * Some validation is performed:
@@ -24,23 +29,25 @@
  * - `selection` is an array.
  * - `story` is an object.
  *
- * @param {Object} state Current state.
+ * @param {Object} draft Current state.
  * @param {Object} payload New state to set.
  * @param {Array<Object>} payload.pages List of pages.
  * @param {string} payload.current Current page ID.
  * @param {Array} payload.selection Selection.
  * @param {Object} payload.story Story object.
  * @param {Object} payload.capabilities Capabilities object.
- * @return {Object} New state
  */
-function restore(state, { pages, current, selection, story, capabilities }) {
+export const restore = (
+  draft,
+  { pages, current, selection, story, capabilities }
+) => {
   if (!Array.isArray(pages) || pages.length === 0) {
-    return state;
+    return undefined;
   }
 
   const newStory = typeof story === 'object' ? story : {};
   const newCapabilities = typeof capabilities === 'object' ? capabilities : {};
-  const oldCurrent = current ?? state.current;
+  const oldCurrent = current ?? draft.current;
   const newCurrent = pages.some(({ id }) => id === oldCurrent)
     ? oldCurrent
     : pages[0].id;
@@ -51,10 +58,10 @@ function restore(state, { pages, current, selection, story, capabilities }) {
     current: newCurrent,
     selection: newSelection,
     story: newStory,
-    animationState: state.animationState,
+    animationState: draft.animationState,
     capabilities: newCapabilities,
     copiedElementState: {},
   };
-}
+};
 
-export default restore;
+export default produce(restore);
