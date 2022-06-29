@@ -27,9 +27,29 @@ import { useStory } from '../../../app';
 
 describe('Eyedropper', () => {
   let fixture;
+  let eyeDropper;
+
+  beforeAll(() => {
+    eyeDropper = window.EyeDropper;
+
+    // removed to run test against htmlToImage EyeDropper vs API
+    // see issue testing with native API here
+    // https://github.com/GoogleForCreators/web-stories-wp/pull/11739#issuecomment-1162367409
+    delete window.EyeDropper;
+  });
+
+  afterAll(() => {
+    window.EyeDropper = eyeDropper;
+  });
 
   beforeEach(async () => {
     fixture = new Fixture();
+
+    // removed to run test against htmlToImage EyeDropper vs API
+    // see issue testing with native API here
+    // https://github.com/GoogleForCreators/web-stories-wp/pull/11739#issuecomment-1162367409
+    delete window.EyeDropper;
+
     await fixture.render();
     await fixture.collapseHelpCenter();
   });
