@@ -38,9 +38,8 @@ class ShortPixel extends DependencyInjectedTestCase {
 	 * @covers ::register
 	 */
 	public function test_register(): void {
-		$short_pixel = new \Google\Web_Stories\Integrations\ShortPixel();
-		$short_pixel->register();
-		$this->assertSame( 10, has_filter( 'shortpixel_image_urls', [ $short_pixel, 'image_urls' ] ) );
+		$this->instance->register();
+		$this->assertSame( 10, has_filter( 'shortpixel_image_urls', [ $this->instance, 'image_urls' ] ) );
 	}
 
 	/**
