@@ -244,7 +244,7 @@ class Admin extends Service_Base {
 	/**
 	 * Adds active publisher logo to media state output.
 	 *
-	 * @since 1.2.2
+	 * @since 1.2.3
 	 *
 	 * @param string[] $media_states Array of media states.
 	 * @param WP_Post  $post    Post object.
