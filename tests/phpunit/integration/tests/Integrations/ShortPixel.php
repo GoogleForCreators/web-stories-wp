@@ -46,9 +46,8 @@ class ShortPixel extends DependencyInjectedTestCase {
 	 * @covers ::image_urls
 	 */
 	public function test_image_urls(): void {
-		$short_pixel = new \Google\Web_Stories\Integrations\ShortPixel();
 		$urls        = [ 'http://localhost:8899/wp-content/uploads/2022/03/web-stories-page-template-768.jpg' ];
-		$result      = $short_pixel->image_urls( $urls, 10 );
+		$result      = $this->instance->image_urls( $urls, 10 );
 		$this->assertEqualSets( [], $result );
 	}
 
