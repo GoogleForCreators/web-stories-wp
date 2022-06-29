@@ -74,9 +74,19 @@ describe('Panels/Captions', () => {
       name: /Caption and subtitles/i,
     });
     expect(captionRegion).toBeInTheDocument();
+
+    const captionButton = screen.queryByRole('button', {
+      name: /Select caption/i,
+    });
+    expect(captionButton).toBeInTheDocument();
+
+    const captionHotlinkButton = screen.queryByRole('button', {
+      name: /Link to caption file/i,
+    });
+    expect(captionHotlinkButton).toBeInTheDocument();
   });
 
-  it('should not render <Captions /> panel', () => {
+  it('should not render captions upload buton', () => {
     arrange(
       {
         capabilities: {
@@ -85,10 +95,15 @@ describe('Panels/Captions', () => {
       },
       [defaultElement]
     );
-    const captionRegion = screen.queryByRole('region', {
-      name: /Caption and subtitles/i,
+    const captionButton = screen.queryByRole('button', {
+      name: /Select caption/i,
     });
-    expect(captionRegion).not.toBeInTheDocument();
+    expect(captionButton).not.toBeInTheDocument();
+
+    const captionHotlinkButton = screen.queryByRole('button', {
+      name: /Link to caption file/i,
+    });
+    expect(captionHotlinkButton).toBeInTheDocument();
   });
 
   it('should display Mixed in case of mixed value multi-selection', () => {

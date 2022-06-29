@@ -822,9 +822,6 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 		if ( ! $this->experiments->is_experiment_enabled( 'audioHotlinking' ) ) {
 			$mime_type['audio'] = [];
 		}
-		if ( ! $this->experiments->is_experiment_enabled( 'captionHotlinking' ) ) {
-			unset( $mime_type['caption'] );
-		}
 		// Do not support hotlinking SVGs for security reasons.
 		unset( $mime_type['vector'] );
 
