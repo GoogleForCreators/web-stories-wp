@@ -54,9 +54,18 @@ class ShortPixel extends Service_Base {
 		if ( empty( $urls ) ) {
 			 return $urls;
 		}
-		if ( false !== strpos( $urls[0], 'web-stories-page-template' ) ) {
+
+		$match = array_filter(
+			$urls,
+			static function( $url ) {
+				return false !== strpos( $url, 'web-stories-page-template' );
+			}
+		);
+
+		if ( $match ) {
 			return [];
 		}
+
 		return $urls;
 	}
 }
