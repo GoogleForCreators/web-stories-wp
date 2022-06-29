@@ -17,7 +17,7 @@
 
 namespace Google\Web_Stories\Tests\Integration\Integrations;
 
-use Google\Web_Stories\Tests\Integration\TestCase;
+use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Integrations\ShortPixel
