@@ -86,7 +86,7 @@ describe('Panels/Captions', () => {
     expect(captionHotlinkButton).toBeInTheDocument();
   });
 
-  it('should not render captions upload buton', () => {
+  it('should not render captions upload button', () => {
     arrange(
       {
         capabilities: {
