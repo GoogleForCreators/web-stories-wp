@@ -133,7 +133,7 @@ class Plugin extends ServiceBasedPlugin {
 		'taxonomy.tag'                 => Taxonomy\Tag_Taxonomy::class,
 		'user_preferences'             => User\Preferences::class,
 		'web_stories_block'            => Block\Web_Stories_Block::class,
-		'shortpixel_patch'          => Admin\ShortPixel_Patch::class,
+		'shortpixel_patch'             => Admin\ShortPixel_Patch::class,
 	];
 
 	/**

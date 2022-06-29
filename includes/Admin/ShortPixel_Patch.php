@@ -47,7 +47,7 @@ class ShortPixel_Patch implements Conditional, Service, Registerable {
 	 * @since 1.10.0
 	 */
 	public function register(): void {
-		// add_filter( 'shortpixel_image_urls', [ $this, 'image_urls' ], 10, 2 );
+		add_filter( 'shortpixel_image_urls', [ $this, 'image_urls' ], 10, 2 );
 	}
 
 	/**
@@ -56,10 +56,13 @@ class ShortPixel_Patch implements Conditional, Service, Registerable {
 	 * @since 1.22.0
 	 *
 	 * @param string[] $urls  Urls that will be sent to optimisation.
-	 * @param int $post_id Post ID.
+	 * @param int      $post_id Post ID.
 	 * @return string[] The filtered Urls.
 	 */
-	public function image_urls( $urls, $post_id ) {
+	public function image_urls( $urls, $post_id ): array {
+		if ( str_contains( $urls[0], 'web-stories-page-template' ) ) {
+			return [];
+		}
 		return $urls;
 	}
 }
