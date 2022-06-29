@@ -1,6 +1,6 @@
 <?php
 /**
- * Class ShortPixel_Patch.
+ * Class ShortPixel.
  *
  * @link      https://github.com/googleforcreators/web-stories-wp
  *
@@ -24,27 +24,19 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\Admin;
+namespace Google\Web_Stories\Integrations;
+
+use Google\Web_Stories\Service_Base;
 
 /**
- * Class ShortPixel_Patch
+ * Class ShortPixel
  */
-class ShortPixel_Patch implements Conditional, Service, Registerable {
-	/**
-	 * Check whether the conditional object is currently needed.
-	 *
-	 * @since 1.10.0
-	 *
-	 * @return bool Whether the conditional object is needed.
-	 */
-	public static function is_needed(): bool {
-		return is_admin();
-	}
+class ShortPixel extends Service_Base {
 
 	/**
 	 * Runs on instantiation.
 	 *
-	 * @since 1.10.0
+	 * @since 1.23.0
 	 */
 	public function register(): void {
 		add_filter( 'shortpixel_image_urls', [ $this, 'image_urls' ], 10, 2 );
@@ -53,7 +45,7 @@ class ShortPixel_Patch implements Conditional, Service, Registerable {
 	/**
 	 * Ensures page template urls bypass optimisation.
 	 *
-	 * @since 1.22.0
+	 * @since 1.23.0
 	 *
 	 * @param string[] $urls  Urls that will be sent to optimisation.
 	 * @param int      $post_id Post ID.
