@@ -39,7 +39,7 @@ class ShortPixel extends Service_Base {
 	 * @since 1.23.0
 	 */
 	public function register(): void {
-		add_filter( 'shortpixel_image_urls', [ $this, 'image_urls' ], 10, 1 );
+		add_filter( 'shortpixel_image_urls', [ $this, 'image_urls' ] );
 	}
 
 	/**
