@@ -13,33 +13,41 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * External dependencies
+ */
+import { produce } from 'immer';
+
 /**
  * Internal dependencies
  */
-import toggleElement from './toggleElement';
-import setSelectedElements from './setSelectedElements';
+import { toggleElement } from './toggleElement';
+import { setSelectedElements } from './setSelectedElements';
 
-function toggleLayer(
-  state,
+export const toggleLayer = (
+  draft,
   { elementId, metaKey, shiftKey, withLinked = false }
-) {
+) => {
   // Meta pressed. Toggle this layer in the selection.
   if (metaKey) {
-    return toggleElement(state, { elementId, withLinked });
+    toggleElement(draft, { elementId, withLinked });
+    return;
   }
 
   // No special key pressed - just selected this layer and nothing else.
-  if (state.selection.length <= 0 || !shiftKey) {
-    return setSelectedElements(state, {
+  if (draft.selection.length <= 0 || !shiftKey) {
+    setSelectedElements(draft, {
       elementIds: [elementId],
       withLinked,
     });
+    return;
   }
 
   // Shift key pressed with any element selected:
   // select everything between this layer and the first selected layer
-  const firstId = state.selection[0];
-  const currentPage = state.pages.find(({ id }) => id === state.current);
+  const firstId = draft.selection[0];
+  const currentPage = draft.pages.find(({ id }) => id === draft.current);
   const pageElementIds = currentPage.elements.map((el) => el.id);
   const firstIndex = pageElementIds.findIndex((id) => id === firstId);
   const clickedIndex = pageElementIds.findIndex((id) => id === elementId);
@@ -51,10 +59,10 @@ function toggleLayer(
     elementIds.reverse();
   }
 
-  return setSelectedElements(state, {
+  setSelectedElements(draft, {
     elementIds,
     withLinked,
   });
-}
+};
 
-export default toggleLayer;
+export default produce(toggleLayer);

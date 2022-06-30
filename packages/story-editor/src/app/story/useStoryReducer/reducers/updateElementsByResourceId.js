@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { produce } from 'immer';
+
+/**
  * Internal dependencies
  */
 import { updateElementWithUpdater } from './utils';
@@ -32,47 +37,27 @@ import { updateElementWithUpdater } from './utils';
  *
  * Current selection and page is unchanged.
  *
- * @param {Object} state Current state
+ * @param {Object} draft Current state
  * @param {Object} payload Action payload
  * @param {string|null} payload.id id Update all elements with this resource id
  * @param {Object|function(Object):Object} payload.properties Properties to set on all the given elements or
  * a function to calculate new values based on the current properties.
- * @return {Object} New state
  */
-function updateElementsByResourceId(
-  state,
+export const updateElementsByResourceId = (
+  draft,
   { id, properties: propertiesOrUpdater }
-) {
+) => {
   if (!id) {
-    return state;
+    return;
   }
 
-  const hasElementWithResourceId = state.pages.some((page) =>
-    page.elements.some((element) => element.resource?.id === id)
-  );
-
-  if (!hasElementWithResourceId) {
-    return state;
-  }
-
-  const updatedPages = state.pages.map((page) => {
-    const updatedElements = page.elements.map((element) => {
-      if (element.resource?.id === id) {
-        return updateElementWithUpdater(element, propertiesOrUpdater);
-      }
-      return element;
-    });
-
-    return {
-      ...page,
-      elements: updatedElements,
-    };
+  draft.pages.forEach((page) => {
+    page.elements
+      .filter(({ resource }) => resource?.id === id)
+      .forEach((element) =>
+        updateElementWithUpdater(element, propertiesOrUpdater)
+      );
   });
+};
 
-  return {
-    ...state,
-    pages: updatedPages,
-  };
-}
-
-export default updateElementsByResourceId;
+export default produce(updateElementsByResourceId);

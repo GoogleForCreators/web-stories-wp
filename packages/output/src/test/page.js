@@ -1572,9 +1572,6 @@ describe('Page output', () => {
             },
           ],
         },
-        flags: {
-          shoppingIntegration: true,
-        },
       };
 
       const { container } = render(<PageOutput {...props} />);
@@ -1616,9 +1613,6 @@ describe('Page output', () => {
               product: PRODUCT_ART,
             },
           ],
-        },
-        flags: {
-          shoppingIntegration: true,
         },
       };
 
@@ -1664,9 +1658,6 @@ describe('Page output', () => {
             url: 'http://example.com',
             ctaText: 'Click me!',
           },
-        },
-        flags: {
-          shoppingIntegration: true,
         },
       };
 
@@ -1938,9 +1929,6 @@ describe('Page output', () => {
               product: PRODUCT_FLOWERS,
             },
           ],
-        },
-        flags: {
-          shoppingIntegration: true,
         },
       };
 

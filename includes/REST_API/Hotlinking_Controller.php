@@ -217,11 +217,11 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 		$raw_url = $request['url'];
 		$raw_url = untrailingslashit( $raw_url );
 
-		$url = $this->validate_url( $raw_url );
+		$url_or_ip = $this->validate_url( $raw_url );
 
 		$host = wp_parse_url( $raw_url, PHP_URL_HOST );
 
-		if ( ! $url || ! $host ) {
+		if ( ! $url_or_ip || ! $host ) {
 			return new WP_Error( 'rest_invalid_url', __( 'Invalid URL', 'web-stories' ), [ 'status' => 400 ] );
 		}
 
@@ -230,11 +230,11 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 		 *
 		 * @since 1.11.0
 		 *
-		 * @param int $time Time to live (in seconds). Default is 1 day.
-		 * @param string $url The attempted URL.
+		 * @param int    $time Time to live (in seconds). Default is 1 day.
+		 * @param string $url  The attempted URL.
 		 */
-		$cache_ttl = apply_filters( 'web_stories_hotlinking_url_data_cache_ttl', DAY_IN_SECONDS, $url );
-		$cache_key = 'web_stories_url_data_' . md5( $url );
+		$cache_ttl = apply_filters( 'web_stories_hotlinking_url_data_cache_ttl', DAY_IN_SECONDS, $raw_url );
+		$cache_key = 'web_stories_url_data_' . md5( $raw_url );
 
 		$data = get_transient( $cache_key );
 		if ( \is_string( $data ) && ! empty( $data ) ) {
@@ -252,8 +252,11 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 			}
 		}
 
+		$callback = $this->get_curl_resolve_callback( $raw_url, $url_or_ip );
+		add_action( 'http_api_curl', $callback );
+
 		$response = wp_safe_remote_head(
-			$url,
+			$raw_url,
 			[
 				'redirection' => 0, // No redirects allowed.
 				'headers'     => [
@@ -261,6 +264,9 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 				],
 			]
 		);
+
+		remove_action( 'http_api_curl', $callback );
+
 		if ( is_wp_error( $response ) && 'http_request_failed' === $response->get_error_code() ) {
 			return new WP_Error( 'rest_invalid_url', __( 'Invalid URL', 'web-stories' ), [ 'status' => 404 ] );
 		}
@@ -277,12 +283,7 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 		}
 		$file_size = (int) $headers['content-length'];
 
-		/**
-		 * The URL's path.
-		 *
-		 * @var string|false|null $path
-		 */
-		$path = wp_parse_url( $url, PHP_URL_PATH );
+		$path = wp_parse_url( $raw_url, PHP_URL_PATH );
 
 		if ( ! \is_string( $path ) ) {
 			return new WP_Error( 'rest_invalid_url', __( 'Invalid URL', 'web-stories' ), [ 'status' => 404 ] );
@@ -339,11 +340,11 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 		$raw_url = $request['url'];
 		$raw_url = untrailingslashit( $raw_url );
 
-		$url = $this->validate_url( $raw_url );
+		$url_or_ip = $this->validate_url( $raw_url );
 
 		$host = wp_parse_url( $raw_url, PHP_URL_HOST );
 
-		if ( ! $url || ! $host ) {
+		if ( ! $url_or_ip || ! $host ) {
 			return new WP_Error( 'rest_invalid_url', __( 'Invalid URL', 'web-stories' ), [ 'status' => 400 ] );
 		}
 
@@ -368,8 +369,11 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 			'redirection' => 0, // No redirects allowed.
 		];
 
+		$callback = $this->get_curl_resolve_callback( $raw_url, $url_or_ip );
+		add_action( 'http_api_curl', $callback );
+
 		$http      = _wp_http_get_object();
-		$transport = $http->_get_first_available_transport( $args, $url );
+		$transport = $http->_get_first_available_transport( $args, $raw_url );
 
 		// When cURL is available, we might be able to use it together with fopen().
 		if ( 'WP_Http_Curl' === $transport ) {
@@ -384,17 +388,16 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 
 			if ( $stream_handle ) {
 				$this->stream_handle = $stream_handle;
-				$this->proxy_url_curl( $url, $args );
+				$this->proxy_url_curl( $raw_url, $args );
+				exit;
 			}
-			exit;
 		}
 
-		// If either cURL is not available or fopen() did not succeed, use whatever WP gives us,
-		// using good old wp_remote
-		// Fall back to using whatever else is set up on the site, presumably WP_Http_Streams
-		// or just cURL but without .
+		// If either cURL is not available or fopen() did not succeed,
+		// fall back to using whatever else is set up on the site,
+		// presumably WP_Http_Streams or still WP_Http_Curl but without streams.
 		unset( $args['blocking'] );
-		$this->proxy_url_fallback( $url, $args );
+		$this->proxy_url_fallback( $raw_url, $args );
 
 		exit;
 	}
@@ -578,7 +581,11 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	 */
 	public function parse_url_permissions_check() {
 		if ( ! $this->story_post_type->has_cap( 'edit_posts' ) ) {
-			return new WP_Error( 'rest_forbidden', __( 'Sorry, you are not allowed to insert external media.', 'web-stories' ), [ 'status' => rest_authorization_required_code() ] );
+			return new WP_Error(
+				'rest_forbidden',
+				__( 'Sorry, you are not allowed to insert external media.', 'web-stories' ),
+				[ 'status' => rest_authorization_required_code() ]
+			);
 		}
 
 		return true;
@@ -620,7 +627,7 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	 * @since 1.22.0
 	 *
 	 * @param string $url Request URL.
-	 * @return string|false URL or false on failure.
+	 * @return string|false Original URL, resolved IP address, or false on failure.
 	 */
 	private function validate_url( string $url ) {
 		if ( '' === $url || is_numeric( $url ) ) {
@@ -633,12 +640,6 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 			return false;
 		}
 
-		/**
-		 * URL parts.
-		 *
-		 * @var array|false $parsed_url
-		 * @phpstan-var URLParts|false $parsed_url
-		 */
 		$parsed_url = wp_parse_url( $url );
 		if ( ! $parsed_url || ! isset( $parsed_url['host'], $parsed_url['scheme'] ) ) {
 			return false;
@@ -659,12 +660,6 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 		 */
 		$home_url = get_option( 'home' );
 
-		/**
-		 * URL parts of home URL.
-		 *
-		 * @var array|false $parsed_home
-		 * @phpstan-var URLParts|false $parsed_home
-		 */
 		$parsed_home = wp_parse_url( $home_url );
 
 		if ( ! $parsed_home ) {
@@ -695,15 +690,8 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 				return false;
 			}
 
-			// Construct host using IP address to avoid DNS rebinding issues.
-			$validated_url = sprintf(
-				'%1$s://%2$s%3$s%4$s%5$s',
-				$parsed_url['scheme'],
-				$ip,
-				isset( $parsed_url['port'] ) ? ":${parsed_url['port']}" : '',
-				$parsed_url['path'] ?? '',
-				isset( $parsed_url['query'] ) ? "?${parsed_url['query']}" : ''
-			);
+			// Use resolved IP address to avoid DNS rebinding issues.
+			$validated_url = $ip;
 		}
 
 		/** This filter is documented in wp-includes/http.php */
@@ -723,13 +711,56 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	}
 
 	/**
+	 * Returns a callback to modify the cURL configuration before the request is executed.
+	 *
+	 * @since 1.22.1
+	 *
+	 * @param string $url       URL.
+	 * @param string $url_or_ip URL or IP address.
+	 */
+	public function get_curl_resolve_callback( string $url, string $url_or_ip ): callable {
+		/**
+		 * CURL configuration callback.
+		 *
+		 * @param resource $handle The cURL handle returned by curl_init() (passed by reference).
+		 */
+		return static function( $handle ) use ( $url, $url_or_ip ): void {
+			// Just some safeguard in case cURL is not really available,
+			// despite this method being run in the context of WP_Http_Curl.
+			if ( ! function_exists( 'curl_setopt' ) ) {
+				return;
+			}
+
+			if ( $url === $url_or_ip ) {
+				return;
+			}
+
+			$host   = wp_parse_url( $url, PHP_URL_HOST );
+			$scheme = wp_parse_url( $url, PHP_URL_SCHEME ) ?? 'http';
+			$port   = wp_parse_url( $url, PHP_URL_PORT ) ?? 'http' === $scheme ? 80 : 443;
+
+			// phpcs:disable WordPress.WP.AlternativeFunctions.curl_curl_setopt
+
+			curl_setopt(
+				$handle,
+				CURLOPT_RESOLVE,
+				[
+					"$host:$port:$url_or_ip",
+				]
+			);
+
+			// phpcs:enable WordPress.WP.AlternativeFunctions.curl_curl_setopt
+		};
+	}
+
+	/**
 	 * Modifies the cURL configuration before the request is executed.
 	 *
 	 * @since 1.15.0
 	 *
-	 * @param resource $handle The cURL handle returned by curl_init() (passed by reference).
+	 * @param resource $handle The cURL handle returned by {@see curl_init()} (passed by reference).
 	 */
-	public function modify_curl_configuration( &$handle ): void {
+	public function modify_curl_configuration( $handle ): void {
 		// Just some safeguard in case cURL is not really available,
 		// despite this method being run in the context of WP_Http_Curl.
 		if ( ! function_exists( 'curl_setopt' ) ) {
@@ -788,9 +819,6 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	 */
 	protected function get_allowed_mime_types(): array {
 		$mime_type = $this->types->get_allowed_mime_types();
-		if ( ! $this->experiments->is_experiment_enabled( 'audioHotlinking' ) ) {
-			$mime_type['audio'] = [];
-		}
 		if ( ! $this->experiments->is_experiment_enabled( 'captionHotlinking' ) ) {
 			unset( $mime_type['caption'] );
 		}

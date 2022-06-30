@@ -35,14 +35,13 @@ import {
   SelectControl,
   Spinner,
   Button,
-  TextControl,
 } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
+import { useDebounce } from '@wordpress/compose';
 
 /**
  * Internal dependencies
  */
-import useDebounce from '../../hooks/useDebounce';
 import StoryPreview from './storyPreview';
 
 const SORT_OPTIONS = [
@@ -64,9 +63,6 @@ const SORT_OPTIONS = [
   },
 ];
 
-// ComboboxControl does not yet exist in WordPress 5.5.
-// TODO: Remove these once WordPress 5.5 is no longer required.
-
 function AuthorSearch({
   label,
   options,
@@ -74,25 +70,14 @@ function AuthorSearch({
   onChange,
   value,
 }) {
-  if (ComboboxControl) {
-    return (
-      <ComboboxControl
-        label={label}
-        options={options}
-        onFilterValueChange={onFilterValueChange}
-        onChange={onChange}
-        value={value}
-        className="web-stories-story-picker-filter__combobox"
-      />
-    );
-  }
-
   return (
-    <SelectControl
+    <ComboboxControl
       label={label}
       options={options}
+      onFilterValueChange={onFilterValueChange}
       onChange={onChange}
       value={value}
+      className="web-stories-story-picker-filter__combobox"
     />
   );
 }
@@ -112,20 +97,16 @@ function KeywordSearch({
   onChange,
   value,
 }) {
-  if (ComboboxControl) {
-    return (
-      <ComboboxControl
-        label={label}
-        options={options}
-        onFilterValueChange={onFilterValueChange}
-        onChange={onChange}
-        value={value}
-        className="web-stories-story-picker-filter__combobox"
-      />
-    );
-  }
-
-  return <TextControl label={label} value={value} onChange={onChange} />;
+  return (
+    <ComboboxControl
+      label={label}
+      options={options}
+      onFilterValueChange={onFilterValueChange}
+      onChange={onChange}
+      value={value}
+      className="web-stories-story-picker-filter__combobox"
+    />
+  );
 }
 
 KeywordSearch.propTypes = {

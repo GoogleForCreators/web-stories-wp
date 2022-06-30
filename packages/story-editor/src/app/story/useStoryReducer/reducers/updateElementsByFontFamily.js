@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { produce } from 'immer';
+
+/**
  * Internal dependencies
  */
 import { updateElementWithUpdater } from './utils';
@@ -32,49 +37,27 @@ import { updateElementWithUpdater } from './utils';
  *
  * Current selection and page is unchanged.
  *
- * @param {Object} state Current state
+ * @param {Object} draft Current state
  * @param {Object} payload Action payload
  * @param {string|null} payload.family Update all elements with this font family
  * @param {Object|function(Object):Object} payload.properties font / properties to set on all the given elements or
  * a function to update based on the current properties.
- * @return {Object} New state
  */
-function updateElementsByFontFamily(
-  state,
+export const updateElementsByFontFamily = (
+  draft,
   { family, properties: propertiesOrUpdater }
-) {
+) => {
   if (!family) {
-    return state;
+    return;
   }
 
-  const hasElementWithFontFamily = state.pages.some((page) =>
-    page.elements.some((element) => {
-      return element.type === 'text' && element?.font?.family === family;
-    })
-  );
-
-  if (!hasElementWithFontFamily) {
-    return state;
-  }
-
-  const updatedPages = state.pages.map((page) => {
-    const updatedElements = page.elements.map((element) => {
-      if (element?.font?.family === family) {
-        return updateElementWithUpdater(element, propertiesOrUpdater);
-      }
-      return element;
-    });
-
-    return {
-      ...page,
-      elements: updatedElements,
-    };
+  draft.pages.forEach((page) => {
+    page.elements
+      .filter(({ font }) => font?.family === family)
+      .forEach((element) =>
+        updateElementWithUpdater(element, propertiesOrUpdater)
+      );
   });
+};
 
-  return {
-    ...state,
-    pages: updatedPages,
-  };
-}
-
-export default updateElementsByFontFamily;
+export default produce(updateElementsByFontFamily);

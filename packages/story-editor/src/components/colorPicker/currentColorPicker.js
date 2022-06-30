@@ -155,9 +155,7 @@ function CurrentColorPicker({
     [rgb, onChange]
   );
 
-  const { initEyedropper } = useEyedropper({
-    onChange,
-  });
+  const { initEyedropper } = useEyedropper({ onChange });
 
   return (
     <>
