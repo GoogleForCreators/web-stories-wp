@@ -67,7 +67,7 @@ const ExtraPagePreview = styled(PagePreview)`
 `;
 
 function range(from, to) {
-  return Array.from(Array(to - from)).map((k, v) => v + from);
+  return from < to ? Array.from(Array(to - from)).map((k, v) => v + from) : [];
 }
 
 function getPagesToShow({
@@ -84,12 +84,12 @@ function getPagesToShow({
   if (isPrevious) {
     const from = Math.max(0, currentPageIndex - extraPageCount);
     const to = currentPageIndex;
-    return from < to ? range(from, to).reverse() : [];
+    return range(from, to).reverse();
   }
   // Showing pages after the current one
-  const from = Math.min(pageCount - 1, currentPageIndex + 1);
-  const to = Math.min(pageCount - 1, currentPageIndex + extraPageCount + 1);
-  return from < to ? range(from, to) : [];
+  const from = currentPageIndex + 1;
+  const to = Math.min(pageCount, currentPageIndex + extraPageCount + 2);
+  return range(from, to);
 }
 
 function ExtraPages({ isPrevious = false }) {
