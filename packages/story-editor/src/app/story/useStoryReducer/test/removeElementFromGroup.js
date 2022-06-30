@@ -19,7 +19,7 @@
 import { setupReducer } from './_utils';
 
 describe('removeElementFromGroup', () => {
-  it('should remove element from group', () => {
+  it('should move element out of group', () => {
     const { restore, removeElementFromGroup } = setupReducer();
     restore({
       current: 'f93d7',
@@ -30,8 +30,13 @@ describe('removeElementFromGroup', () => {
           elements: [
             { id: '3e822', layerName: 'Bkd' },
             { groupId: '86b8e', id: '5c37d', layerName: 'C1' },
-            { groupId: '86b8e', id: '53b7e', layerName: 'B1' },
+            {
+              groupId: '86b8e',
+              id: '53b7e',
+              layerName: 'Move this out of group',
+            },
             { groupId: '86b8e', id: '53d47', layerName: 'A1' },
+            { id: '0e26c', layerName: 'B' },
             { id: '0e26d', layerName: 'A' },
           ],
           type: 'page',
@@ -52,7 +57,19 @@ describe('removeElementFromGroup', () => {
       groupId: '86b8e',
     });
 
+    const layers = [];
     const elements = result.pages[0].elements;
-    expect(elements[3].id).toBe('53b7e');
+    for (const [index] of Object.entries(elements).reverse()) {
+      layers.push(elements[index].layerName);
+    }
+
+    expect(layers).toStrictEqual([
+      'A',
+      'B',
+      'Move this out of group',
+      'A1',
+      'C1',
+      'Bkd',
+    ]);
   });
 });
