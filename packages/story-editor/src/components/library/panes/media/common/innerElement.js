@@ -209,7 +209,6 @@ function InnerElement({
   };
 
   if (type === ContentType.IMAGE) {
-    // eslint-disable-next-line styled-components-a11y/alt-text -- False positive.
     media = <Image key={src} ref={mediaElement} {...imageProps} />;
     cloneProps.src = thumbnailURL;
   } else if ([ContentType.VIDEO, ContentType.GIF].includes(type)) {
