@@ -312,41 +312,6 @@ class Experiments extends Service_Base implements HasRequirements {
 				'group'       => 'editor',
 			],
 			/**
-			 * Issue: #10846
-			 * Creation date: 2022-03-28
-			 */
-			[
-				'name'        => 'shoppingIntegration',
-				'label'       => __( 'Shopping', 'web-stories' ),
-				'description' => __( 'Enable shopping integration in the editor', 'web-stories' ),
-				'group'       => 'general',
-				'default'     => true,
-			],
-			/**
-			 * Author: @spacedmonkey
-			 * Issue: #11081
-			 * Creation date: 2022-03-30
-			 */
-			[
-				'name'        => 'captionHotlinking',
-				'label'       => __( 'Caption hotlinking', 'web-stories' ),
-				'description' => __( 'Enable hotlinking of captions', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-			/**
-			 * Author: @spacedmonkey
-			 * Issue: #10888
-			 * Creation date: 2022-04-08
-			 */
-			[
-				'name'        => 'audioHotlinking',
-				'label'       => __( 'Audio hotlinking', 'web-stories' ),
-				'description' => __( 'Enable hotlinking background audio', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-			/**
 			 * Author: @barklund
 			 * Issue: #7332
 			 * Creation date: 2022-04-19
@@ -381,6 +346,17 @@ class Experiments extends Service_Base implements HasRequirements {
 				'description' => __( 'Enable layer naming', 'web-stories' ),
 				'group'       => 'editor',
 				'default'     => true,
+			],
+			/**
+			 * Author: @barklund
+			 * Issue: #9643
+			 * Creation date: 2022-06-21
+			 */
+			[
+				'name'        => 'extraPages',
+				'label'       => __( 'Context Pages', 'web-stories' ),
+				'description' => __( 'Show extra pages for context before and after the current canvas page. Note: This might come with a performance penalty.', 'web-stories' ),
+				'group'       => 'editor',
 			],
 		];
 	}
