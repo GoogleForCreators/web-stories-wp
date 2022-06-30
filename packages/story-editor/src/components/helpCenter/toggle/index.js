@@ -17,7 +17,6 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 import { __, _n, sprintf } from '@googleforcreators/i18n';
 import { Icons } from '@googleforcreators/design-system';
 
@@ -26,18 +25,6 @@ import { Icons } from '@googleforcreators/design-system';
  */
 import { ToggleButton } from '../../toggleButton';
 
-const MainIcon = styled(Icons.QuestionMarkOutline)`
-  height: 32px;
-  width: auto;
-  display: block;
-`;
-const StyledToggleButton = styled(ToggleButton)`
-  padding-left: 3px;
-  padding-right: 3px;
-  display: block;
-  background-color: ${({ theme }) => theme.colors.bg.primary};
-`;
-
 function Toggle({
   isOpen = false,
   popupId = '',
@@ -45,7 +32,7 @@ function Toggle({
   notificationCount = 0,
 }) {
   return (
-    <StyledToggleButton
+    <ToggleButton
       aria-owns={popupId}
       aria-label={
         notificationCount > 0
@@ -64,7 +51,7 @@ function Toggle({
       onClick={onClick}
       isOpen={isOpen}
       label={__('Help', 'web-stories')}
-      MainIcon={MainIcon}
+      MainIcon={Icons.QuestionMarkOutline}
       notificationCount={notificationCount}
     />
   );

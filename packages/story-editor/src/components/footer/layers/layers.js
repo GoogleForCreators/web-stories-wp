@@ -40,6 +40,7 @@ const Container = styled.div`
 const StyledNavigationWrapper = styled(NavigationWrapper)`
   width: 260px;
 `;
+
 function Layers() {
   const layersLength = useLayers().length;
   const [isOpen, setIsOpen] = useState(false);
@@ -68,6 +69,7 @@ function Layers() {
         </StyledNavigationWrapper>
       </Popup>
       <ToggleButton
+        hasMenuList
         isOpen={isOpen}
         notificationCount={layersLength}
         copy={__('Layers', 'web-stories')}

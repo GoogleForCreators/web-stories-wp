@@ -312,17 +312,6 @@ class Experiments extends Service_Base implements HasRequirements {
 				'group'       => 'editor',
 			],
 			/**
-			 * Issue: #10846
-			 * Creation date: 2022-03-28
-			 */
-			[
-				'name'        => 'shoppingIntegration',
-				'label'       => __( 'Shopping', 'web-stories' ),
-				'description' => __( 'Enable shopping integration in the editor', 'web-stories' ),
-				'group'       => 'general',
-				'default'     => true,
-			],
-			/**
 			 * Author: @spacedmonkey
 			 * Issue: #11081
 			 * Creation date: 2022-03-30
@@ -331,18 +320,6 @@ class Experiments extends Service_Base implements HasRequirements {
 				'name'        => 'captionHotlinking',
 				'label'       => __( 'Caption hotlinking', 'web-stories' ),
 				'description' => __( 'Enable hotlinking of captions', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-			/**
-			 * Author: @spacedmonkey
-			 * Issue: #10888
-			 * Creation date: 2022-04-08
-			 */
-			[
-				'name'        => 'audioHotlinking',
-				'label'       => __( 'Audio hotlinking', 'web-stories' ),
-				'description' => __( 'Enable hotlinking background audio', 'web-stories' ),
 				'group'       => 'editor',
 				'default'     => true,
 			],

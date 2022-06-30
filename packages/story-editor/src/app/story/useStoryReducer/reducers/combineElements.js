@@ -20,6 +20,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import { canSupportMultiBorder } from '@googleforcreators/masks';
 import { DEFAULT_ATTRIBUTES_FOR_MEDIA } from '@googleforcreators/element-library';
+import { produce } from 'immer';
 
 /**
  * Internal dependencies
@@ -46,25 +47,23 @@ import { removeAnimationsWithElementIds } from './utils';
  *
  * Updates selection to only include the second item after merge.
  *
- * @param {Object} state Current state
+ * @param {Object} draft Current state
  * @param {Object} payload Action payload
  * @param {string} payload.firstElement Element with properties to merge
  * @param {string} payload.secondId Element to add properties to
  * @param {boolean} payload.shouldRetainAnimations Is called from copy and paste
- * @return {Object} New state
  */
-function combineElements(
-  state,
+export const combineElements = (
+  draft,
   { firstElement, secondId, shouldRetainAnimations = true }
-) {
+) => {
   if (!firstElement || !secondId) {
-    return state;
+    return;
   }
   const firstId = firstElement.id;
   const element = firstElement;
 
-  const pageIndex = state.pages.findIndex(({ id }) => id === state.current);
-  const page = state.pages[pageIndex];
+  const page = draft.pages.find(({ id }) => id === draft.current);
 
   const secondElementPosition = page.elements.findIndex(
     ({ id }) => id === secondId
@@ -72,18 +71,16 @@ function combineElements(
   const secondElement = page.elements[secondElementPosition];
 
   if (!element || !element.resource || !secondElement) {
-    return state;
+    return;
   }
 
-  const newPageProps = secondElement.isDefaultBackground
-    ? {
-        defaultBackgroundElement: {
-          ...secondElement,
-          // But generate a new ID for this temp background element
-          id: uuidv4(),
-        },
-      }
-    : {};
+  if (secondElement.isDefaultBackground) {
+    page.defaultBackgroundElement = {
+      ...secondElement,
+      // But generate a new ID for this temp background element
+      id: uuidv4(),
+    };
+  }
 
   const propsFromFirst = [
     'alt',
@@ -104,28 +101,23 @@ function combineElements(
       propsFromFirst.push('borderRadius');
     }
   } else {
-    // If we're dropping into background, maintain the flip and overlay.
-    propsFromFirst.push('flip');
-    propsFromFirst.push('overlay');
+    // If we're dropping into background, maintain the flip and overlay, too.
+    // Only copy position properties for backgrounds, as they're ignored while being background
+    // For non-backgrounds, elements should keep original positions from secondElement
+    propsFromFirst.push('flip', 'overlay', 'width', 'height', 'x', 'y');
   }
-  const mediaProps = objectPick(element, propsFromFirst);
-
-  const positionProps = objectPick(element, ['width', 'height', 'x', 'y']);
 
   const newElement = {
     // First copy everything from existing element except if it was default background
     ...objectWithout(secondElement, ['isDefaultBackground']),
     // Then set sensible default attributes
     ...DEFAULT_ATTRIBUTES_FOR_MEDIA,
-    // Then copy all media-related attributes from new element
-    ...mediaProps,
-    // Only copy position properties for backgrounds, as they're ignored while being background
-    // For non-backgrounds, elements should keep original positions from secondElement
-    ...(secondElement.isBackground ? positionProps : {}),
+    // Then copy all relevant attributes from new element
+    ...objectPick(element, propsFromFirst),
   };
 
   // Elements are now
-  const elements = page.elements
+  page.elements = page.elements
     // Remove first element if combining from existing id
     .filter(({ id }) => id !== firstId)
     // Update reference to second element
@@ -139,29 +131,13 @@ function combineElements(
   // We want different behavior for copy and paste where we
   // replace the element's animation with any coming from the
   // newly pasted element.
-  const newAnimations = removeAnimationsWithElementIds(
+  page.animations = removeAnimationsWithElementIds(
     page.animations,
     shouldRetainAnimations ? [firstId] : [firstId, secondId]
   );
 
-  const newPage = {
-    ...page,
-    elements,
-    ...newPageProps,
-    animations: newAnimations,
-  };
+  // Selection is always just second id
+  draft.selection = [secondId];
+};
 
-  const newPages = [
-    ...state.pages.slice(0, pageIndex),
-    newPage,
-    ...state.pages.slice(pageIndex + 1),
-  ];
-
-  return {
-    ...state,
-    pages: newPages,
-    selection: [secondId],
-  };
-}
-
-export default combineElements;
+export default produce(combineElements);

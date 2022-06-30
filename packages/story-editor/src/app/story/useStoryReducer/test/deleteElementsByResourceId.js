@@ -28,6 +28,11 @@ describe('deleteElementsByResourceId', () => {
       pages: [
         {
           id: '111',
+          defaultBackgroundElement: {
+            id: '1',
+            isDefaultBackground: true,
+            isBackground: true,
+          },
           elements: [
             {
               id: '789',
@@ -61,6 +66,11 @@ describe('deleteElementsByResourceId', () => {
     expect(result.pages).toStrictEqual([
       {
         id: '111',
+        defaultBackgroundElement: {
+          id: '1',
+          isBackground: true,
+          isDefaultBackground: true,
+        },
         elements: [
           {
             id: '789',
@@ -136,6 +146,11 @@ describe('deleteElementsByResourceId', () => {
             { id: 'b', targets: ['456'] },
             { id: 'c', targets: ['789'] },
           ],
+          defaultBackgroundElement: {
+            id: '1',
+            isDefaultBackground: true,
+            isBackground: true,
+          },
           elements: [
             { id: '123', resource: { type: 'video', id: '10' } },
             { id: '456', resource: { type: 'video', id: '10' } },
@@ -144,10 +159,22 @@ describe('deleteElementsByResourceId', () => {
         },
         {
           id: '222',
+          defaultBackgroundElement: {
+            id: '2',
+            isDefaultBackground: true,
+            isBackground: true,
+          },
           animations: [{ id: 'd', targets: ['123'] }],
           elements: [
-            { id: '123', resource: { type: 'video', id: '10' } },
-            { id: '456', resource: { type: 'image', id: '11' } },
+            {
+              id: '123',
+              resource: { type: 'video', id: '10' },
+              isBackground: true,
+            },
+            {
+              id: '456',
+              resource: { type: 'image', id: '11' },
+            },
           ],
         },
       ],
@@ -158,18 +185,18 @@ describe('deleteElementsByResourceId', () => {
       id: '10',
     });
 
-    expect(result.pages).toStrictEqual([
-      {
-        id: '111',
-        animations: [{ id: 'c', targets: ['789'] }],
-        elements: [{ id: '789', resource: { type: 'image', id: '11' } }],
-      },
-      {
-        id: '222',
-        animations: [],
-        elements: [{ id: '456', resource: { type: 'image', id: '11' } }],
-      },
+    expect(result.pages[0].elements).toStrictEqual([
+      { id: '1', isDefaultBackground: true, isBackground: true },
+      { id: '789', resource: { type: 'image', id: '11' } },
     ]);
+    expect(result.pages[0].animations).toStrictEqual([
+      { id: 'c', targets: ['789'] },
+    ]);
+    expect(result.pages[1].elements).toStrictEqual([
+      { id: '2', isBackground: true, isDefaultBackground: true },
+      { id: '456', resource: { type: 'image', id: '11' } },
+    ]);
+    expect(result.pages[1].animations).toStrictEqual([]);
   });
 
   it('should do nothing if id not given', () => {
