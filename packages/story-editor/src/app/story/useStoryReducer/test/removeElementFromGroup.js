@@ -52,6 +52,7 @@ describe('removeElementFromGroup', () => {
       groupId: '86b8e',
     });
 
-    expect(result.pages[0].elements).toBe(true);
+    const elements = result.pages[0].elements;
+    expect(elements[3].id).toBe('53b7e');
   });
 });
