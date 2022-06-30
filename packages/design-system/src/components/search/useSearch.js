@@ -130,7 +130,9 @@ export default function useSearch({
    * send the inputState when it changes back to the parent so that any results that need to change can be changed.
    */
   useEffect(() => {
-    handleSearchValueChange?.(inputState.value);
+    if (inputState?.value !== undefined) {
+      handleSearchValueChange?.(inputState.value);
+    }
   }, [handleSearchValueChange, inputState]);
 
   /* Announce changes to the length of the list */

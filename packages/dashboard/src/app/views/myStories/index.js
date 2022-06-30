@@ -86,24 +86,17 @@ function MyStories() {
     };
   }, []);
 
-  const {
-    page,
-    search,
-    sort,
-    view,
-    showStoriesWhileLoading,
-    initialPageReady,
-  } = useStoryView({
-    statusFilters: STORY_STATUSES,
-    filtersObject,
-    isLoading,
-    totalPages,
-  });
+  const { page, sort, view, showStoriesWhileLoading, initialPageReady } =
+    useStoryView({
+      statusFilters: STORY_STATUSES,
+      filtersObject,
+      isLoading,
+      totalPages,
+    });
 
   useEffect(() => {
     fetchStories({
       page: page.value,
-      searchTerm: search.keyword,
       sortDirection: sort.direction,
       sortOption: sort.value,
       filters: filtersObject,
@@ -112,7 +105,6 @@ function MyStories() {
     fetchStories,
     filtersObject,
     page.value,
-    search.keyword,
     sort.direction,
     sort.value,
     apiCallbacks,
@@ -128,7 +120,6 @@ function MyStories() {
     <Layout.Provider>
       <Header
         initialPageReady={initialPageReady}
-        search={search}
         sort={sort}
         stories={orderedStories}
         totalStoriesByStatus={totalStoriesByStatus}
@@ -144,7 +135,6 @@ function MyStories() {
           showStoriesWhileLoading,
         }}
         page={page}
-        search={search}
         sort={sort}
         stories={orderedStories}
         storyActions={{

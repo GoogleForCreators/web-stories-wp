@@ -44,12 +44,13 @@ import {
 import { EmptyContentMessage } from '../../shared';
 import StoriesView from './storiesView';
 
-function NoAvailableContent({ keyword, filtersObject }) {
-  if (keyword) {
+function NoAvailableContent({ filtersObject }) {
+  const { search } = filtersObject;
+  if (search) {
     return sprintf(
       /* translators: %s: search term. */
       __('Sorry, we couldn\'t find any results matching "%s"', 'web-stories'),
-      keyword
+      search
     );
   } else if (Object.keys(filtersObject).length !== 0) {
     return __("Sorry, we couldn't find any results", 'web-stories');
@@ -59,7 +60,6 @@ function NoAvailableContent({ keyword, filtersObject }) {
 }
 NoAvailableContent.propTypes = {
   filtersObject: PropTypes.object,
-  keyword: PropTypes.string,
 };
 
 function Content({
@@ -68,7 +68,6 @@ function Content({
   filtersObject = {},
   loading,
   page,
-  search,
   sort,
   stories,
   storyActions,
@@ -104,13 +103,9 @@ function Content({
               size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
               as="h3"
             >
-              <NoAvailableContent
-                keyword={search?.keyword}
-                filtersObject={filtersObject}
-              />
+              <NoAvailableContent filtersObject={filtersObject} />
             </Headline>
-            {!search?.keyword &&
-              Object.keys(filtersObject).length === 0 &&
+            {Object.keys(filtersObject).length === 0 &&
               canViewDefaultTemplates && (
                 <Button
                   type={BUTTON_TYPES.PRIMARY}
@@ -136,7 +131,6 @@ Content.propTypes = {
     showStoriesWhileLoading: ShowStoriesWhileLoadingPropType,
   }),
   page: PagePropTypes,
-  search: PropTypes.object,
   sort: SortPropTypes,
   stories: StoriesPropType,
   storyActions: StoryActionsPropType,

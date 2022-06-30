@@ -48,7 +48,6 @@ export function fetchStories(config, queryParams) {
   const {
     sortOption = STORY_SORT_OPTIONS.LAST_MODIFIED,
     sortDirection,
-    searchTerm,
     page = 1,
     perPage = STORIES_PER_REQUEST,
     filters = {},
@@ -66,7 +65,6 @@ export function fetchStories(config, queryParams) {
 
   const query = {
     ..._defaultPreload,
-    search: searchTerm || undefined,
     orderby: sortOption,
     page,
     per_page: perPage,

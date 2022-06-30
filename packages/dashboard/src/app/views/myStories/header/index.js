@@ -22,6 +22,7 @@ import {
   memo,
   useCallback,
   useDebouncedCallback,
+  useEffect,
 } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { __ } from '@googleforcreators/i18n';
@@ -39,11 +40,7 @@ import {
   StoriesPropType,
   TotalStoriesByStatusPropType,
 } from '../../../../types';
-import {
-  SearchPropTypes,
-  SortPropTypes,
-  ViewPropTypes,
-} from '../../../../utils/useStoryView';
+import { SortPropTypes, ViewPropTypes } from '../../../../utils/useStoryView';
 import { useDashboardResultsLabel } from '../../../../utils';
 import { BodyViewOptions, PageHeading } from '../../shared';
 import { getSearchOptions } from '../../utils';
@@ -52,7 +49,6 @@ import StoryStatusToggle from './storyStatusToggle';
 
 function Header({
   initialPageReady,
-  search,
   sort,
   stories,
   totalStoriesByStatus,
@@ -62,36 +58,38 @@ function Header({
     actions: { scrollToTop },
   } = useLayoutContext();
 
-  const { setKeyword } = search;
-
   const searchOptions = useMemo(() => getSearchOptions(stories), [stories]);
 
-  const { filters } = useFilters(({ state: { filters } }) => ({ filters }));
-  const [dropDownFilters, statusFilter] = useMemo(() => {
-    const _dropDownFilters = [];
-    let _statusFilter;
-    for (const filter of filters) {
-      if (filter.key === 'status') {
-        _statusFilter = filter;
-        continue;
-      }
-      _dropDownFilters.push(filter);
-    }
-    return [_dropDownFilters, _statusFilter];
-  }, [filters]);
+  const { filters, updateFilter, registerFilters } = useFilters(
+    ({ state: { filters }, actions: { updateFilter, registerFilters } }) => ({
+      filters,
+      updateFilter,
+      registerFilters,
+    })
+  );
+  const [dropDownFilters, statusFilterValue, searchFilterValue] =
+    useMemo(() => {
+      const status = filters.find(({ key }) => key === 'status');
+      const search = filters.find(({ key }) => key === 'search');
+      const rest = filters.filter(
+        ({ key }) => !['status', 'search'].includes(key)
+      );
+
+      return [rest, status?.filterId, search?.filterId];
+    }, [filters]);
 
   const totalResults = useMemo(
     () =>
-      (statusFilter?.filterId.split(',') || []).reduce(
+      (statusFilterValue?.split(',') || []).reduce(
         (total, filterKey) => (total += totalStoriesByStatus[filterKey] || 0),
         0
       ),
-    [statusFilter?.filterId, totalStoriesByStatus]
+    [statusFilterValue, totalStoriesByStatus]
   );
 
   const resultsLabel = useDashboardResultsLabel({
-    currentFilter: statusFilter?.filterId,
-    isActiveSearch: Boolean(search.keyword),
+    currentFilter: statusFilterValue,
+    isActiveSearch: Boolean(searchFilterValue),
     totalResults,
     view: DASHBOARD_VIEWS.DASHBOARD,
   });
@@ -109,10 +107,17 @@ function Header({
       search_type: 'dashboard',
       search_term: value,
     });
-    setKeyword(value);
+    updateFilter('search', { filterId: value });
   }, TEXT_INPUT_DEBOUNCE);
 
-  const clearSearch = useCallback(() => setKeyword(''), [setKeyword]);
+  useEffect(() => {
+    registerFilters([{ key: 'search' }]);
+  }, [registerFilters]);
+
+  const clearSearch = useCallback(
+    () => updateFilter('search', { filterId: null }),
+    [updateFilter]
+  );
 
   return (
     <>
@@ -122,13 +127,13 @@ function Header({
         searchOptions={searchOptions}
         handleSearchChange={debouncedSearchChange}
         showSearch={initialPageReady}
-        searchValue={search.keyword}
+        searchValue={searchFilterValue}
         onClear={clearSearch}
       >
         <StoryStatusToggle
           initialPageReady={initialPageReady}
           totalStoriesByStatus={totalStoriesByStatus}
-          currentStatus={statusFilter?.filterId}
+          currentStatus={statusFilterValue}
         />
       </PageHeading>
 
@@ -153,7 +158,6 @@ function Header({
 
 Header.propTypes = {
   initialPageReady: PropTypes.bool,
-  search: SearchPropTypes.isRequired,
   sort: SortPropTypes.isRequired,
   stories: StoriesPropType,
   totalStoriesByStatus: TotalStoriesByStatusPropType,
