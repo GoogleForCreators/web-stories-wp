@@ -18,6 +18,7 @@
  * Internal dependencies
  */
 import arrangeElement from './arrangeElement';
+import updateElements from './updateElements';
 import { getTopPositionOutsideGroup } from './utils';
 
 /**
@@ -34,7 +35,15 @@ function removeElementFromGroup(state, { elementId, groupId }) {
   const page = state.pages[pageIndex];
   const elements = page.elements || [];
 
-  const finalState = arrangeElement(state, {
+  const updatedState = updateElements(state, {
+    elementIds: null,
+    properties: (oldElement) => ({
+      ...oldElement,
+      groupId: null,
+    }),
+  });
+
+  const finalState = arrangeElement(updatedState, {
     elementId,
     position: getTopPositionOutsideGroup({ elements, elementId, groupId }),
   });

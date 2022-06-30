@@ -23,17 +23,15 @@ describe('removeElementFromGroup', () => {
     const { restore, removeElementFromGroup } = setupReducer();
     const initialState = restore({
       current: 'f93d7',
-      selection: ['5c37d'],
+      selection: ['53b7e'],
       story: {},
       pages: [
         {
           elements: [
             { id: '3e822', layerName: 'Bkd' },
-            { groupId: '86b8e', id: 'e89ee', layerName: 'D1' },
-            { groupId: null, id: '5c37d', layerName: 'C1' },
+            { groupId: '86b8e', id: '5c37d', layerName: 'C1' },
             { groupId: '86b8e', id: '53b7e', layerName: 'B1' },
             { groupId: '86b8e', id: '53d47', layerName: 'A1' },
-            { id: '02c54', layerName: 'B' },
             { id: '0e26d', layerName: 'A' },
           ],
           type: 'page',
@@ -50,7 +48,7 @@ describe('removeElementFromGroup', () => {
     });
 
     const result = removeElementFromGroup(initialState, {
-      elementId: '5c37d',
+      elementId: '53b7e',
       groupId: '86b8e',
     });
 
