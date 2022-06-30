@@ -28,12 +28,11 @@ import { RIGHT_CLICK_MENU_LABELS } from '../constants';
 import { useStory } from '../..';
 
 function LayerUngroup() {
-  const { updateSelectedElements, selectedElements, arrangeElement, elements } =
+  const { updateSelectedElements, selectedElements, removeElementFromGroup } =
     useStory(({ state, actions }) => ({
       updateSelectedElements: actions.updateSelectedElements,
       selectedElements: state.selectedElements,
-      arrangeElement: actions.arrangeElement,
-      elements: state.currentPage?.elements || [],
+      removeElementFromGroup: actions.removeElementFromGroup,
     }));
   const handleLayerUngroup = useCallback(() => {
     updateSelectedElements({
@@ -42,30 +41,11 @@ function LayerUngroup() {
         groupId: null,
       }),
     });
-
-    const oldElement = selectedElements[0];
-    let count = 0;
-    let currentPosition = 0;
-
-    for (const [index] of Object.entries(elements).reverse()) {
-      if (elements[index].id === oldElement.id) {
-        currentPosition = Number(index);
-      }
-
-      if (
-        elements[index].groupId === oldElement.groupId &&
-        elements[index].id != oldElement.id &&
-        currentPosition === 0
-      ) {
-        count++;
-      }
-    }
-
-    arrangeElement({
+    removeElementFromGroup({
       elementId: selectedElements[0].id,
-      position: currentPosition + count,
+      groupId: selectedElements[0].groupId,
     });
-  }, [updateSelectedElements, arrangeElement, elements, selectedElements]);
+  }, [updateSelectedElements, selectedElements, removeElementFromGroup]);
 
   const isLayerGroupingEnabled = useFeature('layerGrouping');
   const isLayerInGroup = selectedElements.some((el) => el.groupId);
