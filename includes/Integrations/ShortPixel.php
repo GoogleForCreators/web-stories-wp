@@ -51,21 +51,11 @@ class ShortPixel extends Service_Base {
 	 * @return string[] The filtered Urls.
 	 */
 	public function image_urls( $urls ): array {
-		if ( empty( $urls ) ) {
-			return $urls;
-		}
-
-		$match = array_filter(
+		return array_filter(
 			$urls,
 			static function( $url ) {
-				return false !== strpos( $url, 'web-stories-page-template' );
+				return false === strpos( $url, 'web-stories-page-template' );
 			}
 		);
-
-		if ( $match ) {
-			return [];
-		}
-
-		return $urls;
 	}
 }

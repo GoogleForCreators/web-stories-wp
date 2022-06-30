@@ -52,6 +52,34 @@ class ShortPixel extends DependencyInjectedTestCase {
 			'http://localhost:8899/wp-content/uploads/2022/03/example-01.jpg',
 		];
 		$result = $this->instance->image_urls( $urls, 10 );
+		$this->assertEqualSets(
+			[ 
+				'http://localhost:8899/wp-content/uploads/2022/03/example.jpg',
+				'http://localhost:8899/wp-content/uploads/2022/03/example-01.jpg',
+			],
+			$result 
+		);
+	}
+
+	/**
+	 * @covers ::image_urls
+	 */
+	public function test_image_urls_only_web_stories_urls(): void {
+		$urls   = [ 
+			'http://localhost:8899/wp-content/uploads/2022/03/web-stories-page-template-768.jpg',
+			'http://localhost:8899/wp-content/uploads/2022/03/web-stories-page-template-769.jpg',
+			'http://localhost:8899/wp-content/uploads/2022/03/web-stories-page-template-770.jpg',
+		];
+		$result = $this->instance->image_urls( $urls, 10 );
+		$this->assertSame( [], $result );
+	}
+
+	/**
+	 * @covers ::image_urls
+	 */
+	public function test_image_urls_empty(): void {
+		$urls   = [];
+		$result = $this->instance->image_urls( $urls, 10 );
 		$this->assertSame( [], $result );
 	}
 
