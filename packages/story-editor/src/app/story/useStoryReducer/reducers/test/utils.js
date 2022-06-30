@@ -26,6 +26,7 @@ import {
   updateAnimations,
   removeDuplicates,
   exclusion,
+  getTopPositionOutsideGroup,
 } from '../utils';
 import { LAYER_DIRECTIONS } from '../../../../../constants';
 
@@ -298,5 +299,53 @@ describe('exclusion', () => {
 
   it('should return an empty array if nothing passed in', () => {
     expect(exclusion()).toStrictEqual([]);
+  });
+});
+
+describe('getTopPositionOutsideGroup', () => {
+  it('should calcuate the top position for element outside of current group', () => {
+    const state = {
+      current: 'f93d7',
+      selection: ['5c37d'],
+      story: {},
+      pages: [
+        {
+          elements: [
+            { id: '3e822', layerName: 'Bkd' },
+            { groupId: '86b8e', id: 'e89ee', layerName: 'D1' },
+            { groupId: '86b8e', id: '5c37d', layerName: 'C1' },
+            { groupId: '86b8e', id: '53b7e', layerName: 'B1' },
+            { groupId: '86b8e', id: '53d47', layerName: 'A1' },
+            { id: '02c54', layerName: 'B' },
+            { id: '0e26d', layerName: 'A' },
+          ],
+          type: 'page',
+          id: 'f93d70',
+          groups: {
+            '86b8e': {
+              name: 'Group 1',
+              isLocked: false,
+              isCollapsed: false,
+            },
+          },
+        },
+      ],
+    };
+
+    const elements = state.pages[0].elements;
+    expect(elements[0].layerName).toBe('Bkd');
+    expect(elements[5].layerName).toBe('B');
+
+    const nestedIds = ['e89ee', '5c37d', '53b7e', '53d47'];
+
+    nestedIds.forEach((elementId) => {
+      expect(
+        getTopPositionOutsideGroup({
+          elements: elements,
+          elementId,
+          groupId: '86b8e',
+        })
+      ).toBe(4);
+    });
   });
 });
