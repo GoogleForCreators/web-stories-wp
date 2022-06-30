@@ -21,7 +21,7 @@ import { setupReducer } from './_utils';
 describe('removeElementFromGroup', () => {
   it('should remove element from group', () => {
     const { restore, removeElementFromGroup } = setupReducer();
-    const initialState = restore({
+    restore({
       current: 'f93d7',
       selection: ['53b7e'],
       story: {},
@@ -47,7 +47,7 @@ describe('removeElementFromGroup', () => {
       ],
     });
 
-    const result = removeElementFromGroup(initialState, {
+    const result = removeElementFromGroup({
       elementId: '53b7e',
       groupId: '86b8e',
     });
