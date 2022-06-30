@@ -36,6 +36,7 @@ import { produce } from 'immer';
  * @param {Array} payload.selection Selection.
  * @param {Object} payload.story Story object.
  * @param {Object} payload.capabilities Capabilities object.
+ * @return {Object} Restored state.
  */
 export const restore = (
   draft,
