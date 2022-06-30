@@ -31,7 +31,7 @@
     "sirbrillig/phpcs-variable-analysis": "^2.8",
     "slevomat/coding-standard": "^8.0.0",
     "sniccowp/php-scoper-wordpress-excludes": "^6.0",
-    "szepeviktor/phpstan-wordpress": "^1.0",
+    "szepeviktor/phpstan-wordpress": "^1.1.2",
     "wp-coding-standards/wpcs": "^2.3",
     "yoast/wp-test-utils": "^1.0.0"
   },

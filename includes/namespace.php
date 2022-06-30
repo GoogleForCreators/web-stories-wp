@@ -198,6 +198,11 @@ function rest_preload_api_request( $memo, $path ): array {
 		}
 	}
 
+	/**
+	 * URL parts.
+	 *
+	 * @var array{path:string, query?: string} $path_parts
+	 */
 	$path_parts = wp_parse_url( (string) $path );
 	if ( ! \is_array( $path_parts ) ) {
 		return $memo;
