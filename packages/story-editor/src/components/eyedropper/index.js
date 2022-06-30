@@ -24,6 +24,7 @@ import { useCallback } from '@googleforcreators/react';
  */
 import { useCanvas, useLayout } from '../../app';
 import { ZOOM_SETTING } from '../../constants';
+import useEyeDropperApi from './useEyeDropperApi';
 
 export default ({ onChange }) => {
   const {
@@ -52,6 +53,13 @@ export default ({ onChange }) => {
     })
   );
 
+  const { isEyeDropperApiSupported, openEyeDropper } = useEyeDropperApi({
+    onChange,
+    handleClose: useCallback(() => {
+      setIsEyedropperActive(false);
+    }, [setIsEyedropperActive]),
+  });
+
   const { zoomSetting, setZoomSetting } = useLayout(
     ({ state: { zoomSetting }, actions: { setZoomSetting } }) => ({
       zoomSetting,
@@ -62,6 +70,16 @@ export default ({ onChange }) => {
   const initEyedropper = useCallback(
     (resetZoom = true) =>
       async () => {
+        if (isEyeDropperApiSupported) {
+          if (resetZoom) {
+            setIsEyedropperActive(true);
+            openEyeDropper();
+          }
+
+          // pointer event just return
+          return;
+        }
+
         if (!resetZoom && zoomSetting !== ZOOM_SETTING.FIT) {
           return;
         }
@@ -123,6 +141,8 @@ export default ({ onChange }) => {
       setEyedropperImg,
       setEyedropperPixelData,
       setZoomSetting,
+      isEyeDropperApiSupported,
+      openEyeDropper,
     ]
   );
 

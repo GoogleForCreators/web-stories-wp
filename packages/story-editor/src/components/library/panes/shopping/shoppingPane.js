@@ -16,7 +16,6 @@
 /**
  * External dependencies
  */
-import { useFeature } from 'flagged';
 import styled from 'styled-components';
 import {
   useCallback,
@@ -66,7 +65,6 @@ const loadingSpinnerProps = { animationSize: 25, circleSize: 3 };
 function ShoppingPane(props) {
   const { showSnackbar } = useSnackbar();
   const { shoppingProvider } = useConfig();
-  const isShoppingIntegrationEnabled = useFeature('shoppingIntegration');
   const speak = useLiveRegion('assertive');
   const {
     actions: { getProducts },
@@ -162,8 +160,7 @@ function ShoppingPane(props) {
     [debouncedProductsQuery, order, orderby, searchTerm]
   );
 
-  const isShoppingEnabled =
-    'none' !== shoppingProvider && isShoppingIntegrationEnabled;
+  const isShoppingEnabled = 'none' !== shoppingProvider;
 
   useEffect(() => {
     if (isShoppingEnabled) {
@@ -172,13 +169,15 @@ function ShoppingPane(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps -- Only run once on mount.
   }, [isShoppingEnabled]);
 
+  const numProducts = products.length;
+
   useEffect(() => {
-    if (!isShoppingEnabled) {
+    if (!isShoppingEnabled && numProducts === 0) {
       setProducts(currentPageProducts?.map(({ product }) => product));
       setIsLoading(false);
       setLoaded(true);
     }
-  }, [currentPageProducts, isShoppingEnabled]);
+  }, [currentPageProducts, isShoppingEnabled, numProducts]);
 
   const handleFocus = () => setIsMenuFocused(false);
 
