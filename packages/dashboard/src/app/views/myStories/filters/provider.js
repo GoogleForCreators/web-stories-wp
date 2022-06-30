@@ -65,7 +65,19 @@ export default function FiltersProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, {
     filters: [],
     filtersObject: {},
+    sortObject: {},
   });
+
+  /**
+   * Dispatch UPDATE_SORT with new data to update sort
+   *
+   * @param {string} key key property on one of the sort objects
+   * @param {Object} value the properties with updated values
+   * @return {void}
+   */
+  const updateSort = useCallback((values) => {
+    dispatch({ type: types.UPDATE_SORT, payload: { values } });
+  }, []);
 
   /**
    * Dispatch UPDATE_FILTER with new data for a given filter
@@ -108,9 +120,9 @@ export default function FiltersProvider({ children }) {
   const contextValue = useMemo(() => {
     return {
       state,
-      actions: { updateFilter, registerFilters },
+      actions: { updateFilter, updateSort, registerFilters },
     };
-  }, [state, updateFilter, registerFilters]);
+  }, [state, updateFilter, updateSort, registerFilters]);
 
   useEffect(() => {
     initializeFilters();

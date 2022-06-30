@@ -30,34 +30,24 @@ import { trackEvent } from '@googleforcreators/tracking';
 /**
  * Internal dependencies
  */
-import { useLayoutContext } from '../../../../components';
 import {
   DASHBOARD_VIEWS,
   STORY_SORT_MENU_ITEMS,
+  STORY_SORT_OPTIONS,
   TEXT_INPUT_DEBOUNCE,
 } from '../../../../constants';
 import {
   StoriesPropType,
   TotalStoriesByStatusPropType,
 } from '../../../../types';
-import { SortPropTypes, ViewPropTypes } from '../../../../utils/useStoryView';
+import { ViewPropTypes } from '../../../../utils/useStoryView';
 import { useDashboardResultsLabel } from '../../../../utils';
 import { BodyViewOptions, PageHeading } from '../../shared';
 import { getSearchOptions } from '../../utils';
 import useFilters from '../filters/useFilters';
 import StoryStatusToggle from './storyStatusToggle';
 
-function Header({
-  initialPageReady,
-  sort,
-  stories,
-  totalStoriesByStatus,
-  view,
-}) {
-  const {
-    actions: { scrollToTop },
-  } = useLayoutContext();
-
+function Header({ initialPageReady, stories, totalStoriesByStatus, view }) {
   const searchOptions = useMemo(() => getSearchOptions(stories), [stories]);
 
   const { filters, updateFilter, registerFilters } = useFilters(
@@ -93,14 +83,6 @@ function Header({
     totalResults,
     view: DASHBOARD_VIEWS.DASHBOARD,
   });
-
-  const onSortChange = useCallback(
-    (newSort) => {
-      sort.set(newSort);
-      scrollToTop();
-    },
-    [scrollToTop, sort]
-  );
 
   const debouncedSearchChange = useDebouncedCallback(async (value) => {
     await trackEvent('search', {
@@ -144,13 +126,8 @@ function Header({
         resultsLabel={resultsLabel}
         layoutStyle={view.style}
         handleLayoutSelect={view.toggleStyle}
-        currentSort={sort.value}
         pageSortOptions={STORY_SORT_MENU_ITEMS}
-        handleSortChange={onSortChange}
-        sortDropdownAriaLabel={__(
-          'Choose sort option for display',
-          'web-stories'
-        )}
+        pageSortDefaultOption={STORY_SORT_OPTIONS.LAST_MODIFIED}
       />
     </>
   );
@@ -158,7 +135,6 @@ function Header({
 
 Header.propTypes = {
   initialPageReady: PropTypes.bool,
-  sort: SortPropTypes.isRequired,
   stories: StoriesPropType,
   totalStoriesByStatus: TotalStoriesByStatusPropType,
   view: ViewPropTypes.isRequired,

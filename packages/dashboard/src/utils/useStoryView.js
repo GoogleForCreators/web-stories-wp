@@ -38,6 +38,7 @@ import usePagePreviewSize from './usePagePreviewSize';
 export default function useStoryView({
   statusFilters,
   filtersObject,
+  sortObject,
   isLoading = false,
   totalPages,
 }) {
@@ -167,6 +168,12 @@ export default function useStoryView({
       setFilters(filtersObject);
     }
   }, [setFilters, initialPageReady, filtersObject]);
+
+  useEffect(() => {
+    if (initialPageReady) {
+      setSort(sortObject);
+    }
+  }, [setSort, initialPageReady, sortObject]);
 
   return useMemo(
     () => ({

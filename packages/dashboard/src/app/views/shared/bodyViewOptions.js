@@ -23,7 +23,6 @@ import { TranslateWithMarkup, __ } from '@googleforcreators/i18n';
 import {
   Text,
   THEME_CONSTANTS,
-  DropDown,
   Datalist,
 } from '@googleforcreators/design-system';
 
@@ -31,8 +30,8 @@ import {
  * Internal dependencies
  */
 import { StandardViewContentGutter, ViewStyleBar } from '../../../components';
-import { DROPDOWN_TYPES } from '../../../constants';
 import useFilters from '../myStories/filters/useFilters';
+import SortDropDown from './sortDropDown';
 
 const FILTER_MAX_WIDTH = 350;
 
@@ -59,25 +58,19 @@ const ControlsContainer = styled.div`
   justify-self: end;
 `;
 
-const StyledDropDown = styled(DropDown)`
-  width: 210px;
-`;
-
 const BodyViewOptionsHeader = styled.div``;
 const StyledDatalist = styled(Datalist.DropDown)`
   max-width: ${FILTER_MAX_WIDTH}px;
 `;
 
 export default function BodyViewOptions({
-  currentSort,
   handleLayoutSelect,
-  handleSortChange,
   resultsLabel,
   layoutStyle,
   pageSortOptions = [],
+  pageSortDefaultOption,
   showGridToggle,
   showSortDropdown,
-  sortDropdownAriaLabel,
   filters = [],
 }) {
   const { updateFilter } = useFilters(({ actions: { updateFilter } }) => ({
@@ -125,12 +118,9 @@ export default function BodyViewOptions({
             : null}
           {showSortDropdown && (
             <StorySortDropdownContainer>
-              <StyledDropDown
-                ariaLabel={sortDropdownAriaLabel}
-                options={pageSortOptions}
-                type={DROPDOWN_TYPES.MENU}
-                selectedValue={currentSort}
-                onMenuItemClick={(_, newSort) => handleSortChange(newSort)}
+              <SortDropDown
+                pageSortOptions={pageSortOptions}
+                pageSortDefaultOption={pageSortDefaultOption}
               />
             </StorySortDropdownContainer>
           )}
@@ -147,19 +137,17 @@ export default function BodyViewOptions({
 }
 
 BodyViewOptions.propTypes = {
-  currentSort: PropTypes.string.isRequired,
   handleLayoutSelect: PropTypes.func,
-  handleSortChange: PropTypes.func,
   layoutStyle: PropTypes.string.isRequired,
   resultsLabel: PropTypes.string.isRequired,
+  showGridToggle: PropTypes.bool,
+  showSortDropdown: PropTypes.bool,
+  filters: PropTypes.array,
   pageSortOptions: PropTypes.arrayOf(
     PropTypes.shape({
       value: PropTypes.string,
       label: PropTypes.string,
     })
   ),
-  showGridToggle: PropTypes.bool,
-  showSortDropdown: PropTypes.bool,
-  sortDropdownAriaLabel: PropTypes.string.isRequired,
-  filters: PropTypes.array,
+  pageSortDefaultOption: PropTypes.string,
 };

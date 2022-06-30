@@ -15,4 +15,5 @@
  */
 
 export const UPDATE_FILTER = 'UPDATE_FILTER';
+export const UPDATE_SORT = 'UPDATE_SORT';
 export const REGISTER_FILTERS = 'REGISTER_FILTERS';

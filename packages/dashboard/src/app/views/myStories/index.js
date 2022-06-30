@@ -71,9 +71,12 @@ function MyStories() {
       totalStoriesByStatus,
     })
   );
-  const { filtersObject } = useFilters(({ state: { filtersObject } }) => ({
-    filtersObject,
-  }));
+  const { filtersObject, sortObject } = useFilters(
+    ({ state: { filtersObject, sortObject } }) => ({
+      filtersObject,
+      sortObject,
+    })
+  );
 
   const { apiCallbacks, canViewDefaultTemplates } = useConfig();
   const isMounted = useRef(false);
@@ -86,10 +89,11 @@ function MyStories() {
     };
   }, []);
 
-  const { page, sort, view, showStoriesWhileLoading, initialPageReady } =
+  const { page, view, showStoriesWhileLoading, initialPageReady } =
     useStoryView({
       statusFilters: STORY_STATUSES,
       filtersObject,
+      sortObject,
       isLoading,
       totalPages,
     });
@@ -97,18 +101,10 @@ function MyStories() {
   useEffect(() => {
     fetchStories({
       page: page.value,
-      sortDirection: sort.direction,
-      sortOption: sort.value,
       filters: filtersObject,
+      sort: sortObject,
     });
-  }, [
-    fetchStories,
-    filtersObject,
-    page.value,
-    sort.direction,
-    sort.value,
-    apiCallbacks,
-  ]);
+  }, [fetchStories, filtersObject, sortObject, page.value, apiCallbacks]);
 
   const orderedStories = useMemo(() => {
     return storiesOrderById.map((storyId) => {
@@ -120,7 +116,6 @@ function MyStories() {
     <Layout.Provider>
       <Header
         initialPageReady={initialPageReady}
-        sort={sort}
         stories={orderedStories}
         totalStoriesByStatus={totalStoriesByStatus}
         view={view}
@@ -135,7 +130,6 @@ function MyStories() {
           showStoriesWhileLoading,
         }}
         page={page}
-        sort={sort}
         stories={orderedStories}
         storyActions={{
           duplicateStory,

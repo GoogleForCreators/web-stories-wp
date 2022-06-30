@@ -17,6 +17,7 @@
 /**
  * Internal dependencies
  */
+import { SORT_KEYS, STORY_SORT_OPTIONS } from '../../../../constants/stories';
 import * as types from './types';
 
 /**
@@ -63,6 +64,33 @@ const reducer = (state, { type, payload = {} }) => {
         ...state,
         filters,
         filtersObject,
+      };
+    }
+
+    case types.UPDATE_SORT: {
+      const { values } = payload;
+
+      const sortObject = {};
+
+      // only use acceptable key value pairs
+      for (const key in values) {
+        if (
+          key in SORT_KEYS &&
+          Object.values(SORT_KEYS[key]).includes(values[key]) &&
+          state.sortObject[key] !== values[key]
+        ) {
+          sortObject[key] = values[key];
+        }
+      }
+
+      // nothing changed no need for an update
+      if (Object.entries(sortObject).length === 0) {
+        return state;
+      }
+
+      return {
+        ...state,
+        sortObject: { ...state.sortObject, ...sortObject },
       };
     }
 

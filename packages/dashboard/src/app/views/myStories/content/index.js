@@ -68,7 +68,6 @@ function Content({
   filtersObject = {},
   loading,
   page,
-  sort,
   stories,
   storyActions,
   view,
@@ -79,7 +78,6 @@ function Content({
         {stories.length > 0 ? (
           <>
             <StoriesView
-              sort={sort}
               storyActions={storyActions}
               stories={stories}
               view={view}

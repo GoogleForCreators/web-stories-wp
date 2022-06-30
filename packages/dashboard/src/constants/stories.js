@@ -76,6 +76,11 @@ export const STORY_SORT_OPTIONS = {
   CREATED_BY: 'story_author',
 };
 
+export const SORT_KEYS = {
+  orderby: STORY_SORT_OPTIONS,
+  order: SORT_DIRECTION,
+};
+
 export const ORDER_BY_SORT = {
   [STORY_SORT_OPTIONS.NAME]: SORT_DIRECTION.ASC,
   [STORY_SORT_OPTIONS.DATE_CREATED]: SORT_DIRECTION.DESC,

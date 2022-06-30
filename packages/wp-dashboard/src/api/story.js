@@ -46,11 +46,10 @@ import { reshapeStoryObject } from './utils';
  */
 export function fetchStories(config, queryParams) {
   const {
-    sortOption = STORY_SORT_OPTIONS.LAST_MODIFIED,
-    sortDirection,
     page = 1,
     perPage = STORIES_PER_REQUEST,
     filters = {},
+    sort = {},
   } = queryParams;
 
   // Important: Keep in sync with REST API preloading definition.
@@ -61,15 +60,16 @@ export function fetchStories(config, queryParams) {
     _web_stories_envelope: true,
     _fields: STORY_FIELDS,
     status: STORY_STATUS.ALL,
+    orderby: STORY_SORT_OPTIONS.LAST_MODIFIED,
+    order: ORDER_BY_SORT[STORY_SORT_OPTIONS.LAST_MODIFIED],
   };
 
   const query = {
     ..._defaultPreload,
-    orderby: sortOption,
     page,
     per_page: perPage,
-    order: sortDirection || ORDER_BY_SORT[sortOption],
     ...filters,
+    ...sort,
   };
 
   return apiFetch({
