@@ -76,7 +76,7 @@ describe('Panels/Captions', () => {
     expect(captionRegion).toBeInTheDocument();
 
     const captionButton = screen.queryByRole('button', {
-      name: /Select caption/i,
+      name: /Upload a file/i,
     });
     expect(captionButton).toBeInTheDocument();
 
@@ -96,7 +96,7 @@ describe('Panels/Captions', () => {
       [defaultElement]
     );
     const captionButton = screen.queryByRole('button', {
-      name: /Select caption/i,
+      name: /Upload a file/i,
     });
     expect(captionButton).not.toBeInTheDocument();
 

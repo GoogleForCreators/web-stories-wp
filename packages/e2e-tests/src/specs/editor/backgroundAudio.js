@@ -22,7 +22,6 @@ import {
   uploadFile,
   deleteMedia,
   takeSnapshot,
-  withExperimentalFeatures,
   withPlugin,
   insertStoryTitle,
   publishStory,
