@@ -23,6 +23,7 @@ import { renderHook, act } from '@testing-library/react-hooks';
  */
 import FiltersProvider from '../provider';
 import useFilters from '../useFilters';
+import { SORT_KEYS } from '../../../../../constants/stories';
 
 jest.mock('../taxonomy/useTaxonomyFilters', () => {
   const initializeTaxonomyFilters = () => Promise.resolve([]);
@@ -90,5 +91,77 @@ describe('provider', () => {
     expect(filterObj).toMatchObject({
       [filterKey]: 1,
     });
+  });
+
+  it('should be able to update the sortObject if the acceptable keys are use', () => {
+    const wrapper = ({ children }) => (
+      <FiltersProvider>{children}</FiltersProvider>
+    );
+
+    const { result } = renderHook(() => useFilters(), { wrapper });
+
+    for (const key of Object.keys(SORT_KEYS)) {
+      for (const value of Object.values(SORT_KEYS[key])) {
+        act(() => {
+          result.current.actions.updateSort({ [key]: value });
+        });
+        expect(result.current.state.sortObject).toMatchObject({ [key]: value });
+      }
+    }
+  });
+
+  it('should not be able to update the sortObject with arbitrary key value pairs', () => {
+    const wrapper = ({ children }) => (
+      <FiltersProvider>{children}</FiltersProvider>
+    );
+
+    const { result } = renderHook(() => useFilters(), { wrapper });
+
+    const unacceptableSortValues = {
+      orderby: 'valueNotInSortKeyOrderby',
+      order: 'up',
+    };
+
+    const unacceptableSortKeys = {
+      sortby: 'title',
+      sortorder: 'asc',
+    };
+
+    act(() => {
+      result.current.actions.updateSort(unacceptableSortValues);
+    });
+    expect(result.current.state.sortObject).toMatchObject({});
+
+    act(() => {
+      result.current.actions.updateSort(unacceptableSortKeys);
+    });
+    expect(result.current.state.sortObject).toMatchObject({});
+  });
+
+  it('should not return sortObject if nothing changes', () => {
+    const wrapper = ({ children }) => (
+      <FiltersProvider>{children}</FiltersProvider>
+    );
+
+    const { result } = renderHook(() => useFilters(), { wrapper });
+
+    const acceptableSortObject = {
+      orderby: 'title',
+      order: 'asc',
+    };
+
+    const unacceptableSortKeys = {
+      sortby: 'title',
+      sortorder: 'asc',
+    };
+
+    act(() => {
+      // set the sortObject to an acceptable sortObject
+      result.current.actions.updateSort(acceptableSortObject);
+      // try to set the sortObject to an unacceptable sortObject
+      result.current.actions.updateSort(unacceptableSortKeys);
+    });
+    // the state shouldn't be updated if given an unacceptable sortObject
+    expect(result.current.state.sortObject).toMatchObject(acceptableSortObject);
   });
 });

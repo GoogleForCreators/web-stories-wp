@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { SORT_KEYS, STORY_SORT_OPTIONS } from '../../../../constants/stories';
+import { SORT_KEYS } from '../../../../constants/stories';
 import * as types from './types';
 
 /**
