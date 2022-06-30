@@ -312,18 +312,6 @@ class Experiments extends Service_Base implements HasRequirements {
 				'group'       => 'editor',
 			],
 			/**
-			 * Author: @spacedmonkey
-			 * Issue: #11081
-			 * Creation date: 2022-03-30
-			 */
-			[
-				'name'        => 'captionHotlinking',
-				'label'       => __( 'Caption hotlinking', 'web-stories' ),
-				'description' => __( 'Enable hotlinking of captions', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-			/**
 			 * Author: @barklund
 			 * Issue: #7332
 			 * Creation date: 2022-04-19
