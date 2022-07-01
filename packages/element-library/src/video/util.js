@@ -17,11 +17,10 @@
 /**
  * External dependencies
  */
-import { css } from 'styled-components';
+import styled, { css } from 'styled-components';
 
-export const videoWithScale = css`
+const videoWithScale = css`
   width: ${({ width }) => `${width}px`};
-  height: ${({ height }) => `${height}px`};
   left: ${({ offsetX }) => `${-offsetX}px`};
   top: ${({ offsetY }) => `${-offsetY}px`};
   max-width: ${({ isBackground }) => (isBackground ? 'initial' : null)};
@@ -34,3 +33,19 @@ export const getBackgroundStyle = () => {
     maxWidth: 'initial',
   };
 };
+
+export const Video = styled.video`
+  position: absolute;
+  max-width: initial;
+  max-height: initial;
+  height: ${({ height }) => `${height}px`};
+  background-image: ${({ poster }) => `${poster}`};
+  ${videoWithScale}
+`;
+
+export const VideoImage = styled.img`
+  position: absolute;
+  max-height: initial;
+  object-fit: contain;
+  ${videoWithScale}
+`;

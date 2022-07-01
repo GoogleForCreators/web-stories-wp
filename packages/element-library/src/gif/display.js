@@ -27,24 +27,7 @@ import { StoryPropTypes } from '@googleforcreators/elements';
  * Internal dependencies
  */
 import MediaDisplay from '../media/display';
-import { getBackgroundStyle, videoWithScale } from '../video/util';
-
-const Video = styled.video`
-  position: absolute;
-  max-width: initial;
-  max-height: initial;
-  ${videoWithScale}
-`;
-
-const Image = styled.img`
-  position: absolute;
-  max-height: initial;
-  object-fit: contain;
-  width: ${({ width }) => `${width}px`};
-  left: ${({ offsetX }) => `${-offsetX}px`};
-  top: ${({ offsetY }) => `${-offsetY}px`};
-  max-width: ${({ isBackground }) => (isBackground ? 'initial' : null)};
-`;
+import { getBackgroundStyle, Video, VideoImage } from '../video/util';
 
 function VideoDisplay({ previewMode, box: { width, height }, element }) {
   const { id, poster, resource, isBackground, scale, focalX, focalY } = element;
@@ -78,7 +61,7 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
     >
       {previewMode ? (
         (poster || resource.poster) && (
-          <Image
+          <VideoImage
             src={poster || resource.poster}
             alt={element.alt || resource.alt}
             style={style}

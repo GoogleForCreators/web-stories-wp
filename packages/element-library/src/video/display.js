@@ -27,25 +27,8 @@ import { StoryPropTypes } from '@googleforcreators/elements';
  * Internal dependencies
  */
 import MediaDisplay from '../media/display';
-import { getBackgroundStyle, videoWithScale } from './util';
+import { getBackgroundStyle, Video, VideoImage } from './util';
 import Captions from './captions';
-
-const Video = styled.video`
-  position: absolute;
-  max-width: initial;
-  max-height: initial;
-  ${videoWithScale}
-`;
-
-const Image = styled.img`
-  position: absolute;
-  max-height: initial;
-  object-fit: contain;
-  width: ${({ width }) => `${width}px`};
-  left: ${({ offsetX }) => `${-offsetX}px`};
-  top: ${({ offsetY }) => `${-offsetY}px`};
-  max-width: ${({ isBackground }) => (isBackground ? 'initial' : null)};
-`;
 
 function VideoDisplay({
   previewMode,
@@ -106,7 +89,7 @@ function VideoDisplay({
     >
       {previewMode ? (
         (poster || resource.poster) && (
-          <Image
+          <VideoImage
             src={poster || resource.poster}
             alt={element.alt || resource.alt}
             style={style}
@@ -115,7 +98,7 @@ function VideoDisplay({
           />
         )
       ) : (
-        // eslint-disable-next-line styled-components-a11y/media-has-caption,jsx-a11y/media-has-caption -- False positive.
+        // eslint-disable-next-line jsx-a11y/media-has-caption -- False positive.
         <Video
           id={`video-${id}`}
           // Force React to update the video in the DOM, causing it to properly reload if the URL changes.

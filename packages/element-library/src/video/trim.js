@@ -30,14 +30,10 @@ import { StoryPropTypes, getTransformFlip } from '@googleforcreators/elements';
 import MediaDisplay from '../media/display';
 import { elementWithFlip } from '../shared';
 import PlayPauseButton from './playPauseButton';
-import { getBackgroundStyle, videoWithScale } from './util';
+import { getBackgroundStyle, Video as _Video } from './util';
 import Captions from './captions';
 
-const Video = styled.video`
-  position: absolute;
-  max-width: initial;
-  max-height: initial;
-  ${videoWithScale}
+const Video = styled(_Video)`
   ${elementWithFlip}
 `;
 
@@ -132,7 +128,7 @@ function VideoTrim({
           showPlaceholder
           previewMode={false}
         >
-          {/* eslint-disable-next-line styled-components-a11y/media-has-caption,jsx-a11y/media-has-caption -- False positive. */}
+          {/* eslint-disable-next-line jsx-a11y/media-has-caption -- False positive. */}
           <Video
             poster={poster || resource.poster}
             style={style}
