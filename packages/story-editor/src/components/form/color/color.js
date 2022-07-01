@@ -128,8 +128,9 @@ const Color = forwardRef(function Color(
     value !== MULTIPLE_VALUE && Boolean(getPreviewText(value)) && hasInputs;
 
   const { initEyedropper } = useEyedropper({
-    onChange: (color) => onChange({ color }),
+    onChange: useCallback((color) => onChange({ color }), [onChange]),
   });
+
   const tooltip = __('Pick a color from canvas', 'web-stories');
 
   const tooltipPlacement =

@@ -245,8 +245,8 @@ const updateElementsByFontFamily =
 
 const addGroup =
   (dispatch) =>
-  ({ groupId, name }) =>
-    dispatch({ type: types.ADD_GROUP, payload: { groupId, name } });
+  ({ groupId, name, isLocked }) =>
+    dispatch({ type: types.ADD_GROUP, payload: { groupId, name, isLocked } });
 
 const updateGroupById =
   (dispatch) =>

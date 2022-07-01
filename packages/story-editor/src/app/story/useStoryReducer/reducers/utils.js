@@ -87,9 +87,13 @@ export function updateElementWithUpdater(element, properties) {
     typeof properties === 'function' ? properties(element) : properties;
   const allowedProperties = objectWithout(updater, ELEMENT_RESERVED_PROPERTIES);
   if (Object.keys(allowedProperties).length === 0) {
-    return element;
+    return null;
   }
-  return { ...element, ...allowedProperties };
+  if (allowedProperties.animation) {
+    return allowedProperties.animation;
+  }
+  Object.assign(element, allowedProperties);
+  return null;
 }
 
 export function removeAnimationsWithElementIds(animations = [], ids = []) {

@@ -15,7 +15,7 @@
  */
 
 export const DEFAULT_DATE_SETTINGS = {
-  dateFormat: 'Y-m-d',
+  dateFormat: 'F j, Y',
   timeFormat: 'g:i a',
   gmtOffset: 0,
   timezone: '',

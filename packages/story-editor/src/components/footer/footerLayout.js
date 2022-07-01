@@ -36,9 +36,9 @@ const Wrapper = styled.section`
   grid:
     /* Note the two empty 1fr areas each side of the buttons - that's on purpose */
     'secondary carousel primary' auto /
-    ${MAX_MENU_WIDTH}px
-    minmax(auto, calc(100% - ${2 * MAX_MENU_WIDTH}px))
-    ${MAX_MENU_WIDTH}px;
+    1fr
+    minmax(auto, calc(100% - ${3 * MAX_MENU_WIDTH}px))
+    1fr;
   width: 100%;
   max-width: 100%;
   height: 100%;
