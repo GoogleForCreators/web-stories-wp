@@ -28,6 +28,7 @@ import {
   Button,
   PLACEMENT,
   Popup,
+  Disclosure,
 } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 import styled from 'styled-components';
@@ -204,7 +205,7 @@ function PresetPanel() {
             aria-expanded={isPopupOpen}
           >
             {__('More styles', 'web-stories')}
-            <Icons.ChevronDownSmall />
+            <Disclosure isOpen={isPopupOpen} />
           </MoreButton>
           <Popup
             anchor={buttonRef}

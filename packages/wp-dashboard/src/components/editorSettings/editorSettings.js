@@ -26,7 +26,6 @@ import {
   MIN_IMG_HEIGHT,
   useConfig,
 } from '@googleforcreators/dashboard';
-import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -139,8 +138,6 @@ function EditorSettings() {
       shopifyAccessToken,
     })
   );
-
-  const isShoppingEnabled = useFeature('shoppingIntegration');
 
   const {
     capabilities: { canUploadFiles, canManageSettings } = {},
@@ -388,16 +385,14 @@ function EditorSettings() {
                   adManagerSlotId={adManagerSlotId}
                   siteKitStatus={siteKit}
                 />
-                {isShoppingEnabled && (
-                  <Shopping
-                    updateSettings={updateSettings}
-                    shoppingProvider={shoppingProvider}
-                    shopifyHost={shopifyHost}
-                    shopifyAccessToken={shopifyAccessToken}
-                    vendors={vendors}
-                    woocommerce={woocommerce}
-                  />
-                )}
+                <Shopping
+                  updateSettings={updateSettings}
+                  shoppingProvider={shoppingProvider}
+                  shopifyHost={shopifyHost}
+                  shopifyAccessToken={shopifyAccessToken}
+                  vendors={vendors}
+                  woocommerce={woocommerce}
+                />
               </>
             )}
           </Main>

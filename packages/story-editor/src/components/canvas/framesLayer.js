@@ -43,7 +43,15 @@ import {
   useRightClickMenu,
 } from '../../app';
 import useCanvasKeys from '../../app/canvas/useCanvasKeys';
-import { Layer, NavNextArea, NavPrevArea, PageArea } from './layout';
+import {
+  Layer,
+  NavNextArea,
+  NavPrevArea,
+  PageArea,
+  PageBeforeArea,
+  PageAfterArea,
+} from './layout';
+import ExtraPages from './extraPages';
 import FrameElement from './frameElement';
 import Selection from './selection';
 import PageNav from './pagenav';
@@ -128,6 +136,12 @@ function FramesNavAndSelection({ children }) {
       aria-label={__('Frames layer', 'web-stories')}
     >
       {children}
+      <PageBeforeArea>
+        <ExtraPages isPrevious />
+      </PageBeforeArea>
+      <PageAfterArea>
+        <ExtraPages />
+      </PageAfterArea>
       <NavPrevArea>
         <PageNav isNext={false} />
       </NavPrevArea>

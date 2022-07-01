@@ -165,9 +165,9 @@ describe('LibraryTabs integration', () => {
       await fixture.events.keyboard.press('Space');
       await expectActivePaneToBe('pageTemplates');
 
-      // Then press "left" to focus shapes tab
+      // Then press "left" to focus shopping tab
       await fixture.events.keyboard.press('ArrowLeft');
-      expectFocusedTabToBe('shapes');
+      expectFocusedTabToBe('shopping');
       await expectActivePaneToBe('pageTemplates');
 
       // Then press "home" to focus media tab

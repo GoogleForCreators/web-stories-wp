@@ -74,6 +74,7 @@
     "flagged": "^2.0.3",
     "history": "^5.3.0",
     "html-to-image": "1.9.0",
+    "immer": "^9.0.15",
     "polished": "^4.2.2",
     "prop-types": "^15.8.1",
     "react-blurhash": "^0.1.3",

@@ -124,6 +124,7 @@ function createProviderValues({
         pages: '/wp/v2/pages/',
         publisherLogos: '/web-stories/v1/publisher-logos/',
       },
+      vendors: { none: 'None', shopify: 'Shopify', woocommerce: 'WooCommerce' },
       plugins: { siteKit: {}, woocommerce: {} },
     },
     api: {

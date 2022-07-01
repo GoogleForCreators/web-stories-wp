@@ -33,7 +33,6 @@ import {
   getExtensionsFromMimeType,
   ResourcePropTypes,
 } from '@googleforcreators/media';
-import { useFeature } from 'flagged';
 import { trackError, trackEvent } from '@googleforcreators/tracking';
 
 /**
@@ -77,8 +76,6 @@ function CaptionsPanelContent({
   } = useConfig();
 
   const [isOpen, setIsOpen] = useState(false);
-
-  const enableCaptionHotlinking = useFeature('captionHotlinking');
 
   const allowedFileTypes = useMemo(
     () =>
@@ -128,7 +125,7 @@ function CaptionsPanelContent({
         buttonInsertText: __('Select caption', 'web-stories'),
       },
     },
-    enableCaptionHotlinking && {
+    {
       label: __('Link to a file', 'web-stories'),
       value: 'hotlink',
       onClick: () => {
@@ -171,31 +168,27 @@ function CaptionsPanelContent({
               render={renderUploadButton}
             />
           )}
-          {enableCaptionHotlinking && (
-            <HotlinkButton
-              variant={BUTTON_VARIANTS.RECTANGLE}
-              type={BUTTON_TYPES.SECONDARY}
-              size={BUTTON_SIZES.SMALL}
-              onClick={() => setIsOpen(true)}
-            >
-              {__('Link to caption file', 'web-stories')}
-            </HotlinkButton>
-          )}
+          <HotlinkButton
+            variant={BUTTON_VARIANTS.RECTANGLE}
+            type={BUTTON_TYPES.SECONDARY}
+            size={BUTTON_SIZES.SMALL}
+            onClick={() => setIsOpen(true)}
+          >
+            {__('Link to caption file', 'web-stories')}
+          </HotlinkButton>
         </ButtonRow>
       )}
-      {enableCaptionHotlinking && (
-        <HotlinkModal
-          title={__('Insert external captions', 'web-stories')}
-          isOpen={isOpen}
-          onSelect={onSelect}
-          onError={onError}
-          onClose={() => setIsOpen(false)}
-          allowedFileTypes={allowedFileTypes}
-          insertText={__('Use caption', 'web-stories')}
-          insertingText={__('Selecting caption', 'web-stories')}
-          canUseProxy={false}
-        />
-      )}
+      <HotlinkModal
+        title={__('Insert external captions', 'web-stories')}
+        isOpen={isOpen}
+        onSelect={onSelect}
+        onError={onError}
+        onClose={() => setIsOpen(false)}
+        allowedFileTypes={allowedFileTypes}
+        insertText={__('Use caption', 'web-stories')}
+        insertingText={__('Selecting caption', 'web-stories')}
+        canUseProxy={false}
+      />
     </>
   );
 }
