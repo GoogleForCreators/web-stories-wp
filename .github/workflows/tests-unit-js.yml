@@ -53,7 +53,6 @@ jobs:
 
       - name: Setup Jest cache
         uses: actions/cache@v3
-        id: cache-jest-cache
         with:
           path: .jest-cache
           key: ${{ runner.os }}-${{ steps.nvm.outputs.NVMRC }}-jest
@@ -66,10 +65,18 @@ jobs:
         env:
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
 
+      - name: Download AMP validator JS
+        id: amp_validator
+        run: |
+          cd $RUNNER_TEMP && curl -O -f -s -S https://cdn.ampproject.org/v0/validator_wasm.js
+          AMP_VALIDATOR_FILE="${RUNNER_TEMP}/validator_wasm.js"
+          echo "::set-output name=validator_file::$AMP_VALIDATOR_FILE"
+
       - name: Run JavaScript unit tests
         run: npm run test:js -- --runInBand --ci --cacheDirectory="$HOME/.jest-cache" --collectCoverage --shard=$SHARD
         env:
           SHARD: ${{ matrix.shard }}
+          AMP_VALIDATOR_FILE: ${{ steps.amp_validator.outputs.validator_file }}
 
       - name: Upload code coverage report
         uses: codecov/codecov-action@v3.1.0

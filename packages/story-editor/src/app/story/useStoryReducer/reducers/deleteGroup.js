@@ -15,9 +15,14 @@
  */
 
 /**
+ * External dependencies
+ */
+import { produce } from 'immer';
+
+/**
  * Internal dependencies
  */
-import deleteElements from './deleteElements';
+import { deleteElements } from './deleteElements';
 
 /**
  * Delete group by id.
@@ -28,51 +33,28 @@ import deleteElements from './deleteElements';
  * @param {boolean} payload.includeElements If also delete all elements in the group
  * @return {Object} New state
  */
-function deleteGroup(state, { groupId, includeElements = false }) {
-  const pageIndex = state.pages.findIndex(({ id }) => id === state.current);
-
-  const updatedGroups = {
-    ...state.pages[pageIndex].groups,
-  };
-  delete updatedGroups[groupId];
-
-  const currentPage = state.pages[pageIndex];
-
-  const newPage = {
-    ...currentPage,
-    groups: updatedGroups,
-  };
-
-  // Remove group elements.
-  newPage.elements = newPage.elements.map((el) => {
-    if (el.groupId === groupId) {
-      const newEl = { ...el };
-      delete newEl.groupId;
-      return newEl;
-    } else {
-      return el;
-    }
-  });
-
-  const newPages = [
-    ...state.pages.slice(0, pageIndex),
-    newPage,
-    ...state.pages.slice(pageIndex + 1),
-  ];
-
-  const finalState = {
-    ...state,
-    pages: newPages,
-  };
-
-  if (includeElements) {
-    const elementIds = currentPage.elements
-      .filter((el) => groupId && el.groupId === groupId)
-      .map((el) => el.id);
-    return deleteElements(finalState, { elementIds });
+const deleteGroup = produce((draft, { groupId, includeElements = false }) => {
+  const { elements, groups } = draft.pages.find(
+    ({ id }) => id === draft.current
+  );
+  if (!groupId || !groups?.[groupId]) {
+    return;
   }
 
-  return finalState;
-}
+  // Delete the group object completely
+  delete groups[groupId];
+
+  // If includeElements is true, remove elements as well
+  // Otherwise just unset groupId on elements
+  const groupElements = elements.filter((el) => el.groupId === groupId);
+  if (includeElements) {
+    const elementIds = groupElements.map(({ id }) => id);
+    deleteElements(draft, { elementIds });
+  } else {
+    groupElements.forEach((el) => {
+      delete el.groupId;
+    });
+  }
+});
 
 export default deleteGroup;

@@ -28,6 +28,7 @@ import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import { Button, Placeholder } from '@wordpress/components';
 import { BlockIcon } from '@wordpress/block-editor';
+import { useDebounce } from '@wordpress/compose';
 
 /**
  * Internal dependencies
@@ -36,7 +37,6 @@ import { BlockIcon as WebStoriesLogo } from '../../icons';
 import StoriesInspectorControls from '../../components/storiesInspectorControls';
 import StoriesLoading from '../../components/storiesLoading';
 import StoriesPreview from '../../components/storiesPreview';
-import useDebounce from '../../hooks/useDebounce';
 
 const {
   config: {

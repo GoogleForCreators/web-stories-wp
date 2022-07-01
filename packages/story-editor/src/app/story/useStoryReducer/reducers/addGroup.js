@@ -15,41 +15,26 @@
  */
 
 /**
+ * External dependencies
+ */
+import { produce } from 'immer';
+
+/**
  * Add a group to the current page groups list (id, name).
  *
- * @param {Object} state Current state
+ * @param {Object} draft Current state
  * @param {Object} payload Action payload
- * @param {Object} payload.groupId Group id
- * @param {Object} payload.name Group name
- * @param {Object} payload.isLocked Is group locked
- * @return {Object} New state
+ * @param {string} payload.groupId Group id
+ * @param {string} payload.name Group name
+ * @param {boolean} payload.isLocked Is group locked
  */
-function addGroup(state, { groupId, name, isLocked = false }) {
-  const pageIndex = state.pages.findIndex(({ id }) => id === state.current);
+export const addGroup = (draft, { groupId, name, isLocked = false }) => {
+  if (!groupId || !name) {
+    return;
+  }
 
-  const updatedGroups = {
-    ...state.pages[pageIndex].groups,
-    [groupId]: {
-      name,
-      isLocked,
-    },
-  };
+  const page = draft.pages.find(({ id }) => id === draft.current);
+  page.groups[groupId] = { name, isLocked };
+};
 
-  const newPage = {
-    ...state.pages[pageIndex],
-    groups: updatedGroups,
-  };
-
-  const newPages = [
-    ...state.pages.slice(0, pageIndex),
-    newPage,
-    ...state.pages.slice(pageIndex + 1),
-  ];
-
-  return {
-    ...state,
-    pages: newPages,
-  };
-}
-
-export default addGroup;
+export default produce(addGroup);

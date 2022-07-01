@@ -35,11 +35,12 @@ describe('date/formatDate', () => {
     resetSettings();
   });
 
-  it('should return 2020-05-02 with no formatting options', () => {
+  // Uses DEFAULT_DATE_SETTINGS.dateFormat
+  it('should return May 2, 2020 with no formatting options', () => {
     const dateString = '2020-05-02T10:47:26';
     const formattedDate = formatDate(dateString);
 
-    expect(formattedDate).toBe('2020-05-02');
+    expect(formattedDate).toBe('May 2, 2020');
   });
 
   it('should return "May 2, 2020" with "F j, Y" formatting options', () => {
