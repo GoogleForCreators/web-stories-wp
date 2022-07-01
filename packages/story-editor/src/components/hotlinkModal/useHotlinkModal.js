@@ -125,41 +125,39 @@ function useHotlinkModal({
           requiredWidth !== suppliedWidth
         ) {
           const message = sprintf(
-            /* translators: 1: supplied width. 2: supplied height. 3: desired width. 4: desired height */
+            /* translators: 1: image dimensions. 2: required dimensions. */
             __(
-              'Image dimensions (%1$dx%2$dpx) do not match required image dimensions (%3$dx%4$dpx).',
+              'Image dimensions (%1$s) do not match required image dimensions (%2$s).',
               'web-stories'
             ),
-            suppliedWidth,
-            suppliedHeight,
-            requiredWidth,
-            requiredHeight
+            `${suppliedWidth}x${suppliedHeight}px`,
+            `${requiredWidth}x${requiredHeight}px`
           );
           setErrorMsg(message);
           return;
         }
         if (requiredHeight && requiredHeight !== suppliedHeight) {
           const message = sprintf(
-            /* translators: 1: supplied height. 2: desired height */
+            /* translators: 1: supplied height. 2: required height. */
             __(
-              'Image height (%1$dpx) does not match required image height (%2$dpx).',
+              'Image height (%1$s) does not match required image height (%2$s).',
               'web-stories'
             ),
-            suppliedHeight,
-            requiredHeight
+            `${suppliedHeight}px`,
+            `${requiredHeight}px`
           );
           setErrorMsg(message);
           return;
         }
         if (requiredWidth && requiredWidth !== suppliedWidth) {
           const message = sprintf(
-            /* translators: 1: supplied width. 2: desired width */
+            /* translators: 1: supplied width. 2: required width. */
             __(
-              'Image width (%1$dpx) does not match required image width (%2$dpx).',
+              'Image width (%1$s) does not match required image width (%2$s).',
               'web-stories'
             ),
-            suppliedWidth,
-            requiredWidth
+            `${suppliedWidth}px`,
+            `${requiredWidth}px`
           );
           setErrorMsg(message);
           return;
