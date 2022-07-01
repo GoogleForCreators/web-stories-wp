@@ -41,7 +41,7 @@ function useHotlinkModal({
   onError,
   allowedFileTypes,
   canUseProxy,
-  requiredImgDimensions = {},
+  requiredImgDimensions,
 }) {
   const [isInserting, setIsInserting] = useState(false);
   const [link, setLink] = useState('');
