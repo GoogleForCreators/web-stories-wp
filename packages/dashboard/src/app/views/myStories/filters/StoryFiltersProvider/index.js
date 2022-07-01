@@ -58,7 +58,7 @@ export const filterContext = createContext({
  * @return {Node} React node
  */
 
-export default function FiltersProvider({ children }) {
+export default function StoryFiltersProvider({ children }) {
   // each filter type will have its own logic for initilizing and querying
   const initializeTaxonomyFilters = useTaxonomyFilters();
   const initializeAuthorFilter = useAuthorFilter();
@@ -138,6 +138,6 @@ export default function FiltersProvider({ children }) {
   );
 }
 
-FiltersProvider.propTypes = {
+StoryFiltersProvider.propTypes = {
   children: PropTypes.node,
 };
