@@ -28,7 +28,6 @@ import {
   shouldDisplayBorder,
 } from '@googleforcreators/masks';
 import { StoryPropTypes } from '@googleforcreators/elements';
-import { Blurhash } from 'react-blurhash';
 
 /**
  * Internal dependencies
@@ -43,19 +42,10 @@ import { getMediaWithScaleCss } from './util';
 
 const Element = styled.div.attrs({ className: 'story-media-display-element' })`
   ${elementFillContent}
-  ${({ showPlaceholder, $placeholderColor }) =>
-    showPlaceholder && `background-color: ${$placeholderColor};`}
+  ${({ showPlaceholder }) => showPlaceholder && `background-color: #C4C4C4;`}
   color: transparent;
   overflow: hidden;
   ${elementWithBorder}
-`;
-
-const BlurhashContainer = styled(Blurhash)`
-  position: absolute !important;
-  top: 0;
-  left: 0;
-  min-height: 100%;
-  min-width: 100%;
 `;
 
 const Overlay = styled.div`
@@ -69,6 +59,7 @@ function MediaDisplay({
   children,
   previewMode,
   showPlaceholder = false,
+  renderResourcePlaceholder,
 }) {
   const {
     id,
@@ -83,10 +74,6 @@ function MediaDisplay({
     overlay,
     mask,
   } = element;
-
-  const { baseColor, blurHash } = resource;
-
-  const placeholderColor = baseColor || '#C4C4C4';
 
   const { dataToEditorX } = useUnits((state) => ({
     dataToEditorX: state.actions.dataToEditorX,
@@ -136,16 +123,10 @@ function MediaDisplay({
       height={height}
       mask={mask}
       showPlaceholder={showPlaceholder}
-      $placeholderColor={placeholderColor}
     >
-      {showPlaceholder && blurHash && (
-        <BlurhashContainer
-          hash={blurHash}
-          width={width}
-          height={height}
-          punch={1}
-        />
-      )}
+      {showPlaceholder &&
+        renderResourcePlaceholder &&
+        renderResourcePlaceholder(resource)}
       {children}
       {overlay && <Overlay backgroundColor={overlay} />}
     </Element>
@@ -158,6 +139,7 @@ MediaDisplay.propTypes = {
   children: PropTypes.node,
   showPlaceholder: PropTypes.bool,
   previewMode: PropTypes.bool,
+  renderResourcePlaceholder: PropTypes.func,
 };
 
 export default MediaDisplay;
