@@ -26,7 +26,7 @@ import { StoryPropTypes } from '@googleforcreators/elements';
  * Internal dependencies
  */
 import MediaDisplay from '../media/display';
-import { getBackgroundStyle, Video, VideoImage } from '../video/util';
+import { getBackgroundStyle, Video, VideoImage } from '../media/util';
 
 function VideoDisplay({ previewMode, box: { width, height }, element }) {
   const { id, poster, resource, isBackground, scale, focalX, focalY } = element;

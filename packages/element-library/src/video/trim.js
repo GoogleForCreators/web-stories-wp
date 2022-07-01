@@ -29,11 +29,11 @@ import { StoryPropTypes, getTransformFlip } from '@googleforcreators/elements';
  */
 import MediaDisplay from '../media/display';
 import { elementWithFlip } from '../shared';
+import { getBackgroundStyle, Video } from '../media/util';
 import PlayPauseButton from './playPauseButton';
-import { getBackgroundStyle, Video as _Video } from './util';
 import Captions from './captions';
 
-const Video = styled(_Video)`
+const StyledVideo = styled(Video)`
   ${elementWithFlip}
 `;
 
@@ -128,8 +128,9 @@ function VideoTrim({
           showPlaceholder
           previewMode={false}
         >
+          {}
           {/* eslint-disable-next-line jsx-a11y/media-has-caption -- False positive. */}
-          <Video
+          <StyledVideo
             poster={poster || resource.poster}
             style={style}
             {...videoProps}
@@ -142,7 +143,7 @@ function VideoTrim({
               <source src={resource.src} type={resource.mimeType} />
             )}
             <Captions tracks={tracksFormatted} />
-          </Video>
+          </StyledVideo>
         </MediaDisplay>
       </Wrapper>
       <PlayPauseButton

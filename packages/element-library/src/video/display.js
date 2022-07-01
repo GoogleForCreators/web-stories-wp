@@ -26,7 +26,7 @@ import { StoryPropTypes } from '@googleforcreators/elements';
  * Internal dependencies
  */
 import MediaDisplay from '../media/display';
-import { getBackgroundStyle, Video, VideoImage } from './util';
+import { getBackgroundStyle, Video, VideoImage } from '../media/util';
 import Captions from './captions';
 
 function VideoDisplay({
