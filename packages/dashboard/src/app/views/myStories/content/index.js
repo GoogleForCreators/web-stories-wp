@@ -38,7 +38,6 @@ import { StoriesPropType, StoryActionsPropType } from '../../../../types';
 import {
   ViewPropTypes,
   PagePropTypes,
-  SortPropTypes,
   ShowStoriesWhileLoadingPropType,
 } from '../../../../utils/useStoryView';
 import { EmptyContentMessage } from '../../shared';
@@ -129,7 +128,6 @@ Content.propTypes = {
     showStoriesWhileLoading: ShowStoriesWhileLoadingPropType,
   }),
   page: PagePropTypes,
-  sort: SortPropTypes,
   stories: StoriesPropType,
   storyActions: StoryActionsPropType,
   view: ViewPropTypes,

@@ -31,6 +31,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
+import { DEFAULT_FILTERS } from '../../../../constants/stories';
 import reducer from './reducer';
 import useTaxonomyFilters from './taxonomy/useTaxonomyFilters';
 import useAuthorFilter from './author/useAuthorFilter';
@@ -61,11 +62,13 @@ export default function FiltersProvider({ children }) {
   // each filter type will have its own logic for initilizing and querying
   const initializeTaxonomyFilters = useTaxonomyFilters();
   const initializeAuthorFilter = useAuthorFilter();
+  const { filters: defaultStoryFilters, sort: defaultStorySort } =
+    DEFAULT_FILTERS;
 
   const [state, dispatch] = useReducer(reducer, {
     filters: [],
-    filtersObject: {},
-    sortObject: {},
+    filtersObject: { ...defaultStoryFilters },
+    sortObject: { ...defaultStorySort },
   });
 
   /**
@@ -106,7 +109,7 @@ export default function FiltersProvider({ children }) {
    *
    * @return {void}
    */
-  const initializeFilters = useCallback(async () => {
+  const initializeStoyFilters = useCallback(async () => {
     const taxonomies = await initializeTaxonomyFilters();
     const author = initializeAuthorFilter();
 
@@ -125,8 +128,8 @@ export default function FiltersProvider({ children }) {
   }, [state, updateFilter, updateSort, registerFilters]);
 
   useEffect(() => {
-    initializeFilters();
-  }, [initializeFilters]);
+    initializeStoyFilters();
+  }, [initializeStoyFilters]);
 
   return (
     <filterContext.Provider value={contextValue}>

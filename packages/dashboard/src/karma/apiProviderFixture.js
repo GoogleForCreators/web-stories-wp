@@ -143,25 +143,17 @@ function getStoriesState() {
   };
 }
 
-function fetchStories(
-  {
-    status = STORY_STATUSES[0].value,
-    searchTerm = '',
-    sortOption = STORY_SORT_OPTIONS.LAST_MODIFIED,
-    sortDirection,
-    filters,
-  },
-  currentState
-) {
+function fetchStories({ sort, filters }, currentState) {
   const storiesState = currentState ? { ...currentState } : getStoriesState();
+  const { author, web_story_category, search = '', status } = filters;
+  const { orderby, order } = sort;
   const statuses = status.split(',');
-  const { author, web_story_category } = filters;
 
   storiesState.storiesOrderById = Object.values(storiesState.stories)
     .filter(
       ({ status: storyStatus, title }) =>
         statuses.includes(storyStatus) &&
-        title.toLowerCase().includes(searchTerm.toLowerCase())
+        title.toLowerCase().includes(search.toLowerCase())
     )
     .filter((story) => typeof author !== 'number' || story.author.id === author)
     .filter(
@@ -171,17 +163,17 @@ function fetchStories(
     )
     .sort((a, b) => {
       let value;
-      switch (sortOption) {
+      switch (orderby) {
         case STORY_SORT_OPTIONS.DATE_CREATED: {
           value = new Date(a.created).getTime() - new Date(b.created).getTime();
           break;
         }
         case STORY_SORT_OPTIONS.LAST_MODIFIED: {
-          value = differenceInSeconds(a[sortOption], b[sortOption]);
+          value = differenceInSeconds(a[orderby], b[orderby]);
           break;
         }
         case STORY_SORT_OPTIONS.NAME: {
-          value = a[sortOption].localeCompare(b[sortOption]);
+          value = a[orderby].localeCompare(b[orderby]);
           break;
         }
         case STORY_SORT_OPTIONS.CREATED_BY: {
@@ -195,8 +187,8 @@ function fetchStories(
       }
 
       const shouldSortDescending =
-        (sortDirection && sortDirection === 'desc') ||
-        (!sortDirection && sortOption === STORY_SORT_OPTIONS.LAST_MODIFIED);
+        (order && order === 'desc') ||
+        (!order && orderby === STORY_SORT_OPTIONS.LAST_MODIFIED);
 
       return shouldSortDescending ? value * -1 : value;
     })

@@ -22,6 +22,7 @@ import {
   STORIES_PER_REQUEST,
   STORY_SORT_OPTIONS,
   STORY_STATUS,
+  DEFAULT_FILTERS,
 } from '@googleforcreators/dashboard';
 import { createSolidFromString } from '@googleforcreators/patterns';
 import { snakeToCamelCaseObjectKeys } from '@web-stories-wp/wp-utils';
@@ -53,15 +54,13 @@ export function fetchStories(config, queryParams) {
   } = queryParams;
 
   // Important: Keep in sync with REST API preloading definition.
-  // TODO: check backend preload
   const _defaultPreload = {
     _embed: STORY_EMBED,
     context: 'edit',
     _web_stories_envelope: true,
     _fields: STORY_FIELDS,
-    status: STORY_STATUS.ALL,
-    orderby: STORY_SORT_OPTIONS.LAST_MODIFIED,
-    order: ORDER_BY_SORT[STORY_SORT_OPTIONS.LAST_MODIFIED],
+    ...DEFAULT_FILTERS.filters,
+    ...DEFAULT_FILTERS.sort,
   };
 
   const query = {

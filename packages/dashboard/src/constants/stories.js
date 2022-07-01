@@ -240,3 +240,13 @@ export const STORY_ANIMATION_STATE = {
   SCRUBBING: 'scrubbing',
   PLAYING: 'playing',
 };
+
+export const DEFAULT_FILTERS = {
+  filters: {
+    status: STORY_STATUS.ALL,
+  },
+  sort: {
+    orderby: STORY_SORT_OPTIONS.LAST_MODIFIED,
+    order: ORDER_BY_SORT[STORY_SORT_OPTIONS.LAST_MODIFIED],
+  },
+};

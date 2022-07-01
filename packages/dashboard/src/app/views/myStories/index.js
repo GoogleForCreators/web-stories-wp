@@ -23,7 +23,6 @@ import { useEffect, useMemo, useRef } from '@googleforcreators/react';
  * Internal dependencies
  */
 import { ScrollToTop, Layout } from '../../../components';
-import { STORY_STATUSES } from '../../../constants';
 import { useStoryView } from '../../../utils';
 import { useConfig } from '../../config';
 import useApi from '../../api/useApi';
@@ -91,7 +90,6 @@ function MyStories() {
 
   const { page, view, showStoriesWhileLoading, initialPageReady } =
     useStoryView({
-      statusFilters: STORY_STATUSES,
       filtersObject,
       sortObject,
       isLoading,
