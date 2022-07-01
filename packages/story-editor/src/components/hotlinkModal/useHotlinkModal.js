@@ -32,6 +32,7 @@ import {
   isValidUrlForHotlinking,
   getErrorMessage,
   CORSMessage,
+  checkImageDimensions,
 } from './utils';
 
 function useHotlinkModal({
@@ -115,56 +116,19 @@ function useHotlinkModal({
           : link;
 
         const dimensions = await getImageDimensions(proxiedUrl);
-        const { height: suppliedHeight, width: suppliedWidth } = dimensions;
-        const { height: requiredHeight, width: requiredWidth } =
-          requiredImgDimensions;
-        if (
-          requiredHeight &&
-          requiredHeight !== suppliedHeight &&
-          requiredWidth &&
-          requiredWidth !== suppliedWidth
-        ) {
-          const message = sprintf(
-            /* translators: 1: image dimensions. 2: required dimensions. */
-            __(
-              'Image dimensions (%1$s) do not match required image dimensions (%2$s).',
-              'web-stories'
-            ),
-            `${suppliedWidth}x${suppliedHeight}px`,
-            `${requiredWidth}x${requiredHeight}px`
-          );
-          setErrorMsg(message);
-          return;
-        }
-        if (requiredHeight && requiredHeight !== suppliedHeight) {
-          const message = sprintf(
-            /* translators: 1: supplied height. 2: required height. */
-            __(
-              'Image height (%1$s) does not match required image height (%2$s).',
-              'web-stories'
-            ),
-            `${suppliedHeight}px`,
-            `${requiredHeight}px`
-          );
-          setErrorMsg(message);
-          return;
-        }
-        if (requiredWidth && requiredWidth !== suppliedWidth) {
-          const message = sprintf(
-            /* translators: 1: supplied width. 2: required width. */
-            __(
-              'Image width (%1$s) does not match required image width (%2$s).',
-              'web-stories'
-            ),
-            `${suppliedWidth}px`,
-            `${requiredWidth}px`
-          );
-          setErrorMsg(message);
+        const errorMessage = checkImageDimensions(
+          dimensions.width,
+          dimensions.height,
+          requiredImgDimensions?.width,
+          requiredImgDimensions?.height
+        );
+        if (errorMessage) {
+          setErrorMsg(errorMessage);
           return;
         }
 
-        hotlinkInfo.width = suppliedWidth;
-        hotlinkInfo.height = suppliedHeight;
+        hotlinkInfo.width = dimensions.width;
+        hotlinkInfo.height = dimensions.height;
       }
 
       await onSelect({ link, hotlinkInfo, needsProxy });
