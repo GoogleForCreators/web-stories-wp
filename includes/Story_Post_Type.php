@@ -224,7 +224,7 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 			self::POSTER_META_KEY,
 			[
 				'type'         => 'object',
-				'description'  => __( 'Poster URL', 'web-stories' ),
+				'description'  => __( 'Poster object', 'web-stories' ),
 				'show_in_rest' => [
 					'schema' => [
 						'type'       => 'object',
