@@ -88,7 +88,7 @@ const Img = styled.img`
 `;
 
 const menuStyleOverride = css`
-  min-width: 100px;
+  min-width: 115px;
   margin-top: 0;
   li {
     display: block;
