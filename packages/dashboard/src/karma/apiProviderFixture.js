@@ -31,7 +31,7 @@ import formattedStoriesArray from '../dataUtils/formattedStoriesArray';
 import formattedTaxonomiesArray from '../dataUtils/formattedTaxonomiesArray';
 import formattedTaxonomyTermsObject from '../dataUtils/formattedTaxonomyTermsObject';
 import formattedTemplatesArray from '../dataUtils/formattedTemplatesArray';
-import { STORY_STATUSES, STORY_SORT_OPTIONS } from '../constants/stories';
+import { STORY_SORT_OPTIONS } from '../constants/stories';
 import { groupTemplatesByTag } from '../testUtils';
 
 /* eslint-disable jasmine/no-unsafe-spy */
