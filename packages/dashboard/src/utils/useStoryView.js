@@ -41,8 +41,8 @@ import { PageSizePropType } from '../types';
 import usePagePreviewSize from './usePagePreviewSize';
 
 export default function useStoryView({
-  filtersObject = { ...DEFAULT_FILTERS.filters },
-  sortObject = { ...DEFAULT_FILTERS.sort },
+  filtersObject = DEFAULT_FILTERS.filters,
+  sortObject = DEFAULT_FILTERS.sort,
   isLoading = false,
   totalPages,
 }) {
@@ -122,17 +122,17 @@ export default function useStoryView({
     }
   }, [totalPages, initialPageReady]);
 
-  // useEffect(() => {
-  //   if (initialPageReady) {
-  //     setFilters(filtersObject);
-  //   }
-  // }, [setFilters, initialPageReady, filtersObject]);
+  useEffect(() => {
+    if (initialPageReady) {
+      setFilters(filtersObject);
+    }
+  }, [setFilters, initialPageReady, filtersObject]);
 
-  // useEffect(() => {
-  //   if (initialPageReady) {
-  //     setSort(sortObject);
-  //   }
-  // }, [setSort, initialPageReady, sortObject]);
+  useEffect(() => {
+    if (initialPageReady) {
+      setSort(sortObject);
+    }
+  }, [setSort, initialPageReady, sortObject]);
 
   return useMemo(
     () => ({
