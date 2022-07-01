@@ -19,7 +19,7 @@
  */
 import { useCallback, useState } from '@googleforcreators/react';
 import { withProtocol } from '@googleforcreators/url';
-import { __, sprintf } from '@googleforcreators/i18n';
+import { __ } from '@googleforcreators/i18n';
 
 /**
  * Internal dependencies
