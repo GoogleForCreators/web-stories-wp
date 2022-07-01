@@ -83,9 +83,11 @@ function useMediaInfo() {
     async (file) => {
       const getSize = () => file.size;
 
+      // TODO: Look into using createFileReader from media package.
       const readChunk = (chunkSize, offset) =>
         new Promise((resolve, reject) => {
           const reader = new FileReader();
+          reader.onerror = reject;
           reader.onload = (event) => {
             if (event.target.error) {
               reject(event.target.error);
