@@ -53,6 +53,8 @@ export const Video = styled.video.attrs({ crossOrigin: 'anonymous' })`
   max-height: initial;
   height: ${({ height }) => `${height}px`};
   background-image: ${({ poster }) => `url("${poster}")`};
+  background-repeat: no-repeat;
+  background-size: cover;
   ${videoWithScale}
 `;
 
