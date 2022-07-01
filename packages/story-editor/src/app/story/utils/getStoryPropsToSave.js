@@ -58,6 +58,7 @@ function getStoryPropsToSave({ story, pages, metadata, flags }) {
             url: featuredMedia.url,
             width: featuredMedia.width,
             height: featuredMedia.height,
+            needsProxy: featuredMedia.needsProxy,
           }
         : undefined,
     },

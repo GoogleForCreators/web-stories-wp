@@ -188,6 +188,7 @@ describe('publishModal/storyPreview', () => {
           height: newPoster.height,
           width: newPoster.width,
           isExternal: newPoster.isExternal,
+          needsProxy: newPoster.needsProxy,
         },
       },
     });

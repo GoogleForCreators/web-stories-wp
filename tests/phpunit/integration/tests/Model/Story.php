@@ -109,9 +109,10 @@ class Story extends TestCase {
 			$post->ID,
 			\Google\Web_Stories\Story_Post_Type::POSTER_META_KEY,
 			[
-				'url'    => 'http://www.example.com/image.png',
-				'height' => 1000,
-				'width'  => 1000,
+				'url'        => 'http://www.example.com/image.png',
+				'height'     => 1000,
+				'width'      => 1000,
+				'needsProxy' => false,
 			]
 		);
 

@@ -705,9 +705,10 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 		$attachment_id     = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg', 0 );
 		$publisher_logo_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg', 0 );
 		$custom_poster     = [
-			'url'    => 'http://www.example.com/image.png',
-			'width'  => 1000,
-			'height' => 1000,
+			'url'        => 'http://www.example.com/image.png',
+			'width'      => 1000,
+			'height'     => 1000,
+			'needsProxy' => false,
 		];
 		set_post_thumbnail( $original_id, $attachment_id );
 		update_post_meta( $original_id, \Google\Web_Stories\Story_Post_Type::PUBLISHER_LOGO_META_KEY, $publisher_logo_id );
