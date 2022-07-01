@@ -31,11 +31,11 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { DEFAULT_FILTERS } from '../../../../constants/stories';
-import reducer from './reducer';
+import { DEFAULT_FILTERS } from '../../../../../constants/stories';
+import reducer from '../reducer';
+import * as types from '../types';
 import useTaxonomyFilters from './taxonomy/useTaxonomyFilters';
 import useAuthorFilter from './author/useAuthorFilter';
-import * as types from './types';
 
 export const filterContext = createContext({
   state: {},

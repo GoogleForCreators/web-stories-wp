@@ -27,14 +27,14 @@ import { __ } from '@googleforcreators/i18n';
  * Internal dependencies
  */
 import { DROPDOWN_TYPES } from '../../../constants';
-import useFilters from '../myStories/filters/useFilters';
+import useStoryFilters from '../myStories/filters/useStoryFilters';
 
 const StyledDropDown = styled(DropDown)`
   width: 210px;
 `;
 
 function SortDropDown({ pageSortOptions, pageSortDefaultOption }) {
-  const { sortObject, updateSort } = useFilters(
+  const { sortObject, updateSort } = useStoryFilters(
     ({ state: { sortObject }, actions: { updateSort } }) => ({
       sortObject,
       updateSort,

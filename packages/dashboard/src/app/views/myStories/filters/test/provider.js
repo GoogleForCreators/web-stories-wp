@@ -21,8 +21,8 @@ import { renderHook, act } from '@testing-library/react-hooks';
 /**
  * Internal dependencies
  */
-import FiltersProvider from '../provider';
-import useFilters from '../useFilters';
+import FiltersProvider from '..';
+import useStoryFilters from '../useStoryFilters';
 import { SORT_KEYS } from '../../../../../constants/stories';
 
 jest.mock('../taxonomy/useTaxonomyFilters', () => {
@@ -51,7 +51,7 @@ describe('provider', () => {
       <FiltersProvider>{children}</FiltersProvider>
     );
 
-    const { result } = renderHook(() => useFilters(), { wrapper });
+    const { result } = renderHook(() => useStoryFilters(), { wrapper });
     const filterKey = 'web_story_category';
 
     // register filter
@@ -98,7 +98,7 @@ describe('provider', () => {
       <FiltersProvider>{children}</FiltersProvider>
     );
 
-    const { result } = renderHook(() => useFilters(), { wrapper });
+    const { result } = renderHook(() => useStoryFilters(), { wrapper });
 
     for (const key of Object.keys(SORT_KEYS)) {
       for (const value of Object.values(SORT_KEYS[key])) {
@@ -115,7 +115,7 @@ describe('provider', () => {
       <FiltersProvider>{children}</FiltersProvider>
     );
 
-    const { result } = renderHook(() => useFilters(), { wrapper });
+    const { result } = renderHook(() => useStoryFilters(), { wrapper });
 
     const unacceptableSortValues = {
       orderby: 'valueNotInSortKeyOrderby',
@@ -143,7 +143,7 @@ describe('provider', () => {
       <FiltersProvider>{children}</FiltersProvider>
     );
 
-    const { result } = renderHook(() => useFilters(), { wrapper });
+    const { result } = renderHook(() => useStoryFilters(), { wrapper });
 
     const acceptableSortObject = {
       orderby: 'title',

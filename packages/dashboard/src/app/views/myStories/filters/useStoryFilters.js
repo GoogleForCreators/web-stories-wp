@@ -21,8 +21,8 @@ import { identity, useContextSelector } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
-import { filterContext } from './provider';
+import { filterContext } from './StoryFiltersProvider';
 
-export default function useFilters(selector = identity) {
+export default function useStoryFilters(selector = identity) {
   return useContextSelector(filterContext, selector);
 }

@@ -26,7 +26,7 @@ import { ScrollToTop, Layout } from '../../../components';
 import { useStoryView } from '../../../utils';
 import { useConfig } from '../../config';
 import useApi from '../../api/useApi';
-import useFilters from './filters/useFilters';
+import useStoryFilters from './filters/useStoryFilters';
 import Content from './content';
 import Header from './header';
 
@@ -70,7 +70,7 @@ function MyStories() {
       totalStoriesByStatus,
     })
   );
-  const { filtersObject, sortObject } = useFilters(
+  const { filtersObject, sortObject } = useStoryFilters(
     ({ state: { filtersObject, sortObject } }) => ({
       filtersObject,
       sortObject,

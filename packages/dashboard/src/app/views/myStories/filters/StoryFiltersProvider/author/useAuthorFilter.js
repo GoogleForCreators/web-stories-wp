@@ -23,7 +23,7 @@ import { __ } from '@googleforcreators/i18n';
 /**
  * Internal dependencies
  */
-import useApi from '../../../../api/useApi';
+import useApi from '../../../../../api/useApi';
 
 let cachedPrimaryOptions = null;
 

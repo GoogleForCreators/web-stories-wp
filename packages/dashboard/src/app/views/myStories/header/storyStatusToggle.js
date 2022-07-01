@@ -26,7 +26,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import useFilters from '../filters/useFilters';
+import useStoryFilters from '../filters/useStoryFilters';
 import { STORY_STATUS, STORY_STATUSES } from '../../../../constants';
 import { TotalStoriesByStatusPropType } from '../../../../types';
 
@@ -46,7 +46,7 @@ function StoryStatusToggle({
   totalStoriesByStatus,
   currentStatus,
 }) {
-  const { updateFilter, registerFilters } = useFilters(
+  const { updateFilter, registerFilters } = useStoryFilters(
     ({ actions: { updateFilter, registerFilters } }) => ({
       updateFilter,
       registerFilters,

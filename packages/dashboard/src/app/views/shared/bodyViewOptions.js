@@ -30,7 +30,7 @@ import {
  * Internal dependencies
  */
 import { StandardViewContentGutter, ViewStyleBar } from '../../../components';
-import useFilters from '../myStories/filters/useFilters';
+import useStoryFilters from '../myStories/filters/useStoryFilters';
 import SortDropDown from './sortDropDown';
 
 const FILTER_MAX_WIDTH = 350;
@@ -73,7 +73,7 @@ export default function BodyViewOptions({
   showSortDropdown,
   filters = [],
 }) {
-  const { updateFilter } = useFilters(({ actions: { updateFilter } }) => ({
+  const { updateFilter } = useStoryFilters(({ actions: { updateFilter } }) => ({
     updateFilter,
   }));
 

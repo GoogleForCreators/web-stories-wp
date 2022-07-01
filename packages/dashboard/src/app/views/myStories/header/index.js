@@ -44,13 +44,13 @@ import { ViewPropTypes } from '../../../../utils/useStoryView';
 import { useDashboardResultsLabel } from '../../../../utils';
 import { BodyViewOptions, PageHeading } from '../../shared';
 import { getSearchOptions } from '../../utils';
-import useFilters from '../filters/useFilters';
+import useStoryFilters from '../filters/useStoryFilters';
 import StoryStatusToggle from './storyStatusToggle';
 
 function Header({ initialPageReady, stories, totalStoriesByStatus, view }) {
   const searchOptions = useMemo(() => getSearchOptions(stories), [stories]);
 
-  const { filters, updateFilter, registerFilters } = useFilters(
+  const { filters, updateFilter, registerFilters } = useStoryFilters(
     ({ state: { filters }, actions: { updateFilter, registerFilters } }) => ({
       filters,
       updateFilter,

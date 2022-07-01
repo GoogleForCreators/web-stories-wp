@@ -47,7 +47,7 @@ import {
   STORY_STATUS,
 } from '../../../../../constants';
 import { useConfig } from '../../../../config';
-import useFilters from '../../filters/useFilters';
+import useStoryFilters from '../../filters/useStoryFilters';
 import { StoryListItem } from '../storyListItem';
 import {
   ArrowIcon,
@@ -73,7 +73,7 @@ export default function StoryListView({
     styleConstants: { topOffset },
   } = useConfig();
 
-  const { filters, sortObject, updateSort } = useFilters(
+  const { filters, sortObject, updateSort } = useStoryFilters(
     ({ state: { filters, sortObject }, actions: { updateSort } }) => ({
       filters,
       sortObject,
