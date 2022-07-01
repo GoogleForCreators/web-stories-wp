@@ -109,39 +109,64 @@ function useHotlinkModal({
         return;
       }
 
-      if (
-        'image' === hotlinkInfo?.type &&
-        requiredImgDimensions?.height &&
-        requiredImgDimensions?.width
-      ) {
+      if ('image' === hotlinkInfo?.type && requiredImgDimensions) {
         const proxiedUrl = needsProxy
           ? getProxiedUrl({ needsProxy }, link)
           : link;
 
         const dimensions = await getImageDimensions(proxiedUrl);
+        const { height: suppliedHeight, width: suppliedWidth } = dimensions;
+        const { height: requiredHeight, width: requiredWidth } =
+          requiredImgDimensions;
         if (
-          (requiredImgDimensions?.height &&
-            requiredImgDimensions?.height !== dimensions.height) ||
-          (requiredImgDimensions?.width &&
-            requiredImgDimensions?.width !== dimensions.width)
+          requiredHeight &&
+          requiredHeight !== suppliedHeight &&
+          requiredWidth &&
+          requiredWidth !== suppliedWidth
         ) {
-          setErrorMsg(
-            sprintf(
-              /* translators: 1: supplied width. 2: supplied height. 3: desired width. 4: desired height */
-              __(
-                'Invalid image height supplied %1$d x %2$d when %3$d x %4$d is required.',
-                'web-stories'
-              ),
-              dimensions.width,
-              dimensions.height,
-              requiredImgDimensions.width,
-              requiredImgDimensions.height
-            )
+          const message = sprintf(
+            /* translators: 1: supplied width. 2: supplied height. 3: desired width. 4: desired height */
+            __(
+              'Image dimensions (%1$dx%2$dpx) do not match required image dimensions (%3$dx%4$dpx).',
+              'web-stories'
+            ),
+            suppliedWidth,
+            suppliedHeight,
+            requiredWidth,
+            requiredHeight
           );
+          setErrorMsg(message);
           return;
         }
-        hotlinkInfo.width = dimensions.width;
-        hotlinkInfo.height = dimensions.height;
+        if (requiredHeight && requiredHeight !== suppliedHeight) {
+          const message = sprintf(
+            /* translators: 1: supplied height. 2: desired height */
+            __(
+              'Image height (%1$dpx) does not match required image height (%2$dpx).',
+              'web-stories'
+            ),
+            suppliedHeight,
+            requiredHeight
+          );
+          setErrorMsg(message);
+          return;
+        }
+        if (requiredWidth && requiredWidth !== suppliedWidth) {
+          const message = sprintf(
+            /* translators: 1: supplied width. 2: desired width */
+            __(
+              'Image width (%1$dpx) does not match required image width (%2$dpx).',
+              'web-stories'
+            ),
+            suppliedWidth,
+            requiredWidth
+          );
+          setErrorMsg(message);
+          return;
+        }
+
+        hotlinkInfo.width = suppliedWidth;
+        hotlinkInfo.height = suppliedHeight;
       }
 
       await onSelect({ link, hotlinkInfo, needsProxy });
