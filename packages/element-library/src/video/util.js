@@ -39,7 +39,7 @@ export const Video = styled.video`
   max-width: initial;
   max-height: initial;
   height: ${({ height }) => `${height}px`};
-  background-image: ${({ poster }) => `${poster}`};
+  background-image: ${({ poster }) => `url("${poster}")`};
   ${videoWithScale}
 `;
 
