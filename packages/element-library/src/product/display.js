@@ -94,7 +94,7 @@ const pulseDotAfter = keyframes`
   }
 `;
 
-// See https://github.com/ampproject/amphtml/blob/160dcd9c93d34bb7da073a1240c287fc0cf14591/extensions/amp-story-shopping/0.1/amp-story-shopping-tag.css#L56-L154
+// See https://github.com/ampproject/amphtml/blob/b2dbb6b805529b7cf699dad3a91f6d7556131543/extensions/amp-story-shopping/0.1/amp-story-shopping-tag.css
 const ShoppingTagDot = styled.div`
   border-radius: 100%;
   position: relative;

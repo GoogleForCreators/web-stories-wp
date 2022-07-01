@@ -109,6 +109,12 @@ Web Stories are powered by [AMP](https://amp.dev/), which adds some restrictions
 
 For the plugin's full changelog, please see [the Releases page on GitHub](https://github.com/googleforcreators/web-stories-wp/releases).
 
+= 1.22.1 =
+
+**Release Date:** June 30, 2022.
+
+* Fixes an issue with inserting external media by URL.
+
 = 1.22.0 =
 
 **Release Date:** June 21, 2022.
@@ -124,18 +130,11 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 
 * Fixes an issue related to roles and capabilities that caused interference with other plugins.
 
-= 1.21.0 =
-
-**Release Date:** May 24, 2022.
-
-* Enhancement: verified compatibility with WordPress 6.0
-* Enhancement: added support for hotlinking background audio and caption files
-* Enhancement: added support for locking layers/elements on the canvas
-* Enhancement: added warning when using animations on the first page of a story
-* Enhancement: improved user feedback when submitting a story for review
-* Bug fixes and performance improvements.
-
 == Upgrade Notice ==
+
+= 1.22.1 =
+
+This release fixes an issue with inserting external media by URL.
 
 = 1.22.0 =
 
@@ -144,7 +143,3 @@ This release brings shopping support, layers grouping/masking/naming, and catego
 = 1.21.1 =
 
 This releases fixes an issue related to roles and capabilities that caused interference with other plugins.
-
-= 1.21.0 =
-
-This release includes WordPress 6.0 compatibility, audio and captions hotlinking, the ability to lock individual layers, as well as various bug fixes and performance improvements.

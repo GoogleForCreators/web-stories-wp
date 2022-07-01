@@ -64,6 +64,9 @@ export function TestFrameElement({
       video: [],
       ...(inputConfigContext && inputConfigContext.allowedMimeTypes),
     },
+    locale: {
+      locale: 'en-US',
+    },
   };
   const storyContext = {
     ...inputStoryContext,
