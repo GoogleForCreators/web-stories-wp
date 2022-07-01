@@ -88,7 +88,7 @@ const Img = styled.img`
 `;
 
 const menuStyleOverride = css`
-  min-width: 115px;
+  white-space: nowrap;
   margin-top: 0;
   li {
     display: block;
