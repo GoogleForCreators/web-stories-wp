@@ -26,7 +26,7 @@ import {
   updateAnimations,
   removeDuplicates,
   exclusion,
-  getTopPositionOutsideGroup,
+  getLastIndexOfGroup,
 } from '../utils';
 import { LAYER_DIRECTIONS } from '../../../../../constants';
 
@@ -302,50 +302,22 @@ describe('exclusion', () => {
   });
 });
 
-describe('getTopPositionOutsideGroup', () => {
-  it('should calcuate the top position for element outside of current group', () => {
-    const state = {
-      current: 'f93d7',
-      selection: ['5c37d'],
-      story: {},
-      pages: [
-        {
-          elements: [
-            { id: '3e822', layerName: 'Bkd' },
-            { groupId: '86b8e', id: 'e89ee', layerName: 'D1' },
-            { groupId: '86b8e', id: '5c37d', layerName: 'C1' },
-            { groupId: '86b8e', id: '53b7e', layerName: 'B1' },
-            { groupId: '86b8e', id: '53d47', layerName: 'A1' },
-            { id: '02c54', layerName: 'B' },
-            { id: '0e26d', layerName: 'A' },
-          ],
-          type: 'page',
-          id: 'f93d70',
-          groups: {
-            '86b8e': {
-              name: 'Group 1',
-              isLocked: false,
-              isCollapsed: false,
-            },
-          },
-        },
-      ],
-    };
+describe('getLastIndexOfGroup', () => {
+  it('should calculate the last position of a group', () => {
+    const elements = [
+      { id: 'e1', isBackground: true },
+      { id: 'e2' },
+      { id: 'e3', groupId: 'g1' },
+      { id: 'e4', groupId: 'g1' },
+      { id: 'e5', groupId: 'g1' },
+      { id: 'e6', groupId: 'g1' },
+      { id: 'e7', groupId: 'g1' }, // <-- 6th index
+      { id: 'e8' },
+      { id: 'e9', groupId: 'g2' },
+      { id: 'e10', groupId: 'g2' }, // <-- 9th index
+    ];
 
-    const elements = state.pages[0].elements;
-    expect(elements[0].layerName).toBe('Bkd');
-    expect(elements[5].layerName).toBe('B');
-
-    const nestedIds = ['e89ee', '5c37d', '53b7e', '53d47'];
-
-    nestedIds.forEach((elementId) => {
-      expect(
-        getTopPositionOutsideGroup({
-          elements: elements,
-          elementId,
-          groupId: '86b8e',
-        })
-      ).toBe(4);
-    });
+    expect(getLastIndexOfGroup({ elements, groupId: 'g1' })).toBe(6);
+    expect(getLastIndexOfGroup({ elements, groupId: 'g2' })).toBe(9);
   });
 });

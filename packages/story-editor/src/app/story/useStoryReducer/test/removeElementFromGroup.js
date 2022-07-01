@@ -19,57 +19,108 @@
 import { setupReducer } from './_utils';
 
 describe('removeElementFromGroup', () => {
-  it('should move element out of group', () => {
+  it('should do nothing if element is not in group', () => {
     const { restore, removeElementFromGroup } = setupReducer();
-    restore({
-      current: 'f93d7',
-      selection: ['53b7e'],
-      story: {},
+    const initialState = restore({
+      current: 'p1',
+      selection: ['e2'],
       pages: [
         {
           elements: [
-            { id: '3e822', layerName: 'Bkd' },
-            { groupId: '86b8e', id: '5c37d', layerName: 'C1' },
-            {
-              groupId: '86b8e',
-              id: '53b7e',
-              layerName: 'Move this out of group',
-            },
-            { groupId: '86b8e', id: '53d47', layerName: 'A1' },
-            { id: '0e26c', layerName: 'B' },
-            { id: '0e26d', layerName: 'A' },
+            { id: 'e1', isBackground: true },
+            { id: 'e2' },
+            { id: 'e3', groupId: 'g1' },
+            { id: 'e4', groupId: 'g1' },
+            { id: 'e5', groupId: 'g2' },
           ],
-          type: 'page',
-          id: 'f93d70',
+          id: 'p1',
           groups: {
-            '86b8e': {
-              name: 'Group 1',
-              isLocked: false,
-              isCollapsed: false,
-            },
+            g1: { name: 'Group 1' },
+            g2: { name: 'Group 2' },
           },
         },
       ],
     });
 
     const result = removeElementFromGroup({
-      elementId: '53b7e',
-      groupId: '86b8e',
+      elementId: 'e2',
+      groupId: 'g1',
     });
 
-    const layers = [];
-    const elements = result.pages[0].elements;
-    for (const [index] of Object.entries(elements).reverse()) {
-      layers.push(elements[index].layerName);
-    }
+    expect(result).toBe(initialState);
+  });
 
-    expect(layers).toStrictEqual([
-      'A',
-      'B',
-      'Move this out of group',
-      'A1',
-      'C1',
-      'Bkd',
+  it('should move element out of group', () => {
+    const { restore, removeElementFromGroup } = setupReducer();
+    restore({
+      current: 'p1',
+      selection: ['e2'],
+      pages: [
+        {
+          elements: [
+            { id: 'e1', isBackground: true },
+            { id: 'e2' },
+            { id: 'e3', groupId: 'g1' },
+            { id: 'e4', groupId: 'g1' },
+            { id: 'e5', groupId: 'g2' },
+          ],
+          id: 'p1',
+          groups: {
+            g1: { name: 'Group 1' },
+            g2: { name: 'Group 2' },
+          },
+        },
+      ],
+    });
+
+    const result = removeElementFromGroup({
+      elementId: 'e3',
+      groupId: 'g1',
+    });
+
+    expect(result.pages[0].elements).toStrictEqual([
+      { id: 'e1', isBackground: true },
+      { id: 'e2' },
+      { id: 'e4', groupId: 'g1' },
+      { id: 'e3' },
+      { id: 'e5', groupId: 'g2' },
+    ]);
+  });
+
+  it('should remove element from group but not reorder if already last element', () => {
+    const { restore, removeElementFromGroup } = setupReducer();
+    restore({
+      current: 'p1',
+      selection: ['e2'],
+      pages: [
+        {
+          elements: [
+            { id: 'e1', isBackground: true },
+            { id: 'e2' },
+            { id: 'e3', groupId: 'g1' },
+            { id: 'e4', groupId: 'g1' },
+            { id: 'e5', groupId: 'g2' },
+          ],
+          id: 'p1',
+          groups: {
+            g1: { name: 'Group 1' },
+            g2: { name: 'Group 2' },
+          },
+        },
+      ],
+    });
+
+    const result = removeElementFromGroup({
+      elementId: 'e4',
+      groupId: 'g1',
+    });
+
+    expect(result.pages[0].elements).toStrictEqual([
+      { id: 'e1', isBackground: true },
+      { id: 'e2' },
+      { id: 'e3', groupId: 'g1' },
+      { id: 'e4' },
+      { id: 'e5', groupId: 'g2' },
     ]);
   });
 });

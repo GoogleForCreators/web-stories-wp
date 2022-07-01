@@ -15,40 +15,45 @@
  */
 
 /**
+ * External dependencies
+ */
+import { produce } from 'immer';
+
+/**
  * Internal dependencies
  */
-import arrangeElement from './arrangeElement';
-import updateElements from './updateElements';
-import { getTopPositionOutsideGroup } from './utils';
+import { arrangeElement } from './arrangeElement';
+import { getLastIndexOfGroup } from './utils';
 
 /**
  * Remove element from group.
  *
- * @param {Object} state Current state
+ * @param {Object} draft Current state
  * @param {Object} payload Action payload
  * @param {number} payload.elementId Selected element id
  * @param {number} payload.groupId Selected element group id
- * @return {Object} New state
  */
-function removeElementFromGroup(state, { elementId, groupId }) {
-  const pageIndex = state.pages.findIndex(({ id }) => id === state.current);
-  const page = state.pages[pageIndex];
-  const elements = page.elements || [];
+export const removeElementFromGroup = (draft, { elementId, groupId }) => {
+  const page = draft.pages.find(({ id }) => id === draft.current);
+  const { elements } = page;
+  const element = elements.find(({ id }) => id === elementId);
+  if (element.groupId !== groupId) {
+    return;
+  }
 
-  const updatedState = updateElements(state, {
-    elementIds: null,
-    properties: (oldElement) => ({
-      ...oldElement,
-      groupId: null,
-    }),
-  });
+  // Find out where to move the element to
+  const position = getLastIndexOfGroup({ elements, groupId });
 
-  const finalState = arrangeElement(updatedState, {
-    elementId,
-    position: getTopPositionOutsideGroup({ elements, elementId, groupId }),
-  });
+  // Only then delete the group id property
+  delete element.groupId;
 
-  return finalState;
-}
+  // If already at last index of group, nothing left to do
+  if (elements[position] === element) {
+    return;
+  }
 
-export default removeElementFromGroup;
+  // Otherwise move
+  arrangeElement(draft, { elementId, position });
+};
+
+export default produce(removeElementFromGroup);

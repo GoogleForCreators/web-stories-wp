@@ -166,34 +166,16 @@ export function exclusion(left = [], right = []) {
 }
 
 /**
- * Calculate top element postion outside of current group.
+ * Calculate the last index of a group.
  *
- * @param {Object} state Current state
- * @param {Object} state.elements page elements
- * @param {number} state.elementId Selected element id
- * @param {number} state.groupId Selected element group id
- * @return {number} New postion
+ * @param {Object} props Props
+ * @param {Array} props.elements Elements array
+ * @param {string} props.groupId Group id
+ * @return {number} Last index of group
  */
-export function getTopPositionOutsideGroup({
-  elements = [],
-  elementId,
-  groupId,
-}) {
-  let count = 0;
-  let currentPosition = 0;
-  for (const [index] of Object.entries(elements).reverse()) {
-    if (elements[index].id === elementId) {
-      currentPosition = Number(index);
-    }
-
-    if (
-      elements[index].groupId === groupId &&
-      elements[index].id != elementId &&
-      currentPosition === 0
-    ) {
-      count++;
-    }
-  }
-
-  return currentPosition + count;
+export function getLastIndexOfGroup({ elements, groupId }) {
+  const isMember = (e) => e.groupId === groupId;
+  const firstGroupElemenIndex = elements.findIndex(isMember);
+  const groupSize = elements.filter(isMember).length;
+  return firstGroupElemenIndex + groupSize - 1;
 }
