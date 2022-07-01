@@ -313,18 +313,6 @@ class Experiments extends Service_Base implements HasRequirements {
 			],
 			/**
 			 * Author: @spacedmonkey
-			 * Issue: #11081
-			 * Creation date: 2022-03-30
-			 */
-			[
-				'name'        => 'captionHotlinking',
-				'label'       => __( 'Caption hotlinking', 'web-stories' ),
-				'description' => __( 'Enable hotlinking of captions', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-			/**
-			 * Author: @spacedmonkey
 			 * Issue: #11536
 			 * Creation date: 2022-06-22
 			 */
@@ -369,6 +357,17 @@ class Experiments extends Service_Base implements HasRequirements {
 				'description' => __( 'Enable layer naming', 'web-stories' ),
 				'group'       => 'editor',
 				'default'     => true,
+			],
+			/**
+			 * Author: @barklund
+			 * Issue: #9643
+			 * Creation date: 2022-06-21
+			 */
+			[
+				'name'        => 'extraPages',
+				'label'       => __( 'Context Pages', 'web-stories' ),
+				'description' => __( 'Show extra pages for context before and after the current canvas page. Note: This might come with a performance penalty.', 'web-stories' ),
+				'group'       => 'editor',
 			],
 		];
 	}

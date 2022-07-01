@@ -22,7 +22,6 @@ import {
   uploadFile,
   deleteMedia,
   takeSnapshot,
-  withExperimentalFeatures,
   withPlugin,
   insertStoryTitle,
   publishStory,
@@ -201,8 +200,6 @@ describe('Background Audio', () => {
       });
 
       describe('Captions', () => {
-        withExperimentalFeatures(['captionHotlinking']);
-
         it('should allow adding background audio with captions', async () => {
           await createNewStory();
 

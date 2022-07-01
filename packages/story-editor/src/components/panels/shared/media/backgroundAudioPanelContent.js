@@ -43,7 +43,6 @@ import {
 } from '@googleforcreators/media';
 import { v4 as uuidv4 } from 'uuid';
 import { BackgroundAudioPropType } from '@googleforcreators/elements';
-import { useFeature } from 'flagged';
 import { trackError, trackEvent } from '@googleforcreators/tracking';
 
 /**
@@ -95,7 +94,6 @@ function BackgroundAudioPanelContent({
     MediaUpload,
   } = useConfig();
   const [isOpen, setIsOpen] = useState(false);
-  const enableCaptionHotlinking = useFeature('captionHotlinking');
   const { getProxiedUrl } = useCORSProxy();
 
   const allowedAudioFileTypes = useMemo(
@@ -108,9 +106,6 @@ function BackgroundAudioPanelContent({
   const { resource = {}, tracks = [], loop = true } = backgroundAudio || {};
 
   const playerRef = useRef();
-
-  const canManageCaptions =
-    tracks.length > 0 || hasUploadMediaAction || enableCaptionHotlinking;
 
   const audioSrcProxied = getProxiedUrl(resource, resource?.src);
 
@@ -322,7 +317,7 @@ function BackgroundAudioPanelContent({
               loop={loop}
             />
           </FileRow>
-          {showCaptions && canManageCaptions && (
+          {showCaptions && (
             <>
               <SectionHeading>
                 {__('Caption and Subtitles', 'web-stories')}
