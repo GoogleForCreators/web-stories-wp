@@ -26,18 +26,18 @@ export const mediaWithScale = css`
   top: ${({ offsetY }) => `${-offsetY}px`};
 `;
 
-export function getMediaWithScaleCss({ width, height, offsetX, offsetY }) {
-  // @todo: This is a complete duplication of `mediaWithScale` above. But
-  // no other apparent way to execute interpolate `mediaWithScale` dynamically.
-  return `width:${width}px; height:${height}px; left:${-offsetX}px; top:${-offsetY}px;`;
-}
-
 const videoWithScale = css`
   width: ${({ width }) => `${width}px`};
   left: ${({ offsetX }) => `${-offsetX}px`};
   top: ${({ offsetY }) => `${-offsetY}px`};
   max-width: ${({ isBackground }) => (isBackground ? 'initial' : null)};
 `;
+
+export function getMediaWithScaleCss({ width, height, offsetX, offsetY }) {
+  // @todo: This is a complete duplication of `mediaWithScale` above. But
+  // no other apparent way to execute interpolate `mediaWithScale` dynamically.
+  return `width:${width}px; height:${height}px; left:${-offsetX}px; top:${-offsetY}px;`;
+}
 
 export const getBackgroundStyle = () => {
   return {
@@ -47,7 +47,7 @@ export const getBackgroundStyle = () => {
   };
 };
 
-export const Video = styled.video`
+export const Video = styled.video.attrs({ crossOrigin: 'anonymous' })`
   position: absolute;
   max-width: initial;
   max-height: initial;
@@ -56,7 +56,7 @@ export const Video = styled.video`
   ${videoWithScale}
 `;
 
-export const VideoImage = styled.img`
+export const VideoImage = styled.img.attrs({ crossOrigin: 'anonymous' })`
   position: absolute;
   max-height: initial;
   object-fit: contain;

@@ -66,8 +66,6 @@ function VideoDisplay({
     focalY
   );
 
-  videoProps.crossOrigin = 'anonymous';
-
   const muted = Boolean(resource?.isMuted);
 
   const url = getProxiedUrl(resource, resource?.src);

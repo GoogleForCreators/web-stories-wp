@@ -110,7 +110,6 @@ function VideoTrim({
   );
 
   videoProps.transformFlip = getTransformFlip(flip);
-  videoProps.crossOrigin = 'anonymous';
   const tracksFormatted = tracks.map((track) => {
     const src = getProxiedUrl(track, track?.track);
     return {
