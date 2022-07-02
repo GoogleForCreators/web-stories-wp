@@ -126,7 +126,8 @@ html[dir='rtl'] .glider-prev.disabled:hover,
   display: none;
 }
 
-.web-stories-list.is-carousel.is-view-type-carousel .web-stories-list__carousel:not(.glider) {
+.web-stories-list.is-carousel.is-view-type-carousel
+  .web-stories-list__carousel:not(.glider) {
   display: flex;
   overflow-y: scroll;
 }
