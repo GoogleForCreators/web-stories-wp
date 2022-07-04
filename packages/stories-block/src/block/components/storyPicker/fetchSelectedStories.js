@@ -28,6 +28,7 @@ import { useEffect } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
 import { useDispatch } from '@wordpress/data';
+import { store as noticesStore } from '@wordpress/notices';
 
 /**
  * Internal dependencies
@@ -47,7 +48,7 @@ function FetchSelectedStories({
   setSelectedStories,
   setIsFetching,
 }) {
-  const { createErrorNotice } = useDispatch('core/notices');
+  const { createErrorNotice } = useDispatch(noticesStore);
 
   const fetchStories = async () => {
     try {
