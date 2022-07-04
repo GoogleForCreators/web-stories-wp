@@ -80,7 +80,7 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
     capabilities: { hasUploadMediaAction },
   } = useConfig();
 
-  const menuOptions = [
+  const options = [
     enablePosterHotlinking && hasUploadMediaAction && 'upload',
     !enablePosterHotlinking && hasUploadMediaAction && 'edit',
     enablePosterHotlinking && 'hotlink',
@@ -183,9 +183,9 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
           alt={__('Preview poster image', 'web-stories')}
           type={allowedImageMimeTypes}
           ariaLabel={__('Video poster', 'web-stories')}
-          menuOptions={menuOptions}
+          menuOptions={options}
           imgProps={cropParams}
-          canUpload={hasUploadMediaAction || enablePosterHotlinking}
+          canUpload={options.length !== 0}
         />
         <InputsWrapper>
           <StyledText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
