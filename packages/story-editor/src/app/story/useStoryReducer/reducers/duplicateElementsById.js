@@ -13,10 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
 import { duplicateElement, ELEMENT_TYPES } from '@googleforcreators/elements';
+import { produce } from 'immer';
 
 /**
  * Duplicate all elements specified by `elementIds` on the current page.
@@ -24,32 +26,26 @@ import { duplicateElement, ELEMENT_TYPES } from '@googleforcreators/elements';
  *
  * If given `elementIds` are not a list, do nothing.
  *
- * @param {Object} state Current state
+ * @param {Object} draft Current state
  * @param {Object} payload Action payload
  * @param {Array.<string>} payload.elementIds Array of ids of elements to duplicate.
- * @return {Object} New state
  */
-function duplicateElementsById(state, { elementIds }) {
+export const duplicateElementsById = (draft, { elementIds }) => {
   if (!Array.isArray(elementIds)) {
-    return state;
+    return;
   }
 
-  const pageIndex = state.pages.findIndex(({ id }) => id === state.current);
-  const oldPage = state.pages[pageIndex];
-
-  const newPage = { ...oldPage };
-  const newSelection = [];
+  const page = draft.pages.find(({ id }) => id === draft.current);
+  let hasDeletedSomething = false;
 
   elementIds.forEach((elementId) => {
-    const elementIndex = newPage.elements.findIndex(
-      ({ id }) => id === elementId
-    );
+    const elementIndex = page.elements.findIndex(({ id }) => id === elementId);
 
     if (elementIndex < 0) {
       return;
     }
 
-    const elementToDuplicate = newPage.elements[elementIndex];
+    const elementToDuplicate = page.elements[elementIndex];
 
     if (elementToDuplicate.isBackground) {
       return;
@@ -61,39 +57,22 @@ function duplicateElementsById(state, { elementIds }) {
 
     const { element, elementAnimations } = duplicateElement({
       element: elementToDuplicate,
-      animations: oldPage.animations,
-      existingElements: oldPage.elements,
+      animations: page.animations,
+      existingElements: page.elements,
     });
 
-    newSelection.push(element.id);
+    if (!hasDeletedSomething) {
+      hasDeletedSomething = true;
+      draft.selection = [];
+    }
 
-    newPage.animations = [...(newPage.animations || []), ...elementAnimations];
-    newPage.elements = [
-      ...newPage.elements.slice(0, elementIndex),
-      elementToDuplicate,
-      element,
-      ...newPage.elements.slice(elementIndex + 1),
-    ];
+    draft.selection.push(element.id);
 
-    return;
+    if (page.animations) {
+      page.animations = page.animations.concat(elementAnimations);
+    }
+    page.elements.splice(elementIndex + 1, 0, element);
   });
+};
 
-  // Do nothing if no new elements
-  if (!newSelection.length) {
-    return state;
-  }
-
-  const newPages = [
-    ...state.pages.slice(0, pageIndex),
-    newPage,
-    ...state.pages.slice(pageIndex + 1),
-  ];
-
-  return {
-    ...state,
-    pages: newPages,
-    selection: newSelection,
-  };
-}
-
-export default duplicateElementsById;
+export default produce(duplicateElementsById);

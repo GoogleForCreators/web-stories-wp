@@ -13,6 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * External dependencies
+ */
+import { produce } from 'immer';
+
 /**
  * Internal dependencies
  */
@@ -41,19 +47,16 @@ export const ATTRIBUTES_TO_COPY = [
  * Copies the styles and animations of the selected element
  * on the current page.
  *
- * @param {Object} state Current state
- * @return {Object} New state
+ * @param {Object} draft Current state
  */
-function copySelectedElement(state) {
-  // we can only copy one element
-  if (state.selection?.length !== 1) {
-    return state;
+export const copySelectedElement = (draft) => {
+  // we can only copy one element and it has to exist
+  if (draft.selection?.length !== 1 || !draft.selection[0]) {
+    return;
   }
 
-  const elementId = state.selection[0];
-  const page = state.pages.find(({ id }) => id === state.current);
-  const elementIndex = page.elements.findIndex(({ id }) => id === elementId);
-  const element = page.elements[elementIndex];
+  const page = draft.pages.find(({ id }) => id === draft.current);
+  const element = page.elements.find(({ id }) => id === draft.selection[0]);
 
   // find related animations
   const elementAnimations = (page.animations || []).filter(({ targets }) =>
@@ -63,14 +66,11 @@ function copySelectedElement(state) {
   // omit properties that must not be copied
   const copiedStyles = objectPick(element, ATTRIBUTES_TO_COPY);
 
-  return {
-    ...state,
-    copiedElementState: {
-      animations: elementAnimations,
-      styles: copiedStyles,
-      type: element.type,
-    },
+  draft.copiedElementState = {
+    animations: elementAnimations,
+    styles: copiedStyles,
+    type: element.type,
   };
-}
+};
 
-export default copySelectedElement;
+export default produce(copySelectedElement);

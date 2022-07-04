@@ -15,40 +15,31 @@
  */
 
 /**
+ * External dependencies
+ */
+import { produce } from 'immer';
+
+/**
  * Update group by id.
  *
- * @param {Object} state Current state
+ * @param {Object} draft Current state
  * @param {Object} payload Action payload
- * @param {number} payload.groupId Group id
+ * @param {string} payload.groupId Group id
  * @param {number} payload.properties Object with properties to set for given group.
- * @return {Object} New state
  */
-function updateGroup(state, { groupId, properties }) {
-  const pageIndex = state.pages.findIndex(({ id }) => id === state.current);
+export const updateGroup = (draft, { groupId, properties }) => {
+  if (!groupId) {
+    return;
+  }
 
-  const updatedGroups = {
-    ...state.pages[pageIndex].groups,
-    [groupId]: {
-      ...state.pages[pageIndex].groups[groupId],
-      ...properties,
-    },
-  };
+  const { groups } = draft.pages.find(({ id }) => id === draft.current);
 
-  const newPage = {
-    ...state.pages[pageIndex],
-    groups: updatedGroups,
-  };
+  // Should only update existing groups
+  if (!groups?.[groupId]) {
+    return;
+  }
 
-  const newPages = [
-    ...state.pages.slice(0, pageIndex),
-    newPage,
-    ...state.pages.slice(pageIndex + 1),
-  ];
+  Object.assign(groups[groupId], properties);
+};
 
-  return {
-    ...state,
-    pages: newPages,
-  };
-}
-
-export default updateGroup;
+export default produce(updateGroup);

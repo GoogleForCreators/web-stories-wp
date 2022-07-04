@@ -124,6 +124,7 @@ function PublishTime() {
           selectButtonStylesOverride={focusStyle}
           onPointerEnter={() => loadCalendar()}
           onFocus={() => loadCalendar()}
+          isOpen={showDatePicker}
         />
       </Row>
       <Popup

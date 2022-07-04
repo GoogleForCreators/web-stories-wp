@@ -24,7 +24,7 @@ import {
   BUTTON_SIZES,
   BUTTON_TYPES,
   BUTTON_VARIANTS,
-  Icons,
+  Disclosure,
   themeHelpers,
 } from '@googleforcreators/design-system';
 import { useState } from '@googleforcreators/react';
@@ -57,10 +57,13 @@ const StyledButton = styled(Button).attrs({
   type: BUTTON_TYPES.TERTIARY,
 })`
   grid-column: span 4;
-  justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   height: 32px;
   width: 100%;
   margin: 4px 0;
+  padding: 0 64px;
 
   ${({ theme }) =>
     themeHelpers.focusableOutlineCSS(
@@ -69,14 +72,8 @@ const StyledButton = styled(Button).attrs({
     )};
 `;
 
-const IconContainer = styled.div`
-  height: 18px;
-  width: 20px;
-
-  svg {
-    transform: ${({ $isExpanded }) => $isExpanded && 'rotate(-180deg)'};
-    transition: transform ease-in-out 300ms;
-  }
+const disclosureStyle = css`
+  margin-right: 0;
 `;
 
 const ToggleButton = ({ children, isExpanded, ...props }) => (
@@ -84,9 +81,7 @@ const ToggleButton = ({ children, isExpanded, ...props }) => (
     {children || isExpanded
       ? __('Collapse', 'web-stories')
       : __('Expand', 'web-stories')}
-    <IconContainer $isExpanded={isExpanded}>
-      <Icons.ChevronDown />
-    </IconContainer>
+    <Disclosure css={disclosureStyle} duration="100ms" isOpen={isExpanded} />
   </StyledButton>
 );
 ToggleButton.propTypes = {
