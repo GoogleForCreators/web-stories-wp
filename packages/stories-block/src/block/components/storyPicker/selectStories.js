@@ -38,6 +38,7 @@ import {
 } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
 import { useDebounce } from '@wordpress/compose';
+import { store as coreStore } from '@wordpress/core-data';
 
 /**
  * Internal dependencies
@@ -139,7 +140,7 @@ function SelectStories({
         search: authorKeyword,
       };
 
-      const { getAuthors } = select('core');
+      const { getAuthors } = select(coreStore);
 
       return {
         // Not using `getUsers()` because it requires `list_users` capability.
