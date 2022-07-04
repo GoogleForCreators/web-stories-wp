@@ -64,7 +64,7 @@ describe('Background Audio', () => {
         visible: true,
       });
 
-      const fileName = await uploadFile('audio.mp3');
+      const fileName = await uploadFile('audio.mp3', false);
       uploadedFiles.push(fileName);
 
       await expect(page).toClick('button', { text: 'Select audio file' });
@@ -101,7 +101,7 @@ describe('Background Audio', () => {
         visible: true,
       });
 
-      const fileName = await uploadFile('audio.mp3');
+      const fileName = await uploadFile('audio.mp3', false);
       uploadedFiles.push(fileName);
 
       await expect(page).toClick('button', { text: 'Select audio file' });
@@ -134,7 +134,7 @@ describe('Background Audio', () => {
         visible: true,
       });
 
-      const fileName = await uploadFile('audio.mp3');
+      const fileName = await uploadFile('audio.mp3', false);
       uploadedFiles.push(fileName);
 
       await expect(page).toClick('button', { text: 'Select audio file' });
@@ -225,7 +225,7 @@ describe('Background Audio', () => {
             visible: true,
           });
 
-          const fileName = await uploadFile('audio.mp3');
+          const fileName = await uploadFile('audio.mp3', false);
           uploadedFiles.push(fileName);
 
           await expect(page).toClick('button', { text: 'Select audio file' });
@@ -283,7 +283,7 @@ describe('Background Audio', () => {
           visible: true,
         });
 
-        const fileName = await uploadFile('audio.mp3');
+        const fileName = await uploadFile('audio.mp3', false);
         uploadedFiles.push(fileName);
 
         await expect(page).toClick('button', { text: 'Select audio file' });
