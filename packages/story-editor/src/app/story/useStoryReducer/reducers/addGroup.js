@@ -34,10 +34,11 @@ export const addGroup = (draft, { groupId, name, isLocked = false }) => {
   }
 
   const page = draft.pages.find(({ id }) => id === draft.current);
-  page.groups = {
-    ...page.groups,
-    [groupId]: { name, isLocked },
-  };
+
+  if (!page.groups) {
+    page.groups = {};
+  }
+  page.groups[groupId] = { name, isLocked };
 };
 
 export default produce(addGroup);
