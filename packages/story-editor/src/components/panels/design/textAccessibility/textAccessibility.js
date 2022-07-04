@@ -26,6 +26,7 @@ import {
 } from '@googleforcreators/design-system';
 import { getTextElementTagNames } from '@googleforcreators/output';
 import { useFeature } from 'flagged';
+import { useState, useEffect } from '@googleforcreators/react';
 
 /**
  * Internal dependencies
@@ -34,7 +35,7 @@ import { Row } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { useHighlights, states, styles } from '../../../../app/highlights';
 import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
-// import getTextElementTagNames from '../../../../../../output/src/utils/getTextElementTagNames';
+import { combineElementsWithTags } from './utils';
 
 // packages/output/src/utils/getTextElementTagNames
 
@@ -64,6 +65,15 @@ const optionsMap = [
 
 function TextAccessibilityPanel({ selectedElements }) {
   const showSemanticHeadings = useFeature('showSemanticHeadings');
+  const [selectedTextElements, setSelectedTextElements] = useState([]);
+  const [currentTags, setCurrentTags] = useState([]);
+  useEffect(() => {
+    const textElements = selectedElements.filter(({ type }) => 'text' === type);
+    const textTags = getTextElementTagNames(textElements);
+    const newElements = combineElementsWithTags(textElements, textTags);
+    setSelectedTextElements(newElements);
+    setCurrentTags(Array.from(textTags.values()));
+  }, [selectedElements, setSelectedTextElements]);
   const { highlight, resetHighlight, cancelHighlight } = useHighlights(
     (state) => ({
       highlight: state[states.ASSISTIVE_TEXT],
@@ -74,15 +84,17 @@ function TextAccessibilityPanel({ selectedElements }) {
   if (!showSemanticHeadings) {
     return null;
   }
+  console.log('selectedTextElements', selectedTextElements);
   // Map all types of tag names in the selected elements
   // and then convert to an Array for usage
-  const tagNames = Array.from(
-    getTextElementTagNames(
-      selectedElements.filter(({ type }) => 'text' === type)
-    ).values()
-  );
-  const currentValue = tagNames.length > 1 ? '((MULTIPLE))' : tagNames;
-  const onChange = () => {};
+  const handleChange = (ev, value) => {
+    // Update the selected text elements with the
+    // value chosen in the text accessibility dropdown
+    const newTags = getTextElementTagNames(selectedTextElements, value);
+    setCurrentTags(Array.from(newTags.values()));
+  };
+  console.log('currentTags', currentTags);
+  const currentValue = currentTags.length > 1 ? '((MULTIPLE))' : currentTags;
   return (
     <SimplePanel
       css={highlight && styles.FLASH}
@@ -109,7 +121,7 @@ function TextAccessibilityPanel({ selectedElements }) {
               ? MULTIPLE_DISPLAY_VALUE
               : currentValue
           }
-          onChange={onChange}
+          onMenuItemClick={handleChange}
           dropDownLabel={__('Heading Level', 'web-stories')}
         />
       </Row>
