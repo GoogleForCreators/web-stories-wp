@@ -46,7 +46,7 @@ function translateToExclusiveList(options) {
         __('%1$s, or %2$s', 'web-stories'),
         options.slice(0, options.length - 1).join(
           /* translators: delimiter used in a list */
-          __(', ', 'web-stories')  // eslint-disable-line @wordpress/i18n-no-flanking-whitespace -- Expected behaviour.
+          __(', ', 'web-stories') // eslint-disable-line @wordpress/i18n-no-flanking-whitespace -- Expected behaviour.
         ),
         options[options.length - 1]
       );
