@@ -595,6 +595,7 @@
         "packages/tinymce-button/**/*.js"
       ],
       "rules":{
+        "@wordpress/data-no-store-string-literals": "error",
         "no-restricted-imports": [
           "error",
           {
