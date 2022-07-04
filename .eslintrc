@@ -206,8 +206,8 @@
     "jsdoc/require-jsdoc": ["off", {
       "publicOnly": true
     }],
-    "jsdoc/require-returns": "warn",
-    "jsdoc/require-param-description": "warn",
+    "jsdoc/require-returns": "error",
+    "jsdoc/require-param-description": "error",
     "jsdoc/valid-types": "error",
     "eslint-comments/no-unused-disable": "error",
     "eslint-comments/require-description": "error",
@@ -388,6 +388,15 @@
       "rules": {
         "no-var": "off",
         "prefer-const": "off"
+      }
+    },
+    {
+      "files": [
+        "packages/jest-amp/src/**/*.js",
+        "packages/jest-puppeteer-amp/src/**/*.js"
+      ],
+      "env": {
+        "node": true
       }
     },
     {

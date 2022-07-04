@@ -105,12 +105,7 @@ class Discovery extends Service_Base implements HasRequirements {
 		add_action( 'web_stories_story_head', 'wp_shortlink_wp_head', 10, 0 );
 		add_action( 'web_stories_story_head', 'wp_site_icon', 99 );
 		add_action( 'web_stories_story_head', 'wp_oembed_add_discovery_links' );
-		// Add support for WP 5.7. See https://core.trac.wordpress.org/ticket/51511.
-		if ( function_exists( '\wp_robots' ) ) {
-			add_action( 'web_stories_story_head', 'wp_robots', 1 );
-		} else {
-			add_action( 'web_stories_story_head', 'noindex', 1 );
-		}
+		add_action( 'web_stories_story_head', 'wp_robots', 1 );
 	}
 
 	/**

@@ -29,7 +29,7 @@
     "@web-stories-wp/e2e-test-utils": "*",
     "@web-stories-wp/jest-puppeteer-amp": "*",
     "@web-stories-wp/jest-resolver": "*",
-    "@wordpress/jest-console": "^5.0.2",
+    "@wordpress/jest-console": "^5.3.0",
     "@wordpress/jest-puppeteer-axe": "^4.0.2",
     "babel-jest": "^28.1.0",
     "expect-puppeteer": "^6.0.2",

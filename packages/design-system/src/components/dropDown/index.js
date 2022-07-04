@@ -79,6 +79,7 @@ export const DropDown = forwardRef(
       popupZIndex,
       isInline = false,
       selectedValue = '',
+      direction = 'down',
       className,
       ...rest
     },
@@ -173,6 +174,7 @@ export const DropDown = forwardRef(
           id={selectButtonId}
           isOpen={isOpen.value}
           onSelectClick={handleSelectClick}
+          direction={direction}
           ref={(node) => {
             // `ref` can either be a callback ref or a normal ref.
             if (typeof ref == 'function') {

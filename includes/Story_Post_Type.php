@@ -224,21 +224,25 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 			self::POSTER_META_KEY,
 			[
 				'type'         => 'object',
-				'description'  => __( 'Poster URL', 'web-stories' ),
+				'description'  => __( 'Poster object', 'web-stories' ),
 				'show_in_rest' => [
 					'schema' => [
 						'type'       => 'object',
 						'properties' => [
-							'height' => [
+							'needsProxy' => [
+								'description' => __( 'If poster needs to be proxied', 'web-stories' ),
+								'type'        => 'boolean',
+							],
+							'height'     => [
 								'type'        => 'integer',
 								'description' => __( 'Poster height', 'web-stories' ),
 							],
-							'url'    => [
+							'url'        => [
 								'description' => __( 'Poster url.', 'web-stories' ),
 								'type'        => 'string',
 								'format'      => 'uri',
 							],
-							'width'  => [
+							'width'      => [
 								'description' => __( 'Poster width.', 'web-stories' ),
 								'type'        => 'integer',
 							],

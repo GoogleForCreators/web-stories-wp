@@ -48,6 +48,7 @@ StoryPropTypes.story = PropTypes.shape({
     width: PropTypes.number.isRequired,
     height: PropTypes.number.isRequired,
     isExternal: PropTypes.bool,
+    needsProxy: PropTypes.bool,
   }),
   password: PropTypes.string.isRequired,
   currentStoryStyles: PropTypes.object,

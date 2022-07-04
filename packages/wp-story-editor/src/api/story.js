@@ -77,6 +77,7 @@ const getStorySaveData = (
             url: featuredMedia.url,
             width: featuredMedia.width,
             height: featuredMedia.height,
+            needsProxy: featuredMedia.needsProxy,
           }
         : undefined,
     },
@@ -128,6 +129,7 @@ export function saveStoryById(config, story) {
         height: poster?.height || featuredmedia?.media_details?.height || 0,
         width: poster?.width || featuredmedia?.media_details?.width || 0,
         url: poster?.url || featuredmedia?.source_url || '',
+        needsProxy: poster?.needsProxy || false,
         isExternal: Boolean(poster),
       },
     };

@@ -18,11 +18,16 @@
  * External dependencies
  */
 import { ELEMENT_TYPES } from '@googleforcreators/elements';
+import { produce } from 'immer';
+
 /**
  * Internal dependencies
  */
 import { MAX_PRODUCTS_PER_PAGE } from '../../../../constants';
 import { exclusion } from './utils';
+
+const isProduct = ({ type }) => type === ELEMENT_TYPES.PRODUCT;
+const isNotProduct = ({ type }) => type !== ELEMENT_TYPES.PRODUCT;
 
 /**
  * Add elements to current page.
@@ -37,81 +42,58 @@ import { exclusion } from './utils';
  *
  * Selection is set to be exactly the new elements.
  *
- * @param {Object} state Current state
+ * @param {Object} draft Current state
  * @param {Object} payload Action payload
  * @param {Array.<Object>} payload.elements Elements to insert on the given page.
- * @return {Object} New state
  */
-function addElements(state, { elements }) {
+export const addElements = (draft, { elements }) => {
   if (!Array.isArray(elements)) {
-    return state;
+    return;
   }
 
-  const pageIndex = state.pages.findIndex(({ id }) => id === state.current);
-  const oldPage = state.pages[pageIndex];
-  const newElements = exclusion(oldPage.elements, elements);
+  const page = draft.pages.find(({ id }) => id === draft.current);
+  const newElements = exclusion(page.elements, elements);
 
   if (newElements.length === 0) {
-    return state;
+    return;
   }
 
-  const currentPageProductIds = oldPage?.elements
-    ?.filter(({ type }) => type === ELEMENT_TYPES.PRODUCT)
-    .map(({ product }) => product?.productId);
+  // If an element is added, the id is added to this array
+  const addedIds = [];
 
-  const newElementDuplicateID = newElements
-    .filter(
-      ({ type, product }) =>
-        type === ELEMENT_TYPES.PRODUCT &&
-        currentPageProductIds.includes(product?.productId)
-    )
-    .map(({ id }) => id);
-
-  const newElementNoDuplicateProducts = newElements.filter(
-    ({ id }) => newElementDuplicateID && !newElementDuplicateID.includes(id)
-  );
-
-  const newElementProducts = newElementNoDuplicateProducts.filter(
-    ({ type }) => type === ELEMENT_TYPES.PRODUCT
-  );
-
-  const newElementProductsFiltered =
-    currentPageProductIds.length + newElementProducts.length <=
-    MAX_PRODUCTS_PER_PAGE
-      ? newElementProducts
-      : [];
-
-  const newElementNoProducts = newElementNoDuplicateProducts.filter(
-    ({ type }) => type !== ELEMENT_TYPES.PRODUCT
-  );
-
-  const newPageElements = [
-    ...newElementNoProducts,
-    ...newElementProductsFiltered,
-  ];
-
-  if (newPageElements.length === 0) {
-    return state;
+  // Always add non-products if any
+  const nonProducts = newElements.filter(isNotProduct);
+  if (nonProducts.length) {
+    page.elements = page.elements.concat(nonProducts);
+    addedIds.push(...nonProducts.map(({ id }) => id));
   }
 
-  const newPage = {
-    ...oldPage,
-    elements: [...oldPage.elements, ...newPageElements],
-  };
+  // For products, first filter out products that already exist on the page
+  const newProducts = newElements.filter(isProduct);
+  if (newProducts.length) {
+    const currentProducts = page.elements
+      .filter(isProduct)
+      .map(({ product }) => product?.productId);
 
-  const newPages = [
-    ...state.pages.slice(0, pageIndex),
-    newPage,
-    ...state.pages.slice(pageIndex + 1),
-  ];
+    const uniqueProducts = newProducts.filter(
+      ({ product }) => !currentProducts.includes(product?.productId)
+    );
 
-  const newSelection = newPageElements.map(({ id }) => id);
+    // Then, if the number of products after adding these would still be within
+    // the limit, add them all, otherwise add none
+    if (
+      currentProducts.length + uniqueProducts.length <=
+      MAX_PRODUCTS_PER_PAGE
+    ) {
+      page.elements = page.elements.concat(uniqueProducts);
+      addedIds.push(...uniqueProducts.map(({ id }) => id));
+    }
+  }
 
-  return {
-    ...state,
-    pages: newPages,
-    selection: newSelection,
-  };
-}
+  // If any elements were added, update selection to match the ids of those
+  if (addedIds.length > 0) {
+    draft.selection = addedIds;
+  }
+};
 
-export default addElements;
+export default produce(addElements);
