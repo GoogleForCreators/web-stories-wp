@@ -84,16 +84,17 @@ function TextAccessibilityPanel({ selectedElements }) {
   if (!showSemanticHeadings) {
     return null;
   }
-  console.log('selectedTextElements', selectedTextElements);
   // Map all types of tag names in the selected elements
   // and then convert to an Array for usage
   const handleChange = (ev, value) => {
+    // TODO: MAKE THIS UPDATE THE TAG NAME IN DATA
+    // TODO: THIS WORK ONLY CHANGES THE TAG NAME IN LOCAL STATE
+
     // Update the selected text elements with the
     // value chosen in the text accessibility dropdown
     const newTags = getTextElementTagNames(selectedTextElements, value);
     setCurrentTags(Array.from(newTags.values()));
   };
-  console.log('currentTags', currentTags);
   const currentValue = currentTags.length > 1 ? '((MULTIPLE))' : currentTags;
   return (
     <SimplePanel
