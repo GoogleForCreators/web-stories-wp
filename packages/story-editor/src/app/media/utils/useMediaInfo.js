@@ -31,6 +31,7 @@ import {
   MEDIA_VIDEO_DIMENSIONS_THRESHOLD,
   MEDIA_VIDEO_FILE_SIZE_THRESHOLD,
   MEDIA_MIME_TYPES_OPTIMIZED_VIDEOS,
+  MEDIA_RECOMMENDED_MAX_VIDEO_DURATION,
 } from '../../../constants';
 
 /**
@@ -209,8 +210,17 @@ function useMediaInfo() {
         return false;
       }
 
+      // The recommendation for videos in stories is to be < 15s in duration
+      // and < 4 MB in size. If uploading a longer video,
+      // it is only natural that it will exceed the size limit.
+      // Thus, we're instead checking for the average size per second.
+      // Example: 4MB for a 15s video, 12MB for a 45s long video.
+      // TODO: Revisit to avoid fallacy that we're OK with such large file sizes.
       const hasSmallFileSize =
-        fileInfo.fileSize < MEDIA_VIDEO_FILE_SIZE_THRESHOLD;
+        fileInfo.fileSize <
+        (MEDIA_VIDEO_FILE_SIZE_THRESHOLD /
+          MEDIA_RECOMMENDED_MAX_VIDEO_DURATION) *
+          fileInfo.duration;
 
       const hasSmallDimensions =
         fileInfo.width * fileInfo.height <=

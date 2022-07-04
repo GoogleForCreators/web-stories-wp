@@ -36,3 +36,5 @@ export const MEDIA_VIDEO_FILE_SIZE_THRESHOLD = 4_000_000;
 
 // This could eventually also include WebM/VP9
 export const MEDIA_MIME_TYPES_OPTIMIZED_VIDEOS = ['video/mp4'];
+
+export const MEDIA_RECOMMENDED_MAX_VIDEO_DURATION = 15;
