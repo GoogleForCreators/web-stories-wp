@@ -83,13 +83,11 @@ function DeleteDialog({ mediaId, type, onClose }) {
   const imageDialogTitle = __('Delete Image?', 'web-stories');
   const videoDialogTitle = __('Delete Video?', 'web-stories');
   const imageDialogDescription = __(
-    'You are about to permanently delete this image from your site.' +
-      'The image will appear broken in any content that uses it.',
+    'You are about to permanently delete this image from your site. The image will appear broken in any content that uses it.',
     'web-stories'
   );
   const videoDialogDescription = __(
-    'You are about to permanently delete this video from your site.' +
-      'The video will appear broken in any content that uses it.',
+    'You are about to permanently delete this video from your site. The video will appear broken in any content that uses it.',
     'web-stories'
   );
 
