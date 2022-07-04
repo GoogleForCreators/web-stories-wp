@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { mkdir, writeFile } from 'fs/promises';
+import util from 'node:util';
 import OriginalEnvironment from 'jest-environment-puppeteer';
 
 const ARTIFACTS_PATH =
@@ -73,10 +74,10 @@ class PuppeteerEnvironment extends OriginalEnvironment {
       // eslint-disable-next-line no-console
       console.log(
         new Date().toString() +
-        ' Unhandled event(' +
-        event.name +
-        '): ' +
-        util.inspect(event)
+          ' Unhandled event(' +
+          event.name +
+          '): ' +
+          util.inspect(event)
       );
     }
   }
