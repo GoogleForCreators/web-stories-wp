@@ -43,7 +43,7 @@ describe('Background Audio', () => {
   });
 
   describe('Story Background Audio', () => {
-    it('should allow adding background audio', async () => {
+    it('story should allow adding background audio', async () => {
       await createNewStory();
 
       await expect(page).toClick('li[role="tab"]', { text: 'Document' });
@@ -82,7 +82,7 @@ describe('Background Audio', () => {
   });
 
   describe('Page Background Audio', () => {
-    it('should allow adding background audio', async () => {
+    it('page should allow adding background audio', async () => {
       await createNewStory();
 
       // Select the current page by clicking bg change quick action (because of empty state).
