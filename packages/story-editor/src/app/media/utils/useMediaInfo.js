@@ -30,6 +30,7 @@ import { useConfig } from '../../config';
 import {
   MEDIA_VIDEO_DIMENSIONS_THRESHOLD,
   MEDIA_VIDEO_FILE_SIZE_THRESHOLD,
+  MEDIA_MIME_TYPES_OPTIMIZED_VIDEOS,
 } from '../../../constants';
 
 /**
@@ -187,7 +188,7 @@ function useMediaInfo() {
       }
 
       // Short-circuit for non-matching mime types.
-      if (resource.mimeType !== 'video/mp4') {
+      if (!MEDIA_MIME_TYPES_OPTIMIZED_VIDEOS.includes(resource.mimeType)) {
         return false;
       }
 
