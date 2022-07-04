@@ -45,7 +45,8 @@ function translateToInclusiveList(options) {
         /* translators: %1$s: is a comma separated list. %2$s: last entry in list  */
         __('%1$s, and %2$s', 'web-stories'),
         options.slice(0, options.length - 1).join(
-          /* translators: delimiter used in a list */
+          /* eslint-disable-next-line @wordpress/i18n-no-flanking-whitespace -- Expected behaviour.
+           * translators: delimiter used in a list */
           __(', ', 'web-stories')
         ),
         options[options.length - 1]

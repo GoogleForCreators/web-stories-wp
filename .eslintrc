@@ -212,6 +212,7 @@
     "eslint-comments/no-unused-disable": "error",
     "eslint-comments/require-description": "error",
     "@wordpress/dependency-group": "error",
+    "@wordpress/i18n-no-flanking-whitespace": "error",
     "@wordpress/no-unused-vars-before-return": ["error", {
       "excludePattern": "^use"
     }],
