@@ -54,7 +54,7 @@
     "@rollup/plugin-dynamic-import-vars": "^1.4.3",
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^13.3.0",
-    "@rollup/plugin-url": "^6.1.0",
+    "@rollup/plugin-url": "^7.0.0",
     "@storybook/addon-a11y": "^6.4.20",
     "@storybook/addon-backgrounds": "^6.4.20",
     "@storybook/addon-docs": "^6.4.20",
