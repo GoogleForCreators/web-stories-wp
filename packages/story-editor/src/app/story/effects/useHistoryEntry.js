@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import cloneDeep from 'clone-deep';
 import { useEffect, useRef } from '@googleforcreators/react';
 
 /**
@@ -61,7 +60,7 @@ function useHistoryEntry({ story, current, pages, selection, capabilities }) {
   const currentHistoryEntryRef = useRef();
   useEffect(() => {
     if (currentEntry) {
-      currentHistoryEntryRef.current = cloneDeep(currentEntry);
+      currentHistoryEntryRef.current = structuredClone(currentEntry);
     }
   }, [currentEntry]);
 
@@ -74,7 +73,7 @@ function useHistoryEntry({ story, current, pages, selection, capabilities }) {
 
   const deleteKeysFromPages = (list) => {
     // Create a copy of the list not to influence the original.
-    return cloneDeep(list).map((page) => {
+    return structuredClone(list).map((page) => {
       page.elements.forEach(deleteNestedKeys(ELEMENT_PROPS_TO_IGNORE));
       return page;
     });
