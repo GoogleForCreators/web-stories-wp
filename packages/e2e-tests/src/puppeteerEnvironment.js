@@ -48,6 +48,37 @@ class PuppeteerEnvironment extends OriginalEnvironment {
 
       await this.storeArtifacts(testName, errorMessages);
     }
+
+    // print error to console
+    const ignoredEvents = [
+      'setup',
+      'add_hook',
+      'start_describe_definition',
+      'add_test',
+      'finish_describe_definition',
+      'run_start',
+      'run_describe_start',
+      'test_start',
+      'hook_start',
+      'hook_success',
+      'test_fn_start',
+      'test_fn_success',
+      'test_done',
+      'test_skip',
+      'run_describe_finish',
+      'run_finish',
+      'teardown',
+    ];
+    if (!ignoredEvents.includes(event.name)) {
+      // eslint-disable-next-line no-console
+      console.log(
+        new Date().toString() +
+        ' Unhandled event(' +
+        event.name +
+        '): ' +
+        util.inspect(event)
+      );
+    }
   }
 
   async storeArtifacts(testName, errorMessages) {
