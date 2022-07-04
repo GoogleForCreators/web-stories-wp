@@ -116,6 +116,7 @@ const LinkImage = styled.img`
   vertical-align: middle;
   border-radius: 50%;
   border: 0 none;
+  object-fit: contain;
 `;
 
 const spacing = { x: 8 };
