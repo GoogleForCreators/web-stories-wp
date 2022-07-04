@@ -19,7 +19,7 @@
  */
 import { useCallback, useState } from '@googleforcreators/react';
 import { withProtocol } from '@googleforcreators/url';
-import { __, sprintf } from '@googleforcreators/i18n';
+import { __ } from '@googleforcreators/i18n';
 
 /**
  * Internal dependencies
@@ -32,6 +32,7 @@ import {
   isValidUrlForHotlinking,
   getErrorMessage,
   CORSMessage,
+  checkImageDimensions,
 } from './utils';
 
 function useHotlinkModal({
@@ -40,7 +41,7 @@ function useHotlinkModal({
   onError,
   allowedFileTypes,
   canUseProxy,
-  requiredImgDimensions = {},
+  requiredImgDimensions,
 }) {
   const [isInserting, setIsInserting] = useState(false);
   const [link, setLink] = useState('');
@@ -109,37 +110,23 @@ function useHotlinkModal({
         return;
       }
 
-      if (
-        'image' === hotlinkInfo?.type &&
-        requiredImgDimensions?.height &&
-        requiredImgDimensions?.width
-      ) {
+      if ('image' === hotlinkInfo?.type && requiredImgDimensions) {
         const proxiedUrl = needsProxy
           ? getProxiedUrl({ needsProxy }, link)
           : link;
 
         const dimensions = await getImageDimensions(proxiedUrl);
-        if (
-          (requiredImgDimensions?.height &&
-            requiredImgDimensions?.height !== dimensions.height) ||
-          (requiredImgDimensions?.width &&
-            requiredImgDimensions?.width !== dimensions.width)
-        ) {
-          setErrorMsg(
-            sprintf(
-              /* translators: 1: supplied width. 2: supplied height. 3: desired width. 4: desired height */
-              __(
-                'Invalid image height supplied %1$d x %2$d when %3$d x %4$d is required.',
-                'web-stories'
-              ),
-              dimensions.width,
-              dimensions.height,
-              requiredImgDimensions.width,
-              requiredImgDimensions.height
-            )
-          );
+        const errorMessage = checkImageDimensions(
+          dimensions.width,
+          dimensions.height,
+          requiredImgDimensions?.width,
+          requiredImgDimensions?.height
+        );
+        if (errorMessage) {
+          setErrorMsg(errorMessage);
           return;
         }
+
         hotlinkInfo.width = dimensions.width;
         hotlinkInfo.height = dimensions.height;
       }

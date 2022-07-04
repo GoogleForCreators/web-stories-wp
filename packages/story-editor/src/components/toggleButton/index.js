@@ -23,10 +23,12 @@ import {
   BUTTON_TYPES,
   BUTTON_VARIANTS,
   BUTTON_SIZES,
+  Disclosure,
   Text,
   TOOLTIP_PLACEMENT,
   themeHelpers,
   THEME_CONSTANTS,
+  theme as dsTheme,
 } from '@googleforcreators/design-system';
 import { forwardRef } from '@googleforcreators/react';
 
@@ -35,57 +37,95 @@ import { forwardRef } from '@googleforcreators/react';
  */
 import Tooltip from '../tooltip';
 
-const Button = styled(dsButton)`
-  height: 36px;
-  width: ${({ isSquare }) => (isSquare ? 36 : 58)}px;
-  display: inline-block;
-  border: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
-  padding: 2px 0;
-  color: ${({ theme }) => theme.colors.fg.primary};
-  ${({ isOpen, theme }) =>
-    isOpen &&
-    css`
-      border-color: ${theme.colors.bg.secondary};
-      background-color: ${theme.colors.bg.secondary};
-    `}
-  ${({ hasText, theme }) =>
-    hasText &&
-    css`
-      padding: 2px 0 2px 8px;
-      width: auto;
-      ${themeHelpers.expandPresetStyles({
-        preset: {
-          ...theme.typography.presets.paragraph[
-            THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL
-          ],
-        },
-        theme,
-      })};
+const buttonHeight = 36;
 
-      span {
-        padding-left: 6px;
-      }
-    `}
+const Button = styled(dsButton)`
+  width: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-width: 1px;
+  border-style: solid;
+  padding: 0 10px;
+  white-space: nowrap;
+  // Handle props-dependent styling in one place
+  ${({ isOpen, hasText, height = buttonHeight, theme }) => css`
+    height: ${height}px;
+    min-width: ${height}px;
+    color: ${theme.colors.fg.primary};
+    border-color: ${
+      isOpen ? theme.colors.bg.secondary : theme.colors.border.defaultNormal
+    };
+    background-color: ${
+      isOpen ? theme.colors.bg.secondary : theme.colors.bg.primary
+    };
+    ${
+      hasText &&
+      css`
+        ${themeHelpers.expandPresetStyles({
+          preset: {
+            ...theme.typography.presets.paragraph[
+              THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL
+            ],
+          },
+          theme,
+        })};
+      `
+    }
+  }`}
+
+  // This should be sufficient to ensure proper spacing of button content
+  > :not(svg):last-child {
+    margin-right: 0;
+  }
+
+  // Margin is set to -8px to compensate for empty space
+  // around the actual icon graphic in the svg
+  .main-icon {
+    height: ${THEME_CONSTANTS.ICON_SIZE}px;
+    width: auto;
+    margin: -8px;
+    display: block;
+  }
 `;
 Button.propTypes = {
   hasText: PropTypes.bool,
   isOpen: PropTypes.bool,
+  height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 };
 
-const Wrapper = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-`;
+// `badgeSize` is the default height and min-width of the badge circle/oval
+// Hard-coded here, but can be overridden by `size` prop in the component
+const badgeSize = 22;
 
-const NotificationCount = styled(Text).attrs({ as: 'span' })`
-  margin: -2px 0 -2px;
-  padding-right: 6px;
-  line-height: 20px;
-  color: ${({ theme }) => theme.colors.violet[20]};
+// Defaults for badge come from typography.presets.label.small
+const badgeText =
+  dsTheme.typography.presets.label[
+    THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL
+  ];
+
+// TODO: Extract `CountBadge` to its own component?
+const CountBadge = styled(Text).attrs({ as: 'span' })`
+  ${({ size = badgeSize, fontSize = badgeText.size, theme }) => css`
+    min-width: ${size}px;
+    width: auto;
+    height: ${size}px;
+    padding: 0 ${size / 4}px;
+    margin: 0 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: ${theme.colors.fg.primary};
+    background-color: ${theme.colors.bg.quaternary};
+    border-radius: 9999px;
+    font-size: ${fontSize}px;
+    line-height: 0;
+  `}
 `;
+CountBadge.propTypes = {
+  size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  fontSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+};
 
 export const ToggleButton = forwardRef(
   (
@@ -97,6 +137,7 @@ export const ToggleButton = forwardRef(
       label,
       shortcut,
       popupZIndexOverride,
+      hasMenuList = false,
       ...rest
     },
     ref
@@ -124,13 +165,10 @@ export const ToggleButton = forwardRef(
           size={BUTTON_SIZES.MEDIUM}
           {...rest}
         >
-          <Wrapper>
-            {MainIcon && <MainIcon />}
-            {copy}
-            {hasNotifications && (
-              <NotificationCount>{notificationCount}</NotificationCount>
-            )}
-          </Wrapper>
+          {MainIcon && <MainIcon className="main-icon" />}
+          {copy}
+          {hasNotifications && <CountBadge>{notificationCount}</CountBadge>}
+          {hasMenuList && <Disclosure direction="down" isOpen={isOpen} />}
         </Button>
       </Tooltip>
     );
@@ -147,4 +185,5 @@ ToggleButton.propTypes = {
   notificationCount: PropTypes.number,
   shortcut: PropTypes.string,
   popupZIndexOverride: PropTypes.number,
+  hasMenuList: PropTypes.bool,
 };
