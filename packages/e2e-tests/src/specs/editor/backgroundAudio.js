@@ -43,7 +43,7 @@ describe('Background Audio', () => {
   });
 
   describe('Story Background Audio', () => {
-    it('story should allow adding background audio', async () => {
+    it('should allow adding background audio to story', async () => {
       await createNewStory();
 
       await expect(page).toClick('li[role="tab"]', { text: 'Document' });
@@ -82,7 +82,7 @@ describe('Background Audio', () => {
   });
 
   describe('Page Background Audio', () => {
-    it('page should allow adding background audio', async () => {
+    it('should allow adding background audio to page', async () => {
       await createNewStory();
 
       // Select the current page by clicking bg change quick action (because of empty state).
@@ -166,7 +166,7 @@ describe('Background Audio', () => {
       withPlugin('e2e-tests-hotlink');
 
       describe('Audio file', () => {
-        it('should allow adding background audio', async () => {
+        it('should allow adding background audio to page using hotlinked file', async () => {
           await createNewStory();
 
           // Select the current page by clicking bg change quick action (because of empty state).
