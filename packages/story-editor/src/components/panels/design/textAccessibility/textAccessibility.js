@@ -18,9 +18,14 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { __ } from '@googleforcreators/i18n';
-import { DropDown } from '@googleforcreators/design-system';
+import { __, TranslateWithMarkup } from '@googleforcreators/i18n';
+import {
+  DropDown,
+  Text,
+  THEME_CONSTANTS,
+} from '@googleforcreators/design-system';
 import { getTextElementTagNames } from '@googleforcreators/output';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -33,6 +38,7 @@ import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
 
 // packages/output/src/utils/getTextElementTagNames
 
+// Options to be mapped for the dropdown
 const optionsMap = [
   {
     label: __('Heading 1', 'web-stories'),
@@ -50,9 +56,14 @@ const optionsMap = [
     label: __('Paragraph', 'web-stories'),
     value: 'p',
   },
+  {
+    label: __('Automatic', 'web-stories'),
+    value: 'auto',
+  },
 ];
 
 function TextAccessibilityPanel({ selectedElements }) {
+  const showSemanticHeadings = useFeature('showSemanticHeadings');
   const { highlight, resetHighlight, cancelHighlight } = useHighlights(
     (state) => ({
       highlight: state[states.ASSISTIVE_TEXT],
@@ -60,6 +71,9 @@ function TextAccessibilityPanel({ selectedElements }) {
       cancelHighlight: state.cancelEffect,
     })
   );
+  if (!showSemanticHeadings) {
+    return null;
+  }
   // Map all types of tag names in the selected elements
   // and then convert to an Array for usage
   const tagNames = Array.from(
@@ -99,6 +113,28 @@ function TextAccessibilityPanel({ selectedElements }) {
           dropDownLabel={__('Heading Level', 'web-stories')}
         />
       </Row>
+      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
+        <TranslateWithMarkup
+          mapping={{
+            a: (
+              <a
+                href={__(
+                  'https://github.com/GoogleForCreators/web-stories-wp/tree/main/docs',
+                  'web-stories'
+                )}
+                rel="noreferrer"
+                target="_blank"
+                aria-label={__('Learn more', 'web-stories')}
+              />
+            ),
+          }}
+        >
+          {__(
+            '<a>Learn more</a> about using headings in Stories.',
+            'web-stories'
+          )}
+        </TranslateWithMarkup>
+      </Text>
     </SimplePanel>
   );
 }
