@@ -215,7 +215,6 @@
     "@wordpress/no-unused-vars-before-return": ["error", {
       "excludePattern": "^use"
     }],
-    "@wordpress/data-no-store-string-literals": "error",
     "@wordpress/react-no-unsafe-timeout": "error",
     "@wordpress/i18n-text-domain": ["error", {
       "allowedTextDomain": "web-stories"
@@ -596,6 +595,7 @@
         "packages/tinymce-button/**/*.js"
       ],
       "rules":{
+        "@wordpress/data-no-store-string-literals": "error",
         "no-restricted-imports": [
           "error",
           {
