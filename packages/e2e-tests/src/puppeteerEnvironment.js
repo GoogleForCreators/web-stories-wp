@@ -54,7 +54,7 @@ class PuppeteerEnvironment extends OriginalEnvironment {
     const datetime = new Date().toISOString().split('.')[0];
     const fileName = `${testName} ${datetime}`.replaceAll(/[ :"/\\|?*]+/g, '-');
 
-    await writeFile(`errors.txt`, errorMessages, { flag: 'a' });
+    await writeFile(`errors.txt`, errorMessages);
 
     await writeFile(
       `${ARTIFACTS_PATH}/${fileName}-snapshot.html`,
