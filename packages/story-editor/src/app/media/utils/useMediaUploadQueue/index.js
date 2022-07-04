@@ -79,7 +79,7 @@ function useMediaUploadQueue() {
     convertGifToVideo,
     trimVideo,
   } = useFFmpeg();
-  const { getFileInfo, isConsideredOptimized } = useMediaInfo();
+  const { isConsideredOptimized } = useMediaInfo();
 
   const [state, actions] = useReduction(initialState, reducer);
   const { uploadVideoPoster } = useUploadVideoFrame({
@@ -432,24 +432,18 @@ function useMediaUploadQueue() {
       const isVideo = file.type.startsWith('video/');
 
       if (isVideo) {
-        const fileInfo = await getFileInfo(file);
+        // TODO: Consider always using getFileInfo() to have more accurate audio information.
 
-        if (fileInfo) {
-          // This more accurate audio information is also useful
-          // if transcoding is not skipped, so we set this here.
-          item.additionalData.isMuted = fileInfo.isMuted;
-
-          if (isConsideredOptimized(fileInfo)) {
-            // Do not override pre-existing mediaSource if provided,
-            // for example by media recording.
-            if (!item.additionalData.mediaSource) {
-              item.additionalData.mediaSource = 'video-optimization';
-            }
-
-            uploadItem(item);
-
-            return;
+        if (await isConsideredOptimized(resource, file)) {
+          // Do not override pre-existing mediaSource if provided,
+          // for example by media recording.
+          if (!item.additionalData.mediaSource) {
+            item.additionalData.mediaSource = 'video-optimization';
           }
+
+          uploadItem(item);
+
+          return;
         }
       }
 
@@ -499,7 +493,6 @@ function useMediaUploadQueue() {
     [
       canTranscodeFile,
       convertGifItem,
-      getFileInfo,
       isConsideredOptimized,
       isTranscodingEnabled,
       muteVideoItem,

@@ -32,6 +32,10 @@ import {
   MEDIA_VIDEO_FILE_SIZE_THRESHOLD,
 } from '../../../constants';
 
+/**
+ * @typedef {import('@googleforcreators/media').Resource} Resource
+ */
+
 function loadScriptOnce(url) {
   if (document.querySelector(`script[src="${url}"]`)) {
     return Promise.resolve();
@@ -65,10 +69,16 @@ function loadScriptOnce(url) {
  */
 
 /**
+ * @typedef MediaInfoReturnValue
+ * @property {(file: File) => Promise<MediaInfo>} getFileInfo Return media file info.
+ * @property {(resource: Resource, file: File) => Promise<MediaInfo>} isConsideredOptimized Determines a resource's optimization status.
+ */
+
+/**
  * Custom hook to interact with mediainfo.js.
  *
  * @see https://mediainfo.js.org/
- * @return {Object} Functions and vars related to mediainfo.js usage.
+ * @return {MediaInfoReturnValue} Functions and vars related to mediainfo.js usage.
  */
 function useMediaInfo() {
   const { mediainfoUrl } = useConfig();
@@ -159,35 +169,73 @@ function useMediaInfo() {
     [mediainfoUrl]
   );
 
-  const isConsideredOptimized = useCallback((fileInfo) => {
-    if (!fileInfo) {
-      return false;
-    }
+  const isConsideredOptimized = useCallback(
+    /**
+     * Determines whether a video file is to be considered optimized.
+     *
+     * Checks things like dimensions, file size, mime type, and codecs.
+     *
+     * @todo Allow WebM with VP9 once Safari catches up.
+     * @param {Resource} resource Resource object.
+     * @param {File} file File object.
+     * @return {Promise<boolean>} Whether the file meets optimization criteria.
+     */
+    async (resource, file) => {
+      // This should never happen, but just in case.
+      if (resource.isOptimized) {
+        return true;
+      }
 
-    const hasSmallFileSize =
-      fileInfo.fileSize < MEDIA_VIDEO_FILE_SIZE_THRESHOLD;
-    const hasSmallDimensions =
-      fileInfo.width * fileInfo.height <=
-      MEDIA_VIDEO_DIMENSIONS_THRESHOLD.WIDTH *
-        MEDIA_VIDEO_DIMENSIONS_THRESHOLD.HEIGHT;
+      // Short-circuit for non-matching mime types.
+      if (resource.mimeType !== 'video/mp4') {
+        return false;
+      }
 
-    // Video is small enough and has an allowed mime type, upload straight away.
-    const result =
-      hasSmallFileSize &&
-      hasSmallDimensions &&
-      ['video/webm', 'video/mp4'].includes(fileInfo.mimeType);
+      // Placeholders are the size of the canvas, so account for that when
+      // checking the dimensions.
+      if (
+        !resource.isPlaceholder &&
+        resource.width * resource.height >
+          MEDIA_VIDEO_DIMENSIONS_THRESHOLD.WIDTH *
+            MEDIA_VIDEO_DIMENSIONS_THRESHOLD.HEIGHT
+      ) {
+        return false;
+      }
 
-    trackEvent('mediainfo_is_optimized', {
-      result,
-      file_size: fileInfo.fileSize,
-      file_type: fileInfo.mimeType,
-      width: fileInfo.width,
-      height: fileInfo.height,
-      duration: fileInfo.duration,
-    });
+      const fileInfo = await getFileInfo(file);
 
-    return result;
-  }, []);
+      if (!fileInfo) {
+        return false;
+      }
+
+      const hasSmallFileSize =
+        fileInfo.fileSize < MEDIA_VIDEO_FILE_SIZE_THRESHOLD;
+
+      const hasSmallDimensions =
+        fileInfo.width * fileInfo.height <=
+        MEDIA_VIDEO_DIMENSIONS_THRESHOLD.WIDTH *
+          MEDIA_VIDEO_DIMENSIONS_THRESHOLD.HEIGHT;
+
+      // AVC is H.264.
+      const isSupportedMp4 =
+        fileInfo.mimeType === 'video/mp4' && fileInfo.videoCodec === 'avc';
+
+      // Video is small enough and uses a widely supported codec.
+      const result = hasSmallFileSize && hasSmallDimensions && isSupportedMp4;
+
+      trackEvent('mediainfo_is_optimized', {
+        result,
+        file_size: fileInfo.fileSize,
+        file_type: fileInfo.mimeType,
+        width: fileInfo.width,
+        height: fileInfo.height,
+        duration: fileInfo.duration,
+      });
+
+      return result;
+    },
+    [getFileInfo]
+  );
 
   return useMemo(
     () => ({
