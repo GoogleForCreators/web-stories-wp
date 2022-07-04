@@ -38,23 +38,23 @@ class PuppeteerEnvironment extends OriginalEnvironment {
   }
 
   async handleTestEvent(event, state) {
-
     if (event.name === 'test_fn_failure') {
+      const testName = `${state.currentlyRunningTest.parent.name}  ${state.currentlyRunningTest.name}`;
       const errors = state.currentlyRunningTest.errors;
-      const parentName = state.currentlyRunningTest.parent.name;
-      const testName = state.currentlyRunningTest.name;
-      await this.storeArtifacts(`${parentName}-${testName}`, errors);
+      let errorMessages = '';
+      errors.forEach((error) => {
+        errorMessages += testName + '::' + error + '\n\n';
+      });
+
+      await this.storeArtifacts(testName, errorMessages);
     }
   }
 
-  async storeArtifacts(testName, errors) {
+  async storeArtifacts(testName, errorMessages) {
     const datetime = new Date().toISOString().split('.')[0];
     const fileName = `${testName} ${datetime}`.replaceAll(/[ :"/\\|?*]+/g, '-');
 
-    await writeFile(
-      `${ARTIFACTS_PATH}/${fileName}-errors.txt`,
-      JSON.stringify(errors)
-    );
+    await writeFile(`errors.txt`, errorMessages, { flag: 'a' });
 
     await writeFile(
       `${ARTIFACTS_PATH}/${fileName}-snapshot.html`,
