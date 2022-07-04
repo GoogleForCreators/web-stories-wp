@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import { __ } from '@googleforcreators/i18n';
-import { Datalist } from '@googleforcreators/design-system';
+import { DropDown } from '@googleforcreators/design-system';
 import { getTextElementTagNames } from '@googleforcreators/output';
 
 /**
@@ -35,19 +35,19 @@ import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
 
 const optionsMap = [
   {
-    label: 'Heading 1',
+    label: __('Heading 1', 'web-stories'),
     value: 'h1',
   },
   {
-    label: 'Heading 2',
+    label: __('Heading 2', 'web-stories'),
     value: 'h2',
   },
   {
-    label: 'Heading 3',
+    label: __('Heading 3', 'web-stories'),
     value: 'h3',
   },
   {
-    label: 'Paragraph',
+    label: __('Paragraph', 'web-stories'),
     value: 'p',
   },
 ];
@@ -61,13 +61,13 @@ function TextAccessibilityPanel({ selectedElements }) {
     })
   );
   // Map all types of tag names in the selected elements
-  const tagNamesMap = getTextElementTagNames(
-    selectedElements.filter(({ type }) => 'text' === type)
+  // and then convert to an Array for usage
+  const tagNames = Array.from(
+    getTextElementTagNames(
+      selectedElements.filter(({ type }) => 'text' === type)
+    ).values()
   );
-  console.log([...tagNamesMap]);
-  const currentValue =
-    [...tagNamesMap.length] > 1 ? '((MULTIPLE))' : [...tagNamesMap][0];
-  console.log([...tagNamesMap]);
+  const currentValue = tagNames.length > 1 ? '((MULTIPLE))' : tagNames;
   const onChange = () => {};
   return (
     <SimplePanel
@@ -78,32 +78,25 @@ function TextAccessibilityPanel({ selectedElements }) {
       isPersistable={!highlight}
     >
       <Row>
-        <Datalist.DropDown
+        <DropDown
           ref={(node) => {
             if (node && highlight?.focus && highlight?.showEffect) {
               node.addEventListener('keydown', cancelHighlight, { once: true });
               node.focus();
             }
           }}
-          //   zIndex={zIndex}
-          //   tabIndex={tabIndex}
-          //   highlightStylesOverride={highlightStylesOverride}
-          data-testid="font"
+          data-testid="headingLevel"
           title={__('Heading Levels', 'web-stories')}
-          dropdownButtonLabel={__('Font family', 'web-stories')}
+          dropdownButtonLabel={__('Heading Levels', 'web-stories')}
           options={optionsMap}
-          selectedId={MULTIPLE_VALUE === currentValue ? '' : currentValue}
+          selectedValue={currentValue}
           placeholder={
             MULTIPLE_VALUE === currentValue
               ? MULTIPLE_DISPLAY_VALUE
               : currentValue
           }
           onChange={onChange}
-          // renderer={forwardRef(renderer)}
           dropDownLabel={__('Heading Level', 'web-stories')}
-          //   listStyleOverrides={listStyleOverrides}
-          //   containerStyleOverrides={containerStyleOverrides}
-          //   className={className}
         />
       </Row>
     </SimplePanel>
@@ -112,7 +105,6 @@ function TextAccessibilityPanel({ selectedElements }) {
 
 TextAccessibilityPanel.propTypes = {
   selectedElements: PropTypes.array.isRequired,
-  pushUpdate: PropTypes.func.isRequired,
 };
 
 export default TextAccessibilityPanel;
