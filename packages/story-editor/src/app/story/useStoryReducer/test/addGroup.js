@@ -79,7 +79,7 @@ describe('addGroup', () => {
     });
   });
 
-  it('should add group even if there are no groups', () => {
+  it('should add group even if `groups` is not set, () => {
     const { restore, addGroup } = setupReducer();
 
     restore({
