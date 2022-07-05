@@ -2,7 +2,7 @@
   "name": "@googleforcreators/i18n",
   "description": "Tiny i18n gettext helper package.",
   "private": false,
-  "version": "0.1.202206271222",
+  "version": "0.1.202207041221",
   "author": {
     "name": "Google",
     "url": "https://creators.google/"
