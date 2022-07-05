@@ -143,6 +143,9 @@ describe('Story Details Modal - Admin User', () => {
           response.status() === 200
       );
 
+      // add small delay after we have results
+      await page.waitForTimeout(400);
+
       const optionListAfterSearch = await authorDropDownOptions.$$eval(
         'li[role="option"]',
         (nodeList) => nodeList.map((node) => node.innerText)
