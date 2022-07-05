@@ -45,9 +45,7 @@ export default {
     'jest-extended/all',
     '<rootDir>/packages/e2e-tests/src/config/bootstrap.js',
     '@wordpress/jest-puppeteer-axe',
-    '@wordpress/jest-console',
     'expect-puppeteer',
   ],
   modulePathIgnorePatterns: ['<rootDir>/build', '<rootDir>/vendor'],
-  reporters: [['jest-silent-reporter', { useDots: true, showWarnings: true }]],
 };
