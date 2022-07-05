@@ -130,8 +130,7 @@ describe('taxonomy', () => {
       await publishStory();
 
       // Refresh page to verify that the assignments persisted.
-      await page.reload();
-      await page.waitForSelector('input[placeholder="Add title"]', { timeout: 2000 });
+      await page.reload({ waitUntil: 'networkidle2' });
       await expect(page).toMatchElement('input[placeholder="Add title"]');
 
       await goToAndExpandTaxonomyPanel();

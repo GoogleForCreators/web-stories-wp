@@ -127,7 +127,7 @@ if ('true' === process.env.CI) {
 }
 
 // Set default timeout for individual expect-puppeteer assertions. (Default: 500)
-setDefaultOptions({ timeout: EXPECT_PUPPETEER_TIMEOUT || 1000 });
+setDefaultOptions({ timeout: EXPECT_PUPPETEER_TIMEOUT || 2000 });
 
 /**
  * Set up browser.
