@@ -166,7 +166,6 @@ function removePageEvents() {
  * the observed console logging types is encountered.
  */
 function observeConsoleLogging() {
-  return;
   page.on('console', (message) => {
     const type = message.type();
     if (!Object.hasOwnProperty.call(OBSERVED_CONSOLE_MESSAGE_TYPES, type)) {
