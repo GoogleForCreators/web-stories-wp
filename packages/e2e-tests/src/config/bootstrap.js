@@ -210,7 +210,7 @@ function observeConsoleLogging() {
      * @wordpress/jest-console matchers, will cause the intended test
      * failure.
      **/
-    // console[logFunction](text);
+    console[logFunction](text);
   });
 }
 
