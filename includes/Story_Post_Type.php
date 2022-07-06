@@ -59,6 +59,11 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 	public const PUBLISHER_LOGO_META_KEY = 'web_stories_publisher_logo';
 
 	/**
+	 * Poster meta key.
+	 */
+	public const POSTER_META_KEY = 'web_stories_poster';
+
+	/**
 	 * Settings instance.
 	 *
 	 * @var Settings Settings instance.
@@ -211,6 +216,42 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 				'show_in_rest'      => true,
 				'default'           => $active_publisher_logo_id,
 				'single'            => true,
+			]
+		);
+
+		register_post_meta(
+			$this->get_slug(),
+			self::POSTER_META_KEY,
+			[
+				'type'         => 'object',
+				'description'  => __( 'Poster object', 'web-stories' ),
+				'show_in_rest' => [
+					'schema' => [
+						'type'       => 'object',
+						'properties' => [
+							'needsProxy' => [
+								'description' => __( 'If poster needs to be proxied', 'web-stories' ),
+								'type'        => 'boolean',
+							],
+							'height'     => [
+								'type'        => 'integer',
+								'description' => __( 'Poster height', 'web-stories' ),
+							],
+							'url'        => [
+								'description' => __( 'Poster url.', 'web-stories' ),
+								'type'        => 'string',
+								'format'      => 'uri',
+							],
+							'width'      => [
+								'description' => __( 'Poster width.', 'web-stories' ),
+								'type'        => 'integer',
+							],
+						],
+
+					],
+				],
+				'default'      => [],
+				'single'       => true,
 			]
 		);
 	}
