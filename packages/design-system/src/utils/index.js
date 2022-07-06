@@ -20,7 +20,6 @@ export { default as labelAccessibilityValidator } from './labelAccessibilityVali
 export { default as useLiveRegion } from './useLiveRegion';
 export { default as uniqueEntriesByKey } from './uniqueEntriesByKey';
 export { default as deepMerge } from './deepMerge';
-export { default as resolveSizeUnits } from './resolveSizeUnits';
 export { default as useMouseDownOutsideRef } from './useMouseDownOutsideRef';
 export { default as pointerEventsCss } from './pointerEventsCss';
 export { default as objectWithout } from './objectWithout';

@@ -39,25 +39,29 @@ const rotate = {
  *
  * @param {Object} [props] All props.
  * @param {string} [props.direction] Initial direction of chevron icon
+ * @param {boolean} [props.disabled] Should the icon have a 'disabled' appearance?
  * @param {number|string} [props.duration] Transition duration
  * @param {boolean} [props.isOpen] Rotates icon when true
- * @param {number[]} [props.rotation] Tuple of start and stop rotation values in degrees
  * @return {*} Disclosure icon component
  */
 export const Disclosure = ({
   direction = 'down',
+  disabled = false,
   duration = 0,
   isOpen = false,
-  rotation,
   ...rest
 }) => {
-  const [whenClosed, whenOpen] = rotation ?? rotate[direction];
+  const [whenClosed, whenOpen] = rotate[direction];
 
+  // Passing `iconStyle` to the `css` prop of <ChevronDownSmall/>
+  // is a Styled Components pattern that doesn't require an
+  // 'in-between' component like `styled(ChevronDownSmall)`
   const iconStyle = css`
     height: ${THEME_CONSTANTS.ICON_SIZE}px;
     width: auto;
     margin: 0 -10px;
-    color: ${({ theme }) => theme.colors.fg.secondary};
+    color: ${({ theme }) =>
+      disabled ? theme.colors.fg.disable : theme.colors.fg.secondary};
     transition: transform ${duration};
     transform: rotate(${isOpen ? whenOpen : whenClosed}deg);
   `;
@@ -67,7 +71,7 @@ export const Disclosure = ({
 
 Disclosure.propTypes = {
   direction: PropTypes.oneOf(Object.keys(rotate)),
+  disabled: PropTypes.bool,
   duration: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   isOpen: PropTypes.bool,
-  rotation: PropTypes.arrayOf(PropTypes.number),
 };

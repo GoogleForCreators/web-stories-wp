@@ -52,7 +52,7 @@ const selectButtonStylesOverride = css`
 `;
 
 const selectValueStylesOverride = css`
-  margin-right: -12px;
+  margin-right: 0;
 `;
 
 function Select(props) {
