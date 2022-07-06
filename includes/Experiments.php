@@ -369,6 +369,17 @@ class Experiments extends Service_Base implements HasRequirements {
 				'description' => __( 'Show extra pages for context before and after the current canvas page. Note: This might come with a performance penalty.', 'web-stories' ),
 				'group'       => 'editor',
 			],
+			/**
+			 * Author: @swissspidy
+			 * Issue: #11878
+			 * Creation date: 2022-07-06
+			 */
+			[
+				'name'        => 'tenorStickers',
+				'label'       => __( 'Stickers', 'web-stories' ),
+				'description' => __( 'Enable Tenor stickers support', 'web-stories' ),
+				'group'       => 'editor',
+			],
 		];
 	}
 

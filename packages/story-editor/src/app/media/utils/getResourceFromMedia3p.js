@@ -87,12 +87,6 @@ import { PROVIDERS } from '../media3p/providerConfiguration';
  * @return {Object} The array of "sizes"-type objects.
  */
 function getImageUrls(m) {
-  const type = m.type.toLowerCase();
-
-  if (type !== 'image') {
-    throw new Error('Invalid media type.');
-  }
-
   // The rest of the application expects 3 named "sizes": "full", "large" and
   // "web_stories_thumbnail". We use the biggest as "full", the next biggest
   // as "large", and the smallest as "web_stories_thumbnail". The rest are
@@ -124,10 +118,6 @@ function getImageUrls(m) {
  */
 
 function getGifUrls(m) {
-  if (m.type.toLowerCase() !== 'gif') {
-    throw new Error('Invalid media type');
-  }
-
   // The rest of the application expects 3 named "sizes": "full", "large" and
   // "web_stories_thumbnail". We use the biggest as "full", the next biggest
   // as "large", and the smallest as "web_stories_thumbnail". The rest are
@@ -191,10 +181,6 @@ function getGifUrls(m) {
  * @return {Object} The array of "sizes"-type objects.
  */
 function getVideoUrls(m) {
-  if (m.type.toLowerCase() !== 'video') {
-    throw new Error('Invalid media type.');
-  }
-
   // The rest of the application expects 2 named "sizes": "full", and "preview"
   // The highest fidelity is used (videoUrls is ordered by fidelity from the backend)
   // as "full", and the lowest as "preview".
@@ -329,6 +315,33 @@ function getGifResourceFromMedia3p(m) {
   });
 }
 
+function getStickerResourceFromMedia3p(m) {
+  // This way we'll only use WebP images and not GIFs by accident, which are heavier.
+  const mWithWebP = {
+    ...m,
+    imageUrls: m.imageUrls.filter((i) => i.mimeType === 'image/webp'),
+  };
+
+  // Not using videos because of transparency.
+  const imageUrls = getImageUrls(mWithWebP);
+  return createResource({
+    id: m.name,
+    baseColor: m.color,
+    blurHash: m.blurHash,
+    type: 'image',
+    mimeType: imageUrls.full.mimeType,
+    creationDate: m.createTime,
+    src: imageUrls.full.sourceUrl,
+    width: imageUrls.full.width,
+    height: imageUrls.full.height,
+    alt: m.description || m.title || m.name,
+    isExternal: true,
+    isPlaceholder: false,
+    sizes: imageUrls,
+    attribution: getAttributionFromMedia3p(m),
+  });
+}
+
 /**
  * Generates a resource object from a Media3P object from the API.
  *
@@ -343,6 +356,8 @@ export default function getResourceFromMedia3p(m) {
       return getVideoResourceFromMedia3p(m);
     case 'gif':
       return getGifResourceFromMedia3p(m);
+    case 'sticker':
+      return getStickerResourceFromMedia3p(m);
     default:
       throw new Error('Invalid media type.');
   }
