@@ -19,8 +19,8 @@ namespace Google\Web_Stories\Tests\Integration\REST_API;
 
 use DateTime;
 use Google\Web_Stories\Story_Post_Type;
+use Google\Web_Stories\Tests\Integration\DependencyInjectedRestTestCase;
 use Google\Web_Stories\Tests\Integration\Fixture\DummyTaxonomy;
-use Google\Web_Stories\Tests\Integration\RestTestCase;
 use WP_REST_Request;
 
 /**
@@ -28,7 +28,7 @@ use WP_REST_Request;
  *
  * @coversDefaultClass \Google\Web_Stories\REST_API\Stories_Controller
  */
-class Stories_Controller extends RestTestCase {
+class Stories_Controller extends DependencyInjectedRestTestCase {
 
 	protected $server;
 
@@ -141,6 +141,8 @@ class Stories_Controller extends RestTestCase {
 	public function set_up(): void {
 		parent::set_up();
 
+		$story_post_type = $this->injector->make( \Google\Web_Stories\Story_Post_Type::class );
+		$story_post_type->register();
 		$this->controller = new \Google\Web_Stories\REST_API\Stories_Controller( Story_Post_Type::POST_TYPE_SLUG );
 	}
 
@@ -682,6 +684,7 @@ class Stories_Controller extends RestTestCase {
 
 	/**
 	 * @covers ::create_item
+	 * @covers ::get_registered_meta
 	 */
 	public function test_create_item_duplicate_id(): void {
 		$this->controller->register_routes();
@@ -699,8 +702,17 @@ class Stories_Controller extends RestTestCase {
 			]
 		);
 
-		$attachment_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg', 0 );
+		$attachment_id     = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg', 0 );
+		$publisher_logo_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg', 0 );
+		$custom_poster     = [
+			'url'        => 'http://www.example.com/image.png',
+			'width'      => 1000,
+			'height'     => 1000,
+			'needsProxy' => false,
+		];
 		set_post_thumbnail( $original_id, $attachment_id );
+		update_post_meta( $original_id, \Google\Web_Stories\Story_Post_Type::PUBLISHER_LOGO_META_KEY, $publisher_logo_id );
+		update_post_meta( $original_id, \Google\Web_Stories\Story_Post_Type::POSTER_META_KEY, $custom_poster );
 
 		wp_set_current_user( self::$user_id );
 		$this->kses_int();
@@ -722,11 +734,54 @@ class Stories_Controller extends RestTestCase {
 		$this->assertArrayHasKey( 'raw', $new_data['excerpt'] );
 		$this->assertArrayHasKey( 'story_data', $new_data );
 		$this->assertArrayHasKey( 'featured_media', $new_data );
+		$this->assertArrayHasKey( 'meta', $new_data );
+		$this->assertArrayHasKey( \Google\Web_Stories\Story_Post_Type::PUBLISHER_LOGO_META_KEY, $new_data['meta'] );
+		$this->assertArrayHasKey( \Google\Web_Stories\Story_Post_Type::POSTER_META_KEY, $new_data['meta'] );
 
 		$this->assertSame( 'Example title (Copy)', $new_data['title']['raw'] );
 		$this->assertSame( 'Example excerpt', $new_data['excerpt']['raw'] );
 		$this->assertSame( $attachment_id, $new_data['featured_media'] );
+		$this->assertSame( $publisher_logo_id, $new_data['meta'][ \Google\Web_Stories\Story_Post_Type::PUBLISHER_LOGO_META_KEY ] );
+		$this->assertSame( $custom_poster, $new_data['meta'][ \Google\Web_Stories\Story_Post_Type::POSTER_META_KEY ] );
 		$this->assertSame( [ 'pages' => [] ], $new_data['story_data'] );
+	}
+
+	/**
+	 * @covers ::create_item
+	 * @covers ::get_registered_meta
+	 */
+	public function test_create_item_duplicate_id_invalid_meta(): void {
+		$this->controller->register_routes();
+
+		$unsanitized_content    = file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/story_post_content.html' );
+		$unsanitized_story_data = wp_json_encode( [ 'pages' => [] ] );
+		$original_id            = self::factory()->post->create(
+			[
+				'post_type'             => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_content'          => $unsanitized_content,
+				'post_title'            => 'Example title',
+				'post_excerpt'          => 'Example excerpt',
+				'post_author'           => self::$user_id,
+				'post_content_filtered' => $unsanitized_story_data,
+			]
+		);
+
+
+		update_post_meta( $original_id, \Google\Web_Stories\Story_Post_Type::PUBLISHER_LOGO_META_KEY, 'wibble' );
+		update_post_meta( $original_id, \Google\Web_Stories\Story_Post_Type::POSTER_META_KEY, -1 );
+
+		wp_set_current_user( self::$user_id );
+		$this->kses_int();
+
+		$request = new WP_REST_Request( \WP_REST_Server::CREATABLE, '/web-stories/v1/web-story' );
+		$request->set_body_params(
+			[
+				'original_id' => $original_id,
+			]
+		);
+
+		$response = rest_get_server()->dispatch( $request );
+		$this->assertErrorResponse( 'rest_invalid_type', $response, 400 );
 	}
 
 	/**

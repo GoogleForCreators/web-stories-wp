@@ -49,7 +49,7 @@ import {
   useHighlights,
   useSidebar,
 } from '@googleforcreators/story-editor';
-
+import { useFeature } from 'flagged';
 /**
  * Internal dependencies
  */
@@ -118,6 +118,7 @@ const LogoImg = styled.img`
 `;
 
 function PublishPanel({ nameOverride }) {
+  const enablePosterHotlinking = useFeature('posterHotlinking');
   const {
     state: { users },
   } = useSidebar();
@@ -192,6 +193,8 @@ function PublishPanel({ nameOverride }) {
             url: newPoster.src,
             height: newPoster.height,
             width: newPoster.width,
+            isExternal: newPoster.isExternal,
+            needsProxy: newPoster.needsProxy,
           },
         },
       });
@@ -304,6 +307,11 @@ function PublishPanel({ nameOverride }) {
     );
   }
 
+  const menuOptions = [
+    enablePosterHotlinking && hasUploadMediaAction && 'upload',
+    enablePosterHotlinking && 'hotlink',
+  ].filter(Boolean);
+
   return (
     <Panel
       name={nameOverride || 'publishing'}
@@ -341,12 +349,25 @@ function PublishPanel({ nameOverride }) {
                 value={featuredMedia?.url}
                 onChange={handleChangePoster}
                 title={__('Select as poster image', 'web-stories')}
+                hotlinkTitle={__(
+                  'Use external image as poster image',
+                  'web-stories'
+                )}
+                hotlinkInsertText={__(
+                  'Use image as poster image',
+                  'web-stories'
+                )}
+                hotlinkInsertingText={__(
+                  'Using image as poster image',
+                  'web-stories'
+                )}
                 buttonInsertText={__('Select as poster image', 'web-stories')}
                 type={allowedImageMimeTypes}
                 ariaLabel={__('Poster image', 'web-stories')}
                 onChangeErrorText={posterErrorMessage}
                 imgProps={featuredMedia}
-                canUpload={hasUploadMediaAction}
+                canUpload={hasUploadMediaAction || enablePosterHotlinking}
+                menuOptions={menuOptions}
               />
             </MediaWrapper>
             <LabelWrapper>

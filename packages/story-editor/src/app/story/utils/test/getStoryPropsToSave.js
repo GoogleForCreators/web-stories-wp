@@ -43,7 +43,13 @@ describe('getStoryPropsToSave', () => {
       date: '2020-04-10T07:06:26',
       modified: '',
       excerpt: '',
-      featuredMedia: { id: 0 },
+      featuredMedia: {
+        id: 0,
+        url: 'https://example.com/image.png',
+        isExternal: false,
+        height: 100,
+        width: 100,
+      },
       password: '',
       globalStoryStyles: '',
       autoAdvance: 'manual',
@@ -80,6 +86,82 @@ describe('getStoryPropsToSave', () => {
       pages,
       ...neededProps,
       meta: {
+        web_stories_poster: undefined,
+        web_stories_products: [],
+        web_stories_publisher_logo: 1,
+      },
+    };
+    delete expected.publisherLogo;
+    delete expected.taxonomies;
+
+    expect(props).toStrictEqual(expected);
+  });
+
+  it('should return correct story properties with external poster', () => {
+    const neededProps = {
+      title: 'Story!',
+      author: { id: 1, name: 'John Doe' },
+      slug: 'story',
+      publisherLogo: {
+        id: 1,
+        url: 'https://example.com/logo.png',
+        height: 0,
+        width: 0,
+      },
+      status: 'publish',
+      date: '2020-04-10T07:06:26',
+      modified: '',
+      excerpt: '',
+      featuredMedia: {
+        id: 0,
+        url: 'https://example.com/image.png',
+        isExternal: true,
+        needsProxy: false,
+        height: 100,
+        width: 100,
+      },
+      password: '',
+      globalStoryStyles: '',
+      autoAdvance: 'manual',
+      defaultPageDuration: 7,
+      backgroundAudio: {
+        resource: {
+          src: 'https://example.com/audio.mp3',
+          id: 123,
+          mimeType: 'audio/mpeg',
+        },
+      },
+      taxonomies: [],
+    };
+    const extraProps = {
+      storyId: 1,
+      foo: 'bar',
+    };
+    const story = {
+      ...neededProps,
+      ...extraProps,
+    };
+    const pages = [
+      { id: '1', elements: [] },
+      { id: '2', elements: [] },
+    ];
+    const metadata = {};
+    getStoryMarkup.mockImplementation(() => {
+      return 'Hello World!';
+    });
+    const props = getStoryPropsToSave({ story, pages, metadata });
+
+    const expected = {
+      content: 'Hello World!',
+      pages,
+      ...neededProps,
+      meta: {
+        web_stories_poster: {
+          height: 100,
+          url: 'https://example.com/image.png',
+          width: 100,
+          needsProxy: false,
+        },
         web_stories_products: [],
         web_stories_publisher_logo: 1,
       },
