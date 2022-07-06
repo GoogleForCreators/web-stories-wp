@@ -24,18 +24,16 @@ const placeholderStyles = css`
   position: absolute !important;
   top: 0;
   left: 0;
+  min-height: 100%;
+  min-width: 100%;
 `;
 
 const BlurhashContainer = styled(Blurhash)`
   ${placeholderStyles}
-  height: ${({ height }) => height}px;
-  width: ${({ width }) => width}px;
 `;
 
 const BaseColorContainer = styled.div`
   ${placeholderStyles}
-  height: ${({ height }) => height}px;
-  width: ${({ width }) => width}px;
   background-color: ${({ $baseColor }) => $baseColor};
 `;
 
@@ -52,13 +50,7 @@ function renderResourcePlaceholder({ blurHash, baseColor }, { width, height }) {
   }
 
   if (baseColor) {
-    return (
-      <BaseColorContainer
-        width={width}
-        height={height}
-        $baseColor={baseColor}
-      />
-    );
+    return <BaseColorContainer $baseColor={baseColor} />;
   }
 
   return null;
