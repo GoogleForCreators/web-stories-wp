@@ -71,6 +71,10 @@ function StoryPreview({
     }
   }, [story.status, displayDate]);
 
+  const externalPoster = story.meta['web_stories_poster']?.url;
+  const featuredImage = story._embedded?.['wp:featuredmedia']?.[0]?.source_url;
+  const posterImage = externalPoster || featuredImage;
+
   return (
     <div className="web-stories-story-preview-card">
       <div className="web-stories-story-preview-card__poster">
@@ -80,13 +84,8 @@ function StoryPreview({
           addSelectedStory={addSelectedStory}
           removeSelectedStory={removeSelectedStory}
         />
-        {story._embedded?.['wp:featuredmedia']?.[0]?.source_url && (
-          <img
-            src={story._embedded?.['wp:featuredmedia']?.[0]?.source_url}
-            alt=""
-            width={640}
-            height={853}
-          />
+        {posterImage && (
+          <img src={posterImage} alt="" width={640} height={853} />
         )}
       </div>
       <div className="web-stories-story-preview-card__label">

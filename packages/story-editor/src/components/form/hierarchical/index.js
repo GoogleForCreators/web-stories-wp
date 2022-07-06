@@ -274,7 +274,7 @@ const HierarchicalInput = ({
       const count = options.length;
 
       const message = sprintf(
-        /* Translators: %d: Number of results. */
+        /* translators: %d: number of results. */
         _n('%d result found.', '%d results found.', count, 'web-stories'),
         count
       );
