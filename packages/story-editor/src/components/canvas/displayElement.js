@@ -241,7 +241,9 @@ function DisplayElement({
             isCurrentResourceUploading={isCurrentResourceUploading}
             maybeEnqueueFontStyle={maybeEnqueueFontStyle}
             siblingCount={siblingCount}
-            renderResourcePlaceholder={renderResourcePlaceholder}
+            renderResourcePlaceholder={(resource) =>
+              renderResourcePlaceholder(resource, box)
+            }
           />
         </WithMask>
         {!previewMode && (
