@@ -13,114 +13,82 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
+import { produce } from 'immer';
 import { duplicateElement } from '@googleforcreators/elements';
+
 /**
  * Internal dependencies
  */
-import addGroup from './addGroup';
-import arrangeElement from './arrangeElement';
+import { addGroup } from './addGroup';
 
 /**
  * Duplicate group with all elements on the current page.
  * Set selected elements to be the newly created group.
  *
- * @param {Object} state Current state
+ * @param {Object} draft Current state
  * @param {Object} payload Action payload
  * @param {string} payload.oldGroupId Id of a group to duplicate.
  * @param {string} payload.groupId New group id.
  * @param {string} payload.name New group name.
  * @param {string} payload.isLocked Is group locked.
- * @return {Object} New state
  */
-function duplicateGroup(state, { oldGroupId, groupId, name, isLocked }) {
-  // Add group.
-  const stateWithGroup = addGroup(state, { groupId, name, isLocked });
-  const pageIndex = stateWithGroup.pages.findIndex(
-    ({ id }) => id === stateWithGroup.current
-  );
-  const oldPage = stateWithGroup.pages[pageIndex];
-  const newSelection = [];
-  const newPage = { ...oldPage };
-  const elementIds = newPage.elements
-    .filter((el) => el.groupId === oldGroupId)
-    .map((el) => el.id);
+export const duplicateGroup = (
+  draft,
+  { oldGroupId, groupId, name, isLocked }
+) => {
+  if (!oldGroupId || !groupId || !name) {
+    return;
+  }
 
-  elementIds.forEach((elementId) => {
-    const elementIndex = newPage.elements.findIndex(
-      ({ id }) => id === elementId
-    );
+  // Check that old group exists
+  const page = draft.pages.find(({ id }) => id === draft.current);
+  if (!page.groups?.[oldGroupId]) {
+    return;
+  }
 
-    if (elementIndex < 0) {
-      return;
-    }
+  // Check that old group has members
+  const isInGroup = (el) => el.groupId === oldGroupId;
+  const members = page.elements.filter(isInGroup);
+  if (!members.length) {
+    return;
+  }
 
-    const elementToDuplicate = newPage.elements[elementIndex];
+  // Check that old group doesn't include background
+  if (members.some(({ isBackground }) => isBackground)) {
+    return;
+  }
 
-    if (elementToDuplicate.isBackground) {
-      return;
-    }
+  // Add group
+  addGroup(draft, { groupId, name, isLocked });
 
+  // Create a list of the new elements to insert
+  const newElements = members.map((oldElement) => {
     const { element, elementAnimations } = duplicateElement({
-      element: elementToDuplicate,
-      animations: oldPage.animations,
-      existingElements: oldPage.elements,
+      element: oldElement,
+      animations: page.animations,
+      existingElements: page.elements,
     });
 
     element.groupId = groupId;
-    newSelection.push(element.id);
 
-    newPage.animations = [...(newPage.animations || []), ...elementAnimations];
-    newPage.elements = [
-      ...newPage.elements.slice(0, elementIndex),
-      elementToDuplicate,
-      element,
-      ...newPage.elements.slice(elementIndex + 1),
-    ];
+    if (elementAnimations.length) {
+      // If duplicated element has animations, so does existing, so animations
+      // array already exists
+      page.animations.push(...elementAnimations);
+    }
 
-    return;
+    return element;
   });
 
-  // Do nothing if no new elements
-  if (!newSelection.length) {
-    return state;
-  }
+  // Insert the new elements at the right position
+  const lastIndexOfOldGroup = page.elements.findLastIndex(isInGroup);
+  page.elements.splice(lastIndexOfOldGroup + 1, 0, ...newElements);
 
-  const newPages = [
-    ...state.pages.slice(0, pageIndex),
-    newPage,
-    ...state.pages.slice(pageIndex + 1),
-  ];
+  draft.selection = newElements.map(({ id }) => id);
+};
 
-  let finalState = {
-    ...state,
-    pages: newPages,
-    selection: newSelection,
-  };
-
-  // Fix the order
-  const newGroupElements = newPage.elements.filter(
-    (el) => el.groupId === groupId
-  );
-  const elementFromGroupWithHighestPosition = Math.max(
-    ...newGroupElements.map((el) =>
-      newPage.elements.findIndex(({ id }) => id === el?.id)
-    )
-  );
-  for (const [index, element] of newGroupElements.reverse().entries()) {
-    const position = newPage.elements.findIndex(({ id }) => id === element?.id);
-    if (position !== elementFromGroupWithHighestPosition) {
-      const newPosition = elementFromGroupWithHighestPosition - index;
-      finalState = arrangeElement(finalState, {
-        elementId: element.id,
-        position: newPosition,
-      });
-    }
-  }
-
-  return finalState;
-}
-
-export default duplicateGroup;
+export default produce(duplicateGroup);

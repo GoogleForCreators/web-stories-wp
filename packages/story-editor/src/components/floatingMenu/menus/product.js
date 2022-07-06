@@ -19,7 +19,6 @@
 import { __ } from '@googleforcreators/i18n';
 import { memo, useCallback } from '@googleforcreators/react';
 import styled from 'styled-components';
-import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -42,9 +41,7 @@ const FloatingProductMenu = memo(function FloatingProductMenu() {
     }));
 
   const { shoppingProvider } = useConfig();
-  const isShoppingIntegrationEnabled = useFeature('shoppingIntegration');
-  const isShoppingEnabled =
-    'none' !== shoppingProvider && isShoppingIntegrationEnabled;
+  const isShoppingEnabled = 'none' !== shoppingProvider;
 
   const setProduct = useCallback(
     (product) => updateSelectedElements({ properties: { product } }),

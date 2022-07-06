@@ -23,7 +23,6 @@ import {
   deleteMedia,
   skipSuiteOnFirefox,
   takeSnapshot,
-  withExperimentalFeatures,
   withPlugin,
   insertStoryTitle,
   publishStory,
@@ -171,7 +170,6 @@ describe('Background Audio', () => {
       withPlugin('e2e-tests-hotlink');
 
       describe('Audio file', () => {
-        withExperimentalFeatures(['audioHotlinking']);
         it('should allow adding background audio', async () => {
           await createNewStory();
 
@@ -206,8 +204,6 @@ describe('Background Audio', () => {
       });
 
       describe('Captions', () => {
-        withExperimentalFeatures(['captionHotlinking']);
-
         it('should allow adding background audio with captions', async () => {
           await createNewStory();
 

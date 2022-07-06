@@ -121,7 +121,7 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
 
     const count = results.length;
     const message = sprintf(
-      /* Translators: %d: Number of results. */
+      /* translators: %d: number of results. */
       _n('%d result found.', '%d results found.', count, 'web-stories'),
       count
     );

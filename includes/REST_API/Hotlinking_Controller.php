@@ -26,7 +26,6 @@
 
 namespace Google\Web_Stories\REST_API;
 
-use Google\Web_Stories\Experiments;
 use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Media\Types;
 use Google\Web_Stories\Story_Post_Type;
@@ -101,13 +100,6 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	private $types;
 
 	/**
-	 * Experiments instance.
-	 *
-	 * @var Experiments Experiments instance.
-	 */
-	private $experiments;
-
-	/**
 	 * File pointer resource.
 	 *
 	 * @var resource
@@ -119,16 +111,14 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	 *
 	 * @param Story_Post_Type $story_post_type Story_Post_Type instance.
 	 * @param Types           $types Types instance.
-	 * @param Experiments     $experiments Experiments instance.
 	 * @return void
 	 */
-	public function __construct( Story_Post_Type $story_post_type, Types $types, Experiments $experiments ) {
+	public function __construct( Story_Post_Type $story_post_type, Types $types ) {
 		$this->story_post_type = $story_post_type;
 		$this->types           = $types;
 
-		$this->namespace   = 'web-stories/v1';
-		$this->rest_base   = 'hotlink';
-		$this->experiments = $experiments;
+		$this->namespace = 'web-stories/v1';
+		$this->rest_base = 'hotlink';
 	}
 
 	/**
@@ -819,12 +809,7 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	 */
 	protected function get_allowed_mime_types(): array {
 		$mime_type = $this->types->get_allowed_mime_types();
-		if ( ! $this->experiments->is_experiment_enabled( 'audioHotlinking' ) ) {
-			$mime_type['audio'] = [];
-		}
-		if ( ! $this->experiments->is_experiment_enabled( 'captionHotlinking' ) ) {
-			unset( $mime_type['caption'] );
-		}
+
 		// Do not support hotlinking SVGs for security reasons.
 		unset( $mime_type['vector'] );
 

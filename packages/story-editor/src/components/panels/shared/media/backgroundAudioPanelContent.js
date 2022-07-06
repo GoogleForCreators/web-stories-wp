@@ -29,7 +29,12 @@ import {
   themeHelpers,
 } from '@googleforcreators/design-system';
 import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
-import { useCallback, useMemo, useState } from '@googleforcreators/react';
+import {
+  useCallback,
+  useMemo,
+  useState,
+  useRef,
+} from '@googleforcreators/react';
 import {
   ResourcePropTypes,
   getExtensionsFromMimeType,
@@ -38,7 +43,6 @@ import {
 } from '@googleforcreators/media';
 import { v4 as uuidv4 } from 'uuid';
 import { BackgroundAudioPropType } from '@googleforcreators/elements';
-import { useFeature } from 'flagged';
 import { trackError, trackEvent } from '@googleforcreators/tracking';
 
 /**
@@ -90,8 +94,6 @@ function BackgroundAudioPanelContent({
     MediaUpload,
   } = useConfig();
   const [isOpen, setIsOpen] = useState(false);
-  const enableAudioHotlinking = useFeature('audioHotlinking');
-  const enableCaptionHotlinking = useFeature('captionHotlinking');
   const { getProxiedUrl } = useCORSProxy();
 
   const allowedAudioFileTypes = useMemo(
@@ -103,8 +105,7 @@ function BackgroundAudioPanelContent({
   );
   const { resource = {}, tracks = [], loop = true } = backgroundAudio || {};
 
-  const canManageCaptions =
-    tracks.length > 0 || hasUploadMediaAction || enableCaptionHotlinking;
+  const playerRef = useRef();
 
   const audioSrcProxied = getProxiedUrl(resource, resource?.src);
 
@@ -239,6 +240,13 @@ function BackgroundAudioPanelContent({
     []
   );
 
+  const handleRemove = useCallback(() => {
+    if (playerRef.current) {
+      playerRef.current.pause();
+    }
+    updateBackgroundAudio(null);
+  }, [updateBackgroundAudio, playerRef]);
+
   const options = [
     hasUploadMediaAction && {
       label: __('Upload a file', 'web-stories'),
@@ -255,7 +263,7 @@ function BackgroundAudioPanelContent({
         buttonInsertText: __('Select audio file', 'web-stories'),
       },
     },
-    enableAudioHotlinking && {
+    {
       label: __('Link to a file', 'web-stories'),
       value: 'hotlink',
       onClick: () => {
@@ -278,16 +286,14 @@ function BackgroundAudioPanelContent({
               render={renderUploadButton}
             />
           )}
-          {enableAudioHotlinking && (
-            <UploadButton
-              variant={BUTTON_VARIANTS.RECTANGLE}
-              type={BUTTON_TYPES.SECONDARY}
-              size={BUTTON_SIZES.SMALL}
-              onClick={() => setIsOpen(true)}
-            >
-              {__('Link to audio file', 'web-stories')}
-            </UploadButton>
-          )}
+          <UploadButton
+            variant={BUTTON_VARIANTS.RECTANGLE}
+            type={BUTTON_TYPES.SECONDARY}
+            size={BUTTON_SIZES.SMALL}
+            onClick={() => setIsOpen(true)}
+          >
+            {__('Link to audio file', 'web-stories')}
+          </UploadButton>
         </ButtonRow>
       )}
       {resource?.src && (
@@ -298,7 +304,7 @@ function BackgroundAudioPanelContent({
             title={resource.src.split('/').pop()}
             isExternal={!resource.id}
             options={options}
-            onRemove={() => updateBackgroundAudio(null)}
+            onRemove={handleRemove}
             removeItemLabel={__('Remove file', 'web-stories')}
           >
             <AudioPlayer
@@ -307,10 +313,11 @@ function BackgroundAudioPanelContent({
               mimeType={resource.mimeType}
               tracks={tracks}
               audioId={audioId}
+              playerRef={playerRef}
               loop={loop}
             />
           </FileRow>
-          {showCaptions && canManageCaptions && (
+          {showCaptions && (
             <>
               <SectionHeading>
                 {__('Caption and Subtitles', 'web-stories')}
@@ -334,20 +341,18 @@ function BackgroundAudioPanelContent({
           )}
         </>
       )}
-      {enableAudioHotlinking && (
-        <HotlinkModal
-          title={__('Insert external background audio', 'web-stories')}
-          isOpen={isOpen}
-          onError={onError}
-          onSelect={onSelectHotlink}
-          onClose={() => setIsOpen(false)}
-          allowedFileTypes={allowedAudioFileTypes}
-          insertText={__('Use audio file', 'web-stories')}
-          insertingText={__('Selecting audio file', 'web-stories')}
-          // See https://github.com/GoogleForCreators/web-stories-wp/issues/11479
-          canUseProxy={!showCaptions && !showLoopControl}
-        />
-      )}
+      <HotlinkModal
+        title={__('Insert external background audio', 'web-stories')}
+        isOpen={isOpen}
+        onError={onError}
+        onSelect={onSelectHotlink}
+        onClose={() => setIsOpen(false)}
+        allowedFileTypes={allowedAudioFileTypes}
+        insertText={__('Use audio file', 'web-stories')}
+        insertingText={__('Selecting audio file', 'web-stories')}
+        // See https://github.com/GoogleForCreators/web-stories-wp/issues/11479
+        canUseProxy={!showCaptions && !showLoopControl}
+      />
     </>
   );
 }
