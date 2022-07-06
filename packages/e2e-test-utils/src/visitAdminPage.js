@@ -35,7 +35,7 @@ import {
  * @param {string} [query] String to be serialized as query portion of URL.
  */
 async function visitAdminPage(adminPath, query = '') {
-  await page.goto(createURL(join('wp-admin', adminPath), query));
+  await page.goto(createURL(join('wp-admin', adminPath), query, { waitUntil: 'networkidle2' }));
 
   // Handle upgrade required screen
   if (isCurrentURL('wp-admin/upgrade.php')) {
