@@ -55,6 +55,16 @@ const PARAGRAPH = {
   y: 10,
 };
 
+const ELEMENT_WITH_TAG_NAME = {
+  id: '555',
+  content: 'Title 1',
+  fontSize: 36,
+  type: 'text',
+  tagName: 'h1',
+  x: 10,
+  y: 10,
+};
+
 describe('getTextElementTagNames', () => {
   it('should return tag name map for elements', () => {
     const elements = [ELEMENT_H1, ELEMENT_H2, ELEMENT_H3, PARAGRAPH];
@@ -65,6 +75,27 @@ describe('getTextElementTagNames', () => {
         ['222', 'h2'],
         ['333', 'h3'],
         ['444', 'p'],
+      ])
+    );
+  });
+
+  it('should return a tag name map for elements with tags already', () => {
+    const elements = [ELEMENT_WITH_TAG_NAME];
+
+    expect(getTextElementTagNames(elements)).toStrictEqual(
+      new Map([['555', 'h3']])
+    );
+  });
+
+  it('should return tag name map with added tag if passed', () => {
+    const elements = [ELEMENT_H1, ELEMENT_H2, ELEMENT_H3, PARAGRAPH];
+
+    expect(getTextElementTagNames(elements, 'h2')).toStrictEqual(
+      new Map([
+        ['111', 'h2'],
+        ['222', 'h2'],
+        ['333', 'h2'],
+        ['444', 'h2'],
       ])
     );
   });

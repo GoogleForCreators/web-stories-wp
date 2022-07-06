@@ -40,7 +40,7 @@ import { combineElementsWithTags } from './utils';
 // packages/output/src/utils/getTextElementTagNames
 
 // Options to be mapped for the dropdown
-const optionsMap = [
+const semanticHeadingsOptionsMap = [
   {
     label: __('Heading 1', 'web-stories'),
     value: 'h1',
@@ -127,7 +127,7 @@ function TextAccessibilityPanel({ selectedElements, pushUpdate }) {
           data-testid="headingLevel"
           title={__('Heading Levels', 'web-stories')}
           dropdownButtonLabel={__('Heading Levels', 'web-stories')}
-          options={optionsMap}
+          options={semanticHeadingsOptionsMap}
           selectedValue={currentValue}
           placeholder={
             MULTIPLE_VALUE === currentValue
