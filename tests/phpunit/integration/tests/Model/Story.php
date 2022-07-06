@@ -96,6 +96,39 @@ class Story extends TestCase {
 	/**
 	 * @covers ::load_from_post
 	 */
+	public function test_load_from_post_with_poster_meta(): void {
+		$post = self::factory()->post->create_and_get(
+			[
+				'post_title'   => 'test title',
+				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
+			]
+		);
+
+		add_post_meta(
+			$post->ID,
+			\Google\Web_Stories\Story_Post_Type::POSTER_META_KEY,
+			[
+				'url'        => 'http://www.example.com/image.png',
+				'height'     => 1000,
+				'width'      => 1000,
+				'needsProxy' => false,
+			]
+		);
+
+		$story = new \Google\Web_Stories\Model\Story();
+		$story->load_from_post( $post );
+
+		$this->assertEquals( $story->get_title(), 'test title' );
+		$this->assertEquals( $story->get_url(), get_permalink( $post ) );
+		$this->assertEquals( 'http://www.example.com/image.png', $story->get_poster_portrait() );
+		$this->assertEqualSets( [ 1000, 1000 ], $story->get_poster_portrait_size() );
+		$this->assertEmpty( $story->get_poster_srcset() );
+	}
+
+	/**
+	 * @covers ::load_from_post
+	 */
 	public function test_invalid_load_from_post(): void {
 		$post = self::factory()->post->create_and_get(
 			[

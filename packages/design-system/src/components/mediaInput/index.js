@@ -88,7 +88,7 @@ const Img = styled.img`
 `;
 
 const menuStyleOverride = css`
-  min-width: 100px;
+  white-space: nowrap;
   margin-top: 0;
   li {
     display: block;
@@ -254,6 +254,8 @@ export const MediaInput = forwardRef(function Media(
         placement={PLACEMENT.BOTTOM_END}
         anchor={internalRef}
         isOpen={isMenuOpen}
+        // Ensure that popup is visible in publish dialog.
+        zIndex={11}
       >
         <Menu
           parentId={buttonId}
