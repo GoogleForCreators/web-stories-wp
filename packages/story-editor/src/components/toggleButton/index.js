@@ -181,7 +181,7 @@ ToggleButton.propTypes = {
   copy: PropTypes.string,
   isOpen: PropTypes.bool,
   label: PropTypes.string,
-  MainIcon: PropTypes.node,
+  MainIcon: PropTypes.object,
   notificationCount: PropTypes.number,
   shortcut: PropTypes.string,
   popupZIndexOverride: PropTypes.number,
