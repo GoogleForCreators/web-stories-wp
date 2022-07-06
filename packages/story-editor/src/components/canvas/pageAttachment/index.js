@@ -155,7 +155,7 @@ function PageAttachment({ pageAttachment = {} }) {
               {icon ? (
                 <LinkImage
                   src={icon}
-                  alt={__('Attachment Icon', 'web-stories')}
+                  alt={__('Site Icon', 'web-stories')}
                   decoding="async"
                   crossOrigin="anonymous"
                 />
