@@ -32,7 +32,6 @@ import {
   Menu,
   PLACEMENT,
   Popup,
-  useKeyDownEffect,
   noop,
 } from '@googleforcreators/design-system';
 
@@ -41,8 +40,7 @@ import {
  */
 import { useLocalMedia } from '../../../../../app';
 import { ActionButton } from '../../shared';
-import useFocusCanvas from '../../../../canvas/useFocusCanvas';
-import useRovingTabIndex from '../../../../../utils/useRovingTabIndex';
+import DropDownKeyEvents from '../../../../panels/utils/dropDownKeyEvents';
 import DeleteDialog from './deleteDialog';
 import MediaEditDialog from './mediaEditDialog';
 
@@ -67,8 +65,6 @@ const menuStylesOverride = css`
   }
 `;
 
-// This is used for nested roving tab index to detect parent siblings.
-const BUTTON_NESTING_DEPTH = 3;
 const MENU_OPTIONS = {
   EDIT: 'edit',
   DELETE: 'delete',
@@ -155,16 +151,6 @@ function DropDownMenu({
     onClose();
   }, [setShowEditDialog, onClose]);
 
-  useRovingTabIndex(
-    { ref: moreButtonRef.current || null },
-    [],
-    BUTTON_NESTING_DEPTH
-  );
-  const focusCanvas = useFocusCanvas();
-  useKeyDownEffect(moreButtonRef.current || null, 'tab', focusCanvas, [
-    focusCanvas,
-  ]);
-
   const listId = useMemo(() => `list-${uuidv4()}`, []);
   const buttonId = useMemo(() => `button-${uuidv4()}`, []);
 
@@ -172,6 +158,9 @@ function DropDownMenu({
   return (
     canTranscodeResource(resource) && ( // Don't show menu if resource is being processed.
       <MenuContainer>
+        {moreButtonRef.current && (
+          <DropDownKeyEvents target={moreButtonRef.current} />
+        )}
         <MoreButton
           ref={moreButtonRef}
           onClick={onMenuOpen}
