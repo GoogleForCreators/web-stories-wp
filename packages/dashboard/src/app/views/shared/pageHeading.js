@@ -25,7 +25,7 @@ import {
   THEME_CONSTANTS,
   noop,
 } from '@googleforcreators/design-system';
-import { useCallback, useState } from '@googleforcreators/react';
+import { useCallback, useMemo } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
@@ -74,13 +74,6 @@ const PageHeading = ({
   searchValue,
   onClear = noop,
 }) => {
-  const [_searchValue, setSearchValue] = useState(searchValue);
-
-  const handleOnClear = useCallback(() => {
-    setSearchValue(undefined);
-    onClear();
-  }, [onClear]);
-
   return (
     <HeadingContainer>
       <StyledHeadline
@@ -95,10 +88,10 @@ const PageHeading = ({
         <HeaderSearch>
           <Search
             placeholder={searchPlaceholder}
-            selectedValue={{ label: _searchValue, value: _searchValue }}
+            searchValue={searchValue}
             options={searchOptions}
             handleSearchValueChange={handleSearchChange}
-            onClear={handleOnClear}
+            onClear={onClear}
             emptyText={__('No options available', 'web-stories')}
           />
         </HeaderSearch>

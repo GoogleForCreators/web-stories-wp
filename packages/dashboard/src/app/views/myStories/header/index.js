@@ -50,13 +50,19 @@ import StoryStatusToggle from './storyStatusToggle';
 function Header({ initialPageReady, stories, totalStoriesByStatus, view }) {
   const searchOptions = useMemo(() => getSearchOptions(stories), [stories]);
 
-  const { filters, updateFilter, registerFilters } = useStoryFilters(
-    ({ state: { filters }, actions: { updateFilter, registerFilters } }) => ({
-      filters,
-      updateFilter,
-      registerFilters,
-    })
-  );
+  const { filters, sortObject, updateFilter, updateSort, registerFilters } =
+    useStoryFilters(
+      ({
+        state: { filters, sortObject },
+        actions: { updateFilter, updateSort, registerFilters },
+      }) => ({
+        filters,
+        updateFilter,
+        sortObject,
+        updateSort,
+        registerFilters,
+      })
+    );
   const [dropDownFilters, statusFilterValue, searchFilterValue] =
     useMemo(() => {
       const status = filters.find(({ key }) => key === 'status');
@@ -128,6 +134,8 @@ function Header({ initialPageReady, stories, totalStoriesByStatus, view }) {
         handleLayoutSelect={view.toggleStyle}
         pageSortOptions={STORY_SORT_MENU_ITEMS}
         pageSortDefaultOption={STORY_SORT_OPTIONS.LAST_MODIFIED}
+        handleSortChange={updateSort}
+        currentSort={sortObject}
       />
     </>
   );

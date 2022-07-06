@@ -72,6 +72,8 @@ export default function BodyViewOptions({
   showGridToggle,
   showSortDropdown,
   filters = [],
+  currentSort,
+  handleSortChange,
 }) {
   const { updateFilter } = useStoryFilters(({ actions: { updateFilter } }) => ({
     updateFilter,
@@ -121,6 +123,8 @@ export default function BodyViewOptions({
               <SortDropDown
                 pageSortOptions={pageSortOptions}
                 pageSortDefaultOption={pageSortDefaultOption}
+                currentSort={currentSort}
+                handleSortChange={handleSortChange}
               />
             </StorySortDropdownContainer>
           )}

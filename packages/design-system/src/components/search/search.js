@@ -87,6 +87,7 @@ export const Search = ({
   popupFillWidth = DEFAULT_POPUP_FILL_WIDTH,
   popupZIndex,
   selectedValue = {},
+  searchValue,
   ...rest
 }) => {
   const listId = useMemo(() => `list-${uuidv4()}`, []);
@@ -106,6 +107,7 @@ export const Search = ({
   } = useSearch({
     options,
     selectedValue,
+    searchValue,
     handleSearchValueChange,
   });
 

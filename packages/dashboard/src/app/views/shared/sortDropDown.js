@@ -27,25 +27,22 @@ import { __ } from '@googleforcreators/i18n';
  * Internal dependencies
  */
 import { DROPDOWN_TYPES } from '../../../constants';
-import useStoryFilters from '../myStories/filters/useStoryFilters';
 
 const StyledDropDown = styled(DropDown)`
   width: 210px;
 `;
 
-function SortDropDown({ pageSortOptions, pageSortDefaultOption }) {
-  const { sortObject, updateSort } = useStoryFilters(
-    ({ state: { sortObject }, actions: { updateSort } }) => ({
-      sortObject,
-      updateSort,
-    })
-  );
-
-  const handleSortChange = useCallback(
+function SortDropDown({
+  pageSortOptions,
+  pageSortDefaultOption,
+  currentSort,
+  handleSortChange,
+}) {
+  const _handleSortChange = useCallback(
     (_, orderby) => {
-      updateSort({ orderby });
+      handleSortChange({ orderby });
     },
-    [updateSort]
+    [handleSortChange]
   );
 
   return (
@@ -53,8 +50,8 @@ function SortDropDown({ pageSortOptions, pageSortDefaultOption }) {
       ariaLabel={__('Choose sort option for display', 'web-stories')}
       options={pageSortOptions}
       type={DROPDOWN_TYPES.DropDown}
-      selectedValue={sortObject?.orderby || pageSortDefaultOption}
-      onMenuItemClick={handleSortChange}
+      selectedValue={currentSort?.orderby || pageSortDefaultOption}
+      onMenuItemClick={_handleSortChange}
     />
   );
 }

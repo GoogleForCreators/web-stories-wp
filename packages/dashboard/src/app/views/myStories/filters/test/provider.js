@@ -25,7 +25,7 @@ import FiltersProvider from '..';
 import useStoryFilters from '../useStoryFilters';
 import { SORT_KEYS } from '../../../../../constants/stories';
 
-jest.mock('../taxonomy/useTaxonomyFilters', () => {
+jest.mock('../StoryFiltersProvider/taxonomy/useTaxonomyFilters', () => {
   const initializeTaxonomyFilters = () => Promise.resolve([]);
   return {
     __esModule: true,

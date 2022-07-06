@@ -22,10 +22,15 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import StoryFiltersProvider from './StoryFiltersProvider';
+import StoryFiltersProvider from '../myStories/filters/StoryFiltersProvider';
+import TemplateFiltersProvider from '../exploreTemplates/filters/TemplateFiltersProvider';
 
 export default function FiltersProvider({ children }) {
-  return <StoryFiltersProvider>{children}</StoryFiltersProvider>;
+  return (
+    <StoryFiltersProvider>
+      <TemplateFiltersProvider>{children}</TemplateFiltersProvider>
+    </StoryFiltersProvider>
+  );
 }
 
 FiltersProvider.propTypes = {

@@ -17,7 +17,8 @@
 /**
  * Internal dependencies
  */
-import { SORT_KEYS } from '../../../../constants/stories';
+import { STORY_SORT_KEYS } from '../../../constants/stories';
+import { TEMPLATE_SORT_KEYS } from '../../../constants/templates';
 import * as types from './types';
 
 /**
@@ -44,6 +45,9 @@ const reducer = (state, { type, payload = {} }) => {
 
       // remove 'filter-by' value
       if (value.filterId && _filter?.filterId === value.filterId) {
+        if (key === 'search') {
+          return state;
+        }
         value.filterId = null;
       }
 
@@ -68,15 +72,18 @@ const reducer = (state, { type, payload = {} }) => {
     }
 
     case types.UPDATE_SORT: {
-      const { values } = payload;
+      const { type: sortType, values } = payload;
 
       const sortObject = {};
+
+      const ACCEPTABLE_KEYS =
+        sortType === 'story' ? STORY_SORT_KEYS : TEMPLATE_SORT_KEYS;
 
       // only use acceptable key value pairs
       for (const key in values) {
         if (
-          key in SORT_KEYS &&
-          Object.values(SORT_KEYS[key]).includes(values[key]) &&
+          key in ACCEPTABLE_KEYS &&
+          Object.values(ACCEPTABLE_KEYS[key]).includes(values[key]) &&
           state.sortObject[key] !== values[key]
         ) {
           sortObject[key] = values[key];

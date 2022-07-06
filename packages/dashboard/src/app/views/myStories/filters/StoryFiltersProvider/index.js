@@ -32,8 +32,8 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { DEFAULT_FILTERS } from '../../../../../constants/stories';
-import reducer from '../reducer';
-import * as types from '../types';
+import reducer from '../../../filters/reducer';
+import * as types from '../../../filters/types';
 import useTaxonomyFilters from './taxonomy/useTaxonomyFilters';
 import useAuthorFilter from './author/useAuthorFilter';
 
@@ -58,17 +58,18 @@ export const filterContext = createContext({
  * @return {Node} React node
  */
 
+const { filters: defaultStoryFilters, sort: defaultStorySort } =
+  DEFAULT_FILTERS;
+
 export default function StoryFiltersProvider({ children }) {
   // each filter type will have its own logic for initilizing and querying
   const initializeTaxonomyFilters = useTaxonomyFilters();
   const initializeAuthorFilter = useAuthorFilter();
-  const { filters: defaultStoryFilters, sort: defaultStorySort } =
-    DEFAULT_FILTERS;
 
   const [state, dispatch] = useReducer(reducer, {
     filters: [],
-    filtersObject: { ...defaultStoryFilters },
-    sortObject: { ...defaultStorySort },
+    filtersObject: defaultStoryFilters,
+    sortObject: defaultStorySort,
   });
 
   /**
@@ -79,7 +80,7 @@ export default function StoryFiltersProvider({ children }) {
    * @return {void}
    */
   const updateSort = useCallback((values) => {
-    dispatch({ type: types.UPDATE_SORT, payload: { values } });
+    dispatch({ type: types.UPDATE_SORT, payload: { type: 'story', values } });
   }, []);
 
   /**

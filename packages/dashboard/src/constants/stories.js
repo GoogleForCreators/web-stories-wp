@@ -76,7 +76,7 @@ export const STORY_SORT_OPTIONS = {
   CREATED_BY: 'story_author',
 };
 
-export const SORT_KEYS = {
+export const STORY_SORT_KEYS = {
   orderby: STORY_SORT_OPTIONS,
   order: SORT_DIRECTION,
 };

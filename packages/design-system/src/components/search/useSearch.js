@@ -33,6 +33,7 @@ import { useLiveRegion } from '../../utils';
 export default function useSearch({
   handleSearchValueChange,
   selectedValue,
+  searchValue,
   options,
 }) {
   const speak = useLiveRegion('assertive');
@@ -102,11 +103,12 @@ export default function useSearch({
   );
 
   const activeOption = useMemo(() => {
-    if (!selectedValue?.value || normalizedOptions.length === 0) {
+    const selected = selectedValue?.value || searchValue;
+    if (!selected || normalizedOptions.length === 0) {
       return null;
     }
-    return getActiveOption(selectedValue.value);
-  }, [selectedValue, normalizedOptions, getActiveOption]);
+    return getActiveOption(selected);
+  }, [selectedValue.value, searchValue, normalizedOptions, getActiveOption]);
 
   /**
    * Monitor input value separate from selected value to respect user input while maintaining accurate results.

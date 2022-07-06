@@ -35,7 +35,7 @@ import { APP_ROUTES, ROUTE_TITLES } from '../../constants';
 import { Route, useRouteHistory } from '../../app/router';
 import { AppFrame, LeftRail, PageContent } from '../pageStructure';
 import useApiAlerts from '../../app/api/useApiAlerts';
-import FiltersProvider from '../../app/views/myStories/filters';
+import FiltersProvider from '../../app/views/filters/provider';
 import useApi from '../../app/api/useApi';
 import { useConfig } from '../../app/config';
 
