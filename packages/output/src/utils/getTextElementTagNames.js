@@ -52,6 +52,7 @@ function getTextElementTagNames(elements, newTag) {
         // if a tag already exists,
         // utilize the one already part of the element
         if (tagName) {
+          tagNamesMap.set(id, tagName);
           return tagNamesMap;
         }
 

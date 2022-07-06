@@ -63,14 +63,19 @@ const optionsMap = [
   },
 ];
 
-function TextAccessibilityPanel({ selectedElements }) {
+function TextAccessibilityPanel({ selectedElements, pushUpdate }) {
+  // Feature flagging for Semantic Headings
   const showSemanticHeadings = useFeature('showSemanticHeadings');
   const [selectedTextElements, setSelectedTextElements] = useState([]);
   const [currentTags, setCurrentTags] = useState([]);
   useEffect(() => {
+    // We only want to do this if all selected elements are of type text
     const textElements = selectedElements.filter(({ type }) => 'text' === type);
+    // Then we want to get the text tags for the elements
     const textTags = getTextElementTagNames(textElements);
+    // Then combine the elements with their associated tag
     const newElements = combineElementsWithTags(textElements, textTags);
+    // And then set them into component state
     setSelectedTextElements(newElements);
     setCurrentTags(Array.from(textTags.values()));
   }, [selectedElements, setSelectedTextElements]);
@@ -87,15 +92,22 @@ function TextAccessibilityPanel({ selectedElements }) {
   // Map all types of tag names in the selected elements
   // and then convert to an Array for usage
   const handleChange = (ev, value) => {
-    // TODO: MAKE THIS UPDATE THE TAG NAME IN DATA
-    // TODO: THIS WORK ONLY CHANGES THE TAG NAME IN LOCAL STATE
-
+    selectedElements.map((element) => {
+      if (element.type != 'text') {
+        return;
+      }
+      pushUpdate({ tagName: value });
+    });
     // Update the selected text elements with the
     // value chosen in the text accessibility dropdown
     const newTags = getTextElementTagNames(selectedTextElements, value);
     setCurrentTags(Array.from(newTags.values()));
   };
-  const currentValue = currentTags.length > 1 ? '((MULTIPLE))' : currentTags;
+  // Check if tags match for selected item in dropdown
+  // If they don't match, we want to show 'Mixed'
+  // However, if they match, show the matching value
+  const doElementTagsMatch = new Set(currentTags || []).size === 1;
+  const currentValue = doElementTagsMatch ? currentTags[0] : '((MULTIPLE))';
   return (
     <SimplePanel
       css={highlight && styles.FLASH}
@@ -154,6 +166,7 @@ function TextAccessibilityPanel({ selectedElements }) {
 
 TextAccessibilityPanel.propTypes = {
   selectedElements: PropTypes.array.isRequired,
+  pushUpdate: PropTypes.func.isRequired,
 };
 
 export default TextAccessibilityPanel;
