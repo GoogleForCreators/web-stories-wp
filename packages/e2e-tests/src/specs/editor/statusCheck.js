@@ -64,7 +64,7 @@ describe('Status Check', () => {
   describe('200 OK', () => {
     it('should not display error dialog', async () => {
       await createNewStory();
-      await expect(page).toMatchElement('input[placeholder="Add title"]');
+      await expect(page).not.toMatch('Unable to save your story');
     });
   });
 
