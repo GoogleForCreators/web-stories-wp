@@ -98,7 +98,7 @@ function MediaRecordingProvider({ children }) {
         trackError('media_recording_capture', e.message);
         showSnackbar({
           message: __(
-            ' There was an error taking a photo. Please try again.',
+            'There was an error recording a video. Please try again.',
             'web-stories'
           ),
           dismissable: true,
