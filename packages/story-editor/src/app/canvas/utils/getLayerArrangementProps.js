@@ -20,6 +20,10 @@
 import { LAYER_DIRECTIONS } from '../../../constants';
 
 function getLayerArrangementProps(key, shift, selectedElements, elements) {
+  // This only supports moving single layer.
+  if (!selectedElements || selectedElements.length > 1) {
+    return {};
+  }
   let position = null;
   if (key === 'ArrowUp') {
     position = shift ? LAYER_DIRECTIONS.FRONT : LAYER_DIRECTIONS.FORWARD;
