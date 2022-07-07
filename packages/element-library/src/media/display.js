@@ -55,7 +55,6 @@ const Overlay = styled.div`
 
 function MediaDisplay({
   element,
-  box,
   mediaRef,
   children,
   previewMode,
@@ -127,7 +126,7 @@ function MediaDisplay({
     >
       {showPlaceholder &&
         renderResourcePlaceholder &&
-        renderResourcePlaceholder(resource, box)}
+        renderResourcePlaceholder(resource)}
       {children}
       {overlay && <Overlay backgroundColor={overlay} />}
     </Element>
@@ -137,7 +136,6 @@ function MediaDisplay({
 MediaDisplay.propTypes = {
   element: StoryPropTypes.elements.media.isRequired,
   mediaRef: PropTypes.object,
-  box: PropTypes.object,
   children: PropTypes.node,
   showPlaceholder: PropTypes.bool,
   previewMode: PropTypes.bool,

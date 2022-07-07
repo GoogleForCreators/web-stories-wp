@@ -121,7 +121,6 @@ function ImageDisplay({
 
   return (
     <MediaDisplay
-      box={box}
       element={element}
       mediaRef={ref}
       showPlaceholder={showPlaceholder}

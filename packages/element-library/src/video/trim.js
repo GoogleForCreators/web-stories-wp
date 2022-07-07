@@ -128,7 +128,6 @@ function VideoTrim({
     <>
       <Wrapper ref={wrapperRef}>
         <MediaDisplay
-          box={box}
           element={element}
           mediaRef={videoRef}
           showPlaceholder

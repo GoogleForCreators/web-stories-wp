@@ -48,12 +48,11 @@ const Image = styled.img`
 
 function VideoDisplay({
   previewMode,
-  box,
+  box: { width, height },
   element,
   renderResourcePlaceholder,
 }) {
   const { id, poster, resource, isBackground, scale, focalX, focalY } = element;
-  const { width, height } = box;
   const ref = useRef();
   let style = {};
   if (isBackground) {
@@ -77,7 +76,6 @@ function VideoDisplay({
 
   return (
     <MediaDisplay
-      box={box}
       element={element}
       mediaRef={ref}
       showPlaceholder

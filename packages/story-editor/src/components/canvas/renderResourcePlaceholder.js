@@ -37,16 +37,9 @@ const BaseColorContainer = styled.div`
   background-color: ${({ $baseColor }) => $baseColor};
 `;
 
-function renderResourcePlaceholder({ blurHash, baseColor }, { width, height }) {
+function renderResourcePlaceholder({ blurHash, baseColor }) {
   if (blurHash) {
-    return (
-      <BlurhashContainer
-        hash={blurHash}
-        resolutionX={parseInt(width)}
-        resolutionY={parseInt(height)}
-        punch={1}
-      />
-    );
+    return <BlurhashContainer hash={blurHash} punch={1} />;
   }
 
   if (baseColor) {

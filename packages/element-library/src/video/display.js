@@ -49,7 +49,7 @@ const Image = styled.img`
 
 function VideoDisplay({
   previewMode,
-  box,
+  box: { width, height },
   element,
   getProxiedUrl,
   renderResourcePlaceholder,
@@ -65,7 +65,6 @@ function VideoDisplay({
     focalY,
     loop,
   } = element;
-  const { width, height } = box;
   const ref = useRef();
 
   let style = {};
@@ -101,7 +100,6 @@ function VideoDisplay({
 
   return (
     <MediaDisplay
-      box={box}
       element={element}
       mediaRef={ref}
       showPlaceholder
