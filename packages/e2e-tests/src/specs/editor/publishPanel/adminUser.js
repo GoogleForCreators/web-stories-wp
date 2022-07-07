@@ -82,7 +82,7 @@ describe('Publish panel in document tab', () => {
     await page.keyboard.type('auth');
 
     // wait for search results
-    await page.waitForTimeout(1000);
+    await page.waitForTimeout(500);
 
     const optionListAfterSearch = await authorDropDownOptions.$$eval(
       'li[role="option"]',
