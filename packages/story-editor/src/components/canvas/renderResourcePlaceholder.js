@@ -42,8 +42,8 @@ function renderResourcePlaceholder({ blurHash, baseColor }, { width, height }) {
     return (
       <BlurhashContainer
         hash={blurHash}
-        width={width}
-        height={height}
+        resolutionX={parseInt(width)}
+        resolutionY={parseInt(height)}
         punch={1}
       />
     );
