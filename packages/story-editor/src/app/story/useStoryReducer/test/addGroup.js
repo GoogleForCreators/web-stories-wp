@@ -79,6 +79,26 @@ describe('addGroup', () => {
     });
   });
 
+  it('should add group even if `groups` is not set', () => {
+    const { restore, addGroup } = setupReducer();
+
+    restore({
+      pages: [
+        {
+          id: '111',
+          elements: [{ id: '123', isBackground: true }, { id: '234' }],
+        },
+      ],
+      current: '111',
+    });
+
+    const result = addGroup({ groupId: 'g1', name: 'Group 1' });
+
+    expect(result.pages[0].groups).toStrictEqual({
+      g1: { name: 'Group 1', isLocked: false },
+    });
+  });
+
   it('should add group with specified lock status', () => {
     const { restore, addGroup } = setupReducer();
 
