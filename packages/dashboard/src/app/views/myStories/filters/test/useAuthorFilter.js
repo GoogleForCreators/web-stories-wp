@@ -72,7 +72,7 @@ describe('useAuthorFilter', () => {
         expect(filter.placeholder).toBe('All Authors');
         expect(filter.ariaLabel).toBe(`Filter stories by author`);
         expect(filter.noMatchesFoundLabel).toBe('No authors found');
-        expect(filter.searchPlaceholder).toBe('Search authors');
+        expect(filter.searchPlaceholder).toBe('Search Authors');
       });
     });
   });

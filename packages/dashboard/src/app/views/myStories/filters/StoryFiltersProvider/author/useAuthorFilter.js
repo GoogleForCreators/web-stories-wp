@@ -89,7 +89,7 @@ function useAuthorFilter() {
       key: 'author',
       ariaLabel: __('Filter stories by author', 'web-stories'),
       placeholder: __('All Authors', 'web-stories'),
-      searchPlaceholder: __('Search authors', 'web-stories'),
+      searchPlaceholder: __('Search Authors', 'web-stories'),
       noMatchesFoundLabel: __('No authors found', 'web-stories'),
       query: queryAuthors,
       getPrimaryOptions,
