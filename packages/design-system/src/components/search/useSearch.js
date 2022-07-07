@@ -113,14 +113,27 @@ export default function useSearch({
   /**
    * Monitor input value separate from selected value to respect user input while maintaining accurate results.
    */
-  const [_inputState, setInputState] = useState(undefined);
+  const [_inputState, _setInputState] = useState(searchValue);
+
+  /**
+   * send the inputState when it changes back to the parent so that any results that need to change can be changed.
+   */
+  const setInputState = useCallback(
+    (value) => {
+      _setInputState(value);
+      if (value !== undefined) {
+        handleSearchValueChange?.(value);
+      }
+    },
+    [handleSearchValueChange]
+  );
 
   const inputState = useMemo(
     () => ({
       value: _inputState,
       set: setInputState,
     }),
-    [_inputState]
+    [_inputState, setInputState]
   );
 
   useEffect(() => {
@@ -128,14 +141,6 @@ export default function useSearch({
       inputState.set(selectedValue?.label || '');
     }
   }, [inputState, selectedValue]);
-  /**
-   * send the inputState when it changes back to the parent so that any results that need to change can be changed.
-   */
-  useEffect(() => {
-    if (inputState?.value !== undefined) {
-      handleSearchValueChange?.(inputState.value);
-    }
-  }, [handleSearchValueChange, inputState]);
 
   /* Announce changes to the length of the list */
   useEffect(() => {

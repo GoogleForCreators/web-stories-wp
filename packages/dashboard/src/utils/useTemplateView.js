@@ -23,14 +23,18 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { TEMPLATES_GALLERY_SORT_OPTIONS, VIEW_STYLE } from '../constants';
+import {
+  TEMPLATES_GALLERY_SORT_OPTIONS,
+  VIEW_STYLE,
+  DEFAULT_TEMPLATE_FILTERS,
+} from '../constants';
 import { PageSizePropType } from '../types';
 import usePagePreviewSize from './usePagePreviewSize';
 
 export default function useTemplateView({
   totalPages,
-  sortObject = {},
-  filtersObject = {},
+  sortObject = DEFAULT_TEMPLATE_FILTERS.sort,
+  filtersObject = DEFAULT_TEMPLATE_FILTERS.filters,
 }) {
   const [sort, _setSort] = useState(sortObject);
   const [filters, _setFilters] = useState(filtersObject);
