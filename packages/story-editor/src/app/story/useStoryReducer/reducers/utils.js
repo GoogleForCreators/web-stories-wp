@@ -164,3 +164,18 @@ export function exclusion(left = [], right = []) {
   const leftJoinKeys = left.map(({ id }) => id);
   return rightSet.filter(({ id }) => !leftJoinKeys.includes(id));
 }
+
+/**
+ * Calculate the last index of a group.
+ *
+ * @param {Object} props Props
+ * @param {Array} props.elements Elements array
+ * @param {string} props.groupId Group id
+ * @return {number} Last index of group
+ */
+export function getLastIndexOfGroup({ elements, groupId }) {
+  const isMember = (e) => e.groupId === groupId;
+  const firstGroupElemenIndex = elements.findIndex(isMember);
+  const groupSize = elements.filter(isMember).length;
+  return firstGroupElemenIndex + groupSize - 1;
+}
