@@ -116,6 +116,8 @@ function MediaInput(
     (open) => {
       // Options available for the media input menu.
       const availableMenuOptions = [
+        { label: __('Upload a file', 'web-stories'), value: 'upload' },
+        { label: __('Link to a file', 'web-stories'), value: 'hotlink' },
         { label: __('Edit', 'web-stories'), value: 'edit' },
         { label: __('Remove', 'web-stories'), value: 'remove' },
         { label: __('Reset', 'web-stories'), value: 'reset' },
