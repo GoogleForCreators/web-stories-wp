@@ -29,6 +29,7 @@
     }
   },
   "rules": {
+    "array-callback-return": "error",
     "block-scoped-var": "error",
     "complexity": ["error", {"max": 20}],
     "consistent-return": "error",
