@@ -212,32 +212,7 @@ function observeConsoleLogging() {
      * @wordpress/jest-console matchers, will cause the intended test
      * failure.
      **/
-    // console[logFunction](text);
-  });
-}
-
-/**
- * Runs Axe tests when the story editor is found on the current page.
- *
- * @return {?Promise} Promise resolving once Axe texts are finished.
- */
-async function runAxeTestsForStoriesEditor() {
-  if (!(await page.$('body.edit-story'))) {
-    return;
-  }
-
-  await expect(page).toPassAxeTests({
-    // Temporary disabled rules to enable initial integration.
-    disabledRules: [
-      'aria-input-field-name',
-      'aria-required-parent',
-      'color-contrast',
-      // Because of multiple #_wpnonce elements.
-      'duplicate-id',
-      'region',
-      'aria-allowed-attr',
-      'nested-interactive',
-    ],
+    console[logFunction](text);
   });
 }
 
@@ -267,7 +242,6 @@ beforeAll(async () => {
 
 // eslint-disable-next-line jest/require-top-level-describe
 afterEach(async () => {
-  // await runAxeTestsForStoriesEditor();
   await setupBrowser();
   await clearLocalStorage();
 });

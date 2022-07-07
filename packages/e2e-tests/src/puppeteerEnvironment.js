@@ -50,11 +50,9 @@ class PuppeteerEnvironment extends OriginalEnvironment {
       await this.storeArtifacts(testName, errorMessages);
 
       // eslint-disable-next-line no-console
-      /*
       console.log(
         ' Unhandled event(' + event.name + '): ' + util.inspect(event)
       );
-      */
     }
   }
 

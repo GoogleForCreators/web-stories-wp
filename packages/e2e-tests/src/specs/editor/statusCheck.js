@@ -61,13 +61,6 @@ describe('Status Check', () => {
     mockResponse = undefined;
   });
 
-  describe('200 OK', () => {
-    it('should not display error dialog', async () => {
-      await createNewStory();
-      await expect(page).not.toMatch('Unable to save your story');
-    });
-  });
-
   describe('Invalid JSON response', () => {
     it('should display error dialog', async () => {
       mockResponse = {
