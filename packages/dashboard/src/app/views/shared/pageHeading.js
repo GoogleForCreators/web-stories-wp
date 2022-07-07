@@ -25,7 +25,7 @@ import {
   THEME_CONSTANTS,
   noop,
 } from '@googleforcreators/design-system';
-import { useCallback, useMemo } from '@googleforcreators/react';
+
 /**
  * Internal dependencies
  */

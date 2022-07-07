@@ -110,7 +110,7 @@ export default function StoryFiltersProvider({ children }) {
    *
    * @return {void}
    */
-  const initializeStoyFilters = useCallback(async () => {
+  const initializeStoryFilters = useCallback(async () => {
     const taxonomies = await initializeTaxonomyFilters();
     const author = initializeAuthorFilter();
 
@@ -129,8 +129,8 @@ export default function StoryFiltersProvider({ children }) {
   }, [state, updateFilter, updateSort, registerFilters]);
 
   useEffect(() => {
-    initializeStoyFilters();
-  }, [initializeStoyFilters]);
+    initializeStoryFilters();
+  }, [initializeStoryFilters]);
 
   return (
     <filterContext.Provider value={contextValue}>

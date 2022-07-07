@@ -108,7 +108,7 @@ export default function useSearch({
       return null;
     }
     return getActiveOption(selected);
-  }, [selectedValue.value, searchValue, normalizedOptions, getActiveOption]);
+  }, [selectedValue, searchValue, normalizedOptions, getActiveOption]);
 
   /**
    * Monitor input value separate from selected value to respect user input while maintaining accurate results.

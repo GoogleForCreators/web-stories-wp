@@ -21,9 +21,9 @@ import { renderHook, act } from '@testing-library/react-hooks';
 /**
  * Internal dependencies
  */
-import FiltersProvider from '..';
+import StoryFiltersProvider from '../StoryFiltersProvider';
 import useStoryFilters from '../useStoryFilters';
-import { SORT_KEYS } from '../../../../../constants/stories';
+import { STORY_SORT_KEYS } from '../../../../../constants/stories';
 
 jest.mock('../StoryFiltersProvider/taxonomy/useTaxonomyFilters', () => {
   const initializeTaxonomyFilters = () => Promise.resolve([]);
@@ -35,7 +35,7 @@ jest.mock('../StoryFiltersProvider/taxonomy/useTaxonomyFilters', () => {
   };
 });
 
-jest.mock('../author/useAuthorFilter', () => {
+jest.mock('../StoryFiltersProvider/author/useAuthorFilter', () => {
   const initializeAuthorFilter = () => null;
   return {
     __esModule: true,
@@ -48,7 +48,7 @@ jest.mock('../author/useAuthorFilter', () => {
 describe('provider', () => {
   it('should register filters and update filters', () => {
     const wrapper = ({ children }) => (
-      <FiltersProvider>{children}</FiltersProvider>
+      <StoryFiltersProvider>{children}</StoryFiltersProvider>
     );
 
     const { result } = renderHook(() => useStoryFilters(), { wrapper });
@@ -95,13 +95,13 @@ describe('provider', () => {
 
   it('should be able to update the sortObject if the acceptable keys are use', () => {
     const wrapper = ({ children }) => (
-      <FiltersProvider>{children}</FiltersProvider>
+      <StoryFiltersProvider>{children}</StoryFiltersProvider>
     );
 
     const { result } = renderHook(() => useStoryFilters(), { wrapper });
 
-    for (const key of Object.keys(SORT_KEYS)) {
-      for (const value of Object.values(SORT_KEYS[key])) {
+    for (const key of Object.keys(STORY_SORT_KEYS)) {
+      for (const value of Object.values(STORY_SORT_KEYS[key])) {
         act(() => {
           result.current.actions.updateSort({ [key]: value });
         });
@@ -112,7 +112,7 @@ describe('provider', () => {
 
   it('should not be able to update the sortObject with arbitrary key value pairs', () => {
     const wrapper = ({ children }) => (
-      <FiltersProvider>{children}</FiltersProvider>
+      <StoryFiltersProvider>{children}</StoryFiltersProvider>
     );
 
     const { result } = renderHook(() => useStoryFilters(), { wrapper });
@@ -140,7 +140,7 @@ describe('provider', () => {
 
   it('should not return sortObject if nothing changes', () => {
     const wrapper = ({ children }) => (
-      <FiltersProvider>{children}</FiltersProvider>
+      <StoryFiltersProvider>{children}</StoryFiltersProvider>
     );
 
     const { result } = renderHook(() => useStoryFilters(), { wrapper });

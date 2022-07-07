@@ -17,8 +17,8 @@
 /**
  * Internal dependencies
  */
-import reducer from '../reducer';
-import * as types from '../types';
+import reducer from '../../../filters/reducer';
+import * as types from '../../../filters/types';
 
 describe('reducer', () => {
   it('should update the state', () => {

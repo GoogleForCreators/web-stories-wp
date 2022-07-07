@@ -23,11 +23,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import {
-  TEMPLATES_GALLERY_SORT_OPTIONS,
-  TEMPLATES_GALLERY_STATUS,
-  VIEW_STYLE,
-} from '../constants';
+import { TEMPLATES_GALLERY_SORT_OPTIONS, VIEW_STYLE } from '../constants';
 import { PageSizePropType } from '../types';
 import usePagePreviewSize from './usePagePreviewSize';
 
@@ -36,7 +32,6 @@ export default function useTemplateView({
   sortObject = {},
   filtersObject = {},
 }) {
-  const [searchKeyword, _setSearchKeyword] = useState('');
   const [sort, _setSort] = useState(sortObject);
   const [filters, _setFilters] = useState(filtersObject);
   const [page, setPage] = useState(1);
@@ -72,14 +67,6 @@ export default function useTemplateView({
     },
     [setPageClamped]
   );
-
-  // const setSearchKeyword = useCallback(
-  //   (newSearchKeyword) => {
-  //     setPageClamped(1);
-  //     _setSearchKeyword(newSearchKeyword);
-  //   },
-  //   [setPageClamped]
-  // );
 
   return useMemo(
     () => ({

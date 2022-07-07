@@ -64,6 +64,11 @@ SortDropDown.propTypes = {
     })
   ),
   pageSortDefaultOption: PropTypes.string,
+  currentSort: PropTypes.shape({
+    orderby: PropTypes.string,
+    order: PropTypes.string,
+  }),
+  handleSortChange: PropTypes.func.isRequired,
 };
 
 export default SortDropDown;
