@@ -34,6 +34,7 @@ function getLayerArrangementProps(key, shift, selectedElements, elements) {
   if (!position) {
     return {};
   }
+
   const { id, groupId } = selectedElements[0];
   // Get layer index.
   const currentPosition = elements.findIndex(({ id: elId }) => elId === id);
