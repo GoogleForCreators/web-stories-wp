@@ -27,6 +27,7 @@ import { useState, useEffect, useCallback } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
 import { useDispatch } from '@wordpress/data';
 import { addQueryArgs } from '@wordpress/url';
+import { store as noticesStore } from '@wordpress/notices';
 
 /**
  * Internal dependencies
@@ -49,7 +50,7 @@ function StoryPicker({
   setIsSortingStories = () => {},
   maxNumOfStories,
 }) {
-  const { createErrorNotice } = useDispatch('core/notices');
+  const { createErrorNotice } = useDispatch(noticesStore);
 
   const [localSelectedStories, setLocalSelectedStories] =
     useState(selectedStories);

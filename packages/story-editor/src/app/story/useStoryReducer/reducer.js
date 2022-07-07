@@ -143,6 +143,10 @@ function reducer(state, { type, payload }) {
       return reducers.duplicateGroup(state, payload);
     }
 
+    case types.REMOVE_ELEMENT_FROM_GROUP: {
+      return reducers.removeElementFromGroup(state, payload);
+    }
+
     default:
       return state;
   }

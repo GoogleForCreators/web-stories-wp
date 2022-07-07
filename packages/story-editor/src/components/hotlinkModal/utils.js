@@ -101,3 +101,51 @@ export function CORSMessage() {
     </TranslateWithMarkup>
   );
 }
+
+export function checkImageDimensions(
+  suppliedWidth,
+  suppliedHeight,
+  requiredWidth,
+  requiredHeight
+) {
+  if (
+    requiredHeight &&
+    requiredHeight !== suppliedHeight &&
+    requiredWidth &&
+    requiredWidth !== suppliedWidth
+  ) {
+    return sprintf(
+      /* translators: 1: image dimensions. 2: required dimensions. */
+      __(
+        'Image dimensions (%1$s) do not match required image dimensions (%2$s).',
+        'web-stories'
+      ),
+      `${suppliedWidth}x${suppliedHeight}px`,
+      `${requiredWidth}x${requiredHeight}px`
+    );
+  }
+  if (requiredHeight && requiredHeight !== suppliedHeight) {
+    return sprintf(
+      /* translators: 1: supplied height. 2: required height. */
+      __(
+        'Image height (%1$s) does not match required image height (%2$s).',
+        'web-stories'
+      ),
+      `${suppliedHeight}px`,
+      `${requiredHeight}px`
+    );
+  }
+  if (requiredWidth && requiredWidth !== suppliedWidth) {
+    return sprintf(
+      /* translators: 1: supplied width. 2: required width. */
+      __(
+        'Image width (%1$s) does not match required image width (%2$s).',
+        'web-stories'
+      ),
+      `${suppliedWidth}px`,
+      `${requiredWidth}px`
+    );
+  }
+
+  return null;
+}
