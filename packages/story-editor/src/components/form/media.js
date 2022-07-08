@@ -25,12 +25,13 @@ import {
   MediaInput as Input,
   themeHelpers,
 } from '@googleforcreators/design-system';
-
 /**
  * Internal dependencies
  */
 import { useConfig } from '../../app';
 import { MULTIPLE_VALUE } from '../../constants';
+import HotlinkModal from '../hotlinkModal';
+import useHotlink from './useHotlink';
 
 const StyledInput = styled(Input)`
   button:focus {
@@ -44,6 +45,7 @@ const StyledInput = styled(Input)`
 
 const MediaInputField = ({
   open,
+  openHotlink,
   dropdownOptions,
   onChange,
   forwardedRef,
@@ -54,7 +56,11 @@ const MediaInputField = ({
     (evt, opt) => {
       switch (opt) {
         case 'edit':
+        case 'upload':
           open(evt);
+          break;
+        case 'hotlink':
+          openHotlink(evt);
           break;
         case 'remove':
         case 'reset':
@@ -64,7 +70,7 @@ const MediaInputField = ({
           break;
       }
     },
-    [onChange, open]
+    [onChange, open, openHotlink]
   );
 
   return (
@@ -82,6 +88,9 @@ const MediaInputField = ({
 function MediaInput(
   {
     buttonInsertText = __('Choose an image', 'web-stories'),
+    hotlinkTitle = __('Use external image', 'web-stories'),
+    hotlinkInsertText = __('Use image', 'web-stories'),
+    hotlinkInsertingText = __('Using image', 'web-stories'),
     menuOptions = [],
     onChange,
     onChangeErrorText = __(
@@ -92,16 +101,23 @@ function MediaInput(
     type = 'image',
     value,
     cropParams,
+    canUseProxy = false,
     ...rest
   },
   forwardedRef
 ) {
   const { MediaUpload } = useConfig();
+  const {
+    actions: { onSelect, openHotlink, onCloseHotlink },
+    state: { allowedFileTypes, isOpen },
+  } = useHotlink({ onChange, type, canUseProxy });
 
   const renderMediaIcon = useCallback(
     (open) => {
       // Options available for the media input menu.
       const availableMenuOptions = [
+        { label: __('Upload a file', 'web-stories'), value: 'upload' },
+        { label: __('Link to a file', 'web-stories'), value: 'hotlink' },
         { label: __('Edit', 'web-stories'), value: 'edit' },
         { label: __('Remove', 'web-stories'), value: 'remove' },
         { label: __('Reset', 'web-stories'), value: 'reset' },
@@ -115,10 +131,10 @@ function MediaInput(
           : availableMenuOptions.filter(({ value: option }) =>
               menuOptions.includes(option)
             );
-
       return (
         <MediaInputField
           open={open}
+          openHotlink={openHotlink}
           onChange={onChange}
           dropdownOptions={dropdownOptions}
           forwardedRef={forwardedRef}
@@ -127,19 +143,32 @@ function MediaInput(
         />
       );
     },
-    [value, onChange, forwardedRef, rest, menuOptions]
+    [value, openHotlink, onChange, forwardedRef, rest, menuOptions]
   );
 
   return (
-    <MediaUpload
-      title={title}
-      buttonInsertText={buttonInsertText}
-      onSelect={onChange}
-      onSelectErrorMessage={onChangeErrorText}
-      type={type}
-      cropParams={cropParams}
-      render={renderMediaIcon}
-    />
+    <>
+      <HotlinkModal
+        isOpen={isOpen}
+        title={hotlinkTitle}
+        onSelect={onSelect}
+        onClose={onCloseHotlink}
+        insertText={hotlinkInsertText}
+        insertingText={hotlinkInsertingText}
+        allowedFileTypes={allowedFileTypes}
+        canUseProxy={canUseProxy}
+        requiredImgDimensions={cropParams}
+      />
+      <MediaUpload
+        title={title}
+        buttonInsertText={buttonInsertText}
+        onSelect={onChange}
+        onSelectErrorMessage={onChangeErrorText}
+        type={type}
+        cropParams={cropParams}
+        render={renderMediaIcon}
+      />
+    </>
   );
 }
 
@@ -147,6 +176,7 @@ const MediaInputWithRef = forwardRef(MediaInput);
 
 MediaInputField.propTypes = {
   open: PropTypes.func,
+  openHotlink: PropTypes.func,
   dropdownOptions: PropTypes.array,
   onChange: PropTypes.func,
   forwardedRef: PropTypes.oneOfType([
@@ -159,6 +189,9 @@ MediaInputField.propTypes = {
 MediaInput.propTypes = {
   className: PropTypes.string,
   buttonInsertText: PropTypes.string,
+  hotlinkTitle: PropTypes.string,
+  hotlinkInsertText: PropTypes.string,
+  hotlinkInsertingText: PropTypes.string,
   menuOptions: PropTypes.array,
   onChange: PropTypes.func.isRequired,
   onChangeErrorText: PropTypes.string,
@@ -167,6 +200,7 @@ MediaInput.propTypes = {
     PropTypes.arrayOf(PropTypes.string),
   ]),
   cropParams: PropTypes.object,
+  canUseProxy: PropTypes.bool,
   title: PropTypes.string,
   value: PropTypes.string,
 };

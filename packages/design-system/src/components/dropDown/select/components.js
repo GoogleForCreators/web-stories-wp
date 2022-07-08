@@ -28,6 +28,8 @@ import { Text } from '../../typography';
 
 export const SelectButton = styled.button(
   ({ theme, hasError, isOpen, selectButtonStylesOverride }) => css`
+    // FIXME: Does the width *need* to be 100%?
+    //  This can lead to unexpected styling issues.
     width: 100%;
     height: ${({ autoHeight }) => (autoHeight ? 'auto' : '36px')};
     display: flex;
@@ -92,7 +94,7 @@ SelectButton.propTypes = {
 
 export const Value = styled(Text)`
   max-width: 100%;
-  padding-right: 8px;
+  padding-right: 12px;
   color: ${({ theme }) => theme.colors.fg.primary};
   white-space: nowrap;
   overflow: hidden;

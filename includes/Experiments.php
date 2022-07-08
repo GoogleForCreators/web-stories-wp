@@ -313,27 +313,25 @@ class Experiments extends Service_Base implements HasRequirements {
 			],
 			/**
 			 * Author: @spacedmonkey
-			 * Issue: #11081
-			 * Creation date: 2022-03-30
+			 * Issue: #11536
+			 * Creation date: 2022-06-22
 			 */
 			[
-				'name'        => 'captionHotlinking',
-				'label'       => __( 'Caption hotlinking', 'web-stories' ),
-				'description' => __( 'Enable hotlinking of captions', 'web-stories' ),
+				'name'        => 'posterHotlinking',
+				'label'       => __( 'Poster hotlinking', 'web-stories' ),
+				'description' => __( 'Enable story poster hotlinking', 'web-stories' ),
 				'group'       => 'editor',
-				'default'     => true,
 			],
 			/**
 			 * Author: @spacedmonkey
-			 * Issue: #10888
-			 * Creation date: 2022-04-08
+			 * Issue: #11535
+			 * Creation date: 2022-06-24
 			 */
 			[
-				'name'        => 'audioHotlinking',
-				'label'       => __( 'Audio hotlinking', 'web-stories' ),
-				'description' => __( 'Enable hotlinking background audio', 'web-stories' ),
+				'name'        => 'videoPosterHotlinking',
+				'label'       => __( 'Video poster hotlinking', 'web-stories' ),
+				'description' => __( 'Enable video poster hotlinking', 'web-stories' ),
 				'group'       => 'editor',
-				'default'     => true,
 			],
 			/**
 			 * Author: @barklund
@@ -380,6 +378,17 @@ class Experiments extends Service_Base implements HasRequirements {
 				'name'        => 'showSemanticHeadings',
 				'label'       => __( 'Semantic headings', 'web-stories' ),
 				'description' => __( 'Display semantic heading tags', 'web-stories' ),
+        'group'       => 'editor',
+      ],
+      /**
+			 * Author: @barklund
+			 * Issue: #9643
+			 * Creation date: 2022-06-21
+			 */
+			[
+				'name'        => 'extraPages',
+				'label'       => __( 'Context Pages', 'web-stories' ),
+				'description' => __( 'Show extra pages for context before and after the current canvas page. Note: This might come with a performance penalty.', 'web-stories' ),
 				'group'       => 'editor',
 			],
 		];

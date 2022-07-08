@@ -22,6 +22,7 @@ import {
   Icons,
   ContextMenu,
   ContextMenuComponents,
+  Disclosure,
   TOOLTIP_PLACEMENT,
   useKeyDownEffect,
 } from '@googleforcreators/design-system';
@@ -154,7 +155,10 @@ function TextAlign() {
         >
           <StyledMenuIcon title={tooltip}>
             <CurrentIcon role="img" aria-label={currentLabel} />
-            <Icons.ChevronDownSmall />
+            <Disclosure
+              style={{ marginLeft: -8, marginRight: 0 }}
+              isOpen={isMenuOpen}
+            />
           </StyledMenuIcon>
         </StyledMenuButton>
       </Tooltip>

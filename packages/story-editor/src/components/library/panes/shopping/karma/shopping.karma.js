@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { waitFor } from '@testing-library/react';
+import { waitFor, within } from '@testing-library/react';
 /**
  * Internal dependencies
  */
@@ -205,6 +205,40 @@ describe('Shopping integration', () => {
       );
 
       expect(firstOption.textContent).toContain('WordPress Pennant');
+    });
+
+    it('should display product pill tooltip when adding product on canvas', async () => {
+      await insertProduct('Big Logo Collection');
+
+      const container = fixture.container;
+      // Unselect element.
+      const fullbleedElements = await within(container).findAllByTestId(
+        'fullbleed',
+        {
+          timeout: 2000,
+        }
+      );
+      // There are three fullbleed elements; [0](Display layer), [1](Frames layer), and [2](Edit layer),
+      const { left, top } = fullbleedElements[1].getBoundingClientRect();
+      await fixture.events.mouse.click(left - 5, top - 5);
+
+      // Move mouse to hover over the element.
+      const frame = await waitFor(() => {
+        const frameNode = fixture.editor.canvas.framesLayer.frames[1].node;
+        if (!frameNode) {
+          throw new Error('node not ready');
+        }
+        expect(frameNode).toBeTruthy();
+        return frameNode;
+      });
+
+      const tooltipText = '$28.00';
+
+      await fixture.events.mouse.moveRel(frame, 10, 10);
+
+      const tooltip = await fixture.screen.findByText(tooltipText);
+      expect(tooltip).toHaveTextContent(tooltipText);
+      await fixture.snapshot('Product pill tooltip on hover');
     });
   });
 });

@@ -131,7 +131,7 @@ function MediaRecordingLayer() {
 
       showSnackbar({
         message: __(
-          ' There was an error taking a photo. Please try again.',
+          'There was an error taking a photo. Please try again.',
           'web-stories'
         ),
         dismissable: true,
