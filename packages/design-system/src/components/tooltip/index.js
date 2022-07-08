@@ -374,7 +374,7 @@ function BaseTooltip({
                 )}
               </TooltipContainer>
             </PopupContainer>,
-            document.body
+            document.body // eslint-disable-line ssr-friendly/no-dom-globals-in-react-fc -- Used conditionally
           )
         : null}
     </>

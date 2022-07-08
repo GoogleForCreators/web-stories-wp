@@ -183,8 +183,12 @@ AudioPlayer.propTypes = {
   audioId: PropTypes.string,
   loop: PropTypes.bool,
   tracks: PropTypes.arrayOf(ResourcePropTypes.trackResource),
-  playerRef: PropTypes.shape({ current: PropTypes.instanceOf(Element) })
-    .isRequired,
+  playerRef: PropTypes.shape({
+    current:
+      typeof Element !== 'undefined'
+        ? PropTypes.instanceOf(Element) // eslint-disable-line ssr-friendly/no-dom-globals-in-module-scope -- Used conditionally
+        : PropTypes.any,
+  }).isRequired,
 };
 
 export default AudioPlayer;

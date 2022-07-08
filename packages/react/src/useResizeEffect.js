@@ -19,6 +19,7 @@
  */
 import { useEffect } from './react';
 
+// eslint-disable-next-line ssr-friendly/no-dom-globals-in-module-scope -- Used conditionally
 if (typeof window !== 'undefined' && window && !('ResizeObserver' in window)) {
   import(
     /* webpackChunkName: "chunk-resize-observer-polyfill" */ 'resize-observer-polyfill'

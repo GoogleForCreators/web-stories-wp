@@ -294,5 +294,8 @@
       "github-actions",
       "imgbot"
     ]
+  },
+  "dependencies": {
+    "eslint-plugin-ssr-friendly": "^1.0.6"
   }
 }

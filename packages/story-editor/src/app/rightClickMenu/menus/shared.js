@@ -40,7 +40,7 @@ export const MenuPropType = {
     PropTypes.func,
     PropTypes.shape({
       current: globalThis.Element
-        ? PropTypes.instanceOf(Element)
+        ? PropTypes.instanceOf(Element) // eslint-disable-line ssr-friendly/no-dom-globals-in-module-scope -- Used conditionally
         : PropTypes.any,
     }), // To handle in SSR.
   ]).isRequired,

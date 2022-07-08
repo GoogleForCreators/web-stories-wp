@@ -731,6 +731,42 @@
           }
         ]
       }
+    },
+    {
+      "files": [
+        "packages/**/*.js"
+      ],
+      "excludedFiles": [
+        "packages/karma-fixture/**/*.js",
+        "packages/e2e-tests/**/*.js",
+        "packages/activation-notice/**/*.js",
+        "packages/commander/**/*.js",
+        "packages/e2e-test-utils/**/*.js",
+        "packages/eslint-import-resolver/**/*.js",
+        "packages/glider/**/*.js",
+        "packages/imgareaselect/**/*.js",
+        "packages/jest-amp/**/*.js",
+        "packages/jest-puppeteer-amp/**/*.js",
+        "packages/jest-resolver/**/*.js",
+        "packages/karma-failed-tests-reporter/**/*.js",
+        "packages/karma-puppeteer-client/**/*.js",
+        "packages/karma-puppeteer-launcher/**/*.js",
+        "packages/stories-block/**/*.js",
+        "packages/stories-carousel/**/*.js",
+        "packages/stories-lightbox/**/*.js",
+        "packages/tinymce-button/**/*.js",
+        "packages/widget/**/*.js",
+        "packages/wp-dashboard/**/*.js",
+        "packages/wp-story-editor/**/*.js",
+        "packages/wp-utils/**/*.js",
+        "packages/**/test/*.js"
+      ],
+      "extends": [
+        "plugin:ssr-friendly/recommended"
+      ],
+      "plugins": [
+        "ssr-friendly"
+      ]
     }
   ]
 }
