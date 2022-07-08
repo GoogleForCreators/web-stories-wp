@@ -51,15 +51,13 @@ class PuppeteerEnvironment extends OriginalEnvironment {
 
       const errorMsg = util.inspect(event);
 
-      if (errorMsg.includes("JestAssertionError")) {
+      if (errorMsg.includes('JestAssertionError')) {
         // return already handled
         return;
       }
 
       // eslint-disable-next-line no-console
-      console.log(
-        ' Unhandled event(' + event.name + '): ' + errorMsg
-      );
+      console.log(' Unhandled event(' + event.name + '): ' + errorMsg);
     }
   }
 

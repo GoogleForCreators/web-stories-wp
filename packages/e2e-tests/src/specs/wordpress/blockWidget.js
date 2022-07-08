@@ -86,6 +86,7 @@ describe('Web Stories Widget Block', () => {
     await expect(page).toMatch('Embed Settings');
   });
 
+  //eslint-disable-next-line jest/no-disabled-tests
   it.skip('should insert a legacy web stories widget', async () => {
     await activatePlugin('classic-widgets');
 

@@ -55,7 +55,8 @@ describe('Story Editor', () => {
     expect(crossOriginIsolated).toBeTrue();
   });
 
-  it('should have cross-origin isolation disabled', async () => {
+  //eslint-disable-next-line jest/no-disabled-tests
+  it.skip('should have cross-origin isolation disabled', async () => {
     await toggleVideoOptimization();
     await createNewStory();
 

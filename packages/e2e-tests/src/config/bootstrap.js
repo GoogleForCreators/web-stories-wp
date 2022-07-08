@@ -101,9 +101,9 @@ const ALLOWED_ERROR_MESSAGES = [
 
   // See https://www.chromestatus.com/feature/508239670987980
   "Blocked attempt to show a 'beforeunload' confirmation panel for a frame that never had a user gesture since its load",
-  
+
   // See https://github.com/GoogleForCreators/web-stories-wp/pull/11782#issuecomment-1178865825
-  "Bundle not found for language en:"
+  'Bundle not found for language en:',
 ];
 
 export function addAllowedErrorMessage(message) {
