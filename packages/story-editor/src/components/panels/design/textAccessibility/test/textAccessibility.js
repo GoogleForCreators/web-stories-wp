@@ -30,7 +30,6 @@ import TextAccessibilityPanel from '../textAccessibility';
 jest.mock('flagged');
 
 describe('Panels/TextAccessibility', () => {
-  const paragraphLabel = 'Paragraph';
   const defaultElement = {
     type: 'text',
     tagName: 'p',
