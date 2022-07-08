@@ -33,6 +33,8 @@ describe('Saving Story', () => {
   let stopRequestInterception;
   let mockResponse;
 
+  jest.retryTimes(3, {logErrorsBeforeRetry: true});
+
   beforeAll(async () => {
     removeErrorMessage = addAllowedErrorMessage(
       'the server responded with a status of'
