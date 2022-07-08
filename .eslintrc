@@ -760,7 +760,8 @@
         "packages/wp-story-editor/**/*.js",
         "packages/wp-utils/**/*.js",
         "packages/**/test/*.js",
-        "packages/**/stories/*.js"
+        "packages/**/stories/*.js",
+        "packages/**/*.md/*.js"
       ],
       "extends": [
         "plugin:ssr-friendly/recommended"
