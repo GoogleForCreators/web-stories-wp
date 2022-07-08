@@ -29,6 +29,7 @@
     }
   },
   "rules": {
+    "array-callback-return": "error",
     "block-scoped-var": "error",
     "complexity": ["error", {"max": 20}],
     "consistent-return": "error",
@@ -36,6 +37,7 @@
     "default-case": "error",
     "guard-for-in": "error",
     "no-await-in-loop": "error",
+    "no-constant-binary-expression": "error",
     "no-extra-bind": "error",
     "no-extra-label": "error",
     "no-floating-decimal": "error",
@@ -210,12 +212,13 @@
     "jsdoc/require-jsdoc": ["off", {
       "publicOnly": true
     }],
-    "jsdoc/require-returns": "warn",
-    "jsdoc/require-param-description": "warn",
+    "jsdoc/require-returns": "error",
+    "jsdoc/require-param-description": "error",
     "jsdoc/valid-types": "error",
     "eslint-comments/no-unused-disable": "error",
     "eslint-comments/require-description": "error",
     "@wordpress/dependency-group": "error",
+    "@wordpress/i18n-no-flanking-whitespace": "error",
     "@wordpress/no-unused-vars-before-return": ["error", {
       "excludePattern": "^use"
     }],
@@ -392,6 +395,15 @@
       "rules": {
         "no-var": "off",
         "prefer-const": "off"
+      }
+    },
+    {
+      "files": [
+        "packages/jest-amp/src/**/*.js",
+        "packages/jest-puppeteer-amp/src/**/*.js"
+      ],
+      "env": {
+        "node": true
       }
     },
     {
@@ -590,6 +602,7 @@
         "packages/tinymce-button/**/*.js"
       ],
       "rules":{
+        "@wordpress/data-no-store-string-literals": "error",
         "no-restricted-imports": [
           "error",
           {

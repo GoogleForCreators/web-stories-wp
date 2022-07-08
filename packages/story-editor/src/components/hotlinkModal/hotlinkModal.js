@@ -44,6 +44,7 @@ function HotlinkModal({
   insertingText = __('Inserting…', 'web-stories'),
   title,
   canUseProxy = true,
+  requiredImgDimensions = {},
 }) {
   const inputRef = useRef(null);
 
@@ -56,6 +57,7 @@ function HotlinkModal({
     onError,
     onSelect,
     canUseProxy,
+    requiredImgDimensions,
   });
 
   const primaryText = isInserting ? insertingText : insertText;
@@ -107,6 +109,10 @@ HotlinkModal.propTypes = {
   onSelect: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
   canUseProxy: PropTypes.bool,
+  requiredImgDimensions: PropTypes.shape({
+    width: PropTypes.number,
+    height: PropTypes.number,
+  }),
 };
 
 export default HotlinkModal;

@@ -39,6 +39,140 @@ describe('arrangeElement', () => {
     expect(result).toBe(initialState);
   });
 
+  it('should do nothing if already in the right place and no groups are used', () => {
+    const { restore, arrangeElement } = setupReducer();
+
+    const initialState = restore({
+      pages: [
+        {
+          id: '111',
+          elements: [
+            { id: '123', isBackground: true },
+            { id: '234' },
+            { id: '345' },
+          ],
+        },
+      ],
+      current: '111',
+    });
+
+    const result = arrangeElement({ elementId: '234', position: 1 });
+
+    expect(result).toStrictEqual(initialState);
+  });
+
+  it('should do nothing if already in the right place and in the right group', () => {
+    const { restore, arrangeElement } = setupReducer();
+
+    const initialState = restore({
+      pages: [
+        {
+          id: '111',
+          elements: [
+            { id: '123', isBackground: true },
+            { id: '234', groupId: 'g1' },
+            { id: '345' },
+          ],
+        },
+      ],
+      current: '111',
+    });
+
+    const result = arrangeElement({
+      elementId: '234',
+      position: 1,
+      groupId: 'g1',
+    });
+
+    expect(result).toBe(initialState);
+  });
+
+  it('should set group if already in the right place, but changing group', () => {
+    const { restore, arrangeElement } = setupReducer();
+
+    restore({
+      pages: [
+        {
+          id: '111',
+          elements: [
+            { id: '123', isBackground: true },
+            { id: '234', groupId: 'g1' },
+            { id: '345' },
+          ],
+        },
+      ],
+      current: '111',
+    });
+
+    const result = arrangeElement({
+      elementId: '234',
+      position: 1,
+      groupId: 'g2',
+    });
+
+    expect(result.pages[0].elements).toStrictEqual([
+      { id: '123', isBackground: true },
+      { id: '234', groupId: 'g2' },
+      { id: '345' },
+    ]);
+  });
+
+  it('should remove group if already in the right place, but explictly without group', () => {
+    const { restore, arrangeElement } = setupReducer();
+
+    restore({
+      pages: [
+        {
+          id: '111',
+          elements: [
+            { id: '123', isBackground: true },
+            { id: '234', groupId: 'g1' },
+            { id: '345' },
+          ],
+        },
+      ],
+      current: '111',
+    });
+
+    const result = arrangeElement({
+      elementId: '234',
+      position: 1,
+      groupId: null,
+    });
+
+    expect(result.pages[0].elements).toStrictEqual([
+      { id: '123', isBackground: true },
+      { id: '234' },
+      { id: '345' },
+    ]);
+  });
+
+  it('should move but not alter group if group is unset', () => {
+    const { restore, arrangeElement } = setupReducer();
+
+    restore({
+      pages: [
+        {
+          id: '111',
+          elements: [
+            { id: '123', isBackground: true },
+            { id: '234', groupId: 'g1' },
+            { id: '345' },
+          ],
+        },
+      ],
+      current: '111',
+    });
+
+    const result = arrangeElement({ elementId: '234', position: 2 });
+
+    expect(result.pages[0].elements).toStrictEqual([
+      { id: '123', isBackground: true },
+      { id: '345' },
+      { id: '234', groupId: 'g1' },
+    ]);
+  });
+
   it('should move element to specified position', () => {
     const { restore, arrangeElement } = setupReducer();
 

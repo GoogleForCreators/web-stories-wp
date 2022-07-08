@@ -161,6 +161,8 @@ class Discovery extends DependencyInjectedTestCase {
 		$this->assertStringContainsString( 'article:published_time', $output );
 		$this->assertStringContainsString( 'article:modified_time', $output );
 		$this->assertStringContainsString( 'og:image', $output );
+		$this->assertStringContainsString( 'og:image:width', $output );
+		$this->assertStringContainsString( 'og:image:height', $output );
 	}
 
 	/**
@@ -174,6 +176,8 @@ class Discovery extends DependencyInjectedTestCase {
 		$this->assertArrayHasKey( 'article:published_time', $result );
 		$this->assertArrayHasKey( 'article:modified_time', $result );
 		$this->assertArrayHasKey( 'og:image', $result );
+		$this->assertArrayHasKey( 'og:image:width', $result );
+		$this->assertArrayHasKey( 'og:image:height', $result );
 	}
 
 	/**
@@ -222,24 +226,6 @@ class Discovery extends DependencyInjectedTestCase {
 		$this->assertArrayHasKey( 'twitter:image', $result );
 		$this->assertArrayHasKey( 'twitter:image:alt', $result );
 		$this->assertSame( 'Discovery Test Story', $result['twitter:image:alt'] );
-	}
-
-	/**
-	 * @covers ::get_poster
-	 */
-	public function test_get_poster(): void {
-		$result = $this->call_private_method( $this->instance, 'get_poster', [ self::$story_id ] );
-		$this->assertArrayHasKey( 'src', $result );
-		$this->assertArrayHasKey( 'height', $result );
-		$this->assertArrayHasKey( 'width', $result );
-	}
-
-	/**
-	 * @covers ::get_poster
-	 */
-	public function test_get_poster_no(): void {
-		$result = $this->call_private_method( $this->instance, 'get_poster', [ -99 ] );
-		$this->assertFalse( $result );
 	}
 
 	/**

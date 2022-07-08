@@ -25,11 +25,11 @@
   },
   "main": "./src/index.js",
   "dependencies": {
-    "@wordpress/components": "^19.9.0",
-    "@wordpress/compose": "^5.5.0",
-    "@wordpress/data": "^6.7.0",
-    "@wordpress/element": "^4.5.0",
-    "@wordpress/i18n": "^4.7.0",
+    "@wordpress/components": "^19.13.0",
+    "@wordpress/compose": "^5.9.0",
+    "@wordpress/data": "^6.11.0",
+    "@wordpress/element": "^4.9.0",
+    "@wordpress/i18n": "^4.11.0",
     "prop-types": "^15.8.1"
   },
   "devDependencies": {

@@ -245,8 +245,8 @@ const updateElementsByFontFamily =
 
 const addGroup =
   (dispatch) =>
-  ({ groupId, name }) =>
-    dispatch({ type: types.ADD_GROUP, payload: { groupId, name } });
+  ({ groupId, name, isLocked }) =>
+    dispatch({ type: types.ADD_GROUP, payload: { groupId, name, isLocked } });
 
 const updateGroupById =
   (dispatch) =>
@@ -278,6 +278,14 @@ const duplicateGroupById =
     dispatch({
       type: types.DUPLICATE_GROUP,
       payload: { groupId, name, oldGroupId, isLocked },
+    });
+
+const removeElementFromGroup =
+  (dispatch) =>
+  ({ elementId, groupId }) =>
+    dispatch({
+      type: types.REMOVE_ELEMENT_FROM_GROUP,
+      payload: { elementId, groupId },
     });
 
 export const exposedActions = {
@@ -322,6 +330,7 @@ export const exposedActions = {
   deleteGroupById,
   deleteGroupAndElementsById,
   duplicateGroupById,
+  removeElementFromGroup,
 };
 
 // Internal actions

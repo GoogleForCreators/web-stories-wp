@@ -52,6 +52,7 @@ function Popup({
   zIndex = DEFAULT_POPUP_Z_INDEX,
   ignoreMaxOffsetY,
   offsetOverride = false,
+  maxWidth,
 }) {
   const {
     topOffset = DEFAULT_TOP_OFFSET,
@@ -190,6 +191,7 @@ function Popup({
         <PopupContainer
           ref={popup}
           fillWidth={fillWidth}
+          maxWidth={maxWidth}
           $offset={popupState.offset}
           topOffset={topOffset}
           zIndex={zIndex}
@@ -225,6 +227,7 @@ Popup.propTypes = {
   zIndex: PropTypes.number,
   ignoreMaxOffsetY: PropTypes.bool,
   offsetOverride: PropTypes.bool,
+  maxWidth: PropTypes.number,
 };
 
 export { Popup, PLACEMENT };

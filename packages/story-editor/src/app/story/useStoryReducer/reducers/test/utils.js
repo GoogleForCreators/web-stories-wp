@@ -26,6 +26,7 @@ import {
   updateAnimations,
   removeDuplicates,
   exclusion,
+  getLastIndexOfGroup,
 } from '../utils';
 import { LAYER_DIRECTIONS } from '../../../../../constants';
 
@@ -298,5 +299,25 @@ describe('exclusion', () => {
 
   it('should return an empty array if nothing passed in', () => {
     expect(exclusion()).toStrictEqual([]);
+  });
+});
+
+describe('getLastIndexOfGroup', () => {
+  it('should calculate the last position of a group', () => {
+    const elements = [
+      { id: 'e1', isBackground: true },
+      { id: 'e2' },
+      { id: 'e3', groupId: 'g1' },
+      { id: 'e4', groupId: 'g1' },
+      { id: 'e5', groupId: 'g1' },
+      { id: 'e6', groupId: 'g1' },
+      { id: 'e7', groupId: 'g1' }, // <-- 6th index
+      { id: 'e8' },
+      { id: 'e9', groupId: 'g2' },
+      { id: 'e10', groupId: 'g2' }, // <-- 9th index
+    ];
+
+    expect(getLastIndexOfGroup({ elements, groupId: 'g1' })).toBe(6);
+    expect(getLastIndexOfGroup({ elements, groupId: 'g2' })).toBe(9);
   });
 });

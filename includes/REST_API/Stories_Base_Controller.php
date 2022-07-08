@@ -38,6 +38,8 @@ use WP_REST_Response;
 /**
  * Stories_Base_Controller class.
  *
+ * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
+ *
  * Override the WP_REST_Posts_Controller class to add `post_content_filtered` to REST request.
  *
  * @phpstan-type Link array{
@@ -57,6 +59,15 @@ use WP_REST_Response;
  *     content?: SchemaEntry,
  *     story_data?: SchemaEntry
  *   }
+ * }
+ * @phpstan-type RegisteredMetadata array{
+ *   type: string,
+ *   description: string,
+ *   single: bool,
+ *   sanitize_callback?: callable,
+ *   auth_callback: callable,
+ *   show_in_rest: bool|array{schema: array<string, mixed>},
+ *   default?: mixed
  * }
  */
 class Stories_Base_Controller extends WP_REST_Posts_Controller {
@@ -245,7 +256,38 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 			$request->set_param( 'featured_media', $thumbnail_id );
 		}
 
+		$meta = $this->get_registered_meta( $original_post );
+		if ( $meta ) {
+			$request->set_param( 'meta', $meta );
+		}
+
 		return parent::create_item( $request );
+	}
+
+	/**
+	 * Get registered post meta.
+	 *
+	 * @since 1.23.0
+	 *
+	 * @param WP_Post $original_post Post Object.
+	 * @return array<string, mixed> $meta
+	 */
+	protected function get_registered_meta( WP_Post $original_post ): array {
+		$meta_keys = get_registered_meta_keys( 'post', $this->post_type );
+		$meta      = [];
+		/**
+		 * Meta key settings.
+		 *
+		 * @var array $settings
+		 * @phpstan-var RegisteredMetadata $settings
+		 */
+		foreach ( $meta_keys as $key => $settings ) {
+			if ( $settings['show_in_rest'] ) {
+				$meta[ $key ] = get_post_meta( $original_post->ID, $key, $settings['single'] );
+			}
+		}
+
+		return $meta;
 	}
 
 	/**

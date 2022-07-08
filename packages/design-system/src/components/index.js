@@ -19,6 +19,7 @@ export * from './checkbox';
 export * from './contextMenu';
 export { Chip } from './chip';
 export { Dialog } from './dialog';
+export { Disclosure } from './disclosure';
 export { DropDown, DropDownSelect } from './dropDown';
 export { HexInput } from './hex';
 export { Input, BaseInput } from './input';

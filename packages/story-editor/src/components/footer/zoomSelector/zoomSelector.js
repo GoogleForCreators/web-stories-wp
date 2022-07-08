@@ -20,7 +20,11 @@
 import { useCallback, useMemo } from '@googleforcreators/react';
 import { css } from 'styled-components';
 import { __, _x, sprintf } from '@googleforcreators/i18n';
-import { DropDown, PLACEMENT } from '@googleforcreators/design-system';
+import {
+  BUTTON_TRANSITION_TIMING,
+  DropDown,
+  PLACEMENT,
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -28,13 +32,33 @@ import { DropDown, PLACEMENT } from '@googleforcreators/design-system';
 import { ZOOM_SETTING } from '../../../constants';
 import { useLayout } from '../../../app/layout';
 
+// Styles updated so the Zoom selector matches the other footer buttons
 const selectButtonCSS = css`
+  width: 80px;
   height: 36px;
-  padding: 8px;
+  padding: 0 10px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: ${({ theme }) => theme.colors.border.defaultNormal};
   background-color: ${({ theme }) => theme.colors.bg.primary};
+  transition: background-color ${BUTTON_TRANSITION_TIMING};
+
+  &:hover,
+  &:focus,
+  &:active {
+    border-color: ${({ theme }) => theme.colors.bg.secondary};
+    background-color: ${({ theme }) => theme.colors.bg.tertiary};
+  }
 
   span {
+    height: 100%;
     padding: 0;
+    display: flex;
+    align-items: center;
+  }
+
+  svg {
+    margin: 0 -10px;
   }
 `;
 
@@ -104,6 +128,7 @@ function ZoomSelector() {
       selectedValue={zoomSetting}
       popupFillWidth={false}
       selectButtonStylesOverride={selectButtonCSS}
+      className="zoom-selector-dropdown"
     />
   );
 }

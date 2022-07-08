@@ -58,6 +58,7 @@ import {
   useDropTargets,
 } from '../../app';
 import WithLink from '../elementLink/frame';
+import WithProductPill from '../shopping/frame';
 import useDoubleClick from '../../utils/useDoubleClick';
 import usePerformanceTracking from '../../utils/usePerformanceTracking';
 import { TRACKING_EVENTS } from '../../constants';
@@ -304,60 +305,66 @@ function FrameElement({ id }) {
       );
 
   return (
-    <WithLink element={element} active={isLinkActive} anchorRef={elementRef}>
-      {Controls && (
-        <Controls
-          isTransforming={isTransforming}
-          box={box}
-          elementRef={elementRef}
-          element={element}
-          isRTL={isRTL}
-          topOffset={topOffset}
-          isActive={isActive}
-        />
-      )}
-      {/* eslint-disable-next-line styled-components-a11y/click-events-have-key-events -- False positive */}
-      <Wrapper
-        ref={combinedFocusGroupRef}
-        data-element-id={id}
-        {...box}
-        tabIndex={-1}
-        role="button"
-        aria-label={elementLabel}
-        hasMask={isMaskable}
-        isClickable={isClickable}
-        data-testid="frameElement"
-        onMouseDown={handleMouseDown}
-        onFocus={handleFocus}
-        onPointerEnter={onPointerEnter}
-        onPointerLeave={onPointerLeave}
-        onClick={isMedia ? handleMediaClick(id) : null}
-      >
-        <WithMask
-          element={element}
-          fill
-          flip={flip}
-          draggingResource={draggingResource}
-          activeDropTargetId={activeDropTargetId}
-          isDropSource={isDropSource}
-          registerDropTarget={registerDropTarget}
-          unregisterDropTarget={unregisterDropTarget}
-          isSelected={isSelected}
+    <WithProductPill
+      element={element}
+      active={isLinkActive}
+      anchorRef={elementRef}
+    >
+      <WithLink element={element} active={isLinkActive} anchorRef={elementRef}>
+        {Controls && (
+          <Controls
+            isTransforming={isTransforming}
+            box={box}
+            elementRef={elementRef}
+            element={element}
+            isRTL={isRTL}
+            topOffset={topOffset}
+            isActive={isActive}
+          />
+        )}
+        {/* eslint-disable-next-line styled-components-a11y/click-events-have-key-events -- False positive */}
+        <Wrapper
+          ref={combinedFocusGroupRef}
+          data-element-id={id}
+          {...box}
+          tabIndex={-1}
+          role="button"
+          aria-label={elementLabel}
+          hasMask={isMaskable}
+          isClickable={isClickable}
+          data-testid="frameElement"
+          onMouseDown={handleMouseDown}
+          onFocus={handleFocus}
+          onPointerEnter={onPointerEnter}
+          onPointerLeave={onPointerLeave}
+          onClick={isMedia ? handleMediaClick(id) : null}
         >
-          {Frame ? (
-            <Frame
-              wrapperRef={elementRef}
-              element={element}
-              box={box}
-              isOnlySelectedElement={isOnlySelectedElement}
-              setEditingElementWithState={setEditingElementWithState}
-            />
-          ) : (
-            <EmptyFrame />
-          )}
-        </WithMask>
-      </Wrapper>
-    </WithLink>
+          <WithMask
+            element={element}
+            fill
+            flip={flip}
+            draggingResource={draggingResource}
+            activeDropTargetId={activeDropTargetId}
+            isDropSource={isDropSource}
+            registerDropTarget={registerDropTarget}
+            unregisterDropTarget={unregisterDropTarget}
+            isSelected={isSelected}
+          >
+            {Frame ? (
+              <Frame
+                wrapperRef={elementRef}
+                element={element}
+                box={box}
+                isOnlySelectedElement={isOnlySelectedElement}
+                setEditingElementWithState={setEditingElementWithState}
+              />
+            ) : (
+              <EmptyFrame />
+            )}
+          </WithMask>
+        </Wrapper>
+      </WithLink>
+    </WithProductPill>
   );
 }
 

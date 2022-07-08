@@ -28,6 +28,7 @@ import { useCallback, useMemo } from '@googleforcreators/react';
 import { PAGE_RATIO } from '@googleforcreators/units';
 import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
 import { getExtensionsFromMimeType } from '@googleforcreators/media';
+import { useFeature } from 'flagged';
 /**
  * Internal dependencies
  */
@@ -184,6 +185,7 @@ const Publisher = styled(Text).attrs({
 `;
 
 const StoryPreview = () => {
+  const enablePosterHotlinking = useFeature('posterHotlinking');
   const { title, featuredMedia, publisherLogo, updateStory } = useStory(
     ({ state: { story }, actions }) => ({
       title: story?.title,
@@ -228,6 +230,8 @@ const StoryPreview = () => {
             url: newPoster.src,
             height: newPoster.height,
             width: newPoster.width,
+            isExternal: newPoster.isExternal,
+            needsProxy: newPoster.needsProxy,
           },
         },
       });
@@ -248,6 +252,11 @@ const StoryPreview = () => {
     );
   }
 
+  const menuOptions = [
+    enablePosterHotlinking && hasUploadMediaAction && 'upload',
+    enablePosterHotlinking && 'hotlink',
+  ].filter(Boolean);
+
   return (
     <>
       <Headline
@@ -261,6 +270,7 @@ const StoryPreview = () => {
           {featuredMedia?.url ? (
             <Image
               crossOrigin="anonymous"
+              decoding="async"
               src={featuredMedia.url}
               width={featuredMedia.width}
               height={featuredMedia.height}
@@ -277,6 +287,7 @@ const StoryPreview = () => {
                 {publisherLogo?.url?.length > 0 && (
                   <PublisherLogo
                     crossOrigin="anonymous"
+                    decoding="async"
                     width={publisherLogo.width}
                     height={publisherLogo.height}
                     src={publisherLogo.url}
@@ -284,10 +295,22 @@ const StoryPreview = () => {
                     data-testid="story_preview_logo"
                   />
                 )}
-                {hasUploadMediaAction && (
+                {(hasUploadMediaAction || enablePosterHotlinking) && (
                   <StyledMedia
                     onChange={handleChangePoster}
                     title={__('Select as poster image', 'web-stories')}
+                    hotlinkTitle={__(
+                      'Use external image as poster image',
+                      'web-stories'
+                    )}
+                    hotlinkInsertText={__(
+                      'Use image as poster image',
+                      'web-stories'
+                    )}
+                    hotlinkInsertingText={__(
+                      'Using image as poster image',
+                      'web-stories'
+                    )}
                     buttonInsertText={__(
                       'Select as poster image',
                       'web-stories'
@@ -296,8 +319,9 @@ const StoryPreview = () => {
                     ariaLabel={__('Poster image', 'web-stories')}
                     onChangeErrorText={posterErrorMessage}
                     imgProps={featuredMedia}
-                    canUpload={hasUploadMediaAction}
+                    canUpload={hasUploadMediaAction || enablePosterHotlinking}
                     variant={MEDIA_VARIANTS.NONE}
+                    menuOptions={menuOptions}
                     cropParams={{
                       width: 640,
                       height: 853,

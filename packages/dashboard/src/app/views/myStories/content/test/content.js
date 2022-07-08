@@ -171,4 +171,34 @@ describe('Dashboard <Content />', function () {
       )
     ).toBeInTheDocument();
   });
+
+  it('should show "Sorry, we couldn\'t find any results if no stories are found for a filter query are present.', function () {
+    renderWithProviders(
+      <SnackbarProvider>
+        <LayoutProvider>
+          <Content
+            filter={STORY_STATUSES[0]}
+            stories={[]}
+            filtersObject={{ sports: 2 }}
+            page={{
+              requestNextPage: jest.fn,
+            }}
+            view={{
+              style: VIEW_STYLE.GRID,
+              pageSize,
+            }}
+            storyActions={{
+              duplicateStory: jest.fn,
+              trashStory: jest.fn,
+              updateStory: jest.fn,
+            }}
+          />
+        </LayoutProvider>
+      </SnackbarProvider>
+    );
+
+    expect(
+      screen.getByText("Sorry, we couldn't find any results")
+    ).toBeInTheDocument();
+  });
 });

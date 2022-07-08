@@ -40,7 +40,7 @@ export default function useDashboardResultsLabel({
         : defaultLabel;
     return isActiveSearch
       ? sprintf(
-          /* translators: %s: number of results */
+          /* translators: %s: number of results. */
           _n('%s result', '%s results', numResults, 'web-stories'),
           sprintf('<strong>%s</strong>', numResults)
         )
