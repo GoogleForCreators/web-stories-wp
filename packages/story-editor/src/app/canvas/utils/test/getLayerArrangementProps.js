@@ -111,7 +111,7 @@ describe('getLayerArrangementProps', () => {
       { id: 'd' },
       { id: 'e', groupId: 'g2' },
     ];
-    // Position stays the same but the layer is moved out of the group.
+    // Position stays the same but the layer is moved into either group.
     expect(
       getLayerArrangementProps('ArrowUp', false, [{ id: 'd' }], elements)
     ).toStrictEqual({ position: 3, groupId: 'g2' });
