@@ -36,6 +36,7 @@ import { useFeature } from 'flagged';
  */
 import {
   DASHBOARD_VIEWS,
+  DEFAULT_TEMPLATE_FILTERS,
   TEMPLATES_GALLERY_SORT_MENU_ITEMS,
   TEMPLATES_GALLERY_SORT_OPTIONS,
   TEXT_INPUT_DEBOUNCE,
@@ -76,6 +77,9 @@ function Header({ isLoading, totalTemplates, view, searchOptions = [] }) {
 
   useEffect(() => {
     registerFilters([{ key: 'search' }]);
+    registerFilters([
+      { key: 'status', filterId: DEFAULT_TEMPLATE_FILTERS.filters.status },
+    ]);
   }, [registerFilters]);
 
   const clearSearch = useCallback(
