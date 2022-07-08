@@ -111,12 +111,15 @@ function MediaRecordingProvider({ children }) {
       }
       const f = blobToFile(
         blob,
-        `webcam-capture-${format(new Date(), 'Y-m-d-H-i')}.${FILE_TYPE}`,
+        `${hasVideo ? 'webcam' : 'audio'}-capture-${format(
+          new Date(),
+          'Y-m-d-H-i'
+        )}.${FILE_TYPE}`,
         MIME_TYPE
       );
       setFile(f);
     },
-    [showSnackbar, FILE_TYPE, MIME_TYPE]
+    [showSnackbar, hasVideo, FILE_TYPE, MIME_TYPE]
   );
 
   const {
