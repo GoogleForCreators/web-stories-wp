@@ -37,8 +37,6 @@ import { useHighlights, states, styles } from '../../../../app/highlights';
 import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
 import { combineElementsWithTags } from './utils';
 
-// packages/output/src/utils/getTextElementTagNames
-
 // Options to be mapped for the dropdown
 const semanticHeadingsOptionsMap = [
   {
@@ -69,9 +67,9 @@ function TextAccessibilityPanel({ selectedElements, pushUpdate }) {
   const [selectedTextElements, setSelectedTextElements] = useState([]);
   const [currentTags, setCurrentTags] = useState([]);
   useEffect(() => {
-    // We only want to do this if all selected elements are of type text
+    // We only want to impact elements if all selected elements are of type text
     const textElements = selectedElements.filter(({ type }) => 'text' === type);
-    // Then we want to get the text tags for the elements
+    // Then we want to get the text tags for the elements if not already defined
     const textTags = getTextElementTagNames(textElements);
     // Then combine the elements with their associated tag
     const newElements = combineElementsWithTags(textElements, textTags);
@@ -106,8 +104,8 @@ function TextAccessibilityPanel({ selectedElements, pushUpdate }) {
   // Check if tags match for selected item in dropdown
   // If they don't match, we want to show 'Mixed'
   // However, if they match, show the matching value
-  const doElementTagsMatch = new Set(currentTags || []).size === 1;
-  const currentValue = doElementTagsMatch ? currentTags[0] : '((MULTIPLE))';
+  const currentValue =
+    new Set(currentTags || []).size === 1 ? currentTags[0] : '((MULTIPLE))';
   return (
     <SimplePanel
       css={highlight && styles.FLASH}
@@ -124,7 +122,7 @@ function TextAccessibilityPanel({ selectedElements, pushUpdate }) {
               node.focus();
             }
           }}
-          data-testid="headingLevel"
+          data-testid="text-accessibility-dropdown"
           title={__('Heading Levels', 'web-stories')}
           dropdownButtonLabel={__('Heading Levels', 'web-stories')}
           options={semanticHeadingsOptionsMap}
