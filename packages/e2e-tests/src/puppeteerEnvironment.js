@@ -41,13 +41,20 @@ class PuppeteerEnvironment extends OriginalEnvironment {
   async handleTestEvent(event, state) {
     if (event.name === 'test_fn_failure') {
       const testName = `${state.currentlyRunningTest.parent.name}  ${state.currentlyRunningTest.name}`;
-      
-      const data = await this.global.page.screenshot({ type: 'jpeg', encoding: 'base64', quality: 1 	});
-      // eslint-disable-next-line no-console
-      console.log(`data:image/jpeg;base64,${data}`);
-      
+      const data = await this.global.page.screenshot({
+        type: 'jpeg',
+        encoding: 'base64',
+        quality: 1,
+      });
+      // note you can console log this for local debugging
+      const img = `data:image/jpeg;base64,${data}`;
+
       const errors = state.currentlyRunningTest.errors;
       let errorMessages = '';
+      errorMessages += `=========${testName}==========\n\n`;
+      errorMessages += img;
+      errorMessages += '============end==========\n\n';
+
       errors.forEach((error) => {
         errorMessages += testName + '::' + error + '\n\n';
       });
