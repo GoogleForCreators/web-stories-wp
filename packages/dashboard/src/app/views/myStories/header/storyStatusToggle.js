@@ -55,11 +55,9 @@ function StoryStatusToggle({
 
   const handleStatusChange = useCallback(
     (value) => {
-      if (currentStatus !== value) {
-        updateFilter('status', { filterId: value });
-      }
+      updateFilter('status', { filterId: value });
     },
-    [currentStatus, updateFilter]
+    [updateFilter]
   );
 
   useEffect(() => {

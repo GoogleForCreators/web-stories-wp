@@ -36,6 +36,7 @@ import * as types from './types';
 const reducer = (state, { type, payload = {} }) => {
   switch (type) {
     case types.UPDATE_FILTER: {
+      const ALLOW_SAME_FILTERID = ['search', 'status'];
       const { key, value } = payload;
       const _filter = state.filters.find((filter) => filter.key === key);
 
@@ -45,7 +46,7 @@ const reducer = (state, { type, payload = {} }) => {
 
       // remove 'filter-by' value
       if (value.filterId && _filter?.filterId === value.filterId) {
-        if (key === 'search') {
+        if (ALLOW_SAME_FILTERID.includes(key)) {
           return state;
         }
         value.filterId = null;

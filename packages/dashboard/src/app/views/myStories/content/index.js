@@ -52,6 +52,7 @@ function NoAvailableContent({ filtersObject }) {
       search
     );
   } else if (Object.keys(filtersObject).length !== 0) {
+    console.log(filtersObject);
     return __("Sorry, we couldn't find any results", 'web-stories');
   } else {
     return __('Start telling Stories.', 'web-stories');
@@ -95,25 +96,27 @@ function Content({
             />
           </>
         ) : (
-          <EmptyContentMessage>
-            <Headline
-              size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-              as="h3"
-            >
-              <NoAvailableContent filtersObject={filtersObject} />
-            </Headline>
-            {Object.keys(filtersObject).length === 0 &&
-              canViewDefaultTemplates && (
-                <Button
-                  type={BUTTON_TYPES.PRIMARY}
-                  size={BUTTON_SIZES.MEDIUM}
-                  as="a"
-                  href={resolveRoute(APP_ROUTES.TEMPLATES_GALLERY)}
-                >
-                  {__('Explore Templates', 'web-stories')}
-                </Button>
-              )}
-          </EmptyContentMessage>
+          !loading?.isLoading && (
+            <EmptyContentMessage>
+              <Headline
+                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                as="h3"
+              >
+                <NoAvailableContent filtersObject={filtersObject} />
+              </Headline>
+              {Object.keys(filtersObject).length === 0 &&
+                canViewDefaultTemplates && (
+                  <Button
+                    type={BUTTON_TYPES.PRIMARY}
+                    size={BUTTON_SIZES.MEDIUM}
+                    as="a"
+                    href={resolveRoute(APP_ROUTES.TEMPLATES_GALLERY)}
+                  >
+                    {__('Explore Templates', 'web-stories')}
+                  </Button>
+                )}
+            </EmptyContentMessage>
+          )
         )}
       </StandardViewContentGutter>
     </Layout.Scrollable>

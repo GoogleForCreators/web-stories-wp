@@ -17,8 +17,9 @@
 /**
  * Internal dependencies
  */
-import reducer from '../../../filters/reducer';
-import * as types from '../../../filters/types';
+import reducer from '../reducer';
+import * as types from '../types';
+import { TEMPLATES_GALLERY_SORT_OPTIONS } from '../../../../constants/templates';
 
 describe('reducer', () => {
   it('should update the state', () => {
@@ -45,8 +46,8 @@ describe('reducer', () => {
     expect(filter.filterId).toBe(112);
   });
 
-  it('should update set the filterId to null if the same filterId is given', () => {
-    const initial_state = {
+  it('should update set the filterId to null if the same filterId is given, unless the filter is "search" or "status"', () => {
+    let initial_state = {
       filters: [
         {
           key: 'officers',
@@ -56,7 +57,7 @@ describe('reducer', () => {
       ],
     };
 
-    const args = {
+    let args = {
       type: types.UPDATE_FILTER,
       payload: {
         key: 'officers',
@@ -64,9 +65,41 @@ describe('reducer', () => {
       },
     };
 
-    const state = reducer(initial_state, args);
-    const filter = state.filters.find((f) => f.key === 'officers');
+    let state = reducer(initial_state, args);
+    let filter = state.filters.find((f) => f.key === 'officers');
     expect(filter.filterId).toBeNull();
+
+    initial_state = {
+      filters: [
+        { key: 'search', filterId: 'John' },
+        { key: 'status', filterId: 'New' },
+      ],
+    };
+    // search
+    args = {
+      type: types.UPDATE_FILTER,
+      payload: {
+        key: 'search',
+        value: 'John',
+      },
+    };
+
+    state = reducer(initial_state, args);
+    filter = state.filters.find((f) => f.key === 'search');
+    expect(filter.filterId).toBe('John');
+
+    // status
+    args = {
+      type: types.UPDATE_FILTER,
+      payload: {
+        key: 'status',
+        value: 'New',
+      },
+    };
+
+    state = reducer(initial_state, args);
+    filter = state.filters.find((f) => f.key === 'status');
+    expect(filter.filterId).toBe('New');
   });
 
   it('should register filters in state', () => {
@@ -142,5 +175,36 @@ describe('reducer', () => {
 
     const state = reducer(initial_state, args);
     expect(state).toMatchObject(initial_state);
+  });
+
+  it('should update sort based on "type" and acceptable keys', () => {
+    const initial_state = {
+      sortObject: {},
+    };
+
+    let args = {
+      type: 'UPDATE_SORT',
+      payload: {
+        type: 'template',
+        values: { orderby: TEMPLATES_GALLERY_SORT_OPTIONS.POPULAR },
+      },
+    };
+
+    let state = reducer(initial_state, args);
+    expect(state.sortObject).toMatchObject({
+      orderby: TEMPLATES_GALLERY_SORT_OPTIONS.POPULAR,
+    });
+
+    args = {
+      type: 'UPDATE_SORT',
+      payload: { type: 'template', values: { orderby: 'non-popular' } },
+    };
+
+    state = reducer(state, args);
+    // state shouldn't change because 'non-popular' is not an acceptable value
+    // for 'template' sort 'orderby'
+    expect(state.sortObject).toMatchObject({
+      orderby: TEMPLATES_GALLERY_SORT_OPTIONS.POPULAR,
+    });
   });
 });

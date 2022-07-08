@@ -26,6 +26,7 @@ import {
   useDebouncedCallback,
   useCallback,
   useMemo,
+  useEffect,
 } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { useFeature } from 'flagged';
@@ -49,17 +50,19 @@ function Header({ isLoading, totalTemplates, view, searchOptions = [] }) {
     'enableInProgressTemplateActions'
   );
 
-  const { filters, sortObject, updateFilter, updateSort } = useTemplateFilters(
-    ({
-      state: { filters, sortObject },
-      actions: { updateFilter, updateSort },
-    }) => ({
-      filters,
-      sortObject,
-      updateFilter,
-      updateSort,
-    })
-  );
+  const { filters, sortObject, updateFilter, updateSort, registerFilters } =
+    useTemplateFilters(
+      ({
+        state: { filters, sortObject },
+        actions: { updateFilter, updateSort, registerFilters },
+      }) => ({
+        filters,
+        sortObject,
+        updateFilter,
+        updateSort,
+        registerFilters,
+      })
+    );
 
   const [statusFilterValue, searchFilterValue] = useMemo(() => {
     const status = filters.find(({ key }) => key === 'status');
@@ -70,6 +73,10 @@ function Header({ isLoading, totalTemplates, view, searchOptions = [] }) {
   const debouncedSearchChange = useDebouncedCallback((value) => {
     updateFilter('search', { filterId: value });
   }, TEXT_INPUT_DEBOUNCE);
+
+  useEffect(() => {
+    registerFilters([{ key: 'search' }]);
+  }, [registerFilters]);
 
   const clearSearch = useCallback(
     () => updateFilter('search', { filterId: null }),

@@ -28,10 +28,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import {
-  DEFAULT_TEMPLATE_FILTERS,
-  TEMPLATES_GALLERY_STATUS,
-} from '../../../../../constants/templates';
+import { DEFAULT_TEMPLATE_FILTERS } from '../../../../../constants/templates';
 import reducer from '../../../filters/reducer';
 import * as types from '../../../filters/types';
 
@@ -45,10 +42,7 @@ const { filters: defaultTemplateFilters, sort: defaultTemplateSort } =
 
 export default function TemplateFiltersProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, {
-    filters: [
-      { key: 'search', filterId: null },
-      { key: 'status', filterId: TEMPLATES_GALLERY_STATUS.ALL },
-    ],
+    filters: [],
     filtersObject: defaultTemplateFilters,
     sortObject: defaultTemplateSort,
   });
