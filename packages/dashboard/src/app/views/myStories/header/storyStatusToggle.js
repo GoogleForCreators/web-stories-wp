@@ -27,11 +27,7 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import useStoryFilters from '../filters/useStoryFilters';
-import {
-  DEFAULT_FILTERS,
-  STORY_STATUS,
-  STORY_STATUSES,
-} from '../../../../constants';
+import { DEFAULT_FILTERS, STORY_STATUSES } from '../../../../constants';
 import { TotalStoriesByStatusPropType } from '../../../../types';
 
 const StyledPill = styled(Pill)`

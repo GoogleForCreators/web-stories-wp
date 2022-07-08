@@ -52,7 +52,6 @@ function NoAvailableContent({ filtersObject }) {
       search
     );
   } else if (Object.keys(filtersObject).length !== 0) {
-    console.log(filtersObject);
     return __("Sorry, we couldn't find any results", 'web-stories');
   } else {
     return __('Start telling Stories.', 'web-stories');
