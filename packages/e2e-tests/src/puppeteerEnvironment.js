@@ -47,17 +47,20 @@ class PuppeteerEnvironment extends OriginalEnvironment {
         errorMessages += testName + '::' + error + '\n\n';
       });
 
+      const eventError = util.inspect(event);
+
+      errorMessages += '=========================\n\n';
+      errorMessages += eventError;
+
       await this.storeArtifacts(testName, errorMessages);
 
-      const errorMsg = util.inspect(event);
-
-      if (errorMsg.includes('JestAssertionError')) {
+      if (eventError.includes('JestAssertionError')) {
         // return already handled
         return;
       }
 
       // eslint-disable-next-line no-console
-      console.log(' Unhandled event(' + event.name + '): ' + errorMsg);
+      console.log(' Unhandled event(' + event.name + '): ' + eventError);
     }
   }
 
