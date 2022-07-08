@@ -102,8 +102,6 @@ describe('Font Check Metrics', () => {
   let stopRequestInterception;
   let mockResponse;
 
-  jest.retryTimes(3, {logErrorsBeforeRetry: true});
-
   beforeAll(async () => {
     await page.setRequestInterception(true);
     stopRequestInterception = addRequestInterception((request) => {
@@ -123,6 +121,8 @@ describe('Font Check Metrics', () => {
   afterAll(() => {
     stopRequestInterception();
   });
+
+  jest.retryTimes(3);
 
   it('should receive updated font metrics and not alter history', async () => {
     const storyTitle = 'Font Check Metrics';
