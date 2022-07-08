@@ -49,9 +49,16 @@ class PuppeteerEnvironment extends OriginalEnvironment {
 
       await this.storeArtifacts(testName, errorMessages);
 
+      const errorMsg = util.inspect(event);
+
+      if (errorMsg(JestAssertionError)) {
+        // return already handled
+        return;
+      }
+
       // eslint-disable-next-line no-console
       console.log(
-        ' Unhandled event(' + event.name + '): ' + util.inspect(event)
+        ' Unhandled event(' + event.name + '): ' + errorMsg
       );
     }
   }
