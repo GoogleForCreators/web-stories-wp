@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-const buffer = globalThis?.document?.createElement('div') || {};
+const buffer = globalThis?.document?.createElement('div') || {}; // To handle SSR.
 
 export default function escapeHTML(string) {
   // @todo: implement a cheaper way to escape HTML characters.
