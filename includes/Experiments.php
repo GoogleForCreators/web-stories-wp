@@ -380,7 +380,7 @@ class Experiments extends Service_Base implements HasRequirements {
 				'description' => __( 'Display semantic heading tags', 'web-stories' ),
 				'group'       => 'editor',
 			],
-      		/**
+			/**
 			 * Author: @barklund
 			 * Issue: #9643
 			 * Creation date: 2022-06-21
