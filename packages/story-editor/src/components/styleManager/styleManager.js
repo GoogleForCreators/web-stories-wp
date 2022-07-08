@@ -24,6 +24,7 @@ import {
   useRef,
   useState,
   useCallback,
+  useEffect,
 } from '@googleforcreators/react';
 import styled from 'styled-components';
 import {
@@ -87,7 +88,12 @@ function StyleManager({ styles, onClose, applyStyle, ...rest }) {
   const containerRef = useRef(null);
 
   // Re-establish focus when actively exiting by button or key press
-  const previousFocus = useRef(document.activeElement);
+  const previousFocus = useRef(null);
+
+  useEffect(() => {
+    previousFocus.current = document.activeElement;
+  }, []);
+
   const handleCloseAndRefocus = useCallback(
     (evt) => {
       // Ignore reason: In Jest, focus is always on document.body if not on any specific

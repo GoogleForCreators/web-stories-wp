@@ -49,7 +49,7 @@ function ErrorMessage({ error, hasVideo }) {
 
   // Use some more human-readable error messages for most common scenarios.
   // See https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia#exceptions
-  if (!window.isSecureContext) {
+  if (!globalThis.isSecureContext) {
     errorMessage = __(
       'Requires a secure browsing context (HTTPS)',
       'web-stories'

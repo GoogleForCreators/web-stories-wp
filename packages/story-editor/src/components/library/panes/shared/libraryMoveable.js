@@ -138,7 +138,7 @@ function LibraryMoveable({
   // We only need to use this effect while dragging since the active element is document.body
   // and using just that interferes with other handlers.
   useKeyDownEffect(
-    isDragging ? document.body : { current: null },
+    isDragging ? document.body : { current: null }, // eslint-disable-line ssr-friendly/no-dom-globals-in-react-fc -- Used conditionally
     'esc',
     () => {
       setDidManuallyReset(true);
