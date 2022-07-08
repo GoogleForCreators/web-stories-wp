@@ -86,7 +86,7 @@ describe('Web Stories Widget Block', () => {
     await expect(page).toMatch('Embed Settings');
   });
 
-  it('should insert a legacy web stories widget', async () => {
+  it.skip('should insert a legacy web stories widget', async () => {
     await activatePlugin('classic-widgets');
 
     await visitAdminPage('widgets.php');
