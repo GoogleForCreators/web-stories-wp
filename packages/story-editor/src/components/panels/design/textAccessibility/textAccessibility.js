@@ -90,11 +90,8 @@ function TextAccessibilityPanel({ selectedElements, pushUpdate }) {
   // Map all types of tag names in the selected elements
   // and then convert to an Array for usage
   const handleChange = (ev, value) => {
-    selectedElements.map((element) => {
-      if (element.type != 'text') {
-        return;
-      }
-      pushUpdate({ tagName: value });
+    selectedElements.map(() => {
+      return pushUpdate({ tagName: value });
     });
     // Update the selected text elements with the
     // value chosen in the text accessibility dropdown
