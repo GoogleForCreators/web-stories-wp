@@ -21,5 +21,8 @@ export const COUNTDOWN_TIME_IN_SECONDS = 3;
 export const VIDEO_MIME_TYPE = 'video/mp4';
 export const VIDEO_FILE_TYPE = 'mp4';
 
+export const AUDIO_MIME_TYPE = 'audio/ogg';
+export const AUDIO_FILE_TYPE = 'ogg';
+
 export const PHOTO_MIME_TYPE = 'image/jpeg';
 export const PHOTO_FILE_TYPE = 'jpeg';
