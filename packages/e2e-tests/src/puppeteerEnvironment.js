@@ -51,7 +51,7 @@ class PuppeteerEnvironment extends OriginalEnvironment {
 
       const errorMsg = util.inspect(event);
 
-      if (errorMsg(JestAssertionError)) {
+      if (errorMsg.includes("JestAssertionError")) {
         // return already handled
         return;
       }
