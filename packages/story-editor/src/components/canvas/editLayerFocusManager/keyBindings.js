@@ -90,10 +90,9 @@ function KeyBindings({ uuid, node, focusGroup, exitFocusGroup }) {
 
 KeyBindings.propTypes = {
   uuid: PropTypes.string.isRequired,
-  node:
-    typeof Element !== 'undefined'
-      ? PropTypes.instanceOf(Element).isRequired // eslint-disable-line ssr-friendly/no-dom-globals-in-module-scope -- Used conditionally
-      : PropTypes.any.isRequired,
+  node: globalThis.Element
+    ? PropTypes.instanceOf(Element).isRequired // eslint-disable-line ssr-friendly/no-dom-globals-in-module-scope -- Used conditionally
+    : PropTypes.any.isRequired,
   focusGroup: PropTypes.array.isRequired,
   exitFocusGroup: PropTypes.func,
 };

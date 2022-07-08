@@ -37,9 +37,8 @@ export default function DropDownKeyEvents({ target }) {
 
 DropDownKeyEvents.propTypes = {
   target: PropTypes.shape({
-    current:
-      typeof Element !== 'undefined'
-        ? PropTypes.instanceOf(Element) // eslint-disable-line ssr-friendly/no-dom-globals-in-module-scope -- Used conditionally
-        : PropTypes.any,
+    current: globalThis.Element
+      ? PropTypes.instanceOf(Element) // eslint-disable-line ssr-friendly/no-dom-globals-in-module-scope -- Used conditionally
+      : PropTypes.any,
   }),
 };
