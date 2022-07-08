@@ -36,12 +36,15 @@ describe('reshapeStoryObject', () => {
       title: { raw: 'Carlos Draft' },
       excerpt: { rendered: '', protected: false },
       author: 1,
-      featured_media: 0,
+      featured_media: 33,
       preview_link: 'http://localhost:8899/preview/27',
       edit_link: 'http://localhost:8899/edit/27',
       template: '',
       categories: [],
       tags: [],
+      meta: {
+        web_stories_poster: {},
+      },
       _embedded: {
         'wp:featuredmedia': [
           {
@@ -117,6 +120,9 @@ describe('reshapeStoryObject', () => {
       template: '',
       categories: [],
       tags: [],
+      meta: {
+        web_stories_poster: {},
+      },
       _embedded: {
         'wp:featuredmedia': [
           {
@@ -183,6 +189,9 @@ describe('reshapeStoryObject', () => {
       template: '',
       categories: [],
       tags: [],
+      meta: {
+        web_stories_poster: {},
+      },
       _embedded: {
         'wp:featuredmedia': [{ id: 0, source_url: '' }],
         author: [{ id: 1, name: 'admin' }],
@@ -212,6 +221,9 @@ describe('reshapeStoryObject', () => {
       template: '',
       categories: [],
       tags: [],
+      meta: {
+        web_stories_poster: {},
+      },
       _embedded: {
         'wp:featuredmedia': [{ id: 0, source_url: '' }],
         author: [{ id: 1, name: 'admin' }],

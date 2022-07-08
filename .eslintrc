@@ -29,6 +29,7 @@
     }
   },
   "rules": {
+    "array-callback-return": "error",
     "block-scoped-var": "error",
     "complexity": ["error", {"max": 20}],
     "consistent-return": "error",
@@ -36,6 +37,7 @@
     "default-case": "error",
     "guard-for-in": "error",
     "no-await-in-loop": "error",
+    "no-constant-binary-expression": "error",
     "no-extra-bind": "error",
     "no-extra-label": "error",
     "no-floating-decimal": "error",
