@@ -458,6 +458,59 @@ function useFFmpeg() {
   );
 
   /**
+   * Converts any audio file format to MP3 using FFmpeg.
+   *
+   * @param {File} file Original audio file object.
+   * @return {Promise<File>} Converted video file object.
+   */
+  const convertToMp3 = useCallback(
+    async (file) => {
+      //eslint-disable-next-line @wordpress/no-unused-vars-before-return -- False positive because of the finally().
+      const trackTiming = getTimeTracker('load_mp3_conversion');
+
+      let ffmpeg;
+
+      try {
+        ffmpeg = await getFFmpegInstance(file);
+
+        const tempFileName = uuidv4() + '.mp3';
+        const outputFileName = getFileName(file) + '.mp3';
+
+        await ffmpeg.run(
+          // Input filename.
+          '-i',
+          file.name,
+          // Output filename. MUST be different from input filename.
+          tempFileName
+        );
+
+        const data = ffmpeg.FS('readFile', tempFileName);
+
+        return new blobToFile(
+          new Blob([data.buffer], { type: 'audio/mpeg' }),
+          outputFileName,
+          'audio/mpeg'
+        );
+      } catch (err) {
+        // eslint-disable-next-line no-console -- We want to surface this error.
+        console.error(err);
+
+        trackError('mp3_conversion', err.message);
+
+        throw err;
+      } finally {
+        try {
+          ffmpeg.exit();
+          // eslint-disable-next-line no-empty -- no-op
+        } catch (e) {}
+
+        trackTiming();
+      }
+    },
+    [getFFmpegInstance]
+  );
+
+  /**
    * Determines whether the given file can be transcoded.
    *
    * @param {File} file File object.
@@ -496,6 +549,7 @@ function useFFmpeg() {
       stripAudioFromVideo,
       getFirstFrameOfVideo,
       convertGifToVideo,
+      convertToMp3,
       trimVideo,
     }),
     [
@@ -505,6 +559,7 @@ function useFFmpeg() {
       stripAudioFromVideo,
       getFirstFrameOfVideo,
       convertGifToVideo,
+      convertToMp3,
       trimVideo,
     ]
   );

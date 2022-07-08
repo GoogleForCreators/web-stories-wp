@@ -17,12 +17,7 @@
 /**
  * External dependencies
  */
-import {
-  useEffect,
-  useRef,
-  useState,
-  useCallback,
-} from '@googleforcreators/react';
+import { useEffect, useRef, useState } from '@googleforcreators/react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
@@ -43,35 +38,41 @@ Audio.propTypes = {
   liveStream: PropTypes.object,
 };
 
-const audioContext = new window.AudioContext();
-const analyser = audioContext.createAnalyser();
-
 const AudioAnalyser = (props) => {
   const [data, setData] = useState([]);
   const raf = useRef();
+  const audioContextRef = useRef();
+  const analyserRef = useRef();
   const prevRafTime = useRef();
 
-  const tick = useCallback((time) => {
-    if (prevRafTime.current !== undefined) {
-      const dataArray = new Uint8Array(analyser.frequencyBinCount);
-      analyser.getByteTimeDomainData(dataArray);
-      setData(dataArray);
-    }
-    prevRafTime.current = time;
-    raf.current = requestAnimationFrame(tick);
-  }, []);
+  if (!analyserRef.current) {
+    audioContextRef.current = new window.AudioContext();
+    analyserRef.current = audioContextRef.current.createAnalyser();
+  }
 
   useEffect(() => {
-    const source = audioContext.createMediaStreamSource(props.source);
-    source.connect(analyser);
+    const source = audioContextRef.current.createMediaStreamSource(
+      props.source
+    );
+    source.connect(analyserRef.current);
+
+    const tick = (time) => {
+      if (prevRafTime.current !== undefined) {
+        const dataArray = new Uint8Array(analyserRef.current.frequencyBinCount);
+        analyserRef.current.getByteTimeDomainData(dataArray);
+        setData(dataArray);
+      }
+      prevRafTime.current = time;
+      raf.current = requestAnimationFrame(tick);
+    };
 
     raf.current = requestAnimationFrame(tick);
     return () => {
       cancelAnimationFrame(raf.current);
-      analyser.disconnect();
+      analyserRef.current.disconnect();
       source.disconnect();
     };
-  }, [props.source, tick]);
+  }, [props.source]);
 
   return <AudioVisualiser data={data} />;
 };
@@ -114,5 +115,5 @@ const AudioVisualiser = ({ data }) => {
 };
 
 AudioVisualiser.propTypes = {
-  data: PropTypes.object,
+  data: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
 };

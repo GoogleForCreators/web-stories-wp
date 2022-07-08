@@ -142,8 +142,8 @@ function MediaRecordingProvider({ children }) {
     // granted permission, so it's not easy to detect.
     // TODO: Figure out how to retry without microphone if possible.
     mediaStreamConstraints: {
-      audio: audioInput && hasAudio ? { deviceId: audioInput } : false,
-      video: videoInput && hasVideo ? { deviceId: videoInput } : false,
+      audio: audioInput && hasAudio ? { deviceId: audioInput } : true,
+      video: videoInput && hasVideo ? { deviceId: videoInput } : true,
     },
     onStop,
   });

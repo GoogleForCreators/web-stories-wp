@@ -49,6 +49,7 @@ import { useUploader } from '../../app/uploader';
 import { useStory } from '../../app';
 import useHighlights from '../../app/highlights/useHighlights';
 import states from '../../app/highlights/states';
+import useFFmpeg from '../../app/media/utils/useFFmpeg';
 import { COUNTDOWN_TIME_IN_SECONDS } from './constants';
 import useMediaRecording from './useMediaRecording';
 
@@ -293,11 +294,14 @@ function Footer({ captureImage, videoRef }) {
     setHighlights,
   }));
 
+  const { convertToMp3 } = useFFmpeg();
+
   const onAudioInsert = async () => {
     setIsInserting(true);
     speak(__('Inserting…', 'web-stories'));
 
-    const resource = await uploadFile(file);
+    const mp3File = await convertToMp3(file);
+    const resource = await uploadFile(mp3File);
     const backgroundAudio = {
       resource,
     };
