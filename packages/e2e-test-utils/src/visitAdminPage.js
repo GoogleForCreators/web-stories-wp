@@ -36,7 +36,7 @@ import {
  */
 async function visitAdminPage(adminPath, query = '') {
   await page.goto(
-    createURL(join('wp-admin', adminPath), query, { waitUntil: 'networkidle2' })
+    createURL(join('wp-admin', adminPath), query)
   );
 
   // Handle upgrade required screen
