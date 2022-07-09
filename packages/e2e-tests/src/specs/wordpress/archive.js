@@ -109,7 +109,8 @@ describe.skip('Stories Archive', () => {
       await changeStoriesArchivesType('Default');
     });
 
-    describe('Block', () => {
+    // eslint-disable-next-line jest/no-disabled-tests
+    describe.skip('Block', () => {
       it('should insert a new web stories block', async () => {
         await createNewPost({
           showWelcomeGuide: false,
