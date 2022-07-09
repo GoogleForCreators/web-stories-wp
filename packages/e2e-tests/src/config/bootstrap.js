@@ -238,7 +238,7 @@ beforeAll(async () => {
   await trashAllPosts('web-story');
   await trashAllTerms('web_story_category');
   await trashAllTerms('web_story_tag');
-  await deleteAllMedia();
+  // await deleteAllMedia(); try without delete media
 
   await clearLocalStorage();
 });
