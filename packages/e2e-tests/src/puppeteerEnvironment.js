@@ -53,7 +53,11 @@ class PuppeteerEnvironment extends OriginalEnvironment {
       const eventError = util.inspect(event);
       let errorMessages = '';
       errorMessages += `=========${testName}==========\n\n`;
-      errorMessages += "start:" + new Date(event.test.startedAt).toLocaleString() + " end:" + new Date().toLocaleString();
+      errorMessages +=
+        'start:' +
+        new Date(event.test.startedAt).toLocaleString() +
+        ' end:' +
+        new Date().toLocaleString();
       errorMessages += img;
       errorMessages += '============end==========\n\n';
       errors.forEach((error) => {
