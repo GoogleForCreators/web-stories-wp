@@ -50,16 +50,15 @@ class PuppeteerEnvironment extends OriginalEnvironment {
       const img = `data:image/jpeg;base64,${data}`;
 
       const errors = state.currentlyRunningTest.errors;
+      const eventError = util.inspect(event);
       let errorMessages = '';
       errorMessages += `=========${testName}==========\n\n`;
+      errorMessages += "start:" + new Date(event.test.startedAt).toLocaleString() + " end:" + new Date().toLocaleString();
       errorMessages += img;
       errorMessages += '============end==========\n\n';
-
       errors.forEach((error) => {
         errorMessages += testName + '::' + error + '\n\n';
       });
-
-      const eventError = util.inspect(event);
 
       errorMessages += '=========================\n\n';
       errorMessages += eventError;
