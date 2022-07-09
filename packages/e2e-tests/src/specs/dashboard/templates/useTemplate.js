@@ -64,7 +64,7 @@ describe('Template', () => {
     await page.waitForNavigation();
 
     // Wait for title input to load before continuing.
-    await page.waitForSelector('input[placeholder="Add title"]');
+    // await page.waitForSelector('input[placeholder="Add title"]');
 
     // Wait for skeleton thumbnails in the carousel to render which gives footer time to also render
     await page.waitForFunction(

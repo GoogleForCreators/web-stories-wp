@@ -32,7 +32,8 @@ import {
  */
 import { addAllowedErrorMessage } from '../../config/bootstrap.js';
 
-describe('Web Stories Widget Block', () => {
+// eslint-disable-next-line jest/no-disabled-tests
+describe.skip('Web Stories Widget Block', () => {
   let removeErrorMessage;
 
   minWPVersionRequired('5.8');
