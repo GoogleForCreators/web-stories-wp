@@ -95,7 +95,7 @@
     "core-js": "^3.23.3",
     "cross-env": "^7.0.3",
     "css-loader": "^6.7.1",
-    "css-minimizer-webpack-plugin": "^3.0.2",
+    "css-minimizer-webpack-plugin": "^4.0.0",
     "cssnano": "^5.1.12",
     "eslint": "^8.19.0",
     "eslint-config-prettier": "^8.5.0",
