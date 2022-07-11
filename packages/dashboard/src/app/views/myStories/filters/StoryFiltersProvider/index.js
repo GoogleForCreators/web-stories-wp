@@ -58,9 +58,6 @@ export const filterContext = createContext({
  * @return {Node} React node
  */
 
-const { filters: defaultStoryFilters, sort: defaultStorySort } =
-  DEFAULT_FILTERS;
-
 export default function StoryFiltersProvider({ children }) {
   // each filter type will have its own logic for initilizing and querying
   const initializeTaxonomyFilters = useTaxonomyFilters();
@@ -68,8 +65,8 @@ export default function StoryFiltersProvider({ children }) {
 
   const [state, dispatch] = useReducer(reducer, {
     filters: [],
-    filtersObject: defaultStoryFilters,
-    sortObject: defaultStorySort,
+    filtersObject: {},
+    sortObject: {},
   });
 
   /**
