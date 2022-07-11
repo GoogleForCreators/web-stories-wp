@@ -60,8 +60,6 @@ function MediaRecordingProvider({ children }) {
 
   const [hasVideo, setHasVideo] = useState(true);
   const [hasAudio, setHasAudio] = useState(true);
-  const FILE_TYPE = hasVideo ? VIDEO_FILE_TYPE : AUDIO_FILE_TYPE;
-  const MIME_TYPE = hasVideo ? VIDEO_MIME_TYPE : AUDIO_MIME_TYPE;
   const [videoInput, setVideoInput] = useState(
     localStore.getItemByKey(LOCAL_STORAGE_PREFIX.MEDIA_RECORDING_VIDEO_INPUT)
   );
@@ -109,6 +107,8 @@ function MediaRecordingProvider({ children }) {
           dismissable: true,
         });
       }
+      const FILE_TYPE = hasVideo ? VIDEO_FILE_TYPE : AUDIO_FILE_TYPE;
+      const MIME_TYPE = hasVideo ? VIDEO_MIME_TYPE : AUDIO_MIME_TYPE;
       const f = blobToFile(
         blob,
         `${hasVideo ? 'webcam' : 'audio'}-capture-${format(
@@ -119,7 +119,7 @@ function MediaRecordingProvider({ children }) {
       );
       setFile(f);
     },
-    [showSnackbar, hasVideo, FILE_TYPE, MIME_TYPE]
+    [showSnackbar, hasVideo]
   );
 
   const {
