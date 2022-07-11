@@ -104,6 +104,8 @@ const ALLOWED_ERROR_MESSAGES = [
 
   // See https://github.com/GoogleForCreators/web-stories-wp/pull/11782#issuecomment-1178865825
   'Bundle not found for language en:',
+
+  'Failed to fetch'
 ];
 
 export function addAllowedErrorMessage(message) {

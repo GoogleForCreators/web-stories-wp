@@ -24,8 +24,10 @@ import {
   withPlugin,
 } from '@web-stories-wp/e2e-test-utils';
 
-describe('Custom Meta Boxes', () => {
-  describe('Unavailable', () => {
+// eslint-disable-next-line jest/no-disabled-tests
+describe.skip('Custom Meta Boxes', () => {
+  // eslint-disable-next-line jest/no-disabled-tests
+  describe.skip('Unavailable', () => {
     it('should not display button to toggle meta boxes', async () => {
       await createNewStory();
       await expect(page).toMatchElement('input[placeholder="Add title"]');
@@ -35,7 +37,8 @@ describe('Custom Meta Boxes', () => {
     });
   });
 
-  describe('Available', () => {
+  // eslint-disable-next-line jest/no-disabled-tests
+  describe.skip('Available', () => {
     withPlugin('web-stories-test-plugin-meta-box');
 
     it('should display meta boxes and save their content', async () => {
