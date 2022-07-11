@@ -120,7 +120,7 @@ function useSingleSelectionDrag({
       }
     }
     resetDragging(target);
-    handleFullbleedMediaAsBackground(target);
+    handleFullbleedMediaAsBackground();
     return undefined;
   };
 

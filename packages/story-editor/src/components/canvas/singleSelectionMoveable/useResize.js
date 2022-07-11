@@ -176,7 +176,7 @@ function useSingleSelectionResize({
     }
     setIsResizingFromCorner(true);
     resetMoveable(target);
-    handleFullbleedMediaAsBackground(target);
+    handleFullbleedMediaAsBackground();
   };
 
   const visuallyHideHandles =

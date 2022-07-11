@@ -24,12 +24,13 @@ import {
 } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 import { MEDIA_ELEMENT_TYPES } from '@googleforcreators/elements';
+import SAT from 'sat';
 
 /**
  * Internal dependencies
  */
-import isTargetCoveringContainer from '../../../utils/isTargetCoveringContainer';
 import { useStory, useCanvas } from '../../../app';
+import useElementPolygon from '../../../utils/useElementPolygon';
 
 function useFullbleedMediaAsBackground({ selectedElement }) {
   const [
@@ -51,14 +52,25 @@ function useFullbleedMediaAsBackground({ selectedElement }) {
     })
   );
   const { showSnackbar } = useSnackbar();
+  const getElementPolygon = useElementPolygon();
 
-  const handleFullbleedMediaAsBackground = (target) => {
+  const handleFullbleedMediaAsBackground = () => {
     if (
       isDefaultBackground &&
-      MEDIA_ELEMENT_TYPES.includes(selectedElement.type) &&
-      isTargetCoveringContainer(target, fullbleedContainer)
+      MEDIA_ELEMENT_TYPES.includes(selectedElement.type)
     ) {
-      setBackgroundElement({ elementId: selectedElement.id });
+      const elPolygon = getElementPolygon(selectedElement);
+      const fullbleedBox = fullbleedContainer.getBoundingClientRect();
+      const bgPolygon = new SAT.Box(
+        new SAT.Vector(fullbleedBox.x, fullbleedBox.y),
+        fullbleedBox.width,
+        fullbleedBox.height
+      ).toPolygon();
+      const response = new SAT.Response();
+      SAT.testPolygonPolygon(elPolygon, bgPolygon, response);
+      if (response.bInA) {
+        setBackgroundElement({ elementId: selectedElement.id });
+      }
 
       if (!isBackgroundSnackbarMessageDismissed) {
         showSnackbar({
