@@ -118,7 +118,7 @@ describe('Font Check Metrics', () => {
     mockResponse = undefined;
   });
 
-  afterAll(() => {
+  afterAll(async () => {
     await page.setRequestInterception(false);
     stopRequestInterception();
   });
