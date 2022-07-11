@@ -46,7 +46,7 @@ import { Z_INDEX_RECORDING_MODE } from '../../constants/zIndex';
 import { FooterArea } from '../canvas/layout';
 import useUploadWithPreview from '../canvas/useUploadWithPreview';
 import { useUploader } from '../../app/uploader';
-import { useStory } from '../../app';
+import { useConfig, useStory } from '../../app';
 import useHighlights from '../../app/highlights/useHighlights';
 import states from '../../app/highlights/states';
 import useFFmpeg from '../../app/media/utils/useFFmpeg';
@@ -162,6 +162,8 @@ function Footer({ captureImage, videoRef }) {
   const uploadWithPreview = useUploadWithPreview();
 
   const speak = useLiveRegion();
+
+  const { audio: allowedAudioMimeTypes } = useConfig();
 
   const onRetry = useCallback(async () => {
     resetState();
@@ -301,7 +303,13 @@ function Footer({ captureImage, videoRef }) {
     speak(__('Inserting…', 'web-stories'));
 
     const mp3File = await convertToMp3(file);
-    const resource = await uploadFile(mp3File);
+    const resource = await uploadFile(
+      mp3File,
+      {
+        mediaSource: 'recording',
+      },
+      allowedAudioMimeTypes
+    );
     const backgroundAudio = {
       resource,
     };
