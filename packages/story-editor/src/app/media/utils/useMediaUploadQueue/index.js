@@ -531,7 +531,7 @@ function useMediaUploadQueue() {
 
   // Upload freshly transcoded files to server.
   useEffect(() => {
-    state.queue.map((item) => {
+    state.queue.forEach((item) => {
       const { state: itemState } = item;
       if (
         ![

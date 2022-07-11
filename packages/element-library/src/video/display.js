@@ -52,6 +52,7 @@ function VideoDisplay({
   box: { width, height },
   element,
   getProxiedUrl,
+  renderResourcePlaceholder,
 }) {
   const {
     id,
@@ -103,6 +104,7 @@ function VideoDisplay({
       mediaRef={ref}
       showPlaceholder
       previewMode={previewMode}
+      renderResourcePlaceholder={renderResourcePlaceholder}
     >
       {previewMode ? (
         (poster || resource.poster) && (
@@ -145,6 +147,7 @@ VideoDisplay.propTypes = {
   element: StoryPropTypes.elements.video.isRequired,
   box: StoryPropTypes.box.isRequired,
   getProxiedUrl: PropTypes.func.isRequired,
+  renderResourcePlaceholder: PropTypes.func,
 };
 
 export default VideoDisplay;
