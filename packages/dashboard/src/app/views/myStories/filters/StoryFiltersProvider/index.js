@@ -31,7 +31,6 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { DEFAULT_FILTERS } from '../../../../../constants/stories';
 import reducer from '../../../filters/reducer';
 import * as types from '../../../filters/types';
 import useTaxonomyFilters from './taxonomy/useTaxonomyFilters';
