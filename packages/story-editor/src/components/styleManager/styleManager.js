@@ -24,7 +24,6 @@ import {
   useRef,
   useState,
   useCallback,
-  useEffect,
 } from '@googleforcreators/react';
 import styled from 'styled-components';
 import {
@@ -88,11 +87,7 @@ function StyleManager({ styles, onClose, applyStyle, ...rest }) {
   const containerRef = useRef(null);
 
   // Re-establish focus when actively exiting by button or key press
-  const previousFocus = useRef(null);
-
-  useEffect(() => {
-    previousFocus.current = document.activeElement;
-  }, []);
+  const previousFocus = useRef(globalThis.document?.activeElement);
 
   const handleCloseAndRefocus = useCallback(
     (evt) => {

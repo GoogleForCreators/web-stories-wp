@@ -125,12 +125,7 @@ function ColorPicker({
   // this gives us a way to process that change when no longer mounted
   const isMounted = useRef(true);
 
-  // Re-establish focus when actively exiting by button or key press
-  const previousFocus = useRef(null);
-
   useEffect(() => {
-    previousFocus.current = document.activeElement;
-
     return () => {
       isMounted.current = false;
     };
@@ -174,6 +169,8 @@ function ColorPicker({
   const containerRef = useRef();
   useFocusOut(containerRef, maybeClose, [isEyedropperActive, showDialog]);
 
+  // Re-establish focus when actively exiting by button or key press
+  const previousFocus = useRef(globalThis.document?.activeElement);
   const handleCloseAndRefocus = useCallback(
     (evt) => {
       // Ignore reason: In Jest, focus is always on document.body if not on any specific
