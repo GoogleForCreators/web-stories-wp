@@ -44,14 +44,14 @@ function getTextElementTagNames(elements, newTag) {
       (tagNamesMap, { id, fontSize, content, tagName }) => {
         // if a new tagName is added,
         // add it to the element
-        if (newTag) {
+        if (newTag && newTag !== 'auto') {
           tagNamesMap.set(id, newTag);
           return tagNamesMap;
         }
 
         // if a tag already exists,
         // utilize the one already part of the element
-        if (tagName) {
+        if (tagName && tagName !== 'auto') {
           tagNamesMap.set(id, tagName);
           return tagNamesMap;
         }

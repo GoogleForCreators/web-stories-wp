@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { __, TranslateWithMarkup } from '@googleforcreators/i18n';
+import { __, sprintf, TranslateWithMarkup } from '@googleforcreators/i18n';
 import {
   DropDown,
   Text,
@@ -32,51 +32,35 @@ import { useState, useEffect } from '@googleforcreators/react';
  * Internal dependencies
  */
 import { Row } from '../../../form';
+import { getCommonValue } from '../../shared';
 import { SimplePanel } from '../../panel';
 import { useHighlights, states, styles } from '../../../../app/highlights';
 import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
 import { combineElementsWithTags } from './utils';
 
-// Options to be mapped for the dropdown
-const semanticHeadingsOptionsMap = [
-  {
-    label: __('Heading 1', 'web-stories'),
-    value: 'h1',
-  },
-  {
-    label: __('Heading 2', 'web-stories'),
-    value: 'h2',
-  },
-  {
-    label: __('Heading 3', 'web-stories'),
-    value: 'h3',
-  },
-  {
-    label: __('Paragraph', 'web-stories'),
-    value: 'p',
-  },
-  {
-    label: __('Automatic', 'web-stories'),
-    value: 'auto',
-  },
-];
+const HEADING_LEVELS = {
+  h1: __('Heading 1', 'web-stories'),
+  h2: __('Heading 2', 'web-stories'),
+  h3: __('Heading 3', 'web-stories'),
+  p: __('Paragraph', 'web-stories'),
+};
 
 function TextAccessibilityPanel({ selectedElements, pushUpdate }) {
   // Feature flagging for Semantic Headings
   const showSemanticHeadings = useFeature('showSemanticHeadings');
   const [selectedTextElements, setSelectedTextElements] = useState([]);
   const [currentTags, setCurrentTags] = useState([]);
+
   useEffect(() => {
-    // We only want to impact elements if all selected elements are of type text
-    const textElements = selectedElements.filter(({ type }) => 'text' === type);
     // Then we want to get the text tags for the elements if not already defined
-    const textTags = getTextElementTagNames(textElements);
+    const textTags = getTextElementTagNames(selectedElements);
     // Then combine the elements with their associated tag
-    const newElements = combineElementsWithTags(textElements, textTags);
+    const newElements = combineElementsWithTags(selectedElements, textTags);
     // And then set them into component state
     setSelectedTextElements(newElements);
     setCurrentTags(Array.from(textTags.values()));
   }, [selectedElements, setSelectedTextElements]);
+
   const { highlight, resetHighlight, cancelHighlight } = useHighlights(
     (state) => ({
       highlight: state[states.ASSISTIVE_TEXT],
@@ -84,9 +68,11 @@ function TextAccessibilityPanel({ selectedElements, pushUpdate }) {
       cancelHighlight: state.cancelEffect,
     })
   );
+
   if (!showSemanticHeadings) {
     return null;
   }
+
   // Map all types of tag names in the selected elements
   // and then convert to an Array for usage
   const handleChange = (ev, value) => {
@@ -98,11 +84,49 @@ function TextAccessibilityPanel({ selectedElements, pushUpdate }) {
     const newTags = getTextElementTagNames(selectedTextElements, value);
     setCurrentTags(Array.from(newTags.values()));
   };
+
   // Check if tags match for selected item in dropdown
   // If they don't match, we want to show 'Mixed'
   // However, if they match, show the matching value
   const currentValue =
-    new Set(currentTags || []).size === 1 ? currentTags[0] : '((MULTIPLE))';
+    new Set(currentTags || []).size === 1 ? currentTags[0] : MULTIPLE_VALUE;
+
+  const isIndeterminate = MULTIPLE_VALUE === currentValue;
+
+  const tagName = getCommonValue(selectedElements, 'tagName', 'auto');
+
+  const selectedValue = 'auto' === tagName ? 'auto' : currentValue;
+
+  const options = [
+    {
+      label:
+        'auto' === selectedValue
+          ? sprintf(
+              /* translators: %s: heading level. */
+              __('Automatic (%s)', 'web-stories'),
+              HEADING_LEVELS[currentValue]
+            )
+          : __('Automatic', 'web-stories'),
+      value: 'auto',
+    },
+    {
+      label: HEADING_LEVELS.h1,
+      value: 'h1',
+    },
+    {
+      label: HEADING_LEVELS.h2,
+      value: 'h2',
+    },
+    {
+      label: HEADING_LEVELS.h3,
+      value: 'h3',
+    },
+    {
+      label: HEADING_LEVELS.p,
+      value: 'p',
+    },
+  ];
+
   return (
     <SimplePanel
       css={highlight && styles.FLASH}
@@ -122,13 +146,9 @@ function TextAccessibilityPanel({ selectedElements, pushUpdate }) {
           data-testid="text-accessibility-dropdown"
           title={__('Heading Levels', 'web-stories')}
           dropdownButtonLabel={__('Heading Levels', 'web-stories')}
-          options={semanticHeadingsOptionsMap}
-          selectedValue={currentValue}
-          placeholder={
-            MULTIPLE_VALUE === currentValue
-              ? MULTIPLE_DISPLAY_VALUE
-              : currentValue
-          }
+          options={options}
+          selectedValue={selectedValue}
+          placeholder={isIndeterminate ? MULTIPLE_DISPLAY_VALUE : currentValue}
           onMenuItemClick={handleChange}
           dropDownLabel={__('Heading Level', 'web-stories')}
         />
