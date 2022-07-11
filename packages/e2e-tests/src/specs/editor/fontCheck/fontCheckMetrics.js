@@ -119,6 +119,7 @@ describe('Font Check Metrics', () => {
   });
 
   afterAll(() => {
+    await page.setRequestInterception(false);
     stopRequestInterception();
   });
 
