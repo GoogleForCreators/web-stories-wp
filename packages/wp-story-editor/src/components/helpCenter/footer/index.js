@@ -107,7 +107,7 @@ export default function Footer() {
           rel="noreferrer"
           onClick={onDocsClick}
         >
-          {__('Read Start Guide', 'web-stories')}
+          {__('Read Documentation', 'web-stories')}
         </Link>
         <Link
           href={SUPPORT_URL}

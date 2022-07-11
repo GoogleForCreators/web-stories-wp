@@ -34,7 +34,7 @@ function reducePage({ animations, ...rest }) {
 
 function updateAnimation(animations, animation) {
   const { targets, id, ...rest } = animation;
-  targets.map((target, i) => {
+  targets.forEach((target, i) => {
     animations.push({
       id: i === 0 ? id : uuidv4(),
       targets: [target],

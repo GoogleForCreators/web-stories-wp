@@ -234,9 +234,7 @@ export default class Fixture {
       const font = '12px "Google Sans"';
       const fonts = weights.map((weight) => `${weight} ${font}`);
       await Promise.all(
-        fonts.map((thisFont) => {
-          document.fonts.load(thisFont, '');
-        })
+        fonts.map((thisFont) => document.fonts.load(thisFont, ''))
       );
       fonts.forEach((thisFont) => {
         if (!document.fonts.check(thisFont, '')) {
