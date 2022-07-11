@@ -224,7 +224,7 @@ function observeConsoleLogging() {
 function monitorRequests() {
   page.on('requestfailed', (request) => {
     // eslint-disable-next-line no-console
-    console.log("requestfailed: " + request.url() + ' ' + request.failure().errorText + ' ' + request.status());
+    console.log("requestfailed: " + request.url() + ' ' + request.failure().errorText);
   });
 }
 
