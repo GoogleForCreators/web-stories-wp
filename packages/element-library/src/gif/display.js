@@ -46,7 +46,12 @@ const Image = styled.img`
   max-width: ${({ isBackground }) => (isBackground ? 'initial' : null)};
 `;
 
-function VideoDisplay({ previewMode, box: { width, height }, element }) {
+function VideoDisplay({
+  previewMode,
+  box: { width, height },
+  element,
+  renderResourcePlaceholder,
+}) {
   const { id, poster, resource, isBackground, scale, focalX, focalY } = element;
   const ref = useRef();
   let style = {};
@@ -75,6 +80,7 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
       mediaRef={ref}
       showPlaceholder
       previewMode={previewMode}
+      renderResourcePlaceholder={renderResourcePlaceholder}
     >
       {previewMode ? (
         (poster || resource.poster) && (
@@ -113,6 +119,7 @@ VideoDisplay.propTypes = {
   previewMode: PropTypes.bool,
   element: StoryPropTypes.elements.video.isRequired,
   box: StoryPropTypes.box.isRequired,
+  renderResourcePlaceholder: PropTypes.func,
 };
 
 export default VideoDisplay;
