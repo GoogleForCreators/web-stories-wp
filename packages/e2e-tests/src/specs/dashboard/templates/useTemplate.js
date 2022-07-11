@@ -23,8 +23,7 @@ import {
   withPlugin,
 } from '@web-stories-wp/e2e-test-utils';
 
-// eslint-disable-next-line jest/no-disabled-tests
-describe.skip('Template', () => {
+describe('Template', () => {
   it('should be able to use existing template for new story', async () => {
     await visitDashboard();
 
