@@ -32,7 +32,7 @@ import SAT from 'sat';
 import { useStory, useCanvas } from '../../../app';
 import useElementPolygon from '../../../utils/useElementPolygon';
 
-function useFullbleedMediaAsBackground({ selectedElement }) {
+function useFullbleedMediaAsBackground() {
   const [
     isBackgroundSnackbarMessageDismissed,
     setIsBackgroundSnackbarMessageDismissed,
@@ -54,7 +54,7 @@ function useFullbleedMediaAsBackground({ selectedElement }) {
   const { showSnackbar } = useSnackbar();
   const getElementPolygon = useElementPolygon();
 
-  const handleFullbleedMediaAsBackground = () => {
+  const handleFullbleedMediaAsBackground = (selectedElement) => {
     if (
       isDefaultBackground &&
       MEDIA_ELEMENT_TYPES.includes(selectedElement.type)

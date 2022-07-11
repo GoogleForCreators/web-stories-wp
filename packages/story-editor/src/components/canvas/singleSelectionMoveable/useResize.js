@@ -57,9 +57,7 @@ function useSingleSelectionResize({
   }));
 
   const { handleElementOutOfCanvas } = useElementOutOfCanvas();
-  const { handleFullbleedMediaAsBackground } = useFullbleedMediaAsBackground({
-    selectedElement,
-  });
+  const { handleFullbleedMediaAsBackground } = useFullbleedMediaAsBackground();
 
   const { editorToDataX, editorToDataY, dataToEditorY, dataToEditorX } =
     useUnits(
@@ -155,12 +153,13 @@ function useSingleSelectionResize({
       return;
     }
     const [editorWidth, editorHeight] = frame.resize;
+    let properties = {};
     if (editorWidth !== 0 && editorHeight !== 0) {
       const { direction } = frame;
       const [deltaX, deltaY] = frame.translate;
       const newWidth = editorToDataX(editorWidth);
       const newHeight = editorToDataY(editorHeight);
-      const properties = {
+      properties = {
         width: newWidth,
         height: newHeight,
         x: selectedElement.x + editorToDataX(deltaX),
@@ -176,7 +175,7 @@ function useSingleSelectionResize({
     }
     setIsResizingFromCorner(true);
     resetMoveable(target);
-    handleFullbleedMediaAsBackground();
+    handleFullbleedMediaAsBackground({ ...selectedElement, ...properties });
   };
 
   const visuallyHideHandles =
