@@ -219,22 +219,10 @@ function observeConsoleLogging() {
   });
 }
 
-let requestResults = []; // collects request results
-
 function monitorRequests() {
-  page.on('requestfinished', async (request) => {
-    const response = await request.response();
-    if (response.status() !== 200) {
-      requestResults.push(response.status() + ' ' + request.url());
-    }
-  });
-
-  page.on('requestfailed', (requestfailed) => {
-    const req = JSON.stringify(requestfailed.failure());
+  page.on('requestfailed', (request) => {
     // eslint-disable-next-line no-console
-    console.log('requestfailed occurred: ', req);
-    // eslint-disable-next-line no-console
-    console.log('monitor requests:' + JSON.stringify(requestResults));
+    console.log("requestfailed: " + request.url() + ' ' + request.failure().errorText);
   });
 }
 
@@ -267,7 +255,6 @@ beforeAll(async () => {
 afterEach(async () => {
   await setupBrowser();
   await clearLocalStorage();
-  requestResults = [];
 });
 
 // eslint-disable-next-line jest/require-top-level-describe
