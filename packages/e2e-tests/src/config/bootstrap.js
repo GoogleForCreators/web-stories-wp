@@ -219,6 +219,25 @@ function observeConsoleLogging() {
   });
 }
 
+let requestResults = []; // collects request results
+
+function monitorRequests() {
+  page.on('requestfinished', async (request) => {
+    const response = await request.response();
+    if (response.status() !== 200) {
+      requestResults.push(response.status() + ' ' + request.url());
+    }
+  });
+
+  page.on('requestfailed', (requestfailed) => {
+    const req = JSON.stringify(requestfailed.failure());
+    // eslint-disable-next-line no-console
+    console.log('requestfailed occurred: ', req);
+    // eslint-disable-next-line no-console
+    console.log('monitor requests:' + JSON.stringify(requestResults));
+  });
+}
+
 /**
  * Before every test suite run, delete all content created by the test. This ensures
  * other posts/comments/etc. aren't dirtying tests and tests don't depend on
@@ -229,6 +248,7 @@ beforeAll(async () => {
   capturePageEventsForTearDown();
   enablePageDialogAccept();
   observeConsoleLogging();
+  monitorRequests();
   await setupBrowser();
   await page.setDefaultNavigationTimeout(10000);
   await page.setDefaultTimeout(3000);
@@ -247,6 +267,7 @@ beforeAll(async () => {
 afterEach(async () => {
   await setupBrowser();
   await clearLocalStorage();
+  requestResults = [];
 });
 
 // eslint-disable-next-line jest/require-top-level-describe

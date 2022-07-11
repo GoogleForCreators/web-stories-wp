@@ -61,8 +61,7 @@ describe('Status Check', () => {
     mockResponse = undefined;
   });
 
-  // eslint-disable-next-line jest/no-disabled-tests
-  describe.skip('Invalid JSON response', () => {
+  describe('Invalid JSON response', () => {
     it('should display error dialog', async () => {
       mockResponse = {
         status: 200,
@@ -74,8 +73,7 @@ describe('Status Check', () => {
     });
   });
 
-  // eslint-disable-next-line jest/no-disabled-tests
-  describe.skip('403 Forbidden (WAF)', () => {
+  describe('403 Forbidden (WAF)', () => {
     it('should display error dialog', async () => {
       mockResponse = {
         status: 403,
@@ -87,8 +85,7 @@ describe('Status Check', () => {
     });
   });
 
-  // eslint-disable-next-line jest/no-disabled-tests
-  describe.skip('500 Internal Server Error', () => {
+  describe('500 Internal Server Error', () => {
     it('should display error dialog', async () => {
       mockResponse = {
         status: 500,
