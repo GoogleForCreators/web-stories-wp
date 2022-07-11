@@ -68,17 +68,19 @@ function useUploader() {
    * Validates a file for upload.
    *
    * @throws Throws an error if file doesn't meet requirements.
-   * @param {Object} file File object.
-   * @param {boolean} canTranscodeFile Whether file can be transcoded by consumer.
-   * @param {boolean} isFileTooLarge Whether file is too large for consumer.
+   * @param {Object} args
+   * @param {Object} args.file File object.
+   * @param {boolean} args.canTranscodeFile Whether file can be transcoded by consumer.
+   * @param {boolean} args.isFileTooLarge Whether file is too large for consumer.
+   * @param {Array} args.overrideAllowedMimeTypes Array of override allowed mime types.
    */
   const validateFileForUpload = useCallback(
-    (
+    ({
       file,
       canTranscodeFile,
       isFileTooLarge,
-      overrideAllowedMimeTypes = allowedMimeTypes
-    ) => {
+      overrideAllowedMimeTypes = allowedMimeTypes,
+    }) => {
       // Bail early if user doesn't have upload capabilities.
       if (!hasUploadMediaAction) {
         const message = __(
@@ -103,8 +105,8 @@ function useUploader() {
           throw createError('SizeError', file.name, message);
         }
 
-        const isValidType = ({ type }) => allowedMimeTypes.includes(type);
-
+        const isValidType = ({ type }) =>
+          overrideAllowedMimeTypes.includes(type);
         // TODO: Move this check to useUploadMedia?
         if (!isValidType(file)) {
           let message = __(
@@ -149,6 +151,7 @@ function useUploader() {
    *
    * @param {Object} file File object.
    * @param {Object} additionalData Additional Data object.
+   * @param {Array} overrideAllowedMimeTypes Array of override allowed mime types.
    */
   const uploadFile = useCallback(
     (
@@ -157,7 +160,7 @@ function useUploader() {
       overrideAllowedMimeTypes = allowedMimeTypes
     ) => {
       // This will throw if the file cannot be uploaded.
-      validateFileForUpload(file, overrideAllowedMimeTypes);
+      validateFileForUpload({ file, overrideAllowedMimeTypes });
 
       const _additionalData = {
         storyId,

@@ -163,7 +163,9 @@ function Footer({ captureImage, videoRef }) {
 
   const speak = useLiveRegion();
 
-  const { audio: allowedAudioMimeTypes } = useConfig();
+  const {
+    allowedMimeTypes: { audio: allowedAudioMimeTypes },
+  } = useConfig();
 
   const onRetry = useCallback(async () => {
     resetState();
