@@ -22,7 +22,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 const AudioWrapper = styled.div`
-  background: #26292a;
+  background: ${({ theme }) => theme.colors.bg.secondary};
   border-radius: 5px;
   width: 100%;
   height: 100%;
