@@ -109,9 +109,10 @@ function MediaRecordingProvider({ children }) {
       }
       const FILE_TYPE = hasVideo ? VIDEO_FILE_TYPE : AUDIO_FILE_TYPE;
       const MIME_TYPE = hasVideo ? VIDEO_MIME_TYPE : AUDIO_MIME_TYPE;
+      const captureType = hasVideo ? 'webcam' : 'audio';
       const f = blobToFile(
         blob,
-        `${hasVideo ? 'webcam' : 'audio'}-capture-${format(
+        `${captureType}-capture-${format(
           new Date(),
           'Y-m-d-H-i'
         )}.${FILE_TYPE}`,
