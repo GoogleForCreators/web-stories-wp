@@ -182,7 +182,7 @@ function observeConsoleLogging() {
       return;
     }
 
-    if (message.includes('requestfailed:')) {
+    if (text.includes('requestfailed:')) {
       return;
     }
 
@@ -240,7 +240,7 @@ beforeAll(async () => {
   capturePageEventsForTearDown();
   enablePageDialogAccept();
   observeConsoleLogging();
-  monitorRequests();
+  // monitorRequests();
   await setupBrowser();
   await page.setDefaultNavigationTimeout(10000);
   await page.setDefaultTimeout(3000);
