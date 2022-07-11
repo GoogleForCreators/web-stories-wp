@@ -83,7 +83,7 @@ describe('getTextElementTagNames', () => {
     const elements = [ELEMENT_WITH_TAG_NAME];
 
     expect(getTextElementTagNames(elements)).toStrictEqual(
-      new Map([['555', 'h3']])
+      new Map([['555', 'h1']])
     );
   });
 
