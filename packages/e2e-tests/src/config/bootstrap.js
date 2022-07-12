@@ -177,10 +177,6 @@ function observeConsoleLogging() {
       return;
     }
 
-    if (text.includes('requestfailed:')) {
-      return;
-    }
-
     // Special case: ignore 403 errors on logout page.
     // See https://github.com/googleforcreators/web-stories-wp/pull/7889
     if (

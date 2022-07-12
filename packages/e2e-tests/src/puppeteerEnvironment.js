@@ -25,6 +25,16 @@ const ARTIFACTS_PATH =
   process.env.E2E_ARTIFACTS_PATH ||
   (process.env.GITHUB_WORKSPACE || process.cwd()) + '/build/e2e-artifacts';
 
+async function inlineImage() {
+  const data = await this.global.page.screenshot({
+    type: 'jpeg',
+    encoding: 'base64',
+    quality: 1,
+  });
+  // note you can console log this for local debugging
+  return `data:image/jpeg;base64,${data}`;
+}
+
 class PuppeteerEnvironment extends OriginalEnvironment {
   async setup() {
     await super.setup();
@@ -41,27 +51,19 @@ class PuppeteerEnvironment extends OriginalEnvironment {
   async handleTestEvent(event, state) {
     if (event.name === 'test_fn_failure') {
       const testName = `${state.currentlyRunningTest.parent.name}  ${state.currentlyRunningTest.name}`;
-      const data = await this.global.page.screenshot({
-        type: 'jpeg',
-        encoding: 'base64',
-        quality: 1,
-      });
-      // note you can console log this for local debugging
-      const img = `data:image/jpeg;base64,${data}`;
-
       const errors = state.currentlyRunningTest.errors;
       const eventError = util.inspect(event);
       let errorMessages = '';
-      errorMessages += `=========${testName}==========\n\n`;
+      errorMessages += `========= ${testName} ==========\n\n`;
       errorMessages +=
-        'start:' +
+        'started:' +
         new Date(event.test.startedAt).toLocaleString() +
-        ' end:' +
+        ' ended:' +
         new Date().toLocaleString();
-      errorMessages += img;
+      errorMessages += await inlineImage();
       errorMessages += '============end==========\n\n';
       errors.forEach((error) => {
-        errorMessages += testName + '::' + error + '\n\n';
+        errorMessages += `${testName}:${error}\n\n`;
       });
 
       errorMessages += '=========================\n\n';

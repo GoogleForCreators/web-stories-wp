@@ -47,8 +47,7 @@ describe.skip('Story Editor', () => {
     });
   });
 
-  //eslint-disable-next-line jest/no-disabled-tests
-  it.skip('should have cross-origin isolation enabled', async () => {
+  it('should have cross-origin isolation enabled', async () => {
     await createNewStory();
 
     const crossOriginIsolated = await page.evaluate(
@@ -57,8 +56,7 @@ describe.skip('Story Editor', () => {
     expect(crossOriginIsolated).toBeTrue();
   });
 
-  //eslint-disable-next-line jest/no-disabled-tests
-  it.skip('should have cross-origin isolation disabled', async () => {
+  it('should have cross-origin isolation disabled', async () => {
     await toggleVideoOptimization();
     await createNewStory();
 
