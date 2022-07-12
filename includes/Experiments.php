@@ -324,6 +324,17 @@ class Experiments extends Service_Base implements HasRequirements {
 			],
 			/**
 			 * Author: @spacedmonkey
+			 * Issue: #11777
+			 * Creation date: 2022-06-24
+			 */
+			[
+				'name'        => 'linkIconHotlinking',
+				'label'       => __( 'Link icon hotlinking', 'web-stories' ),
+				'description' => __( 'Enable link icon hotlinking', 'web-stories' ),
+				'group'       => 'editor',
+			],
+			/**
+			 * Author: @spacedmonkey
 			 * Issue: #11535
 			 * Creation date: 2022-06-24
 			 */

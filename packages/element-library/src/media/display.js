@@ -59,6 +59,7 @@ function MediaDisplay({
   children,
   previewMode,
   showPlaceholder = false,
+  renderResourcePlaceholder,
 }) {
   const {
     id,
@@ -123,6 +124,9 @@ function MediaDisplay({
       mask={mask}
       showPlaceholder={showPlaceholder}
     >
+      {showPlaceholder &&
+        renderResourcePlaceholder &&
+        renderResourcePlaceholder(resource)}
       {children}
       {overlay && <Overlay backgroundColor={overlay} />}
     </Element>
@@ -135,6 +139,7 @@ MediaDisplay.propTypes = {
   children: PropTypes.node,
   showPlaceholder: PropTypes.bool,
   previewMode: PropTypes.bool,
+  renderResourcePlaceholder: PropTypes.func,
 };
 
 export default MediaDisplay;

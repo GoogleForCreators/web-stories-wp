@@ -64,6 +64,7 @@ function VideoTrim({
   resource,
   setVideoNode,
   getProxiedUrl,
+  renderResourcePlaceholder,
 }) {
   const { width, height } = box;
   const { poster, tracks, isBackground, scale, flip, focalX, focalY } = element;
@@ -131,6 +132,7 @@ function VideoTrim({
           mediaRef={videoRef}
           showPlaceholder
           previewMode={false}
+          renderResourcePlaceholder={renderResourcePlaceholder}
         >
           {/* eslint-disable-next-line styled-components-a11y/media-has-caption,jsx-a11y/media-has-caption -- False positive. */}
           <Video
@@ -171,6 +173,7 @@ VideoTrim.propTypes = {
   resource: PropTypes.object,
   setVideoNode: PropTypes.func,
   getProxiedUrl: PropTypes.func,
+  renderResourcePlaceholder: PropTypes.func,
 };
 
 export default VideoTrim;
