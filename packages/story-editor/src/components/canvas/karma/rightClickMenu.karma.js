@@ -393,7 +393,7 @@ describe('Right Click Menu integration', () => {
 
   const verifyPageDuplicated = (pages = []) => {
     expect(pages[0].backgroundColor).toEqual(pages[1].backgroundColor);
-    pages[0].elements.map((elem, index) => {
+    pages[0].elements.forEach((elem, index) => {
       // ids won't match
       const { id, ...originalElement } = elem;
       const { id: newId, basedOn, ...newElement } = pages[1].elements[index];

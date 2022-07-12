@@ -169,10 +169,10 @@ const arrangeGroup =
 
 const arrangeSelection =
   (dispatch) =>
-  ({ position }) =>
+  ({ position, groupId }) =>
     dispatch({
       type: types.ARRANGE_ELEMENT,
-      payload: { elementId: null, position },
+      payload: { elementId: null, position, groupId },
     });
 
 const setSelectedElementsById =
@@ -280,6 +280,14 @@ const duplicateGroupById =
       payload: { groupId, name, oldGroupId, isLocked },
     });
 
+const removeElementFromGroup =
+  (dispatch) =>
+  ({ elementId, groupId }) =>
+    dispatch({
+      type: types.REMOVE_ELEMENT_FROM_GROUP,
+      payload: { elementId, groupId },
+    });
+
 export const exposedActions = {
   addPage,
   addPageAt,
@@ -322,6 +330,7 @@ export const exposedActions = {
   deleteGroupById,
   deleteGroupAndElementsById,
   duplicateGroupById,
+  removeElementFromGroup,
 };
 
 // Internal actions
