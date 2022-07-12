@@ -25,6 +25,7 @@ import {
   THEME_CONSTANTS,
 } from '@googleforcreators/design-system';
 import { getTextElementTagNames } from '@googleforcreators/output';
+import { trackClick } from '@googleforcreators/tracking';
 import { useFeature } from 'flagged';
 import { useState, useEffect } from '@googleforcreators/react';
 
@@ -34,7 +35,6 @@ import { useState, useEffect } from '@googleforcreators/react';
 import { Row } from '../../../form';
 import { getCommonValue } from '../../shared';
 import { SimplePanel } from '../../panel';
-import { useHighlights, states, styles } from '../../../../app/highlights';
 import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
 import { combineElementsWithTags } from './utils';
 
@@ -52,7 +52,7 @@ function TextAccessibilityPanel({ selectedElements, pushUpdate }) {
   const [currentTags, setCurrentTags] = useState([]);
 
   useEffect(() => {
-    // Then we want to get the text tags for the elements if not already defined
+    // We want to get the text tags for the elements if not already defined
     const textTags = getTextElementTagNames(selectedElements);
     // Then combine the elements with their associated tag
     const newElements = combineElementsWithTags(selectedElements, textTags);
@@ -61,21 +61,14 @@ function TextAccessibilityPanel({ selectedElements, pushUpdate }) {
     setCurrentTags(Array.from(textTags.values()));
   }, [selectedElements, setSelectedTextElements]);
 
-  const { highlight, resetHighlight, cancelHighlight } = useHighlights(
-    (state) => ({
-      highlight: state[states.ASSISTIVE_TEXT],
-      resetHighlight: state.onFocusOut,
-      cancelHighlight: state.cancelEffect,
-    })
-  );
-
   if (!showSemanticHeadings) {
     return null;
   }
 
   // Map all types of tag names in the selected elements
   // and then convert to an Array for usage
-  const handleChange = (ev, value) => {
+  const handleChange = (evt, value) => {
+    trackClick(evt, 'click-headings-docs');
     selectedElements.map(() => {
       return pushUpdate({ tagName: value });
     });
@@ -129,20 +122,11 @@ function TextAccessibilityPanel({ selectedElements, pushUpdate }) {
 
   return (
     <SimplePanel
-      css={highlight && styles.FLASH}
-      onAnimationEnd={() => resetHighlight()}
       name="textAccessibility"
       title={__('Accessibility', 'web-stories')}
-      isPersistable={!highlight}
     >
       <Row>
         <DropDown
-          ref={(node) => {
-            if (node && highlight?.focus && highlight?.showEffect) {
-              node.addEventListener('keydown', cancelHighlight, { once: true });
-              node.focus();
-            }
-          }}
           data-testid="text-accessibility-dropdown"
           title={__('Heading Levels', 'web-stories')}
           dropdownButtonLabel={__('Heading Levels', 'web-stories')}
@@ -158,10 +142,7 @@ function TextAccessibilityPanel({ selectedElements, pushUpdate }) {
           mapping={{
             a: (
               <a
-                href={__(
-                  'https://github.com/GoogleForCreators/web-stories-wp/tree/main/docs',
-                  'web-stories'
-                )}
+                href={__('https://wp.stories.google/docs', 'web-stories')}
                 rel="noreferrer"
                 target="_blank"
                 aria-label={__('Learn more', 'web-stories')}

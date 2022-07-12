@@ -377,7 +377,7 @@ class Experiments extends Service_Base implements HasRequirements {
 			[
 				'name'        => 'showSemanticHeadings',
 				'label'       => __( 'Semantic headings', 'web-stories' ),
-				'description' => __( 'Display semantic heading tags', 'web-stories' ),
+				'description' => __( 'Display UI for changing semantic heading tags', 'web-stories' ),
 				'group'       => 'editor',
 			],
 			/**
