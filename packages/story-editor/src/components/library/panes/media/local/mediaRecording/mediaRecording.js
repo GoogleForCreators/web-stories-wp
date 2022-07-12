@@ -78,7 +78,7 @@ function MediaRecording() {
     return null;
   }
 
-  const label = __('Record Video', 'web-stories');
+  const label = __('Record Video or Background Audio', 'web-stories');
   return (
     <Tooltip title={label}>
       <Button

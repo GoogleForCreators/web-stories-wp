@@ -45,7 +45,6 @@ function useUploader() {
       image: allowedImageMimeTypes,
       vector: allowedVectorMimeTypes,
       video: allowedVideoMimeTypes,
-      audio: allowedAudioMimeTypes,
     },
     capabilities: { hasUploadMediaAction },
   } = useConfig();
@@ -54,26 +53,8 @@ function useUploader() {
       ...allowedImageMimeTypes,
       ...allowedVectorMimeTypes,
       ...allowedVideoMimeTypes,
-      ...allowedAudioMimeTypes,
     ],
-    [
-      allowedImageMimeTypes,
-      allowedVectorMimeTypes,
-      allowedVideoMimeTypes,
-      allowedAudioMimeTypes,
-    ]
-  );
-  const allowedFileTypes = useMemo(
-    () =>
-      allowedMimeTypes.map((type) => getExtensionsFromMimeType(type)).flat(),
-    [allowedMimeTypes]
-  );
-
-  const isValidType = useCallback(
-    ({ type }) => {
-      return allowedMimeTypes.includes(type);
-    },
-    [allowedMimeTypes]
+    [allowedImageMimeTypes, allowedVectorMimeTypes, allowedVideoMimeTypes]
   );
 
   const isFileSizeWithinLimits = useCallback(
@@ -87,12 +68,19 @@ function useUploader() {
    * Validates a file for upload.
    *
    * @throws Throws an error if file doesn't meet requirements.
-   * @param {Object} file File object.
-   * @param {boolean} canTranscodeFile Whether file can be transcoded by consumer.
-   * @param {boolean} isFileTooLarge Whether file is too large for consumer.
+   * @param {Object} args
+   * @param {Object} args.file File object.
+   * @param {boolean} args.canTranscodeFile Whether file can be transcoded by consumer.
+   * @param {boolean} args.isFileTooLarge Whether file is too large for consumer.
+   * @param {Array} args.overrideAllowedMimeTypes Array of override allowed mime types.
    */
   const validateFileForUpload = useCallback(
-    (file, canTranscodeFile, isFileTooLarge) => {
+    ({
+      file,
+      canTranscodeFile,
+      isFileTooLarge,
+      overrideAllowedMimeTypes = allowedMimeTypes,
+    }) => {
       // Bail early if user doesn't have upload capabilities.
       if (!hasUploadMediaAction) {
         const message = __(
@@ -117,12 +105,18 @@ function useUploader() {
           throw createError('SizeError', file.name, message);
         }
 
+        const isValidType = ({ type }) =>
+          overrideAllowedMimeTypes.includes(type);
         // TODO: Move this check to useUploadMedia?
         if (!isValidType(file)) {
           let message = __(
             'No file types are currently supported.',
             'web-stories'
           );
+
+          const allowedFileTypes = overrideAllowedMimeTypes
+            .map((type) => getExtensionsFromMimeType(type))
+            .flat();
 
           if (allowedFileTypes.length) {
             /* translators: %s is a list of allowed file extensions. */
@@ -149,13 +143,7 @@ function useUploader() {
         throw createError('SizeError', file.name, message);
       }
     },
-    [
-      hasUploadMediaAction,
-      isFileSizeWithinLimits,
-      maxUpload,
-      allowedFileTypes,
-      isValidType,
-    ]
+    [allowedMimeTypes, hasUploadMediaAction, isFileSizeWithinLimits, maxUpload]
   );
 
   /**
@@ -163,11 +151,16 @@ function useUploader() {
    *
    * @param {Object} file File object.
    * @param {Object} additionalData Additional Data object.
+   * @param {Array} overrideAllowedMimeTypes Array of override allowed mime types.
    */
   const uploadFile = useCallback(
-    (file, additionalData = {}) => {
+    (
+      file,
+      additionalData = {},
+      overrideAllowedMimeTypes = allowedMimeTypes
+    ) => {
       // This will throw if the file cannot be uploaded.
-      validateFileForUpload(file);
+      validateFileForUpload({ file, overrideAllowedMimeTypes });
 
       const _additionalData = {
         storyId,
@@ -178,7 +171,7 @@ function useUploader() {
 
       return uploadMedia(file, _additionalData);
     },
-    [validateFileForUpload, uploadMedia, storyId]
+    [allowedMimeTypes, validateFileForUpload, storyId, uploadMedia]
   );
 
   return useMemo(() => {

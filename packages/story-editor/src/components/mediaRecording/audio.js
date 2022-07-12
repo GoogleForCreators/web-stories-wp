@@ -22,7 +22,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 const AudioWrapper = styled.div`
-  background: #26292a;
+  background: ${({ theme }) => theme.colors.bg.secondary};
   border-radius: 5px;
   width: 100%;
   height: 100%;
@@ -38,7 +38,7 @@ Audio.propTypes = {
   liveStream: PropTypes.object,
 };
 
-const AudioAnalyser = (props) => {
+const AudioAnalyser = ({ source }) => {
   const [data, setData] = useState([]);
   const raf = useRef();
   const audioContextRef = useRef();
@@ -51,10 +51,8 @@ const AudioAnalyser = (props) => {
   }
 
   useEffect(() => {
-    const source = audioContextRef.current.createMediaStreamSource(
-      props.source
-    );
-    source.connect(analyserRef.current);
+    const audioNode = audioContextRef.current.createMediaStreamSource(source);
+    audioNode.connect(analyserRef.current);
 
     const tick = (time) => {
       if (prevRafTime.current !== undefined) {
@@ -70,9 +68,9 @@ const AudioAnalyser = (props) => {
     return () => {
       cancelAnimationFrame(raf.current);
       analyserRef.current.disconnect();
-      source.disconnect();
+      audioNode.disconnect();
     };
-  }, [props.source]);
+  }, [source]);
 
   return <AudioVisualiser data={data} />;
 };
