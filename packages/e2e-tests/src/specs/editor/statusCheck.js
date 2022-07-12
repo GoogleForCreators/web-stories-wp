@@ -51,14 +51,14 @@ describe('Status Check', () => {
     });
   });
 
+  afterEach(() => {
+    mockResponse = undefined;
+  });
+
   afterAll(async () => {
     removeErrorMessage();
     await page.setRequestInterception(false);
     stopRequestInterception();
-  });
-
-  afterEach(() => {
-    mockResponse = undefined;
   });
 
   describe('200 OK', () => {
