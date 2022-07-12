@@ -115,7 +115,7 @@ function PlayPauseButton({ videoRef }) {
       videoNode.pause();
       setShowControls(true);
     } else {
-      videoNode.play().catch(() => {});
+      //videoNode.play().catch(() => {});
     }
   };
 

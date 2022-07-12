@@ -19,32 +19,22 @@
  */
 import PropTypes from 'prop-types';
 import { useCallback } from '@googleforcreators/react';
-import { formatMsToHMS, getVideoLengthDisplay } from '@googleforcreators/media';
+import { formatMsToHMS } from '@googleforcreators/media';
 import { trackEvent } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies
  */
-import { useLocalMedia } from '../../app';
 import VideoTrimContext from './videoTrimContext';
-import useVideoTrimMode from './useVideoTrimMode';
 import useVideoNode from './useVideoNode';
 
-function VideoTrimProvider({ children }) {
-  const { trimExistingVideo } = useLocalMedia(
-    ({ actions: { trimExistingVideo } }) => ({
-      trimExistingVideo,
-    })
-  );
-  const { isTrimMode, hasTrimMode, toggleTrimMode, videoData } =
-    useVideoTrimMode();
+function VideoRecordingTrimProvider({ children, onTrim, videoData }) {
   const {
     hasChanged,
     currentTime,
     startOffset,
     endOffset,
     maxOffset,
-    videoNode,
     setStartOffset,
     setEndOffset,
     setVideoNode,
@@ -52,52 +42,33 @@ function VideoTrimProvider({ children }) {
   } = useVideoNode(videoData);
 
   const performTrim = useCallback(() => {
-    const { resource, element } = videoData;
-    if (!resource) {
-      return;
-    }
-    const lengthInSeconds = Math.round(endOffset / 1000 - startOffset / 1000);
-    trimExistingVideo({
-      resource: {
-        ...resource,
-        length: lengthInSeconds,
-        lengthFormatted: getVideoLengthDisplay(lengthInSeconds),
-      },
-      // This is the ID of the resource that's currently on canvas and needs to be cloned.
-      // It's only different from the above resource, if the canvas resource is a trim of the other.
-      canvasResourceId: element.resource.id,
-      elementId: element.id,
+    onTrim({
       start: formatMsToHMS(startOffset),
       end: formatMsToHMS(endOffset),
     });
-    trackEvent('video_trim', {
-      original_length: resource.length,
-      new_length: lengthInSeconds,
+    trackEvent('recording_video_trim', {
       start_offset: startOffset,
       end_offset: endOffset,
     });
-    toggleTrimMode();
-  }, [endOffset, startOffset, trimExistingVideo, toggleTrimMode, videoData]);
+  }, [endOffset, startOffset, onTrim]);
 
   const value = {
     state: {
       videoData,
       hasChanged,
-      isTrimMode,
-      hasTrimMode,
+      isTrimMode: true,
       currentTime,
       startOffset,
       endOffset,
       maxOffset,
-      videoNode,
     },
     actions: {
       performTrim,
-      toggleTrimMode,
       setVideoNode,
       setStartOffset,
       setEndOffset,
       setIsDraggingHandles,
+      toggleTrimMode: onTrim,
     },
   };
 
@@ -108,8 +79,10 @@ function VideoTrimProvider({ children }) {
   );
 }
 
-VideoTrimProvider.propTypes = {
+VideoRecordingTrimProvider.propTypes = {
   children: PropTypes.node.isRequired,
+  onTrim: PropTypes.func.isRequired,
+  videoData: PropTypes.object,
 };
 
-export default VideoTrimProvider;
+export default VideoRecordingTrimProvider;

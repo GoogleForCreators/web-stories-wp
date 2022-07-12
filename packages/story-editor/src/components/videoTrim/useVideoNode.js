@@ -54,7 +54,7 @@ function useVideoNode(videoData) {
       videoNode.pause();
     } else {
       videoNode.currentTime = startOffset / 1000;
-      videoNode.play();
+      videoNode.play().catch(() => {});
     }
   }, [videoNode, isDraggingHandles, startOffset]);
 
@@ -75,7 +75,7 @@ function useVideoNode(videoData) {
 
     function restart(at) {
       videoNode.currentTime = at / 1000;
-      videoNode.play();
+      videoNode.play().catch(() => {});
     }
 
     function onLoadedMetadata(evt) {
@@ -98,6 +98,11 @@ function useVideoNode(videoData) {
     }
     videoNode.addEventListener('timeupdate', onTimeUpdate);
     videoNode.addEventListener('loadedmetadata', onLoadedMetadata);
+
+    // We might already have metadata, if so invoke the event handler directly
+    if (!isNaN(videoNode.duration) && startOffset === null) {
+      onLoadedMetadata({ target: videoNode });
+    }
 
     return () => {
       videoNode.removeEventListener('timeupdate', onTimeUpdate);
@@ -139,6 +144,7 @@ function useVideoNode(videoData) {
     startOffset,
     endOffset,
     maxOffset,
+    videoNode,
     setStartOffset,
     setEndOffset,
     setVideoNode,

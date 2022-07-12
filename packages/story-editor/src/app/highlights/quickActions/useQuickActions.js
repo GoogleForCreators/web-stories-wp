@@ -70,6 +70,7 @@ const {
   Captions,
   Cross,
   Settings,
+  Scissors,
 } = Icons;
 
 const StyledSettings = styled(Settings).attrs({
@@ -307,6 +308,9 @@ const useQuickActions = () => {
     toggleSettings,
     audioInput,
     isReady,
+    isProcessing,
+    isTrimming,
+    startTrim,
   } = useMediaRecording(({ state, actions }) => ({
     isInRecordingMode: state.isInRecordingMode,
     hasAudio: state.hasAudio,
@@ -315,11 +319,14 @@ const useQuickActions = () => {
       state.status === 'ready' &&
       !state.file?.type?.startsWith('image') &&
       !state.isCountingDown,
+    isProcessing: state.isProcessing,
+    isTrimming: state.isTrimming,
     toggleRecordingMode: actions.toggleRecordingMode,
     toggleAudio: actions.toggleAudio,
     toggleSettings: actions.toggleSettings,
     muteAudio: actions.muteAudio,
     unMuteAudio: actions.unMuteAudio,
+    startTrim: actions.startTrim,
   }));
 
   const undoRef = useRef(undo);
@@ -816,15 +823,28 @@ const useQuickActions = () => {
         disabled: !isReady,
         ...actionMenuProps,
       },
+      {
+        Icon: Scissors,
+        label: __('Trim Video', 'web-stories'),
+        onClick: () => {
+          trackEvent('media_recording_trim_start');
+          startTrim();
+        },
+        disabled: !isProcessing || isTrimming,
+        ...actionMenuProps,
+      },
     ].filter(Boolean);
   }, [
     actionMenuProps,
+    isReady,
     audioInput,
     hasAudio,
-    toggleAudio,
+    isProcessing,
+    isTrimming,
     toggleRecordingMode,
     toggleSettings,
-    isReady,
+    toggleAudio,
+    startTrim,
   ]);
 
   // Return special actions for media recording mode.

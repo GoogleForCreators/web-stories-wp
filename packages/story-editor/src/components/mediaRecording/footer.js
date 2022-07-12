@@ -18,7 +18,6 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
 import { __, _n, sprintf } from '@googleforcreators/i18n';
 import {
   Button,
@@ -26,35 +25,34 @@ import {
   BUTTON_TYPES,
   Icons,
   useLiveRegion,
+  useSnackbar,
 } from '@googleforcreators/design-system';
 import {
   useCallback,
   useDebouncedCallback,
   useState,
+  useEffect,
 } from '@googleforcreators/react';
-import { trackEvent } from '@googleforcreators/tracking';
+import { trackEvent, trackError } from '@googleforcreators/tracking';
 import {
-  getVideoLength,
   getVideoLengthDisplay,
+  blobToFile,
+  createBlob,
+  getImageFromVideo,
 } from '@googleforcreators/media';
+import { format } from '@googleforcreators/date';
 
 /**
  * Internal dependencies
  */
 import getResourceFromLocalFile from '../../app/media/utils/getResourceFromLocalFile';
-import { Z_INDEX_RECORDING_MODE } from '../../constants/zIndex';
-import { FooterArea } from '../canvas/layout';
 import useUploadWithPreview from '../canvas/useUploadWithPreview';
 import useMediaRecording from './useMediaRecording';
-import { COUNTDOWN_TIME_IN_SECONDS } from './constants';
-
-const StyledFooter = styled(FooterArea)`
-  display: flex;
-  align-items: start;
-  flex-direction: row;
-  justify-content: center;
-  z-index: ${Z_INDEX_RECORDING_MODE};
-`;
+import {
+  COUNTDOWN_TIME_IN_SECONDS,
+  PHOTO_MIME_TYPE,
+  PHOTO_FILE_TYPE,
+} from './constants';
 
 const BaseButton = styled(Button).attrs({
   type: BUTTON_TYPES.PRIMARY,
@@ -113,7 +111,7 @@ const RetryButton = styled(Button).attrs({
   margin-right: 20px;
 `;
 
-function Footer({ captureImage, videoRef }) {
+function Footer() {
   const {
     status,
     file,
@@ -123,6 +121,7 @@ function Footer({ captureImage, videoRef }) {
     countdown,
     duration,
     isCountingDown,
+    trimData,
     setMediaBlobUrl,
     setDuration,
     setCountdown,
@@ -132,6 +131,9 @@ function Footer({ captureImage, videoRef }) {
     toggleRecordingMode,
     getMediaStream,
     resetState,
+    resetStream,
+    streamNode,
+    liveStream,
   } = useMediaRecording(({ state, actions }) => ({
     status: state.status,
     file: state.file,
@@ -141,6 +143,9 @@ function Footer({ captureImage, videoRef }) {
     duration: state.duration,
     isCountingDown: state.isCountingDown,
     hasMediaToInsert: Boolean(state.mediaBlobUrl),
+    trimData: state.trimData,
+    liveStream: state.liveStream,
+    streamNode: state.streamNode,
     startRecording: actions.startRecording,
     stopRecording: actions.stopRecording,
     setFile: actions.setFile,
@@ -150,6 +155,7 @@ function Footer({ captureImage, videoRef }) {
     toggleRecordingMode: actions.toggleRecordingMode,
     getMediaStream: actions.getMediaStream,
     resetState: actions.resetState,
+    resetStream: actions.resetStream,
   }));
 
   const uploadWithPreview = useUploadWithPreview();
@@ -162,26 +168,6 @@ function Footer({ captureImage, videoRef }) {
 
     trackEvent('media_recording_retry');
   }, [getMediaStream, resetState]);
-
-  const onCapture = useCallback(() => {
-    speak(
-      sprintf(
-        /* translators: %d: countdown time in seconds. */
-        _n(
-          'Taking photo in %d second',
-          'Taking photo in %d seconds',
-          COUNTDOWN_TIME_IN_SECONDS,
-          'web-stories'
-        ),
-        COUNTDOWN_TIME_IN_SECONDS
-      )
-    );
-
-    setCountdown(COUNTDOWN_TIME_IN_SECONDS);
-    captureImage();
-
-    trackEvent('media_recording_capture', { type: 'image' });
-  }, [captureImage, setCountdown, speak]);
 
   const debouncedStartRecording = useDebouncedCallback(startRecording, 3000);
 
@@ -231,17 +217,13 @@ function Footer({ captureImage, videoRef }) {
       args.additionalData.isMuted = isMuted;
       args.additionalData.isGif = isGif;
 
-      // Get length from the video blob on screen and fall back
-      // to the duration in state if needed since it's not super reliable.
-      const { length, lengthFormatted } = getVideoLength(videoRef.current);
-      args.resource.length = length || duration;
-      args.resource.lengthFormatted = length
-        ? lengthFormatted
-        : getVideoLengthDisplay(duration);
+      args.resource.length = duration;
+      args.resource.lengthFormatted = getVideoLengthDisplay(duration);
 
       args.resource.isOptimized = true;
       args.resource.isMuted = isMuted;
       args.posterFile = posterFile;
+      args.trimData = trimData;
     }
 
     uploadWithPreview([file], true, args);
@@ -263,7 +245,6 @@ function Footer({ captureImage, videoRef }) {
 
     toggleRecordingMode();
   }, [
-    videoRef,
     file,
     uploadWithPreview,
     toggleRecordingMode,
@@ -274,14 +255,79 @@ function Footer({ captureImage, videoRef }) {
     setMediaBlobUrl,
     setFile,
     speak,
+    trimData,
   ]);
+
+  useEffect(() => {
+    // Checking for srcObject avoids flickering due to the stream changing constantly.
+    if (streamNode && !streamNode.srcObject && liveStream) {
+      streamNode.srcObject = liveStream;
+    }
+
+    if (streamNode && !liveStream) {
+      streamNode.srcObject = null;
+    }
+  }, [streamNode, liveStream]);
+
+  const { showSnackbar } = useSnackbar();
+
+  const captureImage = useCallback(async () => {
+    if (!streamNode) {
+      return;
+    }
+
+    let blob;
+
+    try {
+      blob = await getImageFromVideo(streamNode);
+      setMediaBlobUrl(createBlob(blob));
+    } catch (e) {
+      trackError('media_recording_capture', e.message);
+
+      showSnackbar({
+        message: __(
+          'There was an error taking a photo. Please try again.',
+          'web-stories'
+        ),
+        dismissable: true,
+      });
+    }
+
+    const imageFile = blobToFile(
+      blob,
+      `image-capture-${format(new Date(), 'Y-m-d-H-i')}.${PHOTO_FILE_TYPE}`,
+      PHOTO_MIME_TYPE
+    );
+    setFile(imageFile);
+    resetStream();
+  }, [resetStream, setFile, setMediaBlobUrl, showSnackbar, streamNode]);
+
+  const onCapture = useCallback(() => {
+    speak(
+      sprintf(
+        /* translators: %d: countdown time in seconds. */
+        _n(
+          'Taking photo in %d second',
+          'Taking photo in %d seconds',
+          COUNTDOWN_TIME_IN_SECONDS,
+          'web-stories'
+        ),
+        COUNTDOWN_TIME_IN_SECONDS
+      )
+    );
+
+    setCountdown(COUNTDOWN_TIME_IN_SECONDS);
+    captureImage();
+
+    trackEvent('media_recording_capture', { type: 'image' });
+  }, [captureImage, setCountdown, speak]);
 
   if ('acquiring_media' === status) {
     return null;
   }
 
   return (
-    <StyledFooter showOverflow>
+    <>
       {hasMediaToInsert && (
         <>
           <RetryButton onClick={onRetry} disabled={isInserting}>
@@ -315,13 +361,8 @@ function Footer({ captureImage, videoRef }) {
           )}
         </>
       )}
-    </StyledFooter>
+    </>
   );
 }
-
-Footer.propTypes = {
-  captureImage: PropTypes.func.isRequired,
-  videoRef: PropTypes.object,
-};
 
 export default Footer;
