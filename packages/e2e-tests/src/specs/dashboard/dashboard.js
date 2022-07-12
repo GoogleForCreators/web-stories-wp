@@ -28,8 +28,7 @@ import {
 
 const percyCSS = `.dashboard-grid-item-date { display: none; }`;
 
-// eslint-disable-next-line jest/no-disabled-tests
-describe.skip('Stories Dashboard', () => {
+describe('Stories Dashboard', () => {
   it('should be able to open the dashboard', async () => {
     await visitDashboard();
 
@@ -104,8 +103,7 @@ describe.skip('Stories Dashboard', () => {
     });
   });
 
-  // eslint-disable-next-line jest/no-disabled-tests
-  describe.skip('RTL', () => {
+  describe('RTL', () => {
     withRTL();
 
     it('should be able to open the dashboard', async () => {
