@@ -25,7 +25,8 @@ import {
   withRTL,
 } from '@web-stories-wp/e2e-test-utils';
 
-describe('Story Editor', () => {
+// eslint-disable-next-line jest/no-disabled-tests
+describe.skip('Story Editor', () => {
   it('should be able to create a blank story', async () => {
     await createNewStory();
 
