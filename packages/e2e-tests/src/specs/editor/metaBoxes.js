@@ -37,8 +37,7 @@ describe.skip('Custom Meta Boxes', () => {
     });
   });
 
-  // eslint-disable-next-line jest/no-disabled-tests
-  describe.skip('Available', () => {
+  describe('Available', () => {
     withPlugin('web-stories-test-plugin-meta-box');
 
     it('should display meta boxes and save their content', async () => {
