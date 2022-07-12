@@ -169,10 +169,10 @@ const arrangeGroup =
 
 const arrangeSelection =
   (dispatch) =>
-  ({ position }) =>
+  ({ position, groupId }) =>
     dispatch({
       type: types.ARRANGE_ELEMENT,
-      payload: { elementId: null, position },
+      payload: { elementId: null, position, groupId },
     });
 
 const setSelectedElementsById =

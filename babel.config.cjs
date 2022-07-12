@@ -46,7 +46,12 @@ module.exports = function (api) {
     ],
     plugins: [
       '@wordpress/babel-plugin-import-jsx-pragma',
-      'babel-plugin-styled-components',
+      [
+        'babel-plugin-styled-components',
+        {
+          meaninglessFileNames: ['index', 'styles', 'components'],
+        },
+      ],
     ],
     sourceMaps: true,
     env: {

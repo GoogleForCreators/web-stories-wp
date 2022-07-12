@@ -106,6 +106,13 @@ export const arrangeElement = (
     page.elements[currentPosition].groupId = groupId;
   } else if (groupId === undefined || groupId === null) {
     delete page.elements[currentPosition].groupId;
+    // If there are no elements left in this group, remove the group as well.
+    const groupHasElements = page.elements.find(
+      ({ groupId: elGroupId }) => elGroupId === currentGroupId
+    );
+    if (!groupHasElements) {
+      delete page.groups?.[currentGroupId];
+    }
   }
 
   // Then reorder
