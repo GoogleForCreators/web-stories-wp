@@ -21,6 +21,7 @@ import {
   addRequestInterception,
   createNewStory,
   insertStoryTitle,
+  publishStory,
 } from '@web-stories-wp/e2e-test-utils';
 
 /**
