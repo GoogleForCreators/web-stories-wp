@@ -316,14 +316,16 @@ function getGifResourceFromMedia3p(m) {
 }
 
 function getStickerResourceFromMedia3p(m) {
-  // This way we'll only use WebP images and not GIFs by accident, which are heavier.
-  const mWithWebP = {
+  // Animated WebP images are typically larger than GIFs, albeit with
+  // better quality.
+  // For now we prefer lower-quality GIFs, but this can be revisited again in the future.
+  const mWithGifUrlsOnly = {
     ...m,
-    imageUrls: m.imageUrls.filter((i) => i.mimeType === 'image/webp'),
+    imageUrls: m.imageUrls.filter((i) => i.mimeType === 'image/gif'),
   };
 
   // Not using videos because of transparency.
-  const imageUrls = getImageUrls(mWithWebP);
+  const imageUrls = getImageUrls(mWithGifUrlsOnly);
   return createResource({
     id: m.name,
     baseColor: m.color,
