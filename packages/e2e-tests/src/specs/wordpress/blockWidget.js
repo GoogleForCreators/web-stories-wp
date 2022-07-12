@@ -46,12 +46,12 @@ describe('Web Stories Widget Block', () => {
     await deleteWidgets();
   });
 
-  afterAll(() => {
-    removeErrorMessage();
-  });
-
   afterEach(async () => {
     await deleteWidgets();
+  });
+
+  afterAll(() => {
+    removeErrorMessage();
   });
 
   it('should insert a new web stories block', async () => {
