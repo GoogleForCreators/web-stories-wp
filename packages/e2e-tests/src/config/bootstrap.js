@@ -126,13 +126,6 @@ const pageEvents = [];
 // The Jest timeout is increased because these tests are a bit slow
 jest.setTimeout(PUPPETEER_TIMEOUT || 100000);
 
-// Retry flaky tests at most 2 times in CI (off by 1).
-/*
-if ('true' === process.env.CI) {
-  jest.retryTimes(3);
-}
-*/
-
 // Set default timeout for individual expect-puppeteer assertions. (Default: 500)
 setDefaultOptions({ timeout: EXPECT_PUPPETEER_TIMEOUT || 2000 });
 
@@ -225,15 +218,6 @@ function observeConsoleLogging() {
   });
 }
 
-function monitorRequests() {
-  page.on('requestfailed', (request) => {
-    // eslint-disable-next-line no-console
-    console.log(
-      'requestfailed: ' + request.url() + ' ' + request.failure().errorText
-    );
-  });
-}
-
 /**
  * Before every test suite run, delete all content created by the test. This ensures
  * other posts/comments/etc. aren't dirtying tests and tests don't depend on
@@ -244,7 +228,6 @@ beforeAll(async () => {
   capturePageEventsForTearDown();
   enablePageDialogAccept();
   observeConsoleLogging();
-  // monitorRequests();
   await setupBrowser();
   await page.setDefaultNavigationTimeout(10000);
   await page.setDefaultTimeout(3000);
