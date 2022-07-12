@@ -73,6 +73,9 @@ describe('arrangeElement', () => {
             { id: '234', groupId: 'g1' },
             { id: '345' },
           ],
+          groups: {
+            g1: { name: 'Group 1' },
+          },
         },
       ],
       current: '111',
@@ -95,26 +98,101 @@ describe('arrangeElement', () => {
         {
           id: '111',
           elements: [
-            { id: '123', isBackground: true },
-            { id: '234', groupId: 'g1' },
-            { id: '345' },
+            { id: 'e1', isBackground: true },
+            { id: 'e2', groupId: 'g1' },
+            { id: 'e3', groupId: 'g1' },
+            { id: 'e4', groupId: 'g2' },
           ],
+          groups: {
+            g1: { name: 'Group 1' },
+            g2: { name: 'Group 2' },
+          },
         },
       ],
       current: '111',
     });
 
     const result = arrangeElement({
-      elementId: '234',
+      elementId: 'e3',
+      position: 2,
+      groupId: 'g2',
+    });
+
+    expect(result.pages[0].elements).toStrictEqual([
+      { id: 'e1', isBackground: true },
+      { id: 'e2', groupId: 'g1' },
+      { id: 'e3', groupId: 'g2' },
+      { id: 'e4', groupId: 'g2' },
+    ]);
+  });
+
+  it('should remove group if changing group and the old group is empty', () => {
+    const { restore, arrangeElement } = setupReducer();
+
+    restore({
+      pages: [
+        {
+          id: '111',
+          elements: [
+            { id: 'e1', isBackground: true },
+            { id: 'e2', groupId: 'g1' },
+            { id: 'e3', groupId: 'g2' },
+            { id: 'e4', groupId: 'g2' },
+          ],
+          groups: {
+            g1: { name: 'Group 1' },
+            g2: { name: 'Group 2' },
+          },
+        },
+      ],
+      current: '111',
+    });
+
+    const result = arrangeElement({
+      elementId: 'e2',
       position: 1,
       groupId: 'g2',
     });
 
     expect(result.pages[0].elements).toStrictEqual([
-      { id: '123', isBackground: true },
-      { id: '234', groupId: 'g2' },
-      { id: '345' },
+      { id: 'e1', isBackground: true },
+      { id: 'e2', groupId: 'g2' },
+      { id: 'e3', groupId: 'g2' },
+      { id: 'e4', groupId: 'g2' },
     ]);
+
+    expect(result.pages[0].groups).toStrictEqual({
+      g2: { name: 'Group 2' },
+    });
+  });
+
+  it('should not be able to change group to a group that does not exist', () => {
+    const { restore, arrangeElement } = setupReducer();
+
+    const initialState = restore({
+      pages: [
+        {
+          id: '111',
+          elements: [
+            { id: 'e1', isBackground: true },
+            { id: 'e2', groupId: 'g1' },
+            { id: 'e3', groupId: 'g1' },
+          ],
+          groups: {
+            g1: { name: 'Group 1' },
+          },
+        },
+      ],
+      current: '111',
+    });
+
+    const result = arrangeElement({
+      elementId: 'e2',
+      position: 1,
+      groupId: 'g2',
+    });
+
+    expect(result).toBe(initialState);
   });
 
   it('should remove group if already in the right place, but explicitly without group', () => {
@@ -127,8 +205,11 @@ describe('arrangeElement', () => {
           elements: [
             { id: '123', isBackground: true },
             { id: '234', groupId: 'g1' },
-            { id: '345' },
+            { id: '345', groupId: 'g1' },
           ],
+          groups: {
+            g1: { name: 'Group 1' },
+          },
         },
       ],
       current: '111',
@@ -143,7 +224,7 @@ describe('arrangeElement', () => {
     expect(result.pages[0].elements).toStrictEqual([
       { id: '123', isBackground: true },
       { id: '234' },
-      { id: '345' },
+      { id: '345', groupId: 'g1' },
     ]);
   });
 
