@@ -141,7 +141,7 @@ describe('provider', () => {
     expect(statusFilter.filterId).toBe('New');
   });
 
-  it('should be able to update the sortObject if the acceptable keys are use', () => {
+  it('should be able to update the sortObject if the acceptable keys are used', () => {
     const wrapper = ({ children }) => (
       <TemplateFiltersProvider>{children}</TemplateFiltersProvider>
     );

@@ -46,8 +46,8 @@ describe('reducer', () => {
     expect(filter.filterId).toBe(112);
   });
 
-  it('should update set the filterId to null if the same filterId is given, unless the filter is "search" or "status"', () => {
-    let initial_state = {
+  it('should update set the filterId to null if the same filterId is given', () => {
+    const initial_state = {
       filters: [
         {
           key: 'officers',
@@ -57,7 +57,7 @@ describe('reducer', () => {
       ],
     };
 
-    let args = {
+    const args = {
       type: types.UPDATE_FILTER,
       payload: {
         key: 'officers',
@@ -65,18 +65,17 @@ describe('reducer', () => {
       },
     };
 
-    let state = reducer(initial_state, args);
-    let filter = state.filters.find((f) => f.key === 'officers');
+    const state = reducer(initial_state, args);
+    const filter = state.filters.find((f) => f.key === 'officers');
     expect(filter.filterId).toBeNull();
+  });
 
-    initial_state = {
-      filters: [
-        { key: 'search', filterId: 'John' },
-        { key: 'status', filterId: 'New' },
-      ],
+  it('should not reset the filterId for "search" if the same filterId is given', () => {
+    const initial_state = {
+      filters: [{ key: 'search', filterId: 'John' }],
     };
     // search
-    args = {
+    const args = {
       type: types.UPDATE_FILTER,
       payload: {
         key: 'search',
@@ -84,12 +83,16 @@ describe('reducer', () => {
       },
     };
 
-    state = reducer(initial_state, args);
-    filter = state.filters.find((f) => f.key === 'search');
+    const state = reducer(initial_state, args);
+    const filter = state.filters.find((f) => f.key === 'search');
     expect(filter.filterId).toBe('John');
+  });
 
-    // status
-    args = {
+  it('should not reset the filterId for "status" if the same filterId is given', () => {
+    const initial_state = {
+      filters: [{ key: 'status', filterId: 'New' }],
+    };
+    const args = {
       type: types.UPDATE_FILTER,
       payload: {
         key: 'status',
@@ -97,8 +100,8 @@ describe('reducer', () => {
       },
     };
 
-    state = reducer(initial_state, args);
-    filter = state.filters.find((f) => f.key === 'status');
+    const state = reducer(initial_state, args);
+    const filter = state.filters.find((f) => f.key === 'status');
     expect(filter.filterId).toBe('New');
   });
 
