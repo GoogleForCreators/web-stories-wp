@@ -28,7 +28,8 @@ import {
  */
 import { addAllowedErrorMessage } from '../../config/bootstrap';
 
-describe('Saving Story', () => {
+// eslint-disable-next-line jest/no-disabled-tests
+describe.skip('Saving Story', () => {
   let removeErrorMessage;
   let stopRequestInterception;
   let mockResponse;
