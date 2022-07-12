@@ -52,15 +52,15 @@ describe('Saving Story', () => {
     });
   });
 
+  afterEach(() => {
+    mockResponse = undefined;
+  });
+
   afterAll(async () => {
     removeErrorMessage();
 
     await page.setRequestInterception(false);
     stopRequestInterception();
-  });
-
-  afterEach(() => {
-    mockResponse = undefined;
   });
 
   it('should display published dialog', async () => {
