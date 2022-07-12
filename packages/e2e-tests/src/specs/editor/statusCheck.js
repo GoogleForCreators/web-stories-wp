@@ -52,14 +52,22 @@ describe.skip('Status Check', () => {
     });
   });
 
+  afterEach(() => {
+    mockResponse = undefined;
+  });
+
   afterAll(async () => {
     removeErrorMessage();
     await page.setRequestInterception(false);
     stopRequestInterception();
   });
 
-  afterEach(() => {
-    mockResponse = undefined;
+  describe('200 OK', () => {
+    it('should not display error dialog', async () => {
+      await createNewStory();
+
+      await expect(page).not.toMatch('Unable to save your story');
+    });
   });
 
   describe('Invalid JSON response', () => {

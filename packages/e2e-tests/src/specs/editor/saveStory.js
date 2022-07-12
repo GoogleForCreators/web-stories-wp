@@ -51,6 +51,10 @@ describe('Saving Story', () => {
     });
   });
 
+  afterEach(() => {
+    mockResponse = undefined;
+  });
+
   afterAll(async () => {
     removeErrorMessage();
 
@@ -58,11 +62,12 @@ describe('Saving Story', () => {
     stopRequestInterception();
   });
 
-  afterEach(() => {
-    mockResponse = undefined;
+  it('should display published dialog', async () => {
+    await createNewStory();
+    await insertStoryTitle('Test story');
+    await publishStory();
+    await expect(page).toMatch('Story published.');
   });
-
-  jest.retryTimes(3);
 
   // eslint-disable-next-line jest/no-disabled-tests
   it.skip('should display detailed error snackbar message', async () => {
