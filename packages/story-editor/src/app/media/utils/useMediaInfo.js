@@ -77,6 +77,38 @@ function loadScriptOnce(url) {
  */
 
 /**
+ * Determines whether the resource/file has small enough dimensions.
+ *
+ * @param {Object} obj Dimensions object.
+ * @param {number} obj.width Width.
+ * @param {number} obj.height Height.
+ * @return {boolean} Whether the resource/file has small enough dimensions.
+ */
+const hasSmallDimensions = ({ width, height }) =>
+  width * height >
+  MEDIA_VIDEO_DIMENSIONS_THRESHOLD.WIDTH *
+    MEDIA_VIDEO_DIMENSIONS_THRESHOLD.HEIGHT;
+
+/**
+ * Whether the file has a reasonable file size / duration ratio.
+ *
+ * The recommendation for videos in stories is to be < 15s in duration
+ * and < 4 MB in size. If uploading a longer video,
+ * it is only natural that it will exceed the size limit.
+ * Thus, we're instead checking for the average size per second.
+ * Example: 4MB for a 15s video, 12MB for a 45s long video.
+ *
+ * @todo Revisit to avoid fallacy that we're OK with such large file sizes.
+ * @param {number} fileSize File size.
+ * @param {number} duration Duration.
+ * @return {boolean} Whether the file has a good file size / duration ratio.
+ */
+const hasSmallFileSize = (fileSize, duration) =>
+  fileSize <
+  (MEDIA_VIDEO_FILE_SIZE_THRESHOLD / MEDIA_RECOMMENDED_MAX_VIDEO_DURATION) *
+    duration;
+
+/**
  * Custom hook to interact with mediainfo.js.
  *
  * @see https://mediainfo.js.org/
@@ -195,11 +227,14 @@ function useMediaInfo() {
 
       // Placeholders are the size of the canvas, so account for that when
       // checking the dimensions.
+      if (!resource.isPlaceholder && hasSmallDimensions(resource)) {
+        return false;
+      }
+
       if (
-        !resource.isPlaceholder &&
-        resource.width * resource.height >
-          MEDIA_VIDEO_DIMENSIONS_THRESHOLD.WIDTH *
-            MEDIA_VIDEO_DIMENSIONS_THRESHOLD.HEIGHT
+        file.size &&
+        resource.length &&
+        !hasSmallFileSize(file.size, resource.length)
       ) {
         return false;
       }
@@ -210,29 +245,15 @@ function useMediaInfo() {
         return false;
       }
 
-      // The recommendation for videos in stories is to be < 15s in duration
-      // and < 4 MB in size. If uploading a longer video,
-      // it is only natural that it will exceed the size limit.
-      // Thus, we're instead checking for the average size per second.
-      // Example: 4MB for a 15s video, 12MB for a 45s long video.
-      // TODO: Revisit to avoid fallacy that we're OK with such large file sizes.
-      const hasSmallFileSize =
-        fileInfo.fileSize <
-        (MEDIA_VIDEO_FILE_SIZE_THRESHOLD /
-          MEDIA_RECOMMENDED_MAX_VIDEO_DURATION) *
-          fileInfo.duration;
-
-      const hasSmallDimensions =
-        fileInfo.width * fileInfo.height <=
-        MEDIA_VIDEO_DIMENSIONS_THRESHOLD.WIDTH *
-          MEDIA_VIDEO_DIMENSIONS_THRESHOLD.HEIGHT;
-
       // AVC is H.264.
       const isSupportedMp4 =
         fileInfo.mimeType === 'video/mp4' && fileInfo.videoCodec === 'avc';
 
       // Video is small enough and uses a widely supported codec.
-      const result = hasSmallFileSize && hasSmallDimensions && isSupportedMp4;
+      const result =
+        hasSmallFileSize(fileInfo.fileSize, fileInfo.duration) &&
+        hasSmallDimensions(fileInfo) &&
+        isSupportedMp4;
 
       trackEvent('mediainfo_is_optimized', {
         result,
