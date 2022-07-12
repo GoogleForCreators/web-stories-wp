@@ -103,19 +103,26 @@ export const arrangeElement = (
 
   // Update group id on current element
   if (groupId) {
+    // Can only change groups to a group that exists
+    if (!page.groups[groupId]) {
+      return;
+    }
     page.elements[currentPosition].groupId = groupId;
   } else if (groupId === undefined || groupId === null) {
     delete page.elements[currentPosition].groupId;
-    // If there are no elements left in this group, remove the group as well.
-    const groupHasElements = page.elements.find(
-      ({ groupId: elGroupId }) => elGroupId === currentGroupId
+  }
+
+  // If there are no elements left in the group, remove the group as well.
+  if (currentGroupId) {
+    const groupHasElements = page.elements.some(
+      (e) => e.groupId === currentGroupId
     );
     if (!groupHasElements) {
-      delete page.groups?.[currentGroupId];
+      delete page.groups[currentGroupId];
     }
   }
 
-  // Then reorder
+  // Then reorder if relevant
   page.elements = moveArrayElement(page.elements, currentPosition, newPosition);
 };
 
