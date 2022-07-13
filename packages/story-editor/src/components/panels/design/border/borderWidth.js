@@ -32,6 +32,7 @@ import Tooltip from '../../../tooltip';
 import { focusStyle } from '../../shared/styles';
 import { useCommonObjectValue } from '../../shared';
 import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
+import { getMetricsForBorder } from '../../utils/getMetricsForBorder';
 import { DEFAULT_BORDER } from './shared';
 
 const BorderInputsFlexContainer = styled.div`
@@ -66,7 +67,7 @@ const BorderRight = styled(Icons.Border)`
   transform: scaleX(-1);
 `;
 
-function WidthControls({ selectedElements, pushUpdateForObject }) {
+function WidthControls({ selectedElements, pushUpdateForObject, pushUpdate }) {
   const border = useCommonObjectValue(
     selectedElements,
     'border',
@@ -91,9 +92,20 @@ function WidthControls({ selectedElements, pushUpdateForObject }) {
             right: value,
             bottom: value,
           };
+      pushUpdate((el) => {
+        const { width, height, x, y, border: currentBorder } = el;
+        return getMetricsForBorder({
+          newBorder,
+          border: currentBorder,
+          x,
+          y,
+          width,
+          height,
+        });
+      });
       pushUpdateForObject('border', newBorder, DEFAULT_BORDER, true);
     },
-    [pushUpdateForObject, lockBorder]
+    [pushUpdateForObject, pushUpdate, lockBorder]
   );
 
   const handleLockChange = useCallback(
@@ -187,6 +199,7 @@ function WidthControls({ selectedElements, pushUpdateForObject }) {
 WidthControls.propTypes = {
   selectedElements: PropTypes.array.isRequired,
   pushUpdateForObject: PropTypes.func.isRequired,
+  pushUpdate: PropTypes.func.isRequired,
 };
 
 export default WidthControls;
