@@ -100,8 +100,7 @@ describe.skip('Stories Archive', () => {
     });
   });
 
-  // eslint-disable-next-line jest/no-disabled-tests
-  describe.skip('Disabled', () => {
+  describe('Disabled', () => {
     beforeAll(async () => {
       await changeStoriesArchivesType('Disabled');
     });

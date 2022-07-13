@@ -32,8 +32,7 @@ import {
  */
 import { addAllowedErrorMessage } from '../../config/bootstrap.js';
 
-// eslint-disable-next-line jest/no-disabled-tests
-describe.skip('Web Stories Widget Block', () => {
+describe('Web Stories Widget Block', () => {
   let removeErrorMessage;
 
   minWPVersionRequired('5.8');
@@ -87,8 +86,7 @@ describe.skip('Web Stories Widget Block', () => {
     await expect(page).toMatch('Embed Settings');
   });
 
-  //eslint-disable-next-line jest/no-disabled-tests
-  it.skip('should insert a legacy web stories widget', async () => {
+  it('should insert a legacy web stories widget', async () => {
     await activatePlugin('classic-widgets');
 
     await visitAdminPage('widgets.php');
