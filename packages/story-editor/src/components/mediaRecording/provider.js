@@ -58,7 +58,8 @@ function MediaRecordingProvider({ children }) {
   const [countdown, setCountdown] = useState(0);
   const [duration, setDuration] = useState(0);
 
-  const { trimData, isTrimming, startTrim, onTrim } = useTrim(setDuration);
+  const { trimData, isTrimming, startTrim, onTrim, resetTrim } =
+    useTrim(setDuration);
 
   const [isGif, setIsGif] = useState(false);
 
@@ -258,9 +259,10 @@ function MediaRecordingProvider({ children }) {
     setCountdown(0);
     setIsProcessing(false);
     setDuration(0);
+    resetTrim();
 
     resetStream();
-  }, [resetStream]);
+  }, [resetStream, resetTrim]);
 
   const toggleRecordingMode = useCallback(() => {
     setIsInRecordingMode((state) => !state);

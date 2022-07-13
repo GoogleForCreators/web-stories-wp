@@ -35,8 +35,12 @@ function useTrim(setDuration) {
     [setDuration]
   );
   const startTrim = useCallback(() => setIsTrimming(true), []);
+  const resetTrim = useCallback(() => {
+    setIsTrimming(false);
+    setTrimData({ start: 0, end: null });
+  }, []);
 
-  return { trimData, isTrimming, onTrim, startTrim };
+  return { trimData, isTrimming, onTrim, startTrim, resetTrim };
 }
 
 export default useTrim;
