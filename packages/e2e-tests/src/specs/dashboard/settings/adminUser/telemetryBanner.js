@@ -49,8 +49,6 @@ describe('Telemetry Banner', () => {
     expect(TelemetrySettingsCheckbox).toBeTruthy();
   });
 
-  jest.retryTimes(3);
-
   // eslint-disable-next-line jest/no-disabled-tests
   it.skip('should toggle the value and call the API provider when the tracking opt in box is clicked and display snackbar confirmation', async () => {
     await disableCheckbox('[data-testid="telemetry-settings-checkbox"]');
