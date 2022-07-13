@@ -26,7 +26,9 @@ function useTrim(setDuration) {
     (newTrimData) => {
       if (newTrimData) {
         setTrimData(newTrimData);
-        setDuration(newTrimData.end - newTrimData.start);
+        const millis = newTrimData.end - newTrimData.start;
+        const seconds = Math.ceil(millis / 1000);
+        setDuration(seconds);
       }
       setIsTrimming(false);
     },

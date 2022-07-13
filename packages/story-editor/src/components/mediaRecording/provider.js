@@ -257,6 +257,7 @@ function MediaRecordingProvider({ children }) {
     setMediaBlobUrl(null);
     setCountdown(0);
     setIsProcessing(false);
+    setDuration(0);
 
     resetStream();
   }, [resetStream]);

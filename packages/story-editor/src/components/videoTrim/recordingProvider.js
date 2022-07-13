@@ -19,7 +19,6 @@
  */
 import PropTypes from 'prop-types';
 import { useCallback } from '@googleforcreators/react';
-import { formatMsToHMS } from '@googleforcreators/media';
 import { trackEvent } from '@googleforcreators/tracking';
 
 /**
@@ -43,8 +42,8 @@ function VideoRecordingTrimProvider({ children, onTrim, videoData }) {
 
   const performTrim = useCallback(() => {
     onTrim({
-      start: formatMsToHMS(startOffset),
-      end: formatMsToHMS(endOffset),
+      start: startOffset,
+      end: endOffset,
     });
     trackEvent('recording_video_trim', {
       start_offset: startOffset,

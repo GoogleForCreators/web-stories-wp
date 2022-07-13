@@ -39,6 +39,7 @@ import {
   blobToFile,
   createBlob,
   getImageFromVideo,
+  formatMsToHMS,
 } from '@googleforcreators/media';
 import { format } from '@googleforcreators/date';
 
@@ -224,6 +225,14 @@ function Footer() {
       args.resource.isMuted = isMuted;
       args.posterFile = posterFile;
       args.trimData = trimData;
+      // If video has been trimmed, `end` will no longer be `null`,
+      // but some number bigger than 0
+      if (trimData.end) {
+        args.trimData = {
+          start: formatMsToHMS(trimData.start),
+          end: formatMsToHMS(trimData.end),
+        };
+      }
     }
 
     uploadWithPreview([file], true, args);
