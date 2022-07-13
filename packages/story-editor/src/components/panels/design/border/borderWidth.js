@@ -96,7 +96,7 @@ function WidthControls({ selectedElements, pushUpdateForObject, pushUpdate }) {
         const { width, height, x, y, border: currentBorder } = el;
         return getMetricsForBorder({
           newBorder,
-          border: currentBorder,
+          border: currentBorder || DEFAULT_BORDER,
           x,
           y,
           width,

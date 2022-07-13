@@ -221,13 +221,13 @@ function DisplayElement({
           fill
           style={{
             opacity: typeof opacity !== 'undefined' ? opacity / 100 : null,
-            ...(shouldDisplayBorder(element)
+            /*...(shouldDisplayBorder(element)
               ? getBorderPositionCSS({
                   ...responsiveBorder,
                   width: `${box.width}px`,
                   height: `${box.height}px`,
                 })
-              : null),
+              : null),*/
           }}
           previewMode={previewMode}
           responsiveBorder={responsiveBorder}
@@ -235,7 +235,11 @@ function DisplayElement({
           <Display
             element={element}
             previewMode={previewMode}
-            box={box}
+            box={{
+              ...box,
+              width: box.width - (border.left || 0) - (border.right || 0),
+              height: box.height - (border.top || 0) - (border.bottom || 0),
+            }}
             getProxiedUrl={getProxiedUrl}
             isCurrentResourceProcessing={isCurrentResourceProcessing}
             isCurrentResourceUploading={isCurrentResourceUploading}
