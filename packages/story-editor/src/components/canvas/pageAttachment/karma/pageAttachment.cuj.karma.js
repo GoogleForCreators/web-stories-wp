@@ -21,6 +21,7 @@ import { createSolidFromString } from '@googleforcreators/patterns';
 /**
  * Internal dependencies
  */
+import { screen, waitFor } from '@testing-library/react';
 import useInsertElement from '../../useInsertElement';
 import { useStory } from '../../../../app/story';
 import { Fixture } from '../../../../karma';
@@ -46,6 +47,7 @@ describe('Page Attachment', () => {
 
   beforeEach(async () => {
     fixture = new Fixture();
+    fixture.setFlags({ linkIconHotlinking: true });
     await fixture.render();
     await fixture.collapseHelpCenter();
 
@@ -128,6 +130,100 @@ describe('Page Attachment', () => {
       expect(storyContext.state.currentPage.pageAttachment.theme).toEqual(
         'dark'
       );
+    });
+
+    it('it should allow adding Page Attachment with custom CTA Text and icon', async () => {
+      await setPageAttachmentLink('http://example.com');
+      await setCtaText('Click me!');
+      const ctaText = fixture.screen.getByText('Click me!');
+      expect(ctaText).toBeDefined();
+      const editIcon = fixture.screen.getByRole('button', {
+        name: 'Edit link icon',
+      });
+      await fixture.events.click(editIcon);
+      const fileButton = fixture.screen.getByRole('menuitem', {
+        name: 'Link to a file',
+      });
+      expect(fileButton).toBeDefined();
+      await fixture.events.click(fileButton);
+
+      const input = fixture.screen.getByRole('textbox', { name: 'URL' });
+      const insertBtn = fixture.screen.getByRole('button', {
+        name: 'Use image as link icon',
+      });
+      await fixture.events.click(input);
+      await fixture.events.keyboard.type(
+        'http://localhost:9876/__static__/icon.png'
+      );
+
+      await fixture.events.click(insertBtn);
+      await fixture.events.sleep(500);
+      const storyContext = await fixture.renderHook(() => useStory());
+
+      expect(storyContext.state.currentPage.pageAttachment.icon).toEqual(
+        'http://localhost:9876/__static__/icon.png'
+      );
+    });
+
+    it('it should allow adding Page Attachment with custom CTA Text and invalid icon', async () => {
+      await setPageAttachmentLink('http://example.com');
+      await setCtaText('Click me!');
+      const ctaText = fixture.screen.getByText('Click me!');
+      expect(ctaText).toBeDefined();
+      const editIcon = fixture.screen.getByRole('button', {
+        name: 'Edit link icon',
+      });
+      await fixture.events.click(editIcon);
+      const fileButton = fixture.screen.getByRole('menuitem', {
+        name: 'Link to a file',
+      });
+      expect(fileButton).toBeDefined();
+      await fixture.events.click(fileButton);
+
+      const input = fixture.screen.getByRole('textbox', { name: 'URL' });
+      const insertBtn = fixture.screen.getByRole('button', {
+        name: 'Use image as link icon',
+      });
+      await fixture.events.click(input);
+      await fixture.events.keyboard.type(
+        'http://localhost:9876/__static__/saturn.jpg'
+      );
+
+      await fixture.events.click(insertBtn);
+      const dialog = screen.getByRole('dialog');
+      await waitFor(() =>
+        expect(dialog.textContent).toContain(
+          'do not match required image dimensions'
+        )
+      );
+    });
+
+    it('it should allow adding Page Attachment with custom CTA Text and invalid icon url', async () => {
+      await setPageAttachmentLink('http://example.com');
+      await setCtaText('Click me!');
+      const ctaText = fixture.screen.getByText('Click me!');
+      expect(ctaText).toBeDefined();
+      const editIcon = fixture.screen.getByRole('button', {
+        name: 'Edit link icon',
+      });
+      await fixture.events.click(editIcon);
+      const fileButton = fixture.screen.getByRole('menuitem', {
+        name: 'Link to a file',
+      });
+      expect(fileButton).toBeDefined();
+      await fixture.events.click(fileButton);
+
+      const input = fixture.screen.getByRole('textbox', { name: 'URL' });
+      const insertBtn = fixture.screen.getByRole('button', {
+        name: 'Use image as link icon',
+      });
+      await fixture.events.click(input);
+      await fixture.events.keyboard.type('invalid');
+
+      await fixture.events.click(insertBtn);
+      await fixture.events.sleep(500);
+      const dialog = screen.getByRole('dialog');
+      await waitFor(() => expect(dialog.textContent).toContain('Invalid link'));
     });
 
     it('it should display warning for a link in the Page Attachment Area', async () => {
