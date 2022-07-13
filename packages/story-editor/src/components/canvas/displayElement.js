@@ -171,6 +171,11 @@ function DisplayElement({
   const wrapperRef = useRef(null);
 
   const box = getBox(element);
+  const boxWithBorder = getBox({
+    ...element,
+    width: element.width - (border.left || 0) - (border.right || 0),
+    height: element.height - (border.top || 0) - (border.bottom || 0),
+  });
 
   useTransformHandler(id, (transform) => {
     const target = wrapperRef.current;
@@ -235,11 +240,7 @@ function DisplayElement({
           <Display
             element={element}
             previewMode={previewMode}
-            box={{
-              ...box,
-              width: box.width - (border.left || 0) - (border.right || 0),
-              height: box.height - (border.top || 0) - (border.bottom || 0),
-            }}
+            box={boxWithBorder}
             getProxiedUrl={getProxiedUrl}
             isCurrentResourceProcessing={isCurrentResourceProcessing}
             isCurrentResourceUploading={isCurrentResourceUploading}
