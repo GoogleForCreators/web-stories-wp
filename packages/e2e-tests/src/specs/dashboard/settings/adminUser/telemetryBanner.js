@@ -19,8 +19,7 @@
  */
 import { disableCheckbox, visitSettings } from '@web-stories-wp/e2e-test-utils';
 
-// eslint-disable-next-line jest/no-disabled-tests
-describe.skip('Telemetry Banner', () => {
+describe('Telemetry Banner', () => {
   beforeEach(async () => {
     await visitSettings();
   });
