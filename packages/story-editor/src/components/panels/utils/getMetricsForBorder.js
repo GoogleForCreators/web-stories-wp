@@ -22,15 +22,17 @@ export function getMetricsForBorder({
   width,
   height,
 }) {
-  const { left, top, right, bottom } = border;
+  const { left = 0, top = 0, right = 0, bottom = 0 } = border;
+  const {
+    left: nLeft = left,
+    top: nTop = top,
+    right: nRight = right,
+    bottom: nBottom = bottom,
+  } = newBorder;
   return {
-    width:
-      width + (newBorder.left - (left || 0)) + (newBorder.right - (right || 0)),
-    height:
-      height +
-      (newBorder.top - (top || 0)) +
-      (newBorder.bottom - (bottom || 0)),
-    x: x - (newBorder.left - (left || 0)),
-    y: y - (newBorder.top - (top || 0)),
+    width: width + (nLeft - left) + (nRight - right),
+    height: height + (nTop - top) + (nBottom - bottom),
+    x: x - (nLeft - left),
+    y: y - (nTop - top),
   };
 }
