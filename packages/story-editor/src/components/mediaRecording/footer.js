@@ -41,6 +41,7 @@ import {
 /**
  * Internal dependencies
  */
+import { BackgroundAudioPropTypeShape } from '@googleforcreators/elements';
 import getResourceFromLocalFile from '../../app/media/utils/getResourceFromLocalFile';
 import { Z_INDEX_RECORDING_MODE } from '../../constants/zIndex';
 import { FooterArea } from '../canvas/layout';
@@ -50,6 +51,7 @@ import { useConfig, useStory } from '../../app';
 import useHighlights from '../../app/highlights/useHighlights';
 import states from '../../app/highlights/states';
 import useFFmpeg from '../../app/media/utils/useFFmpeg';
+import objectPick from '../../utils/objectPick';
 import { COUNTDOWN_TIME_IN_SECONDS } from './constants';
 import useMediaRecording from './useMediaRecording';
 
@@ -313,7 +315,7 @@ function Footer({ captureImage, videoRef }) {
       allowedAudioMimeTypes
     );
     const backgroundAudio = {
-      resource,
+      resource: objectPick(resource, Object.keys(BackgroundAudioPropTypeShape)),
     };
 
     setHighlights({
