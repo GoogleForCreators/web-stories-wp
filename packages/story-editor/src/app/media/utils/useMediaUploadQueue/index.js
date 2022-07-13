@@ -61,7 +61,7 @@ const initialState = {
  *
  * A path through the queue could look like this:
  *
- * PENDING -> TRANSCODING -> TRANSCODED -> TRIMMING -> TRIMMED -> MUTING -> MUTED -> UPLOADING -> UPLOADED -> FINISHED
+ * PENDING -> PREPARING -> PENDING TRANSCODING -> TRANSCODING -> TRANSCODED -> TRIMMING -> TRIMMED -> MUTING -> MUTED -> UPLOADING -> UPLOADED -> FINISHED
  *
  * @return {{state: {Object}, actions: {Object}}} Media queue state.
  */
