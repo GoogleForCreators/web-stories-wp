@@ -235,14 +235,14 @@ describe('useMediaInfo', () => {
     );
   });
 
+  afterEach(() => {
+    mediaInfo.mockClear();
+  });
+
   afterAll(() => {
     document.documentElement.removeChild(mediaInfoScript);
 
     delete window.MediaInfo;
-  });
-
-  afterEach(() => {
-    mediaInfo.mockClear();
   });
 
   describe('getFileInfo', () => {
