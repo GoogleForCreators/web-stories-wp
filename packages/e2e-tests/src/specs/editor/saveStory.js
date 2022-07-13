@@ -62,7 +62,7 @@ describe('Saving Story', () => {
     await page.setRequestInterception(false);
     stopRequestInterception();
   });
-  
+
   //eslint-disable-next-line jest/no-disabled-tests -- error: TimeoutError: Navigation timeout of 10000 ms exceeded
   it.skip('should display published dialog', async () => {
     await createNewStory();
