@@ -69,6 +69,18 @@ function useVideoNode(videoData) {
   }, [paused, isDraggingHandles]);
 
   useEffect(() => {
+    if (!videoData) {
+      // Reset all the things
+      rawSetStartOffset(null);
+      setOriginalStartOffset(null);
+      setCurrentTime(null);
+      rawSetEndOffset(null);
+      setOriginalEndOffset(null);
+      setMaxOffset(null);
+    }
+  }, [videoData]);
+
+  useEffect(() => {
     if (!videoNode || !videoData) {
       return undefined;
     }
@@ -79,6 +91,10 @@ function useVideoNode(videoData) {
     }
 
     function onLoadedMetadata(evt) {
+      if (!isFinite(evt.target.duration)) {
+        // Keep waiting
+        return;
+      }
       const duration = Math.floor(evt.target.duration * 1000);
       rawSetStartOffset(videoData.start);
       setOriginalStartOffset(videoData.start);
@@ -89,6 +105,9 @@ function useVideoNode(videoData) {
       restart(videoData.start);
     }
     function onTimeUpdate(evt) {
+      if (!endOffset) {
+        return;
+      }
       const currentOffset = Math.floor(evt.target.currentTime * 1000);
       setCurrentTime(Math.min(currentOffset, endOffset));
       // If we've reached the end of the video, start again unless the user has paused the video.
@@ -96,16 +115,32 @@ function useVideoNode(videoData) {
         restart(startOffset);
       }
     }
-    videoNode.addEventListener('timeupdate', onTimeUpdate);
-    videoNode.addEventListener('loadedmetadata', onLoadedMetadata);
 
-    // We might already have metadata, if so invoke the event handler directly
-    if (!isNaN(videoNode.duration) && startOffset === null) {
+    // We might already have metadata, if so invoke the event handler directly.
+    // Note that on first playback before completion, duration is Infinite, so
+    // so we need to wait until it isn't anymore.
+    if (
+      !isNaN(videoNode.duration) &&
+      isFinite(videoNode.duration) &&
+      startOffset === null
+    ) {
       onLoadedMetadata({ target: videoNode });
+    } else if (!isFinite(videoNode.duration)) {
+      // Video is a blob of unknown length, wait until it finishes
+      videoNode.addEventListener('timeupdate', onLoadedMetadata);
+    } else {
+      // Video hasn't loaded yet, wait for that
+      videoNode.addEventListener('loadedmetadata', onLoadedMetadata);
+    }
+
+    // We only start scheduling the restart listener once we have the end offset
+    if (endOffset) {
+      videoNode.addEventListener('timeupdate', onTimeUpdate);
     }
 
     return () => {
       videoNode.removeEventListener('timeupdate', onTimeUpdate);
+      videoNode.removeEventListener('timeupdate', onLoadedMetadata);
       videoNode.removeEventListener('loadedmetadata', onLoadedMetadata);
     };
   }, [startOffset, endOffset, videoData, videoNode]);

@@ -67,7 +67,7 @@ function VideoRecordingTrimProvider({ children, onTrim, videoData }) {
       setStartOffset,
       setEndOffset,
       setIsDraggingHandles,
-      toggleTrimMode: onTrim,
+      toggleTrimMode: () => onTrim(),
     },
   };
 
