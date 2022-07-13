@@ -72,30 +72,15 @@ const {
   Settings,
 } = Icons;
 
-const StyledSettings = styled(Settings).attrs({
+const quickActionIconAttrs = {
   width: 24,
   height: 24,
-})``;
-
-const Mic = styled(Icons.Mic).attrs({
-  width: 24,
-  height: 24,
-})``;
-
-const MicOff = styled(Icons.MicOff).attrs({
-  width: 24,
-  height: 24,
-})``;
-
-const Video = styled(Icons.Camera).attrs({
-  width: 24,
-  height: 24,
-})``;
-
-const VideoOff = styled(Icons.CameraOff).attrs({
-  width: 24,
-  height: 24,
-})``;
+};
+const StyledSettings = styled(Settings).attrs(quickActionIconAttrs)``;
+const Mic = styled(Icons.Mic).attrs(quickActionIconAttrs)``;
+const MicOff = styled(Icons.MicOff).attrs(quickActionIconAttrs)``;
+const Video = styled(Icons.Camera).attrs(quickActionIconAttrs)``;
+const VideoOff = styled(Icons.CameraOff).attrs(quickActionIconAttrs)``;
 
 export const MediaPicker = ({ render, ...props }) => {
   const {
