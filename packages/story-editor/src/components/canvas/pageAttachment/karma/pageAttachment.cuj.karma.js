@@ -134,9 +134,25 @@ describe('Page Attachment', () => {
 
     it('it should allow adding Page Attachment with custom CTA Text and icon', async () => {
       await setPageAttachmentLink('http://example.com');
-      await setCtaText('Click me!');
-      const ctaText = fixture.screen.getByText('Click me!');
-      expect(ctaText).toBeDefined();
+      const editIcon = fixture.screen.getByRole('button', {
+        name: 'Edit link icon',
+      });
+      await fixture.events.click(editIcon);
+      const uploadButton = fixture.screen.getByRole('menuitem', {
+        name: 'Upload a file',
+      });
+      expect(uploadButton).toBeDefined();
+      await fixture.events.click(uploadButton);
+
+      const storyContext = await fixture.renderHook(() => useStory());
+
+      expect(storyContext.state.currentPage.pageAttachment.icon).toEqual(
+        'http://localhost:9876/__static__/saturn.jpg'
+      );
+    });
+
+    it('it should allow adding Page Attachment with custom hotlink icon', async () => {
+      await setPageAttachmentLink('http://example.com');
       const editIcon = fixture.screen.getByRole('button', {
         name: 'Edit link icon',
       });
@@ -165,11 +181,8 @@ describe('Page Attachment', () => {
       );
     });
 
-    it('it should allow adding Page Attachment with custom CTA Text and invalid icon', async () => {
+    it('it should allow adding Page Attachment with custom invalid icon', async () => {
       await setPageAttachmentLink('http://example.com');
-      await setCtaText('Click me!');
-      const ctaText = fixture.screen.getByText('Click me!');
-      expect(ctaText).toBeDefined();
       const editIcon = fixture.screen.getByRole('button', {
         name: 'Edit link icon',
       });
@@ -190,6 +203,7 @@ describe('Page Attachment', () => {
       );
 
       await fixture.events.click(insertBtn);
+      await fixture.events.sleep(500);
       const dialog = screen.getByRole('dialog');
       await waitFor(() =>
         expect(dialog.textContent).toContain(
@@ -200,9 +214,6 @@ describe('Page Attachment', () => {
 
     it('it should allow adding Page Attachment with custom CTA Text and invalid icon url', async () => {
       await setPageAttachmentLink('http://example.com');
-      await setCtaText('Click me!');
-      const ctaText = fixture.screen.getByText('Click me!');
-      expect(ctaText).toBeDefined();
       const editIcon = fixture.screen.getByRole('button', {
         name: 'Edit link icon',
       });
