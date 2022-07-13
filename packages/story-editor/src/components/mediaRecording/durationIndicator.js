@@ -38,18 +38,15 @@ const Wrapper = styled(Text).attrs({
 })`
   font-variant-numeric: tabular-nums;
 
-  $:before {
+  &:before {
     content: '';
     display: inline-block;
     width: 10px;
     height: 10px;
     margin-right: 5px;
     border-radius: 100%;
-    ${({ isRecording, theme }) => ({
-      backgroundColor: isRecording
-        ? theme.colors.interactiveBg.negativeNormal
-        : 'transparent',
-    })}
+    background-color: ${({ theme }) =>
+      theme.colors.interactiveBg.negativeNormal};
   }
 `;
 
@@ -59,7 +56,7 @@ function DurationIndicator() {
     isRecording: state.status === 'recording',
   }));
 
-  if (!duration) {
+  if (!isRecording) {
     return null;
   }
 
@@ -82,9 +79,7 @@ function DurationIndicator() {
         },
       }}
     >
-      <Wrapper isRecording={isRecording}>
-        {getVideoLengthDisplay(duration)}
-      </Wrapper>
+      <Wrapper>{getVideoLengthDisplay(duration)}</Wrapper>
     </Tooltip>
   );
 }
