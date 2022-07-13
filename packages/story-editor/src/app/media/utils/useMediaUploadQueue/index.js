@@ -710,6 +710,7 @@ function useMediaUploadQueue() {
       state.queue.some(
         (item) =>
           [
+            ITEM_STATUS.PENDING_TRANSCODING,
             ITEM_STATUS.TRANSCODING,
             ITEM_STATUS.TRIMMING,
             ITEM_STATUS.MUTING,
@@ -723,7 +724,7 @@ function useMediaUploadQueue() {
      * transcoding/muting/trimming has already happened, or when it is
      * still pending to be processed.
      *
-     * Checks for both `resource.id` as well as `previousResourceId`,
+     * Checks for both `resource.id` and `previousResourceId`,
      * since after upload to the backend, the resource's temporary uuid
      * will be replaced by the permanent ID from the backend.
      *
@@ -735,6 +736,7 @@ function useMediaUploadQueue() {
         (item) =>
           [
             ITEM_STATUS.PENDING,
+            ITEM_STATUS.PREPARING,
             ITEM_STATUS.UPLOADING,
             ITEM_STATUS.UPLOADED,
             ITEM_STATUS.FINISHED,
