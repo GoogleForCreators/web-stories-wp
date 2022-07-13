@@ -228,7 +228,7 @@ function useMediaInfo() {
 
       // Placeholders are the size of the canvas, so account for that when
       // checking the dimensions.
-      if (!resource.isPlaceholder && hasSmallDimensions(resource)) {
+      if (!resource.isPlaceholder && !hasSmallDimensions(resource)) {
         return false;
       }
 
