@@ -45,15 +45,14 @@ function MediaRecording() {
     isImageCapture,
     needsPermissions,
     isTrimming,
-    trimData,
     toggleIsGif,
     setStreamNode,
   } = useMediaRecording(({ state, actions }) => ({
     status: state.status,
     error: state.error,
-    liveStream: state.liveStream,
     mediaBlob: state.mediaBlob,
     mediaBlobUrl: state.mediaBlobUrl,
+    liveStream: state.liveStream,
     hasAudio: state.hasAudio,
     isGif: state.isGif,
     isImageCapture: Boolean(state.file?.type?.startsWith('image')),
@@ -61,7 +60,6 @@ function MediaRecording() {
       ('idle' === state.status || 'acquiring_media' === state.status) &&
       !state.videoInput,
     isTrimming: state.isTrimming,
-    trimData: state.trimData,
     toggleIsGif: actions.toggleIsGif,
     setStreamNode: actions.setStreamNode,
   }));
@@ -99,11 +97,6 @@ function MediaRecording() {
     return <PermissionsDialog />;
   }
 
-  const fragment = trimData.end
-    ? `#t=${trimData.start / 1000},${trimData.end / 1000}`
-    : '';
-  const mediaSrc = [mediaBlobUrl, fragment].join('');
-
   return (
     <>
       <Wrapper>
@@ -118,7 +111,7 @@ function MediaRecording() {
                   {/* eslint-disable-next-line jsx-a11y/media-has-caption -- We don't have tracks for this. */}
                   <Video
                     ref={updateVideoNode}
-                    src={mediaSrc}
+                    src={mediaBlobUrl}
                     muted={isMuted}
                     loop={isGif || isTrimming}
                     tabIndex={0}
