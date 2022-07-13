@@ -29,8 +29,7 @@ import {
  */
 import { addAllowedErrorMessage } from '../../config/bootstrap';
 
-// eslint-disable-next-line jest/no-disabled-tests
-describe.skip('Saving Story', () => {
+describe('Saving Story', () => {
   let removeErrorMessage;
   let stopRequestInterception;
   let mockResponse;
@@ -71,8 +70,7 @@ describe.skip('Saving Story', () => {
     await expect(page).toMatch('Story published.');
   });
 
-  // eslint-disable-next-line jest/no-disabled-tests
-  it.skip('should display detailed error snackbar message', async () => {
+  it('should display detailed error snackbar message', async () => {
     mockResponse = {
       status: 500,
       body: JSON.stringify({
