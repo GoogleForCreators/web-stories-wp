@@ -25,16 +25,6 @@ const ARTIFACTS_PATH =
   process.env.E2E_ARTIFACTS_PATH ||
   (process.env.GITHUB_WORKSPACE || process.cwd()) + '/build/e2e-artifacts';
 
-async function inlineImage() {
-  const data = await this.global.page.screenshot({
-    type: 'jpeg',
-    encoding: 'base64',
-    quality: 1,
-  });
-  // note you can console log this for local debugging
-  return `data:image/jpeg;base64,${data}`;
-}
-
 class PuppeteerEnvironment extends OriginalEnvironment {
   async setup() {
     await super.setup();
@@ -60,7 +50,6 @@ class PuppeteerEnvironment extends OriginalEnvironment {
         new Date(event.test.startedAt).toLocaleString() +
         ' ended:' +
         new Date().toLocaleString();
-      errorMessages += await inlineImage();
       errorMessages += '============end==========\n\n';
       errors.forEach((error) => {
         errorMessages += `${testName}:${error}\n\n`;
