@@ -24,10 +24,8 @@ import {
   withPlugin,
 } from '@web-stories-wp/e2e-test-utils';
 
-// eslint-disable-next-line jest/no-disabled-tests
-describe.skip('Custom Meta Boxes', () => {
-  // eslint-disable-next-line jest/no-disabled-tests
-  describe.skip('Unavailable', () => {
+describe('Custom Meta Boxes', () => {
+  describe('Unavailable', () => {
     it('should not display button to toggle meta boxes', async () => {
       await createNewStory();
       await expect(page).toMatchElement('input[placeholder="Add title"]');
