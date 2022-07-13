@@ -109,8 +109,7 @@ describe.skip('Stories Archive', () => {
       await changeStoriesArchivesType('Default');
     });
 
-    // eslint-disable-next-line jest/no-disabled-tests
-    describe.skip('Block', () => {
+    describe('Block', () => {
       it('should insert a new web stories block', async () => {
         await createNewPost({
           showWelcomeGuide: false,
@@ -126,8 +125,7 @@ describe.skip('Stories Archive', () => {
       });
     });
 
-    // eslint-disable-next-line jest/no-disabled-tests
-    describe.skip('Widget Block', () => {
+    describe('Widget Block', () => {
       minWPVersionRequired('5.8');
       it('should insert a new web stories block', async () => {
         await visitBlockWidgetScreen();
@@ -146,8 +144,7 @@ describe.skip('Stories Archive', () => {
       });
     });
 
-    // eslint-disable-next-line jest/no-disabled-tests
-    describe.skip('Widget', () => {
+    describe('Widget', () => {
       withPlugin('classic-widgets');
 
       it('should be able to add widget', async () => {
