@@ -32,6 +32,7 @@ import {
   MEDIA_VIDEO_FILE_SIZE_THRESHOLD,
   MEDIA_MIME_TYPES_OPTIMIZED_VIDEOS,
   MEDIA_RECOMMENDED_MAX_VIDEO_DURATION,
+  MEDIA_RECOMMENDED_MIN_VIDEO_FPS,
 } from '../../../constants';
 
 /**
@@ -249,11 +250,16 @@ function useMediaInfo() {
       const isSupportedMp4 =
         fileInfo.mimeType === 'video/mp4' && fileInfo.videoCodec === 'avc';
 
+      const hasHighFps =
+        !fileInfo.frameRate ||
+        fileInfo.frameRate >= MEDIA_RECOMMENDED_MIN_VIDEO_FPS;
+
       // Video is small enough and uses a widely supported codec.
       const result =
         hasSmallFileSize(fileInfo.fileSize, fileInfo.duration) &&
         hasSmallDimensions(fileInfo) &&
-        isSupportedMp4;
+        isSupportedMp4 &&
+        hasHighFps;
 
       trackEvent('mediainfo_is_optimized', {
         result,
