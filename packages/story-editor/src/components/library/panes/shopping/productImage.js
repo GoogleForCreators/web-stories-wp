@@ -19,6 +19,11 @@
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 
+/**
+ * Internal dependencies
+ */
+import LibraryMoveable from '../shared/libraryMoveable';
+
 const imgPlaceholder = css`
   display: block;
   margin-right: 10px;
@@ -32,9 +37,22 @@ const StyledImgPlaceHolder = styled.div`
   ${imgPlaceholder}
 `;
 
+const ProductImageWrap = styled.div`
+  position: relative;
+`;
+
 const StyledImage = styled.img`
   ${imgPlaceholder}
   object-fit: cover;
+`;
+
+const StyledImageClone = styled.img`
+  opacity: 0;
+  position: absolute;
+  object-fit: cover;
+  border-radius: 4px;
+  width: 100px;
+  height: 100px;
 `;
 
 function ProductImage({ product }) {
@@ -57,4 +75,31 @@ ProductImage.propTypes = {
   product: PropTypes.object.isRequired,
 };
 
-export default ProductImage;
+function DraggableProductImage({ product, isOnPage }) {
+  const src = product?.productImages[0]?.url || '';
+  return (
+    <ProductImageWrap>
+      <ProductImage product={product} />
+      {!isOnPage && (
+        <LibraryMoveable
+          type="product"
+          elementProps={{ product }}
+          cloneElement={StyledImageClone}
+          cloneProps={{
+            loading: 'lazy',
+            decoding: 'async',
+            crossOrigin: 'anonymous',
+            src,
+          }}
+        />
+      )}
+    </ProductImageWrap>
+  );
+}
+
+DraggableProductImage.propTypes = {
+  product: PropTypes.object.isRequired,
+  isOnPage: PropTypes.bool,
+};
+
+export default DraggableProductImage;

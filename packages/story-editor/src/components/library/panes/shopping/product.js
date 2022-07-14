@@ -46,7 +46,7 @@ function Product({ product, onClick, onFocus, isOnPage, canAddMore }) {
         onClick={onClick}
         onFocus={onFocus}
       />
-      <ProductImage product={product} />
+      <ProductImage product={product} isOnPage={isOnPage} />
       <StyledDescription>
         <StyledTitle isBold>{product?.productTitle}</StyledTitle>
         <ProductPrice

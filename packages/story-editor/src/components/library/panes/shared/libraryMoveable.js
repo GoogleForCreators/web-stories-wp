@@ -261,6 +261,12 @@ function LibraryMoveable({
           offsetX: editorToDataX(x - pageX, pageSize.width),
           offsetY: editorToDataY(y - pageY, pageSize.height),
         });
+      } else if (type === 'product') {
+        insertElement(type, {
+          ...elementProps,
+          width: 25,
+          height: 25,
+        });
       } else {
         insertElement(type, {
           ...elementProps,
