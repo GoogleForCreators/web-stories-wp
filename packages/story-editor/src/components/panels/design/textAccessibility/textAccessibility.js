@@ -23,11 +23,12 @@ import {
   DropDown,
   Text,
   THEME_CONSTANTS,
+  Link,
 } from '@googleforcreators/design-system';
 import { getTextElementTagNames } from '@googleforcreators/output';
 import { trackClick } from '@googleforcreators/tracking';
 import { useFeature } from 'flagged';
-import { useState, useEffect } from '@googleforcreators/react';
+import { useState, useEffect, useCallback } from '@googleforcreators/react';
 
 /**
  * Internal dependencies
@@ -61,22 +62,27 @@ function TextAccessibilityPanel({ selectedElements, pushUpdate }) {
     setCurrentTags(Array.from(textTags.values()));
   }, [selectedElements, setSelectedTextElements]);
 
+  // Click tracking for the Learn More link
+  const onLinkClick = useCallback((evt) => {
+    trackClick(evt, 'click_headings_docs');
+  }, []);
+
+  const handleChange = useCallback(
+    (evt, value) => {
+      selectedElements.forEach(() => {
+        pushUpdate({ tagName: value });
+      });
+      // Update the selected text elements with the
+      // value chosen in the text accessibility dropdown
+      const newTags = getTextElementTagNames(selectedTextElements, value);
+      setCurrentTags(Array.from(newTags.values()));
+    },
+    [pushUpdate, selectedElements, selectedTextElements]
+  );
+
   if (!showSemanticHeadings) {
     return null;
   }
-
-  // Map all types of tag names in the selected elements
-  // and then convert to an Array for usage
-  const handleChange = (evt, value) => {
-    trackClick(evt, 'click-headings-docs');
-    selectedElements.map(() => {
-      return pushUpdate({ tagName: value });
-    });
-    // Update the selected text elements with the
-    // value chosen in the text accessibility dropdown
-    const newTags = getTextElementTagNames(selectedTextElements, value);
-    setCurrentTags(Array.from(newTags.values()));
-  };
 
   // Check if tags match for selected item in dropdown
   // If they don't match, we want to show 'Mixed'
@@ -141,17 +147,17 @@ function TextAccessibilityPanel({ selectedElements, pushUpdate }) {
         <TranslateWithMarkup
           mapping={{
             a: (
-              <a
-                href={__('https://wp.stories.google/docs', 'web-stories')}
+              <Link
+                href={__('https://wp.stories.google/docs/seo', 'web-stories')}
                 rel="noreferrer"
                 target="_blank"
-                aria-label={__('Learn more', 'web-stories')}
+                onClick={onLinkClick}
               />
             ),
           }}
         >
           {__(
-            '<a>Learn more</a> about using headings in Stories.',
+            '<a>Learn more</a> about using headings in stories.',
             'web-stories'
           )}
         </TranslateWithMarkup>
