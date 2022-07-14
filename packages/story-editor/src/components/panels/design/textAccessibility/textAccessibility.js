@@ -25,10 +25,9 @@ import {
   THEME_CONSTANTS,
   Link,
 } from '@googleforcreators/design-system';
-import { getTextElementTagNames } from '@googleforcreators/output';
 import { trackClick } from '@googleforcreators/tracking';
 import { useFeature } from 'flagged';
-import { useState, useEffect, useCallback } from '@googleforcreators/react';
+import { useCallback } from '@googleforcreators/react';
 
 /**
  * Internal dependencies
@@ -37,7 +36,6 @@ import { Row } from '../../../form';
 import { getCommonValue } from '../../shared';
 import { SimplePanel } from '../../panel';
 import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
-import { combineElementsWithTags } from './utils';
 
 const HEADING_LEVELS = {
   h1: __('Heading 1', 'web-stories'),
@@ -49,18 +47,6 @@ const HEADING_LEVELS = {
 function TextAccessibilityPanel({ selectedElements, pushUpdate }) {
   // Feature flagging for Semantic Headings
   const showSemanticHeadings = useFeature('showSemanticHeadings');
-  const [selectedTextElements, setSelectedTextElements] = useState([]);
-  const [currentTags, setCurrentTags] = useState([]);
-
-  useEffect(() => {
-    // We want to get the text tags for the elements if not already defined
-    const textTags = getTextElementTagNames(selectedElements);
-    // Then combine the elements with their associated tag
-    const newElements = combineElementsWithTags(selectedElements, textTags);
-    // And then set them into component state
-    setSelectedTextElements(newElements);
-    setCurrentTags(Array.from(textTags.values()));
-  }, [selectedElements, setSelectedTextElements]);
 
   // Click tracking for the Learn More link
   const onLinkClick = useCallback((evt) => {
@@ -72,12 +58,8 @@ function TextAccessibilityPanel({ selectedElements, pushUpdate }) {
       selectedElements.forEach(() => {
         pushUpdate({ tagName: value });
       });
-      // Update the selected text elements with the
-      // value chosen in the text accessibility dropdown
-      const newTags = getTextElementTagNames(selectedTextElements, value);
-      setCurrentTags(Array.from(newTags.values()));
     },
-    [pushUpdate, selectedElements, selectedTextElements]
+    [pushUpdate, selectedElements]
   );
 
   if (!showSemanticHeadings) {
@@ -87,8 +69,12 @@ function TextAccessibilityPanel({ selectedElements, pushUpdate }) {
   // Check if tags match for selected item in dropdown
   // If they don't match, we want to show 'Mixed'
   // However, if they match, show the matching value
+  const tagNames = selectedElements.map((element) => {
+    return element?.tagName;
+  });
   const currentValue =
-    new Set(currentTags || []).size === 1 ? currentTags[0] : MULTIPLE_VALUE;
+    new Set(tagNames).size === 1 ? tagNames[0] : MULTIPLE_VALUE;
+  console.log(currentValue);
 
   const isIndeterminate = MULTIPLE_VALUE === currentValue;
 
@@ -152,6 +138,7 @@ function TextAccessibilityPanel({ selectedElements, pushUpdate }) {
                 rel="noreferrer"
                 target="_blank"
                 onClick={onLinkClick}
+                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
               />
             ),
           }}

@@ -29,8 +29,14 @@
 
 export function combineElementsWithTags(textElements, tagNamesMap) {
   return textElements.map((element) => {
-    const newElement = { ...element };
-    newElement.tagName = tagNamesMap.get(element.id);
-    return newElement;
+    // we only want to do this on elements that are text
+    if (element?.type === 'text') {
+      const newElement = { ...element };
+      newElement.tagName = tagNamesMap.get(element.id);
+      return newElement;
+    }
+    return element;
   });
 }
+
+export default combineElementsWithTags;
