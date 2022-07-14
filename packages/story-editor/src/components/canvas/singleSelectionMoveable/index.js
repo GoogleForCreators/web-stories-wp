@@ -125,6 +125,8 @@ const SingleSelectionMoveable = forwardRef(function SingleSelectionMoveable(
     [box.rotationAngle]
   );
 
+  const { border = {} } = selectedElement;
+  const { left = 0, right = 0, top = 0, bottom = 0 } = border;
   const setTransformStyle = (target, newFrame = frame) => {
     // Get the changes coming from each action type.
     frame.translate = newFrame.translate;
@@ -139,7 +141,19 @@ const SingleSelectionMoveable = forwardRef(function SingleSelectionMoveable(
     if (frame.resize[1]) {
       target.style.height = `${frame.resize[1]}px`;
     }
-    pushTransform(selectedElement.id, frame);
+
+    // If the element has a border, we have to take it out of the resizing values
+    // since the border is in pixels and thus not stored within width/height.
+    let frameForEl = { ...frame };
+    if (frame.resize[0] || frame.resize[1]) {
+      const elWidth = frame.resize[0] - (left + right);
+      const elHeight = frame.resize[1] - (top + bottom);
+      frameForEl = {
+        ...frame,
+        resize: [elWidth, elHeight],
+      };
+    }
+    pushTransform(selectedElement.id, frameForEl);
   };
 
   /**
