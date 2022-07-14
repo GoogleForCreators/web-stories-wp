@@ -48,6 +48,7 @@ function ImageDisplay({
   getProxiedUrl,
   isCurrentResourceProcessing = noop,
   isCurrentResourceUploading = noop,
+  renderResourcePlaceholder,
 }) {
   const { resource, scale, focalX, focalY } = element;
   const { id: resourceId, alt } = resource;
@@ -124,6 +125,7 @@ function ImageDisplay({
       mediaRef={ref}
       showPlaceholder={showPlaceholder}
       previewMode={previewMode}
+      renderResourcePlaceholder={renderResourcePlaceholder}
     >
       <Img
         ref={ref}
@@ -147,6 +149,7 @@ ImageDisplay.propTypes = {
   getProxiedUrl: PropTypes.func.isRequired,
   isCurrentResourceProcessing: PropTypes.func,
   isCurrentResourceUploading: PropTypes.func,
+  renderResourcePlaceholder: PropTypes.func,
 };
 
 export default ImageDisplay;

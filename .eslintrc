@@ -29,6 +29,7 @@
     }
   },
   "rules": {
+    "array-callback-return": "error",
     "block-scoped-var": "error",
     "complexity": ["error", {"max": 20}],
     "consistent-return": "error",
@@ -36,6 +37,7 @@
     "default-case": "error",
     "guard-for-in": "error",
     "no-await-in-loop": "error",
+    "no-constant-binary-expression": "error",
     "no-extra-bind": "error",
     "no-extra-label": "error",
     "no-floating-decimal": "error",
@@ -90,7 +92,7 @@
     "jsx-a11y/label-has-for": "off",
     "jsx-a11y/media-has-caption": [ "error", {
       "audio": [ "Audio" ],
-      "video": [ "Video", "FadedVideo", "CropVideo" ],
+      "video": [ "Video", "FadedVideo", "CropVideo", "StyledVideo" ],
       "track": [ "Track" ]
     }],
     "no-restricted-properties": "error",
@@ -206,12 +208,13 @@
     "jsdoc/require-jsdoc": ["off", {
       "publicOnly": true
     }],
-    "jsdoc/require-returns": "warn",
-    "jsdoc/require-param-description": "warn",
+    "jsdoc/require-returns": "error",
+    "jsdoc/require-param-description": "error",
     "jsdoc/valid-types": "error",
     "eslint-comments/no-unused-disable": "error",
     "eslint-comments/require-description": "error",
     "@wordpress/dependency-group": "error",
+    "@wordpress/i18n-no-flanking-whitespace": "error",
     "@wordpress/no-unused-vars-before-return": ["error", {
       "excludePattern": "^use"
     }],
@@ -595,6 +598,7 @@
         "packages/tinymce-button/**/*.js"
       ],
       "rules":{
+        "@wordpress/data-no-store-string-literals": "error",
         "no-restricted-imports": [
           "error",
           {

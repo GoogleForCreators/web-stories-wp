@@ -18,7 +18,6 @@
  */
 import {
   createNewStory,
-  withExperimentalFeatures,
   minWPVersionRequired,
   previewStory,
   withPlugin,
@@ -32,7 +31,6 @@ import {
 import * as schema from './schema.json';
 
 describe('Shopping', () => {
-  withExperimentalFeatures(['shoppingIntegration']);
   minWPVersionRequired('5.8'); // WooCommerce requires WP 5.7+
 
   describe('WooCommerce', () => {

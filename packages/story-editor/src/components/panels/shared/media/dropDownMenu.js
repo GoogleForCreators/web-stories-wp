@@ -30,7 +30,6 @@ import { v4 as uuidv4 } from 'uuid';
 import {
   Menu,
   Popup,
-  useKeyDownEffect,
   noop,
   PLACEMENT,
   Icons,
@@ -48,8 +47,7 @@ import {
  * Internal dependencies
  */
 import { useConfig } from '../../../../app';
-import useFocusCanvas from '../../../canvas/useFocusCanvas';
-import useRovingTabIndex from '../../../../utils/useRovingTabIndex';
+import DropDownKeyEvents from '../../utils/dropDownKeyEvents';
 
 const MenuButton = styled(Button)`
   top: 4px;
@@ -75,9 +73,6 @@ const ActiveIcon = styled(Icons.CheckmarkSmall)`
   top: 50%;
   transform: translateY(-50%);
 `;
-
-// This is used for nested roving tab index to detect parent siblings.
-const BUTTON_NESTING_DEPTH = 3;
 
 const CustomItemRenderer = forwardRef(function CustomItemRenderer(
   { option, isSelected, ...rest },
@@ -187,22 +182,15 @@ function DropDownMenu({
     onMenuSelected(value);
   };
 
-  useRovingTabIndex(
-    { ref: MenuButtonRef.current || null },
-    [],
-    BUTTON_NESTING_DEPTH
-  );
-  const focusCanvas = useFocusCanvas();
-  useKeyDownEffect(MenuButtonRef.current || null, 'tab', focusCanvas, [
-    focusCanvas,
-  ]);
-
   const listId = useMemo(() => `list-${uuidv4()}`, []);
   const buttonId = useMemo(() => `button-${uuidv4()}`, []);
 
   // Keep icon and menu displayed if menu is open (even if user's mouse leaves the area).
   return (
     <MenuContainer className={className}>
+      {MenuButtonRef.current && (
+        <DropDownKeyEvents target={MenuButtonRef.current} />
+      )}
       <MenuButton
         type={BUTTON_TYPES.TERTIARY}
         size={BUTTON_SIZES.SMALL}

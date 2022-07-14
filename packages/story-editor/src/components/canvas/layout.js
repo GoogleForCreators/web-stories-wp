@@ -68,9 +68,11 @@ const LayerGrid = styled.section`
   /*
     . = empty space
     h = header
+    p = previous page
+    n = next page
     b = back navigation
     f = forward navigation
-    p = canvas page
+    c = canvas page
     m = page action menu
     w = workspace footer
     t = canvas page title
@@ -84,7 +86,7 @@ const LayerGrid = styled.section`
   grid:
     'h h h h h h h' ${HEADER_HEIGHT}px
     '. . . t . . .' minmax(16px, 1fr)
-    '. b . p . f .' var(--viewport-height-px)
+    'p b . c . f n' var(--viewport-height-px)
     '. . . . . . .' 1fr
     'w w w w w w w' ${({ footerHeight }) => footerHeight}px
     '. . . . . . .' ${FOOTER_BOTTOM_MARGIN}px
@@ -113,7 +115,7 @@ const Area = styled.div`
 // Page area is not `overflow:hidden` by default to allow different clipping
 // mechanisms.
 const PageAreaContainer = styled(Area).attrs({
-  area: 'p',
+  area: 'c',
 })`
   position: relative;
   display: flex;
@@ -259,16 +261,16 @@ const NavArea = styled(Area)`
   justify-content: center;
 `;
 
-const NavPrevArea = styled(NavArea).attrs({
-  area: 'b',
-})``;
+const NavPrevArea = styled(NavArea).attrs({ area: 'b' })``;
 
-const NavNextArea = styled(NavArea).attrs({
-  area: 'f',
-})``;
+const NavNextArea = styled(NavArea).attrs({ area: 'f' })``;
+
+const PageBeforeArea = styled(Area).attrs({ area: 'p' })``;
+
+const PageAfterArea = styled(Area).attrs({ area: 'n' })``;
 
 const PageMenuArea = styled.div`
-  grid-area: p;
+  grid-area: c;
   position: absolute;
   right: calc(-24px + var(--page-padding-px));
   top: calc(0.5 * var(--page-padding-px));
@@ -484,6 +486,8 @@ PageArea.propTypes = {
 export {
   Layer,
   PageArea,
+  PageBeforeArea,
+  PageAfterArea,
   PageTitleContainer as PageTitleArea,
   HeadArea,
   MenuArea,

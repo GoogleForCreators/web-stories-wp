@@ -24,6 +24,7 @@ import { __ } from '@googleforcreators/i18n';
 /**
  * Internal dependencies
  */
+import { getImageDimensions } from '@googleforcreators/media';
 import useCORSProxy from '../../utils/useCORSProxy';
 import useAPI from '../../app/api/useAPI';
 import {
@@ -31,6 +32,7 @@ import {
   isValidUrlForHotlinking,
   getErrorMessage,
   CORSMessage,
+  checkImageDimensions,
 } from './utils';
 
 function useHotlinkModal({
@@ -39,6 +41,7 @@ function useHotlinkModal({
   onError,
   allowedFileTypes,
   canUseProxy,
+  requiredImgDimensions,
 }) {
   const [isInserting, setIsInserting] = useState(false);
   const [link, setLink] = useState('');
@@ -48,7 +51,7 @@ function useHotlinkModal({
     actions: { getHotlinkInfo },
   } = useAPI();
 
-  const { checkResourceAccess } = useCORSProxy();
+  const { checkResourceAccess, getProxiedUrl } = useCORSProxy();
 
   const isDisabled = errorMsg || !link || isInserting;
   const description = getHotlinkDescription(allowedFileTypes);
@@ -107,6 +110,27 @@ function useHotlinkModal({
         return;
       }
 
+      if ('image' === hotlinkInfo?.type && requiredImgDimensions) {
+        const proxiedUrl = needsProxy
+          ? getProxiedUrl({ needsProxy }, link)
+          : link;
+
+        const dimensions = await getImageDimensions(proxiedUrl);
+        const errorMessage = checkImageDimensions(
+          dimensions.width,
+          dimensions.height,
+          requiredImgDimensions?.width,
+          requiredImgDimensions?.height
+        );
+        if (errorMessage) {
+          setErrorMsg(errorMessage);
+          return;
+        }
+
+        hotlinkInfo.width = dimensions.width;
+        hotlinkInfo.height = dimensions.height;
+      }
+
       await onSelect({ link, hotlinkInfo, needsProxy });
       setLink('');
       setErrorMsg(null);
@@ -124,7 +148,9 @@ function useHotlinkModal({
     allowedFileTypes,
     checkResourceAccess,
     canUseProxy,
+    requiredImgDimensions,
     onSelect,
+    getProxiedUrl,
     onError,
     description,
   ]);

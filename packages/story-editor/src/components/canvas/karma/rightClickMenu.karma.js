@@ -34,7 +34,6 @@ describe('Right Click Menu integration', () => {
 
   beforeEach(async () => {
     fixture = new Fixture();
-    fixture.setFlags({ shoppingIntegration: true });
     await fixture.render();
     await fixture.collapseHelpCenter();
     await fixture.events.click(fixture.editor.footer.layerPanel.togglePanel);
@@ -394,7 +393,7 @@ describe('Right Click Menu integration', () => {
 
   const verifyPageDuplicated = (pages = []) => {
     expect(pages[0].backgroundColor).toEqual(pages[1].backgroundColor);
-    pages[0].elements.map((elem, index) => {
+    pages[0].elements.forEach((elem, index) => {
       // ids won't match
       const { id, ...originalElement } = elem;
       const { id: newId, basedOn, ...newElement } = pages[1].elements[index];

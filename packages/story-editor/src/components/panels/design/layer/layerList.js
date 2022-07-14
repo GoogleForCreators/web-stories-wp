@@ -69,7 +69,7 @@ const ReorderableLayer = memo(function ReorderableLayer({
     <Fragment key={id}>
       <LayerSeparator
         groupId={element.groupId}
-        nestedOffset={nestedOffset}
+        nestedOffset={Boolean(nestedOffset)}
         nestedOffsetCalcFunc={nestedOffsetCalcFunc}
         position={position + 1}
         isNested={element.groupId}

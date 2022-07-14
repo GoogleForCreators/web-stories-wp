@@ -87,9 +87,13 @@ export function updateElementWithUpdater(element, properties) {
     typeof properties === 'function' ? properties(element) : properties;
   const allowedProperties = objectWithout(updater, ELEMENT_RESERVED_PROPERTIES);
   if (Object.keys(allowedProperties).length === 0) {
-    return element;
+    return null;
   }
-  return { ...element, ...allowedProperties };
+  if (allowedProperties.animation) {
+    return allowedProperties.animation;
+  }
+  Object.assign(element, allowedProperties);
+  return null;
 }
 
 export function removeAnimationsWithElementIds(animations = [], ids = []) {
@@ -159,4 +163,19 @@ export function exclusion(left = [], right = []) {
   const rightSet = removeDuplicates(right);
   const leftJoinKeys = left.map(({ id }) => id);
   return rightSet.filter(({ id }) => !leftJoinKeys.includes(id));
+}
+
+/**
+ * Calculate the last index of a group.
+ *
+ * @param {Object} props Props
+ * @param {Array} props.elements Elements array
+ * @param {string} props.groupId Group id
+ * @return {number} Last index of group
+ */
+export function getLastIndexOfGroup({ elements, groupId }) {
+  const isMember = (e) => e.groupId === groupId;
+  const firstGroupElemenIndex = elements.findIndex(isMember);
+  const groupSize = elements.filter(isMember).length;
+  return firstGroupElemenIndex + groupSize - 1;
 }

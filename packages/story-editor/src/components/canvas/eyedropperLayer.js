@@ -30,6 +30,7 @@ import {
  * Internal dependencies
  */
 import { useCanvas, useLayout } from '../../app';
+import useEyeDropperApi from '../eyedropper/useEyeDropperApi';
 import { Layer, PageArea } from './layout';
 import getColorFromPixelData from './utils/getColorFromPixelData';
 
@@ -141,6 +142,8 @@ function EyedropperLayer() {
     })
   );
 
+  const { isEyeDropperApiSupported } = useEyeDropperApi({});
+
   const { pageWidth } = useLayout(({ state: { pageWidth } }) => ({
     pageWidth,
   }));
@@ -162,6 +165,10 @@ function EyedropperLayer() {
   useFocusOut(eyedropperCanvas, closeEyedropper, [isEyedropperActive, img]);
 
   useGlobalKeyDownEffect('esc', closeEyedropper);
+
+  if (isEyeDropperApiSupported) {
+    return null;
+  }
 
   if (isEyedropperActive && !img) {
     return (
