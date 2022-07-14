@@ -171,12 +171,14 @@ function DisplayElement({
   const wrapperRef = useRef(null);
 
   const box = getBox(element);
-  const boxWithBorder = getBox({
-    ...element,
-    width: element.width - (border.left || 0) - (border.right || 0),
-    height: element.height - (border.top || 0) - (border.bottom || 0),
-  });
-
+  // We're adding the border in pixels since the element is the content + the border in pixels
+  const boxWithBorder = {
+    ...box,
+    x: box.x - (border.left || 0),
+    y: box.y - (border.top || 0),
+    width: box.width + (border.left || 0) + (border.right || 0),
+    height: box.height + (border.top || 0) + (border.bottom || 0),
+  };
   useTransformHandler(id, (transform) => {
     const target = wrapperRef.current;
     if (transform === null) {
@@ -218,7 +220,7 @@ function DisplayElement({
       data-element-id={id}
       isBackground={element.isBackground}
       previewMode={previewMode}
-      {...box}
+      {...boxWithBorder}
     >
       <AnimationWrapper id={id} isAnimatable={isAnimatable}>
         <WithMask
@@ -240,7 +242,7 @@ function DisplayElement({
           <Display
             element={element}
             previewMode={previewMode}
-            box={boxWithBorder}
+            box={box}
             getProxiedUrl={getProxiedUrl}
             isCurrentResourceProcessing={isCurrentResourceProcessing}
             isCurrentResourceUploading={isCurrentResourceUploading}

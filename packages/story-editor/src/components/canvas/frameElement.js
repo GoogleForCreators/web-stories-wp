@@ -153,7 +153,7 @@ function FrameElement({ id }) {
         isActive,
       };
     });
-  const { type, flip, isLocked } = element;
+  const { type, flip, isLocked, border = {} } = element;
 
   // Unlocked elements are always clickable,
   // locked elements are only clickable if selected
@@ -198,6 +198,14 @@ function FrameElement({ id }) {
     setNodeForElement(id, elementRef.current);
   }, [id, setNodeForElement]);
   const box = getBox(element);
+  // We're adding the border in pixels since the element is the content + the border in pixels
+  const boxWithBorder = {
+    ...box,
+    x: box.x - (border.left || 0),
+    y: box.y - (border.top || 0),
+    width: box.width + (border.left || 0) + (border.right || 0),
+    height: box.height + (border.top || 0) + (border.bottom || 0),
+  };
 
   useTransformHandler(id, (transform) => {
     const target = elementRef.current;
@@ -314,7 +322,7 @@ function FrameElement({ id }) {
         {Controls && (
           <Controls
             isTransforming={isTransforming}
-            box={box}
+            box={boxWithBorder}
             elementRef={elementRef}
             element={element}
             isRTL={isRTL}
@@ -326,7 +334,7 @@ function FrameElement({ id }) {
         <Wrapper
           ref={combinedFocusGroupRef}
           data-element-id={id}
-          {...box}
+          {...boxWithBorder}
           tabIndex={-1}
           role="button"
           aria-label={elementLabel}
@@ -354,7 +362,7 @@ function FrameElement({ id }) {
               <Frame
                 wrapperRef={elementRef}
                 element={element}
-                box={box}
+                box={boxWithBorder}
                 isOnlySelectedElement={isOnlySelectedElement}
                 setEditingElementWithState={setEditingElementWithState}
               />
