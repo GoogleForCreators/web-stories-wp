@@ -47,6 +47,7 @@ import {
 import StoryPropTypes from '../../types';
 import useCORSProxy from '../../utils/useCORSProxy';
 import { useLocalMedia, useFont } from '../../app';
+import renderResourcePlaceholder from './renderResourcePlaceholder';
 
 // Using attributes to avoid creation of hundreds of classes by styled components for previewMode.
 const Wrapper = styled.div.attrs(
@@ -240,6 +241,7 @@ function DisplayElement({
             isCurrentResourceUploading={isCurrentResourceUploading}
             maybeEnqueueFontStyle={maybeEnqueueFontStyle}
             siblingCount={siblingCount}
+            renderResourcePlaceholder={renderResourcePlaceholder}
           />
         </WithMask>
         {!previewMode && (

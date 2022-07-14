@@ -380,7 +380,7 @@ describe('StoryAnimation.Provider', () => {
       );
 
       /* eslint-disable jest/no-conditional-expect, jest/no-conditional-in-test */
-      animations.map((animation, i) => {
+      animations.forEach((animation, i) => {
         if (i === unhoistIndex) {
           expect(animation.play).toHaveBeenCalledTimes(0);
           expect(animation.pause).toHaveBeenCalledTimes(0);

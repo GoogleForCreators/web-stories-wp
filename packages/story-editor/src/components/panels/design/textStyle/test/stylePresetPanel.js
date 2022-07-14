@@ -189,7 +189,9 @@ describe('panels/Text/Style', () => {
       const expectedContent = {
         content: '<span style="color: #010101">Hello World</span>',
       };
-      expect(updatedContent).toStrictEqual(expectedContent);
+      expect(updatedContent).toStrictEqual(
+        expect.objectContaining(expectedContent)
+      );
     });
   });
 });

@@ -252,7 +252,6 @@ describe('useContextValueProvider', () => {
       mediaType: '',
       searchTerm: '',
       pagingNum: 1,
-      cacheBust: true,
     });
 
     expect(reducerActions.fetchMediaSuccess).toHaveBeenNthCalledWith(2, {

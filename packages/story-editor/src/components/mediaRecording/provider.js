@@ -98,7 +98,7 @@ function MediaRecordingProvider({ children }) {
         trackError('media_recording_capture', e.message);
         showSnackbar({
           message: __(
-            ' There was an error taking a photo. Please try again.',
+            'There was an error recording a video. Please try again.',
             'web-stories'
           ),
           dismissable: true,
@@ -128,8 +128,13 @@ function MediaRecordingProvider({ children }) {
     unMuteAudio,
   } = useMediaRecorder({
     recordScreen: false,
+    // If the device does not have a microphone or camera, this could result
+    // in an OverconstrainedError.
+    // However, this error can occur even when the user has not yet
+    // granted permission, so it's not easy to detect.
+    // TODO: Figure out how to retry without microphone if possible.
     mediaStreamConstraints: {
-      audio: audioInput && hasAudio ? { deviceId: audioInput } : false,
+      audio: audioInput && hasAudio ? { deviceId: audioInput } : true,
       video: videoInput ? { deviceId: videoInput } : true,
     },
     onStop,
@@ -151,7 +156,11 @@ function MediaRecordingProvider({ children }) {
     try {
       const devices = await navigator.mediaDevices.enumerateDevices();
       setMediaDevices(
-        devices.filter((device) => device.kind !== 'audiooutput')
+        devices
+          .filter((device) => device.kind !== 'audiooutput')
+          // Label is empty if permissions somehow changed meantime,
+          // remove these devices from the list.
+          .filter((device) => device.label)
       );
     } catch (err) {
       // Do nothing for now.

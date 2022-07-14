@@ -194,11 +194,6 @@ const defaultQuickActions = [
 
 const foregroundCommonActions = [
   expect.objectContaining({
-    label: ACTIONS.ADD_ANIMATION.text,
-    onClick: expect.any(Function),
-    Icon: CircleSpeed,
-  }),
-  expect.objectContaining({
     label: ACTIONS.ADD_LINK.text,
     onClick: expect.any(Function),
     Icon: Link,
@@ -652,12 +647,6 @@ describe('useQuickActions', () => {
       result.current[1].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
         elementId: IMAGE_ELEMENT.id,
-        highlight: states.ANIMATION,
-      });
-
-      result.current[2].onClick(mockClickEvent);
-      expect(highlight).toStrictEqual({
-        elementId: IMAGE_ELEMENT.id,
         highlight: states.LINK,
       });
     });
@@ -674,13 +663,13 @@ describe('useQuickActions', () => {
 
       const { result } = renderHook(() => useQuickActions());
 
-      expect(result.current[3]).toBeUndefined();
+      expect(result.current[2]).toBeUndefined();
     });
 
     it('clicking `reset element` should update the element', () => {
       const { result } = renderHook(() => useQuickActions());
 
-      result.current[3].onClick(mockClickEvent);
+      result.current[2].onClick(mockClickEvent);
       expect(mockUpdateElementsById).toHaveBeenCalledWith({
         elementIds: [IMAGE_ELEMENT.id],
         properties: expect.any(Function),
@@ -725,12 +714,6 @@ describe('useQuickActions', () => {
       result.current[0].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
         elementId: SHAPE_ELEMENT.id,
-        highlight: states.ANIMATION,
-      });
-
-      result.current[1].onClick(mockClickEvent);
-      expect(highlight).toStrictEqual({
-        elementId: SHAPE_ELEMENT.id,
         highlight: states.LINK,
       });
     });
@@ -747,13 +730,13 @@ describe('useQuickActions', () => {
 
       const { result } = renderHook(() => useQuickActions());
 
-      expect(result.current[2]).toBeUndefined();
+      expect(result.current[1]).toBeUndefined();
     });
 
     it('clicking `clear animations` should call `updateElementsById`', () => {
       const { result } = renderHook(() => useQuickActions());
 
-      result.current[2].onClick(mockClickEvent);
+      result.current[1].onClick(mockClickEvent);
       expect(mockUpdateElementsById).toHaveBeenCalledWith({
         elementIds: [SHAPE_ELEMENT.id],
         properties: expect.any(Function),
@@ -783,12 +766,6 @@ describe('useQuickActions', () => {
       result.current[1].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
         elementId: TEXT_ELEMENT.id,
-        highlight: states.ANIMATION,
-      });
-
-      result.current[2].onClick(mockClickEvent);
-      expect(highlight).toStrictEqual({
-        elementId: TEXT_ELEMENT.id,
         highlight: states.LINK,
       });
     });
@@ -805,7 +782,7 @@ describe('useQuickActions', () => {
 
       const { result } = renderHook(() => useQuickActions());
 
-      expect(result.current[3]).toBeUndefined();
+      expect(result.current[2]).toBeUndefined();
     });
 
     it('clicking `reset element` should update the element', () => {
@@ -825,7 +802,7 @@ describe('useQuickActions', () => {
       const { result } = renderHook(() => useQuickActions());
       expect(result.current).toStrictEqual(textQuickActionsWithClear);
 
-      result.current[3].onClick(mockClickEvent);
+      result.current[2].onClick(mockClickEvent);
       expect(mockUpdateElementsById).toHaveBeenCalledWith({
         elementIds: [TEXT_ELEMENT.id],
         properties: expect.any(Function),
@@ -860,16 +837,10 @@ describe('useQuickActions', () => {
       result.current[1].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
         elementId: VIDEO_ELEMENT.id,
-        highlight: states.ANIMATION,
-      });
-
-      result.current[2].onClick(mockClickEvent);
-      expect(highlight).toStrictEqual({
-        elementId: VIDEO_ELEMENT.id,
         highlight: states.LINK,
       });
 
-      result.current[3].onClick(mockClickEvent);
+      result.current[2].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
         elementId: VIDEO_ELEMENT.id,
         highlight: states.CAPTIONS,
@@ -894,7 +865,7 @@ describe('useQuickActions', () => {
     it(`should click \`${ACTIONS.RESET_ELEMENT.text} and update the element`, () => {
       const { result } = renderHook(() => useQuickActions());
 
-      result.current[4].onClick(mockClickEvent);
+      result.current[3].onClick(mockClickEvent);
       expect(mockUpdateElementsById).toHaveBeenCalledWith({
         elementIds: [VIDEO_ELEMENT.id],
         properties: expect.any(Function),
@@ -930,12 +901,6 @@ describe('useQuickActions', () => {
       result.current[0].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
         elementId: STICKER_ELEMENT.id,
-        highlight: states.ANIMATION,
-      });
-
-      result.current[1].onClick(mockClickEvent);
-      expect(highlight).toStrictEqual({
-        elementId: STICKER_ELEMENT.id,
         highlight: states.LINK,
       });
     });
@@ -958,7 +923,7 @@ describe('useQuickActions', () => {
     it('clicking `reset element` should update the element', () => {
       const { result } = renderHook(() => useQuickActions());
 
-      result.current[2].onClick(mockClickEvent);
+      result.current[1].onClick(mockClickEvent);
       expect(mockUpdateElementsById).toHaveBeenCalledWith({
         elementIds: [STICKER_ELEMENT.id],
         properties: expect.any(Function),

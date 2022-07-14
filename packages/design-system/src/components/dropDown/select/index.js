@@ -24,14 +24,8 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { THEME_CONSTANTS } from '../../../theme';
-import {
-  SelectButton,
-  ChevronWrap,
-  StyledChevron,
-  Value,
-  LabelText,
-  Label,
-} from './components';
+import { Disclosure } from '../../disclosure';
+import { SelectButton, Value, LabelText, Label } from './components';
 
 const DropDownSelect = (
   {
@@ -43,6 +37,7 @@ const DropDownSelect = (
     isOpen,
     onSelectClick,
     placeholder = '',
+    direction = 'down',
     ...rest
   },
   ref
@@ -81,9 +76,7 @@ const DropDownSelect = (
           </LabelText>
         )}
 
-        <ChevronWrap isOpen={isOpen}>
-          <StyledChevron />
-        </ChevronWrap>
+        <Disclosure direction={direction} isOpen={isOpen} />
       </Label>
     </SelectButton>
   );
@@ -100,4 +93,5 @@ DropDownSelect.propTypes = {
   disabled: PropTypes.bool,
   hasError: PropTypes.bool,
   isOpen: PropTypes.bool,
+  direction: PropTypes.string,
 };

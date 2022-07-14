@@ -36,14 +36,16 @@ import { PageSizePropType } from '../types';
 import usePagePreviewSize from './usePagePreviewSize';
 
 export default function useStoryView({
-  filters,
+  statusFilters,
+  filtersObject,
   isLoading = false,
   totalPages,
 }) {
   const [viewStyle, setViewStyle] = useState(VIEW_STYLE.GRID);
   const [sort, _setSort] = useState(STORY_SORT_OPTIONS.LAST_MODIFIED);
+  const [filters, _setFilters] = useState(filtersObject);
   const [filter, _setFilter] = useState(
-    filters.length > 0 ? filters[0].value : null
+    statusFilters.length > 0 ? statusFilters[0].value : null
   );
   const [sortDirection, _setSortDirection] = useState(SORT_DIRECTION.DESC);
   const [page, setPage] = useState(1);
@@ -69,6 +71,14 @@ export default function useStoryView({
   const setSort = useCallback(
     (newSort) => {
       _setSort(newSort);
+      setPageClamped(1);
+    },
+    [setPageClamped]
+  );
+
+  const setFilters = useCallback(
+    (newFilters) => {
+      _setFilters(newFilters);
       setPageClamped(1);
     },
     [setPageClamped]
@@ -152,6 +162,12 @@ export default function useStoryView({
     }
   }, [totalPages, initialPageReady]);
 
+  useEffect(() => {
+    if (initialPageReady) {
+      setFilters(filtersObject);
+    }
+  }, [setFilters, initialPageReady, filtersObject]);
+
   return useMemo(
     () => ({
       view: {
@@ -168,6 +184,10 @@ export default function useStoryView({
       filter: {
         value: filter,
         set: setFilter,
+      },
+      filters: {
+        value: filters,
+        set: setFilters,
       },
       page: {
         value: page,
@@ -196,6 +216,8 @@ export default function useStoryView({
       sortDirection,
       setSortDirection,
       filter,
+      setFilters,
+      filters,
       initialPageReady,
       setFilter,
       page,

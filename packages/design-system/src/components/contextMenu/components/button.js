@@ -31,7 +31,7 @@ import { menuItemStyles } from './styles';
 const StyledButton = styled(BaseButton)`
   ${menuItemStyles};
 
-  width: 100%;
+  width: auto;
 
   ${({ isHorizontal, isIconMenu, forcePadding, theme }) => {
     const hasHeight = isHorizontal; // In a horizontal menu, all buttons are 32px high

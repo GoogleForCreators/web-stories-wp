@@ -33,7 +33,7 @@ import {
 describe('useStoryView()', function () {
   it('should have the default options initially selected', function () {
     const { result } = renderHook(
-      () => useStoryView({ filters: STORY_STATUSES, totalPages: 1 }),
+      () => useStoryView({ statusFilters: STORY_STATUSES, totalPages: 1 }),
       {}
     );
 
@@ -45,7 +45,7 @@ describe('useStoryView()', function () {
 
   it('should set the new filter when passed and reset the page.', function () {
     const { result } = renderHook(
-      () => useStoryView({ filters: STORY_STATUSES, totalPages: 2 }),
+      () => useStoryView({ statusFilters: STORY_STATUSES, totalPages: 2 }),
       {}
     );
 
@@ -63,7 +63,7 @@ describe('useStoryView()', function () {
 
   it('should set the new sort when passed and reset the page.', function () {
     const { result } = renderHook(
-      () => useStoryView({ filters: STORY_STATUSES, totalPages: 2 }),
+      () => useStoryView({ statusFilters: STORY_STATUSES, totalPages: 2 }),
       {}
     );
 
@@ -79,9 +79,29 @@ describe('useStoryView()', function () {
     expect(result.current.page.value).toBe(1);
   });
 
+  it('should set the new filters when passed and reset the page.', function () {
+    const { result } = renderHook(
+      () => useStoryView({ statusFilters: STORY_STATUSES, totalPages: 2 }),
+      {}
+    );
+
+    act(() => {
+      result.current.page.requestNextPage();
+    });
+    expect(result.current.page.value).toBe(2);
+
+    act(() => {
+      result.current.filters.set({ web_story_category: 45 });
+    });
+    expect(result.current.filters.value).toMatchObject({
+      web_story_category: 45,
+    });
+    expect(result.current.page.value).toBe(1);
+  });
+
   it('should set the new search keyword when typed and reset the page.', function () {
     const { result } = renderHook(
-      () => useStoryView({ filters: STORY_STATUSES, totalPages: 2 }),
+      () => useStoryView({ statusFilters: STORY_STATUSES, totalPages: 2 }),
       {}
     );
 
@@ -99,7 +119,7 @@ describe('useStoryView()', function () {
 
   it('should set the new view style when toggled.', function () {
     const { result } = renderHook(
-      () => useStoryView({ filters: STORY_STATUSES, totalPages: 2 }),
+      () => useStoryView({ statusFilters: STORY_STATUSES, totalPages: 2 }),
       {}
     );
 
@@ -113,7 +133,7 @@ describe('useStoryView()', function () {
 
   it('should set the sort direction to ASC when a NAME sort is selected and the view toggles to LIST.', function () {
     const { result } = renderHook(
-      () => useStoryView({ filters: STORY_STATUSES, totalPages: 2 }),
+      () => useStoryView({ statusFilters: STORY_STATUSES, totalPages: 2 }),
       {}
     );
 
@@ -134,7 +154,7 @@ describe('useStoryView()', function () {
 
   it('should request the next page when called.', function () {
     const { result } = renderHook(
-      () => useStoryView({ filters: STORY_STATUSES, totalPages: 2 }),
+      () => useStoryView({ statusFilters: STORY_STATUSES, totalPages: 2 }),
       {}
     );
 
@@ -147,7 +167,7 @@ describe('useStoryView()', function () {
 
   it('should request the next page when called and not exceed maximum pages.', function () {
     const { result } = renderHook(
-      () => useStoryView({ filters: STORY_STATUSES, totalPages: 2 }),
+      () => useStoryView({ statusFilters: STORY_STATUSES, totalPages: 2 }),
       {}
     );
 
@@ -166,7 +186,7 @@ describe('useStoryView()', function () {
 
   it('should not show stories while loading by default', () => {
     const { result } = renderHook(
-      () => useStoryView({ filters: STORY_STATUSES, totalPages: 2 }),
+      () => useStoryView({ statusFilters: STORY_STATUSES, totalPages: 2 }),
       {}
     );
 
@@ -175,7 +195,7 @@ describe('useStoryView()', function () {
 
   it('should set showStoriesWhileLoading to true when next page is called', () => {
     const { result } = renderHook(
-      () => useStoryView({ filters: STORY_STATUSES, totalPages: 2 }),
+      () => useStoryView({ statusFilters: STORY_STATUSES, totalPages: 2 }),
       {}
     );
 
@@ -191,7 +211,7 @@ describe('useStoryView()', function () {
     const { result, rerender } = renderHook(
       () =>
         useStoryView({
-          filters: STORY_STATUSES,
+          statusFilters: STORY_STATUSES,
           isLoading,
           totalPages: 2,
         }),

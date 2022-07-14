@@ -85,6 +85,7 @@ class Plugin extends ServiceBasedPlugin {
 		'integrations.cfi'             => Integrations\Conditional_Featured_Image::class,
 		'integrations.sitekit'         => Integrations\Site_Kit::class,
 		'integrations.themes_support'  => Integrations\Core_Themes_Support::class,
+		'integrations.shortpixel'      => Integrations\ShortPixel::class,
 		'imgareaselect_patch'          => Admin\ImgAreaSelect_Patch::class,
 		'kses'                         => KSES::class,
 		'font_post_type'               => Font_Post_Type::class,
