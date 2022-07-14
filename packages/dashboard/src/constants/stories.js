@@ -76,6 +76,11 @@ export const STORY_SORT_OPTIONS = {
   CREATED_BY: 'story_author',
 };
 
+export const STORY_SORT_KEYS = {
+  orderby: STORY_SORT_OPTIONS,
+  order: SORT_DIRECTION,
+};
+
 export const ORDER_BY_SORT = {
   [STORY_SORT_OPTIONS.NAME]: SORT_DIRECTION.ASC,
   [STORY_SORT_OPTIONS.DATE_CREATED]: SORT_DIRECTION.DESC,
@@ -234,4 +239,14 @@ export const STORY_ANIMATION_STATE = {
   PAUSED: 'paused',
   SCRUBBING: 'scrubbing',
   PLAYING: 'playing',
+};
+
+export const DEFAULT_FILTERS = {
+  filters: {
+    status: STORY_STATUS.ALL,
+  },
+  sort: {
+    orderby: STORY_SORT_OPTIONS.LAST_MODIFIED,
+    order: ORDER_BY_SORT[STORY_SORT_OPTIONS.LAST_MODIFIED],
+  },
 };
