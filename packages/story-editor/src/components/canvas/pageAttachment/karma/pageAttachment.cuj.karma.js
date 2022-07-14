@@ -204,12 +204,15 @@ describe('Page Attachment', () => {
 
       await fixture.events.click(insertBtn);
       await fixture.events.sleep(500);
-      const dialog = screen.getByRole('dialog');
-      await waitFor(() =>
+      await waitFor(() => {
+        const dialog = screen.getByRole('dialog');
+        if (!dialog) {
+          throw new Error('dialog not ready');
+        }
         expect(dialog.textContent).toContain(
           'do not match required image dimensions'
-        )
-      );
+        );
+      });
     });
 
     it('it should allow adding Page Attachment with custom CTA Text and invalid icon url', async () => {
@@ -232,9 +235,13 @@ describe('Page Attachment', () => {
       await fixture.events.keyboard.type('invalid');
 
       await fixture.events.click(insertBtn);
-      await fixture.events.sleep(500);
-      const dialog = screen.getByRole('dialog');
-      await waitFor(() => expect(dialog.textContent).toContain('Invalid link'));
+      await waitFor(() => {
+        const dialog = screen.getByRole('dialog');
+        if (!dialog) {
+          throw new Error('dialog not ready');
+        }
+        expect(dialog.textContent).toContain('Invalid link');
+      });
     });
 
     it('it should display warning for a link in the Page Attachment Area', async () => {

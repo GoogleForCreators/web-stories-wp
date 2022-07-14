@@ -88,9 +88,13 @@ describe('Page background audio panel', () => {
       );
 
       await fixture.events.click(insertBtn);
-      await fixture.events.sleep(500);
-      const dialog = screen.getByRole('dialog');
-      await waitFor(() => expect(dialog.textContent).toContain('Invalid link'));
+      await waitFor(() => {
+        const dialog = screen.getByRole('dialog');
+        if (!dialog) {
+          throw new Error('dialog not ready');
+        }
+        expect(dialog.textContent).toContain('Invalid link');
+      });
     });
   });
 

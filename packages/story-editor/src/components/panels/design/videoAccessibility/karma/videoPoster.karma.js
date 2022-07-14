@@ -177,12 +177,15 @@ describe('Video Accessibility Panel', () => {
 
       await fixture.events.click(insertBtn);
       await fixture.events.sleep(500);
-      const dialog = screen.getByRole('dialog');
-      await waitFor(() =>
+      await waitFor(() => {
+        const dialog = screen.getByRole('dialog');
+        if (!dialog) {
+          throw new Error('dialog not ready');
+        }
         expect(dialog.textContent).toContain(
           'do not match required image dimensions'
-        )
-      );
+        );
+      });
     });
 
     it('should not be allowed to hotlink images with invalid url', async () => {
@@ -206,9 +209,13 @@ describe('Video Accessibility Panel', () => {
       await fixture.events.keyboard.type(hotlinkUrl);
 
       await fixture.events.click(insertBtn);
-      await fixture.events.sleep(500);
-      const dialog = screen.getByRole('dialog');
-      await waitFor(() => expect(dialog.textContent).toContain('Invalid link'));
+      await waitFor(() => {
+        const dialog = screen.getByRole('dialog');
+        if (!dialog) {
+          throw new Error('dialog not ready');
+        }
+        expect(dialog.textContent).toContain('Invalid link');
+      });
     });
   });
 });
