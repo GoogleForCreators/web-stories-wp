@@ -129,7 +129,6 @@ describe('Video Accessibility Panel', () => {
 
       // Open the menu
       await fixture.events.click(vaPanel.posterMenuButton);
-      await fixture.snapshot('Menu open');
 
       // And click on edit
       await fixture.events.click(vaPanel.posterMenuHotlink);
@@ -164,7 +163,6 @@ describe('Video Accessibility Panel', () => {
 
       // Open the menu
       await fixture.events.click(vaPanel.posterMenuButton);
-      await fixture.snapshot('Menu open');
 
       // And click on edit
       await fixture.events.click(vaPanel.posterMenuHotlink);
@@ -195,7 +193,6 @@ describe('Video Accessibility Panel', () => {
 
       // Open the menu
       await fixture.events.click(vaPanel.posterMenuButton);
-      await fixture.snapshot('Menu open');
 
       // And click on edit
       await fixture.events.click(vaPanel.posterMenuHotlink);
