@@ -118,7 +118,7 @@ describe('Video Accessibility Panel', () => {
       expect(vaPanel.posterImage.src).toBe(originalPoster);
     });
 
-    it('should allow user to hotlink and reset poster image using mouse', async () => {
+    xit('should allow user to hotlink and reset poster image using mouse', async () => {
       // Remember original poster image
       const originalPoster = vaPanel.posterImage.src;
 
