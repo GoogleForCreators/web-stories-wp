@@ -151,7 +151,7 @@ describe('Page Attachment', () => {
       );
     });
 
-    it('it should allow adding Page Attachment with custom hotlink icon', async () => {
+    xit('it should allow adding Page Attachment with custom hotlink icon', async () => {
       await setPageAttachmentLink('http://example.com');
       const editIcon = fixture.screen.getByRole('button', {
         name: 'Edit link icon',
