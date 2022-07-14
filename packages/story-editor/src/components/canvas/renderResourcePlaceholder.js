@@ -24,10 +24,8 @@ const placeholderStyles = css`
   position: absolute !important;
   top: 0;
   left: 0;
-  min-height: 100%;
-  min-width: 100%;
-  max-height: 100%;
-  max-width: 100%;
+  height: 100%;
+  width: 100%;
 `;
 
 const BlurhashContainer = styled(Blurhash)`
@@ -41,7 +39,9 @@ const BaseColorContainer = styled.div`
 
 function renderResourcePlaceholder({ blurHash, baseColor }) {
   if (blurHash) {
-    return <BlurhashContainer hash={blurHash} punch={1} />;
+    return (
+      <BlurhashContainer hash={blurHash} punch={1} height="100%" width="100%" />
+    );
   }
 
   if (baseColor) {
