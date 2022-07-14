@@ -535,7 +535,8 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": { "type": "artHandHeldSign" },
-          "id": "a7ff7705-466d-4145-9060-55e50fefd286"
+          "id": "a7ff7705-466d-4145-9060-55e50fefd286",
+          "groupId": "8d2d5afc-e6f7-4c12-9103-4a3c9a5d45de"
         },
         {
           "x": -32,
@@ -552,7 +553,8 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": { "type": "artHandHeldSign" }
+          "sticker": { "type": "artHandHeldSign" },
+          "groupId": "a4e09ccb-fe53-470c-9ee7-5f03f7694577"
         },
         {
           "opacity": 100,
@@ -664,7 +666,8 @@
           "basedOn": "78f3930a-6395-45ea-9bf7-02b08bc76c8b",
           "id": "598f304a-0826-4b36-8ce8-02adcf9fafc8",
           "x": 229,
-          "y": 44
+          "y": 44,
+          "groupId": "8d2d5afc-e6f7-4c12-9103-4a3c9a5d45de"
         },
         {
           "x": 223,
@@ -740,7 +743,8 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "link": { "url": "https://www.google.com/", "icon": "", "desc": "" }
+          "link": { "url": "https://www.google.com/", "icon": "", "desc": "" },
+          "groupId": "8d2d5afc-e6f7-4c12-9103-4a3c9a5d45de"
         },
         {
           "opacity": 100,
@@ -852,7 +856,8 @@
           "height": 20,
           "scale": 100,
           "focalX": 50,
-          "focalY": 50
+          "focalY": 50,
+          "groupId": "a4e09ccb-fe53-470c-9ee7-5f03f7694577"
         },
         {
           "x": 42,
@@ -928,7 +933,8 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "link": { "url": "https://www.google.com/", "icon": "", "desc": "" }
+          "link": { "url": "https://www.google.com/", "icon": "", "desc": "" },
+          "groupId": "a4e09ccb-fe53-470c-9ee7-5f03f7694577"
         }
       ],
       "animations": [
@@ -980,7 +986,17 @@
       "backgroundColor": { "color": { "r": 184, "g": 184, "b": 207 } },
       "type": "page",
       "id": "41809ae0-f9ad-49aa-be25-8f02e793707a",
-      "pageTemplateType": "list"
+      "pageTemplateType": "list",
+      "groups": {
+        "8d2d5afc-e6f7-4c12-9103-4a3c9a5d45de": {
+          "name": "Sign",
+          "isLocked": false
+        },
+        "a4e09ccb-fe53-470c-9ee7-5f03f7694577": {
+          "name": "Sign",
+          "isLocked": false
+        }
+      }
     },
     {
       "elements": [
@@ -1014,7 +1030,8 @@
           "basedOn": "d164f119-f0ce-4d2c-bf56-480c77b2a275",
           "id": "f7bc1f2c-f9e5-4a56-b6e5-1adbc8a32962",
           "x": -32,
-          "y": 399
+          "y": 399,
+          "groupId": "452c11c2-9912-42f7-a571-a8da9f61b1c2"
         },
         {
           "opacity": 100,
@@ -1031,7 +1048,8 @@
           "basedOn": "a7ff7705-466d-4145-9060-55e50fefd286",
           "id": "77a97a80-7162-4814-96c6-e89594ec96a8",
           "x": 207,
-          "y": 28
+          "y": 28,
+          "groupId": "c19a8f4c-52b5-498b-8483-df9f0b39505f"
         },
         {
           "opacity": 100,
@@ -1106,7 +1124,8 @@
           "id": "b3130e85-7bac-47a1-b1ec-be45dbbd6fa2",
           "x": 225,
           "y": 46,
-          "type": "text"
+          "type": "text",
+          "groupId": "c19a8f4c-52b5-498b-8483-df9f0b39505f"
         },
         {
           "opacity": 100,
@@ -1186,7 +1205,8 @@
             "url": "https://www.google.com/",
             "icon": null,
             "desc": null
-          }
+          },
+          "groupId": "c19a8f4c-52b5-498b-8483-df9f0b39505f"
         },
         {
           "opacity": 100,
@@ -1261,7 +1281,8 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "type": "text"
+          "type": "text",
+          "groupId": "452c11c2-9912-42f7-a571-a8da9f61b1c2"
         },
         {
           "opacity": 100,
@@ -1337,7 +1358,8 @@
           "focalX": 50,
           "focalY": 50,
           "type": "text",
-          "link": { "url": "https://www.google.com/", "icon": "", "desc": "" }
+          "link": { "url": "https://www.google.com/", "icon": "", "desc": "" },
+          "groupId": "452c11c2-9912-42f7-a571-a8da9f61b1c2"
         },
         {
           "opacity": 100,
@@ -1463,7 +1485,17 @@
       "backgroundColor": { "color": { "r": 184, "g": 184, "b": 207 } },
       "type": "page",
       "id": "1a932019-c548-4c31-8220-caec6987e58b",
-      "pageTemplateType": ""
+      "pageTemplateType": "",
+      "groups": {
+        "c19a8f4c-52b5-498b-8483-df9f0b39505f": {
+          "name": "Sign",
+          "isLocked": false
+        },
+        "452c11c2-9912-42f7-a571-a8da9f61b1c2": {
+          "name": "Sign",
+          "isLocked": false
+        }
+      }
     },
     {
       "elements": [
@@ -1667,7 +1699,8 @@
             "ratio": 1,
             "supportsBorder": true
           },
-          "id": "49c80482-23c2-45de-bd5d-a418905e7312"
+          "id": "49c80482-23c2-45de-bd5d-a418905e7312",
+          "groupId": "dbc97575-bb66-4a82-8c47-a12fcfa2de12"
         },
         {
           "x": 366,
@@ -1705,7 +1738,8 @@
             "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
             "ratio": 1,
             "supportsBorder": true
-          }
+          },
+          "groupId": "dbc97575-bb66-4a82-8c47-a12fcfa2de12"
         },
         {
           "x": -14,
@@ -1743,7 +1777,8 @@
             "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
             "ratio": 1,
             "supportsBorder": true
-          }
+          },
+          "groupId": "dbc97575-bb66-4a82-8c47-a12fcfa2de12"
         },
         {
           "opacity": 100,
@@ -1759,7 +1794,8 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": { "type": "artWomanReading02" },
-          "id": "e62ecad0-77a4-41fd-9a21-b10ae2018ebe"
+          "id": "e62ecad0-77a4-41fd-9a21-b10ae2018ebe",
+          "groupId": "dbc97575-bb66-4a82-8c47-a12fcfa2de12"
         }
       ],
       "animations": [
@@ -1806,7 +1842,14 @@
       "backgroundColor": { "color": { "r": 184, "g": 184, "b": 207 } },
       "type": "page",
       "id": "9c09ead0-3c92-4e42-8e20-17da6a6eecc8",
-      "pageTemplateType": "section"
+      "pageTemplateType": "section",
+      "groups": {
+        "dbc97575-bb66-4a82-8c47-a12fcfa2de12": {
+          "name": "Background Image",
+          "isLocked": true,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [

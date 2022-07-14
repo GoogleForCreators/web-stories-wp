@@ -2218,7 +2218,8 @@
           "id": "2184c995-419b-4bbc-b56f-e7736ad376eb",
           "x": 56,
           "y": 21,
-          "type": "text"
+          "type": "text",
+          "groupId": "3ebd0057-d737-46f7-8c87-e6ff33636366"
         },
         {
           "opacity": 100,
@@ -2252,7 +2253,8 @@
           "id": "1e0f3868-24d5-4f1b-aab3-dd539ce372bf",
           "x": 212,
           "y": -57,
-          "type": "image"
+          "type": "image",
+          "groupId": "3ebd0057-d737-46f7-8c87-e6ff33636366"
         },
         {
           "opacity": 100,
@@ -2286,7 +2288,8 @@
           "id": "4b3c1c28-6607-4fc2-a4b5-ab606572f279",
           "x": 0,
           "y": 381,
-          "type": "image"
+          "type": "image",
+          "groupId": "0d44408c-9f4e-4d01-bdd8-073a8dcd419b"
         },
         {
           "opacity": 100,
@@ -2342,7 +2345,8 @@
           "id": "03d45231-d0e1-4389-b51f-d7457f38d448",
           "x": 27,
           "y": -2,
-          "type": "text"
+          "type": "text",
+          "groupId": "3ebd0057-d737-46f7-8c87-e6ff33636366"
         },
         {
           "opacity": 100,
@@ -2396,7 +2400,8 @@
           "id": "b0c805a0-3f15-4fe8-aff9-140d6a1d7def",
           "x": 181,
           "y": 346,
-          "type": "text"
+          "type": "text",
+          "groupId": "0d44408c-9f4e-4d01-bdd8-073a8dcd419b"
         },
         {
           "opacity": 100,
@@ -2452,7 +2457,8 @@
           "id": "c6d5c39d-d54a-4748-b071-603b17e88bf7",
           "x": 275,
           "y": 543,
-          "type": "text"
+          "type": "text",
+          "groupId": "0d44408c-9f4e-4d01-bdd8-073a8dcd419b"
         }
       ],
       "animations": [
@@ -2507,7 +2513,19 @@
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "id": "2a32f8e5-db1b-4e1c-95b9-534caadfdbe1",
-      "pageTemplateType": "list"
+      "pageTemplateType": "list",
+      "groups": {
+        "0d44408c-9f4e-4d01-bdd8-073a8dcd419b": {
+          "name": "QA",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "3ebd0057-d737-46f7-8c87-e6ff33636366": {
+          "name": "QA",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     }
   ],
   "current": null,
