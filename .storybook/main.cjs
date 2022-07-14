@@ -13,29 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
-const path = require('path');
 const webpack = require('webpack');
 const CircularDependencyPlugin = require('circular-dependency-plugin');
-
-/**
- * Storybook Workaround: https://github.com/storybookjs/storybook/issues/14877#issuecomment-1000441696
- *
- * @param {string} filePath Original file path
- * @param {string} newExtension Extension to use (such as .cjs or .html)
- * @return {Object} updated path
- */
-const replaceFileExtension = (filePath, newExtension) => {
-  const { name, root, dir } = path.parse(filePath);
-  return path.format({
-    name,
-    root,
-    dir,
-    ext: newExtension,
-  });
-};
 
 module.exports = {
   stories: [
