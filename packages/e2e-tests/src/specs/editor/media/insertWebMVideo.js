@@ -26,7 +26,7 @@ import {
   uploadFile,
 } from '@web-stories-wp/e2e-test-utils';
 
-// eslint-disable-next-line jest/no-disabled-tests
+// eslint-disable-next-line jest/no-disabled-tests -- this was sometimes coming back as a 404
 describe.skip('Inserting WebM Video', () => {
   let uploadedFiles;
 
