@@ -229,14 +229,10 @@ describe('Media Recording', () => {
     it('should change media recording type to audio via disable video button', async () => {
       // Open media recording.
       await fixture.events.click(fixture.editor.library.media.mediaRecording);
-      expect(
-        fixture.editor.canvas.mediaRecordingLayer.recordVideo
-      ).not.toBeNull();
 
       expect(
         fixture.editor.canvas.mediaRecordingLayer.recordVideo
       ).not.toBeNull();
-      expect(fixture.editor.canvas.mediaRecordingLayer.recordAudio).toBeNull();
 
       // Disable video.
       await fixture.events.click(
@@ -246,7 +242,6 @@ describe('Media Recording', () => {
       expect(
         fixture.editor.canvas.mediaRecordingLayer.recordAudio
       ).not.toBeNull();
-      expect(fixture.editor.canvas.mediaRecordingLayer.recordVideo).toBeNull();
     });
   });
 });
