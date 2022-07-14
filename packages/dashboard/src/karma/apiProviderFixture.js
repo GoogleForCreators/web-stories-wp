@@ -31,7 +31,7 @@ import formattedStoriesArray from '../dataUtils/formattedStoriesArray';
 import formattedTaxonomiesArray from '../dataUtils/formattedTaxonomiesArray';
 import formattedTaxonomyTermsObject from '../dataUtils/formattedTaxonomyTermsObject';
 import formattedTemplatesArray from '../dataUtils/formattedTemplatesArray';
-import { STORY_SORT_OPTIONS } from '../constants/stories';
+import { STORY_SORT_OPTIONS, DEFAULT_FILTERS } from '../constants/stories';
 import { groupTemplatesByTag } from '../testUtils';
 
 /* eslint-disable jasmine/no-unsafe-spy */
@@ -145,8 +145,16 @@ function getStoriesState() {
 
 function fetchStories({ sort, filters }, currentState) {
   const storiesState = currentState ? { ...currentState } : getStoriesState();
-  const { author, web_story_category, search = '', status } = filters;
-  const { orderby, order } = sort;
+  const {
+    author,
+    web_story_category,
+    search = '',
+    status = DEFAULT_FILTERS.filters.status,
+  } = filters;
+  const {
+    orderby = DEFAULT_FILTERS.sort.orderby,
+    order = DEFAULT_FILTERS.sort.order,
+  } = sort;
   const statuses = status.split(',');
 
   storiesState.storiesOrderById = Object.values(storiesState.stories)
