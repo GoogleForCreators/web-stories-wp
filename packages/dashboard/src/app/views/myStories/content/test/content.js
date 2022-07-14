@@ -87,8 +87,6 @@ describe('Dashboard <Content />', function () {
       <SnackbarProvider>
         <LayoutProvider>
           <Content
-            filter={STORY_STATUSES[0]}
-            search={{ keyword: '' }}
             stories={fakeStories}
             page={{
               requestNextPage: jest.fn,
@@ -117,8 +115,6 @@ describe('Dashboard <Content />', function () {
       <SnackbarProvider>
         <LayoutProvider>
           <Content
-            filter={STORY_STATUSES[0]}
-            search={{ keyword: '' }}
             stories={[]}
             page={{
               requestNextPage: jest.fn,
@@ -145,8 +141,10 @@ describe('Dashboard <Content />', function () {
       <SnackbarProvider>
         <LayoutProvider>
           <Content
-            filter={STORY_STATUSES[0]}
-            search={{ keyword: 'scooby dooby doo' }}
+            filtersObject={{
+              search: 'scooby dooby doo',
+              status: STORY_STATUSES[0],
+            }}
             stories={[]}
             page={{
               requestNextPage: jest.fn,
@@ -177,9 +175,10 @@ describe('Dashboard <Content />', function () {
       <SnackbarProvider>
         <LayoutProvider>
           <Content
-            filter={STORY_STATUSES[0]}
             stories={[]}
-            filtersObject={{ sports: 2 }}
+            filtersObject={{
+              sports: 2,
+            }}
             page={{
               requestNextPage: jest.fn,
             }}

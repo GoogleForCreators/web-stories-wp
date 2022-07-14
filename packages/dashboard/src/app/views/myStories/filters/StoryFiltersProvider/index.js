@@ -31,10 +31,10 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import reducer from './reducer';
+import reducer from '../../../filters/reducer';
+import * as types from '../../../filters/types';
 import useTaxonomyFilters from './taxonomy/useTaxonomyFilters';
 import useAuthorFilter from './author/useAuthorFilter';
-import * as types from './types';
 
 export const filterContext = createContext({
   state: {},
@@ -57,7 +57,7 @@ export const filterContext = createContext({
  * @return {Node} React node
  */
 
-export default function FiltersProvider({ children }) {
+export default function StoryFiltersProvider({ children }) {
   // each filter type will have its own logic for initilizing and querying
   const initializeTaxonomyFilters = useTaxonomyFilters();
   const initializeAuthorFilter = useAuthorFilter();
@@ -65,7 +65,19 @@ export default function FiltersProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, {
     filters: [],
     filtersObject: {},
+    sortObject: {},
   });
+
+  /**
+   * Dispatch UPDATE_SORT with new data to update sort
+   *
+   * @param {string} key key property on one of the sort objects
+   * @param {Object} value the properties with updated values
+   * @return {void}
+   */
+  const updateSort = useCallback((values) => {
+    dispatch({ type: types.UPDATE_SORT, payload: { type: 'story', values } });
+  }, []);
 
   /**
    * Dispatch UPDATE_FILTER with new data for a given filter
@@ -94,7 +106,7 @@ export default function FiltersProvider({ children }) {
    *
    * @return {void}
    */
-  const initializeFilters = useCallback(async () => {
+  const initializeStoryFilters = useCallback(async () => {
     const taxonomies = await initializeTaxonomyFilters();
     const author = initializeAuthorFilter();
 
@@ -108,13 +120,13 @@ export default function FiltersProvider({ children }) {
   const contextValue = useMemo(() => {
     return {
       state,
-      actions: { updateFilter, registerFilters },
+      actions: { updateFilter, updateSort, registerFilters },
     };
-  }, [state, updateFilter, registerFilters]);
+  }, [state, updateFilter, updateSort, registerFilters]);
 
   useEffect(() => {
-    initializeFilters();
-  }, [initializeFilters]);
+    initializeStoryFilters();
+  }, [initializeStoryFilters]);
 
   return (
     <filterContext.Provider value={contextValue}>
@@ -123,6 +135,6 @@ export default function FiltersProvider({ children }) {
   );
 }
 
-FiltersProvider.propTypes = {
+StoryFiltersProvider.propTypes = {
   children: PropTypes.node,
 };

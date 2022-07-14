@@ -18,10 +18,8 @@
  */
 import { addQueryArgs } from '@googleforcreators/url';
 import {
-  ORDER_BY_SORT,
   STORIES_PER_REQUEST,
-  STORY_SORT_OPTIONS,
-  STORY_STATUS,
+  DEFAULT_FILTERS,
 } from '@googleforcreators/dashboard';
 import { createSolidFromString } from '@googleforcreators/patterns';
 import { snakeToCamelCaseObjectKeys } from '@web-stories-wp/wp-utils';
@@ -46,30 +44,28 @@ import { reshapeStoryObject } from './utils';
  */
 export function fetchStories(config, queryParams) {
   const {
-    status = STORY_STATUS.ALL,
-    sortOption = STORY_SORT_OPTIONS.LAST_MODIFIED,
-    sortDirection,
-    searchTerm,
     page = 1,
     perPage = STORIES_PER_REQUEST,
-    author,
     filters = {},
+    sort = {},
   } = queryParams;
 
   // Important: Keep in sync with REST API preloading definition.
-  const query = {
+  const _defaultPreload = {
     _embed: STORY_EMBED,
     context: 'edit',
     _web_stories_envelope: true,
-    search: searchTerm || undefined,
-    orderby: sortOption,
+    _fields: STORY_FIELDS,
+    ...DEFAULT_FILTERS.filters,
+    ...DEFAULT_FILTERS.sort,
+  };
+
+  const query = {
+    ..._defaultPreload,
     page,
     per_page: perPage,
-    order: sortDirection || ORDER_BY_SORT[sortOption],
-    status,
-    _fields: STORY_FIELDS,
-    author,
     ...filters,
+    ...sort,
   };
 
   return apiFetch({
