@@ -118,7 +118,7 @@ describe('Video Accessibility Panel', () => {
       expect(vaPanel.posterImage.src).toBe(originalPoster);
     });
 
-    xit('should allow user to hotlink and reset poster image using mouse', async () => {
+    it('should allow user to hotlink and reset poster image using mouse', async () => {
       // Remember original poster image
       const originalPoster = vaPanel.posterImage.src;
 
@@ -143,9 +143,13 @@ describe('Video Accessibility Panel', () => {
       );
 
       await fixture.events.click(insertBtn);
-      await fixture.events.sleep(500);
-      // Expect poster image to have updated ( See MediaUpload component in fixture.js )
-      expect(vaPanel.posterImage.src).toMatch(/^http.+\/ranger9.jpg$/);
+      await waitFor(() => {
+        if (!vaPanel?.posterImage?.src) {
+          throw new Error('image not available');
+        }
+        // Expect poster image to have updated ( See MediaUpload component in fixture.js )
+        expect(vaPanel.posterImage.src).toMatch(/^http.+\/ranger9.jpg$/);
+      });
 
       // Now open menu and click reset
       await fixture.events.click(vaPanel.posterMenuButton);
@@ -176,11 +180,16 @@ describe('Video Accessibility Panel', () => {
       await fixture.events.keyboard.type(hotlinkUrl);
 
       await fixture.events.click(insertBtn);
-      await fixture.events.sleep(500);
       await waitFor(() => {
         const dialog = screen.getByRole('dialog');
         if (!dialog) {
           throw new Error('dialog not ready');
+        }
+        if (
+          -1 ===
+          dialog.textContent.indexOf('do not match required image dimensions')
+        ) {
+          throw new Error('dimensions not available');
         }
         expect(dialog.textContent).toContain(
           'do not match required image dimensions'

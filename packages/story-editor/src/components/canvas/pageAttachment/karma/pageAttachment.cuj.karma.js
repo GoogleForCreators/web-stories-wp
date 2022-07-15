@@ -151,7 +151,7 @@ describe('Page Attachment', () => {
       );
     });
 
-    xit('it should allow adding Page Attachment with custom hotlink icon', async () => {
+    it('it should allow adding Page Attachment with custom hotlink icon', async () => {
       await setPageAttachmentLink('http://example.com');
       const editIcon = fixture.screen.getByRole('button', {
         name: 'Edit link icon',
@@ -173,11 +173,20 @@ describe('Page Attachment', () => {
       );
 
       await fixture.events.click(insertBtn);
-      await fixture.events.sleep(500);
-      const storyContext = await fixture.renderHook(() => useStory());
-
-      expect(storyContext.state.currentPage.pageAttachment.icon).toEqual(
-        'http://localhost:9876/__static__/icon.png'
+      await waitFor(
+        async () => {
+          const storyContext = await fixture.renderHook(() => useStory());
+          // Check if the background audio source is set
+          if (!storyContext.state.currentPage?.pageAttachment?.icon) {
+            throw new Error('icon not ready');
+          }
+          expect(storyContext.state.currentPage.pageAttachment.icon).toEqual(
+            'http://localhost:9876/__static__/icon.png'
+          );
+        },
+        {
+          timeout: 1500,
+        }
       );
     });
 
@@ -203,11 +212,16 @@ describe('Page Attachment', () => {
       );
 
       await fixture.events.click(insertBtn);
-      await fixture.events.sleep(500);
       await waitFor(() => {
         const dialog = screen.getByRole('dialog');
         if (!dialog) {
           throw new Error('dialog not ready');
+        }
+        if (
+          -1 ===
+          dialog.textContent.indexOf('do not match required image dimensions')
+        ) {
+          throw new Error('dimensions not available');
         }
         expect(dialog.textContent).toContain(
           'do not match required image dimensions'

@@ -53,7 +53,7 @@ describe('Page background audio panel', () => {
       ).not.toBeNull();
     });
 
-    it('should able to hotlink background audio ', async () => {
+    it('should able to hotlink background audio', async () => {
       await fixture.events.click(
         fixture.editor.sidebar.designPanel.pageBackgroundAudio.hotlinkButton
       );
@@ -67,11 +67,21 @@ describe('Page background audio panel', () => {
       );
 
       await fixture.events.click(insertBtn);
-      await fixture.events.sleep(500);
-      const storyContext = await fixture.renderHook(() => useStory());
-      expect(
-        storyContext.state.currentPage.backgroundAudio.resource.src
-      ).toMatch('http://localhost:9876/__static__/audio.mp3');
+      await waitFor(
+        async () => {
+          const storyContext = await fixture.renderHook(() => useStory());
+          // Check if the background audio source is set
+          if (!storyContext.state.currentPage.backgroundAudio?.resource?.src) {
+            throw new Error('resource not ready');
+          }
+          expect(
+            storyContext.state.currentPage.backgroundAudio.resource.src
+          ).toMatch('http://localhost:9876/__static__/audio.mp3');
+        },
+        {
+          timeout: 1500,
+        }
+      );
     });
 
     it('should not able to hotlink background audio with invalid', async () => {
