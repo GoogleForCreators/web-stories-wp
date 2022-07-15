@@ -266,8 +266,8 @@ function LibraryMoveable({
           ...elementProps,
           width: 25,
           height: 25,
-          x: 48,
-          y: 0,
+          x: editorToDataX(x - pageX, pageSize.width),
+          y: editorToDataY(y - pageY, pageSize.height),
         });
       } else {
         insertElement(type, {
