@@ -845,7 +845,7 @@ const useQuickActions = () => {
           trackEvent('media_recording_trim_start');
           startTrim();
         },
-        disabled: !isProcessing || isTrimming,
+        disabled: !isProcessing || isTrimming || !hasVideo,
         ...actionMenuProps,
       },
     ].filter(Boolean);
