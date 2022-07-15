@@ -80,12 +80,24 @@ const EditElement = memo(
       ? { ...element, ...localProperties }
       : element;
     const box = getBox(elementWithLocal);
+    // We're adding the border in pixels since the element is the content + the border in pixels
+    const { border } = element;
+    const boxWithBorder = {
+      ...box,
+      x: box.x - (border.left || 0),
+      y: box.y - (border.top || 0),
+      width: box.width + (border.left || 0) + (border.right || 0),
+      height: box.height + (border.top || 0) + (border.bottom || 0),
+    };
+    // In case of text edit mode, we include the border to the selection.
+    const isText = 'text' === type;
+    const editBox = isText ? boxWithBorder : box;
 
     return (
-      <Wrapper aria-labelledby={`layer-${id}`} {...box} ref={ref}>
+      <Wrapper aria-labelledby={`layer-${id}`} {...editBox} ref={ref}>
         <Edit
           element={elementWithLocal}
-          box={box}
+          box={editBox}
           editWrapper={editWrapper}
           onResize={onResize}
           setLocalProperties={setLocalProperties}

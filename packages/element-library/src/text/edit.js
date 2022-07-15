@@ -39,10 +39,7 @@ import {
   useRichText,
 } from '@googleforcreators/rich-text';
 import { stripHTML } from '@googleforcreators/dom';
-import {
-  getBorderPositionCSS,
-  shouldDisplayBorder,
-} from '@googleforcreators/masks';
+import { shouldDisplayBorder } from '@googleforcreators/masks';
 import {
   StoryPropTypes,
   BACKGROUND_TEXT_MODE,
@@ -118,13 +115,12 @@ const Highlight = styled.span`
 
 const OutsideBorder = styled.div`
   ${elementWithBorder}
-  ${({ border }) => border && getBorderPositionCSS(border)}
   overflow: hidden;
 `;
 
 function TextEdit({
   element,
-  box: { x, y, height, rotationAngle },
+  box: { x, y, width, height, rotationAngle },
   editWrapper,
   onResize,
   updateElementById,
@@ -142,7 +138,9 @@ function TextEdit({
     height: elementHeight,
     ...rest
   } = element;
-  const { font, width: elementWidth } = rest;
+  console.log(elementHeight, height);
+  const { font } = rest;
+  const { top = 0, bottom = 0, left = 0 } = border;
   const fontFaceSetConfigs = useMemo(() => {
     const htmlInfo = getHTMLInfo(content);
     return {
@@ -197,7 +195,10 @@ function TextEdit({
   }));
 
   const setProperties = useCallback(
-    (properties) => updateElementById({ elementId: id, properties }),
+    (properties) => {
+      console.log(properties);
+      updateElementById({ elementId: id, properties });
+    },
     [id, updateElementById]
   );
 
@@ -246,15 +247,17 @@ function TextEdit({
           0,
           0,
           0,
-          newHeight - boxRef.current.height
+          Math.round(newHeight - (boxRef.current.height - top - bottom))
         );
         properties.height = editorToDataY(newHeight);
-        properties.x = editorToDataX(boxRef.current.x + dx);
-        properties.y = editorToDataY(boxRef.current.y + dy);
+        // boxRef includes adjustment for the border, let's take it out for element updating.
+        properties.x = editorToDataX(boxRef.current.x + left + dx);
+        properties.y = editorToDataY(boxRef.current.y + top + dy);
       }
+      console.log('after', properties);
       setProperties(properties);
     }
-  }, [editorToDataX, editorToDataY, setProperties]);
+  }, [editorToDataX, editorToDataY, setProperties, bottom, top, left]);
 
   // Update content or delete the whole element (if empty) on unmount.
   const handleUnmount = useCallback(() => {
@@ -291,12 +294,13 @@ function TextEdit({
         0,
         editorHeightRef.current - boxRef.current.height
       );
-      editWrapper.style.height = `${editorHeightRef.current}px`;
+      // We need to consider the potential border, too, and add it to the content height.
+      editWrapper.style.height = `${editorHeightRef.current + top + bottom}px`;
       editWrapper.style.left = `${boxRef.current.x + dx}px`;
       editWrapper.style.top = `${boxRef.current.y + dy}px`;
       onResize && onResize();
     }
-  }, [dataToEditorY, editWrapper, element, onResize]);
+  }, [dataToEditorY, editWrapper, element, onResize, top, bottom]);
   // Invoke on each content update.
   const handleUpdate = useCallback(
     (newContent) => {
@@ -389,8 +393,8 @@ function TextEdit({
       ref={outsideBorderRef}
       border={border}
       borderRadius={borderRadius}
-      width={elementWidth}
-      height={elementHeight}
+      width={width}
+      height={height}
     >
       {/* eslint-disable-next-line styled-components-a11y/click-events-have-key-events, styled-components-a11y/no-static-element-interactions -- Needed here to ensure the editor keeps focus, e.g. after setting inline colour. */}
       <Wrapper

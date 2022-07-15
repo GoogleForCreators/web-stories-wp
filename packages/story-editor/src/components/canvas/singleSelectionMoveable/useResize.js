@@ -73,7 +73,11 @@ function useSingleSelectionResize({
       })
     );
 
-  const { lockAspectRatio: elementLockRatio, type, border = {} } = selectedElement;
+  const {
+    lockAspectRatio: elementLockRatio,
+    type,
+    border = {},
+  } = selectedElement;
   const isText = type === 'text';
   const [isResizingFromCorner, setIsResizingFromCorner] = useState(true);
   // Text element lock aspect ratio doesn't influence resizing.
