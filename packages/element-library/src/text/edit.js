@@ -138,7 +138,6 @@ function TextEdit({
     height: elementHeight,
     ...rest
   } = element;
-  console.log(elementHeight, height);
   const { font } = rest;
   const { top = 0, bottom = 0, left = 0 } = border;
   const fontFaceSetConfigs = useMemo(() => {
@@ -195,10 +194,7 @@ function TextEdit({
   }));
 
   const setProperties = useCallback(
-    (properties) => {
-      console.log(properties);
-      updateElementById({ elementId: id, properties });
-    },
+    (properties) => updateElementById({ elementId: id, properties }),
     [id, updateElementById]
   );
 
@@ -254,7 +250,6 @@ function TextEdit({
         properties.x = editorToDataX(boxRef.current.x + left + dx);
         properties.y = editorToDataY(boxRef.current.y + top + dy);
       }
-      console.log('after', properties);
       setProperties(properties);
     }
   }, [editorToDataX, editorToDataY, setProperties, bottom, top, left]);
