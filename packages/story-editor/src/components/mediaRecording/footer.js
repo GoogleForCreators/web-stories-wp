@@ -237,7 +237,6 @@ function Footer() {
       args.resource.isOptimized = true;
       args.resource.isMuted = isMuted;
       args.posterFile = posterFile;
-      args.trimData = trimData;
       // If video has been trimmed, `end` will no longer be `null`,
       // but some number bigger than 0
       if (trimData.end) {
