@@ -28,7 +28,7 @@ import {
   useCombinedRefs,
 } from '@googleforcreators/react';
 import classnames from 'classnames';
-import { useUnits } from '@googleforcreators/units';
+import {calcRotatedResizeOffset, useUnits} from '@googleforcreators/units';
 import { useGlobalIsKeyPressed } from '@googleforcreators/design-system';
 import { useTransform } from '@googleforcreators/transform';
 import { Moveable } from '@googleforcreators/moveable';
@@ -61,7 +61,7 @@ const SingleSelectionMoveable = forwardRef(function SingleSelectionMoveable(
     scrollTop: state.scrollTop,
   }));
 
-  const { isLocked } = selectedElement;
+  const { isLocked, rotationAngle } = selectedElement;
   const actionsEnabled = !selectedElement.isBackground && !isLocked;
 
   const latestEvent = useRef();

@@ -21,7 +21,7 @@ import PropTypes from 'prop-types';
 import { memo, useRef, useState } from '@googleforcreators/react';
 import styled, { css } from 'styled-components';
 import { generatePatternStyles } from '@googleforcreators/patterns';
-import { useUnits } from '@googleforcreators/units';
+import {calcRotatedResizeOffset, useUnits} from '@googleforcreators/units';
 import { StoryAnimation } from '@googleforcreators/animation';
 import { useTransformHandler } from '@googleforcreators/transform';
 import {
@@ -134,6 +134,7 @@ function DisplayElement({
     overlay,
     border = {},
     flip,
+    rotationAngle,
   } = element;
 
   const { isCurrentResourceProcessing, isCurrentResourceUploading } =
@@ -172,12 +173,13 @@ function DisplayElement({
 
   const box = getBox(element);
   // We're adding the border in pixels since the element is the content + the border in pixels
+  const { left = 0, right = 0, top = 0, bottom = 0 } = border;
   const boxWithBorder = {
     ...box,
-    x: box.x - (border.left || 0),
-    y: box.y - (border.top || 0),
-    width: box.width + (border.left || 0) + (border.right || 0),
-    height: box.height + (border.top || 0) + (border.bottom || 0),
+    x: box.x - left,
+    y: box.y - top,
+    width: box.width + left + right,
+    height: box.height + top + bottom,
   };
   useTransformHandler(id, (transform) => {
     const target = wrapperRef.current;
@@ -186,8 +188,12 @@ function DisplayElement({
       target.style.width = '';
       target.style.height = '';
     } else {
-      const { translate, rotate, resize, dropTargets } = transform;
-      target.style.transform = `translate(${translate?.[0]}px, ${translate?.[1]}px) rotate(${rotate}deg)`;
+      const { translate = [0, 0], rotate, resize, dropTargets } = transform;
+      console.log(rotationAngle);
+      const [dx, dy] = calcRotatedResizeOffset(rotationAngle, left, right, top, bottom);
+      console.log('translate', translate);
+      console.log(dx, dy);
+      target.style.transform = `translate(${translate[0] - dx}px, ${translate[1] - dy}px) rotate(${rotate}deg)`;
       if (resize && resize[0] !== 0 && resize[1] !== 0) {
         target.style.width = `${resize[0]}px`;
         target.style.height = `${resize[1]}px`;

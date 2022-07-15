@@ -18,7 +18,7 @@
  * External dependencies
  */
 import classnames from 'classnames';
-import { useUnits } from '@googleforcreators/units';
+import {calcRotatedResizeOffset, useUnits} from '@googleforcreators/units';
 import { getDefinitionForType } from '@googleforcreators/elements';
 import { useState } from '@googleforcreators/react';
 
