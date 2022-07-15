@@ -38,15 +38,6 @@ describe('Publishing Flow', () => {
   let removeCORSErrorMessage;
   let removeResourceErrorMessage;
 
-  beforeEach(() => (uploadedFiles = []));
-
-  afterEach(async () => {
-    for (const file of uploadedFiles) {
-      // eslint-disable-next-line no-await-in-loop
-      await deleteMedia(file);
-    }
-  });
-
   beforeAll(() => {
     // Ignore CORS errors related to the AMP validator JS.
     removeCORSErrorMessage = addAllowedErrorMessage(
@@ -55,6 +46,15 @@ describe('Publishing Flow', () => {
     removeResourceErrorMessage = addAllowedErrorMessage(
       'Failed to load resource'
     );
+  });
+
+  beforeEach(() => (uploadedFiles = []));
+
+  afterEach(async () => {
+    for (const file of uploadedFiles) {
+      // eslint-disable-next-line no-await-in-loop
+      await deleteMedia(file);
+    }
   });
 
   afterAll(() => {

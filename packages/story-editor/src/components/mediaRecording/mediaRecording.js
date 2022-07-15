@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+/* eslint-disable jsx-a11y/media-has-caption -- Not required for recording */
+
 /**
  * External dependencies
  */
@@ -32,6 +34,7 @@ import PlayPauseButton from './playPauseButton';
 import ErrorDialog from './errorDialog';
 import PermissionsDialog from './permissionsDialog';
 import { Wrapper, VideoWrapper, Video, Photo } from './components';
+import Audio from './audio';
 
 function MediaRecording() {
   const {
@@ -40,6 +43,7 @@ function MediaRecording() {
     mediaBlob,
     mediaBlobUrl,
     liveStream,
+    hasVideo,
     hasAudio,
     isGif,
     isImageCapture,
@@ -53,6 +57,7 @@ function MediaRecording() {
     mediaBlob: state.mediaBlob,
     mediaBlobUrl: state.mediaBlobUrl,
     liveStream: state.liveStream,
+    hasVideo: state.hasVideo,
     hasAudio: state.hasAudio,
     isGif: state.isGif,
     isImageCapture: Boolean(state.file?.type?.startsWith('image')),
@@ -102,26 +107,33 @@ function MediaRecording() {
       <Wrapper>
         {!isImageCapture && (
           <>
-            {mediaBlobUrl && (
+            {mediaBlobUrl && hasVideo && (
               <VideoMode value={!isGif} onChange={onToggleVideoMode} />
             )}
             <VideoWrapper>
-              {mediaBlobUrl && (
-                <>
-                  {/* eslint-disable-next-line jsx-a11y/media-has-caption -- We don't have tracks for this. */}
-                  <Video
-                    ref={updateVideoNode}
-                    src={mediaBlobUrl}
-                    muted={isMuted}
-                    loop={isGif || isTrimming}
-                    tabIndex={0}
-                  />
-                  {!isGif && <PlayPauseButton videoRef={videoRef} />}
-                </>
-              )}
-              {!mediaBlob && !mediaBlobUrl && liveStream && (
-                <Video ref={setStreamNode} muted />
-              )}
+              {mediaBlobUrl &&
+                (hasVideo ? (
+                  <>
+                    <Video
+                      ref={updateVideoNode}
+                      src={mediaBlobUrl}
+                      muted={isMuted}
+                      loop={isGif || isTrimming}
+                      tabIndex={0}
+                    />
+                    {!isGif && <PlayPauseButton videoRef={videoRef} />}
+                  </>
+                ) : (
+                  <audio controls="controls" src={mediaBlobUrl} />
+                ))}
+              {!mediaBlob &&
+                !mediaBlobUrl &&
+                liveStream &&
+                (hasVideo ? (
+                  <Video ref={setStreamNode} muted />
+                ) : (
+                  <Audio liveStream={liveStream} />
+                ))}
             </VideoWrapper>
           </>
         )}
@@ -142,3 +154,5 @@ function MediaRecording() {
 }
 
 export default MediaRecording;
+
+/* eslint-enable jsx-a11y/media-has-caption -- Reenabling */

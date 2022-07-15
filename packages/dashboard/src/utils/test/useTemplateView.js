@@ -32,12 +32,13 @@ describe('useTemplateView()', function () {
   it('should have the default options initially selected', function () {
     const { result } = renderHook(() => useTemplateView({ totalPages: 1 }), {});
 
-    expect(result.current.filter.value).toBe(TEMPLATES_GALLERY_STATUS.ALL);
+    expect(result.current.filters.value.status).toBe(
+      TEMPLATES_GALLERY_STATUS.ALL
+    );
     expect(result.current.sort.value).toBe(
       TEMPLATES_GALLERY_SORT_OPTIONS.POPULAR
     );
     expect(result.current.page.value).toBe(1);
-    expect(result.current.search.keyword).toBe('');
   });
 
   it('should set the new sort when passed and reset the page.', function () {
@@ -49,7 +50,9 @@ describe('useTemplateView()', function () {
     expect(result.current.page.value).toBe(2);
 
     act(() => {
-      result.current.sort.set(TEMPLATES_GALLERY_SORT_OPTIONS.RECENT);
+      result.current.sort.set({
+        orderby: TEMPLATES_GALLERY_SORT_OPTIONS.RECENT,
+      });
     });
     expect(result.current.sort.value).toBe(
       TEMPLATES_GALLERY_SORT_OPTIONS.RECENT
@@ -66,9 +69,13 @@ describe('useTemplateView()', function () {
     expect(result.current.page.value).toBe(2);
 
     act(() => {
-      result.current.search.setKeyword('Magical Creatures Template');
+      result.current.filters.set({
+        search: 'Magical Creatures Template',
+      });
     });
-    expect(result.current.search.keyword).toBe('Magical Creatures Template');
+    expect(result.current.filters.value.search).toBe(
+      'Magical Creatures Template'
+    );
     expect(result.current.page.value).toBe(1);
   });
 

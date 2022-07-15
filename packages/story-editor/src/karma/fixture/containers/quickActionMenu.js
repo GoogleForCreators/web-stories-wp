@@ -114,6 +114,12 @@ export class QuickActionMenu extends Container {
     });
   }
 
+  get disableVideoButton() {
+    return this.queryByRole('menuitem', {
+      name: 'Disable Video',
+    });
+  }
+
   get enableAudioButton() {
     return this.queryByRole('menuitem', {
       name: 'Enable Audio',

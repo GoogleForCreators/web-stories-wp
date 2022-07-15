@@ -118,9 +118,11 @@ describe('CUJ: Creator can view their stories in grid view', () => {
     });
 
     it('should navigate to Explore Templates', async () => {
-      const exploreTemplatesMenuItem = fixture.screen.queryByRole('link', {
-        name: /^Explore Templates/,
-      });
+      const navigation = fixture.screen.queryByRole('navigation');
+      const utils = within(navigation);
+
+      const exploreTemplatesMenuItem = utils.getByText(/^Explore Templates/);
+
       expect(exploreTemplatesMenuItem).toBeTruthy();
 
       await fixture.events.click(exploreTemplatesMenuItem);

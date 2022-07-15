@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useRef } from '@googleforcreators/react';
 import { getMediaSizePositionProps } from '@googleforcreators/media';
@@ -27,24 +26,7 @@ import { StoryPropTypes } from '@googleforcreators/elements';
  * Internal dependencies
  */
 import MediaDisplay from '../media/display';
-import { getBackgroundStyle, videoWithScale } from '../video/util';
-
-const Video = styled.video`
-  position: absolute;
-  max-width: initial;
-  max-height: initial;
-  ${videoWithScale}
-`;
-
-const Image = styled.img`
-  position: absolute;
-  max-height: initial;
-  object-fit: contain;
-  width: ${({ width }) => `${width}px`};
-  left: ${({ offsetX }) => `${-offsetX}px`};
-  top: ${({ offsetY }) => `${-offsetY}px`};
-  max-width: ${({ isBackground }) => (isBackground ? 'initial' : null)};
-`;
+import { getBackgroundStyle, Video, VideoImage } from '../media/util';
 
 function VideoDisplay({
   previewMode,
@@ -72,8 +54,6 @@ function VideoDisplay({
     focalY
   );
 
-  videoProps.crossOrigin = 'anonymous';
-
   return (
     <MediaDisplay
       element={element}
@@ -84,7 +64,7 @@ function VideoDisplay({
     >
       {previewMode ? (
         (poster || resource.poster) && (
-          <Image
+          <VideoImage
             src={poster || resource.poster}
             alt={element.alt || resource.alt}
             style={style}

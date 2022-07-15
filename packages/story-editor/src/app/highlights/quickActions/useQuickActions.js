@@ -73,20 +73,15 @@ const {
   Scissors,
 } = Icons;
 
-const StyledSettings = styled(Settings).attrs({
+const quickActionIconAttrs = {
   width: 24,
   height: 24,
-})``;
-
-const Mic = styled(Icons.Mic).attrs({
-  width: 24,
-  height: 24,
-})``;
-
-const MicOff = styled(Icons.MicOff).attrs({
-  width: 24,
-  height: 24,
-})``;
+};
+const StyledSettings = styled(Settings).attrs(quickActionIconAttrs)``;
+const Mic = styled(Icons.Mic).attrs(quickActionIconAttrs)``;
+const MicOff = styled(Icons.MicOff).attrs(quickActionIconAttrs)``;
+const Video = styled(Icons.Camera).attrs(quickActionIconAttrs)``;
+const VideoOff = styled(Icons.CameraOff).attrs(quickActionIconAttrs)``;
 
 export const MediaPicker = ({ render, ...props }) => {
   const {
@@ -303,10 +298,13 @@ const useQuickActions = () => {
   const {
     isInRecordingMode,
     toggleRecordingMode,
+    toggleVideo,
     toggleAudio,
+    hasVideo,
     hasAudio,
     toggleSettings,
     audioInput,
+    videoInput,
     isReady,
     isProcessing,
     isTrimming,
@@ -314,7 +312,9 @@ const useQuickActions = () => {
   } = useMediaRecording(({ state, actions }) => ({
     isInRecordingMode: state.isInRecordingMode,
     hasAudio: state.hasAudio,
+    hasVideo: state.hasVideo,
     audioInput: state.audioInput,
+    videoInput: state.videoInput,
     isReady:
       state.status === 'ready' &&
       !state.file?.type?.startsWith('image') &&
@@ -322,6 +322,7 @@ const useQuickActions = () => {
     isProcessing: state.isProcessing,
     isTrimming: state.isTrimming,
     toggleRecordingMode: actions.toggleRecordingMode,
+    toggleVideo: actions.toggleVideo,
     toggleAudio: actions.toggleAudio,
     toggleSettings: actions.toggleSettings,
     muteAudio: actions.muteAudio,
@@ -820,7 +821,21 @@ const useQuickActions = () => {
           });
           toggleAudio();
         },
-        disabled: !isReady,
+        disabled: !isReady || !hasVideo,
+        ...actionMenuProps,
+      },
+      videoInput && {
+        Icon: hasVideo ? Video : VideoOff,
+        label: hasVideo
+          ? __('Disable Video', 'web-stories')
+          : __('Enable Video', 'web-stories'),
+        onClick: () => {
+          trackEvent('media_recording_video_toggled', {
+            status: hasVideo ? 'off' : 'on',
+          });
+          toggleVideo();
+        },
+        disabled: !isReady || !hasAudio,
         ...actionMenuProps,
       },
       {
@@ -838,12 +853,15 @@ const useQuickActions = () => {
     actionMenuProps,
     isReady,
     audioInput,
+    videoInput,
+    hasVideo,
     hasAudio,
     isProcessing,
     isTrimming,
+    toggleAudio,
+    toggleVideo,
     toggleRecordingMode,
     toggleSettings,
-    toggleAudio,
     startTrim,
   ]);
 
