@@ -117,7 +117,7 @@ export class Media extends Container {
 
   get mediaRecording() {
     return this.getByRole('button', {
-      name: 'Record Video',
+      name: 'Record Video/Audio',
     });
   }
 

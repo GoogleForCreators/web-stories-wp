@@ -21,7 +21,7 @@ import { renderHook, act } from '@testing-library/react-hooks';
 /**
  * Internal dependencies
  */
-import useAuthorFilter from '../author/useAuthorFilter';
+import useAuthorFilter from '../StoryFiltersProvider/author/useAuthorFilter';
 
 jest.mock('../../../../api/useApi', () => {
   const getAuthors = () => {
@@ -72,7 +72,7 @@ describe('useAuthorFilter', () => {
         expect(filter.placeholder).toBe('All Authors');
         expect(filter.ariaLabel).toBe(`Filter stories by author`);
         expect(filter.noMatchesFoundLabel).toBe('No authors found');
-        expect(filter.searchPlaceholder).toBe('Search authors');
+        expect(filter.searchPlaceholder).toBe('Search Authors');
       });
     });
   });
