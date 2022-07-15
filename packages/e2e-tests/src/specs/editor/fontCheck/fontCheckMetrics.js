@@ -102,6 +102,8 @@ describe('Font Check Metrics', () => {
   let stopRequestInterception;
   let mockResponse;
 
+  jest.retryTimes(3, {logErrorsBeforeRetry: true});
+
   beforeAll(async () => {
     await page.setRequestInterception(true);
     stopRequestInterception = addRequestInterception((request) => {
@@ -122,8 +124,6 @@ describe('Font Check Metrics', () => {
     await page.setRequestInterception(false);
     stopRequestInterception();
   });
-
-  jest.retryTimes(3);
 
   // eslint-disable-next-line jest/no-disabled-tests -- this fails periodiclly
   it.skip('should receive updated font metrics and not alter history', async () => {

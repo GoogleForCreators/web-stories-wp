@@ -64,9 +64,6 @@ class PuppeteerEnvironment extends OriginalEnvironment {
         // return already handled
         return;
       }
-
-      // eslint-disable-next-line no-console
-      console.log(' Unhandled event(' + event.name + '): ' + eventError);
     }
   }
 
