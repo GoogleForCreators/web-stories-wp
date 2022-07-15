@@ -581,7 +581,8 @@
           "focalX": 50,
           "focalY": 50,
           "mask": { "type": "rectangle" },
-          "id": "98f235f0-6612-4880-9b68-e4a4ac5f73a2"
+          "id": "98f235f0-6612-4880-9b68-e4a4ac5f73a2",
+          "groupId": "1b94a3aa-7de5-4cdd-a86e-b3e9f7d6be39"
         },
         {
           "opacity": 100,
@@ -637,7 +638,8 @@
           "basedOn": "a6ec82ef-867b-4b15-ad74-6c39e9b7d005",
           "id": "a58ea7fb-681c-4400-b658-9791b9ae2c58",
           "x": -172,
-          "y": 0
+          "y": 0,
+          "groupId": "1b94a3aa-7de5-4cdd-a86e-b3e9f7d6be39"
         },
         {
           "x": 45,
@@ -669,7 +671,8 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "rectangle" }
+          "mask": { "type": "rectangle" },
+          "groupId": "1b94a3aa-7de5-4cdd-a86e-b3e9f7d6be39"
         },
         {
           "opacity": 100,
@@ -752,7 +755,8 @@
             "bottom": 0,
             "lockedWidth": true,
             "color": { "color": { "r": 0, "g": 0, "b": 0 } }
-          }
+          },
+          "groupId": "1b94a3aa-7de5-4cdd-a86e-b3e9f7d6be39"
         },
         {
           "x": 47,
@@ -836,7 +840,8 @@
             "bottom": 0,
             "lockedWidth": true,
             "color": { "color": { "r": 0, "g": 0, "b": 0 } }
-          }
+          },
+          "groupId": "1b94a3aa-7de5-4cdd-a86e-b3e9f7d6be39"
         },
         {
           "opacity": 100,
@@ -852,7 +857,8 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": { "type": "summerTrendInstragramIcon" },
-          "id": "19e056c8-2b48-469a-ac2f-ad89fb36f8a0"
+          "id": "19e056c8-2b48-469a-ac2f-ad89fb36f8a0",
+          "groupId": "1b94a3aa-7de5-4cdd-a86e-b3e9f7d6be39"
         },
         {
           "opacity": 100,
@@ -868,7 +874,8 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": { "type": "summerTrendHeart" },
-          "id": "fed92a3a-0fb4-426e-a15a-2ff46b630f22"
+          "id": "fed92a3a-0fb4-426e-a15a-2ff46b630f22",
+          "groupId": "1b94a3aa-7de5-4cdd-a86e-b3e9f7d6be39"
         },
         {
           "x": 69,
@@ -952,7 +959,8 @@
             "bottom": 0,
             "lockedWidth": true,
             "color": { "color": { "r": 0, "g": 0, "b": 0 } }
-          }
+          },
+          "groupId": "1b94a3aa-7de5-4cdd-a86e-b3e9f7d6be39"
         }
       ],
       "backgroundColor": {
@@ -967,7 +975,14 @@
       "type": "page",
       "id": "9bddedee-ad4f-4abe-a391-76909650d68c",
       "animations": [],
-      "pageTemplateType": "section"
+      "pageTemplateType": "section",
+      "groups": {
+        "1b94a3aa-7de5-4cdd-a86e-b3e9f7d6be39": {
+          "name": "Card",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [
@@ -1623,7 +1638,8 @@
           "focalY": 50,
           "mask": { "type": "rectangle" },
           "id": "22a12da3-3feb-46a5-a6f4-9a38aa6bcbaa",
-          "type": "shape"
+          "type": "shape",
+          "groupId": "9947d792-9ca1-436f-b709-3ad80374431a"
         },
         {
           "opacity": 100,
@@ -1711,7 +1727,8 @@
           "focalX": 50,
           "focalY": 50,
           "mask": { "type": "rectangle" },
-          "type": "image"
+          "type": "image",
+          "groupId": "9947d792-9ca1-436f-b709-3ad80374431a"
         },
         {
           "opacity": 100,
@@ -1794,7 +1811,8 @@
             "lockedWidth": true,
             "color": { "color": { "r": 0, "g": 0, "b": 0 } }
           },
-          "type": "text"
+          "type": "text",
+          "groupId": "9947d792-9ca1-436f-b709-3ad80374431a"
         },
         {
           "opacity": 100,
@@ -1878,7 +1896,8 @@
             "lockedWidth": true,
             "color": { "color": { "r": 0, "g": 0, "b": 0 } }
           },
-          "type": "text"
+          "type": "text",
+          "groupId": "9947d792-9ca1-436f-b709-3ad80374431a"
         },
         {
           "opacity": 100,
@@ -1894,7 +1913,8 @@
           "focalY": 50,
           "sticker": { "type": "summerTrendInstragramIcon" },
           "id": "3b2103a9-46e4-437f-9f2f-6f3eaf6b1de2",
-          "type": "sticker"
+          "type": "sticker",
+          "groupId": "9947d792-9ca1-436f-b709-3ad80374431a"
         },
         {
           "opacity": 100,
@@ -1910,7 +1930,8 @@
           "focalY": 50,
           "sticker": { "type": "summerTrendHeart" },
           "id": "54f09a1b-fb4f-45c9-bee6-419c88737428",
-          "type": "sticker"
+          "type": "sticker",
+          "groupId": "9947d792-9ca1-436f-b709-3ad80374431a"
         },
         {
           "opacity": 100,
@@ -1994,7 +2015,8 @@
             "lockedWidth": true,
             "color": { "color": { "r": 0, "g": 0, "b": 0 } }
           },
-          "type": "text"
+          "type": "text",
+          "groupId": "9947d792-9ca1-436f-b709-3ad80374431a"
         }
       ],
       "animations": [],
@@ -2009,7 +2031,14 @@
       },
       "type": "page",
       "id": "5b4f4c90-fb37-4406-b7ae-aee2b3a77429",
-      "pageTemplateType": ""
+      "pageTemplateType": "",
+      "groups": {
+        "9947d792-9ca1-436f-b709-3ad80374431a": {
+          "name": "Card",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [
@@ -2663,7 +2692,8 @@
           "focalY": 50,
           "mask": { "type": "rectangle" },
           "id": "e8bc1283-4c3a-4b24-ba33-332d0d37b1ee",
-          "type": "shape"
+          "type": "shape",
+          "groupId": "8f209e48-e15a-4082-9dfe-76749ea2d7f8"
         },
         {
           "opacity": 100,
@@ -2751,7 +2781,8 @@
           "width": 328,
           "height": 400,
           "mask": { "type": "rectangle" },
-          "type": "image"
+          "type": "image",
+          "groupId": "8f209e48-e15a-4082-9dfe-76749ea2d7f8"
         },
         {
           "opacity": 100,
@@ -2835,7 +2866,8 @@
             "color": { "color": { "r": 0, "g": 0, "b": 0 } }
           },
           "type": "text",
-          "marginOffset": 1.495000000000001
+          "marginOffset": 1.495000000000001,
+          "groupId": "8f209e48-e15a-4082-9dfe-76749ea2d7f8"
         },
         {
           "opacity": 100,
@@ -2919,7 +2951,8 @@
             "lockedWidth": true,
             "color": { "color": { "r": 0, "g": 0, "b": 0 } }
           },
-          "type": "text"
+          "type": "text",
+          "groupId": "8f209e48-e15a-4082-9dfe-76749ea2d7f8"
         },
         {
           "opacity": 100,
@@ -2935,7 +2968,8 @@
           "focalY": 50,
           "sticker": { "type": "summerTrendInstragramIcon" },
           "id": "f167306c-72bb-4d09-9634-b08e7e22d143",
-          "type": "sticker"
+          "type": "sticker",
+          "groupId": "8f209e48-e15a-4082-9dfe-76749ea2d7f8"
         },
         {
           "opacity": 100,
@@ -2951,7 +2985,8 @@
           "focalY": 50,
           "sticker": { "type": "summerTrendHeart" },
           "id": "695bb9cc-9af6-4a61-b1fe-391c3a9fba0d",
-          "type": "sticker"
+          "type": "sticker",
+          "groupId": "8f209e48-e15a-4082-9dfe-76749ea2d7f8"
         },
         {
           "opacity": 100,
@@ -3035,7 +3070,8 @@
             "lockedWidth": true,
             "color": { "color": { "r": 0, "g": 0, "b": 0 } }
           },
-          "type": "text"
+          "type": "text",
+          "groupId": "8f209e48-e15a-4082-9dfe-76749ea2d7f8"
         }
       ],
       "animations": [],
@@ -3050,7 +3086,14 @@
       },
       "type": "page",
       "id": "019b8706-705a-4145-8dd5-0554a306b9b0",
-      "pageTemplateType": ""
+      "pageTemplateType": "",
+      "groups": {
+        "8f209e48-e15a-4082-9dfe-76749ea2d7f8": {
+          "name": "Card",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [
@@ -4075,7 +4118,8 @@
           "basedOn": "f9bee353-0525-4042-b8b2-96bc8b3bdd22",
           "id": "b88f9de5-4b17-4ea6-9bf1-541e36cd00ae",
           "x": 210,
-          "y": 141
+          "y": 141,
+          "groupId": "6e6bda5a-ba8d-4d39-a64f-9f1671d43608"
         },
         {
           "x": 71,
@@ -4146,7 +4190,8 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "type": "text"
+          "type": "text",
+          "groupId": "687c1444-b285-4137-8f69-250a3d622e50"
         },
         {
           "x": 210,
@@ -4217,7 +4262,8 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "type": "text"
+          "type": "text",
+          "groupId": "90972d0d-c9d9-454f-b0fe-22e80cdc2374"
         },
         {
           "opacity": 100,
@@ -4256,7 +4302,8 @@
             "isOptimized": false,
             "baseColor": "#a6a4a0",
             "isExternal": true
-          }
+          },
+          "groupId": "6e6bda5a-ba8d-4d39-a64f-9f1671d43608"
         },
         {
           "x": 47,
@@ -4296,7 +4343,8 @@
             "isOptimized": false,
             "baseColor": "#c1b5ad",
             "isExternal": true
-          }
+          },
+          "groupId": "90972d0d-c9d9-454f-b0fe-22e80cdc2374"
         },
         {
           "x": 228,
@@ -4336,7 +4384,8 @@
             "isOptimized": false,
             "baseColor": "#a89087",
             "isExternal": true
-          }
+          },
+          "groupId": "687c1444-b285-4137-8f69-250a3d622e50"
         }
       ],
       "backgroundColor": {
@@ -4375,7 +4424,24 @@
           "delay": 600
         }
       ],
-      "pageTemplateType": "list"
+      "pageTemplateType": "list",
+      "groups": {
+        "6e6bda5a-ba8d-4d39-a64f-9f1671d43608": {
+          "name": "Section",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "687c1444-b285-4137-8f69-250a3d622e50": {
+          "name": "Section",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "90972d0d-c9d9-454f-b0fe-22e80cdc2374": {
+          "name": "Section",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     }
   ],
   "current": null,

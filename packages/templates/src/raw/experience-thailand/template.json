@@ -1426,7 +1426,8 @@
           "id": "5cb07f8c-750f-437b-981f-cc3228cdeffd",
           "content": "<span style=\"color: rgba(9, 66, 40, 1); text-transform: uppercase\">1. Phuket</span>",
           "fontSize": 20,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "13341c17-f694-4c40-95d8-5058fa620c4e"
         },
         {
           "x": 170,
@@ -1453,7 +1454,8 @@
           "id": "840cd415-bf08-4186-9649-932beb2e6778",
           "content": "<span style=\"color: #094228; text-transform: uppercase\">2. Koh Phi Phi</span>",
           "fontSize": 20,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "6b41cd4a-107a-4648-a53a-ec4d1eda23cc"
         },
         {
           "x": 170,
@@ -1480,7 +1482,8 @@
           "id": "bbe6302e-87c0-49d2-b16b-ff787059c187",
           "content": "<span style=\"color: #094228; text-transform: uppercase\">3. Koh Lipe</span>",
           "fontSize": 20,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "09a92979-ba20-4a80-af42-f970ee2d2be1"
         },
         {
           "x": 170,
@@ -1507,7 +1510,8 @@
           "id": "44db08e2-0900-40a6-9e52-3ab2325aeab2",
           "content": "<span style=\"color: #094228; text-transform: uppercase\">4. Ko Samui</span>",
           "fontSize": 20,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "5b9a504d-46ff-4058-83e5-bbf6f78f648b"
         },
         {
           "x": 170,
@@ -1534,7 +1538,8 @@
           "id": "adc642e3-a739-4349-9646-cb06d88f51a4",
           "content": "<span style=\"color: rgba(9, 66, 40, 1)\">Start your journey here</span>",
           "fontSize": 18,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "13341c17-f694-4c40-95d8-5058fa620c4e"
         },
         {
           "x": 169,
@@ -1561,7 +1566,8 @@
           "id": "919e9a80-e851-49fe-9660-c67937a14e13",
           "content": "<span style=\"color: rgba(9, 66, 40, 1)\">Scoot around the island</span>",
           "fontSize": 18,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "6b41cd4a-107a-4648-a53a-ec4d1eda23cc"
         },
         {
           "x": 170,
@@ -1588,7 +1594,8 @@
           "id": "63b0bbbf-6ef4-42c1-b017-d7db0db07039",
           "content": "<span style=\"color: rgba(9, 66, 40, 1)\">Best red curry</span>",
           "fontSize": 18,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "09a92979-ba20-4a80-af42-f970ee2d2be1"
         },
         {
           "x": 171,
@@ -1615,7 +1622,8 @@
           "id": "300c43cc-b0b0-45de-97ba-1775028d50bb",
           "content": "<span style=\"color: rgba(9, 66, 40, 1)\">Semi-secluded island</span>",
           "fontSize": 18,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "5b9a504d-46ff-4058-83e5-bbf6f78f648b"
         },
         {
           "x": -2.5,
@@ -1696,7 +1704,8 @@
             "sizes": [],
             "isExternal": true
           },
-          "alt": "Boat near beach in Phuket"
+          "alt": "Boat near beach in Phuket",
+          "groupId": "13341c17-f694-4c40-95d8-5058fa620c4e"
         },
         {
           "x": 0,
@@ -1728,7 +1737,8 @@
             "sizes": [],
             "isExternal": true
           },
-          "alt": "Person riding a scooter on a road"
+          "alt": "Person riding a scooter on a road",
+          "groupId": "6b41cd4a-107a-4648-a53a-ec4d1eda23cc"
         },
         {
           "x": 0,
@@ -1760,7 +1770,8 @@
             "sizes": [],
             "isExternal": true
           },
-          "alt": "Close up of red curry dish"
+          "alt": "Close up of red curry dish",
+          "groupId": "09a92979-ba20-4a80-af42-f970ee2d2be1"
         },
         {
           "x": 0,
@@ -1792,7 +1803,8 @@
             "sizes": [],
             "isExternal": true
           },
-          "alt": "Close up of palm branch"
+          "alt": "Close up of palm branch",
+          "groupId": "5b9a504d-46ff-4058-83e5-bbf6f78f648b"
         }
       ],
       "animations": [
@@ -1896,7 +1908,29 @@
       "type": "page",
       "id": "78da0e6c-6bc7-4680-90a8-2b6bf6e98aaa",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
-      "pageTemplateType": "list"
+      "pageTemplateType": "list",
+      "groups": {
+        "13341c17-f694-4c40-95d8-5058fa620c4e": {
+          "name": "Section",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "6b41cd4a-107a-4648-a53a-ec4d1eda23cc": {
+          "name": "Section",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "09a92979-ba20-4a80-af42-f970ee2d2be1": {
+          "name": "Section",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "5b9a504d-46ff-4058-83e5-bbf6f78f648b": {
+          "name": "Section",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [
@@ -1929,7 +1963,8 @@
           "focalY": 50,
           "mask": { "type": "rectangle" },
           "id": "b542beff-39c1-4787-a8ad-a2a061c51a60",
-          "lockAspectRatio": true
+          "lockAspectRatio": true,
+          "groupId": "af2d1be9-be5a-4f80-8d7f-508fb15ea9b2"
         },
         {
           "x": 252,
@@ -1947,7 +1982,8 @@
           "mask": { "type": "rectangle" },
           "basedOn": "b542beff-39c1-4787-a8ad-a2a061c51a60",
           "id": "12b82d84-167c-49b1-8efd-afae77b857f0",
-          "lockAspectRatio": true
+          "lockAspectRatio": true,
+          "groupId": "84a09ec9-f5b8-4fd9-9095-4f5dec1a5db2"
         },
         {
           "x": 277,
@@ -1974,7 +2010,8 @@
           "id": "7ea7ab1b-9bcd-45d6-941d-2c1143cadf0f",
           "content": "<span style=\"color: rgba(9, 66, 40, 1); text-transform: uppercase\">5 Spiciest</span>\n<span style=\"color: rgba(9, 66, 40, 1); text-transform: uppercase\">Dishes</span>",
           "fontSize": 20,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "af2d1be9-be5a-4f80-8d7f-508fb15ea9b2"
         },
         {
           "x": 278,
@@ -2028,7 +2065,8 @@
           "id": "fcdc8182-cfb1-4010-82cd-91b5f235f0fc",
           "content": "<span style=\"color: rgba(9, 66, 40, 1); text-transform: uppercase\">Catch The Swimming Monkeys</span>",
           "fontSize": 20,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "84a09ec9-f5b8-4fd9-9095-4f5dec1a5db2"
         },
         {
           "x": 41,
@@ -2166,7 +2204,8 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": { "type": "travelFacebookIcon" },
-          "id": "c6a706c8-7f36-4b04-bb5c-3d3d9d30498a"
+          "id": "c6a706c8-7f36-4b04-bb5c-3d3d9d30498a",
+          "groupId": "dc6f0dc5-613f-46b7-ad00-0c5e7e736f98"
         },
         {
           "opacity": 100,
@@ -2182,7 +2221,8 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": { "type": "travelInstagramIcon" },
-          "id": "3e52ff79-b15b-4f2c-ba7d-daba7f967904"
+          "id": "3e52ff79-b15b-4f2c-ba7d-daba7f967904",
+          "groupId": "dc6f0dc5-613f-46b7-ad00-0c5e7e736f98"
         },
         {
           "opacity": 100,
@@ -2198,7 +2238,8 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": { "type": "travelYouTubeIcon" },
-          "id": "276d0d4c-e1d1-47c9-99bf-fe3ebc86615d"
+          "id": "276d0d4c-e1d1-47c9-99bf-fe3ebc86615d",
+          "groupId": "dc6f0dc5-613f-46b7-ad00-0c5e7e736f98"
         },
         {
           "opacity": 100,
@@ -2214,7 +2255,8 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": { "type": "travelTwitterIcon" },
-          "id": "ce560b5f-13b9-4a5e-85ff-cbc41ea982e8"
+          "id": "ce560b5f-13b9-4a5e-85ff-cbc41ea982e8",
+          "groupId": "dc6f0dc5-613f-46b7-ad00-0c5e7e736f98"
         }
       ],
       "animations": [
@@ -2294,7 +2336,24 @@
       "type": "page",
       "id": "9a45a0b2-0261-4298-aef7-c08b99771787",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
-      "pageTemplateType": "list"
+      "pageTemplateType": "list",
+      "groups": {
+        "dc6f0dc5-613f-46b7-ad00-0c5e7e736f98": {
+          "name": "Share",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "84a09ec9-f5b8-4fd9-9095-4f5dec1a5db2": {
+          "name": "Monkeys",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "af2d1be9-be5a-4f80-8d7f-508fb15ea9b2": {
+          "name": "Dishes",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     }
   ],
   "current": null,
