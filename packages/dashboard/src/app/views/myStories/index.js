@@ -23,11 +23,10 @@ import { useEffect, useMemo, useRef } from '@googleforcreators/react';
  * Internal dependencies
  */
 import { ScrollToTop, Layout } from '../../../components';
-import { STORY_STATUSES } from '../../../constants';
 import { useStoryView } from '../../../utils';
 import { useConfig } from '../../config';
 import useApi from '../../api/useApi';
-import useFilters from './filters/useFilters';
+import useStoryFilters from './filters/useStoryFilters';
 import Content from './content';
 import Header from './header';
 
@@ -71,10 +70,10 @@ function MyStories() {
       totalStoriesByStatus,
     })
   );
-  const { filters, filtersObject } = useFilters(
-    ({ state: { filters, filtersObject } }) => ({
-      filters,
+  const { filtersObject, sortObject } = useStoryFilters(
+    ({ state: { filtersObject, sortObject } }) => ({
       filtersObject,
+      sortObject,
     })
   );
 
@@ -89,41 +88,21 @@ function MyStories() {
     };
   }, []);
 
-  const {
-    filter: statusFilter,
-    filters: dropDownFilters,
-    page,
-    search,
-    sort,
-    view,
-    showStoriesWhileLoading,
-    initialPageReady,
-  } = useStoryView({
-    statusFilters: STORY_STATUSES,
-    filtersObject,
-    isLoading,
-    totalPages,
-  });
+  const { page, view, showStoriesWhileLoading, initialPageReady } =
+    useStoryView({
+      filtersObject,
+      sortObject,
+      isLoading,
+      totalPages,
+    });
 
   useEffect(() => {
     fetchStories({
       page: page.value,
-      searchTerm: search.keyword,
-      sortDirection: sort.direction,
-      sortOption: sort.value,
-      status: statusFilter.value,
-      filters: dropDownFilters.value,
+      filters: filtersObject,
+      sort: sortObject,
     });
-  }, [
-    fetchStories,
-    statusFilter.value,
-    dropDownFilters.value,
-    page.value,
-    search.keyword,
-    sort.direction,
-    sort.value,
-    apiCallbacks,
-  ]);
+  }, [fetchStories, filtersObject, sortObject, page.value, apiCallbacks]);
 
   const orderedStories = useMemo(() => {
     return storiesOrderById.map((storyId) => {
@@ -135,10 +114,6 @@ function MyStories() {
     <Layout.Provider>
       <Header
         initialPageReady={initialPageReady}
-        filter={statusFilter}
-        filters={filters}
-        search={search}
-        sort={sort}
         stories={orderedStories}
         totalStoriesByStatus={totalStoriesByStatus}
         view={view}
@@ -147,15 +122,12 @@ function MyStories() {
       <Content
         allPagesFetched={allPagesFetched}
         canViewDefaultTemplates={canViewDefaultTemplates}
-        filter={statusFilter}
         filtersObject={filtersObject}
         loading={{
           isLoading: isLoading,
           showStoriesWhileLoading,
         }}
         page={page}
-        search={search}
-        sort={sort}
         stories={orderedStories}
         storyActions={{
           duplicateStory,

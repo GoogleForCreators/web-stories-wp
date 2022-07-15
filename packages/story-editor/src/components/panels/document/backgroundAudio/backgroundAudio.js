@@ -31,11 +31,30 @@ import { useConfig } from '../../../../app';
 import { Row } from '../../../form';
 import { SimplePanel } from '../../panel';
 import BackgroundAudioPanelContent from '../../shared/media/backgroundAudioPanelContent';
+import useHighlights from '../../../../app/highlights/useHighlights';
+import states from '../../../../app/highlights/states';
+import { styles } from '../../../../app/highlights';
 
 const HelperText = styled(Text).attrs({
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
 })`
   color: ${({ theme }) => theme.colors.fg.secondary};
+`;
+
+const HighlightRow = styled(Row).attrs({
+  spaceBetween: false,
+})`
+  position: relative;
+  &::after {
+    content: '';
+    position: absolute;
+    top: -10px;
+    bottom: -10px;
+    left: -20px;
+    right: -10px;
+    ${({ isHighlighted }) => isHighlighted && styles.FLASH}
+    pointer-events: none;
+  }
 `;
 
 function BackgroundAudioPanel({ nameOverride }) {
@@ -50,6 +69,13 @@ function BackgroundAudioPanel({ nameOverride }) {
       },
       actions: { updateStory },
     }) => ({ backgroundAudio, updateStory })
+  );
+
+  const { highlightBackgroundAudio, resetHighlight } = useHighlights(
+    (state) => ({
+      highlightBackgroundAudio: state[states.BACKGROUND_AUDIO],
+      resetHighlight: state.onFocusOut,
+    })
   );
 
   const updateBackgroundAudio = useCallback(
@@ -70,6 +96,7 @@ function BackgroundAudioPanel({ nameOverride }) {
       name={nameOverride || 'backgroundAudio'}
       title={__('Background Audio', 'web-stories')}
       collapsedByDefault
+      isPersistable={!highlightBackgroundAudio}
     >
       <Row>
         <HelperText>
@@ -79,10 +106,15 @@ function BackgroundAudioPanel({ nameOverride }) {
           )}
         </HelperText>
       </Row>
-      <BackgroundAudioPanelContent
-        backgroundAudio={backgroundAudio}
-        updateBackgroundAudio={updateBackgroundAudio}
-      />
+      <HighlightRow
+        isHighlighted={highlightBackgroundAudio?.showEffect}
+        onAnimationEnd={() => resetHighlight()}
+      >
+        <BackgroundAudioPanelContent
+          backgroundAudio={backgroundAudio}
+          updateBackgroundAudio={updateBackgroundAudio}
+        />
+      </HighlightRow>
     </SimplePanel>
   );
 }

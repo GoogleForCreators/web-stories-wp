@@ -29,20 +29,52 @@ import {
 } from '../../../../../constants';
 import { renderWithProviders } from '../../../../../testUtils';
 import LayoutProvider from '../../../../../components/layout/provider';
+import useTemplateFilters from '../../filters/useTemplateFilters';
 import Header from '..';
 
+jest.mock('../../filters/useTemplateFilters', () => ({
+  ...jest.requireActual('../../filters/useTemplateFilters'),
+  __esModule: true,
+  default: jest.fn(),
+}));
+
+const mockUseTemplateFilters = useTemplateFilters;
+
+const updateSort = jest.fn();
+const updateFilter = jest.fn();
+
+const mockFilterState = {
+  filters: [
+    {
+      key: 'search',
+      filterId: null,
+    },
+    {
+      key: 'status',
+      filterId: TEMPLATES_GALLERY_STATUS.ALL,
+    },
+  ],
+  filtersObject: {
+    status: TEMPLATES_GALLERY_STATUS.ALL,
+  },
+  sortObject: {
+    orderby: TEMPLATES_GALLERY_SORT_OPTIONS.POPULAR,
+  },
+  registerFilters: () => {},
+  updateFilter,
+  updateSort,
+};
+
 describe('Explore Templates <Header />', function () {
+  beforeEach(() => {
+    mockUseTemplateFilters.mockImplementation(() => mockFilterState);
+  });
+
   it('should have results label that says "Viewing all templates" on initial page view', function () {
     renderWithProviders(
       <LayoutProvider>
         <Header
-          filter={{ value: TEMPLATES_GALLERY_STATUS.ALL }}
           totalTemplates={3}
-          search={{ keyword: '', setKeyword: jest.fn() }}
-          sort={{
-            value: TEMPLATES_GALLERY_SORT_OPTIONS.POPULAR,
-            set: jest.fn(),
-          }}
           view={{
             style: VIEW_STYLE.GRID,
             pageSize: { width: 200, height: 300 },
@@ -56,17 +88,10 @@ describe('Explore Templates <Header />', function () {
   });
 
   it('should call the set sort function when a new sort is selected', function () {
-    const setSortFn = jest.fn();
     renderWithProviders(
       <LayoutProvider>
         <Header
-          filter={{ value: TEMPLATES_GALLERY_STATUS.ALL }}
           totalTemplates={8}
-          search={{ keyword: '', setKeyword: jest.fn() }}
-          sort={{
-            value: TEMPLATES_GALLERY_SORT_OPTIONS.POPULAR,
-            set: setSortFn,
-          }}
           view={{
             style: VIEW_STYLE.GRID,
             pageSize: { width: 200, height: 300 },
@@ -78,20 +103,14 @@ describe('Explore Templates <Header />', function () {
     fireEvent.click(screen.getByLabelText('Choose sort option for display'));
     fireEvent.click(screen.getByText('Recent'));
 
-    expect(setSortFn).toHaveBeenCalledWith('recent');
+    expect(updateSort).toHaveBeenCalledWith({ orderby: 'recent' });
   });
 
   it('should not render with search when features:{enableInProgressTemplateActions is false}', function () {
     renderWithProviders(
       <LayoutProvider>
         <Header
-          filter={{ value: TEMPLATES_GALLERY_STATUS.ALL }}
           totalTemplates={8}
-          search={{ keyword: '', setKeyword: jest.fn() }}
-          sort={{
-            value: TEMPLATES_GALLERY_SORT_OPTIONS.POPULAR,
-            set: jest.fn,
-          }}
           view={{
             style: VIEW_STYLE.GRID,
             pageSize: { width: 200, height: 300 },
