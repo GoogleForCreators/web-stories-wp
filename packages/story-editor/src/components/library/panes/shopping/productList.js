@@ -80,7 +80,7 @@ function ProductList({
               product={product}
               canAddMore={canAddMore}
               isOnPage={onPageProducts.some(
-                (item) => item.product?.productId === product?.productId
+                (item) => item.product.productId === product?.productId
               )}
               onClick={onClick}
               onFocus={(evt) => {

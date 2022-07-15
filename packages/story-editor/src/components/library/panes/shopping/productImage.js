@@ -80,7 +80,7 @@ function DraggableProductImage({ product, isOnPage }) {
   return (
     <ProductImageWrap>
       <ProductImage product={product} />
-      {!isOnPage && (
+      {!isOnPage && src && (
         <LibraryMoveable
           type="product"
           elementProps={{ product }}

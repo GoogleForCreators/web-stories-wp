@@ -266,6 +266,8 @@ function LibraryMoveable({
           ...elementProps,
           width: 25,
           height: 25,
+          x: 48,
+          y: 0,
         });
       } else {
         insertElement(type, {
