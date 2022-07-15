@@ -54,6 +54,8 @@ function useFullbleedMediaAsBackground() {
   const { showSnackbar } = useSnackbar();
   const getElementPolygon = useElementPolygon();
 
+  const buffer = 2;
+
   const handleFullbleedMediaAsBackground = (selectedElement) => {
     if (
       isDefaultBackground &&
@@ -61,10 +63,11 @@ function useFullbleedMediaAsBackground() {
     ) {
       const elPolygon = getElementPolygon(selectedElement);
       const fullbleedBox = fullbleedContainer.getBoundingClientRect();
+      // We use 2 pixel buffer from each edge for setting the background media.
       const bgPolygon = new SAT.Box(
-        new SAT.Vector(fullbleedBox.x, fullbleedBox.y),
-        fullbleedBox.width,
-        fullbleedBox.height
+        new SAT.Vector(fullbleedBox.x + buffer, fullbleedBox.y + buffer),
+        fullbleedBox.width - buffer * 2,
+        fullbleedBox.height - buffer * 2
       ).toPolygon();
       const response = new SAT.Response();
       SAT.testPolygonPolygon(elPolygon, bgPolygon, response);
