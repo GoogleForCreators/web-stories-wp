@@ -14,5 +14,25 @@
  * limitations under the License.
  */
 
-export const UPDATE_FILTER = 'UPDATE_FILTER';
-export const REGISTER_FILTERS = 'REGISTER_FILTERS';
+/**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import StoryFiltersProvider from '../myStories/filters/StoryFiltersProvider';
+import TemplateFiltersProvider from '../exploreTemplates/filters/TemplateFiltersProvider';
+
+export default function FiltersProvider({ children }) {
+  return (
+    <StoryFiltersProvider>
+      <TemplateFiltersProvider>{children}</TemplateFiltersProvider>
+    </StoryFiltersProvider>
+  );
+}
+
+FiltersProvider.propTypes = {
+  children: PropTypes.node,
+};

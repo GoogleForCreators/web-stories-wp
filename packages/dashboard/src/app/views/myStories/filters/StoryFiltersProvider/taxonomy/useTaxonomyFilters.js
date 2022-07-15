@@ -22,7 +22,7 @@ import { useCallback } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
-import useApi from '../../../../api/useApi';
+import useApi from '../../../../../api/useApi';
 
 const cachedPrimaryOptions = {};
 

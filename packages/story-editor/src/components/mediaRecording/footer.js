@@ -41,12 +41,19 @@ import {
 /**
  * Internal dependencies
  */
+import { BackgroundAudioPropTypeShape } from '@googleforcreators/elements';
 import getResourceFromLocalFile from '../../app/media/utils/getResourceFromLocalFile';
 import { Z_INDEX_RECORDING_MODE } from '../../constants/zIndex';
 import { FooterArea } from '../canvas/layout';
 import useUploadWithPreview from '../canvas/useUploadWithPreview';
-import useMediaRecording from './useMediaRecording';
+import { useUploader } from '../../app/uploader';
+import { useConfig, useStory } from '../../app';
+import useHighlights from '../../app/highlights/useHighlights';
+import states from '../../app/highlights/states';
+import useFFmpeg from '../../app/media/utils/useFFmpeg';
+import objectPick from '../../utils/objectPick';
 import { COUNTDOWN_TIME_IN_SECONDS } from './constants';
+import useMediaRecording from './useMediaRecording';
 
 const StyledFooter = styled(FooterArea)`
   display: flex;
@@ -132,6 +139,7 @@ function Footer({ captureImage, videoRef }) {
     toggleRecordingMode,
     getMediaStream,
     resetState,
+    hasVideo,
   } = useMediaRecording(({ state, actions }) => ({
     status: state.status,
     file: state.file,
@@ -140,6 +148,7 @@ function Footer({ captureImage, videoRef }) {
     countdown: state.countdown,
     duration: state.duration,
     isCountingDown: state.isCountingDown,
+    hasVideo: state.hasVideo,
     hasMediaToInsert: Boolean(state.mediaBlobUrl),
     startRecording: actions.startRecording,
     stopRecording: actions.stopRecording,
@@ -155,6 +164,10 @@ function Footer({ captureImage, videoRef }) {
   const uploadWithPreview = useUploadWithPreview();
 
   const speak = useLiveRegion();
+
+  const {
+    allowedMimeTypes: { audio: allowedAudioMimeTypes },
+  } = useConfig();
 
   const onRetry = useCallback(async () => {
     resetState();
@@ -276,6 +289,46 @@ function Footer({ captureImage, videoRef }) {
     speak,
   ]);
 
+  const {
+    actions: { uploadFile },
+  } = useUploader();
+
+  const { updateStory } = useStory(({ actions: { updateStory } }) => ({
+    updateStory,
+  }));
+  const { setHighlights } = useHighlights(({ setHighlights }) => ({
+    setHighlights,
+  }));
+
+  const { convertToMp3 } = useFFmpeg();
+
+  const onAudioInsert = async () => {
+    setIsInserting(true);
+    speak(__('Inserting…', 'web-stories'));
+
+    const mp3File = await convertToMp3(file);
+    const resource = await uploadFile(
+      mp3File,
+      {
+        mediaSource: 'recording',
+      },
+      allowedAudioMimeTypes
+    );
+    const backgroundAudio = {
+      resource: objectPick(resource, Object.keys(BackgroundAudioPropTypeShape)),
+    };
+
+    setHighlights({
+      highlight: states.BACKGROUND_AUDIO,
+    });
+
+    updateStory({
+      properties: { backgroundAudio },
+    });
+    setIsInserting(false);
+    toggleRecordingMode();
+  };
+
   if ('acquiring_media' === status) {
     return null;
   }
@@ -287,10 +340,15 @@ function Footer({ captureImage, videoRef }) {
           <RetryButton onClick={onRetry} disabled={isInserting}>
             {__('Retry', 'web-stories')}
           </RetryButton>
-          <InsertButton onClick={onInsert} disabled={isInserting}>
+          <InsertButton
+            onClick={hasVideo ? onInsert : onAudioInsert}
+            disabled={isInserting}
+          >
             {isInserting
               ? __('Inserting…', 'web-stories')
-              : __('Insert', 'web-stories')}
+              : hasVideo
+              ? __('Insert', 'web-stories')
+              : __('Insert background audio', 'web-stories')}
           </InsertButton>
         </>
       )}
@@ -301,18 +359,25 @@ function Footer({ captureImage, videoRef }) {
               {__('Stop Recording', 'web-stories')}
             </StopButton>
           )}
-          {!isRecording && !isCountingDown && (
-            <>
+          {!isRecording &&
+            !isCountingDown &&
+            (hasVideo ? (
+              <>
+                <RecordingButton onClick={onStart}>
+                  <Icons.Camera width={24} height={24} aria-hidden />
+                  {__('Record Video', 'web-stories')}
+                </RecordingButton>
+                <CaptureButton onClick={onCapture}>
+                  <Icons.PhotoCamera width={24} height={24} aria-hidden />
+                  {__('Take a photo', 'web-stories')}
+                </CaptureButton>
+              </>
+            ) : (
               <RecordingButton onClick={onStart}>
-                <Icons.Camera width={24} height={24} aria-hidden />
-                {__('Record Video', 'web-stories')}
+                <Icons.Mic width={24} height={24} aria-hidden />
+                {__('Record Audio', 'web-stories')}
               </RecordingButton>
-              <CaptureButton onClick={onCapture}>
-                <Icons.PhotoCamera width={24} height={24} aria-hidden />
-                {__('Take a photo', 'web-stories')}
-              </CaptureButton>
-            </>
-          )}
+            ))}
         </>
       )}
     </StyledFooter>
