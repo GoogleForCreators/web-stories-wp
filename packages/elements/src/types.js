@@ -29,14 +29,17 @@ import { MULTIPLE_VALUE, BACKGROUND_TEXT_MODE, OverlayType } from './constants';
 
 const StoryPropTypes = {};
 
-export const BackgroundAudioPropType = PropTypes.shape({
+export const BackgroundAudioPropTypeShape = {
   id: PropTypes.number,
   src: PropTypes.string,
   length: PropTypes.number,
   lengthFormatted: PropTypes.string,
   mimeType: PropTypes.string,
   needsProxy: PropTypes.bool,
-});
+};
+export const BackgroundAudioPropType = PropTypes.shape(
+  BackgroundAudioPropTypeShape
+);
 
 StoryPropTypes.mask = PropTypes.shape({
   type: PropTypes.string.isRequired,

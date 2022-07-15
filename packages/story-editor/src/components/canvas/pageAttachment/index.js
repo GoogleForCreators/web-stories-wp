@@ -110,15 +110,13 @@ const Tooltip = styled.div`
   text-align: center;
 `;
 
-const LinkImage = styled.div`
+const LinkImage = styled.img`
   height: 24px;
   width: 24px;
   vertical-align: middle;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: 50%;
   border-radius: 50%;
-  background-image: url('${({ icon }) => icon}') !important;
+  border: 0 none;
+  object-fit: contain;
 `;
 
 const spacing = { x: 8 };
@@ -155,7 +153,12 @@ function PageAttachment({ pageAttachment = {} }) {
             <ArrowBar fill={bgColor} />
             <OutlinkChip bgColor={bgColor} $factor={dataToEditorY}>
               {icon ? (
-                <LinkImage icon={icon} />
+                <LinkImage
+                  src={icon}
+                  alt={__('Site Icon', 'web-stories')}
+                  decoding="async"
+                  crossOrigin="anonymous"
+                />
               ) : (
                 <DefaultIcon
                   fill={fgColor}

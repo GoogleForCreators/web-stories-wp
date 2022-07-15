@@ -36,21 +36,20 @@ import { APP_ROUTES } from '../../../../constants';
 import { Layout, StandardViewContentGutter } from '../../../../components';
 import { StoriesPropType, StoryActionsPropType } from '../../../../types';
 import {
-  FilterPropTypes,
   ViewPropTypes,
   PagePropTypes,
-  SortPropTypes,
   ShowStoriesWhileLoadingPropType,
 } from '../../../../utils/useStoryView';
 import { EmptyContentMessage } from '../../shared';
 import StoriesView from './storiesView';
 
-function NoAvailableContent({ keyword, filtersObject }) {
-  if (keyword) {
+function NoAvailableContent({ filtersObject }) {
+  const { search } = filtersObject;
+  if (search) {
     return sprintf(
       /* translators: %s: search term. */
       __('Sorry, we couldn\'t find any results matching "%s"', 'web-stories'),
-      keyword
+      search
     );
   } else if (Object.keys(filtersObject).length !== 0) {
     return __("Sorry, we couldn't find any results", 'web-stories');
@@ -60,18 +59,14 @@ function NoAvailableContent({ keyword, filtersObject }) {
 }
 NoAvailableContent.propTypes = {
   filtersObject: PropTypes.object,
-  keyword: PropTypes.string,
 };
 
 function Content({
   allPagesFetched,
   canViewDefaultTemplates,
-  filter,
   filtersObject = {},
   loading,
   page,
-  search,
-  sort,
   stories,
   storyActions,
   view,
@@ -82,8 +77,6 @@ function Content({
         {stories.length > 0 ? (
           <>
             <StoriesView
-              filterValue={filter.value}
-              sort={sort}
               storyActions={storyActions}
               stories={stories}
               view={view}
@@ -102,29 +95,27 @@ function Content({
             />
           </>
         ) : (
-          <EmptyContentMessage>
-            <Headline
-              size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-              as="h3"
-            >
-              <NoAvailableContent
-                keyword={search?.keyword}
-                filtersObject={filtersObject}
-              />
-            </Headline>
-            {!search?.keyword &&
-              Object.keys(filtersObject).length === 0 &&
-              canViewDefaultTemplates && (
-                <Button
-                  type={BUTTON_TYPES.PRIMARY}
-                  size={BUTTON_SIZES.MEDIUM}
-                  as="a"
-                  href={resolveRoute(APP_ROUTES.TEMPLATES_GALLERY)}
-                >
-                  {__('Explore Templates', 'web-stories')}
-                </Button>
-              )}
-          </EmptyContentMessage>
+          !loading?.isLoading && (
+            <EmptyContentMessage>
+              <Headline
+                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                as="h3"
+              >
+                <NoAvailableContent filtersObject={filtersObject} />
+              </Headline>
+              {Object.keys(filtersObject).length === 0 &&
+                canViewDefaultTemplates && (
+                  <Button
+                    type={BUTTON_TYPES.PRIMARY}
+                    size={BUTTON_SIZES.MEDIUM}
+                    as="a"
+                    href={resolveRoute(APP_ROUTES.TEMPLATES_GALLERY)}
+                  >
+                    {__('Explore Templates', 'web-stories')}
+                  </Button>
+                )}
+            </EmptyContentMessage>
+          )
         )}
       </StandardViewContentGutter>
     </Layout.Scrollable>
@@ -133,15 +124,12 @@ function Content({
 Content.propTypes = {
   allPagesFetched: PropTypes.bool,
   canViewDefaultTemplates: PropTypes.bool,
-  filter: FilterPropTypes,
   filtersObject: PropTypes.object,
   loading: PropTypes.shape({
     isLoading: PropTypes.bool,
     showStoriesWhileLoading: ShowStoriesWhileLoadingPropType,
   }),
   page: PagePropTypes,
-  search: PropTypes.object,
-  sort: SortPropTypes,
   stories: StoriesPropType,
   storyActions: StoryActionsPropType,
   view: ViewPropTypes,

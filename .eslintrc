@@ -92,7 +92,7 @@
     "jsx-a11y/label-has-for": "off",
     "jsx-a11y/media-has-caption": [ "error", {
       "audio": [ "Audio" ],
-      "video": [ "Video", "FadedVideo", "CropVideo" ],
+      "video": [ "Video", "FadedVideo", "CropVideo", "StyledVideo" ],
       "track": [ "Track" ]
     }],
     "no-restricted-properties": "error",

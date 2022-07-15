@@ -58,6 +58,7 @@ import {
   PHOTO_FILE_TYPE,
   VideoWrapper,
   Video,
+  Audio,
   Photo,
 } from '../mediaRecording';
 import { PageTitleArea } from './layout';
@@ -76,6 +77,7 @@ function MediaRecordingLayer() {
     getMediaStream,
     setFile,
     needsPermissions,
+    hasVideo,
     hasAudio,
     isGif,
     toggleIsGif,
@@ -89,6 +91,7 @@ function MediaRecordingLayer() {
     liveStream: state.liveStream,
     mediaBlob: state.mediaBlob,
     mediaBlobUrl: state.mediaBlobUrl,
+    hasVideo: state.hasVideo,
     hasAudio: state.hasAudio,
     isGif: state.isGif,
     needsPermissions:
@@ -160,7 +163,7 @@ function MediaRecordingLayer() {
     resetStream();
     getMediaStream();
     // eslint-disable-next-line react-hooks/exhaustive-deps -- Only want to act on actual input changes.
-  }, [audioInput, videoInput]);
+  }, [audioInput, videoInput, hasVideo]);
 
   useEffect(() => {
     if (isReady) {
@@ -202,26 +205,40 @@ function MediaRecordingLayer() {
             <Wrapper>
               {!isImageCapture && (
                 <>
-                  {mediaBlobUrl && (
+                  {mediaBlobUrl && hasVideo && (
                     <VideoMode value={!isGif} onChange={onToggleVideoMode} />
                   )}
                   <VideoWrapper>
-                    {mediaBlobUrl && (
-                      <>
-                        {/* eslint-disable-next-line jsx-a11y/media-has-caption -- We don't have tracks for this. */}
-                        <Video
-                          ref={videoRef}
-                          src={mediaBlobUrl}
-                          muted={isMuted}
-                          loop={isGif}
-                          tabIndex={0}
-                        />
-                        {!isGif && <PlayPauseButton videoRef={videoRef} />}
-                      </>
-                    )}
-                    {!mediaBlob && !mediaBlobUrl && liveStream && (
-                      <Video ref={streamRef} muted />
-                    )}
+                    {mediaBlobUrl &&
+                      (hasVideo ? (
+                        <>
+                          {/* eslint-disable-next-line jsx-a11y/media-has-caption -- We don't have tracks for this. */}
+                          <Video
+                            ref={videoRef}
+                            src={mediaBlobUrl}
+                            muted={isMuted}
+                            loop={isGif}
+                            tabIndex={0}
+                          />
+                          {!isGif && <PlayPauseButton videoRef={videoRef} />}
+                        </>
+                      ) : (
+                        <>
+                          {/* eslint-disable-next-line jsx-a11y/media-has-caption -- No captions wanted/needed here. */}
+                          <audio controls="controls" src={mediaBlobUrl} />
+                        </>
+                      ))}
+                    {!mediaBlob &&
+                      !mediaBlobUrl &&
+                      liveStream &&
+                      (hasVideo ? (
+                        <Video ref={streamRef} muted />
+                      ) : (
+                        <>
+                          {/* eslint-disable-next-line jsx-a11y/media-has-caption -- No an actual <audio> tag. */}
+                          <Audio liveStream={liveStream} />
+                        </>
+                      ))}
                   </VideoWrapper>
                 </>
               )}
