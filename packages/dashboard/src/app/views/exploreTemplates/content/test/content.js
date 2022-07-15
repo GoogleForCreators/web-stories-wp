@@ -22,11 +22,16 @@ import { screen } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { TEMPLATES_GALLERY_STATUS, VIEW_STYLE } from '../../../../../constants';
+import {
+  TEMPLATES_GALLERY_SORT_OPTIONS,
+  TEMPLATES_GALLERY_STATUS,
+  VIEW_STYLE,
+} from '../../../../../constants';
 import { renderWithProviders } from '../../../../../testUtils';
 import LayoutProvider from '../../../../../components/layout/provider';
 import Content from '..';
 import { ConfigProvider } from '../../../../config';
+import useTemplateFilters from '../../filters/useTemplateFilters';
 
 const fakeTemplates = [
   {
@@ -61,14 +66,49 @@ const fakeTemplates = [
   },
 ];
 
+jest.mock('../../filters/useTemplateFilters', () => ({
+  ...jest.requireActual('../../filters/useTemplateFilters'),
+  __esModule: true,
+  default: jest.fn(),
+}));
+
+const mockUseTemplateFilters = useTemplateFilters;
+
+const updateSort = jest.fn();
+const updateFilter = jest.fn();
+
+const mockFilterState = {
+  filters: [
+    {
+      key: 'search',
+      filterId: null,
+    },
+    {
+      key: 'status',
+      filterId: TEMPLATES_GALLERY_STATUS.ALL,
+    },
+  ],
+  filtersObject: {
+    status: TEMPLATES_GALLERY_STATUS.ALL,
+  },
+  sortObject: {
+    orderby: TEMPLATES_GALLERY_SORT_OPTIONS.POPULAR,
+  },
+  registerFilters: () => {},
+  updateFilter,
+  updateSort,
+};
+
 describe('Explore Templates <Content />', function () {
+  beforeEach(() => {
+    mockUseTemplateFilters.mockImplementation(() => mockFilterState);
+  });
+
   it('should render the content grid with the correct template count.', function () {
     renderWithProviders(
       <ConfigProvider config={{ cdnURL: 'cdn.example.com' }}>
         <LayoutProvider>
           <Content
-            filter={{ view: TEMPLATES_GALLERY_STATUS.ALL }}
-            search={{ keyword: '' }}
             templates={fakeTemplates}
             totalTemplates={3}
             page={{
@@ -92,8 +132,6 @@ describe('Explore Templates <Content />', function () {
     renderWithProviders(
       <LayoutProvider>
         <Content
-          filter={{ view: TEMPLATES_GALLERY_STATUS.ALL }}
-          search={{ keyword: '' }}
           templates={[]}
           totalTemplates={0}
           page={{
@@ -115,8 +153,7 @@ describe('Explore Templates <Content />', function () {
     renderWithProviders(
       <LayoutProvider>
         <Content
-          filter={{ view: TEMPLATES_GALLERY_STATUS.ALL }}
-          search={{ keyword: 'scooby dooby doo' }}
+          search={'scooby dooby doo'}
           templates={[]}
           totalTemplates={0}
           page={{

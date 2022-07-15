@@ -31,27 +31,25 @@ import { clamp } from '@googleforcreators/units';
 /**
  * Internal dependencies
  */
-import { SORT_DIRECTION, STORY_SORT_OPTIONS, VIEW_STYLE } from '../constants';
+import {
+  DEFAULT_FILTERS,
+  SORT_DIRECTION,
+  STORY_SORT_OPTIONS,
+  VIEW_STYLE,
+} from '../constants';
 import { PageSizePropType } from '../types';
 import usePagePreviewSize from './usePagePreviewSize';
 
 export default function useStoryView({
-  statusFilters,
-  filtersObject,
+  filtersObject = DEFAULT_FILTERS.filters,
+  sortObject = DEFAULT_FILTERS.sort,
   isLoading = false,
   totalPages,
 }) {
   const [viewStyle, setViewStyle] = useState(VIEW_STYLE.GRID);
-  const [sort, _setSort] = useState(STORY_SORT_OPTIONS.LAST_MODIFIED);
+  const [sort, _setSort] = useState(sortObject);
   const [filters, _setFilters] = useState(filtersObject);
-  const [filter, _setFilter] = useState(
-    statusFilters.length > 0 ? statusFilters[0].value : null
-  );
-  const [sortDirection, _setSortDirection] = useState(SORT_DIRECTION.DESC);
   const [page, setPage] = useState(1);
-  const [searchKeyword, _setSearchKeyword] = useState('');
-  const [authorFilterId, _setAuthorFilterId] = useState(null);
-  const [queriedAuthors, setQueriedAuthors] = useState([]);
   const showStoriesWhileLoading = useRef(false);
   const [initialPageReady, setInitialPageReady] = useState(false);
 
@@ -84,69 +82,31 @@ export default function useStoryView({
     [setPageClamped]
   );
 
-  const setFilter = useCallback(
-    (newFilter) => {
-      _setFilter(newFilter);
-      setPageClamped(1);
-    },
-    [setPageClamped]
-  );
-
-  const setSortDirection = useCallback(
-    (newSortDirection) => {
-      if (newSortDirection !== sortDirection) {
-        _setSortDirection(newSortDirection);
-      }
-    },
-    [sortDirection]
-  );
-
   const toggleViewStyle = useCallback(() => {
     const newViewStyle =
       viewStyle === VIEW_STYLE.LIST ? VIEW_STYLE.GRID : VIEW_STYLE.LIST;
 
     setViewStyle(newViewStyle);
-
-    if (newViewStyle === VIEW_STYLE.LIST) {
-      const newSortDirection =
-        sort === STORY_SORT_OPTIONS.NAME
-          ? SORT_DIRECTION.ASC
-          : SORT_DIRECTION.DESC;
-
-      setSortDirection(newSortDirection);
-    }
-  }, [sort, setSortDirection, viewStyle, setViewStyle]);
-
-  const setSearchKeyword = useCallback(
-    (newSearchKeyword) => {
-      setPageClamped(1);
-      _setSearchKeyword(newSearchKeyword);
-    },
-    [setPageClamped]
-  );
+  }, [viewStyle, setViewStyle]);
 
   const requestNextPage = useCallback(() => {
     showStoriesWhileLoading.current = true;
     setPageClamped(page + 1);
   }, [page, setPageClamped]);
 
-  const toggleAuthorFilterId = useCallback(({ id }) => {
-    _setAuthorFilterId((prevFilterId) => (prevFilterId === id ? null : id));
-  }, []);
-
   useEffect(() => {
-    if (searchKeyword.length) {
+    if (filters?.search?.length) {
       trackEvent('search', {
         search_type: 'dashboard_stories',
-        search_term: searchKeyword,
-        search_filter: filter,
-        search_author_filter: authorFilterId,
-        search_order: sortDirection,
-        search_orderby: sort,
+        search_term: filters.search,
+        search_filter: filters.status,
+        search_author_filter: filters.author,
+        search_order: sort.order,
+        search_orderby: sort.orderby,
         search_view: viewStyle,
       });
     }
-  }, [searchKeyword, filter, sortDirection, sort, viewStyle, authorFilterId]);
+  }, [filters, sort, viewStyle]);
 
   useEffect(() => {
     // reset ref state after request is finished
@@ -168,6 +128,12 @@ export default function useStoryView({
     }
   }, [setFilters, initialPageReady, filtersObject]);
 
+  useEffect(() => {
+    if (initialPageReady) {
+      setSort(sortObject);
+    }
+  }, [setSort, initialPageReady, sortObject]);
+
   return useMemo(
     () => ({
       view: {
@@ -176,14 +142,9 @@ export default function useStoryView({
         pageSize,
       },
       sort: {
-        value: sort,
-        direction: sortDirection,
+        value: sort.orderby,
+        direction: sort.order,
         set: setSort,
-        setDirection: setSortDirection,
-      },
-      filter: {
-        value: filter,
-        set: setFilter,
       },
       filters: {
         value: filters,
@@ -194,16 +155,6 @@ export default function useStoryView({
         set: setPage,
         requestNextPage,
       },
-      search: {
-        keyword: searchKeyword,
-        setKeyword: setSearchKeyword,
-      },
-      author: {
-        filterId: authorFilterId,
-        toggleFilterId: toggleAuthorFilterId,
-        queriedAuthors,
-        setQueriedAuthors,
-      },
       initialPageReady,
       showStoriesWhileLoading,
     }),
@@ -213,21 +164,11 @@ export default function useStoryView({
       pageSize,
       sort,
       setSort,
-      sortDirection,
-      setSortDirection,
-      filter,
-      setFilters,
       filters,
+      setFilters,
       initialPageReady,
-      setFilter,
       page,
       requestNextPage,
-      searchKeyword,
-      setSearchKeyword,
-      authorFilterId,
-      toggleAuthorFilterId,
-      queriedAuthors,
-      setQueriedAuthors,
     ]
   );
 }

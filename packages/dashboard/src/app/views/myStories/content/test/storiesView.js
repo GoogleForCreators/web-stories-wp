@@ -29,7 +29,7 @@ import {
   STORY_STATUS,
 } from '../../../../../constants';
 import StoriesView from '../storiesView';
-import { noop } from '../../../../../utils';
+import useStoryFilters from '../../filters/useStoryFilters';
 
 const fakeStories = [
   {
@@ -84,17 +84,39 @@ const fakeStories = [
   },
 ];
 
+jest.mock('../../filters/useStoryFilters', () => ({
+  ...jest.requireActual('../../filters/useStoryFilters'),
+  __esModule: true,
+  default: jest.fn(),
+}));
+
+const mockUseStoryFilters = useStoryFilters;
+
+const updateSort = jest.fn();
+
+const mockFilterState = {
+  filters: [
+    {
+      key: 'status',
+      filterId: STORY_STATUS.ALL,
+    },
+  ],
+  filtersObject: {},
+  sortObject: {
+    orderby: STORY_SORT_OPTIONS.NAME,
+    order: SORT_DIRECTION.ASC,
+  },
+  updateSort,
+};
+
 describe('Dashboard <StoriesView />', function () {
+  beforeEach(() => {
+    mockUseStoryFilters.mockImplementation(() => mockFilterState);
+  });
+
   it(`should render stories as a grid when view is ${VIEW_STYLE.GRID}`, function () {
     renderWithProviders(
       <StoriesView
-        filterValue={STORY_STATUS.ALL}
-        sort={{
-          value: STORY_SORT_OPTIONS.NAME,
-          direction: SORT_DIRECTION.ASC,
-          set: noop,
-          setDirection: noop,
-        }}
         storyActions={{
           duplicateStory: jest.fn,
           trashStory: jest.fn,
@@ -118,16 +140,12 @@ describe('Dashboard <StoriesView />', function () {
   });
 
   describe('Loading stories', () => {
+    beforeEach(() => {
+      mockUseStoryFilters.mockImplementation(() => mockFilterState);
+    });
     it('should be able to hide the grid while the stories are loading', () => {
       renderWithProviders(
         <StoriesView
-          filterValue={STORY_STATUS.ALL}
-          sort={{
-            value: STORY_SORT_OPTIONS.NAME,
-            direction: SORT_DIRECTION.ASC,
-            set: noop,
-            setDirection: noop,
-          }}
           storyActions={{
             duplicateStory: jest.fn,
             trashStory: jest.fn,
@@ -155,13 +173,6 @@ describe('Dashboard <StoriesView />', function () {
     it('should be able to show the grid while stories are loading', () => {
       renderWithProviders(
         <StoriesView
-          filterValue={STORY_STATUS.ALL}
-          sort={{
-            value: STORY_SORT_OPTIONS.NAME,
-            direction: SORT_DIRECTION.ASC,
-            set: noop,
-            setDirection: noop,
-          }}
           storyActions={{
             duplicateStory: jest.fn,
             trashStory: jest.fn,
@@ -191,13 +202,6 @@ describe('Dashboard <StoriesView />', function () {
     it('should hide stories in the list view when stories are loading', () => {
       renderWithProviders(
         <StoriesView
-          filterValue={STORY_STATUS.ALL}
-          sort={{
-            value: STORY_SORT_OPTIONS.NAME,
-            direction: SORT_DIRECTION.ASC,
-            set: noop,
-            setDirection: noop,
-          }}
           storyActions={{
             duplicateStory: jest.fn,
             trashStory: jest.fn,
@@ -225,13 +229,6 @@ describe('Dashboard <StoriesView />', function () {
     it('should be able to show the list while stories are loading', () => {
       renderWithProviders(
         <StoriesView
-          filterValue={STORY_STATUS.ALL}
-          sort={{
-            value: STORY_SORT_OPTIONS.NAME,
-            direction: SORT_DIRECTION.ASC,
-            set: noop,
-            setDirection: noop,
-          }}
           storyActions={{
             duplicateStory: jest.fn,
             trashStory: jest.fn,
@@ -260,16 +257,12 @@ describe('Dashboard <StoriesView />', function () {
   });
 
   describe('Locked story', () => {
+    beforeEach(() => {
+      mockUseStoryFilters.mockImplementation(() => mockFilterState);
+    });
     it('should show a lock icon and helpful tooltip and aria text in list view when a story is being edited by another user', function () {
       renderWithProviders(
         <StoriesView
-          filterValue={STORY_STATUS.ALL}
-          sort={{
-            value: STORY_SORT_OPTIONS.NAME,
-            direction: SORT_DIRECTION.ASC,
-            set: noop,
-            setDirection: noop,
-          }}
           storyActions={{
             duplicateStory: jest.fn,
             trashStory: jest.fn,

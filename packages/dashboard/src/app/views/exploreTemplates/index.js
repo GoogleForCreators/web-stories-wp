@@ -40,6 +40,7 @@ import { useTemplateView } from '../../../utils';
 import useApi from '../../api/useApi';
 import useRouteHistory from '../../router/useRouteHistory';
 import { getTemplateFilters, composeTemplateFilter } from '../utils';
+import useTemplateFilters from './filters/useTemplateFilters';
 import Content from './content';
 import Header from './header';
 import TemplateDetailsModal from './modal';
@@ -96,9 +97,24 @@ function ExploreTemplates() {
     })
   );
 
-  const { filter, page, search, sort, view } = useTemplateView({
+  const { filters, sortObject, filtersObject } = useTemplateFilters(
+    ({ state: { filters, sortObject, filtersObject } }) => ({
+      filters,
+      sortObject,
+      filtersObject,
+    })
+  );
+
+  const { page, view } = useTemplateView({
+    filtersObject,
+    sortObject,
     totalPages,
   });
+
+  const [searchFilterValue] = useMemo(() => {
+    const search = filters.find(({ key }) => key === 'search');
+    return [search?.filterId];
+  }, [filters]);
 
   // extract templateFilters from template meta data
   const templateFilters = useMemo(
@@ -109,12 +125,12 @@ function ExploreTemplates() {
   // refine templateFilters by search term
   const selectFilters = useMemo(
     () =>
-      search.keyword
+      searchFilterValue
         ? templateFilters.filter((opt) =>
-            opt.label.toLowerCase().includes(search.keyword.toLowerCase())
+            opt.label.toLowerCase().includes(searchFilterValue.toLowerCase())
           )
         : templateFilters,
-    [templateFilters, search.keyword]
+    [templateFilters, searchFilterValue]
   );
 
   // filter templates by the refined templateFilters
@@ -245,10 +261,7 @@ function ExploreTemplates() {
     <Layout.Provider>
       <Header
         isLoading={isLoading && !totalTemplates}
-        filter={filter}
-        sort={sort}
         totalTemplates={totalVisibleTemplates}
-        search={search}
         searchOptions={searchOptions}
         view={view}
       />
@@ -258,7 +271,7 @@ function ExploreTemplates() {
         page={page}
         templates={orderedTemplates}
         totalTemplates={totalVisibleTemplates}
-        search={search}
+        search={searchFilterValue}
         view={view}
         templateActions={templateActions}
       />
