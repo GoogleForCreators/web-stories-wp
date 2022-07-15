@@ -55,19 +55,19 @@ describe('Fullbleed Media as Background', () => {
     fixture.restore();
   });
 
-  it('should set image as background when resized to match the canvas', async () => {
+  it('should set image as background when resized to cover the canvas', async () => {
     const imageFrame = fixture.editor.canvas.framesLayer.frame(image.id);
     const canvas = fixture.editor.canvas.framesLayer.fullbleed;
     await fixture.events.mouse.seq(({ moveRel, down, up }) => [
       moveRel(imageFrame.node, 0, 0),
       down(),
-      moveRel(canvas, 0, 0),
+      moveRel(canvas, '-1%', '-1%'),
       up(),
     ]);
     await fixture.events.mouse.seq(({ moveRel, down, up }) => [
       moveRel(imageFrame.node, '100%', '100%'),
       down(),
-      moveRel(canvas, '100%', '100%'),
+      moveRel(canvas, '101%', '101%'),
       up(),
     ]);
     const elements = await getElements(fixture);
