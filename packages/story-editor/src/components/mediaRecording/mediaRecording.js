@@ -102,6 +102,10 @@ function MediaRecording() {
     return <PermissionsDialog />;
   }
 
+  // Only previewing a gif means that the play button is hidden,
+  // not while trimming (even if gif)
+  const hasPlayButton = !isGif || isTrimming;
+
   return (
     <>
       <Wrapper>
@@ -121,7 +125,7 @@ function MediaRecording() {
                       loop={isGif || isTrimming}
                       tabIndex={0}
                     />
-                    {!isGif && <PlayPauseButton videoRef={videoRef} />}
+                    {hasPlayButton && <PlayPauseButton videoRef={videoRef} />}
                   </>
                 ) : (
                   <audio controls="controls" src={mediaBlobUrl} />
