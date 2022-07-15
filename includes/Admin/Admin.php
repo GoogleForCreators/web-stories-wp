@@ -76,6 +76,7 @@ class Admin extends Service_Base {
 		add_filter( 'default_content', [ $this, 'prefill_post_content' ], 10, 2 );
 		add_filter( 'default_title', [ $this, 'prefill_post_title' ] );
 		add_filter( 'display_media_states', [ $this, 'media_states' ], 10, 2 );
+		add_filter( 'web_stories_erase_data_on_uninstall', [ $this, 'data_removal' ], 10, 2 );
 	}
 
 	/**
@@ -257,5 +258,16 @@ class Admin extends Service_Base {
 			$media_states[] = __( 'Web Stories Publisher Logo', 'web-stories' );
 		}
 		return $media_states;
+	}
+
+	/**
+	 * Returns data removal setting.
+	 *
+	 * @since 1.23.0
+	 *
+	 * @return bool data removal value.
+	 */
+	public function data_removal(): array {
+		return absint( $this->settings->get_setting( $this->settings::SETTING_NAME_DATA_REMOVAL ) ); 
 	}
 }

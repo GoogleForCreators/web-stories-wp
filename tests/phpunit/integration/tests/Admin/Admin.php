@@ -101,6 +101,7 @@ class Admin extends DependencyInjectedTestCase {
 		$this->assertSame( 99, has_filter( 'admin_body_class', [ $this->instance, 'admin_body_class' ] ) );
 		$this->assertSame( 10, has_filter( 'default_content', [ $this->instance, 'prefill_post_content' ] ) );
 		$this->assertSame( 10, has_filter( 'default_title', [ $this->instance, 'prefill_post_title' ] ) );
+		$this->assertSame( 10, has_filter( 'data_removal', [ $this->instance, 'data_removal' ] ) );
 
 	}
 
@@ -248,5 +249,25 @@ class Admin extends DependencyInjectedTestCase {
 		$this->settings->update_setting( $this->settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO, $post->ID );
 		$result = $this->instance->media_states( [], $post );
 		$this->assertEqualSets( [ 'Web Stories Publisher Logo' ], $result );
+	}
+
+	/**
+	 * @covers ::data_removal
+	 */
+	public function test_data_removal_on(): void {
+		$post = self::factory()->post->create_and_get( [] );
+		$this->settings->update_setting( $this->settings::SETTING_NAME_DATA_REMOVAL, true );
+		$result = $this->instance->data_removal();
+		$this->assertEqualSets( true, $result );
+	}
+
+	/**
+	 * @covers ::data_removal
+	 */
+	public function test_data_removal_off(): void {
+		$post = self::factory()->post->create_and_get( [] );
+		$this->settings->update_setting( $this->settings::SETTING_NAME_DATA_REMOVAL, false );
+		$result = $this->instance->data_removal();
+		$this->assertEqualSets( false, $result );
 	}
 }
