@@ -249,7 +249,7 @@ function BackgroundAudioPanelContent({
 
   const onDeleteAudio = useCallback(
     (deletedResource) => {
-      if (deletedResource?.id === resource?.id) {
+      if (deletedResource.id === resource?.id) {
         handleRemove();
       }
     },

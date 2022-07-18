@@ -106,7 +106,7 @@ function CaptionsPanelContent({
   const onError = useCallback((err) => trackError(eventName, err?.message), []);
   const onDeleteTrack = useCallback(
     (deletedResource) => {
-      handleRemoveTrack(deletedResource?.id);
+      handleRemoveTrack(deletedResource.id);
     },
     [handleRemoveTrack]
   );
