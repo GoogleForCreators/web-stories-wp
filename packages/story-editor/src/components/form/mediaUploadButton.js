@@ -175,8 +175,8 @@ function MediaUploadButton({ onInsert, renderButton, buttonInsertText }) {
 
   const onDelete = useCallback(
     (resource) => {
-      deleteMediaElement({ id: resource?.id });
-      deleteElementsByResourceId({ id: resource?.id });
+      deleteMediaElement({ id: resource.id });
+      deleteElementsByResourceId({ id: resource.id });
     },
     [deleteElementsByResourceId, deleteMediaElement]
   );

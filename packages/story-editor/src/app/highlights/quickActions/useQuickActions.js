@@ -238,8 +238,8 @@ export const MediaPicker = ({ render, ...props }) => {
 
   const onDelete = useCallback(
     (resource) => {
-      deleteMediaElement({ id: resource?.id });
-      deleteElementsByResourceId({ id: resource?.id });
+      deleteMediaElement({ id: resource.id });
+      deleteElementsByResourceId({ id: resource.id });
     },
     [deleteElementsByResourceId, deleteMediaElement]
   );
