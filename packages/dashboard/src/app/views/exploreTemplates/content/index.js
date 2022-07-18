@@ -42,7 +42,6 @@ import {
 import {
   ViewPropTypes,
   PagePropTypes,
-  SearchPropTypes,
 } from '../../../../utils/useTemplateView';
 import { TemplatesPropType, TemplateActionsPropType } from '../../../../types';
 import { EmptyContentMessage } from '../../shared';
@@ -90,18 +89,18 @@ function Content({
     ) : (
       <EmptyContentMessage>
         <Headline size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL} as="h3">
-          {search?.keyword
+          {search
             ? sprintf(
                 /* translators: %s: search term. */
                 __(
                   'Sorry, we couldn\'t find any results matching "%s"',
                   'web-stories'
                 ),
-                search.keyword
+                search
               )
             : __('No templates currently available.', 'web-stories')}
         </Headline>
-        {!search?.keyword && (
+        {!search && (
           <Button
             type={BUTTON_TYPES.PRIMARY}
             size={BUTTON_SIZES.MEDIUM}
@@ -118,8 +117,8 @@ function Content({
     isLoading,
     newStoryURL,
     page.requestNextPage,
-    search.keyword,
     templateActions,
+    search,
     templates,
     totalTemplates,
     view.pageSize,
@@ -138,7 +137,7 @@ Content.propTypes = {
   page: PagePropTypes,
   templates: TemplatesPropType,
   totalTemplates: PropTypes.number,
-  search: SearchPropTypes,
+  search: PropTypes.string,
   templateActions: TemplateActionsPropType,
   view: ViewPropTypes,
 };

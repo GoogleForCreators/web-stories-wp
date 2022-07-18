@@ -69,6 +69,7 @@ const SearchInputWrapper = styled.div``;
  * @param {number} props.popupZIndex Allows for an override of the default popup z index (2).
  * @param {Function} props.renderItem If present when menu is open, will override the base list items rendered for each option, the entire item and whether it is selected will be returned and allow you to style list items internal to a list item without affecting dropdown functionality.
  * @param {string} props.selectedValue The selected value, should correspond to an object in the options array of objects.
+ * @param {string} props.searchValue The search value
  */
 
 export const Search = ({
@@ -87,6 +88,7 @@ export const Search = ({
   popupFillWidth = DEFAULT_POPUP_FILL_WIDTH,
   popupZIndex,
   selectedValue = {},
+  searchValue,
   ...rest
 }) => {
   const listId = useMemo(() => `list-${uuidv4()}`, []);
@@ -106,11 +108,13 @@ export const Search = ({
   } = useSearch({
     options,
     selectedValue,
+    searchValue,
     handleSearchValueChange,
   });
 
   const isMenuHidden = useMemo(
-    () => Boolean(disabled || inputState?.value?.length === 0),
+    () =>
+      Boolean(disabled || !inputState?.value || inputState.value?.length === 0),
     [disabled, inputState]
   );
 
@@ -335,4 +339,5 @@ Search.propTypes = {
       PropTypes.number,
     ]),
   }),
+  searchValue: PropTypes.string,
 };

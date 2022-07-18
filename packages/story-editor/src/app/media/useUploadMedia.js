@@ -279,7 +279,11 @@ function useUploadMedia({
           const isTooLarge = canTranscode && isFileTooLarge(file);
 
           try {
-            validateFileForUpload(file, canTranscode, isTooLarge);
+            validateFileForUpload({
+              file,
+              canTranscodeFile: canTranscode,
+              isFileTooLarge: isTooLarge,
+            });
           } catch (e) {
             showSnackbar({
               message: e.message,

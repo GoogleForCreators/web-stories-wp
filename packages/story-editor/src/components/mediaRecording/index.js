@@ -29,6 +29,7 @@ export { default as Countdown } from './countdown';
 export { default as DurationIndicator } from './durationIndicator';
 export { default as PlayPauseButton } from './playPauseButton';
 export * from './constants';
+export * from './audio';
 export {
   LayerWithGrayout,
   DisplayPageArea,

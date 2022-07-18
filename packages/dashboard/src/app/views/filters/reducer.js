@@ -17,6 +17,8 @@
 /**
  * Internal dependencies
  */
+import { STORY_SORT_KEYS } from '../../../constants/stories';
+import { TEMPLATE_SORT_KEYS } from '../../../constants/templates';
 import * as types from './types';
 
 /**
@@ -34,6 +36,7 @@ import * as types from './types';
 const reducer = (state, { type, payload = {} }) => {
   switch (type) {
     case types.UPDATE_FILTER: {
+      const ALLOW_SAME_FILTERID = ['search', 'status'];
       const { key, value } = payload;
       const _filter = state.filters.find((filter) => filter.key === key);
 
@@ -43,6 +46,9 @@ const reducer = (state, { type, payload = {} }) => {
 
       // remove 'filter-by' value
       if (value.filterId && _filter?.filterId === value.filterId) {
+        if (ALLOW_SAME_FILTERID.includes(key)) {
+          return state;
+        }
         value.filterId = null;
       }
 
@@ -63,6 +69,36 @@ const reducer = (state, { type, payload = {} }) => {
         ...state,
         filters,
         filtersObject,
+      };
+    }
+
+    case types.UPDATE_SORT: {
+      const { type: sortType, values } = payload;
+
+      const sortObject = {};
+
+      const ACCEPTABLE_KEYS =
+        sortType === 'story' ? STORY_SORT_KEYS : TEMPLATE_SORT_KEYS;
+
+      // only use acceptable key value pairs
+      for (const key in values) {
+        if (
+          key in ACCEPTABLE_KEYS &&
+          Object.values(ACCEPTABLE_KEYS[key]).includes(values[key]) &&
+          state.sortObject[key] !== values[key]
+        ) {
+          sortObject[key] = values[key];
+        }
+      }
+
+      // nothing changed no need for an update
+      if (Object.entries(sortObject).length === 0) {
+        return state;
+      }
+
+      return {
+        ...state,
+        sortObject: { ...state.sortObject, ...sortObject },
       };
     }
 
