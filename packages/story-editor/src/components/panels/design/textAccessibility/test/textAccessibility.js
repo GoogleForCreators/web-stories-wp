@@ -24,6 +24,7 @@ import { useFeature } from 'flagged';
  * Internal dependencies
  */
 
+import StoryContext from '../../../../../app/story/context';
 import { renderPanel } from '../../../shared/test/_utils';
 import TextAccessibilityPanel from '../textAccessibility';
 
@@ -35,8 +36,21 @@ describe('Panels/TextAccessibility', () => {
     tagName: 'p',
     content: 'Hello!',
   };
-  function arrange(...args) {
-    return renderPanel(TextAccessibilityPanel, ...args);
+
+  const storyContextValue = {
+    state: {
+      currentPage: { elements: [] },
+    },
+  };
+
+  const wrapper = ({ children }) => (
+    <StoryContext.Provider value={storyContextValue}>
+      {children}
+    </StoryContext.Provider>
+  );
+
+  function arrange(selectedElements) {
+    return renderPanel(TextAccessibilityPanel, selectedElements, wrapper);
   }
 
   beforeAll(() => {
