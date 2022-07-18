@@ -26,7 +26,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { useConfig, useLocalMedia } from '../../app';
+import { useConfig, useLocalMedia, useStory } from '../../app';
 import useFFmpeg from '../../app/media/utils/useFFmpeg';
 import { TRANSCODABLE_MIME_TYPES } from '../../app/media';
 
@@ -56,9 +56,14 @@ function MediaUploadButton({ onInsert, renderButton, buttonInsertText }) {
     [allowedUploadMimeTypes]
   );
 
+  const { deleteElementsByResourceId } = useStory((state) => ({
+    deleteElementsByResourceId: state.actions.deleteElementsByResourceId,
+  }));
+
   const {
     canTranscodeResource,
-    resetWithFetch,
+    prependMedia,
+    deleteMediaElement,
     postProcessingResource,
     optimizeVideo,
     optimizeGif,
@@ -66,7 +71,8 @@ function MediaUploadButton({ onInsert, renderButton, buttonInsertText }) {
     ({
       state: { canTranscodeResource },
       actions: {
-        resetWithFetch,
+        prependMedia,
+        deleteMediaElement,
         postProcessingResource,
         optimizeVideo,
         optimizeGif,
@@ -74,7 +80,8 @@ function MediaUploadButton({ onInsert, renderButton, buttonInsertText }) {
     }) => {
       return {
         canTranscodeResource,
-        resetWithFetch,
+        prependMedia,
+        deleteMediaElement,
         postProcessingResource,
         optimizeVideo,
         optimizeGif,
@@ -157,11 +164,29 @@ function MediaUploadButton({ onInsert, renderButton, buttonInsertText }) {
     ]
   );
 
+  const onUpload = useCallback(
+    (resource) => {
+      prependMedia({
+        media: [resource],
+      });
+    },
+    [prependMedia]
+  );
+
+  const onDelete = useCallback(
+    (resource) => {
+      deleteMediaElement({ id: resource?.id });
+      deleteElementsByResourceId({ id: resource?.id });
+    },
+    [deleteElementsByResourceId, deleteMediaElement]
+  );
+
   return (
     <MediaUpload
       onSelect={onSelect}
       onSelectErrorMessage={onSelectErrorMessage}
-      onClose={resetWithFetch}
+      onUpload={onUpload}
+      onDelete={onDelete}
       type={allowedMimeTypes}
       render={renderButton}
       buttonInsertText={buttonInsertText}

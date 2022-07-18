@@ -247,6 +247,15 @@ function BackgroundAudioPanelContent({
     updateBackgroundAudio(null);
   }, [updateBackgroundAudio, playerRef]);
 
+  const onDeleteAudio = useCallback(
+    (deletedResource) => {
+      if (deletedResource?.id === resource?.id) {
+        handleRemove();
+      }
+    },
+    [resource]
+  );
+
   const options = [
     hasUploadMediaAction && {
       label: __('Upload a file', 'web-stories'),
@@ -254,6 +263,7 @@ function BackgroundAudioPanelContent({
       onClick: () => {},
       mediaPickerProps: {
         onSelect,
+        onDelete: onDeleteAudio,
         onSelectErrorMessage: __(
           'Please choose a VTT file to use as caption.',
           'web-stories'
@@ -279,6 +289,7 @@ function BackgroundAudioPanelContent({
           {hasUploadMediaAction && (
             <MediaUpload
               onSelect={onSelect}
+              onDelete={onDeleteAudio}
               onSelectErrorMessage={onSelectErrorMessage}
               type={allowedAudioMimeTypes}
               title={__('Upload an audio file', 'web-stories')}

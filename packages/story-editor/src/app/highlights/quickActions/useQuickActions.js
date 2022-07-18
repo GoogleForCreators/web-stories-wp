@@ -92,14 +92,21 @@ export const MediaPicker = ({ render, ...props }) => {
     MediaUpload,
   } = useConfig();
 
-  const { selectedElements, updateElementsById } = useStory(
-    ({ state: { selectedElements }, actions: { updateElementsById } }) => ({
-      selectedElements,
-      updateElementsById,
-    })
-  );
+  const { selectedElements, updateElementsById, deleteElementsByResourceId } =
+    useStory(
+      ({
+        state: { selectedElements },
+        actions: { updateElementsById, deleteElementsByResourceId },
+      }) => ({
+        selectedElements,
+        updateElementsById,
+        deleteElementsByResourceId,
+      })
+    );
+
   const {
-    resetWithFetch,
+    prependMedia,
+    deleteMediaElement,
     postProcessingResource,
     optimizeVideo,
     optimizeGif,
@@ -108,14 +115,16 @@ export const MediaPicker = ({ render, ...props }) => {
     ({
       state: { canTranscodeResource },
       actions: {
-        resetWithFetch,
+        prependMedia,
+        deleteMediaElement,
         postProcessingResource,
         optimizeVideo,
         optimizeGif,
       },
     }) => ({
       canTranscodeResource,
-      resetWithFetch,
+      prependMedia,
+      deleteMediaElement,
       postProcessingResource,
       optimizeVideo,
       optimizeGif,
@@ -217,12 +226,31 @@ export const MediaPicker = ({ render, ...props }) => {
       showSnackbar,
     ]
   );
+
+  const onUpload = useCallback(
+    (resource) => {
+      prependMedia({
+        media: [resource],
+      });
+    },
+    [prependMedia]
+  );
+
+  const onDelete = useCallback(
+    (resource) => {
+      deleteMediaElement({ id: resource?.id });
+      deleteElementsByResourceId({ id: resource?.id });
+    },
+    [deleteElementsByResourceId, deleteMediaElement]
+  );
+
   return (
     <MediaUpload
       title={__('Replace media', 'web-stories')}
       buttonInsertText={__('Replace media', 'web-stories')}
       onSelect={handleMediaSelect}
-      onClose={resetWithFetch}
+      onUpload={onUpload}
+      onDelete={onDelete}
       type={allowedMimeTypes}
       onSelectErrorMessage={onSelectErrorMessage}
       // Only way to access the open function is to dive

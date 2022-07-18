@@ -104,6 +104,9 @@ function CaptionsPanelContent({
   );
 
   const onError = useCallback((err) => trackError(eventName, err?.message), []);
+  const onDeleteTrack = useCallback((deletedResource) => {
+    handleRemoveTrack(deletedResource?.id);
+  }, []);
 
   if (!allowedCaptionMimeTypes?.length) {
     return null;
@@ -116,6 +119,7 @@ function CaptionsPanelContent({
       onClick: () => {},
       mediaPickerProps: {
         onSelect: handleChangeTrack,
+        onDelete: onDeleteTrack,
         onSelectErrorMessage: __(
           'Please choose a VTT file to use as caption.',
           'web-stories'
@@ -158,6 +162,7 @@ function CaptionsPanelContent({
           {hasUploadMediaAction && (
             <MediaUpload
               onSelect={handleChangeTrack}
+              onDelete={onDeleteTrack}
               onSelectErrorMessage={__(
                 'Please choose a VTT file to use as caption.',
                 'web-stories'

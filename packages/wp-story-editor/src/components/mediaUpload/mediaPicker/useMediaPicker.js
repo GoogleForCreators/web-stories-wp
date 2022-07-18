@@ -54,6 +54,8 @@ const defaultCropParams = {
  * @param {string|string[]} props.type Media type(s).
  * @param {boolean} props.multiple Whether multi-selection should be allowed.
  * @param {Object} props.cropParams Object params for cropped images.
+ * @param {Function?} props.onUpload Upload media Callback.
+ * @param {Function?} props.onDelete Delete media Callback.
  * @return {Function} Callback to open the media picker.
  */
 function useMediaPicker({
@@ -62,6 +64,8 @@ function useMediaPicker({
   onSelect,
   onSelectErrorMessage = __('Unable to use this file type.', 'web-stories'),
   onClose,
+  onUpload,
+  onDelete,
   onPermissionError,
   type = '',
   multiple = false,
@@ -84,6 +88,9 @@ function useMediaPicker({
       // it's just in the WP media modal.
       // Video poster generation for newly added videos is done in <MediaPane>.
       window.wp.Uploader.prototype.success = ({ attributes }) => {
+        if (onUpload) {
+          onUpload(getResourceFromMediaPicker(attributes));
+        }
         updateMedia(attributes.id, {
           mediaSource: 'editor',
           altText: attributes.alt || attributes.title,
@@ -92,7 +99,58 @@ function useMediaPicker({
     } catch (e) {
       // Silence.
     }
-  }, [updateMedia]);
+  }, [onUpload, updateMedia]);
+
+  useEffect(() => {
+    const wsDetails = window.wp.media.view.Attachment.Details?.extend({
+      deleteAttachment: function (event) {
+        event.preventDefault();
+
+        this.getFocusableElements();
+
+        if (window.confirm(window.wp.media.view.l10n.warnDelete)) {
+          this.model.destroy({
+            wait: true,
+            error: function () {
+              window.alert(window.wp.media.view.l10n.errorDeleting);
+            },
+          });
+
+          this.moveFocus();
+        }
+        if (onDelete) {
+          onDelete(getResourceFromMediaPicker(this.model.attributes));
+        }
+      },
+      trashAttachment: function (event) {
+        const library = this.controller.library,
+          self = this;
+        event.preventDefault();
+
+        this.getFocusableElements();
+
+        if (onDelete) {
+          onDelete(getResourceFromMediaPicker(this.model.attributes));
+        }
+
+        // When in the Media Library and the Media Trash is enabled.
+        if (
+          window.wp.media.view.settings.mediaTrash &&
+          'edit-metadata' === this.controller.content.mode()
+        ) {
+          this.model.set('status', 'trash');
+          this.model.save().done(function () {
+            library._requery(true);
+            self.moveFocusToLastFallback();
+          });
+        } else {
+          this.model.destroy();
+          this.moveFocus();
+        }
+      },
+    });
+    window.wp.media.view.Attachment.Details = wsDetails;
+  }, [onDelete]);
 
   const openMediaDialog = useCallback(
     (evt) => {
@@ -315,6 +373,8 @@ useMediaPicker.propTypes = {
   onSelect: PropTypes.func.isRequired,
   onSelectErrorMessage: PropTypes.string,
   onClose: PropTypes.func,
+  onUpload: PropTypes.func,
+  onDelete: PropTypes.func,
   onPermissionError: PropTypes.func,
   type: PropTypes.oneOfType([
     PropTypes.string,

@@ -49,6 +49,14 @@ global.wp.media.controller = {
   },
 };
 
+global.wp.media.view = {
+  Attachment: {
+    Details: {
+      extend: jest.fn(),
+    },
+  },
+};
+
 global.IntersectionObserver = class IntersectionObserver {
   observe() {}
   unobserve() {}

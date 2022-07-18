@@ -318,6 +318,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
       resetFilters,
       uploadMedia,
       resetWithFetch,
+      prependMedia,
       uploadVideoPoster,
       postProcessingResource,
       deleteMediaElement,
