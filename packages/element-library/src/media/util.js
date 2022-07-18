@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { css } from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const mediaWithScale = css`
   width: ${({ width }) => `${width}px`};
@@ -26,8 +26,41 @@ export const mediaWithScale = css`
   top: ${({ offsetY }) => `${-offsetY}px`};
 `;
 
+const videoWithScale = css`
+  width: ${({ width }) => `${width}px`};
+  left: ${({ offsetX }) => `${-offsetX}px`};
+  top: ${({ offsetY }) => `${-offsetY}px`};
+  max-width: ${({ isBackground }) => (isBackground ? 'initial' : null)};
+`;
+
 export function getMediaWithScaleCss({ width, height, offsetX, offsetY }) {
   // @todo: This is a complete duplication of `mediaWithScale` above. But
   // no other apparent way to execute interpolate `mediaWithScale` dynamically.
   return `width:${width}px; height:${height}px; left:${-offsetX}px; top:${-offsetY}px;`;
 }
+
+export const getBackgroundStyle = () => {
+  return {
+    minWidth: '100%',
+    minHeight: '100%',
+    maxWidth: 'initial',
+  };
+};
+
+export const Video = styled.video.attrs({ crossOrigin: 'anonymous' })`
+  position: absolute;
+  max-width: initial;
+  max-height: initial;
+  height: ${({ height }) => `${height}px`};
+  background-image: ${({ poster }) => `url("${poster}")`};
+  background-repeat: no-repeat;
+  background-size: cover;
+  ${videoWithScale}
+`;
+
+export const VideoImage = styled.img.attrs({ crossOrigin: 'anonymous' })`
+  position: absolute;
+  max-height: initial;
+  object-fit: contain;
+  ${videoWithScale}
+`;

@@ -261,6 +261,10 @@ class MediaRecordingLayer extends Container {
     return this.getByRole('button', { name: 'Record Video' });
   }
 
+  get recordAudio() {
+    return this.getByRole('button', { name: 'Record Audio' });
+  }
+
   get takePhoto() {
     return this.getByRole('button', { name: 'Take a photo' });
   }

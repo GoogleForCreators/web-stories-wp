@@ -446,6 +446,50 @@
     }
   },
   {
+    "family": "Albert Sans",
+    "fallbacks": ["sans-serif"],
+    "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+    "styles": ["regular", "italic"],
+    "variants": [
+      [0, 100],
+      [0, 200],
+      [0, 300],
+      [0, 400],
+      [0, 500],
+      [0, 600],
+      [0, 700],
+      [0, 800],
+      [0, 900],
+      [1, 100],
+      [1, 200],
+      [1, 300],
+      [1, 400],
+      [1, 500],
+      [1, 600],
+      [1, 700],
+      [1, 800],
+      [1, 900]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 950,
+      "des": -250,
+      "tAsc": 950,
+      "tDes": -250,
+      "tLGap": 0,
+      "wAsc": 1100,
+      "wDes": 320,
+      "xH": 500,
+      "capH": 700,
+      "yMin": -264,
+      "yMax": 958,
+      "hAsc": 950,
+      "hDes": -250,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Aldrich",
     "fallbacks": ["sans-serif"],
     "weights": [400],
@@ -1397,36 +1441,6 @@
       "xH": 1040,
       "capH": 1485,
       "yMin": -1148,
-      "yMax": 2620,
-      "hAsc": 2500,
-      "hDes": -800,
-      "lGap": 0
-    }
-  },
-  {
-    "family": "Andika New Basic",
-    "fallbacks": ["sans-serif"],
-    "weights": [400, 700],
-    "styles": ["regular", "italic"],
-    "variants": [
-      [0, 400],
-      [1, 400],
-      [0, 700],
-      [1, 700]
-    ],
-    "service": "fonts.google.com",
-    "metrics": {
-      "upm": 2048,
-      "asc": 2500,
-      "des": -800,
-      "tAsc": 2500,
-      "tDes": -800,
-      "tLGap": 0,
-      "wAsc": 2630,
-      "wDes": 580,
-      "xH": 1040,
-      "capH": 1485,
-      "yMin": -520,
       "yMax": 2620,
       "hAsc": 2500,
       "hDes": -800,
@@ -9850,6 +9864,156 @@
     }
   },
   {
+    "family": "Edu NSW ACT Foundation",
+    "fallbacks": ["cursive"],
+    "weights": [400, 500, 600, 700],
+    "styles": ["regular"],
+    "variants": [
+      [0, 400],
+      [0, 500],
+      [0, 600],
+      [0, 700]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1016,
+      "des": -244,
+      "tAsc": 1016,
+      "tDes": -244,
+      "tLGap": 0,
+      "wAsc": 1129,
+      "wDes": 368,
+      "xH": 416,
+      "capH": 772,
+      "yMin": -363,
+      "yMax": 890,
+      "hAsc": 1016,
+      "hDes": -244,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Edu QLD Beginner",
+    "fallbacks": ["cursive"],
+    "weights": [400, 500, 600, 700],
+    "styles": ["regular"],
+    "variants": [
+      [0, 400],
+      [0, 500],
+      [0, 600],
+      [0, 700]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1016,
+      "des": -244,
+      "tAsc": 1016,
+      "tDes": -244,
+      "tLGap": 0,
+      "wAsc": 1129,
+      "wDes": 368,
+      "xH": 416,
+      "capH": 772,
+      "yMin": -364,
+      "yMax": 890,
+      "hAsc": 1016,
+      "hDes": -244,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Edu SA Beginner",
+    "fallbacks": ["cursive"],
+    "weights": [400, 500, 600, 700],
+    "styles": ["regular"],
+    "variants": [
+      [0, 400],
+      [0, 500],
+      [0, 600],
+      [0, 700]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1016,
+      "des": -244,
+      "tAsc": 1016,
+      "tDes": -244,
+      "tLGap": 0,
+      "wAsc": 1129,
+      "wDes": 368,
+      "xH": 416,
+      "capH": 772,
+      "yMin": -363,
+      "yMax": 890,
+      "hAsc": 1016,
+      "hDes": -244,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Edu TAS Beginner",
+    "fallbacks": ["cursive"],
+    "weights": [400, 500, 600, 700],
+    "styles": ["regular"],
+    "variants": [
+      [0, 400],
+      [0, 500],
+      [0, 600],
+      [0, 700]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1016,
+      "des": -244,
+      "tAsc": 1016,
+      "tDes": -244,
+      "tLGap": 0,
+      "wAsc": 1129,
+      "wDes": 368,
+      "xH": 416,
+      "capH": 772,
+      "yMin": -356,
+      "yMax": 890,
+      "hAsc": 1016,
+      "hDes": -244,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Edu VIC WA NT Beginner",
+    "fallbacks": ["cursive"],
+    "weights": [400, 500, 600, 700],
+    "styles": ["regular"],
+    "variants": [
+      [0, 400],
+      [0, 500],
+      [0, 600],
+      [0, 700]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1016,
+      "des": -244,
+      "tAsc": 1016,
+      "tDes": -244,
+      "tLGap": 0,
+      "wAsc": 1129,
+      "wDes": 368,
+      "xH": 416,
+      "capH": 772,
+      "yMin": -363,
+      "yMax": 890,
+      "hAsc": 1016,
+      "hDes": -244,
+      "lGap": 0
+    }
+  },
+  {
     "family": "El Messiri",
     "fallbacks": ["sans-serif"],
     "weights": [400, 500, 600, 700],
@@ -16987,31 +17151,6 @@
       "yMax": 2365,
       "hAsc": 2020,
       "hDes": -540,
-      "lGap": 0
-    }
-  },
-  {
-    "family": "Kdam Thmor",
-    "fallbacks": ["cursive"],
-    "weights": [400],
-    "styles": ["regular"],
-    "variants": [[0, 400]],
-    "service": "fonts.google.com",
-    "metrics": {
-      "upm": 2048,
-      "asc": 2500,
-      "des": -1200,
-      "tAsc": 2500,
-      "tDes": -1200,
-      "tLGap": 132,
-      "wAsc": 2500,
-      "wDes": 1200,
-      "xH": 1098,
-      "capH": 1462,
-      "yMin": -1200,
-      "yMax": 2450,
-      "hAsc": 2500,
-      "hDes": -1200,
       "lGap": 0
     }
   },

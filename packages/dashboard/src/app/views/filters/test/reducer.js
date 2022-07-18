@@ -19,6 +19,7 @@
  */
 import reducer from '../reducer';
 import * as types from '../types';
+import { TEMPLATES_GALLERY_SORT_OPTIONS } from '../../../../constants/templates';
 
 describe('reducer', () => {
   it('should update the state', () => {
@@ -67,6 +68,41 @@ describe('reducer', () => {
     const state = reducer(initial_state, args);
     const filter = state.filters.find((f) => f.key === 'officers');
     expect(filter.filterId).toBeNull();
+  });
+
+  it('should not reset the filterId for "search" if the same filterId is given', () => {
+    const initial_state = {
+      filters: [{ key: 'search', filterId: 'John' }],
+    };
+    // search
+    const args = {
+      type: types.UPDATE_FILTER,
+      payload: {
+        key: 'search',
+        value: 'John',
+      },
+    };
+
+    const state = reducer(initial_state, args);
+    const filter = state.filters.find((f) => f.key === 'search');
+    expect(filter.filterId).toBe('John');
+  });
+
+  it('should not reset the filterId for "status" if the same filterId is given', () => {
+    const initial_state = {
+      filters: [{ key: 'status', filterId: 'New' }],
+    };
+    const args = {
+      type: types.UPDATE_FILTER,
+      payload: {
+        key: 'status',
+        value: 'New',
+      },
+    };
+
+    const state = reducer(initial_state, args);
+    const filter = state.filters.find((f) => f.key === 'status');
+    expect(filter.filterId).toBe('New');
   });
 
   it('should register filters in state', () => {
@@ -142,5 +178,36 @@ describe('reducer', () => {
 
     const state = reducer(initial_state, args);
     expect(state).toMatchObject(initial_state);
+  });
+
+  it('should update sort based on "type" and acceptable keys', () => {
+    const initial_state = {
+      sortObject: {},
+    };
+
+    let args = {
+      type: 'UPDATE_SORT',
+      payload: {
+        type: 'template',
+        values: { orderby: TEMPLATES_GALLERY_SORT_OPTIONS.POPULAR },
+      },
+    };
+
+    let state = reducer(initial_state, args);
+    expect(state.sortObject).toMatchObject({
+      orderby: TEMPLATES_GALLERY_SORT_OPTIONS.POPULAR,
+    });
+
+    args = {
+      type: 'UPDATE_SORT',
+      payload: { type: 'template', values: { orderby: 'non-popular' } },
+    };
+
+    state = reducer(state, args);
+    // state shouldn't change because 'non-popular' is not an acceptable value
+    // for 'template' sort 'orderby'
+    expect(state.sortObject).toMatchObject({
+      orderby: TEMPLATES_GALLERY_SORT_OPTIONS.POPULAR,
+    });
   });
 });

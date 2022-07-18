@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useRef } from '@googleforcreators/react';
 import { getMediaSizePositionProps } from '@googleforcreators/media';
@@ -27,26 +26,14 @@ import { StoryPropTypes } from '@googleforcreators/elements';
  * Internal dependencies
  */
 import MediaDisplay from '../media/display';
-import { getBackgroundStyle, videoWithScale } from '../video/util';
+import { getBackgroundStyle, Video, VideoImage } from '../media/util';
 
-const Video = styled.video`
-  position: absolute;
-  max-width: initial;
-  max-height: initial;
-  ${videoWithScale}
-`;
-
-const Image = styled.img`
-  position: absolute;
-  max-height: initial;
-  object-fit: contain;
-  width: ${({ width }) => `${width}px`};
-  left: ${({ offsetX }) => `${-offsetX}px`};
-  top: ${({ offsetY }) => `${-offsetY}px`};
-  max-width: ${({ isBackground }) => (isBackground ? 'initial' : null)};
-`;
-
-function VideoDisplay({ previewMode, box: { width, height }, element }) {
+function VideoDisplay({
+  previewMode,
+  box: { width, height },
+  element,
+  renderResourcePlaceholder,
+}) {
   const { id, poster, resource, isBackground, scale, focalX, focalY } = element;
   const ref = useRef();
   let style = {};
@@ -67,18 +54,17 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
     focalY
   );
 
-  videoProps.crossOrigin = 'anonymous';
-
   return (
     <MediaDisplay
       element={element}
       mediaRef={ref}
       showPlaceholder
       previewMode={previewMode}
+      renderResourcePlaceholder={renderResourcePlaceholder}
     >
       {previewMode ? (
         (poster || resource.poster) && (
-          <Image
+          <VideoImage
             src={poster || resource.poster}
             alt={element.alt || resource.alt}
             style={style}
@@ -113,6 +99,7 @@ VideoDisplay.propTypes = {
   previewMode: PropTypes.bool,
   element: StoryPropTypes.elements.video.isRequired,
   box: StoryPropTypes.box.isRequired,
+  renderResourcePlaceholder: PropTypes.func,
 };
 
 export default VideoDisplay;

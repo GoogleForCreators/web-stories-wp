@@ -29,15 +29,11 @@ import { StoryPropTypes, getTransformFlip } from '@googleforcreators/elements';
  */
 import MediaDisplay from '../media/display';
 import { elementWithFlip } from '../shared';
+import { getBackgroundStyle, Video } from '../media/util';
 import PlayPauseButton from './playPauseButton';
-import { getBackgroundStyle, videoWithScale } from './util';
 import Captions from './captions';
 
-const Video = styled.video`
-  position: absolute;
-  max-width: initial;
-  max-height: initial;
-  ${videoWithScale}
+const StyledVideo = styled(Video)`
   ${elementWithFlip}
 `;
 
@@ -64,6 +60,7 @@ function VideoTrim({
   resource,
   setVideoNode,
   getProxiedUrl,
+  renderResourcePlaceholder,
 }) {
   const { width, height } = box;
   const { poster, tracks, isBackground, scale, flip, focalX, focalY } = element;
@@ -114,7 +111,6 @@ function VideoTrim({
   );
 
   videoProps.transformFlip = getTransformFlip(flip);
-  videoProps.crossOrigin = 'anonymous';
   const tracksFormatted = tracks.map((track) => {
     const src = getProxiedUrl(track, track?.track);
     return {
@@ -131,9 +127,11 @@ function VideoTrim({
           mediaRef={videoRef}
           showPlaceholder
           previewMode={false}
+          renderResourcePlaceholder={renderResourcePlaceholder}
         >
-          {/* eslint-disable-next-line styled-components-a11y/media-has-caption,jsx-a11y/media-has-caption -- False positive. */}
-          <Video
+          {}
+          {/* eslint-disable-next-line jsx-a11y/media-has-caption -- False positive. */}
+          <StyledVideo
             poster={poster || resource.poster}
             style={style}
             {...videoProps}
@@ -146,7 +144,7 @@ function VideoTrim({
               <source src={resource.src} type={resource.mimeType} />
             )}
             <Captions tracks={tracksFormatted} />
-          </Video>
+          </StyledVideo>
         </MediaDisplay>
       </Wrapper>
       <PlayPauseButton
@@ -171,6 +169,7 @@ VideoTrim.propTypes = {
   resource: PropTypes.object,
   setVideoNode: PropTypes.func,
   getProxiedUrl: PropTypes.func,
+  renderResourcePlaceholder: PropTypes.func,
 };
 
 export default VideoTrim;

@@ -34,8 +34,6 @@ import { ContentType, ProviderType } from './constants';
 /**
  * @typedef ProviderConfiguration
  * @property {string} displayName The display name of the provider.
- * @property {?string} featureName An optional feature that must be turned on
- * for the provider tab to be displayed.
  * @property {?ContentType} contentTypeFilter Optional. The content type to filter by.
  * @property {boolean} supportsCategories Whether this provider supports
  * filtering media by category.
@@ -52,11 +50,11 @@ import { ContentType, ProviderType } from './constants';
  */
 
 /**
- *
  * @type {Object.<string, ProviderConfiguration>}
  */
 export const PROVIDERS = {
   [ProviderType.UNSPLASH]: {
+    provider: ProviderType.UNSPLASH,
     displayName: __('Images', 'web-stories'),
     supportsCategories: true,
     requiresAuthorAttribution: true,
@@ -73,6 +71,7 @@ export const PROVIDERS = {
     ),
   },
   [ProviderType.COVERR]: {
+    provider: ProviderType.COVERR,
     displayName: __('Video', 'web-stories'),
     supportsCategories: false,
     requiresAuthorAttribution: false,
@@ -85,6 +84,7 @@ export const PROVIDERS = {
     defaultPreviewWidth: 640,
   },
   [ProviderType.TENOR]: {
+    provider: ProviderType.TENOR,
     displayName: __('GIFs', 'web-stories'),
     contentTypeFilter: ContentType.GIF,
     supportsCategories: true,
@@ -95,5 +95,19 @@ export const PROVIDERS = {
       __('Error loading media from %s', 'web-stories'),
       'Tenor'
     ),
+  },
+  [ProviderType.TENOR_STICKERS]: {
+    provider: ProviderType.TENOR,
+    displayName: __('Stickers', 'web-stories'),
+    contentTypeFilter: ContentType.STICKER,
+    supportsCategories: true,
+    requiresAuthorAttribution: false,
+    attributionComponent: TenorAttribution,
+    fetchMediaErrorMessage: sprintf(
+      /* translators: %s: media provider name. */
+      __('Error loading media from %s', 'web-stories'),
+      'Tenor'
+    ),
+    featureName: 'tenorStickers',
   },
 };

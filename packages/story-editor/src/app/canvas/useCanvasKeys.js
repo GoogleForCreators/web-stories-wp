@@ -37,7 +37,7 @@ import { __, sprintf } from '@googleforcreators/i18n';
 import states from '../highlights/states';
 import useHighlights from '../highlights/useHighlights';
 import { useStory } from '../story';
-import { LAYER_DIRECTIONS } from '../../constants';
+import getLayerArrangementProps from './utils/getLayerArrangementProps';
 import { useCanvas } from '.';
 
 /**
@@ -57,6 +57,7 @@ function useCanvasKeys(ref) {
     animationState,
     updateAnimationState,
     currentPageProductIds,
+    pageElements,
   } = useStory(
     ({
       state: {
@@ -90,6 +91,7 @@ function useCanvasKeys(ref) {
         currentPageProductIds: currentPage?.elements
           ?.filter(({ type }) => type === ELEMENT_TYPES.PRODUCT)
           .map(({ product }) => product?.productId),
+        pageElements: currentPage?.elements,
       };
     }
   );
@@ -205,12 +207,21 @@ function useCanvasKeys(ref) {
       // into mod+left/right triggering the browser's back/forward navigation.
       evt.preventDefault();
 
-      const layerDir = getLayerDirection(key, shiftKey);
-      if (layerDir) {
-        arrangeSelection({ position: layerDir });
+      // The shortcut doesn't support moving multiple elements currently.
+      if (selectedElements?.length === 1) {
+        const { position, groupId } = getLayerArrangementProps(
+          key,
+          shiftKey,
+          selectedElements,
+          pageElements
+        );
+
+        if (position || groupId) {
+          arrangeSelection({ position, groupId });
+        }
       }
     },
-    [arrangeSelection]
+    [arrangeSelection, selectedElements, pageElements]
   );
 
   // Edit mode
@@ -309,16 +320,6 @@ function useCanvasKeys(ref) {
     },
     [setHighlights, selectedElements]
   );
-}
-
-function getLayerDirection(key, shift) {
-  if (key === 'ArrowUp') {
-    return shift ? LAYER_DIRECTIONS.FRONT : LAYER_DIRECTIONS.FORWARD;
-  }
-  if (key === 'ArrowDown') {
-    return shift ? LAYER_DIRECTIONS.BACK : LAYER_DIRECTIONS.BACKWARD;
-  }
-  return null;
 }
 
 export default useCanvasKeys;

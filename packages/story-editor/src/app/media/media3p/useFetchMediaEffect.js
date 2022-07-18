@@ -84,7 +84,7 @@ export default function useFetchMediaEffect({
       fetchMediaStart({ provider, pageToken });
       try {
         const { media, nextPageToken } = await listMedia({
-          provider,
+          provider: PROVIDERS[provider].provider,
           filter: {
             contentType: PROVIDERS[provider].contentTypeFilter,
             searchTerm: selectedCategoryId ? null : searchTerm,

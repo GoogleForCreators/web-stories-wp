@@ -21,7 +21,7 @@ import { renderHook, act } from '@testing-library/react-hooks';
 /**
  * Internal dependencies
  */
-import useTaxonomyFilters from '../taxonomy/useTaxonomyFilters';
+import useTaxonomyFilters from '../StoryFiltersProvider/taxonomy/useTaxonomyFilters';
 
 jest.mock('../../../../api/useApi', () => {
   const getTaxonomies = (args) => {
