@@ -125,7 +125,7 @@ describe('Font Check Metrics', () => {
     stopRequestInterception();
   });
 
-  // eslint-disable-next-line jest/no-disabled-tests -- this fails periodiclly
+  // eslint-disable-next-line jest/no-disabled-tests -- this fails periodiclly possibly network request related
   it.skip('should receive updated font metrics and not alter history', async () => {
     const storyTitle = 'Font Check Metrics';
     await addStoryWithFont(storyTitle);
