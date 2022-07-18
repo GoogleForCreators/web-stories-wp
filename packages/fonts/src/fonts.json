@@ -1448,36 +1448,6 @@
     }
   },
   {
-    "family": "Andika New Basic",
-    "fallbacks": ["sans-serif"],
-    "weights": [400, 700],
-    "styles": ["regular", "italic"],
-    "variants": [
-      [0, 400],
-      [1, 400],
-      [0, 700],
-      [1, 700]
-    ],
-    "service": "fonts.google.com",
-    "metrics": {
-      "upm": 2048,
-      "asc": 2500,
-      "des": -800,
-      "tAsc": 2500,
-      "tDes": -800,
-      "tLGap": 0,
-      "wAsc": 2630,
-      "wDes": 580,
-      "xH": 1040,
-      "capH": 1485,
-      "yMin": -520,
-      "yMax": 2620,
-      "hAsc": 2500,
-      "hDes": -800,
-      "lGap": 0
-    }
-  },
-  {
     "family": "Anek Bangla",
     "fallbacks": ["sans-serif"],
     "weights": [100, 200, 300, 400, 500, 600, 700, 800],
@@ -17181,31 +17151,6 @@
       "yMax": 2365,
       "hAsc": 2020,
       "hDes": -540,
-      "lGap": 0
-    }
-  },
-  {
-    "family": "Kdam Thmor",
-    "fallbacks": ["cursive"],
-    "weights": [400],
-    "styles": ["regular"],
-    "variants": [[0, 400]],
-    "service": "fonts.google.com",
-    "metrics": {
-      "upm": 2048,
-      "asc": 2500,
-      "des": -1200,
-      "tAsc": 2500,
-      "tDes": -1200,
-      "tLGap": 132,
-      "wAsc": 2500,
-      "wDes": 1200,
-      "xH": 1098,
-      "capH": 1462,
-      "yMin": -1200,
-      "yMax": 2450,
-      "hAsc": 2500,
-      "hDes": -1200,
       "lGap": 0
     }
   },

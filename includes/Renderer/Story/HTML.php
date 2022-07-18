@@ -69,7 +69,7 @@ class HTML {
 		$markup = $this->story->get_markup();
 		$markup = $this->fix_malformed_script_link_tags( $markup );
 		$markup = $this->replace_html_head( $markup );
-		$markup = $this->replace_url_scheme( $markup );
+		$markup = wp_replace_insecure_home_url( $markup );
 		$markup = $this->print_analytics( $markup );
 		$markup = $this->print_social_share( $markup );
 
@@ -193,24 +193,6 @@ class HTML {
 		}
 
 		return $content;
-	}
-
-	/**
-	 * Force home urls to http / https based on context.
-	 *
-	 * @since 1.1.0
-	 *
-	 * @param string $content String to replace.
-	 */
-	protected function replace_url_scheme( string $content ): string {
-		if ( is_ssl() ) {
-			$search  = home_url( '', 'http' );
-			$replace = home_url( '', 'https' );
-			$content = str_replace( $search, $replace, $content );
-		}
-
-		return $content;
-
 	}
 
 	/**

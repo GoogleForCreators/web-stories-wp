@@ -30,5 +30,7 @@ export const TRANSCODABLE_MIME_TYPES = [
   'video/x-mjpeg',
   'video/x-ms-asf',
   'video/x-msvideo',
+  'video/avi',
+  'video/msvideo',
   'video/x-nut',
 ];

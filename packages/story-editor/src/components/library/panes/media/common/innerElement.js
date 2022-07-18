@@ -208,7 +208,7 @@ function InnerElement({
     showWithoutDelay: active,
   };
 
-  if (type === ContentType.IMAGE) {
+  if (type === ContentType.IMAGE || type === ContentType.STICKER) {
     // eslint-disable-next-line styled-components-a11y/alt-text -- False positive.
     media = <Image key={src} {...imageProps} ref={mediaElement} />;
     cloneProps.src = thumbnailURL;
