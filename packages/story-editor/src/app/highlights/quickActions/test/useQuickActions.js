@@ -293,7 +293,6 @@ const mockUseInsertElement = useInsertElement;
 const mockInsertElement = jest.fn();
 const mockUseConfig = useConfig;
 const mockUseLocalMedia = useLocalMedia;
-const mockResetWithFetch = jest.fn();
 const mockPostProcessingResource = jest.fn();
 const mockOptimizeVideo = jest.fn();
 const mockOptimizeGif = jest.fn();
@@ -360,7 +359,6 @@ describe('useQuickActions', () => {
     });
 
     mockUseLocalMedia.mockReturnValue({
-      resetWithFetch: noop,
       postProcessingResource: noop,
       optimizeVideo: noop,
       optimizeGif: noop,
@@ -956,7 +954,6 @@ describe('MediaPicker', () => {
     });
 
     mockUseLocalMedia.mockReturnValue({
-      resetWithFetch: mockResetWithFetch,
       postProcessingResource: mockPostProcessingResource,
       optimizeVideo: mockOptimizeVideo,
       optimizeGif: mockOptimizeGif,

@@ -174,16 +174,6 @@ export default function useContextValueProvider(reducerState, reducerActions) {
   const stateRef = useRef();
   stateRef.current = reducerState;
 
-  const resetWithFetch = useCallback(() => {
-    const { mediaType: currentMediaType } = stateRef.current;
-
-    resetFilters();
-    const isFirstPage = !stateRef.current.pageToken;
-    if (!currentMediaType && !stateRef.current.searchTerm && isFirstPage) {
-      fetchMedia({ mediaType: currentMediaType }, fetchMediaSuccess);
-    }
-  }, [fetchMedia, fetchMediaSuccess, resetFilters]);
-
   useEffect(() => {
     fetchMedia({ searchTerm, pageToken, mediaType }, fetchMediaSuccess);
   }, [fetchMedia, fetchMediaSuccess, mediaType, pageToken, searchTerm]);
@@ -317,7 +307,6 @@ export default function useContextValueProvider(reducerState, reducerActions) {
       setSearchTerm,
       resetFilters,
       uploadMedia,
-      resetWithFetch,
       prependMedia,
       uploadVideoPoster,
       postProcessingResource,

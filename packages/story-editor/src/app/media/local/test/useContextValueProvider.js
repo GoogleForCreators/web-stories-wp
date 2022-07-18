@@ -242,9 +242,6 @@ describe('useContextValueProvider', () => {
       reducerActions.fetchMediaSuccess.mockImplementation(() => {
         done();
       });
-
-      // Act:
-      result.current.actions.resetWithFetch();
     });
 
     // Assert after fetchMediaSuccess callback is called:

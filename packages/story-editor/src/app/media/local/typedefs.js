@@ -42,7 +42,6 @@
  *
  * @typedef {(payload: {id: string}) => undefined} DeleteMediaElementFn
  * @typedef {() => undefined} ResetFiltersFn
- * @typedef {() => undefined} ResetWithFetchFn
  * @typedef {(payload: {mediaType: string}) => undefined} SetMediaTypeFn
  * @typedef {() => undefined} SetNextPageFn
  * @typedef {(payload: {searchTerm: string}) => undefined} SetSearchTermFn
@@ -60,7 +59,6 @@
  * @typedef {Object} LocalMediaContextActions
  * @property {DeleteMediaElementFn} deleteMediaElement action to delete a media
  * @property {ResetFiltersFn} resetFilters action to reset filters
- * @property {ResetWithFetchFn} resetWithFetch resets the filter in the state,
  * and then refetches the media from the server
  * @property {SetMediaTypeFn} setMediaType action to set media type
  * @property {SetNextPageFn} setNextPage action to set next page
@@ -131,7 +129,6 @@
  * @property {FetchMediaSuccessFn} fetchMediaSucccess action when fetching media
  * is successful
  * @property {ResetFiltersFn} resetFilters action to reset filters
- * @property {ResetWithFetchFn} resetWithFetch resets the filter in the state,
  * and then refetches the media from the server
  * @property {SetMediaTypeFn} setMediaType action to set media type
  * @property {SetNextPageFn} setNextPage action to set next page
