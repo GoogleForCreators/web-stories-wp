@@ -45,7 +45,7 @@ describe('Stories Dashboard', () => {
     await takeSnapshot(page, 'Stories Dashboard', { percyCSS });
   });
 
-  //eslint-disable-next-line jest/no-disabled-tests -- https://github.com/GoogleForCreators/web-stories-wp/runs/7301628196?check_suite_focus=true#step:9:19
+  //eslint-disable-next-line jest/no-disabled-tests -- TODO(#11930): Fix flakey test.
   it.skip('should be able to skip to main content of Dashboard for keyboard navigation', async () => {
     await visitDashboard();
 
