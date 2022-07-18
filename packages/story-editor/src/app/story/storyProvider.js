@@ -19,7 +19,6 @@
  */
 import PropTypes from 'prop-types';
 import { useMemo, useEffect } from '@googleforcreators/react';
-import { getTextElementTagNames } from '@googleforcreators/output';
 
 /**
  * Internal dependencies
@@ -35,7 +34,6 @@ import useHistoryReplay from './effects/useHistoryReplay';
 import useStoryReducer from './useStoryReducer';
 import useAutoSave from './actions/useAutoSave';
 import { StoryTriggersProvider } from './storyTriggers';
-import { combineElementsWithTags } from './utils/combineElementsWithTags';
 
 function StoryProvider({ storyId, initialEdits, children }) {
   const [hashPageId, setHashPageId] = useHashState('page', null);
@@ -77,25 +75,7 @@ function StoryProvider({ storyId, initialEdits, children }) {
   );
   const isCurrentPageEmpty = !currentPage;
 
-  // add text tagNames to the current page elements
-  const currentPageWithTagNames = useMemo(() => {
-    if (currentPage?.elements.length) {
-      const textElements = currentPage.elements.filter(
-        ({ type }) => 'text' === type
-      );
-      const textTags = getTextElementTagNames(textElements);
-      // Combine all elements with the tag names in map
-      const newElements = combineElementsWithTags(
-        currentPage?.elements,
-        textTags
-      );
-      return { ...currentPage, elements: newElements };
-    }
-    return currentPage;
-  }, [currentPage]);
-
-  const currentPageElements = currentPageWithTagNames?.elements;
-
+  const currentPageElements = currentPage?.elements;
   const selectedElements = useMemo(() => {
     if (isCurrentPageEmpty) {
       return STABLE_ARRAY;
@@ -151,7 +131,7 @@ function StoryProvider({ storyId, initialEdits, children }) {
   const fullStory = useMemo(
     () => ({
       pages,
-      currentPage: currentPageWithTagNames,
+      currentPage,
       currentPageId,
       currentPageIndex,
       currentPageNumber,
@@ -173,7 +153,7 @@ function StoryProvider({ storyId, initialEdits, children }) {
     }),
     [
       pages,
-      currentPageWithTagNames,
+      currentPage,
       currentPageId,
       currentPageIndex,
       currentPageNumber,

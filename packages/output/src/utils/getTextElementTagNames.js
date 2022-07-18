@@ -23,10 +23,9 @@ const MINIMUM_CONTENT_LENGTH = 3;
  * based on font size.
  *
  * @param {Array<Object>} elements List of text elements
- * @param {string} newTag Chosen new tagName for text element
  * @return {Map<string, string>} Map of element IDs to tag name.
  */
-function getTextElementTagNames(elements, newTag) {
+function getTextElementTagNames(elements) {
   return elements
     .sort((a, b) => a.y - b.y)
     .reduce(
@@ -42,13 +41,6 @@ function getTextElementTagNames(elements, newTag) {
        * @return {Map<string, string>} Tag names map.
        */
       (tagNamesMap, { id, fontSize, content, tagName }) => {
-        // if a new tagName is added,
-        // add it to the element
-        if (newTag && newTag !== 'auto') {
-          tagNamesMap.set(id, newTag);
-          return tagNamesMap;
-        }
-
         // if a tag already exists,
         // utilize the one already part of the element
         if (tagName && tagName !== 'auto') {

@@ -27,11 +27,13 @@ import {
 } from '@googleforcreators/design-system';
 import { trackClick } from '@googleforcreators/tracking';
 import { useFeature } from 'flagged';
-import { useCallback } from '@googleforcreators/react';
+import { useCallback, useState } from '@googleforcreators/react';
+import { getTextElementTagNames } from '@googleforcreators/output';
 
 /**
  * Internal dependencies
  */
+import { useStory } from '../../../../app/story';
 import { Row } from '../../../form';
 import { getCommonValue } from '../../shared';
 import { SimplePanel } from '../../panel';
@@ -45,16 +47,29 @@ const HEADING_LEVELS = {
 };
 
 function TextAccessibilityPanel({ selectedElements, pushUpdate }) {
-  // Feature flagging for Semantic Headings
   const showSemanticHeadings = useFeature('showSemanticHeadings');
+  const [tagNamesOverrides, setTagNamesOverrides] = useState();
 
-  // Click tracking for the Learn More link
+  const { textElements } = useStory(({ state }) => ({
+    textElements: state.currentPage?.elements
+      ?.filter(({ type }) => 'text' === type)
+      .map(({ id, tagName, ...rest }) => ({
+        id,
+        ...rest,
+        tagName: tagNamesOverrides?.get(id) || tagName,
+      })),
+  }));
+
   const onLinkClick = useCallback((evt) => {
     trackClick(evt, 'click_headings_docs');
   }, []);
 
   const handleChange = useCallback(
     (evt, value) => {
+      setTagNamesOverrides(
+        new Map(selectedElements.map(({ id }) => [id, value]))
+      );
+
       selectedElements.forEach(() => {
         pushUpdate({ tagName: value });
       });
@@ -66,20 +81,30 @@ function TextAccessibilityPanel({ selectedElements, pushUpdate }) {
     return null;
   }
 
-  // Check if tags match for selected item in dropdown
-  // If they don't match, we want to show 'Mixed'
-  // However, if they match, show the matching value
-  const tagNames = selectedElements.map((element) => {
-    return element?.tagName;
-  });
+  const tagNamesMap = getTextElementTagNames(textElements);
+
+  const selectedElementsWithTagNames = selectedElements.map((element) => ({
+    ...element,
+    tagName: tagNamesMap.get(element.id),
+    defaultTagName: element.tagName || 'auto',
+  }));
+
+  const uniqueTagNames = [
+    ...new Set(
+      selectedElementsWithTagNames.map(({ tagName }) => tagName || 'auto')
+    ),
+  ];
+
   const currentValue =
-    new Set(tagNames).size === 1 ? tagNames[0] : MULTIPLE_VALUE;
-  console.log(currentValue);
+    uniqueTagNames.length === 1 ? uniqueTagNames[0] : MULTIPLE_VALUE;
 
-  const isIndeterminate = MULTIPLE_VALUE === currentValue;
+  const tagName = getCommonValue(
+    selectedElementsWithTagNames,
+    'defaultTagName',
+    'auto'
+  );
 
-  const tagName = getCommonValue(selectedElements, 'tagName', 'auto');
-
+  const isIndeterminate = MULTIPLE_VALUE === tagName;
   const selectedValue = 'auto' === tagName ? 'auto' : currentValue;
 
   const options = [
@@ -89,7 +114,7 @@ function TextAccessibilityPanel({ selectedElements, pushUpdate }) {
           ? sprintf(
               /* translators: %s: heading level. */
               __('Automatic (%s)', 'web-stories'),
-              HEADING_LEVELS[currentValue]
+              HEADING_LEVELS[currentValue] || MULTIPLE_DISPLAY_VALUE
             )
           : __('Automatic', 'web-stories'),
       value: 'auto',
@@ -134,7 +159,7 @@ function TextAccessibilityPanel({ selectedElements, pushUpdate }) {
           mapping={{
             a: (
               <Link
-                href={__('https://wp.stories.google/docs/seo', 'web-stories')}
+                href={__('https://wp.stories.google/docs/seo/', 'web-stories')}
                 rel="noreferrer"
                 target="_blank"
                 onClick={onLinkClick}
