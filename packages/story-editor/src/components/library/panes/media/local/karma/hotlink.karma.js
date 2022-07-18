@@ -58,24 +58,42 @@ describe('Embedding hotlinked media', () => {
     await fixture.events.click(input);
     await fixture.events.keyboard.type('d');
     await fixture.events.click(insertBtn);
-    let dialog = screen.getByRole('dialog');
-    await waitFor(() => expect(dialog.textContent).toContain('Invalid link'));
+    let dialog;
+    await waitFor(() => {
+      dialog = screen.getByRole('dialog');
+      if (!dialog) {
+        throw new Error('dialog not ready');
+      }
+      expect(dialog.textContent).toContain('Invalid link');
+    });
 
     // Delete the value, verify now the informative message show instead again.
     await fixture.events.click(input, { clickCount: 3 });
     await fixture.events.keyboard.press('Del');
-    dialog = screen.getByRole('dialog');
-    await waitFor(() => expect(dialog.textContent).toContain('You can insert'));
+    await waitFor(() => {
+      dialog = screen.getByRole('dialog');
+      if (!dialog) {
+        throw new Error('dialog not ready');
+      }
+      expect(dialog.textContent).toContain('You can insert');
+    });
 
     await fixture.events.click(input);
     await fixture.events.keyboard.type('https://example.jpgef');
     await fixture.events.click(insertBtn);
 
-    await fixture.events.sleep(500);
-    dialog = screen.getByRole('dialog');
-    await waitFor(() => expect(dialog.textContent).toContain('Invalid link'), {
-      timeout: 1500,
-    });
+    await waitFor(
+      () => {
+        dialog = screen.getByRole('dialog');
+        if (!dialog) {
+          throw new Error('dialog not ready');
+        }
+        expect(dialog.textContent).toContain('Invalid link');
+      },
+      {
+        timeout: 1500,
+      }
+    );
   });
 
   it('should insert a new media element from valid url', async () => {

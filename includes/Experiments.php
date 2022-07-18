@@ -321,6 +321,7 @@ class Experiments extends Service_Base implements HasRequirements {
 				'label'       => __( 'Poster hotlinking', 'web-stories' ),
 				'description' => __( 'Enable story poster hotlinking', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 			/**
 			 * Author: @spacedmonkey
@@ -332,6 +333,7 @@ class Experiments extends Service_Base implements HasRequirements {
 				'label'       => __( 'Link icon hotlinking', 'web-stories' ),
 				'description' => __( 'Enable link icon hotlinking', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 			/**
 			 * Author: @spacedmonkey
@@ -343,6 +345,7 @@ class Experiments extends Service_Base implements HasRequirements {
 				'label'       => __( 'Video poster hotlinking', 'web-stories' ),
 				'description' => __( 'Enable video poster hotlinking', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 			/**
 			 * Author: @barklund
@@ -389,6 +392,17 @@ class Experiments extends Service_Base implements HasRequirements {
 				'name'        => 'extraPages',
 				'label'       => __( 'Context Pages', 'web-stories' ),
 				'description' => __( 'Show extra pages for context before and after the current canvas page. Note: This might come with a performance penalty.', 'web-stories' ),
+				'group'       => 'editor',
+			],
+			/**
+			 * Author: @swissspidy
+			 * Issue: #11878
+			 * Creation date: 2022-07-06
+			 */
+			[
+				'name'        => 'tenorStickers',
+				'label'       => __( 'Stickers', 'web-stories' ),
+				'description' => __( 'Enable Tenor stickers support', 'web-stories' ),
 				'group'       => 'editor',
 			],
 		];
