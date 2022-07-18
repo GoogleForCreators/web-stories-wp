@@ -14,6 +14,10 @@
  * limitations under the License.
  */
 /**
+ * External dependencies
+ */
+import { screen, waitFor } from '@testing-library/react';
+/**
  * Internal dependencies
  */
 import { Fixture } from '../../../../../karma';
@@ -24,6 +28,7 @@ describe('Video Accessibility Panel', () => {
 
   beforeEach(async () => {
     fixture = new Fixture();
+    fixture.setFlags({ videoPosterHotlinking: true });
     await fixture.render();
     await fixture.collapseHelpCenter();
   });
@@ -105,11 +110,121 @@ describe('Video Accessibility Panel', () => {
       await fixture.events.keyboard.press('tab');
       await fixture.events.keyboard.press('Enter');
       await fixture.events.keyboard.press('down');
+      await fixture.events.keyboard.press('down');
       expect(vaPanel.posterMenuReset).toHaveFocus();
       await fixture.events.keyboard.press('Enter');
 
       // Expect poster image to have been reset
       expect(vaPanel.posterImage.src).toBe(originalPoster);
+    });
+
+    it('should allow user to hotlink and reset poster image using mouse', async () => {
+      // Remember original poster image
+      const originalPoster = vaPanel.posterImage.src;
+
+      vaPanel.posterMenuButton.scrollIntoView();
+
+      // Expect menu button to exist
+      expect(vaPanel.posterMenuButton).toBeTruthy();
+
+      // Open the menu
+      await fixture.events.click(vaPanel.posterMenuButton);
+
+      // And click on edit
+      await fixture.events.click(vaPanel.posterMenuHotlink);
+
+      const input = fixture.screen.getByRole('textbox', { name: 'URL' });
+      const insertBtn = fixture.screen.getByRole('button', {
+        name: 'Use image as video poster',
+      });
+      await fixture.events.click(input);
+      await fixture.events.keyboard.type(
+        'http://localhost:9876/__static__/ranger9.jpg'
+      );
+
+      await fixture.events.click(insertBtn);
+      await waitFor(() => {
+        if (!vaPanel?.posterImage?.src) {
+          throw new Error('image not available');
+        }
+        // Expect poster image to have updated ( See MediaUpload component in fixture.js )
+        expect(vaPanel.posterImage.src).toMatch(/^http.+\/ranger9.jpg$/);
+      });
+
+      // Now open menu and click reset
+      await fixture.events.click(vaPanel.posterMenuButton);
+      await fixture.events.click(vaPanel.posterMenuReset);
+
+      // Expect poster image to have been reset
+      expect(vaPanel.posterImage.src).toBe(originalPoster);
+    });
+
+    it('should not be allowed to hotlink images with incorrect dimensions', async () => {
+      vaPanel.posterMenuButton.scrollIntoView();
+
+      // Expect menu button to exist
+      expect(vaPanel.posterMenuButton).toBeTruthy();
+
+      // Open the menu
+      await fixture.events.click(vaPanel.posterMenuButton);
+
+      // And click on edit
+      await fixture.events.click(vaPanel.posterMenuHotlink);
+
+      const input = fixture.screen.getByRole('textbox', { name: 'URL' });
+      const insertBtn = fixture.screen.getByRole('button', {
+        name: 'Use image as video poster',
+      });
+      await fixture.events.click(input);
+      const hotlinkUrl = 'http://localhost:9876/__static__/saturn.jpg';
+      await fixture.events.keyboard.type(hotlinkUrl);
+
+      await fixture.events.click(insertBtn);
+      await waitFor(() => {
+        const dialog = screen.getByRole('dialog');
+        if (!dialog) {
+          throw new Error('dialog not ready');
+        }
+        if (
+          -1 ===
+          dialog.textContent.indexOf('do not match required image dimensions')
+        ) {
+          throw new Error('dimensions not available');
+        }
+        expect(dialog.textContent).toContain(
+          'do not match required image dimensions'
+        );
+      });
+    });
+
+    it('should not be allowed to hotlink images with invalid url', async () => {
+      vaPanel.posterMenuButton.scrollIntoView();
+
+      // Expect menu button to exist
+      expect(vaPanel.posterMenuButton).toBeTruthy();
+
+      // Open the menu
+      await fixture.events.click(vaPanel.posterMenuButton);
+
+      // And click on edit
+      await fixture.events.click(vaPanel.posterMenuHotlink);
+
+      const input = fixture.screen.getByRole('textbox', { name: 'URL' });
+      const insertBtn = fixture.screen.getByRole('button', {
+        name: 'Use image as video poster',
+      });
+      await fixture.events.click(input);
+      const hotlinkUrl = 'invalid';
+      await fixture.events.keyboard.type(hotlinkUrl);
+
+      await fixture.events.click(insertBtn);
+      await waitFor(() => {
+        const dialog = screen.getByRole('dialog');
+        if (!dialog) {
+          throw new Error('dialog not ready');
+        }
+        expect(dialog.textContent).toContain('Invalid link');
+      });
     });
   });
 });
