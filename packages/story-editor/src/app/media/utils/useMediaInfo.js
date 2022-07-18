@@ -86,7 +86,7 @@ function loadScriptOnce(url) {
  * @return {boolean} Whether the resource/file has small enough dimensions.
  */
 const hasSmallDimensions = ({ width, height }) =>
-  width * height <
+  width * height <=
   MEDIA_VIDEO_DIMENSIONS_THRESHOLD.WIDTH *
     MEDIA_VIDEO_DIMENSIONS_THRESHOLD.HEIGHT;
 
@@ -105,7 +105,7 @@ const hasSmallDimensions = ({ width, height }) =>
  * @return {boolean} Whether the file has a good file size / duration ratio.
  */
 const hasSmallFileSize = (fileSize, duration) =>
-  fileSize <
+  fileSize <=
   (MEDIA_VIDEO_FILE_SIZE_THRESHOLD / MEDIA_RECOMMENDED_MAX_VIDEO_DURATION) *
     duration;
 
