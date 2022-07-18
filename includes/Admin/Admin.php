@@ -259,15 +259,4 @@ class Admin extends Service_Base {
 		}
 		return $media_states;
 	}
-
-	/**
-	 * Returns data removal setting.
-	 *
-	 * @since 1.23.0
-	 *
-	 * @return bool data removal value.
-	 */
-	public function data_removal(): bool {
-		return absint( $this->settings->get_setting( $this->settings::SETTING_NAME_DATA_REMOVAL ) ); 
-	}
 }

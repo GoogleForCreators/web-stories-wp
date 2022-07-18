@@ -250,24 +250,4 @@ class Admin extends DependencyInjectedTestCase {
 		$result = $this->instance->media_states( [], $post );
 		$this->assertEqualSets( [ 'Web Stories Publisher Logo' ], $result );
 	}
-
-	/**
-	 * @covers ::data_removal
-	 */
-	public function test_data_removal_on(): void {
-		$post = self::factory()->post->create_and_get( [] );
-		$this->settings->update_setting( $this->settings::SETTING_NAME_DATA_REMOVAL, true );
-		$result = $this->instance->data_removal();
-		$this->assertEqualSets( true, $result );
-	}
-
-	/**
-	 * @covers ::data_removal
-	 */
-	public function test_data_removal_off(): void {
-		$post = self::factory()->post->create_and_get( [] );
-		$this->settings->update_setting( $this->settings::SETTING_NAME_DATA_REMOVAL, false );
-		$result = $this->instance->data_removal();
-		$this->assertEqualSets( false, $result );
-	}
 }
