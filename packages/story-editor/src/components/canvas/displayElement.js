@@ -21,7 +21,7 @@ import PropTypes from 'prop-types';
 import { memo, useRef, useState } from '@googleforcreators/react';
 import styled, { css } from 'styled-components';
 import { generatePatternStyles } from '@googleforcreators/patterns';
-import {calcRotatedResizeOffset, useUnits} from '@googleforcreators/units';
+import { calcRotatedResizeOffset, useUnits } from '@googleforcreators/units';
 import { StoryAnimation } from '@googleforcreators/animation';
 import { useTransformHandler } from '@googleforcreators/transform';
 import {
@@ -189,11 +189,21 @@ function DisplayElement({
       target.style.height = '';
     } else {
       const { translate = [0, 0], rotate, resize, dropTargets } = transform;
-      console.log(rotationAngle);
-      const [dx, dy] = calcRotatedResizeOffset(rotationAngle, left, right, top, bottom);
-      console.log('translate', translate);
-      console.log(dx, dy);
-      target.style.transform = `translate(${translate[0] - dx}px, ${translate[1] - dy}px) rotate(${rotate}deg)`;
+
+      // If we have border, we have to adjust the transformation since the border was considered by Moveable when
+      // creating the transformation values but the border is not considered in the width and height of the element.
+      // So we calculate a transformation assuming that the element was resized by the border and then deduct it from the
+      // applied transformation.
+      const [dx, dy] = calcRotatedResizeOffset(
+        rotationAngle,
+        0,
+        left + right,
+        0,
+        top + bottom
+      );
+      target.style.transform = `translate(${translate[0] - dx}px, ${
+        translate[1] - dy
+      }px) rotate(${rotate}deg)`;
       if (resize && resize[0] !== 0 && resize[1] !== 0) {
         target.style.width = `${resize[0]}px`;
         target.style.height = `${resize[1]}px`;
