@@ -87,32 +87,6 @@ describe('getTextElementTagNames', () => {
     );
   });
 
-  it('should return tag name map with added new tag if passed', () => {
-    const elements = [ELEMENT_H1, ELEMENT_H2, ELEMENT_H3, PARAGRAPH];
-
-    expect(getTextElementTagNames(elements, 'h2')).toStrictEqual(
-      new Map([
-        ['111', 'h2'],
-        ['222', 'h2'],
-        ['333', 'h2'],
-        ['444', 'h2'],
-      ])
-    );
-  });
-
-  it('should return tag name map without added new tag if new tag passed is auto', () => {
-    const elements = [ELEMENT_H1, ELEMENT_H2, ELEMENT_H3, PARAGRAPH];
-
-    expect(getTextElementTagNames(elements, 'auto')).toStrictEqual(
-      new Map([
-        ['111', 'h1'],
-        ['222', 'h2'],
-        ['333', 'h3'],
-        ['444', 'p'],
-      ])
-    );
-  });
-
   it('should have only one h1 element', () => {
     const elements = [
       ELEMENT_H1,
