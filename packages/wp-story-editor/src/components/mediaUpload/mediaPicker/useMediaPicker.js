@@ -102,50 +102,27 @@ function useMediaPicker({
   }, [onUpload, updateMedia]);
 
   useEffect(() => {
-    const wsDetails = window.wp.media.view.Attachment.Details?.extend({
-      deleteAttachment: function (event) {
-        event.preventDefault();
-
-        this.getFocusableElements();
-
-        if (window.confirm(window.wp.media.view.l10n.warnDelete)) {
-          this.model.destroy({
-            wait: true,
-            error: function () {
-              window.alert(window.wp.media.view.l10n.errorDeleting);
-            },
-          });
-
-          this.moveFocus();
-        }
+    const currentDetails = window.wp.media.view.Attachment.Details;
+    const wsDetails = currentDetails?.extend({
+      deleteAttachment: function () {
+        currentDetails.prototype.deleteAttachment.apply(
+          this,
+          // eslint-disable-next-line prefer-rest-params -- expected.
+          arguments
+        );
         if (onDelete) {
           onDelete(getResourceFromMediaPicker(this.model.attributes));
         }
       },
-      trashAttachment: function (event) {
-        const library = this.controller.library,
-          self = this;
-        event.preventDefault();
-
-        this.getFocusableElements();
+      trashAttachment: function () {
+        currentDetails.prototype.trashAttachment.apply(
+          this,
+          // eslint-disable-next-line prefer-rest-params -- expected.
+          arguments
+        );
 
         if (onDelete) {
           onDelete(getResourceFromMediaPicker(this.model.attributes));
-        }
-
-        // When in the Media Library and the Media Trash is enabled.
-        if (
-          window.wp.media.view.settings.mediaTrash &&
-          'edit-metadata' === this.controller.content.mode()
-        ) {
-          this.model.set('status', 'trash');
-          this.model.save().done(function () {
-            library._requery(true);
-            self.moveFocusToLastFallback();
-          });
-        } else {
-          this.model.destroy();
-          this.moveFocus();
         }
       },
     });
