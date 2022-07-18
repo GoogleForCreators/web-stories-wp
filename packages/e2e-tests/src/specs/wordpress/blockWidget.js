@@ -86,7 +86,7 @@ describe('Web Stories Widget Block', () => {
     await expect(page).toMatch('Embed Settings');
   });
 
-  // eslint-disable-next-line jest/no-disabled-tests -- TimeoutError: Element .widget-liquid-right .web-stories-field-wrapper not found
+  // eslint-disable-next-line jest/no-disabled-tests -- -- TODO(#11931): Fix flakey test.
   it.skip('should insert a legacy web stories widget', async () => {
     await activatePlugin('classic-widgets');
 
