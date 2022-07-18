@@ -253,7 +253,7 @@ function BackgroundAudioPanelContent({
         handleRemove();
       }
     },
-    [resource]
+    [resource, handleRemove]
   );
 
   const options = [

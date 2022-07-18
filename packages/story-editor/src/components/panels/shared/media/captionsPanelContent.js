@@ -104,9 +104,12 @@ function CaptionsPanelContent({
   );
 
   const onError = useCallback((err) => trackError(eventName, err?.message), []);
-  const onDeleteTrack = useCallback((deletedResource) => {
-    handleRemoveTrack(deletedResource?.id);
-  }, []);
+  const onDeleteTrack = useCallback(
+    (deletedResource) => {
+      handleRemoveTrack(deletedResource?.id);
+    },
+    [handleRemoveTrack]
+  );
 
   if (!allowedCaptionMimeTypes?.length) {
     return null;
