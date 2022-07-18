@@ -293,17 +293,23 @@ function Footer({ captureImage, videoRef }) {
     actions: { uploadFile },
   } = useUploader();
 
-  const { updateCurrentPageProperties, currentPage, setSelectedElementsById } =
-    useStory(
-      ({
-        state: { currentPage },
-        actions: { updateCurrentPageProperties, setSelectedElementsById },
-      }) => ({
-        updateCurrentPageProperties,
-        setSelectedElementsById,
-        currentPage,
-      })
-    );
+  const {
+    updateCurrentPageProperties,
+    backgroundElementId,
+    setSelectedElementsById,
+  } = useStory(
+    ({
+      state: { currentPage },
+      actions: { updateCurrentPageProperties, setSelectedElementsById },
+    }) => ({
+      backgroundElementId: currentPage?.elements.find(
+        ({ isBackground }) => isBackground
+      )?.id,
+      updateCurrentPageProperties,
+      setSelectedElementsById,
+      currentPage,
+    })
+  );
   const { setHighlights } = useHighlights(({ setHighlights }) => ({
     setHighlights,
   }));
@@ -326,10 +332,7 @@ function Footer({ captureImage, videoRef }) {
       resource: objectPick(resource, Object.keys(BackgroundAudioPropTypeShape)),
     };
 
-    const backgroundElement = currentPage?.elements.find(
-      ({ isBackground }) => isBackground
-    );
-    setSelectedElementsById({ elementIds: [backgroundElement.id] });
+    setSelectedElementsById({ elementIds: [backgroundElementId] });
     setHighlights({
       highlight: states.PAGE_BACKGROUND_AUDIO,
     });
