@@ -102,7 +102,7 @@ describe('Font Check Metrics', () => {
   let stopRequestInterception;
   let mockResponse;
 
-  jest.retryTimes(3, {logErrorsBeforeRetry: true});
+  jest.retryTimes(3, { logErrorsBeforeRetry: true });
 
   beforeAll(async () => {
     await page.setRequestInterception(true);
