@@ -20,42 +20,22 @@
 import { AbstractPanel } from './abstractPanel';
 
 /**
- * The poster panel containing inputs for adding poster.
+ * The page background panel containing inputs flipping and detaching images as well as setting bg color.
  */
-export class VideoPoster extends AbstractPanel {
+export class PageBackgroundAudio extends AbstractPanel {
   constructor(node, path) {
     super(node, path);
   }
 
-  get posterImage() {
-    return this.getByRole('img', { alt: 'Preview poster image' });
-  }
-
-  get posterMenuButton() {
+  get uploadButton() {
     return this.getByRole('button', {
-      name: /video poster/i,
+      name: /upload an audio file/i,
     });
   }
 
-  get posterMenuEdit() {
-    return this.getByRoleIn(this.node.ownerDocument, 'menuitem', {
-      name: /upload a file/i,
+  get hotlinkButton() {
+    return this.getByRole('button', {
+      name: /link to audio file/i,
     });
-  }
-
-  get posterMenuHotlink() {
-    return this.getByRoleIn(this.node.ownerDocument, 'menuitem', {
-      name: /link to a file/i,
-    });
-  }
-
-  get posterMenuReset() {
-    return this.getByRoleIn(this.node.ownerDocument, 'menuitem', {
-      name: /reset/i,
-    });
-  }
-
-  get panelTitle() {
-    return this.getByRole('button', { name: 'Accessibility' });
   }
 }
