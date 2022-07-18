@@ -149,7 +149,12 @@ function PagePreview({ page, label, ...props }) {
         <Page ref={setPageRef} aria-label={label} {...props}>
           <PreviewWrapper background={backgroundColor}>
             {pageImage ? (
-              <Image src={pageImage} alt={label} decoding="async" />
+              <Image
+                draggable="false"
+                src={pageImage}
+                alt={label}
+                decoding="async"
+              />
             ) : (
               page.elements.map((element) => (
                 <DisplayElement
