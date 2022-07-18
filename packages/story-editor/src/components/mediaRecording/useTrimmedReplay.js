@@ -19,11 +19,10 @@
  */
 import { useEffect } from '@googleforcreators/react';
 
-function useTrimmedReplay({ videoRef, trimData, isTrimming }) {
+function useTrimmedReplay({ videoRef, trimData, isActive }) {
   useEffect(() => {
-    // If trimming, the trim provider will take care of the loop stuff
     const videoNode = videoRef.current;
-    if (!videoNode || !trimData.end || isTrimming) {
+    if (!videoNode || !trimData.end || !isActive) {
       return undefined;
     }
 
@@ -51,7 +50,7 @@ function useTrimmedReplay({ videoRef, trimData, isTrimming }) {
     videoNode.addEventListener('timeupdate', onTimeUpdate);
 
     return () => videoNode.removeEventListener('timeupdate', onTimeUpdate);
-  }, [videoRef, trimData, isTrimming]);
+  }, [videoRef, trimData, isActive]);
 }
 
 export default useTrimmedReplay;

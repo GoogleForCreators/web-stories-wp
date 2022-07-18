@@ -94,7 +94,7 @@ function MediaRecording() {
     [setVideoNode]
   );
 
-  useTrimmedReplay({ videoRef, trimData, isTrimming });
+  useTrimmedReplay({ videoRef, trimData, isActive: !isTrimming });
 
   if (isFailed) {
     return <ErrorDialog />;
