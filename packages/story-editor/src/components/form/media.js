@@ -93,6 +93,7 @@ function MediaInput(
     hotlinkInsertingText = __('Using image', 'web-stories'),
     menuOptions = [],
     onChange,
+    onDelete,
     onChangeErrorText = __(
       'Unable to use this file type, please select a valid image type.',
       'web-stories'
@@ -163,6 +164,7 @@ function MediaInput(
         title={title}
         buttonInsertText={buttonInsertText}
         onSelect={onChange}
+        onDelete={onDelete}
         onSelectErrorMessage={onChangeErrorText}
         type={type}
         cropParams={cropParams}
@@ -179,6 +181,7 @@ MediaInputField.propTypes = {
   openHotlink: PropTypes.func,
   dropdownOptions: PropTypes.array,
   onChange: PropTypes.func,
+  onDelete: PropTypes.func,
   forwardedRef: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.shape({ current: PropTypes.elementType }),
@@ -194,6 +197,7 @@ MediaInput.propTypes = {
   hotlinkInsertingText: PropTypes.string,
   menuOptions: PropTypes.array,
   onChange: PropTypes.func.isRequired,
+  onDelete: PropTypes.func,
   onChangeErrorText: PropTypes.string,
   type: PropTypes.oneOfType([
     PropTypes.string,

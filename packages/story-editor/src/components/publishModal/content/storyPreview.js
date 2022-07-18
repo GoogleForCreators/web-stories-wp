@@ -239,6 +239,19 @@ const StoryPreview = () => {
     [updateStory]
   );
 
+  const onDelete = useCallback(
+    (deleteResource) => {
+      if (featuredMedia.id === deleteResource.id) {
+        updateStory({
+          properties: {
+            featuredMedia: {},
+          },
+        });
+      }
+    },
+    [featuredMedia, updateStory]
+  );
+
   let posterErrorMessage = __(
     'No file types are currently supported.',
     'web-stories'
@@ -298,6 +311,7 @@ const StoryPreview = () => {
                 {(hasUploadMediaAction || enablePosterHotlinking) && (
                   <StyledMedia
                     onChange={handleChangePoster}
+                    onDelete={onDelete}
                     title={__('Select as poster image', 'web-stories')}
                     hotlinkTitle={__(
                       'Use external image as poster image',

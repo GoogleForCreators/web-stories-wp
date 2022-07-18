@@ -110,6 +110,15 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
     [pushUpdate, rawPoster]
   );
 
+  const onDelete = useCallback(
+    (deleteResource) => {
+      if (poster === deleteResource.src) {
+        pushUpdate({ poster: resource.poster }, true);
+      }
+    },
+    [poster, resource, pushUpdate]
+  );
+
   const posterErrorMessage = useMemo(() => {
     let message = __('No file types are currently supported.', 'web-stories');
 
@@ -171,6 +180,7 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
           value={poster}
           cropParams={cropParams}
           onChange={handleChangePoster}
+          onDelete={onDelete}
           onChangeErrorText={posterErrorMessage}
           title={__('Select as video poster', 'web-stories')}
           hotlinkTitle={__('Use external image as video poster', 'web-stories')}
