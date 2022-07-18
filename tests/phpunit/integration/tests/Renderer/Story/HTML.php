@@ -141,39 +141,6 @@ class HTML extends TestCase {
 	}
 
 	/**
-	 * @covers ::replace_url_scheme
-	 */
-	public function test_replace_url_scheme(): void {
-		$_SERVER['HTTPS'] = 'on';
-
-		$link = get_home_url( null, 'web-storires/test' );
-		$link = set_url_scheme( $link, 'http' );
-
-		$link_https = set_url_scheme( $link, 'https' );
-
-		$story    = new Story();
-		$renderer = new \Google\Web_Stories\Renderer\Story\HTML( $story );
-
-		$result = $this->call_private_method( $renderer, 'replace_url_scheme', [ $link ] );
-		$this->assertEquals( $result, $link_https );
-	}
-
-
-	/**
-	 * @covers ::replace_url_scheme
-	 */
-	public function test_replace_url_scheme_different_host(): void {
-		$_SERVER['HTTPS'] = 'on';
-		$link             = 'https://www.google.com';
-
-		$story    = new Story();
-		$renderer = new \Google\Web_Stories\Renderer\Story\HTML( $story );
-
-		$result = $this->call_private_method( $renderer, 'replace_url_scheme', [ $link ] );
-		$this->assertEquals( $result, $link );
-	}
-
-	/**
 	 * @covers ::print_analytics
 	 */
 	public function test_print_analytics(): void {
