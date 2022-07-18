@@ -267,7 +267,7 @@ class Admin extends Service_Base {
 	 *
 	 * @return bool data removal value.
 	 */
-	public function data_removal(): array {
+	public function data_removal(): bool {
 		return absint( $this->settings->get_setting( $this->settings::SETTING_NAME_DATA_REMOVAL ) ); 
 	}
 }
