@@ -50,7 +50,7 @@ function useElementPolygon() {
   const elementYOffset = -getBox(bgElement).y;
   const getElementPolygon = (element) => {
     if (element.isBackground) {
-      return { element, polygon: bgPolygon };
+      return bgPolygon;
     }
     const { id, rotationAngle } = element;
     const node = nodesById[id];
