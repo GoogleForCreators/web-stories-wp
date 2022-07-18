@@ -21,7 +21,11 @@ import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
 import PropTypes from 'prop-types';
 import { generatePatternStyles } from '@googleforcreators/patterns';
-import { UnitsProvider } from '@googleforcreators/units';
+import {
+  PAGE_RATIO,
+  FULLBLEED_RATIO,
+  UnitsProvider,
+} from '@googleforcreators/units';
 import {
   useState,
   useEffect,
@@ -81,6 +85,11 @@ const Page = styled.button`
     `}
 `;
 
+const PageOffset = styled.div`
+  position: relative;
+  top: ${({ $top }) => $top}px;
+`;
+
 const PreviewWrapper = styled.div`
   height: 100%;
   position: relative;
@@ -105,7 +114,11 @@ const Image = styled.img`
 
 function PagePreview({ page, label, ...props }) {
   const { backgroundColor } = page;
-  const { width, height, isActive } = props;
+  const { width, isActive } = props;
+
+  const height = Math.round(width / PAGE_RATIO);
+  const fullHeight = Math.round(width / FULLBLEED_RATIO);
+  const pageYOffset = (fullHeight - height) / 2;
 
   const { pageCanvas, generateDeferredPageCanvas } = usePageCanvas(
     ({ state, actions }) => ({
@@ -130,13 +143,10 @@ function PagePreview({ page, label, ...props }) {
 
   // Grab image off of canvas if we got a canvas
   // from the cache
-  const pageImage = useMemo(() => {
-    if (!pageCanvas) {
-      return null;
-    }
-
-    return pageCanvas.toDataURL('image/png');
-  }, [pageCanvas]);
+  const pageImage = useMemo(
+    () => pageCanvas?.toDataURL('image/png'),
+    [pageCanvas]
+  );
 
   usePerformanceTracking({
     node: pageNode,
@@ -146,7 +156,12 @@ function PagePreview({ page, label, ...props }) {
   return (
     <UnitsProvider pageSize={{ width, height }}>
       <TransformProvider>
-        <Page ref={setPageRef} aria-label={label} {...props}>
+        <Page
+          ref={setPageRef}
+          aria-label={label}
+          height={fullHeight}
+          {...props}
+        >
           <PreviewWrapper background={backgroundColor}>
             {pageImage ? (
               <Image
@@ -156,13 +171,15 @@ function PagePreview({ page, label, ...props }) {
                 decoding="async"
               />
             ) : (
-              page.elements.map((element) => (
-                <DisplayElement
-                  key={element.id}
-                  previewMode
-                  element={element}
-                />
-              ))
+              <PageOffset $top={pageYOffset}>
+                {page.elements.map((element) => (
+                  <DisplayElement
+                    key={element.id}
+                    previewMode
+                    element={element}
+                  />
+                ))}
+              </PageOffset>
             )}
           </PreviewWrapper>
         </Page>
@@ -175,7 +192,6 @@ PagePreview.propTypes = {
   page: StoryPropTypes.page.isRequired,
   label: PropTypes.string,
   width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
   isInteractive: PropTypes.bool,
   isActive: PropTypes.bool,
   tabIndex: PropTypes.number,

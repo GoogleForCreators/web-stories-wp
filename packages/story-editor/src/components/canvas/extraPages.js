@@ -45,7 +45,6 @@ const ExtraPageList = styled.ol`
   display: flex;
   flex-direction: ${({ isPrevious }) => (isPrevious ? 'row-reverse' : 'row')};
   width: ${({ listWidth }) => listWidth}px;
-  height: ${({ extraPageHeight }) => extraPageHeight}px;
   margin: 0;
   padding: 0 ${GAP}px;
   gap: ${GAP}px;
@@ -158,7 +157,6 @@ function ExtraPages({ isPrevious = false }) {
                 pageNum + 1
               )}
               width={extraPageWidth - GAP}
-              height={extraPageHeight}
             />
           </ExtraPage>
         ))}
