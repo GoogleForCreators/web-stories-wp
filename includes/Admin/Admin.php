@@ -76,7 +76,6 @@ class Admin extends Service_Base {
 		add_filter( 'default_content', [ $this, 'prefill_post_content' ], 10, 2 );
 		add_filter( 'default_title', [ $this, 'prefill_post_title' ] );
 		add_filter( 'display_media_states', [ $this, 'media_states' ], 10, 2 );
-		add_filter( 'web_stories_erase_data_on_uninstall', [ $this, 'data_removal' ], 10, 2 );
 	}
 
 	/**
