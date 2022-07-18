@@ -35,6 +35,7 @@ import ErrorDialog from './errorDialog';
 import PermissionsDialog from './permissionsDialog';
 import { Wrapper, VideoWrapper, Video, Photo } from './components';
 import Audio from './audio';
+import useTrimmedReplay from './useTrimmedReplay';
 
 function MediaRecording() {
   const {
@@ -49,6 +50,7 @@ function MediaRecording() {
     isImageCapture,
     needsPermissions,
     isTrimming,
+    trimData,
     toggleIsGif,
     setStreamNode,
   } = useMediaRecording(({ state, actions }) => ({
@@ -65,14 +67,12 @@ function MediaRecording() {
       ('idle' === state.status || 'acquiring_media' === state.status) &&
       !state.videoInput,
     isTrimming: state.isTrimming,
+    trimData: state.trimData,
     toggleIsGif: actions.toggleIsGif,
     setStreamNode: actions.setStreamNode,
   }));
-  const { setVideoNode, videoNode } = useVideoTrim(
-    ({ state: { videoNode }, actions: { setVideoNode } }) => ({
-      videoNode,
-      setVideoNode,
-    })
+  const setVideoNode = useVideoTrim(
+    ({ actions: { setVideoNode } }) => setVideoNode
   );
 
   const isFailed = 'failed' === status || Boolean(error);
@@ -80,10 +80,10 @@ function MediaRecording() {
 
   const onToggleVideoMode = useCallback(() => {
     toggleIsGif();
-    if (videoNode) {
-      videoNode.play().catch(() => {});
+    if (videoRef.current) {
+      videoRef.current.play().catch(() => {});
     }
-  }, [toggleIsGif, videoNode]);
+  }, [toggleIsGif]);
 
   const videoRef = useRef();
   const updateVideoNode = useCallback(
@@ -93,6 +93,8 @@ function MediaRecording() {
     },
     [setVideoNode]
   );
+
+  useTrimmedReplay({ videoRef, trimData, isTrimming });
 
   if (isFailed) {
     return <ErrorDialog />;

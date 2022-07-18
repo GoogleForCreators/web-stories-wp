@@ -93,12 +93,15 @@ function PlayPauseButton({ videoRef }) {
 
     const onVideoPlay = () => setIsPlaying(true);
     const onVideoPause = () => setIsPlaying(false);
+    const onTimeUpdate = ({ target: { paused } }) => setIsPlaying(!paused);
 
     videoNode.addEventListener('play', onVideoPlay);
     videoNode.addEventListener('pause', onVideoPause);
+    videoNode.addEventListener('timeupdate', onTimeUpdate);
     return () => {
       videoNode.removeEventListener('play', onVideoPlay);
       videoNode.removeEventListener('pause', onVideoPause);
+      videoNode.removeEventListener('paustimeupdatee', onTimeUpdate);
     };
   }, [videoRef]);
 
