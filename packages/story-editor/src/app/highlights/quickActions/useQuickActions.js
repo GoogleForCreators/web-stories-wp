@@ -33,6 +33,7 @@ import {
   resourceList,
 } from '@googleforcreators/media';
 import styled from 'styled-components';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -329,6 +330,8 @@ const useQuickActions = () => {
     unMuteAudio: actions.unMuteAudio,
     startTrim: actions.startTrim,
   }));
+
+  const enableMediaRecordingTrimming = useFeature('recordingTrimming');
 
   const undoRef = useRef(undo);
   undoRef.current = undo;
@@ -838,7 +841,7 @@ const useQuickActions = () => {
         disabled: !isReady || !hasAudio,
         ...actionMenuProps,
       },
-      {
+      enableMediaRecordingTrimming && {
         Icon: Scissors,
         label: __('Trim Video', 'web-stories'),
         onClick: () => {
@@ -863,6 +866,7 @@ const useQuickActions = () => {
     toggleRecordingMode,
     toggleSettings,
     startTrim,
+    enableMediaRecordingTrimming,
   ]);
 
   // Return special actions for media recording mode.

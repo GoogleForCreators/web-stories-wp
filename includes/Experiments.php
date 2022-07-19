@@ -391,6 +391,17 @@ class Experiments extends Service_Base implements HasRequirements {
 				'description' => __( 'Show extra pages for context before and after the current canvas page. Note: This might come with a performance penalty.', 'web-stories' ),
 				'group'       => 'editor',
 			],
+			/**
+			 * Author: @barklund
+			 * Issue: #11908
+			 * Creation date: 2022-07-19
+			 */
+			[
+				'name'        => 'recordingTrimming',
+				'label'       => __( 'Trim media recording', 'web-stories' ),
+				'description' => __( 'Enable the ability to trim a media recording before you insert it', 'web-stories' ),
+				'group'       => 'editor',
+			],
 		];
 	}
 
