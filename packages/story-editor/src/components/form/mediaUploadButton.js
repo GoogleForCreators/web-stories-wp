@@ -30,7 +30,12 @@ import { useConfig, useLocalMedia, useStory } from '../../app';
 import useFFmpeg from '../../app/media/utils/useFFmpeg';
 import { TRANSCODABLE_MIME_TYPES } from '../../app/media';
 
-function MediaUploadButton({ onInsert, renderButton, buttonInsertText }) {
+function MediaUploadButton({
+  onInsert,
+  renderButton,
+  buttonInsertText,
+  ...props
+}) {
   const {
     allowedMimeTypes: {
       image: allowedImageMimeTypes,
@@ -190,6 +195,7 @@ function MediaUploadButton({ onInsert, renderButton, buttonInsertText }) {
       type={allowedMimeTypes}
       render={renderButton}
       buttonInsertText={buttonInsertText}
+      {...props}
     />
   );
 }
