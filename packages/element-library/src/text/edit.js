@@ -287,7 +287,7 @@ function TextEdit({
         0,
         0,
         0,
-        editorHeightRef.current - boxRef.current.height
+        editorHeightRef.current - (boxRef.current.height - top - bottom)
       );
       // We need to consider the potential border, too, and add it to the content height.
       editWrapper.style.height = `${editorHeightRef.current + top + bottom}px`;
