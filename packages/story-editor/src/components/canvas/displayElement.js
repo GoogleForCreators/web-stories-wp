@@ -36,9 +36,7 @@ import {
 } from '@googleforcreators/element-library';
 import {
   DisplayWithMask as WithMask,
-  getBorderPositionCSS,
   getResponsiveBorder,
-  shouldDisplayBorder,
 } from '@googleforcreators/masks';
 
 /**
@@ -244,13 +242,6 @@ function DisplayElement({
           fill
           style={{
             opacity: typeof opacity !== 'undefined' ? opacity / 100 : null,
-            /*...(shouldDisplayBorder(element)
-              ? getBorderPositionCSS({
-                  ...responsiveBorder,
-                  width: `${box.width}px`,
-                  height: `${box.height}px`,
-                })
-              : null),*/
           }}
           previewMode={previewMode}
           responsiveBorder={responsiveBorder}
