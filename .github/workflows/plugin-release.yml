@@ -16,6 +16,9 @@ on:
         description: 'Plugin version (e.g. 1.2.3 or 7.2.0-rc.1)'
         required: true
 
+permissions:
+  contents: read
+
 env:
   PLUGIN_VERSION: ${{ github.event.inputs.version }}
   TAG_NAME: 'v${{ github.event.inputs.version }}'

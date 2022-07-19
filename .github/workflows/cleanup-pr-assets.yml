@@ -7,6 +7,9 @@ on:
   pull_request:
     types: [closed]
 
+permissions:
+  contents: read
+
 jobs:
   remove-pr:
     name: Cleanup storage

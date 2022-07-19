@@ -11,6 +11,9 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+
 env:
   PR_NUMBER: ${{ github.event.pull_request.number }}
   ISSUE_REFERENCE_REGEX: \(#([0-9]+)\)

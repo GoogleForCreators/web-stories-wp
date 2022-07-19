@@ -5,6 +5,9 @@ on:
   schedule:
     - cron: '0 12 * * 1'
 
+permissions:
+  contents: read
+
 env:
   GIT_AUTHOR_EMAIL: 94923726+googleforcreators-bot@users.noreply.github.com
   GIT_AUTHOR_NAME: googleforcreators-bot

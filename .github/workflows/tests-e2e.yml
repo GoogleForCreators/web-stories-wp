@@ -54,6 +54,9 @@ on:
       - synchronize
       - ready_for_review
 
+permissions:
+  contents: read
+
 # Cancels all previous workflow runs for pull requests that have not completed.
 concurrency:
   # The concurrency group contains the workflow name and the branch name for pull requests

@@ -44,10 +44,17 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.head_ref || github.sha }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
   lint:
     name: Lint
     runs-on: ubuntu-latest
+    permissions:
+      checks: write # for ataylorme/eslint-annotate-action to create checks
+      contents: read # for actions/checkout to fetch code
+      pull-requests: read # for ataylorme/eslint-annotate-action to get changed PR files
     timeout-minutes: 15
     steps:
       - name: Checkout

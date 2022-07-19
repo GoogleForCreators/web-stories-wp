@@ -20,6 +20,9 @@ on:
       - 'includes/**.php'
       - '.github/workflows/lint-i18n.yml'
 
+permissions:
+  contents: read
+
 # Cancels all previous workflow runs for pull requests that have not completed.
 concurrency:
   # The concurrency group contains the workflow name and the branch name for pull requests
