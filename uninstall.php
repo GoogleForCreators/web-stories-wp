@@ -41,7 +41,7 @@ $erase = (bool) get_option( \Google\Web_Stories\Settings::SETTING_NAME_DATA_REMO
 /**
  * Filters whether data should be erased when uninstalling the plugin.
  *
- * @since 1.23.0
+ * @since 1.0.0
  *
  * @param bool $erase Whether to erase data. Default false.
  */
