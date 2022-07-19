@@ -39,8 +39,7 @@ const EMBED_BLOCK_CONTENT = `
 <!-- /wp:web-stories/embed -->
 `;
 
-// eslint-disable-next-line jest/no-disabled-tests -- test hangs possibly something to do with the request interception
-describe.skip('Web Stories Block', () => {
+describe('Web Stories Block', () => {
   let stopRequestInterception;
   let removeErrorMessage;
 
