@@ -71,7 +71,7 @@ function TextAccessibilityPanel({ selectedElements, pushUpdate }) {
       );
 
       selectedElements.forEach(() => {
-        pushUpdate({ tagName: value });
+        pushUpdate({ tagName: value }, true);
       });
     },
     [pushUpdate, selectedElements]
