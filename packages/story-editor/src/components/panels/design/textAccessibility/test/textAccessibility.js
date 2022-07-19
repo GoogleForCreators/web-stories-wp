@@ -91,6 +91,7 @@ describe('Panels/TextAccessibility', () => {
     fireEvent.click(option2);
     expect(pushUpdate).toHaveBeenCalledTimes(1);
   });
+
   it('should call pushUpdate three times when multiple items have been updated', () => {
     const { pushUpdate } = arrange([
       defaultElement,
