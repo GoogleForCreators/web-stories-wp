@@ -20,7 +20,7 @@
 import { memo, useState, forwardRef } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useUnits } from '@googleforcreators/units';
+import { calcRotatedResizeOffset, useUnits } from '@googleforcreators/units';
 import { getDefinitionForType } from '@googleforcreators/elements';
 import {
   elementWithPosition,
@@ -81,13 +81,21 @@ const EditElement = memo(
       : element;
     const box = getBox(elementWithLocal);
     // We're adding the border in pixels since the element is the content + the border in pixels
-    const { border } = element;
+    const { border, rotationAngle } = element;
+    const { left = 0, right = 0, top = 0, bottom = 0 } = border;
+    const [diffX, diffY] = calcRotatedResizeOffset(
+      rotationAngle,
+      left,
+      right,
+      top,
+      bottom
+    );
     const boxWithBorder = {
       ...box,
-      x: box.x - (border.left || 0),
-      y: box.y - (border.top || 0),
-      width: box.width + (border.left || 0) + (border.right || 0),
-      height: box.height + (border.top || 0) + (border.bottom || 0),
+      x: box.x + diffX,
+      y: box.y + diffY,
+      width: box.width + left + right,
+      height: box.height + top + bottom,
     };
     // In case of text edit mode, we include the border to the selection.
     const isText = 'text' === type;

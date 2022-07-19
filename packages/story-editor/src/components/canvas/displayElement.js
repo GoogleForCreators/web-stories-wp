@@ -172,10 +172,17 @@ function DisplayElement({
   const box = getBox(element);
   // We're adding the border in pixels since the element is the content + the border in pixels
   const { left = 0, right = 0, top = 0, bottom = 0 } = border;
+  const [diffX, diffY] = calcRotatedResizeOffset(
+    rotationAngle,
+    left,
+    right,
+    top,
+    bottom
+  );
   const boxWithBorder = {
     ...box,
-    x: box.x - left,
-    y: box.y - top,
+    x: box.x + diffX,
+    y: box.y + diffY,
     width: box.width + left + right,
     height: box.height + top + bottom,
   };
