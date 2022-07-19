@@ -59,7 +59,7 @@ export default function DataRemovalSettings({
             forwardedAs="span"
           >
             {__(
-              'Remove data when uninstalling the Web Story plugin.',
+              'Remove all data including stories and saved templates when uninstalling the Web Stories plugin.',
               'web-stories'
             )}
           </CheckboxLabelText>
