@@ -40,7 +40,6 @@ import {
   StyledPane,
 } from '../common/styles';
 import { SearchInput } from '../../../common';
-import Flags from '../../../../../flags';
 import { PROVIDERS } from '../../../../../app/media/media3p/providerConfiguration';
 import TermsDialog from './termsDialog';
 
@@ -116,10 +115,6 @@ function Media3pPane(props) {
     [searchTerm, setSearchTerm]
   );
 
-  const incrementalSearchDebounceMedia = useFeature(
-    Flags.INCREMENTAL_SEARCH_DEBOUNCE_MEDIA
-  );
-
   const paneBottomRef = useRef();
 
   const features = useFeatures();
@@ -143,7 +138,6 @@ function Media3pPane(props) {
                 initialValue={searchTerm}
                 placeholder={__('Search', 'web-stories')}
                 onSearch={onSearch}
-                incremental={incrementalSearchDebounceMedia}
                 disabled={Boolean(
                   selectedProvider &&
                     PROVIDERS[selectedProvider].supportsCategories &&

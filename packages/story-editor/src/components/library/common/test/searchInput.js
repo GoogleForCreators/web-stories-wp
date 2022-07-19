@@ -51,7 +51,7 @@ describe('SearchInput', () => {
     expect(screen.getByRole('searchbox')).toBeInTheDocument();
   });
 
-  it('should not trigger onSearch when incremental is false and text changes', () => {
+  it('should trigger onSearch when text changes', () => {
     const onSearchMock = jest.fn();
 
     renderWithTheme(
@@ -59,7 +59,6 @@ describe('SearchInput', () => {
         initialValue={'dog'}
         placeholder={'Hello'}
         onSearch={onSearchMock}
-        incremental={false}
       />
     );
 
@@ -67,10 +66,10 @@ describe('SearchInput', () => {
     setInputValue(input, 'cat');
     triggerOnChange(input);
 
-    expect(onSearchMock).not.toHaveBeenCalled();
+    expect(onSearchMock).toHaveBeenCalled();
   });
 
-  it('should trigger onSearch when incremental is false and enter is pressed', () => {
+  it('should trigger onSearch when enter is pressed', () => {
     const onSearchMock = jest.fn();
 
     renderWithTheme(
@@ -78,7 +77,6 @@ describe('SearchInput', () => {
         initialValue={'dog'}
         placeholder={'Hello'}
         onSearch={onSearchMock}
-        incremental={false}
       />
     );
 
@@ -93,7 +91,7 @@ describe('SearchInput', () => {
     expect(onSearchMock).toHaveBeenCalledTimes(1);
   });
 
-  it('should trigger onSearch when incremental is false and text is emptied', () => {
+  it('should trigger onSearch when text is emptied', () => {
     const onSearchMock = jest.fn();
 
     renderWithTheme(
@@ -101,7 +99,6 @@ describe('SearchInput', () => {
         initialValue={'d'}
         placeholder={'Hello'}
         onSearch={onSearchMock}
-        incremental={false}
       />
     );
 
@@ -112,7 +109,7 @@ describe('SearchInput', () => {
     expect(onSearchMock).toHaveBeenCalledTimes(1);
   });
 
-  it('should trigger onSearch when incremental is true and text changes', () => {
+  it('should trigger onSearch when text changes, with some delay', () => {
     const onSearchMock = jest.fn();
 
     renderWithTheme(
@@ -120,27 +117,6 @@ describe('SearchInput', () => {
         initialValue={'d'}
         placeholder={'Hello'}
         onSearch={onSearchMock}
-        incremental
-        delayMs={0}
-      />
-    );
-
-    const input = screen.getByDisplayValue('d');
-    setInputValue(input, 'cat');
-    triggerOnChange(input);
-
-    expect(onSearchMock).toHaveBeenCalledTimes(1);
-  });
-
-  it('should trigger onSearch when incremental is true and text changes, with some delay', () => {
-    const onSearchMock = jest.fn();
-
-    renderWithTheme(
-      <SearchInput
-        initialValue={'d'}
-        placeholder={'Hello'}
-        onSearch={onSearchMock}
-        incremental
         delayMs={2000}
       />
     );

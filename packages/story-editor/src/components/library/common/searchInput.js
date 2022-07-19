@@ -45,10 +45,6 @@ const StyledSearchInput = styled(SearchInput)`
  * @param {string} obj.placeholder A placeholder text to show when it's empty.
  * @param {Function} obj.onSearch Callback to call when a search is triggered.
  * @param {boolean} obj.disabled Whether the input should be shown as disabled.
- * @param {boolean} obj.incremental If `incremental` is false, a search is
- * triggered when the user presses enter, or when they clear the input.
- * If `incremental` is true, this occurs when the text changes, optionally
- * debounced via `delayMs`.
  * @param {number} obj.delayMs The number of milliseconds to debounce an autoSearch.
  * @return {SearchInput} The component.
  * @class
@@ -58,7 +54,6 @@ function WrappedSearchInput({
   placeholder,
   onSearch,
   disabled = false,
-  incremental = false,
   delayMs = 500,
 }) {
   // Local state so that we can debounce triggering searches.
@@ -71,24 +66,24 @@ function WrappedSearchInput({
 
   const submitValue = useCallback(
     (value) => {
-      if (incremental && delayMs) {
+      if (delayMs) {
         changeSearchTermDebounced();
       } else {
         onSearch(value);
       }
     },
-    [changeSearchTermDebounced, onSearch, delayMs, incremental]
+    [changeSearchTermDebounced, onSearch, delayMs]
   );
 
   const onChange = useCallback(
     (evt) => {
       const newValue = evt.target.value;
       setLocalValue(newValue);
-      if (incremental || newValue === '') {
+      if (newValue === '') {
         submitValue(newValue);
       }
     },
-    [submitValue, incremental]
+    [submitValue]
   );
 
   const onClear = useCallback(() => {
@@ -127,7 +122,6 @@ WrappedSearchInput.propTypes = {
   placeholder: PropTypes.string.isRequired,
   onSearch: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
-  incremental: PropTypes.bool,
   delayMs: PropTypes.number,
 };
 
