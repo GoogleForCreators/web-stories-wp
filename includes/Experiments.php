@@ -321,6 +321,7 @@ class Experiments extends Service_Base implements HasRequirements {
 				'label'       => __( 'Poster hotlinking', 'web-stories' ),
 				'description' => __( 'Enable story poster hotlinking', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 			/**
 			 * Author: @spacedmonkey
@@ -332,6 +333,7 @@ class Experiments extends Service_Base implements HasRequirements {
 				'label'       => __( 'Link icon hotlinking', 'web-stories' ),
 				'description' => __( 'Enable link icon hotlinking', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 			/**
 			 * Author: @spacedmonkey
@@ -343,6 +345,7 @@ class Experiments extends Service_Base implements HasRequirements {
 				'label'       => __( 'Video poster hotlinking', 'web-stories' ),
 				'description' => __( 'Enable video poster hotlinking', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 			/**
 			 * Author: @barklund
