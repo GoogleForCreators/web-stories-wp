@@ -27,7 +27,7 @@ import {
 } from '@web-stories-wp/e2e-test-utils';
 
 // eslint-disable-next-line jest/no-disabled-tests -- TODO(#11959): Fix flakey test
-describe('Inserting WebM Video', () => {
+describe.skip('Inserting WebM Video', () => {
   let uploadedFiles;
 
   beforeEach(() => (uploadedFiles = []));
