@@ -113,7 +113,7 @@ function MediaRecording() {
       <Wrapper>
         {!isImageCapture && (
           <>
-            {mediaBlobUrl && hasVideo && (
+            {mediaBlobUrl && hasVideo && !isTrimming && (
               <VideoMode value={!isGif} onChange={onToggleVideoMode} />
             )}
             <VideoWrapper>

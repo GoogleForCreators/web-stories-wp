@@ -34,6 +34,7 @@ function VideoRecordingTrimProvider({ children, onTrim, videoData }) {
     startOffset,
     endOffset,
     maxOffset,
+    videoNode,
     setStartOffset,
     setEndOffset,
     setVideoNode,
@@ -60,6 +61,7 @@ function VideoRecordingTrimProvider({ children, onTrim, videoData }) {
       startOffset,
       endOffset,
       maxOffset,
+      videoNode,
     },
     actions: {
       performTrim,

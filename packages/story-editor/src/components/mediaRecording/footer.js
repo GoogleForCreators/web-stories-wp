@@ -35,6 +35,7 @@ import {
 } from '@googleforcreators/react';
 import { trackEvent, trackError } from '@googleforcreators/tracking';
 import {
+  getVideoLength,
   getVideoLengthDisplay,
   blobToFile,
   createBlob,
@@ -42,11 +43,12 @@ import {
   formatMsToHMS,
 } from '@googleforcreators/media';
 import { format } from '@googleforcreators/date';
+import { BackgroundAudioPropTypeShape } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
-import { BackgroundAudioPropTypeShape } from '@googleforcreators/elements';
+import useVideoTrim from '../videoTrim/useVideoTrim';
 import getResourceFromLocalFile from '../../app/media/utils/getResourceFromLocalFile';
 import useUploadWithPreview from '../canvas/useUploadWithPreview';
 import { useUploader } from '../../app/uploader';
@@ -167,6 +169,7 @@ function Footer() {
     resetState: actions.resetState,
     resetStream: actions.resetStream,
   }));
+  const videoNode = useVideoTrim(({ state: { videoNode } }) => videoNode);
 
   const uploadWithPreview = useUploadWithPreview();
 
@@ -244,6 +247,15 @@ function Footer() {
           start: formatMsToHMS(trimData.start),
           end: formatMsToHMS(trimData.end),
         };
+        const trimmedLength = (trimData.end - trimData.start) / 1000;
+        args.resource.length = trimmedLength;
+        args.resource.lengthFormatted = getVideoLengthDisplay(trimmedLength);
+      } else {
+        const { length, lengthFormatted } = getVideoLength(videoNode);
+        args.resource.length = length || duration;
+        args.resource.lengthFormatted = length
+          ? lengthFormatted
+          : getVideoLengthDisplay(duration);
       }
     }
 
@@ -266,17 +278,19 @@ function Footer() {
 
     toggleRecordingMode();
   }, [
+    speak,
     file,
     uploadWithPreview,
-    toggleRecordingMode,
     isRecording,
     isGif,
-    duration,
     isMuted,
+    duration,
+    toggleRecordingMode,
+    trimData.end,
+    trimData.start,
+    videoNode,
     setMediaBlobUrl,
     setFile,
-    speak,
-    trimData,
   ]);
 
   useEffect(() => {

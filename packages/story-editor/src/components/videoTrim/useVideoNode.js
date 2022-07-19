@@ -119,11 +119,7 @@ function useVideoNode(videoData) {
     // We might already have metadata, if so invoke the event handler directly.
     // Note that on first playback before completion, duration is Infinite, so
     // so we need to wait until it isn't anymore.
-    if (
-      !isNaN(videoNode.duration) &&
-      isFinite(videoNode.duration) &&
-      startOffset === null
-    ) {
+    if (isFinite(videoNode.duration) && startOffset === null) {
       onLoadedMetadata({ target: videoNode });
     } else if (!isFinite(videoNode.duration)) {
       // Video is a blob of unknown length, wait until it finishes
