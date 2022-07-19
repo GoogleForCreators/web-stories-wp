@@ -23,6 +23,7 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import LibraryMoveable from '../shared/libraryMoveable';
+import { PRODUCT_WIDTH, PRODUCT_HEIGHT } from './constants';
 
 const imgPlaceholder = css`
   display: block;
@@ -51,8 +52,8 @@ const StyledImageClone = styled.img`
   position: absolute;
   object-fit: cover;
   border-radius: 4px;
-  width: 100px;
-  height: 100px;
+  width: ${PRODUCT_WIDTH}px;
+  height: ${PRODUCT_HEIGHT}px;
 `;
 
 function ProductImage({ product }) {

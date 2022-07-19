@@ -43,6 +43,7 @@ import { useStory, useCanvas } from '../../../../app';
 import objectWithout from '../../../../utils/objectWithout';
 import { noop } from '../../../../utils/noop';
 import usePerformanceTracking from '../../../../utils/usePerformanceTracking';
+import { PRODUCT_WIDTH, PRODUCT_HEIGHT } from '../shopping/constants';
 
 const TargetBox = styled.div`
   position: absolute;
@@ -264,8 +265,8 @@ function LibraryMoveable({
       } else if (type === 'product') {
         insertElement(type, {
           ...elementProps,
-          width: 25,
-          height: 25,
+          width: PRODUCT_WIDTH,
+          height: PRODUCT_HEIGHT,
           x: editorToDataX(x - pageX, pageSize.width),
           y: editorToDataY(y - pageY, pageSize.height),
         });
