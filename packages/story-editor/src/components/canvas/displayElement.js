@@ -188,24 +188,29 @@ function DisplayElement({
     } else {
       const { translate = [0, 0], rotate, resize, dropTargets } = transform;
 
-      // If we have border, we have to adjust the transformation since the border was considered by Moveable when
-      // creating the transformation values but the border is not considered in the width and height of the element.
-      // So we calculate a transformation assuming that the element was resized by the border and then deduct it from the
-      // applied transformation.
-      const [dx, dy] = calcRotatedResizeOffset(
-        rotationAngle,
-        0,
-        left + right,
-        0,
-        top + bottom
-      );
-      target.style.transform = `translate(${translate[0] - dx}px, ${
-        translate[1] - dy
-      }px) rotate(${rotate}deg)`;
+      let dx = 0;
+      let dy = 0;
       if (resize && resize[0] !== 0 && resize[1] !== 0) {
         target.style.width = `${resize[0]}px`;
         target.style.height = `${resize[1]}px`;
+
+        // If we have border, we have to adjust the transformation since the border was considered by Moveable when
+        // creating the transformation values but the border is not considered in the width and height of the element.
+        // So we calculate a transformation assuming that the element was resized by the border and then deduct it from the
+        // applied transformation.
+        const [_dx, _dy] = calcRotatedResizeOffset(
+          rotationAngle,
+          0,
+          left + right,
+          0,
+          top + bottom
+        );
+        dx = _dx;
+        dy = _dy;
       }
+      target.style.transform = `translate(${translate[0] - dx}px, ${
+        translate[1] - dy
+      }px) rotate(${rotate}deg)`;
       if (dropTargets?.hover !== undefined) {
         target.style.opacity = dropTargets.hover ? 0 : 1;
       }

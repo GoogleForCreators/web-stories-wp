@@ -107,13 +107,26 @@ const MultiSelectionMoveable = forwardRef(function MultiSelectionMoveable(
   /**
    * Set style to the element.
    *
-   * @param {string} id Target element's id.
-   * @param {Object} target Target element to update.
+   * @param {Object} element Target element's id.
+   * @param {Object} target Target element node to update.
    * @param {Object} frame Properties from the frame for that specific element.
    */
-  const setTransformStyle = (id, target, frame) => {
+  const setTransformStyle = (element, target, frame) => {
+    const { id, border = {} } = element;
     target.style.transform = `translate(${frame.translate[0]}px, ${frame.translate[1]}px) rotate(${frame.rotate}deg)`;
-    pushTransform(id, frame);
+    // If the element has a border, we have to take it out of the resizing values
+    // since the border is in pixels and thus not stored within width/height.
+    const { left = 0, right = 0, top = 0, bottom = 0 } = border;
+    let frameForEl = { ...frame };
+    if (frame.resize[0] || frame.resize[1]) {
+      const elWidth = frame.resize[0] - (left + right);
+      const elHeight = frame.resize[1] - (top + bottom);
+      frameForEl = {
+        ...frame,
+        resize: [elWidth, elHeight],
+      };
+    }
+    pushTransform(id, frameForEl);
   };
 
   const frames = targetList
@@ -181,8 +194,10 @@ const MultiSelectionMoveable = forwardRef(function MultiSelectionMoveable(
       const [editorWidth, editorHeight] = frame.resize;
       const didResize = editorWidth !== 0 && editorHeight !== 0;
       if (isResize && didResize) {
-        const newWidth = editorToDataX(editorWidth);
-        const newHeight = editorToDataY(editorHeight);
+        const { border } = element;
+        const { left = 0, right = 0, top = 0, bottom = 0 } = border;
+        const newWidth = editorToDataX(editorWidth - (left + right));
+        const newHeight = editorToDataY(editorHeight - (top + bottom));
         properties.width = newWidth;
         properties.height = newHeight;
         if (updateForResizeEvent) {

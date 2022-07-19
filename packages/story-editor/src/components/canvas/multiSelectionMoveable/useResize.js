@@ -39,8 +39,11 @@ function useResize({ onGroupEventEnd, targetList, setTransformStyle, frames }) {
     events.forEach(({ target, direction, width, height, drag }, i) => {
       const sFrame = frames[i];
       const { element, updateForResizeEvent } = targetList[i];
-      let newHeight = height;
-      const newWidth = width;
+      const { border } = element;
+      const { left = 0, right = 0, top = 0, bottom = 0 } = border;
+      // We remove the border in pixels since that's not saved to the width/height directly.
+      const newWidth = width - (left + right);
+      let newHeight = height - (top + bottom);
       let updates = null;
       if (updateForResizeEvent) {
         updates = updateForResizeEvent(
@@ -53,13 +56,17 @@ function useResize({ onGroupEventEnd, targetList, setTransformStyle, frames }) {
       if (updates && updates.height) {
         newHeight = dataToEditorY(updates.height);
       }
-      target.style.width = `${newWidth}px`;
-      target.style.height = `${newHeight}px`;
+
+      // We add the border size back for the target display.
+      const frameWidth = newWidth + left + right;
+      const frameHeight = newHeight + top + bottom;
+      target.style.width = `${frameWidth}px`;
+      target.style.height = `${frameHeight}px`;
       sFrame.direction = direction;
-      sFrame.resize = [newWidth, newHeight];
+      sFrame.resize = [frameWidth, frameHeight];
       sFrame.translate = drag.beforeTranslate;
       sFrame.updates = updates;
-      setTransformStyle(element.id, target, sFrame);
+      setTransformStyle(element, target, sFrame);
     });
   };
   const onResizeGroupEnd = ({ targets }) => {

@@ -85,7 +85,7 @@ function useMultiSelectionDrag({
       const sFrame = frames[i];
       const { element } = targetList[i];
       sFrame.translate = beforeTranslate;
-      setTransformStyle(element.id, target, sFrame);
+      setTransformStyle(element, target, sFrame);
     });
   };
   const onDragGroupStart = ({ events, inputEvent }) => {
