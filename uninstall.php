@@ -28,6 +28,9 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	return;
 }
 
+
+$erase = (bool) get_option( \Google\Web_Stories\Settings::SETTING_NAME_DATA_REMOVAL );
+
 /**
  * Filters whether data should be erased when uninstalling the plugin.
  *
@@ -35,8 +38,6 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
  *
  * @param bool $erase Whether to erase data. Default false.
  */
-
-$erase = (bool) get_option( \Google\Web_Stories\Settings::SETTING_NAME_DATA_REMOVAL );
 $erase = (bool) apply_filters( 'web_stories_erase_data_on_uninstall', $erase );
 
 if ( false === $erase ) {
