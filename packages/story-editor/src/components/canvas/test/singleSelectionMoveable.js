@@ -71,7 +71,7 @@ describe('singleSelectionMoveable', () => {
       state: {
         selectedElements: [element],
         currentPage: {
-          elements: [],
+          elements: [{ isBackground: true, id: 2 }],
         },
       },
       actions: { updateSelectedElements },
@@ -79,7 +79,7 @@ describe('singleSelectionMoveable', () => {
     canvasContext = {
       state: {
         pageSize,
-        nodesById: { 1: target },
+        nodesById: { 1: target, 2: document.body },
         fullbleedContainer: document.body,
       },
       actions: {
