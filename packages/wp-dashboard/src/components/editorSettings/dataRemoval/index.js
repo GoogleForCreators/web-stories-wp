@@ -43,7 +43,7 @@ export default function DataRemovalSettings({
   return (
     <SettingForm>
       <div>
-        <SettingHeading>{__('Data removal', 'web-stories')}</SettingHeading>
+        <SettingHeading>{__('Plugin Uninstall', 'web-stories')}</SettingHeading>
       </div>
       <div>
         <CheckboxLabel forwardedAs="label" htmlFor="data-removal-settings">
