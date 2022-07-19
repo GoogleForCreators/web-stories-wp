@@ -29,10 +29,10 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
 
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@17f8bd926464a1afa4c6a11669539e9c1ba77048
         with:
           node-version-file: '.nvmrc'
           cache: npm
@@ -46,7 +46,7 @@ jobs:
         run: npm run storybook:build
 
       - name: Upload storybook
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8
         with:
           name: storybook-files
           path: build/storybook
@@ -58,13 +58,13 @@ jobs:
     needs: [build-storybook]
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
         with:
           ref: gh-pages
           token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
 
       - name: Download storybook files
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@fb598a63ae348fa914e94cd0ff38f362e927b741
         with:
           name: storybook-files
           path: storybook-files

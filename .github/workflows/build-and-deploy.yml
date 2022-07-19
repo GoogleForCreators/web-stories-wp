@@ -75,16 +75,16 @@ jobs:
       github.event.pull_request.user.login != 'dependabot[bot]'
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
 
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@17f8bd926464a1afa4c6a11669539e9c1ba77048
         with:
           node-version-file: '.nvmrc'
           cache: npm
 
       - name: Bundle size check
-        uses: preactjs/compressed-size-action@v2
+        uses: preactjs/compressed-size-action@8119d3d31b6e57b167e09c81dfa877eada3bcb35
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           pattern: '{assets/js/*.js,assets/css/*.css}'
@@ -103,16 +103,16 @@ jobs:
       github.event.pull_request.user.login != 'dependabot[bot]'
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
 
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@17f8bd926464a1afa4c6a11669539e9c1ba77048
         with:
           node-version-file: '.nvmrc'
           cache: npm
 
       - name: Setup PHP
-        uses: shivammathur/setup-php@v2
+        uses: shivammathur/setup-php@aa1fe473f9c687b6fb896056d771232c0bc41161
         with:
           php-version: '8.0'
           coverage: none
@@ -124,7 +124,7 @@ jobs:
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
 
       - name: Install PHP dependencies
-        uses: 'ramsey/composer-install@v1'
+        uses: ramsey/composer-install@f680dac46551dffb2234a240d65ae806c2999dd6
         with:
           composer-options: '--prefer-dist --no-progress --no-interaction'
 
@@ -147,13 +147,13 @@ jobs:
           mv build/web-stories build/web-stories-dev/
 
       - name: Upload regular bundle
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8
         with:
           name: web-stories
           path: build/web-stories-regular
 
       - name: Upload development bundle
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8
         with:
           name: web-stories-dev
           path: build/web-stories-dev
@@ -168,10 +168,10 @@ jobs:
       github.event.pull_request.user.login != 'dependabot[bot]'
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
 
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@17f8bd926464a1afa4c6a11669539e9c1ba77048
         with:
           node-version-file: '.nvmrc'
           cache: npm
@@ -196,7 +196,7 @@ jobs:
     needs: build
     steps:
       - name: Download all artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@fb598a63ae348fa914e94cd0ff38f362e927b741
         with:
           path: ${{ github.ref }}
 
@@ -208,7 +208,7 @@ jobs:
         working-directory: ${{ github.ref }}
 
       - name: Setup Cloud SDK
-        uses: google-github-actions/setup-gcloud@v0.6.0
+        uses: google-github-actions/setup-gcloud@877d4953d2c70a0ba7ef3290ae968eb24af233bb
         with:
           project_id: ${{ secrets.GCP_PROJECT_ID }}
           service_account_key: ${{ secrets.GCP_SA_KEY }}
@@ -230,16 +230,16 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
 
       - name: Download full bundle
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@fb598a63ae348fa914e94cd0ff38f362e927b741
         with:
           name: web-stories
           path: build
 
       - name: Setup SSH Keys and known_hosts
-        uses: webfactory/ssh-agent@v0.5.4
+        uses: webfactory/ssh-agent@fc49353b67b2b7c1e0e6a600572d01a69f2672dd
         with:
           ssh-private-key: ${{ secrets.PANTHEON_DEPLOY_KEY }}
 
@@ -264,7 +264,7 @@ jobs:
     steps:
       - name: Check if a comment was already made
         id: find-comment
-        uses: peter-evans/find-comment@v2
+        uses: peter-evans/find-comment@1769778a0c5bd330272d749d12c036d65e70d39d
         with:
           issue-number: ${{ github.event.pull_request.number }}
           comment-author: googleforcreators-bot
@@ -282,7 +282,7 @@ jobs:
 
       - name: Create comment on PR with links to plugin builds
         if: ${{ steps.find-comment.outputs.comment-id == '' }}
-        uses: peter-evans/create-or-update-comment@v2
+        uses: peter-evans/create-or-update-comment@c9fcb64660bc90ec1cc535646af190c992007c32
         with:
           issue-number: ${{ github.event.pull_request.number }}
           body: ${{ steps.get-comment-body.outputs.body }}
@@ -290,7 +290,7 @@ jobs:
 
       - name: Update comment on PR with links to plugin builds
         if: ${{ steps.find-comment.outputs.comment-id != '' }}
-        uses: peter-evans/create-or-update-comment@v2
+        uses: peter-evans/create-or-update-comment@c9fcb64660bc90ec1cc535646af190c992007c32
         with:
           comment-id: ${{ steps.find-comment.outputs.comment-id }}
           edit-mode: replace

@@ -43,16 +43,16 @@ jobs:
         shard: ['1/2', '2/2']
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
 
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@17f8bd926464a1afa4c6a11669539e9c1ba77048
         with:
           node-version-file: '.nvmrc'
           cache: npm
 
       - name: Setup Jest cache
-        uses: actions/cache@v3
+        uses: actions/cache@48af2dc4a9e8278b89d7fa154b955c30c6aaab09
         with:
           path: .jest-cache
           key: ${{ runner.os }}-${{ steps.nvm.outputs.NVMRC }}-jest
@@ -79,7 +79,7 @@ jobs:
           AMP_VALIDATOR_FILE: ${{ steps.amp_validator.outputs.validator_file }}
 
       - name: Upload code coverage report
-        uses: codecov/codecov-action@v3.1.0
+        uses: codecov/codecov-action@81cd2dc8148241f03f5839d295e000b8f761e378
         with:
           file: build/logs/lcov.info
           flags: unittests
