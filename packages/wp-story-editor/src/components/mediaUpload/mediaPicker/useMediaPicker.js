@@ -127,7 +127,7 @@ function useMediaPicker({
       },
     });
     window.wp.media.view.Attachment.Details = wsDetails;
-    
+
     return () => {
       window.wp.media.view.Attachment.Details = currentDetails;
     };
