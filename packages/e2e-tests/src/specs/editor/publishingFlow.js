@@ -91,7 +91,8 @@ describe('Publishing Flow', () => {
     await expect(page).toMatchElement('[alt="Preview image"]');
   }
 
-  it('should guide me towards creating a new post to embed my story with poster', async () => {
+  //eslint-disable-next-line jest/no-disabled-tests -- TODO(#11970): Fix flakey test.
+  it.skip('should guide me towards creating a new post to embed my story with poster', async () => {
     await createNewStory();
 
     await insertStoryTitle('Publishing Flow Test');
