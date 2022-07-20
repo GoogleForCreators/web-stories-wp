@@ -84,6 +84,21 @@ function useMediaPicker({
   } = useConfig();
   const { showSnackbar } = useSnackbar();
 
+  const afterUpload = useCallback(
+    (attachment) => {
+      if (onUploadMedia) {
+        onUploadMedia(getResourceFromMediaPicker(attachment));
+      }
+      if (attachment?.id) {
+        updateMedia(attachment.id, {
+          mediaSource: 'editor',
+          altText: attachment.alt || attachment.title,
+        });
+      }
+    },
+    [onUploadMedia, updateMedia]
+  );
+
   useEffect(() => {
     try {
       // The Uploader.success callback is invoked when a user uploads a file.
@@ -92,19 +107,12 @@ function useMediaPicker({
       // Note: at this point the video has not yet been inserted into the canvas,
       // it's just in the WP media modal.
       // Video poster generation for newly added videos is done in <MediaPane>.
-      window.wp.Uploader.prototype.success = ({ attributes }) => {
-        if (onUploadMedia) {
-          onUploadMedia(getResourceFromMediaPicker(attributes));
-        }
-        updateMedia(attributes.id, {
-          mediaSource: 'editor',
-          altText: attributes.alt || attributes.title,
-        });
-      };
+      window.wp.Uploader.prototype.success = ({ attributes }) =>
+        afterUpload(attributes);
     } catch (e) {
       // Silence.
     }
-  }, [onUploadMedia, updateMedia]);
+  }, [afterUpload]);
 
   useEffect(() => {
     const currentDetails = window.wp.media.view.Attachment.Details;
@@ -265,14 +273,7 @@ function useMediaPicker({
       });
 
       fileFrame.once('cropped', (attachment) => {
-        if (attachment?.id) {
-          const altText = attachment.alt || attachment.title;
-          updateMedia(attachment.id, {
-            mediaSource: 'editor',
-            altText,
-          });
-          attachment.alt = altText;
-        }
+        afterUpload(attachment);
         onSelect(getResourceFromMediaPicker(attachment));
       });
 
@@ -338,10 +339,10 @@ function useMediaPicker({
       title,
       type,
       multiple,
-      onSelect,
       onClose,
       onPermissionError,
-      updateMedia,
+      afterUpload,
+      onSelect,
       showSnackbar,
       onSelectErrorMessage,
     ]
