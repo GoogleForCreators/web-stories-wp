@@ -280,19 +280,6 @@ function PublishPanel({ nameOverride }) {
     );
   };
 
-  const onDelete = useCallback(
-    (deleteResource) => {
-      if (featuredMedia.id === deleteResource.id) {
-        updateStory({
-          properties: {
-            featuredMedia: {},
-          },
-        });
-      }
-    },
-    [featuredMedia.id, updateStory]
-  );
-
   const renderUploadButton = (open) => (
     <Datalist.Option onClick={open} aria-label={__('Add new', 'web-stories')}>
       <Icons.ArrowCloud height={32} width={32} />
@@ -361,7 +348,6 @@ function PublishPanel({ nameOverride }) {
                 }}
                 value={featuredMedia?.url}
                 onChange={handleChangePoster}
-                onDelete={onDelete}
                 title={__('Select as poster image', 'web-stories')}
                 hotlinkTitle={__(
                   'Use external image as poster image',
