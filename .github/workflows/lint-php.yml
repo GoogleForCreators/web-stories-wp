@@ -50,7 +50,7 @@ jobs:
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
 
       - name: Setup PHP
-        uses: shivammathur/setup-php@aa1fe473f9c687b6fb896056d771232c0bc41161
+        uses: shivammathur/setup-php@945c34c1751f6d2c8106ec0feba5662fcbc1c943
         with:
           php-version: '8.0'
           coverage: none
