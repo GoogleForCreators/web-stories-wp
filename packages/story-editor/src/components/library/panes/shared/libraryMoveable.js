@@ -127,6 +127,11 @@ function LibraryMoveable({
   };
 
   const resetMoveable = useCallback(() => {
+
+    if (!targetBoxRef.current || !cloneRef.current) {
+      return;
+    }
+
     targetBoxRef.current.style.transform = null;
     cloneRef.current.style.transform = null;
     // Hide the clone, too.
