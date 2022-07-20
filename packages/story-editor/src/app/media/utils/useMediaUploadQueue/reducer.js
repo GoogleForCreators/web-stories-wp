@@ -43,6 +43,7 @@ import { ITEM_STATUS } from './constants';
  * @param {import('@googleforcreators/media').TrimData} action.payload.trimData Trim data.
  * @param {number} action.payload.originalResourceId Original resource id.
  * @param {string} action.payload.elementId ID of element on the canvas.
+ * @param {boolean} action.payload.isAnimatedGif Whether the item is an animated GIF.
  * @return {Object} New state
  */
 export function addItem(
@@ -55,12 +56,13 @@ export function addItem(
       onUploadProgress,
       onUploadError,
       onUploadSuccess,
-      additionalData,
+      additionalData: _additionalData = {},
       posterFile,
       muteVideo,
       trimData,
       originalResourceId,
       elementId,
+      isAnimatedGif,
     },
   }
 ) {
@@ -68,6 +70,31 @@ export function addItem(
 
   if (!resource.id) {
     resource.id = uuidv4();
+  }
+
+  const additionalData = {
+    ..._additionalData,
+    meta: {
+      ...(_additionalData.meta || {}),
+    },
+  };
+
+  if (
+    resource.type === 'video' &&
+    resource.isMuted !== null &&
+    additionalData?.isMuted === undefined
+  ) {
+    additionalData.isMuted = resource.isMuted;
+  }
+
+  if (resource?.baseColor) {
+    additionalData.meta.baseColor = resource.baseColor;
+  }
+
+  // Do not copy over BlurHash for new trimmed videos
+  // since the poster (and thus the BlurHash) might be different.
+  if (resource?.blurHash && !resource?.trimData) {
+    additionalData.meta.blurHash = resource.blurHash;
   }
 
   const newItem = {
@@ -85,11 +112,58 @@ export function addItem(
     trimData,
     originalResourceId,
     elementId,
+    isAnimatedGif,
   };
 
   return {
     ...state,
     queue: [...state.queue, newItem],
+  };
+}
+
+/**
+ * Prepare a file for further processing.
+ *
+ * @param {Object} state Current state.
+ * @param {Object} action Action object.
+ * @param {Object} action.payload Action payload.
+ * @param {string} action.payload.id Item ID.
+ * @return {Object} New state
+ */
+export function prepareItem(state, { payload: { id } }) {
+  return {
+    ...state,
+    queue: state.queue.map((item) =>
+      item.id === id
+        ? {
+            ...item,
+            state: ITEM_STATUS.PREPARING,
+          }
+        : item
+    ),
+  };
+}
+
+/**
+ * Prepare a file for transcoding.
+ *
+ * @param {Object} state Current state.
+ * @param {Object} action Action object.
+ * @param {Object} action.payload Action payload.
+ * @param {string} action.payload.id Item ID.
+ * @return {Object} New state
+ */
+export function prepareForTranscoding(state, { payload: { id } }) {
+  return {
+    ...state,
+    queue: state.queue.map((item) =>
+      item.id === id
+        ? {
+            ...item,
+            state: ITEM_STATUS.PENDING_TRANSCODING,
+          }
+        : item
+    ),
   };
 }
 
