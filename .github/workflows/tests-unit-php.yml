@@ -27,8 +27,8 @@ on:
       - 'includes/data/**'
       - '.github/workflows/tests-unit-php.yml'
 
-permissions:
-  contents: read
+#permissions:
+#  contents: read
 
 # Cancels all previous workflow runs for pull requests that have not completed.
 concurrency:
