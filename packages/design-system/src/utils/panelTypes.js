@@ -25,6 +25,7 @@ const PAGE_BACKGROUND = 'pageBackground';
 const PAGE_BACKGROUND_AUDIO = 'pageBackgroundAudio';
 const SIZE_POSITION = 'sizePosition';
 const SHAPE_STYLE = 'shapeStyle';
+const TEXT_ACCESSIBILITY = 'textAccessibility';
 const TEXT_STYLE = 'textStyle';
 const VIDEO_OPTIONS = 'videoOptions';
 const VIDEO_ACCESSIBILITY = 'videoAccessibility';
@@ -38,6 +39,7 @@ const PanelTypes = {
   PAGE_BACKGROUND_AUDIO,
   SIZE_POSITION,
   TEXT_STYLE,
+  TEXT_ACCESSIBILITY,
   FILTER,
   SHAPE_STYLE,
   BORDER,
