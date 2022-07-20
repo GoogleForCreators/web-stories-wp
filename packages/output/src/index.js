@@ -16,4 +16,5 @@
 
 export { default as OutputStory } from './story';
 export { default as getStoryMarkup } from './utils/getStoryMarkup';
+export { default as getTextElementTagNames } from './utils/getTextElementTagNames';
 export * from './constants';

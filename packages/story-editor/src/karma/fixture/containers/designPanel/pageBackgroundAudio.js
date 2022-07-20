@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,16 +14,28 @@
  * limitations under the License.
  */
 
-export const ContentType = {
-  IMAGE: 'image',
-  VIDEO: 'video',
-  GIF: 'gif',
-  STICKER: 'sticker',
-};
+/**
+ * Internal dependencies
+ */
+import { AbstractPanel } from './abstractPanel';
 
-export const ProviderType = {
-  UNSPLASH: 'unsplash',
-  COVERR: 'coverr',
-  TENOR: 'tenor',
-  TENOR_STICKERS: 'tenor_stickers',
-};
+/**
+ * The page background panel containing inputs flipping and detaching images as well as setting bg color.
+ */
+export class PageBackgroundAudio extends AbstractPanel {
+  constructor(node, path) {
+    super(node, path);
+  }
+
+  get uploadButton() {
+    return this.getByRole('button', {
+      name: /upload an audio file/i,
+    });
+  }
+
+  get hotlinkButton() {
+    return this.getByRole('button', {
+      name: /link to audio file/i,
+    });
+  }
+}

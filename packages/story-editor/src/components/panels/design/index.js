@@ -26,6 +26,7 @@ export { default as PageAttachmentPanel } from './pageAttachment';
 export { default as PageBackgroundPanel } from './pageBackground';
 export { default as ShapeStylePanel } from './shapeStyle';
 export { default as SizePositionPanel } from './sizePosition';
+export { default as TextAccessibilityPanel } from './textAccessibility';
 export { default as TextStylePanel } from './textStyle';
 export { default as VideoAccessibilityPanel } from './videoAccessibility';
 export { default as VideoOptionsPanel } from './videoOptions';

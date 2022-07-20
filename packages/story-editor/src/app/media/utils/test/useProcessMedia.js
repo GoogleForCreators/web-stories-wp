@@ -26,6 +26,7 @@ import { waitFor } from '@testing-library/react';
 import APIContext from '../../../api/context';
 import StoryContext from '../../../story/context';
 import useProcessMedia from '../useProcessMedia';
+import useMediaInfo from '../useMediaInfo';
 
 const fetchRemoteFileMock = (url, mimeType) => {
   if (url === 'http://www.google.com/foo.mov') {
@@ -56,6 +57,7 @@ const fetchRemoteBlobMock = (url) => {
 
   return Promise.reject(new Error('Invalid file'));
 };
+
 jest.mock('@googleforcreators/media', () => {
   return {
     fetchRemoteFile: fetchRemoteFileMock,
@@ -89,6 +91,14 @@ const uploadMedia = (
 
 const getOptimizedMediaById = jest.fn();
 const getMutedMediaById = jest.fn();
+
+jest.mock('../useMediaInfo', () => ({
+  __esModule: true,
+  default: jest.fn(() => ({
+    getFileInfo: jest.fn(() => null),
+    isConsideredOptimized: jest.fn(() => false),
+  })),
+}));
 
 function setup() {
   const apiContextValue = {
@@ -157,6 +167,10 @@ function setup() {
 }
 
 describe('useProcessMedia', () => {
+  afterEach(() => {
+    useMediaInfo.mockClear();
+  });
+
   describe('optimizeVideo', () => {
     it('should reuse already existing optimized video', async () => {
       getOptimizedMediaById.mockImplementationOnce(() => ({
