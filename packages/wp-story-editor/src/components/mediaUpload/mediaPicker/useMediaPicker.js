@@ -21,7 +21,12 @@ import { useCallback, useEffect, useMemo } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import { trackEvent } from '@googleforcreators/tracking';
 import { useSnackbar } from '@googleforcreators/design-system';
-import { useConfig, useAPI } from '@googleforcreators/story-editor';
+import {
+  useConfig,
+  useAPI,
+  useStory,
+  useLocalMedia,
+} from '@googleforcreators/story-editor';
 import PropTypes from 'prop-types';
 
 /**
@@ -79,6 +84,44 @@ function useMediaPicker({
   } = useConfig();
   const { showSnackbar } = useSnackbar();
 
+  const { deleteElementsByResourceId } = useStory((state) => ({
+    deleteElementsByResourceId: state.actions.deleteElementsByResourceId,
+  }));
+
+  const { prependMedia, deleteMediaElement } = useLocalMedia(
+    ({ actions: { prependMedia, deleteMediaElement } }) => {
+      return {
+        prependMedia,
+        deleteMediaElement,
+      };
+    }
+  );
+
+  const onUploadMedia = useCallback(
+    (resource) => {
+      if (['image', 'video', 'gif'].includes(resource.type)) {
+        prependMedia({
+          media: [resource],
+        });
+      }
+      if (onUpload) {
+        onUpload(resource);
+      }
+    },
+    [onUpload, prependMedia]
+  );
+
+  const onDeleteMedia = useCallback(
+    (resource) => {
+      deleteMediaElement({ id: resource.id });
+      deleteElementsByResourceId({ id: resource.id });
+      if (onDelete) {
+        onDelete(resource);
+      }
+    },
+    [deleteElementsByResourceId, deleteMediaElement, onDelete]
+  );
+
   useEffect(() => {
     try {
       // The Uploader.success callback is invoked when a user uploads a file.
@@ -88,9 +131,7 @@ function useMediaPicker({
       // it's just in the WP media modal.
       // Video poster generation for newly added videos is done in <MediaPane>.
       window.wp.Uploader.prototype.success = ({ attributes }) => {
-        if (onUpload) {
-          onUpload(getResourceFromMediaPicker(attributes));
-        }
+        onUploadMedia(getResourceFromMediaPicker(attributes));
         updateMedia(attributes.id, {
           mediaSource: 'editor',
           altText: attributes.alt || attributes.title,
@@ -99,7 +140,7 @@ function useMediaPicker({
     } catch (e) {
       // Silence.
     }
-  }, [onUpload, updateMedia]);
+  }, [onUploadMedia, updateMedia]);
 
   useEffect(() => {
     const currentDetails = window.wp.media.view.Attachment.Details;
@@ -110,9 +151,7 @@ function useMediaPicker({
           // eslint-disable-next-line prefer-rest-params -- expected.
           arguments
         );
-        if (onDelete) {
-          onDelete(getResourceFromMediaPicker(this.model.attributes));
-        }
+        onDeleteMedia(getResourceFromMediaPicker(this.model.attributes));
       },
       trashAttachment: function () {
         currentDetails.prototype.trashAttachment.apply(
@@ -120,10 +159,7 @@ function useMediaPicker({
           // eslint-disable-next-line prefer-rest-params -- expected.
           arguments
         );
-
-        if (onDelete) {
-          onDelete(getResourceFromMediaPicker(this.model.attributes));
-        }
+        onDeleteMedia(getResourceFromMediaPicker(this.model.attributes));
       },
     });
     window.wp.media.view.Attachment.Details = wsDetails;
@@ -131,7 +167,7 @@ function useMediaPicker({
     return () => {
       window.wp.media.view.Attachment.Details = currentDetails;
     };
-  }, [onDelete]);
+  }, [onDeleteMedia]);
 
   const openMediaDialog = useCallback(
     (evt) => {

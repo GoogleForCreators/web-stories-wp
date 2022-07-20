@@ -61,32 +61,18 @@ function MediaUploadButton({
     [allowedUploadMimeTypes]
   );
 
-  const { deleteElementsByResourceId } = useStory((state) => ({
-    deleteElementsByResourceId: state.actions.deleteElementsByResourceId,
-  }));
-
   const {
     canTranscodeResource,
-    prependMedia,
-    deleteMediaElement,
     postProcessingResource,
     optimizeVideo,
     optimizeGif,
   } = useLocalMedia(
     ({
       state: { canTranscodeResource },
-      actions: {
-        prependMedia,
-        deleteMediaElement,
-        postProcessingResource,
-        optimizeVideo,
-        optimizeGif,
-      },
+      actions: { postProcessingResource, optimizeVideo, optimizeGif },
     }) => {
       return {
         canTranscodeResource,
-        prependMedia,
-        deleteMediaElement,
         postProcessingResource,
         optimizeVideo,
         optimizeGif,
@@ -169,29 +155,10 @@ function MediaUploadButton({
     ]
   );
 
-  const onUpload = useCallback(
-    (resource) => {
-      prependMedia({
-        media: [resource],
-      });
-    },
-    [prependMedia]
-  );
-
-  const onDelete = useCallback(
-    (resource) => {
-      deleteMediaElement({ id: resource.id });
-      deleteElementsByResourceId({ id: resource.id });
-    },
-    [deleteElementsByResourceId, deleteMediaElement]
-  );
-
   return (
     <MediaUpload
       onSelect={onSelect}
       onSelectErrorMessage={onSelectErrorMessage}
-      onUpload={onUpload}
-      onDelete={onDelete}
       type={allowedMimeTypes}
       render={renderButton}
       buttonInsertText={buttonInsertText}
