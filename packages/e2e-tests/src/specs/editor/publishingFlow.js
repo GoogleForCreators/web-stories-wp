@@ -33,7 +33,8 @@ import {
  */
 import { addAllowedErrorMessage } from '../../config/bootstrap.js';
 
-describe('Publishing Flow', () => {
+//eslint-disable-next-line jest/no-disabled-tests -- TODO(#11970): Fix flakey test.
+describe.skip('Publishing Flow', () => {
   let uploadedFiles;
   let removeCORSErrorMessage;
   let removeResourceErrorMessage;
@@ -91,8 +92,7 @@ describe('Publishing Flow', () => {
     await expect(page).toMatchElement('[alt="Preview image"]');
   }
 
-  //eslint-disable-next-line jest/no-disabled-tests -- TODO(#11970): Fix flakey test.
-  it.skip('should guide me towards creating a new post to embed my story with poster', async () => {
+  it('should guide me towards creating a new post to embed my story with poster', async () => {
     await createNewStory();
 
     await insertStoryTitle('Publishing Flow Test');
