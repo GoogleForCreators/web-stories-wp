@@ -194,7 +194,7 @@ const MultiSelectionMoveable = forwardRef(function MultiSelectionMoveable(
       const [editorWidth, editorHeight] = frame.resize;
       const didResize = editorWidth !== 0 && editorHeight !== 0;
       if (isResize && didResize) {
-        const { border } = element;
+        const { border = {} } = element;
         const { left = 0, right = 0, top = 0, bottom = 0 } = border;
         const newWidth = editorToDataX(editorWidth - (left + right));
         const newHeight = editorToDataY(editorHeight - (top + bottom));

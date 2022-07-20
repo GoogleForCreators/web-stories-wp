@@ -81,7 +81,7 @@ const EditElement = memo(
       : element;
     const box = getBox(elementWithLocal);
     // We're adding the border in pixels since the element is the content + the border in pixels
-    const { border, rotationAngle } = element;
+    const { border = {}, rotationAngle } = element;
     const { left = 0, right = 0, top = 0, bottom = 0 } = border;
     const [diffX, diffY] = calcRotatedResizeOffset(
       rotationAngle,
