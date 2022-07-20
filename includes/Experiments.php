@@ -310,6 +310,7 @@ class Experiments extends Service_Base implements HasRequirements {
 				'label'       => __( 'Media Recording', 'web-stories' ),
 				'description' => __( 'Enable recording from webcam/microphone', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 			/**
 			 * Author: @spacedmonkey
