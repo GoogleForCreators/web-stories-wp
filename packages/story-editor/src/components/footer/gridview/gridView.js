@@ -26,7 +26,7 @@ import {
   useResizeEffect,
 } from '@googleforcreators/react';
 import { __, sprintf } from '@googleforcreators/i18n';
-import { PAGE_RATIO } from '@googleforcreators/units';
+import { FULLBLEED_RATIO } from '@googleforcreators/units';
 import {
   Slider,
   Button,
@@ -177,7 +177,7 @@ function GridView({ onClose }) {
   const pageGridGap = Math.floor(
     (availableWidth - actualPageWidths) / (pagesPerRow - 1)
   );
-  const pageHeight = pageWidth / PAGE_RATIO;
+  const pageHeight = pageWidth / FULLBLEED_RATIO;
 
   const handleClickPage = (page) => () => setCurrentPage({ pageId: page.id });
 

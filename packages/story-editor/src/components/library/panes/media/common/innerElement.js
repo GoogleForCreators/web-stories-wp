@@ -45,6 +45,7 @@ const styledTiles = css`
   transition: 0.2s transform, 0.15s opacity;
   border-radius: 4px;
   opacity: 0;
+  object-fit: cover;
 `;
 
 const Image = styled.img`
@@ -54,7 +55,6 @@ const Image = styled.img`
 // Display the newly uploaded videos without a delay: showWithoutDelay
 const Video = styled.video`
   ${styledTiles}
-  object-fit: cover;
   ${({ showWithoutDelay }) => (showWithoutDelay ? 'opacity: 1;' : '')}
 `;
 

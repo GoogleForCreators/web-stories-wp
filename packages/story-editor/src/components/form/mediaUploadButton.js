@@ -105,12 +105,6 @@ function MediaUploadButton({ onInsert, renderButton, buttonInsertText }) {
     isTranscodingEnabled,
   ]);
 
-  const transcodableMimeTypes = useMemo(() => {
-    return TRANSCODABLE_MIME_TYPES.filter(
-      (x) => !allowedVideoMimeTypes.includes(x)
-    );
-  }, [allowedVideoMimeTypes]);
-
   let onSelectErrorMessage = __(
     'No file types are currently supported.',
     'web-stories'
@@ -127,7 +121,10 @@ function MediaUploadButton({ onInsert, renderButton, buttonInsertText }) {
     (resource) => {
       try {
         if (isTranscodingEnabled && canTranscodeResource(resource)) {
-          if (transcodableMimeTypes.includes(resource.mimeType)) {
+          if (
+            !resource.isOptimized &&
+            TRANSCODABLE_MIME_TYPES.includes(resource.mimeType)
+          ) {
             optimizeVideo({ resource });
           }
 
@@ -153,7 +150,6 @@ function MediaUploadButton({ onInsert, renderButton, buttonInsertText }) {
       optimizeVideo,
       postProcessingResource,
       showSnackbar,
-      transcodableMimeTypes,
     ]
   );
 
