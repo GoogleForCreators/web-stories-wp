@@ -139,7 +139,7 @@ function TextEdit({
     ...rest
   } = element;
   const { font } = rest;
-  const { top = 0, bottom = 0, left = 0 } = border;
+  const { top = 0, bottom = 0, left = 0, right = 0 } = border;
   const fontFaceSetConfigs = useMemo(() => {
     const htmlInfo = getHTMLInfo(content);
     return {
@@ -240,8 +240,8 @@ function TextEdit({
       if (newHeight) {
         const [dx, dy] = calcRotatedResizeOffset(
           boxRef.current.rotationAngle,
-          0,
-          0,
+          -left,
+          -right,
           -top,
           Math.round(newHeight - (boxRef.current.height - top))
         );
@@ -252,7 +252,7 @@ function TextEdit({
       }
       setProperties(properties);
     }
-  }, [editorToDataX, editorToDataY, setProperties, bottom, top, left]);
+  }, [editorToDataX, editorToDataY, setProperties, top, left, right]);
 
   // Update content or delete the whole element (if empty) on unmount.
   const handleUnmount = useCallback(() => {
