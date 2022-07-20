@@ -23,6 +23,7 @@ import { PAGE_RATIO } from '@googleforcreators/units';
 import PropTypes from 'prop-types';
 import { __, sprintf } from '@googleforcreators/i18n';
 import { useFeature } from 'flagged';
+import { useTransform } from '@googleforcreators/transform';
 
 /**
  * Internal dependencies
@@ -44,7 +45,6 @@ const ExtraPageList = styled.ol`
   display: flex;
   flex-direction: ${({ isPrevious }) => (isPrevious ? 'row-reverse' : 'row')};
   width: ${({ listWidth }) => listWidth}px;
-  height: ${({ extraPageHeight }) => extraPageHeight}px;
   margin: 0;
   padding: 0 ${GAP}px;
   gap: ${GAP}px;
@@ -56,11 +56,14 @@ const ExtraPage = styled.li`
   border-radius: 4px;
   background-color: white;
 
-  opacity: 0.5;
+  // First extra page is at 60% opacity, then 45, 30, and 15
+  opacity: ${({ $distance }) => 0.6 - $distance * 0.15};
   transition: opacity 0.2s ease;
   &:hover {
     opacity: 1;
   }
+
+  ${({ $inert }) => $inert && 'pointer-events: none;'}
 `;
 const ExtraPagePreview = styled(PagePreview)`
   cursor: pointer;
@@ -107,6 +110,10 @@ function ExtraPages({ isPrevious = false }) {
       extraPageCount,
     })
   );
+  const isAnythingTransforming = useTransform(
+    ({ state: { isAnythingTransforming } }) => isAnythingTransforming
+  );
+
   const isExtraPagesEnabled = useFeature('extraPages');
   const pageCount = pages?.length;
   if (!pageCount || !isExtraPagesEnabled) {
@@ -134,8 +141,13 @@ function ExtraPages({ isPrevious = false }) {
         listWidth={listWidth}
         extraPageHeight={extraPageHeight}
       >
-        {pagesToShow.map((pageNum) => (
-          <ExtraPage key={pageNum} extraPageWidth={extraPageWidth}>
+        {pagesToShow.map((pageNum, index) => (
+          <ExtraPage
+            key={pageNum}
+            extraPageWidth={extraPageWidth}
+            $inert={isAnythingTransforming}
+            $distance={index}
+          >
             <ExtraPagePreview
               page={pages[pageNum]}
               onClick={clickPage(pages[pageNum].id)}
@@ -145,7 +157,6 @@ function ExtraPages({ isPrevious = false }) {
                 pageNum + 1
               )}
               width={extraPageWidth - GAP}
-              height={extraPageHeight}
             />
           </ExtraPage>
         ))}

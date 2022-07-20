@@ -24,6 +24,7 @@ import {
   localStore,
   LOCAL_STORAGE_PREFIX,
 } from '@googleforcreators/design-system';
+import { isAnimatedGif } from '@googleforcreators/media';
 
 /**
  * Internal dependencies
@@ -305,6 +306,10 @@ function useUploadMedia({
             resource = newResource;
           }
 
+          const isGif =
+            resource.mimeType === 'image/gif' &&
+            isAnimatedGif(await file.arrayBuffer());
+
           // Treat incoming video as a gif if wanted, used by media recording.
           if (additionalData?.isGif) {
             resource = {
@@ -331,6 +336,7 @@ function useUploadMedia({
             trimData,
             originalResourceId,
             elementId,
+            isAnimatedGif: isGif,
           });
         })
       );

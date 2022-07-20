@@ -46,6 +46,7 @@ export const CAROUSEL_STATE = {
 export const CAROUSEL_TRANSITION_DURATION = 300;
 
 export const PAGE_WIDTH_FACTOR = 12;
+export const MAX_EXTRA_PAGES = 4;
 
 export const DESIGN_SPACE_MARGIN = 48;
 
