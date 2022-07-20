@@ -310,6 +310,7 @@ class Experiments extends Service_Base implements HasRequirements {
 				'label'       => __( 'Media Recording', 'web-stories' ),
 				'description' => __( 'Enable recording from webcam/microphone', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 			/**
 			 * Author: @spacedmonkey
@@ -393,6 +394,7 @@ class Experiments extends Service_Base implements HasRequirements {
 				'label'       => __( 'Semantic headings', 'web-stories' ),
 				'description' => __( 'Display UI for changing semantic heading tags', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 			/**
 			 * Author: @barklund
