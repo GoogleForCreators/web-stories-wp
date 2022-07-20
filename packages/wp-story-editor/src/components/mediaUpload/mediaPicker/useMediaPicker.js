@@ -93,7 +93,9 @@ function useMediaPicker({
       // it's just in the WP media modal.
       // Video poster generation for newly added videos is done in <MediaPane>.
       window.wp.Uploader.prototype.success = ({ attributes }) => {
-        onUploadMedia(getResourceFromMediaPicker(attributes));
+        if (onUploadMedia) {
+          onUploadMedia(getResourceFromMediaPicker(attributes));
+        }
         updateMedia(attributes.id, {
           mediaSource: 'editor',
           altText: attributes.alt || attributes.title,
@@ -113,7 +115,9 @@ function useMediaPicker({
           // eslint-disable-next-line prefer-rest-params -- expected.
           arguments
         );
-        onDeleteMedia(getResourceFromMediaPicker(this.model.attributes));
+        if (onDeleteMedia) {
+          onDeleteMedia(getResourceFromMediaPicker(this.model.attributes));
+        }
       },
       trashAttachment: function () {
         currentDetails.prototype.trashAttachment.apply(
@@ -121,7 +125,9 @@ function useMediaPicker({
           // eslint-disable-next-line prefer-rest-params -- expected.
           arguments
         );
-        onDeleteMedia(getResourceFromMediaPicker(this.model.attributes));
+        if (onDeleteMedia) {
+          onDeleteMedia(getResourceFromMediaPicker(this.model.attributes));
+        }
       },
     });
     window.wp.media.view.Attachment.Details = wsDetails;
