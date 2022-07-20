@@ -105,9 +105,7 @@ function CaptionsPanelContent({
 
   const onError = useCallback((err) => trackError(eventName, err?.message), []);
   const onDeleteTrack = useCallback(
-    (deletedResource) => {
-      handleRemoveTrack(deletedResource.id);
-    },
+    (deletedResource) => handleRemoveTrack(deletedResource.id),
     [handleRemoveTrack]
   );
 
@@ -165,7 +163,7 @@ function CaptionsPanelContent({
           {hasUploadMediaAction && (
             <MediaUpload
               onSelect={handleChangeTrack}
-              onDelete={onDeleteTrack}
+              onDeleteMedia={onDeleteTrack}
               onSelectErrorMessage={__(
                 'Please choose a VTT file to use as caption.',
                 'web-stories'

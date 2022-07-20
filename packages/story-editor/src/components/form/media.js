@@ -164,7 +164,7 @@ function MediaInput(
         title={title}
         buttonInsertText={buttonInsertText}
         onSelect={onChange}
-        onDelete={onDelete}
+        onDeleteMedia={onDelete}
         onSelectErrorMessage={onChangeErrorText}
         type={type}
         cropParams={cropParams}

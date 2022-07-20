@@ -110,7 +110,7 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
     [pushUpdate, rawPoster]
   );
 
-  const onDelete = useCallback(
+  const onDeleteMedia = useCallback(
     (deleteResource) => {
       if (poster === deleteResource.src) {
         pushUpdate({ poster: resource.poster }, true);
@@ -180,7 +180,7 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
           value={poster}
           cropParams={cropParams}
           onChange={handleChangePoster}
-          onDelete={onDelete}
+          onDeleteMedia={onDeleteMedia}
           onChangeErrorText={posterErrorMessage}
           title={__('Select as video poster', 'web-stories')}
           hotlinkTitle={__('Use external image as video poster', 'web-stories')}

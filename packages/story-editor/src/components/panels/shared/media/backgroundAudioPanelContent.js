@@ -289,7 +289,7 @@ function BackgroundAudioPanelContent({
           {hasUploadMediaAction && (
             <MediaUpload
               onSelect={onSelect}
-              onDelete={onDeleteAudio}
+              onDeleteMedia={onDeleteAudio}
               onSelectErrorMessage={onSelectErrorMessage}
               type={allowedAudioMimeTypes}
               title={__('Upload an audio file', 'web-stories')}

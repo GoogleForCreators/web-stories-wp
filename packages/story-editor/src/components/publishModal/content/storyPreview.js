@@ -239,7 +239,7 @@ const StoryPreview = () => {
     [updateStory]
   );
 
-  const onDelete = useCallback(
+  const onDeleteMedia = useCallback(
     (deleteResource) => {
       if (featuredMedia.id === deleteResource.id) {
         updateStory({
@@ -311,7 +311,7 @@ const StoryPreview = () => {
                 {(hasUploadMediaAction || enablePosterHotlinking) && (
                   <StyledMedia
                     onChange={handleChangePoster}
-                    onDelete={onDelete}
+                    onDeleteMedia={onDeleteMedia}
                     title={__('Select as poster image', 'web-stories')}
                     hotlinkTitle={__(
                       'Use external image as poster image',

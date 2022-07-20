@@ -59,8 +59,8 @@ const defaultCropParams = {
  * @param {string|string[]} props.type Media type(s).
  * @param {boolean} props.multiple Whether multi-selection should be allowed.
  * @param {Object} props.cropParams Object params for cropped images.
- * @param {Function?} props.onUpload Upload media Callback.
- * @param {Function?} props.onDelete Delete media Callback.
+ * @param {Function?} props.onUploadMedia Upload media Callback.
+ * @param {Function?} props.onDeleteMedia Delete media Callback.
  * @return {Function} Callback to open the media picker.
  */
 function useMediaPicker({
@@ -69,8 +69,8 @@ function useMediaPicker({
   onSelect,
   onSelectErrorMessage = __('Unable to use this file type.', 'web-stories'),
   onClose,
-  onUpload,
-  onDelete,
+  onUploadMedia,
+  onDeleteMedia,
   onPermissionError,
   type = '',
   multiple = false,
@@ -97,29 +97,29 @@ function useMediaPicker({
     }
   );
 
-  const onUploadMedia = useCallback(
+  const uploadMedia = useCallback(
     (resource) => {
       if (['image', 'video', 'gif'].includes(resource.type)) {
         prependMedia({
           media: [resource],
         });
       }
-      if (onUpload) {
-        onUpload(resource);
+      if (onUploadMedia) {
+        onUploadMedia(resource);
       }
     },
-    [onUpload, prependMedia]
+    [onUploadMedia, prependMedia]
   );
 
-  const onDeleteMedia = useCallback(
+  const deleteMedia = useCallback(
     (resource) => {
       deleteMediaElement({ id: resource.id });
       deleteElementsByResourceId({ id: resource.id });
-      if (onDelete) {
-        onDelete(resource);
+      if (onDeleteMedia) {
+        onDeleteMedia(resource);
       }
     },
-    [deleteElementsByResourceId, deleteMediaElement, onDelete]
+    [deleteElementsByResourceId, deleteMediaElement, onDeleteMedia]
   );
 
   useEffect(() => {
@@ -131,7 +131,7 @@ function useMediaPicker({
       // it's just in the WP media modal.
       // Video poster generation for newly added videos is done in <MediaPane>.
       window.wp.Uploader.prototype.success = ({ attributes }) => {
-        onUploadMedia(getResourceFromMediaPicker(attributes));
+        uploadMedia(getResourceFromMediaPicker(attributes));
         updateMedia(attributes.id, {
           mediaSource: 'editor',
           altText: attributes.alt || attributes.title,
@@ -140,7 +140,7 @@ function useMediaPicker({
     } catch (e) {
       // Silence.
     }
-  }, [onUploadMedia, updateMedia]);
+  }, [uploadMedia, updateMedia]);
 
   useEffect(() => {
     const currentDetails = window.wp.media.view.Attachment.Details;
@@ -151,7 +151,7 @@ function useMediaPicker({
           // eslint-disable-next-line prefer-rest-params -- expected.
           arguments
         );
-        onDeleteMedia(getResourceFromMediaPicker(this.model.attributes));
+        deleteMedia(getResourceFromMediaPicker(this.model.attributes));
       },
       trashAttachment: function () {
         currentDetails.prototype.trashAttachment.apply(
@@ -159,7 +159,7 @@ function useMediaPicker({
           // eslint-disable-next-line prefer-rest-params -- expected.
           arguments
         );
-        onDeleteMedia(getResourceFromMediaPicker(this.model.attributes));
+        deleteMedia(getResourceFromMediaPicker(this.model.attributes));
       },
     });
     window.wp.media.view.Attachment.Details = wsDetails;
@@ -167,7 +167,7 @@ function useMediaPicker({
     return () => {
       window.wp.media.view.Attachment.Details = currentDetails;
     };
-  }, [onDeleteMedia]);
+  }, [deleteMedia]);
 
   const openMediaDialog = useCallback(
     (evt) => {
