@@ -293,9 +293,23 @@ function Footer({ captureImage, videoRef }) {
     actions: { uploadFile },
   } = useUploader();
 
-  const { updateStory } = useStory(({ actions: { updateStory } }) => ({
-    updateStory,
-  }));
+  const {
+    updateCurrentPageProperties,
+    backgroundElementId,
+    setSelectedElementsById,
+  } = useStory(
+    ({
+      state: { currentPage },
+      actions: { updateCurrentPageProperties, setSelectedElementsById },
+    }) => ({
+      backgroundElementId: currentPage?.elements.find(
+        ({ isBackground }) => isBackground
+      )?.id,
+      updateCurrentPageProperties,
+      setSelectedElementsById,
+      currentPage,
+    })
+  );
   const { setHighlights } = useHighlights(({ setHighlights }) => ({
     setHighlights,
   }));
@@ -318,12 +332,15 @@ function Footer({ captureImage, videoRef }) {
       resource: objectPick(resource, Object.keys(BackgroundAudioPropTypeShape)),
     };
 
+    setSelectedElementsById({ elementIds: [backgroundElementId] });
     setHighlights({
-      highlight: states.BACKGROUND_AUDIO,
+      highlight: states.PAGE_BACKGROUND_AUDIO,
     });
 
-    updateStory({
-      properties: { backgroundAudio },
+    updateCurrentPageProperties({
+      properties: {
+        backgroundAudio,
+      },
     });
     setIsInserting(false);
     toggleRecordingMode();
@@ -348,7 +365,7 @@ function Footer({ captureImage, videoRef }) {
               ? __('Inserting…', 'web-stories')
               : hasVideo
               ? __('Insert', 'web-stories')
-              : __('Insert background audio', 'web-stories')}
+              : __('Insert page background audio', 'web-stories')}
           </InsertButton>
         </>
       )}
