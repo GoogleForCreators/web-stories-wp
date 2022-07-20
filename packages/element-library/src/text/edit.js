@@ -132,7 +132,7 @@ function TextEdit({
     content,
     backgroundColor,
     backgroundTextMode,
-    border,
+    border = {},
     borderRadius,
     opacity,
     height: elementHeight,
