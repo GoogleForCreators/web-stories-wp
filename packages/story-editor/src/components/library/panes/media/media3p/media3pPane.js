@@ -25,7 +25,7 @@ import {
   useRef,
   useMemo,
 } from '@googleforcreators/react';
-import { useFeature, useFeatures } from 'flagged';
+import { useFeatures } from 'flagged';
 import { __ } from '@googleforcreators/i18n';
 import { trackEvent } from '@googleforcreators/tracking';
 

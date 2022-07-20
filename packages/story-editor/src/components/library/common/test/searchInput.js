@@ -51,24 +51,6 @@ describe('SearchInput', () => {
     expect(screen.getByRole('searchbox')).toBeInTheDocument();
   });
 
-  it('should trigger onSearch when text changes', () => {
-    const onSearchMock = jest.fn();
-
-    renderWithTheme(
-      <SearchInput
-        initialValue={'dog'}
-        placeholder={'Hello'}
-        onSearch={onSearchMock}
-      />
-    );
-
-    const input = screen.getByRole('searchbox');
-    setInputValue(input, 'cat');
-    triggerOnChange(input);
-
-    expect(onSearchMock).toHaveBeenCalled();
-  });
-
   it('should trigger onSearch when enter is pressed', () => {
     const onSearchMock = jest.fn();
 
