@@ -41,7 +41,7 @@ describe('Shopping product', () => {
         return false;
       });
     }
-    //eslint-disable-next-line jest/no-disabled-tests -- failing "focus" in the beforeAll above setShoppingProvider('WooCommerce');
+    //eslint-disable-next-line jest/no-disabled-tests -- related #11976 failing "focus" in the beforeAll above setShoppingProvider('WooCommerce');
     it.skip('should show a floating menu with product dropdown', async () => {
       const productText = 'Hoodie with Zipper';
       await createNewStory();
