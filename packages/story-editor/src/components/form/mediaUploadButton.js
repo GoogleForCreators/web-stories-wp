@@ -26,7 +26,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { useConfig, useLocalMedia, useStory } from '../../app';
+import { useConfig, useLocalMedia } from '../../app';
 import useFFmpeg from '../../app/media/utils/useFFmpeg';
 import { TRANSCODABLE_MIME_TYPES } from '../../app/media';
 
