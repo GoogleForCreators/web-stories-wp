@@ -358,8 +358,8 @@ useMediaPicker.propTypes = {
   onSelect: PropTypes.func.isRequired,
   onSelectErrorMessage: PropTypes.string,
   onClose: PropTypes.func,
-  onUpload: PropTypes.func,
-  onDelete: PropTypes.func,
+  onUploadMedia: PropTypes.func,
+  onDeleteMedia: PropTypes.func,
   onPermissionError: PropTypes.func,
   type: PropTypes.oneOfType([
     PropTypes.string,
