@@ -48,6 +48,7 @@ import {
   useConfig,
   useHighlights,
   useSidebar,
+  MediaUpload,
 } from '@googleforcreators/story-editor';
 import { useFeature } from 'flagged';
 /**
@@ -132,7 +133,6 @@ function PublishPanel({ nameOverride }) {
     allowedMimeTypes: { image: allowedImageMimeTypes },
     dashboardSettingsLink,
     capabilities: { hasUploadMediaAction, canManageSettings },
-    MediaUpload,
   } = useConfig();
 
   const allowedImageFileTypes = useMemo(

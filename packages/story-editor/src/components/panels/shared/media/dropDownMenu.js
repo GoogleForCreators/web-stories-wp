@@ -46,7 +46,7 @@ import {
 /**
  * Internal dependencies
  */
-import { useConfig } from '../../../../app';
+import { MediaUpload } from '../../../mediaUpload';
 import DropDownKeyEvents from '../../utils/dropDownKeyEvents';
 
 const MenuButton = styled(Button)`
@@ -78,8 +78,6 @@ const CustomItemRenderer = forwardRef(function CustomItemRenderer(
   { option, isSelected, ...rest },
   ref
 ) {
-  const { MediaUpload } = useConfig();
-
   if (option.mediaPickerProps) {
     return (
       <MediaUpload

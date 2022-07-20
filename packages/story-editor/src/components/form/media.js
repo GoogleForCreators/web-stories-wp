@@ -28,7 +28,7 @@ import {
 /**
  * Internal dependencies
  */
-import { useConfig } from '../../app';
+import { MediaUpload } from '../mediaUpload';
 import { MULTIPLE_VALUE } from '../../constants';
 import HotlinkModal from '../hotlinkModal';
 import useHotlink from './useHotlink';
@@ -107,7 +107,6 @@ function MediaInput(
   },
   forwardedRef
 ) {
-  const { MediaUpload } = useConfig();
   const {
     actions: { onSelect, openHotlink, onCloseHotlink },
     state: { allowedFileTypes, isOpen },

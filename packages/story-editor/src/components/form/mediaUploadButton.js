@@ -29,6 +29,7 @@ import PropTypes from 'prop-types';
 import { useConfig, useLocalMedia } from '../../app';
 import useFFmpeg from '../../app/media/utils/useFFmpeg';
 import { TRANSCODABLE_MIME_TYPES } from '../../app/media';
+import { MediaUpload } from '../mediaUpload';
 
 function MediaUploadButton({
   onInsert,
@@ -42,7 +43,6 @@ function MediaUploadButton({
       vector: allowedVectorMimeTypes,
       video: allowedVideoMimeTypes,
     },
-    MediaUpload,
   } = useConfig();
 
   const allowedUploadMimeTypes = useMemo(

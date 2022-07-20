@@ -42,6 +42,7 @@ import { Row } from '../../../form';
 import { useConfig } from '../../../../app/config';
 import { MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
 import HotlinkModal from '../../../hotlinkModal';
+import { MediaUpload } from '../../../mediaUpload';
 import FileRow from './fileRow';
 
 const ButtonRow = styled(Row)`
@@ -72,7 +73,6 @@ function CaptionsPanelContent({
   const {
     allowedMimeTypes: { caption: allowedCaptionMimeTypes = [] },
     capabilities: { hasUploadMediaAction },
-    MediaUpload,
   } = useConfig();
 
   const [isOpen, setIsOpen] = useState(false);

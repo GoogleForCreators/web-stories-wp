@@ -84,44 +84,6 @@ function useMediaPicker({
   } = useConfig();
   const { showSnackbar } = useSnackbar();
 
-  const { deleteElementsByResourceId } = useStory((state) => ({
-    deleteElementsByResourceId: state.actions.deleteElementsByResourceId,
-  }));
-
-  const { prependMedia, deleteMediaElement } = useLocalMedia(
-    ({ actions: { prependMedia, deleteMediaElement } }) => {
-      return {
-        prependMedia,
-        deleteMediaElement,
-      };
-    }
-  );
-
-  const uploadMedia = useCallback(
-    (resource) => {
-      if (['image', 'video', 'gif'].includes(resource.type)) {
-        prependMedia({
-          media: [resource],
-        });
-      }
-      if (onUploadMedia) {
-        onUploadMedia(resource);
-      }
-    },
-    [onUploadMedia, prependMedia]
-  );
-
-  const deleteMedia = useCallback(
-    (resource) => {
-      deleteMediaElement({ id: resource.id });
-      deleteElementsByResourceId({ id: resource.id });
-      if (onDeleteMedia) {
-        onDeleteMedia(resource);
-      }
-    },
-    [deleteElementsByResourceId, deleteMediaElement, onDeleteMedia]
-  );
-
   useEffect(() => {
     try {
       // The Uploader.success callback is invoked when a user uploads a file.
@@ -131,7 +93,7 @@ function useMediaPicker({
       // it's just in the WP media modal.
       // Video poster generation for newly added videos is done in <MediaPane>.
       window.wp.Uploader.prototype.success = ({ attributes }) => {
-        uploadMedia(getResourceFromMediaPicker(attributes));
+        onUploadMedia(getResourceFromMediaPicker(attributes));
         updateMedia(attributes.id, {
           mediaSource: 'editor',
           altText: attributes.alt || attributes.title,
@@ -140,7 +102,7 @@ function useMediaPicker({
     } catch (e) {
       // Silence.
     }
-  }, [uploadMedia, updateMedia]);
+  }, [onUploadMedia, updateMedia]);
 
   useEffect(() => {
     const currentDetails = window.wp.media.view.Attachment.Details;
@@ -151,7 +113,7 @@ function useMediaPicker({
           // eslint-disable-next-line prefer-rest-params -- expected.
           arguments
         );
-        deleteMedia(getResourceFromMediaPicker(this.model.attributes));
+        onDeleteMedia(getResourceFromMediaPicker(this.model.attributes));
       },
       trashAttachment: function () {
         currentDetails.prototype.trashAttachment.apply(
@@ -159,7 +121,7 @@ function useMediaPicker({
           // eslint-disable-next-line prefer-rest-params -- expected.
           arguments
         );
-        deleteMedia(getResourceFromMediaPicker(this.model.attributes));
+        onDeleteMedia(getResourceFromMediaPicker(this.model.attributes));
       },
     });
     window.wp.media.view.Attachment.Details = wsDetails;
@@ -167,7 +129,7 @@ function useMediaPicker({
     return () => {
       window.wp.media.view.Attachment.Details = currentDetails;
     };
-  }, [deleteMedia]);
+  }, [onDeleteMedia]);
 
   const openMediaDialog = useCallback(
     (evt) => {

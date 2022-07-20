@@ -72,6 +72,9 @@ function arrange(selectedElements) {
     state: {
       currentPage: { elements: [] },
     },
+    actions: {
+      deleteElementsByResourceId: jest.fn(),
+    }
   };
 
   const apiValue = {

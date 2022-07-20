@@ -52,6 +52,7 @@ import { useConfig } from '../../../../app/config';
 import { Row } from '../../../form';
 import useCORSProxy from '../../../../utils/useCORSProxy';
 import HotlinkModal from '../../../hotlinkModal';
+import { MediaUpload } from '../../../mediaUpload';
 import CaptionsPanelContent from './captionsPanelContent';
 import LoopPanelContent from './loopPanelContent';
 import AudioPlayer from './audioPlayer';
@@ -91,7 +92,6 @@ function BackgroundAudioPanelContent({
   const {
     allowedMimeTypes: { audio: allowedAudioMimeTypes },
     capabilities: { hasUploadMediaAction },
-    MediaUpload,
   } = useConfig();
   const [isOpen, setIsOpen] = useState(false);
   const { getProxiedUrl } = useCORSProxy();

@@ -33,6 +33,7 @@ export * from './components/form';
 export * from './components/panels/panel';
 export * from './components/panels/shared';
 export * from './components/checklist';
+export * from './components/mediaUpload';
 export { default as FontPicker } from './components/fontPicker';
 export { focusStyle } from './components/panels/shared/styles';
 export * from './components/checklistCard';
