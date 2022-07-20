@@ -37,9 +37,17 @@ function getTextElementTagNames(elements) {
        * @param {string} element.id Element ID
        * @param {number} element.fontSize Font size.
        * @param {string} element.content Text content.
+       * @param {string} element.tagName Existing tagName
        * @return {Map<string, string>} Tag names map.
        */
-      (tagNamesMap, { id, fontSize, content }) => {
+      (tagNamesMap, { id, fontSize, content, tagName }) => {
+        // if a tag already exists,
+        // utilize the one already part of the element
+        if (tagName && tagName !== 'auto') {
+          tagNamesMap.set(id, tagName);
+          return tagNamesMap;
+        }
+
         if (content.length <= MINIMUM_CONTENT_LENGTH) {
           tagNamesMap.set(id, 'p');
           return tagNamesMap;
