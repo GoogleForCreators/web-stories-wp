@@ -154,7 +154,7 @@ function MediaPane(props) {
 
   const onSearch = (value) => {
     const trimText = value.trim();
-    if (trimText !== searchTerm) {
+    if (trimText !== searchTerm || trimText === '') {
       setSearchTerm({ searchTerm: trimText });
     }
   };

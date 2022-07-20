@@ -90,27 +90,4 @@ describe('SearchInput', () => {
 
     expect(onSearchMock).toHaveBeenCalledTimes(1);
   });
-
-  it('should trigger onSearch when text changes, with some delay', () => {
-    const onSearchMock = jest.fn();
-
-    renderWithTheme(
-      <SearchInput
-        initialValue={'d'}
-        placeholder={'Hello'}
-        onSearch={onSearchMock}
-        delayMs={2000}
-      />
-    );
-
-    const input = screen.getByDisplayValue('d');
-    setInputValue(input, 'cat');
-    triggerOnChange(input);
-
-    expect(onSearchMock).not.toHaveBeenCalledTimes(1);
-
-    jest.advanceTimersByTime(2001);
-
-    expect(onSearchMock).toHaveBeenCalledTimes(1);
-  });
 });
