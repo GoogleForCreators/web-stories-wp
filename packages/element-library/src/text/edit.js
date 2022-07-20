@@ -242,13 +242,13 @@ function TextEdit({
           boxRef.current.rotationAngle,
           0,
           0,
-          0,
-          Math.round(newHeight - (boxRef.current.height - top - bottom))
+          -top,
+          Math.round(newHeight - (boxRef.current.height - bottom - top))
         );
         properties.height = editorToDataY(newHeight);
         // boxRef includes adjustment for the border, let's take it out for element updating.
-        properties.x = editorToDataX(boxRef.current.x + left + dx);
-        properties.y = editorToDataY(boxRef.current.y + top + dy);
+        properties.x = editorToDataX(boxRef.current.x + dx);
+        properties.y = editorToDataY(boxRef.current.y + dy);
       }
       setProperties(properties);
     }
