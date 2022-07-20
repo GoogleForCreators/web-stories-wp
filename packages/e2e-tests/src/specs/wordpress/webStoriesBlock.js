@@ -38,7 +38,7 @@ const EMBED_BLOCK_CONTENT = `
 <div class="wp-block-web-stories-embed alignnone"><amp-story-player style="width:360px;height:600px" data-testid="amp-story-player"><a href="https://wp.stories.google/stories/intro-to-web-stories-storytime" style="--story-player-poster:url('https://amp.dev/static/samples/img/story_dog2_portrait.jpg')">Stories in AMP - Hello World</a></amp-story-player></div>
 <!-- /wp:web-stories/embed -->
 `;
-//eslint-disable-next-line jest/no-disabled-tests -- TODO(#): Fix flakey test.
+//eslint-disable-next-line jest/no-disabled-tests -- TODO(#11975): Fix flakey test.
 describe.skip('Web Stories Block', () => {
   let stopRequestInterception;
   let removeErrorMessage;

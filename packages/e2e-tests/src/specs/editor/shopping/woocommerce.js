@@ -41,7 +41,7 @@ describe('Shopping', () => {
     });
 
     describe('Schema Validation', () => {
-      //eslint-disable-next-line jest/no-disabled-tests -- issue with await shoppingProviderDropdown.focus();.
+      //eslint-disable-next-line jest/no-disabled-tests -- TODO(#11976): Fix flakey test
       it.skip('should match a valid schema', async () => {
         await createNewStory();
         await insertProduct('Hoodie with Zipper', true);

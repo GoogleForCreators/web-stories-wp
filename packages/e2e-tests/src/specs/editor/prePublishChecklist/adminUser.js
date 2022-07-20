@@ -74,7 +74,7 @@ describe('Pre-Publish Checklist : Admin User', () => {
     await takeSnapshot(page, 'Prepublish checklist');
   });
 
-  //eslint-disable-next-line jest/no-disabled-tests -- TODO(#): Fix flakey test.
+  //eslint-disable-next-line jest/no-disabled-tests -- TODO(#11977): Fix flakey test.
   it.skip('should show cards related to poster image issues', async () => {
     await addTextElement();
     await addPages(3);
