@@ -243,7 +243,7 @@ function TextEdit({
           0,
           0,
           -top,
-          Math.round(newHeight - (boxRef.current.height - bottom - top))
+          Math.round(newHeight - (boxRef.current.height - top))
         );
         properties.height = editorToDataY(newHeight);
         // boxRef includes adjustment for the border, let's take it out for element updating.
