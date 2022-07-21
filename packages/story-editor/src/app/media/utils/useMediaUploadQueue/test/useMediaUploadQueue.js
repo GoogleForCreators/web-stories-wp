@@ -18,13 +18,14 @@
  * External dependencies
  */
 import { renderHook, act } from '@testing-library/react-hooks';
-import { isAnimatedGif, createResource } from '@googleforcreators/media';
+import { createResource } from '@googleforcreators/media';
 
 /**
  * Internal dependencies
  */
 import useMediaUploadQueue from '..';
 import useFFmpeg from '../../useFFmpeg';
+import useMediaInfo from '../../useMediaInfo';
 import { ITEM_STATUS } from '../constants';
 
 const canTranscodeFile = (file) => {
@@ -53,9 +54,11 @@ jest.mock('../../useFFmpeg', () => ({
   })),
 }));
 
-jest.mock('@googleforcreators/media', () => ({
-  ...jest.requireActual('@googleforcreators/media'),
-  isAnimatedGif: jest.fn(),
+jest.mock('../../useMediaInfo', () => ({
+  __esModule: true,
+  default: jest.fn(() => ({
+    isConsideredOptimized: jest.fn(() => Promise.resolve(false)),
+  })),
 }));
 
 const mockUploadFile = jest.fn().mockImplementation((file) =>
@@ -114,12 +117,9 @@ jest.mock('../../../../uploader', () => ({
 }));
 
 describe('useMediaUploadQueue', () => {
-  beforeEach(() => {
-    isAnimatedGif.mockReturnValue(false);
-  });
-
   afterEach(() => {
     useFFmpeg.mockClear();
+    useMediaInfo.mockClear();
   });
 
   it('sets initial state for upload queue', async () => {
@@ -199,7 +199,6 @@ describe('useMediaUploadQueue', () => {
   });
 
   it('should set isUploading state when adding a gif item to the queue', async () => {
-    isAnimatedGif.mockReturnValue(true);
     const { result, waitFor } = renderHook(() => useMediaUploadQueue());
 
     expect(result.current.state.isUploading).toBeFalse();
@@ -208,18 +207,19 @@ describe('useMediaUploadQueue', () => {
       result.current.actions.addItem({
         file: gifFile,
         resource: gifResource,
+        isAnimatedGif: true,
       })
     );
 
-    const {
-      resource: { id: resourceId },
-    } = result.current.state.pending[0];
-
     await waitFor(() => expect(result.current.state.isTranscoding).toBeTrue());
-
-    expect(
-      result.current.state.isCurrentResourceTranscoding(resourceId)
-    ).toBeTrue();
+    await waitFor(() => {
+      const {
+        resource: { id: resourceId },
+      } = result.current.state.progress[0];
+      expect(
+        result.current.state.isCurrentResourceTranscoding(resourceId)
+      ).toBeTrue();
+    });
   });
 
   it('should set isTrancoding state when adding an item to the queue', async () => {
@@ -234,11 +234,11 @@ describe('useMediaUploadQueue', () => {
       })
     );
 
+    await waitFor(() => expect(result.current.state.isTranscoding).toBeTrue());
+
     const {
       resource: { id: resourceId },
     } = result.current.state.progress[0];
-
-    await waitFor(() => expect(result.current.state.isTranscoding).toBeTrue());
 
     expect(
       result.current.state.isCurrentResourceProcessing(resourceId)
@@ -264,10 +264,11 @@ describe('useMediaUploadQueue', () => {
       })
     );
 
+    await waitFor(() => expect(result.current.state.isMuting).toBeTrue());
+
     const {
       resource: { id: resourceId },
     } = result.current.state.progress[0];
-    await waitFor(() => expect(result.current.state.isMuting).toBeTrue());
 
     expect(
       result.current.state.isCurrentResourceProcessing(resourceId)
@@ -291,11 +292,11 @@ describe('useMediaUploadQueue', () => {
       })
     );
 
+    await waitFor(() => expect(result.current.state.isTrimming).toBeTrue());
+
     const {
       resource: { id: resourceId },
     } = result.current.state.progress[0];
-
-    await waitFor(() => expect(result.current.state.isTrimming).toBeTrue());
 
     expect(
       result.current.state.isCurrentResourceProcessing(resourceId)
