@@ -27,7 +27,7 @@ import {
  */
 import { addAllowedErrorMessage } from '../../config/bootstrap.js';
 
-describe('CORS check', () => {
+describe.skip('CORS check', () => {
   withPlugin('e2e-tests-cors-error');
 
   let removeCORSErrorMessage;
