@@ -120,18 +120,35 @@ export function saveStoryById(config, story) {
     method: 'POST',
   }).then((data) => {
     const { _embedded: embedded = {}, meta, ...rest } = data;
-    const poster = meta['web_stories_poster'];
-    const featuredmedia = embedded?.['wp:featuredmedia']?.[0];
+
+    let featuredMedia = {};
+
+    const externalPoster = meta['web_stories_poster'];
+    const postThumbnail = embedded?.['wp:featuredmedia']?.[0];
+
+    if (postThumbnail?.id) {
+      featuredMedia = {
+        id: postThumbnail.id,
+        height: postThumbnail.media_details?.height || 0,
+        width: postThumbnail.media_details?.width || 0,
+        url: postThumbnail.source_url || '',
+        needsProxy: false,
+        isExternal: false,
+      };
+    } else if (externalPoster?.url) {
+      featuredMedia = {
+        id: 0,
+        height: externalPoster.height || 0,
+        width: externalPoster.width || 0,
+        url: externalPoster.url,
+        needsProxy: Boolean(externalPoster.needsProxy),
+        isExternal: true,
+      };
+    }
+
     return {
       ...snakeToCamelCaseObjectKeys(rest),
-      featuredMedia: {
-        id: featuredmedia?.id || 0,
-        height: poster?.height || featuredmedia?.media_details?.height || 0,
-        width: poster?.width || featuredmedia?.media_details?.width || 0,
-        url: poster?.url || featuredmedia?.source_url || '',
-        needsProxy: poster?.needsProxy || false,
-        isExternal: Boolean(poster),
-      },
+      featuredMedia,
     };
   });
 }
