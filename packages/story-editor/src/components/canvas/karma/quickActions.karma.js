@@ -1116,7 +1116,7 @@ describe('Quick Actions integration', () => {
       const insertElement = await fixture.renderHook(() => useInsertElement());
       const sticker = await fixture.act(() =>
         insertElement('sticker', {
-          border: {},
+          border: null,
           borderRadius: null,
           flip: { vertical: false, horizontal: false },
           focalX: 50,
