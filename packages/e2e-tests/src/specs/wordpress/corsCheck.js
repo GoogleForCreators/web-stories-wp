@@ -27,6 +27,7 @@ import {
  */
 import { addAllowedErrorMessage } from '../../config/bootstrap.js';
 
+// eslint-disable-next-line jest/no-disabled-tests -- TODO(#11981): Fix flakey test.
 describe.skip('CORS check', () => {
   withPlugin('e2e-tests-cors-error');
 
