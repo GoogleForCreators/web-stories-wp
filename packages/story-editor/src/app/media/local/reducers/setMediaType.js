@@ -13,23 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * Internal dependencies
  */
-import { INITIAL_STATE } from '../constants';
+import { LOCAL_MEDIA_TYPE_ALL } from '../types';
 
 function setMediaType(state, { mediaType }) {
   if (mediaType === state.mediaType) {
     return state;
   }
+
+  // Filters existing media in the state by mediaType
+  // for immediate user feedback.
+  // Still, the provider will fetch items from the server.
+  // Useful when switching e.g. from All -> Videos, since there might
+  // be some videos already in state.
   return {
-    ...INITIAL_STATE,
-    media: state.media.filter(({ local }) => local), // This filter allows remove temporary file returned on upload
-    audioProcessing: [...state.audioProcessing],
-    audioProcessed: [...state.audioProcessed],
-    posterProcessing: [...state.posterProcessing],
-    posterProcessed: [...state.posterProcessed],
-    searchTerm: state.searchTerm,
+    ...state,
+    media:
+      mediaType === LOCAL_MEDIA_TYPE_ALL
+        ? state.media
+        : state.media.filter(({ type }) => mediaType === type),
     mediaType,
   };
 }

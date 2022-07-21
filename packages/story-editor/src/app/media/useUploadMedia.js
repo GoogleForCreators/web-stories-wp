@@ -67,6 +67,7 @@ function useUploadMedia({
       uploaded,
       failures,
       finished,
+      active,
       isNewResourceProcessing,
       isCurrentResourceProcessing,
       isNewResourceTranscoding,
@@ -121,12 +122,6 @@ function useUploadMedia({
         onUploadStart({ resource });
       }
     }
-
-    const resourcesToAdd = newItems.map(({ resource }) => resource);
-
-    prependMedia({
-      media: resourcesToAdd,
-    });
   }, [pending, prependMedia]);
 
   // Update *existing* items in the media library and on canvas.
@@ -352,6 +347,7 @@ function useUploadMedia({
   );
 
   return {
+    active,
     uploadMedia,
     isUploading,
     isTranscoding,
