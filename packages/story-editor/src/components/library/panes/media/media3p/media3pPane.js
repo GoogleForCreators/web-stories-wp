@@ -108,7 +108,7 @@ function Media3pPane(props) {
   const onSearch = useCallback(
     (value) => {
       const trimText = value.trim();
-      if (trimText !== searchTerm || trimText === '') {
+      if (trimText !== searchTerm) {
         setSearchTerm({ searchTerm: trimText });
       }
     },
