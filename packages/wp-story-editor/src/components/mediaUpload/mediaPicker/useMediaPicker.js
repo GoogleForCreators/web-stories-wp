@@ -21,12 +21,7 @@ import { useCallback, useEffect, useMemo } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import { trackEvent } from '@googleforcreators/tracking';
 import { useSnackbar } from '@googleforcreators/design-system';
-import {
-  useConfig,
-  useAPI,
-  useStory,
-  useLocalMedia,
-} from '@googleforcreators/story-editor';
+import { useConfig, useAPI } from '@googleforcreators/story-editor';
 import PropTypes from 'prop-types';
 
 /**

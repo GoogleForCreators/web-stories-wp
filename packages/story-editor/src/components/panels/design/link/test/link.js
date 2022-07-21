@@ -74,7 +74,7 @@ function arrange(selectedElements) {
     },
     actions: {
       deleteElementsByResourceId: jest.fn(),
-    }
+    },
   };
 
   const apiValue = {
