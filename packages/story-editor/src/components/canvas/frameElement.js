@@ -28,7 +28,7 @@ import {
   useCombinedRefs,
   useEffect,
 } from '@googleforcreators/react';
-import { calcRotatedResizeOffset, useUnits } from '@googleforcreators/units';
+import { useUnits } from '@googleforcreators/units';
 import { useTransformHandler } from '@googleforcreators/transform';
 import PropTypes from 'prop-types';
 import {
@@ -153,7 +153,7 @@ function FrameElement({ id }) {
         isActive,
       };
     });
-  const { type, flip, isLocked, border = {}, rotationAngle } = element;
+  const { type, flip, isLocked } = element;
 
   // Unlocked elements are always clickable,
   // locked elements are only clickable if selected
@@ -192,29 +192,12 @@ function FrameElement({ id }) {
   );
   const isLinkActive = isAnythingTransforming && !isLocked;
 
-  const getBox = useUnits(({ actions }) => actions.getBox);
+  const getBoxWithBorder = useUnits(({ actions }) => actions.getBoxWithBorder);
 
   useLayoutEffect(() => {
     setNodeForElement(id, elementRef.current);
   }, [id, setNodeForElement]);
-  const box = getBox(element);
-
-  const { left = 0, right = 0, top = 0, bottom = 0 } = border;
-  const [diffX, diffY] = calcRotatedResizeOffset(
-    rotationAngle,
-    left,
-    right,
-    top,
-    bottom
-  );
-  // We're adding the border in pixels since the element is the content + the border in pixels
-  const boxWithBorder = {
-    ...box,
-    x: box.x + diffX,
-    y: box.y + diffY,
-    width: box.width + left + right,
-    height: box.height + top + bottom,
-  };
+  const boxWithBorder = getBoxWithBorder(element);
 
   useTransformHandler(id, (transform) => {
     const target = elementRef.current;

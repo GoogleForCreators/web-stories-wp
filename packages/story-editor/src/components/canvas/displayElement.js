@@ -111,8 +111,9 @@ function DisplayElement({
   isAnimatable = false,
   siblingCount = 0,
 }) {
-  const { getBox, dataToEditorX } = useUnits((state) => ({
+  const { getBox, getBoxWithBorder, dataToEditorX } = useUnits((state) => ({
     getBox: state.actions.getBox,
+    getBoxWithBorder: state.actions.getBoxWithBorder,
     dataToEditorX: state.actions.dataToEditorX,
   }));
   const { getProxiedUrl } = useCORSProxy();
@@ -169,23 +170,11 @@ function DisplayElement({
 
   const wrapperRef = useRef(null);
 
+  // The element content will use box without border, the wrapper will use box with border.
   const box = getBox(element);
-  // We're adding the border in pixels since the element is the content + the border in pixels
+  const boxWithBorder = getBoxWithBorder(element);
+
   const { left = 0, right = 0, top = 0, bottom = 0 } = border;
-  const [diffX, diffY] = calcRotatedResizeOffset(
-    rotationAngle,
-    left,
-    right,
-    top,
-    bottom
-  );
-  const boxWithBorder = {
-    ...box,
-    x: box.x + diffX,
-    y: box.y + diffY,
-    width: box.width + left + right,
-    height: box.height + top + bottom,
-  };
   useTransformHandler(id, (transform) => {
     const target = wrapperRef.current;
     if (transform === null) {

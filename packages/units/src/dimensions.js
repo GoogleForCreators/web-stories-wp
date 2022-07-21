@@ -23,6 +23,7 @@ import {
   FULLBLEED_HEIGHT,
   DEFAULT_EM,
 } from './constants';
+import calcRotatedResizeOffset from './calcRotatedResizeOffset';
 
 /**
  * Rounds the pixel value to the max allowed precision in the "data" space.
@@ -138,5 +139,39 @@ export function getBox(
     width: dataToEditorX(isBackground ? PAGE_WIDTH : width, pageWidth),
     height: dataToEditorY(isBackground ? FULLBLEED_HEIGHT : height, pageHeight),
     rotationAngle: isBackground ? 0 : rotationAngle,
+  };
+}
+
+/**
+ * Converts the element's position, width, border, and rotation) to the "box" in the
+ * "editor" coordinate space for an element with border.
+ *
+ * @param {Object} element The element object. See `StoryPropTypes.element`.
+ * @param {number} pageWidth The basis value for the page's width in the "editor" space.
+ * @param {number} pageHeight The basis value for the page's height in the "editor" space.
+ * @return {{x:number, y:number, width:number, height:number, rotationAngle:number}} The
+ * "box" in the editor space.
+ */
+export function getBoxWithBorder(element, pageWidth, pageHeight) {
+  const { rotationAngle, border = {} } = element;
+  const box = getBox(element, pageWidth, pageHeight);
+  const { left = 0, right = 0, top = 0, bottom = 0 } = border;
+  const [diffX, diffY] = calcRotatedResizeOffset(
+    rotationAngle,
+    left,
+    right,
+    top,
+    bottom
+  );
+
+  // Since CSS border is used and the border width is not responsive,
+  // the border is not included in the element's width and height,
+  // and we're adding the border to the box in pixels directly.
+  return {
+    ...box,
+    x: box.x + diffX,
+    y: box.y + diffY,
+    width: box.width + left + right,
+    height: box.height + top + bottom,
   };
 }
