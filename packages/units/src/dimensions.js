@@ -153,7 +153,7 @@ export function getBox(
  * "box" in the editor space.
  */
 export function getBoxWithBorder(element, pageWidth, pageHeight) {
-  const { rotationAngle, border = {} } = element;
+  const { rotationAngle, border } = element;
   const box = getBox(element, pageWidth, pageHeight);
   if (!border) {
     return box;
