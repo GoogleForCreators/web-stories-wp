@@ -32,6 +32,7 @@ import {
   ZOOM_SETTING,
   PAGE_NAV_WIDTH,
   PAGE_WIDTH_FACTOR,
+  MAX_EXTRA_PAGES,
 } from '../../constants';
 
 // Beware, that these are slightly magic numbers, that just happens to look good
@@ -167,7 +168,7 @@ function calculateViewportProperties(workspaceSize, zoomSetting, zoomLevel) {
   const extraPageWidth = Math.round(0.9 * pageWidth);
   const hasExtraPages = !hasAnyOverflow && hasPageNavigation && extraSpace > 50;
   const extraPageCount = hasExtraPages
-    ? Math.ceil(extraSpace / extraPageWidth)
+    ? Math.min(MAX_EXTRA_PAGES, Math.ceil(extraSpace / extraPageWidth))
     : 0;
   return {
     pageWidth,
