@@ -131,7 +131,7 @@ function DisplayElement({
     type,
     isBackground,
     overlay,
-    border = {},
+    border,
     flip,
     rotationAngle,
   } = element;
@@ -174,7 +174,7 @@ function DisplayElement({
   const box = getBox(element);
   const boxWithBorder = getBoxWithBorder(element);
 
-  const { left = 0, right = 0, top = 0, bottom = 0 } = border;
+  const { left = 0, right = 0, top = 0, bottom = 0 } = border || {};
   useTransformHandler(id, (transform) => {
     const target = wrapperRef.current;
     if (transform === null) {

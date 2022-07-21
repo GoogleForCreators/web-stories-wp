@@ -112,11 +112,11 @@ const MultiSelectionMoveable = forwardRef(function MultiSelectionMoveable(
    * @param {Object} frame Properties from the frame for that specific element.
    */
   const setTransformStyle = (element, target, frame) => {
-    const { id, border = {} } = element;
+    const { id, border } = element;
     target.style.transform = `translate(${frame.translate[0]}px, ${frame.translate[1]}px) rotate(${frame.rotate}deg)`;
     // If the element has a border, we have to take it out of the resizing values
     // since the border is in pixels and thus not stored within width/height.
-    const { left = 0, right = 0, top = 0, bottom = 0 } = border;
+    const { left = 0, right = 0, top = 0, bottom = 0 } = border || {};
     let frameForEl = { ...frame };
     if (frame.resize[0] || frame.resize[1]) {
       const elWidth = frame.resize[0] - (left + right);
@@ -195,8 +195,8 @@ const MultiSelectionMoveable = forwardRef(function MultiSelectionMoveable(
       const didResize = editorWidth !== 0 && editorHeight !== 0;
       if (isResize && didResize) {
         // We remove the border from the width/height before updating the element since border is not included in those.
-        const { border = {} } = element;
-        const { left = 0, right = 0, top = 0, bottom = 0 } = border;
+        const { border } = element;
+        const { left = 0, right = 0, top = 0, bottom = 0 } = border || {};
         const newWidth = editorToDataX(editorWidth - (left + right));
         const newHeight = editorToDataY(editorHeight - (top + bottom));
         properties.width = newWidth;

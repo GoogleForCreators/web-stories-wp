@@ -71,11 +71,7 @@ function useSingleSelectionResize({
       })
     );
 
-  const {
-    lockAspectRatio: elementLockRatio,
-    type,
-    border = {},
-  } = selectedElement;
+  const { lockAspectRatio: elementLockRatio, type, border } = selectedElement;
   const isText = type === 'text';
   const [isResizingFromCorner, setIsResizingFromCorner] = useState(true);
   // Text element lock aspect ratio doesn't influence resizing.
@@ -90,7 +86,7 @@ function useSingleSelectionResize({
   const minHeight = dataToEditorY(resizeRules.minHeight);
   const aspectRatio = selectedElement.width / selectedElement.height;
 
-  const { left = 0, right = 0, top = 0, bottom = 0 } = border;
+  const { left = 0, right = 0, top = 0, bottom = 0 } = border || {};
   const onResize = ({ target, direction, width, height, drag }) => {
     // We remove the border in pixels since that's not saved to the width/height directly.
     let newWidth = width - (left + right);

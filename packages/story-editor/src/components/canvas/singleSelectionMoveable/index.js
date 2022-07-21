@@ -125,8 +125,8 @@ const SingleSelectionMoveable = forwardRef(function SingleSelectionMoveable(
     [box.rotationAngle]
   );
 
-  const { border = {} } = selectedElement;
-  const { left = 0, right = 0, top = 0, bottom = 0 } = border;
+  const { border } = selectedElement;
+  const { left = 0, right = 0, top = 0, bottom = 0 } = border || {};
   const setTransformStyle = (target, newFrame = frame) => {
     // Get the changes coming from each action type.
     frame.translate = newFrame.translate;

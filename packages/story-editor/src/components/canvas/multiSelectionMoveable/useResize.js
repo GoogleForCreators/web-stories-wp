@@ -39,8 +39,8 @@ function useResize({ onGroupEventEnd, targetList, setTransformStyle, frames }) {
     events.forEach(({ target, direction, width, height, drag }, i) => {
       const sFrame = frames[i];
       const { element, updateForResizeEvent } = targetList[i];
-      const { border = {} } = element;
-      const { left = 0, right = 0, top = 0, bottom = 0 } = border;
+      const { border } = element;
+      const { left = 0, right = 0, top = 0, bottom = 0 } = border || {};
       // We remove the border in pixels since that's not saved to the width/height directly.
       const newWidth = width - (left + right);
       let newHeight = height - (top + bottom);
