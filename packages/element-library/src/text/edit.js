@@ -237,6 +237,7 @@ function TextEdit({
       // Remove manual line breaks and remember to trim any trailing non-breaking space.
       const properties = { content: contentRef.current };
       // Recalculate the new height and offset.
+      // boxRef includes adjustment for the border, let's take the border values out for element updating.
       if (newHeight) {
         const [dx, dy] = calcRotatedResizeOffset(
           boxRef.current.rotationAngle,
@@ -246,7 +247,6 @@ function TextEdit({
           Math.round(newHeight - (boxRef.current.height - top))
         );
         properties.height = editorToDataY(newHeight);
-        // boxRef includes adjustment for the border, let's take it out for element updating.
         properties.x = editorToDataX(boxRef.current.x + dx);
         properties.y = editorToDataY(boxRef.current.y + dy);
       }
@@ -282,6 +282,7 @@ function TextEdit({
     wrapper.style.height = `${editorHeightRef.current}px`;
     textBox.style.margin = '';
     if (editWrapper) {
+      // We need to consider the potential border, too, and remove/add it to the content height.
       const [dx, dy] = calcRotatedResizeOffset(
         boxRef.current.rotationAngle,
         0,
@@ -289,7 +290,6 @@ function TextEdit({
         0,
         editorHeightRef.current - (boxRef.current.height - top - bottom)
       );
-      // We need to consider the potential border, too, and add it to the content height.
       editWrapper.style.height = `${editorHeightRef.current + top + bottom}px`;
       editWrapper.style.left = `${boxRef.current.x + dx}px`;
       editWrapper.style.top = `${boxRef.current.y + dy}px`;

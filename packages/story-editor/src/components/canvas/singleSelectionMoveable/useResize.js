@@ -166,6 +166,7 @@ function useSingleSelectionResize({
     if (editorWidth !== 0 && editorHeight !== 0) {
       const { direction } = frame;
       const [deltaX, deltaY] = frame.translate;
+      // Border is not saved into element's width/height (since it's in pixels) so remove it before updating.
       const newWidth = editorToDataX(editorWidth - (left + right));
       const newHeight = editorToDataY(editorHeight - (top + bottom));
       properties = {
