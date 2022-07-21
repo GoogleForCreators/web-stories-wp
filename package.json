@@ -150,7 +150,6 @@
     "puppeteer": "^15.5.0",
     "react": "npm:@preact/compat",
     "react-dom": "npm:@preact/compat",
-    "react-moveable": "npm:@preact-moveable",
     "react-refresh": "^0.14.0",
     "react-test-renderer": "^17.0.2",
     "rollup": "^2.75.7",

@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { forwardRef } from '@googleforcreators/react';
-import OriginalMoveable from 'react-moveable';
+import OriginalMoveable from 'preact-moveable';
 import PropTypes from 'prop-types';
 
 /**
