@@ -85,7 +85,7 @@ const LayerGrid = styled.section`
   */
   grid:
     'h h h h h h h' ${HEADER_HEIGHT}px
-    '. . . t . . .' minmax(16px, 1fr)
+    '. . . t . . .' minmax(10px, 1fr)
     'p b . c . f n' var(--viewport-height-px)
     '. . . . . . .' 1fr
     'w w w w w w w' ${({ footerHeight }) => footerHeight}px
