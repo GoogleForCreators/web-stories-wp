@@ -29,6 +29,21 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 }
 
 
+if ( ! defined( 'WEBSTORIES_PLUGIN_DIR_PATH' ) ) {
+	define( 'WEBSTORIES_PLUGIN_DIR_PATH', __DIR__ );
+}
+
+// Autoloader for dependencies.
+if ( file_exists( WEBSTORIES_PLUGIN_DIR_PATH . '/third-party/vendor/scoper-autoload.php' ) ) {
+	require WEBSTORIES_PLUGIN_DIR_PATH . '/third-party/vendor/scoper-autoload.php';
+}
+
+// Autoloader for plugin itself.
+if ( file_exists( WEBSTORIES_PLUGIN_DIR_PATH . '/includes/vendor/autoload.php' ) ) {
+	require WEBSTORIES_PLUGIN_DIR_PATH . '/includes/vendor/autoload.php';
+}
+
+
 $erase = (bool) get_option( \Google\Web_Stories\Settings::SETTING_NAME_DATA_REMOVAL );
 
 /**
