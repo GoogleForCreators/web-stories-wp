@@ -180,15 +180,14 @@ function useMediaPicker({
     },
     [
       hasUploadMediaAction,
-      showSnackbar,
-      onPermissionError,
-      onClose,
-      onSelect,
-      buttonInsertText,
-      onSelectErrorMessage,
       multiple,
-      type,
+      onClose,
+      onPermissionError,
+      onSelect,
+      onSelectErrorMessage,
+      showSnackbar,
       title,
+      type,
     ]
   );
 
