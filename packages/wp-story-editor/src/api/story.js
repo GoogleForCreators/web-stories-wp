@@ -121,7 +121,14 @@ export function saveStoryById(config, story) {
   }).then((data) => {
     const { _embedded: embedded = {}, meta, ...rest } = data;
 
-    let featuredMedia = {};
+    let featuredMedia = {
+      id: 0,
+      height: 0,
+      width: 0,
+      url: '',
+      needsProxy: false,
+      isExternal: false,
+    };
 
     const externalPoster = meta['web_stories_poster'];
     const postThumbnail = embedded?.['wp:featuredmedia']?.[0];
