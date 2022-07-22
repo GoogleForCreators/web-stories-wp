@@ -94,6 +94,33 @@ function useMediaPicker({
     }
   }, [updateMedia]);
 
+  useEffect(() => {
+    let select;
+    try {
+      select = window.wp.media.view.MediaFrame.Select;
+      const selectWithButton = window.wp.media.view.MediaFrame.Select.extend({
+        createSelectToolbar: function (toolbar, options) {
+          options = options || this.options.button || {};
+          options.text = buttonInsertText;
+          if (cropParams) {
+            options.close = false;
+          }
+          options.controller = this;
+
+          toolbar.view = new window.wp.media.view.Toolbar.Select(options);
+        },
+      });
+      window.wp.media.view.MediaFrame.Select = selectWithButton;
+    } catch (e) {
+      // Silence.
+    }
+    return () => {
+      if (select) {
+        window.wp.media.view.MediaFrame.Select = select;
+      }
+    };
+  }, [buttonInsertText, cropParams]);
+
   const openMediaDialog = useCallback(
     (evt) => {
       trackEvent('open_media_modal');
@@ -112,9 +139,6 @@ function useMediaPicker({
         title,
         library: {
           type,
-        },
-        button: {
-          text: buttonInsertText,
         },
         multiple,
       });
@@ -191,19 +215,16 @@ function useMediaPicker({
         mustBeCropped,
       };
 
-      const button = {
-        text: buttonInsertText,
-        close: false,
-      };
-
       // Create the media frame.
       const fileFrame = window.wp.media({
-        button,
+        button: {
+          text: buttonInsertText,
+          close: false,
+        },
         states: [
           new window.wp.media.controller.Library({
             title,
             library: window.wp.media.query({ type }),
-            button,
             multiple,
             suggestedWidth: params.width,
             suggestedHeight: params.height,
