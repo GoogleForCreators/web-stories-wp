@@ -17,15 +17,22 @@
 /**
  * External dependencies
  */
-import { useCallback } from '@googleforcreators/react';
+import { useCallback, useState, useEffect } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
 import PropTypes from 'prop-types';
 import { useConfig, useLocalMedia, useStory } from '../../app';
 
-function MediaUpload({ onUploadMedia, onDeleteMedia, ...props }) {
+function MediaUpload({
+  onUploadMedia,
+  onDeleteMedia,
+  onClose: onCloseCallback,
+  ...props
+}) {
   const { MediaUpload: MediaUploader } = useConfig();
+  const [newResources, setNewResources] = useState([]);
+  const [doProcess, setDoProcess] = useState(false);
 
   const { deleteElementsByResourceId, updateStory, featuredMedia } = useStory(
     (state) => ({
@@ -44,18 +51,33 @@ function MediaUpload({ onUploadMedia, onDeleteMedia, ...props }) {
     }
   );
 
+  useEffect(() => {
+    if (doProcess && newResources.length) {
+      prependMedia({
+        media: newResources,
+      });
+      setDoProcess(false);
+      setNewResources([]);
+    }
+  }, [doProcess, newResources, prependMedia]);
+
+  const onClose = useCallback(() => {
+    if (onCloseCallback) {
+      onCloseCallback();
+    }
+    setDoProcess(true);
+  }, [onCloseCallback]);
+
   const uploadMedia = useCallback(
     (resource) => {
       if (['image', 'video', 'gif'].includes(resource.type)) {
-        prependMedia({
-          media: [resource],
-        });
+        setNewResources((state) => [resource, ...state]);
       }
       if (onUploadMedia) {
         onUploadMedia(resource);
       }
     },
-    [onUploadMedia, prependMedia]
+    [onUploadMedia]
   );
 
   const resetFeatureMedia = useCallback(
@@ -75,6 +97,7 @@ function MediaUpload({ onUploadMedia, onDeleteMedia, ...props }) {
     (resource) => {
       deleteMediaElement({ id: resource.id });
       deleteElementsByResourceId({ id: resource.id });
+      setNewResources((state) => state.filter(({ id }) => id !== resource.id));
       resetFeatureMedia(resource.id);
       if (onDeleteMedia) {
         onDeleteMedia(resource);
@@ -92,6 +115,7 @@ function MediaUpload({ onUploadMedia, onDeleteMedia, ...props }) {
     <MediaUploader
       onUploadMedia={uploadMedia}
       onDeleteMedia={deleteMedia}
+      onClose={onClose}
       {...props}
     />
   );
@@ -100,5 +124,6 @@ function MediaUpload({ onUploadMedia, onDeleteMedia, ...props }) {
 MediaUpload.propTypes = {
   onUploadMedia: PropTypes.func,
   onDeleteMedia: PropTypes.func,
+  onClose: PropTypes.func,
 };
 export default MediaUpload;

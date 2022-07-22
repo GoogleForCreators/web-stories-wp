@@ -17,7 +17,12 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useMemo } from '@googleforcreators/react';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+} from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import { trackEvent } from '@googleforcreators/tracking';
 import { useSnackbar } from '@googleforcreators/design-system';
@@ -78,6 +83,7 @@ function useMediaPicker({
     capabilities: { hasUploadMediaAction },
   } = useConfig();
   const { showSnackbar } = useSnackbar();
+  const fileFrame = useRef(null);
 
   const afterUpload = useCallback(
     (attachment) => {
@@ -154,20 +160,22 @@ function useMediaPicker({
       }
 
       // Create the media frame.
-      const fileFrame = window.wp.media({
-        title,
-        library: {
-          type,
-        },
-        button: {
-          text: buttonInsertText,
-        },
-        multiple,
-      });
+      if (!fileFrame.current) {
+        fileFrame.current = window.wp.media({
+          title,
+          library: {
+            type,
+          },
+          button: {
+            text: buttonInsertText,
+          },
+          multiple,
+        });
+      }
 
       // When an image is selected, run a callback.
-      fileFrame.once('select', () => {
-        const mediaPickerEl = fileFrame
+      fileFrame.current.once('select', () => {
+        const mediaPickerEl = fileFrame.current
           .state()
           .get('selection')
           .first()
@@ -184,19 +192,19 @@ function useMediaPicker({
       });
 
       if (onClose) {
-        fileFrame.once('close', onClose);
+        fileFrame.current.once('close', onClose);
       }
 
-      fileFrame.once('content:activate:browse', () => {
+      fileFrame.current.once('content:activate:browse', () => {
         // Force-refresh media modal contents every time it's opened
         // to avoid stale data due to media items being upload & updated
         // through the editor in the meantime.
-        fileFrame.content?.get()?.collection?._requery(true);
-        fileFrame.content?.get()?.options?.selection?.reset();
+        fileFrame.current.content?.get()?.collection?._requery(true);
+        fileFrame.current.content?.get()?.options?.selection?.reset();
       });
 
       // Finally, open the modal
-      fileFrame.open();
+      fileFrame.current.open();
 
       evt.preventDefault();
     },
@@ -243,37 +251,39 @@ function useMediaPicker({
       };
 
       // Create the media frame.
-      const fileFrame = window.wp.media({
-        button,
-        states: [
-          new window.wp.media.controller.Library({
-            title,
-            library: window.wp.media.query({ type }),
-            button,
-            multiple,
-            suggestedWidth: params.width,
-            suggestedHeight: params.height,
-          }),
-          // In a Karma context `wp.media.controller.Cropper.extend` will not exist yet
-          // during time of import, despite mocking, so WordPressImageCropper won't be
-          // a class with a proper constructor.
-          // This safeguard below prevents errors in tests while retaining full functionality
-          // in the actual app at runtime.
-          WordPressImageCropper &&
-            new WordPressImageCropper({
-              imgSelectOptions: calculateImageSelectOptions,
-              control,
+      if (!fileFrame.current) {
+        fileFrame.current = window.wp.media({
+          button,
+          states: [
+            new window.wp.media.controller.Library({
+              title,
+              library: window.wp.media.query({ type }),
+              button,
+              multiple,
+              suggestedWidth: params.width,
+              suggestedHeight: params.height,
             }),
-        ],
-      });
+            // In a Karma context `wp.media.controller.Cropper.extend` will not exist yet
+            // during time of import, despite mocking, so WordPressImageCropper won't be
+            // a class with a proper constructor.
+            // This safeguard below prevents errors in tests while retaining full functionality
+            // in the actual app at runtime.
+            WordPressImageCropper &&
+              new WordPressImageCropper({
+                imgSelectOptions: calculateImageSelectOptions,
+                control,
+              }),
+          ],
+        });
+      }
 
-      fileFrame.once('cropped', (attachment) => {
+      fileFrame.current.once('cropped', (attachment) => {
         afterUpload(attachment);
         onSelect(getResourceFromMediaPicker(attachment));
       });
 
-      fileFrame.once('skippedcrop', () => {
-        const mediaPickerEl = fileFrame
+      fileFrame.current.once('skippedcrop', () => {
+        const mediaPickerEl = fileFrame.current
           .state()
           .get('selection')
           .first()
@@ -282,8 +292,8 @@ function useMediaPicker({
         onSelect(getResourceFromMediaPicker(mediaPickerEl));
       });
 
-      fileFrame.once('select', () => {
-        const mediaPickerEl = fileFrame
+      fileFrame.current.once('select', () => {
+        const mediaPickerEl = fileFrame.current
           .state()
           .get('selection')
           .first()
@@ -291,7 +301,7 @@ function useMediaPicker({
 
         // Only allow user to select a mime type from allowed list.
         if (Array.isArray(type) && !type.includes(mediaPickerEl.mime)) {
-          fileFrame.close();
+          fileFrame.current.close();
           showSnackbar({ message: onSelectErrorMessage });
 
           return;
@@ -305,25 +315,25 @@ function useMediaPicker({
         ) {
           mediaPickerEl.alt = mediaPickerEl.alt || mediaPickerEl.title;
           onSelect(getResourceFromMediaPicker(mediaPickerEl));
-          fileFrame.close();
+          fileFrame.current.close();
         } else {
-          fileFrame.setState('cropper');
+          fileFrame.current.setState('cropper');
         }
       });
 
       if (onClose) {
-        fileFrame.once('close', onClose);
+        fileFrame.current.once('close', onClose);
       }
 
-      fileFrame.once('content:activate:browse', () => {
+      fileFrame.current.once('content:activate:browse', () => {
         // Force-refresh media modal contents every time
         // to avoid stale data.
-        fileFrame.content?.get()?.collection?._requery(true);
-        fileFrame.content?.get()?.options?.selection?.reset();
+        fileFrame.current.content?.get()?.collection?._requery(true);
+        fileFrame.current.content?.get()?.options?.selection?.reset();
       });
 
       // Finally, open the modal
-      fileFrame.open();
+      fileFrame.current.open();
 
       evt.preventDefault();
     },
