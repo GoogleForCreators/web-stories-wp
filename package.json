@@ -215,7 +215,7 @@
     "storybook": "start-storybook --quiet",
     "storybook:build": "build-storybook -c .storybook -o build/storybook --quiet",
     "test": "npm-run-all --parallel test:*",
-    "pretest:js": "if [[ -z $AMP_VALIDATOR_FILE ]]; then curl --output-dir $TMPDIR -O -f https://cdn.ampproject.org/v0/validator_wasm.js; fi",
+    "pretest:js": "if [ -z $AMP_VALIDATOR_FILE ]; then curl --output-dir $TMPDIR -O -f https://cdn.ampproject.org/v0/validator_wasm.js; fi",
     "test:js": "jest --config=tests/js/jest.config.js",
     "test:js:coverage": "npm run test:js -- --collectCoverage; open build/logs/lcov-report/index.html",
     "test:js:debug": "node --inspect-brk node_modules/.bin/jest --config=tests/js/jest.config.js",
