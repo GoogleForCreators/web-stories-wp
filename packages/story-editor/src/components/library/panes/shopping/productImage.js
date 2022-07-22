@@ -76,12 +76,12 @@ ProductImage.propTypes = {
   product: PropTypes.object.isRequired,
 };
 
-function DraggableProductImage({ product, isOnPage, canAddMore }) {
+function DraggableProductImage({ product, draggable }) {
   const src = product?.productImages[0]?.url || '';
   return (
     <ProductImageWrap>
       <ProductImage product={product} />
-      {!isOnPage && canAddMore && src && (
+      {draggable && src && (
         <LibraryMoveable
           type="product"
           elementProps={{ product }}
@@ -100,8 +100,7 @@ function DraggableProductImage({ product, isOnPage, canAddMore }) {
 
 DraggableProductImage.propTypes = {
   product: PropTypes.object.isRequired,
-  isOnPage: PropTypes.bool,
-  canAddMore: PropTypes.bool,
+  draggable: PropTypes.bool,
 };
 
 export default DraggableProductImage;
