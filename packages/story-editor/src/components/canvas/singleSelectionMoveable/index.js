@@ -32,6 +32,7 @@ import { useUnits } from '@googleforcreators/units';
 import { useGlobalIsKeyPressed } from '@googleforcreators/design-system';
 import { useTransform } from '@googleforcreators/transform';
 import { Moveable } from '@googleforcreators/moveable';
+import { canSupportMultiBorder } from '@googleforcreators/masks';
 
 /**
  * Internal dependencies
@@ -144,8 +145,12 @@ const SingleSelectionMoveable = forwardRef(function SingleSelectionMoveable(
 
     // If the element has a border, we have to take it out of the resizing values
     // since the border is in pixels and thus not stored within width/height.
+    // We add canSupportMultiBorder check to ignore non-rectangular shapes since the border works differently for those.
     let frameForEl = { ...frame };
-    if (frame.resize[0] || frame.resize[1]) {
+    if (
+      (frame.resize[0] || frame.resize[1]) &&
+      canSupportMultiBorder(selectedElement)
+    ) {
       const elWidth = frame.resize[0] - (left + right);
       const elHeight = frame.resize[1] - (top + bottom);
       frameForEl = {

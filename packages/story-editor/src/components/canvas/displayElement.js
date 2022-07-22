@@ -35,6 +35,7 @@ import {
   useColorTransformHandler,
 } from '@googleforcreators/element-library';
 import {
+  canSupportMultiBorder,
   DisplayWithMask as WithMask,
   getResponsiveBorder,
 } from '@googleforcreators/masks';
@@ -194,15 +195,18 @@ function DisplayElement({
         // creating the transformation values but the border is not considered in the width and height of the element.
         // So we calculate a transformation assuming that the element was resized by the border and then deduct it from the
         // applied transformation.
-        const [_dx, _dy] = calcRotatedResizeOffset(
-          rotationAngle,
-          0,
-          left + right,
-          0,
-          top + bottom
-        );
-        dx = _dx;
-        dy = _dy;
+        // We add canSupportMultiBorder check to ignore non-rectangular shapes since the border works differently for those.
+        if (canSupportMultiBorder(element)) {
+          const [_dx, _dy] = calcRotatedResizeOffset(
+            rotationAngle,
+            0,
+            left + right,
+            0,
+            top + bottom
+          );
+          dx = _dx;
+          dy = _dy;
+        }
       }
       target.style.transform = `translate(${translate[0] - dx}px, ${
         translate[1] - dy

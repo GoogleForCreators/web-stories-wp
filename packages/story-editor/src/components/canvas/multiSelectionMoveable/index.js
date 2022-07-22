@@ -29,6 +29,7 @@ import { useUnits } from '@googleforcreators/units';
 import { useTransform } from '@googleforcreators/transform';
 import { Moveable } from '@googleforcreators/moveable';
 import { getDefinitionForType } from '@googleforcreators/elements';
+import { canSupportMultiBorder } from '@googleforcreators/masks';
 
 /**
  * Internal dependencies
@@ -116,9 +117,13 @@ const MultiSelectionMoveable = forwardRef(function MultiSelectionMoveable(
     target.style.transform = `translate(${frame.translate[0]}px, ${frame.translate[1]}px) rotate(${frame.rotate}deg)`;
     // If the element has a border, we have to take it out of the resizing values
     // since the border is in pixels and thus not stored within width/height.
+    // We add canSupportMultiBorder check to ignore non-rectangular shapes since the border works differently for those.
     const { left = 0, right = 0, top = 0, bottom = 0 } = border || {};
     let frameForEl = { ...frame };
-    if (frame.resize[0] || frame.resize[1]) {
+    if (
+      (frame.resize[0] || frame.resize[1]) &&
+      canSupportMultiBorder(element)
+    ) {
       const elWidth = frame.resize[0] - (left + right);
       const elHeight = frame.resize[1] - (top + bottom);
       frameForEl = {
