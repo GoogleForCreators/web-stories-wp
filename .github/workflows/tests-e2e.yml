@@ -116,7 +116,7 @@ jobs:
       result: ${{ steps.nonce.outputs.result }}
     steps:
       - id: nonce
-        run: echo "::set-output name=result::${{ github.run_id }}-$(date +%s)"
+        run: echo "::set-output name=result::${{ github.run_id }}-${{ github.run_attempt }}-$(date +%s)"
 
   e2e:
     name: '${{ matrix.browser }} - WP ${{ matrix.wp }} (${{ matrix.shard }})'
