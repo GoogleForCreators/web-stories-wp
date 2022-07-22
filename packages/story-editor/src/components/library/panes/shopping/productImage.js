@@ -64,7 +64,7 @@ function ProductImage({ product }) {
       src={imageSrc}
       loading="lazy"
       decoding="async"
-      draggable={false}
+      draggable={false} // dragging is handled by `DraggableProductImage`
       crossOrigin="anonymous"
     />
   ) : (
