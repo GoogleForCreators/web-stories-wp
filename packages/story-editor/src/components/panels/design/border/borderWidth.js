@@ -121,6 +121,7 @@ function WidthControls({ selectedElements, pushUpdateForObject }) {
           onChange={handleChange('left')}
           aria-label={firstInputLabel}
           suffix={!lockBorder && <Icons.Border />}
+          min={0}
           {...getMixedValueProps(border.left)}
         />
 
@@ -132,6 +133,7 @@ function WidthControls({ selectedElements, pushUpdateForObject }) {
               aria-label={__('Top border', 'web-stories')}
               labelText={__('Top', 'web-stories')}
               suffix={<BorderTop />}
+              min={0}
               {...getMixedValueProps(border.top)}
             />
 
@@ -141,6 +143,7 @@ function WidthControls({ selectedElements, pushUpdateForObject }) {
               aria-label={__('Right border', 'web-stories')}
               labelText={__('Right', 'web-stories')}
               suffix={<BorderRight />}
+              min={0}
               {...getMixedValueProps(border.right)}
             />
 
@@ -150,6 +153,7 @@ function WidthControls({ selectedElements, pushUpdateForObject }) {
               aria-label={__('Bottom border', 'web-stories')}
               labelText={__('Bottom', 'web-stories')}
               suffix={<BorderBottom />}
+              min={0}
               {...getMixedValueProps(border.bottom)}
             />
           </>
