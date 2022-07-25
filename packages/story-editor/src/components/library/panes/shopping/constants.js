@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,15 +13,5 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/**
- * Internal dependencies
- */
-export { default as useMediaRecording } from './useMediaRecording';
-export { default as MediaRecording } from './mediaRecording';
-export { default as MediaRecordingProvider } from './provider';
-export { default as SettingsModal } from './settingsModal';
-export { default as ErrorDialog } from './errorDialog';
-export { default as PermissionsDialog } from './permissionsDialog';
-export { default as Footer } from './footer';
-export { default as DurationIndicator } from './durationIndicator';
+export const PRODUCT_WIDTH = 25;
+export const PRODUCT_HEIGHT = 25;

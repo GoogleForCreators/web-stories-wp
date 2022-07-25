@@ -19,6 +19,12 @@
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 
+/**
+ * Internal dependencies
+ */
+import LibraryMoveable from '../shared/libraryMoveable';
+import { PRODUCT_WIDTH, PRODUCT_HEIGHT } from './constants';
+
 const imgPlaceholder = css`
   display: block;
   margin-right: 10px;
@@ -32,9 +38,22 @@ const StyledImgPlaceHolder = styled.div`
   ${imgPlaceholder}
 `;
 
+const ProductImageWrap = styled.div`
+  position: relative;
+`;
+
 const StyledImage = styled.img`
   ${imgPlaceholder}
   object-fit: cover;
+`;
+
+const StyledImageClone = styled.img`
+  opacity: 0;
+  position: absolute;
+  object-fit: cover;
+  border-radius: 4px;
+  width: ${PRODUCT_WIDTH}px;
+  height: ${PRODUCT_HEIGHT}px;
 `;
 
 function ProductImage({ product }) {
@@ -45,7 +64,7 @@ function ProductImage({ product }) {
       src={imageSrc}
       loading="lazy"
       decoding="async"
-      draggable={false}
+      draggable={false} // dragging is handled by `DraggableProductImage`
       crossOrigin="anonymous"
     />
   ) : (
@@ -57,4 +76,31 @@ ProductImage.propTypes = {
   product: PropTypes.object.isRequired,
 };
 
-export default ProductImage;
+function DraggableProductImage({ product, draggable }) {
+  const src = product?.productImages[0]?.url || '';
+  return (
+    <ProductImageWrap>
+      <ProductImage product={product} />
+      {draggable && src && (
+        <LibraryMoveable
+          type="product"
+          elementProps={{ product }}
+          cloneElement={StyledImageClone}
+          cloneProps={{
+            loading: 'lazy',
+            decoding: 'async',
+            crossOrigin: 'anonymous',
+            src,
+          }}
+        />
+      )}
+    </ProductImageWrap>
+  );
+}
+
+DraggableProductImage.propTypes = {
+  product: PropTypes.object.isRequired,
+  draggable: PropTypes.bool,
+};
+
+export default DraggableProductImage;
