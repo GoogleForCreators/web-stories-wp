@@ -101,7 +101,7 @@ function PlayPauseButton({ videoRef }) {
     return () => {
       videoNode.removeEventListener('play', onVideoPlay);
       videoNode.removeEventListener('pause', onVideoPause);
-      videoNode.removeEventListener('paustimeupdatee', onTimeUpdate);
+      videoNode.removeEventListener('timeupdate', onTimeUpdate);
     };
   }, [videoRef]);
 
