@@ -35,6 +35,7 @@ import {
 import { format } from '@googleforcreators/date';
 import { useSnackbar } from '@googleforcreators/design-system';
 import { trackError } from '@googleforcreators/tracking';
+import { SelfieSegmentation } from '@mediapipe/selfie_segmentation';
 
 /**
  * Internal dependencies
@@ -58,6 +59,7 @@ import {
   PHOTO_FILE_TYPE,
   VideoWrapper,
   Video,
+  Canvas,
   Audio,
   Photo,
 } from '../mediaRecording';
@@ -85,6 +87,8 @@ function MediaRecordingLayer() {
     audioInput,
     videoInput,
     resetStream,
+    canvasStream,
+    setCanvasStream,
   } = useMediaRecording(({ state, actions }) => ({
     status: state.status,
     error: state.error,
@@ -99,6 +103,7 @@ function MediaRecordingLayer() {
       !state.videoInput,
     audioInput: state.audioInput,
     videoInput: state.videoInput,
+    canvasStream: state.canvasStream,
     isImageCapture: Boolean(state.file?.type?.startsWith('image')),
     toggleIsGif: actions.toggleIsGif,
     updateMediaDevices: actions.updateMediaDevices,
@@ -107,10 +112,13 @@ function MediaRecordingLayer() {
     setFile: actions.setFile,
     setMediaBlobUrl: actions.setMediaBlobUrl,
     resetStream: actions.resetStream,
+    setCanvasStream: actions.setCanvasStream,
   }));
 
   const streamRef = useRef();
   const videoRef = useRef();
+  const canvasRef = useRef();
+  const contextRef = useRef();
 
   const isReady = 'ready' === status;
   const isFailed = 'failed' === status || Boolean(error);
@@ -171,16 +179,66 @@ function MediaRecordingLayer() {
     }
   }, [isReady, updateMediaDevices]);
 
-  useEffect(() => {
-    // Checking for srcObject avoids flickering due to the stream changing constantly.
-    if (streamRef.current && !streamRef.current.srcObject && liveStream) {
-      streamRef.current.srcObject = liveStream;
-    }
+  const onResults = (results) => {
+    // TODO: use streamRef.current.videoWidth to set the canvas dims
+    const canvas = canvasRef.current;
+    const context = contextRef.current;
+    context.save();
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.drawImage(
+      results.segmentationMask,
+      0,
+      0,
+      canvas.width,
+      canvas.height
+    );
+    context.globalCompositeOperation = 'source-out';
+    context.fillStyle = '#0F0';
+    context.fillRect(0, 0, canvas.width, canvas.height);
+    context.globalCompositeOperation = 'destination-atop';
+    context.drawImage(results.image, 0, 0, canvas.width, canvas.height);
+    context.restore();
+  };
 
-    if (streamRef.current && !liveStream) {
-      streamRef.current.srcObject = null;
+  useEffect(() => {
+    async function run() {
+      if (canvasRef.current) {
+        contextRef.current = canvasRef.current.getContext('2d');
+        if (!canvasStream) {
+          setCanvasStream(canvasRef.current.captureStream(25));
+        } // TODO: Read FPS from webcam stream?
+      }
+      const selfieSegmentation = new SelfieSegmentation({
+        locateFile: (file) =>
+          `https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/${file}`,
+      });
+      const sendToMediaPipe = async () => {
+        if (!streamRef.current || !streamRef.current.videoWidth) {
+          requestAnimationFrame(sendToMediaPipe);
+        } else {
+          await selfieSegmentation.send({ image: streamRef.current });
+          requestAnimationFrame(sendToMediaPipe);
+        }
+      };
+
+      // Checking for srcObject avoids flickering due to the stream changing constantly.
+      if (streamRef.current && !streamRef.current.srcObject && liveStream) {
+        streamRef.current.srcObject = liveStream;
+        await sendToMediaPipe();
+
+        selfieSegmentation.setOptions({
+          modelSelection: 1,
+        });
+
+        selfieSegmentation.onResults(onResults);
+      }
+
+      if (streamRef.current && !liveStream) {
+        streamRef.current.srcObject = null;
+      }
     }
-  }, [liveStream]);
+    run();
+  }, [liveStream, canvasStream, setCanvasStream]);
 
   if (needsPermissions) {
     return <PermissionsDialog />;
@@ -232,7 +290,11 @@ function MediaRecordingLayer() {
                       !mediaBlobUrl &&
                       liveStream &&
                       (hasVideo ? (
-                        <Video ref={streamRef} muted />
+                        <>
+                          <Video ref={streamRef} muted />
+                          {/* TODO: Use videoWidth from webcam stream video. */}
+                          {<Canvas ref={canvasRef} width={640} height={480} />}
+                        </>
                       ) : (
                         <>
                           {/* eslint-disable-next-line jsx-a11y/media-has-caption -- No an actual <audio> tag. */}

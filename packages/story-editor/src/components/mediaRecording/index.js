@@ -36,5 +36,6 @@ export {
   Wrapper,
   VideoWrapper,
   Video,
+  Canvas,
   Photo,
 } from './components';

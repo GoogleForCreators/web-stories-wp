@@ -70,6 +70,7 @@ function MediaRecordingProvider({ children }) {
   const [mediaDevices, setMediaDevices] = useState([]);
 
   const [file, setFile] = useState(null);
+  const [canvasStream, setCanvasStream] = useState(null);
 
   useEffect(() => {
     if (!mediaDevices.length) {
@@ -147,6 +148,7 @@ function MediaRecordingProvider({ children }) {
       video: hasVideo ? (videoInput ? { deviceId: videoInput } : true) : false,
     },
     onStop,
+    // customMediaStream: canvasStream, // TODO: Will not work, we cannot have webcam and canvas stream in the same recorder.
   });
 
   useEffect(() => {
@@ -312,6 +314,7 @@ function MediaRecordingProvider({ children }) {
         duration,
         countdown,
         isCountingDown: isCountingDown || wasCountingDown,
+        canvasStream,
       },
       actions: {
         toggleRecordingMode,
@@ -335,6 +338,7 @@ function MediaRecordingProvider({ children }) {
         setCountdown,
         resetState,
         resetStream,
+        setCanvasStream,
       },
     }),
     [
@@ -371,6 +375,8 @@ function MediaRecordingProvider({ children }) {
       unMuteAudio,
       resetState,
       resetStream,
+      canvasStream,
+      setCanvasStream,
     ]
   );
 
