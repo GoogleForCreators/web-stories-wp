@@ -21,7 +21,7 @@ export * from './performanceTrackingEvents';
 
 export const ADMIN_TOOLBAR_HEIGHT = 32;
 export const HEADER_HEIGHT = 64;
-export const HEADER_GAP = 16;
+export const HEADER_GAP = 10;
 export const CANVAS_MIN_WIDTH = 570;
 export const SIDEBAR_WIDTH = 360;
 export const PAGE_NAV_PADDING = 60;
