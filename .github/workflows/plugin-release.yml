@@ -16,6 +16,9 @@ on:
         description: 'Plugin version (e.g. 1.2.3 or 7.2.0-rc.1)'
         required: true
 
+permissions:
+  contents: read
+
 env:
   PLUGIN_VERSION: ${{ github.event.inputs.version }}
   TAG_NAME: 'v${{ github.event.inputs.version }}'
@@ -37,8 +40,13 @@ jobs:
     # See https://docs.github.com/en/actions/reference/environments
     environment: Production
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@74b568e8591fbb3115c70f3436a0c6b0909a8504
+        with:
+          egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
+
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
 
       - name: Verify semver compatibility
         run: |
@@ -95,6 +103,11 @@ jobs:
     timeout-minutes: 10
     needs: [checks]
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@74b568e8591fbb3115c70f3436a0c6b0909a8504
+        with:
+          egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
+
       # TODO: Define behavior for patch releases.
       #
       # A patch release is done from a specific release branch instead of `main`
@@ -114,7 +127,7 @@ jobs:
 
       # Grab current assets version from `web-stories.php` and pass on to next steps.
       # - name: Checkout
-      #   uses: actions/checkout@v3
+      #   uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
       #   with:
       #     ref:
 
@@ -130,7 +143,7 @@ jobs:
       #       ASSETS_VERSION_REGEX: "https://wp.stories.google/static/([^']+)"
 
       - name: Checkout wp.stories.google
-        uses: actions/checkout@v3
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
         with:
           repository: GoogleForCreators/wp.stories.google
           lfs: true
@@ -138,7 +151,7 @@ jobs:
           token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
 
       - name: Setup Cloud SDK
-        uses: google-github-actions/setup-gcloud@v0.6.0
+        uses: google-github-actions/setup-gcloud@877d4953d2c70a0ba7ef3290ae968eb24af233bb
         with:
           project_id: ${{ secrets.GCP_PROJECT_ID }}
           service_account_key: ${{ secrets.GCP_SA_KEY }}
@@ -204,7 +217,7 @@ jobs:
           echo "" > assets_version/assets_version.txt
 
       - name: Upload assets version
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8
         with:
           name: assets-version
           path: public/static/assets_version
@@ -218,14 +231,19 @@ jobs:
       release_branch: ${{ steps.release_branch.outputs.release_branch }}
       release_name: ${{ steps.release_branch.outputs.release_name }}
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@74b568e8591fbb3115c70f3436a0c6b0909a8504
+        with:
+          egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
+
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
         with:
           fetch-depth: 0 # 0 indicates all history for all branches and tags.
           token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
 
       - name: Download assets version
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@fb598a63ae348fa914e94cd0ff38f362e927b741
         with:
           name: assets-version
         continue-on-error: true
@@ -238,13 +256,13 @@ jobs:
         continue-on-error: true
 
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@17f8bd926464a1afa4c6a11669539e9c1ba77048
         with:
           node-version-file: '.nvmrc'
           cache: npm
 
       - name: Setup PHP
-        uses: shivammathur/setup-php@v2
+        uses: shivammathur/setup-php@945c34c1751f6d2c8106ec0feba5662fcbc1c943
         with:
           php-version: '8.0'
           coverage: none
@@ -257,7 +275,7 @@ jobs:
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
 
       - name: Install PHP dependencies
-        uses: 'ramsey/composer-install@v1'
+        uses: ramsey/composer-install@f680dac46551dffb2234a240d65ae806c2999dd6
         with:
           composer-options: '--prefer-dist --no-progress --no-interaction'
 
@@ -360,7 +378,7 @@ jobs:
           mv build/*.zip build/release-assets/
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8
         with:
           name: release-assets
           path: build/release-assets
@@ -371,18 +389,23 @@ jobs:
     timeout-minutes: 5
     needs: [build]
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@74b568e8591fbb3115c70f3436a0c6b0909a8504
+        with:
+          egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
+
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
 
       - name: Download release artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@fb598a63ae348fa914e94cd0ff38f362e927b741
         with:
           name: release-assets
           path: build
 
       - name: Publish Release
         id: create_release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@1e07f4398721186383de40550babbdf2b84acfc5
         with:
           tag_name: ${{ env.TAG_NAME }}
           name: ${{ needs.build.outputs.release_name }}
@@ -402,14 +425,19 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ ! startsWith(github.ref, 'refs/heads/release/') && ! contains(github.event.inputs.version, 'rc') }}
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@74b568e8591fbb3115c70f3436a0c6b0909a8504
+        with:
+          egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
+
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
         with:
           ref: main
           token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
 
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@17f8bd926464a1afa4c6a11669539e9c1ba77048
         with:
           node-version-file: '.nvmrc'
           cache: npm
@@ -448,8 +476,13 @@ jobs:
       SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
       SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@74b568e8591fbb3115c70f3436a0c6b0909a8504
+        with:
+          egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
+
       - name: Download release artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@fb598a63ae348fa914e94cd0ff38f362e927b741
         with:
           name: release-assets
           path: release-assets
@@ -517,6 +550,11 @@ jobs:
     needs: [create-release]
     if: ${{ ! contains(github.event.inputs.version, 'rc') }}
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@74b568e8591fbb3115c70f3436a0c6b0909a8504
+        with:
+          egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
+
       # https://github.com/ZenHubIO/API#get-release-reports-for-a-repository
       # https://github.com/ZenHubIO/API#add-or-remove-issues-to-or-from-a-release-report
       - name: Close release report

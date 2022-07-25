@@ -5,6 +5,9 @@ on:
   schedule:
     - cron: '0 12 * * 1'
 
+permissions:
+  contents: read
+
 env:
   GIT_AUTHOR_EMAIL: 94923726+googleforcreators-bot@users.noreply.github.com
   GIT_AUTHOR_NAME: googleforcreators-bot
@@ -15,16 +18,21 @@ jobs:
   update-fonts:
     name: Update Google Fonts
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
 
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@74b568e8591fbb3115c70f3436a0c6b0909a8504
+        with:
+          egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
+
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
         with:
           token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
 
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@17f8bd926464a1afa4c6a11669539e9c1ba77048
         with:
           node-version-file: '.nvmrc'
           cache: npm
@@ -40,7 +48,7 @@ jobs:
         run: npm run workflow:fonts
 
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v4
+        uses: peter-evans/create-pull-request@f094b77505fb89581e68a1163fbd2fffece39da1
         with:
           token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
           commit-message: Update list of Google Fonts

@@ -33,7 +33,7 @@ describe('Panel: Style Presets', () => {
   const selectTarget = async (target) => {
     await fixture.events.keyboard.down('Shift');
     await fixture.events.mouse.seq(({ moveRel, down, up }) => [
-      moveRel(target, 20, 20),
+      moveRel(target, 10, 10),
       down(),
       up(),
     ]);
