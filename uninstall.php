@@ -28,9 +28,24 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	return;
 }
 
+if ( ! defined( 'WEBSTORIES_VERSION' ) ) {
+	define( 'WEBSTORIES_VERSION', '1' );
+}
+
+if ( ! defined( 'WEBSTORIES_DEV_MODE' ) ) {
+	define( 'WEBSTORIES_DEV_MODE', false );
+}
+
+if ( ! defined( 'WEBSTORIES_PLUGIN_DIR_FILE' ) ) {
+	define( 'WEBSTORIES_PLUGIN_FILE', __DIR__ . '/web-stories.php' );
+}
 
 if ( ! defined( 'WEBSTORIES_PLUGIN_DIR_PATH' ) ) {
 	define( 'WEBSTORIES_PLUGIN_DIR_PATH', __DIR__ );
+}
+
+if ( ! defined( 'WEBSTORIES_PLUGIN_DIR_URL' ) ) {
+	define( 'WEBSTORIES_PLUGIN_DIR_URL', plugin_dir_url( WEBSTORIES_PLUGIN_FILE ) );
 }
 
 // Autoloader for dependencies.
@@ -43,6 +58,7 @@ if ( file_exists( WEBSTORIES_PLUGIN_DIR_PATH . '/includes/vendor/autoload.php' )
 	require WEBSTORIES_PLUGIN_DIR_PATH . '/includes/vendor/autoload.php';
 }
 
+\Google\Web_Stories\PluginFactory::create()->register();
 
 $erase = (bool) get_option( \Google\Web_Stories\Settings::SETTING_NAME_DATA_REMOVAL );
 
