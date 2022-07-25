@@ -28,11 +28,13 @@ const AudioWrapper = styled.div`
   height: 100%;
 `;
 
-export const Audio = ({ liveStream }) => (
-  <AudioWrapper>
-    <AudioAnalyser source={liveStream} />
-  </AudioWrapper>
-);
+function Audio({ liveStream }) {
+  return (
+    <AudioWrapper>
+      <AudioAnalyser source={liveStream} />
+    </AudioWrapper>
+  );
+}
 
 Audio.propTypes = {
   liveStream: PropTypes.object,
@@ -115,3 +117,5 @@ const AudioVisualiser = ({ data }) => {
 AudioVisualiser.propTypes = {
   data: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
 };
+
+export default Audio;

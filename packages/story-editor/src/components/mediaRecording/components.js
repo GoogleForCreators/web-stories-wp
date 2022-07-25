@@ -19,13 +19,6 @@
  */
 import styled from 'styled-components';
 import { Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
-import { withOverlay } from '@googleforcreators/moveable';
-
-/**
- * Internal dependencies
- */
-import { Layer, PageArea } from '../canvas/layout';
-import { Z_INDEX_RECORDING_MODE } from '../../constants/zIndex';
 
 export const MessageWrap = styled.div`
   display: flex;
@@ -49,15 +42,6 @@ export const MessageText = styled(Text).attrs({
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
 })`
   margin: 0 0 14px;
-`;
-
-export const LayerWithGrayout = withOverlay(styled(Layer)`
-  background-color: ${({ theme }) => theme.colors.opacity.overlayExtraDark};
-  z-index: ${Z_INDEX_RECORDING_MODE};
-`);
-
-export const DisplayPageArea = styled(PageArea)`
-  position: absolute;
 `;
 
 export const Wrapper = styled.div`

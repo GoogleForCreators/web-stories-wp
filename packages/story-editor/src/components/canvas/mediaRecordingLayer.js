@@ -17,147 +17,79 @@
 /**
  * External dependencies
  */
-import { StyleSheetManager } from 'styled-components';
+import styled, { StyleSheetManager } from 'styled-components';
 import stylisRTLPlugin from 'stylis-plugin-rtl';
 Object.defineProperty(stylisRTLPlugin, 'name', { value: 'stylisRTLPlugin' });
 import { __ } from '@googleforcreators/i18n';
-import {
-  useCallback,
-  useEffect,
-  useRef,
-  useDebouncedCallback,
-} from '@googleforcreators/react';
-import {
-  blobToFile,
-  createBlob,
-  getImageFromVideo,
-} from '@googleforcreators/media';
-import { format } from '@googleforcreators/date';
-import { useSnackbar } from '@googleforcreators/design-system';
-import { trackError } from '@googleforcreators/tracking';
+import { useEffect, useMemo } from '@googleforcreators/react';
+import { withOverlay } from '@googleforcreators/moveable';
+import { FULLBLEED_RATIO } from '@googleforcreators/units';
 
 /**
  * Internal dependencies
  */
 import useConfig from '../../app/config/useConfig';
+import { Z_INDEX_RECORDING_MODE } from '../../constants/zIndex';
 import {
   useMediaRecording,
-  PermissionsDialog,
-  ErrorDialog,
-  Countdown,
-  VideoMode,
-  ProgressBar,
+  SettingsModal,
+  MediaRecording,
   DurationIndicator,
   Footer,
-  SettingsModal,
-  PlayPauseButton,
-  LayerWithGrayout,
-  DisplayPageArea,
-  Wrapper,
-  PHOTO_MIME_TYPE,
-  PHOTO_FILE_TYPE,
-  VideoWrapper,
-  Video,
-  Audio,
-  Photo,
 } from '../mediaRecording';
-import { PageTitleArea } from './layout';
+import VideoRecordingTrimProvider from '../videoTrim/recordingProvider';
+import VideoTrimmer from '../videoTrim/videoTrimmer';
+import { PageTitleArea, Layer, PageArea, FooterArea } from './layout';
+
+const DisplayPageArea = styled(PageArea)`
+  position: absolute;
+`;
+
+const LayerWithGrayout = withOverlay(styled(Layer)`
+  background-color: ${({ theme }) => theme.colors.opacity.overlayExtraDark};
+  z-index: ${Z_INDEX_RECORDING_MODE};
+`);
+
+const StyledFooter = styled(FooterArea)`
+  display: flex;
+  align-items: start;
+  flex-direction: row;
+  justify-content: center;
+  z-index: ${Z_INDEX_RECORDING_MODE};
+`;
 
 function MediaRecordingLayer() {
   const { isRTL } = useConfig();
 
   const {
-    updateMediaDevices,
     status,
-    error,
-    mediaBlob,
-    mediaBlobUrl,
-    setMediaBlobUrl,
-    liveStream,
-    getMediaStream,
-    setFile,
-    needsPermissions,
-    hasVideo,
-    hasAudio,
-    isGif,
-    toggleIsGif,
-    isImageCapture,
     audioInput,
     videoInput,
+    hasVideo,
+    isTrimming,
+    trimData,
+    mediaBlobUrl,
+    duration,
+    updateMediaDevices,
+    getMediaStream,
     resetStream,
+    onTrim,
   } = useMediaRecording(({ state, actions }) => ({
     status: state.status,
-    error: state.error,
-    liveStream: state.liveStream,
-    mediaBlob: state.mediaBlob,
-    mediaBlobUrl: state.mediaBlobUrl,
-    hasVideo: state.hasVideo,
-    hasAudio: state.hasAudio,
-    isGif: state.isGif,
-    needsPermissions:
-      ('idle' === state.status || 'acquiring_media' === state.status) &&
-      !state.videoInput,
     audioInput: state.audioInput,
     videoInput: state.videoInput,
-    isImageCapture: Boolean(state.file?.type?.startsWith('image')),
-    toggleIsGif: actions.toggleIsGif,
+    hasVideo: state.hasVideo,
+    isTrimming: state.isTrimming,
+    trimData: state.trimData,
+    mediaBlobUrl: state.mediaBlobUrl,
+    duration: state.duration,
     updateMediaDevices: actions.updateMediaDevices,
     getMediaStream: actions.getMediaStream,
-    clearMediaStream: actions.clearMediaStream,
-    setFile: actions.setFile,
-    setMediaBlobUrl: actions.setMediaBlobUrl,
     resetStream: actions.resetStream,
+    onTrim: actions.onTrim,
   }));
 
-  const streamRef = useRef();
-  const videoRef = useRef();
-
   const isReady = 'ready' === status;
-  const isFailed = 'failed' === status || Boolean(error);
-
-  const isMuted = !hasAudio || isGif;
-
-  const { showSnackbar } = useSnackbar();
-
-  const captureImage = useCallback(async () => {
-    if (!streamRef.current) {
-      return;
-    }
-
-    let blob;
-
-    try {
-      blob = await getImageFromVideo(streamRef.current);
-      setMediaBlobUrl(createBlob(blob));
-    } catch (e) {
-      trackError('media_recording_capture', e.message);
-
-      showSnackbar({
-        message: __(
-          'There was an error taking a photo. Please try again.',
-          'web-stories'
-        ),
-        dismissable: true,
-      });
-    }
-
-    const imageFile = blobToFile(
-      blob,
-      `image-capture-${format(new Date(), 'Y-m-d-H-i')}.${PHOTO_FILE_TYPE}`,
-      PHOTO_MIME_TYPE
-    );
-    setFile(imageFile);
-    resetStream();
-  }, [resetStream, setFile, setMediaBlobUrl, showSnackbar]);
-
-  const debouncedCaptureImage = useDebouncedCallback(captureImage, 3000);
-
-  const onToggleVideoMode = useCallback(() => {
-    toggleIsGif();
-    if (videoRef.current) {
-      videoRef.current.play().catch(() => {});
-    }
-  }, [toggleIsGif]);
 
   useEffect(() => {
     resetStream();
@@ -171,30 +103,32 @@ function MediaRecordingLayer() {
     }
   }, [isReady, updateMediaDevices]);
 
-  useEffect(() => {
-    // Checking for srcObject avoids flickering due to the stream changing constantly.
-    if (streamRef.current && !streamRef.current.srcObject && liveStream) {
-      streamRef.current.srcObject = liveStream;
-    }
-
-    if (streamRef.current && !liveStream) {
-      streamRef.current.srcObject = null;
-    }
-  }, [liveStream]);
-
-  if (needsPermissions) {
-    return <PermissionsDialog />;
-  }
-
-  if (isFailed) {
-    return <ErrorDialog />;
-  }
+  // Video data was designed for a different purpose, so we need to fake the api a bit here
+  const videoData = useMemo(() => {
+    return isTrimming
+      ? {
+          element: {
+            width: FULLBLEED_RATIO * 480,
+            height: 480,
+            scale: 1,
+            focalX: 50,
+            focalY: 50,
+            flip: {},
+          },
+          resource: {
+            src: mediaBlobUrl,
+            length: duration,
+          },
+          ...trimData,
+        }
+      : null;
+  }, [isTrimming, trimData, mediaBlobUrl, duration]);
 
   return (
     // CanvasLayout disables stylisRTLPlugin, but for this subtree we want it again
     // to make RTL work automatically.
     <StyleSheetManager stylisPlugins={isRTL ? [stylisRTLPlugin] : []}>
-      <>
+      <VideoRecordingTrimProvider onTrim={onTrim} videoData={videoData}>
         <LayerWithGrayout
           aria-label={__('Media Recording layer', 'web-stories')}
         >
@@ -202,63 +136,14 @@ function MediaRecordingLayer() {
             <DurationIndicator />
           </PageTitleArea>
           <DisplayPageArea withSafezone={false} showOverflow>
-            <Wrapper>
-              {!isImageCapture && (
-                <>
-                  {mediaBlobUrl && hasVideo && (
-                    <VideoMode value={!isGif} onChange={onToggleVideoMode} />
-                  )}
-                  <VideoWrapper>
-                    {mediaBlobUrl &&
-                      (hasVideo ? (
-                        <>
-                          {/* eslint-disable-next-line jsx-a11y/media-has-caption -- We don't have tracks for this. */}
-                          <Video
-                            ref={videoRef}
-                            src={mediaBlobUrl}
-                            muted={isMuted}
-                            loop={isGif}
-                            tabIndex={0}
-                          />
-                          {!isGif && <PlayPauseButton videoRef={videoRef} />}
-                        </>
-                      ) : (
-                        <>
-                          {/* eslint-disable-next-line jsx-a11y/media-has-caption -- No captions wanted/needed here. */}
-                          <audio controls="controls" src={mediaBlobUrl} />
-                        </>
-                      ))}
-                    {!mediaBlob &&
-                      !mediaBlobUrl &&
-                      liveStream &&
-                      (hasVideo ? (
-                        <Video ref={streamRef} muted />
-                      ) : (
-                        <>
-                          {/* eslint-disable-next-line jsx-a11y/media-has-caption -- No an actual <audio> tag. */}
-                          <Audio liveStream={liveStream} />
-                        </>
-                      ))}
-                  </VideoWrapper>
-                </>
-              )}
-              {isImageCapture && (
-                <VideoWrapper>
-                  <Photo
-                    decoding="async"
-                    src={mediaBlobUrl}
-                    alt={__('Image capture', 'web-stories')}
-                  />
-                </VideoWrapper>
-              )}
-            </Wrapper>
-            <ProgressBar />
-            <Countdown />
+            <MediaRecording />
           </DisplayPageArea>
-          <Footer captureImage={debouncedCaptureImage} videoRef={videoRef} />
+          <StyledFooter showOverflow>
+            {isTrimming ? <VideoTrimmer /> : <Footer />}
+          </StyledFooter>
         </LayerWithGrayout>
         <SettingsModal />
-      </>
+      </VideoRecordingTrimProvider>
     </StyleSheetManager>
   );
 }

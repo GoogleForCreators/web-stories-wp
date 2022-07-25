@@ -408,6 +408,17 @@ class Experiments extends Service_Base implements HasRequirements {
 				'group'       => 'editor',
 			],
 			/**
+			 * Author: @barklund
+			 * Issue: #11908
+			 * Creation date: 2022-07-19
+			 */
+			[
+				'name'        => 'recordingTrimming',
+				'label'       => __( 'Trim media recording', 'web-stories' ),
+				'description' => __( 'Enable the ability to trim a media recording before you insert it', 'web-stories' ),
+				'group'       => 'editor',
+			],
+			/**
 			 * Author: @swissspidy
 			 * Issue: #11878
 			 * Creation date: 2022-07-06
