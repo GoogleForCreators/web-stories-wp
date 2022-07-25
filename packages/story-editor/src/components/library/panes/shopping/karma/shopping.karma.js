@@ -84,7 +84,7 @@ describe('Shopping integration', () => {
     return storyContext.state.selectedElements[0];
   };
 
-  fdescribe('Shopping tab', () => {
+  describe('Shopping tab', () => {
     it('should handle product search add and remove', async () => {
       expect(isStoryEmpty()).toEqual(true);
       const productTitle = 'Hoodie';
@@ -241,10 +241,10 @@ describe('Shopping integration', () => {
       await fixture.snapshot('Product pill tooltip on hover');
     });
 
-    fit('add product via dragging', async () => {
+    it('add product via dragging', async () => {
       expect(isStoryEmpty()).toEqual(true);
-      await searchProduct("hoodie");
-      
+      await searchProduct('hoodie');
+
       // Only background initially
       const bgFrame = fixture.editor.canvas.framesLayer.frames[0].node;
 
