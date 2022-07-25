@@ -25,15 +25,19 @@ import PropTypes from 'prop-types';
  */
 import {
   TEMPLATES_GALLERY_SORT_OPTIONS,
-  TEMPLATES_GALLERY_STATUS,
   VIEW_STYLE,
+  DEFAULT_TEMPLATE_FILTERS,
 } from '../constants';
 import { PageSizePropType } from '../types';
 import usePagePreviewSize from './usePagePreviewSize';
 
-export default function useTemplateView({ totalPages }) {
-  const [searchKeyword, _setSearchKeyword] = useState('');
-  const [sort, _setSort] = useState(TEMPLATES_GALLERY_SORT_OPTIONS.POPULAR);
+export default function useTemplateView({
+  totalPages,
+  sortObject = DEFAULT_TEMPLATE_FILTERS.sort,
+  filtersObject = DEFAULT_TEMPLATE_FILTERS.filters,
+}) {
+  const [sort, _setSort] = useState(sortObject);
+  const [filters, _setFilters] = useState(filtersObject);
   const [page, setPage] = useState(1);
 
   const { pageSize } = usePagePreviewSize({
@@ -60,10 +64,10 @@ export default function useTemplateView({ totalPages }) {
     [setPageClamped]
   );
 
-  const setSearchKeyword = useCallback(
-    (newSearchKeyword) => {
+  const setFilters = useCallback(
+    (newSort) => {
+      _setFilters(newSort);
       setPageClamped(1);
-      _setSearchKeyword(newSearchKeyword);
     },
     [setPageClamped]
   );
@@ -75,32 +79,21 @@ export default function useTemplateView({ totalPages }) {
         pageSize,
       },
       sort: {
-        value: sort,
+        value: sort.orderby,
+        direction: sort.order,
         set: setSort,
       },
-      filter: {
-        value: TEMPLATES_GALLERY_STATUS.ALL,
-        set: () => {},
+      filters: {
+        value: filters,
+        set: setFilters,
       },
       page: {
         value: page,
         set: setPage,
         requestNextPage,
       },
-      search: {
-        keyword: searchKeyword,
-        setKeyword: setSearchKeyword,
-      },
     }),
-    [
-      pageSize,
-      sort,
-      setSort,
-      page,
-      requestNextPage,
-      searchKeyword,
-      setSearchKeyword,
-    ]
+    [pageSize, sort, setSort, page, requestNextPage, filters, setFilters]
   );
 }
 

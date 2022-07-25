@@ -93,7 +93,7 @@ describe('Media Recording', () => {
     fixture.restore();
   });
 
-  describe('Creator can self-record using their webcam', () => {
+  describe('Creator can self-record video using their webcam', () => {
     it('should toggle media recording layer via library and quick actions', async () => {
       // Open media recording.
       await fixture.events.click(fixture.editor.library.media.mediaRecording);
@@ -221,6 +221,26 @@ describe('Media Recording', () => {
 
       expect(
         fixture.editor.canvas.mediaRecordingLayer.previewImage
+      ).not.toBeNull();
+    });
+  });
+
+  describe('Creator can self-record audio using their webcam or microphone', () => {
+    it('should change media recording type to audio via disable video button', async () => {
+      // Open media recording.
+      await fixture.events.click(fixture.editor.library.media.mediaRecording);
+
+      expect(
+        fixture.editor.canvas.mediaRecordingLayer.recordVideo
+      ).not.toBeNull();
+
+      // Disable video.
+      await fixture.events.click(
+        fixture.editor.canvas.quickActionMenu.disableVideoButton
+      );
+
+      expect(
+        fixture.editor.canvas.mediaRecordingLayer.recordAudio
       ).not.toBeNull();
     });
   });

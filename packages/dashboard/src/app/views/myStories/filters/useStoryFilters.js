@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,20 +17,12 @@
 /**
  * External dependencies
  */
-import { css } from 'styled-components';
+import { identity, useContextSelector } from '@googleforcreators/react';
+/**
+ * Internal dependencies
+ */
+import { filterContext } from './StoryFiltersProvider';
 
-export const videoWithScale = css`
-  width: ${({ width }) => `${width}px`};
-  height: ${({ height }) => `${height}px`};
-  left: ${({ offsetX }) => `${-offsetX}px`};
-  top: ${({ offsetY }) => `${-offsetY}px`};
-  max-width: ${({ isBackground }) => (isBackground ? 'initial' : null)};
-`;
-
-export const getBackgroundStyle = () => {
-  return {
-    minWidth: '100%',
-    minHeight: '100%',
-    maxWidth: 'initial',
-  };
-};
+export default function useStoryFilters(selector = identity) {
+  return useContextSelector(filterContext, selector);
+}

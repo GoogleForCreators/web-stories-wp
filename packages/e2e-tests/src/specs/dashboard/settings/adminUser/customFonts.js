@@ -50,10 +50,6 @@ describe('Custom Fonts', () => {
     );
   });
 
-  afterAll(() => {
-    removeResourceErrorMessage();
-  });
-
   beforeEach(async () => {
     await visitSettings();
     await removeAllFonts();
@@ -62,6 +58,10 @@ describe('Custom Fonts', () => {
   afterEach(async () => {
     await visitSettings();
     await removeAllFonts();
+  });
+
+  afterAll(() => {
+    removeResourceErrorMessage();
   });
 
   it('should add a fonts and handle keyboard navigation', async () => {

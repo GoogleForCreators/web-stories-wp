@@ -109,37 +109,38 @@ Web Stories are powered by [AMP](https://amp.dev/), which adds some restrictions
 
 For the plugin's full changelog, please see [the Releases page on GitHub](https://github.com/googleforcreators/web-stories-wp/releases).
 
+= 1.23.1 =
+
+**Release Date:** July 25, 2022.
+
+* Fixes an issue with story poster images not saving correctly.
+
+= 1.23.0 =
+
+**Release Date:** July 20, 2022.
+
+* New feature: record videos, GIFs, still pictures, and background audio directly within the editor.
+* New feature: added support for hotlinking story posters, video posters, and link icons.
+* New feature: you can now change the heading levels used for text elements in the Style panel.
+* Bumped minimum WordPress version requirement to 5.7.
+* Bug fixes and performance improvements.
+
 = 1.22.1 =
 
 **Release Date:** June 30, 2022.
 
 * Fixes an issue with inserting external media by URL.
 
-= 1.22.0 =
-
-**Release Date:** June 21, 2022.
-
-* New feature: you can now add shoppable products from WooCommerce and Shopify to your stories
-* New feature: added support for grouping, masking, and naming layers on the canvas
-* New feature: added support for filtering stories by category on the dashboard
-* Bug fixes and performance improvements.
-
-= 1.21.1 =
-
-**Release Date:** June 1, 2022.
-
-* Fixes an issue related to roles and capabilities that caused interference with other plugins.
-
 == Upgrade Notice ==
+
+= 1.23.1 =
+
+This release fixes an issue with story poster images not saving correctly.
+
+= 1.23.0 =
+
+This release introduces webcam recording, more hotlinking capabilities, and a UI to change heading levels in the editor.
 
 = 1.22.1 =
 
 This release fixes an issue with inserting external media by URL.
-
-= 1.22.0 =
-
-This release brings shopping support, layers grouping/masking/naming, and category filtering on the dashboard.
-
-= 1.21.1 =
-
-This releases fixes an issue related to roles and capabilities that caused interference with other plugins.

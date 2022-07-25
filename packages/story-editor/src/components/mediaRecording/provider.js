@@ -45,6 +45,8 @@ import {
   MAX_RECORDING_DURATION_IN_SECONDS,
   VIDEO_FILE_TYPE,
   VIDEO_MIME_TYPE,
+  AUDIO_FILE_TYPE,
+  AUDIO_MIME_TYPE,
 } from './constants';
 
 function MediaRecordingProvider({ children }) {
@@ -56,6 +58,7 @@ function MediaRecordingProvider({ children }) {
 
   const [isGif, setIsGif] = useState(false);
 
+  const [hasVideo, setHasVideo] = useState(true);
   const [hasAudio, setHasAudio] = useState(true);
   const [videoInput, setVideoInput] = useState(
     localStore.getItemByKey(LOCAL_STORAGE_PREFIX.MEDIA_RECORDING_VIDEO_INPUT)
@@ -104,14 +107,20 @@ function MediaRecordingProvider({ children }) {
           dismissable: true,
         });
       }
+      const FILE_TYPE = hasVideo ? VIDEO_FILE_TYPE : AUDIO_FILE_TYPE;
+      const MIME_TYPE = hasVideo ? VIDEO_MIME_TYPE : AUDIO_MIME_TYPE;
+      const captureType = hasVideo ? 'webcam' : 'audio';
       const f = blobToFile(
         blob,
-        `webcam-capture-${format(new Date(), 'Y-m-d-H-i')}.${VIDEO_FILE_TYPE}`,
-        VIDEO_MIME_TYPE
+        `${captureType}-capture-${format(
+          new Date(),
+          'Y-m-d-H-i'
+        )}.${FILE_TYPE}`,
+        MIME_TYPE
       );
       setFile(f);
     },
-    [showSnackbar]
+    [showSnackbar, hasVideo]
   );
 
   const {
@@ -134,11 +143,22 @@ function MediaRecordingProvider({ children }) {
     // granted permission, so it's not easy to detect.
     // TODO: Figure out how to retry without microphone if possible.
     mediaStreamConstraints: {
-      audio: audioInput && hasAudio ? { deviceId: audioInput } : true,
-      video: videoInput ? { deviceId: videoInput } : true,
+      audio: hasAudio ? (audioInput ? { deviceId: audioInput } : true) : false,
+      video: hasVideo ? (videoInput ? { deviceId: videoInput } : true) : false,
     },
     onStop,
   });
+
+  useEffect(() => {
+    if (
+      error?.name === 'NotFoundError' ||
+      error?.name === 'NotReadableError' ||
+      error?.name === 'OverConstrainedError'
+    ) {
+      setHasVideo(false);
+      setVideoInput(null);
+    }
+  }, [error]);
 
   const speak = useLiveRegion();
 
@@ -186,6 +206,10 @@ function MediaRecordingProvider({ children }) {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps -- We only want to run it once.
   }, []);
+
+  const toggleVideo = useCallback(() => {
+    setHasVideo(!hasVideo);
+  }, [hasVideo]);
 
   const toggleAudio = useCallback(() => {
     setHasAudio(!hasAudio);
@@ -272,6 +296,7 @@ function MediaRecordingProvider({ children }) {
     () => ({
       state: {
         isInRecordingMode,
+        hasVideo,
         hasAudio,
         mediaDevices,
         audioInput,
@@ -291,6 +316,7 @@ function MediaRecordingProvider({ children }) {
       actions: {
         toggleRecordingMode,
         setMediaBlobUrl,
+        toggleVideo,
         toggleAudio,
         toggleSettings,
         toggleIsGif,
@@ -313,6 +339,7 @@ function MediaRecordingProvider({ children }) {
     }),
     [
       isInRecordingMode,
+      hasVideo,
       hasAudio,
       mediaDevices,
       audioInput,
@@ -330,6 +357,7 @@ function MediaRecordingProvider({ children }) {
       isCountingDown,
       wasCountingDown,
       toggleRecordingMode,
+      toggleVideo,
       toggleAudio,
       toggleSettings,
       toggleIsGif,

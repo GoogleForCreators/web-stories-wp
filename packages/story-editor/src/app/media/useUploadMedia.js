@@ -24,6 +24,7 @@ import {
   localStore,
   LOCAL_STORAGE_PREFIX,
 } from '@googleforcreators/design-system';
+import { isAnimatedGif } from '@googleforcreators/media';
 
 /**
  * Internal dependencies
@@ -278,7 +279,11 @@ function useUploadMedia({
           const isTooLarge = canTranscode && isFileTooLarge(file);
 
           try {
-            validateFileForUpload(file, canTranscode, isTooLarge);
+            validateFileForUpload({
+              file,
+              canTranscodeFile: canTranscode,
+              isFileTooLarge: isTooLarge,
+            });
           } catch (e) {
             showSnackbar({
               message: e.message,
@@ -300,6 +305,10 @@ function useUploadMedia({
             posterFile = newPosterFile;
             resource = newResource;
           }
+
+          const isGif =
+            resource.mimeType === 'image/gif' &&
+            isAnimatedGif(await file.arrayBuffer());
 
           // Treat incoming video as a gif if wanted, used by media recording.
           if (additionalData?.isGif) {
@@ -327,6 +336,7 @@ function useUploadMedia({
             trimData,
             originalResourceId,
             elementId,
+            isAnimatedGif: isGif,
           });
         })
       );
