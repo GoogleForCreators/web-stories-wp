@@ -123,6 +123,7 @@ function useVideoNode(videoData) {
       onLoadedMetadata({ target: videoNode });
     } else if (!isFinite(videoNode.duration)) {
       // Video is a blob of unknown length, seek to infinity and wait until it's ready
+      // @see https://crbug.com/642012
       videoNode.currentTime = Number.MAX_SAFE_INTEGER;
       videoNode.addEventListener('timeupdate', onLoadedMetadata);
     } else {
