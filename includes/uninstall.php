@@ -154,7 +154,7 @@ function delete_posts(): void {
 		[
 			'fields'           => 'ids',
 			'suppress_filters' => false,
-			'post_status'          =>       'any',
+			'post_status'      => 'any',
 			'post_type'        => [
 				Story_Post_Type::POST_TYPE_SLUG,
 				Page_Template_Post_Type::POST_TYPE_SLUG,
