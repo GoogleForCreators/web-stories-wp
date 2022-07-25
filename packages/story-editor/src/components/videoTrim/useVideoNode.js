@@ -122,7 +122,8 @@ function useVideoNode(videoData) {
     if (isFinite(videoNode.duration) && startOffset === null) {
       onLoadedMetadata({ target: videoNode });
     } else if (!isFinite(videoNode.duration)) {
-      // Video is a blob of unknown length, wait until it finishes
+      // Video is a blob of unknown length, seek to infinity and wait until it's ready
+      videoNode.currentTime = Number.MAX_SAFE_INTEGER;
       videoNode.addEventListener('timeupdate', onLoadedMetadata);
     } else {
       // Video hasn't loaded yet, wait for that
