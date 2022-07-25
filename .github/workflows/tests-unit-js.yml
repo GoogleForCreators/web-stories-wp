@@ -60,7 +60,7 @@ jobs:
           cache: npm
 
       - name: Setup Jest cache
-        uses: actions/cache@48af2dc4a9e8278b89d7fa154b955c30c6aaab09
+        uses: actions/cache@0865c47f36e68161719c5b124609996bb5c40129
         with:
           path: .jest-cache
           key: ${{ runner.os }}-${{ steps.nvm.outputs.NVMRC }}-jest
