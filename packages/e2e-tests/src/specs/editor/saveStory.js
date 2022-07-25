@@ -63,7 +63,7 @@ describe('Saving Story', () => {
     stopRequestInterception();
   });
 
-  //eslint-disable-next-line jest/no-disabled-tests -- error: TimeoutError: Navigation timeout of 10000 ms exceeded
+  //eslint-disable-next-line jest/no-disabled-tests -- TODO(#11992): Fix flakey test.
   it.skip('should display published dialog', async () => {
     await createNewStory();
     await insertStoryTitle('Test story');
@@ -71,7 +71,7 @@ describe('Saving Story', () => {
     await expect(page).toMatch('Story published.');
   });
 
-  // eslint-disable-next-line jest/no-disabled-tests -- Navigation timeout of 10000 ms exceeded, Error
+  // eslint-disable-next-line jest/no-disabled-tests -- TODO(#11992): Fix flakey test.
   it.skip('should display detailed error snackbar message', async () => {
     mockResponse = {
       status: 500,

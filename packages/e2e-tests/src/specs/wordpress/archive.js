@@ -146,7 +146,7 @@ describe.skip('Stories Archive', () => {
     describe('Widget', () => {
       withPlugin('classic-widgets');
 
-      // eslint-disable-next-line jest/no-disabled-tests -- [TimeoutError: Element .widget-liquid-right .web-stories-field-wrapper not found
+      // eslint-disable-next-line jest/no-disabled-tests -- TODO(#11990): Fix flakey test.
       it.skip('should be able to add widget', async () => {
         await visitAdminPage('widgets.php');
 
