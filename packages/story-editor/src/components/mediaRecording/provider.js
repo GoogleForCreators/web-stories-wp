@@ -41,6 +41,7 @@ import { trackError } from '@googleforcreators/tracking';
  * Internal dependencies
  */
 import MediaRecordingContext from './context';
+import useTrim from './useTrim';
 import {
   MAX_RECORDING_DURATION_IN_SECONDS,
   VIDEO_FILE_TYPE,
@@ -52,9 +53,15 @@ import {
 function MediaRecordingProvider({ children }) {
   const [isInRecordingMode, setIsInRecordingMode] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
+
+  const [streamNode, setStreamNode] = useState(null);
 
   const [countdown, setCountdown] = useState(0);
   const [duration, setDuration] = useState(0);
+
+  const { trimData, isTrimming, startTrim, onTrim, resetTrim } =
+    useTrim(setDuration);
 
   const [isGif, setIsGif] = useState(false);
 
@@ -163,6 +170,7 @@ function MediaRecordingProvider({ children }) {
   const speak = useLiveRegion();
 
   const stopRecording = useCallback(() => {
+    setIsProcessing(true);
     originalStopRecording();
     speak(__('Recording stopped', 'web-stories'));
   }, [originalStopRecording, speak]);
@@ -273,9 +281,12 @@ function MediaRecordingProvider({ children }) {
     setIsGif(false);
     setMediaBlobUrl(null);
     setCountdown(0);
+    setIsProcessing(false);
+    setDuration(0);
+    resetTrim();
 
     resetStream();
-  }, [resetStream]);
+  }, [resetStream, resetTrim]);
 
   const toggleRecordingMode = useCallback(() => {
     setIsInRecordingMode((state) => !state);
@@ -311,7 +322,11 @@ function MediaRecordingProvider({ children }) {
         isGif,
         duration,
         countdown,
+        isProcessing,
         isCountingDown: isCountingDown || wasCountingDown,
+        trimData,
+        isTrimming,
+        streamNode,
       },
       actions: {
         toggleRecordingMode,
@@ -335,6 +350,9 @@ function MediaRecordingProvider({ children }) {
         setCountdown,
         resetState,
         resetStream,
+        onTrim,
+        startTrim,
+        setStreamNode,
       },
     }),
     [
@@ -356,6 +374,10 @@ function MediaRecordingProvider({ children }) {
       countdown,
       isCountingDown,
       wasCountingDown,
+      isProcessing,
+      trimData,
+      isTrimming,
+      streamNode,
       toggleRecordingMode,
       toggleVideo,
       toggleAudio,
@@ -371,6 +393,9 @@ function MediaRecordingProvider({ children }) {
       unMuteAudio,
       resetState,
       resetStream,
+      onTrim,
+      startTrim,
+      setStreamNode,
     ]
   );
 

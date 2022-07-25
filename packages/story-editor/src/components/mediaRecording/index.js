@@ -17,24 +17,11 @@
 /**
  * Internal dependencies
  */
-export { default as MediaRecordingProvider } from './provider';
 export { default as useMediaRecording } from './useMediaRecording';
+export { default as MediaRecording } from './mediaRecording';
+export { default as MediaRecordingProvider } from './provider';
 export { default as SettingsModal } from './settingsModal';
 export { default as ErrorDialog } from './errorDialog';
 export { default as PermissionsDialog } from './permissionsDialog';
 export { default as Footer } from './footer';
-export { default as VideoMode } from './videoMode';
-export { default as ProgressBar } from './progressBar';
-export { default as Countdown } from './countdown';
 export { default as DurationIndicator } from './durationIndicator';
-export { default as PlayPauseButton } from './playPauseButton';
-export * from './constants';
-export * from './audio';
-export {
-  LayerWithGrayout,
-  DisplayPageArea,
-  Wrapper,
-  VideoWrapper,
-  Video,
-  Photo,
-} from './components';
