@@ -60,7 +60,7 @@ const keys = {
   PAGE_TEMPLATES: 'PAGE_TEMPLATES',
 
   // DOCUMENT
-  BACKGROUND_AUDIO: 'BACKGROUND_AUDIO',
+  PAGE_BACKGROUND_AUDIO: 'PAGE_BACKGROUND_AUDIO',
 };
 
 export const STATES = {
@@ -87,9 +87,9 @@ export const STATES = {
     focus: true,
     tab: DOCUMENT,
   },
-  [keys.BACKGROUND_AUDIO]: {
+  [keys.PAGE_BACKGROUND_AUDIO]: {
     focus: true,
-    tab: DOCUMENT,
+    tab: STYLE,
   },
   [keys.CAPTIONS]: {
     focus: true,

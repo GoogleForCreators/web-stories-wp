@@ -150,11 +150,22 @@ function MediaRecordingProvider({ children }) {
     // granted permission, so it's not easy to detect.
     // TODO: Figure out how to retry without microphone if possible.
     mediaStreamConstraints: {
-      audio: audioInput && hasAudio ? { deviceId: audioInput } : true,
-      video: videoInput && hasVideo ? { deviceId: videoInput } : true,
+      audio: hasAudio ? (audioInput ? { deviceId: audioInput } : true) : false,
+      video: hasVideo ? (videoInput ? { deviceId: videoInput } : true) : false,
     },
     onStop,
   });
+
+  useEffect(() => {
+    if (
+      error?.name === 'NotFoundError' ||
+      error?.name === 'NotReadableError' ||
+      error?.name === 'OverConstrainedError'
+    ) {
+      setHasVideo(false);
+      setVideoInput(null);
+    }
+  }, [error]);
 
   const speak = useLiveRegion();
 

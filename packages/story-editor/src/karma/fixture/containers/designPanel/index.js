@@ -25,6 +25,7 @@ import { Border } from './border';
 import { ColorPreset } from './colorPreset';
 import { Link } from './link';
 import { PageBackground } from './pageBackground';
+import { PageBackgroundAudio } from './pageBackgroundAudio';
 import { SizePosition } from './sizePosition';
 import { TextStyle } from './textStyle';
 import { VideoPoster } from './videoPoster';
@@ -155,6 +156,14 @@ export class DesignPanel extends Container {
       this.getByRole('region', { name: /^Page Background$/i }),
       'pageBackground',
       PageBackground
+    );
+  }
+
+  get pageBackgroundAudio() {
+    return this._get(
+      this.getByRole('region', { name: /^Page Background Audio$/i }),
+      'pageBackgroundAudio',
+      PageBackgroundAudio
     );
   }
 }

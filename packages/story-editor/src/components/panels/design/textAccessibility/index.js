@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,16 +14,4 @@
  * limitations under the License.
  */
 
-export const ContentType = {
-  IMAGE: 'image',
-  VIDEO: 'video',
-  GIF: 'gif',
-  STICKER: 'sticker',
-};
-
-export const ProviderType = {
-  UNSPLASH: 'unsplash',
-  COVERR: 'coverr',
-  TENOR: 'tenor',
-  TENOR_STICKERS: 'tenor_stickers',
-};
+export { default } from './textAccessibility';
