@@ -1,0 +1,19 @@
+diff --git a/node_modules/preact-moveable/dist/moveable.esm.js b/node_modules/preact-moveable/dist/moveable.esm.js
+index b947209..86a2885 100644
+--- a/node_modules/preact-moveable/dist/moveable.esm.js
++++ b/node_modules/preact-moveable/dist/moveable.esm.js
+@@ -4909,6 +4909,14 @@ var Draggable = {
+     var bottom = datas.bottom - beforeDist[1];
+     var nextTransform = convertTransformFormat(datas, "translate(".concat(translate[0], "px, ").concat(translate[1], "px)"), "translate(".concat(dist[0], "px, ").concat(dist[1], "px)"));
+     fillOriginalTransform(e, nextTransform);
++
++    if(!moveable.state.dragInfo) {
++      moveable.state.dragInfo = {
++        startRect: moveable.getRect(),
++        dist: [0, 0]
++      };
++    }
++
+     moveable.state.dragInfo.dist = parentEvent ? [0, 0] : dist;
+ 
+     if (!parentEvent && !parentMoveable && delta.every(function (num) {
