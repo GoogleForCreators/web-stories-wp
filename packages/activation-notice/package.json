@@ -29,7 +29,7 @@
     "@googleforcreators/tracking": "*",
     "@wordpress/element": "^4.9.0",
     "@wordpress/i18n": "^4.11.0",
-    "flagged": "^2.0.3",
+    "flagged": "^2.0.5",
     "polished": "^4.2.2",
     "prop-types": "^15.8.1",
     "styled-components": "^5.3.3",
