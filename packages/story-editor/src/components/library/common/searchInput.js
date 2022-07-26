@@ -18,11 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import {
-  useState,
-  useCallback,
-  useDebouncedCallback,
-} from '@googleforcreators/react';
+import { useState, useCallback } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import styled from 'styled-components';
 import { SearchInput } from '@googleforcreators/design-system';
@@ -45,11 +41,6 @@ const StyledSearchInput = styled(SearchInput)`
  * @param {string} obj.placeholder A placeholder text to show when it's empty.
  * @param {Function} obj.onSearch Callback to call when a search is triggered.
  * @param {boolean} obj.disabled Whether the input should be shown as disabled.
- * @param {boolean} obj.incremental If `incremental` is false, a search is
- * triggered when the user presses enter, or when they clear the input.
- * If `incremental` is true, this occurs when the text changes, optionally
- * debounced via `delayMs`.
- * @param {number} obj.delayMs The number of milliseconds to debounce an autoSearch.
  * @return {SearchInput} The component.
  * @class
  */
@@ -58,50 +49,32 @@ function WrappedSearchInput({
   placeholder,
   onSearch,
   disabled = false,
-  incremental = false,
-  delayMs = 500,
 }) {
   // Local state so that we can debounce triggering searches.
   const [localValue, setLocalValue] = useState(initialValue);
-
-  // Effectively performs a search, triggered at most every `delayMs`.
-  const changeSearchTermDebounced = useDebouncedCallback(() => {
-    onSearch(localValue);
-  }, delayMs);
-
-  const submitValue = useCallback(
-    (value) => {
-      if (incremental && delayMs) {
-        changeSearchTermDebounced();
-      } else {
-        onSearch(value);
-      }
-    },
-    [changeSearchTermDebounced, onSearch, delayMs, incremental]
-  );
 
   const onChange = useCallback(
     (evt) => {
       const newValue = evt.target.value;
       setLocalValue(newValue);
-      if (incremental || newValue === '') {
-        submitValue(newValue);
+      if (newValue === '') {
+        onSearch(newValue);
       }
     },
-    [submitValue, incremental]
+    [onSearch]
   );
 
   const onClear = useCallback(() => {
     setLocalValue('');
-    submitValue('');
-  }, [submitValue]);
+    onSearch('');
+  }, [onSearch]);
 
   const onSubmit = useCallback(
     (evt) => {
       evt.preventDefault();
-      submitValue(localValue);
+      onSearch(localValue);
     },
-    [submitValue, localValue]
+    [localValue, onSearch]
   );
 
   const hasContent = localValue.length > 0;
@@ -127,8 +100,6 @@ WrappedSearchInput.propTypes = {
   placeholder: PropTypes.string.isRequired,
   onSearch: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
-  incremental: PropTypes.bool,
-  delayMs: PropTypes.number,
 };
 
 export default WrappedSearchInput;
