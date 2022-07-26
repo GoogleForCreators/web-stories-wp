@@ -33,6 +33,7 @@ import { Z_INDEX_RECORDING_MODE } from '../../constants/zIndex';
 import {
   useMediaRecording,
   SettingsModal,
+  ProcessingModal,
   MediaRecording,
   DurationIndicator,
   Footer,
@@ -68,7 +69,7 @@ function MediaRecordingLayer() {
     hasVideo,
     isTrimming,
     trimData,
-    mediaBlobUrl,
+    originalMediaBlobUrl,
     duration,
     updateMediaDevices,
     getMediaStream,
@@ -81,7 +82,7 @@ function MediaRecordingLayer() {
     hasVideo: state.hasVideo,
     isTrimming: state.isTrimming,
     trimData: state.trimData,
-    mediaBlobUrl: state.mediaBlobUrl,
+    originalMediaBlobUrl: state.originalMediaBlobUrl,
     duration: state.duration,
     updateMediaDevices: actions.updateMediaDevices,
     getMediaStream: actions.getMediaStream,
@@ -116,13 +117,13 @@ function MediaRecordingLayer() {
             flip: {},
           },
           resource: {
-            src: mediaBlobUrl,
+            src: originalMediaBlobUrl,
             length: duration,
           },
           ...trimData,
         }
       : null;
-  }, [isTrimming, trimData, mediaBlobUrl, duration]);
+  }, [isTrimming, trimData, originalMediaBlobUrl, duration]);
 
   return (
     // CanvasLayout disables stylisRTLPlugin, but for this subtree we want it again
@@ -143,6 +144,7 @@ function MediaRecordingLayer() {
           </StyledFooter>
         </LayerWithGrayout>
         <SettingsModal />
+        <ProcessingModal />
       </VideoRecordingTrimProvider>
     </StyleSheetManager>
   );

@@ -40,7 +40,6 @@ import {
   blobToFile,
   createBlob,
   getImageFromVideo,
-  formatMsToHMS,
 } from '@googleforcreators/media';
 import { format } from '@googleforcreators/date';
 import { BackgroundAudioPropTypeShape } from '@googleforcreators/elements';
@@ -131,7 +130,6 @@ function Footer() {
     countdown,
     duration,
     isCountingDown,
-    trimData,
     setMediaBlobUrl,
     setDuration,
     setCountdown,
@@ -155,7 +153,6 @@ function Footer() {
     isCountingDown: state.isCountingDown,
     hasVideo: state.hasVideo,
     hasMediaToInsert: Boolean(state.mediaBlobUrl),
-    trimData: state.trimData,
     liveStream: state.liveStream,
     streamNode: state.streamNode,
     startRecording: actions.startRecording,
@@ -240,23 +237,12 @@ function Footer() {
       args.resource.isOptimized = true;
       args.resource.isMuted = isMuted;
       args.posterFile = posterFile;
-      // If video has been trimmed, `end` will no longer be `null`,
-      // but some number bigger than 0
-      if (trimData.end) {
-        args.trimData = {
-          start: formatMsToHMS(trimData.start),
-          end: formatMsToHMS(trimData.end),
-        };
-        const trimmedLength = (trimData.end - trimData.start) / 1000;
-        args.resource.length = trimmedLength;
-        args.resource.lengthFormatted = getVideoLengthDisplay(trimmedLength);
-      } else {
-        const { length, lengthFormatted } = getVideoLength(videoNode);
-        args.resource.length = length || duration;
-        args.resource.lengthFormatted = length
-          ? lengthFormatted
-          : getVideoLengthDisplay(duration);
-      }
+
+      const { length, lengthFormatted } = getVideoLength(videoNode);
+      args.resource.length = length || duration;
+      args.resource.lengthFormatted = length
+        ? lengthFormatted
+        : getVideoLengthDisplay(duration);
     }
 
     uploadWithPreview([file], true, args);
@@ -286,8 +272,6 @@ function Footer() {
     isMuted,
     duration,
     toggleRecordingMode,
-    trimData.end,
-    trimData.start,
     videoNode,
     setMediaBlobUrl,
     setFile,

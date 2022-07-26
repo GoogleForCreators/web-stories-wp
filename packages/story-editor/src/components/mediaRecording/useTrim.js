@@ -17,30 +17,46 @@
 /**
  * External dependencies
  */
+import { formatMsToHMS } from '@googleforcreators/media';
 import { useState, useCallback } from '@googleforcreators/react';
 
-function useTrim(setDuration) {
+/**
+ * Internal dependencies
+ */
+import useFFmpeg from '../../app/media/utils/useFFmpeg';
+
+function useTrim({ setDuration, onTrimmed, file }) {
   const [trimData, setTrimData] = useState({ start: 0, end: null });
   const [isTrimming, setIsTrimming] = useState(false);
+  const [isProcessingTrim, setIsProcessingTrim] = useState(false);
+  const { trimVideo } = useFFmpeg();
   const onTrim = useCallback(
-    (newTrimData) => {
+    async (newTrimData) => {
+      setIsTrimming(false);
       if (newTrimData) {
         setTrimData(newTrimData);
-        const millis = newTrimData.end - newTrimData.start;
-        const seconds = Math.ceil(millis / 1000);
-        setDuration(seconds);
+        setIsProcessingTrim(true);
+        const start = formatMsToHMS(newTrimData.start);
+        const end = formatMsToHMS(newTrimData.end);
+        const result = await trimVideo(file, start, end);
+        onTrimmed(result);
+        setDuration(newTrimData.end - newTrimData.start);
+        setIsProcessingTrim(false);
       }
-      setIsTrimming(false);
     },
-    [setDuration]
+    [file, onTrimmed, setDuration, trimVideo]
   );
   const startTrim = useCallback(() => setIsTrimming(true), []);
-  const resetTrim = useCallback(() => {
-    setIsTrimming(false);
-    setTrimData({ start: 0, end: null });
-  }, []);
+  const resetTrim = useCallback(() => setIsTrimming(false), []);
 
-  return { trimData, isTrimming, onTrim, startTrim, resetTrim };
+  return {
+    trimData,
+    isTrimming,
+    isProcessingTrim,
+    onTrim,
+    startTrim,
+    resetTrim,
+  };
 }
 
 export default useTrim;

@@ -50,6 +50,17 @@ import {
   AUDIO_MIME_TYPE,
 } from './constants';
 
+function createFile(blob, hasVideo) {
+  const FILE_TYPE = hasVideo ? VIDEO_FILE_TYPE : AUDIO_FILE_TYPE;
+  const MIME_TYPE = hasVideo ? VIDEO_MIME_TYPE : AUDIO_MIME_TYPE;
+  const captureType = hasVideo ? 'webcam' : 'audio';
+  return blobToFile(
+    blob,
+    `${captureType}-capture-${format(new Date(), 'Y-m-d-H-i')}.${FILE_TYPE}`,
+    MIME_TYPE
+  );
+}
+
 function MediaRecordingProvider({ children }) {
   const [isInRecordingMode, setIsInRecordingMode] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
@@ -59,9 +70,6 @@ function MediaRecordingProvider({ children }) {
 
   const [countdown, setCountdown] = useState(0);
   const [duration, setDuration] = useState(0);
-
-  const { trimData, isTrimming, startTrim, onTrim, resetTrim } =
-    useTrim(setDuration);
 
   const [isGif, setIsGif] = useState(false);
 
@@ -77,6 +85,7 @@ function MediaRecordingProvider({ children }) {
   const [mediaDevices, setMediaDevices] = useState([]);
 
   const [file, setFile] = useState(null);
+  const [originalFile, setOriginalFile] = useState(null);
 
   useEffect(() => {
     if (!mediaDevices.length) {
@@ -97,13 +106,20 @@ function MediaRecordingProvider({ children }) {
   }, [audioInput, mediaDevices, videoInput]);
 
   const [mediaBlobUrl, setMediaBlobUrl] = useState();
+  const [originalMediaBlobUrl, setOriginalMediaBlobUrl] = useState();
 
   const { showSnackbar } = useSnackbar();
 
   const onStop = useCallback(
     (blob) => {
       try {
-        setMediaBlobUrl(createBlob(blob));
+        const recordedBlob = createBlob(blob);
+        setOriginalMediaBlobUrl(recordedBlob);
+        setMediaBlobUrl(recordedBlob);
+
+        const recordedFile = createFile(blob, hasVideo);
+        setOriginalFile(recordedFile);
+        setFile(recordedFile);
       } catch (e) {
         trackError('media_recording_capture', e.message);
         showSnackbar({
@@ -114,21 +130,23 @@ function MediaRecordingProvider({ children }) {
           dismissable: true,
         });
       }
-      const FILE_TYPE = hasVideo ? VIDEO_FILE_TYPE : AUDIO_FILE_TYPE;
-      const MIME_TYPE = hasVideo ? VIDEO_MIME_TYPE : AUDIO_MIME_TYPE;
-      const captureType = hasVideo ? 'webcam' : 'audio';
-      const f = blobToFile(
-        blob,
-        `${captureType}-capture-${format(
-          new Date(),
-          'Y-m-d-H-i'
-        )}.${FILE_TYPE}`,
-        MIME_TYPE
-      );
-      setFile(f);
     },
     [showSnackbar, hasVideo]
   );
+
+  const onTrimmed = useCallback((trimmedFile) => {
+    setMediaBlobUrl(createBlob(trimmedFile));
+    setFile(trimmedFile);
+  }, []);
+
+  const {
+    trimData,
+    isTrimming,
+    isProcessingTrim,
+    startTrim,
+    onTrim,
+    resetTrim,
+  } = useTrim({ setDuration, onTrimmed, file: originalFile });
 
   const {
     error,
@@ -317,6 +335,7 @@ function MediaRecordingProvider({ children }) {
         status,
         mediaBlob,
         mediaBlobUrl,
+        originalMediaBlobUrl,
         liveStream,
         file,
         isGif,
@@ -327,6 +346,7 @@ function MediaRecordingProvider({ children }) {
         trimData,
         isTrimming,
         streamNode,
+        isProcessingTrim,
       },
       actions: {
         toggleRecordingMode,
@@ -367,6 +387,7 @@ function MediaRecordingProvider({ children }) {
       status,
       mediaBlob,
       mediaBlobUrl,
+      originalMediaBlobUrl,
       liveStream,
       file,
       isGif,
@@ -378,6 +399,7 @@ function MediaRecordingProvider({ children }) {
       trimData,
       isTrimming,
       streamNode,
+      isProcessingTrim,
       toggleRecordingMode,
       toggleVideo,
       toggleAudio,

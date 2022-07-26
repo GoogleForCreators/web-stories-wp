@@ -35,7 +35,6 @@ import ErrorDialog from './errorDialog';
 import PermissionsDialog from './permissionsDialog';
 import { Wrapper, VideoWrapper, Video, Photo } from './components';
 import Audio from './audio';
-import useTrimmedReplay from './useTrimmedReplay';
 
 function MediaRecording() {
   const {
@@ -43,6 +42,7 @@ function MediaRecording() {
     error,
     mediaBlob,
     mediaBlobUrl,
+    originalMediaBlobUrl,
     liveStream,
     hasVideo,
     hasAudio,
@@ -50,7 +50,6 @@ function MediaRecording() {
     isImageCapture,
     needsPermissions,
     isTrimming,
-    trimData,
     toggleIsGif,
     setStreamNode,
   } = useMediaRecording(({ state, actions }) => ({
@@ -58,6 +57,7 @@ function MediaRecording() {
     error: state.error,
     mediaBlob: state.mediaBlob,
     mediaBlobUrl: state.mediaBlobUrl,
+    originalMediaBlobUrl: state.originalMediaBlobUrl,
     liveStream: state.liveStream,
     hasVideo: state.hasVideo,
     hasAudio: state.hasAudio,
@@ -67,7 +67,6 @@ function MediaRecording() {
       ('idle' === state.status || 'acquiring_media' === state.status) &&
       !state.videoInput,
     isTrimming: state.isTrimming,
-    trimData: state.trimData,
     toggleIsGif: actions.toggleIsGif,
     setStreamNode: actions.setStreamNode,
   }));
@@ -94,8 +93,6 @@ function MediaRecording() {
     [setVideoNode]
   );
 
-  useTrimmedReplay({ videoRef, trimData, isActive: !isTrimming });
-
   if (isFailed) {
     return <ErrorDialog />;
   }
@@ -107,6 +104,7 @@ function MediaRecording() {
   // Only previewing a gif means that the play button is hidden,
   // not while trimming (even if gif)
   const hasPlayButton = !isGif || isTrimming;
+  const mediaSrc = isTrimming ? originalMediaBlobUrl : mediaBlobUrl;
 
   return (
     <>
@@ -122,7 +120,7 @@ function MediaRecording() {
                   <>
                     <Video
                       ref={updateVideoNode}
-                      src={mediaBlobUrl}
+                      src={mediaSrc}
                       muted={isMuted}
                       loop={isGif || isTrimming}
                       tabIndex={0}
