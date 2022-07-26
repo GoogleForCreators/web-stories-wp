@@ -290,18 +290,6 @@ class Experiments extends Service_Base implements HasRequirements {
 				'default'     => true,
 			],
 			/**
-			 * Author: @swissspidy
-			 * Issue: #10930
-			 * Creation date: 2022-03-17
-			 */
-			[
-				'name'        => 'mediaRecording',
-				'label'       => __( 'Media Recording', 'web-stories' ),
-				'description' => __( 'Enable recording from webcam/microphone', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-			/**
 			 * Author: @spacedmonkey
 			 * Issue: #11536
 			 * Creation date: 2022-06-22
