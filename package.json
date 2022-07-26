@@ -33,7 +33,7 @@
   },
   "devDependencies": {
     "@ampproject/toolbox-optimizer": "^2.9.0",
-    "@babel/core": "^7.18.2",
+    "@babel/core": "^7.18.9",
     "@babel/eslint-parser": "^7.18.9",
     "@babel/eslint-plugin": "^7.17.7",
     "@babel/preset-env": "^7.18.2",
@@ -135,7 +135,7 @@
     "karma-sourcemap-loader": "^0.3.8",
     "karma-webpack": "^5.0.0",
     "lint-staged": "^13.0.3",
-    "markdownlint-cli": "^0.32.0",
+    "markdownlint-cli": "^0.32.1",
     "mini-css-extract-plugin": "^2.6.1",
     "mockdate": "^3.0.5",
     "npm-package-json-lint": "^6.3.0",
