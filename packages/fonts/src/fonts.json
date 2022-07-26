@@ -12556,36 +12556,6 @@
     }
   },
   {
-    "family": "Gentium Basic",
-    "fallbacks": ["serif"],
-    "weights": [400, 700],
-    "styles": ["regular", "italic"],
-    "variants": [
-      [0, 400],
-      [1, 400],
-      [0, 700],
-      [1, 700]
-    ],
-    "service": "fonts.google.com",
-    "metrics": {
-      "upm": 2048,
-      "asc": 1790,
-      "des": -580,
-      "tAsc": 1790,
-      "tDes": -580,
-      "tLGap": 0,
-      "wAsc": 1790,
-      "wDes": 580,
-      "xH": 930,
-      "capH": 1260,
-      "yMin": -725,
-      "yMax": 2169,
-      "hAsc": 1790,
-      "hDes": -580,
-      "lGap": 0
-    }
-  },
-  {
     "family": "Gentium Book Basic",
     "fallbacks": ["serif"],
     "weights": [400, 700],
