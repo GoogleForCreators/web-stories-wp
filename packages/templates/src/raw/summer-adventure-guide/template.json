@@ -4307,9 +4307,10 @@
             "topRight": 80,
             "bottomRight": 80,
             "bottomLeft": 80,
-            "locked": true
+            "locked": false
           },
-          "link": { "url": "https://google.com", "icon": null, "desc": null }
+          "link": { "url": "https://google.com", "icon": null, "desc": null },
+          "groupId": "aa8c2007-1cb7-4dbe-860d-fc9e0241924e"
         },
         {
           "opacity": 100,
@@ -4381,7 +4382,8 @@
             "url": "https://google.com",
             "icon": null,
             "desc": "https://google.com"
-          }
+          },
+          "groupId": "aa8c2007-1cb7-4dbe-860d-fc9e0241924e"
         },
         {
           "opacity": 100,
@@ -4397,7 +4399,8 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": { "type": "SummerAdventureShare" },
-          "id": "bfab27f8-6fff-47dc-a220-fa3a919db3ad"
+          "id": "bfab27f8-6fff-47dc-a220-fa3a919db3ad",
+          "groupId": "aa8c2007-1cb7-4dbe-860d-fc9e0241924e"
         }
       ],
       "animations": [
@@ -4473,7 +4476,11 @@
         "642f35b3-7274-4159-bae1-5d246295825e": {
           "name": "Image",
           "isLocked": false,
-          "isCollapsed": true
+          "isCollapsed": false
+        },
+        "aa8c2007-1cb7-4dbe-860d-fc9e0241924e": {
+          "name": "Share",
+          "isLocked": false
         }
       }
     }
