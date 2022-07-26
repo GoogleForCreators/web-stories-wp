@@ -24,20 +24,25 @@ import { fireEvent, screen } from '@testing-library/react';
 import CustomFontsSettings, { TEXT } from '..';
 import { renderWithProviders } from '../../../../testUtils';
 
-describe('Editor Settings: CustomFontsSettings <CustomFontsSettings />', function () {
-  it('should render and select font when clicked', function () {
+describe('Editor Settings: <CustomFontsSettings />', () => {
+  it('should select font when clicked', () => {
     renderWithProviders(
       <CustomFontsSettings
         customFonts={[
           {
-            id: 1,
+            id: 609,
             family: 'Overpass ExtraBold Italic',
             url: 'https://example.com/overpass-extrabold-italic.ttf',
           },
           {
-            id: 2,
+            id: 610,
             family: 'Overpass Regular',
             url: 'https://example.com/overpass-regular.ttf',
+          },
+          {
+            id: 611,
+            family: 'Overpass SemiBold Italic',
+            url: 'https://example.com/overpass-semibold-italic.ttf',
           },
         ]}
         addCustomFont={jest.fn}
@@ -45,9 +50,8 @@ describe('Editor Settings: CustomFontsSettings <CustomFontsSettings />', functio
       />
     );
 
-    const input = screen.getByRole('textbox');
-    expect(input).toBeInTheDocument();
-    expect(input).toBeEnabled();
+    const heading = screen.getByText(TEXT.SECTION_HEADING);
+    expect(heading).toBeInTheDocument();
 
     const textContext = screen.getByText(TEXT.ADD_CONTEXT);
     expect(textContext).toBeInTheDocument();
@@ -55,6 +59,6 @@ describe('Editor Settings: CustomFontsSettings <CustomFontsSettings />', functio
     fireEvent.click(screen.getByText('Overpass Regular'));
 
     const selected = screen.getByRole('option', { selected: true });
-    expect(selected.id).toBe('font-2');
+    expect(selected.id).toBe('font-610');
   });
 });
