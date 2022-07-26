@@ -43,7 +43,8 @@ describe('Background Audio', () => {
   });
 
   describe('Story Background Audio', () => {
-    it('should allow adding background audio', async () => {
+    //eslint-disable-next-line jest/no-disabled-tests -- TODO(#12025): Fix flakey test.
+    it.skip('should allow adding background audio', async () => {
       await createNewStory();
 
       await expect(page).toClick('li[role="tab"]', { text: 'Document' });
