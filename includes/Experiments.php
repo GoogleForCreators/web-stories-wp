@@ -256,17 +256,6 @@ class Experiments extends Service_Base implements HasRequirements {
 				'group'       => 'dashboard',
 			],
 			/**
-			 * Author: @diegovar
-			 * Issue: #3206
-			 * Creation date: 2020-07-15
-			 */
-			[
-				'name'        => 'incrementalSearchDebounceMedia',
-				'label'       => __( 'Incremental Search', 'web-stories' ),
-				'description' => __( 'Enable incremental search in the Upload and Third-party media tabs', 'web-stories' ),
-				'group'       => 'editor',
-			],
-			/**
 			 * Author: @spacedmonkey
 			 * Issue: #798
 			 * Creation date: 2020-11-02
