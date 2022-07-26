@@ -4476,11 +4476,12 @@
         "642f35b3-7274-4159-bae1-5d246295825e": {
           "name": "Image",
           "isLocked": false,
-          "isCollapsed": false
+          "isCollapsed": true
         },
         "aa8c2007-1cb7-4dbe-860d-fc9e0241924e": {
           "name": "Share",
-          "isLocked": false
+          "isLocked": false,
+          "isCollapsed": true
         }
       }
     }
