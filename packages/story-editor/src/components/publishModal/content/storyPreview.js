@@ -28,7 +28,6 @@ import { useCallback, useMemo } from '@googleforcreators/react';
 import { PAGE_RATIO } from '@googleforcreators/units';
 import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
 import { getExtensionsFromMimeType } from '@googleforcreators/media';
-import { useFeature } from 'flagged';
 /**
  * Internal dependencies
  */
@@ -185,7 +184,6 @@ const Publisher = styled(Text).attrs({
 `;
 
 const StoryPreview = () => {
-  const enablePosterHotlinking = useFeature('posterHotlinking');
   const { title, featuredMedia, publisherLogo, updateStory } = useStory(
     ({ state: { story }, actions }) => ({
       title: story?.title,
@@ -252,10 +250,9 @@ const StoryPreview = () => {
     );
   }
 
-  const menuOptions = [
-    enablePosterHotlinking && hasUploadMediaAction && 'upload',
-    enablePosterHotlinking && 'hotlink',
-  ].filter(Boolean);
+  const menuOptions = [hasUploadMediaAction && 'upload', 'hotlink'].filter(
+    Boolean
+  );
 
   return (
     <>
@@ -295,7 +292,7 @@ const StoryPreview = () => {
                     data-testid="story_preview_logo"
                   />
                 )}
-                {(hasUploadMediaAction || enablePosterHotlinking) && (
+                {hasUploadMediaAction && (
                   <StyledMedia
                     onChange={handleChangePoster}
                     title={__('Select as poster image', 'web-stories')}
@@ -319,7 +316,7 @@ const StoryPreview = () => {
                     ariaLabel={__('Poster image', 'web-stories')}
                     onChangeErrorText={posterErrorMessage}
                     imgProps={featuredMedia}
-                    canUpload={hasUploadMediaAction || enablePosterHotlinking}
+                    canUpload={hasUploadMediaAction}
                     variant={MEDIA_VARIANTS.NONE}
                     menuOptions={menuOptions}
                     cropParams={{

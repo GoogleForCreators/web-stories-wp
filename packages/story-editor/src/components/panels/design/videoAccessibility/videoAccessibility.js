@@ -23,7 +23,6 @@ import { getExtensionsFromMimeType } from '@googleforcreators/media';
 import { useCallback, useMemo } from '@googleforcreators/react';
 import styled from 'styled-components';
 import { Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
-import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -64,7 +63,6 @@ const StyledText = styled(Text)`
 `;
 
 function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
-  const enablePosterHotlinking = useFeature('videoPosterHotlinking');
   const resource = useCommonObjectValue(
     selectedElements,
     'resource',
@@ -81,9 +79,9 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
   } = useConfig();
 
   const options = [
-    enablePosterHotlinking && hasUploadMediaAction && 'upload',
-    !enablePosterHotlinking && hasUploadMediaAction && 'edit',
-    enablePosterHotlinking && 'hotlink',
+    hasUploadMediaAction && 'upload',
+    hasUploadMediaAction && 'edit',
+    'hotlink',
     poster !== resource.poster && 'reset',
   ].filter(Boolean);
 
