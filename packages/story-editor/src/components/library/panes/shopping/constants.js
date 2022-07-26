@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,16 +13,5 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/**
- * The flags that can be enabled on the editor for feature development
- * and testing.
- *
- * @enum {string}
- */
-const Flags = {
-  // Flag for using incremental search in media and media3p with a debouncer.
-  INCREMENTAL_SEARCH_DEBOUNCE_MEDIA: 'incrementalSearchDebounceMedia',
-};
-
-export default Flags;
+export const PRODUCT_WIDTH = 25;
+export const PRODUCT_HEIGHT = 25;
