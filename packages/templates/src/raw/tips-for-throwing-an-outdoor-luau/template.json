@@ -2539,7 +2539,7 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": {"r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "type": "image",
           "width": 139,
           "height": 173,
