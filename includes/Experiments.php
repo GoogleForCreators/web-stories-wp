@@ -417,6 +417,7 @@ class Experiments extends Service_Base implements HasRequirements {
 				'label'       => __( 'Stickers', 'web-stories' ),
 				'description' => __( 'Enable Tenor stickers support', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 		];
 	}
