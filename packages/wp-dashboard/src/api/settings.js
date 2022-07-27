@@ -37,6 +37,7 @@ const transformSettingResponse = (response) => ({
   adManagerSlotId: response.web_stories_ad_manager_slot_id,
   adNetwork: response.web_stories_ad_network,
   videoCache: response.web_stories_video_cache,
+  dataRemoval: response.web_stories_data_removal,
   archive: response.web_stories_archive,
   archivePageId: response.web_stories_archive_page_id,
   shoppingProvider: response.web_stories_shopping_provider,
@@ -73,6 +74,7 @@ export function updateSettings(apiPath, queryParams) {
     adManagerSlotId,
     adNetwork,
     videoCache,
+    dataRemoval,
     archive,
     archivePageId,
     shoppingProvider,
@@ -108,6 +110,10 @@ export function updateSettings(apiPath, queryParams) {
 
   if (videoCache !== undefined) {
     query.web_stories_video_cache = Boolean(videoCache);
+  }
+
+  if (dataRemoval !== undefined) {
+    query.web_stories_data_removal = Boolean(dataRemoval);
   }
 
   if (archive !== undefined) {

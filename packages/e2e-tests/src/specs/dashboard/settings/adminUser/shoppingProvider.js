@@ -21,7 +21,9 @@ import { visitSettings } from '@web-stories-wp/e2e-test-utils';
 describe('Shopify settings', () => {
   const shoppingProviderDropdownSelector =
     'button[aria-label="Shopping provider"]';
-  it('should let me see and update shopping provider settings', async () => {
+
+  // eslint-disable-next-line jest/no-disabled-tests  -- TODO(#11994): Fix flakey test.
+  it.skip('should let me see and update shopping provider settings', async () => {
     await visitSettings();
     // Small trick to ensure we scroll to this input.
     const shoppingProviderDropdown = await page.$(
