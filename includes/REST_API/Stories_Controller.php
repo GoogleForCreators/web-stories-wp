@@ -655,9 +655,9 @@ class Stories_Controller extends Stories_Base_Controller {
 	 * @since 1.23.2
 	 *
 	 * @param WP_Post $post Post Object.
-	 * @return array{url:string, width: int, height: int, needsProxy: bool, id?: int} Story poster data.
+	 * @return array{url:string, width: int, height: int, needsProxy: bool, id?: int}|null Story poster data.
 	 */
-	private function get_story_poster( WP_Post $post ): array {
+	private function get_story_poster( WP_Post $post ): ?array {
 		$thumbnail_id = (int) get_post_thumbnail_id( $post );
 
 		if ( 0 !== $thumbnail_id ) {
