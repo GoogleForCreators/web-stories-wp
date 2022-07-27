@@ -79,7 +79,7 @@ const getStorySaveData = (
             height: featuredMedia.height,
             needsProxy: featuredMedia.needsProxy,
           }
-        : undefined,
+        : null, // null ensures the meta value will be deleted.
     },
     publisher_logo: publisherLogo,
     content: encodeMarkup ? base64Encode(content) : content,
