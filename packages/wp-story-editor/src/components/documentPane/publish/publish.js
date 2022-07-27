@@ -363,7 +363,7 @@ function PublishPanel({ nameOverride }) {
                 ariaLabel={__('Poster image', 'web-stories')}
                 onChangeErrorText={posterErrorMessage}
                 imgProps={featuredMedia}
-                canUpload={hasUploadMediaAction}
+                canUpload
                 menuOptions={menuOptions}
               />
             </MediaWrapper>

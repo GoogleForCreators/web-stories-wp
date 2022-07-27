@@ -312,7 +312,7 @@ const StoryPreview = () => {
                   ariaLabel={__('Poster image', 'web-stories')}
                   onChangeErrorText={posterErrorMessage}
                   imgProps={featuredMedia}
-                  canUpload={hasUploadMediaAction}
+                  canUpload
                   variant={MEDIA_VARIANTS.NONE}
                   menuOptions={menuOptions}
                   cropParams={{
