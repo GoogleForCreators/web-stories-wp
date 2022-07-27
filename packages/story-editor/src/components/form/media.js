@@ -172,7 +172,7 @@ function MediaInput(
   );
 }
 
-const MediaInputWithRef = MediaInput ? forwardRef(MediaInput) : null;
+const MediaInputWithRef = forwardRef(MediaInput);
 
 MediaInputField.propTypes = {
   open: PropTypes.func,
