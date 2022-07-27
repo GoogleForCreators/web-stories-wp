@@ -421,7 +421,8 @@ const webStoriesBlock = {
   },
   plugins: [
     ...sharedConfig.plugins,
-
+    // React Fast Refresh.
+    !isProduction && new ReactRefreshWebpackPlugin(),
     new WebpackBar({
       name: 'Web Stories Block',
       color: '#357BB5',
@@ -437,6 +438,8 @@ const activationNotice = {
   },
   plugins: [
     ...sharedConfig.plugins,
+    // React Fast Refresh.
+    !isProduction && new ReactRefreshWebpackPlugin(),
     new WebpackBar({
       name: 'Activation Notice',
       color: '#fcd8ba',

@@ -27,7 +27,8 @@ import {
   uploadFile,
 } from '@web-stories-wp/e2e-test-utils';
 
-describe('Inserting WebM Video', () => {
+// eslint-disable-next-line jest/no-disabled-tests -- TODO(#11959): Fix flakey test
+describe.skip('Inserting WebM Video', () => {
   // Firefox does not yet support file uploads with Puppeteer. See https://bugzilla.mozilla.org/show_bug.cgi?id=1553847.
   skipSuiteOnFirefox();
 

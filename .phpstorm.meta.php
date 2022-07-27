@@ -30,6 +30,7 @@ namespace PHPSTORM_META {
 			'integrations.cfi'             => \Google\Web_Stories\Integrations\Conditional_Featured_Image::class,
 			'integrations.sitekit'         => \Google\Web_Stories\Integrations\Site_Kit::class,
 			'integrations.themes_support'  => \Google\Web_Stories\Integrations\Core_Themes_Support::class,
+			'integrations.shortpixel'      => \Google\Web_Stories\Integrations\ShortPixel::class,
 			'imgareaselect_patch'          => \Google\Web_Stories\Admin\ImgAreaSelect_Patch::class,
 			'kses'                         => \Google\Web_Stories\KSES::class,
 			'media.base_color'             => \Google\Web_Stories\Media\Base_Color::class,

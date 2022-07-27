@@ -1,4 +1,5 @@
 name: Scorecards supply-chain security
+
 on:
   # Only the default branch is supported.
   branch_protection_rule:
@@ -7,8 +8,8 @@ on:
   push:
     branches: [main]
 
-# Declare default permissions as read only.
-permissions: read-all
+permissions:
+  contents: read
 
 jobs:
   analysis:
@@ -21,13 +22,18 @@ jobs:
       contents: read
 
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@74b568e8591fbb3115c70f3436a0c6b0909a8504
+        with:
+          egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
+
       - name: 'Checkout code'
-        uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579 # v2.4.0
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
         with:
           persist-credentials: false
 
       - name: 'Run analysis'
-        uses: ossf/scorecard-action@ce330fde6b1a5c9c75b417e7efc510b822a35564 # v1.0.4
+        uses: ossf/scorecard-action@ce330fde6b1a5c9c75b417e7efc510b822a35564
         with:
           results_file: results.sarif
           results_format: sarif
@@ -40,7 +46,7 @@ jobs:
 
       # Upload the results as artifacts (optional).
       - name: 'Upload artifact'
-        uses: actions/upload-artifact@v3 # v2.3.1
+        uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8
         with:
           name: SARIF file
           path: results.sarif
@@ -48,6 +54,6 @@ jobs:
 
       # Upload the results to GitHub's code scanning dashboard.
       - name: 'Upload to code-scanning'
-        uses: github/codeql-action/upload-sarif@v2 # v1.0.26
+        uses: github/codeql-action/upload-sarif@3e7e3b32d0fb8283594bb0a76cc60a00918b0969
         with:
           sarif_file: results.sarif

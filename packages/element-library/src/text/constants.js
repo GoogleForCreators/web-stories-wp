@@ -69,6 +69,7 @@ export const panels = [
   PanelTypes.ELEMENT_ALIGNMENT,
   PanelTypes.SIZE_POSITION,
   PanelTypes.TEXT_STYLE,
+  PanelTypes.TEXT_ACCESSIBILITY,
   PanelTypes.BORDER,
   PanelTypes.LINK,
   PanelTypes.ANIMATION,

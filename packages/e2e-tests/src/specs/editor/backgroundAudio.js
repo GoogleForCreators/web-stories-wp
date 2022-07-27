@@ -47,7 +47,8 @@ describe('Background Audio', () => {
   });
 
   describe('Story Background Audio', () => {
-    it('should allow adding background audio', async () => {
+    //eslint-disable-next-line jest/no-disabled-tests -- TODO(#12025): Fix flakey test.
+    it.skip('should allow adding background audio', async () => {
       await createNewStory();
 
       await expect(page).toClick('li[role="tab"]', { text: 'Document' });
@@ -68,7 +69,7 @@ describe('Background Audio', () => {
         visible: true,
       });
 
-      const fileName = await uploadFile('audio.mp3');
+      const fileName = await uploadFile('audio.mp3', false);
       uploadedFiles.push(fileName);
 
       await expect(page).toClick('button', { text: 'Select audio file' });
@@ -105,7 +106,7 @@ describe('Background Audio', () => {
         visible: true,
       });
 
-      const fileName = await uploadFile('audio.mp3');
+      const fileName = await uploadFile('audio.mp3', false);
       uploadedFiles.push(fileName);
 
       await expect(page).toClick('button', { text: 'Select audio file' });
@@ -138,7 +139,7 @@ describe('Background Audio', () => {
         visible: true,
       });
 
-      const fileName = await uploadFile('audio.mp3');
+      const fileName = await uploadFile('audio.mp3', false);
       uploadedFiles.push(fileName);
 
       await expect(page).toClick('button', { text: 'Select audio file' });
@@ -229,7 +230,7 @@ describe('Background Audio', () => {
             visible: true,
           });
 
-          const fileName = await uploadFile('audio.mp3');
+          const fileName = await uploadFile('audio.mp3', false);
           uploadedFiles.push(fileName);
 
           await expect(page).toClick('button', { text: 'Select audio file' });
@@ -287,7 +288,7 @@ describe('Background Audio', () => {
           visible: true,
         });
 
-        const fileName = await uploadFile('audio.mp3');
+        const fileName = await uploadFile('audio.mp3', false);
         uploadedFiles.push(fileName);
 
         await expect(page).toClick('button', { text: 'Select audio file' });

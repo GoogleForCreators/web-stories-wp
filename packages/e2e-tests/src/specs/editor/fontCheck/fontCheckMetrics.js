@@ -123,11 +123,13 @@ describe('Font Check Metrics', () => {
       mockResponse = undefined;
     });
 
-    afterAll(() => {
+    afterAll(async () => {
+      await page.setRequestInterception(false);
       stopRequestInterception();
     });
 
-    it('should receive updated font metrics and not alter history', async () => {
+    // eslint-disable-next-line jest/no-disabled-tests -- TODO(#11978): Fix flakey test.
+    it.skip('should receive updated font metrics and not alter history', async () => {
       const storyTitle = 'Font Check Metrics';
       await addStoryWithFont(storyTitle);
 

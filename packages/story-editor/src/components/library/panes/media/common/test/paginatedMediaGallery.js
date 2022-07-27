@@ -81,6 +81,11 @@ describe('paginatedMediaGallery', () => {
   const mockUseCanvas = useCanvas;
   const mockUseCanvasBoundingBox = useCanvasBoundingBox;
 
+  beforeAll(() => {
+    // https://stackoverflow.com/questions/53271193/typeerror-scrollintoview-is-not-a-function
+    window.HTMLElement.prototype.scrollTo = () => {};
+  });
+
   beforeEach(() => {
     mockUseCanvas.mockReturnValue(mockCanvasContext);
     mockUseCanvasBoundingBox.mockReturnValue({ x: 0, y: 0 });
@@ -92,11 +97,6 @@ describe('paginatedMediaGallery', () => {
       isCurrentResourceUploading: jest.fn(),
       isNewResourceProcessing: jest.fn(),
     });
-  });
-
-  beforeAll(() => {
-    // https://stackoverflow.com/questions/53271193/typeerror-scrollintoview-is-not-a-function
-    window.HTMLElement.prototype.scrollTo = () => {};
   });
 
   it('should render attribution when media is present', () => {

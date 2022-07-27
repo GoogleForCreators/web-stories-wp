@@ -42,7 +42,7 @@
     "@googleforcreators/media": "*",
     "@googleforcreators/react": "*",
     "@googleforcreators/units": "*",
-    "flagged": "^2.0.3",
+    "flagged": "^2.0.5",
     "prop-types": "^15.8.1",
     "styled-components": "^5.3.3",
     "uuid": "^8.3.2",

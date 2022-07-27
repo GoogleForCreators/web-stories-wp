@@ -26,7 +26,8 @@ import { addAllowedErrorMessage } from '../../config/bootstrap';
 
 // TODO: Use request interception instead of WP plugins once supported in Firefox.
 // See https://bugzilla.mozilla.org/show_bug.cgi?id=1587857
-describe('Status Check', () => {
+// eslint-disable-next-line jest/no-disabled-tests -- TODO(#11991): Fix flakey test.
+describe.skip('Status Check', () => {
   let removeErrorMessage;
 
   beforeAll(() => {

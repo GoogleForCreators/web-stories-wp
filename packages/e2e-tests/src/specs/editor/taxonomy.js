@@ -120,7 +120,8 @@ describe('Taxonomies', () => {
       // created in the background via the REST API already.
     });
 
-    describe('Administrator', () => {
+    // eslint-disable-next-line jest/no-disabled-tests -- TODO(#12026): Fix flakey test.
+    describe.skip('Administrator', () => {
       it('should be able to add new categories', async () => {
         await createNewStory();
         await insertStoryTitle('Taxonomies - Categories - Admin');
@@ -136,7 +137,7 @@ describe('Taxonomies', () => {
         await publishStory();
 
         // Refresh page to verify that the assignments persisted.
-        await page.reload();
+        await page.reload({ waitUntil: 'networkidle2' });
         await expect(page).toMatchElement('input[placeholder="Add title"]');
 
         await goToAndExpandTaxonomyPanel();

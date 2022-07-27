@@ -67,11 +67,19 @@ const getStorySaveData = (
       currentStoryStyles,
       backgroundAudio,
     },
-    featured_media: featuredMedia.id,
+    featured_media: !featuredMedia.isExternal ? featuredMedia.id : null,
     style_presets: globalStoryStyles,
     meta: {
       web_stories_publisher_logo: publisherLogo?.id,
       web_stories_products: products,
+      web_stories_poster: featuredMedia.isExternal
+        ? {
+            url: featuredMedia.url,
+            width: featuredMedia.width,
+            height: featuredMedia.height,
+            needsProxy: featuredMedia.needsProxy,
+          }
+        : undefined,
     },
     publisher_logo: publisherLogo,
     content: encodeMarkup ? base64Encode(content) : content,
@@ -101,6 +109,7 @@ export function saveStoryById(config, story) {
       'preview_link',
       'edit_link',
       'embed_post_link',
+      'meta.web_stories_poster',
     ].join(','),
     _embed: STORY_EMBED,
   });
@@ -110,16 +119,43 @@ export function saveStoryById(config, story) {
     data: storySaveData,
     method: 'POST',
   }).then((data) => {
-    const { _embedded: embedded = {}, ...rest } = data;
+    const { _embedded: embedded = {}, meta, ...rest } = data;
+
+    let featuredMedia = {
+      id: 0,
+      height: 0,
+      width: 0,
+      url: '',
+      needsProxy: false,
+      isExternal: false,
+    };
+
+    const externalPoster = meta['web_stories_poster'];
+    const postThumbnail = embedded?.['wp:featuredmedia']?.[0];
+
+    if (postThumbnail?.id) {
+      featuredMedia = {
+        id: postThumbnail.id,
+        height: postThumbnail.media_details?.height || 0,
+        width: postThumbnail.media_details?.width || 0,
+        url: postThumbnail.source_url || '',
+        needsProxy: false,
+        isExternal: false,
+      };
+    } else if (externalPoster?.url) {
+      featuredMedia = {
+        id: 0,
+        height: externalPoster.height || 0,
+        width: externalPoster.width || 0,
+        url: externalPoster.url,
+        needsProxy: Boolean(externalPoster.needsProxy),
+        isExternal: true,
+      };
+    }
 
     return {
       ...snakeToCamelCaseObjectKeys(rest),
-      featuredMedia: {
-        id: embedded?.['wp:featuredmedia']?.[0].id || 0,
-        height: embedded?.['wp:featuredmedia']?.[0]?.media_details?.height || 0,
-        width: embedded?.['wp:featuredmedia']?.[0]?.media_details?.width || 0,
-        url: embedded?.['wp:featuredmedia']?.[0]?.source_url || '',
-      },
+      featuredMedia,
     };
   });
 }

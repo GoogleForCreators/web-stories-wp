@@ -33,7 +33,6 @@ import {
   createBlob,
   getFileName,
   getImageDimensions,
-  isAnimatedGif,
 } from '@googleforcreators/media';
 
 /**
@@ -43,6 +42,7 @@ import { useUploader } from '../../../uploader';
 import { noop } from '../../../../utils/noop';
 import useUploadVideoFrame from '../useUploadVideoFrame';
 import useFFmpeg from '../useFFmpeg';
+import useMediaInfo from '../useMediaInfo';
 import getResourceFromLocalFile from '../getResourceFromLocalFile';
 import * as reducer from './reducer';
 import { ITEM_STATUS } from './constants';
@@ -61,7 +61,7 @@ const initialState = {
  *
  * A path through the queue could look like this:
  *
- * PENDING -> TRANSCODING -> TRANSCODED -> TRIMMING -> TRIMMED -> MUTING -> MUTED -> UPLOADING -> UPLOADED -> FINISHED
+ * PENDING -> PREPARING -> PENDING TRANSCODING -> TRANSCODING -> TRANSCODED -> TRIMMING -> TRIMMED -> MUTING -> MUTED -> UPLOADING -> UPLOADED -> FINISHED
  *
  * @return {{state: {Object}, actions: {Object}}} Media queue state.
  */
@@ -78,6 +78,7 @@ function useMediaUploadQueue() {
     convertGifToVideo,
     trimVideo,
   } = useFFmpeg();
+  const { isConsideredOptimized } = useMediaInfo();
 
   const [state, actions] = useReduction(initialState, reducer);
   const { uploadVideoPoster } = useUploadVideoFrame({
@@ -89,6 +90,8 @@ function useMediaUploadQueue() {
   const currentPosterGenerationItem = useRef(null);
 
   const {
+    prepareItem,
+    prepareForTranscoding,
     startUploading,
     finishUploading,
     cancelUploading,
@@ -210,6 +213,8 @@ function useMediaUploadQueue() {
 
       startTranscoding({ id });
 
+      currentTranscodingItem.current = id;
+
       try {
         const newFile = await convertGifToVideo(file);
 
@@ -237,6 +242,8 @@ function useMediaUploadQueue() {
       const { id, file, additionalData = {}, trimData } = item;
 
       startTrimming({ id });
+
+      currentTranscodingItem.current = id;
 
       try {
         const newFile = await trimVideo(file, trimData.start, trimData.end);
@@ -268,6 +275,8 @@ function useMediaUploadQueue() {
 
       startMuting({ id });
 
+      currentTranscodingItem.current = id;
+
       try {
         const newFile = await stripAudioFromVideo(file);
 
@@ -294,6 +303,8 @@ function useMediaUploadQueue() {
       const { id, file, additionalData = {} } = item;
 
       startTranscoding({ id });
+
+      currentTranscodingItem.current = id;
 
       try {
         const newFile = await transcodeVideo(file);
@@ -425,113 +436,126 @@ function useMediaUploadQueue() {
 
   // Upload files to server, optionally first transcoding them.
   useEffect(() => {
-    (async () => {
-      await Promise.all(
-        /**
-         * Uploads a single pending item.
-         *
-         * @param {Object} item Queue item.
-         * @param {File} item.file File object.
-         * @return {Promise<void>}
-         */
-        state.queue.map(async (item) => {
-          const {
-            id,
-            file,
-            state: itemState,
-            resource,
-            additionalData = {},
-            muteVideo,
-            trimData,
-          } = item;
-          if (ITEM_STATUS.PENDING !== itemState) {
-            return;
-          }
+    state.queue.forEach(
+      /**
+       * Uploads a single pending item.
+       *
+       * @param {Object} item Queue item.
+       * @param {File} item.file File object.
+       * @param {Object} item.additionalData Additional Data object.
+       */
+      async (item) => {
+        const { id, file, resource, isAnimatedGif, state: itemState } = item;
+        if (ITEM_STATUS.PENDING !== itemState) {
+          return;
+        }
+
+        // Changing item state so that an item is never processed twice
+        // in this effect.
+        prepareItem({ id });
+
+        const isVideo = file.type.startsWith('video/');
+
+        if (isVideo) {
+          // TODO: Consider always using getFileInfo() to have more accurate audio information.
 
           if (
-            resource.type === 'video' &&
-            resource.isMuted !== null &&
-            additionalData?.isMuted === undefined
+            item.additionalData.mediaSource !== 'recording' &&
+            (await isConsideredOptimized(resource, file))
           ) {
-            additionalData.isMuted = resource.isMuted;
-          }
+            // Do not override pre-existing mediaSource if provided,
+            // for example by media recording.
+            if (!item.additionalData.mediaSource) {
+              item.additionalData.mediaSource = 'video-optimization';
+            }
 
-          if (resource?.baseColor) {
-            additionalData.meta = {
-              ...additionalData.meta,
-              baseColor: resource.baseColor,
-            };
-          }
-          // Do not copy over blurhash for new trimmed videos, poster might be different.
-          if (resource?.blurHash && !resource?.trimData) {
-            additionalData.meta = {
-              ...additionalData.meta,
-              blurHash: resource.blurHash,
-            };
-          }
+            uploadItem(item);
 
-          const isGifThatNeedsTranscoding =
-            resource.mimeType === 'image/gif' &&
-            isAnimatedGif(await file.arrayBuffer());
-
-          const needsTranscoding =
-            isTranscodingEnabled &&
-            (isGifThatNeedsTranscoding || canTranscodeFile(file));
-
-          const isAlreadyTranscoding = currentTranscodingItem.current !== null;
-
-          // Prevent simultaneous transcoding processes.
-          // See https://github.com/googleforcreators/web-stories-wp/issues/8779
-          if (needsTranscoding && isAlreadyTranscoding) {
             return;
           }
+        }
 
-          if (isTranscodingEnabled) {
-            if (isGifThatNeedsTranscoding) {
-              currentTranscodingItem.current = id;
-              convertGifItem(item);
-              return;
-            }
-
-            if (canTranscodeFile(file)) {
-              currentTranscodingItem.current = id;
-
-              if (trimData) {
-                trimVideoItem(item);
-                return;
-              }
-
-              if (muteVideo) {
-                muteVideoItem(item);
-                return;
-              }
-
-              // Transcode/Optimize videos before upload.
-              // TODO: Only transcode & optimize video if needed (criteria TBD).
-              // Probably need to use FFmpeg first to get more information (dimensions, fps, etc.)
-              optimizeVideoItem(item);
-              return;
-            }
-          }
-
+        if (!isTranscodingEnabled) {
           uploadItem(item);
-        })
-      );
-    })();
+
+          return;
+        }
+
+        const needsTranscoding = isAnimatedGif || canTranscodeFile(file);
+
+        if (!needsTranscoding) {
+          uploadItem(item);
+
+          return;
+        }
+
+        prepareForTranscoding({ id });
+      }
+    );
   }, [
     state.queue,
+    prepareItem,
+    prepareForTranscoding,
+    isConsideredOptimized,
+    uploadItem,
     isTranscodingEnabled,
     canTranscodeFile,
+  ]);
+
+  // Transcode items sequentially.
+  useEffect(() => {
+    state.queue.forEach(
+      /**
+       * Uploads a single pending item.
+       *
+       * @param {Object} item Queue item.
+       * @param {File} item.file File object.
+       * @param {Object} item.additionalData Additional Data object.
+       */
+      (item) => {
+        const { muteVideo, trimData, isAnimatedGif, state: itemState } = item;
+        if (ITEM_STATUS.PENDING_TRANSCODING !== itemState) {
+          return;
+        }
+
+        const isAlreadyTranscoding = currentTranscodingItem.current !== null;
+
+        // Prevent simultaneous transcoding processes.
+        // See https://github.com/googleforcreators/web-stories-wp/issues/8779
+        if (isAlreadyTranscoding) {
+          return;
+        }
+
+        if (isAnimatedGif) {
+          convertGifItem(item);
+          return;
+        }
+
+        if (trimData) {
+          trimVideoItem(item);
+          return;
+        }
+
+        if (muteVideo) {
+          muteVideoItem(item);
+          return;
+        }
+
+        optimizeVideoItem(item);
+      }
+    );
+  }, [
+    state.queue,
+    prepareItem,
+    optimizeVideoItem,
     convertGifItem,
     trimVideoItem,
     muteVideoItem,
-    optimizeVideoItem,
-    uploadItem,
   ]);
 
   // Upload freshly transcoded files to server.
   useEffect(() => {
-    state.queue.map((item) => {
+    state.queue.forEach((item) => {
       const { state: itemState } = item;
       if (
         ![
@@ -686,6 +710,7 @@ function useMediaUploadQueue() {
       state.queue.some(
         (item) =>
           [
+            ITEM_STATUS.PENDING_TRANSCODING,
             ITEM_STATUS.TRANSCODING,
             ITEM_STATUS.TRIMMING,
             ITEM_STATUS.MUTING,
@@ -699,7 +724,7 @@ function useMediaUploadQueue() {
      * transcoding/muting/trimming has already happened, or when it is
      * still pending to be processed.
      *
-     * Checks for both `resource.id` as well as `previousResourceId`,
+     * Checks for both `resource.id` and `previousResourceId`,
      * since after upload to the backend, the resource's temporary uuid
      * will be replaced by the permanent ID from the backend.
      *
@@ -711,6 +736,7 @@ function useMediaUploadQueue() {
         (item) =>
           [
             ITEM_STATUS.PENDING,
+            ITEM_STATUS.PREPARING,
             ITEM_STATUS.UPLOADING,
             ITEM_STATUS.UPLOADED,
             ITEM_STATUS.FINISHED,

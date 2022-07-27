@@ -58,6 +58,9 @@ const keys = {
   MEDIA3P: 'MEDIA3P',
   TEXT_SET: 'TEXT',
   PAGE_TEMPLATES: 'PAGE_TEMPLATES',
+
+  // DOCUMENT
+  PAGE_BACKGROUND_AUDIO: 'PAGE_BACKGROUND_AUDIO',
 };
 
 export const STATES = {
@@ -83,6 +86,10 @@ export const STATES = {
   [keys.EXCERPT]: {
     focus: true,
     tab: DOCUMENT,
+  },
+  [keys.PAGE_BACKGROUND_AUDIO]: {
+    focus: true,
+    tab: STYLE,
   },
   [keys.CAPTIONS]: {
     focus: true,

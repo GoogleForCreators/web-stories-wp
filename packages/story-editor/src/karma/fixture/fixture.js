@@ -384,9 +384,7 @@ export class Fixture {
       const font = '12px "Google Sans"';
       const fonts = weights.map((weight) => `${weight} ${font}`);
       await Promise.all(
-        fonts.map((thisFont) => {
-          document.fonts.load(thisFont, '');
-        })
+        fonts.map((thisFont) => document.fonts.load(thisFont, ''))
       );
       fonts.forEach((thisFont) => {
         if (!document.fonts.check(thisFont, '')) {
@@ -680,16 +678,23 @@ class APIProviderFixture {
         []
       );
 
-      const getHotlinkInfo = useCallback(
-        () =>
-          asyncResponse({
-            ext: 'jpg',
-            mimeType: 'image/jpeg',
-            type: 'image',
-            fileName: 'example.jpg',
-          }),
-        []
-      );
+      const getHotlinkInfo = useCallback((link) => {
+        if (link.endsWith('mp3')) {
+          return asyncResponse({
+            ext: 'mp3',
+            mimeType: 'audio/mp3',
+            type: 'audio',
+            fileName: 'example.mp3',
+          });
+        }
+
+        return asyncResponse({
+          ext: 'jpg',
+          mimeType: 'image/jpeg',
+          type: 'image',
+          fileName: 'example.jpg',
+        });
+      }, []);
 
       const getProxyUrl = useCallback(
         () => 'http://localhost:9876/__static__/saturn.jpg',

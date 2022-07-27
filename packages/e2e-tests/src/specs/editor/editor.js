@@ -84,7 +84,8 @@ describe('Story Editor', () => {
     });
   });
 
-  it('should preview story with development mode', async () => {
+  //eslint-disable-next-line jest/no-disabled-tests -- TODO(#12023): Fix flakey test.
+  it.skip('should preview story with development mode', async () => {
     await createNewStory();
 
     const editorPage = page;

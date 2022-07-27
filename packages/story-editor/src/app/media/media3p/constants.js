@@ -18,10 +18,12 @@ export const ContentType = {
   IMAGE: 'image',
   VIDEO: 'video',
   GIF: 'gif',
+  STICKER: 'sticker',
 };
 
 export const ProviderType = {
   UNSPLASH: 'unsplash',
   COVERR: 'coverr',
   TENOR: 'tenor',
+  TENOR_STICKERS: 'tenor_stickers',
 };

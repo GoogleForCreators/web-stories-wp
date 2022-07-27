@@ -79,10 +79,12 @@ function BackgroundAudioPanel({ nameOverride }) {
           )}
         </HelperText>
       </Row>
-      <BackgroundAudioPanelContent
-        backgroundAudio={backgroundAudio}
-        updateBackgroundAudio={updateBackgroundAudio}
-      />
+      <Row>
+        <BackgroundAudioPanelContent
+          backgroundAudio={backgroundAudio}
+          updateBackgroundAudio={updateBackgroundAudio}
+        />
+      </Row>
     </SimplePanel>
   );
 }

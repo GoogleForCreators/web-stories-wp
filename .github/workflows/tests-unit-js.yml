@@ -25,6 +25,9 @@ on:
       - 'patches/**'
       - 'packages/fonts/src/fonts.json'
 
+permissions:
+  contents: read
+
 # Cancels all previous workflow runs for pull requests that have not completed.
 concurrency:
   # The concurrency group contains the workflow name and the branch name for pull requests
@@ -42,17 +45,22 @@ jobs:
         # We want to split up the tests into 2 parts running in parallel.
         shard: ['1/2', '2/2']
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@74b568e8591fbb3115c70f3436a0c6b0909a8504
+        with:
+          egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
+
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
 
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@2fddd8803e2f5c9604345a0b591c3020ee971a93
         with:
           node-version-file: '.nvmrc'
           cache: npm
 
       - name: Setup Jest cache
-        uses: actions/cache@v3
+        uses: actions/cache@0865c47f36e68161719c5b124609996bb5c40129
         with:
           path: .jest-cache
           key: ${{ runner.os }}-${{ steps.nvm.outputs.NVMRC }}-jest
@@ -79,7 +87,7 @@ jobs:
           AMP_VALIDATOR_FILE: ${{ steps.amp_validator.outputs.validator_file }}
 
       - name: Upload code coverage report
-        uses: codecov/codecov-action@v3.1.0
+        uses: codecov/codecov-action@81cd2dc8148241f03f5839d295e000b8f761e378
         with:
           file: build/logs/lcov.info
           flags: unittests

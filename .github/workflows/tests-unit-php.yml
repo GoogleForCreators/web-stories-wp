@@ -27,6 +27,9 @@ on:
       - 'includes/data/**'
       - '.github/workflows/tests-unit-php.yml'
 
+permissions:
+  contents: read
+
 # Cancels all previous workflow runs for pull requests that have not completed.
 concurrency:
   # The concurrency group contains the workflow name and the branch name for pull requests
@@ -48,7 +51,7 @@ jobs:
           MYSQL_DATABASE: wordpress_test
         ports:
           - 3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3 --restart=always
     continue-on-error: ${{ matrix.experimental }}
     strategy:
       matrix:
@@ -81,21 +84,26 @@ jobs:
             experimental: true
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+      - name: Harden Runner
+        uses: step-security/harden-runner@74b568e8591fbb3115c70f3436a0c6b0909a8504
+        with:
+          egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
-      # PHP-Scoper only works on PHP 7.2+ and we need to prefix our dependencies to accurately test them.
+      - name: Checkout
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
+
+      # PHP-Scoper only works on PHP 7.4+ and we need to prefix our dependencies to accurately test them.
       # So we temporarily switch PHP versions, do a full install and then remove the package.
       # Then switch back to the PHP version we want to test and delete the vendor directory.
 
       - name: Setup PHP 8.0
-        uses: shivammathur/setup-php@v2
+        uses: shivammathur/setup-php@945c34c1751f6d2c8106ec0feba5662fcbc1c943
         with:
           php-version: '8.0'
           tools: composer
 
       - name: Install PHP dependencies
-        uses: 'ramsey/composer-install@v1'
+        uses: ramsey/composer-install@f680dac46551dffb2234a240d65ae806c2999dd6
         with:
           composer-options: '--prefer-dist --no-progress --no-interaction'
 
@@ -103,7 +111,7 @@ jobs:
         run: rm -rf vendor/*
 
       - name: Setup PHP
-        uses: shivammathur/setup-php@v2
+        uses: shivammathur/setup-php@945c34c1751f6d2c8106ec0feba5662fcbc1c943
         with:
           php-version: ${{ matrix.php }}
           extensions: mysql
@@ -111,7 +119,7 @@ jobs:
           tools: composer, cs2pr
 
       - name: Install PHP dependencies
-        uses: 'ramsey/composer-install@v1'
+        uses: ramsey/composer-install@f680dac46551dffb2234a240d65ae806c2999dd6
         with:
           composer-options: '--prefer-dist --no-progress --no-interaction --no-scripts'
 
@@ -183,7 +191,7 @@ jobs:
         if: ${{ matrix.random }}
 
       - name: Upload code coverage report
-        uses: codecov/codecov-action@v3.1.0
+        uses: codecov/codecov-action@81cd2dc8148241f03f5839d295e000b8f761e378
         with:
           file: build/logs/*.xml
         if: ${{ matrix.coverage }}

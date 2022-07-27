@@ -87,7 +87,8 @@ describe('Pre-Publish Checklist : Admin User', () => {
     // Firefox does not yet support file uploads with Puppeteer. See https://bugzilla.mozilla.org/show_bug.cgi?id=1553847.
     skipSuiteOnFirefox();
 
-    it('should show cards related to poster image issues', async () => {
+    //eslint-disable-next-line jest/no-disabled-tests -- TODO(#11977): Fix flakey test.
+    it.skip('should show cards related to poster image issues', async () => {
       await addTextElement();
       await addPages(3);
 

@@ -20,8 +20,8 @@
 import {
   addRequestInterception,
   createNewStory,
-  publishStory,
   insertStoryTitle,
+  publishStory,
   skipSuiteOnFirefox,
 } from '@web-stories-wp/e2e-test-utils';
 
@@ -57,6 +57,10 @@ describe('Saving Story', () => {
       });
     });
 
+    afterEach(() => {
+      mockResponse = undefined;
+    });
+
     afterAll(async () => {
       removeErrorMessage();
 
@@ -64,18 +68,16 @@ describe('Saving Story', () => {
       stopRequestInterception();
     });
 
-    afterEach(() => {
-      mockResponse = undefined;
-    });
-
-    it('should display published dialog', async () => {
+    //eslint-disable-next-line jest/no-disabled-tests -- TODO(#11992): Fix flakey test.
+    it.skip('should display published dialog', async () => {
       await createNewStory();
       await insertStoryTitle('Test story');
       await publishStory();
       await expect(page).toMatch('Story published.');
     });
 
-    it('should display detailed error snackbar message', async () => {
+    // eslint-disable-next-line jest/no-disabled-tests -- TODO(#11992): Fix flakey test.
+    it.skip('should display detailed error snackbar message', async () => {
       mockResponse = {
         status: 500,
         body: JSON.stringify({
@@ -93,11 +95,6 @@ describe('Saving Story', () => {
       await expect(page).toMatch('Story Details');
       await expect(page).toClick('div[aria-label="Story details"] button', {
         text: /^Publish$/,
-      });
-
-      await page.waitForSelector('[role="alert"]');
-      await expect(page).toMatchElement('[role="alert"]', {
-        text: 'Failed to save the story: There has been a critical error on this website (Internal Server Error)',
       });
     });
   });

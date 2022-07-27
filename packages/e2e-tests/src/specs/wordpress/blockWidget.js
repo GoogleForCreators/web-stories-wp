@@ -44,12 +44,12 @@ describe('Web Stories Widget Block', () => {
     );
   });
 
-  afterAll(() => {
-    removeErrorMessage();
-  });
-
   afterEach(async () => {
     await deleteWidgets();
+  });
+
+  afterAll(() => {
+    removeErrorMessage();
   });
 
   describe('Regular Block', () => {
@@ -104,8 +104,7 @@ describe('Web Stories Widget Block', () => {
 
     minWPVersionRequired('5.8');
 
-    // TODO(#7748): Investigate flakey test.
-    //eslint-disable-next-line jest/no-disabled-tests
+    // eslint-disable-next-line jest/no-disabled-tests -- TODO(#11931): Fix flakey test.
     it.skip('should insert a legacy Web Stories widget', async () => {
       await activatePlugin('classic-widgets');
 

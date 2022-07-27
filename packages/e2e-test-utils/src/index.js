@@ -45,7 +45,6 @@ export {
   addCustomFont,
   removeCustomFont,
   getFontList,
-  getSelectedFont,
   removeAllFonts,
 } from './customFonts';
 

@@ -33,19 +33,11 @@ import {
  */
 import { addAllowedErrorMessage } from '../../config/bootstrap.js';
 
-describe('Publishing Flow', () => {
+//eslint-disable-next-line jest/no-disabled-tests -- TODO(#11970): Fix flakey test.
+describe.skip('Publishing Flow', () => {
   let uploadedFiles;
   let removeCORSErrorMessage;
   let removeResourceErrorMessage;
-
-  beforeEach(() => (uploadedFiles = []));
-
-  afterEach(async () => {
-    for (const file of uploadedFiles) {
-      // eslint-disable-next-line no-await-in-loop
-      await deleteMedia(file);
-    }
-  });
 
   beforeAll(() => {
     // Ignore CORS errors related to the AMP validator JS.
@@ -55,6 +47,15 @@ describe('Publishing Flow', () => {
     removeResourceErrorMessage = addAllowedErrorMessage(
       'Failed to load resource'
     );
+  });
+
+  beforeEach(() => (uploadedFiles = []));
+
+  afterEach(async () => {
+    for (const file of uploadedFiles) {
+      // eslint-disable-next-line no-await-in-loop
+      await deleteMedia(file);
+    }
   });
 
   afterAll(() => {
