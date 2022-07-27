@@ -49,5 +49,4 @@ export default {
     'expect-puppeteer',
   ],
   modulePathIgnorePatterns: ['<rootDir>/build', '<rootDir>/vendor'],
-  reporters: [['jest-silent-reporter', { useDots: true, showWarnings: true }]],
 };

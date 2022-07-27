@@ -14,17 +14,22 @@
  * limitations under the License.
  */
 
-export const monetizationDropdownSelector =
-  'button[aria-label="Monetization type"]';
+/**
+ * Internal dependencies
+ */
+import DataRemovalSettings from '..';
 
-export const telemetryCheckboxSelector =
-  'input[data-testid="telemetry-settings-checkbox"]';
+export default {
+  title: 'Dashboard/Views/EditorSettings/DataRemovalSettings',
+  component: DataRemovalSettings,
+  args: {
+    isEnabled: true,
+  },
+  argTypes: {
+    updateSettings: { action: 'updateSettings fired' },
+  },
+};
 
-export const videoOptimizationCheckboxSelector =
-  'input[data-testid="media-optimization-settings-checkbox"]';
-
-export const videoCacheCheckboxSelector =
-  'input[data-testid="video-cache-settings-checkbox"]';
-
-export const dataRemovalCheckboxSelector =
-  'input[data-testid="data-removal-settings-checkbox"]';
+export const _default = (args) => {
+  return <DataRemovalSettings {...args} />;
+};
