@@ -31,10 +31,9 @@ export default function reshapeStoryObject(originalStoryData) {
     link,
     preview_link: previewLink,
     edit_link: editStoryLink,
-    meta: { web_stories_poster: poster = {} },
+    story_poster: storyPoster,
     _embedded: {
       author = [{ name: '', id: 0 }],
-      'wp:featuredmedia': featuredMedia = [{ source_url: '' }],
       'wp:lock': lock = [{ locked: false }],
       'wp:lockuser': lockUser = [{ id: 0, name: '' }],
     } = {},
@@ -43,7 +42,6 @@ export default function reshapeStoryObject(originalStoryData) {
   if (!id) {
     return null;
   }
-  const { source_url: featuredMediaUrl } = featuredMedia[0];
   const capabilities = {
     hasEditAction: Object.prototype.hasOwnProperty.call(links, REST_LINKS.EDIT),
     hasDeleteAction: Object.prototype.hasOwnProperty.call(
@@ -71,11 +69,10 @@ export default function reshapeStoryObject(originalStoryData) {
       avatar: lockUser[0]?.avatar_urls?.['96'] || null,
     },
     bottomTargetAction: editStoryLink,
-    featuredMediaUrl: poster?.url || featuredMediaUrl,
+    featuredMediaUrl: storyPoster?.url,
     editStoryLink,
     previewLink,
     link,
     capabilities,
-    poster,
   };
 }

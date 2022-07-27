@@ -27,6 +27,7 @@
 namespace Google\Web_Stories\REST_API;
 
 use Google\Web_Stories\Demo_Content;
+use Google\Web_Stories\Media\Image_Sizes;
 use Google\Web_Stories\Story_Post_Type;
 use WP_Error;
 use WP_Post;
@@ -140,6 +141,13 @@ class Stories_Controller extends Stories_Base_Controller {
 			$data['embed_post_link'] = add_query_arg( [ 'from-web-story' => $post->ID ], admin_url( 'post-new.php' ) );
 		}
 
+		if ( rest_is_field_included( 'story_poster', $fields ) ) {
+			$story_poster = $this->get_story_poster( $post );
+			if ( $story_poster ) {
+				$data['story_poster'] = $story_poster;
+			}
+		}
+
 		$data  = $this->filter_response_by_context( $data, $context );
 		$links = $response->get_links();
 
@@ -230,6 +238,35 @@ class Stories_Controller extends Stories_Base_Controller {
 			'context'     => [ 'edit' ],
 			'format'      => 'uri',
 			'default'     => '',
+		];
+
+		$schema['properties']['story_poster'] = [
+			'description' => __( 'Story poster image.', 'web-stories' ),
+			'type'        => 'object',
+			'properties'  => [
+				'id'         => [
+					'type'        => 'integer',
+					'description' => __( 'Poster ID', 'web-stories' ),
+				],
+				'needsProxy' => [
+					'description' => __( 'If poster needs to be proxied', 'web-stories' ),
+					'type'        => 'boolean',
+				],
+				'height'     => [
+					'type'        => 'integer',
+					'description' => __( 'Poster height', 'web-stories' ),
+				],
+				'url'        => [
+					'description' => __( 'Poster URL.', 'web-stories' ),
+					'type'        => 'string',
+					'format'      => 'uri',
+				],
+				'width'      => [
+					'description' => __( 'Poster width.', 'web-stories' ),
+					'type'        => 'integer',
+				],
+			],
+			'default'     => null,
 		];
 
 		$schema['properties']['status']['enum'][] = 'auto-draft';
@@ -607,5 +644,49 @@ class Stories_Controller extends Stories_Base_Controller {
 		}
 
 		return $links;
+	}
+
+
+	/**
+	 * Helper method to get the story poster.
+	 *
+	 * Checks for the regular featured image as well as a hotlinked image.
+	 *
+	 * @since 1.23.2
+	 *
+	 * @param WP_Post $post Post Object.
+	 * @return array{url:string, width: int, height: int, needsProxy: bool, id?: int} Story poster data.
+	 */
+	private function get_story_poster( WP_Post $post ): array {
+		$thumbnail_id = (int) get_post_thumbnail_id( $post );
+
+		if ( 0 !== $thumbnail_id ) {
+			$poster_src = wp_get_attachment_image_src( $thumbnail_id, Image_Sizes::POSTER_PORTRAIT_IMAGE_SIZE );
+			if ( $poster_src ) {
+				[$url, $width, $height] = $poster_src;
+
+				return [
+					'id'         => $thumbnail_id,
+					'url'        => $url,
+					'width'      => $width,
+					'height'     => $height,
+					'needsProxy' => false,
+				];
+			}
+		} else {
+
+			/**
+			 * Poster.
+			 *
+			 * @var array{url:string, width: int, height: int, needsProxy: bool}|false $poster
+			 */
+			$poster = get_post_meta( $post->ID, Story_Post_Type::POSTER_META_KEY, true );
+
+			if ( ! empty( $poster ) ) {
+				return $poster;
+			}
+		}
+
+		return null;
 	}
 }

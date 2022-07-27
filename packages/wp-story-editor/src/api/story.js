@@ -109,7 +109,7 @@ export function saveStoryById(config, story) {
       'preview_link',
       'edit_link',
       'embed_post_link',
-      'meta.web_stories_poster',
+      'story_poster',
     ].join(','),
     _embed: STORY_EMBED,
   });
@@ -119,39 +119,21 @@ export function saveStoryById(config, story) {
     data: storySaveData,
     method: 'POST',
   }).then((data) => {
-    const { _embedded: embedded = {}, meta, ...rest } = data;
+    const { story_poster: storyPoster, ...rest } = data;
 
-    let featuredMedia = {
-      id: 0,
-      height: 0,
-      width: 0,
-      url: '',
-      needsProxy: false,
-      isExternal: false,
-    };
-
-    const externalPoster = meta['web_stories_poster'];
-    const postThumbnail = embedded?.['wp:featuredmedia']?.[0];
-
-    if (postThumbnail?.id) {
-      featuredMedia = {
-        id: postThumbnail.id,
-        height: postThumbnail.media_details?.height || 0,
-        width: postThumbnail.media_details?.width || 0,
-        url: postThumbnail.source_url || '',
-        needsProxy: false,
-        isExternal: false,
-      };
-    } else if (externalPoster?.url) {
-      featuredMedia = {
-        id: 0,
-        height: externalPoster.height || 0,
-        width: externalPoster.width || 0,
-        url: externalPoster.url,
-        needsProxy: Boolean(externalPoster.needsProxy),
-        isExternal: true,
-      };
-    }
+    const featuredMedia = storyPoster
+      ? {
+          ...storyPoster,
+          isExternal: !storyPoster.id,
+        }
+      : {
+          id: 0,
+          height: 0,
+          width: 0,
+          url: '',
+          needsProxy: false,
+          isExternal: false,
+        };
 
     return {
       ...snakeToCamelCaseObjectKeys(rest),

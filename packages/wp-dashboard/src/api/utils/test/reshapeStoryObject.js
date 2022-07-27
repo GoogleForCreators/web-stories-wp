@@ -42,16 +42,14 @@ describe('reshapeStoryObject', () => {
       template: '',
       categories: [],
       tags: [],
-      meta: {
-        web_stories_poster: {},
+      story_poster: {
+        id: 33,
+        url: 'http://localhost:8899/wp-content/uploads/poster.jpg',
+        width: 640,
+        height: 853,
+        needsProxy: false,
       },
       _embedded: {
-        'wp:featuredmedia': [
-          {
-            id: 33,
-            source_url: 'http://localhost:8899/wp-content/uploads/poster.jpg',
-          },
-        ],
         author: [{ id: 1, name: 'admin' }],
         'wp:lock': [{ locked: true, time: '1628506372', user: 1 }],
         'wp:lockuser': [
@@ -120,16 +118,14 @@ describe('reshapeStoryObject', () => {
       template: '',
       categories: [],
       tags: [],
-      meta: {
-        web_stories_poster: {},
+      story_poster: {
+        id: 33,
+        url: 'http://localhost:8899/wp-content/uploads/poster.jpg',
+        width: 640,
+        height: 853,
+        needsProxy: false,
       },
       _embedded: {
-        'wp:featuredmedia': [
-          {
-            id: 33,
-            source_url: 'http://localhost:8899/wp-content/uploads/poster.jpg',
-          },
-        ],
         author: [{ id: 1, name: 'admin' }],
         'wp:lock': [{ locked: true, time: '1628506372', user: 1 }],
         'wp:lockuser': [

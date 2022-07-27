@@ -322,7 +322,7 @@ class Dashboard extends Service_Base {
 					'_embed'                => rawurlencode(
 						implode(
 							',',
-							[ 'wp:lock', 'wp:lockuser', 'author', 'wp:featuredmedia' ]
+							[ 'wp:lock', 'wp:lockuser', 'author' ]
 						)
 					),
 					'context'               => 'edit',
@@ -348,6 +348,7 @@ class Dashboard extends Service_Base {
 								'date_gmt',
 								'modified',
 								'modified_gmt',
+								'story_poster',
 								'link',
 								'preview_link',
 								'edit_link',
