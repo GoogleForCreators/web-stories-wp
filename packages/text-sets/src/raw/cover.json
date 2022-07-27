@@ -139,7 +139,8 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "id": "fec4e47a-0f6d-48c3-9e3b-35f4ccd12d84"
+          "id": "fec4e47a-0f6d-48c3-9e3b-35f4ccd12d84",
+          "tagName": "h1"
         },
         {
           "opacity": 100,
@@ -427,7 +428,8 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "id": "747ea170-3d1b-4652-ac15-bbee4a882d86"
+          "id": "747ea170-3d1b-4652-ac15-bbee4a882d86",
+          "tagName": "h1"
         },
         {
           "opacity": 100,
@@ -702,7 +704,8 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "id": "467bdf56-0df2-42c5-97eb-9e6eeb3440d5"
+          "id": "467bdf56-0df2-42c5-97eb-9e6eeb3440d5",
+          "tagName": "h1"
         },
         {
           "opacity": 100,
@@ -1267,7 +1270,8 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "id": "2375a3d4-4f13-4510-9612-893af7c538be"
+          "id": "2375a3d4-4f13-4510-9612-893af7c538be",
+          "tagName": "h1"
         },
         {
           "opacity": 100,
@@ -1550,7 +1554,8 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "id": "267ef5db-ebee-4830-a7b2-a8b0afd85619"
+          "id": "267ef5db-ebee-4830-a7b2-a8b0afd85619",
+          "tagName": "h1"
         },
         {
           "opacity": 100,
@@ -1791,7 +1796,8 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "id": "a08bb658-d031-4dd4-9770-79cfcb13d600"
+          "id": "a08bb658-d031-4dd4-9770-79cfcb13d600",
+          "tagName": "h1"
         },
         {
           "opacity": 100,
@@ -1852,7 +1858,8 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "id": "e861676a-0d4d-498c-a68d-06ad5cd702ee"
+          "id": "e861676a-0d4d-498c-a68d-06ad5cd702ee",
+          "tagName": "h1"
         },
         {
           "opacity": 100,
@@ -2114,7 +2121,8 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "id": "b8546fb4-62be-4d60-b344-f3b8bf416a0d"
+          "id": "b8546fb4-62be-4d60-b344-f3b8bf416a0d",
+          "tagName": "h1"
         },
         {
           "opacity": 100,
@@ -2391,7 +2399,8 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "id": "8e4f558d-688a-4b35-8e09-e68b3f0c2174"
+          "id": "8e4f558d-688a-4b35-8e09-e68b3f0c2174",
+          "tagName": "h1"
         }
       ],
       "backgroundOverlay": "none",
@@ -2632,7 +2641,8 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "id": "15688993-939f-4cb6-a1bf-82bbf63a0041"
+          "id": "15688993-939f-4cb6-a1bf-82bbf63a0041",
+          "tagName": "h1"
         },
         {
           "opacity": 100,
