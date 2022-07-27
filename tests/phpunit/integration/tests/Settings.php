@@ -40,6 +40,7 @@ class Settings extends DependencyInjectedTestCase {
 		$this->assertArrayHasKey( $settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO, $options );
 		$this->assertArrayHasKey( $settings::SETTING_NAME_PUBLISHER_LOGOS, $options );
 		$this->assertArrayHasKey( $settings::SETTING_NAME_VIDEO_CACHE, $options );
+		$this->assertArrayHasKey( $settings::SETTING_NAME_DATA_REMOVAL, $options );
 		$this->assertArrayHasKey( $settings::SETTING_NAME_ARCHIVE, $options );
 	}
 }
