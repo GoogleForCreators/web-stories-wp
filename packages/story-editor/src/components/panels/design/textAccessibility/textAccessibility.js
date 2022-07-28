@@ -26,7 +26,6 @@ import {
   Link,
 } from '@googleforcreators/design-system';
 import { trackClick } from '@googleforcreators/tracking';
-import { useFeature } from 'flagged';
 import { useCallback, useState } from '@googleforcreators/react';
 import { getTextElementTagNames } from '@googleforcreators/output';
 
@@ -47,7 +46,6 @@ const HEADING_LEVELS = {
 };
 
 function TextAccessibilityPanel({ selectedElements, pushUpdate }) {
-  const showSemanticHeadings = useFeature('showSemanticHeadings');
   const [tagNamesOverrides, setTagNamesOverrides] = useState();
 
   const { textElements } = useStory(({ state }) => ({
@@ -76,10 +74,6 @@ function TextAccessibilityPanel({ selectedElements, pushUpdate }) {
     },
     [pushUpdate, selectedElements]
   );
-
-  if (!showSemanticHeadings) {
-    return null;
-  }
 
   const tagNamesMap = getTextElementTagNames(textElements);
 
