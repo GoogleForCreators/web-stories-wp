@@ -362,18 +362,6 @@ class Experiments extends Service_Base implements HasRequirements {
 				'default'     => true,
 			],
 			/**
-			 * Author: @sblinde
-			 * Issue: #5326
-			 * Creation date: 2022-06-29
-			 */
-			[
-				'name'        => 'showSemanticHeadings',
-				'label'       => __( 'Semantic headings', 'web-stories' ),
-				'description' => __( 'Display UI for changing semantic heading tags', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-			/**
 			 * Author: @barklund
 			 * Issue: #9643
 			 * Creation date: 2022-06-21
