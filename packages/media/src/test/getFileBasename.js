@@ -17,26 +17,26 @@
 /**
  * Internal dependencies
  */
-import getFileName from '../getFileName';
+import getFileBasename from '../getFileBasename';
 
 describe('getFileName', () => {
   it('should remove the file extension', () => {
-    expect(getFileName({ name: 'my-video.mp4' })).toBe('my-video');
+    expect(getFileBasename({ name: 'my-video.mp4' })).toBe('my-video');
   });
 
   it('should remove the file extension with period in name', () => {
-    expect(getFileName({ name: 'my.video.mp4' })).toBe('my.video');
+    expect(getFileBasename({ name: 'my.video.mp4' })).toBe('my.video');
   });
 
   it('should support files without extension', () => {
-    expect(getFileName({ name: 'my-video' })).toBe('my-video');
+    expect(getFileBasename({ name: 'my-video' })).toBe('my-video');
   });
 
   it('should return an empty string if missing name', () => {
-    expect(getFileName({ name: '' })).toBe('');
+    expect(getFileBasename({ name: '' })).toBe('');
   });
 
   it('should default to an empty name', () => {
-    expect(getFileName({})).toBe('');
+    expect(getFileBasename({})).toBe('');
   });
 });

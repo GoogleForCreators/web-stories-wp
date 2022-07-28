@@ -22,7 +22,7 @@ import { useCallback, useMemo } from '@googleforcreators/react';
 import { getTimeTracker, trackError } from '@googleforcreators/tracking';
 import {
   getExtensionFromMimeType,
-  getFileName,
+  getFileBasename,
   blobToFile,
 } from '@googleforcreators/media';
 
@@ -183,7 +183,7 @@ function useFFmpeg() {
         ffmpeg = await getFFmpegInstance(file);
 
         const tempFileName = uuidv4() + '.' + MEDIA_POSTER_IMAGE_FILE_TYPE;
-        const originalFileName = getFileName(file);
+        const originalFileName = getFileBasename(file);
         const outputFileName = getPosterName(originalFileName);
 
         await ffmpeg.run(
@@ -244,7 +244,7 @@ function useFFmpeg() {
 
         const tempFileName = uuidv4() + '.' + MEDIA_TRANSCODED_FILE_TYPE;
         const outputFileName =
-          getFileName(file) + '.' + MEDIA_TRANSCODED_FILE_TYPE;
+          getFileBasename(file) + '.' + MEDIA_TRANSCODED_FILE_TYPE;
 
         await ffmpeg.run(
           // Input filename.
@@ -303,7 +303,7 @@ function useFFmpeg() {
         const type = file?.type || MEDIA_TRANSCODED_MIME_TYPE;
         const ext = getExtensionFromMimeType(type);
         const tempFileName = uuidv4() + '.' + ext;
-        const outputFileName = getFileName(file) + '-trimmed.' + ext;
+        const outputFileName = getFileBasename(file) + '-trimmed.' + ext;
 
         await ffmpeg.run(
           // Input filename.
@@ -361,7 +361,7 @@ function useFFmpeg() {
         const type = file?.type || MEDIA_TRANSCODED_MIME_TYPE;
         const ext = getExtensionFromMimeType(type);
         const tempFileName = uuidv4() + '.' + ext;
-        const outputFileName = getFileName(file) + '-muted.' + ext;
+        const outputFileName = getFileBasename(file) + '-muted.' + ext;
 
         await ffmpeg.run(
           // Input filename.
@@ -420,7 +420,7 @@ function useFFmpeg() {
 
         const tempFileName = uuidv4() + '.' + MEDIA_TRANSCODED_FILE_TYPE;
         const outputFileName =
-          getFileName(file) + '.' + MEDIA_TRANSCODED_FILE_TYPE;
+          getFileBasename(file) + '.' + MEDIA_TRANSCODED_FILE_TYPE;
 
         await ffmpeg.run(
           // Input filename.
@@ -474,7 +474,7 @@ function useFFmpeg() {
         ffmpeg = await getFFmpegInstance(file);
 
         const tempFileName = uuidv4() + '.mp3';
-        const outputFileName = getFileName(file) + '.mp3';
+        const outputFileName = getFileBasename(file) + '.mp3';
 
         await ffmpeg.run(
           // Input filename.
