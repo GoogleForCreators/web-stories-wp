@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { useFeature } from 'flagged';
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
 import {
@@ -56,7 +55,6 @@ function MediaRecording() {
     })
   );
 
-  const enableMediaRecording = useFeature('mediaRecording');
   const { isTranscodingEnabled } = useFFmpeg();
 
   const onClick = useCallback(() => {
@@ -65,10 +63,6 @@ function MediaRecording() {
     });
     toggleRecordingMode();
   }, [isInRecordingMode, toggleRecordingMode]);
-
-  if (!enableMediaRecording) {
-    return null;
-  }
 
   // Media recording requires video optimization to be enabled,
   // since it's the only reliable way to ensure the recorded video
