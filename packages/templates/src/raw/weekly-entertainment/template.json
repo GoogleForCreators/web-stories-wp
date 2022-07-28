@@ -429,7 +429,8 @@
           "id": "26df8c19-b913-441a-bff1-bf1b677cb159",
           "content": "<span style=\"font-weight: 700; color: #fff; text-transform: uppercase\">The Top 10</span>",
           "fontSize": 81,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "00fb5f95-5464-40af-a3a5-d59c615c36e9"
         },
         {
           "x": -20,
@@ -479,7 +480,8 @@
           "id": "5bfb51c9-3d47-4a78-be2c-776db5143bc9",
           "content": "<span style=\"font-weight: 700; color: #fff; text-transform: uppercase\">The Top 10</span>",
           "fontSize": 81,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "00fb5f95-5464-40af-a3a5-d59c615c36e9"
         },
         {
           "x": -20,
@@ -529,7 +531,8 @@
           "id": "5efefa69-c1d0-4331-905b-3936d866f0eb",
           "content": "<span style=\"font-weight: 700; color: #fff; text-transform: uppercase\">The Top 10</span>",
           "fontSize": 81,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "00fb5f95-5464-40af-a3a5-d59c615c36e9"
         }
       ],
       "animations": [
@@ -569,7 +572,14 @@
       "type": "page",
       "id": "9670b092-e11b-433e-aa8a-659e4ee982c9",
       "backgroundColor": { "color": { "r": 0, "g": 0, "b": 0 } },
-      "pageTemplateType": "section"
+      "pageTemplateType": "section",
+      "groups": {
+        "00fb5f95-5464-40af-a3a5-d59c615c36e9": {
+          "name": "Text",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [
@@ -1282,7 +1292,8 @@
           "mask": { "type": "rectangle" },
           "type": "shape",
           "basedOn": "b6325820-9ffe-41d3-97e9-eb969ff9ef22",
-          "id": "76c34633-deca-4d3b-ad89-9f8f787aabf3"
+          "id": "76c34633-deca-4d3b-ad89-9f8f787aabf3",
+          "groupId": "c8d3e119-de8d-4b40-bf9a-18d5ba0f91d4"
         },
         {
           "x": 254,
@@ -1300,7 +1311,8 @@
           "mask": { "type": "rectangle" },
           "type": "shape",
           "basedOn": "3f8f943f-ca2c-4604-b9e7-d300c4b2b9d6",
-          "id": "837db927-1ee6-4419-ace6-c59f83f0ca49"
+          "id": "837db927-1ee6-4419-ace6-c59f83f0ca49",
+          "groupId": "c8d3e119-de8d-4b40-bf9a-18d5ba0f91d4"
         },
         {
           "x": 257.5,
@@ -1357,7 +1369,8 @@
             "bottomRight": 0,
             "bottomLeft": 0,
             "locked": false
-          }
+          },
+          "groupId": "c8d3e119-de8d-4b40-bf9a-18d5ba0f91d4"
         },
         {
           "x": 136,
@@ -1407,7 +1420,8 @@
           "id": "ed850d1c-3f8f-4154-ad72-a90d30dc836d",
           "content": "<span style=\"font-style: italic; color: #fff\">5 out of 5</span>",
           "fontSize": 12,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "ab61d7c9-c230-4372-abd0-27d88e95b225"
         },
         {
           "opacity": 100,
@@ -1423,7 +1437,8 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": { "type": "entertainmentStar" },
-          "id": "fbd2640e-0f63-49fb-9573-172a8e77b166"
+          "id": "fbd2640e-0f63-49fb-9573-172a8e77b166",
+          "groupId": "ab61d7c9-c230-4372-abd0-27d88e95b225"
         },
         {
           "opacity": 100,
@@ -1440,7 +1455,8 @@
           "basedOn": "fbd2640e-0f63-49fb-9573-172a8e77b166",
           "id": "502676dd-9ed2-4bb1-a899-4f43733ae6ae",
           "x": 83,
-          "y": 560
+          "y": 560,
+          "groupId": "ab61d7c9-c230-4372-abd0-27d88e95b225"
         },
         {
           "opacity": 100,
@@ -1457,7 +1473,8 @@
           "basedOn": "fbd2640e-0f63-49fb-9573-172a8e77b166",
           "id": "049e569d-4f5a-473f-ad05-0a00f4ccb802",
           "x": 67,
-          "y": 560
+          "y": 560,
+          "groupId": "ab61d7c9-c230-4372-abd0-27d88e95b225"
         },
         {
           "opacity": 100,
@@ -1474,7 +1491,8 @@
           "basedOn": "fbd2640e-0f63-49fb-9573-172a8e77b166",
           "id": "c136d4e4-a956-4d96-87c2-febec1c39ca0",
           "x": 52,
-          "y": 560
+          "y": 560,
+          "groupId": "ab61d7c9-c230-4372-abd0-27d88e95b225"
         },
         {
           "opacity": 100,
@@ -1491,7 +1509,8 @@
           "basedOn": "fbd2640e-0f63-49fb-9573-172a8e77b166",
           "id": "1d5e6344-dba8-4aec-8865-9c60b35e8ed2",
           "x": 37,
-          "y": 560
+          "y": 560,
+          "groupId": "ab61d7c9-c230-4372-abd0-27d88e95b225"
         }
       ],
       "animations": [
@@ -1590,7 +1609,19 @@
       "type": "page",
       "id": "7494b712-c8d0-4189-a85c-32aa52a22032",
       "backgroundColor": { "color": { "r": 0, "g": 0, "b": 0 } },
-      "pageTemplateType": "editorial"
+      "pageTemplateType": "editorial",
+      "groups": {
+        "c8d3e119-de8d-4b40-bf9a-18d5ba0f91d4": {
+          "name": "See More",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "ab61d7c9-c230-4372-abd0-27d88e95b225": {
+          "name": "Rating",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [
@@ -1775,7 +1806,8 @@
           "id": "99964f56-048a-4e9c-bc0c-79ff8f9e32d5",
           "content": "<span style=\"font-weight: 700; color: #fff; text-transform: uppercase\">Out Now</span>",
           "fontSize": 79,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "e41dada8-d72e-40ec-8657-30222347907f"
         },
         {
           "x": 39,
@@ -1825,7 +1857,8 @@
           "id": "7134bc0d-5c49-40fb-ac4a-dac7dc45dccf",
           "content": "<span style=\"font-weight: 700; color: #fff; text-transform: uppercase\">Out Now</span>",
           "fontSize": 79,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "e41dada8-d72e-40ec-8657-30222347907f"
         },
         {
           "x": 39,
@@ -1875,7 +1908,8 @@
           "id": "842c2576-5887-4eb2-a9ba-93a6eea67b7d",
           "content": "<span style=\"font-weight: 700; color: #fff; text-transform: uppercase\">Out Now</span>",
           "fontSize": 79,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "e41dada8-d72e-40ec-8657-30222347907f"
         },
         {
           "x": 39,
@@ -1946,7 +1980,14 @@
       "type": "page",
       "id": "fd60f532-b619-4162-8df9-d8241cc88e45",
       "backgroundColor": { "color": { "r": 0, "g": 0, "b": 0 } },
-      "pageTemplateType": "editorial"
+      "pageTemplateType": "editorial",
+      "groups": {
+        "e41dada8-d72e-40ec-8657-30222347907f": {
+          "name": "Text",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [
@@ -2237,7 +2278,8 @@
           "mask": { "type": "rectangle" },
           "type": "shape",
           "basedOn": "4e907f06-b5e0-4254-b469-8f0a505cd915",
-          "id": "6403aa20-a02a-499d-832a-0982518395f5"
+          "id": "6403aa20-a02a-499d-832a-0982518395f5",
+          "groupId": "c67adb69-b6e9-4df0-920a-bfc33ef11e82"
         },
         {
           "x": 0,
@@ -2255,7 +2297,8 @@
           "mask": { "type": "rectangle" },
           "type": "shape",
           "basedOn": "4e907f06-b5e0-4254-b469-8f0a505cd915",
-          "id": "016efcac-89dc-4123-bec4-f7422f8babd6"
+          "id": "016efcac-89dc-4123-bec4-f7422f8babd6",
+          "groupId": "17e0c840-10d9-4b9c-94be-9a79d9db55dc"
         },
         {
           "x": 0,
@@ -2272,7 +2315,8 @@
           "focalY": 50,
           "mask": { "type": "rectangle" },
           "type": "shape",
-          "id": "4e907f06-b5e0-4254-b469-8f0a505cd915"
+          "id": "4e907f06-b5e0-4254-b469-8f0a505cd915",
+          "groupId": "9ffe05c9-14f6-414c-a007-e15aaf5614c9"
         },
         {
           "x": -2,
@@ -2302,7 +2346,8 @@
             "sizes": [],
             "baseColor": "#3b4345",
             "isExternal": true
-          }
+          },
+          "groupId": "9ffe05c9-14f6-414c-a007-e15aaf5614c9"
         },
         {
           "x": 0,
@@ -2334,7 +2379,8 @@
             "sizes": [],
             "baseColor": "#664e4a",
             "isExternal": true
-          }
+          },
+          "groupId": "c67adb69-b6e9-4df0-920a-bfc33ef11e82"
         },
         {
           "x": -2,
@@ -2365,7 +2411,8 @@
             "sizes": [],
             "baseColor": "#93967e",
             "isExternal": true
-          }
+          },
+          "groupId": "17e0c840-10d9-4b9c-94be-9a79d9db55dc"
         },
         {
           "x": 0,
@@ -2415,7 +2462,8 @@
           "id": "2942198b-fcac-4d56-bc37-b5a16de50651",
           "content": "<span style=\"font-weight: 700; color: #fff; text-transform: uppercase\">Murder Mystery</span>",
           "fontSize": 26,
-          "padding": { "horizontal": 10, "vertical": 10 }
+          "padding": { "horizontal": 10, "vertical": 10 },
+          "groupId": "9ffe05c9-14f6-414c-a007-e15aaf5614c9"
         },
         {
           "x": 0,
@@ -2465,7 +2513,8 @@
           "id": "787be6c3-3d2d-4d08-9db1-801e2f1bf7f1",
           "content": "<span style=\"color: rgba(255, 255, 255, 1)\"><span style=\"font-weight: 700; text-transform: uppercase\">Documentary</span></span>",
           "fontSize": 26,
-          "padding": { "horizontal": 10, "vertical": 10 }
+          "padding": { "horizontal": 10, "vertical": 10 },
+          "groupId": "17e0c840-10d9-4b9c-94be-9a79d9db55dc"
         },
         {
           "x": 0,
@@ -2515,7 +2564,8 @@
           "id": "b2b65d7c-5689-4c40-a40e-5a9a628bc04e",
           "content": "<span style=\"color: rgba(255, 255, 255, 1)\"><span style=\"font-weight: 700; text-transform: uppercase\">Political Biopic</span></span>",
           "fontSize": 26,
-          "padding": { "horizontal": 10, "vertical": 11 }
+          "padding": { "horizontal": 10, "vertical": 11 },
+          "groupId": "c67adb69-b6e9-4df0-920a-bfc33ef11e82"
         }
       ],
       "animations": [
@@ -2590,7 +2640,24 @@
       "type": "page",
       "id": "3d0dbbd3-70c0-4376-b1bf-c8015def1050",
       "backgroundColor": { "color": { "r": 0, "g": 0, "b": 0 } },
-      "pageTemplateType": "list"
+      "pageTemplateType": "list",
+      "groups": {
+        "9ffe05c9-14f6-414c-a007-e15aaf5614c9": {
+          "name": "Section",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "17e0c840-10d9-4b9c-94be-9a79d9db55dc": {
+          "name": "Section",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "c67adb69-b6e9-4df0-920a-bfc33ef11e82": {
+          "name": "Section",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [
@@ -2657,7 +2724,8 @@
           "basedOn": "4f12d40d-d1c9-488f-a4f8-48e81f141c27",
           "id": "f449ade2-50c9-4495-9887-2e906e1e925f",
           "x": -1,
-          "y": 57
+          "y": 57,
+          "groupId": "fe5dd611-9a17-4f04-b007-539cddb1fc08"
         },
         {
           "x": -1,
@@ -2707,7 +2775,8 @@
           "id": "4f12d40d-d1c9-488f-a4f8-48e81f141c27",
           "content": "<span style=\"font-weight: 700; color: #fff; text-transform: uppercase\">More</span>",
           "fontSize": 80,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "fe5dd611-9a17-4f04-b007-539cddb1fc08"
         },
         {
           "x": 210,
@@ -2757,7 +2826,8 @@
           "id": "c6c185a6-32d1-42ed-b376-5733abe06f55",
           "content": "<span style=\"font-weight: 700; color: #fff; text-transform: uppercase\">Our Top Picks&nbsp;For The Grammys</span>",
           "fontSize": 16,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "42f48f90-d1d9-4b0a-a2dc-7b0c09c93a1f"
         },
         {
           "x": 210,
@@ -2807,7 +2877,8 @@
           "id": "9379053f-520a-4138-9720-dd14e3115431",
           "content": "<span style=\"font-weight: 700; color: #fff; text-transform: uppercase\">Trending Superhero</span>",
           "fontSize": 16,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "3a76f47c-6334-4091-80cd-964169685c97"
         },
         {
           "x": 210,
@@ -2857,7 +2928,8 @@
           "id": "9300db37-ac48-4bfc-b91b-0ffb4da5f8d0",
           "content": "<span style=\"font-weight: 700; color: #fff; text-transform: uppercase\">New Summer Movies</span>",
           "fontSize": 16,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "6ae7d757-be0e-40ef-95e4-41609ab2e6c6"
         },
         {
           "width": 108,
@@ -2875,7 +2947,8 @@
           "basedOn": "76c34633-deca-4d3b-ad89-9f8f787aabf3",
           "id": "9b070f80-9ba0-4358-bc37-5da9fc2a9697",
           "x": 220,
-          "y": 240
+          "y": 240,
+          "groupId": "42f48f90-d1d9-4b0a-a2dc-7b0c09c93a1f"
         },
         {
           "width": 108,
@@ -2893,7 +2966,8 @@
           "basedOn": "837db927-1ee6-4419-ace6-c59f83f0ca49",
           "id": "a5460d7e-4e85-41c9-b55f-a6ca14c0df8e",
           "x": 210,
-          "y": 229
+          "y": 229,
+          "groupId": "42f48f90-d1d9-4b0a-a2dc-7b0c09c93a1f"
         },
         {
           "width": 101,
@@ -2950,7 +3024,8 @@
           "basedOn": "d61d1f44-9af9-4cdc-8912-caf2aa0c4993",
           "id": "72fa1c93-fbac-460f-a06a-9c539d1f55c0",
           "x": 213.5,
-          "y": 231
+          "y": 231,
+          "groupId": "42f48f90-d1d9-4b0a-a2dc-7b0c09c93a1f"
         },
         {
           "width": 108,
@@ -2968,7 +3043,8 @@
           "basedOn": "9b070f80-9ba0-4358-bc37-5da9fc2a9697",
           "id": "5930c7f2-9203-4a8a-b183-4d42a8c78850",
           "x": 219,
-          "y": 385
+          "y": 385,
+          "groupId": "3a76f47c-6334-4091-80cd-964169685c97"
         },
         {
           "width": 108,
@@ -2986,7 +3062,8 @@
           "basedOn": "a5460d7e-4e85-41c9-b55f-a6ca14c0df8e",
           "id": "19f39586-3daa-4b78-8561-7a2f1beafb37",
           "x": 209,
-          "y": 374
+          "y": 374,
+          "groupId": "3a76f47c-6334-4091-80cd-964169685c97"
         },
         {
           "width": 101,
@@ -3043,7 +3120,8 @@
           "basedOn": "72fa1c93-fbac-460f-a06a-9c539d1f55c0",
           "id": "0f9d3b1c-6f29-4dce-a4fb-7a9a66715ad9",
           "x": 212.5,
-          "y": 376
+          "y": 376,
+          "groupId": "3a76f47c-6334-4091-80cd-964169685c97"
         },
         {
           "width": 108,
@@ -3061,7 +3139,8 @@
           "basedOn": "5930c7f2-9203-4a8a-b183-4d42a8c78850",
           "id": "a83e16c9-6c65-4c65-bdca-30f2a1616e01",
           "x": 220,
-          "y": 542
+          "y": 542,
+          "groupId": "6ae7d757-be0e-40ef-95e4-41609ab2e6c6"
         },
         {
           "width": 108,
@@ -3079,7 +3158,8 @@
           "basedOn": "19f39586-3daa-4b78-8561-7a2f1beafb37",
           "id": "f8241cd9-c24e-44aa-8556-4bde9758fee4",
           "x": 210,
-          "y": 531
+          "y": 531,
+          "groupId": "6ae7d757-be0e-40ef-95e4-41609ab2e6c6"
         },
         {
           "width": 101,
@@ -3136,7 +3216,8 @@
           "basedOn": "0f9d3b1c-6f29-4dce-a4fb-7a9a66715ad9",
           "id": "a82b3d64-8a58-4b16-9faa-88051a2d246a",
           "x": 213.5,
-          "y": 533
+          "y": 533,
+          "groupId": "6ae7d757-be0e-40ef-95e4-41609ab2e6c6"
         },
         {
           "x": 26,
@@ -3166,7 +3247,8 @@
             "sizes": [],
             "baseColor": "#453248",
             "isExternal": true
-          }
+          },
+          "groupId": "42f48f90-d1d9-4b0a-a2dc-7b0c09c93a1f"
         },
         {
           "x": 26,
@@ -3197,7 +3279,8 @@
             "sizes": [],
             "baseColor": "#92a6a3",
             "isExternal": true
-          }
+          },
+          "groupId": "3a76f47c-6334-4091-80cd-964169685c97"
         },
         {
           "x": 26,
@@ -3228,7 +3311,8 @@
             "sizes": [],
             "baseColor": "#5c5a4f",
             "isExternal": true
-          }
+          },
+          "groupId": "6ae7d757-be0e-40ef-95e4-41609ab2e6c6"
         }
       ],
       "animations": [
@@ -3373,7 +3457,29 @@
       "type": "page",
       "id": "f4ea7828-e328-47e6-bf9d-a786ab192ee1",
       "backgroundColor": { "color": { "r": 0, "g": 0, "b": 0 } },
-      "pageTemplateType": "list"
+      "pageTemplateType": "list",
+      "groups": {
+        "fe5dd611-9a17-4f04-b007-539cddb1fc08": {
+          "name": "Text",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "42f48f90-d1d9-4b0a-a2dc-7b0c09c93a1f": {
+          "name": "Section",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "3a76f47c-6334-4091-80cd-964169685c97": {
+          "name": "Section",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "6ae7d757-be0e-40ef-95e4-41609ab2e6c6": {
+          "name": "Section",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     }
   ],
   "current": null,

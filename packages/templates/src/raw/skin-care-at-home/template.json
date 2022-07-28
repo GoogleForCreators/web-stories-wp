@@ -532,7 +532,8 @@
           "focalX": 50,
           "focalY": 50,
           "id": "ebe2c6c7-5673-4422-991a-e280bf2c1911",
-          "type": "text"
+          "type": "text",
+          "groupId": "39ff0e14-b6a7-4232-a3e6-80a65351c61d"
         },
         {
           "opacity": 100,
@@ -605,7 +606,8 @@
           "id": "09d4225a-4f54-40cd-86e0-6f52fcd2d1b1",
           "x": 48,
           "y": 426,
-          "type": "text"
+          "type": "text",
+          "groupId": "39ff0e14-b6a7-4232-a3e6-80a65351c61d"
         },
         {
           "opacity": 100,
@@ -638,7 +640,8 @@
           "focalY": 50,
           "sticker": { "type": "skinCareFlower" },
           "id": "370a1e52-c08c-444e-a8a0-7722a4e17d53",
-          "type": "sticker"
+          "type": "sticker",
+          "groupId": "4f8dc467-7f9d-431b-8ae9-84327c18f689"
         },
         {
           "opacity": 100,
@@ -711,7 +714,8 @@
           "id": "6bff3a0b-7663-4320-830a-be09408e9a45",
           "x": 69,
           "y": 602,
-          "type": "text"
+          "type": "text",
+          "groupId": "4f8dc467-7f9d-431b-8ae9-84327c18f689"
         },
         {
           "opacity": 100,
@@ -727,7 +731,8 @@
           "focalY": 50,
           "sticker": { "type": "skinCareSleepMask" },
           "id": "adcf48ee-e573-4132-9d4c-1d347484111a",
-          "type": "sticker"
+          "type": "sticker",
+          "groupId": "ea1cb809-8164-4a9d-b33c-aad859631cdb"
         },
         {
           "opacity": 100,
@@ -800,7 +805,8 @@
           "id": "c8dc89c4-a487-4b69-b348-b4c9da229f15",
           "x": 170,
           "y": 602,
-          "type": "text"
+          "type": "text",
+          "groupId": "ea1cb809-8164-4a9d-b33c-aad859631cdb"
         },
         {
           "opacity": 100,
@@ -816,7 +822,8 @@
           "focalY": 50,
           "sticker": { "type": "skinCareFaceWashBottles" },
           "id": "e8977e77-d102-4262-a7cd-9a75a3ee53a3",
-          "type": "sticker"
+          "type": "sticker",
+          "groupId": "07b4e87d-7d98-4839-b77a-0e8771e923ad"
         },
         {
           "opacity": 100,
@@ -889,7 +896,8 @@
           "id": "14f6f698-b49a-42df-b0b8-9e3b7cac6abe",
           "x": 278,
           "y": 602,
-          "type": "text"
+          "type": "text",
+          "groupId": "07b4e87d-7d98-4839-b77a-0e8771e923ad"
         }
       ],
       "animations": [
@@ -947,7 +955,29 @@
       "backgroundColor": { "color": { "r": 205, "g": 204, "b": 243 } },
       "type": "page",
       "id": "19bb36d6-a1b9-4050-b25b-4e3448aa5238",
-      "pageTemplateType": "editorial"
+      "pageTemplateType": "editorial",
+      "groups": {
+        "39ff0e14-b6a7-4232-a3e6-80a65351c61d": {
+          "name": "Text",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "4f8dc467-7f9d-431b-8ae9-84327c18f689": {
+          "name": "Floral",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "ea1cb809-8164-4a9d-b33c-aad859631cdb": {
+          "name": "Fine",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "07b4e87d-7d98-4839-b77a-0e8771e923ad": {
+          "name": "Bright",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [
@@ -1069,7 +1099,8 @@
           "focalX": 50,
           "focalY": 50,
           "id": "75ddef40-8b20-49de-8b27-d31aca22972f",
-          "type": "text"
+          "type": "text",
+          "groupId": "47734154-b827-401e-a029-d7035ec3e5fb"
         },
         {
           "opacity": 100,
@@ -1142,7 +1173,8 @@
           "id": "0a09e4ff-8dfe-4611-ba67-8cc5d427a0d1",
           "x": 48,
           "y": 426,
-          "type": "text"
+          "type": "text",
+          "groupId": "47734154-b827-401e-a029-d7035ec3e5fb"
         },
         {
           "opacity": 100,
@@ -1232,7 +1264,8 @@
           "id": "aeaacb7c-b025-4c98-848d-36d485a2b102",
           "x": 47,
           "y": 602,
-          "type": "text"
+          "type": "text",
+          "groupId": "8701c6e5-0348-4da4-949e-203edaf029d0"
         },
         {
           "opacity": 100,
@@ -1305,7 +1338,8 @@
           "id": "f830d245-8818-4f9b-b1af-348c53cba8e1",
           "x": 169,
           "y": 602,
-          "type": "text"
+          "type": "text",
+          "groupId": "16de95b7-85b5-44ba-bea7-39fe77f7ff40"
         },
         {
           "opacity": 100,
@@ -1378,7 +1412,8 @@
           "id": "03ebbda3-8fd9-4faf-86ce-f496c2db0e36",
           "x": 289,
           "y": 602,
-          "type": "text"
+          "type": "text",
+          "groupId": "3017fbbd-cc27-44e9-86b2-242e36ad0df9"
         },
         {
           "opacity": 100,
@@ -1394,7 +1429,8 @@
           "focalY": 50,
           "sticker": { "type": "skinCareCombAndScissors" },
           "id": "978989fd-7e0a-4b34-b138-e9dd089c7a8e",
-          "type": "sticker"
+          "type": "sticker",
+          "groupId": "8701c6e5-0348-4da4-949e-203edaf029d0"
         },
         {
           "opacity": 100,
@@ -1410,7 +1446,8 @@
           "focalY": 50,
           "sticker": { "type": "skinCareFaceIcon" },
           "id": "de52b375-b0f0-47fb-9020-f607a1ca4bfd",
-          "type": "sticker"
+          "type": "sticker",
+          "groupId": "16de95b7-85b5-44ba-bea7-39fe77f7ff40"
         },
         {
           "opacity": 100,
@@ -1426,7 +1463,8 @@
           "focalY": 50,
           "sticker": { "type": "skinCarePalmIcon" },
           "id": "df2cf7f8-5451-462a-8620-37dc2a81c2ec",
-          "type": "sticker"
+          "type": "sticker",
+          "groupId": "3017fbbd-cc27-44e9-86b2-242e36ad0df9"
         }
       ],
       "animations": [
@@ -1484,7 +1522,29 @@
       "backgroundColor": { "color": { "r": 205, "g": 204, "b": 243 } },
       "type": "page",
       "id": "d3d1cfdd-f4bb-4f74-8130-becc36a103c9",
-      "pageTemplateType": ""
+      "pageTemplateType": "",
+      "groups": {
+        "8701c6e5-0348-4da4-949e-203edaf029d0": {
+          "name": "Comb",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "16de95b7-85b5-44ba-bea7-39fe77f7ff40": {
+          "name": "Towel",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "3017fbbd-cc27-44e9-86b2-242e36ad0df9": {
+          "name": "Palm",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "47734154-b827-401e-a029-d7035ec3e5fb": {
+          "name": "Text",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [
@@ -1816,7 +1876,8 @@
           "focalX": 50,
           "focalY": 50,
           "id": "5968e701-5359-4a87-b8a7-3f4ef4d25705",
-          "type": "text"
+          "type": "text",
+          "groupId": "e0e86fe6-3c8d-4137-9503-225519ff84af"
         },
         {
           "opacity": 100,
@@ -1889,7 +1950,8 @@
           "id": "386d793e-6748-430a-a247-06a0b85cd84a",
           "x": 48,
           "y": 426,
-          "type": "text"
+          "type": "text",
+          "groupId": "e0e86fe6-3c8d-4137-9503-225519ff84af"
         },
         {
           "opacity": 100,
@@ -1923,7 +1985,8 @@
           "id": "8e615ea4-3113-4abe-a1bc-46ecd1c51c2a",
           "x": 63,
           "y": 562,
-          "type": "sticker"
+          "type": "sticker",
+          "groupId": "f4a089fe-b89d-4d3d-9cc7-5f425bef388d"
         },
         {
           "opacity": 100,
@@ -1996,7 +2059,8 @@
           "id": "c0a0292e-f21d-4b57-bc74-13ebd9f0257a",
           "x": 69,
           "y": 602,
-          "type": "text"
+          "type": "text",
+          "groupId": "f4a089fe-b89d-4d3d-9cc7-5f425bef388d"
         },
         {
           "opacity": 100,
@@ -2013,7 +2077,8 @@
           "id": "f5ce94a5-d36f-46d1-96ee-218dd72b39cc",
           "x": 170,
           "y": 567,
-          "type": "sticker"
+          "type": "sticker",
+          "groupId": "fa87c9f1-aac8-430d-89e0-7ce96e061470"
         },
         {
           "opacity": 100,
@@ -2086,7 +2151,8 @@
           "id": "ea499eb0-4ee0-4547-a1e4-8b9face6d5f3",
           "x": 170,
           "y": 602,
-          "type": "text"
+          "type": "text",
+          "groupId": "fa87c9f1-aac8-430d-89e0-7ce96e061470"
         },
         {
           "opacity": 100,
@@ -2103,7 +2169,8 @@
           "id": "48848644-9ca4-4685-9d41-964c079e8a42",
           "x": 301,
           "y": 560,
-          "type": "sticker"
+          "type": "sticker",
+          "groupId": "65b34c51-fad9-4f98-be3f-c2fa3c35655a"
         },
         {
           "opacity": 100,
@@ -2176,7 +2243,8 @@
           "id": "32e700c0-59b2-47fa-bd72-110c8950c3b9",
           "x": 278,
           "y": 602,
-          "type": "text"
+          "type": "text",
+          "groupId": "65b34c51-fad9-4f98-be3f-c2fa3c35655a"
         }
       ],
       "animations": [
@@ -2234,7 +2302,29 @@
       "backgroundColor": { "color": { "r": 204, "g": 224, "b": 243 } },
       "type": "page",
       "id": "b0a17975-50ed-4942-a231-fac486b74e4c",
-      "pageTemplateType": ""
+      "pageTemplateType": "",
+      "groups": {
+        "e0e86fe6-3c8d-4137-9503-225519ff84af": {
+          "name": "Text",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "f4a089fe-b89d-4d3d-9cc7-5f425bef388d": {
+          "name": "Floral",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "fa87c9f1-aac8-430d-89e0-7ce96e061470": {
+          "name": "Fine",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "65b34c51-fad9-4f98-be3f-c2fa3c35655a": {
+          "name": "Bright",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [
@@ -2356,7 +2446,8 @@
           "focalX": 50,
           "focalY": 50,
           "id": "ade4fb0a-ae1e-4810-b0c4-d6df7be0e768",
-          "type": "text"
+          "type": "text",
+          "groupId": "0886179e-b185-4e7e-8842-b773484993df"
         },
         {
           "opacity": 100,
@@ -2429,7 +2520,8 @@
           "id": "32890e1e-7df2-4a8e-b7c9-3f637f1a5dc4",
           "x": 48,
           "y": 426,
-          "type": "text"
+          "type": "text",
+          "groupId": "0886179e-b185-4e7e-8842-b773484993df"
         },
         {
           "opacity": 100,
@@ -2519,7 +2611,8 @@
           "id": "b3700257-de62-4a6c-9628-c0a710d09194",
           "x": 47,
           "y": 602,
-          "type": "text"
+          "type": "text",
+          "groupId": "ab49d554-690a-4328-84db-781ca9da9730"
         },
         {
           "opacity": 100,
@@ -2592,7 +2685,8 @@
           "id": "783ed25c-fa78-4955-9a32-60e4644b31e0",
           "x": 169,
           "y": 602,
-          "type": "text"
+          "type": "text",
+          "groupId": "aeaaeaeb-9b0a-4756-93a6-c14109f23e54"
         },
         {
           "opacity": 100,
@@ -2665,7 +2759,8 @@
           "id": "053dc788-623e-460c-a83c-0dd6389b76b7",
           "x": 289,
           "y": 602,
-          "type": "text"
+          "type": "text",
+          "groupId": "b17a3386-b3fd-49f2-8396-6bad6e54cf52"
         },
         {
           "opacity": 100,
@@ -2682,7 +2777,8 @@
           "id": "151343f1-87de-4d35-b899-e04ac77250ca",
           "x": 73,
           "y": 555,
-          "type": "sticker"
+          "type": "sticker",
+          "groupId": "ab49d554-690a-4328-84db-781ca9da9730"
         },
         {
           "opacity": 100,
@@ -2699,7 +2795,8 @@
           "id": "11ff418c-29d0-4829-8519-517a7af5b8ff",
           "x": 199,
           "y": 556,
-          "type": "sticker"
+          "type": "sticker",
+          "groupId": "aeaaeaeb-9b0a-4756-93a6-c14109f23e54"
         },
         {
           "opacity": 100,
@@ -2716,7 +2813,8 @@
           "id": "b19c86d0-db83-4c49-9392-cc240d8ba2d9",
           "x": 308,
           "y": 556,
-          "type": "sticker"
+          "type": "sticker",
+          "groupId": "b17a3386-b3fd-49f2-8396-6bad6e54cf52"
         }
       ],
       "animations": [
@@ -2774,7 +2872,29 @@
       "backgroundColor": { "color": { "r": 204, "g": 224, "b": 243 } },
       "type": "page",
       "id": "7244f52a-0b7c-41ec-8d53-c22ff9f74794",
-      "pageTemplateType": ""
+      "pageTemplateType": "",
+      "groups": {
+        "0886179e-b185-4e7e-8842-b773484993df": {
+          "name": "Text",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "ab49d554-690a-4328-84db-781ca9da9730": {
+          "name": "Comb",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "aeaaeaeb-9b0a-4756-93a6-c14109f23e54": {
+          "name": "Towel",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "b17a3386-b3fd-49f2-8396-6bad6e54cf52": {
+          "name": "Palm",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [
@@ -3106,7 +3226,8 @@
           "focalX": 50,
           "focalY": 50,
           "id": "79c362e0-f8a4-408d-a277-e3c782993bda",
-          "type": "text"
+          "type": "text",
+          "groupId": "2ca2151c-0c47-4df6-96d1-cc0139b3ffc3"
         },
         {
           "opacity": 100,
@@ -3179,7 +3300,8 @@
           "id": "433e728d-112c-410f-a705-0265af338161",
           "x": 48,
           "y": 426,
-          "type": "text"
+          "type": "text",
+          "groupId": "2ca2151c-0c47-4df6-96d1-cc0139b3ffc3"
         },
         {
           "opacity": 100,
@@ -3213,7 +3335,8 @@
           "id": "0b58a842-52f4-4dbe-bfc0-4b4fe3739ed9",
           "x": 63,
           "y": 562,
-          "type": "sticker"
+          "type": "sticker",
+          "groupId": "7578ba09-70a0-406b-984a-122903c11edd"
         },
         {
           "opacity": 100,
@@ -3286,7 +3409,8 @@
           "id": "72851118-d2c2-4b1d-ac7d-0f956e9001c9",
           "x": 69,
           "y": 602,
-          "type": "text"
+          "type": "text",
+          "groupId": "7578ba09-70a0-406b-984a-122903c11edd"
         },
         {
           "opacity": 100,
@@ -3303,7 +3427,8 @@
           "id": "3e3c7f42-3053-4084-a5c0-a73cacc39b22",
           "x": 170,
           "y": 567,
-          "type": "sticker"
+          "type": "sticker",
+          "groupId": "48ba3f9b-382d-4c77-a036-0f41572dbef1"
         },
         {
           "opacity": 100,
@@ -3376,7 +3501,8 @@
           "id": "51f893c5-3ce2-4bcc-aad7-1c10705c37c5",
           "x": 170,
           "y": 602,
-          "type": "text"
+          "type": "text",
+          "groupId": "48ba3f9b-382d-4c77-a036-0f41572dbef1"
         },
         {
           "opacity": 100,
@@ -3393,7 +3519,8 @@
           "id": "5d7a968b-62a3-48e7-9d0f-3e19fff25541",
           "x": 301,
           "y": 560,
-          "type": "sticker"
+          "type": "sticker",
+          "groupId": "48ca823d-ce07-4d2a-8bc8-83993e0ee8ed"
         },
         {
           "opacity": 100,
@@ -3466,7 +3593,8 @@
           "id": "4d2d5842-69cc-4f40-b687-5ad4090c56d3",
           "x": 278,
           "y": 602,
-          "type": "text"
+          "type": "text",
+          "groupId": "48ca823d-ce07-4d2a-8bc8-83993e0ee8ed"
         }
       ],
       "animations": [
@@ -3524,7 +3652,29 @@
       "backgroundColor": { "color": { "r": 243, "g": 229, "b": 204 } },
       "type": "page",
       "id": "f7d33660-69b0-4840-806b-264519f8aee6",
-      "pageTemplateType": ""
+      "pageTemplateType": "",
+      "groups": {
+        "2ca2151c-0c47-4df6-96d1-cc0139b3ffc3": {
+          "name": "Text",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "7578ba09-70a0-406b-984a-122903c11edd": {
+          "name": "Floral",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "48ba3f9b-382d-4c77-a036-0f41572dbef1": {
+          "name": "Fine",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "48ca823d-ce07-4d2a-8bc8-83993e0ee8ed": {
+          "name": "Bright",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [
@@ -3646,7 +3796,8 @@
           "focalX": 50,
           "focalY": 50,
           "id": "cc19b7f1-3da2-4fa5-8bd9-56e04744a29e",
-          "type": "text"
+          "type": "text",
+          "groupId": "9f68a921-792f-4d8a-bbb6-2d7431e44678"
         },
         {
           "opacity": 100,
@@ -3719,7 +3870,8 @@
           "id": "dec7ecbb-2b02-4bcd-b450-2d63744f0748",
           "x": 48,
           "y": 426,
-          "type": "text"
+          "type": "text",
+          "groupId": "9f68a921-792f-4d8a-bbb6-2d7431e44678"
         },
         {
           "opacity": 100,
@@ -3809,7 +3961,8 @@
           "id": "1b074b86-3434-431e-ba1d-061d16340eb5",
           "x": 47,
           "y": 602,
-          "type": "text"
+          "type": "text",
+          "groupId": "0dff1010-c026-44d1-aced-c89935385385"
         },
         {
           "opacity": 100,
@@ -3882,7 +4035,8 @@
           "id": "9ebfd0c8-ba93-4558-ac18-7aff09d04b08",
           "x": 169,
           "y": 602,
-          "type": "text"
+          "type": "text",
+          "groupId": "92312010-b686-460e-9487-4671b5eb46b4"
         },
         {
           "opacity": 100,
@@ -3955,7 +4109,8 @@
           "id": "1db0e777-5220-4e03-a975-423727136da2",
           "x": 289,
           "y": 602,
-          "type": "text"
+          "type": "text",
+          "groupId": "9f6a79e4-d42e-4c22-8a20-c4acad9dfde7"
         },
         {
           "opacity": 100,
@@ -3972,7 +4127,8 @@
           "id": "7007c4c0-eea7-4370-9a30-4b6f2bd497a6",
           "x": 73,
           "y": 555,
-          "type": "sticker"
+          "type": "sticker",
+          "groupId": "0dff1010-c026-44d1-aced-c89935385385"
         },
         {
           "opacity": 100,
@@ -3989,7 +4145,8 @@
           "id": "c69c154e-02ad-435b-9747-81a6e0a5b386",
           "x": 199,
           "y": 556,
-          "type": "sticker"
+          "type": "sticker",
+          "groupId": "92312010-b686-460e-9487-4671b5eb46b4"
         },
         {
           "opacity": 100,
@@ -4006,7 +4163,8 @@
           "id": "3419470a-78a1-42fc-a49f-7f31ce3d6ef4",
           "x": 308,
           "y": 556,
-          "type": "sticker"
+          "type": "sticker",
+          "groupId": "9f6a79e4-d42e-4c22-8a20-c4acad9dfde7"
         }
       ],
       "animations": [
@@ -4064,7 +4222,29 @@
       "backgroundColor": { "color": { "r": 243, "g": 229, "b": 204 } },
       "type": "page",
       "id": "ba660036-2d65-40ab-9a27-6fadd6d6f92f",
-      "pageTemplateType": ""
+      "pageTemplateType": "",
+      "groups": {
+        "9f68a921-792f-4d8a-bbb6-2d7431e44678": {
+          "name": "Text",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "0dff1010-c026-44d1-aced-c89935385385": {
+          "name": "Comb",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "92312010-b686-460e-9487-4671b5eb46b4": {
+          "name": "Towel",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "9f6a79e4-d42e-4c22-8a20-c4acad9dfde7": {
+          "name": "Palm",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [
