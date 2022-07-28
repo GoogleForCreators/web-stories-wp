@@ -95,7 +95,7 @@ $story_query_params = [
 	'_embed'  => rawurlencode(
 		implode(
 			',',
-			[ 'wp:featuredmedia', 'wp:lockuser', 'author', 'wp:publisherlogo', 'wp:term' ]
+			[ 'wp:lockuser', 'author', 'wp:publisherlogo', 'wp:term' ]
 		)
 	),
 	'context' => 'edit',
@@ -111,7 +111,7 @@ $story_query_params = [
 				'modified',
 				'excerpt',
 				'link',
-				'meta.web_stories_poster',
+				'story_poster',
 				'story_data',
 				'preview_link',
 				'edit_link',
