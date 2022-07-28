@@ -173,8 +173,10 @@ describe('useVideoNode', () => {
 function DummyVideo() {
   this.currentTime = 0;
   this.playing = false;
+  this.duration = null;
   this.play = () => {
     this.playing = true;
+    return Promise.resolve(true);
   };
   this.addEventListener = (event, callback) => {
     this[event] = callback;

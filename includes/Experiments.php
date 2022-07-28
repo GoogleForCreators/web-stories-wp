@@ -256,17 +256,6 @@ class Experiments extends Service_Base implements HasRequirements {
 				'group'       => 'dashboard',
 			],
 			/**
-			 * Author: @diegovar
-			 * Issue: #3206
-			 * Creation date: 2020-07-15
-			 */
-			[
-				'name'        => 'incrementalSearchDebounceMedia',
-				'label'       => __( 'Incremental Search', 'web-stories' ),
-				'description' => __( 'Enable incremental search in the Upload and Third-party media tabs', 'web-stories' ),
-				'group'       => 'editor',
-			],
-			/**
 			 * Author: @spacedmonkey
 			 * Issue: #798
 			 * Creation date: 2020-11-02
@@ -297,18 +286,6 @@ class Experiments extends Service_Base implements HasRequirements {
 				'name'        => 'floatingMenu',
 				'label'       => __( 'Floating Menu', 'web-stories' ),
 				'description' => __( 'Enable the new floating design menu', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-			/**
-			 * Author: @swissspidy
-			 * Issue: #10930
-			 * Creation date: 2022-03-17
-			 */
-			[
-				'name'        => 'mediaRecording',
-				'label'       => __( 'Media Recording', 'web-stories' ),
-				'description' => __( 'Enable recording from webcam/microphone', 'web-stories' ),
 				'group'       => 'editor',
 				'default'     => true,
 			],
@@ -385,18 +362,6 @@ class Experiments extends Service_Base implements HasRequirements {
 				'default'     => true,
 			],
 			/**
-			 * Author: @sblinde
-			 * Issue: #5326
-			 * Creation date: 2022-06-29
-			 */
-			[
-				'name'        => 'showSemanticHeadings',
-				'label'       => __( 'Semantic headings', 'web-stories' ),
-				'description' => __( 'Display UI for changing semantic heading tags', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-			/**
 			 * Author: @barklund
 			 * Issue: #9643
 			 * Creation date: 2022-06-21
@@ -405,6 +370,17 @@ class Experiments extends Service_Base implements HasRequirements {
 				'name'        => 'extraPages',
 				'label'       => __( 'Context Pages', 'web-stories' ),
 				'description' => __( 'Show extra pages for context before and after the current canvas page. Note: This might come with a performance penalty.', 'web-stories' ),
+				'group'       => 'editor',
+			],
+			/**
+			 * Author: @barklund
+			 * Issue: #11908
+			 * Creation date: 2022-07-19
+			 */
+			[
+				'name'        => 'recordingTrimming',
+				'label'       => __( 'Trim media recording', 'web-stories' ),
+				'description' => __( 'Enable the ability to trim a media recording before you insert it', 'web-stories' ),
 				'group'       => 'editor',
 			],
 			/**
@@ -417,6 +393,7 @@ class Experiments extends Service_Base implements HasRequirements {
 				'label'       => __( 'Stickers', 'web-stories' ),
 				'description' => __( 'Enable Tenor stickers support', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 		];
 	}

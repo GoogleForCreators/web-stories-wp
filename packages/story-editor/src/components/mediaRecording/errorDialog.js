@@ -33,8 +33,6 @@ import {
   MessageWrap,
   MessageText,
   MessageHeading,
-  LayerWithGrayout,
-  DisplayPageArea,
   Wrapper,
 } from './components';
 import useMediaRecording from './useMediaRecording';
@@ -102,13 +100,9 @@ function ErrorDialog() {
     hasVideo: Boolean(state.videoInput),
   }));
   return (
-    <LayerWithGrayout>
-      <DisplayPageArea withSafezone={false} showOverflow>
-        <Wrapper>
-          <ErrorMessage error={error} hasVideo={hasVideo} />
-        </Wrapper>
-      </DisplayPageArea>
-    </LayerWithGrayout>
+    <Wrapper>
+      <ErrorMessage error={error} hasVideo={hasVideo} />
+    </Wrapper>
   );
 }
 

@@ -79,7 +79,7 @@ jobs:
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
 
       - name: Setup Node
-        uses: actions/setup-node@17f8bd926464a1afa4c6a11669539e9c1ba77048
+        uses: actions/setup-node@2fddd8803e2f5c9604345a0b591c3020ee971a93
         with:
           node-version-file: '.nvmrc'
           cache: npm
@@ -138,8 +138,8 @@ jobs:
         browser: ['chrome']
         wp: ['5.7']
         snapshots: [false]
-        # We want to split up the tests into 2 parts running in parallel.
-        shard: ['1/2', '2/2']
+        # We want to split up the tests into 4 parts running in parallel.
+        shard: ['1/4', '2/4', '3/4', '4/4']
         include:
           - browser: 'chrome'
             wp: 'latest'
@@ -195,7 +195,7 @@ jobs:
         if: ( matrix.snapshots ) && ( github.event.pull_request.draft == false )
 
       - name: Run E2E tests with percy
-        run: npm run test:e2e:percy -- --shard=$SHARD
+        run: npm run test:e2e:percy -- -- --shard=$SHARD
         env:
           PERCY_TOKEN: ${{ secrets.PERCY_TOKEN_E2E }}
           WP_VERSION: ${{ matrix.wp }}
@@ -241,7 +241,7 @@ jobs:
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
 
       - name: Setup Node
-        uses: actions/setup-node@17f8bd926464a1afa4c6a11669539e9c1ba77048
+        uses: actions/setup-node@2fddd8803e2f5c9604345a0b591c3020ee971a93
         with:
           node-version-file: '.nvmrc'
           cache: npm

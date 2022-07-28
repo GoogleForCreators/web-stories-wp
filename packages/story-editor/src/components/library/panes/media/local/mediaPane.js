@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { useFeature } from 'flagged';
 import { useCallback, useEffect } from '@googleforcreators/react';
 import styled from 'styled-components';
 import { __, _n, sprintf } from '@googleforcreators/i18n';
@@ -48,7 +47,6 @@ import {
   StyledPane,
 } from '../common/styles';
 import PaginatedMediaGallery from '../common/paginatedMediaGallery';
-import Flags from '../../../../../flags';
 import { PANE_PADDING } from '../../shared';
 import { LOCAL_MEDIA_TYPE_ALL } from '../../../../../app/media/local/types';
 import { focusStyle } from '../../../../panels/shared/styles';
@@ -171,10 +169,6 @@ function MediaPane(props) {
     }
   }, [searchTerm, mediaType]);
 
-  const incrementalSearchDebounceMedia = useFeature(
-    Flags.INCREMENTAL_SEARCH_DEBOUNCE_MEDIA
-  );
-
   const renderUploadButtonIcon = useCallback(
     (open) => (
       <Button
@@ -199,7 +193,6 @@ function MediaPane(props) {
               initialValue={searchTerm}
               placeholder={__('Search', 'web-stories')}
               onSearch={onSearch}
-              incremental={incrementalSearchDebounceMedia}
             />
           </SearchInputContainer>
           <FilterArea>

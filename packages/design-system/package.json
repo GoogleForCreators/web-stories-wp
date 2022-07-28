@@ -41,7 +41,7 @@
     "@googleforcreators/patterns": "*",
     "@googleforcreators/react": "*",
     "@googleforcreators/tracking": "*",
-    "big.js": "^6.2.0",
+    "big.js": "^6.2.1",
     "focus-visible": "^5.2.0",
     "mousetrap": "^1.6.5",
     "polished": "^4.2.2",
