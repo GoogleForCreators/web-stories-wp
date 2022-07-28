@@ -30,6 +30,7 @@ import {
   editorToDataX,
   editorToDataY,
   getBox,
+  getBoxWithBorder,
 } from './dimensions';
 
 function UnitsProvider({ pageSize, children }) {
@@ -47,6 +48,8 @@ function UnitsProvider({ pageSize, children }) {
         editorToDataY: (y, withRounding) =>
           editorToDataY(y, pageHeight, withRounding),
         getBox: (element) => getBox(element, pageWidth, pageHeight),
+        getBoxWithBorder: (element) =>
+          getBoxWithBorder(element, pageWidth, pageHeight),
       },
     }),
     [pageWidth, pageHeight]

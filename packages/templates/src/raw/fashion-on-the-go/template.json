@@ -545,7 +545,8 @@
           "id": "64b41c08-0817-4b98-aa55-0aaa9ea205e8",
           "content": "<span style=\"color: #212121; letter-spacing: -0.01em; text-transform: uppercase\">MJ</span>\n<span style=\"color: #212121; letter-spacing: -0.01em; text-transform: uppercase\">Kepler</span>",
           "fontSize": 37,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "8bb349c8-ad53-4610-bee5-f5146f5c95f7"
         },
         {
           "x": 17,
@@ -582,7 +583,8 @@
           "id": "a2a90d9e-2bce-44d3-95cd-77f33c55e144",
           "content": "<span style=\"color: #212121; letter-spacing: -0.02em; text-transform: uppercase\">A Rich History</span>",
           "fontSize": 18,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "8bb349c8-ad53-4610-bee5-f5146f5c95f7"
         },
         {
           "x": 122,
@@ -625,7 +627,8 @@
           "id": "8c45242f-9941-4fdc-b5de-3339a36585bf",
           "content": "<span style=\"color: #212121; text-transform: uppercase\">Monogram Canvas</span>",
           "fontSize": 26,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "b96485e7-6ed3-493e-adfd-61a35b9e40f7"
         },
         {
           "x": 132,
@@ -652,7 +655,8 @@
           "id": "acb2ccae-1faf-4192-bf28-19614324ed25",
           "content": "<span style=\"color: #ff3000; letter-spacing: -0.01em\">1896</span>",
           "fontSize": 132,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "b96485e7-6ed3-493e-adfd-61a35b9e40f7"
         },
         {
           "x": 18,
@@ -679,7 +683,8 @@
           "id": "e6ee6ead-43e0-45a4-aeef-1bcb7c914fcd",
           "content": "<span style=\"color: #ff3000; letter-spacing: -0.01em\">1901</span>",
           "fontSize": 66,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "4ed447fb-ab58-4857-af1f-1ff3633793c0"
         },
         {
           "x": 19,
@@ -722,7 +727,8 @@
           "id": "2c548d81-abe2-4f74-9292-9910382fb293",
           "content": "<span style=\"color: #212121; text-transform: uppercase\">The Hobo Bag</span>",
           "fontSize": 26,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "4ed447fb-ab58-4857-af1f-1ff3633793c0"
         },
         {
           "x": 264,
@@ -750,7 +756,8 @@
           "id": "9156bf8e-3cdd-41fb-99c2-f6206f95ec1b",
           "content": "<span style=\"color: #ff3000; letter-spacing: -0.01em\">1930</span>",
           "fontSize": 66,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "cc808f1a-5fa4-4c81-a1bb-fd6219b32ee9"
         },
         {
           "x": 160,
@@ -794,7 +801,8 @@
           "id": "78ef1efb-0ca7-4067-9a38-a646987fd096",
           "content": "<span style=\"color: #212121; letter-spacing: -0.01em; text-transform: uppercase\">The Kepler Bag</span>",
           "fontSize": 26,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "cc808f1a-5fa4-4c81-a1bb-fd6219b32ee9"
         },
         {
           "x": 20,
@@ -838,7 +846,8 @@
           "id": "f5593520-3bb3-49d6-bfbd-c9fe2af7ee51",
           "content": "<span style=\"color: #212121; letter-spacing: -0.01em; text-transform: uppercase\">The Stargaze Bag</span>",
           "fontSize": 26,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "10e11545-6cef-4cdb-8693-f851c5d575cb"
         },
         {
           "x": 18,
@@ -866,7 +875,8 @@
           "id": "a10cc4c5-ee6f-43dd-a391-ce72a14a43b7",
           "content": "<span style=\"color: #ff3000\">1966</span>",
           "fontSize": 100,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "10e11545-6cef-4cdb-8693-f851c5d575cb"
         }
       ],
       "animations": [
@@ -1008,7 +1018,34 @@
       "type": "page",
       "id": "22e2ed54-fa70-43c5-81e8-81ad672bd6ad",
       "backgroundColor": { "color": { "r": 255, "g": 236, "b": 227 } },
-      "pageTemplateType": "list"
+      "pageTemplateType": "list",
+      "groups": {
+        "b96485e7-6ed3-493e-adfd-61a35b9e40f7": {
+          "name": "1896",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "4ed447fb-ab58-4857-af1f-1ff3633793c0": {
+          "name": "1901",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "cc808f1a-5fa4-4c81-a1bb-fd6219b32ee9": {
+          "name": "1930",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "10e11545-6cef-4cdb-8693-f851c5d575cb": {
+          "name": "1966",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "8bb349c8-ad53-4610-bee5-f5146f5c95f7": {
+          "name": "Text",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [
@@ -1447,7 +1484,8 @@
           "id": "ecfb31af-00a8-4533-b86a-e268e7b2a573",
           "content": "<span style=\"color: #212121; text-transform: uppercase\">MJ Kepler</span>",
           "fontSize": 48,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "39871719-16d5-4d12-8eb2-f24044c9ff90"
         },
         {
           "x": 180,
@@ -1491,7 +1529,8 @@
           "id": "f40e6fac-12c9-4259-a5af-8de9d1fd1c64",
           "content": "<span style=\"color: #212121; text-transform: uppercase\">Jardin</span>",
           "fontSize": 48,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "c94d8d78-fa72-4857-bc29-845b17b529b4"
         },
         {
           "x": 15,
@@ -1535,7 +1574,8 @@
           "id": "dc565020-6358-44d9-9aac-a8eb90e76415",
           "content": "<span style=\"color: #212121; text-transform: uppercase\">Rick Marks</span>",
           "fontSize": 48,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "f8582406-83b5-49e1-9c02-e3ae3ac5cacd"
         },
         {
           "x": 107,
@@ -1579,7 +1619,8 @@
           "id": "d6fea8bd-8f0a-414b-a845-722d436a6d43",
           "content": "<span style=\"color: #212121; text-transform: uppercase\">Prag</span>",
           "fontSize": 48,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "fb573ce0-4aee-46a6-ab7b-acfeb578b2c2"
         },
         {
           "x": 71,
@@ -1623,7 +1664,8 @@
           "id": "7726e175-d97f-42ed-bb2e-a581f4135332",
           "content": "<span style=\"color: #212121; text-transform: uppercase\">Rag’n Tag</span>",
           "fontSize": 48,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "1df9f87e-137c-4f60-a4d7-1c0a2da19247"
         },
         {
           "x": 255,
@@ -1651,7 +1693,8 @@
           "id": "3873fcaf-3c89-43dd-ba61-47bfed747b3e",
           "content": "<span style=\"color: #ff3000\">1</span>",
           "fontSize": 36,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "39871719-16d5-4d12-8eb2-f24044c9ff90"
         },
         {
           "opacity": 100,
@@ -1667,7 +1710,8 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": { "type": "fashionStarburst" },
-          "id": "fdc527dd-e6f2-4524-a9d2-3310a15372c7"
+          "id": "fdc527dd-e6f2-4524-a9d2-3310a15372c7",
+          "groupId": "39871719-16d5-4d12-8eb2-f24044c9ff90"
         },
         {
           "x": 164,
@@ -1695,7 +1739,8 @@
           "id": "e614554a-4201-4bdd-9ced-c5fe97c758c8",
           "content": "<span style=\"color: #ff3000\">2</span>",
           "fontSize": 36,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "c94d8d78-fa72-4857-bc29-845b17b529b4"
         },
         {
           "opacity": 100,
@@ -1711,7 +1756,8 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": { "type": "fashionStarburst" },
-          "id": "1c4e8466-f929-4200-820a-26881a9b613e"
+          "id": "1c4e8466-f929-4200-820a-26881a9b613e",
+          "groupId": "c94d8d78-fa72-4857-bc29-845b17b529b4"
         },
         {
           "x": 289,
@@ -1739,7 +1785,8 @@
           "id": "53f8e685-93b5-4971-bb76-03d52602eb47",
           "content": "<span style=\"color: #ff3000\">3</span>",
           "fontSize": 36,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "f8582406-83b5-49e1-9c02-e3ae3ac5cacd"
         },
         {
           "opacity": 100,
@@ -1755,7 +1802,8 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": { "type": "fashionStarburst" },
-          "id": "d54dbea3-9271-4b1f-84cc-9d6611d2e105"
+          "id": "d54dbea3-9271-4b1f-84cc-9d6611d2e105",
+          "groupId": "f8582406-83b5-49e1-9c02-e3ae3ac5cacd"
         },
         {
           "x": 82,
@@ -1783,7 +1831,8 @@
           "id": "c8f479d6-429d-4ea4-93e8-ce8dfb37a5d5",
           "content": "<span style=\"color: #ff3000\">4</span>",
           "fontSize": 36,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "fb573ce0-4aee-46a6-ab7b-acfeb578b2c2"
         },
         {
           "opacity": 100,
@@ -1799,7 +1848,8 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": { "type": "fashionStarburst" },
-          "id": "8e3a20f9-294c-4030-ab03-930f372372f5"
+          "id": "8e3a20f9-294c-4030-ab03-930f372372f5",
+          "groupId": "fb573ce0-4aee-46a6-ab7b-acfeb578b2c2"
         },
         {
           "x": 311,
@@ -1827,7 +1877,8 @@
           "id": "175d2727-d683-4601-8405-f0a2ee56a654",
           "content": "<span style=\"color: #ff3000\">5</span>",
           "fontSize": 36,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "1df9f87e-137c-4f60-a4d7-1c0a2da19247"
         },
         {
           "opacity": 100,
@@ -1843,7 +1894,8 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": { "type": "fashionStarburst" },
-          "id": "9945ab8f-4235-4ced-a414-aed99e981653"
+          "id": "9945ab8f-4235-4ced-a414-aed99e981653",
+          "groupId": "1df9f87e-137c-4f60-a4d7-1c0a2da19247"
         }
       ],
       "animations": [
@@ -1979,7 +2031,34 @@
       "type": "page",
       "id": "e39c480a-e017-4c6e-b48c-4dc1ef00f6ab",
       "backgroundColor": { "color": { "r": 255, "g": 236, "b": 227 } },
-      "pageTemplateType": "list"
+      "pageTemplateType": "list",
+      "groups": {
+        "39871719-16d5-4d12-8eb2-f24044c9ff90": {
+          "name": "Section",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "c94d8d78-fa72-4857-bc29-845b17b529b4": {
+          "name": "Section",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "f8582406-83b5-49e1-9c02-e3ae3ac5cacd": {
+          "name": "Section",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "fb573ce0-4aee-46a6-ab7b-acfeb578b2c2": {
+          "name": "Section",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "1df9f87e-137c-4f60-a4d7-1c0a2da19247": {
+          "name": "Section",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [
@@ -2730,7 +2809,8 @@
           "id": "1043803d-625c-4b7a-a5ad-1cdecfbb1c62",
           "content": "<span style=\"color: #212121; letter-spacing: -0.01em; text-transform: uppercase\">How to pull off the</span>\n<span style=\"letter-spacing: -0.01em; text-transform: uppercase\">all denim look</span>",
           "fontSize": 20,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "72c25e55-9c1e-484d-a9a8-7ccf770d91d7"
         },
         {
           "x": 148,
@@ -2774,7 +2854,8 @@
           "id": "87b77bd3-8bc3-44ca-af6f-661e45522a7c",
           "content": "<span style=\"color: #212121; letter-spacing: -0.01em; text-transform: uppercase\">The Best Street </span><span style=\"letter-spacing: -0.01em; text-transform: uppercase\">Styles From NYFW</span>",
           "fontSize": 20,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "c625b6ba-90fc-4e5a-8a85-a7140b8cdddc"
         },
         {
           "x": 148,
@@ -2818,7 +2899,8 @@
           "id": "44e7aa5c-3fe0-43db-8d46-c0a4425eeb18",
           "content": "<span style=\"color: #212121; letter-spacing: -0.01em; text-transform: uppercase\">The Latest Trends </span><span style=\"letter-spacing: -0.01em; text-transform: uppercase\">In Sneaker Land</span>",
           "fontSize": 20,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "d1542e9f-6499-44ed-b51e-421787ecebbd"
         },
         {
           "x": 30,
@@ -2848,7 +2930,8 @@
             "alt": "page9_item1-cropped",
             "sizes": [],
             "isExternal": true
-          }
+          },
+          "groupId": "72c25e55-9c1e-484d-a9a8-7ccf770d91d7"
         },
         {
           "x": 30,
@@ -2879,7 +2962,8 @@
             "alt": "page9_item2",
             "sizes": [],
             "isExternal": true
-          }
+          },
+          "groupId": "c625b6ba-90fc-4e5a-8a85-a7140b8cdddc"
         },
         {
           "x": 29,
@@ -2910,7 +2994,8 @@
             "alt": "page9_item3",
             "sizes": [],
             "isExternal": true
-          }
+          },
+          "groupId": "d1542e9f-6499-44ed-b51e-421787ecebbd"
         },
         {
           "width": 94,
@@ -2942,7 +3027,8 @@
           "basedOn": "ba68ba92-edcd-4c5c-a4fe-5263fc994e2b",
           "id": "40d8eaeb-1fad-4346-b56b-eef002fcb4db",
           "x": 29,
-          "y": 496
+          "y": 496,
+          "groupId": "fa78fb07-2fd6-4be8-ad25-25741ca99d0e"
         },
         {
           "width": 195,
@@ -2986,7 +3072,8 @@
           "basedOn": "44e7aa5c-3fe0-43db-8d46-c0a4425eeb18",
           "id": "0785511b-324d-4a52-90bc-1fa6d5a8a0e6",
           "x": 148,
-          "y": 535
+          "y": 535,
+          "groupId": "fa78fb07-2fd6-4be8-ad25-25741ca99d0e"
         }
       ],
       "animations": [
@@ -3066,7 +3153,29 @@
       "type": "page",
       "id": "a9ed1626-720d-4b66-bfbd-40441c83390c",
       "backgroundColor": { "color": { "r": 255, "g": 236, "b": 227 } },
-      "pageTemplateType": "list"
+      "pageTemplateType": "list",
+      "groups": {
+        "72c25e55-9c1e-484d-a9a8-7ccf770d91d7": {
+          "name": "Section",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "c625b6ba-90fc-4e5a-8a85-a7140b8cdddc": {
+          "name": "Section",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "d1542e9f-6499-44ed-b51e-421787ecebbd": {
+          "name": "Section",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "fa78fb07-2fd6-4be8-ad25-25741ca99d0e": {
+          "name": "Section",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     }
   ],
   "current": null,

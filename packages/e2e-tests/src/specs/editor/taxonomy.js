@@ -109,13 +109,12 @@ describe('taxonomy', () => {
       await addTag('sci-fi'),
       await addTag('comedy'),
     ]);
-
     // No need to save/publish the story, as the new categories will have been
     // created in the background via the REST API already.
   });
 
-  // eslint-disable-next-line jest/no-disabled-tests -- TODO(#12026): Fix flakey test.
-  describe.skip('Administrator', () => {
+  describe('Administrator', () => {
+    jest.retryTimes(3, { logErrorsBeforeRetry: true });
     it('should be able to add new categories', async () => {
       await createNewStory();
       await insertStoryTitle('Taxonomies - Categories - Admin');
@@ -140,6 +139,7 @@ describe('taxonomy', () => {
       await expect(page).toMatchElement('input[name="hierarchical_term_rock"]');
 
       // categories added are checked automatically.
+
       await expect(page).toMatchElement(
         'input[name="hierarchical_term_funk"][checked]'
       );

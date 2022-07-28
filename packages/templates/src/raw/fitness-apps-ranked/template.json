@@ -702,7 +702,8 @@
           "focalX": 50,
           "focalY": 50,
           "mask": { "type": "circle" },
-          "id": "d20092e4-0de3-4f5e-ac2a-74f1ee93bbb5"
+          "id": "d20092e4-0de3-4f5e-ac2a-74f1ee93bbb5",
+          "groupId": "c509118f-a795-489e-8c16-38fd25df02fe"
         },
         {
           "opacity": 100,
@@ -718,7 +719,8 @@
           "focalY": 50,
           "sticker": { "type": "technologyPieChart" },
           "id": "52c8c3bf-06e9-40d0-98aa-af0487e36896",
-          "type": "sticker"
+          "type": "sticker",
+          "groupId": "c509118f-a795-489e-8c16-38fd25df02fe"
         },
         {
           "opacity": 100,
@@ -925,7 +927,14 @@
         "type": "shape",
         "id": "fd289893-c627-46ab-aa5d-8ec4f7005780"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": "",
+      "groups": {
+        "c509118f-a795-489e-8c16-38fd25df02fe": {
+          "name": "Badge",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [
@@ -1327,7 +1336,8 @@
           "focalX": 50,
           "focalY": 50,
           "mask": { "type": "circle" },
-          "id": "ae657fdf-9c17-478c-998f-d2ff6b79751e"
+          "id": "ae657fdf-9c17-478c-998f-d2ff6b79751e",
+          "groupId": "ffc5d036-c2cc-4793-8876-67d165efac0a"
         },
         {
           "opacity": 100,
@@ -1343,7 +1353,8 @@
           "focalY": 50,
           "sticker": { "type": "technologyRunningFigure" },
           "id": "d20ca0b1-89f6-44a9-9302-38d1f681945e",
-          "type": "sticker"
+          "type": "sticker",
+          "groupId": "ffc5d036-c2cc-4793-8876-67d165efac0a"
         },
         {
           "opacity": 100,
@@ -1550,7 +1561,14 @@
         "type": "shape",
         "id": "fd289893-c627-46ab-aa5d-8ec4f7005780"
       },
-      "pageTemplateType": "section"
+      "pageTemplateType": "section",
+      "groups": {
+        "ffc5d036-c2cc-4793-8876-67d165efac0a": {
+          "name": "Badge",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [
@@ -1949,7 +1967,8 @@
           "focalX": 50,
           "focalY": 50,
           "mask": { "type": "circle" },
-          "id": "a1612d1b-cb9a-4807-a101-cdc8bc949db8"
+          "id": "a1612d1b-cb9a-4807-a101-cdc8bc949db8",
+          "groupId": "4ce7115e-2de9-468c-a0cc-fbb20acc8853"
         },
         {
           "opacity": 100,
@@ -1965,7 +1984,8 @@
           "focalY": 50,
           "sticker": { "type": "technologyDumbbells" },
           "id": "43c1a7d7-4f77-4b31-b5ce-3718eda3f214",
-          "type": "sticker"
+          "type": "sticker",
+          "groupId": "4ce7115e-2de9-468c-a0cc-fbb20acc8853"
         },
         {
           "opacity": 100,
@@ -2164,7 +2184,14 @@
         "type": "shape",
         "id": "fd289893-c627-46ab-aa5d-8ec4f7005780"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": "",
+      "groups": {
+        "4ce7115e-2de9-468c-a0cc-fbb20acc8853": {
+          "name": "Badge",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [
@@ -2387,7 +2414,8 @@
           "basedOn": "d91c0a8f-3852-4f50-bd7d-9a24f408c45c",
           "id": "d0f9a832-6edd-404d-b901-fbd26bd133b0",
           "x": -137,
-          "y": 649
+          "y": 649,
+          "groupId": "111d68da-2a22-4b15-af6a-32f43056b491"
         },
         {
           "opacity": 100,
@@ -2412,7 +2440,8 @@
           "basedOn": "d0f9a832-6edd-404d-b901-fbd26bd133b0",
           "id": "f6dba06f-74c8-47e3-b2b9-1daa894954e5",
           "x": 202,
-          "y": -130
+          "y": -130,
+          "groupId": "111d68da-2a22-4b15-af6a-32f43056b491"
         },
         {
           "opacity": 100,
@@ -2518,7 +2547,8 @@
             "bottomRight": 10,
             "bottomLeft": 10,
             "locked": true
-          }
+          },
+          "groupId": "7f0c3f83-9298-4b80-bb5d-e7c471761eeb"
         },
         {
           "opacity": 100,
@@ -2534,7 +2564,8 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": { "type": "technologyShoe" },
-          "id": "e0d7e496-d352-4d0f-ba5d-632b879dc8b8"
+          "id": "e0d7e496-d352-4d0f-ba5d-632b879dc8b8",
+          "groupId": "7f0c3f83-9298-4b80-bb5d-e7c471761eeb"
         },
         {
           "opacity": 100,
@@ -2609,7 +2640,8 @@
           "basedOn": "c5c1927a-a461-4655-abcf-558d60946e60",
           "id": "3517ae98-6e41-466f-b4b7-1450e61662df",
           "x": 189,
-          "y": 242
+          "y": 242,
+          "groupId": "7f0c3f83-9298-4b80-bb5d-e7c471761eeb"
         },
         {
           "opacity": 100,
@@ -2684,7 +2716,8 @@
           "basedOn": "3517ae98-6e41-466f-b4b7-1450e61662df",
           "id": "ca30a640-6708-42d0-a226-9daa57069a88",
           "x": 189,
-          "y": 275
+          "y": 275,
+          "groupId": "7f0c3f83-9298-4b80-bb5d-e7c471761eeb"
         },
         {
           "opacity": 100,
@@ -2709,7 +2742,8 @@
           "basedOn": "7eeb17d7-d26e-4476-b2ec-52e2e6a42447",
           "id": "17ffcd54-b88d-4307-8fd8-e8759f3f7915",
           "x": 71,
-          "y": 362
+          "y": 362,
+          "groupId": "d83c519e-827c-4412-ab6c-d62db9b56271"
         },
         {
           "opacity": 100,
@@ -2725,7 +2759,8 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": { "type": "technologyMuscle" },
-          "id": "2eb0121e-b4f1-422f-a1ba-02b934034b3e"
+          "id": "2eb0121e-b4f1-422f-a1ba-02b934034b3e",
+          "groupId": "d83c519e-827c-4412-ab6c-d62db9b56271"
         },
         {
           "opacity": 100,
@@ -2800,7 +2835,8 @@
           "basedOn": "3517ae98-6e41-466f-b4b7-1450e61662df",
           "id": "de3a2c4e-0e2c-4806-8c0a-482ebf71c625",
           "x": 189,
-          "y": 354
+          "y": 354,
+          "groupId": "d83c519e-827c-4412-ab6c-d62db9b56271"
         },
         {
           "opacity": 100,
@@ -2875,7 +2911,8 @@
           "basedOn": "ca30a640-6708-42d0-a226-9daa57069a88",
           "id": "6db24f9a-c2c9-40ba-a6d4-255015e1e9cb",
           "x": 189,
-          "y": 391
+          "y": 391,
+          "groupId": "d83c519e-827c-4412-ab6c-d62db9b56271"
         },
         {
           "opacity": 100,
@@ -2900,7 +2937,8 @@
           "basedOn": "17ffcd54-b88d-4307-8fd8-e8759f3f7915",
           "id": "1299e382-b9b7-4cc5-b4c3-283c1cd22dcf",
           "x": 71,
-          "y": 482
+          "y": 482,
+          "groupId": "b493ca28-f3a4-4a39-b251-b07af4563067"
         },
         {
           "opacity": 100,
@@ -2916,7 +2954,8 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": { "type": "technologySwimmer" },
-          "id": "1e3b0b01-f908-4b79-abef-8e873fba73b1"
+          "id": "1e3b0b01-f908-4b79-abef-8e873fba73b1",
+          "groupId": "b493ca28-f3a4-4a39-b251-b07af4563067"
         },
         {
           "opacity": 100,
@@ -2991,7 +3030,8 @@
           "basedOn": "de3a2c4e-0e2c-4806-8c0a-482ebf71c625",
           "id": "2d97fc7c-c3a8-4a95-bfe4-bac6cc74e7af",
           "x": 188,
-          "y": 482
+          "y": 482,
+          "groupId": "b493ca28-f3a4-4a39-b251-b07af4563067"
         },
         {
           "opacity": 100,
@@ -3066,7 +3106,8 @@
           "basedOn": "6db24f9a-c2c9-40ba-a6d4-255015e1e9cb",
           "id": "e2ff0591-7b07-4312-a4d2-03b29372d003",
           "x": 187,
-          "y": 517
+          "y": 517,
+          "groupId": "b493ca28-f3a4-4a39-b251-b07af4563067"
         }
       ],
       "backgroundOverlay": "none",
@@ -3187,7 +3228,29 @@
           "delay": 1400
         }
       ],
-      "pageTemplateType": "list"
+      "pageTemplateType": "list",
+      "groups": {
+        "7f0c3f83-9298-4b80-bb5d-e7c471761eeb": {
+          "name": "Section",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "d83c519e-827c-4412-ab6c-d62db9b56271": {
+          "name": "Section",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "b493ca28-f3a4-4a39-b251-b07af4563067": {
+          "name": "Section",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "111d68da-2a22-4b15-af6a-32f43056b491": {
+          "name": "Background",
+          "isLocked": true,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [
@@ -3341,7 +3404,8 @@
             "isOptimized": false,
             "baseColor": "#1d120b",
             "isExternal": true
-          }
+          },
+          "groupId": "b2a5f85c-0025-40f7-b384-37098f282c3f"
         },
         {
           "opacity": 100,
@@ -3416,7 +3480,8 @@
           "basedOn": "0ce7cd0e-c641-4ea3-9df8-1ff400fcd1f4",
           "id": "cad091f8-9d55-4101-a087-d311f81ee04e",
           "x": 63,
-          "y": 242
+          "y": 242,
+          "groupId": "b2a5f85c-0025-40f7-b384-37098f282c3f"
         },
         {
           "opacity": 100,
@@ -3456,7 +3521,8 @@
             "isOptimized": false,
             "baseColor": "#d1d9d6",
             "isExternal": true
-          }
+          },
+          "groupId": "964030c5-9acd-4414-af12-fc459a8d08f5"
         },
         {
           "opacity": 100,
@@ -3531,7 +3597,8 @@
           "basedOn": "cad091f8-9d55-4101-a087-d311f81ee04e",
           "id": "783bcbab-9cf3-4023-89ae-b251e1e33168",
           "x": 219,
-          "y": 370
+          "y": 370,
+          "groupId": "964030c5-9acd-4414-af12-fc459a8d08f5"
         },
         {
           "opacity": 100,
@@ -3571,7 +3638,8 @@
             "isOptimized": false,
             "baseColor": "#beaaa4",
             "isExternal": true
-          }
+          },
+          "groupId": "2474450c-c1fc-47a2-bc62-2380be88516a"
         },
         {
           "opacity": 100,
@@ -3646,7 +3714,8 @@
           "basedOn": "783bcbab-9cf3-4023-89ae-b251e1e33168",
           "id": "f39454d6-f499-4d27-96a8-6bce103371d5",
           "x": 63,
-          "y": 498
+          "y": 498,
+          "groupId": "2474450c-c1fc-47a2-bc62-2380be88516a"
         }
       ],
       "backgroundOverlay": "none",
@@ -3709,7 +3778,24 @@
           "delay": 0
         }
       ],
-      "pageTemplateType": "list"
+      "pageTemplateType": "list",
+      "groups": {
+        "b2a5f85c-0025-40f7-b384-37098f282c3f": {
+          "name": "Section",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "964030c5-9acd-4414-af12-fc459a8d08f5": {
+          "name": "Section",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "2474450c-c1fc-47a2-bc62-2380be88516a": {
+          "name": "Section",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     }
   ],
   "current": null,

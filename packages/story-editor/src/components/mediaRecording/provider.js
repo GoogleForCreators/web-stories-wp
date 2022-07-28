@@ -142,6 +142,8 @@ function MediaRecordingProvider({ children }) {
     clearMediaBlob,
     muteAudio,
     unMuteAudio,
+    pauseRecording,
+    resumeRecording,
   } = useMediaRecorder({
     recordScreen: false,
     // If the device does not have a microphone or camera, this could result
@@ -353,6 +355,8 @@ function MediaRecordingProvider({ children }) {
         onTrim,
         startTrim,
         setStreamNode,
+        pauseRecording,
+        resumeRecording,
       },
     }),
     [
@@ -396,6 +400,8 @@ function MediaRecordingProvider({ children }) {
       onTrim,
       startTrim,
       setStreamNode,
+      pauseRecording,
+      resumeRecording,
     ]
   );
 

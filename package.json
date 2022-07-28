@@ -236,7 +236,7 @@
     "test:php:integration:single": "vendor/bin/phpunit -c phpunit-integration.xml.dist",
     "test:php:integration:multisite": "vendor/bin/phpunit -c phpunit-integration-multisite.xml.dist",
     "test:php:unit:help": "npm run test:php -- --help",
-    "test:e2e": "cross-env JEST_PUPPETEER_CONFIG=jest-puppeteer.config.cjs jest --runInBand --config=packages/e2e-tests/src/jest.config.js",
+    "test:e2e": "cross-env PUPPETEER_SLOWMO=80 JEST_PUPPETEER_CONFIG=jest-puppeteer.config.cjs jest packages/e2e-tests/src/specs/editor/taxonomy.js --runInBand --config=packages/e2e-tests/src/jest.config.js",
     "test:e2e:help": "npm run test:e2e -- --help",
     "test:e2e:percy": "percy exec --parallel --config=percy.config.yml -- npm run test:e2e",
     "test:e2e:watch": "npm run test:e2e -- --watch",

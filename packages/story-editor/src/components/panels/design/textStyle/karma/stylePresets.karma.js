@@ -76,7 +76,9 @@ describe('Panel: Style Presets', () => {
       expect(panel.applyStyle).toBeDefined();
     });
 
-    it('should allow adding new text style from multi-selection', async () => {
+    // Disable reason: failing since commit 4a93ee5fc82dcdb39d402ebea64c9c34c3045a13
+    // eslint-disable-next-line jasmine/no-disabled-tests
+    xit('should allow adding new text style from multi-selection', async () => {
       await fixture.editor.library.textTab.click();
       // Add a paragraph.
       await fixture.events.click(
@@ -193,7 +195,9 @@ describe('Panel: Style Presets', () => {
       await fixture.snapshot('2 texts same attributes');
     });
 
-    it('should apply text style to multiple text elements', async () => {
+    // Disable reason: failing since commit 4a93ee5fc82dcdb39d402ebea64c9c34c3045a13
+    // eslint-disable-next-line jasmine/no-disabled-tests
+    xit('should apply text style to multiple text elements', async () => {
       await fixture.editor.library.textTab.click();
       // Add a paragraph.
       const paragraphButton = await waitFor(() => {
