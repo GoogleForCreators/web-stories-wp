@@ -30,6 +30,11 @@ on:
       - main
       - release/*
   pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - ready_for_review
     # Don't run for irrelevant changes.
     paths-ignore:
       - 'docs/**'
