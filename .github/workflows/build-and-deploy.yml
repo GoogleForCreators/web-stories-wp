@@ -74,7 +74,7 @@ jobs:
   bundle-size:
     name: Bundle size check
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     # The action cannot annotate the PR when run from a PR fork or authored by Dependabot.
     if: >
       github.event_name == 'pull_request' &&
