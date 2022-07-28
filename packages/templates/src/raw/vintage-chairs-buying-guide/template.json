@@ -1701,7 +1701,8 @@
           "id": "24ef8218-89e0-4842-a881-0c20118cab26",
           "x": 50,
           "y": 126,
-          "type": "image"
+          "type": "image",
+          "groupId": "0b685419-996b-492a-bffd-0986a9c2e438"
         },
         {
           "opacity": 100,
@@ -1719,7 +1720,8 @@
           "id": "89393419-7cf5-47b9-956c-acf46b8827e4",
           "x": 200,
           "y": 126,
-          "type": "shape"
+          "type": "shape",
+          "groupId": "0b685419-996b-492a-bffd-0986a9c2e438"
         },
         {
           "opacity": 100,
@@ -1794,7 +1796,8 @@
           "id": "d808b9e7-ba2d-45d6-8f09-1b7096fb2550",
           "x": 218,
           "y": 221,
-          "type": "text"
+          "type": "text",
+          "groupId": "0b685419-996b-492a-bffd-0986a9c2e438"
         },
         {
           "opacity": 100,
@@ -1828,7 +1831,8 @@
           "id": "9c2eef7b-236d-49ed-9157-23ef20108444",
           "x": 50,
           "y": 374,
-          "type": "image"
+          "type": "image",
+          "groupId": "ebcc586b-bc9c-4d87-9c90-4519eef3c210"
         },
         {
           "opacity": 100,
@@ -1846,7 +1850,8 @@
           "id": "e5565584-23aa-47ae-83ed-aba693bbd37c",
           "x": 200,
           "y": 374,
-          "type": "shape"
+          "type": "shape",
+          "groupId": "ebcc586b-bc9c-4d87-9c90-4519eef3c210"
         },
         {
           "opacity": 100,
@@ -1921,7 +1926,8 @@
           "id": "bc62e2f5-543f-4a0b-8a99-aba9f41d1cee",
           "x": 218,
           "y": 454,
-          "type": "text"
+          "type": "text",
+          "groupId": "ebcc586b-bc9c-4d87-9c90-4519eef3c210"
         }
       ],
       "animations": [
@@ -1945,7 +1951,19 @@
       "backgroundColor": { "color": { "r": 49, "g": 56, "b": 49 } },
       "type": "page",
       "id": "ee9c0096-fa8c-4866-bf3d-ed2f0f046e11",
-      "pageTemplateType": "list"
+      "pageTemplateType": "list",
+      "groups": {
+        "0b685419-996b-492a-bffd-0986a9c2e438": {
+          "name": "Card",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "ebcc586b-bc9c-4d87-9c90-4519eef3c210": {
+          "name": "Card",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     }
   ],
   "current": null,
