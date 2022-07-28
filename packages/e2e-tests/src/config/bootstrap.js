@@ -148,6 +148,9 @@ const ALLOWED_ERROR_MESSAGES_FIREFOX = [
   // When viewing a single story or viewing a story embedded in <amp-story-player>
   'The resource at “https://cdn.ampproject.org/v0/amp-story-1.0.js” preloaded with link preload was not used within a few seconds. Make sure all attributes of the preload tag are set correctly.',
   'An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can remove its sandboxing.',
+
+  // See https://github.com/puppeteer/puppeteer/pull/8631
+  'DOM.scrollIntoViewIfNeeded',
 ];
 
 /**
