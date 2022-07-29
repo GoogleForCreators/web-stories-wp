@@ -39,22 +39,23 @@ function useElementPolygon() {
       getBox,
     })
   );
-  const bgNode = nodesById[bgElement.id];
-  const {
-    x: bgX,
-    y: bgY,
-    width: bgWidth,
-    height: bgHeight,
-  } = bgNode.getBoundingClientRect();
-  const bgPolygon = new SAT.Box(
-    new SAT.Vector(bgX, bgY),
-    bgWidth,
-    bgHeight
-  ).toPolygon();
-  // The background element is offset by a certain amount, so add that back in for
-  // other elements when resolving their position relative to it.
-  const elementYOffset = -getBox(bgElement).y;
+
   const getElementPolygon = (element) => {
+    const bgNode = nodesById[bgElement.id];
+    const {
+      x: bgX,
+      y: bgY,
+      width: bgWidth,
+      height: bgHeight,
+    } = bgNode.getBoundingClientRect();
+    const bgPolygon = new SAT.Box(
+      new SAT.Vector(bgX, bgY),
+      bgWidth,
+      bgHeight
+    ).toPolygon();
+    // The background element is offset by a certain amount, so add that back in for
+    // other elements when resolving their position relative to it.
+    const elementYOffset = -getBox(bgElement).y;
     if (element.isBackground) {
       return bgPolygon;
     }
