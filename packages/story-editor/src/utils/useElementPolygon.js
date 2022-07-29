@@ -19,6 +19,7 @@
  */
 import SAT from 'sat';
 import { useUnits } from '@googleforcreators/units';
+import { canSupportMultiBorder } from '@googleforcreators/masks';
 
 /**
  * Internal dependencies
@@ -32,7 +33,12 @@ function useElementPolygon() {
     state.currentPage?.elements?.find(({ isBackground }) => isBackground)
   );
 
-  const getBox = useUnits(({ actions: { getBox } }) => getBox);
+  const { getBoxWithBorder, getBox } = useUnits(
+    ({ actions: { getBox, getBoxWithBorder } }) => ({
+      getBoxWithBorder,
+      getBox,
+    })
+  );
   const bgNode = nodesById[bgElement.id];
   const {
     x: bgX,
@@ -57,7 +63,9 @@ function useElementPolygon() {
     if (!node) {
       return null;
     }
-    const box = getBox(element);
+    const box = canSupportMultiBorder(element)
+      ? getBoxWithBorder(element)
+      : getBox(element);
     // Note that we place the box at the center coordinate. We do this for the angle
     // to apply correctly. We correct for this offset with `setOffset`` later.
     const center = new SAT.Vector(
