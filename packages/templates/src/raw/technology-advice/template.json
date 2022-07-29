@@ -804,7 +804,8 @@
           "focalX": 50,
           "focalY": 50,
           "mask": { "type": "rectangle" },
-          "id": "2d7caaa6-8c4c-4ea6-9d9c-1b651d76952c"
+          "id": "2d7caaa6-8c4c-4ea6-9d9c-1b651d76952c",
+          "groupId": "4a6f46b0-177c-4c44-9e5d-cd16f3f94826"
         },
         {
           "opacity": 100,
@@ -875,7 +876,8 @@
           "focalX": 50,
           "focalY": 50,
           "id": "e42a76a2-a293-4bac-bf2e-4e9e74b2abeb",
-          "marginOffset": 9.84375
+          "marginOffset": 9.84375,
+          "groupId": "4a6f46b0-177c-4c44-9e5d-cd16f3f94826"
         },
         {
           "x": 344,
@@ -947,7 +949,8 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "marginOffset": 0.19999999999999973
+          "marginOffset": 0.19999999999999973,
+          "groupId": "4a6f46b0-177c-4c44-9e5d-cd16f3f94826"
         },
         {
           "x": 47,
@@ -1019,7 +1022,8 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "marginOffset": 9.84375
+          "marginOffset": 9.84375,
+          "groupId": "1416f63c-6823-4f69-a8f7-38c3929526b5"
         },
         {
           "opacity": 100,
@@ -1091,7 +1095,8 @@
           "basedOn": "75cfcda7-af7d-40dd-825f-5e6964ca40bd",
           "id": "cca05235-7415-4377-9c94-cb45ec8cfe16",
           "x": 47,
-          "y": 23
+          "y": 23,
+          "groupId": "1416f63c-6823-4f69-a8f7-38c3929526b5"
         },
         {
           "opacity": 100,
@@ -1176,7 +1181,19 @@
           "delay": 350
         }
       ],
-      "pageTemplateType": "section"
+      "pageTemplateType": "section",
+      "groups": {
+        "4a6f46b0-177c-4c44-9e5d-cd16f3f94826": {
+          "name": "Info",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "1416f63c-6823-4f69-a8f7-38c3929526b5": {
+          "name": "Header",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [

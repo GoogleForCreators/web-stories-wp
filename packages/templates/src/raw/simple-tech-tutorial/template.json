@@ -89,7 +89,8 @@
           "focalX": 50,
           "focalY": 50,
           "id": "52d76a59-0387-4a92-89a7-2ce936c82717",
-          "type": "text"
+          "type": "text",
+          "groupId": "e0c23ee6-4dd2-48c8-be9c-f942ef6b64db"
         },
         {
           "opacity": 100,
@@ -162,7 +163,8 @@
           "focalX": 50,
           "focalY": 50,
           "id": "b3c9036c-5394-4ded-aed0-6abe5e1adb96",
-          "type": "text"
+          "type": "text",
+          "groupId": "e0c23ee6-4dd2-48c8-be9c-f942ef6b64db"
         },
         {
           "opacity": 100,
@@ -202,7 +204,14 @@
       "backgroundColor": { "color": { "r": 0, "g": 145, "b": 202 } },
       "type": "page",
       "id": "0277a411-0108-4e6b-8e52-6341a77c7851",
-      "pageTemplateType": "cover"
+      "pageTemplateType": "cover",
+      "groups": {
+        "e0c23ee6-4dd2-48c8-be9c-f942ef6b64db": {
+          "name": "Header",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [
@@ -431,7 +440,8 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "id": "587c063f-d247-47b5-892e-0b3a2209088b"
+          "id": "587c063f-d247-47b5-892e-0b3a2209088b",
+          "groupId": "1d1b6c99-ad82-4fa0-8fa7-6f213ef06c6c"
         },
         {
           "opacity": 100,
@@ -499,7 +509,8 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "id": "9d908d43-23c1-4335-bd81-4214a215c366"
+          "id": "9d908d43-23c1-4335-bd81-4214a215c366",
+          "groupId": "1d1b6c99-ad82-4fa0-8fa7-6f213ef06c6c"
         },
         {
           "opacity": 100,
@@ -568,7 +579,8 @@
           "basedOn": "9d908d43-23c1-4335-bd81-4214a215c366",
           "id": "842d6797-de9f-4b78-8c0d-e600f52d4d56",
           "x": 47,
-          "y": 67
+          "y": 67,
+          "groupId": "1d1b6c99-ad82-4fa0-8fa7-6f213ef06c6c"
         },
         {
           "opacity": 100,
@@ -706,7 +718,14 @@
           "delay": 0
         }
       ],
-      "pageTemplateType": "steps"
+      "pageTemplateType": "steps",
+      "groups": {
+        "1d1b6c99-ad82-4fa0-8fa7-6f213ef06c6c": {
+          "name": "Header",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [
@@ -796,7 +815,8 @@
           "focalX": 50,
           "focalY": 50,
           "id": "31f17f12-62ea-4857-9844-06afa8f7a4f8",
-          "type": "text"
+          "type": "text",
+          "groupId": "9a478c57-4e21-4079-9964-3d05bc47e72b"
         },
         {
           "opacity": 100,
@@ -864,7 +884,8 @@
           "focalX": 50,
           "focalY": 50,
           "id": "d55478f3-ec15-445d-bc13-e7aebafa689e",
-          "type": "text"
+          "type": "text",
+          "groupId": "9a478c57-4e21-4079-9964-3d05bc47e72b"
         },
         {
           "opacity": 100,
@@ -933,7 +954,8 @@
           "id": "b7784902-43cb-44f3-8d3d-6d17baabe22a",
           "x": 47,
           "y": 67,
-          "type": "text"
+          "type": "text",
+          "groupId": "9a478c57-4e21-4079-9964-3d05bc47e72b"
         },
         {
           "opacity": 100,
@@ -1001,7 +1023,14 @@
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "id": "2973fe6c-4414-433f-ba04-6b7bbf28eb0f",
-      "pageTemplateType": ""
+      "pageTemplateType": "",
+      "groups": {
+        "9a478c57-4e21-4079-9964-3d05bc47e72b": {
+          "name": "Header",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [
@@ -1221,7 +1250,8 @@
           "focalX": 50,
           "focalY": 50,
           "id": "e556e80b-a5f3-4f19-81db-d04c4352fd8c",
-          "type": "text"
+          "type": "text",
+          "groupId": "e37a5058-676c-457e-a2ce-ef6f8a3423a9"
         },
         {
           "opacity": 100,
@@ -1289,7 +1319,8 @@
           "focalX": 50,
           "focalY": 50,
           "id": "06e87cee-3dc6-4ddb-950c-aba2f9d681b7",
-          "type": "text"
+          "type": "text",
+          "groupId": "e37a5058-676c-457e-a2ce-ef6f8a3423a9"
         },
         {
           "opacity": 100,
@@ -1358,7 +1389,8 @@
           "id": "22dcb0b9-cb26-4e3b-8725-2641b90462f4",
           "x": 47,
           "y": 67,
-          "type": "text"
+          "type": "text",
+          "groupId": "e37a5058-676c-457e-a2ce-ef6f8a3423a9"
         },
         {
           "opacity": 100,
@@ -1426,7 +1458,13 @@
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "id": "b86af1ff-3f9f-4fb4-9197-85e6293793aa",
-      "pageTemplateType": ""
+      "pageTemplateType": "",
+      "groups": {
+        "e37a5058-676c-457e-a2ce-ef6f8a3423a9": {
+          "name": "Header",
+          "isLocked": false
+        }
+      }
     },
     {
       "elements": [
@@ -1516,7 +1554,8 @@
           "focalX": 50,
           "focalY": 50,
           "id": "01b45803-c895-4215-bd5a-7c0aeb2c976a",
-          "type": "text"
+          "type": "text",
+          "groupId": "63e58e45-d402-482b-838f-c585fdf249ac"
         },
         {
           "opacity": 100,
@@ -1584,7 +1623,8 @@
           "focalX": 50,
           "focalY": 50,
           "id": "3712e806-1a36-4218-b468-291de608300e",
-          "type": "text"
+          "type": "text",
+          "groupId": "63e58e45-d402-482b-838f-c585fdf249ac"
         },
         {
           "opacity": 100,
@@ -1653,7 +1693,8 @@
           "id": "75063df8-9faf-4d81-8c3a-97429db94993",
           "x": 47,
           "y": 67,
-          "type": "text"
+          "type": "text",
+          "groupId": "63e58e45-d402-482b-838f-c585fdf249ac"
         },
         {
           "opacity": 100,
@@ -1723,7 +1764,13 @@
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "id": "3c15156c-96a3-40d1-9cd8-112085061b9b",
-      "pageTemplateType": ""
+      "pageTemplateType": "",
+      "groups": {
+        "63e58e45-d402-482b-838f-c585fdf249ac": {
+          "name": "Header",
+          "isLocked": false
+        }
+      }
     },
     {
       "elements": [

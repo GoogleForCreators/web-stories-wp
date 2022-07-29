@@ -22,7 +22,6 @@ import { ContextMenuComponents } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
-import { useFeature } from 'flagged';
 import { RIGHT_CLICK_MENU_LABELS } from '../constants';
 import { states, useHighlights } from '../../highlights';
 import { MediaUploadButton } from '../../../components/form';
@@ -54,7 +53,6 @@ function EmptyStateMenu() {
   const { toggleRecordingMode } = useMediaRecording(({ actions }) => ({
     toggleRecordingMode: actions.toggleRecordingMode,
   }));
-  const enableMediaRecording = useFeature('mediaRecording');
   const { isTranscodingEnabled } = useFFmpeg();
 
   return (
@@ -72,7 +70,7 @@ function EmptyStateMenu() {
         <MediaButton />
       </LibraryProvider>
       {/* `isTranscodingEnabled` already checks for `hasUploadMediaAction` */}
-      {enableMediaRecording && isTranscodingEnabled && (
+      {isTranscodingEnabled && (
         <ContextMenuComponents.MenuButton onClick={toggleRecordingMode}>
           {RIGHT_CLICK_MENU_LABELS.RECORD_VIDEO}
         </ContextMenuComponents.MenuButton>

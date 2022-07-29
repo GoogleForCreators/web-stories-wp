@@ -1,18 +1,26 @@
 {
+  "current": null,
+  "selection": [],
+  "story": {},
   "version": 43,
   "pages": [
     {
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "isDefaultBackground": true,
           "type": "shape",
@@ -20,16 +28,18 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Montserrat",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
-            "styles": ["italic", "regular"],
+            "styles": ["regular", "italic"],
             "variants": [
               [0, 100],
               [0, 200],
@@ -50,6 +60,7 @@
               [1, 800],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 968,
@@ -59,20 +70,30 @@
               "tLGap": 0,
               "wAsc": 1109,
               "wDes": 270,
-              "xH": 525,
+              "xH": 517,
               "capH": 700,
-              "yMin": -262,
-              "yMax": 1043,
+              "yMin": -259,
+              "yMax": 1021,
               "hAsc": 968,
               "hDes": -251,
               "lGap": 0
             }
           },
           "fontSize": 44,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.1,
           "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "type": "text",
           "content": "<span style=\"font-weight: 700; color: #fff\">Gift Guide: Art Books</span>",
           "fontWeight": 400,
@@ -98,16 +119,18 @@
           "id": "f7759f78-a4c5-4b50-b234-2c6ec855e99a",
           "basedOn": "f6877772-87af-4046-95ba-76d84c6605fb",
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Montserrat",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
-            "styles": ["italic", "regular"],
+            "styles": ["regular", "italic"],
             "variants": [
               [0, 100],
               [0, 200],
@@ -128,6 +151,7 @@
               [1, 800],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 968,
@@ -137,20 +161,30 @@
               "tLGap": 0,
               "wAsc": 1109,
               "wDes": 270,
-              "xH": 525,
+              "xH": 517,
               "capH": 700,
-              "yMin": -262,
-              "yMax": 1043,
+              "yMin": -259,
+              "yMax": 1021,
               "hAsc": 968,
               "hDes": -251,
               "lGap": 0
             }
           },
           "fontSize": 16,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1,
           "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "type": "text",
           "content": "<span style=\"font-weight: 500; color: #fff\">Charlie Taylor</span>",
           "fontWeight": 400,
@@ -169,7 +203,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "type": "sticker",
@@ -180,11 +217,19 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": { "type": "artWomanReading" },
+          "sticker": {
+            "type": "artWomanReading"
+          },
           "id": "81355f8c-39b0-42f9-b4b3-8bb3f67ba2fb"
         }
       ],
-      "backgroundColor": { "color": { "r": 65, "g": 44, "b": 71 } },
+      "backgroundColor": {
+        "color": {
+          "r": 65,
+          "g": 44,
+          "b": 71
+        }
+      },
       "type": "page",
       "id": "c02e601a-0212-46d0-84d8-7b5c63e4523f",
       "animations": [],
@@ -194,14 +239,19 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "isDefaultBackground": true,
           "type": "shape",
@@ -209,16 +259,18 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Montserrat",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
-            "styles": ["italic", "regular"],
+            "styles": ["regular", "italic"],
             "variants": [
               [0, 100],
               [0, 200],
@@ -239,6 +291,7 @@
               [1, 800],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 968,
@@ -248,20 +301,30 @@
               "tLGap": 0,
               "wAsc": 1109,
               "wDes": 270,
-              "xH": 525,
+              "xH": 517,
               "capH": 700,
-              "yMin": -262,
-              "yMax": 1043,
+              "yMin": -259,
+              "yMax": 1021,
               "hAsc": 968,
               "hDes": -251,
               "lGap": 0
             }
           },
           "fontSize": 20,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.2,
           "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "type": "text",
           "content": "<span style=\"font-weight: 600; color: #412c47; letter-spacing: 0.01em\">A book can often be the perfect gift, whether it’s specifically tailored to a friend’s tastes or something you personally loved.</span>",
           "fontWeight": 400,
@@ -284,7 +347,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "type": "sticker",
@@ -295,11 +361,19 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": { "type": "artBooks" },
+          "sticker": {
+            "type": "artBooks"
+          },
           "id": "9f6bdbef-2e18-4382-b3b5-eb50c19eb682"
         }
       ],
-      "backgroundColor": { "color": { "r": 218, "g": 155, "b": 178 } },
+      "backgroundColor": {
+        "color": {
+          "r": 218,
+          "g": 155,
+          "b": 178
+        }
+      },
       "type": "page",
       "id": "0d4492e9-e0e1-4c5d-913c-bf32ef001186",
       "animations": [],
@@ -309,14 +383,19 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "isDefaultBackground": true,
           "type": "shape",
@@ -324,16 +403,18 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Montserrat",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
-            "styles": ["italic", "regular"],
+            "styles": ["regular", "italic"],
             "variants": [
               [0, 100],
               [0, 200],
@@ -354,6 +435,7 @@
               [1, 800],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 968,
@@ -363,20 +445,30 @@
               "tLGap": 0,
               "wAsc": 1109,
               "wDes": 270,
-              "xH": 525,
+              "xH": 517,
               "capH": 700,
-              "yMin": -262,
-              "yMax": 1043,
+              "yMin": -259,
+              "yMax": 1021,
               "hAsc": 968,
               "hDes": -251,
               "lGap": 0
             }
           },
           "fontSize": 16,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.2,
           "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "type": "text",
           "content": "<span style=\"color: #412c47; letter-spacing: 0.01em\">Perfect coffee table books for every art lover.</span>",
           "fontWeight": 400,
@@ -399,16 +491,18 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Montserrat",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
-            "styles": ["italic", "regular"],
+            "styles": ["regular", "italic"],
             "variants": [
               [0, 100],
               [0, 200],
@@ -429,6 +523,7 @@
               [1, 800],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 968,
@@ -438,20 +533,30 @@
               "tLGap": 0,
               "wAsc": 1109,
               "wDes": 270,
-              "xH": 525,
+              "xH": 517,
               "capH": 700,
-              "yMin": -262,
-              "yMax": 1043,
+              "yMin": -259,
+              "yMax": 1021,
               "hAsc": 968,
               "hDes": -251,
               "lGap": 0
             }
           },
           "fontSize": 34,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.1,
           "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "type": "text",
           "content": "<span style=\"font-weight: 700; color: #412c47\">Coffee table art books</span>",
           "fontWeight": 400,
@@ -474,7 +579,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "type": "sticker",
@@ -485,11 +593,19 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": { "type": "artManReading" },
+          "sticker": {
+            "type": "artManReading"
+          },
           "id": "65af2559-eb01-481a-9601-12751f3cba53"
         }
       ],
-      "backgroundColor": { "color": { "r": 184, "g": 184, "b": 207 } },
+      "backgroundColor": {
+        "color": {
+          "r": 184,
+          "g": 184,
+          "b": 207
+        }
+      },
       "type": "page",
       "id": "40fd5d51-bcb6-4c0a-a69e-36f808ebc832",
       "animations": [
@@ -508,14 +624,19 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "isDefaultBackground": true,
           "id": "91ce90fc-a094-40ca-8865-6bce341b636d",
@@ -523,40 +644,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": true },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "type": "sticker",
-          "x": 207,
-          "y": 28,
-          "width": 232,
-          "height": 328,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "sticker": { "type": "artHandHeldSign" },
-          "id": "a7ff7705-466d-4145-9060-55e50fefd286"
-        },
-        {
-          "x": -32,
-          "y": 399,
-          "id": "d164f119-f0ce-4d2c-bf56-480c77b2a275",
-          "basedOn": "a7ff7705-466d-4145-9060-55e50fefd286",
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "type": "sticker",
-          "width": 232,
-          "height": 328,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "sticker": { "type": "artHandHeldSign" }
-        },
-        {
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "scale": 100,
@@ -593,16 +684,40 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": true
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "type": "sticker",
+          "x": 207,
+          "y": 28,
+          "width": 232,
+          "height": 328,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "sticker": {
+            "type": "artHandHeldSign"
+          },
+          "id": "a7ff7705-466d-4145-9060-55e50fefd286",
+          "groupId": "8d2d5afc-e6f7-4c12-9103-4a3c9a5d45de"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Montserrat",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
-            "styles": ["italic", "regular"],
+            "styles": ["regular", "italic"],
             "variants": [
               [0, 100],
               [0, 200],
@@ -623,6 +738,7 @@
               [1, 800],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 968,
@@ -632,20 +748,30 @@
               "tLGap": 0,
               "wAsc": 1109,
               "wDes": 270,
-              "xH": 525,
+              "xH": 517,
               "capH": 700,
-              "yMin": -262,
-              "yMax": 1043,
+              "yMin": -259,
+              "yMax": 1021,
               "hAsc": 968,
               "hDes": -251,
               "lGap": 0
             }
           },
           "fontSize": 16,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.2,
           "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "type": "text",
           "content": "<span style=\"font-weight: 600; color: #412c47; letter-spacing: 0.01em\">$150</span>",
           "fontWeight": 400,
@@ -664,7 +790,8 @@
           "basedOn": "78f3930a-6395-45ea-9bf7-02b08bc76c8b",
           "id": "598f304a-0826-4b36-8ce8-02adcf9fafc8",
           "x": 229,
-          "y": 44
+          "y": 44,
+          "groupId": "8d2d5afc-e6f7-4c12-9103-4a3c9a5d45de"
         },
         {
           "x": 223,
@@ -672,16 +799,18 @@
           "id": "ca5afbb0-12d2-4015-9105-919fe53e918b",
           "basedOn": "78f3930a-6395-45ea-9bf7-02b08bc76c8b",
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Montserrat",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
-            "styles": ["italic", "regular"],
+            "styles": ["regular", "italic"],
             "variants": [
               [0, 100],
               [0, 200],
@@ -702,6 +831,7 @@
               [1, 800],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 968,
@@ -711,20 +841,30 @@
               "tLGap": 0,
               "wAsc": 1109,
               "wDes": 270,
-              "xH": 525,
+              "xH": 517,
               "capH": 700,
-              "yMin": -262,
-              "yMax": 1043,
+              "yMin": -259,
+              "yMax": 1021,
               "hAsc": 968,
               "hDes": -251,
               "lGap": 0
             }
           },
           "fontSize": 16,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.2,
           "textAlign": "left",
-          "padding": { "locked": true, "horizontal": 5, "vertical": 5 },
+          "padding": {
+            "locked": true,
+            "horizontal": 5,
+            "vertical": 5
+          },
           "type": "text",
           "content": "<span style=\"font-weight: 500; text-decoration: underline; color: #c01e00; letter-spacing: 0.01em\">Peter Beard</span>\n<span style=\"font-weight: 500; text-decoration: underline; color: #c01e00; letter-spacing: 0.01em\">Taschen</span>",
           "fontWeight": 400,
@@ -740,11 +880,19 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "link": { "url": "https://www.google.com/", "icon": "", "desc": "" }
+          "link": {
+            "url": "https://www.google.com/",
+            "icon": "",
+            "desc": ""
+          },
+          "groupId": "8d2d5afc-e6f7-4c12-9103-4a3c9a5d45de"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "scale": 100,
@@ -780,21 +928,46 @@
           "id": "e503d67d-7abf-4b7a-9f1e-03a3fdd96d7c"
         },
         {
+          "x": -32,
+          "y": 399,
+          "id": "d164f119-f0ce-4d2c-bf56-480c77b2a275",
+          "basedOn": "a7ff7705-466d-4145-9060-55e50fefd286",
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "type": "sticker",
+          "width": 232,
+          "height": 328,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "sticker": {
+            "type": "artHandHeldSign"
+          },
+          "groupId": "a4e09ccb-fe53-470c-9ee7-5f03f7694577"
+        },
+        {
           "x": 42,
           "y": 414,
           "id": "d2157111-b18b-408c-9385-bb4a0dd58837",
           "basedOn": "78f3930a-6395-45ea-9bf7-02b08bc76c8b",
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Montserrat",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
-            "styles": ["italic", "regular"],
+            "styles": ["regular", "italic"],
             "variants": [
               [0, 100],
               [0, 200],
@@ -815,6 +988,7 @@
               [1, 800],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 968,
@@ -824,20 +998,30 @@
               "tLGap": 0,
               "wAsc": 1109,
               "wDes": 270,
-              "xH": 525,
+              "xH": 517,
               "capH": 700,
-              "yMin": -262,
-              "yMax": 1043,
+              "yMin": -259,
+              "yMax": 1021,
               "hAsc": 968,
               "hDes": -251,
               "lGap": 0
             }
           },
           "fontSize": 16,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.2,
           "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "type": "text",
           "content": "<span style=\"font-weight: 600; color: #412c47; letter-spacing: 0.01em\">$44</span>",
           "fontWeight": 400,
@@ -852,7 +1036,8 @@
           "height": 20,
           "scale": 100,
           "focalX": 50,
-          "focalY": 50
+          "focalY": 50,
+          "groupId": "a4e09ccb-fe53-470c-9ee7-5f03f7694577"
         },
         {
           "x": 42,
@@ -860,16 +1045,18 @@
           "id": "3b6ad9ec-a488-41ea-85f6-095878692006",
           "basedOn": "78f3930a-6395-45ea-9bf7-02b08bc76c8b",
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Montserrat",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
-            "styles": ["italic", "regular"],
+            "styles": ["regular", "italic"],
             "variants": [
               [0, 100],
               [0, 200],
@@ -890,6 +1077,7 @@
               [1, 800],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 968,
@@ -899,20 +1087,30 @@
               "tLGap": 0,
               "wAsc": 1109,
               "wDes": 270,
-              "xH": 525,
+              "xH": 517,
               "capH": 700,
-              "yMin": -262,
-              "yMax": 1043,
+              "yMin": -259,
+              "yMax": 1021,
               "hAsc": 968,
               "hDes": -251,
               "lGap": 0
             }
           },
           "fontSize": 16,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.2,
           "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "type": "text",
           "content": "<span style=\"font-weight: 500; text-decoration: underline; color: #c01e00; letter-spacing: 0.01em\">Vogue and the Met Costume Institute</span>\n<span style=\"font-weight: 500; text-decoration: underline; color: #c01e00; letter-spacing: 0.01em\">Amazon</span>",
           "fontWeight": 400,
@@ -928,7 +1126,12 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "link": { "url": "https://www.google.com/", "icon": "", "desc": "" }
+          "link": {
+            "url": "https://www.google.com/",
+            "icon": "",
+            "desc": ""
+          },
+          "groupId": "a4e09ccb-fe53-470c-9ee7-5f03f7694577"
         }
       ],
       "animations": [
@@ -977,23 +1180,46 @@
           "delay": 1750
         }
       ],
-      "backgroundColor": { "color": { "r": 184, "g": 184, "b": 207 } },
+      "backgroundColor": {
+        "color": {
+          "r": 184,
+          "g": 184,
+          "b": 207
+        }
+      },
       "type": "page",
       "id": "41809ae0-f9ad-49aa-be25-8f02e793707a",
-      "pageTemplateType": "list"
+      "pageTemplateType": "list",
+      "groups": {
+        "8d2d5afc-e6f7-4c12-9103-4a3c9a5d45de": {
+          "name": "Sign",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "a4e09ccb-fe53-470c-9ee7-5f03f7694577": {
+          "name": "Sign",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "isDefaultBackground": true,
           "id": "96fdf79d-6e7a-402c-9eb7-c664697d7d6b",
@@ -1001,7 +1227,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": true
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "type": "sticker",
@@ -1010,41 +1239,29 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": { "type": "artHandHeldSign" },
-          "basedOn": "d164f119-f0ce-4d2c-bf56-480c77b2a275",
-          "id": "f7bc1f2c-f9e5-4a56-b6e5-1adbc8a32962",
-          "x": -32,
-          "y": 399
-        },
-        {
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": true },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "type": "sticker",
-          "width": 232,
-          "height": 328,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "sticker": { "type": "artHandHeldSign" },
+          "sticker": {
+            "type": "artHandHeldSign"
+          },
           "basedOn": "a7ff7705-466d-4145-9060-55e50fefd286",
           "id": "77a97a80-7162-4814-96c6-e89594ec96a8",
           "x": 207,
-          "y": 28
+          "y": 28,
+          "groupId": "c19a8f4c-52b5-498b-8483-df9f0b39505f"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Montserrat",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
-            "styles": ["italic", "regular"],
+            "styles": ["regular", "italic"],
             "variants": [
               [0, 100],
               [0, 200],
@@ -1065,6 +1282,7 @@
               [1, 800],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 968,
@@ -1074,20 +1292,30 @@
               "tLGap": 0,
               "wAsc": 1109,
               "wDes": 270,
-              "xH": 525,
+              "xH": 517,
               "capH": 700,
-              "yMin": -262,
-              "yMax": 1043,
+              "yMin": -259,
+              "yMax": 1021,
               "hAsc": 968,
               "hDes": -251,
               "lGap": 0
             }
           },
           "fontSize": 16,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.2,
           "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "content": "<span style=\"font-weight: 600; color: #412c47; letter-spacing: 0.01em\">$40</span>",
           "fontWeight": 400,
           "borderRadius": {
@@ -1106,20 +1334,23 @@
           "id": "b3130e85-7bac-47a1-b1ec-be45dbbd6fa2",
           "x": 225,
           "y": 46,
-          "type": "text"
+          "type": "text",
+          "groupId": "c19a8f4c-52b5-498b-8483-df9f0b39505f"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Montserrat",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
-            "styles": ["italic", "regular"],
+            "styles": ["regular", "italic"],
             "variants": [
               [0, 100],
               [0, 200],
@@ -1140,6 +1371,7 @@
               [1, 800],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 968,
@@ -1149,20 +1381,30 @@
               "tLGap": 0,
               "wAsc": 1109,
               "wDes": 270,
-              "xH": 525,
+              "xH": 517,
               "capH": 700,
-              "yMin": -262,
-              "yMax": 1043,
+              "yMin": -259,
+              "yMax": 1021,
               "hAsc": 968,
               "hDes": -251,
               "lGap": 0
             }
           },
           "fontSize": 16,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.2,
           "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "x": 225,
           "y": 88,
           "id": "b6ced4b0-1bd5-424b-9954-cac6b2a54820",
@@ -1186,20 +1428,46 @@
             "url": "https://www.google.com/",
             "icon": null,
             "desc": null
-          }
+          },
+          "groupId": "c19a8f4c-52b5-498b-8483-df9f0b39505f"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "type": "sticker",
+          "width": 232,
+          "height": 328,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "sticker": {
+            "type": "artHandHeldSign"
+          },
+          "basedOn": "d164f119-f0ce-4d2c-bf56-480c77b2a275",
+          "id": "f7bc1f2c-f9e5-4a56-b6e5-1adbc8a32962",
+          "x": -32,
+          "y": 399,
+          "groupId": "452c11c2-9912-42f7-a571-a8da9f61b1c2"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Montserrat",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
-            "styles": ["italic", "regular"],
+            "styles": ["regular", "italic"],
             "variants": [
               [0, 100],
               [0, 200],
@@ -1220,6 +1488,7 @@
               [1, 800],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 968,
@@ -1229,20 +1498,30 @@
               "tLGap": 0,
               "wAsc": 1109,
               "wDes": 270,
-              "xH": 525,
+              "xH": 517,
               "capH": 700,
-              "yMin": -262,
-              "yMax": 1043,
+              "yMin": -259,
+              "yMax": 1021,
               "hAsc": 968,
               "hDes": -251,
               "lGap": 0
             }
           },
           "fontSize": 16,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.2,
           "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "x": 44,
           "y": 412,
           "id": "3b395780-46aa-4406-b8c6-9fefe36a9609",
@@ -1261,20 +1540,23 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "type": "text"
+          "type": "text",
+          "groupId": "452c11c2-9912-42f7-a571-a8da9f61b1c2"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Montserrat",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
-            "styles": ["italic", "regular"],
+            "styles": ["regular", "italic"],
             "variants": [
               [0, 100],
               [0, 200],
@@ -1295,6 +1577,7 @@
               [1, 800],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 968,
@@ -1304,20 +1587,30 @@
               "tLGap": 0,
               "wAsc": 1109,
               "wDes": 270,
-              "xH": 525,
+              "xH": 517,
               "capH": 700,
-              "yMin": -262,
-              "yMax": 1043,
+              "yMin": -259,
+              "yMax": 1021,
               "hAsc": 968,
               "hDes": -251,
               "lGap": 0
             }
           },
           "fontSize": 16,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.2,
           "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "x": 44,
           "y": 478,
           "id": "ea8abd53-2472-474f-b41f-c7fa2dd42be9",
@@ -1337,11 +1630,19 @@
           "focalX": 50,
           "focalY": 50,
           "type": "text",
-          "link": { "url": "https://www.google.com/", "icon": "", "desc": "" }
+          "link": {
+            "url": "https://www.google.com/",
+            "icon": "",
+            "desc": ""
+          },
+          "groupId": "452c11c2-9912-42f7-a571-a8da9f61b1c2"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "scale": 100,
@@ -1378,7 +1679,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "scale": 100,
@@ -1460,23 +1764,46 @@
           "delay": 1750
         }
       ],
-      "backgroundColor": { "color": { "r": 184, "g": 184, "b": 207 } },
+      "backgroundColor": {
+        "color": {
+          "r": 184,
+          "g": 184,
+          "b": 207
+        }
+      },
       "type": "page",
       "id": "1a932019-c548-4c31-8220-caec6987e58b",
-      "pageTemplateType": ""
+      "pageTemplateType": "",
+      "groups": {
+        "c19a8f4c-52b5-498b-8483-df9f0b39505f": {
+          "name": "Sign",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "452c11c2-9912-42f7-a571-a8da9f61b1c2": {
+          "name": "Sign",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "isDefaultBackground": true,
           "id": "c0376cc7-6044-45cc-9764-070a5978b311",
@@ -1484,16 +1811,18 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Montserrat",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
-            "styles": ["italic", "regular"],
+            "styles": ["regular", "italic"],
             "variants": [
               [0, 100],
               [0, 200],
@@ -1514,6 +1843,7 @@
               [1, 800],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 968,
@@ -1523,20 +1853,30 @@
               "tLGap": 0,
               "wAsc": 1109,
               "wDes": 270,
-              "xH": 525,
+              "xH": 517,
               "capH": 700,
-              "yMin": -262,
-              "yMax": 1043,
+              "yMin": -259,
+              "yMax": 1021,
               "hAsc": 968,
               "hDes": -251,
               "lGap": 0
             }
           },
           "fontSize": 16,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.2,
           "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "content": "<span style=\"color: #412c47\">Books that will make you feel like you are in the museum or an art gallery.</span>",
           "fontWeight": 400,
           "borderRadius": {
@@ -1559,16 +1899,18 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Montserrat",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
-            "styles": ["italic", "regular"],
+            "styles": ["regular", "italic"],
             "variants": [
               [0, 100],
               [0, 200],
@@ -1589,6 +1931,7 @@
               [1, 800],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 968,
@@ -1598,20 +1941,30 @@
               "tLGap": 0,
               "wAsc": 1109,
               "wDes": 270,
-              "xH": 525,
+              "xH": 517,
               "capH": 700,
-              "yMin": -262,
-              "yMax": 1043,
+              "yMin": -259,
+              "yMax": 1021,
               "hAsc": 968,
               "hDes": -251,
               "lGap": 0
             }
           },
           "fontSize": 34,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.1,
           "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "content": "<span style=\"font-weight: 700; color: #412c47\">Page Turning art books</span>",
           "fontWeight": 400,
           "borderRadius": {
@@ -1634,7 +1987,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "scale": 100,
@@ -1667,7 +2023,8 @@
             "ratio": 1,
             "supportsBorder": true
           },
-          "id": "49c80482-23c2-45de-bd5d-a418905e7312"
+          "id": "49c80482-23c2-45de-bd5d-a418905e7312",
+          "groupId": "dbc97575-bb66-4a82-8c47-a12fcfa2de12"
         },
         {
           "x": 366,
@@ -1675,7 +2032,10 @@
           "id": "da698ecc-cd48-40c5-a7b1-202284bfe55b",
           "basedOn": "49c80482-23c2-45de-bd5d-a418905e7312",
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "scale": 100,
@@ -1705,7 +2065,8 @@
             "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
             "ratio": 1,
             "supportsBorder": true
-          }
+          },
+          "groupId": "dbc97575-bb66-4a82-8c47-a12fcfa2de12"
         },
         {
           "x": -14,
@@ -1713,7 +2074,10 @@
           "id": "b9168a92-a459-4f5d-b9f2-8b60e54a1a19",
           "basedOn": "49c80482-23c2-45de-bd5d-a418905e7312",
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "scale": 100,
@@ -1743,11 +2107,15 @@
             "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
             "ratio": 1,
             "supportsBorder": true
-          }
+          },
+          "groupId": "dbc97575-bb66-4a82-8c47-a12fcfa2de12"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "type": "sticker",
@@ -1758,8 +2126,11 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": { "type": "artWomanReading02" },
-          "id": "e62ecad0-77a4-41fd-9a21-b10ae2018ebe"
+          "sticker": {
+            "type": "artWomanReading02"
+          },
+          "id": "e62ecad0-77a4-41fd-9a21-b10ae2018ebe",
+          "groupId": "dbc97575-bb66-4a82-8c47-a12fcfa2de12"
         }
       ],
       "animations": [
@@ -1803,23 +2174,41 @@
           "delay": 0
         }
       ],
-      "backgroundColor": { "color": { "r": 184, "g": 184, "b": 207 } },
+      "backgroundColor": {
+        "color": {
+          "r": 184,
+          "g": 184,
+          "b": 207
+        }
+      },
       "type": "page",
       "id": "9c09ead0-3c92-4e42-8e20-17da6a6eecc8",
-      "pageTemplateType": "section"
+      "pageTemplateType": "section",
+      "groups": {
+        "dbc97575-bb66-4a82-8c47-a12fcfa2de12": {
+          "name": "Background Image",
+          "isLocked": true,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "isDefaultBackground": true,
           "id": "a89ecd48-9e45-4d5b-8966-8c918f5b9d59",
@@ -1827,10 +2216,19 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
           "type": "shape",
           "x": 71,
           "y": 458,
@@ -1839,7 +2237,9 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "id": "7bbe2ee2-f54e-4a81-b16b-09db2edbd897"
         },
         {
@@ -1848,17 +2248,28 @@
           "id": "0ff7e277-3063-45e0-9a7a-124e064d0295",
           "basedOn": "7bbe2ee2-f54e-4a81-b16b-09db2edbd897",
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 196, "g": 195, "b": 220 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 195,
+              "b": 220
+            }
+          },
           "type": "shape",
           "width": 270,
           "height": 409,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "rectangle" }
+          "mask": {
+            "type": "rectangle"
+          }
         },
         {
           "x": 89,
@@ -1866,10 +2277,19 @@
           "id": "2c3b2493-2951-4837-adea-0f02a30eb4b1",
           "basedOn": "7bbe2ee2-f54e-4a81-b16b-09db2edbd897",
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
           "type": "image",
           "resource": {
             "type": "image",
@@ -1890,20 +2310,24 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "rectangle" }
+          "mask": {
+            "type": "rectangle"
+          }
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Montserrat",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
-            "styles": ["italic", "regular"],
+            "styles": ["regular", "italic"],
             "variants": [
               [0, 100],
               [0, 200],
@@ -1924,6 +2348,7 @@
               [1, 800],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 968,
@@ -1933,20 +2358,30 @@
               "tLGap": 0,
               "wAsc": 1109,
               "wDes": 270,
-              "xH": 525,
+              "xH": 517,
               "capH": 700,
-              "yMin": -262,
-              "yMax": 1043,
+              "yMin": -259,
+              "yMax": 1021,
               "hAsc": 968,
               "hDes": -251,
               "lGap": 0
             }
           },
           "fontSize": 16,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.2,
           "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "content": "<span style=\"font-weight: 600; color: #412c47; letter-spacing: 0.01em\">$40</span>",
           "fontWeight": 400,
           "borderRadius": {
@@ -1969,16 +2404,18 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Montserrat",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
-            "styles": ["italic", "regular"],
+            "styles": ["regular", "italic"],
             "variants": [
               [0, 100],
               [0, 200],
@@ -1999,6 +2436,7 @@
               [1, 800],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 968,
@@ -2008,20 +2446,30 @@
               "tLGap": 0,
               "wAsc": 1109,
               "wDes": 270,
-              "xH": 525,
+              "xH": 517,
               "capH": 700,
-              "yMin": -262,
-              "yMax": 1043,
+              "yMin": -259,
+              "yMax": 1021,
               "hAsc": 968,
               "hDes": -251,
               "lGap": 0
             }
           },
           "fontSize": 16,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.2,
           "textAlign": "left",
-          "padding": { "locked": true, "horizontal": 5, "vertical": 5 },
+          "padding": {
+            "locked": true,
+            "horizontal": 5,
+            "vertical": 5
+          },
           "content": "<span style=\"font-weight: 500; text-decoration: underline; color: #c01e00; letter-spacing: 0.01em\">Life with PIcasso by Francois Gilot</span>",
           "fontWeight": 400,
           "borderRadius": {
@@ -2049,7 +2497,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "type": "sticker",
@@ -2058,7 +2509,9 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": { "type": "artHands" },
+          "sticker": {
+            "type": "artHands"
+          },
           "basedOn": "fa62a01c-6375-4576-8491-a7be73526e74",
           "id": "d942d107-e000-4704-9c6d-b951b8443ea5",
           "x": 107,
@@ -2082,7 +2535,13 @@
           "delay": 0
         }
       ],
-      "backgroundColor": { "color": { "r": 184, "g": 184, "b": 207 } },
+      "backgroundColor": {
+        "color": {
+          "r": 184,
+          "g": 184,
+          "b": 207
+        }
+      },
       "type": "page",
       "id": "6870c42a-6aa3-46b7-83a8-53ef90ac7162",
       "pageTemplateType": ""
@@ -2091,14 +2550,19 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "isDefaultBackground": true,
           "id": "6994e656-1ccf-4e7a-938d-c48bbf513679",
@@ -2106,10 +2570,19 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 196, "g": 195, "b": 220 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 195,
+              "b": 220
+            }
+          },
           "x": 89,
           "y": 0,
           "id": "8d9ffc82-820f-4866-b2d7-0088f89fa4ab",
@@ -2119,15 +2592,26 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "type": "shape"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
           "x": 72,
           "y": 335,
           "width": 270,
@@ -2135,13 +2619,18 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "id": "0833bb21-791c-4f97-933b-3314290143f3",
           "type": "shape"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "scale": 100,
@@ -2165,24 +2654,34 @@
           "y": 13,
           "id": "25485940-5d2e-498a-a936-5553ccc39e04",
           "basedOn": "7bbe2ee2-f54e-4a81-b16b-09db2edbd897",
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
           "width": 205,
           "height": 322,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "type": "image"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Montserrat",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
-            "styles": ["italic", "regular"],
+            "styles": ["regular", "italic"],
             "variants": [
               [0, 100],
               [0, 200],
@@ -2203,6 +2702,7 @@
               [1, 800],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 968,
@@ -2212,20 +2712,30 @@
               "tLGap": 0,
               "wAsc": 1109,
               "wDes": 270,
-              "xH": 525,
+              "xH": 517,
               "capH": 700,
-              "yMin": -262,
-              "yMax": 1043,
+              "yMin": -259,
+              "yMax": 1021,
               "hAsc": 968,
               "hDes": -251,
               "lGap": 0
             }
           },
           "fontSize": 16,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.2,
           "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "content": "<span style=\"font-weight: 600; color: #412c47; letter-spacing: 0.01em\">$54</span>",
           "fontWeight": 400,
           "borderRadius": {
@@ -2248,16 +2758,18 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Montserrat",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
-            "styles": ["italic", "regular"],
+            "styles": ["regular", "italic"],
             "variants": [
               [0, 100],
               [0, 200],
@@ -2278,6 +2790,7 @@
               [1, 800],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 968,
@@ -2287,20 +2800,30 @@
               "tLGap": 0,
               "wAsc": 1109,
               "wDes": 270,
-              "xH": 525,
+              "xH": 517,
               "capH": 700,
-              "yMin": -262,
-              "yMax": 1043,
+              "yMin": -259,
+              "yMax": 1021,
               "hAsc": 968,
               "hDes": -251,
               "lGap": 0
             }
           },
           "fontSize": 16,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.2,
           "textAlign": "left",
-          "padding": { "locked": true, "horizontal": 5, "vertical": 5 },
+          "padding": {
+            "locked": true,
+            "horizontal": 5,
+            "vertical": 5
+          },
           "content": "<span style=\"font-weight: 500; text-decoration: underline; color: #c01e00; letter-spacing: 0.01em\">Walden by Henry David Thoreau</span>",
           "fontWeight": 400,
           "borderRadius": {
@@ -2320,11 +2843,18 @@
           "x": 160,
           "y": 340,
           "type": "text",
-          "link": { "url": "https://www.google.com/", "icon": "", "desc": "" }
+          "link": {
+            "url": "https://www.google.com/",
+            "icon": "",
+            "desc": ""
+          }
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "type": "sticker",
@@ -2333,7 +2863,9 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": { "type": "artHands" },
+          "sticker": {
+            "type": "artHands"
+          },
           "basedOn": "e89a6865-0482-44ad-9f6f-9d75281de7f2",
           "id": "fa62a01c-6375-4576-8491-a7be73526e74",
           "x": 107,
@@ -2341,16 +2873,18 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Montserrat",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
-            "styles": ["italic", "regular"],
+            "styles": ["regular", "italic"],
             "variants": [
               [0, 100],
               [0, 200],
@@ -2371,6 +2905,7 @@
               [1, 800],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 968,
@@ -2380,20 +2915,30 @@
               "tLGap": 0,
               "wAsc": 1109,
               "wDes": 270,
-              "xH": 525,
+              "xH": 517,
               "capH": 700,
-              "yMin": -262,
-              "yMax": 1043,
+              "yMin": -259,
+              "yMax": 1021,
               "hAsc": 968,
               "hDes": -251,
               "lGap": 0
             }
           },
           "fontSize": 16,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.2,
           "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "content": "<span style=\"font-weight: 600; color: #412c47; letter-spacing: 0.01em\">“I was surprised by the three distinct themes I found in this fascinating book.”</span>",
           "fontWeight": 400,
           "borderRadius": {
@@ -2420,16 +2965,18 @@
           "id": "39d1b204-ddf8-4ece-89bb-ee0c561b6dc6",
           "basedOn": "31ae845b-2ca4-4b32-904a-6f8157c88c8d",
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Montserrat",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
-            "styles": ["italic", "regular"],
+            "styles": ["regular", "italic"],
             "variants": [
               [0, 100],
               [0, 200],
@@ -2450,6 +2997,7 @@
               [1, 800],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 968,
@@ -2459,20 +3007,30 @@
               "tLGap": 0,
               "wAsc": 1109,
               "wDes": 270,
-              "xH": 525,
+              "xH": 517,
               "capH": 700,
-              "yMin": -262,
-              "yMax": 1043,
+              "yMin": -259,
+              "yMax": 1021,
               "hAsc": 968,
               "hDes": -251,
               "lGap": 0
             }
           },
           "fontSize": 16,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.2,
           "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "content": "<span style=\"color: #412c47; letter-spacing: 0.01em\">Linda Newbery,</span>\n<span style=\"color: #412c47; letter-spacing: 0.01em\">British writer</span>",
           "fontWeight": 400,
           "borderRadius": {
@@ -2507,7 +3065,13 @@
           "delay": 0
         }
       ],
-      "backgroundColor": { "color": { "r": 184, "g": 184, "b": 207 } },
+      "backgroundColor": {
+        "color": {
+          "r": 184,
+          "g": 184,
+          "b": 207
+        }
+      },
       "type": "page",
       "id": "f4c22fc7-8bf5-41c8-a280-55d58802680a",
       "pageTemplateType": "editorial"
@@ -2516,14 +3080,19 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "isDefaultBackground": true,
           "id": "7935a43d-03d8-4762-b0de-e8b9e914558c",
@@ -2531,16 +3100,18 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Montserrat",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
-            "styles": ["italic", "regular"],
+            "styles": ["regular", "italic"],
             "variants": [
               [0, 100],
               [0, 200],
@@ -2561,6 +3132,7 @@
               [1, 800],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 968,
@@ -2570,20 +3142,30 @@
               "tLGap": 0,
               "wAsc": 1109,
               "wDes": 270,
-              "xH": 525,
+              "xH": 517,
               "capH": 700,
-              "yMin": -262,
-              "yMax": 1043,
+              "yMin": -259,
+              "yMax": 1021,
               "hAsc": 968,
               "hDes": -251,
               "lGap": 0
             }
           },
           "fontSize": 20,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.2,
           "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "content": "<span style=\"font-weight: 500; color: #412c47\">Whether it’s a page turner or something unique for your coffee table, you can’t go wrong with an art book.</span>",
           "fontWeight": 400,
           "borderRadius": {
@@ -2606,16 +3188,18 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Montserrat",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
-            "styles": ["italic", "regular"],
+            "styles": ["regular", "italic"],
             "variants": [
               [0, 100],
               [0, 200],
@@ -2636,6 +3220,7 @@
               [1, 800],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 968,
@@ -2645,20 +3230,30 @@
               "tLGap": 0,
               "wAsc": 1109,
               "wDes": 270,
-              "xH": 525,
+              "xH": 517,
               "capH": 700,
-              "yMin": -262,
-              "yMax": 1043,
+              "yMin": -259,
+              "yMax": 1021,
               "hAsc": 968,
               "hDes": -251,
               "lGap": 0
             }
           },
           "fontSize": 20,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.2,
           "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "x": 49,
           "y": 117,
           "id": "c2838699-b88f-4b38-936a-804f57775fa7",
@@ -2681,7 +3276,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "type": "sticker",
@@ -2690,7 +3288,9 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": { "type": "artBooks" },
+          "sticker": {
+            "type": "artBooks"
+          },
           "basedOn": "9f6bdbef-2e18-4382-b3b5-eb50c19eb682",
           "id": "e608b6d2-0aa8-4f7a-b744-1b819cde4dc3",
           "x": 66,
@@ -2698,7 +3298,13 @@
         }
       ],
       "animations": [],
-      "backgroundColor": { "color": { "r": 218, "g": 155, "b": 178 } },
+      "backgroundColor": {
+        "color": {
+          "r": 218,
+          "g": 155,
+          "b": 178
+        }
+      },
       "type": "page",
       "id": "f55be543-f8e9-46cd-9b43-8b4463471b82",
       "pageTemplateType": ""
@@ -2707,14 +3313,19 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "isDefaultBackground": true,
           "id": "e986f066-e518-496b-b6cf-36aa675b202c",
@@ -2722,16 +3333,18 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Montserrat",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
-            "styles": ["italic", "regular"],
+            "styles": ["regular", "italic"],
             "variants": [
               [0, 100],
               [0, 200],
@@ -2752,6 +3365,7 @@
               [1, 800],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 968,
@@ -2761,20 +3375,30 @@
               "tLGap": 0,
               "wAsc": 1109,
               "wDes": 270,
-              "xH": 525,
+              "xH": 517,
               "capH": 700,
-              "yMin": -262,
-              "yMax": 1043,
+              "yMin": -259,
+              "yMax": 1021,
               "hAsc": 968,
               "hDes": -251,
               "lGap": 0
             }
           },
           "fontSize": 34,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.1,
           "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "content": "<span style=\"font-weight: 700; color: #fff\">Other stories</span>",
           "fontWeight": 400,
           "borderRadius": {
@@ -2796,10 +3420,19 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "type": "image",
           "resource": {
             "type": "image",
@@ -2822,7 +3455,9 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "id": "840c4b09-46f1-4939-a795-52af1bff9e88"
         },
         {
@@ -2831,17 +3466,28 @@
           "id": "be852c25-89f2-4ba3-8c56-d1b66af5a6c1",
           "basedOn": "840c4b09-46f1-4939-a795-52af1bff9e88",
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
           "type": "shape",
           "width": 217,
           "height": 248,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "rectangle" }
+          "mask": {
+            "type": "rectangle"
+          }
         },
         {
           "x": 0,
@@ -2849,17 +3495,28 @@
           "id": "8c74e67f-b16e-4e43-aad7-a2417d328323",
           "basedOn": "840c4b09-46f1-4939-a795-52af1bff9e88",
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
           "type": "shape",
           "width": 196,
           "height": 248,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "rectangle" }
+          "mask": {
+            "type": "rectangle"
+          }
         },
         {
           "x": 196,
@@ -2867,10 +3524,19 @@
           "id": "2462790e-886f-41f5-b649-4126a8fe5340",
           "basedOn": "840c4b09-46f1-4939-a795-52af1bff9e88",
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "type": "image",
           "resource": {
             "type": "image",
@@ -2891,20 +3557,24 @@
           "scale": 100,
           "focalX": 50.19435535332219,
           "focalY": 47.29712804514386,
-          "mask": { "type": "rectangle" }
+          "mask": {
+            "type": "rectangle"
+          }
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Montserrat",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
-            "styles": ["italic", "regular"],
+            "styles": ["regular", "italic"],
             "variants": [
               [0, 100],
               [0, 200],
@@ -2925,6 +3595,7 @@
               [1, 800],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 968,
@@ -2934,20 +3605,30 @@
               "tLGap": 0,
               "wAsc": 1109,
               "wDes": 270,
-              "xH": 525,
+              "xH": 517,
               "capH": 700,
-              "yMin": -262,
-              "yMax": 1043,
+              "yMin": -259,
+              "yMax": 1021,
               "hAsc": 968,
               "hDes": -251,
               "lGap": 0
             }
           },
           "fontSize": 16,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.2,
           "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "content": "<span style=\"font-weight: 500; text-decoration: underline; color: #c01e00; letter-spacing: 0.01em\">Inside the Studio with Christopher Wool</span>",
           "fontWeight": 400,
           "borderRadius": {
@@ -2979,16 +3660,18 @@
           "id": "33739323-584a-485a-be33-d2edbaaf2d71",
           "basedOn": "287f4fb1-6f79-4d8a-9cc5-fcecf1cac6b4",
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Montserrat",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
-            "styles": ["italic", "regular"],
+            "styles": ["regular", "italic"],
             "variants": [
               [0, 100],
               [0, 200],
@@ -3009,6 +3692,7 @@
               [1, 800],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 968,
@@ -3018,20 +3702,30 @@
               "tLGap": 0,
               "wAsc": 1109,
               "wDes": 270,
-              "xH": 525,
+              "xH": 517,
               "capH": 700,
-              "yMin": -262,
-              "yMax": 1043,
+              "yMin": -259,
+              "yMax": 1021,
               "hAsc": 968,
               "hDes": -251,
               "lGap": 0
             }
           },
           "fontSize": 16,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.2,
           "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "content": "<span style=\"font-weight: 500; text-decoration: underline; color: #c01e00\">Inside the Studio with Barbara Kruger</span>",
           "fontWeight": 400,
           "borderRadius": {
@@ -3047,7 +3741,11 @@
           "focalX": 50,
           "focalY": 50,
           "type": "text",
-          "link": { "url": "https://www.google.com/", "icon": "", "desc": "" }
+          "link": {
+            "url": "https://www.google.com/",
+            "icon": "",
+            "desc": ""
+          }
         }
       ],
       "animations": [
@@ -3068,13 +3766,16 @@
           "delay": 0
         }
       ],
-      "backgroundColor": { "color": { "r": 65, "g": 44, "b": 71 } },
+      "backgroundColor": {
+        "color": {
+          "r": 65,
+          "g": 44,
+          "b": 71
+        }
+      },
       "type": "page",
       "id": "86c0e307-d8ad-4bbb-9829-a32fa5e7ba8a",
       "pageTemplateType": "list"
     }
-  ],
-  "current": null,
-  "selection": [],
-  "story": {}
+  ]
 }

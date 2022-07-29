@@ -509,7 +509,8 @@
           "focalY": 50,
           "mask": { "type": "rectangle" },
           "id": "ba4478ab-2791-4d63-9b67-fd0491405cc1",
-          "type": "shape"
+          "type": "shape",
+          "groupId": "ccd8441d-1d26-4bf0-88bb-b3171d2811a4"
         },
         {
           "opacity": 100,
@@ -584,7 +585,8 @@
           "id": "724858ef-097e-4b72-9ec2-105750f1c638",
           "x": 48,
           "y": 14,
-          "type": "text"
+          "type": "text",
+          "groupId": "ccd8441d-1d26-4bf0-88bb-b3171d2811a4"
         },
         {
           "opacity": 100,
@@ -659,7 +661,8 @@
           "id": "5793290c-aabd-48d9-a4fe-3b39ae4c51e0",
           "x": 47,
           "y": 55,
-          "type": "text"
+          "type": "text",
+          "groupId": "ccd8441d-1d26-4bf0-88bb-b3171d2811a4"
         },
         {
           "opacity": 70,
@@ -677,7 +680,8 @@
           "focalX": 50,
           "focalY": 50,
           "mask": { "type": "circle" },
-          "type": "shape"
+          "type": "shape",
+          "groupId": "fbc339bf-dd80-4039-8e88-e058900ba2f4"
         },
         {
           "opacity": 100,
@@ -694,7 +698,8 @@
           "focalY": 50,
           "mask": { "type": "circle" },
           "id": "3ea648fa-dccf-435e-95d8-8cd217288f27",
-          "type": "shape"
+          "type": "shape",
+          "groupId": "fbc339bf-dd80-4039-8e88-e058900ba2f4"
         },
         {
           "opacity": 70,
@@ -712,7 +717,8 @@
           "focalX": 50,
           "focalY": 50,
           "mask": { "type": "circle" },
-          "type": "shape"
+          "type": "shape",
+          "groupId": "e39453c3-885c-4d7f-af0a-75500ec26304"
         },
         {
           "opacity": 100,
@@ -730,7 +736,8 @@
           "focalX": 50,
           "focalY": 50,
           "mask": { "type": "circle" },
-          "type": "shape"
+          "type": "shape",
+          "groupId": "e39453c3-885c-4d7f-af0a-75500ec26304"
         },
         {
           "opacity": 100,
@@ -812,7 +819,8 @@
           "focalY": 50,
           "link": { "url": "https://www.google.com/", "icon": "", "desc": "" },
           "marginOffset": 3.3999999999999986,
-          "type": "text"
+          "type": "text",
+          "groupId": "d5f7a406-4f76-4e50-beae-8b59fd4f8b2d"
         },
         {
           "opacity": 100,
@@ -828,7 +836,8 @@
           "focalY": 50,
           "sticker": { "type": "dayInTheLifeBag" },
           "id": "a6ee6890-154d-4c0f-8d5e-038bb3cd2783",
-          "type": "sticker"
+          "type": "sticker",
+          "groupId": "d5f7a406-4f76-4e50-beae-8b59fd4f8b2d"
         }
       ],
       "animations": [
@@ -884,7 +893,29 @@
         "type": "shape",
         "id": "f5a8c3e4-03b2-4269-a0da-0b45dc704532"
       },
-      "pageTemplateType": "editorial"
+      "pageTemplateType": "editorial",
+      "groups": {
+        "d5f7a406-4f76-4e50-beae-8b59fd4f8b2d": {
+          "name": "Action",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "ccd8441d-1d26-4bf0-88bb-b3171d2811a4": {
+          "name": "Header",
+          "isLocked": false,
+          "isCollapsed": false
+        },
+        "e39453c3-885c-4d7f-af0a-75500ec26304": {
+          "name": "Focus",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "fbc339bf-dd80-4039-8e88-e058900ba2f4": {
+          "name": "Focus",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [
@@ -1281,7 +1312,8 @@
           "focalY": 50,
           "sticker": { "type": "dayInTheLifeAlarmClock" },
           "id": "46be44b4-5dc6-4cc5-8310-ec81ad624d97",
-          "type": "sticker"
+          "type": "sticker",
+          "groupId": "c676ab9f-ec5d-4ced-a0f9-298059af381d"
         },
         {
           "opacity": 100,
@@ -1356,7 +1388,8 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "type": "text"
+          "type": "text",
+          "groupId": "c676ab9f-ec5d-4ced-a0f9-298059af381d"
         },
         {
           "opacity": 100,
@@ -1431,7 +1464,8 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "type": "text"
+          "type": "text",
+          "groupId": "c676ab9f-ec5d-4ced-a0f9-298059af381d"
         },
         {
           "opacity": 100,
@@ -1447,7 +1481,8 @@
           "focalY": 50,
           "sticker": { "type": "dayInTheLifeJumpRope" },
           "id": "f0298471-fa3a-4435-b86d-54c6b0b744ac",
-          "type": "sticker"
+          "type": "sticker",
+          "groupId": "6f9c459b-e14e-49e4-90b4-b286ee43d5e1"
         },
         {
           "opacity": 100,
@@ -1522,7 +1557,8 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "type": "text"
+          "type": "text",
+          "groupId": "6f9c459b-e14e-49e4-90b4-b286ee43d5e1"
         },
         {
           "opacity": 100,
@@ -1597,7 +1633,8 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "type": "text"
+          "type": "text",
+          "groupId": "6f9c459b-e14e-49e4-90b4-b286ee43d5e1"
         },
         {
           "opacity": 100,
@@ -1613,7 +1650,8 @@
           "focalY": 50,
           "sticker": { "type": "dayInTheLifeDumbells" },
           "id": "7c217db2-ee8d-46d8-ae30-97633cc84e43",
-          "type": "sticker"
+          "type": "sticker",
+          "groupId": "b8130953-0754-4800-801f-2507f890c612"
         },
         {
           "opacity": 100,
@@ -1688,7 +1726,8 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "type": "text"
+          "type": "text",
+          "groupId": "b8130953-0754-4800-801f-2507f890c612"
         },
         {
           "opacity": 100,
@@ -1763,7 +1802,8 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "type": "text"
+          "type": "text",
+          "groupId": "b8130953-0754-4800-801f-2507f890c612"
         }
       ],
       "animations": [
@@ -1834,7 +1874,24 @@
       "backgroundColor": { "color": { "r": 12, "g": 23, "b": 39 } },
       "type": "page",
       "id": "f10eeeae-8d55-4d3f-a0e6-2fb7a38417b8",
-      "pageTemplateType": "table"
+      "pageTemplateType": "table",
+      "groups": {
+        "c676ab9f-ec5d-4ced-a0f9-298059af381d": {
+          "name": "Treadmill",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "6f9c459b-e14e-49e4-90b4-b286ee43d5e1": {
+          "name": "Rope",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "b8130953-0754-4800-801f-2507f890c612": {
+          "name": "Lunges",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [
@@ -2232,7 +2289,8 @@
           "focalY": 50,
           "sticker": { "type": "dayInTheLifeFish" },
           "id": "d101b2f6-d85d-4683-9ded-528264aa6724",
-          "type": "sticker"
+          "type": "sticker",
+          "groupId": "d558a302-5e68-47b1-b9b1-25503d452ecd"
         },
         {
           "opacity": 100,
@@ -2307,7 +2365,8 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "type": "text"
+          "type": "text",
+          "groupId": "d558a302-5e68-47b1-b9b1-25503d452ecd"
         },
         {
           "opacity": 100,
@@ -2382,7 +2441,8 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "type": "text"
+          "type": "text",
+          "groupId": "d558a302-5e68-47b1-b9b1-25503d452ecd"
         },
         {
           "opacity": 100,
@@ -2457,7 +2517,8 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "type": "text"
+          "type": "text",
+          "groupId": "d558a302-5e68-47b1-b9b1-25503d452ecd"
         },
         {
           "opacity": 100,
@@ -2473,7 +2534,8 @@
           "focalY": 50,
           "sticker": { "type": "dayInTheLifeBrownRice" },
           "id": "ad8127ae-7949-45f3-9976-d00f0bb76a2e",
-          "type": "sticker"
+          "type": "sticker",
+          "groupId": "6c87c966-2031-4e97-9c16-4e21f9df69a2"
         },
         {
           "opacity": 100,
@@ -2548,7 +2610,8 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "type": "text"
+          "type": "text",
+          "groupId": "6c87c966-2031-4e97-9c16-4e21f9df69a2"
         },
         {
           "opacity": 100,
@@ -2623,7 +2686,8 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "type": "text"
+          "type": "text",
+          "groupId": "6c87c966-2031-4e97-9c16-4e21f9df69a2"
         },
         {
           "opacity": 100,
@@ -2639,7 +2703,8 @@
           "focalY": 50,
           "sticker": { "type": "dayInTheLifeLeaves" },
           "id": "c2829191-981c-45fa-8908-3d2f5afbf25b",
-          "type": "sticker"
+          "type": "sticker",
+          "groupId": "97e3a654-5784-42da-b660-d614aa307a54"
         },
         {
           "opacity": 100,
@@ -2714,7 +2779,8 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "type": "text"
+          "type": "text",
+          "groupId": "97e3a654-5784-42da-b660-d614aa307a54"
         },
         {
           "opacity": 100,
@@ -2789,7 +2855,8 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "type": "text"
+          "type": "text",
+          "groupId": "97e3a654-5784-42da-b660-d614aa307a54"
         },
         {
           "opacity": 100,
@@ -2864,7 +2931,8 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "type": "text"
+          "type": "text",
+          "groupId": "97e3a654-5784-42da-b660-d614aa307a54"
         }
       ],
       "animations": [
@@ -2949,7 +3017,24 @@
       "backgroundColor": { "color": { "r": 12, "g": 23, "b": 39 } },
       "type": "page",
       "id": "b99a433d-e8a9-41c7-ab8e-70605639b48d",
-      "pageTemplateType": ""
+      "pageTemplateType": "",
+      "groups": {
+        "d558a302-5e68-47b1-b9b1-25503d452ecd": {
+          "name": "Fish",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "6c87c966-2031-4e97-9c16-4e21f9df69a2": {
+          "name": "Rice",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "97e3a654-5784-42da-b660-d614aa307a54": {
+          "name": "Veggies",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [
@@ -4079,7 +4164,8 @@
           "height": 189,
           "mask": { "type": "rectangle" },
           "id": "17678571-5417-44a3-89ab-296eb55965c4",
-          "type": "image"
+          "type": "image",
+          "groupId": "870bd98c-1033-475e-a2f4-288a02fe7f24"
         },
         {
           "opacity": 100,
@@ -4113,7 +4199,8 @@
           "width": 195,
           "height": 295,
           "mask": { "type": "rectangle" },
-          "type": "image"
+          "type": "image",
+          "groupId": "b8a12257-1cb9-4178-8119-50630afc8a32"
         },
         {
           "opacity": 100,
@@ -4188,7 +4275,8 @@
           "id": "0315941d-7e80-44c4-8c2d-603947137752",
           "x": 187,
           "y": 205,
-          "type": "text"
+          "type": "text",
+          "groupId": "870bd98c-1033-475e-a2f4-288a02fe7f24"
         },
         {
           "opacity": 100,
@@ -4263,7 +4351,8 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "type": "text"
+          "type": "text",
+          "groupId": "b8a12257-1cb9-4178-8119-50630afc8a32"
         }
       ],
       "animations": [
@@ -4285,7 +4374,19 @@
       "backgroundColor": { "color": { "r": 12, "g": 23, "b": 39 } },
       "type": "page",
       "id": "4441a44c-e958-4e1b-a717-cbc46c18e817",
-      "pageTemplateType": "list"
+      "pageTemplateType": "list",
+      "groups": {
+        "870bd98c-1033-475e-a2f4-288a02fe7f24": {
+          "name": "Section",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "b8a12257-1cb9-4178-8119-50630afc8a32": {
+          "name": "Section",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     }
   ],
   "current": null,

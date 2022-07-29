@@ -48,6 +48,7 @@ import useLibrary from '../../useLibrary';
 import paneId from './paneId';
 import ProductList from './productList';
 import ProductSort from './productSort';
+import { PRODUCT_WIDTH, PRODUCT_HEIGHT } from './constants';
 
 const LoadingContainer = styled.div`
   display: flex;
@@ -200,8 +201,8 @@ function ShoppingPane(props) {
   const insertProduct = useCallback(
     (product) => {
       insertElement(ELEMENT_TYPES.PRODUCT, {
-        width: 25,
-        height: 25,
+        width: PRODUCT_WIDTH,
+        height: PRODUCT_HEIGHT,
         product,
       });
 

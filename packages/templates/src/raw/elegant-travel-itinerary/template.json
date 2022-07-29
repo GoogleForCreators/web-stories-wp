@@ -1188,7 +1188,8 @@
           "basedOn": "cef81440-c106-46e8-8329-3d9a9093b7c2",
           "id": "c32ec50e-daf1-4e8b-a1c5-5bf795878f99",
           "x": 155.5,
-          "y": 5
+          "y": 5,
+          "groupId": "804859cc-4d6d-4587-abb9-2eb61803b774"
         },
         {
           "opacity": 100,
@@ -1260,7 +1261,8 @@
           "basedOn": "b1bd827b-1c84-49b9-8b58-627cbfc20743",
           "id": "6f21120f-99c0-43b0-9864-e5d0c7f0cd40",
           "x": 74,
-          "y": 46
+          "y": 46,
+          "groupId": "804859cc-4d6d-4587-abb9-2eb61803b774"
         },
         {
           "opacity": 100,
@@ -1298,7 +1300,8 @@
             "ratio": 1,
             "supportsBorder": true
           },
-          "id": "3bf10ebf-b810-4ffa-85fd-3204f1a12de2"
+          "id": "3bf10ebf-b810-4ffa-85fd-3204f1a12de2",
+          "groupId": "d3a38361-fd7f-4785-9bed-bff4984c46b2"
         },
         {
           "opacity": 100,
@@ -1315,7 +1318,8 @@
           "focalX": 50,
           "focalY": 50,
           "mask": { "type": "circle" },
-          "id": "1db3e8b6-0630-4e74-b6ed-977af47e128a"
+          "id": "1db3e8b6-0630-4e74-b6ed-977af47e128a",
+          "groupId": "d3a38361-fd7f-4785-9bed-bff4984c46b2"
         },
         {
           "opacity": 100,
@@ -1349,7 +1353,8 @@
             "bottom": 1,
             "lockedWidth": true,
             "color": { "color": { "r": 200, "g": 157, "b": 79 } }
-          }
+          },
+          "groupId": "d3a38361-fd7f-4785-9bed-bff4984c46b2"
         },
         {
           "x": 93,
@@ -1367,7 +1372,8 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "circle" }
+          "mask": { "type": "circle" },
+          "groupId": "d3a38361-fd7f-4785-9bed-bff4984c46b2"
         },
         {
           "x": 138,
@@ -1385,7 +1391,8 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "circle" }
+          "mask": { "type": "circle" },
+          "groupId": "d3a38361-fd7f-4785-9bed-bff4984c46b2"
         },
         {
           "x": 278,
@@ -1403,7 +1410,8 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "circle" }
+          "mask": { "type": "circle" },
+          "groupId": "d3a38361-fd7f-4785-9bed-bff4984c46b2"
         },
         {
           "x": 60,
@@ -1475,7 +1483,8 @@
           "focalX": 50,
           "focalY": 50,
           "marginOffset": -3.330000000000002,
-          "type": "text"
+          "type": "text",
+          "groupId": "d3a38361-fd7f-4785-9bed-bff4984c46b2"
         },
         {
           "x": 103,
@@ -1547,7 +1556,8 @@
           "focalX": 50,
           "focalY": 50,
           "marginOffset": -3.330000000000002,
-          "type": "text"
+          "type": "text",
+          "groupId": "d3a38361-fd7f-4785-9bed-bff4984c46b2"
         },
         {
           "x": 192,
@@ -1619,7 +1629,8 @@
           "focalX": 50,
           "focalY": 50,
           "marginOffset": -3.330000000000002,
-          "type": "text"
+          "type": "text",
+          "groupId": "d3a38361-fd7f-4785-9bed-bff4984c46b2"
         },
         {
           "x": 283,
@@ -1691,7 +1702,8 @@
           "focalX": 50,
           "focalY": 50,
           "marginOffset": -3.330000000000002,
-          "type": "text"
+          "type": "text",
+          "groupId": "d3a38361-fd7f-4785-9bed-bff4984c46b2"
         },
         {
           "opacity": 100,
@@ -1707,7 +1719,8 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": { "type": "elegantTravelTrainTracks" },
-          "id": "7fa4e0a8-8a0f-46d2-b0a0-848fbc1a3024"
+          "id": "7fa4e0a8-8a0f-46d2-b0a0-848fbc1a3024",
+          "groupId": "719e7099-fce8-49c9-9451-821fa7d83acf"
         },
         {
           "opacity": 100,
@@ -1723,7 +1736,8 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": { "type": "elegantTravelStationClock" },
-          "id": "d1d4316e-e846-47d9-b12a-480df3d7e06f"
+          "id": "d1d4316e-e846-47d9-b12a-480df3d7e06f",
+          "groupId": "694ef937-19e2-41f6-92d7-a8f0c002fa78"
         },
         {
           "opacity": 100,
@@ -1739,7 +1753,8 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": { "type": "elegantTravelBridge" },
-          "id": "16316614-0f96-44c8-a7ea-46f00114c36d"
+          "id": "16316614-0f96-44c8-a7ea-46f00114c36d",
+          "groupId": "b9bed110-dde8-4901-a570-7e437e3cff5b"
         },
         {
           "x": 60,
@@ -1811,7 +1826,8 @@
           "focalX": 50,
           "focalY": 50,
           "marginOffset": -6.263999999999999,
-          "type": "text"
+          "type": "text",
+          "groupId": "719e7099-fce8-49c9-9451-821fa7d83acf"
         },
         {
           "x": 184,
@@ -1883,7 +1899,8 @@
           "focalX": 50,
           "focalY": 50,
           "marginOffset": -6.263999999999999,
-          "type": "text"
+          "type": "text",
+          "groupId": "694ef937-19e2-41f6-92d7-a8f0c002fa78"
         },
         {
           "x": 298,
@@ -1955,7 +1972,8 @@
           "focalX": 50,
           "focalY": 50,
           "marginOffset": -6.263999999999999,
-          "type": "text"
+          "type": "text",
+          "groupId": "b9bed110-dde8-4901-a570-7e437e3cff5b"
         },
         {
           "x": 57,
@@ -2031,7 +2049,8 @@
           "focalX": 50,
           "focalY": 50,
           "marginOffset": -6.263999999999999,
-          "type": "text"
+          "type": "text",
+          "groupId": "719e7099-fce8-49c9-9451-821fa7d83acf"
         },
         {
           "x": 177,
@@ -2107,7 +2126,8 @@
           "focalX": 50,
           "focalY": 50,
           "marginOffset": -6.263999999999999,
-          "type": "text"
+          "type": "text",
+          "groupId": "694ef937-19e2-41f6-92d7-a8f0c002fa78"
         },
         {
           "x": 286,
@@ -2183,7 +2203,8 @@
           "focalX": 50,
           "focalY": 50,
           "marginOffset": -6.263999999999999,
-          "type": "text"
+          "type": "text",
+          "groupId": "b9bed110-dde8-4901-a570-7e437e3cff5b"
         }
       ],
       "backgroundColor": { "color": { "r": 21, "g": 28, "b": 35 } },
@@ -2261,7 +2282,34 @@
           "delay": 2000
         }
       ],
-      "pageTemplateType": "section"
+      "pageTemplateType": "section",
+      "groups": {
+        "719e7099-fce8-49c9-9451-821fa7d83acf": {
+          "name": "Miles",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "694ef937-19e2-41f6-92d7-a8f0c002fa78": {
+          "name": "Hours",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "b9bed110-dde8-4901-a570-7e437e3cff5b": {
+          "name": "Bridges",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "d3a38361-fd7f-4785-9bed-bff4984c46b2": {
+          "name": "Trip",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "804859cc-4d6d-4587-abb9-2eb61803b774": {
+          "name": "Header",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [
@@ -2354,7 +2402,8 @@
             "ratio": 1,
             "supportsBorder": true
           },
-          "id": "64eb7718-13b6-4d4f-99b0-2f59e3712389"
+          "id": "64eb7718-13b6-4d4f-99b0-2f59e3712389",
+          "groupId": "956b5d4f-bf98-4b64-b7f9-9d9d5340a8b1"
         },
         {
           "opacity": 100,
@@ -2409,7 +2458,8 @@
           "id": "af8a748a-23cc-4c37-b1cb-4efe601071d2",
           "x": 155.5,
           "y": 5,
-          "type": "sticker"
+          "type": "sticker",
+          "groupId": "42be86c1-e433-4aa8-84f9-b5eea0f50bcc"
         },
         {
           "opacity": 100,
@@ -2481,7 +2531,8 @@
           "id": "7614ccd1-001c-43fb-bd04-75e6be01fcd2",
           "x": 74,
           "y": 46,
-          "type": "text"
+          "type": "text",
+          "groupId": "42be86c1-e433-4aa8-84f9-b5eea0f50bcc"
         },
         {
           "opacity": 100,
@@ -2498,7 +2549,8 @@
           "focalY": 50,
           "mask": { "type": "circle" },
           "id": "66b385e8-ea99-4828-88c5-8188a00653ae",
-          "type": "shape"
+          "type": "shape",
+          "groupId": "956b5d4f-bf98-4b64-b7f9-9d9d5340a8b1"
         },
         {
           "opacity": 100,
@@ -2532,7 +2584,8 @@
             "lockedWidth": true,
             "color": { "color": { "r": 200, "g": 157, "b": 79 } }
           },
-          "type": "shape"
+          "type": "shape",
+          "groupId": "956b5d4f-bf98-4b64-b7f9-9d9d5340a8b1"
         },
         {
           "opacity": 100,
@@ -2622,7 +2675,8 @@
           "basedOn": "175f9e72-686c-4223-b55b-9c75c45d5722",
           "id": "4586c430-8745-4edb-9997-55e6dab9bc7b",
           "x": 273,
-          "y": 158
+          "y": 158,
+          "groupId": "956b5d4f-bf98-4b64-b7f9-9d9d5340a8b1"
         }
       ],
       "animations": [
@@ -2655,7 +2709,19 @@
       "backgroundColor": { "color": { "r": 21, "g": 28, "b": 35 } },
       "type": "page",
       "id": "229ff8e6-51f4-41e7-b24d-2b4a60667265",
-      "pageTemplateType": ""
+      "pageTemplateType": "",
+      "groups": {
+        "956b5d4f-bf98-4b64-b7f9-9d9d5340a8b1": {
+          "name": "Trip",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "42be86c1-e433-4aa8-84f9-b5eea0f50bcc": {
+          "name": "Header",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [
@@ -2930,7 +2996,8 @@
             "ratio": 1,
             "supportsBorder": true
           },
-          "id": "6d77678e-af6c-4dd9-bf25-8be73fc6ca20"
+          "id": "6d77678e-af6c-4dd9-bf25-8be73fc6ca20",
+          "groupId": "7f1ba731-3cd2-4f3a-a787-59f979699fdf"
         },
         {
           "opacity": 100,
@@ -2985,7 +3052,8 @@
           "id": "05780628-ce8e-4949-914a-228286aad847",
           "x": 155.5,
           "y": 5,
-          "type": "sticker"
+          "type": "sticker",
+          "groupId": "41f7b790-df82-4456-b8bb-2398f318959f"
         },
         {
           "opacity": 100,
@@ -3057,7 +3125,8 @@
           "id": "88b09b12-96c3-49f4-856b-83ade487bb96",
           "x": 74,
           "y": 46,
-          "type": "text"
+          "type": "text",
+          "groupId": "41f7b790-df82-4456-b8bb-2398f318959f"
         },
         {
           "opacity": 100,
@@ -3074,7 +3143,8 @@
           "focalY": 50,
           "mask": { "type": "circle" },
           "id": "5dc3d148-55e9-4d7e-8fe6-c01ce534d1a0",
-          "type": "shape"
+          "type": "shape",
+          "groupId": "7f1ba731-3cd2-4f3a-a787-59f979699fdf"
         },
         {
           "opacity": 100,
@@ -3108,7 +3178,8 @@
             "lockedWidth": true,
             "color": { "color": { "r": 200, "g": 157, "b": 79 } }
           },
-          "type": "shape"
+          "type": "shape",
+          "groupId": "7f1ba731-3cd2-4f3a-a787-59f979699fdf"
         },
         {
           "opacity": 100,
@@ -3198,7 +3269,8 @@
           "id": "2821aed5-b46a-472c-b321-960674119b05",
           "x": 314,
           "y": 220,
-          "type": "shape"
+          "type": "shape",
+          "groupId": "7f1ba731-3cd2-4f3a-a787-59f979699fdf"
         }
       ],
       "animations": [
@@ -3231,7 +3303,19 @@
       "backgroundColor": { "color": { "r": 21, "g": 28, "b": 35 } },
       "type": "page",
       "id": "713e70f1-286c-4b56-834f-a54399866785",
-      "pageTemplateType": ""
+      "pageTemplateType": "",
+      "groups": {
+        "7f1ba731-3cd2-4f3a-a787-59f979699fdf": {
+          "name": "Trip",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "41f7b790-df82-4456-b8bb-2398f318959f": {
+          "name": "Header",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [
@@ -3358,7 +3442,8 @@
           "focalY": 50,
           "mask": { "type": "circle" },
           "id": "e312a53b-c58d-480d-af3c-39c1be6d7b0a",
-          "type": "shape"
+          "type": "shape",
+          "groupId": "14d55607-e623-4274-ab8c-70f404dd2002"
         },
         {
           "opacity": 100,
@@ -3392,7 +3477,8 @@
             "lockedWidth": true,
             "color": { "color": { "r": 200, "g": 157, "b": 79 } }
           },
-          "type": "shape"
+          "type": "shape",
+          "groupId": "14d55607-e623-4274-ab8c-70f404dd2002"
         },
         {
           "opacity": 100,
@@ -3464,7 +3550,8 @@
           "id": "0b19f04e-d24a-4f9c-8b18-39af051cce2e",
           "x": 74,
           "y": 517,
-          "type": "text"
+          "type": "text",
+          "groupId": "14d55607-e623-4274-ab8c-70f404dd2002"
         },
         {
           "x": -5.5,
@@ -3587,7 +3674,14 @@
       "backgroundColor": { "color": { "r": 21, "g": 28, "b": 35 } },
       "type": "page",
       "id": "2dacc2ce-a98b-4df3-aab9-c3a7e564f94b",
-      "pageTemplateType": ""
+      "pageTemplateType": "",
+      "groups": {
+        "14d55607-e623-4274-ab8c-70f404dd2002": {
+          "name": "Trip",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [
@@ -3715,7 +3809,8 @@
           "id": "0ea311b8-4133-401a-9721-ac3c574f8047",
           "x": 155.5,
           "y": 5,
-          "type": "sticker"
+          "type": "sticker",
+          "groupId": "dccdb7b9-67b0-40bc-85b6-cc4e79bf9b95"
         },
         {
           "opacity": 100,
@@ -3732,7 +3827,8 @@
           "focalY": 50,
           "mask": { "type": "circle" },
           "id": "350fc10f-fcab-4d3d-aedf-a8da1318e19a",
-          "type": "shape"
+          "type": "shape",
+          "groupId": "afec97de-4d6a-4a77-aee2-ce53508d1b4a"
         },
         {
           "opacity": 100,
@@ -3766,7 +3862,8 @@
             "lockedWidth": true,
             "color": { "color": { "r": 200, "g": 157, "b": 79 } }
           },
-          "type": "shape"
+          "type": "shape",
+          "groupId": "afec97de-4d6a-4a77-aee2-ce53508d1b4a"
         },
         {
           "opacity": 100,
@@ -3856,7 +3953,8 @@
           "id": "8c0e631a-884b-4f45-81e2-589ac8091c1b",
           "x": 263,
           "y": 234,
-          "type": "shape"
+          "type": "shape",
+          "groupId": "afec97de-4d6a-4a77-aee2-ce53508d1b4a"
         },
         {
           "opacity": 100,
@@ -3928,7 +4026,8 @@
           "id": "8c368da4-d6dd-4efb-96d2-057e7f10ce06",
           "x": 74,
           "y": 46,
-          "type": "text"
+          "type": "text",
+          "groupId": "dccdb7b9-67b0-40bc-85b6-cc4e79bf9b95"
         },
         {
           "opacity": 100,
@@ -3967,7 +4066,8 @@
           "basedOn": "6d77678e-af6c-4dd9-bf25-8be73fc6ca20",
           "id": "ecb9a927-2049-4022-a486-3ca6c83903c1",
           "x": 132,
-          "y": 190
+          "y": 190,
+          "groupId": "afec97de-4d6a-4a77-aee2-ce53508d1b4a"
         }
       ],
       "animations": [
@@ -4000,7 +4100,19 @@
       "backgroundColor": { "color": { "r": 21, "g": 28, "b": 35 } },
       "type": "page",
       "id": "58767793-d6a8-46ae-abdd-811177f4b68b",
-      "pageTemplateType": ""
+      "pageTemplateType": "",
+      "groups": {
+        "dccdb7b9-67b0-40bc-85b6-cc4e79bf9b95": {
+          "name": "Header",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "afec97de-4d6a-4a77-aee2-ce53508d1b4a": {
+          "name": "Trip",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [
