@@ -37,7 +37,9 @@ import {
 import {
   canSupportMultiBorder,
   DisplayWithMask as WithMask,
+  getBorderPositionCSS,
   getResponsiveBorder,
+  shouldDisplayBorder,
 } from '@googleforcreators/masks';
 
 /**
@@ -239,7 +241,7 @@ function DisplayElement({
       data-element-id={id}
       isBackground={element.isBackground}
       previewMode={previewMode}
-      {...boxWithBorder}
+      {...(previewMode ? box : boxWithBorder)}
     >
       <AnimationWrapper id={id} isAnimatable={isAnimatable}>
         <WithMask
@@ -247,6 +249,13 @@ function DisplayElement({
           fill
           style={{
             opacity: typeof opacity !== 'undefined' ? opacity / 100 : null,
+            ...(shouldDisplayBorder(element) && previewMode
+              ? getBorderPositionCSS({
+                  ...responsiveBorder,
+                  width: `${box.width}px`,
+                  height: `${box.height}px`,
+                })
+              : null),
           }}
           previewMode={previewMode}
           responsiveBorder={responsiveBorder}
