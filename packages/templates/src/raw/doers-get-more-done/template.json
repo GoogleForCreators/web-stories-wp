@@ -1275,7 +1275,8 @@
             "alt": "page8_image1",
             "sizes": [],
             "isExternal": true
-          }
+          },
+          "groupId": "afa5baf1-7022-402d-8528-f9eded74849c"
         },
         {
           "x": 44,
@@ -1306,7 +1307,8 @@
             "isExternal": true
           },
           "basedOn": "ae3014b3-9828-4285-991d-4b0aa1fc83a6",
-          "id": "ad72e216-61e5-474b-b187-9f06a613a4d5"
+          "id": "ad72e216-61e5-474b-b187-9f06a613a4d5",
+          "groupId": "d1387b40-30ae-4a2c-ab0c-856cdfc7be3f"
         },
         {
           "x": 44,
@@ -1336,7 +1338,8 @@
             "alt": "page8_image3",
             "sizes": [],
             "isExternal": true
-          }
+          },
+          "groupId": "aa00d502-7b6c-4fc7-a420-ca3748f8a6f7"
         },
         {
           "x": 192,
@@ -1364,7 +1367,8 @@
           "id": "ac28f1fa-0509-49e2-82d2-4607c9e2cc23",
           "content": "<span style=\"color: #211f1e; text-transform: uppercase\">Cordless</span>\n<span style=\"color: #211f1e; text-transform: uppercase\">Power Drill</span>",
           "fontSize": 22,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "afa5baf1-7022-402d-8528-f9eded74849c"
         },
         {
           "x": 192,
@@ -1392,7 +1396,8 @@
           "id": "bc9330a4-a5c1-4711-842c-9f6c2a577bd0",
           "content": "<span style=\"color: #211f1e; text-transform: uppercase\">Jet Screws</span>",
           "fontSize": 22,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "d1387b40-30ae-4a2c-ab0c-856cdfc7be3f"
         },
         {
           "x": 192,
@@ -1420,7 +1425,8 @@
           "id": "b29b6af7-1fd0-4f84-a9c5-8e33c4623865",
           "content": "<span style=\"color: #211f1e; text-transform: uppercase\">Clamp Meter</span>",
           "fontSize": 22,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "aa00d502-7b6c-4fc7-a420-ca3748f8a6f7"
         },
         {
           "x": 168,
@@ -1448,7 +1454,8 @@
           "id": "7b1484d1-e0d5-4d8c-8c03-d28ecf193b4f",
           "content": "<span style=\"color: #ff630b\">3.</span>",
           "fontSize": 22,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "aa00d502-7b6c-4fc7-a420-ca3748f8a6f7"
         },
         {
           "x": 168,
@@ -1476,7 +1483,8 @@
           "id": "db606b2b-1199-4a93-885e-8e1be559c256",
           "content": "<span style=\"color: #ff630b\">2.</span>",
           "fontSize": 22,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "d1387b40-30ae-4a2c-ab0c-856cdfc7be3f"
         },
         {
           "x": 168,
@@ -1504,7 +1512,8 @@
           "id": "9b59aecd-69c2-45c3-8f8e-b12aa586e99b",
           "content": "<span style=\"color: #ff630b\">1.</span>",
           "fontSize": 22,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "afa5baf1-7022-402d-8528-f9eded74849c"
         },
         {
           "x": 45,
@@ -1643,7 +1652,24 @@
       "type": "page",
       "id": "7dc22ed5-579e-4988-9f9c-97b2cd2ff068",
       "backgroundColor": { "color": { "r": 33, "g": 31, "b": 30 } },
-      "pageTemplateType": "list"
+      "pageTemplateType": "list",
+      "groups": {
+        "afa5baf1-7022-402d-8528-f9eded74849c": {
+          "name": "Drill",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "d1387b40-30ae-4a2c-ab0c-856cdfc7be3f": {
+          "name": "Screws",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "aa00d502-7b6c-4fc7-a420-ca3748f8a6f7": {
+          "name": "Meter",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [
@@ -1921,7 +1947,8 @@
           "id": "57cb521c-1572-490b-96aa-daa9ae4b45a9",
           "content": "<span style=\"color: #211f1e; text-transform: uppercase\">Kitchen Remodeling</span>",
           "fontSize": 22,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "050c8b2d-c0e3-48bd-95eb-89050f977637"
         },
         {
           "x": 173,
@@ -1949,7 +1976,8 @@
           "id": "e68025e7-bea3-47fc-ba92-466cdd5fbaf5",
           "content": "<span style=\"color: #211f1e\">Learn how to remodel your kitchen in 10 steps</span>",
           "fontSize": 16,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "050c8b2d-c0e3-48bd-95eb-89050f977637"
         },
         {
           "width": 186,
@@ -1977,7 +2005,8 @@
           "basedOn": "57cb521c-1572-490b-96aa-daa9ae4b45a9",
           "id": "bf4d94b8-f717-4ed1-a09d-f0d4cb4f7801",
           "x": 173,
-          "y": 291
+          "y": 291,
+          "groupId": "5fb50c20-881b-458f-8e35-220d75eec380"
         },
         {
           "width": 176,
@@ -2005,7 +2034,8 @@
           "basedOn": "e68025e7-bea3-47fc-ba92-466cdd5fbaf5",
           "id": "9a04e762-70f6-45bb-b265-a78a04253b5c",
           "x": 173,
-          "y": 318
+          "y": 318,
+          "groupId": "5fb50c20-881b-458f-8e35-220d75eec380"
         },
         {
           "width": 186,
@@ -2033,7 +2063,8 @@
           "basedOn": "bf4d94b8-f717-4ed1-a09d-f0d4cb4f7801",
           "id": "aa346ca1-cce7-4e30-b0e3-7f11462bf2e4",
           "x": 172,
-          "y": 425
+          "y": 425,
+          "groupId": "a2c0faaa-75f1-47ff-9b52-b04a1e356546"
         },
         {
           "width": 151,
@@ -2061,7 +2092,8 @@
           "basedOn": "9a04e762-70f6-45bb-b265-a78a04253b5c",
           "id": "221fddb4-180f-4239-bb83-76d6e25bd38c",
           "x": 172,
-          "y": 452
+          "y": 452,
+          "groupId": "a2c0faaa-75f1-47ff-9b52-b04a1e356546"
         },
         {
           "opacity": 100,
@@ -2092,7 +2124,8 @@
             "alt": "page10_image1",
             "sizes": [],
             "isExternal": true
-          }
+          },
+          "groupId": "050c8b2d-c0e3-48bd-95eb-89050f977637"
         },
         {
           "opacity": 100,
@@ -2124,7 +2157,8 @@
             "alt": "page10_image2",
             "sizes": [],
             "isExternal": true
-          }
+          },
+          "groupId": "5fb50c20-881b-458f-8e35-220d75eec380"
         },
         {
           "opacity": 100,
@@ -2156,7 +2190,8 @@
             "alt": "page10_image3",
             "sizes": [],
             "isExternal": true
-          }
+          },
+          "groupId": "a2c0faaa-75f1-47ff-9b52-b04a1e356546"
         },
         {
           "opacity": 100,
@@ -2172,7 +2207,8 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": { "type": "diyTwitterIcon" },
-          "id": "b3313c8a-776c-44f2-a3ee-fd4d27cc74f1"
+          "id": "b3313c8a-776c-44f2-a3ee-fd4d27cc74f1",
+          "groupId": "2e7050a7-3bca-4d6b-8987-1751cd315d59"
         },
         {
           "opacity": 100,
@@ -2188,7 +2224,8 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": { "type": "diyYouTubeIcon" },
-          "id": "06861f8b-4684-4204-8500-892a85c70abc"
+          "id": "06861f8b-4684-4204-8500-892a85c70abc",
+          "groupId": "2e7050a7-3bca-4d6b-8987-1751cd315d59"
         },
         {
           "opacity": 100,
@@ -2204,7 +2241,8 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": { "type": "diyInstagramIcon" },
-          "id": "e69ad458-2707-41ac-91d4-99aa820a211c"
+          "id": "e69ad458-2707-41ac-91d4-99aa820a211c",
+          "groupId": "2e7050a7-3bca-4d6b-8987-1751cd315d59"
         },
         {
           "opacity": 100,
@@ -2220,7 +2258,8 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": { "type": "diyFacebookIcon" },
-          "id": "7427d556-c992-447b-9c66-222ba6224d25"
+          "id": "7427d556-c992-447b-9c66-222ba6224d25",
+          "groupId": "2e7050a7-3bca-4d6b-8987-1751cd315d59"
         }
       ],
       "animations": [
@@ -2315,7 +2354,29 @@
       "type": "page",
       "id": "5c295574-87a0-4ae7-b548-699e0bd47fdf",
       "backgroundColor": { "color": { "r": 53, "g": 51, "b": 50 } },
-      "pageTemplateType": "list"
+      "pageTemplateType": "list",
+      "groups": {
+        "050c8b2d-c0e3-48bd-95eb-89050f977637": {
+          "name": "Section",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "5fb50c20-881b-458f-8e35-220d75eec380": {
+          "name": "Section",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "a2c0faaa-75f1-47ff-9b52-b04a1e356546": {
+          "name": "Section",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "2e7050a7-3bca-4d6b-8987-1751cd315d59": {
+          "name": "Share",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     }
   ],
   "current": null,

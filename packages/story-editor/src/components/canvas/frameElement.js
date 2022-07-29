@@ -192,12 +192,12 @@ function FrameElement({ id }) {
   );
   const isLinkActive = isAnythingTransforming && !isLocked;
 
-  const getBox = useUnits(({ actions }) => actions.getBox);
+  const getBoxWithBorder = useUnits(({ actions }) => actions.getBoxWithBorder);
 
   useLayoutEffect(() => {
     setNodeForElement(id, elementRef.current);
   }, [id, setNodeForElement]);
-  const box = getBox(element);
+  const boxWithBorder = getBoxWithBorder(element);
 
   useTransformHandler(id, (transform) => {
     const target = elementRef.current;
@@ -314,7 +314,7 @@ function FrameElement({ id }) {
         {Controls && (
           <Controls
             isTransforming={isTransforming}
-            box={box}
+            box={boxWithBorder}
             elementRef={elementRef}
             element={element}
             isRTL={isRTL}
@@ -326,7 +326,7 @@ function FrameElement({ id }) {
         <Wrapper
           ref={combinedFocusGroupRef}
           data-element-id={id}
-          {...box}
+          {...boxWithBorder}
           tabIndex={-1}
           role="button"
           aria-label={elementLabel}
@@ -354,7 +354,7 @@ function FrameElement({ id }) {
               <Frame
                 wrapperRef={elementRef}
                 element={element}
-                box={box}
+                box={boxWithBorder}
                 isOnlySelectedElement={isOnlySelectedElement}
                 setEditingElementWithState={setEditingElementWithState}
               />

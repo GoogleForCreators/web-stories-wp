@@ -243,7 +243,8 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": { "type": "nycThickBrush" },
-          "id": "5abdcde8-f807-494e-9b67-05d2ce6fe69e"
+          "id": "5abdcde8-f807-494e-9b67-05d2ce6fe69e",
+          "groupId": "9ec8f4c2-5acd-4485-87b1-8a83b9d10e30"
         },
         {
           "opacity": 100,
@@ -304,7 +305,8 @@
           "basedOn": "141d53bc-61f1-4cec-a683-49ecfbed7167",
           "id": "f090cc50-af7f-4bb3-aae7-4a3635278181",
           "x": 119,
-          "y": 495
+          "y": 495,
+          "groupId": "9ec8f4c2-5acd-4485-87b1-8a83b9d10e30"
         },
         {
           "opacity": 100,
@@ -365,7 +367,8 @@
           "basedOn": "fc8d37f1-7dc3-41a8-b109-5d970ac8df40",
           "id": "bb1dd937-9734-4d5e-8b60-68e45a56cc1f",
           "x": 130,
-          "y": 537
+          "y": 537,
+          "groupId": "9ec8f4c2-5acd-4485-87b1-8a83b9d10e30"
         }
       ],
       "backgroundOverlay": "none",
@@ -397,7 +400,14 @@
           "delay": 200
         }
       ],
-      "pageTemplateType": ""
+      "pageTemplateType": "",
+      "groups": {
+        "9ec8f4c2-5acd-4485-87b1-8a83b9d10e30": {
+          "name": "Info",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [
@@ -613,7 +623,8 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": { "type": "nycTomatoes" },
-          "id": "0fdbd60e-58c7-40e0-b2d6-e4411e43d075"
+          "id": "0fdbd60e-58c7-40e0-b2d6-e4411e43d075",
+          "groupId": "1573a2c0-1bf1-4d21-8a69-15a355dccfef"
         },
         {
           "opacity": 20,
@@ -629,7 +640,8 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": { "type": "nycVeggies" },
-          "id": "6ad3b8d4-6173-4ac9-aafd-1ac50538501d"
+          "id": "6ad3b8d4-6173-4ac9-aafd-1ac50538501d",
+          "groupId": "1573a2c0-1bf1-4d21-8a69-15a355dccfef"
         },
         {
           "opacity": 20,
@@ -645,7 +657,8 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": { "type": "nycOnion" },
-          "id": "a045a19f-414c-43de-b055-f88332181481"
+          "id": "a045a19f-414c-43de-b055-f88332181481",
+          "groupId": "1573a2c0-1bf1-4d21-8a69-15a355dccfef"
         },
         {
           "opacity": 20,
@@ -661,7 +674,8 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": { "type": "nycChili" },
-          "id": "370ab2af-ecea-438b-be40-44406adeaa4e"
+          "id": "370ab2af-ecea-438b-be40-44406adeaa4e",
+          "groupId": "1573a2c0-1bf1-4d21-8a69-15a355dccfef"
         },
         {
           "opacity": 20,
@@ -677,7 +691,8 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": { "type": "nycCheese" },
-          "id": "d5ae66ef-593c-4cee-a2f6-11530804990b"
+          "id": "d5ae66ef-593c-4cee-a2f6-11530804990b",
+          "groupId": "1573a2c0-1bf1-4d21-8a69-15a355dccfef"
         }
       ],
       "backgroundOverlay": "none",
@@ -685,7 +700,14 @@
       "type": "page",
       "id": "19bcb726-8666-4323-8c64-c684699d0a41",
       "animations": [],
-      "pageTemplateType": "editorial"
+      "pageTemplateType": "editorial",
+      "groups": {
+        "1573a2c0-1bf1-4d21-8a69-15a355dccfef": {
+          "name": "Background",
+          "isLocked": true,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [
@@ -736,7 +758,8 @@
           "focalY": 50,
           "sticker": { "type": "nycTiltedBrush" },
           "id": "302bdac3-fa06-494e-b7b5-a8406aef1c77",
-          "type": "sticker"
+          "type": "sticker",
+          "groupId": "9e50a2ee-593f-4ea6-a122-a65449c5a64a"
         },
         {
           "opacity": 100,
@@ -797,7 +820,8 @@
           "id": "ed117c88-8375-41e1-b767-cd64cd0cbaaa",
           "x": 119,
           "y": 496,
-          "type": "text"
+          "type": "text",
+          "groupId": "9e50a2ee-593f-4ea6-a122-a65449c5a64a"
         },
         {
           "opacity": 100,
@@ -858,7 +882,8 @@
           "id": "e6df3ee2-a880-4378-84b6-a3f32f7c9232",
           "x": 75,
           "y": 537,
-          "type": "text"
+          "type": "text",
+          "groupId": "9e50a2ee-593f-4ea6-a122-a65449c5a64a"
         }
       ],
       "backgroundOverlay": "none",
@@ -891,7 +916,14 @@
         "id": "6e157aba-a731-4a10-9930-508c49cba4d3",
         "type": "shape"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": "",
+      "groups": {
+        "9e50a2ee-593f-4ea6-a122-a65449c5a64a": {
+          "name": "Info",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [
@@ -942,7 +974,8 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": { "type": "nycMediumBrush" },
-          "id": "286d00f9-3c42-406f-910c-055a307d5b36"
+          "id": "286d00f9-3c42-406f-910c-055a307d5b36",
+          "groupId": "1bbe0d93-915e-4b8a-80dd-e90112fabe6c"
         },
         {
           "opacity": 100,
@@ -1003,7 +1036,8 @@
           "basedOn": "ed117c88-8375-41e1-b767-cd64cd0cbaaa",
           "id": "7f1c95fe-7584-450a-a89a-369d21de63e2",
           "x": 119,
-          "y": 1
+          "y": 1,
+          "groupId": "1bbe0d93-915e-4b8a-80dd-e90112fabe6c"
         },
         {
           "opacity": 100,
@@ -1064,7 +1098,8 @@
           "basedOn": "e6df3ee2-a880-4378-84b6-a3f32f7c9232",
           "id": "15d5f0a0-6550-4191-b682-836656cbdb9e",
           "x": 76,
-          "y": 44
+          "y": 44,
+          "groupId": "1bbe0d93-915e-4b8a-80dd-e90112fabe6c"
         }
       ],
       "backgroundOverlay": "none",
@@ -1097,7 +1132,14 @@
           "targets": ["96134eee-b383-4fde-869f-53c57ce6c307"]
         }
       ],
-      "pageTemplateType": ""
+      "pageTemplateType": "",
+      "groups": {
+        "1bbe0d93-915e-4b8a-80dd-e90112fabe6c": {
+          "name": "Info",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [
@@ -1148,7 +1190,8 @@
           "focalY": 50,
           "sticker": { "type": "nycMediumBrush" },
           "id": "e993190f-f960-4251-88a7-4b4812dc8722",
-          "type": "sticker"
+          "type": "sticker",
+          "groupId": "a366a44b-ab3d-4547-86cb-d98481e7530c"
         },
         {
           "opacity": 100,
@@ -1209,7 +1252,8 @@
           "id": "d75e3812-8de5-4549-8b62-c56c5e83b2d8",
           "x": 97,
           "y": 224,
-          "type": "text"
+          "type": "text",
+          "groupId": "a366a44b-ab3d-4547-86cb-d98481e7530c"
         },
         {
           "opacity": 100,
@@ -1270,7 +1314,8 @@
           "id": "c570dc78-a9d6-450a-9e75-62b5b515cea4",
           "x": 71,
           "y": 267,
-          "type": "text"
+          "type": "text",
+          "groupId": "a366a44b-ab3d-4547-86cb-d98481e7530c"
         }
       ],
       "backgroundOverlay": "none",
@@ -1303,7 +1348,14 @@
         "type": "shape",
         "id": "a78d233c-2f13-417e-baf2-0869cf5abb90"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": "",
+      "groups": {
+        "a366a44b-ab3d-4547-86cb-d98481e7530c": {
+          "name": "Info",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [
@@ -1354,7 +1406,8 @@
           "focalY": 50,
           "sticker": { "type": "nycMediumBrush" },
           "id": "54476660-3aa7-4472-af49-63b9ccafa96c",
-          "type": "sticker"
+          "type": "sticker",
+          "groupId": "7866007b-b710-4c7f-92c3-6fcea78a3193"
         },
         {
           "opacity": 100,
@@ -1415,7 +1468,8 @@
           "id": "b98989c6-593e-4c61-8777-ffa12fece779",
           "x": 76,
           "y": 494,
-          "type": "text"
+          "type": "text",
+          "groupId": "7866007b-b710-4c7f-92c3-6fcea78a3193"
         },
         {
           "opacity": 100,
@@ -1476,7 +1530,8 @@
           "id": "3f654768-f856-4e3d-981e-c8f88f19bb2c",
           "x": 71,
           "y": 537,
-          "type": "text"
+          "type": "text",
+          "groupId": "7866007b-b710-4c7f-92c3-6fcea78a3193"
         }
       ],
       "backgroundOverlay": "none",
@@ -1509,7 +1564,14 @@
         "type": "shape",
         "id": "a78d233c-2f13-417e-baf2-0869cf5abb90"
       },
-      "pageTemplateType": "editorial"
+      "pageTemplateType": "editorial",
+      "groups": {
+        "7866007b-b710-4c7f-92c3-6fcea78a3193": {
+          "name": "Info",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [
@@ -1569,7 +1631,8 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": { "type": "nycThickBrush" },
-          "id": "c3d5dbfa-8686-4444-981c-35de73796b92"
+          "id": "c3d5dbfa-8686-4444-981c-35de73796b92",
+          "groupId": "3cf7b9b0-4373-4675-bfdd-90c9774d7e7d"
         },
         {
           "opacity": 100,
@@ -1630,7 +1693,8 @@
           "basedOn": "b98989c6-593e-4c61-8777-ffa12fece779",
           "id": "7e8aef49-21f8-422b-8158-5b6762d52aed",
           "x": 76,
-          "y": 96
+          "y": 96,
+          "groupId": "3cf7b9b0-4373-4675-bfdd-90c9774d7e7d"
         },
         {
           "x": 76,
@@ -1691,7 +1755,8 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "type": "text"
+          "type": "text",
+          "groupId": "3cf7b9b0-4373-4675-bfdd-90c9774d7e7d"
         },
         {
           "opacity": 100,
@@ -1719,7 +1784,8 @@
           "basedOn": "e3bf149d-ec07-4d6b-9543-68e4bc1a825c",
           "id": "b3852ea4-e583-424e-99e5-bd9d42a23065",
           "x": 116.5,
-          "y": 579
+          "y": 579,
+          "groupId": "c27a215d-d7b5-4d87-9d46-c5f877506125"
         },
         {
           "opacity": 100,
@@ -1780,7 +1846,8 @@
           "basedOn": "356aeba7-6c32-472b-9d22-2939278f7b85",
           "id": "39f9cfdc-6996-448a-9303-481f8031599d",
           "x": 167,
-          "y": 586
+          "y": 586,
+          "groupId": "c27a215d-d7b5-4d87-9d46-c5f877506125"
         },
         {
           "opacity": 100,
@@ -1797,7 +1864,8 @@
           "basedOn": "e4323d9f-887f-4cc0-9ae9-bb7f413678b3",
           "id": "755bf31d-5ecd-47f0-abce-95938e285635",
           "x": 132,
-          "y": 586
+          "y": 586,
+          "groupId": "c27a215d-d7b5-4d87-9d46-c5f877506125"
         }
       ],
       "backgroundOverlay": "none",
@@ -1843,7 +1911,19 @@
           "delay": 0
         }
       ],
-      "pageTemplateType": ""
+      "pageTemplateType": "",
+      "groups": {
+        "3cf7b9b0-4373-4675-bfdd-90c9774d7e7d": {
+          "name": "Info",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "c27a215d-d7b5-4d87-9d46-c5f877506125": {
+          "name": "Action",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [
@@ -1902,7 +1982,8 @@
           "focalY": 50,
           "sticker": { "type": "nycThickBrush" },
           "id": "619a4653-c867-4bfa-9dcc-12d71f2f21f3",
-          "type": "sticker"
+          "type": "sticker",
+          "groupId": "7d123ae5-fef6-4186-9098-af0434204212"
         },
         {
           "opacity": 100,
@@ -1963,7 +2044,8 @@
           "id": "b4d74646-c7aa-46a4-ae0d-931372c5a306",
           "x": 76,
           "y": 61,
-          "type": "text"
+          "type": "text",
+          "groupId": "7d123ae5-fef6-4186-9098-af0434204212"
         },
         {
           "opacity": 100,
@@ -2024,7 +2106,8 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "type": "text"
+          "type": "text",
+          "groupId": "7d123ae5-fef6-4186-9098-af0434204212"
         },
         {
           "opacity": 100,
@@ -2052,7 +2135,8 @@
           "basedOn": "b3852ea4-e583-424e-99e5-bd9d42a23065",
           "id": "b1e7ee1f-75d9-4c99-8a61-005276bd7a96",
           "x": 116.5,
-          "y": 579
+          "y": 579,
+          "groupId": "a900af27-4a6e-479f-ae08-d71ce869dc6d"
         },
         {
           "opacity": 100,
@@ -2113,7 +2197,8 @@
           "basedOn": "39f9cfdc-6996-448a-9303-481f8031599d",
           "id": "3e8ab1fc-06ce-40b6-8055-17835c1365aa",
           "x": 167,
-          "y": 586
+          "y": 586,
+          "groupId": "a900af27-4a6e-479f-ae08-d71ce869dc6d"
         },
         {
           "opacity": 100,
@@ -2130,7 +2215,8 @@
           "basedOn": "755bf31d-5ecd-47f0-abce-95938e285635",
           "id": "4e4e3e92-d4bf-408e-a1a2-9bad3f41d189",
           "x": 132,
-          "y": 586
+          "y": 586,
+          "groupId": "a900af27-4a6e-479f-ae08-d71ce869dc6d"
         }
       ],
       "backgroundOverlay": "none",
@@ -2176,7 +2262,19 @@
         "type": "shape",
         "id": "47621367-6c30-4f3d-89e5-240c6e0cd13b"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": "",
+      "groups": {
+        "a900af27-4a6e-479f-ae08-d71ce869dc6d": {
+          "name": "Action",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "7d123ae5-fef6-4186-9098-af0434204212": {
+          "name": "Info",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [
@@ -2235,7 +2333,8 @@
           "focalY": 50,
           "sticker": { "type": "nycThickBrush" },
           "id": "c81a5ffa-27e8-4b4b-9a0d-e33747310f1e",
-          "type": "sticker"
+          "type": "sticker",
+          "groupId": "ca4c057e-321c-44e8-ab3b-af0ad98da8e5"
         },
         {
           "opacity": 100,
@@ -2296,7 +2395,8 @@
           "id": "dc318dfc-6f02-4890-8f93-f6f031debff9",
           "x": 76,
           "y": 219,
-          "type": "text"
+          "type": "text",
+          "groupId": "ca4c057e-321c-44e8-ab3b-af0ad98da8e5"
         },
         {
           "opacity": 100,
@@ -2357,7 +2457,8 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "type": "text"
+          "type": "text",
+          "groupId": "ca4c057e-321c-44e8-ab3b-af0ad98da8e5"
         },
         {
           "opacity": 100,
@@ -2385,7 +2486,8 @@
           "basedOn": "b3852ea4-e583-424e-99e5-bd9d42a23065",
           "id": "10db8ade-73ab-422d-ba09-3cbbb6e643c1",
           "x": 116.5,
-          "y": 579
+          "y": 579,
+          "groupId": "ea319746-4536-4240-96ac-febdf13e5e49"
         },
         {
           "opacity": 100,
@@ -2446,7 +2548,8 @@
           "basedOn": "39f9cfdc-6996-448a-9303-481f8031599d",
           "id": "5e93d33d-0573-4d76-b286-259c4e3b480a",
           "x": 167,
-          "y": 586
+          "y": 586,
+          "groupId": "ea319746-4536-4240-96ac-febdf13e5e49"
         },
         {
           "opacity": 100,
@@ -2463,7 +2566,8 @@
           "basedOn": "755bf31d-5ecd-47f0-abce-95938e285635",
           "id": "7155f312-5345-4c81-877d-b155d8962c97",
           "x": 132,
-          "y": 586
+          "y": 586,
+          "groupId": "ea319746-4536-4240-96ac-febdf13e5e49"
         }
       ],
       "backgroundOverlay": "none",
@@ -2509,7 +2613,19 @@
         "type": "shape",
         "id": "2f156d35-c735-464e-9ac6-df4ae6654b71"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": "",
+      "groups": {
+        "ca4c057e-321c-44e8-ab3b-af0ad98da8e5": {
+          "name": "Info",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "ea319746-4536-4240-96ac-febdf13e5e49": {
+          "name": "Action",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [
@@ -2568,7 +2684,8 @@
           "focalY": 50,
           "sticker": { "type": "nycThickBrush" },
           "id": "36be4aec-f421-44fe-a4f9-3e8a711f205e",
-          "type": "sticker"
+          "type": "sticker",
+          "groupId": "47d0a7c3-f739-4979-ba88-47ec1ed53446"
         },
         {
           "opacity": 100,
@@ -2629,7 +2746,8 @@
           "id": "3c3ee984-c4ac-45ea-99c3-6b1da119fc4c",
           "x": 76,
           "y": 270,
-          "type": "text"
+          "type": "text",
+          "groupId": "47d0a7c3-f739-4979-ba88-47ec1ed53446"
         },
         {
           "opacity": 100,
@@ -2690,7 +2808,8 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "type": "text"
+          "type": "text",
+          "groupId": "47d0a7c3-f739-4979-ba88-47ec1ed53446"
         },
         {
           "opacity": 100,
@@ -2718,7 +2837,8 @@
           "basedOn": "b3852ea4-e583-424e-99e5-bd9d42a23065",
           "id": "50208ecd-622e-407b-871c-6976a7e2bcf8",
           "x": 116.5,
-          "y": 579
+          "y": 579,
+          "groupId": "b4fa7401-2904-444e-8f7b-d8d54e6af73f"
         },
         {
           "opacity": 100,
@@ -2779,7 +2899,8 @@
           "basedOn": "39f9cfdc-6996-448a-9303-481f8031599d",
           "id": "3108be35-0e44-4624-8811-2d56f95d2f75",
           "x": 167,
-          "y": 586
+          "y": 586,
+          "groupId": "b4fa7401-2904-444e-8f7b-d8d54e6af73f"
         },
         {
           "opacity": 100,
@@ -2796,7 +2917,8 @@
           "basedOn": "755bf31d-5ecd-47f0-abce-95938e285635",
           "id": "d979e4d6-52e0-4f77-90f3-2e5a55b45eae",
           "x": 132,
-          "y": 586
+          "y": 586,
+          "groupId": "b4fa7401-2904-444e-8f7b-d8d54e6af73f"
         }
       ],
       "backgroundOverlay": "none",
@@ -2842,7 +2964,19 @@
         "type": "shape",
         "id": "8cf01df7-0149-492b-b86e-edf53955f7bb"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": "",
+      "groups": {
+        "47d0a7c3-f739-4979-ba88-47ec1ed53446": {
+          "name": "Info",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "b4fa7401-2904-444e-8f7b-d8d54e6af73f": {
+          "name": "Action",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [
@@ -2875,7 +3009,8 @@
           "focalY": 50,
           "sticker": { "type": "nycTomatoes" },
           "id": "7e1fbdf4-e3fa-48e1-aa99-425ba6c602c5",
-          "type": "sticker"
+          "type": "sticker",
+          "groupId": "c2eca49f-eaaf-43a1-b699-eab439e06f7c"
         },
         {
           "opacity": 20,
@@ -2891,7 +3026,8 @@
           "focalY": 50,
           "sticker": { "type": "nycVeggies" },
           "id": "c1396685-2622-4ff3-ab15-b5c16b7c2a7f",
-          "type": "sticker"
+          "type": "sticker",
+          "groupId": "c2eca49f-eaaf-43a1-b699-eab439e06f7c"
         },
         {
           "opacity": 20,
@@ -2907,7 +3043,8 @@
           "focalY": 50,
           "sticker": { "type": "nycChili" },
           "id": "8ac3218e-27dc-4eef-a005-fcb81f585b21",
-          "type": "sticker"
+          "type": "sticker",
+          "groupId": "c2eca49f-eaaf-43a1-b699-eab439e06f7c"
         },
         {
           "opacity": 20,
@@ -2923,7 +3060,8 @@
           "focalY": 50,
           "sticker": { "type": "nycCheese" },
           "id": "c0762083-ebdc-44d2-81f8-90c908063332",
-          "type": "sticker"
+          "type": "sticker",
+          "groupId": "c2eca49f-eaaf-43a1-b699-eab439e06f7c"
         },
         {
           "opacity": 100,
@@ -3033,7 +3171,8 @@
           "basedOn": "36be4aec-f421-44fe-a4f9-3e8a711f205e",
           "id": "e9847403-aa9f-4cdb-b1dd-bea51f9d76c6",
           "x": 61.5,
-          "y": 387
+          "y": 387,
+          "groupId": "0e53105d-437f-4522-b3c3-2554fecd0bac"
         },
         {
           "opacity": 100,
@@ -3094,7 +3233,8 @@
           "basedOn": "3c3ee984-c4ac-45ea-99c3-6b1da119fc4c",
           "id": "5fae2cab-6229-424d-801f-7a019fc65f87",
           "x": 129,
-          "y": 415
+          "y": 415,
+          "groupId": "0e53105d-437f-4522-b3c3-2554fecd0bac"
         }
       ],
       "backgroundOverlay": "none",
@@ -3135,7 +3275,19 @@
       "backgroundColor": { "color": { "r": 0, "g": 0, "b": 0 } },
       "type": "page",
       "id": "8cb30a3a-7dc1-4705-8a77-63edee73555c",
-      "pageTemplateType": ""
+      "pageTemplateType": "",
+      "groups": {
+        "c2eca49f-eaaf-43a1-b699-eab439e06f7c": {
+          "name": "Background",
+          "isLocked": true,
+          "isCollapsed": true
+        },
+        "0e53105d-437f-4522-b3c3-2554fecd0bac": {
+          "name": "Info",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     }
   ],
   "current": null,

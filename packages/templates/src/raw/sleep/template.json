@@ -216,7 +216,8 @@
           "focalX": 50,
           "focalY": 50,
           "mask": { "type": "blob-3" },
-          "id": "8d31d477-7e91-4214-b263-c72d0a726be1"
+          "id": "8d31d477-7e91-4214-b263-c72d0a726be1",
+          "groupId": "88ff01d9-2cd0-4f93-bc6b-c49dc66164f1"
         },
         {
           "opacity": 100,
@@ -235,7 +236,8 @@
           "focalX": 50,
           "focalY": 50,
           "mask": { "type": "blob-2" },
-          "id": "ec40785b-35e7-4572-8fd5-3bce5b898d50"
+          "id": "ec40785b-35e7-4572-8fd5-3bce5b898d50",
+          "groupId": "88ff01d9-2cd0-4f93-bc6b-c49dc66164f1"
         },
         {
           "opacity": 100,
@@ -252,7 +254,8 @@
           "focalX": 50,
           "focalY": 50,
           "mask": { "type": "blob-6" },
-          "id": "741aeabf-40d3-4f1b-8ff0-0e9d72639718"
+          "id": "741aeabf-40d3-4f1b-8ff0-0e9d72639718",
+          "groupId": "88ff01d9-2cd0-4f93-bc6b-c49dc66164f1"
         },
         {
           "x": 187,
@@ -401,7 +404,14 @@
       "type": "page",
       "id": "e96638f8-1f19-4f34-b7e6-963329aa12fd",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
-      "pageTemplateType": "quote"
+      "pageTemplateType": "quote",
+      "groups": {
+        "88ff01d9-2cd0-4f93-bc6b-c49dc66164f1": {
+          "name": "Background",
+          "isLocked": true,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [
@@ -465,7 +475,8 @@
           "focalX": 50,
           "focalY": 50,
           "mask": { "type": "blob-2" },
-          "id": "89b87d99-5afb-46bd-a3aa-14225f858bac"
+          "id": "89b87d99-5afb-46bd-a3aa-14225f858bac",
+          "groupId": "7fda65e6-f078-4d1a-bc06-31d689917f9f"
         },
         {
           "opacity": 100,
@@ -484,7 +495,8 @@
           "focalX": 50,
           "focalY": 50,
           "mask": { "type": "blob-2" },
-          "id": "f48c6b69-fb61-4c9f-aee3-2155a28eda0b"
+          "id": "f48c6b69-fb61-4c9f-aee3-2155a28eda0b",
+          "groupId": "7fda65e6-f078-4d1a-bc06-31d689917f9f"
         },
         {
           "opacity": 100,
@@ -501,7 +513,8 @@
           "focalX": 50,
           "focalY": 50,
           "mask": { "type": "blob-6" },
-          "id": "1d881f00-3727-4531-ba0a-3d6d3459dc8e"
+          "id": "1d881f00-3727-4531-ba0a-3d6d3459dc8e",
+          "groupId": "7fda65e6-f078-4d1a-bc06-31d689917f9f"
         },
         {
           "x": 38,
@@ -675,7 +688,14 @@
       "type": "page",
       "id": "e6b3eacb-1032-4965-8e57-efe5dbe8b1b7",
       "backgroundColor": { "color": { "r": 31, "g": 42, "b": 46 } },
-      "pageTemplateType": "editorial"
+      "pageTemplateType": "editorial",
+      "groups": {
+        "7fda65e6-f078-4d1a-bc06-31d689917f9f": {
+          "name": "Background",
+          "isLocked": true,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [
@@ -1403,7 +1423,8 @@
           "focalX": 50,
           "focalY": 50,
           "mask": { "type": "blob-2" },
-          "id": "9b7290b8-f166-4e38-8213-97abb1c96ad6"
+          "id": "9b7290b8-f166-4e38-8213-97abb1c96ad6",
+          "groupId": "074e2685-7611-45fb-9e1c-0341fe20581a"
         },
         {
           "opacity": 100,
@@ -1420,7 +1441,8 @@
           "focalX": 50,
           "focalY": 50,
           "mask": { "type": "blob-6" },
-          "id": "85a31443-3c26-4c04-9123-c4d86b83e1f0"
+          "id": "85a31443-3c26-4c04-9123-c4d86b83e1f0",
+          "groupId": "074e2685-7611-45fb-9e1c-0341fe20581a"
         },
         {
           "x": 144,
@@ -1527,7 +1549,14 @@
         "id": "fadc0093-2969-4c68-a93a-443622c08d81"
       },
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255, "a": 1 } },
-      "pageTemplateType": "section"
+      "pageTemplateType": "section",
+      "groups": {
+        "074e2685-7611-45fb-9e1c-0341fe20581a": {
+          "name": "Background",
+          "isLocked": true,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [
@@ -1611,7 +1640,8 @@
           "focalX": 50,
           "focalY": 50,
           "mask": { "type": "blob-2" },
-          "id": "f6ced1c2-1877-4093-a039-a8deacce21ea"
+          "id": "f6ced1c2-1877-4093-a039-a8deacce21ea",
+          "groupId": "5594783d-8cb4-4ca3-b6e1-ba6a2f3550e1"
         },
         {
           "opacity": 100,
@@ -1628,7 +1658,8 @@
           "focalX": 50,
           "focalY": 50,
           "mask": { "type": "blob-6" },
-          "id": "4fe9f1f6-d2dd-491a-90a1-a0ff485c735f"
+          "id": "4fe9f1f6-d2dd-491a-90a1-a0ff485c735f",
+          "groupId": "5594783d-8cb4-4ca3-b6e1-ba6a2f3550e1"
         },
         {
           "opacity": 100,
@@ -1646,7 +1677,8 @@
           "basedOn": "4fe9f1f6-d2dd-491a-90a1-a0ff485c735f",
           "id": "fed8726d-5c7d-4110-ba07-c436be00523b",
           "x": 208,
-          "y": 545
+          "y": 545,
+          "groupId": "5594783d-8cb4-4ca3-b6e1-ba6a2f3550e1"
         },
         {
           "x": 38,
@@ -1856,7 +1888,14 @@
       "type": "page",
       "id": "a3dd6d21-4f75-4d8a-bacb-ef9d14f61503",
       "backgroundColor": { "color": { "r": 31, "g": 42, "b": 46 } },
-      "pageTemplateType": "steps"
+      "pageTemplateType": "steps",
+      "groups": {
+        "5594783d-8cb4-4ca3-b6e1-ba6a2f3550e1": {
+          "name": "Background",
+          "isLocked": true,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [
@@ -1890,7 +1929,8 @@
           "focalX": 50,
           "focalY": 50,
           "mask": { "type": "blob-2" },
-          "id": "1156e7c9-c922-46f0-b484-65e141757c02"
+          "id": "1156e7c9-c922-46f0-b484-65e141757c02",
+          "groupId": "652808df-22da-4c3d-a3e0-ee34fe2bbd25"
         },
         {
           "opacity": 100,
@@ -1907,7 +1947,8 @@
           "focalX": 50,
           "focalY": 50,
           "mask": { "type": "blob-2" },
-          "id": "ca831afb-f22f-491a-aaf1-ace1e3423d64"
+          "id": "ca831afb-f22f-491a-aaf1-ace1e3423d64",
+          "groupId": "652808df-22da-4c3d-a3e0-ee34fe2bbd25"
         },
         {
           "x": 45,
@@ -1977,7 +2018,8 @@
           "id": "4038789a-8b44-4d77-b5dd-592a1e247933",
           "content": "<span style=\"font-weight: 300; color: #1f2a2e\">3</span>",
           "fontSize": 132,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "909d6039-a44d-47ed-95b7-778d84ff13fc"
         },
         {
           "x": 46,
@@ -2012,7 +2054,8 @@
           "id": "7d7706a3-01b2-4bcd-8799-e18119b4c17d",
           "content": "<span style=\"font-weight: 300; color: #1f2a2e\">1</span>",
           "fontSize": 132,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "d2e4a7ff-a799-4fe0-9b90-d78d40e0a754"
         },
         {
           "x": 314,
@@ -2047,7 +2090,8 @@
           "id": "e02c6ab4-de7d-437d-b2b9-271b7de9b64b",
           "content": "<span style=\"font-weight: 300; color: #1f2a2e\">2</span>",
           "fontSize": 132,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "311afe47-563f-4e56-94e9-5f932fd8d018"
         },
         {
           "x": 315,
@@ -2082,7 +2126,8 @@
           "id": "7404bfb0-bd86-4b76-8dbb-37fa50a28dfe",
           "content": "<span style=\"font-weight: 300; color: #1f2a2e\">4</span>",
           "fontSize": 132,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "24a6583e-5002-42ed-aa76-40bea8cc6a18"
         },
         {
           "x": 126,
@@ -2132,7 +2177,8 @@
           "id": "6398137c-148c-4469-b521-f3db9fd40b5d",
           "content": "<span style=\"color: rgba(43, 57, 62, 1)\">Six Senses Douro Valley,\nPortugal</span>",
           "fontSize": 13,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "24a6583e-5002-42ed-aa76-40bea8cc6a18"
         },
         {
           "x": 126,
@@ -2182,7 +2228,8 @@
           "id": "e33ab4b1-8411-42c7-a407-b2d85756ff6f",
           "content": "<span style=\"color: rgba(43, 57, 62, 1)\">Aro Ha, Glenorchy,\nNew Zealand</span>",
           "fontSize": 13,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "311afe47-563f-4e56-94e9-5f932fd8d018"
         },
         {
           "x": 120,
@@ -2232,7 +2279,8 @@
           "id": "8d0b43ae-5979-4cb2-8b12-524929fe7d9a",
           "content": "<span style=\"color: rgba(43, 57, 62, 1)\">Kamalaya, Koh Samui,\nThailand</span>",
           "fontSize": 13,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "d2e4a7ff-a799-4fe0-9b90-d78d40e0a754"
         },
         {
           "x": 121,
@@ -2282,7 +2330,8 @@
           "id": "a314d206-0252-40f6-84f4-75b84138df1b",
           "content": "<span style=\"color: rgba(43, 57, 62, 1)\">Amanpuri, Phuket,\nThailand</span>",
           "fontSize": 13,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "909d6039-a44d-47ed-95b7-778d84ff13fc"
         }
       ],
       "animations": [
@@ -2322,7 +2371,34 @@
       "type": "page",
       "id": "d17e5002-9a42-41ea-a7fc-c2fddc7b58e6",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
-      "pageTemplateType": "list"
+      "pageTemplateType": "list",
+      "groups": {
+        "652808df-22da-4c3d-a3e0-ee34fe2bbd25": {
+          "name": "Background",
+          "isLocked": true,
+          "isCollapsed": true
+        },
+        "d2e4a7ff-a799-4fe0-9b90-d78d40e0a754": {
+          "name": "Section",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "311afe47-563f-4e56-94e9-5f932fd8d018": {
+          "name": "Section",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "909d6039-a44d-47ed-95b7-778d84ff13fc": {
+          "name": "Section",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "24a6583e-5002-42ed-aa76-40bea8cc6a18": {
+          "name": "Section",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [
@@ -2386,7 +2462,8 @@
             "alt": "page10_image1",
             "sizes": [],
             "isExternal": true
-          }
+          },
+          "groupId": "17085809-a0db-4a0b-9a11-967585ca39ea"
         },
         {
           "x": 33,
@@ -2418,7 +2495,8 @@
             "isExternal": true
           },
           "basedOn": "20ab13c0-b782-40f7-8700-a99d9b56008c",
-          "id": "70006d51-6f37-47b4-9074-b193a473caab"
+          "id": "70006d51-6f37-47b4-9074-b193a473caab",
+          "groupId": "767f9281-3430-4d09-b4d3-9c09805ae0e6"
         },
         {
           "x": 33,
@@ -2449,7 +2527,8 @@
             "isExternal": true
           },
           "basedOn": "70006d51-6f37-47b4-9074-b193a473caab",
-          "id": "46172f61-dfd3-4105-a3b3-9e6b95e32a4c"
+          "id": "46172f61-dfd3-4105-a3b3-9e6b95e32a4c",
+          "groupId": "93f58f04-66fa-4777-8e70-e161b749fd1f"
         },
         {
           "opacity": 100,
@@ -2480,7 +2559,8 @@
             "alt": "page10_image4",
             "sizes": [],
             "isExternal": true
-          }
+          },
+          "groupId": "f47e9a75-46c0-41de-84a2-d0f384aacf3d"
         },
         {
           "x": 169,
@@ -2530,7 +2610,8 @@
           "id": "e59766e5-94cd-4a5d-92c3-010f9b5f85ff",
           "content": "<span style=\"color: rgba(43, 57, 62, 1)\">10 Ways to bring the outdoors inside.</span>",
           "fontSize": 15,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "17085809-a0db-4a0b-9a11-967585ca39ea"
         },
         {
           "x": 170,
@@ -2580,7 +2661,8 @@
           "id": "7ac7ca60-c164-4860-8ea5-837ee07d47b0",
           "content": "<span style=\"color: rgba(43, 57, 62, 1)\">Is snoozing with your pets bad for your health?</span>",
           "fontSize": 15,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "767f9281-3430-4d09-b4d3-9c09805ae0e6"
         },
         {
           "x": 170,
@@ -2630,7 +2712,8 @@
           "id": "ad0ab4b9-9b87-4624-bfa8-45779fe6cf78",
           "content": "<span style=\"color: rgba(43, 57, 62, 1)\">Perfect supplement for home-made granola.</span>",
           "fontSize": 15,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "93f58f04-66fa-4777-8e70-e161b749fd1f"
         },
         {
           "x": 51,
@@ -2714,7 +2797,8 @@
           "basedOn": "ad0ab4b9-9b87-4624-bfa8-45779fe6cf78",
           "id": "64006e3b-b381-4321-90f5-b8c5e9efffe9",
           "x": 169,
-          "y": 533
+          "y": 533,
+          "groupId": "f47e9a75-46c0-41de-84a2-d0f384aacf3d"
         }
       ],
       "animations": [
@@ -2786,7 +2870,29 @@
       "type": "page",
       "id": "47783f6c-471c-427c-804e-532ace8261d1",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
-      "pageTemplateType": "list"
+      "pageTemplateType": "list",
+      "groups": {
+        "17085809-a0db-4a0b-9a11-967585ca39ea": {
+          "name": "Section",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "767f9281-3430-4d09-b4d3-9c09805ae0e6": {
+          "name": "Section",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "93f58f04-66fa-4777-8e70-e161b749fd1f": {
+          "name": "Section",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "f47e9a75-46c0-41de-84a2-d0f384aacf3d": {
+          "name": "Section",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     }
   ],
   "current": null,

@@ -79,8 +79,15 @@ const RecordingButton = styled(BaseButton)`
   }
 `;
 
-const StopButton = styled(BaseButton)`
+const PauseButton = styled(BaseButton).attrs({
+  type: BUTTON_TYPES.SECONDARY,
+})`
   margin-right: 20px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+`;
+
+const StopButton = styled(BaseButton)`
   padding-top: 12px;
   padding-bottom: 12px;
 
@@ -145,6 +152,8 @@ function Footer() {
     streamNode,
     liveStream,
     hasVideo,
+    pauseRecording,
+    resumeRecording,
   } = useMediaRecording(({ state, actions }) => ({
     status: state.status,
     file: state.file,
@@ -168,6 +177,8 @@ function Footer() {
     getMediaStream: actions.getMediaStream,
     resetState: actions.resetState,
     resetStream: actions.resetStream,
+    pauseRecording: actions.pauseRecording,
+    resumeRecording: actions.resumeRecording,
   }));
   const videoNode = useVideoTrim(({ state: { videoNode } }) => videoNode);
 
@@ -178,6 +189,16 @@ function Footer() {
   const {
     allowedMimeTypes: { audio: allowedAudioMimeTypes },
   } = useConfig();
+
+  const onPause = useCallback(() => {
+    pauseRecording();
+    trackEvent('media_recording_pause');
+  }, [pauseRecording]);
+
+  const onResume = useCallback(() => {
+    resumeRecording();
+    trackEvent('media_recording_resume');
+  }, [resumeRecording]);
 
   const onRetry = useCallback(async () => {
     resetState();
@@ -209,7 +230,10 @@ function Footer() {
 
   const [isInserting, setIsInserting] = useState(false);
 
-  const isRecording = ['recording', 'stopping', 'stopped'].includes(status);
+  const isRecording = ['recording', 'stopping', 'stopped', 'paused'].includes(
+    status
+  );
+  const isPaused = status === 'paused';
 
   const onInsert = useCallback(async () => {
     setIsInserting(true);
@@ -439,9 +463,26 @@ function Footer() {
       {!hasMediaToInsert && countdown === 0 && (
         <>
           {isRecording && (
-            <StopButton onClick={stopRecording}>
-              {__('Stop Recording', 'web-stories')}
-            </StopButton>
+            <>
+              <PauseButton
+                onClick={isPaused ? onResume : onPause}
+                aria-label={
+                  isPaused
+                    ? __('Resume Recording', 'web-stories')
+                    : __('Pause Recording', 'web-stories')
+                }
+              >
+                {isPaused
+                  ? __('Resume', 'web-stories')
+                  : __('Pause', 'web-stories')}
+              </PauseButton>
+              <StopButton
+                onClick={stopRecording}
+                aria-label={__('Stop Recording', 'web-stories')}
+              >
+                {__('Stop', 'web-stories')}
+              </StopButton>
+            </>
           )}
           {!isRecording &&
             !isCountingDown &&

@@ -48,7 +48,8 @@
           "focalX": 50,
           "focalY": 50,
           "mask": { "type": "brush-stroke-1" },
-          "id": "c2cb4adc-8209-4441-83f3-94fb5dba59eb"
+          "id": "c2cb4adc-8209-4441-83f3-94fb5dba59eb",
+          "groupId": "f183f9bc-8bcd-4fa9-8530-425af0f604bd"
         },
         {
           "x": 49,
@@ -79,7 +80,8 @@
           "id": "25b6f99b-3f69-4351-9e18-31b8ef1d1a61",
           "content": "<span style=\"color: #28292b; letter-spacing: 0.09em; text-transform: uppercase\">Fresh</span>\n<span style=\"color: #28292b; letter-spacing: 0.09em; text-transform: uppercase\">&amp;&nbsp;</span>\n<span style=\"color: #28292b; letter-spacing: 0.09em; text-transform: uppercase\">Bright</span>",
           "fontSize": 55,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "f183f9bc-8bcd-4fa9-8530-425af0f604bd"
         },
         {
           "opacity": 100,
@@ -134,7 +136,14 @@
         "id": "eaf6765f-8506-48c9-a526-15917b431464"
       },
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255, "a": 1 } },
-      "pageTemplateType": "cover"
+      "pageTemplateType": "cover",
+      "groups": {
+        "f183f9bc-8bcd-4fa9-8530-425af0f604bd": {
+          "name": "Info",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [
@@ -206,7 +215,8 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": { "type": "beautyHeart" },
-          "id": "bd8f9376-7962-44a0-b2b7-175ab75b9d58"
+          "id": "bd8f9376-7962-44a0-b2b7-175ab75b9d58",
+          "groupId": "dc20376a-95ab-4347-9ea4-5b6864a83a7a"
         },
         {
           "opacity": 100,
@@ -223,7 +233,8 @@
           "basedOn": "bd8f9376-7962-44a0-b2b7-175ab75b9d58",
           "id": "254ac1ec-228e-424f-ab2f-392364e08947",
           "x": 316,
-          "y": 45
+          "y": 45,
+          "groupId": "dc20376a-95ab-4347-9ea4-5b6864a83a7a"
         },
         {
           "opacity": 100,
@@ -240,7 +251,8 @@
           "basedOn": "254ac1ec-228e-424f-ab2f-392364e08947",
           "id": "3797ec08-e931-4774-a4bd-9f91af2439f5",
           "x": 30,
-          "y": 235
+          "y": 235,
+          "groupId": "dc20376a-95ab-4347-9ea4-5b6864a83a7a"
         },
         {
           "opacity": 100,
@@ -257,7 +269,8 @@
           "basedOn": "3797ec08-e931-4774-a4bd-9f91af2439f5",
           "id": "98375f28-5877-481d-a08d-a0b525af943c",
           "x": 337,
-          "y": 540
+          "y": 540,
+          "groupId": "dc20376a-95ab-4347-9ea4-5b6864a83a7a"
         },
         {
           "opacity": 100,
@@ -274,7 +287,8 @@
           "basedOn": "98375f28-5877-481d-a08d-a0b525af943c",
           "id": "19df8224-87e4-4d81-a452-43b6d0a218f5",
           "x": 6,
-          "y": 590
+          "y": 590,
+          "groupId": "dc20376a-95ab-4347-9ea4-5b6864a83a7a"
         },
         {
           "x": 61,
@@ -330,7 +344,14 @@
       "type": "page",
       "id": "65359a38-f1fa-4048-9b99-9415147b74d3",
       "backgroundColor": { "color": { "r": 233, "g": 213, "b": 197 } },
-      "pageTemplateType": "quote"
+      "pageTemplateType": "quote",
+      "groups": {
+        "dc20376a-95ab-4347-9ea4-5b6864a83a7a": {
+          "name": "Background",
+          "isLocked": true,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [
@@ -364,7 +385,8 @@
           "focalX": 50,
           "focalY": 50,
           "mask": { "type": "brush-stroke-1" },
-          "id": "9b89eb4a-f9fa-408f-b5df-8d7f9324309c"
+          "id": "9b89eb4a-f9fa-408f-b5df-8d7f9324309c",
+          "groupId": "327c1303-ef75-4ea2-97da-7fdc57adb40c"
         },
         {
           "x": 125,
@@ -451,7 +473,8 @@
           "id": "8922e664-91d5-422d-86a8-8dda035c39d8",
           "content": "<span style=\"font-weight: 900; color: #28292b\">Sun Protection</span>\nDone Right",
           "fontSize": 44,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "327c1303-ef75-4ea2-97da-7fdc57adb40c"
         },
         {
           "x": 52,
@@ -500,7 +523,8 @@
           "id": "b93fdb3d-22a9-4f54-bcdc-5c9c0aa7117c",
           "content": "<span style=\"color: #28292b\">We’ve done our research so you don’t have to. These sheer sun screens protect your skin from UVA and UVBs while also posing no harm to the environment.</span>",
           "fontSize": 16,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "327c1303-ef75-4ea2-97da-7fdc57adb40c"
         }
       ],
       "animations": [
@@ -537,7 +561,14 @@
       "type": "page",
       "id": "e71288c8-1c09-4abd-8e59-db479c97cef2",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
-      "pageTemplateType": "editorial"
+      "pageTemplateType": "editorial",
+      "groups": {
+        "327c1303-ef75-4ea2-97da-7fdc57adb40c": {
+          "name": "Info",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [
@@ -888,7 +919,8 @@
           "id": "53c22575-7ab2-4c00-931d-b0a8b68b7464",
           "content": "<span style=\"color: #28292b\">1</span>",
           "fontSize": 100,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "87d2a5bd-e2c5-4722-8b2e-909f1dd4abc2"
         },
         {
           "x": 25,
@@ -928,7 +960,8 @@
           "id": "6db599ec-da49-4694-ad37-9384644b0f8d",
           "content": "<span style=\"color: rgba(40, 41, 43, 1)\"><span style=\"font-weight: 900\">Natural Beauty</span></span>",
           "fontSize": 44,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "87d2a5bd-e2c5-4722-8b2e-909f1dd4abc2"
         },
         {
           "x": 39,
@@ -978,7 +1011,8 @@
           "id": "c7cb3455-9a2e-4af4-8098-e5f04567b377",
           "content": "<span style=\"color: #28292b\">For that friend who barely wears makeup</span>\n<span style=\"color: #28292b\">but likes to add a little sparkle.</span>",
           "fontSize": 16,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "87d2a5bd-e2c5-4722-8b2e-909f1dd4abc2"
         },
         {
           "x": 0,
@@ -1046,7 +1080,8 @@
           "focalY": 50,
           "mask": { "type": "rectangle" },
           "type": "shape",
-          "id": "d9cf345f-dd84-49c9-b652-20e31cd6d03a"
+          "id": "d9cf345f-dd84-49c9-b652-20e31cd6d03a",
+          "groupId": "7055e037-6834-4cf6-b782-638826142d5e"
         },
         {
           "x": 239,
@@ -1095,7 +1130,8 @@
           "id": "b21c003f-d5ad-4829-8ebd-4fe39746ec36",
           "content": "<span style=\"color: rgba(255, 255, 255, 1)\"><span style=\"font-weight: 500\">Buy Now</span></span>",
           "fontSize": 15,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "7055e037-6834-4cf6-b782-638826142d5e"
         },
         {
           "x": 25,
@@ -1173,7 +1209,19 @@
       "type": "page",
       "id": "173b610b-392d-4bd1-a3c4-747c7535ba5c",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
-      "pageTemplateType": "steps"
+      "pageTemplateType": "steps",
+      "groups": {
+        "87d2a5bd-e2c5-4722-8b2e-909f1dd4abc2": {
+          "name": "Info",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "7055e037-6834-4cf6-b782-638826142d5e": {
+          "name": "Action",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [
@@ -1207,7 +1255,8 @@
           "focalY": 50,
           "mask": { "type": "rectangle" },
           "type": "shape",
-          "id": "66c7e85f-72de-4dda-93cd-c3d114332275"
+          "id": "66c7e85f-72de-4dda-93cd-c3d114332275",
+          "groupId": "af5acc97-c15f-4d25-ae68-49e2a4cfb9d5"
         },
         {
           "x": 135,
@@ -1225,7 +1274,8 @@
           "mask": { "type": "rectangle" },
           "type": "shape",
           "basedOn": "66c7e85f-72de-4dda-93cd-c3d114332275",
-          "id": "6b601d9d-0aa0-4c11-8077-19881fb1f744"
+          "id": "6b601d9d-0aa0-4c11-8077-19881fb1f744",
+          "groupId": "76b1a926-7a44-4dba-8a75-668acfb884e4"
         },
         {
           "x": 167,
@@ -1255,7 +1305,8 @@
             "sizes": [],
             "isExternal": true,
             "baseColor": "#cfb1aa"
-          }
+          },
+          "groupId": "76b1a926-7a44-4dba-8a75-668acfb884e4"
         },
         {
           "x": 51,
@@ -1285,7 +1336,8 @@
             "sizes": [],
             "isExternal": true,
             "baseColor": "#a87155"
-          }
+          },
+          "groupId": "af5acc97-c15f-4d25-ae68-49e2a4cfb9d5"
         },
         {
           "x": 71,
@@ -1303,7 +1355,8 @@
           "mask": { "type": "rectangle" },
           "type": "shape",
           "basedOn": "1e41bc02-224e-4168-875c-82b101b868b8",
-          "id": "e7d293d9-09be-439d-a665-09a7d5427ce0"
+          "id": "e7d293d9-09be-439d-a665-09a7d5427ce0",
+          "groupId": "0f035801-d8bb-4a82-ae00-0cba807b6ae6"
         },
         {
           "x": 58,
@@ -1353,7 +1406,8 @@
           "id": "61b7afa6-8306-4656-b0f6-b47a43350b9a",
           "content": "<span style=\"font-weight: 500; color: #fff\">Buy Now</span>",
           "fontSize": 16,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "0f035801-d8bb-4a82-ae00-0cba807b6ae6"
         },
         {
           "x": 53,
@@ -1393,7 +1447,8 @@
           "id": "ac0add24-bf97-46a4-abe0-1241f0e91a20",
           "content": "<span style=\"color: rgba(40, 41, 43, 1)\"><span style=\"font-weight: 900\">Lid Shimmer $12</span></span>",
           "fontSize": 20,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "af5acc97-c15f-4d25-ae68-49e2a4cfb9d5"
         },
         {
           "x": 53,
@@ -1443,7 +1498,8 @@
           "id": "479bdbea-1369-40c8-bcb7-96d82fb8b36c",
           "content": "<span style=\"color: rgba(40, 41, 43, 1)\">website.com</span>",
           "fontSize": 16,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "af5acc97-c15f-4d25-ae68-49e2a4cfb9d5"
         },
         {
           "x": 236,
@@ -1483,7 +1539,8 @@
           "id": "d07cf4f9-46d9-420c-aa06-ad4e406b7a42",
           "content": "<span style=\"color: rgba(40, 41, 43, 1)\"><span style=\"font-weight: 900\">Lip Tattoo $18</span></span>",
           "fontSize": 20,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "76b1a926-7a44-4dba-8a75-668acfb884e4"
         },
         {
           "x": 236,
@@ -1533,7 +1590,8 @@
           "id": "6017e32e-c0fb-4ea3-8876-aaaa1b2bbef5",
           "content": "<span style=\"color: #28292b\">website.com</span>",
           "fontSize": 16,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "76b1a926-7a44-4dba-8a75-668acfb884e4"
         },
         {
           "x": 250,
@@ -1551,7 +1609,8 @@
           "mask": { "type": "rectangle" },
           "type": "shape",
           "basedOn": "e7d293d9-09be-439d-a665-09a7d5427ce0",
-          "id": "0bc138cd-b9ba-469c-b43b-8610b9b70565"
+          "id": "0bc138cd-b9ba-469c-b43b-8610b9b70565",
+          "groupId": "235f4576-d429-41e8-9823-543901200926"
         },
         {
           "x": 238,
@@ -1601,7 +1660,8 @@
           "id": "3a38df92-03f4-4576-8d59-928c9412c39e",
           "content": "<span style=\"color: rgba(255, 255, 255, 1)\"><span style=\"font-weight: 500\">Buy Now</span></span>",
           "fontSize": 16,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "235f4576-d429-41e8-9823-543901200926"
         }
       ],
       "animations": [
@@ -1623,7 +1683,29 @@
       "type": "page",
       "id": "9845d2e8-8afe-448b-b7c7-ed1b5e30ab69",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
-      "pageTemplateType": "editorial"
+      "pageTemplateType": "editorial",
+      "groups": {
+        "0f035801-d8bb-4a82-ae00-0cba807b6ae6": {
+          "name": "Action",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "235f4576-d429-41e8-9823-543901200926": {
+          "name": "Action",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "af5acc97-c15f-4d25-ae68-49e2a4cfb9d5": {
+          "name": "Section",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "76b1a926-7a44-4dba-8a75-668acfb884e4": {
+          "name": "Section",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [
@@ -1793,7 +1875,8 @@
           "mask": { "type": "rectangle" },
           "type": "shape",
           "basedOn": "0bc138cd-b9ba-469c-b43b-8610b9b70565",
-          "id": "c01e32d0-fecd-4462-b8a5-9284fea75f78"
+          "id": "c01e32d0-fecd-4462-b8a5-9284fea75f78",
+          "groupId": "635d5ae7-cffe-4dfa-bb4d-f4083e3e3152"
         },
         {
           "x": 132,
@@ -1843,7 +1926,8 @@
           "id": "a2cd4b99-da90-49e7-8a8d-25c54400b4a1",
           "content": "<span style=\"color: rgba(255, 255, 255, 1)\"><span style=\"font-weight: 500\">Get The Look</span></span>",
           "fontSize": 16,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "635d5ae7-cffe-4dfa-bb4d-f4083e3e3152"
         }
       ],
       "animations": [
@@ -1880,7 +1964,14 @@
       "type": "page",
       "id": "d605aece-b940-4ae4-8917-562ffba57c53",
       "backgroundColor": { "color": { "r": 243, "g": 217, "b": 225 } },
-      "pageTemplateType": "editorial"
+      "pageTemplateType": "editorial",
+      "groups": {
+        "635d5ae7-cffe-4dfa-bb4d-f4083e3e3152": {
+          "name": "Action",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [
@@ -1963,7 +2054,8 @@
           "basedOn": "6ec575af-42c7-4b91-b0ed-49780a002117",
           "id": "95bffcec-5323-4f5d-9eea-8402d676bd2e",
           "x": -15,
-          "y": 454
+          "y": 454,
+          "groupId": "593a20fa-0ca6-4353-a11b-48abe8cd4227"
         },
         {
           "opacity": 100,
@@ -1981,7 +2073,8 @@
           "basedOn": "6ec575af-42c7-4b91-b0ed-49780a002117",
           "id": "c83e126a-96a0-4131-8906-6ed69881877e",
           "x": -166,
-          "y": 310
+          "y": 310,
+          "groupId": "d5380682-3183-4269-ae52-e8835dcd4070"
         },
         {
           "opacity": 100,
@@ -1998,7 +2091,8 @@
           "focalX": 50,
           "focalY": 50,
           "mask": { "type": "brush-stroke-2" },
-          "id": "6ec575af-42c7-4b91-b0ed-49780a002117"
+          "id": "6ec575af-42c7-4b91-b0ed-49780a002117",
+          "groupId": "e6a435ef-5381-4ded-9ef6-dd0a231aa17a"
         },
         {
           "x": 33,
@@ -2028,7 +2122,8 @@
             "sizes": [],
             "isExternal": true,
             "baseColor": "#dbdbdc"
-          }
+          },
+          "groupId": "e6a435ef-5381-4ded-9ef6-dd0a231aa17a"
         },
         {
           "x": 248,
@@ -2058,7 +2153,8 @@
             "alt": "page9_story2",
             "sizes": [],
             "isExternal": true
-          }
+          },
+          "groupId": "d5380682-3183-4269-ae52-e8835dcd4070"
         },
         {
           "x": 33,
@@ -2089,7 +2185,8 @@
             "alt": "page9_story3",
             "sizes": [],
             "isExternal": true
-          }
+          },
+          "groupId": "593a20fa-0ca6-4353-a11b-48abe8cd4227"
         },
         {
           "x": 205,
@@ -2129,7 +2226,8 @@
           "id": "e5f86bbb-dd3e-431a-aae3-5a8e00cf6d0f",
           "content": "<span style=\"color: rgba(40, 41, 43, 1)\"><span style=\"font-weight: 900\">Top 10 Bronzing\nKits for Summer</span></span>",
           "fontSize": 20,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "e6a435ef-5381-4ded-9ef6-dd0a231aa17a"
         },
         {
           "x": 205,
@@ -2169,7 +2267,8 @@
           "id": "6405d5d0-89ec-4f1e-976e-48eed941608d",
           "content": "<span style=\"color: rgba(40, 41, 43, 1)\"><span style=\"font-weight: 900\">Use the Fenty\nShade Finder</span></span>",
           "fontSize": 20,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "593a20fa-0ca6-4353-a11b-48abe8cd4227"
         },
         {
           "x": 40,
@@ -2209,7 +2308,8 @@
           "id": "41f71d08-27df-4137-94b7-eaf0aec0d16c",
           "content": "<span style=\"color: rgba(40, 41, 43, 1)\"><span style=\"font-weight: 900\">This Year’s\nK-Beauty Trends</span></span>",
           "fontSize": 20,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "groupId": "d5380682-3183-4269-ae52-e8835dcd4070"
         }
       ],
       "animations": [
@@ -2247,7 +2347,24 @@
       "type": "page",
       "id": "edf299b1-e35a-4049-9e66-a08dcee8b936",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
-      "pageTemplateType": "list"
+      "pageTemplateType": "list",
+      "groups": {
+        "e6a435ef-5381-4ded-9ef6-dd0a231aa17a": {
+          "name": "Section",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "d5380682-3183-4269-ae52-e8835dcd4070": {
+          "name": "Section",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "593a20fa-0ca6-4353-a11b-48abe8cd4227": {
+          "name": "Section",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     }
   ],
   "current": null,
