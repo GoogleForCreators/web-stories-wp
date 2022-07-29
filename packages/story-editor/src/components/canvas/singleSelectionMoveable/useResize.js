@@ -71,7 +71,7 @@ function useSingleSelectionResize({
       })
     );
 
-  const { lockAspectRatio: elementLockRatio, type } = selectedElement;
+  const { lockAspectRatio: elementLockRatio, type, border } = selectedElement;
   const isText = type === 'text';
   const [isResizingFromCorner, setIsResizingFromCorner] = useState(true);
   // Text element lock aspect ratio doesn't influence resizing.
@@ -86,9 +86,11 @@ function useSingleSelectionResize({
   const minHeight = dataToEditorY(resizeRules.minHeight);
   const aspectRatio = selectedElement.width / selectedElement.height;
 
+  const { left = 0, right = 0, top = 0, bottom = 0 } = border || {};
   const onResize = ({ target, direction, width, height, drag }) => {
-    let newWidth = width;
-    let newHeight = height;
+    // We remove the border in pixels since that's not saved to the width/height directly.
+    let newWidth = width - (left + right);
+    let newHeight = height - (top + bottom);
     let updates = null;
 
     if (lockAspectRatio) {
@@ -122,10 +124,13 @@ function useSingleSelectionResize({
       }px 0`;
     }
 
-    target.style.width = `${newWidth}px`;
-    target.style.height = `${newHeight}px`;
+    // We add the border size back for the target display.
+    const frameWidth = newWidth + left + right;
+    const frameHeight = newHeight + top + bottom;
+    target.style.width = `${frameWidth}px`;
+    target.style.height = `${frameHeight}px`;
     frame.direction = direction;
-    frame.resize = [newWidth, newHeight];
+    frame.resize = [frameWidth, frameHeight];
     frame.translate = drag.beforeTranslate;
     frame.updates = updates;
     setTransformStyle(target, frame);
@@ -157,8 +162,9 @@ function useSingleSelectionResize({
     if (editorWidth !== 0 && editorHeight !== 0) {
       const { direction } = frame;
       const [deltaX, deltaY] = frame.translate;
-      const newWidth = editorToDataX(editorWidth);
-      const newHeight = editorToDataY(editorHeight);
+      // Border is not saved into element's width/height (since it's in pixels) so remove it before updating.
+      const newWidth = editorToDataX(editorWidth - (left + right));
+      const newHeight = editorToDataY(editorHeight - (top + bottom));
       properties = {
         width: newWidth,
         height: newHeight,
