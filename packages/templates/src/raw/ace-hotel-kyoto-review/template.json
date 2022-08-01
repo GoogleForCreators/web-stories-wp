@@ -4591,7 +4591,8 @@
           "id": "d3b8dc1d-4fbb-4444-87bd-63c3a468e1ed",
           "x": 68,
           "y": 3,
-          "type": "text"
+          "type": "text",
+          "tagName": "h3"
         },
         {
           "x": 68,
@@ -4781,7 +4782,8 @@
           "basedOn": "b4257d95-bfec-4e61-ac95-212c3bb41ac4",
           "id": "dcb28936-1d06-4c08-9041-2bca836f784f",
           "x": 68,
-          "y": 169
+          "y": 169,
+          "tagName": "p"
         }
       ],
       "backgroundOverlay": "none",
