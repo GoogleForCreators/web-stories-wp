@@ -18,13 +18,16 @@
  * External dependencies
  */
 import { useUnits } from '@googleforcreators/units';
+import { getDefinitionForType } from '@googleforcreators/elements';
 
 function useResize({ onGroupEventEnd, targetList, setTransformStyle, frames }) {
-  const { editorToDataX, editorToDataY, dataToEditorY } = useUnits((state) => ({
-    editorToDataX: state.actions.editorToDataX,
-    editorToDataY: state.actions.editorToDataY,
-    dataToEditorY: state.actions.dataToEditorY,
-  }));
+  const { editorToDataX, editorToDataY, dataToEditorY, dataToEditorX } =
+    useUnits((state) => ({
+      editorToDataX: state.actions.editorToDataX,
+      editorToDataY: state.actions.editorToDataY,
+      dataToEditorY: state.actions.dataToEditorY,
+      dataToEditorX: state.actions.dataToEditorX,
+    }));
 
   const onResizeGroupStart = ({ events }) => {
     events.forEach((ev, i) => {
@@ -35,12 +38,30 @@ function useResize({ onGroupEventEnd, targetList, setTransformStyle, frames }) {
       }
     });
   };
+
   const onResizeGroup = ({ events }) => {
     events.forEach(({ target, direction, width, height, drag }, i) => {
       const sFrame = frames[i];
       const { element, updateForResizeEvent } = targetList[i];
-      let newHeight = height;
-      const newWidth = width;
+      const { border, type } = element;
+      const { resizeRules } = getDefinitionForType(type);
+      const minWidth = dataToEditorX(resizeRules.minWidth);
+      const minHeight = dataToEditorY(resizeRules.minHeight);
+
+      const { left = 0, right = 0, top = 0, bottom = 0 } = border || {};
+      // We remove the border in pixels since that's not saved to the width/height directly.
+      let newWidth = width - (left + right);
+      let newHeight = height - (top + bottom);
+
+      const aspectRatio = element.width / element.height;
+      if (newWidth < minWidth) {
+        newWidth = minWidth;
+        newHeight = newWidth / aspectRatio;
+      }
+      if (newHeight < minHeight) {
+        newHeight = minHeight;
+        newWidth = minHeight * aspectRatio;
+      }
       let updates = null;
       if (updateForResizeEvent) {
         updates = updateForResizeEvent(
@@ -53,13 +74,17 @@ function useResize({ onGroupEventEnd, targetList, setTransformStyle, frames }) {
       if (updates && updates.height) {
         newHeight = dataToEditorY(updates.height);
       }
-      target.style.width = `${newWidth}px`;
-      target.style.height = `${newHeight}px`;
+
+      // We add the border size back for the target display.
+      const frameWidth = newWidth + left + right;
+      const frameHeight = newHeight + top + bottom;
+      target.style.width = `${frameWidth}px`;
+      target.style.height = `${frameHeight}px`;
       sFrame.direction = direction;
-      sFrame.resize = [newWidth, newHeight];
+      sFrame.resize = [frameWidth, frameHeight];
       sFrame.translate = drag.beforeTranslate;
       sFrame.updates = updates;
-      setTransformStyle(element.id, target, sFrame);
+      setTransformStyle(element, target, sFrame);
     });
   };
   const onResizeGroupEnd = ({ targets }) => {
