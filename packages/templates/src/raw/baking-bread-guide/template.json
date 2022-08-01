@@ -1,18 +1,26 @@
 {
+  "current": null,
+  "selection": [],
+  "story": {},
   "version": 43,
   "pages": [
     {
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "isDefaultBackground": true,
           "type": "shape",
@@ -20,17 +28,28 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "type": "image",
           "width": 412,
           "height": 484,
           "scale": 118,
           "focalX": 50,
           "focalY": 33.01094072280514,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "basedOn": "cb08239a-51c6-48f6-a516-aea526bbb0e1",
           "id": "1d5e5fbc-5fc6-4707-8430-c96ee46482de",
           "x": 0,
@@ -47,22 +66,34 @@
             "alt": "page01_image1",
             "isOptimized": false,
             "isExternal": true,
-            "baseColor": "#b09b88"
+            "baseColor": "#b09b88",
+            "sizes": []
           }
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 45, "g": 42, "b": 53 } },
+          "backgroundColor": {
+            "color": {
+              "r": 45,
+              "g": 42,
+              "b": 53
+            }
+          },
           "type": "shape",
           "width": 37,
           "height": 35,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "triangle" },
+          "mask": {
+            "type": "triangle"
+          },
           "basedOn": "0e87fa78-9538-4fb6-beb2-5237d820da3d",
           "id": "058e4521-038d-4034-be16-f80248526262",
           "x": 57,
@@ -70,13 +101,15 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Inter",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
             "styles": ["regular"],
@@ -91,6 +124,7 @@
               [0, 800],
               [0, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 2816,
               "asc": 2728,
@@ -110,10 +144,20 @@
             }
           },
           "fontSize": 13,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.3,
           "textAlign": "center",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "type": "text",
           "content": "<span style=\"font-weight: 900; color: #bcebee; letter-spacing: 0.4em; text-transform: uppercase\">Bak'n with Em</span>",
           "fontWeight": 400,
@@ -136,17 +180,20 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Trykker",
-            "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [400],
             "styles": ["regular"],
             "variants": [[0, 400]],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 2048,
               "asc": 2022,
@@ -166,10 +213,20 @@
             }
           },
           "fontSize": 32,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.18,
           "textAlign": "center",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "type": "text",
           "content": "<span style=\"color: #fff0d8; letter-spacing: 0.04em\">Beginner’s Guide</span>\n<span style=\"color: #fff0d8; letter-spacing: 0.04em\">to Baking Bread</span>",
           "fontWeight": 400,
@@ -188,21 +245,25 @@
           "basedOn": "d6bf026b-c84c-4db0-8a97-861914fae4d4",
           "id": "b77a2dd4-5b1f-4b65-ad07-0689182056df",
           "x": 48,
-          "y": 489
+          "y": 489,
+          "tagName": "h1"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Trykker",
-            "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [400],
             "styles": ["regular"],
             "variants": [[0, 400]],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 2048,
               "asc": 2022,
@@ -222,10 +283,20 @@
             }
           },
           "fontSize": 15,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.18,
           "textAlign": "center",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "type": "text",
           "content": "<span style=\"color: #bcebee\">Emma Keys</span>",
           "fontWeight": 400,
@@ -247,7 +318,13 @@
           "y": 584
         }
       ],
-      "backgroundColor": { "color": { "r": 45, "g": 42, "b": 53 } },
+      "backgroundColor": {
+        "color": {
+          "r": 45,
+          "g": 42,
+          "b": 53
+        }
+      },
       "type": "page",
       "id": "21cf9649-5574-4038-bd34-e297eca0a920",
       "animations": [],
@@ -257,14 +334,19 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "isDefaultBackground": true,
           "type": "shape",
@@ -272,10 +354,19 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "type": "image",
           "x": -16,
           "y": 333,
@@ -284,7 +375,9 @@
           "scale": 138,
           "focalX": 39.07292385553255,
           "focalY": 46.35764128517751,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "id": "cb08239a-51c6-48f6-a516-aea526bbb0e1",
           "resource": {
             "type": "image",
@@ -298,22 +391,34 @@
             "alt": "page02_image1",
             "isOptimized": false,
             "isExternal": true,
-            "baseColor": "#372e25"
+            "baseColor": "#372e25",
+            "sizes": []
           }
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 180,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 188, "g": 235, "b": 238 } },
+          "backgroundColor": {
+            "color": {
+              "r": 188,
+              "g": 235,
+              "b": 238
+            }
+          },
           "type": "shape",
           "width": 46,
           "height": 44,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "triangle" },
+          "mask": {
+            "type": "triangle"
+          },
           "basedOn": "c60c875f-ffd4-4216-b031-a7641859178a",
           "id": "0e87fa78-9538-4fb6-beb2-5237d820da3d",
           "x": 36,
@@ -321,17 +426,20 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Trykker",
-            "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [400],
             "styles": ["regular"],
             "variants": [[0, 400]],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 2048,
               "asc": 2022,
@@ -351,10 +459,20 @@
             }
           },
           "fontSize": 22,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.4,
           "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "type": "text",
           "content": "So, I hear you want to bake bread! You’ve come to the right place. Making bread is both easy and rewarding, especially if you learn these 6 fast rules for making bread.",
           "fontWeight": 400,
@@ -366,7 +484,7 @@
             "bottomLeft": 0
           },
           "width": 315,
-          "height": 181,
+          "height": 182,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -374,21 +492,25 @@
           "id": "2a0e6c2d-2b10-4b9d-9efe-5bf60e3e3d3d",
           "x": 49,
           "y": 39,
-          "marginOffset": 3.299999999999997
+          "marginOffset": 3.299999999999997,
+          "tagName": "p"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Trykker",
-            "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [400],
             "styles": ["regular"],
             "variants": [[0, 400]],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 2048,
               "asc": 2022,
@@ -408,10 +530,20 @@
             }
           },
           "fontSize": 22,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.4,
           "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "type": "text",
           "content": "\nLet’s get started!",
           "fontWeight": 400,
@@ -431,11 +563,18 @@
           "basedOn": "2a0e6c2d-2b10-4b9d-9efe-5bf60e3e3d3d",
           "id": "dccf045e-6b78-4db1-9447-e2583a5e93b2",
           "x": 50,
-          "y": 220
+          "y": 220,
+          "tagName": "p"
         }
       ],
       "backgroundOverlay": "none",
-      "backgroundColor": { "color": { "r": 188, "g": 235, "b": 238 } },
+      "backgroundColor": {
+        "color": {
+          "r": 188,
+          "g": 235,
+          "b": 238
+        }
+      },
       "type": "page",
       "id": "a5371335-75d1-4360-828d-d8a0ec8b0485",
       "animations": [
@@ -464,15 +603,26 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
           "x": -154,
           "y": 106,
           "width": 720,
           "height": 406,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "type": "video",
           "id": "5b16c66f-673d-4b95-84bd-587b329a825e",
@@ -502,21 +652,38 @@
           "overlay": {
             "type": "linear",
             "stops": [
-              { "color": { "r": 0, "g": 0, "b": 0, "a": 0 }, "position": 0.22 },
-              { "color": { "r": 0, "g": 0, "b": 0 }, "position": 1 }
+              {
+                "color": {
+                  "r": 0,
+                  "g": 0,
+                  "b": 0,
+                  "a": 0
+                },
+                "position": 0.22
+              },
+              {
+                "color": {
+                  "r": 0,
+                  "g": 0,
+                  "b": 0
+                },
+                "position": 1
+              }
             ],
             "alpha": 0.8
           }
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Inter",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
             "styles": ["regular"],
@@ -531,6 +698,7 @@
               [0, 800],
               [0, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 2816,
               "asc": 2728,
@@ -550,10 +718,20 @@
             }
           },
           "fontSize": 35,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.1,
           "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "type": "text",
           "content": "<span style=\"font-weight: 700; color: #fff\">There is nothing mysterious about making bread! Practice makes perfect so bake, bake, bake!</span>",
           "fontWeight": 400,
@@ -572,17 +750,20 @@
           "basedOn": "469eff9a-7401-4112-bf1f-90f99bdcb51a",
           "id": "afc1d24f-a73c-4375-9e78-198f71a7eeb8",
           "x": 64,
-          "y": 372
+          "y": 372,
+          "tagName": "p"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Inter",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
             "styles": ["regular"],
@@ -597,6 +778,7 @@
               [0, 800],
               [0, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 2816,
               "asc": 2728,
@@ -616,10 +798,20 @@
             }
           },
           "fontSize": 36,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.1,
           "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "type": "text",
           "content": "<span style=\"font-weight: 700; color: #fff\">“</span>",
           "fontWeight": 400,
@@ -642,20 +834,37 @@
         }
       ],
       "backgroundOverlay": "none",
-      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 255,
+          "b": 255
+        }
+      },
       "type": "page",
       "id": "fa833674-57f8-4311-80bc-de1817acc6e7",
       "defaultBackgroundElement": {
         "opacity": 100,
-        "flip": { "vertical": false, "horizontal": false },
+        "flip": {
+          "vertical": false,
+          "horizontal": false
+        },
         "rotationAngle": 0,
         "lockAspectRatio": true,
-        "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+        "backgroundColor": {
+          "color": {
+            "r": 255,
+            "g": 255,
+            "b": 255
+          }
+        },
         "x": 1,
         "y": 1,
         "width": 1,
         "height": 1,
-        "mask": { "type": "rectangle" },
+        "mask": {
+          "type": "rectangle"
+        },
         "isBackground": true,
         "isDefaultBackground": true,
         "type": "shape",
@@ -668,14 +877,19 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "isDefaultBackground": true,
           "type": "shape",
@@ -683,17 +897,20 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Trykker",
-            "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [400],
             "styles": ["regular"],
             "variants": [[0, 400]],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 2048,
               "asc": 2022,
@@ -713,10 +930,19 @@
             }
           },
           "fontSize": 36,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.18,
           "textAlign": "center",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "type": "text",
           "content": "<span style=\"color: #fff0d8\">6 Fast Rules For Making Bread</span>",
           "fontWeight": 700,
@@ -735,21 +961,25 @@
           "basedOn": "0452aebc-3d49-47c2-9914-ed354b89d90d",
           "id": "16a1e440-3dca-42c6-abc1-d139939023e1",
           "x": 48,
-          "y": 0
+          "y": 0,
+          "tagName": "h2"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Trykker",
-            "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [400],
             "styles": ["regular"],
             "variants": [[0, 400]],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 2048,
               "asc": 2022,
@@ -769,10 +999,19 @@
             }
           },
           "fontSize": 18,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.28,
           "textAlign": "left",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "type": "text",
           "content": "<span style=\"color: #fff0d8; letter-spacing: 0.01em\">01</span>\n\n<span style=\"color: #bcebee; letter-spacing: 0.01em\">Use fresh ingredients - especially yeast</span>",
           "fontWeight": 700,
@@ -796,17 +1035,20 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Trykker",
-            "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [400],
             "styles": ["regular"],
             "variants": [[0, 400]],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 2048,
               "asc": 2022,
@@ -826,10 +1068,19 @@
             }
           },
           "fontSize": 18,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.28,
           "textAlign": "left",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "type": "text",
           "content": "<span style=\"color: #fff0d8; letter-spacing: 0.01em\">02</span>\n\n<span style=\"color: #bcebee; letter-spacing: 0.01em\">Storage: dry is nice</span>",
           "fontWeight": 700,
@@ -853,17 +1104,20 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Trykker",
-            "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [400],
             "styles": ["regular"],
             "variants": [[0, 400]],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 2048,
               "asc": 2022,
@@ -883,10 +1137,19 @@
             }
           },
           "fontSize": 18,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.28,
           "textAlign": "left",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "type": "text",
           "content": "<span style=\"color: #fff0d8; letter-spacing: 0.01em\">03</span>\n\n<span style=\"color: #bcebee; letter-spacing: 0.01em\">Use the right flour</span>",
           "fontWeight": 700,
@@ -910,17 +1173,20 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Trykker",
-            "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [400],
             "styles": ["regular"],
             "variants": [[0, 400]],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 2048,
               "asc": 2022,
@@ -940,10 +1206,19 @@
             }
           },
           "fontSize": 18,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.28,
           "textAlign": "left",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "type": "text",
           "content": "<span style=\"color: #fff0d8; letter-spacing: 0.01em\">04</span>\n\n<span style=\"color: #bcebee; letter-spacing: 0.01em\">Temperature and yeast</span>",
           "fontWeight": 700,
@@ -967,17 +1242,20 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Trykker",
-            "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [400],
             "styles": ["regular"],
             "variants": [[0, 400]],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 2048,
               "asc": 2022,
@@ -997,10 +1275,19 @@
             }
           },
           "fontSize": 18,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.28,
           "textAlign": "left",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "type": "text",
           "content": "<span style=\"color: #fff0d8; letter-spacing: 0.01em\">05</span>\n\n<span style=\"color: #bcebee; letter-spacing: 0.01em\">To knead or not to knead</span>",
           "fontWeight": 700,
@@ -1024,17 +1311,20 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Trykker",
-            "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [400],
             "styles": ["regular"],
             "variants": [[0, 400]],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 2048,
               "asc": 2022,
@@ -1054,10 +1344,19 @@
             }
           },
           "fontSize": 18,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.28,
           "textAlign": "left",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "type": "text",
           "content": "<span style=\"color: #fff0d8; letter-spacing: 0.01em\">06</span>\n\n<span style=\"color: #bcebee; letter-spacing: 0.01em\">Prescribed rising times</span>",
           "fontWeight": 700,
@@ -1081,7 +1380,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "type": "sticker",
@@ -1092,13 +1394,18 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": { "type": "yeastPackage" },
+          "sticker": {
+            "type": "yeastPackage"
+          },
           "id": "3f1bc3f7-c9cf-44c0-8263-30f739d37db8",
           "groupId": "dd43b0fa-072f-4a02-8846-86b32ca0ca30"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "type": "sticker",
@@ -1109,13 +1416,18 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": { "type": "thermometer" },
+          "sticker": {
+            "type": "thermometer"
+          },
           "id": "db3ce326-32cd-4a9c-9466-547b17186779",
           "groupId": "cf61d1d8-02fb-4d0d-af5e-ba7e7be08669"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "type": "sticker",
@@ -1126,13 +1438,18 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": { "type": "jar" },
+          "sticker": {
+            "type": "jar"
+          },
           "id": "f98bf842-45d7-4587-939f-1f0b7bd32723",
           "groupId": "f2346ced-a649-41c8-a9a4-f79c95cd05f8"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "type": "sticker",
@@ -1143,13 +1460,18 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": { "type": "dough" },
+          "sticker": {
+            "type": "dough"
+          },
           "id": "a2e91787-181c-409d-a6f3-a449dc2698c3",
           "groupId": "9bb74869-ce4c-43a1-9a46-c748b0a00d95"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "type": "sticker",
@@ -1160,13 +1482,18 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": { "type": "flourBag" },
+          "sticker": {
+            "type": "flourBag"
+          },
           "id": "2c9c36c0-13ce-41ae-a799-19eea39ffdff",
           "groupId": "54e505b6-550c-4976-9e30-cf0b903ee9af"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "type": "sticker",
@@ -1177,13 +1504,21 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": { "type": "flourBowl" },
+          "sticker": {
+            "type": "flourBowl"
+          },
           "id": "e818b9d9-cfd1-4f18-ab15-072f0adb3ec7",
           "groupId": "b8f993b0-d14c-4267-900c-33c2c2a5e814"
         }
       ],
       "backgroundOverlay": "none",
-      "backgroundColor": { "color": { "r": 45, "g": 42, "b": 53 } },
+      "backgroundColor": {
+        "color": {
+          "r": 45,
+          "g": 42,
+          "b": 53
+        }
+      },
       "type": "page",
       "id": "3bebb81e-b6bf-4b85-92ef-27c958f7b3c2",
       "animations": [
@@ -1280,14 +1615,19 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "isDefaultBackground": true,
           "type": "shape",
@@ -1295,17 +1635,28 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "type": "image",
           "width": 412,
           "height": 452,
           "scale": 115,
           "focalX": 49.705845423943224,
           "focalY": 56.52173913043478,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "basedOn": "cb08239a-51c6-48f6-a516-aea526bbb0e1",
           "id": "d40aed6a-b833-4f82-93c6-b65d2e2fc0f1",
           "x": 0,
@@ -1322,22 +1673,34 @@
             "alt": "page05_image1",
             "isOptimized": false,
             "isExternal": true,
-            "baseColor": "#9b8988"
+            "baseColor": "#9b8988",
+            "sizes": []
           }
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 45, "g": 42, "b": 53 } },
+          "backgroundColor": {
+            "color": {
+              "r": 45,
+              "g": 42,
+              "b": 53
+            }
+          },
           "type": "shape",
           "width": 48,
           "height": 46,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "triangle" },
+          "mask": {
+            "type": "triangle"
+          },
           "basedOn": "0e87fa78-9538-4fb6-beb2-5237d820da3d",
           "id": "53be6e2a-5359-4321-a0e3-db39db99126b",
           "x": 37,
@@ -1345,17 +1708,20 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Trykker",
-            "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [400],
             "styles": ["regular"],
             "variants": [[0, 400]],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 2048,
               "asc": 2022,
@@ -1375,10 +1741,20 @@
             }
           },
           "fontSize": 24,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.4,
           "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "type": "text",
           "content": "<span style=\"color: #fff\">Use fresh ingredients - especially yeast</span>",
           "fontWeight": 400,
@@ -1405,17 +1781,20 @@
           "id": "2446c1cd-46e9-4392-bada-6b17973d3f4d",
           "basedOn": "2a0e6c2d-2b10-4b9d-9efe-5bf60e3e3d3d",
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Trykker",
-            "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [400],
             "styles": ["regular"],
             "variants": [[0, 400]],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 2048,
               "asc": 2022,
@@ -1435,10 +1814,20 @@
             }
           },
           "fontSize": 24,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.4,
           "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "type": "text",
           "content": "<span style=\"color: #fff\">01</span>",
           "fontWeight": 400,
@@ -1453,7 +1842,8 @@
           "height": 30,
           "scale": 100,
           "focalX": 50,
-          "focalY": 50
+          "focalY": 50,
+          "tagName": "p"
         },
         {
           "x": 101,
@@ -1461,17 +1851,20 @@
           "id": "c935d5f6-ca44-4263-b130-06b16f0876e5",
           "basedOn": "2a0e6c2d-2b10-4b9d-9efe-5bf60e3e3d3d",
           "opacity": 60,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Trykker",
-            "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [400],
             "styles": ["regular"],
             "variants": [[0, 400]],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 2048,
               "asc": 2022,
@@ -1491,10 +1884,20 @@
             }
           },
           "fontSize": 18,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.4,
           "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "type": "text",
           "content": "<span style=\"color: #fff0d8\">To ensure a good lift and a beautiful outer crust, you’ll want to start with fresh yeast and baking powder/soda</span>",
           "fontWeight": 400,
@@ -1513,7 +1916,13 @@
         }
       ],
       "backgroundOverlay": "none",
-      "backgroundColor": { "color": { "r": 45, "g": 42, "b": 53 } },
+      "backgroundColor": {
+        "color": {
+          "r": 45,
+          "g": 42,
+          "b": 53
+        }
+      },
       "type": "page",
       "id": "dbcb59d0-1ecf-403b-8eef-5d9f0d595a3c",
       "animations": [],
@@ -1523,14 +1932,19 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "isDefaultBackground": true,
           "type": "shape",
@@ -1538,17 +1952,28 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "type": "image",
           "width": 430,
           "height": 452,
           "scale": 143,
           "focalX": 62.153903387331034,
           "focalY": 68.67475141397557,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "basedOn": "d40aed6a-b833-4f82-93c6-b65d2e2fc0f1",
           "id": "fc207625-f197-4ddb-980c-7b8cd535de9e",
           "x": -9,
@@ -1565,22 +1990,34 @@
             "alt": "page06_image1",
             "isOptimized": false,
             "isExternal": true,
-            "baseColor": "#6e5f4f"
+            "baseColor": "#6e5f4f",
+            "sizes": []
           }
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
           "type": "shape",
           "width": 45,
           "height": 42,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "triangle" },
+          "mask": {
+            "type": "triangle"
+          },
           "basedOn": "53be6e2a-5359-4321-a0e3-db39db99126b",
           "id": "310a1d2d-9c15-4180-bab9-e82b5a68a71f",
           "x": 38,
@@ -1588,17 +2025,20 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Trykker",
-            "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [400],
             "styles": ["regular"],
             "variants": [[0, 400]],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 2048,
               "asc": 2022,
@@ -1618,10 +2058,20 @@
             }
           },
           "fontSize": 24,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.4,
           "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "type": "text",
           "content": "<span style=\"color: #2d2a35\">Storage: Dry is nice</span>",
           "fontWeight": 400,
@@ -1639,22 +2089,25 @@
           "focalY": 50,
           "basedOn": "71459ccb-fea5-45bd-b97f-d3305bbd1f06",
           "id": "7f8d3dad-7463-4d82-9246-75dbce5a4670",
-          "x": 101,
+          "x": 102,
           "y": 435
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Trykker",
-            "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [400],
             "styles": ["regular"],
             "variants": [[0, 400]],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 2048,
               "asc": 2022,
@@ -1674,10 +2127,20 @@
             }
           },
           "fontSize": 24,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.4,
           "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "type": "text",
           "content": "<span style=\"color: #2d2a35\">02</span>",
           "fontWeight": 400,
@@ -1696,21 +2159,25 @@
           "basedOn": "2446c1cd-46e9-4392-bada-6b17973d3f4d",
           "id": "4ad093bc-7a41-4ba5-8d92-c5257c1e9d4b",
           "x": 48,
-          "y": 435
+          "y": 435,
+          "tagName": "p"
         },
         {
           "opacity": 60,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Trykker",
-            "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [400],
             "styles": ["regular"],
             "variants": [[0, 400]],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 2048,
               "asc": 2022,
@@ -1730,10 +2197,20 @@
             }
           },
           "fontSize": 18,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.4,
           "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "type": "text",
           "content": "Always store your baking ingredients in a dry place at room temperature. Never refrigerate.",
           "fontWeight": 400,
@@ -1756,21 +2233,38 @@
         }
       ],
       "backgroundOverlay": "none",
-      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 255,
+          "b": 255
+        }
+      },
       "type": "page",
       "id": "09e3254f-73d9-4e45-a888-510d39a554c0",
       "animations": [],
       "defaultBackgroundElement": {
         "opacity": 100,
-        "flip": { "vertical": false, "horizontal": false },
+        "flip": {
+          "vertical": false,
+          "horizontal": false
+        },
         "rotationAngle": 0,
         "lockAspectRatio": true,
-        "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+        "backgroundColor": {
+          "color": {
+            "r": 255,
+            "g": 255,
+            "b": 255
+          }
+        },
         "x": 1,
         "y": 1,
         "width": 1,
         "height": 1,
-        "mask": { "type": "rectangle" },
+        "mask": {
+          "type": "rectangle"
+        },
         "isBackground": true,
         "isDefaultBackground": true,
         "type": "shape",
@@ -1782,14 +2276,19 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "isDefaultBackground": true,
           "id": "96332d53-9ec9-45ff-95c6-63fa71ce3069",
@@ -1797,16 +2296,27 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "width": 412,
           "height": 452,
           "scale": 150,
           "focalX": 51.32275132275132,
           "focalY": 57.76014109347444,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "basedOn": "cb08239a-51c6-48f6-a516-aea526bbb0e1",
           "id": "d89a2156-a2b1-4dc8-9d65-41d4e8bb409e",
           "x": 0,
@@ -1824,21 +2334,33 @@
             "alt": "page07_image1",
             "isOptimized": false,
             "isExternal": true,
-            "baseColor": "#a09ea6"
+            "baseColor": "#a09ea6",
+            "sizes": []
           }
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 45, "g": 42, "b": 53 } },
+          "backgroundColor": {
+            "color": {
+              "r": 45,
+              "g": 42,
+              "b": 53
+            }
+          },
           "width": 48,
           "height": 46,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "triangle" },
+          "mask": {
+            "type": "triangle"
+          },
           "basedOn": "0e87fa78-9538-4fb6-beb2-5237d820da3d",
           "id": "c596ffca-5b22-4df1-8b7e-3e2a5592659f",
           "x": 37,
@@ -1847,17 +2369,20 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Trykker",
-            "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [400],
             "styles": ["regular"],
             "variants": [[0, 400]],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 2048,
               "asc": 2022,
@@ -1877,10 +2402,20 @@
             }
           },
           "fontSize": 24,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.4,
           "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "content": "<span style=\"color: #fff\">Use the Right Flour</span>",
           "fontWeight": 400,
           "borderRadius": {
@@ -1903,17 +2438,20 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Trykker",
-            "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [400],
             "styles": ["regular"],
             "variants": [[0, 400]],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 2048,
               "asc": 2022,
@@ -1933,10 +2471,20 @@
             }
           },
           "fontSize": 24,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.4,
           "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "x": 48,
           "y": 435,
           "id": "1f4f5e00-54e2-4ce0-99ca-d1c6989a0362",
@@ -1955,21 +2503,25 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "type": "text"
+          "type": "text",
+          "tagName": "p"
         },
         {
           "opacity": 60,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Trykker",
-            "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [400],
             "styles": ["regular"],
             "variants": [[0, 400]],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 2048,
               "asc": 2022,
@@ -1989,10 +2541,20 @@
             }
           },
           "fontSize": 18,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.4,
           "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "x": 101,
           "y": 488,
           "id": "d8acea82-3fe0-403e-b330-aa5946dcb61a",
@@ -2016,7 +2578,13 @@
       ],
       "backgroundOverlay": "none",
       "animations": [],
-      "backgroundColor": { "color": { "r": 45, "g": 42, "b": 53 } },
+      "backgroundColor": {
+        "color": {
+          "r": 45,
+          "g": 42,
+          "b": 53
+        }
+      },
       "type": "page",
       "id": "2a131a9b-cf36-4961-86a9-9ccc8a7a6f64",
       "pageAttachment": {
@@ -2030,14 +2598,19 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "isDefaultBackground": true,
           "id": "02869b8a-bc1c-40c7-b0ce-f0f649f51b32",
@@ -2045,16 +2618,27 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "width": 412,
           "height": 452,
           "scale": 107,
           "focalX": 47.120837613107994,
           "focalY": 50.47567366063136,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "basedOn": "d40aed6a-b833-4f82-93c6-b65d2e2fc0f1",
           "id": "a72425c1-32f5-459f-ad35-fb94eb7fe514",
           "x": 0,
@@ -2072,21 +2656,33 @@
             "alt": "page08_image1",
             "isOptimized": false,
             "baseColor": "#ebe7dd",
-            "isExternal": true
+            "isExternal": true,
+            "sizes": []
           }
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
           "width": 52,
           "height": 46,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "triangle" },
+          "mask": {
+            "type": "triangle"
+          },
           "basedOn": "53be6e2a-5359-4321-a0e3-db39db99126b",
           "id": "d33cf65c-dac1-4f38-9a13-2402573e6010",
           "x": 37,
@@ -2095,17 +2691,20 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Trykker",
-            "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [400],
             "styles": ["regular"],
             "variants": [[0, 400]],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 2048,
               "asc": 2022,
@@ -2125,10 +2724,20 @@
             }
           },
           "fontSize": 24,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.4,
           "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "content": "<span style=\"color: #2d2a35\">Temperature and Yeast</span>",
           "fontWeight": 400,
           "borderRadius": {
@@ -2151,17 +2760,20 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Trykker",
-            "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [400],
             "styles": ["regular"],
             "variants": [[0, 400]],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 2048,
               "asc": 2022,
@@ -2181,10 +2793,20 @@
             }
           },
           "fontSize": 24,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.4,
           "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "content": "<span style=\"color: #2d2a35\">04</span>",
           "fontWeight": 400,
           "borderRadius": {
@@ -2203,21 +2825,25 @@
           "id": "33a33767-1230-485c-93eb-99d36f94bc1c",
           "x": 48,
           "y": 435,
-          "type": "text"
+          "type": "text",
+          "tagName": "p"
         },
         {
           "opacity": 60,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Trykker",
-            "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [400],
             "styles": ["regular"],
             "variants": [[0, 400]],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 2048,
               "asc": 2022,
@@ -2237,10 +2863,20 @@
             }
           },
           "fontSize": 18,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.4,
           "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "content": "Make sure your liquid is between 95 degrees F and 115 degrees F when adding to yeast.",
           "fontWeight": 400,
           "borderRadius": {
@@ -2264,20 +2900,37 @@
       ],
       "backgroundOverlay": "none",
       "animations": [],
-      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 255,
+          "b": 255
+        }
+      },
       "type": "page",
       "id": "eea9d5d5-8b17-4943-a1c6-3a56f040eccd",
       "defaultBackgroundElement": {
         "opacity": 100,
-        "flip": { "vertical": false, "horizontal": false },
+        "flip": {
+          "vertical": false,
+          "horizontal": false
+        },
         "rotationAngle": 0,
         "lockAspectRatio": true,
-        "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+        "backgroundColor": {
+          "color": {
+            "r": 255,
+            "g": 255,
+            "b": 255
+          }
+        },
         "x": 1,
         "y": 1,
         "width": 1,
         "height": 1,
-        "mask": { "type": "rectangle" },
+        "mask": {
+          "type": "rectangle"
+        },
         "isBackground": true,
         "isDefaultBackground": true,
         "id": "02869b8a-bc1c-40c7-b0ce-f0f649f51b32",
@@ -2289,14 +2942,19 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "isDefaultBackground": true,
           "id": "56455d14-495c-408c-8e13-1a53975e7e48",
@@ -2304,16 +2962,27 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "width": 412,
           "height": 452,
           "scale": 115,
           "focalX": 51.048429287851604,
           "focalY": 49.37094242728904,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "basedOn": "cb08239a-51c6-48f6-a516-aea526bbb0e1",
           "id": "2fbb2f16-e99e-4d0e-a7ae-be892480d711",
           "x": 0,
@@ -2331,21 +3000,33 @@
             "alt": "page09_image1",
             "isOptimized": false,
             "baseColor": "#cec5bf",
-            "isExternal": true
+            "isExternal": true,
+            "sizes": []
           }
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 45, "g": 42, "b": 53 } },
+          "backgroundColor": {
+            "color": {
+              "r": 45,
+              "g": 42,
+              "b": 53
+            }
+          },
           "width": 48,
           "height": 46,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "triangle" },
+          "mask": {
+            "type": "triangle"
+          },
           "type": "shape",
           "basedOn": "c596ffca-5b22-4df1-8b7e-3e2a5592659f",
           "id": "975f6314-92ae-40d8-a317-b875ba97f8ae",
@@ -2354,17 +3035,20 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Trykker",
-            "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [400],
             "styles": ["regular"],
             "variants": [[0, 400]],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 2048,
               "asc": 2022,
@@ -2384,10 +3068,20 @@
             }
           },
           "fontSize": 24,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.4,
           "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "content": "<span style=\"color: #fff\">To knead or not to knead</span>",
           "fontWeight": 400,
           "borderRadius": {
@@ -2410,17 +3104,20 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Trykker",
-            "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [400],
             "styles": ["regular"],
             "variants": [[0, 400]],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 2048,
               "asc": 2022,
@@ -2440,10 +3137,20 @@
             }
           },
           "fontSize": 24,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.4,
           "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "x": 48,
           "y": 435,
           "id": "be956d2e-177b-4263-bdf4-0662cbb725e0",
@@ -2462,21 +3169,25 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "type": "text"
+          "type": "text",
+          "tagName": "p"
         },
         {
           "opacity": 60,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Trykker",
-            "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [400],
             "styles": ["regular"],
             "variants": [[0, 400]],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 2048,
               "asc": 2022,
@@ -2496,10 +3207,20 @@
             }
           },
           "fontSize": 18,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.4,
           "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "x": 101,
           "y": 518,
           "id": "2d86e11c-8491-4f94-9e09-e90bce600859",
@@ -2523,7 +3244,13 @@
       ],
       "backgroundOverlay": "none",
       "animations": [],
-      "backgroundColor": { "color": { "r": 45, "g": 42, "b": 53 } },
+      "backgroundColor": {
+        "color": {
+          "r": 45,
+          "g": 42,
+          "b": 53
+        }
+      },
       "type": "page",
       "id": "e9734daf-b847-40d4-8821-2a8b944381bf",
       "pageTemplateType": ""
@@ -2532,14 +3259,19 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "isDefaultBackground": true,
           "id": "2e9270bd-9e9e-42de-995f-c1a11c408431",
@@ -2547,16 +3279,27 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "width": 412,
           "height": 452,
           "scale": 113,
           "focalX": 48.826315885723645,
           "focalY": 45.84826594826905,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "basedOn": "d40aed6a-b833-4f82-93c6-b65d2e2fc0f1",
           "id": "bef5e047-e2bb-4798-bdfd-4de3282c2b39",
           "x": 0,
@@ -2574,21 +3317,33 @@
             "alt": "page10_image1",
             "isOptimized": false,
             "isExternal": true,
-            "baseColor": "#c4c5c2"
+            "baseColor": "#c4c5c2",
+            "sizes": []
           }
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
           "width": 52,
           "height": 46,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "triangle" },
+          "mask": {
+            "type": "triangle"
+          },
           "type": "shape",
           "basedOn": "d33cf65c-dac1-4f38-9a13-2402573e6010",
           "id": "f55181ef-456d-4620-bac0-bea368f6d159",
@@ -2597,17 +3352,20 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Trykker",
-            "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [400],
             "styles": ["regular"],
             "variants": [[0, 400]],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 2048,
               "asc": 2022,
@@ -2627,10 +3385,20 @@
             }
           },
           "fontSize": 24,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.4,
           "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "content": "<span style=\"color: #2d2a35\">Prescribed rising times</span>",
           "fontWeight": 400,
           "borderRadius": {
@@ -2653,17 +3421,20 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Trykker",
-            "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [400],
             "styles": ["regular"],
             "variants": [[0, 400]],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 2048,
               "asc": 2022,
@@ -2683,10 +3454,20 @@
             }
           },
           "fontSize": 24,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.4,
           "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "content": "<span style=\"color: #2d2a35\">06</span>",
           "fontWeight": 400,
           "borderRadius": {
@@ -2705,21 +3486,25 @@
           "id": "7479e9b3-a69d-49e4-a561-3998150c81aa",
           "x": 48,
           "y": 435,
-          "type": "text"
+          "type": "text",
+          "tagName": "p"
         },
         {
           "opacity": 60,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Trykker",
-            "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [400],
             "styles": ["regular"],
             "variants": [[0, 400]],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 2048,
               "asc": 2022,
@@ -2739,10 +3524,20 @@
             }
           },
           "fontSize": 18,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.4,
           "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "content": "Follow the prescribed rising time. Use a timer. Too long and you might have a sour-tasting loaf or a dry bread with abundance of holes!",
           "fontWeight": 400,
           "borderRadius": {
@@ -2766,20 +3561,37 @@
       ],
       "backgroundOverlay": "none",
       "animations": [],
-      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 255,
+          "b": 255
+        }
+      },
       "type": "page",
       "id": "c8b945df-3d70-47c6-9fec-66d98cea42ac",
       "defaultBackgroundElement": {
         "opacity": 100,
-        "flip": { "vertical": false, "horizontal": false },
+        "flip": {
+          "vertical": false,
+          "horizontal": false
+        },
         "rotationAngle": 0,
         "lockAspectRatio": true,
-        "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+        "backgroundColor": {
+          "color": {
+            "r": 255,
+            "g": 255,
+            "b": 255
+          }
+        },
         "x": 1,
         "y": 1,
         "width": 1,
         "height": 1,
-        "mask": { "type": "rectangle" },
+        "mask": {
+          "type": "rectangle"
+        },
         "isBackground": true,
         "isDefaultBackground": true,
         "id": "2e9270bd-9e9e-42de-995f-c1a11c408431",
@@ -2791,14 +3603,19 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "isDefaultBackground": true,
           "type": "shape",
@@ -2806,17 +3623,28 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 45, "g": 42, "b": 53 } },
+          "backgroundColor": {
+            "color": {
+              "r": 45,
+              "g": 42,
+              "b": 53
+            }
+          },
           "type": "shape",
           "width": 412,
           "height": 191,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "basedOn": "d40aed6a-b833-4f82-93c6-b65d2e2fc0f1",
           "id": "b694f1a5-c447-4572-be03-0abfcd19ae0e",
           "x": 0,
@@ -2825,17 +3653,28 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 45, "g": 42, "b": 53 } },
+          "backgroundColor": {
+            "color": {
+              "r": 45,
+              "g": 42,
+              "b": 53
+            }
+          },
           "type": "shape",
           "width": 26,
           "height": 24,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "triangle" },
+          "mask": {
+            "type": "triangle"
+          },
           "basedOn": "53be6e2a-5359-4321-a0e3-db39db99126b",
           "id": "f2bd63d3-1e19-4863-8743-a52d68cf0ead",
           "x": 65,
@@ -2844,7 +3683,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "type": "sticker",
@@ -2855,23 +3697,28 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": { "type": "breadBun" },
+          "sticker": {
+            "type": "breadBun"
+          },
           "id": "4f62eec7-72aa-4c6e-b414-192925454393",
           "groupId": "9d04824c-f1cb-439a-a908-4b6c69a6afca"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Trykker",
-            "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [400],
             "styles": ["regular"],
             "variants": [[0, 400]],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 2048,
               "asc": 2022,
@@ -2891,10 +3738,20 @@
             }
           },
           "fontSize": 31,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.28,
           "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "type": "text",
           "content": "<span style=\"color: #2d2a35; letter-spacing: 0.02em\">Beginner Bread Recipe</span>",
           "fontWeight": 400,
@@ -2922,17 +3779,20 @@
           "id": "835c0875-e0c3-42aa-b2ca-a157c263498e",
           "basedOn": "7f8d3dad-7463-4d82-9246-75dbce5a4670",
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Trykker",
-            "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [400],
             "styles": ["regular"],
             "variants": [[0, 400]],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 2048,
               "asc": 2022,
@@ -2952,10 +3812,20 @@
             }
           },
           "fontSize": 18,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.28,
           "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "type": "text",
           "content": "<span style=\"color: #2d2a35\">Sour French Baguette</span>",
           "fontWeight": 400,
@@ -2972,7 +3842,8 @@
           "focalX": 50,
           "focalY": 50,
           "marginOffset": 0.06000000000000005,
-          "groupId": "a28e72c2-599f-4fbd-b06a-48ed6b3b8481"
+          "groupId": "a28e72c2-599f-4fbd-b06a-48ed6b3b8481",
+          "tagName": "h3"
         },
         {
           "x": 66,
@@ -2980,17 +3851,20 @@
           "id": "8b105649-9015-4c21-90b2-9242f0dda07e",
           "basedOn": "7f8d3dad-7463-4d82-9246-75dbce5a4670",
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Trykker",
-            "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [400],
             "styles": ["regular"],
             "variants": [[0, 400]],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 2048,
               "asc": 2022,
@@ -3010,10 +3884,20 @@
             }
           },
           "fontSize": 18,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.28,
           "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "type": "text",
           "content": "<span style=\"color: #2d2a35\">White Homemade Bread</span>",
           "fontWeight": 400,
@@ -3030,14 +3914,24 @@
           "focalX": 50,
           "focalY": 50,
           "marginOffset": 0.06000000000000005,
-          "groupId": "689d34df-a852-421d-a8b0-eb0fbf057331"
+          "groupId": "689d34df-a852-421d-a8b0-eb0fbf057331",
+          "tagName": "h3"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "type": "image",
           "x": 195,
           "y": 161,
@@ -3046,7 +3940,9 @@
           "scale": 147,
           "focalX": 58.723066344144655,
           "focalY": 50,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "id": "95df0e77-bdab-4709-a33e-b43f1cc44349",
           "resource": {
             "type": "image",
@@ -3060,7 +3956,8 @@
             "alt": "page13_image1",
             "isOptimized": false,
             "baseColor": "#694c3d",
-            "isExternal": true
+            "isExternal": true,
+            "sizes": []
           },
           "groupId": "a28e72c2-599f-4fbd-b06a-48ed6b3b8481"
         },
@@ -3070,17 +3967,28 @@
           "id": "3838e975-9f05-4195-9202-c9c3a2a11871",
           "basedOn": "95df0e77-bdab-4709-a33e-b43f1cc44349",
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "type": "image",
           "width": 153,
           "height": 96,
           "scale": 149,
           "focalX": 49.28283514955857,
           "focalY": 49.043780199411444,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "resource": {
             "type": "image",
             "mimeType": "image/png",
@@ -3093,23 +4001,27 @@
             "alt": "page11_image2",
             "isOptimized": false,
             "baseColor": "#998d78",
-            "isExternal": true
+            "isExternal": true,
+            "sizes": []
           },
           "groupId": "689d34df-a852-421d-a8b0-eb0fbf057331"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Trykker",
-            "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [400],
             "styles": ["regular"],
             "variants": [[0, 400]],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 2048,
               "asc": 2022,
@@ -3129,10 +4041,20 @@
             }
           },
           "fontSize": 24,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.4,
           "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "content": "<span style=\"color: #fff\">Emma Ray Keys</span>",
           "fontWeight": 400,
           "borderRadius": {
@@ -3156,17 +4078,20 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "HIGHLIGHT",
           "font": {
             "family": "Trykker",
-            "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [400],
             "styles": ["regular"],
             "variants": [[0, 400]],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 2048,
               "asc": 2022,
@@ -3187,7 +4112,12 @@
           },
           "fontSize": 17,
           "backgroundColor": {
-            "color": { "r": 196, "g": 196, "b": 196, "a": 0 }
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196,
+              "a": 0
+            }
           },
           "lineHeight": 1.4,
           "textAlign": "left",
@@ -3226,10 +4156,19 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "type": "image",
           "x": 265,
           "y": 541,
@@ -3238,7 +4177,9 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "id": "9521ce09-9a52-404b-9b80-3471a0cf5561",
           "borderRadius": {
             "topLeft": 44,
@@ -3253,7 +4194,13 @@
             "top": 4,
             "bottom": 4,
             "lockedWidth": true,
-            "color": { "color": { "r": 100, "g": 100, "b": 100 } }
+            "color": {
+              "color": {
+                "r": 100,
+                "g": 100,
+                "b": 100
+              }
+            }
           },
           "resource": {
             "type": "image",
@@ -3274,7 +4221,13 @@
         }
       ],
       "backgroundOverlay": "none",
-      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 255,
+          "b": 255
+        }
+      },
       "type": "page",
       "id": "5e448bcd-223a-42af-bb53-b2b676948f32",
       "animations": [
@@ -3328,15 +4281,26 @@
       ],
       "defaultBackgroundElement": {
         "opacity": 100,
-        "flip": { "vertical": false, "horizontal": false },
+        "flip": {
+          "vertical": false,
+          "horizontal": false
+        },
         "rotationAngle": 0,
         "lockAspectRatio": true,
-        "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+        "backgroundColor": {
+          "color": {
+            "r": 255,
+            "g": 255,
+            "b": 255
+          }
+        },
         "x": 1,
         "y": 1,
         "width": 1,
         "height": 1,
-        "mask": { "type": "rectangle" },
+        "mask": {
+          "type": "rectangle"
+        },
         "isBackground": true,
         "isDefaultBackground": true,
         "type": "shape",
@@ -3371,8 +4335,5 @@
         }
       }
     }
-  ],
-  "current": null,
-  "selection": [],
-  "story": {}
+  ]
 }
