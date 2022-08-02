@@ -111,19 +111,13 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 
 = 1.23.2 =
 
-**Release Date:** July 28, 2022.
-
 * Fixes another issue related to story poster images.
 
 = 1.23.1 =
 
-**Release Date:** July 25, 2022.
-
 * Fixes an issue with story poster images not saving correctly.
 
 = 1.23.0 =
-
-**Release Date:** July 20, 2022.
 
 * New feature: record videos, GIFs, still pictures, and background audio directly within the editor.
 * New feature: added support for hotlinking story posters, video posters, and link icons.
