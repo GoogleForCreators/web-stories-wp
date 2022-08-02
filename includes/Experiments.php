@@ -371,6 +371,7 @@ class Experiments extends Service_Base implements HasRequirements {
 				'label'       => __( 'Context Pages', 'web-stories' ),
 				'description' => __( 'Show extra pages for context before and after the current canvas page. Note: This might come with a performance penalty.', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 			/**
 			 * Author: @barklund
