@@ -2302,10 +2302,10 @@
           "fontWeight": 700,
           "borderRadius": {
             "locked": true,
-            "topLeft": 2,
-            "topRight": 2,
-            "bottomRight": 2,
-            "bottomLeft": 2
+            "topLeft": 0,
+            "topRight": 0,
+            "bottomRight": 0,
+            "bottomLeft": 0
           },
           "width": 315,
           "height": 157,
@@ -2830,10 +2830,10 @@
           "fontWeight": 700,
           "borderRadius": {
             "locked": true,
-            "topLeft": 2,
-            "topRight": 2,
-            "bottomRight": 2,
-            "bottomLeft": 2
+            "topLeft": 0,
+            "topRight": 0,
+            "bottomRight": 0,
+            "bottomLeft": 0
           },
           "width": 315,
           "height": 113,
@@ -3349,10 +3349,10 @@
           "fontWeight": 700,
           "borderRadius": {
             "locked": true,
-            "topLeft": 2,
-            "topRight": 2,
-            "bottomRight": 2,
-            "bottomLeft": 2
+            "topLeft": 0,
+            "topRight": 0,
+            "bottomRight": 0,
+            "bottomLeft": 0
           },
           "width": 317,
           "height": 110,
@@ -3875,10 +3875,10 @@
           "fontWeight": 700,
           "borderRadius": {
             "locked": true,
-            "topLeft": 2,
-            "topRight": 2,
-            "bottomRight": 2,
-            "bottomLeft": 2
+            "topLeft": 0,
+            "topRight": 0,
+            "bottomRight": 0,
+            "bottomLeft": 0
           },
           "width": 316,
           "height": 132,
@@ -4399,10 +4399,10 @@
           "fontWeight": 700,
           "borderRadius": {
             "locked": true,
-            "topLeft": 2,
-            "topRight": 2,
-            "bottomRight": 2,
-            "bottomLeft": 2
+            "topLeft": 0,
+            "topRight": 0,
+            "bottomRight": 0,
+            "bottomLeft": 0
           },
           "width": 316,
           "height": 114,
@@ -4930,10 +4930,10 @@
           "fontWeight": 700,
           "borderRadius": {
             "locked": true,
-            "topLeft": 2,
-            "topRight": 2,
-            "bottomRight": 2,
-            "bottomLeft": 2
+            "topLeft": 0,
+            "topRight": 0,
+            "bottomRight": 0,
+            "bottomLeft": 0
           },
           "width": 314,
           "height": 114,
@@ -5266,10 +5266,10 @@
           "fontWeight": 700,
           "borderRadius": {
             "locked": true,
-            "topLeft": 2,
-            "topRight": 2,
-            "bottomRight": 2,
-            "bottomLeft": 2
+            "topLeft": 0,
+            "topRight": 0,
+            "bottomRight": 0,
+            "bottomLeft": 0
           },
           "width": 315,
           "height": 117,
