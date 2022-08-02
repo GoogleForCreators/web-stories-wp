@@ -5259,7 +5259,7 @@
           "padding": {
             "locked": false,
             "hasHiddenPadding": true,
-            "horizontal": 26,
+            "horizontal": 22,
             "vertical": 14
           },
           "content": "<span style=\"color: #160236\">The unique experiences in Barcelona belong to this city only, begging you to return here over and over again.</span>",
@@ -5271,15 +5271,15 @@
             "bottomRight": 2,
             "bottomLeft": 2
           },
-          "width": 314,
-          "height": 116,
+          "width": 315,
+          "height": 117,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "60ed9ffe-24ef-488c-bd94-a96a4e88da3e",
           "id": "fccd7415-af38-4f6b-b9b6-380a20f6e8b7",
           "x": 48,
-          "y": 501,
+          "y": 500,
           "marginOffset": -0.03399999999999892,
           "type": "text"
         }
