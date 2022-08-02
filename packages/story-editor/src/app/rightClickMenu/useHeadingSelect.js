@@ -54,28 +54,31 @@ function useHeadingSelect({ menuItemProps, isMenuOpen }) {
       return [];
     }
 
+    const selectedElement = selectedElements[0];
+
     const headingLevels = [
-      { tagName: 'h1', label: __('Heading 1', 'web-stories') },
-      { tagName: 'h2', label: __('Heading 2', 'web-stories') },
-      { tagName: 'h3', label: __('Heading 3', 'web-stories') },
-      { tagName: 'p', label: __('Paragraph', 'web-stories') },
+      { value: 'auto', label: __('Automatic', 'web-stories') },
+      { value: 'h1', label: __('Heading 1', 'web-stories') },
+      { value: 'h2', label: __('Heading 2', 'web-stories') },
+      { value: 'h3', label: __('Heading 3', 'web-stories') },
+      { value: 'p', label: __('Paragraph', 'web-stories') },
     ];
 
     return headingLevels.map((element) => {
-      const { tagName } = element;
+      const { value } = element;
+      const tagName = selectedElement.tagName
+        ? selectedElement.tagName
+        : 'auto';
       return {
-        key: tagName,
+        key: value,
         supportsIcon: true,
-        icon:
-          selectedElements[0].tagName === tagName ? (
-            <Icons.CheckmarkSmall />
-          ) : null,
+        icon: tagName === value ? <Icons.CheckmarkSmall /> : null,
         label: <span>{element.label}</span>,
         onClick: () => {
           updateSelectedElements({
             properties: (oldElement) => ({
               ...oldElement,
-              tagName: tagName,
+              tagName: value,
             }),
           });
         },
