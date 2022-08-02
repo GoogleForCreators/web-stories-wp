@@ -114,8 +114,7 @@ describe('taxonomy', () => {
     // created in the background via the REST API already.
   });
 
-  // eslint-disable-next-line jest/no-disabled-tests -- TODO(#12026): Fix flakey test.
-  describe.skip('Administrator', () => {
+  describe('Administrator', () => {
     it('should be able to add new categories', async () => {
       await createNewStory();
       await insertStoryTitle('Taxonomies - Categories - Admin');
