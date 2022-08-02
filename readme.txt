@@ -138,7 +138,3 @@ This release fixes an issue with story poster images not saving correctly.
 = 1.23.0 =
 
 This release introduces webcam recording, more hotlinking capabilities, and a UI to change heading levels in the editor.
-
-= 1.22.1 =
-
-This release fixes an issue with inserting external media by URL.
