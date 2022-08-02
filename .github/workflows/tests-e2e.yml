@@ -136,7 +136,7 @@ jobs:
       matrix:
         # TODO: add back Firefox once support is more mature.
         browser: ['chrome']
-        wp: ['5.7']
+        wp: ['5.7.1']
         snapshots: [false]
         # We want to split up the tests into 4 parts running in parallel.
         shard: ['1/4', '2/4', '3/4', '4/4']
