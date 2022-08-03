@@ -24,7 +24,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { ReorderableSeparator, ReorderableItem } from '../../../reorderable';
+import { ReorderableSeparator, ReorderableItem } from '../../reorderable';
 import { LAYER_HEIGHT } from './constants';
 import Group from './group';
 
