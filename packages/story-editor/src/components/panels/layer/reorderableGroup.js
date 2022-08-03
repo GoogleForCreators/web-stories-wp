@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { Fragment, memo } from '@googleforcreators/react';
+import { memo } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 
 /**
@@ -35,28 +35,28 @@ const LayerSeparator = styled(ReorderableSeparator)`
 `;
 
 const ReorderableGroup = memo(function ReorderableGroup({
-  groupId,
+  id,
   position,
   handleStartReordering,
 }) {
   // This is counterintuitive but the top separator is outside of the group header.
   const separatorGroupId = null;
   return (
-    <Fragment key={groupId}>
+    <>
       <LayerSeparator groupId={separatorGroupId} position={position + 1} />
       <ReorderableItem
         position={position}
-        data={{ group: groupId }}
-        onStartReordering={handleStartReordering({ id: groupId })}
+        data={{ group: id }}
+        onStartReordering={handleStartReordering({ id })}
       >
-        <Group groupId={groupId} />
+        <Group groupId={id} />
       </ReorderableItem>
-    </Fragment>
+    </>
   );
 });
 
 ReorderableGroup.propTypes = {
-  groupId: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   position: PropTypes.number.isRequired,
   handleStartReordering: PropTypes.func.isRequired,

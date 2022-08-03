@@ -16,3 +16,5 @@
 
 export const LAYER_HEIGHT = 35;
 export const NESTED_PX = 30;
+
+export const nestedOffsetCalcFunc = (evt) => evt.offsetY < LAYER_HEIGHT / 1.7;
