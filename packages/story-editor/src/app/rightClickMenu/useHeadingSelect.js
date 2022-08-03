@@ -17,9 +17,10 @@
  * External dependencies
  */
 import { useEffect, useMemo, useState } from '@googleforcreators/react';
-import { __ } from '@googleforcreators/i18n';
+import { __, sprintf } from '@googleforcreators/i18n';
 import { Icons } from '@googleforcreators/design-system';
 import styled from 'styled-components';
+import { getTextElementTagNames } from '@googleforcreators/output';
 
 /**
  * Internal dependencies
@@ -54,17 +55,36 @@ function useHeadingSelect({ menuItemProps, isMenuOpen }) {
       return [];
     }
 
-    const selectedElement = selectedElements[0];
+    const HEADING_LEVELS = {
+      h1: __('Heading 1', 'web-stories'),
+      h2: __('Heading 2', 'web-stories'),
+      h3: __('Heading 3', 'web-stories'),
+      p: __('Paragraph', 'web-stories'),
+    };
 
-    const headingLevels = [
-      { value: 'auto', label: __('Automatic', 'web-stories') },
-      { value: 'h1', label: __('Heading 1', 'web-stories') },
-      { value: 'h2', label: __('Heading 2', 'web-stories') },
-      { value: 'h3', label: __('Heading 3', 'web-stories') },
-      { value: 'p', label: __('Paragraph', 'web-stories') },
+    const selectedElement = selectedElements[0];
+    const currentTagName = getTextElementTagNames([selectedElement]).get(
+      selectedElement.id
+    );
+    const options = [
+      {
+        value: 'auto',
+        label:
+          'auto' === selectedElement.tagName
+            ? sprintf(
+                /* translators: %s: heading level. */
+                __('Automatic (%s)', 'web-stories'),
+                HEADING_LEVELS[currentTagName]
+              )
+            : __('Automatic', 'web-stories'),
+      },
+      { value: 'h1', label: HEADING_LEVELS.h1 },
+      { value: 'h2', label: HEADING_LEVELS.h2 },
+      { value: 'h3', label: HEADING_LEVELS.h3 },
+      { value: 'p', label: HEADING_LEVELS.p },
     ];
 
-    return headingLevels.map((element) => {
+    return options.map((element) => {
       const { value } = element;
       const tagName = selectedElement.tagName
         ? selectedElement.tagName
