@@ -14,84 +14,30 @@
  * limitations under the License.
  */
 
-/* eslint-disable jsx-a11y/media-has-caption -- Not required for recording */
-
-/**
- * External dependencies
- */
-import { __ } from '@googleforcreators/i18n';
-import { useCallback, useRef } from '@googleforcreators/react';
-
 /**
  * Internal dependencies
  */
-import useVideoTrim from '../videoTrim/useVideoTrim';
 import useMediaRecording from './useMediaRecording';
 import Countdown from './countdown';
-import VideoMode from './videoMode';
 import ProgressBar from './progressBar';
-import PlayPauseButton from './playPauseButton';
+import PlaybackMedia from './playbackMedia';
 import ErrorDialog from './errorDialog';
 import PermissionsDialog from './permissionsDialog';
-import { Wrapper, VideoWrapper, Video, Photo } from './components';
-import Audio from './audio';
+import ProcessingOverlay from './processingOverlay';
+import { Wrapper } from './components';
 
 function MediaRecording() {
-  const {
-    status,
-    error,
-    mediaBlob,
-    mediaBlobUrl,
-    originalMediaBlobUrl,
-    liveStream,
-    hasVideo,
-    hasAudio,
-    isGif,
-    isImageCapture,
-    needsPermissions,
-    isTrimming,
-    toggleIsGif,
-    setStreamNode,
-  } = useMediaRecording(({ state, actions }) => ({
-    status: state.status,
-    error: state.error,
-    mediaBlob: state.mediaBlob,
-    mediaBlobUrl: state.mediaBlobUrl,
-    originalMediaBlobUrl: state.originalMediaBlobUrl,
-    liveStream: state.liveStream,
-    hasVideo: state.hasVideo,
-    hasAudio: state.hasAudio,
-    isGif: state.isGif,
-    isImageCapture: Boolean(state.file?.type?.startsWith('image')),
-    needsPermissions:
-      ('idle' === state.status || 'acquiring_media' === state.status) &&
-      !state.videoInput,
-    isTrimming: state.isTrimming,
-    toggleIsGif: actions.toggleIsGif,
-    setStreamNode: actions.setStreamNode,
-  }));
-  const setVideoNode = useVideoTrim(
-    ({ actions: { setVideoNode } }) => setVideoNode
-  );
+  const { status, error, needsPermissions, isProcessingTrim } =
+    useMediaRecording(({ state }) => ({
+      status: state.status,
+      error: state.error,
+      needsPermissions:
+        ('idle' === state.status || 'acquiring_media' === state.status) &&
+        !state.videoInput,
+      isProcessingTrim: state.isProcessingTrim,
+    }));
 
   const isFailed = 'failed' === status || Boolean(error);
-  const isMuted = !hasAudio || isGif;
-
-  const onToggleVideoMode = useCallback(() => {
-    toggleIsGif();
-    if (videoRef.current) {
-      videoRef.current.play().catch(() => {});
-    }
-  }, [toggleIsGif]);
-
-  const videoRef = useRef();
-  const updateVideoNode = useCallback(
-    (node) => {
-      setVideoNode(node);
-      videoRef.current = node;
-    },
-    [setVideoNode]
-  );
 
   if (isFailed) {
     return <ErrorDialog />;
@@ -101,55 +47,11 @@ function MediaRecording() {
     return <PermissionsDialog />;
   }
 
-  // Only previewing a gif means that the play button is hidden,
-  // not while trimming (even if gif)
-  const hasPlayButton = !isGif || isTrimming;
-  const mediaSrc = isTrimming ? originalMediaBlobUrl : mediaBlobUrl;
-
   return (
     <>
       <Wrapper>
-        {!isImageCapture && (
-          <>
-            {mediaBlobUrl && hasVideo && !isTrimming && (
-              <VideoMode value={!isGif} onChange={onToggleVideoMode} />
-            )}
-            <VideoWrapper>
-              {mediaBlobUrl &&
-                (hasVideo ? (
-                  <>
-                    <Video
-                      ref={updateVideoNode}
-                      src={mediaSrc}
-                      muted={isMuted}
-                      loop={isGif || isTrimming}
-                      tabIndex={0}
-                    />
-                    {hasPlayButton && <PlayPauseButton videoRef={videoRef} />}
-                  </>
-                ) : (
-                  <audio controls="controls" src={mediaBlobUrl} />
-                ))}
-              {!mediaBlob &&
-                !mediaBlobUrl &&
-                liveStream &&
-                (hasVideo ? (
-                  <Video ref={setStreamNode} muted />
-                ) : (
-                  <Audio liveStream={liveStream} />
-                ))}
-            </VideoWrapper>
-          </>
-        )}
-        {isImageCapture && (
-          <VideoWrapper>
-            <Photo
-              decoding="async"
-              src={mediaBlobUrl}
-              alt={__('Image capture', 'web-stories')}
-            />
-          </VideoWrapper>
-        )}
+        <PlaybackMedia />
+        {isProcessingTrim && <ProcessingOverlay />}
       </Wrapper>
       <ProgressBar />
       <Countdown />
@@ -158,5 +60,3 @@ function MediaRecording() {
 }
 
 export default MediaRecording;
-
-/* eslint-enable jsx-a11y/media-has-caption -- Reenabling */

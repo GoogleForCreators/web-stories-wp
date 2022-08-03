@@ -141,11 +141,12 @@ function MediaRecordingProvider({ children }) {
 
   const {
     trimData,
-    isTrimming,
+    isAdjustingTrim,
     isProcessingTrim,
     startTrim,
     onTrim,
     resetTrim,
+    cancelTrim,
   } = useTrim({ setDuration, onTrimmed, file: originalFile });
 
   const {
@@ -346,7 +347,7 @@ function MediaRecordingProvider({ children }) {
         isProcessing,
         isCountingDown: isCountingDown || wasCountingDown,
         trimData,
-        isTrimming,
+        isAdjustingTrim,
         streamNode,
         isProcessingTrim,
       },
@@ -377,6 +378,7 @@ function MediaRecordingProvider({ children }) {
         setStreamNode,
         pauseRecording,
         resumeRecording,
+        cancelTrim,
       },
     }),
     [
@@ -401,7 +403,7 @@ function MediaRecordingProvider({ children }) {
       wasCountingDown,
       isProcessing,
       trimData,
-      isTrimming,
+      isAdjustingTrim,
       streamNode,
       isProcessingTrim,
       toggleRecordingMode,
@@ -424,6 +426,7 @@ function MediaRecordingProvider({ children }) {
       setStreamNode,
       pauseRecording,
       resumeRecording,
+      cancelTrim,
     ]
   );
 

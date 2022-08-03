@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { formatMsToHMS } from '@googleforcreators/media';
-import { useState, useCallback } from '@googleforcreators/react';
+import { useState, useCallback, useRef } from '@googleforcreators/react';
 
 /**
  * Internal dependencies
@@ -27,35 +27,46 @@ import useFFmpeg from '../../app/media/utils/useFFmpeg';
 
 function useTrim({ setDuration, onTrimmed, file }) {
   const [trimData, setTrimData] = useState({ start: 0, end: null });
-  const [isTrimming, setIsTrimming] = useState(false);
+  const [isAdjustingTrim, setIsAdjustingTrim] = useState(false);
   const [isProcessingTrim, setIsProcessingTrim] = useState(false);
   const { trimVideo } = useFFmpeg();
+  const hasCancelledTrim = useRef();
   const onTrim = useCallback(
     async (newTrimData) => {
-      setIsTrimming(false);
+      setIsAdjustingTrim(false);
       if (newTrimData) {
         setTrimData(newTrimData);
+        hasCancelledTrim.current = false;
         setIsProcessingTrim(true);
         const start = formatMsToHMS(newTrimData.start);
         const end = formatMsToHMS(newTrimData.end);
         const result = await trimVideo(file, start, end);
+        // If it was cancelled in the meantime, just abort
+        if (hasCancelledTrim.current) {
+          return;
+        }
+        setIsProcessingTrim(false);
         onTrimmed(result);
         setDuration(newTrimData.end - newTrimData.start);
-        setIsProcessingTrim(false);
       }
     },
     [file, onTrimmed, setDuration, trimVideo]
   );
-  const startTrim = useCallback(() => setIsTrimming(true), []);
-  const resetTrim = useCallback(() => setIsTrimming(false), []);
+  const startTrim = useCallback(() => setIsAdjustingTrim(true), []);
+  const resetTrim = useCallback(() => setIsAdjustingTrim(false), []);
+  const cancelTrim = useCallback(() => {
+    hasCancelledTrim.current = true;
+    setIsProcessingTrim(false);
+  }, []);
 
   return {
     trimData,
-    isTrimming,
+    isAdjustingTrim,
     isProcessingTrim,
     onTrim,
     startTrim,
     resetTrim,
+    cancelTrim,
   };
 }
 

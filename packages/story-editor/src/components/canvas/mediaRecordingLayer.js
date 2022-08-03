@@ -33,7 +33,6 @@ import { Z_INDEX_RECORDING_MODE } from '../../constants/zIndex';
 import {
   useMediaRecording,
   SettingsModal,
-  ProcessingModal,
   MediaRecording,
   DurationIndicator,
   Footer,
@@ -67,7 +66,7 @@ function MediaRecordingLayer() {
     audioInput,
     videoInput,
     hasVideo,
-    isTrimming,
+    isAdjustingTrim,
     trimData,
     originalMediaBlobUrl,
     duration,
@@ -80,7 +79,7 @@ function MediaRecordingLayer() {
     audioInput: state.audioInput,
     videoInput: state.videoInput,
     hasVideo: state.hasVideo,
-    isTrimming: state.isTrimming,
+    isAdjustingTrim: state.isAdjustingTrim,
     trimData: state.trimData,
     originalMediaBlobUrl: state.originalMediaBlobUrl,
     duration: state.duration,
@@ -106,7 +105,7 @@ function MediaRecordingLayer() {
 
   // Video data was designed for a different purpose, so we need to fake the api a bit here
   const videoData = useMemo(() => {
-    return isTrimming
+    return isAdjustingTrim
       ? {
           element: {
             width: FULLBLEED_RATIO * 480,
@@ -123,7 +122,7 @@ function MediaRecordingLayer() {
           ...trimData,
         }
       : null;
-  }, [isTrimming, trimData, originalMediaBlobUrl, duration]);
+  }, [isAdjustingTrim, trimData, originalMediaBlobUrl, duration]);
 
   return (
     // CanvasLayout disables stylisRTLPlugin, but for this subtree we want it again
@@ -140,11 +139,10 @@ function MediaRecordingLayer() {
             <MediaRecording />
           </DisplayPageArea>
           <StyledFooter showOverflow>
-            {isTrimming ? <VideoTrimmer /> : <Footer />}
+            {isAdjustingTrim ? <VideoTrimmer /> : <Footer />}
           </StyledFooter>
         </LayerWithGrayout>
         <SettingsModal />
-        <ProcessingModal />
       </VideoRecordingTrimProvider>
     </StyleSheetManager>
   );

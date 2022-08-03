@@ -18,33 +18,37 @@
  * External dependencies
  */
 import { __ } from '@googleforcreators/i18n';
-import { Text } from '@googleforcreators/design-system';
+import { Text, LoadingSpinner } from '@googleforcreators/design-system';
+import styled from 'styled-components';
 
-/**
- * Internal dependencies
- */
-import Dialog from '../dialog';
-import useMediaRecording from './useMediaRecording';
+const Wrapper = styled.div`
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-color: rgba(0 0 0 / 0.5);
+  gap: 2em;
+  padding: 3em;
+`;
 
-function ProcessingModal() {
-  const isProcessingTrim = useMediaRecording(
-    ({ state }) => state.isProcessingTrim
-  );
-
+function ProcessingOverlay() {
   return (
-    <Dialog
-      isOpen={isProcessingTrim}
-      contentLabel={__('Media Processing', 'web-stories')}
-      title={__('Media Processing', 'web-stories')}
-    >
+    <Wrapper>
+      <LoadingSpinner />
       <Text>
         {__(
           'Video trimming in progress. Please wait up to a few minutes depending on output video length.',
           'web-stories'
         )}
       </Text>
-    </Dialog>
+    </Wrapper>
   );
 }
 
-export default ProcessingModal;
+export default ProcessingOverlay;

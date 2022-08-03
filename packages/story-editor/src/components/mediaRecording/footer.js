@@ -152,6 +152,8 @@ function Footer() {
     hasVideo,
     pauseRecording,
     resumeRecording,
+    isProcessingTrim,
+    cancelTrim,
   } = useMediaRecording(({ state, actions }) => ({
     status: state.status,
     file: state.file,
@@ -164,6 +166,7 @@ function Footer() {
     hasMediaToInsert: Boolean(state.mediaBlobUrl),
     liveStream: state.liveStream,
     streamNode: state.streamNode,
+    isProcessingTrim: state.isProcessingTrim,
     startRecording: actions.startRecording,
     stopRecording: actions.stopRecording,
     setFile: actions.setFile,
@@ -176,6 +179,7 @@ function Footer() {
     resetStream: actions.resetStream,
     pauseRecording: actions.pauseRecording,
     resumeRecording: actions.resumeRecording,
+    cancelTrim: actions.cancelTrim,
   }));
   const videoNode = useVideoTrim(({ state: { videoNode } }) => videoNode);
 
@@ -425,72 +429,83 @@ function Footer() {
     return null;
   }
 
-  return (
-    <>
-      {hasMediaToInsert && (
-        <>
-          <RetryButton onClick={onRetry} disabled={isInserting}>
-            {__('Retry', 'web-stories')}
-          </RetryButton>
-          <InsertButton
-            onClick={hasVideo ? onInsert : onAudioInsert}
-            disabled={isInserting}
-          >
-            {isInserting
-              ? __('Inserting…', 'web-stories')
-              : hasVideo
-              ? __('Insert', 'web-stories')
-              : __('Insert page background audio', 'web-stories')}
-          </InsertButton>
-        </>
-      )}
-      {!hasMediaToInsert && countdown === 0 && (
-        <>
-          {isRecording && (
+  if (isProcessingTrim) {
+    return (
+      <RetryButton onClick={cancelTrim}>
+        {__('Cancel trimming', 'web-stories')}
+      </RetryButton>
+    );
+  }
+
+  if (hasMediaToInsert) {
+    return (
+      <>
+        <RetryButton onClick={onRetry} disabled={isInserting}>
+          {__('Retry', 'web-stories')}
+        </RetryButton>
+        <InsertButton
+          onClick={hasVideo ? onInsert : onAudioInsert}
+          disabled={isInserting}
+        >
+          {isInserting
+            ? __('Inserting…', 'web-stories')
+            : hasVideo
+            ? __('Insert', 'web-stories')
+            : __('Insert page background audio', 'web-stories')}
+        </InsertButton>
+      </>
+    );
+  }
+
+  if (countdown === 0) {
+    return (
+      <>
+        {isRecording && (
+          <>
+            <PauseButton
+              onClick={isPaused ? onResume : onPause}
+              aria-label={
+                isPaused
+                  ? __('Resume Recording', 'web-stories')
+                  : __('Pause Recording', 'web-stories')
+              }
+            >
+              {isPaused
+                ? __('Resume', 'web-stories')
+                : __('Pause', 'web-stories')}
+            </PauseButton>
+            <StopButton
+              onClick={stopRecording}
+              aria-label={__('Stop Recording', 'web-stories')}
+            >
+              {__('Stop', 'web-stories')}
+            </StopButton>
+          </>
+        )}
+        {!isRecording &&
+          !isCountingDown &&
+          (hasVideo ? (
             <>
-              <PauseButton
-                onClick={isPaused ? onResume : onPause}
-                aria-label={
-                  isPaused
-                    ? __('Resume Recording', 'web-stories')
-                    : __('Pause Recording', 'web-stories')
-                }
-              >
-                {isPaused
-                  ? __('Resume', 'web-stories')
-                  : __('Pause', 'web-stories')}
-              </PauseButton>
-              <StopButton
-                onClick={stopRecording}
-                aria-label={__('Stop Recording', 'web-stories')}
-              >
-                {__('Stop', 'web-stories')}
-              </StopButton>
-            </>
-          )}
-          {!isRecording &&
-            !isCountingDown &&
-            (hasVideo ? (
-              <>
-                <RecordingButton onClick={onStart}>
-                  <Icons.Camera width={24} height={24} aria-hidden />
-                  {__('Record Video', 'web-stories')}
-                </RecordingButton>
-                <CaptureButton onClick={onCapture}>
-                  <Icons.PhotoCamera width={24} height={24} aria-hidden />
-                  {__('Take a photo', 'web-stories')}
-                </CaptureButton>
-              </>
-            ) : (
               <RecordingButton onClick={onStart}>
-                <Icons.Mic width={24} height={24} aria-hidden />
-                {__('Record Audio', 'web-stories')}
+                <Icons.Camera width={24} height={24} aria-hidden />
+                {__('Record Video', 'web-stories')}
               </RecordingButton>
-            ))}
-        </>
-      )}
-    </>
-  );
+              <CaptureButton onClick={onCapture}>
+                <Icons.PhotoCamera width={24} height={24} aria-hidden />
+                {__('Take a photo', 'web-stories')}
+              </CaptureButton>
+            </>
+          ) : (
+            <RecordingButton onClick={onStart}>
+              <Icons.Mic width={24} height={24} aria-hidden />
+              {__('Record Audio', 'web-stories')}
+            </RecordingButton>
+          ))}
+      </>
+    );
+  }
+
+  return null;
 }
 
 export default Footer;

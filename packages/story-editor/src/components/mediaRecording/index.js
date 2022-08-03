@@ -21,7 +21,6 @@ export { default as useMediaRecording } from './useMediaRecording';
 export { default as MediaRecording } from './mediaRecording';
 export { default as MediaRecordingProvider } from './provider';
 export { default as SettingsModal } from './settingsModal';
-export { default as ProcessingModal } from './processingModal';
 export { default as ErrorDialog } from './errorDialog';
 export { default as PermissionsDialog } from './permissionsDialog';
 export { default as Footer } from './footer';

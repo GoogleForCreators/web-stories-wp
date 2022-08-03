@@ -45,7 +45,7 @@ async function generateVideoStrip(element, resource, stripWidth, stripHeight) {
   const { src, length } = resource;
 
   // First check if we already generated this exact strip
-  const cacheKey = [
+  const cacheKey = JSON.stringify([
     src,
     stripWidth,
     stripHeight,
@@ -55,7 +55,7 @@ async function generateVideoStrip(element, resource, stripWidth, stripHeight) {
     flip,
     frameWidth,
     frameHeight,
-  ].join('$');
+  ]);
   if (CACHE.has(cacheKey)) {
     return CACHE.get(cacheKey);
   }
