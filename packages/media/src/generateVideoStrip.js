@@ -21,6 +21,8 @@ import getMediaSizePositionProps from './getMediaSizePositionProps';
 import preloadVideo from './preloadVideo';
 import seekVideo from './seekVideo';
 
+const CACHE = new Map();
+
 /**
  * Returns an image data URL with a video strip of the frames of the video.
  *
@@ -41,6 +43,22 @@ async function generateVideoStrip(element, resource, stripWidth, stripHeight) {
   } = element;
 
   const { src, length } = resource;
+
+  // First check if we already generated this exact strip
+  const cacheKey = [
+    src,
+    stripWidth,
+    stripHeight,
+    scale,
+    focalX,
+    focalY,
+    flip,
+    frameWidth,
+    frameHeight,
+  ].join('$');
+  if (CACHE.has(cacheKey)) {
+    return CACHE.get(cacheKey);
+  }
 
   // Calculate the scaled frame width in the strip
   const stripFrameHeight = stripHeight;
@@ -137,7 +155,11 @@ async function generateVideoStrip(element, resource, stripWidth, stripHeight) {
     return grabFrame();
   };
 
-  return grabFrame().then(() => canvas.toDataURL());
+  return grabFrame().then(() => {
+    const finalStrip = canvas.toDataURL();
+    CACHE.set(cacheKey, finalStrip);
+    return finalStrip;
+  });
 }
 
 export default generateVideoStrip;
