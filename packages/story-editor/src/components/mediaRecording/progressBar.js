@@ -62,7 +62,7 @@ const ProgressIndicator = styled.progress`
 function ProgressBar() {
   const { duration, isRecording } = useMediaRecording(({ state }) => ({
     duration: state.duration,
-    isRecording: state.status === 'recording',
+    isRecording: ['recording', 'paused'].includes(state.status),
   }));
 
   if (!isRecording) {

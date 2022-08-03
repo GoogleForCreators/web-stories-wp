@@ -109,15 +109,15 @@ Web Stories are powered by [AMP](https://amp.dev/), which adds some restrictions
 
 For the plugin's full changelog, please see [the Releases page on GitHub](https://github.com/googleforcreators/web-stories-wp/releases).
 
-= 1.23.1 =
+= 1.23.2 =
 
-**Release Date:** July 25, 2022.
+* Fixes another issue related to story poster images.
+
+= 1.23.1 =
 
 * Fixes an issue with story poster images not saving correctly.
 
 = 1.23.0 =
-
-**Release Date:** July 20, 2022.
 
 * New feature: record videos, GIFs, still pictures, and background audio directly within the editor.
 * New feature: added support for hotlinking story posters, video posters, and link icons.
@@ -125,13 +125,11 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 * Bumped minimum WordPress version requirement to 5.7.
 * Bug fixes and performance improvements.
 
-= 1.22.1 =
-
-**Release Date:** June 30, 2022.
-
-* Fixes an issue with inserting external media by URL.
-
 == Upgrade Notice ==
+
+= 1.23.2 =
+
+This release fixes another issue related to story poster images.
 
 = 1.23.1 =
 
@@ -140,7 +138,3 @@ This release fixes an issue with story poster images not saving correctly.
 = 1.23.0 =
 
 This release introduces webcam recording, more hotlinking capabilities, and a UI to change heading levels in the editor.
-
-= 1.22.1 =
-
-This release fixes an issue with inserting external media by URL.

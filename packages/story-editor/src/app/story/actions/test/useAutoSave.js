@@ -120,14 +120,10 @@ describe('useAutoSave', () => {
       ...story,
       pages,
       content: 'Hello World!',
-      meta: {
-        web_stories_poster: undefined,
-        web_stories_publisher_logo: 1,
-        web_stories_products: [],
-      },
+      products: [],
     };
-    delete expected.publisherLogo;
     delete expected.taxonomies;
+
     expect(autoSaveById).toHaveBeenCalledWith(expected);
   });
 
@@ -198,19 +194,10 @@ describe('useAutoSave', () => {
       ...story,
       pages,
       content: 'Hello World!',
-      meta: {
-        web_stories_poster: {
-          height: 100,
-          url: 'https://example.com/image.png',
-          width: 100,
-          needsProxy: false,
-        },
-        web_stories_publisher_logo: 1,
-        web_stories_products: [],
-      },
+      products: [],
     };
-    delete expected.publisherLogo;
     delete expected.taxonomies;
+
     expect(autoSaveById).toHaveBeenCalledWith(expected);
   });
 });

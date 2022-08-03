@@ -30,6 +30,11 @@ on:
       - main
       - release/*
   pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - ready_for_review
     # Don't run for irrelevant changes.
     paths-ignore:
       - 'docs/**'
@@ -69,7 +74,7 @@ jobs:
   bundle-size:
     name: Bundle size check
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     # The action cannot annotate the PR when run from a PR fork or authored by Dependabot.
     if: >
       github.event_name == 'pull_request' &&

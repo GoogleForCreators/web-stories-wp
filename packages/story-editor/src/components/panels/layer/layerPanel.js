@@ -23,8 +23,8 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { PanelContent } from '../../panel';
-import useSidebar from '../../../sidebar/useSidebar';
+import { PanelContent } from '../panel';
+import useSidebar from '../../sidebar/useSidebar';
 import LayerList from './layerList';
 import useLayers from './useLayers';
 
