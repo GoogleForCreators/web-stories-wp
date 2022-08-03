@@ -25,9 +25,9 @@ import { getTextElementTagNames } from '@googleforcreators/output';
 /**
  * Internal dependencies
  */
-import useStory from '../story/useStory';
-import { useConfig } from '../config';
-import { RIGHT_CLICK_MENU_LABELS } from './constants';
+import useStory from '../../story/useStory';
+import { useConfig } from '../../config';
+import { RIGHT_CLICK_MENU_LABELS } from '../constants';
 
 const ReversedIcon = styled(Icons.ChevronRightSmall)`
   transform: rotate(180deg);

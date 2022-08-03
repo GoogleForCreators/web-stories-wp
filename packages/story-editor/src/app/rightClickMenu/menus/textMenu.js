@@ -37,7 +37,7 @@ import {
   usePresetActions,
 } from '../hooks';
 import useLayerSelect from '../useLayerSelect';
-import useHeadingSelect from '../useHeadingSelect';
+import useHeadingSelect from '../hooks/useHeadingSelect';
 import { LayerLock, LayerName, LayerUngroup } from '../items';
 import { useStory } from '../..';
 import useRightClickMenu from '../useRightClickMenu';
