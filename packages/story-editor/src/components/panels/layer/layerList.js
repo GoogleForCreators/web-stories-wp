@@ -25,9 +25,10 @@ import { __ } from '@googleforcreators/i18n';
  * Internal dependencies
  */
 import { Reorderable } from '../../reorderable';
-import { useRightClickMenu, useStory } from '../../../app';
-import { LAYER_HEIGHT, nestedOffsetCalcFunc } from './constants';
+import { useRightClickMenu } from '../../../app';
+import { LAYER_HEIGHT } from './constants';
 import ReorderableElement from './reorderableElement';
+import useLayerElements from './useLayerElements';
 
 const LayerList = styled(Reorderable).attrs({
   'aria-orientation': 'vertical',
@@ -43,81 +44,14 @@ const LayerList = styled(Reorderable).attrs({
 `;
 
 function LayerPanel({ layers }) {
-  const { arrangeElement, arrangeGroup } = useStory(({ actions }) => ({
-    arrangeElement: actions.arrangeElement,
-    arrangeGroup: actions.arrangeGroup,
-    setSelectedElementsById: actions.setSelectedElementsById,
-  }));
-
   const onOpenMenu = useRightClickMenu((value) => value.onOpenMenu);
 
-  const numLayers = layers.length;
+  // This is a list of layers and groups in the order they're displayed
+  const { layerElements, handlePositionChange } = useLayerElements(layers);
 
-  if (!numLayers) {
+  if (layers.length === 0) {
     return null;
   }
-
-  const groupIds = new Set();
-
-  // This is a list of layers and groups in the order they're displayed
-  const layerElements = layers
-    // If an layer has a new group, add both group and layer
-    .map((layer, index, list) => {
-      const displayLayer = {
-        isGroup: false,
-        isFirstLayerAfterGroup: index > 0 && Boolean(list[index - 1].groupId),
-        id: layer.id,
-        position: layer.position,
-      };
-      const isGroup = layer.groupId && !groupIds.has(layer.groupId);
-      if (!isGroup) {
-        return displayLayer;
-      }
-      groupIds.add(layer.groupId);
-      const displayGroup = {
-        isGroup: true,
-        id: layer.groupId,
-        position: layer.position,
-        name: layer.groupId,
-      };
-      return [displayGroup, displayLayer];
-    })
-    // Flatten the nested arrays
-    .flat();
-
-  const handlePositionChange = (oldPosObj, newPosObj, evt) => {
-    const { position: oldPos } = oldPosObj;
-    const {
-      position: newPos,
-      data: { groupId: newGroupId },
-    } = newPosObj;
-    const offsetTopHalf = nestedOffsetCalcFunc(evt); // Only relevant if isNewPosLastInGroup
-    const oldPosElement = layers.find((layer) => layer.position === oldPos);
-    const elementAboveNewPos = layers.find(
-      (layer) => layer.position === (newPos <= 2 ? 1 : newPos + 1)
-    ); // Above in LP is below in array.
-
-    let groupId = newGroupId;
-    if (offsetTopHalf && elementAboveNewPos?.groupId) {
-      groupId = elementAboveNewPos.groupId;
-    }
-
-    if (oldPosObj.data?.group) {
-      // We are holding the whole group.
-      if (!newPosObj.data?.groupId) {
-        arrangeGroup({
-          groupId: oldPosObj.data.group,
-          position: newPos,
-        });
-      }
-    } else {
-      arrangeElement({
-        elementId: oldPosElement.id,
-        position: newPos,
-        groupId,
-      });
-    }
-  };
 
   return (
     <LayerList
