@@ -1546,9 +1546,9 @@
         },
         {
           "x": 255,
-          "y": 504,
-          "width": 116,
-          "height": 43,
+          "y": 505,
+          "width": 115,
+          "height": 42,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -1556,36 +1556,7 @@
           },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 51,
-              "g": 51,
-              "b": 51
-            }
-          },
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "type": "shape",
-          "id": "d9cf345f-dd84-49c9-b652-20e31cd6d03a",
-          "groupId": "7055e037-6834-4cf6-b782-638826142d5e"
-        },
-        {
-          "x": 239,
-          "y": 516,
-          "width": 150,
-          "height": 19,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
+          "backgroundTextMode": "FILL",
           "font": {
             "family": "Raleway",
             "fallbacks": ["sans-serif"],
@@ -1632,9 +1603,9 @@
           },
           "backgroundColor": {
             "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
+              "r": 51,
+              "g": 51,
+              "b": 51
             }
           },
           "lineHeight": 1.3,
@@ -1647,10 +1618,10 @@
           "content": "<span style=\"color: rgba(255, 255, 255, 1)\"><span style=\"font-weight: 500\">Buy Now</span></span>",
           "fontSize": 15,
           "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          },
-          "groupId": "7055e037-6834-4cf6-b782-638826142d5e"
+            "hasHiddenPadding": true,
+            "horizontal": 8,
+            "vertical": 12
+          }
         },
         {
           "x": 25,
@@ -1767,11 +1738,6 @@
       "groups": {
         "87d2a5bd-e2c5-4722-8b2e-909f1dd4abc2": {
           "name": "Info",
-          "isLocked": false,
-          "isCollapsed": true
-        },
-        "7055e037-6834-4cf6-b782-638826142d5e": {
-          "name": "Action",
           "isLocked": false,
           "isCollapsed": true
         }
@@ -1941,116 +1907,6 @@
             "baseColor": "#a87155"
           },
           "groupId": "af5acc97-c15f-4d25-ae68-49e2a4cfb9d5"
-        },
-        {
-          "x": 71,
-          "y": 233,
-          "width": 125,
-          "height": 43,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 51,
-              "g": 51,
-              "b": 51
-            }
-          },
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "type": "shape",
-          "basedOn": "1e41bc02-224e-4168-875c-82b101b868b8",
-          "id": "e7d293d9-09be-439d-a665-09a7d5427ce0",
-          "groupId": "0f035801-d8bb-4a82-ae00-0cba807b6ae6"
-        },
-        {
-          "x": 58,
-          "y": 244,
-          "width": 150,
-          "height": 22,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Raleway",
-            "fallbacks": ["sans-serif"],
-            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
-            "styles": ["regular", "italic"],
-            "variants": [
-              [0, 100],
-              [0, 200],
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900],
-              [1, 100],
-              [1, 200],
-              [1, 300],
-              [1, 400],
-              [1, 500],
-              [1, 600],
-              [1, 700],
-              [1, 800],
-              [1, 900]
-            ],
-            "service": "fonts.google.com",
-            "metrics": {
-              "upm": 1000,
-              "asc": 940,
-              "des": -234,
-              "tAsc": 940,
-              "tDes": -234,
-              "tLGap": 0,
-              "wAsc": 1154,
-              "wDes": 234,
-              "xH": 519,
-              "capH": 710,
-              "yMin": -223,
-              "yMax": 1151,
-              "hAsc": 940,
-              "hDes": -234,
-              "lGap": 0
-            }
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.3,
-          "textAlign": "center",
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "type": "text",
-          "basedOn": "82945f20-87ab-4b75-84d8-4f177b7a2250",
-          "id": "61b7afa6-8306-4656-b0f6-b47a43350b9a",
-          "content": "<span style=\"font-weight: 500; color: #fff\">Buy Now</span>",
-          "fontSize": 16,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          },
-          "groupId": "0f035801-d8bb-4a82-ae00-0cba807b6ae6"
         },
         {
           "x": 53,
@@ -2353,10 +2209,10 @@
           "groupId": "76b1a926-7a44-4dba-8a75-668acfb884e4"
         },
         {
-          "x": 250,
-          "y": 557,
-          "width": 125,
-          "height": 43,
+          "x": 71,
+          "y": 233,
+          "width": 123,
+          "height": 42,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -2364,37 +2220,7 @@
           },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 51,
-              "g": 51,
-              "b": 51
-            }
-          },
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "type": "shape",
-          "basedOn": "e7d293d9-09be-439d-a665-09a7d5427ce0",
-          "id": "0bc138cd-b9ba-469c-b43b-8610b9b70565",
-          "groupId": "235f4576-d429-41e8-9823-543901200926"
-        },
-        {
-          "x": 238,
-          "y": 567,
-          "width": 150,
-          "height": 20,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
+          "backgroundTextMode": "FILL",
           "font": {
             "family": "Raleway",
             "fallbacks": ["sans-serif"],
@@ -2441,9 +2267,9 @@
           },
           "backgroundColor": {
             "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
+              "r": 51,
+              "g": 51,
+              "b": 51
             }
           },
           "lineHeight": 1.3,
@@ -2452,15 +2278,95 @@
           "focalX": 50,
           "focalY": 50,
           "type": "text",
-          "basedOn": "61b7afa6-8306-4656-b0f6-b47a43350b9a",
-          "id": "3a38df92-03f4-4576-8d59-928c9412c39e",
           "content": "<span style=\"color: rgba(255, 255, 255, 1)\"><span style=\"font-weight: 500\">Buy Now</span></span>",
-          "fontSize": 16,
+          "fontSize": 15,
           "padding": {
-            "horizontal": 0,
-            "vertical": 0
+            "hasHiddenPadding": true,
+            "horizontal": 8,
+            "vertical": 12
           },
-          "groupId": "235f4576-d429-41e8-9823-543901200926"
+          "basedOn": "b21c003f-d5ad-4829-8ebd-4fe39746ec36",
+          "id": "fc58f262-ffa0-4d0c-a233-a95aa62d27ad"
+        },
+        {
+          "x": 252,
+          "y": 557,
+          "width": 123,
+          "height": 42,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "FILL",
+          "font": {
+            "family": "Raleway",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["regular", "italic"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ],
+            "service": "fonts.google.com",
+            "metrics": {
+              "upm": 1000,
+              "asc": 940,
+              "des": -234,
+              "tAsc": 940,
+              "tDes": -234,
+              "tLGap": 0,
+              "wAsc": 1154,
+              "wDes": 234,
+              "xH": 519,
+              "capH": 710,
+              "yMin": -223,
+              "yMax": 1151,
+              "hAsc": 940,
+              "hDes": -234,
+              "lGap": 0
+            }
+          },
+          "backgroundColor": {
+            "color": {
+              "r": 51,
+              "g": 51,
+              "b": 51
+            }
+          },
+          "lineHeight": 1.3,
+          "textAlign": "center",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "content": "<span style=\"color: rgba(255, 255, 255, 1)\"><span style=\"font-weight: 500\">Buy Now</span></span>",
+          "fontSize": 15,
+          "padding": {
+            "hasHiddenPadding": true,
+            "horizontal": 8,
+            "vertical": 12
+          },
+          "basedOn": "fc58f262-ffa0-4d0c-a233-a95aa62d27ad",
+          "id": "04968afa-8979-49ea-a445-43865ea4099e"
         }
       ],
       "animations": [
@@ -2490,16 +2396,6 @@
       },
       "pageTemplateType": "editorial",
       "groups": {
-        "0f035801-d8bb-4a82-ae00-0cba807b6ae6": {
-          "name": "Action",
-          "isLocked": false,
-          "isCollapsed": true
-        },
-        "235f4576-d429-41e8-9823-543901200926": {
-          "name": "Action",
-          "isLocked": false,
-          "isCollapsed": true
-        },
         "af5acc97-c15f-4d25-ae68-49e2a4cfb9d5": {
           "name": "Section",
           "isLocked": false,
@@ -2712,46 +2608,6 @@
           "id": "1fd9e47b-c054-4966-8b5e-8288726a1463"
         },
         {
-          "x": 135,
-          "y": 225,
-          "width": 204,
-          "height": 272,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 51,
-              "g": 51,
-              "b": 51
-            }
-          },
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "type": "image",
-          "id": "7d267050-70a4-4fdb-849e-f91092d8fda4",
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fresh-and-bright/page8_figure.jpg",
-            "width": 370,
-            "height": 492,
-            "id": 0,
-            "alt": "page8_figure",
-            "isExternal": true,
-            "baseColor": "#e1d3c9",
-            "sizes": []
-          }
-        },
-        {
           "x": 145,
           "y": 554,
           "width": 125,
@@ -2763,37 +2619,7 @@
           },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 51,
-              "g": 51,
-              "b": 51
-            }
-          },
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "type": "shape",
-          "basedOn": "0bc138cd-b9ba-469c-b43b-8610b9b70565",
-          "id": "c01e32d0-fecd-4462-b8a5-9284fea75f78",
-          "groupId": "635d5ae7-cffe-4dfa-bb4d-f4083e3e3152"
-        },
-        {
-          "x": 132,
-          "y": 565,
-          "width": 150,
-          "height": 20,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
+          "backgroundTextMode": "FILL",
           "font": {
             "family": "Raleway",
             "fallbacks": ["sans-serif"],
@@ -2840,9 +2666,9 @@
           },
           "backgroundColor": {
             "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
+              "r": 51,
+              "g": 51,
+              "b": 51
             }
           },
           "lineHeight": 1.3,
@@ -2851,15 +2677,55 @@
           "focalX": 50,
           "focalY": 50,
           "type": "text",
-          "basedOn": "3a38df92-03f4-4576-8d59-928c9412c39e",
-          "id": "a2cd4b99-da90-49e7-8a8d-25c54400b4a1",
-          "content": "<span style=\"color: rgba(255, 255, 255, 1)\"><span style=\"font-weight: 500\">Get The Look</span></span>",
+          "content": "<span style=\"font-weight: 500; color: #fff\">Get The Look</span>",
           "fontSize": 16,
           "padding": {
-            "horizontal": 0,
-            "vertical": 0
+            "hasHiddenPadding": true,
+            "horizontal": 8,
+            "vertical": 12
           },
-          "groupId": "635d5ae7-cffe-4dfa-bb4d-f4083e3e3152"
+          "basedOn": "b21c003f-d5ad-4829-8ebd-4fe39746ec36",
+          "id": "0ab67d94-4d3a-423d-acfb-444d1c8359e4"
+        },
+        {
+          "x": 135,
+          "y": 225,
+          "width": 204,
+          "height": 272,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 51,
+              "g": 51,
+              "b": 51
+            }
+          },
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "type": "image",
+          "id": "7d267050-70a4-4fdb-849e-f91092d8fda4",
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fresh-and-bright/page8_figure.jpg",
+            "width": 370,
+            "height": 492,
+            "id": 0,
+            "alt": "page8_figure",
+            "isExternal": true,
+            "baseColor": "#e1d3c9",
+            "sizes": []
+          }
         }
       ],
       "animations": [
@@ -2903,13 +2769,7 @@
         }
       },
       "pageTemplateType": "editorial",
-      "groups": {
-        "635d5ae7-cffe-4dfa-bb4d-f4083e3e3152": {
-          "name": "Action",
-          "isLocked": false,
-          "isCollapsed": true
-        }
-      }
+      "groups": {}
     },
     {
       "elements": [
