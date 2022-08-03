@@ -692,38 +692,10 @@
           "alt": "Preparing a street food dish"
         },
         {
-          "x": 237,
+          "x": 236,
           "y": 284,
           "width": 88,
           "height": 88,
-          "type": "shape",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "backgroundColor": {
-            "color": {
-              "r": 0,
-              "g": 0,
-              "b": 0
-            }
-          },
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "id": "6e549d8a-d851-45c5-b168-f3e681261bab",
-          "lockAspectRatio": true
-        },
-        {
-          "x": 255,
-          "y": 309,
-          "width": 50,
-          "height": 40,
           "font": {
             "family": "Oswald",
             "fallbacks": ["sans-serif"],
@@ -763,7 +735,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "backgroundTextMode": "NONE",
+          "backgroundTextMode": "FILL",
           "lineHeight": 1,
           "textAlign": "left",
           "backgroundColor": {
@@ -780,10 +752,10 @@
           "content": "<span style=\"font-weight: 500; color: #fff; text-transform: uppercase\">Learn</span>\n<span style=\"font-weight: 500; color: #fff; text-transform: uppercase\">More</span>",
           "fontSize": 20,
           "padding": {
-            "hasHiddenPadding": false,
-            "locked": true,
-            "horizontal": 0,
-            "vertical": 0
+            "hasHiddenPadding": true,
+            "locked": false,
+            "horizontal": 18,
+            "vertical": 19
           },
           "lockAspectRatio": true,
           "marginOffset": 0
@@ -938,13 +910,6 @@
           "flyInDir": "leftToRight",
           "duration": 600,
           "delay": 400
-        },
-        {
-          "id": "ac2fe7ff-a451-4297-9d2d-0a03d224d879",
-          "type": "effect-fade-in",
-          "targets": ["6e549d8a-d851-45c5-b168-f3e681261bab"],
-          "duration": 600,
-          "delay": 600
         },
         {
           "id": "a5e7c238-bf50-45b8-a4c4-eafc15e03fbc",
@@ -1961,38 +1926,10 @@
           "alt": "Close up of statue in 3 Kings Monument"
         },
         {
-          "x": 238.734375,
+          "x": 239,
           "y": 257,
           "width": 88,
           "height": 88,
-          "type": "shape",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "backgroundColor": {
-            "color": {
-              "r": 0,
-              "g": 0,
-              "b": 0
-            }
-          },
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "id": "7c4a2686-3bcc-4e41-92ed-f12b899b615b",
-          "lockAspectRatio": true
-        },
-        {
-          "x": 238.734375,
-          "y": 290.5,
-          "width": 88,
-          "height": 21,
           "font": {
             "family": "Oswald",
             "fallbacks": ["sans-serif"],
@@ -2032,44 +1969,34 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "backgroundTextMode": "NONE",
+          "backgroundTextMode": "FILL",
           "lineHeight": 1,
-          "textAlign": "center",
+          "textAlign": "left",
           "backgroundColor": {
             "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
+              "r": 0,
+              "g": 0,
+              "b": 0
             }
           },
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "basedOn": "3cf17fb8-a5ae-4f32-8e5f-d3a0513215de",
-          "id": "4f71e74f-fd3f-4840-9ea4-8c0f59363952",
-          "content": "<span style=\"color: rgba(255, 255, 255, 1); text-transform: uppercase\">No. 3</span>",
-          "fontSize": 21,
+          "content": "<span style=\"font-weight: 500; color: #fff; text-transform: uppercase\">No. 3</span>",
+          "fontSize": 20,
           "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
+            "hasHiddenPadding": true,
+            "locked": false,
+            "horizontal": 18,
+            "vertical": 29
+          },
+          "lockAspectRatio": true,
+          "marginOffset": 0,
+          "basedOn": "3cf17fb8-a5ae-4f32-8e5f-d3a0513215de",
+          "id": "b6dd7e92-0951-4581-9436-29393593c5d3"
         }
       ],
       "animations": [
-        {
-          "id": "c42b3a1e-a968-479a-89f4-16893898235d",
-          "type": "effect-fade-in",
-          "targets": ["4f71e74f-fd3f-4840-9ea4-8c0f59363952"],
-          "duration": 600,
-          "delay": 600
-        },
-        {
-          "id": "4060e70b-0b5b-465a-93bf-25b277d21eb1",
-          "type": "effect-fade-in",
-          "targets": ["7c4a2686-3bcc-4e41-92ed-f12b899b615b"],
-          "duration": 600,
-          "delay": 600
-        },
         {
           "id": "6cef7b08-36b0-47d2-b1e7-ac1212a09080",
           "type": "effect-fly-in",
@@ -2085,6 +2012,13 @@
           "flyInDir": "leftToRight",
           "duration": 600,
           "delay": 700
+        },
+        {
+          "targets": ["b6dd7e92-0951-4581-9436-29393593c5d3"],
+          "id": "6c6db6d4-c0e6-479e-8442-e227a734af37",
+          "type": "effect-fade-in",
+          "duration": 600,
+          "delay": 600
         }
       ],
       "type": "page",
@@ -2166,101 +2100,6 @@
             "type": "rectangle"
           },
           "id": "f60ae332-db13-481f-ace7-107885b1c202"
-        },
-        {
-          "x": 236,
-          "y": 290,
-          "width": 88,
-          "height": 88,
-          "type": "shape",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "backgroundColor": {
-            "color": {
-              "r": 0,
-              "g": 0,
-              "b": 0
-            }
-          },
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "basedOn": "7c4a2686-3bcc-4e41-92ed-f12b899b615b",
-          "id": "5f598141-8e1c-4486-8d73-9fd9e8934c48",
-          "lockAspectRatio": true
-        },
-        {
-          "x": 258,
-          "y": 314,
-          "width": 50,
-          "height": 40,
-          "font": {
-            "family": "Oswald",
-            "fallbacks": ["sans-serif"],
-            "weights": [200, 300, 400, 500, 600, 700],
-            "styles": ["regular"],
-            "variants": [
-              [0, 200],
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700]
-            ],
-            "service": "fonts.google.com",
-            "metrics": {
-              "upm": 1000,
-              "asc": 1193,
-              "des": -289,
-              "tAsc": 1193,
-              "tDes": -289,
-              "tLGap": 0,
-              "wAsc": 1325,
-              "wDes": 377,
-              "xH": 578,
-              "capH": 810,
-              "yMin": -287,
-              "yMax": 1297,
-              "hAsc": 1193,
-              "hDes": -289,
-              "lGap": 0
-            }
-          },
-          "type": "text",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "backgroundTextMode": "NONE",
-          "lineHeight": 1,
-          "textAlign": "initial",
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "basedOn": "3cf17fb8-a5ae-4f32-8e5f-d3a0513215de",
-          "id": "28b135fd-63b8-456c-985d-3dfe542fffd7",
-          "content": "<span style=\"color: rgba(255, 255, 255, 1); text-transform: uppercase\">Learn</span>\n<span style=\"color: rgba(255, 255, 255, 1); text-transform: uppercase\">More</span>",
-          "fontSize": 20,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
         },
         {
           "x": 40,
@@ -2396,23 +2235,79 @@
             "horizontal": 0,
             "vertical": 0
           }
+        },
+        {
+          "x": 236,
+          "y": 290,
+          "width": 88,
+          "height": 88,
+          "font": {
+            "family": "Oswald",
+            "fallbacks": ["sans-serif"],
+            "weights": [200, 300, 400, 500, 600, 700],
+            "styles": ["regular"],
+            "variants": [
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700]
+            ],
+            "service": "fonts.google.com",
+            "metrics": {
+              "upm": 1000,
+              "asc": 1193,
+              "des": -289,
+              "tAsc": 1193,
+              "tDes": -289,
+              "tLGap": 0,
+              "wAsc": 1325,
+              "wDes": 377,
+              "xH": 578,
+              "capH": 810,
+              "yMin": -287,
+              "yMax": 1297,
+              "hAsc": 1193,
+              "hDes": -289,
+              "lGap": 0
+            }
+          },
+          "type": "text",
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "backgroundTextMode": "FILL",
+          "lineHeight": 1,
+          "textAlign": "left",
+          "backgroundColor": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "content": "<span style=\"font-weight: 500; color: #fff; text-transform: uppercase\">Learn</span>\n<span style=\"font-weight: 500; color: #fff; text-transform: uppercase\">More</span>",
+          "fontSize": 20,
+          "padding": {
+            "hasHiddenPadding": true,
+            "locked": false,
+            "horizontal": 18,
+            "vertical": 19
+          },
+          "lockAspectRatio": true,
+          "marginOffset": 0,
+          "basedOn": "3cf17fb8-a5ae-4f32-8e5f-d3a0513215de",
+          "id": "88d486d7-a957-4c41-b4e9-11280585f13f"
         }
       ],
       "animations": [
-        {
-          "id": "f896e73f-f754-453c-9fe2-0145f1087269",
-          "type": "effect-fade-in",
-          "targets": ["5f598141-8e1c-4486-8d73-9fd9e8934c48"],
-          "duration": 600,
-          "delay": 900
-        },
-        {
-          "id": "dd3bbc71-9cf3-4bd4-8ca5-cd2b3f822cee",
-          "type": "effect-fade-in",
-          "targets": ["28b135fd-63b8-456c-985d-3dfe542fffd7"],
-          "duration": 600,
-          "delay": 900
-        },
         {
           "id": "75b03916-f227-421c-957e-1681ff729d77",
           "type": "effect-fly-in",
@@ -2426,6 +2321,13 @@
           "type": "effect-fly-in",
           "targets": ["41d3069f-61de-4998-8487-036ea86917a6"],
           "flyInDir": "leftToRight",
+          "duration": 600,
+          "delay": 600
+        },
+        {
+          "targets": ["88d486d7-a957-4c41-b4e9-11280585f13f"],
+          "id": "c3ab8ee7-6ac1-4e73-b042-5ef7d43685a2",
+          "type": "effect-fade-in",
           "duration": 600,
           "delay": 600
         }
