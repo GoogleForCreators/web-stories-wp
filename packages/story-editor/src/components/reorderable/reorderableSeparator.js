@@ -24,7 +24,7 @@ import { useCallback, useRef, useState } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
-import { NESTED_PX } from '../panels/design/layer/constants';
+import { NESTED_PX } from '../panels/layer/constants';
 import useReorderable from './useReorderable';
 
 const Wrapper = styled.div`

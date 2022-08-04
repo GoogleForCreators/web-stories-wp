@@ -14,4 +14,30 @@
  * limitations under the License.
  */
 
-export { default } from './layerPanel';
+/**
+ * Internal dependencies
+ */
+import { useStory } from '../../../app';
+import { STABLE_ARRAY } from '../../../constants';
+
+function useLayers() {
+  const elements = useStory(
+    ({ state }) =>
+      state.currentPage?.elements?.map(({ id, groupId, layerName }) => ({
+        id,
+        groupId,
+        layerName,
+      })) || STABLE_ARRAY
+  );
+
+  const layers = elements.map(({ id, groupId, layerName }, index) => ({
+    id,
+    groupId,
+    layerName,
+    position: index,
+  }));
+  layers.reverse();
+  return layers;
+}
+
+export default useLayers;
