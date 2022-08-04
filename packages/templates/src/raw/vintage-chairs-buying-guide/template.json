@@ -1,18 +1,26 @@
 {
+  "current": null,
+  "selection": [],
+  "story": {},
   "version": 43,
   "pages": [
     {
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "isDefaultBackground": true,
           "id": "7a0b814a-e76a-4ffa-8ab3-ff5712d0423b",
@@ -20,13 +28,15 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Epilogue",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
             "styles": ["regular", "italic"],
@@ -50,6 +60,7 @@
               [1, 800],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 2000,
               "asc": 1580,
@@ -69,10 +80,19 @@
             }
           },
           "fontSize": 30,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.2,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"font-weight: 500; color: #dbe2e7\">Vintage Chairs: What to look for and how to buy</span>",
           "fontWeight": 700,
           "borderRadius": {
@@ -90,17 +110,20 @@
           "focalX": 50,
           "focalY": 50,
           "id": "10c12b78-df3a-4a93-b387-8ec6d0fe72e9",
-          "type": "text"
+          "type": "text",
+          "tagName": "h1"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Epilogue",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
             "styles": ["regular", "italic"],
@@ -124,6 +147,7 @@
               [1, 800],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 2000,
               "asc": 1580,
@@ -143,10 +167,19 @@
             }
           },
           "fontSize": 15,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.3,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"color: #dbe2e7\">Billy Rogers</span>",
           "fontWeight": 700,
           "borderRadius": {
@@ -169,7 +202,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "scale": 100,
@@ -191,18 +227,32 @@
             "baseColor": "#d8d3cc",
             "isExternal": true
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "x": 0,
           "y": 220,
           "width": 412,
           "height": 455,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "id": "0bfeec41-0b6e-4426-81cf-9b2089ab5fb2",
           "type": "image"
         }
       ],
       "animations": [],
-      "backgroundColor": { "color": { "r": 49, "g": 56, "b": 49 } },
+      "backgroundColor": {
+        "color": {
+          "r": 49,
+          "g": 56,
+          "b": 49
+        }
+      },
       "type": "page",
       "id": "e9a82cb4-df90-48d7-be12-bf3a9a6a353d",
       "pageTemplateType": "cover"
@@ -211,14 +261,19 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "isDefaultBackground": true,
           "id": "eafdb137-f761-4943-aa70-1ffa5d6737ae",
@@ -226,10 +281,19 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 243, "g": 242, "b": 240 } },
+          "backgroundColor": {
+            "color": {
+              "r": 243,
+              "g": 242,
+              "b": 240
+            }
+          },
           "x": 0,
           "y": 220,
           "width": 412,
@@ -237,19 +301,23 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "id": "6f2519e8-97e8-4dcc-b705-c7c1675e68e9",
           "type": "shape"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Epilogue",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
             "styles": ["regular", "italic"],
@@ -273,6 +341,7 @@
               [1, 800],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 2000,
               "asc": 1580,
@@ -292,10 +361,19 @@
             }
           },
           "fontSize": 17,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.3,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"color: #313831\">The duo behind Brooklyn’s hip antique furniture store, Lichen, clue us in on what to look for when it comes to vintage seating.</span>",
           "fontWeight": 700,
           "borderRadius": {
@@ -317,7 +395,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "scale": 100,
@@ -339,18 +420,29 @@
             "baseColor": "#242c2c",
             "isExternal": true
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "x": 50,
           "y": 317,
           "width": 221,
           "height": 289,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "id": "fcc934f7-41f0-483a-8996-017b5da170b5",
           "type": "image"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "scale": 178,
@@ -372,10 +464,18 @@
             "baseColor": "#d9e1d5",
             "isExternal": true
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "width": 136,
           "height": 236,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "basedOn": "d04fbc00-3ee1-4720-9450-814edd5dd095",
           "id": "f7dc7e79-e2db-43ae-8ee1-901e6953095e",
           "x": 276,
@@ -384,7 +484,13 @@
         }
       ],
       "animations": [],
-      "backgroundColor": { "color": { "r": 219, "g": 226, "b": 231 } },
+      "backgroundColor": {
+        "color": {
+          "r": 219,
+          "g": 226,
+          "b": 231
+        }
+      },
       "type": "page",
       "id": "e5631fd5-26ed-4243-b7fc-4b155c220dbd",
       "pageTemplateType": "editorial"
@@ -393,14 +499,19 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "isDefaultBackground": true,
           "id": "b34e4d00-ebc2-4b69-aa94-eab86f0ee682",
@@ -408,7 +519,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "scale": 100,
@@ -430,24 +544,34 @@
             "baseColor": "#d1c6ba",
             "isExternal": true
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "x": 0,
           "y": -57,
           "width": 412,
           "height": 512,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "id": "d02da367-47d3-4663-afd3-d5ed52ab31b3",
           "type": "image"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Epilogue",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
             "styles": ["regular", "italic"],
@@ -471,6 +595,7 @@
               [1, 800],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 2000,
               "asc": 1580,
@@ -490,10 +615,19 @@
             }
           },
           "fontSize": 17,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.3,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"color: #313831\">If you don’t know what era, what style and who it’s made by, don’t sweat it.</span>",
           "fontWeight": 700,
           "borderRadius": {
@@ -524,7 +658,13 @@
           "delay": 0
         }
       ],
-      "backgroundColor": { "color": { "r": 243, "g": 242, "b": 240 } },
+      "backgroundColor": {
+        "color": {
+          "r": 243,
+          "g": 242,
+          "b": 240
+        }
+      },
       "type": "page",
       "id": "64637ae6-949b-49bc-b75d-5107b99e0a2a",
       "pageTemplateType": ""
@@ -533,14 +673,19 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "isDefaultBackground": true,
           "id": "81664493-6dd0-4100-b46f-804fd73880ac",
@@ -548,7 +693,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "scale": 237,
@@ -570,12 +718,20 @@
             "baseColor": "#42362b",
             "isExternal": true
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "x": 83.5,
           "y": 175,
           "width": 245,
           "height": 396,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "id": "81c30c2c-8fb2-4492-a06a-df660e0edc22",
           "border": {
             "left": 18,
@@ -583,19 +739,27 @@
             "top": 18,
             "bottom": 18,
             "lockedWidth": true,
-            "color": { "color": { "r": 243, "g": 242, "b": 240 } }
+            "color": {
+              "color": {
+                "r": 243,
+                "g": 242,
+                "b": 240
+              }
+            }
           },
           "type": "image"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Epilogue",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
             "styles": ["regular", "italic"],
@@ -619,6 +783,7 @@
               [1, 800],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 2000,
               "asc": 1580,
@@ -638,10 +803,19 @@
             }
           },
           "fontSize": 17,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.3,
           "textAlign": "center",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"color: #313831\">If you like it,</span>\n<span style=\"color: #313831\">You like it.</span>",
           "fontWeight": 700,
           "borderRadius": {
@@ -663,7 +837,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 188,
@@ -673,7 +850,9 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": { "type": "vintageChairsIcon01" },
+          "sticker": {
+            "type": "vintageChairsIcon01"
+          },
           "id": "8b2c5851-3b10-4640-ada6-1f4d7a46ae66",
           "type": "sticker"
         }
@@ -688,7 +867,13 @@
           "targets": ["81c30c2c-8fb2-4492-a06a-df660e0edc22"]
         }
       ],
-      "backgroundColor": { "color": { "r": 219, "g": 226, "b": 231 } },
+      "backgroundColor": {
+        "color": {
+          "r": 219,
+          "g": 226,
+          "b": 231
+        }
+      },
       "type": "page",
       "id": "05a9b66a-1b7b-4b36-b3cb-f7b7067fd30e",
       "pageTemplateType": "section"
@@ -697,15 +882,26 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
           "x": 48,
           "y": 0,
           "width": 330,
           "height": 494,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "id": "8ef7ea3b-6750-457b-b89b-29f4be1bbc93",
           "type": "image",
@@ -731,18 +927,28 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "backgroundColor": {
-            "color": { "r": 243, "g": 242, "b": 240, "a": 0 }
+            "color": {
+              "r": 243,
+              "g": 242,
+              "b": 240,
+              "a": 0
+            }
           },
           "width": 313,
           "height": 452,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "basedOn": "e1827df9-8d0d-479b-ba6d-a2eb13407e21",
           "id": "991b8871-3c99-41bc-94d7-7def3faed1c4",
           "x": 49.5,
@@ -753,16 +959,31 @@
             "top": 2,
             "bottom": 2,
             "lockedWidth": true,
-            "color": { "color": { "r": 243, "g": 242, "b": 240 } }
+            "color": {
+              "color": {
+                "r": 243,
+                "g": 242,
+                "b": 240
+              }
+            }
           },
           "type": "shape"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 243, "g": 242, "b": 240 } },
+          "backgroundColor": {
+            "color": {
+              "r": 243,
+              "g": 242,
+              "b": 240
+            }
+          },
           "x": 47,
           "y": 452,
           "width": 318,
@@ -770,19 +991,23 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "id": "2592965f-4074-427e-a3fe-8c8673882dcb",
           "type": "shape"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Epilogue",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
             "styles": ["regular", "italic"],
@@ -806,6 +1031,7 @@
               [1, 800],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 2000,
               "asc": 1580,
@@ -825,10 +1051,19 @@
             }
           },
           "fontSize": 17,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.3,
           "textAlign": "left",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"color: #313831\">Carefully examine the surface of each chair. Examine every part and look for authenticity marks.</span>",
           "fontWeight": 700,
           "borderRadius": {
@@ -859,20 +1094,37 @@
           "targets": ["8ef7ea3b-6750-457b-b89b-29f4be1bbc93"]
         }
       ],
-      "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+      "backgroundColor": {
+        "color": {
+          "r": 196,
+          "g": 196,
+          "b": 196
+        }
+      },
       "type": "page",
       "id": "2b0c1bf8-0acc-4f24-9996-e5c6b47afa40",
       "defaultBackgroundElement": {
         "opacity": 100,
-        "flip": { "vertical": false, "horizontal": false },
+        "flip": {
+          "vertical": false,
+          "horizontal": false
+        },
         "rotationAngle": 0,
         "lockAspectRatio": true,
-        "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+        "backgroundColor": {
+          "color": {
+            "r": 255,
+            "g": 255,
+            "b": 255
+          }
+        },
         "x": 1,
         "y": 1,
         "width": 1,
         "height": 1,
-        "mask": { "type": "rectangle" },
+        "mask": {
+          "type": "rectangle"
+        },
         "isBackground": true,
         "isDefaultBackground": true,
         "id": "0b4ac6ea-6c4d-44ba-9641-de83ed21ae86",
@@ -884,14 +1136,19 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "isDefaultBackground": true,
           "id": "e69e0a10-3a83-49dc-b32f-502c7f451b26",
@@ -899,7 +1156,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": true },
+          "flip": {
+            "vertical": false,
+            "horizontal": true
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "scale": 100,
@@ -921,24 +1181,34 @@
             "baseColor": "#cac4bc",
             "isExternal": true
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "x": 0,
           "y": -57,
           "width": 412,
           "height": 510,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "id": "30d1e12a-80da-4e85-b967-265a557ff634",
           "type": "image"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Epilogue",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
             "styles": ["regular", "italic"],
@@ -962,6 +1232,7 @@
               [1, 800],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 2000,
               "asc": 1580,
@@ -981,10 +1252,19 @@
             }
           },
           "fontSize": 17,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.3,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"color: #313831\">When you find an interesting chair, do you like the curvature? The angles? The lines?</span>",
           "fontWeight": 700,
           "borderRadius": {
@@ -1014,7 +1294,13 @@
           "delay": 0
         }
       ],
-      "backgroundColor": { "color": { "r": 243, "g": 242, "b": 240 } },
+      "backgroundColor": {
+        "color": {
+          "r": 243,
+          "g": 242,
+          "b": 240
+        }
+      },
       "type": "page",
       "id": "62ae21f2-86a5-43bc-b4a1-560e8cfeb4ab",
       "pageTemplateType": ""
@@ -1023,14 +1309,19 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "isDefaultBackground": true,
           "id": "fde97a56-1328-4b52-b81b-5ca62fc91cb3",
@@ -1038,13 +1329,15 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Epilogue",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
             "styles": ["regular", "italic"],
@@ -1068,6 +1361,7 @@
               [1, 800],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 2000,
               "asc": 1580,
@@ -1087,10 +1381,19 @@
             }
           },
           "fontSize": 17,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.3,
           "textAlign": "center",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"color: #313831\">Find an element that draws you in.</span>",
           "fontWeight": 700,
           "borderRadius": {
@@ -1113,7 +1416,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "scale": 100,
@@ -1135,12 +1441,20 @@
             "baseColor": "#e8e7e6",
             "isExternal": true
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "x": 83.5,
           "y": 175,
           "width": 245,
           "height": 396,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "id": "849b30cb-f70e-43a0-92c3-0817cf3264b4",
           "border": {
             "left": 18,
@@ -1148,13 +1462,22 @@
             "top": 18,
             "bottom": 18,
             "lockedWidth": true,
-            "color": { "color": { "r": 243, "g": 242, "b": 240 } }
+            "color": {
+              "color": {
+                "r": 243,
+                "g": 242,
+                "b": 240
+              }
+            }
           },
           "type": "image"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 181,
@@ -1164,7 +1487,9 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": { "type": "vintageChairsIcon02" },
+          "sticker": {
+            "type": "vintageChairsIcon02"
+          },
           "id": "e10fc08c-b48e-461b-b0cc-20ef1a3d07f7",
           "type": "sticker"
         }
@@ -1179,7 +1504,13 @@
           "targets": ["849b30cb-f70e-43a0-92c3-0817cf3264b4"]
         }
       ],
-      "backgroundColor": { "color": { "r": 219, "g": 226, "b": 231 } },
+      "backgroundColor": {
+        "color": {
+          "r": 219,
+          "g": 226,
+          "b": 231
+        }
+      },
       "type": "page",
       "id": "0c2f43a3-1099-480b-907f-d40f39daf5dc",
       "pageTemplateType": ""
@@ -1188,15 +1519,26 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
           "x": 48,
           "y": 0,
           "width": 330,
           "height": 220,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "id": "1baa4a14-6a42-46c8-905f-437a46cbd5fa",
           "type": "image",
@@ -1222,18 +1564,28 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "backgroundColor": {
-            "color": { "r": 243, "g": 242, "b": 240, "a": 0 }
+            "color": {
+              "r": 243,
+              "g": 242,
+              "b": 240,
+              "a": 0
+            }
           },
           "width": 313,
           "height": 452,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "basedOn": "e1827df9-8d0d-479b-ba6d-a2eb13407e21",
           "id": "7a182ed7-b007-4420-9e0a-5d6dfb6a9f18",
           "x": 49.5,
@@ -1244,16 +1596,31 @@
             "top": 2,
             "bottom": 2,
             "lockedWidth": true,
-            "color": { "color": { "r": 243, "g": 242, "b": 240 } }
+            "color": {
+              "color": {
+                "r": 243,
+                "g": 242,
+                "b": 240
+              }
+            }
           },
           "type": "shape"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 243, "g": 242, "b": 240 } },
+          "backgroundColor": {
+            "color": {
+              "r": 243,
+              "g": 242,
+              "b": 240
+            }
+          },
           "x": 47,
           "y": 452,
           "width": 318,
@@ -1261,19 +1628,23 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "id": "62452434-bf75-47d6-986a-616ce1f4605f",
           "type": "shape"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Epilogue",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
             "styles": ["regular", "italic"],
@@ -1297,6 +1668,7 @@
               [1, 800],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 2000,
               "asc": 1580,
@@ -1316,10 +1688,19 @@
             }
           },
           "fontSize": 17,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.3,
           "textAlign": "left",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"color: #313831\">Check foundational details to make sure it’s sturdy and it hasn’t lost any structural integrity.</span>",
           "fontWeight": 700,
           "borderRadius": {
@@ -1350,20 +1731,37 @@
           "targets": ["1baa4a14-6a42-46c8-905f-437a46cbd5fa"]
         }
       ],
-      "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+      "backgroundColor": {
+        "color": {
+          "r": 196,
+          "g": 196,
+          "b": 196
+        }
+      },
       "type": "page",
       "id": "dd67e19a-af30-4218-b615-a2bc5a74b477",
       "defaultBackgroundElement": {
         "opacity": 100,
-        "flip": { "vertical": false, "horizontal": false },
+        "flip": {
+          "vertical": false,
+          "horizontal": false
+        },
         "rotationAngle": 0,
         "lockAspectRatio": true,
-        "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+        "backgroundColor": {
+          "color": {
+            "r": 255,
+            "g": 255,
+            "b": 255
+          }
+        },
         "x": 1,
         "y": 1,
         "width": 1,
         "height": 1,
-        "mask": { "type": "rectangle" },
+        "mask": {
+          "type": "rectangle"
+        },
         "isBackground": true,
         "isDefaultBackground": true,
         "id": "4bb61167-dd01-49c8-8df5-874d735d39bd",
@@ -1375,14 +1773,19 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "isDefaultBackground": true,
           "id": "6bd6e063-6549-4e62-9887-35b1774d0be6",
@@ -1390,7 +1793,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "scale": 115,
@@ -1412,24 +1818,34 @@
             "baseColor": "#333e2e",
             "isExternal": true
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "x": 0,
           "y": -57,
           "width": 412,
           "height": 424,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "id": "c2d228af-53fc-4d90-8ef0-61ad983369e3",
           "type": "image"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Epilogue",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
             "styles": ["regular", "italic"],
@@ -1453,6 +1869,7 @@
               [1, 800],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 2000,
               "asc": 1580,
@@ -1472,10 +1889,19 @@
             }
           },
           "fontSize": 21,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.3,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"color: #313831\">“Try before you buy. See it, smell it, sit on it. And - bargain for it.</span>",
           "fontWeight": 700,
           "borderRadius": {
@@ -1493,17 +1919,20 @@
           "focalX": 50,
           "focalY": 50,
           "id": "9a2e05c4-db9d-42d9-ba09-4d89d555de11",
-          "type": "text"
+          "type": "text",
+          "tagName": "p"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Epilogue",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
             "styles": ["regular", "italic"],
@@ -1527,6 +1956,7 @@
               [1, 800],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 2000,
               "asc": 1580,
@@ -1546,10 +1976,19 @@
             }
           },
           "fontSize": 15,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.3,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"color: #313831\">Mark Jackson</span>",
           "fontWeight": 700,
           "borderRadius": {
@@ -1572,7 +2011,13 @@
         }
       ],
       "animations": [],
-      "backgroundColor": { "color": { "r": 219, "g": 226, "b": 231 } },
+      "backgroundColor": {
+        "color": {
+          "r": 219,
+          "g": 226,
+          "b": 231
+        }
+      },
       "type": "page",
       "id": "7729b890-8486-44b9-a309-182b1cce85c2",
       "pageTemplateType": "quote"
@@ -1581,14 +2026,19 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "isDefaultBackground": true,
           "id": "f0533bc8-23cc-4599-9379-5c9a548da45f",
@@ -1596,13 +2046,15 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Epilogue",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
             "styles": ["regular", "italic"],
@@ -1626,6 +2078,7 @@
               [1, 800],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 2000,
               "asc": 1580,
@@ -1645,10 +2098,19 @@
             }
           },
           "fontSize": 21,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.3,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"color: #dbe2e7\">Read More:</span>",
           "fontWeight": 700,
           "borderRadius": {
@@ -1667,11 +2129,15 @@
           "id": "4d905c2c-ead1-4f2a-a788-6402e78eb8d8",
           "x": 50,
           "y": 39,
-          "type": "text"
+          "type": "text",
+          "tagName": "h2"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "scale": 100,
@@ -1693,29 +2159,47 @@
             "baseColor": "#e7ddd5",
             "isExternal": true
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "width": 150,
           "height": 228,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "basedOn": "2d757a40-31f5-4c9f-bf90-12c287c33975",
           "id": "24ef8218-89e0-4842-a881-0c20118cab26",
           "x": 50,
           "y": 126,
-          "type": "image",
-          "groupId": "0b685419-996b-492a-bffd-0986a9c2e438"
+          "type": "image"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 243, "g": 242, "b": 240 } },
+          "backgroundColor": {
+            "color": {
+              "r": 243,
+              "g": 242,
+              "b": 240
+            }
+          },
           "width": 163,
           "height": 228,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "basedOn": "db0d1905-7c38-4c88-9c06-936a907639d0",
           "id": "89393419-7cf5-47b9-956c-acf46b8827e4",
           "x": 200,
@@ -1725,13 +2209,15 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Epilogue",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
             "styles": ["regular", "italic"],
@@ -1755,6 +2241,7 @@
               [1, 800],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 2000,
               "asc": 1580,
@@ -1774,10 +2261,19 @@
             }
           },
           "fontSize": 15,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.3,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"color: #313831\">Make it&nbsp;</span>\n<span style=\"color: #313831\">Mid-Century</span>",
           "fontWeight": 700,
           "borderRadius": {
@@ -1797,11 +2293,15 @@
           "x": 218,
           "y": 221,
           "type": "text",
-          "groupId": "0b685419-996b-492a-bffd-0986a9c2e438"
+          "groupId": "0b685419-996b-492a-bffd-0986a9c2e438",
+          "tagName": "h3"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "scale": 100,
@@ -1823,10 +2323,18 @@
             "baseColor": "#584f46",
             "isExternal": true
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "width": 150,
           "height": 228,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "basedOn": "db0d1905-7c38-4c88-9c06-936a907639d0",
           "id": "9c2eef7b-236d-49ed-9157-23ef20108444",
           "x": 50,
@@ -1836,16 +2344,27 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 243, "g": 242, "b": 240 } },
+          "backgroundColor": {
+            "color": {
+              "r": 243,
+              "g": 242,
+              "b": 240
+            }
+          },
           "width": 163,
           "height": 228,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "basedOn": "748a22e9-ad83-4d32-bc9c-86f0161a9213",
           "id": "e5565584-23aa-47ae-83ed-aba693bbd37c",
           "x": 200,
@@ -1855,13 +2374,15 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Epilogue",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
             "styles": ["regular", "italic"],
@@ -1885,6 +2406,7 @@
               [1, 800],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 2000,
               "asc": 1580,
@@ -1904,10 +2426,19 @@
             }
           },
           "fontSize": 15,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.3,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"color: #313831\">How to</span>\n<span style=\"color: #313831\">Re-decorate Your Bathroom on a Budget</span>",
           "fontWeight": 700,
           "borderRadius": {
@@ -1927,7 +2458,8 @@
           "x": 218,
           "y": 454,
           "type": "text",
-          "groupId": "ebcc586b-bc9c-4d87-9c90-4519eef3c210"
+          "groupId": "ebcc586b-bc9c-4d87-9c90-4519eef3c210",
+          "tagName": "h3"
         }
       ],
       "animations": [
@@ -1948,7 +2480,13 @@
           "delay": 300
         }
       ],
-      "backgroundColor": { "color": { "r": 49, "g": 56, "b": 49 } },
+      "backgroundColor": {
+        "color": {
+          "r": 49,
+          "g": 56,
+          "b": 49
+        }
+      },
       "type": "page",
       "id": "ee9c0096-fa8c-4866-bf3d-ed2f0f046e11",
       "pageTemplateType": "list",
@@ -1965,8 +2503,5 @@
         }
       }
     }
-  ],
-  "current": null,
-  "selection": [],
-  "story": {}
+  ]
 }
