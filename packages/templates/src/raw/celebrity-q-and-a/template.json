@@ -1,18 +1,26 @@
 {
+  "current": null,
+  "selection": [],
+  "story": {},
   "version": 43,
   "pages": [
     {
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "isDefaultBackground": true,
           "id": "8292711e-a84b-46fc-9a01-06d14c221166",
@@ -20,7 +28,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "scale": 400,
@@ -42,28 +53,39 @@
             "baseColor": "#28221c",
             "isExternal": true
           },
-          "backgroundColor": { "color": { "r": 254, "g": 49, "b": 49 } },
+          "backgroundColor": {
+            "color": {
+              "r": 254,
+              "g": 49,
+              "b": 49
+            }
+          },
           "x": 210,
           "y": -57,
           "width": 202,
           "height": 299,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "id": "34f04d90-ba21-4036-abc6-363af1d12bc7",
           "type": "image"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Six Caps",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [400],
             "styles": ["regular"],
             "variants": [[0, 400]],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 2048,
               "asc": 2263,
@@ -81,10 +103,19 @@
             }
           },
           "fontSize": 230,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 0.88,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"text-transform: uppercase\">Zoe</span>\n<span style=\"text-transform: uppercase\">Travis</span>",
           "fontWeight": 700,
           "borderRadius": {
@@ -106,17 +137,20 @@
         },
         {
           "opacity": 85,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 18,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Covered By Your Grace",
-            "service": "fonts.google.com",
             "fallbacks": ["cursive"],
             "weights": [400],
             "styles": ["regular"],
             "variants": [[0, 400]],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1024,
               "asc": 995,
@@ -136,10 +170,19 @@
             }
           },
           "fontSize": 160,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.4,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"color: #ff2d2d\">Q&amp;A</span>",
           "fontWeight": 700,
           "borderRadius": {
@@ -157,17 +200,20 @@
           "focalX": 50,
           "focalY": 50,
           "id": "5e174cb2-a3f1-4a21-a08d-de3b1af4b54a",
-          "type": "text"
+          "type": "text",
+          "tagName": "p"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Lora",
-            "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [400, 500, 600, 700],
             "styles": ["regular", "italic"],
@@ -181,6 +227,7 @@
               [1, 600],
               [1, 700]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 1006,
@@ -200,10 +247,19 @@
             }
           },
           "fontSize": 16,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.2,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "By <span style=\"font-weight: 700\">Nicole Newman</span> 9/13/20",
           "fontWeight": 700,
           "borderRadius": {
@@ -225,7 +281,13 @@
         }
       ],
       "animations": [],
-      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 255,
+          "b": 255
+        }
+      },
       "type": "page",
       "id": "911c9de4-8b85-4779-aa58-321b4b7e3388",
       "pageTemplateType": "cover"
@@ -234,15 +296,26 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
           "x": 48,
           "y": 0,
           "width": 330,
           "height": 494,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "type": "image",
           "id": "d7149945-c3b3-4672-a1e4-1101caf606df",
@@ -268,24 +341,46 @@
           "overlay": {
             "type": "linear",
             "stops": [
-              { "color": { "r": 0, "g": 0, "b": 0, "a": 0.31 }, "position": 0 },
               {
-                "color": { "r": 0, "g": 0, "b": 0, "a": 0.31 },
+                "color": {
+                  "r": 0,
+                  "g": 0,
+                  "b": 0,
+                  "a": 0.31
+                },
+                "position": 0
+              },
+              {
+                "color": {
+                  "r": 0,
+                  "g": 0,
+                  "b": 0,
+                  "a": 0.31
+                },
                 "position": 0.7
               },
-              { "color": { "r": 0, "g": 0, "b": 0 }, "position": 1 }
+              {
+                "color": {
+                  "r": 0,
+                  "g": 0,
+                  "b": 0
+                },
+                "position": 1
+              }
             ]
           }
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Lora",
-            "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [400, 500, 600, 700],
             "styles": ["regular", "italic"],
@@ -299,6 +394,7 @@
               [1, 600],
               [1, 700]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 1006,
@@ -318,10 +414,20 @@
             }
           },
           "fontSize": 20,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.4,
           "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "content": "<span style=\"color: #fff\">Style icon and actress best known for her roles in Big Lies and Lo-Fidelity joins us for an edition of our rapid-fire Q &amp; A.</span>",
           "fontWeight": 400,
           "borderRadius": {
@@ -353,20 +459,37 @@
         }
       ],
       "backgroundOverlay": "none",
-      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 255,
+          "b": 255
+        }
+      },
       "type": "page",
       "id": "f9324df0-5145-4972-b8a2-fea346d97858",
       "defaultBackgroundElement": {
         "opacity": 100,
-        "flip": { "vertical": false, "horizontal": false },
+        "flip": {
+          "vertical": false,
+          "horizontal": false
+        },
         "rotationAngle": 0,
         "lockAspectRatio": true,
-        "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+        "backgroundColor": {
+          "color": {
+            "r": 255,
+            "g": 255,
+            "b": 255
+          }
+        },
         "x": 1,
         "y": 1,
         "width": 1,
         "height": 1,
-        "mask": { "type": "rectangle" },
+        "mask": {
+          "type": "rectangle"
+        },
         "isBackground": true,
         "isDefaultBackground": true,
         "type": "shape",
@@ -378,14 +501,19 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "isDefaultBackground": true,
           "id": "1774bba0-9b0d-4a74-b200-90533c54da09",
@@ -393,7 +521,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "scale": 160,
@@ -415,10 +546,18 @@
             "baseColor": "#33251e",
             "isExternal": true
           },
-          "backgroundColor": { "color": { "r": 254, "g": 49, "b": 49 } },
+          "backgroundColor": {
+            "color": {
+              "r": 254,
+              "g": 49,
+              "b": 49
+            }
+          },
           "width": 272,
           "height": 253,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "basedOn": "8b8afbf4-fc93-4683-bc23-3e14e260f83c",
           "id": "decfcaeb-a56a-46a7-bae6-48c0d86fa253",
           "x": 140,
@@ -426,9 +565,21 @@
           "overlay": {
             "type": "linear",
             "stops": [
-              { "color": { "r": 255, "g": 255, "b": 255 }, "position": 0 },
               {
-                "color": { "r": 255, "g": 255, "b": 255, "a": 0 },
+                "color": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255
+                },
+                "position": 0
+              },
+              {
+                "color": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 0
+                },
                 "position": 1
               }
             ],
@@ -438,17 +589,20 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Six Caps",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [400],
             "styles": ["regular"],
             "variants": [[0, 400]],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 2048,
               "asc": 2263,
@@ -466,10 +620,19 @@
             }
           },
           "fontSize": 154,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 0.9,
           "textAlign": "left",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"text-transform: uppercase\">Where</span>\n<span style=\"text-transform: uppercase\">did you</span>\n<span style=\"text-transform: uppercase\">grow up</span>",
           "fontWeight": 700,
           "borderRadius": {
@@ -492,17 +655,20 @@
         },
         {
           "opacity": 85,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 10,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Covered By Your Grace",
-            "service": "fonts.google.com",
             "fallbacks": ["cursive"],
             "weights": [400],
             "styles": ["regular"],
             "variants": [[0, 400]],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1024,
               "asc": 995,
@@ -522,10 +688,19 @@
             }
           },
           "fontSize": 200,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.4,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"color: #ff2d2d\">\"</span>",
           "fontWeight": 700,
           "borderRadius": {
@@ -548,17 +723,20 @@
         },
         {
           "opacity": 85,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 26,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Covered By Your Grace",
-            "service": "fonts.google.com",
             "fallbacks": ["cursive"],
             "weights": [400],
             "styles": ["regular"],
             "variants": [[0, 400]],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1024,
               "asc": 995,
@@ -578,10 +756,19 @@
             }
           },
           "fontSize": 218,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.4,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"color: #ff2d2d\">?</span>",
           "fontWeight": 700,
           "borderRadius": {
@@ -614,7 +801,13 @@
         }
       ],
       "backgroundOverlay": "none",
-      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 255,
+          "b": 255
+        }
+      },
       "type": "page",
       "id": "117e9a48-d7a6-48bf-8980-997cfcda6362",
       "pageTemplateType": ""
@@ -623,15 +816,26 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
           "x": 48,
           "y": 0,
           "width": 330,
           "height": 625,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "type": "video",
           "id": "abc7c465-20d3-45f6-acc6-d5fa9303f1a8",
@@ -665,20 +869,37 @@
       ],
       "animations": [],
       "backgroundOverlay": "none",
-      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 255,
+          "b": 255
+        }
+      },
       "type": "page",
       "id": "376eaf69-859a-4911-b177-e9527ae4f44e",
       "defaultBackgroundElement": {
         "opacity": 100,
-        "flip": { "vertical": false, "horizontal": false },
+        "flip": {
+          "vertical": false,
+          "horizontal": false
+        },
         "rotationAngle": 0,
         "lockAspectRatio": true,
-        "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+        "backgroundColor": {
+          "color": {
+            "r": 255,
+            "g": 255,
+            "b": 255
+          }
+        },
         "x": 1,
         "y": 1,
         "width": 1,
         "height": 1,
-        "mask": { "type": "rectangle" },
+        "mask": {
+          "type": "rectangle"
+        },
         "isBackground": true,
         "isDefaultBackground": true,
         "type": "shape",
@@ -690,14 +911,19 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "isDefaultBackground": true,
           "id": "84e8f574-948f-4337-a7d1-6c48a0f3b24f",
@@ -705,17 +931,20 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Six Caps",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [400],
             "styles": ["regular"],
             "variants": [[0, 400]],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 2048,
               "asc": 2263,
@@ -733,10 +962,19 @@
             }
           },
           "fontSize": 400,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.5,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"color: #f2f2f2; text-transform: uppercase\">Brooklyn</span>",
           "fontWeight": 700,
           "borderRadius": {
@@ -761,13 +999,22 @@
             "top": 0,
             "bottom": 0,
             "lockedWidth": true,
-            "color": { "color": { "r": 0, "g": 0, "b": 0 } }
+            "color": {
+              "color": {
+                "r": 0,
+                "g": 0,
+                "b": 0
+              }
+            }
           },
           "type": "text"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "scale": 150,
@@ -789,10 +1036,18 @@
             "baseColor": "#cfc2be",
             "isExternal": true
           },
-          "backgroundColor": { "color": { "r": 254, "g": 49, "b": 49 } },
+          "backgroundColor": {
+            "color": {
+              "r": 254,
+              "g": 49,
+              "b": 49
+            }
+          },
           "width": 315,
           "height": 515,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "basedOn": "d38aa0d7-f3a8-409f-aaae-e9181d57ce41",
           "id": "27ae4af9-cf9d-424e-81fe-872391371fac",
           "x": 97,
@@ -801,13 +1056,15 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Lora",
-            "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [400, 500, 600, 700],
             "styles": ["regular", "italic"],
@@ -821,6 +1078,7 @@
               [1, 600],
               [1, 700]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 1006,
@@ -840,10 +1098,20 @@
             }
           },
           "fontSize": 16,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.4,
           "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "content": "It feels like Travis, 30, has always been famous — an indelible screen presence and iconic parents will do that.",
           "fontWeight": 400,
           "borderRadius": {
@@ -876,7 +1144,13 @@
         }
       ],
       "backgroundOverlay": "none",
-      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 255,
+          "b": 255
+        }
+      },
       "type": "page",
       "id": "9d76fa95-d6d3-4e1b-acc9-7c6b6bc5bbd1",
       "pageTemplateType": ""
@@ -885,14 +1159,19 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "isDefaultBackground": true,
           "id": "53c94040-b94c-4c29-9bb2-0d3f3aa78dba",
@@ -900,17 +1179,20 @@
         },
         {
           "opacity": 85,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 10,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Covered By Your Grace",
-            "service": "fonts.google.com",
             "fallbacks": ["cursive"],
             "weights": [400],
             "styles": ["regular"],
             "variants": [[0, 400]],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1024,
               "asc": 995,
@@ -930,10 +1212,19 @@
             }
           },
           "fontSize": 200,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.4,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"color: #ff2d2d\">\"</span>",
           "fontWeight": 700,
           "borderRadius": {
@@ -956,17 +1247,20 @@
         },
         {
           "opacity": 85,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 10,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Covered By Your Grace",
-            "service": "fonts.google.com",
             "fallbacks": ["cursive"],
             "weights": [400],
             "styles": ["regular"],
             "variants": [[0, 400]],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1024,
               "asc": 995,
@@ -986,10 +1280,19 @@
             }
           },
           "fontSize": 200,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.4,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"color: #ff2d2d\">\"</span>",
           "fontWeight": 700,
           "borderRadius": {
@@ -1012,13 +1315,15 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Lora",
-            "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [400, 500, 600, 700],
             "styles": ["regular", "italic"],
@@ -1032,6 +1337,7 @@
               [1, 600],
               [1, 700]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 1006,
@@ -1051,10 +1357,20 @@
             }
           },
           "fontSize": 24,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.3,
           "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "content": "<span style=\"color: #fff\">That was what I liked growing up. And also, that was what I thought I was suited for. I didn’t see a lot of people who looked like me in big movies.</span>",
           "fontWeight": 400,
           "borderRadius": {
@@ -1077,7 +1393,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "scale": 200,
@@ -1099,10 +1418,18 @@
             "baseColor": "#3a2113",
             "isExternal": true
           },
-          "backgroundColor": { "color": { "r": 254, "g": 49, "b": 49 } },
+          "backgroundColor": {
+            "color": {
+              "r": 254,
+              "g": 49,
+              "b": 49
+            }
+          },
           "width": 256,
           "height": 366,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "basedOn": "8f4e9c36-4c28-47b7-aeba-5999630343c0",
           "id": "d89ed844-8f84-4c6f-aab6-d4c5d76bd533",
           "x": 157,
@@ -1134,7 +1461,13 @@
           "delay": 0
         }
       ],
-      "backgroundColor": { "color": { "r": 0, "g": 0, "b": 0 } },
+      "backgroundColor": {
+        "color": {
+          "r": 0,
+          "g": 0,
+          "b": 0
+        }
+      },
       "type": "page",
       "id": "83de9e27-6ff8-46cc-8555-5a61aa1f64e0",
       "pageTemplateType": "quote"
@@ -1143,14 +1476,19 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "isDefaultBackground": true,
           "id": "428cb4ac-7928-4315-96a9-b1917ecd38a0",
@@ -1158,7 +1496,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "scale": 230,
@@ -1180,10 +1521,18 @@
             "baseColor": "#d8d9d4",
             "isExternal": true
           },
-          "backgroundColor": { "color": { "r": 254, "g": 49, "b": 49 } },
+          "backgroundColor": {
+            "color": {
+              "r": 254,
+              "g": 49,
+              "b": 49
+            }
+          },
           "width": 265,
           "height": 183,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "basedOn": "79efeb10-da8f-43b2-bac4-5eaf1a49b75c",
           "id": "4a6f6ac1-7a58-466e-b972-c0ee339808bf",
           "x": 147,
@@ -1192,7 +1541,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "scale": 180,
@@ -1214,10 +1566,18 @@
             "baseColor": "#3c3336",
             "isExternal": true
           },
-          "backgroundColor": { "color": { "r": 254, "g": 49, "b": 49 } },
+          "backgroundColor": {
+            "color": {
+              "r": 254,
+              "g": 49,
+              "b": 49
+            }
+          },
           "width": 331,
           "height": 220,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "basedOn": "79efeb10-da8f-43b2-bac4-5eaf1a49b75c",
           "id": "685975e0-431f-4c4b-8e93-5a829d15b08b",
           "x": 0,
@@ -1226,17 +1586,20 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Six Caps",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [400],
             "styles": ["regular"],
             "variants": [[0, 400]],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 2048,
               "asc": 2263,
@@ -1254,10 +1617,19 @@
             }
           },
           "fontSize": 159,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 0.88,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"text-transform: uppercase\">Brooklyn</span>",
           "fontWeight": 700,
           "borderRadius": {
@@ -1276,21 +1648,25 @@
           "id": "b64babea-33f3-4264-8af4-3fdeadaab637",
           "x": 35,
           "y": 142,
-          "type": "text"
+          "type": "text",
+          "tagName": "h2"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Six Caps",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [400],
             "styles": ["regular"],
             "variants": [[0, 400]],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 2048,
               "asc": 2263,
@@ -1308,10 +1684,19 @@
             }
           },
           "fontSize": 159,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 0.88,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"text-transform: uppercase\">Manhattan</span>",
           "fontWeight": 700,
           "borderRadius": {
@@ -1334,17 +1719,20 @@
         },
         {
           "opacity": 85,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 2,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Covered By Your Grace",
-            "service": "fonts.google.com",
             "fallbacks": ["cursive"],
             "weights": [400],
             "styles": ["regular"],
             "variants": [[0, 400]],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1024,
               "asc": 995,
@@ -1364,10 +1752,19 @@
             }
           },
           "fontSize": 116,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.4,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"color: #ff2d2d\">or</span>",
           "fontWeight": 700,
           "borderRadius": {
@@ -1386,21 +1783,25 @@
           "id": "ca68969a-9b92-4ef2-bea4-e04d195b2b2c",
           "x": 14,
           "y": 235,
-          "type": "text"
+          "type": "text",
+          "tagName": "h2"
         },
         {
           "opacity": 85,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Covered By Your Grace",
-            "service": "fonts.google.com",
             "fallbacks": ["cursive"],
             "weights": [400],
             "styles": ["regular"],
             "variants": [[0, 400]],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1024,
               "asc": 995,
@@ -1420,10 +1821,19 @@
             }
           },
           "fontSize": 160,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.4,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"color: #ff2d2d\">?</span>",
           "fontWeight": 700,
           "borderRadius": {
@@ -1493,7 +1903,13 @@
           "delay": 800
         }
       ],
-      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 255,
+          "b": 255
+        }
+      },
       "type": "page",
       "id": "0e0e880b-1817-4bae-892d-3d49fe25b34d",
       "pageTemplateType": ""
@@ -1502,15 +1918,26 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
           "x": 48,
           "y": 0,
           "width": 330,
           "height": 625,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "type": "video",
           "id": "6fdcc6c8-1d7d-4749-9469-658bd3b5ea7a",
@@ -1541,20 +1968,37 @@
           "loop": true
         }
       ],
-      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 255,
+          "b": 255
+        }
+      },
       "type": "page",
       "id": "c5d0dc2a-59bc-4fe5-82c5-4e2dd8ea2373",
       "defaultBackgroundElement": {
         "opacity": 100,
-        "flip": { "vertical": false, "horizontal": false },
+        "flip": {
+          "vertical": false,
+          "horizontal": false
+        },
         "rotationAngle": 0,
         "lockAspectRatio": true,
-        "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+        "backgroundColor": {
+          "color": {
+            "r": 255,
+            "g": 255,
+            "b": 255
+          }
+        },
         "x": 1,
         "y": 1,
         "width": 1,
         "height": 1,
-        "mask": { "type": "rectangle" },
+        "mask": {
+          "type": "rectangle"
+        },
         "isBackground": true,
         "isDefaultBackground": true,
         "type": "shape",
@@ -1567,14 +2011,19 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "isDefaultBackground": true,
           "id": "06a5fd42-8759-4527-839d-e6db322ba611",
@@ -1582,17 +2031,20 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Six Caps",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [400],
             "styles": ["regular"],
             "variants": [[0, 400]],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 2048,
               "asc": 2263,
@@ -1610,10 +2062,19 @@
             }
           },
           "fontSize": 400,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.5,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"color: #f2f2f2; text-transform: uppercase\">Brooklyn</span>",
           "fontWeight": 700,
           "borderRadius": {
@@ -1638,13 +2099,22 @@
             "top": 0,
             "bottom": 0,
             "lockedWidth": true,
-            "color": { "color": { "r": 0, "g": 0, "b": 0 } }
+            "color": {
+              "color": {
+                "r": 0,
+                "g": 0,
+                "b": 0
+              }
+            }
           },
           "type": "text"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "scale": 156,
@@ -1666,10 +2136,18 @@
             "baseColor": "#c0b8b3",
             "isExternal": true
           },
-          "backgroundColor": { "color": { "r": 254, "g": 49, "b": 49 } },
+          "backgroundColor": {
+            "color": {
+              "r": 254,
+              "g": 49,
+              "b": 49
+            }
+          },
           "width": 304,
           "height": 448,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "basedOn": "d38aa0d7-f3a8-409f-aaae-e9181d57ce41",
           "id": "c499efe0-85f5-45b7-adc5-8b958ae32ca6",
           "x": 0,
@@ -1678,13 +2156,15 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Lora",
-            "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [400, 500, 600, 700],
             "styles": ["regular", "italic"],
@@ -1698,6 +2178,7 @@
               [1, 600],
               [1, 700]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 1006,
@@ -1717,10 +2198,20 @@
             }
           },
           "fontSize": 16,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.4,
           "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "content": "There is so much diverse energy in Brooklyn. You can take a turn down a lovely neighborhood street, or get that lively nightlife if you want.",
           "fontWeight": 400,
           "borderRadius": {
@@ -1753,7 +2244,13 @@
         }
       ],
       "backgroundOverlay": "none",
-      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 255,
+          "b": 255
+        }
+      },
       "type": "page",
       "id": "36b691c7-6c88-4af4-a2d4-8e8fafe57659",
       "pageTemplateType": "editorial"
@@ -1762,14 +2259,19 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "isDefaultBackground": true,
           "id": "9bd1ce1d-a481-4bf1-addb-d5db72633a8f",
@@ -1777,17 +2279,20 @@
         },
         {
           "opacity": 85,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 10,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Covered By Your Grace",
-            "service": "fonts.google.com",
             "fallbacks": ["cursive"],
             "weights": [400],
             "styles": ["regular"],
             "variants": [[0, 400]],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1024,
               "asc": 995,
@@ -1807,10 +2312,19 @@
             }
           },
           "fontSize": 200,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.4,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"color: #ff2d2d\">\"</span>",
           "fontWeight": 700,
           "borderRadius": {
@@ -1833,17 +2347,20 @@
         },
         {
           "opacity": 85,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 10,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Covered By Your Grace",
-            "service": "fonts.google.com",
             "fallbacks": ["cursive"],
             "weights": [400],
             "styles": ["regular"],
             "variants": [[0, 400]],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1024,
               "asc": 995,
@@ -1863,10 +2380,19 @@
             }
           },
           "fontSize": 200,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.4,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"color: #ff2d2d\">\"</span>",
           "fontWeight": 700,
           "borderRadius": {
@@ -1889,13 +2415,15 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Lora",
-            "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [400, 500, 600, 700],
             "styles": ["regular", "italic"],
@@ -1909,6 +2437,7 @@
               [1, 600],
               [1, 700]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 1006,
@@ -1928,10 +2457,20 @@
             }
           },
           "fontSize": 24,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.3,
           "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "content": "<span style=\"color: #fff\">A lot of what inspires me is rooted in Brooklyn. I love to be at home whenever I can and I really fill my place with treasures from people near and dear to me.</span>",
           "fontWeight": 400,
           "borderRadius": {
@@ -1954,7 +2493,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "scale": 160,
@@ -1976,10 +2518,18 @@
             "baseColor": "#342420",
             "isExternal": true
           },
-          "backgroundColor": { "color": { "r": 254, "g": 49, "b": 49 } },
+          "backgroundColor": {
+            "color": {
+              "r": 254,
+              "g": 49,
+              "b": 49
+            }
+          },
           "width": 256,
           "height": 366,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "basedOn": "8f4e9c36-4c28-47b7-aeba-5999630343c0",
           "id": "cbf1acf8-1862-4b25-8730-f18c60359851",
           "x": 157,
@@ -2011,7 +2561,13 @@
           "delay": 600
         }
       ],
-      "backgroundColor": { "color": { "r": 0, "g": 0, "b": 0 } },
+      "backgroundColor": {
+        "color": {
+          "r": 0,
+          "g": 0,
+          "b": 0
+        }
+      },
       "type": "page",
       "id": "8763dc13-eb60-4ff7-b17f-f8f8388d0978",
       "pageTemplateType": ""
@@ -2020,15 +2576,26 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
           "x": 48,
           "y": 0,
           "width": 330,
           "height": 625,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "type": "video",
           "id": "378e5de8-25ed-4f1a-8f0c-9a90240fcd43",
@@ -2061,7 +2628,13 @@
         }
       ],
       "animations": [],
-      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 255,
+          "b": 255
+        }
+      },
       "type": "page",
       "id": "00330383-ed24-4e3a-96c9-9fb40d7c0eb5",
       "pageAttachment": {
@@ -2071,15 +2644,26 @@
       },
       "defaultBackgroundElement": {
         "opacity": 100,
-        "flip": { "vertical": false, "horizontal": false },
+        "flip": {
+          "vertical": false,
+          "horizontal": false
+        },
         "rotationAngle": 0,
         "lockAspectRatio": true,
-        "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+        "backgroundColor": {
+          "color": {
+            "r": 255,
+            "g": 255,
+            "b": 255
+          }
+        },
         "x": 1,
         "y": 1,
         "width": 1,
         "height": 1,
-        "mask": { "type": "rectangle" },
+        "mask": {
+          "type": "rectangle"
+        },
         "isBackground": true,
         "isDefaultBackground": true,
         "type": "shape",
@@ -2091,14 +2675,19 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "isDefaultBackground": true,
           "id": "c36f0cfe-d15f-4b37-8c02-de3bf7b7c8e5",
@@ -2106,17 +2695,20 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Six Caps",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [400],
             "styles": ["regular"],
             "variants": [[0, 400]],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 2048,
               "asc": 2263,
@@ -2134,10 +2726,19 @@
             }
           },
           "fontSize": 271,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.5,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"color: #f2f2f2; text-transform: uppercase\">More videos</span>",
           "fontWeight": 700,
           "borderRadius": {
@@ -2162,23 +2763,32 @@
             "top": 0,
             "bottom": 0,
             "lockedWidth": true,
-            "color": { "color": { "r": 0, "g": 0, "b": 0 } }
+            "color": {
+              "color": {
+                "r": 0,
+                "g": 0,
+                "b": 0
+              }
+            }
           },
           "type": "text"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Six Caps",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [400],
             "styles": ["regular"],
             "variants": [[0, 400]],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 2048,
               "asc": 2263,
@@ -2196,10 +2806,19 @@
             }
           },
           "fontSize": 120,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 0.9,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"text-transform: uppercase\">Javier</span>\n<span style=\"text-transform: uppercase\">Dardem</span>",
           "fontWeight": 700,
           "borderRadius": {
@@ -2223,7 +2842,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "scale": 120,
@@ -2245,10 +2867,18 @@
             "baseColor": "#33211f",
             "isExternal": true
           },
-          "backgroundColor": { "color": { "r": 254, "g": 49, "b": 49 } },
+          "backgroundColor": {
+            "color": {
+              "r": 254,
+              "g": 49,
+              "b": 49
+            }
+          },
           "width": 200,
           "height": 250,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "basedOn": "d38aa0d7-f3a8-409f-aaae-e9181d57ce41",
           "id": "1e0f3868-24d5-4f1b-aab3-dd539ce372bf",
           "x": 212,
@@ -2258,7 +2888,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "scale": 238,
@@ -2280,10 +2913,18 @@
             "baseColor": "#dac4ae",
             "isExternal": true
           },
-          "backgroundColor": { "color": { "r": 254, "g": 49, "b": 49 } },
+          "backgroundColor": {
+            "color": {
+              "r": 254,
+              "g": 49,
+              "b": 49
+            }
+          },
           "width": 168,
           "height": 294,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "basedOn": "b4920a69-bf49-415c-9496-97e3ad6adc81",
           "id": "4b3c1c28-6607-4fc2-a4b5-ab606572f279",
           "x": 0,
@@ -2293,17 +2934,20 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 16,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Covered By Your Grace",
-            "service": "fonts.google.com",
             "fallbacks": ["cursive"],
             "weights": [400],
             "styles": ["regular"],
             "variants": [[0, 400]],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1024,
               "asc": 995,
@@ -2323,10 +2967,19 @@
             }
           },
           "fontSize": 66,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.4,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"color: #ff2d2d\">Q&amp;A</span>",
           "fontWeight": 700,
           "borderRadius": {
@@ -2350,17 +3003,20 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Six Caps",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [400],
             "styles": ["regular"],
             "variants": [[0, 400]],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 2048,
               "asc": 2263,
@@ -2378,10 +3034,19 @@
             }
           },
           "fontSize": 120,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 0.9,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"text-transform: uppercase\">Dree</span>\n<span style=\"text-transform: uppercase\">Larson</span>",
           "fontWeight": 700,
           "borderRadius": {
@@ -2405,17 +3070,20 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": -10,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Covered By Your Grace",
-            "service": "fonts.google.com",
             "fallbacks": ["cursive"],
             "weights": [400],
             "styles": ["regular"],
             "variants": [[0, 400]],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1024,
               "asc": 995,
@@ -2435,10 +3103,19 @@
             }
           },
           "fontSize": 66,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.4,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"color: #ff2d2d\">Q&amp;A</span>",
           "fontWeight": 700,
           "borderRadius": {
@@ -2510,7 +3187,13 @@
         }
       ],
       "backgroundOverlay": "none",
-      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 255,
+          "b": 255
+        }
+      },
       "type": "page",
       "id": "2a32f8e5-db1b-4e1c-95b9-534caadfdbe1",
       "pageTemplateType": "list",
@@ -2527,8 +3210,5 @@
         }
       }
     }
-  ],
-  "current": null,
-  "selection": [],
-  "story": {}
+  ]
 }

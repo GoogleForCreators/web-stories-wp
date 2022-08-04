@@ -484,7 +484,8 @@
           "basedOn": "6a3f6860-7507-4d56-9873-73d77c98038e",
           "id": "f569e972-ff30-4069-a979-cd49c1e93da8",
           "x": 47,
-          "y": 343
+          "y": 343,
+          "tagName": "p"
         }
       ],
       "backgroundColor": {
@@ -667,7 +668,8 @@
           "basedOn": "1d98d184-492d-41f8-b6cb-09d2345b2bee",
           "id": "5c8416a2-60a0-4f6b-8cd0-9edd58aaa750",
           "x": 48,
-          "y": 3
+          "y": 3,
+          "tagName": "h1"
         },
         {
           "opacity": 100,
@@ -1293,7 +1295,8 @@
           "id": "168b955f-3766-4567-90be-f771f3bb3d4a",
           "x": 50,
           "y": 2,
-          "type": "text"
+          "type": "text",
+          "tagName": "h1"
         },
         {
           "opacity": 100,
@@ -1918,7 +1921,8 @@
           "id": "d16389af-9567-4596-b119-96e142c10f4d",
           "x": 31,
           "y": 280,
-          "type": "text"
+          "type": "text",
+          "tagName": "h2"
         },
         {
           "opacity": 100,
@@ -2005,7 +2009,8 @@
           "id": "73ce87ad-8503-487d-93c0-4276fb91fbc0",
           "x": -28,
           "y": -74,
-          "type": "text"
+          "type": "text",
+          "tagName": "p"
         },
         {
           "x": 30,
@@ -2094,7 +2099,8 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "type": "text"
+          "type": "text",
+          "tagName": "p"
         },
         {
           "opacity": 100,
@@ -2226,477 +2232,6 @@
               "a": 0.45
             }
           }
-        },
-        {
-          "opacity": 40,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 255,
-              "b": 255
-            }
-          },
-          "type": "shape",
-          "x": 49,
-          "y": 83,
-          "width": 318,
-          "height": 1,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "id": "209ea68e-0a75-4c9f-846a-04d3888fc2a2",
-          "groupId": "c1ff5c76-454b-45ed-a640-bd6784d4541f"
-        },
-        {
-          "x": 49,
-          "y": 170,
-          "id": "6d6de56a-5b4a-41fc-b5ab-9786be6b21e6",
-          "basedOn": "209ea68e-0a75-4c9f-846a-04d3888fc2a2",
-          "opacity": 40,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 255,
-              "b": 255
-            }
-          },
-          "type": "shape",
-          "width": 318,
-          "height": 1,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "groupId": "98b935dc-c913-40bf-9faa-8ccd3bae6aad"
-        },
-        {
-          "x": 49,
-          "y": 257,
-          "id": "37182dab-597c-4006-90bc-85ea20760834",
-          "basedOn": "209ea68e-0a75-4c9f-846a-04d3888fc2a2",
-          "opacity": 40,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 255,
-              "b": 255
-            }
-          },
-          "type": "shape",
-          "width": 318,
-          "height": 1,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "groupId": "62391972-efab-4fcb-9025-f845cc7c3822"
-        },
-        {
-          "x": 49,
-          "y": 344,
-          "id": "cc25e651-a299-498a-ace6-10e0c199cec9",
-          "basedOn": "209ea68e-0a75-4c9f-846a-04d3888fc2a2",
-          "opacity": 40,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 255,
-              "b": 255
-            }
-          },
-          "type": "shape",
-          "width": 318,
-          "height": 1,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "groupId": "e56a28ff-4048-404f-88e8-02bc3dafa8ff"
-        },
-        {
-          "x": 48,
-          "y": 36,
-          "id": "f63371b6-3beb-46e8-95ac-12fc112a3226",
-          "basedOn": "dd50c7a4-0e4a-491e-9a81-8ec4e04a8754",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Work Sans",
-            "fallbacks": ["sans-serif"],
-            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
-            "styles": ["regular", "italic"],
-            "variants": [
-              [0, 100],
-              [0, 200],
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900],
-              [1, 100],
-              [1, 200],
-              [1, 300],
-              [1, 400],
-              [1, 500],
-              [1, 600],
-              [1, 700],
-              [1, 800],
-              [1, 900]
-            ],
-            "service": "fonts.google.com",
-            "metrics": {
-              "upm": 1000,
-              "asc": 930,
-              "des": -243,
-              "tAsc": 930,
-              "tDes": -243,
-              "tLGap": 0,
-              "wAsc": 1105,
-              "wDes": 343,
-              "xH": 500,
-              "capH": 660,
-              "yMin": -337,
-              "yMax": 1100,
-              "hAsc": 930,
-              "hDes": -243,
-              "lGap": 0
-            }
-          },
-          "fontSize": 24,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.22,
-          "textAlign": "initial",
-          "padding": {
-            "locked": true,
-            "hasHiddenPadding": false
-          },
-          "type": "text",
-          "content": "<span style=\"font-weight: 500; color: #fff\">Pagework</span>",
-          "fontWeight": 400,
-          "borderRadius": {
-            "locked": true,
-            "topLeft": 2,
-            "topRight": 2,
-            "bottomRight": 2,
-            "bottomLeft": 2
-          },
-          "width": 200,
-          "height": 28,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "groupId": "c1ff5c76-454b-45ed-a640-bd6784d4541f"
-        },
-        {
-          "x": 48,
-          "y": 124,
-          "id": "d5a974db-cc2b-42bf-b597-076481c2cdfc",
-          "basedOn": "dd50c7a4-0e4a-491e-9a81-8ec4e04a8754",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Work Sans",
-            "fallbacks": ["sans-serif"],
-            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
-            "styles": ["regular", "italic"],
-            "variants": [
-              [0, 100],
-              [0, 200],
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900],
-              [1, 100],
-              [1, 200],
-              [1, 300],
-              [1, 400],
-              [1, 500],
-              [1, 600],
-              [1, 700],
-              [1, 800],
-              [1, 900]
-            ],
-            "service": "fonts.google.com",
-            "metrics": {
-              "upm": 1000,
-              "asc": 930,
-              "des": -243,
-              "tAsc": 930,
-              "tDes": -243,
-              "tLGap": 0,
-              "wAsc": 1105,
-              "wDes": 343,
-              "xH": 500,
-              "capH": 660,
-              "yMin": -337,
-              "yMax": 1100,
-              "hAsc": 930,
-              "hDes": -243,
-              "lGap": 0
-            }
-          },
-          "fontSize": 24,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.22,
-          "textAlign": "initial",
-          "padding": {
-            "locked": true,
-            "hasHiddenPadding": false
-          },
-          "type": "text",
-          "content": "<span style=\"font-weight: 500; color: #fff\">Mon 09.07.20</span>",
-          "fontWeight": 400,
-          "borderRadius": {
-            "locked": true,
-            "topLeft": 2,
-            "topRight": 2,
-            "bottomRight": 2,
-            "bottomLeft": 2
-          },
-          "width": 200,
-          "height": 28,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "groupId": "98b935dc-c913-40bf-9faa-8ccd3bae6aad"
-        },
-        {
-          "x": 48,
-          "y": 213,
-          "id": "1ec6c0ac-f9bf-438b-a83d-680c8ade0c19",
-          "basedOn": "dd50c7a4-0e4a-491e-9a81-8ec4e04a8754",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Work Sans",
-            "fallbacks": ["sans-serif"],
-            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
-            "styles": ["regular", "italic"],
-            "variants": [
-              [0, 100],
-              [0, 200],
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900],
-              [1, 100],
-              [1, 200],
-              [1, 300],
-              [1, 400],
-              [1, 500],
-              [1, 600],
-              [1, 700],
-              [1, 800],
-              [1, 900]
-            ],
-            "service": "fonts.google.com",
-            "metrics": {
-              "upm": 1000,
-              "asc": 930,
-              "des": -243,
-              "tAsc": 930,
-              "tDes": -243,
-              "tLGap": 0,
-              "wAsc": 1105,
-              "wDes": 343,
-              "xH": 500,
-              "capH": 660,
-              "yMin": -337,
-              "yMax": 1100,
-              "hAsc": 930,
-              "hDes": -243,
-              "lGap": 0
-            }
-          },
-          "fontSize": 24,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.22,
-          "textAlign": "initial",
-          "padding": {
-            "locked": true,
-            "hasHiddenPadding": false
-          },
-          "type": "text",
-          "content": "<span style=\"font-weight: 500; color: #fff\">12:00 - 3:00</span>",
-          "fontWeight": 400,
-          "borderRadius": {
-            "locked": true,
-            "topLeft": 2,
-            "topRight": 2,
-            "bottomRight": 2,
-            "bottomLeft": 2
-          },
-          "width": 200,
-          "height": 28,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "groupId": "62391972-efab-4fcb-9025-f845cc7c3822"
-        },
-        {
-          "x": 48,
-          "y": 302,
-          "id": "0c7e492e-fd6c-4b55-8ad8-9d18cb9ec89d",
-          "basedOn": "dd50c7a4-0e4a-491e-9a81-8ec4e04a8754",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Work Sans",
-            "fallbacks": ["sans-serif"],
-            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
-            "styles": ["regular", "italic"],
-            "variants": [
-              [0, 100],
-              [0, 200],
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900],
-              [1, 100],
-              [1, 200],
-              [1, 300],
-              [1, 400],
-              [1, 500],
-              [1, 600],
-              [1, 700],
-              [1, 800],
-              [1, 900]
-            ],
-            "service": "fonts.google.com",
-            "metrics": {
-              "upm": 1000,
-              "asc": 930,
-              "des": -243,
-              "tAsc": 930,
-              "tDes": -243,
-              "tLGap": 0,
-              "wAsc": 1105,
-              "wDes": 343,
-              "xH": 500,
-              "capH": 660,
-              "yMin": -337,
-              "yMax": 1100,
-              "hAsc": 930,
-              "hDes": -243,
-              "lGap": 0
-            }
-          },
-          "fontSize": 24,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.22,
-          "textAlign": "initial",
-          "padding": {
-            "locked": true,
-            "hasHiddenPadding": false
-          },
-          "type": "text",
-          "content": "<span style=\"font-weight: 500; color: #fff\">18+</span>",
-          "fontWeight": 400,
-          "borderRadius": {
-            "locked": true,
-            "topLeft": 2,
-            "topRight": 2,
-            "bottomRight": 2,
-            "bottomLeft": 2
-          },
-          "width": 200,
-          "height": 28,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "groupId": "e56a28ff-4048-404f-88e8-02bc3dafa8ff"
         },
         {
           "x": 48,
@@ -2941,6 +2476,124 @@
           "groupId": "c1ff5c76-454b-45ed-a640-bd6784d4541f"
         },
         {
+          "x": 48,
+          "y": 36,
+          "id": "f63371b6-3beb-46e8-95ac-12fc112a3226",
+          "basedOn": "dd50c7a4-0e4a-491e-9a81-8ec4e04a8754",
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Work Sans",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["regular", "italic"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ],
+            "service": "fonts.google.com",
+            "metrics": {
+              "upm": 1000,
+              "asc": 930,
+              "des": -243,
+              "tAsc": 930,
+              "tDes": -243,
+              "tLGap": 0,
+              "wAsc": 1105,
+              "wDes": 343,
+              "xH": 500,
+              "capH": 660,
+              "yMin": -337,
+              "yMax": 1100,
+              "hAsc": 930,
+              "hDes": -243,
+              "lGap": 0
+            }
+          },
+          "fontSize": 24,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.22,
+          "textAlign": "initial",
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
+          "type": "text",
+          "content": "<span style=\"font-weight: 500; color: #fff\">Pagework</span>",
+          "fontWeight": 400,
+          "borderRadius": {
+            "locked": true,
+            "topLeft": 2,
+            "topRight": 2,
+            "bottomRight": 2,
+            "bottomLeft": 2
+          },
+          "width": 200,
+          "height": 28,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "groupId": "c1ff5c76-454b-45ed-a640-bd6784d4541f",
+          "tagName": "p"
+        },
+        {
+          "opacity": 40,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
+          "type": "shape",
+          "x": 49,
+          "y": 83,
+          "width": 318,
+          "height": 1,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "id": "209ea68e-0a75-4c9f-846a-04d3888fc2a2",
+          "groupId": "c1ff5c76-454b-45ed-a640-bd6784d4541f"
+        },
+        {
           "opacity": 60,
           "flip": {
             "vertical": false,
@@ -3027,6 +2680,125 @@
           "x": 49,
           "y": 98,
           "groupId": "98b935dc-c913-40bf-9faa-8ccd3bae6aad"
+        },
+        {
+          "x": 49,
+          "y": 170,
+          "id": "6d6de56a-5b4a-41fc-b5ab-9786be6b21e6",
+          "basedOn": "209ea68e-0a75-4c9f-846a-04d3888fc2a2",
+          "opacity": 40,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
+          "type": "shape",
+          "width": 318,
+          "height": 1,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "groupId": "98b935dc-c913-40bf-9faa-8ccd3bae6aad"
+        },
+        {
+          "x": 48,
+          "y": 124,
+          "id": "d5a974db-cc2b-42bf-b597-076481c2cdfc",
+          "basedOn": "dd50c7a4-0e4a-491e-9a81-8ec4e04a8754",
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Work Sans",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["regular", "italic"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ],
+            "service": "fonts.google.com",
+            "metrics": {
+              "upm": 1000,
+              "asc": 930,
+              "des": -243,
+              "tAsc": 930,
+              "tDes": -243,
+              "tLGap": 0,
+              "wAsc": 1105,
+              "wDes": 343,
+              "xH": 500,
+              "capH": 660,
+              "yMin": -337,
+              "yMax": 1100,
+              "hAsc": 930,
+              "hDes": -243,
+              "lGap": 0
+            }
+          },
+          "fontSize": 24,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.22,
+          "textAlign": "initial",
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
+          "type": "text",
+          "content": "<span style=\"font-weight: 500; color: #fff\">Mon 09.07.20</span>",
+          "fontWeight": 400,
+          "borderRadius": {
+            "locked": true,
+            "topLeft": 2,
+            "topRight": 2,
+            "bottomRight": 2,
+            "bottomLeft": 2
+          },
+          "width": 200,
+          "height": 28,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "groupId": "98b935dc-c913-40bf-9faa-8ccd3bae6aad",
+          "tagName": "p"
         },
         {
           "opacity": 60,
@@ -3117,6 +2889,125 @@
           "groupId": "62391972-efab-4fcb-9025-f845cc7c3822"
         },
         {
+          "x": 48,
+          "y": 213,
+          "id": "1ec6c0ac-f9bf-438b-a83d-680c8ade0c19",
+          "basedOn": "dd50c7a4-0e4a-491e-9a81-8ec4e04a8754",
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Work Sans",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["regular", "italic"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ],
+            "service": "fonts.google.com",
+            "metrics": {
+              "upm": 1000,
+              "asc": 930,
+              "des": -243,
+              "tAsc": 930,
+              "tDes": -243,
+              "tLGap": 0,
+              "wAsc": 1105,
+              "wDes": 343,
+              "xH": 500,
+              "capH": 660,
+              "yMin": -337,
+              "yMax": 1100,
+              "hAsc": 930,
+              "hDes": -243,
+              "lGap": 0
+            }
+          },
+          "fontSize": 24,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.22,
+          "textAlign": "initial",
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
+          "type": "text",
+          "content": "<span style=\"font-weight: 500; color: #fff\">12:00 - 3:00</span>",
+          "fontWeight": 400,
+          "borderRadius": {
+            "locked": true,
+            "topLeft": 2,
+            "topRight": 2,
+            "bottomRight": 2,
+            "bottomLeft": 2
+          },
+          "width": 200,
+          "height": 28,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "groupId": "62391972-efab-4fcb-9025-f845cc7c3822",
+          "tagName": "p"
+        },
+        {
+          "x": 49,
+          "y": 257,
+          "id": "37182dab-597c-4006-90bc-85ea20760834",
+          "basedOn": "209ea68e-0a75-4c9f-846a-04d3888fc2a2",
+          "opacity": 40,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
+          "type": "shape",
+          "width": 318,
+          "height": 1,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "groupId": "62391972-efab-4fcb-9025-f845cc7c3822"
+        },
+        {
           "opacity": 60,
           "flip": {
             "vertical": false,
@@ -3203,6 +3094,125 @@
           "x": 49,
           "y": 276,
           "groupId": "e56a28ff-4048-404f-88e8-02bc3dafa8ff"
+        },
+        {
+          "x": 49,
+          "y": 344,
+          "id": "cc25e651-a299-498a-ace6-10e0c199cec9",
+          "basedOn": "209ea68e-0a75-4c9f-846a-04d3888fc2a2",
+          "opacity": 40,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
+          "type": "shape",
+          "width": 318,
+          "height": 1,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "groupId": "e56a28ff-4048-404f-88e8-02bc3dafa8ff"
+        },
+        {
+          "x": 48,
+          "y": 302,
+          "id": "0c7e492e-fd6c-4b55-8ad8-9d18cb9ec89d",
+          "basedOn": "dd50c7a4-0e4a-491e-9a81-8ec4e04a8754",
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Work Sans",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["regular", "italic"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ],
+            "service": "fonts.google.com",
+            "metrics": {
+              "upm": 1000,
+              "asc": 930,
+              "des": -243,
+              "tAsc": 930,
+              "tDes": -243,
+              "tLGap": 0,
+              "wAsc": 1105,
+              "wDes": 343,
+              "xH": 500,
+              "capH": 660,
+              "yMin": -337,
+              "yMax": 1100,
+              "hAsc": 930,
+              "hDes": -243,
+              "lGap": 0
+            }
+          },
+          "fontSize": 24,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.22,
+          "textAlign": "initial",
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
+          "type": "text",
+          "content": "<span style=\"font-weight: 500; color: #fff\">18+</span>",
+          "fontWeight": 400,
+          "borderRadius": {
+            "locked": true,
+            "topLeft": 2,
+            "topRight": 2,
+            "bottomRight": 2,
+            "bottomLeft": 2
+          },
+          "width": 200,
+          "height": 28,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "groupId": "e56a28ff-4048-404f-88e8-02bc3dafa8ff",
+          "tagName": "p"
         }
       ],
       "backgroundColor": {
@@ -3525,7 +3535,8 @@
           "id": "e70f49a1-9fde-44c4-b2de-0a7c4e89b3cd",
           "x": 30,
           "y": 249,
-          "type": "text"
+          "type": "text",
+          "tagName": "h2"
         },
         {
           "opacity": 100,
@@ -3612,7 +3623,8 @@
           "id": "7bddadc1-f7f3-4bb8-b0a9-6efd15bd86cc",
           "x": -28,
           "y": -74,
-          "type": "text"
+          "type": "text",
+          "tagName": "p"
         },
         {
           "opacity": 100,
@@ -3701,7 +3713,8 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "type": "text"
+          "type": "text",
+          "tagName": "p"
         },
         {
           "opacity": 100,
@@ -3840,94 +3853,6 @@
               }
             ]
           }
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Work Sans",
-            "fallbacks": ["sans-serif"],
-            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
-            "styles": ["regular", "italic"],
-            "variants": [
-              [0, 100],
-              [0, 200],
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900],
-              [1, 100],
-              [1, 200],
-              [1, 300],
-              [1, 400],
-              [1, 500],
-              [1, 600],
-              [1, 700],
-              [1, 800],
-              [1, 900]
-            ],
-            "service": "fonts.google.com",
-            "metrics": {
-              "upm": 1000,
-              "asc": 930,
-              "des": -243,
-              "tAsc": 930,
-              "tDes": -243,
-              "tLGap": 0,
-              "wAsc": 1105,
-              "wDes": 343,
-              "xH": 500,
-              "capH": 660,
-              "yMin": -337,
-              "yMax": 1100,
-              "hAsc": 930,
-              "hDes": -243,
-              "lGap": 0
-            }
-          },
-          "fontSize": 24,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.22,
-          "textAlign": "initial",
-          "padding": {
-            "locked": true,
-            "hasHiddenPadding": false
-          },
-          "type": "text",
-          "content": "<span style=\"font-weight: 500; color: #fff\">Queensland</span>",
-          "fontWeight": 400,
-          "borderRadius": {
-            "locked": true,
-            "topLeft": 2,
-            "topRight": 2,
-            "bottomRight": 2,
-            "bottomLeft": 2
-          },
-          "width": 200,
-          "height": 28,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "basedOn": "f63371b6-3beb-46e8-95ac-12fc112a3226",
-          "id": "5b9288d9-5d5d-4128-ab9a-fab8f04f9513",
-          "x": 50,
-          "y": 36,
-          "groupId": "3483e291-f8ef-47b8-9539-5621f397ddca"
         },
         {
           "opacity": 100,
@@ -4175,6 +4100,95 @@
           "groupId": "3483e291-f8ef-47b8-9539-5621f397ddca"
         },
         {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Work Sans",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["regular", "italic"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ],
+            "service": "fonts.google.com",
+            "metrics": {
+              "upm": 1000,
+              "asc": 930,
+              "des": -243,
+              "tAsc": 930,
+              "tDes": -243,
+              "tLGap": 0,
+              "wAsc": 1105,
+              "wDes": 343,
+              "xH": 500,
+              "capH": 660,
+              "yMin": -337,
+              "yMax": 1100,
+              "hAsc": 930,
+              "hDes": -243,
+              "lGap": 0
+            }
+          },
+          "fontSize": 24,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.22,
+          "textAlign": "initial",
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
+          "type": "text",
+          "content": "<span style=\"font-weight: 500; color: #fff\">Queensland</span>",
+          "fontWeight": 400,
+          "borderRadius": {
+            "locked": true,
+            "topLeft": 2,
+            "topRight": 2,
+            "bottomRight": 2,
+            "bottomLeft": 2
+          },
+          "width": 200,
+          "height": 28,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "f63371b6-3beb-46e8-95ac-12fc112a3226",
+          "id": "5b9288d9-5d5d-4128-ab9a-fab8f04f9513",
+          "x": 50,
+          "y": 36,
+          "groupId": "3483e291-f8ef-47b8-9539-5621f397ddca",
+          "tagName": "p"
+        },
+        {
           "opacity": 40,
           "flip": {
             "vertical": false,
@@ -4408,7 +4422,8 @@
           "focalX": 50,
           "focalY": 50,
           "type": "text",
-          "groupId": "1090c0b6-8213-4f2d-aff8-4028d39e1336"
+          "groupId": "1090c0b6-8213-4f2d-aff8-4028d39e1336",
+          "tagName": "p"
         },
         {
           "opacity": 60,
@@ -4614,7 +4629,8 @@
           "focalX": 50,
           "focalY": 50,
           "type": "text",
-          "groupId": "b97e756c-2fab-4333-a3f5-4f0ad4dd35f6"
+          "groupId": "b97e756c-2fab-4333-a3f5-4f0ad4dd35f6",
+          "tagName": "p"
         },
         {
           "opacity": 40,
@@ -4820,7 +4836,8 @@
           "id": "571979fa-09ba-45d4-8cd5-34485ca37150",
           "x": 48,
           "y": 302,
-          "groupId": "ed0664a1-fe1a-4f46-8685-3c80411ff4e7"
+          "groupId": "ed0664a1-fe1a-4f46-8685-3c80411ff4e7",
+          "tagName": "p"
         }
       ],
       "animations": [
@@ -5142,7 +5159,8 @@
           "id": "cf9968cf-5f45-4523-89c8-dfd6d7c33054",
           "x": 29,
           "y": 278,
-          "type": "text"
+          "type": "text",
+          "tagName": "h2"
         },
         {
           "opacity": 100,
@@ -5229,7 +5247,8 @@
           "id": "f8238f2f-5d36-41d4-9558-de0fdd890173",
           "x": -28,
           "y": -72,
-          "type": "text"
+          "type": "text",
+          "tagName": "p"
         },
         {
           "opacity": 100,
@@ -5318,7 +5337,8 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "type": "text"
+          "type": "text",
+          "tagName": "p"
         },
         {
           "opacity": 100,
@@ -5460,94 +5480,6 @@
             ],
             "alpha": 0.6
           }
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Work Sans",
-            "fallbacks": ["sans-serif"],
-            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
-            "styles": ["regular", "italic"],
-            "variants": [
-              [0, 100],
-              [0, 200],
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900],
-              [1, 100],
-              [1, 200],
-              [1, 300],
-              [1, 400],
-              [1, 500],
-              [1, 600],
-              [1, 700],
-              [1, 800],
-              [1, 900]
-            ],
-            "service": "fonts.google.com",
-            "metrics": {
-              "upm": 1000,
-              "asc": 930,
-              "des": -243,
-              "tAsc": 930,
-              "tDes": -243,
-              "tLGap": 0,
-              "wAsc": 1105,
-              "wDes": 343,
-              "xH": 500,
-              "capH": 660,
-              "yMin": -337,
-              "yMax": 1100,
-              "hAsc": 930,
-              "hDes": -243,
-              "lGap": 0
-            }
-          },
-          "fontSize": 24,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.22,
-          "textAlign": "initial",
-          "padding": {
-            "locked": true,
-            "hasHiddenPadding": false
-          },
-          "x": 48,
-          "y": 35,
-          "id": "5a0fc61d-c757-4c39-bdb1-7b57c57d0e4e",
-          "basedOn": "dd50c7a4-0e4a-491e-9a81-8ec4e04a8754",
-          "content": "<span style=\"font-weight: 500; color: #fff\">Drumsheds</span>",
-          "fontWeight": 400,
-          "borderRadius": {
-            "locked": true,
-            "topLeft": 2,
-            "topRight": 2,
-            "bottomRight": 2,
-            "bottomLeft": 2
-          },
-          "width": 200,
-          "height": 28,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "type": "text",
-          "groupId": "d7ad1e80-23f6-44c3-ae9f-cb816d5a0062"
         },
         {
           "opacity": 100,
@@ -5795,6 +5727,95 @@
           "groupId": "d7ad1e80-23f6-44c3-ae9f-cb816d5a0062"
         },
         {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Work Sans",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["regular", "italic"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ],
+            "service": "fonts.google.com",
+            "metrics": {
+              "upm": 1000,
+              "asc": 930,
+              "des": -243,
+              "tAsc": 930,
+              "tDes": -243,
+              "tLGap": 0,
+              "wAsc": 1105,
+              "wDes": 343,
+              "xH": 500,
+              "capH": 660,
+              "yMin": -337,
+              "yMax": 1100,
+              "hAsc": 930,
+              "hDes": -243,
+              "lGap": 0
+            }
+          },
+          "fontSize": 24,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.22,
+          "textAlign": "initial",
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
+          "x": 48,
+          "y": 35,
+          "id": "5a0fc61d-c757-4c39-bdb1-7b57c57d0e4e",
+          "basedOn": "dd50c7a4-0e4a-491e-9a81-8ec4e04a8754",
+          "content": "<span style=\"font-weight: 500; color: #fff\">Drumsheds</span>",
+          "fontWeight": 400,
+          "borderRadius": {
+            "locked": true,
+            "topLeft": 2,
+            "topRight": 2,
+            "bottomRight": 2,
+            "bottomLeft": 2
+          },
+          "width": 200,
+          "height": 28,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "groupId": "d7ad1e80-23f6-44c3-ae9f-cb816d5a0062",
+          "tagName": "p"
+        },
+        {
           "opacity": 40,
           "flip": {
             "vertical": false,
@@ -5998,7 +6019,8 @@
           "focalX": 50,
           "focalY": 50,
           "type": "text",
-          "groupId": "14bc625a-a7d8-4959-99e7-1864db692727"
+          "groupId": "14bc625a-a7d8-4959-99e7-1864db692727",
+          "tagName": "p"
         },
         {
           "opacity": 40,
@@ -6204,7 +6226,8 @@
           "focalX": 50,
           "focalY": 50,
           "type": "text",
-          "groupId": "8badf9ae-1cb8-4fa1-82d1-47a2d730f312"
+          "groupId": "8badf9ae-1cb8-4fa1-82d1-47a2d730f312",
+          "tagName": "p"
         },
         {
           "opacity": 40,
@@ -6440,7 +6463,8 @@
           "id": "abe25859-f66f-404b-91ca-a38a63387ef8",
           "x": 48,
           "y": 302,
-          "groupId": "c4c1b2f3-a52f-4396-afa2-abd48273c807"
+          "groupId": "c4c1b2f3-a52f-4396-afa2-abd48273c807",
+          "tagName": "p"
         }
       ],
       "animations": [
@@ -6760,7 +6784,8 @@
           "id": "5fb7a7ff-8e44-416d-8c82-84693542c5e8",
           "x": -28,
           "y": -74,
-          "type": "text"
+          "type": "text",
+          "tagName": "p"
         },
         {
           "opacity": 100,
@@ -6871,7 +6896,8 @@
           "basedOn": "d999a128-0c59-4790-b5c9-66f3c80b1874",
           "id": "0a7d8cfe-9828-4472-a0bf-7e7761ebd0f8",
           "x": 26,
-          "y": 245
+          "y": 245,
+          "tagName": "h2"
         },
         {
           "opacity": 100,
@@ -6960,7 +6986,8 @@
           "basedOn": "562bf3a2-be98-4dec-9fce-c8289489670b",
           "id": "b3f194e7-6ae5-4ab6-9eb6-d67bd05d2da2",
           "x": 39,
-          "y": 430
+          "y": 430,
+          "tagName": "p"
         }
       ],
       "animations": [
@@ -7055,94 +7082,6 @@
             "isOptimized": false,
             "isExternal": true
           }
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Work Sans",
-            "fallbacks": ["sans-serif"],
-            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
-            "styles": ["regular", "italic"],
-            "variants": [
-              [0, 100],
-              [0, 200],
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900],
-              [1, 100],
-              [1, 200],
-              [1, 300],
-              [1, 400],
-              [1, 500],
-              [1, 600],
-              [1, 700],
-              [1, 800],
-              [1, 900]
-            ],
-            "service": "fonts.google.com",
-            "metrics": {
-              "upm": 1000,
-              "asc": 930,
-              "des": -243,
-              "tAsc": 930,
-              "tDes": -243,
-              "tLGap": 0,
-              "wAsc": 1105,
-              "wDes": 343,
-              "xH": 500,
-              "capH": 660,
-              "yMin": -337,
-              "yMax": 1100,
-              "hAsc": 930,
-              "hDes": -243,
-              "lGap": 0
-            }
-          },
-          "fontSize": 24,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.22,
-          "textAlign": "initial",
-          "padding": {
-            "locked": true,
-            "hasHiddenPadding": false
-          },
-          "x": 48,
-          "y": 35,
-          "id": "106fc2c7-7d31-41ab-968b-e6047b1c20f7",
-          "basedOn": "dd50c7a4-0e4a-491e-9a81-8ec4e04a8754",
-          "content": "<span style=\"font-weight: 500; color: #fff\">Happy Endings</span>",
-          "fontWeight": 400,
-          "borderRadius": {
-            "locked": true,
-            "topLeft": 2,
-            "topRight": 2,
-            "bottomRight": 2,
-            "bottomLeft": 2
-          },
-          "width": 200,
-          "height": 28,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "type": "text",
-          "groupId": "65c27a80-9505-4587-ab6f-8b0e4c5cd0fd"
         },
         {
           "opacity": 100,
@@ -7302,36 +7241,6 @@
           "groupId": "6c69de29-c841-4b13-bf94-ff38ad8efcc7"
         },
         {
-          "opacity": 40,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 255,
-              "b": 255
-            }
-          },
-          "type": "shape",
-          "width": 318,
-          "height": 1,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "basedOn": "d88f3324-8907-4ffc-ad44-ab519709b36f",
-          "id": "7d971b82-b5fb-4824-a71a-13ca149778fd",
-          "x": 49,
-          "y": 344,
-          "groupId": "a2065c2a-7fd8-454d-a28b-d1fd6bf1a558"
-        },
-        {
           "opacity": 60,
           "flip": {
             "vertical": false,
@@ -7418,6 +7327,95 @@
           "x": 49,
           "y": 11,
           "groupId": "65c27a80-9505-4587-ab6f-8b0e4c5cd0fd"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Work Sans",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["regular", "italic"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ],
+            "service": "fonts.google.com",
+            "metrics": {
+              "upm": 1000,
+              "asc": 930,
+              "des": -243,
+              "tAsc": 930,
+              "tDes": -243,
+              "tLGap": 0,
+              "wAsc": 1105,
+              "wDes": 343,
+              "xH": 500,
+              "capH": 660,
+              "yMin": -337,
+              "yMax": 1100,
+              "hAsc": 930,
+              "hDes": -243,
+              "lGap": 0
+            }
+          },
+          "fontSize": 24,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.22,
+          "textAlign": "initial",
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
+          "x": 48,
+          "y": 35,
+          "id": "106fc2c7-7d31-41ab-968b-e6047b1c20f7",
+          "basedOn": "dd50c7a4-0e4a-491e-9a81-8ec4e04a8754",
+          "content": "<span style=\"font-weight: 500; color: #fff\">Happy Endings</span>",
+          "fontWeight": 400,
+          "borderRadius": {
+            "locked": true,
+            "topLeft": 2,
+            "topRight": 2,
+            "bottomRight": 2,
+            "bottomLeft": 2
+          },
+          "width": 200,
+          "height": 28,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "groupId": "65c27a80-9505-4587-ab6f-8b0e4c5cd0fd",
+          "tagName": "p"
         },
         {
           "opacity": 40,
@@ -7653,7 +7651,8 @@
           "focalX": 50,
           "focalY": 50,
           "type": "text",
-          "groupId": "2d55153e-230e-4851-a457-b2fb7b9d0e68"
+          "groupId": "2d55153e-230e-4851-a457-b2fb7b9d0e68",
+          "tagName": "p"
         },
         {
           "opacity": 60,
@@ -7859,7 +7858,8 @@
           "focalX": 50,
           "focalY": 50,
           "type": "text",
-          "groupId": "ded72301-f80b-4a39-a726-d1bd0027935a"
+          "groupId": "ded72301-f80b-4a39-a726-d1bd0027935a",
+          "tagName": "p"
         },
         {
           "opacity": 60,
@@ -7950,6 +7950,36 @@
           "groupId": "a2065c2a-7fd8-454d-a28b-d1fd6bf1a558"
         },
         {
+          "opacity": 40,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
+          "type": "shape",
+          "width": 318,
+          "height": 1,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "basedOn": "d88f3324-8907-4ffc-ad44-ab519709b36f",
+          "id": "7d971b82-b5fb-4824-a71a-13ca149778fd",
+          "x": 49,
+          "y": 344,
+          "groupId": "a2065c2a-7fd8-454d-a28b-d1fd6bf1a558"
+        },
+        {
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -8035,7 +8065,8 @@
           "id": "f2b32ce2-6f83-46e3-bfcb-1b6c44517d8f",
           "x": 48,
           "y": 302,
-          "groupId": "a2065c2a-7fd8-454d-a28b-d1fd6bf1a558"
+          "groupId": "a2065c2a-7fd8-454d-a28b-d1fd6bf1a558",
+          "tagName": "p"
         }
       ],
       "animations": [
@@ -8259,7 +8290,7 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2021-06-23T12:46:26",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/new-york-party-round-up/page3_bg.png",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/new-york-party-round-up/page3_bg.jpg",
             "width": 1080,
             "height": 1920,
             "id": 0,
@@ -8358,7 +8389,8 @@
           "id": "2d3c8f89-2efb-4a6a-98bd-0363655bae0f",
           "x": 48,
           "y": -1,
-          "type": "text"
+          "type": "text",
+          "tagName": "auto"
         },
         {
           "opacity": 100,
@@ -8490,6 +8522,95 @@
           "y": 280,
           "type": "text",
           "groupId": "caf28278-b654-4345-8139-80127981e025"
+        },
+        {
+          "opacity": 30,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Work Sans",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["regular", "italic"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ],
+            "service": "fonts.google.com",
+            "metrics": {
+              "upm": 1000,
+              "asc": 930,
+              "des": -243,
+              "tAsc": 930,
+              "tDes": -243,
+              "tLGap": 0,
+              "wAsc": 1105,
+              "wDes": 343,
+              "xH": 500,
+              "capH": 660,
+              "yMin": -337,
+              "yMax": 1100,
+              "hAsc": 930,
+              "hDes": -243,
+              "lGap": 0
+            }
+          },
+          "fontSize": 108,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 0.73,
+          "textAlign": "initial",
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
+          "content": "<span style=\"font-weight: 700; color: #fff\">9/30</span>",
+          "fontWeight": 400,
+          "borderRadius": {
+            "locked": true,
+            "topLeft": 2,
+            "topRight": 2,
+            "bottomRight": 2,
+            "bottomLeft": 2
+          },
+          "width": 256,
+          "height": 127,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "68fb4e17-c785-40a4-b11d-f145fdd82c30",
+          "id": "8c4a7012-bd08-43e4-ae06-f57c07cdea99",
+          "x": 9,
+          "y": 213,
+          "type": "text",
+          "groupId": "caf28278-b654-4345-8139-80127981e025",
+          "tagName": "p"
         },
         {
           "opacity": 100,
@@ -8690,94 +8811,6 @@
             "locked": true,
             "hasHiddenPadding": false
           },
-          "content": "<span style=\"font-weight: 700; color: #fff\">9/30</span>",
-          "fontWeight": 400,
-          "borderRadius": {
-            "locked": true,
-            "topLeft": 2,
-            "topRight": 2,
-            "bottomRight": 2,
-            "bottomLeft": 2
-          },
-          "width": 256,
-          "height": 127,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "basedOn": "68fb4e17-c785-40a4-b11d-f145fdd82c30",
-          "id": "8c4a7012-bd08-43e4-ae06-f57c07cdea99",
-          "x": 9,
-          "y": 213,
-          "type": "text",
-          "groupId": "caf28278-b654-4345-8139-80127981e025"
-        },
-        {
-          "opacity": 30,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Work Sans",
-            "fallbacks": ["sans-serif"],
-            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
-            "styles": ["regular", "italic"],
-            "variants": [
-              [0, 100],
-              [0, 200],
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900],
-              [1, 100],
-              [1, 200],
-              [1, 300],
-              [1, 400],
-              [1, 500],
-              [1, 600],
-              [1, 700],
-              [1, 800],
-              [1, 900]
-            ],
-            "service": "fonts.google.com",
-            "metrics": {
-              "upm": 1000,
-              "asc": 930,
-              "des": -243,
-              "tAsc": 930,
-              "tDes": -243,
-              "tLGap": 0,
-              "wAsc": 1105,
-              "wDes": 343,
-              "xH": 500,
-              "capH": 660,
-              "yMin": -337,
-              "yMax": 1100,
-              "hAsc": 930,
-              "hDes": -243,
-              "lGap": 0
-            }
-          },
-          "fontSize": 108,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 0.73,
-          "textAlign": "initial",
-          "padding": {
-            "locked": true,
-            "hasHiddenPadding": false
-          },
           "x": -1,
           "y": 523,
           "id": "19e0c202-deae-42f4-89d2-d127b1d536e9",
@@ -8797,7 +8830,8 @@
           "focalX": 50,
           "focalY": 50,
           "type": "text",
-          "groupId": "4a3c19d2-089e-4598-94ac-844853a91361"
+          "groupId": "4a3c19d2-089e-4598-94ac-844853a91361",
+          "tagName": "p"
         }
       ],
       "animations": [],
