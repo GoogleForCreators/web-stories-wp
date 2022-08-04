@@ -39,7 +39,7 @@ const includeDefaultScrimBackground = [
  * Element and page thumbnails, used in the prepublish checklist
  *
  * @param {Object} props Component props.
- * @param {Node} props.displayBackground Node that renders the element. Relies on PagePreview or LayerIcon (getDefinitionForType, see panels/design/layer) to keep element rendering consistent with carousel and layer panels. See /storybook for demo.
+ * @param {Node} props.displayBackground Node that renders the element. Relies on PagePreview or LayerIcon (getDefinitionForType, see panels/layer) to keep element rendering consistent with carousel and layer panels. See /storybook for demo.
  * @param {boolean} props.isError Thumbnail errors don't prevent further interaction with the thumbnail, they just change the presentation so user knows the action failed.
  * @param {boolean} props.isLoading If a thumbnail needs to show a loading progress bar this should be true.
  * @param {string} props.loadingMessage If a thumbnail needs an aria alert with loading bar this should be used.

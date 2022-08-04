@@ -29,9 +29,9 @@ import {
   Reorderable,
   ReorderableSeparator,
   ReorderableItem,
-} from '../../../reorderable';
-import { useRightClickMenu, useStory, useCanvas } from '../../../../app';
-import useFocusCanvas from '../../../canvas/useFocusCanvas';
+} from '../../reorderable';
+import { useRightClickMenu, useStory, useCanvas } from '../../../app';
+import useFocusCanvas from '../../canvas/useFocusCanvas';
 import { LAYER_HEIGHT } from './constants';
 import Layer from './layer';
 import ReorderableGroup from './reorderableGroup';
