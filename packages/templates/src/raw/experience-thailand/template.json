@@ -115,7 +115,8 @@
           "padding": {
             "horizontal": 0,
             "vertical": 0
-          }
+          },
+          "tagName": "h1"
         },
         {
           "x": -2,
@@ -123,9 +124,36 @@
           "width": 413,
           "height": 98,
           "font": {
-            "service": "fonts.google.com",
             "family": "Oswald",
-            "fallbacks": ["sans-serif"]
+            "fallbacks": ["sans-serif"],
+            "weights": [200, 300, 400, 500, 600, 700],
+            "styles": ["regular"],
+            "variants": [
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700]
+            ],
+            "service": "fonts.google.com",
+            "metrics": {
+              "upm": 1000,
+              "asc": 1193,
+              "des": -289,
+              "tAsc": 1193,
+              "tDes": -289,
+              "tLGap": 0,
+              "wAsc": 1325,
+              "wDes": 377,
+              "xH": 578,
+              "capH": 810,
+              "yMin": -287,
+              "yMax": 1297,
+              "hAsc": 1193,
+              "hDes": -289,
+              "lGap": 0
+            }
           },
           "type": "text",
           "opacity": 100,
@@ -153,7 +181,8 @@
           "padding": {
             "horizontal": 0,
             "vertical": 0
-          }
+          },
+          "tagName": "h1"
         },
         {
           "x": 20,
@@ -310,9 +339,36 @@
           "width": 265,
           "height": 265,
           "font": {
-            "service": "fonts.google.com",
             "family": "Oswald",
-            "fallbacks": ["sans-serif"]
+            "fallbacks": ["sans-serif"],
+            "weights": [200, 300, 400, 500, 600, 700],
+            "styles": ["regular"],
+            "variants": [
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700]
+            ],
+            "service": "fonts.google.com",
+            "metrics": {
+              "upm": 1000,
+              "asc": 1193,
+              "des": -289,
+              "tAsc": 1193,
+              "tDes": -289,
+              "tLGap": 0,
+              "wAsc": 1325,
+              "wDes": 377,
+              "xH": 578,
+              "capH": 810,
+              "yMin": -287,
+              "yMax": 1297,
+              "hAsc": 1193,
+              "hDes": -289,
+              "lGap": 0
+            }
           },
           "type": "text",
           "opacity": 100,
@@ -340,7 +396,8 @@
           "padding": {
             "horizontal": 0,
             "vertical": 0
-          }
+          },
+          "tagName": "p"
         },
         {
           "x": 33,
@@ -348,9 +405,36 @@
           "width": 19,
           "height": 51,
           "font": {
-            "service": "fonts.google.com",
             "family": "Oswald",
-            "fallbacks": ["sans-serif"]
+            "fallbacks": ["sans-serif"],
+            "weights": [200, 300, 400, 500, 600, 700],
+            "styles": ["regular"],
+            "variants": [
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700]
+            ],
+            "service": "fonts.google.com",
+            "metrics": {
+              "upm": 1000,
+              "asc": 1193,
+              "des": -289,
+              "tAsc": 1193,
+              "tDes": -289,
+              "tLGap": 0,
+              "wAsc": 1325,
+              "wDes": 377,
+              "xH": 578,
+              "capH": 810,
+              "yMin": -287,
+              "yMax": 1297,
+              "hAsc": 1193,
+              "hDes": -289,
+              "lGap": 0
+            }
           },
           "type": "text",
           "opacity": 100,
@@ -641,9 +725,36 @@
           "width": 50,
           "height": 40,
           "font": {
-            "service": "fonts.google.com",
             "family": "Oswald",
-            "fallbacks": ["sans-serif"]
+            "fallbacks": ["sans-serif"],
+            "weights": [200, 300, 400, 500, 600, 700],
+            "styles": ["regular"],
+            "variants": [
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700]
+            ],
+            "service": "fonts.google.com",
+            "metrics": {
+              "upm": 1000,
+              "asc": 1193,
+              "des": -289,
+              "tAsc": 1193,
+              "tDes": -289,
+              "tLGap": 0,
+              "wAsc": 1325,
+              "wDes": 377,
+              "xH": 578,
+              "capH": 810,
+              "yMin": -287,
+              "yMax": 1297,
+              "hAsc": 1193,
+              "hDes": -289,
+              "lGap": 0
+            }
           },
           "type": "text",
           "opacity": 100,
@@ -750,9 +861,36 @@
           "width": 143,
           "height": 104,
           "font": {
-            "service": "fonts.google.com",
             "family": "Oswald",
-            "fallbacks": ["sans-serif"]
+            "fallbacks": ["sans-serif"],
+            "weights": [200, 300, 400, 500, 600, 700],
+            "styles": ["regular"],
+            "variants": [
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700]
+            ],
+            "service": "fonts.google.com",
+            "metrics": {
+              "upm": 1000,
+              "asc": 1193,
+              "des": -289,
+              "tAsc": 1193,
+              "tDes": -289,
+              "tLGap": 0,
+              "wAsc": 1325,
+              "wDes": 377,
+              "xH": 578,
+              "capH": 810,
+              "yMin": -287,
+              "yMax": 1297,
+              "hAsc": 1193,
+              "hDes": -289,
+              "lGap": 0
+            }
           },
           "type": "text",
           "opacity": 100,
@@ -780,7 +918,8 @@
           "padding": {
             "horizontal": 0,
             "vertical": 0
-          }
+          },
+          "tagName": "h2"
         }
       ],
       "animations": [
@@ -900,9 +1039,36 @@
           "width": 139,
           "height": 26,
           "font": {
-            "service": "fonts.google.com",
             "family": "Oswald",
-            "fallbacks": ["sans-serif"]
+            "fallbacks": ["sans-serif"],
+            "weights": [200, 300, 400, 500, 600, 700],
+            "styles": ["regular"],
+            "variants": [
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700]
+            ],
+            "service": "fonts.google.com",
+            "metrics": {
+              "upm": 1000,
+              "asc": 1193,
+              "des": -289,
+              "tAsc": 1193,
+              "tDes": -289,
+              "tLGap": 0,
+              "wAsc": 1325,
+              "wDes": 377,
+              "xH": 578,
+              "capH": 810,
+              "yMin": -287,
+              "yMax": 1297,
+              "hAsc": 1193,
+              "hDes": -289,
+              "lGap": 0
+            }
           },
           "type": "text",
           "opacity": 100,
@@ -1170,7 +1336,8 @@
           "padding": {
             "horizontal": 0,
             "vertical": 0
-          }
+          },
+          "tagName": "h2"
         },
         {
           "x": 0,
@@ -1178,9 +1345,36 @@
           "width": 411,
           "height": 97,
           "font": {
-            "service": "fonts.google.com",
             "family": "Oswald",
-            "fallbacks": ["sans-serif"]
+            "fallbacks": ["sans-serif"],
+            "weights": [200, 300, 400, 500, 600, 700],
+            "styles": ["regular"],
+            "variants": [
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700]
+            ],
+            "service": "fonts.google.com",
+            "metrics": {
+              "upm": 1000,
+              "asc": 1193,
+              "des": -289,
+              "tAsc": 1193,
+              "tDes": -289,
+              "tLGap": 0,
+              "wAsc": 1325,
+              "wDes": 377,
+              "xH": 578,
+              "capH": 810,
+              "yMin": -287,
+              "yMax": 1297,
+              "hAsc": 1193,
+              "hDes": -289,
+              "lGap": 0
+            }
           },
           "type": "text",
           "opacity": 100,
@@ -1208,7 +1402,8 @@
           "padding": {
             "horizontal": 0,
             "vertical": 0
-          }
+          },
+          "tagName": "h2"
         },
         {
           "x": 74,
@@ -1369,9 +1564,36 @@
           "width": 246,
           "height": 108,
           "font": {
-            "service": "fonts.google.com",
             "family": "Oswald",
-            "fallbacks": ["sans-serif"]
+            "fallbacks": ["sans-serif"],
+            "weights": [200, 300, 400, 500, 600, 700],
+            "styles": ["regular"],
+            "variants": [
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700]
+            ],
+            "service": "fonts.google.com",
+            "metrics": {
+              "upm": 1000,
+              "asc": 1193,
+              "des": -289,
+              "tAsc": 1193,
+              "tDes": -289,
+              "tLGap": 0,
+              "wAsc": 1325,
+              "wDes": 377,
+              "xH": 578,
+              "capH": 810,
+              "yMin": -287,
+              "yMax": 1297,
+              "hAsc": 1193,
+              "hDes": -289,
+              "lGap": 0
+            }
           },
           "type": "text",
           "opacity": 100,
@@ -1399,7 +1621,8 @@
           "padding": {
             "horizontal": 0,
             "vertical": 0
-          }
+          },
+          "tagName": "h2"
         },
         {
           "x": 44,
@@ -1566,9 +1789,36 @@
           "width": 152,
           "height": 104,
           "font": {
-            "service": "fonts.google.com",
             "family": "Oswald",
-            "fallbacks": ["sans-serif"]
+            "fallbacks": ["sans-serif"],
+            "weights": [200, 300, 400, 500, 600, 700],
+            "styles": ["regular"],
+            "variants": [
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700]
+            ],
+            "service": "fonts.google.com",
+            "metrics": {
+              "upm": 1000,
+              "asc": 1193,
+              "des": -289,
+              "tAsc": 1193,
+              "tDes": -289,
+              "tLGap": 0,
+              "wAsc": 1325,
+              "wDes": 377,
+              "xH": 578,
+              "capH": 810,
+              "yMin": -287,
+              "yMax": 1297,
+              "hAsc": 1193,
+              "hDes": -289,
+              "lGap": 0
+            }
           },
           "type": "text",
           "opacity": 100,
@@ -1597,7 +1847,8 @@
           "padding": {
             "horizontal": 0,
             "vertical": 0
-          }
+          },
+          "tagName": "h2"
         },
         {
           "x": 42,
@@ -1743,9 +1994,36 @@
           "width": 88,
           "height": 21,
           "font": {
-            "service": "fonts.google.com",
             "family": "Oswald",
-            "fallbacks": ["sans-serif"]
+            "fallbacks": ["sans-serif"],
+            "weights": [200, 300, 400, 500, 600, 700],
+            "styles": ["regular"],
+            "variants": [
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700]
+            ],
+            "service": "fonts.google.com",
+            "metrics": {
+              "upm": 1000,
+              "asc": 1193,
+              "des": -289,
+              "tAsc": 1193,
+              "tDes": -289,
+              "tLGap": 0,
+              "wAsc": 1325,
+              "wDes": 377,
+              "xH": 578,
+              "capH": 810,
+              "yMin": -287,
+              "yMax": 1297,
+              "hAsc": 1193,
+              "hDes": -289,
+              "lGap": 0
+            }
           },
           "type": "text",
           "opacity": 100,
@@ -1924,9 +2202,36 @@
           "width": 50,
           "height": 40,
           "font": {
-            "service": "fonts.google.com",
             "family": "Oswald",
-            "fallbacks": ["sans-serif"]
+            "fallbacks": ["sans-serif"],
+            "weights": [200, 300, 400, 500, 600, 700],
+            "styles": ["regular"],
+            "variants": [
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700]
+            ],
+            "service": "fonts.google.com",
+            "metrics": {
+              "upm": 1000,
+              "asc": 1193,
+              "des": -289,
+              "tAsc": 1193,
+              "tDes": -289,
+              "tLGap": 0,
+              "wAsc": 1325,
+              "wDes": 377,
+              "xH": 578,
+              "capH": 810,
+              "yMin": -287,
+              "yMax": 1297,
+              "hAsc": 1193,
+              "hDes": -289,
+              "lGap": 0
+            }
           },
           "type": "text",
           "opacity": 100,
@@ -1963,9 +2268,36 @@
           "width": 195,
           "height": 101,
           "font": {
-            "service": "fonts.google.com",
             "family": "Oswald",
-            "fallbacks": ["sans-serif"]
+            "fallbacks": ["sans-serif"],
+            "weights": [200, 300, 400, 500, 600, 700],
+            "styles": ["regular"],
+            "variants": [
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700]
+            ],
+            "service": "fonts.google.com",
+            "metrics": {
+              "upm": 1000,
+              "asc": 1193,
+              "des": -289,
+              "tAsc": 1193,
+              "tDes": -289,
+              "tLGap": 0,
+              "wAsc": 1325,
+              "wDes": 377,
+              "xH": 578,
+              "capH": 810,
+              "yMin": -287,
+              "yMax": 1297,
+              "hAsc": 1193,
+              "hDes": -289,
+              "lGap": 0
+            }
           },
           "type": "text",
           "opacity": 100,
@@ -1994,7 +2326,8 @@
           "padding": {
             "horizontal": 0,
             "vertical": 0
-          }
+          },
+          "tagName": "h2"
         },
         {
           "x": 41,
@@ -2158,9 +2491,36 @@
           "width": 206,
           "height": 20,
           "font": {
-            "service": "fonts.google.com",
             "family": "Oswald",
-            "fallbacks": ["sans-serif"]
+            "fallbacks": ["sans-serif"],
+            "weights": [200, 300, 400, 500, 600, 700],
+            "styles": ["regular"],
+            "variants": [
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700]
+            ],
+            "service": "fonts.google.com",
+            "metrics": {
+              "upm": 1000,
+              "asc": 1193,
+              "des": -289,
+              "tAsc": 1193,
+              "tDes": -289,
+              "tLGap": 0,
+              "wAsc": 1325,
+              "wDes": 377,
+              "xH": 578,
+              "capH": 810,
+              "yMin": -287,
+              "yMax": 1297,
+              "hAsc": 1193,
+              "hDes": -289,
+              "lGap": 0
+            }
           },
           "type": "text",
           "opacity": 100,
@@ -2198,9 +2558,36 @@
           "width": 206,
           "height": 20,
           "font": {
-            "service": "fonts.google.com",
             "family": "Oswald",
-            "fallbacks": ["sans-serif"]
+            "fallbacks": ["sans-serif"],
+            "weights": [200, 300, 400, 500, 600, 700],
+            "styles": ["regular"],
+            "variants": [
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700]
+            ],
+            "service": "fonts.google.com",
+            "metrics": {
+              "upm": 1000,
+              "asc": 1193,
+              "des": -289,
+              "tAsc": 1193,
+              "tDes": -289,
+              "tLGap": 0,
+              "wAsc": 1325,
+              "wDes": 377,
+              "xH": 578,
+              "capH": 810,
+              "yMin": -287,
+              "yMax": 1297,
+              "hAsc": 1193,
+              "hDes": -289,
+              "lGap": 0
+            }
           },
           "type": "text",
           "opacity": 100,
@@ -2238,9 +2625,36 @@
           "width": 206,
           "height": 20,
           "font": {
-            "service": "fonts.google.com",
             "family": "Oswald",
-            "fallbacks": ["sans-serif"]
+            "fallbacks": ["sans-serif"],
+            "weights": [200, 300, 400, 500, 600, 700],
+            "styles": ["regular"],
+            "variants": [
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700]
+            ],
+            "service": "fonts.google.com",
+            "metrics": {
+              "upm": 1000,
+              "asc": 1193,
+              "des": -289,
+              "tAsc": 1193,
+              "tDes": -289,
+              "tLGap": 0,
+              "wAsc": 1325,
+              "wDes": 377,
+              "xH": 578,
+              "capH": 810,
+              "yMin": -287,
+              "yMax": 1297,
+              "hAsc": 1193,
+              "hDes": -289,
+              "lGap": 0
+            }
           },
           "type": "text",
           "opacity": 100,
@@ -2278,9 +2692,36 @@
           "width": 195,
           "height": 20,
           "font": {
-            "service": "fonts.google.com",
             "family": "Oswald",
-            "fallbacks": ["sans-serif"]
+            "fallbacks": ["sans-serif"],
+            "weights": [200, 300, 400, 500, 600, 700],
+            "styles": ["regular"],
+            "variants": [
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700]
+            ],
+            "service": "fonts.google.com",
+            "metrics": {
+              "upm": 1000,
+              "asc": 1193,
+              "des": -289,
+              "tAsc": 1193,
+              "tDes": -289,
+              "tLGap": 0,
+              "wAsc": 1325,
+              "wDes": 377,
+              "xH": 578,
+              "capH": 810,
+              "yMin": -287,
+              "yMax": 1297,
+              "hAsc": 1193,
+              "hDes": -289,
+              "lGap": 0
+            }
           },
           "type": "text",
           "opacity": 100,
@@ -3034,9 +3475,36 @@
           "width": 81,
           "height": 40,
           "font": {
-            "service": "fonts.google.com",
             "family": "Oswald",
-            "fallbacks": ["sans-serif"]
+            "fallbacks": ["sans-serif"],
+            "weights": [200, 300, 400, 500, 600, 700],
+            "styles": ["regular"],
+            "variants": [
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700]
+            ],
+            "service": "fonts.google.com",
+            "metrics": {
+              "upm": 1000,
+              "asc": 1193,
+              "des": -289,
+              "tAsc": 1193,
+              "tDes": -289,
+              "tLGap": 0,
+              "wAsc": 1325,
+              "wDes": 377,
+              "xH": 578,
+              "capH": 810,
+              "yMin": -287,
+              "yMax": 1297,
+              "hAsc": 1193,
+              "hDes": -289,
+              "lGap": 0
+            }
           },
           "type": "text",
           "opacity": 100,
@@ -3066,7 +3534,8 @@
             "horizontal": 0,
             "vertical": 0
           },
-          "groupId": "af2d1be9-be5a-4f80-8d7f-508fb15ea9b2"
+          "groupId": "af2d1be9-be5a-4f80-8d7f-508fb15ea9b2",
+          "tagName": "h3"
         },
         {
           "x": 0,
@@ -3147,9 +3616,36 @@
           "width": 88,
           "height": 60,
           "font": {
-            "service": "fonts.google.com",
             "family": "Oswald",
-            "fallbacks": ["sans-serif"]
+            "fallbacks": ["sans-serif"],
+            "weights": [200, 300, 400, 500, 600, 700],
+            "styles": ["regular"],
+            "variants": [
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700]
+            ],
+            "service": "fonts.google.com",
+            "metrics": {
+              "upm": 1000,
+              "asc": 1193,
+              "des": -289,
+              "tAsc": 1193,
+              "tDes": -289,
+              "tLGap": 0,
+              "wAsc": 1325,
+              "wDes": 377,
+              "xH": 578,
+              "capH": 810,
+              "yMin": -287,
+              "yMax": 1297,
+              "hAsc": 1193,
+              "hDes": -289,
+              "lGap": 0
+            }
           },
           "type": "text",
           "opacity": 100,
@@ -3179,7 +3675,8 @@
             "horizontal": 0,
             "vertical": 0
           },
-          "groupId": "84a09ec9-f5b8-4fd9-9095-4f5dec1a5db2"
+          "groupId": "84a09ec9-f5b8-4fd9-9095-4f5dec1a5db2",
+          "tagName": "h3"
         },
         {
           "x": 0,
@@ -3231,9 +3728,36 @@
           "width": 195,
           "height": 104,
           "font": {
-            "service": "fonts.google.com",
             "family": "Oswald",
-            "fallbacks": ["sans-serif"]
+            "fallbacks": ["sans-serif"],
+            "weights": [200, 300, 400, 500, 600, 700],
+            "styles": ["regular"],
+            "variants": [
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700]
+            ],
+            "service": "fonts.google.com",
+            "metrics": {
+              "upm": 1000,
+              "asc": 1193,
+              "des": -289,
+              "tAsc": 1193,
+              "tDes": -289,
+              "tLGap": 0,
+              "wAsc": 1325,
+              "wDes": 377,
+              "xH": 578,
+              "capH": 810,
+              "yMin": -287,
+              "yMax": 1297,
+              "hAsc": 1193,
+              "hDes": -289,
+              "lGap": 0
+            }
           },
           "type": "text",
           "opacity": 99,
@@ -3262,7 +3786,8 @@
           "padding": {
             "horizontal": 0,
             "vertical": 0
-          }
+          },
+          "tagName": "h2"
         },
         {
           "x": 278,
@@ -3270,9 +3795,36 @@
           "width": 89,
           "height": 60,
           "font": {
-            "service": "fonts.google.com",
             "family": "Oswald",
-            "fallbacks": ["sans-serif"]
+            "fallbacks": ["sans-serif"],
+            "weights": [200, 300, 400, 500, 600, 700],
+            "styles": ["regular"],
+            "variants": [
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700]
+            ],
+            "service": "fonts.google.com",
+            "metrics": {
+              "upm": 1000,
+              "asc": 1193,
+              "des": -289,
+              "tAsc": 1193,
+              "tDes": -289,
+              "tLGap": 0,
+              "wAsc": 1325,
+              "wDes": 377,
+              "xH": 578,
+              "capH": 810,
+              "yMin": -287,
+              "yMax": 1297,
+              "hAsc": 1193,
+              "hDes": -289,
+              "lGap": 0
+            }
           },
           "type": "text",
           "opacity": 100,
@@ -3302,7 +3854,8 @@
             "horizontal": 0,
             "vertical": 0
           },
-          "groupId": "b4c42e7f-223e-4460-a534-f464437321b0"
+          "groupId": "b4c42e7f-223e-4460-a534-f464437321b0",
+          "tagName": "h3"
         },
         {
           "x": 0,

@@ -512,7 +512,8 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "id": "52d376d6-2fbd-47f8-b2ce-ce7ab854926e"
+          "id": "52d376d6-2fbd-47f8-b2ce-ce7ab854926e",
+          "tagName": "h1"
         },
         {
           "opacity": 100,
@@ -867,7 +868,8 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "id": "b60a1d6f-7acb-4d2e-b011-4bd6d9ebfe7d"
+          "id": "b60a1d6f-7acb-4d2e-b011-4bd6d9ebfe7d",
+          "tagName": "p"
         }
       ],
       "backgroundOverlay": "none",
@@ -1084,7 +1086,8 @@
           "basedOn": "b60a1d6f-7acb-4d2e-b011-4bd6d9ebfe7d",
           "id": "01725e1b-0655-49f5-be24-6d1409f736e6",
           "x": 47,
-          "y": 36
+          "y": 36,
+          "tagName": "p"
         },
         {
           "x": 41,
@@ -1377,7 +1380,8 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "id": "ddd7925a-f13f-4889-9b93-2da70c2cf62e"
+          "id": "ddd7925a-f13f-4889-9b93-2da70c2cf62e",
+          "tagName": "p"
         },
         {
           "opacity": 100,
@@ -1493,7 +1497,8 @@
           "basedOn": "d6c5b9d2-ba5b-4225-97b9-e30f2157f3fb",
           "id": "ef95490a-990d-4d7b-93b0-c271509d0bf4",
           "x": 46,
-          "y": 378
+          "y": 378,
+          "tagName": "h2"
         },
         {
           "opacity": 100,
@@ -1579,7 +1584,8 @@
           "basedOn": "b60a1d6f-7acb-4d2e-b011-4bd6d9ebfe7d",
           "id": "3a5c98ea-0411-461e-b3aa-b728a28d6502",
           "x": 48,
-          "y": 415
+          "y": 415,
+          "tagName": "p"
         }
       ],
       "backgroundOverlay": "none",
@@ -1948,7 +1954,8 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "marginOffset": 1.330078125
+          "marginOffset": 1.330078125,
+          "tagName": "h3"
         },
         {
           "opacity": 100,
@@ -2034,7 +2041,8 @@
           "basedOn": "3a5c98ea-0411-461e-b3aa-b728a28d6502",
           "id": "ebc0d53d-87a8-43b1-9c33-aac61b7ff6ae",
           "x": 48,
-          "y": 466
+          "y": 466,
+          "tagName": "p"
         },
         {
           "opacity": 100,
@@ -2350,7 +2358,8 @@
           "id": "e5a13822-3d08-494e-a824-f7d9bbd9ba16",
           "x": 65,
           "y": 415,
-          "type": "text"
+          "type": "text",
+          "tagName": "p"
         },
         {
           "opacity": 100,
@@ -2663,7 +2672,8 @@
           "id": "4c1b176a-c242-49a8-88f7-5fd5a90c693e",
           "x": 65,
           "y": 415,
-          "type": "text"
+          "type": "text",
+          "tagName": "p"
         },
         {
           "opacity": 100,
@@ -3005,7 +3015,8 @@
           "focalX": 50,
           "focalY": 50,
           "id": "2e583876-f776-4fbd-aa3e-2609f8c0a483",
-          "type": "text"
+          "type": "text",
+          "tagName": "p"
         },
         {
           "opacity": 100,
@@ -3121,7 +3132,8 @@
           "id": "f27a9b3f-fc16-4c0b-9bc9-6e9a370d77b2",
           "x": 47,
           "y": 378,
-          "type": "text"
+          "type": "text",
+          "tagName": "h2"
         },
         {
           "opacity": 100,
@@ -3207,7 +3219,8 @@
           "id": "cd93b09e-d187-4368-9229-85a7a088252b",
           "x": 48,
           "y": 415,
-          "type": "text"
+          "type": "text",
+          "tagName": "p"
         }
       ],
       "backgroundOverlay": "none",
@@ -3625,7 +3638,8 @@
           "focalX": 50,
           "focalY": 50,
           "marginOffset": 1.330078125,
-          "type": "text"
+          "type": "text",
+          "tagName": "h3"
         },
         {
           "opacity": 100,
@@ -3711,7 +3725,8 @@
           "id": "065b33dd-4d57-410e-9e1f-64369383d7bc",
           "x": 48,
           "y": 466,
-          "type": "text"
+          "type": "text",
+          "tagName": "p"
         }
       ],
       "backgroundOverlay": "none",
@@ -3985,7 +4000,8 @@
           "id": "6a104b8c-3475-4049-9ec4-c248eecc399a",
           "x": 65,
           "y": 346,
-          "type": "text"
+          "type": "text",
+          "tagName": "p"
         },
         {
           "opacity": 100,
@@ -4335,7 +4351,8 @@
           "id": "202aae74-f4a4-419c-ae28-6ac5e9271af3",
           "x": 65,
           "y": 95,
-          "type": "text"
+          "type": "text",
+          "tagName": "p"
         },
         {
           "opacity": 100,
@@ -4697,7 +4714,8 @@
           "id": "68cd1a10-3464-47c8-8133-97c0a879fb0a",
           "x": 65,
           "y": 478,
-          "type": "text"
+          "type": "text",
+          "tagName": "p"
         },
         {
           "opacity": 100,
@@ -4977,7 +4995,8 @@
           "id": "fe5275da-58d0-42e7-9d2a-680d6badff66",
           "x": 48,
           "y": 52,
-          "type": "text"
+          "type": "text",
+          "tagName": "p"
         },
         {
           "opacity": 100,
