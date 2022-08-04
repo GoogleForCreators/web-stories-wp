@@ -22,9 +22,9 @@ import { TEXT_ELEMENT_DEFAULT_FONT } from '@googleforcreators/elements';
 /**
  * Internal dependencies
  */
-import { Fixture } from '../../../../../karma';
-import { useInsertElement } from '../../../../canvas';
-import { useStory } from '../../../../../app/story';
+import { Fixture } from '../../../../karma';
+import { useInsertElement } from '../../../canvas';
+import { useStory } from '../../../../app/story';
 
 describe('Layer Panel', () => {
   let fixture;
