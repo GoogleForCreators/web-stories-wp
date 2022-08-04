@@ -33,6 +33,13 @@ const ReversedIcon = styled(Icons.ChevronRightSmall)`
   transform: rotate(180deg);
 `;
 
+const HEADING_LEVELS = {
+  h1: __('Heading 1', 'web-stories'),
+  h2: __('Heading 2', 'web-stories'),
+  h3: __('Heading 3', 'web-stories'),
+  p: __('Paragraph', 'web-stories'),
+};
+
 function useHeadingSelect({ menuItemProps, isMenuOpen }) {
   const { isRTL } = useConfig();
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
@@ -54,13 +61,6 @@ function useHeadingSelect({ menuItemProps, isMenuOpen }) {
     if (!isMenuOpen || selectedElements.length === 0) {
       return [];
     }
-
-    const HEADING_LEVELS = {
-      h1: __('Heading 1', 'web-stories'),
-      h2: __('Heading 2', 'web-stories'),
-      h3: __('Heading 3', 'web-stories'),
-      p: __('Paragraph', 'web-stories'),
-    };
 
     const selectedElement = selectedElements[0];
     const currentTagName = getTextElementTagNames([selectedElement]).get(
