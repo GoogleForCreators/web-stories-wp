@@ -49,8 +49,9 @@ const Wrapper = styled.div`
 const EditElement = memo(
   forwardRef(function EditElement({ element, editWrapper, onResize }, ref) {
     const { id, type } = element;
-    const { getBox } = useUnits((state) => ({
+    const { getBox, getBoxWithBorder } = useUnits((state) => ({
       getBox: state.actions.getBox,
+      getBoxWithBorder: state.actions.getBoxWithBorder,
     }));
     const { getProxiedUrl } = useCORSProxy();
     const { isRTL, styleConstants: { topOffset } = {} } = useConfig();
@@ -79,13 +80,17 @@ const EditElement = memo(
     const elementWithLocal = localProperties
       ? { ...element, ...localProperties }
       : element;
-    const box = getBox(elementWithLocal);
+    // In case of text edit mode, we include the border to the selection, so get the box with border.
+    const isText = 'text' === type;
+    const editBox = isText
+      ? getBoxWithBorder(elementWithLocal)
+      : getBox(elementWithLocal);
 
     return (
-      <Wrapper aria-labelledby={`layer-${id}`} {...box} ref={ref}>
+      <Wrapper aria-labelledby={`layer-${id}`} {...editBox} ref={ref}>
         <Edit
           element={elementWithLocal}
-          box={box}
+          box={editBox}
           editWrapper={editWrapper}
           onResize={onResize}
           setLocalProperties={setLocalProperties}

@@ -15,18 +15,29 @@
  */
 
 /**
- * External dependencies
+ * Internal dependencies
  */
-import SAT from 'sat';
-import { getCorners } from '@googleforcreators/units';
+import { useStory } from '../../../app';
+import { STABLE_ARRAY } from '../../../constants';
 
-export default function createPolygon(rotationAngle, x, y, width, height) {
-  const { topLeftPoint, topRightPoint, bottomRightPoint, bottomLeftPoint } =
-    getCorners(rotationAngle, x, y, width, height);
-  return new SAT.Polygon(new SAT.Vector(), [
-    new SAT.Vector(topLeftPoint.x, topLeftPoint.y),
-    new SAT.Vector(bottomLeftPoint.x, bottomLeftPoint.y),
-    new SAT.Vector(bottomRightPoint.x, bottomRightPoint.y),
-    new SAT.Vector(topRightPoint.x, topRightPoint.y),
-  ]);
+function useLayers() {
+  const elements = useStory(
+    ({ state }) =>
+      state.currentPage?.elements?.map(({ id, groupId, layerName }) => ({
+        id,
+        groupId,
+        layerName,
+      })) || STABLE_ARRAY
+  );
+
+  const layers = elements.map(({ id, groupId, layerName }, index) => ({
+    id,
+    groupId,
+    layerName,
+    position: index,
+  }));
+  layers.reverse();
+  return layers;
 }
+
+export default useLayers;

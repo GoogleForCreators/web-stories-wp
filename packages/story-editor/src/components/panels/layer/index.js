@@ -14,4 +14,5 @@
  * limitations under the License.
  */
 
-export { default } from './layerPanel';
+export { default as LayerPanel } from './layerPanel';
+export { default as useLayers } from './useLayers';
