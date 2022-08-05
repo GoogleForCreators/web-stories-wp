@@ -27,28 +27,52 @@ import { getTextElementTagNames } from '@googleforcreators/output';
  */
 import useStory from '../../story/useStory';
 import { useConfig } from '../../config';
+import { getCommonValue } from '../../../components/panels/shared';
 import { RIGHT_CLICK_MENU_LABELS } from '../constants';
+import { HEADING_LEVELS } from '../../../constants';
 
 const ReversedIcon = styled(Icons.ChevronRightSmall)`
   transform: rotate(180deg);
 `;
 
-const HEADING_LEVELS = {
-  h1: __('Heading 1', 'web-stories'),
-  h2: __('Heading 2', 'web-stories'),
-  h3: __('Heading 3', 'web-stories'),
-  p: __('Paragraph', 'web-stories'),
-};
-
 function useHeadingSelect({ menuItemProps, isMenuOpen }) {
   const { isRTL } = useConfig();
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
+  const { textElements } = useStory(({ state }) => ({
+    textElements: state.currentPage?.elements?.filter(
+      ({ type }) => 'text' === type
+    ),
+  }));
+
+  const tagNamesMap = getTextElementTagNames(textElements);
+
   const { selectedElements, updateSelectedElements } = useStory(
     ({ state: { selectedElements }, actions: { updateSelectedElements } }) => ({
       selectedElements,
       updateSelectedElements,
     })
   );
+
+  const selectedElementsWithTagNames = selectedElements.map((element) => ({
+    ...element,
+    tagName: tagNamesMap.get(element.id),
+    defaultTagName: element.tagName || 'auto',
+  }));
+
+  const selectedTagName = getCommonValue(
+    selectedElementsWithTagNames,
+    'defaultTagName',
+    'auto'
+  );
+
+  const uniqueTagNames = [
+    ...new Set(
+      selectedElementsWithTagNames.map(({ tagName }) => tagName || 'auto')
+    ),
+  ];
+
+  const computedTagName = uniqueTagNames.length === 1 ? uniqueTagNames[0] : '';
+  const selectedValue = 'auto' === selectedTagName ? 'auto' : computedTagName;
 
   useEffect(() => {
     // Close submenu if the menu itself also closes.
@@ -62,19 +86,15 @@ function useHeadingSelect({ menuItemProps, isMenuOpen }) {
       return [];
     }
 
-    const selectedElement = selectedElements[0];
-    const currentTagName = getTextElementTagNames([selectedElement]).get(
-      selectedElement.id
-    );
     const options = [
       {
         value: 'auto',
         label:
-          'auto' === selectedElement.tagName
+          'auto' === selectedValue && HEADING_LEVELS[computedTagName]
             ? sprintf(
                 /* translators: %s: heading level. */
                 __('Automatic (%s)', 'web-stories'),
-                HEADING_LEVELS[currentTagName]
+                HEADING_LEVELS[computedTagName]
               )
             : __('Automatic', 'web-stories'),
       },
@@ -86,13 +106,10 @@ function useHeadingSelect({ menuItemProps, isMenuOpen }) {
 
     return options.map((element) => {
       const { value } = element;
-      const tagName = selectedElement.tagName
-        ? selectedElement.tagName
-        : 'auto';
       return {
         key: value,
         supportsIcon: true,
-        icon: tagName === value ? <Icons.CheckmarkSmall /> : null,
+        icon: selectedValue === value ? <Icons.CheckmarkSmall /> : null,
         label: <span>{element.label}</span>,
         onClick: () => {
           updateSelectedElements({
@@ -105,7 +122,14 @@ function useHeadingSelect({ menuItemProps, isMenuOpen }) {
         ...menuItemProps,
       };
     });
-  }, [isMenuOpen, menuItemProps, selectedElements, updateSelectedElements]);
+  }, [
+    isMenuOpen,
+    menuItemProps,
+    updateSelectedElements,
+    selectedValue,
+    selectedElements,
+    computedTagName,
+  ]);
 
   // Only display if submenu has any items.
   return subMenuItems.length > 0
