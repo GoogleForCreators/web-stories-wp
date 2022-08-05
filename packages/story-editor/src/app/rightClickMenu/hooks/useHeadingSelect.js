@@ -71,7 +71,7 @@ function useHeadingSelect({ menuItemProps, isMenuOpen }) {
     ),
   ];
 
-  const computedTagName = uniqueTagNames.length === 1 ? uniqueTagNames[0] : '';
+  const computedTagName = uniqueTagNames?.length ? uniqueTagNames[0] : 'auto';
   const selectedValue = 'auto' === selectedTagName ? 'auto' : computedTagName;
 
   useEffect(() => {
