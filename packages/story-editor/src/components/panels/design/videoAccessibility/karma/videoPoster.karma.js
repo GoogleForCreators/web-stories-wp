@@ -28,7 +28,6 @@ describe('Video Accessibility Panel', () => {
 
   beforeEach(async () => {
     fixture = new Fixture();
-    fixture.setFlags({ videoPosterHotlinking: true });
     await fixture.render();
     await fixture.collapseHelpCenter();
   });

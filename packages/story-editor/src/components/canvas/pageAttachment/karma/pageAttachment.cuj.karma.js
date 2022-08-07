@@ -47,7 +47,6 @@ describe('Page Attachment', () => {
 
   beforeEach(async () => {
     fixture = new Fixture();
-    fixture.setFlags({ linkIconHotlinking: true });
     await fixture.render();
     await fixture.collapseHelpCenter();
 
