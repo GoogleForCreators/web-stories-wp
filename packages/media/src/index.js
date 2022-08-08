@@ -16,23 +16,20 @@
 
 export * from './blob';
 export * from './types';
+export * from './mimeTypes';
 
 export { default as calculateSrcSet } from './calculateSrcSet';
 export { default as createResource } from './createResource';
-export { default as getFileName } from './getFileName';
-export { default as formatDuration } from './formatDuration';
+export { default as getFileBasename } from './getFileBasename';
 export { default as createFileReader } from './createFileReader';
 export { default as fetchRemoteFile } from './fetchRemoteFile';
 export { default as fetchRemoteBlob } from './fetchRemoteBlob';
 export { default as formatMsToHMS } from './formatMsToHMS';
 export { default as generateVideoStrip } from './generateVideoStrip';
 export { default as getFileNameFromUrl } from './getFileNameFromUrl';
-export { default as getFileNameWithExt } from './getFileNameWithExt';
-export * from './mimeTypes';
 export { default as getFirstFrameOfVideo } from './getFirstFrameOfVideo';
 export { default as getImageDimensions } from './getImageDimensions';
 export { default as getMsFromHMS } from './getMsFromHMS';
-export { default as getVideoDimensions } from './getVideoDimensions';
 export { default as getVideoLength } from './getVideoLength';
 export { default as getVideoLengthDisplay } from './getVideoLengthDisplay';
 export { default as getResourceSize } from './getResourceSize';
@@ -47,6 +44,5 @@ export { default as seekVideo } from './seekVideo';
 export { default as resourceList } from './resourceList';
 export { default as isAnimatedGif } from './isAnimatedGif';
 export { default as hasVideoGotAudio } from './hasVideoGotAudio';
-export { default as getCanvasBlob } from './getCanvasBlob';
 export { default as getImageFromVideo } from './getImageFromVideo';
 export { default as blobToFile } from './blobToFile';
