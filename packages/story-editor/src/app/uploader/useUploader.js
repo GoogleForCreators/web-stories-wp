@@ -20,7 +20,7 @@
 import { useCallback, useMemo } from '@googleforcreators/react';
 import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
 import {
-  getFileName,
+  getFileBasename,
   getExtensionsFromMimeType,
 } from '@googleforcreators/media';
 
@@ -164,7 +164,7 @@ function useUploader() {
 
       const _additionalData = {
         storyId,
-        altText: getFileName(file),
+        altText: getFileBasename(file),
         mediaSource: 'editor',
         ...additionalData,
       };

@@ -1,18 +1,26 @@
 {
+  "current": null,
+  "selection": [],
+  "story": {},
   "version": 43,
   "pages": [
     {
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "isDefaultBackground": true,
           "type": "shape",
@@ -20,7 +28,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -58,10 +69,19 @@
             }
           },
           "fontSize": 49,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 0.9,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "type": "text",
           "content": "<span style=\"font-weight: 900; color: #f7722f\">Top 5 most Anticipated Album Releases for Fall</span>",
           "fontWeight": 400,
@@ -83,7 +103,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -121,10 +144,19 @@
             }
           },
           "fontSize": 18,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 0.8,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "type": "text",
           "content": "<span style=\"font-weight: 700; color: #fee2c6\">By: Marco Carola</span>",
           "fontWeight": 400,
@@ -146,7 +178,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "scale": 100,
@@ -161,7 +196,8 @@
             "height": 369,
             "id": 0,
             "alt": "page01_image1",
-            "isExternal": true
+            "isExternal": true,
+            "sizes": []
           },
           "type": "image",
           "x": 48,
@@ -186,7 +222,13 @@
           }
         }
       ],
-      "backgroundColor": { "color": { "r": 18, "g": 32, "b": 54 } },
+      "backgroundColor": {
+        "color": {
+          "r": 18,
+          "g": 32,
+          "b": 54
+        }
+      },
       "type": "page",
       "id": "eff1d1ce-14d8-454c-a770-2cdf0d3c154f",
       "animations": [],
@@ -196,14 +238,19 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "isDefaultBackground": true,
           "type": "shape",
@@ -211,15 +258,26 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
           "x": -185.5,
           "y": -64,
           "width": 783,
           "height": 746,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "type": "image",
           "id": "d8c4e07a-9722-4faf-8d28-6bb6e12f5fd8",
           "scale": 119,
@@ -235,13 +293,17 @@
             "alt": "sticker_sound",
             "isOptimized": false,
             "baseColor": "#ffffff",
-            "isExternal": true
+            "isExternal": true,
+            "sizes": []
           },
           "overlay": null
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -279,10 +341,19 @@
             }
           },
           "fontSize": 32,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 0.9,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"font-weight: 700; color: #fee2c6\">There is so much to look forward to this Fall, from the latest hip-hop release by United World Records to genres you didn't even know existed.&nbsp;</span>",
           "fontWeight": 400,
           "borderRadius": {
@@ -300,25 +371,43 @@
           "focalX": 50,
           "focalY": 50,
           "id": "a8e8b431-4927-4128-9fb1-9a236bf364b4",
-          "type": "text"
+          "type": "text",
+          "tagName": "p"
         }
       ],
       "animations": [],
       "backgroundOverlay": "none",
-      "backgroundColor": { "color": { "r": 18, "g": 32, "b": 54 } },
+      "backgroundColor": {
+        "color": {
+          "r": 18,
+          "g": 32,
+          "b": 54
+        }
+      },
       "type": "page",
       "id": "ba8f61d1-d6d2-463f-9d02-cc95560a1a31",
       "defaultBackgroundElement": {
         "opacity": 100,
-        "flip": { "vertical": false, "horizontal": false },
+        "flip": {
+          "vertical": false,
+          "horizontal": false
+        },
         "rotationAngle": 0,
         "lockAspectRatio": true,
-        "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+        "backgroundColor": {
+          "color": {
+            "r": 255,
+            "g": 255,
+            "b": 255
+          }
+        },
         "x": 1,
         "y": 1,
         "width": 1,
         "height": 1,
-        "mask": { "type": "rectangle" },
+        "mask": {
+          "type": "rectangle"
+        },
         "isBackground": true,
         "isDefaultBackground": true,
         "type": "shape",
@@ -330,14 +419,19 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "isDefaultBackground": true,
           "type": "shape",
@@ -345,7 +439,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "scale": 100,
@@ -363,7 +460,8 @@
             "alt": "sticker_sound",
             "isOptimized": false,
             "baseColor": "#ffffff",
-            "isExternal": true
+            "isExternal": true,
+            "sizes": []
           },
           "type": "image",
           "x": -27.5,
@@ -382,7 +480,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "scale": 100,
@@ -397,7 +498,8 @@
             "id": 0,
             "alt": "page03_image1",
             "isExternal": true,
-            "baseColor": "#0c0d14"
+            "baseColor": "#0c0d14",
+            "sizes": []
           },
           "type": "image",
           "x": 46,
@@ -423,7 +525,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -461,10 +566,19 @@
             }
           },
           "fontSize": 23,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 0.9,
           "textAlign": "center",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "type": "text",
           "content": "<span style=\"font-weight: 700; color: #f7722f\">1.</span>",
           "fontWeight": 400,
@@ -487,7 +601,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -525,10 +642,19 @@
             }
           },
           "fontSize": 75,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 0.7,
           "textAlign": "center",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "type": "text",
           "content": "<span style=\"font-weight: 900; color: #f7722f; text-transform: uppercase\">Travis</span>\n<span style=\"font-weight: 900; color: #f7722f; text-transform: uppercase\">Travis</span>",
           "fontWeight": 700,
@@ -552,7 +678,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -590,10 +719,19 @@
             }
           },
           "fontSize": 26,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 0.9,
           "textAlign": "center",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "type": "text",
           "content": "<span style=\"font-weight: 700; color: #fee2c6\">The Travis</span>",
           "fontWeight": 400,
@@ -616,7 +754,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -654,10 +795,19 @@
             }
           },
           "fontSize": 18,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 0.9,
           "textAlign": "center",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "type": "text",
           "content": "<span style=\"font-weight: 700; color: #fee2c6\">2020</span>",
           "fontWeight": 400,
@@ -681,7 +831,13 @@
         }
       ],
       "backgroundOverlay": "none",
-      "backgroundColor": { "color": { "r": 18, "g": 32, "b": 54 } },
+      "backgroundColor": {
+        "color": {
+          "r": 18,
+          "g": 32,
+          "b": 54
+        }
+      },
       "type": "page",
       "id": "d9dbb504-256d-4641-89e0-4912eacf3b68",
       "animations": [
@@ -707,15 +863,26 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
           "x": 110,
           "y": 5,
           "width": 330,
           "height": 586,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "type": "image",
           "id": "c5b51ca8-0299-4799-a96f-504df4c40e7d",
@@ -731,21 +898,41 @@
             "id": 0,
             "alt": "page04_image1",
             "baseColor": "#1a3243",
-            "isExternal": true
+            "isExternal": true,
+            "sizes": []
           },
           "overlay": {
             "type": "linear",
             "rotation": 0,
             "stops": [
-              { "color": { "r": 0, "g": 0, "b": 0, "a": 0 }, "position": 0 },
-              { "color": { "r": 0, "g": 0, "b": 0, "a": 1 }, "position": 1 }
+              {
+                "color": {
+                  "r": 0,
+                  "g": 0,
+                  "b": 0,
+                  "a": 0
+                },
+                "position": 0
+              },
+              {
+                "color": {
+                  "r": 0,
+                  "g": 0,
+                  "b": 0,
+                  "a": 1
+                },
+                "position": 1
+              }
             ],
             "alpha": 0.9
           }
         },
         {
           "opacity": 40,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "scale": 100,
@@ -761,7 +948,8 @@
             "alt": "sticker_sound",
             "isOptimized": false,
             "isExternal": true,
-            "baseColor": "#ffffff"
+            "baseColor": "#ffffff",
+            "sizes": []
           },
           "type": "image",
           "width": 991,
@@ -781,7 +969,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -819,10 +1010,19 @@
             }
           },
           "fontSize": 32,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 0.9,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "type": "text",
           "content": "<span style=\"font-weight: 700; color: #f7722f\">Travis Travis' full length album will be released this November. Mixing hip-hop with lo-fi and ambient genres, this album is set to satisfy his original fanbase.</span>",
           "fontWeight": 400,
@@ -840,24 +1040,42 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "id": "aa0a3a83-2b78-4368-bb2d-2eba6ceb3cf7"
+          "id": "aa0a3a83-2b78-4368-bb2d-2eba6ceb3cf7",
+          "tagName": "p"
         }
       ],
       "backgroundOverlay": "none",
-      "backgroundColor": { "color": { "r": 18, "g": 32, "b": 54 } },
+      "backgroundColor": {
+        "color": {
+          "r": 18,
+          "g": 32,
+          "b": 54
+        }
+      },
       "type": "page",
       "id": "d5582e2a-be27-4a3b-9182-0f60701ead66",
       "defaultBackgroundElement": {
         "opacity": 100,
-        "flip": { "vertical": false, "horizontal": false },
+        "flip": {
+          "vertical": false,
+          "horizontal": false
+        },
         "rotationAngle": 0,
         "lockAspectRatio": true,
-        "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+        "backgroundColor": {
+          "color": {
+            "r": 255,
+            "g": 255,
+            "b": 255
+          }
+        },
         "x": 1,
         "y": 1,
         "width": 1,
         "height": 1,
-        "mask": { "type": "rectangle" },
+        "mask": {
+          "type": "rectangle"
+        },
         "isBackground": true,
         "isDefaultBackground": true,
         "type": "shape",
@@ -879,15 +1097,26 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
           "x": 119,
           "y": 101,
           "width": 131,
           "height": 234,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "type": "image",
           "id": "b0e39a74-727e-40d8-9222-c38a69a15b46",
@@ -905,21 +1134,41 @@
             "id": 0,
             "alt": "page05_image1",
             "baseColor": "#2e3b4b",
-            "isExternal": true
+            "isExternal": true,
+            "sizes": []
           },
           "overlay": {
             "type": "linear",
             "rotation": 0,
             "stops": [
-              { "color": { "r": 0, "g": 0, "b": 0, "a": 0 }, "position": 0 },
-              { "color": { "r": 0, "g": 0, "b": 0, "a": 1 }, "position": 1 }
+              {
+                "color": {
+                  "r": 0,
+                  "g": 0,
+                  "b": 0,
+                  "a": 0
+                },
+                "position": 0
+              },
+              {
+                "color": {
+                  "r": 0,
+                  "g": 0,
+                  "b": 0,
+                  "a": 1
+                },
+                "position": 1
+              }
             ],
             "alpha": 0.9
           }
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -957,10 +1206,19 @@
             }
           },
           "fontSize": 50,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "type": "text",
           "content": "<span style=\"font-weight: 900; color: #fff; text-transform: uppercase\">Moongazing</span>",
           "fontWeight": 500,
@@ -978,11 +1236,15 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "id": "b42d0c60-2d97-48b9-a2c2-c1590e06d308"
+          "id": "b42d0c60-2d97-48b9-a2c2-c1590e06d308",
+          "tagName": "h2"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": -11,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -1012,10 +1274,19 @@
             }
           },
           "fontSize": 20,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "type": "text",
           "content": "<span style=\"color: #f7722f; letter-spacing: 0.1em; text-transform: uppercase\">Can't wait</span>\n<span style=\"color: #f7722f; letter-spacing: 0.1em; text-transform: uppercase\">to listen to</span>",
           "fontWeight": 400,
@@ -1037,7 +1308,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -1075,10 +1349,19 @@
             }
           },
           "fontSize": 24,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 0.9,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "type": "text",
           "content": "<span style=\"font-weight: 700; color: #fee2c6\">A single from the album conjures his grandmother's poetry, which he remembers from childhood trips traveling through Texas with her.</span>",
           "fontWeight": 400,
@@ -1096,24 +1379,42 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "id": "143d6b1d-a740-4553-91f1-59e43f1f5783"
+          "id": "143d6b1d-a740-4553-91f1-59e43f1f5783",
+          "tagName": "p"
         }
       ],
       "backgroundOverlay": "none",
-      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 255,
+          "b": 255
+        }
+      },
       "type": "page",
       "id": "31846961-c9bb-493a-bc80-c30a40188716",
       "defaultBackgroundElement": {
         "opacity": 100,
-        "flip": { "vertical": false, "horizontal": false },
+        "flip": {
+          "vertical": false,
+          "horizontal": false
+        },
         "rotationAngle": 0,
         "lockAspectRatio": true,
-        "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+        "backgroundColor": {
+          "color": {
+            "r": 255,
+            "g": 255,
+            "b": 255
+          }
+        },
         "x": 1,
         "y": 1,
         "width": 1,
         "height": 1,
-        "mask": { "type": "rectangle" },
+        "mask": {
+          "type": "rectangle"
+        },
         "isBackground": true,
         "isDefaultBackground": true,
         "type": "shape",
@@ -1144,14 +1445,19 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "isDefaultBackground": true,
           "id": "52792a53-0e06-4ad9-bdd1-1d6692b53b59",
@@ -1159,7 +1465,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "scale": 100,
@@ -1177,7 +1486,8 @@
             "alt": "sticker_sound",
             "isOptimized": false,
             "baseColor": "#ffffff",
-            "isExternal": true
+            "isExternal": true,
+            "sizes": []
           },
           "width": 467,
           "height": 444,
@@ -1197,10 +1507,19 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "type": "image",
           "x": 48,
           "y": 0,
@@ -1209,7 +1528,9 @@
           "scale": 152,
           "focalX": 54.39883258953343,
           "focalY": 57.122253957995575,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "id": "5aad802a-b40d-4fc8-a917-928c3579a145",
           "borderRadius": {
             "topLeft": 11,
@@ -1230,12 +1551,16 @@
             "alt": "page06_image1",
             "isOptimized": false,
             "baseColor": "#121319",
-            "isExternal": true
+            "isExternal": true,
+            "sizes": []
           }
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -1273,10 +1598,19 @@
             }
           },
           "fontSize": 23,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 0.9,
           "textAlign": "center",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"font-weight: 700; color: #3d3225\">2.</span>",
           "fontWeight": 400,
           "borderRadius": {
@@ -1300,7 +1634,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -1338,10 +1675,19 @@
             }
           },
           "fontSize": 75,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 0.7,
           "textAlign": "center",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"font-weight: 900; color: #3d3225; text-transform: uppercase\">Ariana</span>\n<span style=\"font-weight: 900; color: #3d3225; text-transform: uppercase\">Ariana</span>",
           "fontWeight": 700,
           "borderRadius": {
@@ -1364,7 +1710,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -1402,10 +1751,19 @@
             }
           },
           "fontSize": 26,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 0.9,
           "textAlign": "center",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"font-weight: 700; color: rgba(61,50,37,0.8)\">Sweetener</span>",
           "fontWeight": 400,
           "borderRadius": {
@@ -1428,7 +1786,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -1466,10 +1827,19 @@
             }
           },
           "fontSize": 18,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 0.9,
           "textAlign": "center",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"font-weight: 700; color: rgba(61,50,37,0.8)\">2020</span>",
           "fontWeight": 400,
           "borderRadius": {
@@ -1503,7 +1873,13 @@
           "delay": 0
         }
       ],
-      "backgroundColor": { "color": { "r": 223, "g": 185, "b": 149 } },
+      "backgroundColor": {
+        "color": {
+          "r": 223,
+          "g": 185,
+          "b": 149
+        }
+      },
       "type": "page",
       "id": "0fe270f2-e036-4c0d-ba0d-fbaec4962362",
       "pageTemplateType": "section",
@@ -1518,15 +1894,26 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
           "x": 48,
           "y": 0,
           "width": 330,
           "height": 586,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "type": "image",
           "id": "93d3893d-4cb2-4acb-a244-c5b32ccfa9ed",
@@ -1544,21 +1931,41 @@
             "id": 0,
             "alt": "page07_image1",
             "baseColor": "#2f2125",
-            "isExternal": true
+            "isExternal": true,
+            "sizes": []
           },
           "overlay": {
             "type": "linear",
             "rotation": 0,
             "stops": [
-              { "color": { "r": 0, "g": 0, "b": 0, "a": 0 }, "position": 0 },
-              { "color": { "r": 0, "g": 0, "b": 0, "a": 1 }, "position": 1 }
+              {
+                "color": {
+                  "r": 0,
+                  "g": 0,
+                  "b": 0,
+                  "a": 0
+                },
+                "position": 0
+              },
+              {
+                "color": {
+                  "r": 0,
+                  "g": 0,
+                  "b": 0,
+                  "a": 1
+                },
+                "position": 1
+              }
             ],
             "alpha": 0.9
           }
         },
         {
           "opacity": 40,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "scale": 100,
@@ -1574,7 +1981,8 @@
             "alt": "sticker_sound",
             "isOptimized": false,
             "isExternal": true,
-            "baseColor": "#ffffff"
+            "baseColor": "#ffffff",
+            "sizes": []
           },
           "type": "image",
           "width": 991,
@@ -1594,7 +2002,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -1632,10 +2043,19 @@
             }
           },
           "fontSize": 32,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 0.9,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "type": "text",
           "content": "<span style=\"font-weight: 700; color: #fee2c6\">Ariana's 6th album release is expected this October. Having leaked her last 2 albums, it's unclear what fans can expect from the artist and her next album release.</span>",
           "fontWeight": 400,
@@ -1654,24 +2074,42 @@
           "basedOn": "aa0a3a83-2b78-4368-bb2d-2eba6ceb3cf7",
           "id": "beac2df8-847c-471a-be2b-5c28272047da",
           "x": 48,
-          "y": 354
+          "y": 354,
+          "tagName": "p"
         }
       ],
       "backgroundOverlay": "none",
-      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 255,
+          "b": 255
+        }
+      },
       "type": "page",
       "id": "e3886fad-695f-43cc-989f-52556bb58cae",
       "defaultBackgroundElement": {
         "opacity": 100,
-        "flip": { "vertical": false, "horizontal": false },
+        "flip": {
+          "vertical": false,
+          "horizontal": false
+        },
         "rotationAngle": 0,
         "lockAspectRatio": true,
-        "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+        "backgroundColor": {
+          "color": {
+            "r": 255,
+            "g": 255,
+            "b": 255
+          }
+        },
         "x": 1,
         "y": 1,
         "width": 1,
         "height": 1,
-        "mask": { "type": "rectangle" },
+        "mask": {
+          "type": "rectangle"
+        },
         "isBackground": true,
         "isDefaultBackground": true,
         "type": "shape",
@@ -1693,15 +2131,26 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
           "x": 48,
           "y": 0,
           "width": 330,
           "height": 220,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "id": "f14c3425-f459-4b1c-8b19-a78f1d266e75",
           "type": "image",
@@ -1718,20 +2167,39 @@
             "alt": "page08_image1",
             "isOptimized": false,
             "baseColor": "#ae8f7d",
-            "isExternal": true
+            "isExternal": true,
+            "sizes": []
           },
           "overlay": {
             "type": "linear",
             "stops": [
-              { "color": { "r": 50, "g": 37, "b": 24, "a": 0 }, "position": 0 },
-              { "color": { "r": 0, "g": 0, "b": 0 }, "position": 1 }
+              {
+                "color": {
+                  "r": 50,
+                  "g": 37,
+                  "b": 24,
+                  "a": 0
+                },
+                "position": 0
+              },
+              {
+                "color": {
+                  "r": 0,
+                  "g": 0,
+                  "b": 0
+                },
+                "position": 1
+              }
             ],
             "alpha": 0.9
           }
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -1769,10 +2237,19 @@
             }
           },
           "fontSize": 50,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.2,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"font-weight: 900; color: #fff; text-transform: uppercase\">5 Rings</span>",
           "fontWeight": 500,
           "borderRadius": {
@@ -1790,11 +2267,15 @@
           "focalX": 50,
           "focalY": 50,
           "id": "87cc3529-72b2-4fa9-bb1f-f7da4e5edbed",
-          "type": "text"
+          "type": "text",
+          "tagName": "h2"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": -11,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -1824,10 +2305,19 @@
             }
           },
           "fontSize": 20,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"color: #fee2c6; letter-spacing: 0.1em; text-transform: uppercase\">Can't wait</span>\n<span style=\"color: #fee2c6; letter-spacing: 0.1em; text-transform: uppercase\">to listen to</span>",
           "fontWeight": 400,
           "borderRadius": {
@@ -1850,7 +2340,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -1888,10 +2381,19 @@
             }
           },
           "fontSize": 24,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 0.9,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"font-weight: 700; color: #fee2c6\">Already a single that has topped the charts from her latest album. More hits coming right up.</span>",
           "fontWeight": 400,
           "borderRadius": {
@@ -1909,7 +2411,8 @@
           "focalX": 50,
           "focalY": 50,
           "id": "7ec57319-100b-429e-ae11-fd0b97454698",
-          "type": "text"
+          "type": "text",
+          "tagName": "p"
         }
       ],
       "backgroundOverlay": "none",
@@ -1932,20 +2435,37 @@
           "delay": 0
         }
       ],
-      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 255,
+          "b": 255
+        }
+      },
       "type": "page",
       "id": "60ce8825-26f3-4422-a7a9-e70f78d837cc",
       "defaultBackgroundElement": {
         "opacity": 100,
-        "flip": { "vertical": false, "horizontal": false },
+        "flip": {
+          "vertical": false,
+          "horizontal": false
+        },
         "rotationAngle": 0,
         "lockAspectRatio": true,
-        "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+        "backgroundColor": {
+          "color": {
+            "r": 255,
+            "g": 255,
+            "b": 255
+          }
+        },
         "x": 1,
         "y": 1,
         "width": 1,
         "height": 1,
-        "mask": { "type": "rectangle" },
+        "mask": {
+          "type": "rectangle"
+        },
         "isBackground": true,
         "isDefaultBackground": true,
         "id": "1899b726-b36a-4990-86c8-9747fb2e5c08",
@@ -1957,14 +2477,19 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "isDefaultBackground": true,
           "id": "2919e860-b917-44a2-b381-1e5b3e9a24ef",
@@ -1972,7 +2497,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "scale": 100,
@@ -1990,7 +2518,8 @@
             "alt": "sticker_sound",
             "isOptimized": false,
             "baseColor": "#ffffff",
-            "isExternal": true
+            "isExternal": true,
+            "sizes": []
           },
           "width": 467,
           "height": 444,
@@ -2010,10 +2539,19 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "type": "image",
           "x": 48,
           "y": 0,
@@ -2022,7 +2560,9 @@
           "scale": 179,
           "focalX": 50,
           "focalY": 49.97976726425704,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "id": "584af732-596b-4f36-a8a6-775761af4472",
           "borderRadius": {
             "topLeft": 11,
@@ -2043,12 +2583,16 @@
             "alt": "page09_image1",
             "isOptimized": false,
             "baseColor": "#292519",
-            "isExternal": true
+            "isExternal": true,
+            "sizes": []
           }
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -2086,10 +2630,19 @@
             }
           },
           "fontSize": 23,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 0.9,
           "textAlign": "center",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"font-weight: 700; color: #f4e6b0\">3.</span>",
           "fontWeight": 400,
           "borderRadius": {
@@ -2113,7 +2666,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -2151,10 +2707,19 @@
             }
           },
           "fontSize": 75,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 0.7,
           "textAlign": "center",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"font-weight: 900; color: #f4e6b0; text-transform: uppercase\">Teyana</span>\n<span style=\"font-weight: 900; color: #f4e6b0; text-transform: uppercase\">Teyana</span>",
           "fontWeight": 700,
           "borderRadius": {
@@ -2177,7 +2742,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -2215,10 +2783,19 @@
             }
           },
           "fontSize": 26,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 0.9,
           "textAlign": "center",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"font-weight: 700; color: #fff\">K.T.S.E</span>",
           "fontWeight": 400,
           "borderRadius": {
@@ -2241,7 +2818,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -2279,10 +2859,19 @@
             }
           },
           "fontSize": 18,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 0.9,
           "textAlign": "center",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"font-weight: 700; color: #fff\">2020</span>",
           "fontWeight": 400,
           "borderRadius": {
@@ -2316,7 +2905,13 @@
           "delay": 0
         }
       ],
-      "backgroundColor": { "color": { "r": 25, "g": 43, "b": 49 } },
+      "backgroundColor": {
+        "color": {
+          "r": 25,
+          "g": 43,
+          "b": 49
+        }
+      },
       "type": "page",
       "id": "eb00917e-1f2f-40d0-a8d4-a78c4e6b1274",
       "pageTemplateType": "",
@@ -2332,15 +2927,26 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
           "x": 48,
           "y": 0,
           "width": 330,
           "height": 586,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "id": "eaf548d4-6a37-4458-b9ba-17bc1e55fd35",
           "type": "image",
@@ -2358,21 +2964,41 @@
             "id": 0,
             "alt": "page10_image1",
             "baseColor": "#8e8981",
-            "isExternal": true
+            "isExternal": true,
+            "sizes": []
           },
           "overlay": {
             "type": "linear",
             "rotation": 0,
             "stops": [
-              { "color": { "r": 0, "g": 0, "b": 0, "a": 0 }, "position": 0 },
-              { "color": { "r": 0, "g": 0, "b": 0, "a": 1 }, "position": 1 }
+              {
+                "color": {
+                  "r": 0,
+                  "g": 0,
+                  "b": 0,
+                  "a": 0
+                },
+                "position": 0
+              },
+              {
+                "color": {
+                  "r": 0,
+                  "g": 0,
+                  "b": 0,
+                  "a": 1
+                },
+                "position": 1
+              }
             ],
             "alpha": 0.9
           }
         },
         {
           "opacity": 40,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "scale": 100,
@@ -2388,7 +3014,8 @@
             "alt": "sticker_sound",
             "isOptimized": false,
             "isExternal": true,
-            "baseColor": "#ffffff"
+            "baseColor": "#ffffff",
+            "sizes": []
           },
           "type": "image",
           "width": 991,
@@ -2408,7 +3035,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -2446,10 +3076,19 @@
             }
           },
           "fontSize": 32,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 0.9,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"font-weight: 700; color: #f4e6b0\">Teyana's music is made to move you. Influences from legendary R&amp;B singers of the 80s, her music sounds soothingly familiar but with a modern twist. &nbsp;</span>",
           "fontWeight": 400,
           "borderRadius": {
@@ -2468,7 +3107,8 @@
           "id": "30e0117e-0b3e-4f60-b564-4b6e059a341b",
           "x": 48,
           "y": 354,
-          "type": "text"
+          "type": "text",
+          "tagName": "p"
         }
       ],
       "backgroundOverlay": "none",
@@ -2482,20 +3122,37 @@
           "delay": 0
         }
       ],
-      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 255,
+          "b": 255
+        }
+      },
       "type": "page",
       "id": "f4ec2dd8-2edc-47aa-97af-b884a62ad77a",
       "defaultBackgroundElement": {
         "opacity": 100,
-        "flip": { "vertical": false, "horizontal": false },
+        "flip": {
+          "vertical": false,
+          "horizontal": false
+        },
         "rotationAngle": 0,
         "lockAspectRatio": true,
-        "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+        "backgroundColor": {
+          "color": {
+            "r": 255,
+            "g": 255,
+            "b": 255
+          }
+        },
         "x": 1,
         "y": 1,
         "width": 1,
         "height": 1,
-        "mask": { "type": "rectangle" },
+        "mask": {
+          "type": "rectangle"
+        },
         "isBackground": true,
         "isDefaultBackground": true,
         "id": "a05807ee-5090-4aa2-90f2-8e899d080aa9",
@@ -2507,15 +3164,26 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
           "x": 48,
           "y": 0,
           "width": 330,
           "height": 586,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "id": "2dfcbdeb-6d63-4650-88ec-27bfbbe32938",
           "type": "image",
@@ -2531,21 +3199,41 @@
             "id": 0,
             "alt": "page11_image1",
             "baseColor": "#6b6a68",
-            "isExternal": true
+            "isExternal": true,
+            "sizes": []
           },
           "overlay": {
             "type": "linear",
             "rotation": 0,
             "stops": [
-              { "color": { "r": 0, "g": 0, "b": 0, "a": 0 }, "position": 0 },
-              { "color": { "r": 0, "g": 0, "b": 0, "a": 1 }, "position": 1 }
+              {
+                "color": {
+                  "r": 0,
+                  "g": 0,
+                  "b": 0,
+                  "a": 0
+                },
+                "position": 0
+              },
+              {
+                "color": {
+                  "r": 0,
+                  "g": 0,
+                  "b": 0,
+                  "a": 1
+                },
+                "position": 1
+              }
             ],
             "alpha": 0.9
           }
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -2583,10 +3271,19 @@
             }
           },
           "fontSize": 50,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 0.7,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"font-weight: 900; color: #fff; text-transform: uppercase\">Going</span>\n<span style=\"font-weight: 900; color: #fff; text-transform: uppercase\">West</span>",
           "fontWeight": 500,
           "borderRadius": {
@@ -2604,11 +3301,15 @@
           "focalX": 50,
           "focalY": 50,
           "id": "8e967863-0da9-4f8c-8f9d-8af0da14075b",
-          "type": "text"
+          "type": "text",
+          "tagName": "h2"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": -11,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -2638,10 +3339,19 @@
             }
           },
           "fontSize": 20,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"color: #f4e6b0; letter-spacing: 0.1em; text-transform: uppercase\">Top 10</span>\n<span style=\"color: #f4e6b0; letter-spacing: 0.1em; text-transform: uppercase\">Dancers</span>",
           "fontWeight": 400,
           "borderRadius": {
@@ -2663,7 +3373,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -2701,10 +3414,19 @@
             }
           },
           "fontSize": 24,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 0.9,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"font-weight: 700; color: #f4e6b0\">She's been able to catch the attention of the right people in the music industry and this is her tribute.</span>",
           "fontWeight": 400,
           "borderRadius": {
@@ -2722,7 +3444,8 @@
           "focalX": 50,
           "focalY": 50,
           "id": "4d0bc3ad-7b91-4449-be8d-53f19f640fc4",
-          "type": "text"
+          "type": "text",
+          "tagName": "p"
         }
       ],
       "backgroundOverlay": "none",
@@ -2745,20 +3468,37 @@
           "delay": 0
         }
       ],
-      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 255,
+          "b": 255
+        }
+      },
       "type": "page",
       "id": "8d19a3ef-cec0-4741-be77-f7910ebfa51c",
       "defaultBackgroundElement": {
         "opacity": 100,
-        "flip": { "vertical": false, "horizontal": false },
+        "flip": {
+          "vertical": false,
+          "horizontal": false
+        },
         "rotationAngle": 0,
         "lockAspectRatio": true,
-        "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+        "backgroundColor": {
+          "color": {
+            "r": 255,
+            "g": 255,
+            "b": 255
+          }
+        },
         "x": 1,
         "y": 1,
         "width": 1,
         "height": 1,
-        "mask": { "type": "rectangle" },
+        "mask": {
+          "type": "rectangle"
+        },
         "isBackground": true,
         "isDefaultBackground": true,
         "id": "8ecdb58d-3192-47e7-b2e7-896b2d0af033",
@@ -2770,14 +3510,19 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "isDefaultBackground": true,
           "id": "393d5a6d-ca62-4f1b-ac59-d9564abfe183",
@@ -2785,7 +3530,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "scale": 100,
@@ -2803,7 +3551,8 @@
             "alt": "sticker_sound",
             "isOptimized": false,
             "baseColor": "#ffffff",
-            "isExternal": true
+            "isExternal": true,
+            "sizes": []
           },
           "width": 467,
           "height": 444,
@@ -2823,7 +3572,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -2861,10 +3613,19 @@
             }
           },
           "fontSize": 23,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 0.9,
           "textAlign": "center",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"font-weight: 700; color: #fee2c6\">4.</span>",
           "fontWeight": 400,
           "borderRadius": {
@@ -2888,7 +3649,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -2926,10 +3690,19 @@
             }
           },
           "fontSize": 75,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 0.7,
           "textAlign": "center",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"font-weight: 900; color: #fee2c6; text-transform: uppercase\">Justin</span>\n<span style=\"font-weight: 900; color: #fee2c6; text-transform: uppercase\">Barber</span>",
           "fontWeight": 700,
           "borderRadius": {
@@ -2952,7 +3725,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -2990,10 +3766,19 @@
             }
           },
           "fontSize": 26,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 0.9,
           "textAlign": "center",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"font-weight: 700; color: #fff\">Changes</span>",
           "fontWeight": 400,
           "borderRadius": {
@@ -3016,7 +3801,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -3054,10 +3842,19 @@
             }
           },
           "fontSize": 18,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 0.9,
           "textAlign": "center",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"font-weight: 700; color: #fff\">2020</span>",
           "fontWeight": 400,
           "borderRadius": {
@@ -3081,10 +3878,19 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "type": "image",
           "x": 48,
           "y": 0,
@@ -3093,7 +3899,9 @@
           "scale": 193,
           "focalX": 59.919012034037976,
           "focalY": 52.905438395217196,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "id": "1bab9ba1-224b-4c1b-b48f-8a90dc28b72a",
           "borderRadius": {
             "topLeft": 11,
@@ -3114,7 +3922,8 @@
             "alt": "page15_image1",
             "isOptimized": false,
             "baseColor": "#663636",
-            "isExternal": true
+            "isExternal": true,
+            "sizes": []
           }
         }
       ],
@@ -3129,7 +3938,13 @@
           "delay": 0
         }
       ],
-      "backgroundColor": { "color": { "r": 31, "g": 23, "b": 55 } },
+      "backgroundColor": {
+        "color": {
+          "r": 31,
+          "g": 23,
+          "b": 55
+        }
+      },
       "type": "page",
       "id": "c0864782-cc25-4f04-bbd8-633e2b4ac38f",
       "pageTemplateType": "",
@@ -3145,15 +3960,26 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
           "x": 48,
           "y": 0,
           "width": 330,
           "height": 586,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "id": "7399fbc5-00b2-480a-a5e4-5975ada8c9d1",
           "type": "image",
@@ -3169,21 +3995,41 @@
             "id": 0,
             "alt": "page16_image1",
             "baseColor": "#73707d",
-            "isExternal": true
+            "isExternal": true,
+            "sizes": []
           },
           "overlay": {
             "type": "linear",
             "rotation": 0,
             "stops": [
-              { "color": { "r": 0, "g": 0, "b": 0, "a": 0 }, "position": 0 },
-              { "color": { "r": 0, "g": 0, "b": 0, "a": 1 }, "position": 1 }
+              {
+                "color": {
+                  "r": 0,
+                  "g": 0,
+                  "b": 0,
+                  "a": 0
+                },
+                "position": 0
+              },
+              {
+                "color": {
+                  "r": 0,
+                  "g": 0,
+                  "b": 0,
+                  "a": 1
+                },
+                "position": 1
+              }
             ],
             "alpha": 0.9
           }
         },
         {
           "opacity": 40,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "scale": 100,
@@ -3199,7 +4045,8 @@
             "alt": "sticker_sound",
             "isOptimized": false,
             "baseColor": "#ffffff",
-            "isExternal": true
+            "isExternal": true,
+            "sizes": []
           },
           "type": "image",
           "width": 991,
@@ -3219,7 +4066,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -3257,10 +4107,19 @@
             }
           },
           "fontSize": 32,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 0.9,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"font-weight: 700; color: #fee2c6\">Always keeping things exciting, Barber opts for even more collaborations with established and rising artists on his forthcoming album.</span>",
           "fontWeight": 400,
           "borderRadius": {
@@ -3279,7 +4138,8 @@
           "id": "7295ae08-99ad-4121-8e2d-d3af5168b95f",
           "x": 48,
           "y": 386,
-          "type": "text"
+          "type": "text",
+          "tagName": "p"
         }
       ],
       "backgroundOverlay": "none",
@@ -3293,20 +4153,37 @@
           "delay": 0
         }
       ],
-      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 255,
+          "b": 255
+        }
+      },
       "type": "page",
       "id": "55dfbb6b-afbd-4787-9ca8-1c90e6e40650",
       "defaultBackgroundElement": {
         "opacity": 100,
-        "flip": { "vertical": false, "horizontal": false },
+        "flip": {
+          "vertical": false,
+          "horizontal": false
+        },
         "rotationAngle": 0,
         "lockAspectRatio": true,
-        "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+        "backgroundColor": {
+          "color": {
+            "r": 255,
+            "g": 255,
+            "b": 255
+          }
+        },
         "x": 1,
         "y": 1,
         "width": 1,
         "height": 1,
-        "mask": { "type": "rectangle" },
+        "mask": {
+          "type": "rectangle"
+        },
         "isBackground": true,
         "isDefaultBackground": true,
         "id": "2f709f3f-4120-4fde-9068-983f77b8c753",
@@ -3318,15 +4195,26 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
           "x": 48,
           "y": 0,
           "width": 330,
           "height": 586,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "id": "4e3bb4e5-d99c-449d-8c00-28566ecd3fdb",
           "type": "image",
@@ -3342,21 +4230,41 @@
             "id": 0,
             "alt": "page17_image1",
             "baseColor": "#6a364e",
-            "isExternal": true
+            "isExternal": true,
+            "sizes": []
           },
           "overlay": {
             "type": "linear",
             "rotation": 0,
             "stops": [
-              { "color": { "r": 0, "g": 0, "b": 0, "a": 0 }, "position": 0 },
-              { "color": { "r": 0, "g": 0, "b": 0, "a": 1 }, "position": 1 }
+              {
+                "color": {
+                  "r": 0,
+                  "g": 0,
+                  "b": 0,
+                  "a": 0
+                },
+                "position": 0
+              },
+              {
+                "color": {
+                  "r": 0,
+                  "g": 0,
+                  "b": 0,
+                  "a": 1
+                },
+                "position": 1
+              }
             ],
             "alpha": 0.9
           }
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -3394,10 +4302,19 @@
             }
           },
           "fontSize": 50,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 0.7,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"font-weight: 900; color: #fff; text-transform: uppercase\">Pink</span>\n<span style=\"font-weight: 900; color: #fff; text-transform: uppercase\">Sweater</span>",
           "fontWeight": 500,
           "borderRadius": {
@@ -3415,11 +4332,15 @@
           "focalX": 50,
           "focalY": 50,
           "id": "a532098d-7c38-4a95-8acc-99b1aecfea76",
-          "type": "text"
+          "type": "text",
+          "tagName": "h2"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 345,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -3449,10 +4370,19 @@
             }
           },
           "fontSize": 20,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"color: #fee2c6; letter-spacing: 0.1em; text-transform: uppercase\">That's</span>\n<span style=\"color: #fee2c6; letter-spacing: 0.1em; text-transform: uppercase\">Flow!</span>",
           "fontWeight": 400,
           "borderRadius": {
@@ -3474,7 +4404,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -3512,10 +4445,19 @@
             }
           },
           "fontSize": 24,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 0.9,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"font-weight: 700; color: #fee2c6\">The song samples some of the greatest Jazz tracks of all time. Naturally, we see Barber collaborating on this track with the best and brightest hip hop newcomers.&nbsp;</span>",
           "fontWeight": 400,
           "borderRadius": {
@@ -3533,7 +4475,8 @@
           "focalX": 50,
           "focalY": 50,
           "id": "0d87c15d-0c0e-4806-a469-f72a57593bca",
-          "type": "text"
+          "type": "text",
+          "tagName": "p"
         }
       ],
       "backgroundOverlay": "none",
@@ -3556,20 +4499,37 @@
           "delay": 0
         }
       ],
-      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 255,
+          "b": 255
+        }
+      },
       "type": "page",
       "id": "73a54749-45bb-4fab-80a3-c6aa4a9d164f",
       "defaultBackgroundElement": {
         "opacity": 100,
-        "flip": { "vertical": false, "horizontal": false },
+        "flip": {
+          "vertical": false,
+          "horizontal": false
+        },
         "rotationAngle": 0,
         "lockAspectRatio": true,
-        "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+        "backgroundColor": {
+          "color": {
+            "r": 255,
+            "g": 255,
+            "b": 255
+          }
+        },
         "x": 1,
         "y": 1,
         "width": 1,
         "height": 1,
-        "mask": { "type": "rectangle" },
+        "mask": {
+          "type": "rectangle"
+        },
         "isBackground": true,
         "isDefaultBackground": true,
         "id": "aa014c03-c406-451b-8b18-0f2fce008b43",
@@ -3581,14 +4541,19 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "isDefaultBackground": true,
           "type": "shape",
@@ -3596,7 +4561,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -3634,10 +4602,19 @@
             }
           },
           "fontSize": 50,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 0.7,
           "textAlign": "center",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"font-weight: 900; color: #fff; text-transform: uppercase\">What's</span>\n<span style=\"font-weight: 900; color: #fff; text-transform: uppercase\">Next?</span>",
           "fontWeight": 500,
           "borderRadius": {
@@ -3660,7 +4637,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "scale": 100,
@@ -3675,7 +4655,8 @@
             "id": 0,
             "alt": "page19_image1",
             "isExternal": true,
-            "baseColor": "#3f3739"
+            "baseColor": "#3f3739",
+            "sizes": []
           },
           "type": "image",
           "x": 48,
@@ -3694,7 +4675,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -3732,10 +4716,19 @@
             }
           },
           "fontSize": 26,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 0.9,
           "textAlign": "center",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"font-weight: 700; color: #fee2c6\">Top 5 hip hop tracks of all time</span>",
           "fontWeight": 400,
           "borderRadius": {
@@ -3758,7 +4751,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "FILL",
@@ -3798,7 +4794,13 @@
             }
           },
           "fontSize": 14,
-          "backgroundColor": { "color": { "r": 254, "g": 226, "b": 198 } },
+          "backgroundColor": {
+            "color": {
+              "r": 254,
+              "g": 226,
+              "b": 198
+            }
+          },
           "lineHeight": 1.2,
           "textAlign": "initial",
           "padding": {
@@ -3834,7 +4836,13 @@
         }
       ],
       "backgroundOverlay": "none",
-      "backgroundColor": { "color": { "r": 18, "g": 32, "b": 54 } },
+      "backgroundColor": {
+        "color": {
+          "r": 18,
+          "g": 32,
+          "b": 54
+        }
+      },
       "type": "page",
       "id": "ce1b993b-e400-429d-86c8-0236ff5cec5d",
       "animations": [
@@ -3858,8 +4866,5 @@
       ],
       "pageTemplateType": ""
     }
-  ],
-  "current": null,
-  "selection": [],
-  "story": {}
+  ]
 }

@@ -20,14 +20,11 @@
 import getFileNameFromUrl from './getFileNameFromUrl';
 import fetchRemoteBlob from './fetchRemoteBlob';
 import blobToFile from './blobToFile';
+import getFileBasename from './getFileBasename';
 
 function generateFileName(url) {
   const currentFileName = getFileNameFromUrl(url);
-  const currentFileExt = currentFileName
-    .split(/[#?]/)[0]
-    .split('.')
-    .pop()
-    .trim();
+  const currentFileExt = getFileBasename({ name: currentFileName });
 
   return currentFileName.replace(
     `.${currentFileExt}`,

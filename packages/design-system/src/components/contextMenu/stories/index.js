@@ -562,21 +562,87 @@ const backgroundMediaMenu = (
   </>
 );
 
-const textMenu = (
-  <>
-    {rightClickMenuMainOptions}
-    <MenuItems.MenuSeparator />
-    {rightClickMenuLayeringOptions}
-    <MenuItems.MenuSeparator />
-    {rightClickMenuStyleOptions}
-    <MenuItems.MenuButton onClick={() => {}}>
-      {'Add style to "Saved styles"'}
-    </MenuItems.MenuButton>
-    <MenuItems.MenuButton onClick={() => {}}>
-      {'Add color to "Saved colors"'}
-    </MenuItems.MenuButton>
-  </>
-);
+const TextMenu = ({ children, ...args }) => {
+  const ref = useRef();
+  const subMenuRef = useRef();
+  const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
+  return (
+    <Container ref={ref}>
+      {children}
+      <ContextMenu {...args}>
+        <MenuItems.SubMenuTrigger
+          subMenuRef={subMenuRef}
+          isSubMenuOpen={isSubMenuOpen}
+          parentMenuRef={ref}
+          closeSubMenu={() => setIsSubMenuOpen(false)}
+          openSubMenu={() => setIsSubMenuOpen(true)}
+          label="Heading Level"
+          SuffixIcon={ChevronRightSmall}
+        />
+        <RightClickContextMenuContainer
+          position={{
+            y: 0,
+            x: 212,
+          }}
+          ref={subMenuRef}
+        >
+          <ContextMenu
+            isOpen={isSubMenuOpen}
+            onCloseSubMenu={() => setIsSubMenuOpen(false)}
+            isSubMenu
+            parentMenuRef={ref}
+          >
+            <MenuItems.MenuItem
+              supportsIcon
+              dismissOnClick={false}
+              onClick={() => () => setIsSubMenuOpen(false)}
+              label={<span>{'Automatic'}</span>}
+            />
+            <MenuItems.MenuItem
+              supportsIcon
+              dismissOnClick={false}
+              icon={<CheckmarkSmall />}
+              onClick={() => setIsSubMenuOpen(false)}
+              label={<span>{'Heading 1'}</span>}
+            />
+            <MenuItems.MenuItem
+              supportsIcon
+              dismissOnClick={false}
+              onClick={() => setIsSubMenuOpen(false)}
+              label={<span>{'Heading 2'}</span>}
+            />
+            <MenuItems.MenuItem
+              supportsIcon
+              dismissOnClick={false}
+              onClick={() => setIsSubMenuOpen(false)}
+              label={<span>{'Heading 3'}</span>}
+            />
+            <MenuItems.MenuItem
+              supportsIcon
+              dismissOnClick={false}
+              onClick={() => setIsSubMenuOpen(false)}
+              label={<span>{'Paragraph'}</span>}
+            />
+          </ContextMenu>
+        </RightClickContextMenuContainer>
+        <MenuItems.MenuSeparator />
+        {rightClickMenuLayeringOptions}
+        <MenuItems.MenuSeparator />
+        {rightClickMenuStyleOptions}
+        <MenuItems.MenuButton onClick={() => {}}>
+          {'Add style to "Saved styles"'}
+        </MenuItems.MenuButton>
+        <MenuItems.MenuButton onClick={() => {}}>
+          {'Add color to "Saved colors"'}
+        </MenuItems.MenuButton>
+      </ContextMenu>
+    </Container>
+  );
+};
+
+TextMenu.propTypes = {
+  children: PropTypes.node,
+};
 
 const SampleLayout = styled.div`
   display: block;
@@ -787,10 +853,9 @@ export const RightClickMenuStaticValues = (args) => {
         <Text>{'Right click on background element'}</Text>
         <ContextMenu {...args}>{backgroundMediaMenu}</ContextMenu>
       </Container>
-      <Container>
+      <TextMenu {...args}>
         <Text>{'Right click on text element'}</Text>
-        <ContextMenu {...args}>{textMenu}</ContextMenu>
-      </Container>
+      </TextMenu>
     </Grid>
   );
 };

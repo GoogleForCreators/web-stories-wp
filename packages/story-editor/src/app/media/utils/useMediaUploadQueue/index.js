@@ -31,7 +31,7 @@ import {
 } from '@googleforcreators/tracking';
 import {
   createBlob,
-  getFileName,
+  getFileBasename,
   getImageDimensions,
 } from '@googleforcreators/media';
 
@@ -358,7 +358,7 @@ function useMediaUploadQueue() {
       }
 
       try {
-        const posterFileName = getFileName(posterFile);
+        const posterFileName = getFileBasename(posterFile);
         const { poster, posterId } = await uploadVideoPoster(
           newResource.id,
           posterFileName,
