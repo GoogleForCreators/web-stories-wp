@@ -19,13 +19,14 @@
  */
 import { formatMsToHMS } from '@googleforcreators/media';
 import { useState, useCallback, useRef } from '@googleforcreators/react';
+import { useEffect } from 'react';
 
 /**
  * Internal dependencies
  */
 import useFFmpeg from '../../app/media/utils/useFFmpeg';
 
-function useTrim({ setDuration, onTrimmed, file }) {
+function useTrim({ setDuration, onTrimmed, file, isRecording }) {
   const [trimData, setTrimData] = useState({ start: 0, end: null });
   const [isAdjustingTrim, setIsAdjustingTrim] = useState(false);
   const [isProcessingTrim, setIsProcessingTrim] = useState(false);
@@ -35,7 +36,6 @@ function useTrim({ setDuration, onTrimmed, file }) {
     async (newTrimData) => {
       setIsAdjustingTrim(false);
       if (newTrimData) {
-        setTrimData(newTrimData);
         hasCancelledTrim.current = false;
         setIsProcessingTrim(true);
         const start = formatMsToHMS(newTrimData.start);
@@ -45,6 +45,7 @@ function useTrim({ setDuration, onTrimmed, file }) {
         if (hasCancelledTrim.current) {
           return;
         }
+        setTrimData(newTrimData);
         setIsProcessingTrim(false);
         onTrimmed(result);
         setDuration(newTrimData.end - newTrimData.start);
@@ -53,11 +54,20 @@ function useTrim({ setDuration, onTrimmed, file }) {
     [file, onTrimmed, setDuration, trimVideo]
   );
   const startTrim = useCallback(() => setIsAdjustingTrim(true), []);
-  const resetTrim = useCallback(() => setIsAdjustingTrim(false), []);
+  const resetTrim = useCallback(() => {
+    setIsAdjustingTrim(false);
+    setTrimData({ start: 0, end: null });
+  }, []);
   const cancelTrim = useCallback(() => {
     hasCancelledTrim.current = true;
     setIsProcessingTrim(false);
   }, []);
+  // Whenever a new recording starts, reset any previously captured trim data
+  useEffect(() => {
+    if (isRecording) {
+      resetTrim();
+    }
+  }, [isRecording, resetTrim]);
 
   return {
     trimData,
