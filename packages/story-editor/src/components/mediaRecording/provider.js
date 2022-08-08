@@ -81,6 +81,9 @@ function MediaRecordingProvider({ children }) {
   const [audioInput, setAudioInput] = useState(
     localStore.getItemByKey(LOCAL_STORAGE_PREFIX.MEDIA_RECORDING_AUDIO_INPUT)
   );
+  const [videoEffect, setVideoEffect] = useState(
+    localStore.getItemByKey(LOCAL_STORAGE_PREFIX.MEDIA_RECORDING_VIDEO_EFFECT)
+  );
 
   const [mediaDevices, setMediaDevices] = useState([]);
 
@@ -333,6 +336,7 @@ function MediaRecordingProvider({ children }) {
         mediaDevices,
         audioInput,
         videoInput,
+        videoEffect,
         isSettingsOpen,
         error,
         status,
@@ -360,6 +364,7 @@ function MediaRecordingProvider({ children }) {
         toggleIsGif,
         setAudioInput,
         setVideoInput,
+        setVideoEffect,
         updateMediaDevices,
         stopRecording,
         startRecording,
@@ -388,6 +393,7 @@ function MediaRecordingProvider({ children }) {
       mediaDevices,
       audioInput,
       videoInput,
+      videoEffect,
       isSettingsOpen,
       error,
       status,

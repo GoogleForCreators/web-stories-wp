@@ -80,9 +80,19 @@ export const Video = styled.video.attrs({
   disablePictureInPicture: true,
 })`
   display: block;
+  visibility: ${({ hidden }) => (hidden ? 'hidden' : 'visible')};
+  position: ${({ hidden }) => (hidden ? 'absolute' : 'initial')};
   width: 100%;
   height: 100%;
   object-fit: cover;
   border-radius: 5px;
   ${({ $isProcessing }) => $isProcessing && 'filter: blur(5px)'};
+`;
+
+export const Canvas = styled.canvas`
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 5px;
 `;

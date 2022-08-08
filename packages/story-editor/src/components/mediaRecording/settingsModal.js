@@ -44,9 +44,11 @@ function SettingsModal() {
     hasAudio,
     videoInput,
     audioInput,
+    videoEffect,
     isSettingsOpen,
     setAudioInput,
     setVideoInput,
+    setVideoEffect,
     clearMediaStream,
     clearMediaBlob,
     toggleSettings,
@@ -55,9 +57,11 @@ function SettingsModal() {
     hasAudio: state.hasAudio,
     videoInput: state.videoInput,
     audioInput: state.audioInput,
+    videoEffect: state.videoEffect,
     isSettingsOpen: state.isSettingsOpen,
     setAudioInput: actions.setAudioInput,
     setVideoInput: actions.setVideoInput,
+    setVideoEffect: actions.setVideoEffect,
     clearMediaStream: actions.clearMediaStream,
     clearMediaBlob: actions.clearMediaBlob,
     toggleSettings: actions.toggleSettings,
@@ -65,6 +69,7 @@ function SettingsModal() {
 
   const [localVideoInput, setLocalVideoInput] = useState(videoInput);
   const [localAudioInput, setLocalAudioInput] = useState(audioInput);
+  const [localVideoEffect, setLocalVideoEffect] = useState(videoEffect);
 
   useEffect(() => setLocalVideoInput(videoInput), [videoInput]);
   useEffect(() => setLocalAudioInput(audioInput), [audioInput]);
@@ -84,7 +89,17 @@ function SettingsModal() {
       localAudioInput
     );
 
-    if (videoInput !== localVideoInput || audioInput !== localAudioInput) {
+    setVideoEffect(localVideoEffect);
+    localStore.setItemByKey(
+      LOCAL_STORAGE_PREFIX.MEDIA_RECORDING_VIDEO_EFFECT,
+      localVideoEffect
+    );
+
+    if (
+      videoInput !== localVideoInput ||
+      audioInput !== localAudioInput ||
+      videoEffect !== localVideoEffect
+    ) {
       trackEvent('media_recording_settings_changed');
       clearMediaStream();
       clearMediaBlob();
@@ -95,10 +110,13 @@ function SettingsModal() {
     clearMediaStream,
     localAudioInput,
     localVideoInput,
+    localVideoEffect,
     setAudioInput,
     setVideoInput,
+    setVideoEffect,
     toggleSettings,
     videoInput,
+    videoEffect,
   ]);
 
   const videoInputs = mediaDevices
@@ -107,6 +125,10 @@ function SettingsModal() {
   const audioInputs = mediaDevices
     .filter((device) => device.kind === 'audioinput')
     .map(({ deviceId, label }) => ({ value: deviceId, label }));
+  const videoEffects = [
+    { value: 'none', label: __('None', 'web-stories') },
+    { value: 'blur', label: __('Background blur', 'web-stories') },
+  ];
 
   const onChangeVideoInput = useCallback(
     (_event, value) => setLocalVideoInput(value),
@@ -115,6 +137,11 @@ function SettingsModal() {
 
   const onChangeAudioInput = useCallback(
     (evt, value) => setLocalAudioInput(value),
+    []
+  );
+
+  const onChangeVideoEffect = useCallback(
+    (_event, value) => setLocalVideoEffect(value),
     []
   );
 
@@ -165,6 +192,18 @@ function SettingsModal() {
             onMenuItemClick={onChangeAudioInput}
             selectedValue={localAudioInput}
             disabled={!hasAudio}
+            popupZIndex={11}
+          />
+        </Row>
+      )}
+      {videoInputs.length > 0 && (
+        <Row>
+          <DropDown
+            ariaLabel={__('Video Effect', 'web-stories')}
+            placeholder={__('Select Video Effect', 'web-stories')}
+            options={videoEffects}
+            onMenuItemClick={onChangeVideoEffect}
+            selectedValue={localVideoEffect}
             popupZIndex={11}
           />
         </Row>

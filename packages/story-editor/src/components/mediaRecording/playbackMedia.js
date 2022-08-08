@@ -20,7 +20,8 @@
  * External dependencies
  */
 import { __ } from '@googleforcreators/i18n';
-import { useCallback, useRef } from '@googleforcreators/react';
+import { useCallback, useRef, useEffect } from '@googleforcreators/react';
+import { SelfieSegmentation } from '@mediapipe/selfie_segmentation';
 
 /**
  * Internal dependencies
@@ -29,8 +30,18 @@ import useVideoTrim from '../videoTrim/useVideoTrim';
 import useMediaRecording from './useMediaRecording';
 import VideoMode from './videoMode';
 import PlayPauseButton from './playPauseButton';
-import { VideoWrapper, Video, Photo } from './components';
+import { VideoWrapper, Video, Photo, Canvas } from './components';
 import Audio from './audio';
+import { BACKGROUND_BLUR_PX } from './constants';
+
+const selfieSegmentation = new SelfieSegmentation({
+  locateFile: (file) =>
+    `https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/${file}`,
+});
+selfieSegmentation.setOptions({
+  modelSelection: 1,
+});
+selfieSegmentation.initialize();
 
 function PlaybackMedia() {
   const {
@@ -40,10 +51,12 @@ function PlaybackMedia() {
     liveStream,
     hasVideo,
     hasAudio,
+    videoEffect,
     isGif,
     isImageCapture,
     isAdjustingTrim,
     toggleIsGif,
+    streamNode,
     setStreamNode,
     isProcessingTrim,
   } = useMediaRecording(({ state, actions }) => ({
@@ -53,7 +66,9 @@ function PlaybackMedia() {
     liveStream: state.liveStream,
     hasVideo: state.hasVideo,
     hasAudio: state.hasAudio,
+    videoEffect: state.videoEffect,
     isGif: state.isGif,
+    streamNode: state.streamNode,
     isImageCapture: Boolean(state.file?.type?.startsWith('image')),
     isAdjustingTrim: state.isAdjustingTrim,
     toggleIsGif: actions.toggleIsGif,
@@ -65,6 +80,7 @@ function PlaybackMedia() {
   );
 
   const isMuted = !hasAudio || isGif;
+  const hasVideoEffect = videoEffect && videoEffect !== 'none';
 
   const onToggleVideoMode = useCallback(() => {
     toggleIsGif();
@@ -73,6 +89,7 @@ function PlaybackMedia() {
     }
   }, [toggleIsGif]);
 
+  const canvasRef = useRef();
   const videoRef = useRef();
   const updateVideoNode = useCallback(
     (node) => {
@@ -81,6 +98,49 @@ function PlaybackMedia() {
     },
     [setVideoNode]
   );
+
+  const onSelfieSegmentationResults = (results) => {
+    const canvas = canvasRef.current;
+    if (!canvas || !results.image || results.image.width === 0) {
+      return;
+    }
+    const context = canvasRef.current.getContext('2d');
+
+    context.globalCompositeOperation = 'copy';
+    context.filter = `blur(${BACKGROUND_BLUR_PX}px)`;
+    context.drawImage(
+      results.segmentationMask,
+      0,
+      0,
+      canvas.width,
+      canvas.height
+    );
+
+    context.globalCompositeOperation = 'source-in';
+    context.filter = 'none';
+    context.drawImage(results.image, 0, 0, canvas.width, canvas.height);
+
+    context.globalCompositeOperation = 'destination-over';
+    context.filter = `blur(${BACKGROUND_BLUR_PX}px)`;
+    context.drawImage(results.image, 0, 0, canvas.width, canvas.height);
+  };
+
+  useEffect(() => {
+    async function run() {
+      if (videoEffect === 'blur') {
+        await selfieSegmentation.initialize();
+        selfieSegmentation.onResults(onSelfieSegmentationResults);
+        const sendFrame = async () => {
+          if (streamNode && streamNode.videoWidth && selfieSegmentation) {
+            await selfieSegmentation.send({ image: streamNode });
+          }
+          requestAnimationFrame(sendFrame);
+        };
+        await sendFrame();
+      }
+    }
+    run();
+  }, [videoEffect, hasVideoEffect, streamNode]);
 
   // Only previewing a gif means that the play button is hidden,
   // not while trimming (even if gif)
@@ -128,7 +188,12 @@ function PlaybackMedia() {
           !mediaBlobUrl &&
           liveStream &&
           (hasVideo ? (
-            <Video ref={setStreamNode} muted />
+            <>
+              <Video ref={setStreamNode} muted hidden={hasVideoEffect} />
+              {hasVideoEffect && (
+                <Canvas ref={canvasRef} width={640} height={480} />
+              )}
+            </>
           ) : (
             <Audio liveStream={liveStream} />
           ))}

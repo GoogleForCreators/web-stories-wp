@@ -74,6 +74,7 @@ function MediaRecordingLayer() {
     getMediaStream,
     resetStream,
     onTrim,
+    videoEffect,
   } = useMediaRecording(({ state, actions }) => ({
     status: state.status,
     audioInput: state.audioInput,
@@ -83,6 +84,7 @@ function MediaRecordingLayer() {
     trimData: state.trimData,
     originalMediaBlobUrl: state.originalMediaBlobUrl,
     duration: state.duration,
+    videoEffect: state.videoEffect,
     updateMediaDevices: actions.updateMediaDevices,
     getMediaStream: actions.getMediaStream,
     resetStream: actions.resetStream,
@@ -95,7 +97,7 @@ function MediaRecordingLayer() {
     resetStream();
     getMediaStream();
     // eslint-disable-next-line react-hooks/exhaustive-deps -- Only want to act on actual input changes.
-  }, [audioInput, videoInput, hasVideo]);
+  }, [audioInput, videoInput, hasVideo, videoEffect]);
 
   useEffect(() => {
     if (isReady) {

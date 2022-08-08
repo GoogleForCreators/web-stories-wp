@@ -61,6 +61,7 @@
     "@googleforcreators/transform": "*",
     "@googleforcreators/units": "*",
     "@googleforcreators/url": "*",
+    "@mediapipe/selfie_segmentation": "^0.1.1632777926",
     "@wmik/use-media-recorder": "^1.6.4-beta.0",
     "blurhash": "^1.1.5",
     "classnames": "^2.3.1",
