@@ -1972,63 +1972,8 @@
           "y": 466
         },
         {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 241,
-              "g": 241,
-              "b": 241,
-              "a": 1
-            }
-          },
-          "type": "shape",
-          "x": 47,
+          "x": 48,
           "y": 572,
-          "width": 318,
-          "height": 48,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "id": "bd28914f-dc74-4e4c-8839-add83909737d",
-          "border": {
-            "left": 1,
-            "right": 1,
-            "top": 1,
-            "bottom": 1,
-            "lockedWidth": true,
-            "color": {
-              "color": {
-                "r": 41,
-                "g": 41,
-                "b": 41
-              }
-            }
-          },
-          "borderRadius": {
-            "topLeft": 5,
-            "topRight": 5,
-            "bottomRight": 5,
-            "bottomLeft": 5,
-            "locked": true
-          },
-          "link": {
-            "url": "https://google.com",
-            "icon": "",
-            "desc": "google.com"
-          }
-        },
-        {
-          "x": 155,
-          "y": 587,
           "id": "414d9609-a339-40e3-8b13-537531b8addf",
           "basedOn": "9f0dcb16-c292-4289-bb31-88941eb19904",
           "opacity": 100,
@@ -2094,21 +2039,23 @@
           "lineHeight": 1.4,
           "textAlign": "center",
           "padding": {
-            "locked": true,
-            "hasHiddenPadding": false
+            "locked": false,
+            "hasHiddenPadding": false,
+            "horizontal": 107,
+            "vertical": 15
           },
           "type": "text",
           "content": "<span style=\"font-weight: 800; color: #292929\">Visit Website</span>",
           "fontWeight": 700,
           "borderRadius": {
             "locked": true,
-            "topLeft": 2,
-            "topRight": 2,
-            "bottomRight": 2,
-            "bottomLeft": 2
+            "topLeft": 5,
+            "topRight": 5,
+            "bottomRight": 5,
+            "bottomLeft": 5
           },
-          "width": 102,
-          "height": 18,
+          "width": 316,
+          "height": 48,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -2117,6 +2064,20 @@
             "url": "https://google.com",
             "icon": "",
             "desc": "google.com"
+          },
+          "border": {
+            "left": 1,
+            "right": 1,
+            "top": 1,
+            "bottom": 1,
+            "lockedWidth": true,
+            "color": {
+              "color": {
+                "r": 41,
+                "g": 41,
+                "b": 41
+              }
+            }
           }
         }
       ],
@@ -2130,13 +2091,6 @@
       "type": "page",
       "id": "4d233f88-21b3-4859-a478-b7140b212d93",
       "animations": [
-        {
-          "id": "baf54beb-ca8f-49ed-bbcb-ed0612705e28",
-          "type": "effect-fade-in",
-          "targets": ["bd28914f-dc74-4e4c-8839-add83909737d"],
-          "duration": 2000,
-          "delay": 250
-        },
         {
           "id": "feb887c6-b277-4dfe-81d8-07b202fad804",
           "type": "effect-fade-in",
@@ -3382,62 +3336,9 @@
           "id": "8f411f1e-9797-464f-bc1e-08ff9e89d0ad"
         },
         {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 241,
-              "g": 241,
-              "b": 241,
-              "a": 1
-            }
-          },
-          "type": "shape",
-          "width": 318,
-          "height": 48,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "border": {
-            "left": 1,
-            "right": 1,
-            "top": 1,
-            "bottom": 1,
-            "lockedWidth": true,
-            "color": {
-              "color": {
-                "r": 41,
-                "g": 41,
-                "b": 41
-              }
-            }
-          },
-          "borderRadius": {
-            "topLeft": 5,
-            "topRight": 5,
-            "bottomRight": 5,
-            "bottomLeft": 5,
-            "locked": true
-          },
-          "link": {
-            "url": "https://google.com",
-            "icon": "",
-            "desc": "https://google.com"
-          },
-          "basedOn": "bd28914f-dc74-4e4c-8839-add83909737d",
-          "id": "064edb4d-1e1e-444d-a88f-bee0f29eff0a",
-          "x": 47,
-          "y": 572
-        },
-        {
+          "x": 48,
+          "y": 572,
+          "basedOn": "414d9609-a339-40e3-8b13-537531b8addf",
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -3501,21 +3402,23 @@
           "lineHeight": 1.4,
           "textAlign": "center",
           "padding": {
-            "locked": true,
-            "hasHiddenPadding": false
+            "locked": false,
+            "hasHiddenPadding": false,
+            "horizontal": 107,
+            "vertical": 15
           },
           "type": "text",
           "content": "<span style=\"font-weight: 800; color: #292929\">Visit Website</span>",
           "fontWeight": 700,
           "borderRadius": {
             "locked": true,
-            "topLeft": 2,
-            "topRight": 2,
-            "bottomRight": 2,
-            "bottomLeft": 2
+            "topLeft": 5,
+            "topRight": 5,
+            "bottomRight": 5,
+            "bottomLeft": 5
           },
-          "width": 102,
-          "height": 18,
+          "width": 316,
+          "height": 48,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -3525,23 +3428,27 @@
             "icon": "",
             "desc": "google.com"
           },
-          "basedOn": "414d9609-a339-40e3-8b13-537531b8addf",
-          "id": "1d49d5ae-85ec-4df7-88f6-90bf497e528f",
-          "x": 155,
-          "y": 587
+          "border": {
+            "left": 1,
+            "right": 1,
+            "top": 1,
+            "bottom": 1,
+            "lockedWidth": true,
+            "color": {
+              "color": {
+                "r": 41,
+                "g": 41,
+                "b": 41
+              }
+            }
+          },
+          "id": "eedced71-7d76-4098-b51c-9668088b982c"
         }
       ],
       "animations": [
         {
-          "targets": ["064edb4d-1e1e-444d-a88f-bee0f29eff0a"],
-          "id": "ec3538be-ada3-4de1-9469-9f1253347b34",
-          "type": "effect-fade-in",
-          "duration": 2000,
-          "delay": 250
-        },
-        {
-          "targets": ["1d49d5ae-85ec-4df7-88f6-90bf497e528f"],
-          "id": "280e1e7a-2a0f-4462-a0c9-c6e69ccd2e18",
+          "targets": ["eedced71-7d76-4098-b51c-9668088b982c"],
+          "id": "d91ca061-ffbb-470b-b12f-3a16812417db",
           "type": "effect-fade-in",
           "duration": 2000,
           "delay": 250
@@ -4795,62 +4702,9 @@
           "type": "text"
         },
         {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 241,
-              "g": 241,
-              "b": 241,
-              "a": 1
-            }
-          },
-          "type": "shape",
-          "width": 318,
-          "height": 48,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "border": {
-            "left": 1,
-            "right": 1,
-            "top": 1,
-            "bottom": 1,
-            "lockedWidth": true,
-            "color": {
-              "color": {
-                "r": 41,
-                "g": 41,
-                "b": 41
-              }
-            }
-          },
-          "borderRadius": {
-            "topLeft": 5,
-            "topRight": 5,
-            "bottomRight": 5,
-            "bottomLeft": 5,
-            "locked": true
-          },
-          "link": {
-            "url": "https://google.com",
-            "icon": "",
-            "desc": ""
-          },
-          "basedOn": "bd28914f-dc74-4e4c-8839-add83909737d",
-          "id": "c318250c-ae21-4810-a405-3c04a9aa2207",
-          "x": 47,
-          "y": 572
-        },
-        {
+          "x": 48,
+          "y": 572,
+          "basedOn": "eedced71-7d76-4098-b51c-9668088b982c",
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -4914,21 +4768,23 @@
           "lineHeight": 1.4,
           "textAlign": "center",
           "padding": {
-            "locked": true,
-            "hasHiddenPadding": false
+            "locked": false,
+            "hasHiddenPadding": false,
+            "horizontal": 107,
+            "vertical": 15
           },
           "type": "text",
           "content": "<span style=\"font-weight: 800; color: #292929\">Visit Website</span>",
           "fontWeight": 700,
           "borderRadius": {
             "locked": true,
-            "topLeft": 2,
-            "topRight": 2,
-            "bottomRight": 2,
-            "bottomLeft": 2
+            "topLeft": 5,
+            "topRight": 5,
+            "bottomRight": 5,
+            "bottomLeft": 5
           },
-          "width": 102,
-          "height": 18,
+          "width": 316,
+          "height": 48,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -4938,23 +4794,27 @@
             "icon": "",
             "desc": "google.com"
           },
-          "basedOn": "414d9609-a339-40e3-8b13-537531b8addf",
-          "id": "6ebe3dc4-40c4-49c3-9a22-1a1588410207",
-          "x": 155,
-          "y": 587
+          "border": {
+            "left": 1,
+            "right": 1,
+            "top": 1,
+            "bottom": 1,
+            "lockedWidth": true,
+            "color": {
+              "color": {
+                "r": 41,
+                "g": 41,
+                "b": 41
+              }
+            }
+          },
+          "id": "2cea4858-7d4e-47e3-b67b-64273bee5bb8"
         }
       ],
       "animations": [
         {
-          "targets": ["c318250c-ae21-4810-a405-3c04a9aa2207"],
-          "id": "24cd28af-ac66-4f02-a682-96dfa7d83419",
-          "type": "effect-fade-in",
-          "duration": 2000,
-          "delay": 250
-        },
-        {
-          "targets": ["6ebe3dc4-40c4-49c3-9a22-1a1588410207"],
-          "id": "a8f470cf-5228-4f97-a789-75d32b994475",
+          "targets": ["2cea4858-7d4e-47e3-b67b-64273bee5bb8"],
+          "id": "446180ad-2652-4d57-8209-1917eb4dc45a",
           "type": "effect-fade-in",
           "duration": 2000,
           "delay": 250
