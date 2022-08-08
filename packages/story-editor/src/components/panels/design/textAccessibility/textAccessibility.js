@@ -36,14 +36,11 @@ import { useStory } from '../../../../app/story';
 import { Row } from '../../../form';
 import { getCommonValue } from '../../shared';
 import { SimplePanel } from '../../panel';
-import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
-
-const HEADING_LEVELS = {
-  h1: __('Heading 1', 'web-stories'),
-  h2: __('Heading 2', 'web-stories'),
-  h3: __('Heading 3', 'web-stories'),
-  p: __('Paragraph', 'web-stories'),
-};
+import {
+  MULTIPLE_VALUE,
+  MULTIPLE_DISPLAY_VALUE,
+  HEADING_LEVELS,
+} from '../../../../constants';
 
 function TextAccessibilityPanel({ selectedElements, pushUpdate }) {
   const [tagNamesOverrides, setTagNamesOverrides] = useState();
