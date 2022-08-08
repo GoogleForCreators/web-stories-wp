@@ -1249,37 +1249,8 @@
           "marginOffset": 2.4238636363636417
         },
         {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 254,
-              "g": 200,
-              "b": 90
-            }
-          },
-          "type": "shape",
-          "x": 182.5,
+          "x": 183,
           "y": 399,
-          "width": 47,
-          "height": 47,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "circle"
-          },
-          "id": "b2b0cd98-eef4-44ac-9cca-c35bcbe50ed9",
-          "groupId": "969daff2-44c0-46b5-834d-d2525604dacb"
-        },
-        {
-          "x": 196,
-          "y": 408.5,
           "id": "084b0d48-8990-436b-b996-551ac4aecd6f",
           "basedOn": "75b36af4-815e-41f2-b339-43e2fc8eb6c7",
           "opacity": 100,
@@ -1288,8 +1259,8 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundTextMode": "NONE",
+          "lockAspectRatio": true,
+          "backgroundTextMode": "FILL",
           "font": {
             "family": "Teko",
             "fallbacks": ["sans-serif"],
@@ -1321,37 +1292,38 @@
               "lGap": 0
             }
           },
-          "fontSize": 24,
+          "fontSize": 26,
           "backgroundColor": {
             "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
+              "r": 254,
+              "g": 200,
+              "b": 90
             }
           },
           "lineHeight": 0.8,
           "textAlign": "center",
           "padding": {
             "locked": true,
-            "hasHiddenPadding": false
+            "hasHiddenPadding": true,
+            "horizontal": 8,
+            "vertical": 4
           },
           "type": "text",
           "content": "<span style=\"font-weight: 700; color: #262525; text-transform: uppercase\">1</span>",
           "fontWeight": 700,
           "borderRadius": {
             "locked": true,
-            "topLeft": 2,
-            "topRight": 2,
-            "bottomRight": 2,
-            "bottomLeft": 2
+            "topLeft": 100,
+            "topRight": 100,
+            "bottomRight": 100,
+            "bottomLeft": 100
           },
-          "width": 20,
-          "height": 34,
+          "width": 47,
+          "height": 45,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "marginOffset": -15.825000000000003,
-          "groupId": "969daff2-44c0-46b5-834d-d2525604dacb",
+          "marginOffset": -17.091,
           "tagName": "p"
         },
         {
@@ -1431,13 +1403,7 @@
         "id": "e49c3605-3a1b-497c-a21a-579f0acdcfa4"
       },
       "pageTemplateType": "section",
-      "groups": {
-        "969daff2-44c0-46b5-834d-d2525604dacb": {
-          "name": "Number",
-          "isLocked": false,
-          "isCollapsed": true
-        }
-      }
+      "groups": {}
     },
     {
       "elements": [
@@ -2185,6 +2151,9 @@
           "type": "text"
         },
         {
+          "x": 183,
+          "y": 399,
+          "basedOn": "084b0d48-8990-436b-b996-551ac4aecd6f",
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -2192,36 +2161,7 @@
           },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 254,
-              "g": 200,
-              "b": 90
-            }
-          },
-          "x": 182.5,
-          "y": 399,
-          "width": 47,
-          "height": 47,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "circle"
-          },
-          "id": "e0523874-0972-42eb-8421-03d9f572ccec",
-          "type": "shape",
-          "groupId": "96146c12-7812-4731-9010-eb947ddbcad8"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundTextMode": "NONE",
+          "backgroundTextMode": "FILL",
           "font": {
             "family": "Teko",
             "fallbacks": ["sans-serif"],
@@ -2253,42 +2193,40 @@
               "lGap": 0
             }
           },
-          "fontSize": 24,
+          "fontSize": 26,
           "backgroundColor": {
             "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
+              "r": 254,
+              "g": 200,
+              "b": 90
             }
           },
           "lineHeight": 0.8,
           "textAlign": "center",
           "padding": {
             "locked": true,
-            "hasHiddenPadding": false
+            "hasHiddenPadding": true,
+            "horizontal": 8,
+            "vertical": 4
           },
-          "x": 196,
-          "y": 408,
-          "id": "d8a3c093-76ce-44eb-989e-20ddada46ae8",
-          "basedOn": "75b36af4-815e-41f2-b339-43e2fc8eb6c7",
+          "type": "text",
           "content": "<span style=\"font-weight: 700; color: #262525; text-transform: uppercase\">2</span>",
           "fontWeight": 700,
           "borderRadius": {
             "locked": true,
-            "topLeft": 2,
-            "topRight": 2,
-            "bottomRight": 2,
-            "bottomLeft": 2
+            "topLeft": 100,
+            "topRight": 100,
+            "bottomRight": 100,
+            "bottomLeft": 100
           },
-          "width": 20,
-          "height": 32,
+          "width": 47,
+          "height": 46,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "marginOffset": -15.825000000000003,
-          "type": "text",
-          "groupId": "96146c12-7812-4731-9010-eb947ddbcad8",
-          "tagName": "p"
+          "marginOffset": -17.091,
+          "tagName": "p",
+          "id": "9d8e9afd-a771-4416-887a-692a4206a844"
         },
         {
           "opacity": 50,
@@ -2367,13 +2305,7 @@
         "type": "shape"
       },
       "pageTemplateType": "",
-      "groups": {
-        "96146c12-7812-4731-9010-eb947ddbcad8": {
-          "name": "Number",
-          "isLocked": false,
-          "isCollapsed": false
-        }
-      }
+      "groups": {}
     },
     {
       "elements": [
@@ -3121,6 +3053,9 @@
           "type": "text"
         },
         {
+          "x": 183,
+          "y": 399,
+          "basedOn": "9d8e9afd-a771-4416-887a-692a4206a844",
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -3128,36 +3063,7 @@
           },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 254,
-              "g": 200,
-              "b": 90
-            }
-          },
-          "x": 182.5,
-          "y": 399,
-          "width": 47,
-          "height": 47,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "circle"
-          },
-          "id": "8c044c6f-089f-4072-b70d-3e7dacfb848a",
-          "type": "shape",
-          "groupId": "5cc87e03-9a12-44c2-9c15-69f964669658"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundTextMode": "NONE",
+          "backgroundTextMode": "FILL",
           "font": {
             "family": "Teko",
             "fallbacks": ["sans-serif"],
@@ -3189,42 +3095,40 @@
               "lGap": 0
             }
           },
-          "fontSize": 24,
+          "fontSize": 26,
           "backgroundColor": {
             "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
+              "r": 254,
+              "g": 200,
+              "b": 90
             }
           },
           "lineHeight": 0.8,
           "textAlign": "center",
           "padding": {
             "locked": true,
-            "hasHiddenPadding": false
+            "hasHiddenPadding": true,
+            "horizontal": 8,
+            "vertical": 4
           },
-          "x": 196,
-          "y": 408,
-          "id": "d3c7c34d-a449-44ba-b76a-feffb49702ae",
-          "basedOn": "75b36af4-815e-41f2-b339-43e2fc8eb6c7",
+          "type": "text",
           "content": "<span style=\"font-weight: 700; color: #262525; text-transform: uppercase\">3</span>",
           "fontWeight": 700,
           "borderRadius": {
             "locked": true,
-            "topLeft": 2,
-            "topRight": 2,
-            "bottomRight": 2,
-            "bottomLeft": 2
+            "topLeft": 100,
+            "topRight": 100,
+            "bottomRight": 100,
+            "bottomLeft": 100
           },
-          "width": 20,
-          "height": 32,
+          "width": 47,
+          "height": 46,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "marginOffset": -15.825000000000003,
-          "type": "text",
-          "groupId": "5cc87e03-9a12-44c2-9c15-69f964669658",
-          "tagName": "p"
+          "marginOffset": -17.091,
+          "tagName": "p",
+          "id": "af755602-80d9-4d50-8d35-4b4274a7bf2e"
         }
       ],
       "animations": [
@@ -3281,13 +3185,7 @@
         "type": "shape"
       },
       "pageTemplateType": "",
-      "groups": {
-        "5cc87e03-9a12-44c2-9c15-69f964669658": {
-          "name": "Number",
-          "isLocked": false,
-          "isCollapsed": true
-        }
-      }
+      "groups": {}
     },
     {
       "elements": [
