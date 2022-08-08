@@ -84,6 +84,7 @@ export const RIGHT_CLICK_MENU_LABELS = {
   USE_SHAPE_AS_MASK: __('Use Shape as a Mask', 'web-stories'),
   REMOVE_MASK: __('Unmask', 'web-stories'),
   RECORD_VIDEO: __('Record Video', 'web-stories'),
+  HEADING_LEVEL: __('Heading Level', 'web-stories'),
 };
 
 const StyledKbd = styled(Text).attrs({

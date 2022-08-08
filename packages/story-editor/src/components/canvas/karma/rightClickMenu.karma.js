@@ -91,6 +91,12 @@ describe('Right Click Menu integration', () => {
     });
   }
 
+  function selectHeadingLevel() {
+    return fixture.screen.getByRole('menuitem', {
+      name: /^Heading Level/i,
+    });
+  }
+
   function setAsPageBackground() {
     return fixture.screen.getByRole('menuitem', {
       name: /^Set as page Background/i,
@@ -1467,6 +1473,31 @@ describe('Right Click Menu integration', () => {
       expect(sendToBack().disabled).toBeTrue();
       expect(bringForward().disabled).toBeTrue();
       expect(bringToFront().disabled).toBeTrue();
+    });
+  });
+
+  describe('right click menu: heading level', () => {
+    it('text has heading right click menu', async () => {
+      const text = await addText({
+        y: 300,
+        fontSize: 40,
+        content: '<span style="color: #000">Web Stories</span>',
+        tagName: 'h2',
+      });
+
+      const textElement = fixture.editor.canvas.framesLayer.frame(text.id).node;
+
+      await rightClickOnTarget(textElement);
+      await fixture.events.click(selectHeadingLevel());
+
+      const textItemH2 = fixture.screen.getByRole('menuitem', {
+        name: /^Heading 2$/,
+      });
+
+      expect(textItemH2).toBeDefined();
+
+      // check if h2 has the "checked" icon
+      expect(textItemH2.firstChild.tagName).toEqual('svg');
     });
   });
 });
