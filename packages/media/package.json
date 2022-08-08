@@ -2,7 +2,7 @@
   "name": "@googleforcreators/media",
   "description": "Functionality for creating and working with media resources in the Web Stories editor.",
   "private": false,
-  "version": "0.1.202207041221",
+  "version": "0.1.202208081316",
   "author": {
     "name": "Google",
     "url": "https://creators.google/"
