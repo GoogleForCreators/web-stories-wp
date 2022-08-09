@@ -1,19 +1,33 @@
 {
+  "current": null,
+  "selection": [],
+  "story": {},
   "version": 43,
   "pages": [
     {
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
           "x": 48,
           "y": 0,
           "width": 330,
           "height": 586,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "type": "image",
           "id": "0f69f03c-1479-46b7-bd97-fb43a60f361c",
@@ -35,11 +49,21 @@
             "baseColor": "#d9c4bc",
             "isExternal": true
           },
-          "overlay": { "color": { "r": 0, "g": 0, "b": 0, "a": 0.1 } }
+          "overlay": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.1
+            }
+          }
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "type": "sticker",
@@ -50,59 +74,47 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": { "type": "luauYellowFlowerBanner" },
+          "sticker": {
+            "type": "luauYellowFlowerBanner"
+          },
           "id": "71a34778-58f1-4f26-afb0-4e8f502df2bf",
           "groupId": "d01f0aa9-b191-4101-aba5-fccd5ad14642"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 68,
-          "lockAspectRatio": true,
-          "type": "sticker",
-          "x": -43,
-          "y": 482,
-          "width": 277,
-          "height": 264,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "sticker": { "type": "luauGreenFlower" },
-          "id": "298312ec-78a8-4abf-af99-29f217fc4cb8",
-          "groupId": "006edb2f-afe4-4187-96de-c36072e9c665"
-        },
-        {
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Poppins",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
             "styles": ["italic", "regular"],
             "variants": [
               [0, 100],
-              [0, 200],
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900],
               [1, 100],
+              [0, 200],
               [1, 200],
+              [0, 300],
               [1, 300],
+              [0, 400],
               [1, 400],
+              [0, 500],
               [1, 500],
+              [0, 600],
               [1, 600],
+              [0, 700],
               [1, 700],
+              [0, 800],
               [1, 800],
+              [0, 900],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 1050,
@@ -122,10 +134,19 @@
             }
           },
           "fontSize": 32,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.12,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "type": "text",
           "content": "<span style=\"font-weight: 600; color: #3f4f3e\">How to throw</span>\n<span style=\"font-weight: 600; color: #3f4f3e\">a safe and fun outdoor luau</span>",
           "fontWeight": 700,
@@ -144,7 +165,30 @@
           "focalX": 50,
           "focalY": 50,
           "id": "0a5f0ed4-e8f9-4fd2-add8-177d89e97b15",
-          "groupId": "d01f0aa9-b191-4101-aba5-fccd5ad14642"
+          "groupId": "d01f0aa9-b191-4101-aba5-fccd5ad14642",
+          "tagName": "h1"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 68,
+          "lockAspectRatio": true,
+          "type": "sticker",
+          "x": -43,
+          "y": 482,
+          "width": 277,
+          "height": 264,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "sticker": {
+            "type": "luauGreenFlower"
+          },
+          "id": "298312ec-78a8-4abf-af99-29f217fc4cb8",
+          "groupId": "006edb2f-afe4-4187-96de-c36072e9c665"
         },
         {
           "x": 46,
@@ -152,13 +196,15 @@
           "id": "3e8cbf15-8932-4912-bcc4-26e5c0186dbf",
           "basedOn": "0a5f0ed4-e8f9-4fd2-add8-177d89e97b15",
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Poppins",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
             "styles": ["italic", "regular"],
@@ -182,6 +228,7 @@
               [0, 900],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 1050,
@@ -201,10 +248,19 @@
             }
           },
           "fontSize": 14,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.3,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "type": "text",
           "content": "<span style=\"color: #fff; text-transform: uppercase\">by:</span>",
           "fontWeight": 700,
@@ -228,13 +284,15 @@
           "id": "c753ede0-0d43-4a37-979f-555026dfd008",
           "basedOn": "0a5f0ed4-e8f9-4fd2-add8-177d89e97b15",
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Poppins",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
             "styles": ["italic", "regular"],
@@ -258,6 +316,7 @@
               [0, 900],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 1050,
@@ -277,10 +336,19 @@
             }
           },
           "fontSize": 19,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.3,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "type": "text",
           "content": "<span style=\"font-weight: 500; color: #fff\">Joshua</span>\n<span style=\"font-weight: 500; color: #fff\">Goldsmith</span>",
           "fontWeight": 700,
@@ -300,7 +368,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "type": "sticker",
@@ -311,24 +382,43 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": { "type": "luauYellowFlower" },
+          "sticker": {
+            "type": "luauYellowFlower"
+          },
           "id": "9d6198b0-aae1-4d69-b480-52202b511192"
         }
       ],
-      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 255,
+          "b": 255
+        }
+      },
       "type": "page",
       "id": "bd7c5157-9295-4c70-9455-5e6bebe2183d",
       "defaultBackgroundElement": {
         "opacity": 100,
-        "flip": { "vertical": false, "horizontal": false },
+        "flip": {
+          "vertical": false,
+          "horizontal": false
+        },
         "rotationAngle": 0,
         "lockAspectRatio": true,
-        "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+        "backgroundColor": {
+          "color": {
+            "r": 255,
+            "g": 255,
+            "b": 255
+          }
+        },
         "x": 1,
         "y": 1,
         "width": 1,
         "height": 1,
-        "mask": { "type": "rectangle" },
+        "mask": {
+          "type": "rectangle"
+        },
         "isBackground": true,
         "isDefaultBackground": true,
         "type": "shape",
@@ -353,15 +443,26 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
           "x": -154,
           "y": 106,
           "width": 720,
           "height": 406,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "id": "2816ff3d-3786-4955-a866-dbfaa4f8786b",
           "type": "video",
@@ -388,18 +489,27 @@
             "isExternal": true
           },
           "tracks": [],
-          "overlay": { "color": { "r": 0, "g": 0, "b": 0, "a": 0.2 } },
+          "overlay": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.2
+            }
+          },
           "loop": true
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Poppins",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
             "styles": ["italic", "regular"],
@@ -423,6 +533,7 @@
               [0, 900],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 1050,
@@ -442,10 +553,19 @@
             }
           },
           "fontSize": 32,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"font-weight: 600; color: #fff\">Joshua</span>\n<span style=\"font-weight: 600; color: #fff\">Goldsmith</span>",
           "fontWeight": 700,
           "borderRadius": {
@@ -468,13 +588,15 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Poppins",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
             "styles": ["italic", "regular"],
@@ -498,6 +620,7 @@
               [0, 900],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 1050,
@@ -517,10 +640,19 @@
             }
           },
           "fontSize": 16,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.3,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "x": 47,
           "y": 76,
           "id": "a4afe50e-e806-42c6-bc8d-72ab9d478cec",
@@ -544,7 +676,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 120,
           "lockAspectRatio": true,
           "type": "sticker",
@@ -555,12 +690,17 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": { "type": "luauYellowFlower" },
+          "sticker": {
+            "type": "luauYellowFlower"
+          },
           "id": "1170401f-1778-4dc7-94ce-277f243de245"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "type": "sticker",
@@ -571,7 +711,9 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": { "type": "luauYellowWavyLine" },
+          "sticker": {
+            "type": "luauYellowWavyLine"
+          },
           "id": "df0f6f5f-5546-470c-aef6-22486e76d6f2",
           "groupId": "073a017b-60ff-4006-89a3-157e8d5fe6ec"
         },
@@ -581,7 +723,10 @@
           "id": "9d25cd3c-dba0-4d0d-8c6d-ee0577686973",
           "basedOn": "df0f6f5f-5546-470c-aef6-22486e76d6f2",
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "type": "sticker",
@@ -590,25 +735,44 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": { "type": "luauYellowWavyLine" },
+          "sticker": {
+            "type": "luauYellowWavyLine"
+          },
           "groupId": "073a017b-60ff-4006-89a3-157e8d5fe6ec"
         }
       ],
       "animations": [],
-      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 255,
+          "b": 255
+        }
+      },
       "type": "page",
       "id": "908894c8-0108-488d-921f-939fbb03cfba",
       "defaultBackgroundElement": {
         "opacity": 100,
-        "flip": { "vertical": false, "horizontal": false },
+        "flip": {
+          "vertical": false,
+          "horizontal": false
+        },
         "rotationAngle": 0,
         "lockAspectRatio": true,
-        "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+        "backgroundColor": {
+          "color": {
+            "r": 255,
+            "g": 255,
+            "b": 255
+          }
+        },
         "x": 1,
         "y": 1,
         "width": 1,
         "height": 1,
-        "mask": { "type": "rectangle" },
+        "mask": {
+          "type": "rectangle"
+        },
         "isBackground": true,
         "isDefaultBackground": true,
         "id": "581e926d-fb91-433e-a8d4-bb19f48c010f",
@@ -632,15 +796,26 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
           "x": 48,
           "y": 0,
           "width": 330,
           "height": 586,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "id": "9e3e87c9-247d-4414-8d6c-8f73415164d5",
           "type": "image",
@@ -666,7 +841,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "type": "sticker",
@@ -677,19 +855,23 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": { "type": "luauYellowFlowerBanner" },
+          "sticker": {
+            "type": "luauYellowFlowerBanner"
+          },
           "id": "96a19e6c-afaf-40ec-a8a2-97d6df809f98",
           "groupId": "bdb11a1e-0a8d-4797-939f-8b302bae9284"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Poppins",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
             "styles": ["italic", "regular"],
@@ -713,6 +895,7 @@
               [0, 900],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 1050,
@@ -732,10 +915,19 @@
             }
           },
           "fontSize": 28,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.2,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"font-weight: 600; color: #3f4f3e\">Limit guest</span>\n<span style=\"font-weight: 600; color: #3f4f3e\">invitations</span>",
           "fontWeight": 700,
           "borderRadius": {
@@ -758,13 +950,15 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Poppins",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
             "styles": ["italic", "regular"],
@@ -788,6 +982,7 @@
               [0, 900],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 1050,
@@ -807,10 +1002,19 @@
             }
           },
           "fontSize": 16,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.3,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "x": 47,
           "y": 480,
           "id": "2ff73b92-e0f0-4455-9d52-44f25a61d526",
@@ -834,20 +1038,37 @@
         }
       ],
       "animations": [],
-      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 255,
+          "b": 255
+        }
+      },
       "type": "page",
       "id": "eed23703-9d04-4043-bbb4-062286d11314",
       "defaultBackgroundElement": {
         "opacity": 100,
-        "flip": { "vertical": false, "horizontal": false },
+        "flip": {
+          "vertical": false,
+          "horizontal": false
+        },
         "rotationAngle": 0,
         "lockAspectRatio": true,
-        "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+        "backgroundColor": {
+          "color": {
+            "r": 255,
+            "g": 255,
+            "b": 255
+          }
+        },
         "x": 1,
         "y": 1,
         "width": 1,
         "height": 1,
-        "mask": { "type": "rectangle" },
+        "mask": {
+          "type": "rectangle"
+        },
         "isBackground": true,
         "isDefaultBackground": true,
         "id": "c4d30e8f-b89c-4bac-b006-110083a14673",
@@ -866,15 +1087,26 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
           "x": 48,
           "y": 0,
           "width": 330,
           "height": 586,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "id": "3ea03b48-d58e-4196-bcb0-57c1217da610",
           "type": "image",
@@ -899,9 +1131,22 @@
           "overlay": {
             "type": "linear",
             "stops": [
-              { "color": { "r": 0, "g": 0, "b": 0, "a": 0 }, "position": 0 },
               {
-                "color": { "r": 0, "g": 0, "b": 0, "a": 0.75 },
+                "color": {
+                  "r": 0,
+                  "g": 0,
+                  "b": 0,
+                  "a": 0
+                },
+                "position": 0
+              },
+              {
+                "color": {
+                  "r": 0,
+                  "g": 0,
+                  "b": 0,
+                  "a": 0.75
+                },
                 "position": 0.78
               }
             ],
@@ -910,13 +1155,15 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Poppins",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
             "styles": ["italic", "regular"],
@@ -940,6 +1187,7 @@
               [0, 900],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 1050,
@@ -959,10 +1207,19 @@
             }
           },
           "fontSize": 18,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.5,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "x": 47,
           "y": 483,
           "id": "0d31c315-4e1a-48ab-9e30-4e6facfec496",
@@ -985,7 +1242,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "type": "sticker",
@@ -994,7 +1254,9 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": { "type": "luauYellowWavyLine" },
+          "sticker": {
+            "type": "luauYellowWavyLine"
+          },
           "basedOn": "df0f6f5f-5546-470c-aef6-22486e76d6f2",
           "id": "58187665-53d1-4862-b407-8f4bfdce9bbb",
           "x": -47,
@@ -1003,7 +1265,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "type": "sticker",
@@ -1012,7 +1277,9 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": { "type": "luauYellowWavyLine" },
+          "sticker": {
+            "type": "luauYellowWavyLine"
+          },
           "basedOn": "9d25cd3c-dba0-4d0d-8c6d-ee0577686973",
           "id": "2e4dd6cf-aaeb-4736-bbc7-d2cce3932a48",
           "x": -47,
@@ -1030,20 +1297,37 @@
           "delay": 0
         }
       ],
-      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 255,
+          "b": 255
+        }
+      },
       "type": "page",
       "id": "f808c1b4-9ef2-488c-aecb-03cfa716817b",
       "defaultBackgroundElement": {
         "opacity": 100,
-        "flip": { "vertical": false, "horizontal": false },
+        "flip": {
+          "vertical": false,
+          "horizontal": false
+        },
         "rotationAngle": 0,
         "lockAspectRatio": true,
-        "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+        "backgroundColor": {
+          "color": {
+            "r": 255,
+            "g": 255,
+            "b": 255
+          }
+        },
         "x": 1,
         "y": 1,
         "width": 1,
         "height": 1,
-        "mask": { "type": "rectangle" },
+        "mask": {
+          "type": "rectangle"
+        },
         "isBackground": true,
         "isDefaultBackground": true,
         "id": "728c69de-5b58-42a9-88cd-7f64b4ccb7b3",
@@ -1062,15 +1346,26 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
           "x": 48,
           "y": 0,
           "width": 330,
           "height": 586,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "id": "cf8560ca-98de-495f-abbe-baf3635490af",
           "type": "image",
@@ -1095,7 +1390,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "type": "sticker",
@@ -1106,42 +1404,47 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": { "type": "luauGreenLeafBanner" },
+          "sticker": {
+            "type": "luauGreenLeafBanner"
+          },
           "id": "d3b9d317-1599-47e7-9027-57759f62cab9",
           "groupId": "cc2d4127-0244-4752-a071-4ce6e5f60dd2"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Poppins",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
             "styles": ["italic", "regular"],
             "variants": [
               [0, 100],
-              [0, 200],
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900],
               [1, 100],
+              [0, 200],
               [1, 200],
+              [0, 300],
               [1, 300],
+              [0, 400],
               [1, 400],
+              [0, 500],
               [1, 500],
+              [0, 600],
               [1, 600],
+              [0, 700],
               [1, 700],
+              [0, 800],
               [1, 800],
+              [0, 900],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 1050,
@@ -1161,10 +1464,19 @@
             }
           },
           "fontSize": 28,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.2,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"font-weight: 600; color: #fff\">Provide masks, hand sanitizer &amp; personalized utensils</span>",
           "fontWeight": 700,
           "borderRadius": {
@@ -1187,13 +1499,15 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Poppins",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
             "styles": ["italic", "regular"],
@@ -1217,6 +1531,7 @@
               [0, 900],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 1050,
@@ -1236,10 +1551,19 @@
             }
           },
           "fontSize": 16,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.3,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "x": 47,
           "y": 0,
           "id": "19ca5381-9c07-4b91-9e0f-57d5c88bc62a",
@@ -1263,7 +1587,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "type": "sticker",
@@ -1274,25 +1601,44 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": { "type": "luauYellowFlower" },
+          "sticker": {
+            "type": "luauYellowFlower"
+          },
           "id": "2d18d6db-196d-437e-b6c0-5796008dca95"
         }
       ],
       "animations": [],
-      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 255,
+          "b": 255
+        }
+      },
       "type": "page",
       "id": "30cd053f-5ece-4fae-8872-d26d4dff8fd4",
       "defaultBackgroundElement": {
         "opacity": 100,
-        "flip": { "vertical": false, "horizontal": false },
+        "flip": {
+          "vertical": false,
+          "horizontal": false
+        },
         "rotationAngle": 0,
         "lockAspectRatio": true,
-        "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+        "backgroundColor": {
+          "color": {
+            "r": 255,
+            "g": 255,
+            "b": 255
+          }
+        },
         "x": 1,
         "y": 1,
         "width": 1,
         "height": 1,
-        "mask": { "type": "rectangle" },
+        "mask": {
+          "type": "rectangle"
+        },
         "isBackground": true,
         "isDefaultBackground": true,
         "id": "0bd6c15a-71cc-4b30-9308-6889dfc90b00",
@@ -1311,15 +1657,26 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
           "x": 48,
           "y": 0,
           "width": 330,
           "height": 586,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "id": "d7973fde-8cfc-4669-96ad-2a5535bc6e15",
           "type": "image",
@@ -1344,7 +1701,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "type": "sticker",
@@ -1353,7 +1713,9 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": { "type": "luauYellowFlowerBanner" },
+          "sticker": {
+            "type": "luauYellowFlowerBanner"
+          },
           "basedOn": "96a19e6c-afaf-40ec-a8a2-97d6df809f98",
           "id": "d1e5e216-4a52-415f-81cb-4b0f21cb0db0",
           "x": -96,
@@ -1362,13 +1724,15 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Poppins",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
             "styles": ["italic", "regular"],
@@ -1392,6 +1756,7 @@
               [0, 900],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 1050,
@@ -1411,10 +1776,19 @@
             }
           },
           "fontSize": 28,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.2,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"font-weight: 600; color: #3f4f3e\">Decorate with Luau props&nbsp;</span>",
           "fontWeight": 700,
           "borderRadius": {
@@ -1437,13 +1811,15 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Poppins",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
             "styles": ["italic", "regular"],
@@ -1467,6 +1843,7 @@
               [0, 900],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 1050,
@@ -1486,10 +1863,19 @@
             }
           },
           "fontSize": 16,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.3,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "x": 47,
           "y": 480,
           "id": "35c1962b-4497-4317-a79d-4f60044acbe9",
@@ -1513,7 +1899,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "type": "sticker",
@@ -1522,7 +1911,9 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": { "type": "luauYellowFlower" },
+          "sticker": {
+            "type": "luauYellowFlower"
+          },
           "basedOn": "2d18d6db-196d-437e-b6c0-5796008dca95",
           "id": "dabaf908-3e2a-4f27-b8e6-aa80512ed3d9",
           "x": 283,
@@ -1539,20 +1930,37 @@
           "delay": 0
         }
       ],
-      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 255,
+          "b": 255
+        }
+      },
       "type": "page",
       "id": "2b3ddbea-1f95-4574-8b9b-1beb9a2a775f",
       "defaultBackgroundElement": {
         "opacity": 100,
-        "flip": { "vertical": false, "horizontal": false },
+        "flip": {
+          "vertical": false,
+          "horizontal": false
+        },
         "rotationAngle": 0,
         "lockAspectRatio": true,
-        "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+        "backgroundColor": {
+          "color": {
+            "r": 255,
+            "g": 255,
+            "b": 255
+          }
+        },
         "x": 1,
         "y": 1,
         "width": 1,
         "height": 1,
-        "mask": { "type": "rectangle" },
+        "mask": {
+          "type": "rectangle"
+        },
         "isBackground": true,
         "isDefaultBackground": true,
         "id": "6234ea30-f145-46c6-802f-ffaf74922b62",
@@ -1571,15 +1979,26 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
           "x": 48,
           "y": 0,
           "width": 330,
           "height": 586,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "id": "82e263a1-f83d-4fd7-8ea2-25b9beee1401",
           "type": "image",
@@ -1604,7 +2023,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "type": "sticker",
@@ -1613,7 +2035,9 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": { "type": "luauYellowFlowerBanner" },
+          "sticker": {
+            "type": "luauYellowFlowerBanner"
+          },
           "basedOn": "96a19e6c-afaf-40ec-a8a2-97d6df809f98",
           "id": "e5f6a202-c4f6-4184-add8-60e0c6a77672",
           "x": -120,
@@ -1622,13 +2046,15 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Poppins",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
             "styles": ["italic", "regular"],
@@ -1652,6 +2078,7 @@
               [0, 900],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 1050,
@@ -1671,10 +2098,19 @@
             }
           },
           "fontSize": 28,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.2,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"font-weight: 600; color: #3f4f3e\">Try single \nserve snacks and drinks</span>",
           "fontWeight": 700,
           "borderRadius": {
@@ -1697,13 +2133,15 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Poppins",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
             "styles": ["italic", "regular"],
@@ -1727,6 +2165,7 @@
               [0, 900],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 1050,
@@ -1746,10 +2185,19 @@
             }
           },
           "fontSize": 16,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.3,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "x": 47,
           "y": 480,
           "id": "99fb8e7e-e7f0-4df2-815f-7e01a2077e82",
@@ -1773,7 +2221,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "type": "sticker",
@@ -1782,7 +2233,9 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": { "type": "luauYellowFlower" },
+          "sticker": {
+            "type": "luauYellowFlower"
+          },
           "basedOn": "dabaf908-3e2a-4f27-b8e6-aa80512ed3d9",
           "id": "3c55b132-0a29-4b2c-a376-f5186f190056",
           "x": 289,
@@ -1799,20 +2252,37 @@
           "delay": 0
         }
       ],
-      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 255,
+          "b": 255
+        }
+      },
       "type": "page",
       "id": "d8acf3bb-8e72-4668-b9a7-8c5c44011282",
       "defaultBackgroundElement": {
         "opacity": 100,
-        "flip": { "vertical": false, "horizontal": false },
+        "flip": {
+          "vertical": false,
+          "horizontal": false
+        },
         "rotationAngle": 0,
         "lockAspectRatio": true,
-        "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+        "backgroundColor": {
+          "color": {
+            "r": 255,
+            "g": 255,
+            "b": 255
+          }
+        },
         "x": 1,
         "y": 1,
         "width": 1,
         "height": 1,
-        "mask": { "type": "rectangle" },
+        "mask": {
+          "type": "rectangle"
+        },
         "isBackground": true,
         "isDefaultBackground": true,
         "id": "b1e4d0c9-6953-42e6-a350-a22a31894668",
@@ -1831,15 +2301,26 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
           "x": 48,
           "y": 0,
           "width": 330,
           "height": 586,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "id": "26b86fa3-5aee-4395-96ab-25942edeed71",
           "type": "image",
@@ -1864,7 +2345,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "type": "sticker",
@@ -1873,7 +2357,9 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": { "type": "luauYellowFlower" },
+          "sticker": {
+            "type": "luauYellowFlower"
+          },
           "basedOn": "2d18d6db-196d-437e-b6c0-5796008dca95",
           "id": "b5768d71-6ad0-48fb-b4c3-ec43972e2c1b",
           "x": 275,
@@ -1881,7 +2367,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "type": "sticker",
@@ -1890,7 +2379,9 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": { "type": "luauGreenLeafBanner" },
+          "sticker": {
+            "type": "luauGreenLeafBanner"
+          },
           "basedOn": "d3b9d317-1599-47e7-9027-57759f62cab9",
           "id": "c3a2b32a-09bd-40b1-8bf0-6d98fb9b0da8",
           "x": -90,
@@ -1899,13 +2390,15 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Poppins",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
             "styles": ["italic", "regular"],
@@ -1929,6 +2422,7 @@
               [0, 900],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 1050,
@@ -1948,10 +2442,19 @@
             }
           },
           "fontSize": 28,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.2,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"font-weight: 600; color: #fff\">Best</span>\n<span style=\"font-weight: 600; color: #fff\">Hawaiian</span>\n<span style=\"font-weight: 600; color: #fff\">Juices</span>",
           "fontWeight": 700,
           "borderRadius": {
@@ -1974,13 +2477,15 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Poppins",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
             "styles": ["italic", "regular"],
@@ -2004,6 +2509,7 @@
               [0, 900],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 1050,
@@ -2023,10 +2529,19 @@
             }
           },
           "fontSize": 16,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.3,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "x": 47,
           "y": 0,
           "id": "7c50ca8f-3058-49a0-892f-bb10f4503648",
@@ -2050,20 +2565,37 @@
         }
       ],
       "animations": [],
-      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 255,
+          "b": 255
+        }
+      },
       "type": "page",
       "id": "9fc148e7-dec6-4c8e-99f0-969a955037eb",
       "defaultBackgroundElement": {
         "opacity": 100,
-        "flip": { "vertical": false, "horizontal": false },
+        "flip": {
+          "vertical": false,
+          "horizontal": false
+        },
         "rotationAngle": 0,
         "lockAspectRatio": true,
-        "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+        "backgroundColor": {
+          "color": {
+            "r": 255,
+            "g": 255,
+            "b": 255
+          }
+        },
         "x": 1,
         "y": 1,
         "width": 1,
         "height": 1,
-        "mask": { "type": "rectangle" },
+        "mask": {
+          "type": "rectangle"
+        },
         "isBackground": true,
         "isDefaultBackground": true,
         "id": "4eea3ee4-729d-47b0-833e-312b418257d0",
@@ -2081,15 +2613,26 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
           "x": -154,
           "y": 106,
           "width": 720,
           "height": 406,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "type": "video",
           "id": "7d7a080e-0152-40ff-8b0a-b56397019105",
@@ -2116,12 +2659,22 @@
             "isExternal": true
           },
           "tracks": [],
-          "overlay": { "color": { "r": 0, "g": 0, "b": 0, "a": 0.15 } },
+          "overlay": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.15
+            }
+          },
           "loop": true
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "type": "sticker",
@@ -2130,7 +2683,9 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": { "type": "luauYellowWavyLine" },
+          "sticker": {
+            "type": "luauYellowWavyLine"
+          },
           "basedOn": "df0f6f5f-5546-470c-aef6-22486e76d6f2",
           "id": "3a5cd35c-3b81-4292-9a41-147558c6c430",
           "x": -20,
@@ -2138,7 +2693,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "type": "sticker",
@@ -2147,27 +2705,46 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": { "type": "luauYellowWavyLine" },
+          "sticker": {
+            "type": "luauYellowWavyLine"
+          },
           "basedOn": "9d25cd3c-dba0-4d0d-8c6d-ee0577686973",
           "id": "556fe8c2-07b7-4ab7-bbc8-1719ddf54b8e",
           "x": -20,
           "y": 26
         }
       ],
-      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 255,
+          "b": 255
+        }
+      },
       "type": "page",
       "id": "8bc2f54e-e886-4c8c-8baf-0f52cd462767",
       "defaultBackgroundElement": {
         "opacity": 100,
-        "flip": { "vertical": false, "horizontal": false },
+        "flip": {
+          "vertical": false,
+          "horizontal": false
+        },
         "rotationAngle": 0,
         "lockAspectRatio": true,
-        "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+        "backgroundColor": {
+          "color": {
+            "r": 255,
+            "g": 255,
+            "b": 255
+          }
+        },
         "x": 1,
         "y": 1,
         "width": 1,
         "height": 1,
-        "mask": { "type": "rectangle" },
+        "mask": {
+          "type": "rectangle"
+        },
         "isBackground": true,
         "isDefaultBackground": true,
         "type": "shape",
@@ -2197,15 +2774,26 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
           "x": 48,
           "y": 0,
           "width": 330,
           "height": 586,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "id": "297b3b0e-c167-41d1-9438-18161cf9eef6",
           "type": "image",
@@ -2227,17 +2815,26 @@
             "baseColor": "#42584e",
             "isExternal": true
           },
-          "overlay": { "color": { "r": 0, "g": 0, "b": 0, "a": 0.3 } }
+          "overlay": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.3
+            }
+          }
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Poppins",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
             "styles": ["italic", "regular"],
@@ -2261,6 +2858,7 @@
               [0, 900],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 1050,
@@ -2280,10 +2878,19 @@
             }
           },
           "fontSize": 50,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"font-weight: 600; color: #fff\">Have a</span>\n<span style=\"font-weight: 600; color: #fff\">safe and</span>\n<span style=\"font-weight: 600; color: #fff\">happy</span>\n<span style=\"font-weight: 600; color: #fff\">summer</span>\n<span style=\"font-weight: 600; color: #fff\">luau!</span>",
           "fontWeight": 700,
           "borderRadius": {
@@ -2301,11 +2908,15 @@
           "focalX": 50,
           "focalY": 50,
           "id": "c4ca66ab-1731-415d-8de3-bcc6c72bc8db",
-          "type": "text"
+          "type": "text",
+          "tagName": "p"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "type": "sticker",
@@ -2314,7 +2925,9 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": { "type": "luauYellowWavyLine" },
+          "sticker": {
+            "type": "luauYellowWavyLine"
+          },
           "basedOn": "df0f6f5f-5546-470c-aef6-22486e76d6f2",
           "id": "c3dac545-7e7c-475b-84d6-33e6461e7d22",
           "x": 47,
@@ -2323,7 +2936,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "type": "sticker",
@@ -2332,7 +2948,9 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": { "type": "luauYellowWavyLine" },
+          "sticker": {
+            "type": "luauYellowWavyLine"
+          },
           "basedOn": "9d25cd3c-dba0-4d0d-8c6d-ee0577686973",
           "id": "b9f28adb-4061-4097-b11a-4db20e9b54b5",
           "x": 47,
@@ -2358,20 +2976,37 @@
           "delay": 0
         }
       ],
-      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 255,
+          "b": 255
+        }
+      },
       "type": "page",
       "id": "fd981f68-922c-496c-915f-dd023a6a2907",
       "defaultBackgroundElement": {
         "opacity": 100,
-        "flip": { "vertical": false, "horizontal": false },
+        "flip": {
+          "vertical": false,
+          "horizontal": false
+        },
         "rotationAngle": 0,
         "lockAspectRatio": true,
-        "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+        "backgroundColor": {
+          "color": {
+            "r": 255,
+            "g": 255,
+            "b": 255
+          }
+        },
         "x": 1,
         "y": 1,
         "width": 1,
         "height": 1,
-        "mask": { "type": "rectangle" },
+        "mask": {
+          "type": "rectangle"
+        },
         "isBackground": true,
         "isDefaultBackground": true,
         "id": "5001b3b0-56ae-4ae0-8951-2dbf479c0541",
@@ -2390,14 +3025,19 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "isDefaultBackground": true,
           "id": "03ab5547-440a-4cf8-a658-fab756136f9c",
@@ -2405,13 +3045,15 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Poppins",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
             "styles": ["italic", "regular"],
@@ -2435,6 +3077,7 @@
               [0, 900],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 1050,
@@ -2454,10 +3097,19 @@
             }
           },
           "fontSize": 28,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.2,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"font-weight: 600; color: #fff\">Julie’s Party Guides</span>",
           "fontWeight": 700,
           "borderRadius": {
@@ -2483,149 +3135,15 @@
           "id": "4c846890-3003-4d2b-a19e-71fd97a939d0",
           "basedOn": "0d31c315-4e1a-48ab-9e30-4e6facfec496",
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Poppins",
-            "service": "fonts.google.com",
-            "metrics": {
-              "upm": 1000,
-              "asc": 1050,
-              "des": -350,
-              "tAsc": 1050,
-              "tDes": -350,
-              "tLGap": 100,
-              "wAsc": 1135,
-              "wDes": 627,
-              "xH": 548,
-              "capH": 698,
-              "yMin": -572,
-              "yMax": 1065,
-              "hAsc": 1050,
-              "hDes": -350,
-              "lGap": 100
-            }
-          },
-          "fontSize": 16,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
-          "lineHeight": 1.5,
-          "textAlign": "right",
-          "padding": { "locked": true, "hasHiddenPadding": false },
-          "content": "<span style=\"font-weight: 500; color: #fff\">How I became a</span>\n<span style=\"font-weight: 500; color: #fff\">Party Planner</span>",
-          "fontWeight": 700,
-          "borderRadius": {
-            "locked": true,
-            "topLeft": 2,
-            "topRight": 2,
-            "bottomRight": 2,
-            "bottomLeft": 2
-          },
-          "width": 139,
-          "height": 46,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "type": "text",
-          "groupId": "778b3a3d-396e-4bc4-9cff-221ab556ba3c"
-        },
-        {
-          "x": 226,
-          "y": 367,
-          "id": "4a2e33b9-7e4f-4cb7-a093-b1b4c7a6aab3",
-          "basedOn": "7374361e-f20e-4968-80c5-77533773b90d",
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
-          "type": "image",
-          "width": 139,
-          "height": 173,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": { "type": "rectangle" },
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "creationDate": "2021-07-14T11:27:44",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/tips-for-throwing-an-outdoor-luau/page11_image2.jpg",
-            "width": 480,
-            "height": 598,
-            "id": 0,
-            "alt": "Laughing Women",
-            "sizes": [],
-            "isPlaceholder": false,
-            "isOptimized": false,
-            "baseColor": "#4d4033",
-            "isExternal": true
-          },
-          "groupId": "778b3a3d-396e-4bc4-9cff-221ab556ba3c"
-        },
-        {
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "type": "sticker",
-          "x": 100,
-          "y": 548,
-          "width": 96,
-          "height": 35,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "sticker": { "type": "luauWhiteDottedArrow" },
-          "id": "6ce1e0f0-dd09-4d56-9d02-0ab8ff788fe1",
-          "groupId": "778b3a3d-396e-4bc4-9cff-221ab556ba3c"
-        },
-        {
-          "x": 127,
-          "y": 469,
-          "id": "5e460268-bfa2-4e5b-9abc-30a8ff6cfa10",
-          "basedOn": "c3dac545-7e7c-475b-84d6-33e6461e7d22",
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "type": "sticker",
-          "width": 135,
-          "height": 10,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "sticker": { "type": "luauYellowWavyLine" },
-          "groupId": "778b3a3d-396e-4bc4-9cff-221ab556ba3c"
-        },
-        {
-          "x": 127,
-          "y": 488,
-          "id": "682a9ba8-dc87-4e3b-b41b-cfaf39f71b42",
-          "basedOn": "b9f28adb-4061-4097-b11a-4db20e9b54b5",
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "type": "sticker",
-          "width": 135,
-          "height": 10,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "sticker": { "type": "luauYellowWavyLine" },
-          "groupId": "778b3a3d-396e-4bc4-9cff-221ab556ba3c"
-        },
-        {
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Poppins",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
             "styles": ["italic", "regular"],
@@ -2649,6 +3167,7 @@
               [0, 900],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 1050,
@@ -2668,10 +3187,217 @@
             }
           },
           "fontSize": 16,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.5,
+          "textAlign": "right",
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
+          "content": "<span style=\"font-weight: 500; color: #fff\">How I became a</span>\n<span style=\"font-weight: 500; color: #fff\">Party Planner</span>",
+          "fontWeight": 700,
+          "borderRadius": {
+            "locked": true,
+            "topLeft": 2,
+            "topRight": 2,
+            "bottomRight": 2,
+            "bottomLeft": 2
+          },
+          "width": 139,
+          "height": 46,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "groupId": "778b3a3d-396e-4bc4-9cff-221ab556ba3c",
+          "tagName": "h3"
+        },
+        {
+          "x": 226,
+          "y": 367,
+          "id": "4a2e33b9-7e4f-4cb7-a093-b1b4c7a6aab3",
+          "basedOn": "7374361e-f20e-4968-80c5-77533773b90d",
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "type": "image",
+          "width": 139,
+          "height": 173,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "creationDate": "2021-07-14T11:27:44",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/tips-for-throwing-an-outdoor-luau/page11_image2.jpg",
+            "width": 480,
+            "height": 598,
+            "id": 0,
+            "alt": "Laughing Women",
+            "sizes": [],
+            "isPlaceholder": false,
+            "isOptimized": false,
+            "baseColor": "#4d4033",
+            "isExternal": true
+          },
+          "groupId": "778b3a3d-396e-4bc4-9cff-221ab556ba3c"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "type": "sticker",
+          "x": 100,
+          "y": 548,
+          "width": 96,
+          "height": 35,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "sticker": {
+            "type": "luauWhiteDottedArrow"
+          },
+          "id": "6ce1e0f0-dd09-4d56-9d02-0ab8ff788fe1",
+          "groupId": "778b3a3d-396e-4bc4-9cff-221ab556ba3c"
+        },
+        {
+          "x": 127,
+          "y": 469,
+          "id": "5e460268-bfa2-4e5b-9abc-30a8ff6cfa10",
+          "basedOn": "c3dac545-7e7c-475b-84d6-33e6461e7d22",
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "type": "sticker",
+          "width": 135,
+          "height": 10,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "sticker": {
+            "type": "luauYellowWavyLine"
+          },
+          "groupId": "778b3a3d-396e-4bc4-9cff-221ab556ba3c"
+        },
+        {
+          "x": 127,
+          "y": 488,
+          "id": "682a9ba8-dc87-4e3b-b41b-cfaf39f71b42",
+          "basedOn": "b9f28adb-4061-4097-b11a-4db20e9b54b5",
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "type": "sticker",
+          "width": 135,
+          "height": 10,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "sticker": {
+            "type": "luauYellowWavyLine"
+          },
+          "groupId": "778b3a3d-396e-4bc4-9cff-221ab556ba3c"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Poppins",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [1, 100],
+              [0, 200],
+              [1, 200],
+              [0, 300],
+              [1, 300],
+              [0, 400],
+              [1, 400],
+              [0, 500],
+              [1, 500],
+              [0, 600],
+              [1, 600],
+              [0, 700],
+              [1, 700],
+              [0, 800],
+              [1, 800],
+              [0, 900],
+              [1, 900]
+            ],
+            "service": "fonts.google.com",
+            "metrics": {
+              "upm": 1000,
+              "asc": 1050,
+              "des": -350,
+              "tAsc": 1050,
+              "tDes": -350,
+              "tLGap": 100,
+              "wAsc": 1135,
+              "wDes": 627,
+              "xH": 548,
+              "capH": 698,
+              "yMin": -572,
+              "yMax": 1065,
+              "hAsc": 1050,
+              "hDes": -350,
+              "lGap": 100
+            }
+          },
+          "fontSize": 16,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.5,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "content": "<span style=\"font-weight: 500; color: #fff\">A paper-themed children’s birthday party</span>",
           "fontWeight": 700,
           "borderRadius": {
@@ -2691,14 +3417,24 @@
           "id": "cfbb9340-d11b-455a-9665-9cdd6e786f3d",
           "x": 42,
           "y": 314,
-          "groupId": "a7413651-9329-41e0-a291-2d3ef7290eb8"
+          "groupId": "a7413651-9329-41e0-a291-2d3ef7290eb8",
+          "tagName": "h3"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "type": "image",
           "x": 42,
           "y": 126,
@@ -2707,7 +3443,9 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "id": "7374361e-f20e-4968-80c5-77533773b90d",
           "resource": {
             "type": "image",
@@ -2732,7 +3470,10 @@
           "id": "f54a1e47-0a15-40aa-acbe-b5d88a96a1e2",
           "basedOn": "6ce1e0f0-dd09-4d56-9d02-0ab8ff788fe1",
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 162,
           "lockAspectRatio": true,
           "type": "sticker",
@@ -2741,12 +3482,17 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": { "type": "luauWhiteDottedArrow" },
+          "sticker": {
+            "type": "luauWhiteDottedArrow"
+          },
           "groupId": "a7413651-9329-41e0-a291-2d3ef7290eb8"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "type": "sticker",
@@ -2755,7 +3501,9 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": { "type": "luauYellowWavyLine" },
+          "sticker": {
+            "type": "luauYellowWavyLine"
+          },
           "basedOn": "c3dac545-7e7c-475b-84d6-33e6461e7d22",
           "id": "18beb40c-c393-48e2-8f95-473b6167276c",
           "x": 158,
@@ -2764,7 +3512,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "type": "sticker",
@@ -2773,7 +3524,9 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": { "type": "luauYellowWavyLine" },
+          "sticker": {
+            "type": "luauYellowWavyLine"
+          },
           "basedOn": "b9f28adb-4061-4097-b11a-4db20e9b54b5",
           "id": "4b778d7f-ca8a-4a2d-a342-3a9ec317d956",
           "x": 158,
@@ -2811,7 +3564,13 @@
           "delay": 1000
         }
       ],
-      "backgroundColor": { "color": { "r": 63, "g": 79, "b": 62 } },
+      "backgroundColor": {
+        "color": {
+          "r": 63,
+          "g": 79,
+          "b": 62
+        }
+      },
       "type": "page",
       "id": "47246645-2015-49a3-96ff-e8f35420e654",
       "pageTemplateType": "list",
@@ -2828,8 +3587,5 @@
         }
       }
     }
-  ],
-  "current": null,
-  "selection": [],
-  "story": {}
+  ]
 }

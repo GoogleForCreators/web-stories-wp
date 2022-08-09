@@ -114,7 +114,6 @@
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Playfair Display",
-            "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [400, 500, 600, 700, 800, 900],
             "styles": ["regular", "italic"],
@@ -132,6 +131,7 @@
               [1, 800],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 1082,
@@ -195,7 +195,6 @@
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Playfair Display",
-            "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [400, 500, 600, 700, 800, 900],
             "styles": ["regular", "italic"],
@@ -213,6 +212,7 @@
               [1, 800],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 1082,
@@ -264,7 +264,8 @@
           "x": 48,
           "y": 152,
           "type": "text",
-          "groupId": "17166fdb-7768-407e-a9d4-8ae688ad252c"
+          "groupId": "17166fdb-7768-407e-a9d4-8ae688ad252c",
+          "tagName": "h1"
         },
         {
           "opacity": 100,
@@ -277,18 +278,18 @@
           "backgroundTextMode": "NONE",
           "font": {
             "family": "DM Sans",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [400, 500, 700],
             "styles": ["regular", "italic"],
             "variants": [
               [0, 400],
-              [0, 500],
-              [0, 700],
               [1, 400],
+              [0, 500],
               [1, 500],
+              [0, 700],
               [1, 700]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 992,
@@ -532,18 +533,18 @@
           "backgroundTextMode": "NONE",
           "font": {
             "family": "DM Sans",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [400, 500, 700],
             "styles": ["regular", "italic"],
             "variants": [
               [0, 400],
-              [0, 500],
-              [0, 700],
               [1, 400],
+              [0, 500],
               [1, 500],
+              [0, 700],
               [1, 700]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 992,
@@ -607,7 +608,6 @@
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Playfair Display",
-            "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [400, 500, 600, 700, 800, 900],
             "styles": ["regular", "italic"],
@@ -625,6 +625,7 @@
               [1, 800],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 1082,
@@ -676,7 +677,8 @@
           "x": 48,
           "y": 37,
           "type": "text",
-          "groupId": "e3454734-01f7-11ed-b939-0242ac120002"
+          "groupId": "e3454734-01f7-11ed-b939-0242ac120002",
+          "tagName": "h2"
         },
         {
           "opacity": 100,
@@ -750,18 +752,18 @@
           "backgroundTextMode": "NONE",
           "font": {
             "family": "DM Sans",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [400, 500, 700],
             "styles": ["regular", "italic"],
             "variants": [
               [0, 400],
-              [0, 500],
-              [0, 700],
               [1, 400],
+              [0, 500],
               [1, 500],
+              [0, 700],
               [1, 700]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 992,
@@ -849,18 +851,18 @@
           "backgroundTextMode": "NONE",
           "font": {
             "family": "DM Sans",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [400, 500, 700],
             "styles": ["regular", "italic"],
             "variants": [
               [0, 400],
-              [0, 500],
-              [0, 700],
               [1, 400],
+              [0, 500],
               [1, 500],
+              [0, 700],
               [1, 700]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 992,
@@ -948,18 +950,18 @@
           "backgroundTextMode": "NONE",
           "font": {
             "family": "DM Sans",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [400, 500, 700],
             "styles": ["regular", "italic"],
             "variants": [
               [0, 400],
-              [0, 500],
-              [0, 700],
               [1, 400],
+              [0, 500],
               [1, 500],
+              [0, 700],
               [1, 700]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 992,
@@ -1180,7 +1182,6 @@
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Playfair Display",
-            "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [400, 500, 600, 700, 800, 900],
             "styles": ["regular", "italic"],
@@ -1198,6 +1199,7 @@
               [1, 800],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 1082,
@@ -1284,18 +1286,18 @@
           "backgroundTextMode": "NONE",
           "font": {
             "family": "DM Sans",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [400, 500, 700],
             "styles": ["regular", "italic"],
             "variants": [
               [0, 400],
-              [0, 500],
-              [0, 700],
               [1, 400],
+              [0, 500],
               [1, 500],
+              [0, 700],
               [1, 700]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 992,
@@ -1383,18 +1385,18 @@
           "backgroundTextMode": "NONE",
           "font": {
             "family": "DM Sans",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [400, 500, 700],
             "styles": ["regular", "italic"],
             "variants": [
               [0, 400],
-              [0, 500],
-              [0, 700],
               [1, 400],
+              [0, 500],
               [1, 500],
+              [0, 700],
               [1, 700]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 992,
@@ -1482,18 +1484,18 @@
           "backgroundTextMode": "NONE",
           "font": {
             "family": "DM Sans",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [400, 500, 700],
             "styles": ["regular", "italic"],
             "variants": [
               [0, 400],
-              [0, 500],
-              [0, 700],
               [1, 400],
+              [0, 500],
               [1, 500],
+              [0, 700],
               [1, 700]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 992,
@@ -1620,7 +1622,6 @@
           "backgroundTextMode": "NONE",
           "font": {
             "family": "DM Sans",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [400, 500, 700],
             "styles": ["regular", "italic"],
@@ -1632,6 +1633,7 @@
               [0, 700],
               [1, 700]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 992,
@@ -1691,51 +1693,22 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 199,
-              "b": 0
-            }
-          },
-          "type": "shape",
-          "x": 48,
-          "y": 510,
-          "width": 316,
-          "height": 108,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "id": "dd23b1ef-a608-4338-bfdb-9959de6e61ee",
-          "groupId": "d34090c3-090b-42a0-8499-f78aec1e906d"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
+          "backgroundTextMode": "FILL",
           "font": {
             "family": "DM Sans",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [400, 500, 700],
             "styles": ["regular", "italic"],
             "variants": [
               [0, 400],
-              [0, 500],
-              [0, 700],
               [1, 400],
+              [0, 500],
               [1, 500],
+              [0, 700],
               [1, 700]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 992,
@@ -1757,37 +1730,38 @@
           "fontSize": 17,
           "backgroundColor": {
             "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
+              "r": 255,
+              "g": 199,
+              "b": 0
             }
           },
           "lineHeight": 1.3,
           "textAlign": "initial",
           "padding": {
-            "locked": true,
-            "hasHiddenPadding": false
+            "locked": false,
+            "hasHiddenPadding": true,
+            "horizontal": 24,
+            "vertical": 10
           },
           "content": "<span style=\"color: #160236\">A special walk through medieval streets and alleyways of the Gothic and Barceloneta neighborhoods.</span>",
           "fontWeight": 700,
           "borderRadius": {
             "locked": true,
-            "topLeft": 2,
-            "topRight": 2,
-            "bottomRight": 2,
-            "bottomLeft": 2
+            "topLeft": 0,
+            "topRight": 0,
+            "bottomRight": 0,
+            "bottomLeft": 0
           },
-          "width": 283,
-          "height": 65,
+          "width": 315,
+          "height": 108,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "type": "text",
           "basedOn": "60ed9ffe-24ef-488c-bd94-a96a4e88da3e",
           "id": "c6de292a-421d-472b-9475-abfe7ead8219",
-          "x": 64,
-          "y": 531,
-          "groupId": "d34090c3-090b-42a0-8499-f78aec1e906d"
+          "x": 48,
+          "y": 510
         }
       ],
       "backgroundOverlay": "none",
@@ -1894,11 +1868,6 @@
           "isLocked": false,
           "isCollapsed": true
         },
-        "d34090c3-090b-42a0-8499-f78aec1e906d": {
-          "name": "Info",
-          "isLocked": false,
-          "isCollapsed": true
-        },
         "94970fa5-54a1-4dfb-90d1-511804cd559e": {
           "name": "Start",
           "isLocked": false,
@@ -1985,18 +1954,18 @@
           "backgroundTextMode": "NONE",
           "font": {
             "family": "DM Sans",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [400, 500, 700],
             "styles": ["regular", "italic"],
             "variants": [
               [0, 400],
-              [0, 500],
-              [0, 700],
               [1, 400],
+              [0, 500],
               [1, 500],
+              [0, 700],
               [1, 700]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 992,
@@ -2061,7 +2030,6 @@
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Playfair Display",
-            "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [400, 500, 600, 700, 800, 900],
             "styles": ["regular", "italic"],
@@ -2079,6 +2047,7 @@
               [1, 800],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 1082,
@@ -2130,7 +2099,8 @@
           "x": 48,
           "y": 37,
           "type": "text",
-          "groupId": "4eb0f819-8cd8-44b7-891b-d473a0e9b3de"
+          "groupId": "4eb0f819-8cd8-44b7-891b-d473a0e9b3de",
+          "tagName": "h2"
         },
         {
           "opacity": 100,
@@ -2206,7 +2176,6 @@
           "backgroundTextMode": "NONE",
           "font": {
             "family": "DM Sans",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [400, 500, 700],
             "styles": ["regular", "italic"],
@@ -2218,6 +2187,7 @@
               [0, 700],
               [1, 700]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 992,
@@ -2278,51 +2248,22 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 199,
-              "b": 0
-            }
-          },
-          "x": 48,
-          "y": 462,
-          "width": 316,
-          "height": 156,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "id": "98676671-1608-4743-aa98-9b08a0c8be22",
-          "type": "shape",
-          "groupId": "44f0b192-af1e-4744-b4e6-fa9148375fea"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
+          "backgroundTextMode": "FILL",
           "font": {
             "family": "DM Sans",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [400, 500, 700],
             "styles": ["regular", "italic"],
             "variants": [
               [0, 400],
-              [0, 500],
-              [0, 700],
               [1, 400],
+              [0, 500],
               [1, 500],
+              [0, 700],
               [1, 700]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 992,
@@ -2344,37 +2285,38 @@
           "fontSize": 17,
           "backgroundColor": {
             "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
+              "r": 255,
+              "g": 199,
+              "b": 0
             }
           },
           "lineHeight": 1.3,
           "textAlign": "initial",
           "padding": {
-            "locked": true,
-            "hasHiddenPadding": false
+            "locked": false,
+            "hasHiddenPadding": true,
+            "horizontal": 24,
+            "vertical": 23
           },
           "content": "<span style=\"color: #160236\">Why Park Güell? It’s a public park system composed of gardens and architectural elements located on Carmel Hill. It's a must see for any traveler in Barcelona.</span>",
           "fontWeight": 700,
           "borderRadius": {
             "locked": true,
-            "topLeft": 2,
-            "topRight": 2,
-            "bottomRight": 2,
-            "bottomLeft": 2
+            "topLeft": 0,
+            "topRight": 0,
+            "bottomRight": 0,
+            "bottomLeft": 0
           },
-          "width": 283,
-          "height": 109,
+          "width": 315,
+          "height": 157,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "60ed9ffe-24ef-488c-bd94-a96a4e88da3e",
           "id": "bed3654d-9924-49df-ae65-2335fd4c897e",
-          "x": 64.5,
-          "y": 485.5,
-          "type": "text",
-          "groupId": "44f0b192-af1e-4744-b4e6-fa9148375fea"
+          "x": 48,
+          "y": 462,
+          "type": "text"
         }
       ],
       "backgroundOverlay": "none",
@@ -2454,11 +2396,6 @@
         },
         "82369769-f716-44e0-8ebf-cf5b82382418": {
           "name": "Time",
-          "isLocked": false,
-          "isCollapsed": true
-        },
-        "44f0b192-af1e-4744-b4e6-fa9148375fea": {
-          "name": "Info",
           "isLocked": false,
           "isCollapsed": true
         }
@@ -2543,18 +2480,18 @@
           "backgroundTextMode": "NONE",
           "font": {
             "family": "DM Sans",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [400, 500, 700],
             "styles": ["regular", "italic"],
             "variants": [
               [0, 400],
-              [0, 500],
-              [0, 700],
               [1, 400],
+              [0, 500],
               [1, 500],
+              [0, 700],
               [1, 700]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 992,
@@ -2619,7 +2556,6 @@
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Playfair Display",
-            "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [400, 500, 600, 700, 800, 900],
             "styles": ["regular", "italic"],
@@ -2637,6 +2573,7 @@
               [1, 800],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 1082,
@@ -2688,7 +2625,8 @@
           "x": 47,
           "y": 36,
           "type": "text",
-          "groupId": "bb4c28dd-988d-44a0-8af8-430ba633138d"
+          "groupId": "bb4c28dd-988d-44a0-8af8-430ba633138d",
+          "tagName": "h2"
         },
         {
           "opacity": 100,
@@ -2766,7 +2704,6 @@
           "backgroundTextMode": "NONE",
           "font": {
             "family": "DM Sans",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [400, 500, 700],
             "styles": ["regular", "italic"],
@@ -2778,6 +2715,7 @@
               [0, 700],
               [1, 700]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 992,
@@ -2838,51 +2776,22 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 199,
-              "b": 0
-            }
-          },
-          "x": 48,
-          "y": 505,
-          "width": 316,
-          "height": 113,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "id": "c2b644be-e82e-48b1-9f9d-be55fe072eeb",
-          "type": "shape",
-          "groupId": "d73183e6-f265-4043-b9e4-f7f29ff25859"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
+          "backgroundTextMode": "FILL",
           "font": {
             "family": "DM Sans",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [400, 500, 700],
             "styles": ["regular", "italic"],
             "variants": [
               [0, 400],
-              [0, 500],
-              [0, 700],
               [1, 400],
+              [0, 500],
               [1, 500],
+              [0, 700],
               [1, 700]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 992,
@@ -2904,37 +2813,38 @@
           "fontSize": 17,
           "backgroundColor": {
             "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
+              "r": 255,
+              "g": 199,
+              "b": 0
             }
           },
-          "lineHeight": 1.3,
+          "lineHeight": 1.5,
           "textAlign": "initial",
           "padding": {
-            "locked": true,
-            "hasHiddenPadding": false
+            "locked": false,
+            "hasHiddenPadding": true,
+            "horizontal": 19,
+            "vertical": 20
           },
           "content": "<span style=\"color: #160236\">A historic home that houses all the personal treasures of Antoni Gaudi. You won't see them anywhere else.</span>",
           "fontWeight": 700,
           "borderRadius": {
             "locked": true,
-            "topLeft": 2,
-            "topRight": 2,
-            "bottomRight": 2,
-            "bottomLeft": 2
+            "topLeft": 0,
+            "topRight": 0,
+            "bottomRight": 0,
+            "bottomLeft": 0
           },
-          "width": 283,
-          "height": 65,
+          "width": 315,
+          "height": 113,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "60ed9ffe-24ef-488c-bd94-a96a4e88da3e",
           "id": "0407e214-bae3-487f-b3b8-3e90562ecf18",
-          "x": 64.5,
-          "y": 529,
-          "type": "text",
-          "groupId": "d73183e6-f265-4043-b9e4-f7f29ff25859"
+          "x": 48,
+          "y": 505,
+          "type": "text"
         }
       ],
       "backgroundOverlay": "none",
@@ -3006,11 +2916,6 @@
         },
         "763c6552-fbad-4a8b-bfa0-d078ea11523f": {
           "name": "Time",
-          "isLocked": false,
-          "isCollapsed": true
-        },
-        "d73183e6-f265-4043-b9e4-f7f29ff25859": {
-          "name": "Info",
           "isLocked": false,
           "isCollapsed": true
         }
@@ -3094,18 +2999,18 @@
           "backgroundTextMode": "NONE",
           "font": {
             "family": "DM Sans",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [400, 500, 700],
             "styles": ["regular", "italic"],
             "variants": [
               [0, 400],
-              [0, 500],
-              [0, 700],
               [1, 400],
+              [0, 500],
               [1, 500],
+              [0, 700],
               [1, 700]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 992,
@@ -3170,7 +3075,6 @@
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Playfair Display",
-            "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [400, 500, 600, 700, 800, 900],
             "styles": ["regular", "italic"],
@@ -3188,6 +3092,7 @@
               [1, 800],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 1082,
@@ -3239,7 +3144,8 @@
           "x": 52,
           "y": 37,
           "type": "text",
-          "groupId": "8507db95-896c-4456-8be2-f867dd867528"
+          "groupId": "8507db95-896c-4456-8be2-f867dd867528",
+          "tagName": "h2"
         },
         {
           "opacity": 100,
@@ -3317,7 +3223,6 @@
           "backgroundTextMode": "NONE",
           "font": {
             "family": "DM Sans",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [400, 500, 700],
             "styles": ["regular", "italic"],
@@ -3329,6 +3234,7 @@
               [0, 700],
               [1, 700]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 992,
@@ -3389,51 +3295,22 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 199,
-              "b": 0
-            }
-          },
-          "x": 48,
-          "y": 505,
-          "width": 316,
-          "height": 113,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "id": "161fdf31-42ff-47cf-802d-779d155eeffb",
-          "type": "shape",
-          "groupId": "d5c8890d-eb25-4485-a879-fb0047a831b1"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
+          "backgroundTextMode": "FILL",
           "font": {
             "family": "DM Sans",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [400, 500, 700],
             "styles": ["regular", "italic"],
             "variants": [
               [0, 400],
-              [0, 500],
-              [0, 700],
               [1, 400],
+              [0, 500],
               [1, 500],
+              [0, 700],
               [1, 700]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 992,
@@ -3455,37 +3332,38 @@
           "fontSize": 17,
           "backgroundColor": {
             "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
+              "r": 255,
+              "g": 199,
+              "b": 0
             }
           },
           "lineHeight": 1.3,
           "textAlign": "initial",
           "padding": {
-            "locked": true,
-            "hasHiddenPadding": false
+            "locked": false,
+            "hasHiddenPadding": true,
+            "horizontal": 20,
+            "vertical": 22
           },
           "content": "<span style=\"color: #160236\">Spend the day exploring shops and restaurants. Stop in, take your time, grab lunch and a few gin &amp; tonics.</span>",
           "fontWeight": 700,
           "borderRadius": {
             "locked": true,
-            "topLeft": 2,
-            "topRight": 2,
-            "bottomRight": 2,
-            "bottomLeft": 2
+            "topLeft": 0,
+            "topRight": 0,
+            "bottomRight": 0,
+            "bottomLeft": 0
           },
-          "width": 283,
-          "height": 65,
+          "width": 317,
+          "height": 110,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "60ed9ffe-24ef-488c-bd94-a96a4e88da3e",
           "id": "c5364cb9-6b40-4a02-b65d-715b3c024d9c",
-          "x": 64.5,
-          "y": 529,
-          "type": "text",
-          "groupId": "d5c8890d-eb25-4485-a879-fb0047a831b1"
+          "x": 48,
+          "y": 506,
+          "type": "text"
         }
       ],
       "backgroundOverlay": "none",
@@ -3567,11 +3445,6 @@
           "name": "Time",
           "isLocked": false,
           "isCollapsed": true
-        },
-        "d5c8890d-eb25-4485-a879-fb0047a831b1": {
-          "name": "Info",
-          "isLocked": false,
-          "isCollapsed": true
         }
       }
     },
@@ -3651,88 +3524,6 @@
           },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Playfair Display",
-            "service": "fonts.google.com",
-            "fallbacks": ["serif"],
-            "weights": [400, 500, 600, 700, 800, 900],
-            "styles": ["regular", "italic"],
-            "variants": [
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900],
-              [1, 400],
-              [1, 500],
-              [1, 600],
-              [1, 700],
-              [1, 800],
-              [1, 900]
-            ],
-            "metrics": {
-              "upm": 1000,
-              "asc": 1082,
-              "des": -251,
-              "tAsc": 1082,
-              "tDes": -251,
-              "tLGap": 0,
-              "wAsc": 1159,
-              "wDes": 251,
-              "xH": 514,
-              "capH": 708,
-              "yMin": -241,
-              "yMax": 1159,
-              "hAsc": 1082,
-              "hDes": -251,
-              "lGap": 0
-            }
-          },
-          "fontSize": 42,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1,
-          "textAlign": "initial",
-          "padding": {
-            "locked": true,
-            "hasHiddenPadding": false
-          },
-          "content": "<span style=\"font-weight: 500; color: #fff\">Casa</span>\n<span style=\"color: #fff\">Batlló</span>",
-          "fontWeight": 700,
-          "borderRadius": {
-            "locked": true,
-            "topLeft": 2,
-            "topRight": 2,
-            "bottomRight": 2,
-            "bottomLeft": 2
-          },
-          "width": 316,
-          "height": 96,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "basedOn": "34b8691e-be81-4464-b4c1-af056b37b0fa",
-          "id": "e406dbd5-4c40-4aeb-8ec9-ff74bf275b94",
-          "x": 46,
-          "y": 37,
-          "type": "text",
-          "groupId": "9d24f16f-eaa8-4f13-8c68-65e3e26e9fa0"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -3799,7 +3590,6 @@
           "backgroundTextMode": "NONE",
           "font": {
             "family": "DM Sans",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [400, 500, 700],
             "styles": ["regular", "italic"],
@@ -3811,6 +3601,7 @@
               [0, 700],
               [1, 700]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 992,
@@ -3871,128 +3662,22 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 199,
-              "b": 0
-            }
-          },
-          "x": 48,
-          "y": 483,
-          "width": 316,
-          "height": 135,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "id": "9dae8ae7-cb96-4c78-bf38-d63f6a71a018",
-          "type": "shape",
-          "groupId": "324240e3-94d8-44da-b6e3-56d2a7f2a6fa"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "DM Sans",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [400, 500, 700],
             "styles": ["regular", "italic"],
             "variants": [
               [0, 400],
-              [0, 500],
-              [0, 700],
               [1, 400],
+              [0, 500],
               [1, 500],
+              [0, 700],
               [1, 700]
             ],
-            "metrics": {
-              "upm": 1000,
-              "asc": 992,
-              "des": -310,
-              "tAsc": 992,
-              "tDes": -310,
-              "tLGap": 0,
-              "wAsc": 992,
-              "wDes": 310,
-              "xH": 496,
-              "capH": 700,
-              "yMin": -261,
-              "yMax": 967,
-              "hAsc": 992,
-              "hDes": -310,
-              "lGap": 0
-            }
-          },
-          "fontSize": 17,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.3,
-          "textAlign": "initial",
-          "padding": {
-            "locked": true,
-            "hasHiddenPadding": false
-          },
-          "content": "<span style=\"color: #160236\">Casa Batlló is identifiable as Modernism or Art Nouveau in the broadest sense. To locals, it’s a slice of Barcelona tradition.</span>",
-          "fontWeight": 700,
-          "borderRadius": {
-            "locked": true,
-            "topLeft": 2,
-            "topRight": 2,
-            "bottomRight": 2,
-            "bottomLeft": 2
-          },
-          "width": 280,
-          "height": 88,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "basedOn": "60ed9ffe-24ef-488c-bd94-a96a4e88da3e",
-          "id": "ec789224-25b4-440b-8ae4-9b7b1a7d7a99",
-          "x": 66,
-          "y": 506.5,
-          "type": "text",
-          "marginOffset": -0.03399999999999892,
-          "groupId": "324240e3-94d8-44da-b6e3-56d2a7f2a6fa"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "DM Sans",
             "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [400, 500, 700],
-            "styles": ["regular", "italic"],
-            "variants": [
-              [0, 400],
-              [0, 500],
-              [0, 700],
-              [1, 400],
-              [1, 500],
-              [1, 700]
-            ],
             "metrics": {
               "upm": 1000,
               "asc": 992,
@@ -4045,6 +3730,167 @@
           "x": 48,
           "y": 20,
           "groupId": "9d24f16f-eaa8-4f13-8c68-65e3e26e9fa0"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Playfair Display",
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700, 800, 900],
+            "styles": ["regular", "italic"],
+            "variants": [
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ],
+            "service": "fonts.google.com",
+            "metrics": {
+              "upm": 1000,
+              "asc": 1082,
+              "des": -251,
+              "tAsc": 1082,
+              "tDes": -251,
+              "tLGap": 0,
+              "wAsc": 1159,
+              "wDes": 251,
+              "xH": 514,
+              "capH": 708,
+              "yMin": -241,
+              "yMax": 1159,
+              "hAsc": 1082,
+              "hDes": -251,
+              "lGap": 0
+            }
+          },
+          "fontSize": 42,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1,
+          "textAlign": "initial",
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
+          "content": "<span style=\"font-weight: 500; color: #fff\">Casa</span>\n<span style=\"color: #fff\">Batlló</span>",
+          "fontWeight": 700,
+          "borderRadius": {
+            "locked": true,
+            "topLeft": 2,
+            "topRight": 2,
+            "bottomRight": 2,
+            "bottomLeft": 2
+          },
+          "width": 316,
+          "height": 96,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "34b8691e-be81-4464-b4c1-af056b37b0fa",
+          "id": "e406dbd5-4c40-4aeb-8ec9-ff74bf275b94",
+          "x": 46,
+          "y": 37,
+          "type": "text",
+          "groupId": "9d24f16f-eaa8-4f13-8c68-65e3e26e9fa0",
+          "tagName": "h2"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "FILL",
+          "font": {
+            "family": "DM Sans",
+            "fallbacks": ["sans-serif"],
+            "weights": [400, 500, 700],
+            "styles": ["regular", "italic"],
+            "variants": [
+              [0, 400],
+              [1, 400],
+              [0, 500],
+              [1, 500],
+              [0, 700],
+              [1, 700]
+            ],
+            "service": "fonts.google.com",
+            "metrics": {
+              "upm": 1000,
+              "asc": 992,
+              "des": -310,
+              "tAsc": 992,
+              "tDes": -310,
+              "tLGap": 0,
+              "wAsc": 992,
+              "wDes": 310,
+              "xH": 496,
+              "capH": 700,
+              "yMin": -261,
+              "yMax": 967,
+              "hAsc": 992,
+              "hDes": -310,
+              "lGap": 0
+            }
+          },
+          "fontSize": 17,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 199,
+              "b": 0
+            }
+          },
+          "lineHeight": 1.3,
+          "textAlign": "initial",
+          "padding": {
+            "locked": false,
+            "hasHiddenPadding": true,
+            "horizontal": 26,
+            "vertical": 22
+          },
+          "content": "<span style=\"color: #160236\">Casa Batlló is identifiable as Modernism or Art Nouveau in the broadest sense. To locals, it’s a slice of Barcelona tradition.</span>",
+          "fontWeight": 700,
+          "borderRadius": {
+            "locked": true,
+            "topLeft": 0,
+            "topRight": 0,
+            "bottomRight": 0,
+            "bottomLeft": 0
+          },
+          "width": 316,
+          "height": 132,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "60ed9ffe-24ef-488c-bd94-a96a4e88da3e",
+          "id": "ec789224-25b4-440b-8ae4-9b7b1a7d7a99",
+          "x": 46,
+          "y": 485,
+          "type": "text",
+          "marginOffset": -0.03399999999999892
         }
       ],
       "backgroundOverlay": "none",
@@ -4117,7 +3963,7 @@
         "324240e3-94d8-44da-b6e3-56d2a7f2a6fa": {
           "name": "Info",
           "isLocked": false,
-          "isCollapsed": true
+          "isCollapsed": false
         },
         "349f764f-9f35-4935-83e0-243dcdf78f30": {
           "name": "Time",
@@ -4205,18 +4051,18 @@
           "backgroundTextMode": "NONE",
           "font": {
             "family": "DM Sans",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [400, 500, 700],
             "styles": ["regular", "italic"],
             "variants": [
               [0, 400],
-              [0, 500],
-              [0, 700],
               [1, 400],
+              [0, 500],
               [1, 500],
+              [0, 700],
               [1, 700]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 992,
@@ -4281,7 +4127,6 @@
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Playfair Display",
-            "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [400, 500, 600, 700, 800, 900],
             "styles": ["regular", "italic"],
@@ -4299,6 +4144,7 @@
               [1, 800],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 1082,
@@ -4350,7 +4196,8 @@
           "x": 47,
           "y": 37,
           "type": "text",
-          "groupId": "46a533c3-50eb-4908-9ffa-c25d56cb2d42"
+          "groupId": "46a533c3-50eb-4908-9ffa-c25d56cb2d42",
+          "tagName": "h2"
         },
         {
           "opacity": 100,
@@ -4426,7 +4273,6 @@
           "backgroundTextMode": "NONE",
           "font": {
             "family": "DM Sans",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [400, 500, 700],
             "styles": ["regular", "italic"],
@@ -4438,6 +4284,7 @@
               [0, 700],
               [1, 700]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 992,
@@ -4498,51 +4345,22 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 199,
-              "b": 0
-            }
-          },
-          "x": 48,
-          "y": 505,
-          "width": 316,
-          "height": 113,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "id": "0a35881f-d3c6-4167-bc70-7218ecf34fca",
-          "type": "shape",
-          "groupId": "bad5dba2-1ffa-40f4-a5d6-e5a4f5b1df66"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
+          "backgroundTextMode": "FILL",
           "font": {
             "family": "DM Sans",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [400, 500, 700],
             "styles": ["regular", "italic"],
             "variants": [
               [0, 400],
-              [0, 500],
-              [0, 700],
               [1, 400],
+              [0, 500],
               [1, 500],
+              [0, 700],
               [1, 700]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 992,
@@ -4564,38 +4382,39 @@
           "fontSize": 17,
           "backgroundColor": {
             "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
+              "r": 255,
+              "g": 199,
+              "b": 0
             }
           },
           "lineHeight": 1.3,
           "textAlign": "initial",
           "padding": {
-            "locked": true,
-            "hasHiddenPadding": false
+            "locked": false,
+            "hasHiddenPadding": true,
+            "horizontal": 26,
+            "vertical": 24
           },
           "content": "<span style=\"color: #160236\">Sagrada Familia, the symbol of Barcelona and the stunning masterpiece of Gaudi.</span>",
           "fontWeight": 700,
           "borderRadius": {
             "locked": true,
-            "topLeft": 2,
-            "topRight": 2,
-            "bottomRight": 2,
-            "bottomLeft": 2
+            "topLeft": 0,
+            "topRight": 0,
+            "bottomRight": 0,
+            "bottomLeft": 0
           },
-          "width": 280,
-          "height": 65,
+          "width": 316,
+          "height": 114,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "60ed9ffe-24ef-488c-bd94-a96a4e88da3e",
           "id": "fd200968-8ccd-4f68-907b-443262f35486",
-          "x": 66,
-          "y": 529,
+          "x": 48,
+          "y": 505,
           "marginOffset": -0.03399999999999892,
-          "type": "text",
-          "groupId": "bad5dba2-1ffa-40f4-a5d6-e5a4f5b1df66"
+          "type": "text"
         }
       ],
       "backgroundOverlay": "none",
@@ -4671,7 +4490,7 @@
         "bad5dba2-1ffa-40f4-a5d6-e5a4f5b1df66": {
           "name": "Info",
           "isLocked": false,
-          "isCollapsed": true
+          "isCollapsed": false
         },
         "1702b74a-44cf-49ae-8163-19e3f9148e27": {
           "name": "Time",
@@ -4763,18 +4582,18 @@
           "backgroundTextMode": "NONE",
           "font": {
             "family": "DM Sans",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [400, 500, 700],
             "styles": ["regular", "italic"],
             "variants": [
               [0, 400],
-              [0, 500],
-              [0, 700],
               [1, 400],
+              [0, 500],
               [1, 500],
+              [0, 700],
               [1, 700]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 992,
@@ -4839,7 +4658,6 @@
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Playfair Display",
-            "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [400, 500, 600, 700, 800, 900],
             "styles": ["regular", "italic"],
@@ -4857,6 +4675,7 @@
               [1, 800],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 1082,
@@ -4908,7 +4727,8 @@
           "x": 48,
           "y": 37,
           "type": "text",
-          "groupId": "f3d63749-0118-476c-a183-47ef25360f7d"
+          "groupId": "f3d63749-0118-476c-a183-47ef25360f7d",
+          "tagName": "h2"
         },
         {
           "opacity": 100,
@@ -4984,7 +4804,6 @@
           "backgroundTextMode": "NONE",
           "font": {
             "family": "DM Sans",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [400, 500, 700],
             "styles": ["regular", "italic"],
@@ -4996,6 +4815,7 @@
               [0, 700],
               [1, 700]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 992,
@@ -5056,51 +4876,22 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 199,
-              "b": 0
-            }
-          },
-          "x": 48,
-          "y": 502,
-          "width": 316,
-          "height": 116,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "id": "9076d755-a2f2-4660-8dcd-38ea449ced08",
-          "type": "shape",
-          "groupId": "49467d11-3bfc-41a3-925a-28ac167faa38"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
+          "backgroundTextMode": "FILL",
           "font": {
             "family": "DM Sans",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [400, 500, 700],
             "styles": ["regular", "italic"],
             "variants": [
               [0, 400],
-              [0, 500],
-              [0, 700],
               [1, 400],
+              [0, 500],
               [1, 500],
+              [0, 700],
               [1, 700]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 992,
@@ -5122,38 +4913,39 @@
           "fontSize": 17,
           "backgroundColor": {
             "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
+              "r": 255,
+              "g": 199,
+              "b": 0
             }
           },
           "lineHeight": 1.3,
           "textAlign": "initial",
           "padding": {
-            "locked": true,
-            "hasHiddenPadding": false
+            "locked": false,
+            "hasHiddenPadding": true,
+            "horizontal": 25,
+            "vertical": 24
           },
           "content": "<span style=\"color: #160236\">Ready for some bites now, right? Grab pre-dinner snacks at this local's bar and restaurant.</span>",
           "fontWeight": 700,
           "borderRadius": {
             "locked": true,
-            "topLeft": 2,
-            "topRight": 2,
-            "bottomRight": 2,
-            "bottomLeft": 2
+            "topLeft": 0,
+            "topRight": 0,
+            "bottomRight": 0,
+            "bottomLeft": 0
           },
-          "width": 280,
-          "height": 65,
+          "width": 314,
+          "height": 114,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "60ed9ffe-24ef-488c-bd94-a96a4e88da3e",
           "id": "27472069-5878-4a0e-8c5f-c9eee943a15d",
-          "x": 66,
-          "y": 527.5,
+          "x": 48,
+          "y": 505,
           "marginOffset": -0.03399999999999892,
-          "type": "text",
-          "groupId": "49467d11-3bfc-41a3-925a-28ac167faa38"
+          "type": "text"
         }
       ],
       "backgroundOverlay": "none",
@@ -5218,11 +5010,6 @@
       },
       "pageTemplateType": "",
       "groups": {
-        "49467d11-3bfc-41a3-925a-28ac167faa38": {
-          "name": "Info",
-          "isLocked": false,
-          "isCollapsed": true
-        },
         "eeb19136-ea34-4a36-ae0a-8fa47a588959": {
           "name": "Time",
           "isLocked": false,
@@ -5353,7 +5140,6 @@
           "backgroundTextMode": "NONE",
           "font": {
             "family": "DM Sans",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [400, 500, 700],
             "styles": ["regular", "italic"],
@@ -5365,6 +5151,7 @@
               [0, 700],
               [1, 700]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 992,
@@ -5425,51 +5212,22 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 199,
-              "b": 0
-            }
-          },
-          "x": 48,
-          "y": 500,
-          "width": 316,
-          "height": 118,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "id": "8b114a7b-39fe-4022-be22-a92079eda452",
-          "type": "shape",
-          "groupId": "52e1c525-7276-4e93-8181-e2dee1eb4197"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
+          "backgroundTextMode": "FILL",
           "font": {
             "family": "DM Sans",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [400, 500, 700],
             "styles": ["regular", "italic"],
             "variants": [
               [0, 400],
-              [0, 500],
-              [0, 700],
               [1, 400],
+              [0, 500],
               [1, 500],
+              [0, 700],
               [1, 700]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 992,
@@ -5491,38 +5249,39 @@
           "fontSize": 17,
           "backgroundColor": {
             "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
+              "r": 255,
+              "g": 199,
+              "b": 0
             }
           },
           "lineHeight": 1.3,
           "textAlign": "initial",
           "padding": {
-            "locked": true,
-            "hasHiddenPadding": false
+            "locked": false,
+            "hasHiddenPadding": true,
+            "horizontal": 22,
+            "vertical": 14
           },
           "content": "<span style=\"color: #160236\">The unique experiences in Barcelona belong to this city only, begging you to return here over and over again.</span>",
           "fontWeight": 700,
           "borderRadius": {
             "locked": true,
-            "topLeft": 2,
-            "topRight": 2,
-            "bottomRight": 2,
-            "bottomLeft": 2
+            "topLeft": 0,
+            "topRight": 0,
+            "bottomRight": 0,
+            "bottomLeft": 0
           },
-          "width": 278,
-          "height": 88,
+          "width": 315,
+          "height": 117,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "60ed9ffe-24ef-488c-bd94-a96a4e88da3e",
           "id": "fccd7415-af38-4f6b-b9b6-380a20f6e8b7",
-          "x": 67,
-          "y": 515,
+          "x": 48,
+          "y": 500,
           "marginOffset": -0.03399999999999892,
-          "type": "text",
-          "groupId": "52e1c525-7276-4e93-8181-e2dee1eb4197"
+          "type": "text"
         }
       ],
       "backgroundOverlay": "none",
@@ -5587,11 +5346,6 @@
       },
       "pageTemplateType": "",
       "groups": {
-        "52e1c525-7276-4e93-8181-e2dee1eb4197": {
-          "name": "Info",
-          "isLocked": false,
-          "isCollapsed": true
-        },
         "8ccea118-49f8-4978-989f-2e9329648e61": {
           "name": "End",
           "isLocked": false,
@@ -5674,18 +5428,18 @@
           "backgroundTextMode": "NONE",
           "font": {
             "family": "DM Sans",
-            "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [400, 500, 700],
             "styles": ["regular", "italic"],
             "variants": [
               [0, 400],
-              [0, 500],
-              [0, 700],
               [1, 400],
+              [0, 500],
               [1, 500],
+              [0, 700],
               [1, 700]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 992,
@@ -5750,7 +5504,6 @@
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Playfair Display",
-            "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [400, 500, 600, 700, 800, 900],
             "styles": ["regular", "italic"],
@@ -5768,6 +5521,7 @@
               [1, 800],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 1082,
@@ -5832,7 +5586,6 @@
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Playfair Display",
-            "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [400, 500, 600, 700, 800, 900],
             "styles": ["regular", "italic"],
@@ -5850,6 +5603,7 @@
               [1, 800],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 1082,
@@ -5901,7 +5655,8 @@
           "id": "ef5cbd25-6d2e-4fc7-876f-5a11ac357010",
           "x": 197,
           "y": 253,
-          "groupId": "fc45fbb0-70df-4d3c-aa17-d660aa78b582"
+          "groupId": "fc45fbb0-70df-4d3c-aa17-d660aa78b582",
+          "tagName": "h3"
         },
         {
           "opacity": 100,
@@ -5914,7 +5669,6 @@
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Playfair Display",
-            "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [400, 500, 600, 700, 800, 900],
             "styles": ["regular", "italic"],
@@ -5932,6 +5686,7 @@
               [1, 800],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 1082,
@@ -5983,7 +5738,8 @@
           "id": "61390d07-3107-4db5-b90f-27b90e8b53ec",
           "x": 225,
           "y": 280,
-          "groupId": "fc45fbb0-70df-4d3c-aa17-d660aa78b582"
+          "groupId": "fc45fbb0-70df-4d3c-aa17-d660aa78b582",
+          "tagName": "h3"
         },
         {
           "opacity": 100,
@@ -6079,7 +5835,6 @@
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Playfair Display",
-            "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [400, 500, 600, 700, 800, 900],
             "styles": ["regular", "italic"],
@@ -6097,6 +5852,7 @@
               [1, 800],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 1082,
@@ -6148,7 +5904,8 @@
           "id": "9cc2576e-652e-4f03-8a3d-8463f3fc8ff7",
           "x": 55,
           "y": 416,
-          "groupId": "b3b8bf9f-8c6f-4b33-bc9e-2fe7076b18c8"
+          "groupId": "b3b8bf9f-8c6f-4b33-bc9e-2fe7076b18c8",
+          "tagName": "h3"
         },
         {
           "opacity": 100,
@@ -6161,7 +5918,6 @@
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Playfair Display",
-            "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [400, 500, 600, 700, 800, 900],
             "styles": ["regular", "italic"],
@@ -6179,6 +5935,7 @@
               [1, 800],
               [1, 900]
             ],
+            "service": "fonts.google.com",
             "metrics": {
               "upm": 1000,
               "asc": 1082,
@@ -6230,7 +5987,8 @@
           "id": "59e236f3-2390-4349-8392-46b4d9e29d28",
           "x": 91,
           "y": 447,
-          "groupId": "b3b8bf9f-8c6f-4b33-bc9e-2fe7076b18c8"
+          "groupId": "b3b8bf9f-8c6f-4b33-bc9e-2fe7076b18c8",
+          "tagName": "h3"
         },
         {
           "opacity": 100,

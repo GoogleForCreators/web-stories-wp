@@ -95,4 +95,5 @@ export const Canvas = styled.canvas`
   height: 100%;
   object-fit: cover;
   border-radius: 5px;
+  ${({ $isProcessing }) => $isProcessing && 'filter: blur(5px)'};
 `;

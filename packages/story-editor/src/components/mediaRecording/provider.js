@@ -137,21 +137,6 @@ function MediaRecordingProvider({ children }) {
     [showSnackbar, hasVideo]
   );
 
-  const onTrimmed = useCallback((trimmedFile) => {
-    setMediaBlobUrl(createBlob(trimmedFile));
-    setFile(trimmedFile);
-  }, []);
-
-  const {
-    trimData,
-    isAdjustingTrim,
-    isProcessingTrim,
-    startTrim,
-    onTrim,
-    resetTrim,
-    cancelTrim,
-  } = useTrim({ setDuration, onTrimmed, file: originalFile });
-
   const {
     error,
     status,
@@ -179,6 +164,23 @@ function MediaRecordingProvider({ children }) {
     },
     onStop,
   });
+
+  const isRecording = 'recording' === status;
+
+  const onTrimmed = useCallback((trimmedFile) => {
+    setMediaBlobUrl(createBlob(trimmedFile));
+    setFile(trimmedFile);
+  }, []);
+
+  const {
+    trimData,
+    isAdjustingTrim,
+    isProcessingTrim,
+    startTrim,
+    onTrim,
+    resetTrim,
+    cancelTrim,
+  } = useTrim({ setDuration, onTrimmed, file: originalFile, isRecording });
 
   useEffect(() => {
     if (
@@ -255,12 +257,14 @@ function MediaRecordingProvider({ children }) {
   const previousBlobUrl = usePrevious(mediaBlobUrl);
 
   useEffect(() => {
-    if (previousBlobUrl && previousBlobUrl !== mediaBlobUrl) {
+    if (
+      previousBlobUrl &&
+      previousBlobUrl !== mediaBlobUrl &&
+      previousBlobUrl !== originalMediaBlobUrl
+    ) {
       revokeBlob(previousBlobUrl);
     }
-  }, [mediaBlobUrl, previousBlobUrl]);
-
-  const isRecording = 'recording' === status;
+  }, [mediaBlobUrl, previousBlobUrl, originalMediaBlobUrl]);
 
   useEffect(() => {
     let timeout;

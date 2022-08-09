@@ -436,7 +436,8 @@
           "basedOn": "f0bdf78b-7be0-42d9-8cd3-53ad40290c5a",
           "id": "10d1cc5c-019a-47fb-993b-7e26ff16c512",
           "x": 50,
-          "y": 542
+          "y": 542,
+          "tagName": "h2"
         },
         {
           "opacity": 100,
@@ -966,7 +967,8 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "id": "3ce7db4d-0723-41cd-a90b-3830227a7817"
+          "id": "3ce7db4d-0723-41cd-a90b-3830227a7817",
+          "tagName": "h2"
         },
         {
           "opacity": 100,
@@ -1319,7 +1321,8 @@
           "focalX": 50,
           "focalY": 50,
           "id": "6be7a6a0-2b17-4a12-b66f-3c74b75284d3",
-          "type": "text"
+          "type": "text",
+          "tagName": "h2"
         },
         {
           "opacity": 100,
@@ -1703,7 +1706,8 @@
           "focalX": 50,
           "focalY": 50,
           "id": "2e6b6761-9cb7-4bba-b532-a04659992d1e",
-          "type": "text"
+          "type": "text",
+          "tagName": "h2"
         },
         {
           "opacity": 100,
@@ -4484,7 +4488,8 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "type": "text"
+          "type": "text",
+          "tagName": "p"
         }
       ],
       "animations": [],
@@ -4618,7 +4623,8 @@
           "focalX": 50,
           "focalY": 50,
           "id": "3a2476e7-bdba-45d8-8858-bf249a0be25f",
-          "type": "text"
+          "type": "text",
+          "tagName": "h2"
         },
         {
           "opacity": 100,
@@ -4688,7 +4694,8 @@
           "focalX": 50,
           "focalY": 50,
           "type": "text",
-          "groupId": "124d8c7c-94c3-48b2-901e-4381aa45baf1"
+          "groupId": "124d8c7c-94c3-48b2-901e-4381aa45baf1",
+          "tagName": "p"
         },
         {
           "opacity": 100,
@@ -4758,7 +4765,8 @@
           "focalX": 50,
           "focalY": 50,
           "type": "text",
-          "groupId": "124d8c7c-94c3-48b2-901e-4381aa45baf1"
+          "groupId": "124d8c7c-94c3-48b2-901e-4381aa45baf1",
+          "tagName": "p"
         },
         {
           "opacity": 100,
@@ -4828,7 +4836,8 @@
           "focalX": 50,
           "focalY": 50,
           "type": "text",
-          "groupId": "f8f2dc70-029b-487e-a283-77aafc2396ae"
+          "groupId": "f8f2dc70-029b-487e-a283-77aafc2396ae",
+          "tagName": "h3"
         },
         {
           "opacity": 100,
@@ -5388,7 +5397,8 @@
           "focalX": 50,
           "focalY": 50,
           "type": "text",
-          "groupId": "c0c10ac0-b63a-4d62-8f27-fa5f6d89b57b"
+          "groupId": "c0c10ac0-b63a-4d62-8f27-fa5f6d89b57b",
+          "tagName": "p"
         },
         {
           "x": 304,
@@ -5458,7 +5468,8 @@
           "focalX": 50,
           "focalY": 50,
           "type": "text",
-          "groupId": "c0c10ac0-b63a-4d62-8f27-fa5f6d89b57b"
+          "groupId": "c0c10ac0-b63a-4d62-8f27-fa5f6d89b57b",
+          "tagName": "p"
         }
       ],
       "animations": [
@@ -5770,7 +5781,8 @@
           "focalX": 50,
           "focalY": 50,
           "id": "e5f6d5f0-8311-48ec-a742-a07bf2221e82",
-          "type": "text"
+          "type": "text",
+          "tagName": "h3"
         },
         {
           "opacity": 100,

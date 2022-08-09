@@ -301,7 +301,8 @@
           "focalY": 50,
           "id": "90a5e51a-13a2-44f8-8468-ac65afadeb1d",
           "marginOffset": 0.6343749999999986,
-          "groupId": "1f16b646-e901-476d-b503-34631e08cc78"
+          "groupId": "1f16b646-e901-476d-b503-34631e08cc78",
+          "tagName": "h1"
         },
         {
           "opacity": 100,
@@ -518,7 +519,7 @@
         "1f16b646-e901-476d-b503-34631e08cc78": {
           "name": "Title",
           "isLocked": false,
-          "isCollapsed": true
+          "isCollapsed": false
         },
         "bab34a77-e091-451e-8329-072180fbf1d3": {
           "name": "Images",
@@ -809,50 +810,6 @@
           },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "type": "sticker",
-          "x": -85,
-          "y": 42,
-          "width": 592,
-          "height": 581,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "sticker": {
-            "type": "contactTracingRings"
-          },
-          "id": "47c8a613-4a9d-4c32-8780-ddfc4052ec5f",
-          "groupId": "c9220a64-1778-4c5d-8379-43bf77e706cd"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "type": "sticker",
-          "x": -19,
-          "y": 174,
-          "width": 374,
-          "height": 530,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "sticker": {
-            "type": "contactTracingPhone"
-          },
-          "id": "3c12ddd1-a7f8-4095-8a68-02149412c1a2",
-          "groupId": "c9220a64-1778-4c5d-8379-43bf77e706cd"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Archivo",
@@ -932,6 +889,50 @@
           "id": "8b60fcc3-a7ce-4fa8-a2f2-7c84b2ff0695",
           "x": 65,
           "y": 0
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "type": "sticker",
+          "x": -19,
+          "y": 174,
+          "width": 374,
+          "height": 530,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "sticker": {
+            "type": "contactTracingPhone"
+          },
+          "id": "3c12ddd1-a7f8-4095-8a68-02149412c1a2",
+          "groupId": "c9220a64-1778-4c5d-8379-43bf77e706cd"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "type": "sticker",
+          "x": -85,
+          "y": 42,
+          "width": 592,
+          "height": 581,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "sticker": {
+            "type": "contactTracingRings"
+          },
+          "id": "47c8a613-4a9d-4c32-8780-ddfc4052ec5f",
+          "groupId": "c9220a64-1778-4c5d-8379-43bf77e706cd"
         },
         {
           "opacity": 100,
@@ -2443,52 +2444,6 @@
           },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "type": "sticker",
-          "width": 592,
-          "height": 581,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "sticker": {
-            "type": "contactTracingRings"
-          },
-          "basedOn": "47c8a613-4a9d-4c32-8780-ddfc4052ec5f",
-          "id": "d0d3a306-c447-4107-8c81-db81c84ed03b",
-          "x": -85,
-          "y": 42,
-          "groupId": "1142e96b-0956-4c2d-b474-3ba13a77fb52"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "type": "sticker",
-          "width": 374,
-          "height": 530,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "sticker": {
-            "type": "contactTracingPhone"
-          },
-          "basedOn": "3c12ddd1-a7f8-4095-8a68-02149412c1a2",
-          "id": "a6ab5c47-7dbf-4ab5-b091-714476e1f689",
-          "x": -19,
-          "y": 174,
-          "groupId": "1142e96b-0956-4c2d-b474-3ba13a77fb52"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Archivo",
@@ -2568,6 +2523,52 @@
           "x": 65,
           "y": 0,
           "type": "text"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "type": "sticker",
+          "width": 592,
+          "height": 581,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "sticker": {
+            "type": "contactTracingRings"
+          },
+          "basedOn": "47c8a613-4a9d-4c32-8780-ddfc4052ec5f",
+          "id": "d0d3a306-c447-4107-8c81-db81c84ed03b",
+          "x": -85,
+          "y": 42,
+          "groupId": "1142e96b-0956-4c2d-b474-3ba13a77fb52"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "type": "sticker",
+          "width": 374,
+          "height": 530,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "sticker": {
+            "type": "contactTracingPhone"
+          },
+          "basedOn": "3c12ddd1-a7f8-4095-8a68-02149412c1a2",
+          "id": "a6ab5c47-7dbf-4ab5-b091-714476e1f689",
+          "x": -19,
+          "y": 174,
+          "groupId": "1142e96b-0956-4c2d-b474-3ba13a77fb52"
         },
         {
           "x": 65,
@@ -2699,7 +2700,7 @@
         "1142e96b-0956-4c2d-b474-3ba13a77fb52": {
           "name": "Image",
           "isLocked": false,
-          "isCollapsed": true
+          "isCollapsed": false
         }
       }
     },
@@ -2874,96 +2875,8 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "id": "d771187d-91ba-4d58-abb5-c581ef048f00"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Archivo",
-            "fallbacks": ["sans-serif"],
-            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
-            "styles": ["regular", "italic"],
-            "variants": [
-              [0, 100],
-              [0, 200],
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900],
-              [1, 100],
-              [1, 200],
-              [1, 300],
-              [1, 400],
-              [1, 500],
-              [1, 600],
-              [1, 700],
-              [1, 800],
-              [1, 900]
-            ],
-            "service": "fonts.google.com",
-            "metrics": {
-              "upm": 1000,
-              "asc": 878,
-              "des": -210,
-              "tAsc": 878,
-              "tDes": -210,
-              "tLGap": 0,
-              "wAsc": 1100,
-              "wDes": 410,
-              "xH": 526,
-              "capH": 686,
-              "yMin": -406,
-              "yMax": 1092,
-              "hAsc": 878,
-              "hDes": -210,
-              "lGap": 0
-            }
-          },
-          "fontSize": 17,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.3,
-          "textAlign": "left",
-          "padding": {
-            "locked": true,
-            "hasHiddenPadding": false
-          },
-          "content": "<span style=\"color: #22242e\">How to build your own quantum computer</span>",
-          "fontWeight": 400,
-          "borderRadius": {
-            "locked": true,
-            "topLeft": 2,
-            "topRight": 2,
-            "bottomRight": 2,
-            "bottomLeft": 2
-          },
-          "width": 189,
-          "height": 40,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "marginOffset": 1.3439999999999976,
-          "type": "text",
-          "basedOn": "b423c51f-2157-48d5-8ea6-afcb4a9c19c4",
-          "id": "302714cf-49af-4528-a9a0-66b33fcdce68",
-          "x": 146,
-          "y": 272,
-          "groupId": "b7fa09ba-1ec2-4d9d-b281-6e595a55d426"
+          "id": "d771187d-91ba-4d58-abb5-c581ef048f00",
+          "tagName": "h2"
         },
         {
           "x": 146,
@@ -3095,48 +3008,6 @@
           },
           "id": "6e318344-60c7-4bba-943e-1e4160dd7d9c",
           "groupId": "a0c3d60d-d61a-4dbb-9544-b94550e693f0"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "creationDate": "2021-06-04T06:57:29",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/how-contact-tracing-works/page13_image01.jpg",
-            "width": 720,
-            "height": 540,
-            "posterId": 0,
-            "id": 0,
-            "alt": "White and green hard disk drive",
-            "sizes": [],
-            "isOptimized": false,
-            "baseColor": "#dacfbd",
-            "isExternal": true
-          },
-          "type": "image",
-          "x": 74,
-          "y": 87,
-          "width": 261,
-          "height": 175,
-          "mask": {
-            "type": "rectangle",
-            "showInLibrary": true,
-            "name": "Rectangle",
-            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
-            "ratio": 1,
-            "supportsBorder": true
-          },
-          "id": "4431e12d-b0bf-4eea-bfac-206af0cf687f",
-          "groupId": "b7fa09ba-1ec2-4d9d-b281-6e595a55d426"
         },
         {
           "x": 76,
@@ -3314,6 +3185,137 @@
           "focalY": 50,
           "marginOffset": 3.1799999999999997,
           "type": "text",
+          "groupId": "b7fa09ba-1ec2-4d9d-b281-6e595a55d426"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Archivo",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["regular", "italic"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ],
+            "service": "fonts.google.com",
+            "metrics": {
+              "upm": 1000,
+              "asc": 878,
+              "des": -210,
+              "tAsc": 878,
+              "tDes": -210,
+              "tLGap": 0,
+              "wAsc": 1100,
+              "wDes": 410,
+              "xH": 526,
+              "capH": 686,
+              "yMin": -406,
+              "yMax": 1092,
+              "hAsc": 878,
+              "hDes": -210,
+              "lGap": 0
+            }
+          },
+          "fontSize": 17,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.3,
+          "textAlign": "left",
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
+          "content": "<span style=\"color: #22242e\">How to build your own quantum computer</span>",
+          "fontWeight": 400,
+          "borderRadius": {
+            "locked": true,
+            "topLeft": 2,
+            "topRight": 2,
+            "bottomRight": 2,
+            "bottomLeft": 2
+          },
+          "width": 189,
+          "height": 40,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "marginOffset": 1.3439999999999976,
+          "type": "text",
+          "basedOn": "b423c51f-2157-48d5-8ea6-afcb4a9c19c4",
+          "id": "302714cf-49af-4528-a9a0-66b33fcdce68",
+          "x": 146,
+          "y": 272,
+          "groupId": "b7fa09ba-1ec2-4d9d-b281-6e595a55d426"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "creationDate": "2021-06-04T06:57:29",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/how-contact-tracing-works/page13_image01.jpg",
+            "width": 720,
+            "height": 540,
+            "posterId": 0,
+            "id": 0,
+            "alt": "White and green hard disk drive",
+            "sizes": [],
+            "isOptimized": false,
+            "baseColor": "#dacfbd",
+            "isExternal": true
+          },
+          "type": "image",
+          "x": 74,
+          "y": 87,
+          "width": 261,
+          "height": 175,
+          "mask": {
+            "type": "rectangle",
+            "showInLibrary": true,
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1,
+            "supportsBorder": true
+          },
+          "id": "4431e12d-b0bf-4eea-bfac-206af0cf687f",
           "groupId": "b7fa09ba-1ec2-4d9d-b281-6e595a55d426"
         }
       ],
