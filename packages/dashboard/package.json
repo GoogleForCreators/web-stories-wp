@@ -2,7 +2,7 @@
   "name": "@googleforcreators/dashboard",
   "description": "The core Web Stories dashboard web application, which is platform-agnostic.",
   "private": false,
-  "version": "0.1.202207041221",
+  "version": "0.1.202208081316",
   "author": {
     "name": "Google",
     "url": "https://creators.google/"

@@ -23,6 +23,7 @@ import {
   preloadImage,
   getFirstFrameOfVideo,
   getFileNameFromUrl,
+  getFileBasename,
 } from '@googleforcreators/media';
 /**
  * Internal dependencies
@@ -116,7 +117,9 @@ function useUploadVideoFrame({ updateMediaElement }) {
       const trackTiming = getTimeTracker('load_video_poster');
       try {
         const originalFileName = getFileNameFromUrl(src);
-        const fileName = getPosterName(originalFileName);
+        const fileName = getPosterName(
+          getFileBasename({ name: originalFileName })
+        );
         const obj = await getFirstFrameOfVideo(src);
         const { posterId, poster, posterWidth, posterHeight } =
           await uploadVideoPoster(id, fileName, obj);
