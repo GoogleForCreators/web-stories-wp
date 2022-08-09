@@ -2872,62 +2872,6 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196,
-              "a": 0
-            }
-          },
-          "type": "shape",
-          "x": 126,
-          "y": 570,
-          "width": 160,
-          "height": 48,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "id": "65a3c7b3-f6b2-4f66-b4a9-282bf505c393",
-          "borderRadius": {
-            "topLeft": 40,
-            "topRight": 40,
-            "bottomRight": 40,
-            "bottomLeft": 40,
-            "locked": true
-          },
-          "border": {
-            "left": 1,
-            "right": 1,
-            "top": 1,
-            "bottom": 1,
-            "lockedWidth": true,
-            "color": {
-              "color": {
-                "r": 255,
-                "g": 255,
-                "b": 255
-              }
-            }
-          },
-          "link": {
-            "url": "https://google.com",
-            "icon": null,
-            "desc": "google.com"
-          },
-          "groupId": "ab183ada-08b2-41cc-8050-4c4af57ba531"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
           "lockAspectRatio": true,
           "type": "sticker",
           "x": 144,
@@ -2949,10 +2893,9 @@
           "groupId": "ab183ada-08b2-41cc-8050-4c4af57ba531"
         },
         {
-          "x": 169,
-          "y": 585,
-          "id": "23acd5c7-7a8b-4085-838b-001c11a21dec",
-          "basedOn": "81970e87-bdf8-44e2-b6d8-3930ed995b31",
+          "x": 126,
+          "y": 571,
+          "basedOn": "6b1f4017-01cc-4775-adf7-7808ca543fd8",
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -3002,23 +2945,25 @@
             }
           },
           "lineHeight": 1.4,
-          "textAlign": "initial",
+          "textAlign": "right",
           "padding": {
-            "locked": true,
-            "hasHiddenPadding": false
+            "locked": false,
+            "hasHiddenPadding": false,
+            "horizontal": 23,
+            "vertical": 14
           },
           "type": "text",
           "content": "<span style=\"color: #fff\">View Products</span>",
           "fontWeight": 700,
           "borderRadius": {
             "locked": true,
-            "topLeft": 2,
-            "topRight": 2,
-            "bottomRight": 2,
-            "bottomLeft": 2
+            "topLeft": 100,
+            "topRight": 100,
+            "bottomRight": 100,
+            "bottomLeft": 100
           },
-          "width": 99,
-          "height": 18,
+          "width": 159,
+          "height": 46,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -3028,6 +2973,21 @@
             "icon": "",
             "desc": "google.com"
           },
+          "border": {
+            "left": 1,
+            "right": 1,
+            "top": 1,
+            "bottom": 1,
+            "lockedWidth": true,
+            "color": {
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255
+              }
+            }
+          },
+          "id": "41b11a78-af4d-4ad8-9496-975e0a5d8261",
           "groupId": "ab183ada-08b2-41cc-8050-4c4af57ba531"
         }
       ],
@@ -3493,63 +3453,6 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196,
-              "a": 0
-            }
-          },
-          "type": "shape",
-          "width": 160,
-          "height": 48,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "borderRadius": {
-            "topLeft": 40,
-            "topRight": 40,
-            "bottomRight": 40,
-            "bottomLeft": 40,
-            "locked": true
-          },
-          "border": {
-            "left": 1,
-            "right": 1,
-            "top": 1,
-            "bottom": 1,
-            "lockedWidth": true,
-            "color": {
-              "color": {
-                "r": 255,
-                "g": 255,
-                "b": 255
-              }
-            }
-          },
-          "link": {
-            "url": "https://google.com",
-            "icon": null,
-            "desc": "google.com"
-          },
-          "basedOn": "65a3c7b3-f6b2-4f66-b4a9-282bf505c393",
-          "id": "d5e03265-f1b7-4728-ace3-d5137382ce0c",
-          "x": 126,
-          "y": 570,
-          "groupId": "2ae58dce-ca1a-4258-8a64-38b623826133"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
           "lockAspectRatio": true,
           "type": "sticker",
           "width": 16,
@@ -3572,6 +3475,9 @@
           "groupId": "2ae58dce-ca1a-4258-8a64-38b623826133"
         },
         {
+          "x": 126,
+          "y": 571,
+          "basedOn": "6b1f4017-01cc-4775-adf7-7808ca543fd8",
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -3621,23 +3527,25 @@
             }
           },
           "lineHeight": 1.4,
-          "textAlign": "initial",
+          "textAlign": "right",
           "padding": {
-            "locked": true,
-            "hasHiddenPadding": false
+            "locked": false,
+            "hasHiddenPadding": false,
+            "horizontal": 23,
+            "vertical": 14
           },
           "type": "text",
           "content": "<span style=\"color: #fff\">View Products</span>",
           "fontWeight": 700,
           "borderRadius": {
             "locked": true,
-            "topLeft": 2,
-            "topRight": 2,
-            "bottomRight": 2,
-            "bottomLeft": 2
+            "topLeft": 100,
+            "topRight": 100,
+            "bottomRight": 100,
+            "bottomLeft": 100
           },
-          "width": 99,
-          "height": 18,
+          "width": 159,
+          "height": 46,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -3647,10 +3555,21 @@
             "icon": "",
             "desc": "google.com"
           },
-          "basedOn": "23acd5c7-7a8b-4085-838b-001c11a21dec",
-          "id": "34a1443e-948b-475b-a3e8-6a00e63e72a1",
-          "x": 169,
-          "y": 585,
+          "border": {
+            "left": 1,
+            "right": 1,
+            "top": 1,
+            "bottom": 1,
+            "lockedWidth": true,
+            "color": {
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255
+              }
+            }
+          },
+          "id": "b8495237-4d1f-4a9d-9032-365f51bed2b0",
           "groupId": "2ae58dce-ca1a-4258-8a64-38b623826133"
         }
       ],
@@ -4124,63 +4043,6 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196,
-              "a": 0
-            }
-          },
-          "type": "shape",
-          "width": 160,
-          "height": 48,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "borderRadius": {
-            "topLeft": 40,
-            "topRight": 40,
-            "bottomRight": 40,
-            "bottomLeft": 40,
-            "locked": true
-          },
-          "border": {
-            "left": 1,
-            "right": 1,
-            "top": 1,
-            "bottom": 1,
-            "lockedWidth": true,
-            "color": {
-              "color": {
-                "r": 255,
-                "g": 255,
-                "b": 255
-              }
-            }
-          },
-          "link": {
-            "url": "https://google.com",
-            "icon": null,
-            "desc": "google.com"
-          },
-          "basedOn": "d5e03265-f1b7-4728-ace3-d5137382ce0c",
-          "id": "e55818cd-43a3-44b6-abcd-0acdcca3e9cd",
-          "x": 126,
-          "y": 570,
-          "groupId": "d380642e-e38f-48a5-8bde-c4e6ab8ff25b"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
           "lockAspectRatio": true,
           "type": "sticker",
           "width": 16,
@@ -4203,6 +4065,9 @@
           "groupId": "d380642e-e38f-48a5-8bde-c4e6ab8ff25b"
         },
         {
+          "x": 126,
+          "y": 571,
+          "basedOn": "6b1f4017-01cc-4775-adf7-7808ca543fd8",
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -4252,23 +4117,25 @@
             }
           },
           "lineHeight": 1.4,
-          "textAlign": "initial",
+          "textAlign": "right",
           "padding": {
-            "locked": true,
-            "hasHiddenPadding": false
+            "locked": false,
+            "hasHiddenPadding": false,
+            "horizontal": 23,
+            "vertical": 14
           },
           "type": "text",
           "content": "<span style=\"color: #fff\">View Products</span>",
           "fontWeight": 700,
           "borderRadius": {
             "locked": true,
-            "topLeft": 2,
-            "topRight": 2,
-            "bottomRight": 2,
-            "bottomLeft": 2
+            "topLeft": 100,
+            "topRight": 100,
+            "bottomRight": 100,
+            "bottomLeft": 100
           },
-          "width": 99,
-          "height": 18,
+          "width": 159,
+          "height": 46,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -4278,10 +4145,21 @@
             "icon": "",
             "desc": "google.com"
           },
-          "basedOn": "34a1443e-948b-475b-a3e8-6a00e63e72a1",
-          "id": "1a1aca24-bf24-483e-af80-b2a2fae9496d",
-          "x": 169,
-          "y": 585,
+          "border": {
+            "left": 1,
+            "right": 1,
+            "top": 1,
+            "bottom": 1,
+            "lockedWidth": true,
+            "color": {
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255
+              }
+            }
+          },
+          "id": "0b716870-e949-4507-98c0-4ddbdafa844b",
           "groupId": "d380642e-e38f-48a5-8bde-c4e6ab8ff25b"
         }
       ],
@@ -5871,63 +5749,6 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196,
-              "a": 0
-            }
-          },
-          "type": "shape",
-          "width": 160,
-          "height": 48,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "borderRadius": {
-            "topLeft": 40,
-            "topRight": 40,
-            "bottomRight": 40,
-            "bottomLeft": 40,
-            "locked": true
-          },
-          "border": {
-            "left": 1,
-            "right": 1,
-            "top": 1,
-            "bottom": 1,
-            "lockedWidth": true,
-            "color": {
-              "color": {
-                "r": 255,
-                "g": 255,
-                "b": 255
-              }
-            }
-          },
-          "link": {
-            "url": "https://google.com",
-            "icon": null,
-            "desc": "google.com"
-          },
-          "basedOn": "d5e03265-f1b7-4728-ace3-d5137382ce0c",
-          "id": "dc7b14fc-41b5-44e6-82fc-d62c841b5789",
-          "x": 126,
-          "y": 570,
-          "groupId": "c7b8e772-d320-4739-a9ff-11e0e444f978"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
           "lockAspectRatio": true,
           "type": "sticker",
           "width": 16,
@@ -5950,6 +5771,9 @@
           "groupId": "c7b8e772-d320-4739-a9ff-11e0e444f978"
         },
         {
+          "x": 126,
+          "y": 571,
+          "basedOn": "6f8af339-0975-4c87-af37-94b9503284a9",
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -5999,23 +5823,25 @@
             }
           },
           "lineHeight": 1.4,
-          "textAlign": "initial",
+          "textAlign": "right",
           "padding": {
-            "locked": true,
-            "hasHiddenPadding": false
+            "locked": false,
+            "hasHiddenPadding": false,
+            "horizontal": 19,
+            "vertical": 14
           },
           "type": "text",
           "content": "<span style=\"color: #fff\">View Products</span>",
           "fontWeight": 700,
           "borderRadius": {
             "locked": true,
-            "topLeft": 2,
-            "topRight": 2,
-            "bottomRight": 2,
-            "bottomLeft": 2
+            "topLeft": 100,
+            "topRight": 100,
+            "bottomRight": 100,
+            "bottomLeft": 100
           },
-          "width": 99,
-          "height": 18,
+          "width": 162,
+          "height": 46,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -6025,11 +5851,22 @@
             "icon": "",
             "desc": "google.com"
           },
-          "basedOn": "34a1443e-948b-475b-a3e8-6a00e63e72a1",
-          "id": "adab2c08-c10f-4f39-9f20-0121f3e341b9",
-          "x": 169,
-          "y": 585,
-          "groupId": "c7b8e772-d320-4739-a9ff-11e0e444f978"
+          "groupId": "c7b8e772-d320-4739-a9ff-11e0e444f978",
+          "border": {
+            "left": 1,
+            "right": 1,
+            "top": 1,
+            "bottom": 1,
+            "lockedWidth": true,
+            "color": {
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255
+              }
+            }
+          },
+          "id": "f6f8325e-6e5a-4730-9803-5552933d824e"
         }
       ],
       "animations": [
@@ -6494,63 +6331,6 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196,
-              "a": 0
-            }
-          },
-          "type": "shape",
-          "width": 160,
-          "height": 48,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "borderRadius": {
-            "topLeft": 40,
-            "topRight": 40,
-            "bottomRight": 40,
-            "bottomLeft": 40,
-            "locked": true
-          },
-          "border": {
-            "left": 1,
-            "right": 1,
-            "top": 1,
-            "bottom": 1,
-            "lockedWidth": true,
-            "color": {
-              "color": {
-                "r": 255,
-                "g": 255,
-                "b": 255
-              }
-            }
-          },
-          "link": {
-            "url": "https://google.com",
-            "icon": null,
-            "desc": "google.com"
-          },
-          "basedOn": "d5e03265-f1b7-4728-ace3-d5137382ce0c",
-          "id": "8cb1458a-e544-4e6d-8b8f-7ff33ea69070",
-          "x": 126,
-          "y": 570,
-          "groupId": "50c374f9-9a5f-4a83-864c-10175f9d3024"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
           "lockAspectRatio": true,
           "type": "sticker",
           "width": 16,
@@ -6573,6 +6353,9 @@
           "groupId": "50c374f9-9a5f-4a83-864c-10175f9d3024"
         },
         {
+          "x": 126,
+          "y": 571,
+          "basedOn": "6f8af339-0975-4c87-af37-94b9503284a9",
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -6622,23 +6405,25 @@
             }
           },
           "lineHeight": 1.4,
-          "textAlign": "initial",
+          "textAlign": "right",
           "padding": {
-            "locked": true,
-            "hasHiddenPadding": false
+            "locked": false,
+            "hasHiddenPadding": false,
+            "horizontal": 23,
+            "vertical": 14
           },
           "type": "text",
           "content": "<span style=\"color: #fff\">View Products</span>",
           "fontWeight": 700,
           "borderRadius": {
             "locked": true,
-            "topLeft": 2,
-            "topRight": 2,
-            "bottomRight": 2,
-            "bottomLeft": 2
+            "topLeft": 100,
+            "topRight": 100,
+            "bottomRight": 100,
+            "bottomLeft": 100
           },
-          "width": 99,
-          "height": 18,
+          "width": 159,
+          "height": 46,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -6648,10 +6433,21 @@
             "icon": "",
             "desc": "google.com"
           },
-          "basedOn": "34a1443e-948b-475b-a3e8-6a00e63e72a1",
-          "id": "8ccf9baa-fcda-4696-9e21-9b99ffa14dc6",
-          "x": 169,
-          "y": 585,
+          "border": {
+            "left": 1,
+            "right": 1,
+            "top": 1,
+            "bottom": 1,
+            "lockedWidth": true,
+            "color": {
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255
+              }
+            }
+          },
+          "id": "6b1f4017-01cc-4775-adf7-7808ca543fd8",
           "groupId": "50c374f9-9a5f-4a83-864c-10175f9d3024"
         }
       ],
@@ -7117,63 +6913,6 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196,
-              "a": 0
-            }
-          },
-          "type": "shape",
-          "width": 160,
-          "height": 48,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "borderRadius": {
-            "topLeft": 40,
-            "topRight": 40,
-            "bottomRight": 40,
-            "bottomLeft": 40,
-            "locked": true
-          },
-          "border": {
-            "left": 1,
-            "right": 1,
-            "top": 1,
-            "bottom": 1,
-            "lockedWidth": true,
-            "color": {
-              "color": {
-                "r": 255,
-                "g": 255,
-                "b": 255
-              }
-            }
-          },
-          "link": {
-            "url": "https://google.com",
-            "icon": null,
-            "desc": "google.com"
-          },
-          "basedOn": "8cb1458a-e544-4e6d-8b8f-7ff33ea69070",
-          "id": "8a8f1cdf-07bf-4a16-a928-5cb4d72d2b1d",
-          "x": 126,
-          "y": 570,
-          "groupId": "7292f956-f14c-4d8f-8ff4-3b1110538d5a"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
           "lockAspectRatio": true,
           "type": "sticker",
           "width": 16,
@@ -7196,6 +6935,9 @@
           "groupId": "7292f956-f14c-4d8f-8ff4-3b1110538d5a"
         },
         {
+          "x": 126,
+          "y": 571,
+          "basedOn": "6b1f4017-01cc-4775-adf7-7808ca543fd8",
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -7245,23 +6987,25 @@
             }
           },
           "lineHeight": 1.4,
-          "textAlign": "initial",
+          "textAlign": "right",
           "padding": {
-            "locked": true,
-            "hasHiddenPadding": false
+            "locked": false,
+            "hasHiddenPadding": false,
+            "horizontal": 23,
+            "vertical": 14
           },
           "type": "text",
           "content": "<span style=\"color: #fff\">View Products</span>",
           "fontWeight": 700,
           "borderRadius": {
             "locked": true,
-            "topLeft": 2,
-            "topRight": 2,
-            "bottomRight": 2,
-            "bottomLeft": 2
+            "topLeft": 100,
+            "topRight": 100,
+            "bottomRight": 100,
+            "bottomLeft": 100
           },
-          "width": 99,
-          "height": 18,
+          "width": 159,
+          "height": 46,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -7271,10 +7015,21 @@
             "icon": "",
             "desc": "google.com"
           },
-          "basedOn": "8ccf9baa-fcda-4696-9e21-9b99ffa14dc6",
-          "id": "999d0f19-6c88-4d0f-ac53-6a5f5ad1ba29",
-          "x": 169,
-          "y": 585,
+          "border": {
+            "left": 1,
+            "right": 1,
+            "top": 1,
+            "bottom": 1,
+            "lockedWidth": true,
+            "color": {
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255
+              }
+            }
+          },
+          "id": "ec980d3e-5e00-46f9-b7bf-3b58eae77f67",
           "groupId": "7292f956-f14c-4d8f-8ff4-3b1110538d5a"
         }
       ],
@@ -7454,6 +7209,45 @@
           "y": 0
         },
         {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/hawaii-travel-packing-list/page13_image01.jpg",
+            "width": 720,
+            "height": 563,
+            "id": 0,
+            "alt": "Woman swimming underwater",
+            "sizes": [],
+            "isOptimized": false,
+            "baseColor": "#1d715b",
+            "isExternal": true
+          },
+          "type": "image",
+          "x": 0,
+          "y": 158,
+          "width": 220,
+          "height": 172,
+          "mask": {
+            "type": "rectangle",
+            "showInLibrary": true,
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1,
+            "supportsBorder": true
+          },
+          "id": "127db0dd-e66e-41ca-8d79-b69985457a5f"
+        },
+        {
           "x": 140,
           "y": 81,
           "id": "0d90785f-0ab6-49bc-8088-aa516321f46f",
@@ -7537,45 +7331,6 @@
           "marginOffset": -15.660000000000004,
           "type": "text",
           "tagName": "h3"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/hawaii-travel-packing-list/page13_image01.jpg",
-            "width": 720,
-            "height": 563,
-            "id": 0,
-            "alt": "Woman swimming underwater",
-            "sizes": [],
-            "isOptimized": false,
-            "baseColor": "#1d715b",
-            "isExternal": true
-          },
-          "type": "image",
-          "x": 0,
-          "y": 158,
-          "width": 220,
-          "height": 172,
-          "mask": {
-            "type": "rectangle",
-            "showInLibrary": true,
-            "name": "Rectangle",
-            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
-            "ratio": 1,
-            "supportsBorder": true
-          },
-          "id": "127db0dd-e66e-41ca-8d79-b69985457a5f"
         },
         {
           "opacity": 100,
@@ -7709,64 +7464,6 @@
           },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 0,
-              "g": 0,
-              "b": 0,
-              "a": 0
-            }
-          },
-          "width": 160,
-          "height": 48,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "borderRadius": {
-            "topLeft": 40,
-            "topRight": 40,
-            "bottomRight": 40,
-            "bottomLeft": 40,
-            "locked": true
-          },
-          "border": {
-            "left": 1,
-            "right": 1,
-            "top": 1,
-            "bottom": 1,
-            "lockedWidth": true,
-            "color": {
-              "color": {
-                "r": 0,
-                "g": 0,
-                "b": 0,
-                "a": 0.4
-              }
-            }
-          },
-          "type": "shape",
-          "basedOn": "1ba250e4-a44c-40cd-91eb-5e17f75b3b1e",
-          "id": "ed11af1a-63f2-400d-9b83-b0c2db4934d0",
-          "x": 126,
-          "y": 570,
-          "link": {
-            "url": "https://google.com",
-            "icon": null,
-            "desc": "google.com"
-          },
-          "groupId": "ba615278-0a47-4344-b176-5294bd7139dd"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "DM Sans",
@@ -7811,20 +7508,22 @@
           "lineHeight": 1.4,
           "textAlign": "center",
           "padding": {
-            "locked": true,
-            "hasHiddenPadding": false
+            "locked": false,
+            "hasHiddenPadding": false,
+            "horizontal": 43,
+            "vertical": 14
           },
           "content": "See More",
           "fontWeight": 700,
           "borderRadius": {
             "locked": true,
-            "topLeft": 2,
-            "topRight": 2,
-            "bottomRight": 2,
-            "bottomLeft": 2
+            "topLeft": 100,
+            "topRight": 100,
+            "bottomRight": 100,
+            "bottomLeft": 100
           },
-          "width": 73,
-          "height": 18,
+          "width": 159,
+          "height": 46,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -7832,14 +7531,28 @@
           "type": "text",
           "basedOn": "450dec43-018e-4571-9799-2bc3a1d8d0ea",
           "id": "165e5f3e-1282-4cc3-a649-b70a53acbceb",
-          "x": 169.5,
-          "y": 585,
+          "x": 127,
+          "y": 571,
           "link": {
             "url": "https://google.com",
             "icon": "",
             "desc": "google.com"
           },
-          "groupId": "ba615278-0a47-4344-b176-5294bd7139dd"
+          "border": {
+            "left": 1,
+            "right": 1,
+            "top": 1,
+            "bottom": 1,
+            "lockedWidth": true,
+            "color": {
+              "color": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 0.4
+              }
+            }
+          }
         }
       ],
       "backgroundColor": {
@@ -7874,13 +7587,6 @@
           "delay": 1250
         },
         {
-          "id": "1ced217d-0632-40b2-9851-4eb219295747",
-          "type": "effect-fade-in",
-          "targets": ["ed11af1a-63f2-400d-9b83-b0c2db4934d0"],
-          "duration": 2000,
-          "delay": 1250
-        },
-        {
           "id": "2c902e55-b664-4eee-b8aa-e0a86f77f501",
           "type": "effect-fly-in",
           "targets": ["627abd9f-5447-4df3-8c27-3971d0892e7b"],
@@ -7898,13 +7604,7 @@
         }
       ],
       "pageTemplateType": "list",
-      "groups": {
-        "ba615278-0a47-4344-b176-5294bd7139dd": {
-          "name": "Action",
-          "isLocked": false,
-          "isCollapsed": true
-        }
-      }
+      "groups": {}
     }
   ]
 }

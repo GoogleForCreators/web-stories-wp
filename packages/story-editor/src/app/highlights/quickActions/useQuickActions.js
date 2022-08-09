@@ -308,7 +308,8 @@ const useQuickActions = () => {
     videoInput,
     isReady,
     isProcessing,
-    isTrimming,
+    isAdjustingTrim,
+    isProcessingTrim,
     startTrim,
   } = useMediaRecording(({ state, actions }) => ({
     isInRecordingMode: state.isInRecordingMode,
@@ -321,7 +322,8 @@ const useQuickActions = () => {
       !state.file?.type?.startsWith('image') &&
       !state.isCountingDown,
     isProcessing: state.isProcessing,
-    isTrimming: state.isTrimming,
+    isAdjustingTrim: state.isAdjustingTrim,
+    isProcessingTrim: state.isProcessingTrim,
     toggleRecordingMode: actions.toggleRecordingMode,
     toggleVideo: actions.toggleVideo,
     toggleAudio: actions.toggleAudio,
@@ -848,7 +850,8 @@ const useQuickActions = () => {
           trackEvent('media_recording_trim_start');
           startTrim();
         },
-        disabled: !isProcessing || isTrimming || !hasVideo,
+        disabled:
+          !isProcessing || isAdjustingTrim || !hasVideo || isProcessingTrim,
         ...actionMenuProps,
       },
     ].filter(Boolean);
@@ -860,7 +863,8 @@ const useQuickActions = () => {
     hasVideo,
     hasAudio,
     isProcessing,
-    isTrimming,
+    isAdjustingTrim,
+    isProcessingTrim,
     toggleAudio,
     toggleVideo,
     toggleRecordingMode,
