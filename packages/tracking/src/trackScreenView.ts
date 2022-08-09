@@ -30,7 +30,7 @@ import isTrackingEnabled from './isTrackingEnabled';
  * @param {string} screenName Screen name. Example: 'Explore Templates'.
  * @return {Promise<void>} Promise that always resolves.
  */
-async function trackScreenView(screenName) {
+async function trackScreenView(screenName: string) {
   if (!(await isTrackingEnabled())) {
     return Promise.resolve();
   }

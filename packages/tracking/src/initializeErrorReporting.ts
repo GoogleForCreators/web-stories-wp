@@ -25,7 +25,7 @@ const IGNORED_ERROR_MESSAGES = ['ResizeObserver loop limit exceeded'];
  *
  * @param {ErrorEvent} event Error event.
  */
-function handleErrors(event) {
+function handleErrors(event: ErrorEvent) {
   if (event.filename && !event.filename.includes('web-stories')) {
     return;
   }
@@ -42,7 +42,7 @@ function handleErrors(event) {
  *
  * @param {PromiseRejectionEvent} event Promise rejection event.
  */
-function handleUncaughtPromises(event) {
+function handleUncaughtPromises(event: PromiseRejectionEvent) {
   const errorMessage = event.reason || 'Promise rejection';
   trackError('uncaught_promise', errorMessage);
 }

@@ -22,7 +22,7 @@ import { config, gtag } from './shared';
 
 const SCRIPT_IDENTIFIER = 'data-web-stories-tracking';
 
-function loadScriptTag(url) {
+function loadScriptTag(url: string) {
   return new Promise((resolve, reject) => {
     const script = document.createElement('script');
     script.setAttribute(SCRIPT_IDENTIFIER, '');
@@ -124,7 +124,7 @@ async function loadTrackingScript(sendPageView = true) {
   });
 }
 
-async function enableTracking(sendPageView) {
+async function enableTracking(sendPageView = true) {
   if (!config.trackingAllowed || config.trackingEnabled) {
     return;
   }

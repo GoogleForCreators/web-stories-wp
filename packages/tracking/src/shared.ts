@@ -19,11 +19,55 @@
  */
 import { DATA_LAYER } from './constants';
 
+interface TrackingConfig {
+  /**
+   * Whether tracking is allowed in the current context.
+   *
+   * @default false
+   */
+  trackingAllowed?: boolean;
+  /**
+   * Whether tracking is currently enabled.
+   *
+   * @default false
+   */
+  trackingEnabled?: boolean;
+  /**
+   * Tracking ID.
+   */
+  trackingId: string;
+  /**
+   * GA4 tracking ID.
+   */
+  trackingIdGA4: string;
+  /**
+   * Application name.
+   */
+  appName: string;
+  /**
+   * Application version.
+   */
+  appVersion: string;
+  /**
+   * User properties.
+   */
+  userProperties: Record<string, string | number>;
+}
+
+declare global {
+  interface Window {
+    [DATA_LAYER]: object[];
+    webStoriesTrackingSettings: TrackingConfig;
+  }
+}
+
 /**
  * Pushes data onto the data layer.
  *
  * Must push an instance of Arguments to the target.
  * Using an ES6 spread operator (i.e. `...args`) will cause tracking events to _silently_ fail.
+ *
+ * @return {void}
  */
 export function gtag() {
   window[DATA_LAYER] = window[DATA_LAYER] || [];
@@ -37,6 +81,7 @@ const DEFAULT_CONFIG = {
   trackingId: '',
   trackingIdGA4: '',
   userProperties: {},
+  appName: '',
 };
 
 const {
@@ -47,7 +92,7 @@ const {
   userProperties,
 } = window.webStoriesTrackingSettings || {};
 
-export const config = {
+export const config: TrackingConfig = {
   ...DEFAULT_CONFIG,
   trackingAllowed,
   trackingId,

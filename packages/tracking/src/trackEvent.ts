@@ -21,6 +21,18 @@ import { config } from './shared';
 import isTrackingEnabled from './isTrackingEnabled';
 import track from './track';
 
+interface EventParameters {
+  name?: string;
+  value?: string | number;
+  send_to?: string | number;
+  search_type?: string;
+  duration?: number;
+  title_length?: number;
+  unread_count?: number;
+  event_label?: string;
+  event_category?: string;
+}
+
 /**
  * Send an Analytics tracking event.
  *
@@ -30,10 +42,13 @@ import track from './track';
  * @see https://support.google.com/analytics/answer/9267735
  * @see https://support.google.com/analytics/answer/9310895?hl=en
  * @param {string} eventName The event name (e.g. 'search'). The value that will appear as the event action in Google Analytics Event reports.
- * @param {Object<*>} [eventParameters] Event parameters.
+ * @param {EventParameters} [eventParameters] Event parameters.
  * @return {Promise<void>} Promise that always resolves.
  */
-async function trackEvent(eventName, eventParameters = {}) {
+async function trackEvent(
+  eventName: string,
+  eventParameters: EventParameters = {}
+): Promise<void> {
   if (!(await isTrackingEnabled())) {
     return Promise.resolve();
   }

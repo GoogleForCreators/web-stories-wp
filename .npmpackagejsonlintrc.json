@@ -57,6 +57,7 @@
         "exports",
         "main",
         "module",
+        "types",
         "source",
         "publishConfig",
         "sideEffects",

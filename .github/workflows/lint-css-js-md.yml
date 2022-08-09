@@ -6,6 +6,7 @@ on:
     paths:
       - '**.js'
       - '**.cjs'
+      - '**.ts'
       - '**.css'
       - 'docs/**/*.md'
       - 'packages/**/*.md'
@@ -25,6 +26,7 @@ on:
     paths:
       - '**.js'
       - '**.cjs'
+      - '**.ts'
       - '**.css'
       - 'docs/**/*.md'
       - 'packages/**/*.md'

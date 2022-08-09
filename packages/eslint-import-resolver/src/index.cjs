@@ -23,23 +23,26 @@ const nodeResolver = require('eslint-import-resolver-node');
 exports.interfaceVersion = 2;
 
 exports.resolve = function (source, file, config) {
+  function nodeResolve(src) {
+    return nodeResolver.resolve(src, file, {
+      ...config,
+      extensions: ['.tsx', '.ts', '.mjs', '.js', '.json', '.node'],
+    });
+  }
+
   if (!config.mapping) {
-    return nodeResolver.resolve(source, file, config);
+    return nodeResolve(source);
   }
 
   for (const [regex, dir] of Object.entries(config.mapping)) {
     // eslint-disable-next-line security/detect-non-literal-regexp
     const sourceLocation = source.replace(new RegExp(regex), dir);
-    const result = nodeResolver.resolve(
-      path.resolve(sourceLocation),
-      file,
-      config
-    );
+    const result = nodeResolve(path.resolve(sourceLocation));
 
     if (result.found) {
       return result;
     }
   }
 
-  return nodeResolver.resolve(source, file, config);
+  return nodeResolve(source);
 };
