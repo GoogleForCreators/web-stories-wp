@@ -289,47 +289,38 @@ const StoryPreview = () => {
                     height={publisherLogo.height}
                     src={publisherLogo.url}
                     alt={__('Publisher Logo', 'web-stories')}
-                    data-testid="story_preview_logo"
                   />
                 )}
-                {hasUploadMediaAction && (
-                  <StyledMedia
-                    onChange={handleChangePoster}
-                    title={__('Select as poster image', 'web-stories')}
-                    hotlinkTitle={__(
-                      'Use external image as poster image',
-                      'web-stories'
-                    )}
-                    hotlinkInsertText={__(
-                      'Use image as poster image',
-                      'web-stories'
-                    )}
-                    hotlinkInsertingText={__(
-                      'Using image as poster image',
-                      'web-stories'
-                    )}
-                    buttonInsertText={__(
-                      'Select as poster image',
-                      'web-stories'
-                    )}
-                    type={allowedImageMimeTypes}
-                    ariaLabel={__('Poster image', 'web-stories')}
-                    onChangeErrorText={posterErrorMessage}
-                    imgProps={featuredMedia}
-                    canUpload={hasUploadMediaAction}
-                    variant={MEDIA_VARIANTS.NONE}
-                    menuOptions={menuOptions}
-                    cropParams={{
-                      width: 640,
-                      height: 853,
-                    }}
-                  />
-                )}
+                <StyledMedia
+                  onChange={handleChangePoster}
+                  title={__('Select as poster image', 'web-stories')}
+                  hotlinkTitle={__(
+                    'Use external image as poster image',
+                    'web-stories'
+                  )}
+                  hotlinkInsertText={__(
+                    'Use image as poster image',
+                    'web-stories'
+                  )}
+                  hotlinkInsertingText={__(
+                    'Using image as poster image',
+                    'web-stories'
+                  )}
+                  buttonInsertText={__('Select as poster image', 'web-stories')}
+                  type={allowedImageMimeTypes}
+                  ariaLabel={__('Poster image', 'web-stories')}
+                  onChangeErrorText={posterErrorMessage}
+                  imgProps={featuredMedia}
+                  variant={MEDIA_VARIANTS.NONE}
+                  menuOptions={menuOptions}
+                  cropParams={{
+                    width: 640,
+                    height: 853,
+                  }}
+                />
               </ScrimTop>
               <ScrimBottom>
-                {title && (
-                  <Title data-testid="story_preview_title">{title}</Title>
-                )}
+                {title && <Title>{title}</Title>}
                 {publisher && (
                   <Publisher data-testid="story_preview_publisher">
                     {publisher}
