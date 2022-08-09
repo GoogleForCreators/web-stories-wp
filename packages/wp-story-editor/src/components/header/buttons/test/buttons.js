@@ -34,6 +34,13 @@ import { renderWithTheme } from '@googleforcreators/test-utils';
 import MetaBoxesContext from '../../../metaBoxes/context';
 import Buttons from '..';
 
+const newPoster = {
+  id: 'new-poster',
+  src: 'new-poster-url',
+  height: '36px',
+  width: '100000px',
+};
+
 function arrange({
   story: extraStoryProps,
   storyState: extraStoryStateProps,
@@ -82,6 +89,14 @@ function arrange({
       publisher: 'publisher title',
     },
     ...extraConfigProps,
+    MediaUpload: ({ onSelect }) => (
+      <button
+        data-testid="media-upload-button"
+        onClick={() => onSelect(newPoster)}
+      >
+        {'Media Upload Button!'}
+      </button>
+    ),
   };
 
   renderWithTheme(
