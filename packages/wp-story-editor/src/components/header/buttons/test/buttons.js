@@ -88,7 +88,6 @@ function arrange({
     metadata: {
       publisher: 'publisher title',
     },
-    ...extraConfigProps,
     MediaUpload: ({ onSelect }) => (
       <button
         data-testid="media-upload-button"
@@ -97,6 +96,7 @@ function arrange({
         {'Media Upload Button!'}
       </button>
     ),
+    ...extraConfigProps,
   };
 
   renderWithTheme(
