@@ -205,6 +205,10 @@ function sortMediaBySize(m, mediaUrls) {
 }
 
 function getOriginalSize(mediaUrls) {
+  if (mediaUrls.length < 1) {
+    return { originalWidth: 0, originalHeight: 0 };
+  }
+
   return {
     originalWidth: mediaUrls[0].width,
     originalHeight: mediaUrls[0].height,
