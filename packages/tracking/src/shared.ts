@@ -19,6 +19,48 @@
  */
 import { DATA_LAYER } from './constants';
 
+interface ConfigParams {
+  anonymize_ip?: boolean;
+  app_name?: string;
+  app_version?: string;
+  send_page_view?: boolean;
+  transport_type?: 'beacon' | 'image' | 'xhr';
+  page_title?: string;
+  page_path?: string;
+  custom_map?: Record<string, string | number>;
+}
+
+interface ControlParams {
+  groups?: string | string[] | undefined;
+  send_to?: string | string[] | undefined;
+  event_callback?: (() => void) | undefined;
+  event_timeout?: number | undefined;
+}
+
+export interface EventParameters {
+  name?: string;
+  value?: string | number;
+  send_to?: string | number;
+  search_type?: string;
+  duration?: number;
+  title_length?: number;
+  unread_count?: number;
+  event_label?: string;
+  event_category?: string;
+}
+
+interface Gtag {
+  (command: 'config', targetId: string, config?: ConfigParams): void;
+  (command: 'set', targetId: string, config: ConfigParams): void;
+  (command: 'set', config: ConfigParams): void;
+  (command: 'js', config: Date): void;
+  (
+    command: 'event',
+    eventName: string,
+    eventParams?: ControlParams | EventParameters
+  ): void;
+}
+
 interface TrackingConfig {
   /**
    * Whether tracking is allowed in the current context.
@@ -64,16 +106,17 @@ declare global {
 /**
  * Pushes data onto the data layer.
  *
- * Must push an instance of Arguments to the target.
+ * MUST push an instance of Arguments to the target.
  * Using an ES6 spread operator (i.e. `...args`) will cause tracking events to _silently_ fail.
  *
+ * @see https://developers.google.com/tag-platform/devguides/datalayer#rename_the_data_layer
  * @return {void}
  */
-export function gtag() {
+export const gtag: Gtag = function () {
   window[DATA_LAYER] = window[DATA_LAYER] || [];
   //eslint-disable-next-line prefer-rest-params -- Must push instead of using spread to prevent tracking failures.
   window[DATA_LAYER].push(arguments);
-}
+};
 
 const DEFAULT_CONFIG = {
   trackingAllowed: false,

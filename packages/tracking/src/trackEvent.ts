@@ -17,21 +17,9 @@
 /**
  * Internal dependencies
  */
-import { config } from './shared';
+import { config, EventParameters } from './shared';
 import isTrackingEnabled from './isTrackingEnabled';
 import track from './track';
-
-interface EventParameters {
-  name?: string;
-  value?: string | number;
-  send_to?: string | number;
-  search_type?: string;
-  duration?: number;
-  title_length?: number;
-  unread_count?: number;
-  event_label?: string;
-  event_category?: string;
-}
 
 /**
  * Send an Analytics tracking event.
