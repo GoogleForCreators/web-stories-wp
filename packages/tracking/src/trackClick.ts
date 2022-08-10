@@ -30,7 +30,7 @@ import track from './track';
  * @param {string} eventName The event name (e.g. 'search').
  * @return {Promise<void>} Promise that always resolves.
  */
-async function trackClick(event: MouseEvent, eventName: string) {
+async function trackClick(event: MouseEvent, eventName: string): Promise<void> {
   // currentTarget becomes null after event bubbles up, so we
   // grab it for reference before any async operations occur.
   // https://github.com/facebook/react/issues/2857#issuecomment-70006324

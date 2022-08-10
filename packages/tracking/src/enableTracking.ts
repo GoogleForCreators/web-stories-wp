@@ -22,7 +22,7 @@ import { config, gtag } from './shared';
 
 const SCRIPT_IDENTIFIER = 'data-web-stories-tracking';
 
-function loadScriptTag(url: string) {
+function loadScriptTag(url: string): Promise<Event> {
   return new Promise((resolve, reject) => {
     const script = document.createElement('script');
     script.setAttribute(SCRIPT_IDENTIFIER, '');
@@ -40,7 +40,7 @@ function loadScriptTag(url: string) {
  * @param {boolean} [sendPageView=true] Whether to send a page view event or not upon loading.
  * @return {Promise<void>} Promise.
  */
-async function loadTrackingScript(sendPageView = true) {
+async function loadTrackingScript(sendPageView = true): Promise<void> {
   if (document.querySelector(`script[${SCRIPT_IDENTIFIER}]`)) {
     return;
   }
@@ -124,7 +124,7 @@ async function loadTrackingScript(sendPageView = true) {
   });
 }
 
-async function enableTracking(sendPageView = true) {
+async function enableTracking(sendPageView = true): Promise<void> {
   if (!config.trackingAllowed || config.trackingEnabled) {
     return;
   }

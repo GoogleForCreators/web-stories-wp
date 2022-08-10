@@ -33,7 +33,7 @@ function trackTiming(
   time: number,
   label = '',
   eventName = 'click'
-) {
+): void {
   // Universal Analytics has a special `timing_complete` event which
   // does not exist in GA4.
   trackEvent('timing_complete', {
