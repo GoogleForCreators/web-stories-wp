@@ -102,7 +102,7 @@ export default function useFetchMediaEffect({
       } catch (e) {
         // eslint-disable-next-line no-console -- We want to surface this error.
         console.error(e);
-        trackError('fetch_media', e.message);
+        trackError('fetch_media3p', e.message);
         fetchMediaError({ provider, pageToken });
         showSnackbar({
           message: PROVIDERS[provider].fetchMediaErrorMessage,
