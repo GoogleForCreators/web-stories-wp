@@ -54,6 +54,7 @@ function CanvasProvider({ children }) {
   const [isEyedropperActive, setIsEyedropperActive] = useState(null);
   const [eyedropperCallback, setEyedropperCallback] = useState(null);
   const [renamableLayer, setRenamableLayer] = useState(null);
+  const [floatingMenu, setFloatingMenu] = useState(null);
 
   // IntersectionObserver tracks clientRects which is what we need here.
   // different from use case of useIntersectionEffect because this is extensible
@@ -202,6 +203,7 @@ function CanvasProvider({ children }) {
         clientRectObserver,
         onMoveableMount,
         renamableLayer,
+        floatingMenu,
       },
       actions: {
         setPageContainer,
@@ -222,6 +224,7 @@ function CanvasProvider({ children }) {
         setEyedropperPixelData,
         setMoveableMount,
         setRenamableLayer,
+        setFloatingMenu,
       },
     }),
     [
@@ -243,6 +246,7 @@ function CanvasProvider({ children }) {
       clientRectObserver,
       renamableLayer,
       getNodeForElement,
+      floatingMenu,
       setNodeForElement,
       setEditingElementWithoutState,
       setEditingElementWithState,

@@ -23,20 +23,31 @@ import {
   useState,
   useCallback,
 } from '@googleforcreators/react';
+import {
+  LOCAL_STORAGE_PREFIX,
+  localStore,
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
  */
 import { useCanvas, useLayout, useStory, useTransform } from '../../app';
-import { FLOATING_MENU_DISTANCE } from '../../constants';
-import { SELECTED_ELEMENT_TYPES, hasDesignMenu } from './constants';
+import { FLOATING_MENU_DISTANCE, HEADER_HEIGHT } from '../../constants';
+import {
+  SELECTED_ELEMENT_TYPES,
+  hasDesignMenu,
+  TOOLBAR_POSITIONS,
+} from './constants';
 import FloatingMenu from './menu';
 
+const LOCAL_STORAGE_KEY = LOCAL_STORAGE_PREFIX.ELEMENT_TOOLBAR_SETTINGS;
+
 function FloatingMenuLayer() {
-  const { setMoveableMount, isEyedropperActive } = useCanvas(
+  const { setMoveableMount, isEyedropperActive, floatingMenu } = useCanvas(
     ({ actions, state }) => ({
       setMoveableMount: actions.setMoveableMount,
       isEyedropperActive: state.isEyedropperActive,
+      floatingMenu: state.floatingMenu,
     })
   );
 
@@ -65,7 +76,6 @@ function FloatingMenuLayer() {
   );
 
   const [moveable, setMoveable] = useState(null);
-  const menuRef = useRef();
   const workspaceSize = useRef();
 
   const [isDismissed, setDismissed] = useState(false);
@@ -102,18 +112,28 @@ function FloatingMenuLayer() {
 
   // Whenever moveable is set (because selection count changed between none, single, or multiple)
   useEffect(() => {
-    const menu = menuRef.current;
+    const menu = floatingMenu;
     if (!menu || !moveable) {
       return undefined;
     }
 
+    // If the toolbar is positioned to the top, we keep it in a fixed position.
+    const local = localStore.getItemByKey(LOCAL_STORAGE_KEY) || {};
+
     const updatePosition = () => {
       const frameRect = moveable.getRect();
       const { width, height } = workspaceSize.current;
-      const centerX = frameRect.left + frameRect.width / 2;
-      menu.style.left = `clamp(0px, ${centerX}px - (var(--width) / 2), ${width}px - var(--width))`;
-      const bottomX = frameRect.top + frameRect.height + FLOATING_MENU_DISTANCE;
-      menu.style.top = `clamp(0px, ${bottomX}px, ${height}px - var(--height))`;
+      if (local.position === TOOLBAR_POSITIONS.top) {
+        menu.style.left = `clamp(0px, ${
+          width / 2
+        }px - (var(--width) / 2), ${width}px - var(--width))`;
+        menu.style.top = `clamp(0px, ${HEADER_HEIGHT}px, ${height}px - var(--height))`;
+      } else {
+        const centerX = frameRect.left + frameRect.width / 2;
+        menu.style.left = `clamp(0px, ${centerX}px - (var(--width) / 2), ${width}px - var(--width))`;
+        const bottomX = frameRect.top + frameRect.height + FLOATING_MENU_DISTANCE;
+        menu.style.top = `clamp(0px, ${bottomX}px, ${height}px - var(--height))`;
+      }
     };
 
     // Update now
@@ -122,14 +142,16 @@ function FloatingMenuLayer() {
     // And update when any element's properties inside the moveable box changes
     const observer = new MutationObserver(updatePosition);
     const node = document.querySelector('.moveable-control-box');
-    observer.observe(node, {
-      attributes: true,
-      subtree: true,
-      attributeFilter: ['style'],
-    });
+    if (node) {
+      observer.observe(node, {
+        attributes: true,
+        subtree: true,
+        attributeFilter: ['style'],
+      });
+    }
 
     return () => observer.disconnect();
-  }, [moveable, hasMenu]);
+  }, [moveable, hasMenu, floatingMenu]);
 
   if (!hasMenu) {
     return false;
@@ -137,7 +159,6 @@ function FloatingMenuLayer() {
 
   return (
     <FloatingMenu
-      ref={menuRef}
       handleDismiss={handleDismiss}
       selectedElementType={selectedElementType}
       selectionIdentifier={selectionIdentifier}

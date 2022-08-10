@@ -28,6 +28,11 @@ export const SELECTED_ELEMENT_TYPES = {
   NONE: 'none',
 };
 
+export const TOOLBAR_POSITIONS = {
+  element: 'fixed_to_element',
+  top: 'fixed_to_top',
+};
+
 export function hasDesignMenu(type) {
   switch (type) {
     case SELECTED_ELEMENT_TYPES.MULTIPLE:

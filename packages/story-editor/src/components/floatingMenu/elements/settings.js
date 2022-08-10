@@ -31,6 +31,9 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
+import { TOOLBAR_POSITIONS } from '../constants';
+import {FLOATING_MENU_DISTANCE, HEADER_HEIGHT} from '../../../constants';
+import {useCanvas, useLayout} from '../../../app';
 import { IconButton } from './shared';
 
 const StyledIconButton = styled(IconButton)`
@@ -50,13 +53,17 @@ const SubMenuContainer = styled.div`
 `;
 const LOCAL_STORAGE_KEY = LOCAL_STORAGE_PREFIX.ELEMENT_TOOLBAR_SETTINGS;
 
-const TOOLBAR_POSITIONS = {
-  element: 'fixed_to_element',
-  top: 'fixed_to_top',
-};
-
 function Settings() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { workspaceWidth, workspaceHeight } = useLayout(
+    ({ state: { workspaceWidth, workspaceHeight } }) => ({
+      workspaceWidth,
+      workspaceHeight,
+    })
+  );
+  const { floatingMenu } = useCanvas(({ state }) => ({
+    floatingMenu: state.floatingMenu,
+  }));
 
   const buttonRef = useRef();
   const subMenuRef = useRef();
@@ -76,6 +83,18 @@ function Settings() {
 
   const local = localStore.getItemByKey(LOCAL_STORAGE_KEY) || {};
   const handleToolbarPosition = (position) => {
+    // Update the style of the menu.
+    if (position === TOOLBAR_POSITIONS.top) {
+      const centerX = workspaceWidth / 2;
+      floatingMenu.style.left = `clamp(0px, ${centerX}px - (var(--width) / 2), ${workspaceWidth}px - var(--width))`;
+      floatingMenu.style.top = `clamp(0px, ${HEADER_HEIGHT}px, ${workspaceHeight}px - var(--height))`;
+    } else if (position === TOOLBAR_POSITIONS.element) {
+      /*const frameRect = moveable.getRect();
+      const centerX = frameRect.left + frameRect.width / 2;
+      floatingMenu.style.left = `clamp(0px, ${centerX}px - (var(--width) / 2), ${workspaceWidth}px - var(--width))`;
+      const bottomX = frameRect.top + frameRect.height + FLOATING_MENU_DISTANCE;
+      floatingMenu.style.top = `clamp(0px, ${bottomX}px, ${workspaceHeight}px - var(--height))`;*/
+    }
     localStore.setItemByKey(LOCAL_STORAGE_KEY, {
       ...local,
       position,
