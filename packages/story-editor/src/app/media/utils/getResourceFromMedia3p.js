@@ -197,6 +197,7 @@ function getVideoUrls(m) {
 }
 
 function sortMediaBySize(m, mediaUrls) {
+  // https://github.com/GoogleForCreators/web-stories-wp/issues/12083
   if (mediaUrls.length < 1) {
     return [];
   }
