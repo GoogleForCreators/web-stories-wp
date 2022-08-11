@@ -17,7 +17,12 @@
 /**
  * External dependencies
  */
-import { useLayoutEffect, useCallback, memo } from '@googleforcreators/react';
+import {
+  forwardRef,
+  useLayoutEffect,
+  useCallback,
+  memo,
+} from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
@@ -31,7 +36,6 @@ import {
   useFocusGroupRef,
   FOCUS_GROUPS,
 } from '../canvas/editLayerFocusManager';
-import { useCanvas } from '../../app';
 import { FloatingMenuProvider } from './context';
 import MenuSelector from './menus';
 
@@ -49,76 +53,69 @@ const MenuWrapper = styled.section`
   transition: 140ms opacity;
 `;
 
-const FloatingMenu = memo(function FloatingMenu({
-  selectionIdentifier,
-  selectedElementType,
-  handleDismiss,
-  visuallyHidden,
-}) {
-  const { floatingMenu, setFloatingMenu } = useCanvas(
-    ({ state: { floatingMenu }, actions: { setFloatingMenu } }) => ({
-      floatingMenu,
-      setFloatingMenu,
-    })
-  );
+const FloatingMenu = memo(
+  forwardRef(function FloatingMenu(
+    { selectionIdentifier, selectedElementType, handleDismiss, visuallyHidden },
+    ref
+  ) {
+    const focusGroupRef = useFocusGroupRef(FOCUS_GROUPS.EDIT_ELEMENT);
+    const speak = useLiveRegion();
 
-  const focusGroupRef = useFocusGroupRef(FOCUS_GROUPS.EDIT_ELEMENT);
-  const speak = useLiveRegion();
+    const announceKeyboardControls = useCallback(() => {
+      speak(FLOATING_MENU_MESSAGE);
+    }, [speak]);
 
-  const announceKeyboardControls = useCallback(() => {
-    speak(FLOATING_MENU_MESSAGE);
-  }, [speak]);
+    useLayoutEffect(() => {
+      const node = ref.current;
+      const updateSize = () => {
+        node.style.width = '';
+        const bounds = node.getBoundingClientRect();
+        node.style.setProperty('--width', `${bounds.width.toFixed(2)}px`);
+        node.style.setProperty('--height', `${bounds.height.toFixed(2)}px`);
+        node.style.width = 'var(--width)';
+      };
+      updateSize();
+      // If the menu children list changes, update the size again
+      const observer = new MutationObserver(updateSize);
+      const menu = node.querySelector('[role=menu]');
+      observer.observe(menu, { childList: true });
+      return () => observer.disconnect();
+    }, [ref, selectionIdentifier]);
 
-  useLayoutEffect(() => {
-    if (!floatingMenu) {
-      return undefined;
-    }
-    const node = floatingMenu;
-    const updateSize = () => {
-      node.style.width = '';
-      const bounds = node.getBoundingClientRect();
-      node.style.setProperty('--width', `${bounds.width.toFixed(2)}px`);
-      node.style.setProperty('--height', `${bounds.height.toFixed(2)}px`);
-      node.style.width = 'var(--width)';
-    };
-    updateSize();
-    // If the menu children list changes, update the size again
-    const observer = new MutationObserver(updateSize);
-    const menu = node.querySelector('[role=menu]');
-    observer.observe(menu, { childList: true });
-    return () => observer.disconnect();
-  }, [floatingMenu, selectionIdentifier]);
-
-  return (
-    <MenuWrapper
-      ref={setFloatingMenu}
-      aria-label={__('Design menu', 'web-stories')}
-      visuallyHidden={visuallyHidden}
-    >
-      <FloatingMenuProvider handleDismiss={handleDismiss}>
-        <ContextMenu
-          isInline
-          isHorizontal
-          isSecondary
-          isAlwaysVisible
-          tabIndex={-1}
-          ref={focusGroupRef}
-          dismissOnEscape={false}
-          onFocus={announceKeyboardControls}
-          aria-label={__('Design options for selected element', 'web-stories')}
-          onMouseDown={(e) => {
-            // Stop the event from bubbling if the user clicks in between buttons.
-            // This prevents the selected element in the canvas from losing focus.
-            e.stopPropagation();
-          }}
-          popoverZIndex={Z_INDEX_FLOATING_MENU}
-        >
-          <MenuSelector selectedElementType={selectedElementType} />
-        </ContextMenu>
-      </FloatingMenuProvider>
-    </MenuWrapper>
-  );
-});
+    return (
+      <MenuWrapper
+        ref={ref}
+        aria-label={__('Design menu', 'web-stories')}
+        visuallyHidden={visuallyHidden}
+      >
+        <FloatingMenuProvider handleDismiss={handleDismiss}>
+          <ContextMenu
+            isInline
+            isHorizontal
+            isSecondary
+            isAlwaysVisible
+            tabIndex={-1}
+            ref={focusGroupRef}
+            dismissOnEscape={false}
+            onFocus={announceKeyboardControls}
+            aria-label={__(
+              'Design options for selected element',
+              'web-stories'
+            )}
+            onMouseDown={(e) => {
+              // Stop the event from bubbling if the user clicks in between buttons.
+              // This prevents the selected element in the canvas from losing focus.
+              e.stopPropagation();
+            }}
+            popoverZIndex={Z_INDEX_FLOATING_MENU}
+          >
+            <MenuSelector selectedElementType={selectedElementType} />
+          </ContextMenu>
+        </FloatingMenuProvider>
+      </MenuWrapper>
+    );
+  })
+);
 
 FloatingMenu.propTypes = {
   handleDismiss: PropTypes.func.isRequired,
