@@ -23,10 +23,6 @@ import {
   useState,
   useCallback,
 } from '@googleforcreators/react';
-import {
-  LOCAL_STORAGE_PREFIX,
-  localStore,
-} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -40,15 +36,18 @@ import {
 } from './constants';
 import FloatingMenu from './menu';
 
-const LOCAL_STORAGE_KEY = LOCAL_STORAGE_PREFIX.ELEMENT_TOOLBAR_SETTINGS;
-
 function FloatingMenuLayer() {
-  const { setMoveableMount, isEyedropperActive, floatingMenuPosition } =
-    useCanvas(({ actions, state }) => ({
-      setMoveableMount: actions.setMoveableMount,
-      isEyedropperActive: state.isEyedropperActive,
-      floatingMenuPosition: state.floatingMenuPosition,
-    }));
+  const {
+    setMoveableMount,
+    isEyedropperActive,
+    floatingMenuPosition,
+    displayFloatingMenu,
+  } = useCanvas(({ actions, state }) => ({
+    setMoveableMount: actions.setMoveableMount,
+    isEyedropperActive: state.isEyedropperActive,
+    floatingMenuPosition: state.floatingMenuPosition,
+    displayFloatingMenu: state.displayFloatingMenu,
+  }));
 
   const { workspaceWidth, workspaceHeight } = useLayout(
     ({ state: { workspaceWidth, workspaceHeight } }) => ({
@@ -108,7 +107,12 @@ function FloatingMenuLayer() {
   }, [workspaceWidth, workspaceHeight]);
 
   const selectedElementHasDesignMenu = hasDesignMenu(selectedElementType);
-  const hasMenu = selectedElementHasDesignMenu && !isDismissed && moveable;
+  const isMenuPermanentlyDismissed = false === displayFloatingMenu;
+  const hasMenu =
+    selectedElementHasDesignMenu &&
+    !isDismissed &&
+    moveable &&
+    !isMenuPermanentlyDismissed;
 
   // Whenever moveable is set (because selection count changed between none, single, or multiple)
   useEffect(() => {
@@ -118,14 +122,10 @@ function FloatingMenuLayer() {
     }
 
     // If the toolbar is positioned to the top, we keep it in a fixed position.
-    const local = floatingMenuPosition
-      ? { position: floatingMenuPosition }
-      : localStore.getItemByKey(LOCAL_STORAGE_KEY) || {};
-
     const updatePosition = () => {
       const frameRect = moveable.getRect();
       const { width, height } = workspaceSize.current;
-      if (local.position === TOOLBAR_POSITIONS.top) {
+      if (floatingMenuPosition === TOOLBAR_POSITIONS.top) {
         menu.style.left = `clamp(0px, ${
           width / 2
         }px - (var(--width) / 2), ${width}px - var(--width))`;
