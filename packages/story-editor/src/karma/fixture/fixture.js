@@ -55,8 +55,10 @@ import DocumentPane, {
 } from './components/documentPane';
 import { Accessibility, Design, Priority } from './components/checklist';
 
-const React = require('react');
-const { useCallback, useState, useMemo, forwardRef } = React;
+const Preact = require('preact');
+const PreactCompat = require('preact/compat');
+const { useCallback, useState, useMemo } = Preact;
+const { forwardRef } = PreactCompat;
 
 if ('true' === WEB_STORIES_CI) {
   configure({
@@ -155,9 +157,9 @@ export class Fixture {
     this._config = { ...FIXTURE_DEFAULT_CONFIG };
 
     this._componentStubs = new Map();
-    const origCreateElement = React.createElement;
+    const origCreateElement = Preact.createElement;
     //eslint-disable-next-line jasmine/no-unsafe-spy
-    spyOn(React, 'createElement').and.callFake((type, props, ...children) => {
+    spyOn(Preact, 'createElement').and.callFake((type, props, ...children) => {
       if (!props?._wrapped) {
         const stubs = this._componentStubs.get(type);
         if (stubs) {

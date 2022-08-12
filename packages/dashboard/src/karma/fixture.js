@@ -42,7 +42,7 @@ import InterfaceSkeleton from '../components/interfaceSkeleton';
 import { noop } from '../utils';
 import ApiProviderFixture from './apiProviderFixture';
 
-const React = require('react');
+const Preact = require('preact');
 
 if ('true' === WEB_STORIES_CI) {
   configure({
@@ -109,9 +109,9 @@ export default class Fixture {
     this._componentStubs = new Map();
     this._events = new FixtureEvents(act);
 
-    const createElement = React.createElement;
+    const createElement = Preact.createElement;
     //eslint-disable-next-line jasmine/no-unsafe-spy
-    spyOn(React, 'createElement').and.callFake((type, props, ...children) => {
+    spyOn(Preact, 'createElement').and.callFake((type, props, ...children) => {
       if (!props?._wrapped) {
         const stubs = this._componentStubs.get(type);
         if (stubs) {

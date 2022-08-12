@@ -144,7 +144,7 @@
     "patch-package": "^6.4.7",
     "postcss-jsx": "^0.36.4",
     "postcss-syntax": "^0.36.2",
-    "preact": "^10.9.0",
+    "preact": "^10.10.0",
     "preact-render-to-string": "^5.2.0",
     "prettier": "^2.7.1",
     "puppeteer": "^15.5.0",
