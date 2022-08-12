@@ -54,6 +54,7 @@ import {
   StatusCheck,
   CorsCheck,
   FontCheck,
+  AutoSaveCheck,
   PostLock,
   MediaUpload,
 } from './components';
@@ -108,6 +109,7 @@ window.webStories.initializeStoryEditor = (id, config, initialEdits) => {
         <StatusCheck />
         <CorsCheck />
         <FontCheck />
+        <AutoSaveCheck />
         <PostLock />
       </StoryEditor>
     </StrictMode>,

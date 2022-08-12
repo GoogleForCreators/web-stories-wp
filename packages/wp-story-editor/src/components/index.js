@@ -21,4 +21,5 @@ export { default as PostLock } from './postLock';
 export { default as StatusCheck } from './statusCheck';
 export { default as CorsCheck } from './corsCheck';
 export { default as FontCheck } from './fontCheck';
+export { default as AutoSaveCheck } from './autoSaveCheck';
 export * from './metaBoxes';
