@@ -49,6 +49,10 @@ function getConfig(group, { coverage = false } = {}) {
             !(plugin instanceof HtmlWebpackPlugin)
         ),
       ],
+      // See https://github.com/ryanclark/karma-webpack/issues/493#issuecomment-780411348
+      optimization: {
+        splitChunks: false
+      }
     }))[0];
   if (coverage) {
     config.module.rules.push({
