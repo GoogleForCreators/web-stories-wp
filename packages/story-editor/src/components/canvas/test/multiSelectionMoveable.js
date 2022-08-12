@@ -19,7 +19,7 @@
  */
 import { render, act, waitFor } from '@testing-library/react';
 import { withOverlay } from '@googleforcreators/moveable';
-import { MockMoveable } from 'react-moveable'; // eslint-disable-line import/named -- This is a custom Jest mock
+import { MockMoveable } from 'preact-moveable';
 import PropTypes from 'prop-types';
 import { forwardRef } from '@googleforcreators/react';
 import { UnitsProvider } from '@googleforcreators/units';
