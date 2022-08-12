@@ -325,6 +325,15 @@ const templateParameters = (compilation, assets, assetTags, options) => ({
 
 const editorAndDashboard = {
   ...sharedConfig,
+  resolve: {
+    ...sharedConfig.resolve,
+      'alias': {
+        'react': 'preact/compat',
+        'react-dom/test-utils': 'preact/test-utils',
+        'react-dom': 'preact/compat', // Must be below test-utils
+        'react/jsx-runtime': 'preact/jsx-runtime'
+    },
+  },
   devServer: !isProduction
     ? {
         devMiddleware: {
