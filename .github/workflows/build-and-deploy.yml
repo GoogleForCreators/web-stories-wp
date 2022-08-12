@@ -173,9 +173,8 @@ jobs:
 
       - name: Upload ZIP files to GCS
         run: |
-          gsutil cp -r web-stories.zip gs://web-stories-wp-github-artifacts/${{ github.ref }}/web-stories.zip
-          gsutil cp -r web-stories-dev.zip gs://web-stories-wp-github-artifacts/${{ github.ref }}/web-stories-dev.zip
-        working-directory: ${{ github.ref }}
+          gsutil cp -r build/web-stories.zip gs://web-stories-wp-github-artifacts/${{ github.ref }}/web-stories.zip
+          gsutil cp -r build/web-stories-dev.zip gs://web-stories-wp-github-artifacts/${{ github.ref }}/web-stories-dev.zip
 
       # Leave comment with links to plugin ZIPs.
 
