@@ -185,6 +185,13 @@ jobs:
           issue-number: ${{ github.event.pull_request.number }}
           comment-author: googleforcreators-bot
           body-includes: Plugin builds for
+        # Only run this step if it's a PR. One way to check for that is if `github.head_ref` is not empty.
+        # Only run if the PR was not authored by Dependabot and it is not a draft or not from a fork.
+        if: >
+          github.head_ref &&
+          github.event.pull_request.draft == false &&
+          github.event.pull_request.head.repo.fork == false &&
+          github.event.pull_request.user.login != 'dependabot[bot]'
 
       - name: Get comment body
         id: get-comment-body
@@ -195,23 +202,38 @@ jobs:
           - Download [production build](https://storage.googleapis.com/web-stories-wp-github-artifacts/${{ github.ref }}/web-stories.zip?${{ github.sha }})"
           body="${body//$'\n'/'%0A'}"
           echo "::set-output name=body::$body"
+        if: >
+          github.head_ref &&
+          github.event.pull_request.draft == false &&
+          github.event.pull_request.head.repo.fork == false &&
+          github.event.pull_request.user.login != 'dependabot[bot]'
 
       - name: Create comment on PR with links to plugin builds
-        if: ${{ steps.find-comment.outputs.comment-id == '' }}
         uses: peter-evans/create-or-update-comment@c9fcb64660bc90ec1cc535646af190c992007c32
         with:
           issue-number: ${{ github.event.pull_request.number }}
           body: ${{ steps.get-comment-body.outputs.body }}
           token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
+        if: >
+          github.head_ref &&
+          github.event.pull_request.draft == false &&
+          github.event.pull_request.head.repo.fork == false &&
+          github.event.pull_request.user.login != 'dependabot[bot]' &&
+          steps.find-comment.outputs.comment-id == ''
 
       - name: Update comment on PR with links to plugin builds
-        if: ${{ steps.find-comment.outputs.comment-id != '' }}
         uses: peter-evans/create-or-update-comment@c9fcb64660bc90ec1cc535646af190c992007c32
         with:
           comment-id: ${{ steps.find-comment.outputs.comment-id }}
           edit-mode: replace
           body: ${{ steps.get-comment-body.outputs.body }}
           token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
+        if: >
+          github.head_ref &&
+          github.event.pull_request.draft == false &&
+          github.event.pull_request.head.repo.fork == false &&
+          github.event.pull_request.user.login != 'dependabot[bot]' &&
+          steps.find-comment.outputs.comment-id != ''
 
       # Deploy to staging site if on main branch.
 
