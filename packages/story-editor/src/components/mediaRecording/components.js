@@ -64,6 +64,7 @@ export const VideoWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 `;
 
 export const Photo = styled.img`
@@ -83,4 +84,5 @@ export const Video = styled.video.attrs({
   height: 100%;
   object-fit: cover;
   border-radius: 5px;
+  ${({ $isProcessing }) => $isProcessing && 'filter: blur(5px)'};
 `;
