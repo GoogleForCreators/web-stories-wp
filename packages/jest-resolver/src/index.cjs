@@ -61,6 +61,21 @@ module.exports = (request, options) => {
     });
   }
 
+  // Similar workaround for preact and its preact/compat export.
+  if ('preact/compat' === request) {
+    return options.defaultResolver(request, {
+      ...options,
+      packageFilter: (pkg) => {
+        if ('preact' === pkg.name) {
+          delete pkg.exports;
+          delete pkg.module;
+        }
+
+        return pkg;
+      },
+    });
+  }
+
   if (!isLocalRepo(request)) {
     return options.defaultResolver(request, options);
   }
