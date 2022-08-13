@@ -16,41 +16,24 @@
 /**
  * External dependencies
  */
-import { useEffect, useState, useCallback } from '@googleforcreators/react';
+import { useState } from '@googleforcreators/react';
+
 /**
  * Internal dependencies
  */
 import { useConfig } from '../../app/config';
-
-/**
- * Internal dependencies
- */
 import { AutoSaveDialog } from './autoSaveDialog';
 
 export const AutoSaveCheck = () => {
   const { autoSaveLink } = useConfig();
-  const [showDialog, setShowDialog] = useState(false);
+  const [showDialog, setShowDialog] = useState(Boolean(autoSaveLink));
   const onClose = () => setShowDialog(false);
-
-  const onPrimary = useCallback(() => {
-    window.location = autoSaveLink;
-  }, [autoSaveLink]);
-
-  useEffect(
-    () => {
-      if (autoSaveLink) {
-        setShowDialog(true);
-      }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- we only want to run this once
-    []
-  );
 
   return (
     <AutoSaveDialog
       isOpen={showDialog}
       onClose={onClose}
-      onPrimary={onPrimary}
+      autoSaveLink={autoSaveLink}
     />
   );
 };

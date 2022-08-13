@@ -17,23 +17,44 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
+import { __ } from '@googleforcreators/i18n';
+import {
+  Text,
+  THEME_CONSTANTS,
+  Button,
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+} from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
-import { __ } from '@googleforcreators/i18n';
 import Dialog from '../dialog';
 
-export const AutoSaveDialog = ({ onClose, isOpen, onPrimary }) => {
+export const AutoSaveDialog = ({ onClose, isOpen, autoSaveLink }) => {
   return (
     <Dialog
       isOpen={isOpen}
-      onClose={onClose}
       title={__('AutoSave', 'web-stories')}
       contentLabel={__('AutoSave Available', 'web-stories')}
       secondaryText={__('Dismiss', 'web-stories')}
-      onPrimary={onPrimary}
-      primaryText={__('View the autosave', 'web-stories')}
+      actions={
+        <>
+          <Button
+            type={BUTTON_TYPES.TERTIARY}
+            size={BUTTON_SIZES.SMALL}
+            onClick={() => onClose()}
+          >
+            {__('Dismiss', 'web-stories')}
+          </Button>
+          <Button
+            type={BUTTON_TYPES.PRIMARY}
+            size={BUTTON_SIZES.SMALL}
+            href={autoSaveLink}
+          >
+            {__('View the autosave', 'web-stories')}
+          </Button>
+        </>
+      }
     >
       <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
         {__(
@@ -48,5 +69,5 @@ export const AutoSaveDialog = ({ onClose, isOpen, onPrimary }) => {
 AutoSaveDialog.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-  onPrimary: PropTypes.func.isRequired,
+  autoSaveLink: PropTypes.string.isRequired,
 };

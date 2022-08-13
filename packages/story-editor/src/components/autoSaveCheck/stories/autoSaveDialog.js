@@ -23,10 +23,10 @@ export default {
   component: AutoSaveDialog,
   args: {
     isOpen: true,
+    autoSaveLink: 'http://example.com',
   },
   argTypes: {
     onClose: { action: 'closed' },
-    onPrimary: { action: 'link to autosave' },
   },
 };
 
