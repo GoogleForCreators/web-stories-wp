@@ -6,6 +6,7 @@ on:
     paths:
       - '**.js'
       - '**.cjs'
+      - '**.ts'
       - '**.css'
       - 'docs/**/*.md'
       - 'packages/**/*.md'
@@ -25,6 +26,7 @@ on:
     paths:
       - '**.js'
       - '**.cjs'
+      - '**.ts'
       - '**.css'
       - 'docs/**/*.md'
       - 'packages/**/*.md'
@@ -108,3 +110,6 @@ jobs:
         if: >
           github.event.pull_request.head.repo.fork == false &&
           github.event.pull_request.user.login != 'dependabot[bot]'
+
+      - name: Type checking
+        run: npm run workflow:bundle-packages:types

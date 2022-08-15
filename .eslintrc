@@ -250,7 +250,8 @@
           "^@googleforcreators\\/(.*)\\/(.*)": "./packages/$1/src/$2",
           "^@googleforcreators\\/(.*)": "./packages/$1/src/",
           "^@web-stories-wp\\/(.*)": "./packages/$1/src/"
-        }
+        },
+        "extensions": [ ".js", ".jsx", ".ts", ".tsx" ]
       }
     },
     "jsdoc": {
@@ -286,6 +287,32 @@
   "overrides": [
     {
       "files": [
+        "**/*.ts",
+        "**/*.tsx"
+      ],
+      "excludedFiles": [
+        "**/*.d.ts"
+      ],
+      "plugins": [
+        "@typescript-eslint"
+      ],
+      "extends": [
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@typescript-eslint/eslint-recommended"
+      ],
+      "parser": "@typescript-eslint/parser",
+      "rules": {
+        "no-duplicate-imports": "off",
+        "@typescript-eslint/no-duplicate-imports": "error",
+        "jsdoc/require-param-type": "off",
+        "jsdoc/require-returns-type": "off",
+        "no-unused-vars": "off",
+        "no-shadow": "off",
+        "@typescript-eslint/no-shadow": "error"
+      }
+    },
+    {
+      "files": [
         "__mocks__/**/*.js",
         "**/__tests__/**/*.js",
         "**/test/**/*.js",
@@ -315,6 +342,7 @@
         "eslint-comments/require-description": "off",
         "react/prop-types": "off",
         "jest/no-hooks": "off",
+        "jest/max-expects": "off",
         "jest/prefer-expect-assertions": "off",
         "jest/prefer-inline-snapshots": "off",
         "jest/prefer-lowercase-title": [
@@ -415,6 +443,7 @@
       },
       "rules": {
         "eslint-comments/require-description": "off",
+        "jest/max-expects": "off",
         "jest/no-hooks": "off",
         "jest/prefer-expect-assertions": "off",
         "jest/prefer-inline-snapshots": "off",
@@ -452,6 +481,7 @@
       "rules": {
         "eslint-comments/require-description": "off",
         "jest/expect-expect": "off",
+        "jest/max-expects": "off",
         "jest/no-export": "off",
         "jest/require-top-level-describe": "off"
       }
