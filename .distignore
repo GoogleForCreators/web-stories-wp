@@ -43,6 +43,7 @@ web-stories-scraper
 .nvmrc
 .phpstorm.config.js
 .phpstorm.meta.php
+.phpunit.result.cache
 .prettierignore
 .prettierrc
 .stylelintignore
@@ -60,11 +61,16 @@ package.json
 package-lock.json
 percy.config.karma.yml
 percy.config.yml
+phpcs.xml
 phpcs.xml.dist
 phpmd.xml
+phpstan.neon
 phpstan.neon.dist
+phpunit.xml
 phpunit.xml.dist
+phpunit-integration.xml
 phpunit-integration.xml.dist
+phpunit-integration-multisite.xml
 phpunit-integration-multisite.xml.dist
 README.md
 rollup.config.js
