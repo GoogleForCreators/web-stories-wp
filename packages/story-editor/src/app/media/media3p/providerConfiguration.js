@@ -73,7 +73,7 @@ export const PROVIDERS = {
   [ProviderType.COVERR]: {
     provider: ProviderType.COVERR,
     displayName: __('Video', 'web-stories'),
-    supportsCategories: false,
+    supportsCategories: true,
     requiresAuthorAttribution: false,
     attributionComponent: CoverrAttribution,
     fetchMediaErrorMessage: sprintf(

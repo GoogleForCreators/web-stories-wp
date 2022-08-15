@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,8 +14,19 @@
  * limitations under the License.
  */
 
-function getFileNameWithExt(path) {
-  return /(?:\/([^/]+))?$/.exec(path)[1];
+export default function resizeSvgPath(x, y, path) {
+  const coords = path
+    .replace(/\s*(-)/g, ' $1')
+    .replace(/\s*([A-Za-z,])\s*/g, ' $1 ')
+    .split(' ');
+  let coordIndex = 0;
+  return coords.reduce((acc, value) => {
+    const parsed = parseFloat(value);
+    if (!isNaN(parsed)) {
+      const scaled = coordIndex % 2 === 0 ? parsed / x : parsed / y;
+      return `${acc} ${scaled.toFixed(6)}`;
+    }
+    coordIndex = 0;
+    return `${acc} ${value}`;
+  }, '');
 }
-
-export default getFileNameWithExt;

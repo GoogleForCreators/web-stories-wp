@@ -17,30 +17,67 @@
 /**
  * External dependencies
  */
-import { useState, useCallback } from '@googleforcreators/react';
+import { formatMsToHMS } from '@googleforcreators/media';
+import { useState, useCallback, useRef } from '@googleforcreators/react';
+import { useEffect } from 'react';
 
-function useTrim(setDuration) {
+/**
+ * Internal dependencies
+ */
+import useFFmpeg from '../../app/media/utils/useFFmpeg';
+
+function useTrim({ setDuration, onTrimmed, file, isRecording }) {
   const [trimData, setTrimData] = useState({ start: 0, end: null });
-  const [isTrimming, setIsTrimming] = useState(false);
+  const [isAdjustingTrim, setIsAdjustingTrim] = useState(false);
+  const [isProcessingTrim, setIsProcessingTrim] = useState(false);
+  const { trimVideo } = useFFmpeg();
+  const hasCancelledTrim = useRef();
   const onTrim = useCallback(
-    (newTrimData) => {
+    async (newTrimData) => {
+      setIsAdjustingTrim(false);
       if (newTrimData) {
+        hasCancelledTrim.current = false;
+        setIsProcessingTrim(true);
+        const start = formatMsToHMS(newTrimData.start);
+        const end = formatMsToHMS(newTrimData.end);
+        const result = await trimVideo(file, start, end);
+        // If it was cancelled in the meantime, just abort
+        if (hasCancelledTrim.current) {
+          return;
+        }
         setTrimData(newTrimData);
-        const millis = newTrimData.end - newTrimData.start;
-        const seconds = Math.ceil(millis / 1000);
-        setDuration(seconds);
+        setIsProcessingTrim(false);
+        onTrimmed(result);
+        setDuration(newTrimData.end - newTrimData.start);
       }
-      setIsTrimming(false);
     },
-    [setDuration]
+    [file, onTrimmed, setDuration, trimVideo]
   );
-  const startTrim = useCallback(() => setIsTrimming(true), []);
+  const startTrim = useCallback(() => setIsAdjustingTrim(true), []);
   const resetTrim = useCallback(() => {
-    setIsTrimming(false);
+    setIsAdjustingTrim(false);
     setTrimData({ start: 0, end: null });
   }, []);
+  const cancelTrim = useCallback(() => {
+    hasCancelledTrim.current = true;
+    setIsProcessingTrim(false);
+  }, []);
+  // Whenever a new recording starts, reset any previously captured trim data
+  useEffect(() => {
+    if (isRecording) {
+      resetTrim();
+    }
+  }, [isRecording, resetTrim]);
 
-  return { trimData, isTrimming, onTrim, startTrim, resetTrim };
+  return {
+    trimData,
+    isAdjustingTrim,
+    isProcessingTrim,
+    onTrim,
+    startTrim,
+    resetTrim,
+    cancelTrim,
+  };
 }
 
 export default useTrim;

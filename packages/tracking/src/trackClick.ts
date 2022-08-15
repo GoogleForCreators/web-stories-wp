@@ -30,7 +30,7 @@ import track from './track';
  * @param {string} eventName The event name (e.g. 'search').
  * @return {Promise<void>} Promise that always resolves.
  */
-async function trackClick(event, eventName) {
+async function trackClick(event: MouseEvent, eventName: string): Promise<void> {
   // currentTarget becomes null after event bubbles up, so we
   // grab it for reference before any async operations occur.
   // https://github.com/facebook/react/issues/2857#issuecomment-70006324
@@ -46,11 +46,11 @@ async function trackClick(event, eventName) {
   }
 
   const openLinkInNewTab =
-    currentTarget?.target === '_blank' ||
+    (currentTarget as HTMLAnchorElement)?.target === '_blank' ||
     event.ctrlKey ||
     event.shiftKey ||
     event.metaKey ||
-    event.which === 2;
+    event.button === 1;
 
   if (openLinkInNewTab) {
     return track(eventName);
@@ -59,7 +59,7 @@ async function trackClick(event, eventName) {
   event.preventDefault();
 
   return track(eventName).finally(() => {
-    document.location = currentTarget.href;
+    document.location = (currentTarget as HTMLAnchorElement).href;
   });
 }
 

@@ -15,22 +15,14 @@
  */
 
 /**
- * Internal dependencies
- */
-import preloadVideoMetadata from './preloadVideoMetadata';
-
-/**
- * Get video dimensions from a video.
+ * Returns file basename without extension.
  *
- * @param {string} src Video source.
- * @return {Promise} Video dimensions object.
+ * @param {File} file File object.
+ * @param {string} file.name File name.
+ * @return {string} File name without extension.
  */
-const getVideoDimensions = async (src) => {
-  const video = await preloadVideoMetadata(src);
-  return {
-    width: video.videoWidth,
-    height: video.videoHeight,
-  };
-};
+function getFileBasename({ name = '' }) {
+  return name.includes('.') ? name.split('.').slice(0, -1).join('.') : name;
+}
 
-export default getVideoDimensions;
+export default getFileBasename;

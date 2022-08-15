@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,15 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
- * Returns file basename without extension.
- *
- * @param {File} file File object.
- * @param {string} file.name File name.
- * @return {string} File name without extension.
+ * External dependencies
  */
-const getFileName = ({ name = '' }) =>
-  name.includes('.') ? name.split('.').slice(0, -1).join('.') : name;
+import { __ } from '@googleforcreators/i18n';
 
-export default getFileName;
+export const HEADING_LEVELS = {
+  h1: __('Heading 1', 'web-stories'),
+  h2: __('Heading 2', 'web-stories'),
+  h3: __('Heading 3', 'web-stories'),
+  p: __('Paragraph', 'web-stories'),
+};

@@ -1,0 +1,4 @@
+{
+  "references": [{ "path": "packages/tracking" }],
+  "include": []
+}

@@ -22,12 +22,13 @@ import { fileURLToPath } from 'url';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import { babel } from '@rollup/plugin-babel';
-import { terser } from 'rollup-plugin-terser';
-import svgr from '@svgr/rollup';
-import filesize from 'rollup-plugin-filesize';
 import url from '@rollup/plugin-url';
 import json from '@rollup/plugin-json';
 import dynamicImportVars from '@rollup/plugin-dynamic-import-vars';
+import typescript from '@rollup/plugin-typescript';
+import svgr from '@svgr/rollup';
+import { terser } from 'rollup-plugin-terser';
+import filesize from 'rollup-plugin-filesize';
 import license from 'rollup-plugin-license';
 import del from 'rollup-plugin-delete';
 import copy from 'rollup-plugin-copy';
@@ -42,10 +43,13 @@ const plugins = [
     preferBuiltins: true,
     dedupe: [],
   }),
+  typescript(),
   babel({
+    babelrc: false,
+    extensions: ['.ts', '.tsx', '.js', '.jsx', '.mjs'],
     babelHelpers: 'inline',
     exclude: 'node_modules/**',
-    presets: ['@babel/env', '@babel/preset-react'],
+    presets: ['@babel/env', '@babel/preset-react', '@babel/preset-typescript'],
     plugins: [
       'babel-plugin-styled-components',
       'babel-plugin-transform-react-remove-prop-types',
