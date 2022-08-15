@@ -113,8 +113,3 @@ jobs:
 
       - name: Type checking
         run: npm run workflow:bundle-packages:types
-
-      # Bundle npm packages to see whether that still works as expected.
-
-      - name: Bundle npm packages
-        run: npm run workflow:bundle-packages
