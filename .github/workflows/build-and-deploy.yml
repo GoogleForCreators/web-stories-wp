@@ -155,7 +155,7 @@ jobs:
       - name: Bundle regular version
         run: |
           npm run workflow:build-plugin -- --zip web-stories.zip
-          cp -r build/web-stories build/web-stories-regular/
+          cp -r build/web-stories/ build/web-stories-regular/
 
       - name: Bundle development version
         run: |
