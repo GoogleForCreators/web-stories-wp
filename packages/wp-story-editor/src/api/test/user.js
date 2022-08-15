@@ -39,14 +39,16 @@ describe('User API Callbacks', () => {
   const API_PATH = '/web-stories/v1/users/me/';
 
   it('getCurrentUser maps arguments to expected format', async () => {
-    apiFetch.mockResolvedValue({
-      id: 1234,
-      meta: {
-        web_stories_tracking_optin: true,
-        web_stories_onboarding: 'foobar',
-        web_stories_media_optimization: false,
-      },
-    });
+    apiFetch.mockReturnValue(
+      Promise.resolve({
+        id: 1234,
+        meta: {
+          web_stories_tracking_optin: true,
+          web_stories_onboarding: 'foobar',
+          web_stories_media_optimization: false,
+        },
+      })
+    );
     const { getCurrentUser } = bindToCallbacks(apiCallbacks, {
       api: { currentUser: API_PATH },
     });
@@ -62,14 +64,16 @@ describe('User API Callbacks', () => {
   });
 
   it('updateCurrentUser maps arguments to expected format', async () => {
-    apiFetch.mockResolvedValue({
-      id: 1234,
-      meta: {
-        web_stories_tracking_optin: true,
-        web_stories_onboarding: 'foobar',
-        web_stories_media_optimization: false,
-      },
-    });
+    apiFetch.mockReturnValue(
+      Promise.resolve({
+        id: 1234,
+        meta: {
+          web_stories_tracking_optin: true,
+          web_stories_onboarding: 'foobar',
+          web_stories_media_optimization: false,
+        },
+      })
+    );
 
     const { updateCurrentUser } = bindToCallbacks(apiCallbacks, {
       api: { currentUser: API_PATH },

@@ -69,14 +69,16 @@ describe('useFetchCategoriesEffect', () => {
   }
 
   it('should fetch categories when the provider is set', async () => {
-    mockListCategories.mockResolvedValue({
-      categories: [
-        {
-          name: 'categories/unsplash:c7USHrQ0Ljw',
-          label: 'COVID-19',
-        },
-      ],
-    });
+    mockListCategories.mockImplementation(() =>
+      Promise.resolve({
+        categories: [
+          {
+            name: 'categories/unsplash:c7USHrQ0Ljw',
+            label: 'COVID-19',
+          },
+        ],
+      })
+    );
 
     await renderUseFetchCategoriesEffect();
 

@@ -38,18 +38,20 @@ describe('pageTemplates', () => {
 
   describe('getCustomPageTemplates', () => {
     it('should always provide id and elements', async () => {
-      apiFetch.mockResolvedValue({
-        headers: {
-          'X-WP-TotalPages': 20,
-        },
-        body: [
-          {
-            id: 123,
-            story_data: { id: 'page-id', elements: [{ id: 'foo' }] },
+      apiFetch.mockReturnValue(
+        Promise.resolve({
+          headers: {
+            'X-WP-TotalPages': 20,
           },
-          { id: 456, story_data: [] },
-        ],
-      });
+          body: [
+            {
+              id: 123,
+              story_data: { id: 'page-id', elements: [{ id: 'foo' }] },
+            },
+            { id: 456, story_data: [] },
+          ],
+        })
+      );
 
       const { getCustomPageTemplates } = bindToCallbacks(apiCallbacks, {
         api: { pageTemplates: '/web-stories/v1/web-story-page/' },

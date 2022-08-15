@@ -30,7 +30,7 @@ describe('Meta Boxes API Callbacks', () => {
   beforeEach(() => {
     jest.clearAllMocks();
 
-    apiFetch.mockResolvedValue({});
+    apiFetch.mockReturnValue(Promise.resolve({}));
   });
 
   describe('saveMetaBoxes', () => {

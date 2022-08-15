@@ -40,7 +40,7 @@ describe('Media API Callbacks', () => {
   const MEDIA_PATH = `/web-stories/v1/media/`;
 
   it('updateMedia maps arguments to expected format', () => {
-    apiFetch.mockResolvedValue(GET_MEDIA_RESPONSE_BODY[0]);
+    apiFetch.mockReturnValue(Promise.resolve(GET_MEDIA_RESPONSE_BODY[0]));
     const { updateMedia } = bindToCallbacks(apiCallbacks, {
       api: { media: MEDIA_PATH },
     });
@@ -84,7 +84,7 @@ describe('Media API Callbacks', () => {
   });
 
   it('uploadMedia maps arguments to expected format', () => {
-    apiFetch.mockResolvedValue(GET_MEDIA_RESPONSE_BODY[0]);
+    apiFetch.mockReturnValue(Promise.resolve(GET_MEDIA_RESPONSE_BODY[0]));
     const { uploadMedia } = bindToCallbacks(apiCallbacks, {
       api: { media: MEDIA_PATH },
     });

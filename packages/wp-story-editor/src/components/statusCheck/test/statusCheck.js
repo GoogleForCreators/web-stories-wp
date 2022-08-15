@@ -57,7 +57,7 @@ describe('statusCheck', () => {
   });
 
   it('should do nothing if successful', async () => {
-    getStatusCheck.mockResolvedValue({ success: true });
+    getStatusCheck.mockReturnValue(Promise.resolve({ success: true }));
 
     setup();
 
@@ -69,7 +69,7 @@ describe('statusCheck', () => {
   });
 
   it('should display dismissible dialog if failed', async () => {
-    getStatusCheck.mockRejectedValue(new Error('api failed'));
+    getStatusCheck.mockReturnValue(Promise.reject(new Error('api failed')));
 
     setup();
 

@@ -61,7 +61,6 @@ jest.mock('../../useMediaInfo', () => ({
   })),
 }));
 
-// eslint-disable-next-line jest/prefer-mock-promise-shorthand -- False positive.
 const mockUploadFile = jest.fn().mockImplementation((file) =>
   Promise.resolve(
     createResource({

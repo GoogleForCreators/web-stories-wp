@@ -233,9 +233,11 @@ describe('useContextValueProvider', () => {
     // This promise will only complete when the "done()" callback is called
     // (see reducerActions.fetchMediaSuccess mock implementation in Promise).
     await new Promise((done) => {
-      getMedia.mockResolvedValue({
-        data: GET_MEDIA_RESPONSE_BODY,
-        headers: GET_MEDIA_RESPONSE_HEADER,
+      getMedia.mockImplementation(() => {
+        return Promise.resolve({
+          data: GET_MEDIA_RESPONSE_BODY,
+          headers: GET_MEDIA_RESPONSE_HEADER,
+        });
       });
       reducerActions.fetchMediaSuccess.mockImplementation(() => {
         done();

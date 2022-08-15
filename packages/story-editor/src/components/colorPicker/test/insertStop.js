@@ -30,6 +30,7 @@ const ABLACK = { r: 0, g: 0, b: 0, a: 0 };
 const GRAY80 = { r: 51, g: 51, b: 51 };
 const MGRAY80 = { r: 51, g: 51, b: 51, a: 0.2 };
 
+// eslint-disable-next-line jest/require-hook
 expect.extend({ toBeDeepCloseTo });
 
 describe('insertStop', () => {
