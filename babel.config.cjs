@@ -43,6 +43,7 @@ module.exports = function (api) {
           development: !isProduction,
         },
       ],
+      '@babel/preset-typescript',
     ],
     plugins: [
       '@wordpress/babel-plugin-import-jsx-pragma',
