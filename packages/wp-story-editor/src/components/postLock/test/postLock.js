@@ -103,8 +103,8 @@ describe('PostLock', () => {
     document.documentElement.appendChild(modalWrapper);
     setAppElement(modalWrapper);
 
-    setStoryLockById.mockReturnValue(Promise.resolve());
-    deleteStoryLockById.mockReturnValue(Promise.resolve());
+    setStoryLockById.mockResolvedValue(undefined);
+    deleteStoryLockById.mockResolvedValue(undefined);
   });
 
   afterAll(() => {
@@ -127,14 +127,12 @@ describe('PostLock', () => {
       },
     };
 
-    getStoryLockById.mockReturnValue(
-      Promise.resolve({
-        locked: true,
-        user: 123,
-        nonce: 'fsdfds',
-        _embedded: { author: [{ id: 123, name: 'John Doe' }] },
-      })
-    );
+    getStoryLockById.mockResolvedValue({
+      locked: true,
+      user: 123,
+      nonce: 'fsdfds',
+      _embedded: { author: [{ id: 123, name: 'John Doe' }] },
+    });
 
     setup(storyContextValue);
 
@@ -163,14 +161,12 @@ describe('PostLock', () => {
       },
     };
 
-    getStoryLockById.mockReturnValue(
-      Promise.resolve({
-        locked: true,
-        user: 123,
-        nonce: 'fsdfds',
-        _embedded: { author: [{ id: 123, name: 'John Doe' }] },
-      })
-    );
+    getStoryLockById.mockResolvedValue({
+      locked: true,
+      user: 123,
+      nonce: 'fsdfds',
+      _embedded: { author: [{ id: 123, name: 'John Doe' }] },
+    });
 
     const configValue = {
       flags: {
@@ -194,14 +190,12 @@ describe('PostLock', () => {
   it.skip('should display dialog', async () => {
     jest.spyOn(window, 'setInterval');
 
-    getStoryLockById.mockReturnValue(
-      Promise.resolve({
-        locked: true,
-        user: 123,
-        nonce: 'fsdfds',
-        _embedded: { author: [{ id: 123, name: 'John Doe' }] },
-      })
-    );
+    getStoryLockById.mockResolvedValue({
+      locked: true,
+      user: 123,
+      nonce: 'fsdfds',
+      _embedded: { author: [{ id: 123, name: 'John Doe' }] },
+    });
 
     setup();
 
@@ -228,14 +222,12 @@ describe('PostLock', () => {
   });
 
   it('should not display dialog', () => {
-    getStoryLockById.mockReturnValue(
-      Promise.resolve({
-        locked: true,
-        user: 150,
-        nonce: 'fsdfds',
-        _embedded: { author: [{ id: 150, name: 'John Doe' }] },
-      })
-    );
+    getStoryLockById.mockResolvedValue({
+      locked: true,
+      user: 150,
+      nonce: 'fsdfds',
+      _embedded: { author: [{ id: 150, name: 'John Doe' }] },
+    });
 
     setup();
 
@@ -245,14 +237,12 @@ describe('PostLock', () => {
   it('should register beforeunload listener', () => {
     jest.spyOn(window, 'addEventListener');
 
-    getStoryLockById.mockReturnValue(
-      Promise.resolve({
-        locked: true,
-        user: 150,
-        nonce: 'fsdfds',
-        _embedded: { author: [{ id: 150, name: 'John Doe' }] },
-      })
-    );
+    getStoryLockById.mockResolvedValue({
+      locked: true,
+      user: 150,
+      nonce: 'fsdfds',
+      _embedded: { author: [{ id: 150, name: 'John Doe' }] },
+    });
     setup();
 
     expect(window.addEventListener).toHaveBeenCalledWith(

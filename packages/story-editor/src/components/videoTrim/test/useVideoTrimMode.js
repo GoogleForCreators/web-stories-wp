@@ -187,9 +187,7 @@ describe('useVideoTrimMode', () => {
   it('should enter edit mode for trimmed video with working original', async () => {
     const originalId = 'video456';
     const originalResource = { id: originalId };
-    const mockGetMediaById = jest
-      .fn()
-      .mockImplementation(() => Promise.resolve(originalResource));
+    const mockGetMediaById = jest.fn().mockResolvedValue(originalResource);
     const {
       result,
       setEditingElementWithState,
@@ -231,9 +229,7 @@ describe('useVideoTrimMode', () => {
 
   it('should enter edit mode for trimmed video with broken original', async () => {
     const originalId = 'video456';
-    const mockGetMediaById = jest
-      .fn()
-      .mockImplementation(() => Promise.reject(new Error('404')));
+    const mockGetMediaById = jest.fn().mockRejectedValue(new Error('404'));
 
     const {
       result,

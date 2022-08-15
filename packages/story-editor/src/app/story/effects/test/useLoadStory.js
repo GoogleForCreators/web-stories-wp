@@ -61,15 +61,13 @@ describe('useLoadStory', () => {
   });
 
   it('should load draft story with identical date and modified as having no publish date', async () => {
-    getStoryById.mockReturnValue(
-      Promise.resolve(
-        createStory({
-          date: '2020-01-01T19:20:20',
-          dateGmt: '2020-01-01T20:20:20',
-          modified: '2020-01-01T19:20:20',
-          status: 'draft',
-        })
-      )
+    getStoryById.mockResolvedValue(
+      createStory({
+        date: '2020-01-01T19:20:20',
+        dateGmt: '2020-01-01T20:20:20',
+        modified: '2020-01-01T19:20:20',
+        status: 'draft',
+      })
     );
 
     const restore = jest.fn();
@@ -101,15 +99,13 @@ describe('useLoadStory', () => {
   });
 
   it('should load draft story with specific publish date set to that date', async () => {
-    getStoryById.mockReturnValue(
-      Promise.resolve(
-        createStory({
-          date: '2020-01-01T19:20:20',
-          dateGmt: '2020-01-01T20:20:20',
-          modified: '2019-01-01T19:20:20',
-          status: 'draft',
-        })
-      )
+    getStoryById.mockResolvedValue(
+      createStory({
+        date: '2020-01-01T19:20:20',
+        dateGmt: '2020-01-01T20:20:20',
+        modified: '2019-01-01T19:20:20',
+        status: 'draft',
+      })
     );
 
     const restore = jest.fn();
@@ -141,15 +137,13 @@ describe('useLoadStory', () => {
   });
 
   it('should load published story with identical date and modified with actual publish date', async () => {
-    getStoryById.mockReturnValue(
-      Promise.resolve(
-        createStory({
-          date: '2020-01-01T19:20:20',
-          dateGmt: '2020-01-01T20:20:20',
-          modified: '2020-01-01T19:20:20',
-          status: 'published',
-        })
-      )
+    getStoryById.mockResolvedValue(
+      createStory({
+        date: '2020-01-01T19:20:20',
+        dateGmt: '2020-01-01T20:20:20',
+        modified: '2020-01-01T19:20:20',
+        status: 'published',
+      })
     );
 
     const restore = jest.fn();

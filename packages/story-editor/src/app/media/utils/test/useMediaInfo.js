@@ -224,14 +224,12 @@ describe('useMediaInfo', () => {
 
     window.MediaInfo = mediaInfo;
 
-    analyzeData.mockImplementation(() =>
-      Promise.resolve(
-        JSON.stringify({
-          media: {
-            track: [],
-          },
-        })
-      )
+    analyzeData.mockResolvedValue(
+      JSON.stringify({
+        media: {
+          track: [],
+        },
+      })
     );
   });
 
@@ -264,9 +262,7 @@ describe('useMediaInfo', () => {
     it('should return file info for muted mp4 file', async () => {
       const { result } = arrange();
 
-      analyzeData.mockImplementation(() =>
-        Promise.resolve(MEDIAINFO_RESULT_MP4)
-      );
+      analyzeData.mockResolvedValue(MEDIAINFO_RESULT_MP4);
 
       const fileInfo = await result.current.getFileInfo(
         new File(['foo'], 'foo.mp4', {
@@ -292,9 +288,7 @@ describe('useMediaInfo', () => {
     it('should return file info for webm file', async () => {
       const { result } = arrange();
 
-      analyzeData.mockImplementation(() =>
-        Promise.resolve(MEDIAINFO_RESULT_WEBM)
-      );
+      analyzeData.mockResolvedValue(MEDIAINFO_RESULT_WEBM);
 
       const fileInfo = await result.current.getFileInfo(
         new File(['foo'], 'foo.webm', {
@@ -369,9 +363,7 @@ describe('useMediaInfo', () => {
     });
 
     it('should return false for large MP4 file', async () => {
-      analyzeData.mockImplementation(() =>
-        Promise.resolve(MEDIAINFO_RESULT_MP4)
-      );
+      analyzeData.mockResolvedValue(MEDIAINFO_RESULT_MP4);
 
       const { result } = arrange();
 
@@ -385,9 +377,7 @@ describe('useMediaInfo', () => {
     });
 
     it('should return true for small MP4 file', async () => {
-      analyzeData.mockImplementation(() =>
-        Promise.resolve(MEDIAINFO_RESULT_MP4_SMALL)
-      );
+      analyzeData.mockResolvedValue(MEDIAINFO_RESULT_MP4_SMALL);
 
       const { result } = arrange();
 

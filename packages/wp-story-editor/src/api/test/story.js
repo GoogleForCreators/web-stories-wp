@@ -38,19 +38,17 @@ describe('Story API Callbacks', () => {
 
   describe('saveStoryById', () => {
     it('uses provided story poster', async () => {
-      apiFetch.mockReturnValue(
-        Promise.resolve({
-          id: 123,
-          meta: {},
-          story_poster: {
-            id: 567,
-            url: 'https://example.com/featuredimage.jpg',
-            width: 640,
-            height: 853,
-            needsProxy: false,
-          },
-        })
-      );
+      apiFetch.mockResolvedValue({
+        id: 123,
+        meta: {},
+        story_poster: {
+          id: 567,
+          url: 'https://example.com/featuredimage.jpg',
+          width: 640,
+          height: 853,
+          needsProxy: false,
+        },
+      });
       const { saveStoryById } = bindToCallbacks(apiCallbacks, {
         api: { stories: '/web-stories/v1/web-story/' },
       });
@@ -77,17 +75,15 @@ describe('Story API Callbacks', () => {
     });
 
     it('sets isExternal for hotlinked poster', async () => {
-      apiFetch.mockReturnValue(
-        Promise.resolve({
-          id: 123,
-          story_poster: {
-            url: 'https://example.com/hotlinked.jpg',
-            width: 640,
-            height: 853,
-            needsProxy: true,
-          },
-        })
-      );
+      apiFetch.mockResolvedValue({
+        id: 123,
+        story_poster: {
+          url: 'https://example.com/hotlinked.jpg',
+          width: 640,
+          height: 853,
+          needsProxy: true,
+        },
+      });
       const { saveStoryById } = bindToCallbacks(apiCallbacks, {
         api: { stories: '/web-stories/v1/web-story/' },
       });
@@ -113,12 +109,10 @@ describe('Story API Callbacks', () => {
     });
 
     it('returns "empty" object when there is no featured image', async () => {
-      apiFetch.mockReturnValue(
-        Promise.resolve({
-          id: 123,
-          story_poster: null,
-        })
-      );
+      apiFetch.mockResolvedValue({
+        id: 123,
+        story_poster: null,
+      });
       const { saveStoryById } = bindToCallbacks(apiCallbacks, {
         api: { stories: '/web-stories/v1/web-story/' },
       });

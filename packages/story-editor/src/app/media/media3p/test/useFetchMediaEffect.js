@@ -72,9 +72,10 @@ describe('useFetchMediaEffect', () => {
   }
 
   it('should fetch media when the provider is set and not search term', async () => {
-    mockListMedia.mockImplementation(() =>
-      Promise.resolve({ media: [{ id: 1 }], nextPageToken: 'nextPageToken' })
-    );
+    mockListMedia.mockResolvedValue({
+      media: [{ id: 1 }],
+      nextPageToken: 'nextPageToken',
+    });
 
     await renderUseFetchMediaEffect();
 
@@ -97,9 +98,10 @@ describe('useFetchMediaEffect', () => {
   });
 
   it('should fetch media when the provider is set and contentType is filtered', async () => {
-    mockListMedia.mockImplementation(() =>
-      Promise.resolve({ media: [{ id: 1 }], nextPageToken: 'nextPageToken' })
-    );
+    mockListMedia.mockResolvedValue({
+      media: [{ id: 1 }],
+      nextPageToken: 'nextPageToken',
+    });
 
     await renderUseFetchMediaEffect({
       provider: 'tenor',
@@ -125,9 +127,10 @@ describe('useFetchMediaEffect', () => {
   });
 
   it('should fetch media when the provider is set and search term', async () => {
-    mockListMedia.mockImplementation(() =>
-      Promise.resolve({ media: [{ id: 1 }], nextPageToken: 'nextPageToken' })
-    );
+    mockListMedia.mockResolvedValue({
+      media: [{ id: 1 }],
+      nextPageToken: 'nextPageToken',
+    });
 
     await renderUseFetchMediaEffect({ searchTerm: 'cat' });
 
@@ -150,9 +153,10 @@ describe('useFetchMediaEffect', () => {
   });
 
   it('should fetch media when the provider is set and category id', async () => {
-    mockListMedia.mockImplementation(() =>
-      Promise.resolve({ media: [{ id: 1 }], nextPageToken: 'nextPageToken' })
-    );
+    mockListMedia.mockResolvedValue({
+      media: [{ id: 1 }],
+      nextPageToken: 'nextPageToken',
+    });
 
     await renderUseFetchMediaEffect({ selectedCategoryId: 'category/1' });
 
