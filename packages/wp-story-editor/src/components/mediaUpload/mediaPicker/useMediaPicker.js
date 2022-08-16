@@ -94,33 +94,6 @@ function useMediaPicker({
     }
   }, [updateMedia]);
 
-  useEffect(() => {
-    let select;
-    try {
-      select = window.wp.media.view.MediaFrame.Select;
-      const selectWithButton = window.wp.media.view.MediaFrame.Select.extend({
-        createSelectToolbar: function (toolbar, options) {
-          options = options || this.options.button || {};
-          options.text = buttonInsertText;
-          if (cropParams) {
-            options.close = false;
-          }
-          options.controller = this;
-
-          toolbar.view = new window.wp.media.view.Toolbar.Select(options);
-        },
-      });
-      window.wp.media.view.MediaFrame.Select = selectWithButton;
-    } catch (e) {
-      // Silence.
-    }
-    return () => {
-      if (select) {
-        window.wp.media.view.MediaFrame.Select = select;
-      }
-    };
-  }, [buttonInsertText, cropParams]);
-
   const openMediaDialog = useCallback(
     (evt) => {
       trackEvent('open_media_modal');
@@ -141,6 +114,12 @@ function useMediaPicker({
           type,
         },
         multiple,
+      });
+
+      fileFrame.on('toolbar:create:select', (toolbar) => {
+        fileFrame.createSelectToolbar(toolbar, {
+          text: buttonInsertText,
+        });
       });
 
       // When an image is selected, run a callback.
@@ -179,6 +158,7 @@ function useMediaPicker({
       evt.preventDefault();
     },
     [
+      buttonInsertText,
       hasUploadMediaAction,
       multiple,
       onClose,
