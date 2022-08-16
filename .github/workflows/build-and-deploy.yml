@@ -245,6 +245,6 @@ jobs:
       - name: Deploy to staging
         run: |
           rm -rf build/web-stories
-          mv build/web-stories-regular build/web-stories
+          mv build/web-stories-regular/* build/web-stories
           bash bin/deploy-to-test-environment.sh
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
