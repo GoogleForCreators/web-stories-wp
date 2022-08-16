@@ -21,7 +21,6 @@ import styled from 'styled-components';
 import { useMemo } from '@googleforcreators/react';
 import { getExtensionsFromMimeType } from '@googleforcreators/media';
 import PropTypes from 'prop-types';
-import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -37,7 +36,6 @@ const StyledMedia = styled(Media)`
 `;
 
 function LinkIcon({ handleChange, icon, isLoading = false, ...rest }) {
-  const enableHotlinking = useFeature('linkIconHotlinking');
   const {
     allowedMimeTypes: { image: allowedImageMimeTypes },
     capabilities: { hasUploadMediaAction },
@@ -69,9 +67,9 @@ function LinkIcon({ handleChange, icon, isLoading = false, ...rest }) {
   }, [allowedImageFileTypes]);
 
   const options = [
-    enableHotlinking && hasUploadMediaAction && 'upload',
-    !enableHotlinking && hasUploadMediaAction && 'edit',
-    enableHotlinking && 'hotlink',
+    hasUploadMediaAction && 'upload',
+    hasUploadMediaAction && 'edit',
+    'hotlink',
     icon && 'remove',
   ].filter(Boolean);
 
