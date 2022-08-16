@@ -65,9 +65,8 @@ permissions:
 
 # Cancels all previous workflow runs for pull requests that have not completed.
 concurrency:
-  # The concurrency group contains the workflow name and the branch name for pull requests
-  # or the commit hash for any other events.
-  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.head_ref || github.sha }}
+  # The concurrency group contains the workflow name and the (target) branch name.
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -83,7 +82,7 @@ jobs:
       github.event.pull_request.user.login != 'dependabot[bot]'
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@74b568e8591fbb3115c70f3436a0c6b0909a8504
+        uses: step-security/harden-runner@dd2c410b088af7c0dc8046f3ac9a8f4148492a95
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
@@ -116,7 +115,7 @@ jobs:
       github.event.pull_request.user.login != 'dependabot[bot]'
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@74b568e8591fbb3115c70f3436a0c6b0909a8504
+        uses: step-security/harden-runner@dd2c410b088af7c0dc8046f3ac9a8f4148492a95
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
@@ -155,7 +154,7 @@ jobs:
       - name: Bundle regular version
         run: |
           npm run workflow:build-plugin -- --zip web-stories.zip
-          cp -r build/web-stories build/web-stories-regular/
+          cp -r build/web-stories/ build/web-stories-regular/
 
       - name: Bundle development version
         run: |
@@ -246,6 +245,6 @@ jobs:
       - name: Deploy to staging
         run: |
           rm -rf build/web-stories
-          mv build/web-stories-regular build/web-stories
+          mv build/web-stories-regular/* build/web-stories
           bash bin/deploy-to-test-environment.sh
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'

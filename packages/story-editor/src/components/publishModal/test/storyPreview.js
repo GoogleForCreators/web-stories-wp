@@ -113,14 +113,14 @@ describe('publishModal/storyPreview', () => {
 
   it('should render the story title when present', () => {
     view({ storyTitle: 'Great books to read' });
-    const storyTitle = screen.getByTestId('story_preview_title');
+    const storyTitle = screen.getByText('Great books to read');
 
     expect(storyTitle).toBeInTheDocument();
   });
 
   it('should render the site title when present', () => {
     view({ publisher: 'My Site Title' });
-    const siteTitle = screen.getByTestId('story_preview_publisher');
+    const siteTitle = screen.getByText('My Site Title');
 
     expect(siteTitle).toBeInTheDocument();
   });
@@ -134,14 +134,14 @@ describe('publishModal/storyPreview', () => {
 
   it('should render the publisher logo when present', () => {
     view({ publisherLogo: 'http://test.com/imageurl' });
-    const publisherLogo = screen.getByTestId('story_preview_logo');
+    const publisherLogo = screen.getByRole('img', { alt: 'Publisher Logo' });
 
     expect(publisherLogo).toBeInTheDocument();
   });
 
   it('should not render the story title when not present', () => {
     view();
-    const storyTitle = screen.queryByTestId('story_preview_title');
+    const storyTitle = screen.queryByRole('heading', { level: 3 });
 
     expect(storyTitle).not.toBeInTheDocument();
   });
@@ -162,16 +162,9 @@ describe('publishModal/storyPreview', () => {
 
   it('should not render the publisher logo when not present', () => {
     view();
-    const publisherLogo = screen.queryByTestId('story_preview_logo');
+    const publisherLogo = screen.queryByRole('img', { alt: 'Publisher Logo' });
 
     expect(publisherLogo).not.toBeInTheDocument();
-  });
-
-  it('should not render the update featured media button if the user does not have update permissions', () => {
-    view();
-    const uploadMediaButton = screen.queryByText('Media Upload Button!');
-
-    expect(uploadMediaButton).not.toBeInTheDocument();
   });
 
   it('should update the poster image when the upload media button is clicked', () => {
