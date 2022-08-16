@@ -10,6 +10,12 @@ on:
 permissions:
   contents: read
 
+# Cancels all previous workflow runs for pull requests that have not completed.
+concurrency:
+  # The concurrency group contains the workflow name and the (target) branch name.
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
 env:
   PRODUCTION_REGISTRY_URL: https://wombat-dressing-room.appspot.com
   LOCAL_REGISTRY_URL: http://localhost:4873
