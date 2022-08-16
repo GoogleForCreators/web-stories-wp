@@ -351,6 +351,7 @@
             "ignore": ["describe"]
           }
         ],
+        "jest/prefer-mock-promise-shorthand": "off",
         "jest/prefer-snapshot-hint": "off",
         "jsdoc/require-jsdoc": "off",
         "testing-library/no-await-sync-events": "error",
