@@ -25,3 +25,6 @@ export const videoOptimizationCheckboxSelector =
 
 export const videoCacheCheckboxSelector =
   'input[data-testid="video-cache-settings-checkbox"]';
+
+export const dataRemovalCheckboxSelector =
+  'input[data-testid="data-removal-settings-checkbox"]';

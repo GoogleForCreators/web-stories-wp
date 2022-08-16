@@ -22,7 +22,7 @@ import {
   getTypeFromMime,
   getResourceSize,
   createResource,
-  getFileName,
+  getFileBasename,
   getImageDimensions,
   createFileReader,
   getVideoLength,
@@ -47,7 +47,7 @@ import getPosterName from './getPosterName';
  * @return {Promise<import('@googleforcreators/media').Resource>} Local image resource object.
  */
 const getImageResource = async (file) => {
-  const alt = getFileName(file);
+  const alt = getFileBasename(file);
   const mimeType = file.type;
 
   const reader = await createFileReader(file);
@@ -71,7 +71,7 @@ const getImageResource = async (file) => {
  * @return {Promise<import('@googleforcreators/media').Resource>} Local video resource object.
  */
 const getVideoResource = async (file) => {
-  const alt = getFileName(file);
+  const alt = getFileBasename(file);
   const mimeType = file.type;
 
   const reader = await createFileReader(file);
@@ -90,7 +90,7 @@ const getVideoResource = async (file) => {
   const hasAudio = hasVideoGotAudio(videoEl);
   const posterFile = blobToFile(
     await getImageFromVideo(videoEl),
-    getPosterName(getFileName(file)),
+    getPosterName(getFileBasename(file)),
     MEDIA_POSTER_IMAGE_MIME_TYPE
   );
   const poster = createBlob(posterFile);
@@ -116,7 +116,7 @@ const createPlaceholderResource = (properties) => {
 };
 
 const getPlaceholderResource = (file) => {
-  const alt = getFileName(file);
+  const alt = getFileBasename(file);
   const type = getTypeFromMime(file.type);
   const mimeType = type === 'image' ? 'image/png' : 'video/mp4';
 

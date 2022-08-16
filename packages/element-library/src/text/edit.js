@@ -39,10 +39,7 @@ import {
   useRichText,
 } from '@googleforcreators/rich-text';
 import { stripHTML } from '@googleforcreators/dom';
-import {
-  getBorderPositionCSS,
-  shouldDisplayBorder,
-} from '@googleforcreators/masks';
+import { shouldDisplayBorder } from '@googleforcreators/masks';
 import {
   StoryPropTypes,
   BACKGROUND_TEXT_MODE,
@@ -118,13 +115,12 @@ const Highlight = styled.span`
 
 const OutsideBorder = styled.div`
   ${elementWithBorder}
-  ${({ border }) => border && getBorderPositionCSS(border)}
   overflow: hidden;
 `;
 
 function TextEdit({
   element,
-  box: { x, y, height, rotationAngle },
+  box: { x, y, width, height, rotationAngle },
   editWrapper,
   onResize,
   updateElementById,
@@ -136,13 +132,14 @@ function TextEdit({
     content,
     backgroundColor,
     backgroundTextMode,
-    border,
+    border = {},
     borderRadius,
     opacity,
     height: elementHeight,
     ...rest
   } = element;
-  const { font, width: elementWidth } = rest;
+  const { font } = rest;
+  const { top = 0, bottom = 0, left = 0, right = 0 } = border;
   const fontFaceSetConfigs = useMemo(() => {
     const htmlInfo = getHTMLInfo(content);
     return {
@@ -240,13 +237,14 @@ function TextEdit({
       // Remove manual line breaks and remember to trim any trailing non-breaking space.
       const properties = { content: contentRef.current };
       // Recalculate the new height and offset.
+      // boxRef includes adjustment for the border, let's take the border values out for element updating.
       if (newHeight) {
         const [dx, dy] = calcRotatedResizeOffset(
           boxRef.current.rotationAngle,
-          0,
-          0,
-          0,
-          newHeight - boxRef.current.height
+          -left,
+          -right,
+          -top,
+          Math.round(newHeight - (boxRef.current.height - top))
         );
         properties.height = editorToDataY(newHeight);
         properties.x = editorToDataX(boxRef.current.x + dx);
@@ -254,7 +252,7 @@ function TextEdit({
       }
       setProperties(properties);
     }
-  }, [editorToDataX, editorToDataY, setProperties]);
+  }, [editorToDataX, editorToDataY, setProperties, top, left, right]);
 
   // Update content or delete the whole element (if empty) on unmount.
   const handleUnmount = useCallback(() => {
@@ -284,19 +282,20 @@ function TextEdit({
     wrapper.style.height = `${editorHeightRef.current}px`;
     textBox.style.margin = '';
     if (editWrapper) {
+      // We need to consider the potential border, too, and remove/add it to the content height.
       const [dx, dy] = calcRotatedResizeOffset(
         boxRef.current.rotationAngle,
         0,
         0,
         0,
-        editorHeightRef.current - boxRef.current.height
+        editorHeightRef.current - (boxRef.current.height - top - bottom)
       );
-      editWrapper.style.height = `${editorHeightRef.current}px`;
+      editWrapper.style.height = `${editorHeightRef.current + top + bottom}px`;
       editWrapper.style.left = `${boxRef.current.x + dx}px`;
       editWrapper.style.top = `${boxRef.current.y + dy}px`;
       onResize && onResize();
     }
-  }, [dataToEditorY, editWrapper, element, onResize]);
+  }, [dataToEditorY, editWrapper, element, onResize, top, bottom]);
   // Invoke on each content update.
   const handleUpdate = useCallback(
     (newContent) => {
@@ -389,8 +388,8 @@ function TextEdit({
       ref={outsideBorderRef}
       border={border}
       borderRadius={borderRadius}
-      width={elementWidth}
-      height={elementHeight}
+      width={width}
+      height={height}
     >
       {/* eslint-disable-next-line styled-components-a11y/click-events-have-key-events, styled-components-a11y/no-static-element-interactions -- Needed here to ensure the editor keeps focus, e.g. after setting inline colour. */}
       <Wrapper

@@ -32,9 +32,8 @@ permissions:
 
 # Cancels all previous workflow runs for pull requests that have not completed.
 concurrency:
-  # The concurrency group contains the workflow name and the branch name for pull requests
-  # or the commit hash for any other events.
-  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.head_ref || github.sha }}
+  # The concurrency group contains the workflow name and the (target) branch name.
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -55,7 +54,7 @@ jobs:
     continue-on-error: ${{ matrix.experimental }}
     strategy:
       matrix:
-        php: ['7.2', '8.0']
+        php: ['8.0']
         wp: ['latest']
         coverage: [false]
         experimental: [false]
@@ -75,17 +74,13 @@ jobs:
             random: true
             experimental: true
 
-          - php: '8.0'
-            wp: 'trunk'
-            experimental: true
-
           - php: '8.1'
             wp: 'trunk'
             experimental: true
 
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@74b568e8591fbb3115c70f3436a0c6b0909a8504
+        uses: step-security/harden-runner@dd2c410b088af7c0dc8046f3ac9a8f4148492a95
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
@@ -97,7 +92,7 @@ jobs:
       # Then switch back to the PHP version we want to test and delete the vendor directory.
 
       - name: Setup PHP 8.0
-        uses: shivammathur/setup-php@945c34c1751f6d2c8106ec0feba5662fcbc1c943
+        uses: shivammathur/setup-php@16011a795d747d5f45038f96371c3b98aec5669d
         with:
           php-version: '8.0'
           tools: composer
@@ -111,7 +106,7 @@ jobs:
         run: rm -rf vendor/*
 
       - name: Setup PHP
-        uses: shivammathur/setup-php@945c34c1751f6d2c8106ec0feba5662fcbc1c943
+        uses: shivammathur/setup-php@16011a795d747d5f45038f96371c3b98aec5669d
         with:
           php-version: ${{ matrix.php }}
           extensions: mysql

@@ -95,6 +95,11 @@ class Settings extends Service_Base {
 	public const SETTING_NAME_VIDEO_CACHE = 'web_stories_video_cache';
 
 	/**
+	 * Data removal setting name.
+	 */
+	public const SETTING_NAME_DATA_REMOVAL = 'web_stories_data_removal';
+
+	/**
 	 * Web Stories archive setting name.
 	 */
 	public const SETTING_NAME_ARCHIVE = 'web_stories_archive';
@@ -247,6 +252,17 @@ class Settings extends Service_Base {
 			self::SETTING_NAME_VIDEO_CACHE,
 			[
 				'description'  => __( 'Video Cache', 'web-stories' ),
+				'type'         => 'boolean',
+				'default'      => false,
+				'show_in_rest' => true,
+			]
+		);
+
+		register_setting(
+			self::SETTING_GROUP,
+			self::SETTING_NAME_DATA_REMOVAL,
+			[
+				'description'  => __( 'Data Removal', 'web-stories' ),
 				'type'         => 'boolean',
 				'default'      => false,
 				'show_in_rest' => true,

@@ -22,10 +22,10 @@ import { getStoryMarkup } from '@googleforcreators/output';
  * Internal dependencies
  */
 import objectPick from '../../../utils/objectPick';
-import getAllProdcuts from './getAllProducts';
+import getAllProducts from './getAllProducts';
 
 function getStoryPropsToSave({ story, pages, metadata, flags }) {
-  const { terms, featuredMedia, ...propsFromStory } = objectPick(story, [
+  const { terms, ...propsFromStory } = objectPick(story, [
     'title',
     'status',
     'author',
@@ -34,6 +34,7 @@ function getStoryPropsToSave({ story, pages, metadata, flags }) {
     'slug',
     'excerpt',
     'featuredMedia',
+    'publisherLogo',
     'password',
     'currentStoryStyles',
     'globalStoryStyles',
@@ -42,26 +43,14 @@ function getStoryPropsToSave({ story, pages, metadata, flags }) {
     'backgroundAudio',
     'terms',
   ]);
-  const products = getAllProdcuts(pages);
+  const products = getAllProducts(pages);
   const content = getStoryMarkup(story, pages, metadata, flags);
   return {
     content,
     pages,
     ...propsFromStory,
     ...terms,
-    featuredMedia,
-    meta: {
-      web_stories_publisher_logo: story.publisherLogo?.id,
-      web_stories_products: products,
-      web_stories_poster: featuredMedia.isExternal
-        ? {
-            url: featuredMedia.url,
-            width: featuredMedia.width,
-            height: featuredMedia.height,
-            needsProxy: featuredMedia.needsProxy,
-          }
-        : undefined,
-    },
+    products,
   };
 }
 

@@ -37,22 +37,17 @@ describe('Story API Callbacks', () => {
   });
 
   describe('saveStoryById', () => {
-    it('uses featured image', async () => {
+    it('uses provided story poster', async () => {
       apiFetch.mockReturnValue(
         Promise.resolve({
           id: 123,
           meta: {},
-          _embedded: {
-            'wp:featuredmedia': [
-              {
-                id: 567,
-                source_url: 'https://example.com/featuredimage.jpg',
-                media_details: {
-                  width: 640,
-                  height: 853,
-                },
-              },
-            ],
+          story_poster: {
+            id: 567,
+            url: 'https://example.com/featuredimage.jpg',
+            width: 640,
+            height: 853,
+            needsProxy: false,
           },
         })
       );
@@ -71,30 +66,25 @@ describe('Story API Callbacks', () => {
           id: 123,
           featuredMedia: {
             id: 567,
+            url: 'https://example.com/featuredimage.jpg',
             width: 640,
             height: 853,
-            isExternal: false,
             needsProxy: false,
-            url: 'https://example.com/featuredimage.jpg',
+            isExternal: false,
           },
         })
       );
     });
 
-    it('uses hotlinked poster from post meta', async () => {
+    it('sets isExternal for hotlinked poster', async () => {
       apiFetch.mockReturnValue(
         Promise.resolve({
           id: 123,
-          meta: {
-            web_stories_poster: {
-              url: 'https://example.com/hotlinked.jpg',
-              width: 640,
-              height: 853,
-              needsProxy: true,
-            },
-          },
-          _embedded: {
-            'wp:featuredmedia': [],
+          story_poster: {
+            url: 'https://example.com/hotlinked.jpg',
+            width: 640,
+            height: 853,
+            needsProxy: true,
           },
         })
       );
@@ -112,7 +102,6 @@ describe('Story API Callbacks', () => {
         expect.objectContaining({
           id: 123,
           featuredMedia: {
-            id: 0,
             width: 640,
             height: 853,
             isExternal: true,
@@ -123,65 +112,11 @@ describe('Story API Callbacks', () => {
       );
     });
 
-    it('uses featured image over hotlinked poster from post meta', async () => {
-      apiFetch.mockReturnValue(
-        Promise.resolve({
-          id: 123,
-          meta: {
-            web_stories_poster: {
-              url: 'https://example.com/hotlinked.jpg',
-              width: 640,
-              height: 853,
-              needsProxy: true,
-            },
-          },
-          _embedded: {
-            'wp:featuredmedia': [
-              {
-                id: 567,
-                source_url: 'https://example.com/featuredimage.jpg',
-                media_details: {
-                  width: 640,
-                  height: 853,
-                },
-              },
-            ],
-          },
-        })
-      );
-      const { saveStoryById } = bindToCallbacks(apiCallbacks, {
-        api: { stories: '/web-stories/v1/web-story/' },
-      });
-
-      await expect(
-        saveStoryById({
-          storyId: 123,
-          featuredMedia: {},
-          author: {},
-        })
-      ).resolves.toStrictEqual(
-        expect.objectContaining({
-          id: 123,
-          featuredMedia: {
-            id: 567,
-            width: 640,
-            height: 853,
-            isExternal: false,
-            needsProxy: false,
-            url: 'https://example.com/featuredimage.jpg',
-          },
-        })
-      );
-    });
-
     it('returns "empty" object when there is no featured image', async () => {
       apiFetch.mockReturnValue(
         Promise.resolve({
           id: 123,
-          meta: {},
-          _embedded: {
-            'wp:featuredmedia': [],
-          },
+          story_poster: null,
         })
       );
       const { saveStoryById } = bindToCallbacks(apiCallbacks, {

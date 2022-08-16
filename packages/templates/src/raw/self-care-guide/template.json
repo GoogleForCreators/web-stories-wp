@@ -50,7 +50,8 @@
             "bottom": 1,
             "lockedWidth": true,
             "color": { "color": { "r": 0, "g": 0, "b": 0, "a": 0.1 } }
-          }
+          },
+          "groupId": "62bceaac-53fc-435d-bde6-2522f980695c"
         },
         {
           "x": 117,
@@ -85,7 +86,8 @@
             "bottom": 1,
             "lockedWidth": true,
             "color": { "color": { "r": 0, "g": 0, "b": 0, "a": 0.1 } }
-          }
+          },
+          "groupId": "62bceaac-53fc-435d-bde6-2522f980695c"
         },
         {
           "opacity": 100,
@@ -102,7 +104,8 @@
           "focalX": 50,
           "focalY": 50,
           "mask": { "type": "rectangle" },
-          "id": "0e2c1625-4aac-4476-8b1d-84c9fbfd90b7"
+          "id": "0e2c1625-4aac-4476-8b1d-84c9fbfd90b7",
+          "groupId": "73e659e8-f68a-40fb-8a60-23d007df1b31"
         },
         {
           "x": 216,
@@ -120,7 +123,8 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "rectangle" }
+          "mask": { "type": "rectangle" },
+          "groupId": "73e659e8-f68a-40fb-8a60-23d007df1b31"
         },
         {
           "opacity": 100,
@@ -138,7 +142,8 @@
           "basedOn": "0e2c1625-4aac-4476-8b1d-84c9fbfd90b7",
           "id": "7e7f69f3-472e-42cf-863f-989c27ece528",
           "x": 104,
-          "y": 609
+          "y": 609,
+          "groupId": "73e659e8-f68a-40fb-8a60-23d007df1b31"
         },
         {
           "opacity": 100,
@@ -156,7 +161,8 @@
           "basedOn": "7e7f69f3-472e-42cf-863f-989c27ece528",
           "id": "e13185ca-4f74-4957-b149-6a0939ee4950",
           "x": 47,
-          "y": 609
+          "y": 609,
+          "groupId": "73e659e8-f68a-40fb-8a60-23d007df1b31"
         },
         {
           "opacity": 100,
@@ -387,7 +393,19 @@
       "type": "page",
       "id": "e2d8f340-b4d4-4fd9-9858-6db7e5a90ad8",
       "animations": [],
-      "pageTemplateType": "cover"
+      "pageTemplateType": "cover",
+      "groups": {
+        "62bceaac-53fc-435d-bde6-2522f980695c": {
+          "name": "Background",
+          "isLocked": true,
+          "isCollapsed": true
+        },
+        "73e659e8-f68a-40fb-8a60-23d007df1b31": {
+          "name": "Bar",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [
@@ -457,7 +475,8 @@
           "basedOn": "270cd27c-03e7-4f73-82b5-5e72204452e2",
           "id": "3869addd-d01a-41d8-a631-36ed17b0fd34",
           "x": -177,
-          "y": 39
+          "y": 39,
+          "groupId": "6c26938c-3d28-4658-afca-2ac6da8df519"
         },
         {
           "opacity": 100,
@@ -492,7 +511,8 @@
           "basedOn": "9c7df34e-1209-4a82-a973-20154a455d87",
           "id": "01881a70-d4c4-4bb6-8714-1cdb19159ad1",
           "x": 29,
-          "y": -36
+          "y": -36,
+          "groupId": "6c26938c-3d28-4658-afca-2ac6da8df519"
         },
         {
           "opacity": 100,
@@ -619,7 +639,14 @@
           "delay": 0
         }
       ],
-      "pageTemplateType": ""
+      "pageTemplateType": "",
+      "groups": {
+        "6c26938c-3d28-4658-afca-2ac6da8df519": {
+          "name": "Background",
+          "isLocked": true,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [
@@ -671,7 +698,8 @@
           "basedOn": "270cd27c-03e7-4f73-82b5-5e72204452e2",
           "id": "8b4eb9cf-865f-441b-9e4d-8a3111d7b552",
           "x": -153,
-          "y": 131
+          "y": 131,
+          "groupId": "16b6fef8-ad77-48a6-a98f-2e898b1aaff1"
         },
         {
           "opacity": 100,
@@ -706,7 +734,8 @@
           "basedOn": "01881a70-d4c4-4bb6-8714-1cdb19159ad1",
           "id": "85ec672f-cc6d-48f5-9198-dddee8abd4fb",
           "x": 229,
-          "y": 448
+          "y": 448,
+          "groupId": "16b6fef8-ad77-48a6-a98f-2e898b1aaff1"
         },
         {
           "opacity": 100,
@@ -1023,7 +1052,13 @@
           "delay": 0
         }
       ],
-      "pageTemplateType": "editorial"
+      "pageTemplateType": "editorial",
+      "groups": {
+        "16b6fef8-ad77-48a6-a98f-2e898b1aaff1": {
+          "name": "Background",
+          "isLocked": true
+        }
+      }
     },
     {
       "elements": [
@@ -1075,7 +1110,8 @@
           "basedOn": "270cd27c-03e7-4f73-82b5-5e72204452e2",
           "id": "f29059fe-cbf9-49bb-90de-c58f85326dc9",
           "x": 110,
-          "y": 131
+          "y": 131,
+          "groupId": "beb7e768-d23a-48b2-9780-300e2b6bdfeb"
         },
         {
           "opacity": 100,
@@ -1110,7 +1146,8 @@
           "basedOn": "9c7df34e-1209-4a82-a973-20154a455d87",
           "id": "c01b6a06-08f3-4381-be34-f42db440d26c",
           "x": 117,
-          "y": -250
+          "y": -250,
+          "groupId": "beb7e768-d23a-48b2-9780-300e2b6bdfeb"
         },
         {
           "opacity": 100,
@@ -1135,7 +1172,8 @@
           "basedOn": "74e1254b-bc03-4b9d-a351-44972f1f5324",
           "id": "64d31899-54e8-4e0d-bcb3-9469a6283a48",
           "x": 29,
-          "y": -183
+          "y": -183,
+          "groupId": "beb7e768-d23a-48b2-9780-300e2b6bdfeb"
         },
         {
           "opacity": 100,
@@ -1175,7 +1213,8 @@
             "provider": "local",
             "baseColor": "#9a9692",
             "isExternal": true
-          }
+          },
+          "groupId": "a9f1ec9d-9ba6-4e10-8e0a-4eafc385d937"
         },
         {
           "opacity": 100,
@@ -1250,7 +1289,8 @@
           "basedOn": "08cf8b1d-35e8-412a-8db9-c657d0ccf92e",
           "id": "7d978541-31ae-49b6-9da9-80bce2fbbccd",
           "x": 223,
-          "y": 317
+          "y": 317,
+          "groupId": "a9f1ec9d-9ba6-4e10-8e0a-4eafc385d937"
         },
         {
           "x": 223,
@@ -1325,7 +1365,8 @@
           "height": 19,
           "scale": 100,
           "focalX": 50,
-          "focalY": 50
+          "focalY": 50,
+          "groupId": "a9f1ec9d-9ba6-4e10-8e0a-4eafc385d937"
         },
         {
           "x": 57,
@@ -1366,7 +1407,8 @@
             "provider": "local",
             "baseColor": "#cbc5be",
             "isExternal": true
-          }
+          },
+          "groupId": "04546939-096c-4eab-8b75-be91b5743753"
         },
         {
           "x": 223,
@@ -1441,7 +1483,8 @@
           "height": 17,
           "scale": 100,
           "focalX": 50,
-          "focalY": 50
+          "focalY": 50,
+          "groupId": "04546939-096c-4eab-8b75-be91b5743753"
         },
         {
           "x": 222,
@@ -1516,7 +1559,8 @@
           "height": 64,
           "scale": 100,
           "focalX": 50,
-          "focalY": 50
+          "focalY": 50,
+          "groupId": "04546939-096c-4eab-8b75-be91b5743753"
         },
         {
           "x": 47,
@@ -1610,7 +1654,24 @@
           "delay": 200
         }
       ],
-      "pageTemplateType": ""
+      "pageTemplateType": "",
+      "groups": {
+        "beb7e768-d23a-48b2-9780-300e2b6bdfeb": {
+          "name": "Background",
+          "isLocked": true,
+          "isCollapsed": true
+        },
+        "a9f1ec9d-9ba6-4e10-8e0a-4eafc385d937": {
+          "name": "Section",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "04546939-096c-4eab-8b75-be91b5743753": {
+          "name": "Section",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [
@@ -1662,7 +1723,8 @@
           "id": "6fa5bcc1-f3d8-4ef1-aab6-31d3daff5e06",
           "x": -153,
           "y": 131,
-          "type": "shape"
+          "type": "shape",
+          "groupId": "e0c4d7e9-5997-4826-a740-144a39ad5cb6"
         },
         {
           "opacity": 100,
@@ -1697,7 +1759,8 @@
           "id": "39655dcb-c49f-4428-a1b7-b6b55a89a0ee",
           "x": 229,
           "y": 448,
-          "type": "shape"
+          "type": "shape",
+          "groupId": "e0c4d7e9-5997-4826-a740-144a39ad5cb6"
         },
         {
           "opacity": 100,
@@ -1714,7 +1777,8 @@
           "focalY": 50,
           "mask": { "type": "rectangle" },
           "id": "f5dae377-1d10-48f8-8b70-8a7f9dbea6d9",
-          "type": "shape"
+          "type": "shape",
+          "groupId": "e0c4d7e9-5997-4826-a740-144a39ad5cb6"
         },
         {
           "opacity": 100,
@@ -2014,7 +2078,14 @@
       "backgroundColor": { "color": { "r": 245, "g": 244, "b": 238 } },
       "type": "page",
       "id": "d896de97-47c6-4509-8358-eba27f168b06",
-      "pageTemplateType": ""
+      "pageTemplateType": "",
+      "groups": {
+        "e0c4d7e9-5997-4826-a740-144a39ad5cb6": {
+          "name": "Background",
+          "isLocked": true,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [
@@ -2066,7 +2137,8 @@
           "id": "dcedd70c-ee4e-490c-90b1-07ca6a17a714",
           "x": 110,
           "y": 131,
-          "type": "shape"
+          "type": "shape",
+          "groupId": "02334812-5f7b-4956-a4a1-14739124592a"
         },
         {
           "opacity": 100,
@@ -2101,7 +2173,8 @@
           "id": "5f69e607-0710-4fee-b098-d1041d363a8d",
           "x": 117,
           "y": -250,
-          "type": "shape"
+          "type": "shape",
+          "groupId": "02334812-5f7b-4956-a4a1-14739124592a"
         },
         {
           "opacity": 100,
@@ -2126,7 +2199,8 @@
           "id": "1655cf00-79c7-407b-a8b7-69fa5df30ded",
           "x": 29,
           "y": -183,
-          "type": "shape"
+          "type": "shape",
+          "groupId": "02334812-5f7b-4956-a4a1-14739124592a"
         },
         {
           "opacity": 100,
@@ -2165,7 +2239,8 @@
             "isOptimized": false,
             "baseColor": "#abacaf",
             "isExternal": true
-          }
+          },
+          "groupId": "bb04fb07-bbf4-4ec6-8387-be22d1469465"
         },
         {
           "opacity": 100,
@@ -2240,7 +2315,8 @@
           "id": "87ba7d25-84a3-4a49-a9cc-cb4b5d835e7f",
           "x": 223,
           "y": 290,
-          "type": "text"
+          "type": "text",
+          "groupId": "bb04fb07-bbf4-4ec6-8387-be22d1469465"
         },
         {
           "opacity": 100,
@@ -2315,7 +2391,8 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "type": "text"
+          "type": "text",
+          "groupId": "bb04fb07-bbf4-4ec6-8387-be22d1469465"
         },
         {
           "opacity": 100,
@@ -2355,7 +2432,8 @@
             "sizes": [],
             "isOptimized": false,
             "isExternal": true
-          }
+          },
+          "groupId": "f129f23c-2ced-4b86-a615-07e02d99e73b"
         },
         {
           "opacity": 100,
@@ -2430,7 +2508,8 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "type": "text"
+          "type": "text",
+          "groupId": "f129f23c-2ced-4b86-a615-07e02d99e73b"
         },
         {
           "opacity": 100,
@@ -2505,7 +2584,8 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "type": "text"
+          "type": "text",
+          "groupId": "f129f23c-2ced-4b86-a615-07e02d99e73b"
         },
         {
           "opacity": 100,
@@ -2599,7 +2679,24 @@
       "backgroundColor": { "color": { "r": 70, "g": 76, "b": 90 } },
       "type": "page",
       "id": "4edd4335-d94c-4b29-85e0-0b419ec1746c",
-      "pageTemplateType": ""
+      "pageTemplateType": "",
+      "groups": {
+        "02334812-5f7b-4956-a4a1-14739124592a": {
+          "name": "Background",
+          "isLocked": true,
+          "isCollapsed": true
+        },
+        "bb04fb07-bbf4-4ec6-8387-be22d1469465": {
+          "name": "Section",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "f129f23c-2ced-4b86-a615-07e02d99e73b": {
+          "name": "Section",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [
@@ -2651,7 +2748,8 @@
           "id": "0dcdf7f8-1c67-4927-b639-1d315728a3d8",
           "x": -153,
           "y": 131,
-          "type": "shape"
+          "type": "shape",
+          "groupId": "b2c7d6b8-4d4d-400a-926a-2178760f92f1"
         },
         {
           "opacity": 100,
@@ -2686,7 +2784,8 @@
           "id": "21873cb8-7195-4b34-acc9-d150e0fd53da",
           "x": 229,
           "y": 448,
-          "type": "shape"
+          "type": "shape",
+          "groupId": "b2c7d6b8-4d4d-400a-926a-2178760f92f1"
         },
         {
           "opacity": 100,
@@ -2703,7 +2802,8 @@
           "focalY": 50,
           "mask": { "type": "rectangle" },
           "id": "7b8cc4d9-0ce8-4132-b1f2-a769b4d174cd",
-          "type": "shape"
+          "type": "shape",
+          "groupId": "b2c7d6b8-4d4d-400a-926a-2178760f92f1"
         },
         {
           "opacity": 100,
@@ -3003,7 +3103,14 @@
       "backgroundColor": { "color": { "r": 245, "g": 244, "b": 238 } },
       "type": "page",
       "id": "0df5cf42-08b1-420c-ac21-64d370c404a4",
-      "pageTemplateType": ""
+      "pageTemplateType": "",
+      "groups": {
+        "b2c7d6b8-4d4d-400a-926a-2178760f92f1": {
+          "name": "Background",
+          "isLocked": true,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [
@@ -3055,7 +3162,8 @@
           "id": "f72e3cab-d2e8-41d9-abb0-9ebcad4668e6",
           "x": 110,
           "y": 131,
-          "type": "shape"
+          "type": "shape",
+          "groupId": "9ca0d2ac-8785-480f-b68f-9b1f5a66e83f"
         },
         {
           "opacity": 100,
@@ -3090,7 +3198,8 @@
           "id": "24b8f1c4-dc6a-4ad1-8e46-b0d838136d30",
           "x": 117,
           "y": -250,
-          "type": "shape"
+          "type": "shape",
+          "groupId": "9ca0d2ac-8785-480f-b68f-9b1f5a66e83f"
         },
         {
           "opacity": 100,
@@ -3115,7 +3224,8 @@
           "id": "b5e4bf11-878b-4639-acec-9dd17ca50714",
           "x": 29,
           "y": -183,
-          "type": "shape"
+          "type": "shape",
+          "groupId": "9ca0d2ac-8785-480f-b68f-9b1f5a66e83f"
         },
         {
           "opacity": 100,
@@ -3154,7 +3264,8 @@
             "isOptimized": false,
             "baseColor": "#d9e8e8",
             "isExternal": true
-          }
+          },
+          "groupId": "2dbfbeb5-5d4a-4c0e-8870-368dd3c6a325"
         },
         {
           "opacity": 100,
@@ -3229,7 +3340,8 @@
           "id": "703c5e62-ccf4-4942-ada6-f4d073642914",
           "x": 223,
           "y": 290,
-          "type": "text"
+          "type": "text",
+          "groupId": "2dbfbeb5-5d4a-4c0e-8870-368dd3c6a325"
         },
         {
           "opacity": 100,
@@ -3304,7 +3416,8 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "type": "text"
+          "type": "text",
+          "groupId": "2dbfbeb5-5d4a-4c0e-8870-368dd3c6a325"
         },
         {
           "opacity": 100,
@@ -3344,7 +3457,8 @@
             "isOptimized": false,
             "baseColor": "#b6473f",
             "isExternal": true
-          }
+          },
+          "groupId": "d101ba21-6c8c-40f8-aef1-5c73bfa120d7"
         },
         {
           "opacity": 100,
@@ -3419,7 +3533,8 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "type": "text"
+          "type": "text",
+          "groupId": "d101ba21-6c8c-40f8-aef1-5c73bfa120d7"
         },
         {
           "opacity": 100,
@@ -3494,7 +3609,8 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "type": "text"
+          "type": "text",
+          "groupId": "d101ba21-6c8c-40f8-aef1-5c73bfa120d7"
         },
         {
           "opacity": 100,
@@ -3588,7 +3704,24 @@
       "backgroundColor": { "color": { "r": 66, "g": 78, "b": 68 } },
       "type": "page",
       "id": "141b9a5e-a39a-44b8-b1f8-3ae52bce927f",
-      "pageTemplateType": ""
+      "pageTemplateType": "",
+      "groups": {
+        "9ca0d2ac-8785-480f-b68f-9b1f5a66e83f": {
+          "name": "Background",
+          "isLocked": true,
+          "isCollapsed": true
+        },
+        "2dbfbeb5-5d4a-4c0e-8870-368dd3c6a325": {
+          "name": "Section",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "d101ba21-6c8c-40f8-aef1-5c73bfa120d7": {
+          "name": "Section",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [
@@ -3640,7 +3773,8 @@
           "id": "95fdd935-299a-4975-9e56-031d98bceab9",
           "x": -153,
           "y": 131,
-          "type": "shape"
+          "type": "shape",
+          "groupId": "2044dc02-f340-4853-95b6-fb981b434a66"
         },
         {
           "opacity": 100,
@@ -3675,7 +3809,8 @@
           "id": "2e72f5a3-4f8d-48a7-a72c-3d8abe0cd969",
           "x": 229,
           "y": 448,
-          "type": "shape"
+          "type": "shape",
+          "groupId": "2044dc02-f340-4853-95b6-fb981b434a66"
         },
         {
           "opacity": 100,
@@ -3692,7 +3827,8 @@
           "focalY": 50,
           "mask": { "type": "rectangle" },
           "id": "29050045-f073-4127-9e2d-957e8f7674e2",
-          "type": "shape"
+          "type": "shape",
+          "groupId": "2044dc02-f340-4853-95b6-fb981b434a66"
         },
         {
           "opacity": 100,
@@ -3992,7 +4128,14 @@
       "backgroundColor": { "color": { "r": 245, "g": 244, "b": 238 } },
       "type": "page",
       "id": "de3c610c-ae10-49b7-ba37-95a3320d68a7",
-      "pageTemplateType": ""
+      "pageTemplateType": "",
+      "groups": {
+        "2044dc02-f340-4853-95b6-fb981b434a66": {
+          "name": "Background",
+          "isLocked": true,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [
@@ -4044,7 +4187,8 @@
           "id": "9355719e-eeaa-4d7e-95e2-5e053b0389a8",
           "x": 110,
           "y": 131,
-          "type": "shape"
+          "type": "shape",
+          "groupId": "2ef4008b-8b60-4300-90a1-8654d3fc428b"
         },
         {
           "opacity": 100,
@@ -4079,7 +4223,8 @@
           "id": "311f5ee9-6176-4e02-af0e-d4d1a23d884b",
           "x": 117,
           "y": -250,
-          "type": "shape"
+          "type": "shape",
+          "groupId": "2ef4008b-8b60-4300-90a1-8654d3fc428b"
         },
         {
           "opacity": 100,
@@ -4104,7 +4249,8 @@
           "id": "e10cd290-a090-440e-9fe3-d5ec15a5f611",
           "x": 29,
           "y": -183,
-          "type": "shape"
+          "type": "shape",
+          "groupId": "2ef4008b-8b60-4300-90a1-8654d3fc428b"
         },
         {
           "opacity": 100,
@@ -4143,7 +4289,8 @@
             "isOptimized": false,
             "baseColor": "#e4e4e5",
             "isExternal": true
-          }
+          },
+          "groupId": "ad3f83e7-2118-42ec-8056-3c3dd577b031"
         },
         {
           "opacity": 100,
@@ -4218,7 +4365,8 @@
           "id": "2c6c86d3-f394-4de8-8a82-6303134e8d03",
           "x": 223,
           "y": 290,
-          "type": "text"
+          "type": "text",
+          "groupId": "ad3f83e7-2118-42ec-8056-3c3dd577b031"
         },
         {
           "opacity": 100,
@@ -4293,7 +4441,8 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "type": "text"
+          "type": "text",
+          "groupId": "ad3f83e7-2118-42ec-8056-3c3dd577b031"
         },
         {
           "opacity": 100,
@@ -4333,7 +4482,8 @@
             "isOptimized": false,
             "baseColor": "#6b564f",
             "isExternal": true
-          }
+          },
+          "groupId": "fb446e2c-b395-472c-8f1f-6b5ff827ac81"
         },
         {
           "opacity": 100,
@@ -4408,7 +4558,8 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "type": "text"
+          "type": "text",
+          "groupId": "fb446e2c-b395-472c-8f1f-6b5ff827ac81"
         },
         {
           "opacity": 100,
@@ -4483,7 +4634,8 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "type": "text"
+          "type": "text",
+          "groupId": "fb446e2c-b395-472c-8f1f-6b5ff827ac81"
         },
         {
           "opacity": 100,
@@ -4577,7 +4729,24 @@
       "backgroundColor": { "color": { "r": 99, "g": 101, "b": 79 } },
       "type": "page",
       "id": "995c748f-da00-4449-afe2-e0bb26720198",
-      "pageTemplateType": ""
+      "pageTemplateType": "",
+      "groups": {
+        "2ef4008b-8b60-4300-90a1-8654d3fc428b": {
+          "name": "Background",
+          "isLocked": true,
+          "isCollapsed": true
+        },
+        "ad3f83e7-2118-42ec-8056-3c3dd577b031": {
+          "name": "Section",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "fb446e2c-b395-472c-8f1f-6b5ff827ac81": {
+          "name": "Section",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     },
     {
       "elements": [
@@ -4628,7 +4797,8 @@
             "lockedWidth": true,
             "color": { "color": { "r": 0, "g": 0, "b": 0, "a": 0.1 } }
           },
-          "type": "shape"
+          "type": "shape",
+          "groupId": "1370028e-0753-4db2-a4a7-69a259ef8554"
         },
         {
           "opacity": 100,
@@ -4663,7 +4833,8 @@
             "lockedWidth": true,
             "color": { "color": { "r": 0, "g": 0, "b": 0, "a": 0.1 } }
           },
-          "type": "shape"
+          "type": "shape",
+          "groupId": "1370028e-0753-4db2-a4a7-69a259ef8554"
         },
         {
           "opacity": 100,
@@ -4703,7 +4874,8 @@
             "provider": "local",
             "baseColor": "#dbd4d3",
             "isExternal": true
-          }
+          },
+          "groupId": "6b5d68ab-33ff-460e-a411-deea98123782"
         },
         {
           "opacity": 100,
@@ -4815,7 +4987,8 @@
             "isOptimized": false,
             "provider": "local",
             "isExternal": true
-          }
+          },
+          "groupId": "25258554-a2fb-4a8c-b22a-ffe3de09551c"
         },
         {
           "x": 221,
@@ -4856,7 +5029,8 @@
             "provider": "local",
             "baseColor": "#47261a",
             "isExternal": true
-          }
+          },
+          "groupId": "28b266c2-f8b6-48cf-93a5-e52705452e96"
         },
         {
           "opacity": 100,
@@ -4931,7 +5105,8 @@
           "basedOn": "7d978541-31ae-49b6-9da9-80bce2fbbccd",
           "id": "b9b2aa64-41af-4b5a-96bf-e966d11eef1b",
           "x": 51,
-          "y": 226
+          "y": 226,
+          "groupId": "6b5d68ab-33ff-460e-a411-deea98123782"
         },
         {
           "x": 51,
@@ -5006,7 +5181,8 @@
           "height": 17,
           "scale": 100,
           "focalX": 50,
-          "focalY": 50
+          "focalY": 50,
+          "groupId": "25258554-a2fb-4a8c-b22a-ffe3de09551c"
         },
         {
           "x": 51,
@@ -5081,7 +5257,8 @@
           "height": 37,
           "scale": 100,
           "focalX": 50,
-          "focalY": 50
+          "focalY": 50,
+          "groupId": "28b266c2-f8b6-48cf-93a5-e52705452e96"
         },
         {
           "x": 221,
@@ -5121,7 +5298,8 @@
             "isOptimized": false,
             "baseColor": "#b3b7b9",
             "isExternal": true
-          }
+          },
+          "groupId": "74c6bc9a-cee5-4732-9c4c-930ac27e0bfa"
         },
         {
           "x": 51,
@@ -5196,7 +5374,8 @@
           "height": 37,
           "scale": 100,
           "focalX": 50,
-          "focalY": 50
+          "focalY": 50,
+          "groupId": "74c6bc9a-cee5-4732-9c4c-930ac27e0bfa"
         }
       ],
       "backgroundOverlay": "none",
@@ -5233,7 +5412,34 @@
       "backgroundColor": { "color": { "r": 245, "g": 244, "b": 238 } },
       "type": "page",
       "id": "61a81226-95e0-47c7-92b1-071477f13da2",
-      "pageTemplateType": "list"
+      "pageTemplateType": "list",
+      "groups": {
+        "1370028e-0753-4db2-a4a7-69a259ef8554": {
+          "name": "Background",
+          "isLocked": true,
+          "isCollapsed": true
+        },
+        "6b5d68ab-33ff-460e-a411-deea98123782": {
+          "name": "Exercise",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "25258554-a2fb-4a8c-b22a-ffe3de09551c": {
+          "name": "Sleep",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "28b266c2-f8b6-48cf-93a5-e52705452e96": {
+          "name": "Vitamins",
+          "isLocked": false,
+          "isCollapsed": true
+        },
+        "74c6bc9a-cee5-4732-9c4c-930ac27e0bfa": {
+          "name": "Coffee",
+          "isLocked": false,
+          "isCollapsed": true
+        }
+      }
     }
   ],
   "current": null,

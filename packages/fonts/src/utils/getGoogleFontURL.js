@@ -53,7 +53,7 @@ function getGoogleFontURL(fonts, display = 'swap') {
       family += ':' + axisTagList;
     }
 
-    const axisTuples = variants
+    const axisTuples = [...variants]
       .sort((a, b) => {
         if (a[0] < b[0]) {
           return -1;

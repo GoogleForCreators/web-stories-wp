@@ -13,7 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-const getFileNameFromUrl = (url) =>
-  url.substring(url.lastIndexOf('/') + 1, url.lastIndexOf('.'));
+
+/**
+ * Returns the file name including extension from a URL.
+ *
+ * @param {string} url File URL.
+ * @return {string} File name.
+ */
+function getFileNameFromUrl(url) {
+  return url.split('/').at(-1).split(/[#?]/).at(0);
+}
 
 export default getFileNameFromUrl;

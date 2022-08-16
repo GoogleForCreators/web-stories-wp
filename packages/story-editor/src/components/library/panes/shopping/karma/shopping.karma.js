@@ -240,5 +240,28 @@ describe('Shopping integration', () => {
       expect(tooltip).toHaveTextContent(tooltipText);
       await fixture.snapshot('Product pill tooltip on hover');
     });
+
+    it('add product via dragging', async () => {
+      expect(isStoryEmpty()).toEqual(true);
+      await searchProduct('hoodie');
+
+      // Only background initially
+      const bgFrame = fixture.editor.canvas.framesLayer.frames[0].node;
+
+      const product = fixture.querySelector(
+        '[aria-label="Products list"] [role="listitem"] img'
+      );
+
+      await fixture.events.mouse.seq(({ moveRel, down, up }) => [
+        moveRel(product, 10, 10),
+        down(),
+        /* The steps give time for Moveable to react and display a clone to drag */
+        moveRel(bgFrame, 50, 50, { steps: 20 }),
+        up(),
+      ]);
+
+      // Now background + 1 extra element
+      expect(fixture.editor.canvas.framesLayer.frames.length).toBe(2);
+    });
   });
 });

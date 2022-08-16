@@ -33,7 +33,8 @@ import {
  */
 import { addAllowedErrorMessage } from '../../config/bootstrap.js';
 
-describe('Publishing Flow', () => {
+//eslint-disable-next-line jest/no-disabled-tests -- TODO(#11970): Fix flakey test.
+describe.skip('Publishing Flow', () => {
   let uploadedFiles;
   let removeCORSErrorMessage;
   let removeResourceErrorMessage;

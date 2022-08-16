@@ -20,8 +20,8 @@
 import {
   addRequestInterception,
   createNewStory,
-  publishStory,
   insertStoryTitle,
+  publishStory,
 } from '@web-stories-wp/e2e-test-utils';
 
 /**
@@ -63,14 +63,16 @@ describe('Saving Story', () => {
     stopRequestInterception();
   });
 
-  it('should display published dialog', async () => {
+  //eslint-disable-next-line jest/no-disabled-tests -- TODO(#11992): Fix flakey test.
+  it.skip('should display published dialog', async () => {
     await createNewStory();
     await insertStoryTitle('Test story');
     await publishStory();
     await expect(page).toMatch('Story published.');
   });
 
-  it('should display detailed error snackbar message', async () => {
+  // eslint-disable-next-line jest/no-disabled-tests -- TODO(#11992): Fix flakey test.
+  it.skip('should display detailed error snackbar message', async () => {
     mockResponse = {
       status: 500,
       body: JSON.stringify({

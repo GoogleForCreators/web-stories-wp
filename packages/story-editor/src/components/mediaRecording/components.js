@@ -19,13 +19,6 @@
  */
 import styled from 'styled-components';
 import { Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
-import { withOverlay } from '@googleforcreators/moveable';
-
-/**
- * Internal dependencies
- */
-import { Layer, PageArea } from '../canvas/layout';
-import { Z_INDEX_RECORDING_MODE } from '../../constants/zIndex';
 
 export const MessageWrap = styled.div`
   display: flex;
@@ -51,15 +44,6 @@ export const MessageText = styled(Text).attrs({
   margin: 0 0 14px;
 `;
 
-export const LayerWithGrayout = withOverlay(styled(Layer)`
-  background-color: ${({ theme }) => theme.colors.opacity.overlayExtraDark};
-  z-index: ${Z_INDEX_RECORDING_MODE};
-`);
-
-export const DisplayPageArea = styled(PageArea)`
-  position: absolute;
-`;
-
 export const Wrapper = styled.div`
   background-color: ${({ theme }) => theme.colors.standard.white};
   border-radius: 5px;
@@ -80,6 +64,7 @@ export const VideoWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 `;
 
 export const Photo = styled.img`
@@ -99,4 +84,5 @@ export const Video = styled.video.attrs({
   height: 100%;
   object-fit: cover;
   border-radius: 5px;
+  ${({ $isProcessing }) => $isProcessing && 'filter: blur(5px)'};
 `;

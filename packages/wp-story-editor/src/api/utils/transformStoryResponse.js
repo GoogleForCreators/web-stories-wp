@@ -18,12 +18,14 @@
  */
 import { snakeToCamelCaseObjectKeys } from '@web-stories-wp/wp-utils';
 
-// eslint-disable-next-line complexity -- Transform function is complex.
 function transformStoryResponse(post) {
-  const { _embedded: embedded = {}, meta, _links: links = {}, ...rest } = post;
+  const {
+    _embedded: embedded = {},
+    story_poster: storyPoster,
+    _links: links = {},
+    ...rest
+  } = post;
 
-  const poster = meta['web_stories_poster'];
-  const featuredmedia = embedded?.['wp:featuredmedia']?.[0];
   // TODO: Make author, lockUser, etc. null if absent, instead of these "empty" objects.
   const story = {
     ...snakeToCamelCaseObjectKeys(rest, ['story_data']),
@@ -39,14 +41,19 @@ function transformStoryResponse(post) {
         avatar: embedded?.['wp:lockuser']?.[0].avatar_urls?.['96'] || '',
       },
     },
-    featuredMedia: {
-      id: featuredmedia?.id || 0,
-      height: poster?.height || featuredmedia?.media_details?.height || 0,
-      width: poster?.width || featuredmedia?.media_details?.width || 0,
-      url: poster?.url || featuredmedia?.source_url || '',
-      needsProxy: poster?.needsProxy || false,
-      isExternal: Boolean(poster),
-    },
+    featuredMedia: storyPoster
+      ? {
+          ...storyPoster,
+          isExternal: !storyPoster.id,
+        }
+      : {
+          id: 0,
+          height: 0,
+          width: 0,
+          url: '',
+          needsProxy: false,
+          isExternal: false,
+        },
     publisherLogo: {
       id: embedded?.['wp:publisherlogo']?.[0].id || 0,
       height: embedded?.['wp:publisherlogo']?.[0]?.media_details?.height || 0,

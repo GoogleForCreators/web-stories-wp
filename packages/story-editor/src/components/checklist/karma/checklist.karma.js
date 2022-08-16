@@ -398,63 +398,6 @@ describe('Checklist integration - Card visibility', () => {
     ACCESSIBILITY_COPY.videoMissingCaptions.title,
   ];
 
-  beforeEach(() => {
-    // mock the wordpress media explorer
-    const media = () => ({
-      state: () => ({
-        get: () => ({
-          first: () => ({
-            toJSON: () => ({
-              id: 10,
-              type: 'image',
-              mimeType: 'image/jpg',
-              src: 'http://localhost:9876/__static__/earth.jpg',
-              alt: 'earth',
-              width: 640,
-              height: 529,
-              baseColor: '#734727',
-            }),
-          }),
-        }),
-      }),
-      on: (_type, callback) => callback(),
-      once: (_type, callback) =>
-        callback({
-          id: 10,
-          type: 'image',
-          mimeType: 'image/jpg',
-          src: 'http://localhost:9876/__static__/earth.jpg',
-          alt: 'earth',
-          width: 640,
-          height: 529,
-          baseColor: '#734727',
-        }),
-      open: () => {},
-      close: () => {},
-      setState: () => {},
-    });
-
-    class Library {}
-
-    class Cropper {
-      extend() {
-        return class ExtendedCropper {};
-      }
-    }
-
-    media.controller = {
-      Cropper,
-      Library,
-    };
-    media.query = () => {};
-
-    // Create fake media browser
-    window.wp = {
-      ...window.wp,
-      media,
-    };
-  });
-
   const addPages = async (count) => {
     let clickCount = 1;
     while (clickCount <= count) {

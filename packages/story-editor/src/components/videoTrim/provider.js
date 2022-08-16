@@ -44,6 +44,7 @@ function VideoTrimProvider({ children }) {
     startOffset,
     endOffset,
     maxOffset,
+    videoNode,
     setStartOffset,
     setEndOffset,
     setVideoNode,
@@ -88,6 +89,7 @@ function VideoTrimProvider({ children }) {
       startOffset,
       endOffset,
       maxOffset,
+      videoNode,
     },
     actions: {
       performTrim,

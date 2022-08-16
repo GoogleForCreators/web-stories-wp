@@ -85,13 +85,8 @@ describe('getStoryPropsToSave', () => {
       content: 'Hello World!',
       pages,
       ...neededProps,
-      meta: {
-        web_stories_poster: undefined,
-        web_stories_products: [],
-        web_stories_publisher_logo: 1,
-      },
+      products: [],
     };
-    delete expected.publisherLogo;
     delete expected.taxonomies;
 
     expect(props).toStrictEqual(expected);
@@ -155,18 +150,9 @@ describe('getStoryPropsToSave', () => {
       content: 'Hello World!',
       pages,
       ...neededProps,
-      meta: {
-        web_stories_poster: {
-          height: 100,
-          url: 'https://example.com/image.png',
-          width: 100,
-          needsProxy: false,
-        },
-        web_stories_products: [],
-        web_stories_publisher_logo: 1,
-      },
+      products: [],
     };
-    delete expected.publisherLogo;
+
     delete expected.taxonomies;
 
     expect(props).toStrictEqual(expected);

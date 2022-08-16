@@ -37,6 +37,7 @@ import PublisherLogoSettings from './publisherLogo';
 import TelemetrySettings from './telemetry';
 import MediaOptimizationSettings from './mediaOptimization';
 import VideoCacheSettings from './videoCache';
+import DataRemovalSettings from './dataRemoval';
 import ArchiveSettings from './archive';
 import GoogleAnalyticsSettings from './googleAnalytics';
 import { Wrapper, Main } from './components';
@@ -58,6 +59,7 @@ function EditorSettings() {
     newlyCreatedMediaIds,
     isMediaLoading,
     videoCache,
+    dataRemoval,
     archive,
     archivePageId,
     searchPages,
@@ -97,6 +99,7 @@ function EditorSettings() {
           adManagerSlotId,
           adNetwork,
           videoCache,
+          dataRemoval,
           archive,
           archivePageId,
           shoppingProvider,
@@ -120,6 +123,7 @@ function EditorSettings() {
       isMediaLoading,
       newlyCreatedMediaIds,
       videoCache,
+      dataRemoval,
       archive,
       archivePageId,
       searchPages,
@@ -366,6 +370,10 @@ function EditorSettings() {
               <>
                 <VideoCacheSettings
                   isEnabled={videoCache}
+                  updateSettings={updateSettings}
+                />
+                <DataRemovalSettings
+                  isEnabled={dataRemoval}
                   updateSettings={updateSettings}
                 />
                 <ArchiveSettings

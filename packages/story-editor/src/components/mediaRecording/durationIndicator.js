@@ -53,7 +53,7 @@ const Wrapper = styled(Text).attrs({
 function DurationIndicator() {
   const { duration, isRecording } = useMediaRecording(({ state }) => ({
     duration: state.duration,
-    isRecording: state.status === 'recording',
+    isRecording: ['recording', 'paused'].includes(state.status),
   }));
 
   if (!isRecording) {

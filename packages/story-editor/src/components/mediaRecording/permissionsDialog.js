@@ -25,40 +25,30 @@ import { __ } from '@googleforcreators/i18n';
  * Internal dependencies
  */
 import {
-  DisplayPageArea,
-  LayerWithGrayout,
   Wrapper,
   MessageWrap,
   MessageText,
   MessageHeading,
 } from './components';
 
-function IntroMessage() {
-  return (
-    <MessageWrap>
-      <ThemeProvider theme={{ ...dsTheme, colors: lightMode }}>
-        <MessageHeading>{__('Media Recording', 'web-stories')}</MessageHeading>
-
-        <MessageText>
-          {__(
-            'To get started, you need to allow access to your camera and microphone.',
-            'web-stories'
-          )}
-        </MessageText>
-      </ThemeProvider>
-    </MessageWrap>
-  );
-}
-
 function PermissionsDialog() {
   return (
-    <LayerWithGrayout>
-      <DisplayPageArea withSafezone={false} showOverflow>
-        <Wrapper>
-          <IntroMessage />
-        </Wrapper>
-      </DisplayPageArea>
-    </LayerWithGrayout>
+    <Wrapper>
+      <MessageWrap>
+        <ThemeProvider theme={{ ...dsTheme, colors: lightMode }}>
+          <MessageHeading>
+            {__('Media Recording', 'web-stories')}
+          </MessageHeading>
+
+          <MessageText>
+            {__(
+              'To get started, you need to allow access to your camera and microphone.',
+              'web-stories'
+            )}
+          </MessageText>
+        </ThemeProvider>
+      </MessageWrap>
+    </Wrapper>
   );
 }
 

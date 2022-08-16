@@ -2,7 +2,7 @@
   "name": "@googleforcreators/design-system",
   "description": "Main UI components for the Web Stories editor and dashboard",
   "private": false,
-  "version": "0.1.202207041221",
+  "version": "0.1.202208151234",
   "author": {
     "name": "Google",
     "url": "https://creators.google/"
@@ -41,13 +41,13 @@
     "@googleforcreators/patterns": "*",
     "@googleforcreators/react": "*",
     "@googleforcreators/tracking": "*",
-    "big.js": "^6.2.0",
+    "big.js": "^6.2.1",
     "focus-visible": "^5.2.0",
     "mousetrap": "^1.6.5",
     "polished": "^4.2.2",
     "prop-types": "^15.8.1",
     "react-modal": "^3.15.1",
-    "react-transition-group": "^4.4.2",
+    "react-transition-group": "^4.4.5",
     "styled-components": "^5.3.3",
     "uuid": "^8.3.2"
   },

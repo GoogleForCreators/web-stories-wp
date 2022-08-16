@@ -41,6 +41,7 @@ import { trackError } from '@googleforcreators/tracking';
  * Internal dependencies
  */
 import MediaRecordingContext from './context';
+import useTrim from './useTrim';
 import {
   MAX_RECORDING_DURATION_IN_SECONDS,
   VIDEO_FILE_TYPE,
@@ -49,9 +50,23 @@ import {
   AUDIO_MIME_TYPE,
 } from './constants';
 
+function createFile(blob, hasVideo) {
+  const FILE_TYPE = hasVideo ? VIDEO_FILE_TYPE : AUDIO_FILE_TYPE;
+  const MIME_TYPE = hasVideo ? VIDEO_MIME_TYPE : AUDIO_MIME_TYPE;
+  const captureType = hasVideo ? 'webcam' : 'audio';
+  return blobToFile(
+    blob,
+    `${captureType}-capture-${format(new Date(), 'Y-m-d-H-i')}.${FILE_TYPE}`,
+    MIME_TYPE
+  );
+}
+
 function MediaRecordingProvider({ children }) {
   const [isInRecordingMode, setIsInRecordingMode] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
+
+  const [streamNode, setStreamNode] = useState(null);
 
   const [countdown, setCountdown] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -70,6 +85,7 @@ function MediaRecordingProvider({ children }) {
   const [mediaDevices, setMediaDevices] = useState([]);
 
   const [file, setFile] = useState(null);
+  const [originalFile, setOriginalFile] = useState(null);
 
   useEffect(() => {
     if (!mediaDevices.length) {
@@ -90,13 +106,20 @@ function MediaRecordingProvider({ children }) {
   }, [audioInput, mediaDevices, videoInput]);
 
   const [mediaBlobUrl, setMediaBlobUrl] = useState();
+  const [originalMediaBlobUrl, setOriginalMediaBlobUrl] = useState();
 
   const { showSnackbar } = useSnackbar();
 
   const onStop = useCallback(
     (blob) => {
       try {
-        setMediaBlobUrl(createBlob(blob));
+        const recordedBlob = createBlob(blob);
+        setOriginalMediaBlobUrl(recordedBlob);
+        setMediaBlobUrl(recordedBlob);
+
+        const recordedFile = createFile(blob, hasVideo);
+        setOriginalFile(recordedFile);
+        setFile(recordedFile);
       } catch (e) {
         trackError('media_recording_capture', e.message);
         showSnackbar({
@@ -107,18 +130,6 @@ function MediaRecordingProvider({ children }) {
           dismissable: true,
         });
       }
-      const FILE_TYPE = hasVideo ? VIDEO_FILE_TYPE : AUDIO_FILE_TYPE;
-      const MIME_TYPE = hasVideo ? VIDEO_MIME_TYPE : AUDIO_MIME_TYPE;
-      const captureType = hasVideo ? 'webcam' : 'audio';
-      const f = blobToFile(
-        blob,
-        `${captureType}-capture-${format(
-          new Date(),
-          'Y-m-d-H-i'
-        )}.${FILE_TYPE}`,
-        MIME_TYPE
-      );
-      setFile(f);
     },
     [showSnackbar, hasVideo]
   );
@@ -135,6 +146,8 @@ function MediaRecordingProvider({ children }) {
     clearMediaBlob,
     muteAudio,
     unMuteAudio,
+    pauseRecording,
+    resumeRecording,
   } = useMediaRecorder({
     recordScreen: false,
     // If the device does not have a microphone or camera, this could result
@@ -148,6 +161,23 @@ function MediaRecordingProvider({ children }) {
     },
     onStop,
   });
+
+  const isRecording = 'recording' === status;
+
+  const onTrimmed = useCallback((trimmedFile) => {
+    setMediaBlobUrl(createBlob(trimmedFile));
+    setFile(trimmedFile);
+  }, []);
+
+  const {
+    trimData,
+    isAdjustingTrim,
+    isProcessingTrim,
+    startTrim,
+    onTrim,
+    resetTrim,
+    cancelTrim,
+  } = useTrim({ setDuration, onTrimmed, file: originalFile, isRecording });
 
   useEffect(() => {
     if (
@@ -163,6 +193,7 @@ function MediaRecordingProvider({ children }) {
   const speak = useLiveRegion();
 
   const stopRecording = useCallback(() => {
+    setIsProcessing(true);
     originalStopRecording();
     speak(__('Recording stopped', 'web-stories'));
   }, [originalStopRecording, speak]);
@@ -223,12 +254,14 @@ function MediaRecordingProvider({ children }) {
   const previousBlobUrl = usePrevious(mediaBlobUrl);
 
   useEffect(() => {
-    if (previousBlobUrl && previousBlobUrl !== mediaBlobUrl) {
+    if (
+      previousBlobUrl &&
+      previousBlobUrl !== mediaBlobUrl &&
+      previousBlobUrl !== originalMediaBlobUrl
+    ) {
       revokeBlob(previousBlobUrl);
     }
-  }, [mediaBlobUrl, previousBlobUrl]);
-
-  const isRecording = 'recording' === status;
+  }, [mediaBlobUrl, previousBlobUrl, originalMediaBlobUrl]);
 
   useEffect(() => {
     let timeout;
@@ -273,9 +306,12 @@ function MediaRecordingProvider({ children }) {
     setIsGif(false);
     setMediaBlobUrl(null);
     setCountdown(0);
+    setIsProcessing(false);
+    setDuration(0);
+    resetTrim();
 
     resetStream();
-  }, [resetStream]);
+  }, [resetStream, resetTrim]);
 
   const toggleRecordingMode = useCallback(() => {
     setIsInRecordingMode((state) => !state);
@@ -306,12 +342,18 @@ function MediaRecordingProvider({ children }) {
         status,
         mediaBlob,
         mediaBlobUrl,
+        originalMediaBlobUrl,
         liveStream,
         file,
         isGif,
         duration,
         countdown,
+        isProcessing,
         isCountingDown: isCountingDown || wasCountingDown,
+        trimData,
+        isAdjustingTrim,
+        streamNode,
+        isProcessingTrim,
       },
       actions: {
         toggleRecordingMode,
@@ -335,6 +377,12 @@ function MediaRecordingProvider({ children }) {
         setCountdown,
         resetState,
         resetStream,
+        onTrim,
+        startTrim,
+        setStreamNode,
+        pauseRecording,
+        resumeRecording,
+        cancelTrim,
       },
     }),
     [
@@ -349,6 +397,7 @@ function MediaRecordingProvider({ children }) {
       status,
       mediaBlob,
       mediaBlobUrl,
+      originalMediaBlobUrl,
       liveStream,
       file,
       isGif,
@@ -356,6 +405,11 @@ function MediaRecordingProvider({ children }) {
       countdown,
       isCountingDown,
       wasCountingDown,
+      isProcessing,
+      trimData,
+      isAdjustingTrim,
+      streamNode,
+      isProcessingTrim,
       toggleRecordingMode,
       toggleVideo,
       toggleAudio,
@@ -371,6 +425,12 @@ function MediaRecordingProvider({ children }) {
       unMuteAudio,
       resetState,
       resetStream,
+      onTrim,
+      startTrim,
+      setStreamNode,
+      pauseRecording,
+      resumeRecording,
+      cancelTrim,
     ]
   );
 
