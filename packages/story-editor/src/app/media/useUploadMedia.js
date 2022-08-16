@@ -183,12 +183,14 @@ function useUploadMedia({
   // Handle *finished* items.
   // At this point, uploaded resources have been updated and rendered everywhere,
   // and no further action is required.
-  // It is safe to remove them from the queue now.
+  // It is safe to remove them from the queue now and *properly* prepend them
+  // to the media library list.
   useEffect(() => {
-    for (const { id } of finished) {
+    for (const { id, resource } of finished) {
       removeItem({ id });
+      prependMedia({ media: [resource] });
     }
-  }, [finished, removeItem]);
+  }, [finished, removeItem, prependMedia]);
 
   // Handle *failed* items.
   // Remove resources from media library and canvas.
