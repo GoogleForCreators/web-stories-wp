@@ -41,8 +41,8 @@ describe('Shopping product', () => {
         return false;
       });
     }
-
-    it('should show a floating menu with product dropdown', async () => {
+    //eslint-disable-next-line jest/no-disabled-tests -- TODO(#11989): Fix flakey test.
+    it.skip('should show a floating menu with product dropdown', async () => {
       const productText = 'Hoodie with Zipper';
       await createNewStory();
       await expect(isStoryEmpty()).resolves.toBe(true);

@@ -11,6 +11,9 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+
 env:
   PR_NUMBER: ${{ github.event.pull_request.number }}
   ISSUE_REFERENCE_REGEX: \(#([0-9]+)\)
@@ -23,6 +26,11 @@ jobs:
     timeout-minutes: 5
     if: github.event.pull_request.merged == true
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@dd2c410b088af7c0dc8046f3ac9a8f4148492a95
+        with:
+          egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
+
       # https://github.com/ZenHubIO/API#get-release-reports-for-a-repository
       # https://github.com/ZenHubIO/API#add-or-remove-issues-to-or-from-a-release-report
       - name: Get next release
@@ -50,7 +58,7 @@ jobs:
           RELEASE_ID: ${{ steps.release.outputs.release_id }}
 
       - name: Retrieve linked issues
-        uses: actions/github-script@v6
+        uses: actions/github-script@d50f485531ba88479582bc2da03ff424389af5c1
         id: linked-issues
         with:
           script: |

@@ -154,6 +154,7 @@ function delete_posts(): void {
 		[
 			'fields'           => 'ids',
 			'suppress_filters' => false,
+			'post_status'      => 'any',
 			'post_type'        => [
 				Story_Post_Type::POST_TYPE_SLUG,
 				Page_Template_Post_Type::POST_TYPE_SLUG,
@@ -183,6 +184,10 @@ function delete_terms(): void {
 	$taxonomies[] = $injector->make( Media_Source_Taxonomy::class )->get_taxonomy_slug();
 	$taxonomies[] = $injector->make( Category_Taxonomy::class )->get_taxonomy_slug();
 	$taxonomies[] = $injector->make( Tag_Taxonomy::class )->get_taxonomy_slug();
+
+	foreach ( $taxonomies as $taxonomy ) {
+		clean_taxonomy_cache( $taxonomy );
+	}
 
 	$term_query = new WP_Term_Query();
 	$terms      = $term_query->query(

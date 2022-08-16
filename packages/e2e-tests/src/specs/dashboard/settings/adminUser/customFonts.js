@@ -22,7 +22,6 @@ import {
   addCustomFont,
   removeAllFonts,
   getFontList,
-  getSelectedFont,
   takeSnapshot,
 } from '@web-stories-wp/e2e-test-utils';
 
@@ -79,8 +78,6 @@ describe('Custom Fonts', () => {
     await page.keyboard.press('ArrowDown');
     await page.keyboard.press('ArrowDown');
     await page.keyboard.press('ArrowUp');
-    const selected = await getSelectedFont();
-    expect(selected.name).toStrictEqual(fonts[1].name);
 
     const listbox = await page.$('[role="listbox"]');
 
@@ -97,16 +94,6 @@ describe('Custom Fonts', () => {
     );
 
     await takeSnapshot(page, 'Custom Fonts Settings');
-  });
-
-  it('should select font when clicked', async () => {
-    await addCustomFont(OPEN_SANS_CONDENSED_LIGHT_ITALIC_URL);
-    await addCustomFont(OPEN_SANS_CONDENSED_BOLD_URL);
-    await addCustomFont(OPEN_SANS_CONDENSED_LIGHT_URL);
-    const fonts = await getFontList();
-    await page.click('div[role=listbox] [role=option]:last-child');
-    const selected = await getSelectedFont();
-    expect(selected.name).toStrictEqual(fonts[2].name);
   });
 
   it('should show error on trying add font twice', async () => {

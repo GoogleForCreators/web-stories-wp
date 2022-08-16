@@ -50,7 +50,6 @@ import {
   useSidebar,
   MediaUpload,
 } from '@googleforcreators/story-editor';
-import { useFeature } from 'flagged';
 /**
  * Internal dependencies
  */
@@ -119,7 +118,6 @@ const LogoImg = styled.img`
 `;
 
 function PublishPanel({ nameOverride }) {
-  const enablePosterHotlinking = useFeature('posterHotlinking');
   const {
     state: { users },
   } = useSidebar();
@@ -307,10 +305,9 @@ function PublishPanel({ nameOverride }) {
     );
   }
 
-  const menuOptions = [
-    enablePosterHotlinking && hasUploadMediaAction && 'upload',
-    enablePosterHotlinking && 'hotlink',
-  ].filter(Boolean);
+  const menuOptions = [hasUploadMediaAction && 'upload', 'hotlink'].filter(
+    Boolean
+  );
 
   return (
     <Panel
@@ -366,7 +363,7 @@ function PublishPanel({ nameOverride }) {
                 ariaLabel={__('Poster image', 'web-stories')}
                 onChangeErrorText={posterErrorMessage}
                 imgProps={featuredMedia}
-                canUpload={hasUploadMediaAction || enablePosterHotlinking}
+                canUpload
                 menuOptions={menuOptions}
               />
             </MediaWrapper>

@@ -24,7 +24,7 @@ export const STORY_FIELDS = [
   'modified',
   'excerpt',
   'link',
-  'meta.web_stories_poster',
+  'story_poster',
   'story_data',
   'preview_link',
   'edit_link',
@@ -34,8 +34,7 @@ export const STORY_FIELDS = [
   'password',
 ].join(',');
 
-export const STORY_EMBED =
-  'wp:featuredmedia,wp:lockuser,author,wp:publisherlogo,wp:term';
+export const STORY_EMBED = 'wp:lockuser,author,wp:publisherlogo,wp:term';
 
 export const MEDIA_FIELDS = [
   'id',

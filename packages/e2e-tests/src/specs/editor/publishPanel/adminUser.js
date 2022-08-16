@@ -82,7 +82,16 @@ describe('Publish panel in document tab', () => {
     await page.keyboard.type('auth');
 
     // wait for search results
-    await page.waitForTimeout(200);
+    await page.waitForResponse(
+      (response) =>
+        //eslint-disable-next-line jest/no-conditional-in-test
+        response.url().includes('web-stories/v1/users') &&
+        response.url().includes('search=auth') &&
+        response.status() === 200
+    );
+
+    // add small delay after we have results
+    await page.waitForTimeout(400);
 
     const optionListAfterSearch = await authorDropDownOptions.$$eval(
       'li[role="option"]',

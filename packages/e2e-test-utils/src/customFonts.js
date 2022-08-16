@@ -65,23 +65,6 @@ export const getFontList = async () => {
 };
 
 /**
- * Get currently selected font in the listbox
- *
- * @return {Promise<FontData>} selected font data.
- */
-export const getSelectedFont = async () => {
-  try {
-    const element = await page.$(
-      'div[role=listbox] [aria-selected=true] div:first-child'
-    );
-    const optionsText = await page.evaluate((el) => el.innerText, element);
-    return parseText([optionsText])[0];
-  } catch (e) {
-    return { name: '', url: '' };
-  }
-};
-
-/**
  * Add a custom font on the settings page.
  *
  * @param {string} fontUrl Font URL.

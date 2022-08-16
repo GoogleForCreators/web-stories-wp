@@ -19,6 +19,7 @@
  */
 import { useEffect, useRef } from '@googleforcreators/react';
 import { useSnackbar } from '@googleforcreators/design-system';
+import { trackError } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies
@@ -99,6 +100,9 @@ export default function useFetchMediaEffect({
           nextPageToken,
         });
       } catch (e) {
+        // eslint-disable-next-line no-console -- We want to surface this error.
+        console.error(e);
+        trackError('fetch_media3p', e.message);
         fetchMediaError({ provider, pageToken });
         showSnackbar({
           message: PROVIDERS[provider].fetchMediaErrorMessage,

@@ -35,6 +35,7 @@ import {
   getCurrentVersionNumber,
   updateVersionNumbers,
   updateCdnUrl,
+  resizeSvgPath,
 } from './utils/index.js';
 
 const PLUGIN_DIR = process.cwd();
@@ -167,6 +168,23 @@ program
     );
 
     console.log(`Assets CDN URL successfully updated!`);
+  });
+
+program
+  .command('normalize-path')
+  .arguments('<width> <height> <path>')
+  .description('Normalize SVG paths for shapes', {
+    width: 'Viewbox width',
+    height: 'Viewbox height',
+    path: 'Path to normalize',
+  })
+  .on('--help', () => {
+    console.log('');
+    console.log('Example:');
+    console.log('  $ commander.js normalize-path 392 392 "M10 10"');
+  })
+  .action((width, height, path) => {
+    console.log(resizeSvgPath(Number(width), Number(height), path));
   });
 
 program.parse(process.argv);

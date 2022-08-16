@@ -45,7 +45,8 @@ describe('Stories Dashboard', () => {
     await takeSnapshot(page, 'Stories Dashboard', { percyCSS });
   });
 
-  it('should be able to skip to main content of Dashboard for keyboard navigation', async () => {
+  //eslint-disable-next-line jest/no-disabled-tests -- TODO(#11930): Fix flakey test.
+  it.skip('should be able to skip to main content of Dashboard for keyboard navigation', async () => {
     await visitDashboard();
 
     // If there are no existing stories, the app goes to the templates page instead.

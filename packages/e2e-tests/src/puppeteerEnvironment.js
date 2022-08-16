@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { mkdir, writeFile } from 'fs/promises';
+import util from 'node:util';
 import OriginalEnvironment from 'jest-environment-puppeteer';
 
 const ARTIFACTS_PATH =
@@ -39,14 +40,38 @@ class PuppeteerEnvironment extends OriginalEnvironment {
 
   async handleTestEvent(event, state) {
     if (event.name === 'test_fn_failure') {
-      const testName = state.currentlyRunningTest.name;
-      await this.storeArtifacts(testName);
+      const testName = `${state.currentlyRunningTest.parent.name}  ${state.currentlyRunningTest.name}`;
+      const errors = state.currentlyRunningTest.errors;
+      const eventError = util.inspect(event);
+      let errorMessages = '';
+      errorMessages += `========= ${testName} ==========\n\n`;
+      errorMessages +=
+        'started:' +
+        new Date(event.test.startedAt).toLocaleString() +
+        ' ended:' +
+        new Date().toLocaleString();
+      errorMessages += '============end==========\n\n';
+      errors.forEach((error) => {
+        errorMessages += `${testName}:${error}\n\n`;
+      });
+
+      errorMessages += '=========================\n\n';
+      errorMessages += eventError;
+
+      await this.storeArtifacts(testName, errorMessages);
+
+      if (eventError.includes('JestAssertionError')) {
+        // return already handled
+        return;
+      }
     }
   }
 
-  async storeArtifacts(testName) {
+  async storeArtifacts(testName, errorMessages) {
     const datetime = new Date().toISOString().split('.')[0];
     const fileName = `${testName} ${datetime}`.replaceAll(/[ :"/\\|?*]+/g, '-');
+
+    await writeFile(`${ARTIFACTS_PATH}/${fileName}-errors.txt`, errorMessages);
 
     await writeFile(
       `${ARTIFACTS_PATH}/${fileName}-snapshot.html`,

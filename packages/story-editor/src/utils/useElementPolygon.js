@@ -19,6 +19,7 @@
  */
 import SAT from 'sat';
 import { useUnits } from '@googleforcreators/units';
+import { canSupportMultiBorder } from '@googleforcreators/masks';
 
 /**
  * Internal dependencies
@@ -32,23 +33,29 @@ function useElementPolygon() {
     state.currentPage?.elements?.find(({ isBackground }) => isBackground)
   );
 
-  const getBox = useUnits(({ actions: { getBox } }) => getBox);
-  const bgNode = nodesById[bgElement.id];
-  const {
-    x: bgX,
-    y: bgY,
-    width: bgWidth,
-    height: bgHeight,
-  } = bgNode.getBoundingClientRect();
-  const bgPolygon = new SAT.Box(
-    new SAT.Vector(bgX, bgY),
-    bgWidth,
-    bgHeight
-  ).toPolygon();
-  // The background element is offset by a certain amount, so add that back in for
-  // other elements when resolving their position relative to it.
-  const elementYOffset = -getBox(bgElement).y;
+  const { getBoxWithBorder, getBox } = useUnits(
+    ({ actions: { getBox, getBoxWithBorder } }) => ({
+      getBoxWithBorder,
+      getBox,
+    })
+  );
+
   const getElementPolygon = (element) => {
+    const bgNode = nodesById[bgElement.id];
+    const {
+      x: bgX,
+      y: bgY,
+      width: bgWidth,
+      height: bgHeight,
+    } = bgNode.getBoundingClientRect();
+    const bgPolygon = new SAT.Box(
+      new SAT.Vector(bgX, bgY),
+      bgWidth,
+      bgHeight
+    ).toPolygon();
+    // The background element is offset by a certain amount, so add that back in for
+    // other elements when resolving their position relative to it.
+    const elementYOffset = -getBox(bgElement).y;
     if (element.isBackground) {
       return bgPolygon;
     }
@@ -57,7 +64,9 @@ function useElementPolygon() {
     if (!node) {
       return null;
     }
-    const box = getBox(element);
+    const box = canSupportMultiBorder(element)
+      ? getBoxWithBorder(element)
+      : getBox(element);
     // Note that we place the box at the center coordinate. We do this for the angle
     // to apply correctly. We correct for this offset with `setOffset`` later.
     const center = new SAT.Vector(

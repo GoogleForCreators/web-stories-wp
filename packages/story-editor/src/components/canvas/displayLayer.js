@@ -184,7 +184,7 @@ function DisplayLayer() {
       isBackgroundSelected: state.selectedElements?.[0]?.isBackground,
       pageAttachment: state.currentPage?.pageAttachment || {},
       shoppingAttachment: state.currentPage?.shoppingAttachment || {},
-      hasProducts: state.currentPage.elements?.some(
+      hasProducts: state.currentPage?.elements?.some(
         ({ type, product }) =>
           type === ELEMENT_TYPES.PRODUCT && product?.productId
       ),

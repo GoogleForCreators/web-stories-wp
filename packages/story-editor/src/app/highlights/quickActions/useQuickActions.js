@@ -30,6 +30,7 @@ import { trackEvent } from '@googleforcreators/tracking';
 import { ELEMENT_TYPES } from '@googleforcreators/elements';
 import { resourceList } from '@googleforcreators/media';
 import styled from 'styled-components';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -66,6 +67,7 @@ const {
   Captions,
   Cross,
   Settings,
+  Scissors,
 } = Icons;
 
 const quickActionIconAttrs = {
@@ -192,6 +194,10 @@ const useQuickActions = () => {
     audioInput,
     videoInput,
     isReady,
+    isProcessing,
+    isAdjustingTrim,
+    isProcessingTrim,
+    startTrim,
   } = useMediaRecording(({ state, actions }) => ({
     isInRecordingMode: state.isInRecordingMode,
     hasAudio: state.hasAudio,
@@ -202,13 +208,19 @@ const useQuickActions = () => {
       state.status === 'ready' &&
       !state.file?.type?.startsWith('image') &&
       !state.isCountingDown,
+    isProcessing: state.isProcessing,
+    isAdjustingTrim: state.isAdjustingTrim,
+    isProcessingTrim: state.isProcessingTrim,
     toggleRecordingMode: actions.toggleRecordingMode,
     toggleVideo: actions.toggleVideo,
     toggleAudio: actions.toggleAudio,
     toggleSettings: actions.toggleSettings,
     muteAudio: actions.muteAudio,
     unMuteAudio: actions.unMuteAudio,
+    startTrim: actions.startTrim,
   }));
+
+  const enableMediaRecordingTrimming = useFeature('recordingTrimming');
 
   const undoRef = useRef(undo);
   undoRef.current = undo;
@@ -718,18 +730,34 @@ const useQuickActions = () => {
         disabled: !isReady || !hasAudio,
         ...actionMenuProps,
       },
+      enableMediaRecordingTrimming && {
+        Icon: Scissors,
+        label: __('Trim Video', 'web-stories'),
+        onClick: () => {
+          trackEvent('media_recording_trim_start');
+          startTrim();
+        },
+        disabled:
+          !isProcessing || isAdjustingTrim || !hasVideo || isProcessingTrim,
+        ...actionMenuProps,
+      },
     ].filter(Boolean);
   }, [
     actionMenuProps,
+    isReady,
     audioInput,
     videoInput,
     hasVideo,
     hasAudio,
+    isProcessing,
+    isAdjustingTrim,
+    isProcessingTrim,
     toggleAudio,
     toggleVideo,
     toggleRecordingMode,
     toggleSettings,
-    isReady,
+    startTrim,
+    enableMediaRecordingTrimming,
   ]);
 
   // Return special actions for media recording mode.

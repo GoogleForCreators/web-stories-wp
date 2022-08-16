@@ -21,12 +21,12 @@ import styled from 'styled-components';
 import { useState, useRef, useEffect } from '@googleforcreators/react';
 import { __, sprintf } from '@googleforcreators/i18n';
 import { PLACEMENT } from '@googleforcreators/design-system';
+
 /**
  * Internal dependencies
  */
 import { Z_INDEX_FOOTER } from '../../../constants/zIndex';
-import { LayerPanel } from '../../panels/design';
-import useLayers from '../../panels/design/layer/useLayers';
+import { LayerPanel, useLayers } from '../../panels/layer';
 import Popup, { NavigationWrapper } from '../../secondaryPopup';
 import { ToggleButton } from '../../toggleButton';
 import { useCanvas } from '../../../app';

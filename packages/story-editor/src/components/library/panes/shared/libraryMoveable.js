@@ -43,6 +43,7 @@ import { useStory, useCanvas } from '../../../../app';
 import objectWithout from '../../../../utils/objectWithout';
 import { noop } from '../../../../utils/noop';
 import usePerformanceTracking from '../../../../utils/usePerformanceTracking';
+import { PRODUCT_WIDTH, PRODUCT_HEIGHT } from '../shopping/constants';
 
 const TargetBox = styled.div`
   position: absolute;
@@ -126,6 +127,10 @@ function LibraryMoveable({
   };
 
   const resetMoveable = useCallback(() => {
+    if (!targetBoxRef.current || !cloneRef.current) {
+      return;
+    }
+
     targetBoxRef.current.style.transform = null;
     cloneRef.current.style.transform = null;
     // Hide the clone, too.
@@ -260,6 +265,14 @@ function LibraryMoveable({
         insertTextSetByOffset(elements, {
           offsetX: editorToDataX(x - pageX, pageSize.width),
           offsetY: editorToDataY(y - pageY, pageSize.height),
+        });
+      } else if (type === 'product') {
+        insertElement(type, {
+          ...elementProps,
+          width: PRODUCT_WIDTH,
+          height: PRODUCT_HEIGHT,
+          x: editorToDataX(x - pageX, pageSize.width),
+          y: editorToDataY(y - pageY, pageSize.height),
         });
       } else {
         insertElement(type, {

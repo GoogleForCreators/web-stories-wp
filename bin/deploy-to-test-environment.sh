@@ -52,8 +52,8 @@ fi
 
 echo "Fetching remote repository"
 
-git config --global user.name "Travis CI"
-git config --global user.email "travis-ci+$PANTHEON_SITE@example.org"
+git config --global user.name "Google for Creators Bot"
+git config --global user.email "94923726+googleforcreators-bot@users.noreply.github.com"
 
 if [ ! -e "$repo_dir/.git" ]; then
     git clone -v ssh://codeserver.dev.$PANTHEON_UUID@codeserver.dev.$PANTHEON_UUID.drush.in:2222/~/repository.git "$repo_dir"
