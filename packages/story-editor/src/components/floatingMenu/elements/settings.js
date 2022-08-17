@@ -25,7 +25,13 @@ import {
   localStore,
 } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
-import { useEffect, useRef, useState } from '@googleforcreators/react';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from '@googleforcreators/react';
 import styled from 'styled-components';
 
 /**
@@ -33,6 +39,7 @@ import styled from 'styled-components';
  */
 import { TOOLBAR_POSITIONS } from '../constants';
 import { useCanvas } from '../../../app';
+import { states, useHighlights } from '../../../app/highlights';
 import { IconButton } from './shared';
 
 const StyledIconButton = styled(IconButton)`
@@ -60,6 +67,7 @@ function Settings() {
       setDisplayFloatingMenu: actions.setDisplayFloatingMenu,
     })
   );
+  const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
 
   const buttonRef = useRef();
   const subMenuRef = useRef();
@@ -77,7 +85,10 @@ function Settings() {
     buttonRef.current.focus();
   };
 
-  const local = localStore.getItemByKey(LOCAL_STORAGE_KEY) || {};
+  const local = useMemo(
+    () => localStore.getItemByKey(LOCAL_STORAGE_KEY) || {},
+    []
+  );
   const handleToolbarPosition = (position) => {
     setFloatingMenuPosition(position);
     localStore.setItemByKey(LOCAL_STORAGE_KEY, {
@@ -86,13 +97,16 @@ function Settings() {
     });
   };
 
-  const hideFloatingMenu = () => {
+  const hideFloatingMenu = useCallback(() => {
     setDisplayFloatingMenu(false);
     localStore.setItemByKey(LOCAL_STORAGE_KEY, {
       ...local,
       isDisplayed: false,
     });
-  };
+    setHighlights({
+      highlight: states.ELEMENT_TOOLBAR_TOGGLE,
+    });
+  }, [local, setDisplayFloatingMenu, setHighlights]);
 
   const subMenuItems = [
     {

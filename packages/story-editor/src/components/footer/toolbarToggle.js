@@ -26,14 +26,28 @@ import {
   LOCAL_STORAGE_PREFIX,
   localStore,
   PLACEMENT,
+  themeHelpers,
 } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
+import styled, { css } from 'styled-components';
 
 /**
  * Internal dependencies
  */
 import Tooltip from '../tooltip';
 import { useCanvas } from '../../app';
+import { states, useHighlights, styles } from '../../app/highlights';
+
+const StyledToggleButton = styled(ToggleButton)`
+  ${themeHelpers.focusableOutlineCSS};
+
+  ${({ isHighlighted }) =>
+    isHighlighted &&
+    css`
+      ${styles.OUTLINE}
+      ${styles.FLASH}
+    `}
+`;
 
 const LOCAL_STORAGE_KEY = LOCAL_STORAGE_PREFIX.ELEMENT_TOOLBAR_SETTINGS;
 
@@ -44,6 +58,11 @@ function ToolbarToggle() {
       setDisplayFloatingMenu: actions.setDisplayFloatingMenu,
     })
   );
+
+  const { highlight, resetHighlight } = useHighlights((state) => ({
+    highlight: state[states.ELEMENT_TOOLBAR_TOGGLE],
+    resetHighlight: state.onFocusOut,
+  }));
 
   const handleToolbarVisibility = () => {
     const local = localStore.getItemByKey(LOCAL_STORAGE_KEY) || {};
@@ -64,16 +83,23 @@ function ToolbarToggle() {
       placement={PLACEMENT.TOP}
       hasTail
     >
-      <ToggleButton
+      <StyledToggleButton
+        ref={(node) => {
+          if (node && highlight?.focus && highlight?.showEffect) {
+            node.focus();
+          }
+        }}
         variant={BUTTON_VARIANTS.SQUARE}
         type={BUTTON_TYPES.TERTIARY}
         size={BUTTON_SIZES.SMALL}
         isToggled={displayFloatingMenu}
         onClick={handleToolbarVisibility}
         aria-label={__('Show element toolbar', 'web-stories')}
+        isHighlighted={highlight?.showEffect}
+        onAnimationEnd={() => resetHighlight()}
       >
         <Icons.Pencil />
-      </ToggleButton>
+      </StyledToggleButton>
     </Tooltip>
   );
 }
