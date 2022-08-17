@@ -109,6 +109,16 @@ Web Stories are powered by [AMP](https://amp.dev/), which adds some restrictions
 
 For the plugin's full changelog, please see [the Releases page on GitHub](https://github.com/googleforcreators/web-stories-wp/releases).
 
+= 1.24.0 =
+
+* New feature: pause/resume and video trimming support for webcam recording.
+* New feature: multi-page canvas in the editor.
+* New feature: added stickers library to third-party media tab.
+* Enhancement: added category filter for videos in third-party media tab.
+* Enhancement: improved templates to make them easier to use.
+* Enhancement: improved media upload experience for pre-optimized videos.
+* Bug fixes and performance improvements.
+
 = 1.23.2 =
 
 * Fixes another issue related to story poster images.
@@ -117,15 +127,11 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 
 * Fixes an issue with story poster images not saving correctly.
 
-= 1.23.0 =
-
-* New feature: record videos, GIFs, still pictures, and background audio directly within the editor.
-* New feature: added support for hotlinking story posters, video posters, and link icons.
-* New feature: you can now change the heading levels used for text elements in the Style panel.
-* Bumped minimum WordPress version requirement to 5.7.
-* Bug fixes and performance improvements.
-
 == Upgrade Notice ==
+
+= 1.24.0 =
+
+This release introduces multi-page canvas and contains improvements to webcam recording, third-party media, and templates.
 
 = 1.23.2 =
 
@@ -135,6 +141,3 @@ This release fixes another issue related to story poster images.
 
 This release fixes an issue with story poster images not saving correctly.
 
-= 1.23.0 =
-
-This release introduces webcam recording, more hotlinking capabilities, and a UI to change heading levels in the editor.
