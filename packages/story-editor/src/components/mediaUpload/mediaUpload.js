@@ -17,22 +17,16 @@
 /**
  * External dependencies
  */
-import { useCallback, useState, useEffect } from '@googleforcreators/react';
+import { useCallback } from '@googleforcreators/react';
+
 /**
  * Internal dependencies
  */
 import PropTypes from 'prop-types';
 import { useConfig, useLocalMedia, useStory } from '../../app';
 
-function MediaUpload({
-  onUploadMedia,
-  onDeleteMedia,
-  onClose: onCloseCallback,
-  ...props
-}) {
-  const { MediaUpload: MediaUploader } = useConfig();
-  const [newResources, setNewResources] = useState([]);
-  const [doProcess, setDoProcess] = useState(false);
+function MediaUpload({ onUploadMedia, onDeleteMedia, onClose, ...props }) {
+  const { allowedMimeTypes, MediaUpload: MediaUploader } = useConfig();
 
   const { deleteElementsByResourceId, updateStory, featuredMedia } = useStory(
     (state) => ({
@@ -51,33 +45,29 @@ function MediaUpload({
     }
   );
 
-  useEffect(() => {
-    if (doProcess && newResources.length) {
-      prependMedia({
-        media: newResources,
-      });
-      setDoProcess(false);
-      setNewResources([]);
-    }
-  }, [doProcess, newResources, prependMedia]);
-
-  const onClose = useCallback(() => {
-    if (onCloseCallback) {
-      onCloseCallback();
-    }
-    setDoProcess(true);
-  }, [onCloseCallback]);
-
   const uploadMedia = useCallback(
     (resource) => {
-      if (['image', 'video', 'gif'].includes(resource.type)) {
-        setNewResources((state) => [resource, ...state]);
+      const allowedTypes = [
+        ...allowedMimeTypes.image,
+        ...allowedMimeTypes.vector,
+        ...allowedMimeTypes.video,
+      ];
+
+      // When uploading a new item in the media modal, we want to
+      // directly add them to the library, but only
+      // if it's a supported type and not for instance
+      // TODO: Reconsider this approach for items like MOV or animated GIFs.
+      if (allowedTypes.includes(resource.mimeType)) {
+        prependMedia({
+          media: [resource],
+        });
       }
+
       if (onUploadMedia) {
         onUploadMedia(resource);
       }
     },
-    [onUploadMedia]
+    [onUploadMedia, prependMedia, allowedMimeTypes]
   );
 
   const resetFeatureMedia = useCallback(
@@ -95,10 +85,10 @@ function MediaUpload({
 
   const deleteMedia = useCallback(
     (resource) => {
-      deleteMediaElement({ id: resource.id });
-      deleteElementsByResourceId({ id: resource.id });
-      setNewResources((state) => state.filter(({ id }) => id !== resource.id));
-      resetFeatureMedia(resource.id);
+      const { id } = resource;
+      deleteMediaElement({ id: id });
+      deleteElementsByResourceId({ id: id });
+      resetFeatureMedia(id);
       if (onDeleteMedia) {
         onDeleteMedia(resource);
       }
