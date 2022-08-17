@@ -54,9 +54,12 @@ const LOCAL_STORAGE_KEY = LOCAL_STORAGE_PREFIX.ELEMENT_TOOLBAR_SETTINGS;
 
 function Settings() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { setFloatingMenuPosition } = useCanvas(({ actions }) => ({
-    setFloatingMenuPosition: actions.setFloatingMenuPosition,
-  }));
+  const { setFloatingMenuPosition, setDisplayFloatingMenu } = useCanvas(
+    ({ actions }) => ({
+      setFloatingMenuPosition: actions.setFloatingMenuPosition,
+      setDisplayFloatingMenu: actions.setDisplayFloatingMenu,
+    })
+  );
 
   const buttonRef = useRef();
   const subMenuRef = useRef();
@@ -103,6 +106,13 @@ function Settings() {
         local.position === TOOLBAR_POSITIONS.top ? (
           <Icons.CheckmarkSmall />
         ) : null,
+    },
+    {
+      key: 'hide',
+      label: <span>{__('Always hide', 'web-stories')}</span>,
+      // Note: this doesn't really support icon but this way there's the same amount of padding as the other items have.
+      supportsIcon: true,
+      onClick: () => setDisplayFloatingMenu(false),
     },
   ];
 
