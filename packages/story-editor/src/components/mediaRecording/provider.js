@@ -68,6 +68,7 @@ function MediaRecordingProvider({ children }) {
 
   const [streamNode, setStreamNode] = useState(null);
   const [canvasStream, setCanvasStream] = useState(null);
+  const [canvasNode, setCanvasNode] = useState(null);
 
   const [countdown, setCountdown] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -386,6 +387,8 @@ function MediaRecordingProvider({ children }) {
         isAdjustingTrim,
         streamNode,
         isProcessingTrim,
+        canvasStream,
+        canvasNode,
       },
       actions: {
         toggleRecordingMode,
@@ -417,6 +420,7 @@ function MediaRecordingProvider({ children }) {
         resumeRecording,
         cancelTrim,
         setCanvasStream,
+        setCanvasNode,
       },
     }),
     [
@@ -467,7 +471,10 @@ function MediaRecordingProvider({ children }) {
       pauseRecording,
       resumeRecording,
       cancelTrim,
+      canvasStream,
       setCanvasStream,
+      canvasNode,
+      setCanvasNode,
     ]
   );
 

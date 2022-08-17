@@ -40,6 +40,7 @@ import {
   blobToFile,
   createBlob,
   getImageFromVideo,
+  getCanvasBlob,
 } from '@googleforcreators/media';
 import { format } from '@googleforcreators/date';
 import { BackgroundAudioPropTypeShape } from '@googleforcreators/elements';
@@ -156,6 +157,7 @@ function Footer() {
     resumeRecording,
     isProcessingTrim,
     cancelTrim,
+    canvasNode,
   } = useMediaRecording(({ state, actions }) => ({
     status: state.status,
     file: state.file,
@@ -184,6 +186,7 @@ function Footer() {
     pauseRecording: actions.pauseRecording,
     resumeRecording: actions.resumeRecording,
     cancelTrim: actions.cancelTrim,
+    canvasNode: state.canvasNode,
   }));
   const videoNode = useVideoTrim(({ state: { videoNode } }) => videoNode);
 
@@ -212,7 +215,10 @@ function Footer() {
     trackEvent('media_recording_retry');
   }, [getMediaStream, resetState]);
 
-  const debouncedStartRecording = useDebouncedCallback(startRecording, 3000);
+  const debouncedStartRecording = useDebouncedCallback(
+    startRecording,
+    COUNTDOWN_TIME_IN_SECONDS * 1000
+  );
 
   const onStart = useCallback(() => {
     speak(
@@ -332,7 +338,11 @@ function Footer() {
     let blob;
 
     try {
-      blob = await getImageFromVideo(inputStream);
+      if (hasVideoEffect) {
+        blob = await getCanvasBlob(canvasNode);
+      } else {
+        blob = await getImageFromVideo(inputStream);
+      }
       setMediaBlobUrl(createBlob(blob));
     } catch (e) {
       trackError('media_recording_capture', e.message);
@@ -361,8 +371,13 @@ function Footer() {
     streamNode,
     canvasStream,
     videoEffect,
+    canvasNode,
   ]);
 
+  const debouncedCaptureImage = useDebouncedCallback(
+    captureImage,
+    COUNTDOWN_TIME_IN_SECONDS * 1000
+  );
   const onCapture = useCallback(() => {
     speak(
       sprintf(
@@ -378,10 +393,10 @@ function Footer() {
     );
 
     setCountdown(COUNTDOWN_TIME_IN_SECONDS);
-    captureImage();
+    debouncedCaptureImage();
 
     trackEvent('media_recording_capture', { type: 'image' });
-  }, [captureImage, setCountdown, speak]);
+  }, [debouncedCaptureImage, setCountdown, speak]);
   const {
     actions: { uploadFile },
   } = useUploader();
