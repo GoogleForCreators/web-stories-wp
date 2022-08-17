@@ -29,8 +29,8 @@ export const SELECTED_ELEMENT_TYPES = {
 };
 
 export const TOOLBAR_POSITIONS = {
-  element: 'fixed_to_element',
-  top: 'fixed_to_top',
+  ELEMENT: 'FIXED_TO_ELEMENT',
+  TOP: 'FIXED_TO_TOP',
 };
 
 export function hasDesignMenu(type) {

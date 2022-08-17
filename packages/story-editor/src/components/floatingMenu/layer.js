@@ -125,7 +125,7 @@ function FloatingMenuLayer() {
     const updatePosition = () => {
       const frameRect = moveable.getRect();
       const { width, height } = workspaceSize.current;
-      if (floatingMenuPosition === TOOLBAR_POSITIONS.top) {
+      if (floatingMenuPosition === TOOLBAR_POSITIONS.TOP) {
         menu.style.left = `clamp(0px, ${
           width / 2
         }px - (var(--width) / 2), ${width}px - var(--width))`;

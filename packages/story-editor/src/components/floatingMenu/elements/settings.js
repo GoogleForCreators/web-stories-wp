@@ -33,6 +33,7 @@ import {
   useState,
 } from '@googleforcreators/react';
 import styled from 'styled-components';
+import { trackEvent } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies
@@ -95,6 +96,10 @@ function Settings() {
       ...local,
       position,
     });
+    trackEvent('floating_menu', {
+      name: 'reposition_menu',
+      position,
+    });
   };
 
   const hideFloatingMenu = useCallback(() => {
@@ -106,26 +111,29 @@ function Settings() {
     setHighlights({
       highlight: states.ELEMENT_TOOLBAR_TOGGLE,
     });
+    trackEvent('floating_menu', {
+      name: 'persistent_menu_hide',
+    });
   }, [local, setDisplayFloatingMenu, setHighlights]);
 
   const subMenuItems = [
     {
-      key: TOOLBAR_POSITIONS.element,
+      key: TOOLBAR_POSITIONS.ELEMENT,
       label: <span>{__('Fix to element', 'web-stories')}</span>,
-      onClick: () => handleToolbarPosition(TOOLBAR_POSITIONS.element),
+      onClick: () => handleToolbarPosition(TOOLBAR_POSITIONS.ELEMENT),
       supportsIcon: true,
       icon:
-        local.position === TOOLBAR_POSITIONS.element ? (
+        local.position === TOOLBAR_POSITIONS.ELEMENT ? (
           <Icons.CheckmarkSmall />
         ) : null,
     },
     {
-      key: TOOLBAR_POSITIONS.top,
+      key: TOOLBAR_POSITIONS.TOP,
       label: <span>{__('Fix to top', 'web-stories')}</span>,
-      onClick: () => handleToolbarPosition(TOOLBAR_POSITIONS.top),
+      onClick: () => handleToolbarPosition(TOOLBAR_POSITIONS.TOP),
       supportsIcon: true,
       icon:
-        local.position === TOOLBAR_POSITIONS.top ? (
+        local.position === TOOLBAR_POSITIONS.TOP ? (
           <Icons.CheckmarkSmall />
         ) : null,
     },
