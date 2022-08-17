@@ -25,12 +25,14 @@ import {
   Icons,
   LOCAL_STORAGE_PREFIX,
   localStore,
+  PLACEMENT,
 } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 
 /**
  * Internal dependencies
  */
+import Tooltip from '../tooltip';
 import { useCanvas } from '../../app';
 
 const LOCAL_STORAGE_KEY = LOCAL_STORAGE_PREFIX.ELEMENT_TOOLBAR_SETTINGS;
@@ -47,21 +49,32 @@ function ToolbarToggle() {
     const local = localStore.getItemByKey(LOCAL_STORAGE_KEY) || {};
     localStore.setItemByKey(LOCAL_STORAGE_KEY, {
       ...local,
-      isDisplayed: !displayFloatingMenu,
+      isDisplayed: true,
     });
-    setDisplayFloatingMenu(!displayFloatingMenu);
+    setDisplayFloatingMenu(true);
   };
+
+  // We only display the button for showing the toolbar.
+  if (displayFloatingMenu) {
+    return null;
+  }
   return (
-    <ToggleButton
-      variant={BUTTON_VARIANTS.SQUARE}
-      type={BUTTON_TYPES.TERTIARY}
-      size={BUTTON_SIZES.SMALL}
-      isToggled={displayFloatingMenu}
-      onClick={handleToolbarVisibility}
-      aria-label={__('Toggle element toolbar', 'web-stories')}
+    <Tooltip
+      title={__('Show element toolbar', 'web-stories')}
+      placement={PLACEMENT.TOP}
+      hasTail
     >
-      <Icons.Pencil />
-    </ToggleButton>
+      <ToggleButton
+        variant={BUTTON_VARIANTS.SQUARE}
+        type={BUTTON_TYPES.TERTIARY}
+        size={BUTTON_SIZES.SMALL}
+        isToggled={displayFloatingMenu}
+        onClick={handleToolbarVisibility}
+        aria-label={__('Show element toolbar', 'web-stories')}
+      >
+        <Icons.Pencil />
+      </ToggleButton>
+    </Tooltip>
   );
 }
 

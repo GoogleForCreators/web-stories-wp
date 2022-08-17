@@ -86,6 +86,14 @@ function Settings() {
     });
   };
 
+  const hideFloatingMenu = () => {
+    setDisplayFloatingMenu(false);
+    localStore.setItemByKey(LOCAL_STORAGE_KEY, {
+      ...local,
+      isDisplayed: false,
+    });
+  };
+
   const subMenuItems = [
     {
       key: TOOLBAR_POSITIONS.element,
@@ -112,7 +120,7 @@ function Settings() {
       label: <span>{__('Always hide', 'web-stories')}</span>,
       // Note: this doesn't really support icon but this way there's the same amount of padding as the other items have.
       supportsIcon: true,
-      onClick: () => setDisplayFloatingMenu(false),
+      onClick: () => hideFloatingMenu(),
     },
   ];
 
