@@ -119,6 +119,7 @@ function LocalAutoSave() {
   }
 
   const restoreBackup = () => {
+    deleteLocalAutosave(storyId, isNew);
     console.log('restoring');
     stateToHistory({
       story,
@@ -127,7 +128,6 @@ function LocalAutoSave() {
       pages,
       capabilities,
     });
-    deleteLocalAutosave(storyId, isNew);
     setBackup(false);
   };
 
