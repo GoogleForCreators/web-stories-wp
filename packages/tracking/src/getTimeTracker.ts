@@ -29,7 +29,7 @@ import { config } from './shared';
  * @param {string} eventName The event nae (e.g. 'load_items').
  * @return {Function} Callback to stop timer and send tracking event.
  */
-function getTimeTracker(eventName) {
+function getTimeTracker(eventName: string): () => void {
   const before = window.performance.now();
   return () => {
     const after = window.performance.now();

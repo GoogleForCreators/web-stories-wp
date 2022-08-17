@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": true,
+    "allowSyntheticDefaultImports": true,
+    "jsx": "preserve",
+    "target": "esnext",
+    "module": "esnext",
+    "lib": ["dom", "esnext"],
+    "declaration": true,
+    "declarationMap": true,
+    "composite": true,
+    "emitDeclarationOnly": true,
+    "isolatedModules": true,
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "importsNotUsedAsValues": "error",
+    "moduleResolution": "node",
+    "esModuleInterop": false,
+    "resolveJsonModule": true,
+    "typeRoots": ["./typings", "./node_modules/@types"],
+    "types": []
+  },
+  "exclude": [
+    "packages/*/dist-*/**",
+    "packages/*/dist/**",
+    "**/test/**",
+    "**/karma/**"
+  ]
+}

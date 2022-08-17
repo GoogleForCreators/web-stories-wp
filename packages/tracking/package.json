@@ -2,7 +2,7 @@
   "name": "@googleforcreators/tracking",
   "description": "Utility package for telemetry in the Web Stories editor, powered by Google Analytics.",
   "private": false,
-  "version": "0.1.202208081316",
+  "version": "0.1.202208151234",
   "author": {
     "name": "Google",
     "url": "https://creators.google/"
@@ -29,12 +29,13 @@
   },
   "customExports": {
     ".": {
-      "default": "./src/index.js"
+      "default": "./src/index.ts"
     }
   },
   "main": "dist/index.js",
   "module": "dist-module/index.js",
-  "source": "src/index.js",
+  "types": "dist-types/index.js",
+  "source": "src/index.ts",
   "publishConfig": {
     "access": "public"
   },

@@ -4,6 +4,8 @@ on:
   push:
     paths:
       - '**.js'
+      - '**.cjs'
+      - '**.ts'
       - '**/package.json'
       - 'package-lock.json'
       - 'web-stories.php'
@@ -14,6 +16,8 @@ on:
   pull_request:
     paths:
       - '**.js'
+      - '**.cjs'
+      - '**.ts'
       - '**/package.json'
       - 'package-lock.json'
       - 'web-stories.php'
@@ -25,9 +29,8 @@ permissions:
 
 # Cancels all previous workflow runs for pull requests that have not completed.
 concurrency:
-  # The concurrency group contains the workflow name and the branch name for pull requests
-  # or the commit hash for any other events.
-  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.head_ref || github.sha }}
+  # The concurrency group contains the workflow name and the (target) branch name.
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -37,7 +40,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@74b568e8591fbb3115c70f3436a0c6b0909a8504
+        uses: step-security/harden-runner@dd2c410b088af7c0dc8046f3ac9a8f4148492a95
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
