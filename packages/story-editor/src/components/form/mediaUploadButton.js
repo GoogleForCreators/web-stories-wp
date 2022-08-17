@@ -18,7 +18,12 @@
  * External dependencies
  */
 import { useSnackbar } from '@googleforcreators/design-system';
-import { useCallback, useMemo } from '@googleforcreators/react';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+} from '@googleforcreators/react';
 import { getExtensionsFromMimeType } from '@googleforcreators/media';
 import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
 import PropTypes from 'prop-types';
@@ -130,6 +135,7 @@ function MediaUploadButton({
             optimizeGif({ resource });
           }
         }
+
         onInsert(resource);
 
         postProcessingResource(resource);
@@ -151,9 +157,18 @@ function MediaUploadButton({
     ]
   );
 
+  // So postProcessingResource is never stale, which would otherwise
+  // happen when uploading an item through the modal and inadvertently
+  // trying to process it twice.
+  // See https://github.com/GoogleForCreators/web-stories-wp/pull/11941
+  const onSelectRef = useRef(onSelect);
+  useEffect(() => {
+    onSelectRef.current = onSelect;
+  }, [onSelect]);
+
   return (
     <MediaUpload
-      onSelect={onSelect}
+      onSelect={onSelectRef.current}
       onSelectErrorMessage={onSelectErrorMessage}
       type={allowedMimeTypes}
       render={renderButton}
