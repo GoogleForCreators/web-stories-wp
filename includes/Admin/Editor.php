@@ -375,13 +375,13 @@ class Editor extends Service_Base implements HasRequirements {
 			
 			$auto_save = wp_get_post_autosave( $story_id );
 
-			if ( $auto_save ) {
+			if ( $auto_save && $post ) {
 				if ( mysql2date( 'U', $auto_save->post_modified_gmt, false ) > mysql2date( 'U', $post->post_modified_gmt, false ) ) {
 					$auto_save_link = get_edit_post_link( $auto_save->ID );
+				} else {
+					wp_delete_post_revision( $auto_save->ID );  
 				}
-			} else {
-				wp_delete_post_revision( $auto_save->ID );
-			}
+			} 
 		}
 		
 		$settings = [
