@@ -34,6 +34,7 @@ import useHistoryReplay from './effects/useHistoryReplay';
 import useStoryReducer from './useStoryReducer';
 import useAutoSave from './actions/useAutoSave';
 import { StoryTriggersProvider } from './storyTriggers';
+import useLocalAutoSave from "./actions/useLocalAutoSave";
 
 function StoryProvider({ storyId, initialEdits, children }) {
   const [hashPageId, setHashPageId] = useHashState('page', null);
@@ -128,6 +129,14 @@ function StoryProvider({ storyId, initialEdits, children }) {
     story,
   });
 
+  const { restoreLocalAutoSave } = useLocalAutoSave({
+    pages,
+    capabilities,
+    restore,
+    storyId,
+    isNew: story.isNew,
+  });
+
   const fullStory = useMemo(
     () => ({
       pages,
@@ -178,6 +187,7 @@ function StoryProvider({ storyId, initialEdits, children }) {
       ...api,
       autoSave,
       saveStory,
+      restoreLocalAutoSave,
     },
     internal: { reducerState, restore },
   };

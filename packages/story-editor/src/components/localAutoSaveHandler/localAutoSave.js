@@ -17,7 +17,11 @@
 /**
  * External dependencies
  */
-import { useEffect, useCallback, useState } from '@googleforcreators/react';
+import {
+  useEffect,
+  useCallback,
+  useState,
+} from '@googleforcreators/react';
 import {
   Button,
   BUTTON_TYPES,
@@ -33,26 +37,31 @@ import { __ } from '@googleforcreators/i18n';
  */
 import { useConfig, useHistory, useStory } from '../../app';
 import useIsUploadingToStory from '../../utils/useIsUploadingToStory';
-import {deleteLocalAutosave, getLocalAutoSave, setLocalAutoSave} from './utils';
+import {
+  deleteLocalAutosave,
+  getLocalAutoSave,
+  setLocalAutoSave,
+} from './utils';
 
 function LocalAutoSave() {
   const { localAutoSaveInterval = 15 } = useConfig();
   const {
     state: { hasNewChanges },
-    actions: { stateToHistory },
   } = useHistory();
   const isUploading = useIsUploadingToStory();
 
-  const { story, pages, capabilities } = useStory(({ state }) => ({
-    story: state.story,
-    capabilities: state.capabilities,
-    pages: state.pages,
-  }));
+  const { story, pages, restoreLocalAutoSave } = useStory(
+    ({ state, actions }) => ({
+      story: state.story,
+      pages: state.pages,
+      restoreLocalAutoSave: actions.restoreLocalAutoSave,
+    })
+  );
   const { storyId, isNew } = story;
 
   const [backup, setBackup] = useState(false);
 
-  // Save the local autosave
+  // Save the local autosave.
   useEffect(() => {
     if (!hasNewChanges || !localAutoSaveInterval || isUploading) {
       return undefined;
@@ -62,11 +71,7 @@ function LocalAutoSave() {
     // back false after the save.
     // This timeout will thus be re-started when some new change occurs after an autosave.
     const timeout = setTimeout(
-      //() => setLocalAutoSave(storyId, isNew, story, pages),
-      () => {
-        setLocalAutoSave(storyId, isNew, story, pages);
-        console.log('saving');
-      },
+      () => setLocalAutoSave(storyId, isNew, story, pages),
       localAutoSaveInterval * 1000
     );
 
@@ -110,24 +115,16 @@ function LocalAutoSave() {
     }
 
     // Otherwise, delete the autosave.
-    console.log('deleting');
     deleteLocalAutosave(storyId, isNew);
-  }, [autoSaveHasChanges, isNew, setBackup, storyId]);
+  }, [autoSaveHasChanges, setBackup, isNew, storyId]);
 
   if (!backup) {
     return null;
   }
 
   const restoreBackup = () => {
+    restoreLocalAutoSave();
     deleteLocalAutosave(storyId, isNew);
-    console.log('restoring');
-    stateToHistory({
-      story,
-      current: pages[0],
-      selection: [],
-      pages,
-      capabilities,
-    });
     setBackup(false);
   };
 
