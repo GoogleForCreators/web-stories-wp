@@ -148,8 +148,10 @@ function Footer() {
     resetState,
     resetStream,
     streamNode,
+    canvasStream,
     liveStream,
     hasVideo,
+    videoEffect,
     pauseRecording,
     resumeRecording,
     isProcessingTrim,
@@ -163,9 +165,11 @@ function Footer() {
     duration: state.duration,
     isCountingDown: state.isCountingDown,
     hasVideo: state.hasVideo,
+    videoEffect: state.videoEffect,
     hasMediaToInsert: Boolean(state.mediaBlobUrl),
     liveStream: state.liveStream,
     streamNode: state.streamNode,
+    canvasStream: state.canvasStream,
     isProcessingTrim: state.isProcessingTrim,
     startRecording: actions.startRecording,
     stopRecording: actions.stopRecording,
@@ -319,14 +323,16 @@ function Footer() {
   const { showSnackbar } = useSnackbar();
 
   const captureImage = useCallback(async () => {
-    if (!streamNode) {
+    const hasVideoEffect = videoEffect && videoEffect !== 'none';
+    const inputStream = hasVideoEffect ? canvasStream : streamNode;
+    if (!inputStream) {
       return;
     }
 
     let blob;
 
     try {
-      blob = await getImageFromVideo(streamNode);
+      blob = await getImageFromVideo(inputStream);
       setMediaBlobUrl(createBlob(blob));
     } catch (e) {
       trackError('media_recording_capture', e.message);
@@ -347,7 +353,15 @@ function Footer() {
     );
     setFile(imageFile);
     resetStream();
-  }, [resetStream, setFile, setMediaBlobUrl, showSnackbar, streamNode]);
+  }, [
+    resetStream,
+    setFile,
+    setMediaBlobUrl,
+    showSnackbar,
+    streamNode,
+    canvasStream,
+    videoEffect,
+  ]);
 
   const onCapture = useCallback(() => {
     speak(

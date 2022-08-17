@@ -83,6 +83,12 @@ const Mic = styled(Icons.Mic).attrs(quickActionIconAttrs)``;
 const MicOff = styled(Icons.MicOff).attrs(quickActionIconAttrs)``;
 const Video = styled(Icons.Camera).attrs(quickActionIconAttrs)``;
 const VideoOff = styled(Icons.CameraOff).attrs(quickActionIconAttrs)``;
+const BackgroundBlur = styled(Icons.BackgroundBlur).attrs(
+  quickActionIconAttrs
+)``;
+const BackgroundBlurOff = styled(Icons.BackgroundBlurOff).attrs(
+  quickActionIconAttrs
+)``;
 
 export const MediaPicker = ({ render, ...props }) => {
   const {
@@ -303,6 +309,8 @@ const useQuickActions = () => {
     toggleAudio,
     hasVideo,
     hasAudio,
+    videoEffect,
+    setVideoEffect,
     toggleSettings,
     audioInput,
     videoInput,
@@ -315,10 +323,11 @@ const useQuickActions = () => {
     isInRecordingMode: state.isInRecordingMode,
     hasAudio: state.hasAudio,
     hasVideo: state.hasVideo,
+    videoEffect: state.videoEffect,
     audioInput: state.audioInput,
     videoInput: state.videoInput,
     isReady:
-      state.status === 'ready' &&
+      state.inputStatus === 'ready' &&
       !state.file?.type?.startsWith('image') &&
       !state.isCountingDown,
     isProcessing: state.isProcessing,
@@ -331,6 +340,7 @@ const useQuickActions = () => {
     muteAudio: actions.muteAudio,
     unMuteAudio: actions.unMuteAudio,
     startTrim: actions.startTrim,
+    setVideoEffect: actions.setVideoEffect,
   }));
 
   const enableMediaRecordingTrimming = useFeature('recordingTrimming');
@@ -843,6 +853,22 @@ const useQuickActions = () => {
         disabled: !isReady || !hasAudio,
         ...actionMenuProps,
       },
+      videoInput && {
+        Icon: videoEffect === 'blur' ? BackgroundBlur : BackgroundBlurOff,
+        label:
+          videoEffect === 'blur'
+            ? __('Disable Background Blur', 'web-stories')
+            : __('Enable Background Blur', 'web-stories'),
+        onClick: () => {
+          trackEvent('media_recording_background_blur', {
+            status: videoEffect === 'blur' ? 'off' : 'on',
+          });
+          const newVideoEffect = videoEffect === 'blur' ? 'none' : 'blur';
+          setVideoEffect(newVideoEffect);
+        },
+        disabled: !isReady || !hasVideo,
+        ...actionMenuProps,
+      },
       enableMediaRecordingTrimming && {
         Icon: Scissors,
         label: __('Trim Video', 'web-stories'),
@@ -871,6 +897,8 @@ const useQuickActions = () => {
     toggleSettings,
     startTrim,
     enableMediaRecordingTrimming,
+    videoEffect,
+    setVideoEffect,
   ]);
 
   // Return special actions for media recording mode.

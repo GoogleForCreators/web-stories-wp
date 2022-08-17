@@ -59,6 +59,7 @@ function PlaybackMedia() {
     streamNode,
     setStreamNode,
     isProcessingTrim,
+    setCanvasStream,
   } = useMediaRecording(({ state, actions }) => ({
     mediaBlob: state.mediaBlob,
     mediaBlobUrl: state.mediaBlobUrl,
@@ -74,6 +75,7 @@ function PlaybackMedia() {
     toggleIsGif: actions.toggleIsGif,
     setStreamNode: actions.setStreamNode,
     isProcessingTrim: state.isProcessingTrim,
+    setCanvasStream: actions.setCanvasStream,
   }));
   const setVideoNode = useVideoTrim(
     ({ actions: { setVideoNode } }) => setVideoNode
@@ -127,6 +129,9 @@ function PlaybackMedia() {
 
   useEffect(() => {
     async function run() {
+      if (hasVideoEffect && canvasRef.current) {
+        setCanvasStream(canvasRef.current.captureStream());
+      }
       if (videoEffect === 'blur') {
         await selfieSegmentation.initialize();
         selfieSegmentation.onResults(onSelfieSegmentationResults);
@@ -140,7 +145,7 @@ function PlaybackMedia() {
       }
     }
     run();
-  }, [videoEffect, hasVideoEffect, streamNode]);
+  }, [videoEffect, hasVideoEffect, streamNode, setCanvasStream]);
 
   // Only previewing a gif means that the play button is hidden,
   // not while trimming (even if gif)

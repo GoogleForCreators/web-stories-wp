@@ -41,6 +41,8 @@ export { default as ArrowRightCurved } from './arrow_right_curved.svg';
 export { default as ArrowRightLarge } from './arrow_right_large.svg';
 export { default as ArrowUp } from './arrow_up.svg';
 export { default as ArrowsLeftRight } from './arrows_leftright.svg';
+export { default as BackgroundBlur } from './background_blur.svg';
+export { default as BackgroundBlurOff } from './background_blur_off.svg';
 export { default as Border } from './border.svg';
 export { default as BorderBox } from './border_box.svg';
 export { default as Box1 } from './box1.svg';
