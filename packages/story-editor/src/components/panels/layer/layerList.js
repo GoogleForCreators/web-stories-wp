@@ -18,7 +18,6 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
 import { __ } from '@googleforcreators/i18n';
 
 /**
@@ -27,10 +26,10 @@ import { __ } from '@googleforcreators/i18n';
 import { Reorderable } from '../../reorderable';
 import { useRightClickMenu } from '../../../app';
 import { LAYER_HEIGHT } from './constants';
-import ReorderableElement from './reorderableElement';
-import useLayerElements from './useLayerElements';
+import ReorderableLayer from './reorderableLayer';
+import useLayers from './useLayers';
 
-const LayerList = styled(Reorderable).attrs({
+const ReorderableLayerList = styled(Reorderable).attrs({
   'aria-orientation': 'vertical',
   'aria-label': __('Layers List', 'web-stories'),
 })`
@@ -43,32 +42,28 @@ const LayerList = styled(Reorderable).attrs({
   padding-bottom: 4px; // for when panel has scroll
 `;
 
-function LayerPanel({ layers }) {
+function LayerList() {
   const onOpenMenu = useRightClickMenu((value) => value.onOpenMenu);
 
-  // This is a list of layers and groups in the order they're displayed
-  const { layerElements, handlePositionChange } = useLayerElements(layers);
+  // This is a list of elements and groups in the order they're displayed
+  const { layers, handlePositionChange } = useLayers();
 
   if (layers.length === 0) {
     return null;
   }
 
   return (
-    <LayerList
+    <ReorderableLayerList
       onContextMenu={onOpenMenu}
       onPositionChange={handlePositionChange}
       mode={'vertical'}
       getItemSize={() => LAYER_HEIGHT}
     >
-      {layerElements.map((element) => (
-        <ReorderableElement key={element.id} {...element} />
+      {layers.map((layer) => (
+        <ReorderableLayer key={layer.id} {...layer} />
       ))}
-    </LayerList>
+    </ReorderableLayerList>
   );
 }
 
-LayerPanel.propTypes = {
-  layers: PropTypes.array.isRequired,
-};
-
-export default LayerPanel;
+export default LayerList;

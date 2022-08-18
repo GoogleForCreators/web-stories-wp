@@ -17,58 +17,57 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
-import { Fragment, memo } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
+import { useCallback } from '@googleforcreators/react';
 
 /**
  * Internal dependencies
  */
-import { ReorderableSeparator, ReorderableItem } from '../../reorderable';
-import { useStory } from '../../../app';
-import { LAYER_HEIGHT } from './constants';
-import Layer from './layer';
+import { useStory, useCanvas } from '../../../app';
+import useFocusCanvas from '../../canvas/useFocusCanvas';
+import { nestedOffsetCalcFunc } from './constants';
+import ReorderableGroupLayer from './reorderableGroupLayer';
+import ReorderableElementLayer from './reorderableElementLayer';
 
-const LayerSeparator = styled(ReorderableSeparator)`
-  height: ${LAYER_HEIGHT}px;
-  margin: -${LAYER_HEIGHT / 2}px 0;
-  padding: ${LAYER_HEIGHT / 2}px 0;
-`;
-
-const ReorderableLayer = memo(function ReorderableLayer({
-  id,
-  position,
-  nestedOffset,
-  nestedOffsetCalcFunc,
-  handleStartReordering,
+function ReorderableElement({
+  isGroup,
+  isFirstElementAfterGroup = false,
+  ...rest
 }) {
-  const element = useStory(({ state }) =>
-    state.currentPage?.elements.find((el) => el.id === id)
+  const setSelectedElementsById = useStory(
+    ({ actions }) => actions.setSelectedElementsById
   );
-  return element ? (
-    <Fragment key={id}>
-      <LayerSeparator
-        groupId={element.groupId}
-        nestedOffset={Boolean(nestedOffset)}
-        nestedOffsetCalcFunc={nestedOffsetCalcFunc}
-        position={position + 1}
-        isNested={element.groupId}
-      />
-      <ReorderableItem
-        position={position}
-        onStartReordering={handleStartReordering(element)}
-        disabled={element.isBackground}
-      >
-        <Layer element={element} />
-      </ReorderableItem>
-    </Fragment>
-  ) : null;
-});
+  const focusCanvas = useFocusCanvas();
+  const renamableLayer = useCanvas(({ state }) => state.renamableLayer);
 
-ReorderableLayer.propTypes = {
-  id: PropTypes.string.isRequired,
-  position: PropTypes.number.isRequired,
-  handleStartReordering: PropTypes.func.isRequired,
+  const handleStartReordering = useCallback(
+    (element) => () => {
+      setSelectedElementsById({ elementIds: [element.id] });
+
+      if (renamableLayer) {
+        focusCanvas();
+      }
+    },
+    [setSelectedElementsById, focusCanvas, renamableLayer]
+  );
+
+  const props = { ...rest, handleStartReordering };
+
+  if (isGroup) {
+    return <ReorderableGroupLayer {...props} />;
+  }
+  return (
+    <ReorderableElementLayer
+      nestedOffset={isFirstElementAfterGroup}
+      nestedOffsetCalcFunc={nestedOffsetCalcFunc}
+      {...props}
+    />
+  );
+}
+
+ReorderableElement.propTypes = {
+  isGroup: PropTypes.bool.isRequired,
+  isFirstElementAfterGroup: PropTypes.bool,
 };
 
-export default ReorderableLayer;
+export default ReorderableElement;
