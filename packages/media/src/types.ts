@@ -223,7 +223,7 @@ export interface Attribution {
   /** The optional author of the media object. */
   author?: AttributionAuthor;
   /** The optional url to register the media usage. */
-  registerUsageUrl: string;
+  registerUsageUrl?: string;
 }
 
 export interface TrimData {
