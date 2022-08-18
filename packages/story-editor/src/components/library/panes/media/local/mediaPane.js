@@ -237,10 +237,7 @@ function MediaPane(props) {
           </FilterArea>
         </PaneHeader>
 
-        {isMediaLoaded &&
-        !media.length &&
-        !uploadingMedia.length &&
-        !isSearching ? (
+        {isMediaLoaded && !media.length && !uploadingMedia.length ? (
           <MediaGalleryMessage>
             {isSearching
               ? __('No results found.', 'web-stories')
