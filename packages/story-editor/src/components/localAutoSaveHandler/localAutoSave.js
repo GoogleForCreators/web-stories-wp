@@ -107,6 +107,8 @@ function LocalAutoSave() {
         JSON.stringify(pagesRef.current) &&
       JSON.stringify(existingAutoSave.story) !==
         JSON.stringify(storyRef.current);
+
+    // @todo Should we also check for DB autosave once it's implemented in #1402?
     // If we have an autosave and it differs from the current state.
     if (autoSaveHasChanges) {
       setBackup(existingAutoSave);
