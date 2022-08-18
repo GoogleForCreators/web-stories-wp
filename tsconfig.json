@@ -1,4 +1,8 @@
 {
-  "references": [{ "path": "packages/tracking" }],
+  "references": [
+    { "path": "packages/media" },
+    { "path": "packages/tracking" },
+    { "path": "packages/units" }
+  ],
   "include": []
 }

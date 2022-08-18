@@ -34,7 +34,7 @@
   },
   "main": "dist/index.js",
   "module": "dist-module/index.js",
-  "types": "dist-types/index.js",
+  "types": "dist-types/index.d.ts",
   "source": "src/index.ts",
   "publishConfig": {
     "access": "public"
