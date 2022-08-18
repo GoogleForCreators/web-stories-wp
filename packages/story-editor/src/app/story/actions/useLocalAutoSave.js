@@ -21,14 +21,17 @@ import { useCallback } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
-import { getLocalAutoSave } from '../../../components/localAutoSaveHandler/utils';
+import { getLocalAutoSave } from '../../../utils/localAutoSave';
 
 function useLocalAutoSave({ restore, storyId, pages, capabilities, isNew }) {
   const restoreLocalAutoSave = useCallback(() => {
-    const existingAutoSave = JSON.parse(getLocalAutoSave(storyId, isNew));
-    if (!existingAutoSave) {
+    let existingAutoSave;
+    try {
+      existingAutoSave = JSON.parse(getLocalAutoSave(storyId, isNew));
+    } catch (e) {
       return;
     }
+
     restore({
       current: pages[0],
       selection: [],

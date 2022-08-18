@@ -17,17 +17,12 @@
 /**
  * External dependencies
  */
-import {
-  useEffect,
-  useCallback,
-  useState,
-} from '@googleforcreators/react';
+import { useEffect, useState, useRef } from '@googleforcreators/react';
 import {
   Button,
   BUTTON_TYPES,
   BUTTON_SIZES,
   THEME_CONSTANTS,
-  Dialog,
   Text,
 } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
@@ -41,7 +36,8 @@ import {
   deleteLocalAutosave,
   getLocalAutoSave,
   setLocalAutoSave,
-} from './utils';
+} from '../../utils/localAutoSave';
+import Dialog from '../dialog';
 
 function LocalAutoSave() {
   const { localAutoSaveInterval = 15 } = useConfig();
@@ -60,6 +56,14 @@ function LocalAutoSave() {
   const { storyId, isNew } = story;
 
   const [backup, setBackup] = useState(false);
+
+  // Store into ref for not triggering autosave display when these change.
+  const storyRef = useRef();
+  const pagesRef = useRef();
+  useEffect(() => {
+    storyRef.current = story;
+    pagesRef.current = pages;
+  }, [story, pages]);
 
   // Save the local autosave.
   useEffect(() => {
@@ -91,16 +95,6 @@ function LocalAutoSave() {
     setBackup(false);
   };
 
-  const autoSaveHasChanges = useCallback(
-    (existingAutoSave) => {
-      return (
-        JSON.stringify(existingAutoSave.pages) !== JSON.stringify(pages) &&
-        JSON.stringify(existingAutoSave.story) !== JSON.stringify(story)
-      );
-    },
-    [pages, story]
-  );
-
   // Display
   useEffect(() => {
     const existingAutoSave = getLocalAutoSave(storyId, isNew);
@@ -108,15 +102,20 @@ function LocalAutoSave() {
       return;
     }
 
+    const autoSaveHasChanges =
+      JSON.stringify(existingAutoSave.pages) !==
+        JSON.stringify(pagesRef.current) &&
+      JSON.stringify(existingAutoSave.story) !==
+        JSON.stringify(storyRef.current);
     // If we have an autosave and it differs from the current state.
-    if (autoSaveHasChanges(existingAutoSave)) {
+    if (autoSaveHasChanges) {
       setBackup(existingAutoSave);
       return;
     }
 
     // Otherwise, delete the autosave.
     deleteLocalAutosave(storyId, isNew);
-  }, [autoSaveHasChanges, setBackup, isNew, storyId]);
+  }, [setBackup, isNew, storyId]);
 
   if (!backup) {
     return null;
