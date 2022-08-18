@@ -132,7 +132,6 @@ function LocalAutoSave() {
   return (
     <Dialog
       isOpen
-      title={__('AutoSave', 'web-stories')}
       secondaryText={__('Dismiss', 'web-stories')}
       onClose={onClose}
       actions={
