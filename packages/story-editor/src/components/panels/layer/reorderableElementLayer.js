@@ -27,7 +27,7 @@ import PropTypes from 'prop-types';
 import { ReorderableSeparator, ReorderableItem } from '../../reorderable';
 import { useStory } from '../../../app';
 import { LAYER_HEIGHT } from './constants';
-import Layer from './layer';
+import ElementLayer from './elementLayer';
 
 const LayerSeparator = styled(ReorderableSeparator)`
   height: ${LAYER_HEIGHT}px;
@@ -59,7 +59,7 @@ const ReorderableLayer = memo(function ReorderableLayer({
         onStartReordering={handleStartReordering(element)}
         disabled={element.isBackground}
       >
-        <Layer element={element} />
+        <ElementLayer element={element} />
       </ReorderableItem>
     </Fragment>
   ) : null;

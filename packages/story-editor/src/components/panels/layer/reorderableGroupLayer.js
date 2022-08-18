@@ -26,7 +26,7 @@ import PropTypes from 'prop-types';
  */
 import { ReorderableSeparator, ReorderableItem } from '../../reorderable';
 import { LAYER_HEIGHT } from './constants';
-import Group from './group';
+import GroupLayer from './groupLayer';
 
 const LayerSeparator = styled(ReorderableSeparator)`
   height: ${LAYER_HEIGHT}px;
@@ -49,7 +49,7 @@ const ReorderableGroup = memo(function ReorderableGroup({
         data={{ group: id }}
         onStartReordering={handleStartReordering({ id })}
       >
-        <Group groupId={id} />
+        <GroupLayer groupId={id} />
       </ReorderableItem>
     </>
   );
