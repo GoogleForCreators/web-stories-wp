@@ -14,24 +14,13 @@
  * limitations under the License.
  */
 
-function storyKey(storyId, isNew) {
-  return `wp-stories-autosave-story-${isNew ? 'auto-draft' : storyId}`;
-}
+/**
+ * External dependencies
+ */
+import { SESSION_STORAGE_PREFIX } from '@googleforcreators/design-system';
 
-export function getLocalAutoSave(storyId, isNew) {
-  return window.sessionStorage.getItem(storyKey(storyId, isNew));
-}
-
-export function setLocalAutoSave(storyId, isNew, story, pages) {
-  window.sessionStorage.setItem(
-    storyKey(storyId, isNew),
-    JSON.stringify({
-      story,
-      pages,
-    })
-  );
-}
-
-export function deleteLocalAutosave(storyId, isNew) {
-  window.sessionStorage.removeItem(storyKey(storyId, isNew));
+export default function getSessionStorageKey(storyId, isNew) {
+  return `${SESSION_STORAGE_PREFIX.LOCAL_AUTOSAAVE_PREFIX}_${
+    isNew ? 'auto-draft' : storyId
+  }`;
 }

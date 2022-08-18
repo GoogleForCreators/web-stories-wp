@@ -24,6 +24,7 @@ import {
   BUTTON_SIZES,
   THEME_CONSTANTS,
   Text,
+  sessionStore,
 } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 
@@ -32,12 +33,8 @@ import { __ } from '@googleforcreators/i18n';
  */
 import { useConfig, useHistory, useStory } from '../../app';
 import useIsUploadingToStory from '../../utils/useIsUploadingToStory';
-import {
-  deleteLocalAutosave,
-  getLocalAutoSave,
-  setLocalAutoSave,
-} from '../../utils/localAutoSave';
 import Dialog from '../dialog';
+import getSessionStorageKey from '../../utils/getSessionStorageKey';
 
 function LocalAutoSave() {
   const { localAutoSaveInterval = 15 } = useConfig();
@@ -75,7 +72,11 @@ function LocalAutoSave() {
     // back false after the save.
     // This timeout will thus be re-started when some new change occurs after an autosave.
     const timeout = setTimeout(
-      () => setLocalAutoSave(storyId, isNew, story, pages),
+      () =>
+        sessionStore.setItemByKey(getSessionStorageKey(storyId, isNew), {
+          story,
+          pages,
+        }),
       localAutoSaveInterval * 1000
     );
 
@@ -91,13 +92,15 @@ function LocalAutoSave() {
   ]);
 
   const onClose = () => {
-    deleteLocalAutosave(storyId, isNew);
+    sessionStore.deleteItemByKey(getSessionStorageKey(storyId, isNew));
     setBackup(false);
   };
 
   // Display
   useEffect(() => {
-    const existingAutoSave = getLocalAutoSave(storyId, isNew);
+    const existingAutoSave = sessionStore.getItemByKey(
+      getSessionStorageKey(storyId, isNew)
+    );
     if (!existingAutoSave) {
       return;
     }
@@ -116,7 +119,7 @@ function LocalAutoSave() {
     }
 
     // Otherwise, delete the autosave.
-    deleteLocalAutosave(storyId, isNew);
+    sessionStore.deleteItemByKey(getSessionStorageKey(storyId, isNew));
   }, [setBackup, isNew, storyId]);
 
   if (!backup) {
@@ -125,7 +128,7 @@ function LocalAutoSave() {
 
   const restoreBackup = () => {
     restoreLocalAutoSave();
-    deleteLocalAutosave(storyId, isNew);
+    sessionStore.deleteItemByKey(getSessionStorageKey(storyId, isNew));
     setBackup(false);
   };
 

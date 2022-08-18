@@ -17,18 +17,20 @@
  * External dependencies
  */
 import { useCallback } from '@googleforcreators/react';
+import { sessionStore } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
  */
-import { getLocalAutoSave } from '../../../utils/localAutoSave';
+import getSessionStorageKey from '../../../utils/getSessionStorageKey';
 
 function useLocalAutoSave({ restore, storyId, pages, capabilities, isNew }) {
   const restoreLocalAutoSave = useCallback(() => {
-    let existingAutoSave;
-    try {
-      existingAutoSave = JSON.parse(getLocalAutoSave(storyId, isNew));
-    } catch (e) {
+    const existingAutoSave = sessionStore.getItemByKey(
+      getSessionStorageKey(storyId, isNew)
+    );
+    // If either of the values is missing, nothing to do.
+    if (!existingAutoSave?.story || !existingAutoSave?.pages) {
       return;
     }
 
