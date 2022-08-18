@@ -18,20 +18,9 @@
  * Internal dependencies
  */
 import { config } from './shared';
-import enableTracking from './enableTracking';
-import initializeErrorReporting from './initializeErrorReporting';
 
-/**
- * Initializes tracking.
- *
- * @param {string} appName Name of the application, e.g. 'Dashboard' or 'Editor'.
- * @param {boolean} [sendPageView=true] Whether to send an initial page view event upon loading.
- * @return {Promise<void>} Promise.
- */
-async function initializeTracking(appName, sendPageView = true) {
-  config.appName = appName;
-  await enableTracking(sendPageView);
-  initializeErrorReporting();
+function disableTracking(): void {
+  config.trackingEnabled = false;
 }
 
-export default initializeTracking;
+export default disableTracking;

@@ -32,7 +32,11 @@ import track from './track';
  * @param {boolean} [fatal=false] Report whether there is a fatal error.
  * @return {Promise<void>} Promise that always resolves.
  */
-async function trackError(prefix, description, fatal = false) {
+async function trackError(
+  prefix: string,
+  description: string,
+  fatal = false
+): Promise<void> {
   if (!(await isTrackingEnabled())) {
     return Promise.resolve();
   }
