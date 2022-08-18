@@ -55,6 +55,7 @@ const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 function PaginatedMediaGallery({
   providerType,
   resources,
+  uploadingResources,
   searchTerm,
   selectedCategoryId,
   isMediaLoading,
@@ -156,7 +157,7 @@ function PaginatedMediaGallery({
   }, [handleScrollOrResize]);
 
   const mediaGallery =
-    isMediaLoaded && resources.length === 0 ? (
+    isMediaLoaded && !resources.length && !uploadingResources.length ? (
       <MediaGalleryMessage>
         {__('No media found.', 'web-stories')}
       </MediaGalleryMessage>
@@ -166,6 +167,7 @@ function PaginatedMediaGallery({
           providerType={providerType}
           canEditMedia={canEditMedia}
           resources={resources}
+          uploadingResources={uploadingResources}
           onInsert={onInsert}
         />
       </div>
@@ -215,6 +217,7 @@ function PaginatedMediaGallery({
 PaginatedMediaGallery.propTypes = {
   providerType: PropTypes.string.isRequired,
   resources: PropTypes.arrayOf(PropTypes.object).isRequired,
+  uploadingResources: PropTypes.arrayOf(PropTypes.object).isRequired,
   isMediaLoading: PropTypes.bool.isRequired,
   isMediaLoaded: PropTypes.bool.isRequired,
   hasMore: PropTypes.bool.isRequired,

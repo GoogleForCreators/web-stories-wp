@@ -307,7 +307,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
   return {
     state: {
       ...reducerState,
-      media: [...uploadingResources, ...reducerState.media],
+      uploadingMedia: uploadingResources,
       isUploading: isUploading || isGeneratingPosterImages,
       isTranscoding,
       isNewResourceProcessing,
