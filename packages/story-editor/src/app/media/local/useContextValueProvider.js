@@ -131,7 +131,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
   );
 
   const {
-    active,
+    active = [],
     uploadMedia,
     isUploading,
     isTranscoding,
