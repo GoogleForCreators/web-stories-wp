@@ -33,7 +33,7 @@ interface HTMLVideoElement {
  * @param {HTMLVideoElement} video Video element.
  * @return {boolean} Whether the video has audio or not.
  */
-function hasVideoGotAudio(video: HTMLVideoElement) {
+function hasVideoGotAudio(video: HTMLVideoElement): boolean {
   return (
     (video.mozHasAudio as boolean) ||
     Boolean(video.webkitAudioDecodedByteCount) ||

@@ -44,7 +44,7 @@ const resourceList: ResourceCache = {
   get: function (id: ResourceId): ResourceCacheEntry {
     return this.list[id];
   },
-  set: function (id: ResourceId, value: ResourceCacheEntry) {
+  set: function (id: ResourceId, value: ResourceCacheEntry): void {
     if (value?.type === 'cached' && this.list[id]) {
       // We already have better (or equal) resource than cached, prevent flickering
       return;

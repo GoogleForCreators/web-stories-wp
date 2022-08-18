@@ -28,7 +28,7 @@ import type { Resource } from './types';
  * @param {Resource} resource The resource.
  * @return {string} Source URL of the smallest available size media.
  */
-function getSmallestUrlForWidth(minWidth: number, resource: Resource) {
+function getSmallestUrlForWidth(minWidth: number, resource: Resource): string {
   if (resource.sizes) {
     const smallestMedia = Object.values(resource.sizes)
       .sort((s1, s2) => s1.width - s2.width)
