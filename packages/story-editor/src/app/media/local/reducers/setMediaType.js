@@ -14,11 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import { LOCAL_MEDIA_TYPE_ALL } from '../types';
-
 function setMediaType(state, { mediaType }) {
   if (mediaType === state.mediaType) {
     return state;
@@ -31,10 +26,7 @@ function setMediaType(state, { mediaType }) {
   // be some videos already in state.
   return {
     ...state,
-    media:
-      mediaType === LOCAL_MEDIA_TYPE_ALL
-        ? state.media
-        : state.media.filter(({ type }) => mediaType === type),
+    media: [],
     mediaType,
   };
 }
