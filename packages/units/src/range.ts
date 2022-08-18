@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+interface Range {
+  MIN: number;
+  MAX: number;
+}
+
 /**
  * Linear interpolation function.
  *
@@ -24,7 +29,7 @@
  * @param {Object} range - tuple that dictates a range between 2 numbers
  * @return {number} value within given range
  */
-export const lerp = (progress, range) =>
+export const lerp = (progress: number, range: Range) =>
   (1 - progress) * range.MIN + progress * range.MAX;
 
 /**
@@ -40,7 +45,7 @@ export const lerp = (progress, range) =>
  * @param {*} range - range in the form of a tuple
  * @return {number} - progress value in the range [0, 1]
  */
-export const progress = (v, range) => {
+export const progress = (v: number, range: Range) => {
   const clamped = clamp(v, range);
   const delta = clamped - range.MIN;
   const difference = range.MAX - range.MIN;
@@ -57,6 +62,6 @@ export const progress = (v, range) => {
  * @param {number} range.MAX Maximum value.
  * @return {number} Number within range.
  */
-export const clamp = (value, { MIN, MAX }) => {
+export const clamp = (value: number, { MIN, MAX }: Range) => {
   return Math.min(Math.max(value, MIN), MAX);
 };

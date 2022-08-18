@@ -4,5 +4,12 @@
     "rootDir": "src",
     "declarationDir": "dist-types"
   },
-  "include": ["src/constants.js"]
+  "references": [{ "path": "../react" }],
+  "include": [
+    "src/calcRotatedResizeOffset.ts",
+    "src/constants.ts",
+    "src/context.ts",
+    "src/dimensions.ts",
+    "src/range.ts"
+  ]
 }

@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-export const PAGE_RATIO = 2 / 3;
+export const PAGE_RATIO: number = 2 / 3;
 export const PAGE_WIDTH = 412;
 export const PAGE_HEIGHT = 618;
 
-export const FULLBLEED_RATIO = 9 / 16;
+export const FULLBLEED_RATIO: number = 9 / 16;
 
-export const FULLBLEED_HEIGHT = PAGE_WIDTH / FULLBLEED_RATIO;
-export const DANGER_ZONE_HEIGHT = (FULLBLEED_HEIGHT - PAGE_HEIGHT) / 2;
+export const FULLBLEED_HEIGHT: number = PAGE_WIDTH / FULLBLEED_RATIO;
+export const DANGER_ZONE_HEIGHT: number = (FULLBLEED_HEIGHT - PAGE_HEIGHT) / 2;
 
 // Default 1em value for font size.
-export const DEFAULT_EM = PAGE_HEIGHT * 0.02186;
+export const DEFAULT_EM: number = PAGE_HEIGHT * 0.02186;
 
 // Default device pixel ratio.
 export const DEFAULT_DPR = 0.5;

@@ -31,7 +31,7 @@ import calcRotatedResizeOffset from './calcRotatedResizeOffset';
  * @param {number} v The value to be rounded.
  * @return {number} The value rounded to the "data" space precision.
  */
-export function dataPixels(v) {
+export function dataPixels(v: number): number {
   return Number(v.toFixed(0));
 }
 
@@ -41,7 +41,7 @@ export function dataPixels(v) {
  * @param {number} v The "em" value. E.g. 2 for "2em".
  * @return {number} The font size for the specified "em" value.
  */
-export function dataFontEm(v) {
+export function dataFontEm(v: number): number {
   return Number((v * DEFAULT_EM).toFixed(1));
 }
 
@@ -51,7 +51,7 @@ export function dataFontEm(v) {
  * @param {number} v The value to be rounded.
  * @return {number} The value rounded to the "editor" space precision.
  */
-export function editorPixels(v) {
+export function editorPixels(v: number): number {
   return Number(v.toFixed(5));
 }
 
@@ -63,7 +63,7 @@ export function editorPixels(v) {
  * @param {number} pageWidth The basis value for the page's width in the "editor" space.
  * @return {number} The value in the "editor" space.
  */
-export function dataToEditorX(x, pageWidth) {
+export function dataToEditorX(x: number, pageWidth: number): number {
   return editorPixels((x * pageWidth) / PAGE_WIDTH);
 }
 
@@ -75,11 +75,11 @@ export function dataToEditorX(x, pageWidth) {
  * @param {number} pageHeight The basis value for the page's height in the "editor" space.
  * @return {number} The value in the "editor" space.
  */
-export function dataToEditorY(y, pageHeight) {
+export function dataToEditorY(y: number, pageHeight: number): number {
   return editorPixels((y * pageHeight) / PAGE_HEIGHT);
 }
 
-export function dataToFontSizeY(v, pageHeight) {
+export function dataToFontSizeY(v: number, pageHeight: number): string {
   return (dataToEditorY(v, pageHeight) / 10).toFixed(6);
 }
 
@@ -92,9 +92,13 @@ export function dataToFontSizeY(v, pageHeight) {
  * @param {boolean} [withRounding=true] Whether the dataPixels rounding should occur.
  * @return {number} The value in the "data" space.
  */
-export function editorToDataX(x, pageWidth, withRounding = true) {
+export function editorToDataX(
+  x: number,
+  pageWidth: number,
+  withRounding = true
+) {
   const v = (x * PAGE_WIDTH) / pageWidth;
-  if (withRounding === false) {
+  if (!withRounding) {
     return v;
   }
   return dataPixels(v);
@@ -109,12 +113,40 @@ export function editorToDataX(x, pageWidth, withRounding = true) {
  * @param {boolean} [withRounding=true] Whether the dataPixels rounding should occur.
  * @return {number} The value in the "data" space.
  */
-export function editorToDataY(y, pageHeight, withRounding = true) {
+export function editorToDataY(
+  y: number,
+  pageHeight: number,
+  withRounding = true
+) {
   const v = (y * PAGE_HEIGHT) / pageHeight;
-  if (withRounding === false) {
+  if (!withRounding) {
     return v;
   }
   return dataPixels(v);
+}
+
+// TODO(#12126): Use improved Element type from shared package.
+interface Element {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  rotationAngle: number;
+  isBackground: boolean;
+  border: {
+    top: number;
+    right: number;
+    bottom: number;
+    left: number;
+  };
+}
+
+interface ElementBox {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  rotationAngle: number;
 }
 
 /**
@@ -129,10 +161,10 @@ export function editorToDataY(y, pageHeight, withRounding = true) {
  * "box" in the editor space.
  */
 export function getBox(
-  { x, y, width, height, rotationAngle, isBackground },
-  pageWidth,
-  pageHeight
-) {
+  { x, y, width, height, rotationAngle, isBackground }: Element,
+  pageWidth: number,
+  pageHeight: number
+): ElementBox {
   return {
     x: dataToEditorX(isBackground ? 0 : x, pageWidth),
     y: dataToEditorY(isBackground ? -DANGER_ZONE_HEIGHT : y, pageHeight),
@@ -152,7 +184,11 @@ export function getBox(
  * @return {{x:number, y:number, width:number, height:number, rotationAngle:number}} The
  * "box" in the editor space.
  */
-export function getBoxWithBorder(element, pageWidth, pageHeight) {
+export function getBoxWithBorder(
+  element: Element,
+  pageWidth: number,
+  pageHeight: number
+) {
   const { rotationAngle, border } = element;
   const box = getBox(element, pageWidth, pageHeight);
   if (!border) {

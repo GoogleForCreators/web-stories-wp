@@ -25,7 +25,13 @@
  * @param {number} bottom The resize delta on the bottom.
  * @return {Array<number>} The offsets in a [dx, dy] array.
  */
-function calcRotatedResizeOffset(degree, left, right, top, bottom) {
+function calcRotatedResizeOffset(
+  degree: number,
+  left: number,
+  right: number,
+  top: number,
+  bottom: number
+): [number, number] {
   const rad = (degree * Math.PI) / 180.0;
   const cos = Math.cos(rad);
   const sin = Math.sin(rad);
