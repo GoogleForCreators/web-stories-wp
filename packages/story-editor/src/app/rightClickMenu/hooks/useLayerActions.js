@@ -160,6 +160,14 @@ const useLayerActions = () => {
     });
   }, [arrangeElement, canElementMoveForwards, elements, selectedElement]);
 
+  /**
+   * Send element all the way back, if possible.
+   */
+  const handleCropHidden = useCallback(() => {
+    // eslint-disable-next-line no-console -- temp code
+    console.log('handleCropHidden', selectedElement.id);
+  }, [selectedElement]);
+
   return {
     canElementMoveBackwards,
     canElementMoveForwards,
@@ -167,6 +175,7 @@ const useLayerActions = () => {
     handleBringToFront,
     handleSendBackward,
     handleSendToBack,
+    handleCropHidden,
   };
 };
 

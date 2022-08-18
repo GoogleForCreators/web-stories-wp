@@ -66,6 +66,7 @@ function ForegroundMediaMenu({ parentMenuRef }) {
     handleSendToBack,
     handleBringForward,
     handleBringToFront,
+    handleCropHidden,
   } = useLayerActions();
 
   const { hasShapeMask, removeShapeMask } = useShapeMask(selectedElement);
@@ -202,6 +203,9 @@ function ForegroundMediaMenu({ parentMenuRef }) {
       </ContextMenuComponents.MenuButton>
       <ContextMenuComponents.MenuButton onClick={handleOpenScaleAndCrop}>
         {scaleLabel}
+      </ContextMenuComponents.MenuButton>
+      <ContextMenuComponents.MenuButton onClick={handleCropHidden}>
+        {RIGHT_CLICK_MENU_LABELS.CROP_HIDDEN}
       </ContextMenuComponents.MenuButton>
       {showToggleTrimMode && (
         <ContextMenuComponents.MenuButton
