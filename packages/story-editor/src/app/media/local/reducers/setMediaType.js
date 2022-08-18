@@ -14,19 +14,28 @@
  * limitations under the License.
  */
 
+/**
+ * Internal dependencies
+ */
+import { LOCAL_MEDIA_TYPE_ALL } from '../types';
+
 function setMediaType(state, { mediaType }) {
   if (mediaType === state.mediaType) {
     return state;
   }
 
   // Filters existing media in the state by mediaType
-  // for immediate user feedback.
-  // Still, the provider will fetch items from the server.
+  // for immediate user feedback while the provider fetches items from the server.
   // Useful when switching e.g. from All -> Videos, since there might
   // be some videos already in state.
   return {
     ...state,
-    media: [],
+    // media: [],
+    media:
+      mediaType === LOCAL_MEDIA_TYPE_ALL
+        ? []
+        : state.media.filter(({ type }) => mediaType === type),
+    pageToken: undefined,
     mediaType,
   };
 }
