@@ -34,7 +34,7 @@ import useHistoryReplay from './effects/useHistoryReplay';
 import useStoryReducer from './useStoryReducer';
 import useAutoSave from './actions/useAutoSave';
 import { StoryTriggersProvider } from './storyTriggers';
-import useLocalAutoSave from "./actions/useLocalAutoSave";
+import useLocalAutoSave from './actions/useLocalAutoSave';
 
 function StoryProvider({ storyId, initialEdits, children }) {
   const [hashPageId, setHashPageId] = useHashState('page', null);
