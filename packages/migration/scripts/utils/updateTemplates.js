@@ -23,7 +23,7 @@ import { join, resolve } from 'path';
 /**
  * Internal dependencies
  */
-
+// eslint-disable-next-line import/no-unresolved
 import { migrate, migrateSingle, DATA_VERSION } from '../module.js';
 
 function updateTemplates(templatesDir, forceVersion) {
