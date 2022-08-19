@@ -20,7 +20,7 @@
 import { SESSION_STORAGE_PREFIX } from '@googleforcreators/design-system';
 
 export default function getSessionStorageKey(storyId, isNew) {
-  return `${SESSION_STORAGE_PREFIX.LOCAL_AUTOSAAVE_PREFIX}_${
+  return `${SESSION_STORAGE_PREFIX.LOCAL_AUTOSAVE_PREFIX}_${
     isNew ? 'auto-draft' : storyId
   }`;
 }

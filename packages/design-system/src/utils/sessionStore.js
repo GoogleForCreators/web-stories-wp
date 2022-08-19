@@ -20,7 +20,7 @@
 import { trackError } from '@googleforcreators/tracking';
 
 export const SESSION_STORAGE_PREFIX = {
-  LOCAL_AUTOSAAVE_PREFIX: 'wp_stories_autosave_story',
+  LOCAL_AUTOSAVE_PREFIX: 'wp_stories_autosave_story',
 };
 
 export function getItemByKey(key) {

@@ -52,7 +52,7 @@ function LocalAutoSave() {
   );
   const { storyId, isNew } = story;
 
-  const [backup, setBackup] = useState(false);
+  const [backup, setBackup] = useState(null);
 
   // Store into ref for not triggering autosave display when these change.
   const storyRef = useRef();
@@ -93,7 +93,7 @@ function LocalAutoSave() {
 
   const onClose = () => {
     sessionStore.deleteItemByKey(getSessionStorageKey(storyId, isNew));
-    setBackup(false);
+    setBackup(null);
   };
 
   // Display
@@ -129,7 +129,7 @@ function LocalAutoSave() {
   const restoreBackup = () => {
     restoreLocalAutoSave();
     sessionStore.deleteItemByKey(getSessionStorageKey(storyId, isNew));
-    setBackup(false);
+    setBackup(null);
   };
 
   return (
@@ -142,14 +142,14 @@ function LocalAutoSave() {
           <Button
             type={BUTTON_TYPES.TERTIARY}
             size={BUTTON_SIZES.SMALL}
-            onClick={() => onClose()}
+            onClick={onClose}
           >
             {__('Dismiss', 'web-stories')}
           </Button>
           <Button
             type={BUTTON_TYPES.PRIMARY}
             size={BUTTON_SIZES.SMALL}
-            onClick={() => restoreBackup()}
+            onClick={restoreBackup}
           >
             {__('Restore Backup', 'web-stories')}
           </Button>
