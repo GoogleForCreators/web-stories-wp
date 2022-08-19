@@ -533,13 +533,6 @@
         "content": {
           "type": "string",
           "title": "The element's content. Can contain HTML."
-        },
-        "fontWeight": {
-          "type": "integer",
-          "minimum": 100,
-          "maximum": 900,
-          "title": "Font weight",
-          "$comment": "TODO: Outdated?"
         }
       }
     },
