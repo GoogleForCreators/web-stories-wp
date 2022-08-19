@@ -342,6 +342,56 @@ function useFFmpeg() {
     [getFFmpegInstance]
   );
 
+  //
+
+  /**
+   * Crop Video to remove off-canvas portion of the video using FFmpeg.
+   */
+  const cropHidden = useCallback(
+    async (file, x, y, w, h) => {
+      let ffmpeg;
+
+      try {
+        ffmpeg = await getFFmpegInstance(file);
+
+        const type = file?.type || MEDIA_TRANSCODED_MIME_TYPE;
+        const ext = getExtensionFromMimeType(type);
+        const tempFileName = uuidv4() + '.' + ext;
+        const outputFileName = getFileBasename(file) + '-cropped.' + ext;
+
+        const crop = `crop=${x}:${y}:${w}:${h}`;
+
+        await ffmpeg.run(
+          // Input filename.
+          '-i',
+          file.name,
+          '-filter:v',
+          crop,
+          tempFileName
+        );
+
+        const data = ffmpeg.FS('readFile', tempFileName);
+
+        return blobToFile(
+          new Blob([data.buffer], { type }),
+          outputFileName,
+          type
+        );
+      } catch (err) {
+        // eslint-disable-next-line no-console -- We want to surface this error.
+        console.log(err);
+        throw err;
+      } finally {
+        try {
+          ffmpeg.exit();
+        } catch {
+          // Not interested in errors here.
+        }
+      }
+    },
+    [getFFmpegInstance]
+  );
+
   /**
    * Strip audio from video using FFmpeg.
    *
@@ -551,6 +601,7 @@ function useFFmpeg() {
       convertGifToVideo,
       convertToMp3,
       trimVideo,
+      cropHidden,
     }),
     [
       isTranscodingEnabled,
@@ -561,6 +612,7 @@ function useFFmpeg() {
       convertGifToVideo,
       convertToMp3,
       trimVideo,
+      cropHidden,
     ]
   );
 }

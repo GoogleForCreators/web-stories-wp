@@ -18,10 +18,12 @@
  */
 import { useCallback } from '@googleforcreators/react';
 import { trackEvent } from '@googleforcreators/tracking';
+import { fetchRemoteFile } from '@googleforcreators/media';
 /**
  * Internal dependencies
  */
 import { useStory } from '../..';
+import useFFmpeg from '../../media/utils/useFFmpeg';
 
 /**
  * Creates the right click menu layer actions.
@@ -35,6 +37,8 @@ import { useStory } from '../..';
  * @return {Object} Right click menu layer actions
  */
 const useLayerActions = () => {
+  const { cropHidden } = useFFmpeg();
+
   const { arrangeElement, elements, selectedElement } = useStory(
     ({ state, actions }) => ({
       arrangeElement: actions.arrangeElement,
@@ -163,10 +167,16 @@ const useLayerActions = () => {
   /**
    * Send element all the way back, if possible.
    */
-  const handleCropHidden = useCallback(() => {
+  const handleCropHidden = useCallback(async () => {
+    const { x, y } = selectedElement;
+    const file = await fetchRemoteFile(
+      selectedElement.resource.src,
+      selectedElement.resource.mimeType
+    );
+    const result = await cropHidden(file, x, y, 100, 100);
     // eslint-disable-next-line no-console -- temp code
-    console.log('handleCropHidden', selectedElement.id);
-  }, [selectedElement]);
+    console.log('result', result);
+  }, [selectedElement, cropHidden]);
 
   return {
     canElementMoveBackwards,
