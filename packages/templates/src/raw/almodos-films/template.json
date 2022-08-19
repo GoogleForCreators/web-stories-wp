@@ -1,33 +1,19 @@
 {
-  "current": null,
-  "selection": [],
-  "story": {},
   "version": 43,
   "pages": [
     {
       "elements": [
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 255,
-              "b": 255
-            }
-          },
+          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 48,
           "y": 0,
           "width": 330,
           "height": 510,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "isBackground": true,
           "type": "image",
           "id": "aa873b8f-d480-416b-9b89-118916439706",
@@ -52,23 +38,8 @@
           "overlay": {
             "type": "linear",
             "stops": [
-              {
-                "color": {
-                  "r": 0,
-                  "g": 0,
-                  "b": 0,
-                  "a": 0
-                },
-                "position": 0
-              },
-              {
-                "color": {
-                  "r": 0,
-                  "g": 0,
-                  "b": 0
-                },
-                "position": 1
-              }
+              { "color": { "r": 0, "g": 0, "b": 0, "a": 0 }, "position": 0 },
+              { "color": { "r": 0, "g": 0, "b": 0 }, "position": 1 }
             ],
             "rotation": 0.25,
             "alpha": 0.4
@@ -76,10 +47,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 270,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -117,19 +85,10 @@
             }
           },
           "fontSize": 74,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
           "textAlign": "initial",
-          "padding": {
-            "locked": true,
-            "hasHiddenPadding": false
-          },
+          "padding": { "locked": true, "hasHiddenPadding": false },
           "type": "text",
           "content": "<span style=\"color: #fbeb50; text-transform: uppercase\">Women in Almodo’s films</span>",
           "fontWeight": 700,
@@ -151,10 +110,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -199,20 +155,10 @@
             }
           },
           "fontSize": 16,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"color: #fff\">By </span><span style=\"font-weight: 700; color: #fff\">Nicole Newman</span><span style=\"color: #fff\"> | Jan 29, 2020</span>",
           "fontWeight": 400,
@@ -233,37 +179,20 @@
           "id": "4838faa0-fb5d-49d4-9095-1b14feac4aba"
         }
       ],
-      "backgroundColor": {
-        "color": {
-          "r": 255,
-          "g": 255,
-          "b": 255
-        }
-      },
+      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "id": "957708f3-6565-46a3-9ef3-ca13ad24fbb6",
       "defaultBackgroundElement": {
         "opacity": 100,
-        "flip": {
-          "vertical": false,
-          "horizontal": false
-        },
+        "flip": { "vertical": false, "horizontal": false },
         "rotationAngle": 0,
         "lockAspectRatio": true,
-        "backgroundColor": {
-          "color": {
-            "r": 255,
-            "g": 255,
-            "b": 255
-          }
-        },
+        "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
         "x": 1,
         "y": 1,
         "width": 1,
         "height": 1,
-        "mask": {
-          "type": "rectangle"
-        },
+        "mask": { "type": "rectangle" },
         "isBackground": true,
         "isDefaultBackground": true,
         "type": "shape",
@@ -276,26 +205,15 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 255,
-              "b": 255
-            }
-          },
+          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 48,
           "y": 0,
           "width": 330,
           "height": 586,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "isBackground": true,
           "type": "image",
           "id": "eb34fd22-fa04-4a70-aa0d-50ec8d0cb9e2",
@@ -321,42 +239,18 @@
           "overlay": {
             "type": "linear",
             "stops": [
-              {
-                "color": {
-                  "r": 0,
-                  "g": 0,
-                  "b": 0,
-                  "a": 0
-                },
-                "position": 0.33
-              },
-              {
-                "color": {
-                  "r": 0,
-                  "g": 0,
-                  "b": 0
-                },
-                "position": 1
-              }
+              { "color": { "r": 0, "g": 0, "b": 0, "a": 0 }, "position": 0.33 },
+              { "color": { "r": 0, "g": 0, "b": 0 }, "position": 1 }
             ],
             "alpha": 0.7
           }
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 38,
-              "g": 53,
-              "b": 36
-            }
-          },
+          "backgroundColor": { "color": { "r": 38, "g": 53, "b": 36 } },
           "type": "shape",
           "x": 0,
           "y": 309,
@@ -365,9 +259,7 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "id": "a7a0779c-491d-43bf-aea3-7c994c52f6a7",
           "borderRadius": {
             "topLeft": 100,
@@ -380,10 +272,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -421,19 +310,10 @@
             }
           },
           "fontSize": 38,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
           "textAlign": "initial",
-          "padding": {
-            "locked": true,
-            "hasHiddenPadding": false
-          },
+          "padding": { "locked": true, "hasHiddenPadding": false },
           "type": "text",
           "content": "<span style=\"color: #fbeb50; text-transform: uppercase\">Strong female characters</span>",
           "fontWeight": 700,
@@ -457,10 +337,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -505,20 +382,10 @@
             }
           },
           "fontSize": 16,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.5,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"color: #fff\">With a filmography that spans nearly 40 years, Almodo has always been consistent with his memorable, outspoken, and nuanced female leads.</span>",
           "fontWeight": 400,
@@ -541,38 +408,20 @@
           "groupId": "0c3fe02d-557f-468c-baaa-1442b4efa843"
         }
       ],
-      "backgroundOverlay": "none",
-      "backgroundColor": {
-        "color": {
-          "r": 255,
-          "g": 255,
-          "b": 255
-        }
-      },
+      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "id": "e35f8c9b-ca1e-409c-b8ac-5999a1dbd20a",
       "defaultBackgroundElement": {
         "opacity": 100,
-        "flip": {
-          "vertical": false,
-          "horizontal": false
-        },
+        "flip": { "vertical": false, "horizontal": false },
         "rotationAngle": 0,
         "lockAspectRatio": true,
-        "backgroundColor": {
-          "color": {
-            "r": 255,
-            "g": 255,
-            "b": 255
-          }
-        },
+        "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
         "x": 1,
         "y": 1,
         "width": 1,
         "height": 1,
-        "mask": {
-          "type": "rectangle"
-        },
+        "mask": { "type": "rectangle" },
         "isBackground": true,
         "isDefaultBackground": true,
         "type": "shape",
@@ -608,19 +457,14 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "isBackground": true,
           "isDefaultBackground": true,
           "id": "bf2a101e-8e1f-4f5d-a958-49feb7cf55ca",
@@ -628,10 +472,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "scale": 100,
@@ -667,10 +508,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -715,20 +553,10 @@
             }
           },
           "fontSize": 16,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.5,
           "textAlign": "center",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "content": "<span style=\"color: #fff\">Almodo's film \"Julieta\" poignantly explores female agency when one woman reconciles her present situation with her past decisions.&nbsp;</span>",
           "fontWeight": 400,
           "borderRadius": {
@@ -751,10 +579,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -792,19 +617,10 @@
             }
           },
           "fontSize": 27,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
           "textAlign": "center",
-          "padding": {
-            "locked": true,
-            "hasHiddenPadding": false
-          },
+          "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #fbeb50; text-transform: uppercase\">Julieta</span>",
           "fontWeight": 700,
           "borderRadius": {
@@ -827,10 +643,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -875,20 +688,10 @@
             }
           },
           "fontSize": 14,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 0.95,
           "textAlign": "center",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "x": 129,
           "y": 34,
           "id": "81b9cbb1-fc48-4d5f-8bf8-9d8076ef71d7",
@@ -912,10 +715,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 108,
@@ -925,19 +725,14 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": {
-            "type": "heptagram"
-          },
+          "sticker": { "type": "heptagram" },
           "id": "02a60ede-ff6a-4a10-a9df-15a0d116e37b",
           "type": "sticker",
           "groupId": "d83642db-ae25-4f64-8bd4-fbc55904c30c"
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 290,
@@ -949,9 +744,7 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": {
-            "type": "heptagram"
-          },
+          "sticker": { "type": "heptagram" },
           "type": "sticker",
           "groupId": "d83642db-ae25-4f64-8bd4-fbc55904c30c"
         }
@@ -974,14 +767,7 @@
           "delay": 0
         }
       ],
-      "backgroundOverlay": "none",
-      "backgroundColor": {
-        "color": {
-          "r": 38,
-          "g": 53,
-          "b": 36
-        }
-      },
+      "backgroundColor": { "color": { "r": 38, "g": 53, "b": 36 } },
       "type": "page",
       "id": "3887d40d-0866-48ac-b811-83f822c7df44",
       "pageTemplateType": "editorial",
@@ -997,26 +783,15 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 255,
-              "b": 255
-            }
-          },
+          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": -284,
           "y": -301,
           "width": 1080,
           "height": 1920,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "isBackground": true,
           "type": "image",
           "id": "373bfaa0-99cc-415f-87ab-cf2b576fac02",
@@ -1038,39 +813,21 @@
             "baseColor": "#dddbda",
             "isExternal": true
           },
-          "overlay": {
-            "color": {
-              "r": 1,
-              "g": 1,
-              "b": 1,
-              "a": 0.4
-            }
-          }
+          "overlay": { "color": { "r": 1, "g": 1, "b": 1, "a": 0.4 } }
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 38,
-              "g": 53,
-              "b": 36
-            }
-          },
+          "backgroundColor": { "color": { "r": 38, "g": 53, "b": 36 } },
           "type": "shape",
           "width": 412,
           "height": 249,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "borderRadius": {
             "topLeft": 0,
             "topRight": 0,
@@ -1086,10 +843,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -1134,20 +888,10 @@
             }
           },
           "fontSize": 16,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.5,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"color: #fff\">Originally intended for legendary actor Meryl Streep, Almodo ultimately decided to cast Adriana Ugarte back home in his native Spain.&nbsp;</span>",
           "fontWeight": 400,
@@ -1171,10 +915,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -1212,19 +953,10 @@
             }
           },
           "fontSize": 20,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.1,
           "textAlign": "left",
-          "padding": {
-            "locked": true,
-            "hasHiddenPadding": false
-          },
+          "padding": { "locked": true, "hasHiddenPadding": false },
           "type": "text",
           "content": "<span style=\"color: #fbeb50; text-transform: uppercase\">Making Julieta</span>",
           "fontWeight": 700,
@@ -1248,38 +980,20 @@
           "tagName": "h3"
         }
       ],
-      "backgroundOverlay": "none",
-      "backgroundColor": {
-        "color": {
-          "r": 255,
-          "g": 255,
-          "b": 255
-        }
-      },
+      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "id": "8d6df786-df0b-495d-a269-956114065985",
       "defaultBackgroundElement": {
         "opacity": 100,
-        "flip": {
-          "vertical": false,
-          "horizontal": false
-        },
+        "flip": { "vertical": false, "horizontal": false },
         "rotationAngle": 0,
         "lockAspectRatio": true,
-        "backgroundColor": {
-          "color": {
-            "r": 255,
-            "g": 255,
-            "b": 255
-          }
-        },
+        "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
         "x": 1,
         "y": 1,
         "width": 1,
         "height": 1,
-        "mask": {
-          "type": "rectangle"
-        },
+        "mask": { "type": "rectangle" },
         "isBackground": true,
         "isDefaultBackground": true,
         "type": "shape",
@@ -1315,19 +1029,14 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "isBackground": true,
           "isDefaultBackground": true,
           "id": "588effb3-5f01-400f-a89c-fa73e544e1fa",
@@ -1335,10 +1044,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -1383,20 +1089,10 @@
             }
           },
           "fontSize": 16,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.5,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "content": "<span style=\"color: #fff\">Adriana Ugarte was ultimately chosen to play Julieta for her nuanced portrayal of youth, independence, and female freedom.&nbsp;</span>",
           "fontWeight": 400,
           "borderRadius": {
@@ -1419,10 +1115,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -1460,19 +1153,10 @@
             }
           },
           "fontSize": 20,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.1,
           "textAlign": "left",
-          "padding": {
-            "locked": true,
-            "hasHiddenPadding": false
-          },
+          "padding": { "locked": true, "hasHiddenPadding": false },
           "type": "text",
           "content": "<span style=\"color: #fbeb50; text-transform: uppercase\">Ugarte as Julieta</span>",
           "fontWeight": 700,
@@ -1496,10 +1180,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "scale": 100,
@@ -1520,20 +1201,12 @@
             "baseColor": "#564d3d",
             "isExternal": true
           },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "x": 48,
           "y": 71,
           "width": 193,
           "height": 304,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "id": "85c8d43f-b488-45c5-a24b-445f63748e1c",
           "borderRadius": {
             "topLeft": 90,
@@ -1550,10 +1223,7 @@
           "id": "fc3c6ae0-fa0f-4c50-84f5-0e07c266e8bf",
           "basedOn": "85c8d43f-b488-45c5-a24b-445f63748e1c",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "scale": 100,
@@ -1574,18 +1244,10 @@
             "baseColor": "#261e16",
             "isExternal": true
           },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "width": 193,
           "height": 304,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "borderRadius": {
             "topLeft": 90,
             "topRight": 90,
@@ -1596,7 +1258,6 @@
           "type": "image"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "7d38872e-4316-47c4-986d-09e338658822",
@@ -1615,13 +1276,7 @@
           "delay": 0
         }
       ],
-      "backgroundColor": {
-        "color": {
-          "r": 38,
-          "g": 53,
-          "b": 36
-        }
-      },
+      "backgroundColor": { "color": { "r": 38, "g": 53, "b": 36 } },
       "type": "page",
       "id": "be528b0a-a60f-4d52-ae28-b7e76dfaf6a1",
       "pageTemplateType": ""
@@ -1630,10 +1285,7 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "scale": 118,
@@ -1654,56 +1306,30 @@
             "isOptimized": false,
             "isExternal": true
           },
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 255,
-              "b": 255
-            }
-          },
+          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": -334,
           "y": -651,
           "width": 1080,
           "height": 1920,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "isBackground": true,
           "id": "bc027675-b8b2-4d26-9512-80e48a750eea",
           "type": "image",
-          "overlay": {
-            "color": {
-              "r": 1,
-              "g": 1,
-              "b": 1,
-              "a": 0.2
-            }
-          }
+          "overlay": { "color": { "r": 1, "g": 1, "b": 1, "a": 0.2 } }
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 38,
-              "g": 53,
-              "b": 36
-            }
-          },
+          "backgroundColor": { "color": { "r": 38, "g": 53, "b": 36 } },
           "type": "shape",
           "width": 412,
           "height": 372,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "borderRadius": {
             "topLeft": 100,
             "topRight": 100,
@@ -1719,10 +1345,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -1760,19 +1383,10 @@
             }
           },
           "fontSize": 26,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.3,
           "textAlign": "initial",
-          "padding": {
-            "locked": true,
-            "hasHiddenPadding": false
-          },
+          "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #fbeb50; text-transform: uppercase\">“ I wanted to portray a woman exploring life and making decisions on her own terms.”</span>",
           "fontWeight": 700,
           "borderRadius": {
@@ -1797,10 +1411,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -1845,20 +1456,10 @@
             }
           },
           "fontSize": 16,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.5,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "content": "<span style=\"color: #fff\">Almodo on </span><span style=\"font-weight: 700; color: #fff\">Adriana Ugarte</span>",
           "fontWeight": 400,
           "borderRadius": {
@@ -1881,7 +1482,6 @@
           "groupId": "d15b4890-cdc7-4707-940b-2e56241574aa"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "b8ef6cd9-eae0-4c5d-b8cd-fcae68ea7a33",
@@ -1899,37 +1499,20 @@
           "delay": 0
         }
       ],
-      "backgroundColor": {
-        "color": {
-          "r": 255,
-          "g": 255,
-          "b": 255
-        }
-      },
+      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "id": "f66754bc-4646-4e58-8831-c175b1c87abe",
       "defaultBackgroundElement": {
         "opacity": 100,
-        "flip": {
-          "vertical": false,
-          "horizontal": false
-        },
+        "flip": { "vertical": false, "horizontal": false },
         "rotationAngle": 0,
         "lockAspectRatio": true,
-        "backgroundColor": {
-          "color": {
-            "r": 255,
-            "g": 255,
-            "b": 255
-          }
-        },
+        "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
         "x": 1,
         "y": 1,
         "width": 1,
         "height": 1,
-        "mask": {
-          "type": "rectangle"
-        },
+        "mask": { "type": "rectangle" },
         "isBackground": true,
         "isDefaultBackground": true,
         "type": "shape",
@@ -1948,19 +1531,14 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "isBackground": true,
           "isDefaultBackground": true,
           "id": "c1e7631a-ad07-4833-8394-2b1383e0945c",
@@ -1968,10 +1546,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "scale": 100,
@@ -2008,10 +1583,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -2056,20 +1628,10 @@
             }
           },
           "fontSize": 16,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.5,
           "textAlign": "center",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "content": "<span style=\"color: #fff\">In Volver, we see Almodo explore female identity: the layers, the emotions, the influences on a woman's decision-making process.</span>",
           "fontWeight": 400,
           "borderRadius": {
@@ -2092,10 +1654,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -2133,19 +1692,10 @@
             }
           },
           "fontSize": 27,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
           "textAlign": "center",
-          "padding": {
-            "locked": true,
-            "hasHiddenPadding": false
-          },
+          "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #fbeb50; text-transform: uppercase\">Volver</span>",
           "fontWeight": 700,
           "borderRadius": {
@@ -2168,10 +1718,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -2216,20 +1763,10 @@
             }
           },
           "fontSize": 14,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 0.95,
           "textAlign": "center",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "x": 129,
           "y": 34,
           "id": "217b8544-8ff2-4131-9a40-ca5ed2d27afd",
@@ -2253,10 +1790,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "width": 13,
@@ -2264,9 +1798,7 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": {
-            "type": "heptagram"
-          },
+          "sticker": { "type": "heptagram" },
           "basedOn": "5fa445aa-d2b9-4b23-ba40-54f756b963df",
           "id": "9f971c69-149e-477d-a8c3-b27b9fbce181",
           "x": 121,
@@ -2276,10 +1808,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "width": 13,
@@ -2287,9 +1816,7 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": {
-            "type": "heptagram"
-          },
+          "sticker": { "type": "heptagram" },
           "basedOn": "eef565bf-4eb4-4174-b514-5f63b8701f54",
           "id": "df20e5d2-fce7-4fb2-82bc-f891e3b4716a",
           "x": 280,
@@ -2316,14 +1843,7 @@
           "delay": 0
         }
       ],
-      "backgroundOverlay": "none",
-      "backgroundColor": {
-        "color": {
-          "r": 38,
-          "g": 53,
-          "b": 36
-        }
-      },
+      "backgroundColor": { "color": { "r": 38, "g": 53, "b": 36 } },
       "type": "page",
       "id": "6e6528b7-19b4-4fd1-bf4b-e4d6665af57a",
       "pageTemplateType": "",
@@ -2339,10 +1859,7 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "scale": 100,
@@ -2363,56 +1880,30 @@
             "isOptimized": false,
             "isExternal": true
           },
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 255,
-              "b": 255
-            }
-          },
+          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": -334,
           "y": -651,
           "width": 1080,
           "height": 1920,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "isBackground": true,
           "id": "ee04022a-afcb-4485-84a6-bc817870bef8",
           "type": "image",
-          "overlay": {
-            "color": {
-              "r": 1,
-              "g": 1,
-              "b": 1,
-              "a": 0.2
-            }
-          }
+          "overlay": { "color": { "r": 1, "g": 1, "b": 1, "a": 0.2 } }
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 38,
-              "g": 53,
-              "b": 36
-            }
-          },
+          "backgroundColor": { "color": { "r": 38, "g": 53, "b": 36 } },
           "type": "shape",
           "width": 412,
           "height": 249,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "borderRadius": {
             "topLeft": 0,
             "topRight": 0,
@@ -2428,10 +1919,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -2476,20 +1964,10 @@
             }
           },
           "fontSize": 16,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.5,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "content": "<span style=\"color: #fff\">Almodo famously makes movies about movies as a way to explore the complexity of identity for women. Women have always been understood through someone else's lens or medium.</span>",
           "fontWeight": 400,
           "borderRadius": {
@@ -2513,10 +1991,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -2554,19 +2029,10 @@
             }
           },
           "fontSize": 20,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.1,
           "textAlign": "left",
-          "padding": {
-            "locked": true,
-            "hasHiddenPadding": false
-          },
+          "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #fbeb50; text-transform: uppercase\">Why Identity?</span>",
           "fontWeight": 700,
           "borderRadius": {
@@ -2590,7 +2056,6 @@
           "tagName": "h3"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "5cc6fb32-98a8-42e2-b2cc-178fa7d9bede",
@@ -2608,37 +2073,20 @@
           "delay": 0
         }
       ],
-      "backgroundColor": {
-        "color": {
-          "r": 255,
-          "g": 255,
-          "b": 255
-        }
-      },
+      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "id": "d88d7fed-f444-4104-84c1-e21a0068aeca",
       "defaultBackgroundElement": {
         "opacity": 100,
-        "flip": {
-          "vertical": false,
-          "horizontal": false
-        },
+        "flip": { "vertical": false, "horizontal": false },
         "rotationAngle": 0,
         "lockAspectRatio": true,
-        "backgroundColor": {
-          "color": {
-            "r": 255,
-            "g": 255,
-            "b": 255
-          }
-        },
+        "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
         "x": 1,
         "y": 1,
         "width": 1,
         "height": 1,
-        "mask": {
-          "type": "rectangle"
-        },
+        "mask": { "type": "rectangle" },
         "isBackground": true,
         "isDefaultBackground": true,
         "type": "shape",
@@ -2657,10 +2105,7 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "scale": 111,
@@ -2681,56 +2126,30 @@
             "baseColor": "#d59e76",
             "isExternal": true
           },
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 255,
-              "b": 255
-            }
-          },
+          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 48,
           "y": 0,
           "width": 330,
           "height": 531,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "isBackground": true,
           "id": "747ae8c9-698b-4d39-984d-e35d9bc73eb4",
           "type": "image",
-          "overlay": {
-            "color": {
-              "r": 1,
-              "g": 1,
-              "b": 1,
-              "a": 0.2
-            }
-          }
+          "overlay": { "color": { "r": 1, "g": 1, "b": 1, "a": 0.2 } }
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 38,
-              "g": 53,
-              "b": 36
-            }
-          },
+          "backgroundColor": { "color": { "r": 38, "g": 53, "b": 36 } },
           "type": "shape",
           "width": 412,
           "height": 341,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "borderRadius": {
             "topLeft": 100,
             "topRight": 100,
@@ -2746,10 +2165,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -2787,19 +2203,10 @@
             }
           },
           "fontSize": 26,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.3,
           "textAlign": "initial",
-          "padding": {
-            "locked": true,
-            "hasHiddenPadding": false
-          },
+          "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #fbeb50; text-transform: uppercase\">“His work is his love letter to women. It's his love letter to cinema.”</span>",
           "fontWeight": 700,
           "borderRadius": {
@@ -2824,10 +2231,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -2872,20 +2276,10 @@
             }
           },
           "fontSize": 16,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.5,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "content": "<span style=\"color: #fff\">Almodo on </span><span style=\"font-weight: 700; color: #fff\">Penny Cruz</span>",
           "fontWeight": 400,
           "borderRadius": {
@@ -2908,7 +2302,6 @@
           "groupId": "075a59ee-96c4-4370-9971-324b829197ed"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "b4a10039-4534-41ff-a7c1-23a23df8919d",
@@ -2926,37 +2319,20 @@
           "delay": 0
         }
       ],
-      "backgroundColor": {
-        "color": {
-          "r": 255,
-          "g": 255,
-          "b": 255
-        }
-      },
+      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "id": "185f13ae-c58e-4308-9ac0-aebde90bb34b",
       "defaultBackgroundElement": {
         "opacity": 100,
-        "flip": {
-          "vertical": false,
-          "horizontal": false
-        },
+        "flip": { "vertical": false, "horizontal": false },
         "rotationAngle": 0,
         "lockAspectRatio": true,
-        "backgroundColor": {
-          "color": {
-            "r": 255,
-            "g": 255,
-            "b": 255
-          }
-        },
+        "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
         "x": 1,
         "y": 1,
         "width": 1,
         "height": 1,
-        "mask": {
-          "type": "rectangle"
-        },
+        "mask": { "type": "rectangle" },
         "isBackground": true,
         "isDefaultBackground": true,
         "type": "shape",
@@ -2975,19 +2351,14 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "isBackground": true,
           "isDefaultBackground": true,
           "id": "9a9b88ce-5a32-43f2-8aae-e9560983669b",
@@ -2995,10 +2366,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "scale": 100,
@@ -3034,10 +2402,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -3082,20 +2447,10 @@
             }
           },
           "fontSize": 16,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.5,
           "textAlign": "center",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "content": "<span style=\"color: #fff\">All About My Mother explores why women act, who they act for, and how they perform.</span>",
           "fontWeight": 400,
           "borderRadius": {
@@ -3118,10 +2473,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -3159,19 +2511,10 @@
             }
           },
           "fontSize": 27,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.3,
           "textAlign": "center",
-          "padding": {
-            "locked": true,
-            "hasHiddenPadding": false
-          },
+          "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #fbeb50; text-transform: uppercase\">All about my mother</span>",
           "fontWeight": 700,
           "borderRadius": {
@@ -3194,10 +2537,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -3242,20 +2582,10 @@
             }
           },
           "fontSize": 14,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 0.95,
           "textAlign": "center",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "x": 130,
           "y": 34,
           "id": "69a8da9c-eb98-4f4c-8f7f-c271d7ffcd47",
@@ -3279,10 +2609,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "width": 13,
@@ -3290,9 +2617,7 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": {
-            "type": "heptagram"
-          },
+          "sticker": { "type": "heptagram" },
           "basedOn": "5fa445aa-d2b9-4b23-ba40-54f756b963df",
           "id": "3d0d4e6a-9ac8-445b-805f-73798142e6ae",
           "x": 124,
@@ -3302,10 +2627,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "width": 13,
@@ -3313,9 +2635,7 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": {
-            "type": "heptagram"
-          },
+          "sticker": { "type": "heptagram" },
           "basedOn": "eef565bf-4eb4-4174-b514-5f63b8701f54",
           "id": "188a9280-5841-44f3-ad8d-b7051056efda",
           "x": 276,
@@ -3342,14 +2662,7 @@
           "delay": 0
         }
       ],
-      "backgroundOverlay": "none",
-      "backgroundColor": {
-        "color": {
-          "r": 38,
-          "g": 53,
-          "b": 36
-        }
-      },
+      "backgroundColor": { "color": { "r": 38, "g": 53, "b": 36 } },
       "type": "page",
       "id": "8f868cda-a3fe-4685-b4e2-815d713ede88",
       "pageTemplateType": "",
@@ -3365,10 +2678,7 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "scale": 122,
@@ -3389,71 +2699,37 @@
             "baseColor": "#222c2a",
             "isExternal": true
           },
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 255,
-              "b": 255
-            }
-          },
+          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 0,
           "y": -57,
           "width": 412,
           "height": 732,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "isBackground": true,
           "id": "9c4edb33-6bc6-4c64-97ea-84f5169a3bb6",
           "type": "image",
           "overlay": {
             "type": "linear",
             "stops": [
-              {
-                "color": {
-                  "r": 1,
-                  "g": 1,
-                  "b": 1,
-                  "a": 0
-                },
-                "position": 0.43
-              },
-              {
-                "color": {
-                  "r": 1,
-                  "g": 1,
-                  "b": 1
-                },
-                "position": 1
-              }
+              { "color": { "r": 1, "g": 1, "b": 1, "a": 0 }, "position": 0.43 },
+              { "color": { "r": 1, "g": 1, "b": 1 }, "position": 1 }
             ],
             "alpha": 0.8
           }
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 38,
-              "g": 53,
-              "b": 36
-            }
-          },
+          "backgroundColor": { "color": { "r": 38, "g": 53, "b": 36 } },
           "type": "shape",
           "width": 412,
           "height": 249,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "borderRadius": {
             "topLeft": 0,
             "topRight": 0,
@@ -3469,10 +2745,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -3517,20 +2790,10 @@
             }
           },
           "fontSize": 16,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.5,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "content": "<span style=\"color: #fff\">The film moves around characters who are melodramatic. Their real hardships are punctuated by moments of seeming parody. Almodo examines the convention of acting in our daily lives.</span>",
           "fontWeight": 400,
           "borderRadius": {
@@ -3554,10 +2817,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -3595,19 +2855,10 @@
             }
           },
           "fontSize": 20,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.1,
           "textAlign": "left",
-          "padding": {
-            "locked": true,
-            "hasHiddenPadding": false
-          },
+          "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #fbeb50; text-transform: uppercase\">Real vs. Unreal</span>",
           "fontWeight": 700,
           "borderRadius": {
@@ -3631,7 +2882,6 @@
           "tagName": "h3"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "d4da8222-c7ee-45a7-abbd-2bdb71870ce5",
@@ -3649,37 +2899,20 @@
           "delay": 0
         }
       ],
-      "backgroundColor": {
-        "color": {
-          "r": 255,
-          "g": 255,
-          "b": 255
-        }
-      },
+      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "id": "eaceddda-c153-42e6-98cd-9bcb19cd2e2b",
       "defaultBackgroundElement": {
         "opacity": 100,
-        "flip": {
-          "vertical": false,
-          "horizontal": false
-        },
+        "flip": { "vertical": false, "horizontal": false },
         "rotationAngle": 0,
         "lockAspectRatio": true,
-        "backgroundColor": {
-          "color": {
-            "r": 255,
-            "g": 255,
-            "b": 255
-          }
-        },
+        "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
         "x": 1,
         "y": 1,
         "width": 1,
         "height": 1,
-        "mask": {
-          "type": "rectangle"
-        },
+        "mask": { "type": "rectangle" },
         "isBackground": true,
         "isDefaultBackground": true,
         "type": "shape",
@@ -3698,10 +2931,7 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "scale": 112,
@@ -3722,71 +2952,37 @@
             "isOptimized": false,
             "isExternal": true
           },
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 255,
-              "b": 255
-            }
-          },
+          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": -334,
           "y": -651,
           "width": 1080,
           "height": 1920,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "isBackground": true,
           "id": "9b631654-bc1f-4657-ad7c-4b913ae6e92a",
           "type": "image",
           "overlay": {
             "type": "linear",
             "stops": [
-              {
-                "color": {
-                  "r": 1,
-                  "g": 1,
-                  "b": 1,
-                  "a": 0
-                },
-                "position": 0
-              },
-              {
-                "color": {
-                  "r": 1,
-                  "g": 1,
-                  "b": 1
-                },
-                "position": 1
-              }
+              { "color": { "r": 1, "g": 1, "b": 1, "a": 0 }, "position": 0 },
+              { "color": { "r": 1, "g": 1, "b": 1 }, "position": 1 }
             ],
             "alpha": 0.4
           }
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 38,
-              "g": 53,
-              "b": 36
-            }
-          },
+          "backgroundColor": { "color": { "r": 38, "g": 53, "b": 36 } },
           "type": "shape",
           "width": 412,
           "height": 374,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "borderRadius": {
             "topLeft": 100,
             "topRight": 100,
@@ -3802,10 +2998,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -3843,19 +3036,10 @@
             }
           },
           "fontSize": 26,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.3,
           "textAlign": "initial",
-          "padding": {
-            "locked": true,
-            "hasHiddenPadding": false
-          },
+          "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #fbeb50; text-transform: uppercase\">“The films he makes are a reflection of himself, and this is how he sees women.”</span>",
           "fontWeight": 700,
           "borderRadius": {
@@ -3880,10 +3064,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -3928,20 +3109,10 @@
             }
           },
           "fontSize": 16,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.5,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "content": "<span style=\"color: #fff\">Almodo on </span><span style=\"font-weight: 700; color: #fff\">Cecilia Roth</span>",
           "fontWeight": 400,
           "borderRadius": {
@@ -3964,7 +3135,6 @@
           "groupId": "d8ec8e34-4304-41bc-ace1-f3c1868ce035"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "d3e7be7a-7522-4657-a3ba-ed8cfc2ea882",
@@ -3982,37 +3152,20 @@
           "delay": 0
         }
       ],
-      "backgroundColor": {
-        "color": {
-          "r": 255,
-          "g": 255,
-          "b": 255
-        }
-      },
+      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "id": "f0ef7445-19db-4246-a731-c9d12c21a80e",
       "defaultBackgroundElement": {
         "opacity": 100,
-        "flip": {
-          "vertical": false,
-          "horizontal": false
-        },
+        "flip": { "vertical": false, "horizontal": false },
         "rotationAngle": 0,
         "lockAspectRatio": true,
-        "backgroundColor": {
-          "color": {
-            "r": 255,
-            "g": 255,
-            "b": 255
-          }
-        },
+        "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
         "x": 1,
         "y": 1,
         "width": 1,
         "height": 1,
-        "mask": {
-          "type": "rectangle"
-        },
+        "mask": { "type": "rectangle" },
         "isBackground": true,
         "isDefaultBackground": true,
         "type": "shape",
@@ -4031,19 +3184,14 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "isBackground": true,
           "isDefaultBackground": true,
           "type": "shape",
@@ -4051,10 +3199,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -4092,19 +3237,10 @@
             }
           },
           "fontSize": 20,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.1,
           "textAlign": "left",
-          "padding": {
-            "locked": true,
-            "hasHiddenPadding": false
-          },
+          "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #fbeb50; text-transform: uppercase\">The observer of women</span>",
           "fontWeight": 700,
           "borderRadius": {
@@ -4128,10 +3264,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -4176,20 +3309,10 @@
             }
           },
           "fontSize": 16,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.5,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "content": "<span style=\"color: #fff\">La Frances Hui said: “Almodo is someone who is very beloved by female actresses. He has an unusual ability to observe women with a sense of empathy.</span>",
           "fontWeight": 400,
           "borderRadius": {
@@ -4212,10 +3335,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "scale": 100,
@@ -4236,18 +3356,10 @@
             "baseColor": "#312218",
             "isExternal": true
           },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "width": 193,
           "height": 304,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "borderRadius": {
             "topLeft": 90,
             "topRight": 90,
@@ -4263,10 +3375,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "scale": 100,
@@ -4287,18 +3396,10 @@
             "baseColor": "#302218",
             "isExternal": true
           },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "width": 193,
           "height": 304,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "borderRadius": {
             "topLeft": 90,
             "topRight": 90,
@@ -4313,7 +3414,6 @@
           "y": 204
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "65a4cc37-be34-4252-b382-0541a82805ad",
@@ -4332,37 +3432,20 @@
           "delay": 0
         }
       ],
-      "backgroundColor": {
-        "color": {
-          "r": 38,
-          "g": 53,
-          "b": 36
-        }
-      },
+      "backgroundColor": { "color": { "r": 38, "g": 53, "b": 36 } },
       "type": "page",
       "id": "9224c10b-3726-433c-9000-1081fe1ae04c",
       "defaultBackgroundElement": {
         "opacity": 100,
-        "flip": {
-          "vertical": false,
-          "horizontal": false
-        },
+        "flip": { "vertical": false, "horizontal": false },
         "rotationAngle": 0,
         "lockAspectRatio": true,
-        "backgroundColor": {
-          "color": {
-            "r": 255,
-            "g": 255,
-            "b": 255
-          }
-        },
+        "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
         "x": 1,
         "y": 1,
         "width": 1,
         "height": 1,
-        "mask": {
-          "type": "rectangle"
-        },
+        "mask": { "type": "rectangle" },
         "isBackground": true,
         "isDefaultBackground": true,
         "type": "shape",
@@ -4374,19 +3457,14 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "isBackground": true,
           "isDefaultBackground": true,
           "type": "shape",
@@ -4394,10 +3472,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -4435,19 +3510,10 @@
             }
           },
           "fontSize": 38,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.1,
           "textAlign": "center",
-          "padding": {
-            "locked": true,
-            "hasHiddenPadding": false
-          },
+          "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #fbeb50; text-transform: uppercase\">Other \nstories</span>",
           "fontWeight": 700,
           "borderRadius": {
@@ -4471,19 +3537,10 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 28,
-              "g": 39,
-              "b": 27
-            }
-          },
+          "backgroundColor": { "color": { "r": 28, "g": 39, "b": 27 } },
           "type": "shape",
           "x": -112,
           "y": 123,
@@ -4492,9 +3549,7 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "id": "8f98248e-e03b-4e4f-a1c0-04857b9ab1da",
           "borderRadius": {
             "topLeft": 15,
@@ -4511,28 +3566,17 @@
           "id": "d09e3b35-5ccc-468c-a7e8-10f7b9062221",
           "basedOn": "8f98248e-e03b-4e4f-a1c0-04857b9ab1da",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 28,
-              "g": 39,
-              "b": 27
-            }
-          },
+          "backgroundColor": { "color": { "r": 28, "g": 39, "b": 27 } },
           "type": "shape",
           "width": 202,
           "height": 140,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "borderRadius": {
             "topLeft": 15,
             "topRight": 15,
@@ -4548,28 +3592,17 @@
           "id": "2a6a2790-5d10-42e6-96e5-a37704ed2136",
           "basedOn": "8f98248e-e03b-4e4f-a1c0-04857b9ab1da",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "type": "image",
           "width": 200,
           "height": 140,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "borderRadius": {
             "topLeft": 15,
             "topRight": 15,
@@ -4596,10 +3629,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -4637,20 +3667,10 @@
             }
           },
           "fontSize": 16.2,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.5,
           "textAlign": "center",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"color: #fbeb50; text-transform: uppercase\">In the Museum of Modern Art</span>",
           "fontWeight": 400,
@@ -4678,28 +3698,17 @@
           "id": "bc168ffd-841e-47af-b3e1-e7ec793854b3",
           "basedOn": "8f98248e-e03b-4e4f-a1c0-04857b9ab1da",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 28,
-              "g": 39,
-              "b": 27
-            }
-          },
+          "backgroundColor": { "color": { "r": 28, "g": 39, "b": 27 } },
           "type": "shape",
           "width": 202,
           "height": 140,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "borderRadius": {
             "topLeft": 15,
             "topRight": 15,
@@ -4715,28 +3724,17 @@
           "id": "1bbf68d0-4e83-424a-8935-ea7c64809dd1",
           "basedOn": "8f98248e-e03b-4e4f-a1c0-04857b9ab1da",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 28,
-              "g": 39,
-              "b": 27
-            }
-          },
+          "backgroundColor": { "color": { "r": 28, "g": 39, "b": 27 } },
           "type": "shape",
           "width": 202,
           "height": 140,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "borderRadius": {
             "topLeft": 15,
             "topRight": 15,
@@ -4752,28 +3750,17 @@
           "id": "80dbfb66-ca4b-4743-9e35-2ce531cb1102",
           "basedOn": "8f98248e-e03b-4e4f-a1c0-04857b9ab1da",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "type": "image",
           "width": 200,
           "height": 140,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "borderRadius": {
             "topLeft": 15,
             "topRight": 15,
@@ -4804,10 +3791,7 @@
           "id": "203125f8-e726-4a2f-987b-0587191de874",
           "basedOn": "a0cad156-0467-42bb-a2c2-9c074999edf7",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -4845,20 +3829,10 @@
             }
           },
           "fontSize": 16.2,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.5,
           "textAlign": "center",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"color: #fbeb50; text-transform: uppercase\">The director that gives the most notes</span>",
           "fontWeight": 400,
@@ -4878,14 +3852,7 @@
           "tagName": "h3"
         }
       ],
-      "backgroundOverlay": "none",
-      "backgroundColor": {
-        "color": {
-          "r": 38,
-          "g": 53,
-          "b": 36
-        }
-      },
+      "backgroundColor": { "color": { "r": 38, "g": 53, "b": 36 } },
       "type": "page",
       "id": "41e7ee5f-cc78-49bc-b99f-60b8bc7e512f",
       "animations": [
@@ -4971,5 +3938,8 @@
         }
       }
     }
-  ]
+  ],
+  "current": null,
+  "selection": [],
+  "story": {}
 }

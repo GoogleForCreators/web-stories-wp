@@ -595,7 +595,6 @@
           "y": 414
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": { "color": { "r": 0, "g": 0, "b": 0 } },
       "type": "page",
       "id": "be6ace0d-7343-4c74-ac9f-20bd185a9e25",
@@ -1016,7 +1015,6 @@
           "focalY": 50
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": { "color": { "r": 245, "g": 244, "b": 238 } },
       "type": "page",
       "id": "f30d7b9f-80f0-43b3-82ec-4ca9efe39f0c",
@@ -1634,7 +1632,6 @@
           "focalY": 50
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": { "color": { "r": 94, "g": 86, "b": 74 } },
       "type": "page",
       "id": "dd8e448d-2525-43a2-a4b8-3e481eab3e8a",
@@ -2042,7 +2039,6 @@
           "type": "text"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "8b2b13bc-6d7b-4102-a791-4ca487be30dc",
@@ -2659,7 +2655,6 @@
           "type": "text"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "37bd28d3-f9bc-4845-a01b-8f39757253e5",
@@ -3067,7 +3062,6 @@
           "type": "text"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "9d517124-6748-44ca-9d74-4a62088053f0",
@@ -3684,7 +3678,6 @@
           "type": "text"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "80893fdc-ba84-4d88-8236-5ebd61573202",
@@ -4092,7 +4085,6 @@
           "type": "text"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "b464f992-fcb5-49ef-8dcf-a3c072caaf05",
@@ -4709,7 +4701,6 @@
           "type": "text"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "333ac16f-afb9-44c8-b5bd-dc578b4651a4",
@@ -5378,7 +5369,6 @@
           "groupId": "74c6bc9a-cee5-4732-9c4c-930ac27e0bfa"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "c2ee574f-14dc-4d1f-88f9-1b3c7ae9595a",
