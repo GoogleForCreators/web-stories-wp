@@ -56,7 +56,7 @@ const RowRenderer = ({ children }) => children;
  */
 function MediaGallery({
   resources,
-  uploadingResources,
+  uploadingResources = [],
   onInsert,
   providerType,
   canEditMedia,
@@ -119,7 +119,7 @@ function MediaGallery({
 
 MediaGallery.propTypes = {
   resources: PropTypes.arrayOf(PropTypes.object).isRequired,
-  uploadingResources: PropTypes.arrayOf(PropTypes.object).isRequired,
+  uploadingResources: PropTypes.arrayOf(PropTypes.object),
   onInsert: PropTypes.func.isRequired,
   providerType: PropTypes.string.isRequired,
   canEditMedia: PropTypes.bool,

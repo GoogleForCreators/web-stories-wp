@@ -55,7 +55,7 @@ const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 function PaginatedMediaGallery({
   providerType,
   resources,
-  uploadingResources,
+  uploadingResources = [],
   searchTerm,
   selectedCategoryId,
   isMediaLoading,
@@ -217,7 +217,7 @@ function PaginatedMediaGallery({
 PaginatedMediaGallery.propTypes = {
   providerType: PropTypes.string.isRequired,
   resources: PropTypes.arrayOf(PropTypes.object).isRequired,
-  uploadingResources: PropTypes.arrayOf(PropTypes.object).isRequired,
+  uploadingResources: PropTypes.arrayOf(PropTypes.object),
   isMediaLoading: PropTypes.bool.isRequired,
   isMediaLoaded: PropTypes.bool.isRequired,
   hasMore: PropTypes.bool.isRequired,
