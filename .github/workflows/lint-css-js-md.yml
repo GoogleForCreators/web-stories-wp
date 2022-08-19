@@ -112,3 +112,9 @@ jobs:
 
       - name: Type checking
         run: npm run workflow:bundle-packages:types
+
+      - name: JSON Schema validation
+        run: |
+          ls -1 packages/templates/src/raw/*/template.json | xargs -I% npx ajv validate -s bin/schemas/story.json -d %
+          ls -1 packages/text-sets/src/raw/*.json | xargs -I% npx ajv validate -s bin/schemas/story.json -d %
+          npx ajv validate -s bin/schemas/story.json -d includes/data/stories/demo.json
