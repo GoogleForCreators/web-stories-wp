@@ -37,6 +37,7 @@ export const AutoSaveDialog = ({ onClose, isOpen, autoSaveLink }) => {
       title={__('AutoSave', 'web-stories')}
       contentLabel={__('AutoSave Available', 'web-stories')}
       secondaryText={__('Dismiss', 'web-stories')}
+      onClose={onClose}
       actions={
         <>
           <Button
