@@ -23,10 +23,10 @@ import { join, resolve } from 'path';
 /**
  * Internal dependencies
  */
-// eslint-disable-next-line import/no-unresolved
-import { migrate, DATA_VERSION } from '../module.js';
 
-function updateTemplates(templatesDir) {
+import { migrate, migrateSingle, DATA_VERSION } from '../module.js';
+
+function updateTemplates(templatesDir, forceVersion) {
   const fileNamePattern = /^.*\.json$/;
 
   const getFiles = (dir) =>
@@ -47,14 +47,17 @@ function updateTemplates(templatesDir) {
   for (const file of templateFiles) {
     const template = JSON.parse(readFileSync(file, 'utf8'));
 
-    if (Number(template.version) === Number(DATA_VERSION)) {
+    if (Number(template.version) === Number(DATA_VERSION) && !forceVersion) {
       continue;
     }
 
     // This ensures that the version number is always at the top.
     const updatedTemplate = {
       version: DATA_VERSION,
-      ...migrate(template, template.version),
+      // Run all migrations or only a single one if desired.
+      ...(forceVersion
+        ? migrateSingle(template, forceVersion)
+        : migrate(template, template.version)),
     };
     updatedTemplate.version = DATA_VERSION;
 
