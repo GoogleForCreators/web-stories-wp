@@ -487,12 +487,8 @@ function useProcessMedia({
    * @param {import('@googleforcreators/media').Resource} resource Resource object.
    */
   const cropHiddenVideo = useCallback(
-    ({ resource: oldResource }) => {
-      const { id: resourceId, src: url, mimeType } = oldResource;
-
-      //eslint-disable-next-line no-console -- temp code
-      console.log(resourceId, url, mimeType);
-      /*
+    ({ resource: oldResource, x, y }) => {
+      const { id: resourceId, src: url, mimeType, width, height } = oldResource;
       const onUploadSuccess = ({ id, resource }) => {
         copyResourceData({ oldResource, resource });
         updateOldTranscodedObject(oldResource.id, resource.id, 'source-image');
@@ -504,44 +500,45 @@ function useProcessMedia({
           postProcessingResource(resource);
         }
       };
-      */
 
-      /*
       const onUploadProgress = ({ resource }) => {
         const oldResourceWithId = { ...resource, id: oldResource.id };
         updateExistingElementsByResourceId(resourceId, {
           ...oldResourceWithId,
         });
       };
-      */
 
       const process = async () => {
         let file = false;
         try {
-          file = await fetchRemoteFile(url, mimeType);
-          await cropHidden(file, 20, 20, 200, 200);
+          const originalFile = await fetchRemoteFile(url, mimeType);
+          file = await cropHidden(originalFile, x, y, width, height);
+          await file.arrayBuffer();
+          await uploadMedia([file], {
+            onUploadSuccess,
+            onUploadProgress,
+            additionalData: {
+              original_id: resourceId,
+            },
+            originalResourceId: resourceId,
+          });
         } catch (e) {
-          // Ignore for now.
+          //eslint-disable-next-line no-console -- surface this error
+          console.log(e.message);
           return;
         }
-
-        /*
-        const buffer = await file.arrayBuffer();
-        
-
-        await uploadMedia([file], {
-          onUploadSuccess,
-          onUploadProgress,
-          additionalData: {
-            original_id: resourceId,
-          },
-          originalResourceId: resourceId,
-        });
-        */
       };
       return process();
     },
-    [cropHidden]
+    [
+      cropHidden,
+      copyResourceData,
+      deleteMediaElement,
+      postProcessingResource,
+      updateExistingElementsByResourceId,
+      updateOldTranscodedObject,
+      uploadMedia,
+    ]
   );
 
   return {

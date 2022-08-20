@@ -359,7 +359,7 @@ function useFFmpeg() {
         const tempFileName = uuidv4() + '.' + ext;
         const outputFileName = getFileBasename(file) + '-cropped.' + ext;
 
-        const crop = `crop=${x}:${y}:${w}:${h}`;
+        const crop = `crop=${w}:${h}:${x}:${y}`;
 
         await ffmpeg.run(
           // Input filename.
