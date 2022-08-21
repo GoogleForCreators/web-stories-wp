@@ -512,7 +512,19 @@ function useProcessMedia({
         let file = false;
         try {
           const originalFile = await fetchRemoteFile(url, mimeType);
-          file = await cropHidden(originalFile, x, y, width, height);
+          // calculations need to be worked on here:
+          const cropWidth = width - Math.abs(x);
+          const cropHeight = height;
+          const cropX = Math.abs(x);
+          const cropY = y;
+
+          file = await cropHidden(
+            originalFile,
+            cropWidth,
+            cropHeight,
+            cropX,
+            cropY
+          );
           await file.arrayBuffer();
           await uploadMedia([file], {
             onUploadSuccess,

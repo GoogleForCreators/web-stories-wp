@@ -348,7 +348,7 @@ function useFFmpeg() {
    * Crop Video to remove off-canvas portion of the video using FFmpeg.
    */
   const cropHidden = useCallback(
-    async (file, x, y, w, h) => {
+    async (file, w, h, x, y) => {
       let ffmpeg;
 
       try {
