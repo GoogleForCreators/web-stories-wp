@@ -71,6 +71,9 @@ function ForegroundMediaMenu({ parentMenuRef }) {
 
   const { hasShapeMask, removeShapeMask } = useShapeMask(selectedElement);
 
+  const isOffCanvas =
+    (selectedElement && selectedElement.x < 0) || selectedElement.y < 0;
+
   const canTranscodeResource = useLocalMedia(
     (value) => value.state.canTranscodeResource
   );
@@ -204,9 +207,13 @@ function ForegroundMediaMenu({ parentMenuRef }) {
       <ContextMenuComponents.MenuButton onClick={handleOpenScaleAndCrop}>
         {scaleLabel}
       </ContextMenuComponents.MenuButton>
-      <ContextMenuComponents.MenuButton onClick={handleCropHidden}>
-        {RIGHT_CLICK_MENU_LABELS.CROP_HIDDEN}
-      </ContextMenuComponents.MenuButton>
+
+      {isOffCanvas && (
+        <ContextMenuComponents.MenuButton onClick={handleCropHidden}>
+          {RIGHT_CLICK_MENU_LABELS.CROP_HIDDEN}
+        </ContextMenuComponents.MenuButton>
+      )}
+
       {showToggleTrimMode && (
         <ContextMenuComponents.MenuButton
           disabled={!canTranscodeResource(selectedElement?.resource)}
