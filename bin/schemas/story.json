@@ -66,40 +66,40 @@
         },
         "targets": {
           "type": "array",
-          "title": "The targets Schema",
+          "title": "Animation targets",
           "items": {
             "type": "string",
-            "title": "A Schema",
-            "examples": [
-              "d3c66373-d2ce-4295-bb5e-5e1ffe20aee9",
-              "2035c185-344a-4a74-80f4-001552afa5ac"
-            ]
-          },
-          "examples": [
-            ["d3c66373-d2ce-4295-bb5e-5e1ffe20aee9"],
-            ["2035c185-344a-4a74-80f4-001552afa5ac"]
-          ]
+            "title": "Target element ID"
+          }
         },
         "panDir": {
           "type": "string",
-          "title": "The panDir Schema",
-          "examples": ["leftToRight", "topToBottom"]
+          "title": "panDir direction",
+          "enum": ["leftToRight", "topToBottom", "rightToLeft", "bottomToTop"]
         },
         "duration": {
           "type": "integer",
-          "title": "The duration Schema",
-          "examples": [3000, 4000]
+          "title": "Duration in ms",
+          "minimum": 0
         },
         "delay": {
           "type": "integer",
-          "title": "The delay Schema",
-          "examples": [0]
+          "title": "Delay in ms",
+          "minimum": 0
         },
         "zoomDirection": {
           "type": "string",
           "default": "",
-          "title": "The zoomDirection Schema",
-          "examples": ["scaleIn"]
+          "title": "Zoom direction",
+          "enum": [
+            "dynamicPropertyValue",
+            "scaleIn",
+            "scaleInBottomRight",
+            "scaleInTopLeft",
+            "scaleOut",
+            "scaleOutTopRight",
+            "scaleOutBottomLeft"
+          ]
         }
       }
     },
@@ -248,7 +248,7 @@
         "type": {
           "type": "string",
           "title": "The element type",
-          "examples": ["image", "sticker", "text", "video", "shape"]
+          "enum": ["image", "sticker", "text", "video", "shape", "gif"]
         },
         "id": {
           "type": "string",
@@ -271,16 +271,18 @@
         },
         "padding": {
           "type": "object",
-          "title": "The padding Schema",
+          "title": "Element padding",
           "required": [],
           "properties": {
             "horizontal": {
               "type": "integer",
-              "title": "Horizontal padding"
+              "title": "Horizontal padding",
+              "minimum": 0
             },
             "vertical": {
               "type": "integer",
-              "title": "Vertical padding"
+              "title": "Vertical padding",
+              "minimum": 0
             },
             "locked": {
               "type": "boolean",
@@ -294,7 +296,7 @@
         },
         "borderRadius": {
           "type": "object",
-          "title": "The borderRadius Schema",
+          "title": "Element border radius",
           "required": [
             "locked",
             "topLeft",
@@ -305,34 +307,33 @@
           "properties": {
             "locked": {
               "type": "boolean",
-              "title": "The locked Schema",
-              "examples": [true]
+              "title": "Whether padding is locked"
             },
             "topLeft": {
               "type": "integer",
-              "title": "The topLeft Schema",
-              "examples": [2]
+              "title": "Top left radius",
+              "minimum": 0
             },
             "topRight": {
               "type": "integer",
-              "title": "The topRight Schema",
-              "examples": [2]
+              "title": "Top right radius",
+              "minimum": 0
             },
             "bottomRight": {
               "type": "integer",
-              "title": "The bottomRight Schema",
-              "examples": [2]
+              "title": "Bottom right radius",
+              "minimum": 0
             },
             "bottomLeft": {
               "type": "integer",
-              "title": "The bottomLeft Schema",
-              "examples": [2]
+              "title": "Bottom left radius",
+              "minimum": 0
             }
           }
         },
         "marginOffset": {
           "type": "number",
-          "title": "The marginOffset Schema"
+          "title": "Margin offset"
         },
         "basedOn": {
           "type": "string",
@@ -417,8 +418,7 @@
                 "title": "Font weight",
                 "minimum": 100,
                 "maximum": 900
-              },
-              "examples": [[100, 300, 400, 500, 700, 900]]
+              }
             },
             "styles": {
               "type": "array",
@@ -435,7 +435,7 @@
               "title": "Font variants",
               "items": {
                 "type": "array",
-                "title": "Font variant",
+                "title": "Font variant tuple",
                 "minItems": 2,
                 "maxItems": 2,
                 "items": {
@@ -520,8 +520,8 @@
         },
         "fontSize": {
           "type": "integer",
-          "title": "The fontSize Schema",
-          "examples": [40, 14, 19]
+          "title": "Font size",
+          "minimum": 1
         },
         "lineHeight": {
           "type": "number",
@@ -783,7 +783,8 @@
               { "$ref": "#/$defs/element" },
               { "$ref": "#/$defs/mediaElement" },
               { "$ref": "#/$defs/shapeElement" },
-              { "$ref": "#/$defs/stickerElement" }
+              { "$ref": "#/$defs/stickerElement" },
+              { "$ref": "#/$defs/textElement" }
             ]
           }
         },
@@ -795,10 +796,7 @@
         "defaultBackgroundElement": {
           "type": "object",
           "title": "The default background element",
-          "oneOf": [
-            { "$ref": "#/$defs/mediaElement" },
-            { "$ref": "#/$defs/shapeElement" }
-          ],
+          "$ref": "#/$defs/shapeElement",
           "$comment": "TODO: Move to story element or remove?"
         },
         "id": {
