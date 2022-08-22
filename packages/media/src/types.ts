@@ -275,9 +275,9 @@ export interface Resource {
   /** The natural height of the resource in physical pixels. */
   height: number;
   /** The resource's average color. */
-  baseColor: string;
+  baseColor?: string;
   /** BlurHash. */
-  blurHash: string;
+  blurHash?: string;
   /** Whether the resource externally hosted. */
   isExternal: boolean;
   /** Whether the resource is a placeholder. */
@@ -285,8 +285,10 @@ export interface Resource {
   /** Whether the resource needs a CORS proxy. */
   needsProxy: boolean;
   /** Resource creation date. */
-  creationDate: string;
+  readonly creationDate?: string;
+  /** Resource sizes */
   sizes: { [key: string]: ResourceSize };
+  /** Resource author attribution */
   attribution?: Attribution;
 }
 
@@ -300,11 +302,11 @@ export interface VideoResource extends Resource {
   /** The formatted length, e.g. "01:17". */
   lengthFormatted: string;
   /** Whether the resource has already been optimized. */
-  isOptimized: boolean;
+  isOptimized?: boolean;
   /** Whether the resource is muted. */
-  isMuted: boolean;
+  isMuted?: boolean;
   /** Information about trimmed video and its original. */
-  trimData: TrimData;
+  trimData?: TrimData;
 }
 
 export interface GifResource extends Resource {
@@ -330,18 +332,20 @@ export interface ResourceInput {
   /** The natural height of the resource in physical pixels. */
   height: number;
   /** The resource's average color. */
-  baseColor: string;
+  baseColor?: string;
   /** BlurHash. */
-  blurHash: string;
+  blurHash?: string;
   /** Whether the resource externally hosted. */
-  isExternal: boolean;
+  isExternal?: boolean;
   /** Whether the resource is a placeholder. */
-  isPlaceholder: boolean;
+  isPlaceholder?: boolean;
   /** Whether the resource needs a CORS proxy. */
   needsProxy: boolean;
   /** Resource creation date. */
-  creationDate: string;
+  creationDate?: string;
+  /** Resource sizes */
   sizes: { [key: string]: ResourceSize };
+  /** Resource author a ttribution */
   attribution?: Attribution;
   /** The resource's poster. */
   poster?: string;
@@ -352,10 +356,11 @@ export interface ResourceInput {
   /** The formatted length, e.g. "01:17". */
   lengthFormatted: string;
   /** Whether the resource has already been optimized. */
-  isOptimized: boolean;
+  isOptimized?: boolean;
   /** Whether the resource is muted. */
-  isMuted: boolean;
+  isMuted?: boolean;
   /** Information about trimmed video and its original. */
-  trimData: TrimData;
-  output: Output;
+  trimData?: TrimData;
+  /** Output type data, for GIFs */
+  output?: Output;
 }

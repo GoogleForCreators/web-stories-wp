@@ -97,7 +97,7 @@ export function editorToDataX(
   x: number,
   pageWidth: number,
   withRounding = true
-) {
+): number {
   const v = (x * PAGE_WIDTH) / pageWidth;
   if (!withRounding) {
     return v;
@@ -118,7 +118,7 @@ export function editorToDataY(
   y: number,
   pageHeight: number,
   withRounding = true
-) {
+): number {
   const v = (y * PAGE_HEIGHT) / pageHeight;
   if (!withRounding) {
     return v;
@@ -165,7 +165,7 @@ export function getBoxWithBorder(
   element: Element,
   pageWidth: number,
   pageHeight: number
-) {
+): ElementBox {
   const { rotationAngle, border } = element;
   const box = getBox(element, pageWidth, pageHeight);
   if (!border) {

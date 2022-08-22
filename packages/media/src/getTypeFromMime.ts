@@ -26,7 +26,7 @@ import type { ResourceType } from './types';
  * @return {string} Element type.
  */
 function getTypeFromMime(mimeType: string): ResourceType {
-  return mimeType?.split('/')[0] as ResourceType;
+  return mimeType.split('/')[0] as ResourceType;
 }
 
 export default getTypeFromMime;

@@ -35,7 +35,7 @@ interface HTMLVideoElement {
  */
 function hasVideoGotAudio(video: HTMLVideoElement): boolean {
   return (
-    (video.mozHasAudio as boolean) ||
+    video.mozHasAudio ||
     Boolean(video.webkitAudioDecodedByteCount) ||
     Boolean(video.audioTracks?.length)
   );
