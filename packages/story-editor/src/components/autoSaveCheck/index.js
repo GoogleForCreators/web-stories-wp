@@ -17,6 +17,7 @@
  * External dependencies
  */
 import { useState } from '@googleforcreators/react';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -28,6 +29,11 @@ export const AutoSaveCheck = () => {
   const { autoSaveLink } = useConfig();
   const [showDialog, setShowDialog] = useState(Boolean(autoSaveLink));
   const onClose = () => setShowDialog(false);
+  const improvedAutosaves = useFeature('improvedAutosaves');
+
+  if (!improvedAutosaves) {
+    return null;
+  }
 
   return (
     <AutoSaveDialog
