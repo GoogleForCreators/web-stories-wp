@@ -15,7 +15,7 @@
  */
 
 export { useDebouncedCallback } from 'use-debounce';
-export * from 'use-reduction';
+export { default as useReduction } from 'use-reduction';
 
 export * from './context';
 export * from './react';
