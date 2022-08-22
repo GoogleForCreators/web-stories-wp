@@ -43,7 +43,7 @@ export const AutoSaveDialog = ({ onClose, isOpen, autoSaveLink }) => {
           <Button
             type={BUTTON_TYPES.TERTIARY}
             size={BUTTON_SIZES.SMALL}
-            onClick={() => onClose()}
+            onClick={onClose}
           >
             {__('Dismiss', 'web-stories')}
           </Button>
