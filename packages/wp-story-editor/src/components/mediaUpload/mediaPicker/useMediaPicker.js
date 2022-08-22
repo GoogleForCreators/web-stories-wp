@@ -113,10 +113,13 @@ function useMediaPicker({
         library: {
           type,
         },
-        button: {
-          text: buttonInsertText,
-        },
         multiple,
+      });
+
+      fileFrame.on('toolbar:create:select', (toolbar) => {
+        fileFrame.createSelectToolbar(toolbar, {
+          text: buttonInsertText,
+        });
       });
 
       // When an image is selected, run a callback.
@@ -155,16 +158,16 @@ function useMediaPicker({
       evt.preventDefault();
     },
     [
-      hasUploadMediaAction,
-      showSnackbar,
-      onPermissionError,
-      onClose,
-      onSelect,
       buttonInsertText,
-      onSelectErrorMessage,
+      hasUploadMediaAction,
       multiple,
-      type,
+      onClose,
+      onPermissionError,
+      onSelect,
+      onSelectErrorMessage,
+      showSnackbar,
       title,
+      type,
     ]
   );
 
@@ -191,19 +194,16 @@ function useMediaPicker({
         mustBeCropped,
       };
 
-      const button = {
-        text: buttonInsertText,
-        close: false,
-      };
-
       // Create the media frame.
       const fileFrame = window.wp.media({
-        button,
+        button: {
+          text: buttonInsertText,
+          close: false,
+        },
         states: [
           new window.wp.media.controller.Library({
             title,
             library: window.wp.media.query({ type }),
-            button,
             multiple,
             suggestedWidth: params.width,
             suggestedHeight: params.height,
