@@ -159,11 +159,13 @@
         },
         "width": {
           "type": "number",
-          "title": "Element width"
+          "title": "Element width",
+          "minimum": 1
         },
         "height": {
           "type": "number",
-          "title": "Element height"
+          "title": "Element height",
+          "minimum": 1
         },
         "mask": {
           "type": "object",
