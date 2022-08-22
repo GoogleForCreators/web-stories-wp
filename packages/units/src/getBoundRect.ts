@@ -18,6 +18,7 @@
  * Internal dependencies
  */
 import { dataPixels } from './dimensions';
+import type { ElementBox } from './types';
 
 /**
  * Get the outer frame values for all objects in `list`,
@@ -33,7 +34,7 @@ getBoundRect( [ { x: 10, y: 10, width: 100, height: 50 }, { x: 30, y: 20, width:
  * @param {Array<Object>} list List of elements with size and position properties
  * @return {Object} Returns outer frame of all list objects
  */
-function getBoundRect(list) {
+function getBoundRect(list: ElementBox[]) {
   const updatedList = list.map((el) =>
     calcRotatedObjectPositionAndSize(
       el.rotationAngle,
@@ -65,7 +66,13 @@ function getBoundRect(list) {
   };
 }
 
-export function calcRotatedObjectPositionAndSize(angle, x, y, width, height) {
+export function calcRotatedObjectPositionAndSize(
+  angle: number,
+  x: number,
+  y: number,
+  width: number,
+  height: number
+) {
   if (!angle || angle === 0) {
     return { x, y, width, height };
   }
@@ -106,7 +113,13 @@ export function calcRotatedObjectPositionAndSize(angle, x, y, width, height) {
   };
 }
 
-export function getCorners(angle, x, y, width, height) {
+export function getCorners(
+  angle: number,
+  x: number,
+  y: number,
+  width: number,
+  height: number
+) {
   /// variables
   const centerX = x + width * 0.5;
   const centerY = y + height * 0.5;
@@ -130,7 +143,13 @@ export function getCorners(angle, x, y, width, height) {
   };
 }
 
-function getCorner(pivotX, pivotY, cornerX, cornerY, angle) {
+function getCorner(
+  pivotX: number,
+  pivotY: number,
+  cornerX: number,
+  cornerY: number,
+  angle: number
+) {
   /// get distance from center to point
   const diffX = cornerX - pivotX;
   const diffY = cornerY - pivotY;

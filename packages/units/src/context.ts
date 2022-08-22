@@ -19,4 +19,30 @@
  */
 import { createContext } from '@googleforcreators/react';
 
-export default createContext({ actions: {}, state: {} });
+/**
+ * Internal dependencies
+ */
+import type { Element, ElementBox } from './types';
+
+export const INITIAL_STATE = {
+  state: {},
+  actions: {},
+};
+
+interface State {
+  pageSize?: {
+    width?: number;
+    height?: number;
+  };
+}
+
+interface Actions {
+  dataToEditorX?: (x: number) => number;
+  dataToEditorY?: (y: number) => number;
+  editorToDataX?: (x: number, withRounding: boolean) => number;
+  editorToDataY?: (y: number, withRounding: boolean) => number;
+  getBox?: (element: Element) => ElementBox;
+  getBoxWithBorder?: (element: Element) => ElementBox;
+}
+
+export default createContext<{ state: State; actions: Actions }>(INITIAL_STATE);

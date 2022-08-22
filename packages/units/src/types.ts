@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,18 +14,26 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import { identity, useContextSelector } from '@googleforcreators/react';
-
-/**
- * Internal dependencies
- */
-import Context from './context';
-
-function useUnits(selector) {
-  return useContextSelector(Context, selector ?? identity);
+// TODO(#12126): Use improved Element type from shared package.
+export interface Element {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  rotationAngle: number;
+  isBackground: boolean;
+  border: {
+    top: number;
+    right: number;
+    bottom: number;
+    left: number;
+  };
 }
 
-export default useUnits;
+export interface ElementBox {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  rotationAngle: number;
+}

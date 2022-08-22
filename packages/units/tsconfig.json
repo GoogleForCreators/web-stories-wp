@@ -5,11 +5,5 @@
     "declarationDir": "dist-types"
   },
   "references": [{ "path": "../react" }],
-  "include": [
-    "src/calcRotatedResizeOffset.ts",
-    "src/constants.ts",
-    "src/context.ts",
-    "src/dimensions.ts",
-    "src/range.ts"
-  ]
+  "include": ["src/**/*"]
 }

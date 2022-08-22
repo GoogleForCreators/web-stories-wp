@@ -24,6 +24,7 @@ import {
   DEFAULT_EM,
 } from './constants';
 import calcRotatedResizeOffset from './calcRotatedResizeOffset';
+import type { ElementBox, Element } from './types';
 
 /**
  * Rounds the pixel value to the max allowed precision in the "data" space.
@@ -123,30 +124,6 @@ export function editorToDataY(
     return v;
   }
   return dataPixels(v);
-}
-
-// TODO(#12126): Use improved Element type from shared package.
-interface Element {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-  rotationAngle: number;
-  isBackground: boolean;
-  border: {
-    top: number;
-    right: number;
-    bottom: number;
-    left: number;
-  };
-}
-
-interface ElementBox {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-  rotationAngle: number;
 }
 
 /**
