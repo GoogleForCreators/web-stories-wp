@@ -127,7 +127,7 @@ function Buttons() {
   );
 
   const isPending = 'pending' === status;
-  const isDraft = 'draft' === status || !status;
+  const isDraft = ['draft', 'auto-draft'].includes(status) || !status;
   const isDraftOrPending = isDraft || isPending;
 
   const { hasMetaBoxes, isSavingMetaBoxes } = useMetaBoxes(

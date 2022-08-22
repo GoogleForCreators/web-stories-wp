@@ -73,7 +73,6 @@ function loadStory(storyId, post, restore, clearHistory) {
         suffix,
       }
     : null;
-  const statusFormat = status === 'auto-draft' ? 'draft' : status;
 
   // First clear history completely.
   clearHistory();
@@ -98,9 +97,7 @@ function loadStory(storyId, post, restore, clearHistory) {
   const story = {
     storyId: storyId,
     title,
-    status: statusFormat,
-    // @todo Temporary, check for an alternative.
-    isNew: status === 'auto-draft',
+    status,
     author,
     date,
     modified,
