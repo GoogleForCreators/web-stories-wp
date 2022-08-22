@@ -313,6 +313,17 @@
     },
     {
       "files": [
+        "typings/**/*.ts",
+        "**/*.d.ts"
+      ],
+      "rules": {
+        "no-undef": "off",
+        "no-unused-vars": "off",
+        "no-var": "off"
+      }
+    },
+    {
+      "files": [
         "__mocks__/**/*.js",
         "**/__tests__/**/*.js",
         "**/test/**/*.js",

@@ -18,12 +18,16 @@
  * External dependencies
  */
 import { useContextSelector as useContextSelectorOrig } from 'use-context-selector';
+import { useRef, Context, MutableRefObject } from 'react';
 
 /**
  * Internal dependencies
  */
-import { useRef } from './react';
 import shallowEqual from './shallowEqual';
+
+interface EqualityFn {
+  (a: unknown, b: unknown): boolean;
+}
 
 /**
  * This hook returns a part of the context value by selector.
@@ -32,7 +36,7 @@ import shallowEqual from './shallowEqual';
  * By default, a shallow equals of the selected context value is used to
  * determine if a re-render is needed.
  *
- * @param {import('react').Context} context Context.
+ * @param {Context} context Context.
  * @param {function(Object):Object} selector Returns a fragment of the context
  * that the consumer is interested in.
  * @param {function(Object, Object):boolean} equalityFn Used to compare the
@@ -40,10 +44,14 @@ import shallowEqual from './shallowEqual';
  * will not be triggered. This is {shallowEqual} by default.
  * @return {Object} The selected context value fragment.
  */
-function useContextSelector(context, selector, equalityFn = shallowEqual) {
-  const ref = useRef();
+function useContextSelector<T, S>(
+  context: Context<T>,
+  selector: (value: T) => S,
+  equalityFn: EqualityFn = shallowEqual
+) {
+  const ref: MutableRefObject<S | undefined> = useRef();
 
-  const equalityFnCallback = (state) => {
+  const equalityFnCallback = (state: T) => {
     const selected = selector(state);
     if (equalityFn(ref.current, selected)) {
       return ref.current;
@@ -53,8 +61,7 @@ function useContextSelector(context, selector, equalityFn = shallowEqual) {
   };
 
   // Update the selector fn to memoize the selected value by [equalityFn].
-  const patchedSelector = equalityFn ? equalityFnCallback : selector;
-  return useContextSelectorOrig(context, patchedSelector);
+  return useContextSelectorOrig(context, equalityFnCallback);
 }
 
 export default useContextSelector;

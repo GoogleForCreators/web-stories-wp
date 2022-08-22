@@ -15,27 +15,31 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { useLayoutEffect } from './react';
+import { DependencyList, MutableRefObject, useLayoutEffect } from 'react';
 
-function useFocusOut(ref, callback, deps) {
+function useFocusOut(
+  ref: MutableRefObject<HTMLElement>,
+  callback: (evt: FocusEvent | MouseEvent) => void | undefined,
+  deps: DependencyList
+) {
   useLayoutEffect(() => {
     const node = ref?.current;
     if (!node) {
       return undefined;
     }
 
-    const onFocusOut = (evt) => {
+    const onFocusOut = (evt: FocusEvent) => {
       // If focus moves somewhere outside the node, callback time!
-      if (evt.relatedTarget && !node.contains(evt.relatedTarget)) {
+      if (evt.relatedTarget && !node.contains(<HTMLElement>evt.relatedTarget)) {
         callback(evt);
       }
     };
 
-    const onDocumentClick = (evt) => {
+    const onDocumentClick = (evt: MouseEvent) => {
       // If something outside the target node is clicked, callback time!
-      const isInNode = node.contains(evt.target);
+      const isInNode = node.contains(<HTMLElement>evt.target);
       if (!isInNode) {
         callback(evt);
       }

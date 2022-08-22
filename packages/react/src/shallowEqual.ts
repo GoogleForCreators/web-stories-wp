@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,26 +16,22 @@
 /**
  * External dependencies
  */
-import { useState } from 'react';
+import { shallowEqualArrays, shallowEqualObjects } from 'shallow-equal';
 
-/**
- * Takes an initialition function and returns a memoized result of
- * that function. This value is not subject to cache purging
- * and will only call your initialization function once.
- *
- * ie
- * ```js
- * function SomeComponent() {
- *   const id = useInitializedValue(() => generateId());
- *   // ...
- * }
- * ```
- *
- * @param {Function} initializer - initialization function
- * @return {any} result of initializer
- */
-function useInitializedValue(initializer) {
-  return useState(initializer)[0];
+function shallowEqual(a: unknown, b: unknown): boolean {
+  if (a === b) {
+    return true;
+  }
+
+  if (Array.isArray(a) && Array.isArray(b)) {
+    return shallowEqualArrays(a, b);
+  }
+
+  if (typeof a === 'object' && typeof b === 'object') {
+    return shallowEqualObjects(a, b);
+  }
+
+  return false;
 }
 
-export default useInitializedValue;
+export default shallowEqual;

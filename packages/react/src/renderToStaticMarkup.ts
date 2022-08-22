@@ -18,8 +18,7 @@
  * External dependencies
  */
 import { renderToStaticMarkup as _renderToStaticMarkup } from 'react-dom/server';
-
-/** @typedef {import('react').ReactElement} ReactElement */
+import type { ReactElement } from 'react';
 
 /* eslint-disable no-console -- Deliberately overriding console.error  */
 
@@ -36,7 +35,7 @@ import { renderToStaticMarkup as _renderToStaticMarkup } from 'react-dom/server'
  * @param {ReactElement} element React element.
  * @return {string} Markup.
  */
-function renderToStaticMarkup(element) {
+function renderToStaticMarkup(element: ReactElement) {
   const originalConsoleError = console.error;
   console.error = function (error, ...args) {
     if (

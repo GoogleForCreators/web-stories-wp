@@ -4,5 +4,5 @@
     "rootDir": "src",
     "declarationDir": "dist-types"
   },
-  "include": ["src/context.ts", "src/react.ts", "src/react-dom.ts"]
+  "include": ["src/**/*"]
 }

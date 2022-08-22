@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,17 +14,4 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import { useEffect, useRef } from './react';
-
-export default function usePrevious(value) {
-  const ref = useRef();
-
-  useEffect(() => {
-    ref.current = value;
-  }, [value]);
-
-  return ref.current;
-}
+export var WEB_STORIES_ENV: string;

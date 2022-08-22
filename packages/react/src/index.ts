@@ -15,6 +15,7 @@
  */
 
 export { useDebouncedCallback } from 'use-debounce';
+export * from 'use-reduction';
 
 export * from './context';
 export * from './react';
@@ -25,7 +26,6 @@ export { default as useCombinedRefs } from './useCombinedRefs';
 export { default as useContextSelector } from './useContextSelector';
 export { default as useFocusOut } from './useFocusOut';
 export { default as usePrevious } from './usePrevious';
-export { default as useReduction } from './useReduction';
 export { default as useResizeEffect } from './useResizeEffect';
 export { default as renderToStaticMarkup } from './renderToStaticMarkup';
 export { default as useUnmount } from './useUnmount';

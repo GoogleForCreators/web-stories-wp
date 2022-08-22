@@ -15,31 +15,24 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { useEffect } from './react';
+import { useEffect, DependencyList, MutableRefObject } from 'react';
 
-if (typeof window !== 'undefined' && window && !('ResizeObserver' in window)) {
-  import(
-    /* webpackChunkName: "chunk-resize-observer-polyfill" */ 'resize-observer-polyfill'
-  )
-    .then((module) => (window.ResizeObserver = module.ResizeObserver))
-    .catch(() => undefined);
+interface ResizeHandler {
+  (dimensions: { width: number; height: number }): void;
 }
-
-/**
- * @callback ResizeHandler
- * @param {Object} dimensions Element dimensions
- * @param {number} dimensions.width Width.
- * @param {number} dimensions.height Height.
- */
 
 /**
  * @param {Object<{current: ?Element}>} ref Target node ref.
  * @param {ResizeHandler} handler The resize handler.
  * @param {Array} [deps] The effect's dependencies.
  */
-function useResizeEffect(ref, handler, deps = undefined) {
+function useResizeEffect(
+  ref: MutableRefObject<Element>,
+  handler: ResizeHandler,
+  deps: DependencyList | undefined = undefined
+) {
   useEffect(
     () => {
       if (!ref?.current || !ResizeObserver) {

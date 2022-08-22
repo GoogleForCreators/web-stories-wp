@@ -18,11 +18,8 @@
  * External dependencies
  */
 import { unstable_batchedUpdates as batchedUpdates } from 'react-dom';
-
-/**
- * Internal dependencies
- */
-import { useCallback } from './react';
+import { useCallback } from 'react';
+import type { DependencyList } from 'react';
 
 /**
  * The same as `useCallback` except that it ensures the updates
@@ -34,7 +31,10 @@ import { useCallback } from './react';
  * @param {Array} [deps] The optional callback dependencies.
  * @return {Function} The memoized batching function.
  */
-function useBatchingCallback(callback, deps = undefined) {
+function useBatchingCallback<T extends (...args: unknown[]) => unknown>(
+  callback: T,
+  deps: DependencyList
+) {
   return useCallback(
     (...args) => batchedUpdates(() => callback(...args)),
     // eslint-disable-next-line react-hooks/exhaustive-deps -- Pass through provided deps.

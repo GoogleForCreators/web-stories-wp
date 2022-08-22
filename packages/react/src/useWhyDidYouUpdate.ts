@@ -15,9 +15,9 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { useEffect, useRef } from './react';
+import { useEffect, useRef, MutableRefObject } from 'react';
 
 /**
  * Hook to see which prop changes are causing a component to re-render.
@@ -28,16 +28,20 @@ import { useEffect, useRef } from './react';
  * @param {string} name Component name.
  * @param {Object} props Component props.
  */
-function useWhyDidYouUpdate(name, props) {
-  const previousProps = useRef();
+function useWhyDidYouUpdate(name: string, props: Record<string, unknown>) {
+  const previousProps: MutableRefObject<Record<string, unknown> | undefined> =
+    useRef();
 
   useEffect(() => {
     if (previousProps.current) {
       const allKeys = Object.keys({ ...previousProps.current, ...props });
-      const changesObj = {};
+      const changesObj: Record<string, { from: unknown; to: unknown }> = {};
 
       allKeys.forEach((key) => {
-        if (previousProps.current[key] !== props[key]) {
+        if (
+          previousProps.current &&
+          previousProps.current[key] !== props[key]
+        ) {
           changesObj[key] = {
             from: previousProps.current[key],
             to: props[key],
@@ -58,4 +62,4 @@ function useWhyDidYouUpdate(name, props) {
 const isDevelopment =
   typeof WEB_STORIES_ENV !== 'undefined' && WEB_STORIES_ENV === 'development';
 
-export default isDevelopment ? useWhyDidYouUpdate : () => {};
+export default isDevelopment ? useWhyDidYouUpdate : () => null;

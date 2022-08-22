@@ -15,9 +15,9 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { useCallback, useRef } from './react';
+import { ForwardedRef, useCallback, useRef } from 'react';
 
 /**
  * Synchronize multiple refs to a single ref
@@ -27,7 +27,7 @@ import { useCallback, useRef } from './react';
  * @param {Array} refs  List of refs to synchronize
  * @return {(node:HTMLElement) => void} A callback to be used as `ref` for element.
  */
-function useCombinedRefs(...refs) {
+function useCombinedRefs<T>(...refs: ForwardedRef<T>[]) {
   const refsRef = useRef(refs);
   refsRef.current = refs;
   return useCallback((node) => {
