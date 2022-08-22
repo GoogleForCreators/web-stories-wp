@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { useEffect, useRef } from '@googleforcreators/react';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -26,18 +27,20 @@ import { useConfig, useHistory, useStory } from '../../app';
 import useIsUploadingToStory from '../../utils/useIsUploadingToStory';
 
 function AutoSaveHandler() {
+  const improvedAutosaves = useFeature('improvedAutosaves');
   const { autoSaveInterval } = useConfig();
   const {
     state: { hasNewChanges },
   } = useHistory();
-  const { status, saveStory } = useStory(
+  const { status, saveStory, autoSave } = useStory(
     ({
       state: {
         story: { status },
       },
-      actions: { saveStory },
+      actions: { autoSave, saveStory },
     }) => ({
       status,
+      autoSave,
       saveStory,
     })
   );
@@ -45,11 +48,13 @@ function AutoSaveHandler() {
 
   const isDraft = 'draft' === status || !status;
 
+  const save = improvedAutosaves ? autoSave : saveStory;
+
   // Cache it to make it stable in terms of the below timeout
-  const cachedSaveStory = useRef(saveStory);
+  const cachedSaveStory = useRef(save);
   useEffect(() => {
-    cachedSaveStory.current = saveStory;
-  }, [saveStory]);
+    cachedSaveStory.current = save;
+  }, [save]);
 
   useEffect(() => {
     // @todo The isDraft check is temporary to ensure only draft gets auto-saved,
