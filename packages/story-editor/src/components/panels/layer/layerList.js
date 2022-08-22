@@ -46,7 +46,7 @@ function LayerList() {
   const onOpenMenu = useRightClickMenu((value) => value.onOpenMenu);
 
   // This is a list of elements and groups in the order they're displayed
-  const { layers, handlePositionChange } = useLayers();
+  const { layers, handleDragPosition } = useLayers();
 
   if (layers.length === 0) {
     return null;
@@ -55,7 +55,7 @@ function LayerList() {
   return (
     <ReorderableLayerList
       onContextMenu={onOpenMenu}
-      onPositionChange={handlePositionChange}
+      onPositionChange={handleDragPosition}
       mode={'vertical'}
       getItemSize={() => LAYER_HEIGHT}
     >

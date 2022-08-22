@@ -77,7 +77,7 @@ function useLayers() {
     );
   }, [elementLayers]);
 
-  const handlePositionChange = useCallback(
+  const handleDragPosition = useCallback(
     (oldPosObj, newPosObj, evt) => {
       const { position: oldPos } = oldPosObj;
       const {
@@ -114,7 +114,7 @@ function useLayers() {
     [arrangeElement, arrangeGroup, elementLayers]
   );
 
-  return { layers, handlePositionChange };
+  return { layers, handleDragPosition };
 }
 
 export default useLayers;
