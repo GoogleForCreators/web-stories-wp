@@ -59,7 +59,7 @@ export const AutoSaveDialog = ({ onClose, isOpen, autoSaveLink }) => {
     >
       <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
         {__(
-          'There is an autosave of this story that is more recent than the version your editing.',
+          'There is an autosave of this story that is more recent than the version you are editing.',
           'web-stories'
         )}
       </Text>
