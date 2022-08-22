@@ -106,7 +106,7 @@
     "element": {
       "type": "object",
       "title": "Base element",
-      "required": ["x", "y", "width", "height", "type", "id"],
+      "required": ["x", "y", "width", "height", "type", "id", "rotationAngle"],
       "properties": {
         "opacity": {
           "type": "integer",
