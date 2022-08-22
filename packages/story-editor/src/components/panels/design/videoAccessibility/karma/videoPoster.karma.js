@@ -77,7 +77,9 @@ describe('Video Accessibility Panel', () => {
       expect(vaPanel.posterImage.src).toBe(originalPoster);
     });
 
-    it('should allow user to edit and reset poster image using keyboard', async () => {
+    // TODO: https://github.com/GoogleForCreators/web-stories-wp/issues/12141
+    // eslint-disable-next-line jasmine/no-disabled-tests
+    xit('should allow user to edit and reset poster image using keyboard', async () => {
       // Remember original poster image
       const originalPoster = vaPanel.posterImage.src;
 
