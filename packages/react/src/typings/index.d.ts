@@ -14,4 +14,8 @@
  * limitations under the License.
  */
 
-export var WEB_STORIES_ENV: string;
+declare global {
+  var WEB_STORIES_ENV: string;
+}
+
+export {};
