@@ -42,7 +42,7 @@ const StyledNavigationWrapper = styled(NavigationWrapper)`
 `;
 
 function Layers() {
-  const nunElements = useStory(
+  const numElements = useStory(
     ({ state }) => state.currentPage?.elements?.length
   );
   const [isOpen, setIsOpen] = useState(false);
@@ -73,13 +73,13 @@ function Layers() {
       <ToggleButton
         hasMenuList
         isOpen={isOpen}
-        notificationCount={nunElements}
+        notificationCount={numElements}
         copy={__('Layers', 'web-stories')}
         onClick={() => setIsOpen((state) => !state)}
         aria-label={sprintf(
           /* translators: %d: number of layers */
           __('Layers (%d)', 'web-stories'),
-          nunElements
+          numElements
         )}
       />
     </>
