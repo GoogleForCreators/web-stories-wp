@@ -370,6 +370,7 @@ class Editor extends Service_Base implements HasRequirements {
 
 		$settings = [
 			'autoSaveInterval'        => \defined( 'AUTOSAVE_INTERVAL' ) ? AUTOSAVE_INTERVAL : null,
+			'localAutoSaveInterval'   => 15,
 			'isRTL'                   => is_rtl(),
 			'locale'                  => $this->locale->get_locale_settings(),
 			'allowedMimeTypes'        => $this->types->get_allowed_mime_types(),
