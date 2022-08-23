@@ -49,6 +49,7 @@ import { MediaProvider } from './app/media';
 import { CurrentUserProvider } from './app/currentUser';
 import { TaxonomyProvider } from './app/taxonomy';
 import AutoSaveHandler from './components/autoSaveHandler';
+import LocalAutoSaveHandler from './components/localAutoSaveHandler';
 import { DropTargetsProvider } from './components/dropTargets';
 import { HelpCenterProvider } from './app/helpCenter';
 import { PageDataUrlProvider } from './app/pageDataUrls';
@@ -85,6 +86,7 @@ function StoryEditor({ config, initialEdits, children }) {
                           <CurrentUserProvider>
                             <FontProvider>
                               <MediaProvider>
+                                <LocalAutoSaveHandler />
                                 <AutoSaveHandler />
                                 <TransformProvider>
                                   <DropTargetsProvider>

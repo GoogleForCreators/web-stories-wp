@@ -71,7 +71,7 @@ jobs:
           cache: npm
 
       - name: Setup PHP
-        uses: shivammathur/setup-php@16011a795d747d5f45038f96371c3b98aec5669d
+        uses: shivammathur/setup-php@e04e1d97f0c0481c6e1ba40f8a538454fe5d7709
         with:
           php-version: '8.0'
           coverage: none
