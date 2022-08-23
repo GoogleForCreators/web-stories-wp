@@ -365,7 +365,7 @@ function useFFmpeg() {
           // Input filename.
           '-i',
           file.name,
-          '-filter:v',
+          '-vf',
           crop,
           tempFileName
         );
