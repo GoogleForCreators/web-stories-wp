@@ -84,6 +84,7 @@ class Discovery extends Service_Base implements HasRequirements {
 	 * @since 1.0.0
 	 */
 	public function register(): void {
+		add_action( 'web_stories_story_head', [ $this, 'print_document_title' ] );
 		add_action( 'web_stories_story_head', [ $this, 'print_metadata' ] );
 		add_action( 'web_stories_story_head', [ $this, 'print_schemaorg_metadata' ] );
 		add_action( 'web_stories_story_head', [ $this, 'print_open_graph_metadata' ] );
@@ -109,7 +110,35 @@ class Discovery extends Service_Base implements HasRequirements {
 	}
 
 	/**
-	 * Prints general metadata on the single story template.
+	 * Prints document title for stories.
+	 *
+	 * Works both for classic themes and block themes without any conditionals.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @link https://github.com/GoogleForCreators/web-stories-wp/issues/12139
+	 * @see _wp_render_title_tag()
+	 * @see _block_template_render_title_tag()
+	 */
+	public function print_document_title(): void {
+		/**
+		 * Filters whether to print the document title.
+		 *
+		 * @since 1.25.0
+		 *
+		 * @param bool $enable_open_graph Whether to print the document title. Default to true.
+		 */
+		$enable_metadata = apply_filters( 'web_stories_enable_document_title', true );
+		if ( ! $enable_metadata ) {
+			return;
+		}
+		?>
+		<title><?php echo esc_html( wp_get_document_title() ); ?></title>
+		<?php
+	}
+
+	/**
+	 * Prints the meta description on the single story template.
 	 *
 	 * Theme support for title tag is implied for stories.
 	 *
@@ -119,18 +148,17 @@ class Discovery extends Service_Base implements HasRequirements {
 	 */
 	public function print_metadata(): void {
 		/**
-		 * Filters filter to enable / disable metadata
+		 * Filters whether to print the meta description.
 		 *
 		 * @since 1.2.0
 		 *
-		 * @param bool $enable_open_graph Enable / disable metadata. Default to true.
+		 * @param bool $enable_open_graph Whether to print the meta description. Default to true.
 		 */
 		$enable_metadata = apply_filters( 'web_stories_enable_metadata', true );
 		if ( ! $enable_metadata ) {
 			return;
 		}
 		?>
-		<title><?php echo esc_html( wp_get_document_title() ); ?></title>
 		<meta name="description" content="<?php echo esc_attr( wp_strip_all_tags( get_the_excerpt() ) ); ?>" />
 		<?php
 	}
