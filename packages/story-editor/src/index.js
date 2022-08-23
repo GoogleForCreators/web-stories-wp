@@ -48,6 +48,7 @@ export { default as InterfaceSkeleton } from './components/layout';
 export { default as Tooltip } from './components/tooltip';
 export { default as useSidebar } from './components/sidebar/useSidebar';
 export { default as SidebarContext } from './components/sidebar/context';
+export { AutoSaveCheck } from './components/autoSaveCheck';
 export { default as useIsUploadingToStory } from './utils/useIsUploadingToStory';
 export { getInUseFontsForPages } from './utils/getInUseFonts';
 export {

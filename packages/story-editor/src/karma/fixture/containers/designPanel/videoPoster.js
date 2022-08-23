@@ -39,7 +39,7 @@ export class VideoPoster extends AbstractPanel {
 
   get posterMenuEdit() {
     return this.getByRoleIn(this.node.ownerDocument, 'menuitem', {
-      name: /upload a file/i,
+      name: /edit/i,
     });
   }
 
