@@ -46,6 +46,13 @@ class Shopify_Query extends DependencyInjectedTestCase {
 	 */
 	protected $request_body;
 
+	/**
+	 * Most recent response body.
+	 *
+	 * @var string
+	 */
+	protected $response_body;
+
 	public function set_up(): void {
 		parent::set_up();
 
