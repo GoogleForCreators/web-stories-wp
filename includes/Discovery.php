@@ -114,7 +114,7 @@ class Discovery extends Service_Base implements HasRequirements {
 	 *
 	 * Works both for classic themes and block themes without any conditionals.
 	 *
-	 * @since 1.0.0
+	 * @since 1.25.0
 	 *
 	 * @link https://github.com/GoogleForCreators/web-stories-wp/issues/12139
 	 * @see _wp_render_title_tag()
