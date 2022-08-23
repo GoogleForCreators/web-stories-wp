@@ -561,7 +561,7 @@
     },
     {
       "files": [
-        "packages/migration/src/utils/updateTemplates.js"
+        "packages/migration/scripts/utils/updateTemplates.js"
       ],
       "rules": {
         "eslint-comments/no-unused-disable": "off"
