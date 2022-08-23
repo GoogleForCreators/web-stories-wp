@@ -77,19 +77,6 @@ class HTML {
 	}
 
 	/**
-	 * Get story meta images.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return string[] Images.
-	 */
-	protected function get_poster_images(): array {
-		return [
-			'poster-portrait-src' => $this->story->get_poster_portrait(),
-		];
-	}
-
-	/**
 	 * Fix malformed <a> tags in the <head>.
 	 *
 	 * On certain environments like WordPress.com VIP, there is additional KSES
