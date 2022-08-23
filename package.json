@@ -35,7 +35,7 @@
     "@ampproject/toolbox-optimizer": "^2.9.0",
     "@babel/core": "^7.18.9",
     "@babel/eslint-parser": "^7.18.9",
-    "@babel/eslint-plugin": "^7.17.7",
+    "@babel/eslint-plugin": "^7.18.10",
     "@babel/preset-env": "^7.18.2",
     "@babel/preset-react": "^7.18.6",
     "@babel/preset-typescript": "^7.18.6",
