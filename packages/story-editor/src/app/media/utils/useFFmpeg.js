@@ -348,7 +348,11 @@ function useFFmpeg() {
    * Crop Video to remove off-canvas portion of the video using FFmpeg.
    */
   const cropHidden = useCallback(
-    async (file, w, h, x, y) => {
+    async (
+      file,
+      { width, height },
+      { cropWidth, cropHeight, cropX, cropY }
+    ) => {
       let ffmpeg;
 
       try {
@@ -358,15 +362,13 @@ function useFFmpeg() {
         const ext = getExtensionFromMimeType(type);
         const tempFileName = uuidv4() + '.' + ext;
         const outputFileName = getFileBasename(file) + '-cropped.' + ext;
-
-        const crop = `crop=${w}:${h}:${x}:${y}`;
-
+        const scaleAndCrop = `scale=${width}:${height},crop=${cropWidth}:${cropHeight}:${cropX}:${cropY}`;
         await ffmpeg.run(
           // Input filename.
           '-i',
           file.name,
           '-vf',
-          crop,
+          scaleAndCrop,
           tempFileName
         );
 
