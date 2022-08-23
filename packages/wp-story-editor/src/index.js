@@ -30,7 +30,7 @@ import './setLocaleData';
 /**
  * External dependencies
  */
-import { StoryEditor } from '@googleforcreators/story-editor';
+import { StoryEditor, AutoSaveCheck } from '@googleforcreators/story-editor';
 import { setAppElement } from '@googleforcreators/design-system';
 import { StrictMode, render } from '@googleforcreators/react';
 import { updateSettings } from '@googleforcreators/date';
@@ -108,6 +108,7 @@ window.webStories.initializeStoryEditor = (id, config, initialEdits) => {
         <StatusCheck />
         <CorsCheck />
         <FontCheck />
+        <AutoSaveCheck />
         <PostLock />
       </StoryEditor>
     </StrictMode>,
