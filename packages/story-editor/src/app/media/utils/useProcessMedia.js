@@ -487,12 +487,22 @@ function useProcessMedia({
    * @param {import('@googleforcreators/media').Resource} resource Resource object.
    */
   const cropHiddenVideo = useCallback(
-    ({ resource: oldResource, x, y }) => {
-      const { id: resourceId, src: url, mimeType, width, height } = oldResource;
+    ({ id: elementId, resource: oldResource, x, y, width, height }) => {
+      // calculations need to be worked on here:
+      const cropWidth = width - Math.abs(x);
+      const cropHeight = height;
+      const cropX = Math.abs(x);
+      const cropY = y;
+
+      const { id: resourceId, src: url, mimeType } = oldResource;
       const onUploadSuccess = ({ id, resource }) => {
         copyResourceData({ oldResource, resource });
         updateOldTranscodedObject(oldResource.id, resource.id, 'source-image');
         deleteMediaElement({ id: oldResource.id });
+        updateElementById({
+          elementId,
+          properties: { width: cropWidth, height: cropHeight },
+        });
 
         // onUploadSuccess is also called with previousResourceId,
         // for which we don't need to run this.
@@ -512,12 +522,6 @@ function useProcessMedia({
         let file = false;
         try {
           const originalFile = await fetchRemoteFile(url, mimeType);
-          // calculations need to be worked on here:
-          const cropWidth = width - Math.abs(x);
-          const cropHeight = height;
-          const cropX = Math.abs(x);
-          const cropY = y;
-
           file = await cropHidden(
             originalFile,
             cropWidth,
@@ -544,6 +548,7 @@ function useProcessMedia({
     },
     [
       cropHidden,
+      updateElementById,
       copyResourceData,
       deleteMediaElement,
       postProcessingResource,
