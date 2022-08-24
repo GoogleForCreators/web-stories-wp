@@ -71,8 +71,11 @@ function ForegroundMediaMenu({ parentMenuRef }) {
 
   const { hasShapeMask, removeShapeMask } = useShapeMask(selectedElement);
 
+  const isOffCanvas = true;
+  /*
   const isOffCanvas =
     (selectedElement && selectedElement.x < 0) || selectedElement.y < 0;
+  */
 
   const canTranscodeResource = useLocalMedia(
     (value) => value.state.canTranscodeResource

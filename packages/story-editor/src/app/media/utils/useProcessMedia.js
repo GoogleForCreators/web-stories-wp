@@ -23,6 +23,11 @@ import {
   isAnimatedGif,
 } from '@googleforcreators/media';
 
+import {
+  PAGE_HEIGHT,
+  PAGE_WIDTH,
+} from '@googleforcreators/units';
+
 /**
  * Internal dependencies
  */
@@ -488,11 +493,35 @@ function useProcessMedia({
    */
   const cropHiddenVideo = useCallback(
     ({ id: elementId, resource: oldResource, x, y, width, height }) => {
+      // need to calc y with safeZone
       // calculations need to be worked on here:
-      const cropWidth = width - Math.abs(x);
-      const cropHeight = height;
-      const cropX = Math.abs(x);
-      const cropY = y;
+      // this currently handles off stage left and top
+      let cropWidth = width - Math.abs(x);
+      let cropHeight = height - Math.abs(y);
+      let cropX = Math.abs(x);
+      let cropY = Math.abs(y);
+
+      // needs to crop from the right side
+      if (Number.isInteger(x) && x > 0) {
+        cropWidth = width;
+        if (x + width > PAGE_WIDTH) {
+          cropX = width - ((x + width) - PAGE_WIDTH);
+          console.log("offstage x", x + width - PAGE_WIDTH, "cropX", cropX);
+        } else {
+          cropX = 0;
+        }
+      }
+
+      // needs to crop from the bottom
+      if (Number.isInteger(y) && y > 0) {
+        cropHeight = height;
+        if (y + height > PAGE_HEIGHT) {
+          cropY = height - ((y + height) - PAGE_HEIGHT);
+          console.log("offstage y", ((y + height) - PAGE_HEIGHT), cropY);
+        } else {
+          cropY = 0;
+        }
+      }
 
       const { id: resourceId, src: url, mimeType } = oldResource;
       const onUploadSuccess = ({ id, resource }) => {
