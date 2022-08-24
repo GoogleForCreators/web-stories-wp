@@ -77,19 +77,6 @@ class HTML {
 	}
 
 	/**
-	 * Get story meta images.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return string[] Images.
-	 */
-	protected function get_poster_images(): array {
-		return [
-			'poster-portrait-src' => $this->story->get_poster_portrait(),
-		];
-	}
-
-	/**
 	 * Fix malformed <a> tags in the <head>.
 	 *
 	 * On certain environments like WordPress.com VIP, there is additional KSES
@@ -116,10 +103,10 @@ class HTML {
 	 * @return string Filtered content
 	 */
 	protected function fix_malformed_script_link_tags( string $content ): string {
-		$content = (string) preg_replace_callback(
-			'/(?P<link><a[^>]+href=\"(?P<href>.*?)\"[^>]*>(?P<content>.*?)<\/a>)/ms',
+		$replaced_content = preg_replace_callback(
+			'/<a[^>]+href="(?P<href>[^"]+)"[^>]*>\1<\/a>/m',
 			static function( $matches ) {
-				if ( $matches['href'] === $matches['content'] && 0 === strpos( $matches['href'], 'https://cdn.ampproject.org/' ) ) {
+				if ( 0 === strpos( $matches['href'], 'https://cdn.ampproject.org/' ) ) {
 					$script_url = $matches['href'];
 
 					// Turns `<a href="https://cdn.ampproject.org/v0.js">https://cdn.ampproject.org/v0.js</a>`
@@ -143,7 +130,8 @@ class HTML {
 			$content
 		);
 
-		return $content;
+		// On errors the return value of preg_replace_callback() is null.
+		return $replaced_content ?: $content;
 	}
 
 	/**
