@@ -98,7 +98,7 @@ function ToolbarToggle() {
         isHighlighted={highlight?.showEffect}
         onAnimationEnd={() => resetHighlight()}
       >
-        <Icons.Pencil />
+        <Icons.BoxWithDots />
       </StyledToggleButton>
     </Tooltip>
   );
