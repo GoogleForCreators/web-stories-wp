@@ -24,7 +24,7 @@ import { memo } from '@googleforcreators/react';
  */
 import { ElementAlignment, Dismiss, Separator } from '../elements';
 
-const FloatingMultipleMenu = memo(function FloatingMultipleMenu() {
+const FloatingMultipleMenu = memo(() => {
   return (
     <>
       <ElementAlignment />

@@ -47,7 +47,7 @@ const Wrapper = styled.div`
 `;
 
 const EditElement = memo(
-  forwardRef(function EditElement({ element, editWrapper, onResize }, ref) {
+  forwardRef(({ element, editWrapper, onResize }, ref) => {
     const { id, type } = element;
     const { getBox, getBoxWithBorder } = useUnits((state) => ({
       getBox: state.actions.getBox,

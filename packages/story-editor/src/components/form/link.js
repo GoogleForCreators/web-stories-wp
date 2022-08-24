@@ -36,42 +36,41 @@ const MIN_MAX = {
   },
 };
 
-const LinkInput = forwardRef(function LinkInput(
-  { onChange, onBlur, onFocus, value = '', hint, hasError, ...rest },
-  ref
-) {
-  const trimmedValue = (value || '').trim();
-  const isValid = isValidUrl(withProtocol(trimmedValue));
-  const isNotValid = trimmedValue.length > 0 && !isValid;
-  return (
-    <Row>
-      <Input
-        ref={ref}
-        placeholder={__('Web address', 'web-stories')}
-        onChange={(evt) => onChange(evt.target.value)}
-        onBlur={() => {
-          if (trimmedValue?.length) {
-            const urlWithProtocol = withProtocol(trimmedValue);
-            if (urlWithProtocol !== trimmedValue) {
-              onChange(urlWithProtocol);
+const LinkInput = forwardRef(
+  ({ onChange, onBlur, onFocus, value = '', hint, hasError, ...rest }, ref) => {
+    const trimmedValue = (value || '').trim();
+    const isValid = isValidUrl(withProtocol(trimmedValue));
+    const isNotValid = trimmedValue.length > 0 && !isValid;
+    return (
+      <Row>
+        <Input
+          ref={ref}
+          placeholder={__('Web address', 'web-stories')}
+          onChange={(evt) => onChange(evt.target.value)}
+          onBlur={() => {
+            if (trimmedValue?.length) {
+              const urlWithProtocol = withProtocol(trimmedValue);
+              if (urlWithProtocol !== trimmedValue) {
+                onChange(urlWithProtocol);
+              }
             }
-          }
-          if (onBlur) {
-            onBlur();
-          }
-        }}
-        onFocus={onFocus}
-        value={value || ''}
-        minLength={MIN_MAX.URL.MIN}
-        maxLength={MIN_MAX.URL.MAX}
-        hasError={isNotValid || hasError}
-        hint={isNotValid ? __('Invalid web address.', 'web-stories') : hint}
-        containerStyleOverride={inputContainerStyleOverride}
-        {...rest}
-      />
-    </Row>
-  );
-});
+            if (onBlur) {
+              onBlur();
+            }
+          }}
+          onFocus={onFocus}
+          value={value || ''}
+          minLength={MIN_MAX.URL.MIN}
+          maxLength={MIN_MAX.URL.MAX}
+          hasError={isNotValid || hasError}
+          hint={isNotValid ? __('Invalid web address.', 'web-stories') : hint}
+          containerStyleOverride={inputContainerStyleOverride}
+          {...rest}
+        />
+      </Row>
+    );
+  }
+);
 
 LinkInput.propTypes = {
   value: PropTypes.string,

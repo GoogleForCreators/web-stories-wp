@@ -168,112 +168,114 @@ const LoadingDots = styled.div`
   }
 `;
 
-export const MediaInput = forwardRef(function Media(
-  {
-    className,
-    onBlur,
-    alt = __('Preview image', 'web-stories'),
-    value,
-    ariaLabel = __('Choose an image', 'web-stories'),
-    variant = MEDIA_VARIANTS.RECTANGLE,
-    isLoading,
-    menuOptions = [],
-    onMenuOption,
-    openMediaPicker,
-    canUpload = true,
-    menuProps = {},
-    imgProps = {},
-    ...rest
-  },
-  ref
-) {
-  const hasMenu = menuOptions?.length > 0;
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+export const MediaInput = forwardRef(
+  (
+    {
+      className,
+      onBlur,
+      alt = __('Preview image', 'web-stories'),
+      value,
+      ariaLabel = __('Choose an image', 'web-stories'),
+      variant = MEDIA_VARIANTS.RECTANGLE,
+      isLoading,
+      menuOptions = [],
+      onMenuOption,
+      openMediaPicker,
+      canUpload = true,
+      menuProps = {},
+      imgProps = {},
+      ...rest
+    },
+    ref
+  ) => {
+    const hasMenu = menuOptions?.length > 0;
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const listId = useMemo(() => `list-${uuidv4()}`, []);
-  const buttonId = useMemo(() => `button-${uuidv4()}`, []);
+    const listId = useMemo(() => `list-${uuidv4()}`, []);
+    const buttonId = useMemo(() => `button-${uuidv4()}`, []);
 
-  const internalRef = useRef(null);
+    const internalRef = useRef(null);
 
-  const StyledMedia = MediaOptions[variant];
-  // Media input only allows simplified dropdown with one group.
-  const options = [{ group: menuOptions }];
+    const StyledMedia = MediaOptions[variant];
+    // Media input only allows simplified dropdown with one group.
+    const options = [{ group: menuOptions }];
 
-  return (
-    <StyledMedia className={className}>
-      {variant !== MEDIA_VARIANTS.NONE && (
-        <ImageWrapper variant={variant}>
-          {value ? (
-            <Img
-              src={value}
-              alt={alt}
-              crossOrigin="anonymous"
-              decoding="async"
-              width={imgProps?.width || null}
-              height={imgProps?.height || null}
-            />
-          ) : (
-            <DefaultImageWrapper>
-              <DefaultImage />
-            </DefaultImageWrapper>
-          )}
-          {isLoading && <LoadingDots />}
-        </ImageWrapper>
-      )}
-      {canUpload && (
-        <BaseTooltip
-          title={hasMenu ? null : __('Open media picker', 'web-stories')}
-        >
-          <Button
-            ref={(node) => {
-              // `ref` can either be a callback ref or a normal ref.
-              if (typeof ref == 'function') {
-                ref(node);
-              } else if (ref) {
-                ref.current = node;
-              }
-              internalRef.current = node;
-            }}
-            id={buttonId}
-            showImage={variant !== MEDIA_VARIANTS.NONE}
-            variant={BUTTON_VARIANTS.SQUARE}
-            type={BUTTON_TYPES.TERTIARY}
-            size={BUTTON_SIZES.SMALL}
-            aria-label={ariaLabel}
-            onClick={hasMenu ? () => setIsMenuOpen(true) : openMediaPicker}
-            aria-owns={hasMenu ? listId : null}
-            aria-pressed={isMenuOpen}
-            aria-expanded={isMenuOpen}
-            {...rest}
+    return (
+      <StyledMedia className={className}>
+        {variant !== MEDIA_VARIANTS.NONE && (
+          <ImageWrapper variant={variant}>
+            {value ? (
+              <Img
+                src={value}
+                alt={alt}
+                crossOrigin="anonymous"
+                decoding="async"
+                width={imgProps?.width || null}
+                height={imgProps?.height || null}
+              />
+            ) : (
+              <DefaultImageWrapper>
+                <DefaultImage />
+              </DefaultImageWrapper>
+            )}
+            {isLoading && <LoadingDots />}
+          </ImageWrapper>
+        )}
+        {canUpload && (
+          <BaseTooltip
+            title={hasMenu ? null : __('Open media picker', 'web-stories')}
           >
-            <Pencil />
-          </Button>
-        </BaseTooltip>
-      )}
-      <Popup
-        placement={PLACEMENT.BOTTOM_END}
-        anchor={internalRef}
-        isOpen={isMenuOpen}
-        // Ensure that popup is visible in publish dialog.
-        zIndex={11}
-      >
-        <Menu
-          parentId={buttonId}
-          listId={listId}
-          hasMenuRole
-          options={options}
-          onMenuItemClick={(evt, val) => {
-            onMenuOption(evt, val);
-            setIsMenuOpen(false);
-          }}
-          onDismissMenu={() => setIsMenuOpen(false)}
-          menuStylesOverride={menuStyleOverride}
-          {...menuProps}
-        />
-      </Popup>
-    </StyledMedia>
-  );
-});
+            <Button
+              ref={(node) => {
+                // `ref` can either be a callback ref or a normal ref.
+                if (typeof ref === 'function') {
+                  ref(node);
+                } else if (ref) {
+                  ref.current = node;
+                }
+                internalRef.current = node;
+              }}
+              id={buttonId}
+              showImage={variant !== MEDIA_VARIANTS.NONE}
+              variant={BUTTON_VARIANTS.SQUARE}
+              type={BUTTON_TYPES.TERTIARY}
+              size={BUTTON_SIZES.SMALL}
+              aria-label={ariaLabel}
+              onClick={hasMenu ? () => setIsMenuOpen(true) : openMediaPicker}
+              aria-owns={hasMenu ? listId : null}
+              aria-pressed={isMenuOpen}
+              aria-expanded={isMenuOpen}
+              {...rest}
+            >
+              <Pencil />
+            </Button>
+          </BaseTooltip>
+        )}
+        <Popup
+          placement={PLACEMENT.BOTTOM_END}
+          anchor={internalRef}
+          isOpen={isMenuOpen}
+          // Ensure that popup is visible in publish dialog.
+          zIndex={11}
+        >
+          <Menu
+            parentId={buttonId}
+            listId={listId}
+            hasMenuRole
+            options={options}
+            onMenuItemClick={(evt, val) => {
+              onMenuOption(evt, val);
+              setIsMenuOpen(false);
+            }}
+            onDismissMenu={() => setIsMenuOpen(false)}
+            menuStylesOverride={menuStyleOverride}
+            {...menuProps}
+          />
+        </Popup>
+      </StyledMedia>
+    );
+  }
+);
 
 MediaInput.propTypes = {
   className: PropTypes.string,

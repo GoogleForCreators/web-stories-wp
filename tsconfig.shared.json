@@ -21,6 +21,12 @@
     "moduleResolution": "node",
     "esModuleInterop": false,
     "resolveJsonModule": true,
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    "forceConsistentCasingInFileNames": true,
+    "noEmitOnError": true,
+    "pretty": true,
+    "sourceMap": true,
     "typeRoots": ["./typings", "./node_modules/@types"],
     "types": []
   },

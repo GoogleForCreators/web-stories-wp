@@ -26,10 +26,7 @@ import { __ } from '@googleforcreators/i18n';
  */
 import { Option, Selected, OverflowEllipses } from './styled';
 
-const DefaultRenderer = forwardRef(function DefaultRenderer(
-  { option, value, ...rest },
-  ref
-) {
+const DefaultRenderer = forwardRef(({ option, value, ...rest }, ref) => {
   return (
     <Option key={option.id} {...rest} ref={ref}>
       {value === option.id && (

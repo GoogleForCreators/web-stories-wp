@@ -157,33 +157,32 @@ const Hint = styled(Text).attrs({
  * @param {string} props.value the value of the radio button
  * @return {Object} The radio button
  */
-export const Radio = forwardRef(function RadioButton(
-  { className, hint, id, label, ...props },
-  ref
-) {
-  const inputId = useMemo(() => id || uuidv4(), [id]);
+export const Radio = forwardRef(
+  ({ className, hint, id, label, ...props }, ref) => {
+    const inputId = useMemo(() => id || uuidv4(), [id]);
 
-  return (
-    <Container className={className}>
-      <RadioInputContainer>
-        <HiddenInput id={inputId} ref={ref} {...props} />
-        <RadioBorder />
-        <InnerButton />
-      </RadioInputContainer>
+    return (
+      <Container className={className}>
+        <RadioInputContainer>
+          <HiddenInput id={inputId} ref={ref} {...props} />
+          <RadioBorder />
+          <InnerButton />
+        </RadioInputContainer>
 
-      <LabelContainer>
-        <Text
-          htmlFor={inputId}
-          as="label"
-          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-        >
-          {label}
-        </Text>
-        {hint && <Hint>{hint}</Hint>}
-      </LabelContainer>
-    </Container>
-  );
-});
+        <LabelContainer>
+          <Text
+            htmlFor={inputId}
+            as="label"
+            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+          >
+            {label}
+          </Text>
+          {hint && <Hint>{hint}</Hint>}
+        </LabelContainer>
+      </Container>
+    );
+  }
+);
 Radio.propTypes = {
   className: PropTypes.string,
   checked: PropTypes.bool,

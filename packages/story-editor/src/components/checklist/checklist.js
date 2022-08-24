@@ -61,10 +61,7 @@ const Wrapper = styled.div`
 // TODO make this responsive so that title bar is never covered by popup.
 const StyledNavigationWrapper = styled(NavigationWrapper)``;
 
-const ThroughputPopup = forwardRef(function ThroughputPopup(
-  { isOpen, children, close },
-  ref
-) {
+const ThroughputPopup = forwardRef(({ isOpen, children, close }, ref) => {
   const closeButtonRef = useRef();
   const {
     checklistFocused,

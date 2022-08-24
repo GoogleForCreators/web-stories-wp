@@ -35,7 +35,7 @@ import {
   Dismiss,
 } from '../elements';
 
-const FloatingTextMenu = memo(function FloatingTextMenu() {
+const FloatingTextMenu = memo(() => {
   return (
     <>
       <FontFamily />

@@ -77,186 +77,188 @@ const Container = styled.div`
  * @param {number} props.maxWidth sets a max-width on the Popup component
  * @return {*} Render.
  */
-const Datalist = forwardRef(function Datalist(
-  {
-    onChange,
-    disabled = false,
-    selectedId,
-    options,
-    hasSearch = false,
-    getOptionsByQuery,
-    onObserve,
-    primaryOptions,
-    primaryLabel,
-    priorityOptionGroups,
-    searchResultsLabel,
-    renderer,
-    activeItemRenderer,
-    isInline = false,
-    dropDownLabel = '',
-    highlightStylesOverride,
-    hasDropDownBorder = false,
-    zIndex,
-    listStyleOverrides,
-    containerStyleOverrides,
-    title,
-    dropdownButtonLabel,
-    className,
-    offsetOverride = false,
-    noMatchesFoundLabel,
-    searchPlaceholder,
-    maxWidth,
-    getPrimaryOptions,
-    ...rest
-  },
-  ref
-) {
-  const searchRef = useRef();
-  const listRef = useRef();
-  if (!options && !getOptionsByQuery) {
-    throw new Error(
-      'Dropdown initiated with invalid params: options or getOptionsByQuery has to be set'
+const Datalist = forwardRef(
+  (
+    {
+      onChange,
+      disabled = false,
+      selectedId,
+      options,
+      hasSearch = false,
+      getOptionsByQuery,
+      onObserve,
+      primaryOptions,
+      primaryLabel,
+      priorityOptionGroups,
+      searchResultsLabel,
+      renderer,
+      activeItemRenderer,
+      isInline = false,
+      dropDownLabel = '',
+      highlightStylesOverride,
+      hasDropDownBorder = false,
+      zIndex,
+      listStyleOverrides,
+      containerStyleOverrides,
+      title,
+      dropdownButtonLabel,
+      className,
+      offsetOverride = false,
+      noMatchesFoundLabel,
+      searchPlaceholder,
+      maxWidth,
+      getPrimaryOptions,
+      ...rest
+    },
+    ref
+  ) => {
+    const searchRef = useRef();
+    const listRef = useRef();
+    if (!options && !getOptionsByQuery) {
+      throw new Error(
+        'Dropdown initiated with invalid params: options or getOptionsByQuery has to be set'
+      );
+    }
+    // If search is not enabled, always display all options.
+    if (!hasSearch) {
+      primaryOptions = options;
+    }
+    const internalRef = useRef();
+
+    const [isOpen, setIsOpen] = useState(false);
+    const [_primaryOptions, _setPrimaryOptions] = useState([]);
+
+    const closeDropDown = useCallback(() => {
+      setIsOpen(false);
+      // Restore focus
+      internalRef.current?.focus();
+    }, [internalRef]);
+
+    const toggleDropDown = useCallback(() => setIsOpen((val) => !val), []);
+    // Must be debounced to account for clicking the select box again
+    // (closing in useFocusOut and then opening again in onClick)
+    const debouncedCloseDropDown = useDebouncedCallback(closeDropDown, 100);
+
+    const handleSelect = useCallback(
+      (option) => {
+        onChange(option);
+        setIsOpen(false);
+        internalRef.current?.focus();
+      },
+      [onChange, internalRef]
+    );
+
+    const focusSearch = useCallback(() => {
+      searchRef.current?.focus();
+    }, []);
+
+    const list = (
+      <OptionsContainer
+        ref={searchRef}
+        isOpen={isOpen}
+        onClose={debouncedCloseDropDown}
+        getOptionsByQuery={getOptionsByQuery}
+        hasSearch={hasSearch}
+        isInline={isInline}
+        title={title}
+        hasDropDownBorder={hasDropDownBorder}
+        containerStyleOverrides={containerStyleOverrides}
+        placeholder={searchPlaceholder}
+        renderContents={({
+          searchKeyword,
+          setIsExpanded,
+          trigger,
+          queriedOptions,
+          listId,
+        }) => (
+          <List
+            ref={listRef}
+            listId={listId}
+            value={selectedId}
+            keyword={searchKeyword}
+            onSelect={handleSelect}
+            onClose={debouncedCloseDropDown}
+            onExpandedChange={setIsExpanded}
+            focusTrigger={trigger}
+            onObserve={onObserve}
+            options={options || queriedOptions}
+            primaryOptions={_primaryOptions}
+            primaryLabel={primaryLabel}
+            priorityOptionGroups={priorityOptionGroups}
+            searchResultsLabel={searchResultsLabel}
+            focusSearch={focusSearch}
+            renderer={renderer}
+            listStyleOverrides={listStyleOverrides}
+            noMatchesFoundLabel={noMatchesFoundLabel}
+          />
+        )}
+      />
+    );
+
+    const DropDownSelectRef = useCallback(
+      (node) => {
+        // `ref` can either be a callback ref or a normal ref.
+        if (typeof ref === 'function') {
+          ref(node);
+        } else if (ref) {
+          ref.current = node;
+        }
+        internalRef.current = node;
+      },
+      [ref]
+    );
+
+    // Logic for fetching primaryOptions
+    useEffect(() => {
+      if (getPrimaryOptions) {
+        getPrimaryOptions().then((res) => {
+          _setPrimaryOptions(res);
+        });
+      } else if (primaryOptions) {
+        _setPrimaryOptions(primaryOptions);
+      }
+    }, [
+      _setPrimaryOptions,
+      getOptionsByQuery,
+      getPrimaryOptions,
+      primaryOptions,
+    ]);
+
+    const selectedOption = _primaryOptions.find(({ id }) => id === selectedId);
+    // In case of isInline, the list is displayed with 'absolute' positioning instead of using a separate popup.
+    return (
+      <Container className={className}>
+        <DropDownSelect
+          aria-pressed={isOpen}
+          aria-haspopup
+          aria-expanded={isOpen}
+          ref={DropDownSelectRef}
+          activeItemLabel={selectedOption?.name}
+          activeItemRenderer={activeItemRenderer}
+          dropDownLabel={dropDownLabel}
+          onSelectClick={toggleDropDown}
+          selectButtonStylesOverride={highlightStylesOverride || focusStyle}
+          aria-label={dropdownButtonLabel}
+          isOpen={isOpen}
+          {...rest}
+        />
+        {isOpen && !disabled && isInline && list}
+        {!disabled && !isInline && (
+          <Popup
+            anchor={internalRef}
+            isOpen={isOpen}
+            zIndex={zIndex}
+            offsetOverride={offsetOverride}
+            maxWidth={maxWidth || DEFAULT_WIDTH}
+            fillWidth
+          >
+            {list}
+          </Popup>
+        )}
+      </Container>
     );
   }
-  // If search is not enabled, always display all options.
-  if (!hasSearch) {
-    primaryOptions = options;
-  }
-  const internalRef = useRef();
-
-  const [isOpen, setIsOpen] = useState(false);
-  const [_primaryOptions, _setPrimaryOptions] = useState([]);
-
-  const closeDropDown = useCallback(() => {
-    setIsOpen(false);
-    // Restore focus
-    internalRef.current?.focus();
-  }, [internalRef]);
-
-  const toggleDropDown = useCallback(() => setIsOpen((val) => !val), []);
-  // Must be debounced to account for clicking the select box again
-  // (closing in useFocusOut and then opening again in onClick)
-  const debouncedCloseDropDown = useDebouncedCallback(closeDropDown, 100);
-
-  const handleSelect = useCallback(
-    (option) => {
-      onChange(option);
-      setIsOpen(false);
-      internalRef.current?.focus();
-    },
-    [onChange, internalRef]
-  );
-
-  const focusSearch = useCallback(() => {
-    searchRef.current?.focus();
-  }, []);
-
-  const list = (
-    <OptionsContainer
-      ref={searchRef}
-      isOpen={isOpen}
-      onClose={debouncedCloseDropDown}
-      getOptionsByQuery={getOptionsByQuery}
-      hasSearch={hasSearch}
-      isInline={isInline}
-      title={title}
-      hasDropDownBorder={hasDropDownBorder}
-      containerStyleOverrides={containerStyleOverrides}
-      placeholder={searchPlaceholder}
-      renderContents={({
-        searchKeyword,
-        setIsExpanded,
-        trigger,
-        queriedOptions,
-        listId,
-      }) => (
-        <List
-          ref={listRef}
-          listId={listId}
-          value={selectedId}
-          keyword={searchKeyword}
-          onSelect={handleSelect}
-          onClose={debouncedCloseDropDown}
-          onExpandedChange={setIsExpanded}
-          focusTrigger={trigger}
-          onObserve={onObserve}
-          options={options || queriedOptions}
-          primaryOptions={_primaryOptions}
-          primaryLabel={primaryLabel}
-          priorityOptionGroups={priorityOptionGroups}
-          searchResultsLabel={searchResultsLabel}
-          focusSearch={focusSearch}
-          renderer={renderer}
-          listStyleOverrides={listStyleOverrides}
-          noMatchesFoundLabel={noMatchesFoundLabel}
-        />
-      )}
-    />
-  );
-
-  const DropDownSelectRef = useCallback(
-    (node) => {
-      // `ref` can either be a callback ref or a normal ref.
-      if (typeof ref == 'function') {
-        ref(node);
-      } else if (ref) {
-        ref.current = node;
-      }
-      internalRef.current = node;
-    },
-    [ref]
-  );
-
-  // Logic for fetching primaryOptions
-  useEffect(() => {
-    if (getPrimaryOptions) {
-      getPrimaryOptions().then((res) => {
-        _setPrimaryOptions(res);
-      });
-    } else if (primaryOptions) {
-      _setPrimaryOptions(primaryOptions);
-    }
-  }, [
-    _setPrimaryOptions,
-    getOptionsByQuery,
-    getPrimaryOptions,
-    primaryOptions,
-  ]);
-
-  const selectedOption = _primaryOptions.find(({ id }) => id === selectedId);
-  // In case of isInline, the list is displayed with 'absolute' positioning instead of using a separate popup.
-  return (
-    <Container className={className}>
-      <DropDownSelect
-        aria-pressed={isOpen}
-        aria-haspopup
-        aria-expanded={isOpen}
-        ref={DropDownSelectRef}
-        activeItemLabel={selectedOption?.name}
-        activeItemRenderer={activeItemRenderer}
-        dropDownLabel={dropDownLabel}
-        onSelectClick={toggleDropDown}
-        selectButtonStylesOverride={highlightStylesOverride || focusStyle}
-        aria-label={dropdownButtonLabel}
-        isOpen={isOpen}
-        {...rest}
-      />
-      {isOpen && !disabled && isInline && list}
-      {!disabled && !isInline && (
-        <Popup
-          anchor={internalRef}
-          isOpen={isOpen}
-          zIndex={zIndex}
-          offsetOverride={offsetOverride}
-          maxWidth={maxWidth || DEFAULT_WIDTH}
-          fillWidth
-        >
-          {list}
-        </Popup>
-      )}
-    </Container>
-  );
-});
+);
 
 Datalist.propTypes = {
   selectedId: PropTypes.any,

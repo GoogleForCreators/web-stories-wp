@@ -31,7 +31,7 @@ import {
   Dismiss,
 } from '../elements';
 
-const FloatingStickerMenu = memo(function FloatingStickerMenu() {
+const FloatingStickerMenu = memo(() => {
   return (
     <>
       <LayerOpacity />

@@ -32,7 +32,7 @@ import {
   Dismiss,
 } from '../elements';
 
-const FloatingImageMenu = memo(function FloatingImageMenu() {
+const FloatingImageMenu = memo(() => {
   return (
     <>
       <LayerOpacity />

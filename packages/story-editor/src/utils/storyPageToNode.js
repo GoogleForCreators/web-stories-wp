@@ -67,47 +67,49 @@ const FullHeight = styled.div`
   left: 0;
 `;
 
-const PageWithDependencies = forwardRef(function PageWithDependencies(
-  { page, width, height, renderFullHeightThumb = false, containerHeight },
-  ref
-) {
-  return (
-    <ThemeProvider theme={ds_theme}>
-      <FontProvider>
-        <TransformProvider>
-          <UnitsProvider
-            pageSize={{
-              width,
-              height,
-            }}
-          >
-            <Page
-              ref={ref}
-              height={renderFullHeightThumb ? containerHeight : height}
-              width={width}
+const PageWithDependencies = forwardRef(
+  (
+    { page, width, height, renderFullHeightThumb = false, containerHeight },
+    ref
+  ) => {
+    return (
+      <ThemeProvider theme={ds_theme}>
+        <FontProvider>
+          <TransformProvider>
+            <UnitsProvider
+              pageSize={{
+                width,
+                height,
+              }}
             >
-              <PreviewWrapper background={page.backgroundColor}>
-                <FullHeight
-                  yOffset={
-                    renderFullHeightThumb ? (containerHeight - height) / 2 : 0
-                  }
-                >
-                  {page.elements.map((element) => (
-                    <DisplayElement
-                      key={element.id}
-                      previewMode
-                      element={element}
-                    />
-                  ))}
-                </FullHeight>
-              </PreviewWrapper>
-            </Page>
-          </UnitsProvider>
-        </TransformProvider>
-      </FontProvider>
-    </ThemeProvider>
-  );
-});
+              <Page
+                ref={ref}
+                height={renderFullHeightThumb ? containerHeight : height}
+                width={width}
+              >
+                <PreviewWrapper background={page.backgroundColor}>
+                  <FullHeight
+                    yOffset={
+                      renderFullHeightThumb ? (containerHeight - height) / 2 : 0
+                    }
+                  >
+                    {page.elements.map((element) => (
+                      <DisplayElement
+                        key={element.id}
+                        previewMode
+                        element={element}
+                      />
+                    ))}
+                  </FullHeight>
+                </PreviewWrapper>
+              </Page>
+            </UnitsProvider>
+          </TransformProvider>
+        </FontProvider>
+      </ThemeProvider>
+    );
+  }
+);
 
 /**
  * @typedef {import('../../../types').Page} Page

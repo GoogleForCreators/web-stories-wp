@@ -24,7 +24,7 @@ import { fireEvent, screen } from '@testing-library/react';
 import GoogleAnalyticsSettings, { TEXT } from '..';
 import { renderWithProviders } from '../../../../testUtils';
 
-describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
+describe('Editor Settings: Google Analytics <GoogleAnalytics />', () => {
   let googleAnalyticsId;
   let mockUpdate;
   const defaultSiteKitStatus = {
@@ -44,7 +44,7 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
     googleAnalyticsId = '';
   });
 
-  it('should render Google Analytics input and helper text by default', function () {
+  it('should render Google Analytics input and helper text by default', () => {
     renderWithProviders(
       <GoogleAnalyticsSettings
         googleAnalyticsId={googleAnalyticsId}
@@ -62,7 +62,7 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
     expect(sectionHeader).toBeInTheDocument();
   });
 
-  it('should render a visually hidden label for Google Analytics input', function () {
+  it('should render a visually hidden label for Google Analytics input', () => {
     renderWithProviders(
       <GoogleAnalyticsSettings
         googleAnalyticsId={googleAnalyticsId}
@@ -76,7 +76,7 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
     expect(label).toBeInTheDocument();
   });
 
-  it('should not display any input field when analytics module is active', function () {
+  it('should not display any input field when analytics module is active', () => {
     renderWithProviders(
       <GoogleAnalyticsSettings
         googleAnalyticsId={googleAnalyticsId}
@@ -94,7 +94,7 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
     expect(input).not.toBeInTheDocument();
   });
 
-  it('should allow the input to be active when Site Kit is installed but analytics module is not active', function () {
+  it('should allow the input to be active when Site Kit is installed but analytics module is not active', () => {
     renderWithProviders(
       <GoogleAnalyticsSettings
         googleAnalyticsId={googleAnalyticsId}
@@ -112,7 +112,7 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
     expect(input).toBeEnabled();
   });
 
-  it('should call mockUpdate when enter is keyed on input', function () {
+  it('should call mockUpdate when enter is keyed on input', () => {
     const { rerender } = renderWithProviders(
       <GoogleAnalyticsSettings
         googleAnalyticsId={googleAnalyticsId}
@@ -161,7 +161,7 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
     expect(mockUpdate).toHaveBeenCalledTimes(2);
   });
 
-  it('should call mockUpdate when the save button is clicked', function () {
+  it('should call mockUpdate when the save button is clicked', () => {
     const { rerender } = renderWithProviders(
       <GoogleAnalyticsSettings
         googleAnalyticsId={googleAnalyticsId}

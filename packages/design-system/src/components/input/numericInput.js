@@ -25,79 +25,81 @@ import { useKeyDownEffect } from '../keyboard';
 import { useNumericInput } from './useNumericInput';
 import { Input, InputPropTypes } from '.';
 
-export const NumericInput = forwardRef(function NumericInput(
-  {
-    allowEmpty,
-    isFloat,
-    onChange,
-    max,
-    min,
-    value = '',
-    isIndeterminate: originalIsIndeterminate,
-    ...props
-  },
-  ref
-) {
-  const {
-    currentValue,
-    handleBlur,
-    handleChange,
-    handleEsc,
-    handleKeyUpAndDown,
-    inputRef,
-    isIndeterminate,
-  } = useNumericInput({
-    allowEmpty,
-    isFloat,
-    onChange,
-    max,
-    min,
-    value,
-    isIndeterminate: originalIsIndeterminate,
-    ref,
-  });
-
-  useKeyDownEffect(
-    inputRef,
+export const NumericInput = forwardRef(
+  (
     {
-      key: ['up', 'alt+up', 'down', 'alt+down'],
-      editable: true,
+      allowEmpty,
+      isFloat,
+      onChange,
+      max,
+      min,
+      value = '',
+      isIndeterminate: originalIsIndeterminate,
+      ...props
     },
-    handleKeyUpAndDown,
-    [handleKeyUpAndDown]
-  );
+    ref
+  ) => {
+    const {
+      currentValue,
+      handleBlur,
+      handleChange,
+      handleEsc,
+      handleKeyUpAndDown,
+      inputRef,
+      isIndeterminate,
+    } = useNumericInput({
+      allowEmpty,
+      isFloat,
+      onChange,
+      max,
+      min,
+      value,
+      isIndeterminate: originalIsIndeterminate,
+      ref,
+    });
 
-  useKeyDownEffect(
-    inputRef,
-    {
-      key: ['escape'],
-      editable: true,
-    },
-    handleEsc,
-    [handleEsc]
-  );
+    useKeyDownEffect(
+      inputRef,
+      {
+        key: ['up', 'alt+up', 'down', 'alt+down'],
+        editable: true,
+      },
+      handleKeyUpAndDown,
+      [handleKeyUpAndDown]
+    );
 
-  useKeyDownEffect(
-    inputRef,
-    {
-      key: ['enter'],
-      editable: true,
-    },
-    handleBlur,
-    [handleBlur]
-  );
+    useKeyDownEffect(
+      inputRef,
+      {
+        key: ['escape'],
+        editable: true,
+      },
+      handleEsc,
+      [handleEsc]
+    );
 
-  return (
-    <Input
-      ref={inputRef}
-      onBlur={handleBlur}
-      onChange={handleChange}
-      value={String(currentValue)}
-      isIndeterminate={isIndeterminate && originalIsIndeterminate}
-      {...props}
-    />
-  );
-});
+    useKeyDownEffect(
+      inputRef,
+      {
+        key: ['enter'],
+        editable: true,
+      },
+      handleBlur,
+      [handleBlur]
+    );
+
+    return (
+      <Input
+        ref={inputRef}
+        onBlur={handleBlur}
+        onChange={handleChange}
+        value={String(currentValue)}
+        isIndeterminate={isIndeterminate && originalIsIndeterminate}
+        {...props}
+      />
+    );
+  }
+);
 NumericInput.propTypes = {
   ...InputPropTypes,
   allowEmpty: PropTypes.bool,

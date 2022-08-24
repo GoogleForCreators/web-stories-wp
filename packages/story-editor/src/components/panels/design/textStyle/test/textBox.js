@@ -38,6 +38,7 @@ jest.mock('../../../../form/color/color', () => {
   const React = require('@googleforcreators/react');
 
   const _PropTypes = require('prop-types');
+  // eslint-disable-next-line prefer-arrow-callback -- False positive.
   const FakeControl = React.forwardRef(function FakeControl(props, ref) {
     mockControls[props['data-testid']] = props;
     return <div ref={ref} />;

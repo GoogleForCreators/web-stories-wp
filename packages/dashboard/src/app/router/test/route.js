@@ -19,40 +19,40 @@
  */
 import { parentRoute, resolveRoute } from '../route';
 
-describe('Route', function () {
+describe('Route', () => {
   afterEach(() => {
     window.location.hash = '';
   });
 
-  it('should return the parent route from the path.', function () {
+  it('should return the parent route from the path.', () => {
     window.location.hash = '#/parent/child';
     expect(parentRoute()).toBe('#/parent');
   });
 
-  it('should return the root hash if the hash only has one level.', function () {
+  it('should return the root hash if the hash only has one level.', () => {
     window.location.hash = 'parent';
     expect(parentRoute()).toBe('#/');
   });
 
-  it('should the full URL if it has a http or https protocol.', function () {
+  it('should the full URL if it has a http or https protocol.', () => {
     expect(resolveRoute('http://www.google.com')).toBe('http://www.google.com');
     expect(resolveRoute('https://www.google.com')).toBe(
       'https://www.google.com'
     );
   });
 
-  it('should append a nested route to the current hash when the path is relative', function () {
+  it('should append a nested route to the current hash when the path is relative', () => {
     window.location.hash = '#/templates-gallery';
     expect(resolveRoute('template-detail')).toBe(
       '#/templates-gallery/template-detail'
     );
   });
 
-  it('should create a route hash when the path is a backslash', function () {
+  it('should create a route hash when the path is a backslash', () => {
     expect(resolveRoute('/')).toBe('#/');
   });
 
-  it('should create a route hash when the path is empty', function () {
+  it('should create a route hash when the path is empty', () => {
     expect(resolveRoute('')).toBe('#/');
   });
 });

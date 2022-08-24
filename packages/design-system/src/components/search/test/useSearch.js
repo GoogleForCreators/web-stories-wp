@@ -29,7 +29,7 @@ import {
 } from '../../../testUtils/sampleData';
 import useSearch from '../useSearch';
 
-describe('useSearch()', function () {
+describe('useSearch()', () => {
   it('should return falsy for activeOption when no selectedValue is present', () => {
     const { result } = renderHook(() => useSearch({ options: [] }));
 
@@ -73,7 +73,7 @@ describe('useSearch()', function () {
     expect(result.current.normalizedOptions).toStrictEqual([]);
   });
 
-  it('should return an empty array when only bad options are present', function () {
+  it('should return an empty array when only bad options are present', () => {
     const { result } = renderHook(() =>
       useSearch({
         selectedValue: {},
@@ -88,7 +88,7 @@ describe('useSearch()', function () {
     expect(result.current.normalizedOptions).toStrictEqual([]);
   });
 
-  it('should return only sanitized options that meet requirements', function () {
+  it('should return only sanitized options that meet requirements', () => {
     const { result } = renderHook(() =>
       useSearch({ selectedValue: {}, options: nestedDropDownOptions })
     );

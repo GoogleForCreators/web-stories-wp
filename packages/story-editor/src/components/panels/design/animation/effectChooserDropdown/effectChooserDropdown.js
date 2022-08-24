@@ -44,137 +44,139 @@ import {
 } from './styles';
 import DropDownItem from './dropdownItem';
 
-const EffectChooserDropdown = forwardRef(function EffectChooserDropdown(
-  {
-    onAnimationSelected,
-    onNoEffectSelected,
-    isBackgroundEffects = false,
-    selectedEffectType,
-    disabledTypeOptionsMap,
-    direction,
-    selectButtonStylesOverride,
-    disabled = false,
-  },
-  ref
-) {
-  const { enableExperimentalAnimationEffects } = useFeatures();
-
-  const selectedValue = useMemo(
-    () => getDirectionalEffect(selectedEffectType, direction),
-    [selectedEffectType, direction]
-  );
-
-  // Determine if any background effects are disabled due to element positioning
-  const disabledBackgroundEffects = useMemo(
-    () =>
-      isBackgroundEffects &&
-      getDisabledBackgroundEffects(
-        backgroundEffectOptions,
-        disabledTypeOptionsMap
-      ),
-    [disabledTypeOptionsMap, isBackgroundEffects]
-  );
-
-  // Set up dropdown options by effect type (background vs foreground)
-  const expandedPlacement = isBackgroundEffects
-    ? PLACEMENT.BOTTOM
-    : PLACEMENT.TOP;
-  const animationOptionsObject = isBackgroundEffects
-    ? backgroundEffectOptions
-    : foregroundEffectOptions;
-
-  // remove experiments if needed
-  const availableAnimationOptions = useMemo(
-    () =>
-      enableExperimentalAnimationEffects
-        ? Object.values(animationOptionsObject)
-        : Object.values(animationOptionsObject).filter(({ value }) => {
-            return experimentalEffects.indexOf(value) === -1;
-          }),
-    [animationOptionsObject, enableExperimentalAnimationEffects]
-  );
-
-  const assembledOptions = useMemo(
-    () =>
-      availableAnimationOptions?.map((option) => {
-        const isDisabled =
-          isBackgroundEffects &&
-          disabledBackgroundEffects.includes(option.value);
-        return {
-          ...option,
-          disabled: isDisabled,
-          tooltip:
-            isDisabled &&
-            disabledTypeOptionsMap[option.animation?.value]?.tooltip,
-        };
-      }),
-    [
-      availableAnimationOptions,
-      isBackgroundEffects,
-      disabledBackgroundEffects,
-      disabledTypeOptionsMap,
-    ]
-  );
-
-  const handleSelect = useCallback(
-    (event, value) => {
-      event.preventDefault();
-      if (value === NO_ANIMATION) {
-        Boolean(selectedValue) && onNoEffectSelected();
-        return;
-      }
-
-      const selectedAnimation = animationOptionsObject[value]?.animation;
-      const animationWithDynamicProps = generateDynamicProps({
-        animation: selectedAnimation,
-        disabledTypeOptionsMap,
-      });
-      onAnimationSelected({
-        animation: animationWithDynamicProps.value,
-        panDir: animationWithDynamicProps?.panDirection,
-        zoomDirection: animationWithDynamicProps?.zoomDirection,
-        flyInDir: animationWithDynamicProps?.flyInDirection,
-        rotateInDir: animationWithDynamicProps?.rotateInDirection,
-        whooshInDir: animationWithDynamicProps?.whooshInDirection,
-        scaleDirection: animationWithDynamicProps?.scaleDirection,
-      });
-    },
-    [
-      animationOptionsObject,
-      disabledTypeOptionsMap,
+const EffectChooserDropdown = forwardRef(
+  (
+    {
       onAnimationSelected,
-      selectedValue,
       onNoEffectSelected,
-    ]
-  );
+      isBackgroundEffects = false,
+      selectedEffectType,
+      disabledTypeOptionsMap,
+      direction,
+      selectButtonStylesOverride,
+      disabled = false,
+    },
+    ref
+  ) => {
+    const { enableExperimentalAnimationEffects } = useFeatures();
 
-  const innerStyleOverrides =
-    selectedValue && selectedValue !== NO_ANIMATION
-      ? styleOverrideForSelectButton
-      : focusStyle;
-  const buttonStyleOverride = css`
-    ${innerStyleOverrides}
-    ${typeof selectButtonStylesOverride !== 'undefined' &&
-    selectButtonStylesOverride}
-  `;
+    const selectedValue = useMemo(
+      () => getDirectionalEffect(selectedEffectType, direction),
+      [selectedEffectType, direction]
+    );
 
-  return (
-    <DropDown
-      ref={ref}
-      options={assembledOptions}
-      placeholder={_x('None', 'animation effect', 'web-stories')}
-      selectedValue={selectedValue}
-      ariaLabel={__('Animation: Effect Chooser', 'web-stories')}
-      menuStylesOverride={styleOverrideForAnimationEffectMenu}
-      renderItem={DropDownItem}
-      onMenuItemClick={handleSelect}
-      placement={expandedPlacement}
-      isKeepMenuOpenOnSelection
-      selectButtonStylesOverride={buttonStyleOverride}
-      disabled={disabled}
-    />
-  );
-});
+    // Determine if any background effects are disabled due to element positioning
+    const disabledBackgroundEffects = useMemo(
+      () =>
+        isBackgroundEffects &&
+        getDisabledBackgroundEffects(
+          backgroundEffectOptions,
+          disabledTypeOptionsMap
+        ),
+      [disabledTypeOptionsMap, isBackgroundEffects]
+    );
+
+    // Set up dropdown options by effect type (background vs foreground)
+    const expandedPlacement = isBackgroundEffects
+      ? PLACEMENT.BOTTOM
+      : PLACEMENT.TOP;
+    const animationOptionsObject = isBackgroundEffects
+      ? backgroundEffectOptions
+      : foregroundEffectOptions;
+
+    // remove experiments if needed
+    const availableAnimationOptions = useMemo(
+      () =>
+        enableExperimentalAnimationEffects
+          ? Object.values(animationOptionsObject)
+          : Object.values(animationOptionsObject).filter(({ value }) => {
+              return experimentalEffects.indexOf(value) === -1;
+            }),
+      [animationOptionsObject, enableExperimentalAnimationEffects]
+    );
+
+    const assembledOptions = useMemo(
+      () =>
+        availableAnimationOptions?.map((option) => {
+          const isDisabled =
+            isBackgroundEffects &&
+            disabledBackgroundEffects.includes(option.value);
+          return {
+            ...option,
+            disabled: isDisabled,
+            tooltip:
+              isDisabled &&
+              disabledTypeOptionsMap[option.animation?.value]?.tooltip,
+          };
+        }),
+      [
+        availableAnimationOptions,
+        isBackgroundEffects,
+        disabledBackgroundEffects,
+        disabledTypeOptionsMap,
+      ]
+    );
+
+    const handleSelect = useCallback(
+      (event, value) => {
+        event.preventDefault();
+        if (value === NO_ANIMATION) {
+          Boolean(selectedValue) && onNoEffectSelected();
+          return;
+        }
+
+        const selectedAnimation = animationOptionsObject[value]?.animation;
+        const animationWithDynamicProps = generateDynamicProps({
+          animation: selectedAnimation,
+          disabledTypeOptionsMap,
+        });
+        onAnimationSelected({
+          animation: animationWithDynamicProps.value,
+          panDir: animationWithDynamicProps?.panDirection,
+          zoomDirection: animationWithDynamicProps?.zoomDirection,
+          flyInDir: animationWithDynamicProps?.flyInDirection,
+          rotateInDir: animationWithDynamicProps?.rotateInDirection,
+          whooshInDir: animationWithDynamicProps?.whooshInDirection,
+          scaleDirection: animationWithDynamicProps?.scaleDirection,
+        });
+      },
+      [
+        animationOptionsObject,
+        disabledTypeOptionsMap,
+        onAnimationSelected,
+        selectedValue,
+        onNoEffectSelected,
+      ]
+    );
+
+    const innerStyleOverrides =
+      selectedValue && selectedValue !== NO_ANIMATION
+        ? styleOverrideForSelectButton
+        : focusStyle;
+    const buttonStyleOverride = css`
+      ${innerStyleOverrides}
+      ${typeof selectButtonStylesOverride !== 'undefined' &&
+      selectButtonStylesOverride}
+    `;
+
+    return (
+      <DropDown
+        ref={ref}
+        options={assembledOptions}
+        placeholder={_x('None', 'animation effect', 'web-stories')}
+        selectedValue={selectedValue}
+        ariaLabel={__('Animation: Effect Chooser', 'web-stories')}
+        menuStylesOverride={styleOverrideForAnimationEffectMenu}
+        renderItem={DropDownItem}
+        onMenuItemClick={handleSelect}
+        placement={expandedPlacement}
+        isKeepMenuOpenOnSelection
+        selectButtonStylesOverride={buttonStyleOverride}
+        disabled={disabled}
+      />
+    );
+  }
+);
 
 EffectChooserDropdown.propTypes = {
   onAnimationSelected: PropTypes.func.isRequired,

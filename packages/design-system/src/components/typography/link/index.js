@@ -69,7 +69,7 @@ ConditionalSpanWrapper.propTypes = {
   isWrapped: PropTypes.bool,
 };
 
-const Link = forwardRef(function Link({ children, ...props }, ref) {
+const Link = forwardRef(({ children, ...props }, ref) => {
   const isExternalLink = props.target === '_blank';
   return (
     <StyledAnchor ref={ref} {...props}>

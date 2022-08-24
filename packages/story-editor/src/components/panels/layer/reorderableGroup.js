@@ -34,26 +34,24 @@ const LayerSeparator = styled(ReorderableSeparator)`
   padding: ${LAYER_HEIGHT / 2}px 0;
 `;
 
-const ReorderableGroup = memo(function ReorderableGroup({
-  groupId,
-  position,
-  handleStartReordering,
-}) {
-  // This is counterintuitive but the top separator is outside of the group header.
-  const separatorGroupId = null;
-  return (
-    <Fragment key={groupId}>
-      <LayerSeparator groupId={separatorGroupId} position={position + 1} />
-      <ReorderableItem
-        position={position}
-        data={{ group: groupId }}
-        onStartReordering={handleStartReordering({ id: groupId })}
-      >
-        <Group groupId={groupId} />
-      </ReorderableItem>
-    </Fragment>
-  );
-});
+const ReorderableGroup = memo(
+  ({ groupId, position, handleStartReordering }) => {
+    // This is counterintuitive but the top separator is outside of the group header.
+    const separatorGroupId = null;
+    return (
+      <Fragment key={groupId}>
+        <LayerSeparator groupId={separatorGroupId} position={position + 1} />
+        <ReorderableItem
+          position={position}
+          data={{ group: groupId }}
+          onStartReordering={handleStartReordering({ id: groupId })}
+        >
+          <Group groupId={groupId} />
+        </ReorderableItem>
+      </Fragment>
+    );
+  }
+);
 
 ReorderableGroup.propTypes = {
   groupId: PropTypes.string.isRequired,
