@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,23 +17,10 @@
 /**
  * External dependencies
  */
-import Modal from 'react-modal';
+import { SESSION_STORAGE_PREFIX } from '@googleforcreators/design-system';
 
-/**
- * Internal dependencies
- */
-import localStore, { LOCAL_STORAGE_PREFIX } from './utils/localStore';
-import sessionStore, { SESSION_STORAGE_PREFIX } from './utils/sessionStore';
-import * as Icons from './icons';
-
-const { setAppElement } = Modal;
-
-export { Icons };
-export { localStore, LOCAL_STORAGE_PREFIX };
-export { sessionStore, SESSION_STORAGE_PREFIX };
-export * from './components';
-export * from './contexts';
-export * from './images';
-export * from './theme';
-export * from './utils';
-export { setAppElement };
+export default function getSessionStorageKey(storyId, isNew) {
+  return `${SESSION_STORAGE_PREFIX.LOCAL_AUTOSAVE_PREFIX}_${
+    isNew ? 'auto-draft' : storyId
+  }`;
+}

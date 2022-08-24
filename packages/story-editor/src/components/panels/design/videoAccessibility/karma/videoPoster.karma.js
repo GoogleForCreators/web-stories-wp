@@ -77,9 +77,7 @@ describe('Video Accessibility Panel', () => {
       expect(vaPanel.posterImage.src).toBe(originalPoster);
     });
 
-    // TODO: https://github.com/GoogleForCreators/web-stories-wp/issues/12141
-    // eslint-disable-next-line jasmine/no-disabled-tests
-    xit('should allow user to edit and reset poster image using keyboard', async () => {
+    it('should allow user to edit and reset poster image using keyboard', async () => {
       // Remember original poster image
       const originalPoster = vaPanel.posterImage.src;
 
@@ -99,7 +97,9 @@ describe('Video Accessibility Panel', () => {
       expect(vaPanel.posterMenuEdit).toBeDefined();
       await fixture.snapshot('Menu open');
 
-      // And click on edit
+      // The third option is for editing, press down and click to edit.
+      await fixture.events.keyboard.press('down');
+      await fixture.events.keyboard.press('down');
       expect(vaPanel.posterMenuEdit).toHaveFocus();
       await fixture.events.keyboard.press('Enter');
 
@@ -110,6 +110,7 @@ describe('Video Accessibility Panel', () => {
       await focusOnTitle();
       await fixture.events.keyboard.press('tab');
       await fixture.events.keyboard.press('Enter');
+      await fixture.events.keyboard.press('down');
       await fixture.events.keyboard.press('down');
       await fixture.events.keyboard.press('down');
       expect(vaPanel.posterMenuReset).toHaveFocus();
