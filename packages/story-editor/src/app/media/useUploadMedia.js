@@ -122,7 +122,7 @@ function useUploadMedia({
         onUploadStart({ resource });
       }
     }
-  }, [pending, prependMedia]);
+  }, [pending]);
 
   // Update *existing* items in the media library and on canvas.
   useEffect(() => {
