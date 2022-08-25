@@ -352,9 +352,9 @@ export interface ResourceInput {
   /** The resource's poster ID. */
   posterId?: string;
   /** Length in seconds. */
-  length: number;
+  length?: number;
   /** The formatted length, e.g. "01:17". */
-  lengthFormatted: string;
+  lengthFormatted?: string;
   /** Whether the resource has already been optimized. */
   isOptimized?: boolean;
   /** Whether the resource is muted. */
