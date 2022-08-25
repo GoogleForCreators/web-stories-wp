@@ -48,7 +48,7 @@ export default function useDropDown({ options = [], selectedValue }) {
   );
 
   const normalizedOptions = useMemo(() => {
-    if (!options || options.length == 0) {
+    if (!options.length) {
       return [];
     }
     return getOptions(options);

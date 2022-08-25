@@ -57,7 +57,7 @@ function validateCategoriesOrderBy(orderBy) {
 
 function validateOrderBy(allowedOrderByValues, orderBy) {
   if (
-    orderBy == null ||
+    orderBy === null ||
     Object.values(allowedOrderByValues).indexOf(orderBy.toLowerCase()) > -1
   ) {
     return;
@@ -66,7 +66,7 @@ function validateOrderBy(allowedOrderByValues, orderBy) {
 }
 
 function validatePageSize(pageSize) {
-  if (pageSize == null || pageSize > 0) {
+  if (pageSize === null || pageSize > 0) {
     return;
   }
   throw new Error('Invalid page_size: ' + pageSize);

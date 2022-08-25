@@ -62,11 +62,11 @@
         };
       }
       return func.apply(null, args).then(
-        function (value) {
+        (value) => {
           cleanup();
           return value;
         },
-        function (reason) {
+        (reason) => {
           cleanup();
           throw reason;
         }

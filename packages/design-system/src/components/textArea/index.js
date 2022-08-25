@@ -179,7 +179,7 @@ export const TextArea = forwardRef(
             disabled={disabled}
             ref={(input) => {
               // `ref` can either be a callback ref or a normal ref.
-              if (typeof ref == 'function') {
+              if (typeof ref === 'function') {
                 ref(input);
               } else if (ref) {
                 ref.current = input;

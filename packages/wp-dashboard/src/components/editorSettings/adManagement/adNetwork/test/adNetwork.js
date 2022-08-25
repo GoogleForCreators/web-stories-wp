@@ -26,7 +26,7 @@ import AdNetworkSettings from '..';
 import { AD_NETWORK_TYPE } from '../../../../../constants';
 import { renderWithProviders } from '../../../../../testUtils';
 
-describe('Editor Settings: Ad network settings <AdNetworkSettings />', function () {
+describe('Editor Settings: Ad network settings <AdNetworkSettings />', () => {
   let adNetwork;
   let mockUpdate;
 
@@ -41,7 +41,7 @@ describe('Editor Settings: Ad network settings <AdNetworkSettings />', function 
     adNetwork = AD_NETWORK_TYPE.NONE;
   });
 
-  it('should render ad network settings dropdown button', function () {
+  it('should render ad network settings dropdown button', () => {
     renderWithProviders(
       <AdNetworkSettings adNetwork={adNetwork} handleUpdate={mockUpdate} />
     );
