@@ -92,7 +92,6 @@ function ToolbarToggle() {
         variant={BUTTON_VARIANTS.SQUARE}
         type={BUTTON_TYPES.TERTIARY}
         size={BUTTON_SIZES.SMALL}
-        isToggled={displayFloatingMenu}
         onClick={handleToolbarVisibility}
         aria-label={__('Show element toolbar', 'web-stories')}
         isHighlighted={highlight?.showEffect}
