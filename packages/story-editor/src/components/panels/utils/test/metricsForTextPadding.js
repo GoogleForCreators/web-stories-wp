@@ -18,8 +18,8 @@
  */
 import { metricsForTextPadding } from '../metricsForTextPadding';
 
-describe('metricsForTextPadding()', function () {
-  it('should calculate metrics for new padding with no existing padding.', function () {
+describe('metricsForTextPadding()', () => {
+  it('should calculate metrics for new padding with no existing padding.', () => {
     expect(
       metricsForTextPadding({
         newPadding: { horizontal: 10, vertical: 8 },
@@ -37,7 +37,7 @@ describe('metricsForTextPadding()', function () {
     });
   });
 
-  it('should calculate metrics for shrinking (new padding is smaller than current).', function () {
+  it('should calculate metrics for shrinking (new padding is smaller than current).', () => {
     expect(
       metricsForTextPadding({
         newPadding: { horizontal: 10, vertical: 8 },
@@ -55,7 +55,7 @@ describe('metricsForTextPadding()', function () {
     });
   });
 
-  it('should calculate metrics for growing (new padding is smaller than current).', function () {
+  it('should calculate metrics for growing (new padding is smaller than current).', () => {
     expect(
       metricsForTextPadding({
         newPadding: { horizontal: 64, vertical: 28 },

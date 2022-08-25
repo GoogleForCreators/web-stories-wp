@@ -152,7 +152,7 @@ const RadioButtonLabel = styled(Text).attrs({
  * @param {boolean} props.value the value of the radio group
  * @return {Object} The radio button
  */
-export const Switch = forwardRef(function (
+export const Switch = forwardRef(function Switch(
   {
     className,
     disabled,

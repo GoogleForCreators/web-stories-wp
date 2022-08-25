@@ -15,7 +15,7 @@
  */
 
 function getCanvasBlob(canvasEl: HTMLCanvasElement): Promise<Blob | null> {
-  return new Promise(function (resolve) {
+  return new Promise((resolve) => {
     canvasEl.toBlob((blob) => {
       resolve(blob);
     }, 'image/jpeg');

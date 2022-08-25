@@ -25,8 +25,8 @@ import { createRef } from '@googleforcreators/react';
  */
 import useVirtualizedGridNavigation from '../useVirtualizedGridNavigation';
 
-describe('useVirtualizedGridNavigation()', function () {
-  it('should initially return focus booleans as false', function () {
+describe('useVirtualizedGridNavigation()', () => {
+  it('should initially return focus booleans as false', () => {
     const { result } = renderHook(
       () =>
         useVirtualizedGridNavigation({
@@ -42,7 +42,7 @@ describe('useVirtualizedGridNavigation()', function () {
     expect(result.current.isGridFocused).toBe(false);
   });
 
-  it('should update isGridFocused to true and set activeGridItemId to first index when handleGridFocus is called', function () {
+  it('should update isGridFocused to true and set activeGridItemId to first index when handleGridFocus is called', () => {
     const { result } = renderHook(
       () =>
         useVirtualizedGridNavigation({
@@ -62,7 +62,7 @@ describe('useVirtualizedGridNavigation()', function () {
     expect(result.current.isGridFocused).toBe(true);
   });
 
-  it('should update activeGridItemId when handleGridItemFocus is called', function () {
+  it('should update activeGridItemId when handleGridItemFocus is called', () => {
     const { result } = renderHook(
       () =>
         useVirtualizedGridNavigation({

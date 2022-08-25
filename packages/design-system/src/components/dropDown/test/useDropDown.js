@@ -29,14 +29,14 @@ import {
 } from '../../../testUtils/sampleData';
 import useDropDown from '../useDropDown';
 
-describe('useDropDown()', function () {
-  it('should return falsy for activeOption when no selectedValue is present', function () {
+describe('useDropDown()', () => {
+  it('should return falsy for activeOption when no selectedValue is present', () => {
     const { result } = renderHook(() => useDropDown({ options: [] }));
 
     expect(result.current.activeOption).toBeFalsy();
   });
 
-  it('should return object from options containing selectedValue as active option', function () {
+  it('should return object from options containing selectedValue as active option', () => {
     const { result } = renderHook(() =>
       useDropDown({
         selectedValue: basicDropDownOptions[2].value,
@@ -47,7 +47,7 @@ describe('useDropDown()', function () {
     expect(result.current.activeOption).toMatchObject(basicDropDownOptions[2]);
   });
 
-  it('should return falsy for activeOption when selectedValue is not present in options', function () {
+  it('should return falsy for activeOption when selectedValue is not present in options', () => {
     const { result } = renderHook(() =>
       useDropDown({
         selectedValue: 'bogus value',
@@ -58,7 +58,7 @@ describe('useDropDown()', function () {
     expect(result.current.activeOption).toBeFalsy();
   });
 
-  it('should return an empty array when no options are present', function () {
+  it('should return an empty array when no options are present', () => {
     const { result } = renderHook(() =>
       useDropDown({ selectedValue: null, options: [] })
     );
@@ -66,7 +66,7 @@ describe('useDropDown()', function () {
     expect(result.current.normalizedOptions).toStrictEqual([]);
   });
 
-  it('should return an empty array when only bad options are present', function () {
+  it('should return an empty array when only bad options are present', () => {
     const { result } = renderHook(() =>
       useDropDown({
         selectedValue: null,
@@ -81,7 +81,7 @@ describe('useDropDown()', function () {
     expect(result.current.normalizedOptions).toStrictEqual([]);
   });
 
-  it('should return only sanitized options that meet requirements', function () {
+  it('should return only sanitized options that meet requirements', () => {
     const { result } = renderHook(() =>
       useDropDown({ selectedValue: null, options: nestedDropDownOptions })
     );

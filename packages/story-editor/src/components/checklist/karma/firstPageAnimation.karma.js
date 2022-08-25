@@ -26,7 +26,7 @@ import { Fixture } from '../../../karma';
 import { DESIGN_COPY } from '../constants';
 import { useStory } from '../../../app/story';
 
-describe('firstPageAnimation', function () {
+describe('firstPageAnimation', () => {
   let fixture;
 
   beforeEach(async () => {
@@ -100,7 +100,7 @@ describe('firstPageAnimation', function () {
     return page;
   }
 
-  it('should see First Page Animation text in checklist design panel', async function () {
+  it('should see First Page Animation text in checklist design panel', async () => {
     await openCheckList();
     // open the Design tab
     await fixture.events.click(fixture.editor.checklist.designTab);

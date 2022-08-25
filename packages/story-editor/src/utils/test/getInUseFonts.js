@@ -19,12 +19,12 @@
  */
 import { getInUseFontsForPages, getTextSetsForFonts } from '../getInUseFonts';
 
-describe('getInUseFontsForPages', function () {
-  it('should return nothing for empty pages', function () {
+describe('getInUseFontsForPages', () => {
+  it('should return nothing for empty pages', () => {
     expect(getInUseFontsForPages([])).toStrictEqual([]);
   });
 
-  it('should return a list of fonts for the pages', function () {
+  it('should return a list of fonts for the pages', () => {
     expect(
       getInUseFontsForPages([
         {
@@ -38,7 +38,7 @@ describe('getInUseFontsForPages', function () {
     ).toStrictEqual(['Roboto', 'Google Sans']);
   });
 
-  it('should eliminate any duplicate fonts and list them only once', function () {
+  it('should eliminate any duplicate fonts and list them only once', () => {
     expect(
       getInUseFontsForPages([
         {
@@ -53,7 +53,7 @@ describe('getInUseFontsForPages', function () {
     ).toStrictEqual(['Roboto', 'Google Sans']);
   });
 
-  it('should eliminate any invalid data or missing font names', function () {
+  it('should eliminate any invalid data or missing font names', () => {
     expect(
       getInUseFontsForPages([
         {
@@ -69,7 +69,7 @@ describe('getInUseFontsForPages', function () {
     ).toStrictEqual(['Google Sans']);
   });
 
-  it('should return text sets for the fonts.', function () {
+  it('should return text sets for the fonts.', () => {
     expect(
       getTextSetsForFonts({
         fonts: ['Google Sans', 'Helvetica'],
@@ -85,7 +85,7 @@ describe('getInUseFontsForPages', function () {
     ]);
   });
 
-  it('should return an empty array if there are no matches.', function () {
+  it('should return an empty array if there are no matches.', () => {
     expect(
       getTextSetsForFonts({
         fonts: ['New York', 'San Francisco'],
