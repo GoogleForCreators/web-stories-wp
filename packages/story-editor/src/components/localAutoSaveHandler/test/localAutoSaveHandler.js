@@ -40,14 +40,18 @@ jest.mock('@googleforcreators/design-system', () => ({
   },
 }));
 
-function setup({ hasNewChanges = true, isNew = false, isUploading = false }) {
+function setup({
+  hasNewChanges = true,
+  status = 'auto-draft',
+  isUploading = false,
+}) {
   const historyContextValue = { state: { hasNewChanges } };
   const configValue = {
     localAutoSaveInterval: 0.1,
   };
   const storyContextValue = {
     state: {
-      story: { isNew, storyId: 1 },
+      story: { status, storyId: 1 },
       pages: [{ id: 1 }],
     },
     actions: {
@@ -77,14 +81,26 @@ describe('AutoSaveHandler', () => {
     mockSaveLocal.mockRestore();
   });
 
-  it('should trigger saving', () => {
+  it('should trigger saving for auto-draft', () => {
     setup({});
+    jest.runAllTimers();
+    expect(mockSaveLocal).toHaveBeenLastCalledWith(
+      'wp_stories_autosave_story_auto-draft',
+      {
+        pages: [{ id: 1 }],
+        story: { status: 'auto-draft', storyId: 1 },
+      }
+    );
+  });
+
+  it('should trigger saving for a saved story', () => {
+    setup({ status: 'draft' });
     jest.runAllTimers();
     expect(mockSaveLocal).toHaveBeenLastCalledWith(
       'wp_stories_autosave_story_1',
       {
         pages: [{ id: 1 }],
-        story: { isNew: false, storyId: 1 },
+        story: { status: 'draft', storyId: 1 },
       }
     );
   });
