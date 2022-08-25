@@ -186,10 +186,16 @@ function useUploadMedia({
   // It is safe to remove them from the queue now and *properly* prepend them
   // to the media library list.
   useEffect(() => {
-    for (const { id, resource } of finished) {
-      removeItem({ id });
-      prependMedia({ media: [resource] });
+    if (!finished.length) {
+      return;
     }
+
+    for (const { id } of finished) {
+      removeItem({ id });
+    }
+
+    // Update state in 1 call instead of in the above loop.
+    prependMedia({ media: finished.map(({ resource }) => resource) });
   }, [finished, removeItem, prependMedia]);
 
   // Handle *failed* items.
