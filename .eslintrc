@@ -51,6 +51,7 @@
     "no-new": "error",
     "no-new-func": "error",
     "no-new-wrappers": "error",
+    "no-multiple-empty-lines": "error",
     "no-trailing-spaces": "error",
     "header/header": [ "error", "block", [
       "",
