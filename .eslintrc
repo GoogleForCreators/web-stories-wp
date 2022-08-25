@@ -124,7 +124,12 @@
     "no-console": "error",
     "no-duplicate-imports": "error",
     "no-var": "error",
-    "prefer-arrow-callback": "error",
+    "prefer-arrow-callback": [
+      "error",
+      {
+        "allowNamedFunctions": true
+      }
+    ],
     "prefer-const": "error",
     "prefer-object-spread": "error",
     "prefer-promise-reject-errors": "error",
