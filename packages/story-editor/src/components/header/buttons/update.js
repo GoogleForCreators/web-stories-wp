@@ -114,7 +114,7 @@ function UpdateButton({ hasUpdates = false, forceIsSaving = false }) {
   const isEnabled = !isSaving && !isUploading && (hasNewChanges || hasUpdates);
 
   const isPending = 'pending' === status;
-  const isDraft = 'draft' === status || !status;
+  const isDraft = ['draft', 'auto-draft'].includes(status) || !status;
 
   if (isPending) {
     return (

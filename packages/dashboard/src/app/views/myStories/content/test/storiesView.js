@@ -109,12 +109,12 @@ const mockFilterState = {
   updateSort,
 };
 
-describe('Dashboard <StoriesView />', function () {
+describe('Dashboard <StoriesView />', () => {
   beforeEach(() => {
     mockUseStoryFilters.mockImplementation(() => mockFilterState);
   });
 
-  it(`should render stories as a grid when view is ${VIEW_STYLE.GRID}`, function () {
+  it(`should render stories as a grid when view is ${VIEW_STYLE.GRID}`, () => {
     renderWithProviders(
       <StoriesView
         storyActions={{
@@ -260,7 +260,7 @@ describe('Dashboard <StoriesView />', function () {
     beforeEach(() => {
       mockUseStoryFilters.mockImplementation(() => mockFilterState);
     });
-    it('should show a lock icon and helpful tooltip and aria text in list view when a story is being edited by another user', function () {
+    it('should show a lock icon and helpful tooltip and aria text in list view when a story is being edited by another user', () => {
       renderWithProviders(
         <StoriesView
           storyActions={{

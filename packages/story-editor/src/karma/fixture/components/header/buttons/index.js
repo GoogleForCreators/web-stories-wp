@@ -82,7 +82,8 @@ function Buttons() {
   );
 
   const isPending = 'pending' === status;
-  const isDraft = 'draft' === status || isPending || !status;
+  const isDraft =
+    ['draft', 'auto-draft'].includes(status) || isPending || !status;
   const isDraftOrPending = isDraft || isPending;
 
   return (

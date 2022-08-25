@@ -104,12 +104,12 @@ const mockFilterState = {
   updateSort,
 };
 
-describe('Dashboard <Header />', function () {
+describe('Dashboard <Header />', () => {
   beforeEach(() => {
     mockUseStoryFilters.mockImplementation(() => mockFilterState);
   });
 
-  it('should have results label that says "Viewing all stories" on initial page view', function () {
+  it('should have results label that says "Viewing all stories" on initial page view', () => {
     renderWithProviders(
       <LayoutProvider>
         <Header
@@ -130,7 +130,7 @@ describe('Dashboard <Header />', function () {
     expect(screen.getByText('Viewing all stories')).toBeInTheDocument();
   });
 
-  it('should have results label that says "Viewing drafts" when filter is set to drafts', function () {
+  it('should have results label that says "Viewing drafts" when filter is set to drafts', () => {
     mockUseStoryFilters.mockImplementation(() => ({
       ...mockFilterState,
       filters: [{ key: 'status', filterId: STORY_STATUS.DRAFT }],
@@ -155,7 +155,7 @@ describe('Dashboard <Header />', function () {
     expect(screen.getByText('Viewing drafts')).toBeInTheDocument();
   });
 
-  it('should have 3 toggle buttons, one for each status that say how many items belong to that status', function () {
+  it('should have 3 toggle buttons, one for each status that say how many items belong to that status', () => {
     renderWithProviders(
       <LayoutProvider>
         <Header
@@ -198,7 +198,7 @@ describe('Dashboard <Header />', function () {
     expect(screen.queryByText('Private')).not.toBeInTheDocument();
   });
 
-  it('should show the private tab only when there are private stories.', function () {
+  it('should show the private tab only when there are private stories.', () => {
     renderWithProviders(
       <LayoutProvider>
         <Header
@@ -239,7 +239,7 @@ describe('Dashboard <Header />', function () {
     expect(privateButton).toHaveTextContent('Private2');
   });
 
-  it('should not show the private tab even if there are private stories when the user does not have permission.', function () {
+  it('should not show the private tab even if there are private stories when the user does not have permission.', () => {
     renderWithProviders(
       <LayoutProvider>
         <Header
@@ -274,7 +274,7 @@ describe('Dashboard <Header />', function () {
     expect(screen.queryByText('Private')).not.toBeInTheDocument();
   });
 
-  it('should call the set keyword function when new text is searched', async function () {
+  it('should call the set keyword function when new text is searched', async () => {
     renderWithProviders(
       <LayoutProvider>
         <Header
@@ -303,7 +303,7 @@ describe('Dashboard <Header />', function () {
     });
   });
 
-  it('should call the set sort function when a new sort is selected', async function () {
+  it('should call the set sort function when a new sort is selected', async () => {
     renderWithProviders(
       <LayoutProvider>
         <Header

@@ -46,7 +46,7 @@ describe('Editor Settings: Shopping provider settings <ShoppingProviderDropDown 
     provider = SHOPPING_PROVIDER_TYPE.NONE;
   });
 
-  it('should render shopping provider settings dropdown button', function () {
+  it('should render shopping provider settings dropdown button', () => {
     renderWithProviders(
       <ShoppingProviderDropDown
         shoppingProvider={provider}
