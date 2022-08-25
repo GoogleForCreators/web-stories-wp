@@ -1,7 +1,53 @@
-<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path fill-rule="evenodd" clip-rule="evenodd" d="M 7,11.5 C 7,10.6716 7.67157,10 8.5,10 h 14.9996 c 0.8285,0 1.5,0.6716 1.5,1.5 v 4.91 c 0,0.8284 -0.6715,1.5 -1.5,1.5 H 8.5 C 7.67157,17.91 7,17.2384 7,16.41 Z M 8.5,11 C 8.22386,11 8,11.2239 8,11.5 v 4.91 c 0,0.2761 0.22386,0.5 0.5,0.5 h 14.9996 c 0.2762,0 0.5,-0.2239 0.5,-0.5 V 11.5 c 0,-0.2761 -0.2238,-0.5 -0.5,-0.5 z" fill="currentColor" id="path95"/><circle cx="10.25" cy="13.75" r="0.75" fill="currentColor" id="circle99" />
-    <circle cx="12.75" cy="13.75" r="0.75" fill="currentColor" id="circle101" />
-    <circle cx="15.75" cy="13.75" r="0.75" fill="currentColor" id="circle103" />
-    <circle cx="18.75" cy="13.75" r="0.75" fill="currentColor" id="circle105" />
-    <circle cx="21.75" cy="13.75" r="0.75" fill="currentColor" id="circle107" />
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="32"
+   height="32"
+   viewBox="0 0 32 32"
+   fill="none"
+   version="1.1"
+   id="svg117"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs121" />
+  <g
+     id="g17"
+     transform="translate(2e-4,2.045)">
+    <path
+       fill-rule="evenodd"
+       clip-rule="evenodd"
+       d="M 7,11.5 C 7,10.6716 7.67157,10 8.5,10 h 14.9996 c 0.8285,0 1.5,0.6716 1.5,1.5 v 4.91 c 0,0.8284 -0.6715,1.5 -1.5,1.5 H 8.5 C 7.67157,17.91 7,17.2384 7,16.41 Z M 8.5,11 C 8.22386,11 8,11.2239 8,11.5 v 4.91 c 0,0.2761 0.22386,0.5 0.5,0.5 h 14.9996 c 0.2762,0 0.5,-0.2239 0.5,-0.5 V 11.5 c 0,-0.2761 -0.2238,-0.5 -0.5,-0.5 z"
+       fill="currentColor"
+       id="path95" />
+    <circle
+       cx="10.25"
+       cy="14.04493"
+       r="0.75"
+       fill="currentColor"
+       id="circle99" />
+    <circle
+       cx="12.75"
+       cy="14.04493"
+       r="0.75"
+       fill="currentColor"
+       id="circle101" />
+    <circle
+       cx="15.75"
+       cy="14.04493"
+       r="0.75"
+       fill="currentColor"
+       id="circle103" />
+    <circle
+       cx="18.75"
+       cy="14.04493"
+       r="0.75"
+       fill="currentColor"
+       id="circle105" />
+    <circle
+       cx="21.75"
+       cy="14.04493"
+       r="0.75"
+       fill="currentColor"
+       id="circle107" />
+  </g>
 </svg>
