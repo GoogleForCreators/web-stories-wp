@@ -39,6 +39,9 @@ export default {
     'jest-canvas-mock',
     'core-js',
   ],
+  // Do not transform any node_modules except use-reduction
+  // See https://jestjs.io/docs/configuration#transformignorepatterns-arraystring
+  transformIgnorePatterns: ['/node_modules/(?!(use-reduction)/)'],
   testEnvironment: 'jsdom',
   testMatch: [
     '**/__tests__/**/*.[jt]s',
