@@ -16,7 +16,10 @@
 function prependMedia(state, { media }) {
   return {
     ...state,
-    media: [...media, ...state.media],
+    media: [
+      ...media.filter(({ id }) => !state.media.some((item) => item.id === id)),
+      ...state.media,
+    ],
   };
 }
 export default prependMedia;
