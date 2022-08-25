@@ -234,7 +234,8 @@ trait Sanitization_Utils {
 			 *
 			 * @var DOMNode $child Child node.
 			 */
-			$new_node->appendChild( $document->importNode( $child, true ) );
+
+			$new_node->appendChild( $document->importNode( $child->cloneNode( true ), true ) );
 		}
 
 		// Then, copy over all attributes.

@@ -99,6 +99,8 @@ function loadStory(storyId, post, restore, clearHistory) {
     storyId: storyId,
     title,
     status: statusFormat,
+    // @todo Temporary, check for an alternative.
+    isNew: status === 'auto-draft',
     author,
     date,
     modified,

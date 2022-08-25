@@ -115,6 +115,11 @@ You can also provide an external link in the description of the tip.
 - type: `number`
 - description: Time Interval (in seconds) after which story editor automatically saves a story by calling `saveStoryById`.
 
+### `localAutoSaveInterval`
+
+- type: `number`
+- description: Time Interval (in seconds) after which story editor automatically saves the story data into sessionStorage.
+
 ### `canViewDefaultTemplates`
 
 - type: `boolean`
