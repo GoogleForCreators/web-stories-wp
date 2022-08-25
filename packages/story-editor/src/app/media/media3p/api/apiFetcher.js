@@ -57,7 +57,7 @@ function validateCategoriesOrderBy(orderBy) {
 
 function validateOrderBy(allowedOrderByValues, orderBy) {
   if (
-    !orderBy ||
+    orderBy === null ||
     Object.values(allowedOrderByValues).indexOf(orderBy.toLowerCase()) > -1
   ) {
     return;
