@@ -122,7 +122,9 @@ function MediaPane(props) {
       return {
         hasMore,
         media,
-        uploadingMedia,
+        // If the media library is empty and we're still loading new items,
+        // do not display uploading items either for better UX.
+        uploadingMedia: !media.length && isMediaLoading ? [] : uploadingMedia,
         isMediaLoading,
         isMediaLoaded,
         mediaType,
