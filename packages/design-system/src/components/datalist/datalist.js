@@ -197,7 +197,7 @@ const Datalist = forwardRef(function Datalist(
   const DropDownSelectRef = useCallback(
     (node) => {
       // `ref` can either be a callback ref or a normal ref.
-      if (typeof ref == 'function') {
+      if (typeof ref === 'function') {
         ref(node);
       } else if (ref) {
         ref.current = node;

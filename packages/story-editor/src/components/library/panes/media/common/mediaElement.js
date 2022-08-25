@@ -134,7 +134,7 @@ function Element({
     if (!isMenuOpen) {
       if (active) {
         setShowVideoDetail(false);
-        if (mediaElement.current && hoverTimer == null) {
+        if (mediaElement.current && hoverTimer === null) {
           const timer = setTimeout(() => {
             if (activeRef.current && src) {
               mediaElement.current.play().catch(() => {});
