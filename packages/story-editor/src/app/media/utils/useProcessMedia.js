@@ -23,11 +23,6 @@ import {
   isAnimatedGif,
 } from '@googleforcreators/media';
 
-import {
-  PAGE_HEIGHT,
-  PAGE_WIDTH,
-} from '@googleforcreators/units';
-
 /**
  * Internal dependencies
  */
@@ -492,37 +487,7 @@ function useProcessMedia({
    * @param {import('@googleforcreators/media').Resource} resource Resource object.
    */
   const cropHiddenVideo = useCallback(
-    ({ id: elementId, resource: oldResource, x, y, width, height }) => {
-      // need to calc y with safeZone
-      // calculations need to be worked on here:
-      // this currently handles off stage left and top
-      let cropWidth = width - Math.abs(x);
-      let cropHeight = height - Math.abs(y);
-      let cropX = Math.abs(x);
-      let cropY = Math.abs(y);
-
-      // needs to crop from the right side
-      if (Number.isInteger(x) && x > 0) {
-        cropWidth = width;
-        if (x + width > PAGE_WIDTH) {
-          cropX = width - ((x + width) - PAGE_WIDTH);
-          console.log("offstage x", x + width - PAGE_WIDTH, "cropX", cropX);
-        } else {
-          cropX = 0;
-        }
-      }
-
-      // needs to crop from the bottom
-      if (Number.isInteger(y) && y > 0) {
-        cropHeight = height;
-        if (y + height > PAGE_HEIGHT) {
-          cropY = height - ((y + height) - PAGE_HEIGHT);
-          console.log("offstage y", ((y + height) - PAGE_HEIGHT), cropY);
-        } else {
-          cropY = 0;
-        }
-      }
-
+    ({ id: elementId, resource: oldResource, width, height }, cropParams) => {
       const { id: resourceId, src: url, mimeType } = oldResource;
       const onUploadSuccess = ({ id, resource }) => {
         copyResourceData({ oldResource, resource });
@@ -530,7 +495,10 @@ function useProcessMedia({
         deleteMediaElement({ id: oldResource.id });
         updateElementById({
           elementId,
-          properties: { width: cropWidth, height: cropHeight },
+          properties: {
+            width: cropParams.cropWidth,
+            height: cropParams.cropHeight,
+          },
         });
 
         // onUploadSuccess is also called with previousResourceId,
@@ -551,11 +519,7 @@ function useProcessMedia({
         let file = false;
         try {
           const originalFile = await fetchRemoteFile(url, mimeType);
-          file = await cropHidden(
-            originalFile,
-            { width, height },
-            { cropWidth, cropHeight, cropX, cropY }
-          );
+          file = await cropHidden(originalFile, { width, height }, cropParams);
           await file.arrayBuffer();
           await uploadMedia([file], {
             onUploadSuccess,

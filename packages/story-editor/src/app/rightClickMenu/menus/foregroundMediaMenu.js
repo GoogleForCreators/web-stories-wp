@@ -41,6 +41,7 @@ import useVideoTrim from '../../../components/videoTrim/useVideoTrim';
 import useRightClickMenu from '../useRightClickMenu';
 import useLayerSelect from '../useLayerSelect';
 import { LayerLock, LayerName, LayerUngroup } from '../items';
+import useIsPartiallyOffCanvas from '../hooks/useIsPartiallyOffCanvas';
 import {
   DEFAULT_DISPLACEMENT,
   MenuPropType,
@@ -71,11 +72,7 @@ function ForegroundMediaMenu({ parentMenuRef }) {
 
   const { hasShapeMask, removeShapeMask } = useShapeMask(selectedElement);
 
-  const isOffCanvas = true;
-  /*
-  const isOffCanvas =
-    (selectedElement && selectedElement.x < 0) || selectedElement.y < 0;
-  */
+  const { isOffCanvas } = useIsPartiallyOffCanvas(selectedElement);
 
   const canTranscodeResource = useLocalMedia(
     (value) => value.state.canTranscodeResource
