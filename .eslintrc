@@ -330,16 +330,17 @@
       "rules": {
         "no-undef": "off",
         "no-unused-vars": "off",
-        "no-var": "off"
+        "no-var": "off",
+        "@wordpress/dependency-group": "off"
       }
     },
     {
       "files": [
         "__mocks__/**/*.js",
-        "**/__tests__/**/*.js",
         "**/test/**/*.js",
+        "**/test/**/*.ts",
         "**/testUtils/**/*.js",
-        "**/?(*.)test.js",
+        "**/testUtils/**/*.ts",
         "tests/js/**/*.js"
       ],
       "excludedFiles": [

@@ -25,6 +25,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 export default {
   rootDir: '../../',
   resolver: '@web-stories-wp/jest-resolver',
+  preset: 'ts-jest',
   transform: {
     '^.+\\.[jt]sx?$': 'babel-jest',
   },
