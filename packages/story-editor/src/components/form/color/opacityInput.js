@@ -49,51 +49,52 @@ const minimalInputContainerStyleOverride = css`
   padding-right: 6px;
 `;
 
-const OpacityInput = forwardRef(
-  ({ value, onChange, isInDesignMenu, ...props }, ref) => {
-    const [inputValue, setInputValue] = useState('');
+const OpacityInput = forwardRef(function OpacityInput(
+  { value, onChange, isInDesignMenu, ...props },
+  ref
+) {
+  const [inputValue, setInputValue] = useState('');
 
-    // Allow any input, but only persist non-NaN values up-chain
-    const handleChange = useCallback(
-      (evt, val) => {
-        setInputValue(val);
-        if (!isNaN(val)) {
-          onChange(val / 100);
-        }
-      },
-      [onChange]
-    );
+  // Allow any input, but only persist non-NaN values up-chain
+  const handleChange = useCallback(
+    (evt, val) => {
+      setInputValue(val);
+      if (!isNaN(val)) {
+        onChange(val / 100);
+      }
+    },
+    [onChange]
+  );
 
-    const updateFromValue = useCallback(
-      () => setInputValue(getPreviewOpacity(value)),
-      [value]
-    );
+  const updateFromValue = useCallback(
+    () => setInputValue(getPreviewOpacity(value)),
+    [value]
+  );
 
-    useEffect(() => updateFromValue(), [updateFromValue, value]);
+  useEffect(() => updateFromValue(), [updateFromValue, value]);
 
-    const containerStyle = isInDesignMenu
-      ? minimalInputContainerStyleOverride
-      : inputContainerStyleOverride;
+  const containerStyle = isInDesignMenu
+    ? minimalInputContainerStyleOverride
+    : inputContainerStyleOverride;
 
-    return (
-      <Input
-        ref={ref}
-        aria-label={__('Opacity', 'web-stories')}
-        onChange={handleChange}
-        value={inputValue}
-        unit={_x('%', 'Percentage', 'web-stories')}
-        suffix={<Icons.ColorDrop />}
-        min={0}
-        max={100}
-        allowEmpty={false}
-        isFloat={false}
-        containerStyleOverride={containerStyle}
-        id={uuidv4()}
-        {...props}
-      />
-    );
-  }
-);
+  return (
+    <Input
+      ref={ref}
+      aria-label={__('Opacity', 'web-stories')}
+      onChange={handleChange}
+      value={inputValue}
+      unit={_x('%', 'Percentage', 'web-stories')}
+      suffix={<Icons.ColorDrop />}
+      min={0}
+      max={100}
+      allowEmpty={false}
+      isFloat={false}
+      containerStyleOverride={containerStyle}
+      id={uuidv4()}
+      {...props}
+    />
+  );
+});
 
 OpacityInput.propTypes = {
   value: PropTypes.oneOfType([PatternPropType, PropTypes.string]),

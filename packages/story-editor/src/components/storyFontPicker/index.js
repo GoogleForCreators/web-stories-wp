@@ -33,7 +33,7 @@ import { getCommonValue } from '../panels/shared';
 import FontPicker from '../fontPicker';
 import updateProperties from '../style/updateProperties';
 
-const StoryFontPicker = forwardRef(({ ...rest }, ref) => {
+const StoryFontPicker = forwardRef(function StoryFontPicker({ ...rest }, ref) {
   const { updateSelectedElements, selectedElements } = useStory(
     ({ state, actions }) => ({
       updateSelectedElements: actions.updateSelectedElements,

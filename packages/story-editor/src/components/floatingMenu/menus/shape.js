@@ -33,7 +33,7 @@ import {
   Dismiss,
 } from '../elements';
 
-const FloatingShapeMenu = memo(() => {
+const FloatingShapeMenu = memo(function FloatingShapeMenu() {
   return (
     <>
       <ShapeColor />

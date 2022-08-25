@@ -87,136 +87,134 @@ const EyeDropperButton = styled(Button).attrs({
 
 const DEFAULT_CONTAINER_LABEL_BASE = __('Color input', 'web-stories');
 
-const Color = forwardRef(
-  (
-    {
-      onChange,
-      allowsGradient = false,
-      allowsOpacity = true,
-      allowsSavedColors = false,
-      value = null,
-      label = null,
-      containerLabelBase = DEFAULT_CONTAINER_LABEL_BASE,
-      changedStyle = null,
-      hasEyedropper = false,
-      pickerHasEyedropper = true,
-      maxHeight = null,
-      shouldCloseOnSelection = false,
-      allowsSavedColorDeletion = true,
-      pickerPlacement = PLACEMENT.RIGHT_START,
-      isInDesignMenu = false,
-      hasInputs = true,
-      width,
-      tabIndex,
-      opacityFocusTrap,
-      colorFocusTrap,
-    },
-    ref
-  ) => {
-    const handleOpacityChange = useCallback(
-      (newOpacity) => onChange(applyOpacityChange(value, newOpacity)),
-      [value, onChange]
-    );
+const Color = forwardRef(function Color(
+  {
+    onChange,
+    allowsGradient = false,
+    allowsOpacity = true,
+    allowsSavedColors = false,
+    value = null,
+    label = null,
+    containerLabelBase = DEFAULT_CONTAINER_LABEL_BASE,
+    changedStyle = null,
+    hasEyedropper = false,
+    pickerHasEyedropper = true,
+    maxHeight = null,
+    shouldCloseOnSelection = false,
+    allowsSavedColorDeletion = true,
+    pickerPlacement = PLACEMENT.RIGHT_START,
+    isInDesignMenu = false,
+    hasInputs = true,
+    width,
+    tabIndex,
+    opacityFocusTrap,
+    colorFocusTrap,
+  },
+  ref
+) {
+  const handleOpacityChange = useCallback(
+    (newOpacity) => onChange(applyOpacityChange(value, newOpacity)),
+    [value, onChange]
+  );
 
-    const containerLabel = sprintf(
-      /* translators: 1: the input section in the editor. 2: color input label name. */
-      __('%1$s: %2$s', 'web-stories'),
-      containerLabelBase,
-      label
-    );
+  const containerLabel = sprintf(
+    /* translators: 1: the input section in the editor. 2: color input label name. */
+    __('%1$s: %2$s', 'web-stories'),
+    containerLabelBase,
+    label
+  );
 
-    const displayOpacity =
-      value !== MULTIPLE_VALUE && Boolean(getPreviewText(value)) && hasInputs;
+  const displayOpacity =
+    value !== MULTIPLE_VALUE && Boolean(getPreviewText(value)) && hasInputs;
 
-    const { initEyedropper } = useEyedropper({
-      onChange: useCallback((color) => onChange({ color }), [onChange]),
-    });
+  const { initEyedropper } = useEyedropper({
+    onChange: useCallback((color) => onChange({ color }), [onChange]),
+  });
 
-    const tooltip = __('Pick a color from canvas', 'web-stories');
+  const tooltip = __('Pick a color from canvas', 'web-stories');
 
-    const tooltipPlacement =
-      isInDesignMenu || hasEyedropper
-        ? TOOLTIP_PLACEMENT.BOTTOM
-        : TOOLTIP_PLACEMENT.BOTTOM_START;
+  const tooltipPlacement =
+    isInDesignMenu || hasEyedropper
+      ? TOOLTIP_PLACEMENT.BOTTOM
+      : TOOLTIP_PLACEMENT.BOTTOM_START;
 
-    // Sometimes there's more than 1 color to an element.
-    // When there's multiple colors the input displays "Mixed" (in english) and takes up a different amount of space.
-    // By checking here to ignore that value based on mixed colors we prevent visual spill over of content.
-    const ignoreSetWidth = width && value === MULTIPLE_VALUE;
+  // Sometimes there's more than 1 color to an element.
+  // When there's multiple colors the input displays "Mixed" (in english) and takes up a different amount of space.
+  // By checking here to ignore that value based on mixed colors we prevent visual spill over of content.
+  const ignoreSetWidth = width && value === MULTIPLE_VALUE;
 
-    return (
-      <Container
-        aria-label={containerLabel}
-        isInDesignMenu={isInDesignMenu}
-        width={!ignoreSetWidth && width ? width : null}
-      >
-        {hasEyedropper && (
-          <Tooltip
-            title={tooltip}
-            hasTail
-            placement={
-              isInDesignMenu
-                ? TOOLTIP_PLACEMENT.BOTTOM
-                : TOOLTIP_PLACEMENT.BOTTOM_START
-            }
+  return (
+    <Container
+      aria-label={containerLabel}
+      isInDesignMenu={isInDesignMenu}
+      width={!ignoreSetWidth && width ? width : null}
+    >
+      {hasEyedropper && (
+        <Tooltip
+          title={tooltip}
+          hasTail
+          placement={
+            isInDesignMenu
+              ? TOOLTIP_PLACEMENT.BOTTOM
+              : TOOLTIP_PLACEMENT.BOTTOM_START
+          }
+        >
+          <EyeDropperButton
+            id={uuidv4()}
+            tabIndex={tabIndex}
+            aria-label={tooltip}
+            onClick={initEyedropper()}
+            onPointerEnter={initEyedropper(false)}
           >
-            <EyeDropperButton
-              id={uuidv4()}
-              tabIndex={tabIndex}
-              aria-label={tooltip}
-              onClick={initEyedropper()}
-              onPointerEnter={initEyedropper(false)}
-            >
-              <Icons.Pipette />
-            </EyeDropperButton>
-          </Tooltip>
-        )}
+            <Icons.Pipette />
+          </EyeDropperButton>
+        </Tooltip>
+      )}
 
-        <ColorInputsWrapper isInDesignMenu={isInDesignMenu}>
-          <InputWrapper hasInputs={hasInputs}>
-            <ColorInput
-              ref={ref}
-              tabIndex={tabIndex}
-              onChange={onChange}
-              value={value}
-              label={label}
-              changedStyle={changedStyle}
-              pickerPlacement={pickerPlacement}
-              hasInputs={hasInputs}
+      <ColorInputsWrapper isInDesignMenu={isInDesignMenu}>
+        <InputWrapper hasInputs={hasInputs}>
+          <ColorInput
+            ref={ref}
+            tabIndex={tabIndex}
+            onChange={onChange}
+            value={value}
+            label={label}
+            changedStyle={changedStyle}
+            pickerPlacement={pickerPlacement}
+            hasInputs={hasInputs}
+            isInDesignMenu={isInDesignMenu}
+            spacing={
+              isInDesignMenu ? SPACING.FLOATING_MENU : SPACING.DEFAULT_SIDEBAR
+            }
+            tooltipPlacement={tooltipPlacement}
+            colorFocusTrap={colorFocusTrap}
+            pickerProps={{
+              allowsGradient,
+              allowsOpacity,
+              allowsSavedColors,
+              hasEyedropper: pickerHasEyedropper,
+              allowsSavedColorDeletion,
+              maxHeight,
+              shouldCloseOnSelection,
+            }}
+          />
+        </InputWrapper>
+        {allowsOpacity && displayOpacity && (
+          <>
+            <Space />
+            <ActiveOpacity
+              handleOpacityChange={handleOpacityChange}
               isInDesignMenu={isInDesignMenu}
-              spacing={
-                isInDesignMenu ? SPACING.FLOATING_MENU : SPACING.DEFAULT_SIDEBAR
-              }
-              tooltipPlacement={tooltipPlacement}
-              colorFocusTrap={colorFocusTrap}
-              pickerProps={{
-                allowsGradient,
-                allowsOpacity,
-                allowsSavedColors,
-                hasEyedropper: pickerHasEyedropper,
-                allowsSavedColorDeletion,
-                maxHeight,
-                shouldCloseOnSelection,
-              }}
+              opacityFocusTrap={opacityFocusTrap}
+              tabIndex={tabIndex}
+              value={value}
             />
-          </InputWrapper>
-          {allowsOpacity && displayOpacity && (
-            <>
-              <Space />
-              <ActiveOpacity
-                handleOpacityChange={handleOpacityChange}
-                isInDesignMenu={isInDesignMenu}
-                opacityFocusTrap={opacityFocusTrap}
-                tabIndex={tabIndex}
-                value={value}
-              />
-            </>
-          )}
-        </ColorInputsWrapper>
-      </Container>
-    );
-  }
-);
+          </>
+        )}
+      </ColorInputsWrapper>
+    </Container>
+  );
+});
 
 Color.propTypes = {
   value: PropTypes.oneOfType([PatternPropType, PropTypes.string]),

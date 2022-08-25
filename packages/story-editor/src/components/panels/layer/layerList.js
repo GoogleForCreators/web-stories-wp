@@ -55,37 +55,35 @@ const LayerSeparator = styled(ReorderableSeparator)`
   padding: ${LAYER_HEIGHT / 2}px 0;
 `;
 
-const ReorderableLayer = memo(
-  ({
-    id,
-    position,
-    nestedOffset,
-    nestedOffsetCalcFunc,
-    handleStartReordering,
-  }) => {
-    const element = useStory(({ state }) =>
-      state.currentPage?.elements.find((el) => el.id === id)
-    );
-    return element ? (
-      <Fragment key={id}>
-        <LayerSeparator
-          groupId={element.groupId}
-          nestedOffset={Boolean(nestedOffset)}
-          nestedOffsetCalcFunc={nestedOffsetCalcFunc}
-          position={position + 1}
-          isNested={element.groupId}
-        />
-        <ReorderableItem
-          position={position}
-          onStartReordering={handleStartReordering(element)}
-          disabled={element.isBackground}
-        >
-          <Layer element={element} />
-        </ReorderableItem>
-      </Fragment>
-    ) : null;
-  }
-);
+const ReorderableLayer = memo(function ReorderableLayer({
+  id,
+  position,
+  nestedOffset,
+  nestedOffsetCalcFunc,
+  handleStartReordering,
+}) {
+  const element = useStory(({ state }) =>
+    state.currentPage?.elements.find((el) => el.id === id)
+  );
+  return element ? (
+    <Fragment key={id}>
+      <LayerSeparator
+        groupId={element.groupId}
+        nestedOffset={Boolean(nestedOffset)}
+        nestedOffsetCalcFunc={nestedOffsetCalcFunc}
+        position={position + 1}
+        isNested={element.groupId}
+      />
+      <ReorderableItem
+        position={position}
+        onStartReordering={handleStartReordering(element)}
+        disabled={element.isBackground}
+      >
+        <Layer element={element} />
+      </ReorderableItem>
+    </Fragment>
+  ) : null;
+});
 
 ReorderableLayer.propTypes = {
   id: PropTypes.string.isRequired,

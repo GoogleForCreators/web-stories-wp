@@ -29,7 +29,7 @@ const Button = styled(ContextMenuComponents.MenuButton)`
   letter-spacing: normal;
 `;
 
-const TextButton = memo(({ text, ...rest }) => {
+const TextButton = memo(function TextButton({ text, ...rest }) {
   return (
     <Button forcePadding title={text} {...rest} tabIndex={-1}>
       {text}

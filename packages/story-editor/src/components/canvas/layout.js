@@ -152,7 +152,7 @@ const PageTitleContainer = styled(Area).attrs({
   align-items: center;
 `;
 
-const Layer = forwardRef(({ children, ...rest }, ref) => {
+const Layer = forwardRef(function Layer({ children, ...rest }, ref) {
   const footerHeight = useFooterHeight();
   return (
     <LayerGrid ref={ref} footerHeight={footerHeight} {...rest}>
@@ -368,108 +368,106 @@ function useLayoutParamsCssVars() {
   };
 }
 
-const PageArea = forwardRef(
-  (
-    {
-      children,
-      fullbleedRef: _fullbleedRef = null,
-      fullBleedContainerLabel = __('Fullbleed area', 'web-stories'),
-      overlay = [],
-      background,
-      isControlled = false,
-      className = '',
-      showOverflow = false,
-      isBackgroundSelected = false,
-      pageAreaRef = createRef(),
-      withSafezone = true,
-      ...rest
-    },
-    ref
-  ) => {
-    const internalFullblledRef = useRef();
-    const fullbleedRef = _fullbleedRef || internalFullblledRef;
-    const {
-      hasVerticalOverflow,
-      hasHorizontalOverflow,
-      zoomSetting,
-      scrollLeft,
-      scrollTop,
-    } = useLayout(
-      ({
-        state: {
-          hasVerticalOverflow,
-          hasHorizontalOverflow,
-          zoomSetting,
-          scrollLeft,
-          scrollTop,
-        },
-      }) => ({
+const PageArea = forwardRef(function PageArea(
+  {
+    children,
+    fullbleedRef: _fullbleedRef = null,
+    fullBleedContainerLabel = __('Fullbleed area', 'web-stories'),
+    overlay = [],
+    background,
+    isControlled = false,
+    className = '',
+    showOverflow = false,
+    isBackgroundSelected = false,
+    pageAreaRef = createRef(),
+    withSafezone = true,
+    ...rest
+  },
+  ref
+) {
+  const internalFullblledRef = useRef();
+  const fullbleedRef = _fullbleedRef || internalFullblledRef;
+  const {
+    hasVerticalOverflow,
+    hasHorizontalOverflow,
+    zoomSetting,
+    scrollLeft,
+    scrollTop,
+  } = useLayout(
+    ({
+      state: {
         hasVerticalOverflow,
         hasHorizontalOverflow,
         zoomSetting,
         scrollLeft,
         scrollTop,
-      })
-    );
+      },
+    }) => ({
+      hasVerticalOverflow,
+      hasHorizontalOverflow,
+      zoomSetting,
+      scrollLeft,
+      scrollTop,
+    })
+  );
 
-    // We need to ref scroll, because scroll changes should not update a non-controlled layer
-    const scroll = useRef();
-    scroll.current = { top: scrollTop, left: scrollLeft };
-    // If zoom setting changes for a non-controlled layer, make sure to reset actual scroll inside container
-    useEffect(() => {
-      if (!isControlled) {
-        fullbleedRef.current.scrollTop = scroll.current.top;
-        fullbleedRef.current.scrollLeft = scroll.current.left;
-      }
-    }, [isControlled, zoomSetting, fullbleedRef]);
+  // We need to ref scroll, because scroll changes should not update a non-controlled layer
+  const scroll = useRef();
+  scroll.current = { top: scrollTop, left: scrollLeft };
+  // If zoom setting changes for a non-controlled layer, make sure to reset actual scroll inside container
+  useEffect(() => {
+    if (!isControlled) {
+      fullbleedRef.current.scrollTop = scroll.current.top;
+      fullbleedRef.current.scrollLeft = scroll.current.left;
+    }
+  }, [isControlled, zoomSetting, fullbleedRef]);
 
-    const paddedRef = useRef(null);
-    usePinchToZoom({ containerRef: paddedRef });
+  const paddedRef = useRef(null);
+  usePinchToZoom({ containerRef: paddedRef });
 
-    return (
-      <PageAreaContainer
-        showOverflow={showOverflow}
-        isControlled={isControlled}
+  return (
+    <PageAreaContainer
+      showOverflow={showOverflow}
+      isControlled={isControlled}
+      hasHorizontalOverflow={hasHorizontalOverflow}
+      hasVerticalOverflow={hasVerticalOverflow}
+      className={className}
+      data-scroll-container
+      {...rest}
+    >
+      <PageClip
         hasHorizontalOverflow={hasHorizontalOverflow}
         hasVerticalOverflow={hasVerticalOverflow}
-        className={className}
-        data-scroll-container
-        {...rest}
       >
-        <PageClip
-          hasHorizontalOverflow={hasHorizontalOverflow}
-          hasVerticalOverflow={hasVerticalOverflow}
-        >
-          <PaddedPage ref={paddedRef}>
-            <FullbleedContainer
-              aria-label={fullBleedContainerLabel}
-              role="region"
-              ref={fullbleedRef}
-              data-testid="fullbleed"
-              background={background}
-              isControlled={isControlled}
-              isBackgroundSelected={isBackgroundSelected}
+        <PaddedPage ref={paddedRef}>
+          <FullbleedContainer
+            aria-label={fullBleedContainerLabel}
+            role="region"
+            ref={fullbleedRef}
+            data-testid="fullbleed"
+            background={background}
+            isControlled={isControlled}
+            isBackgroundSelected={isBackgroundSelected}
+          >
+            <PageAreaWithoutOverflow
+              ref={pageAreaRef}
+              showOverflow={showOverflow}
             >
-              <PageAreaWithoutOverflow
-                ref={pageAreaRef}
-                showOverflow={showOverflow}
-              >
-                {withSafezone ? (
-                  <PageAreaSafeZone ref={ref} data-testid="safezone">
-                    {children}
-                  </PageAreaSafeZone>
-                ) : (
-                  children
-                )}
-                {overlay}
-              </PageAreaWithoutOverflow>
-            </FullbleedContainer>
-          </PaddedPage>
-        </PageClip>
-      </PageAreaContainer>
-    );
-  }
-);
+              {withSafezone ? (
+                <PageAreaSafeZone ref={ref} data-testid="safezone">
+                  {children}
+                </PageAreaSafeZone>
+              ) : (
+                children
+              )}
+              {overlay}
+            </PageAreaWithoutOverflow>
+          </FullbleedContainer>
+        </PaddedPage>
+      </PageClip>
+    </PageAreaContainer>
+  );
+});
 
 PageArea.propTypes = {
   children: PropTypes.node,

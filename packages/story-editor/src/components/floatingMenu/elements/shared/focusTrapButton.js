@@ -78,40 +78,41 @@ export const handleReturnTrappedFocus = (e, buttonRef) => {
  * @param {Node} props.children children within wrapper
  */
 
-const FocusTrapButton = forwardRef(
-  ({ inputRef, inputLabel, children, styleOverride }, ref) => {
-    return (
-      <_FocusTrapButton
-        id={uuidv4()}
-        tabIndex={-1}
-        ref={ref}
-        onClick={(e) => {
-          e.stopPropagation();
-          inputRef.current.focus();
-        }}
-        onBlur={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-        }}
-        onKeyDown={(e) => {
-          e.preventDefault();
+const FocusTrapButton = forwardRef(function FocusTrapButton(
+  { inputRef, inputLabel, children, styleOverride },
+  ref
+) {
+  return (
+    <_FocusTrapButton
+      id={uuidv4()}
+      tabIndex={-1}
+      ref={ref}
+      onClick={(e) => {
+        e.stopPropagation();
+        inputRef.current.focus();
+      }}
+      onBlur={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+      }}
+      onKeyDown={(e) => {
+        e.preventDefault();
 
-          if (e.key === 'Enter') {
-            inputRef.current.focus();
-          }
-        }}
-        aria-label={sprintf(
-          /* translators: %s: input label that is accessible by pressing Enter */
-          __('Press Enter to edit %s', 'web-stories'),
-          inputLabel
-        )}
-        styleOverride={styleOverride}
-      >
-        {children}
-      </_FocusTrapButton>
-    );
-  }
-);
+        if (e.key === 'Enter') {
+          inputRef.current.focus();
+        }
+      }}
+      aria-label={sprintf(
+        /* translators: %s: input label that is accessible by pressing Enter */
+        __('Press Enter to edit %s', 'web-stories'),
+        inputLabel
+      )}
+      styleOverride={styleOverride}
+    >
+      {children}
+    </_FocusTrapButton>
+  );
+});
 
 export default FocusTrapButton;
 

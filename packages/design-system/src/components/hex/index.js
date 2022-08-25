@@ -34,91 +34,92 @@ import { getHexFromValue, getPreviewText } from '@googleforcreators/patterns';
 import { useKeyDownEffect } from '../keyboard';
 import { InputPropTypes, Input } from '../input';
 
-export const HexInput = forwardRef(
-  ({ value, placeholder, onChange, ...rest }, ref) => {
-    const [inputValue, setInputValue] = useState('');
+export const HexInput = forwardRef(function Hex(
+  { value, placeholder, onChange, ...rest },
+  ref
+) {
+  const [inputValue, setInputValue] = useState('');
 
-    const inputRef = useRef(null);
-    const skipValidationRef = useRef(false);
+  const inputRef = useRef(null);
+  const skipValidationRef = useRef(false);
 
-    const previewText = getPreviewText(value);
-    useEffect(() => setInputValue(previewText), [previewText]);
+  const previewText = getPreviewText(value);
+  useEffect(() => setInputValue(previewText), [previewText]);
 
-    const handleInputChange = useCallback((evt) => {
-      // Trim and strip initial '#' (might very well be pasted in)
-      const val = evt.target.value.trim().replace(/^#/, '');
-      setInputValue(val);
-    }, []);
+  const handleInputChange = useCallback((evt) => {
+    // Trim and strip initial '#' (might very well be pasted in)
+    const val = evt.target.value.trim().replace(/^#/, '');
+    setInputValue(val);
+  }, []);
 
-    const validateAndSubmitInput = useCallback(() => {
-      const hex = getHexFromValue(inputValue) ?? previewText;
-      setInputValue(hex);
+  const validateAndSubmitInput = useCallback(() => {
+    const hex = getHexFromValue(inputValue) ?? previewText;
+    setInputValue(hex);
 
-      // Only trigger onChange when hex has been changed
-      if (hex !== previewText) {
-        // Update actual color, which will in turn update hex input from value
-        const { red: r, green: g, blue: b } = parseToRgb(`#${hex}`);
+    // Only trigger onChange when hex has been changed
+    if (hex !== previewText) {
+      // Update actual color, which will in turn update hex input from value
+      const { red: r, green: g, blue: b } = parseToRgb(`#${hex}`);
 
-        // Keep same opacity as before though. In case of mixed values, set to default (1).
-        const a = value.color.a;
-        onChange({ color: { r, g, b, a } });
-      }
-    }, [inputValue, previewText, onChange, value]);
+      // Keep same opacity as before though. In case of mixed values, set to default (1).
+      const a = value.color.a;
+      onChange({ color: { r, g, b, a } });
+    }
+  }, [inputValue, previewText, onChange, value]);
 
-    const handleEnter = useCallback(() => {
+  const handleEnter = useCallback(() => {
+    validateAndSubmitInput();
+  }, [validateAndSubmitInput]);
+
+  const handleInputBlur = useCallback(() => {
+    if (!skipValidationRef.current) {
       validateAndSubmitInput();
-    }, [validateAndSubmitInput]);
+    }
 
-    const handleInputBlur = useCallback(() => {
-      if (!skipValidationRef.current) {
-        validateAndSubmitInput();
-      }
+    // Reset flag after use
+    skipValidationRef.current = false;
+  }, [validateAndSubmitInput]);
 
-      // Reset flag after use
-      skipValidationRef.current = false;
-    }, [validateAndSubmitInput]);
+  const handleEsc = useCallback(() => {
+    // Revert input value and exit input focus without
+    // triggering blur validation
+    setInputValue(previewText);
+    skipValidationRef.current = true;
+    const availableRef = ref?.current ? ref : inputRef;
+    availableRef.current.blur();
+  }, [previewText, ref]);
 
-    const handleEsc = useCallback(() => {
-      // Revert input value and exit input focus without
-      // triggering blur validation
-      setInputValue(previewText);
-      skipValidationRef.current = true;
-      const availableRef = ref?.current ? ref : inputRef;
-      availableRef.current.blur();
-    }, [previewText, ref]);
+  useKeyDownEffect(
+    inputRef,
+    {
+      key: ['escape'],
+      editable: true,
+    },
+    handleEsc,
+    [handleEsc]
+  );
 
-    useKeyDownEffect(
-      inputRef,
-      {
-        key: ['escape'],
-        editable: true,
-      },
-      handleEsc,
-      [handleEsc]
-    );
+  useKeyDownEffect(
+    inputRef,
+    {
+      key: ['enter'],
+      editable: true,
+    },
+    handleEnter,
+    [handleEnter]
+  );
 
-    useKeyDownEffect(
-      inputRef,
-      {
-        key: ['enter'],
-        editable: true,
-      },
-      handleEnter,
-      [handleEnter]
-    );
-
-    return (
-      <Input
-        ref={ref || inputRef}
-        value={inputValue || ''}
-        onChange={handleInputChange}
-        onBlur={handleInputBlur}
-        placeholder={placeholder}
-        {...rest}
-      />
-    );
-  }
-);
+  return (
+    <Input
+      ref={ref || inputRef}
+      value={inputValue || ''}
+      onChange={handleInputChange}
+      onBlur={handleInputBlur}
+      placeholder={placeholder}
+      {...rest}
+    />
+  );
+});
 
 HexInput.propTypes = {
   ...InputPropTypes,

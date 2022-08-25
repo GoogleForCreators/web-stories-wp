@@ -47,7 +47,10 @@ const Label = styled(Headline).attrs({
   font-weight: ${({ theme }) => theme.typography.weight.regular};
 `;
 
-export const TopNavigation = forwardRef(({ onClose, label, popupId }, ref) => {
+export const TopNavigation = forwardRef(function TopNavigation(
+  { onClose, label, popupId },
+  ref
+) {
   return (
     <NavBar>
       <Label>{label}</Label>

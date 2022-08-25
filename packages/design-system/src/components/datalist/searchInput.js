@@ -113,59 +113,57 @@ const Input = styled.input.attrs({
 
 const MAX_INPUT_SIZE = 35;
 
-const SearchInput = forwardRef(
-  (
-    {
-      isExpanded,
-      onClose,
-      value,
-      onChange,
-      focusFontListFirstOption = noop,
-      placeholder = __('Search', 'web-stories'),
-      ...rest
+const SearchInput = forwardRef(function SearchInput(
+  {
+    isExpanded,
+    onClose,
+    value,
+    onChange,
+    focusFontListFirstOption = noop,
+    placeholder = __('Search', 'web-stories'),
+    ...rest
+  },
+  ref
+) {
+  const handleKeyPress = useCallback(
+    (evt) => {
+      evt.stopPropagation();
+
+      const { key } = evt;
+
+      if (key === 'Escape') {
+        onClose();
+      } else if (key === 'ArrowDown') {
+        focusFontListFirstOption();
+      }
     },
-    ref
-  ) => {
-    const handleKeyPress = useCallback(
-      (evt) => {
-        evt.stopPropagation();
+    [onClose, focusFontListFirstOption]
+  );
 
-        const { key } = evt;
-
-        if (key === 'Escape') {
-          onClose();
-        } else if (key === 'ArrowDown') {
-          focusFontListFirstOption();
-        }
-      },
-      [onClose, focusFontListFirstOption]
-    );
-
-    return (
-      <SearchContainer>
-        <Input
-          ref={ref}
-          aria-expanded={isExpanded}
-          value={value}
-          onKeyDown={handleKeyPress}
-          placeholder={placeholder}
-          size={Math.min(placeholder.length, MAX_INPUT_SIZE)}
-          onChange={onChange}
-          aria-label={__('Search', 'web-stories')}
-          {...rest}
-        />
-        <SearchIconContainer>
-          <Magnifier />
-        </SearchIconContainer>
-        {value.trim().length > 0 && (
-          <ClearButton onClick={() => onChange({ target: { value: '' } })}>
-            <Cross />
-          </ClearButton>
-        )}
-      </SearchContainer>
-    );
-  }
-);
+  return (
+    <SearchContainer>
+      <Input
+        ref={ref}
+        aria-expanded={isExpanded}
+        value={value}
+        onKeyDown={handleKeyPress}
+        placeholder={placeholder}
+        size={Math.min(placeholder.length, MAX_INPUT_SIZE)}
+        onChange={onChange}
+        aria-label={__('Search', 'web-stories')}
+        {...rest}
+      />
+      <SearchIconContainer>
+        <Magnifier />
+      </SearchIconContainer>
+      {value.trim().length > 0 && (
+        <ClearButton onClick={() => onChange({ target: { value: '' } })}>
+          <Cross />
+        </ClearButton>
+      )}
+    </SearchContainer>
+  );
+});
 
 SearchInput.propTypes = {
   value: PropTypes.string,

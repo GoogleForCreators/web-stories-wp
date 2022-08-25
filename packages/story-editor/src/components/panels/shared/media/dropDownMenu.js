@@ -74,64 +74,65 @@ const ActiveIcon = styled(Icons.CheckmarkSmall)`
   transform: translateY(-50%);
 `;
 
-const CustomItemRenderer = forwardRef(
-  ({ option, isSelected, ...rest }, ref) => {
-    const { MediaUpload } = useConfig();
+const CustomItemRenderer = forwardRef(function CustomItemRenderer(
+  { option, isSelected, ...rest },
+  ref
+) {
+  const { MediaUpload } = useConfig();
 
-    if (option.mediaPickerProps) {
-      return (
-        <MediaUpload
-          {...option.mediaPickerProps}
-          render={(open) => (
-            <DefaultListItemInner
-              {...rest}
-              ref={ref}
-              isSelected={isSelected}
-              disabled={option.disabled}
-              aria-disabled={option.disabled}
-              onClick={(evt) => {
-                rest.onClick?.(evt);
-                open(evt);
-              }}
-            >
-              <DefaultListItemLabelDisplayText
-                forwardedAs="span"
-                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-              >
-                {option.label}
-              </DefaultListItemLabelDisplayText>
-            </DefaultListItemInner>
-          )}
-        />
-      );
-    }
-
+  if (option.mediaPickerProps) {
     return (
-      <DefaultListItemInner
-        {...rest}
-        ref={ref}
-        isSelected={isSelected}
-        disabled={option.disabled}
-        aria-disabled={option.disabled}
-      >
-        {isSelected && (
-          <ActiveIcon
-            data-testid={'dropdownMenuItem_active_icon'}
-            aria-label={__('Selected', 'web-stories')}
-            width={32}
-            height={32}
-          />
+      <MediaUpload
+        {...option.mediaPickerProps}
+        render={(open) => (
+          <DefaultListItemInner
+            {...rest}
+            ref={ref}
+            isSelected={isSelected}
+            disabled={option.disabled}
+            aria-disabled={option.disabled}
+            onClick={(evt) => {
+              rest.onClick?.(evt);
+              open(evt);
+            }}
+          >
+            <DefaultListItemLabelDisplayText
+              forwardedAs="span"
+              size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+            >
+              {option.label}
+            </DefaultListItemLabelDisplayText>
+          </DefaultListItemInner>
         )}
-        <DefaultListItemLabelDisplayText
-          forwardedAs="span"
-          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-        >
-          {option.label}
-        </DefaultListItemLabelDisplayText>
-      </DefaultListItemInner>
+      />
     );
   }
-);
+
+  return (
+    <DefaultListItemInner
+      {...rest}
+      ref={ref}
+      isSelected={isSelected}
+      disabled={option.disabled}
+      aria-disabled={option.disabled}
+    >
+      {isSelected && (
+        <ActiveIcon
+          data-testid={'dropdownMenuItem_active_icon'}
+          aria-label={__('Selected', 'web-stories')}
+          width={32}
+          height={32}
+        />
+      )}
+      <DefaultListItemLabelDisplayText
+        forwardedAs="span"
+        size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+      >
+        {option.label}
+      </DefaultListItemLabelDisplayText>
+    </DefaultListItemInner>
+  );
+});
 
 CustomItemRenderer.propTypes = {
   option: DROP_DOWN_ITEM,

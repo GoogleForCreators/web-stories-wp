@@ -32,7 +32,7 @@ const StyledDropDown = styled(ProductDropdown)`
   width: 240px;
 `;
 
-const FloatingProductMenu = memo(() => {
+const FloatingProductMenu = memo(function FloatingProductMenu() {
   const { selectedElement, updateSelectedElements, deleteSelectedElements } =
     useStory(({ actions, state }) => ({
       updateSelectedElements: actions.updateSelectedElements,

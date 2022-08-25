@@ -94,7 +94,7 @@ function PreviewPageAnimationController({ animationState }) {
 }
 
 const PreviewPageDisplay = memo(
-  forwardRef(({ page, pageSize }, ref) => {
+  forwardRef(function PreviewPageDisplay({ page, pageSize }, ref) {
     return (
       <FullBleedPreviewWrapper
         ref={ref}
@@ -109,32 +109,30 @@ const PreviewPageDisplay = memo(
   })
 );
 
-const PreviewPage = forwardRef(
-  (
-    {
-      page,
-      pageSize,
-      animationState = STORY_ANIMATION_STATE.RESET,
-      onAnimationComplete,
-    },
-    ref
-  ) => {
-    // Preview is wrapped in StyleSheetManager w/ stylisPlugins={[]} in order to prevent
-    // elements from shifting when in RTL mode since these aren't relevant for story previews
-    return (
-      <StyleSheetManager stylisPlugins={[]}>
-        <StoryAnimation.Provider
-          animations={page.animations}
-          elements={page.elements}
-          onWAAPIFinish={onAnimationComplete}
-        >
-          <PreviewPageDisplay ref={ref} page={page} pageSize={pageSize} />
-          <PreviewPageAnimationController animationState={animationState} />
-        </StoryAnimation.Provider>
-      </StyleSheetManager>
-    );
-  }
-);
+const PreviewPage = forwardRef(function PreviewPage(
+  {
+    page,
+    pageSize,
+    animationState = STORY_ANIMATION_STATE.RESET,
+    onAnimationComplete,
+  },
+  ref
+) {
+  // Preview is wrapped in StyleSheetManager w/ stylisPlugins={[]} in order to prevent
+  // elements from shifting when in RTL mode since these aren't relevant for story previews
+  return (
+    <StyleSheetManager stylisPlugins={[]}>
+      <StoryAnimation.Provider
+        animations={page.animations}
+        elements={page.elements}
+        onWAAPIFinish={onAnimationComplete}
+      >
+        <PreviewPageDisplay ref={ref} page={page} pageSize={pageSize} />
+        <PreviewPageAnimationController animationState={animationState} />
+      </StoryAnimation.Provider>
+    </StyleSheetManager>
+  );
+});
 
 PreviewPage.propTypes = {
   page: StoryPropTypes.page.isRequired,

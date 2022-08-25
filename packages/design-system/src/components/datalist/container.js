@@ -69,88 +69,86 @@ const Container = styled.div`
    ${({ $containerStyleOverrides }) => $containerStyleOverrides};
 `;
 
-const OptionsContainer = forwardRef(
-  (
-    {
-      onClose,
-      isOpen,
-      getOptionsByQuery,
-      hasSearch,
-      renderContents,
-      isInline,
-      hasDropDownBorder = false,
-      containerStyleOverrides,
-      title,
-      placeholder,
-    },
-    inputRef
-  ) => {
-    const ref = useRef();
-    const [searchKeyword, setSearchKeyword] = useState('');
-    const [queriedOptions, setQueriedOptions] = useState(null);
-    const [isExpanded, setIsExpanded] = useState(true);
-    const [trigger, setTrigger] = useState(0);
+const OptionsContainer = forwardRef(function OptionsContainer(
+  {
+    onClose,
+    isOpen,
+    getOptionsByQuery,
+    hasSearch,
+    renderContents,
+    isInline,
+    hasDropDownBorder = false,
+    containerStyleOverrides,
+    title,
+    placeholder,
+  },
+  inputRef
+) {
+  const ref = useRef();
+  const [searchKeyword, setSearchKeyword] = useState('');
+  const [queriedOptions, setQueriedOptions] = useState(null);
+  const [isExpanded, setIsExpanded] = useState(true);
+  const [trigger, setTrigger] = useState(0);
 
-    useFocusOut(ref, onClose, [onClose]);
+  useFocusOut(ref, onClose, [onClose]);
 
-    const handleSearchInputChanged = useCallback(
-      ({ target: { value } }) => setSearchKeyword(value),
-      []
-    );
+  const handleSearchInputChanged = useCallback(
+    ({ target: { value } }) => setSearchKeyword(value),
+    []
+  );
 
-    const debounceHandleLoadOptions = useDebouncedCallback(() => {
-      getOptionsByQuery(searchKeyword).then((res) => {
-        setQueriedOptions(res);
-      });
-    }, 500);
+  const debounceHandleLoadOptions = useDebouncedCallback(() => {
+    getOptionsByQuery(searchKeyword).then((res) => {
+      setQueriedOptions(res);
+    });
+  }, 500);
 
-    useEffect(() => {
-      if (getOptionsByQuery && isKeywordFilterable(searchKeyword)) {
-        debounceHandleLoadOptions();
-      } else {
-        setQueriedOptions(null);
-      }
-    }, [getOptionsByQuery, searchKeyword, debounceHandleLoadOptions]);
+  useEffect(() => {
+    if (getOptionsByQuery && isKeywordFilterable(searchKeyword)) {
+      debounceHandleLoadOptions();
+    } else {
+      setQueriedOptions(null);
+    }
+  }, [getOptionsByQuery, searchKeyword, debounceHandleLoadOptions]);
 
-    useEffect(() => {
-      if (isOpen) {
-        inputRef?.current?.focus();
-      }
-    }, [isOpen, inputRef]);
+  useEffect(() => {
+    if (isOpen) {
+      inputRef?.current?.focus();
+    }
+  }, [isOpen, inputRef]);
 
-    const listId = useMemo(() => `list-${uuidv4()}`, []);
-    return (
-      <Container
-        role="dialog"
-        title={title}
-        ref={ref}
-        isInline={isInline}
-        hasDropDownBorder={hasDropDownBorder}
-        $containerStyleOverrides={containerStyleOverrides}
-      >
-        {hasSearch && (
-          <SearchInput
-            ref={inputRef}
-            value={searchKeyword}
-            onChange={handleSearchInputChanged}
-            onClose={onClose}
-            isExpanded={isExpanded}
-            focusFontListFirstOption={() => setTrigger((v) => v + 1)}
-            aria-owns={listId}
-            placeholder={placeholder}
-          />
-        )}
-        {renderContents({
-          searchKeyword,
-          setIsExpanded,
-          trigger,
-          queriedOptions,
-          listId,
-        })}
-      </Container>
-    );
-  }
-);
+  const listId = useMemo(() => `list-${uuidv4()}`, []);
+  return (
+    <Container
+      role="dialog"
+      title={title}
+      ref={ref}
+      isInline={isInline}
+      hasDropDownBorder={hasDropDownBorder}
+      $containerStyleOverrides={containerStyleOverrides}
+    >
+      {hasSearch && (
+        <SearchInput
+          ref={inputRef}
+          value={searchKeyword}
+          onChange={handleSearchInputChanged}
+          onClose={onClose}
+          isExpanded={isExpanded}
+          focusFontListFirstOption={() => setTrigger((v) => v + 1)}
+          aria-owns={listId}
+          placeholder={placeholder}
+        />
+      )}
+      {renderContents({
+        searchKeyword,
+        setIsExpanded,
+        trigger,
+        queriedOptions,
+        listId,
+      })}
+    </Container>
+  );
+});
 
 OptionsContainer.propTypes = {
   isOpen: PropTypes.bool.isRequired,

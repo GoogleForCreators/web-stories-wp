@@ -50,7 +50,10 @@ DashboardGrid.propTypes = {
   columnWidth: PropTypes.number,
 };
 
-const CardGrid = forwardRef(({ ariaLabel, children, pageSize }, ref) => {
+const CardGrid = forwardRef(function CardGrid(
+  { ariaLabel, children, pageSize },
+  ref
+) {
   return (
     <DashboardGrid
       ref={ref}

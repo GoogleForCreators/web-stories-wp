@@ -51,41 +51,33 @@ const Button = styled(DefaultButton)`
   }
 `;
 
-const InnerButton = forwardRef(
-  (
-    {
-      text,
-      checkpoint,
-      hasHighPriorityIssues = false,
-      onClick,
-      ...buttonProps
-    },
-    ref
-  ) => {
-    const handleClick = (evt) => {
-      // https://github.com/reactjs/react-modal/issues/680#issuecomment-413422345
-      // React Modal restores input on last focused element on close.
-      // Blur button so that it doesn't steal focus back when opening the checklist.
-      evt.currentTarget.blur();
+const InnerButton = forwardRef(function InnerButton(
+  { text, checkpoint, hasHighPriorityIssues = false, onClick, ...buttonProps },
+  ref
+) {
+  const handleClick = (evt) => {
+    // https://github.com/reactjs/react-modal/issues/680#issuecomment-413422345
+    // React Modal restores input on last focused element on close.
+    // Blur button so that it doesn't steal focus back when opening the checklist.
+    evt.currentTarget.blur();
 
-      onClick?.(evt);
-    };
+    onClick?.(evt);
+  };
 
-    return (
-      <Button
-        ref={ref}
-        variant={BUTTON_VARIANTS.RECTANGLE}
-        type={BUTTON_TYPES.PRIMARY}
-        size={BUTTON_SIZES.SMALL}
-        onClick={handleClick}
-        {...buttonProps}
-      >
-        {text}
-        {hasHighPriorityIssues && <ChecklistIcon checkpoint={checkpoint} />}
-      </Button>
-    );
-  }
-);
+  return (
+    <Button
+      ref={ref}
+      variant={BUTTON_VARIANTS.RECTANGLE}
+      type={BUTTON_TYPES.PRIMARY}
+      size={BUTTON_SIZES.SMALL}
+      onClick={handleClick}
+      {...buttonProps}
+    >
+      {text}
+      {hasHighPriorityIssues && <ChecklistIcon checkpoint={checkpoint} />}
+    </Button>
+  );
+});
 
 InnerButton.propTypes = {
   checkpoint: PropTypes.oneOf(Object.values(PPC_CHECKPOINT_STATE)),
@@ -95,7 +87,10 @@ InnerButton.propTypes = {
 };
 
 const ButtonWithChecklistWarning = forwardRef(
-  ({ disabled, hasFutureDate, ...buttonProps }, ref) => {
+  function ButtonWithChecklistWarning(
+    { disabled, hasFutureDate, ...buttonProps },
+    ref
+  ) {
     const isUploading = useIsUploadingToStory();
     const { isSaving, canPublish, status } = useStory(({ state }) => ({
       isSaving: state.meta?.isSaving,

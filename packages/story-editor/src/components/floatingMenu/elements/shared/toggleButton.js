@@ -24,7 +24,10 @@ import {
   BUTTON_TYPES,
 } from '@googleforcreators/design-system';
 
-const ToggleButton = forwardRef(({ isToggled, children, ...rest }, ref) => {
+const ToggleButton = forwardRef(function ToggleButton(
+  { isToggled, children, ...rest },
+  ref
+) {
   // Add extra properties to indicate this is a pushbutton, only if isToggled is a boolean
   const toggleProps =
     typeof isToggled === 'boolean'

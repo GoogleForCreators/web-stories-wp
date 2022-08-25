@@ -33,7 +33,7 @@ jest.mock('../shared/useProperties', () =>
   jest.fn().mockImplementation(() => ({}))
 );
 jest.mock('../shared/icon', () =>
-  jest.fn().mockImplementation(({ title, Icon, ...rest }) => {
+  jest.fn().mockImplementation(function MockButton({ title, Icon, ...rest }) {
     return (
       <button role="menuitem" {...rest}>
         {title}

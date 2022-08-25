@@ -243,33 +243,31 @@ const ButtonOptions = {
   [BUTTON_VARIANTS.LINK]: ButtonLink,
 };
 
-const Button = forwardRef(
-  (
-    {
-      size = BUTTON_SIZES.MEDIUM,
-      type = BUTTON_TYPES.PLAIN,
-      variant = BUTTON_VARIANTS.RECTANGLE,
-      children,
-      ...rest
-    },
-    ref
-  ) => {
-    const isLink = rest.href !== undefined;
-    const StyledButton = ButtonOptions[variant];
+const Button = forwardRef(function Button(
+  {
+    size = BUTTON_SIZES.MEDIUM,
+    type = BUTTON_TYPES.PLAIN,
+    variant = BUTTON_VARIANTS.RECTANGLE,
+    children,
+    ...rest
+  },
+  ref
+) {
+  const isLink = rest.href !== undefined;
+  const StyledButton = ButtonOptions[variant];
 
-    return (
-      <StyledButton
-        ref={ref}
-        as={isLink ? 'a' : 'button'}
-        size={size}
-        type={type}
-        {...rest}
-      >
-        {children}
-      </StyledButton>
-    );
-  }
-);
+  return (
+    <StyledButton
+      ref={ref}
+      as={isLink ? 'a' : 'button'}
+      size={size}
+      type={type}
+      {...rest}
+    >
+      {children}
+    </StyledButton>
+  );
+});
 
 Button.propTypes = {
   size: PropTypes.oneOf(Object.values(BUTTON_SIZES)),

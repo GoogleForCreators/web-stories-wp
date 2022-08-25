@@ -32,7 +32,9 @@ import Text from './text';
 import Video from './video';
 import Product from './product';
 
-const FloatingMenuSelector = memo(({ selectedElementType }) => {
+const FloatingMenuSelector = memo(function FloatingMenuSelector({
+  selectedElementType,
+}) {
   switch (selectedElementType) {
     case SELECTED_ELEMENT_TYPES.MULTIPLE:
       return <Multiple />;
