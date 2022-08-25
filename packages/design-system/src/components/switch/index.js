@@ -152,85 +152,83 @@ const RadioButtonLabel = styled(Text).attrs({
  * @param {boolean} props.value the value of the radio group
  * @return {Object} The radio button
  */
-export const Switch = forwardRef(
-  (
-    {
-      className,
-      disabled,
-      groupLabel,
-      id,
-      offLabel,
-      onChange,
-      onLabel,
-      value,
-      ...props
+export const Switch = forwardRef(function Switch(
+  {
+    className,
+    disabled,
+    groupLabel,
+    id,
+    offLabel,
+    onChange,
+    onLabel,
+    value,
+    ...props
+  },
+  ref
+) {
+  const ids = useMemo(
+    () => ({
+      group: id || uuidv4(),
+      offInput: uuidv4(),
+      onInput: uuidv4(),
+    }),
+    [id]
+  );
+
+  const handleChange = useCallback(
+    (evt) => {
+      onChange(evt, evt.target.value === VALUES.ON);
     },
-    ref
-  ) => {
-    const ids = useMemo(
-      () => ({
-        group: id || uuidv4(),
-        offInput: uuidv4(),
-        onInput: uuidv4(),
-      }),
-      [id]
-    );
+    [onChange]
+  );
 
-    const handleChange = useCallback(
-      (evt) => {
-        onChange(evt, evt.target.value === VALUES.ON);
-      },
-      [onChange]
-    );
+  return (
+    <SwitchContainer
+      ref={ref}
+      className={className}
+      role="radiogroup"
+      aria-labelledby={ids.group}
+      aria-disabled={disabled}
+      disabled={disabled}
+    >
+      <VisuallyHiddenRadioGroupLabel id={ids.group}>
+        {groupLabel}
+      </VisuallyHiddenRadioGroupLabel>
 
-    return (
-      <SwitchContainer
-        ref={ref}
-        className={className}
-        role="radiogroup"
-        aria-labelledby={ids.group}
-        aria-disabled={disabled}
+      <RadioButtonLabel
+        htmlFor={ids.onInput}
+        isActive={value}
         disabled={disabled}
       >
-        <VisuallyHiddenRadioGroupLabel id={ids.group}>
-          {groupLabel}
-        </VisuallyHiddenRadioGroupLabel>
-
-        <RadioButtonLabel
-          htmlFor={ids.onInput}
-          isActive={value}
+        {onLabel}
+        <HiddenRadioButton
+          checked={value}
           disabled={disabled}
-        >
-          {onLabel}
-          <HiddenRadioButton
-            checked={value}
-            disabled={disabled}
-            id={ids.onInput}
-            onChange={handleChange}
-            value={VALUES.ON}
-            {...props}
-          />
-        </RadioButtonLabel>
-        <RadioButtonLabel
-          htmlFor={ids.offInput}
-          isActive={!value}
+          id={ids.onInput}
+          onChange={handleChange}
+          value={VALUES.ON}
+          {...props}
+        />
+      </RadioButtonLabel>
+      <RadioButtonLabel
+        htmlFor={ids.offInput}
+        isActive={!value}
+        disabled={disabled}
+      >
+        {offLabel}
+        <HiddenRadioButton
+          checked={!value}
           disabled={disabled}
-        >
-          {offLabel}
-          <HiddenRadioButton
-            checked={!value}
-            disabled={disabled}
-            id={ids.offInput}
-            onChange={handleChange}
-            value={VALUES.OFF}
-            {...props}
-          />
-        </RadioButtonLabel>
-        <SlidingButton hasOffset={!value} />
-      </SwitchContainer>
-    );
-  }
-);
+          id={ids.offInput}
+          onChange={handleChange}
+          value={VALUES.OFF}
+          {...props}
+        />
+      </RadioButtonLabel>
+      <SlidingButton hasOffset={!value} />
+    </SwitchContainer>
+  );
+});
 Switch.displayName = 'Switch';
 export const SwitchPropTypes = {
   className: PropTypes.string,
