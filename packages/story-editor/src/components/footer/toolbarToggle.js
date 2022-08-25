@@ -18,7 +18,7 @@
  * External dependencies
  */
 import {
-  ToggleButton,
+  Button,
   BUTTON_SIZES,
   BUTTON_TYPES,
   BUTTON_VARIANTS,
@@ -38,7 +38,7 @@ import Tooltip from '../tooltip';
 import { useCanvas } from '../../app';
 import { states, useHighlights, styles } from '../../app/highlights';
 
-const StyledToggleButton = styled(ToggleButton)`
+const StyledButton = styled(Button)`
   ${themeHelpers.focusableOutlineCSS};
 
   ${({ isHighlighted }) =>
@@ -83,7 +83,7 @@ function ToolbarToggle() {
       placement={PLACEMENT.TOP}
       hasTail
     >
-      <StyledToggleButton
+      <StyledButton
         ref={(node) => {
           if (node && highlight?.focus && highlight?.showEffect) {
             node.focus();
@@ -99,7 +99,7 @@ function ToolbarToggle() {
         onAnimationEnd={() => resetHighlight()}
       >
         <Icons.BoxWithDots />
-      </StyledToggleButton>
+      </StyledButton>
     </Tooltip>
   );
 }

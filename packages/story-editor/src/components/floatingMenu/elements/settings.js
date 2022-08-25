@@ -62,12 +62,15 @@ const LOCAL_STORAGE_KEY = LOCAL_STORAGE_PREFIX.ELEMENT_TOOLBAR_SETTINGS;
 
 function Settings() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { setFloatingMenuPosition, setDisplayFloatingMenu } = useCanvas(
-    ({ actions }) => ({
-      setFloatingMenuPosition: actions.setFloatingMenuPosition,
-      setDisplayFloatingMenu: actions.setDisplayFloatingMenu,
-    })
-  );
+  const {
+    setFloatingMenuPosition,
+    setDisplayFloatingMenu,
+    floatingMenuPosition,
+  } = useCanvas(({ actions, state }) => ({
+    setFloatingMenuPosition: actions.setFloatingMenuPosition,
+    setDisplayFloatingMenu: actions.setDisplayFloatingMenu,
+    floatingMenuPosition: state.floatingMenuPosition,
+  }));
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
 
   const buttonRef = useRef();
@@ -123,7 +126,8 @@ function Settings() {
       onClick: () => handleToolbarPosition(TOOLBAR_POSITIONS.ELEMENT),
       supportsIcon: true,
       icon:
-        local.position === TOOLBAR_POSITIONS.ELEMENT ? (
+        !floatingMenuPosition ||
+        floatingMenuPosition === TOOLBAR_POSITIONS.ELEMENT ? (
           <Icons.CheckmarkSmall />
         ) : null,
     },
@@ -133,7 +137,7 @@ function Settings() {
       onClick: () => handleToolbarPosition(TOOLBAR_POSITIONS.TOP),
       supportsIcon: true,
       icon:
-        local.position === TOOLBAR_POSITIONS.TOP ? (
+        floatingMenuPosition === TOOLBAR_POSITIONS.TOP ? (
           <Icons.CheckmarkSmall />
         ) : null,
     },
