@@ -16,10 +16,19 @@
 /**
  * External dependencies
  */
-import { PAGE_HEIGHT, PAGE_WIDTH } from '@googleforcreators/units';
+//PAGE_RATIO, FULLBLEED_RATIO
+import { useUnits, PAGE_HEIGHT, PAGE_WIDTH } from '@googleforcreators/units';
 
 function useIsPartiallyOffCanvas(selectedElement) {
   const { x, y, width, height } = selectedElement;
+
+  const { dataToEditorX, dataToEditorY } = useUnits((state) => ({
+    dataToEditorX: state.actions.dataToEditorX,
+    dataToEditorY: state.actions.dataToEditorY,
+  }));
+
+  // @todo --- how to get canvas?
+  // const safeZoneDiff = (canvas.width / FULLBLEED_RATIO - canvas.width / PAGE_RATIO) / 2;
 
   // @todo add rotation check
   let isOffCanvas = false;
@@ -59,6 +68,11 @@ function useIsPartiallyOffCanvas(selectedElement) {
       cropY = 0;
     }
   }
+
+  cropWidth = dataToEditorX(cropWidth);
+  cropHeight = dataToEditorY(cropHeight);
+  cropX = dataToEditorX(cropX);
+  cropY = dataToEditorY(cropY);
 
   return { isOffCanvas, cropParams: { cropWidth, cropHeight, cropX, cropY } };
 }
