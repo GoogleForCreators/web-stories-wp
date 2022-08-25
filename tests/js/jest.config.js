@@ -22,6 +22,7 @@ import { fileURLToPath } from 'url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
+/** @type {import('@jest/types').Config} */
 export default {
   rootDir: '../../',
   resolver: '@web-stories-wp/jest-resolver',
