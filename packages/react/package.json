@@ -44,6 +44,7 @@
     "use-reduction": "^2.1.2"
   },
   "devDependencies": {
+    "@types/react": "^17.0.44",
     "@testing-library/react": "^12.1.5",
     "@testing-library/react-hooks": "^8.0.0"
   },

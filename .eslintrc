@@ -315,11 +315,12 @@
       "rules": {
         "no-duplicate-imports": "off",
         "@typescript-eslint/no-duplicate-imports": "error",
+        "@typescript-eslint/no-shadow": "error",
+        "react/prop-types": "off",
         "jsdoc/require-param-type": "off",
         "jsdoc/require-returns-type": "off",
         "no-unused-vars": "off",
-        "no-shadow": "off",
-        "@typescript-eslint/no-shadow": "error"
+        "no-shadow": "off"
       }
     },
     {
@@ -330,7 +331,8 @@
       "rules": {
         "no-undef": "off",
         "no-unused-vars": "off",
-        "no-var": "off"
+        "no-var": "off",
+        "@wordpress/dependency-group": "off"
       }
     },
     {

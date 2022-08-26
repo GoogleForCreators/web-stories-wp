@@ -19,49 +19,55 @@
  */
 import styled from 'styled-components';
 import {
-  useState,
   forwardRef,
   useCombinedRefs,
+  useState,
 } from '@googleforcreators/react';
-import PropTypes from 'prop-types';
+import type { ElementType, ForwardedRef, ReactNode } from 'react';
 
 /**
  * Internal dependencies
  */
 import Context from './context';
 
-const Overlay = styled.div`
+interface OverlayProps {
+  $zIndex: number;
+}
+
+interface WithOverlayProps {
+  zIndex: number;
+  children: ReactNode;
+}
+
+const Overlay = styled.div<OverlayProps>`
   position: absolute;
   top: 0;
   /*! @noflip */
   left: 0;
   width: 0;
   height: 0;
-  z-index: ${({ zIndex }) => zIndex};
+  z-index: ${({ $zIndex }) => $zIndex};
 `;
 
-function withOverlay(Comp) {
-  function WithOverlay({ children, ...rest }, ref) {
-    const [overlay, setOverlay] = useState(null);
-    const [container, setContainer] = useState(null);
+function withOverlay(Comp: ElementType) {
+  function WithOverlay(
+    { children, ...rest }: WithOverlayProps,
+    ref: ForwardedRef<HTMLElement>
+  ) {
+    const [overlay, setOverlay] = useState<HTMLElement | null>(null);
+    const [container, setContainer] = useState<HTMLElement | null>(null);
     const { zIndex = 1 } = rest;
     return (
       <Context.Provider value={{ container, overlay }}>
         <Comp ref={useCombinedRefs(ref, setContainer)} {...rest}>
           {children}
-          <Overlay ref={setOverlay} zIndex={zIndex} />
+          <Overlay ref={setOverlay} $zIndex={zIndex} />
         </Comp>
       </Context.Provider>
     );
   }
 
-  const ReffedWithOverlay = forwardRef(WithOverlay);
-
-  WithOverlay.propTypes = {
-    children: PropTypes.node,
-  };
-
-  return ReffedWithOverlay;
+  return forwardRef(WithOverlay);
 }
 
 export default withOverlay;

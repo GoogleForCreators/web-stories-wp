@@ -19,11 +19,14 @@
  *
  * It can be any two mouse event such as down and up or dragstart and drag.
  *
- * @param {Object} firstEvent   First mouse event object.
- * @param {Object} secondEvent  Second mouse event object.
+ * @param {MouseEvent} firstEvent   First mouse event object.
+ * @param {MouseEvent} secondEvent  Second mouse event object.
  * @return {boolean} Returns true iff the events are considered part of dragging
  */
-function areEventsDragging(firstEvent, secondEvent) {
+function areEventsDragging(
+  firstEvent: MouseEvent,
+  secondEvent: MouseEvent
+): boolean {
   const { clientX, clientY, timeStamp } = firstEvent;
   const timingDifference = secondEvent.timeStamp - timeStamp;
 

@@ -1,6 +1,7 @@
 {
   "references": [
     { "path": "packages/media" },
+    { "path": "packages/moveable" },
     { "path": "packages/react" },
     { "path": "packages/tracking" },
     { "path": "packages/units" }
