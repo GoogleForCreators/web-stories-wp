@@ -56,7 +56,7 @@ const getBlurHashFromImage = async (src) => {
       componentX: 4,
       componentY: 4,
     });
-    worker.addEventListener('message', function (event) {
+    worker.addEventListener('message', (event) => {
       worker.terminate(); // lgtm [js/property-access-on-non-object]
       trackTiming();
       if (event.data.type === 'success') {

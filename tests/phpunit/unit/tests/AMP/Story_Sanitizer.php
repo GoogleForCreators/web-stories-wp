@@ -662,4 +662,44 @@ HTML;
 		$this->assertStringContainsString( 'T3B</p>', $actual );
 		$this->assertStringContainsString( 'PB</p>', $actual );
 	}
+
+
+	/**
+	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::use_semantic_heading_tags
+	 */
+	public function test_use_semantic_heading_tags_with_newlines_and_nested_spans(): void {
+		$source = <<<'HTML'
+<html><head></head><body><amp-story>
+	<amp-story-page>
+		<amp-story-grid-layer>
+			<p class="fill text-wrapper" style="font-size:.582524em">
+				<span>
+				<span style="font-weight: 700; color: #fff">Title 1</span>
+				</span>
+			</p>
+			<p class="text-wrapper" style="font-size:.582524em"><span><span>Title 1</span></span></p>
+			<p class="text-wrapper" style="font-size:.436893em"><span><span>Title 2</span></span></p>
+			<p class="text-wrapper" style="font-size:.339805em"><span><span>Title 3</span></span></p>
+			<p class="text-wrapper" style="font-size:.291262em"><span><span>Paragraph</span></span></p>
+		</amp-story-grid-layer>
+	</amp-story-page>
+</amp-story></body></html>
+HTML;
+
+		$args = [
+			'publisher_logo' => '',
+			'publisher'      => '',
+			'poster_images'  => [],
+			'video_cache'    => false,
+		];
+
+		$actual = $this->sanitize_and_get( $source, $args );
+
+		$this->assertStringContainsString( "<span class=\"_14af73e\">Title 1</span>\n\t\t\t\t</span>\n\t\t\t</h1>", $actual );
+		$this->assertStringContainsString( 'Title 1</span></span></h2>', $actual );
+		$this->assertStringContainsString( 'Title 2</span></span></h2>', $actual );
+		$this->assertStringContainsString( 'Title 3</span></span></h3>', $actual );
+		$this->assertStringContainsString( 'Paragraph</span></span></p>', $actual );
+	}
+
 }

@@ -30,8 +30,8 @@ import {
 
 import useDashboardResultsLabel from '../useDashboardResultsLabel';
 
-describe('useGenericResultsLabel()', function () {
-  it(`should return an empty string to display if there is no currentFilter supplied`, function () {
+describe('useGenericResultsLabel()', () => {
+  it(`should return an empty string to display if there is no currentFilter supplied`, () => {
     const { result } = renderHook(
       () =>
         useDashboardResultsLabel({
@@ -44,7 +44,7 @@ describe('useGenericResultsLabel()', function () {
   });
 
   // Dashboard
-  it(`should have default options initially selected for ${DASHBOARD_VIEWS.DASHBOARD}`, function () {
+  it(`should have default options initially selected for ${DASHBOARD_VIEWS.DASHBOARD}`, () => {
     const { result } = renderHook(
       () =>
         useDashboardResultsLabel({
@@ -58,7 +58,7 @@ describe('useGenericResultsLabel()', function () {
     );
   });
 
-  it(`should have options selected for ${DASHBOARD_VIEWS.DASHBOARD} when filtered to drafts`, function () {
+  it(`should have options selected for ${DASHBOARD_VIEWS.DASHBOARD} when filtered to drafts`, () => {
     const { result } = renderHook(
       () =>
         useDashboardResultsLabel({
@@ -72,7 +72,7 @@ describe('useGenericResultsLabel()', function () {
     );
   });
 
-  it(`should have options selected for ${DASHBOARD_VIEWS.DASHBOARD} when filtered to published stories`, function () {
+  it(`should have options selected for ${DASHBOARD_VIEWS.DASHBOARD} when filtered to published stories`, () => {
     const { result } = renderHook(
       () =>
         useDashboardResultsLabel({
@@ -86,7 +86,7 @@ describe('useGenericResultsLabel()', function () {
     );
   });
 
-  it(`should show counted results if isActiveSearch is true for ${DASHBOARD_VIEWS.DASHBOARD}`, function () {
+  it(`should show counted results if isActiveSearch is true for ${DASHBOARD_VIEWS.DASHBOARD}`, () => {
     const { result } = renderHook(
       () =>
         useDashboardResultsLabel({
@@ -100,7 +100,7 @@ describe('useGenericResultsLabel()', function () {
     expect(result.current).toBe('<strong>4</strong> results');
   });
 
-  it(`should show "1 result" if isActiveSearch is true and totalResults is 0 for ${DASHBOARD_VIEWS.DASHBOARD}`, function () {
+  it(`should show "1 result" if isActiveSearch is true and totalResults is 0 for ${DASHBOARD_VIEWS.DASHBOARD}`, () => {
     const { result } = renderHook(
       () =>
         useDashboardResultsLabel({
@@ -114,7 +114,7 @@ describe('useGenericResultsLabel()', function () {
     expect(result.current).toBe('<strong>1</strong> result');
   });
 
-  it(`should show "0 results" if isActiveSearch is true and totalResults is 0 for ${DASHBOARD_VIEWS.DASHBOARD}`, function () {
+  it(`should show "0 results" if isActiveSearch is true and totalResults is 0 for ${DASHBOARD_VIEWS.DASHBOARD}`, () => {
     const { result } = renderHook(
       () =>
         useDashboardResultsLabel({
@@ -130,7 +130,7 @@ describe('useGenericResultsLabel()', function () {
 
   // template gallery
 
-  it(`should have default options initially selected for ${DASHBOARD_VIEWS.TEMPLATES_GALLERY}`, function () {
+  it(`should have default options initially selected for ${DASHBOARD_VIEWS.TEMPLATES_GALLERY}`, () => {
     const { result } = renderHook(
       () =>
         useDashboardResultsLabel({
@@ -146,7 +146,7 @@ describe('useGenericResultsLabel()', function () {
     );
   });
 
-  it(`should show counted results if isActiveSearch is true for ${DASHBOARD_VIEWS.TEMPLATES_GALLERY}`, function () {
+  it(`should show counted results if isActiveSearch is true for ${DASHBOARD_VIEWS.TEMPLATES_GALLERY}`, () => {
     const { result } = renderHook(
       () =>
         useDashboardResultsLabel({

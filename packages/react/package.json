@@ -26,21 +26,22 @@
   },
   "customExports": {
     ".": {
-      "default": "./src/index.js"
+      "default": "./src/index.ts"
     }
   },
   "main": "dist/index.js",
   "module": "dist-module/index.js",
-  "source": "src/index.js",
+  "types": "dist-types/index.d.ts",
+  "source": "src/index.ts",
   "publishConfig": {
     "access": "public"
   },
   "dependencies": {
     "prop-types": "^15.8.1",
-    "resize-observer-polyfill": "^1.5.1",
     "shallow-equal": "^1.2.1",
     "use-context-selector": "^1.2.11",
-    "use-debounce": "^7.0.1"
+    "use-debounce": "^7.0.1",
+    "use-reduction": "^2.1.2"
   },
   "devDependencies": {
     "@testing-library/react": "^12.1.5",

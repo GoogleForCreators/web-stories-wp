@@ -50,7 +50,8 @@ function LocalAutoSave() {
       restoreLocalAutoSave: actions.restoreLocalAutoSave,
     })
   );
-  const { storyId, isNew } = story;
+  const { storyId, status } = story;
+  const isNew = 'auto-draft' === status;
 
   const [backup, setBackup] = useState(null);
 
