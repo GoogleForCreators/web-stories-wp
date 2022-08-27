@@ -42,7 +42,7 @@ function useIsPartiallyOffCanvas(selectedElement) {
       offCanvasRight = x + width - PAGE_WIDTH;
     }
   } else {
-    const r = (width - Math.abs(x)) - PAGE_WIDTH;
+    const r = width - Math.abs(x) - PAGE_WIDTH;
     offCanvasRight = r > 0 ? r : 0;
   }
 
@@ -52,15 +52,28 @@ function useIsPartiallyOffCanvas(selectedElement) {
       offCanvasBottom = y + height - PAGE_HEIGHT;
     }
   } else {
-    const b = (height - Math.abs(y)) - PAGE_HEIGHT;
+    const b = height - Math.abs(y) - PAGE_HEIGHT;
     offCanvasBottom = b > 0 ? b : 0;
   }
 
-  if (offCanvasTop > 0 || offCanvasRight > 0 || offCanvasBottom > 0 || offCanvasLeft > 0) {
+  if (
+    offCanvasTop > 0 ||
+    offCanvasRight > 0 ||
+    offCanvasBottom > 0 ||
+    offCanvasLeft > 0
+  ) {
     isOffCanvas = true;
   }
 
-  return { isOffCanvas, cropParams: { offCanvasTop, offCanvasRight, offCanvasBottom, offCanvasLeft } };
+  return {
+    isOffCanvas,
+    cropParams: {
+      offCanvasTop,
+      offCanvasRight,
+      offCanvasBottom,
+      offCanvasLeft,
+    },
+  };
 }
 
 export default useIsPartiallyOffCanvas;
