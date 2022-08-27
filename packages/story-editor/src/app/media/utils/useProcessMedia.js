@@ -488,17 +488,26 @@ function useProcessMedia({
    */
   const cropHiddenVideo = useCallback(
     ({ id: elementId, resource: oldResource, width, height }, cropParams) => {
-
       const { id: resourceId, src: url, mimeType } = oldResource;
+      const { offCanvasTop, offCanvasRight, offCanvasBottom, offCanvasLeft } =
+        cropParams;
+      const cropWidth = width - (offCanvasLeft + offCanvasRight);
+      const cropHeight = height - (offCanvasTop + offCanvasBottom);
+      const cropX = offCanvasLeft;
+      const cropY = offCanvasTop;
+
       const onUploadSuccess = ({ id, resource }) => {
         copyResourceData({ oldResource, resource });
         updateOldTranscodedObject(oldResource.id, resource.id, 'source-image');
         deleteMediaElement({ id: oldResource.id });
+
         updateElementById({
           elementId,
           properties: {
-            width: cropParams.cropWidth,
-            height: cropParams.cropHeight,
+            x: 0,
+            y: 0,
+            width: cropWidth,
+            height: cropHeight,
           },
         });
 
@@ -520,7 +529,12 @@ function useProcessMedia({
         let file = false;
         try {
           const originalFile = await fetchRemoteFile(url, mimeType);
-          file = await cropHidden(originalFile, { width, height }, cropParams);
+          file = await cropHidden(originalFile, {
+            cropWidth,
+            cropHeight,
+            cropX,
+            cropY,
+          });
           await file.arrayBuffer();
           await uploadMedia([file], {
             onUploadSuccess,
