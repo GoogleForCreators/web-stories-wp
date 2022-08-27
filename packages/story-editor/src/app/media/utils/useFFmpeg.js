@@ -342,8 +342,6 @@ function useFFmpeg() {
     [getFFmpegInstance]
   );
 
-  //
-
   /**
    * Crop Video to remove off-canvas portion of the video using FFmpeg.
    */
