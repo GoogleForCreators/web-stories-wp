@@ -348,18 +348,17 @@ function useFFmpeg() {
    * Crop Video to remove off-canvas portion of the video using FFmpeg.
    */
   const cropHidden = useCallback(
-    async (
-      file,
-      { width, height },
-      cropParams
-    ) => {
+    async (file, { width, height }, cropParams) => {
       let ffmpeg;
 
       try {
+        const { offCanvasTop, offCanvasRight, offCanvasBottom, offCanvasLeft } =
+          cropParams;
 
-        
-        // "crop=out_w:out_h:x:y"
-        // offCanvasTop: 0, offCanvasRight: 0, offCanvasBottom: 0, offCanvasLeft: 34
+        const cropWidth = width - offCanvasLeft - offCanvasRight;
+        const cropHeight = height - offCanvasTop - offCanvasBottom;
+        const cropX = offCanvasLeft;
+        const cropY = offCanvasTop;
 
         ffmpeg = await getFFmpegInstance(file);
 
@@ -367,8 +366,7 @@ function useFFmpeg() {
         const ext = getExtensionFromMimeType(type);
         const tempFileName = uuidv4() + '.' + ext;
         const outputFileName = getFileBasename(file) + '-cropped.' + ext;
-        // const crop = `scale=${width}:${height},crop=${cropWidth}:${cropHeight}:${cropX}:${cropY}`;
-        const crop = "";
+        const crop = `scale=${width}:${height},crop=${cropWidth}:${cropHeight}:${cropX}:${cropY}`;
         await ffmpeg.run(
           // Input filename.
           '-i',
@@ -507,7 +505,7 @@ function useFFmpeg() {
         try {
           ffmpeg.exit();
           // eslint-disable-next-line no-empty -- no-op
-        } catch (e) { }
+        } catch (e) {}
 
         trackTiming();
       }
@@ -560,7 +558,7 @@ function useFFmpeg() {
         try {
           ffmpeg.exit();
           // eslint-disable-next-line no-empty -- no-op
-        } catch (e) { }
+        } catch (e) {}
 
         trackTiming();
       }
