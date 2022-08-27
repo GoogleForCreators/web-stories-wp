@@ -16,65 +16,51 @@
 /**
  * External dependencies
  */
-//PAGE_RATIO, FULLBLEED_RATIO
-import { useUnits, PAGE_HEIGHT, PAGE_WIDTH } from '@googleforcreators/units';
+import { PAGE_HEIGHT, PAGE_WIDTH } from '@googleforcreators/units';
 
 function useIsPartiallyOffCanvas(selectedElement) {
   const { x, y, width, height } = selectedElement;
-
-  const { dataToEditorX, dataToEditorY } = useUnits((state) => ({
-    dataToEditorX: state.actions.dataToEditorX,
-    dataToEditorY: state.actions.dataToEditorY,
-  }));
-
-  // @todo --- how to get canvas?
-  // const safeZoneDiff = (canvas.width / FULLBLEED_RATIO - canvas.width / PAGE_RATIO) / 2;
-
-  // @todo add rotation check
   let isOffCanvas = false;
-  let cropWidth = width - Math.abs(x);
-  let cropHeight = height - Math.abs(y); // need to calc y with safeZone
-  let cropX = Math.abs(x);
-  let cropY = Math.abs(y); // need to calc y with safeZone
+  let offCanvasTop = 0;
+  let offCanvasRight = 0;
+  let offCanvasBottom = 0;
+  let offCanvasLeft = 0;
 
   // if x is a negative #
-  if (Number.isInteger(x) && x < 0) {
-    isOffCanvas = true;
+  if (x < 0) {
+    offCanvasLeft = Math.abs(x);
   }
 
   // if y is a negative #
-  if (Number.isInteger(y) && y < 0) {
-    isOffCanvas = true;
+  if (y < 0) {
+    offCanvasTop = Math.abs(y);
   }
 
   // check for off-canvas right side
-  if (Number.isInteger(x) && x > 0) {
-    cropWidth = width;
+  if (x > 0) {
     if (x + width > PAGE_WIDTH) {
-      isOffCanvas = true;
-      cropX = width - (x + width - PAGE_WIDTH);
-    } else {
-      cropX = 0;
+      offCanvasRight = x + width - PAGE_WIDTH;
     }
+  } else {
+    const r = (width - Math.abs(x)) - PAGE_WIDTH;
+    offCanvasRight = r > 0 ? r : 0;
   }
 
   // check if off-canvas bottom
-  if (Number.isInteger(y) && y > 0) {
-    cropHeight = height;
+  if (y > 0) {
     if (y + height > PAGE_HEIGHT) {
-      isOffCanvas = true;
-      cropY = height - (y + height - PAGE_HEIGHT);
-    } else {
-      cropY = 0;
+      offCanvasBottom = y + height - PAGE_HEIGHT;
     }
+  } else {
+    const b = (height - Math.abs(y)) - PAGE_HEIGHT;
+    offCanvasBottom = b > 0 ? b : 0;
   }
 
-  cropWidth = dataToEditorX(cropWidth);
-  cropHeight = dataToEditorY(cropHeight);
-  cropX = dataToEditorX(cropX);
-  cropY = dataToEditorY(cropY);
+  if (offCanvasTop > 0 || offCanvasRight > 0 || offCanvasBottom > 0 || offCanvasLeft > 0) {
+    isOffCanvas = true;
+  }
 
-  return { isOffCanvas, cropParams: { cropWidth, cropHeight, cropX, cropY } };
+  return { isOffCanvas, cropParams: { offCanvasTop, offCanvasRight, offCanvasBottom, offCanvasLeft } };
 }
 
 export default useIsPartiallyOffCanvas;

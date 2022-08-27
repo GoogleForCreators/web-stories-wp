@@ -488,6 +488,7 @@ function useProcessMedia({
    */
   const cropHiddenVideo = useCallback(
     ({ id: elementId, resource: oldResource, width, height }, cropParams) => {
+
       const { id: resourceId, src: url, mimeType } = oldResource;
       const onUploadSuccess = ({ id, resource }) => {
         copyResourceData({ oldResource, resource });

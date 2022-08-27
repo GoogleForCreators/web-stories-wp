@@ -351,24 +351,30 @@ function useFFmpeg() {
     async (
       file,
       { width, height },
-      { cropWidth, cropHeight, cropX, cropY }
+      cropParams
     ) => {
       let ffmpeg;
 
       try {
+
+        
+        // "crop=out_w:out_h:x:y"
+        // offCanvasTop: 0, offCanvasRight: 0, offCanvasBottom: 0, offCanvasLeft: 34
+
         ffmpeg = await getFFmpegInstance(file);
 
         const type = file?.type || MEDIA_TRANSCODED_MIME_TYPE;
         const ext = getExtensionFromMimeType(type);
         const tempFileName = uuidv4() + '.' + ext;
         const outputFileName = getFileBasename(file) + '-cropped.' + ext;
-        const scaleAndCrop = `scale=${width}:${height},crop=${cropWidth}:${cropHeight}:${cropX}:${cropY}`;
+        // const crop = `scale=${width}:${height},crop=${cropWidth}:${cropHeight}:${cropX}:${cropY}`;
+        const crop = "";
         await ffmpeg.run(
           // Input filename.
           '-i',
           file.name,
           '-vf',
-          scaleAndCrop,
+          crop,
           tempFileName
         );
 
@@ -501,7 +507,7 @@ function useFFmpeg() {
         try {
           ffmpeg.exit();
           // eslint-disable-next-line no-empty -- no-op
-        } catch (e) {}
+        } catch (e) { }
 
         trackTiming();
       }
@@ -554,7 +560,7 @@ function useFFmpeg() {
         try {
           ffmpeg.exit();
           // eslint-disable-next-line no-empty -- no-op
-        } catch (e) {}
+        } catch (e) { }
 
         trackTiming();
       }
