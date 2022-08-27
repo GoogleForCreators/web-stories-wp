@@ -68,6 +68,7 @@ function useIsPartiallyOffCanvas(selectedElement) {
   return {
     isOffCanvas,
     cropParams: {
+      element: selectedElement,
       offCanvasTop,
       offCanvasRight,
       offCanvasBottom,

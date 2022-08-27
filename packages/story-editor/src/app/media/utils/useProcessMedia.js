@@ -504,8 +504,8 @@ function useProcessMedia({
         updateElementById({
           elementId,
           properties: {
-            x: 0,
-            y: 0,
+            x: cropParams.element.x < 0 ? 0 : cropParams.element.x,
+            y: cropParams.element.y < 0 ? 0 : cropParams.element.y,
             width: cropWidth,
             height: cropHeight,
           },
