@@ -27,7 +27,7 @@ import ArchiveSetting, { TEXT } from '..';
 import { ARCHIVE_TYPE } from '../../../../constants';
 import { renderWithProviders } from '../../../../testUtils';
 
-describe('Editor Settings: Archive page settings <ArchiveSetting />', function () {
+describe('Editor Settings: Archive page settings <ArchiveSetting />', () => {
   let archive;
   let mockUpdate;
 
@@ -40,7 +40,7 @@ describe('Editor Settings: Archive page settings <ArchiveSetting />', function (
     archive = ARCHIVE_TYPE.DEFAULT;
   });
 
-  it('should render archive dropdown button and helper text for default', function () {
+  it('should render archive dropdown button and helper text for default', () => {
     const archiveURL = 'http://www.example.com/custom-archive/';
     const defaultArchiveURL = 'http://www.example.com/web-stories/';
     renderWithProviders(
@@ -72,7 +72,7 @@ describe('Editor Settings: Archive page settings <ArchiveSetting />', function (
     expect(archiveDropdown).toHaveTextContent('Default');
   });
 
-  it('should render archive dropdown button and helper text for disabled', function () {
+  it('should render archive dropdown button and helper text for disabled', () => {
     const archiveURL = 'http://www.example.com/custom-archive/';
     const defaultArchiveURL = 'http://www.example.com/web-stories/';
     renderWithProviders(

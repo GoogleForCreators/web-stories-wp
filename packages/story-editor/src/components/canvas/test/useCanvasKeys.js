@@ -45,7 +45,7 @@ const Canvas = () => {
 const mockUseHighlights = useHighlights;
 const setHighlights = jest.fn();
 
-describe('useCanvasKeys', function () {
+describe('useCanvasKeys', () => {
   beforeAll(() => {
     elementTypes.forEach(registerElementType);
     mockUseHighlights.mockImplementation(() => ({

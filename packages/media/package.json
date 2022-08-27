@@ -26,12 +26,13 @@
   },
   "customExports": {
     ".": {
-      "default": "./src/index.js"
+      "default": "./src/index.ts"
     }
   },
   "main": "dist/index.js",
   "module": "dist-module/index.js",
-  "source": "src/index.js",
+  "types": "dist-types/index.d.ts",
+  "source": "src/index.ts",
   "publishConfig": {
     "access": "public"
   },
@@ -43,5 +44,7 @@
     "mime": "^3.0.0",
     "prop-types": "^15.8.1"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@types/mime": "^3.0.1"
+  }
 }

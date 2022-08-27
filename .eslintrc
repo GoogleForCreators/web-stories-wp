@@ -24,6 +24,7 @@
     "styled-components-a11y"
   ],
   "parserOptions": {
+    "ecmaVersion": "latest",
     "ecmaFeatures": {
       "jsx": true
     }
@@ -35,6 +36,8 @@
     "consistent-return": "error",
     "curly": ["error", "all"],
     "default-case": "error",
+    "eol-last": "error",
+    "eqeqeq": "error",
     "guard-for-in": "error",
     "no-await-in-loop": "error",
     "no-constant-binary-expression": "error",
@@ -48,6 +51,8 @@
     "no-new": "error",
     "no-new-func": "error",
     "no-new-wrappers": "error",
+    "no-multiple-empty-lines": "error",
+    "no-trailing-spaces": "error",
     "header/header": [ "error", "block", [
       "",
       {
@@ -119,6 +124,12 @@
     "no-console": "error",
     "no-duplicate-imports": "error",
     "no-var": "error",
+    "prefer-arrow-callback": [
+      "error",
+      {
+        "allowNamedFunctions": true
+      }
+    ],
     "prefer-const": "error",
     "prefer-object-spread": "error",
     "prefer-promise-reject-errors": "error",
@@ -309,6 +320,17 @@
         "no-unused-vars": "off",
         "no-shadow": "off",
         "@typescript-eslint/no-shadow": "error"
+      }
+    },
+    {
+      "files": [
+        "typings/**/*.ts",
+        "**/*.d.ts"
+      ],
+      "rules": {
+        "no-undef": "off",
+        "no-unused-vars": "off",
+        "no-var": "off"
       }
     },
     {

@@ -99,12 +99,12 @@ const mockFilterState = {
   updateSort,
 };
 
-describe('Explore Templates <Content />', function () {
+describe('Explore Templates <Content />', () => {
   beforeEach(() => {
     mockUseTemplateFilters.mockImplementation(() => mockFilterState);
   });
 
-  it('should render the content grid with the correct template count.', function () {
+  it('should render the content grid with the correct template count.', () => {
     renderWithProviders(
       <ConfigProvider config={{ cdnURL: 'cdn.example.com' }}>
         <LayoutProvider>
@@ -128,7 +128,7 @@ describe('Explore Templates <Content />', function () {
     expect(useButtons).toHaveLength(fakeTemplates.length);
   });
 
-  it('should show "No templates currently available." if no templates are present.', function () {
+  it('should show "No templates currently available." if no templates are present.', () => {
     renderWithProviders(
       <LayoutProvider>
         <Content
@@ -149,7 +149,7 @@ describe('Explore Templates <Content />', function () {
     ).toBeInTheDocument();
   });
 
-  it('should show "Sorry, we couldn\'t find any results matching "scooby dooby doo" if no templates are found for a search query are present.', function () {
+  it('should show "Sorry, we couldn\'t find any results matching "scooby dooby doo" if no templates are found for a search query are present.', () => {
     renderWithProviders(
       <LayoutProvider>
         <Content

@@ -25,8 +25,8 @@ import { screen } from '@testing-library/react';
 import { renderWithProviders } from '../../../testUtils/renderWithProviders';
 import { BaseTooltip } from '..';
 
-describe('<BaseTooltip />', function () {
-  it('should be not visible when the mouse is not hovering over the container', function () {
+describe('<BaseTooltip />', () => {
+  it('should be not visible when the mouse is not hovering over the container', () => {
     renderWithProviders(
       <BaseTooltip title={'Some tooltip text'}>
         <button>{'hover to see tooltip'}</button>

@@ -113,6 +113,7 @@ class Discovery extends DependencyInjectedTestCase {
 	 */
 	public function test_register(): void {
 		$this->instance->register();
+		$this->assertSame( 10, has_action( 'web_stories_story_head', [ $this->instance, 'print_document_title' ] ) );
 		$this->assertSame( 10, has_action( 'web_stories_story_head', [ $this->instance, 'print_metadata' ] ) );
 		$this->assertSame( 10, has_action( 'web_stories_story_head', [ $this->instance, 'print_schemaorg_metadata' ] ) );
 		$this->assertSame( 10, has_action( 'web_stories_story_head', [ $this->instance, 'print_open_graph_metadata' ] ) );
@@ -126,6 +127,14 @@ class Discovery extends DependencyInjectedTestCase {
 	 */
 	public function test_print_metadata(): void {
 		$output = get_echo( [ $this->instance, 'print_metadata' ] );
+		$this->assertStringContainsString( '<meta', $output );
+	}
+
+	/**
+	 * @covers ::print_metadata
+	 */
+	public function test_print_document_title(): void {
+		$output = get_echo( [ $this->instance, 'print_document_title' ] );
 		$this->assertStringContainsString( '<title>', $output );
 	}
 

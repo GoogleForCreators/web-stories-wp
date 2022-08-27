@@ -134,7 +134,7 @@ function StoryProvider({ storyId, initialEdits, children }) {
     capabilities,
     restore,
     storyId,
-    isNew: story.isNew,
+    isNew: story.status === 'auto-draft',
   });
 
   const fullStory = useMemo(

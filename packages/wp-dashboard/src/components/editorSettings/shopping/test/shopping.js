@@ -52,12 +52,12 @@ const config = {
   },
 };
 
-describe('Editor Settings: Shopping <Shopping />', function () {
+describe('Editor Settings: Shopping <Shopping />', () => {
   beforeEach(() => {
     updateSettings.mockReset();
   });
 
-  it('should render Shopify inputs and helper texts', function () {
+  it('should render Shopify inputs and helper texts', () => {
     renderWithProviders(
       <ConfigProvider config={config}>
         <ShoppingSettings
@@ -79,7 +79,7 @@ describe('Editor Settings: Shopping <Shopping />', function () {
     expect(sectionHeader).toBeInTheDocument();
   });
 
-  it('should render WooCommerce inputs and helper texts', function () {
+  it('should render WooCommerce inputs and helper texts', () => {
     renderWithProviders(
       <ConfigProvider config={config}>
         <ShoppingSettings
@@ -100,7 +100,7 @@ describe('Editor Settings: Shopping <Shopping />', function () {
     );
   });
 
-  it('should render WooCommerce inputs and activation message', function () {
+  it('should render WooCommerce inputs and activation message', () => {
     renderWithProviders(
       <ConfigProvider config={config}>
         <ShoppingSettings
@@ -125,7 +125,7 @@ describe('Editor Settings: Shopping <Shopping />', function () {
     );
   });
 
-  it('should render WooCommerce  inputs and install message', function () {
+  it('should render WooCommerce  inputs and install message', () => {
     renderWithProviders(
       <ConfigProvider config={config}>
         <ShoppingSettings
@@ -151,7 +151,7 @@ describe('Editor Settings: Shopping <Shopping />', function () {
     );
   });
 
-  it('should update settings when pressing enter', function () {
+  it('should update settings when pressing enter', () => {
     renderWithProviders(
       <ConfigProvider config={config}>
         <ShoppingSettings
@@ -175,7 +175,7 @@ describe('Editor Settings: Shopping <Shopping />', function () {
     });
   });
 
-  it('should update settings when clicking save button', function () {
+  it('should update settings when clicking save button', () => {
     renderWithProviders(
       <ConfigProvider config={config}>
         <ShoppingSettings
@@ -206,7 +206,7 @@ describe('Editor Settings: Shopping <Shopping />', function () {
     });
   });
 
-  it('should render test api connection button', async function () {
+  it('should render test api connection button', async () => {
     renderWithProviders(
       <ConfigProvider config={config}>
         <ShoppingSettings

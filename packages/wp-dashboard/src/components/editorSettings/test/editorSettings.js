@@ -198,13 +198,13 @@ const renderEditorSettings = (values) => {
   );
 };
 
-describe('Editor Settings: <Editor Settings />', function () {
+describe('Editor Settings: <Editor Settings />', () => {
   afterEach(() => {
     mockFetchSettings.mockReset();
     mockRemovePublisherLogo.mockReset();
   });
 
-  it('should render settings page with google analytics and publisher logo sections', function () {
+  it('should render settings page with google analytics and publisher logo sections', () => {
     const { container } = renderEditorSettings({
       googleAnalyticsId: 'UA-098909-05',
       usingLegacyAnalytics: false,
@@ -238,7 +238,7 @@ describe('Editor Settings: <Editor Settings />', function () {
     ).toBeInTheDocument();
   });
 
-  it('should render settings page with publisher logos', function () {
+  it('should render settings page with publisher logos', () => {
     const { container } = renderEditorSettings({
       googleAnalyticsId: 'UA-098909-05',
       usingLegacyAnalytics: false,
@@ -255,7 +255,7 @@ describe('Editor Settings: <Editor Settings />', function () {
     );
   });
 
-  it('should call mockRemovePublisherLogo when a logo is removed', function () {
+  it('should call mockRemovePublisherLogo when a logo is removed', () => {
     renderEditorSettings({
       googleAnalyticsId: 'UA-098909-05',
       usingLegacyAnalytics: false,
@@ -282,7 +282,7 @@ describe('Editor Settings: <Editor Settings />', function () {
     expect(mockRemovePublisherLogo).toHaveBeenCalledTimes(1);
   });
 
-  it('should render settings page without file upload section when canUploadFiles is false', function () {
+  it('should render settings page without file upload section when canUploadFiles is false', () => {
     const { container } = renderEditorSettings({
       googleAnalyticsId: 'UA-098909-05',
       usingLegacyAnalytics: false,
@@ -296,7 +296,7 @@ describe('Editor Settings: <Editor Settings />', function () {
     expect(screen.queryByTestId('upload-file-input')).not.toBeInTheDocument();
   });
 
-  it('should render settings page with AdSense', function () {
+  it('should render settings page with AdSense', () => {
     const { container } = renderEditorSettings({
       googleAnalyticsId: 'UA-098909-05',
       usingLegacyAnalytics: false,
