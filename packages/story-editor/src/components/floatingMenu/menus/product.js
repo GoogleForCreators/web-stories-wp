@@ -23,7 +23,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { Separator, Dismiss, Trash } from '../elements';
+import { Separator, Dismiss, Trash, Settings } from '../elements';
 import { useStory } from '../../../app/story';
 import { useConfig } from '../../../app/config';
 import ProductDropdown from '../../library/panes/shopping/productDropdown';
@@ -63,6 +63,7 @@ const FloatingProductMenu = memo(function FloatingProductMenu() {
         title={__('Remove product', 'web-stories')}
         handleRemove={deleteSelectedElements}
       />
+      <Settings />
       <Dismiss />
     </>
   );

@@ -35,7 +35,7 @@ describe('reducer', () => {
     act(() => {
       result.current.actions.fetchMediaStart({
         provider: 'provider',
-        pageToken: 'page2',
+        pageToken: 2,
       });
     });
 
@@ -76,7 +76,7 @@ describe('reducer', () => {
       result.current.actions.fetchMediaSuccess({
         provider: 'provider',
         media: [{ id: 'id' }],
-        nextPageToken: 'page2',
+        nextPageToken: 2,
         totalPages: 10,
       });
     });
@@ -85,7 +85,7 @@ describe('reducer', () => {
       expect.objectContaining({
         media: [{ id: 'id' }],
         pageToken: undefined,
-        nextPageToken: 'page2',
+        nextPageToken: 2,
         totalPages: 10,
         hasMore: true,
       })
@@ -101,7 +101,7 @@ describe('reducer', () => {
       result.current.actions.fetchMediaSuccess({
         provider: 'provider',
         media: [{ id: 'id1' }],
-        nextPageToken: 'page2',
+        nextPageToken: 2,
         totalPages: 10,
       });
     });
@@ -110,8 +110,8 @@ describe('reducer', () => {
       result.current.actions.fetchMediaSuccess({
         provider: 'provider',
         media: [{ id: 'id2' }],
-        pageToken: 'page2',
-        nextPageToken: 'page3',
+        pageToken: 2,
+        nextPageToken: 3,
         totalPages: 10,
       });
     });
@@ -119,7 +119,7 @@ describe('reducer', () => {
     expect(result.current.state).toStrictEqual(
       expect.objectContaining({
         media: [{ id: 'id1' }, { id: 'id2' }],
-        nextPageToken: 'page3',
+        nextPageToken: 3,
         totalPages: 10,
         hasMore: true,
       })
@@ -134,7 +134,7 @@ describe('reducer', () => {
     act(() => {
       result.current.actions.fetchMediaSuccess({
         media: [{ id: 'id1' }],
-        nextPageToken: 'page2',
+        nextPageToken: 2,
         totalPages: 10,
       });
     });
@@ -142,7 +142,7 @@ describe('reducer', () => {
     act(() => {
       result.current.actions.fetchMediaSuccess({
         media: [{ id: 'id2' }],
-        nextPageToken: 'page2',
+        nextPageToken: 2,
         totalPages: 10,
       });
     });
@@ -150,7 +150,7 @@ describe('reducer', () => {
     expect(result.current.state).toStrictEqual(
       expect.objectContaining({
         media: [{ id: 'id2' }],
-        nextPageToken: 'page2',
+        nextPageToken: 2,
         totalPages: 10,
         hasMore: true,
       })
@@ -183,7 +183,7 @@ describe('reducer', () => {
       result.current.actions.fetchMediaSuccess({
         provider: 'provider',
         media: [{ id: 'id' }],
-        nextPageToken: 'page2',
+        nextPageToken: 2,
       });
     });
 
@@ -192,19 +192,19 @@ describe('reducer', () => {
     });
 
     expect(result.current.state).toStrictEqual(
-      expect.objectContaining({ pageToken: 'page2', nextPageToken: 'page2' })
+      expect.objectContaining({ pageToken: 2, nextPageToken: 2 })
     );
 
     act(() => {
       result.current.actions.fetchMediaSuccess({
         provider: 'provider',
         media: [{ id: 'id' }],
-        nextPageToken: 'page3',
+        nextPageToken: 3,
       });
     });
 
     expect(result.current.state).toStrictEqual(
-      expect.objectContaining({ pageToken: 'page2', nextPageToken: 'page3' })
+      expect.objectContaining({ pageToken: 2, nextPageToken: 3 })
     );
   });
 });
