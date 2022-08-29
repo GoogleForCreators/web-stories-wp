@@ -487,14 +487,9 @@ function useProcessMedia({
    * @param {import('@googleforcreators/media').Resource} resource Resource object.
    */
   const cropHiddenVideo = useCallback(
-    ({ id: elementId, resource: oldResource, width, height }, cropParams) => {
+    ({ id: elementId, resource: oldResource }, cropParams) => {
       const { id: resourceId, src: url, mimeType } = oldResource;
-      const { offCanvasTop, offCanvasRight, offCanvasBottom, offCanvasLeft } =
-        cropParams;
-      const cropWidth = width - (offCanvasLeft + offCanvasRight);
-      const cropHeight = height - (offCanvasTop + offCanvasBottom);
-      const cropX = offCanvasLeft;
-      const cropY = offCanvasTop;
+      const { newWidth, newHeight, cropElement } = cropParams;
 
       const onUploadSuccess = ({ id, resource }) => {
         copyResourceData({ oldResource, resource });
@@ -504,10 +499,10 @@ function useProcessMedia({
         updateElementById({
           elementId,
           properties: {
-            x: cropParams.element.x < 0 ? 0 : cropParams.element.x,
-            y: cropParams.element.y < 0 ? 0 : cropParams.element.y,
-            width: cropWidth,
-            height: cropHeight,
+            x: cropElement.x < 0 ? 0 : cropElement.x,
+            y: cropElement.y < 0 ? 0 : cropElement.y,
+            width: newWidth,
+            height: newHeight,
           },
         });
 
@@ -529,12 +524,7 @@ function useProcessMedia({
         let file = false;
         try {
           const originalFile = await fetchRemoteFile(url, mimeType);
-          file = await cropHidden(originalFile, {
-            cropWidth,
-            cropHeight,
-            cropX,
-            cropY,
-          });
+          file = await cropHidden(originalFile, cropParams);
           await file.arrayBuffer();
           await uploadMedia([file], {
             onUploadSuccess,

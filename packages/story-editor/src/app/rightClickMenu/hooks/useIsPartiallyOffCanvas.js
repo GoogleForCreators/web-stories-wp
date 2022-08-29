@@ -16,9 +16,14 @@
 /**
  * External dependencies
  */
-import { PAGE_HEIGHT, PAGE_WIDTH } from '@googleforcreators/units';
+import { useUnits, PAGE_HEIGHT, PAGE_WIDTH } from '@googleforcreators/units';
 
 function useIsPartiallyOffCanvas(selectedElement) {
+  const { dataToEditorX, dataToEditorY } = useUnits((state) => ({
+    dataToEditorX: state.actions.dataToEditorX,
+    dataToEditorY: state.actions.dataToEditorY,
+  }));
+
   const { x, y, width, height } = selectedElement;
   let isOffCanvas = false;
   let offCanvasTop = 0;
@@ -65,14 +70,29 @@ function useIsPartiallyOffCanvas(selectedElement) {
     isOffCanvas = true;
   }
 
+  const percentage = width / selectedElement.resource.width;
+  const multiplier = 100 / (percentage * 100);
+  const offCanvasX = Math.floor((offCanvasLeft + offCanvasRight) * multiplier);
+  const offCanvasY = Math.floor((offCanvasTop + offCanvasBottom) * multiplier);
+  const cropWidth = selectedElement.resource.width - offCanvasX;
+  const cropHeight = selectedElement.resource.height - offCanvasY;
+  const cropX = Math.floor(offCanvasLeft * multiplier);
+  const cropY = Math.floor(offCanvasTop * multiplier);
+
   return {
     isOffCanvas,
     cropParams: {
-      element: selectedElement,
+      cropElement: selectedElement,
       offCanvasTop,
       offCanvasRight,
       offCanvasBottom,
       offCanvasLeft,
+      cropWidth,
+      cropHeight,
+      cropX,
+      cropY,
+      newWidth: dataToEditorX(cropWidth),
+      newHeight: dataToEditorY(cropHeight),
     },
   };
 }
