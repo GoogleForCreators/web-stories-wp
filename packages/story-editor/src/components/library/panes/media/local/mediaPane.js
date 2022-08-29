@@ -96,6 +96,7 @@ function MediaPane(props) {
   const {
     hasMore,
     media,
+    uploadingMedia,
     isMediaLoading,
     isMediaLoaded,
     mediaType,
@@ -109,6 +110,7 @@ function MediaPane(props) {
       state: {
         hasMore,
         media,
+        uploadingMedia,
         isMediaLoading,
         isMediaLoaded,
         mediaType,
@@ -120,6 +122,9 @@ function MediaPane(props) {
       return {
         hasMore,
         media,
+        // If the media library is empty and we're still loading new items,
+        // do not display uploading items either for better UX.
+        uploadingMedia: !media.length && isMediaLoading ? [] : uploadingMedia,
         isMediaLoading,
         isMediaLoaded,
         mediaType,
@@ -234,7 +239,7 @@ function MediaPane(props) {
           </FilterArea>
         </PaneHeader>
 
-        {isMediaLoaded && !media.length ? (
+        {isMediaLoaded && !media.length && !uploadingMedia.length ? (
           <MediaGalleryMessage>
             {isSearching
               ? __('No results found.', 'web-stories')
@@ -245,6 +250,7 @@ function MediaPane(props) {
             providerType="local"
             canEditMedia={hasUploadMediaAction}
             resources={media}
+            uploadingResources={uploadingMedia}
             isMediaLoading={isMediaLoading}
             isMediaLoaded={isMediaLoaded}
             hasMore={hasMore}
