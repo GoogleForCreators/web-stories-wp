@@ -20,7 +20,7 @@ jest.mock('../shared');
  * Internal dependencies
  */
 import trackScreenView from '../trackScreenView';
-import { config, gtag } from '../shared';
+import { config, ControlParams, gtag } from '../shared';
 
 describe('trackScreenView', () => {
   afterEach(() => {
@@ -35,8 +35,8 @@ describe('trackScreenView', () => {
     config.trackingEnabled = true;
     config.trackingId = 'UA-12345678-1';
 
-    gtag.mockImplementationOnce((type, eventName, eventData) => {
-      eventData.event_callback();
+    jest.mocked(gtag).mockImplementationOnce((_type, _eventName, eventData) => {
+      (eventData as ControlParams).event_callback?.();
     });
 
     await trackScreenView('Explore Templates');

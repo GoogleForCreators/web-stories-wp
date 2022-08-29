@@ -28,8 +28,9 @@
     "pretty": true,
     "sourceMap": true,
     "typeRoots": ["./typings", "./node_modules/@types"],
-    "types": []
+    "types": ["node", "jest"]
   },
+  "include": ["typings/**/*"],
   "exclude": [
     "packages/*/dist-*/**",
     "packages/*/dist/**",

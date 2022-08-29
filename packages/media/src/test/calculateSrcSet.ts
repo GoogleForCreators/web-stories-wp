@@ -18,137 +18,211 @@
  * Internal dependencies
  */
 import calculateSrcSet from '../calculateSrcSet';
+import createResource from '../createResource';
+import { ResourceType } from '../types';
 
 describe('calculateSrcSet', () => {
   it('should generate srcset properly', () => {
-    const resource = {
+    const resource = createResource({
+      id: 123,
       width: 400,
       height: 800,
+      type: ResourceType.IMAGE,
+      mimeType: 'image/jpeg',
+      src: 'URL',
+      alt: '',
       sizes: {
         size1: {
+          mimeType: 'image/jpeg',
           sourceUrl: 'URL1',
           width: 200,
           height: 400,
         },
         size2: {
+          mimeType: 'image/jpeg',
           sourceUrl: 'URL2',
           width: 400,
           height: 800,
         },
       },
-    };
+    });
 
     const srcSet = calculateSrcSet(resource);
     expect(srcSet).toBe('URL2 400w,URL1 200w');
   });
 
   it("should skip images that don't match the largest image's orientation", () => {
-    const resource = {
+    const resource = createResource({
+      id: 123,
       width: 400,
       height: 800,
+      type: ResourceType.IMAGE,
+      mimeType: 'image/jpeg',
+      src: 'URL',
+      alt: '',
       sizes: {
         size1: {
+          mimeType: 'image/jpeg',
           sourceUrl: 'URL1',
           width: 200,
           height: 400,
         },
         size2: {
+          mimeType: 'image/jpeg',
           sourceUrl: 'URL2',
           width: 400,
           height: 800,
         },
         size3: {
+          mimeType: 'image/jpeg',
           sourceUrl: 'URL3',
           width: 400,
           height: 410,
         },
       },
-    };
+    });
 
     const srcSet = calculateSrcSet(resource);
     expect(srcSet).toBe('URL2 400w,URL1 200w');
   });
 
   it('should remove duplicate width images', () => {
-    const resource = {
+    const resource = createResource({
+      id: 123,
       width: 800,
       height: 1600,
+      type: ResourceType.IMAGE,
+      mimeType: 'image/jpeg',
+      src: 'URL',
+      alt: '',
       sizes: {
         size1: {
+          mimeType: 'image/jpeg',
           sourceUrl: 'URL1',
           width: 200,
           height: 400,
         },
         size2: {
+          mimeType: 'image/jpeg',
           sourceUrl: 'URL2',
           width: 400,
           height: 800,
         },
         size3: {
+          mimeType: 'image/jpeg',
           sourceUrl: 'URL3',
           width: 200,
           height: 400,
         },
         size4: {
+          mimeType: 'image/jpeg',
           sourceUrl: 'URL3',
           width: 800,
           height: 1600,
         },
       },
-    };
+    });
 
     const srcSet = calculateSrcSet(resource);
     expect(srcSet).toBe('URL3 800w,URL2 400w,URL1 200w');
   });
 
   it('should skip sizes that are invalid', () => {
-    const resource = {
+    const resource = createResource({
+      id: 123,
+      type: ResourceType.IMAGE,
+      mimeType: 'image/jpeg',
+      alt: '',
       src: 'default-url',
       width: 400,
       height: 200,
       sizes: {
-        img1: { height: 100, sourceUrl: 'small-url' },
-        img2: { width: 300, height: 150 },
-        img3: { width: 400, height: 200, sourceUrl: 'large-url' },
+        img1: { mimeType: 'image/jpeg', height: 100, sourceUrl: 'small-url' },
+        img2: {
+          mimeType: 'image/jpeg',
+          width: 300,
+          height: 150,
+          sourceUrl: '',
+        },
+        img3: {
+          mimeType: 'image/jpeg',
+          width: 400,
+          height: 200,
+          sourceUrl: 'large-url',
+        },
       },
-    };
+    });
 
     const srcSet = calculateSrcSet(resource);
     expect(srcSet).toBe('large-url 400w');
   });
 
   it('should encode URLs with spaces', () => {
-    const resource = {
+    const resource = createResource({
+      id: 123,
+      type: ResourceType.IMAGE,
+      mimeType: 'image/jpeg',
+      alt: '',
       src: 'default-url',
       width: 500,
       height: 500,
       sizes: {
-        img1: { width: 100, height: 100, sourceUrl: 'small url' },
-        img2: { width: 200, height: 200, sourceUrl: 'medium url' },
-        img3: { width: 300, height: 300, sourceUrl: 'large url' },
+        img1: {
+          mimeType: 'image/jpeg',
+          width: 100,
+          height: 100,
+          sourceUrl: 'small url',
+        },
+        img2: {
+          mimeType: 'image/jpeg',
+          width: 200,
+          height: 200,
+          sourceUrl: 'medium url',
+        },
+        img3: {
+          mimeType: 'image/jpeg',
+          width: 300,
+          height: 300,
+          sourceUrl: 'large url',
+        },
       },
-    };
+    });
 
     const srcSet = calculateSrcSet(resource);
     expect(srcSet).toBe('large%20url 300w,medium%20url 200w,small%20url 100w');
   });
 
   it('should not encode already encoded URLs', () => {
-    const resource = {
+    const resource = createResource({
+      id: 123,
+      type: ResourceType.IMAGE,
+      mimeType: 'image/jpeg',
+      alt: '',
       src: 'default-url',
       width: 500,
       height: 500,
       sizes: {
         img1: {
+          mimeType: 'image/jpeg',
           width: 100,
           height: 100,
           sourceUrl:
             'https://firebasestorage.googleapis.com/v0/b/c-dashboard-d4a82.appspot.com/o/media%2FNurUn5ekSeOkSCfk1yPIkg17buI3%2Fimages%2F1650068451121-omid-armin-nACf6L_pXq8-unsplash.jpeg?alt=media&token=edc4dfd7-6ac1-44a0-83b7-1aa99a3adad3',
         },
-        img2: { width: 200, height: 200, sourceUrl: 'medium%2Furl' },
-        img3: { width: 300, height: 300, sourceUrl: 'large%2Furl' },
+        img2: {
+          mimeType: 'image/jpeg',
+          width: 200,
+          height: 200,
+          sourceUrl: 'medium%2Furl',
+        },
+        img3: {
+          mimeType: 'image/jpeg',
+          width: 300,
+          height: 300,
+          sourceUrl: 'large%2Furl',
+        },
       },
-    };
+    });
 
     const srcSet = calculateSrcSet(resource);
     expect(srcSet).toBe(
@@ -157,16 +231,35 @@ describe('calculateSrcSet', () => {
   });
 
   it('should encode URLs with multiple spaces', () => {
-    const resource = {
+    const resource = createResource({
+      id: 123,
+      type: ResourceType.IMAGE,
+      mimeType: 'image/jpeg',
+      alt: '',
       src: 'default-url',
       width: 500,
       height: 500,
       sizes: {
-        img1: { width: 100, height: 100, sourceUrl: 'small      url' },
-        img2: { width: 200, height: 200, sourceUrl: 'medium     url' },
-        img3: { width: 300, height: 300, sourceUrl: 'large      url' },
+        img1: {
+          mimeType: 'image/jpeg',
+          width: 100,
+          height: 100,
+          sourceUrl: 'small      url',
+        },
+        img2: {
+          mimeType: 'image/jpeg',
+          width: 200,
+          height: 200,
+          sourceUrl: 'medium     url',
+        },
+        img3: {
+          mimeType: 'image/jpeg',
+          width: 300,
+          height: 300,
+          sourceUrl: 'large      url',
+        },
       },
-    };
+    });
 
     const srcSet = calculateSrcSet(resource);
     expect(srcSet).toBe(
@@ -175,134 +268,178 @@ describe('calculateSrcSet', () => {
   });
 
   it('should ignore sizes with empty URLs', () => {
-    const resource = {
+    const resource = createResource({
+      id: 123,
+      type: ResourceType.IMAGE,
+      mimeType: 'image/jpeg',
+      alt: '',
       src: 'default-url',
       width: 500,
       height: 500,
       sizes: {
-        img1: { width: 100, height: 100, sourceUrl: '' },
-        img2: { width: 200, height: 200, sourceUrl: '' },
-        img3: { width: 300, height: 300, sourceUrl: '' },
+        img1: {
+          mimeType: 'image/jpeg',
+          width: 100,
+          height: 100,
+          sourceUrl: '',
+        },
+        img2: {
+          mimeType: 'image/jpeg',
+          width: 200,
+          height: 200,
+          sourceUrl: '',
+        },
+        img3: {
+          mimeType: 'image/jpeg',
+          width: 300,
+          height: 300,
+          sourceUrl: '',
+        },
       },
-    };
+    });
 
     const srcSet = calculateSrcSet(resource);
     expect(srcSet).toBe('');
   });
 
   it('should convert strings when checking for duplicates', () => {
-    const resource = {
+    const resource = createResource({
+      id: 123,
+      type: ResourceType.IMAGE,
+      mimeType: 'image/jpeg',
+      alt: '',
       src: 'image.jpg',
       width: 1000,
       height: 1333,
       sizes: {
         thumbnail: {
+          mimeType: 'image/jpeg',
           width: 300,
           height: 300,
           sourceUrl: 'image-300x300.jpg',
         },
         medium: {
+          mimeType: 'image/jpeg',
           width: 225,
           height: 300,
           sourceUrl: 'image-225x300.jpg',
         },
         medium_large: {
+          mimeType: 'image/jpeg',
           width: 768,
           height: 1024,
           sourceUrl: 'image-768x1024.jpg',
         },
         large: {
+          mimeType: 'image/jpeg',
           width: 768,
           height: 1024,
           sourceUrl: 'image-768x1024.jpg',
         },
         'rss-image': {
+          mimeType: 'image/jpeg',
           width: 225,
           height: 300,
           sourceUrl: 'image-225x300.jpg',
         },
         'featured-long': {
+          mimeType: 'image/jpeg',
           width: 600,
           height: 850,
           sourceUrl: 'image-600x850.jpg',
         },
         'featured-wide': {
+          mimeType: 'image/jpeg',
           width: 800,
           height: 560,
           sourceUrl: 'image-800x560.jpg',
         },
         'featured-square': {
+          mimeType: 'image/jpeg',
           width: 600,
           height: 600,
           sourceUrl: 'image-600x600.jpg',
         },
         'single-post-featured': {
+          mimeType: 'image/jpeg',
           width: 1000,
           height: 500,
           sourceUrl: 'image-1000x500.jpg',
         },
         wp_rp_thumbnail: {
+          mimeType: 'image/jpeg',
           width: 400,
           height: 400,
           sourceUrl: 'image-400x400.jpg',
         },
         thumbnail_old_300x300: {
+          mimeType: 'image/jpeg',
           width: '300',
           height: '300',
           sourceUrl: 'image-300x300.jpg',
         },
         medium_old_225x300: {
+          mimeType: 'image/jpeg',
           width: '225',
           height: '300',
           sourceUrl: 'image-225x300.jpg',
         },
         medium_large_old_768x1024: {
+          mimeType: 'image/jpeg',
           width: '768',
           height: '1024',
           sourceUrl: 'image-768x1024.jpg',
         },
         large_old_768x1024: {
+          mimeType: 'image/jpeg',
           width: '768',
           height: '1024',
           sourceUrl: 'image-768x1024.jpg',
         },
         'rss-image_old_225x300': {
+          mimeType: 'image/jpeg',
           width: '225',
           height: '300',
           sourceUrl: 'image-225x300.jpg',
         },
         'square-entry-image': {
+          mimeType: 'image/jpeg',
           width: '400',
           height: '400',
           sourceUrl: 'image-400x400.jpg',
         },
         'vertical-entry-image': {
+          mimeType: 'image/jpeg',
           width: '600',
           height: '850',
           sourceUrl: 'image-600x850.jpg',
         },
         'small-vertical-entry-image': {
+          mimeType: 'image/jpeg',
           width: '150',
           height: '200',
           sourceUrl: 'image-150x200.jpg',
         },
         'horizontal-entry-image': {
+          mimeType: 'image/jpeg',
           width: '775',
           height: '500',
           sourceUrl: 'image-775x500.jpg',
         },
         wp_rp_thumbnail_old_400x400: {
+          mimeType: 'image/jpeg',
           width: '400',
           height: '400',
           sourceUrl: 'image-400x400.jpg',
         },
         full: {
+          mimeType: 'image/jpeg',
           width: 1000,
           height: 1333,
           sourceUrl: 'image.jpg',
         },
       },
-    };
+    });
 
     const srcSet = calculateSrcSet(resource);
     expect(srcSet).toBe(
@@ -311,31 +448,38 @@ describe('calculateSrcSet', () => {
   });
 
   it('should not break image URLs with commas in them', () => {
-    const resource = {
+    const resource = createResource({
+      id: 123,
+      type: ResourceType.IMAGE,
+      mimeType: 'image/jpeg',
+      alt: '',
       src: 'image.jpg',
       width: 640,
       height: 853,
       sizes: {
         thumbnail: {
+          mimeType: 'image/jpeg',
           width: 150,
           height: 200,
           sourceUrl:
             'https://example.com/images/w_150,h_200,c_scale/image.jpg?_i=AA',
         },
         medium: {
+          mimeType: 'image/jpeg',
           width: 225,
           height: 300,
           sourceUrl:
             'https://example.com/images/w_225,h_300,c_scale/image.jpg?_i=AA',
         },
         full: {
+          mimeType: 'image/jpeg',
           width: 640,
           height: 853,
           sourceUrl:
             'https://example.com/images/w_640,h_853,c_scale/image.jpg?_i=AA',
         },
       },
-    };
+    });
 
     const srcSet = calculateSrcSet(resource);
     expect(srcSet).toBe(

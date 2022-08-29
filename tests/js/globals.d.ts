@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,23 +14,4 @@
  * limitations under the License.
  */
 
-jest.mock('../shared');
-
-/**
- * Internal dependencies
- */
-import { config } from '../shared';
-import initializeTracking from '../initializeTracking';
-
-describe('initializeTracking', () => {
-  afterEach(() => {
-    config.trackingId = '';
-  });
-
-  it('sets app name in config', async () => {
-    config.trackingId = '1234567';
-    await initializeTracking('Foo App');
-
-    expect(config.appName).toBe('Foo App');
-  });
-});
+import 'jest-extended';

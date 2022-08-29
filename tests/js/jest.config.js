@@ -28,7 +28,8 @@ export default {
   resolver: '@web-stories-wp/jest-resolver',
   preset: 'ts-jest',
   transform: {
-    '^.+\\.[jt]sx?$': 'babel-jest',
+    '^.+\\.tsx?$': 'ts-jest',
+    '^.+\\.jsx?$': 'babel-jest',
   },
   moduleNameMapper: {
     '\\.svg': join(__dirname, '/svgrMock.js'),
@@ -52,6 +53,11 @@ export default {
     WEB_STORIES_DISABLE_OPTIMIZED_RENDERING: true,
     WEB_STORIES_DISABLE_PREVENT: true,
     WEB_STORIES_DISABLE_QUICK_TIPS: true,
+    'ts-jest': {
+      tsconfig: '<rootDir>/tests/js/tsconfig.json',
+      // Transform remaining JSX with Babel.
+      babelConfig: true,
+    },
   },
   setupFilesAfterEnv: ['jest-extended/all', '<rootDir>/tests/js/jest.setup'],
   testPathIgnorePatterns: [

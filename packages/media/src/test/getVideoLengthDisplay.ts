@@ -20,14 +20,12 @@
 import getVideoLengthDisplay from '../getVideoLengthDisplay';
 
 describe('getVideoLengthDisplay', () => {
-  it('should correctly format 0', () => {
-    expect(getVideoLengthDisplay(0, true)).toBe('0:00');
-  });
-
-  it('should return correct results', () => {
-    expect(getVideoLengthDisplay(1)).toBe('0:01');
-    expect(getVideoLengthDisplay(60)).toBe('1:00');
-    expect(getVideoLengthDisplay(610)).toBe('10:10');
-    expect(getVideoLengthDisplay(6000)).toBe('1:40:00');
+  it.each([
+    [0, '0:00'],
+    [60, '1:00'],
+    [610, '10:10'],
+    [6000, '1:40:00'],
+  ])('getVideoLengthDisplay(%d) should return %s', (length, expected) => {
+    expect(getVideoLengthDisplay(length)).toBe(expected);
   });
 });

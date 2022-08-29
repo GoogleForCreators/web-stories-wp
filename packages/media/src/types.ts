@@ -253,7 +253,17 @@ export interface ResourceSize {
   height: number;
 }
 
-export type ResourceId = string;
+// TODO: Enforce number type for dimensions already in wp-* integration packages.
+// TODO: Make sure all properties are required.
+// For this, move logic like normalizeResourceSizes and parts of calculateSrcSet.
+export interface ResourceSizeInput {
+  width?: number | string;
+  height?: number | string;
+  mimeType: string;
+  sourceUrl: string;
+}
+
+export type ResourceId = string | number;
 
 /** A media resource. */
 export interface Resource {
@@ -318,7 +328,7 @@ export interface ResourceInput {
    * The resource ID.
    * TODO: currently this value is local to the editor's media system.
    */
-  id: string;
+  id: ResourceId;
   /** The type of the resource. */
   type: ResourceType;
   /** The MIME type of the resource. E.g. "image/png". */
@@ -340,11 +350,11 @@ export interface ResourceInput {
   /** Whether the resource is a placeholder. */
   isPlaceholder?: boolean;
   /** Whether the resource needs a CORS proxy. */
-  needsProxy: boolean;
+  needsProxy?: boolean;
   /** Resource creation date. */
   creationDate?: string;
   /** Resource sizes */
-  sizes: { [key: string]: ResourceSize };
+  sizes: { [key: string]: ResourceSizeInput };
   /** Resource author a ttribution */
   attribution?: Attribution;
   /** The resource's poster. */

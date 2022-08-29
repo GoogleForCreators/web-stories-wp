@@ -20,7 +20,7 @@ jest.mock('../shared');
  * Internal dependencies
  */
 import trackError from '../trackError';
-import { config, gtag } from '../shared';
+import { config, ControlParams, gtag } from '../shared';
 
 describe('trackError', () => {
   afterEach(() => {
@@ -35,8 +35,8 @@ describe('trackError', () => {
     config.trackingEnabled = true;
     const error = new Error('mock error');
 
-    gtag.mockImplementationOnce((type, eventName, eventData) => {
-      eventData.event_callback();
+    jest.mocked(gtag).mockImplementationOnce((_type, _eventName, eventData) => {
+      (eventData as ControlParams).event_callback?.();
     });
     await trackError('test_error', error.message, true);
     expect(gtag).toHaveBeenCalledWith('event', 'exception', {

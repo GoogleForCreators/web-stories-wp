@@ -59,7 +59,4 @@ function useWhyDidYouUpdate(name: string, props: Record<string, unknown>) {
   });
 }
 
-const isDevelopment =
-  typeof WEB_STORIES_ENV !== 'undefined' && WEB_STORIES_ENV === 'development';
-
-export default isDevelopment ? useWhyDidYouUpdate : () => null;
+export default useWhyDidYouUpdate;

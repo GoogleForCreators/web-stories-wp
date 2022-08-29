@@ -19,7 +19,7 @@
  */
 import type { ResourceId } from './types';
 
-interface ResourceCacheEntry {
+export interface ResourceCacheEntry {
   url: string;
   type: 'cached' | 'fullsize';
 }

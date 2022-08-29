@@ -32,7 +32,7 @@ describe('trackTiming', () => {
   afterEach(() => {
     config.trackingAllowed = false;
     config.trackingEnabled = false;
-    config.appName = undefined;
+    config.appName = '';
 
     jest.clearAllMocks();
   });

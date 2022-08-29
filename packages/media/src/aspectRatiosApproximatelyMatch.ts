@@ -17,13 +17,18 @@
 /**
  * Internal dependencies
  */
-import type { Dimensions } from './types';
+import type { Dimensions, ResourceSize } from './types';
 
 function aspectRatiosApproximatelyMatch(
-  obj1: Dimensions,
-  obj2: Dimensions
+  obj1: Dimensions | ResourceSize,
+  obj2: Dimensions | ResourceSize
 ): boolean {
-  return Math.abs(obj1.width / obj1.height - obj2.width / obj2.height) < 0.01;
+  return (
+    Math.abs(
+      Number(obj1.width) / Number(obj1.height) -
+        Number(obj2.width) / Number(obj2.height)
+    ) < 0.01
+  );
 }
 
 export default aspectRatiosApproximatelyMatch;

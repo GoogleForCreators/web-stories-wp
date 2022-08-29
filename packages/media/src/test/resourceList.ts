@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import resourceList from '../resourceList';
+import resourceList, { ResourceCacheEntry } from '../resourceList';
 
 describe('resourceList', () => {
   beforeEach(() => {
@@ -26,7 +26,7 @@ describe('resourceList', () => {
 
   it('should set and get cached resource by id', () => {
     const id = 461;
-    const resourceState = {
+    const resourceState: ResourceCacheEntry = {
       type: 'cached',
       url: 'http://localhost/thumb.jpg',
     };
@@ -43,11 +43,11 @@ describe('resourceList', () => {
 
   it('should not update the resource to lower(cached) quality', () => {
     const id = 461;
-    const resourceStateCached = {
+    const resourceStateCached: ResourceCacheEntry = {
       type: 'cached',
       url: 'http://localhost/thumb.jpg',
     };
-    const resourceStateFullsize = {
+    const resourceStateFullsize: ResourceCacheEntry = {
       type: 'fullsize',
       url: 'http://localhost/full.jpg',
     };

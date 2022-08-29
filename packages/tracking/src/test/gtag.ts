@@ -22,8 +22,8 @@ import { DATA_LAYER } from '../constants';
 
 describe('gtag', () => {
   it('should push data to the data layer', () => {
-    gtag('Foo', 'Bar');
-    gtag('Bar', 'Baz');
+    gtag('event', 'Bar');
+    gtag('event', 'Baz');
     expect(window[DATA_LAYER]).toHaveLength(2);
   });
 });

@@ -17,18 +17,12 @@
 /**
  * Internal dependencies
  */
-import type { ResourceSize } from './types';
-
-interface ResourceSizeInput {
-  width: number | string;
-  height: number | string;
-  mimeType: string;
-  sourceUrl: string;
-}
+import type { ResourceSize, ResourceSizeInput } from './types';
 
 /**
  * Normalize resource sizes to ensure numerical values for dimensions.
  *
+ * @todo Move to wp-* integration packages.
  * @param {Object} sizes Sizes.
  * @return {Object} Normalized sizes.
  */
@@ -45,8 +39,8 @@ function normalizeResourceSizes(sizes?: { [key: string]: ResourceSizeInput }): {
     const data = sizes[size];
     normalizedSizes[size] = {
       ...data,
-      width: Number(data.width),
-      height: Number(data.height),
+      width: Number(data.width) || 0,
+      height: Number(data.height) || 0,
     };
   }
 

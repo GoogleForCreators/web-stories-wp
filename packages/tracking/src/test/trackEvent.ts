@@ -20,7 +20,7 @@ jest.mock('../shared');
  * Internal dependencies
  */
 import trackEvent from '../trackEvent';
-import { config, gtag } from '../shared';
+import { config, ControlParams, gtag } from '../shared';
 
 describe('trackEvent', () => {
   afterEach(() => {
@@ -34,23 +34,23 @@ describe('trackEvent', () => {
     config.trackingAllowed = true;
     config.trackingEnabled = true;
 
-    gtag.mockImplementationOnce((type, eventName, eventData) => {
-      eventData.event_callback();
+    jest.mocked(gtag).mockImplementationOnce((_type, _eventName, eventData) => {
+      (eventData as ControlParams).event_callback?.();
     });
 
-    await trackEvent('name', { foo: 'abc', bar: 'def', baz: 'ghi' });
+    await trackEvent('name', { name: 'abc', value: 'def', event_label: 'ghi' });
     expect(gtag).toHaveBeenCalledWith('event', 'name', {
       event_callback: expect.any(Function),
-      foo: 'abc',
-      bar: 'def',
-      baz: 'ghi',
+      name: 'abc',
+      value: 'def',
+      event_label: 'ghi',
     });
   });
 
   it('does not push to dataLayer when tracking is disabled', async () => {
     config.trackingEnabled = false;
 
-    await trackEvent('name', { foo: 'abc', bar: 'def', baz: 'ghi' });
+    await trackEvent('name', { name: 'abc', value: 'def', event_label: 'ghi' });
     expect(gtag).not.toHaveBeenCalled();
   });
 
@@ -60,68 +60,60 @@ describe('trackEvent', () => {
     config.trackingId = 'UA-12345678-1';
     config.trackingIdGA4 = 'G-ABC1234567';
 
-    gtag.mockImplementationOnce((type, eventName, eventData) => {
-      eventData.event_callback();
+    jest.mocked(gtag).mockImplementationOnce((_type, _eventName, eventData) => {
+      (eventData as ControlParams).event_callback?.();
     });
 
-    await trackEvent('name', { search_type: 'abc', bar: 'def', baz: 'ghi' });
-    await trackEvent('name', { duration: 123, bar: 'def', baz: 'ghi' });
-    await trackEvent('name', { title_length: 123, bar: 'def', baz: 'ghi' });
-    await trackEvent('name', { unread_count: 123, bar: 'def', baz: 'ghi' });
+    await trackEvent('name', {
+      search_type: 'abc',
+    });
+    await trackEvent('name', {
+      duration: 123,
+    });
+    await trackEvent('name', {
+      title_length: 123,
+    });
+    await trackEvent('name', {
+      unread_count: 123,
+    });
     expect(gtag).toHaveBeenNthCalledWith(1, 'event', 'name', {
       event_callback: expect.any(Function),
       event_label: 'abc',
-      bar: 'def',
-      baz: 'ghi',
       send_to: config.trackingId,
     });
     expect(gtag).toHaveBeenNthCalledWith(2, 'event', 'name', {
       event_callback: expect.any(Function),
       search_type: 'abc',
-      bar: 'def',
-      baz: 'ghi',
       send_to: config.trackingIdGA4,
     });
     expect(gtag).toHaveBeenNthCalledWith(3, 'event', 'name', {
       event_callback: expect.any(Function),
       value: 123,
-      bar: 'def',
-      baz: 'ghi',
       send_to: config.trackingId,
     });
     expect(gtag).toHaveBeenNthCalledWith(4, 'event', 'name', {
       event_callback: expect.any(Function),
       duration: 123,
-      bar: 'def',
-      baz: 'ghi',
       send_to: config.trackingIdGA4,
     });
     expect(gtag).toHaveBeenNthCalledWith(5, 'event', 'name', {
       event_callback: expect.any(Function),
       value: 123,
-      bar: 'def',
-      baz: 'ghi',
       send_to: config.trackingId,
     });
     expect(gtag).toHaveBeenNthCalledWith(6, 'event', 'name', {
       event_callback: expect.any(Function),
       title_length: 123,
-      bar: 'def',
-      baz: 'ghi',
       send_to: config.trackingIdGA4,
     });
     expect(gtag).toHaveBeenNthCalledWith(7, 'event', 'name', {
       event_callback: expect.any(Function),
       value: 123,
-      bar: 'def',
-      baz: 'ghi',
       send_to: config.trackingId,
     });
     expect(gtag).toHaveBeenNthCalledWith(8, 'event', 'name', {
       event_callback: expect.any(Function),
       unread_count: 123,
-      bar: 'def',
-      baz: 'ghi',
       send_to: config.trackingIdGA4,
     });
   });
