@@ -131,6 +131,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
   );
 
   const {
+    active = [],
     uploadMedia,
     isUploading,
     isTranscoding,
@@ -300,9 +301,18 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     stateRef.current?.posterProcessing?.length
   );
 
+  let uploadingResources = active.map(({ resource }) => resource);
+
+  if (mediaType && mediaType !== LOCAL_MEDIA_TYPE_ALL) {
+    uploadingResources = uploadingResources.filter(
+      ({ type }) => mediaType === type
+    );
+  }
+
   return {
     state: {
       ...reducerState,
+      uploadingMedia: uploadingResources,
       isUploading: isUploading || isGeneratingPosterImages,
       isTranscoding,
       isNewResourceProcessing,

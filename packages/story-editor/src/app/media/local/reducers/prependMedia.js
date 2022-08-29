@@ -14,9 +14,16 @@
  * limitations under the License.
  */
 function prependMedia(state, { media }) {
+  if (!media.length) {
+    return state;
+  }
+
   return {
     ...state,
-    media: [...media, ...state.media],
+    media: [
+      ...media.filter(({ id }) => !state.media.some((item) => item.id === id)),
+      ...state.media,
+    ],
   };
 }
 export default prependMedia;

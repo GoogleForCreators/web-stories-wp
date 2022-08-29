@@ -67,6 +67,7 @@ function useUploadMedia({
       uploaded,
       failures,
       finished,
+      active,
       isNewResourceProcessing,
       isCurrentResourceProcessing,
       isNewResourceTranscoding,
@@ -121,13 +122,7 @@ function useUploadMedia({
         onUploadStart({ resource });
       }
     }
-
-    const resourcesToAdd = newItems.map(({ resource }) => resource);
-
-    prependMedia({
-      media: resourcesToAdd,
-    });
-  }, [pending, prependMedia]);
+  }, [pending]);
 
   // Update *existing* items in the media library and on canvas.
   useEffect(() => {
@@ -188,12 +183,20 @@ function useUploadMedia({
   // Handle *finished* items.
   // At this point, uploaded resources have been updated and rendered everywhere,
   // and no further action is required.
-  // It is safe to remove them from the queue now.
+  // It is safe to remove them from the queue now and *properly* prepend them
+  // to the media library list.
   useEffect(() => {
+    if (!finished.length) {
+      return;
+    }
+
     for (const { id } of finished) {
       removeItem({ id });
     }
-  }, [finished, removeItem]);
+
+    // Update state in 1 call instead of in the above loop.
+    prependMedia({ media: finished.map(({ resource }) => resource) });
+  }, [finished, removeItem, prependMedia]);
 
   // Handle *failed* items.
   // Remove resources from media library and canvas.
@@ -352,6 +355,7 @@ function useUploadMedia({
   );
 
   return {
+    active,
     uploadMedia,
     isUploading,
     isTranscoding,
