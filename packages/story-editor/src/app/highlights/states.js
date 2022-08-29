@@ -35,6 +35,7 @@ import { PANE_IDS } from '../../components/library/paneIds';
 
 const keys = {
   STORY_TITLE: 'STORY_TITLE',
+  ELEMENT_TOOLBAR_TOGGLE: 'ELEMENT_TOOLBAR_TOGGLE',
 
   // Sidebar tabs
   STYLE_PANE: 'STYLE_PANE',
@@ -65,6 +66,10 @@ const keys = {
 
 export const STATES = {
   [keys.STORY_TITLE]: {
+    focus: true,
+  },
+
+  [keys.ELEMENT_TOOLBAR_TOGGLE]: {
     focus: true,
   },
 
