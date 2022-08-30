@@ -129,21 +129,4 @@ export function migrate(storyData, version) {
   return result;
 }
 
-export function migrateSingle(storyData, version) {
-  const migrations = MIGRATIONS[version];
-  if (!migrations) {
-    return storyData;
-  }
-
-  let result = storyData;
-
-  for (const i in migrations) {
-    if (Object.prototype.hasOwnProperty.call(migrations, i)) {
-      result = migrations[Number(i)](result);
-    }
-  }
-
-  return result;
-}
-
 export default migrate;

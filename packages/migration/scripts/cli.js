@@ -26,9 +26,7 @@ if (!dir) {
   throw new Error('Directory path was not provided');
 }
 
-const version = args[1] ? Number(args[1]) : undefined;
-
-updateTemplates(dir, version);
+updateTemplates(dir);
 
 // eslint-disable-next-line no-console
 console.log("Files updated! Don't forget to run prettier!");

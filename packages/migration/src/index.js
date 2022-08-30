@@ -14,4 +14,4 @@
  * limitations under the License.
  */
 
-export { DATA_VERSION, migrate, migrateSingle } from './migrate';
+export { DATA_VERSION, migrate } from './migrate';
