@@ -391,6 +391,15 @@
     },
     {
       "files": [
+        "**/test/**/*.ts",
+        "**/testUtils/**/*.ts"
+      ],
+      "rules": {
+        "jest/unbound-method": "error"
+      }
+    },
+    {
+      "files": [
         "__mocks__/**/*.js"
       ],
       "rules": {
