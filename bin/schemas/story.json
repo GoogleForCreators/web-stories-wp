@@ -675,6 +675,10 @@
       "title": "Solid pattern",
       "required": ["color"],
       "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["none", "solid", "linear", "radial"]
+        },
         "color": {
           "type": "object",
           "title": "RGB(A) color",
