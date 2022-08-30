@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import mime from 'mime/lite';
+import * as mime from 'mime/lite';
 
 /**
  * Get the file extension for a given mime type.
