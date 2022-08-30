@@ -27,8 +27,7 @@
     "noEmitOnError": true,
     "pretty": true,
     "sourceMap": true,
-    "typeRoots": ["./typings", "./node_modules/@types"],
-    "types": []
+    "typeRoots": ["typings", "node_modules/@types"]
   },
   "exclude": [
     "packages/*/dist-*/**",
