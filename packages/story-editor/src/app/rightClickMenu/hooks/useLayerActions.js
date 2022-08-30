@@ -51,7 +51,7 @@ const useLayerActions = () => {
     })
   );
 
-  const { cropParams } = useIsPartiallyOffCanvas(selectedElement);
+  const { getCropParams } = useIsPartiallyOffCanvas(selectedElement);
 
   const elementPosition = elements.findIndex(
     ({ id }) => id === selectedElement?.id
@@ -174,8 +174,8 @@ const useLayerActions = () => {
    * Crop Video to remove off-canvas portion of the video.
    */
   const handleCropHidden = useCallback(() => {
-    cropHiddenVideo(selectedElement, cropParams);
-  }, [selectedElement, cropParams, cropHiddenVideo]);
+    cropHiddenVideo(selectedElement, getCropParams());
+  }, [selectedElement, getCropParams, cropHiddenVideo]);
 
   return {
     canElementMoveBackwards,

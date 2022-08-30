@@ -208,7 +208,7 @@ function ForegroundMediaMenu({ parentMenuRef }) {
         {scaleLabel}
       </ContextMenuComponents.MenuButton>
 
-      {isOffCanvas && (
+      {isOffCanvas() && (
         <ContextMenuComponents.MenuButton onClick={handleCropHidden}>
           {RIGHT_CLICK_MENU_LABELS.CROP_HIDDEN}
         </ContextMenuComponents.MenuButton>
