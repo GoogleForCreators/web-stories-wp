@@ -16,14 +16,9 @@
 /**
  * External dependencies
  */
-import { useUnits, PAGE_HEIGHT, PAGE_WIDTH } from '@googleforcreators/units';
+import { PAGE_HEIGHT, PAGE_WIDTH } from '@googleforcreators/units';
 
 function useIsPartiallyOffCanvas(selectedElement) {
-  const { dataToEditorX, dataToEditorY } = useUnits((state) => ({
-    dataToEditorX: state.actions.dataToEditorX,
-    dataToEditorY: state.actions.dataToEditorY,
-  }));
-
   const { x, y, width, height } = selectedElement;
   let isOffCanvas = false;
   let offCanvasTop = 0;
@@ -91,8 +86,8 @@ function useIsPartiallyOffCanvas(selectedElement) {
       cropHeight,
       cropX,
       cropY,
-      newWidth: dataToEditorX(cropWidth),
-      newHeight: dataToEditorY(cropHeight),
+      newWidth: width - offCanvasLeft - offCanvasRight,
+      newHeight: height - offCanvasTop - offCanvasBottom,
     },
   };
 }
