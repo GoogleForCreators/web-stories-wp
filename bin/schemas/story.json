@@ -35,7 +35,8 @@
       "properties": {
         "id": {
           "type": "string",
-          "title": "Animation ID"
+          "title": "Animation ID",
+          "format": "uuid"
         },
         "type": {
           "type": "string",
@@ -252,7 +253,8 @@
         },
         "id": {
           "type": "string",
-          "title": "The id Schema"
+          "title": "Element ID",
+          "format": "uuid"
         },
         "scale": {
           "type": "number",
@@ -639,7 +641,7 @@
               "type": "string",
               "default": "",
               "title": "Date the media file was uploaded",
-              "$comment": "TODO: Remove? Use date-time format and ajv-formats?"
+              "format": "date-time"
             },
             "posterId": {
               "type": "integer",
@@ -805,7 +807,8 @@
         },
         "id": {
           "type": "string",
-          "title": "Page ID"
+          "title": "Page ID",
+          "format": "uuid"
         },
         "pageTemplateType": {
           "$ref": "#/$defs/pageTemplateType"
