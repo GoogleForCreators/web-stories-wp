@@ -236,7 +236,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #f7ece3\">Solo Sunday in Your City</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -418,7 +417,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #e0193e\">Betty Doe</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -511,7 +509,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #e0193e; letter-spacing: 0.01em\">@BettysBigCity</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -817,7 +814,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #f7ece3\">Treat yourself</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1010,7 +1006,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #f7ece3\">Freemans</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1265,7 +1260,6 @@
           "id": "36c8886c-cfa4-4193-8cb2-91b38b621f5b",
           "basedOn": "d82fc575-69b6-4a88-919c-db015e6665b7",
           "content": "<span style=\"font-weight: 700; color: #fff\">Top Coffee</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1645,7 +1639,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #f7ece3\">Explore</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1831,7 +1824,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #f7ece3\">Central Park</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2086,7 +2078,6 @@
           "id": "80a6e2b3-af35-4ecc-88e0-943a3d1ad450",
           "basedOn": "d82fc575-69b6-4a88-919c-db015e6665b7",
           "content": "<span style=\"font-weight: 700; color: #fff\">Love running here...</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2327,7 +2318,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #f7ece3\">Empire State</span>\n<span style=\"color: #f7ece3\">Building</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2582,7 +2572,6 @@
           "id": "7452ff3d-d9d5-4d98-9ea7-17570bbe639b",
           "basedOn": "d82fc575-69b6-4a88-919c-db015e6665b7",
           "content": "<span style=\"font-weight: 700; color: #fff\">Nice views</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2914,7 +2903,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #f7ece3\">Enjoy</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3178,7 +3166,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #f7ece3\">Skyline</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3433,7 +3420,6 @@
           "id": "6207d60a-f752-4ddd-b0f4-830b25c698d9",
           "basedOn": "d82fc575-69b6-4a88-919c-db015e6665b7",
           "content": "<span style=\"font-weight: 700; color: #fff\">I just need</span>\n<span style=\"font-weight: 700; color: #fff\">someone to share</span>\n<span style=\"font-weight: 700; color: #fff\">this moment...</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3657,7 +3643,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #f7ece3\">Bool</span>\n<span style=\"color: #f7ece3\">Restaurant</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3912,7 +3897,6 @@
           "id": "8e964f92-2a01-44dd-bb97-781a7e3a3204",
           "basedOn": "d82fc575-69b6-4a88-919c-db015e6665b7",
           "content": "<span style=\"font-weight: 700; color: #fff\">Best pasta</span>\n<span style=\"font-weight: 700; color: #fff\">of NYC</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4072,7 +4056,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #f7ece3\">About Betty</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4164,7 +4147,6 @@
           "id": "5000fd0f-727f-42e8-9b7a-51990ae7b8ca",
           "basedOn": "9d29ef73-b53f-47b2-8ecd-c3a088e97f24",
           "content": "<span style=\"color: #fff\">Betty has lived in NYC for 14 years and has written numerous articles for The Cut.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4253,7 +4235,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #f7ece3\">Read more about her</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4323,7 +4304,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700\">Betty Simons</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,

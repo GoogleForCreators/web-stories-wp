@@ -284,7 +284,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #fff\">How it works:</span>\n<span style=\"color: #fff\">Contact Tracing</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -487,7 +486,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 600; color: #fff\">Billy Rogers</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2860,7 +2858,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #2d303c\">Other stories</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,

@@ -93,7 +93,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 600; color: #393d28\">How to make your own plant based dyes: DIY</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -181,7 +180,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 500; color: #393d28; letter-spacing: 0.12em; text-transform: uppercase\">SASHA DUERR</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -480,7 +478,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 600; color: #f9e46c\">Sasha Duerr</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -673,7 +670,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.12em; text-transform: uppercase\">YOUR GUIDE</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -694,7 +690,6 @@
           "groupId": "d6431164-4f9c-45d6-a8ac-301c9233f836"
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 255,
@@ -1073,7 +1068,6 @@
           "groupId": "3d3cf946-8e76-4eca-862b-edb8719354f3"
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 65,
@@ -1258,7 +1252,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 600; color: #ffee96; letter-spacing: 0.12em; text-transform: uppercase\">TUTORIAL</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1409,7 +1402,6 @@
           "groupId": "fa51342f-94c8-4e59-aa23-cca44e346091"
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 255,
@@ -1619,7 +1611,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 600; color: #414c40\">Prepare your</span>\n<span style=\"font-weight: 600; color: #414c40\">fabric</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1816,7 +1807,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 600; color: #fff\">1</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1834,7 +1824,6 @@
           "tagName": "p"
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 228,
@@ -2035,7 +2024,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 600; color: #414c40\">Prepare the</span>\n<span style=\"font-weight: 600; color: #414c40\">avocado pits</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2207,7 +2195,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 600; color: #fff\">2</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2229,7 +2216,6 @@
           "tagName": "p"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [],
       "backgroundColor": {
         "color": {
@@ -2430,7 +2416,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 600; color: #414c40\">Mix everything</span>\n<span style=\"font-weight: 600; color: #414c40\">together</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2602,7 +2587,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 600; color: #fff\">3</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2624,7 +2608,6 @@
           "tagName": "p"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [],
       "backgroundColor": {
         "color": {
@@ -2832,7 +2815,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.12em; text-transform: uppercase\">ADVICE</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3010,7 +2992,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 500; color: #fff; letter-spacing: 0.12em; text-transform: uppercase\">SASHA DUERR</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3027,7 +3008,6 @@
           "type": "text"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "558253e0-1adb-4cdf-81ab-53c566662cab",
@@ -3246,7 +3226,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 600; color: #414c40\">Give it</span>\n<span style=\"font-weight: 600; color: #414c40\">time</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3418,7 +3397,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 600; color: #fff\">4</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3440,7 +3418,6 @@
           "tagName": "p"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [],
       "backgroundColor": {
         "color": {
@@ -3641,7 +3618,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 600; color: #414c40\">Let it dry</span>\n<span style=\"font-weight: 600; color: #414c40\">overnight</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3813,7 +3789,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 600; color: #fff\">5</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3835,7 +3810,6 @@
           "tagName": "p"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [],
       "backgroundColor": {
         "color": {
@@ -4033,7 +4007,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 600; color: #f9e46c\">Your plant dyed fabrics are now ready for use!</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4142,7 +4115,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #414c40; letter-spacing: 0.12em; text-transform: uppercase\">WELL DONE!</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4164,7 +4136,6 @@
           "groupId": "b3bb33ae-ef7d-4f59-83a7-90078d506530"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "4215114c-2a64-4a2b-8be7-2a2ea62c54d0",
@@ -4419,7 +4390,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.12em; text-transform: uppercase\">ENJOY</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4597,7 +4567,6 @@
           "id": "0987803c-2b09-4418-b7ca-98609ca450c3",
           "basedOn": "8762d1df-b171-4594-b8e4-6ec9eaca6955",
           "content": "<span style=\"font-weight: 500; color: #fff; letter-spacing: 0.12em; text-transform: uppercase\">SASHA DUERR</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4614,7 +4583,6 @@
           "type": "text"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "2599514c-8d50-4d35-a70d-0a484a526d4b",
@@ -5137,7 +5105,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 600; color: #414c40\">1</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -5229,7 +5196,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 600; color: #414c40\">2</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -5315,7 +5281,6 @@
           "groupId": "43ee0819-fede-4817-996d-0ba1de825a37"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "eb173176-7330-418f-aa93-6d2be2a334d0",

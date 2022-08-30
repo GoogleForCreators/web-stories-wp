@@ -353,7 +353,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #2f2f2f; letter-spacing: 0.1em; text-transform: uppercase\">Sylvia Tribel</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -435,7 +434,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 500; color: #0057ff\">Pick the right laptop for your creative needs</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -601,7 +599,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 500; color: #0057ff\">Being a creative requires patience, an eye for details.&nbsp;</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -685,7 +682,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #2f2f2f\">We compiled a list of laptops for your specific creative needs. Read on for our picks.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -704,7 +700,6 @@
           "y": 474
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 255,
@@ -844,7 +839,6 @@
             "vertical": 4
           },
           "content": "<span style=\"color: #fff; letter-spacing: 0.1em\">01/03</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -928,7 +922,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 500; color: #fff\">For animators</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1011,7 +1004,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fff\">Animators need RAM and processing speed. Period.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1031,7 +1023,6 @@
           "type": "text"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "e58e6cb7-f631-497c-a94b-a41175946951",
@@ -1205,7 +1196,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #fff; letter-spacing: 0.1em; text-transform: uppercase\">&gt;&gt;&gt; 01 for Animators</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1330,7 +1320,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 500; color: #0057ff\">Google Pixelbook</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1413,7 +1402,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #2f2f2f\">Powerful processing speed and infinite cloud storage.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1496,7 +1484,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 500; color: #0057ff; text-transform: uppercase\">&gt;&gt;&gt; Score:95/100</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1515,7 +1502,6 @@
           "y": 596
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 255,
@@ -1651,7 +1637,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fff; letter-spacing: 0.1em; text-transform: uppercase\">&gt;&gt;&gt; 01 for Animators</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1776,7 +1761,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 500; color: #0057ff\">Google Pixelbook Go</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1859,7 +1843,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #2f2f2f\">A larger magic screen + processing speed but lacks the infinite cloud storage capability.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1942,7 +1925,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 500; color: #0057ff; text-transform: uppercase\">&gt;&gt;&gt; Score:92/100</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1962,7 +1944,6 @@
           "type": "text"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [],
       "backgroundColor": {
         "color": {
@@ -2098,7 +2079,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fff; letter-spacing: 0.1em; text-transform: uppercase\">&gt;&gt;&gt; 01 for Animators</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2182,7 +2162,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 500; color: #2f2f2f\">Performance graph</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2293,7 +2272,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 500; color: #2f2f2f\">Performance graph</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2452,7 +2430,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 500; color: #0057ff; letter-spacing: 0.1em\">95/100</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2565,7 +2542,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 500; color: #2f2f2f\">Google Pixelbook Go</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2724,7 +2700,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 500; color: #0057ff; letter-spacing: 0.1em\">92/100</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2837,7 +2812,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 500; color: #2f2f2f\">Average</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2996,7 +2970,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 500; color: #0057ff; letter-spacing: 0.1em\">51/100</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3017,7 +2990,6 @@
           "groupId": "b045d2f3-d3b7-49ef-a7e6-f595cab821ea"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "c8198913-7853-4607-8933-6490eceae3b4",
@@ -3213,7 +3185,6 @@
             "vertical": 4
           },
           "content": "<span style=\"color: #fff; letter-spacing: 0.1em\">02/03</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3297,7 +3268,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 500; color: #fff\">For writers</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3380,7 +3350,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fff\">Really all you need is a digital writing pad and a place to access your thoughts online and off.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3400,7 +3369,6 @@
           "type": "text"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "3171f627-0b7c-4515-8cda-77d9c60b9955",
@@ -3573,7 +3541,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fff; letter-spacing: 0.1em; text-transform: uppercase\">&gt;&gt;&gt; 02 for Writers</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3699,7 +3666,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 500; color: #0057ff\">Lenovo Ideapad S340</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3782,7 +3748,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #2f2f2f\">With the ability to write your free-form thoughts like a notepad and switch to editing mode. You're all set</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3865,7 +3830,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 500; color: #0057ff; text-transform: uppercase\">&gt;&gt;&gt; Score:97/100</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3885,7 +3849,6 @@
           "type": "text"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [],
       "backgroundColor": {
         "color": {
@@ -4021,7 +3984,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fff; letter-spacing: 0.1em; text-transform: uppercase\">&gt;&gt;&gt; 02 for Writers</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4144,7 +4106,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 500; color: #0057ff\">Lenovo Ideapad S145</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4227,7 +4188,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #2f2f2f\">The latest and greatest, now in a collapsible version so you can carry with you anywhere</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4310,7 +4270,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 500; color: #0057ff; text-transform: uppercase\">&gt;&gt;&gt; Score:98/100</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4330,7 +4289,6 @@
           "type": "text"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [],
       "backgroundColor": {
         "color": {
@@ -4466,7 +4424,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fff; letter-spacing: 0.1em; text-transform: uppercase\">&gt;&gt;&gt; 01 for Animators</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4550,7 +4507,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 500; color: #2f2f2f\">Lightweight graph</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4661,7 +4617,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 500; color: #2f2f2f\">Lenovo Ideapad S340</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4835,7 +4790,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 500; color: #0057ff; letter-spacing: 0.1em\">3.4 LB</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4948,7 +4902,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 500; color: #2f2f2f\">Lenovo Ideapad S145</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -5123,7 +5076,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 500; color: #0057ff; letter-spacing: 0.1em\">1.45 LB</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -5236,7 +5188,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 500; color: #2f2f2f\">Average</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -5411,7 +5362,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 500; color: #0057ff; letter-spacing: 0.1em\">2.95 LB</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -5432,7 +5382,6 @@
           "groupId": "097cef7a-0ede-4fda-a863-7d18c1ef22cb"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "88407aef-d969-4e4c-8169-7f61ccd5434a",
@@ -5691,7 +5640,6 @@
             "vertical": 4
           },
           "content": "<span style=\"color: #fff; letter-spacing: 0.1em\">02/03</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -5775,7 +5723,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 500; color: #fff\">For designers</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -5858,7 +5805,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fff\">Processing speed, screen clarity and transportability.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -5878,7 +5824,6 @@
           "type": "text"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "b27ee23b-a407-4cd3-8296-b03b8b9a6b04",
@@ -6051,7 +5996,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fff; letter-spacing: 0.1em; text-transform: uppercase\">&gt;&gt;&gt; 03 for Designers</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -6175,7 +6119,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 500; color: #0057ff\">DELL Inspiron 3593</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -6258,7 +6201,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #2f2f2f\">With an edge to edge screen with Google's clarity pixelation(TM) you'll see every detail of your design.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -6341,7 +6283,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 500; color: #0057ff; text-transform: uppercase\">&gt;&gt;&gt; Score:94/100</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -6361,7 +6302,6 @@
           "type": "text"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [],
       "backgroundColor": {
         "color": {
@@ -6497,7 +6437,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fff; letter-spacing: 0.1em; text-transform: uppercase\">&gt;&gt;&gt; 03 for Designers</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -6620,7 +6559,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 500; color: #0057ff\">Lenovo Ideapad Slim 3i</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -6703,7 +6641,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #2f2f2f\">More for transportability between meetings or for traveling. Quickly access and download the files you need.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -6786,7 +6723,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 500; color: #0057ff; text-transform: uppercase\">&gt;&gt;&gt; Score:96/100</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -6806,7 +6742,6 @@
           "type": "text"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [],
       "backgroundColor": {
         "color": {
@@ -6942,7 +6877,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fff\">Best laptop...&nbsp;</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -7112,7 +7046,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 500; color: #2f2f2f; letter-spacing: 0.1em; text-transform: uppercase\">For Animators</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -7196,7 +7129,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 500; color: #2f2f2f\">Google Pixelbook</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -7280,7 +7212,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 500; color: #0057ff; letter-spacing: 0.1em; text-transform: uppercase\">&gt;&gt;&gt; Score:95/100</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -7450,7 +7381,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 500; color: #2f2f2f; letter-spacing: 0.1em; text-transform: uppercase\">For Writers</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -7534,7 +7464,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 500; color: #2f2f2f\">Lenovo Ideapad S340</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -7618,7 +7547,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 500; color: #0057ff; letter-spacing: 0.1em; text-transform: uppercase\">&gt;&gt;&gt; Score:95/100</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -7787,7 +7715,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 500; color: #2f2f2f; letter-spacing: 0.1em; text-transform: uppercase\">For Designers</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -7871,7 +7798,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 500; color: #2f2f2f\">Lenovo Ideapad Slim 3i</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -7955,7 +7881,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 500; color: #0057ff; letter-spacing: 0.1em; text-transform: uppercase\">&gt;&gt;&gt; Score:95/100</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -7976,7 +7901,6 @@
           "groupId": "45f859e0-dab0-460d-bced-9b683eb07e34"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "3203d62e-7d1d-4ec0-ba09-894278348d28",
@@ -8119,7 +8043,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fff\">Other stories</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -8203,7 +8126,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 500; color: #fff; letter-spacing: 0.1em\">01</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -8330,7 +8252,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fff\">Find the right tablet</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -8415,7 +8336,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fff; letter-spacing: 0.1em\">&gt;&gt;&gt;</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -8499,7 +8419,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 500; color: #fff; letter-spacing: 0.1em\">02</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -8627,7 +8546,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fff\">Get savvy on Sketch</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -8712,7 +8630,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fff; letter-spacing: 0.1em\">&gt;&gt;&gt;</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -8733,7 +8650,6 @@
           "groupId": "10eb0ab1-2ec5-455e-9187-5719368baea1"
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 0,

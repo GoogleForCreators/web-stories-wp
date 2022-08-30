@@ -148,7 +148,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 800; color: rgba(255,255,255,0.3); text-transform: uppercase\">A day in the life: Jordan Micheals</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -421,7 +420,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 800; color: rgba(255,255,255,0.3)\">7:00AM</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1321,7 +1319,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 800; color: rgba(255,255,255,0.3)\">9:00AM</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2493,7 +2490,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 800; color: rgba(255,255,255,0.3)\">11:00AM</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3856,7 +3852,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 800; color: rgba(255,255,255,0.3)\">6:00PM</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4241,7 +4236,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 800; color: rgba(255,255,255,0.3)\">9:00PM</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4862,7 +4856,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 800; color: rgba(255,255,255,0.3)\">11:00PM</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -5291,7 +5284,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 800; color: #fff; text-transform: uppercase\">Mary Coppolla's Wild Life</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -5384,7 +5376,6 @@
           "id": "45b30b77-d14b-4e81-b9ee-7c3cd3ed1708",
           "basedOn": "dfbbea38-849a-4efb-81f4-078ef1f8e8b4",
           "content": "<span style=\"font-weight: 800; color: #fff; text-transform: uppercase\">Evan Chris: Downunder</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,

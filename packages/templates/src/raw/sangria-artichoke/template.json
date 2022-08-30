@@ -701,7 +701,6 @@
           "marginOffset": -7
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 28,
@@ -1039,7 +1038,6 @@
           "marginOffset": -7
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 220,
@@ -1436,7 +1434,6 @@
           "id": "fb6c5e85-f9c2-4a76-a92f-f4681d21e96a"
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 17,
@@ -1932,7 +1929,6 @@
           "groupId": "cbe20a8f-4f95-4896-8db1-7f47c603f35e"
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 249,
@@ -2299,7 +2295,6 @@
           "y": 223
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 249,
@@ -2850,7 +2845,6 @@
           "id": "66b0b5e3-1b7d-4f20-9520-a91e91c0d9d9"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "8ec39960-052c-4b46-87ca-75a5e71552a8",
@@ -3170,7 +3164,6 @@
           "y": 393
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 249,
@@ -3464,7 +3457,6 @@
           "y": 393
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "6351f05d-a357-47a3-a314-5975b55dc739",
@@ -3756,7 +3748,6 @@
           "y": 393
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "15c74038-1812-4644-ad87-37169694f44c",
@@ -4050,7 +4041,6 @@
           "y": 393
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "75a190c7-24ab-4004-b6b4-1f180706c37d",
@@ -4642,7 +4632,6 @@
           "groupId": "b954269c-3d83-45d4-a0d9-0654e5db52b0"
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 252,

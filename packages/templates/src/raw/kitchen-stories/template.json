@@ -1154,7 +1154,6 @@
           "groupId": "0211b650-6f32-4b4f-924e-d73057472020"
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 255,
@@ -2417,7 +2416,6 @@
           "groupId": "c7dad8ad-bf3d-495e-a8c0-7db915f6501c"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "targets": ["9f8d380f-ba21-4359-b1cf-67e8f93f4a53"],
@@ -3234,7 +3232,6 @@
           "groupId": "283b6814-35b8-4dfd-a7b3-7202768aaf3c"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "targets": ["d58b9350-fcf1-48e7-a42b-4c0a1bee0efc"],
@@ -3773,7 +3770,6 @@
           "groupId": "3b0b775c-1024-47f7-be3f-eaf2f754a414"
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 212,
@@ -4057,7 +4053,6 @@
           "y": 19
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 255,
@@ -4352,7 +4347,6 @@
           "type": "text"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [],
       "backgroundColor": {
         "color": {
@@ -4647,7 +4641,6 @@
           "type": "text"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [],
       "backgroundColor": {
         "color": {
@@ -4942,7 +4935,6 @@
           "type": "text"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [],
       "backgroundColor": {
         "color": {
@@ -5237,7 +5229,6 @@
           "type": "text"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [],
       "backgroundColor": {
         "color": {
@@ -5532,7 +5523,6 @@
           "type": "text"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [],
       "backgroundColor": {
         "color": {
@@ -5634,7 +5624,6 @@
           ]
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 255,
@@ -6313,7 +6302,6 @@
           "groupId": "00cfa981-a3f5-476e-8545-8d1d7c5a1c9c"
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 255,

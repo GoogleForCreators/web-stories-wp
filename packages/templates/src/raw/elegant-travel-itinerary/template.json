@@ -151,7 +151,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #eef0f2\">The Venice Simplon Orient Express</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -242,7 +241,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #fff; letter-spacing: 0.15em; text-transform: uppercase\">By John Doe 2020</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -330,7 +328,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #fff; letter-spacing: 0.3em; text-transform: uppercase\">All aboard</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -5551,7 +5548,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #fff; letter-spacing: 0.3em; text-transform: uppercase\">More from John Doe</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -5720,7 +5716,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #fff\">Top Five Fall Road Trips</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -5804,7 +5799,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #fff\">Spend a Week in Tuscany</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,

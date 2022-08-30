@@ -166,7 +166,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 700; color: #fec85a; text-transform: uppercase\">Plan an</span>\n<span style=\"font-weight: 700; color: #fec85a; text-transform: uppercase\">RV Summer Adventure</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -394,7 +393,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 700; color: #fec85a; letter-spacing: 0.01em\">Everything you’ll need to prepare a perfect RV summer adventure.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -473,7 +471,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 700; color: #fec85a\">1.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -550,7 +547,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 700; color: #fec85a\">3.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -631,7 +627,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #fec85a\">Choose the camper</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -711,7 +706,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #fec85a\">Plan your budget</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -787,7 +781,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 700; color: #fec85a\">2.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -868,7 +861,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #fec85a\">Map the&nbsp;</span>\n<span style=\"color: #fec85a\">route</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1150,7 +1142,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 700; color: #fec85a; text-transform: uppercase\">choose the right camper</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1310,7 +1301,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 700; color: #262525; text-transform: uppercase\">1</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 100,
@@ -1553,7 +1543,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 700; color: #fec85a; letter-spacing: 0.01em\">Truck Camper</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1806,7 +1795,6 @@
           "id": "7abe682d-140e-4cfa-b03d-ba3687bc3b02",
           "basedOn": "75b36af4-815e-41f2-b339-43e2fc8eb6c7",
           "content": "<span style=\"color: #fec85a\">A captivating RV camper with spacious interiors is suitable for making yourself at home or working on the road.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2051,7 +2039,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #fec85a; text-transform: uppercase\">Plan the BUDGET</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2211,7 +2198,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 700; color: #262525; text-transform: uppercase\">2</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 100,
@@ -2454,7 +2440,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #fec85a; letter-spacing: 0.01em\">Analyze all expenses</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2709,7 +2694,6 @@
           "id": "bde025b6-589a-43b3-876d-e8f357dbc3e8",
           "basedOn": "75b36af4-815e-41f2-b339-43e2fc8eb6c7",
           "content": "<span style=\"color: #fec85a\">No one wants to set a budget for travel, but even on the road, you should know what your expenses are.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2953,7 +2937,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #fec85a; text-transform: uppercase\">plan</span>\n<span style=\"font-weight: 700; color: #fec85a; text-transform: uppercase\">the route</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3113,7 +3096,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 700; color: #262525; text-transform: uppercase\">3</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 100,
@@ -3334,7 +3316,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #fec85a; letter-spacing: 0.01em\">Do it together</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3589,7 +3570,6 @@
           "id": "5c83bca3-a2e9-4dd5-826f-7e00c3c1ccf3",
           "basedOn": "75b36af4-815e-41f2-b339-43e2fc8eb6c7",
           "content": "<span style=\"color: #fec85a\">There’s a whole subculture related to using physical maps, which is super fun and can be collected or framed later on.&nbsp;</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3764,7 +3744,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #fec85a; letter-spacing: 0.01em\">Let’s recap</span>\n<span style=\"font-weight: 700; color: #fec85a; letter-spacing: 0.01em\">what we</span>\n<span style=\"font-weight: 700; color: #fec85a; letter-spacing: 0.01em\">learned</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3843,7 +3822,6 @@
           "id": "4499c215-0509-4c8a-ab95-9ac7bf00f010",
           "basedOn": "75b36af4-815e-41f2-b339-43e2fc8eb6c7",
           "content": "<span style=\"font-weight: 700; color: #fec85a\">1.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3920,7 +3898,6 @@
           "id": "183d771f-bcc7-4918-af1a-b4e7083124f6",
           "basedOn": "75b36af4-815e-41f2-b339-43e2fc8eb6c7",
           "content": "<span style=\"font-weight: 700; color: #fec85a\">2.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3997,7 +3974,6 @@
           "id": "94326373-cbf7-42c1-9a63-f595d056a3ef",
           "basedOn": "75b36af4-815e-41f2-b339-43e2fc8eb6c7",
           "content": "<span style=\"font-weight: 700; color: #fec85a\">3.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4078,7 +4054,6 @@
           "id": "1180a7f4-c339-44e9-941a-6aea7d4da000",
           "basedOn": "75b36af4-815e-41f2-b339-43e2fc8eb6c7",
           "content": "<span style=\"color: #fec85a\">Choose the right camper</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4159,7 +4134,6 @@
           "id": "ee28c61e-d0c9-4ce2-ae23-e287c251412c",
           "basedOn": "75b36af4-815e-41f2-b339-43e2fc8eb6c7",
           "content": "<span style=\"color: #fec85a\">Plan your budget</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4240,7 +4214,6 @@
           "id": "6593319f-6e62-4587-b39f-c7a041b0b4b8",
           "basedOn": "75b36af4-815e-41f2-b339-43e2fc8eb6c7",
           "content": "<span style=\"color: #fec85a\">Map the&nbsp;</span>\n<span style=\"color: #fec85a\">route</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4978,7 +4951,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #fec85a; letter-spacing: 0.01em; text-transform: uppercase\">Liked this story?</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -5063,7 +5035,6 @@
           "id": "fcdc29dc-6e07-4e72-a320-055fd4d2f56d",
           "basedOn": "75b36af4-815e-41f2-b339-43e2fc8eb6c7",
           "content": "<span style=\"letter-spacing: 0.01em\">Click &nbsp;to explore</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 80,
@@ -5214,7 +5185,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.01em\">Next</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -5290,7 +5260,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #fec85a; letter-spacing: 0.01em\">Why I Live Outdoors</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -5422,7 +5391,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fff\">Share it</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,

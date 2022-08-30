@@ -114,7 +114,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 300; color: #44272b\">Kitchen Makeover Interior</span>\n<span style=\"font-weight: 300; color: #44272b\">Decor with:</span>\n<span style=\"color: #44272b\">Athene Calder</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -192,7 +191,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 300; color: #44272b\">Ann Katowich</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -498,7 +496,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #44272b\">Athene Calder</span>\n<span style=\"font-weight: 300\">of I-Swoon</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -576,7 +573,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 700; color: #44272b\">•</span><span style=\"font-weight: 300; color: #44272b\"> Designer, Decorator</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -595,7 +591,6 @@
           "y": 607
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 215,
@@ -730,7 +725,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 300; color: #f3f3f1\">01</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 100,
@@ -809,7 +803,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 300; color: #44272b\">Modern Farmhouse I</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1007,7 +1000,6 @@
           }
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 243,
@@ -1140,7 +1132,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 300; color: #f3f3f1\">02</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 100,
@@ -1218,7 +1209,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 300; color: #44272b\">Modern Farmhouse II</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1416,7 +1406,6 @@
           }
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "ca28b0ef-696f-461b-b84a-8aee912e753f",
@@ -1558,7 +1547,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 300; color: #f3f3f1\">03</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 100,
@@ -1636,7 +1624,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 300; color: #44272b\">Modern Farmhouse III</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1834,7 +1821,6 @@
           }
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [],
       "backgroundColor": {
         "color": {
@@ -1954,7 +1940,6 @@
           "tracks": []
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "341e3e17-e096-479a-86ec-13780ede8cf1",
@@ -2086,7 +2071,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 300; color: #44272b\">Before we had a rustic stove that we really wanted to keep but needed more room.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2150,7 +2134,6 @@
           }
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [],
       "backgroundColor": {
         "color": {
@@ -2215,7 +2198,6 @@
           "tracks": []
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 255,
@@ -2364,7 +2346,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 300; color: #44272b\">At long last ... new shelves</span>\n<span style=\"font-weight: 300; color: #44272b\">going in!</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2429,7 +2410,6 @@
           }
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "8d0f8880-25d4-46b4-b659-526605edf26d",
@@ -2559,7 +2539,6 @@
             "vertical": 7
           },
           "content": "<span style=\"font-weight: 300; color: #44272b\">Before</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -2666,7 +2645,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 300; color: #44272b\">Rustic, but definitely lacking in modern charm and space.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2686,7 +2664,6 @@
           "y": 529
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 255,
@@ -2869,7 +2846,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 300; color: #44272b\">And there you have it. A modern farmhouse kitchen.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2949,7 +2925,6 @@
             "vertical": 7
           },
           "content": "<span style=\"font-weight: 300; color: #44272b\">After</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -2969,7 +2944,6 @@
           "id": "bef4a0ca-bc85-4f8d-92fa-b344fc572ae6"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [],
       "backgroundColor": {
         "color": {
@@ -3147,7 +3121,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 300; color: #44272b\">Other stories</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3270,7 +3243,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 300; color: #44272b\">Bedroom Makeover with Athene</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3395,7 +3367,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 300; color: #44272b\">Inspiration for a living room upgrade</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3520,7 +3491,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 300; color: #44272b\">How to get the lighting right</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3542,7 +3512,6 @@
           "tagName": "h3"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "bf2a138a-acd7-4eb7-9487-336710ab58e0",

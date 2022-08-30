@@ -141,7 +141,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fff; text-transform: uppercase\">Logo</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -215,7 +214,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #020202\">Rise to Fame:</span>\n<span style=\"font-weight: 700; color: #020202\">Meet Jane Popular</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -294,7 +292,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #020202; text-transform: uppercase\">By Michaela Doe</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -372,7 +369,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #020202\">July 22, 2020</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -769,7 +765,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #282828; text-transform: uppercase\">The early years</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -843,7 +838,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #020202\">1985.-1995.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -1153,7 +1147,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #80ff44\">1985</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -1494,7 +1487,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #80ff44\">1989</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -1827,7 +1819,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #80ff44\">1992</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -2160,7 +2151,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #80ff44\">1995</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -2460,7 +2450,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #282828; text-transform: uppercase\">The change</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -2534,7 +2523,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #020202\">1996.-2001.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -2845,7 +2833,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #80ff44\">1996</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -3186,7 +3173,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #80ff44\">1996</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -3519,7 +3505,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #80ff44\">1997</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -3852,7 +3837,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #80ff44\">2003</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -4185,7 +4169,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #80ff44\">2012</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -4459,7 +4442,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #020202\">Read</span>\n<span style=\"font-weight: 700; color: #020202\">more</span>\n<span style=\"font-weight: 700; color: #020202\">stories</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -4585,7 +4567,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #020202\">Music</span>\n<span style=\"font-weight: 700; color: #020202\">Legacy</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -4784,7 +4765,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #020202\">Hollywood</span>\n<span style=\"font-weight: 700; color: #020202\">Couples</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,

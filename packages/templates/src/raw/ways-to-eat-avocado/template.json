@@ -93,7 +93,6 @@
           },
           "type": "text",
           "content": "<span style=\"letter-spacing: 0.28em; text-transform: uppercase\">Recipe Inspiration</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -872,7 +871,6 @@
           "tagName": "p"
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 242,
@@ -1177,7 +1175,6 @@
           "marginOffset": 20.657812500000006
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 242,
@@ -1588,7 +1585,6 @@
           "tagName": "p"
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 242,
@@ -2087,7 +2083,6 @@
           "groupId": "885d5a17-8172-4fb5-a6ca-cafbbe421bac"
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 242,
@@ -2448,7 +2443,6 @@
           "y": 378
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "47231fe1-3e99-4fea-880b-25a57bd61bb9",
@@ -2791,7 +2785,6 @@
           "y": 368
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "targets": ["03c192c4-1287-4265-b8ab-f5e4beeb8eb0"],
@@ -3223,7 +3216,6 @@
           "tagName": "p"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "6307fd31-3583-4480-b74b-78994ff700a5",
@@ -3729,7 +3721,6 @@
           "tagName": "p"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "ddec8b6e-17f6-44c1-8d20-872ead5b1277",
@@ -4090,7 +4081,6 @@
           "type": "text"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "11440cb1-31d3-470a-9bea-4c193fd71a9d",
@@ -4441,7 +4431,6 @@
           "type": "text"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "ff47c5d9-db58-4d77-a9f0-abc7c4680978",
@@ -4804,7 +4793,6 @@
           "type": "text"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "54713841-1b20-418c-bb25-8096ce85618b",
@@ -5301,7 +5289,6 @@
           "y": -23
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [],
       "backgroundColor": {
         "color": {

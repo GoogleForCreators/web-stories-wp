@@ -92,7 +92,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 200; font-style: italic; color: rgba(177,140,84,0.12)\">Inside look</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -178,7 +177,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 200; font-style: italic; color: rgba(177,140,84,0.12)\">Inside look</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -264,7 +262,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 200; font-style: italic; color: rgba(177,140,84,0.12)\">Inside look</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -350,7 +347,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 200; font-style: italic; color: rgba(177,140,84,0.12)\">Inside look</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -436,7 +432,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 500; letter-spacing: 0.28em; text-transform: uppercase\">Fashion Inspiration</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -594,7 +589,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 200\">Inside</span>\n<span style=\"font-weight: 200\">Jean Legere's</span>\n<span style=\"font-weight: 200\">Closet</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,

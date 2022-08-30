@@ -82,7 +82,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #235524\">Create Your Indoor Garden Oasis</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -156,7 +155,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #235524\">Home gardening guide</span>\n<span style=\"color: #235524\">Maria Contelo</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -245,7 +243,6 @@
           }
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [],
       "backgroundColor": {
         "color": {
@@ -358,7 +355,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 700; color: #fcefab\">Ever wanted a little garden or jungle oasis of your own?</span>\n<span style=\"font-weight: 700; color: #fcefab\">Bring the outside in with our DIY guide to making your apartment as green as can be.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -432,7 +428,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 700; color: #fff\">Start the</span>\n<span style=\"font-weight: 700; color: #fff\">tutorial</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -473,7 +468,6 @@
           "id": "21028a0a-0f9e-41e2-894c-9fa0c5d271d4"
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 35,
@@ -640,7 +634,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 700; color: #235524\">Here's What You Need</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -716,7 +709,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 700; color: #235524\">1</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -796,7 +788,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 700; color: #235524; text-transform: uppercase\">Lighting</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -873,7 +864,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #235524\">Adjustable LED lights help your plants grow.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -915,7 +905,6 @@
           "y": 92
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 255,
@@ -1107,7 +1096,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #235524\">2</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1187,7 +1175,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #235524; text-transform: uppercase\">Tools / Shear</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1264,7 +1251,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #235524\">The right tools to trim, weed, and maintain.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1285,7 +1271,6 @@
           "groupId": "bec97c62-440e-4b17-8dea-b046aca32f8c"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [],
       "backgroundColor": {
         "color": {
@@ -1468,7 +1453,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #235524\">3</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1548,7 +1532,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #235524; text-transform: uppercase\">Kit / Containers</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1625,7 +1608,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #235524\">From very basic to self-watering.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1646,7 +1628,6 @@
           "groupId": "396ae62e-701d-4481-975c-f6b8c5f27659"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "ead36123-a0dd-4ad9-b191-63fdc3295398",
@@ -1830,7 +1811,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 700; color: #235524\">First things first: Choose Your Light</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1906,7 +1886,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 700; color: #235524\">01</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1982,7 +1961,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 700; color: #235524\">Warm Light</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2058,7 +2036,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 700; color: #235524\">02</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2134,7 +2111,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 700; color: #235524\">Fluorescent Bulbs</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2210,7 +2186,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 700; color: #235524\">03</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2286,7 +2261,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 700; color: #235524\">Indirect Light</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2394,7 +2368,6 @@
           "groupId": "4338d9be-1da7-4877-af11-4a1fcda72827"
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 252,
@@ -2580,7 +2553,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #235524\">Tools and Shears</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2656,7 +2628,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #235524\">01</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2732,7 +2703,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #235524\">Length</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2808,7 +2778,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #235524\">02</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2884,7 +2853,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #235524\">Size</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2960,7 +2928,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #235524\">03</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3036,7 +3003,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #235524\">Weight</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3145,7 +3111,6 @@
           "groupId": "788749db-17ca-4a39-8d6b-18a17a7044ec"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "9598b6ec-f45d-4a16-a357-3b18e3e1227d",
@@ -3307,7 +3272,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #235524\">So you want an all-in-one kit</span>\n<span style=\"font-weight: 700; color: #235524\">you say?</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3383,7 +3347,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #235524\">01</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3459,7 +3422,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #235524\">Watering</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3535,7 +3497,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #235524\">02</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3611,7 +3572,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #235524\">Lighting Requirements</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3687,7 +3647,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #235524\">03</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3763,7 +3722,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #235524\">Simplicity</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3872,7 +3830,6 @@
           "groupId": "712f6cc1-ca5e-48b7-9c15-380701241327"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "8f63b72e-0572-41dc-9131-347f1baf284a",
@@ -4084,7 +4041,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #fcefab\">Once you've gotten the basics and foundation down, there's no limit to what you can build.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4158,7 +4114,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fff\">Look at other</span>\n<span style=\"color: #fff\">stories</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4223,7 +4178,6 @@
           "y": 575
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "d285f24e-edb5-4d45-b5bd-13e2e8567dc6",
@@ -4331,7 +4285,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #235524\">Other Stories</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4485,7 +4438,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #235524\">10 tips</span>\n<span style=\"font-weight: 700; color: #235524\">for growing lettuce</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4642,7 +4594,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #235524\">Natural nutrients for house plants</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4799,7 +4750,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #235524\">How to strengthen</span>\n<span style=\"font-weight: 700; color: #235524\">up your</span>\n<span style=\"font-weight: 700; color: #235524\">plant game</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4842,7 +4792,6 @@
           "id": "092ca1c1-fa0c-4b2f-aead-83f135d2aecf"
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 194,

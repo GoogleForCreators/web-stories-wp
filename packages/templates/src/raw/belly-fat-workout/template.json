@@ -144,7 +144,6 @@
           },
           "type": "text",
           "content": "<span style=\"text-transform: uppercase\">KILL BELLY FAT IN </span><span style=\"color: #fff; text-transform: uppercase\">15</span><span style=\"text-transform: uppercase\"> MINUTES</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -410,7 +409,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #d6fd56; letter-spacing: 0.01em; text-transform: uppercase\">elly jordan</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -511,7 +509,6 @@
           "y": 522
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "9c7138a7-f80f-4340-906c-9ddf15c93bfa",
@@ -673,7 +670,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #f9f9f9; letter-spacing: 0.01em; text-transform: uppercase\">JUMP ROPE WARM UP</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -747,7 +743,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #d6fd56; text-transform: uppercase\">repeat: 8x</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -828,7 +823,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 800; color: #d6fd56\">1</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -847,7 +841,6 @@
           "tagName": "p"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "39aaf0c4-5d21-4669-bf52-ab078c26bff5",
@@ -1028,7 +1021,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #f9f9f9; letter-spacing: 0.01em; text-transform: uppercase\">AB CRUNCHES</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1102,7 +1094,6 @@
           "id": "e5a3ba83-9e64-4978-8d61-540895ce8f62",
           "basedOn": "14150f8a-687f-4e56-bb86-d08bdf7c145d",
           "content": "<span style=\"color: #d6fd56; text-transform: uppercase\">repeat: 8x</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1183,7 +1174,6 @@
           "id": "6f3d0683-411d-461e-88b6-4660ca29c6d8",
           "basedOn": "14150f8a-687f-4e56-bb86-d08bdf7c145d",
           "content": "<span style=\"font-weight: 800; color: #d6fd56\">2</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1202,7 +1192,6 @@
           "tagName": "p"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "a9c997b2-3171-4237-a9e7-84a224a62b7d",
@@ -1383,7 +1372,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #f9f9f9; letter-spacing: 0.01em; text-transform: uppercase\">BATTLE </span>\n<span style=\"color: #f9f9f9; letter-spacing: 0.01em; text-transform: uppercase\">ROPE WAVE</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1458,7 +1446,6 @@
           "id": "31803504-4ba8-4cca-9b39-67caaebff486",
           "basedOn": "14150f8a-687f-4e56-bb86-d08bdf7c145d",
           "content": "<span style=\"color: #d6fd56; text-transform: uppercase\">repeat: 16x</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1539,7 +1526,6 @@
           "id": "fcd0d318-243a-472b-a24f-69afa50b25d1",
           "basedOn": "14150f8a-687f-4e56-bb86-d08bdf7c145d",
           "content": "<span style=\"font-weight: 800; color: #d6fd56\">3</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1558,7 +1544,6 @@
           "tagName": "p"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "a1aec702-33ec-4857-9dc9-02ec006781b9",
@@ -1738,7 +1723,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #f9f9f9; letter-spacing: 0.01em; text-transform: uppercase\">KETTLEBELL</span>\n<span style=\"color: #f9f9f9; letter-spacing: 0.01em; text-transform: uppercase\">LUNGE</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1813,7 +1797,6 @@
           "id": "9af14d2b-7061-4c72-a67e-64ee4906533b",
           "basedOn": "14150f8a-687f-4e56-bb86-d08bdf7c145d",
           "content": "<span style=\"color: #d6fd56; text-transform: uppercase\">repeat: 8x</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1894,7 +1877,6 @@
           "id": "c9054608-a576-469c-9172-ffe0883f5211",
           "basedOn": "14150f8a-687f-4e56-bb86-d08bdf7c145d",
           "content": "<span style=\"font-weight: 800; color: #d6fd56\">4</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1913,7 +1895,6 @@
           "tagName": "p"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "c7ca2128-9414-4e2c-8177-03ed82b69992",
@@ -2094,7 +2075,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #f9f9f9; letter-spacing: 0.01em; text-transform: uppercase\">PUSH-UPS</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2169,7 +2149,6 @@
           "id": "6784c4ae-6f96-423e-bbab-fad7982f870b",
           "basedOn": "14150f8a-687f-4e56-bb86-d08bdf7c145d",
           "content": "<span style=\"color: #d6fd56; text-transform: uppercase\">repeat: 8x</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2250,7 +2229,6 @@
           "id": "804b84ce-167f-4dde-a0bc-0806b41c5832",
           "basedOn": "14150f8a-687f-4e56-bb86-d08bdf7c145d",
           "content": "<span style=\"font-weight: 800; color: #d6fd56\">5</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2269,7 +2247,6 @@
           "tagName": "p"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "fb0a32aa-df8d-47b2-86f1-6de171e74466",
@@ -2450,7 +2427,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #f9f9f9; letter-spacing: 0.01em; text-transform: uppercase\">KETTLEBELL</span>\n<span style=\"color: #f9f9f9; letter-spacing: 0.01em; text-transform: uppercase\">SWINGS</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2525,7 +2501,6 @@
           "id": "fd4f4ceb-ff05-4e0e-bfbb-7c956beac753",
           "basedOn": "14150f8a-687f-4e56-bb86-d08bdf7c145d",
           "content": "<span style=\"color: #d6fd56; text-transform: uppercase\">repeat: 16x</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2606,7 +2581,6 @@
           "id": "6096276e-9e15-434c-af8e-6b2658837382",
           "basedOn": "14150f8a-687f-4e56-bb86-d08bdf7c145d",
           "content": "<span style=\"font-weight: 800; color: #d6fd56\">6</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2625,7 +2599,6 @@
           "tagName": "p"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "9452fac9-53ad-497e-a885-569b9f3fc2d1",
@@ -2806,7 +2779,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #f9f9f9; letter-spacing: 0.01em; text-transform: uppercase\">LATERAL CRUNCH FINISH</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2881,7 +2853,6 @@
           "id": "c45bac82-3050-4cb0-9d5c-098f3a085cb9",
           "basedOn": "14150f8a-687f-4e56-bb86-d08bdf7c145d",
           "content": "<span style=\"color: #d6fd56; text-transform: uppercase\">repeat: 10x</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2962,7 +2933,6 @@
           "id": "e379e224-fcf6-402d-8c6a-75ceb3ccfcc4",
           "basedOn": "14150f8a-687f-4e56-bb86-d08bdf7c145d",
           "content": "<span style=\"font-weight: 800; color: #d6fd56\">7</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2981,7 +2951,6 @@
           "tagName": "p"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "cc9649ef-bdf6-49e8-8701-61cf478fc134",
@@ -3091,7 +3060,6 @@
           "id": "686be377-803d-46ec-a6b1-1a2020b17260"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [],
       "backgroundColor": {
         "color": {
@@ -3176,7 +3144,6 @@
           "id": "07a525ed-f231-4cec-a488-e6371229368f"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [],
       "backgroundColor": {
         "color": {
@@ -3306,7 +3273,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #d6fd56; text-transform: uppercase\">OTHER WORKOUTS</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3379,7 +3345,6 @@
           "id": "df2e9106-0be7-491c-884e-3fd4aadcf9e0",
           "basedOn": "14150f8a-687f-4e56-bb86-d08bdf7c145d",
           "content": "<span style=\"color: #fff; text-transform: uppercase\">Full Body Workout for Beach Body</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3576,7 +3541,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fff; text-transform: uppercase\">The 9-Minute Daily Strength Workout</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3647,7 +3611,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fff; text-transform: uppercase\">Leg &amp; yoga Workouts for Women</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3694,7 +3657,6 @@
           "id": "93b3b7e5-3fb3-4525-ad61-6b2dc0d61b6b"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "5495e22b-9fcc-4c3d-bb48-b18b0a161d72",
