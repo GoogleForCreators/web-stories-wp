@@ -54,7 +54,6 @@ export default {
     WEB_STORIES_DISABLE_PREVENT: true,
     WEB_STORIES_DISABLE_QUICK_TIPS: true,
     'ts-jest': {
-      tsconfig: '<rootDir>/tests/js/tsconfig.json',
       // Transform remaining JSX with Babel.
       babelConfig: true,
     },

@@ -28,13 +28,13 @@
     "pretty": true,
     "sourceMap": true,
     "typeRoots": ["./typings", "./node_modules/@types"],
-    "types": ["node", "jest"]
+    "types": []
   },
-  "include": ["typings/**/*"],
   "exclude": [
     "packages/*/dist-*/**",
     "packages/*/dist/**",
-    "**/test/**",
+    "**/test/**/*.js",
+    "**/testUtils/**/*.js",
     "**/karma/**"
   ]
 }

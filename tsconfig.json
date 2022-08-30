@@ -5,5 +5,5 @@
     { "path": "packages/tracking" },
     { "path": "packages/units" }
   ],
-  "include": []
+  "files": []
 }

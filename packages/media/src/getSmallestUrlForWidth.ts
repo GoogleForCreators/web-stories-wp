@@ -31,10 +31,10 @@ import type { Resource } from './types';
 function getSmallestUrlForWidth(minWidth: number, resource: Resource): string {
   if (resource.sizes) {
     const smallestMedia = Object.values(resource.sizes)
-      .sort((s1, s2) => Number(s1.width) - Number(s2.width))
+      .sort((s1, s2) => s1.width - s2.width)
       .filter((s) => aspectRatiosApproximatelyMatch(s, resource))
-      .find((s) => Number(s.width) >= minWidth * window.devicePixelRatio);
-    if (smallestMedia?.sourceUrl) {
+      .find((s) => s.width >= minWidth * window.devicePixelRatio);
+    if (smallestMedia) {
       return smallestMedia.sourceUrl;
     }
   }
