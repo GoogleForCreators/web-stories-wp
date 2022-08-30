@@ -41,7 +41,7 @@ export function getGridColumnAndRowCount(grid, pageCount) {
   let prevX;
   for (const el of grid.children) {
     const { x } = el.getBoundingClientRect();
-    if (prevX != null && x < prevX) {
+    if (typeof prevX !== 'undefined' && x < prevX) {
       break;
     }
     prevX = x;

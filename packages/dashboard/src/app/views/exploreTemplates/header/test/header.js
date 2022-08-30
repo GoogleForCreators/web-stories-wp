@@ -65,12 +65,12 @@ const mockFilterState = {
   updateSort,
 };
 
-describe('Explore Templates <Header />', function () {
+describe('Explore Templates <Header />', () => {
   beforeEach(() => {
     mockUseTemplateFilters.mockImplementation(() => mockFilterState);
   });
 
-  it('should have results label that says "Viewing all templates" on initial page view', function () {
+  it('should have results label that says "Viewing all templates" on initial page view', () => {
     renderWithProviders(
       <LayoutProvider>
         <Header
@@ -87,7 +87,7 @@ describe('Explore Templates <Header />', function () {
     expect(screen.getByText('Viewing all templates')).toBeInTheDocument();
   });
 
-  it('should call the set sort function when a new sort is selected', function () {
+  it('should call the set sort function when a new sort is selected', () => {
     renderWithProviders(
       <LayoutProvider>
         <Header
@@ -106,7 +106,7 @@ describe('Explore Templates <Header />', function () {
     expect(updateSort).toHaveBeenCalledWith({ orderby: 'recent' });
   });
 
-  it('should not render with search when features:{enableInProgressTemplateActions is false}', function () {
+  it('should not render with search when features:{enableInProgressTemplateActions is false}', () => {
     renderWithProviders(
       <LayoutProvider>
         <Header

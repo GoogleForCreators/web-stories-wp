@@ -2,7 +2,7 @@
   "name": "@googleforcreators/date",
   "description": "Date-handling package, a tiny wrapper around date-fns.",
   "private": false,
-  "version": "0.1.202208151234",
+  "version": "0.1.202208291229",
   "author": {
     "name": "Google",
     "url": "https://creators.google/"
@@ -38,7 +38,7 @@
   },
   "dependencies": {
     "@googleforcreators/i18n": "*",
-    "date-fns": "^2.29.1",
+    "date-fns": "^2.29.2",
     "date-fns-tz": "^1.3.6"
   },
   "devDependencies": {

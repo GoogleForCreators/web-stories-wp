@@ -26,6 +26,10 @@ import {
   useState,
 } from '@googleforcreators/react';
 import { UnitsProvider } from '@googleforcreators/units';
+import {
+  LOCAL_STORAGE_PREFIX,
+  localStore,
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -54,6 +58,18 @@ function CanvasProvider({ children }) {
   const [isEyedropperActive, setIsEyedropperActive] = useState(null);
   const [eyedropperCallback, setEyedropperCallback] = useState(null);
   const [renamableLayer, setRenamableLayer] = useState(null);
+  const [floatingMenuPosition, setFloatingMenuPosition] = useState(() => {
+    const local = localStore.getItemByKey(
+      LOCAL_STORAGE_PREFIX.ELEMENT_TOOLBAR_SETTINGS
+    );
+    return local?.position;
+  });
+  const [displayFloatingMenu, setDisplayFloatingMenu] = useState(() => {
+    const local = localStore.getItemByKey(
+      LOCAL_STORAGE_PREFIX.ELEMENT_TOOLBAR_SETTINGS
+    );
+    return local?.isDisplayed;
+  });
 
   // IntersectionObserver tracks clientRects which is what we need here.
   // different from use case of useIntersectionEffect because this is extensible
@@ -202,6 +218,8 @@ function CanvasProvider({ children }) {
         clientRectObserver,
         onMoveableMount,
         renamableLayer,
+        floatingMenuPosition,
+        displayFloatingMenu,
       },
       actions: {
         setPageContainer,
@@ -222,6 +240,8 @@ function CanvasProvider({ children }) {
         setEyedropperPixelData,
         setMoveableMount,
         setRenamableLayer,
+        setFloatingMenuPosition,
+        setDisplayFloatingMenu,
       },
     }),
     [
@@ -243,6 +263,8 @@ function CanvasProvider({ children }) {
       clientRectObserver,
       renamableLayer,
       getNodeForElement,
+      floatingMenuPosition,
+      displayFloatingMenu,
       setNodeForElement,
       setEditingElementWithoutState,
       setEditingElementWithState,

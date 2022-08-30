@@ -23,12 +23,14 @@ import Modal from 'react-modal';
  * Internal dependencies
  */
 import localStore, { LOCAL_STORAGE_PREFIX } from './utils/localStore';
+import sessionStore, { SESSION_STORAGE_PREFIX } from './utils/sessionStore';
 import * as Icons from './icons';
 
 const { setAppElement } = Modal;
 
 export { Icons };
 export { localStore, LOCAL_STORAGE_PREFIX };
+export { sessionStore, SESSION_STORAGE_PREFIX };
 export * from './components';
 export * from './contexts';
 export * from './images';

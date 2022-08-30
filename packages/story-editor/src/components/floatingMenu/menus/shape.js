@@ -31,6 +31,7 @@ import {
   More,
   Separator,
   Dismiss,
+  Settings,
 } from '../elements';
 
 const FloatingShapeMenu = memo(function FloatingShapeMenu() {
@@ -53,6 +54,8 @@ const FloatingShapeMenu = memo(function FloatingShapeMenu() {
       <More />
 
       <Separator />
+
+      <Settings />
 
       <Dismiss />
     </>
