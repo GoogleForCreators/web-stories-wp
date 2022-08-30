@@ -80,6 +80,7 @@
     "@testing-library/react-hooks": "^8.0.0",
     "@testing-library/user-event": "^14.4.3",
     "@types/jest": "^29.0.0",
+    "@types/jsdom": "^20.0.0",
     "@typescript-eslint/eslint-plugin": "^5.33.0",
     "@typescript-eslint/parser": "^5.33.1",
     "@web-stories-wp/e2e-tests": "*",
