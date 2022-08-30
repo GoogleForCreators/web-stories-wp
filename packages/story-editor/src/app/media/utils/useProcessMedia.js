@@ -22,6 +22,7 @@ import {
   fetchRemoteFile,
   isAnimatedGif,
 } from '@googleforcreators/media';
+import { DANGER_ZONE_HEIGHT } from '@googleforcreators/units';
 
 /**
  * Internal dependencies
@@ -500,7 +501,10 @@ function useProcessMedia({
           elementId,
           properties: {
             x: cropElement.x < 0 ? 0 : cropElement.x,
-            y: cropElement.y < 0 ? 0 : cropElement.y,
+            y:
+              cropElement.y < DANGER_ZONE_HEIGHT
+                ? -DANGER_ZONE_HEIGHT
+                : cropElement.y,
             width: newWidth,
             height: newHeight,
           },

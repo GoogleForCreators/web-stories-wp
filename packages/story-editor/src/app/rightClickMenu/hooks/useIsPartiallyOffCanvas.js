@@ -16,7 +16,11 @@
 /**
  * External dependencies
  */
-import { PAGE_HEIGHT, PAGE_WIDTH } from '@googleforcreators/units';
+import {
+  DANGER_ZONE_HEIGHT,
+  PAGE_HEIGHT,
+  PAGE_WIDTH,
+} from '@googleforcreators/units';
 
 function useIsPartiallyOffCanvas(selectedElement) {
   const { x, y, width, height } = selectedElement;
@@ -31,9 +35,11 @@ function useIsPartiallyOffCanvas(selectedElement) {
     offCanvasLeft = Math.abs(x);
   }
 
+  // We have to adjust the y value since y = 0 is the top edge of the page container, not the top edge of the fullbleed container.
+  const adjustedY = y + DANGER_ZONE_HEIGHT;
   // if y is a negative #
-  if (y < 0) {
-    offCanvasTop = Math.abs(y);
+  if (adjustedY < 0) {
+    offCanvasTop = Math.abs(adjustedY);
   }
 
   // check for off-canvas right side
@@ -47,9 +53,9 @@ function useIsPartiallyOffCanvas(selectedElement) {
   }
 
   // check if off-canvas bottom
-  if (y > 0) {
-    if (y + height > PAGE_HEIGHT) {
-      offCanvasBottom = y + height - PAGE_HEIGHT;
+  if (adjustedY > 0) {
+    if (adjustedY + height > PAGE_HEIGHT) {
+      offCanvasBottom = adjustedY + height - PAGE_HEIGHT;
     }
   } else {
     const b = height - Math.abs(y) - PAGE_HEIGHT;
