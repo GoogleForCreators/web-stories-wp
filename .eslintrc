@@ -309,9 +309,15 @@
       ],
       "extends": [
         "plugin:@typescript-eslint/recommended",
-        "plugin:@typescript-eslint/eslint-recommended"
+        "plugin:@typescript-eslint/recommended-requiring-type-checking"
       ],
       "parser": "@typescript-eslint/parser",
+      "parserOptions": {
+        "project": [
+          "./tsconfig.json",
+          "./packages/*/tsconfig.json"
+        ]
+      },
       "rules": {
         "no-duplicate-imports": "off",
         "@typescript-eslint/no-duplicate-imports": "error",
@@ -377,6 +383,7 @@
         "jest/prefer-mock-promise-shorthand": "off",
         "jest/prefer-snapshot-hint": "off",
         "jsdoc/require-jsdoc": "off",
+        "jest/unbound-method": "off",
         "testing-library/no-await-sync-events": "error",
         "testing-library/no-debugging-utils": "error",
         "testing-library/no-dom-import": "error"
@@ -490,7 +497,8 @@
             ]
           }
         ],
-        "jest/prefer-snapshot-hint": "off"
+        "jest/prefer-snapshot-hint": "off",
+        "jest/unbound-method": "off"
       },
       "globals": {
         "browser": "readonly",

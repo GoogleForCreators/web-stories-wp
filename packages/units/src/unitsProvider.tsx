@@ -23,7 +23,7 @@ import type { ReactNode } from 'react';
 /**
  * Internal dependencies
  */
-import Context from './context';
+import Context, { ContextState } from './context';
 import {
   dataToEditorX,
   dataToEditorY,
@@ -45,7 +45,7 @@ interface UnitsProviderProps {
 
 function UnitsProvider({ pageSize, children }: UnitsProviderProps) {
   const { width: pageWidth, height: pageHeight } = pageSize;
-  const state = useMemo(
+  const state: ContextState = useMemo(
     () => ({
       state: {
         pageSize: { width: pageWidth, height: pageHeight },
