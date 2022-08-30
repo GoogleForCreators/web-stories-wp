@@ -309,9 +309,15 @@
       ],
       "extends": [
         "plugin:@typescript-eslint/recommended",
-        "plugin:@typescript-eslint/eslint-recommended"
+        "plugin:@typescript-eslint/recommended-requiring-type-checking"
       ],
       "parser": "@typescript-eslint/parser",
+      "parserOptions": {
+        "project": [
+          "./tsconfig.json",
+          "./packages/*/tsconfig.json"
+        ]
+      },
       "rules": {
         "no-duplicate-imports": "off",
         "@typescript-eslint/no-duplicate-imports": "error",
