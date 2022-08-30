@@ -22,7 +22,7 @@ import preloadVideo from './preloadVideo';
 import seekVideo from './seekVideo';
 import type { VideoResource } from './types';
 
-const CACHE = new Map();
+const CACHE: Map<string, string> = new Map();
 
 interface FlipSettings {
   vertical: boolean;

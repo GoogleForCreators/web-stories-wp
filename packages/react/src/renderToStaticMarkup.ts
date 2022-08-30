@@ -39,9 +39,10 @@ function renderToStaticMarkup(element: ReactElement) {
   const originalConsoleError = console.error;
   console.error = function (error, ...args) {
     if (
-      error &&
+      typeof error === 'string' &&
       !error.startsWith('Warning: useLayoutEffect does nothing on the server')
     ) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument -- OK to pass through here.
       originalConsoleError(error, ...args);
     }
   };
