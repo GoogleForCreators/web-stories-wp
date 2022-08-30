@@ -65,7 +65,7 @@ const RenderModal = () => {
  */
 WebStoryMCEStore.subscribe(() => RenderModal());
 
-tinymce.PluginManager.add('web_stories', function (editor) {
+tinymce.PluginManager.add('web_stories', (editor) => {
   editor.addButton('web_stories', {
     text: __('Web Stories', 'web-stories'),
     classes: 'web-stories',

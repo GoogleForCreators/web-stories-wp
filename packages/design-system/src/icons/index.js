@@ -46,6 +46,7 @@ export { default as BorderBox } from './border_box.svg';
 export { default as Box1 } from './box1.svg';
 export { default as Box4 } from './box4.svg';
 export { default as Box4Alternate } from './box4_alternate.svg';
+export { default as BoxWithDots } from './box_with_dots.svg';
 export { default as Bucket } from './bucket.svg';
 export { default as Camera } from './camera.svg';
 export { default as CameraOff } from './camera_off.svg';

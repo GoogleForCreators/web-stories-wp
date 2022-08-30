@@ -30,8 +30,8 @@ import {
 import useDropDownMenu from '../useDropDownMenu';
 import { getOptions } from '../utils';
 
-describe('useDropDownMenu()', function () {
-  it('should have the default options initially selected', function () {
+describe('useDropDownMenu()', () => {
+  it('should have the default options initially selected', () => {
     const { result } = renderHook(() =>
       useDropDownMenu({
         handleMenuItemSelect: () => {},
@@ -45,7 +45,7 @@ describe('useDropDownMenu()', function () {
     expect(result.current.focusedValue).toBeUndefined();
   });
 
-  it('should return focused index matching activeValue passed in initially if present', function () {
+  it('should return focused index matching activeValue passed in initially if present', () => {
     const { result } = renderHook(() =>
       useDropDownMenu({
         activeValue: basicDropDownOptions[2].value,
@@ -60,7 +60,7 @@ describe('useDropDownMenu()', function () {
     expect(result.current.focusedValue).toBe(basicDropDownOptions[2].value);
   });
 
-  it('should return focused index matching activeValue passed in initially if present in a nested list', function () {
+  it('should return focused index matching activeValue passed in initially if present in a nested list', () => {
     const { result } = renderHook(() =>
       useDropDownMenu({
         activeValue: 'dog-2',

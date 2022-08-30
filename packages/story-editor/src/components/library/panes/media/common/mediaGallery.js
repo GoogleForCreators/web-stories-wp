@@ -48,18 +48,38 @@ const RowRenderer = ({ children }) => children;
  *
  * @param {Object} props Component props.
  * @param {Array.<Object>} props.resources List of resources to display.
+ * @param {Array.<Object>} props.uploadingResources List of uploading resources to display.
  * @param {InsertionCallback} props.onInsert Called when element is selected.
  * @param {string} props.providerType Provider of gallery's elements.
  * @param {boolean} props.canEditMedia Current user can upload media.
  * @return {*} The gallery element.
  */
-function MediaGallery({ resources, onInsert, providerType, canEditMedia }) {
-  const photos = resources.map((resource, index) => ({
+function MediaGallery({
+  resources,
+  uploadingResources = [],
+  onInsert,
+  providerType,
+  canEditMedia,
+}) {
+  // Use different key for uploading vs. uploaded items to avoid confusions.
+  const photos = [
+    ...uploadingResources.map((resource) => ({
+      key: `uploading-${resource.id}`,
+      src: resource.src,
+      width: resource.width,
+      height: resource.height,
+      resource,
+    })),
+    ...resources.map((resource) => ({
+      key: resource.id,
+      src: resource.src,
+      width: resource.width,
+      height: resource.height,
+      resource,
+    })),
+  ].map((photo, index) => ({
+    ...photo,
     index,
-    key: resource.id,
-    src: resource.src,
-    width: resource.width,
-    height: resource.height,
   }));
 
   const imageRenderer = useCallback(
@@ -69,7 +89,7 @@ function MediaGallery({ resources, onInsert, providerType, canEditMedia }) {
           key={photo.key}
           index={photo.index}
           margin={`0px 0px ${PHOTO_SPACING}px 0px`}
-          resource={resources[photo.index]}
+          resource={photo.resource}
           width={layout.width}
           height={layout.height}
           onInsert={onInsert}
@@ -78,7 +98,7 @@ function MediaGallery({ resources, onInsert, providerType, canEditMedia }) {
         />
       );
     },
-    [providerType, onInsert, resources, canEditMedia]
+    [providerType, onInsert, canEditMedia]
   );
 
   return (
@@ -99,6 +119,7 @@ function MediaGallery({ resources, onInsert, providerType, canEditMedia }) {
 
 MediaGallery.propTypes = {
   resources: PropTypes.arrayOf(PropTypes.object).isRequired,
+  uploadingResources: PropTypes.arrayOf(PropTypes.object),
   onInsert: PropTypes.func.isRequired,
   providerType: PropTypes.string.isRequired,
   canEditMedia: PropTypes.bool,

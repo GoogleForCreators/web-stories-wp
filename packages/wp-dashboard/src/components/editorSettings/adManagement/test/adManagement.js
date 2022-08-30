@@ -26,7 +26,7 @@ import AdManagement, { TEXT } from '..';
 import { AD_NETWORK_TYPE } from '../../../../constants';
 import { renderWithProviders } from '../../../../testUtils';
 
-describe('Editor Settings: Ad Management group settings <AdManagement />', function () {
+describe('Editor Settings: Ad Management group settings <AdManagement />', () => {
   let adNetwork;
   let mockUpdate;
   const defaultSiteKitStatus = {
@@ -44,7 +44,7 @@ describe('Editor Settings: Ad Management group settings <AdManagement />', funct
     adNetwork = AD_NETWORK_TYPE.NONE;
   });
 
-  it('should render ad management settings area with ad network dropdown button and helper text by default', function () {
+  it('should render ad management settings area with ad network dropdown button and helper text by default', () => {
     renderWithProviders(
       <AdManagement
         adNetwork={adNetwork}
@@ -71,7 +71,7 @@ describe('Editor Settings: Ad Management group settings <AdManagement />', funct
     expect(networkDropdown).toHaveTextContent('None');
   });
 
-  it('should render ad network settings and link adsense', function () {
+  it('should render ad network settings and link adsense', () => {
     renderWithProviders(
       <AdManagement
         adNetwork={AD_NETWORK_TYPE.ADSENSE}
@@ -95,7 +95,7 @@ describe('Editor Settings: Ad Management group settings <AdManagement />', funct
     expect(helperLink).toBeInTheDocument();
   });
 
-  it('should render ad network settings and link Ad Manager', function () {
+  it('should render ad network settings and link Ad Manager', () => {
     renderWithProviders(
       <AdManagement
         adNetwork={AD_NETWORK_TYPE.ADMANAGER}
@@ -120,7 +120,7 @@ describe('Editor Settings: Ad Management group settings <AdManagement />', funct
     expect(helperLink).toBeInTheDocument();
   });
 
-  it('should render adsense message when site kit is installed', function () {
+  it('should render adsense message when site kit is installed', () => {
     renderWithProviders(
       <AdManagement
         adNetwork={AD_NETWORK_TYPE.ADMANAGER}

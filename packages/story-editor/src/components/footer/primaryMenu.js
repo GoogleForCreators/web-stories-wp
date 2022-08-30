@@ -27,6 +27,7 @@ import ZoomSelector from './zoomSelector';
 import { GridViewButton } from './gridview';
 import Layers from './layers';
 import { FOOTER_MENU_GAP, FOOTER_MARGIN } from './constants';
+import ToolbarToggle from './toolbarToggle';
 
 const Wrapper = styled.div`
   display: flex;
@@ -51,6 +52,7 @@ function PrimaryMenu() {
     <Wrapper>
       {/* This ID is used for portal rendering of additional menu items, e.g. for custom meta boxes */}
       <MenuItems id="primary-menu-items">
+        <ToolbarToggle />
         <ZoomSelector />
         <GridViewButton />
         <Layers />

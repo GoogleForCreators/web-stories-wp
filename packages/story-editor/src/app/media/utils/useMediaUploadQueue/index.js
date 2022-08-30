@@ -625,6 +625,15 @@ function useMediaUploadQueue() {
     );
 
     /**
+     * A list of all items that are still in the queue and not cancelled.
+     *
+     * @type {Array} Failed items.
+     */
+    const active = state.queue.filter(
+      (item) => item.state !== ITEM_STATUS.CANCELLED
+    );
+
+    /**
      * A list of all items that failed to upload.
      *
      * @type {Array} Failed items.
@@ -879,6 +888,7 @@ function useMediaUploadQueue() {
         uploaded,
         failures,
         finished,
+        active,
         isUploading,
         isTranscoding,
         isMuting,

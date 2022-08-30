@@ -65,9 +65,9 @@ function setupDebugMode() {
 
     //eslint-disable-next-line no-console
     console.info('Karma paused. Call karmaResume() to resume.');
-    return new Promise(function (resolve) {
+    return new Promise((resolve) => {
       resumeCallback = resolve;
-      setTimeout(function () {
+      setTimeout(() => {
         resumeCallback = null;
         resolve();
       }, DEBUG_TIMEOUT);
