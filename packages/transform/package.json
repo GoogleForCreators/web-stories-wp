@@ -26,12 +26,12 @@
   },
   "customExports": {
     ".": {
-      "default": "./src/index.js"
+      "default": "./src/index.ts"
     }
   },
   "main": "dist/index.js",
   "module": "dist-module/index.js",
-  "source": "src/index.js",
+  "source": "src/index.ts",
   "publishConfig": {
     "access": "public"
   },

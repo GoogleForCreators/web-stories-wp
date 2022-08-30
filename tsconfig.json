@@ -3,6 +3,7 @@
     { "path": "packages/media" },
     { "path": "packages/react" },
     { "path": "packages/tracking" },
+    { "path": "packages/transform" },
     { "path": "packages/units" }
   ],
   "include": []
