@@ -26,6 +26,7 @@ import { useRef } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
+import { useFeature } from 'flagged';
 import {
   RIGHT_CLICK_MENU_LABELS,
   RIGHT_CLICK_MENU_SHORTCUTS,
@@ -73,6 +74,8 @@ function ForegroundMediaMenu({ parentMenuRef }) {
   const { hasShapeMask, removeShapeMask } = useShapeMask(selectedElement);
 
   const { isOffCanvas } = useIsPartiallyOffCanvas(selectedElement);
+
+  const cropHidden = useFeature('cropHidden');
 
   const canTranscodeResource = useLocalMedia(
     (value) => value.state.canTranscodeResource
@@ -208,7 +211,7 @@ function ForegroundMediaMenu({ parentMenuRef }) {
         {scaleLabel}
       </ContextMenuComponents.MenuButton>
 
-      {isOffCanvas() && (
+      {cropHidden && isOffCanvas() && (
         <ContextMenuComponents.MenuButton onClick={handleCropHidden}>
           {RIGHT_CLICK_MENU_LABELS.CROP_HIDDEN}
         </ContextMenuComponents.MenuButton>
