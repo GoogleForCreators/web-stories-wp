@@ -37,12 +37,12 @@ function getTimeTracker(eventName: string): () => void {
 
     // Universal Analytics has a special `timing_complete` event which
     // does not exist in GA4.
-    trackEvent('timing_complete', {
+    void trackEvent('timing_complete', {
       name: eventName,
       value,
       send_to: config.trackingId,
     });
-    trackEvent(eventName, {
+    void trackEvent(eventName, {
       value,
       send_to: config.trackingIdGA4,
     });
