@@ -494,7 +494,8 @@
             ]
           }
         ],
-        "jest/prefer-snapshot-hint": "off"
+        "jest/prefer-snapshot-hint": "off",
+        "jest/unbound-method": "off"
       },
       "globals": {
         "browser": "readonly",
