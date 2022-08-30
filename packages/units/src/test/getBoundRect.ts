@@ -27,12 +27,14 @@ describe('getBoundRect', () => {
         y: 10,
         width: 100,
         height: 50,
+        rotationAngle: 0,
       },
       {
         x: 30,
         y: 20,
         width: 100,
         height: 50,
+        rotationAngle: 0,
       },
     ];
 
@@ -55,18 +57,21 @@ describe('getBoundRect', () => {
         y: 10,
         width: 100,
         height: 50,
+        rotationAngle: 0,
       },
       {
         x: 30,
         y: 20,
         width: 100,
         height: 50,
+        rotationAngle: 0,
       },
       {
         x: 75,
         y: 84,
         width: 50,
         height: 32,
+        rotationAngle: 0,
       },
     ];
 
@@ -133,6 +138,7 @@ describe('getBoundRect', () => {
         y: 83,
         width: 250,
         height: 12,
+        rotationAngle: 0,
       },
       {
         x: 18,
