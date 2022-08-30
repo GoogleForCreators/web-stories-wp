@@ -4885,11 +4885,6 @@
           "delay": 300
         },
         {
-          "targets": ["a5460d7e-4e85-41c9-b55f-a6ca14c0df8e"],
-          "delete": true,
-          "id": "0c818dd2-61aa-44c6-82dc-54bc51ecfd12"
-        },
-        {
           "id": "f49e4183-364c-4032-8bab-3007b7492518",
           "type": "effect-fade-in",
           "targets": ["a5460d7e-4e85-41c9-b55f-a6ca14c0df8e"],
@@ -4911,11 +4906,6 @@
           "delay": 400
         },
         {
-          "targets": ["19f39586-3daa-4b78-8561-7a2f1beafb37"],
-          "delete": true,
-          "id": "b6e1ad75-b42b-4105-976d-e56e4434baaf"
-        },
-        {
           "id": "2144a782-06cf-4af0-84cd-bda9587ccd82",
           "type": "effect-fade-in",
           "targets": ["19f39586-3daa-4b78-8561-7a2f1beafb37"],
@@ -4935,11 +4925,6 @@
           "targets": ["a83e16c9-6c65-4c65-bdca-30f2a1616e01"],
           "duration": 1200,
           "delay": 500
-        },
-        {
-          "targets": ["f8241cd9-c24e-44aa-8556-4bde9758fee4"],
-          "delete": true,
-          "id": "8df812b1-1636-463b-81e6-6626cd726b62"
         },
         {
           "id": "602a40d5-ba5d-4524-8d0e-dd760e36e123",
