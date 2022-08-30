@@ -51,7 +51,7 @@ const useLayerActions = () => {
     })
   );
 
-  const { cropParams } = useisPartiallyOffCanvas(selectedElement);
+  const { cropParams } = useIsPartiallyOffCanvas(selectedElement);
 
   const elementPosition = elements.findIndex(
     ({ id }) => id === selectedElement?.id
