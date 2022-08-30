@@ -23,7 +23,7 @@ import { trackEvent } from '@googleforcreators/tracking';
  */
 import { useStory } from '../..';
 import { useLocalMedia } from '../../media';
-import useisPartiallyOffCanvas from './useIsPartiallyOffCanvas';
+import useIsPartiallyOffCanvas from './useIsPartiallyOffCanvas';
 
 /**
  * Creates the right click menu layer actions.
