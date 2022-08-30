@@ -45,4 +45,9 @@ interface Actions {
   getBoxWithBorder?: (element: Element) => ElementBox;
 }
 
-export default createContext<{ state: State; actions: Actions }>(INITIAL_STATE);
+export interface ContextState {
+  state: State;
+  actions: Actions;
+}
+
+export default createContext<ContextState>(INITIAL_STATE);

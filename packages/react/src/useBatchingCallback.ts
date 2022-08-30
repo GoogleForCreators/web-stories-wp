@@ -36,6 +36,7 @@ function useBatchingCallback<T extends (...args: unknown[]) => unknown>(
   deps: DependencyList
 ) {
   return useCallback(
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument -- Just passing through
     (...args) => batchedUpdates(() => callback(...args)),
     // eslint-disable-next-line react-hooks/exhaustive-deps -- Pass through provided deps.
     deps
