@@ -495,7 +495,6 @@ function useProcessMedia({
       const onUploadSuccess = ({ id, resource }) => {
         copyResourceData({ oldResource, resource });
         updateOldTranscodedObject(oldResource.id, resource.id, 'source-image');
-        deleteMediaElement({ id: oldResource.id });
 
         updateElementById({
           elementId,
@@ -550,7 +549,6 @@ function useProcessMedia({
       cropHidden,
       updateElementById,
       copyResourceData,
-      deleteMediaElement,
       postProcessingResource,
       updateExistingElementsByResourceId,
       updateOldTranscodedObject,
