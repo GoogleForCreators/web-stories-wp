@@ -54,6 +54,11 @@ export default {
     WEB_STORIES_DISABLE_PREVENT: true,
     WEB_STORIES_DISABLE_QUICK_TIPS: true,
     'ts-jest': {
+      // Disable type checking but improve performance.
+      // See https://kulshekhar.github.io/ts-jest/docs/getting-started/options/isolatedModules
+      // See https://github.com/kulshekhar/ts-jest/issues/1648
+      // TODO: Look into disabling this again.
+      isolatedModules: true,
       // Transform remaining JSX with Babel.
       babelConfig: true,
     },

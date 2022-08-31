@@ -14,17 +14,4 @@
  * limitations under the License.
  */
 
-// See https://github.com/moroshko/shallow-equal/issues/13
-// and https://github.com/moroshko/shallow-equal/pull/16
-
-declare module 'shallow-equal' {
-  export function shallowEqualArrays(
-    arr1: any[] | null | undefined,
-    arr2: any[] | null | undefined
-  ): boolean;
-
-  export function shallowEqualObjects(
-    obj1: Record<string, any> | null | undefined,
-    obj2: Record<string, any> | null | undefined
-  ): boolean;
-}
+import 'jest-extended';
