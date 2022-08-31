@@ -19,12 +19,17 @@
  */
 import Tannin from 'tannin';
 
+/**
+ * Internal dependencies
+ */
+import type { LocaleDataWrapper } from './types';
+
 const TEXT_DOMAIN = 'web-stories';
 
 const tannin = new Tannin({
   [TEXT_DOMAIN]: {
     '': {
-      plural_forms(n) {
+      plural_forms(n: number) {
         return n === 1 ? 0 : 1;
       },
     },
@@ -34,9 +39,9 @@ const tannin = new Tannin({
 /**
  * Merge locale data into the Tannin instance.
  *
- * @param {Object} data Locale data.
+ * @param {LocaleDataWrapper} data Locale data.
  */
-export function setLocaleData(data) {
+export function setLocaleData(data: LocaleDataWrapper) {
   const translations =
     data.locale_data['web-stories'] || data.locale_data.messages;
   tannin.data[TEXT_DOMAIN] = {
@@ -56,7 +61,7 @@ export function setLocaleData(data) {
  * @param {string} [domain] Text domain. Unique identifier for retrieving translated strings.
  * @return {string} Translated text.
  */
-export function __(text, domain = TEXT_DOMAIN) {
+export function __(text: string, domain = TEXT_DOMAIN) {
   return tannin.dcnpgettext(domain, undefined, text);
 }
 
@@ -68,7 +73,7 @@ export function __(text, domain = TEXT_DOMAIN) {
  * @param {string} [domain] Text domain. Unique identifier for retrieving translated strings.
  * @return {string} Translated text.
  */
-export function _x(text, context, domain = TEXT_DOMAIN) {
+export function _x(text: string, context: string, domain = TEXT_DOMAIN) {
   return tannin.dcnpgettext(domain, context, text);
 }
 
@@ -81,7 +86,12 @@ export function _x(text, context, domain = TEXT_DOMAIN) {
  * @param {string} [domain] Text domain. Unique identifier for retrieving translated strings.
  * @return {string} Translated text.
  */
-export function _n(singular, plural, number, domain = TEXT_DOMAIN) {
+export function _n(
+  singular: string,
+  plural: string,
+  number: number,
+  domain = TEXT_DOMAIN
+) {
   return tannin.dcnpgettext(domain, undefined, singular, plural, number);
 }
 
@@ -95,6 +105,12 @@ export function _n(singular, plural, number, domain = TEXT_DOMAIN) {
  * @param {string} [domain] Text domain. Unique identifier for retrieving translated strings.
  * @return {string} Translated text.
  */
-export function _nx(singular, plural, number, context, domain = TEXT_DOMAIN) {
+export function _nx(
+  singular: string,
+  plural: string,
+  number: number,
+  context: string,
+  domain = TEXT_DOMAIN
+) {
   return tannin.dcnpgettext(domain, context, singular, plural, number);
 }

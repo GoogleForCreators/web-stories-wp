@@ -23,6 +23,12 @@ import {
   Fragment,
 } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
+import type React from 'react';
+
+/**
+ * Internal dependencies
+ */
+import type { Mapping } from './types';
 
 /** @typedef {import('react').ReactNode} ReactNode */
 /** @typedef {import('react').ReactElement} ReactElement */
@@ -52,18 +58,22 @@ const VOID_ELEMENTS = [
  * @param {?Object.<string, ReactElement>} mapping Map of tag names to React components.
  * @return {ReactNode} Transformed node.
  */
-export function transformNode(node, mapping = {}) {
-  const { childNodes, localName, nodeType, textContent } = node;
+export function transformNode(
+  node: ChildNode,
+  mapping: Mapping = {}
+): React.ReactNode {
+  const { firstChild, nodeType, textContent } = node;
   if (Node.TEXT_NODE === nodeType) {
     return textContent;
   }
 
-  const children = node.hasChildNodes()
-    ? [...childNodes].map((child) => transform(child, mapping))
-    : null;
+  const children = node.hasChildNodes() ? transform(firstChild, mapping) : null;
 
-  if (localName in mapping) {
-    return cloneElement(mapping[localName], null, children);
+  if ('localName' in node) {
+    const { localName } = node as Element;
+    if (localName in mapping) {
+      return cloneElement(mapping[localName], undefined, children);
+    }
   }
 
   return createElement(localName, null, children);
@@ -77,15 +87,19 @@ export function transformNode(node, mapping = {}) {
  * @param {?Object.<string, ReactElement>} mapping Map of tag names to React components.
  * @return {ReactNode[]} List of transformed nodes.
  */
-function transform(node, mapping = {}) {
-  const result = [];
-
-  do {
+function transform(node: ChildNode | null, mapping: Mapping = {}) {
+  const result: Array<React.ReactNode> = [];
+  while (node) {
     result.push(transformNode(node, mapping));
     node = node.nextSibling;
-  } while (node !== null);
+  }
 
   return result;
+}
+
+interface TranslateWithMarkupProps {
+  mapping: Mapping;
+  children: string;
 }
 
 /**
@@ -99,10 +113,13 @@ function transform(node, mapping = {}) {
  * @see https://github.com/googleforcreators/web-stories-wp/issues/1578
  * @param {Object} props Component props.
  * @param {?Object.<string, ReactElement>} props.mapping Map of tag names to React components.
- * @param {ReactNode[]|string} props.children Children / string to parse.
+ * @param {string} props.children Children / string to parse.
  * @return {ReactNode[]} Transformed children.
  */
-function TranslateWithMarkup({ mapping = {}, children }) {
+function TranslateWithMarkup({
+  mapping = {},
+  children,
+}: TranslateWithMarkupProps) {
   //Ensure all Object keys are lowercase as the DOMParser converts tag names to lowercase.
   mapping = Object.fromEntries(
     Object.entries(mapping).map(([k, v]) => [k.toLowerCase(), v])
