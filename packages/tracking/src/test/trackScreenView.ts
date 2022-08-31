@@ -41,7 +41,7 @@ describe('trackScreenView', () => {
 
     await trackScreenView('Explore Templates');
     expect(gtag).toHaveBeenCalledWith('event', 'screen_view', {
-      event_callback: expect.any(Function),
+      event_callback: expect.any(Function) as () => void,
       screen_name: 'Explore Templates',
     });
   });

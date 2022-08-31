@@ -37,14 +37,14 @@ describe('trackTiming', () => {
     jest.clearAllMocks();
   });
 
-  it('sends two separate tracking events', async () => {
+  it('sends two separate tracking events', () => {
     config.appName = 'Foo App';
     config.trackingAllowed = true;
     config.trackingEnabled = true;
     config.trackingId = 'UA-12345678-1';
     config.trackingIdGA4 = 'G-ABC1234567';
 
-    await trackTiming('page', 50, 'carousel_navigate', 'click');
+    trackTiming('page', 50, 'carousel_navigate', 'click');
 
     expect(trackEvent).toHaveBeenCalledTimes(2);
     expect(trackEvent).toHaveBeenNthCalledWith(1, 'timing_complete', {

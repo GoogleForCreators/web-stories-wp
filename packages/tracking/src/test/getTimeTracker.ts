@@ -37,7 +37,7 @@ describe('getTimeTracker', () => {
     jest.clearAllMocks();
   });
 
-  it('sends two separate tracking events', async () => {
+  it('sends two separate tracking events', () => {
     config.appName = 'Foo App';
     config.trackingAllowed = true;
     config.trackingEnabled = true;
@@ -45,7 +45,7 @@ describe('getTimeTracker', () => {
     config.trackingIdGA4 = 'G-ABC1234567';
 
     const trackTime = getTimeTracker('load_dependencies');
-    await trackTime();
+    trackTime();
 
     expect(trackEvent).toHaveBeenCalledTimes(2);
     expect(trackEvent).toHaveBeenNthCalledWith(1, 'timing_complete', {

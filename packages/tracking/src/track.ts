@@ -27,7 +27,7 @@ import { gtag } from './shared';
  * @return {Promise<void>} Promise that always resolves.
  */
 function track(eventName: string, eventData = {}): Promise<void> {
-  return new Promise((resolve) => {
+  return new Promise<void>((resolve) => {
     // This timeout ensures a tracking event does not block the user
     // event if it is not sent (in time).
     // If this fails, it shouldn't reject the promise since event

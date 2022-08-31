@@ -42,7 +42,7 @@ describe('trackError', () => {
     expect(gtag).toHaveBeenCalledWith('event', 'exception', {
       description: 'test_error: mock error',
       fatal: true,
-      event_callback: expect.any(Function),
+      event_callback: expect.any(Function) as () => void,
     });
   });
 
