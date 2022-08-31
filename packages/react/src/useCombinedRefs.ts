@@ -38,7 +38,7 @@ function useCombinedRefs<T>(
 ) {
   const refsRef = useRef(refs);
   refsRef.current = refs;
-  return useCallback((node) => {
+  return useCallback((node: T) => {
     refsRef.current.forEach((ref) => {
       if (typeof ref === 'function') {
         ref(node);
