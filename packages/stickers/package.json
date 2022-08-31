@@ -31,7 +31,8 @@
   },
   "main": "dist/index.js",
   "module": "dist-module/index.js",
-  "source": "src/index.js",
+  "types": "dist-types/index.d.ts",
+  "source": "src/index.ts",
   "publishConfig": {
     "access": "public"
   },
@@ -39,5 +40,9 @@
     "@googleforcreators/i18n": "*",
     "@googleforcreators/react": "*",
     "prop-types": "^15.8.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.18",
+    "@types/react-dom": "^18.0.6"
   }
 }
