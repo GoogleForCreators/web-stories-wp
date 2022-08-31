@@ -49,6 +49,7 @@ import {
   useHighlights,
   useSidebar,
 } from '@googleforcreators/story-editor';
+import { useFeature } from 'flagged';
 /**
  * Internal dependencies
  */
@@ -116,6 +117,18 @@ const LogoImg = styled.img`
   max-height: 96px;
 `;
 
+const RevisionsWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  margin-bottom: 20px;
+  margin-top: 4px;
+`;
+
+const LabelIconWrapper = styled.div`
+  position: absolute;
+  display: inline-block;
+`;
+
 function PublishPanel({ nameOverride }) {
   const {
     state: { users },
@@ -131,7 +144,10 @@ function PublishPanel({ nameOverride }) {
     dashboardSettingsLink,
     capabilities: { hasUploadMediaAction, canManageSettings },
     MediaUpload,
+    autoSaveLink,
   } = useConfig();
+
+  const improvedAutosaves = useFeature('improvedAutosaves');
 
   const allowedImageFileTypes = useMemo(
     () =>
@@ -414,6 +430,28 @@ function PublishPanel({ nameOverride }) {
             </LabelWrapper>
           </DropdownWrapper>
         </HighlightRow>
+        {improvedAutosaves && autoSaveLink && (
+          <RevisionsWrapper>
+            <LabelWrapper>
+              <Label>
+                {__('Revisions', 'web-stories')}{' '}
+                <LabelIconWrapper>
+                  <Icons.History width={24} height={24} aria-hidden />
+                </LabelIconWrapper>
+              </Label>
+              <Row>
+                <Link
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  href={autoSaveLink}
+                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
+                >
+                  {__('Manage', 'web-stories')}
+                </Link>
+              </Row>
+            </LabelWrapper>
+          </RevisionsWrapper>
+        )}
       </PanelContent>
     </Panel>
   );
