@@ -4,5 +4,5 @@
     "rootDir": "src",
     "declarationDir": "dist-types"
   },
-  "include": ["src/**/*", "src/index.d.ts"]
+  "include": ["src/**/*"]
 }
