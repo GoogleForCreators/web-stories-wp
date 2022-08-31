@@ -32,18 +32,11 @@ function AutoSaveHandler() {
   const {
     state: { hasNewChanges },
   } = useHistory();
-  const { status, saveStory, autoSave } = useStory(
-    ({
-      state: {
-        story: { status },
-      },
-      actions: { autoSave, saveStory },
-    }) => ({
-      status,
-      autoSave,
-      saveStory,
-    })
-  );
+  const { status, saveStory, autoSave } = useStory(({ state, actions }) => ({
+    autoSave: actions.autoSave,
+    saveStory: actions.saveStory,
+    isDraft: state.status,
+  }));
   const isUploading = useIsUploadingToStory();
 
   const isDraft = 'draft' === status || !status;
@@ -57,9 +50,13 @@ function AutoSaveHandler() {
   }, [save]);
 
   useEffect(() => {
-    // @todo The isDraft check is temporary to ensure only draft gets auto-saved,
-    // until the logic for other statuses has been decided.
-    if (!isDraft || !hasNewChanges || !autoSaveInterval || isUploading) {
+    // TODO: Remove isDraft check when improvedAutosaves gets enabled by default.
+    if (
+      (!isDraft && !improvedAutosaves) ||
+      !hasNewChanges ||
+      !autoSaveInterval ||
+      isUploading
+    ) {
       return undefined;
     }
     // This is only a timeout (and not an interval), as `hasNewChanges` will come
@@ -71,7 +68,13 @@ function AutoSaveHandler() {
     );
 
     return () => clearTimeout(timeout);
-  }, [autoSaveInterval, isDraft, hasNewChanges, isUploading]);
+  }, [
+    autoSaveInterval,
+    isDraft,
+    improvedAutosaves,
+    hasNewChanges,
+    isUploading,
+  ]);
 
   return null;
 }
