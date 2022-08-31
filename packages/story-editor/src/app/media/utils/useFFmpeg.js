@@ -345,7 +345,7 @@ function useFFmpeg() {
   /**
    * Crop Video to remove off-canvas portion of the video using FFmpeg.
    */
-  const cropHidden = useCallback(
+  const cropVideo = useCallback(
     async (file, cropParams) => {
       let ffmpeg;
 
@@ -600,7 +600,7 @@ function useFFmpeg() {
       convertGifToVideo,
       convertToMp3,
       trimVideo,
-      cropHidden,
+      cropVideo,
     }),
     [
       isTranscodingEnabled,
@@ -611,7 +611,7 @@ function useFFmpeg() {
       convertGifToVideo,
       convertToMp3,
       trimVideo,
-      cropHidden,
+      cropVideo,
     ]
   );
 }

@@ -378,10 +378,10 @@ class Experiments extends Service_Base implements HasRequirements {
 			 * Creation date: 2022-08-18
 			 */
 			[
-				'name'        => 'cropHidden',
-				'label'       => __( 'Crop Hidden', 'web-stories' ),
+				'name'        => 'offScreenVideoCropping',
+				'label'       => __( 'Crop off-screen video parts', 'web-stories' ),
 				'description' => __( 'Enable support for cropping cut off-screen parts of videos', 'web-stories' ),
-				'group'       => 'editor'
+				'group'       => 'editor',
 			],
 		];
 	}

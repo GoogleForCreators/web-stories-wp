@@ -37,9 +37,9 @@ import useIsPartiallyOffCanvas from './useIsPartiallyOffCanvas';
  * @return {Object} Right click menu layer actions
  */
 const useLayerActions = () => {
-  const { cropHiddenVideo } = useLocalMedia(
-    ({ actions: { cropHiddenVideo } }) => ({
-      cropHiddenVideo,
+  const { cropOffScreenVideo } = useLocalMedia(
+    ({ actions: { cropOffScreenVideo } }) => ({
+      cropOffScreenVideo,
     })
   );
 
@@ -173,9 +173,9 @@ const useLayerActions = () => {
   /**
    * Crop Video to remove off-canvas portion of the video.
    */
-  const handleCropHidden = useCallback(() => {
-    cropHiddenVideo(selectedElement, getCropParams());
-  }, [selectedElement, getCropParams, cropHiddenVideo]);
+  const handleCropOffScreenVideo = useCallback(() => {
+    cropOffScreenVideo(selectedElement, getCropParams());
+  }, [selectedElement, getCropParams, cropOffScreenVideo]);
 
   return {
     canElementMoveBackwards,
@@ -184,7 +184,7 @@ const useLayerActions = () => {
     handleBringToFront,
     handleSendBackward,
     handleSendToBack,
-    handleCropHidden,
+    handleCropOffScreenVideo,
   };
 };
 

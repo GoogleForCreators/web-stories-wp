@@ -49,7 +49,7 @@ function useProcessMedia({
   );
   const { isConsideredOptimized } = useMediaInfo();
 
-  const { cropHidden } = useFFmpeg();
+  const { cropVideo } = useFFmpeg();
 
   const copyResourceData = useCallback(
     ({ oldResource, resource }) => {
@@ -487,7 +487,7 @@ function useProcessMedia({
    *
    * @param {import('@googleforcreators/media').Resource} resource Resource object.
    */
-  const cropHiddenVideo = useCallback(
+  const cropOffScreenVideo = useCallback(
     ({ id: elementId, resource: oldResource }, cropParams) => {
       const { id: resourceId, src: url, mimeType } = oldResource;
       const { newWidth, newHeight, cropElement } = cropParams;
@@ -527,7 +527,7 @@ function useProcessMedia({
         let file = false;
         try {
           const originalFile = await fetchRemoteFile(url, mimeType);
-          file = await cropHidden(originalFile, cropParams);
+          file = await cropVideo(originalFile, cropParams);
           await file.arrayBuffer();
           await uploadMedia([file], {
             onUploadSuccess,
@@ -546,7 +546,7 @@ function useProcessMedia({
       return process();
     },
     [
-      cropHidden,
+      cropVideo,
       updateElementById,
       copyResourceData,
       postProcessingResource,
@@ -561,7 +561,7 @@ function useProcessMedia({
     optimizeGif,
     muteExistingVideo,
     trimExistingVideo,
-    cropHiddenVideo,
+    cropOffScreenVideo,
   };
 }
 

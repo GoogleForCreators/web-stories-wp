@@ -68,14 +68,14 @@ function ForegroundMediaMenu({ parentMenuRef }) {
     handleSendToBack,
     handleBringForward,
     handleBringToFront,
-    handleCropHidden,
+    handleCropOffScreenVideo,
   } = useLayerActions();
 
   const { hasShapeMask, removeShapeMask } = useShapeMask(selectedElement);
 
   const { isOffCanvas } = useIsPartiallyOffCanvas(selectedElement);
 
-  const cropHidden = useFeature('cropHidden');
+  const offScreenVideoCropping = useFeature('offScreenVideoCropping');
 
   const canTranscodeResource = useLocalMedia(
     (value) => value.state.canTranscodeResource
@@ -211,9 +211,9 @@ function ForegroundMediaMenu({ parentMenuRef }) {
         {scaleLabel}
       </ContextMenuComponents.MenuButton>
 
-      {cropHidden && isOffCanvas() && (
-        <ContextMenuComponents.MenuButton onClick={handleCropHidden}>
-          {RIGHT_CLICK_MENU_LABELS.CROP_HIDDEN}
+      {offScreenVideoCropping && isOffCanvas() && (
+        <ContextMenuComponents.MenuButton onClick={handleCropOffScreenVideo}>
+          {RIGHT_CLICK_MENU_LABELS.CROP_OFF_SCREEN_VIDEO}
         </ContextMenuComponents.MenuButton>
       )}
 

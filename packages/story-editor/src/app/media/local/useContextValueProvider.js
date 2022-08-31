@@ -279,7 +279,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
   );
 
   const {
-    cropHiddenVideo,
+    cropOffScreenVideo,
     optimizeVideo,
     optimizeGif,
     muteExistingVideo,
@@ -343,7 +343,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
       trimExistingVideo,
       updateBaseColor,
       updateBlurHash,
-      cropHiddenVideo,
+      cropOffScreenVideo,
     },
   };
 }
