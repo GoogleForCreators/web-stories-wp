@@ -17,11 +17,22 @@
 /**
  * Internal dependencies
  */
-import convertToCSS from './convertToCSS';
-import generatePatternStyles from './generatePatternStyles';
+import createSolidFromString from './createSolidFromString';
+import createSolid from './createSolid';
+import type { Pattern } from './types';
 
-export default function isPatternEqual(p1, p2, patternType = undefined) {
-  const p1CSS = convertToCSS(generatePatternStyles(p1, patternType));
-  const p2CSS = convertToCSS(generatePatternStyles(p2, patternType));
-  return p1CSS === p2CSS;
+function getSolidFromHex(hex: string): Pattern {
+  // We already have a nice parser for most of this, but we need to
+  // parse opacity as the last two hex digits as percent, not 1/256th
+
+  const {
+    color: { r, g, b },
+  } = createSolidFromString(`#${hex.slice(0, 6)}`);
+
+  const opacityDigits = hex.slice(6);
+  const opacity = opacityDigits ? parseInt(opacityDigits, 16) : 100;
+
+  return createSolid(r, g, b, opacity / 100);
 }
+
+export default getSolidFromHex;

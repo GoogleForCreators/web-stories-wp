@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,14 +14,13 @@
  * limitations under the License.
  */
 
-function convertToCSS(style) {
-  return Object.entries(style).reduce((str, [key, val]) => {
-    const casedKey = key.replace(
-      /[A-Z]/g,
-      (match) => `-${match.toLowerCase()}`
-    );
-    return `${str}${casedKey}:${val};`;
-  }, '');
+/**
+ * Internal dependencies
+ */
+import type { Pattern } from './types';
+
+function hasGradient(pattern: Pattern) {
+  return Boolean(pattern?.type) && 'solid' !== pattern.type;
 }
 
-export default convertToCSS;
+export default hasGradient;

@@ -14,24 +14,8 @@
  * limitations under the License.
  */
 
-function colorHasTransparency(color) {
-  return color.a !== undefined && color.a < 1;
+function isHexColorString(s: string) {
+  return /^#(?:[a-f0-9]{3}){1,2}$/i.test(s);
 }
 
-function hasOpacity(preset) {
-  const { color, alpha, stops } = preset;
-  if (color) {
-    return Boolean(colorHasTransparency(color));
-  }
-  if (typeof alpha === 'number' && alpha < 1) {
-    return true;
-  }
-  for (const colorStop of stops || []) {
-    if (colorHasTransparency(colorStop.color)) {
-      return true;
-    }
-  }
-  return false;
-}
-
-export default hasOpacity;
+export default isHexColorString;

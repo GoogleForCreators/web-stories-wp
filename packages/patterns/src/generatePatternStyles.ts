@@ -20,13 +20,18 @@
 import { rgba } from 'polished';
 
 /**
+ * Internal dependencies
+ */
+import type { ColorStop, Hex, Pattern, Solid, Radial, Linear } from './types';
+
+/**
  * Truncate a number to a given number of decimals.
  *
  * @param {number} val Number to truncate
  * @param {number} pos Maximum number of allowed decimals
  * @return {number} Number in given precision
  */
-function truncate(val, pos) {
+function truncate(val: number, pos: number) {
   return Number(val.toFixed(pos));
 }
 
@@ -46,23 +51,26 @@ function truncate(val, pos) {
  * @param {Object} pattern.size Gradient size if not full size
  * @return {string} Minimal description for gradient.
  */
-function getGradientDescription({ type, rotation, center, size }) {
-  const sizeString = size
-    ? `ellipse ${truncate(100 * size.w, 2)}% ${truncate(100 * size.h, 2)}%`
-    : '';
-  const centerString = center
-    ? ` at ${truncate(100 * center.x, 2)}% ${truncate(100 * center.y, 2)}%`
-    : '';
-  switch (type) {
-    case 'radial':
+function getGradientDescription(pattern: Radial | Linear) {
+  switch (pattern.type) {
+    case 'radial': {
+      const { size, center } = pattern;
+      const sizeString = size
+        ? `ellipse ${truncate(100 * size.w, 2)}% ${truncate(100 * size.h, 2)}%`
+        : '';
+      const centerString = center
+        ? ` at ${truncate(100 * center.x, 2)}% ${truncate(100 * center.y, 2)}%`
+        : '';
       if (!centerString && !sizeString) {
         return null;
       }
       return `${sizeString}${centerString}`.trim();
-    case 'linear':
+    }
+    case 'linear': {
       // Always include rotation and offset by .5turn, as default is .5turn(?)
+      const { rotation } = pattern;
       return `${((rotation || 0) + 0.5) % 1}turn`;
-
+    }
     // Ignore reason: only here because of eslint, will not happen
     // istanbul ignore next
     default:
@@ -78,8 +86,8 @@ function getGradientDescription({ type, rotation, center, size }) {
  * @param {number} alpha Alpha opacity to multiple to each stop
  * @return {Array} List of serialized stops
  */
-function getStopList(stops, alpha) {
-  const getColor = ({ r, g, b, a = 1 }) => rgba(r, g, b, a * alpha);
+function getStopList(stops: Array<ColorStop>, alpha: number) {
+  const getColor = ({ r, g, b, a = 1 }: Hex) => rgba(r, g, b, a * alpha);
   return stops.map(
     ({ color, position }) =>
       `${getColor(color)} ${truncate(position * 100, 2)}%`
@@ -95,7 +103,10 @@ function getStopList(stops, alpha) {
  * @return {Object} CSS declaration as object, e.g. {fill: 'transparent'} or
  * {backgroundImage: 'radial-gradient(red, blue)'}.
  */
-function generatePatternStyles(pattern = null, property = 'background') {
+function generatePatternStyles(
+  pattern: Pattern | null = null,
+  property = 'background'
+) {
   const isBackground = property === 'background';
   if (pattern === null) {
     return { [property]: 'transparent' };
@@ -116,14 +127,14 @@ function generatePatternStyles(pattern = null, property = 'background') {
   if (type === 'solid') {
     const {
       color: { r, g, b, a = 1 },
-    } = pattern;
+    } = pattern as Solid;
     const objectPropertyPostfix = isBackground ? 'Color' : '';
     return { [`${property}${objectPropertyPostfix}`]: rgba(r, g, b, a) };
   }
 
-  const { stops, alpha = 1 } = pattern;
+  const { stops, alpha = 1 } = pattern as Radial | Linear;
   const func = `${type}-gradient`;
-  const description = getGradientDescription(pattern);
+  const description = getGradientDescription(pattern as Radial | Linear);
   const stopList = getStopList(stops, alpha);
   const parms = description ? [description, ...stopList] : stopList;
   const value = `${func}(${parms.join(', ')})`;

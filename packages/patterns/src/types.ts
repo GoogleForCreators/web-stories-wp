@@ -46,3 +46,50 @@ export const PatternPropType = PropTypes.shape({
     h: PropTypes.number.isRequired,
   }),
 });
+
+export enum PatternType {
+  SOLID = 'solid',
+  LINEAR = 'linear',
+  RADIAL = 'radial',
+}
+
+export type Hex = {
+  r: number;
+  g: number;
+  b: number;
+  a?: number;
+};
+
+export type Solid = {
+  type?: PatternType.SOLID;
+  color: Hex;
+};
+
+export type ColorStop = {
+  color: Hex;
+  position: number;
+};
+
+export type Linear = {
+  type: PatternType.LINEAR;
+  stops: Array<ColorStop>;
+  rotation?: number;
+  alpha?: number;
+};
+
+export type Radial = {
+  type: PatternType.RADIAL;
+  stops: Array<ColorStop>;
+  size?: {
+    w: number;
+    h: number;
+  };
+  center?: {
+    x: number;
+    y: number;
+  };
+  rotation?: number;
+  alpha?: number;
+};
+
+export type Pattern = Solid | Linear | Radial;
