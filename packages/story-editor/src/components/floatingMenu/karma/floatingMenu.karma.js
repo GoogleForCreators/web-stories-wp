@@ -212,4 +212,45 @@ describe('Design Menu: Keyboard Navigation', () => {
     );
     expect(selectedElements[0].type).toBe('image');
   });
+
+  it('should allow hiding and displaying menu', async () => {
+    // Add a shape to the canvas
+    await fixture.events.click(fixture.editor.library.shapesTab);
+    await waitFor(() => fixture.editor.library.shapes);
+
+    await fixture.events.click(
+      fixture.editor.library.shapes.shape('Rectangle')
+    );
+
+    const settingsButton = fixture.screen.getByRole('menuitem', {
+      name: 'Menu settings',
+    });
+    await fixture.events.click(settingsButton);
+
+    await fixture.events.click(
+      fixture.screen.getByRole('menuitem', { name: 'Always hide' })
+    );
+
+    const showMenuButton = fixture.screen.getByRole('button', {
+      name: 'Show element toolbar',
+    });
+    expect(showMenuButton).toBeTruthy();
+
+    // Menu is not visible anymore.
+    expect(() =>
+      fixture.screen.getByRole('menuitem', {
+        name: 'Menu settings',
+      })
+    ).toThrow();
+
+    // Click the display button.
+    await fixture.events.click(showMenuButton);
+
+    // Menu is visible again.
+    expect(
+      fixture.screen.getByRole('menuitem', {
+        name: 'Menu settings',
+      })
+    ).toBeDefined();
+  });
 });

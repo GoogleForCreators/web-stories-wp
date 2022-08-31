@@ -19,7 +19,7 @@
 import commonReducer from '../../pagination/reducer';
 
 function setupState(state, { type, payload }) {
-  if (payload?.provider == 'local') {
+  if (payload?.provider === 'local') {
     return commonReducer(state, { type, payload });
   }
   return state;

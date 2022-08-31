@@ -25,20 +25,20 @@ import { fireEvent, screen } from '@testing-library/react';
 import VideoCache from '..';
 import { renderWithProviders } from '../../../../testUtils';
 
-describe('Editor Settings: <VideoCache />', function () {
-  it('should render the video cache setting as checked when isEnabled', function () {
+describe('Editor Settings: <VideoCache />', () => {
+  it('should render the video cache setting as checked when isEnabled', () => {
     renderWithProviders(<VideoCache updateSettings={jest.fn()} isEnabled />);
 
     expect(screen.getByRole('checkbox')).toBeChecked();
   });
 
-  it('should not render the video cache setting as checked when not isEnabled', function () {
+  it('should not render the video cache setting as checked when not isEnabled', () => {
     renderWithProviders(<VideoCache updateSettings={jest.fn()} />);
 
     expect(screen.getByRole('checkbox')).not.toBeChecked();
   });
 
-  it('should update settings when the checkbox is clicked.', function () {
+  it('should update settings when the checkbox is clicked.', () => {
     const onChange = jest.fn();
     renderWithProviders(<VideoCache updateSettings={onChange} />);
 

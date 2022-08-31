@@ -26,10 +26,10 @@ import { VIEW_STYLE } from '../../../constants';
 import { renderWithProviders } from '../../../testUtils';
 import ViewStyleBar from '..';
 
-describe('<ViewStyleBar />', function () {
+describe('<ViewStyleBar />', () => {
   const mockPress = jest.fn();
 
-  it(`should render the list icon when layoutStyle is ${VIEW_STYLE.GRID}`, function () {
+  it(`should render the list icon when layoutStyle is ${VIEW_STYLE.GRID}`, () => {
     renderWithProviders(
       <ViewStyleBar layoutStyle={VIEW_STYLE.GRID} onPress={mockPress} />
     );
@@ -41,7 +41,7 @@ describe('<ViewStyleBar />', function () {
     expect(gridIcon).not.toBeInTheDocument();
   });
 
-  it(`should render the grid icon when layoutStyle is ${VIEW_STYLE.LIST}`, function () {
+  it(`should render the grid icon when layoutStyle is ${VIEW_STYLE.LIST}`, () => {
     renderWithProviders(
       <ViewStyleBar layoutStyle={VIEW_STYLE.LIST} onPress={mockPress} />
     );
@@ -53,7 +53,7 @@ describe('<ViewStyleBar />', function () {
     expect(listIcon).not.toBeInTheDocument();
   });
 
-  it('should have triggered mockPress once on onPress click', function () {
+  it('should have triggered mockPress once on onPress click', () => {
     renderWithProviders(
       <ViewStyleBar layoutStyle={VIEW_STYLE.LIST} onPress={mockPress} />
     );

@@ -69,8 +69,14 @@ async function trackEvent(
   }
 
   if (Object.values(gtagEventParameters).length) {
-    track(eventName, { ...gtagEventParameters, send_to: config.trackingId });
-    track(eventName, { ...eventParameters, send_to: config.trackingIdGA4 });
+    void track(eventName, {
+      ...gtagEventParameters,
+      send_to: config.trackingId,
+    });
+    void track(eventName, {
+      ...eventParameters,
+      send_to: config.trackingIdGA4,
+    });
     return Promise.resolve();
   }
 
