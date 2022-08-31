@@ -29,8 +29,8 @@ import type { ElementBox, Element } from './types';
 /**
  * Rounds the pixel value to the max allowed precision in the "data" space.
  *
- * @param {number} v The value to be rounded.
- * @return {number} The value rounded to the "data" space precision.
+ * @param v The value to be rounded.
+ * @return The value rounded to the "data" space precision.
  */
 export function dataPixels(v: number): number {
   return Number(v.toFixed(0));
@@ -39,8 +39,8 @@ export function dataPixels(v: number): number {
 /**
  * Returns the font size in the "data" space for the specified "em" value.
  *
- * @param {number} v The "em" value. E.g. 2 for "2em".
- * @return {number} The font size for the specified "em" value.
+ * @param v The "em" value. E.g. 2 for "2em".
+ * @return The font size for the specified "em" value.
  */
 export function dataFontEm(v: number): number {
   return Number((v * DEFAULT_EM).toFixed(1));
@@ -49,8 +49,8 @@ export function dataFontEm(v: number): number {
 /**
  * Rounds the pixel value to the max allowed precision in the "editor" space.
  *
- * @param {number} v The value to be rounded.
- * @return {number} The value rounded to the "editor" space precision.
+ * @param v The value to be rounded.
+ * @return The value rounded to the "editor" space precision.
  */
 export function editorPixels(v: number): number {
   return Number(v.toFixed(5));
@@ -60,9 +60,9 @@ export function editorPixels(v: number): number {
  * Converts a "data" pixel value to the value in the "editor" space along
  * the horizontal (X) dimension.
  *
- * @param {number} x The value to be converted.
- * @param {number} pageWidth The basis value for the page's width in the "editor" space.
- * @return {number} The value in the "editor" space.
+ * @param x The value to be converted.
+ * @param pageWidth The basis value for the page's width in the "editor" space.
+ * @return The value in the "editor" space.
  */
 export function dataToEditorX(x: number, pageWidth: number): number {
   return editorPixels((x * pageWidth) / PAGE_WIDTH);
@@ -72,9 +72,9 @@ export function dataToEditorX(x: number, pageWidth: number): number {
  * Converts a "data" pixel value to the value in the "editor" space along
  * the vertical (Y) dimension.
  *
- * @param {number} y The value to be converted.
- * @param {number} pageHeight The basis value for the page's height in the "editor" space.
- * @return {number} The value in the "editor" space.
+ * @param y The value to be converted.
+ * @param pageHeight The basis value for the page's height in the "editor" space.
+ * @return The value in the "editor" space.
  */
 export function dataToEditorY(y: number, pageHeight: number): number {
   return editorPixels((y * pageHeight) / PAGE_HEIGHT);
@@ -88,10 +88,10 @@ export function dataToFontSizeY(v: number, pageHeight: number): string {
  * Converts a "editor" pixel value to the value in the "data" space along
  * the horizontal (X) dimension.
  *
- * @param {number} x The value to be converted.
- * @param {number} pageWidth The basis value for the page's width in the "editor" space.
- * @param {boolean} [withRounding=true] Whether the dataPixels rounding should occur.
- * @return {number} The value in the "data" space.
+ * @param x The value to be converted.
+ * @param pageWidth The basis value for the page's width in the "editor" space.
+ * @param [withRounding=true] Whether the dataPixels rounding should occur.
+ * @return The value in the "data" space.
  */
 export function editorToDataX(
   x: number,
@@ -109,10 +109,10 @@ export function editorToDataX(
  * Converts a "editor" pixel value to the value in the "data" space along
  * the vertical (Y) dimension.
  *
- * @param {number} y The value to be converted.
- * @param {number} pageHeight The basis value for the page's height in the "editor" space.
- * @param {boolean} [withRounding=true] Whether the dataPixels rounding should occur.
- * @return {number} The value in the "data" space.
+ * @param y The value to be converted.
+ * @param pageHeight The basis value for the page's height in the "editor" space.
+ * @param [withRounding=true] Whether the dataPixels rounding should occur.
+ * @return The value in the "data" space.
  */
 export function editorToDataY(
   y: number,
@@ -130,12 +130,10 @@ export function editorToDataY(
  * Converts the element's position, width, and rotation) to the "box" in the
  * "editor" coordinate space.
  *
- * @param {{x:number, y:number, width:number, height:number, rotationAngle:number}} element The
- * element's position, width, and rotation. See `StoryPropTypes.element`.
- * @param {number} pageWidth The basis value for the page's width in the "editor" space.
- * @param {number} pageHeight The basis value for the page's height in the "editor" space.
- * @return {{x:number, y:number, width:number, height:number, rotationAngle:number}} The
- * "box" in the editor space.
+ * @param element The element's position, width, and rotation. See `StoryPropTypes.element`.
+ * @param pageWidth The basis value for the page's width in the "editor" space.
+ * @param pageHeight The basis value for the page's height in the "editor" space.
+ * @return The "box" in the editor space.
  */
 export function getBox(
   { x, y, width, height, rotationAngle, isBackground }: Element,
@@ -155,11 +153,10 @@ export function getBox(
  * Converts the element's position, width, border, and rotation) to the "box" in the
  * "editor" coordinate space for an element with border.
  *
- * @param {Object} element The element object. See `StoryPropTypes.element`.
- * @param {number} pageWidth The basis value for the page's width in the "editor" space.
- * @param {number} pageHeight The basis value for the page's height in the "editor" space.
- * @return {{x:number, y:number, width:number, height:number, rotationAngle:number}} The
- * "box" in the editor space.
+ * @param element The element object. See `StoryPropTypes.element`.
+ * @param pageWidth The basis value for the page's width in the "editor" space.
+ * @param pageHeight The basis value for the page's height in the "editor" space.
+ * @return The "box" in the editor space.
  */
 export function getBoxWithBorder(
   element: Element,
