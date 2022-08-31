@@ -57,8 +57,9 @@ function useIsPartiallyOffCanvas(selectedElement) {
 
     // check if off-canvas bottom
     if (adjustedY > 0) {
-      if (adjustedY + height > PAGE_HEIGHT) {
-        offCanvasBottom = adjustedY + height - PAGE_HEIGHT;
+      if (y + height > PAGE_HEIGHT) {
+        const b = Math.floor(y + height - (PAGE_HEIGHT + DANGER_ZONE_HEIGHT));
+        offCanvasBottom = b > 0 ? b : 0;
       }
     } else {
       const b = height - Math.abs(y) - PAGE_HEIGHT;
