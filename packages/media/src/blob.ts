@@ -46,7 +46,6 @@ export function getBlob(url: string): CacheObject {
  * Remove blob from cache (and browser memory).
  *
  * @param url Blob URL.
- * @return
  */
 export function revokeBlob(url: string): void {
   if (getBlob(url)) {
