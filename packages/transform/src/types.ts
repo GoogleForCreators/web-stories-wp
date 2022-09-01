@@ -14,3 +14,24 @@
  * limitations under the License.
  */
 export type TransformHandler = (frame: object | null) => void;
+export type HandlerRegister = (
+  id: string,
+  handler: TransformHandler
+) => () => void;
+
+export interface HandlersList {
+  [id: string]: TransformHandler[];
+}
+
+export interface TransformsList {
+  [id: string]: Record<string, unknown> | null;
+}
+
+export interface State {
+  actions: {
+    [key: string]: unknown;
+  };
+  state: {
+    [key: string]: unknown;
+  };
+}

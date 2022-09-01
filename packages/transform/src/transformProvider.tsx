@@ -24,14 +24,14 @@ import type { ReactNode } from 'react';
  * Internal dependencies
  */
 import Context from './context';
-import type { TransformHandler } from './types';
+import type { TransformHandler, HandlersList, TransformsList } from './types';
 
 function TransformProvider({ children }: { children: ReactNode }) {
-    const transformHandlersRef = useRef<{ [id: string]: TransformHandler[] }>({});
-    const lastTransformsRef = useRef<{ [id: string]: Record<string, unknown> | null}>({});
+    const transformHandlersRef = useRef<HandlersList>({});
+    const lastTransformsRef = useRef<TransformsList>({});
     const [isAnythingTransforming, setIsAnythingTransforming] = useState(false);
 
-    const registerTransformHandler = useCallback((id: string, handler: TransformHandler) => {
+    const registerTransformHandler = useCallback((id, handler) => {
         const handlerListMap = transformHandlersRef.current;
         const handlerList = handlerListMap[id] || (handlerListMap[id] = []);
         handlerList.push(handler);

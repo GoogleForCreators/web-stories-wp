@@ -19,9 +19,9 @@
  */
 import { createContext } from '@googleforcreators/react';
 
-interface State {
-  actions: unknown;
-  state: unknown;
-}
+/**
+ * Internal dependencies
+ */
+import type { State } from './types';
 
 export default createContext<State>({ actions: {}, state: {} });

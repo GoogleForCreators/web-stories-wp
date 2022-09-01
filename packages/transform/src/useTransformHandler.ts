@@ -23,12 +23,7 @@ import { useEffect } from '@googleforcreators/react';
  * Internal dependencies
  */
 import useTransform from './useTransform';
-import type { TransformHandler } from './types';
-
-/**
- * @callback TransformHandler
- * @param {?Object} frameObject
- */
+import type { State, TransformHandler, HandlerRegister } from './types';
 
 /**
  * @param {string} id Target element's id.
@@ -42,11 +37,11 @@ function useTransformHandler(
   deps: unknown[] | undefined = undefined
 ) {
   const registerTransformHandler = useTransform(
-    ({ actions }) => actions.registerTransformHandler
+    ({ actions }: State) => actions.registerTransformHandler
   );
 
   useEffect(
-    () => registerTransformHandler(id, handler),
+    () => (registerTransformHandler as HandlerRegister)(id, handler),
     // eslint-disable-next-line react-hooks/exhaustive-deps -- We want to pass through provided deps.
     deps
   );
