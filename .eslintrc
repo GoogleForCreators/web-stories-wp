@@ -321,6 +321,13 @@
       "rules": {
         "@typescript-eslint/no-duplicate-imports": "error",
         "@typescript-eslint/no-shadow": "error",
+        "@typescript-eslint/unbound-method": [
+          "error",
+          {
+            "ignoreStatic": true
+          }
+        ],
+        "react/prop-types": "off",
         "jsdoc/check-param-names": "off",
         "jsdoc/require-param": "off",
         "jsdoc/require-param-type": "off",
@@ -352,7 +359,8 @@
       "rules": {
         "no-undef": "off",
         "no-unused-vars": "off",
-        "no-var": "off"
+        "no-var": "off",
+        "@wordpress/dependency-group": "off"
       }
     },
     {
