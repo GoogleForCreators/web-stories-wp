@@ -27,11 +27,16 @@ export interface TransformsList {
   [id: string]: Record<string, unknown> | null;
 }
 
+type PushTransform = (id: string, transform: object) => void;
+type ClearTransform = () => void;
+
 export interface State {
   actions: {
-    [key: string]: unknown;
+    registerTransformHandler?: HandlerRegister;
+    pushTransform?: PushTransform;
+    clearTransforms?: ClearTransform;
   };
   state: {
-    [key: string]: unknown;
+    isAnythingTransforming?: boolean;
   };
 }

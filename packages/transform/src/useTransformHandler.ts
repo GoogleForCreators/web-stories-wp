@@ -23,7 +23,7 @@ import { useEffect } from '@googleforcreators/react';
  * Internal dependencies
  */
 import useTransform from './useTransform';
-import type { State, TransformHandler, HandlerRegister } from './types';
+import type { State, TransformHandler } from './types';
 
 /**
  * @param {string} id Target element's id.
@@ -41,7 +41,7 @@ function useTransformHandler(
   );
 
   useEffect(
-    () => (registerTransformHandler as HandlerRegister)(id, handler),
+    () => registerTransformHandler?.(id, handler),
     // eslint-disable-next-line react-hooks/exhaustive-deps -- We want to pass through provided deps.
     deps
   );
