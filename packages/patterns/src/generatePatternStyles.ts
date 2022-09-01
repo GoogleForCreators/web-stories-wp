@@ -22,15 +22,7 @@ import { rgba } from 'polished';
 /**
  * Internal dependencies
  */
-import type {
-  ColorStop,
-  Hex,
-  Pattern,
-  Solid,
-  Gradient,
-  Linear,
-  Radial,
-} from './types';
+import { ColorStop, Hex, Pattern, Solid, Gradient, PatternType } from './types';
 
 /**
  * Truncate a number to a given number of decimals.
@@ -61,8 +53,8 @@ function truncate(val: number, pos: number) {
  */
 function getGradientDescription(pattern: Gradient) {
   switch (pattern.type) {
-    case 'radial': {
-      const { size, center } = pattern as Radial;
+    case PatternType.RADIAL: {
+      const { size, center } = pattern;
       const sizeString = size
         ? `ellipse ${truncate(100 * size.w, 2)}% ${truncate(100 * size.h, 2)}%`
         : '';
@@ -74,9 +66,9 @@ function getGradientDescription(pattern: Gradient) {
       }
       return `${sizeString}${centerString}`.trim();
     }
-    case 'linear': {
+    case PatternType.LINEAR: {
       // Always include rotation and offset by .5turn, as default is .5turn(?)
-      const { rotation } = pattern as Linear;
+      const { rotation } = pattern;
       return `${((rotation || 0) + 0.5) % 1}turn`;
     }
     // Ignore reason: only here because of eslint, will not happen
@@ -107,7 +99,7 @@ function getStopList(stops: Array<ColorStop>, alpha: number) {
  *
  * @param {Object} pattern Patterns as describe by the Pattern type
  * @param {string} property Type of CSS to generate. Defaults to 'background',
- * but can also be 'color', 'fill' or 'stroke'.
+ * but can also be 'color', 'fill', 'stroke', or even a CSS variable.
  * @return {Object} CSS declaration as object, e.g. {fill: 'transparent'} or
  * {backgroundImage: 'radial-gradient(red, blue)'}.
  */
@@ -115,24 +107,24 @@ function generatePatternStyles(
   pattern: Pattern | null = null,
   property = 'background'
 ) {
-  const isBackground = property === 'background';
   if (pattern === null) {
     return { [property]: 'transparent' };
   }
 
-  const { type = 'solid' } = pattern;
-  if (!['solid', 'radial', 'linear'].includes(type)) {
+  const isBackground = property === 'background';
+  const { type = PatternType.SOLID } = pattern;
+  if (!Object.values(PatternType).includes(type)) {
     throw new Error(`Unknown pattern type: '${type}'`);
   }
 
   // Gradients are only possible for backgrounds
-  if (!isBackground && type !== 'solid') {
+  if (!isBackground && type !== PatternType.SOLID) {
     throw new Error(
       `Can only generate solid colors for property '${property}'`
     );
   }
 
-  if (type === 'solid') {
+  if (type === PatternType.SOLID) {
     const {
       color: { r, g, b, a = 1 },
     } = pattern as Solid;

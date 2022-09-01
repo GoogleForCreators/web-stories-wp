@@ -17,10 +17,10 @@
 /**
  * Internal dependencies
  */
-import type { Pattern } from './types';
+import { Pattern, PatternType } from './types';
 
 function hasGradient(pattern: Pattern) {
-  return Boolean(pattern?.type) && 'solid' !== pattern.type;
+  return Boolean(pattern?.type) && PatternType.SOLID !== pattern.type;
 }
 
 export default hasGradient;

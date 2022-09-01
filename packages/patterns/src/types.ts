@@ -31,8 +31,14 @@ export const ColorStopPropType = PropTypes.shape({
   position: PropTypes.number.isRequired,
 });
 
+export enum PatternType {
+  SOLID = 'solid',
+  LINEAR = 'linear',
+  RADIAL = 'radial',
+}
+
 export const PatternPropType = PropTypes.shape({
-  type: PropTypes.oneOf(['solid', 'linear', 'radial']),
+  type: PropTypes.oneOf(Object.values(PatternType)),
   color: HexPropType,
   stops: PropTypes.arrayOf(ColorStopPropType),
   rotation: PropTypes.number,
@@ -46,12 +52,6 @@ export const PatternPropType = PropTypes.shape({
     h: PropTypes.number.isRequired,
   }),
 });
-
-export enum PatternType {
-  SOLID = 'solid',
-  LINEAR = 'linear',
-  RADIAL = 'radial',
-}
 
 export type Hex = {
   r: number;
@@ -70,18 +70,18 @@ export type ColorStop = {
   position: number;
 };
 
-export type Gradient = {
+type AbstractGradient = {
   type: PatternType.LINEAR | PatternType.RADIAL;
   stops: ColorStop[];
   alpha?: number;
 };
 
-export type Linear = Gradient & {
+export type Linear = AbstractGradient & {
   type: PatternType.LINEAR;
   rotation?: number;
 };
 
-export type Radial = Gradient & {
+export type Radial = AbstractGradient & {
   type: PatternType.RADIAL;
   size?: {
     w: number;
@@ -94,4 +94,5 @@ export type Radial = Gradient & {
   rotation?: number;
 };
 
-export type Pattern = Solid | Linear | Radial;
+export type Gradient = Linear | Radial;
+export type Pattern = Solid | Gradient;

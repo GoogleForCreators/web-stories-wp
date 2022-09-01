@@ -17,10 +17,10 @@
 /**
  * Internal dependencies
  */
-import type { Pattern } from './types';
+import { Pattern, PatternType } from './types';
 
 function getOpaquePattern(pattern: Pattern) {
-  if (!pattern.type || pattern.type === 'solid') {
+  if (!pattern.type || pattern.type === PatternType.SOLID) {
     const { color } = pattern;
     return {
       color: {
