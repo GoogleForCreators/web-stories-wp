@@ -17,11 +17,15 @@
  * External dependencies
  */
 import { _x } from '@googleforcreators/i18n';
-import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import type { StickerProps, Sticker } from '../types';
 
 const title = _x('Tooltip', 'sticker name', 'web-stories');
 
-const ToolTip = ({ style }) => (
+const ToolTip = ({ style }: StickerProps) => (
   <svg
     style={style}
     xmlns="http://www.w3.org/2000/svg"
@@ -36,12 +40,8 @@ const ToolTip = ({ style }) => (
   </svg>
 );
 
-ToolTip.propTypes = {
-  style: PropTypes.object,
-};
-
 export default {
   aspectRatio: 80 / 33.6,
   svg: ToolTip,
   title,
-};
+} as Sticker;

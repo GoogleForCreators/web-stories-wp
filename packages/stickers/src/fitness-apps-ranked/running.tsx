@@ -17,11 +17,15 @@
  * External dependencies
  */
 import { _x } from '@googleforcreators/i18n';
-import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import type { StickerProps, Sticker } from '../types';
 
 const title = _x('Running', 'sticker name', 'web-stories');
 
-function RunningFigure({ style }) {
+function RunningFigure({ style }: StickerProps) {
   return (
     <svg
       style={style}
@@ -38,12 +42,8 @@ function RunningFigure({ style }) {
   );
 }
 
-RunningFigure.propTypes = {
-  style: PropTypes.object,
-};
-
 export default {
   aspectRatio: 48 / 50,
   svg: RunningFigure,
   title,
-};
+} as Sticker;

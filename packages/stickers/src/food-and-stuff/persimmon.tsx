@@ -17,11 +17,15 @@
  * External dependencies
  */
 import { _x } from '@googleforcreators/i18n';
-import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import type { StickerProps, Sticker } from '../types';
 
 const title = _x('Persimmon', 'sticker name', 'web-stories');
 
-function Persimmon({ style }) {
+function Persimmon({ style }: StickerProps) {
   return (
     <svg
       style={style}
@@ -314,12 +318,8 @@ function Persimmon({ style }) {
   );
 }
 
-Persimmon.propTypes = {
-  style: PropTypes.object,
-};
-
 export default {
   aspectRatio: 41 / 43,
   svg: Persimmon,
   title,
-};
+} as Sticker;

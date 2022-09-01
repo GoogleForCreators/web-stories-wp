@@ -17,11 +17,15 @@
  * External dependencies
  */
 import { _x } from '@googleforcreators/i18n';
-import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import type { StickerProps, Sticker } from '../types';
 
 const title = _x('Alarm Clock', 'sticker name', 'web-stories');
 
-function AlarmClock({ style }) {
+function AlarmClock({ style }: StickerProps) {
   return (
     <svg
       style={style}
@@ -88,12 +92,8 @@ function AlarmClock({ style }) {
   );
 }
 
-AlarmClock.propTypes = {
-  style: PropTypes.object,
-};
-
 export default {
   aspectRatio: 36 / 46,
   svg: AlarmClock,
   title,
-};
+} as Sticker;

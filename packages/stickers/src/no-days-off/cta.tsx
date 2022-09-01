@@ -17,11 +17,15 @@
  * External dependencies
  */
 import { _x } from '@googleforcreators/i18n';
-import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import type { StickerProps, Sticker } from '../types';
 
 const title = _x('Circled Dot', 'sticker name', 'web-stories');
 
-const FitnessCTA = ({ style }) => (
+const FitnessCTA = ({ style }: StickerProps) => (
   <svg
     style={style}
     viewBox="0 0 40 40"
@@ -41,12 +45,8 @@ const FitnessCTA = ({ style }) => (
     />
   </svg>
 );
-FitnessCTA.propTypes = {
-  style: PropTypes.object,
-};
-
 export default {
   aspectRatio: 40 / 40,
   svg: FitnessCTA,
   title,
-};
+} as Sticker;

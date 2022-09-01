@@ -17,11 +17,15 @@
  * External dependencies
  */
 import { _x } from '@googleforcreators/i18n';
-import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import type { StickerProps, Sticker } from '../types';
 
 const title = _x('Medium Brush Stroke', 'sticker name', 'web-stories');
 
-const MediumBrush = ({ style }) => (
+const MediumBrush = ({ style }: StickerProps) => (
   <svg
     style={style}
     viewBox="0 0 56 28"
@@ -36,12 +40,8 @@ const MediumBrush = ({ style }) => (
   </svg>
 );
 
-MediumBrush.propTypes = {
-  style: PropTypes.object,
-};
-
 export default {
   aspectRatio: 56 / 28,
   svg: MediumBrush,
   title,
-};
+} as Sticker;

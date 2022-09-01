@@ -17,11 +17,15 @@
  * External dependencies
  */
 import { _x } from '@googleforcreators/i18n';
-import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import type { StickerProps, Sticker } from '../types';
 
 const title = _x('Terrain Map', 'sticker name', 'web-stories');
 
-const TerrainMap = ({ style }) => (
+const TerrainMap = ({ style }: StickerProps) => (
   <svg
     style={style}
     viewBox="0 0 42 40"
@@ -416,12 +420,8 @@ const TerrainMap = ({ style }) => (
   </svg>
 );
 
-TerrainMap.propTypes = {
-  style: PropTypes.object,
-};
-
 export default {
   aspectRatio: 42 / 40,
   svg: TerrainMap,
   title,
-};
+} as Sticker;

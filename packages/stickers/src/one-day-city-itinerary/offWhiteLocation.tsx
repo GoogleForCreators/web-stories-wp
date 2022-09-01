@@ -17,11 +17,15 @@
  * External dependencies
  */
 import { _x } from '@googleforcreators/i18n';
-import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import type { StickerProps, Sticker } from '../types';
 
 const title = _x('Off-white Location', 'sticker name', 'web-stories');
 
-const OffWhiteLocation = ({ style }) => (
+const OffWhiteLocation = ({ style }: StickerProps) => (
   <svg
     style={style}
     viewBox="0 0 14 18"
@@ -36,12 +40,8 @@ const OffWhiteLocation = ({ style }) => (
   </svg>
 );
 
-OffWhiteLocation.propTypes = {
-  style: PropTypes.object,
-};
-
 export default {
   aspectRatio: 14 / 18,
   svg: OffWhiteLocation,
   title,
-};
+} as Sticker;

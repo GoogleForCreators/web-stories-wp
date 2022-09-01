@@ -17,11 +17,15 @@
  * External dependencies
  */
 import { _x } from '@googleforcreators/i18n';
-import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import type { StickerProps, Sticker } from '../types';
 
 const title = _x('Thick Brush Stroke', 'sticker name', 'web-stories');
 
-const ThickBrush = ({ style }) => (
+const ThickBrush = ({ style }: StickerProps) => (
   <svg
     style={style}
     viewBox="0 0 60 28"
@@ -36,12 +40,8 @@ const ThickBrush = ({ style }) => (
   </svg>
 );
 
-ThickBrush.propTypes = {
-  style: PropTypes.object,
-};
-
 export default {
   aspectRatio: 60 / 28,
   svg: ThickBrush,
   title,
-};
+} as Sticker;

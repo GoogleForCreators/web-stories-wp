@@ -18,11 +18,15 @@
  * External dependencies
  */
 import { _x } from '@googleforcreators/i18n';
-import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import type { StickerProps, Sticker } from '../types';
 
 const title = _x('Green Location Pin', 'sticker name', 'web-stories');
 
-function LocationPin({ style }) {
+function LocationPin({ style }: StickerProps) {
   return (
     <svg
       style={style}
@@ -41,12 +45,8 @@ function LocationPin({ style }) {
   );
 }
 
-LocationPin.propTypes = {
-  style: PropTypes.object,
-};
-
 export default {
   aspectRatio: 26 / 31,
   svg: LocationPin,
   title,
-};
+} as Sticker;

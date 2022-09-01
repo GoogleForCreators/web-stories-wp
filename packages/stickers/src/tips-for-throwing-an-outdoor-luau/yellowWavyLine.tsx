@@ -17,11 +17,15 @@
  * External dependencies
  */
 import { _x } from '@googleforcreators/i18n';
-import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import type { StickerProps, Sticker } from '../types';
 
 const title = _x('Yellow Wavy Line', 'sticker name', 'web-stories');
 
-const YellowWavyLine = ({ style }) => (
+const YellowWavyLine = ({ style }: StickerProps) => (
   <svg
     style={style}
     viewBox="0 0 50 4"
@@ -38,12 +42,8 @@ const YellowWavyLine = ({ style }) => (
   </svg>
 );
 
-YellowWavyLine.propTypes = {
-  style: PropTypes.object,
-};
-
 export default {
   aspectRatio: 50 / 4,
   svg: YellowWavyLine,
   title,
-};
+} as Sticker;

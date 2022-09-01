@@ -17,11 +17,15 @@
  * External dependencies
  */
 import { _x } from '@googleforcreators/i18n';
-import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import type { StickerProps, Sticker } from '../types';
 
 const title = _x('Cutout', 'sticker name', 'web-stories');
 
-function Cutout({ style }) {
+function Cutout({ style }: StickerProps) {
   return (
     <svg
       style={style}
@@ -44,12 +48,8 @@ function Cutout({ style }) {
   );
 }
 
-Cutout.propTypes = {
-  style: PropTypes.object,
-};
-
 export default {
   aspectRatio: 48 / 50,
   svg: Cutout,
   title,
-};
+} as Sticker;

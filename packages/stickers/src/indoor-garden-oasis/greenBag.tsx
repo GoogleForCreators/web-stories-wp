@@ -17,10 +17,14 @@
  * External dependencies
  */
 import { _x } from '@googleforcreators/i18n';
-import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import type { StickerProps, Sticker } from '../types';
 
 const title = _x('Green Bag', 'sticker name', 'web-stories');
-function GreenBag({ style }) {
+function GreenBag({ style }: StickerProps) {
   return (
     <svg
       style={style}
@@ -91,12 +95,8 @@ function GreenBag({ style }) {
   );
 }
 
-GreenBag.propTypes = {
-  style: PropTypes.object,
-};
-
 export default {
   aspectRatio: 39 / 50,
   svg: GreenBag,
   title,
-};
+} as Sticker;

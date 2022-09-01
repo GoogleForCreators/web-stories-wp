@@ -17,11 +17,15 @@
  * External dependencies
  */
 import { _x } from '@googleforcreators/i18n';
-import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import type { StickerProps, Sticker } from '../types';
 
 const title = _x('Plus', 'sticker name', 'web-stories');
 
-function Plus({ style }) {
+function Plus({ style }: StickerProps) {
   return (
     <svg
       style={style}
@@ -42,12 +46,8 @@ function Plus({ style }) {
   );
 }
 
-Plus.propTypes = {
-  style: PropTypes.object,
-};
-
 export default {
   aspectRatio: 23 / 24,
   svg: Plus,
   title,
-};
+} as Sticker;

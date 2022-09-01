@@ -17,11 +17,15 @@
  * External dependencies
  */
 import { _x } from '@googleforcreators/i18n';
-import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import type { StickerProps, Sticker } from '../types';
 
 const title = _x('Muscle', 'sticker name', 'web-stories');
 
-function Muscle({ style }) {
+function Muscle({ style }: StickerProps) {
   return (
     <svg
       style={style}
@@ -38,12 +42,8 @@ function Muscle({ style }) {
   );
 }
 
-Muscle.propTypes = {
-  style: PropTypes.object,
-};
-
 export default {
   aspectRatio: 58 / 50,
   svg: Muscle,
   title,
-};
+} as Sticker;

@@ -17,11 +17,15 @@
  * External dependencies
  */
 import { _x } from '@googleforcreators/i18n';
-import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import type { StickerProps, Sticker } from '../types';
 
 const title = _x('Twitter', 'sticker name', 'web-stories');
 
-const TwitterIcon = ({ style }) => (
+const TwitterIcon = ({ style }: StickerProps) => (
   <svg
     style={style}
     viewBox="0 0 28 23"
@@ -36,12 +40,8 @@ const TwitterIcon = ({ style }) => (
   </svg>
 );
 
-TwitterIcon.propTypes = {
-  style: PropTypes.object,
-};
-
 export default {
   aspectRatio: 28 / 23,
   svg: TwitterIcon,
   title,
-};
+} as Sticker;

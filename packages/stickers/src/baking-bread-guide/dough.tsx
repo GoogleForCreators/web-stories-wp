@@ -17,11 +17,15 @@
  * External dependencies
  */
 import { _x } from '@googleforcreators/i18n';
-import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import type { StickerProps, Sticker } from '../types';
 
 const title = _x('Dough', 'sticker name', 'web-stories');
 
-function Dough({ style }) {
+function Dough({ style }: StickerProps) {
   return (
     <svg
       style={style}
@@ -40,12 +44,8 @@ function Dough({ style }) {
   );
 }
 
-Dough.propTypes = {
-  style: PropTypes.object,
-};
-
 export default {
   aspectRatio: 47 / 21,
   svg: Dough,
   title,
-};
+} as Sticker;

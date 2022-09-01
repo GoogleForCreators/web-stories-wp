@@ -17,11 +17,15 @@
  * External dependencies
  */
 import { _x } from '@googleforcreators/i18n';
-import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import type { StickerProps, Sticker } from '../types';
 
 const title = _x('Pink Blob', 'sticker name', 'web-stories');
 
-function PinkBlob({ style }) {
+function PinkBlob({ style }: StickerProps) {
   return (
     <svg
       style={style}
@@ -38,12 +42,8 @@ function PinkBlob({ style }) {
   );
 }
 
-PinkBlob.propTypes = {
-  style: PropTypes.object,
-};
-
 export default {
   aspectRatio: 49 / 36,
   svg: PinkBlob,
   title,
-};
+} as Sticker;

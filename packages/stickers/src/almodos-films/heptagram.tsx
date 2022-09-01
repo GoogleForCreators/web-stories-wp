@@ -17,11 +17,15 @@
  * External dependencies
  */
 import { _x } from '@googleforcreators/i18n';
-import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import type { StickerProps, Sticker } from '../types';
 
 const title = _x('Heptagram', 'sticker name', 'web-stories');
 
-const Heptagram = ({ style }) => (
+const Heptagram = ({ style }: StickerProps) => (
   <svg
     style={style}
     viewBox="0 0 79 77"
@@ -36,12 +40,8 @@ const Heptagram = ({ style }) => (
   </svg>
 );
 
-Heptagram.propTypes = {
-  style: PropTypes.object,
-};
-
 export default {
   aspectRatio: 79 / 77,
   svg: Heptagram,
   title,
-};
+} as Sticker;

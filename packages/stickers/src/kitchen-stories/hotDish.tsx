@@ -17,11 +17,15 @@
  * External dependencies
  */
 import { _x } from '@googleforcreators/i18n';
-import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import type { StickerProps, Sticker } from '../types';
 
 const title = _x('Hot dish', 'sticker name', 'web-stories');
 
-function HotDish({ style }) {
+function HotDish({ style }: StickerProps) {
   return (
     <svg
       style={style}
@@ -62,12 +66,8 @@ function HotDish({ style }) {
   );
 }
 
-HotDish.propTypes = {
-  style: PropTypes.object,
-};
-
 export default {
   aspectRatio: 34 / 22,
   svg: HotDish,
   title,
-};
+} as Sticker;

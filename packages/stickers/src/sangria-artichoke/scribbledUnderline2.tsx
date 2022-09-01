@@ -17,11 +17,15 @@
  * External dependencies
  */
 import { _x } from '@googleforcreators/i18n';
-import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import type { StickerProps, Sticker } from '../types';
 
 const title = _x('Scribbled Underline 2', 'sticker name', 'web-stories');
 
-function ScribbledUnderline2({ style }) {
+function ScribbledUnderline2({ style }: StickerProps) {
   return (
     <svg
       style={style}
@@ -38,12 +42,8 @@ function ScribbledUnderline2({ style }) {
   );
 }
 
-ScribbledUnderline2.propTypes = {
-  style: PropTypes.object,
-};
-
 export default {
   aspectRatio: 241 / 15,
   svg: ScribbledUnderline2,
   title,
-};
+} as Sticker;

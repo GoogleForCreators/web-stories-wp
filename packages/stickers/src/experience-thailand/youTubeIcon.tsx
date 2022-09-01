@@ -17,11 +17,15 @@
  * External dependencies
  */
 import { _x } from '@googleforcreators/i18n';
-import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import type { StickerProps, Sticker } from '../types';
 
 const title = _x('YouTube', 'sticker name', 'web-stories');
 
-const YouTubeIcon = ({ style }) => (
+const YouTubeIcon = ({ style }: StickerProps) => (
   <svg
     style={style}
     viewBox="0 0 30 20"
@@ -36,12 +40,8 @@ const YouTubeIcon = ({ style }) => (
   </svg>
 );
 
-YouTubeIcon.propTypes = {
-  style: PropTypes.object,
-};
-
 export default {
   aspectRatio: 30 / 20,
   svg: YouTubeIcon,
   title,
-};
+} as Sticker;

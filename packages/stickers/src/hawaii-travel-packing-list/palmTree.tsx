@@ -18,11 +18,15 @@
  * External dependencies
  */
 import { _x } from '@googleforcreators/i18n';
-import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import type { StickerProps, Sticker } from '../types';
 
 const title = _x('Palm Tree', 'sticker name', 'web-stories');
 
-function PalmTree({ style }) {
+function PalmTree({ style }: StickerProps) {
   return (
     <svg
       style={style}
@@ -41,12 +45,8 @@ function PalmTree({ style }) {
   );
 }
 
-PalmTree.propTypes = {
-  style: PropTypes.object,
-};
-
 export default {
   aspectRatio: 30 / 51,
   svg: PalmTree,
   title,
-};
+} as Sticker;

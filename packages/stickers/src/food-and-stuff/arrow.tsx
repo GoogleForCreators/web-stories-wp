@@ -17,11 +17,15 @@
  * External dependencies
  */
 import { _x } from '@googleforcreators/i18n';
-import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import type { StickerProps, Sticker } from '../types';
 
 const title = _x('Arrow', 'sticker name', 'web-stories');
 
-function Arrow({ style }) {
+function Arrow({ style }: StickerProps) {
   return (
     <svg
       style={style}
@@ -38,12 +42,8 @@ function Arrow({ style }) {
   );
 }
 
-Arrow.propTypes = {
-  style: PropTypes.object,
-};
-
 export default {
   aspectRatio: 19 / 10,
   svg: Arrow,
   title,
-};
+} as Sticker;

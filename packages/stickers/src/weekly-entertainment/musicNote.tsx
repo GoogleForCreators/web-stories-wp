@@ -17,11 +17,15 @@
  * External dependencies
  */
 import { _x } from '@googleforcreators/i18n';
-import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import type { StickerProps, Sticker } from '../types';
 
 const title = _x('Musical Note', 'sticker name', 'web-stories');
 
-function MusicNote({ style }) {
+function MusicNote({ style }: StickerProps) {
   return (
     <svg
       style={style}
@@ -38,12 +42,8 @@ function MusicNote({ style }) {
   );
 }
 
-MusicNote.propTypes = {
-  style: PropTypes.object,
-};
-
 export default {
   aspectRatio: 160 / 156,
   svg: MusicNote,
   title,
-};
+} as Sticker;

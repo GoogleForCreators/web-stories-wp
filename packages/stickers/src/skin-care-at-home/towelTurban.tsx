@@ -17,11 +17,15 @@
  * External dependencies
  */
 import { _x } from '@googleforcreators/i18n';
-import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import type { StickerProps, Sticker } from '../types';
 
 const title = _x('Towel Turban', 'sticker name', 'web-stories');
 
-function TowelTurban({ style }) {
+function TowelTurban({ style }: StickerProps) {
   return (
     <svg
       style={style}
@@ -62,12 +66,8 @@ function TowelTurban({ style }) {
   );
 }
 
-TowelTurban.propTypes = {
-  style: PropTypes.object,
-};
-
 export default {
   aspectRatio: 23 / 38,
   svg: TowelTurban,
   title,
-};
+} as Sticker;

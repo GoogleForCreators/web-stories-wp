@@ -17,11 +17,15 @@
  * External dependencies
  */
 import { _x } from '@googleforcreators/i18n';
-import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import type { StickerProps, Sticker } from '../types';
 
 const title = _x('Oven', 'sticker name', 'web-stories');
 
-function Oven({ style }) {
+function Oven({ style }: StickerProps) {
   return (
     <svg
       style={style}
@@ -71,12 +75,8 @@ function Oven({ style }) {
   );
 }
 
-Oven.propTypes = {
-  style: PropTypes.object,
-};
-
 export default {
   aspectRatio: 66 / 65,
   svg: Oven,
   title,
-};
+} as Sticker;

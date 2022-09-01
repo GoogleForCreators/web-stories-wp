@@ -17,11 +17,15 @@
  * External dependencies
  */
 import { _x } from '@googleforcreators/i18n';
-import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import type { StickerProps, Sticker } from '../types';
 
 const title = _x('Yellow Leaf', 'sticker name', 'web-stories');
 
-function YellowLeaf({ style }) {
+function YellowLeaf({ style }: StickerProps) {
   return (
     <svg
       style={style}
@@ -66,12 +70,8 @@ function YellowLeaf({ style }) {
   );
 }
 
-YellowLeaf.propTypes = {
-  style: PropTypes.object,
-};
-
 export default {
   aspectRatio: 59 / 63,
   svg: YellowLeaf,
   title,
-};
+} as Sticker;

@@ -17,11 +17,15 @@
  * External dependencies
  */
 import { _x } from '@googleforcreators/i18n';
-import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import type { StickerProps, Sticker } from '../types';
 
 const title = _x('Large Radish', 'sticker name', 'web-stories');
 
-function RadishLarge({ style }) {
+function RadishLarge({ style }: StickerProps) {
   return (
     <svg
       style={style}
@@ -39,12 +43,8 @@ function RadishLarge({ style }) {
   );
 }
 
-RadishLarge.propTypes = {
-  style: PropTypes.object,
-};
-
 export default {
   aspectRatio: 509 / 718,
   svg: RadishLarge,
   title,
-};
+} as Sticker;

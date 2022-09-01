@@ -18,11 +18,15 @@
  * External dependencies
  */
 import { _x } from '@googleforcreators/i18n';
-import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import type { StickerProps, Sticker } from '../types';
 
 const title = _x('Orange Lightning', 'sticker name', 'web-stories');
 
-function OrangeLightning({ style }) {
+function OrangeLightning({ style }: StickerProps) {
   return (
     <svg
       style={style}
@@ -41,12 +45,8 @@ function OrangeLightning({ style }) {
   );
 }
 
-OrangeLightning.propTypes = {
-  style: PropTypes.object,
-};
-
 export default {
   aspectRatio: 56 / 46,
   svg: OrangeLightning,
   title,
-};
+} as Sticker;

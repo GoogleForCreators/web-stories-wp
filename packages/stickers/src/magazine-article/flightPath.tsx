@@ -17,11 +17,15 @@
  * External dependencies
  */
 import { _x } from '@googleforcreators/i18n';
-import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import type { StickerProps, Sticker } from '../types';
 
 const title = _x('Flight Path', 'sticker name', 'web-stories');
 
-function FlightPath({ style }) {
+function FlightPath({ style }: StickerProps) {
   return (
     <svg
       style={style}
@@ -48,12 +52,8 @@ function FlightPath({ style }) {
   );
 }
 
-FlightPath.propTypes = {
-  style: PropTypes.object,
-};
-
 export default {
   aspectRatio: 35 / 50,
   svg: FlightPath,
   title,
-};
+} as Sticker;

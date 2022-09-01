@@ -17,11 +17,15 @@
  * External dependencies
  */
 import { _x } from '@googleforcreators/i18n';
-import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import type { StickerProps, Sticker } from '../types';
 
 const title = _x('Off-white Section Separator', 'sticker name', 'web-stories');
 
-function OffWhiteSectionSeparator({ style }) {
+function OffWhiteSectionSeparator({ style }: StickerProps) {
   return (
     <svg
       style={style}
@@ -38,12 +42,8 @@ function OffWhiteSectionSeparator({ style }) {
   );
 }
 
-OffWhiteSectionSeparator.propTypes = {
-  style: PropTypes.object,
-};
-
 export default {
   aspectRatio: 62 / 30,
   svg: OffWhiteSectionSeparator,
   title,
-};
+} as Sticker;

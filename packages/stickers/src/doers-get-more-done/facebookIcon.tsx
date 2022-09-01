@@ -17,11 +17,15 @@
  * External dependencies
  */
 import { _x } from '@googleforcreators/i18n';
-import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import type { StickerProps, Sticker } from '../types';
 
 const title = _x('Facebook', 'sticker name', 'web-stories');
 
-function FacebookIcon({ style }) {
+function FacebookIcon({ style }: StickerProps) {
   return (
     <svg
       style={style}
@@ -38,12 +42,8 @@ function FacebookIcon({ style }) {
   );
 }
 
-FacebookIcon.propTypes = {
-  style: PropTypes.object,
-};
-
 export default {
   aspectRatio: 13 / 25,
   svg: FacebookIcon,
   title,
-};
+} as Sticker;

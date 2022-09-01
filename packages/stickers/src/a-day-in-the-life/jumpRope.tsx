@@ -17,11 +17,15 @@
  * External dependencies
  */
 import { _x } from '@googleforcreators/i18n';
-import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import type { StickerProps, Sticker } from '../types';
 
 const title = _x('Jump Rope', 'sticker name', 'web-stories');
 
-function JumpRope({ style }) {
+function JumpRope({ style }: StickerProps) {
   return (
     <svg
       style={style}
@@ -52,12 +56,8 @@ function JumpRope({ style }) {
   );
 }
 
-JumpRope.propTypes = {
-  style: PropTypes.object,
-};
-
 export default {
   aspectRatio: 44 / 46,
   svg: JumpRope,
   title,
-};
+} as Sticker;

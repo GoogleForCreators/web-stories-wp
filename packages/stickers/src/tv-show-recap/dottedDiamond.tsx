@@ -17,11 +17,15 @@
  * External dependencies
  */
 import { _x } from '@googleforcreators/i18n';
-import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import type { StickerProps, Sticker } from '../types';
 
 const title = _x('Dotted Diamond', 'sticker name', 'web-stories');
 
-function DottedDiamond({ style }) {
+function DottedDiamond({ style }: StickerProps) {
   return (
     <svg
       style={style}
@@ -40,12 +44,8 @@ function DottedDiamond({ style }) {
   );
 }
 
-DottedDiamond.propTypes = {
-  style: PropTypes.object,
-};
-
 export default {
   aspectRatio: 58 / 58,
   svg: DottedDiamond,
   title,
-};
+} as Sticker;

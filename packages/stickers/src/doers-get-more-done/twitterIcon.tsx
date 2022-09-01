@@ -17,11 +17,15 @@
  * External dependencies
  */
 import { _x } from '@googleforcreators/i18n';
-import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import type { StickerProps, Sticker } from '../types';
 
 const title = _x('Twitter', 'sticker name', 'web-stories');
 
-function TwitterIcon({ style }) {
+function TwitterIcon({ style }: StickerProps) {
   return (
     <svg
       style={style}
@@ -38,12 +42,8 @@ function TwitterIcon({ style }) {
   );
 }
 
-TwitterIcon.propTypes = {
-  style: PropTypes.object,
-};
-
 export default {
   aspectRatio: 27 / 21,
   svg: TwitterIcon,
   title,
-};
+} as Sticker;

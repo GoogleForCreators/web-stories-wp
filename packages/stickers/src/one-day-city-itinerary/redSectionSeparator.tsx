@@ -17,11 +17,15 @@
  * External dependencies
  */
 import { _x } from '@googleforcreators/i18n';
-import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import type { StickerProps, Sticker } from '../types';
 
 const title = _x('Red Section Separator', 'sticker name', 'web-stories');
 
-const RedSectionSeparator = ({ style }) => (
+const RedSectionSeparator = ({ style }: StickerProps) => (
   <svg
     style={style}
     viewBox="0 0 40 32"
@@ -36,12 +40,8 @@ const RedSectionSeparator = ({ style }) => (
   </svg>
 );
 
-RedSectionSeparator.propTypes = {
-  style: PropTypes.object,
-};
-
 export default {
   aspectRatio: 40 / 32,
   svg: RedSectionSeparator,
   title,
-};
+} as Sticker;

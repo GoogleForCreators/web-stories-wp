@@ -17,11 +17,15 @@
  * External dependencies
  */
 import { _x } from '@googleforcreators/i18n';
-import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import type { StickerProps, Sticker } from '../types';
 
 const title = _x('Handheld Sign', 'sticker name', 'web-stories');
 
-function HandHeldSign({ style }) {
+function HandHeldSign({ style }: StickerProps) {
   return (
     <svg
       style={style}
@@ -232,12 +236,8 @@ function HandHeldSign({ style }) {
   );
 }
 
-HandHeldSign.propTypes = {
-  style: PropTypes.object,
-};
-
 export default {
   aspectRatio: 36 / 51,
   svg: HandHeldSign,
   title,
-};
+} as Sticker;

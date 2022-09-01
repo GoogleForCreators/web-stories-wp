@@ -17,11 +17,15 @@
  * External dependencies
  */
 import { _x } from '@googleforcreators/i18n';
-import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import type { StickerProps, Sticker } from '../types';
 
 const title = _x('Violet Lotus', 'sticker name', 'web-stories');
 
-function VioletLotus({ style }) {
+function VioletLotus({ style }: StickerProps) {
   return (
     <svg
       style={style}
@@ -46,12 +50,8 @@ function VioletLotus({ style }) {
   );
 }
 
-VioletLotus.propTypes = {
-  style: PropTypes.object,
-};
-
 export default {
   aspectRatio: 48 / 32,
   svg: VioletLotus,
   title,
-};
+} as Sticker;

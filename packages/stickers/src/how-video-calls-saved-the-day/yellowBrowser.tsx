@@ -17,11 +17,15 @@
  * External dependencies
  */
 import { _x } from '@googleforcreators/i18n';
-import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import type { StickerProps, Sticker } from '../types';
 
 const title = _x('Yellow Browser', 'sticker name', 'web-stories');
 
-function YellowBrowserIcon({ style }) {
+function YellowBrowserIcon({ style }: StickerProps) {
   return (
     <svg
       style={style}
@@ -82,12 +86,8 @@ function YellowBrowserIcon({ style }) {
   );
 }
 
-YellowBrowserIcon.propTypes = {
-  style: PropTypes.object,
-};
-
 export default {
   aspectRatio: 52 / 37,
   svg: YellowBrowserIcon,
   title,
-};
+} as Sticker;

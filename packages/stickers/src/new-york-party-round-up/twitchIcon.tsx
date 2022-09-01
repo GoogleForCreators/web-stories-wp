@@ -17,11 +17,15 @@
  * External dependencies
  */
 import { _x } from '@googleforcreators/i18n';
-import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import type { StickerProps, Sticker } from '../types';
 
 const title = _x('White Twitch', 'sticker name', 'web-stories');
 
-function TwitchIcon({ style }) {
+function TwitchIcon({ style }: StickerProps) {
   return (
     <svg
       style={style}
@@ -40,12 +44,8 @@ function TwitchIcon({ style }) {
   );
 }
 
-TwitchIcon.propTypes = {
-  style: PropTypes.object,
-};
-
 export default {
   aspectRatio: 28 / 30,
   svg: TwitchIcon,
   title,
-};
+} as Sticker;

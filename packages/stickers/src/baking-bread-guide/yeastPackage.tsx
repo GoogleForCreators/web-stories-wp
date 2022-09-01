@@ -17,11 +17,15 @@
  * External dependencies
  */
 import { _x } from '@googleforcreators/i18n';
-import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import type { StickerProps, Sticker } from '../types';
 
 const title = _x('Yeast Package', 'sticker name', 'web-stories');
 
-function YeastPackage({ style }) {
+function YeastPackage({ style }: StickerProps) {
   return (
     <svg
       style={style}
@@ -39,12 +43,8 @@ function YeastPackage({ style }) {
   );
 }
 
-YeastPackage.propTypes = {
-  style: PropTypes.object,
-};
-
 export default {
   aspectRatio: 34 / 42,
   svg: YeastPackage,
   title,
-};
+} as Sticker;

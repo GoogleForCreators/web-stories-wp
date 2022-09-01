@@ -17,11 +17,15 @@
  * External dependencies
  */
 import { _x } from '@googleforcreators/i18n';
-import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import type { StickerProps, Sticker } from '../types';
 
 const title = _x('Tilted Brush Stroke', 'sticker name', 'web-stories');
 
-const TiltedBrush = ({ style }) => (
+const TiltedBrush = ({ style }: StickerProps) => (
   <svg
     style={style}
     viewBox="0 0 48 38"
@@ -36,12 +40,8 @@ const TiltedBrush = ({ style }) => (
   </svg>
 );
 
-TiltedBrush.propTypes = {
-  style: PropTypes.object,
-};
-
 export default {
   aspectRatio: 48 / 38,
   svg: TiltedBrush,
   title,
-};
+} as Sticker;

@@ -17,11 +17,15 @@
  * External dependencies
  */
 import { _x } from '@googleforcreators/i18n';
-import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import type { StickerProps, Sticker } from '../types';
 
 const title = _x('Squiggly Line', 'sticker name', 'web-stories');
 
-function SquigglyLine({ style }) {
+function SquigglyLine({ style }: StickerProps) {
   return (
     <svg
       style={style}
@@ -38,12 +42,8 @@ function SquigglyLine({ style }) {
   );
 }
 
-SquigglyLine.propTypes = {
-  style: PropTypes.object,
-};
-
 export default {
   aspectRatio: 54 / 20,
   svg: SquigglyLine,
   title,
-};
+} as Sticker;

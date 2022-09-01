@@ -17,11 +17,15 @@
  * External dependencies
  */
 import { _x } from '@googleforcreators/i18n';
-import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import type { StickerProps, Sticker } from '../types';
 
 const title = _x('Chat Box', 'sticker name', 'web-stories');
 
-function Chatbox({ style }) {
+function Chatbox({ style }: StickerProps) {
   return (
     <svg
       style={style}
@@ -38,12 +42,8 @@ function Chatbox({ style }) {
   );
 }
 
-Chatbox.propTypes = {
-  style: PropTypes.object,
-};
-
 export default {
   aspectRatio: 44 / 20,
   svg: Chatbox,
   title,
-};
+} as Sticker;

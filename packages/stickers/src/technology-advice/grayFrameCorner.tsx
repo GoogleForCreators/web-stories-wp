@@ -17,11 +17,15 @@
  * External dependencies
  */
 import { _x } from '@googleforcreators/i18n';
-import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import type { StickerProps, Sticker } from '../types';
 
 const title = _x('Gray Frame Corner', 'sticker name', 'web-stories');
 
-const GrayFrameCorner = ({ style }) => (
+const GrayFrameCorner = ({ style }: StickerProps) => (
   <svg
     style={style}
     viewBox="0 0 26 26"
@@ -37,12 +41,8 @@ const GrayFrameCorner = ({ style }) => (
   </svg>
 );
 
-GrayFrameCorner.propTypes = {
-  style: PropTypes.object,
-};
-
 export default {
   aspectRatio: 26 / 26,
   svg: GrayFrameCorner,
   title,
-};
+} as Sticker;

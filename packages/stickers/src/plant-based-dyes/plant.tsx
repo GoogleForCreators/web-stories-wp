@@ -17,11 +17,15 @@
  * External dependencies
  */
 import { _x } from '@googleforcreators/i18n';
-import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import type { StickerProps, Sticker } from '../types';
 
 const title = _x('Plant', 'sticker name', 'web-stories');
 
-function MakerPlant({ style }) {
+function MakerPlant({ style }: StickerProps) {
   return (
     <svg
       style={style}
@@ -142,12 +146,8 @@ function MakerPlant({ style }) {
   );
 }
 
-MakerPlant.propTypes = {
-  style: PropTypes.object,
-};
-
 export default {
   aspectRatio: 32 / 52,
   svg: MakerPlant,
   title,
-};
+} as Sticker;

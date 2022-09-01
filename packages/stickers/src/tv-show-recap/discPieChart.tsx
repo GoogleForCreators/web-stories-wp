@@ -17,11 +17,15 @@
  * External dependencies
  */
 import { _x } from '@googleforcreators/i18n';
-import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import type { StickerProps, Sticker } from '../types';
 
 const title = _x('Disc Pie Chart', 'sticker name', 'web-stories');
 
-function DiscPieChart({ style }) {
+function DiscPieChart({ style }: StickerProps) {
   return (
     <svg
       style={style}
@@ -59,12 +63,8 @@ function DiscPieChart({ style }) {
   );
 }
 
-DiscPieChart.propTypes = {
-  style: PropTypes.object,
-};
-
 export default {
   aspectRatio: 50 / 50,
   svg: DiscPieChart,
   title,
-};
+} as Sticker;
