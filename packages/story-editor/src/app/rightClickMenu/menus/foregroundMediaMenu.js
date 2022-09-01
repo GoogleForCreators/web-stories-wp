@@ -21,7 +21,7 @@ import {
   ContextMenu,
   ContextMenuComponents,
 } from '@googleforcreators/design-system';
-import { useRef } from '@googleforcreators/react';
+import { useRef, useMemo } from '@googleforcreators/react';
 
 /**
  * Internal dependencies
@@ -42,7 +42,7 @@ import useVideoTrim from '../../../components/videoTrim/useVideoTrim';
 import useRightClickMenu from '../useRightClickMenu';
 import useLayerSelect from '../useLayerSelect';
 import { LayerLock, LayerName, LayerUngroup } from '../items';
-import useIsPartiallyOffCanvas from '../hooks/useIsPartiallyOffCanvas';
+import { isOffCanvas } from '../../../utils/isOffCanvas';
 import {
   DEFAULT_DISPLACEMENT,
   MenuPropType,
@@ -72,8 +72,10 @@ function ForegroundMediaMenu({ parentMenuRef }) {
   } = useLayerActions();
 
   const { hasShapeMask, removeShapeMask } = useShapeMask(selectedElement);
-
-  const { isOffCanvas } = useIsPartiallyOffCanvas(selectedElement);
+  const { offCanvas } = useMemo(
+    () => isOffCanvas(selectedElement),
+    [selectedElement]
+  );
 
   const offScreenVideoCropping = useFeature('offScreenVideoCropping');
 
@@ -211,7 +213,7 @@ function ForegroundMediaMenu({ parentMenuRef }) {
         {scaleLabel}
       </ContextMenuComponents.MenuButton>
 
-      {offScreenVideoCropping && isOffCanvas() && (
+      {offScreenVideoCropping && offCanvas && (
         <ContextMenuComponents.MenuButton onClick={handleCropOffScreenVideo}>
           {RIGHT_CLICK_MENU_LABELS.CROP_OFF_SCREEN_VIDEO}
         </ContextMenuComponents.MenuButton>

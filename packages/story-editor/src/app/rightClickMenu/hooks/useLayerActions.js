@@ -23,7 +23,7 @@ import { trackEvent } from '@googleforcreators/tracking';
  */
 import { useStory } from '../..';
 import { useLocalMedia } from '../../media';
-import useIsPartiallyOffCanvas from './useIsPartiallyOffCanvas';
+import { getCropParams } from '../../../utils/getCropParams';
 
 /**
  * Creates the right click menu layer actions.
@@ -50,8 +50,6 @@ const useLayerActions = () => {
       selectedElement: state.selectedElements?.[0],
     })
   );
-
-  const { getCropParams } = useIsPartiallyOffCanvas(selectedElement);
 
   const elementPosition = elements.findIndex(
     ({ id }) => id === selectedElement?.id
@@ -174,8 +172,8 @@ const useLayerActions = () => {
    * Crop Video to remove off-canvas portion of the video.
    */
   const handleCropOffScreenVideo = useCallback(() => {
-    cropOffScreenVideo(selectedElement, getCropParams());
-  }, [selectedElement, getCropParams, cropOffScreenVideo]);
+    cropOffScreenVideo(selectedElement, getCropParams(selectedElement));
+  }, [selectedElement, cropOffScreenVideo]);
 
   return {
     canElementMoveBackwards,
