@@ -19,9 +19,9 @@
  *
  * It can be any two mouse event such as down and up or dragstart and drag.
  *
- * @param {MouseEvent} firstEvent   First mouse event object.
- * @param {MouseEvent} secondEvent  Second mouse event object.
- * @return {boolean} Returns true iff the events are considered part of dragging
+ * @param firstEvent First mouse event object.
+ * @param secondEvent Second mouse event object.
+ * @return Whether the events are considered part of dragging
  */
 function areEventsDragging(
   firstEvent: MouseEvent,
