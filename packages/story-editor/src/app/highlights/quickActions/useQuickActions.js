@@ -50,6 +50,10 @@ import useFFmpeg from '../../media/utils/useFFmpeg';
 import useInsertElement from '../../../components/canvas/useInsertElement';
 import { DEFAULT_PRESET } from '../../../components/library/panes/text/textPresets';
 import { useMediaRecording } from '../../../components/mediaRecording';
+import {
+  BACKGROUND_BLUR_PX,
+  VIDEO_EFFECTS,
+} from '../../../components/mediaRecording/constants';
 import { getResetProperties } from './utils';
 import { ACTIONS, RESET_DEFAULTS, RESET_PROPERTIES } from './constants';
 
@@ -854,16 +858,22 @@ const useQuickActions = () => {
         ...actionMenuProps,
       },
       videoInput && {
-        Icon: videoEffect === 'blur' ? BackgroundBlur : BackgroundBlurOff,
+        Icon:
+          videoEffect === VIDEO_EFFECTS.BLUR
+            ? BackgroundBlur
+            : BackgroundBlurOff,
         label:
-          videoEffect === 'blur'
+          videoEffect === VIDEO_EFFECTS.BLUR
             ? __('Disable Background Blur', 'web-stories')
             : __('Enable Background Blur', 'web-stories'),
         onClick: () => {
-          trackEvent('media_recording_background_blur', {
-            status: videoEffect === 'blur' ? 'off' : 'on',
+          trackEvent('media_recording_background_blur_px', {
+            value: videoEffect === VIDEO_EFFECTS.BLUR ? 0 : BACKGROUND_BLUR_PX,
           });
-          const newVideoEffect = videoEffect === 'blur' ? 'none' : 'blur';
+          const newVideoEffect =
+            videoEffect === VIDEO_EFFECTS.BLUR
+              ? VIDEO_EFFECTS.NONE
+              : VIDEO_EFFECTS.BLUR;
           setVideoEffect(newVideoEffect);
         },
         disabled: !isReady || !hasVideo,

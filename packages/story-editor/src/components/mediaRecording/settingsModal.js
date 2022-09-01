@@ -33,6 +33,7 @@ import { trackEvent } from '@googleforcreators/tracking';
  */
 import Dialog from '../dialog';
 import useMediaRecording from './useMediaRecording';
+import { SETTINGS_POPUP_ZINDEX, VIDEO_EFFECTS } from './constants';
 
 const Row = styled.div`
   margin-bottom: 16px;
@@ -126,8 +127,8 @@ function SettingsModal() {
     .filter((device) => device.kind === 'audioinput')
     .map(({ deviceId, label }) => ({ value: deviceId, label }));
   const videoEffects = [
-    { value: 'none', label: __('None', 'web-stories') },
-    { value: 'blur', label: __('Background blur', 'web-stories') },
+    { value: VIDEO_EFFECTS.NONE, label: __('None', 'web-stories') },
+    { value: VIDEO_EFFECTS.BLUR, label: __('Background blur', 'web-stories') },
   ];
 
   const onChangeVideoInput = useCallback(
@@ -179,7 +180,7 @@ function SettingsModal() {
             options={videoInputs}
             onMenuItemClick={onChangeVideoInput}
             selectedValue={localVideoInput}
-            popupZIndex={11}
+            popupZIndex={SETTINGS_POPUP_ZINDEX}
           />
         </Row>
       )}
@@ -192,7 +193,7 @@ function SettingsModal() {
             onMenuItemClick={onChangeAudioInput}
             selectedValue={localAudioInput}
             disabled={!hasAudio}
-            popupZIndex={11}
+            popupZIndex={SETTINGS_POPUP_ZINDEX}
           />
         </Row>
       )}
@@ -204,7 +205,7 @@ function SettingsModal() {
             options={videoEffects}
             onMenuItemClick={onChangeVideoEffect}
             selectedValue={localVideoEffect}
-            popupZIndex={11}
+            popupZIndex={SETTINGS_POPUP_ZINDEX}
           />
         </Row>
       )}

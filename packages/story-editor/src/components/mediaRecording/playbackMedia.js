@@ -32,7 +32,7 @@ import VideoMode from './videoMode';
 import PlayPauseButton from './playPauseButton';
 import { VideoWrapper, Video, Photo, Canvas } from './components';
 import Audio from './audio';
-import { BACKGROUND_BLUR_PX } from './constants';
+import { BACKGROUND_BLUR_PX, VIDEO_EFFECTS } from './constants';
 
 const selfieSegmentation = new SelfieSegmentation({
   locateFile: (file) =>
@@ -135,7 +135,7 @@ function PlaybackMedia() {
         setCanvasNode(canvasRef.current);
         setCanvasStream(canvasRef.current.captureStream());
       }
-      if (videoEffect === 'blur') {
+      if (videoEffect === VIDEO_EFFECTS.BLUR) {
         await selfieSegmentation.initialize();
         selfieSegmentation.onResults(onSelfieSegmentationResults);
         const sendFrame = async () => {

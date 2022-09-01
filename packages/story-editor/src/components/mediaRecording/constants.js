@@ -28,3 +28,7 @@ export const AUDIO_FILE_TYPE = 'mp3';
 
 export const PHOTO_MIME_TYPE = 'image/jpeg';
 export const PHOTO_FILE_TYPE = 'jpeg';
+
+export const SETTINGS_POPUP_ZINDEX = 11;
+
+export const VIDEO_EFFECTS = [{ NONE: 'none', BLUR: 'blur' }];
