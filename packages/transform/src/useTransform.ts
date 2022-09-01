@@ -24,7 +24,7 @@ import { identity, useContextSelector } from '@googleforcreators/react';
 import Context from './context';
 import type { State } from './types';
 
-function useTransform(selector: (state: State) => unknown) {
+function useTransform<T>(selector: (state: State) => T) {
   return useContextSelector(Context, selector ?? identity);
 }
 
