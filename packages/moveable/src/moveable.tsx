@@ -35,7 +35,7 @@ interface MoveableWithRefProps extends MoveableProps {
 
 function MoveableWithRef(
   { onContextMenu, ...moveableProps }: MoveableWithRefProps,
-  ref: ForwardedRef<HTMLElement>
+  ref: ForwardedRef<OriginalMoveable>
 ) {
   return (
     <InOverlay
@@ -55,6 +55,8 @@ function MoveableWithRef(
   );
 }
 
-const Moveable = forwardRef<HTMLElement, MoveableWithRefProps>(MoveableWithRef);
+const Moveable = forwardRef<OriginalMoveable, MoveableWithRefProps>(
+  MoveableWithRef
+);
 
 export default Moveable;
