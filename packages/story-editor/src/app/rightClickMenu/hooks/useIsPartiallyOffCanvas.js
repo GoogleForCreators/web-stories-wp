@@ -26,6 +26,7 @@ import { useCallback } from 'react';
 function useIsPartiallyOffCanvas(selectedElement) {
   const { x, y, width, height } = selectedElement;
 
+  // @todo this will be replaced with src/utils/isOffCanvas
   const isOffCanvas = useCallback(() => {
     let offCanvas = false;
     let offCanvasTop = 0;
@@ -84,6 +85,7 @@ function useIsPartiallyOffCanvas(selectedElement) {
     };
   }, [x, y, width, height]);
 
+  // @todo this will be replaced with src/utils/getCropParams
   const getCropParams = useCallback(() => {
     const { offCanvasLeft, offCanvasRight, offCanvasTop, offCanvasBottom } =
       isOffCanvas();
