@@ -32,14 +32,14 @@ function AutoSaveHandler() {
   const {
     state: { hasNewChanges },
   } = useHistory();
-  const { status, saveStory, autoSave } = useStory(({ state, actions }) => ({
-    autoSave: actions.autoSave,
-    saveStory: actions.saveStory,
-    isDraft: state.status,
-  }));
+  const { isDraft, saveStory, autoSave } = useStory(
+    ({ state: { story }, actions }) => ({
+      autoSave: actions.autoSave,
+      saveStory: actions.saveStory,
+      isDraft: 'draft' === story.status || !story.status,
+    })
+  );
   const isUploading = useIsUploadingToStory();
-
-  const isDraft = 'draft' === status || !status;
 
   const save = improvedAutosaves ? autoSave : saveStory;
 
