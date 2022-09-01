@@ -322,6 +322,12 @@
         "no-duplicate-imports": "off",
         "@typescript-eslint/no-duplicate-imports": "error",
         "@typescript-eslint/no-shadow": "error",
+        "@typescript-eslint/unbound-method": [
+          "error",
+          {
+            "ignoreStatic": true
+          }
+        ],
         "react/prop-types": "off",
         "jsdoc/require-param-type": "off",
         "jsdoc/require-returns-type": "off",
