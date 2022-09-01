@@ -381,7 +381,7 @@ class Experiments extends Service_Base implements HasRequirements {
 				'name'        => 'offScreenVideoCropping',
 				'label'       => __( 'Crop off-screen video parts', 'web-stories' ),
 				'description' => __( 'Enable support for cropping cut off-screen parts of videos', 'web-stories' ),
-				'group'       => 'editor'
+				'group'       => 'editor',
 			],
 		];
 	}
