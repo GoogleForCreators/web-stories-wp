@@ -41,7 +41,7 @@
     "@googleforcreators/react": "*",
     "@types/styled-components": "^5.1.26",
     "prop-types": "^15.7.2",
-    "react-moveable": "^0.33.0",
+    "react-moveable": "^0.38.4",
     "styled-components": "^5.3.3"
   },
   "devDependencies": {}
