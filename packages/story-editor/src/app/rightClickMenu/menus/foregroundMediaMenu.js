@@ -214,7 +214,7 @@ function ForegroundMediaMenu({ parentMenuRef }) {
         {scaleLabel}
       </ContextMenuComponents.MenuButton>
 
-      {offScreenVideoCropping && offCanvas && (
+      {offScreenVideoCropping && isVideo && offCanvas && (
         <ContextMenuComponents.MenuButton onClick={handleCropOffScreenVideo}>
           {RIGHT_CLICK_MENU_LABELS.CROP_OFF_SCREEN_VIDEO}
         </ContextMenuComponents.MenuButton>
