@@ -483,9 +483,10 @@ function useProcessMedia({
   );
 
   /**
-   * Crop hidden video using FFmpeg.
+   * Crop off screen video using FFmpeg.
    *
    * @param {import('@googleforcreators/media').Resource} resource Resource object.
+   * @param {Object<{newWidth: number, newHeight: number, cropElement: Element}>} cropParams Crop params.
    */
   const cropOffScreenVideo = useCallback(
     ({ id: elementId, resource: oldResource }, cropParams) => {
