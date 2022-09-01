@@ -27,8 +27,8 @@ import isTrackingEnabled from './isTrackingEnabled';
  *
  * @see https://developers.google.com/analytics/devguides/collection/gtagjs/screens
  * @see https://developers.google.com/analytics/devguides/collection/ga4/screen-view
- * @param {string} screenName Screen name. Example: 'Explore Templates'.
- * @return {Promise<void>} Promise that always resolves.
+ * @param screenName Screen name. Example: 'Explore Templates'.
+ * @return Promise that always resolves.
  */
 async function trackScreenView(screenName: string): Promise<void> {
   if (!(await isTrackingEnabled())) {

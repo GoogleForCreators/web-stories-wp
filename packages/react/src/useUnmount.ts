@@ -20,7 +20,7 @@
 import { useEffect } from 'react';
 
 /**
- * @param {Function} callback The identity-stable callback to be executed on unmount
+ * @param callback The identity-stable callback to be executed on unmount
  */
 function useUnmount(callback: () => void | undefined) {
   useEffect(() => callback, [callback]);

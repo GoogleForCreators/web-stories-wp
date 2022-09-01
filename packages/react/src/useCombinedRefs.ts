@@ -30,8 +30,8 @@ import {
  *
  * This is used when receiving a forwarded ref, but also needing an internal one.
  *
- * @param {Array} refs  List of refs to synchronize
- * @return {(node:HTMLElement) => void} A callback to be used as `ref` for element.
+ * @param refs  List of refs to synchronize
+ * @return A callback to be used as `ref` for element.
  */
 function useCombinedRefs<T>(
   ...refs: Array<RefCallback<T> | MutableRefObject<T> | ForwardedRef<T>>

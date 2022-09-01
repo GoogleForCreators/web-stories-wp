@@ -23,8 +23,8 @@ import type { Dimensions } from './types';
 /**
  * Get image dimensions from an image.
  *
- * @param {string} src Image source.
- * @return {Promise} Image dimensions object.
+ * @param src Image source.
+ * @return Image dimensions object.
  */
 async function getImageDimensions(src: string): Promise<Dimensions> {
   const img = await preloadImage({ src });
