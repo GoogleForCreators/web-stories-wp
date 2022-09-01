@@ -19,7 +19,8 @@
  */
 import { forwardRef } from '@googleforcreators/react';
 import OriginalMoveable from 'react-moveable';
-import PropTypes from 'prop-types';
+import type { MoveableProps, MoveableDefaultOptions } from 'react-moveable';
+import type { ForwardedRef, MouseEventHandler } from 'react';
 
 /**
  * Internal dependencies
@@ -28,13 +29,20 @@ import InOverlay from './overlay';
 
 const DEFAULT_Z_INDEX = 10;
 
-function MoveableWithRef({ onContextMenu, ...moveableProps }, ref) {
+interface MoveableWithRefProps extends MoveableProps {
+  onContextMenu: MouseEventHandler<HTMLElement>;
+}
+
+function MoveableWithRef(
+  { onContextMenu, ...moveableProps }: MoveableWithRefProps,
+  ref: ForwardedRef<OriginalMoveable>
+) {
   return (
     <InOverlay
       onContextMenu={onContextMenu}
       zIndex={DEFAULT_Z_INDEX}
       pointerEvents="initial"
-      render={({ container }) => {
+      render={({ container }: MoveableDefaultOptions) => {
         return (
           <OriginalMoveable
             ref={ref}
@@ -47,12 +55,8 @@ function MoveableWithRef({ onContextMenu, ...moveableProps }, ref) {
   );
 }
 
-const Moveable = forwardRef(MoveableWithRef);
-
-Moveable.propTypes = {
-  onContextMenu: PropTypes.func,
-};
-
-MoveableWithRef.propTypes = Moveable.propTypes;
+const Moveable = forwardRef<OriginalMoveable, MoveableWithRefProps>(
+  MoveableWithRef
+);
 
 export default Moveable;
