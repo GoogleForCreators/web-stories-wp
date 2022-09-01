@@ -22,7 +22,7 @@ import { rgba } from 'polished';
 /**
  * Internal dependencies
  */
-import type { ColorStop, Hex, Pattern, Solid, Radial, Linear } from './types';
+import type { ColorStop, Hex, Pattern, Solid, Gradient, Linear, Radial } from './types';
 
 /**
  * Truncate a number to a given number of decimals.
@@ -51,10 +51,10 @@ function truncate(val: number, pos: number) {
  * @param {Object} pattern.size Gradient size if not full size
  * @return {string} Minimal description for gradient.
  */
-function getGradientDescription(pattern: Radial | Linear) {
+function getGradientDescription(pattern: Gradient) {
   switch (pattern.type) {
     case 'radial': {
-      const { size, center } = pattern;
+      const { size, center } = pattern as Radial;
       const sizeString = size
         ? `ellipse ${truncate(100 * size.w, 2)}% ${truncate(100 * size.h, 2)}%`
         : '';
@@ -68,7 +68,7 @@ function getGradientDescription(pattern: Radial | Linear) {
     }
     case 'linear': {
       // Always include rotation and offset by .5turn, as default is .5turn(?)
-      const { rotation } = pattern;
+      const { rotation } = pattern as Linear;
       return `${((rotation || 0) + 0.5) % 1}turn`;
     }
     // Ignore reason: only here because of eslint, will not happen
@@ -132,9 +132,9 @@ function generatePatternStyles(
     return { [`${property}${objectPropertyPostfix}`]: rgba(r, g, b, a) };
   }
 
-  const { stops, alpha = 1 } = pattern as Radial | Linear;
+  const { stops, alpha = 1 } = pattern as Gradient;
   const func = `${type}-gradient`;
-  const description = getGradientDescription(pattern as Radial | Linear);
+  const description = getGradientDescription(pattern as Gradient);
   const stopList = getStopList(stops, alpha);
   const parms = description ? [description, ...stopList] : stopList;
   const value = `${func}(${parms.join(', ')})`;

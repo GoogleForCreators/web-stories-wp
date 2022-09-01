@@ -70,16 +70,19 @@ export type ColorStop = {
   position: number;
 };
 
-export type Linear = {
-  type: PatternType.LINEAR;
-  stops: Array<ColorStop>;
-  rotation?: number;
+export type Gradient = {
+  type: PatternType.LINEAR | PatternType.RADIAL;
+  stops: ColorStop[];
   alpha?: number;
 };
 
-export type Radial = {
+export type Linear = Gradient & {
+  type: PatternType.LINEAR;
+  rotation?: number;
+};
+
+export type Radial = Gradient & {
   type: PatternType.RADIAL;
-  stops: Array<ColorStop>;
   size?: {
     w: number;
     h: number;
@@ -89,7 +92,6 @@ export type Radial = {
     y: number;
   };
   rotation?: number;
-  alpha?: number;
 };
 
 export type Pattern = Solid | Linear | Radial;
