@@ -19,13 +19,9 @@ export type HandlerRegister = (
   handler: TransformHandler
 ) => () => void;
 
-export interface HandlersList {
-  [id: string]: TransformHandler[];
-}
+export type HandlersList = Record<string, TransformHandler[]>;
 
-export interface TransformsList {
-  [id: string]: Record<string, unknown> | null;
-}
+export type TransformsList = Record<string, Record<string, unknown> | null>;
 
 export interface Transform {
   staticTransformation: boolean;

@@ -25,12 +25,10 @@ import type { ReactNode } from 'react';
  */
 import Context from './context';
 import type {
-  TransformHandler,
   HandlersList,
   TransformsList,
-  HandlerRegister,
-  PushTransform,
-  ClearTransform,
+  Transform,
+  TransformHandler,
 } from './types';
 
 function TransformProvider({ children }: { children: ReactNode }) {
@@ -38,9 +36,8 @@ function TransformProvider({ children }: { children: ReactNode }) {
   const lastTransformsRef = useRef<TransformsList>({});
   const [isAnythingTransforming, setIsAnythingTransforming] = useState(false);
 
-  // @todo HandlerRegister etc shouldn't be required here if the State / Context would work as expected?
-  const registerTransformHandler = useCallback<HandlerRegister>(
-    (id, handler) => {
+  const registerTransformHandler = useCallback(
+    (id: string, handler: TransformHandler) => {
       const handlerListMap = transformHandlersRef.current;
       const handlerList = handlerListMap[id] || (handlerListMap[id] = []);
       handlerList.push(handler);
@@ -51,13 +48,13 @@ function TransformProvider({ children }: { children: ReactNode }) {
     []
   );
 
-  const pushTransform = useCallback<PushTransform>((id, transform) => {
+  const pushTransform = useCallback((id: string, transform: Transform) => {
     const handlerListMap = transformHandlersRef.current;
     const lastTransforms = lastTransformsRef.current;
     const handlerList = handlerListMap[id];
 
     if (handlerList) {
-      handlerList.forEach((handler: TransformHandler) => handler(transform));
+      handlerList.forEach((handler) => handler(transform));
     }
 
     if (transform === null) {
@@ -80,7 +77,7 @@ function TransformProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  const clearTransforms = useCallback<ClearTransform>(() => {
+  const clearTransforms = useCallback(() => {
     lastTransformsRef.current = {};
     setIsAnythingTransforming(false);
   }, [setIsAnythingTransforming]);
