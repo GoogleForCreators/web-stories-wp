@@ -54,7 +54,7 @@ function PreviewButton({ forceIsSaving = false }) {
 
   const [previewLinkToOpenViaDialog, setPreviewLinkToOpenViaDialog] =
     useState(null);
-  const isDraft = 'draft' === status || !status;
+  const isDraft = ['draft', 'auto-draft'].includes(status) || !status;
 
   /**
    * Applies any local transforms (e.g. AMP development mode) to the stored preview link.

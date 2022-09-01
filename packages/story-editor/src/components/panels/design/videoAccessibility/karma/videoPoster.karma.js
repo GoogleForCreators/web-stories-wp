@@ -97,7 +97,9 @@ describe('Video Accessibility Panel', () => {
       expect(vaPanel.posterMenuEdit).toBeDefined();
       await fixture.snapshot('Menu open');
 
-      // And click on edit
+      // The third option is for editing, press down and click to edit.
+      await fixture.events.keyboard.press('down');
+      await fixture.events.keyboard.press('down');
       expect(vaPanel.posterMenuEdit).toHaveFocus();
       await fixture.events.keyboard.press('Enter');
 
@@ -108,6 +110,7 @@ describe('Video Accessibility Panel', () => {
       await focusOnTitle();
       await fixture.events.keyboard.press('tab');
       await fixture.events.keyboard.press('Enter');
+      await fixture.events.keyboard.press('down');
       await fixture.events.keyboard.press('down');
       await fixture.events.keyboard.press('down');
       expect(vaPanel.posterMenuReset).toHaveFocus();

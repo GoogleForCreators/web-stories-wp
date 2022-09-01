@@ -29,6 +29,7 @@ import {
   BorderWidthAndColor,
   More,
   Separator,
+  Settings,
   Dismiss,
 } from '../elements';
 
@@ -50,6 +51,8 @@ const FloatingImageMenu = memo(function FloatingImageMenu() {
       <More />
 
       <Separator />
+
+      <Settings />
 
       <Dismiss />
     </>

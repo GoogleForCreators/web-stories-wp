@@ -2,7 +2,7 @@
   "name": "@googleforcreators/dashboard",
   "description": "The core Web Stories dashboard web application, which is platform-agnostic.",
   "private": false,
-  "version": "0.1.202208151234",
+  "version": "0.1.202208291229",
   "author": {
     "name": "Google",
     "url": "https://creators.google/"
@@ -59,7 +59,7 @@
     "@storybook/addon-essentials": "^6.4.20",
     "@testing-library/react": "^12.1.5",
     "@testing-library/react-hooks": "^8.0.0",
-    "@testing-library/user-event": "^14.2.6",
+    "@testing-library/user-event": "^14.4.3",
     "jest": "^28.1.3",
     "react": "^17.0.2"
   }

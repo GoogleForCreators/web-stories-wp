@@ -178,6 +178,10 @@ describe('Shape Design Menu: Keyboard Navigation', () => {
     await fixture.events.keyboard.press('ArrowRight');
     expect(document.activeElement.getAttribute('title')).toBe('More');
 
+    // Arrow right to Menu settings
+    await fixture.events.keyboard.press('ArrowRight');
+    expect(document.activeElement.getAttribute('title')).toBe('Menu settings');
+
     // Arrow right to Dismiss menu button
     await fixture.events.keyboard.press('ArrowRight');
     expect(document.activeElement.getAttribute('title')).toBe('Dismiss menu');

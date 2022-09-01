@@ -368,8 +368,26 @@ class Editor extends Service_Base implements HasRequirements {
 
 		$shopping_provider = $this->settings->get_setting( $this->settings::SETTING_NAME_SHOPPING_PROVIDER );
 
+		$auto_save_link     = '';
+		$improved_autosaves = $this->experiments->is_experiment_enabled( 'improvedAutosaves' );
+
+		if ( $improved_autosaves && isset( $story_id ) ) {
+			
+			$auto_save = wp_get_post_autosave( $story_id );
+
+			if ( $auto_save && $post ) {
+				if ( mysql2date( 'U', $auto_save->post_modified_gmt, false ) > mysql2date( 'U', $post->post_modified_gmt, false ) ) {
+					$auto_save_link = get_edit_post_link( $auto_save->ID );
+				} else {
+					wp_delete_post_revision( $auto_save->ID );  
+				}
+			} 
+		}
+		
 		$settings = [
 			'autoSaveInterval'        => \defined( 'AUTOSAVE_INTERVAL' ) ? AUTOSAVE_INTERVAL : null,
+			'localAutoSaveInterval'   => 15,
+			'autoSaveLink'            => $auto_save_link,
 			'isRTL'                   => is_rtl(),
 			'locale'                  => $this->locale->get_locale_settings(),
 			'allowedMimeTypes'        => $this->types->get_allowed_mime_types(),

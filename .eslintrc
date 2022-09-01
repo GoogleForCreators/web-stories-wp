@@ -24,6 +24,7 @@
     "styled-components-a11y"
   ],
   "parserOptions": {
+    "ecmaVersion": "latest",
     "ecmaFeatures": {
       "jsx": true
     }
@@ -35,6 +36,8 @@
     "consistent-return": "error",
     "curly": ["error", "all"],
     "default-case": "error",
+    "eol-last": "error",
+    "eqeqeq": "error",
     "guard-for-in": "error",
     "no-await-in-loop": "error",
     "no-constant-binary-expression": "error",
@@ -48,6 +51,8 @@
     "no-new": "error",
     "no-new-func": "error",
     "no-new-wrappers": "error",
+    "no-multiple-empty-lines": "error",
+    "no-trailing-spaces": "error",
     "header/header": [ "error", "block", [
       "",
       {
@@ -119,6 +124,12 @@
     "no-console": "error",
     "no-duplicate-imports": "error",
     "no-var": "error",
+    "prefer-arrow-callback": [
+      "error",
+      {
+        "allowNamedFunctions": true
+      }
+    ],
     "prefer-const": "error",
     "prefer-object-spread": "error",
     "prefer-promise-reject-errors": "error",
@@ -298,9 +309,15 @@
       ],
       "extends": [
         "plugin:@typescript-eslint/recommended",
-        "plugin:@typescript-eslint/eslint-recommended"
+        "plugin:@typescript-eslint/recommended-requiring-type-checking"
       ],
       "parser": "@typescript-eslint/parser",
+      "parserOptions": {
+        "project": [
+          "./tsconfig.json",
+          "./packages/*/tsconfig.json"
+        ]
+      },
       "rules": {
         "no-duplicate-imports": "off",
         "@typescript-eslint/no-duplicate-imports": "error",
@@ -313,11 +330,20 @@
     },
     {
       "files": [
+        "typings/**/*.ts",
+        "**/*.d.ts"
+      ],
+      "rules": {
+        "no-undef": "off",
+        "no-unused-vars": "off",
+        "no-var": "off"
+      }
+    },
+    {
+      "files": [
         "__mocks__/**/*.js",
-        "**/__tests__/**/*.js",
         "**/test/**/*.js",
         "**/testUtils/**/*.js",
-        "**/?(*.)test.js",
         "tests/js/**/*.js"
       ],
       "excludedFiles": [
@@ -354,6 +380,7 @@
         "jest/prefer-mock-promise-shorthand": "off",
         "jest/prefer-snapshot-hint": "off",
         "jsdoc/require-jsdoc": "off",
+        "jest/unbound-method": "off",
         "testing-library/no-await-sync-events": "error",
         "testing-library/no-debugging-utils": "error",
         "testing-library/no-dom-import": "error"
@@ -467,7 +494,8 @@
             ]
           }
         ],
-        "jest/prefer-snapshot-hint": "off"
+        "jest/prefer-snapshot-hint": "off",
+        "jest/unbound-method": "off"
       },
       "globals": {
         "browser": "readonly",
@@ -561,7 +589,7 @@
     },
     {
       "files": [
-        "packages/migration/src/utils/updateTemplates.js"
+        "packages/migration/scripts/utils/updateTemplates.js"
       ],
       "rules": {
         "eslint-comments/no-unused-disable": "off"

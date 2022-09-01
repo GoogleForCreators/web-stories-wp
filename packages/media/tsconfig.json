@@ -1,0 +1,13 @@
+{
+  "extends": "../../tsconfig.shared.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "declarationDir": "dist-types"
+  },
+  "references": [
+    { "path": "../react" },
+    { "path": "../tracking" },
+    { "path": "../units" }
+  ],
+  "include": ["src/**/*"]
+}
