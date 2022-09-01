@@ -72,6 +72,7 @@ function ForegroundMediaMenu({ parentMenuRef }) {
   } = useLayerActions();
 
   const { hasShapeMask, removeShapeMask } = useShapeMask(selectedElement);
+  // @todo #12203 -- handle elements that have been rotated
   const { offCanvas } = useMemo(
     () => isOffCanvas(selectedElement),
     [selectedElement]
