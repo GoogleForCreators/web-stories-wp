@@ -23,13 +23,13 @@ import { useEffect } from '@googleforcreators/react';
  * Internal dependencies
  */
 import useTransform from './useTransform';
-import type { State, TransformHandler } from './types';
+import type { TransformHandler } from './types';
 
 /**
- * @param {string} id Target element's id.
- * @param {TransformHandler} handler The transform handler. The argument is
+ * @param id Target element's id.
+ * @param handler The transform handler. The argument is
  * the frame object. The `null` value resets the transform.
- * @param {Array} [deps] The effect's dependencies.
+ * @param [deps] The effect's dependencies.
  */
 function useTransformHandler(
   id: string,
@@ -37,7 +37,7 @@ function useTransformHandler(
   deps: unknown[] | undefined = undefined
 ) {
   const registerTransformHandler = useTransform(
-    ({ actions }: State) => actions.registerTransformHandler
+    ({ actions }) => actions.registerTransformHandler
   );
 
   useEffect(
