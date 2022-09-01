@@ -22,12 +22,12 @@ import { __ } from './i18n';
 
 /**
  * Join all options in a list and translate. These will be joined with
- * the conjunction `and`.
+ * the conjunction `or`.
  *
- * @param {Array.<string>} options The options that will be joined with the `and` conjunction.
- * @return {string} Localized list items.
+ * @param options The options that will be joined with the `or` conjunction.
+ * @return Localized list items.
  */
-function translateToInclusiveList(options) {
+function translateToExclusiveList(options: string[]) {
   switch (options.length) {
     case 0:
       return '';
@@ -36,14 +36,14 @@ function translateToInclusiveList(options) {
     case 2:
       return sprintf(
         /* translators: %1$s: first item of list. %2$s: second item of list. */
-        __('%1$s and %2$s', 'web-stories'),
+        __('%1$s or %2$s', 'web-stories'),
         options[0],
         options[1]
       );
     default:
       return sprintf(
         /* translators: %1$s: is a comma separated list. %2$s: last entry in list  */
-        __('%1$s, and %2$s', 'web-stories'),
+        __('%1$s, or %2$s', 'web-stories'),
         options.slice(0, options.length - 1).join(
           /* translators: delimiter used in a list */
           __(', ', 'web-stories') // eslint-disable-line @wordpress/i18n-no-flanking-whitespace -- Expected behaviour.
@@ -53,4 +53,4 @@ function translateToInclusiveList(options) {
   }
 }
 
-export default translateToInclusiveList;
+export default translateToExclusiveList;

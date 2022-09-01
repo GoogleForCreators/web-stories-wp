@@ -24,9 +24,9 @@ interface ResizeHandler {
 }
 
 /**
- * @param {Object<{current: ?Element}>} ref Target node ref.
- * @param {ResizeHandler} handler The resize handler.
- * @param {Array} [deps] The effect's dependencies.
+ * @param ref Target node ref.
+ * @param handler The resize handler.
+ * @param [deps] The effect's dependencies.
  */
 function useResizeEffect(
   ref: MutableRefObject<Element>,

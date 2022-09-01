@@ -22,8 +22,8 @@ import type { ResourceType } from './types';
 /**
  * Infer element type from mime type of its resource
  *
- * @param {string} mimeType Mime type.
- * @return {string} Element type.
+ * @param mimeType Mime type.
+ * @return Element type.
  */
 function getTypeFromMime(mimeType: string): ResourceType {
   return mimeType.split('/')[0] as ResourceType;

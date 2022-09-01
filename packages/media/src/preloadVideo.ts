@@ -22,8 +22,8 @@ import preloadVideoMetadata from './preloadVideoMetadata';
 /**
  * Preload a video.
  *
- * @param {string} src Video source.
- * @return {Promise<HTMLVideoElement>} Video element.
+ * @param src Video source.
+ * @return Video element.
  */
 async function preloadVideo(src: string): Promise<HTMLVideoElement> {
   const video = await preloadVideoMetadata(src);

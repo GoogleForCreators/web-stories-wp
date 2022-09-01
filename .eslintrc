@@ -319,13 +319,29 @@
         ]
       },
       "rules": {
-        "no-duplicate-imports": "off",
         "@typescript-eslint/no-duplicate-imports": "error",
+        "@typescript-eslint/no-shadow": "error",
+        "jsdoc/check-param-names": "off",
+        "jsdoc/require-param": "off",
         "jsdoc/require-param-type": "off",
+        "jsdoc/require-returns": "off",
+        "jsdoc/require-returns-check": "off",
         "jsdoc/require-returns-type": "off",
+        "jsdoc/no-types": "error",
+        "no-duplicate-imports": "off",
         "no-unused-vars": "off",
         "no-shadow": "off",
-        "@typescript-eslint/no-shadow": "error"
+        "no-restricted-imports": [
+          "error",
+          {
+            "paths": [
+              {
+                "name": "prop-types",
+                "message": "Use TypeScript instead."
+              }
+            ]
+          }
+        ]
       }
     },
     {
