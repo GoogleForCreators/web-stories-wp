@@ -27,8 +27,8 @@ interface VideoLength {
 /**
  * Get video length from a video.
  *
- * @param {HTMLVideoElement | Object<{duration: number}>} video Video element.
- * @return {Object<{length: number, lengthFormatted: string}>} Video length information.
+ * @param video Video element.
+ * @return Video length information.
  */
 function getVideoLength(video: HTMLMediaElement): VideoLength {
   // If the element's media doesn't have a known duration—such as for live media streams—the value of duration is +Infinity.

@@ -20,7 +20,7 @@
 import { useState } from 'react';
 
 /**
- * Takes an initialition function and returns a memoized result of
+ * Takes an initialization function and returns a memoized result of
  * that function. This value is not subject to cache purging
  * and will only call your initialization function once.
  *
@@ -32,8 +32,8 @@ import { useState } from 'react';
  * }
  * ```
  *
- * @param {Function} initializer - initialization function
- * @return {any} result of initializer
+ * @param initializer Initialization function
+ * @return result of initializer
  */
 function useInitializedValue(initializer: unknown) {
   return useState(initializer)[0];

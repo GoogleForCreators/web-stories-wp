@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { useMemo } from '@googleforcreators/react';
-import PropTypes from 'prop-types';
 import type { ReactNode } from 'react';
 
 /**
@@ -68,13 +67,5 @@ function UnitsProvider({ pageSize, children }: UnitsProviderProps) {
 
   return <Context.Provider value={state}>{children}</Context.Provider>;
 }
-
-UnitsProvider.propTypes = {
-  pageSize: PropTypes.exact({
-    width: PropTypes.number.isRequired,
-    height: PropTypes.number.isRequired,
-  }).isRequired,
-  children: PropTypes.node.isRequired,
-};
 
 export default UnitsProvider;
