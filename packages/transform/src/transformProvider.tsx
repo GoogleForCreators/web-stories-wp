@@ -27,73 +27,73 @@ import Context from './context';
 import type { TransformHandler, HandlersList, TransformsList } from './types';
 
 function TransformProvider({ children }: { children: ReactNode }) {
-    const transformHandlersRef = useRef<HandlersList>({});
-    const lastTransformsRef = useRef<TransformsList>({});
-    const [isAnythingTransforming, setIsAnythingTransforming] = useState(false);
+  const transformHandlersRef = useRef<HandlersList>({});
+  const lastTransformsRef = useRef<TransformsList>({});
+  const [isAnythingTransforming, setIsAnythingTransforming] = useState(false);
 
-    const registerTransformHandler = useCallback((id, handler) => {
-        const handlerListMap = transformHandlersRef.current;
-        const handlerList = handlerListMap[id] || (handlerListMap[id] = []);
-        handlerList.push(handler);
-        return () => {
-            handlerList.splice(handlerList.indexOf(handler), 1);
-        };
-    }, []);
+  const registerTransformHandler = useCallback((id, handler) => {
+    const handlerListMap = transformHandlersRef.current;
+    const handlerList = handlerListMap[id] || (handlerListMap[id] = []);
+    handlerList.push(handler);
+    return () => {
+      handlerList.splice(handlerList.indexOf(handler), 1);
+    };
+  }, []);
 
-    const pushTransform = useCallback((id, transform) => {
-        const handlerListMap = transformHandlersRef.current;
-        const lastTransforms = lastTransformsRef.current;
-        const handlerList = handlerListMap[id];
+  const pushTransform = useCallback((id, transform) => {
+    const handlerListMap = transformHandlersRef.current;
+    const lastTransforms = lastTransformsRef.current;
+    const handlerList = handlerListMap[id];
 
-        if (handlerList) {
-            handlerList.forEach((handler: TransformHandler) => handler(transform));
-        }
+    if (handlerList) {
+      handlerList.forEach((handler: TransformHandler) => handler(transform));
+    }
 
-        if (transform === null) {
-            lastTransforms[id] = null;
-        } else {
-            lastTransforms[id] = { ...lastTransforms[id], ...transform };
-        }
+    if (transform === null) {
+      lastTransforms[id] = null;
+    } else {
+      lastTransforms[id] = { ...lastTransforms[id], ...transform };
+    }
 
-        if (isDoneTransform(lastTransforms[id])) {
-            const allTransformsDone =
-                Object.values(lastTransforms).every(isDoneTransform);
-            if (allTransformsDone) {
-                lastTransformsRef.current = {};
-                setIsAnythingTransforming(false);
-            }
-            // isAnythingTransforming is relevant for transformations relevant to Moveable.
-            // Suppress communicating static transformations to the world.
-        } else if (!transform.staticTransformation) {
-            setIsAnythingTransforming(true);
-        }
-    }, []);
-
-    const clearTransforms = useCallback(() => {
+    if (isDoneTransform(lastTransforms[id])) {
+      const allTransformsDone =
+        Object.values(lastTransforms).every(isDoneTransform);
+      if (allTransformsDone) {
         lastTransformsRef.current = {};
         setIsAnythingTransforming(false);
-    }, [setIsAnythingTransforming]);
+      }
+      // isAnythingTransforming is relevant for transformations relevant to Moveable.
+      // Suppress communicating static transformations to the world.
+    } else if (!transform.staticTransformation) {
+      setIsAnythingTransforming(true);
+    }
+  }, []);
 
-    const state = {
-        state: {
-            isAnythingTransforming,
-        },
-        actions: {
-            registerTransformHandler,
-            pushTransform,
-            clearTransforms,
-        },
-    };
+  const clearTransforms = useCallback(() => {
+    lastTransformsRef.current = {};
+    setIsAnythingTransforming(false);
+  }, [setIsAnythingTransforming]);
 
-    return <Context.Provider value={state}>{children}</Context.Provider>;
+  const state = {
+    state: {
+      isAnythingTransforming,
+    },
+    actions: {
+      registerTransformHandler,
+      pushTransform,
+      clearTransforms,
+    },
+  };
+
+  return <Context.Provider value={state}>{children}</Context.Provider>;
 }
 
 const isDoneTransform = (transform: null | object) => {
-    if (transform === null) {
-        return true;
-    }
-    const transformKeys = Object.keys(transform);
-    return transformKeys.length === 1 && 'dropTargets' in transform;
+  if (transform === null) {
+    return true;
+  }
+  const transformKeys = Object.keys(transform);
+  return transformKeys.length === 1 && 'dropTargets' in transform;
 };
 
 export default TransformProvider;
