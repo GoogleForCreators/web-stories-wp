@@ -496,7 +496,6 @@ function useProcessMedia({
       const onUploadSuccess = ({ id, resource }) => {
         copyResourceData({ oldResource, resource });
         updateOldTranscodedObject(oldResource.id, resource.id, 'source-image');
-
         updateElementById({
           elementId,
           properties: {
@@ -507,6 +506,7 @@ function useProcessMedia({
                 : cropElement.y,
             width: newWidth,
             height: newHeight,
+            resource: { ...resource, id: oldResource.id },
           },
         });
 
@@ -517,13 +517,6 @@ function useProcessMedia({
         }
       };
 
-      const onUploadProgress = ({ resource }) => {
-        const oldResourceWithId = { ...resource, id: oldResource.id };
-        updateExistingElementsByResourceId(resourceId, {
-          ...oldResourceWithId,
-        });
-      };
-
       const process = async () => {
         let file = false;
         try {
@@ -532,7 +525,6 @@ function useProcessMedia({
           await file.arrayBuffer();
           await uploadMedia([file], {
             onUploadSuccess,
-            onUploadProgress,
             additionalData: {
               original_id: resourceId,
             },
@@ -551,7 +543,6 @@ function useProcessMedia({
       updateElementById,
       copyResourceData,
       postProcessingResource,
-      updateExistingElementsByResourceId,
       updateOldTranscodedObject,
       uploadMedia,
     ]
