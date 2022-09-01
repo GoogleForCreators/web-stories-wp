@@ -23,6 +23,7 @@ import { useEffect } from '@googleforcreators/react';
  * Internal dependencies
  */
 import useTransform from './useTransform';
+import type { TransformHandler } from './types';
 
 /**
  * @callback TransformHandler
@@ -35,7 +36,11 @@ import useTransform from './useTransform';
  * the frame object. The `null` value resets the transform.
  * @param {Array} [deps] The effect's dependencies.
  */
-function useTransformHandler(id, handler, deps = undefined) {
+function useTransformHandler(
+  id: string,
+  handler: TransformHandler,
+  deps: unknown[] | undefined = undefined
+) {
   const registerTransformHandler = useTransform(
     ({ actions }) => actions.registerTransformHandler
   );

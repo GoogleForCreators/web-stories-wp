@@ -17,20 +17,21 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import { useCallback, useRef, useState } from '@googleforcreators/react';
+import type { ReactNode } from 'react';
 
 /**
  * Internal dependencies
  */
 import Context from './context';
+import type { TransformHandler } from './types';
 
-function TransformProvider({ children }) {
-    const transformHandlersRef = useRef({});
-    const lastTransformsRef = useRef({});
+function TransformProvider({ children }: { children: ReactNode }) {
+    const transformHandlersRef = useRef<{ [id: string]: TransformHandler[] }>({});
+    const lastTransformsRef = useRef<{ [id: string]: Record<string, unknown> | null}>({});
     const [isAnythingTransforming, setIsAnythingTransforming] = useState(false);
 
-    const registerTransformHandler = useCallback((id, handler) => {
+    const registerTransformHandler = useCallback((id: string, handler: TransformHandler) => {
         const handlerListMap = transformHandlersRef.current;
         const handlerList = handlerListMap[id] || (handlerListMap[id] = []);
         handlerList.push(handler);
@@ -45,7 +46,7 @@ function TransformProvider({ children }) {
         const handlerList = handlerListMap[id];
 
         if (handlerList) {
-            handlerList.forEach((handler) => handler(transform));
+            handlerList.forEach((handler: TransformHandler) => handler(transform));
         }
 
         if (transform === null) {
@@ -87,11 +88,7 @@ function TransformProvider({ children }) {
     return <Context.Provider value={state}>{children}</Context.Provider>;
 }
 
-TransformProvider.propTypes = {
-    children: PropTypes.node,
-};
-
-const isDoneTransform = (transform) => {
+const isDoneTransform = (transform: null | object) => {
     if (transform === null) {
         return true;
     }
