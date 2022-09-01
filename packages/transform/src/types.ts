@@ -27,8 +27,12 @@ export interface TransformsList {
   [id: string]: Record<string, unknown> | null;
 }
 
-type PushTransform = (id: string, transform: object) => void;
-type ClearTransform = () => void;
+export interface Transform {
+  staticTransformation: boolean;
+}
+
+export type PushTransform = (id: string, transform: Transform) => void;
+export type ClearTransform = () => void;
 
 export interface State {
   actions: {

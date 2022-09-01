@@ -24,23 +24,34 @@ import type { ReactNode } from 'react';
  * Internal dependencies
  */
 import Context from './context';
-import type { TransformHandler, HandlersList, TransformsList } from './types';
+import type {
+  TransformHandler,
+  HandlersList,
+  TransformsList,
+  HandlerRegister,
+  PushTransform,
+  ClearTransform,
+} from './types';
 
 function TransformProvider({ children }: { children: ReactNode }) {
   const transformHandlersRef = useRef<HandlersList>({});
   const lastTransformsRef = useRef<TransformsList>({});
   const [isAnythingTransforming, setIsAnythingTransforming] = useState(false);
 
-  const registerTransformHandler = useCallback((id, handler) => {
-    const handlerListMap = transformHandlersRef.current;
-    const handlerList = handlerListMap[id] || (handlerListMap[id] = []);
-    handlerList.push(handler);
-    return () => {
-      handlerList.splice(handlerList.indexOf(handler), 1);
-    };
-  }, []);
+  // @todo HandlerRegister etc shouldn't be required here if the State / Context would work as expected?
+  const registerTransformHandler = useCallback<HandlerRegister>(
+    (id, handler) => {
+      const handlerListMap = transformHandlersRef.current;
+      const handlerList = handlerListMap[id] || (handlerListMap[id] = []);
+      handlerList.push(handler);
+      return () => {
+        handlerList.splice(handlerList.indexOf(handler), 1);
+      };
+    },
+    []
+  );
 
-  const pushTransform = useCallback((id, transform) => {
+  const pushTransform = useCallback<PushTransform>((id, transform) => {
     const handlerListMap = transformHandlersRef.current;
     const lastTransforms = lastTransformsRef.current;
     const handlerList = handlerListMap[id];
@@ -69,7 +80,7 @@ function TransformProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  const clearTransforms = useCallback(() => {
+  const clearTransforms = useCallback<ClearTransform>(() => {
     lastTransformsRef.current = {};
     setIsAnythingTransforming(false);
   }, [setIsAnythingTransforming]);
