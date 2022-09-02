@@ -24,13 +24,9 @@ function getOpaquePattern(pattern) {
       },
     };
   }
-  return objectWithout(pattern, ['alpha']);
+
+  const { alpha: _, ...opaquePattern } = pattern;
+  return opaquePattern;
 }
 
 export default getOpaquePattern;
-
-function objectWithout(obj, propertiesToRemove) {
-  return Object.keys(obj)
-    .filter((key) => !propertiesToRemove.includes(key))
-    .reduce((newObj, key) => ({ ...newObj, [key]: obj[key] }), {});
-}
