@@ -17,10 +17,10 @@
 /**
  * Create a new File from a Blob instance.
  *
- * @param {Blob} blob Blob object.
- * @param {string} filename File name.
- * @param {string} type Mime type.
- * @return {File} File object.
+ * @param blob Blob object.
+ * @param filename File name.
+ * @param type Mime type.
+ * @return File object.
  */
 function blobToFile(blob: Blob, filename: string, type: string): File {
   return new File([blob], filename, { type });

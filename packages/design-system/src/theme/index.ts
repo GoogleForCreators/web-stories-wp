@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import type { DefaultTheme } from 'styled-components';
+
+/**
  * Internal dependencies
  */
 import { dark as darkMode, light as lightMode } from './colors';
@@ -25,7 +30,7 @@ import { typography } from './typography';
 import { borders } from './borders';
 import { breakpoint, raw } from './breakpoint';
 
-export const theme = {
+export const theme: DefaultTheme = {
   borders,
   typography,
   colors: { ...darkMode },

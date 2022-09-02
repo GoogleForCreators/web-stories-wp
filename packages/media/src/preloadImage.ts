@@ -24,12 +24,12 @@ interface ImageArguments {
 /**
  * Preload image using a promise.
  *
- * @param {Object} attr Image attributes
- * @param {string} attr.src Image source.
- * @param {string} attr.srcset Image source set.
- * @param {number|string} attr.width Image width.
- * @param {number|string} attr.height Image height.
- * @return {Promise} Image object.
+ * @param attr Image attributes
+ * @param attr.src Image source.
+ * @param attr.srcset Image source set.
+ * @param attr.width Image width.
+ * @param attr.height Image height.
+ * @return Image object.
  */
 function preloadImage({
   src,

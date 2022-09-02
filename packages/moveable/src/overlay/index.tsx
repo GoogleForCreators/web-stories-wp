@@ -19,35 +19,55 @@
  */
 import styled, { css } from 'styled-components';
 import { forwardRef, useContext, createPortal } from '@googleforcreators/react';
-import PropTypes from 'prop-types';
+import type { ReactNode, HTMLAttributes, ForwardedRef } from 'react';
 
 /**
  * Internal dependencies
  */
 import Context from './context';
 
-const pointerEventsCss = css`
+type PointerEventsValue = 'none' | 'auto' | 'initial';
+
+interface WrapperProps {
+  $zIndex: number;
+  ref: ForwardedRef<HTMLDivElement>;
+  pointerEvents?: PointerEventsValue;
+}
+
+const pointerEventsCss = css<WrapperProps>`
   ${({ pointerEvents }) => {
-    if (pointerEvents && typeof pointerEvents === 'string') {
+    if (pointerEvents) {
       return `pointer-events: ${pointerEvents};`;
     }
     return '';
   }}
 `;
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<WrapperProps>`
   ${pointerEventsCss}
   position: absolute;
   top: 0;
   left: 0;
   width: 0;
   height: 0;
-  z-index: ${({ zIndex }) => `${zIndex}`};
+  z-index: ${({ $zIndex }) => `${$zIndex}`};
 `;
 
+interface RenderProps {
+  container: HTMLElement;
+  overlay: Element;
+}
+
+interface InOverlayProps extends HTMLAttributes<HTMLDivElement> {
+  pointerEvents: PointerEventsValue;
+  children?: ReactNode;
+  zIndex: number;
+  render: (props: RenderProps) => JSX.Element;
+}
+
 function InOverlayWithRef(
-  { zIndex, pointerEvents, render, children = null, ...props },
-  ref
+  { zIndex, pointerEvents, render, children = null, ...props }: InOverlayProps,
+  ref: ForwardedRef<HTMLDivElement>
 ) {
   const { container, overlay } = useContext(Context);
   if (!container || !overlay) {
@@ -58,7 +78,7 @@ function InOverlayWithRef(
     <Wrapper
       {...props}
       ref={ref}
-      zIndex={zIndex || 0}
+      $zIndex={zIndex || 0}
       pointerEvents={pointerEvents}
       onMouseDown={(evt) => evt.stopPropagation()}
     >
@@ -68,13 +88,6 @@ function InOverlayWithRef(
   return createPortal(slot, overlay);
 }
 
-const InOverlay = forwardRef(InOverlayWithRef);
-
-InOverlayWithRef.propTypes = {
-  zIndex: PropTypes.number,
-  pointerEvents: PropTypes.string,
-  render: PropTypes.func,
-  children: PropTypes.node,
-};
+const InOverlay = forwardRef<HTMLDivElement, InOverlayProps>(InOverlayWithRef);
 
 export default InOverlay;
