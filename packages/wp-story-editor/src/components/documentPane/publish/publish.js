@@ -124,6 +124,10 @@ const RevisionsWrapper = styled.div`
   margin-top: 4px;
 `;
 
+const RevisionsLabel = styled.div`
+  margin-left: 24px;
+`;
+
 const LabelIconWrapper = styled.div`
   position: absolute;
   display: inline-block;
@@ -144,7 +148,7 @@ function PublishPanel({ nameOverride }) {
     dashboardSettingsLink,
     capabilities: { hasUploadMediaAction, canManageSettings },
     MediaUpload,
-    autoSaveLink,
+    revision_links,
   } = useConfig();
 
   const improvedAutosaves = useFeature('improvedAutosaves');
@@ -325,6 +329,9 @@ function PublishPanel({ nameOverride }) {
     Boolean
   );
 
+  const revision_count = revision_links?.['version-history']?.count | 0;
+  const revision_link = revision_links?.['version-history']?.href;
+
   return (
     <Panel
       name={nameOverride || 'publishing'}
@@ -430,25 +437,30 @@ function PublishPanel({ nameOverride }) {
             </LabelWrapper>
           </DropdownWrapper>
         </HighlightRow>
-        {improvedAutosaves && autoSaveLink && (
+        {improvedAutosaves && (
           <RevisionsWrapper>
             <LabelWrapper>
               <Label>
-                {__('Revisions', 'web-stories')}{' '}
                 <LabelIconWrapper>
                   <Icons.History width={24} height={24} aria-hidden />
                 </LabelIconWrapper>
+                <RevisionsLabel>
+                  {revision_count} {__('Revisions', 'web-stories')}
+                </RevisionsLabel>
               </Label>
-              <Row>
-                <Link
-                  rel="noopener noreferrer"
-                  target="_blank"
-                  href={autoSaveLink}
-                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-                >
-                  {__('Manage', 'web-stories')}
-                </Link>
-              </Row>
+
+              {revision_link && (
+                <Row>
+                  <Link
+                    rel="noopener noreferrer"
+                    target="_blank"
+                    href={revision_link}
+                    size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
+                  >
+                    {__('Manage', 'web-stories')}
+                  </Link>
+                </Row>
+              )}
             </LabelWrapper>
           </RevisionsWrapper>
         )}

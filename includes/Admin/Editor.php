@@ -322,7 +322,7 @@ class Editor extends Service_Base implements HasRequirements {
 		$post                 = get_post();
 		$story_id             = $post->ID ?? null;
 		$general_settings_url = admin_url( 'options-general.php' );
-
+ 
 		if ( $story_id ) {
 			$this->setup_lock( $story_id );
 		}
@@ -383,11 +383,70 @@ class Editor extends Service_Base implements HasRequirements {
 				}
 			} 
 		}
+
+		// Replace this with wp_get_latest_revision_id_and_total_count 
+		// Once 6.1 becomes the lowest version supported
+		function revision_count( $post ) {
+
+			if ( ! $post ) {
+				return new WP_Error( 'invalid_post', __( 'Invalid post.' ) );
+			}
+
+			if ( ! wp_revisions_enabled( $post ) ) {
+				return new WP_Error( 'revisions_not_enabled', __( 'Revisions not enabled.' ) );
+			}
+
+			$args = [
+				'post_parent'         => $post->ID,
+				'fields'              => 'ids',
+				'post_type'           => 'revision',
+				'post_status'         => 'inherit',
+				'order'               => 'DESC',
+				'orderby'             => 'date ID',
+				'posts_per_page'      => 1,
+				'ignore_sticky_posts' => true,
+			];
+
+			$revision_query = new \WP_Query();
+			$revisions      = $revision_query->query( $args );
+
+			if ( ! $revisions ) {
+				return [
+					'latest_id' => 0,
+					'count'     => 0,
+				];
+			}
+
+			return [
+				'latest_id' => $revisions[0],
+				'count'     => $revision_query->found_posts,
+			];
+		}
+
+		$revision_links = [];
+
+		if ( \in_array( $post->post_type, [ 'post', 'page' ], true ) || post_type_supports( $post->post_type, 'revisions' ) ) {
+			$revisions       = revision_count( $post );
+			$revisions_count = ! is_wp_error( $revisions ) ? $revisions['count'] : 0;
+
+			$revision_links['version-history'] = [
+				'href'  => admin_url() . 'revision.php?revision=' . $post->ID,
+				'count' => $revisions_count,
+			];
+
+			if ( $revisions_count > 0 ) {
+				$revision_links['predecessor-version'] = [
+					'href' => admin_url() . 'revision.php?revision=' . $revisions['latest_id'],
+					'id'   => $revisions['latest_id'],
+				];
+			}
+		}
 		
 		$settings = [
 			'autoSaveInterval'        => \defined( 'AUTOSAVE_INTERVAL' ) ? AUTOSAVE_INTERVAL : null,
 			'localAutoSaveInterval'   => 15,
 			'autoSaveLink'            => $auto_save_link,
+			'revision_links'          => $revision_links,
 			'isRTL'                   => is_rtl(),
 			'locale'                  => $this->locale->get_locale_settings(),
 			'allowedMimeTypes'        => $this->types->get_allowed_mime_types(),
