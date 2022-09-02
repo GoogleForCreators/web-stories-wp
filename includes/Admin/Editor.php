@@ -320,14 +320,15 @@ class Editor extends Service_Base implements HasRequirements {
 	 * @since 1.25.0
 	 *
 	 * @param WP_Post $post    Current post object.
+	 * @return array<string,mixed> Revison links and count.
 	 */
-	public function get_latest_revision_id_and_total_count( $post ) {
-		if ( ! $post ) {
-			return new WP_Error( 'invalid_post', __( 'Invalid post.' ) );
+	public function get_latest_revision_id_and_total_count( $post ): array {
+		if ( ! $post->ID ) {
+			return [];
 		}
 
 		if ( ! wp_revisions_enabled( $post ) ) {
-			return new WP_Error( 'revisions_not_enabled', __( 'Revisions not enabled.' ) );
+			return [];
 		}
 
 		$args = [
@@ -434,10 +435,10 @@ class Editor extends Service_Base implements HasRequirements {
 
 		$revision_links = [];
 
-		if ( $improved_autosaves && $post->post_type && $post->ID ) {
+		if ( $improved_autosaves && isset( $post->post_type ) && $post->ID ) {
 			if ( \in_array( $post->post_type, [ 'post', 'page' ], true ) || post_type_supports( $post->post_type, 'revisions' ) ) {
 				$revisions       = $this->get_latest_revision_id_and_total_count( $post );
-				$revisions_count = ! is_wp_error( $revisions ) ? $revisions['count'] : 0;
+				$revisions_count = ! \count( $revisions ) >= 1 ? $revisions['count'] : 0;
 
 				$revision_links['version-history'] = [
 					'href'  => admin_url() . 'revision.php?revision=' . $post->ID,
