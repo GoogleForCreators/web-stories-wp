@@ -23,7 +23,7 @@
  * @property {string|number} [width] Resource width.
  * @property {string|number} [height] Resource height.
  * @property {string} mimeType Mime type.
- * @property {string} sourceUrl URL.
+ * @property {string} [sourceUrl] URL.
  */
 
 /**
@@ -44,7 +44,7 @@ function normalizeResourceSizes(sizes) {
   for (const size of Object.keys(sizes)) {
     const data = sizes[size];
 
-    if (!data.width || !data.height) {
+    if (!data.width || !data.height || !data.sourceUrl) {
       continue;
     }
 

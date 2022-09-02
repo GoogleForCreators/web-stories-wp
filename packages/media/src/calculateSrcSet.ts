@@ -62,8 +62,6 @@ function calculateSrcSet(resource: Resource): string | null {
             : [...unique, s],
         []
       )
-      // TODO: Move this filter to wp-* integration packages.
-      .filter((s) => s && s.sourceUrl && s.width)
       .map(
         (s) =>
           `${maybeEncodeURI(s.sourceUrl).replaceAll(',', '%2C')} ${s.width}w`

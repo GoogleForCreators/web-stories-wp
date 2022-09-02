@@ -78,21 +78,33 @@ describe('normalizeResourceSizes', () => {
         mimeType: 'image/jpeg',
         width: 400,
         height: 200,
+        sourceUrl: 'medium-url',
+      },
+      img4: {
+        mimeType: 'image/jpeg',
+        width: 800,
+        height: 400,
         sourceUrl: 'large-url',
       },
-    };
-
-    const expected = {
-      img2: {
+      img5: {
         mimeType: 'image/jpeg',
         width: 300,
         height: 150,
-        sourceUrl: '',
       },
+      img6: { mimeType: 'image/jpeg', width: 100, sourceUrl: 'small-url' },
+    };
+
+    const expected = {
       img3: {
         mimeType: 'image/jpeg',
         width: 400,
         height: 200,
+        sourceUrl: 'medium-url',
+      },
+      img4: {
+        mimeType: 'image/jpeg',
+        width: 800,
+        height: 400,
         sourceUrl: 'large-url',
       },
     };
