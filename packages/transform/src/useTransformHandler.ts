@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { useEffect } from '@googleforcreators/react';
+import type { DependencyList } from 'react';
 
 /**
  * Internal dependencies
@@ -34,7 +35,7 @@ import type { TransformHandler } from './types';
 function useTransformHandler(
   id: string,
   handler: TransformHandler,
-  deps: unknown[] | undefined = undefined
+  deps: DependencyList | undefined = undefined
 ) {
   const registerTransformHandler = useTransform(
     ({ actions }) => actions.registerTransformHandler
