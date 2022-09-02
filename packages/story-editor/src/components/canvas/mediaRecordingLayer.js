@@ -94,8 +94,11 @@ function MediaRecordingLayer() {
   const isReady = 'ready' === status;
 
   useEffect(() => {
-    resetStream();
-    getMediaStream();
+    async function run() {
+      resetStream();
+      await getMediaStream();
+    }
+    run();
     // eslint-disable-next-line react-hooks/exhaustive-deps -- Only want to act on actual input changes.
   }, [audioInput, videoInput, hasVideo, videoEffect]);
 

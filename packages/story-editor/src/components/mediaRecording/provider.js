@@ -170,6 +170,11 @@ function MediaRecordingProvider({ children }) {
           resumeRecording: canvasRecorder.resumeRecording,
           stopRecording: canvasRecorder.stopRecording,
           mediaBlob: canvasRecorder.mediaBlob,
+          clearMediaBlob: canvasRecorder.clearMediaBlob,
+          getMediaStream: async () => {
+            canvasRecorder.clearMediaStream();
+            await mediaRecorder.getMediaStream();
+          },
         }
       : {
           ...mediaRecorder,
@@ -327,10 +332,15 @@ function MediaRecordingProvider({ children }) {
     if (liveStream) {
       liveStream.getTracks().forEach((track) => track.stop());
     }
+    if (canvasRecorder.liveStream) {
+      canvasRecorder.liveStream.getTracks().forEach((track) => track.stop());
+    }
 
     clearMediaBlob();
     clearMediaStream();
-  }, [clearMediaBlob, clearMediaStream, liveStream]);
+
+    canvasRecorder.clearMediaStream();
+  }, [clearMediaBlob, clearMediaStream, liveStream, canvasRecorder]);
 
   const resetState = useCallback(() => {
     setFile(null);
@@ -346,8 +356,15 @@ function MediaRecordingProvider({ children }) {
 
   const toggleRecordingMode = useCallback(() => {
     setIsInRecordingMode((state) => !state);
-    resetState();
-  }, [resetState]);
+    if (canvasRecorder.status === 'recording') {
+      stopRecording();
+    } else {
+      resetState();
+      if (isInRecordingMode === true) {
+        canvasRecorder.clearMediaStream();
+      }
+    }
+  }, [resetState, canvasRecorder, isInRecordingMode, stopRecording]);
 
   const toggleSettings = useCallback(
     () => setIsSettingsOpen((state) => !state),

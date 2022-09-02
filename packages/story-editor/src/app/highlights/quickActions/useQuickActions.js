@@ -333,7 +333,8 @@ const useQuickActions = () => {
     isReady:
       state.inputStatus === 'ready' &&
       !state.file?.type?.startsWith('image') &&
-      !state.isCountingDown,
+      !state.isCountingDown &&
+      (state.status === 'ready' || state.status === 'idle'),
     isProcessing: state.isProcessing,
     isAdjustingTrim: state.isAdjustingTrim,
     isProcessingTrim: state.isProcessingTrim,
