@@ -64,4 +64,39 @@ describe('normalizeResourceSizes', () => {
 
     expect(normalizeResourceSizes(sizes)).toStrictEqual(expected);
   });
+
+  it('should skip sizes that are invalid', () => {
+    const sizes = {
+      img1: { mimeType: 'image/jpeg', height: 100, sourceUrl: 'small-url' },
+      img2: {
+        mimeType: 'image/jpeg',
+        width: 300,
+        height: 150,
+        sourceUrl: '',
+      },
+      img3: {
+        mimeType: 'image/jpeg',
+        width: 400,
+        height: 200,
+        sourceUrl: 'large-url',
+      },
+    };
+
+    const expected = {
+      img2: {
+        mimeType: 'image/jpeg',
+        width: 300,
+        height: 150,
+        sourceUrl: '',
+      },
+      img3: {
+        mimeType: 'image/jpeg',
+        width: 400,
+        height: 200,
+        sourceUrl: 'large-url',
+      },
+    };
+
+    expect(normalizeResourceSizes(sizes)).toStrictEqual(expected);
+  });
 });

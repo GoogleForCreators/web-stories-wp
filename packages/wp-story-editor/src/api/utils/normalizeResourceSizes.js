@@ -20,14 +20,16 @@
 
 /**
  * @typedef {Object} PartialResourceSize
- * @property {string|number} width Resource width.
- * @property {string|number} height Resource height.
+ * @property {string|number} [width] Resource width.
+ * @property {string|number} [height] Resource height.
  * @property {string} mimeType Mime type.
  * @property {string} sourceUrl URL.
  */
 
 /**
  * Normalize resource sizes to ensure numerical values for dimensions.
+ *
+ * Skips invalid sizes lacking either width or height.
  *
  * @param {Object.<string, PartialResourceSize>} sizes Sizes.
  * @return {Object.<string, ResourceSize>} Normalized sizes.
@@ -41,10 +43,22 @@ function normalizeResourceSizes(sizes) {
 
   for (const size of Object.keys(sizes)) {
     const data = sizes[size];
+
+    if (!data.width || !data.height) {
+      continue;
+    }
+
+    const width = Number(data.width);
+    const height = Number(data.height);
+
+    if (Number.isNaN(width) || Number.isNaN(height)) {
+      continue;
+    }
+
     normalizedSizes[size] = {
       ...data,
-      width: Number(data.width) || 0,
-      height: Number(data.height) || 0,
+      width,
+      height,
     };
   }
 
