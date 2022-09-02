@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,25 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
- * Internal dependencies
+ * External dependencies
  */
-import preloadImage from './preloadImage';
-import type { Dimensions } from './types';
-
-/**
- * Get image dimensions from an image.
- *
- * @param src Image source.
- * @return Image dimensions object.
- */
-async function getImageDimensions(src: string): Promise<Dimensions> {
-  const img = await preloadImage({ src });
-  return {
-    width: img.naturalWidth,
-    height: img.naturalHeight,
-  };
-}
-
-export default getImageDimensions;
+export { default as Moveable } from './moveable';
+export { GlobalStyle as CropMoveableGlobalStyle } from './cropStyle';
+export { GlobalStyle as DefaultMoveableGlobalStyle } from './moveStyle';
+export { default as InOverlay } from './overlay';
+export { default as withOverlay } from './overlay/withOverlay';
+export { default as areEventsDragging } from './areEventsDragging';

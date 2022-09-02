@@ -23,10 +23,10 @@ import { config } from './shared';
 /**
  * Track event timing for performance measuring.
  *
- * @param {string} category Category for categorizing the user timing variables into groups.
- * @param {number} time Duration in milliseconds.
- * @param {string} label Label that allows extra flexibility in reports.
- * @param {string} eventName Event name, e.g. click or mousedown.
+ * @param category Category for categorizing the user timing variables into groups.
+ * @param time Duration in milliseconds.
+ * @param label Label that allows extra flexibility in reports.
+ * @param eventName Event name, e.g. click or mousedown.
  */
 function trackTiming(
   category: string,
@@ -36,14 +36,14 @@ function trackTiming(
 ): void {
   // Universal Analytics has a special `timing_complete` event which
   // does not exist in GA4.
-  trackEvent('timing_complete', {
+  void trackEvent('timing_complete', {
     name: eventName,
     value: time,
     event_category: category,
     event_label: label,
     send_to: config.trackingId,
   });
-  trackEvent(eventName, {
+  void trackEvent(eventName, {
     value: time,
     event_category: category,
     event_label: label,

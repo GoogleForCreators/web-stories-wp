@@ -22,8 +22,8 @@ import formatDuration from './formatDuration';
 /**
  * Get video length to display from seconds.
  *
- * @param {number} seconds Length in seconds.
- * @return {string} Video length in H:MM:SS format.
+ * @param seconds Length in seconds.
+ * @return Video length in H:MM:SS format.
  */
 function getVideoLengthDisplay(seconds: number): string {
   const hours = Math.floor(seconds / 3600);

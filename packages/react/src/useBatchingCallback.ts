@@ -27,15 +27,16 @@ import type { DependencyList } from 'react';
  * or for microtasks.
  * See https://blog.logrocket.com/simplifying-state-management-in-react-apps-with-batched-updates/.
  *
- * @param {Function} callback The callback to be batched and memoized.
- * @param {Array} [deps] The optional callback dependencies.
- * @return {Function} The memoized batching function.
+ * @param callback The callback to be batched and memoized.
+ * @param [deps] The optional callback dependencies.
+ * @return The memoized batching function.
  */
 function useBatchingCallback<T extends (...args: unknown[]) => unknown>(
   callback: T,
   deps: DependencyList
 ) {
   return useCallback(
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument -- Just passing through
     (...args) => batchedUpdates(() => callback(...args)),
     // eslint-disable-next-line react-hooks/exhaustive-deps -- Pass through provided deps.
     deps

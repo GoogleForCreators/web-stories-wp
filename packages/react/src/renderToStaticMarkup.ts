@@ -32,16 +32,17 @@ import type { ReactElement } from 'react';
  * to use React as a simple static page generator, as stripping away the extra
  * attributes can save lots of bytes.
  *
- * @param {ReactElement} element React element.
- * @return {string} Markup.
+ * @param element React element.
+ * @return Markup.
  */
 function renderToStaticMarkup(element: ReactElement) {
   const originalConsoleError = console.error;
   console.error = function (error, ...args) {
     if (
-      error &&
+      typeof error === 'string' &&
       !error.startsWith('Warning: useLayoutEffect does nothing on the server')
     ) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument -- OK to pass through here.
       originalConsoleError(error, ...args);
     }
   };

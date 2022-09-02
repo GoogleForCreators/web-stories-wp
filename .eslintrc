@@ -309,17 +309,46 @@
       ],
       "extends": [
         "plugin:@typescript-eslint/recommended",
-        "plugin:@typescript-eslint/eslint-recommended"
+        "plugin:@typescript-eslint/recommended-requiring-type-checking"
       ],
       "parser": "@typescript-eslint/parser",
+      "parserOptions": {
+        "project": [
+          "./tsconfig.json",
+          "./packages/*/tsconfig.json"
+        ]
+      },
       "rules": {
-        "no-duplicate-imports": "off",
         "@typescript-eslint/no-duplicate-imports": "error",
+        "@typescript-eslint/no-shadow": "error",
+        "@typescript-eslint/unbound-method": [
+          "error",
+          {
+            "ignoreStatic": true
+          }
+        ],
+        "react/prop-types": "off",
+        "jsdoc/check-param-names": "off",
+        "jsdoc/require-param": "off",
         "jsdoc/require-param-type": "off",
+        "jsdoc/require-returns": "off",
+        "jsdoc/require-returns-check": "off",
         "jsdoc/require-returns-type": "off",
+        "jsdoc/no-types": "error",
+        "no-duplicate-imports": "off",
         "no-unused-vars": "off",
         "no-shadow": "off",
-        "@typescript-eslint/no-shadow": "error"
+        "no-restricted-imports": [
+          "error",
+          {
+            "paths": [
+              {
+                "name": "prop-types",
+                "message": "Use TypeScript instead."
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -330,16 +359,15 @@
       "rules": {
         "no-undef": "off",
         "no-unused-vars": "off",
-        "no-var": "off"
+        "no-var": "off",
+        "@wordpress/dependency-group": "off"
       }
     },
     {
       "files": [
         "__mocks__/**/*.js",
-        "**/__tests__/**/*.js",
         "**/test/**/*.js",
         "**/testUtils/**/*.js",
-        "**/?(*.)test.js",
         "tests/js/**/*.js"
       ],
       "excludedFiles": [
@@ -376,6 +404,7 @@
         "jest/prefer-mock-promise-shorthand": "off",
         "jest/prefer-snapshot-hint": "off",
         "jsdoc/require-jsdoc": "off",
+        "jest/unbound-method": "off",
         "testing-library/no-await-sync-events": "error",
         "testing-library/no-debugging-utils": "error",
         "testing-library/no-dom-import": "error"
@@ -489,7 +518,8 @@
             ]
           }
         ],
-        "jest/prefer-snapshot-hint": "off"
+        "jest/prefer-snapshot-hint": "off",
+        "jest/unbound-method": "off"
       },
       "globals": {
         "browser": "readonly",

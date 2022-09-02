@@ -18,13 +18,12 @@
  * External dependencies
  */
 import { useMemo } from '@googleforcreators/react';
-import PropTypes from 'prop-types';
 import type { ReactNode } from 'react';
 
 /**
  * Internal dependencies
  */
-import Context from './context';
+import Context, { ContextState } from './context';
 import {
   dataToEditorX,
   dataToEditorY,
@@ -46,7 +45,7 @@ interface UnitsProviderProps {
 
 function UnitsProvider({ pageSize, children }: UnitsProviderProps) {
   const { width: pageWidth, height: pageHeight } = pageSize;
-  const state = useMemo(
+  const state: ContextState = useMemo(
     () => ({
       state: {
         pageSize: { width: pageWidth, height: pageHeight },
@@ -68,13 +67,5 @@ function UnitsProvider({ pageSize, children }: UnitsProviderProps) {
 
   return <Context.Provider value={state}>{children}</Context.Provider>;
 }
-
-UnitsProvider.propTypes = {
-  pageSize: PropTypes.exact({
-    width: PropTypes.number.isRequired,
-    height: PropTypes.number.isRequired,
-  }).isRequired,
-  children: PropTypes.node.isRequired,
-};
 
 export default UnitsProvider;

@@ -17,8 +17,8 @@
 /**
  * Preload video metadata.
  *
- * @param {string} src Video source.
- * @return {Promise<HTMLVideoElement>} Video element.
+ * @param src Video source.
+ * @return Video element.
  */
 function preloadVideoMetadata(src: string): Promise<HTMLVideoElement> {
   const video = document.createElement('video');

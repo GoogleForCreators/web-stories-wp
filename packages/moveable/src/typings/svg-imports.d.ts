@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,9 +14,7 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import { createContext } from '@googleforcreators/react';
-
-export default createContext({ container: null, layer: null });
+declare module '*.svg' {
+  const content: string;
+  export default content;
+}

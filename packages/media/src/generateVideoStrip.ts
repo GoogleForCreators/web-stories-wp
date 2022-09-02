@@ -22,7 +22,7 @@ import preloadVideo from './preloadVideo';
 import seekVideo from './seekVideo';
 import type { VideoResource } from './types';
 
-const CACHE = new Map();
+const CACHE: Map<string, string> = new Map();
 
 interface FlipSettings {
   vertical: boolean;
@@ -42,11 +42,11 @@ interface Element {
 /**
  * Returns an image data URL with a video strip of the frames of the video.
  *
- * @param {Object} element Canvas element with information about size, scale, and focal point.
- * @param {Object} resource Resource object with url and video length.
- * @param {number} stripWidth Target strip width.
- * @param {number} stripHeight Video src URL.
- * @return {Promise<string|null>} The video strip as a data URL or null if there was an error.
+ * @param element Canvas element with information about size, scale, and focal point.
+ * @param resource Resource object with url and video length.
+ * @param stripWidth Target strip width.
+ * @param stripHeight Video src URL.
+ * @return The video strip as a data URL or null if there was an error.
  */
 async function generateVideoStrip(
   element: Element,
