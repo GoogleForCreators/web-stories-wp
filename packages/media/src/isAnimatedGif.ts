@@ -25,8 +25,8 @@ const GRAPHIC_CONTROL_LABEL = 0xf9;
  *
  * See http://www.matthewflickinger.com/lab/whatsinagif/bits_and_bytes.asp for how GIFs are structured.
  *
- * @param {ArrayBuffer} buffer The GIF ArrayBuffer instance.
- * @return {boolean} Whether this is an animated GIF or not.
+ * @param buffer The GIF ArrayBuffer instance.
+ * @return Whether this is an animated GIF or not.
  */
 function isAnimatedGif(buffer: ArrayBuffer): boolean {
   const arr = new Uint8Array(buffer);

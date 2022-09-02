@@ -13,12 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
-export { default as Moveable } from './moveable.js';
-export { GlobalStyle as CropMoveableGlobalStyle } from './cropStyle';
-export { GlobalStyle as DefaultMoveableGlobalStyle } from './moveStyle';
-export { default as InOverlay } from './overlay';
-export { default as withOverlay } from './overlay/withOverlay';
-export { default as areEventsDragging } from './areEventsDragging';
+import { createContext } from '@googleforcreators/react';
+
+interface State {
+  container?: HTMLElement | null;
+  layer?: unknown;
+  overlay?: Element | null;
+}
+
+export default createContext<State>({ container: null, layer: null });

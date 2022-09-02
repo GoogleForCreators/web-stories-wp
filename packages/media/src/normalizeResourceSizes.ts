@@ -29,8 +29,8 @@ interface ResourceSizeInput {
 /**
  * Normalize resource sizes to ensure numerical values for dimensions.
  *
- * @param {Object} sizes Sizes.
- * @return {Object} Normalized sizes.
+ * @param sizes Sizes.
+ * @return Normalized sizes.
  */
 function normalizeResourceSizes(sizes?: { [key: string]: ResourceSizeInput }): {
   [key: string]: ResourceSize;

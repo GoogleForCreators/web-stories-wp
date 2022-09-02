@@ -36,13 +36,13 @@ interface EqualityFn {
  * By default, a shallow equals of the selected context value is used to
  * determine if a re-render is needed.
  *
- * @param {Context} context Context.
- * @param {function(Object):Object} selector Returns a fragment of the context
+ * @param context Context.
+ * @param selector Returns a fragment of the context
  * that the consumer is interested in.
- * @param {function(Object, Object):boolean} equalityFn Used to compare the
+ * @param equalityFn Used to compare the
  * selected context value. If the context fragment has not changed, a re-render
  * will not be triggered. This is {shallowEqual} by default.
- * @return {Object} The selected context value fragment.
+ * @return The selected context value fragment.
  */
 function useContextSelector<T, S>(
   context: Context<T>,

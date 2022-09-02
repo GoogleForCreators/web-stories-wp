@@ -14,29 +14,37 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import { useState } from 'react';
+import 'styled-components';
 
-/**
- * Takes an initialization function and returns a memoized result of
- * that function. This value is not subject to cache purging
- * and will only call your initialization function once.
- *
- * ie
- * ```js
- * function SomeComponent() {
- *   const id = useInitializedValue(() => generateId());
- *   // ...
- * }
- * ```
- *
- * @param initializer Initialization function
- * @return result of initializer
- */
-function useInitializedValue(initializer: unknown) {
-  return useState(initializer)[0];
+declare module 'styled-components' {
+  export interface DefaultTheme {
+    borders: {
+      radius: {
+        [key: string]: string;
+      };
+    };
+    typography: {
+      family: {
+        [key: string]: string;
+      };
+      weight: {
+        [key: string]: number;
+      };
+      presets: {
+        [key: string]: {
+          [key: string]: {
+            [key: string]: number;
+          };
+        };
+      };
+    };
+    colors: {
+      [key: string]: {
+        [key: string]: string;
+      };
+    };
+    breakpoint: {
+      [key: string]: string;
+    };
+  }
 }
-
-export default useInitializedValue;

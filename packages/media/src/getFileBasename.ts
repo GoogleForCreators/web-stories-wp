@@ -17,9 +17,9 @@
 /**
  * Returns file basename without extension.
  *
- * @param {File} file File object.
- * @param {string} file.name File name.
- * @return {string} File name without extension.
+ * @param file File object.
+ * @param file.name File name.
+ * @return File name without extension.
  */
 function getFileBasename({ name = '' }): string {
   return name.includes('.') ? name.split('.').slice(0, -1).join('.') : name;

@@ -22,10 +22,9 @@ import {
   createElement,
   Fragment,
 } from '@googleforcreators/react';
-import PropTypes from 'prop-types';
+import type { ReactNode, ReactElement } from 'react';
 
-/** @typedef {import('react').ReactNode} ReactNode */
-/** @typedef {import('react').ReactElement} ReactElement */
+type Mapping = Record<string, ReactElement>;
 
 // See https://html.spec.whatwg.org/multipage/syntax.html#void-elements
 const VOID_ELEMENTS = [
@@ -48,22 +47,24 @@ const VOID_ELEMENTS = [
 /**
  * Transforms a single DOM node.
  *
- * @param {Node} node DOM node.
- * @param {?Object.<string, ReactElement>} mapping Map of tag names to React components.
- * @return {ReactNode} Transformed node.
+ * @param node DOM node.
+ * @param mapping Map of tag names to React components.
+ * @return Transformed node.
  */
-export function transformNode(node, mapping = {}) {
+export function transformNode(node: Element, mapping: Mapping = {}) {
   const { childNodes, localName, nodeType, textContent } = node;
   if (Node.TEXT_NODE === nodeType) {
     return textContent;
   }
 
   const children = node.hasChildNodes()
-    ? [...childNodes].map((child) => transform(child, mapping))
+    ? Array.from(childNodes).map((child) =>
+        transform(child as Element, mapping)
+      )
     : null;
 
   if (localName in mapping) {
-    return cloneElement(mapping[localName], null, children);
+    return cloneElement(mapping[localName], {}, children);
   }
 
   return createElement(localName, null, children);
@@ -73,19 +74,24 @@ export function transformNode(node, mapping = {}) {
  * Recursively traverses through a DOM node and its children and transforms them
  * to React elements.
  *
- * @param {Node} node DOM node.
- * @param {?Object.<string, ReactElement>} mapping Map of tag names to React components.
- * @return {ReactNode[]} List of transformed nodes.
+ * @param node DOM node.
+ * @param mapping Map of tag names to React components.
+ * @return List of transformed nodes.
  */
-function transform(node, mapping = {}) {
+function transform(node: Element, mapping: Mapping = {}): ReactNode[] {
   const result = [];
 
   do {
     result.push(transformNode(node, mapping));
-    node = node.nextSibling;
+    node = node.nextSibling as Element;
   } while (node !== null);
 
   return result;
+}
+
+interface TranslateWithMarkupProps {
+  mapping: Mapping;
+  children: string;
 }
 
 /**
@@ -97,12 +103,15 @@ function transform(node, mapping = {}) {
  * This way, using dangerouslySetInnerHTML can be avoided.
  *
  * @see https://github.com/googleforcreators/web-stories-wp/issues/1578
- * @param {Object} props Component props.
- * @param {?Object.<string, ReactElement>} props.mapping Map of tag names to React components.
- * @param {ReactNode[]|string} props.children Children / string to parse.
- * @return {ReactNode[]} Transformed children.
+ * @param props Component props.
+ * @param props.mapping Map of tag names to React components.
+ * @param props.children Children / string to parse.
+ * @return Transformed children.
  */
-function TranslateWithMarkup({ mapping = {}, children }) {
+function TranslateWithMarkup({
+  mapping = {},
+  children,
+}: TranslateWithMarkupProps) {
   //Ensure all Object keys are lowercase as the DOMParser converts tag names to lowercase.
   mapping = Object.fromEntries(
     Object.entries(mapping).map(([k, v]) => [k.toLowerCase(), v])
@@ -121,7 +130,7 @@ function TranslateWithMarkup({ mapping = {}, children }) {
   }
 
   const node = new DOMParser().parseFromString(children, 'text/html').body
-    .firstChild;
+    .firstChild as Element;
   return node
     ? transform(
         node,
@@ -130,10 +139,5 @@ function TranslateWithMarkup({ mapping = {}, children }) {
       ).map((element, index) => <Fragment key={index}>{element}</Fragment>)
     : [];
 }
-
-TranslateWithMarkup.propTypes = {
-  mapping: PropTypes.object,
-  children: PropTypes.node,
-};
 
 export default TranslateWithMarkup;

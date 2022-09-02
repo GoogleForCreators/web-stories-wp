@@ -29,8 +29,8 @@ import type {
 /**
  * Creates a resource object.
  *
- * @param {ResourceInput} data Resource data.
- * @return {Resource} Resource object.
+ * @param data Resource data.
+ * @return Resource object.
  */
 function createResource({
   baseColor,

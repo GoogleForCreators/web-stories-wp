@@ -19,9 +19,8 @@ const THREE_SECONDS = 3000;
 /**
  * Seek video element to a given offset.
  *
- * @param {HTMLVideoElement} video Video element.
- * @param {number} [offset=0.99] Optional. Desired offset. Defaults to roughly the first frame.
- * @return {Promise<void>}
+ * @param video Video element.
+ * @param [offset=0.99] Optional. Desired offset. Defaults to roughly the first frame.
  */
 function seekVideo(video: HTMLVideoElement, offset = 0.99): Promise<void> {
   if (video.currentTime === offset) {
