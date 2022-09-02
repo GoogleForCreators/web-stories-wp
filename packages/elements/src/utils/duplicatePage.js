@@ -21,14 +21,7 @@ import createNewElement from './createNewElement';
 import duplicateElement from './duplicateElement';
 
 const duplicatePage = (oldPage) => {
-  // Remove title and templateId for inserting the page.
-  const {
-    elements: oldElements,
-    animations: oldAnimations,
-    templateId,
-    title,
-    ...rest
-  } = oldPage;
+  const { elements: oldElements, animations: oldAnimations, ...rest } = oldPage;
 
   const { elements, animations } = oldElements.reduce(
     ({ elements, animations }, oldElement) => {
