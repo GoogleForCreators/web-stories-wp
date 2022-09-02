@@ -26,8 +26,8 @@ import type { Resource, ResourceSize } from './types';
  * Only encodes strings that do not look like they're already encoded,
  * by first looking for the percentage sign character.
  *
- * @param {string} str A value representing an encoded URI.
- * @return {string} Encoded URI
+ * @param str A value representing an encoded URI.
+ * @return Encoded URI
  */
 function maybeEncodeURI(str: string): string {
   if (str.includes('%')) {
@@ -40,8 +40,8 @@ function maybeEncodeURI(str: string): string {
 /**
  * Returns a valid srcSet attribute value for the given media resource.
  *
- * @param {Resource} resource The resource.
- * @return {?string} The srcSet value, or null if the resource has no `sizes`
+ * @param resource The resource.
+ * @return The srcSet value, or null if the resource has no `sizes`
  * attribute.
  */
 function calculateSrcSet(resource: Resource): string | null {

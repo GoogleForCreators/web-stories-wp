@@ -25,9 +25,9 @@ interface Range {
  * Takes a normalized progress value and a range in the form of a tuple
  * and returns the interpolated progress within the given range.
  *
- * @param {number} progress - value between 0 and 1
- * @param {Object} range - tuple that dictates a range between 2 numbers
- * @return {number} value within given range
+ * @param progress Value between 0 and 1.
+ * @param range Range.
+ * @return value within given range
  */
 export const lerp = (progress: number, range: Range) =>
   (1 - progress) * range.MIN + progress * range.MAX;
@@ -41,9 +41,9 @@ export const lerp = (progress: number, range: Range) =>
  * console.log(p) // .5
  * ```
  *
- * @param {*} v - value in range
- * @param {*} range - range in the form of a tuple
- * @return {number} - progress value in the range [0, 1]
+ * @param v Value in range
+ * @param range Range.
+ * @return Progress value in the range [0, 1]
  */
 export const progress = (v: number, range: Range) => {
   const clamped = clamp(v, range);
@@ -56,11 +56,9 @@ export const progress = (v: number, range: Range) => {
 /**
  * Takes a value and a range in the form of a tuple and clamps the value to that range.
  *
- * @param {number} value Value to be clamped.
- * @param {Object} range Range.
- * @param {number} range.MIN Minimum value.
- * @param {number} range.MAX Maximum value.
- * @return {number} Number within range.
+ * @param value Value to be clamped.
+ * @param range Range.
+ * @return Number within range.
  */
 export const clamp = (value: number, { MIN, MAX }: Range) => {
   return Math.min(Math.max(value, MIN), MAX);

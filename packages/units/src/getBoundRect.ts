@@ -31,8 +31,8 @@ getBoundRect( [ { x: 10, y: 10, width: 100, height: 50 }, { x: 30, y: 20, width:
 // returns { startX: 10, startY: -8, endX: 133, endY: 98, width: 123, height: 106 };
 ```
  *
- * @param {Array<Object>} list List of elements with size and position properties
- * @return {Object} Returns outer frame of all list objects
+ * @param list List of elements with size and position properties
+ * @return Returns outer frame of all list objects
  */
 function getBoundRect(list: ElementBox[]) {
   const updatedList = list.map((el) =>
