@@ -18,7 +18,6 @@
  * Internal dependencies
  */
 import normalizeResourceSizes from '../normalizeResourceSizes';
-import type { ResourceSize } from '../types';
 
 describe('normalizeResourceSizes', () => {
   it('normalizes resource sizes to numeric width and height', () => {
@@ -42,7 +41,7 @@ describe('normalizeResourceSizes', () => {
         sourceUrl: 'image-900x900.jpg',
       },
     };
-    const expected: Record<string, ResourceSize> = {
+    const expected = {
       size1: {
         mimeType: 'image/jpeg',
         width: 300,

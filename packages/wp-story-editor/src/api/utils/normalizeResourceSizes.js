@@ -15,21 +15,25 @@
  */
 
 /**
- * Internal dependencies
+ * @typedef {import('@googleforcreators/media').ResourceSize} ResourceSize
  */
-import type { ResourceSize, ResourceSizeInput } from './types';
+
+/**
+ * @typedef {Object} PartialResourceSize
+ * @property {string|number} width Resource width.
+ * @property {string|number} height Resource height.
+ * @property {string} mimeType Mime type.
+ * @property {string} sourceUrl URL.
+ */
 
 /**
  * Normalize resource sizes to ensure numerical values for dimensions.
  *
- * @todo Move to wp-* integration packages.
- * @param sizes Sizes.
- * @return Normalized sizes.
+ * @param {Object.<string, PartialResourceSize>} sizes Sizes.
+ * @return {Object.<string, ResourceSize>} Normalized sizes.
  */
-function normalizeResourceSizes(sizes?: { [key: string]: ResourceSizeInput }): {
-  [key: string]: ResourceSize;
-} {
-  const normalizedSizes: { [key: string]: ResourceSize } = {};
+function normalizeResourceSizes(sizes) {
+  const normalizedSizes = {};
 
   if (!sizes) {
     return normalizedSizes;

@@ -18,7 +18,6 @@
  * Internal dependencies
  */
 import getTypeFromMime from './getTypeFromMime';
-import normalizeResourceSizes from './normalizeResourceSizes';
 import type {
   GifResource,
   Resource,
@@ -72,7 +71,7 @@ function createResource({
     length,
     lengthFormatted,
     alt,
-    sizes: normalizeResourceSizes(sizes),
+    sizes,
     attribution,
     output,
     isPlaceholder,
