@@ -37,9 +37,9 @@ import { getCropParams } from '../../../utils/getCropParams';
  * @return {Object} Right click menu layer actions
  */
 const useLayerActions = () => {
-  const { cropOffScreenVideo } = useLocalMedia(
-    ({ actions: { cropOffScreenVideo } }) => ({
-      cropOffScreenVideo,
+  const { cropExistingVideo } = useLocalMedia(
+    ({ actions: { cropExistingVideo } }) => ({
+      cropExistingVideo,
     })
   );
 
@@ -172,8 +172,8 @@ const useLayerActions = () => {
    * Crop Video to remove off-canvas portion of the video.
    */
   const handleCropOffScreenVideo = useCallback(() => {
-    cropOffScreenVideo(selectedElement, getCropParams(selectedElement));
-  }, [selectedElement, cropOffScreenVideo]);
+    cropExistingVideo(selectedElement, getCropParams(selectedElement));
+  }, [selectedElement, cropExistingVideo]);
 
   return {
     canElementMoveBackwards,

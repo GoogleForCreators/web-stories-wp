@@ -244,6 +244,7 @@ function useUploadMedia({
      * @param {Function} args.onUploadSuccess Callback for when upload succeeds.
      * @param {Object} args.additionalData Object of additionalData.
      * @param {boolean} args.muteVideo If passing a video, should it be muted.
+     * @param {boolean} args.cropVideo If passing a video, should it be cropped.
      * @param {import('@googleforcreators/media').TrimData} args.trimData Trim data.
      * @param {import('@googleforcreators/media').Resource} args.resource Resource object.
      * @param {Blob} args.posterFile Blob object of poster.
@@ -260,6 +261,7 @@ function useUploadMedia({
         onUploadSuccess,
         additionalData,
         muteVideo,
+        cropVideo,
         trimData,
         resource,
         posterFile,
@@ -336,6 +338,7 @@ function useUploadMedia({
             additionalData,
             posterFile,
             muteVideo,
+            cropVideo,
             trimData,
             originalResourceId,
             elementId,

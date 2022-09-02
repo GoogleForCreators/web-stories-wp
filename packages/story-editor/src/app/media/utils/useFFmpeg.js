@@ -343,7 +343,7 @@ function useFFmpeg() {
   );
 
   /**
-   * Crop Video to remove off-canvas portion of the video using FFmpeg.
+   * Crop Video to remove portions of the video using FFmpeg.
    */
   const cropVideo = useCallback(
     async (file, cropParams) => {

@@ -279,10 +279,10 @@ export default function useContextValueProvider(reducerState, reducerActions) {
   );
 
   const {
-    cropOffScreenVideo,
     optimizeVideo,
     optimizeGif,
     muteExistingVideo,
+    cropExistingVideo,
     trimExistingVideo,
   } = useProcessMedia({
     postProcessingResource,
@@ -343,7 +343,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
       trimExistingVideo,
       updateBaseColor,
       updateBlurHash,
-      cropOffScreenVideo,
+      cropExistingVideo,
     },
   };
 }

@@ -30,7 +30,6 @@ import { DANGER_ZONE_HEIGHT } from '@googleforcreators/units';
 import useAPI from '../../api/useAPI';
 import useStory from '../../story/useStory';
 import useMediaInfo from './useMediaInfo';
-import useFFmpeg from './useFFmpeg';
 
 function useProcessMedia({
   uploadMedia,
@@ -48,8 +47,6 @@ function useProcessMedia({
     })
   );
   const { isConsideredOptimized } = useMediaInfo();
-
-  const { cropVideo } = useFFmpeg();
 
   const copyResourceData = useCallback(
     ({ oldResource, resource }) => {
@@ -483,12 +480,12 @@ function useProcessMedia({
   );
 
   /**
-   * Crop off screen video using FFmpeg.
+   * Crop video using FFmpeg.
    *
    * @param {import('@googleforcreators/media').Resource} resource Resource object.
    * @param {Object<{newWidth: number, newHeight: number, cropElement: Element}>} cropParams Crop params.
    */
-  const cropOffScreenVideo = useCallback(
+  const cropExistingVideo = useCallback(
     ({ id: elementId, resource: oldResource }, cropParams) => {
       const { id: resourceId, src: url, mimeType } = oldResource;
       const { newWidth, newHeight, cropElement } = cropParams;
@@ -520,26 +517,25 @@ function useProcessMedia({
       const process = async () => {
         let file = false;
         try {
-          const originalFile = await fetchRemoteFile(url, mimeType);
-          file = await cropVideo(originalFile, cropParams);
-          await file.arrayBuffer();
+          file = await fetchRemoteFile(url, mimeType);
           await uploadMedia([file], {
             onUploadSuccess,
+            cropVideo: true,
             additionalData: {
               original_id: resourceId,
+              cropParams,
             },
             originalResourceId: resourceId,
           });
         } catch (e) {
           //eslint-disable-next-line no-console -- surface this error
-          console.log(e.message);
+          console.log(`cropExistingVideo ${e.message}`);
           return;
         }
       };
       return process();
     },
     [
-      cropVideo,
       updateElementById,
       copyResourceData,
       postProcessingResource,
@@ -553,7 +549,7 @@ function useProcessMedia({
     optimizeGif,
     muteExistingVideo,
     trimExistingVideo,
-    cropOffScreenVideo,
+    cropExistingVideo,
   };
 }
 
