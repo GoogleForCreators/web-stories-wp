@@ -28,7 +28,18 @@ export default {
   resolver: '@web-stories-wp/jest-resolver',
   preset: 'ts-jest',
   transform: {
-    '^.+\\.tsx?$': 'ts-jest',
+    '^.+\\.tsx?$': [
+      'ts-jest',
+      {
+        // Disable type checking but improve performance.
+        // See https://kulshekhar.github.io/ts-jest/docs/getting-started/options/isolatedModules
+        // See https://github.com/kulshekhar/ts-jest/issues/1648
+        // TODO: Look into disabling this again.
+        isolatedModules: true,
+        // Transform remaining JSX with Babel.
+        babelConfig: true,
+      },
+    ],
     '^.+\\.jsx?$': 'babel-jest',
   },
   moduleNameMapper: {
@@ -53,15 +64,6 @@ export default {
     WEB_STORIES_DISABLE_OPTIMIZED_RENDERING: true,
     WEB_STORIES_DISABLE_PREVENT: true,
     WEB_STORIES_DISABLE_QUICK_TIPS: true,
-    'ts-jest': {
-      // Disable type checking but improve performance.
-      // See https://kulshekhar.github.io/ts-jest/docs/getting-started/options/isolatedModules
-      // See https://github.com/kulshekhar/ts-jest/issues/1648
-      // TODO: Look into disabling this again.
-      isolatedModules: true,
-      // Transform remaining JSX with Babel.
-      babelConfig: true,
-    },
   },
   setupFilesAfterEnv: ['jest-extended/all', '<rootDir>/tests/js/jest.setup'],
   testPathIgnorePatterns: [
