@@ -18,12 +18,12 @@
  * Calculates the position offset [dx, dy] for a resized rotated shape.
  * The resizing can be done on four sides: left, right, top, and bottom.
  *
- * @param {number} degree The rotation angle in degrees.
- * @param {number} left The resize delta on the left.
- * @param {number} right The resize delta on the right.
- * @param {number} top The resize delta on the top.
- * @param {number} bottom The resize delta on the bottom.
- * @return {Array<number>} The offsets in a [dx, dy] array.
+ * @param degree The rotation angle in degrees.
+ * @param left The resize delta on the left.
+ * @param right The resize delta on the right.
+ * @param top The resize delta on the top.
+ * @param bottom The resize delta on the bottom.
+ * @return The offsets in a [dx, dy] array.
  */
 function calcRotatedResizeOffset(
   degree: number,

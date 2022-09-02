@@ -24,9 +24,9 @@ import type { Resource } from './types';
  * Choose the source URL of the smallest available size image / video wider than
  * minWidth, according to the device pixel ratio.
  *
- * @param {number} minWidth The minimum width of the thumbnail to return.
- * @param {Resource} resource The resource.
- * @return {string} Source URL of the smallest available size media.
+ * @param minWidth The minimum width of the thumbnail to return.
+ * @param resource The resource.
+ * @return Source URL of the smallest available size media.
  */
 function getSmallestUrlForWidth(minWidth: number, resource: Resource): string {
   if (resource.sizes) {

@@ -22,8 +22,8 @@ import getCanvasBlob from './getCanvasBlob';
 /**
  * Returns a still image from a given video element.
  *
- * @param {HTMLVideoElement} video Video element.
- * @return {Promise<Blob>} JPEG image blob.
+ * @param video Video element.
+ * @return JPEG image blob.
  */
 function getImageFromVideo(video: HTMLVideoElement): Promise<Blob | null> {
   const canvas = document.createElement('canvas');

@@ -23,10 +23,10 @@ import { config } from './shared';
 /**
  * Track event timing for performance measuring.
  *
- * @param {string} category Category for categorizing the user timing variables into groups.
- * @param {number} time Duration in milliseconds.
- * @param {string} label Label that allows extra flexibility in reports.
- * @param {string} eventName Event name, e.g. click or mousedown.
+ * @param category Category for categorizing the user timing variables into groups.
+ * @param time Duration in milliseconds.
+ * @param label Label that allows extra flexibility in reports.
+ * @param eventName Event name, e.g. click or mousedown.
  */
 function trackTiming(
   category: string,

@@ -17,8 +17,8 @@
 /**
  * Helper to get remote file using fetch and return blob.
  *
- * @param {string} url URL of file.
- * @return {Promise<Blob>} Blob object.
+ * @param url URL of file.
+ * @return Blob object.
  */
 async function fetchRemoteBlob(url: string): Promise<Blob> {
   const response = await fetch(url);

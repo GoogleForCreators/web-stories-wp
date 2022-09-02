@@ -35,9 +35,9 @@ function generateFileName(url: string): string {
 /**
  * Helper to get remote file using fetch.
  *
- * @param {string} url URL of file.
- * @param {string} mimeType Mime type of file.
- * @return {Promise<File>} File object.
+ * @param url URL of file.
+ * @param mimeType Mime type of file.
+ * @return File object.
  */
 async function fetchRemoteFile(url: string, mimeType: string): Promise<File> {
   const data = await fetchRemoteBlob(url);

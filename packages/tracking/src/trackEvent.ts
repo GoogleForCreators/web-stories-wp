@@ -29,9 +29,9 @@ import track from './track';
  * @see https://developers.google.com/analytics/devguides/collection/ga4/events
  * @see https://support.google.com/analytics/answer/9267735
  * @see https://support.google.com/analytics/answer/9310895?hl=en
- * @param {string} eventName The event name (e.g. 'search'). The value that will appear as the event action in Google Analytics Event reports.
- * @param {EventParameters} [eventParameters] Event parameters.
- * @return {Promise<void>} Promise that always resolves.
+ * @param eventName The event name (e.g. 'search'). The value that will appear as the event action in Google Analytics Event reports.
+ * @param [eventParameters] Event parameters.
+ * @return Promise that always resolves.
  */
 async function trackEvent(
   eventName: string,

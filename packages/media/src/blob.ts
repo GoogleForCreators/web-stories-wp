@@ -21,8 +21,8 @@ const blobCache: Record<string, CacheObject> = {};
 /**
  * Create a blob URL from a file.
  *
- * @param {CacheObject} file File object.
- * @return {string} Blob URL.
+ * @param file File object.
+ * @return Blob URL.
  */
 export function createBlob(file: CacheObject): string {
   const url = window.URL.createObjectURL(file);
@@ -35,8 +35,8 @@ export function createBlob(file: CacheObject): string {
 /**
  * Get file by blob URL if it exists.
  *
- * @param {string} url Blob URL.
- * @return {?CacheObject} File if exists.
+ * @param url Blob URL.
+ * @return File if exists.
  */
 export function getBlob(url: string): CacheObject {
   return blobCache[url];
@@ -45,8 +45,7 @@ export function getBlob(url: string): CacheObject {
 /**
  * Remove blob from cache (and browser memory).
  *
- * @param {string} url Blob URL.
- * @return {void}
+ * @param url Blob URL.
  */
 export function revokeBlob(url: string): void {
   if (getBlob(url)) {
@@ -59,8 +58,8 @@ export function revokeBlob(url: string): void {
 /**
  * Check whether a URL is a blob URL.
  *
- * @param {string} url The URL.
- * @return {boolean} Is the url a blob url?
+ * @param url The URL.
+ * @return Is the url a blob url?
  */
 export function isBlobURL(url: string): boolean {
   return url?.startsWith('blob:');
