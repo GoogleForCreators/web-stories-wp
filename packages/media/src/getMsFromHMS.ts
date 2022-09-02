@@ -17,8 +17,8 @@
 /**
  * Converts time in H:M:S format to milliseconds.
  *
- * @param {string} time Time in HH:MM:SS or H:M:S format.
- * @return {number} Milliseconds.
+ * @param time Time in HH:MM:SS or H:M:S format.
+ * @return Milliseconds.
  */
 function getMsFromHMS(time: string | null): number {
   if (!time) {

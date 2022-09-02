@@ -110,9 +110,8 @@ declare global {
  * Using an ES6 spread operator (i.e. `...args`) will cause tracking events to _silently_ fail.
  *
  * @see https://developers.google.com/tag-platform/devguides/datalayer#rename_the_data_layer
- * @return {void}
  */
-export const gtag: Gtag = function () {
+export const gtag: Gtag = function (): void {
   window[DATA_LAYER] = window[DATA_LAYER] || [];
   //eslint-disable-next-line prefer-rest-params -- Must push instead of using spread to prevent tracking failures.
   window[DATA_LAYER].push(arguments);

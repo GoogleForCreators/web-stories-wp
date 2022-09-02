@@ -23,8 +23,8 @@ import type { ResourceSize, ResourceSizeInput } from './types';
  * Normalize resource sizes to ensure numerical values for dimensions.
  *
  * @todo Move to wp-* integration packages.
- * @param {Object} sizes Sizes.
- * @return {Object} Normalized sizes.
+ * @param sizes Sizes.
+ * @return Normalized sizes.
  */
 function normalizeResourceSizes(sizes?: { [key: string]: ResourceSizeInput }): {
   [key: string]: ResourceSize;

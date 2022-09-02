@@ -22,8 +22,8 @@ import * as mime from 'mime/lite';
 /**
  * Get the file extension for a given mime type.
  *
- * @param {string} mimeType Mime type.
- * @return {string} File extension.
+ * @param mimeType Mime type.
+ * @return File extension.
  */
 export function getExtensionFromMimeType(mimeType: string): string | null {
   return mime.getExtension(mimeType);
@@ -41,8 +41,8 @@ export function getExtensionFromMimeType(mimeType: string): string | null {
  * most relevant mime types as used in the story editor.
  *
  * @see https://github.com/broofa/mime/issues/254
- * @param {string} mimeType Mime type.
- * @return {string[]} File extension.
+ * @param mimeType Mime type.
+ * @return File extension.
  */
 export function getExtensionsFromMimeType(mimeType: string): string[] {
   switch (mimeType) {

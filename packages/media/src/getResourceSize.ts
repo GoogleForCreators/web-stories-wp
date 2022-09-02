@@ -32,13 +32,13 @@ interface ResourceSizeParams {
  * override the resource's size because the poster generation has a more
  * accurate data.
  *
- * @param {Object} obj - An object with height/width params.
- * @param {number} obj.width Width.
- * @param {number} obj.height Height.
- * @param {boolean} [obj.posterGenerated] Whether a poster has been generated.
- * @param {number} [obj.posterWidth] Poster width.
- * @param {number} [obj.posterHeight] Poster height.
- * @return {Object} The resource's size (width and height).
+ * @param obj - An object with height/width params.
+ * @param obj.width Width.
+ * @param obj.height Height.
+ * @param [obj.posterGenerated] Whether a poster has been generated.
+ * @param [obj.posterWidth] Poster width.
+ * @param [obj.posterHeight] Poster height.
+ * @return The resource's size (width and height).
  */
 function getResourceSize({
   width,

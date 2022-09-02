@@ -81,6 +81,7 @@
     "@testing-library/user-event": "^14.4.3",
     "@types/jest": "^29.0.0",
     "@types/jsdom": "^20.0.0",
+    "@types/styled-components": "^5.1.26",
     "@typescript-eslint/eslint-plugin": "^5.36.1",
     "@typescript-eslint/parser": "^5.36.1",
     "@web-stories-wp/e2e-tests": "*",
