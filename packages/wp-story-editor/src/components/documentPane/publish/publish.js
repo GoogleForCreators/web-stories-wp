@@ -148,10 +148,11 @@ function PublishPanel({ nameOverride }) {
     dashboardSettingsLink,
     capabilities: { hasUploadMediaAction, canManageSettings },
     MediaUpload,
-    revision_links,
+    revision,
   } = useConfig();
 
   const improvedAutosaves = useFeature('improvedAutosaves');
+  const { count: revision_count = 0, href: revision_link = '' } = revision;
 
   const allowedImageFileTypes = useMemo(
     () =>
@@ -328,9 +329,6 @@ function PublishPanel({ nameOverride }) {
   const menuOptions = [hasUploadMediaAction && 'upload', 'hotlink'].filter(
     Boolean
   );
-
-  const revision_count = revision_links?.['version-history']?.count | 0;
-  const revision_link = revision_links?.['version-history']?.href;
 
   return (
     <Panel

@@ -312,7 +312,7 @@ class Editor extends Service_Base implements HasRequirements {
 
 	
 	/**
-	 * Get post revision information.
+	 * Get post revision information for latest id and count.
 	 *
 	 * Replace this with wp_get_latest_revision_id_and_total_count 
 	 * Once 6.1 becomes the lowest version supported
@@ -356,6 +356,41 @@ class Editor extends Service_Base implements HasRequirements {
 			'latest_id' => $revisions[0],
 			'count'     => $revision_query->found_posts,
 		];
+	}
+
+	/**
+	 * Get post revisions count and link.
+	 * 
+	 * @since 1.25.0
+	 *
+	 * @param WP_Post|null $post    Current post object.
+	 * @return array<string,mixed> Revison links and count.
+	 */
+	public function get_revisions_count_and_link( $post ): array {
+		$improved_autosaves = $this->experiments->is_experiment_enabled( 'improvedAutosaves' );
+		$revision           = [ 
+			'href'  => '',
+			'count' => 0,
+		];
+
+		if ( ! $post || ! $post->ID ) {
+			return $revision;
+		}
+		
+		if ( $improved_autosaves && $post->post_type ) {
+			if ( \in_array( $post->post_type, [ 'post', 'page' ], true ) || post_type_supports( $post->post_type, 'revisions' ) ) {
+				
+				$revisions       = $this->get_latest_revision_id_and_total_count( $post );
+				$revisions_count = \count( $revisions ) >= 1 ? $revisions['count'] : 0;
+
+				$revision = [
+					'href'  => $revisions['latest_id'] ? admin_url() . 'revision.php?revision=' . $revisions['latest_id'] : '',
+					'count' => $revisions_count,
+				];
+			}
+		}
+
+		return $revision;
 	}
 
 	/**
@@ -432,33 +467,12 @@ class Editor extends Service_Base implements HasRequirements {
 				}
 			} 
 		}
-
-		$revision_links = [];
-
-		if ( $improved_autosaves && isset( $post->post_type ) && $post->ID ) {
-			if ( \in_array( $post->post_type, [ 'post', 'page' ], true ) || post_type_supports( $post->post_type, 'revisions' ) ) {
-				$revisions       = $this->get_latest_revision_id_and_total_count( $post );
-				$revisions_count = ! \count( $revisions ) >= 1 ? $revisions['count'] : 0;
-
-				$revision_links['version-history'] = [
-					'href'  => admin_url() . 'revision.php?revision=' . $post->ID,
-					'count' => $revisions_count,
-				];
-
-				if ( $revisions_count > 0 ) {
-					$revision_links['predecessor-version'] = [
-						'href' => admin_url() . 'revision.php?revision=' . $revisions['latest_id'],
-						'id'   => $revisions['latest_id'],
-					];
-				}
-			}
-		}
 		
 		$settings = [
 			'autoSaveInterval'        => \defined( 'AUTOSAVE_INTERVAL' ) ? AUTOSAVE_INTERVAL : null,
 			'localAutoSaveInterval'   => 15,
 			'autoSaveLink'            => $auto_save_link,
-			'revision_links'          => $revision_links,
+			'revision'                => $this->get_revisions_count_and_link( $post ),
 			'isRTL'                   => is_rtl(),
 			'locale'                  => $this->locale->get_locale_settings(),
 			'allowedMimeTypes'        => $this->types->get_allowed_mime_types(),
