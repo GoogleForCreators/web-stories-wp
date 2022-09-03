@@ -69,6 +69,7 @@ class Plugin extends ServiceBasedPlugin {
 		'adsense'                      => AdSense::class,
 		'ad_manager'                   => Ad_Manager::class,
 		'admin'                        => Admin\Admin::class,
+		'admin.revisions'              => Admin\Revisions::class,
 		'analytics'                    => Analytics::class,
 		'coi'                          => Admin\Cross_Origin_Isolation::class,
 		'customizer'                   => Admin\Customizer::class,

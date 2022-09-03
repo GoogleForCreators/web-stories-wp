@@ -1,0 +1,212 @@
+<?php
+/**
+ * AdmiRevisionsn class.
+ *
+ * Responsible for WordPress admin integration.
+ *
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
+ * @copyright 2022 Google LLC
+ * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
+ */
+
+/**
+ * Copyright 2022 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+namespace Google\Web_Stories\Admin;
+
+use Google\Web_Stories\AMP_Story_Player_Assets;
+use Google\Web_Stories\Assets;
+use Google\Web_Stories\Service_Base;
+use Google\Web_Stories\Story_Post_Type;
+use WP_Post;
+
+/**
+ * Revisions class.
+ *
+ * @phpstan-type RevisionField array{
+ *   id: string,
+ *   name: string,
+ *   diff: string
+ * }
+ */
+class Revisions extends Service_Base {
+
+	/**
+	 * Story post type instance.
+	 *
+	 * @var Story_Post_Type Story post type instance.
+	 */
+	private $story_post_type;
+
+	/**
+	 * Assets instance.
+	 *
+	 * @var Assets Assets instance.
+	 */
+	private $assets;
+
+	/**
+	 * Single constructor.
+	 *
+	 * @param Story_Post_Type $story_post_type Story post type instance.
+	 * @param Assets          $assets  Assets instance.
+	 */
+	public function __construct( Story_Post_Type $story_post_type, Assets $assets ) {
+		$this->story_post_type = $story_post_type;
+		$this->assets          = $assets;
+	}
+
+	/**
+	 * Initialize admin-related functionality.
+	 *
+	 * @since 1.25.0
+	 */
+	public function register(): void {
+		add_filter( '_wp_post_revision_fields', [ $this, 'filter_revision_fields' ], 10, 2 );
+		add_filter( 'wp_get_revision_ui_diff', [ $this, 'filter_revision_ui_diff' ], 10, 3 );
+
+		add_action( 'admin_print_footer_scripts-revision.php', [ $this, 'enqueue_player_script' ] );
+	}
+
+	/**
+	 * Get the action to use for registering the service.
+	 *
+	 * @since 1.25.0
+	 *
+	 * @return string Registration action to use.
+	 */
+	public static function get_registration_action(): string {
+		return 'admin_init';
+	}
+
+	/**
+	 * Filters the revision fields to ensure that JSON representation gets saved to Story revisions.
+	 *
+	 * @since 1.25.0
+	 *
+	 * @param array|mixed         $fields Array of allowed revision fields.
+	 * @param array<string,mixed> $story  Story post array.
+	 * @return array|mixed Array of allowed fields.
+	 */
+	public function filter_revision_fields( $fields, array $story ) {
+		if ( ! \is_array( $fields ) ) {
+			return $fields;
+		}
+
+		if ( $this->story_post_type->get_slug() === $story['post_type'] ) {
+			$fields['post_content_filtered'] = __( 'Story data', 'web-stories' );
+		}
+
+		return $fields;
+	}
+
+	/**
+	 * Filters the fields displayed in the post revision diff UI.
+	 *
+	 * @since 1.25.0
+	 *
+	 * @param array[]|mixed $return       Array of revision UI fields. Each item is an array of id, name, and diff.
+	 * @param WP_Post       $compare_from The revision post to compare from.
+	 * @param WP_Post       $compare_to   The revision post to compare to.
+	 * @return array[] Filtered array of revision UI fields.
+	 */
+	public function filter_revision_ui_diff( $return, WP_Post $compare_from, WP_Post $compare_to ): array {
+		if ( ! \is_array( $return ) ) {
+			return $return;
+		}
+
+		$parent = get_post_parent( $compare_from );
+
+		if (
+			! $parent instanceof WP_Post ||
+			$this->story_post_type->get_slug() !== $parent->post_type
+		) {
+			return $return;
+		}
+
+		// TODO: Maybe use srcdoc on the iframe since revisions can't be viewed publicly.
+
+		$url_from    = esc_url( get_permalink( $compare_from ) );
+		$title_from  = esc_html( get_the_title( $compare_from ) );
+		$player_from = <<<Player
+<amp-story-player
+	width="3.6"
+	height="6"
+	layout="responsive"
+>
+	<a href="$url_from">$title_from</a>
+</amp-story-player>
+Player;
+
+		$url_to    = esc_url( get_permalink( $compare_to ) );
+		$title_to  = esc_html( get_the_title( $compare_to ) );
+		$player_to = <<<Player
+<amp-story-player
+	width="3.6"
+	height="6"
+	layout="responsive"
+>
+	<a href="$url_to">$title_to</a>
+</amp-story-player>
+Player;
+
+		$args = [
+			'show_split_view' => true,
+			'title_left'      => __( 'Removed' ),
+			'title_right'     => __( 'Added' ),
+		];
+
+		/** This filter is documented in wp-admin/includes/revision.php */
+		$args = apply_filters( 'revision_text_diff_options', $args, 'post_content', $compare_from, $compare_to );
+
+		/**
+		 * Revision field.
+		 *
+		 * @phpstan-var RevisionField $field
+		 * @var array $field
+		 */
+		foreach ( $return as &$field ) {
+			if ( 'post_content' === $field['id'] ) {
+				$diff = '<table class="diff"><colgroup><col class="content diffsplit left"><col class="content diffsplit middle"><col class="content diffsplit right"></colgroup><tbody><tr>';
+
+				// In split screen mode, show the title before/after side by side.
+				if ( true === $args['show_split_view'] ) {
+					$diff .= '<td>' . $player_from . '</td><td></td><td>' . $player_to . '</td>';
+				} else {
+					$diff .= '<td>' . $player_from . '</td></tr><tr><td>' . $player_to . '</td>';
+				}
+
+				$diff .= '</tr></tbody>';
+				$diff .= '</table>';
+
+				$field['diff'] = $diff;
+			}
+		}
+
+		return $return;
+	}
+
+	/**
+	 * Enqueues amp-story-player assets on the revisions screen.
+	 *
+	 * @since 1.25.0
+	 */
+	public function enqueue_player_script(): void {
+		$this->assets->enqueue_style( AMP_Story_Player_Assets::SCRIPT_HANDLE );
+		$this->assets->enqueue_script( AMP_Story_Player_Assets::SCRIPT_HANDLE );
+	}
+}

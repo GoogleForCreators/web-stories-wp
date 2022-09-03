@@ -14,6 +14,7 @@ namespace PHPSTORM_META {
 			'adsense'                      => \Google\Web_Stories\AdSense::class,
 			'ad_manager'                   => \Google\Web_Stories\Ad_Manager::class,
 			'admin'                        => \Google\Web_Stories\Admin\Admin::class,
+			'admin.revisions'              => \Google\Web_Stories\Admin\Revisions::class,
 			'analytics'                    => \Google\Web_Stories\Analytics::class,
 			'coi'                          => \Google\Web_Stories\Admin\Cross_Origin_Isolation::class,
 			'customizer'                   => \Google\Web_Stories\Admin\Customizer::class,

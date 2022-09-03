@@ -94,7 +94,6 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 		$this->register_post_type();
 		$this->register_meta();
 
-		add_filter( '_wp_post_revision_fields', [ $this, 'filter_revision_fields' ], 10, 2 );
 		add_filter( 'wp_insert_post_data', [ $this, 'change_default_title' ] );
 		add_filter( 'bulk_post_updated_messages', [ $this, 'bulk_post_updated_messages' ], 10, 2 );
 		add_action( 'clean_post_cache', [ $this, 'clear_user_posts_count' ], 10, 2 );
@@ -264,27 +263,6 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 	 */
 	protected function get_post_type_icon(): string {
 		return 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xMCAyMGM1LjUyMyAwIDEwLTQuNDc3IDEwLTEwUzE1LjUyMyAwIDEwIDAgMCA0LjQ3NyAwIDEwczQuNDc3IDEwIDEwIDEwek01LjUgNmExIDEgMCAwMTEtMUgxMWExIDEgMCAwMTEgMXY4YTEgMSAwIDAxLTEgMUg2LjVhMSAxIDAgMDEtMS0xVjZ6TTEzIDZhMSAxIDAgMDExIDF2NmExIDEgMCAwMS0xIDFWNnptMi43NSAxLjc1QS43NS43NSAwIDAwMTUgN3Y2YS43NS43NSAwIDAwLjc1LS43NXYtNC41eiIgZmlsbD0iI2EwYTVhYSIvPjwvc3ZnPg==';
-	}
-
-	/**
-	 * Filters the revision fields to ensure that JSON representation gets saved to Story revisions.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param array|mixed         $fields Array of allowed revision fields.
-	 * @param array<string,mixed> $story  Story post array.
-	 * @return array|mixed Array of allowed fields.
-	 */
-	public function filter_revision_fields( $fields, array $story ) {
-		if ( ! \is_array( $fields ) ) {
-			return $fields;
-		}
-
-		if ( $this->get_slug() === $story['post_type'] ) {
-			$fields['post_content_filtered'] = __( 'Story data', 'web-stories' );
-		}
-
-		return $fields;
 	}
 
 	/**
