@@ -27,9 +27,9 @@ import { ColorStop, Hex, Pattern, Solid, Gradient, PatternType } from './types';
 /**
  * Truncate a number to a given number of decimals.
  *
- * @param {number} val Number to truncate
- * @param {number} pos Maximum number of allowed decimals
- * @return {number} Number in given precision
+ * @param val Number to truncate
+ * @param pos Maximum number of allowed decimals
+ * @return Number in given precision
  */
 function truncate(val: number, pos: number) {
   return Number(val.toFixed(pos));
@@ -44,12 +44,12 @@ function truncate(val: number, pos: number) {
  * For a radial gradient, return either center, size, both or none
  * depending on whether the values are set.
  *
- * @param {Object} pattern Gradient pattern description
- * @param {string} pattern.type Gradient type as a string
- * @param {number} pattern.rotation Gradient rotation between 0 and 1
- * @param {Object} pattern.center Gradient center if not 50/50
- * @param {Object} pattern.size Gradient size if not full size
- * @return {string} Minimal description for gradient.
+ * @param pattern Gradient pattern description
+ * @param pattern.type Gradient type as a string
+ * @param pattern.rotation Gradient rotation between 0 and 1
+ * @param pattern.center Gradient center if not 50/50
+ * @param pattern.size Gradient size if not full size
+ * @return Minimal description for gradient.
  */
 function getGradientDescription(pattern: Gradient) {
   switch (pattern.type) {
@@ -82,9 +82,9 @@ function getGradientDescription(pattern: Gradient) {
  * Convert a list of stops to serialized minimal versions. And use percent
  * or turn as unit depending on whether stops are angular or not.
  *
- * @param {Array} stops List of stops as an object with color and position
- * @param {number} alpha Alpha opacity to multiple to each stop
- * @return {Array} List of serialized stops
+ * @param stops List of stops as an object with color and position
+ * @param alpha Alpha opacity to multiple to each stop
+ * @return List of serialized stops
  */
 function getStopList(stops: Array<ColorStop>, alpha: number) {
   const getColor = ({ r, g, b, a = 1 }: Hex) => rgba(r, g, b, a * alpha);
@@ -97,10 +97,10 @@ function getStopList(stops: Array<ColorStop>, alpha: number) {
 /**
  * Generate CSS object from a Pattern.
  *
- * @param {Object} pattern Patterns as describe by the Pattern type
- * @param {string} property Type of CSS to generate. Defaults to 'background',
+ * @param pattern Patterns as describe by the Pattern type
+ * @param property Type of CSS to generate. Defaults to 'background',
  * but can also be 'color', 'fill', 'stroke', or even a CSS variable.
- * @return {Object} CSS declaration as object, e.g. {fill: 'transparent'} or
+ * @return CSS declaration as object, e.g. {fill: 'transparent'} or
  * {backgroundImage: 'radial-gradient(red, blue)'}.
  */
 function generatePatternStyles(

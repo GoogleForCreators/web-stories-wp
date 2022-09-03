@@ -17,7 +17,9 @@
 /**
  * External dependencies
  */
+/* eslint-disable no-restricted-imports -- Still used by other packages. */
 import PropTypes from 'prop-types';
+/* eslint-enable no-restricted-imports -- Still used by other packages. */
 
 export const HexPropType = PropTypes.shape({
   r: PropTypes.number.isRequired,
