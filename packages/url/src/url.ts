@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-export function toAbsoluteUrl(base, path) {
+export function toAbsoluteUrl(base: string, path: string): string {
   try {
     return new URL(path, base).href;
   } catch (error) {
@@ -22,7 +22,7 @@ export function toAbsoluteUrl(base, path) {
   }
 }
 
-export function isValidUrl(url) {
+export function isValidUrl(url: string): boolean {
   try {
     // eslint-disable-next-line no-new -- Needed here just to catch errors.
     new URL(url);
@@ -35,11 +35,14 @@ export function isValidUrl(url) {
 /**
  * Prepends a protocol (default https) to a URL that doesn't have one
  *
- * @param {string} url URL.
- * @param {string} [protocol=https] default protocol to prepend
- * @return {string} the url with the protocol prepended to it
+ * @param url URL.
+ * @param [protocol=https] default protocol to prepend
+ * @return the url with the protocol prepended to it
  */
-export function withProtocol(url, protocol = 'https') {
+export function withProtocol(
+  url: string,
+  protocol: 'http' | 'https' | 'tel' | 'mailto' = 'https'
+): string {
   return /^(http:\/\/|https:\/\/|tel:|mailto:)/.test(url)
     ? url
     : `${protocol}://${url}`;
