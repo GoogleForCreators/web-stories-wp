@@ -487,7 +487,7 @@ function useProcessMedia({
    */
   const cropExistingVideo = useCallback(
     ({ id: elementId, resource: oldResource }, cropParams) => {
-      const { id: resourceId, src: url, mimeType } = oldResource;
+      const { id: resourceId, src: url, mimeType, isOptimized } = oldResource;
       const { newWidth, newHeight, cropElement } = cropParams;
 
       const onUploadSuccess = ({ id, resource }) => {
@@ -524,6 +524,7 @@ function useProcessMedia({
             additionalData: {
               original_id: resourceId,
               cropParams,
+              mediaSource: isOptimized ? 'video-optimization' : 'editor',
             },
             originalResourceId: resourceId,
           });
