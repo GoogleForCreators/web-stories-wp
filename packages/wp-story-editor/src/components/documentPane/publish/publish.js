@@ -152,7 +152,14 @@ function PublishPanel({ nameOverride }) {
   } = useConfig();
 
   const improvedAutosaves = useFeature('improvedAutosaves');
-  const { count: revision_count = 0, href: revision_link = '' } = revision;
+
+  let revision_count = 0;
+  let revision_link = '';
+
+  if (improvedAutosaves && revision) {
+    revision_count = revision.count;
+    revision_link = revision.href;
+  }
 
   const allowedImageFileTypes = useMemo(
     () =>
