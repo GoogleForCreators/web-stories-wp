@@ -14,19 +14,14 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import { parseToRgb } from 'polished';
-
-/**
- * Internal dependencies
- */
-import createSolid from './createSolid';
-
-function createSolidFromString(str) {
-  const { red, green, blue, alpha } = parseToRgb(str);
-  return createSolid(red, green, blue, alpha);
+function convertToCSS(style: Record<string, string>) {
+  return Object.entries(style).reduce((str, [key, val]) => {
+    const casedKey = key.replace(
+      /[A-Z]/g,
+      (match) => `-${match.toLowerCase()}`
+    );
+    return `${str}${casedKey}:${val};`;
+  }, '');
 }
 
-export default createSolidFromString;
+export default convertToCSS;
