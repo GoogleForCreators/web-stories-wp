@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-function getHexFromValue(value) {
+function getHexFromValue(value: string) {
   const val = (value || '').toUpperCase().trim().replace(/^#/, '');
 
   const hasNonHex = /[^0-9a-f]/i.test(val);

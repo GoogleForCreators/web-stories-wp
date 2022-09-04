@@ -17,21 +17,13 @@
 /**
  * Internal dependencies
  */
-import createSolidFromString from './createSolidFromString';
-import createSolid from './createSolid';
+import type { Solid } from './types';
 
-function getSolidFromHex(hex) {
-  // We already have a nice parser for most of this, but we need to
-  // parse opacity as the last two hex digits as percent, not 1/256th
-
-  const {
-    color: { r, g, b },
-  } = createSolidFromString(`#${hex.slice(0, 6)}`);
-
-  const opacityDigits = hex.slice(6);
-  const opacity = opacityDigits ? parseInt(opacityDigits, 16) : 100;
-
-  return createSolid(r, g, b, opacity / 100);
+function createSolid(r: number, g: number, b: number, a = 1): Solid {
+  if (a !== 1) {
+    return { color: { r, g, b, a } };
+  }
+  return { color: { r, g, b } };
 }
 
-export default getSolidFromHex;
+export default createSolid;

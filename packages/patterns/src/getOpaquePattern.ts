@@ -14,24 +14,31 @@
  * limitations under the License.
  */
 
-function colorHasTransparency(color) {
-  return color.a !== undefined && color.a < 1;
+/**
+ * Internal dependencies
+ */
+import { Pattern, PatternType } from './types';
+
+function getOpaquePattern(pattern: Pattern) {
+  if (!pattern.type || pattern.type === PatternType.SOLID) {
+    const { color } = pattern;
+    return {
+      color: {
+        ...color,
+        a: 1,
+      },
+    };
+  }
+  return objectWithout(pattern, ['alpha']);
 }
 
-function hasOpacity(preset) {
-  const { color, alpha, stops } = preset;
-  if (color) {
-    return Boolean(colorHasTransparency(color));
-  }
-  if (typeof alpha === 'number' && alpha < 1) {
-    return true;
-  }
-  for (const colorStop of stops || []) {
-    if (colorHasTransparency(colorStop.color)) {
-      return true;
-    }
-  }
-  return false;
-}
+export default getOpaquePattern;
 
-export default hasOpacity;
+function objectWithout(
+  obj: Record<string, unknown>,
+  propertiesToRemove: Array<string>
+) {
+  return Object.fromEntries(
+    Object.entries(obj).filter(([key]) => !propertiesToRemove.includes(key))
+  );
+}

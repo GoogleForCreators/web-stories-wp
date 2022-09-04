@@ -13,15 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-function getHexFromSolid(solid) {
-  const {
-    color: { r, g, b, a = 1 },
-  } = solid;
-  const dims = [r, g, b, Math.round(a * 100)];
-  return dims
-    .map((n) => n.toString(16))
-    .map((s) => s.padStart(2, '0'))
-    .join('');
+
+/**
+ * Internal dependencies
+ */
+import { Pattern, PatternType } from './types';
+
+function hasGradient(pattern: Pattern) {
+  return Boolean(pattern?.type) && PatternType.SOLID !== pattern.type;
 }
 
-export default getHexFromSolid;
+export default hasGradient;

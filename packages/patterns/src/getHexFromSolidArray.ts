@@ -13,7 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-function getHexFromSolidArray(dims) {
+
+function getHexFromSolidArray(dims: Array<number>) {
   const color = dims
     .map((n) => n.toString(16))
     .map((s) => s.padStart(2, '0'))

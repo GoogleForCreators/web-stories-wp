@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,11 +14,20 @@
  * limitations under the License.
  */
 
-function createSolid(r, g, b, a = 1) {
-  if (a !== 1) {
-    return { color: { r, g, b, a } };
-  }
-  return { color: { r, g, b } };
+/**
+ * Internal dependencies
+ */
+import type { Solid } from './types';
+
+function getHexFromSolid(solid: Solid) {
+  const {
+    color: { r, g, b, a = 1 },
+  } = solid;
+  const dims = [r, g, b, Math.round(a * 100)];
+  return dims
+    .map((n) => n.toString(16))
+    .map((s) => s.padStart(2, '0'))
+    .join('');
 }
 
-export default createSolid;
+export default getHexFromSolid;

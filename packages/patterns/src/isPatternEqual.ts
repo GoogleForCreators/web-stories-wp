@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,8 +14,19 @@
  * limitations under the License.
  */
 
-function hasGradient(pattern) {
-  return Boolean(pattern?.type) && 'solid' !== pattern.type;
-}
+/**
+ * Internal dependencies
+ */
+import convertToCSS from './convertToCSS';
+import generatePatternStyles from './generatePatternStyles';
+import type { Pattern } from './types';
 
-export default hasGradient;
+export default function isPatternEqual(
+  p1: Pattern,
+  p2: Pattern,
+  patternType?: string
+) {
+  const p1CSS = convertToCSS(generatePatternStyles(p1, patternType));
+  const p2CSS = convertToCSS(generatePatternStyles(p2, patternType));
+  return p1CSS === p2CSS;
+}
