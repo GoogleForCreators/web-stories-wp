@@ -329,7 +329,7 @@ function Footer() {
   const { showSnackbar } = useSnackbar();
 
   const captureImage = useCallback(async () => {
-    const hasVideoEffect = videoEffect && videoEffect !== 'none';
+    const hasVideoEffect = videoEffect && videoEffect !== VIDEO_EFFECTS.NONE;
     const inputStream = hasVideoEffect ? canvasStream : streamNode;
     if (!inputStream) {
       return;
