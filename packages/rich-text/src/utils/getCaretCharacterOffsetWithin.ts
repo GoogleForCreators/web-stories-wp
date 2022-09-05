@@ -31,12 +31,16 @@
  * This function includes some cross-browser optimization for older browsers even
  * though they aren't really supported by the editor at large (IE).
  *
- * @param {Node} element    DOM node to find current selection within.
- * @param {number} clientX  Optional x coordinate of click.
- * @param {number} clientY  Optional y coordinate of click.
- * @return {number} Current selection start offset as seen in `element` or 0 if not found.
+ * @param element    DOM node to find current selection within.
+ * @param clientX  Optional x coordinate of click.
+ * @param clientY  Optional y coordinate of click.
+ * @return Current selection start offset as seen in `element` or 0 if not found.
  */
-function getCaretCharacterOffsetWithin(element, clientX, clientY) {
+function getCaretCharacterOffsetWithin(
+  element: Node,
+  clientX: number,
+  clientY: number
+): number {
   const doc = element.ownerDocument || element.document;
   const win = doc.defaultView || doc.parentWindow;
   if (typeof win.getSelection !== 'undefined') {

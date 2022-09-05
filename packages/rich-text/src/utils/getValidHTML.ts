@@ -16,7 +16,7 @@
 
 const contentBuffer = document.createElement('template');
 
-export default function getValidHTML(string) {
+export default function getValidHTML(string: string) {
   contentBuffer.innerHTML = string;
   return contentBuffer.innerHTML;
 }

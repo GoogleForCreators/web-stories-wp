@@ -25,7 +25,7 @@ import { stateFromHTML } from 'draft-js-import-html';
 import getValidHTML from './utils/getValidHTML';
 import formatters from './formatters';
 
-function customInlineFn(element, { Style }) {
+function customInlineFn(element: HTMLElement, { Style }) {
   const styleStrings = formatters
     .map(({ elementToStyle }) => elementToStyle(element))
     .filter((style) => Boolean(style));

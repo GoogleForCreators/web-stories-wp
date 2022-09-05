@@ -18,13 +18,14 @@
  * External dependencies
  */
 import { stateToHTML } from 'draft-js-export-html';
+import type { EditorState } from 'draft-js';
 
 /**
  * Internal dependencies
  */
 import formatters from './formatters';
 
-function inlineStyleFn(styles) {
+function inlineStyleFn(styles: string[]) {
   const inlineCSS = formatters.reduce(
     (css, { stylesToCSS }) => ({ ...css, ...stylesToCSS(styles) }),
     {}
@@ -40,14 +41,14 @@ function inlineStyleFn(styles) {
   };
 }
 
-function exportHTML(editorState) {
+function exportHTML(editorState: EditorState) {
   if (!editorState) {
     return null;
   }
 
   const html = stateToHTML(editorState.getCurrentContent(), {
     inlineStyleFn,
-    defaultBlockTag: null,
+    defaultBlockTag: undefined,
   });
 
   return html.replace(/<br ?\/?>/g, '').replace(/&nbsp;$/, '');
