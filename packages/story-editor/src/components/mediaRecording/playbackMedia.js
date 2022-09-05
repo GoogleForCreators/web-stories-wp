@@ -84,7 +84,7 @@ function PlaybackMedia() {
   );
 
   const isMuted = !hasAudio || isGif;
-  const hasVideoEffect = videoEffect && videoEffect !== 'none';
+  const hasVideoEffect = videoEffect && videoEffect !== VIDEO_EFFECTS.NONE;
 
   const onToggleVideoMode = useCallback(() => {
     toggleIsGif();
