@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,14 +14,8 @@
  * limitations under the License.
  */
 
-function convertToCSS(style) {
-  return Object.entries(style).reduce((str, [key, val]) => {
-    const casedKey = key.replace(
-      /[A-Z]/g,
-      (match) => `-${match.toLowerCase()}`
-    );
-    return `${str}${casedKey}:${val};`;
-  }, '');
+function isHexColorString(s: string) {
+  return /^#(?:[a-f0-9]{3}){1,2}$/i.test(s);
 }
 
-export default convertToCSS;
+export default isHexColorString;

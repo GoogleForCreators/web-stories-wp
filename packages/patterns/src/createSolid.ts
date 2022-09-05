@@ -15,18 +15,15 @@
  */
 
 /**
- * External dependencies
- */
-import { parseToRgb } from 'polished';
-
-/**
  * Internal dependencies
  */
-import createSolid from './createSolid';
+import type { Solid } from './types';
 
-function createSolidFromString(str) {
-  const { red, green, blue, alpha } = parseToRgb(str);
-  return createSolid(red, green, blue, alpha);
+function createSolid(r: number, g: number, b: number, a = 1): Solid {
+  if (a !== 1) {
+    return { color: { r, g, b, a } };
+  }
+  return { color: { r, g, b } };
 }
 
-export default createSolidFromString;
+export default createSolid;

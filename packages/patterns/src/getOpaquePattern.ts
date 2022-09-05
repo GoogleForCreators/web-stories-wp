@@ -13,15 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-function getHexFromSolid(solid) {
-  const {
-    color: { r, g, b, a = 1 },
-  } = solid;
-  const dims = [r, g, b, Math.round(a * 100)];
-  return dims
-    .map((n) => n.toString(16))
-    .map((s) => s.padStart(2, '0'))
-    .join('');
+
+/**
+ * Internal dependencies
+ */
+import { Pattern, PatternType } from './types';
+
+function getOpaquePattern(pattern: Pattern) {
+  if (!pattern.type || pattern.type === PatternType.SOLID) {
+    const { color } = pattern;
+    return {
+      color: {
+        ...color,
+        a: 1,
+      },
+    };
+  }
+
+  const { alpha: _, ...opaquePattern } = pattern;
+  return opaquePattern;
 }
 
-export default getHexFromSolid;
+export default getOpaquePattern;

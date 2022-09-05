@@ -14,24 +14,13 @@
  * limitations under the License.
  */
 
-function colorHasTransparency(color) {
-  return color.a !== undefined && color.a < 1;
+/**
+ * Internal dependencies
+ */
+import { Pattern, PatternType } from './types';
+
+function hasGradient(pattern: Pattern) {
+  return Boolean(pattern?.type) && PatternType.SOLID !== pattern.type;
 }
 
-function hasOpacity(preset) {
-  const { color, alpha, stops } = preset;
-  if (color) {
-    return Boolean(colorHasTransparency(color));
-  }
-  if (typeof alpha === 'number' && alpha < 1) {
-    return true;
-  }
-  for (const colorStop of stops || []) {
-    if (colorHasTransparency(colorStop.color)) {
-      return true;
-    }
-  }
-  return false;
-}
-
-export default hasOpacity;
+export default hasGradient;
