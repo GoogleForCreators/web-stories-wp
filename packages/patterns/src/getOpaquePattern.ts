@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { Pattern, PatternType } from './types';
+import { Gradient, Pattern, PatternType } from './types';
 
 function getOpaquePattern(pattern: Pattern) {
   if (!pattern.type || pattern.type === PatternType.SOLID) {
@@ -30,7 +30,7 @@ function getOpaquePattern(pattern: Pattern) {
     };
   }
 
-  const { alpha: _, ...opaquePattern } = pattern;
+  const { alpha, ...opaquePattern } = pattern as Gradient;
   return opaquePattern;
 }
 
