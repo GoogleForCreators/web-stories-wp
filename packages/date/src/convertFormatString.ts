@@ -215,7 +215,10 @@ type ObtainKeys<Obj, Type> = {
   [Prop in keyof Obj]: Obj[Prop] extends Type ? Prop : never;
 }[keyof Obj];
 type DateStringKey = ObtainKeys<FormatMap, string>;
-type DateFunctionKey = ObtainKeys<FormatMap, (date: Date) => string>;
+type DateFormatter =
+  | ((date: Date) => string | number)
+  | (() => string | number);
+type DateFunctionKey = ObtainKeys<FormatMap, DateFormatter>;
 
 /**
  * Formats a date. Does not alter the date's timezone.
