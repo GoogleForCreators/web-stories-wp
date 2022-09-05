@@ -30,11 +30,11 @@ import getOptions from './getOptions';
 /**
  * Formats a date by a given format.
  *
- * @param {Date|string} date Date to format.
- * @param {string} formatString PHP-style date format.
- * @return {string} Formatted date.
+ * @param date Date to format.
+ * @param formatString PHP-style date format.
+ * @return Formatted date.
  */
-function format(date, formatString) {
+function format(date: Date | string, formatString: string) {
   if (!date) {
     return '';
   }

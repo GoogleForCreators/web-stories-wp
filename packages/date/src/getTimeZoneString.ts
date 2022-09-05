@@ -22,23 +22,21 @@ import { getSettings } from './settings';
 /**
  * Transforms a given integer into a valid UTC Offset in hours.
  *
- * @param {number} offset A UTC offset as an integer
- * @return {string} UTC offset in hours.
+ * @param offset A UTC offset as an integer
+ * @return UTC offset in hours.
  */
-function integerToUTCOffset(offset) {
+function integerToUTCOffset(offset: number) {
   const offsetInHours = offset > 23 ? offset / 60 : offset;
   const sign = offset < 0 ? '-' : '+';
   const absoluteOffset = Math.abs(offsetInHours);
 
-  return offsetInHours < 10
-    ? `${sign}0${absoluteOffset}`
-    : `${sign}${absoluteOffset}`;
+  return `${sign}0${String(absoluteOffset).padStart(2, '0')}`;
 }
 
 /**
  * Returns a properly formatted timezone from a timezone string or offset.
  *
- * @return {string} Timezone string.
+ * @return Timezone string.
  */
 function getTimeZoneString() {
   const settings = getSettings();

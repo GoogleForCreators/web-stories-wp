@@ -39,7 +39,6 @@ export const FORMAT_TOKEN_SEPARATOR_REGEX = new RegExp(
  *
  * @see https://www.php.net/manual/en/datetime.format.php
  * @see https://date-fns.org/v2.16.1/docs/format
- * @type {Object}
  */
 const formatMap = {
   // Day of the month, 2 digits with leading zeros. 01 to 31.
@@ -58,18 +57,18 @@ const formatMap = {
   N: 'i',
 
   // English ordinal suffix for the day of the month, 2 characters. st, nd, rd or th.
-  S(date) {
+  S(date: Date) {
     // Removes the "1" from "1st" to get only "st".
     return format(date, 'do').replace(format(date, 'd'), '');
   },
 
   // Numeric representation of the day of the week. 0 (for Sunday) through 6 (for Saturday)
-  w(date) {
+  w(date: Date) {
     return Number(format(date, 'i')) - 1;
   },
 
   // The day of the year (starting from 0). 0 through 365.
-  z(date) {
+  z(date: Date) {
     return Number(format(date, 'DDD')) - 1;
   },
 
@@ -89,12 +88,12 @@ const formatMap = {
   n: 'M',
 
   // Number of days in the given month. 28 through 31
-  t(date) {
+  t(date: Date) {
     return getDaysInMonth(date);
   },
 
   // Whether it's a leap year. 1 if it is a leap year, 0 otherwise.
-  L(date) {
+  L(date: Date) {
     return Number(isLeapYear(date));
   },
 
@@ -116,12 +115,12 @@ const formatMap = {
   A: 'aa',
 
   //  Swatch Internet time. 000 through 999.
-  B(date) {
+  B(date: Date) {
     // Biel Mean Time (BMT) is UTC+1.
     const timezoned = zonedTimeToUtc(date, '+0100');
-    const seconds = format(timezoned, 's');
-    const minutes = format(timezoned, 'm');
-    const hours = format(timezoned, 'H');
+    const seconds = parseInt(format(timezoned, 's'));
+    const minutes = parseInt(format(timezoned, 'm'));
+    const hours = parseInt(format(timezoned, 'H'));
 
     // Round results like PHP also does.
     return Math.round(
@@ -157,8 +156,7 @@ const formatMap = {
   e: 'zzzz',
 
   // Whether or not the date is in daylight saving time.	1 if Daylight Saving Time, 0 otherwise.
-  //eslint-disable-next-line no-unused-vars -- Not implemented yet
-  I(date) {
+  I() {
     // TODO: Not implemented yet.
     return 0;
   },
@@ -173,7 +171,7 @@ const formatMap = {
   T: 'zzz',
 
   // Timezone offset in seconds. -43200 through 50400.
-  Z(date) {
+  Z(date: Date) {
     const offset = formatWithTZ(
       toDate(date, getOptions()),
       'XXX',
@@ -190,7 +188,7 @@ const formatMap = {
   },
 
   // ISO 8601 date. Example: 2004-02-12T15:19:21+00:00
-  c(date) {
+  c(date: Date) {
     return formatWithTZ(
       toDate(date, getOptions()),
       "yyyy-MM-dd'T'HH:mm:ssxxx",
@@ -199,7 +197,7 @@ const formatMap = {
   },
 
   // RFC 2822 formatted date.
-  r(date) {
+  r(date: Date) {
     return formatWithTZ(
       toDate(date, getOptions()),
       'EEE, dd MMM yyyy HH:mm:ss xx',
@@ -211,15 +209,23 @@ const formatMap = {
   U: 't',
 };
 
+type FormatMap = typeof formatMap;
+type DateKey = keyof FormatMap;
+type ObtainKeys<Obj, Type> = {
+  [Prop in keyof Obj]: Obj[Prop] extends Type ? Prop : never;
+}[keyof Obj];
+type DateStringKey = ObtainKeys<FormatMap, string>;
+type DateFunctionKey = ObtainKeys<FormatMap, (date: Date) => string>;
+
 /**
  * Formats a date. Does not alter the date's timezone.
  *
  * @see https://www.php.net/manual/en/datetime.format.php
- * @param {string} dateFormat PHP-style formatting string.
- * @param {Date} date Date object.
- * @return {string} Formatted date.
+ * @param dateFormat PHP-style formatting string.
+ * @param date Date object.
+ * @return Formatted date.
  */
-function convertFormatString(dateFormat, date) {
+function convertFormatString(dateFormat: string, date: Date) {
   let i;
   let char;
   const newFormat = [];
@@ -236,12 +242,12 @@ function convertFormatString(dateFormat, date) {
     }
 
     if (char in formatMap) {
-      if (typeof formatMap[char] !== 'string') {
+      if (typeof formatMap[char as DateKey] !== 'string') {
         // If the format is a function, call it.
-        newFormat.push(`'${formatMap[char](date)}'`);
+        newFormat.push(`'${formatMap[char as DateFunctionKey](date)}'`);
       } else {
         // Otherwise, add as a formatting string.
-        newFormat.push(formatMap[char]);
+        newFormat.push(formatMap[char as DateStringKey]);
       }
     } else {
       newFormat.push(char);

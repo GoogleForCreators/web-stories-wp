@@ -39,7 +39,7 @@ import getTimeZoneString from './getTimeZoneString';
  * If no locale settings are specified, some English strings
  * taken from date-fns's default en-US locale will be used.
  *
- * @return {OptionsWithTZ} Date options.
+ * @return Date options.
  */
 function getOptions() {
   const settings = getSettings();
@@ -124,20 +124,19 @@ function getOptions() {
   const localize = {
     ...originalLocale.localize,
 
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- Required workaround
     month: buildLocalizeFn({
       values: monthValues,
       defaultWidth: 'wide',
     }),
 
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- Required workaround
     day: buildLocalizeFn({
       values: dayValues,
       defaultWidth: 'wide',
     }),
   };
 
-  /**
-   * @type {Locale}
-   */
   const locale = {
     ...originalLocale,
     code: localeCode || originalLocale.code,
@@ -146,7 +145,7 @@ function getOptions() {
     options: {
       weekStartsOn: weekStartsOn,
     },
-  };
+  } as Locale;
 
   return {
     weekStartsOn,
