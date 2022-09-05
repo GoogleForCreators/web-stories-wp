@@ -242,7 +242,7 @@ function convertFormatString(dateFormat: string, date: Date) {
     }
 
     if (char in formatMap) {
-      if (typeof formatMap[char as DateKey] !== 'string') {
+      if (typeof formatMap[char as DateKey] === 'function') {
         // If the format is a function, call it.
         newFormat.push(`'${formatMap[char as DateFunctionKey](date)}'`);
       } else {

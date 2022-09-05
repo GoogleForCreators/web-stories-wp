@@ -14,12 +14,14 @@
  * limitations under the License.
  */
 
+type WeekdayIndex = 0 | 1 | 2 | 3 | 4 | 5 | 6 | undefined;
+
 export const DEFAULT_DATE_SETTINGS = {
   dateFormat: 'F j, Y',
   timeFormat: 'g:i a',
   gmtOffset: 0,
   timezone: '',
-  weekStartsOn: 0 as 0 | 1,
+  weekStartsOn: 0 as WeekdayIndex,
 };
 
 type Settings = {
@@ -27,7 +29,7 @@ type Settings = {
   timeFormat: string;
   gmtOffset: number;
   timezone: string;
-  weekStartsOn: 0 | 1 | 2 | 3 | 4 | 5 | 6;
+  weekStartsOn: WeekdayIndex;
 } & Partial<{
   locale: string;
   months: string[];
