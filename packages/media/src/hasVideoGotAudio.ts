@@ -30,8 +30,8 @@ interface HTMLVideoElement {
 /**
  * Determines whether a video element has audio tracks.
  *
- * @param {HTMLVideoElement} video Video element.
- * @return {boolean} Whether the video has audio or not.
+ * @param video Video element.
+ * @return Whether the video has audio or not.
  */
 function hasVideoGotAudio(video: HTMLVideoElement): boolean {
   return (

@@ -26,8 +26,8 @@ import { config } from './shared';
  * Works for both Universal Analytics and Google Analytics 4.
  *
  * @see https://developers.google.com/analytics/devguides/collection/gtagjs/user-timings
- * @param {string} eventName The event nae (e.g. 'load_items').
- * @return {Function} Callback to stop timer and send tracking event.
+ * @param eventName The event nae (e.g. 'load_items').
+ * @return Callback to stop timer and send tracking event.
  */
 function getTimeTracker(eventName: string): () => void {
   const before = window.performance.now();

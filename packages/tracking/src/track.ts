@@ -22,9 +22,9 @@ import { gtag } from './shared';
 /**
  * Send an Analytics tracking event.
  *
- * @param {string} eventName Event name, either 'screen_view', 'timing_complete', or something custom.
- * @param {Object<*>?} [eventData] The event data to send.
- * @return {Promise<void>} Promise that always resolves.
+ * @param eventName Event name, either 'screen_view', 'timing_complete', or something custom.
+ * @param [eventData] The event data to send.
+ * @return Promise that always resolves.
  */
 function track(eventName: string, eventData = {}): Promise<void> {
   return new Promise((resolve) => {

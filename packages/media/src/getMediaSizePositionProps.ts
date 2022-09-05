@@ -32,13 +32,13 @@ interface MediaSizePositionProps {
 /**
  * Get props for media specifically influenced by scale and focal point.
  *
- * @param {Object} resource   Media resource.
- * @param {number} width      Original width.
- * @param {number} height     Original height.
- * @param {number} scale      Scale, 100 is the default.
- * @param {number} focalX     X axis focal point.
- * @param {number} focalY     Y axis focal point.
- * @return {Object} Media properties.
+ * @param resource   Media resource.
+ * @param width      Original width.
+ * @param height     Original height.
+ * @param scale      Scale, 100 is the default.
+ * @param focalX     X axis focal point.
+ * @param focalY     Y axis focal point.
+ * @return Media properties.
  */
 function getMediaSizePositionProps(
   resource: Resource,
