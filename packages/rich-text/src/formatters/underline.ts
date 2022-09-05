@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import type { EditorState } from 'draft-js';
+
+/**
  * Internal dependencies
  */
 import { NONE, UNDERLINE } from '../customConstants';
@@ -23,7 +28,7 @@ import {
   getPrefixStylesInSelection,
 } from '../styleManipulation';
 
-function elementToStyle(element) {
+function elementToStyle(element: HTMLElement) {
   const isSpan = element.tagName.toLowerCase() === 'span';
   const isUnderlineDecoration = element.style.textDecoration === 'underline';
   if (isSpan && isUnderlineDecoration) {
@@ -33,7 +38,7 @@ function elementToStyle(element) {
   return null;
 }
 
-function stylesToCSS(styles) {
+function stylesToCSS(styles: string[]) {
   const hasUnderline = styles.includes(UNDERLINE);
   if (!hasUnderline) {
     return null;
@@ -41,12 +46,12 @@ function stylesToCSS(styles) {
   return { textDecoration: 'underline' };
 }
 
-function isUnderline(editorState) {
+function isUnderline(editorState: EditorState) {
   const styles = getPrefixStylesInSelection(editorState, UNDERLINE);
   return !styles.includes(NONE);
 }
 
-function toggleUnderline(editorState, flag) {
+function toggleUnderline(editorState: EditorState, flag: undefined | boolean) {
   if (typeof flag === 'boolean') {
     return togglePrefixStyle(editorState, UNDERLINE, () => flag);
   }

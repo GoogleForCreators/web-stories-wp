@@ -17,7 +17,13 @@
 /**
  * External dependencies
  */
-import { Modifier } from 'draft-js';
+import {
+  Modifier,
+  ContentBlock,
+  SelectionState,
+  ContentState,
+  CharacterMetadata,
+} from 'draft-js';
 
 /**
  * Internal dependencies
@@ -25,17 +31,21 @@ import { Modifier } from 'draft-js';
 import { ITALIC, UNDERLINE } from '../customConstants';
 import { weightToStyle } from './weight';
 
-function convertStyles(contentBlock, blockSelection, contentState) {
-  let updatedContentState = contentState;
-  let lastMetadata = null;
+function convertStyles(
+  contentBlock: ContentBlock,
+  blockSelection: SelectionState,
+  contentState: ContentState
+): ContentState {
+  let updatedContentState: ContentState = contentState;
+  let lastMetadata: CharacterMetadata | null = null;
   contentBlock.findStyleRanges(
-    (metadata) => {
+    (metadata: CharacterMetadata) => {
       lastMetadata = metadata;
       return true;
     },
     (start, end) => {
       // Get new list of styles for this range
-      const oldStyles = lastMetadata.getStyle().toArray();
+      const oldStyles = lastMetadata?.getStyle().toArray() ?? [];
       const newStyles = getNewStyles(oldStyles);
       // Create a selection for this range
       const rangeSelection = blockSelection.merge({
@@ -62,15 +72,15 @@ function convertStyles(contentBlock, blockSelection, contentState) {
   return updatedContentState;
 }
 
-const styleMap = {
-  BOLD: weightToStyle('700'),
+const styleMap: Record<string, string> = {
+  BOLD: weightToStyle(700),
   ITALIC: ITALIC,
   UNDERLINE: UNDERLINE,
 };
 
-function getNewStyles(oldStyles) {
+function getNewStyles(oldStyles: string[]): string[] {
   return oldStyles
-    .map((oldStyle) => (oldStyle in styleMap ? styleMap[oldStyle] : null))
+    .map<string>((oldStyle) => styleMap[oldStyle] ?? null)
     .filter(Boolean);
 }
 

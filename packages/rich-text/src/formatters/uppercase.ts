@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import type { EditorState } from 'draft-js';
+
+/**
  * Internal dependencies
  */
 import { NONE, UPPERCASE } from '../customConstants';
@@ -23,7 +28,7 @@ import {
   getPrefixStylesInSelection,
 } from '../styleManipulation';
 
-function elementToStyle(element) {
+function elementToStyle(element: HTMLElement) {
   const isSpan = element.tagName.toLowerCase() === 'span';
   const isUppercaseTransform = element.style.textTransform === 'uppercase';
   if (isSpan && isUppercaseTransform) {
@@ -33,7 +38,7 @@ function elementToStyle(element) {
   return null;
 }
 
-function stylesToCSS(styles) {
+function stylesToCSS(styles: string[]) {
   const hasUppercase = styles.includes(UPPERCASE);
   if (!hasUppercase) {
     return null;
@@ -41,12 +46,12 @@ function stylesToCSS(styles) {
   return { textTransform: 'uppercase' };
 }
 
-function isUppercase(editorState) {
+function isUppercase(editorState: EditorState) {
   const styles = getPrefixStylesInSelection(editorState, UPPERCASE);
   return !styles.includes(NONE);
 }
 
-function toggleUppercase(editorState, flag) {
+function toggleUppercase(editorState: EditorState, flag: undefined | boolean) {
   if (typeof flag === 'boolean') {
     return togglePrefixStyle(editorState, UPPERCASE, () => flag);
   }

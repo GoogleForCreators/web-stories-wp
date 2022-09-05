@@ -25,6 +25,8 @@ import {
   isPatternEqual,
   createSolidFromString,
 } from '@googleforcreators/patterns';
+import type { Pattern, Solid } from '@googleforcreators/patterns';
+import type { EditorState } from 'draft-js';
 
 /**
  * Internal dependencies
@@ -40,11 +42,13 @@ import { isStyle, getVariable } from './util';
  * Color uses PREFIX-XXXXXXXX where XXXXXXXX is the 8 digit
  * hex represenation of the RGBA color.
  */
-const styleToColor = (style) => getSolidFromHex(getVariable(style, COLOR));
+const styleToColor = (style: string): Pattern =>
+  getSolidFromHex(getVariable(style, COLOR));
 
-const colorToStyle = (color) => `${COLOR}-${getHexFromSolid(color)}`;
+const colorToStyle = (color: Solid): string =>
+  `${COLOR}-${getHexFromSolid(color)}`;
 
-function elementToStyle(element) {
+function elementToStyle(element: HTMLElement): string | null {
   const isSpan = element.tagName.toLowerCase() === 'span';
   const rawColor = element.style.color;
   const hasColor = Boolean(rawColor);
@@ -56,12 +60,12 @@ function elementToStyle(element) {
   return null;
 }
 
-function stylesToCSS(styles) {
+function stylesToCSS(styles: string[]): null | Record<string, unknown> {
   const style = styles.find((someStyle) => isStyle(someStyle, COLOR));
   if (!style) {
     return null;
   }
-  let color;
+  let color: Pattern;
   try {
     color = styleToColor(style);
   } catch (e) {
@@ -71,7 +75,7 @@ function stylesToCSS(styles) {
   return generatePatternStyles(color, 'color');
 }
 
-function getColor(editorState) {
+function getColor(editorState: EditorState): Pattern | '((MULTIPLE))' {
   const styles = getPrefixStylesInSelection(editorState, COLOR);
   if (styles.length > 1) {
     return MULTIPLE_VALUE;
@@ -83,7 +87,7 @@ function getColor(editorState) {
   return styleToColor(colorStyle);
 }
 
-function setColor(editorState, color) {
+function setColor(editorState: EditorState, color: Solid) {
   // opaque black is default, and isn't necessary to set
   const isBlack = isPatternEqual(createSolid(0, 0, 0), color);
   const shouldSetStyle = () => !isBlack;

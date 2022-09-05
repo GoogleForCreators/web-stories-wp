@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import type { EditorState } from 'draft-js';
+
+/**
  * Internal dependencies
  */
 import { NONE, ITALIC } from '../customConstants';
@@ -23,7 +28,7 @@ import {
   getPrefixStylesInSelection,
 } from '../styleManipulation';
 
-function elementToStyle(element) {
+function elementToStyle(element: HTMLElement) {
   const isSpan = element.tagName.toLowerCase() === 'span';
   const isItalicFontStyle = element.style.fontStyle === 'italic';
   if (isSpan && isItalicFontStyle) {
@@ -33,7 +38,7 @@ function elementToStyle(element) {
   return null;
 }
 
-function stylesToCSS(styles) {
+function stylesToCSS(styles: string[]) {
   const hasItalic = styles.includes(ITALIC);
   if (!hasItalic) {
     return null;
@@ -41,12 +46,15 @@ function stylesToCSS(styles) {
   return { fontStyle: 'italic' };
 }
 
-function isItalic(editorState) {
+function isItalic(editorState: EditorState) {
   const styles = getPrefixStylesInSelection(editorState, ITALIC);
   return !styles.includes(NONE);
 }
 
-function toggleItalic(editorState, flag) {
+function toggleItalic(
+  editorState: EditorState,
+  flag: undefined | boolean
+): EditorState {
   if (typeof flag === 'boolean') {
     return togglePrefixStyle(editorState, ITALIC, () => flag);
   }

@@ -86,11 +86,14 @@ export function getPrefixStyleForCharacter(styles, prefix) {
  * // styles are now: ['NONE']
  * </example>
  *
- * @param {Object} editorState  Current editor state
- * @param {string} prefix  Prefix to test styles for
- * @return {Array.<string>} Deduped array of all matching styles
+ * @param editorState  Current editor state
+ * @param prefix  Prefix to test styles for
+ * @return Deduped array of all matching styles
  */
-export function getPrefixStylesInSelection(editorState, prefix) {
+export function getPrefixStylesInSelection(
+  editorState: EditorState,
+  prefix: string
+): string[] {
   const selection = editorState.getSelection();
   const styleSets = getAllStyleSetsInSelection(editorState);
   if (selection.isCollapsed() || styleSets.length === 0) {
@@ -99,7 +102,7 @@ export function getPrefixStylesInSelection(editorState, prefix) {
     ];
   }
 
-  const styles = new Set();
+  const styles = new Set<string>();
   styleSets.forEach((styleSet) =>
     styles.add(getPrefixStyleForCharacter(styleSet, prefix))
   );
@@ -125,11 +128,15 @@ function applyContent(editorState, contentState) {
  * should be added
  * @return {Object} New editor state
  */
+
+type SetStyleCallback = (styles: string[]) => unknown;
+type StyleGetter = (styles: string[]) => unknown;
+
 export function togglePrefixStyle(
   editorState,
   prefix,
-  shouldSetStyle = null,
-  getStyleToSet = null
+  shouldSetStyle: SetStyleCallback | null = null,
+  getStyleToSet: StyleGetter | null = null
 ) {
   if (editorState.getSelection().isCollapsed()) {
     // A different set of rules apply here
