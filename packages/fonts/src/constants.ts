@@ -16,7 +16,7 @@
 
 // Curated Fonts list source:
 // https://github.com/googleforcreators/web-stories-wp/issues/1989#issuecomment-662253222
-export const CURATED_FONT_NAMES = [
+export const CURATED_FONT_NAMES: string[] = [
   'Karla',
   'Lato',
   'Lora',

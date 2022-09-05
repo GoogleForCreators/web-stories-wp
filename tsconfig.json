@@ -1,12 +1,14 @@
 {
   "references": [
+    { "path": "packages/fonts" },
     { "path": "packages/i18n" },
     { "path": "packages/media" },
     { "path": "packages/moveable" },
     { "path": "packages/react" },
     { "path": "packages/stickers" },
     { "path": "packages/tracking" },
-    { "path": "packages/units" }
+    { "path": "packages/units" },
+    { "path": "packages/url" }
   ],
   "include": []
 }

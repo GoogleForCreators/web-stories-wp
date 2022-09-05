@@ -15,23 +15,28 @@
  */
 
 /**
+ * Internal dependencies
+ */
+import type { Font } from '../types';
+
+/**
  * Given a list of Google fonts, returns a URL to embed them.
  *
  * Uses the given list of font variants (axis tuples) to assemble the
  * axis tag list and axis tuple list that Google Fonts expects.
  *
  * @see https://developers.google.com/fonts/docs/css2
- * @param {Array<Object<{family: string, variants: Array<number, number>}>>} fonts List of font objects.
- * @param {string} [display] Valid font-display value, e.g. 'swap' or 'auto'. Default 'swap'.
- * @return {string} Google Fonts embed URL.
+ * @param fonts List of font objects.
+ * @param [display] Valid font-display value, e.g. 'swap' or 'auto'. Default 'swap'.
+ * @return Google Fonts embed URL.
  */
-function getGoogleFontURL(fonts, display = 'swap') {
+function getGoogleFontURL(fonts: Font[], display: 'swap' | 'auto' = 'swap') {
   const url = new URL('https://fonts.googleapis.com/css2');
   url.searchParams.append('display', display);
 
   for (const { family: familyName, variants = [] } of fonts) {
     // [ [ 1, 400 ], [ 0, 700 ] ] -> [ ital, wght ]
-    const axes = variants
+    const axes: string[] = variants
       .reduce((acc, [fontStyle, fontWeight]) => {
         // Uses axis names as listed on https://developers.google.com/web/fundamentals/design-and-ux/typography/variable-fonts.
         if (fontStyle === 1 && !acc.includes('ital')) {
@@ -41,7 +46,7 @@ function getGoogleFontURL(fonts, display = 'swap') {
           acc.push('wght');
         }
         return acc;
-      }, [])
+      }, [] as Array<'ital' | 'wght'>)
       .sort(); // Need to be sorted alphabetically.
 
     let family = familyName;

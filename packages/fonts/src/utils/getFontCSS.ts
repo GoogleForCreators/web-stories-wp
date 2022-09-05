@@ -17,11 +17,11 @@
 /**
  * Get the CSS font format for a given font URL.
  *
- * @param {string} src Font URL.
- * @return {string|null} Font format string or null if the font is unsupported.
+ * @param src Font URL.
+ * @return Font format string or null if the font is unsupported.
  */
-function getFontFormat(src) {
-  const fileExtension = src.split(/[#?]/)[0].split('.').pop().trim();
+function getFontFormat(src: string): string | null {
+  const fileExtension = src.split(/[#?]/)?.[0]?.split('.')?.pop()?.trim();
 
   switch (fileExtension) {
     case 'woff':
@@ -39,11 +39,11 @@ function getFontFormat(src) {
 /**
  * Get the inline stylesheet for a specific font family.
  *
- * @param {string} name Font family.
- * @param {string} src Font URL.
- * @return {string|null} Stylesheet or null if the font has an unsupported format.
+ * @param name Font family.
+ * @param src Font URL.
+ * @return Stylesheet or null if the font has an unsupported format.
  */
-function getFontCSS(name, src) {
+function getFontCSS(name: string, src: string): string | null {
   const format = getFontFormat(src);
 
   if (!format) {
