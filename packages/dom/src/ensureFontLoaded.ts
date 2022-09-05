@@ -19,11 +19,11 @@
  *
  * See https://developer.mozilla.org/en-US/docs/Web/API/FontFaceSet/check
  *
- * @param {string} fontFaceSet A font specification using the CSS value syntax, for example "italic bold 16px Roboto"
- * @param {string} content Limit the font faces to those whose Unicode range contains at least one of the characters in text.
+ * @param fontFaceSet A font specification using the CSS value syntax, for example "italic bold 16px Roboto"
+ * @param content Limit the font faces to those whose Unicode range contains at least one of the characters in text.
  * @return {Promise<boolean>} True if the font is loaded.
  */
-export default function ensureFontLoaded(fontFaceSet, content) {
+export default function ensureFontLoaded(fontFaceSet: string, content: string) {
   if (!document?.fonts) {
     return Promise.resolve(true);
   }
