@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-export function loadStylesheet(url, id) {
+export function loadStylesheet(url: string, id: string) {
   return new Promise((resolve, reject) => {
     const link = document.createElement('link');
     link.id = id;
@@ -30,10 +30,10 @@ export function loadStylesheet(url, id) {
 /**
  * Enqueue an inline stylesheet for a given font family and URL.
  *
- * @param {string} id Element ID.
- * @param {string} css  Css to load inline
+ * @param id Element ID.
+ * @param css  Css to load inline
  */
-export function loadInlineStylesheet(id, css) {
+export function loadInlineStylesheet(id: string, css: string) {
   if (!css) {
     return;
   }

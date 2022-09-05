@@ -16,7 +16,7 @@
 
 const buffer = document.createElement('div');
 
-export default function escapeHTML(string) {
+export default function escapeHTML(string: string) {
   // @todo: implement a cheaper way to escape HTML characters.
   buffer.textContent = string;
   return buffer.innerHTML;

@@ -16,8 +16,8 @@
 
 const buffer = document.createElement('div');
 
-export default function stripHTML(string) {
+export default function stripHTML(string: string) {
   // @todo: implement a cheaper way to strip markup.
   buffer.innerHTML = string;
-  return buffer.textContent;
+  return buffer.textContent || '';
 }
