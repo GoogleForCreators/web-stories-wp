@@ -120,7 +120,7 @@
         "flip": {
           "type": "object",
           "title": "Flip setting",
-          "$comment": "TODO: Set by default and make required",
+          "$comment": "TODO: Move somewhere else since text elements can't be flipped.",
           "required": ["vertical", "horizontal"],
           "properties": {
             "vertical": {
@@ -256,46 +256,7 @@
           "title": "Element ID",
           "format": "uuid"
         },
-        "scale": {
-          "type": "number",
-          "title": "Scaling",
-          "minimum": 0
-        },
-        "focalX": {
-          "type": "number",
-          "title": "X axis focal point",
-          "minimum": 0
-        },
-        "focalY": {
-          "type": "number",
-          "title": "Y axis focal point",
-          "minimum": 0
-        },
-        "padding": {
-          "type": "object",
-          "title": "Element padding",
-          "required": [],
-          "properties": {
-            "horizontal": {
-              "type": "integer",
-              "title": "Horizontal padding",
-              "minimum": 0
-            },
-            "vertical": {
-              "type": "integer",
-              "title": "Vertical padding",
-              "minimum": 0
-            },
-            "locked": {
-              "type": "boolean",
-              "title": "Whether padding is locked"
-            },
-            "hasHiddenPadding": {
-              "type": "boolean",
-              "title": "Whether the element has hidden padding"
-            }
-          }
-        },
+
         "borderRadius": {
           "type": "object",
           "title": "Element border radius",
@@ -333,10 +294,6 @@
             }
           }
         },
-        "marginOffset": {
-          "type": "number",
-          "title": "Margin offset"
-        },
         "basedOn": {
           "type": "string",
           "default": "",
@@ -345,11 +302,8 @@
         },
         "isBackground": {
           "type": "boolean",
-          "title": "Whether it is the background element"
-        },
-        "isDefaultBackground": {
-          "type": "boolean",
-          "title": "Whether it is the default background"
+          "title": "Whether it is the background element",
+          "$comment": "TODO: Move somewhere else since text elements can't be background."
         },
         "groupId": {
           "type": "string",
@@ -537,6 +491,35 @@
         "content": {
           "type": "string",
           "title": "The element's content. Can contain HTML."
+        },
+        "padding": {
+          "type": "object",
+          "title": "Element padding",
+          "required": [],
+          "properties": {
+            "horizontal": {
+              "type": "integer",
+              "title": "Horizontal padding",
+              "minimum": 0
+            },
+            "vertical": {
+              "type": "integer",
+              "title": "Vertical padding",
+              "minimum": 0
+            },
+            "locked": {
+              "type": "boolean",
+              "title": "Whether padding is locked"
+            },
+            "hasHiddenPadding": {
+              "type": "boolean",
+              "title": "Whether the element has hidden padding"
+            }
+          }
+        },
+        "marginOffset": {
+          "type": "number",
+          "title": "Margin offset"
         }
       }
     },
@@ -647,6 +630,21 @@
               "type": "integer",
               "default": 0,
               "title": "ID of the resource's poster"
+            },
+            "scale": {
+              "type": "number",
+              "title": "Scaling",
+              "minimum": 0
+            },
+            "focalX": {
+              "type": "number",
+              "title": "X axis focal point",
+              "minimum": 0
+            },
+            "focalY": {
+              "type": "number",
+              "title": "Y axis focal point",
+              "minimum": 0
             }
           }
         },
@@ -663,7 +661,13 @@
         {
           "$ref": "#/$defs/element"
         }
-      ]
+      ],
+      "properties": {
+        "isDefaultBackground": {
+          "type": "boolean",
+          "title": "Whether it is the default background"
+        }
+      }
     },
     "pattern": {
       "type": "object",
@@ -749,24 +753,10 @@
         },
         "rotation": {
           "type": "number",
-          "minimum": -360,
-          "maximum": 360
+          "minimum": -359,
+          "maximum": 359
         }
       }
-    },
-    "pageTemplateType": {
-      "type": "string",
-      "title": "The pageTemplateType Schema",
-      "enum": [
-        "",
-        "cover",
-        "editorial",
-        "list",
-        "quote",
-        "section",
-        "table",
-        "steps"
-      ]
     },
     "page": {
       "type": "object",
@@ -809,9 +799,6 @@
           "type": "string",
           "title": "Page ID",
           "format": "uuid"
-        },
-        "pageTemplateType": {
-          "$ref": "#/$defs/pageTemplateType"
         },
         "type": {
           "type": "string",

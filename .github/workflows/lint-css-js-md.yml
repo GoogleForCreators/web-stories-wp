@@ -116,7 +116,4 @@ jobs:
           github.event.pull_request.user.login != 'dependabot[bot]'
 
       - name: JSON Schema validation
-        run: |
-          ls -1 packages/templates/src/raw/*/template.json | xargs -I% npx ajv validate -s bin/schemas/story.json -d % -c ajv-formats
-          ls -1 packages/text-sets/src/raw/*.json | xargs -I% npx ajv validate -s bin/schemas/story.json -d % -c ajv-formats
-          npx ajv validate -s bin/schemas/story.json -d includes/data/stories/demo.json -c ajv-formats
+        run: npm run test:schema
