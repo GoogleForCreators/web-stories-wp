@@ -62,14 +62,14 @@ describe('date/getTimeZoneString', () => {
     expect(getTimeZoneString()).toBe('+06:16');
 
     // With high numbers where minutes are the %60
-    updateSettings({ gmtOffset: 121 });
-    expect(getTimeZoneString()).toBe('+02:01');
+    updateSettings({ gmtOffset: -121 });
+    expect(getTimeZoneString()).toBe('-02:01');
 
-    updateSettings({ gmtOffset: 121.1 });
-    expect(getTimeZoneString()).toBe('002:01');
+    updateSettings({ gmtOffset: -121.1 });
+    expect(getTimeZoneString()).toBe('-02:01');
   });
 
-  it('returns default is offset is NaN', () => {
+  it('returns default is offset if NaN', () => {
     updateSettings({ gmtOffset: 'EST' });
     expect(getTimeZoneString()).toBe('+00:00');
   });
