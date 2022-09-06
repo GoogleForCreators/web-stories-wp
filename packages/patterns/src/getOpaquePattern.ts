@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { Pattern, PatternType } from './types';
+import { Gradient, Pattern, PatternType } from './types';
 
 function getOpaquePattern(pattern: Pattern) {
   if (!pattern.type || pattern.type === PatternType.SOLID) {
@@ -29,16 +29,9 @@ function getOpaquePattern(pattern: Pattern) {
       },
     };
   }
-  return objectWithout(pattern, ['alpha']);
+
+  const { alpha, ...opaquePattern } = pattern as Gradient;
+  return opaquePattern;
 }
 
 export default getOpaquePattern;
-
-function objectWithout(
-  obj: Record<string, unknown>,
-  propertiesToRemove: Array<string>
-) {
-  return Object.fromEntries(
-    Object.entries(obj).filter(([key]) => !propertiesToRemove.includes(key))
-  );
-}

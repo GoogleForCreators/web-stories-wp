@@ -52,11 +52,11 @@ function usePerformanceTracking({ node, eventData, eventType = 'click' }) {
     performanceObserver.observe({ entryTypes: [OBSERVED_ENTRY_TYPE] });
   }
 
-  const { label, category } = eventData;
   useEffect(() => {
     if (!node || !supportsPerformanceObserving) {
       return undefined;
     }
+    const { label, category } = eventData;
     const el = node;
     const traceEvent = (e) => {
       TRACES[e.timeStamp] = { category, time: e.timeStamp };
@@ -69,7 +69,7 @@ function usePerformanceTracking({ node, eventData, eventType = 'click' }) {
     return () => {
       el.removeEventListener(eventType, traceEvent);
     };
-  }, [category, label, node, eventType, supportsPerformanceObserving]);
+  }, [eventData, node, eventType, supportsPerformanceObserving]);
 }
 
 export default usePerformanceTracking;

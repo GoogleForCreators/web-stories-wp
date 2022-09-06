@@ -26,7 +26,6 @@ import styled from 'styled-components';
 import { PanelContent } from '../panel';
 import useSidebar from '../../sidebar/useSidebar';
 import LayerList from './layerList';
-import useLayers from './useLayers';
 
 const Container = styled.div`
   filter: drop-shadow(0px -4px 8px rgba(0, 0, 0, 0.2));
@@ -35,16 +34,14 @@ const Container = styled.div`
 `;
 
 function LayerPanel() {
-  const layers = useLayers();
-
   const sidebarContentHeight = useSidebar(
     ({ state }) => state.sidebarContentHeight
   );
 
   return (
     <Container maxHeight={sidebarContentHeight}>
-      <PanelContent padding={'0'}>
-        <LayerList layers={layers} />
+      <PanelContent padding="0">
+        <LayerList />
       </PanelContent>
     </Container>
   );

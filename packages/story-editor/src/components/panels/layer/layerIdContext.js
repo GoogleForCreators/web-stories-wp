@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-export default function objectWithout(obj, propertiesToRemove) {
-  return Object.keys(obj)
-    .filter((key) => !propertiesToRemove.includes(key))
-    .reduce((newObj, key) => ({ ...newObj, [key]: obj[key] }), {});
-}
+/**
+ * External dependencies
+ */
+import { createContext } from '@googleforcreators/react';
+
+export default createContext('');
