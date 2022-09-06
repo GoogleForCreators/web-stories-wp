@@ -26,10 +26,10 @@ import { PLACEMENT } from '@googleforcreators/design-system';
  * Internal dependencies
  */
 import { Z_INDEX_FOOTER } from '../../../constants/zIndex';
-import { LayerPanel, useLayers } from '../../panels/layer';
+import { LayerPanel } from '../../panels/layer';
 import Popup, { NavigationWrapper } from '../../secondaryPopup';
 import { ToggleButton } from '../../toggleButton';
-import { useCanvas } from '../../../app';
+import { useCanvas, useStory } from '../../../app';
 
 const Container = styled.div`
   background-color: ${({ theme }) => theme.colors.bg.secondary};
@@ -42,7 +42,9 @@ const StyledNavigationWrapper = styled(NavigationWrapper)`
 `;
 
 function Layers() {
-  const layersLength = useLayers().length;
+  const numElements = useStory(
+    ({ state }) => state.currentPage?.elements?.length
+  );
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef();
   const { renamableLayer } = useCanvas(({ state }) => ({
@@ -71,13 +73,13 @@ function Layers() {
       <ToggleButton
         hasMenuList
         isOpen={isOpen}
-        notificationCount={layersLength}
+        notificationCount={numElements}
         copy={__('Layers', 'web-stories')}
         onClick={() => setIsOpen((state) => !state)}
         aria-label={sprintf(
           /* translators: %d: number of layers */
           __('Layers (%d)', 'web-stories'),
-          layersLength
+          numElements
         )}
       />
     </>

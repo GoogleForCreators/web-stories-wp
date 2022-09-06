@@ -25,8 +25,8 @@ import { useEffect, useRef, MutableRefObject } from 'react';
  * Only used for development, and removed for production builds.
  *
  * @see https://github.com/gragland/usehooks
- * @param {string} name Component name.
- * @param {Object} props Component props.
+ * @param name Component name.
+ * @param props Component props.
  */
 function useWhyDidYouUpdate(name: string, props: Record<string, unknown>) {
   const previousProps: MutableRefObject<Record<string, unknown> | undefined> =

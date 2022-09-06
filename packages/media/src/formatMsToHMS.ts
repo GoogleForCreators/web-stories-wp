@@ -22,8 +22,8 @@ import formatDuration from './formatDuration';
 /**
  * Converts length in milliseconds to HH:MM:SS.SSS format.
  *
- * @param {number} ms Original length in milliseconds.
- * @return {string} Formatted length.
+ * @param ms Original length in milliseconds.
+ * @return Formatted length.
  */
 function formatMsToHMS(ms: number): string {
   if (!ms) {

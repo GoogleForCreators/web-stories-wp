@@ -17,8 +17,8 @@
 /**
  * Returns the file name including extension from a URL.
  *
- * @param {string} url File URL.
- * @return {string} File name.
+ * @param url File URL.
+ * @return File name.
  */
 function getFileNameFromUrl(url: string): string {
   const tail = url.split('/').at(-1);
