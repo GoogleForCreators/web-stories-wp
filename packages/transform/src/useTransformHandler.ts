@@ -18,30 +18,31 @@
  * External dependencies
  */
 import { useEffect } from '@googleforcreators/react';
+import type { DependencyList } from 'react';
 
 /**
  * Internal dependencies
  */
 import useTransform from './useTransform';
+import type { TransformHandler } from './types';
 
 /**
- * @callback TransformHandler
- * @param {?Object} frameObject
- */
-
-/**
- * @param {string} id Target element's id.
- * @param {TransformHandler} handler The transform handler. The argument is
+ * @param id Target element's id.
+ * @param handler The transform handler. The argument is
  * the frame object. The `null` value resets the transform.
- * @param {Array} [deps] The effect's dependencies.
+ * @param [deps] The effect's dependencies.
  */
-function useTransformHandler(id, handler, deps = undefined) {
+function useTransformHandler(
+  id: string,
+  handler: TransformHandler,
+  deps: DependencyList | undefined = undefined
+) {
   const registerTransformHandler = useTransform(
     ({ actions }) => actions.registerTransformHandler
   );
 
   useEffect(
-    () => registerTransformHandler(id, handler),
+    () => registerTransformHandler?.(id, handler),
     // eslint-disable-next-line react-hooks/exhaustive-deps -- We want to pass through provided deps.
     deps
   );

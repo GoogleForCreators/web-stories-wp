@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,15 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-function getHexFromSolid(solid) {
-  const {
-    color: { r, g, b, a = 1 },
-  } = solid;
-  const dims = [r, g, b, Math.round(a * 100)];
-  return dims
-    .map((n) => n.toString(16))
-    .map((s) => s.padStart(2, '0'))
-    .join('');
-}
 
-export default getHexFromSolid;
+const buffer = document.createElement('div');
+
+export default function escapeHTML(string: string) {
+  // @todo: implement a cheaper way to escape HTML characters.
+  buffer.textContent = string;
+  return buffer.innerHTML;
+}

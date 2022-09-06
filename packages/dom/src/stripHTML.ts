@@ -14,11 +14,10 @@
  * limitations under the License.
  */
 
-function createSolid(r, g, b, a = 1) {
-  if (a !== 1) {
-    return { color: { r, g, b, a } };
-  }
-  return { color: { r, g, b } };
-}
+const buffer = document.createElement('div');
 
-export default createSolid;
+export default function stripHTML(string: string) {
+  // @todo: implement a cheaper way to strip markup.
+  buffer.innerHTML = string;
+  return buffer.textContent || '';
+}

@@ -672,9 +672,21 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 			}
 
 			$parts = array_map( 'intval', explode( '.', $ip ) );
-			if ( 127 === $parts[0] || 10 === $parts[0] || 0 === $parts[0]
-				|| ( 172 === $parts[0] && 16 <= $parts[1] && 31 >= $parts[1] )
-				|| ( 192 === $parts[0] && 168 === $parts[1] )
+			if (
+				0 === $parts[0] // 0.0.0.0/8.
+				||
+				127 === $parts[0] // 127.0.0.0/8.
+				||
+				10 === $parts[0] // 10.0.0.0/8.
+				||
+				( 172 === $parts[0] && 16 <= $parts[1] && 31 >= $parts[1] ) // 172.16.0.0/12.
+				||
+				( 192 === $parts[0] && 168 === $parts[1] ) // 192.168.0.0/16.
+				||
+				( 169 === $parts[0] && 254 === $parts[1] ) // 169.254.0.0/16.
+				||
+				// phpcs:ignore Squiz.PHP.CommentedOutCode.Found
+				( 100 === $parts[0] && 64 <= $parts[1] && 127 >= $parts[1] ) // Private: 100.64.0.0/10.
 			) {
 				// If host appears local, reject.
 				return false;
