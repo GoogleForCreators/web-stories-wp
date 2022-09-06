@@ -17,15 +17,18 @@
 /**
  * Appends search params to the provided URL.
  *
- * @param {string} url  URL to be modified.
- * @param {Object} args Query arguments to apply to URL.
+ * @param url URL to be modified.
+ * @param args Query arguments to apply to URL.
  * @example
  * ```js
  * const newURL = addQueryArgs( 'https://google.com', { q: 'test' } ); // https://google.com/?q=test
  * ```
- * @return {string} URL with arguments applied.
+ * @return URL with arguments applied.
  */
-export default function addQueryArgs(url, args) {
+export default function addQueryArgs(
+  url: string,
+  args: Record<string, string>
+): string {
   let isRelativeUrl = false;
   let parsedURL;
 
