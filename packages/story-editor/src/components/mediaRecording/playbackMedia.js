@@ -134,6 +134,7 @@ function PlaybackMedia() {
       await selfieSegmentation.initialize();
 
       if (hasVideoEffect && canvasRef.current) {
+        canvasRef.current.getContext('2d');
         setCanvasNode(canvasRef.current);
         setCanvasStream(canvasRef.current.captureStream());
       }
