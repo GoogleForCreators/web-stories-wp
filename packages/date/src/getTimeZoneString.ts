@@ -20,12 +20,12 @@
 import { getSettings } from './settings';
 
 /**
- * Transforms a given integer into a valid UTC Offset in hours.
+ * Transforms a given number into a valid UTC Offset in hours and possibly minutes.
  *
- * @param offset A UTC offset as an integer
- * @return UTC offset in hours.
+ * @param offset A UTC offset as a number in either hours or minutes
+ * @return UTC offset as a string.
  */
-function integerToUTCOffset(offset: number) {
+function numberToUTCOffset(offset: number) {
   const sign = offset < 0 ? '-' : '+';
   const absoluteOffset = Math.abs(offset);
   const isHours = absoluteOffset <= 12;
@@ -56,7 +56,7 @@ function getTimeZoneString() {
   }
 
   if (!Number.isNaN(Number(gmtOffset))) {
-    return integerToUTCOffset(gmtOffset);
+    return numberToUTCOffset(gmtOffset);
   }
 
   return '+00:00';
