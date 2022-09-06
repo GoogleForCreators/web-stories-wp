@@ -22,7 +22,6 @@ export { default as uniqueEntriesByKey } from './uniqueEntriesByKey';
 export { default as deepMerge } from './deepMerge';
 export { default as useMouseDownOutsideRef } from './useMouseDownOutsideRef';
 export { default as pointerEventsCss } from './pointerEventsCss';
-export { default as objectWithout } from './objectWithout';
 export { default as getKeyboardMovement } from './getKeyboardMovement';
 export { default as PanelTypes } from './panelTypes';
 export { default as PanelSections } from './panelSections';

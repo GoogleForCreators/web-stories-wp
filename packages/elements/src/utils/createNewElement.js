@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { v4 as uuidv4 } from 'uuid';
-import { objectWithout } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -37,9 +36,11 @@ const createNewElement = (type, attributes = {}) => {
     type,
     id: uuidv4(),
   };
+
   // There's an exception for the background shape that should not get all the default attributes.
   if (attributes.isDefaultBackground) {
-    return objectWithout(newElement, ['backgroundColor']);
+    const { backgroundColor: _, ...newElementWithoutBgColor } = newElement;
+    return newElementWithoutBgColor;
   }
   return newElement;
 };
