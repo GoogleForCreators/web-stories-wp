@@ -25,8 +25,9 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { ReorderableSeparator, ReorderableItem } from '../../reorderable';
+import { useStory } from '../../../app';
 import { LAYER_HEIGHT } from './constants';
-import Group from './group';
+import ElementLayer from './elementLayer';
 
 const LayerSeparator = styled(ReorderableSeparator)`
   height: ${LAYER_HEIGHT}px;
@@ -34,32 +35,40 @@ const LayerSeparator = styled(ReorderableSeparator)`
   padding: ${LAYER_HEIGHT / 2}px 0;
 `;
 
-const ReorderableGroup = memo(function ReorderableGroup({
-  groupId,
+const ReorderableLayer = memo(function ReorderableLayer({
+  id,
   position,
+  nestedOffset,
+  nestedOffsetCalcFunc,
   handleStartReordering,
 }) {
-  // This is counterintuitive but the top separator is outside of the group header.
-  const separatorGroupId = null;
-  return (
-    <Fragment key={groupId}>
-      <LayerSeparator groupId={separatorGroupId} position={position + 1} />
+  const element = useStory(({ state }) =>
+    state.currentPage?.elements.find((el) => el.id === id)
+  );
+  return element ? (
+    <Fragment key={id}>
+      <LayerSeparator
+        groupId={element.groupId}
+        nestedOffset={Boolean(nestedOffset)}
+        nestedOffsetCalcFunc={nestedOffsetCalcFunc}
+        position={position + 1}
+        isNested={element.groupId}
+      />
       <ReorderableItem
         position={position}
-        data={{ group: groupId }}
-        onStartReordering={handleStartReordering({ id: groupId })}
+        onStartReordering={handleStartReordering(element)}
+        disabled={element.isBackground}
       >
-        <Group groupId={groupId} />
+        <ElementLayer element={element} />
       </ReorderableItem>
     </Fragment>
-  );
+  ) : null;
 });
 
-ReorderableGroup.propTypes = {
-  groupId: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
+ReorderableLayer.propTypes = {
+  id: PropTypes.string.isRequired,
   position: PropTypes.number.isRequired,
   handleStartReordering: PropTypes.func.isRequired,
 };
 
-export default ReorderableGroup;
+export default ReorderableLayer;
