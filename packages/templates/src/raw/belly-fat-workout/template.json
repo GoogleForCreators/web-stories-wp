@@ -1221,7 +1221,7 @@
       },
       "type": "page",
       "id": "e4060b3c-f59d-441c-bb62-acc4244a51e0",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "5ee257c1-8f55-4251-9f7c-99d8eaf3fac9": {
           "name": "Info",
@@ -1573,7 +1573,7 @@
       },
       "type": "page",
       "id": "625eed82-64bc-463d-9de0-c794f14a2beb",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "870782ef-3d17-407d-b6cb-2d471e02f792": {
           "name": "Info",
@@ -1924,7 +1924,7 @@
       },
       "type": "page",
       "id": "5acce07d-999b-4d1e-8fcb-e1b632f6147f",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "c4326598-ebda-45a4-af40-c728b1d0cb44": {
           "name": "Info",
@@ -2276,7 +2276,7 @@
       },
       "type": "page",
       "id": "2ff689e5-3d4b-4f5a-9b4b-02ecd54e06ff",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "7bbc3e62-830c-4af7-aacb-2e6c3b7db0e6": {
           "name": "Info",
@@ -2628,7 +2628,7 @@
       },
       "type": "page",
       "id": "4fc62051-3f22-4cbc-b081-5188d9f1df42",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "3ce287fb-164f-40e6-ace4-4d2fb3bddb56": {
           "name": "Info",
@@ -2980,7 +2980,7 @@
       },
       "type": "page",
       "id": "6566be53-d1fe-45f7-b8f3-8225d70d1184",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "dc15a953-de68-45c9-a4d2-fe4afbaf7daf": {
           "name": "Info",
@@ -3070,7 +3070,7 @@
       },
       "type": "page",
       "id": "bd0986c3-00b8-44df-ad93-03927c5809e1",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -3159,7 +3159,7 @@
         "ctaText": "Watch the full video",
         "theme": "light"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [

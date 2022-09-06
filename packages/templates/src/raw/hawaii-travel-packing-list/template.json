@@ -1305,7 +1305,7 @@
         "type": "shape",
         "id": "4e37750d-b059-4aa2-a72f-3c5070985eab"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "4059b06a-672f-4b10-85c4-504c2f131482": {
           "name": "Info",
@@ -1618,7 +1618,7 @@
           "delay": 0
         }
       ],
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -2995,7 +2995,7 @@
           "delay": 0
         }
       ],
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "2cb620af-1d36-4d66-a597-0a93a7803f0c": {
           "name": "Info",
@@ -3573,7 +3573,7 @@
       },
       "type": "page",
       "id": "de6c04ec-3f96-4a08-a5d6-870b3772d53c",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "aa639ff6-17c9-441a-9218-d7eff663d82d": {
           "name": "Info",
@@ -4159,7 +4159,7 @@
       },
       "type": "page",
       "id": "9cdb64c7-57ba-4ba5-becd-d1fd802d78b7",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "d380642e-e38f-48a5-8bde-c4e6ab8ff25b": {
           "name": "Action",
@@ -5274,7 +5274,7 @@
       },
       "type": "page",
       "id": "6951e10e-26d7-4b83-aa1c-a5089d22fc10",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "4f34177c-4d4f-4031-a237-eafd1dab0c00": {
           "name": "Section 1",
@@ -5852,7 +5852,7 @@
       },
       "type": "page",
       "id": "ec688592-858a-47a0-8a13-b03672f5dac9",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "1d2b3c77-1282-4fbc-81e1-2de9114fcfc8": {
           "name": "Info",
@@ -6430,7 +6430,7 @@
       },
       "type": "page",
       "id": "f9eeeb1d-d420-4ed0-a7c9-77c741ef37c8",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "c7c2dfbb-4407-46e7-a6d4-f53e506a8b43": {
           "name": "Info",

@@ -680,7 +680,7 @@
         "ctaText": "See the location",
         "theme": "light"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -1286,7 +1286,7 @@
       },
       "type": "page",
       "id": "d98925cd-b891-40f1-9e10-a7149234972f",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -1586,7 +1586,7 @@
         "ctaText": "See the location",
         "theme": "light"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -1886,7 +1886,7 @@
         "ctaText": "See the location",
         "theme": "light"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -2482,7 +2482,7 @@
         "type": "shape",
         "id": "e6f71327-37c4-4dd4-983f-482fc8c4ea0d"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [

@@ -868,7 +868,7 @@
         "type": "shape",
         "id": "36957881-3929-4947-8a6a-c9c99e9dd608"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "22cda22d-e604-4ca5-8a96-fa3fb601246c": {
           "name": "Text",
@@ -1217,7 +1217,7 @@
         "id": "1e689663-4c00-4ba7-b097-c3cd8962a6cb",
         "type": "shape"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "35ee72cc-f74d-4519-9f53-19df9b825898": {
           "name": "Text",
@@ -1450,7 +1450,7 @@
         "id": "e793daec-aa72-4fb3-bdd8-4901acbdc5e3",
         "type": "shape"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -1676,7 +1676,7 @@
         "id": "ec19f79d-0c1c-41da-ac2b-3ecac1e08241",
         "type": "shape"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -2118,7 +2118,7 @@
       },
       "type": "page",
       "id": "08020a59-6d51-436d-a5b1-7013ed256d72",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "a77dbd2a-c5fe-46a5-bc6a-539eadc581b6": {
           "name": "Image",
@@ -2480,7 +2480,7 @@
         "id": "b11bd56f-35fc-4937-8454-b4f91977d005",
         "type": "shape"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "42bb8c26-9d32-42de-beb0-f266bffb4633": {
           "name": "Text",
@@ -2713,7 +2713,7 @@
         "id": "b5479eab-8fde-46f1-8051-2121a3564e90",
         "type": "shape"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -3757,7 +3757,7 @@
         "id": "84d80c14-69fe-4cfd-9cd2-f7b9eae01195",
         "type": "shape"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -4226,7 +4226,7 @@
       },
       "type": "page",
       "id": "e4ce06eb-05e9-4564-800d-ac932df854e6",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "e8b018f2-a0d9-4aff-bf49-a9de6101fcf2": {
           "name": "Image",

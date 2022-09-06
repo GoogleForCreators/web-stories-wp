@@ -1914,7 +1914,7 @@
           "delay": 500
         }
       ],
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "21f64464-a4ba-4dd7-b8f9-8f98e75c0c92": {
           "name": "Image",
@@ -2846,7 +2846,7 @@
       },
       "type": "page",
       "id": "962fdc9c-994a-4368-afdc-b526e6c4cf5c",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "0818554c-bcab-414c-ab5c-7dae86c15717": {
           "name": "Text",
@@ -3223,7 +3223,7 @@
       },
       "type": "page",
       "id": "b593ab98-1efc-4567-9fcc-2e14fc1e10d6",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "c1a168fa-f682-44f8-8eb1-02d3a7e80279": {
           "name": "Image",
@@ -3679,7 +3679,7 @@
       },
       "type": "page",
       "id": "a7fcb1b4-6ddc-4a2c-94b6-43df3674422d",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "bfc16459-4693-4003-8d25-30d83ba69471": {
           "name": "Image",

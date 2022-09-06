@@ -870,7 +870,7 @@
       "type": "page",
       "id": "c83559fd-1ec2-4def-b9fc-1bdbfe0ad2b6",
       "animations": [],
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "18078796-061e-4f77-a0a5-55c19544b98b": {
           "name": "Info",
@@ -1111,7 +1111,7 @@
       },
       "type": "page",
       "id": "2023769d-d737-4487-babc-c8b2685d90d0",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -1386,7 +1386,7 @@
       },
       "type": "page",
       "id": "49dc6308-3e04-4e3a-9da7-ed8458d63638",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -2983,7 +2983,7 @@
       },
       "type": "page",
       "id": "3d418efe-e50d-41f2-a714-58feef1c0868",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -3225,7 +3225,7 @@
       },
       "type": "page",
       "id": "923f19aa-7356-49af-aa94-5615f92adb76",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "30422657-3c15-4251-ac79-06a02597b17c": {
           "name": "Location",
@@ -3570,7 +3570,7 @@
       },
       "type": "page",
       "id": "80c879ad-c817-4179-8201-17dda83fada3",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "5edce6ce-6b75-40d0-92b3-56367439263b": {
           "name": "Info",
@@ -3829,7 +3829,7 @@
         "id": "a368083a-a94c-4e37-8543-64f9269e065b",
         "type": "shape"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -4071,7 +4071,7 @@
       },
       "type": "page",
       "id": "a3804d63-15bf-4954-8374-69d9ac0e5041",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [

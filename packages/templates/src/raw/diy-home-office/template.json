@@ -918,7 +918,7 @@
           "delay": 0
         }
       ],
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -1125,7 +1125,7 @@
       },
       "type": "page",
       "id": "68080c3e-35ee-49aa-9e18-63e277dab649",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -1317,7 +1317,7 @@
       },
       "type": "page",
       "id": "ef9b90a1-634e-412b-b26b-4b0541cfd938",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -1798,7 +1798,7 @@
       },
       "type": "page",
       "id": "9b0da8f6-4d20-4038-90eb-cb6e1a848297",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {}
     },
     {
@@ -2038,7 +2038,7 @@
       },
       "type": "page",
       "id": "cc74ccfa-71fb-4aaf-9703-cdcecbd0cd83",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {}
     },
     {
@@ -2278,7 +2278,7 @@
       },
       "type": "page",
       "id": "aff9c463-5644-4118-a447-39d726d06172",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {}
     },
     {
@@ -2518,7 +2518,7 @@
       },
       "type": "page",
       "id": "71103bca-aa69-48a7-aa42-6bebcb12b0d8",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {}
     },
     {
@@ -2902,7 +2902,7 @@
           "delay": 0
         }
       ],
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "7e1e3b93-5644-4a34-9b24-338e9c9a9906": {
           "name": "Voila",
@@ -3216,7 +3216,7 @@
           "delay": 0
         }
       ],
-      "pageTemplateType": ""
+      "pageTemplateType": null
     }
   ]
 }

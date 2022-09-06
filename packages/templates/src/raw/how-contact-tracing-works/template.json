@@ -692,7 +692,7 @@
       "type": "page",
       "id": "0d117a47-1d57-4743-9b12-9e70e4a72eab",
       "animations": [],
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -776,7 +776,7 @@
       },
       "type": "page",
       "id": "72a61171-0f0e-4b9b-9759-e4df2565ec87",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -1057,7 +1057,7 @@
           "targets": ["47c8a613-4a9d-4c32-8780-ddfc4052ec5f"]
         }
       ],
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "c9220a64-1778-4c5d-8379-43bf77e706cd": {
           "name": "Image",
@@ -1361,7 +1361,7 @@
           "targets": ["6626e656-44c3-4cfa-a222-183ced30d615"]
         }
       ],
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "6191d443-18e6-43b0-b441-afd6138907ed": {
           "name": "Clouds",
@@ -1530,7 +1530,7 @@
       "type": "page",
       "id": "e4c12e7c-be31-4117-a8ad-3f63ab5cf8f1",
       "animations": [],
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -2005,7 +2005,7 @@
       },
       "type": "page",
       "id": "fa64f7ba-2f25-41ff-b555-adf796b72011",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -2208,7 +2208,7 @@
       },
       "type": "page",
       "id": "ea634391-b948-4b76-ba76-57d1a855c6c1",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "e5c1f9ee-9451-4497-be1f-d88a2ad7039e": {
           "name": "Image",
@@ -2403,7 +2403,7 @@
       },
       "type": "page",
       "id": "051dff32-2014-4f8a-bae6-f25f025e17b8",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "848639c5-4984-4549-bfeb-81f55e05dba5": {
           "name": "Image",
@@ -2693,7 +2693,7 @@
       },
       "type": "page",
       "id": "d61093dd-447a-4448-a0f4-bcec733712c0",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "1142e96b-0956-4c2d-b474-3ba13a77fb52": {
           "name": "Image",
@@ -2784,7 +2784,7 @@
       },
       "type": "page",
       "id": "b1e92d2b-d18c-4cb8-8774-6e0a54872a2c",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [

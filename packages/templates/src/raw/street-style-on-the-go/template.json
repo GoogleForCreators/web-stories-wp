@@ -1248,7 +1248,7 @@
           "delay": 100
         }
       ],
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "9e02919f-ac5c-40ba-bb58-e90081c93011": {
           "name": "Background",
@@ -1886,7 +1886,7 @@
       },
       "type": "page",
       "id": "40aedb26-f5c7-4389-b1f9-b5abe8671d9e",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "7c934704-3be5-41fb-98d7-717306e3c36a": {
           "name": "Section",
@@ -2227,7 +2227,7 @@
       },
       "type": "page",
       "id": "67f8cefb-7c27-4d8d-a705-943380b1de89",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "81ba1fe2-ca86-4ce1-8590-8cd49e79b7c7": {
           "name": "Text",
@@ -2630,7 +2630,7 @@
       },
       "type": "page",
       "id": "cd82cda9-2c39-4204-8df1-f5575e42647e",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "374fa7aa-59fc-4407-babb-59569bb35d91": {
           "name": "Image",
@@ -2991,7 +2991,7 @@
       },
       "type": "page",
       "id": "82970939-a60b-4543-81fb-f9edeed3d243",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "5ff05d6a-4844-4834-a14a-5eeec2ad7268": {
           "name": "Image",
@@ -3327,7 +3327,7 @@
       },
       "type": "page",
       "id": "e59e8a55-ebe7-48cc-b5c5-69ba91ab7297",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "e827c319-3b85-4fe5-b103-1865bd1fbbae": {
           "name": "Text",
@@ -3730,7 +3730,7 @@
       },
       "type": "page",
       "id": "a3030e08-6462-4246-bda4-530a477aec31",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "520fbcd1-de3e-40ae-8c54-cbe352b4dc04": {
           "name": "Image",
@@ -4054,7 +4054,7 @@
       },
       "type": "page",
       "id": "e046e6d1-0633-4298-9726-763c408bbce4",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "dccf59cf-db53-4885-afd2-44041e844611": {
           "name": "Image",

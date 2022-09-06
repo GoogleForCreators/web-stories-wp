@@ -1295,7 +1295,7 @@
           "delay": 0
         }
       ],
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "9365df04-ba7d-45cb-ba7f-3d1f1f470427": {
           "name": "Info",
@@ -1615,7 +1615,7 @@
       },
       "type": "page",
       "id": "be528b0a-a60f-4d52-ae28-b7e76dfaf6a1",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -2313,7 +2313,7 @@
       },
       "type": "page",
       "id": "6e6528b7-19b4-4fd1-bf4b-e4d6665af57a",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "1da32414-b11d-4135-bb9b-d8d07718c034": {
           "name": "Header",
@@ -2629,7 +2629,7 @@
         "type": "shape",
         "id": "9e57288b-42fd-40ef-8ea8-08b5e45f79c2"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "c1ce1dcb-4693-4ea8-9799-27b6929b7512": {
           "name": "Info",
@@ -2945,7 +2945,7 @@
         "type": "shape",
         "id": "283187b0-23d3-4fe8-8189-c5fb55770aa0"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "075a59ee-96c4-4370-9971-324b829197ed": {
           "name": "Info",
@@ -3333,7 +3333,7 @@
       },
       "type": "page",
       "id": "8f868cda-a3fe-4685-b4e2-815d713ede88",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "9fbc7892-ea16-4414-a16a-972975551a65": {
           "name": "Header",
@@ -3664,7 +3664,7 @@
         "type": "shape",
         "id": "9e57288b-42fd-40ef-8ea8-08b5e45f79c2"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "881047a9-509f-4a93-b650-32a1e54aab91": {
           "name": "Info",
@@ -3995,7 +3995,7 @@
         "type": "shape",
         "id": "283187b0-23d3-4fe8-8189-c5fb55770aa0"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "d8ec8e34-4304-41bc-ace1-f3c1868ce035": {
           "name": "Info",
@@ -4343,7 +4343,7 @@
         "type": "shape",
         "id": "283187b0-23d3-4fe8-8189-c5fb55770aa0"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [

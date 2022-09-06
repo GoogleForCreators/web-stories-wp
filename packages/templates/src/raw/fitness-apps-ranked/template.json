@@ -628,7 +628,7 @@
         "type": "shape",
         "id": "517647c0-62ed-476c-ae9e-85d76992732e"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -1176,7 +1176,7 @@
         "type": "shape",
         "id": "fd289893-c627-46ab-aa5d-8ec4f7005780"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "c509118f-a795-489e-8c16-38fd25df02fe": {
           "name": "Badge",
@@ -2222,7 +2222,7 @@
         "ctaText": "Download the app",
         "theme": "light"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -2760,7 +2760,7 @@
         "type": "shape",
         "id": "fd289893-c627-46ab-aa5d-8ec4f7005780"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "4ce7115e-2de9-468c-a0cc-fbb20acc8853": {
           "name": "Badge",
@@ -3010,7 +3010,7 @@
         "ctaText": "Download the app",
         "theme": "light"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [

@@ -363,7 +363,7 @@
           "panDir": "topToBottom"
         }
       ],
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -896,7 +896,7 @@
           "delay": 400
         }
       ],
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -1401,7 +1401,7 @@
       "backgroundColor": { "color": { "r": 248, "g": 223, "b": 220 } },
       "type": "page",
       "id": "43b31c51-4f14-48fc-bd83-4115cada9c88",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -1578,7 +1578,7 @@
       "backgroundColor": { "color": { "r": 174, "g": 194, "b": 191 } },
       "type": "page",
       "id": "e34d8064-5238-406b-8da8-7bae03252844",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -2083,7 +2083,7 @@
       "backgroundColor": { "color": { "r": 248, "g": 223, "b": 220 } },
       "type": "page",
       "id": "c09660a0-330e-451e-be8e-98c71faedb61",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -2262,7 +2262,7 @@
       "backgroundColor": { "color": { "r": 174, "g": 194, "b": 191 } },
       "type": "page",
       "id": "c04e612f-31c6-4d99-b193-8a00bfe15406",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -2767,7 +2767,7 @@
       "backgroundColor": { "color": { "r": 248, "g": 223, "b": 220 } },
       "type": "page",
       "id": "f1f00788-891d-41a7-8c6b-ac5c6f7c348d",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -3300,7 +3300,7 @@
       "backgroundColor": { "color": { "r": 248, "g": 223, "b": 220 } },
       "type": "page",
       "id": "e9381f9f-129e-4b03-b84f-b6f01e512df2",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -3764,7 +3764,7 @@
         "ctaText": "GET PRODUCT",
         "theme": "light"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [

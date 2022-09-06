@@ -2366,7 +2366,7 @@
         "type": "shape",
         "id": "1da06749-7c4f-4f85-9197-4e207659e74b"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "4eb0f819-8cd8-44b7-891b-d473a0e9b3de": {
           "name": "Header",
@@ -2881,7 +2881,7 @@
         "type": "shape",
         "id": "2c3f3035-aea0-460c-aba0-7ab8d2521135"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "bb4c28dd-988d-44a0-8af8-430ba633138d": {
           "name": "Header",
@@ -3917,7 +3917,7 @@
         "type": "shape",
         "id": "e65879b8-1394-4055-b1e8-f22a4bf63447"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "9d24f16f-eaa8-4f13-8c68-65e3e26e9fa0": {
           "name": "Header",
@@ -4444,7 +4444,7 @@
         "type": "shape",
         "id": "2946e472-ae6e-4317-9661-913b0493e7b9"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "bad5dba2-1ffa-40f4-a5d6-e5a4f5b1df66": {
           "name": "Info",
@@ -4962,7 +4962,7 @@
         "type": "shape",
         "id": "9ee6c38a-c279-47cd-a6a4-8aa32340aa2b"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "eeb19136-ea34-4a36-ae0a-8fa47a588959": {
           "name": "Time",
@@ -5295,7 +5295,7 @@
         "type": "shape",
         "id": "a9562766-122d-4f05-b2db-8bb10b1647e4"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "8ccea118-49f8-4978-989f-2e9329648e61": {
           "name": "End",

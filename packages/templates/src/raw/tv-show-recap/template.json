@@ -1282,7 +1282,7 @@
           "delay": 0
         }
       ],
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -1717,7 +1717,7 @@
         "type": "shape",
         "id": "f48af029-0523-4f66-9f81-9ee7de93a7da"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -3192,7 +3192,7 @@
           "delay": 0
         }
       ],
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "fde919fc-86ba-416d-8b57-ce61b813d380": {
           "name": "Section",
@@ -3639,7 +3639,7 @@
         "id": "dda0f84f-7fb6-4eae-8e89-6f641253b6fb",
         "type": "shape"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -3889,7 +3889,7 @@
         "id": "af91cddf-01ad-4147-80e4-1a67b1070ade",
         "type": "shape"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -4633,7 +4633,7 @@
           "delay": 300
         }
       ],
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "2943a234-98e3-426d-8098-4cf9602f8873": {
           "name": "Camilla",
@@ -4894,7 +4894,7 @@
           "delay": 0
         }
       ],
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [

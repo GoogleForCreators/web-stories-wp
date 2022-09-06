@@ -3485,7 +3485,7 @@
       },
       "type": "page",
       "id": "063b89c5-2c8a-496a-a091-e8ad604cf903",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -3776,7 +3776,7 @@
       },
       "type": "page",
       "id": "687277fc-3cdc-434a-bbe7-f2d7b26af4e7",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -4069,7 +4069,7 @@
       },
       "type": "page",
       "id": "941853ce-be33-4db1-853b-44ec764b2033",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [

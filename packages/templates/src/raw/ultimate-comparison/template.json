@@ -573,7 +573,7 @@
           "delay": 0
         }
       ],
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -2552,7 +2552,7 @@
       },
       "type": "page",
       "id": "61b8b7dd-4fe4-452a-8965-4e79fcda8f69",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -3692,7 +3692,7 @@
       },
       "type": "page",
       "id": "ec643a90-770d-435b-a6fb-a435405301a4",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "bfe9a8e6-7035-488b-8999-0ca4dfdb2ef0": {
           "name": "Pros",
@@ -4121,7 +4121,7 @@
       },
       "type": "page",
       "id": "0b0a26c1-4b43-48cc-9b10-5ec80c9849e6",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -5291,7 +5291,7 @@
       },
       "type": "page",
       "id": "ec8a2052-1146-4399-ad06-d15180749c4e",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "5084dd49-d705-49e4-92d7-328b84857ac2": {
           "name": "Pros",
@@ -5724,7 +5724,7 @@
       },
       "type": "page",
       "id": "83187b22-480b-49c5-afa5-dd8342a85a8d",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -6864,7 +6864,7 @@
       },
       "type": "page",
       "id": "fe2623ee-7d43-4d5c-b6cd-f8defc375dd1",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "da6258c7-43c9-4d30-bfb4-20a86424e917": {
           "name": "Pros",
@@ -7787,7 +7787,7 @@
       },
       "type": "page",
       "id": "e353672c-5b08-4f7f-9b6e-dba3d7e45076",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [

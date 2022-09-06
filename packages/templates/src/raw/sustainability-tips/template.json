@@ -507,7 +507,7 @@
       "backgroundColor": { "color": { "r": 253, "g": 240, "b": 214 } },
       "type": "page",
       "id": "654b0843-b6d8-4c5d-a870-a87b70bd2d69",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -664,7 +664,7 @@
         "id": "cb2331ce-0fac-45e2-bd55-d5cc88f31811",
         "type": "shape"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -1047,7 +1047,7 @@
         "id": "94811709-ad86-4f81-9e04-b32045d80f29",
         "type": "shape"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -1274,7 +1274,7 @@
       "backgroundColor": { "color": { "r": 253, "g": 240, "b": 214 } },
       "type": "page",
       "id": "5da19e79-ac72-4f2e-82b4-24fdcee54b39",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -1432,7 +1432,7 @@
         "id": "978e2840-02fd-4725-8520-b30a35bf023b",
         "type": "shape"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -1657,7 +1657,7 @@
       "backgroundColor": { "color": { "r": 253, "g": 240, "b": 214 } },
       "type": "page",
       "id": "8819482e-8301-404d-92bd-9e73c96eee99",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -2032,7 +2032,7 @@
       "backgroundColor": { "color": { "r": 253, "g": 240, "b": 214 } },
       "type": "page",
       "id": "662fae1c-7626-4a30-9b52-ffc9fd4c1bc4",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -2190,7 +2190,7 @@
         "id": "b8844bfb-2f10-4e10-a160-2812c895d5aa",
         "type": "shape"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -2482,7 +2482,7 @@
           "delay": 0
         }
       ],
-      "pageTemplateType": ""
+      "pageTemplateType": null
     }
   ],
   "current": null,

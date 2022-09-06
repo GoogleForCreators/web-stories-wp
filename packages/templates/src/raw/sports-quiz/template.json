@@ -543,7 +543,7 @@
         "type": "shape",
         "id": "d7642b5d-8078-4300-8209-2851ee55404f"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -673,7 +673,7 @@
         "type": "shape",
         "id": "80053e48-dac4-4189-b135-b77d68038f92"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -1157,7 +1157,7 @@
         "id": "94e49dc9-9c6c-45b1-8484-e5132c904931",
         "type": "shape"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -1874,7 +1874,7 @@
         "type": "shape",
         "id": "d91ed00b-42d2-42ce-821a-5eafd6b1d77b"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -2692,7 +2692,7 @@
         "type": "shape",
         "id": "d91ed00b-42d2-42ce-821a-5eafd6b1d77b"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -2924,7 +2924,7 @@
         "type": "shape",
         "id": "c8b5df99-5aac-4f95-b30c-c1c68d188882"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -3409,7 +3409,7 @@
         "id": "76b087bc-fefd-4fd2-b80a-acb6bb496174",
         "type": "shape"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -3641,7 +3641,7 @@
         "type": "shape",
         "id": "b9a458b1-326e-484b-801e-98e3729869c2"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -4126,7 +4126,7 @@
       "backgroundColor": { "color": { "r": 68, "g": 35, "b": 131 } },
       "type": "page",
       "id": "6992edac-d28c-4193-a001-044f004dbdad",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -4417,7 +4417,7 @@
       "backgroundColor": { "color": { "r": 255, "g": 205, "b": 72 } },
       "type": "page",
       "id": "136cca74-5131-4053-a4e2-003b582a3306",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     }
   ],
   "current": null,

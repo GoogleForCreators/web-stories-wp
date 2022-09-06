@@ -1317,7 +1317,7 @@
         "type": "shape",
         "id": "68eb8ab8-e3f5-4798-ad91-5f89286753a3"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "a5c0da69-3fc6-4c96-b134-93bd53db56ed": {
           "name": "Info",
@@ -1726,7 +1726,7 @@
         "id": "e135fc75-153b-4571-8653-497b84f9ce4f",
         "type": "shape"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "7ffedb82-711e-49a7-b00e-85f8f83e8c99": {
           "name": "Info",
@@ -2135,7 +2135,7 @@
         "id": "6d9fdcc7-b1e2-40b3-8a21-74e0c6f670b8",
         "type": "shape"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "5f83f323-95ce-461b-aa6e-38baf8ea199a": {
           "name": "Info",
@@ -2553,7 +2553,7 @@
       },
       "type": "page",
       "id": "bc33cae7-d386-4abd-888b-a24f97636890",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "a3c24400-19d9-4e8f-aad8-ecdf648458c8": {
           "name": "Budget",
@@ -3371,7 +3371,7 @@
         "id": "ea8fce46-64c3-448c-85ef-71f4c335e9b3",
         "type": "shape"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "5a6287d7-7a46-46e5-8f1e-60e5f988f4fa": {
           "name": "Info",
@@ -3780,7 +3780,7 @@
         "id": "03f3b088-ebe7-4f6f-bce1-1072607a5932",
         "type": "shape"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "8c559ef8-8a9f-45e3-94fa-7c6222612aa7": {
           "name": "Info",

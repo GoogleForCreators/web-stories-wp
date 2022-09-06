@@ -638,7 +638,7 @@
           "delay": 0
         }
       ],
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "6c26938c-3d28-4658-afca-2ac6da8df519": {
           "name": "Background",
@@ -1651,7 +1651,7 @@
           "delay": 200
         }
       ],
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "beb7e768-d23a-48b2-9780-300e2b6bdfeb": {
           "name": "Background",
@@ -2074,7 +2074,7 @@
       "backgroundColor": { "color": { "r": 245, "g": 244, "b": 238 } },
       "type": "page",
       "id": "d896de97-47c6-4509-8358-eba27f168b06",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "e0c4d7e9-5997-4826-a740-144a39ad5cb6": {
           "name": "Background",
@@ -2674,7 +2674,7 @@
       "backgroundColor": { "color": { "r": 70, "g": 76, "b": 90 } },
       "type": "page",
       "id": "4edd4335-d94c-4b29-85e0-0b419ec1746c",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "02334812-5f7b-4956-a4a1-14739124592a": {
           "name": "Background",
@@ -3097,7 +3097,7 @@
       "backgroundColor": { "color": { "r": 245, "g": 244, "b": 238 } },
       "type": "page",
       "id": "0df5cf42-08b1-420c-ac21-64d370c404a4",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "b2c7d6b8-4d4d-400a-926a-2178760f92f1": {
           "name": "Background",
@@ -3697,7 +3697,7 @@
       "backgroundColor": { "color": { "r": 66, "g": 78, "b": 68 } },
       "type": "page",
       "id": "141b9a5e-a39a-44b8-b1f8-3ae52bce927f",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "9ca0d2ac-8785-480f-b68f-9b1f5a66e83f": {
           "name": "Background",
@@ -4120,7 +4120,7 @@
       "backgroundColor": { "color": { "r": 245, "g": 244, "b": 238 } },
       "type": "page",
       "id": "de3c610c-ae10-49b7-ba37-95a3320d68a7",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "2044dc02-f340-4853-95b6-fb981b434a66": {
           "name": "Background",
@@ -4720,7 +4720,7 @@
       "backgroundColor": { "color": { "r": 99, "g": 101, "b": 79 } },
       "type": "page",
       "id": "995c748f-da00-4449-afe2-e0bb26720198",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "2ef4008b-8b60-4300-90a1-8654d3fc428b": {
           "name": "Background",

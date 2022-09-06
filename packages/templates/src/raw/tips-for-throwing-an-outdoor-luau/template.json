@@ -773,7 +773,7 @@
         "id": "581e926d-fb91-433e-a8d4-bb19f48c010f",
         "type": "shape"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "368b85a1-41b3-4e6d-93f3-42e47867dd88": {
           "name": "Header",
@@ -1067,7 +1067,7 @@
         "id": "c4d30e8f-b89c-4bac-b006-110083a14673",
         "type": "shape"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "bdb11a1e-0a8d-4797-939f-8b302bae9284": {
           "name": "Tip",
@@ -1325,7 +1325,7 @@
         "id": "728c69de-5b58-42a9-88cd-7f64b4ccb7b3",
         "type": "shape"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "0e492f6d-900d-4be6-ae37-252896142884": {
           "name": "Lines",
@@ -1634,7 +1634,7 @@
         "id": "0bd6c15a-71cc-4b30-9308-6889dfc90b00",
         "type": "shape"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "cc2d4127-0244-4752-a071-4ce6e5f60dd2": {
           "name": "Tip",
@@ -1954,7 +1954,7 @@
         "id": "6234ea30-f145-46c6-802f-ffaf74922b62",
         "type": "shape"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "657e201a-7720-45e1-b484-66023653ce3e": {
           "name": "Tip",
@@ -2274,7 +2274,7 @@
         "id": "b1e4d0c9-6953-42e6-a350-a22a31894668",
         "type": "shape"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "8aef4b56-9ab7-4518-8513-b374f6bbf1ca": {
           "name": "Tip",
@@ -2585,7 +2585,7 @@
         "id": "4eea3ee4-729d-47b0-833e-312b418257d0",
         "type": "shape"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "ce31f7e3-7ce4-437a-9c55-efcb22969bee": {
           "name": "Tip",
@@ -2752,7 +2752,7 @@
           "delay": 100
         }
       ],
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -2995,7 +2995,7 @@
         "id": "5001b3b0-56ae-4ae0-8951-2dbf479c0541",
         "type": "shape"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "e7ef3ca5-51ba-4957-8552-d4f6b362029f": {
           "name": "Lines",

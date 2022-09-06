@@ -2804,7 +2804,7 @@
       },
       "type": "page",
       "id": "bc3e5021-fa2b-49d0-9ac4-3d714a81f86a",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "cceb5cbc-899a-408f-9a71-83a070b25447": {
           "name": "Background",
@@ -3243,7 +3243,7 @@
       },
       "type": "page",
       "id": "1e3c4674-fd94-4232-83d4-eb8ea67236f7",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "351dce1c-79a1-44a5-889b-afbc1891fd7c": {
           "name": "Background",
@@ -3758,7 +3758,7 @@
       },
       "type": "page",
       "id": "7b0a862a-2483-4df0-bc1d-39d5915dc3c3",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "a9515cd8-8212-4b5c-bd1b-37af3728ce70": {
           "name": "Image",
@@ -4127,7 +4127,7 @@
         "id": "fb96f769-4e1f-4cdb-8cc3-a2ff4795b4f3",
         "type": "shape"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "2c997a34-be0b-4812-9e84-230b67dc2e6f": {
           "name": "Background",
@@ -4839,7 +4839,7 @@
         "id": "8333de3f-cbc3-48cd-86cf-04b5313ac7d0",
         "type": "shape"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "08dd757a-5b6b-4346-bfd5-ec263dcc40a5": {
           "name": "Background",

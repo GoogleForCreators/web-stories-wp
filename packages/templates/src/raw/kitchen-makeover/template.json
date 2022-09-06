@@ -610,7 +610,7 @@
           "delay": 0
         }
       ],
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -1010,7 +1010,7 @@
       "type": "page",
       "id": "d1a7e1b9-fb50-439d-860e-371994771e4d",
       "animations": [],
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "912be636-5156-429f-9a56-d2b815dc91e3": {
           "name": "Header",
@@ -1425,7 +1425,7 @@
       },
       "type": "page",
       "id": "62c5c755-6a79-4140-85f8-374e07cbc4ff",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "15bead46-5056-413b-a0cb-4621c722c9da": {
           "name": "Header",
@@ -1831,7 +1831,7 @@
       },
       "type": "page",
       "id": "a24a18b4-68a3-4d02-aac2-f747a75a6c17",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "35da833a-19f5-47ac-9641-603e73e3d361": {
           "name": "Header",
@@ -1959,7 +1959,7 @@
       },
       "type": "page",
       "id": "38f4a398-b6e0-4b1a-bacd-40d7840d7fe4",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -2144,7 +2144,7 @@
       },
       "type": "page",
       "id": "af310d7b-7315-45de-9d2b-3a87556538f1",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -2235,7 +2235,7 @@
         "id": "69ca0638-db76-4db3-a567-7c0692dd1e93"
       },
       "animations": [],
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -2429,7 +2429,7 @@
       },
       "type": "page",
       "id": "7c5d7a91-0830-4670-8b16-43d2750ac7b1",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -2710,7 +2710,7 @@
           "delay": 0
         }
       ],
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -2981,7 +2981,7 @@
         "id": "decf0e89-7063-475a-bc44-328685ec2720",
         "type": "shape"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
