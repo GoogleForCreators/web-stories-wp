@@ -14,7 +14,9 @@
  * limitations under the License.
  */
 
-export const LAYER_HEIGHT = 35;
-export const NESTED_PX = 30;
+/**
+ * External dependencies
+ */
+import { createContext } from '@googleforcreators/react';
 
-export const nestedOffsetCalcFunc = (evt) => evt.offsetY < LAYER_HEIGHT / 1.7;
+export default createContext('');
