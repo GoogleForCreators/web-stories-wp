@@ -37,9 +37,13 @@ function numberToUTCOffset(offset: number) {
     : Math.floor(absoluteOffset / 60);
 
   const hoursAsString = String(offsetInHours).padStart(2, '0');
-  const minutesAsString = String(offsetInMinutes).padStart(2, '0');
 
-  return `${sign}${hoursAsString}:${minutesAsString}`;
+  if (offsetInMinutes > 0) {
+    const minutesAsString = String(offsetInMinutes).padStart(2, '0');
+    return `${sign}${hoursAsString}:${minutesAsString}`;
+  }
+
+  return `${sign}${hoursAsString}`;
 }
 
 /**
@@ -59,7 +63,7 @@ function getTimeZoneString() {
     return numberToUTCOffset(gmtOffset);
   }
 
-  return '+00:00';
+  return '+00';
 }
 
 export default getTimeZoneString;

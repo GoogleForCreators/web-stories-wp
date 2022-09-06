@@ -26,7 +26,7 @@ describe('date/getTimeZoneString', () => {
   });
 
   it('returns +00 by default', () => {
-    expect(getTimeZoneString()).toBe('+00:00');
+    expect(getTimeZoneString()).toBe('+00');
   });
 
   it('returns timezone if present', () => {
@@ -36,15 +36,15 @@ describe('date/getTimeZoneString', () => {
 
   it('returns value as hours from gmtOffset if low number', () => {
     updateSettings({ gmtOffset: 10 });
-    expect(getTimeZoneString()).toBe('+10:00');
+    expect(getTimeZoneString()).toBe('+10');
 
     updateSettings({ gmtOffset: -6 });
-    expect(getTimeZoneString()).toBe('-06:00');
+    expect(getTimeZoneString()).toBe('-06');
   });
 
   it('returns value converted from minutes to hours from gmtOffset if high number', () => {
     updateSettings({ gmtOffset: 120 });
-    expect(getTimeZoneString()).toBe('+02:00');
+    expect(getTimeZoneString()).toBe('+02');
 
     updateSettings({ gmtOffset: -150 });
     expect(getTimeZoneString()).toBe('-02:30');
@@ -71,6 +71,6 @@ describe('date/getTimeZoneString', () => {
 
   it('returns default is offset if NaN', () => {
     updateSettings({ gmtOffset: 'EST' });
-    expect(getTimeZoneString()).toBe('+00:00');
+    expect(getTimeZoneString()).toBe('+00');
   });
 });
