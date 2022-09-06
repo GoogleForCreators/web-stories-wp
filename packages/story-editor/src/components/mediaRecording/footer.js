@@ -62,6 +62,7 @@ import {
   COUNTDOWN_TIME_IN_SECONDS,
   PHOTO_MIME_TYPE,
   PHOTO_FILE_TYPE,
+  VIDEO_EFFECTS,
 } from './constants';
 
 const BaseButton = styled(Button).attrs({
