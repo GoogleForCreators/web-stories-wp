@@ -14,6 +14,9 @@
  * limitations under the License.
  */
 
-export { createContext, useContext } from 'use-context-selector';
+/**
+ * External dependencies
+ */
+import { createContext } from '@googleforcreators/react';
 
-export const identity = <T>(state: T) => state;
+export default createContext('');

@@ -14,17 +14,10 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import { identity, useContextSelector } from '@googleforcreators/react';
-/**
- * Internal dependencies
- */
-import Context from './context';
+const buffer = document.createElement('div');
 
-function useTransform(selector) {
-  return useContextSelector(Context, selector ?? identity);
+export default function stripHTML(string: string) {
+  // @todo: implement a cheaper way to strip markup.
+  buffer.innerHTML = string;
+  return buffer.textContent || '';
 }
-
-export default useTransform;

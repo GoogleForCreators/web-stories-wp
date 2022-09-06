@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,10 +14,7 @@
  * limitations under the License.
  */
 
-const buffer = document.createElement('div');
-
-export default function stripHTML(string) {
-  // @todo: implement a cheaper way to strip markup.
-  buffer.innerHTML = string;
-  return buffer.textContent;
+export interface Font {
+  family: string;
+  variants: Array<[number, number]>;
 }
