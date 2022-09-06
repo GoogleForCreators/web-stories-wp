@@ -18,7 +18,9 @@
  * External dependencies
  */
 import { EditorState, Modifier } from 'draft-js';
+import type { EditorChangeType } from 'draft-js';
 import { useCallback } from '@googleforcreators/react';
+import type { Dispatch, SetStateAction } from 'react';
 
 /**
  * Internal dependencies
@@ -33,12 +35,14 @@ import { getPrefixStylesInSelection } from './styleManipulation';
  * Compare this with `usePasteTextContent` that handles generally pasting
  * text without being in text edit-mode anywhere.
  */
-function useHandlePastedText(setEditorState) {
+function useHandlePastedText(
+  setEditorState: Dispatch<SetStateAction<EditorState>>
+) {
   return useCallback(
-    (text, html, state) => {
+    (text: string, html: string, state: EditorState) => {
       const content = state.getCurrentContent();
       const selection = state.getSelection();
-      let newState, stateChange;
+      let newState, stateChange: EditorChangeType;
       if (html) {
         // Get the styles of the current selection context (collapsed or not),
         // that should be applied to the entirety of the pasted HTML.

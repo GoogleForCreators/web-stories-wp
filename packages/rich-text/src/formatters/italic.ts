@@ -53,7 +53,7 @@ function isItalic(editorState: EditorState) {
 
 function toggleItalic(
   editorState: EditorState,
-  flag: undefined | boolean
+  flag?: undefined | boolean
 ): EditorState {
   if (typeof flag === 'boolean') {
     return togglePrefixStyle(editorState, ITALIC, () => flag);

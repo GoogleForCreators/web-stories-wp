@@ -18,24 +18,30 @@
  * External dependencies
  */
 import { Modifier, EditorState } from 'draft-js';
+import type { ContentState } from 'draft-js';
 
 /**
  * Internal dependencies
  */
 import { NONE } from './customConstants';
 import { getAllStyleSetsInSelection } from './draftUtils';
+import type { SetStyleCallback, StyleGetter } from './types';
 
 /**
  * Get a first style in the given set that match the given prefix,
  * or NONE if there's no match.
  *
- * @param {Set.<string>} styles  Set (ImmutableSet even) of styles to check
- * @param {string} prefix  Prefix to test styles for
- * @return {string} First match or NONE
+ * @param styles  Set (ImmutableSet even) of styles to check
+ * @param prefix  Prefix to test styles for
+ * @return First match or NONE
  */
-export function getPrefixStyleForCharacter(styles, prefix) {
+export function getPrefixStyleForCharacter(
+  styles: Immutable.OrderedSet<string>,
+  prefix: string | typeof NONE
+): string {
+  // @todo Why is `style.style` possible?
   const list = styles.toArray().map((style) => style.style ?? style);
-  const matcher = (style) => style && style.startsWith(prefix);
+  const matcher = (style: string) => style && style.startsWith(prefix);
   if (!list.some(matcher)) {
     return NONE;
   }
@@ -110,7 +116,7 @@ export function getPrefixStylesInSelection(
   return [...styles];
 }
 
-function applyContent(editorState, contentState) {
+function applyContent(editorState: EditorState, contentState: ContentState) {
   return EditorState.push(editorState, contentState, 'change-inline-style');
 }
 
@@ -129,12 +135,9 @@ function applyContent(editorState, contentState) {
  * @return {Object} New editor state
  */
 
-type SetStyleCallback = (styles: string[]) => unknown;
-type StyleGetter = (styles: string[]) => unknown;
-
 export function togglePrefixStyle(
-  editorState,
-  prefix,
+  editorState: EditorState,
+  prefix: string,
   shouldSetStyle: SetStyleCallback | null = null,
   getStyleToSet: StyleGetter | null = null
 ) {

@@ -15,16 +15,27 @@
  */
 
 /**
+ * External dependencies
+ */
+import type { EditorState } from 'draft-js';
+import type { Pattern } from '@googleforcreators/patterns';
+
+/**
  * Internal dependencies
  */
 import formatters from './formatters';
 
-function getStateInfo(state) {
+type Getter = (state: EditorState) => boolean | string | number | Pattern;
+
+function getStateInfo(state: EditorState) {
   const stateInfo = formatters.reduce(
     (aggr, { getters }) => ({
       ...aggr,
       ...Object.fromEntries(
-        Object.entries(getters).map(([key, getter]) => [key, getter(state)])
+        Object.entries(getters).map(([key, getter]: [string, Getter]) => [
+          key,
+          getter(state),
+        ])
       ),
     }),
     {}

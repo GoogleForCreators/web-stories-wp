@@ -78,7 +78,7 @@ function isBold(editorState: EditorState) {
   return allIsBold;
 }
 
-function toggleBold(editorState: EditorState, flag: undefined | boolean) {
+function toggleBold(editorState: EditorState, flag?: undefined | boolean) {
   if (typeof flag === 'boolean') {
     if (flag) {
       const getDefault = () => weightToStyle(DEFAULT_BOLD);
@@ -113,7 +113,8 @@ function getFontWeight(editorState: EditorState) {
   return weights[0];
 }
 
-function setFontWeight(editorState: EditorState, weight: number) {
+// @todo Check what happens if weight is 0, it was not always set previously.
+function setFontWeight(editorState: EditorState, weight = 0) {
   // if the weight to set is non-400, set a style
   // (if 400 is target, all other weights are just removed, and we're good)
   const shouldSetStyle = () => weight !== 400;

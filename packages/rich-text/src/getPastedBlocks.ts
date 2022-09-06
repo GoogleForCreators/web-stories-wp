@@ -29,7 +29,16 @@ import {
  */
 import convertStyles from './formatters/convert';
 
+type ValueOf<T> = T[keyof T];
+type Map = {
+  unstyled: Record<string, string | string[]>;
+  'unordered-list-item': Record<string, string>;
+  'ordered-list-item': Record<string, string>;
+};
+
 class CustomBlockRenderMap {
+  _map: Map;
+
   constructor() {
     // Generally only allow unstyled block types
     // However, we want to add list styles so keep those
@@ -49,12 +58,17 @@ class CustomBlockRenderMap {
   }
 
   // The only function from immutable.js#Map, that we need to implement
-  mapKeys(callback) {
+  mapKeys(
+    callback: (
+      key: string,
+      element: ValueOf<Map>
+    ) => Record<string, string> | Record<string, string[]>
+  ) {
     return Object.keys(this._map).map((key) => callback(key, this._map[key]));
   }
 }
 
-function getPastedBlocks(html, existingStyles = []) {
+function getPastedBlocks(html: string, existingStyles: string[] = []) {
   const renderMap = new CustomBlockRenderMap();
   const { contentBlocks, entityMap } = convertFromHTML(
     html,
@@ -78,7 +92,7 @@ function getPastedBlocks(html, existingStyles = []) {
   // with corrected styles and the required added list styles
   const newContentBlocks = noEntityContent.getBlocksAsArray();
   let updatedContentState = noEntityContent;
-  let lastBlockType = null;
+  let lastBlockType: string | null = null;
   let lastBlockNumber = 0;
 
   newContentBlocks.forEach((contentBlock) => {
@@ -141,7 +155,7 @@ function getPastedBlocks(html, existingStyles = []) {
 
 export default getPastedBlocks;
 
-function selectEverything(contentState) {
+function selectEverything(contentState: ContentState) {
   const firstBlock = contentState.getFirstBlock();
   const lastBlock = contentState.getLastBlock();
   return SelectionState.createEmpty(firstBlock.getKey()).merge({

@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import type { EditorState } from 'draft-js';
+
+/**
  * Internal dependencies
  */
 import { ITALIC, WEIGHT } from './customConstants';
@@ -25,13 +30,14 @@ import { getSelectAllStateFromHTML } from './htmlManipulation';
 /**
  * Gets font styles for a characters, considers italic and weight only.
  *
- * @param {Object} styles Set of styles.
- * @return {[]} Array of found styles for the character.
+ * @param styles Set of styles.
+ * @return Array of found styles for the character.
  */
-function getFontStylesForCharacter(styles) {
+function getFontStylesForCharacter(
+  styles: Immutable.OrderedSet<string>
+): string[] {
   return styles
     .toArray()
-    .map((style) => style.style ?? style)
     .filter((style) => style === ITALIC || style.startsWith(WEIGHT));
 }
 
@@ -39,10 +45,10 @@ function getFontStylesForCharacter(styles) {
  * Gets an array of all found font variants (unique).
  * Font variants are in the format of [italic, weight] where italic is 0 or 1.
  *
- * @param {Object} editorState Editor state.
- * @return {[]} Array of variants.
+ * @param editorState Editor state.
+ * @return Array of variants.
  */
-function getVariants(editorState) {
+function getVariants(editorState: EditorState) {
   const styleSets = getAllStyleSetsInSelection(editorState);
   if (styleSets.length === 0) {
     return getFontStylesForCharacter(editorState.getCurrentInlineStyle());
@@ -56,7 +62,7 @@ function getVariants(editorState) {
   return [...new Set(styles)];
 }
 
-export default function getFontVariants(html) {
+export default function getFontVariants(html: string) {
   const htmlState = getSelectAllStateFromHTML(html);
   const variants = getVariants(htmlState).map((variant) => [
     variant.startsWith(ITALIC) ? 1 : 0,

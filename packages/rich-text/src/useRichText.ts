@@ -22,8 +22,10 @@ import { identity, useContextSelector } from '@googleforcreators/react';
  * Internal dependencies
  */
 import Context from './context';
+// @todo Type State.
+import type { State } from './types';
 
-function useRichText(selector) {
+function useRichText<T>(selector: (state: State) => T) {
   return useContextSelector(Context, selector ?? identity);
 }
 

@@ -20,7 +20,7 @@
 import { useEffect, useState } from '@googleforcreators/react';
 import { EditorState, Modifier } from 'draft-js';
 import type { SelectionState } from 'draft-js';
-import type { SetStateAction } from 'react';
+import type { Dispatch, SetStateAction } from 'react';
 
 const FAUX_SELECTION = 'CUSTOM-FAUX';
 
@@ -47,7 +47,7 @@ function isEqualSelectionIgnoreFocus(
  */
 export function useFauxSelection(
   editorState: EditorState,
-  setEditorState: SetStateAction<EditorState>
+  setEditorState: Dispatch<SetStateAction<EditorState>>
 ) {
   const [fauxSelection, setFauxSelection] = useState<SelectionState | null>(
     null
