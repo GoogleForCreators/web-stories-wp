@@ -477,7 +477,16 @@ function useMediaUploadQueue() {
        * @param {Object} item.additionalData Additional Data object.
        */
       async (item) => {
-        const { id, file, resource, isAnimatedGif, state: itemState } = item;
+        const {
+          id,
+          file,
+          resource,
+          isAnimatedGif,
+          state: itemState,
+          muteVideo,
+          cropVideo,
+          trimData,
+        } = item;
         if (ITEM_STATUS.PENDING !== itemState) {
           return;
         }
@@ -485,6 +494,14 @@ function useMediaUploadQueue() {
         // Changing item state so that an item is never processed twice
         // in this effect.
         prepareItem({ id });
+
+        const needsTranscoding =
+          isAnimatedGif || muteVideo || cropVideo || trimData;
+
+        if (needsTranscoding) {
+          prepareForTranscoding({ id });
+          return;
+        }
 
         const isVideo = file.type.startsWith('video/');
 
@@ -507,15 +524,7 @@ function useMediaUploadQueue() {
           }
         }
 
-        if (!isTranscodingEnabled) {
-          uploadItem(item);
-
-          return;
-        }
-
-        const needsTranscoding = isAnimatedGif || canTranscodeFile(file);
-
-        if (!needsTranscoding) {
+        if (!isTranscodingEnabled || !canTranscodeFile(file)) {
           uploadItem(item);
 
           return;
