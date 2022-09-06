@@ -372,18 +372,18 @@ class Editor extends Service_Base implements HasRequirements {
 		$improved_autosaves = $this->experiments->is_experiment_enabled( 'improvedAutosaves' );
 
 		if ( $improved_autosaves && isset( $story_id ) ) {
-			
+
 			$auto_save = wp_get_post_autosave( $story_id );
 
 			if ( $auto_save && $post ) {
 				if ( mysql2date( 'U', $auto_save->post_modified_gmt, false ) > mysql2date( 'U', $post->post_modified_gmt, false ) ) {
 					$auto_save_link = get_edit_post_link( $auto_save->ID );
 				} else {
-					wp_delete_post_revision( $auto_save->ID );  
+					wp_delete_post_revision( $auto_save->ID );
 				}
-			} 
+			}
 		}
-		
+
 		$settings = [
 			'autoSaveInterval'        => \defined( 'AUTOSAVE_INTERVAL' ) ? AUTOSAVE_INTERVAL : null,
 			'localAutoSaveInterval'   => 15,
@@ -434,7 +434,7 @@ class Editor extends Service_Base implements HasRequirements {
 			'shoppingProvider'        => $shopping_provider,
 			'encodeMarkup'            => $this->decoder->supports_decoding(),
 			'metaBoxes'               => $this->meta_boxes->get_meta_boxes_per_location(),
-			'ffmpegCoreUrl'           => trailingslashit( WEBSTORIES_CDN_URL ) . 'js/@ffmpeg/core@0.10.0/dist/ffmpeg-core.js',
+			'ffmpegCoreUrl'           => trailingslashit( WEBSTORIES_CDN_URL ) . 'js/@ffmpeg/core@0.11.4/dist/ffmpeg-core.js',
 			'mediainfoUrl'            => trailingslashit( WEBSTORIES_CDN_URL ) . 'js/mediainfo.js@0.1.7/dist/mediainfo.min.js',
 			'flags'                   => array_merge(
 				$this->experiments->get_experiment_statuses( 'general' ),
