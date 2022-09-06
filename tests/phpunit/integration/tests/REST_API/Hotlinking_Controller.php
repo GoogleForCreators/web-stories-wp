@@ -573,6 +573,9 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 			'an external request when not allowed'         => [
 				'url' => 'http://192.168.0.1/caniload.php',
 			],
+			'a request with disallowed link-local ip'      => [
+				'url' => 'http://169.254.0.0/caniload.php',
+			],
 			'a port not considered safe by default'        => [
 				'url' => 'https://example.com:81/caniload.php',
 			],
