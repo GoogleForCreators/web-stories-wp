@@ -26,11 +26,18 @@ import { getSettings } from './settings';
  * @return UTC offset in hours.
  */
 function integerToUTCOffset(offset: number) {
-  const offsetInHours = offset > 23 ? offset / 60 : offset;
   const sign = offset < 0 ? '-' : '+';
-  const absoluteOffset = Math.abs(offsetInHours);
+  const absoluteOffset = Math.abs(offset);
+  const isHours = absoluteOffset <= 12;
+  const offsetInMinutes = isHours ? 0 : absoluteOffset % 60;
+  const offsetInHours = isHours
+    ? absoluteOffset
+    : Math.floor(absoluteOffset / 60);
 
-  return `${sign}0${String(absoluteOffset).padStart(2, '0')}`;
+  const hoursAsString = String(offsetInHours).padStart(2, '0');
+  const minutesAsString = String(offsetInMinutes).padStart(2, '0');
+
+  return `${sign}${hoursAsString}:${minutesAsString}`;
 }
 
 /**
