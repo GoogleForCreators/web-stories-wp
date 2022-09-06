@@ -131,12 +131,13 @@ function PlaybackMedia() {
 
   useEffect(() => {
     async function run() {
+      await selfieSegmentation.initialize();
+
       if (hasVideoEffect && canvasRef.current) {
         setCanvasNode(canvasRef.current);
         setCanvasStream(canvasRef.current.captureStream());
       }
       if (videoEffect === VIDEO_EFFECTS.BLUR) {
-        await selfieSegmentation.initialize();
         selfieSegmentation.onResults(onSelfieSegmentationResults);
         const sendFrame = async () => {
           if (streamNode && streamNode.videoWidth && selfieSegmentation) {
