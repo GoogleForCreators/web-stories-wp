@@ -434,7 +434,7 @@ class Editor extends Service_Base implements HasRequirements {
 			'shoppingProvider'        => $shopping_provider,
 			'encodeMarkup'            => $this->decoder->supports_decoding(),
 			'metaBoxes'               => $this->meta_boxes->get_meta_boxes_per_location(),
-			'ffmpegCoreUrl'           => trailingslashit( WEBSTORIES_CDN_URL ) . 'js/@ffmpeg/core@0.11.4/dist/ffmpeg-core.js',
+			'ffmpegCoreUrl'           => trailingslashit( WEBSTORIES_CDN_URL ) . 'js/@ffmpeg/core@0.11.0/dist/ffmpeg-core.js',
 			'mediainfoUrl'            => trailingslashit( WEBSTORIES_CDN_URL ) . 'js/mediainfo.js@0.1.7/dist/mediainfo.min.js',
 			'flags'                   => array_merge(
 				$this->experiments->get_experiment_statuses( 'general' ),

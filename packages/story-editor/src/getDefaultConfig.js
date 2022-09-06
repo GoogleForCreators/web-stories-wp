@@ -83,7 +83,7 @@ const getDefaultConfig = () => ({
   showMedia3p: true,
   encodeMarkup: true,
   ffmpegCoreUrl:
-    'https://wp.stories.google/static/main/js/@ffmpeg/core@0.11.4/dist/ffmpeg-core.js',
+    'https://wp.stories.google/static/main/js/@ffmpeg/core@0.11.0/dist/ffmpeg-core.js',
   apiCallbacks: {},
   MediaUpload: () => null,
   styleConstants: {
