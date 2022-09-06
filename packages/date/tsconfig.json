@@ -5,5 +5,5 @@
     "declarationDir": "dist-types"
   },
   "references": [{ "path": "../i18n" }],
-  "include": ["src/**/*", "buildLocalizeFn.d.ts"]
+  "include": ["src/**/*"]
 }

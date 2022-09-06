@@ -124,13 +124,11 @@ function getOptions() {
   const localize = {
     ...originalLocale.localize,
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- Required workaround
     month: buildLocalizeFn({
       values: monthValues,
       defaultWidth: 'wide',
     }),
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- Required workaround
     day: buildLocalizeFn({
       values: dayValues,
       defaultWidth: 'wide',

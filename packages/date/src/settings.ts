@@ -30,14 +30,13 @@ type Settings = {
   gmtOffset: number;
   timezone: string;
   weekStartsOn: WeekdayIndex;
-} & Partial<{
-  locale: string;
-  months: string[];
-  monthsShort: string[];
-  weekdays: string[];
-  weekdaysShort: string[];
-  weekdaysInitials: string[];
-}>;
+  locale?: string;
+  months?: string[];
+  monthsShort?: string[];
+  weekdays?: string[];
+  weekdaysShort?: string[];
+  weekdaysInitials?: string[];
+};
 
 let settings: Settings = {
   ...DEFAULT_DATE_SETTINGS,
