@@ -19,21 +19,26 @@
  */
 import { __ } from '@googleforcreators/i18n';
 
-function printRGB(r, g, b) {
-  const hex = (v) => v.toString(16).padStart(2, '0');
+/**
+ * Internal dependencies
+ */
+import { Pattern, PatternType } from './types';
+
+function printRGB(r: number, g: number, b: number) {
+  const hex = (v: number) => v.toString(16).padStart(2, '0');
   return `${hex(r)}${hex(g)}${hex(b)}`.toUpperCase();
 }
 
-function getPreviewText(pattern) {
+function getPreviewText(pattern: Pattern | null) {
   if (!pattern) {
     return null;
   }
   switch (pattern.type) {
-    case 'radial':
+    case PatternType.RADIAL:
       return __('Radial', 'web-stories');
-    case 'linear':
+    case PatternType.LINEAR:
       return __('Linear', 'web-stories');
-    case 'solid':
+    case PatternType.SOLID:
     default: {
       const {
         color: { r, g, b },

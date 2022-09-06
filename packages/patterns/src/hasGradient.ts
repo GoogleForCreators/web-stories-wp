@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,10 +14,13 @@
  * limitations under the License.
  */
 
-const buffer = document.createElement('div');
+/**
+ * Internal dependencies
+ */
+import { Pattern, PatternType } from './types';
 
-export default function escapeHTML(string) {
-  // @todo: implement a cheaper way to escape HTML characters.
-  buffer.textContent = string;
-  return buffer.innerHTML;
+function hasGradient(pattern: Pattern) {
+  return Boolean(pattern?.type) && PatternType.SOLID !== pattern.type;
 }
+
+export default hasGradient;

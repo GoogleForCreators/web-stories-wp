@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,23 +14,21 @@
  * limitations under the License.
  */
 
-function getOpaquePattern(pattern) {
-  if (!pattern.type || pattern.type === 'solid') {
-    const { color } = pattern;
-    return {
-      color: {
-        ...color,
-        a: 1,
-      },
-    };
-  }
-  return objectWithout(pattern, ['alpha']);
+/**
+ * External dependencies
+ */
+import { parseToRgb } from 'polished';
+
+/**
+ * Internal dependencies
+ */
+import createSolid from './createSolid';
+
+function createSolidFromString(str: string) {
+  const rgb = parseToRgb(str);
+  const { red, green, blue } = rgb;
+  const alpha = 'alpha' in rgb ? rgb.alpha : undefined;
+  return createSolid(red, green, blue, alpha);
 }
 
-export default getOpaquePattern;
-
-function objectWithout(obj, propertiesToRemove) {
-  return Object.keys(obj)
-    .filter((key) => !propertiesToRemove.includes(key))
-    .reduce((newObj, key) => ({ ...newObj, [key]: obj[key] }), {});
-}
+export default createSolidFromString;

@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,12 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-function getHexFromSolidArray(dims) {
-  const color = dims
-    .map((n) => n.toString(16))
-    .map((s) => s.padStart(2, '0'))
-    .join('');
-  return `#${color}`;
-}
 
-export default getHexFromSolidArray;
+/**
+ * External dependencies
+ */
+import { createContext } from '@googleforcreators/react';
+
+/**
+ * Internal dependencies
+ */
+import type { State } from './types';
+export default createContext<State>({ actions: {}, state: {} });

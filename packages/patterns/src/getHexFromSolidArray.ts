@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,19 +14,12 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import { parseToRgb } from 'polished';
-
-/**
- * Internal dependencies
- */
-import createSolid from './createSolid';
-
-function createSolidFromString(str) {
-  const { red, green, blue, alpha } = parseToRgb(str);
-  return createSolid(red, green, blue, alpha);
+function getHexFromSolidArray(dims: Array<number>) {
+  const color = dims
+    .map((n) => n.toString(16))
+    .map((s) => s.padStart(2, '0'))
+    .join('');
+  return `#${color}`;
 }
 
-export default createSolidFromString;
+export default getHexFromSolidArray;

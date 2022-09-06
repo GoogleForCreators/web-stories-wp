@@ -14,8 +14,28 @@
  * limitations under the License.
  */
 
-function isHexColorString(s) {
-  return /^#(?:[a-f0-9]{3}){1,2}$/i.test(s);
+/**
+ * Internal dependencies
+ */
+import type { Hex, Pattern } from './types';
+
+function colorHasTransparency(color: Hex) {
+  return color.a !== undefined && color.a < 1;
 }
 
-export default isHexColorString;
+function hasOpacity(pattern: Pattern) {
+  if ('color' in pattern) {
+    return Boolean(colorHasTransparency(pattern.color));
+  }
+  if (typeof pattern.alpha === 'number' && pattern.alpha < 1) {
+    return true;
+  }
+  for (const colorStop of pattern.stops || []) {
+    if (colorHasTransparency(colorStop.color)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+export default hasOpacity;

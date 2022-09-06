@@ -14,6 +14,14 @@
  * limitations under the License.
  */
 
-export { createContext, useContext } from 'use-context-selector';
+function convertToCSS(style: Record<string, string>) {
+  return Object.entries(style).reduce((str, [key, val]) => {
+    const casedKey = key.replace(
+      /[A-Z]/g,
+      (match) => `-${match.toLowerCase()}`
+    );
+    return `${str}${casedKey}:${val};`;
+  }, '');
+}
 
-export const identity = <T>(state: T) => state;
+export default convertToCSS;

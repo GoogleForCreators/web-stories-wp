@@ -14,8 +14,20 @@
  * limitations under the License.
  */
 
-function hasGradient(pattern) {
-  return Boolean(pattern?.type) && 'solid' !== pattern.type;
+/**
+ * Internal dependencies
+ */
+import type { Solid } from './types';
+
+function getHexFromSolid(solid: Solid) {
+  const {
+    color: { r, g, b, a = 1 },
+  } = solid;
+  const dims = [r, g, b, Math.round(a * 100)];
+  return dims
+    .map((n) => n.toString(16))
+    .map((s) => s.padStart(2, '0'))
+    .join('');
 }
 
-export default hasGradient;
+export default getHexFromSolid;

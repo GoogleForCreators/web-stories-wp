@@ -14,10 +14,16 @@
  * limitations under the License.
  */
 
-const buffer = document.createElement('div');
+/**
+ * Internal dependencies
+ */
+import type { Solid } from './types';
 
-export default function stripHTML(string) {
-  // @todo: implement a cheaper way to strip markup.
-  buffer.innerHTML = string;
-  return buffer.textContent;
+function createSolid(r: number, g: number, b: number, a = 1): Solid {
+  if (a !== 1) {
+    return { color: { r, g, b, a } };
+  }
+  return { color: { r, g, b } };
 }
+
+export default createSolid;

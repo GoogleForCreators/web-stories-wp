@@ -17,29 +17,38 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import { useCallback, useRef, useState } from '@googleforcreators/react';
+import type { ReactNode } from 'react';
 
 /**
  * Internal dependencies
  */
 import Context from './context';
+import type {
+  HandlersList,
+  TransformsList,
+  Transform,
+  TransformHandler,
+} from './types';
 
-function TransformProvider({ children }) {
-  const transformHandlersRef = useRef({});
-  const lastTransformsRef = useRef({});
+function TransformProvider({ children }: { children: ReactNode }) {
+  const transformHandlersRef = useRef<HandlersList>({});
+  const lastTransformsRef = useRef<TransformsList>({});
   const [isAnythingTransforming, setIsAnythingTransforming] = useState(false);
 
-  const registerTransformHandler = useCallback((id, handler) => {
-    const handlerListMap = transformHandlersRef.current;
-    const handlerList = handlerListMap[id] || (handlerListMap[id] = []);
-    handlerList.push(handler);
-    return () => {
-      handlerList.splice(handlerList.indexOf(handler), 1);
-    };
-  }, []);
+  const registerTransformHandler = useCallback(
+    (id: string, handler: TransformHandler) => {
+      const handlerListMap = transformHandlersRef.current;
+      const handlerList = handlerListMap[id] || (handlerListMap[id] = []);
+      handlerList.push(handler);
+      return () => {
+        handlerList.splice(handlerList.indexOf(handler), 1);
+      };
+    },
+    []
+  );
 
-  const pushTransform = useCallback((id, transform) => {
+  const pushTransform = useCallback((id: string, transform: Transform) => {
     const handlerListMap = transformHandlersRef.current;
     const lastTransforms = lastTransformsRef.current;
     const handlerList = handlerListMap[id];
@@ -87,11 +96,7 @@ function TransformProvider({ children }) {
   return <Context.Provider value={state}>{children}</Context.Provider>;
 }
 
-TransformProvider.propTypes = {
-  children: PropTypes.node,
-};
-
-const isDoneTransform = (transform) => {
+const isDoneTransform = (transform: null | object) => {
   if (transform === null) {
     return true;
   }
