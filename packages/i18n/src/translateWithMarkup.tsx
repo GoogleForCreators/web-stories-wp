@@ -90,7 +90,7 @@ function transform(node: Element, mapping: Mapping = {}): ReactNode[] {
 }
 
 interface TranslateWithMarkupProps {
-  mapping: Mapping;
+  mapping?: Mapping;
   children: string;
 }
 
@@ -111,7 +111,7 @@ interface TranslateWithMarkupProps {
 function TranslateWithMarkup({
   mapping = {},
   children,
-}: TranslateWithMarkupProps) {
+}: TranslateWithMarkupProps): ReactElement | ReactElement[] | null {
   //Ensure all Object keys are lowercase as the DOMParser converts tag names to lowercase.
   mapping = Object.fromEntries(
     Object.entries(mapping).map(([k, v]) => [k.toLowerCase(), v])
@@ -137,7 +137,7 @@ function TranslateWithMarkup({
         mapping
         //eslint-disable-next-line react/no-array-index-key -- Order should never change.
       ).map((element, index) => <Fragment key={index}>{element}</Fragment>)
-    : [];
+    : null;
 }
 
 export default TranslateWithMarkup;

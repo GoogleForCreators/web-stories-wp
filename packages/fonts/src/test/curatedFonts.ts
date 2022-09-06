@@ -24,9 +24,10 @@ import { resolve } from 'path';
  * Internal dependencies
  */
 import { CURATED_FONT_NAMES } from '../constants';
+import type { Font } from '../types';
 
 describe('Curated fonts', () => {
-  const fonts = JSON.parse(
+  const fonts: Font[] = JSON.parse(
     readFileSync(
       resolve(process.cwd(), 'packages/fonts/src/fonts.json'),
       'utf8'

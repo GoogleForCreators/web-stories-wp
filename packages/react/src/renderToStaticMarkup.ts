@@ -35,7 +35,7 @@ import type { ReactElement } from 'react';
  * @param element React element.
  * @return Markup.
  */
-function renderToStaticMarkup(element: ReactElement) {
+function renderToStaticMarkup(element: ReactElement): string {
   const originalConsoleError = console.error;
   console.error = function (error, ...args) {
     if (

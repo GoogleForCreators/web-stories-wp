@@ -20,13 +20,15 @@
 import translateToExclusiveList from '../translateToExclusiveList';
 
 describe('translateToExclusiveList', () => {
-  it.each`
-    options                                        | result
-    ${[]}                                          | ${''}
-    ${['one']}                                     | ${'one'}
-    ${['doctor', 'barnacle']}                      | ${'doctor or barnacle'}
-    ${['apple', 'banana', 'mango', 'dragonfruit']} | ${'apple, banana, mango, or dragonfruit'}
-  `('should translate as expected', ({ options, result }) => {
+  it.each([
+    [[], ''],
+    [['one'], 'one'],
+    [['doctor', 'barnacle'], 'doctor or barnacle'],
+    [
+      ['apple', 'banana', 'mango', 'dragonfruit'],
+      'apple, banana, mango, or dragonfruit',
+    ],
+  ])('should translate as expected', (options, result) => {
     expect(translateToExclusiveList(options)).toBe(result);
   });
 });

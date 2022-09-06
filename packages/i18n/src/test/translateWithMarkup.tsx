@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { renderToStaticMarkup } from '@googleforcreators/react';
+import type { ReactNode } from 'react';
 
 /**
  * Internal dependencies
@@ -72,7 +73,10 @@ describe('TranslateWithMarkup component', () => {
   it('returns expected React element for custom component', () => {
     const string = 'This is a <a>link</a>!';
 
-    const Link = (props) => {
+    const Link = (props: {
+      href: string;
+      children?: ReactNode | undefined;
+    }) => {
       return <a {...props}>{props.children}</a>;
     };
 
@@ -86,7 +90,12 @@ describe('TranslateWithMarkup component', () => {
   });
 
   it('returns expected React element for multiple components', () => {
-    const Link = (props) => {
+    const Link = (props: {
+      href: string;
+      target: string;
+      rel: string;
+      children?: ReactNode | undefined;
+    }) => {
       return <a {...props}>{props.children}</a>;
     };
 
