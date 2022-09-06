@@ -7,6 +7,7 @@
     { "path": "packages/react" },
     { "path": "packages/stickers" },
     { "path": "packages/tracking" },
+    { "path": "packages/transform" },
     { "path": "packages/units" },
     { "path": "packages/url" }
   ],
