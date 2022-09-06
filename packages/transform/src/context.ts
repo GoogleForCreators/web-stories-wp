@@ -14,10 +14,13 @@
  * limitations under the License.
  */
 
-const buffer = document.createElement('div');
+/**
+ * External dependencies
+ */
+import { createContext } from '@googleforcreators/react';
 
-export default function stripHTML(string) {
-  // @todo: implement a cheaper way to strip markup.
-  buffer.innerHTML = string;
-  return buffer.textContent;
-}
+/**
+ * Internal dependencies
+ */
+import type { State } from './types';
+export default createContext<State>({ actions: {}, state: {} });
