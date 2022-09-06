@@ -20,7 +20,6 @@
 import { EditorState, SelectionState } from 'draft-js';
 import type { ContentState } from 'draft-js';
 import { filterEditorState } from 'draftjs-filters';
-import type { Dispatch, SetStateAction } from 'react';
 
 /**
  * Internal dependencies
@@ -80,7 +79,7 @@ function getStateFromCommmand(command: string, oldEditorState: EditorState) {
 }
 
 export const getHandleKeyCommandFromState =
-  (setEditorState: Dispatch<SetStateAction<EditorState>>) =>
+  (setEditorState: (state: EditorState) => void) =>
   (command: string, currentEditorState: EditorState) => {
     const newEditorState = getStateFromCommmand(command, currentEditorState);
     if (newEditorState) {

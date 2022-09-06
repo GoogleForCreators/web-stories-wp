@@ -24,10 +24,11 @@ import type { Pattern } from '@googleforcreators/patterns';
  * Internal dependencies
  */
 import formatters from './formatters';
+import type { StateInfo } from './types';
 
 type Getter = (state: EditorState) => boolean | string | number | Pattern;
 
-function getStateInfo(state: EditorState) {
+function getStateInfo(state: EditorState): StateInfo {
   const stateInfo = formatters.reduce(
     (aggr, { getters }) => ({
       ...aggr,

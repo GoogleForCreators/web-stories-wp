@@ -29,3 +29,39 @@ export type Setter = (
 
 export type SetStyleCallback = (styles: string[]) => unknown;
 export type StyleGetter = (styles: string[]) => string;
+
+export interface SelectionInfo {
+  isBold: boolean;
+  isItalic: boolean;
+  isUnderline: boolean;
+  isUppercase: boolean;
+}
+
+// Partial to make the props optional.
+export interface StateInfo extends Partial<SelectionInfo> {
+  color?: Pattern;
+  letterSpacing?: number;
+  fontWeight?: number;
+}
+
+export interface State {
+  state: {
+    editorState?: EditorState;
+    hasCurrentEditor?: boolean;
+    selectionInfo?: SelectionInfo;
+  };
+  actions: {
+    setStateFromContent?: (content: string) => void;
+    updateEditorState?: (state: EditorState) => void;
+    getHandleKeyCommand?: () => string;
+    handlePastedText?: (
+      text: string,
+      html: string,
+      state: EditorState
+    ) => boolean;
+    clearState?: () => void;
+    // @todo Add formatters.
+    selectionActions?: {};
+    getContentFromState?: (editorState: EditorState) => string | null;
+  };
+}

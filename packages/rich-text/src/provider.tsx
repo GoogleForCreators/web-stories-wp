@@ -62,7 +62,7 @@ function RichTextProvider({ children, editingState }) {
   }, [editorState]);
 
   const setStateFromContent = useCallback(
-    (content) => {
+    (content: string) => {
       const { offset, clearContent, selectAll } = editingState || {};
       let state = EditorState.createWithContent(customImport(content));
       if (clearContent) {
@@ -91,7 +91,7 @@ function RichTextProvider({ children, editingState }) {
   // on paste and updates state accordingly.
   // Furthermore it also sets initial selection if relevant.
   const updateEditorState = useCallback(
-    (newEditorState) => {
+    (newEditorState: EditorState) => {
       let filteredState = getFilteredState(newEditorState, editorState);
       const isEmpty = filteredState.getCurrentContent().getPlainText('') === '';
       if (isEmpty) {
