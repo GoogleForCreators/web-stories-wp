@@ -34,7 +34,7 @@ describe('date/getTimeZoneString', () => {
     expect(getTimeZoneString()).toBe('+02:30');
   });
 
-  it('returns value from gmtOffset if low number', () => {
+  it('returns value as hours from gmtOffset if low number', () => {
     updateSettings({ gmtOffset: 10 });
     expect(getTimeZoneString()).toBe('+10:00');
 
@@ -51,6 +51,22 @@ describe('date/getTimeZoneString', () => {
 
     updateSettings({ gmtOffset: 375 });
     expect(getTimeZoneString()).toBe('+06:15');
+  });
+
+  it('rounds minutes appropriately', () => {
+    // With low numbers where minutes are the decimals
+    updateSettings({ gmtOffset: 6.25 });
+    expect(getTimeZoneString()).toBe('+06:15');
+
+    updateSettings({ gmtOffset: 6.27 });
+    expect(getTimeZoneString()).toBe('+06:16');
+
+    // With high numbers where minutes are the %60
+    updateSettings({ gmtOffset: 121 });
+    expect(getTimeZoneString()).toBe('+02:01');
+
+    updateSettings({ gmtOffset: 121.1 });
+    expect(getTimeZoneString()).toBe('002:01');
   });
 
   it('returns default is offset is NaN', () => {

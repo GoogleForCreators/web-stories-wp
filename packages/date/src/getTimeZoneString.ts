@@ -29,9 +29,11 @@ function integerToUTCOffset(offset: number) {
   const sign = offset < 0 ? '-' : '+';
   const absoluteOffset = Math.abs(offset);
   const isHours = absoluteOffset <= 12;
-  const offsetInMinutes = isHours ? 0 : absoluteOffset % 60;
+  const offsetInMinutes = isHours
+    ? Math.round((absoluteOffset % 1) * 60)
+    : Math.round(absoluteOffset % 60);
   const offsetInHours = isHours
-    ? absoluteOffset
+    ? Math.floor(absoluteOffset)
     : Math.floor(absoluteOffset / 60);
 
   const hoursAsString = String(offsetInHours).padStart(2, '0');
