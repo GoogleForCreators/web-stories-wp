@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { renderToStaticMarkup } from '@googleforcreators/react';
+import type { ReactNode } from 'react';
 
 /**
  * Internal dependencies
@@ -57,7 +58,11 @@ describe('transformNode', () => {
     node.setAttribute('class', 'bar');
     node.textContent = 'Hello World';
 
-    const AwesomeComponent = ({ children }) => {
+    const AwesomeComponent = ({
+      children,
+    }: {
+      children?: ReactNode | undefined;
+    }) => {
       return (
         <div id="bar" className="baz">
           {children}
@@ -81,7 +86,11 @@ describe('transformNode', () => {
     p.appendChild(span);
     node.appendChild(p);
 
-    const AwesomeComponent = ({ children }) => {
+    const AwesomeComponent = ({
+      children,
+    }: {
+      children?: ReactNode | undefined;
+    }) => {
       return (
         <span id="bar" className="baz">
           <em>{children}</em>
