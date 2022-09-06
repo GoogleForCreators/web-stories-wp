@@ -18,45 +18,17 @@
  */
 import memoize from '../memoize';
 
-describe('memoize(func, argumentsHash)', () => {
-  it('memoizes based off arguments', () => {
-    const memoized = memoize((a, b, c) => ({
-      a,
-      b,
-      c,
-    }));
+describe('memoize(func)', () => {
+  it('memoizes with a single argument regardless of input type', () => {
+    const memoized = memoize((a) => ({ a }));
 
     const funcArg = () => {};
     const objArg = {};
 
-    expect(memoized(1, 'prop', true)).toStrictEqual(memoized(1, 'prop', true));
-    expect(memoized(2, 'other-prop', false)).toStrictEqual(
-      memoized(2, 'other-prop', false)
-    );
-    expect(memoized(funcArg, objArg, 5)).toStrictEqual(
-      memoized(funcArg, objArg, 5)
-    );
-  });
-
-  it('allows for a custom hashing function', () => {
-    const memoized = memoize(
-      (v) => v,
-      () => 'hashKey'
-    );
-    const value = { prop: 23 };
-    expect(memoized(value)).toStrictEqual(value);
-    expect(memoized({ prop: 'otherInput' })).toStrictEqual(value);
-  });
-
-  it('only calls the given function once per memoized param', () => {
-    const func = jest.fn();
-    const memoized = memoize(func);
-
-    memoized(1, 2, 3);
-    memoized(1, 2, 3);
-    memoized(1, 2, 3);
-
-    expect(func).toHaveBeenCalledTimes(1);
-    expect(func).toHaveBeenCalledWith(1, 2, 3);
+    expect(memoized('a')).toStrictEqual(memoized('a'));
+    expect(memoized(0)).toStrictEqual(memoized(0));
+    expect(memoized(1)).toStrictEqual(memoized(1));
+    expect(memoized(funcArg)).toStrictEqual(memoized(funcArg));
+    expect(memoized(objArg)).toStrictEqual(memoized(objArg));
   });
 });

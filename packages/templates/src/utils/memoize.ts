@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export default function memoize(func, argsHash = (args) => args.join('-')) {
-  const memoized = new Map();
-  return function (...args) {
-    const key = argsHash(args);
+
+export default function memoize<In, Out>(func: (input: In) => Out) {
+  const memoized = new Map<In, Out | 'IS_VOID'>();
+  return function (input: In) {
     /**
      * The map value should only ever be undefined if
      * func has never been called with this arg key.
@@ -24,19 +24,19 @@ export default function memoize(func, argsHash = (args) => args.join('-')) {
      * This allows us to memoize functions with
      * `null` or `false` return values.
      */
-    if (memoized.get(key) === undefined) {
-      const value = func(...args);
-      memoized.set(key, value === undefined ? 'IS_VOID' : value);
+    if (memoized.get(input) === undefined) {
+      const value = func(input);
+      memoized.set(input, value === undefined ? 'IS_VOID' : value);
     }
     /**
      * `IS_VOID` is how we indicate that a function
      * has been called with a given argument key, and the return
      * value of that call was undefined.
      */
-    if (memoized.get(key) === 'IS_VOID') {
+    if (memoized.get(input) === 'IS_VOID') {
       return undefined;
     }
 
-    return memoized.get(key);
+    return memoized.get(input);
   };
 }
