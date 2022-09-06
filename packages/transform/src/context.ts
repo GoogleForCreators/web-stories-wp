@@ -17,14 +17,10 @@
 /**
  * External dependencies
  */
-import { identity, useContextSelector } from '@googleforcreators/react';
+import { createContext } from '@googleforcreators/react';
+
 /**
  * Internal dependencies
  */
-import Context from './context';
-
-function useTransform(selector) {
-  return useContextSelector(Context, selector ?? identity);
-}
-
-export default useTransform;
+import type { State } from './types';
+export default createContext<State>({ actions: {}, state: {} });
