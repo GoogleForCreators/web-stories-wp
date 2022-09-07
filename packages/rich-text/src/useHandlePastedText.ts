@@ -36,7 +36,7 @@ import { getPrefixStylesInSelection } from './styleManipulation';
  * text without being in text edit-mode anywhere.
  */
 function useHandlePastedText(
-  setEditorState: Dispatch<SetStateAction<EditorState>>
+  setEditorState: Dispatch<SetStateAction<EditorState | null>>
 ) {
   return useCallback(
     (text: string, html: string, state: EditorState) => {

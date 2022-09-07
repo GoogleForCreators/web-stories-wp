@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import {
   useState,
   useCallback,
@@ -25,6 +24,7 @@ import {
   useRef,
 } from '@googleforcreators/react';
 import { EditorState } from 'draft-js';
+import type { DraftInlineStyle } from 'draft-js';
 
 /**
  * Internal dependencies
@@ -42,6 +42,7 @@ import customImport from './customImport';
 import customExport from './customExport';
 import useHandlePastedText from './useHandlePastedText';
 import useSelectionManipulation from './useSelectionManipulation';
+import type { RichTextProviderProps } from './types';
 
 const INITIAL_SELECTION_INFO = {
   isBold: false,
@@ -50,9 +51,9 @@ const INITIAL_SELECTION_INFO = {
   isUppercase: false,
 };
 
-function RichTextProvider({ children, editingState }) {
-  const [editorState, setEditorState] = useState(null);
-  const lastKnownStyle = useRef(null);
+function RichTextProvider({ children, editingState }: RichTextProviderProps) {
+  const [editorState, setEditorState] = useState<EditorState | null>(null);
+  const lastKnownStyle = useRef<DraftInlineStyle | null>(null);
 
   const selectionInfo = useMemo(() => {
     if (editorState) {
@@ -63,17 +64,13 @@ function RichTextProvider({ children, editingState }) {
 
   const setStateFromContent = useCallback(
     (content: string) => {
-      const { offset, clearContent, selectAll } = editingState || {};
+      const { offset, selectAll } = editingState || {};
       let state = EditorState.createWithContent(customImport(content));
-      if (clearContent) {
-        // If `clearContent` is specified, push the update to clear content so that
-        // it can be undone.
-        state = EditorState.push(state, customImport(''), 'remove-range');
-      }
+
       let selection;
       if (selectAll) {
         selection = getSelectionForAll(state.getCurrentContent());
-      } else if (!isNaN(offset)) {
+      } else if (offset) {
         selection = getSelectionForOffset(state.getCurrentContent(), offset);
       }
       if (selection) {
@@ -92,9 +89,13 @@ function RichTextProvider({ children, editingState }) {
   // Furthermore it also sets initial selection if relevant.
   const updateEditorState = useCallback(
     (newEditorState: EditorState) => {
+      if (!newEditorState || !editorState) {
+        return;
+      }
       let filteredState = getFilteredState(newEditorState, editorState);
-      const isEmpty = filteredState.getCurrentContent().getPlainText('') === '';
-      if (isEmpty) {
+      const isEmpty =
+        filteredState?.getCurrentContent().getPlainText('') === '';
+      if (isEmpty && lastKnownStyle.current) {
         // Copy last known current style as inline style
         filteredState = EditorState.setInlineStyleOverride(
           filteredState,
@@ -150,10 +151,5 @@ function RichTextProvider({ children, editingState }) {
     </RichTextContext.Provider>
   );
 }
-
-RichTextProvider.propTypes = {
-  children: PropTypes.node.isRequired,
-  editingState: PropTypes.object,
-};
 
 export default RichTextProvider;

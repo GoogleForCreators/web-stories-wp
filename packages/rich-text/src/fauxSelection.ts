@@ -46,8 +46,8 @@ function isEqualSelectionIgnoreFocus(
  * @param setEditorState  Callback to update current editor state
  */
 export function useFauxSelection(
-  editorState: EditorState,
-  setEditorState: Dispatch<SetStateAction<EditorState>>
+  editorState: EditorState | null,
+  setEditorState: Dispatch<SetStateAction<EditorState | null>>
 ) {
   const [fauxSelection, setFauxSelection] = useState<SelectionState | null>(
     null

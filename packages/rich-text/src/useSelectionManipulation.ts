@@ -34,8 +34,8 @@ import formatters from './formatters';
 import type { AllowedArgs, Setter } from './types';
 
 function useSelectionManipulation(
-  editorState: EditorState,
-  setEditorState: Dispatch<SetStateAction<EditorState>>
+  editorState: EditorState | null,
+  setEditorState: Dispatch<SetStateAction<EditorState | null>>
 ) {
   const lastKnownState = useRef<EditorState | null>(null);
   const lastKnownSelection = useRef<SelectionState | null>(null);
