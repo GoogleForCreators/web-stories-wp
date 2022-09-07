@@ -19,24 +19,31 @@
  */
 import { __, _n, sprintf } from '@googleforcreators/i18n';
 
-const formatDistanceLocale = {
-  lessThanXMinutes(count) {
+type Token = 'lessThanXMinutes' | 'xMinutes' | 'aboutXHours' | 'xHours';
+type Formatter = Record<Token, (count: number) => string>;
+type Options = {
+  addSuffix?: boolean;
+  comparison?: number;
+};
+
+const formatDistanceLocale: Formatter = {
+  lessThanXMinutes(count: number) {
     return sprintf(
       /* translators: Time difference between two dates, in minutes (min=minute). %s: Number of minutes. */
       _n('less than %s min', 'less than %s mins', count, 'web-stories'),
-      count
+      String(count)
     );
   },
 
-  xMinutes(count) {
+  xMinutes(count: number) {
     return sprintf(
       /* translators: Time difference between two dates, in minutes. %s: Number of minutes. */
       _n('%s minute', '%s minutes', count, 'web-stories'),
-      count
+      String(count)
     );
   },
 
-  aboutXHours(count) {
+  aboutXHours(count: number) {
     if (1 === count) {
       return __('an hour', 'web-stories');
     }
@@ -44,26 +51,30 @@ const formatDistanceLocale = {
     return sprintf(
       /* translators: Time difference between two dates, in hours. %s: Number of hours. */
       _n('%s hour', '%s hours', count, 'web-stories'),
-      count
+      String(count)
     );
   },
 
-  xHours(count) {
+  xHours(count: number) {
     return sprintf(
       /* translators: Time difference between two dates, in hours. %s: Number of hours. */
       _n('%s hour', '%s hours', count, 'web-stories'),
-      count
+      String(count)
     );
   },
 };
 
-export default function formatDistance(token, count, options) {
+export default function formatDistance(
+  token: Token,
+  count: number,
+  options: Options
+) {
   options = options || {};
 
   const result = formatDistanceLocale[token](count);
 
   if (options.addSuffix) {
-    if (options.comparison > 0) {
+    if ((options.comparison || 0) > 0) {
       return sprintf(
         /* translators: %s: Human-readable time difference. */
         __('in %s', 'web-stories'),

@@ -34,10 +34,10 @@ import formatDate from './formatDate';
  * If date to display matches yesterday's date it will display "yesterday".
  * Otherwise date will come back formatted by dateSettings.dateFormat (no time).
  *
- * @param {Date|string} date Date to format according to how much time or how many days have passed since date.
- * @return {string} Displayable relative date string
+ * @param date Date to format according to how much time or how many days have passed since date.
+ * @return Displayable relative date string
  */
-function getRelativeDisplayDate(date) {
+function getRelativeDisplayDate(date: Date | string) {
   if (!date) {
     return '';
   }
