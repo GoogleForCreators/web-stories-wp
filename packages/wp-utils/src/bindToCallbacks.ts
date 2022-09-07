@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-function bindToCallbacks (callbacks: Record<string, unknown>, config: object) {
+function bindToCallbacks(callbacks: Record<string, unknown>, config: object) {
   return Object.entries(callbacks).reduce((_callbacks, [name, callback]) => {
     _callbacks[name] = callback.bind(null, config);
     return _callbacks;

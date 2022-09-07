@@ -17,10 +17,10 @@
  * Takes a string that is in snake case and returns the same
  * term in camel case.
  *
- * @param {string} string The key in snake case
- * @return {string} The key in camel case
+ * @param string The key in snake case
+ * @return The key in camel case
  */
-export function snakeToCamelCase(string : string = '') {
+export function snakeToCamelCase(string = '') {
   if (!string.includes('_') && !string.includes('-')) {
     return string;
   }
@@ -37,11 +37,14 @@ export function snakeToCamelCase(string : string = '') {
 /**
  * Transform a given object keys from snake case to camel case recursively.
  *
- * @param {Object} obj Object to be transformed.
- * @param {Object} ignore Array of keys to be ignored for camelcase.
- * @return {any} Transformed object.
+ * @param obj Object to be transformed.
+ * @param ignore Array of keys to be ignored for camelcase.
+ * @return Transformed object.
  */
-export function snakeToCamelCaseObjectKeys(obj: unknown, ignore: Array<string> = []) {
+export function snakeToCamelCaseObjectKeys(
+  obj: unknown,
+  ignore: Array<string> = []
+) {
   const isObject = (val) =>
     val && 'object' === typeof val && !Array.isArray(val);
 
