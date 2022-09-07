@@ -48,7 +48,7 @@ function exportHTML(editorState: EditorState) {
 
   const html = stateToHTML(editorState.getCurrentContent(), {
     inlineStyleFn,
-    defaultBlockTag: undefined,
+    defaultBlockTag: null,
   });
 
   return html.replace(/<br ?\/?>/g, '').replace(/&nbsp;$/, '');
