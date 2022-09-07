@@ -21,11 +21,11 @@ import type { Pattern } from '@googleforcreators/patterns';
 import type { EditorState } from 'draft-js';
 import type { ReactNode } from 'react';
 
-export type AllowedArgs = undefined | boolean | Pattern | number;
+export type AllowedSetterArgs = undefined | boolean | Pattern | number;
 
-export type Setter = (
+export type StyleSetter = (
   state: EditorState | null,
-  arg: AllowedArgs
+  arg: AllowedSetterArgs
 ) => EditorState;
 
 export type SetStyleCallback = (styles: string[]) => unknown;
@@ -61,7 +61,7 @@ export interface State {
       state: EditorState
     ) => boolean;
     clearState?: () => void;
-    selectionActions?: Record<string, Setter>;
+    selectionActions?: Record<string, StyleSetter>;
     getContentFromState?: (editorState: EditorState) => string | null;
   };
 }

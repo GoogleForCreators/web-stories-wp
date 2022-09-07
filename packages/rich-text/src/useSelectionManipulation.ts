@@ -31,7 +31,7 @@ import type { Dispatch, SetStateAction } from 'react';
  * Internal dependencies
  */
 import formatters from './formatters';
-import type { AllowedArgs, Setter } from './types';
+import type { AllowedSetterArgs, StyleSetter } from './types';
 
 function useSelectionManipulation(
   editorState: EditorState | null,
@@ -71,8 +71,8 @@ function useSelectionManipulation(
   );
 
   const getSetterCallback = useCallback(
-    (setter: Setter, autoFocus) =>
-      (...args: [AllowedArgs]) =>
+    (setter: StyleSetter, autoFocus) =>
+      (...args: [AllowedSetterArgs]) =>
         updateWhileUnfocused((state) => setter(state, ...args), autoFocus),
     [updateWhileUnfocused]
   );
@@ -83,10 +83,12 @@ function useSelectionManipulation(
         (aggr, { setters, autoFocus }) => ({
           ...aggr,
           ...Object.fromEntries(
-            Object.entries(setters).map(([key, setter]: [string, Setter]) => [
-              getSetterName(key),
-              getSetterCallback(setter, autoFocus),
-            ])
+            Object.entries(setters).map(
+              ([key, setter]: [string, StyleSetter]) => [
+                getSetterName(key),
+                getSetterCallback(setter, autoFocus),
+              ]
+            )
           ),
         }),
         {}

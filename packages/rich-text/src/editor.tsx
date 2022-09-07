@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { Editor, getDefaultKeyBinding, KeyBindingUtil } from 'draft-js';
-import PropTypes from 'prop-types';
 import {
   useEffect,
   useRef,
@@ -26,6 +25,7 @@ import {
   forwardRef,
   useUnmount,
 } from '@googleforcreators/react';
+import type { ForwardedRef, KeyboardEvent } from 'react';
 
 /**
  * Internal dependencies
@@ -33,7 +33,15 @@ import {
 import useRichText from './useRichText';
 import customInlineDisplay from './customInlineDisplay';
 
-function RichTextEditor({ content, onChange }, ref) {
+interface RichTextEditorProps {
+  content: string;
+  onChange: (content: string) => void;
+}
+
+function RichTextEditor(
+  { content, onChange }: RichTextEditorProps,
+  ref: ForwardedRef<HTMLElement>
+) {
   const editorRef = useRef(null);
   const {
     state: { editorState },
@@ -82,7 +90,7 @@ function RichTextEditor({ content, onChange }, ref) {
 
   const { hasCommandModifier } = KeyBindingUtil;
 
-  function bindKeys(e) {
+  function bindKeys(e: KeyboardEvent) {
     if (e.code === 'KeyA' && hasCommandModifier(e)) {
       return 'selectall';
     }
@@ -107,10 +115,5 @@ function RichTextEditor({ content, onChange }, ref) {
 }
 
 const RichTextEditorWithRef = forwardRef(RichTextEditor);
-
-RichTextEditor.propTypes = {
-  content: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
-};
 
 export default RichTextEditorWithRef;

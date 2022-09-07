@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { stateFromHTML } from 'draft-js-import-html';
+import type { InlineCreators } from 'draft-js-import-html';
 
 /**
  * Internal dependencies
@@ -25,15 +26,16 @@ import { stateFromHTML } from 'draft-js-import-html';
 import getValidHTML from './utils/getValidHTML';
 import formatters from './formatters';
 
-function customInlineFn(element: HTMLElement, { Style }) {
+function customInlineFn(element: Element, { Style }: InlineCreators) {
   const styleStrings = formatters
-    .map(({ elementToStyle }) => elementToStyle(element))
+    .map(({ elementToStyle }) => elementToStyle(element as HTMLElement))
     .filter((style) => Boolean(style));
 
   if (styleStrings.length === 0) {
     return null;
   }
 
+  // @todo Type of Style doesn't seem to be correct, check.
   return Style(styleStrings);
 }
 

@@ -20,6 +20,7 @@
 import formatters from './formatters';
 import { fauxStylesToCSS } from './fauxSelection';
 
+// @todo Proper return type.
 function customInlineDisplay(styles: string[]) {
   const stylesToCSSConverters = [
     ...formatters.map(({ stylesToCSS }) => stylesToCSS),

@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { EditorState } from 'draft-js';
-import type {Pattern} from "@googleforcreators/patterns";
 
 /**
  * Internal dependencies
@@ -28,6 +27,7 @@ import getStateInfo from './getStateInfo';
 import customImport from './customImport';
 import customExport from './customExport';
 import { getSelectionForAll } from './util';
+import type { StyleSetter, AllowedSetterArgs } from './types';
 
 /**
  * Return an editor state object with content set to parsed HTML
@@ -43,8 +43,6 @@ export function getSelectAllStateFromHTML(html: string) {
   return EditorState.forceSelection(initialState, selection);
 }
 
-
-
 /**
  * Convert HTML via updater function. As updater function works on the
  * current selection in an editor state, first parse HTML to editor state
@@ -58,8 +56,8 @@ export function getSelectAllStateFromHTML(html: string) {
  */
 function updateAndReturnHTML(
   html: string,
-  updater: Setter,
-  ...args: [AllowedArgs]
+  updater: StyleSetter,
+  ...args: [AllowedSetterArgs]
 ) {
   const stateWithUpdate = updater(getSelectAllStateFromHTML(html), ...args);
   const renderedHTML = customExport(stateWithUpdate);
@@ -67,8 +65,8 @@ function updateAndReturnHTML(
 }
 
 const getHTMLFormatter =
-  (setter: Setter) =>
-  (html: string, ...args: [AllowedArgs]) =>
+  (setter: StyleSetter) =>
+  (html: string, ...args: [AllowedSetterArgs]) =>
     updateAndReturnHTML(html, setter, ...args);
 
 export const getHTMLFormatters = () => {
@@ -76,7 +74,7 @@ export const getHTMLFormatters = () => {
     (aggr, { setters }) => ({
       ...aggr,
       ...Object.fromEntries(
-        Object.entries(setters).map(([key, setter]: [string, Setter]) => [
+        Object.entries(setters).map(([key, setter]: [string, StyleSetter]) => [
           key,
           getHTMLFormatter(setter),
         ])
