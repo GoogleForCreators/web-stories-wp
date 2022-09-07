@@ -46,6 +46,7 @@ function VideoDisplay({
     focalX,
     focalY,
     loop,
+    volume = 1.0,
   } = element;
   const ref = useRef();
 
@@ -109,6 +110,7 @@ function VideoDisplay({
           preload="metadata"
           loop={loop}
           muted={muted}
+          volume={!muted && volume ? volume : undefined}
           ref={ref}
           data-testid="videoElement"
           data-leaf-element="true"

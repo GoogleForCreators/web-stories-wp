@@ -18,13 +18,20 @@
  * External dependencies
  */
 import { screen } from '@testing-library/react';
-
+import { useFeature } from 'flagged';
 /**
  * Internal dependencies
  */
 import VideoOptions from '../videoOptions';
 import { renderPanel } from '../../../shared/test/_utils';
 import { useLocalMedia } from '../../../../../app/media';
+import mockUseVideoElementTranscoding from '../../../../../app/media/utils/useVideoElementTranscoding';
+
+jest.mock('flagged');
+
+jest.mock('../../../../../app/media/utils/useVideoElementTranscoding', () =>
+  jest.fn()
+);
 
 jest.mock('../../../../../app/media');
 
@@ -45,14 +52,24 @@ jest.mock('../../../../../app/currentUser', () => ({
 
 describe('Panels/VideoOptions', () => {
   const defaultElement = {
+    id: 123,
     type: 'video',
-    resource: { posterId: 0, poster: '', alt: '' },
+    volume: 1.0,
+    resource: { posterId: 0, poster: '', alt: '', isMuted: false },
   };
   function arrange(...args) {
     return renderPanel(VideoOptions, ...args);
   }
 
+  beforeEach(() => {
+    mockUseVideoElementTranscoding.mockImplementation(() => ({
+      state: { canMute: true },
+      actions: {},
+    }));
+  });
+
   beforeAll(() => {
+    useFeature.mockImplementation(() => true);
     localStorage.setItem(
       'web_stories_ui_panel_settings:videoOptions',
       JSON.stringify({ isCollapsed: false })
@@ -73,5 +90,25 @@ describe('Panels/VideoOptions', () => {
     arrange([defaultElement]);
     const panel = screen.getByText('Video Settings');
     expect(panel).toBeInTheDocument();
+  });
+
+  it('should render volume input', () => {
+    arrange([defaultElement]);
+    expect(screen.getByTestId('volume-input')).toBeInTheDocument();
+  });
+
+  it('should render volume input as muted', () => {
+    mockUseVideoElementTranscoding.mockImplementationOnce(() => ({
+      state: { canMute: false },
+      actions: {},
+    }));
+    arrange([
+      {
+        type: 'video',
+        volume: 1.0,
+        resource: { posterId: 0, poster: '', alt: '', isMuted: true },
+      },
+    ]);
+    expect(screen.queryByTestId('volume-input')).not.toBeInTheDocument();
   });
 });

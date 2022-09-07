@@ -29,9 +29,10 @@ import {
   BUTTON_TYPES,
   BUTTON_VARIANTS,
   useLiveRegion,
+  NumericInput,
 } from '@googleforcreators/design-system';
 import { useEffect } from '@googleforcreators/react';
-
+import { useFeature } from 'flagged';
 /**
  * Internal dependencies
  */
@@ -73,7 +74,9 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
   const resource = getCommonValue(selectedElements, 'resource');
   const elementId = getCommonValue(selectedElements, 'id');
   const loop = getCommonValue(selectedElements, 'loop');
+  const volume = getCommonValue(selectedElements, 'volume');
   const isSingleElement = selectedElements.length === 1;
+  const enableVideoVolume = useFeature('videoVolume');
 
   const {
     state: { canTrim, canMute, isTrimming, isMuting, isDisabled },
@@ -103,6 +106,7 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
   }, [isTrimming, trimButtonText, speak]);
 
   const onChange = (evt) => pushUpdate({ loop: evt.target.checked }, true);
+  const onChangeVolume = (evt, value) => pushUpdate({ volume: value }, true);
 
   const Processing = () => {
     return (
@@ -136,6 +140,20 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
       </Row>
       {canMute && (
         <>
+          {enableVideoVolume && (
+            <Row>
+              <NumericInput
+                value={volume}
+                onChange={onChangeVolume}
+                min={0}
+                max={1.0}
+                isFloat
+                suffix={__('Volume', 'web-stories')}
+                aria-label={__('Volume', 'web-stories')}
+                data-testid="volume-input"
+              />
+            </Row>
+          )}
           <Row spaceBetween={false}>
             <StyledButton
               disabled={isDisabled}

@@ -49,6 +49,7 @@ export const defaultAttributes = {
   controls: false,
   loop: false,
   autoPlay: true,
+  volume: 1.0,
   tracks: [],
   resource: {
     posterId: null,

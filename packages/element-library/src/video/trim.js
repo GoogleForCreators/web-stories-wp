@@ -63,7 +63,16 @@ function VideoTrim({
   renderResourcePlaceholder,
 }) {
   const { width, height } = box;
-  const { poster, tracks, isBackground, scale, flip, focalX, focalY } = element;
+  const {
+    poster,
+    tracks,
+    isBackground,
+    scale,
+    flip,
+    focalX,
+    focalY,
+    volume = 1.0,
+  } = element;
   const wrapperRef = useRef();
   const videoRef = useRef();
   let style = {};
@@ -109,7 +118,7 @@ function VideoTrim({
     flip?.horizontal ? 100 - focalX : focalX,
     flip?.vertical ? 100 - focalY : focalY
   );
-
+  const muted = Boolean(resource?.isMuted);
   videoProps.transformFlip = getTransformFlip(flip);
   const tracksFormatted = tracks.map((track) => {
     const src = getProxiedUrl(track, track?.track);
@@ -135,6 +144,7 @@ function VideoTrim({
             poster={poster || resource.poster}
             style={style}
             {...videoProps}
+            volume={!muted && volume ? volume : undefined}
             preload="metadata"
             autoPlay
             tabIndex={0}

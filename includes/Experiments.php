@@ -372,6 +372,18 @@ class Experiments extends Service_Base implements HasRequirements {
 				'description' => __( 'Enable improved autosaves support', 'web-stories' ),
 				'group'       => 'editor',
 			],
+
+			/**
+			 * Author: @spacedmonkey
+			 * Issue: #12211
+			 * Creation date: 2022-09-07
+			 */
+			[
+				'name'        => 'videoVolume',
+				'label'       => __( 'Video Volume', 'web-stories' ),
+				'description' => __( 'Enable setting video volume', 'web-stories' ),
+				'group'       => 'editor',
+			],
 		];
 	}
 

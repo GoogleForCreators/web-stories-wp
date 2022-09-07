@@ -125,6 +125,7 @@ StoryPropTypes.elements.video = PropTypes.shape({
   poster: PropTypes.string,
   tracks: PropTypes.arrayOf(ResourcePropTypes.trackResource),
   loop: PropTypes.bool,
+  volume: PropTypes.number,
 });
 
 StoryPropTypes.elements.gif = PropTypes.shape({
