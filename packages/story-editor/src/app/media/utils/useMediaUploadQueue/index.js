@@ -317,6 +317,7 @@ function useMediaUploadQueue() {
           return;
         }
 
+        additionalData.isCropped = true;
         finishCropping({ id, file: newFile, additionalData });
       } catch (error) {
         // Cancel uploading if there were any errors.
@@ -615,6 +616,7 @@ function useMediaUploadQueue() {
           ITEM_STATUS.TRANSCODED,
           ITEM_STATUS.MUTED,
           ITEM_STATUS.TRIMMED,
+          ITEM_STATUS.CROPPED,
         ].includes(itemState)
       ) {
         return;
