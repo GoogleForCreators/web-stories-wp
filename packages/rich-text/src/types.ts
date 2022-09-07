@@ -47,14 +47,17 @@ export interface StateInfo extends Partial<SelectionInfo> {
 
 export interface State {
   state: {
-    editorState?: EditorState;
+    editorState?: EditorState | null;
     hasCurrentEditor?: boolean;
-    selectionInfo?: SelectionInfo;
+    selectionInfo?: StateInfo | undefined;
   };
   actions: {
     setStateFromContent?: (content: string) => void;
     updateEditorState?: (state: EditorState) => void;
-    getHandleKeyCommand?: () => string;
+    getHandleKeyCommand?: () => (
+      command: string,
+      currentEditorState: EditorState
+    ) => 'handled' | 'not-handled';
     handlePastedText?: (
       text: string,
       html: string,

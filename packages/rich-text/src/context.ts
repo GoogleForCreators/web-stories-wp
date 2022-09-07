@@ -18,7 +18,11 @@
  * External dependencies
  */
 import { createContext } from '@googleforcreators/react';
+/**
+ * Internal dependencies
+ */
+import type { State } from './types';
 
-const RichTextContext = createContext({ state: {}, actions: {} });
+const RichTextContext = createContext<State>({ state: {}, actions: {} });
 
 export default RichTextContext;

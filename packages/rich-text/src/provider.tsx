@@ -42,7 +42,7 @@ import customImport from './customImport';
 import customExport from './customExport';
 import useHandlePastedText from './useHandlePastedText';
 import useSelectionManipulation from './useSelectionManipulation';
-import type { RichTextProviderProps } from './types';
+import type { RichTextProviderProps, State } from './types';
 
 const INITIAL_SELECTION_INFO = {
   isBold: false,
@@ -127,7 +127,7 @@ function RichTextProvider({ children, editingState }: RichTextProviderProps) {
     setEditorState
   );
 
-  const value = {
+  const value: State = {
     state: {
       editorState,
       hasCurrentEditor,

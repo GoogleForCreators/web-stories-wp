@@ -36,7 +36,7 @@ import type { AllowedSetterArgs, StyleSetter } from './types';
 function useSelectionManipulation(
   editorState: EditorState | null,
   setEditorState: Dispatch<SetStateAction<EditorState | null>>
-) {
+): Record<string, StyleSetter> {
   const lastKnownState = useRef<EditorState | null>(null);
   const lastKnownSelection = useRef<SelectionState | null>(null);
   useEffect(() => {
