@@ -19,7 +19,7 @@
  */
 import { useEffect, useState } from '@googleforcreators/react';
 import { EditorState, Modifier } from 'draft-js';
-import type { SelectionState } from 'draft-js';
+import type { DraftInlineStyle, SelectionState } from 'draft-js';
 import type { Dispatch, SetStateAction } from 'react';
 
 const FAUX_SELECTION = 'CUSTOM-FAUX';
@@ -134,7 +134,10 @@ type Style = {
   color?: string;
 };
 
-export function fauxStylesToCSS(styles: string[], css: Record<string, string>) {
+export function fauxStylesToCSS(
+  styles: DraftInlineStyle,
+  css: Record<string, string>
+) {
   const hasFauxSelection = styles.includes(FAUX_SELECTION);
   if (!hasFauxSelection) {
     return null;
