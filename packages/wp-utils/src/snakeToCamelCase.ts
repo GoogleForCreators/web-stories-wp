@@ -20,7 +20,7 @@
  * @param string The key in snake case
  * @return The key in camel case
  */
-export function snakeToCamelCase(string = '') : string{
+export function snakeToCamelCase(string = '') : string {
   if (!string.includes('_') && !string.includes('-')) {
     return string;
   }
@@ -29,9 +29,19 @@ export function snakeToCamelCase(string = '') : string{
     .toLowerCase()
     .replace(
       /([a-z])([_|-][a-z])/g,
-      (_match, group1, group2) =>
+      (_match, group1: string, group2: string) =>
         group1 + group2.toUpperCase().replace('_', '').replace('-', '')
     );
+}
+
+type ObjectOrPrimitive = SnakeOrCamelCaseObject | unknown;
+
+interface SnakeOrCamelCaseObject {
+  [key: string]: ObjectOrPrimitive;
+}
+
+function isObject (obj: unknown) {
+  return obj && 'object' === typeof obj && !Array.isArray(obj);
 }
 
 /**
@@ -42,21 +52,23 @@ export function snakeToCamelCase(string = '') : string{
  * @return Transformed object.
  */
 export function snakeToCamelCaseObjectKeys(
-  obj: any,
-  ignore: Array<string> = []
-) {
-  const isObject = (obj: unknown) => obj && 'object' === typeof obj && !Array.isArray(obj);
-
+  obj: ObjectOrPrimitive,
+  ignore: string[] = []
+): ObjectOrPrimitive {
   if (!isObject(obj)) {
     return obj;
   }
 
-  return Object.entries(obj).reduce((transformedObject, [key, value]) => {
-    const camelCaseKey = snakeToCamelCase(key);
-    transformedObject[camelCaseKey] =
-      isObject(value) && !ignore.includes(key)
-        ? snakeToCamelCaseObjectKeys(value)
-        : value;
-    return transformedObject;
-  }, {});
+  return Object.fromEntries(
+    Object.entries(obj as SnakeOrCamelCaseObject).map(
+      ([key, value]: [string, ObjectOrPrimitive]) => {
+        return [
+          snakeToCamelCase(key),
+          isObject(value) && !ignore.includes(key)
+            ? snakeToCamelCaseObjectKeys(value)
+            : value,
+        ] as [string, SnakeOrCamelCaseObject];
+      }
+    )
+  );
 }
