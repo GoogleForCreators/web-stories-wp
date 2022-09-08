@@ -110,7 +110,7 @@ describe('Layer Panel', () => {
     expect(layerPanel.layers.length).toBe(3);
     const elementALayer = layerPanel.getLayerByInnerText('Title 1');
     await fixture.events.hover(elementALayer);
-    const deleteElementAButton = within(elementALayer).getByLabelText('Delete');
+    const deleteElementAButton = within(elementALayer).getByLabelText(/Delete/);
     await fixture.events.click(deleteElementAButton);
 
     expect(layerPanel.layers.length).toBe(2);
@@ -196,7 +196,7 @@ describe('Layer Panel', () => {
     const elementALayer = layerPanel.getLayerByInnerText('Title 1');
     await fixture.events.hover(elementALayer);
     const duplicateElementAButton =
-      within(elementALayer).getByLabelText('Duplicate');
+      within(elementALayer).getByLabelText(/Duplicate/);
     await fixture.events.click(duplicateElementAButton);
 
     expect(layerPanel.layers.length).toBe(4);
@@ -221,7 +221,7 @@ describe('Layer Panel', () => {
 
     // Hover layer, enable lock, and hover somewhere else
     await fixture.events.hover(elementALayer);
-    const lockButton = within(elementALayer).getByLabelText('Lock/Unlock');
+    const lockButton = within(elementALayer).getByLabelText(/Lock/);
     await fixture.events.click(lockButton);
     await fixture.events.hover(elementBLayer);
 
@@ -236,7 +236,7 @@ describe('Layer Panel', () => {
 
     // Hover layer, disable lock, and hover somewhere else
     await fixture.events.hover(elementALayer);
-    const unlockButton = within(elementALayer).getByLabelText('Lock/Unlock');
+    const unlockButton = within(elementALayer).getByLabelText(/Unlock/);
     await fixture.events.click(unlockButton);
     await fixture.events.hover(elementBLayer);
 
