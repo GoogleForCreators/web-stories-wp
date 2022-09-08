@@ -149,7 +149,7 @@ function PublishPanel({ nameOverride }) {
     dashboardSettingsLink,
     capabilities: { hasUploadMediaAction, canManageSettings },
     MediaUpload,
-    revisionLink
+    revisionLink,
   } = useConfig();
 
   const improvedAutosaves = useFeature('improvedAutosaves');

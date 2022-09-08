@@ -124,8 +124,8 @@ export function saveStoryById(config, story) {
 
     const revisions = {
       count: links?.['version-history']?.[0]?.count,
-      id: links?.['predecessor-version']?.[0]?.id
-    }
+      id: links?.['predecessor-version']?.[0]?.id,
+    };
 
     const featuredMedia = storyPoster
       ? {

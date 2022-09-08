@@ -63,7 +63,7 @@ function transformStoryResponse(post) {
     taxonomies: links?.['wp:term']?.map(({ taxonomy }) => taxonomy) || [],
     revisions: {
       count: links?.['version-history']?.[0]?.count,
-      id: links?.['predecessor-version']?.[0]?.id
+      id: links?.['predecessor-version']?.[0]?.id,
     },
     terms: embedded?.['wp:term'] || [],
   };
