@@ -96,6 +96,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
             slug,
             link,
             previewLink,
+            revisions,
             editLink: newEditLink,
             embedPostLink,
             featuredMedia,
@@ -109,6 +110,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
             editLink: newEditLink,
             embedPostLink,
             featuredMedia,
+            revisions,
           };
           updateStory({ properties });
 

@@ -148,8 +148,6 @@ class Stories_Controller extends Stories_Base_Controller {
 			}
 		}
 
-		$data['revision'] = $this->get_revisions_count_and_link( $post );
-
 		$data  = $this->filter_response_by_context( $data, $context );
 		$links = $response->get_links();
 
@@ -517,12 +515,7 @@ class Stories_Controller extends Stories_Base_Controller {
 	 * @phpstan-return Links
 	 */
 	protected function prepare_links( $post ): array {
-		// Workaround so that WP_REST_Posts_Controller::prepare_links() does not call wp_get_post_revisions(),
-		// avoiding a currently unneeded database query.
-		// TODO(#85): Remove if proper revisions support is ever needed.
-		remove_post_type_support( $this->post_type, 'revisions' );
 		$links = parent::prepare_links( $post );
-		add_post_type_support( $this->post_type, 'revisions' );
 
 		$links = $this->add_post_locking_link( $links, $post );
 		$links = $this->add_publisher_logo_link( $links, $post );
@@ -691,88 +684,4 @@ class Stories_Controller extends Stories_Base_Controller {
 
 		return null;
 	}
-
-	
-	/**
-	 * Get post revision information for latest id and count.
-	 *
-	 * Replace this with wp_get_latest_revision_id_and_total_count 
-	 * Once 6.1 becomes the lowest version supported
-	 * 
-	 * @since 1.25.0
-	 *
-	 * @param WP_Post $post    Current post object.
-	 * @return array<string,mixed> Revison links and count.
-	 */
-	public function get_latest_revision_id_and_total_count( $post ): array {
-		if ( ! $post->ID ) {
-			return [];
-		}
-
-		if ( ! wp_revisions_enabled( $post ) ) {
-			return [];
-		}
-
-		$args = [
-			'post_parent'         => $post->ID,
-			'fields'              => 'ids',
-			'post_type'           => 'revision',
-			'post_status'         => 'inherit',
-			'order'               => 'DESC',
-			'orderby'             => 'date ID',
-			'posts_per_page'      => 1,
-			'ignore_sticky_posts' => true,
-		];
-
-		$revision_query = new \WP_Query();
-		$revisions      = $revision_query->query( $args );
-
-		if ( ! $revisions ) {
-			return [
-				'latest_id' => 0,
-				'count'     => 0,
-			];
-		}
-
-		return [
-			'latest_id' => $revisions[0],
-			'count'     => $revision_query->found_posts,
-		];
-	}
-
-	/**
-	 * Get post revisions count and link.
-	 * 
-	 * @since 1.25.0
-	 *
-	 * @param WP_Post|null $post    Current post object.
-	 * @return array<string,mixed> Revison links and count.
-	 */
-	public function get_revisions_count_and_link( $post ): array {
-		$revision = [ 
-			'href'  => '',
-			'count' => 0,
-		];
-
-		if ( ! $post || ! $post->ID ) {
-			return $revision;
-		}
-		
-		if ( $post->post_type ) {
-			if ( \in_array( $post->post_type, [ 'post', 'page' ], true ) || post_type_supports( $post->post_type, 'revisions' ) ) {
-				
-				$revisions       = $this->get_latest_revision_id_and_total_count( $post );
-				$revisions_count = \count( $revisions ) >= 1 ? $revisions['count'] : 0;
-
-				$revision = [
-					'href'  => $revisions['latest_id'] ? admin_url() . 'revision.php?revision=' . $revisions['latest_id'] : '',
-					'count' => $revisions_count,
-				];
-			}
-		}
-
-		return $revision;
-	}
-
-
 }
