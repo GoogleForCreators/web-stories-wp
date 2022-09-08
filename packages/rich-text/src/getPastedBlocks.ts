@@ -24,6 +24,8 @@ import {
   SelectionState,
 } from 'draft-js';
 
+import type { ContentBlock } from 'draft-js';
+
 /**
  * Internal dependencies
  */
@@ -68,13 +70,18 @@ class CustomBlockRenderMap {
   }
 }
 
+// Overriding this since entityMap is marked as `any` in there, however, it seems to be an object in this case.
+type ConvertFromHTMLReturn = {
+  contentBlocks: ContentBlock[];
+  entityMap: Record<string, unknown>;
+};
 function getPastedBlocks(html: string, existingStyles: string[] = []) {
   const renderMap = new CustomBlockRenderMap();
   const { contentBlocks, entityMap } = convertFromHTML(
     html,
     undefined /* This has to be undefined to trigger default argument */,
     renderMap
-  );
+  ) as ConvertFromHTMLReturn;
   const pastedContentState = ContentState.createFromBlockArray(
     contentBlocks,
     entityMap
