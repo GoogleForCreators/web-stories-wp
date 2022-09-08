@@ -287,7 +287,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #fff; text-transform: uppercase\">What to watch during pride month</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -407,7 +406,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 600; color: #fff\">Since June is synonymous with Pride month, we compiled a few must watch LGBTQI movies to see in the weeks ahead.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -469,7 +467,6 @@
           }
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [],
       "backgroundColor": {
         "color": {
@@ -480,7 +477,7 @@
       },
       "type": "page",
       "id": "73b6974d-70dd-4829-afee-c77f094fd0e1",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -637,7 +634,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #fff; text-transform: uppercase\">Watch with friends&nbsp;</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -724,7 +720,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fff\">Meaty movies worthy of good recap conversation over bowls of popcorn and ice cream.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -744,7 +739,6 @@
           "y": 541
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 181,
@@ -978,7 +972,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #fff; text-transform: uppercase\">Moon Night</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1055,7 +1048,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fff\">A classic bildungsroman of Charles, a young Black man from a tough Miami neighborhood, as he navigates his identity.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1075,7 +1067,6 @@
           "y": 530
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 255,
@@ -1113,7 +1104,7 @@
         "id": "73eb1435-661c-46df-b781-2f53ab0af86d"
       },
       "animations": [],
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -1319,7 +1310,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fff; text-transform: uppercase\">Blue is the coldest color</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1397,7 +1387,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fff\">An ambiguous friendship between Adele and Emma, two teenagers trying to understand their feelings for one another.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1417,7 +1406,6 @@
           "type": "text"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [],
       "backgroundColor": {
         "color": {
@@ -1455,7 +1443,7 @@
         "type": "shape",
         "id": "10dce7c6-8e00-425a-bcf7-d9b3828ebf53"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -1613,7 +1601,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #fff; text-transform: uppercase\">Watch alone and cry</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1700,7 +1687,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fff\">Sometimes you just want to feel all the feelings, alone. We get it.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1720,7 +1706,6 @@
           "y": 566
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 158,
@@ -1748,7 +1733,7 @@
           "delay": 150
         }
       ],
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -1956,7 +1941,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #fff; text-transform: uppercase\">Billy Alles</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2033,7 +2017,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fff\">An 11 year old boy discovers his love for ballet.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2053,7 +2036,6 @@
           "y": 574
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 255,
@@ -2091,7 +2073,7 @@
         "id": "8bf27660-d58f-4a25-8d1c-3a1d019a7ec9"
       },
       "animations": [],
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -2298,7 +2280,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fff; text-transform: uppercase\">Carole</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2376,7 +2357,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fff\">A compelling love story set in 1950s New York, Carole’s narrative weaves through forbidden desire, compromise, and lives that could have been.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2396,7 +2376,6 @@
           "y": 552
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 255,
@@ -2434,7 +2413,7 @@
         "id": "7577a8d2-0ded-4fe6-b9c6-30110eaf6083"
       },
       "animations": [],
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -2574,7 +2553,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fff\">Carol, directed by New Queer Cinema Director Todd Haynes, has received a ten-minute standing ovation at its Cannes Film Festival international press screening and premiere.\"</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2594,7 +2572,6 @@
           "y": 273
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 158,
@@ -2768,7 +2745,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #fff; text-transform: uppercase\">Watch too feel a surge of pride</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2855,7 +2831,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fff\">When you need to feel your spirits soar.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2875,7 +2850,6 @@
           "y": 567
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 92,
@@ -2901,7 +2875,7 @@
           "delay": 150
         }
       ],
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -3110,7 +3084,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #fff; text-transform: uppercase\">Rockets</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3187,7 +3160,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fff\">You know who's story retold through fantastical &nbsp;narrative, song and dance.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3207,7 +3179,6 @@
           "y": 574
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [],
       "backgroundColor": {
         "color": {
@@ -3245,7 +3216,7 @@
         "id": "ee6c5d0c-3a32-4eb9-9b9a-2f2c72ac0c35",
         "type": "shape"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -3453,7 +3424,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fff; text-transform: uppercase\">How to survive a memory</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3531,7 +3501,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fff\">Centered around ACT UP, this movie focuses on AIDS in New York in the 80s and 90s.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3551,7 +3520,6 @@
           "y": 552
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [],
       "backgroundColor": {
         "color": {
@@ -3589,7 +3557,7 @@
         "id": "8c44506b-4b16-41cb-bb82-da6e19e82725",
         "type": "shape"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -3662,7 +3630,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fff; text-transform: uppercase\">Other stories</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3772,7 +3739,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fff; text-transform: uppercase\">In action</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3859,7 +3825,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 500; color: #fff\">Greatest Protest Movies of</span>\n<span style=\"font-weight: 500; color: #fff\">All Time</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3969,7 +3934,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fff; text-transform: uppercase\">A love history</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4056,7 +4020,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 500; color: #fff\">One of the best stories of love</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4076,7 +4039,6 @@
           "y": 529
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "c37cbe50-1989-4e51-b1a2-ceee5454b692",

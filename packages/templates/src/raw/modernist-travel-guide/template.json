@@ -162,7 +162,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 800; color: #2e2e2e; text-transform: uppercase\">The creative boss guide to travel</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -593,7 +592,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 800; color: #292929\">The Crew</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -683,7 +681,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #292929\">Meet our 3 favorite bosses, brand owners and creatives. These insiders let us in on their favorite places to go in the world.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1016,7 +1013,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 800; color: #fff\">Claire W.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1104,7 +1100,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: rgba(255,255,255,0.94); letter-spacing: 0.02em; text-transform: uppercase\">Senior Brand Strategist</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1321,7 +1316,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 800; color: #fff\">Louisiana Art Museum</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1410,7 +1404,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #fff\">Copenhagen</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1701,7 +1694,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #292929\">This place challenges the notions about what art should be. It’s a great place for inspiration and to introduce something fresh to your creative mind.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1730,7 +1722,7 @@
       },
       "type": "page",
       "id": "dca61177-1921-44a6-8347-4c88b991394d",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -1864,7 +1856,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 800; color: #292929\">Louisiana Art Museum</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1952,7 +1943,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #292929\">Gl. Strandvej 13</span>\n<span style=\"color: #292929\">3050 Humlebæk</span>\n<span style=\"color: #292929\">Denmark</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2046,7 +2036,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 800; color: #292929\">Visit Website</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 5,
@@ -2099,7 +2088,7 @@
           "delay": 250
         }
       ],
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -2380,7 +2369,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 800; color: #fff\">Matt F.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2468,7 +2456,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: rgba(255,255,255,0.94); letter-spacing: 0.02em; text-transform: uppercase\">Chief Creative Officer</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2685,7 +2672,6 @@
           "id": "9d8a9206-b76c-4f93-b9db-a67bfb2146c7",
           "basedOn": "e22da101-952c-4c7f-b51f-0744cfc57cd1",
           "content": "<span style=\"font-weight: 800; color: #fff\">Gramercy </span>\n<span style=\"font-weight: 800; color: #fff\">Park Hotel</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2774,7 +2760,6 @@
           "id": "e3380b21-4b64-406c-84ea-1c9266e3dc8c",
           "basedOn": "5aadc105-735c-471a-954f-26aa30f31c9a",
           "content": "<span style=\"color: #fff\">New York City</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2838,7 +2823,7 @@
         "id": "e01312a7-e412-4d17-9efe-a3067532eb26",
         "type": "shape"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "4afecb17-f9e6-4eb5-9982-046a9a3282e8": {
           "name": "Info",
@@ -2942,7 +2927,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #292929\">The NY Hotel's creative flair can be found in each of its 190 guest rooms and suites, which offer a unique composition of colors, textures and a rare collection of art, photographs and objects.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3096,7 +3080,7 @@
       },
       "type": "page",
       "id": "ff41af54-caa6-43c7-aafe-14f1711b8c2b",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -3188,7 +3172,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 800; color: #292929\">Gramercy Park Hotel</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3276,7 +3259,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #292929\">2 Lexington Ave,&nbsp;</span>\n<span style=\"color: #292929\">New York,&nbsp;NY&nbsp;</span>\n<span style=\"color: #292929\">10010</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3409,7 +3391,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 800; color: #292929\">Visit Website</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 5,
@@ -3463,7 +3444,7 @@
       },
       "type": "page",
       "id": "1ce9d4e6-af5b-49a8-adf7-c331c0409581",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -3744,7 +3725,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 800; color: #fff\">Marvin S.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3832,7 +3812,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: rgba(255,255,255,0.94); letter-spacing: 0.02em; text-transform: uppercase\">Editor at Dwell</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4049,7 +4028,6 @@
           "id": "3f7b8e5e-8f1d-4002-ad8f-8f8848ef95cd",
           "basedOn": "e22da101-952c-4c7f-b51f-0744cfc57cd1",
           "content": "<span style=\"font-weight: 800; color: #fff\">Thanks Books</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4138,7 +4116,6 @@
           "id": "7e27cc14-5c39-44f2-978e-5cd7e06c36df",
           "basedOn": "5aadc105-735c-471a-954f-26aa30f31c9a",
           "content": "<span style=\"color: #fff\">Seoul</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4202,7 +4179,7 @@
         "id": "9236191f-554a-4355-b211-b454fdec93a3",
         "type": "shape"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "94df2aab-534c-46ba-8997-7351622dcd7a": {
           "name": "Info",
@@ -4306,7 +4283,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #292929\">Founded by a professor and a local design figure, Thanks Books features expertly curated picks.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4460,7 +4436,7 @@
       },
       "type": "page",
       "id": "a75ccef0-141e-44d6-aa7c-5dbf64174706",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -4593,7 +4569,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 800; color: #292929\">Thanks Books</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4681,7 +4656,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #292929\">28, Jandari-ro, </span>\n<span style=\"color: #292929\">Mapo-gu, Seoul&nbsp;</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4775,7 +4749,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 800; color: #292929\">Visit Website</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 5,
@@ -4829,7 +4802,7 @@
       },
       "type": "page",
       "id": "bcb0daf1-17db-4aae-b8ea-bca4a1cbd982",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -4921,7 +4894,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 800; color: #fff\">Read More</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -5013,7 +4985,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fff\">1.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -5101,7 +5072,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fff\">An Insider’s Guide to Copenhagen</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -5190,7 +5160,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fff\">2.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -5278,7 +5247,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fff\">Everything </span><span style=\"color: #fff\">Entrepreneurial</span><span style=\"color: #fff\"> in Stockholm</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,

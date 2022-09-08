@@ -677,7 +677,7 @@
           "delay": 0
         }
       ],
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -2076,7 +2076,7 @@
       "type": "page",
       "id": "7d3625fb-7c89-4cae-b49f-b908f665edb2",
       "animations": [],
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -2663,7 +2663,7 @@
       },
       "type": "page",
       "id": "5b4f4c90-fb37-4406-b7ae-aee2b3a77429",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "9947d792-9ca1-436f-b709-3ad80374431a": {
           "name": "Card",
@@ -4055,7 +4055,7 @@
       },
       "type": "page",
       "id": "019b8706-705a-4145-8dd5-0554a306b9b0",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "8f209e48-e15a-4082-9dfe-76749ea2d7f8": {
           "name": "Card",
@@ -4362,7 +4362,7 @@
         "type": "shape",
         "id": "883d76ed-eb06-4963-ac97-28db7b45c570"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -4882,7 +4882,7 @@
       },
       "type": "page",
       "id": "c88b3a9a-3607-4191-a252-470e03b9f641",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [

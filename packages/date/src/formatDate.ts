@@ -23,10 +23,10 @@ import { getSettings } from './settings';
 /**
  * Formats a date by dateSettings.dateFormat (no time).
  *
- * @param {Date|string} date Date to format.
- * @return {string} Displayable relative date string
+ * @param date Date to format.
+ * @return Displayable relative date string
  */
-function formatDate(date) {
+function formatDate(date: Date | string) {
   const settings = getSettings();
   const { dateFormat } = settings;
 

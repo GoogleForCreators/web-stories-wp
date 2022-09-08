@@ -492,7 +492,6 @@
           "groupId": "9ec8f4c2-5acd-4485-87b1-8a83b9d10e30"
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 255,
@@ -538,7 +537,7 @@
           "delay": 200
         }
       ],
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "9ec8f4c2-5acd-4485-87b1-8a83b9d10e30": {
           "name": "Info",
@@ -902,7 +901,6 @@
           "groupId": "1573a2c0-1bf1-4d21-8a69-15a355dccfef"
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 0,
@@ -1141,7 +1139,6 @@
           "groupId": "9e50a2ee-593f-4ea6-a122-a65449c5a64a"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "453dd7f4-34df-4dee-8999-4fec9939797e",
@@ -1188,7 +1185,7 @@
         "id": "6e157aba-a731-4a10-9930-508c49cba4d3",
         "type": "shape"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "9e50a2ee-593f-4ea6-a122-a65449c5a64a": {
           "name": "Info",
@@ -1416,7 +1413,6 @@
           "groupId": "1bbe0d93-915e-4b8a-80dd-e90112fabe6c"
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 255,
@@ -1463,7 +1459,7 @@
           "targets": ["96134eee-b383-4fde-869f-53c57ce6c307"]
         }
       ],
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "1bbe0d93-915e-4b8a-80dd-e90112fabe6c": {
           "name": "Info",
@@ -1691,7 +1687,6 @@
           "groupId": "a366a44b-ab3d-4547-86cb-d98481e7530c"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "ecf1743d-3d67-4577-9756-00d0ef8bfa4f",
@@ -1738,7 +1733,7 @@
         "type": "shape",
         "id": "a78d233c-2f13-417e-baf2-0869cf5abb90"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "a366a44b-ab3d-4547-86cb-d98481e7530c": {
           "name": "Info",
@@ -1966,7 +1961,6 @@
           "groupId": "7866007b-b710-4c7f-92c3-6fcea78a3193"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "76128b71-f2a3-4379-9963-d5b79a32ea81",
@@ -2378,7 +2372,6 @@
           "id": "d53839a4-51b4-4e0c-9aae-19f7b9b8f061"
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 255,
@@ -2431,7 +2424,7 @@
           "delay": 0
         }
       ],
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "3cf7b9b0-4373-4675-bfdd-90c9774d7e7d": {
           "name": "Info",
@@ -2803,7 +2796,6 @@
           "id": "57149a11-36a9-4612-9bfb-e1d6fca70aa2"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "24a71109-3b25-49c4-816a-719d4bf8c269",
@@ -2856,7 +2848,7 @@
         "type": "shape",
         "id": "47621367-6c30-4f3d-89e5-240c6e0cd13b"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "a900af27-4a6e-479f-ae08-d71ce869dc6d": {
           "name": "Action",
@@ -3224,7 +3216,6 @@
           "id": "d3e34964-ce81-4418-9308-aae32194d4b1"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "e970ea99-896d-4036-8c7e-c913df657260",
@@ -3277,7 +3268,7 @@
         "type": "shape",
         "id": "2f156d35-c735-464e-9ac6-df4ae6654b71"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "ca4c057e-321c-44e8-ab3b-af0ad98da8e5": {
           "name": "Info",
@@ -3645,7 +3636,6 @@
           "id": "fa1cad59-5395-4264-97a6-7878c98abfde"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "a05185a3-462c-452e-953a-dc93ee5731bc",
@@ -3698,7 +3688,7 @@
         "type": "shape",
         "id": "8cf01df7-0149-492b-b86e-edf53955f7bb"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "47d0a7c3-f739-4979-ba88-47ec1ed53446": {
           "name": "Info",
@@ -4038,7 +4028,6 @@
           "groupId": "0e53105d-437f-4522-b3c3-2554fecd0bac"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "0dd9b324-c010-4808-aaa0-e5392804dae1",
@@ -4082,7 +4071,7 @@
       },
       "type": "page",
       "id": "8cb30a3a-7dc1-4705-8a77-63edee73555c",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "c2eca49f-eaaf-43a1-b699-eab439e06f7c": {
           "name": "Background",
