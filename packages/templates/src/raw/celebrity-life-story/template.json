@@ -141,7 +141,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fff; text-transform: uppercase\">Logo</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -215,7 +214,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #020202\">Rise to Fame:</span>\n<span style=\"font-weight: 700; color: #020202\">Meet Jane Popular</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -294,7 +292,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #020202; text-transform: uppercase\">By Michaela Doe</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -372,7 +369,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #020202\">July 22, 2020</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -623,7 +619,7 @@
         "type": "shape",
         "id": "2493b5f5-432c-437f-89a7-55a3f7e9679f"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -769,7 +765,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #282828; text-transform: uppercase\">The early years</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -843,7 +838,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #020202\">1985.-1995.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -1153,7 +1147,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #80ff44\">1985</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -1315,7 +1308,7 @@
         "type": "shape",
         "id": "1eb5316c-d14e-41a6-8c12-a93ba906ce6d"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -1494,7 +1487,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #80ff44\">1989</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -1648,7 +1640,7 @@
         "type": "shape",
         "id": "b328bbcc-8241-4656-94ba-1f7fe9843e49"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -1827,7 +1819,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #80ff44\">1992</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -2160,7 +2151,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #80ff44\">1995</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -2314,7 +2304,7 @@
         "type": "shape",
         "id": "cf3611df-ee9a-4bcd-a8aa-ea8daf9b1692"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -2460,7 +2450,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #282828; text-transform: uppercase\">The change</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -2534,7 +2523,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #020202\">1996.-2001.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -2666,7 +2654,7 @@
         "type": "shape",
         "id": "94c22cf9-bb96-4887-8e2f-8d9f64fd5d4b"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -2845,7 +2833,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #80ff44\">1996</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -3007,7 +2994,7 @@
         "type": "shape",
         "id": "d822bc82-84fd-4e06-8c61-9458faece9a1"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -3186,7 +3173,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #80ff44\">1996</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -3340,7 +3326,7 @@
         "type": "shape",
         "id": "84439991-ee2b-4334-a03a-3bda9a923d90"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -3519,7 +3505,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #80ff44\">1997</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -3673,7 +3658,7 @@
         "type": "shape",
         "id": "22eeef49-9d4a-45f3-810d-e77a7d5db550"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -3852,7 +3837,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #80ff44\">2003</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -4006,7 +3990,7 @@
         "type": "shape",
         "id": "1d66b0a1-0da6-478c-a7bb-31dfa1a8ec74"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -4185,7 +4169,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #80ff44\">2012</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -4339,7 +4322,7 @@
         "type": "shape",
         "id": "1703fcfc-e49d-406b-809b-40fca8a1fbc4"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -4459,7 +4442,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #020202\">Read</span>\n<span style=\"font-weight: 700; color: #020202\">more</span>\n<span style=\"font-weight: 700; color: #020202\">stories</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -4585,7 +4567,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #020202\">Music</span>\n<span style=\"font-weight: 700; color: #020202\">Legacy</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -4784,7 +4765,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #020202\">Hollywood</span>\n<span style=\"font-weight: 700; color: #020202\">Couples</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,

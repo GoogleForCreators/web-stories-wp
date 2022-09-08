@@ -36,7 +36,16 @@ describe('getTemplate', () => {
                 i + 1
               }.webp`
             ),
-            type: expect.any(String),
+            type: expect.toBeOneOf([
+              null,
+              'cover',
+              'editorial',
+              'list',
+              'quote',
+              'section',
+              'table',
+              'steps',
+            ]),
           })
         );
       });

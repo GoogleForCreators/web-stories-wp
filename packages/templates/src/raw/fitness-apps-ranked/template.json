@@ -177,7 +177,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 600; color: #f1ff51\">The best fitness apps, ranked</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -564,7 +563,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #f1ff51\">Our gym days are over for now. So what are the best apps to get a good sweat in at home?</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -584,7 +582,6 @@
           "tagName": "p"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "c236039a-83bd-42c8-9c5e-ab0c30f7fdf3",
@@ -631,7 +628,7 @@
         "type": "shape",
         "id": "517647c0-62ed-476c-ae9e-85d76992732e"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -788,7 +785,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #fff\">The best app if cost is no concern</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1005,7 +1001,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #222b49\">FitFrame</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1092,7 +1087,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #222b49\">Advanced&nbsp;</span>\n<span style=\"color: #222b49\">Fitness App</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1112,7 +1106,6 @@
           "type": "text"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "6a237812-9843-4b57-a697-84f11517ea8f",
@@ -1183,7 +1176,7 @@
         "type": "shape",
         "id": "fd289893-c627-46ab-aa5d-8ec4f7005780"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "c509118f-a795-489e-8c16-38fd25df02fe": {
           "name": "Badge",
@@ -1363,7 +1356,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #f1ff51\">For someone who’s just getting into a daily workout, FitFrame is a solid-and-free choice.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1383,7 +1375,6 @@
           "tagName": "p"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "9e2ec82d-1f84-4d85-9f3b-1e9c8b0dbb9f",
@@ -1592,7 +1583,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #fff\">Best app which comes with lighweight gear</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1807,7 +1797,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #222b49\">Jetfit</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1894,7 +1883,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #222b49\">App +</span>\n<span style=\"color: #222b49\">Lightweight Gear</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1914,7 +1902,6 @@
           "type": "text"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "e69a3200-d81b-4791-80d9-284a95adfdf9",
@@ -2129,7 +2116,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #f1ff51\">To see maximum results with this app, you will need a few pieces of gear: weights, a tension band, a pilates ball and a jumprope.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2185,7 +2171,6 @@
           "y": -114
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "6648f1fd-a9a7-49ef-9067-840645b7893e",
@@ -2237,7 +2222,7 @@
         "ctaText": "Download the app",
         "theme": "light"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -2394,7 +2379,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #fff\">Best app for runners building their strength</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2609,7 +2593,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #222b49\">RunStrong</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2696,7 +2679,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #222b49\">Strength Training</span>\n<span style=\"color: #222b49\">for Runners </span>Free",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2716,7 +2698,6 @@
           "type": "text"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "211d6aff-92dc-4d7e-a0a0-956503c4dc0f",
@@ -2779,7 +2760,7 @@
         "type": "shape",
         "id": "fd289893-c627-46ab-aa5d-8ec4f7005780"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "4ce7115e-2de9-468c-a0cc-fbb20acc8853": {
           "name": "Badge",
@@ -2923,7 +2904,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #f1ff51\">The app is personalized, creating strength training regiments mixed with your run goals in mind.</span>\n\n<span style=\"font-weight: 700; color: #f1ff51\">The overall goal is to build endurance and to help you achieve time goals.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2979,7 +2959,6 @@
           "y": -114
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "99279686-f50d-4d17-9145-466ae0d33451",
@@ -3031,7 +3010,7 @@
         "ctaText": "Download the app",
         "theme": "light"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -3198,7 +3177,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 600; color: #f1ff51\">Other apps</span>\n<span style=\"font-weight: 600; color: #f1ff51\">we love</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3359,7 +3337,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 700; color: #f1ff51\">Fit For All</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3447,7 +3424,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 500; color: #f1ff51\">The reference app for runners</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3594,7 +3570,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 700; color: #f1ff51\">Gymmy</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3682,7 +3657,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 500; color: #f1ff51\">Dozens of tailor-made workouts</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3829,7 +3803,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 700; color: #f1ff51\">42K Push</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3917,7 +3890,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 500; color: #f1ff51\">10-week program to run long and strong</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3937,7 +3909,6 @@
           "groupId": "b493ca28-f3a4-4a39-b251-b07af4563067"
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 15,
@@ -4212,7 +4183,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 600; color: #0f2c41\">Other stories</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4348,7 +4318,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 500; color: #0f2c41\">Best apps for power lifters</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4488,7 +4457,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 500; color: #0f2c41\">Learn how to do a squat correctly</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4628,7 +4596,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 500; color: #0f2c41\">Top 5 muscle building apps</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4648,7 +4615,6 @@
           "groupId": "2474450c-c1fc-47a2-bc62-2380be88516a"
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 241,
