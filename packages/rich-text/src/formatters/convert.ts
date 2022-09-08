@@ -17,8 +17,8 @@
 /**
  * External dependencies
  */
-import {
-  Modifier,
+import { Modifier } from 'draft-js';
+import type {
   ContentBlock,
   SelectionState,
   ContentState,
