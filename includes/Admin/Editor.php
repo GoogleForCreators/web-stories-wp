@@ -322,7 +322,7 @@ class Editor extends Service_Base implements HasRequirements {
 		$post                 = get_post();
 		$story_id             = $post->ID ?? null;
 		$general_settings_url = admin_url( 'options-general.php' );
- 
+
 		if ( $story_id ) {
 			$this->setup_lock( $story_id );
 		}
