@@ -54,7 +54,7 @@ describe('Panels/VideoOptions', () => {
   const defaultElement = {
     id: 123,
     type: 'video',
-    volume: 1.0,
+    volume: 1,
     resource: { posterId: 0, poster: '', alt: '', isMuted: false },
   };
   function arrange(...args) {
@@ -105,7 +105,7 @@ describe('Panels/VideoOptions', () => {
     arrange([
       {
         type: 'video',
-        volume: 1.0,
+        volume: 1,
         resource: { posterId: 0, poster: '', alt: '', isMuted: true },
       },
     ]);
