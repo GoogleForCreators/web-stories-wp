@@ -50,6 +50,7 @@ import {
   useSidebar,
 } from '@googleforcreators/story-editor';
 import { useFeature } from 'flagged';
+import { addQueryArgs } from '@googleforcreators/url';
 /**
  * Internal dependencies
  */
@@ -148,6 +149,7 @@ function PublishPanel({ nameOverride }) {
     dashboardSettingsLink,
     capabilities: { hasUploadMediaAction, canManageSettings },
     MediaUpload,
+    revisionLink
   } = useConfig();
 
   const improvedAutosaves = useFeature('improvedAutosaves');
@@ -175,14 +177,14 @@ function PublishPanel({ nameOverride }) {
     })
   );
 
-  const { featuredMedia, publisherLogo, updateStory, capabilities, revision } =
+  const { featuredMedia, publisherLogo, updateStory, capabilities, revisions } =
     useStory(
       ({
         state: {
           story: {
             featuredMedia = { id: 0, url: '', height: 0, width: 0 },
             publisherLogo = { id: 0, url: '', height: 0, width: 0 },
-            revision,
+            revisions,
           },
           capabilities,
         },
@@ -193,18 +195,13 @@ function PublishPanel({ nameOverride }) {
           publisherLogo,
           updateStory,
           capabilities,
-          revision,
+          revisions,
         };
       }
     );
 
-  let revision_count = 0;
-  let revision_link = '';
-
-  if (improvedAutosaves && revision) {
-    revision_count = revision.count;
-    revision_link = revision.href;
-  }
+  const revisionCount = revisions?.count ? revisions?.count : 0;
+  const revisionId = revisions?.id ? revisions?.id : 0;
 
   const handleChangePoster = useCallback(
     /**
@@ -452,16 +449,16 @@ function PublishPanel({ nameOverride }) {
                   <Icons.History width={24} height={24} aria-hidden />
                 </LabelIconWrapper>
                 <RevisionsLabel>
-                  {revision_count} {__('Revisions', 'web-stories')}
+                  {revisionCount} {__('Revisions', 'web-stories')}
                 </RevisionsLabel>
               </Label>
 
-              {revision_link && (
+              {revisionLink && revisionId && (
                 <Row>
                   <Link
                     rel="noopener noreferrer"
                     target="_blank"
-                    href={revision_link}
+                    href={addQueryArgs(revisionLink, { revision: revisionId })}
                     size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
                   >
                     {__('Manage', 'web-stories')}

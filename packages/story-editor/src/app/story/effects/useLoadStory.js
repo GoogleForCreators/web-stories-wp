@@ -54,7 +54,7 @@ function loadStory(storyId, post, restore, clearHistory) {
     publisherLogo,
     taxonomies,
     terms,
-    revision,
+    revisions,
   } = post;
 
   const date =
@@ -113,7 +113,7 @@ function loadStory(storyId, post, restore, clearHistory) {
     previewLink,
     editLink,
     embedPostLink,
-    revision,
+    revisions,
     currentStoryStyles: {
       colors: storyData?.currentStoryStyles?.colors
         ? getUniquePresets(storyData.currentStoryStyles.colors)
