@@ -449,7 +449,7 @@
         "id": "f4a5d856-3d77-43b4-b889-3514abb2a7e4",
         "type": "shape"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -619,7 +619,7 @@
         "id": "f8fb5413-f1ab-4321-b666-54a013c17af9",
         "type": "shape"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -1067,7 +1067,7 @@
         "id": "509743ae-90b1-4163-ae8e-2da0c61c42d0",
         "type": "shape"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -1208,7 +1208,7 @@
         "id": "9aac0519-6b18-4bee-a02e-a12b240cfa3d",
         "type": "shape"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -1384,7 +1384,7 @@
         "id": "77e2e659-d0f2-4d32-b143-5a412a3caa98",
         "type": "shape"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -1778,7 +1778,7 @@
         "id": "8d71d082-025d-4044-8e12-f34dc9347626",
         "type": "shape"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -1913,7 +1913,7 @@
         "id": "bd3f7b22-0556-40e7-809e-8ad2297b0b40",
         "type": "shape"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -2048,7 +2048,7 @@
         "id": "44207339-c6ae-4f85-a2ae-dc666afebf0a",
         "type": "shape"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -2183,7 +2183,7 @@
         "id": "23adf013-9449-4ca8-8ab9-a5a64f92f9dd",
         "type": "shape"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -2452,7 +2452,7 @@
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "id": "b77ce411-935c-4e99-856f-3e24e7f2a744",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     }
   ],
   "current": null,

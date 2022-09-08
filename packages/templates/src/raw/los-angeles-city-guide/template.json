@@ -135,7 +135,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 900; color: #c2cda3; text-transform: uppercase\">Everything You Didn't Know About Los Angeles</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -216,7 +215,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #c2cda3\">By </span><span style=\"font-weight: 900; color: #c2cda3\">Billy Rogers</span><span style=\"color: #c2cda3\"> 08/11/20</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -393,7 +391,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 900; color: #c2cda3\">Los Angeles, one of the most traveled cities in the world</span><span style=\"color: #c2cda3\">. </span><span style=\"font-weight: 300; color: #c2cda3\">But just when you thought you knew it all.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -475,7 +472,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 300; color: #c2cda3\">Here are 6 things you (probably) didn’t know.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -688,7 +684,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 900; color: #c2cda3; text-transform: uppercase\">BUNKER HILL</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -770,7 +765,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #c2cda3\">Downtown used to be the infamous </span><span style=\"font-weight: 700; color: #c2cda3\">Bunker Hill.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -850,7 +844,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 900; color: #212426\">01.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -877,7 +870,7 @@
       "type": "page",
       "id": "c83559fd-1ec2-4def-b9fc-1bdbfe0ad2b6",
       "animations": [],
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "18078796-061e-4f77-a0a5-55c19544b98b": {
           "name": "Info",
@@ -1051,7 +1044,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #c2cda3\">The historic home of</span>\n<span style=\"color: #c2cda3\">Los Angeles mobsters &amp; the underground elite.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1119,7 +1111,7 @@
       },
       "type": "page",
       "id": "2023769d-d737-4487-babc-c8b2685d90d0",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -1327,7 +1319,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #c2cda3\">An area of the city with roots in Hollywood film noir and beyond.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1395,7 +1386,7 @@
       },
       "type": "page",
       "id": "49dc6308-3e04-4e3a-9da7-ed8458d63638",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -1529,7 +1520,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #c2cda3\">“Bunker Hill was purchased for $51 and re-architected for a then-whopping $95,000.”</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1611,7 +1601,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #c2cda3; letter-spacing: 0.1em; text-transform: uppercase\">KEN KENNY, LA MAYOR</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1763,7 +1752,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #c2cda3\">Bunker Hill Value</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1844,7 +1832,6 @@
           "id": "539554c7-2730-41f4-b560-449f9367deee",
           "basedOn": "98663352-5c1c-4d3a-bc1a-f93c00d30ca2",
           "content": "<span style=\"font-weight: 900; color: #c2cda3; text-transform: uppercase\">PRICE PAID</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1922,7 +1909,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 900; color: #c2cda3; text-transform: uppercase\">DEVELOPED</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2000,7 +1986,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 900; color: #c2cda3; text-transform: uppercase\">CURRENT VALUE</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2194,7 +2179,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 300; color: #c2cda3\">$51</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2274,7 +2258,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 300; color: #c2cda3\">$95K</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2354,7 +2337,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 300; color: #c2cda3\">$2.1B</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2573,7 +2555,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 900; color: #c2cda3; text-transform: uppercase\">THE EDISON</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2655,7 +2636,6 @@
           "id": "740671e3-99ec-4eb4-aa98-710cd5abcb78",
           "basedOn": "0078d19f-a03e-491e-9c1d-ab59b33e6a94",
           "content": "<span style=\"color: #c2cda3\">You can drink in a Prohibition-era power plant.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2735,7 +2715,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 900; color: #212426\">02.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -2937,7 +2916,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #c2cda3\">Now a beloved 1920s bar and club in what seems like decor, but is a true relic.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3005,7 +2983,7 @@
       },
       "type": "page",
       "id": "3d418efe-e50d-41f2-a714-58feef1c0868",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -3179,7 +3157,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 900; color: #c2cda3\">The Edison</span>\n<span style=\"color: #c2cda3\">108 W 2nd Street</span>\n<span style=\"color: #c2cda3\">Los Angeles, CA 90012</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3248,7 +3225,7 @@
       },
       "type": "page",
       "id": "923f19aa-7356-49af-aa94-5615f92adb76",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "30422657-3c15-4251-ac79-06a02597b17c": {
           "name": "Location",
@@ -3406,7 +3383,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 900; color: #c2cda3; text-transform: uppercase\">DODGER STADIUM</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3488,7 +3464,6 @@
           "id": "c8dddf2e-442d-4157-9987-b70f83a2b7d1",
           "basedOn": "0078d19f-a03e-491e-9c1d-ab59b33e6a94",
           "content": "<span style=\"color: #c2cda3\">Dodger stadium is built on land teeming with Mexican history.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3568,7 +3543,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 900; color: #212426\">03.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -3596,7 +3570,7 @@
       },
       "type": "page",
       "id": "80c879ad-c817-4179-8201-17dda83fada3",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "5edce6ce-6b75-40d0-92b3-56367439263b": {
           "name": "Info",
@@ -3753,7 +3727,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #c2cda3\">The area was once home to the most populous Mexican community in the city.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3856,7 +3829,7 @@
         "id": "a368083a-a94c-4e37-8543-64f9269e065b",
         "type": "shape"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -4031,7 +4004,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #c2cda3\">It’s hard to imagine Los Angeles without the stadium, which now plays neighbor to bustling and diverse Eastside neighborhoods and families.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4099,7 +4071,7 @@
       },
       "type": "page",
       "id": "a3804d63-15bf-4954-8374-69d9ac0e5041",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -4180,7 +4152,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 900; color: #c2cda3; text-transform: uppercase\">READ MORE ABOUT LA</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4264,7 +4235,6 @@
           "y": 529,
           "basedOn": "bd1b08a8-515a-4e8c-9809-f252945c7f3f",
           "content": "<span style=\"font-weight: 900; color: #212426\">2.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -4344,7 +4314,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #c2cda3\">Best Hotel pools in Los Angeles</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4511,7 +4480,6 @@
           "id": "bd1b08a8-515a-4e8c-9809-f252945c7f3f",
           "basedOn": "0078d19f-a03e-491e-9c1d-ab59b33e6a94",
           "content": "<span style=\"font-weight: 900; color: #212426\">1.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -4590,7 +4558,6 @@
           "id": "2567e4e4-cf19-4014-adf4-9df5a9ee6bb7",
           "basedOn": "0078d19f-a03e-491e-9c1d-ab59b33e6a94",
           "content": "<span style=\"color: #c2cda3\">What to Pack for Los Angeles</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
