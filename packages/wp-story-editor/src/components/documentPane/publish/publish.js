@@ -148,18 +148,9 @@ function PublishPanel({ nameOverride }) {
     dashboardSettingsLink,
     capabilities: { hasUploadMediaAction, canManageSettings },
     MediaUpload,
-    revision,
   } = useConfig();
 
   const improvedAutosaves = useFeature('improvedAutosaves');
-
-  let revision_count = 0;
-  let revision_link = '';
-
-  if (improvedAutosaves && revision) {
-    revision_count = revision.count;
-    revision_link = revision.href;
-  }
 
   const allowedImageFileTypes = useMemo(
     () =>
@@ -184,25 +175,36 @@ function PublishPanel({ nameOverride }) {
     })
   );
 
-  const { featuredMedia, publisherLogo, updateStory, capabilities } = useStory(
-    ({
-      state: {
-        story: {
-          featuredMedia = { id: 0, url: '', height: 0, width: 0 },
-          publisherLogo = { id: 0, url: '', height: 0, width: 0 },
+  const { featuredMedia, publisherLogo, updateStory, capabilities, revision } =
+    useStory(
+      ({
+        state: {
+          story: {
+            featuredMedia = { id: 0, url: '', height: 0, width: 0 },
+            publisherLogo = { id: 0, url: '', height: 0, width: 0 },
+            revision,
+          },
+          capabilities,
         },
-        capabilities,
-      },
-      actions: { updateStory },
-    }) => {
-      return {
-        featuredMedia,
-        publisherLogo,
-        updateStory,
-        capabilities,
-      };
-    }
-  );
+        actions: { updateStory },
+      }) => {
+        return {
+          featuredMedia,
+          publisherLogo,
+          updateStory,
+          capabilities,
+          revision,
+        };
+      }
+    );
+
+  let revision_count = 0;
+  let revision_link = '';
+
+  if (improvedAutosaves && revision) {
+    revision_count = revision.count;
+    revision_link = revision.href;
+  }
 
   const handleChangePoster = useCallback(
     /**

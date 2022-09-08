@@ -309,90 +309,6 @@ class Editor extends Service_Base implements HasRequirements {
 		$this->assets->remove_admin_style( [ 'forms' ] );
 	}
 
-
-	
-	/**
-	 * Get post revision information for latest id and count.
-	 *
-	 * Replace this with wp_get_latest_revision_id_and_total_count 
-	 * Once 6.1 becomes the lowest version supported
-	 * 
-	 * @since 1.25.0
-	 *
-	 * @param WP_Post $post    Current post object.
-	 * @return array<string,mixed> Revison links and count.
-	 */
-	public function get_latest_revision_id_and_total_count( $post ): array {
-		if ( ! $post->ID ) {
-			return [];
-		}
-
-		if ( ! wp_revisions_enabled( $post ) ) {
-			return [];
-		}
-
-		$args = [
-			'post_parent'         => $post->ID,
-			'fields'              => 'ids',
-			'post_type'           => 'revision',
-			'post_status'         => 'inherit',
-			'order'               => 'DESC',
-			'orderby'             => 'date ID',
-			'posts_per_page'      => 1,
-			'ignore_sticky_posts' => true,
-		];
-
-		$revision_query = new \WP_Query();
-		$revisions      = $revision_query->query( $args );
-
-		if ( ! $revisions ) {
-			return [
-				'latest_id' => 0,
-				'count'     => 0,
-			];
-		}
-
-		return [
-			'latest_id' => $revisions[0],
-			'count'     => $revision_query->found_posts,
-		];
-	}
-
-	/**
-	 * Get post revisions count and link.
-	 * 
-	 * @since 1.25.0
-	 *
-	 * @param WP_Post|null $post    Current post object.
-	 * @return array<string,mixed> Revison links and count.
-	 */
-	public function get_revisions_count_and_link( $post ): array {
-		$improved_autosaves = $this->experiments->is_experiment_enabled( 'improvedAutosaves' );
-		$revision           = [ 
-			'href'  => '',
-			'count' => 0,
-		];
-
-		if ( ! $post || ! $post->ID ) {
-			return $revision;
-		}
-		
-		if ( $improved_autosaves && $post->post_type ) {
-			if ( \in_array( $post->post_type, [ 'post', 'page' ], true ) || post_type_supports( $post->post_type, 'revisions' ) ) {
-				
-				$revisions       = $this->get_latest_revision_id_and_total_count( $post );
-				$revisions_count = \count( $revisions ) >= 1 ? $revisions['count'] : 0;
-
-				$revision = [
-					'href'  => $revisions['latest_id'] ? admin_url() . 'revision.php?revision=' . $revisions['latest_id'] : '',
-					'count' => $revisions_count,
-				];
-			}
-		}
-
-		return $revision;
-	}
-
 	/**
 	 * Get editor settings as an array.
 	 *
@@ -472,7 +388,6 @@ class Editor extends Service_Base implements HasRequirements {
 			'autoSaveInterval'        => \defined( 'AUTOSAVE_INTERVAL' ) ? AUTOSAVE_INTERVAL : null,
 			'localAutoSaveInterval'   => 15,
 			'autoSaveLink'            => $auto_save_link,
-			'revision'                => $this->get_revisions_count_and_link( $post ),
 			'isRTL'                   => is_rtl(),
 			'locale'                  => $this->locale->get_locale_settings(),
 			'allowedMimeTypes'        => $this->types->get_allowed_mime_types(),
