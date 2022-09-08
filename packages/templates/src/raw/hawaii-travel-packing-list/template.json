@@ -205,7 +205,6 @@
           },
           "type": "text",
           "content": "What to pack for Hawaii’s Main Islands",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -294,7 +293,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 300\">By</span> <span style=\"font-weight: 600\">Emily Kawamoto</span> <span style=\"font-weight: 300\">8/11/20</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -446,7 +444,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 500; color: #fff\">The Hawaiian Islands</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -534,7 +531,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #fff\">Made up of eight islands: Maui, Kauai, Oahu, Lanai, Molokai, Kahoolawe, Niihau, the Big Island Hawaii.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -619,7 +615,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #fff\">Kahoolawe</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -703,7 +698,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #fff\">Hawaii</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -787,7 +781,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #fff\">Lanai</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -871,7 +864,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #fff\">Molokai</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -955,7 +947,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #fff\">Maui</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1039,7 +1030,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #fff\">Oahu</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1123,7 +1113,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #fff\">Kauai</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1207,7 +1196,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #fff\">Niihau</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1317,7 +1305,7 @@
         "type": "shape",
         "id": "4e37750d-b059-4aa2-a72f-3c5070985eab"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "4059b06a-672f-4b10-85c4-504c2f131482": {
           "name": "Info",
@@ -1482,7 +1470,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #fff\">Hike the Big Island</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1566,7 +1553,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 600; color: #fff\">Must Do:</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1632,7 +1618,7 @@
           "delay": 0
         }
       ],
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -1763,7 +1749,6 @@
           },
           "type": "text",
           "content": "Be sure to pack",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1847,7 +1832,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 200\">01.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1936,7 +1920,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 300\">Hiking Boots</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2063,7 +2046,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 300\">A Good Camera</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2148,7 +2130,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 200\">02.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2318,7 +2299,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 300\">Warm Clothes</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2403,7 +2383,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 200\">03.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2615,7 +2594,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #fff\">Hiking Boots</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2700,7 +2678,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 500; color: #fff\">01.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2789,7 +2766,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #fff\">If you really want to hike and adventure to see the real sights of the Big Island, you will want to be prepared.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2954,7 +2930,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #fff\">View Products</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 100,
@@ -3020,7 +2995,7 @@
           "delay": 0
         }
       ],
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "2cb620af-1d36-4d66-a597-0a93a7803f0c": {
           "name": "Info",
@@ -3195,7 +3170,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fff\">A Good Camera</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3280,7 +3254,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 500; color: #fff\">02.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3369,7 +3342,6 @@
           "id": "5c2a2df4-a9cf-405e-a185-ac3e8c6746cc",
           "basedOn": "81970e87-bdf8-44e2-b6d8-3930ed995b31",
           "content": "<span style=\"color: #fff\">You’re going to want more than what your average phone camera can capture. These are going to be photos of a lifetime.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3536,7 +3508,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #fff\">View Products</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 100,
@@ -3602,7 +3573,7 @@
       },
       "type": "page",
       "id": "de6c04ec-3f96-4a08-a5d6-870b3772d53c",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "aa639ff6-17c9-441a-9218-d7eff663d82d": {
           "name": "Info",
@@ -3785,7 +3756,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fff\">Warm Clothes</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3870,7 +3840,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 500; color: #fff\">03.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3959,7 +3928,6 @@
           "id": "62ebe965-c9f2-4575-9c95-43b3f118904d",
           "basedOn": "81970e87-bdf8-44e2-b6d8-3930ed995b31",
           "content": "<span style=\"color: #fff\">Weather can be fickle here. If you plan to hike all day, make sure to be prepared with a set of warmer layers in a backpack.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4126,7 +4094,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #fff\">View Products</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 100,
@@ -4192,7 +4159,7 @@
       },
       "type": "page",
       "id": "9cdb64c7-57ba-4ba5-becd-d1fd802d78b7",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "d380642e-e38f-48a5-8bde-c4e6ab8ff25b": {
           "name": "Action",
@@ -4366,7 +4333,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fff\">Snorkeling in Maui</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4450,7 +4416,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 600; color: #fff\">Must Do:</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4647,7 +4612,6 @@
             "hasHiddenPadding": false
           },
           "content": "What to pack",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4731,7 +4695,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 200\">01.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4820,7 +4783,6 @@
           "id": "bebdc562-d78a-4929-aa27-9345af67fca4",
           "basedOn": "67618dc9-78d0-4981-b9a6-d204f905c67c",
           "content": "<span style=\"font-weight: 300\">Snorkel Mask</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4947,7 +4909,6 @@
           "id": "90a60cf8-deab-4f43-a632-3a268583cf02",
           "basedOn": "67618dc9-78d0-4981-b9a6-d204f905c67c",
           "content": "<span style=\"font-weight: 300\">Sunglasses</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -5032,7 +4993,6 @@
           "id": "937f563a-fded-40c9-992a-b1807dc576ca",
           "basedOn": "6b6fb17c-80d5-4c2a-b6ed-a3351f311adb",
           "content": "<span style=\"font-weight: 200\">02.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -5202,7 +5162,6 @@
           "id": "08447e7e-6d78-4f39-8fe1-77ce92f3d487",
           "basedOn": "6b6fb17c-80d5-4c2a-b6ed-a3351f311adb",
           "content": "<span style=\"font-weight: 200\">03.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -5288,7 +5247,6 @@
           "id": "168149ee-3c87-4c52-a75b-44120eb5fd68",
           "basedOn": "67618dc9-78d0-4981-b9a6-d204f905c67c",
           "content": "<span style=\"font-weight: 300\">Waterproof Pro-Cam</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -5316,7 +5274,7 @@
       },
       "type": "page",
       "id": "6951e10e-26d7-4b83-aa1c-a5089d22fc10",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "4f34177c-4d4f-4031-a237-eafd1dab0c00": {
           "name": "Section 1",
@@ -5491,7 +5449,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fff\">Snorkel Mask</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -5576,7 +5533,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 500; color: #fff\">01.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -5665,7 +5621,6 @@
           "id": "36565544-69be-4c43-bb88-5241b78942b3",
           "basedOn": "81970e87-bdf8-44e2-b6d8-3930ed995b31",
           "content": "<span style=\"color: #fff\">If you can, why not pack your own snorkel mask? Especially these days, you want something that is custom for your face and your face only.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -5832,7 +5787,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #fff\">View Products</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 100,
@@ -5898,7 +5852,7 @@
       },
       "type": "page",
       "id": "ec688592-858a-47a0-8a13-b03672f5dac9",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "1d2b3c77-1282-4fbc-81e1-2de9114fcfc8": {
           "name": "Info",
@@ -6073,7 +6027,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fff\">Sunglasses</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -6158,7 +6111,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 500; color: #fff\">02.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -6247,7 +6199,6 @@
           "id": "c67bb80e-024e-4818-96f1-a8028f59405b",
           "basedOn": "81970e87-bdf8-44e2-b6d8-3930ed995b31",
           "content": "<span style=\"color: #fff\">If you’re going to be on a boat en route to your snorkel destination, be sure to pack a pair of sunnies.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -6414,7 +6365,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #fff\">View Products</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 100,
@@ -6480,7 +6430,7 @@
       },
       "type": "page",
       "id": "f9eeeb1d-d420-4ed0-a7c9-77c741ef37c8",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "c7c2dfbb-4407-46e7-a6d4-f53e506a8b43": {
           "name": "Info",
@@ -6655,7 +6605,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fff\">Waterproof Pro-Cam</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -6740,7 +6689,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 500; color: #fff\">03.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -6829,7 +6777,6 @@
           "id": "5676cfac-4771-4047-b5ff-a22b59357bda",
           "basedOn": "81970e87-bdf8-44e2-b6d8-3930ed995b31",
           "content": "<span style=\"color: #fff\">My rule of thumb is to capture everything. And underwater views are so special. They’re definitely worth savoring again and again.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -6996,7 +6943,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #fff\">View Products</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 100,
@@ -7188,7 +7134,6 @@
             "hasHiddenPadding": false
           },
           "content": "Curious about the \nother islands?",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -7315,7 +7260,6 @@
             "hasHiddenPadding": false
           },
           "content": "Kauai",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -7439,7 +7383,6 @@
             "hasHiddenPadding": false
           },
           "content": "Molokai",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -7514,7 +7457,6 @@
             "vertical": 14
           },
           "content": "See More",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 100,

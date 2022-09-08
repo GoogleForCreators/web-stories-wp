@@ -744,7 +744,7 @@
       },
       "type": "page",
       "id": "a48afcc0-f0f0-4254-bb45-ebb2673a5c23",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -1395,7 +1395,7 @@
         "id": "eca8914e-d94f-4ef6-be97-4cd0255c34b3",
         "type": "shape"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "85afa4b6-472f-4888-bcd9-d6d5fc926612": {
           "name": "Info",
@@ -1773,7 +1773,7 @@
         "id": "436cdf32-be49-40c8-bd05-a24b2d12c243",
         "type": "shape"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "fa25dbe8-a759-4b39-a46f-f20cfc36f6f2": {
           "name": "Info",
@@ -2195,7 +2195,7 @@
         "ctaText": "Donate Now",
         "theme": "light"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "5d539645-cb44-4278-8aaa-093964422cc0": {
           "name": "School Image",
@@ -2488,7 +2488,7 @@
         "id": "3f7536e8-aecd-4a22-b00f-ceacd18c0c39",
         "type": "shape"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -3218,7 +3218,7 @@
         "id": "f86a11fa-86aa-4da2-b0f2-a0a7be4ebf13",
         "type": "shape"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "308754ee-f33e-460d-a1a9-aeafe48b8f84": {
           "name": "Info",
@@ -3639,7 +3639,7 @@
         "ctaText": "Donate Now",
         "theme": "light"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "265104c7-7932-4205-9c60-098ac4047268": {
           "name": "Heart Image",

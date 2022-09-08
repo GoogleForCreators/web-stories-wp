@@ -151,7 +151,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #eef0f2\">The Venice Simplon Orient Express</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -242,7 +241,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #fff; letter-spacing: 0.15em; text-transform: uppercase\">By John Doe 2020</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -330,7 +328,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #fff; letter-spacing: 0.3em; text-transform: uppercase\">All aboard</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -707,7 +704,7 @@
           "delay": 300
         }
       ],
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -951,7 +948,7 @@
           "delay": 250
         }
       ],
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -1198,7 +1195,7 @@
           "delay": 0
         }
       ],
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -1445,7 +1442,7 @@
         "id": "5dac7052-e417-438d-b377-c0b54be04633",
         "type": "shape"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -3354,7 +3351,7 @@
       },
       "type": "page",
       "id": "229ff8e6-51f4-41e7-b24d-2b4a60667265",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "956b5d4f-bf98-4b64-b7f9-9d9d5340a8b1": {
           "name": "Trip",
@@ -3613,7 +3610,7 @@
         "id": "f655e45a-6f83-443a-b822-e10e999265f8",
         "type": "shape"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -4100,7 +4097,7 @@
       },
       "type": "page",
       "id": "713e70f1-286c-4b56-834f-a54399866785",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "7f1ba731-3cd2-4f3a-a787-59f979699fdf": {
           "name": "Trip",
@@ -4562,7 +4559,7 @@
       },
       "type": "page",
       "id": "2dacc2ce-a98b-4df3-aab9-c3a7e564f94b",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "14d55607-e623-4274-ab8c-70f404dd2002": {
           "name": "Trip",
@@ -5087,7 +5084,7 @@
       },
       "type": "page",
       "id": "58767793-d6a8-46ae-abdd-811177f4b68b",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "dccdb7b9-67b0-40bc-85b6-cc4e79bf9b95": {
           "name": "Header",
@@ -5551,7 +5548,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #fff; letter-spacing: 0.3em; text-transform: uppercase\">More from John Doe</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -5720,7 +5716,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #fff\">Top Five Fall Road Trips</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -5804,7 +5799,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #fff\">Spend a Week in Tuscany</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
