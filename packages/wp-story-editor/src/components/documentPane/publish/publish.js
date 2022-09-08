@@ -126,12 +126,13 @@ const RevisionsWrapper = styled.div`
 `;
 
 const RevisionsLabel = styled.div`
-  margin-left: 24px;
+  margin-left: 20px;
 `;
 
 const LabelIconWrapper = styled.div`
   position: absolute;
   display: inline-block;
+  margin-left: -5px;
 `;
 
 function PublishPanel({ nameOverride }) {
