@@ -36,23 +36,7 @@ jest.mock('@wordpress/data', () => ({
   })),
 }));
 
-jest.mock('../../utils/globals', () => ({
-  webStoriesData: {
-    views: [],
-  },
-}));
-
 import * as Utils from '..';
-
-/**
- * Test that the current view is grid view.
- */
-describe('Test the current view', () => {
-  it('view should be circles', () => {
-    const view = Utils.currentView();
-    expect(view).toBe('grid');
-  });
-});
 
 /**
  * Test shortcode build function.
