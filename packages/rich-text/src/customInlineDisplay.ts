@@ -15,13 +15,17 @@
  */
 
 /**
+ * External dependencies
+ */
+import type { CSSProperties } from 'react';
+
+/**
  * Internal dependencies
  */
 import formatters from './formatters';
 import { fauxStylesToCSS } from './fauxSelection';
 
-// @todo Proper return type.
-function customInlineDisplay(styles: string[]) {
+function customInlineDisplay(styles: string[]): CSSProperties {
   const stylesToCSSConverters = [
     ...formatters.map(({ stylesToCSS }) => stylesToCSS),
     fauxStylesToCSS,

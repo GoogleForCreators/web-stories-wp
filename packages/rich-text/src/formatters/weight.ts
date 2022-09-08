@@ -113,7 +113,6 @@ function getFontWeight(editorState: EditorState) {
   return weights[0];
 }
 
-// @todo Check what happens if weight is 0, it was not always set previously.
 function setFontWeight(editorState: EditorState, weight = 0) {
   // if the weight to set is non-400, set a style
   // (if 400 is target, all other weights are just removed, and we're good)
