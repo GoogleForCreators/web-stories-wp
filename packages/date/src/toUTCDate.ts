@@ -14,42 +14,22 @@
  * limitations under the License.
  */
 
-export const DEFAULT_DATE_SETTINGS = {
-  dateFormat: 'F j, Y',
-  timeFormat: 'g:i a',
-  gmtOffset: 0,
-  timezone: '',
-  weekStartsOn: 0,
-};
-
-let settings = {
-  ...DEFAULT_DATE_SETTINGS,
-};
-
 /**
- * Reset date settings to their defaults.
+ * External dependencies
  */
-export function resetSettings() {
-  settings = DEFAULT_DATE_SETTINGS;
-}
+import { toDate } from 'date-fns-tz';
 
 /**
- * Update date settings.
+ * Parses a date as UTC date.
  *
- * @param {Object} newSettings Date settings.
+ * Takes a string without timezone information and
+ * explicitly marks it as UTC.
+ *
+ * @param date Date object or string.
+ * @return UTC date.
  */
-export function updateSettings(newSettings) {
-  settings = {
-    ...settings,
-    ...newSettings,
-  };
+function toUTCDate(date: Date | string) {
+  return toDate(date, { timeZone: '+0000' });
 }
 
-/**
- * Returns the current date settings.
- *
- * @return {Object} Date settings.
- */
-export function getSettings() {
-  return settings;
-}
+export default toUTCDate;

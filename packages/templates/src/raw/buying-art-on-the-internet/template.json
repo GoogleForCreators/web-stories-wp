@@ -565,7 +565,7 @@
         "id": "dc7cb486-74bc-4b71-8e85-5238a7cbad96"
       },
       "animations": [],
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -1208,7 +1208,7 @@
         "type": "shape",
         "id": "afc62c9c-2f34-47dd-b44c-eb2da028bd4c"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -1562,7 +1562,7 @@
         "id": "9fd1d379-8712-465f-871d-4b92c83263ed",
         "type": "shape"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -2490,7 +2490,7 @@
       },
       "type": "page",
       "id": "28457fb3-139a-4b07-9e3e-9e5e75ccee7a",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "fd8a3f60-c3a7-4acc-8e8f-ab0aa64d98c2": {
           "name": "Section",
@@ -2796,7 +2796,7 @@
         "id": "5775d9d1-9a51-4b7b-ba79-1841e31529c1",
         "type": "shape"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -3792,7 +3792,7 @@
       },
       "type": "page",
       "id": "23c3ac5e-86cc-404f-9abe-c763974d32c0",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "43badbc5-7f1c-47ff-ad2d-dad879c92539": {
           "name": "Header",
@@ -4288,7 +4288,7 @@
       },
       "type": "page",
       "id": "d5ec9964-6bba-4c88-9915-a6e6ae8a9554",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "147ba536-9f14-46f8-8e59-2ae2e1bb3622": {
           "name": "Header",
@@ -4529,7 +4529,7 @@
         "id": "43facbfe-203d-438d-8bfd-e4820cfe2c1f",
         "type": "shape"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -5926,7 +5926,7 @@
       },
       "type": "page",
       "id": "543334ac-dbbc-4dc7-a744-f65ae1ccf8dc",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     }
   ]
 }

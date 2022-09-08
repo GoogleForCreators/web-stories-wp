@@ -132,7 +132,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #fbeb50; text-transform: uppercase\">Women in Almodo’s films</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -436,7 +435,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #fbeb50; text-transform: uppercase\">Strong female characters</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -541,7 +539,6 @@
           "groupId": "0c3fe02d-557f-468c-baaa-1442b4efa843"
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 255,
@@ -806,7 +803,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fbeb50; text-transform: uppercase\">Julieta</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -974,7 +970,6 @@
           "delay": 0
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 38,
@@ -1227,7 +1222,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #fbeb50; text-transform: uppercase\">Making Julieta</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1248,7 +1242,6 @@
           "tagName": "h3"
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 255,
@@ -1302,7 +1295,7 @@
           "delay": 0
         }
       ],
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "9365df04-ba7d-45cb-ba7f-3d1f1f470427": {
           "name": "Info",
@@ -1475,7 +1468,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #fbeb50; text-transform: uppercase\">Ugarte as Julieta</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1596,7 +1588,6 @@
           "type": "image"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "7d38872e-4316-47c4-986d-09e338658822",
@@ -1624,7 +1615,7 @@
       },
       "type": "page",
       "id": "be528b0a-a60f-4d52-ae28-b7e76dfaf6a1",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -1774,7 +1765,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fbeb50; text-transform: uppercase\">“ I wanted to portray a woman exploring life and making decisions on her own terms.”</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1881,7 +1871,6 @@
           "groupId": "d15b4890-cdc7-4707-940b-2e56241574aa"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "b8ef6cd9-eae0-4c5d-b8cd-fcae68ea7a33",
@@ -2147,7 +2136,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fbeb50; text-transform: uppercase\">Volver</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2316,7 +2304,6 @@
           "delay": 0
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 38,
@@ -2326,7 +2313,7 @@
       },
       "type": "page",
       "id": "6e6528b7-19b4-4fd1-bf4b-e4d6665af57a",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "1da32414-b11d-4135-bb9b-d8d07718c034": {
           "name": "Header",
@@ -2568,7 +2555,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fbeb50; text-transform: uppercase\">Why Identity?</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2590,7 +2576,6 @@
           "tagName": "h3"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "5cc6fb32-98a8-42e2-b2cc-178fa7d9bede",
@@ -2644,7 +2629,7 @@
         "type": "shape",
         "id": "9e57288b-42fd-40ef-8ea8-08b5e45f79c2"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "c1ce1dcb-4693-4ea8-9799-27b6929b7512": {
           "name": "Info",
@@ -2801,7 +2786,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fbeb50; text-transform: uppercase\">“His work is his love letter to women. It's his love letter to cinema.”</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2908,7 +2892,6 @@
           "groupId": "075a59ee-96c4-4370-9971-324b829197ed"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "b4a10039-4534-41ff-a7c1-23a23df8919d",
@@ -2962,7 +2945,7 @@
         "type": "shape",
         "id": "283187b0-23d3-4fe8-8189-c5fb55770aa0"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "075a59ee-96c4-4370-9971-324b829197ed": {
           "name": "Info",
@@ -3173,7 +3156,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fbeb50; text-transform: uppercase\">All about my mother</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3342,7 +3324,6 @@
           "delay": 0
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 38,
@@ -3352,7 +3333,7 @@
       },
       "type": "page",
       "id": "8f868cda-a3fe-4685-b4e2-815d713ede88",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "9fbc7892-ea16-4414-a16a-972975551a65": {
           "name": "Header",
@@ -3609,7 +3590,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fbeb50; text-transform: uppercase\">Real vs. Unreal</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3631,7 +3611,6 @@
           "tagName": "h3"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "d4da8222-c7ee-45a7-abbd-2bdb71870ce5",
@@ -3685,7 +3664,7 @@
         "type": "shape",
         "id": "9e57288b-42fd-40ef-8ea8-08b5e45f79c2"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "881047a9-509f-4a93-b650-32a1e54aab91": {
           "name": "Info",
@@ -3857,7 +3836,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fbeb50; text-transform: uppercase\">“The films he makes are a reflection of himself, and this is how he sees women.”</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3964,7 +3942,6 @@
           "groupId": "d8ec8e34-4304-41bc-ace1-f3c1868ce035"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "d3e7be7a-7522-4657-a3ba-ed8cfc2ea882",
@@ -4018,7 +3995,7 @@
         "type": "shape",
         "id": "283187b0-23d3-4fe8-8189-c5fb55770aa0"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "d8ec8e34-4304-41bc-ace1-f3c1868ce035": {
           "name": "Info",
@@ -4106,7 +4083,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fbeb50; text-transform: uppercase\">The observer of women</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4313,7 +4289,6 @@
           "y": 204
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "65a4cc37-be34-4252-b382-0541a82805ad",
@@ -4368,7 +4343,7 @@
         "type": "shape",
         "id": "283187b0-23d3-4fe8-8189-c5fb55770aa0"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -4449,7 +4424,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fbeb50; text-transform: uppercase\">Other \nstories</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4878,7 +4852,6 @@
           "tagName": "h3"
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 38,
