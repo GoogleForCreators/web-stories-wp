@@ -53,7 +53,7 @@ function useContextSelector<T, S>(
 
   const equalityFnCallback = (state: T) => {
     const selected = selector(state);
-    if (equalityFn(ref.current, selected)) {
+    if (ref.current && equalityFn(ref.current, selected)) {
       return ref.current;
     }
     ref.current = selected;

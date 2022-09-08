@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-export const isStyle = (style: string, prefix: string) =>
-  style.startsWith(prefix);
+export const isStyle = (style: string | undefined, prefix: string) =>
+  Boolean(style?.startsWith(prefix));
 
 export const getVariable = (style: string, prefix: string) =>
   style.slice(prefix.length + 1);

@@ -24,7 +24,9 @@ import { identity, useContextSelector } from '@googleforcreators/react';
 import Context from './context';
 import type { State } from './types';
 
-function useRichText<T>(selector: (state: State) => T) {
+function useRichText(
+  selector?: (state: State | null) => Partial<State> | State
+) {
   return useContextSelector(Context, selector ?? identity);
 }
 

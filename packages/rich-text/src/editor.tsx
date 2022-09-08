@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { Editor, getDefaultKeyBinding, KeyBindingUtil } from 'draft-js';
+import type { EditorState } from 'draft-js';
 import {
   useEffect,
   useRef,
@@ -34,16 +35,11 @@ import useRichText from './useRichText';
 import customInlineDisplay from './customInlineDisplay';
 import type { RichTextEditorProps, State } from './types';
 
-interface DraftEditor {
-  editorContainer: HTMLElement | null | undefined;
-  focus(): void;
-}
-
 function RichTextEditor(
   { content, onChange }: RichTextEditorProps,
   ref: ForwardedRef<Partial<HTMLElement>>
 ) {
-  const editorRef = useRef<DraftEditor | null>(null);
+  const editorRef = useRef<Editor | null>(null);
   const {
     state: { editorState },
     actions: {
@@ -54,7 +50,7 @@ function RichTextEditor(
       handlePastedText,
       clearState,
     },
-  } = useRichText<State>();
+  } = useRichText() as State;
 
   // Load state from parent when content changes
   useEffect(() => {
@@ -104,7 +100,8 @@ function RichTextEditor(
     <Editor
       ref={editorRef}
       onChange={updateEditorState}
-      editorState={editorState}
+      /* We return before if EditorState is null so we know it's not null here */
+      editorState={editorState as EditorState}
       handleKeyCommand={handleKeyCommand}
       handlePastedText={handlePastedText}
       keyBindingFn={bindKeys}

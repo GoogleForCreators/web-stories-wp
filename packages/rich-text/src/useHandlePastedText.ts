@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { EditorState, Modifier } from 'draft-js';
-import type { EditorChangeType } from 'draft-js';
+import type { DraftHandleValue, EditorChangeType } from 'draft-js';
 import { useCallback } from '@googleforcreators/react';
 import type { Dispatch, SetStateAction } from 'react';
 
@@ -39,7 +39,11 @@ function useHandlePastedText(
   setEditorState: Dispatch<SetStateAction<EditorState | null>>
 ) {
   return useCallback(
-    (text: string, html: string, state: EditorState) => {
+    (
+      text: string,
+      html: string | undefined,
+      state: EditorState
+    ): DraftHandleValue => {
       const content = state.getCurrentContent();
       const selection = state.getSelection();
       let newState, stateChange: EditorChangeType;
@@ -63,7 +67,7 @@ function useHandlePastedText(
       }
       const result = EditorState.push(state, newState, stateChange);
       setEditorState(result);
-      return true;
+      return 'handled';
     },
     [setEditorState]
   );

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import type { EditorState } from 'draft-js';
+import type { EditorState, DraftInlineStyle } from 'draft-js';
 
 /**
  * Internal dependencies
@@ -52,7 +52,7 @@ function elementToStyle(element: HTMLElement) {
   return null;
 }
 
-function stylesToCSS(styles: string[]) {
+function stylesToCSS(styles: DraftInlineStyle) {
   const style = styles.find((someStyle) => isStyle(someStyle, WEIGHT));
   if (!style) {
     return null;

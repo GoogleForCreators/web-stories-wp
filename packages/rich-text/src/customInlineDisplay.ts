@@ -18,6 +18,7 @@
  * External dependencies
  */
 import type { CSSProperties } from 'react';
+import type { DraftInlineStyle } from 'draft-js';
 
 /**
  * Internal dependencies
@@ -25,7 +26,7 @@ import type { CSSProperties } from 'react';
 import formatters from './formatters';
 import { fauxStylesToCSS } from './fauxSelection';
 
-function customInlineDisplay(styles: string[]): CSSProperties {
+function customInlineDisplay(styles: DraftInlineStyle): CSSProperties {
   const stylesToCSSConverters = [
     ...formatters.map(({ stylesToCSS }) => stylesToCSS),
     fauxStylesToCSS,

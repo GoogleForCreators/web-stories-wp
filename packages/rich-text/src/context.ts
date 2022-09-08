@@ -23,6 +23,11 @@ import { createContext } from '@googleforcreators/react';
  */
 import type { State } from './types';
 
-const RichTextContext = createContext<State>({ state: {}, actions: {} });
+// @todo Not sure how to use Partial correctly here to work with empty state and context selector.
+// Should make all state and action values optional as before?
+const RichTextContext = createContext<State>({
+  state: {},
+  actions: {},
+} as State);
 
 export default RichTextContext;

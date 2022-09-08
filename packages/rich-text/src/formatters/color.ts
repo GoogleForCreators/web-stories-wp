@@ -26,7 +26,7 @@ import {
   createSolidFromString,
 } from '@googleforcreators/patterns';
 import type { Pattern, Solid } from '@googleforcreators/patterns';
-import type { EditorState } from 'draft-js';
+import type { EditorState, DraftInlineStyle } from 'draft-js';
 
 /**
  * Internal dependencies
@@ -60,7 +60,7 @@ function elementToStyle(element: HTMLElement): string | null {
   return null;
 }
 
-function stylesToCSS(styles: string[]): null | Record<string, unknown> {
+function stylesToCSS(styles: DraftInlineStyle): null | Record<string, unknown> {
   const style = styles.find((someStyle) => isStyle(someStyle, COLOR));
   if (!style) {
     return null;

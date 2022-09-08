@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import type { EditorState } from 'draft-js';
+import type { DraftInlineStyle, EditorState } from 'draft-js';
 
 /**
  * Internal dependencies
@@ -38,7 +38,7 @@ function elementToStyle(element: HTMLElement) {
   return null;
 }
 
-function stylesToCSS(styles: string[]) {
+function stylesToCSS(styles: DraftInlineStyle) {
   const hasUnderline = styles.includes(UNDERLINE);
   if (!hasUnderline) {
     return null;

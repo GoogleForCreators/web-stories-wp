@@ -47,25 +47,25 @@ export interface StateInfo extends Partial<SelectionInfo> {
 
 export interface State {
   state: {
-    editorState?: EditorState | null;
-    hasCurrentEditor?: boolean;
-    selectionInfo?: StateInfo | undefined;
+    editorState: EditorState | null;
+    hasCurrentEditor: boolean;
+    selectionInfo: StateInfo | undefined;
   };
   actions: {
-    setStateFromContent?: (content: string) => void;
-    updateEditorState?: (state: EditorState) => void;
-    getHandleKeyCommand?: () => (
+    setStateFromContent: (content: string) => void;
+    updateEditorState: (state: EditorState) => void;
+    getHandleKeyCommand: () => (
       command: string,
       currentEditorState: EditorState
     ) => 'handled' | 'not-handled';
-    handlePastedText?: (
+    handlePastedText: (
       text: string,
       html: string,
       state: EditorState
-    ) => boolean;
-    clearState?: () => void;
-    selectionActions?: Record<string, StyleSetter>;
-    getContentFromState?: (editorState: EditorState) => string | null;
+    ) => 'handled' | 'not-handled';
+    clearState: () => void;
+    selectionActions: Record<string, StyleSetter>;
+    getContentFromState: (editorState: EditorState) => string | null;
   };
 }
 
@@ -83,5 +83,5 @@ export interface RichTextProviderProps {
 
 export interface RichTextEditorProps {
   content: string;
-  onChange: (content: string) => void;
+  onChange: (content: string | null) => void;
 }
