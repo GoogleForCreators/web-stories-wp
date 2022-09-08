@@ -447,6 +447,7 @@ describe('Page output', () => {
           id="el-baz-media"
           layout="fill"
           poster="https://example.com/poster.png"
+          volume="1"
         >
           <source
             src="https://example.com/video.mp4"
@@ -505,6 +506,7 @@ describe('Page output', () => {
           id="el-baz-media"
           layout="fill"
           poster="https://example.com/poster.png"
+          volume="1"
         >
           <source
             src="https://example.com/video.mp4"
