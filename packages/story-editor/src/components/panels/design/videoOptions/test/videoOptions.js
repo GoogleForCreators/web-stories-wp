@@ -61,13 +61,6 @@ describe('Panels/VideoOptions', () => {
     return renderPanel(VideoOptions, ...args);
   }
 
-  beforeEach(() => {
-    mockUseVideoElementTranscoding.mockImplementation(() => ({
-      state: { canMute: true },
-      actions: {},
-    }));
-  });
-
   beforeAll(() => {
     useFeature.mockImplementation(() => true);
     localStorage.setItem(
@@ -80,6 +73,13 @@ describe('Panels/VideoOptions', () => {
       isNewResourceMuting: jest.fn(),
       canTranscodeResource: jest.fn(),
     });
+  });
+
+  beforeEach(() => {
+    mockUseVideoElementTranscoding.mockImplementation(() => ({
+      state: { canMute: true },
+      actions: {},
+    }));
   });
 
   afterAll(() => {

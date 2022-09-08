@@ -115,8 +115,8 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
   const onChange = (evt) => pushUpdate({ loop: evt.target.checked }, true);
   const onChangeVolume = (value) => {
     const newVolume = Math.max(0.1, value / 100);
-    pushUpdate({ volume: newVolume  }, true);
-  }
+    pushUpdate({ volume: newVolume }, true);
+  };
 
   const slideId = useInitializedValue(() => `slide-${uuidv4()}`);
 
@@ -154,14 +154,14 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
         <>
           {enableVideoVolume && (
             <VolumeWrapper>
-             <Text
+              <Text
                 as="label"
                 size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
                 htmlFor={slideId}
-             >
-               {__('Volume', 'web-stories')}
-             </Text>
-             <StyledSlider
+              >
+                {__('Volume', 'web-stories')}
+              </Text>
+              <StyledSlider
                 value={volume * 100}
                 handleChange={onChangeVolume}
                 minorStep={10}
