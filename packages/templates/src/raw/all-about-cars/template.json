@@ -508,7 +508,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #00f0ff\">Level 3</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -610,7 +609,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #00f0ff\">Level 1</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -714,7 +712,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #00f0ff\">Level 4</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -834,7 +831,7 @@
         "type": "shape",
         "id": "ce450633-fd8a-444c-a29e-45ea32b16a9d"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "1609c38a-c682-4e86-89f8-4c38e65ed0a3": {
           "name": "Level 4",
@@ -1285,7 +1282,7 @@
           "targets": ["0be7ded0-d3d7-46d4-a0c2-e48f00b51273"]
         }
       ],
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "15608c48-5e23-47ac-9420-ff2944bde348": {
           "name": "Graphic",
@@ -1827,7 +1824,7 @@
       },
       "type": "page",
       "id": "ad88c646-11c4-4f68-8a34-95853bd62472",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "b3cc05f2-41ad-40b7-99c1-4e540c01ed01": {
           "name": "Graphic",
@@ -2932,7 +2929,7 @@
       },
       "type": "page",
       "id": "b8a2bf75-253e-4ac8-ad66-102f0403c957",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "1ec28ba2-9106-4d7d-9a85-1e142e1d4c75": {
           "name": "Graphic",
@@ -3129,7 +3126,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 600; color: #00f0ff\">Level 1</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3230,7 +3226,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 300; color: #a2f6fc\">Monitoring speed</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3311,7 +3306,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #dffdff\">Single automated system like adaptive cruise control features, e.g. monitoring speed</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3377,7 +3371,7 @@
         "type": "shape",
         "id": "3e425af5-09d1-4a91-a7cc-8c1263980d4a"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -3512,7 +3506,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 600; color: #00f0ff\">Level 2</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -3592,7 +3585,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 300; color: #a2f6fc\">Acceleration control</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3673,7 +3665,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #dffdff\">Advanced Driver Assistance Systems. The vehicle can control steering and acceleration.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3768,7 +3759,7 @@
         "type": "shape",
         "id": "285a5ee5-61a2-488e-9fd7-76708f889183"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -3902,7 +3893,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 600; color: #00f0ff\">Level 3</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -3982,7 +3972,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 300; color: #a2f6fc\">Environmental Detection</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4063,7 +4052,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #dffdff\">Conditional automation can alert to any vehicles nearby and make steering adjustments.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4158,7 +4146,7 @@
         "type": "shape",
         "id": "e1a6819e-50f6-4681-a988-51c749c5bc7f"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -4295,7 +4283,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 600; color: #00f0ff\">Level 4</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -4375,7 +4362,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 300; color: #a2f6fc\">Pedestrian</span>\n<span style=\"font-weight: 300; color: #a2f6fc\">Safety</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4456,7 +4442,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #dffdff\">High-driving automation. Vehicles can intervene if things go wrong.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4551,7 +4536,7 @@
         "type": "shape",
         "id": "e97d4b86-fa15-4f7b-b655-fb5f8b42818d"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -4684,7 +4669,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 600; color: #00f0ff\">Level 5</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -4764,7 +4748,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 300; color: #a2f6fc\">Relax</span>\n<span style=\"font-weight: 300; color: #a2f6fc\">and enjoy</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4845,7 +4828,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #dffdff\">Full driving automation. Does not require human attention. No pedals or steering wheels.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4940,7 +4922,7 @@
         "type": "shape",
         "id": "4d347524-ac7e-4345-b587-663e027ab020"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -5026,7 +5008,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #0f2c59\">Levels of automation</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -5105,7 +5086,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #0f2c59\">Automated monitored</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -5185,7 +5165,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #0f2c59\">Human monitored</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -5419,7 +5398,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #0f2c59\">1</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -5525,7 +5503,7 @@
           "targets": ["02eb1747-08ee-4b70-87c7-fbbf519b284c"]
         }
       ],
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "0191a669-a433-446b-ba06-af000646e49b": {
           "name": "Graphic",
@@ -5622,7 +5600,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #0f2c59\">Levels of automation</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -5701,7 +5678,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #0f2c59\">Automated monitored</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -5782,7 +5758,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #0f2c59\">Human monitored</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -6016,7 +5991,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #0f2c59\">2</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -6220,7 +6194,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #0f2c59\">Levels of automation</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -6299,7 +6272,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #0f2c59\">Automated monitored</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -6380,7 +6352,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #0f2c59\">Human monitored</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -6614,7 +6585,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #0f2c59\">5</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -6721,7 +6691,7 @@
       },
       "type": "page",
       "id": "1b2dadc6-d054-46c2-904d-3b9a900bc7d2",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "83053063-a90b-4d4d-abea-dbba3df93d82": {
           "name": "Graphic",
@@ -6818,7 +6788,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 300; color: #a2f6fc\">Other Stories</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -6898,7 +6867,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #00f0ff\">Story 1</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -6979,7 +6947,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #dffdff\">How It’s Made: Autonomous Cars</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -7105,7 +7072,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #00f0ff\">Story 2</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -7186,7 +7152,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #dffdff\">The Interiors of\nSelf-driving Vehicles</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,

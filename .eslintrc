@@ -327,6 +327,12 @@
             "ignoreStatic": true
           }
         ],
+        "@typescript-eslint/no-unused-vars": [
+          "error",
+          {
+            "ignoreRestSiblings": true
+          }
+        ],
         "react/prop-types": "off",
         "jsdoc/check-param-names": "off",
         "jsdoc/require-param": "off",

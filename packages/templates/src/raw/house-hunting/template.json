@@ -127,7 +127,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 900; color: #eec2bc; letter-spacing: 1em; text-transform: uppercase\">Louisiana</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -194,7 +193,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #eec2bc; letter-spacing: 0.04em\">House hunting</span>\n<span style=\"color: #eec2bc; letter-spacing: 0.04em\">in New Orleans</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -263,7 +261,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #eec2bc\">Billy Rogers</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -408,7 +405,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #2d2a35\">Ever wondered how far you can stretch your dollar in a city like New Orleans?</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -476,7 +472,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #2d2a35\">Well, look no further.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -578,7 +573,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fff0d8; letter-spacing: 0.02em\">Garden Style Home</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -646,7 +640,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fff0d8\">If this is your budget, you’re really sitting pretty in a city like NoLa.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -797,7 +790,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 900; color: #eec2bc; letter-spacing: 0.3em; text-transform: uppercase\">Budget</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -865,7 +857,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fff0d8; letter-spacing: 0.03em\">$5000</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1065,7 +1056,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #2d2a35; letter-spacing: 0.02em\">What to look for:</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1133,7 +1123,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #2d2a35\">01</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1203,7 +1192,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #2d2a35\">Dining room</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1272,7 +1260,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: rgba(0,0,0,0.6)\">Spacious open air dining rooms are indicative of the style.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1330,7 +1317,7 @@
         "type": "shape",
         "id": "68eb8ab8-e3f5-4798-ad91-5f89286753a3"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "a5c0da69-3fc6-4c96-b134-93bd53db56ed": {
           "name": "Info",
@@ -1478,7 +1465,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #2d2a35; letter-spacing: 0.02em\">What to look for:</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1546,7 +1532,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #2d2a35\">02</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1616,7 +1601,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #2d2a35\">Courtyard</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1685,7 +1669,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: rgba(0,0,0,0.6)\">A courtyard, often even inside the center of a home is a classic.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1743,7 +1726,7 @@
         "id": "e135fc75-153b-4571-8653-497b84f9ce4f",
         "type": "shape"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "7ffedb82-711e-49a7-b00e-85f8f83e8c99": {
           "name": "Info",
@@ -1891,7 +1874,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #2d2a35; letter-spacing: 0.02em\">What to look for:</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1959,7 +1941,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #2d2a35\">03</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2029,7 +2010,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #2d2a35\">Staircase</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2098,7 +2078,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: rgba(0,0,0,0.6)\">Unique staircases are common in homes of this stature.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2156,7 +2135,7 @@
         "id": "6d9fdcc7-b1e2-40b3-8a21-74e0c6f670b8",
         "type": "shape"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "5f83f323-95ce-461b-aa6e-38baf8ea199a": {
           "name": "Info",
@@ -2236,7 +2215,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fff0d8\">Double Gallery</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2304,7 +2282,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fff0d8\">You still have your pick of the litter at this price point. Personally, I’d go for something classic.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2455,7 +2432,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 900; color: #eec2bc; letter-spacing: 0.3em; text-transform: uppercase\">Budget</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2523,7 +2499,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fff0d8; letter-spacing: 0.03em\">$3000</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2578,7 +2553,7 @@
       },
       "type": "page",
       "id": "bc33cae7-d386-4abd-888b-a24f97636890",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "a3c24400-19d9-4e8f-aad8-ecdf648458c8": {
           "name": "Budget",
@@ -2726,7 +2701,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #2d2a35; letter-spacing: 0.02em\">What to look for:</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2794,7 +2768,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #2d2a35\">01</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2864,7 +2837,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #2d2a35\">Top floor access</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2933,7 +2905,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: rgba(0,0,0,0.6)\">There is typically a visible route to get to the top of this home.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3139,7 +3110,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #2d2a35; letter-spacing: 0.02em\">What to look for:</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3207,7 +3177,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #2d2a35\">02</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3277,7 +3246,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #2d2a35\">Patio</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3346,7 +3314,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: rgba(0,0,0,0.6)\">On the roof, you’ll find hidden spaces or patios to enjoy.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3404,7 +3371,7 @@
         "id": "ea8fce46-64c3-448c-85ef-71f4c335e9b3",
         "type": "shape"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "5a6287d7-7a46-46e5-8f1e-60e5f988f4fa": {
           "name": "Info",
@@ -3552,7 +3519,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #2d2a35; letter-spacing: 0.02em\">What to look for:</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3620,7 +3586,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #2d2a35\">03</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3690,7 +3655,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #2d2a35\">Gallery floor</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3759,7 +3723,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: rgba(0,0,0,0.6)\">These days, gallery floors are used for formal dining.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3817,7 +3780,7 @@
         "id": "03f3b088-ebe7-4f6f-bce1-1072607a5932",
         "type": "shape"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "8c559ef8-8a9f-45e3-94fa-7c6222612aa7": {
           "name": "Info",
@@ -3897,7 +3860,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #eec2bc; letter-spacing: 0.02em\">More about New Orleans</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4010,7 +3972,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fff0d8\">What neighborhood is right for you?</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4124,7 +4085,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fff0d8\">Managing the upkeep of an older home</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,

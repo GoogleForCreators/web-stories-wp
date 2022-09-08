@@ -149,7 +149,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 600; color: #3f4f3e\">How to throw</span>\n<span style=\"font-weight: 600; color: #3f4f3e\">a safe and fun outdoor luau</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -263,7 +262,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #fff; text-transform: uppercase\">by:</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -351,7 +349,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 500; color: #fff\">Joshua</span>\n<span style=\"font-weight: 500; color: #fff\">Goldsmith</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -567,7 +564,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 600; color: #fff\">Joshua</span>\n<span style=\"font-weight: 600; color: #fff\">Goldsmith</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -658,7 +654,6 @@
           "id": "a4afe50e-e806-42c6-bc8d-72ab9d478cec",
           "basedOn": "0a5f0ed4-e8f9-4fd2-add8-177d89e97b15",
           "content": "<span style=\"color: #fff; letter-spacing: 0.01em\">Founder, Hawaiian Events</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -778,7 +773,7 @@
         "id": "581e926d-fb91-433e-a8d4-bb19f48c010f",
         "type": "shape"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "368b85a1-41b3-4e6d-93f3-42e47867dd88": {
           "name": "Header",
@@ -929,7 +924,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 600; color: #3f4f3e\">Limit guest</span>\n<span style=\"font-weight: 600; color: #3f4f3e\">invitations</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1020,7 +1014,6 @@
           "id": "2ff73b92-e0f0-4455-9d52-44f25a61d526",
           "basedOn": "0a5f0ed4-e8f9-4fd2-add8-177d89e97b15",
           "content": "<span style=\"color: #3f4f3e; letter-spacing: 0.01em; text-transform: uppercase\">Tip 1</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1074,7 +1067,7 @@
         "id": "c4d30e8f-b89c-4bac-b006-110083a14673",
         "type": "shape"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "bdb11a1e-0a8d-4797-939f-8b302bae9284": {
           "name": "Tip",
@@ -1225,7 +1218,6 @@
           "id": "0d31c315-4e1a-48ab-9e30-4e6facfec496",
           "basedOn": "0a5f0ed4-e8f9-4fd2-add8-177d89e97b15",
           "content": "<span style=\"font-weight: 500; color: #fff\">Keeping your guests safe is your priority! This means that everybody can relax properly and focus on what is important: having a good time!</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1333,7 +1325,7 @@
         "id": "728c69de-5b58-42a9-88cd-7f64b4ccb7b3",
         "type": "shape"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "0e492f6d-900d-4be6-ae37-252896142884": {
           "name": "Lines",
@@ -1478,7 +1470,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 600; color: #fff\">Provide masks, hand sanitizer &amp; personalized utensils</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1569,7 +1560,6 @@
           "id": "19ca5381-9c07-4b91-9e0f-57d5c88bc62a",
           "basedOn": "0a5f0ed4-e8f9-4fd2-add8-177d89e97b15",
           "content": "<span style=\"color: #fff; letter-spacing: 0.01em; text-transform: uppercase\">Tip 2</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1644,7 +1634,7 @@
         "id": "0bd6c15a-71cc-4b30-9308-6889dfc90b00",
         "type": "shape"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "cc2d4127-0244-4752-a071-4ce6e5f60dd2": {
           "name": "Tip",
@@ -1790,7 +1780,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 600; color: #3f4f3e\">Decorate with Luau props&nbsp;</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1881,7 +1870,6 @@
           "id": "35c1962b-4497-4317-a79d-4f60044acbe9",
           "basedOn": "0a5f0ed4-e8f9-4fd2-add8-177d89e97b15",
           "content": "<span style=\"color: #3f4f3e; letter-spacing: 0.01em; text-transform: uppercase\">Tip 3</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1966,7 +1954,7 @@
         "id": "6234ea30-f145-46c6-802f-ffaf74922b62",
         "type": "shape"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "657e201a-7720-45e1-b484-66023653ce3e": {
           "name": "Tip",
@@ -2112,7 +2100,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 600; color: #3f4f3e\">Try single \nserve snacks and drinks</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2203,7 +2190,6 @@
           "id": "99fb8e7e-e7f0-4df2-815f-7e01a2077e82",
           "basedOn": "0a5f0ed4-e8f9-4fd2-add8-177d89e97b15",
           "content": "<span style=\"color: #3f4f3e; letter-spacing: 0.01em; text-transform: uppercase\">Tip 4</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2288,7 +2274,7 @@
         "id": "b1e4d0c9-6953-42e6-a350-a22a31894668",
         "type": "shape"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "8aef4b56-9ab7-4518-8513-b374f6bbf1ca": {
           "name": "Tip",
@@ -2456,7 +2442,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 600; color: #fff\">Best</span>\n<span style=\"font-weight: 600; color: #fff\">Hawaiian</span>\n<span style=\"font-weight: 600; color: #fff\">Juices</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2547,7 +2532,6 @@
           "id": "7c50ca8f-3058-49a0-892f-bb10f4503648",
           "basedOn": "0a5f0ed4-e8f9-4fd2-add8-177d89e97b15",
           "content": "<span style=\"color: #fff; letter-spacing: 0.01em; text-transform: uppercase\">Tip 5</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2601,7 +2585,7 @@
         "id": "4eea3ee4-729d-47b0-833e-312b418257d0",
         "type": "shape"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "ce31f7e3-7ce4-437a-9c55-efcb22969bee": {
           "name": "Tip",
@@ -2768,7 +2752,7 @@
           "delay": 100
         }
       ],
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -2892,7 +2876,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 600; color: #fff\">Have a</span>\n<span style=\"font-weight: 600; color: #fff\">safe and</span>\n<span style=\"font-weight: 600; color: #fff\">happy</span>\n<span style=\"font-weight: 600; color: #fff\">summer</span>\n<span style=\"font-weight: 600; color: #fff\">luau!</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3012,7 +2995,7 @@
         "id": "5001b3b0-56ae-4ae0-8951-2dbf479c0541",
         "type": "shape"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "e7ef3ca5-51ba-4957-8552-d4f6b362029f": {
           "name": "Lines",
@@ -3111,7 +3094,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 600; color: #fff\">Julie’s Party Guides</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3201,7 +3183,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 500; color: #fff\">How I became a</span>\n<span style=\"font-weight: 500; color: #fff\">Party Planner</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3399,7 +3380,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 500; color: #fff\">A paper-themed children’s birthday party</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,

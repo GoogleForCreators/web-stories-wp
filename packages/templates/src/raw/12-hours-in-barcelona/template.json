@@ -165,7 +165,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #fff\">12</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -246,7 +245,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #fff\">Hours</span><span style=\"font-weight: 700\"> </span><span style=\"font-weight: 700; color: #160236\">in</span>\n<span style=\"font-weight: 700; color: #160236\">Barcelona</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -373,7 +371,6 @@
           "groupId": "68836b5c-a442-4407-a938-a790f564d9de"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [],
       "backgroundColor": {
         "color": {
@@ -578,7 +575,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.01em; text-transform: uppercase\">The writter</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -659,7 +655,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #fff\">Marco</span>\n<span style=\"font-weight: 700; color: #fff\">Christiansen</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -797,7 +792,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fff\">Author of “Barcelona</span>\n<span style=\"color: #fff\">by Day and Night”</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -896,7 +890,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fff\">Editor at Large for\nConde Nast Traveler</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -995,7 +988,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #fff\">Writer for NY Times\nMagazine</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1016,7 +1008,6 @@
           "groupId": "f469962e-01f6-11ed-b939-0242ac120002"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "b9bade29-6db1-4832-b35f-4aea0121e143",
@@ -1233,7 +1224,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #080439\">Live the Journey</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1331,7 +1321,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #080439\">Churches and</span>\n<span style=\"color: #080439\">monasteries</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1430,7 +1419,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #080439\">Most famous</span>\n<span style=\"color: #080439\">shoping street</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1529,7 +1517,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #080439\">Authentic culinary</span>\n<span style=\"color: #080439\">paradise</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1668,7 +1655,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 700\">Start</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1744,7 +1730,6 @@
             "vertical": 10
           },
           "content": "<span style=\"color: #160236\">A special walk through medieval streets and alleyways of the Gothic and Barceloneta neighborhoods.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -1764,7 +1749,6 @@
           "y": 510
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 255,
@@ -1999,7 +1983,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.01em; text-transform: uppercase\">Morning</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2081,7 +2064,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #fff\">Park</span>\n<span style=\"font-weight: 700; color: #fff\">Güell</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2222,7 +2204,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 700\">8:45 AM</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2299,7 +2280,6 @@
             "vertical": 23
           },
           "content": "<span style=\"color: #160236\">Why Park Güell? It’s a public park system composed of gardens and architectural elements located on Carmel Hill. It's a must see for any traveler in Barcelona.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -2319,7 +2299,6 @@
           "type": "text"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "6b4ad9fa-0fa5-447d-bbcf-99a47f1330a9",
@@ -2387,7 +2366,7 @@
         "type": "shape",
         "id": "1da06749-7c4f-4f85-9197-4e207659e74b"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "4eb0f819-8cd8-44b7-891b-d473a0e9b3de": {
           "name": "Header",
@@ -2525,7 +2504,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.01em; text-transform: uppercase\">Morning</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2607,7 +2585,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 500; color: #fff\">Gaudí</span>\n<span style=\"font-weight: 500; color: #fff\">House</span>\n<span style=\"font-weight: 500; color: #fff\">Museum</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2750,7 +2727,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 700\">11:30 AM</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2827,7 +2803,6 @@
             "vertical": 20
           },
           "content": "<span style=\"color: #160236\">A historic home that houses all the personal treasures of Antoni Gaudi. You won't see them anywhere else.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -2847,7 +2822,6 @@
           "type": "text"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "a5a1e8de-dba8-4f03-8ced-a22593e7d1ee",
@@ -2907,7 +2881,7 @@
         "type": "shape",
         "id": "2c3f3035-aea0-460c-aba0-7ab8d2521135"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "bb4c28dd-988d-44a0-8af8-430ba633138d": {
           "name": "Header",
@@ -3044,7 +3018,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.01em; text-transform: uppercase\">Afternoon</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3126,7 +3099,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 500; color: #fff\">Art\nNouveau\nFor Days</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3269,7 +3241,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 700\">1:45 PM</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3346,7 +3317,6 @@
             "vertical": 22
           },
           "content": "<span style=\"color: #160236\">Spend the day exploring shops and restaurants. Stop in, take your time, grab lunch and a few gin &amp; tonics.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -3366,7 +3336,6 @@
           "type": "text"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "80c925b2-16e7-49cf-90e7-e62d35321e37",
@@ -3636,7 +3605,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 700\">3:30 PM</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3711,7 +3679,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.01em; text-transform: uppercase\">Afternoon</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3793,7 +3760,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 500; color: #fff\">Casa</span>\n<span style=\"color: #fff\">Batlló</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3872,7 +3838,6 @@
             "vertical": 22
           },
           "content": "<span style=\"color: #160236\">Casa Batlló is identifiable as Modernism or Art Nouveau in the broadest sense. To locals, it’s a slice of Barcelona tradition.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -3893,7 +3858,6 @@
           "marginOffset": -0.03399999999999892
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "7ab95974-ad79-4f53-a0a3-8c1cd1119e88",
@@ -3953,7 +3917,7 @@
         "type": "shape",
         "id": "e65879b8-1394-4055-b1e8-f22a4bf63447"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "9d24f16f-eaa8-4f13-8c68-65e3e26e9fa0": {
           "name": "Header",
@@ -4096,7 +4060,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.01em; text-transform: uppercase\">Evening</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4178,7 +4141,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 500; color: #fff\">Basílica</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4319,7 +4281,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 700\">7:00 PM</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4396,7 +4357,6 @@
             "vertical": 24
           },
           "content": "<span style=\"color: #160236\">Sagrada Familia, the symbol of Barcelona and the stunning masterpiece of Gaudi.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -4417,7 +4377,6 @@
           "type": "text"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "aba1e5d0-5dc3-4ad4-8875-1ce6f69d78d4",
@@ -4485,7 +4444,7 @@
         "type": "shape",
         "id": "2946e472-ae6e-4317-9661-913b0493e7b9"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "bad5dba2-1ffa-40f4-a5d6-e5a4f5b1df66": {
           "name": "Info",
@@ -4627,7 +4586,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.01em; text-transform: uppercase\">Evening</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4709,7 +4667,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 500; color: #fff\">Bar\nRamón</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4850,7 +4807,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 700\">8:30 PM</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4927,7 +4883,6 @@
             "vertical": 24
           },
           "content": "<span style=\"color: #160236\">Ready for some bites now, right? Grab pre-dinner snacks at this local's bar and restaurant.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -4948,7 +4903,6 @@
           "type": "text"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "4b390a59-87a0-47ef-8ad0-39d125a3381f",
@@ -5008,7 +4962,7 @@
         "type": "shape",
         "id": "9ee6c38a-c279-47cd-a6a4-8aa32340aa2b"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "eeb19136-ea34-4a36-ae0a-8fa47a588959": {
           "name": "Time",
@@ -5186,7 +5140,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 700\">End</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -5263,7 +5216,6 @@
             "vertical": 14
           },
           "content": "<span style=\"color: #160236\">The unique experiences in Barcelona belong to this city only, begging you to return here over and over again.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -5284,7 +5236,6 @@
           "type": "text"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "f0fea999-cbb9-42be-b939-07f0d0391294",
@@ -5344,7 +5295,7 @@
         "type": "shape",
         "id": "a9562766-122d-4f05-b2db-8bb10b1647e4"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "8ccea118-49f8-4978-989f-2e9329648e61": {
           "name": "End",
@@ -5473,7 +5424,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.01em; text-transform: uppercase\">Next steps</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -5555,7 +5505,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 500; color: #fff\">More</span>\n<span style=\"font-weight: 500; color: #fff\">Stories</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -5637,7 +5586,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 500; color: #ffc700\">3</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -5720,7 +5668,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 500; color: #fff\">days in</span>\n<span style=\"font-weight: 500; color: #fff\">East Berlin</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -5886,7 +5833,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 500; color: #ffc700\">A</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -5969,7 +5915,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 500; color: #fff\">dream week</span>\n<span style=\"color: #fff\">in Amsterdam</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -6074,7 +6019,6 @@
           "groupId": "b3b8bf9f-8c6f-4b33-bc9e-2fe7076b18c8"
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 39,
