@@ -32,17 +32,18 @@ import type { ForwardedRef, KeyboardEvent } from 'react';
  */
 import useRichText from './useRichText';
 import customInlineDisplay from './customInlineDisplay';
+import type { RichTextEditorProps, State } from './types';
 
-interface RichTextEditorProps {
-  content: string;
-  onChange: (content: string) => void;
+interface DraftEditor {
+  editorContainer: HTMLElement | null | undefined;
+  focus(): void;
 }
 
 function RichTextEditor(
   { content, onChange }: RichTextEditorProps,
-  ref: ForwardedRef<HTMLElement>
+  ref: ForwardedRef<Partial<HTMLElement>>
 ) {
-  const editorRef = useRef(null);
+  const editorRef = useRef<DraftEditor | null>(null);
   const {
     state: { editorState },
     actions: {
@@ -53,7 +54,7 @@ function RichTextEditor(
       handlePastedText,
       clearState,
     },
-  } = useRichText();
+  } = useRichText<State>();
 
   // Load state from parent when content changes
   useEffect(() => {

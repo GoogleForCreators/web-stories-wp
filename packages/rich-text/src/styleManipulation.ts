@@ -39,13 +39,13 @@ export function getPrefixStyleForCharacter(
   styles: Immutable.OrderedSet<string>,
   prefix: string | typeof NONE
 ): string {
-  // @todo Why is `style.style` possible?
-  const list = styles.toArray().map((style) => style.style ?? style);
+  const list = styles.toArray();
   const matcher = (style: string) => style && style.startsWith(prefix);
   if (!list.some(matcher)) {
     return NONE;
   }
-  return list.find(matcher);
+  // If there are no matches, we return NONE, so the value is not `undefined` here, thus casting to `string`.
+  return list.find(matcher) as string;
 }
 
 /**

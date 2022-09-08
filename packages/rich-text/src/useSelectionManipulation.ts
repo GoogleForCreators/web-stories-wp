@@ -43,7 +43,7 @@ function useSelectionManipulation(
     lastKnownState.current = editorState;
     if (!editorState) {
       lastKnownSelection.current = null;
-    } else if (editorState.getSelection().hasFocus) {
+    } else if (editorState.getSelection().getHasFocus()) {
       lastKnownSelection.current = editorState.getSelection();
     }
   }, [editorState]);

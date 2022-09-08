@@ -35,7 +35,8 @@ function customInlineFn(element: Element, { Style }: InlineCreators) {
     return null;
   }
 
-  // @todo Type of Style doesn't seem to be correct, check.
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment -- The defined type is `string` but it actually accepts arrays of strings, too.
+  // @ts-ignore
   return Style(styleStrings);
 }
 

@@ -80,3 +80,8 @@ export interface RichTextProviderProps {
   children: ReactNode;
   editingState: EditingState;
 }
+
+export interface RichTextEditorProps {
+  content: string;
+  onChange: (content: string) => void;
+}
