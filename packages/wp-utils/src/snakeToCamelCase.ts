@@ -20,7 +20,7 @@
  * @param string The key in snake case
  * @return The key in camel case
  */
-export function snakeToCamelCase(string = '') {
+export function snakeToCamelCase(string = '') : string{
   if (!string.includes('_') && !string.includes('-')) {
     return string;
   }
@@ -42,11 +42,10 @@ export function snakeToCamelCase(string = '') {
  * @return Transformed object.
  */
 export function snakeToCamelCaseObjectKeys(
-  obj: unknown,
+  obj: any,
   ignore: Array<string> = []
 ) {
-  const isObject = (val) =>
-    val && 'object' === typeof val && !Array.isArray(val);
+  const isObject = (obj: unknown) => obj && 'object' === typeof obj && !Array.isArray(obj);
 
   if (!isObject(obj)) {
     return obj;
