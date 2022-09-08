@@ -577,7 +577,6 @@
         }
       ],
       "animations": [],
-      "backgroundOverlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "fonts": ["Source Serif Pro"],
@@ -802,7 +801,6 @@
         }
       ],
       "animations": [],
-      "backgroundOverlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "fonts": ["IBM Plex Sans", "Poppins"],
@@ -952,7 +950,6 @@
         }
       ],
       "animations": [],
-      "backgroundOverlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "fonts": ["Playfair Display"],
@@ -1236,7 +1233,6 @@
         }
       ],
       "animations": [],
-      "backgroundOverlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "fonts": ["Oswald", "Roboto Condensed"],
@@ -1445,7 +1441,6 @@
         }
       ],
       "animations": [],
-      "backgroundOverlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "fonts": ["Raleway", "Merriweather"],
@@ -1660,7 +1655,6 @@
         }
       ],
       "animations": [],
-      "backgroundOverlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "fonts": ["Titillium Web", "Work Sans"],
@@ -1903,7 +1897,6 @@
         }
       ],
       "animations": [],
-      "backgroundOverlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "fonts": ["Karla"],
@@ -2230,7 +2223,6 @@
         }
       ],
       "animations": [],
-      "backgroundOverlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "fonts": ["Rubik", "Henny Penny"],

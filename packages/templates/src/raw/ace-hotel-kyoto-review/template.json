@@ -973,7 +973,6 @@
           "groupId": "549c8bc9-bfbd-43a7-9ba6-0a7feb16951f"
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 111,
@@ -1423,7 +1422,6 @@
           "tagName": "p"
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 25,
@@ -1450,7 +1448,7 @@
           "delay": 150
         }
       ],
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -1576,7 +1574,6 @@
           "id": "1c545b91-68a9-43da-af81-5c63cc677722"
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 255,
@@ -1623,7 +1620,7 @@
         "type": "shape",
         "id": "296ef295-f335-4ede-9dcb-59e6b73b1a3b"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -1875,7 +1872,6 @@
           "id": "640b76da-8390-42d0-9ca3-6806a8306cb6"
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 55,
@@ -1911,7 +1907,7 @@
           "delay": 0
         }
       ],
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -2285,7 +2281,6 @@
           "tagName": "p"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "a6365348-27cc-425a-8243-9dafe967a272",
@@ -2312,7 +2307,7 @@
       },
       "type": "page",
       "id": "4d0dd9f4-a221-497c-9265-afb2916dc082",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -2496,7 +2491,6 @@
           "type": "text"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "ee13c4b2-81c3-498c-a5e5-6b78dfdff965",
@@ -2543,7 +2537,7 @@
         "id": "847dba7c-d3f5-4a26-8a72-a9591b59cfdd",
         "type": "shape"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -2740,7 +2734,6 @@
           "id": "630c4b1f-d936-4cdc-86b3-a061c7eb3102"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "889a05dc-7f8b-46cb-a659-01cc47cba23b",
@@ -2767,7 +2760,7 @@
       },
       "type": "page",
       "id": "19705bc4-77cc-4137-b6c8-e83175cbe3e4",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -3141,7 +3134,6 @@
           "tagName": "p"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "5abd4494-c9e7-471f-965e-11b4b4d765ca",
@@ -3168,7 +3160,7 @@
       },
       "type": "page",
       "id": "6fc8e3d7-8c40-4fec-9545-2658faf045ef",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -3294,7 +3286,6 @@
           "id": "0e4a5d78-5ae1-4e9b-9bca-dcc1fb005264"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "decca973-80e3-4cad-ac8e-235aa790ae34",
@@ -3341,7 +3332,7 @@
         "id": "3140c39b-0e4e-45a5-96df-725241536f3d",
         "type": "shape"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -3593,7 +3584,6 @@
           "id": "c13d2c85-a9fc-4cfb-9cf2-0d501cdc6dc1"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "a3137a60-02b2-4803-b559-79ce9a7bbfd5",
@@ -3629,7 +3619,7 @@
       },
       "type": "page",
       "id": "9914352b-7eb7-4e16-abe5-8807b7d88317",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -4224,7 +4214,6 @@
           "groupId": "59963d38-3472-45c2-8518-2afa53d82ca3"
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 55,
@@ -4594,7 +4583,6 @@
           "tagName": "p"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "1a045f74-6319-4123-87d0-017609144b96",
@@ -4622,7 +4610,7 @@
       },
       "type": "page",
       "id": "f2170217-9ff2-49d8-8c46-7717b5b5b428",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     }
   ]
 }
