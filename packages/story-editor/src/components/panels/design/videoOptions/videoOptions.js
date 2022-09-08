@@ -84,6 +84,7 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
   const volume = getCommonValue(selectedElements, 'volume');
   const isSingleElement = selectedElements.length === 1;
   const enableVideoVolume = useFeature('videoVolume');
+  const showVolumeControl = enableVideoVolume && isSingleElement && !resource?.isMuted;
 
   const {
     state: { canTrim, canMute, isTrimming, isMuting, isDisabled },
@@ -117,7 +118,7 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
     const newVolume = Math.max(0.1, value / 100);
     pushUpdate({ volume: newVolume }, true);
   };
-
+console.log(enableVideoVolume, canMute);
   const slideId = useInitializedValue(() => `slide-${uuidv4()}`);
 
   const Processing = () => {
@@ -150,29 +151,29 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
           </TrimWrapper>
         )}
       </Row>
+      {showVolumeControl && (
+        <VolumeWrapper>
+          <Text
+            as="label"
+            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+            htmlFor={slideId}
+          >
+            {__('Volume', 'web-stories')}
+          </Text>
+          <StyledSlider
+            value={Math.round(volume * 100)}
+            handleChange={onChangeVolume}
+            minorStep={5}
+            majorStep={10}
+            min={0}
+            max={100}
+            id={slideId}
+            aria-label={__('Volume', 'web-stories')}
+          />
+        </VolumeWrapper>
+      )}
       {canMute && (
         <>
-          {enableVideoVolume && (
-            <VolumeWrapper>
-              <Text
-                as="label"
-                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-                htmlFor={slideId}
-              >
-                {__('Volume', 'web-stories')}
-              </Text>
-              <StyledSlider
-                value={volume * 100}
-                handleChange={onChangeVolume}
-                minorStep={10}
-                majorStep={30}
-                min={0}
-                max={100}
-                id={slideId}
-                aria-label={__('Volume', 'web-stories')}
-              />
-            </VolumeWrapper>
-          )}
           <Row spaceBetween={false}>
             <StyledButton
               disabled={isDisabled}
