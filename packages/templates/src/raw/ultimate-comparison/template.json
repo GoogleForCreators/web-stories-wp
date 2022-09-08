@@ -527,7 +527,6 @@
           "tagName": "p"
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 255,
@@ -574,7 +573,7 @@
           "delay": 0
         }
       ],
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -951,7 +950,6 @@
           "y": 468
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 255,
@@ -2035,7 +2033,6 @@
           "groupId": "845ad86c-e09b-4412-b7d1-98eb17607aef"
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 6,
@@ -2521,7 +2518,6 @@
           "type": "text"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "b74880bd-e86c-4d50-8886-ffd02af125f7",
@@ -2556,7 +2552,7 @@
       },
       "type": "page",
       "id": "61b8b7dd-4fe4-452a-8965-4e79fcda8f69",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -3605,7 +3601,6 @@
           "groupId": "7c53b632-dbfe-4b1b-98dd-f8c3f7f827bb"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "a70652f3-b422-4919-b049-d0eeb91b9226",
@@ -3697,7 +3692,7 @@
       },
       "type": "page",
       "id": "ec643a90-770d-435b-a6fb-a435405301a4",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "bfe9a8e6-7035-488b-8999-0ca4dfdb2ef0": {
           "name": "Pros",
@@ -4092,7 +4087,6 @@
           "type": "text"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "7306de21-b153-423e-912a-1f344a17c7b0",
@@ -4127,7 +4121,7 @@
       },
       "type": "page",
       "id": "0b0a26c1-4b43-48cc-9b10-5ec80c9849e6",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -5206,7 +5200,6 @@
           "groupId": "058bf694-0585-469a-b1dc-2af4cc0209cc"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "abe047e7-931e-4a8a-bf1d-7d14fda9e605",
@@ -5298,7 +5291,7 @@
       },
       "type": "page",
       "id": "ec8a2052-1146-4399-ad06-d15180749c4e",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "5084dd49-d705-49e4-92d7-328b84857ac2": {
           "name": "Pros",
@@ -5697,7 +5690,6 @@
           "type": "text"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "19bdc0fa-7631-462b-a7b7-4cc3eb9bc0d0",
@@ -5732,7 +5724,7 @@
       },
       "type": "page",
       "id": "83187b22-480b-49c5-afa5-dd8342a85a8d",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -6781,7 +6773,6 @@
           "groupId": "5de0f1c9-99a4-46c9-8f64-9b035a0d4a9e"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "3abb7d16-ec51-485c-8d3c-8eab07d49470",
@@ -6873,7 +6864,7 @@
       },
       "type": "page",
       "id": "fe2623ee-7d43-4d5c-b6cd-f8defc375dd1",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "da6258c7-43c9-4d30-bfb4-20a86424e917": {
           "name": "Pros",
@@ -7308,7 +7299,6 @@
           }
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 255,
@@ -7762,7 +7752,6 @@
           "type": "shape"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "e43030b1-fb2e-4b3a-9c0d-94bafef7bbbb",
@@ -7798,7 +7787,7 @@
       },
       "type": "page",
       "id": "e353672c-5b08-4f7f-9b6e-dba3d7e45076",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -9866,7 +9855,6 @@
           "groupId": "a972dfec-5fe8-4f03-a5e7-47500398a717"
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 255,
@@ -10569,7 +10557,6 @@
           "groupId": "10b7fbec-26a1-4d97-ad6e-9a9db8fdcf0c"
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 6,

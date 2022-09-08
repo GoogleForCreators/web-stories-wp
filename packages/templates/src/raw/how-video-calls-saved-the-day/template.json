@@ -980,7 +980,6 @@
           "id": "00c0c07e-ce38-41ec-88b7-5bb7c62a2dab"
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 58,
@@ -1488,7 +1487,6 @@
           "groupId": "993bd94e-33f1-4407-a78c-d601f60d4040"
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 255,
@@ -1897,7 +1895,6 @@
           "groupId": "21f64464-a4ba-4dd7-b8f9-8f98e75c0c92"
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 58,
@@ -1917,7 +1914,7 @@
           "delay": 500
         }
       ],
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "21f64464-a4ba-4dd7-b8f9-8f98e75c0c92": {
           "name": "Image",
@@ -2243,7 +2240,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 500; color: #3a3a3a\">“Enabling remote work. </span><span style=\"font-weight: 500; color: #fff\">One minute I could be in NY, one minute in Italy. </span><span style=\"color: #fff\">✈️✈️✈️ </span><span style=\"font-weight: 500; color: #fff\">Theoretically, anyway.”</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2262,7 +2258,6 @@
           "tagName": "p"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "51f7b690-52a9-446d-9ee4-a94660b7084e",
@@ -2792,7 +2787,6 @@
           "groupId": "198c77cb-26f1-41cf-a54f-f4a55521eeae"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "3523d305-e8fc-41d0-9bb7-9800781cdfda",
@@ -2852,7 +2846,7 @@
       },
       "type": "page",
       "id": "962fdc9c-994a-4368-afdc-b526e6c4cf5c",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "0818554c-bcab-414c-ab5c-7dae86c15717": {
           "name": "Text",
@@ -3210,7 +3204,6 @@
           "groupId": "c1a168fa-f682-44f8-8eb1-02d3a7e80279"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "ad12b20a-a287-4a2b-98f3-45b7368b03be",
@@ -3230,7 +3223,7 @@
       },
       "type": "page",
       "id": "b593ab98-1efc-4567-9fcc-2e14fc1e10d6",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "c1a168fa-f682-44f8-8eb1-02d3a7e80279": {
           "name": "Image",
@@ -3668,7 +3661,6 @@
           "groupId": "bfc16459-4693-4003-8d25-30d83ba69471"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "e002dfcc-1be2-4ace-a7c8-f2de3ae9a61d",
@@ -3687,7 +3679,7 @@
       },
       "type": "page",
       "id": "a7fcb1b4-6ddc-4a2c-94b6-43df3674422d",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "bfc16459-4693-4003-8d25-30d83ba69471": {
           "name": "Image",
@@ -4160,7 +4152,6 @@
           "groupId": "db10a96c-253b-4b41-be0d-33524c304eef"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "da4ca752-c834-4374-bacd-0082f8252840",

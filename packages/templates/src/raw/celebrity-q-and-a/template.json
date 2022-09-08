@@ -117,7 +117,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"text-transform: uppercase\">Zoe</span>\n<span style=\"text-transform: uppercase\">Travis</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -184,7 +183,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #ff2d2d\">Q&amp;A</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -261,7 +259,6 @@
             "hasHiddenPadding": false
           },
           "content": "By <span style=\"font-weight: 700\">Nicole Newman</span> 9/13/20",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -458,7 +455,6 @@
           "delay": 0
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 255,
@@ -495,7 +491,7 @@
         "type": "shape",
         "id": "bdb388e5-37e3-4e3e-9389-197ec24f9b87"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -634,7 +630,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"text-transform: uppercase\">Where</span>\n<span style=\"text-transform: uppercase\">did you</span>\n<span style=\"text-transform: uppercase\">grow up</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -702,7 +697,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #ff2d2d\">\"</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -770,7 +764,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #ff2d2d\">?</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -800,7 +793,6 @@
           "delay": 0
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 255,
@@ -810,7 +802,7 @@
       },
       "type": "page",
       "id": "117e9a48-d7a6-48bf-8980-997cfcda6362",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -868,7 +860,6 @@
         }
       ],
       "animations": [],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 255,
@@ -905,7 +896,7 @@
         "type": "shape",
         "id": "f484a700-b391-44ff-9471-65a980cae7b7"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -976,7 +967,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #f2f2f2; text-transform: uppercase\">Brooklyn</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1143,7 +1133,6 @@
           "delay": 0
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 255,
@@ -1153,7 +1142,7 @@
       },
       "type": "page",
       "id": "9d76fa95-d6d3-4e1b-acc9-7c6b6bc5bbd1",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -1226,7 +1215,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #ff2d2d\">\"</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1294,7 +1282,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #ff2d2d\">\"</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1631,7 +1618,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"text-transform: uppercase\">Brooklyn</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1698,7 +1684,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"text-transform: uppercase\">Manhattan</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1766,7 +1751,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #ff2d2d\">or</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1835,7 +1819,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #ff2d2d\">?</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1912,7 +1895,7 @@
       },
       "type": "page",
       "id": "0e0e880b-1817-4bae-892d-3d49fe25b34d",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -2005,7 +1988,7 @@
         "id": "b3631c7e-3b25-4581-8301-07019c59001d"
       },
       "animations": [],
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -2076,7 +2059,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #f2f2f2; text-transform: uppercase\">Brooklyn</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2243,7 +2225,6 @@
           "delay": 0
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 255,
@@ -2326,7 +2307,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #ff2d2d\">\"</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2394,7 +2374,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #ff2d2d\">\"</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2570,7 +2549,7 @@
       },
       "type": "page",
       "id": "8763dc13-eb60-4ff7-b17f-f8f8388d0978",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -2669,7 +2648,7 @@
         "type": "shape",
         "id": "26e4fb31-8acb-4229-bed1-14034c956fce"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -2740,7 +2719,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #f2f2f2; text-transform: uppercase\">More videos</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2820,7 +2798,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"text-transform: uppercase\">Javier</span>\n<span style=\"text-transform: uppercase\">Dardem</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2981,7 +2958,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #ff2d2d\">Q&amp;A</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3048,7 +3024,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"text-transform: uppercase\">Dree</span>\n<span style=\"text-transform: uppercase\">Larson</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3117,7 +3092,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #ff2d2d\">Q&amp;A</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3186,7 +3160,6 @@
           "delay": 300
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 255,

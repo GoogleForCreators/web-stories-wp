@@ -1120,7 +1120,7 @@
       },
       "type": "page",
       "id": "76adfebf-ad05-4c57-9dea-860499dcd9c5",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "0148e1b6-a50c-4e34-bc3a-0b70854778f6": {
           "name": "Info",
@@ -1470,7 +1470,7 @@
       },
       "type": "page",
       "id": "b235c3a6-2002-4b08-a5dc-70c1dbb8a7ec",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "b40bca61-abae-40ef-9aa7-1511f57da051": {
           "name": "Info",
@@ -1571,7 +1571,7 @@
         "type": "shape",
         "id": "36c146f8-b44b-4f32-b7ff-d5b8878b57f1"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -1914,7 +1914,7 @@
       },
       "type": "page",
       "id": "0b2752a8-b820-43c7-affe-29575fe18cfb",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "00db687b-e3d1-4be0-9a61-2fca3bee0f39": {
           "name": "Info",
@@ -2328,7 +2328,7 @@
       },
       "type": "page",
       "id": "e0a49f0f-4792-4db6-9530-defc5123d1cc",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "4b37efd1-45d9-4db7-85de-9d17afd5dde3": {
           "name": "Info",
@@ -2909,7 +2909,7 @@
       },
       "type": "page",
       "id": "5f1f528c-debc-40e8-9624-8d6c989afe8e",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "13175eb6-d6ec-45ad-b22f-b5a69442a136": {
           "name": "Info",
@@ -3305,7 +3305,7 @@
       },
       "type": "page",
       "id": "ab30407b-fc64-4101-8200-0e5e5da1bd14",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "194d89cc-e5c1-4b42-b438-464a8fb42aa2": {
           "name": "Info",

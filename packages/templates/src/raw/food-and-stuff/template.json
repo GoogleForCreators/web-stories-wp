@@ -4142,7 +4142,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 700; color: #3a566e\">Prep the Squash</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
