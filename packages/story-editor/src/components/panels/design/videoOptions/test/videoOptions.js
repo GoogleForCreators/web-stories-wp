@@ -94,7 +94,7 @@ describe('Panels/VideoOptions', () => {
 
   it('should render volume input', () => {
     arrange([defaultElement]);
-    expect(screen.getByTestId('volume-input')).toBeInTheDocument();
+    expect(screen.getByLabelText('Volume')).toBeInTheDocument();
   });
 
   it('should render volume input as muted', () => {
@@ -109,6 +109,6 @@ describe('Panels/VideoOptions', () => {
         resource: { posterId: 0, poster: '', alt: '', isMuted: true },
       },
     ]);
-    expect(screen.queryByTestId('volume-input')).not.toBeInTheDocument();
+    expect(screen.queryByLabelText('Volume')).not.toBeInTheDocument();
   });
 });
