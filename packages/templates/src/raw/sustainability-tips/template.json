@@ -113,7 +113,6 @@
           "padding": { "locked": true, "hasHiddenPadding": false },
           "type": "text",
           "content": "<span style=\"font-weight: 700; color: #134f3c\">Sustainability Tips for Living Green Daily</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -191,7 +190,6 @@
           "padding": { "locked": true, "hasHiddenPadding": false },
           "type": "text",
           "content": "<span style=\"font-weight: 500; color: #bb7c48; text-transform: uppercase\">Written by John Doe</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -266,7 +264,6 @@
           "padding": { "locked": true, "hasHiddenPadding": false },
           "type": "text",
           "content": "<span style=\"font-weight: 500; color: #bb7c48\">July 22, 2020</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -398,7 +395,6 @@
           "textAlign": "center",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; color: #134f3c\">Travel slow if you can</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -476,7 +472,6 @@
           "id": "61c44b93-02eb-4a20-b21a-cb4c259c7348",
           "basedOn": "a95e0ba7-ccc1-462e-879b-d705947194ec",
           "content": "<span style=\"font-weight: 500; color: #bb7c48; text-transform: uppercase\">Tip 1</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -512,7 +507,7 @@
       "backgroundColor": { "color": { "r": 253, "g": 240, "b": 214 } },
       "type": "page",
       "id": "654b0843-b6d8-4c5d-a870-a87b70bd2d69",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -622,7 +617,6 @@
           "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #134f3c\">If you have the luxury of time, try traveling by train or by boat to offset carbon emissions</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -670,7 +664,7 @@
         "id": "cb2331ce-0fac-45e2-bd55-d5cc88f31811",
         "type": "shape"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -783,7 +777,6 @@
           "textAlign": "center",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; color: #134f3c\">Choose your airlines w</span><span style=\"font-weight: 700; color: #134f3c\">isely</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -861,7 +854,6 @@
           "id": "49253ce9-7504-4c5e-acc7-b1e5b951fc51",
           "basedOn": "a95e0ba7-ccc1-462e-879b-d705947194ec",
           "content": "<span style=\"font-weight: 500; color: #bb7c48; text-transform: uppercase\">Tip 2</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1008,7 +1000,6 @@
           "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #134f3c\">Pick an airline that lets you offset your travel emissions when you purchase your ticket.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1056,7 +1047,7 @@
         "id": "94811709-ad86-4f81-9e04-b32045d80f29",
         "type": "shape"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -1171,7 +1162,6 @@
           "textAlign": "center",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; color: #134f3c\">Reduce your waste</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1249,7 +1239,6 @@
           "id": "dc633e84-886f-48a3-963e-bd5241f94461",
           "basedOn": "a95e0ba7-ccc1-462e-879b-d705947194ec",
           "content": "<span style=\"font-weight: 500; color: #bb7c48; text-transform: uppercase\">Tip 3</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1285,7 +1274,7 @@
       "backgroundColor": { "color": { "r": 253, "g": 240, "b": 214 } },
       "type": "page",
       "id": "5da19e79-ac72-4f2e-82b4-24fdcee54b39",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -1396,7 +1385,6 @@
           "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #134f3c\">The amount of trash we generate personally on a daily and annual basis is staggering. Whenever possible, bring your own utensils and bags.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1444,7 +1432,7 @@
         "id": "978e2840-02fd-4725-8520-b30a35bf023b",
         "type": "shape"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -1557,7 +1545,6 @@
           "textAlign": "center",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; color: #134f3c\">Buy in bulk</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1635,7 +1622,6 @@
           "id": "7798aae7-f9a7-458e-833d-1c28ba12176b",
           "basedOn": "a95e0ba7-ccc1-462e-879b-d705947194ec",
           "content": "<span style=\"font-weight: 500; color: #bb7c48; text-transform: uppercase\">Tip 4</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1671,7 +1657,7 @@
       "backgroundColor": { "color": { "r": 253, "g": 240, "b": 214 } },
       "type": "page",
       "id": "8819482e-8301-404d-92bd-9e73c96eee99",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -1782,7 +1768,6 @@
           "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #134f3c\">Not only is it cheaper to buy in bulk, you reduce the amount of product packaging going into landfills.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1943,7 +1928,6 @@
           "textAlign": "center",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; color: #134f3c\">Reduce food</span>\n<span style=\"font-weight: 700; color: #134f3c\">waste</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2021,7 +2005,6 @@
           "id": "c97ef15e-0806-497e-9612-eaed8e22bba8",
           "basedOn": "a95e0ba7-ccc1-462e-879b-d705947194ec",
           "content": "<span style=\"font-weight: 500; color: #bb7c48; text-transform: uppercase\">Tip 5</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2049,7 +2032,7 @@
       "backgroundColor": { "color": { "r": 253, "g": 240, "b": 214 } },
       "type": "page",
       "id": "662fae1c-7626-4a30-9b52-ffc9fd4c1bc4",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -2160,7 +2143,6 @@
           "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #134f3c\">Reducing food waste and composting are great ways to offset your footprint. Find a community compost station near you.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2208,7 +2190,7 @@
         "id": "b8844bfb-2f10-4e10-a160-2812c895d5aa",
         "type": "shape"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -2283,7 +2265,6 @@
           "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; color: #fdf0d6\">Energy saving tips that will save the world</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2358,7 +2339,6 @@
           "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 500; color: #fff\">From Jane Dow</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2433,7 +2413,6 @@
           "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; color: #fdf0d6; text-transform: uppercase\">Up Next</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2503,7 +2482,7 @@
           "delay": 0
         }
       ],
-      "pageTemplateType": ""
+      "pageTemplateType": null
     }
   ],
   "current": null,

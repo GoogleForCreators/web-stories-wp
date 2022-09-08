@@ -15,21 +15,21 @@
  */
 
 /**
- * External dependencies
+ * Internal dependencies
  */
-import { toDate } from 'date-fns-tz';
+import format from './format';
+import { getSettings } from './settings';
 
 /**
- * Parses a date as UTC date.
+ * Formats a date by dateSettings.timeFormat.
  *
- * Takes a string without timezone information and
- * explicitly marks it as UTC.
- *
- * @param {Date|string} date Date object or string.
- * @return {Date} UTC date.
+ * @param date Date to format.
+ * @return Displayable relative date string
  */
-function toUTCDate(date) {
-  return toDate(date, { timeZone: '+0000' });
+function formatTime(date: Date) {
+  const settings = getSettings();
+  const { timeFormat } = settings;
+  return format(date, timeFormat);
 }
 
-export default toUTCDate;
+export default formatTime;
