@@ -27,7 +27,12 @@ import {
 } from '@googleforcreators/react';
 import styled from 'styled-components';
 import { getExtensionsFromMimeType } from '@googleforcreators/media';
-import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
+import {
+  __,
+  _n,
+  sprintf,
+  translateToExclusiveList,
+} from '@googleforcreators/i18n';
 import {
   Link,
   Text,
@@ -450,11 +455,19 @@ function PublishPanel({ nameOverride }) {
                   <Icons.History width={24} height={24} aria-hidden />
                 </LabelIconWrapper>
                 <RevisionsLabel>
-                  {revisionCount} {__('Revisions', 'web-stories')}
+                  {sprintf(
+                    /* translators: %d: number of revisions. */
+                    _n(
+                      '%d Revision',
+                      '%d Revisions',
+                      revisionCount,
+                      'web-stories'
+                    ),
+                    sprintf('%s', revisionCount)
+                  )}
                 </RevisionsLabel>
               </Label>
-
-              {revisionLink && revisionId && (
+              {revisionLink && revisionId ? (
                 <Row>
                   <Link
                     rel="noopener noreferrer"
@@ -465,7 +478,7 @@ function PublishPanel({ nameOverride }) {
                     {__('Manage', 'web-stories')}
                   </Link>
                 </Row>
-              )}
+              ) : null}
             </LabelWrapper>
           </RevisionsWrapper>
         )}
