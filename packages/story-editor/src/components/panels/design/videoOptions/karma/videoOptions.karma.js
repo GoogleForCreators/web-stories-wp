@@ -14,10 +14,13 @@
  * limitations under the License.
  */
 /**
+ * External dependencies
+ */
+import { useStory } from '@googleforcreators/story-editor';
+/**
  * Internal dependencies
  */
 import { Fixture } from '../../../../../karma';
-import { useStory } from '@googleforcreators/story-editor';
 
 describe('Video Options Panel', () => {
   let fixture;
@@ -65,12 +68,11 @@ describe('Video Options Panel', () => {
 
       await fixture.events.sleep(300);
       const storyContext = await fixture.renderHook(() => useStory());
-      expect(storyContext.state.selectedElements[0].volume).toBe( 0.1 );
+      expect(storyContext.state.selectedElements[0].volume).toBe(0.1);
     });
 
-
     it('should allow user to edit volume using keyboard', async () => {
-         // Ensure focus right before the menu button.
+      // Ensure focus right before the menu button.
       vaPanel.panelTitle.scrollIntoView();
       await focusOnTitle();
 
@@ -90,7 +92,7 @@ describe('Video Options Panel', () => {
 
       await fixture.events.sleep(300);
       const storyContext = await fixture.renderHook(() => useStory());
-      expect(storyContext.state.selectedElements[0].volume).toBe( 0.7 );
+      expect(storyContext.state.selectedElements[0].volume).toBe(0.7);
     });
   });
 });

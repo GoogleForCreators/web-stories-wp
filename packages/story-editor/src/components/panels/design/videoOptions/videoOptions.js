@@ -84,7 +84,8 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
   const volume = getCommonValue(selectedElements, 'volume');
   const isSingleElement = selectedElements.length === 1;
   const enableVideoVolume = useFeature('videoVolume');
-  const showVolumeControl = enableVideoVolume && isSingleElement && !resource?.isMuted;
+  const showVolumeControl =
+    enableVideoVolume && isSingleElement && !resource?.isMuted;
 
   const {
     state: { canTrim, canMute, isTrimming, isMuting, isDisabled },
@@ -118,7 +119,7 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
     const newVolume = Math.max(0.1, value / 100);
     pushUpdate({ volume: newVolume }, true);
   };
-console.log(enableVideoVolume, canMute);
+
   const slideId = useInitializedValue(() => `slide-${uuidv4()}`);
 
   const Processing = () => {
