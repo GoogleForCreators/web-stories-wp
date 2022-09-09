@@ -503,7 +503,7 @@ function useProcessMedia({
                 : cropElement.y,
             width: newWidth,
             height: newHeight,
-            resource: { ...resource, id: oldResource.id, poster: null },
+            resource: { ...resource, id: oldResource.id, poster: null, posterId: 0 },
           },
         });
 
