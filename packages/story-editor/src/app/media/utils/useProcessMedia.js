@@ -492,7 +492,6 @@ function useProcessMedia({
 
       const onUploadSuccess = ({ id, resource }) => {
         copyResourceData({ oldResource, resource });
-        updateOldTranscodedObject(oldResource.id, resource.id, 'source-image');
         updateElementById({
           elementId,
           properties: {
@@ -503,9 +502,11 @@ function useProcessMedia({
                 : cropElement.y,
             width: newWidth,
             height: newHeight,
-            resource: { ...resource, id: oldResource.id },
+            resource: { ...resource, id: oldResource.id, poster: null },
           },
         });
+
+        updateOldTranscodedObject(oldResource.id, resource.id, 'source-image');
 
         // onUploadSuccess is also called with previousResourceId,
         // for which we don't need to run this.
