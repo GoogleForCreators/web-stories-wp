@@ -371,7 +371,6 @@ class Experiments extends Service_Base implements HasRequirements {
 				'label'       => __( 'Improved Autosaves', 'web-stories' ),
 				'description' => __( 'Enable improved autosaves support', 'web-stories' ),
 				'group'       => 'editor',
-				'default'     => true,
 			],
 		];
 	}
