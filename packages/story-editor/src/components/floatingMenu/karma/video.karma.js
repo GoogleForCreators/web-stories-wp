@@ -55,6 +55,9 @@ describe('Video Design Menu: Keyboard Navigation', () => {
       20
     );
 
+    // Escape out of the canvas elements focus trap
+    await fixture.events.keyboard.press('esc');
+
     await tabToCanvasFocusContainer(focusContainer, fixture);
     await fixture.events.keyboard.press('Enter');
     await fixture.events.keyboard.press('Tab');
