@@ -14,10 +14,16 @@
  * limitations under the License.
  */
 
-function bindToCallbacks<T>(callbacks: Record<string, (config: T) => unknown>, config: T):Record<string, unknown> {
-  return Object.fromEntries(Object.entries(callbacks).map(
-    ([name, callback]) => [name, callback.bind(null, config)]
-  ));
+function bindToCallbacks<T>(
+  callbacks: Record<string, (config: T) => unknown>,
+  config: T
+): Record<string, unknown> {
+  return Object.fromEntries(
+    Object.entries(callbacks).map(([name, callback]) => [
+      name,
+      callback.bind(null, config),
+    ])
+  );
 }
 
 export default bindToCallbacks;

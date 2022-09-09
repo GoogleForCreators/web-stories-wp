@@ -20,7 +20,7 @@
  * @param string The key in snake case
  * @return The key in camel case
  */
-export function snakeToCamelCase(string = '') : string {
+export function snakeToCamelCase(string = ''): string {
   if (!string.includes('_') && !string.includes('-')) {
     return string;
   }
@@ -40,7 +40,7 @@ interface SnakeOrCamelCaseObject {
   [key: string]: ObjectOrPrimitive;
 }
 
-function isObject (obj: unknown) {
+function isObject(obj: unknown) {
   return obj && 'object' === typeof obj && !Array.isArray(obj);
 }
 
