@@ -23,23 +23,21 @@ import {
   ContentState,
   SelectionState,
 } from 'draft-js';
-
-import type { ContentBlock } from 'draft-js';
+import type { ContentBlock, DraftBlockRenderConfig } from 'draft-js';
 
 /**
  * Internal dependencies
  */
 import convertStyles from './formatters/convert';
 
-type ValueOf<T> = T[keyof T];
-type Map = {
-  unstyled: Record<string, string | string[]>;
-  'unordered-list-item': Record<string, string>;
-  'ordered-list-item': Record<string, string>;
-};
+interface TagMap {
+  unstyled: DraftBlockRenderConfig | undefined;
+  'unordered-list-item': DraftBlockRenderConfig | undefined;
+  'ordered-list-item': DraftBlockRenderConfig | undefined;
+}
 
 class CustomBlockRenderMap {
-  _map: Map;
+  _map: TagMap;
 
   constructor() {
     // Generally only allow unstyled block types
@@ -48,6 +46,8 @@ class CustomBlockRenderMap {
     this._map = {
       unstyled: {
         element: 'div',
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment -- aliasedElements actually does exist on the type when looking at the module but the correct type is not imported.
+        // @ts-ignore
         aliasedElements: ['p', 'h1', 'h2', 'h3', 'blockquote', 'pre'],
       },
       'unordered-list-item': {
@@ -58,15 +58,19 @@ class CustomBlockRenderMap {
       },
     };
   }
-
   // The only function from immutable.js#Map, that we need to implement
-  mapKeys(
+  mapKeys<M>(
     callback: (
-      key: string,
-      element: ValueOf<Map>
-    ) => Record<string, string> | Record<string, string[]>
-  ) {
-    return Object.keys(this._map).map((key) => callback(key, this._map[key]));
+      key?: string | undefined,
+      value?: DraftBlockRenderConfig | undefined,
+      iter?:
+        | Immutable.Collection.Keyed<string, DraftBlockRenderConfig>
+        | undefined
+    ) => M
+  ): M[] {
+    return Object.keys(this._map).map((key) =>
+      callback(key, this._map[key as keyof TagMap])
+    );
   }
 }
 
