@@ -463,7 +463,7 @@ function PublishPanel({ nameOverride }) {
                       revisionCount,
                       'web-stories'
                     ),
-                    sprintf('%s', revisionCount)
+                    revisionCount
                   )}
                 </RevisionsLabel>
               </Label>
