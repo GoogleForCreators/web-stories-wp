@@ -124,14 +124,15 @@ const LogoImg = styled.img`
 `;
 
 const RevisionsWrapper = styled.div`
-  display: flex;
   width: 100%;
   margin-bottom: 20px;
   margin-top: 4px;
 `;
 
 const RevisionsLabel = styled.div`
+  display: inline-block;
   margin-left: 20px;
+  margin-right: 20px;
 `;
 
 const LabelIconWrapper = styled.div`
@@ -447,7 +448,7 @@ function PublishPanel({ nameOverride }) {
             </LabelWrapper>
           </DropdownWrapper>
         </HighlightRow>
-        {improvedAutosaves && (
+        {improvedAutosaves && revisionCount >= 1 ? (
           <RevisionsWrapper>
             <LabelWrapper>
               <Label>
@@ -466,9 +467,7 @@ function PublishPanel({ nameOverride }) {
                     revisionCount
                   )}
                 </RevisionsLabel>
-              </Label>
-              {revisionLink && revisionId ? (
-                <Row>
+                {revisionLink && revisionId ? (
                   <Link
                     rel="noopener noreferrer"
                     target="_blank"
@@ -477,11 +476,11 @@ function PublishPanel({ nameOverride }) {
                   >
                     {__('Manage', 'web-stories')}
                   </Link>
-                </Row>
-              ) : null}
+                ) : null}
+              </Label>
             </LabelWrapper>
           </RevisionsWrapper>
-        )}
+        ) : null}
       </PanelContent>
     </Panel>
   );
