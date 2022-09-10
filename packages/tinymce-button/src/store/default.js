@@ -29,14 +29,14 @@ const setDefaultStateSetting = () => {
       fields[viewType];
 
     state[viewType] = {
-      title: title,
-      excerpt: excerpt,
-      author: author,
-      date: date,
-      archive_link: archive_link,
+      title,
+      excerpt,
+      author,
+      date,
+      archive_link,
       archive_link_label: '',
       circle_size: 150,
-      sharp_corners: sharp_corners,
+      sharp_corners,
       image_alignment: 'left',
       number_of_columns: 1,
       number_of_stories: 5,
