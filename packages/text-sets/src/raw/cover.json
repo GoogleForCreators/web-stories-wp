@@ -547,7 +547,6 @@
           "id": "481812b5-b3b5-4c8c-acd5-49ab3c58ad9c"
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "fonts": ["Source Serif Pro", "Lato"],
@@ -777,7 +776,6 @@
           "id": "d07705f6-d260-4b59-95b9-2867be8ec7c3"
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "fonts": ["Poppins"],
@@ -1100,7 +1098,6 @@
           "id": "c3ec2f27-c240-4496-812a-eb9e82b6a949"
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "fonts": ["Playfair Display", "Poppins"],
@@ -1406,7 +1403,6 @@
           "id": "71dbc521-fca3-43dd-b35d-ad1d07947e84"
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "fonts": ["Oswald", "Roboto Condensed"],
@@ -1714,7 +1710,6 @@
           "id": "8eb89dc5-ef0c-4167-8204-42c8b0ba62c8"
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "fonts": ["Raleway", "Merriweather"],
@@ -2007,7 +2002,6 @@
           }
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "fonts": ["Titillium Web", "Work Sans", "Montserrat"],
@@ -2280,7 +2274,6 @@
           "id": "66588fa9-1271-483c-b6b5-6376d33409bc"
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "fonts": ["Nunito", "Karla"],
@@ -2403,7 +2396,6 @@
           "tagName": "h1"
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "fonts": ["Anton"],
@@ -2708,7 +2700,6 @@
           "id": "f29a5c72-1f88-45d0-af15-7803a1fd8a0b"
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "fonts": ["Open Sans", "UnifrakturMaguntia", "Playfair Display"],

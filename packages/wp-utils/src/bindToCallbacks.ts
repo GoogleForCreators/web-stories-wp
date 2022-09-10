@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,23 +14,16 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import format from './format';
-import { getSettings } from './settings';
-
-/**
- * Formats a date by dateSettings.dateFormat (no time).
- *
- * @param {Date|string} date Date to format.
- * @return {string} Displayable relative date string
- */
-function formatDate(date) {
-  const settings = getSettings();
-  const { dateFormat } = settings;
-
-  return format(date, dateFormat);
+function bindToCallbacks<T>(
+  callbacks: Record<string, (config: T) => unknown>,
+  config: T
+): Record<string, unknown> {
+  return Object.fromEntries(
+    Object.entries(callbacks).map(([name, callback]) => [
+      name,
+      callback.bind(null, config),
+    ])
+  );
 }
 
-export default formatDate;
+export default bindToCallbacks;

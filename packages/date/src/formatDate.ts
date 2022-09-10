@@ -21,15 +21,16 @@ import format from './format';
 import { getSettings } from './settings';
 
 /**
- * Formats a date by dateSettings.timeFormat.
+ * Formats a date by dateSettings.dateFormat (no time).
  *
- * @param {Date|string} date Date to format.
- * @return {string} Displayable relative date string
+ * @param date Date to format.
+ * @return Displayable relative date string
  */
-function formatTime(date) {
+function formatDate(date: Date | string) {
   const settings = getSettings();
-  const { timeFormat } = settings;
-  return format(date, timeFormat);
+  const { dateFormat } = settings;
+
+  return format(date, dateFormat);
 }
 
-export default formatTime;
+export default formatDate;

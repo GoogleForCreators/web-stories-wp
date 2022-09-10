@@ -39,7 +39,7 @@ import getTimeZoneString from './getTimeZoneString';
  * If no locale settings are specified, some English strings
  * taken from date-fns's default en-US locale will be used.
  *
- * @return {OptionsWithTZ} Date options.
+ * @return Date options.
  */
 function getOptions() {
   const settings = getSettings();
@@ -135,9 +135,6 @@ function getOptions() {
     }),
   };
 
-  /**
-   * @type {Locale}
-   */
   const locale = {
     ...originalLocale,
     code: localeCode || originalLocale.code,
@@ -146,7 +143,7 @@ function getOptions() {
     options: {
       weekStartsOn: weekStartsOn,
     },
-  };
+  } as Locale;
 
   return {
     weekStartsOn,

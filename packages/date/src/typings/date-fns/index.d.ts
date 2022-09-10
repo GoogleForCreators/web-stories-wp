@@ -13,11 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-const bindToCallbacks = (callbacks, config) => {
-  return Object.entries(callbacks).reduce((_callbacks, [name, callback]) => {
-    _callbacks[name] = callback.bind(null, config);
-    return _callbacks;
-  }, {});
-};
 
-export default bindToCallbacks;
+declare module 'date-fns/locale/_lib/buildLocalizeFn' {
+  type LocalizeFunction = (...args: any[]) => any;
+  type Width = 'narrow' | 'short' | 'abbreviated' | 'wide';
+  type LocalizeValues = Partial<Record<Width, string[]>>;
+  type LocalizeFunctionBuilderArg = {
+    values: LocalizeValues;
+    defaultWidth: Width;
+  };
+  type LocalizeFunctionBuilder = (
+    args: LocalizeFunctionBuilderArg
+  ) => LocalizeFunction;
+  const localizeFunctionBuilder: LocalizeFunctionBuilder;
+  export default localizeFunctionBuilder;
+}

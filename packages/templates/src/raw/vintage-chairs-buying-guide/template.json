@@ -94,7 +94,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 500; color: #dbe2e7\">Vintage Chairs: What to look for and how to buy</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -181,7 +180,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #dbe2e7\">Billy Rogers</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -375,7 +373,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #313831\">The duo behind Brooklyn’s hip antique furniture store, Lichen, clue us in on what to look for when it comes to vintage seating.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -629,7 +626,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #313831\">If you don’t know what era, what style and who it’s made by, don’t sweat it.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -667,7 +663,7 @@
       },
       "type": "page",
       "id": "64637ae6-949b-49bc-b75d-5107b99e0a2a",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -817,7 +813,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #313831\">If you like it,</span>\n<span style=\"color: #313831\">You like it.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1065,7 +1060,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #313831\">Carefully examine the surface of each chair. Examine every part and look for authenticity marks.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1130,7 +1124,7 @@
         "id": "0b4ac6ea-6c4d-44ba-9641-de83ed21ae86",
         "type": "shape"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -1266,7 +1260,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #313831\">When you find an interesting chair, do you like the curvature? The angles? The lines?</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1303,7 +1296,7 @@
       },
       "type": "page",
       "id": "62ae21f2-86a5-43bc-b4a1-560e8cfeb4ab",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -1395,7 +1388,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #313831\">Find an element that draws you in.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1513,7 +1505,7 @@
       },
       "type": "page",
       "id": "0c2f43a3-1099-480b-907f-d40f39daf5dc",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -1702,7 +1694,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #313831\">Check foundational details to make sure it’s sturdy and it hasn’t lost any structural integrity.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1767,7 +1758,7 @@
         "id": "4bb61167-dd01-49c8-8df5-874d735d39bd",
         "type": "shape"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -1903,7 +1894,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #313831\">“Try before you buy. See it, smell it, sit on it. And - bargain for it.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1990,7 +1980,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #313831\">Mark Jackson</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2112,7 +2101,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #dbe2e7\">Read More:</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2275,7 +2263,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #313831\">Make it&nbsp;</span>\n<span style=\"color: #313831\">Mid-Century</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2440,7 +2427,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #313831\">How to</span>\n<span style=\"color: #313831\">Re-decorate Your Bathroom on a Budget</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,

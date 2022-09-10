@@ -117,7 +117,16 @@ describe('raw template files', () => {
       for (const page of templateData.pages) {
         expect(page).toStrictEqual(
           expect.objectContaining({
-            pageTemplateType: expect.any(String),
+            pageTemplateType: expect.toBeOneOf([
+              null,
+              'cover',
+              'editorial',
+              'list',
+              'quote',
+              'section',
+              'table',
+              'steps',
+            ]),
           })
         );
       }
