@@ -767,6 +767,7 @@ function useMediaUploadQueue() {
             ITEM_STATUS.TRANSCODING,
             ITEM_STATUS.TRIMMING,
             ITEM_STATUS.MUTING,
+            ITEM_STATUS.CROPPING,
           ].includes(item.state) && item.originalResourceId === resourceId
       );
 
@@ -787,6 +788,7 @@ function useMediaUploadQueue() {
             ITEM_STATUS.TRANSCODING,
             ITEM_STATUS.TRIMMING,
             ITEM_STATUS.MUTING,
+            ITEM_STATUS.CROPPING,
           ].includes(item.state) && item.resource.id === resourceId
       );
 
