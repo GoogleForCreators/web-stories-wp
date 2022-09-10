@@ -503,7 +503,12 @@ function useProcessMedia({
                 : cropElement.y,
             width: newWidth,
             height: newHeight,
-            resource: { ...resource, id: oldResource.id, poster: null, posterId: 0 },
+            resource: {
+              ...resource,
+              id: oldResource.id,
+              poster: null,
+              posterId: 0,
+            },
           },
         });
 
@@ -514,12 +519,23 @@ function useProcessMedia({
         }
       };
 
+      const onUploadProgress = ({ resource }) => {
+        const newResourceWithCanvasId = {
+          ...resource,
+          id: cropElement.resource.id,
+        };
+        updateExistingElementById(elementId, {
+          ...newResourceWithCanvasId,
+        });
+      };
+
       const process = async () => {
         let file = false;
         try {
           file = await fetchRemoteFile(url, mimeType);
           await uploadMedia([file], {
             onUploadSuccess,
+            onUploadProgress,
             cropVideo: true,
             additionalData: {
               original_id: resourceId,
@@ -538,6 +554,7 @@ function useProcessMedia({
     },
     [
       updateElementById,
+      updateExistingElementById,
       copyResourceData,
       postProcessingResource,
       updateOldTranscodedObject,
