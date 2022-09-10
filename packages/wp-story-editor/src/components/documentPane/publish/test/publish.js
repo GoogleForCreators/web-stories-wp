@@ -59,6 +59,7 @@ function arrange(
         date: '2020-01-01T20:20:20',
         modified: '2020-01-01T20:20:19',
         featuredMedia: { id: 0, url: '', height: 0, width: 0 },
+        revisions: { count: 8, id: 189 },
         publisherLogo: { id: 0, url: '', height: 0, width: 0 },
         status: 'draft',
       },
@@ -71,6 +72,7 @@ function arrange(
     allowedMimeTypes: {
       image: ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'],
     },
+    revisionLink: 'http://example.com',
     apiCallbacks: {
       getAuthors: jest.fn().mockResolvedValue({}),
     },
@@ -125,9 +127,11 @@ describe('PublishPanel', () => {
     arrange();
     const publishPanel = screen.getByText('Publishing');
     const publisherLogo = screen.getByText('Publisher Logo');
+    const revisionsText = screen.getByText('8 Revisions');
 
     await waitFor(() => expect(publishPanel).toBeDefined());
     await waitFor(() => expect(publisherLogo).toBeDefined());
+    await waitFor(() => expect(revisionsText).toBeDefined());
   });
 
   it('should display Author field if authors available', async () => {
