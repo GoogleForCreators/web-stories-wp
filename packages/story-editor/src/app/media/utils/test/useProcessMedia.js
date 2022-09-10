@@ -110,7 +110,6 @@ function setup() {
   const storyContextValue = {
     actions: { updateElementsByResourceId },
   };
-
   const wrapper = ({ children }) => (
     <APIContext.Provider value={apiContextValue}>
       <StoryContext.Provider value={storyContextValue}>
