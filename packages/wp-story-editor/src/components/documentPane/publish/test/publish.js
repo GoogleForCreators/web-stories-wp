@@ -26,6 +26,7 @@ import {
   SidebarContext,
 } from '@googleforcreators/story-editor';
 import { renderWithTheme } from '@googleforcreators/test-utils';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -36,6 +37,8 @@ jest.mock('./../../../../api/publisherLogos', () => ({
   getPublisherLogos: jest.fn().mockResolvedValue([]),
   addPublisherLogo: jest.fn().mockResolvedValue([]),
 }));
+
+jest.mock('flagged');
 
 function MediaUpload({ render }) {
   const open = jest.fn();
@@ -116,6 +119,7 @@ describe('PublishPanel', () => {
       JSON.stringify({ isCollapsed: false })
     );
     MockDate.set('2020-07-15T12:00:00+00:00');
+    useFeature.mockImplementation(() => true);
   });
 
   afterAll(() => {
