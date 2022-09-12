@@ -27,10 +27,10 @@ import track from './track';
  *
  * @see https://developers.google.com/analytics/devguides/collection/ga4/exceptions
  * @see https://developers.google.com/analytics/devguides/collection/gtagjs/exceptions
- * @param {string} prefix Error prefixed. Concatenated with description.
- * @param {string} description The error description.
- * @param {boolean} [fatal=false] Report whether there is a fatal error.
- * @return {Promise<void>} Promise that always resolves.
+ * @param prefix Error prefixed. Concatenated with description.
+ * @param description The error description.
+ * @param [fatal=false] Report whether there is a fatal error.
+ * @return Promise that always resolves.
  */
 async function trackError(
   prefix: string,

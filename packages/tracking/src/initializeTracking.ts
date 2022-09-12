@@ -24,9 +24,9 @@ import initializeErrorReporting from './initializeErrorReporting';
 /**
  * Initializes tracking.
  *
- * @param {string} appName Name of the application, e.g. 'Dashboard' or 'Editor'.
- * @param {boolean} [sendPageView=true] Whether to send an initial page view event upon loading.
- * @return {Promise<void>} Promise.
+ * @param appName Name of the application, e.g. 'Dashboard' or 'Editor'.
+ * @param [sendPageView=true] Whether to send an initial page view event upon loading.
+ * @return Promise.
  */
 async function initializeTracking(appName: string, sendPageView = true) {
   config.appName = appName;

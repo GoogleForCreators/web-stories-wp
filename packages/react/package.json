@@ -40,12 +40,13 @@
     "prop-types": "^15.8.1",
     "shallow-equal": "^1.2.1",
     "use-context-selector": "^1.2.11",
-    "use-debounce": "^7.0.1",
+    "use-debounce": "^8.0.4",
     "use-reduction": "^2.1.2"
   },
   "devDependencies": {
     "@testing-library/react": "^12.1.5",
-    "@testing-library/react-hooks": "^8.0.0"
+    "@testing-library/react-hooks": "^8.0.0",
+    "@types/react": "^17.0.44"
   },
   "peerDependencies": {
     "react": "^17.0.2",
