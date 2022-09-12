@@ -125,8 +125,8 @@ const LogoImg = styled.img`
 
 const RevisionsWrapper = styled.div`
   width: 100%;
-  margin-bottom: 20px;
-  margin-top: 4px;
+  margin-bottom: 16px;
+  margin-top: 20px;
 `;
 
 const RevisionsLabel = styled.div`
