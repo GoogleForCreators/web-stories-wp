@@ -13,11 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-const bindToCallbacks = (callbacks, config) => {
-  return Object.entries(callbacks).reduce((_callbacks, [name, callback]) => {
-    _callbacks[name] = callback.bind(null, config);
-    return _callbacks;
-  }, {});
-};
+
+function bindToCallbacks<T>(
+  callbacks: Record<string, (config: T) => unknown>,
+  config: T
+): Record<string, unknown> {
+  return Object.fromEntries(
+    Object.entries(callbacks).map(([name, callback]) => [
+      name,
+      callback.bind(null, config),
+    ])
+  );
+}
 
 export default bindToCallbacks;
