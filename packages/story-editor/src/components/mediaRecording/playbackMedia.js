@@ -226,7 +226,7 @@ function PlaybackMedia() {
               <Video
                 ref={setStreamNode}
                 muted
-                _hidden={hasVideoEffect}
+                hidden={hasVideoEffect}
                 onLoadedMetadata={onLoadedMetadata}
               />
               {hasVideoEffect && (
