@@ -174,8 +174,8 @@ Player;
 
 		$args = [
 			'show_split_view' => true,
-			'title_left'      => __( 'Removed' ),
-			'title_right'     => __( 'Added' ),
+			'title_left'      => __( 'Removed' ), // phpcs:ignore WordPress.WP.I18n.MissingArgDomain
+			'title_right'     => __( 'Added' ), // phpcs:ignore WordPress.WP.I18n.MissingArgDomain
 		];
 
 		/** This filter is documented in wp-admin/includes/revision.php */
