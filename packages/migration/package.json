@@ -38,7 +38,7 @@
   },
   "dependencies": {
     "polished": "^4.2.2",
-    "uuid": "^8.3.2"
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^14.1.0",
