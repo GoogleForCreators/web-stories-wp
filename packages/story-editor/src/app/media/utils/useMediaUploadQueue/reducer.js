@@ -416,12 +416,13 @@ export function startCropping(state, { payload: { id } }) {
  * @param {Object} action.payload Action payload.
  * @param {string} action.payload.id Item ID.
  * @param {File} action.payload.file New file object.
+ * @param {File} action.payload.posterFile New poster file object.
  * @param {Object} action.payload.additionalData Additional data.
  * @return {Object} New state
  */
 export function finishCropping(
   state,
-  { payload: { id, file, additionalData = {} } }
+  { payload: { id, file, posterFile, additionalData = {} } }
 ) {
   return {
     ...state,
@@ -430,6 +431,7 @@ export function finishCropping(
         ? {
             ...item,
             file,
+            posterFile,
             state: ITEM_STATUS.CROPPED,
             resource: {
               ...item.resource,
