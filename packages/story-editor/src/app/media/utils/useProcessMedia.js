@@ -543,6 +543,13 @@ function useProcessMedia({
               mediaSource: isOptimized ? 'video-optimization' : 'editor',
             },
             originalResourceId: resourceId,
+             resource: {
+              ...oldResource,
+              poster: null,
+              posterId: 0,
+              width: newWidth,
+              height: newHeight,
+            },
           });
         } catch (e) {
           //eslint-disable-next-line no-console -- surface this error
