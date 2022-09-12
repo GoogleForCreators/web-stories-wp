@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { Editor, getDefaultKeyBinding, KeyBindingUtil } from 'draft-js';
-import type { EditorState } from 'draft-js';
 import {
   useEffect,
   useRef,
@@ -33,7 +32,6 @@ import type { ForwardedRef, KeyboardEvent } from 'react';
  */
 import useRichText from './useRichText';
 import customInlineDisplay from './customInlineDisplay';
-import type { State } from './types';
 
 export interface RichTextEditorProps {
   content: string;
@@ -55,7 +53,7 @@ function RichTextEditor(
       handlePastedText,
       clearState,
     },
-  } = useRichText() as State;
+  } = useRichText();
 
   // Load state from parent when content changes
   useEffect(() => {

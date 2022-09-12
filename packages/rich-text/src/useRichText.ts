@@ -24,6 +24,7 @@ import { identity, useContextSelector } from '@googleforcreators/react';
 import Context from './context';
 import type { State } from './types';
 
+function useRichText(): State;
 function useRichText(
   selector?: (state: State | null) => Partial<State> | State
 ) {
