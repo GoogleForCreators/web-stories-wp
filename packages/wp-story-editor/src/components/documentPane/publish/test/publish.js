@@ -132,10 +132,14 @@ describe('PublishPanel', () => {
     const publishPanel = screen.getByText('Publishing');
     const publisherLogo = screen.getByText('Publisher Logo');
     const revisionsText = screen.getByText('8 Revisions');
-
+    const revisionsLink = screen.getByRole('link', { name: 'Browse' });
     await waitFor(() => expect(publishPanel).toBeDefined());
     await waitFor(() => expect(publisherLogo).toBeDefined());
     await waitFor(() => expect(revisionsText).toBeDefined());
+    expect(revisionsLink).toHaveAttribute(
+      'href',
+      'http://example.com/?revision=189'
+    );
   });
 
   it('should display Author field if authors available', async () => {

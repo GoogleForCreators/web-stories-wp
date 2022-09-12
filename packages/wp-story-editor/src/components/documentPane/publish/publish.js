@@ -474,7 +474,7 @@ function PublishPanel({ nameOverride }) {
                     href={addQueryArgs(revisionLink, { revision: revisionId })}
                     size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
                   >
-                    {__('Manage', 'web-stories')}
+                    {__('Browse', 'web-stories')}
                   </Link>
                 ) : null}
               </Label>
