@@ -64,7 +64,7 @@ export function useFauxSelection(
       fauxSelection,
       currentSelection
     );
-    const hasFauxSelection = Boolean(fauxSelection);
+    const hasFauxSelection = fauxSelection !== null;
 
     if (!isFocused && !hasFauxSelection) {
       // Get new content with style applied to selection
@@ -97,7 +97,7 @@ export function useFauxSelection(
           // Get new content with style removed from old selection
           const contentWithoutFaux = Modifier.removeInlineStyle(
             oldEditorState.getCurrentContent(),
-            fauxSelection as SelectionState,
+            fauxSelection,
             FAUX_SELECTION
           );
 

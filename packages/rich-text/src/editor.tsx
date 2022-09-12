@@ -71,7 +71,7 @@ function RichTextEditor(
     onChange(newContent);
   }, [onChange, getContentFromState, editorState]);
 
-  const hasEditorState = Boolean(editorState);
+  const hasEditorState = editorState !== null;
 
   // On unmount, clear state in provider
   useUnmount(clearState);
@@ -105,8 +105,7 @@ function RichTextEditor(
     <Editor
       ref={editorRef}
       onChange={updateEditorState}
-      /* We return before if EditorState is null so we know it's not null here */
-      editorState={editorState as EditorState}
+      editorState={editorState}
       handleKeyCommand={handleKeyCommand}
       handlePastedText={handlePastedText}
       keyBindingFn={bindKeys}
