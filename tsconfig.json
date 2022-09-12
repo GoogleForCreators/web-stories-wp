@@ -9,7 +9,8 @@
     { "path": "packages/tracking" },
     { "path": "packages/transform" },
     { "path": "packages/units" },
-    { "path": "packages/url" }
+    { "path": "packages/url" },
+    { "path": "packages/wp-utils" }
   ],
   "include": []
 }
