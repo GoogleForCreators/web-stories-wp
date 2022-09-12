@@ -129,11 +129,7 @@ class Revisions extends Service_Base {
 			return $return;
 		}
 
-		if ( ! $compare_from instanceof WP_Post ) {
-			return $return;
-		}
-
-		$parent = get_post_parent( $compare_from );
+		$parent = get_post_parent( $compare_from ?: $compare_to );
 
 		if (
 			! $parent instanceof WP_Post ||
@@ -142,20 +138,24 @@ class Revisions extends Service_Base {
 			return $return;
 		}
 
-		$url_from    = esc_url(
-			wp_nonce_url(
-				add_query_arg( 'rev_id', $compare_from->ID, get_permalink( $parent ) ),
-				'web_stories_revision_for_' . $parent->ID
-			)
-		);
-		$title_from  = esc_html( get_the_title( $compare_from ) );
-		$player_from = <<<Player
+		$player_from = '';
+
+		if ( $compare_from instanceof WP_Post ) {
+			$url_from    = esc_url(
+				wp_nonce_url(
+					add_query_arg( 'rev_id', $compare_from->ID, get_permalink( $parent ) ),
+					'web_stories_revision_for_' . $parent->ID
+				)
+			);
+			$title_from  = esc_html( get_the_title( $compare_from ) );
+			$player_from = <<<Player
 <amp-story-player
-	style="width: 360px; height: 600px;"
+	style="width: 300px; height: 500px; display: flex;"
 >
 	<a href="$url_from">$title_from</a>
 </amp-story-player>
 Player;
+		}
 
 		$url_to    = esc_url(
 			wp_nonce_url(
@@ -166,7 +166,7 @@ Player;
 		$title_to  = esc_html( get_the_title( $compare_to ) );
 		$player_to = <<<Player
 <amp-story-player
-	style="width: 360px; height: 600px;"
+	style="width: 300px; height: 500px; display: flex;"
 >
 	<a href="$url_to">$title_to</a>
 </amp-story-player>
@@ -181,14 +181,21 @@ Player;
 		/** This filter is documented in wp-admin/includes/revision.php */
 		$args = apply_filters( 'revision_text_diff_options', $args, 'post_content', $compare_from, $compare_to );
 
+		$fields_to_return = [];
+
 		/**
 		 * Revision field.
 		 *
 		 * @phpstan-var RevisionField $field
 		 * @var array $field
 		 */
-		foreach ( $return as &$field ) {
-			if ( 'post_content' === $field['id'] ) {
+		foreach ( $return as $field ) {
+			if ( 'post_title' === $field['id'] ) {
+				$fields_to_return[] = $field;
+			}
+			if ( 'post_content' === $field['id'] || 'post_content_filtered' === $field['id'] ) {
+				$field['title'] = __( 'Content', 'web-stories' );
+
 				$diff = '<table class="diff"><colgroup><col class="content diffsplit left"><col class="content diffsplit middle"><col class="content diffsplit right"></colgroup><tbody><tr>';
 
 				// In split screen mode, show the title before/after side by side.
@@ -202,6 +209,9 @@ Player;
 				$diff .= '</table>';
 
 				$field['diff'] = $diff;
+
+				$fields_to_return[] = $field;
+				return $fields_to_return;
 			}
 		}
 
