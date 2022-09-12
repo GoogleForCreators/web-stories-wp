@@ -72,15 +72,18 @@ function convertStyles(
   return updatedContentState;
 }
 
-const styleMap: Record<string, string> = {
+const styleMap = {
   BOLD: weightToStyle(700),
   ITALIC: ITALIC,
   UNDERLINE: UNDERLINE,
 };
+type StyleMapKey = keyof typeof styleMap;
 
 function getNewStyles(oldStyles: string[]): string[] {
   return oldStyles
-    .map<string>((oldStyle) => styleMap[oldStyle] ?? null)
+    .map((oldStyle) =>
+      oldStyle in styleMap ? styleMap[oldStyle as StyleMapKey] : ''
+    )
     .filter(Boolean);
 }
 
