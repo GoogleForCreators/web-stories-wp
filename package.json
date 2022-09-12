@@ -54,7 +54,7 @@
     "@rollup/plugin-commonjs": "^22.0.1",
     "@rollup/plugin-dynamic-import-vars": "^1.4.4",
     "@rollup/plugin-json": "^4.1.0",
-    "@rollup/plugin-node-resolve": "^13.3.0",
+    "@rollup/plugin-node-resolve": "^14.1.0",
     "@rollup/plugin-typescript": "^8.4.0",
     "@rollup/plugin-url": "^7.0.0",
     "@storybook/addon-a11y": "^6.4.20",
