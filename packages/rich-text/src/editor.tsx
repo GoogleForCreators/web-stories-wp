@@ -33,7 +33,12 @@ import type { ForwardedRef, KeyboardEvent } from 'react';
  */
 import useRichText from './useRichText';
 import customInlineDisplay from './customInlineDisplay';
-import type { RichTextEditorProps, State } from './types';
+import type { State } from './types';
+
+export interface RichTextEditorProps {
+  content: string;
+  onChange: (content: string | null) => void;
+}
 
 function RichTextEditor(
   { content, onChange }: RichTextEditorProps,

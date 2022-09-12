@@ -19,7 +19,6 @@
  */
 import type { Pattern } from '@googleforcreators/patterns';
 import type { EditorState } from 'draft-js';
-import type { ReactNode } from 'react';
 
 export type AllowedSetterArgs = undefined | boolean | Pattern | number;
 
@@ -67,21 +66,4 @@ export interface State {
     selectionActions: Record<string, StyleSetter>;
     getContentFromState: (editorState: EditorState) => string | null;
   };
-}
-
-interface EditingState {
-  hasEditMenu?: boolean;
-  showOverflow?: boolean;
-  selectAll?: boolean;
-  offset?: number;
-}
-
-export interface RichTextProviderProps {
-  children: ReactNode;
-  editingState: EditingState;
-}
-
-export interface RichTextEditorProps {
-  content: string;
-  onChange: (content: string | null) => void;
 }

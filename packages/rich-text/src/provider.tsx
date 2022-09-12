@@ -23,6 +23,7 @@ import {
   useMemo,
   useRef,
 } from '@googleforcreators/react';
+import type { ReactNode } from 'react';
 import { EditorState } from 'draft-js';
 import type { DraftInlineStyle } from 'draft-js';
 
@@ -42,7 +43,7 @@ import customImport from './customImport';
 import customExport from './customExport';
 import useHandlePastedText from './useHandlePastedText';
 import useSelectionManipulation from './useSelectionManipulation';
-import type { RichTextProviderProps, State } from './types';
+import type { State } from './types';
 
 const INITIAL_SELECTION_INFO = {
   isBold: false,
@@ -51,6 +52,17 @@ const INITIAL_SELECTION_INFO = {
   isUppercase: false,
 };
 
+interface EditingState {
+  hasEditMenu?: boolean;
+  showOverflow?: boolean;
+  selectAll?: boolean;
+  offset?: number;
+}
+
+export interface RichTextProviderProps {
+  children: ReactNode;
+  editingState: EditingState;
+}
 function RichTextProvider({ children, editingState }: RichTextProviderProps) {
   const [editorState, setEditorState] = useState<EditorState | null>(null);
   const lastKnownStyle = useRef<DraftInlineStyle | null>(null);
