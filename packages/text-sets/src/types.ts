@@ -30,6 +30,8 @@ export interface MinMax {
 
 export interface Page {
   elements: Array<Element>;
+  fonts: Array<string>;
+  id: string;
 }
 export interface Data {
   pages: Array<Page>;

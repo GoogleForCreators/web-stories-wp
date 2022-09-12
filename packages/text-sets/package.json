@@ -27,11 +27,11 @@
   "type": "module",
   "customExports": {
     ".": {
-      "default": "./src/index.js"
+      "default": "./src/index.ts"
     }
   },
   "module": "dist-module/index.js",
-  "main": "./src/index.ts",
+  "main": "dist/index.js",
   "types": "dist-types/index.d.ts",
   "source": "src/index.ts",
   "publishConfig": {

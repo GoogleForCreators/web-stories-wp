@@ -21,7 +21,7 @@ import { migrate } from '@googleforcreators/migration';
 /**
  * Internal dependencies
  */
-import type { Data, Element, MinMax, TextSet } from './types';
+import type { Data, Page, Element, MinMax, TextSet } from './types';
 
 function updateMinMax(minMax: MinMax, element: Element): MinMax {
   // Purposely mutating object so passed
@@ -40,48 +40,38 @@ async function loadTextSet(name: string): Promise<Array<object>> {
     /* webpackChunkName: "chunk-web-stories-textset-[index]" */ `./raw/${name}.json`
   )) as TextSet;
   const migrated: Data = migrate(data.default, data.default.version);
-  return migrated.pages.reduce(
-    (
-      sets,
+  return migrated.pages.reduce((sets, page: Page) => {
+    const minMax = {
+      minX: Infinity,
+      maxX: 0,
+      minY: Infinity,
+      maxY: 0,
+    };
+
+    const textElements = page.elements.filter((element: Element) => {
+      return !element.isBackground && Boolean(updateMinMax(minMax, element));
+    });
+
+    return [
+      ...sets,
       {
-        elements,
-        fonts,
-        id,
-      }: { elements: Array<Element>; fonts: string; id: number }
-    ) => {
-      const minMax = {
-        minX: Infinity,
-        maxX: 0,
-        minY: Infinity,
-        maxY: 0,
-      };
-
-      const textElements = elements.filter((element: Element) => {
-        return !element.isBackground && Boolean(updateMinMax(minMax, element));
-      });
-
-      return [
-        ...sets,
-        {
-          textSetFonts: fonts,
-          id,
-          textSetCategory: name,
-          elements: textElements.map((e: Element) => ({
-            ...e,
-            // Offset elements so the text set's
-            // default position is (0,0)
-            normalizedOffsetX: e.x - minMax.minX,
-            normalizedOffsetY: e.y - minMax.minY,
-            // The overall text set width & height
-            // is the delta between the max/mins
-            textSetWidth: minMax.maxX - minMax.minX,
-            textSetHeight: minMax.maxY - minMax.minY,
-          })),
-        },
-      ];
-    },
-    []
-  );
+        textSetFonts: page.fonts,
+        id: page.id,
+        textSetCategory: name,
+        elements: textElements.map((e: Element) => ({
+          ...e,
+          // Offset elements so the text set's
+          // default position is (0,0)
+          normalizedOffsetX: e.x - minMax.minX,
+          normalizedOffsetY: e.y - minMax.minY,
+          // The overall text set width & height
+          // is the delta between the max/mins
+          textSetWidth: minMax.maxX - minMax.minX,
+          textSetHeight: minMax.maxY - minMax.minY,
+        })),
+      },
+    ];
+  }, []);
 }
 
 export default async function loadTextSets() {
