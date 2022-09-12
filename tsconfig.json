@@ -6,6 +6,7 @@
     { "path": "packages/moveable" },
     { "path": "packages/react" },
     { "path": "packages/stickers" },
+    { "path": "packages/text-sets" },
     { "path": "packages/tracking" },
     { "path": "packages/transform" },
     { "path": "packages/units" },
