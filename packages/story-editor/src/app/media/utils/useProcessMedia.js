@@ -506,8 +506,6 @@ function useProcessMedia({
             resource: {
               ...resource,
               id: oldResource.id,
-              poster: null,
-              posterId: 0,
             },
           },
         });
@@ -543,7 +541,7 @@ function useProcessMedia({
               mediaSource: isOptimized ? 'video-optimization' : 'editor',
             },
             originalResourceId: resourceId,
-             resource: {
+            resource: {
               ...oldResource,
               poster: null,
               posterId: 0,
