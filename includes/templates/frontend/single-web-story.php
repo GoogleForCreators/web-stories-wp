@@ -39,11 +39,11 @@ if ( $current_post instanceof WP_Post ) {
 	if (
 		isset( $_GET['rev_id'], $_GET['_wpnonce'] ) &&
 		wp_verify_nonce(
-			sanitize_text_field( $_GET['_wpnonce'] ),
+			sanitize_text_field( (string) wp_unslash( $_GET['_wpnonce'] ) ),
 			'web_stories_revision_for_' . $current_post->ID
 		)
 	) {
-		$rev_id        = absint( sanitize_text_field( $_GET['rev_id'] ) );
+		$rev_id        = absint( sanitize_text_field( (string) wp_unslash( $_GET['rev_id'] ) ) );
 		$revision_post = get_post( $rev_id );
 
 		if ( $revision_post instanceof WP_Post && $revision_post->post_parent === $current_post->ID ) {

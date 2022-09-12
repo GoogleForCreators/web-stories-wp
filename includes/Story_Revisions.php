@@ -26,12 +26,8 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\Admin;
+namespace Google\Web_Stories;
 
-use Google\Web_Stories\AMP_Story_Player_Assets;
-use Google\Web_Stories\Assets;
-use Google\Web_Stories\Service_Base;
-use Google\Web_Stories\Story_Post_Type;
 use WP_Post;
 
 /**
@@ -43,7 +39,7 @@ use WP_Post;
  *   diff: string
  * }
  */
-class Revisions extends Service_Base {
+class Story_Revisions extends Service_Base {
 
 	/**
 	 * Story post type instance.
@@ -76,6 +72,8 @@ class Revisions extends Service_Base {
 	 * @since 1.25.0
 	 */
 	public function register(): void {
+		$post_type = $this->story_post_type->get_slug();
+		add_action( "wp_{$post_type}_revisions_to_keep", [ $this, 'revisions_to_keep' ] );
 		add_filter( '_wp_post_revision_fields', [ $this, 'filter_revision_fields' ], 10, 2 );
 		add_filter( 'wp_get_revision_ui_diff', [ $this, 'filter_revision_ui_diff' ], 10, 3 );
 
@@ -83,14 +81,16 @@ class Revisions extends Service_Base {
 	}
 
 	/**
-	 * Get the action to use for registering the service.
+	 * Force WordPress to only keep 10 revisions for the web stories post type.
 	 *
 	 * @since 1.25.0
 	 *
-	 * @return string Registration action to use.
+	 * @param int|bool $num Number of revisions to store.
+	 * @return int Number of revisions to store.
 	 */
-	public static function get_registration_action(): string {
-		return 'admin_init';
+	public function revisions_to_keep( $num ): int {
+		$num = (int) $num;
+		return ( $num >= 0 && $num < 10 ) ? $num : 10;
 	}
 
 	/**
@@ -115,6 +115,31 @@ class Revisions extends Service_Base {
 	}
 
 	/**
+	 * Returns the story player markup for a given post.
+	 *
+	 * @since 1.25.0
+	 *
+	 * @param WP_Post $post Post instance.
+	 * @return string Story player markup.
+	 */
+	protected function get_story_player( WP_Post $post ): string {
+		$url   = esc_url(
+			wp_nonce_url(
+				add_query_arg( 'rev_id', $post->ID, get_permalink( $post->post_parent ) ),
+				'web_stories_revision_for_' . $post->post_parent
+			)
+		);
+		$title = esc_html( get_the_title( $post ) );
+		return <<<Player
+<amp-story-player
+	style="width: 300px; height: 500px; display: flex;"
+>
+	<a href="$url">$title</a>
+</amp-story-player>
+Player;
+	}
+
+	/**
 	 * Filters the fields displayed in the post revision diff UI.
 	 *
 	 * @since 1.25.0
@@ -122,14 +147,16 @@ class Revisions extends Service_Base {
 	 * @param array[]|mixed $return       Array of revision UI fields. Each item is an array of id, name, and diff.
 	 * @param WP_Post|false $compare_from The revision post to compare from or false if dealing with the first revision.
 	 * @param WP_Post       $compare_to   The revision post to compare to.
-	 * @return array[] Filtered array of revision UI fields.
+	 * @return array[]|mixed Filtered array of revision UI fields.
+	 *
+	 * @phpstan-return array<int, array{title: string, id: string, diff: string}>|mixed
 	 */
-	public function filter_revision_ui_diff( $return, $compare_from, WP_Post $compare_to ): array {
+	public function filter_revision_ui_diff( $return, $compare_from, WP_Post $compare_to ) {
 		if ( ! \is_array( $return ) ) {
 			return $return;
 		}
 
-		$parent = get_post_parent( $compare_from ?: $compare_to );
+		$parent = get_post_parent( $compare_to );
 
 		if (
 			! $parent instanceof WP_Post ||
@@ -141,36 +168,10 @@ class Revisions extends Service_Base {
 		$player_from = '';
 
 		if ( $compare_from instanceof WP_Post ) {
-			$url_from    = esc_url(
-				wp_nonce_url(
-					add_query_arg( 'rev_id', $compare_from->ID, get_permalink( $parent ) ),
-					'web_stories_revision_for_' . $parent->ID
-				)
-			);
-			$title_from  = esc_html( get_the_title( $compare_from ) );
-			$player_from = <<<Player
-<amp-story-player
-	style="width: 300px; height: 500px; display: flex;"
->
-	<a href="$url_from">$title_from</a>
-</amp-story-player>
-Player;
+			$player_from = $this->get_story_player( $compare_from );
 		}
 
-		$url_to    = esc_url(
-			wp_nonce_url(
-				add_query_arg( 'rev_id', $compare_to->ID, get_permalink( $parent ) ),
-				'web_stories_revision_for_' . $parent->ID
-			)
-		);
-		$title_to  = esc_html( get_the_title( $compare_to ) );
-		$player_to = <<<Player
-<amp-story-player
-	style="width: 300px; height: 500px; display: flex;"
->
-	<a href="$url_to">$title_to</a>
-</amp-story-player>
-Player;
+		$player_to = $this->get_story_player( $compare_to );
 
 		$args = [
 			'show_split_view' => true,
@@ -193,7 +194,11 @@ Player;
 			if ( 'post_title' === $field['id'] ) {
 				$fields_to_return[] = $field;
 			}
-			if ( 'post_content' === $field['id'] || 'post_content_filtered' === $field['id'] ) {
+
+			if (
+				'post_content' === $field['id'] ||
+				'post_content_filtered' === $field['id']
+			) {
 				$field['title'] = __( 'Content', 'web-stories' );
 
 				$diff = '<table class="diff"><colgroup><col class="content diffsplit left"><col class="content diffsplit middle"><col class="content diffsplit right"></colgroup><tbody><tr>';
