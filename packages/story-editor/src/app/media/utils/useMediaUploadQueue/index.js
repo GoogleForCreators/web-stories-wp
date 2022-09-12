@@ -311,8 +311,8 @@ function useMediaUploadQueue() {
       currentTranscodingItem.current = id;
 
       try {
-         const newFile = await cropResource(file, additionalData.cropParams);
-         const posterFile = await getFirstFrameOfVideo(newFile);
+        const newFile = await cropResource(file, additionalData.cropParams);
+        const posterFile = await getFirstFrameOfVideo(newFile);
 
         if (!isMounted.current) {
           return;
@@ -329,7 +329,13 @@ function useMediaUploadQueue() {
         currentTranscodingItem.current = null;
       }
     },
-    [startCropping, finishCropping, cropResource, cancelUploading]
+    [
+      startCropping,
+      finishCropping,
+      cropResource,
+      cancelUploading,
+      getFirstFrameOfVideo,
+    ]
   );
 
   const optimizeVideoItem = useCallback(
