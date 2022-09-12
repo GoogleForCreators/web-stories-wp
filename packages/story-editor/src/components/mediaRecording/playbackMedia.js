@@ -93,6 +93,7 @@ function PlaybackMedia() {
     }
   }, [toggleIsGif]);
 
+  const rafRef = useRef();
   const canvasRef = useRef();
   const videoRef = useRef();
   const updateVideoNode = useCallback(
@@ -144,9 +145,11 @@ function PlaybackMedia() {
           if (streamNode && streamNode.videoWidth && selfieSegmentation) {
             await selfieSegmentation.send({ image: streamNode });
           }
-          requestAnimationFrame(sendFrame);
+          rafRef.current = requestAnimationFrame(sendFrame);
         };
-        await sendFrame();
+        if (streamNode && hasVideoEffect) {
+          await sendFrame();
+        }
       }
     }
     run();
@@ -160,6 +163,19 @@ function PlaybackMedia() {
   const hasVideoModeSwitch =
     mediaBlobUrl && hasVideo && !isAdjustingTrim && !isProcessingTrim;
 
+  useEffect(() => {
+    if (mediaBlobUrl) {
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current);
+      }
+    }
+    return () => {
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current);
+      }
+    };
+  }, [mediaBlobUrl]);
+
   if (isImageCapture) {
     return (
       <VideoWrapper>
@@ -171,6 +187,14 @@ function PlaybackMedia() {
       </VideoWrapper>
     );
   }
+
+  const onLoadedMetadata = () => {
+    if (!canvasRef.current) {
+      return;
+    }
+    canvasRef.current.width = streamNode.videoWidth;
+    canvasRef.current.height = streamNode.videoHeight;
+  };
 
   return (
     <>
@@ -199,7 +223,12 @@ function PlaybackMedia() {
           liveStream &&
           (hasVideo ? (
             <>
-              <Video ref={setStreamNode} muted hidden={hasVideoEffect} />
+              <Video
+                ref={setStreamNode}
+                muted
+                _hidden={hasVideoEffect}
+                onLoadedMetadata={onLoadedMetadata}
+              />
               {hasVideoEffect && (
                 <Canvas ref={canvasRef} width={640} height={480} />
               )}
