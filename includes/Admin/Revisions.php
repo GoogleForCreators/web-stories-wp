@@ -216,5 +216,21 @@ Player;
 	public function enqueue_player_script(): void {
 		$this->assets->enqueue_style( AMP_Story_Player_Assets::SCRIPT_HANDLE );
 		$this->assets->enqueue_script( AMP_Story_Player_Assets::SCRIPT_HANDLE );
+
+		wp_add_inline_script(
+			AMP_Story_Player_Assets::SCRIPT_HANDLE,
+			<<<JS
+	const loadPlayers = () => document.querySelectorAll('amp-story-player').forEach(playerEl => (new AmpStoryPlayer(window, playerEl)).load());
+
+	const originalFrame = wp.revisions.view.Frame;
+	wp.revisions.view.Frame = originalFrame.extend({
+		render: function() {
+			originalFrame.prototype.render.apply(this, arguments);
+			loadPlayers();
+			this.listenTo( this.model, 'update:diff', () => loadPlayers() );
+		},
+	});
+JS
+		);
 	}
 }
