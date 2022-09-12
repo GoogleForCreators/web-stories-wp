@@ -140,16 +140,11 @@ function useMediaPicker({
         onSelect(getResourceFromMediaPicker(mediaPickerEl));
       });
 
-      if (onClose) {
-        fileFrame.once('close', onClose);
-      }
-
-      fileFrame.once('content:activate:browse', () => {
-        // Force-refresh media modal contents every time it's opened
-        // to avoid stale data due to media items being upload & updated
-        // through the editor in the meantime.
-        fileFrame.content?.get()?.collection?._requery(true);
-        fileFrame.content?.get()?.options?.selection?.reset();
+      fileFrame.once('close', () => {
+        if (onClose) {
+          onClose();
+        }
+        fileFrame.remove();
       });
 
       // Finally, open the modal
@@ -272,15 +267,11 @@ function useMediaPicker({
         }
       });
 
-      if (onClose) {
-        fileFrame.once('close', onClose);
-      }
-
-      fileFrame.once('content:activate:browse', () => {
-        // Force-refresh media modal contents every time
-        // to avoid stale data.
-        fileFrame.content?.get()?.collection?._requery(true);
-        fileFrame.content?.get()?.options?.selection?.reset();
+      fileFrame.once('close', () => {
+        if (onClose) {
+          onClose();
+        }
+        fileFrame.remove();
       });
 
       // Finally, open the modal
