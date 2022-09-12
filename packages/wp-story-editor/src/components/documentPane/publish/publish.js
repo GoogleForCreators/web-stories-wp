@@ -450,35 +450,33 @@ function PublishPanel({ nameOverride }) {
         </HighlightRow>
         {improvedAutosaves && revisionCount >= 1 ? (
           <RevisionsWrapper>
-            <LabelWrapper>
-              <Label>
-                <LabelIconWrapper>
-                  <Icons.History width={24} height={24} aria-hidden />
-                </LabelIconWrapper>
-                <RevisionsLabel>
-                  {sprintf(
-                    /* translators: %d: number of revisions. */
-                    _n(
-                      '%d Revision',
-                      '%d Revisions',
-                      revisionCount,
-                      'web-stories'
-                    ),
-                    revisionCount
-                  )}
-                </RevisionsLabel>
-                {revisionLink && revisionId ? (
-                  <Link
-                    rel="noopener noreferrer"
-                    target="_blank"
-                    href={addQueryArgs(revisionLink, { revision: revisionId })}
-                    size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-                  >
-                    {__('Browse', 'web-stories')}
-                  </Link>
-                ) : null}
-              </Label>
-            </LabelWrapper>
+            <Label>
+              <LabelIconWrapper>
+                <Icons.History width={24} height={24} aria-hidden />
+              </LabelIconWrapper>
+              <RevisionsLabel>
+                {sprintf(
+                  /* translators: %d: number of revisions. */
+                  _n(
+                    '%d Revision',
+                    '%d Revisions',
+                    revisionCount,
+                    'web-stories'
+                  ),
+                  revisionCount
+                )}
+              </RevisionsLabel>
+              {revisionLink && revisionId ? (
+                <Link
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  href={addQueryArgs(revisionLink, { revision: revisionId })}
+                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
+                >
+                  {__('Browse', 'web-stories')}
+                </Link>
+              ) : null}
+            </Label>
           </RevisionsWrapper>
         ) : null}
       </PanelContent>
