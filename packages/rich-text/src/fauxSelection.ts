@@ -129,10 +129,7 @@ export function useFauxSelection(
   }, [fauxSelection, editorState, setEditorState]);
 }
 
-export function fauxStylesToCSS(
-  styles: DraftInlineStyle,
-  css: Record<string, string>
-) {
+export function fauxStylesToCSS(styles: DraftInlineStyle, css: CSSProperties) {
   const hasFauxSelection = styles.includes(FAUX_SELECTION);
   if (!hasFauxSelection) {
     return null;
