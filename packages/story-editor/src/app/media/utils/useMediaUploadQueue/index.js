@@ -311,14 +311,15 @@ function useMediaUploadQueue() {
       currentTranscodingItem.current = id;
 
       try {
-        const newFile = await cropResource(file, additionalData.cropParams);
+         const newFile = await cropResource(file, additionalData.cropParams);
+         const posterFile = await getFirstFrameOfVideo(newFile);
 
         if (!isMounted.current) {
           return;
         }
 
         additionalData.isCropped = true;
-        finishCropping({ id, file: newFile, additionalData });
+        finishCropping({ id, file: newFile, posterFile, additionalData });
       } catch (error) {
         // Cancel uploading if there were any errors.
         cancelUploading({ id, error });
