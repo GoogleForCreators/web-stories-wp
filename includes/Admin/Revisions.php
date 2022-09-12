@@ -120,12 +120,16 @@ class Revisions extends Service_Base {
 	 * @since 1.25.0
 	 *
 	 * @param array[]|mixed $return       Array of revision UI fields. Each item is an array of id, name, and diff.
-	 * @param WP_Post       $compare_from The revision post to compare from.
+	 * @param WP_Post|false $compare_from The revision post to compare from or false if dealing with the first revision.
 	 * @param WP_Post       $compare_to   The revision post to compare to.
 	 * @return array[] Filtered array of revision UI fields.
 	 */
-	public function filter_revision_ui_diff( $return, WP_Post $compare_from, WP_Post $compare_to ): array {
+	public function filter_revision_ui_diff( $return, $compare_from, WP_Post $compare_to ): array {
 		if ( ! \is_array( $return ) ) {
+			return $return;
+		}
+
+		if ( ! $compare_from instanceof WP_Post ) {
 			return $return;
 		}
 
@@ -138,27 +142,31 @@ class Revisions extends Service_Base {
 			return $return;
 		}
 
-		// TODO: Maybe use srcdoc on the iframe since revisions can't be viewed publicly.
-
-		$url_from    = esc_url( get_permalink( $compare_from ) );
+		$url_from    = esc_url(
+			wp_nonce_url(
+				add_query_arg( 'rev_id', $compare_from->ID, get_permalink( $parent ) ),
+				'web_stories_revision_for_' . $parent->ID
+			)
+		);
 		$title_from  = esc_html( get_the_title( $compare_from ) );
 		$player_from = <<<Player
 <amp-story-player
-	width="3.6"
-	height="6"
-	layout="responsive"
+	style="width: 360px; height: 600px;"
 >
 	<a href="$url_from">$title_from</a>
 </amp-story-player>
 Player;
 
-		$url_to    = esc_url( get_permalink( $compare_to ) );
+		$url_to    = esc_url(
+			wp_nonce_url(
+				add_query_arg( 'rev_id', $compare_to->ID, get_permalink( $parent ) ),
+				'web_stories_revision_for_' . $parent->ID
+			)
+		);
 		$title_to  = esc_html( get_the_title( $compare_to ) );
 		$player_to = <<<Player
 <amp-story-player
-	width="3.6"
-	height="6"
-	layout="responsive"
+	style="width: 360px; height: 600px;"
 >
 	<a href="$url_to">$title_to</a>
 </amp-story-player>

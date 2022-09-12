@@ -33,6 +33,24 @@ $current_post = get_post();
 
 if ( $current_post instanceof WP_Post ) {
 	$story = new Story();
+
+	// Support displaying revisions of a story for logged-in users on the
+	// wp-admin/revision.php page.
+	if (
+		isset( $_GET['rev_id'], $_GET['_wpnonce'] ) &&
+		wp_verify_nonce(
+			sanitize_text_field( $_GET['_wpnonce'] ),
+			'web_stories_revision_for_' . $current_post->ID
+		)
+	) {
+		$rev_id        = absint( sanitize_text_field( $_GET['rev_id'] ) );
+		$revision_post = get_post( $rev_id );
+
+		if ( $revision_post instanceof WP_Post && $revision_post->post_parent === $current_post->ID ) {
+			$current_post = $revision_post;
+		}
+	}
+
 	$story->load_from_post( $current_post );
 	$renderer = new HTML( $story );
 	echo $renderer->render(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
