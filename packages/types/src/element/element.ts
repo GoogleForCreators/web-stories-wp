@@ -19,7 +19,7 @@
  */
 import type { ElementBox } from './elementBox';
 
-export interface ElementLink {
+export interface Link {
   url: string;
   desc?: string;
   needsProxy?: boolean;
@@ -27,16 +27,16 @@ export interface ElementLink {
   rel?: string[];
 }
 
-export interface ElementFlip {
+export interface Flip {
   vertical: number;
   horizontal: number;
 }
 
-export interface ElementMask {
+export interface Mask {
   type: string;
 }
 
-export interface ElementBorder {
+export interface Border {
   top: number;
   right: number;
   bottom: number;
@@ -44,7 +44,7 @@ export interface ElementBorder {
   locked: boolean;
 }
 
-export interface ElementBorderRadius {
+export interface BorderRadius {
   topLeft: number;
   topRight: number;
   bottomLeft: number;
@@ -57,12 +57,12 @@ export interface Element extends ElementBox {
   type: string;
   isBackground: boolean;
 
-  mask?: ElementMask;
-  link?: ElementLink;
+  mask?: Mask;
+  link?: Link;
   opacity?: number;
   lockAspectRatio?: boolean;
-  flip?: ElementFlip;
+  flip?: Flip;
   groupId?: string;
-  border?: ElementBorder;
-  borderRadius?: ElementBorderRadius;
+  border?: Border;
+  borderRadius?: BorderRadius;
 }

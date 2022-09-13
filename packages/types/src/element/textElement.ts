@@ -24,40 +24,46 @@ import type { Pattern } from '@googleforcreators/patterns';
  */
 import type { Element } from './element';
 
-export type ElementFontVariant = [number, number];
+export type FontStyle = 'normal' | 'italic';
+export enum FontVariantStyle {
+  Normal = 0,
+  Italic = 1,
+}
 
-export type ElementFontStyle = 'normal' | 'italic';
+export type FontWeight = 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
 
-export interface ElementFont {
+export type FontVariant = [FontVariantStyle, FontWeight];
+
+export interface Font {
   family: string;
   service?: string;
-  weights?: number[];
-  styles?: ElementFontStyle[];
-  variants?: ElementFontVariant[];
+  weights?: FontWeight[];
+  styles?: FontStyle[];
+  variants?: FontVariant[];
   fallbacks?: string[];
 }
 
-export interface ElementPadding {
+export interface Padding {
   horizontal: number;
   vertical: number;
   locked: boolean;
   hasHiddenPadding: boolean;
 }
 
-export type ElementTextAlign = 'left' | 'center' | 'right' | 'justify';
-export type ElementTagName = 'h1' | 'h2' | 'h3' | 'p' | 'auto';
-export type ElementBackgroundTextMode = 'NONE' | 'FILL' | 'HIGHLIGHT';
+export type TextAlign = 'left' | 'center' | 'right' | 'justify';
+export type TagName = 'h1' | 'h2' | 'h3' | 'p' | 'auto';
+export type BackgroundTextMode = 'NONE' | 'FILL' | 'HIGHLIGHT';
 
 export interface TextElement extends Element {
   content: string;
-  font: ElementFont;
+  font: Font;
 
-  backgroundTextMode?: ElementBackgroundTextMode;
+  backgroundTextMode?: BackgroundTextMode;
   backgroundColor?: Pattern;
   fontSize?: number;
   lineHeight?: number;
-  padding?: ElementPadding;
-  textAlign?: ElementTextAlign;
-  tagName?: ElementTagName;
+  padding?: Padding;
+  textAlign?: TextAlign;
+  tagName?: TagName;
   marginOffset?: number;
 }

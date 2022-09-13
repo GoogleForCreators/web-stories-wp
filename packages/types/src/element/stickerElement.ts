@@ -19,10 +19,10 @@
  */
 import type { Element } from './element';
 
-export interface ElementSticker {
+export interface Sticker {
   type: string;
 }
 
 export interface StickerElement extends Element {
-  sticker: ElementSticker;
+  sticker: Sticker;
 }
