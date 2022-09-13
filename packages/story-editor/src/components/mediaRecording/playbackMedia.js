@@ -111,8 +111,228 @@ function PlaybackMedia() {
     }
     const context = canvasRef.current.getContext('2d');
 
-    context.globalCompositeOperation = 'copy';
-    context.filter = `blur(${BACKGROUND_BLUR_PX}px)`;
+    context.save();
+    context.clearRect(0, 0, canvas.width, canvas.height);
+
+    const width = canvas.width;
+    const height = canvas.height;
+    const numPixels = width * height;
+    const image = results.image;
+    const radius = BACKGROUND_BLUR_PX;
+
+    const imageFloatLinear = new Float32Array(numPixels * 4);
+    const imageTemp = new Float32Array(imageFloatLinear.length);
+    context.drawImage(image, 0, 0, width, height);
+    const imageData = context.getImageData(0, 0, width, height);
+    const buffer = imageData.data;
+
+    for (let ch = 0; ch < 3; ch++) {
+      for (let i = 0; i < numPixels; i++) {
+        imageFloatLinear[ch * numPixels + i] = Math.pow(
+          buffer[i * 4 + ch] / 255,
+          2.2
+        );
+      } // Gamma to linear
+    }
+    for (let i = 0; i < numPixels; i++) {
+      imageFloatLinear[3 * numPixels + i] = 1;
+    }
+
+    const linearToGamma = new Array(4096 + 1);
+    for (let i = 0; i < linearToGamma.length; i++) {
+      linearToGamma[i] = Math.round(
+        Math.pow(i / (linearToGamma.length - 1), 1 / 2.2) * 255
+      );
+    }
+
+    function FftConvolver(kernelReal, kernelImag) {
+      if (kernelImag === undefined) {
+        kernelImag = new Float32Array(kernelReal.length);
+      }
+
+      const length = kernelReal.length;
+      if (length === 1) {
+        throw new RangeError('Trivial transform');
+      }
+      let levels = -1;
+      for (let i = 0; i < 32; i++) {
+        if (1 << i === length) {
+          levels = i;
+        }
+      }
+      if (levels === -1) {
+        throw new RangeError('Length is not a power of 2');
+      }
+
+      const cosTable = new Float32Array(length / 2);
+      const sinTable = new Float32Array(length / 2);
+      for (let i = 0; i < length / 2; i++) {
+        cosTable[i] = Math.cos((2 * Math.PI * i) / length);
+        sinTable[i] = Math.sin((2 * Math.PI * i) / length);
+      }
+      const bitRevTable = new Uint32Array(length);
+      for (let i = 0; i < length; i++) {
+        bitRevTable[i] = reverseBits(i, levels);
+      }
+
+      transform(kernelReal, kernelImag);
+
+      this.convolve = function (real, imag) {
+        transform(real, imag);
+        for (let i = 0; i < length; i++) {
+          const temp = real[i] * kernelReal[i] - imag[i] * kernelImag[i];
+          imag[i] = imag[i] * kernelReal[i] + real[i] * kernelImag[i];
+          real[i] = temp;
+        }
+        transform(imag, real);
+      };
+
+      function transform(real, imag) {
+        if (real.length !== length || imag.length !== length) {
+          throw new RangeError('Mismatched lengths');
+        }
+
+        for (let i = 0; i < length; i++) {
+          const j = bitRevTable[i];
+          if (j > i) {
+            let temp = real[i];
+            real[i] = real[j];
+            real[j] = temp;
+            temp = imag[i];
+            imag[i] = imag[j];
+            imag[j] = temp;
+          }
+        }
+
+        for (let size = 2; size <= length; size *= 2) {
+          const halfsize = size / 2;
+          const tablestep = length / size;
+          for (let i = 0; i < length; i += size) {
+            for (let j = i, k = 0; j < i + halfsize; j++, k += tablestep) {
+              const tpre =
+                real[j + halfsize] * cosTable[k] +
+                imag[j + halfsize] * sinTable[k];
+              const tpim =
+                -real[j + halfsize] * sinTable[k] +
+                imag[j + halfsize] * cosTable[k];
+              real[j + halfsize] = real[j] - tpre;
+              imag[j + halfsize] = imag[j] - tpim;
+              real[j] += tpre;
+              imag[j] += tpim;
+            }
+          }
+        }
+      }
+
+      function reverseBits(x, bits) {
+        let y = 0;
+        for (let i = 0; i < bits; i++) {
+          y = (y << 1) | (x & 1);
+          x >>>= 1;
+        }
+        return y;
+      }
+    }
+
+    function makeGaussianKernel(stdDev, dataLen) {
+      const kernel = [];
+      const scaler = -1 / (2 * stdDev * stdDev);
+      for (let i = 0; i < dataLen; i++) {
+        const temp = Math.exp(i * i * scaler);
+        kernel.push(temp);
+        if (temp < 1e-6) {
+          break;
+        }
+      }
+
+      let length = 1;
+      while (length < dataLen + kernel.length - 1) {
+        length *= 2;
+      }
+      const result = new Float32Array(length);
+
+      result[0] = kernel[0];
+      for (let i = 0; i < kernel.length; i++) {
+        result[i] = kernel[i];
+        result[length - i] = kernel[i];
+      }
+      return result;
+    }
+
+    function doRowConvolutions(imageIn, imageOut) {
+      const kernel = makeGaussianKernel(radius, width);
+      const length = kernel.length;
+      const convolver = new FftConvolver(kernel);
+      const lineReal = new Float32Array(length);
+      const lineImag = new Float32Array(length);
+      for (let ch = 0; ch < 4; ch += 2) {
+        for (let y = 0; y < height; y++) {
+          const off0 = ch * numPixels + y * width;
+          const off1 = (ch + 1) * numPixels + y * width;
+          let x;
+          for (x = 0; x < width; x++) {
+            lineReal[x] = imageIn[off0 + x];
+            lineImag[x] = imageIn[off1 + x];
+          }
+          for (; x < length; x++) {
+            lineReal[x] = lineImag[x] = 0;
+          }
+          convolver.convolve(lineReal, lineImag);
+          for (x = 0; x < width; x++) {
+            imageOut[off0 + x] = lineReal[x];
+            imageOut[off1 + x] = lineImag[x];
+          }
+        }
+      }
+    }
+
+    function doColumnConvolutions(imageIn, imageOut) {
+      const kernel = makeGaussianKernel(radius, height);
+      const length = kernel.length;
+      const convolver = new FftConvolver(kernel);
+      const lineReal = new Float32Array(length);
+      const lineImag = new Float32Array(length);
+      for (let ch = 0; ch < 4; ch += 2) {
+        for (let x = 0; x < width; x++) {
+          const off0 = ch * numPixels + x;
+          const off1 = (ch + 1) * numPixels + x;
+          let y;
+          for (y = 0; y < height; y++) {
+            lineReal[y] = imageIn[off0 + y * width];
+            lineImag[y] = imageIn[off1 + y * width];
+          }
+          for (; y < length; y++) {
+            lineReal[y] = lineImag[y] = 0;
+          }
+          convolver.convolve(lineReal, lineImag);
+          for (y = 0; y < height; y++) {
+            imageOut[off0 + y * width] = lineReal[y];
+            imageOut[off1 + y * width] = lineImag[y];
+          }
+        }
+      }
+    }
+
+    function convertToByteGamma(imageIn, imageOut) {
+      const lgSteps = linearToGamma.length - 1;
+      for (let i = 0; i < numPixels; i++) {
+        const weight = imageIn[3 * numPixels + i];
+        for (let ch = 0; ch < 3; ch++) {
+          const val = imageIn[ch * numPixels + i] / weight;
+          imageOut[i * 4 + ch] = linearToGamma[Math.round(val * lgSteps)];
+        }
+      }
+    }
+
+    if (!('filter' in CanvasRenderingContext2D.prototype)) {
+      context.drawImage(results.image, 0, 0, canvas.width, canvas.height);
+      doRowConvolutions(imageFloatLinear, imageTemp);
+      doColumnConvolutions(imageTemp, imageTemp);
+      convertToByteGamma(imageTemp, imageData.data);
+      context.putImageData(imageData, 0, 0);
+    }
+
+    context.globalCompositeOperation = 'destination-out';
     context.drawImage(
       results.segmentationMask,
       0,
@@ -121,19 +341,10 @@ function PlaybackMedia() {
       canvas.height
     );
 
-    context.globalCompositeOperation = 'source-in';
-    context.filter = 'none';
-    context.drawImage(results.image, 0, 0, canvas.width, canvas.height);
-
-    if (!('filter' in CanvasRenderingContext2D)) {
-      context.globalCompositeOperation = 'destination-atop';
-      context.fillStyle = 'rgb(255, 255, 255, 0.75)';
-      context.fillRect(0, 0, canvas.width, canvas.height);
-    }
-
     context.globalCompositeOperation = 'destination-over';
-    context.filter = `blur(${BACKGROUND_BLUR_PX}px)`;
     context.drawImage(results.image, 0, 0, canvas.width, canvas.height);
+
+    context.restore();
   };
 
   useEffect(() => {
