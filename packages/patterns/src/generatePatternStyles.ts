@@ -21,7 +21,7 @@ import type { CSSProperties } from 'react';
 
 import { rgba } from 'polished';
 
-import type {
+import {
   ColorStop,
   Gradient,
   Hex,

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import type {
+import {
   Gradient,
   Pattern,
   PatternType,
