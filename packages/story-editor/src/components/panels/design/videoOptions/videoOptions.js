@@ -81,7 +81,7 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
   const resource = getCommonValue(selectedElements, 'resource');
   const elementId = getCommonValue(selectedElements, 'id');
   const loop = getCommonValue(selectedElements, 'loop');
-  const volume = getCommonValue(selectedElements, 'volume');
+  const volume = getCommonValue(selectedElements, 'volume', 1);
   const isSingleElement = selectedElements.length === 1;
   const enableVideoVolume = useFeature('videoVolume');
   const showVolumeControl =
