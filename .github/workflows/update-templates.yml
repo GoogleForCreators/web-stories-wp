@@ -11,6 +11,9 @@ env:
   GIT_COMMITTER_EMAIL: 94923726+googleforcreators-bot@users.noreply.github.com
   GIT_COMMITTER_NAME: googleforcreators-bot
 
+permissions:
+  contents: read
+
 jobs:
   update-template:
     name: Migrate templates and text sets

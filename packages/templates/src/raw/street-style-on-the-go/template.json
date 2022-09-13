@@ -225,7 +225,6 @@
           },
           "type": "text",
           "content": "<span style=\"text-transform: uppercase\">Street Style On The Go</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -501,7 +500,6 @@
           "groupId": "69941a5e-88a5-4c8c-8cfa-19cb195da1b5"
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 255,
@@ -740,7 +738,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"text-transform: uppercase\">New York On The Go</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -830,7 +827,6 @@
           "type": "text"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "7b745a93-1ec5-44aa-bfb0-2a9c017c2c7d",
@@ -1023,7 +1019,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #70ffa9; text-transform: uppercase\">Black &amp; White</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1215,7 +1210,6 @@
           "groupId": "9e02919f-ac5c-40ba-bb58-e90081c93011"
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 255,
@@ -1254,7 +1248,7 @@
           "delay": 100
         }
       ],
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "9e02919f-ac5c-40ba-bb58-e90081c93011": {
           "name": "Background",
@@ -1538,7 +1532,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #70ffa9; text-transform: uppercase\">White Bag</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1757,7 +1750,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #70ffa9; text-transform: uppercase\">Nude Heels</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1865,7 +1857,6 @@
           "groupId": "7c934704-3be5-41fb-98d7-717306e3c36a"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "950391ee-2bf8-4443-856e-94c9dcb81e14",
@@ -1895,7 +1886,7 @@
       },
       "type": "page",
       "id": "40aedb26-f5c7-4389-b1f9-b5abe8671d9e",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "7c934704-3be5-41fb-98d7-717306e3c36a": {
           "name": "Section",
@@ -2129,7 +2120,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"text-transform: uppercase\">Barcelona On The Go</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2219,7 +2209,6 @@
           "type": "text"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "4fc88e3c-770b-4ff6-8458-a5080f7338c7",
@@ -2238,7 +2227,7 @@
       },
       "type": "page",
       "id": "67f8cefb-7c27-4d8d-a705-943380b1de89",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "81ba1fe2-ca86-4ce1-8590-8cd49e79b7c7": {
           "name": "Text",
@@ -2412,7 +2401,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #70ffa9; text-transform: uppercase\">Bright &amp; Bold</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2604,7 +2592,6 @@
           "groupId": "374fa7aa-59fc-4407-babb-59569bb35d91"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "563b7b99-01a1-44d8-9f61-32b4801eb27d",
@@ -2643,7 +2630,7 @@
       },
       "type": "page",
       "id": "cd82cda9-2c39-4204-8df1-f5575e42647e",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "374fa7aa-59fc-4407-babb-59569bb35d91": {
           "name": "Image",
@@ -2812,7 +2799,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #70ffa9; text-transform: uppercase\">Leather First</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2976,7 +2962,6 @@
           "groupId": "5ff05d6a-4844-4834-a14a-5eeec2ad7268"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "b90cf0e2-5891-40b2-b754-20e9328458b4",
@@ -3006,7 +2991,7 @@
       },
       "type": "page",
       "id": "82970939-a60b-4543-81fb-f9edeed3d243",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "5ff05d6a-4844-4834-a14a-5eeec2ad7268": {
           "name": "Image",
@@ -3235,7 +3220,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"text-transform: uppercase\">Paris</span>\n<span style=\"text-transform: uppercase\">&nbsp;On The Go</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3325,7 +3309,6 @@
           "type": "text"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "0954d91f-46b6-4a4d-ba37-935e813e5c13",
@@ -3344,7 +3327,7 @@
       },
       "type": "page",
       "id": "e59e8a55-ebe7-48cc-b5c5-69ba91ab7297",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "e827c319-3b85-4fe5-b103-1865bd1fbbae": {
           "name": "Text",
@@ -3518,7 +3501,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #70ffa9; text-transform: uppercase\">Elegant Style</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3710,7 +3692,6 @@
           "groupId": "520fbcd1-de3e-40ae-8c54-cbe352b4dc04"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "e33b7cfc-7b92-449d-bd33-f2ed4b1af11b",
@@ -3749,7 +3730,7 @@
       },
       "type": "page",
       "id": "a3030e08-6462-4246-bda4-530a477aec31",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "520fbcd1-de3e-40ae-8c54-cbe352b4dc04": {
           "name": "Image",
@@ -3918,7 +3899,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #70ffa9; text-transform: uppercase\">Statement Black Clutch</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4054,7 +4034,6 @@
           "groupId": "dccf59cf-db53-4885-afd2-44041e844611"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "0311b6b5-b628-42e7-a091-5975a80735af",
@@ -4075,7 +4054,7 @@
       },
       "type": "page",
       "id": "e046e6d1-0633-4298-9726-763c408bbce4",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "dccf59cf-db53-4885-afd2-44041e844611": {
           "name": "Image",
@@ -4247,7 +4226,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #70ffa9; text-transform: uppercase\">View More</span>\n<span style=\"color: #70ffa9; text-transform: uppercase\">Cities</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4450,7 +4428,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #70ffa9; text-transform: uppercase\">Sao Paulo</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4563,7 +4540,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #70ffa9; text-transform: uppercase\">Berlin</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4676,7 +4652,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #70ffa9; text-transform: uppercase\">Chicago</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4695,7 +4670,6 @@
           "tagName": "h3"
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 0,

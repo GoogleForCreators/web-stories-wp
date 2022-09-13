@@ -1154,7 +1154,6 @@
           "groupId": "0211b650-6f32-4b4f-924e-d73057472020"
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 255,
@@ -2417,7 +2416,6 @@
           "groupId": "c7dad8ad-bf3d-495e-a8c0-7db915f6501c"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "targets": ["9f8d380f-ba21-4359-b1cf-67e8f93f4a53"],
@@ -2564,7 +2562,7 @@
         "id": "cfccb851-db11-4633-8cbb-acfee2e393a2",
         "type": "shape"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "3a518b12-7c8e-44d9-8433-5eec24e2c0ef": {
           "name": "Section",
@@ -3234,7 +3232,6 @@
           "groupId": "283b6814-35b8-4dfd-a7b3-7202768aaf3c"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "targets": ["d58b9350-fcf1-48e7-a42b-4c0a1bee0efc"],
@@ -3327,7 +3324,7 @@
         "id": "984e182e-601a-4a25-add2-de86f32f4da1",
         "type": "shape"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "9da33eb2-6e4c-43f7-8fc2-44f00e1981d1": {
           "name": "Section",
@@ -3773,7 +3770,6 @@
           "groupId": "3b0b775c-1024-47f7-be3f-eaf2f754a414"
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 212,
@@ -4057,7 +4053,6 @@
           "y": 19
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 255,
@@ -4352,7 +4347,6 @@
           "type": "text"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [],
       "backgroundColor": {
         "color": {
@@ -4390,7 +4384,7 @@
         "id": "abc02b45-c348-4ad0-93c3-d62728b1e3bf",
         "type": "shape"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -4647,7 +4641,6 @@
           "type": "text"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [],
       "backgroundColor": {
         "color": {
@@ -4685,7 +4678,7 @@
         "id": "faa06289-1ab3-49f2-bbbe-6adf3ba9deba",
         "type": "shape"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -4942,7 +4935,6 @@
           "type": "text"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [],
       "backgroundColor": {
         "color": {
@@ -4980,7 +4972,7 @@
         "id": "aceb7b5a-e2a8-43ce-b0d0-9231d04c32d5",
         "type": "shape"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -5237,7 +5229,6 @@
           "type": "text"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [],
       "backgroundColor": {
         "color": {
@@ -5275,7 +5266,7 @@
         "id": "ab1771cd-eb71-43b1-ab77-4e5dddba90d7",
         "type": "shape"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -5532,7 +5523,6 @@
           "type": "text"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [],
       "backgroundColor": {
         "color": {
@@ -5570,7 +5560,7 @@
         "id": "2a1e95e2-ba80-4e73-987b-e26a99ef9f3f",
         "type": "shape"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -5634,7 +5624,6 @@
           ]
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 255,
@@ -5672,7 +5661,7 @@
         "id": "53c31bf9-8bea-4a71-a6b2-6dcacb2bef36"
       },
       "animations": [],
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -6313,7 +6302,6 @@
           "groupId": "00cfa981-a3f5-476e-8545-8d1d7c5a1c9c"
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 255,

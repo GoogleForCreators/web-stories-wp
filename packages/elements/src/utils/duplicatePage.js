@@ -13,10 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * External dependencies
- */
-import { objectWithout } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -25,17 +21,7 @@ import createNewElement from './createNewElement';
 import duplicateElement from './duplicateElement';
 
 const duplicatePage = (oldPage) => {
-  // Remove title and postId for inserting the page.
-  const {
-    elements: oldElements,
-    animations: oldAnimations,
-    postId,
-    title,
-    ...rest
-  } = oldPage;
-
-  // Remove title and templateId for inserting the page.
-  const cleanPage = objectWithout(rest, ['postId', 'title']);
+  const { elements: oldElements, animations: oldAnimations, ...rest } = oldPage;
 
   const { elements, animations } = oldElements.reduce(
     ({ elements, animations }, oldElement) => {
@@ -57,7 +43,7 @@ const duplicatePage = (oldPage) => {
   const newAttributes = {
     elements,
     animations,
-    ...cleanPage,
+    ...rest,
   };
 
   return createNewElement('page', newAttributes);

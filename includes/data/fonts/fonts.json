@@ -12209,8 +12209,11 @@
     "family": "Fruktur",
     "fallbacks": ["cursive"],
     "weights": [400],
-    "styles": ["regular"],
-    "variants": [[0, 400]],
+    "styles": ["regular", "italic"],
+    "variants": [
+      [0, 400],
+      [1, 400]
+    ],
     "service": "fonts.google.com",
     "metrics": {
       "upm": 2048,
@@ -12219,12 +12222,12 @@
       "tAsc": 2020,
       "tDes": -540,
       "tLGap": 0,
-      "wAsc": 2020,
-      "wDes": 540,
+      "wAsc": 2726,
+      "wDes": 558,
       "xH": 1182,
       "capH": 1529,
-      "yMin": -537,
-      "yMax": 2020,
+      "yMin": -558,
+      "yMax": 2557,
       "hAsc": 2020,
       "hDes": -540,
       "lGap": 0
@@ -23599,8 +23602,8 @@
       "wDes": 500,
       "xH": 0,
       "capH": 1900,
-      "yMin": -390,
-      "yMax": 1790,
+      "yMin": -415,
+      "yMax": 1815,
       "hAsc": 1900,
       "hDes": -500,
       "lGap": 0

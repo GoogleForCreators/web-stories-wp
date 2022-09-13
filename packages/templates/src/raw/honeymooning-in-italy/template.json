@@ -641,7 +641,6 @@
           "focalY": 50
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 254,
@@ -681,7 +680,7 @@
         "ctaText": "See the location",
         "theme": "light"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -957,7 +956,6 @@
           "y": 472
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "57bc6e89-a628-4057-abf4-0b9826ff19e2",
@@ -1255,7 +1253,6 @@
           "type": "text"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "efccef3c-074b-4fb0-baa6-9f6c3eba34fd",
@@ -1289,7 +1286,7 @@
       },
       "type": "page",
       "id": "d98925cd-b891-40f1-9e10-a7149234972f",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -1565,7 +1562,6 @@
           "type": "text"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "1f78efdb-6b1a-4c61-92c8-5790e6c212af",
@@ -1590,7 +1586,7 @@
         "ctaText": "See the location",
         "theme": "light"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -1866,7 +1862,6 @@
           "y": -121
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "414eef6e-98c5-4175-8b2a-f9b3441f2e9c",
@@ -1891,7 +1886,7 @@
         "ctaText": "See the location",
         "theme": "light"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -2404,7 +2399,6 @@
           }
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 242,
@@ -2488,7 +2482,7 @@
         "type": "shape",
         "id": "e6f71327-37c4-4dd4-983f-482fc8c4ea0d"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -2761,7 +2755,6 @@
           "type": "text"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "f3e8fc01-3844-413c-88be-93e9f1d66580",
@@ -3199,7 +3192,6 @@
           "tagName": "h3"
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 242,

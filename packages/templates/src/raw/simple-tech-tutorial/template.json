@@ -90,7 +90,6 @@
             "vertical": 4
           },
           "content": "<span style=\"color: #264156\">How to get Safari’s privacy features in Chrome.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -386,7 +385,6 @@
             "vertical": 4
           },
           "content": "<span style=\"color: #264156\">Keeping your web browser private is more important than ever these days. Here’s how to get Safari’s privacy features on Chrome.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -425,7 +423,7 @@
       },
       "type": "page",
       "id": "14f1d556-ba3e-4304-9c2c-5c3f370e6afc",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -595,7 +593,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 500; color: #264156\">Check your passwords</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -676,7 +673,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #264156\">Run an audit on your existing passwords in Chrome.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -825,7 +821,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 300; color: #264156\">Go to Chrome </span><span style=\"font-weight: 500; color: #264156\">Settings</span><span style=\"font-weight: 300; color: #264156\"> and click </span><span style=\"font-weight: 500; color: #264156\">Passwords.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1039,7 +1034,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 500; color: #264156\">Install Noblockers.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1120,7 +1114,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #264156\">To get even more tracking data about a URL, or to block it, Safari-style, use an extension like </span><span style=\"text-decoration: underline; color: #264156\">Noblockers</span><span style=\"color: #264156\">.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1226,7 +1219,7 @@
       },
       "type": "page",
       "id": "2973fe6c-4414-433f-ba04-6b7bbf28eb0f",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "9a478c57-4e21-4079-9964-3d05bc47e72b": {
           "name": "Header",
@@ -1365,7 +1358,6 @@
             "vertical": 4
           },
           "content": "<span style=\"color: #264156\">Almost there! You are more than halfway through.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -1395,7 +1387,7 @@
       },
       "type": "page",
       "id": "61bb1b9f-676a-474e-abca-547972322766",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -1564,7 +1556,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 500; color: #264156\">Police Extensions</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1645,7 +1636,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #264156\">To police extension permissions, go to Choose More Tools &gt; Extensions from the Chrome menu.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1751,7 +1741,7 @@
       },
       "type": "page",
       "id": "b86af1ff-3f9f-4fb4-9197-85e6293793aa",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "e37a5058-676c-457e-a2ce-ef6f8a3423a9": {
           "name": "Header",
@@ -1927,7 +1917,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 500; color: #264156\">Detailed Extensions</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2008,7 +1997,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #264156\">Then click Details next to the extension you need.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2116,7 +2104,7 @@
       },
       "type": "page",
       "id": "3c15156c-96a3-40d1-9cd8-112085061b9b",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "63e58e45-d402-482b-838f-c585fdf249ac": {
           "name": "Header",
@@ -2209,7 +2197,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 500; color: #264156\">Other Stories</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2290,7 +2277,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #264156\">How to use breakout rooms in Vroom</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2372,7 +2358,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"color: #264156\">How to use the Together App for video calls</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,

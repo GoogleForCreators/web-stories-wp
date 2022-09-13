@@ -142,6 +142,20 @@
       "forbid": ["for"]
     }],
     "react/no-array-index-key": "warn",
+    "react/no-unknown-property": [
+      "error",
+      {
+        "ignore": [
+          "amp",
+          "amp-boilerplate",
+          "amp-custom",
+          "animate-in",
+          "animate-in-delay",
+          "animate-in-duration",
+          "custom-element"
+        ]
+      }
+    ],
     "react/prop-types": "error",
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": [
@@ -325,6 +339,12 @@
           "error",
           {
             "ignoreStatic": true
+          }
+        ],
+        "@typescript-eslint/no-unused-vars": [
+          "error",
+          {
+            "ignoreRestSiblings": true
           }
         ],
         "react/prop-types": "off",

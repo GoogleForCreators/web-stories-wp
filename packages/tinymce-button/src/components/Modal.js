@@ -37,13 +37,12 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { updateViewSettings } from '../utils';
-import { webStoriesData } from '../utils/globals';
-import name from '../store/name';
+import store from '../store';
 
 import TinyMceToggle from './controls/Toggle';
 
 const WebStoriesModal = (props) => {
-  const { modalOpen, settings, prepareShortCode } = props;
+  const { modalOpen, settings = {}, prepareShortCode } = props;
   const {
     author,
     date,
@@ -60,7 +59,7 @@ const WebStoriesModal = (props) => {
     sharp_corners,
     archive_link_label,
   } = settings;
-  const { views = {}, fields } = webStoriesData;
+  const { views = [], fields } = window.webStoriesData || {};
 
   const displayField = (fieldName) =>
     fields?.[view][fieldName].show && !fields?.[view][fieldName].hidden;
@@ -72,7 +71,7 @@ const WebStoriesModal = (props) => {
   return (
     <Modal
       onRequestClose={() => {
-        dispatch(name).toggleModal(false);
+        dispatch(store).toggleModal(false);
       }}
       closeButtonLabel={__('Close', 'web-stories')}
       title={__('Web Stories', 'web-stories')}
@@ -84,7 +83,7 @@ const WebStoriesModal = (props) => {
         value={view}
         options={views}
         onChange={(view_type) => {
-          dispatch(name).setCurrentView(view_type);
+          dispatch(store).setCurrentView(view_type);
         }}
       />
 
@@ -222,18 +221,18 @@ const WebStoriesModal = (props) => {
         <Button
           isPrimary
           onClick={() => {
-            const editorInstance = select(name).getEditor();
+            const editorInstance = select(store).getEditor();
             if (editorInstance) {
               const shortcode = prepareShortCode();
               editorInstance.insertContent(shortcode);
             }
 
-            dispatch(name).toggleModal(false);
+            dispatch(store).toggleModal(false);
           }}
         >
           {__('Insert', 'web-stories')}
         </Button>
-        <Button onClick={() => dispatch(name).toggleModal(false)}>
+        <Button onClick={() => dispatch(store).toggleModal(false)}>
           {__('Cancel', 'web-stories')}
         </Button>
       </div>

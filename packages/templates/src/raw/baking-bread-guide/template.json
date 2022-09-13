@@ -567,7 +567,6 @@
           "tagName": "p"
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 188,
@@ -833,7 +832,6 @@
           "y": 362
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 255,
@@ -945,7 +943,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #fff0d8\">6 Fast Rules For Making Bread</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -1014,7 +1011,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #fff0d8; letter-spacing: 0.01em\">01</span>\n\n<span style=\"color: #bcebee; letter-spacing: 0.01em\">Use fresh ingredients - especially yeast</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -1083,7 +1079,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #fff0d8; letter-spacing: 0.01em\">02</span>\n\n<span style=\"color: #bcebee; letter-spacing: 0.01em\">Storage: dry is nice</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -1152,7 +1147,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #fff0d8; letter-spacing: 0.01em\">03</span>\n\n<span style=\"color: #bcebee; letter-spacing: 0.01em\">Use the right flour</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -1221,7 +1215,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #fff0d8; letter-spacing: 0.01em\">04</span>\n\n<span style=\"color: #bcebee; letter-spacing: 0.01em\">Temperature and yeast</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -1290,7 +1283,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #fff0d8; letter-spacing: 0.01em\">05</span>\n\n<span style=\"color: #bcebee; letter-spacing: 0.01em\">To knead or not to knead</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -1359,7 +1351,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #fff0d8; letter-spacing: 0.01em\">06</span>\n\n<span style=\"color: #bcebee; letter-spacing: 0.01em\">Prescribed rising times</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -1511,7 +1502,6 @@
           "groupId": "b8f993b0-d14c-4267-900c-33c2c2a5e814"
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 45,
@@ -1915,7 +1905,6 @@
           "focalY": 50
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 45,
@@ -1926,7 +1915,7 @@
       "type": "page",
       "id": "dbcb59d0-1ecf-403b-8eef-5d9f0d595a3c",
       "animations": [],
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -2232,7 +2221,6 @@
           "y": 488
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 255,
@@ -2270,7 +2258,7 @@
         "type": "shape",
         "id": "aa48759a-6296-4317-961c-f74e3b3b79fe"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -2576,7 +2564,6 @@
           "type": "text"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [],
       "backgroundColor": {
         "color": {
@@ -2898,7 +2885,6 @@
           "type": "text"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [],
       "backgroundColor": {
         "color": {
@@ -3242,7 +3228,6 @@
           "type": "text"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [],
       "backgroundColor": {
         "color": {
@@ -3253,7 +3238,7 @@
       },
       "type": "page",
       "id": "e9734daf-b847-40d4-8821-2a8b944381bf",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -3559,7 +3544,6 @@
           "type": "text"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [],
       "backgroundColor": {
         "color": {
@@ -3597,7 +3581,7 @@
         "id": "2e9270bd-9e9e-42de-995f-c1a11c408431",
         "type": "shape"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -4220,7 +4204,6 @@
           "groupId": "890df759-960b-404e-a9c7-c0999dc07269"
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 255,

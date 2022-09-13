@@ -37,13 +37,12 @@
   },
   "dependencies": {
     "@googleforcreators/animation": "*",
-    "@googleforcreators/design-system": "*",
     "@googleforcreators/i18n": "*",
     "@googleforcreators/media": "*",
     "@googleforcreators/patterns": "*",
     "@googleforcreators/units": "*",
     "prop-types": "^15.7.2",
-    "uuid": "^8.3.2"
+    "uuid": "^9.0.0"
   },
   "devDependencies": {}
 }

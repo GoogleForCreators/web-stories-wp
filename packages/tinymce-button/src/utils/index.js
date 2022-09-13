@@ -22,17 +22,7 @@ import { dispatch, select } from '@wordpress/data';
 /**
  * Internal dependencies
  */
-import name from '../store/name';
-import { webStoriesData } from './globals';
-
-/**
- * Get current view.
- *
- * @return {string} View name.
- */
-export const currentView = () => {
-  return select(name).getCurrentView();
-};
+import store from '../store';
 
 /**
  * Update the view wide settings.
@@ -44,7 +34,7 @@ export const currentView = () => {
  * @return {void}
  */
 export const updateViewSettings = ({ fieldObj, field, hidden = false }) => {
-  const currentViewSettings = select(name).getCurrentViewSettings();
+  const currentViewSettings = select(store).getCurrentViewSettings();
   let updatedSettings = currentViewSettings;
 
   switch (typeof fieldObj) {
@@ -66,42 +56,10 @@ export const updateViewSettings = ({ fieldObj, field, hidden = false }) => {
       break;
   }
 
-  dispatch(name).setViewSettings(currentView(), updatedSettings);
-};
-
-/**
- * Set default setting state per se view type.
- *
- * @return {Object} Settings.
- */
-export const setDefaultStateSetting = () => {
-  const state = [];
-  const { views, fields } = webStoriesData;
-
-  views.forEach((value) => {
-    const { value: viewType } = value;
-    const { title, author, date, excerpt, archive_link, sharp_corners } =
-      fields[viewType];
-
-    state[viewType] = {
-      title: title,
-      excerpt: excerpt,
-      author: author,
-      date: date,
-      archive_link: archive_link,
-      archive_link_label: '',
-      circle_size: 150,
-      sharp_corners: sharp_corners,
-      image_alignment: 'left',
-      number_of_columns: 1,
-      number_of_stories: 5,
-      order: 'DESC',
-      orderby: 'post_title',
-      view: viewType,
-    };
-  });
-
-  return state;
+  dispatch(store).setViewSettings(
+    select(store).getCurrentView(),
+    updatedSettings
+  );
 };
 
 /**
@@ -111,8 +69,8 @@ export const setDefaultStateSetting = () => {
  */
 export const prepareShortCode = () => {
   let shortCode = `[web_stories`;
-  const editorInstance = select(name).getEditor();
-  const settings = select(name).getCurrentViewSettings();
+  const editorInstance = select(store).getEditor();
+  const settings = select(store).getCurrentViewSettings();
 
   if (editorInstance) {
     Object.keys(settings).forEach((value) => {

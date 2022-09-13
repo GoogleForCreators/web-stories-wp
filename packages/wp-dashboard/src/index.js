@@ -37,8 +37,6 @@ import { updateSettings } from '@googleforcreators/date';
 import { initializeTracking } from '@googleforcreators/tracking';
 import { bindToCallbacks } from '@web-stories-wp/wp-utils';
 import { __ } from '@googleforcreators/i18n';
-import { registerElementType } from '@googleforcreators/elements';
-import { elementTypes } from '@googleforcreators/element-library';
 
 /**
  * WordPress dependencies
@@ -75,8 +73,6 @@ window.webStories.initializeStoryDashboard = (id, config) => {
 
   // Already tracking screen views in AppContent, no need to send page views as well.
   initializeTracking('Dashboard', false);
-
-  elementTypes.forEach(registerElementType);
 
   const dashboardConfig = {
     ...config,

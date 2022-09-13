@@ -146,3 +146,4 @@ export { default as TurningLine } from './turning_line.svg';
 export { default as Union } from './union.svg';
 export { default as Video } from './video.svg';
 export { default as RemoveMask } from './remove_mask.svg';
+export { default as History } from './history.svg';

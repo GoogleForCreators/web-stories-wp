@@ -14,11 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import type { Context } from 'react';
-
 export { createContext, useContext } from 'use-context-selector';
 
-export const identity = <T>(state: Context<T>) => state;
+export const identity = <T>(state: T) => state;

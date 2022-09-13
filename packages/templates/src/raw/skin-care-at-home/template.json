@@ -136,7 +136,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #380e63; text-transform: uppercase\">3 facials</span><span style=\"color: #380e63; text-transform: uppercase\"> </span><span style=\"font-weight: 300; color: #380e63; text-transform: uppercase\">you can try at home</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -384,7 +383,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 300; color: #380e63; text-transform: uppercase\">The </span><span style=\"font-weight: 700; color: #380e63; text-transform: uppercase\">Brightening </span><span style=\"font-weight: 300; color: #380e63; text-transform: uppercase\">Facial</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -640,7 +638,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #380e63\">Lapis Facial Oil</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -725,7 +722,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 300; color: #380e63\">An inflammation-reducing facial oil that we recommend for even the most sensitive skin.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -861,7 +857,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #380e63\">Floral</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -969,7 +964,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #380e63\">Fine Line</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1077,7 +1071,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #380e63\">Brightening</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1315,7 +1308,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #380e63\">Rosehip BioRegenerate Oil</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1400,7 +1392,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 300; color: #380e63\">Streamline your routine with this multitasking oil that does it all: conditions &amp; firms.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1514,7 +1505,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #380e63\">Hair Friendly</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1600,7 +1590,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #380e63\">Night Cream</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1686,7 +1675,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #380e63\">No Grease</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1834,7 +1822,7 @@
       },
       "type": "page",
       "id": "d3d1cfdd-f4bb-4f74-8130-becc36a103c9",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "8701c6e5-0348-4da4-949e-203edaf029d0": {
           "name": "Comb",
@@ -1990,7 +1978,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 300; color: #380e63; text-transform: uppercase\">The </span><span style=\"font-weight: 700; color: #380e63; text-transform: uppercase\">Clarifying </span><span style=\"font-weight: 300; color: #380e63; text-transform: uppercase\">Facial</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2112,7 +2099,7 @@
       },
       "type": "page",
       "id": "30930adf-03dc-4b6a-8fef-60445bdfef71",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -2246,7 +2233,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #380e63\">Carrot Seed Facial Oil</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2331,7 +2317,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 300; color: #380e63\">A lightweight, healing vitamin boost that deeply nourishes and reinforces the skin's barrier.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2468,7 +2453,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #380e63\">Floral</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2577,7 +2561,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #380e63\">Fine Line</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2686,7 +2669,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #380e63\">Brightening</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2768,7 +2750,7 @@
       },
       "type": "page",
       "id": "b0a17975-50ed-4942-a231-fac486b74e4c",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "e0e86fe6-3c8d-4137-9503-225519ff84af": {
           "name": "Text",
@@ -2924,7 +2906,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #380e63\">Avocado, Poppy Seed Oil</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3009,7 +2990,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 300; color: #380e63\">Look for a seed oil that is targeted at clearing out impurities in the skin, especially when used with a clarifying cleanser.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3123,7 +3103,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #380e63\">Hair Friendly</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3209,7 +3188,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #380e63\">Night Cream</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3295,7 +3273,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #380e63\">No Grease</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3446,7 +3423,7 @@
       },
       "type": "page",
       "id": "7244f52a-0b7c-41ec-8d53-c22ff9f74794",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "0886179e-b185-4e7e-8842-b773484993df": {
           "name": "Text",
@@ -3602,7 +3579,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 300; color: #380e63\">THE </span><span style=\"font-weight: 700; color: #380e63\">CALMING </span><span style=\"font-weight: 300; color: #380e63\">FACIAL</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3724,7 +3700,7 @@
       },
       "type": "page",
       "id": "98f2de84-f6c6-4a7b-a7a3-6f2f2005c075",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -3858,7 +3834,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #380e63\">Water-Lock Moisturizer</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3943,7 +3918,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 300; color: #380e63\">Hydrate more and waste less with this refillable, lightweight daily moisturizer.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4080,7 +4054,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #380e63\">Floral</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4189,7 +4162,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #380e63\">Fine Line</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4298,7 +4270,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #380e63\">Brightening</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4380,7 +4351,7 @@
       },
       "type": "page",
       "id": "f7d33660-69b0-4840-806b-264519f8aee6",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "2ca2151c-0c47-4df6-96d1-cc0139b3ffc3": {
           "name": "Text",
@@ -4536,7 +4507,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #380e63\">Calendula Hydrating Cream</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4621,7 +4591,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 300; color: #380e63\">Like a panic button for cranky skin, this moisturizer instantly soothes irritation.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4735,7 +4704,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #380e63\">Hair Friendly</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4821,7 +4789,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #380e63\">Night Cream</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4907,7 +4874,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 700; color: #380e63\">No Grease</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -5058,7 +5024,7 @@
       },
       "type": "page",
       "id": "ba660036-2d65-40ab-9a27-6fadd6d6f92f",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "9f68a921-792f-4d8a-bbb6-2d7431e44678": {
           "name": "Text",
@@ -5214,7 +5180,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 300; color: #380e63; text-transform: uppercase\">The Author:</span>\n<span style=\"font-weight: 700; color: #380e63; text-transform: uppercase\">Sandra Lanshin</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -5338,7 +5303,7 @@
       },
       "type": "page",
       "id": "99061b91-2b6c-4ecb-9e72-4c5dcb1bfe2c",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     }
   ]
 }
