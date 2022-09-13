@@ -80,8 +80,8 @@ export const Video = styled.video.attrs({
   disablePictureInPicture: true,
 })`
   display: block;
-  visibility: ${({ hidden }) => (hidden ? 'hidden' : 'visible')};
-  position: ${({ hidden }) => (hidden ? 'absolute' : 'initial')};
+  position: absolute;
+  z-index: 1;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -91,6 +91,8 @@ export const Video = styled.video.attrs({
 
 export const Canvas = styled.canvas`
   display: block;
+  position: absolute;
+  z-index: 2;
   width: 100%;
   height: 100%;
   object-fit: cover;
