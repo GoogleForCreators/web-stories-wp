@@ -110,9 +110,9 @@ function PlaybackMedia() {
       return;
     }
     const context = canvasRef.current.getContext('2d');
+    const canvasBlur = 'filter' in CanvasRenderingContext2D.prototype;
 
     context.save();
-    context.clearRect(0, 0, canvas.width, canvas.height);
 
     const width = canvas.width;
     const height = canvas.height;
@@ -122,27 +122,30 @@ function PlaybackMedia() {
 
     const imageFloatLinear = new Float32Array(numPixels * 4);
     const imageTemp = new Float32Array(imageFloatLinear.length);
-    context.drawImage(image, 0, 0, width, height);
-    const imageData = context.getImageData(0, 0, width, height);
-    const buffer = imageData.data;
+    let buffer, imageData, linearToGamma;
+    if (!canvasBlur) {
+      context.drawImage(image, 0, 0, width, height);
+      imageData = context.getImageData(0, 0, width, height);
+      buffer = imageData.data;
 
-    for (let ch = 0; ch < 3; ch++) {
+      for (let ch = 0; ch < 3; ch++) {
+        for (let i = 0; i < numPixels; i++) {
+          imageFloatLinear[ch * numPixels + i] = Math.pow(
+            buffer[i * 4 + ch] / 255,
+            2.2
+          );
+        } // Gamma to linear
+      }
       for (let i = 0; i < numPixels; i++) {
-        imageFloatLinear[ch * numPixels + i] = Math.pow(
-          buffer[i * 4 + ch] / 255,
-          2.2
-        );
-      } // Gamma to linear
-    }
-    for (let i = 0; i < numPixels; i++) {
-      imageFloatLinear[3 * numPixels + i] = 1;
-    }
+        imageFloatLinear[3 * numPixels + i] = 1;
+      }
 
-    const linearToGamma = new Array(4096 + 1);
-    for (let i = 0; i < linearToGamma.length; i++) {
-      linearToGamma[i] = Math.round(
-        Math.pow(i / (linearToGamma.length - 1), 1 / 2.2) * 255
-      );
+      linearToGamma = new Array(4096 + 1);
+      for (let i = 0; i < linearToGamma.length; i++) {
+        linearToGamma[i] = Math.round(
+          Math.pow(i / (linearToGamma.length - 1), 1 / 2.2) * 255
+        );
+      }
     }
 
     function FftConvolver(kernelReal, kernelImag) {
@@ -324,25 +327,42 @@ function PlaybackMedia() {
       }
     }
 
-    if (!('filter' in CanvasRenderingContext2D.prototype)) {
+    if (!canvasBlur) {
       context.drawImage(results.image, 0, 0, canvas.width, canvas.height);
       doRowConvolutions(imageFloatLinear, imageTemp);
       doColumnConvolutions(imageTemp, imageTemp);
       convertToByteGamma(imageTemp, imageData.data);
       context.putImageData(imageData, 0, 0);
+
+      context.globalCompositeOperation = 'destination-out';
+      context.drawImage(
+        results.segmentationMask,
+        0,
+        0,
+        canvas.width,
+        canvas.height
+      );
+      context.globalCompositeOperation = 'destination-over';
+      context.drawImage(results.image, 0, 0, canvas.width, canvas.height);
+    } else {
+      context.globalCompositeOperation = 'copy';
+      context.filter = `blur(${BACKGROUND_BLUR_PX}px)`;
+      context.drawImage(
+        results.segmentationMask,
+        0,
+        0,
+        canvas.width,
+        canvas.height
+      );
+
+      context.globalCompositeOperation = 'source-in';
+      context.filter = 'none';
+      context.drawImage(results.image, 0, 0, canvas.width, canvas.height);
+
+      context.globalCompositeOperation = 'destination-over';
+      context.filter = `blur(${BACKGROUND_BLUR_PX}px)`;
+      context.drawImage(results.image, 0, 0, canvas.width, canvas.height);
     }
-
-    context.globalCompositeOperation = 'destination-out';
-    context.drawImage(
-      results.segmentationMask,
-      0,
-      0,
-      canvas.width,
-      canvas.height
-    );
-
-    context.globalCompositeOperation = 'destination-over';
-    context.drawImage(results.image, 0, 0, canvas.width, canvas.height);
 
     context.restore();
   };
