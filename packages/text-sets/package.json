@@ -30,8 +30,8 @@
       "default": "./src/index.ts"
     }
   },
-  "module": "dist-module/index.js",
   "main": "dist/index.js",
+  "module": "dist-module/index.js",
   "types": "dist-types/index.d.ts",
   "source": "src/index.ts",
   "publishConfig": {
