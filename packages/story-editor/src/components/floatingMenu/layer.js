@@ -29,6 +29,7 @@ import {
  */
 import { useCanvas, useLayout, useStory, useTransform } from '../../app';
 import { FLOATING_MENU_DISTANCE, HEADER_HEIGHT } from '../../constants';
+import DirectionAware from '../directionAware';
 import {
   SELECTED_ELEMENT_TYPES,
   hasDesignMenu,
@@ -159,13 +160,15 @@ function FloatingMenuLayer() {
   }
 
   return (
-    <FloatingMenu
-      ref={menuRef}
-      handleDismiss={handleDismiss}
-      selectedElementType={selectedElementType}
-      selectionIdentifier={selectionIdentifier}
-      visuallyHidden={isAnythingTransforming}
-    />
+    <DirectionAware>
+      <FloatingMenu
+        ref={menuRef}
+        handleDismiss={handleDismiss}
+        selectedElementType={selectedElementType}
+        selectionIdentifier={selectionIdentifier}
+        visuallyHidden={isAnythingTransforming}
+      />
+    </DirectionAware>
   );
 }
 

@@ -515,12 +515,7 @@ class Stories_Controller extends Stories_Base_Controller {
 	 * @phpstan-return Links
 	 */
 	protected function prepare_links( $post ): array {
-		// Workaround so that WP_REST_Posts_Controller::prepare_links() does not call wp_get_post_revisions(),
-		// avoiding a currently unneeded database query.
-		// TODO(#85): Remove if proper revisions support is ever needed.
-		remove_post_type_support( $this->post_type, 'revisions' );
 		$links = parent::prepare_links( $post );
-		add_post_type_support( $this->post_type, 'revisions' );
 
 		$links = $this->add_post_locking_link( $links, $post );
 		$links = $this->add_publisher_logo_link( $links, $post );
