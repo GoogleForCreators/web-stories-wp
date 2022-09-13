@@ -2,7 +2,7 @@
   "name": "@googleforcreators/types",
   "description": "A collection of TypeScript types used across the entire project.",
   "private": false,
-  "version": "0.1",
+  "version": "0.1.202209130000",
   "author": {
     "name": "Google",
     "url": "https://creators.google/"
