@@ -46,7 +46,7 @@ function VideoDisplay({
     focalX,
     focalY,
     loop,
-    volume = 1,
+    volume,
   } = element;
   const ref = useRef();
 

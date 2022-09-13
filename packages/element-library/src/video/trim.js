@@ -71,7 +71,7 @@ function VideoTrim({
     flip,
     focalX,
     focalY,
-    volume = 1,
+    volume,
   } = element;
   const wrapperRef = useRef();
   const videoRef = useRef();

@@ -32,7 +32,7 @@ function defaultForUndefined(value, def) {
 }
 
 function VideoOutput({ element, box, flags }) {
-  const { resource, loop, tracks, volume = 1 } = element;
+  const { resource, loop, tracks, volume } = element;
   const { isMuted, mimeType, src } = resource;
 
   const poster = defaultForUndefined(element.poster, resource.poster);
