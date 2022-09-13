@@ -17,17 +17,14 @@
 /**
  * Internal dependencies
  */
-import type { SequenceResource } from './sequenceResource';
-import type { ResourceType } from './resourceType';
+import type { Resource } from './resource';
 
-export interface Output {
-  /** The MIME type of the resource. E.g. "image/png". */
-  mimeType: string;
-  /** The source URL of the resource. */
-  src: string;
-}
-
-export interface GifResource extends SequenceResource {
-  type: ResourceType.GIF;
-  output: Output;
+/** This is an abstract parent type of both video and gif resources */
+export interface SequenceResource extends Resource {
+  /** The resource's poster. */
+  poster?: string;
+  /** The resource's poster ID. */
+  posterId?: string;
+  /** Whether the resource has already been optimized. */
+  isOptimized?: boolean;
 }

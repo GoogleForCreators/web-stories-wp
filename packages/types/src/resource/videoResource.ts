@@ -17,8 +17,8 @@
 /**
  * Internal dependencies
  */
-import type { Resource } from './resource';
 import type { ResourceType } from './resourceType';
+import type { SequenceResource } from './sequenceResource';
 
 export interface TrimData {
   /** ID of the original video. */
@@ -29,18 +29,12 @@ export interface TrimData {
   end: string;
 }
 
-export interface VideoResource extends Resource {
+export interface VideoResource extends SequenceResource {
   type: ResourceType.VIDEO;
-  /** The resource's poster. */
-  poster?: string;
-  /** The resource's poster ID. */
-  posterId?: string;
   /** Length in seconds. */
   length: number;
   /** The formatted length, e.g. "01:17". */
   lengthFormatted: string;
-  /** Whether the resource has already been optimized. */
-  isOptimized?: boolean;
   /** Whether the resource is muted. */
   isMuted?: boolean;
   /** Information about trimmed video and its original. */
