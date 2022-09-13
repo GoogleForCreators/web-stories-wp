@@ -67,6 +67,7 @@ describe('Test Store Selectors', () => {
 
   it('get current view settings for round', () => {
     const state = {
+      currentView: 'round',
       settings: {
         round: {
           test: 'dummy',

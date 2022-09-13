@@ -15,17 +15,45 @@
  */
 
 /**
- * Internal dependencies
+ * Set default setting state per se view type.
+ *
+ * @return {Object} Settings.
  */
-import { setDefaultStateSetting } from '../utils';
+const setDefaultStateSetting = () => {
+  const state = [];
+  const { views = [], fields } = window.webStoriesData || {};
+
+  views.forEach((value) => {
+    const { value: viewType } = value;
+    const { title, author, date, excerpt, archive_link, sharp_corners } =
+      fields[viewType];
+
+    state[viewType] = {
+      title,
+      excerpt,
+      author,
+      date,
+      archive_link,
+      archive_link_label: '',
+      circle_size: 150,
+      sharp_corners,
+      image_alignment: 'left',
+      number_of_columns: 1,
+      number_of_stories: 5,
+      order: 'DESC',
+      orderby: 'post_title',
+      view: viewType,
+    };
+  });
+
+  return state;
+};
 
 const DEFAULT_STATE = {
-  settings: {},
+  settings: setDefaultStateSetting(),
   modalOpen: false,
   editor: false,
   currentView: 'circles',
 };
-
-DEFAULT_STATE['settings'] = setDefaultStateSetting();
 
 export default DEFAULT_STATE;
