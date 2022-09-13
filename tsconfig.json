@@ -4,6 +4,7 @@
     { "path": "packages/i18n" },
     { "path": "packages/media" },
     { "path": "packages/moveable" },
+    { "path": "packages/patterns" },
     { "path": "packages/react" },
     { "path": "packages/stickers" },
     { "path": "packages/tracking" },

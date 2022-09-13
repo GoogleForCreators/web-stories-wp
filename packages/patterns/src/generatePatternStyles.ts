@@ -17,12 +17,21 @@
 /**
  * External dependencies
  */
+import type { CSSProperties } from 'react';
+
 import { rgba } from 'polished';
 
 /**
  * Internal dependencies
  */
-import { ColorStop, Hex, Pattern, Solid, Gradient, PatternType } from './types';
+import {
+  ColorStop,
+  Gradient,
+  Hex,
+  Pattern,
+  PatternType,
+  Solid,
+} from './types';
 
 /**
  * Truncate a number to a given number of decimals.
@@ -106,7 +115,7 @@ function getStopList(stops: Array<ColorStop>, alpha: number) {
 function generatePatternStyles(
   pattern: Pattern | null = null,
   property = 'background'
-) {
+): CSSProperties {
   if (pattern === null) {
     return { [property]: 'transparent' };
   }

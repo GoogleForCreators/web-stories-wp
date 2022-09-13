@@ -14,13 +14,18 @@
  * limitations under the License.
  */
 
-function convertToCSS(style: Record<string, string>) {
+/**
+ * External dependencies
+ */
+import type { CSSProperties } from 'react';
+
+function convertToCSS(style: CSSProperties) {
   return Object.entries(style).reduce((str, [key, val]) => {
     const casedKey = key.replace(
       /[A-Z]/g,
       (match) => `-${match.toLowerCase()}`
     );
-    return `${str}${casedKey}:${val};`;
+    return `${str}${casedKey}:${val as string};`;
   }, '');
 }
 
