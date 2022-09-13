@@ -13,18 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * External dependencies
+ */
+import type {
+  Element,
+  ElementBox,
+} from '@googleforcreators/types';
+
 /**
  * Internal dependencies
  */
-import {
-  PAGE_WIDTH,
-  PAGE_HEIGHT,
-  DANGER_ZONE_HEIGHT,
-  FULLBLEED_HEIGHT,
-  DEFAULT_EM,
-} from './constants';
 import calcRotatedResizeOffset from './calcRotatedResizeOffset';
-import type { ElementBox, Element } from './types';
+import {
+  DANGER_ZONE_HEIGHT,
+  DEFAULT_EM,
+  FULLBLEED_HEIGHT,
+  PAGE_HEIGHT,
+  PAGE_WIDTH,
+} from './constants';
 
 /**
  * Rounds the pixel value to the max allowed precision in the "data" space.

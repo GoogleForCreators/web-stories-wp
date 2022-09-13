@@ -17,8 +17,10 @@
 /**
  * External dependencies
  */
-import { useMemo } from '@googleforcreators/react';
 import type { ReactNode } from 'react';
+
+import { useMemo } from '@googleforcreators/react';
+import type { Element } from '@googleforcreators/types';
 
 /**
  * Internal dependencies
@@ -32,7 +34,7 @@ import {
   getBox,
   getBoxWithBorder,
 } from './dimensions';
-import type { Element } from './types';
+
 interface PageSize {
   width: number;
   height: number;
