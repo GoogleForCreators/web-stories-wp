@@ -74,9 +74,9 @@ export const getHTMLFormatters = () => {
     (aggr, { setters }) => ({
       ...aggr,
       ...Object.fromEntries(
-        Object.entries(setters).map(([key, setter]: [string, StyleSetter]) => [
+        Object.entries(setters).map(([key, setter]) => [
           key,
-          getHTMLFormatter(setter),
+          getHTMLFormatter(setter as StyleSetter),
         ])
       ),
     }),

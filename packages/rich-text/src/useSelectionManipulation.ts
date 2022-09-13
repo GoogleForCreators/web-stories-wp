@@ -83,12 +83,10 @@ function useSelectionManipulation(
         (aggr, { setters, autoFocus }) => ({
           ...aggr,
           ...Object.fromEntries(
-            Object.entries(setters).map(
-              ([key, setter]: [string, StyleSetter]) => [
-                getSetterName(key),
-                getSetterCallback(setter, autoFocus),
-              ]
-            )
+            Object.entries(setters).map(([key, setter]) => [
+              getSetterName(key),
+              getSetterCallback(setter as StyleSetter, autoFocus),
+            ])
           ),
         }),
         {}
