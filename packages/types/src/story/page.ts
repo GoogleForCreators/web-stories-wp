@@ -17,11 +17,7 @@
 /**
  * Internal dependencies
  */
-import type {
-  Element,
-  Pattern,
-  ShapeElement,
-} from '../element';
+import type { Element, Pattern, ShapeElement } from '../element';
 import type { Animation } from './animation';
 
 export interface Group {
