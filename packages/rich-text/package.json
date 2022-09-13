@@ -44,6 +44,7 @@
     "draft-js-export-html": "^1.4.1",
     "draft-js-import-html": "^1.4.1",
     "draftjs-filters": "^3.0.1",
+    "immutable": "^4.1.0",
     "prop-types": "^15.7.2"
   },
   "devDependencies": {

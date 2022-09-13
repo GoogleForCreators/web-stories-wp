@@ -24,13 +24,14 @@ import {
   SelectionState,
 } from 'draft-js';
 import type { ContentBlock } from 'draft-js';
+import { Map } from 'immutable';
 
 /**
  * Internal dependencies
  */
 import convertStyles from './formatters/convert';
 
-const RENDER_MAP = Immutable.Map({
+const RENDER_MAP = Map({
   unstyled: {
     element: 'div',
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment -- aliasedElements actually does exist on the type when looking at the module but the correct type is not imported.

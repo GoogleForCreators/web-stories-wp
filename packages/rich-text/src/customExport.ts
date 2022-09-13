@@ -19,13 +19,14 @@
  */
 import { stateToHTML } from 'draft-js-export-html';
 import type { DraftInlineStyle, EditorState } from 'draft-js';
+import type { RenderConfig } from 'draft-js-export-html';
 
 /**
  * Internal dependencies
  */
 import formatters from './formatters';
 
-function inlineStyleFn(styles: DraftInlineStyle) {
+function inlineStyleFn(styles: DraftInlineStyle): RenderConfig | null {
   const inlineCSS = formatters.reduce(
     (css, { stylesToCSS }) => ({ ...css, ...stylesToCSS(styles) }),
     {}
