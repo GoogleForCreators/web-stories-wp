@@ -23,7 +23,7 @@ import {
 } from '@googleforcreators/types';
 
 function hasGradient(pattern: Pattern) {
-  return Boolean(pattern?.type) && PatternType.SOLID !== pattern.type;
+  return Boolean(pattern?.type) && PatternType.Solid !== pattern.type;
 }
 
 export default hasGradient;

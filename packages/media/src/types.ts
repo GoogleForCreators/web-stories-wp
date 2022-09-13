@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-/* eslint-enable no-restricted-imports -- Still used by other packages. */
 import type { Requireable } from 'prop-types';
 /**
  * External dependencies
@@ -22,6 +21,7 @@ import type { Requireable } from 'prop-types';
 /* eslint-disable no-restricted-imports -- Still used by other packages. */
 import * as PropTypes from 'prop-types';
 
+/* eslint-enable no-restricted-imports -- Still used by other packages. */
 import type {
   Attribution,
   Output,

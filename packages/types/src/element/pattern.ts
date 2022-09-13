@@ -15,9 +15,9 @@
  */
 
 export enum PatternType {
-  SOLID = 'solid',
-  LINEAR = 'linear',
-  RADIAL = 'radial',
+  Solid = 'solid',
+  Linear = 'linear',
+  Radial = 'radial',
 }
 
 export type Hex = {
@@ -28,7 +28,7 @@ export type Hex = {
 };
 
 export type Solid = {
-  type?: PatternType.SOLID;
+  type?: PatternType.Solid;
   color: Hex;
 };
 
@@ -38,18 +38,18 @@ export type ColorStop = {
 };
 
 type AbstractGradient = {
-  type: PatternType.LINEAR | PatternType.RADIAL;
+  type: PatternType.Linear | PatternType.Radial;
   stops: ColorStop[];
   alpha?: number;
 };
 
 export type Linear = AbstractGradient & {
-  type: PatternType.LINEAR;
+  type: PatternType.Linear;
   rotation?: number;
 };
 
 export type Radial = AbstractGradient & {
-  type: PatternType.RADIAL;
+  type: PatternType.Radial;
   size?: {
     w: number;
     h: number;

@@ -59,7 +59,7 @@ function truncate(val: number, pos: number) {
  */
 function getGradientDescription(pattern: Gradient) {
   switch (pattern.type) {
-    case PatternType.RADIAL: {
+    case PatternType.Radial: {
       const { size, center } = pattern;
       const sizeString = size
         ? `ellipse ${truncate(100 * size.w, 2)}% ${truncate(100 * size.h, 2)}%`
@@ -72,7 +72,7 @@ function getGradientDescription(pattern: Gradient) {
       }
       return `${sizeString}${centerString}`.trim();
     }
-    case PatternType.LINEAR: {
+    case PatternType.Linear: {
       // Always include rotation and offset by .5turn, as default is .5turn(?)
       const { rotation } = pattern;
       return `${((rotation || 0) + 0.5) % 1}turn`;
@@ -118,19 +118,19 @@ function generatePatternStyles(
   }
 
   const isBackground = property === 'background';
-  const { type = PatternType.SOLID } = pattern;
+  const { type = PatternType.Solid } = pattern;
   if (!Object.values(PatternType).includes(type)) {
     throw new Error(`Unknown pattern type: '${type}'`);
   }
 
   // Gradients are only possible for backgrounds
-  if (!isBackground && type !== PatternType.SOLID) {
+  if (!isBackground && type !== PatternType.Solid) {
     throw new Error(
       `Can only generate solid colors for property '${property}'`
     );
   }
 
-  if (type === PatternType.SOLID) {
+  if (type === PatternType.Solid) {
     const {
       color: { r, g, b, a = 1 },
     } = pattern as Solid;

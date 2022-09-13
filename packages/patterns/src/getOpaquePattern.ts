@@ -24,7 +24,7 @@ import {
 } from '@googleforcreators/types';
 
 function getOpaquePattern(pattern: Pattern) {
-  if (!pattern.type || pattern.type === PatternType.SOLID) {
+  if (!pattern.type || pattern.type === PatternType.Solid) {
     const { color } = pattern;
     return {
       color: {

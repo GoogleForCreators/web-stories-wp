@@ -33,11 +33,11 @@ function getPreviewText(pattern: Pattern | null) {
     return null;
   }
   switch (pattern.type) {
-    case PatternType.RADIAL:
+    case PatternType.Radial:
       return __('Radial', 'web-stories');
-    case PatternType.LINEAR:
+    case PatternType.Linear:
       return __('Linear', 'web-stories');
-    case PatternType.SOLID:
+    case PatternType.Solid:
     default: {
       const {
         color: { r, g, b },
