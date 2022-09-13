@@ -492,10 +492,10 @@ function useProcessMedia({
       const { newWidth, newHeight, cropElement } = cropParams;
 
       const onUploadError = () => {
-          updateExistingElementsByResourceId(resourceId, {
-            height: oldResource.height,
-            width: oldResource.width,
-          });
+        updateExistingElementsByResourceId(resourceId, {
+          height: oldResource.height,
+          width: oldResource.width,
+        });
       };
 
       // TODO: Confirm which properties exactly need to be updated.
@@ -529,7 +529,6 @@ function useProcessMedia({
         }
       };
 
-
       const process = async () => {
         let file = false;
         try {
@@ -561,11 +560,10 @@ function useProcessMedia({
     },
     [
       updateElementById,
-      updateExistingElementById,
       copyResourceData,
       postProcessingResource,
-      updateOldTranscodedObject,
       uploadMedia,
+      updateExistingElementsByResourceId,
     ]
   );
 
