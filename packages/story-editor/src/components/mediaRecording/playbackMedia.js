@@ -125,6 +125,12 @@ function PlaybackMedia() {
     context.filter = 'none';
     context.drawImage(results.image, 0, 0, canvas.width, canvas.height);
 
+    if (!('filter' in CanvasRenderingContext2D)) {
+      context.globalCompositeOperation = 'destination-atop';
+      context.fillStyle = 'rgb(255, 255, 255, 0.75)';
+      context.fillRect(0, 0, canvas.width, canvas.height);
+    }
+
     context.globalCompositeOperation = 'destination-over';
     context.filter = `blur(${BACKGROUND_BLUR_PX}px)`;
     context.drawImage(results.image, 0, 0, canvas.width, canvas.height);
