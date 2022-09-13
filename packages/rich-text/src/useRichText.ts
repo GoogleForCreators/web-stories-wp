@@ -25,10 +25,9 @@ import Context from './context';
 import type { State } from './types';
 
 function useRichText(): State;
-function useRichText(
-  selector?: (state: State | null) => Partial<State> | State
-) {
-  return useContextSelector(Context, selector ?? identity);
+function useRichText<T>(selector: (state: State) => T): T;
+function useRichText<T>(selector: (state: State) => T | State = identity) {
+  return useContextSelector(Context, selector);
 }
 
 export default useRichText;
