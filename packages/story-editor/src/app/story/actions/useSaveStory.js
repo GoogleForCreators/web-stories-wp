@@ -87,6 +87,8 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
               metadata,
               flags,
             }),
+            // Saving an auto-draft should create a draft by default.
+            status: 'auto-draft' === story.status ? 'draft' : story.status,
             ...props,
           })
         )
