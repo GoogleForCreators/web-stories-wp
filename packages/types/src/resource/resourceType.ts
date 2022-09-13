@@ -14,5 +14,8 @@
  * limitations under the License.
  */
 
-export * from './resource';
-export * from './element';
+export enum ResourceType {
+  IMAGE = 'image',
+  VIDEO = 'video',
+  GIF = 'gif',
+}

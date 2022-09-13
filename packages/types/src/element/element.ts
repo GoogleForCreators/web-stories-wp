@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,5 +14,17 @@
  * limitations under the License.
  */
 
-export * from './resource';
-export * from './element';
+/**
+ * Internal dependencies
+ */
+import type { ElementBox } from './elementBox';
+
+export interface Element extends ElementBox {
+  isBackground: boolean;
+  border: {
+    top: number;
+    right: number;
+    bottom: number;
+    left: number;
+  };
+}

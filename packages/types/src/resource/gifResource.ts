@@ -14,5 +14,20 @@
  * limitations under the License.
  */
 
-export * from './resource';
-export * from './element';
+/**
+ * Internal dependencies
+ */
+import type { Resource } from './resource';
+import type { ResourceType } from './resourceType';
+
+export interface Output {
+  /** The MIME type of the resource. E.g. "image/png". */
+  mimeType: string;
+  /** The source URL of the resource. */
+  src: string;
+}
+
+export interface GifResource extends Resource {
+  type: ResourceType.GIF;
+  output: Output;
+}

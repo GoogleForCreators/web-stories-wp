@@ -14,5 +14,7 @@
  * limitations under the License.
  */
 
+export * from './gifResource';
 export * from './resource';
-export * from './element';
+export * from './resourceType';
+export * from './videoResource';
