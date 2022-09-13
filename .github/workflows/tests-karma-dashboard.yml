@@ -116,7 +116,11 @@ jobs:
     name: Percy
     runs-on: ubuntu-latest
     timeout-minutes: 5
-    if: always() && github.event.pull_request.draft == false
+    if: >
+      always() &&
+      github.event.pull_request.draft == false &&
+      github.event.pull_request.head.repo.fork == false &&
+      github.event.pull_request.user.login != 'dependabot[bot]'
     needs: [karma, nonce]
     steps:
       - name: Harden Runner
