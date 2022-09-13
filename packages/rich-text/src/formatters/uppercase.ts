@@ -43,7 +43,7 @@ function stylesToCSS(styles: DraftInlineStyle) {
   if (!hasUppercase) {
     return null;
   }
-  return { textTransform: 'uppercase' };
+  return { textTransform: 'uppercase' as const };
 }
 
 function isUppercase(editorState: EditorState) {

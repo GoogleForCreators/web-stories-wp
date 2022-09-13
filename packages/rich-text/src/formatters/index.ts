@@ -17,6 +17,7 @@
 /**
  * Internal dependencies
  */
+import type { Formatter } from '../types';
 import weightFormatter from './weight';
 import italicFormatter from './italic';
 import underlineFormatter from './underline';
@@ -24,7 +25,7 @@ import colorFormatter from './color';
 import letterSpacingFormatter from './letterSpacing';
 import uppercaseFormatter from './uppercase';
 
-const formatters = [
+const formatters: Formatter[] = [
   weightFormatter,
   italicFormatter,
   underlineFormatter,

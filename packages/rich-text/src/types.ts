@@ -18,7 +18,8 @@
  * External dependencies
  */
 import type { Pattern } from '@googleforcreators/patterns';
-import type { EditorState } from 'draft-js';
+import type { EditorState, DraftInlineStyle } from 'draft-js';
+import type { CSSProperties } from 'react';
 
 export type AllowedSetterArgs = undefined | boolean | Pattern | number;
 
@@ -66,4 +67,15 @@ export interface State {
     selectionActions: Record<string, StyleSetter>;
     getContentFromState: (editorState: EditorState) => string | null;
   };
+}
+
+// @todo Figure out a better type for setters.
+type AllowedGetterArgs = '((MULTIPLE))' | boolean | Pattern | number;
+type Getter = (state: EditorState) => AllowedGetterArgs;
+export interface Formatter {
+  elementToStyle: (element: HTMLElement) => string | null;
+  stylesToCSS: (styles: DraftInlineStyle) => CSSProperties | null;
+  getters: Record<string, Getter>;
+  autoFocus: boolean;
+  setters: Record<string, unknown>;
 }
