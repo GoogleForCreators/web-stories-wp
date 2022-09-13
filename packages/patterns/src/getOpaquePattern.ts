@@ -17,13 +17,9 @@
 /**
  * External dependencies
  */
-import {
-  Gradient,
-  Pattern,
-  PatternType,
-} from '@googleforcreators/types';
+import { Gradient, Pattern, PatternType } from '@googleforcreators/types';
 
-function getOpaquePattern(pattern: Pattern) {
+function getOpaquePattern(pattern: Pattern): Pattern {
   if (!pattern.type || pattern.type === PatternType.Solid) {
     const { color } = pattern;
     return {

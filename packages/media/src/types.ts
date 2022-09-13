@@ -14,13 +14,12 @@
  * limitations under the License.
  */
 
-import type { Requireable } from 'prop-types';
 /**
  * External dependencies
  */
 /* eslint-disable no-restricted-imports -- Still used by other packages. */
 import * as PropTypes from 'prop-types';
-
+import type { Requireable } from 'prop-types';
 /* eslint-enable no-restricted-imports -- Still used by other packages. */
 import type {
   Attribution,

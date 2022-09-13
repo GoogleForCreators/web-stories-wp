@@ -18,9 +18,7 @@
  * External dependencies
  */
 import type { CSSProperties } from 'react';
-
 import { rgba } from 'polished';
-
 import {
   ColorStop,
   Gradient,

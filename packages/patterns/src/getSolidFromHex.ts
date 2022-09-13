@@ -19,10 +19,10 @@
  */
 import type { Pattern } from '@googleforcreators/types';
 
-import createSolid from './createSolid';
 /**
  * Internal dependencies
  */
+import createSolid from './createSolid';
 import createSolidFromString from './createSolidFromString';
 
 function getSolidFromHex(hex: string): Pattern {
