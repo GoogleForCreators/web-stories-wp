@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,4 +14,16 @@
  * limitations under the License.
  */
 
-export const { webStoriesData } = window;
+function bindToCallbacks<T>(
+  callbacks: Record<string, (config: T) => unknown>,
+  config: T
+): Record<string, unknown> {
+  return Object.fromEntries(
+    Object.entries(callbacks).map(([name, callback]) => [
+      name,
+      callback.bind(null, config),
+    ])
+  );
+}
+
+export default bindToCallbacks;

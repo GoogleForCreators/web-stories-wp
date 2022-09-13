@@ -27,7 +27,12 @@ import {
 } from '@googleforcreators/react';
 import styled from 'styled-components';
 import { getExtensionsFromMimeType } from '@googleforcreators/media';
-import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
+import {
+  __,
+  _n,
+  sprintf,
+  translateToExclusiveList,
+} from '@googleforcreators/i18n';
 import {
   Link,
   Text,
@@ -49,6 +54,8 @@ import {
   useHighlights,
   useSidebar,
 } from '@googleforcreators/story-editor';
+import { useFeature } from 'flagged';
+import { addQueryArgs } from '@googleforcreators/url';
 /**
  * Internal dependencies
  */
@@ -116,6 +123,24 @@ const LogoImg = styled.img`
   max-height: 96px;
 `;
 
+const RevisionsWrapper = styled.div`
+  width: 100%;
+  margin-bottom: 16px;
+  margin-top: 20px;
+`;
+
+const RevisionsLabel = styled.div`
+  display: inline-block;
+  margin-left: 20px;
+  margin-right: 20px;
+`;
+
+const LabelIconWrapper = styled.div`
+  position: absolute;
+  display: inline-block;
+  margin-left: -5px;
+`;
+
 function PublishPanel({ nameOverride }) {
   const {
     state: { users },
@@ -131,7 +156,10 @@ function PublishPanel({ nameOverride }) {
     dashboardSettingsLink,
     capabilities: { hasUploadMediaAction, canManageSettings },
     MediaUpload,
+    revisionLink,
   } = useConfig();
+
+  const improvedAutosaves = useFeature('improvedAutosaves');
 
   const allowedImageFileTypes = useMemo(
     () =>
@@ -156,25 +184,31 @@ function PublishPanel({ nameOverride }) {
     })
   );
 
-  const { featuredMedia, publisherLogo, updateStory, capabilities } = useStory(
-    ({
-      state: {
-        story: {
-          featuredMedia = { id: 0, url: '', height: 0, width: 0 },
-          publisherLogo = { id: 0, url: '', height: 0, width: 0 },
+  const { featuredMedia, publisherLogo, updateStory, capabilities, revisions } =
+    useStory(
+      ({
+        state: {
+          story: {
+            featuredMedia = { id: 0, url: '', height: 0, width: 0 },
+            publisherLogo = { id: 0, url: '', height: 0, width: 0 },
+            revisions,
+          },
+          capabilities,
         },
-        capabilities,
-      },
-      actions: { updateStory },
-    }) => {
-      return {
-        featuredMedia,
-        publisherLogo,
-        updateStory,
-        capabilities,
-      };
-    }
-  );
+        actions: { updateStory },
+      }) => {
+        return {
+          featuredMedia,
+          publisherLogo,
+          updateStory,
+          capabilities,
+          revisions,
+        };
+      }
+    );
+
+  const revisionCount = revisions?.count ? revisions?.count : 0;
+  const revisionId = revisions?.id ? revisions?.id : 0;
 
   const handleChangePoster = useCallback(
     /**
@@ -414,6 +448,37 @@ function PublishPanel({ nameOverride }) {
             </LabelWrapper>
           </DropdownWrapper>
         </HighlightRow>
+        {improvedAutosaves && revisionCount >= 1 ? (
+          <RevisionsWrapper>
+            <Label>
+              <LabelIconWrapper>
+                <Icons.History width={24} height={24} aria-hidden />
+              </LabelIconWrapper>
+              <RevisionsLabel>
+                {sprintf(
+                  /* translators: %d: number of revisions. */
+                  _n(
+                    '%d Revision',
+                    '%d Revisions',
+                    revisionCount,
+                    'web-stories'
+                  ),
+                  revisionCount
+                )}
+              </RevisionsLabel>
+              {revisionLink && revisionId ? (
+                <Link
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  href={addQueryArgs(revisionLink, { revision: revisionId })}
+                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
+                >
+                  {__('Browse', 'web-stories')}
+                </Link>
+              ) : null}
+            </Label>
+          </RevisionsWrapper>
+        ) : null}
       </PanelContent>
     </Panel>
   );

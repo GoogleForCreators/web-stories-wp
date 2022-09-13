@@ -23,9 +23,9 @@ import { compose } from '@wordpress/compose';
 /**
  * Internal dependencies
  */
-import name from '../store/name';
 import WebStoriesModal from '../components/Modal';
 import { prepareShortCode } from '../utils';
+import store from '../store';
 
 /**
  *
@@ -36,8 +36,8 @@ import { prepareShortCode } from '../utils';
  */
 const mapSelectToProps = (select) => {
   return {
-    modalOpen: select(name).getModal(),
-    settings: select(name).getCurrentViewSettings(),
+    modalOpen: select(store).getModal(),
+    settings: select(store).getCurrentViewSettings(),
     prepareShortCode: prepareShortCode,
   };
 };
