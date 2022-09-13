@@ -4,6 +4,5 @@
     "rootDir": "src",
     "declarationDir": "dist-types"
   },
-  "references": [{ "path": "../patterns" }],
   "include": ["src/**/*"]
 }

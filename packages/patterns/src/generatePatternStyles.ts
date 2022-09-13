@@ -21,17 +21,14 @@ import type { CSSProperties } from 'react';
 
 import { rgba } from 'polished';
 
-/**
- * Internal dependencies
- */
-import {
+import type {
   ColorStop,
   Gradient,
   Hex,
   Pattern,
   PatternType,
   Solid,
-} from './types';
+} from '@googleforcreators/types';
 
 /**
  * Truncate a number to a given number of decimals.

@@ -15,9 +15,12 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import type { Hex, Pattern } from './types';
+import type {
+  Hex,
+  Pattern,
+} from '@googleforcreators/types';
 
 function colorHasTransparency(color: Hex) {
   return color.a !== undefined && color.a < 1;

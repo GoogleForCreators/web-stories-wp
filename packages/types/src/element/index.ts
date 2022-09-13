@@ -19,6 +19,7 @@ export * from './elementBox';
 export * from './gifElement';
 export * from './imageElement';
 export * from './mediaElement';
+export * from './pattern';
 export * from './productElement';
 export * from './shapeElement';
 export * from './stickerElement';

@@ -15,15 +15,11 @@
  */
 
 /**
- * External dependencies
- */
-import type { Pattern } from '@googleforcreators/patterns';
-
-/**
  * Internal dependencies
  */
 import type {
   Element,
+  Pattern,
   ShapeElement,
 } from '../element';
 import type { Animation } from './animation';

@@ -37,8 +37,6 @@
     "access": "public"
   },
   "sideEffects": false,
-  "dependencies": {
-    "@googleforcreators/patterns": "*"
-  },
+  "dependencies": {},
   "devDependencies": {}
 }

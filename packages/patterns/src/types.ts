@@ -19,7 +19,9 @@
  */
 /* eslint-disable no-restricted-imports -- Still used by other packages. */
 import PropTypes from 'prop-types';
+
 /* eslint-enable no-restricted-imports -- Still used by other packages. */
+import { PatternType } from '@googleforcreators/types';
 
 export const HexPropType = PropTypes.shape({
   r: PropTypes.number.isRequired,
@@ -32,12 +34,6 @@ export const ColorStopPropType = PropTypes.shape({
   color: HexPropType.isRequired,
   position: PropTypes.number.isRequired,
 });
-
-export enum PatternType {
-  SOLID = 'solid',
-  LINEAR = 'linear',
-  RADIAL = 'radial',
-}
 
 export const PatternPropType = PropTypes.shape({
   type: PropTypes.oneOf(Object.values(PatternType)),
@@ -54,47 +50,3 @@ export const PatternPropType = PropTypes.shape({
     h: PropTypes.number.isRequired,
   }),
 });
-
-export type Hex = {
-  r: number;
-  g: number;
-  b: number;
-  a?: number;
-};
-
-export type Solid = {
-  type?: PatternType.SOLID;
-  color: Hex;
-};
-
-export type ColorStop = {
-  color: Hex;
-  position: number;
-};
-
-type AbstractGradient = {
-  type: PatternType.LINEAR | PatternType.RADIAL;
-  stops: ColorStop[];
-  alpha?: number;
-};
-
-export type Linear = AbstractGradient & {
-  type: PatternType.LINEAR;
-  rotation?: number;
-};
-
-export type Radial = AbstractGradient & {
-  type: PatternType.RADIAL;
-  size?: {
-    w: number;
-    h: number;
-  };
-  center?: {
-    x: number;
-    y: number;
-  };
-  rotation?: number;
-};
-
-export type Gradient = Linear | Radial;
-export type Pattern = Solid | Gradient;
