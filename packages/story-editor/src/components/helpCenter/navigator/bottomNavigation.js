@@ -38,6 +38,10 @@ const secondaryTextStyle = css`
   color: ${({ theme }) => theme.colors.fg.secondary};
 `;
 
+const AllTips = styled.span`
+  ${secondaryTextStyle}
+`;
+
 const BottomNavBar = styled(NavBar)`
   position: absolute;
   bottom: 0;
@@ -121,7 +125,7 @@ export function BottomNavigation({
           <ArrowWrap $isRTL={isRTL}>
             <Icons.ArrowLeft />
           </ArrowWrap>
-          <span css={secondaryTextStyle}>{__('All Tips', 'web-stories')}</span>
+          <AllTips>{__('All Tips', 'web-stories')}</AllTips>
         </NavButton>
       </BottomNavButtons>
       <BottomNavButtons>

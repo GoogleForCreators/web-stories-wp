@@ -39,12 +39,6 @@ jest.mock('@wordpress/i18n', () => ({
   __: (val, domain) => val,
 }));
 
-jest.mock('../../utils/globals', () => ({
-  webStoriesData: {
-    views: [],
-  },
-}));
-
 jest.mock('../../utils', () => ({
   updateViewSettings: jest.fn((settings) => settings),
 }));
