@@ -14,13 +14,17 @@
  * limitations under the License.
  */
 
-export * from './element';
-export * from './elementBox';
-export * from './gifElement';
-export * from './imageElement';
-export * from './mediaElement';
-export * from './productElement';
-export * from './shapeElement';
-export * from './stickerElement';
-export * from './textElement';
-export * from './videoElement';
+/**
+ * External dependencies
+ */
+import type { Pattern } from '@googleforcreators/patterns';
+
+/**
+ * Internal dependencies
+ */
+import type { Element } from './element';
+
+export interface ShapeElement extends Element {
+  backgroundColor: Pattern;
+  isDefaultBackground?: boolean;
+}

@@ -14,13 +14,15 @@
  * limitations under the License.
  */
 
-export * from './element';
-export * from './elementBox';
-export * from './gifElement';
-export * from './imageElement';
-export * from './mediaElement';
-export * from './productElement';
-export * from './shapeElement';
-export * from './stickerElement';
-export * from './textElement';
-export * from './videoElement';
+/**
+ * Internal dependencies
+ */
+import type { Resource } from '../resource';
+import type { Element } from './element';
+
+export interface MediaElement extends Element {
+  resource: Resource;
+  scale: number;
+  focalX?: number;
+  focalY?: number;
+}

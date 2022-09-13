@@ -14,6 +14,33 @@
  * limitations under the License.
  */
 
-export * from './resource';
-export * from './element';
-export * from './story';
+/**
+ * External dependencies
+ */
+import type { Pattern } from '@googleforcreators/patterns';
+
+/**
+ * Internal dependencies
+ */
+import type {
+  Element,
+  ShapeElement,
+} from '../element';
+import type { Animation } from './animation';
+
+export interface Group {
+  name: string;
+  isLocked: boolean;
+  isCollapsed?: boolean;
+}
+
+export type Groups = Record<string, Group>;
+
+export interface Page {
+  elements: Element[];
+  defaultBackgroundElement?: ShapeElement;
+  animations?: Animation[];
+  backgroundColor: Pattern;
+  type: 'page';
+  groups: Groups;
+}

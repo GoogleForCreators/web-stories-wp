@@ -14,13 +14,6 @@
  * limitations under the License.
  */
 
-export * from './element';
-export * from './elementBox';
-export * from './gifElement';
-export * from './imageElement';
-export * from './mediaElement';
-export * from './productElement';
-export * from './shapeElement';
-export * from './stickerElement';
-export * from './textElement';
-export * from './videoElement';
+export * from './animation';
+export * from './page';
+export * from './story';

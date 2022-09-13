@@ -14,13 +14,9 @@
  * limitations under the License.
  */
 
-export * from './element';
-export * from './elementBox';
-export * from './gifElement';
-export * from './imageElement';
-export * from './mediaElement';
-export * from './productElement';
-export * from './shapeElement';
-export * from './stickerElement';
-export * from './textElement';
-export * from './videoElement';
+/**
+ * Internal dependencies
+ */
+import type { MediaElement } from './mediaElement';
+
+export type ImageElement = MediaElement;

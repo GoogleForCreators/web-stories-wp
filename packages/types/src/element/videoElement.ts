@@ -14,13 +14,25 @@
  * limitations under the License.
  */
 
-export * from './element';
-export * from './elementBox';
-export * from './gifElement';
-export * from './imageElement';
-export * from './mediaElement';
-export * from './productElement';
-export * from './shapeElement';
-export * from './stickerElement';
-export * from './textElement';
-export * from './videoElement';
+/**
+ * Internal dependencies
+ */
+import type { VideoResource } from '../resource';
+import type { MediaElement } from './mediaElement';
+
+export interface VideoTrack {
+  id: string;
+  track: string;
+  trackId?: number;
+  kind?: string;
+  srclang?: string;
+  label?: string;
+  needsProxy?: boolean;
+}
+
+export interface VideoElement extends MediaElement {
+  resource: VideoResource;
+  poster?: string;
+  tracks?: VideoTrack[];
+  loop?: boolean;
+}
