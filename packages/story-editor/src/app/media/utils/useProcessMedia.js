@@ -30,6 +30,7 @@ import { trackError } from '@googleforcreators/tracking';
  */
 import useAPI from '../../api/useAPI';
 import useStory from '../../story/useStory';
+import useFFmpeg from './useFFmpeg';
 import useMediaInfo from './useMediaInfo';
 
 function useProcessMedia({
@@ -41,6 +42,9 @@ function useProcessMedia({
   const {
     actions: { getOptimizedMediaById, getMutedMediaById },
   } = useAPI();
+
+  const { segmentVideo: ffSegmentVideo } = useFFmpeg();
+
   const { updateElementsByResourceId, updateElementById } = useStory(
     (state) => ({
       updateElementsByResourceId: state.actions.updateElementsByResourceId,
@@ -567,12 +571,38 @@ function useProcessMedia({
     ]
   );
 
+  /**
+   * Segment video using FFmpeg.
+   *
+   * @param {import('@googleforcreators/media').Resource} resource Resource object.
+   * @param {Function} handleSegmented function to handle segmentedFile processing.
+   */
+  const segmentVideo = useCallback(
+    async ({ resource: oldResource, segmentTime }, handleSegmented) => {
+      const { src: url, mimeType } = oldResource;
+      const segmentedFiles = await ffSegmentVideo(
+        await fetchRemoteFile(url, mimeType),
+        segmentTime
+      );
+
+      const addElement = handleSegmented(segmentedFiles);
+
+      for (const file of segmentedFiles) {
+        // eslint-disable-next-line no-await-in-loop -- need to await new new resource
+        await uploadMedia([file], { onUploadSuccess: addElement });
+      }
+      return segmentedFiles;
+    },
+    [uploadMedia, ffSegmentVideo]
+  );
+
   return {
     optimizeVideo,
     optimizeGif,
     muteExistingVideo,
     trimExistingVideo,
     cropExistingVideo,
+    segmentVideo,
   };
 }
 

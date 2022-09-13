@@ -284,6 +284,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     muteExistingVideo,
     cropExistingVideo,
     trimExistingVideo,
+    segmentVideo,
   } = useProcessMedia({
     postProcessingResource,
     uploadMedia,
@@ -344,6 +345,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
       updateBaseColor,
       updateBlurHash,
       cropExistingVideo,
+      segmentVideo,
     },
   };
 }
