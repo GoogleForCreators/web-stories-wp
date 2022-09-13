@@ -304,7 +304,7 @@ function useUploadMedia({
           // having to update the dimensions later on as the information becomes available.
           // Downside: it takes a tad longer for the file to initially appear.
           // Upside: file is displayed with the right dimensions from the beginning.
-          if (!resource || !posterFile) {
+          if ((!resource || !posterFile) && !cropVideo ) {
             const { resource: newResource, posterFile: newPosterFile } =
               await getResourceFromLocalFile(file);
             posterFile = newPosterFile;

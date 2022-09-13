@@ -487,12 +487,27 @@ function useProcessMedia({
    */
   const cropExistingVideo = useCallback(
     ({ id: elementId, resource: oldResource }, cropParams) => {
-      const { id: resourceId, src: url, mimeType, isOptimized } = oldResource;
+      const { id: resourceId, ...oldResourceWithoutId } = oldResource;
+      const { src: url, mimeType, isOptimized } = oldResource;
       const { newWidth, newHeight, cropElement } = cropParams;
+
+      const onUploadError = () => {
+          updateExistingElementsByResourceId(resourceId, {
+            height: oldResource.height,
+            width: oldResource.width,
+          });
+      };
+
+      // TODO: Confirm which properties exactly need to be updated.
+      const onUploadProgress = ({ resource }) => {
+        const oldResourceWithId = { ...resource, id: oldResource.id };
+        updateExistingElementsByResourceId(resourceId, {
+          ...oldResourceWithId,
+        });
+      };
 
       const onUploadSuccess = ({ id, resource }) => {
         copyResourceData({ oldResource, resource });
-        updateOldTranscodedObject(oldResource.id, resource.id, 'source-video');
         updateElementById({
           elementId,
           properties: {
@@ -503,10 +518,7 @@ function useProcessMedia({
                 : cropElement.y,
             width: newWidth,
             height: newHeight,
-            resource: {
-              ...resource,
-              id: oldResource.id,
-            },
+            resource,
           },
         });
 
@@ -517,15 +529,6 @@ function useProcessMedia({
         }
       };
 
-      const onUploadProgress = ({ resource }) => {
-        const newResourceWithCanvasId = {
-          ...resource,
-          id: cropElement.resource.id,
-        };
-        updateExistingElementById(elementId, {
-          ...newResourceWithCanvasId,
-        });
-      };
 
       const process = async () => {
         let file = false;
@@ -534,6 +537,7 @@ function useProcessMedia({
           await uploadMedia([file], {
             onUploadSuccess,
             onUploadProgress,
+            onUploadError,
             cropVideo: true,
             additionalData: {
               original_id: resourceId,
@@ -542,9 +546,7 @@ function useProcessMedia({
             },
             originalResourceId: resourceId,
             resource: {
-              ...oldResource,
-              poster: null,
-              posterId: 0,
+              ...oldResourceWithoutId,
               width: newWidth,
               height: newHeight,
             },
