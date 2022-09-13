@@ -26,14 +26,16 @@ import type { RenderConfig } from 'draft-js-export-html';
  */
 import formatters from './formatters';
 
-function inlineStyleFn(styles: Immutable.OrderedSet<string>): RenderConfig {
+function inlineStyleFn(
+  styles: Immutable.OrderedSet<string>
+): RenderConfig | null {
   const inlineCSS = formatters.reduce(
     (css, { stylesToCSS }) => ({ ...css, ...stylesToCSS(styles) }),
     {}
   );
 
   if (Object.keys(inlineCSS).length === 0) {
-    return {};
+    return null;
   }
 
   return {
@@ -49,6 +51,8 @@ function exportHTML(editorState: EditorState) {
 
   const html = stateToHTML(editorState.getCurrentContent(), {
     inlineStyleFn,
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment -- See the next line for reason.
+    // @ts-ignore Reason: `defaultBlockTag` is optional (undefined | string), however, `undefined` means `p` so we need to use `null` here.
     defaultBlockTag: null,
   });
 
