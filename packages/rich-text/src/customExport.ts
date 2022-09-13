@@ -51,8 +51,6 @@ function exportHTML(editorState: EditorState) {
 
   const html = stateToHTML(editorState.getCurrentContent(), {
     inlineStyleFn,
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment -- See the next line for reason.
-    // @ts-ignore Reason: `defaultBlockTag` is optional (undefined | string), however, `undefined` means `p` so we need to use `null` here.
     defaultBlockTag: null,
   });
 
