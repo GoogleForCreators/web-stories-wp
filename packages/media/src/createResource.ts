@@ -15,16 +15,21 @@
  */
 
 /**
+ * External dependencies
+ */
+import {
+  GifResource,
+  Resource,
+  ResourceType,
+  VideoResource,
+} from '@googleforcreators/types';
+
+/**
  * Internal dependencies
  */
 import getTypeFromMime from './getTypeFromMime';
 import normalizeResourceSizes from './normalizeResourceSizes';
-import type {
-  GifResource,
-  Resource,
-  VideoResource,
-  ResourceInput,
-} from './types';
+import type { ResourceInput } from './types';
 
 /**
  * Creates a resource object.
@@ -57,6 +62,53 @@ function createResource({
   trimData,
   needsProxy = false,
 }: ResourceInput): Resource | VideoResource | GifResource {
+  type = type || getTypeFromMime(mimeType);
+  if (type === ResourceType.VIDEO) {
+    return {
+      baseColor,
+      blurHash,
+      type,
+      mimeType,
+      creationDate,
+      src,
+      width: Number(width || 0),
+      height: Number(height || 0),
+      poster,
+      posterId,
+      id,
+      length,
+      lengthFormatted,
+      alt,
+      sizes: normalizeResourceSizes(sizes),
+      attribution,
+      isPlaceholder,
+      isOptimized,
+      isMuted,
+      isExternal,
+      trimData,
+      needsProxy,
+    };
+  }
+  if (type === ResourceType.GIF) {
+    return {
+      baseColor,
+      blurHash,
+      type,
+      mimeType,
+      creationDate,
+      src,
+      width: Number(width || 0),
+      height: Number(height || 0),
+      id,
+      alt,
+      sizes: normalizeResourceSizes(sizes),
+      attribution,
+      output,
+      isPlaceholder,
+      isExternal,
+      needsProxy,
+    };
+  }
   return {
     baseColor,
     blurHash,
@@ -66,20 +118,12 @@ function createResource({
     src,
     width: Number(width || 0),
     height: Number(height || 0),
-    poster,
-    posterId,
     id,
-    length,
-    lengthFormatted,
     alt,
     sizes: normalizeResourceSizes(sizes),
     attribution,
-    output,
     isPlaceholder,
-    isOptimized,
-    isMuted,
     isExternal,
-    trimData,
     needsProxy,
   };
 }

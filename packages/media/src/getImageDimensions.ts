@@ -15,10 +15,14 @@
  */
 
 /**
+ * External dependencies
+ */
+import type { Dimensions } from '@googleforcreators/types';
+
+/**
  * Internal dependencies
  */
 import preloadImage from './preloadImage';
-import type { Dimensions } from './types';
 
 /**
  * Get image dimensions from an image.
