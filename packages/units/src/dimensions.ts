@@ -17,10 +17,7 @@
 /**
  * External dependencies
  */
-import type {
-  Element,
-  ElementBox,
-} from '@googleforcreators/types';
+import type { Element, ElementBox } from '@googleforcreators/types';
 
 /**
  * Internal dependencies

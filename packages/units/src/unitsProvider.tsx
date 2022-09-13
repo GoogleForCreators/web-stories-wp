@@ -18,7 +18,6 @@
  * External dependencies
  */
 import type { ReactNode } from 'react';
-
 import { useMemo } from '@googleforcreators/react';
 import type { Element } from '@googleforcreators/types';
 

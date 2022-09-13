@@ -18,10 +18,7 @@
  * External dependencies
  */
 import { createContext } from '@googleforcreators/react';
-import type {
-  Element,
-  ElementBox,
-} from '@googleforcreators/types';
+import type { Element, ElementBox } from '@googleforcreators/types';
 
 export const INITIAL_STATE = {
   state: {},
