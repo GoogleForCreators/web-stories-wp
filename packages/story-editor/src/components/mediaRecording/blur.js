@@ -74,7 +74,7 @@ const blur = (context, amount) => {
   const vmin = [];
   const vmax = [];
 
-  let iterations = 3; // 1 - 3
+  let iterations = 3;
   let p, p1, p2, pa;
 
   while (iterations-- > 0) {
@@ -88,7 +88,6 @@ const blur = (context, amount) => {
       let asum = data[yw + 3] * rad1;
 
       for (let i = 1; i <= amount; i++) {
-        // tslint:disable-next-line no-bitwise
         p = yw + ((i > wm ? wm : i) << 2);
         rsum += data[p++];
         gsum += data[p++];
@@ -103,9 +102,7 @@ const blur = (context, amount) => {
         a[yi] = asum;
 
         if (y === 0) {
-          // tslint:disable-next-line no-bitwise
           vmin[x] = ((p = x + rad1) < wm ? p : wm) << 2;
-          // tslint:disable-next-line no-bitwise
           vmax[x] = (p = x - amount) > 0 ? p << 2 : 0;
         }
 
@@ -119,7 +116,6 @@ const blur = (context, amount) => {
 
         yi++;
       }
-      // tslint:disable-next-line no-bitwise
       yw += width << 2;
     }
 
@@ -138,20 +134,15 @@ const blur = (context, amount) => {
         asum += a[yp];
       }
 
-      // tslint:disable-next-line no-bitwise
       yi = x << 2;
 
       for (let y = 0; y < height; y++) {
-        // tslint:disable-next-line no-bitwise
         data[yi + 3] = pa = (asum * mulSum) >>> shgSum;
 
         if (pa > 0) {
           pa = 255 / pa;
-          // tslint:disable-next-line no-bitwise
           data[yi] = ((rsum * mulSum) >>> shgSum) * pa;
-          // tslint:disable-next-line no-bitwise
           data[yi + 1] = ((gsum * mulSum) >>> shgSum) * pa;
-          // tslint:disable-next-line no-bitwise
           data[yi + 2] = ((bsum * mulSum) >>> shgSum) * pa;
         } else {
           data[yi] = data[yi + 1] = data[yi + 2] = 0;
@@ -170,16 +161,12 @@ const blur = (context, amount) => {
         bsum += b[p1] - b[p2];
         asum += a[p1] - a[p2];
 
-        // tslint:disable-next-line no-bitwise
         yi += width << 2;
       }
     }
   }
 
-  // set back image data to context
   context.putImageData(imageData, 0, 0);
-
-  // return the context itself
   return context;
 };
 
