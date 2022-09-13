@@ -17,22 +17,23 @@
 /**
  * WordPress dependencies
  */
-import { registerStore } from '@wordpress/data';
+import { createReduxStore, register } from '@wordpress/data';
+
 /**
  * Internal dependencies
  */
 import * as actions from './actions';
-import name from './name';
 import reducer from './reducers';
 import * as selectors from './selectors';
 
-/**
- * Create a store.
- */
-const WebStoryMCEStore = registerStore(name, {
-  actions: actions,
-  reducer: reducer,
-  selectors: selectors,
+const name = 'web-stories-mce';
+
+const store = createReduxStore(name, {
+  actions,
+  reducer,
+  selectors,
 });
 
-export default WebStoryMCEStore;
+register(store);
+
+export default store;

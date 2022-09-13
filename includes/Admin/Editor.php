@@ -342,6 +342,8 @@ class Editor extends Service_Base implements HasRequirements {
 			admin_url( 'edit.php' )
 		);
 
+		$revision_url = admin_url( 'revision.php' );
+
 		$dashboard_settings_url = add_query_arg(
 			[
 				'post_type' => $this->story_post_type->get_slug(),
@@ -394,6 +396,7 @@ class Editor extends Service_Base implements HasRequirements {
 			'postType'                => $this->story_post_type->get_slug(),
 			'storyId'                 => $story_id,
 			'dashboardLink'           => $dashboard_url,
+			'revisionLink'            => $revision_url,
 			'dashboardSettingsLink'   => $dashboard_settings_url,
 			'generalSettingsLink'     => $general_settings_url,
 			'cdnURL'                  => trailingslashit( WEBSTORIES_CDN_URL ),
