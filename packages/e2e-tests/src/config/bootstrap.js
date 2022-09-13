@@ -30,6 +30,10 @@ import {
   clearLocalStorage,
 } from '@web-stories-wp/e2e-test-utils';
 
+async function clearSessionStorage() {
+  await page.evaluate(() => window.sessionStorage.clear());
+}
+
 expect.extend({
   toBeValidAMP,
 });
@@ -105,6 +109,7 @@ const ALLOWED_ERROR_MESSAGES = [
   // Sometimes the AMP viewer can fail to load translations when viewing a story.
   'Bundle not found for language en:',
 
+  // Media3p API requests can sometimes fail in the Docker environment (due to network issues?).
   'Failed to fetch',
 ];
 
@@ -236,12 +241,14 @@ beforeAll(async () => {
   await deleteAllMedia();
 
   await clearLocalStorage();
+  await clearSessionStorage();
 });
 
 // eslint-disable-next-line jest/require-top-level-describe
 afterEach(async () => {
   await setupBrowser();
   await clearLocalStorage();
+  await clearSessionStorage();
 });
 
 // eslint-disable-next-line jest/require-top-level-describe
