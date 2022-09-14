@@ -32,7 +32,8 @@ describe('date/convertFormatString', () => {
     'converts PHP date format string to its date-fns equivalent',
     (formatString, expectedOutput) => {
       const convertedWithoutSeparator = convertFormatString(
-        formatString
+        formatString,
+        new Date()
       ).replace(FORMAT_TOKEN_SEPARATOR_REGEX, '');
       expect(convertedWithoutSeparator).toStrictEqual(expectedOutput);
       expect(() => format(new Date(), formatString)).not.toThrow();

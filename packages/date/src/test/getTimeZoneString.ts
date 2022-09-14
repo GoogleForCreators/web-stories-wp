@@ -68,9 +68,4 @@ describe('date/getTimeZoneString', () => {
     updateSettings({ gmtOffset: -121.1 });
     expect(getTimeZoneString()).toBe('-02:01');
   });
-
-  it('returns default is offset if NaN', () => {
-    updateSettings({ gmtOffset: 'EST' });
-    expect(getTimeZoneString()).toBe('+00');
-  });
 });

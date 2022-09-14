@@ -204,10 +204,4 @@ describe('date/getRelativeDisplayDate', () => {
 
     expect(formattedDate).toBe('05/02/2020');
   });
-
-  it('should return an empty string with a null date', () => {
-    const formattedDate = getRelativeDisplayDate(null);
-
-    expect(formattedDate).toBe('');
-  });
 });
