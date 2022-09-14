@@ -165,10 +165,17 @@ function PlaybackMedia() {
       if (videoEffect === VIDEO_EFFECTS.BLUR) {
         selfieSegmentation.onResults(onSelfieSegmentationResults);
         const sendFrame = async () => {
-          if (streamNode && streamNode.videoWidth && selfieSegmentation) {
+          if (
+            streamNode &&
+            streamNode.videoWidth &&
+            selfieSegmentation &&
+            canvasRef.current
+          ) {
             await selfieSegmentation.send({ image: streamNode });
           }
-          rafRef.current = requestAnimationFrame(sendFrame);
+          if (canvasRef.current) {
+            rafRef.current = requestAnimationFrame(sendFrame);
+          }
         };
         if (streamNode && hasVideoEffect) {
           await sendFrame();
