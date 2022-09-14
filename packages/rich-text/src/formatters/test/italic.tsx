@@ -29,6 +29,7 @@ import {
 } from '../../styleManipulation';
 import { ITALIC, NONE } from '../../customConstants';
 import formatter from '../italic';
+import type { SetStyleCallback } from '../../types';
 import { getDOMElement } from './_utils';
 
 jest.mock('../../styleManipulation', () => {
@@ -107,7 +108,9 @@ describe('Italic formatter', () => {
     });
 
     function setupFormatter(styleArray: string[]) {
-      jest.mocked(getPrefixStylesInSelection).mockImplementationOnce(() => styleArray);
+      jest
+        .mocked(getPrefixStylesInSelection)
+        .mockImplementationOnce(() => styleArray);
       return getters.isItalic({} as EditorState);
     }
 
@@ -152,7 +155,8 @@ describe('Italic formatter', () => {
       );
 
       // Third argument is tester
-      const shouldSetStyle = jest.mocked(togglePrefixStyle).mock.calls[0][2];
+      const shouldSetStyle = jest.mocked(togglePrefixStyle).mock
+        .calls[0][2] as SetStyleCallback;
       expect(shouldSetStyle()).toBe(false);
     });
 
@@ -166,7 +170,8 @@ describe('Italic formatter', () => {
       );
 
       // Third argument is tester
-      const shouldSetStyle = jest.mocked(togglePrefixStyle).mock.calls[0][2];
+      const shouldSetStyle = jest.mocked(togglePrefixStyle).mock
+        .calls[0][2] as SetStyleCallback;
       expect(shouldSetStyle()).toBe(true);
     });
   });

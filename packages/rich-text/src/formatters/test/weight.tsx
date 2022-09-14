@@ -29,6 +29,7 @@ import {
 } from '../../styleManipulation';
 import { NONE, WEIGHT, MULTIPLE_VALUE } from '../../customConstants';
 import formatter from '../weight';
+import type { SetStyleCallback, StyleGetter } from '../../types';
 import { getDOMElement } from './_utils';
 
 jest.mock('../../styleManipulation', () => {
@@ -194,7 +195,8 @@ describe('Color formatter', () => {
       setters.setFontWeight(state as EditorState, weight);
 
       // Third argument is tester
-      const shouldSetStyle = jest.mocked(togglePrefixStyle).mock.calls[0][2];
+      const shouldSetStyle = jest.mocked(togglePrefixStyle).mock
+        .calls[0][2] as SetStyleCallback;
       expect(shouldSetStyle()).toBe(false);
     });
 
@@ -205,11 +207,12 @@ describe('Color formatter', () => {
       setters.setFontWeight(state as EditorState, weight);
 
       // Third argument is tester
-      const shouldSetStyle = jest.mocked(togglePrefixStyle).mock.calls[0][2];
+      const shouldSetStyle = jest.mocked(togglePrefixStyle).mock
+        .calls[0][2] as SetStyleCallback;
       expect(shouldSetStyle()).toBe(true);
 
       // Fourth argument is actual style to set
-      const styleToSet = jest.mocked(togglePrefixStyle).mock.calls[0][3];
+      const styleToSet = jest.mocked(togglePrefixStyle).mock.calls[0][3] as StyleGetter;
       expect(styleToSet()).toBe(`${WEIGHT}-900`);
     });
 
@@ -223,7 +226,8 @@ describe('Color formatter', () => {
       );
 
       // Third argument is tester
-      const shouldSetStyle = jest.mocked(togglePrefixStyle).mock.calls[0][2];
+      const shouldSetStyle = jest.mocked(togglePrefixStyle).mock
+        .calls[0][2] as SetStyleCallback;
       expect(shouldSetStyle()).toBe(false);
     });
 
@@ -238,11 +242,13 @@ describe('Color formatter', () => {
       );
 
       // Third argument is tester
-      const shouldSetStyle = jest.mocked(togglePrefixStyle).mock.calls[0][2];
+      const shouldSetStyle = jest.mocked(togglePrefixStyle).mock
+        .calls[0][2] as SetStyleCallback;
       expect(shouldSetStyle()).toBe(true);
 
       // Fourth argument is actual style to set
-      const styleToSet = jest.mocked(togglePrefixStyle).mock.calls[0][3];
+      const styleToSet = jest.mocked(togglePrefixStyle).mock
+        .calls[0][3] as SetStyleCallback;
       expect(styleToSet()).toBe(`${WEIGHT}-700`);
     });
 
@@ -257,13 +263,15 @@ describe('Color formatter', () => {
       );
 
       // Third argument is tester
-      const shouldSetStyle = jest.mocked(togglePrefixStyle).mock.calls[0][2];
+      const shouldSetStyle = jest.mocked(togglePrefixStyle).mock
+        .calls[0][2] as SetStyleCallback;
       expect(shouldSetStyle([NONE])).toBe(true);
       expect(shouldSetStyle([`${WEIGHT}-300`, `${WEIGHT}-900`])).toBe(true);
       expect(shouldSetStyle([`${WEIGHT}-600`, `${WEIGHT}-900`])).toBe(false);
 
       // Fourth argument is actual style to set
-      const styleToSet = jest.mocked(togglePrefixStyle).mock.calls[0][3];
+      const styleToSet = jest.mocked(togglePrefixStyle).mock
+        .calls[0][3] as StyleGetter;
       expect(styleToSet([NONE])).toBe(`${WEIGHT}-700`);
       expect(styleToSet([`${WEIGHT}-300`, `${WEIGHT}-600`])).toBe(
         `${WEIGHT}-700`

@@ -17,8 +17,8 @@
 /**
  * External dependencies
  */
-import { Modifier, EditorState } from 'draft-js';
 import type { ContentState } from 'draft-js';
+import { EditorState, Modifier } from 'draft-js';
 
 /**
  * Internal dependencies
@@ -125,22 +125,21 @@ function applyContent(editorState: EditorState, contentState: ContentState) {
  * it's probably easiest to understand how it works by following the inline
  * comments and reading through the corresponding exhaustive unit tests.
  *
- * @param {Object} editorState  Current editor state
- * @param {string} prefix  Style (prefix) to remove from state and potentially
+ * @param editorState  Current editor state
+ * @param prefix  Style (prefix) to remove from state and potentially
  * replace with different style
- * @param {Function} shouldSetStyle  Optional function to get if new style
+ * @param shouldSetStyle  Optional function to get if new style
  * should be added or not
- * @param {Function} getStyleToSet  Optional function to get what new style
+ * @param getStyleToSet  Optional function to get what new style
  * should be added
- * @return {Object} New editor state
+ * @return New editor state
  */
-
 export function togglePrefixStyle(
   editorState: EditorState,
   prefix: string,
   shouldSetStyle: SetStyleCallback | null = null,
   getStyleToSet: StyleGetter | null = null
-) {
+): EditorState {
   if (editorState.getSelection().isCollapsed()) {
     // A different set of rules apply here
     // First find all styles that apply at cursor - we'll reapply those as override
@@ -167,11 +166,7 @@ export function togglePrefixStyle(
     }
 
     // Finally apply to style override
-    const newState = EditorState.setInlineStyleOverride(
-      editorState,
-      inlineStyles
-    );
-    return newState;
+    return EditorState.setInlineStyleOverride(editorState, inlineStyles);
   }
 
   const matchingStyles = getPrefixStylesInSelection(editorState, prefix);
@@ -202,7 +197,7 @@ export function togglePrefixStyle(
   }
 
   // Add style to entire selection
-  // If no function is given, we simple add the prefix as a style
+  // If no function is given, we simply add the prefix as a style
   const styleToSet = getStyleToSet ? getStyleToSet(matchingStyles) : prefix;
   const newContentState = Modifier.applyInlineStyle(
     strippedContentState,

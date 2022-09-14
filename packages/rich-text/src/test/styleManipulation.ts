@@ -395,7 +395,7 @@ function getEditorState(
         type: 'unstyled',
         depth: 0,
         inlineStyleRanges: [
-          { offset: 2, length: 2, style: 'CUSTOM-WEIGHT-700' },
+          { offset: 2, length: 2, style: 'CUSTOM-WEIGHT' },
           { offset: 2, length: 2, style: 'CUSTOM-ITALIC' },
           { offset: 3, length: 2, style: 'CUSTOM-UNDERLINE' },
           { offset: 6, length: 2, style: 'CUSTOM-WEIGHT-700' },

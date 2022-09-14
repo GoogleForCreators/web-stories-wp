@@ -29,6 +29,7 @@ import {
 } from '../../styleManipulation';
 import { NONE, UPPERCASE } from '../../customConstants';
 import formatter from '../uppercase';
+import type { SetStyleCallback } from '../../types';
 import { getDOMElement } from './_utils';
 
 jest.mock('../../styleManipulation', () => {
@@ -154,7 +155,8 @@ describe('Uppercase formatter', () => {
       );
 
       // Third argument is tester
-      const shouldSetStyle = jest.mocked(togglePrefixStyle).mock.calls[0][2];
+      const shouldSetStyle = jest.mocked(togglePrefixStyle).mock
+        .calls[0][2] as SetStyleCallback;
       expect(shouldSetStyle()).toBe(false);
     });
 
@@ -168,7 +170,8 @@ describe('Uppercase formatter', () => {
       );
 
       // Third argument is tester
-      const shouldSetStyle = jest.mocked(togglePrefixStyle).mock.calls[0][2];
+      const shouldSetStyle = jest.mocked(togglePrefixStyle).mock
+        .calls[0][2] as SetStyleCallback;
       expect(shouldSetStyle()).toBe(true);
     });
   });

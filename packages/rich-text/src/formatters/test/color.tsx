@@ -30,6 +30,7 @@ import {
 } from '../../styleManipulation';
 import { NONE, COLOR, MULTIPLE_VALUE } from '../../customConstants';
 import formatter from '../color';
+import type { SetStyleCallback, StyleGetter } from '../../types';
 import { getDOMElement } from './_utils';
 
 jest.mock('../../styleManipulation', () => {
@@ -89,7 +90,7 @@ describe('Color formatter', () => {
 
   describe('stylesToCSS', () => {
     it('should ignore styles without a color style', () => {
-      const css = stylesToCSS();
+      const css = stylesToCSS({} as OrderedSet<string>);
 
       expect(css).toBeNull();
     });
@@ -124,7 +125,9 @@ describe('Color formatter', () => {
     });
 
     function setupFormatter(styleArray: string[]) {
-      jest.mocked(getPrefixStylesInSelection).mockImplementationOnce(() => styleArray);
+      jest
+        .mocked(getPrefixStylesInSelection)
+        .mockImplementationOnce(() => styleArray);
       return getters.color({} as EditorState);
     }
 
@@ -165,11 +168,13 @@ describe('Color formatter', () => {
       );
 
       // Third argument is tester
-      const shouldSetStyle = jest.mocked(togglePrefixStyle).mock.calls[0][2];
+      const shouldSetStyle = jest.mocked(togglePrefixStyle).mock
+        .calls[0][2] as SetStyleCallback;
       expect(shouldSetStyle()).toBe(true);
 
       // Fourth argument is actual style to set
-      const styleToSet = jest.mocked(togglePrefixStyle).mock.calls[0][3];
+      const styleToSet = jest.mocked(togglePrefixStyle).mock
+        .calls[0][3] as StyleGetter;
       expect(styleToSet()).toBe(`${COLOR}-ff00ff64`);
     });
 
@@ -179,7 +184,8 @@ describe('Color formatter', () => {
       setters.setColor(state as EditorState, color);
 
       // Third argument is tester
-      const shouldSetStyle = jest.mocked(togglePrefixStyle).mock.calls[0][2];
+      const shouldSetStyle = jest.mocked(togglePrefixStyle).mock
+        .calls[0][2] as StyleGetter;
       expect(shouldSetStyle()).toBe(false);
 
       // Fourth argument is ignored

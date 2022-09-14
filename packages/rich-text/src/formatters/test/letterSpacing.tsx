@@ -29,6 +29,7 @@ import {
 } from '../../styleManipulation';
 import { NONE, LETTERSPACING, MULTIPLE_VALUE } from '../../customConstants';
 import formatter from '../letterSpacing';
+import type { SetStyleCallback, StyleGetter } from '../../types';
 import { getDOMElement } from './_utils';
 
 jest.mock('../../styleManipulation', () => {
@@ -178,7 +179,8 @@ describe('Color formatter', () => {
       setters.setLetterSpacing(state as EditorState, letterSpacing);
 
       // Third argument is tester
-      const shouldSetStyle = jest.mocked(togglePrefixStyle).mock.calls[0][2];
+      const shouldSetStyle = jest.mocked(togglePrefixStyle).mock
+        .calls[0][2] as SetStyleCallback;
       expect(shouldSetStyle()).toBe(false);
     });
 
@@ -189,11 +191,13 @@ describe('Color formatter', () => {
       setters.setLetterSpacing(state as EditorState, letterSpacing);
 
       // Third argument is tester
-      const shouldSetStyle = jest.mocked(togglePrefixStyle).mock.calls[0][2];
+      const shouldSetStyle = jest.mocked(togglePrefixStyle).mock
+        .calls[0][2] as SetStyleCallback;
       expect(shouldSetStyle()).toBe(true);
 
       // Fourth argument is actual style to set
-      const styleToSet = jest.mocked(togglePrefixStyle).mock.calls[0][3];
+      const styleToSet = jest.mocked(togglePrefixStyle).mock
+        .calls[0][3] as StyleGetter;
       expect(styleToSet()).toBe(`${LETTERSPACING}-N150`);
     });
   });

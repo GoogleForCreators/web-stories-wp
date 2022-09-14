@@ -15,14 +15,25 @@
  */
 
 declare global {
-  namespace jest {
-    interface Matchers<R> {
-      toHaveStyleAtCursor(style: string): R;
-      toHaveStyleInSelection(style: string, stylePrefix?: string | null): R;
-      toHaveStyleInEntireSelection(
-        style: string,
-        stylePrefix?: string | null
-      ): R;
+  namespace Draft {
+    namespace Model {
+      namespace Constants {
+        type DraftInlineStyleType =
+          | 'BOLD'
+          | 'CODE'
+          | 'ITALIC'
+          | 'STRIKETHROUGH'
+          | 'UNDERLINE'
+          | 'NONE'
+          | 'CUSTOM-ITALIC'
+          | 'CUSTOM-UNDERLINE'
+          | 'CUSTOM-WEIGHT'
+          | 'CUSTOM-WEIGHT-700'
+          | 'CUSTOM-WEIGHT-900'
+          | 'CUSTOM-COLOR'
+          | 'CUSTOM-LETTERSPACING'
+          | 'CUSTOM-UPPERCASE';
+      }
     }
   }
 }
