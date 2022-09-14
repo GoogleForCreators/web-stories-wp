@@ -15,11 +15,17 @@
  */
 
 /**
+ * External dependencies
+ */
+import type { OrderedSet } from 'immutable';
+import type { EditorState } from 'draft-js';
+
+/**
  * Internal dependencies
  */
 import {
-  togglePrefixStyle,
   getPrefixStylesInSelection,
+  togglePrefixStyle,
 } from '../../styleManipulation';
 import { NONE, UPPERCASE } from '../../customConstants';
 import formatter from '../uppercase';
@@ -36,16 +42,16 @@ const { elementToStyle, stylesToCSS, getters, setters } = formatter;
 
 describe('Uppercase formatter', () => {
   beforeAll(() => {
-    getPrefixStylesInSelection.mockImplementation(() => [NONE]);
+    jest.mocked(getPrefixStylesInSelection).mockImplementation(() => [NONE]);
   });
 
   beforeEach(() => {
-    togglePrefixStyle.mockClear();
-    getPrefixStylesInSelection.mockClear();
+    jest.mocked(togglePrefixStyle).mockClear();
+    jest.mocked(getPrefixStylesInSelection).mockClear();
   });
 
   describe('elementToStyle', () => {
-    function setupFormatter(element) {
+    function setupFormatter(element: JSX.Element) {
       return elementToStyle(getDOMElement(element));
     }
 
@@ -66,21 +72,23 @@ describe('Uppercase formatter', () => {
     it('should detect uppercase from span elements and return correct style', () => {
       const element = <span style={{ textTransform: 'uppercase' }} />;
       const style = setupFormatter(element);
-      const expected = UPPERCASE;
-
-      expect(style).toBe(expected);
+      expect(style).toBe(UPPERCASE);
     });
   });
 
   describe('stylesToCSS', () => {
     it('should ignore styles without uppercase style', () => {
-      const css = stylesToCSS(['NOT-UPPERCASE', 'ALSO-NOT-UPPERCASE']);
+      const css = stylesToCSS({
+        toArray: () => ['NOT-UPPERCASE', 'ALSO-NOT-UPPERCASE'],
+      } as OrderedSet<string>);
 
       expect(css).toBeNull();
     });
 
     it('should return correct CSS if uppercase is present', () => {
-      const css = stylesToCSS([UPPERCASE]);
+      const css = stylesToCSS({
+        toArray: () => [UPPERCASE],
+      } as OrderedSet<string>);
 
       expect(css).toStrictEqual({ textTransform: 'uppercase' });
     });
@@ -94,13 +102,15 @@ describe('Uppercase formatter', () => {
 
     it('should invoke getPrefixStylesInSelection with given state and correct style prefix', () => {
       const state = {};
-      getters.isUppercase(state);
+      getters.isUppercase(state as EditorState);
       expect(getPrefixStylesInSelection).toHaveBeenCalledWith(state, UPPERCASE);
     });
 
-    function setupFormatter(styleArray) {
-      getPrefixStylesInSelection.mockImplementationOnce(() => styleArray);
-      return getters.isUppercase({});
+    function setupFormatter(styleArray: string[]) {
+      jest
+        .mocked(getPrefixStylesInSelection)
+        .mockImplementationOnce(() => styleArray);
+      return getters.isUppercase({} as EditorState);
     }
 
     it('should return false if both uppercase and non-uppercase', () => {
@@ -130,13 +140,13 @@ describe('Uppercase formatter', () => {
 
     it('should invoke togglePrefixStyle with state and prefix', () => {
       const state = {};
-      setters.toggleUppercase(state);
+      setters.toggleUppercase(state as EditorState);
       expect(togglePrefixStyle).toHaveBeenCalledWith(state, UPPERCASE);
     });
 
     it('should invoke togglePrefixStyle correctly for explicitly setting uppercase to false', () => {
       const state = {};
-      setters.toggleUppercase(state, false);
+      setters.toggleUppercase(state as EditorState, false);
       expect(togglePrefixStyle).toHaveBeenCalledWith(
         state,
         UPPERCASE,
@@ -144,13 +154,13 @@ describe('Uppercase formatter', () => {
       );
 
       // Third argument is tester
-      const shouldSetStyle = togglePrefixStyle.mock.calls[0][2];
+      const shouldSetStyle = jest.mocked(togglePrefixStyle).mock.calls[0][2];
       expect(shouldSetStyle()).toBe(false);
     });
 
     it('should invoke togglePrefixStyle correctly for explicitly setting uppercase to true', () => {
       const state = {};
-      setters.toggleUppercase(state, true);
+      setters.toggleUppercase(state as EditorState, true);
       expect(togglePrefixStyle).toHaveBeenCalledWith(
         state,
         UPPERCASE,
@@ -158,7 +168,7 @@ describe('Uppercase formatter', () => {
       );
 
       // Third argument is tester
-      const shouldSetStyle = togglePrefixStyle.mock.calls[0][2];
+      const shouldSetStyle = jest.mocked(togglePrefixStyle).mock.calls[0][2];
       expect(shouldSetStyle()).toBe(true);
     });
   });

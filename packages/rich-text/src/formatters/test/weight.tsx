@@ -13,6 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * External dependencies
+ */
+import type { EditorState } from 'draft-js';
+import type { OrderedSet } from 'immutable';
+
 /**
  * Internal dependencies
  */
@@ -35,16 +42,16 @@ const { elementToStyle, stylesToCSS, getters, setters } = formatter;
 
 describe('Color formatter', () => {
   beforeAll(() => {
-    getPrefixStylesInSelection.mockImplementation(() => [NONE]);
+    jest.mocked(getPrefixStylesInSelection).mockImplementation(() => [NONE]);
   });
 
   beforeEach(() => {
-    togglePrefixStyle.mockClear();
-    getPrefixStylesInSelection.mockClear();
+    jest.mocked(togglePrefixStyle).mockClear();
+    jest.mocked(getPrefixStylesInSelection).mockClear();
   });
 
   describe('elementToStyle', () => {
-    function setupFormatter(element) {
+    function setupFormatter(element: JSX.Element) {
       return elementToStyle(getDOMElement(element));
     }
 
@@ -73,19 +80,25 @@ describe('Color formatter', () => {
 
   describe('stylesToCSS', () => {
     it('should ignore styles without a font weight style', () => {
-      const css = stylesToCSS(['NOT-WEIGHT', 'ALSO-NOT-WEIGHT']);
+      const css = stylesToCSS({
+        toArray: () => ['NOT-WEIGHT', 'ALSO-NOT-WEIGHT'],
+      } as OrderedSet<string>);
 
       expect(css).toBeNull();
     });
 
     it('should ignore invalid font weight style', () => {
-      const css = stylesToCSS([`${WEIGHT}-invalid`]);
+      const css = stylesToCSS({
+        toArray: () => [`${WEIGHT}-invalid`],
+      } as OrderedSet<string>);
 
       expect(css).toBeNull();
     });
 
     it('should return correct CSS for a valid style', () => {
-      const css = stylesToCSS([`${WEIGHT}-500`]);
+      const css = stylesToCSS({
+        toArray: () => [`${WEIGHT}-500`],
+      } as OrderedSet<string>);
 
       expect(css).toStrictEqual({ fontWeight: 500 });
     });
@@ -100,13 +113,15 @@ describe('Color formatter', () => {
 
     it('should invoke getPrefixStylesInSelection with given state and correct style prefix', () => {
       const state = {};
-      getters.fontWeight(state);
+      getters.fontWeight(state as EditorState);
       expect(getPrefixStylesInSelection).toHaveBeenCalledWith(state, WEIGHT);
     });
 
-    function setupFontWeight(styleArray) {
-      getPrefixStylesInSelection.mockImplementationOnce(() => styleArray);
-      return getters.fontWeight({});
+    function setupFontWeight(styleArray: string[]) {
+      jest
+        .mocked(getPrefixStylesInSelection)
+        .mockImplementationOnce(() => styleArray);
+      return getters.fontWeight({} as EditorState);
     }
 
     it('should return multiple if more than one style matches', () => {
@@ -127,9 +142,11 @@ describe('Color formatter', () => {
       expect(result).toBe(700);
     });
 
-    function setupIsBold(styleArray) {
-      getPrefixStylesInSelection.mockImplementationOnce(() => styleArray);
-      return getters.isBold({});
+    function setupIsBold(styleArray: string[]) {
+      jest
+        .mocked(getPrefixStylesInSelection)
+        .mockImplementationOnce(() => styleArray);
+      return getters.isBold({} as EditorState);
     }
 
     it('should return false if mix of bold and non-bold', () => {
@@ -161,7 +178,7 @@ describe('Color formatter', () => {
     it('should invoke togglePrefixStyle with state and prefix', () => {
       const state = {};
       const weight = 0;
-      setters.setFontWeight(state, weight);
+      setters.setFontWeight(state as EditorState, weight);
       expect(togglePrefixStyle).toHaveBeenCalledWith(
         state,
         WEIGHT,
@@ -174,10 +191,10 @@ describe('Color formatter', () => {
       const state = {};
       // 400 font weight is the trivial case, that doesn't need to be added
       const weight = 400;
-      setters.setFontWeight(state, weight);
+      setters.setFontWeight(state as EditorState, weight);
 
       // Third argument is tester
-      const shouldSetStyle = togglePrefixStyle.mock.calls[0][2];
+      const shouldSetStyle = jest.mocked(togglePrefixStyle).mock.calls[0][2];
       expect(shouldSetStyle()).toBe(false);
     });
 
@@ -185,20 +202,20 @@ describe('Color formatter', () => {
       const state = {};
       // A non-400 font weight should be added as a style
       const weight = 900;
-      setters.setFontWeight(state, weight);
+      setters.setFontWeight(state as EditorState, weight);
 
       // Third argument is tester
-      const shouldSetStyle = togglePrefixStyle.mock.calls[0][2];
+      const shouldSetStyle = jest.mocked(togglePrefixStyle).mock.calls[0][2];
       expect(shouldSetStyle()).toBe(true);
 
       // Fourth argument is actual style to set
-      const styleToSet = togglePrefixStyle.mock.calls[0][3];
+      const styleToSet = jest.mocked(togglePrefixStyle).mock.calls[0][3];
       expect(styleToSet()).toBe(`${WEIGHT}-900`);
     });
 
     it('should invoke togglePrefixStyle correctly for explicitly setting bold to false', () => {
       const state = {};
-      setters.toggleBold(state, false);
+      setters.toggleBold(state as EditorState, false);
       expect(togglePrefixStyle).toHaveBeenCalledWith(
         state,
         WEIGHT,
@@ -206,13 +223,13 @@ describe('Color formatter', () => {
       );
 
       // Third argument is tester
-      const shouldSetStyle = togglePrefixStyle.mock.calls[0][2];
+      const shouldSetStyle = jest.mocked(togglePrefixStyle).mock.calls[0][2];
       expect(shouldSetStyle()).toBe(false);
     });
 
     it('should invoke togglePrefixStyle correctly for explicitly setting bold to true', () => {
       const state = {};
-      setters.toggleBold(state, true);
+      setters.toggleBold(state as EditorState, true);
       expect(togglePrefixStyle).toHaveBeenCalledWith(
         state,
         WEIGHT,
@@ -221,17 +238,17 @@ describe('Color formatter', () => {
       );
 
       // Third argument is tester
-      const shouldSetStyle = togglePrefixStyle.mock.calls[0][2];
+      const shouldSetStyle = jest.mocked(togglePrefixStyle).mock.calls[0][2];
       expect(shouldSetStyle()).toBe(true);
 
       // Fourth argument is actual style to set
-      const styleToSet = togglePrefixStyle.mock.calls[0][3];
+      const styleToSet = jest.mocked(togglePrefixStyle).mock.calls[0][3];
       expect(styleToSet()).toBe(`${WEIGHT}-700`);
     });
 
     it('should correctly determine if setting bold when toggling without explicit flag', () => {
       const state = {};
-      setters.toggleBold(state);
+      setters.toggleBold(state as EditorState);
       expect(togglePrefixStyle).toHaveBeenCalledWith(
         state,
         WEIGHT,
@@ -240,13 +257,13 @@ describe('Color formatter', () => {
       );
 
       // Third argument is tester
-      const shouldSetStyle = togglePrefixStyle.mock.calls[0][2];
+      const shouldSetStyle = jest.mocked(togglePrefixStyle).mock.calls[0][2];
       expect(shouldSetStyle([NONE])).toBe(true);
       expect(shouldSetStyle([`${WEIGHT}-300`, `${WEIGHT}-900`])).toBe(true);
       expect(shouldSetStyle([`${WEIGHT}-600`, `${WEIGHT}-900`])).toBe(false);
 
       // Fourth argument is actual style to set
-      const styleToSet = togglePrefixStyle.mock.calls[0][3];
+      const styleToSet = jest.mocked(togglePrefixStyle).mock.calls[0][3];
       expect(styleToSet([NONE])).toBe(`${WEIGHT}-700`);
       expect(styleToSet([`${WEIGHT}-300`, `${WEIGHT}-600`])).toBe(
         `${WEIGHT}-700`

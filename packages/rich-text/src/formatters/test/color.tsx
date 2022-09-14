@@ -19,6 +19,7 @@
  */
 import { createSolid } from '@googleforcreators/patterns';
 import type { EditorState } from 'draft-js';
+import type { OrderedSet } from 'immutable';
 
 /**
  * Internal dependencies
@@ -88,19 +89,23 @@ describe('Color formatter', () => {
 
   describe('stylesToCSS', () => {
     it('should ignore styles without a color style', () => {
-      const css = stylesToCSS(['NOT-COLOR', 'ALSO-NOT-COLOR']);
+      const css = stylesToCSS();
 
       expect(css).toBeNull();
     });
 
     it('should ignore invalid color style', () => {
-      const css = stylesToCSS([`${COLOR}-invalid`]);
+      const css = stylesToCSS({
+        toArray: () => [`${COLOR}-invalid`],
+      } as OrderedSet<string>);
 
       expect(css).toBeNull();
     });
 
     it('should return correct CSS for a valid color style', () => {
-      const css = stylesToCSS([`${COLOR}-ff000032`]);
+      const css = stylesToCSS({
+        toArray: () => [`${COLOR}-ff000032`],
+      } as OrderedSet<string>);
 
       expect(css).toStrictEqual({ color: 'rgba(255,0,0,0.5)' });
     });
@@ -114,13 +119,13 @@ describe('Color formatter', () => {
 
     it('should invoke getPrefixStylesInSelection with given state and correct style prefix', () => {
       const state = {};
-      getters.color(state);
+      getters.color(state as EditorState);
       expect(getPrefixStylesInSelection).toHaveBeenCalledWith(state, COLOR);
     });
 
-    function setupFormatter(styleArray) {
-      getPrefixStylesInSelection.mockImplementationOnce(() => styleArray);
-      return getters.color({});
+    function setupFormatter(styleArray: string[]) {
+      jest.mocked(getPrefixStylesInSelection).mockImplementationOnce(() => styleArray);
+      return getters.color({} as EditorState);
     }
 
     it('should return multiple if more than one style matches', () => {
@@ -171,7 +176,7 @@ describe('Color formatter', () => {
     it('should invoke togglePrefixStyle correctly with black color', () => {
       const state = {};
       const color = createSolid(0, 0, 0);
-      setters.setColor(state, color);
+      setters.setColor(state as EditorState, color);
 
       // Third argument is tester
       const shouldSetStyle = jest.mocked(togglePrefixStyle).mock.calls[0][2];

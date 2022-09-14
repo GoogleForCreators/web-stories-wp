@@ -13,6 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * External dependencies
+ */
+import type { EditorState } from 'draft-js';
+import type { OrderedSet } from 'immutable';
+
 /**
  * Internal dependencies
  */
@@ -35,16 +42,16 @@ const { elementToStyle, stylesToCSS, getters, setters } = formatter;
 
 describe('Color formatter', () => {
   beforeAll(() => {
-    getPrefixStylesInSelection.mockImplementation(() => [NONE]);
+    jest.mocked(getPrefixStylesInSelection).mockImplementation(() => [NONE]);
   });
 
   beforeEach(() => {
-    togglePrefixStyle.mockClear();
-    getPrefixStylesInSelection.mockClear();
+    jest.mocked(togglePrefixStyle).mockClear();
+    jest.mocked(getPrefixStylesInSelection).mockClear();
   });
 
   describe('elementToStyle', () => {
-    function setupFormatter(element) {
+    function setupFormatter(element: JSX.Element) {
       return elementToStyle(getDOMElement(element));
     }
 
@@ -73,25 +80,33 @@ describe('Color formatter', () => {
 
   describe('stylesToCSS', () => {
     it('should ignore styles without a letter spacing style', () => {
-      const css = stylesToCSS(['NOT-LETTERSPACING', 'ALSO-NOT-LETTERSPACING']);
+      const css = stylesToCSS({
+        toArray: () => ['NOT-LETTERSPACING', 'ALSO-NOT-LETTERSPACING'],
+      } as OrderedSet<string>);
 
       expect(css).toBeNull();
     });
 
     it('should ignore invalid letter spacing style', () => {
-      const css = stylesToCSS([`${LETTERSPACING}-invalid`]);
+      const css = stylesToCSS({
+        toArray: () => [`${LETTERSPACING}-invalid`],
+      } as OrderedSet<string>);
 
       expect(css).toBeNull();
     });
 
     it('should return correct CSS for a positive style', () => {
-      const css = stylesToCSS([`${LETTERSPACING}-150`]);
+      const css = stylesToCSS({
+        toArray: () => [`${LETTERSPACING}-150`],
+      } as OrderedSet<string>);
 
       expect(css).toStrictEqual({ letterSpacing: '1.5em' });
     });
 
     it('should return correct CSS for a negative style', () => {
-      const css = stylesToCSS([`${LETTERSPACING}-N250`]);
+      const css = stylesToCSS({
+        toArray: () => [`${LETTERSPACING}-N250`],
+      } as OrderedSet<string>);
 
       expect(css).toStrictEqual({ letterSpacing: '-2.5em' });
     });
@@ -105,16 +120,18 @@ describe('Color formatter', () => {
 
     it('should invoke getPrefixStylesInSelection with given state and correct style prefix', () => {
       const state = {};
-      getters.letterSpacing(state);
+      getters.letterSpacing(state as EditorState);
       expect(getPrefixStylesInSelection).toHaveBeenCalledWith(
         state,
         LETTERSPACING
       );
     });
 
-    function setupFormatter(styleArray) {
-      getPrefixStylesInSelection.mockImplementationOnce(() => styleArray);
-      return getters.letterSpacing({});
+    function setupFormatter(styleArray: string[]) {
+      jest
+        .mocked(getPrefixStylesInSelection)
+        .mockImplementationOnce(() => styleArray);
+      return getters.letterSpacing({} as EditorState);
     }
 
     it('should return multiple if more than one style matches', () => {
@@ -145,7 +162,7 @@ describe('Color formatter', () => {
     it('should invoke togglePrefixStyle with state and prefix', () => {
       const state = {};
       const letterSpacing = 0;
-      setters.setLetterSpacing(state, letterSpacing);
+      setters.setLetterSpacing(state as EditorState, letterSpacing);
       expect(togglePrefixStyle).toHaveBeenCalledWith(
         state,
         LETTERSPACING,
@@ -158,10 +175,10 @@ describe('Color formatter', () => {
       const state = {};
       // 0 letter spacing is the trivial case, that doesn't need to be added
       const letterSpacing = 0;
-      setters.setLetterSpacing(state, letterSpacing);
+      setters.setLetterSpacing(state as EditorState, letterSpacing);
 
       // Third argument is tester
-      const shouldSetStyle = togglePrefixStyle.mock.calls[0][2];
+      const shouldSetStyle = jest.mocked(togglePrefixStyle).mock.calls[0][2];
       expect(shouldSetStyle()).toBe(false);
     });
 
@@ -169,14 +186,14 @@ describe('Color formatter', () => {
       const state = {};
       // A non-zero letter spacing should be added as a style
       const letterSpacing = -150;
-      setters.setLetterSpacing(state, letterSpacing);
+      setters.setLetterSpacing(state as EditorState, letterSpacing);
 
       // Third argument is tester
-      const shouldSetStyle = togglePrefixStyle.mock.calls[0][2];
+      const shouldSetStyle = jest.mocked(togglePrefixStyle).mock.calls[0][2];
       expect(shouldSetStyle()).toBe(true);
 
       // Fourth argument is actual style to set
-      const styleToSet = togglePrefixStyle.mock.calls[0][3];
+      const styleToSet = jest.mocked(togglePrefixStyle).mock.calls[0][3];
       expect(styleToSet()).toBe(`${LETTERSPACING}-N150`);
     });
   });
