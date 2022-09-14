@@ -44,6 +44,7 @@ const transitionStyles = {
 };
 
 const Controller = styled.div`
+  display: ${({ visible }) => (visible ? 'block' : 'none')};
   position: absolute;
   top: -12px;
   ${({ placement }) => placement}: 0px;
@@ -80,6 +81,7 @@ function Popup({
           aria-label={ariaLabel}
           state={state}
           placement={placement}
+          visible={isOpen}
         >
           {children}
         </Controller>

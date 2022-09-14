@@ -37,6 +37,7 @@ export const LOCAL_STORAGE_PREFIX = {
   MEDIA_RECORDING_AUDIO_INPUT: 'web_stories_media_recording_audio_input',
   MEDIA_RECORDING_VIDEO_INPUT: 'web_stories_media_recording_video_input',
   ELEMENT_TOOLBAR_SETTINGS: 'web_stories_toolbar_settings',
+  MEDIA_RECORDING_VIDEO_EFFECT: 'web_stories_media_recording_video_effect',
 };
 
 function getItemByKey(key) {
