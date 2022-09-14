@@ -70,9 +70,6 @@ describe('Panels/VideoOptions', () => {
     });
   });
 
-  beforeEach(() => {
-  });
-
   afterAll(() => {
     localStorage.clear();
   });
