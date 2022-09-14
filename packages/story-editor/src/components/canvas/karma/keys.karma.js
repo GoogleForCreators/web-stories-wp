@@ -112,9 +112,8 @@ describe('Canvas keys integration', () => {
     );
     await fixture.events.click(colorButton);
     expect(await getSelection()).toEqual([element1.id]);
-    // there are two dialogs, [0] checklist companion and [1]color picker
     const dialogs = await fixture.screen.findAllByRole('dialog');
-    expect(dialogs.length).toBe(2);
+    expect(dialogs.length).toBe(1);
 
     await fixture.snapshot('color picker open');
 
