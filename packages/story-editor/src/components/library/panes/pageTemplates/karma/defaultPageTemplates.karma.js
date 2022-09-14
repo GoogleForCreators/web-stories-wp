@@ -223,7 +223,7 @@ describe('CUJ: Page Templates: Creator can Apply a Default Page Template', () =>
           // expect templates titles to not contain "cover", there will still be one filter button containing "cover"
           expect(fixture.screen.getAllByText(/cover/i).length).toBe(1);
         },
-        { timeout: 1000 }
+        { timeout: 5000 }
       );
       // navigate to and add "Fresh & Bright" template
       await fixture.events.keyboard.press('tab');

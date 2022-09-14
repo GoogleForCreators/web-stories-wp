@@ -17,58 +17,36 @@
 /**
  * WordPress dependencies
  */
-import { select } from '@wordpress/data';
+import { dispatch } from '@wordpress/data';
+
 /**
  * Internal dependencies
  */
-jest.mock('@wordpress/data', () => ({
-  select: jest.fn(() => ({
-    getCurrentView: () => 'grid',
-    getCurrentViewSettings: () => ({
+import * as Utils from '..';
+import store from '../../store';
+
+/**
+ * Test shortcode build function.
+ */
+describe('Test shortcode is preparation', () => {
+  beforeAll(() => {
+    dispatch(store).setViewSettings('circles', {
       order: 'latest',
       dummy: {
         show: true,
         label: 'Dummy Text',
         hidden: true,
       },
-    }),
-    getEditor: () => 'testEditor',
-  })),
-}));
-
-jest.mock('../../utils/globals', () => ({
-  webStoriesData: {
-    views: [],
-  },
-}));
-
-import * as Utils from '..';
-
-/**
- * Test that the current view is grid view.
- */
-describe('Test the current view', () => {
-  it('view should be circles', () => {
-    const view = Utils.currentView();
-    expect(view).toBe('grid');
+    });
   });
-});
 
-/**
- * Test shortcode build function.
- */
-describe('Test shortcode is preparation', () => {
   it('editor instance not set', () => {
-    select.mockImplementationOnce(() => ({
-      getEditor: () => null,
-      getCurrentViewSettings: () => null,
-    }));
-
     const shortCode = Utils.prepareShortCode();
     expect(shortCode).toBe('[web_stories /]');
   });
 
   it('editor instance set', () => {
+    dispatch(store).setEditor('test_editor');
     const shortCode = Utils.prepareShortCode();
     expect(shortCode).toBe('[web_stories order="latest" dummy="true" /]');
   });

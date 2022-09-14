@@ -40,6 +40,7 @@ import {
   blobToFile,
   createBlob,
   getImageFromVideo,
+  getCanvasBlob,
 } from '@googleforcreators/media';
 import { format } from '@googleforcreators/date';
 import { BackgroundAudioPropTypeShape } from '@googleforcreators/elements';
@@ -61,6 +62,7 @@ import {
   COUNTDOWN_TIME_IN_SECONDS,
   PHOTO_MIME_TYPE,
   PHOTO_FILE_TYPE,
+  VIDEO_EFFECTS,
 } from './constants';
 
 const BaseButton = styled(Button).attrs({
@@ -148,12 +150,15 @@ function Footer() {
     resetState,
     resetStream,
     streamNode,
+    canvasStream,
     liveStream,
     hasVideo,
+    videoEffect,
     pauseRecording,
     resumeRecording,
     isProcessingTrim,
     cancelTrim,
+    canvasNode,
   } = useMediaRecording(({ state, actions }) => ({
     status: state.status,
     file: state.file,
@@ -163,9 +168,11 @@ function Footer() {
     duration: state.duration,
     isCountingDown: state.isCountingDown,
     hasVideo: state.hasVideo,
+    videoEffect: state.videoEffect,
     hasMediaToInsert: Boolean(state.mediaBlobUrl),
     liveStream: state.liveStream,
     streamNode: state.streamNode,
+    canvasStream: state.canvasStream,
     isProcessingTrim: state.isProcessingTrim,
     startRecording: actions.startRecording,
     stopRecording: actions.stopRecording,
@@ -180,6 +187,7 @@ function Footer() {
     pauseRecording: actions.pauseRecording,
     resumeRecording: actions.resumeRecording,
     cancelTrim: actions.cancelTrim,
+    canvasNode: state.canvasNode,
   }));
   const videoNode = useVideoTrim(({ state: { videoNode } }) => videoNode);
 
@@ -208,7 +216,10 @@ function Footer() {
     trackEvent('media_recording_retry');
   }, [getMediaStream, resetState]);
 
-  const debouncedStartRecording = useDebouncedCallback(startRecording, 3000);
+  const debouncedStartRecording = useDebouncedCallback(
+    startRecording,
+    COUNTDOWN_TIME_IN_SECONDS * 1000
+  );
 
   const onStart = useCallback(() => {
     speak(
@@ -319,14 +330,20 @@ function Footer() {
   const { showSnackbar } = useSnackbar();
 
   const captureImage = useCallback(async () => {
-    if (!streamNode) {
+    const hasVideoEffect = videoEffect && videoEffect !== VIDEO_EFFECTS.NONE;
+    const inputStream = hasVideoEffect ? canvasStream : streamNode;
+    if (!inputStream) {
       return;
     }
 
     let blob;
 
     try {
-      blob = await getImageFromVideo(streamNode);
+      if (hasVideoEffect) {
+        blob = await getCanvasBlob(canvasNode);
+      } else {
+        blob = await getImageFromVideo(inputStream);
+      }
       setMediaBlobUrl(createBlob(blob));
     } catch (e) {
       trackError('media_recording_capture', e.message);
@@ -347,8 +364,21 @@ function Footer() {
     );
     setFile(imageFile);
     resetStream();
-  }, [resetStream, setFile, setMediaBlobUrl, showSnackbar, streamNode]);
+  }, [
+    resetStream,
+    setFile,
+    setMediaBlobUrl,
+    showSnackbar,
+    streamNode,
+    canvasStream,
+    videoEffect,
+    canvasNode,
+  ]);
 
+  const debouncedCaptureImage = useDebouncedCallback(
+    captureImage,
+    COUNTDOWN_TIME_IN_SECONDS * 1000
+  );
   const onCapture = useCallback(() => {
     speak(
       sprintf(
@@ -364,10 +394,10 @@ function Footer() {
     );
 
     setCountdown(COUNTDOWN_TIME_IN_SECONDS);
-    captureImage();
+    debouncedCaptureImage();
 
     trackEvent('media_recording_capture', { type: 'image' });
-  }, [captureImage, setCountdown, speak]);
+  }, [debouncedCaptureImage, setCountdown, speak]);
   const {
     actions: { uploadFile },
   } = useUploader();

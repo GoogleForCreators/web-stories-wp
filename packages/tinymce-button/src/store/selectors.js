@@ -15,15 +15,6 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { select } from '@wordpress/data';
-/**
- * Internal dependencies
- */
-import name from './name';
-
-/**
  * Retrieve settings.
  *
  * @param {Object} state State of store.
@@ -70,7 +61,7 @@ export function getCurrentView(state) {
  * @return {Object} Settings object for current view.
  */
 export function getCurrentViewSettings(state) {
-  const currentView = select(name).getCurrentView();
+  const currentView = getCurrentView(state);
 
   return state.settings[currentView];
 }
