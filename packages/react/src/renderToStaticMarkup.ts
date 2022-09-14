@@ -35,7 +35,9 @@ import type { ReactElement } from 'react';
  * @param element React element.
  * @return Markup.
  */
-function renderToStaticMarkup(element: ReactElement): string {
+function renderToStaticMarkup(
+  element: ReactElement | ReactElement[] | null | string
+): string {
   const originalConsoleError = console.error;
   console.error = function (error, ...args) {
     if (
@@ -47,7 +49,7 @@ function renderToStaticMarkup(element: ReactElement): string {
     }
   };
 
-  const markup = _renderToStaticMarkup(element);
+  const markup = _renderToStaticMarkup(element as ReactElement);
 
   console.error = originalConsoleError;
 
