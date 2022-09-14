@@ -171,7 +171,11 @@ function PlaybackMedia() {
             selfieSegmentation &&
             canvasRef.current
           ) {
-            await selfieSegmentation.send({ image: streamNode });
+            try {
+              await selfieSegmentation.send({ image: streamNode });
+            } catch (e) {
+              // We can't do much about the WASM memory issue.
+            }
           }
           if (canvasRef.current) {
             rafRef.current = requestAnimationFrame(sendFrame);
