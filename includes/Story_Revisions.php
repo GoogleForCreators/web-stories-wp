@@ -149,7 +149,7 @@ Player;
 	 * @param WP_Post       $compare_to   The revision post to compare to.
 	 * @return array[]|mixed Filtered array of revision UI fields.
 	 *
-	 * @phpstan-return array<int, array{title: string, id: string, diff: string}>|mixed
+	 * @phpstan-return array<int, RevisionField[]>|mixed
 	 */
 	public function filter_revision_ui_diff( $return, $compare_from, WP_Post $compare_to ) {
 		if ( ! \is_array( $return ) ) {
