@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { createSolid } from '@googleforcreators/patterns';
+import type { EditorState } from 'draft-js';
 
 /**
  * Internal dependencies
@@ -41,16 +42,16 @@ const { elementToStyle, stylesToCSS, getters, setters } = formatter;
 
 describe('Color formatter', () => {
   beforeAll(() => {
-    getPrefixStylesInSelection.mockImplementation(() => [NONE]);
+    jest.mocked(getPrefixStylesInSelection).mockImplementation(() => [NONE]);
   });
 
   beforeEach(() => {
-    togglePrefixStyle.mockClear();
-    getPrefixStylesInSelection.mockClear();
+    jest.mocked(togglePrefixStyle).mockClear();
+    jest.mocked(getPrefixStylesInSelection).mockClear();
   });
 
   describe('elementToStyle', () => {
-    function setupFormatter(element) {
+    function setupFormatter(element: JSX.Element) {
       return elementToStyle(getDOMElement(element));
     }
 
@@ -148,7 +149,7 @@ describe('Color formatter', () => {
     });
 
     it('should invoke togglePrefixStyle correctly with non-black color', () => {
-      const state = {};
+      const state: EditorState = {} as EditorState;
       const color = createSolid(255, 0, 255);
       setters.setColor(state, color);
       expect(togglePrefixStyle).toHaveBeenCalledWith(
@@ -159,11 +160,11 @@ describe('Color formatter', () => {
       );
 
       // Third argument is tester
-      const shouldSetStyle = togglePrefixStyle.mock.calls[0][2];
+      const shouldSetStyle = jest.mocked(togglePrefixStyle).mock.calls[0][2];
       expect(shouldSetStyle()).toBe(true);
 
       // Fourth argument is actual style to set
-      const styleToSet = togglePrefixStyle.mock.calls[0][3];
+      const styleToSet = jest.mocked(togglePrefixStyle).mock.calls[0][3];
       expect(styleToSet()).toBe(`${COLOR}-ff00ff64`);
     });
 
@@ -173,7 +174,7 @@ describe('Color formatter', () => {
       setters.setColor(state, color);
 
       // Third argument is tester
-      const shouldSetStyle = togglePrefixStyle.mock.calls[0][2];
+      const shouldSetStyle = jest.mocked(togglePrefixStyle).mock.calls[0][2];
       expect(shouldSetStyle()).toBe(false);
 
       // Fourth argument is ignored

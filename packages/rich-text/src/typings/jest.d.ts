@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,13 +14,17 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import { render } from '@googleforcreators/react';
+import { EditorState } from 'draft-js';
 
-export function getDOMElement(jsx) {
-  const el = document.createElement('div');
-  render(jsx, el);
-  return el.firstChild;
+declare global {
+  namespace jest {
+    interface Matchers<R> {
+      toHaveStyleAtCursor(style: string): R;
+      toHaveStyleInSelection(style: string, stylePrefix?: string | null): R;
+      toHaveStyleInEntireSelection(
+        style: string,
+        stylePrefix?: string | null
+      ): R;
+    }
+  }
 }

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { EditorState, ContentState } from 'draft-js';
+import { EditorState, ContentState, BlockMap } from 'draft-js';
 
 /**
  * Internal dependencies
@@ -26,7 +26,7 @@ import getPastedBlocks from '../getPastedBlocks';
 import customExport from '../customExport';
 
 describe('getPastedBlocks', () => {
-  function blockMapToHTML(blockMap) {
+  function blockMapToHTML(blockMap: BlockMap) {
     const blockArray = blockMap.toArray();
     const contentState = ContentState.createFromBlockArray(blockArray);
     const editorState = EditorState.createWithContent(contentState);

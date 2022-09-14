@@ -17,11 +17,17 @@
 /**
  * External dependencies
  */
-import { convertFromRaw, EditorState, SelectionState } from 'draft-js';
+import {
+  convertFromRaw,
+  EditorState,
+  RawDraftContentState,
+  SelectionState,
+} from 'draft-js';
 
 /**
  * Internal dependencies
  */
+import type { OrderedSet } from 'immutable';
 import {
   getPrefixStyleForCharacter,
   getPrefixStylesInSelection,
@@ -29,50 +35,63 @@ import {
 } from '../styleManipulation';
 
 expect.extend({
-  toHaveStyleAtCursor(received, style) {
+  toHaveStyleAtCursor(received: EditorState, style: string) {
     const styles = received.getCurrentInlineStyle().toArray();
+    const stylesList = styles.join(', ');
     const pass = styles.includes(style);
     if (pass) {
       return {
-        message: () => `expected ${styles} to not include ${style}`,
+        message: () => `expected ${stylesList} to not include ${style}`,
         pass: true,
       };
     } else {
       return {
-        message: () => `expected ${styles} to include ${style}`,
+        message: () => `expected ${stylesList} to include ${style}`,
         pass: false,
       };
     }
   },
-  toHaveStyleInSelection(received, style, stylePrefix = null) {
+  toHaveStyleInSelection(
+    received: EditorState,
+    style: string,
+    stylePrefix: string | null = null
+  ) {
     stylePrefix = stylePrefix ?? style;
     const styles = getPrefixStylesInSelection(received, stylePrefix);
+    const stylesList = styles.join(', ');
     const pass = styles.includes(style);
     if (pass) {
       return {
-        message: () => `expected selection ${styles} to not include ${style}`,
+        message: () =>
+          `expected selection ${stylesList} to not include ${style}`,
         pass: true,
       };
     } else {
       return {
-        message: () => `expected selection ${styles} to include ${style}`,
+        message: () => `expected selection ${stylesList} to include ${style}`,
         pass: false,
       };
     }
   },
-  toHaveStyleInEntireSelection(received, style, stylePrefix = null) {
+  toHaveStyleInEntireSelection(
+    received: EditorState,
+    style: string,
+    stylePrefix: string | null = null
+  ) {
     stylePrefix = stylePrefix ?? style;
     const styles = getPrefixStylesInSelection(received, stylePrefix);
+    const stylesList = styles.join(', ');
     const pass = styles.includes(style) && styles.length === 1;
     if (pass) {
       return {
         message: () =>
-          `expected selection ${styles} to not only include ${style}`,
+          `expected selection ${stylesList} to not only include ${style}`,
         pass: true,
       };
     } else {
       return {
-        message: () => `expected selection ${styles} to only include ${style}`,
+        message: () =>
+          `expected selection ${stylesList} to only include ${style}`,
         pass: false,
       };
     }
@@ -82,7 +101,7 @@ expect.extend({
 describe('getPrefixStyleForCharacter', () => {
   it('should return a direct match', () => {
     const match = getPrefixStyleForCharacter(
-      { toArray: () => ['ALPHA', 'BRAVO', 'CHARLIE'] },
+      { toArray: () => ['ALPHA', 'BRAVO', 'CHARLIE'] } as OrderedSet<string>,
       'BRAVO'
     );
     expect(match).toBe('BRAVO');
@@ -90,7 +109,9 @@ describe('getPrefixStyleForCharacter', () => {
 
   it('should return a prefix match', () => {
     const match = getPrefixStyleForCharacter(
-      { toArray: () => ['ALPHA-1', 'BRAVO-2', 'CHARLIE-3'] },
+      {
+        toArray: () => ['ALPHA-1', 'BRAVO-2', 'CHARLIE-3'],
+      } as OrderedSet<string>,
       'BRAVO'
     );
     expect(match).toBe('BRAVO-2');
@@ -98,7 +119,9 @@ describe('getPrefixStyleForCharacter', () => {
 
   it('should return first match if multiple', () => {
     const match = getPrefixStyleForCharacter(
-      { toArray: () => ['ALPHA-1', 'BRAVO-2', 'BRAVO-3'] },
+      {
+        toArray: () => ['ALPHA-1', 'BRAVO-2', 'BRAVO-3'],
+      } as OrderedSet<string>,
       'BRAVO'
     );
     expect(match).toBe('BRAVO-2');
@@ -106,7 +129,9 @@ describe('getPrefixStyleForCharacter', () => {
 
   it('should return NONE if no match', () => {
     const match = getPrefixStyleForCharacter(
-      { toArray: () => ['ALPHA-1', 'BRAVO-2', 'CHARLIE-3'] },
+      {
+        toArray: () => ['ALPHA-1', 'BRAVO-2', 'CHARLIE-3'],
+      } as OrderedSet<string>,
       'DELTA'
     );
     expect(match).toBe('NONE');
@@ -358,8 +383,11 @@ describe('togglePrefixStyle', () => {
  * 6. "Wo"  is bold (700)
  * 7. "rld" is black (900)
  */
-function getEditorState(selectionStart, selectionEnd = null) {
-  const raw = {
+function getEditorState(
+  selectionStart: number,
+  selectionEnd: number | null = null
+) {
+  const raw: RawDraftContentState = {
     blocks: [
       {
         key: '65t0d',

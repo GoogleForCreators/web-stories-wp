@@ -19,7 +19,7 @@
  */
 import getFontVariants from '../getFontVariants';
 
-describe('getfontVariants', () => {
+describe('getFontVariants', () => {
   it('should produce correct variants', () => {
     const htmlContent =
       '<span style="font-weight: 700">F</span>ill in some text';
