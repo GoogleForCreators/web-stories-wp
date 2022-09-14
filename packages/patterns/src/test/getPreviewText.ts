@@ -19,6 +19,8 @@
  */
 import getPreviewText from '../getPreviewText';
 import createSolid from '../createSolid';
+import type { Linear, Radial, Solid } from '../types';
+import { PatternType } from '../types';
 
 describe('getPreviewText', () => {
   it('should return null for no pattern', () => {
@@ -36,17 +38,20 @@ describe('getPreviewText', () => {
   });
 
   it('should return hex ignoring alpha for explicit non-transparent solid', () => {
-    const input = { ...createSolid(255, 0, 255, 0.3), type: 'solid' };
+    const input: Solid = {
+      ...createSolid(255, 0, 255, 0.3),
+      type: PatternType.SOLID,
+    };
     const result = getPreviewText(input);
     const expected = 'FF00FF';
     expect(result).toBe(expected);
   });
 
   it('should return correct text for gradient', () => {
-    const linearResult = getPreviewText({ type: 'linear' });
+    const linearResult = getPreviewText({ type: 'linear' } as Linear);
     expect(linearResult).toBe('Linear');
 
-    const radialResult = getPreviewText({ type: 'radial' });
+    const radialResult = getPreviewText({ type: 'radial' } as Radial);
     expect(radialResult).toBe('Radial');
   });
 });

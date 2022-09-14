@@ -18,6 +18,8 @@
  * Internal dependencies
  */
 import hasOpacity from '../hasOpacity';
+import type { Linear } from '../types';
+import { PatternType } from '../types';
 
 describe('hasOpacity', () => {
   it('should return false for opaque solid', () => {
@@ -29,20 +31,23 @@ describe('hasOpacity', () => {
   });
 
   it('should return true for gradient with semitransparent stops', () => {
-    const pattern = {
-      type: 'linear',
+    const pattern: Linear = {
+      type: PatternType.LINEAR,
       stops: [
-        { color: { r: 1, g: 1, b: 1 } },
-        { color: { r: 1, g: 1, b: 1, a: 0.5 } },
+        { color: { r: 1, g: 1, b: 1 }, position: 0 },
+        { color: { r: 1, g: 1, b: 1, a: 0.5 }, position: 1 },
       ],
     };
     expect(hasOpacity(pattern)).toBeTrue();
   });
 
   it('should return true for gradient with opaque stops but overall opacity', () => {
-    const pattern = {
-      type: 'linear',
-      stops: [{ color: { r: 1, g: 1, b: 1 } }, { color: { r: 1, g: 1, b: 1 } }],
+    const pattern: Linear = {
+      type: PatternType.LINEAR,
+      stops: [
+        { color: { r: 1, g: 1, b: 1 }, position: 0 },
+        { color: { r: 1, g: 1, b: 1 }, position: 1 },
+      ],
       alpha: 0.5,
     };
     expect(hasOpacity(pattern)).toBeTrue();

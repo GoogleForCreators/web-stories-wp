@@ -104,10 +104,5 @@ describe('getHexFromValue', () => {
       expect(getHexFromValue('jsdhf78384')).toBeNull();
       expect(getHexFromValue('')).toBeNull();
     });
-
-    it('should return null if null or undefined passed in', () => {
-      expect(getHexFromValue(undefined)).toBeNull();
-      expect(getHexFromValue(null)).toBeNull();
-    });
   });
 });

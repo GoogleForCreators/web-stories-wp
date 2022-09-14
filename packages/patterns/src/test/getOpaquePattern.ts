@@ -18,6 +18,8 @@
  * Internal dependencies
  */
 import getOpaquePattern from '../getOpaquePattern';
+import type { Linear } from '../types';
+import { PatternType } from '../types';
 
 describe('getOpaquePattern', () => {
   it('should get the opaque color correctly from a solid', () => {
@@ -30,26 +32,26 @@ describe('getOpaquePattern', () => {
       color: { r: 1, g: 1, b: 1, a: 1 },
     });
     expect(
-      getOpaquePattern({ color: { r: 1, g: 1, b: 1, a: null } })
+      getOpaquePattern({ color: { r: 1, g: 1, b: 1, a: 0 } })
     ).toMatchObject({
       color: { r: 1, g: 1, b: 1, a: 1 },
     });
   });
 
   it('should get the opaque color correctly from a gradient', () => {
-    const input = {
-      type: 'linear',
+    const input: Linear = {
+      type: PatternType.LINEAR,
       stops: [
-        { color: { r: 1, g: 1, b: 1 } },
-        { color: { r: 1, g: 1, b: 1, a: 0.5 } },
+        { color: { r: 1, g: 1, b: 1 }, position: 0 },
+        { color: { r: 1, g: 1, b: 1, a: 0.5 }, position: 1 },
       ],
       alpha: 0.5,
     };
-    const expected = {
-      type: 'linear',
+    const expected: Linear = {
+      type: PatternType.LINEAR,
       stops: [
-        { color: { r: 1, g: 1, b: 1 } },
-        { color: { r: 1, g: 1, b: 1, a: 0.5 } },
+        { color: { r: 1, g: 1, b: 1 }, position: 0 },
+        { color: { r: 1, g: 1, b: 1, a: 0.5 }, position: 1 },
       ],
     };
     expect(getOpaquePattern(input)).toMatchObject(expected);

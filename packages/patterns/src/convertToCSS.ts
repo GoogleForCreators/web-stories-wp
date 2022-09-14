@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-function convertToCSS(style: Record<string, string>) {
+function convertToCSS(style: Record<string, string | number>) {
   return Object.entries(style).reduce((str, [key, val]) => {
     const casedKey = key.replace(
       /[A-Z]/g,
