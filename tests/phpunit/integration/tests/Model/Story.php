@@ -170,22 +170,4 @@ class Story extends TestCase {
 		$this->assertNotEmpty( $story->get_poster_srcset() );
 		$this->assertIsString( $story->get_poster_srcset() );
 	}
-
-	/**
-	 * @covers ::load_from_post
-	 */
-	public function test_invalid_load_from_post(): void {
-		$post = self::factory()->post->create_and_get(
-			[
-				'post_title'   => 'test title',
-				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
-			]
-		);
-
-		$story = new \Google\Web_Stories\Model\Story();
-		$story->load_from_post( $post );
-
-		$this->assertEquals( $story->get_title(), '' );
-		$this->assertEquals( $story->get_url(), '' );
-	}
 }
