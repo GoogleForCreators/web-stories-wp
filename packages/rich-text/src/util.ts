@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { EditorState, SelectionState } from 'draft-js';
+import type { ContentState } from 'draft-js';
 import { filterEditorState } from 'draftjs-filters';
 
 /**
@@ -28,7 +29,10 @@ import italicFormatter from './formatters/italic';
 import underlineFormatter from './formatters/underline';
 import uppercaseFormatter from './formatters/uppercase';
 
-export function getFilteredState(editorState, oldEditorState) {
+export function getFilteredState(
+  editorState: EditorState,
+  oldEditorState: EditorState
+) {
   const shouldFilterPaste =
     oldEditorState.getCurrentContent() !== editorState.getCurrentContent() &&
     editorState.getLastChangeType() === 'insert-fragment';
@@ -49,7 +53,7 @@ export function getFilteredState(editorState, oldEditorState) {
   );
 }
 
-function getStateFromCommmand(command, oldEditorState) {
+function getStateFromCommmand(command: string, oldEditorState: EditorState) {
   switch (command) {
     case 'bold':
       return weightFormatter.setters.toggleBold(oldEditorState);
@@ -75,7 +79,8 @@ function getStateFromCommmand(command, oldEditorState) {
 }
 
 export const getHandleKeyCommandFromState =
-  (setEditorState) => (command, currentEditorState) => {
+  (setEditorState: (state: EditorState) => void) =>
+  (command: string, currentEditorState: EditorState) => {
     const newEditorState = getStateFromCommmand(command, currentEditorState);
     if (newEditorState) {
       setEditorState(newEditorState);
@@ -84,7 +89,7 @@ export const getHandleKeyCommandFromState =
     return 'not-handled';
   };
 
-export function getSelectionForAll(content) {
+export function getSelectionForAll(content: ContentState) {
   const firstBlock = content.getFirstBlock();
   const lastBlock = content.getLastBlock();
   return new SelectionState({
@@ -95,7 +100,7 @@ export function getSelectionForAll(content) {
   });
 }
 
-export function getSelectionForOffset(content, offset) {
+export function getSelectionForOffset(content: ContentState, offset: number) {
   const blocks = content.getBlocksAsArray();
   let countdown = offset;
   for (let i = 0; i < blocks.length && countdown >= 0; i++) {

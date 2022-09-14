@@ -15,42 +15,47 @@
  */
 
 /**
+ * External dependencies
+ */
+import type { DraftInlineStyle, EditorState } from 'draft-js';
+
+/**
  * Internal dependencies
  */
-import { NONE, ITALIC } from '../customConstants';
+import { NONE, UNDERLINE } from '../customConstants';
 import {
   togglePrefixStyle,
   getPrefixStylesInSelection,
 } from '../styleManipulation';
 
-function elementToStyle(element) {
+function elementToStyle(element: HTMLElement) {
   const isSpan = element.tagName.toLowerCase() === 'span';
-  const isItalicFontStyle = element.style.fontStyle === 'italic';
-  if (isSpan && isItalicFontStyle) {
-    return ITALIC;
+  const isUnderlineDecoration = element.style.textDecoration === 'underline';
+  if (isSpan && isUnderlineDecoration) {
+    return UNDERLINE;
   }
 
   return null;
 }
 
-function stylesToCSS(styles) {
-  const hasItalic = styles.includes(ITALIC);
-  if (!hasItalic) {
+function stylesToCSS(styles: DraftInlineStyle) {
+  const hasUnderline = styles.includes(UNDERLINE);
+  if (!hasUnderline) {
     return null;
   }
-  return { fontStyle: 'italic' };
+  return { textDecoration: 'underline' };
 }
 
-function isItalic(editorState) {
-  const styles = getPrefixStylesInSelection(editorState, ITALIC);
+function isUnderline(editorState: EditorState) {
+  const styles = getPrefixStylesInSelection(editorState, UNDERLINE);
   return !styles.includes(NONE);
 }
 
-function toggleItalic(editorState, flag) {
+function toggleUnderline(editorState: EditorState, flag?: undefined | boolean) {
   if (typeof flag === 'boolean') {
-    return togglePrefixStyle(editorState, ITALIC, () => flag);
+    return togglePrefixStyle(editorState, UNDERLINE, () => flag);
   }
-  return togglePrefixStyle(editorState, ITALIC);
+  return togglePrefixStyle(editorState, UNDERLINE);
 }
 
 const formatter = {
@@ -58,10 +63,10 @@ const formatter = {
   stylesToCSS,
   autoFocus: true,
   getters: {
-    isItalic,
+    isUnderline,
   },
   setters: {
-    toggleItalic,
+    toggleUnderline,
   },
 };
 

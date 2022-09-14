@@ -27,15 +27,16 @@ import getStateInfo from './getStateInfo';
 import customImport from './customImport';
 import customExport from './customExport';
 import { getSelectionForAll } from './util';
+import type { StyleSetter, AllowedSetterArgs } from './types';
 
 /**
  * Return an editor state object with content set to parsed HTML
  * and selection set to everything.
  *
- * @param {string} html  HTML string to parse into content
- * @return {Object} New editor state with selection
+ * @param html  HTML string to parse into content
+ * @return New editor state with selection
  */
-export function getSelectAllStateFromHTML(html) {
+export function getSelectAllStateFromHTML(html: string) {
   const contentState = customImport(html);
   const initialState = EditorState.createWithContent(contentState);
   const selection = getSelectionForAll(initialState.getCurrentContent());
@@ -48,20 +49,24 @@ export function getSelectAllStateFromHTML(html) {
  * with entire body selected, then run updater and then export back to
  * HTML again.
  *
- * @param {string} html  HTML string to parse into content
- * @param {Function} updater  A function converting a state to a new state
- * @param {Array} args  Extra args to supply to updater other than state
- * @return {Object} New HTML with updates applied
+ * @param html  HTML string to parse into content
+ * @param updater  A function converting a state to a new state
+ * @param args  Extra args to supply to updater other than state
+ * @return New HTML with updates applied
  */
-function updateAndReturnHTML(html, updater, ...args) {
+function updateAndReturnHTML(
+  html: string,
+  updater: StyleSetter,
+  ...args: [AllowedSetterArgs]
+) {
   const stateWithUpdate = updater(getSelectAllStateFromHTML(html), ...args);
   const renderedHTML = customExport(stateWithUpdate);
   return renderedHTML;
 }
 
 const getHTMLFormatter =
-  (setter) =>
-  (html, ...args) =>
+  (setter: StyleSetter) =>
+  (html: string, ...args: [AllowedSetterArgs]) =>
     updateAndReturnHTML(html, setter, ...args);
 
 export const getHTMLFormatters = () => {
@@ -71,7 +76,7 @@ export const getHTMLFormatters = () => {
       ...Object.fromEntries(
         Object.entries(setters).map(([key, setter]) => [
           key,
-          getHTMLFormatter(setter),
+          getHTMLFormatter(setter as StyleSetter),
         ])
       ),
     }),
@@ -79,7 +84,7 @@ export const getHTMLFormatters = () => {
   );
 };
 
-export function getHTMLInfo(html) {
+export function getHTMLInfo(html: string) {
   const htmlStateInfo = getStateInfo(getSelectAllStateFromHTML(html));
   return htmlStateInfo;
 }

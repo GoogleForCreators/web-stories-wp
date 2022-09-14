@@ -18,13 +18,17 @@
  * External dependencies
  */
 import { stateToHTML } from 'draft-js-export-html';
+import type { EditorState } from 'draft-js';
+import type { RenderConfig } from 'draft-js-export-html';
 
 /**
  * Internal dependencies
  */
 import formatters from './formatters';
 
-function inlineStyleFn(styles) {
+function inlineStyleFn(
+  styles: Immutable.OrderedSet<string>
+): RenderConfig | null {
   const inlineCSS = formatters.reduce(
     (css, { stylesToCSS }) => ({ ...css, ...stylesToCSS(styles) }),
     {}
@@ -40,7 +44,7 @@ function inlineStyleFn(styles) {
   };
 }
 
-function exportHTML(editorState) {
+function exportHTML(editorState: EditorState) {
   if (!editorState) {
     return null;
   }

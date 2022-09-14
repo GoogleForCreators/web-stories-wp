@@ -15,10 +15,23 @@
  */
 
 /**
- * External dependencies
+ * Internal dependencies
  */
-import { createContext } from '@googleforcreators/react';
+import type { Formatter } from '../types';
+import weightFormatter from './weight';
+import italicFormatter from './italic';
+import underlineFormatter from './underline';
+import colorFormatter from './color';
+import letterSpacingFormatter from './letterSpacing';
+import uppercaseFormatter from './uppercase';
 
-const RichTextContext = createContext({ state: {}, actions: {} });
+const formatters: Formatter[] = [
+  weightFormatter,
+  italicFormatter,
+  underlineFormatter,
+  colorFormatter,
+  letterSpacingFormatter,
+  uppercaseFormatter,
+];
 
-export default RichTextContext;
+export default formatters;

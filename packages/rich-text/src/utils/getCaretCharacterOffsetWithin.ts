@@ -31,28 +31,51 @@
  * This function includes some cross-browser optimization for older browsers even
  * though they aren't really supported by the editor at large (IE).
  *
- * @param {Node} element    DOM node to find current selection within.
- * @param {number} clientX  Optional x coordinate of click.
- * @param {number} clientY  Optional y coordinate of click.
- * @return {number} Current selection start offset as seen in `element` or 0 if not found.
+ * @param element    DOM node to find current selection within.
+ * @param clientX  Optional x coordinate of click.
+ * @param clientY  Optional y coordinate of click.
+ * @return Current selection start offset as seen in `element` or 0 if not found.
  */
-function getCaretCharacterOffsetWithin(element, clientX, clientY) {
-  const doc = element.ownerDocument || element.document;
-  const win = doc.defaultView || doc.parentWindow;
-  if (typeof win.getSelection !== 'undefined') {
+
+interface CaretPosition {
+  readonly offset: number;
+  readonly offsetNode: Node;
+  getClientRect(): DOMRect | null;
+}
+
+interface SelectionDocument extends Document {
+  caretPositionFromPoint?: (x: number, y: number) => CaretPosition | null;
+}
+
+// Extend for wider browser support.
+interface SelectionElement extends Node {
+  document?: SelectionDocument;
+}
+
+function getCaretCharacterOffsetWithin(
+  element: SelectionElement,
+  clientX: number,
+  clientY: number
+): number {
+  const doc = (element.ownerDocument || element.document) as SelectionDocument;
+  const win = doc?.defaultView;
+  if (typeof win?.getSelection !== 'undefined') {
     let range;
     if (clientX && clientY) {
       if (doc.caretPositionFromPoint) {
-        const caretPosition = document.caretPositionFromPoint(clientX, clientY);
+        const caretPosition = doc.caretPositionFromPoint(clientX, clientY);
         // Create a range from the caret position.
         if (caretPosition) {
           range = document.createRange();
           range.setStart(caretPosition.offsetNode, caretPosition.offset);
         }
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment -- caretRangeFromPoint does not exist in FF, even though TS claims it always exists.
+        // @ts-ignore
       } else if (doc.caretRangeFromPoint) {
         // Change 'user-select' temporarily to make getting the correct range work for Safari.
         // See https://github.com/googleforcreators/web-stories-wp/issues/7745.
-        const elementsToAdjust = document.querySelectorAll('[data-fix-caret]');
+        const elementsToAdjust =
+          document.querySelectorAll<HTMLElement>('[data-fix-caret]');
         for (const elementToAdjust of elementsToAdjust) {
           elementToAdjust.style.webkitUserSelect = 'auto';
         }
@@ -64,8 +87,8 @@ function getCaretCharacterOffsetWithin(element, clientX, clientY) {
     }
     if (!range) {
       const sel = win.getSelection();
-      if (sel.rangeCount > 0) {
-        range = win.getSelection().getRangeAt(0);
+      if (sel && sel.rangeCount > 0) {
+        range = win.getSelection()?.getRangeAt(0);
       }
     }
     if (range) {
@@ -73,23 +96,13 @@ function getCaretCharacterOffsetWithin(element, clientX, clientY) {
       preCaretRange.selectNodeContents(element);
       preCaretRange.setEnd(range.endContainer, range.endOffset);
       // This is for ensuring that if the logic fails to get the correct offset, it won't cause unexpected behaviour.
-      if (preCaretRange.toString().length <= element.textContent.length) {
+      if (
+        element.textContent &&
+        preCaretRange.toString().length <= element.textContent.length
+      ) {
         return preCaretRange.toString().length;
       }
-      return 0;
     }
-  }
-
-  const sel = doc.selection;
-  if (sel && sel.type !== 'Control') {
-    const textRange = sel.createRange();
-    if (clientX && clientY) {
-      textRange.moveToPoint(clientX, clientY);
-    }
-    const preCaretTextRange = doc.body.createTextRange();
-    preCaretTextRange.moveToElementText(element);
-    preCaretTextRange.setEndPoint('EndToEnd', textRange);
-    return preCaretTextRange.text.length;
   }
 
   return 0;

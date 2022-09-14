@@ -24,31 +24,41 @@ import {
   useMemo,
 } from '@googleforcreators/react';
 import { EditorState } from 'draft-js';
+import type { SelectionState } from 'draft-js';
+import type { Dispatch, SetStateAction } from 'react';
 
 /**
  * Internal dependencies
  */
 import formatters from './formatters';
+import type { AllowedSetterArgs, StyleSetter } from './types';
 
-function useSelectionManipulation(editorState, setEditorState) {
-  const lastKnownState = useRef(null);
-  const lastKnownSelection = useRef(null);
+function useSelectionManipulation(
+  editorState: EditorState | null,
+  setEditorState: Dispatch<SetStateAction<EditorState | null>>
+): Record<string, StyleSetter> {
+  const lastKnownState = useRef<EditorState | null>(null);
+  const lastKnownSelection = useRef<SelectionState | null>(null);
   useEffect(() => {
     lastKnownState.current = editorState;
     if (!editorState) {
       lastKnownSelection.current = null;
-    } else if (editorState.getSelection().hasFocus) {
+    } else if (editorState.getSelection().getHasFocus()) {
       lastKnownSelection.current = editorState.getSelection();
     }
   }, [editorState]);
 
   const updateWhileUnfocused = useCallback(
-    (updater, shouldForceFocus = true) => {
+    (
+      updater: (state: EditorState | null) => EditorState,
+      shouldForceFocus = true
+    ) => {
       const oldState = lastKnownState.current;
       const selection = lastKnownSelection.current;
-      const workingState = shouldForceFocus
-        ? EditorState.forceSelection(oldState, selection)
-        : oldState;
+      const workingState =
+        shouldForceFocus && oldState && selection
+          ? EditorState.forceSelection(oldState, selection)
+          : oldState;
       const newState = updater(workingState);
       setEditorState(newState);
     },
@@ -56,13 +66,13 @@ function useSelectionManipulation(editorState, setEditorState) {
   );
 
   const getSetterName = useCallback(
-    (setterName) => `${setterName}InSelection`,
+    (setterName: string) => `${setterName}InSelection`,
     []
   );
 
   const getSetterCallback = useCallback(
-    (setter, autoFocus) =>
-      (...args) =>
+    (setter: StyleSetter, autoFocus) =>
+      (...args: [AllowedSetterArgs]) =>
         updateWhileUnfocused((state) => setter(state, ...args), autoFocus),
     [updateWhileUnfocused]
   );
@@ -75,7 +85,7 @@ function useSelectionManipulation(editorState, setEditorState) {
           ...Object.fromEntries(
             Object.entries(setters).map(([key, setter]) => [
               getSetterName(key),
-              getSetterCallback(setter, autoFocus),
+              getSetterCallback(setter as StyleSetter, autoFocus),
             ])
           ),
         }),

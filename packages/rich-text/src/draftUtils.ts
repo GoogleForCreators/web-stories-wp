@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
+import type { EditorState } from 'draft-js';
+
 /* Ignore reason: This is lifted from elsewhere - a combo of these basically:
  *
  * https://github.com/webdeveloperpr/draft-js-custom-styles/blob/f3e6b533905de8eee6da54f9727b5e5803d53fc4/src/index.js#L8-L52
@@ -39,11 +44,11 @@
  * output: [Set("BOLD"), Set("BOLD", "ITALIC"), Set(), Set("UNDERLINE")]
  * </example>
  *
- * @param {Object} editorState  The current state of the editor including
+ * @param editorState  The current state of the editor including
  * selection
- * @return {Array.<Set.<string>>} list of sets of styles as described
+ * @return list of sets of styles as described
  */
-export function getAllStyleSetsInSelection(editorState) {
+export function getAllStyleSetsInSelection(editorState: EditorState) {
   const styleSets = [];
   const contentState = editorState.getCurrentContent();
   const selection = editorState.getSelection();

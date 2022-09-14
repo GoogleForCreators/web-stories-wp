@@ -15,21 +15,29 @@
  */
 
 /**
+ * External dependencies
+ */
+import { createContext } from '@googleforcreators/react';
+/**
  * Internal dependencies
  */
-import formatters from './formatters';
-import { fauxStylesToCSS } from './fauxSelection';
+import type { State } from './types';
 
-function customInlineDisplay(styles) {
-  const stylesToCSSConverters = [
-    ...formatters.map(({ stylesToCSS }) => stylesToCSS),
-    fauxStylesToCSS,
-  ];
+const RichTextContext = createContext<State>({
+  state: {
+    editorState: null,
+    hasCurrentEditor: false,
+    selectionInfo: undefined,
+  },
+  actions: {
+    setStateFromContent: () => undefined,
+    updateEditorState: () => undefined,
+    getHandleKeyCommand: () => () => 'not-handled',
+    handlePastedText: () => 'not-handled',
+    clearState: () => undefined,
+    selectionActions: {},
+    getContentFromState: () => null,
+  },
+});
 
-  return stylesToCSSConverters.reduce(
-    (css, stylesToCSS) => ({ ...css, ...stylesToCSS(styles, css) }),
-    {}
-  );
-}
-
-export default customInlineDisplay;
+export default RichTextContext;

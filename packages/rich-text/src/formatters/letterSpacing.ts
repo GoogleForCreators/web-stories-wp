@@ -13,6 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * External dependencies
+ */
+import type { EditorState, DraftInlineStyle } from 'draft-js';
+
 /**
  * Internal dependencies
  */
@@ -23,15 +29,15 @@ import {
 } from '../styleManipulation';
 import { isStyle, numericToStyle, styleToNumeric } from './util';
 
-function letterSpacingToStyle(weight) {
+function letterSpacingToStyle(weight: number) {
   return numericToStyle(LETTERSPACING, weight);
 }
 
-function styleToLetterSpacing(style) {
+function styleToLetterSpacing(style: string) {
   return styleToNumeric(LETTERSPACING, style);
 }
 
-function elementToStyle(element) {
+function elementToStyle(element: HTMLElement) {
   const isSpan = element.tagName.toLowerCase() === 'span';
   // This will implicitly strip any trailing unit from the value - it's assumed to be em
   const letterSpacing = parseFloat(element.style.letterSpacing);
@@ -43,7 +49,7 @@ function elementToStyle(element) {
   return null;
 }
 
-function stylesToCSS(styles) {
+function stylesToCSS(styles: DraftInlineStyle) {
   const style = styles.find((someStyle) => isStyle(someStyle, LETTERSPACING));
   if (!style) {
     return null;
@@ -55,7 +61,7 @@ function stylesToCSS(styles) {
   return { letterSpacing: `${letterSpacing / 100}em` };
 }
 
-function getLetterSpacing(editorState) {
+function getLetterSpacing(editorState: EditorState) {
   const styles = getPrefixStylesInSelection(editorState, LETTERSPACING);
   if (styles.length > 1) {
     return MULTIPLE_VALUE;
@@ -67,7 +73,7 @@ function getLetterSpacing(editorState) {
   return styleToLetterSpacing(spacingStyle);
 }
 
-function setLetterSpacing(editorState, letterSpacing) {
+function setLetterSpacing(editorState: EditorState, letterSpacing: number) {
   // if the spacing to set to non-0, set a style
   const shouldSetStyle = () => letterSpacing !== 0;
 

@@ -14,23 +14,9 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import weightFormatter from './weight';
-import italicFormatter from './italic';
-import underlineFormatter from './underline';
-import colorFormatter from './color';
-import letterSpacingFormatter from './letterSpacing';
-import uppercaseFormatter from './uppercase';
+const contentBuffer = document.createElement('template');
 
-const formatters = [
-  weightFormatter,
-  italicFormatter,
-  underlineFormatter,
-  colorFormatter,
-  letterSpacingFormatter,
-  uppercaseFormatter,
-];
-
-export default formatters;
+export default function getValidHTML(string: string) {
+  contentBuffer.innerHTML = string;
+  return contentBuffer.innerHTML;
+}

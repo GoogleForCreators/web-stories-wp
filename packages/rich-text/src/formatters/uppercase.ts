@@ -15,42 +15,47 @@
  */
 
 /**
+ * External dependencies
+ */
+import type { EditorState, DraftInlineStyle } from 'draft-js';
+
+/**
  * Internal dependencies
  */
-import { NONE, UNDERLINE } from '../customConstants';
+import { NONE, UPPERCASE } from '../customConstants';
 import {
   togglePrefixStyle,
   getPrefixStylesInSelection,
 } from '../styleManipulation';
 
-function elementToStyle(element) {
+function elementToStyle(element: HTMLElement) {
   const isSpan = element.tagName.toLowerCase() === 'span';
-  const isUnderlineDecoration = element.style.textDecoration === 'underline';
-  if (isSpan && isUnderlineDecoration) {
-    return UNDERLINE;
+  const isUppercaseTransform = element.style.textTransform === 'uppercase';
+  if (isSpan && isUppercaseTransform) {
+    return UPPERCASE;
   }
 
   return null;
 }
 
-function stylesToCSS(styles) {
-  const hasUnderline = styles.includes(UNDERLINE);
-  if (!hasUnderline) {
+function stylesToCSS(styles: DraftInlineStyle) {
+  const hasUppercase = styles.includes(UPPERCASE);
+  if (!hasUppercase) {
     return null;
   }
-  return { textDecoration: 'underline' };
+  return { textTransform: 'uppercase' as const };
 }
 
-function isUnderline(editorState) {
-  const styles = getPrefixStylesInSelection(editorState, UNDERLINE);
+function isUppercase(editorState: EditorState) {
+  const styles = getPrefixStylesInSelection(editorState, UPPERCASE);
   return !styles.includes(NONE);
 }
 
-function toggleUnderline(editorState, flag) {
+function toggleUppercase(editorState: EditorState, flag?: undefined | boolean) {
   if (typeof flag === 'boolean') {
-    return togglePrefixStyle(editorState, UNDERLINE, () => flag);
+    return togglePrefixStyle(editorState, UPPERCASE, () => flag);
   }
-  return togglePrefixStyle(editorState, UNDERLINE);
+  return togglePrefixStyle(editorState, UPPERCASE);
 }
 
 const formatter = {
@@ -58,10 +63,10 @@ const formatter = {
   stylesToCSS,
   autoFocus: true,
   getters: {
-    isUnderline,
+    isUppercase,
   },
   setters: {
-    toggleUnderline,
+    toggleUppercase,
   },
 };
 

@@ -15,21 +15,27 @@
  */
 
 /**
+ * External dependencies
+ */
+import type { CSSProperties } from 'react';
+import type { DraftInlineStyle } from 'draft-js';
+
+/**
  * Internal dependencies
  */
 import formatters from './formatters';
+import { fauxStylesToCSS } from './fauxSelection';
 
-function getStateInfo(state) {
-  const stateInfo = formatters.reduce(
-    (aggr, { getters }) => ({
-      ...aggr,
-      ...Object.fromEntries(
-        Object.entries(getters).map(([key, getter]) => [key, getter(state)])
-      ),
-    }),
+function customInlineDisplay(styles: DraftInlineStyle): CSSProperties {
+  const stylesToCSSConverters = [
+    ...formatters.map(({ stylesToCSS }) => stylesToCSS),
+    fauxStylesToCSS,
+  ];
+
+  return stylesToCSSConverters.reduce(
+    (css, stylesToCSS) => ({ ...css, ...stylesToCSS(styles, css) }),
     {}
   );
-  return stateInfo;
 }
 
-export default getStateInfo;
+export default customInlineDisplay;

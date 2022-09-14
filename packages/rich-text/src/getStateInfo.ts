@@ -17,33 +17,31 @@
 /**
  * External dependencies
  */
-import { stateFromHTML } from 'draft-js-import-html';
+import type { EditorState } from 'draft-js';
+import type { Pattern } from '@googleforcreators/patterns';
 
 /**
  * Internal dependencies
  */
-import getValidHTML from './utils/getValidHTML';
 import formatters from './formatters';
+import type { StateInfo } from './types';
 
-function customInlineFn(element, { Style }) {
-  const styleStrings = formatters
-    .map(({ elementToStyle }) => elementToStyle(element))
-    .filter((style) => Boolean(style));
+type Getter = (state: EditorState) => boolean | string | number | Pattern;
 
-  if (styleStrings.length === 0) {
-    return null;
-  }
-
-  return Style(styleStrings);
+function getStateInfo(state: EditorState): StateInfo {
+  const stateInfo = formatters.reduce(
+    (aggr, { getters }) => ({
+      ...aggr,
+      ...Object.fromEntries(
+        Object.entries(getters).map(([key, getter]: [string, Getter]) => [
+          key,
+          getter(state),
+        ])
+      ),
+    }),
+    {}
+  );
+  return stateInfo;
 }
 
-function importHTML(html = '') {
-  const htmlWithBreaks = html
-    .split('\n')
-    .map((s) => `<p>${getValidHTML(s === '' ? '<br />' : s)}</p>`)
-    .join('');
-
-  return stateFromHTML(htmlWithBreaks, { customInlineFn });
-}
-
-export default importHTML;
+export default getStateInfo;

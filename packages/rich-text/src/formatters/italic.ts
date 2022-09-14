@@ -15,42 +15,50 @@
  */
 
 /**
+ * External dependencies
+ */
+import type { EditorState, DraftInlineStyle } from 'draft-js';
+
+/**
  * Internal dependencies
  */
-import { NONE, UPPERCASE } from '../customConstants';
+import { NONE, ITALIC } from '../customConstants';
 import {
   togglePrefixStyle,
   getPrefixStylesInSelection,
 } from '../styleManipulation';
 
-function elementToStyle(element) {
+function elementToStyle(element: HTMLElement) {
   const isSpan = element.tagName.toLowerCase() === 'span';
-  const isUppercaseTransform = element.style.textTransform === 'uppercase';
-  if (isSpan && isUppercaseTransform) {
-    return UPPERCASE;
+  const isItalicFontStyle = element.style.fontStyle === 'italic';
+  if (isSpan && isItalicFontStyle) {
+    return ITALIC;
   }
 
   return null;
 }
 
-function stylesToCSS(styles) {
-  const hasUppercase = styles.includes(UPPERCASE);
-  if (!hasUppercase) {
+function stylesToCSS(styles: DraftInlineStyle) {
+  const hasItalic = styles.includes(ITALIC);
+  if (!hasItalic) {
     return null;
   }
-  return { textTransform: 'uppercase' };
+  return { fontStyle: 'italic' };
 }
 
-function isUppercase(editorState) {
-  const styles = getPrefixStylesInSelection(editorState, UPPERCASE);
+function isItalic(editorState: EditorState) {
+  const styles = getPrefixStylesInSelection(editorState, ITALIC);
   return !styles.includes(NONE);
 }
 
-function toggleUppercase(editorState, flag) {
+function toggleItalic(
+  editorState: EditorState,
+  flag?: undefined | boolean
+): EditorState {
   if (typeof flag === 'boolean') {
-    return togglePrefixStyle(editorState, UPPERCASE, () => flag);
+    return togglePrefixStyle(editorState, ITALIC, () => flag);
   }
-  return togglePrefixStyle(editorState, UPPERCASE);
+  return togglePrefixStyle(editorState, ITALIC);
 }
 
 const formatter = {
@@ -58,10 +66,10 @@ const formatter = {
   stylesToCSS,
   autoFocus: true,
   getters: {
-    isUppercase,
+    isItalic,
   },
   setters: {
-    toggleUppercase,
+    toggleItalic,
   },
 };
 

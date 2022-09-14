@@ -23,44 +23,40 @@ import {
   ContentState,
   SelectionState,
 } from 'draft-js';
+import type { ContentBlock } from 'draft-js';
+import { Map } from 'immutable';
 
 /**
  * Internal dependencies
  */
 import convertStyles from './formatters/convert';
 
-class CustomBlockRenderMap {
-  constructor() {
-    // Generally only allow unstyled block types
-    // However, we want to add list styles so keep those
-    // Will be replaced with unstyled blocks later
-    this._map = {
-      unstyled: {
-        element: 'div',
-        aliasedElements: ['p', 'h1', 'h2', 'h3', 'blockquote', 'pre'],
-      },
-      'unordered-list-item': {
-        element: 'li',
-      },
-      'ordered-list-item': {
-        element: 'li',
-      },
-    };
-  }
+const RENDER_MAP = Map({
+  unstyled: {
+    element: 'div',
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment -- aliasedElements actually does exist on the type when looking at the module but the correct type is not imported.
+    // @ts-ignore
+    aliasedElements: ['p', 'h1', 'h2', 'h3', 'blockquote', 'pre'],
+  },
+  'unordered-list-item': {
+    element: 'li',
+  },
+  'ordered-list-item': {
+    element: 'li',
+  },
+});
 
-  // The only function from immutable.js#Map, that we need to implement
-  mapKeys(callback) {
-    return Object.keys(this._map).map((key) => callback(key, this._map[key]));
-  }
-}
-
-function getPastedBlocks(html, existingStyles = []) {
-  const renderMap = new CustomBlockRenderMap();
+// Overriding this since entityMap is marked as `any` in there, however, it seems to be an object in this case.
+type ConvertFromHTMLReturn = {
+  contentBlocks: ContentBlock[];
+  entityMap: Record<string, unknown>;
+};
+function getPastedBlocks(html: string, existingStyles: string[] = []) {
   const { contentBlocks, entityMap } = convertFromHTML(
     html,
     undefined /* This has to be undefined to trigger default argument */,
-    renderMap
-  );
+    RENDER_MAP
+  ) as ConvertFromHTMLReturn;
   const pastedContentState = ContentState.createFromBlockArray(
     contentBlocks,
     entityMap
@@ -78,7 +74,7 @@ function getPastedBlocks(html, existingStyles = []) {
   // with corrected styles and the required added list styles
   const newContentBlocks = noEntityContent.getBlocksAsArray();
   let updatedContentState = noEntityContent;
-  let lastBlockType = null;
+  let lastBlockType: string | null = null;
   let lastBlockNumber = 0;
 
   newContentBlocks.forEach((contentBlock) => {
@@ -141,7 +137,7 @@ function getPastedBlocks(html, existingStyles = []) {
 
 export default getPastedBlocks;
 
-function selectEverything(contentState) {
+function selectEverything(contentState: ContentState) {
   const firstBlock = contentState.getFirstBlock();
   const lastBlock = contentState.getLastBlock();
   return SelectionState.createEmpty(firstBlock.getKey()).merge({

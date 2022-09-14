@@ -14,19 +14,20 @@
  * limitations under the License.
  */
 
-export const isStyle = (style, prefix) =>
-  typeof style === 'string' && style.startsWith(prefix);
+export const isStyle = (style: string | undefined, prefix: string) =>
+  Boolean(style?.startsWith(prefix));
 
-export const getVariable = (style, prefix) => style.slice(prefix.length + 1);
+export const getVariable = (style: string, prefix: string) =>
+  style.slice(prefix.length + 1);
 
 /*
  * Numerics use PREFIX-123 for the number 123
  * and PREFIX-N123 for the number -123.
  */
-export const numericToStyle = (prefix, num) =>
+export const numericToStyle = (prefix: string, num: number) =>
   `${prefix}-${num < 0 ? 'N' : ''}${Math.abs(num)}`;
 
-export const styleToNumeric = (prefix, style) => {
+export const styleToNumeric = (prefix: string, style: string) => {
   const raw = getVariable(style, prefix);
   // Negative numbers are prefixed with an N:
   if (raw.charAt(0) === 'N') {

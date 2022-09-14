@@ -19,10 +19,15 @@
  */
 import { useEffect, useState } from '@googleforcreators/react';
 import { EditorState, Modifier } from 'draft-js';
+import type { DraftInlineStyle, SelectionState } from 'draft-js';
+import type { CSSProperties, Dispatch, SetStateAction } from 'react';
 
 const FAUX_SELECTION = 'CUSTOM-FAUX';
 
-function isEqualSelectionIgnoreFocus(a, b) {
+function isEqualSelectionIgnoreFocus(
+  a: SelectionState | null,
+  b: SelectionState | null
+) {
   if (!a || !b) {
     return false;
   }
@@ -37,12 +42,16 @@ function isEqualSelectionIgnoreFocus(a, b) {
  * If current selection in editor is unfocused, set faux style on current selection
  * else, if current selection in editor is focused, remove faux style from entire editor
  *
- * @param {Object} editorState  Current editor state
- * @param {Function} setEditorState  Callback to update current editor state
- * @return {void}
+ * @param editorState  Current editor state
+ * @param setEditorState  Callback to update current editor state
  */
-export function useFauxSelection(editorState, setEditorState) {
-  const [fauxSelection, setFauxSelection] = useState(null);
+export function useFauxSelection(
+  editorState: EditorState | null,
+  setEditorState: Dispatch<SetStateAction<EditorState | null>>
+) {
+  const [fauxSelection, setFauxSelection] = useState<SelectionState | null>(
+    null
+  );
   useEffect(() => {
     if (!editorState) {
       setFauxSelection(null);
@@ -55,7 +64,7 @@ export function useFauxSelection(editorState, setEditorState) {
       fauxSelection,
       currentSelection
     );
-    const hasFauxSelection = Boolean(fauxSelection);
+    const hasFauxSelection = fauxSelection !== null;
 
     if (!isFocused && !hasFauxSelection) {
       // Get new content with style applied to selection
@@ -80,8 +89,11 @@ export function useFauxSelection(editorState, setEditorState) {
     }
 
     if (isFocused && hasSelectionChanged && hasFauxSelection) {
-      setEditorState((oldEditorState) => {
+      setEditorState((oldEditorState: EditorState | null) => {
         try {
+          if (!oldEditorState) {
+            return null;
+          }
           // Get new content with style removed from old selection
           const contentWithoutFaux = Modifier.removeInlineStyle(
             oldEditorState.getCurrentContent(),
@@ -117,12 +129,12 @@ export function useFauxSelection(editorState, setEditorState) {
   }, [fauxSelection, editorState, setEditorState]);
 }
 
-export function fauxStylesToCSS(styles, css) {
+export function fauxStylesToCSS(styles: DraftInlineStyle, css: CSSProperties) {
   const hasFauxSelection = styles.includes(FAUX_SELECTION);
   if (!hasFauxSelection) {
     return null;
   }
-  const style = {
+  const style: CSSProperties = {
     backgroundColor: 'rgba(169, 169, 169, 0.7)',
   };
   if (css?.color) {

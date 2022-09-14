@@ -18,28 +18,34 @@
  * External dependencies
  */
 import { Modifier, EditorState } from 'draft-js';
+import type { ContentState } from 'draft-js';
 
 /**
  * Internal dependencies
  */
 import { NONE } from './customConstants';
 import { getAllStyleSetsInSelection } from './draftUtils';
+import type { SetStyleCallback, StyleGetter } from './types';
 
 /**
  * Get a first style in the given set that match the given prefix,
  * or NONE if there's no match.
  *
- * @param {Set.<string>} styles  Set (ImmutableSet even) of styles to check
- * @param {string} prefix  Prefix to test styles for
- * @return {string} First match or NONE
+ * @param styles  Set (ImmutableSet even) of styles to check
+ * @param prefix  Prefix to test styles for
+ * @return First match or NONE
  */
-export function getPrefixStyleForCharacter(styles, prefix) {
-  const list = styles.toArray().map((style) => style.style ?? style);
-  const matcher = (style) => style && style.startsWith(prefix);
+export function getPrefixStyleForCharacter(
+  styles: Immutable.OrderedSet<string>,
+  prefix: string | typeof NONE
+): string {
+  const list = styles.toArray();
+  const matcher = (style: string) => style && style.startsWith(prefix);
   if (!list.some(matcher)) {
     return NONE;
   }
-  return list.find(matcher);
+  // If there are no matches, we return NONE, so the value is not `undefined` here, thus casting to `string`.
+  return list.find(matcher) as string;
 }
 
 /**
@@ -86,11 +92,14 @@ export function getPrefixStyleForCharacter(styles, prefix) {
  * // styles are now: ['NONE']
  * </example>
  *
- * @param {Object} editorState  Current editor state
- * @param {string} prefix  Prefix to test styles for
- * @return {Array.<string>} Deduped array of all matching styles
+ * @param editorState  Current editor state
+ * @param prefix  Prefix to test styles for
+ * @return Deduped array of all matching styles
  */
-export function getPrefixStylesInSelection(editorState, prefix) {
+export function getPrefixStylesInSelection(
+  editorState: EditorState,
+  prefix: string
+): string[] {
   const selection = editorState.getSelection();
   const styleSets = getAllStyleSetsInSelection(editorState);
   if (selection.isCollapsed() || styleSets.length === 0) {
@@ -99,7 +108,7 @@ export function getPrefixStylesInSelection(editorState, prefix) {
     ];
   }
 
-  const styles = new Set();
+  const styles = new Set<string>();
   styleSets.forEach((styleSet) =>
     styles.add(getPrefixStyleForCharacter(styleSet, prefix))
   );
@@ -107,7 +116,7 @@ export function getPrefixStylesInSelection(editorState, prefix) {
   return [...styles];
 }
 
-function applyContent(editorState, contentState) {
+function applyContent(editorState: EditorState, contentState: ContentState) {
   return EditorState.push(editorState, contentState, 'change-inline-style');
 }
 
@@ -125,11 +134,12 @@ function applyContent(editorState, contentState) {
  * should be added
  * @return {Object} New editor state
  */
+
 export function togglePrefixStyle(
-  editorState,
-  prefix,
-  shouldSetStyle = null,
-  getStyleToSet = null
+  editorState: EditorState,
+  prefix: string,
+  shouldSetStyle: SetStyleCallback | null = null,
+  getStyleToSet: StyleGetter | null = null
 ) {
   if (editorState.getSelection().isCollapsed()) {
     // A different set of rules apply here

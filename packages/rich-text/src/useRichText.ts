@@ -14,9 +14,20 @@
  * limitations under the License.
  */
 
-const contentBuffer = document.createElement('template');
+/**
+ * External dependencies
+ */
+import { identity, useContextSelector } from '@googleforcreators/react';
+/**
+ * Internal dependencies
+ */
+import Context from './context';
+import type { State } from './types';
 
-export default function getValidHTML(string) {
-  contentBuffer.innerHTML = string;
-  return contentBuffer.innerHTML;
+function useRichText(): State;
+function useRichText<T>(selector: (state: State) => T): T;
+function useRichText<T>(selector: (state: State) => T | State = identity) {
+  return useContextSelector(Context, selector);
 }
+
+export default useRichText;
