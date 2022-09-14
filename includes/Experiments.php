@@ -372,6 +372,17 @@ class Experiments extends Service_Base implements HasRequirements {
 				'description' => __( 'Enable improved autosaves support', 'web-stories' ),
 				'group'       => 'editor',
 			],
+			/**
+			 * Author: @timarney
+			 * Issue: #12093
+			 * Creation date: 2022-08-18
+			 */
+			[
+				'name'        => 'offScreenVideoCropping',
+				'label'       => __( 'Crop off-screen video parts', 'web-stories' ),
+				'description' => __( 'Enable support for cropping cut off-screen parts of videos', 'web-stories' ),
+				'group'       => 'editor',
+			],
 		];
 	}
 

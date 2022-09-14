@@ -22,6 +22,8 @@ import { trackEvent } from '@googleforcreators/tracking';
  * Internal dependencies
  */
 import { useStory } from '../..';
+import { useLocalMedia } from '../../media';
+import { getCropParams } from '../../../utils/getCropParams';
 
 /**
  * Creates the right click menu layer actions.
@@ -35,6 +37,12 @@ import { useStory } from '../..';
  * @return {Object} Right click menu layer actions
  */
 const useLayerActions = () => {
+  const { cropExistingVideo } = useLocalMedia(
+    ({ actions: { cropExistingVideo } }) => ({
+      cropExistingVideo,
+    })
+  );
+
   const { arrangeElement, elements, selectedElement } = useStory(
     ({ state, actions }) => ({
       arrangeElement: actions.arrangeElement,
@@ -160,6 +168,13 @@ const useLayerActions = () => {
     });
   }, [arrangeElement, canElementMoveForwards, elements, selectedElement]);
 
+  /**
+   * Crop Video to remove off-canvas portion of the video.
+   */
+  const handleCropOffScreenVideo = useCallback(() => {
+    cropExistingVideo(selectedElement, getCropParams(selectedElement));
+  }, [selectedElement, cropExistingVideo]);
+
   return {
     canElementMoveBackwards,
     canElementMoveForwards,
@@ -167,6 +182,7 @@ const useLayerActions = () => {
     handleBringToFront,
     handleSendBackward,
     handleSendToBack,
+    handleCropOffScreenVideo,
   };
 };
 
