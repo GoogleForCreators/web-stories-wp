@@ -41,7 +41,7 @@ function PageAdvancementPanel({ nameOverride }) {
     (newProps) => {
       // Rename "pageDuration" property to "defaultPageDuration"
       const { pageDuration, ...rest } = newProps;
-      const properties = { rest, defaultPageDuration: pageDuration };
+      const properties = { ...rest, defaultPageDuration: pageDuration };
       updateStory({ properties });
     },
     [updateStory]
