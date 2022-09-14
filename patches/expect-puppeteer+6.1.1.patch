@@ -1,0 +1,15 @@
+diff --git a/node_modules/expect-puppeteer/lib/utils.js b/node_modules/expect-puppeteer/lib/utils.js
+index 7065265..e40f2c6 100644
+--- a/node_modules/expect-puppeteer/lib/utils.js
++++ b/node_modules/expect-puppeteer/lib/utils.js
+@@ -26,9 +26,8 @@ const getContext = async (instance, pageFunction) => {
+
+     case 'ElementHandle':
+       {
+-        const executionContext = await instance.executionContext();
+         return {
+-          page: await executionContext.frame(),
++          page: await instance.frame,
+           handle: instance
+         };
+       }
