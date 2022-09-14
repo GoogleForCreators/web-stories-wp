@@ -23,22 +23,18 @@ describe('Admin Menu', () => {
   it('should contain links to Dashboard sub-pages', async () => {
     await visitAdminPage('index.php');
 
-    const adminMenuItem = await expect(page).toMatchElement(
-      '#menu-posts-web-story'
-    );
-
     await page.hover('#menu-posts-web-story a');
     await expect(page).toMatchElement('#menu-posts-web-story.opensub');
 
-    await expect(adminMenuItem).toMatchElement('a', {
+    await expect(page).toMatchElement('#menu-posts-web-story a', {
       text: 'Dashboard',
       visible: true,
     });
-    await expect(adminMenuItem).toMatchElement('a', {
+    await expect(page).toMatchElement('#menu-posts-web-story a', {
       text: 'Explore Templates',
       visible: true,
     });
-    await expect(adminMenuItem).toMatchElement('a', {
+    await expect(page).toMatchElement('#menu-posts-web-story a', {
       text: 'Settings',
       visible: true,
     });
@@ -47,13 +43,10 @@ describe('Admin Menu', () => {
   it('should link to "Dashboard"', async () => {
     await visitAdminPage('index.php');
 
-    const adminMenuItem = await expect(page).toMatchElement(
-      '#menu-posts-web-story'
-    );
     await page.hover('#menu-posts-web-story a');
     await expect(page).toMatchElement('#menu-posts-web-story.opensub');
 
-    await expect(adminMenuItem).toClick('a', {
+    await expect(page).toClick('#menu-posts-web-story a', {
       text: 'Dashboard',
     });
     await page.waitForNavigation();
@@ -66,13 +59,10 @@ describe('Admin Menu', () => {
   it('should link to "Explore Templates"', async () => {
     await visitAdminPage('index.php');
 
-    const adminMenuItem = await expect(page).toMatchElement(
-      '#menu-posts-web-story'
-    );
     await page.hover('#menu-posts-web-story a');
     await expect(page).toMatchElement('#menu-posts-web-story.opensub');
 
-    await expect(adminMenuItem).toClick('a', {
+    await expect(page).toClick('#menu-posts-web-story a', {
       text: 'Explore Templates',
     });
     await page.waitForNavigation();
@@ -84,13 +74,10 @@ describe('Admin Menu', () => {
   it('should link to "Settings"', async () => {
     await visitAdminPage('index.php');
 
-    const adminMenuItem = await expect(page).toMatchElement(
-      '#menu-posts-web-story'
-    );
     await page.hover('#menu-posts-web-story a');
     await expect(page).toMatchElement('#menu-posts-web-story.opensub');
 
-    await expect(adminMenuItem).toClick('a', {
+    await expect(page).toClick('#menu-posts-web-story a', {
       text: 'Settings',
     });
     await page.waitForNavigation();
