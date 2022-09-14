@@ -63,6 +63,7 @@ function MediaRecordingLayer() {
 
   const {
     status,
+    inputStatus,
     audioInput,
     videoInput,
     hasVideo,
@@ -77,6 +78,7 @@ function MediaRecordingLayer() {
     videoEffect,
   } = useMediaRecording(({ state, actions }) => ({
     status: state.status,
+    inputStatus: state.inputStatus,
     audioInput: state.audioInput,
     videoInput: state.videoInput,
     hasVideo: state.hasVideo,
@@ -90,8 +92,7 @@ function MediaRecordingLayer() {
     resetStream: actions.resetStream,
     onTrim: actions.onTrim,
   }));
-
-  const isReady = 'ready' === status;
+  const isReady = 'ready' === inputStatus || 'ready' === status;
 
   useEffect(() => {
     async function run() {
