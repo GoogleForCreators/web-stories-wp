@@ -23,6 +23,7 @@ import {
   isAnimatedGif,
 } from '@googleforcreators/media';
 import { DANGER_ZONE_HEIGHT } from '@googleforcreators/units';
+import { trackError } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies
@@ -551,8 +552,7 @@ function useProcessMedia({
             },
           });
         } catch (e) {
-          //eslint-disable-next-line no-console -- surface this error
-          console.log(`cropExistingVideo ${e.message}`);
+          trackError('crop_existing_video', e.message);
           return;
         }
       };

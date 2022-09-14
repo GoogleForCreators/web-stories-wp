@@ -22,11 +22,11 @@ import {
   ContextMenuComponents,
 } from '@googleforcreators/design-system';
 import { useRef, useMemo } from '@googleforcreators/react';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
  */
-import { useFeature } from 'flagged';
 import {
   RIGHT_CLICK_MENU_LABELS,
   RIGHT_CLICK_MENU_SHORTCUTS,
