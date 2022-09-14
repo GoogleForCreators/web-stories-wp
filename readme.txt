@@ -109,6 +109,13 @@ Web Stories are powered by [AMP](https://amp.dev/), which adds some restrictions
 
 For the plugin's full changelog, please see [the Releases page on GitHub](https://github.com/googleforcreators/web-stories-wp/releases).
 
+= 1.25.0 =
+
+* New feature: background blurring support for webcam recording.
+* Enhancement: change and lock placement of floating menu bar.
+* Enhancements: improved saving and revisions mechanism to prevent content loss.
+* Bug fixes and performance improvements.
+
 = 1.24.0 =
 
 * New feature: pause/resume and video trimming support for webcam recording.
@@ -123,11 +130,11 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 
 * Fixes another issue related to story poster images.
 
-= 1.23.1 =
-
-* Fixes an issue with story poster images not saving correctly.
-
 == Upgrade Notice ==
+
+= 1.25.0 =
+
+This release adds improvements to webcam recording, saving, and the floating menu bar.
 
 = 1.24.0 =
 
@@ -136,8 +143,3 @@ This release introduces multi-page canvas and contains improvements to webcam re
 = 1.23.2 =
 
 This release fixes another issue related to story poster images.
-
-= 1.23.1 =
-
-This release fixes an issue with story poster images not saving correctly.
-
