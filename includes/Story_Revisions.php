@@ -1,8 +1,8 @@
 <?php
 /**
- * AdmiRevisionsn class.
+ * Story_Revisions class.
  *
- * Responsible for WordPress admin integration.
+ * Responsible for WordPress revisions integration.
  *
  * @link      https://github.com/googleforcreators/web-stories-wp
  *
