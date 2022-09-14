@@ -448,7 +448,7 @@ function PublishPanel({ nameOverride }) {
             </LabelWrapper>
           </DropdownWrapper>
         </HighlightRow>
-        {improvedAutosaves && revisionCount >= 1 ? (
+        {improvedAutosaves && revisionCount > 1 ? (
           <RevisionsWrapper>
             <Label>
               <LabelIconWrapper>
