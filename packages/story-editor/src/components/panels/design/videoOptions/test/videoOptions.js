@@ -25,13 +25,8 @@ import { useFeature } from 'flagged';
 import VideoOptions from '../videoOptions';
 import { renderPanel } from '../../../shared/test/_utils';
 import { useLocalMedia } from '../../../../../app/media';
-import mockUseVideoElementTranscoding from '../../../../../app/media/utils/useVideoElementTranscoding';
 
 jest.mock('flagged');
-
-jest.mock('../../../../../app/media/utils/useVideoElementTranscoding', () =>
-  jest.fn()
-);
 
 jest.mock('../../../../../app/media');
 
@@ -76,10 +71,6 @@ describe('Panels/VideoOptions', () => {
   });
 
   beforeEach(() => {
-    mockUseVideoElementTranscoding.mockImplementation(() => ({
-      state: { canMute: true },
-      actions: {},
-    }));
   });
 
   afterAll(() => {
@@ -97,11 +88,7 @@ describe('Panels/VideoOptions', () => {
     expect(screen.getByLabelText('Volume')).toBeInTheDocument();
   });
 
-  it('should not render volume input if video is muted', () => {
-    mockUseVideoElementTranscoding.mockImplementationOnce(() => ({
-      state: { canMute: false },
-      actions: {},
-    }));
+  it('should render volume input as muted', () => {
     arrange([
       {
         type: 'video',
