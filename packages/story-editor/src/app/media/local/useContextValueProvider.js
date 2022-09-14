@@ -278,13 +278,18 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     ]
   );
 
-  const { optimizeVideo, optimizeGif, muteExistingVideo, trimExistingVideo } =
-    useProcessMedia({
-      postProcessingResource,
-      uploadMedia,
-      updateMedia,
-      deleteMediaElement,
-    });
+  const {
+    optimizeVideo,
+    optimizeGif,
+    muteExistingVideo,
+    cropExistingVideo,
+    trimExistingVideo,
+  } = useProcessMedia({
+    postProcessingResource,
+    uploadMedia,
+    updateMedia,
+    deleteMediaElement,
+  });
 
   // Whenever media items in the library change,
   // generate missing posters / has audio / base color if needed.
@@ -338,6 +343,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
       trimExistingVideo,
       updateBaseColor,
       updateBlurHash,
+      cropExistingVideo,
     },
   };
 }

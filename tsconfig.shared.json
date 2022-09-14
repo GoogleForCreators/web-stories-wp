@@ -6,7 +6,7 @@
     "jsx": "preserve",
     "target": "esnext",
     "module": "esnext",
-    "lib": ["dom", "esnext"],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "declaration": true,
     "declarationMap": true,
     "composite": true,

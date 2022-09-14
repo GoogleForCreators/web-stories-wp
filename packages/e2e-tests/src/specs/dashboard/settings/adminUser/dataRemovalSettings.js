@@ -25,22 +25,23 @@ import {
 /**
  * Internal dependencies
  */
-import { dataRemovalCheckboxSelector } from '../../../../utils';
+
+const checkbox = 'input[data-testid="data-removal-settings-checkbox"]';
 
 describe('Admin User', () => {
   beforeEach(async () => {
     await visitSettings();
-    await enableCheckbox(dataRemovalCheckboxSelector);
+    await enableCheckbox(checkbox);
   });
 
   it('should let me see and update data removal settings', async () => {
     // verify that the data removal checkbox can be changed
-    await expect(page).toMatchElement(`${dataRemovalCheckboxSelector}:checked`);
+    await expect(page).toMatchElement(`${checkbox}:checked`);
 
-    await disableCheckbox(dataRemovalCheckboxSelector);
+    await disableCheckbox(checkbox);
 
     // verify that the data removal checkbox can be changed
-    await expect(page).toMatchElement(`${dataRemovalCheckboxSelector}:checked`);
-    await disableCheckbox(dataRemovalCheckboxSelector);
+    await expect(page).toMatchElement(`${checkbox}:not(:checked)`);
+    await disableCheckbox(checkbox);
   });
 });

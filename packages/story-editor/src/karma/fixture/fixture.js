@@ -66,6 +66,7 @@ if ('true' === WEB_STORIES_CI) {
       error.stack = null;
       return error;
     },
+    asyncUtilTimeout: 5000,
   });
 }
 
