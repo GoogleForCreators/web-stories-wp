@@ -18,6 +18,7 @@
  * Internal dependencies
  */
 import generatePatternStyles from '../generatePatternStyles';
+import type { Linear, Radial } from '../types';
 
 describe('generatePatternStyles', () => {
   describe('given null', () => {
@@ -30,6 +31,8 @@ describe('generatePatternStyles', () => {
 
   describe('given an unknown type', () => {
     it('should throw error', () => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment -- Testing the pattern type runtime check.
+      // @ts-ignore
       expect(() => generatePatternStyles({ type: 'comic' })).toThrow(
         /unknown pattern type/i
       );
@@ -72,7 +75,7 @@ describe('generatePatternStyles', () => {
               { color: { r: 255, g: 0, b: 0 }, position: 0 },
               { color: { r: 0, g: 0, b: 255 }, position: 1 },
             ],
-          },
+          } as Linear,
           'fill'
         )
       ).toThrow(/only generate solid/i);
@@ -88,7 +91,7 @@ describe('generatePatternStyles', () => {
             { color: { r: 255, g: 0, b: 0 }, position: 0 },
             { color: { r: 0, g: 0, b: 255 }, position: 1 },
           ],
-        })
+        } as Linear)
       ).toStrictEqual({
         backgroundImage: 'linear-gradient(0.5turn, #f00 0%, #00f 100%)',
       });
@@ -104,7 +107,7 @@ describe('generatePatternStyles', () => {
             { color: { r: 0, g: 0, b: 255 }, position: 1 },
           ],
           rotation: 0.25,
-        })
+        } as Linear)
       ).toStrictEqual({
         backgroundImage:
           'linear-gradient(0.75turn, rgba(255,0,0,0) 0%, #f00 60%, #00f 100%)',
@@ -121,7 +124,7 @@ describe('generatePatternStyles', () => {
             { color: { r: 0, g: 0, b: 255, a: 0 }, position: 1 },
           ],
           alpha: 0.7,
-        })
+        } as Linear)
       ).toStrictEqual({
         backgroundImage:
           'linear-gradient(0.5turn, rgba(255,0,0,0.35) 0%, rgba(255,0,0,0.7) 60%, rgba(0,0,255,0) 100%)',
@@ -138,7 +141,7 @@ describe('generatePatternStyles', () => {
             { color: { r: 255, g: 0, b: 0 }, position: 0 },
             { color: { r: 0, g: 0, b: 255 }, position: 1 },
           ],
-        })
+        } as Radial)
       ).toStrictEqual({
         backgroundImage: 'radial-gradient(#f00 0%, #00f 100%)',
       });
@@ -153,7 +156,7 @@ describe('generatePatternStyles', () => {
             { color: { r: 255, g: 0, b: 0 }, position: 0.6 },
             { color: { r: 0, g: 0, b: 255 }, position: 1 },
           ],
-        })
+        } as Radial)
       ).toStrictEqual({
         backgroundImage:
           'radial-gradient(rgba(255,0,0,0) 0%, #f00 60%, #00f 100%)',
@@ -169,7 +172,7 @@ describe('generatePatternStyles', () => {
             { color: { r: 0, g: 0, b: 255 }, position: 1 },
           ],
           size: { w: 0.2, h: 0.45678 },
-        })
+        } as Radial)
       ).toStrictEqual({
         backgroundImage:
           'radial-gradient(ellipse 20% 45.68%, #f00 0%, #00f 100%)',
@@ -185,7 +188,7 @@ describe('generatePatternStyles', () => {
             { color: { r: 0, g: 0, b: 255 }, position: 1 },
           ],
           center: { x: 0.4, y: 0.6 },
-        })
+        } as Radial)
       ).toStrictEqual({
         backgroundImage: 'radial-gradient(at 40% 60%, #f00 0%, #00f 100%)',
       });
@@ -201,7 +204,7 @@ describe('generatePatternStyles', () => {
           ],
           size: { w: 0.2, h: 0.45678 },
           center: { x: 0.4, y: 0.6 },
-        })
+        } as Radial)
       ).toStrictEqual({
         backgroundImage:
           'radial-gradient(ellipse 20% 45.68% at 40% 60%, #f00 0%, #00f 100%)',
@@ -218,7 +221,7 @@ describe('generatePatternStyles', () => {
             { color: { r: 0, g: 0, b: 255, a: 0 }, position: 1 },
           ],
           alpha: 0.7,
-        })
+        } as Radial)
       ).toStrictEqual({
         backgroundImage:
           'radial-gradient(rgba(255,0,0,0.35) 0%, rgba(255,0,0,0.7) 60%, rgba(0,0,255,0) 100%)',
