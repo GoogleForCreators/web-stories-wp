@@ -97,7 +97,7 @@ describe('Panels/VideoOptions', () => {
     expect(screen.getByLabelText('Volume')).toBeInTheDocument();
   });
 
-  it('should render volume input as muted', () => {
+  it('should not render volume input if video is muted', () => {
     mockUseVideoElementTranscoding.mockImplementationOnce(() => ({
       state: { canMute: false },
       actions: {},
