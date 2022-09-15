@@ -19,33 +19,33 @@
  */
 import type { Story, Element, Page } from '@googleforcreators/types';
 
-interface PrevElement extends Element {
+export interface ElementV43 extends Element {
   tagName?: 'string';
 }
 
-interface PrevPage extends Omit<Page, 'elements'> {
-  elements: PrevElement[];
+export interface PageV43 extends Omit<Page, 'elements'> {
+  elements: ElementV43[];
 }
 
-interface PrevStory extends Omit<Story, 'pages'> {
-  pages: PrevPage[];
+export interface StoryV43 extends Omit<Story, 'pages'> {
+  pages: PageV43[];
 }
 
-function removeTagNames({ pages, ...rest }: PrevStory): Story {
+function removeTagNames({ pages, ...rest }: StoryV43): Story {
   return {
     pages: pages.map(reducePage),
     ...rest,
   };
 }
 
-function reducePage({ elements, ...rest }: PrevPage): Page {
+function reducePage({ elements, ...rest }: PageV43): Page {
   return {
     elements: elements.map(updateElement),
     ...rest,
   };
 }
 
-function updateElement(element: PrevElement): Element {
+function updateElement(element: ElementV43): Element {
   delete element.tagName;
   return element as Element;
 }

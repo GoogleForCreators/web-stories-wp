@@ -15,24 +15,37 @@
  */
 
 /**
- * External dependencies
+ * Internal dependencies
  */
-import type { Element, Page, Story } from '@googleforcreators/types';
+import type { ElementV43, PageV43, StoryV43 } from './v0043_removeTagNames';
 
-interface PrevElement extends Element {
+interface ElementV42 extends ElementV43 {
   tagName?: 'string';
 }
 
-interface PrevPage extends Omit<Page, 'elements'> {
-  elements: PrevElement[];
+interface Track {
+  track: string;
+  trackId: number;
+  id: string;
+  srcLang: string;
+  label: string;
+  kind: string;
+  trackName?: string;
 }
 
-interface PrevStory extends Omit<Story, 'pages'> {
-  pages: PrevPage[];
-  backgroundAudio?: string;
+interface PageV42 extends Omit<PageV43, 'elements'> {
+  elements: ElementV42[];
+  backgroundAudio?: {
+    tracks: Track[];
+  };
 }
 
-function removeTrackName(storyData: PrevStory): Story {
+interface StoryV42 extends Omit<StoryV43, 'pages'> {
+  pages: PageV42[];
+  backgroundAudio?: Record<string, unknown>;
+}
+
+function removeTrackName(storyData: StoryV42): StoryV43 {
   const updatedStoryData = updateStory(storyData);
   const { pages, ...rest } = updatedStoryData;
   return {
@@ -41,7 +54,7 @@ function removeTrackName(storyData: PrevStory): Story {
   };
 }
 
-function updateStory(story: PrevStory): Story {
+function updateStory(story: StoryV42): StoryV43 {
   if (story?.backgroundAudio) {
     story.backgroundAudio = {
       resource: story?.backgroundAudio,
@@ -50,8 +63,11 @@ function updateStory(story: PrevStory): Story {
   return story;
 }
 
-function updatePage(page: PrevPage): Page {
-  if (page?.backgroundAudio?.tracks?.length > 0) {
+function updatePage(page: PageV42): PageV43 {
+  if (
+    page?.backgroundAudio?.tracks &&
+    page?.backgroundAudio?.tracks?.length > 0
+  ) {
     page?.backgroundAudio?.tracks.map((track) => {
       delete track.trackName;
       return track;
