@@ -32,7 +32,7 @@ function defaultForUndefined(value, def) {
 }
 
 function VideoOutput({ element, box, flags }) {
-  const { resource, loop, tracks } = element;
+  const { resource, loop, tracks, volume } = element;
   const { isMuted, mimeType, src } = resource;
 
   const poster = defaultForUndefined(element.poster, resource.poster);
@@ -52,6 +52,7 @@ function VideoOutput({ element, box, flags }) {
     layout: 'fill',
     loop: loop ? 'loop' : undefined,
     noaudio: isMuted ? 'noaudio' : undefined,
+    volume: !isMuted && volume ? volume : undefined,
   };
 
   return (
