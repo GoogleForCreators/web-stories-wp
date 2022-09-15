@@ -279,18 +279,6 @@ class Experiments extends Service_Base implements HasRequirements {
 			],
 			/**
 			 * Author: @barklund
-			 * Issue: #10112
-			 * Creation date: 2022-01-27
-			 */
-			[
-				'name'        => 'floatingMenu',
-				'label'       => __( 'Floating Menu', 'web-stories' ),
-				'description' => __( 'Enable the new floating design menu', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-			/**
-			 * Author: @barklund
 			 * Issue: #9643
 			 * Creation date: 2022-06-21
 			 */
