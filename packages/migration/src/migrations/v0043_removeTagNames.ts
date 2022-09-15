@@ -14,23 +14,40 @@
  * limitations under the License.
  */
 
-function removeTagNames({ pages, ...rest }) {
+/**
+ * External dependencies
+ */
+import type { Story, Element, Page } from '@googleforcreators/types';
+
+interface PrevElement extends Element {
+  tagName?: 'string';
+}
+
+interface PrevPage extends Omit<Page, 'elements'> {
+  elements: PrevElement[];
+}
+
+interface PrevStory extends Omit<Story, 'pages'> {
+  pages: PrevPage[];
+}
+
+function removeTagNames({ pages, ...rest }: PrevStory): Story {
   return {
     pages: pages.map(reducePage),
     ...rest,
   };
 }
 
-function reducePage({ elements, ...rest }) {
+function reducePage({ elements, ...rest }: PrevPage): Page {
   return {
     elements: elements.map(updateElement),
     ...rest,
   };
 }
 
-function updateElement(element) {
+function updateElement(element: PrevElement): Element {
   delete element.tagName;
-  return element;
+  return element as Element;
 }
 
 export default removeTagNames;

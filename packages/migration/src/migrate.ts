@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import type { Page, Story, Element } from '@googleforcreators/types';
+
+/**
  * Internal dependencies
  */
 import storyDataArrayToObject from './migrations/v0001_storyDataArrayToObject';
@@ -57,12 +62,14 @@ import changeBaseColorToHex from './migrations/v0036_changeBaseColorToHex';
 import removeTransientMediaProperties from './migrations/v0037_removeTransientMediaProperties';
 import camelCaseResourceSizes from './migrations/v0038_camelCaseResourceSizes';
 import backgroundAudioFormatting from './migrations/v0039_backgroundAudioFormatting';
-import andadaFontToAndadaPro from './migrations/v0040_andadaFontToAndadaPro.js';
-import removeFontProperties from './migrations/v0041_removeFontProperties.js';
-import removeTrackName from './migrations/v0042_removeTrackName.js';
+import andadaFontToAndadaPro from './migrations/v0040_andadaFontToAndadaPro';
+import removeFontProperties from './migrations/v0041_removeFontProperties';
+import removeTrackName from './migrations/v0042_removeTrackName';
 import removeTagNames from './migrations/v0043_removeTagNames';
 
-const MIGRATIONS = {
+type MigrationFn = (storyData: Story) => Story;
+
+const MIGRATIONS: Record<number, MigrationFn[]> = {
   1: [storyDataArrayToObject],
   2: [dataPixelTo1080],
   3: [fullbleedToFill],
@@ -113,14 +120,14 @@ export const DATA_VERSION = Math.max.apply(
   Object.keys(MIGRATIONS).map(Number)
 );
 
-export function migrate(storyData, version) {
-  let result = storyData;
+export function migrate(storyData: Story, version: number): Story {
+  let result: Story = storyData;
   for (let v = version; v < DATA_VERSION; v++) {
     const migrations = MIGRATIONS[v + 1];
     if (!migrations) {
       continue;
     }
-    for (const i in migrations) {
+    for (let i = 0; v < migrations.length; i++) {
       if (Object.prototype.hasOwnProperty.call(migrations, i)) {
         result = migrations[Number(i)](result);
       }

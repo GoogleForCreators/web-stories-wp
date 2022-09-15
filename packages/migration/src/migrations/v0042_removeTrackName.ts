@@ -14,7 +14,25 @@
  * limitations under the License.
  */
 
-function removeTrackName(storyData) {
+/**
+ * External dependencies
+ */
+import type { Element, Page, Story } from '@googleforcreators/types';
+
+interface PrevElement extends Element {
+  tagName?: 'string';
+}
+
+interface PrevPage extends Omit<Page, 'elements'> {
+  elements: PrevElement[];
+}
+
+interface PrevStory extends Omit<Story, 'pages'> {
+  pages: PrevPage[];
+  backgroundAudio?: string;
+}
+
+function removeTrackName(storyData: PrevStory): Story {
   const updatedStoryData = updateStory(storyData);
   const { pages, ...rest } = updatedStoryData;
   return {
@@ -23,7 +41,7 @@ function removeTrackName(storyData) {
   };
 }
 
-function updateStory(story) {
+function updateStory(story: PrevStory): Story {
   if (story?.backgroundAudio) {
     story.backgroundAudio = {
       resource: story?.backgroundAudio,
@@ -32,7 +50,7 @@ function updateStory(story) {
   return story;
 }
 
-function updatePage(page) {
+function updatePage(page: PrevPage): Page {
   if (page?.backgroundAudio?.tracks?.length > 0) {
     page?.backgroundAudio?.tracks.map((track) => {
       delete track.trackName;

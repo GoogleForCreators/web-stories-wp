@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
+import type { Element, Page, Story } from '@googleforcreators/types';
+
 const NEW_PAGE_WIDTH = 1080;
 const NEW_PAGE_HEIGHT = 1920;
 const OLD_PAGE_WIDTH = 412;
@@ -22,22 +27,33 @@ const OLD_PAGE_HEIGHT = 732;
 const SCALE_X = NEW_PAGE_WIDTH / OLD_PAGE_WIDTH;
 const SCALE_Y = NEW_PAGE_HEIGHT / OLD_PAGE_HEIGHT;
 
-function dataPixelTo1080({ pages, ...rest }) {
+interface ElementV2 extends Element {
+  fontSize?: number | null;
+}
+
+function dataPixelTo1080({ pages, ...rest }: Story): Story {
   return {
     pages: pages.map(reducePage),
     ...rest,
-  };
+  } as Story;
 }
 
-function reducePage({ elements, ...rest }) {
+function reducePage({ elements, ...rest }: Page) {
   return {
     elements: elements.map(updateElement),
     ...rest,
-  };
+  } as Page;
 }
 
-function updateElement({ x, y, width, height, fontSize, ...rest }) {
-  const element = {
+function updateElement({
+  x,
+  y,
+  width,
+  height,
+  fontSize,
+  ...rest
+}: ElementV2): Element {
+  const element: Partial<ElementV2> = {
     x: dataPixels(x * SCALE_X),
     y: dataPixels(y * SCALE_Y),
     width: dataPixels(width * SCALE_X),
@@ -47,16 +63,16 @@ function updateElement({ x, y, width, height, fontSize, ...rest }) {
   if (typeof fontSize === 'number') {
     element.fontSize = dataPixels(fontSize * SCALE_Y);
   }
-  return element;
+  return element as Element;
 }
 
 /**
  * See `units/dimensions.js`.
  *
- * @param {number} v The value to be rounded.
- * @return {number} The value rounded to the "data" space precision.
+ * @param v The value to be rounded.
+ * @return The value rounded to the "data" space precision.
  */
-function dataPixels(v) {
+function dataPixels(v: number) {
   return Number(v.toFixed(0));
 }
 
