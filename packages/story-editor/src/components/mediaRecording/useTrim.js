@@ -18,8 +18,12 @@
  * External dependencies
  */
 import { formatMsToHMS } from '@googleforcreators/media';
-import { useState, useCallback, useRef } from '@googleforcreators/react';
-import { useEffect } from 'react';
+import {
+  useState,
+  useCallback,
+  useRef,
+  useEffect,
+} from '@googleforcreators/react';
 
 /**
  * Internal dependencies

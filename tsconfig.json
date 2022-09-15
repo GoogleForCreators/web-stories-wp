@@ -6,6 +6,7 @@
     { "path": "packages/moveable" },
     { "path": "packages/patterns" },
     { "path": "packages/react" },
+    { "path": "packages/rich-text" },
     { "path": "packages/stickers" },
     { "path": "packages/tracking" },
     { "path": "packages/transform" },

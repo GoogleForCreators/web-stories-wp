@@ -61,7 +61,7 @@ const initialState = {
  *
  * A path through the queue could look like this:
  *
- * PENDING -> PREPARING -> PENDING TRANSCODING -> TRANSCODING -> TRANSCODED -> TRIMMING -> TRIMMED -> MUTING -> MUTED -> UPLOADING -> UPLOADED -> FINISHED
+ * PENDING -> PREPARING -> PENDING TRANSCODING -> TRANSCODING -> TRANSCODED -> TRIMMING -> TRIMMED -> MUTING -> MUTED -> CROPPING -> CROPPED -> UPLOADING -> UPLOADED -> FINISHED
  *
  * @return {{state: {Object}, actions: {Object}}} Media queue state.
  */
@@ -77,6 +77,7 @@ function useMediaUploadQueue() {
     getFirstFrameOfVideo,
     convertGifToVideo,
     trimVideo,
+    cropVideo: cropResource,
   } = useFFmpeg();
   const { isConsideredOptimized } = useMediaInfo();
 
@@ -97,9 +98,11 @@ function useMediaUploadQueue() {
     cancelUploading,
     startTranscoding,
     startMuting,
+    startCropping,
     startTrimming,
     finishTranscoding,
     finishMuting,
+    finishCropping,
     finishTrimming,
     replacePlaceholderResource,
   } = actions;
@@ -114,6 +117,7 @@ function useMediaUploadQueue() {
             ![
               ITEM_STATUS.TRIMMED,
               ITEM_STATUS.MUTED,
+              ITEM_STATUS.CROPPED,
               ITEM_STATUS.TRANSCODED,
             ].includes(itemState) ||
             !resource.isPlaceholder ||
@@ -298,6 +302,42 @@ function useMediaUploadQueue() {
     [startMuting, finishMuting, stripAudioFromVideo, cancelUploading]
   );
 
+  const cropVideoItem = useCallback(
+    async (item) => {
+      const { id, file, additionalData } = item;
+
+      startCropping({ id });
+
+      currentTranscodingItem.current = id;
+
+      try {
+        const newFile = await cropResource(file, additionalData.cropParams);
+        const posterFile = await getFirstFrameOfVideo(newFile);
+
+        if (!isMounted.current) {
+          return;
+        }
+
+        additionalData.isCropped = true;
+        finishCropping({ id, file: newFile, posterFile, additionalData });
+      } catch (error) {
+        // Cancel uploading if there were any errors.
+        cancelUploading({ id, error });
+
+        trackError('upload_media', error?.message);
+      } finally {
+        currentTranscodingItem.current = null;
+      }
+    },
+    [
+      startCropping,
+      finishCropping,
+      cropResource,
+      cancelUploading,
+      getFirstFrameOfVideo,
+    ]
+  );
+
   const optimizeVideoItem = useCallback(
     async (item) => {
       const { id, file, additionalData = {} } = item;
@@ -445,7 +485,16 @@ function useMediaUploadQueue() {
        * @param {Object} item.additionalData Additional Data object.
        */
       async (item) => {
-        const { id, file, resource, isAnimatedGif, state: itemState } = item;
+        const {
+          id,
+          file,
+          resource,
+          isAnimatedGif,
+          state: itemState,
+          muteVideo,
+          cropVideo,
+          trimData,
+        } = item;
         if (ITEM_STATUS.PENDING !== itemState) {
           return;
         }
@@ -453,6 +502,14 @@ function useMediaUploadQueue() {
         // Changing item state so that an item is never processed twice
         // in this effect.
         prepareItem({ id });
+
+        const needsTranscoding =
+          isAnimatedGif || muteVideo || cropVideo || trimData;
+
+        if (needsTranscoding) {
+          prepareForTranscoding({ id });
+          return;
+        }
 
         const isVideo = file.type.startsWith('video/');
 
@@ -475,15 +532,7 @@ function useMediaUploadQueue() {
           }
         }
 
-        if (!isTranscodingEnabled) {
-          uploadItem(item);
-
-          return;
-        }
-
-        const needsTranscoding = isAnimatedGif || canTranscodeFile(file);
-
-        if (!needsTranscoding) {
+        if (!isTranscodingEnabled || !canTranscodeFile(file)) {
           uploadItem(item);
 
           return;
@@ -513,7 +562,13 @@ function useMediaUploadQueue() {
        * @param {Object} item.additionalData Additional Data object.
        */
       (item) => {
-        const { muteVideo, trimData, isAnimatedGif, state: itemState } = item;
+        const {
+          muteVideo,
+          cropVideo,
+          trimData,
+          isAnimatedGif,
+          state: itemState,
+        } = item;
         if (ITEM_STATUS.PENDING_TRANSCODING !== itemState) {
           return;
         }
@@ -541,6 +596,11 @@ function useMediaUploadQueue() {
           return;
         }
 
+        if (cropVideo) {
+          cropVideoItem(item);
+          return;
+        }
+
         optimizeVideoItem(item);
       }
     );
@@ -551,6 +611,7 @@ function useMediaUploadQueue() {
     convertGifItem,
     trimVideoItem,
     muteVideoItem,
+    cropVideoItem,
   ]);
 
   // Upload freshly transcoded files to server.
@@ -562,6 +623,7 @@ function useMediaUploadQueue() {
           ITEM_STATUS.TRANSCODED,
           ITEM_STATUS.MUTED,
           ITEM_STATUS.TRIMMED,
+          ITEM_STATUS.CROPPED,
         ].includes(itemState)
       ) {
         return;
@@ -678,6 +740,15 @@ function useMediaUploadQueue() {
     );
 
     /**
+     * Whether any video cropping is currently in progress.
+     *
+     * @type {boolean} Whether we're muting.
+     */
+    const isCropping = state.queue.some(
+      (item) => item.state === ITEM_STATUS.CROPPING
+    );
+
+    /**
      * Whether any video trimming is currently in progress.
      *
      * @type {boolean} Whether we're trimming.
@@ -703,6 +774,7 @@ function useMediaUploadQueue() {
             ITEM_STATUS.TRANSCODING,
             ITEM_STATUS.TRIMMING,
             ITEM_STATUS.MUTING,
+            ITEM_STATUS.CROPPING,
           ].includes(item.state) && item.originalResourceId === resourceId
       );
 
@@ -723,6 +795,7 @@ function useMediaUploadQueue() {
             ITEM_STATUS.TRANSCODING,
             ITEM_STATUS.TRIMMING,
             ITEM_STATUS.MUTING,
+            ITEM_STATUS.CROPPING,
           ].includes(item.state) && item.resource.id === resourceId
       );
 
@@ -892,6 +965,7 @@ function useMediaUploadQueue() {
         isUploading,
         isTranscoding,
         isMuting,
+        isCropping,
         isTrimming,
         isCurrentResourceMuting,
         isCurrentResourceProcessing,

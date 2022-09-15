@@ -33,14 +33,16 @@ export default {
   resolver: '@web-stories-wp/jest-resolver',
   preset: 'jest-puppeteer',
   testEnvironment: '<rootDir>/packages/e2e-tests/src/puppeteerEnvironment.js',
-  testMatch: ['**/specs/**/*.[jt]s', '**/?(*.)spec.[jt]s'],
+  testMatch: ['**/specs/**/*.[jt]s'],
   testPathIgnorePatterns: [
     '<rootDir>/.git',
     '<rootDir>/build',
     '<rootDir>/node_modules',
     '<rootDir>/vendor',
   ],
-  transformIgnorePatterns: ['node_modules'],
+  // Do not transform any node_modules except use-reduction
+  // See https://jestjs.io/docs/configuration#transformignorepatterns-arraystring
+  transformIgnorePatterns: ['/node_modules/(?!(use-reduction)/)'],
   setupFilesAfterEnv: [
     'jest-extended/all',
     '<rootDir>/packages/e2e-tests/src/config/bootstrap.js',

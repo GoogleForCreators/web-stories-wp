@@ -343,6 +343,55 @@ function useFFmpeg() {
   );
 
   /**
+   * Crop Video to remove portions of the video using FFmpeg.
+   */
+  const cropVideo = useCallback(
+    async (file, cropParams) => {
+      let ffmpeg;
+
+      const { cropWidth, cropHeight, cropX, cropY } = cropParams;
+
+      try {
+        ffmpeg = await getFFmpegInstance(file);
+
+        const type = file?.type || MEDIA_TRANSCODED_MIME_TYPE;
+        const ext = getExtensionFromMimeType(type);
+        const tempFileName = uuidv4() + '.' + ext;
+        const outputFileName = getFileBasename(file) + '-cropped.' + ext;
+        const crop = `crop=${cropWidth}:${cropHeight}:${cropX}:${cropY}`;
+
+        await ffmpeg.run(
+          // Input filename.
+          '-i',
+          file.name,
+          '-vf',
+          crop,
+          tempFileName
+        );
+
+        const data = ffmpeg.FS('readFile', tempFileName);
+
+        return blobToFile(
+          new Blob([data.buffer], { type }),
+          outputFileName,
+          type
+        );
+      } catch (err) {
+        // eslint-disable-next-line no-console -- We want to surface this error.
+        console.log(err);
+        throw err;
+      } finally {
+        try {
+          ffmpeg.exit();
+        } catch {
+          // Not interested in errors here.
+        }
+      }
+    },
+    [getFFmpegInstance]
+  );
+
+  /**
    * Strip audio from video using FFmpeg.
    *
    * @param {File} file Original video file object.
@@ -551,6 +600,7 @@ function useFFmpeg() {
       convertGifToVideo,
       convertToMp3,
       trimVideo,
+      cropVideo,
     }),
     [
       isTranscodingEnabled,
@@ -561,6 +611,7 @@ function useFFmpeg() {
       convertGifToVideo,
       convertToMp3,
       trimVideo,
+      cropVideo,
     ]
   );
 }
