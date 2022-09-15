@@ -116,11 +116,9 @@ describe('Story Details Modal - Contributor User', () => {
     it.skip('should update featured media (poster)', async () => {
       await openPublishingPanel();
 
-      const featuredMediaButton = await expect(page).toMatchElement(
+      await expect(page).toClick(
         'div[aria-label="Story details"] button[aria-label="Poster image"]'
       );
-
-      await featuredMediaButton.click();
 
       const filename = await uploadMedia('example-1.jpg', false);
 
