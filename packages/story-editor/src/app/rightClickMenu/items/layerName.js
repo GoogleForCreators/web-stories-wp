@@ -19,7 +19,6 @@
  */
 import { ContextMenuComponents } from '@googleforcreators/design-system';
 import { useCallback } from '@googleforcreators/react';
-import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -40,12 +39,6 @@ function LayerName() {
       elementId: selectedElementIds[0],
     });
   }, [setRenamableLayer, selectedElementIds]);
-
-  const isLayerNamingEnabled = useFeature('layerNaming');
-
-  if (!isLayerNamingEnabled) {
-    return null;
-  }
 
   return (
     <>
