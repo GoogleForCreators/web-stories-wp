@@ -20,7 +20,6 @@
 import { forwardRef, useCallback, useMemo } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { __, _x } from '@googleforcreators/i18n';
-import { useFeatures } from 'flagged';
 import { css } from 'styled-components';
 import { DropDown, PLACEMENT } from '@googleforcreators/design-system';
 
@@ -32,7 +31,6 @@ import {
   backgroundEffectOptions,
   NO_ANIMATION,
   foregroundEffectOptions,
-  experimentalEffects,
   getDirectionalEffect,
 } from './dropdownConstants';
 import { ANIMATION_DIRECTION_PROP_TYPE } from './types';
@@ -57,8 +55,6 @@ const EffectChooserDropdown = forwardRef(function EffectChooserDropdown(
   },
   ref
 ) {
-  const { enableExperimentalAnimationEffects } = useFeatures();
-
   const selectedValue = useMemo(
     () => getDirectionalEffect(selectedEffectType, direction),
     [selectedEffectType, direction]
@@ -83,15 +79,9 @@ const EffectChooserDropdown = forwardRef(function EffectChooserDropdown(
     ? backgroundEffectOptions
     : foregroundEffectOptions;
 
-  // remove experiments if needed
   const availableAnimationOptions = useMemo(
-    () =>
-      enableExperimentalAnimationEffects
-        ? Object.values(animationOptionsObject)
-        : Object.values(animationOptionsObject).filter(({ value }) => {
-            return experimentalEffects.indexOf(value) === -1;
-          }),
-    [animationOptionsObject, enableExperimentalAnimationEffects]
+    () => Object.values(animationOptionsObject),
+    [animationOptionsObject]
   );
 
   const assembledOptions = useMemo(
