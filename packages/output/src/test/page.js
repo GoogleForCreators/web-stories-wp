@@ -495,6 +495,66 @@ describe('Page output', () => {
       ).toBeInTheDocument();
     });
 
+    it('should use video with volume', async () => {
+      const props = {
+        id: 'foo',
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
+        page: {
+          id: 'bar',
+          elements: [
+            {
+              id: 'baz',
+              type: 'video',
+              mimeType: 'video/mp4',
+              scale: 1,
+              origRatio: 9 / 16,
+              x: 50,
+              y: 100,
+              height: 1920,
+              width: 1080,
+              rotationAngle: 0,
+              loop: false,
+              volume: 0.5,
+              resource: {
+                type: 'video',
+                mimeType: 'video/mp4',
+                id: 123,
+                src: 'https://example.com/video.mp4',
+                poster: 'https://example.com/poster.png',
+                height: 1920,
+                width: 1080,
+                length: 99,
+              },
+            },
+          ],
+        },
+        autoAdvance: true,
+        defaultPageDuration: 7,
+      };
+
+      const { container } = render(<PageOutput {...props} />);
+      const video = queryById(container, 'el-baz-media');
+      await expect(video).toBeInTheDocument();
+      expect(video).toMatchInlineSnapshot(`
+        <amp-video
+          artwork="https://example.com/poster.png"
+          autoplay="autoplay"
+          id="el-baz-media"
+          layout="fill"
+          poster="https://example.com/poster.png"
+          volume="0.5"
+        >
+          <source
+            src="https://example.com/video.mp4"
+            type="video/mp4"
+          />
+        </amp-video>
+      `);
+      await expect(
+        getByAutoAdvanceAfter(container, 'el-baz-media')
+      ).toBeInTheDocument();
+    });
+
     it('should use video element ID for auto-advance-after if video is below defaultPageDuration', async () => {
       const props = {
         id: 'foo',
