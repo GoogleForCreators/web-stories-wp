@@ -200,7 +200,7 @@ describe('TextEdit integration', () => {
         expect(
           fixture.querySelector('[data-testid="textEditor"]')
         ).toBeDefined();
-        await fixture.events.sleep(300);
+        await fixture.events.sleep(500);
         await fixture.events.keyboard.type('This is some test text.');
 
         // Exit edit mode using the Esc key
