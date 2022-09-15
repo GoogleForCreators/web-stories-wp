@@ -291,42 +291,6 @@ class Experiments extends Service_Base implements HasRequirements {
 			],
 			/**
 			 * Author: @barklund
-			 * Issue: #7332
-			 * Creation date: 2022-04-19
-			 */
-			[
-				'name'        => 'layerLocking',
-				'label'       => __( 'Layer locking', 'web-stories' ),
-				'description' => __( 'Enable layer locking', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-			/**
-			 * Author: @merapi
-			 * Issue: #9244
-			 * Creation date: 2022-05-04
-			 */
-			[
-				'name'        => 'layerGrouping',
-				'label'       => __( 'Layer grouping', 'web-stories' ),
-				'description' => __( 'Enable layer grouping', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-			/**
-			 * Author: @mariana-k
-			 * Issue: #9248
-			 * Creation date: 2022-05-12
-			 */
-			[
-				'name'        => 'layerNaming',
-				'label'       => __( 'Layer naming', 'web-stories' ),
-				'description' => __( 'Enable layer naming', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-			/**
-			 * Author: @barklund
 			 * Issue: #9643
 			 * Creation date: 2022-06-21
 			 */
