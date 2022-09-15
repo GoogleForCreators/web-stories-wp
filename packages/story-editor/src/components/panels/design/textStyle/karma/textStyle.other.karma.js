@@ -576,7 +576,7 @@ describe('Text Style Panel', () => {
         });
 
         it('should close the font picker with Esc', async () => {
-          const input = fixture.screen.getByLabelText('Font family');
+          const input = fixture.screen.getAllByLabelText('Font family')[0];
           expect(input.getAttribute('aria-expanded')).toBe('true');
           await fixture.events.keyboard.press('Esc');
           await waitForElementToBeRemoved(
