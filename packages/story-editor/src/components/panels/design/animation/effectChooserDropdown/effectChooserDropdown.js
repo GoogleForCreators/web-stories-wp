@@ -79,10 +79,7 @@ const EffectChooserDropdown = forwardRef(function EffectChooserDropdown(
     ? backgroundEffectOptions
     : foregroundEffectOptions;
 
-  const availableAnimationOptions = useMemo(
-    () => Object.values(animationOptionsObject),
-    [animationOptionsObject]
-  );
+  const availableAnimationOptions = Object.values(animationOptionsObject);
 
   const assembledOptions = useMemo(
     () =>
