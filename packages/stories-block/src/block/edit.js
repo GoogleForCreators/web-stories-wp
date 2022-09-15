@@ -125,6 +125,8 @@ WebStoriesEdit.propTypes = {
     order: PropTypes.string,
     archiveLinkLabel: PropTypes.string,
     authors: PropTypes.array,
+    categories: PropTypes.array,
+    tags: PropTypes.array,
   }),
   setAttributes: PropTypes.func.isRequired,
   className: PropTypes.string.isRequired,

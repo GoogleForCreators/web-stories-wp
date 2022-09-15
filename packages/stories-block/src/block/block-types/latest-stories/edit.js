@@ -53,7 +53,7 @@ const {
  * @return {*} JSX markup for the editor.
  */
 function LatestStoriesEdit({ attributes, setAttributes }) {
-  const { numOfStories, order, orderby, archiveLinkLabel, authors } =
+  const { numOfStories, order, orderby, archiveLinkLabel, authors, categories, tags } =
     attributes;
 
   const [fetchedStories, setFetchedStories] = useState([]);
@@ -74,6 +74,8 @@ function LatestStoriesEdit({ attributes, setAttributes }) {
           orderby: query.orderby || 'modified',
           order: query.order || 'desc',
           author: query.author || undefined,
+          web_story_category: query.category || undefined,
+          web_story_tag: query.tag || undefined,
         }),
       });
 
@@ -94,8 +96,10 @@ function LatestStoriesEdit({ attributes, setAttributes }) {
       order: order || 'desc',
       orderby: orderby || 'date',
       author: authors,
+      category: categories,
+      tag: tags,
     });
-  }, [authors, numOfStories, order, orderby, debouncedFetchStories]);
+  }, [authors, categories, tags, numOfStories, order, orderby, debouncedFetchStories]);
 
   const viewAllLabel = archiveLinkLabel
     ? archiveLinkLabel
@@ -152,6 +156,8 @@ LatestStoriesEdit.propTypes = {
     order: PropTypes.string,
     archiveLinkLabel: PropTypes.string,
     authors: PropTypes.array,
+    categories: PropTypes.array,
+    tags: PropTypes.array,
     circleSize: PropTypes.number,
     fieldState: PropTypes.object,
   }),

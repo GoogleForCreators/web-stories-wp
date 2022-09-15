@@ -57,6 +57,8 @@ use Google\Web_Stories\Tracking;
  *   order?: string,
  *   archiveLinkLabel?: string,
  *   authors?: int[],
+ *   categories?: int[],
+ *   tags?: int[],
  *   fieldState?: array<string, mixed>
  * }
  * @phpstan-type BlockAttributesWithDefaults array{
@@ -77,6 +79,8 @@ use Google\Web_Stories\Tracking;
  *   order: string,
  *   archiveLinkLabel: string,
  *   authors?: int[],
+ *   categories?: int[],
+ *   tags?: int[],
  *   fieldState?: array<string, mixed>
  * }
  */
@@ -230,6 +234,14 @@ class Web_Stories_Block extends Embed_Base {
 						'default' => __( 'View all stories', 'web-stories' ),
 					],
 					'authors'          => [
+						'type'    => 'array',
+						'default' => [],
+					],
+					'categories'       => [
+						'type'    => 'array',
+						'default' => [],
+					],
+					'tags'             => [
 						'type'    => 'array',
 						'default' => [],
 					],
@@ -407,6 +419,36 @@ class Web_Stories_Block extends Embed_Base {
 
 		if ( ! empty( $attributes['authors'] ) && \is_array( $attributes['authors'] ) ) {
 			$query_args['author__in'] = $attributes['authors'];
+		}
+
+		$tax_query = array();
+
+		if ( ! empty( $attributes['categories'] ) && \is_array( $attributes['categories'] ) ) {
+			$tax_query[] = array(
+				array(
+					'taxonomy' => 'web_story_category',
+					'field'    => 'term_id',
+					'terms'    => $attributes['categories'],
+				),
+			);
+		}
+
+		if ( ! empty( $attributes['tags'] ) && \is_array( $attributes['tags'] ) ) {
+			$tax_query[] = array(
+				array(
+					'taxonomy' => 'web_story_tag',
+					'field'    => 'term_id',
+					'terms'    => $attributes['tags'],
+				),
+			);
+		}
+
+		if ( $tax_query ) {
+			if ( count( $tax_query ) > 1 ) {
+				$tax_query['relation'] = 'AND';
+			}
+
+			$query_args['tax_query'] = $tax_query;
 		}
 
 		return $query_args;

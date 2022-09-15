@@ -43,6 +43,8 @@ import {
   LIST_VIEW_TYPE,
 } from '../constants';
 import AuthorSelection from './authorSelection';
+import CategorySelection from './categorySelection';
+import TagSelection from './tagSelection';
 
 /**
  * StoriesInspectorControls props.
@@ -60,6 +62,8 @@ import AuthorSelection from './authorSelection';
  * @property {string} archiveLinkLabel Archive link's label.
  * @property {boolean} imageOnRight Whether or not to display images on right side in list view type.
  * @property {Array} authors An array of authors objects which are currently selected.
+ * @property {Array} categories An array of categories objects which are currently selected.
+ * @property {Array} tags An array of tags objects which are currently selected.
  * @property {Function} setAttributes Callable function for saving attribute values.
  */
 
@@ -83,6 +87,8 @@ const StoriesInspectorControls = (props) => {
       orderby,
       archiveLinkLabel,
       authors,
+      categories,
+      tags,
       circleSize,
       imageAlignment,
       fieldState,
@@ -281,6 +287,8 @@ const StoriesInspectorControls = (props) => {
             onChange={(selection) => setAttributes({ order: selection })}
           />
           <AuthorSelection authors={authors} setAttributes={setAttributes} />
+          <CategorySelection categories={categories} setAttributes={setAttributes} />
+          <TagSelection tags={tags} setAttributes={setAttributes} />
           <RangeControl
             label={__('Number of Stories', 'web-stories')}
             value={numOfStories}
@@ -306,6 +314,8 @@ StoriesInspectorControls.propTypes = {
     order: PropTypes.string,
     archiveLinkLabel: PropTypes.string,
     authors: PropTypes.array,
+    categories: PropTypes.array,
+    tags: PropTypes.array,
     circleSize: PropTypes.number,
     fieldState: PropTypes.object,
     imageAlignment: PropTypes.string,

@@ -160,6 +160,8 @@ const v2 = {
       order: '',
       archiveLinkLabel: '',
       authors: [],
+      categories: [],
+      tags: [],
       fieldState: {},
     };
   },
