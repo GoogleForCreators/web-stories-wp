@@ -234,17 +234,6 @@ class Experiments extends Service_Base implements HasRequirements {
 	public function get_experiments(): array {
 		return [
 			/**
-			 * Author: @littlemilkstudio
-			 * Issue: 6379
-			 * Creation date: 2021-03-09
-			 */
-			[
-				'name'        => 'enableExperimentalAnimationEffects',
-				'label'       => __( 'Experimental animations', 'web-stories' ),
-				'description' => __( 'Enable any animation effects that are currently experimental', 'web-stories' ),
-				'group'       => 'editor',
-			],
-			/**
 			 * Author: @brittanyirl
 			 * Issue: 2381
 			 * Creation date: 2020-06-11

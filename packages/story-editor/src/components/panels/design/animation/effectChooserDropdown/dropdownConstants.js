@@ -70,11 +70,6 @@ export const GRID_SIZING = {
 };
 
 /**
- * Effects that are behind feature flag
- */
-export const experimentalEffects = [];
-
-/**
  * Some effects are more complicated or have just 1 prebaked option in the effect drop down.
  * For these we want to make sure we're mapping the appropriate value to the drop down selectedValue
  * which means ignoring direction which `getDirectionalEffect` ties into to give 1 effect several
