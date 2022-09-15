@@ -25,7 +25,6 @@ describe('Design Menu: Video loop toggle', () => {
 
   beforeEach(async () => {
     fixture = new Fixture();
-    fixture.setFlags({ floatingMenu: true });
     try {
       await fixture.render();
     } catch {

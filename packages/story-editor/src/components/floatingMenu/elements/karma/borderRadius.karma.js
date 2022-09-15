@@ -30,7 +30,6 @@ describe('Design Menu: Border radius', () => {
 
   beforeEach(async () => {
     fixture = new Fixture();
-    fixture.setFlags({ floatingMenu: true });
     await fixture.render();
 
     await fixture.collapseHelpCenter();

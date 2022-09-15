@@ -30,7 +30,6 @@ describe('Canvas Element - keyboard navigation', () => {
 
   beforeEach(async () => {
     fixture = new Fixture();
-    fixture.setFlags({ floatingMenu: true });
 
     await fixture.render();
     await fixture.collapseHelpCenter();

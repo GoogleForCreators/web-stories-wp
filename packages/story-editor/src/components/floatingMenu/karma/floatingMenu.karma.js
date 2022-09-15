@@ -31,7 +31,6 @@ describe('Design Menu: Keyboard Navigation', () => {
 
   beforeEach(async () => {
     fixture = new Fixture();
-    fixture.setFlags({ floatingMenu: true });
     await fixture.render();
     await fixture.collapseHelpCenter();
   });
