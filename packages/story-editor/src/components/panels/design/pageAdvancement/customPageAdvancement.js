@@ -70,8 +70,8 @@ function CustomPageAdvancementPanel() {
       onUpdate={onUpdate}
       autoAdvance={autoAdvance}
       pageDuration={pageDuration}
-      isOverridden={isOverridden}
-      hasOverride
+      hasOverrideEnabled={isOverridden}
+      allowsOverride
       collapsedByDefault
     >
       {__(

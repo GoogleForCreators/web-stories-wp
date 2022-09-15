@@ -78,14 +78,13 @@ function GeneralPageAdvancementPanel({
   pageDuration = DEFAULT_PAGE_DURATION,
   autoAdvance = DEFAULT_AUTO_ADVANCE,
   onUpdate,
-  hasOverride = false,
-  isOverridden = false,
+  allowsOverride = false,
+  hasOverrideEnabled = false,
   children,
   panelName,
   ...rest
 }) {
   const [duration, setDuration] = useState(pageDuration);
-  const [override, setOverride] = useState(isOverridden);
 
   useEffect(() => {
     setDuration(pageDuration);
@@ -125,16 +124,11 @@ function GeneralPageAdvancementPanel({
   );
 
   const onOverrideChange = useCallback(
-    () =>
-      setOverride((oldValue) => {
-        const newValue = !oldValue;
-        onUpdate({ override: newValue });
-        return newValue;
-      }),
-    [onUpdate]
+    () => onUpdate({ override: !hasOverrideEnabled }),
+    [hasOverrideEnabled, onUpdate]
   );
 
-  const customAdvancementDisabled = hasOverride && !override;
+  const customAdvancementDisabled = allowsOverride && !hasOverrideEnabled;
   const toggleId = useMemo(() => `toggle_${uuidv4()}`, []);
 
   return (
@@ -146,14 +140,14 @@ function GeneralPageAdvancementPanel({
       <Row>
         <MutedText>{children}</MutedText>
       </Row>
-      {hasOverride && (
+      {allowsOverride && (
         <JustifyEndRow>
           <LabelText htmlFor={toggleId}>
             {__('Override Story Defaults', 'web-stories')}
           </LabelText>
           <Toggle
             id={toggleId}
-            checked={override}
+            checked={hasOverrideEnabled}
             onChange={onOverrideChange}
           />
         </JustifyEndRow>
@@ -195,8 +189,8 @@ GeneralPageAdvancementPanel.propTypes = {
   pageDuration: PropTypes.number,
   autoAdvance: PropTypes.bool,
   onUpdate: PropTypes.func.isRequired,
-  hasOverride: PropTypes.bool,
-  isOverridden: PropTypes.bool,
+  allowsOverride: PropTypes.bool,
+  hasOverrideEnabled: PropTypes.bool,
   children: PropTypes.node,
   panelName: PropTypes.string.isRequired,
 };
