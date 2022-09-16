@@ -209,6 +209,6 @@ class Muting extends Service_Base implements HasMeta {
 	 * @param int $attachment_id ID of the attachment to be deleted.
 	 */
 	public function delete_video( int $attachment_id ): void {
-		delete_metadata( 'post', null, self::MUTED_ID_POST_META_KEY, $attachment_id, true );
+		delete_metadata( 'post', 0, self::MUTED_ID_POST_META_KEY, $attachment_id, true );
 	}
 }
