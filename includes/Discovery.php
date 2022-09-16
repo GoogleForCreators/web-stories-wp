@@ -30,7 +30,6 @@ namespace Google\Web_Stories;
 
 use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Model\Story;
-use Google\Web_Stories\Shopping\Product_Meta;
 use WP_Post;
 
 /**
@@ -48,21 +47,12 @@ class Discovery extends Service_Base implements HasRequirements {
 	private $story_post_type;
 
 	/**
-	 * Product_Meta instance.
-	 *
-	 * @var Product_Meta Product_Meta instance.
-	 */
-	private $product_meta;
-
-	/**
 	 * Constructor.
 	 *
 	 * @param Story_Post_Type $story_post_type Story_Post_Type instance.
-	 * @param Product_Meta    $product_meta Product_Meta instance.
 	 */
-	public function __construct( Story_Post_Type $story_post_type, Product_Meta $product_meta ) {
+	public function __construct( Story_Post_Type $story_post_type ) {
 		$this->story_post_type = $story_post_type;
-		$this->product_meta    = $product_meta;
 	}
 
 	/**
@@ -265,7 +255,7 @@ class Discovery extends Service_Base implements HasRequirements {
 			 *
 			 * @phpstan-var ProductData[] $products
 			 */
-			$products         = $this->product_meta->get_products( $post->ID );
+			$products         = $story->get_products();
 			$product_metadata = $this->get_product_data( $products );
 			if ( $product_metadata ) {
 				$metadata = array_merge( $product_metadata, $metadata );
