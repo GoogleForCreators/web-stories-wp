@@ -14,14 +14,38 @@
  * limitations under the License.
  */
 
-function andadaFontToAndadaPro({ pages, ...rest }) {
+/**
+ * External dependencies
+ */
+import type { Font } from '@googleforcreators/types';
+
+/**
+ * Internal dependencies
+ */
+import type {
+  ElementV40,
+  PageV40,
+  StoryV40,
+} from './v0041_removeFontProperties';
+
+export type ElementV39 = ElementV40;
+
+export interface PageV39 extends Omit<PageV40, 'elements'> {
+  elements: ElementV39[];
+}
+
+export interface StoryV39 extends Omit<StoryV40, 'pages'> {
+  pages: PageV39[];
+}
+
+function andadaFontToAndadaPro({ pages, ...rest }: StoryV39): StoryV40 {
   return {
     pages: pages.map(reducePage),
     ...rest,
   };
 }
 
-function reducePage({ elements, ...rest }) {
+function reducePage({ elements, ...rest }: PageV39): PageV40 {
   return {
     elements: elements.map(updateElement),
     ...rest,
@@ -63,9 +87,9 @@ const andadaPro = {
     hDes: -235,
     lGap: 0,
   },
-};
+} as Font;
 
-function updateElement(element) {
+function updateElement(element: ElementV39): ElementV40 {
   if (element.type === 'text' && element?.font?.family === 'Andada') {
     element.font = {
       ...element.font,

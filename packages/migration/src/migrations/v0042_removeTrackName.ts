@@ -17,13 +17,9 @@
 /**
  * Internal dependencies
  */
-import type { ElementV43, PageV43, StoryV43 } from './v0043_removeTagNames';
+import type { StoryV42, PageV42, ElementV42 } from './v0043_removeTagNames';
 
-export interface ElementV42 extends ElementV43 {
-  tagName?: 'string';
-}
-
-interface Track {
+interface TrackV41 {
   track: string;
   trackId: number;
   id: string;
@@ -33,19 +29,20 @@ interface Track {
   trackName?: string;
 }
 
-export interface PageV42 extends Omit<PageV43, 'elements'> {
+export interface PageV41 extends Omit<PageV42, 'elements'> {
   elements: ElementV42[];
   backgroundAudio?: {
-    tracks: Track[];
+    resource?: Record<string, unknown>;
+    tracks: TrackV41[];
   };
 }
 
-export interface StoryV42 extends Omit<StoryV43, 'pages'> {
-  pages: PageV42[];
+export interface StoryV41 extends Omit<StoryV42, 'pages'> {
+  pages: PageV41[];
   backgroundAudio?: Record<string, unknown>;
 }
 
-function removeTrackName(storyData: StoryV42): StoryV43 {
+function removeTrackName(storyData: StoryV41): StoryV42 {
   const updatedStoryData = updateStory(storyData);
   const { pages, ...rest } = updatedStoryData;
   return {
@@ -54,16 +51,16 @@ function removeTrackName(storyData: StoryV42): StoryV43 {
   };
 }
 
-function updateStory(story: StoryV42): StoryV43 {
+function updateStory(story: StoryV41): StoryV42 {
   if (story?.backgroundAudio) {
     story.backgroundAudio = {
       resource: story?.backgroundAudio,
     };
   }
-  return story;
+  return story as StoryV42;
 }
 
-function updatePage(page: PageV42): PageV43 {
+function updatePage(page: PageV41): PageV42 {
   if (
     page?.backgroundAudio?.tracks &&
     page?.backgroundAudio?.tracks?.length > 0
@@ -73,7 +70,7 @@ function updatePage(page: PageV42): PageV43 {
       return track;
     });
   }
-  return page;
+  return page as PageV42;
 }
 
 export default removeTrackName;

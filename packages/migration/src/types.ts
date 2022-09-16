@@ -15,17 +15,21 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
+import type {
+  GifElement,
+  ImageElement,
+  ProductElement,
+  ShapeElement,
+  TextElement,
+  VideoElement,
+} from '@googleforcreators/types';
 
-export * from './element';
-export * from './elementBox';
-export * from './gifElement';
-export * from './imageElement';
-export * from './mediaElement';
-export * from './pattern';
-export * from './productElement';
-export * from './shapeElement';
-export * from './stickerElement';
-export * from './textElement';
-export * from './videoElement';
+export type StoryElement =
+  | GifElement
+  | ImageElement
+  | ProductElement
+  | ShapeElement
+  | TextElement
+  | VideoElement;

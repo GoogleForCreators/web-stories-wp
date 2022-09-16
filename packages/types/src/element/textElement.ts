@@ -20,7 +20,7 @@
 import type { Element } from './element';
 import type { Pattern } from './pattern';
 
-export type FontStyle = 'normal' | 'italic';
+export type FontStyle = 'normal' | 'italic' | 'regular';
 export enum FontVariantStyle {
   Normal = 0,
   Italic = 1,

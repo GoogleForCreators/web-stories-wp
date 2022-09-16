@@ -17,37 +17,42 @@
 /**
  * External dependencies
  */
-import type { Story, Element, Page } from '@googleforcreators/types';
+import type { Story, Page, TagName } from '@googleforcreators/types';
 
-export interface ElementV43 extends Element {
-  tagName?: 'string';
+/**
+ * Internal dependencies
+ */
+import type { StoryElement } from '../types';
+
+export type ElementV42 = StoryElement & {
+  tagName?: TagName;
+};
+
+export interface PageV42 extends Omit<Page, 'elements'> {
+  elements: ElementV42[];
 }
 
-export interface PageV43 extends Omit<Page, 'elements'> {
-  elements: ElementV43[];
+export interface StoryV42 extends Omit<Story, 'pages'> {
+  pages: PageV42[];
 }
 
-export interface StoryV43 extends Omit<Story, 'pages'> {
-  pages: PageV43[];
-}
-
-function removeTagNames({ pages, ...rest }: StoryV43): Story {
+function removeTagNames({ pages, ...rest }: StoryV42): Story {
   return {
     pages: pages.map(reducePage),
     ...rest,
   };
 }
 
-function reducePage({ elements, ...rest }: PageV43): Page {
+function reducePage({ elements, ...rest }: PageV42): Page {
   return {
     elements: elements.map(updateElement),
     ...rest,
   };
 }
 
-function updateElement(element: ElementV43): Element {
+function updateElement(element: ElementV42): StoryElement {
   delete element.tagName;
-  return element as Element;
+  return element as StoryElement;
 }
 
 export default removeTagNames;
