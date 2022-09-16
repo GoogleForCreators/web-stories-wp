@@ -81,9 +81,6 @@ describe('Media Recording', () => {
     spyOnProperty(window, 'crossOriginIsolated', 'get').and.returnValue(true);
 
     fixture = new Fixture();
-    fixture.setFlags({
-      mediaRecording: true,
-    });
 
     await fixture.render();
     await fixture.collapseHelpCenter();

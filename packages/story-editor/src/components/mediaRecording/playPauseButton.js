@@ -34,6 +34,7 @@ const ICON_SVG_SIZE = 72;
 
 const Controls = styled.div`
   position: absolute;
+  z-index: 2;
 `;
 
 const ButtonWrapper = styled.button.attrs({ tabIndex: -1 })`

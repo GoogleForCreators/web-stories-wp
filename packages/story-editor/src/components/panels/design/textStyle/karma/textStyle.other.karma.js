@@ -31,7 +31,6 @@ describe('Text Style Panel', () => {
   beforeEach(async () => {
     fixture = new Fixture();
     localStorage.clear();
-    fixture.setFlags({ customFonts: true });
     await fixture.render();
     await fixture.collapseHelpCenter();
   });

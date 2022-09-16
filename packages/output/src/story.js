@@ -89,7 +89,7 @@ function OutputStory({
             <OutputPage
               key={page.id}
               page={page}
-              autoAdvance={autoAdvance}
+              defaultAutoAdvance={autoAdvance}
               defaultPageDuration={defaultPageDuration}
               flags={flags}
             />

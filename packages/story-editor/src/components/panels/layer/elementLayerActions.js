@@ -21,7 +21,6 @@ import { __ } from '@googleforcreators/i18n';
 import { Icons } from '@googleforcreators/design-system';
 import { memo, useMemo, useCallback } from '@googleforcreators/react';
 import { getDefinitionForType } from '@googleforcreators/elements';
-import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -33,7 +32,6 @@ import useShapeMask from '../../../utils/useShapeMask';
 import LayerAction from './layerAction';
 
 function ElementLayerActions({ element }) {
-  const isLayerLockingEnabled = useFeature('layerLocking');
   const { hasDuplicateMenu } = getDefinitionForType(element.type);
 
   const { duplicateElementsById, updateElementById, deleteElementById } =
@@ -109,7 +107,6 @@ function ElementLayerActions({ element }) {
         <Icons.PagePlus />
       </LayerAction>
       <LayerAction
-        isActive={isLayerLockingEnabled}
         label={lockTitle}
         disabled={isNested}
         handleClick={handleLockElement}

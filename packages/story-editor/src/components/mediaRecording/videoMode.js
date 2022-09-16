@@ -29,6 +29,7 @@ import { Switch } from '../form';
 
 const Wrapper = styled.div`
   position: absolute;
+  z-index: 2;
   top: 20px;
   right: 20px;
   width: 70px;

@@ -234,17 +234,6 @@ class Experiments extends Service_Base implements HasRequirements {
 	public function get_experiments(): array {
 		return [
 			/**
-			 * Author: @littlemilkstudio
-			 * Issue: 6379
-			 * Creation date: 2021-03-09
-			 */
-			[
-				'name'        => 'enableExperimentalAnimationEffects',
-				'label'       => __( 'Experimental animations', 'web-stories' ),
-				'description' => __( 'Enable any animation effects that are currently experimental', 'web-stories' ),
-				'group'       => 'editor',
-			],
-			/**
 			 * Author: @brittanyirl
 			 * Issue: 2381
 			 * Creation date: 2020-06-11
@@ -276,54 +265,6 @@ class Experiments extends Service_Base implements HasRequirements {
 				'label'       => __( 'Story locking take over', 'web-stories' ),
 				'description' => __( 'Allow locked stories to be taken over by another author', 'web-stories' ),
 				'group'       => 'editor',
-			],
-			/**
-			 * Author: @barklund
-			 * Issue: #10112
-			 * Creation date: 2022-01-27
-			 */
-			[
-				'name'        => 'floatingMenu',
-				'label'       => __( 'Floating Menu', 'web-stories' ),
-				'description' => __( 'Enable the new floating design menu', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-			/**
-			 * Author: @barklund
-			 * Issue: #7332
-			 * Creation date: 2022-04-19
-			 */
-			[
-				'name'        => 'layerLocking',
-				'label'       => __( 'Layer locking', 'web-stories' ),
-				'description' => __( 'Enable layer locking', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-			/**
-			 * Author: @merapi
-			 * Issue: #9244
-			 * Creation date: 2022-05-04
-			 */
-			[
-				'name'        => 'layerGrouping',
-				'label'       => __( 'Layer grouping', 'web-stories' ),
-				'description' => __( 'Enable layer grouping', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-			/**
-			 * Author: @mariana-k
-			 * Issue: #9248
-			 * Creation date: 2022-05-12
-			 */
-			[
-				'name'        => 'layerNaming',
-				'label'       => __( 'Layer naming', 'web-stories' ),
-				'description' => __( 'Enable layer naming', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
 			],
 			/**
 			 * Author: @barklund
@@ -384,7 +325,6 @@ class Experiments extends Service_Base implements HasRequirements {
 				'description' => __( 'Enable support for cropping cut off-screen parts of videos', 'web-stories' ),
 				'group'       => 'editor',
 			],
-
 			/**
 			 * Author: @spacedmonkey
 			 * Issue: #12211
@@ -394,6 +334,17 @@ class Experiments extends Service_Base implements HasRequirements {
 				'name'        => 'videoVolume',
 				'label'       => __( 'Video Volume', 'web-stories' ),
 				'description' => __( 'Enable setting video volume', 'web-stories' ),
+				'group'       => 'editor',
+			],
+			/**
+			 * Author: @barklund
+			 * Issue: #12210
+			 * Creation date: 2022-09-14
+			 */
+			[
+				'name'        => 'customPageAdvance',
+				'label'       => __( 'Per-Page Page Advance', 'web-stories' ),
+				'description' => __( 'Enable detailed page advancement settings on a per-page basis', 'web-stories' ),
 				'group'       => 'editor',
 			],
 		];

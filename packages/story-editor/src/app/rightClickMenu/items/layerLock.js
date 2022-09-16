@@ -19,7 +19,6 @@
  */
 import { ContextMenuComponents } from '@googleforcreators/design-system';
 import { useCallback } from '@googleforcreators/react';
-import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -41,12 +40,6 @@ function LayerLock() {
       }),
     [updateSelectedElements]
   );
-
-  const isLayerLockingEnabled = useFeature('layerLocking');
-
-  if (!isLayerLockingEnabled) {
-    return null;
-  }
 
   return (
     <ContextMenuComponents.MenuButton onClick={toggleLayerLock}>
