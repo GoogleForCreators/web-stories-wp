@@ -46,6 +46,13 @@ class Shopify_Query extends DependencyInjectedTestCase {
 	 */
 	protected $request_body;
 
+	/**
+	 * Most recent response body.
+	 *
+	 * @var string
+	 */
+	protected $response_body;
+
 	public function set_up(): void {
 		parent::set_up();
 
@@ -375,7 +382,6 @@ class Shopify_Query extends DependencyInjectedTestCase {
 	 * @covers ::get_search
 	 * @covers ::get_products_query
 	 * @covers ::execute_query
-	 * @covers ::parse_sort_by
 	 * @dataProvider data_test_get_search_sort_by_query
 	 */
 	public function test_get_search_sort_by_query( $args, $expected ): void {

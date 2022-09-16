@@ -22,14 +22,15 @@ namespace Google\Web_Stories\Tests\Unit\Shopping;
  * Mocks WooCommerce product methods as needed unit tests.
  */
 class Mock_Product {
-	
+	protected $data;
+
 	/**
 	 * @param mixed $data
 	 */
 	public function __construct( $product_data ) {
 		$this->data = $product_data;
 	}
-	
+
 	/**
 	 * handle calls for methods that haven't been mocked
 	 */
@@ -49,18 +50,18 @@ class Mock_Product {
 	 */
 	public function get_prop( $prop ) {
 		$value = null;
-	
+
 		if ( \array_key_exists( $prop, $this->data ) ) {
 			$value = \array_key_exists( $prop, $this->data ) ? $this->data[ $prop ] : null;
 		}
-	
+
 		return $value;
 	}
 
 	public function get_id(): ?int {
 		return $this->get_prop( 'id' );
 	}
-	
+
 	public function get_image_id(): ?int {
 		return $this->get_prop( 'image_id' );
 	}

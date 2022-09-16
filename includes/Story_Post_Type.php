@@ -94,13 +94,9 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 		$this->register_post_type();
 		$this->register_meta();
 
-		add_filter( '_wp_post_revision_fields', [ $this, 'filter_revision_fields' ], 10, 2 );
 		add_filter( 'wp_insert_post_data', [ $this, 'change_default_title' ] );
 		add_filter( 'bulk_post_updated_messages', [ $this, 'bulk_post_updated_messages' ], 10, 2 );
 		add_action( 'clean_post_cache', [ $this, 'clear_user_posts_count' ], 10, 2 );
-
-		$post_type = $this->get_slug();
-		add_action( "wp_{$post_type}_revisions_to_keep", [ $this, 'revisions_to_keep' ] );
 	}
 
 	/**
@@ -267,27 +263,6 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 	}
 
 	/**
-	 * Filters the revision fields to ensure that JSON representation gets saved to Story revisions.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param array|mixed         $fields Array of allowed revision fields.
-	 * @param array<string,mixed> $story  Story post array.
-	 * @return array|mixed Array of allowed fields.
-	 */
-	public function filter_revision_fields( $fields, array $story ) {
-		if ( ! \is_array( $fields ) ) {
-			return $fields;
-		}
-
-		if ( $this->get_slug() === $story['post_type'] ) {
-			$fields['post_content_filtered'] = __( 'Story data', 'web-stories' );
-		}
-
-		return $fields;
-	}
-
-	/**
 	 * Filters the bulk action updated messages.
 	 *
 	 * @since 1.1.0
@@ -364,7 +339,6 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 	 * @return bool|string Whether the post type should have an archive, or archive slug.
 	 */
 	public function get_has_archive() {
-
 		$archive_page_option    = $this->settings->get_setting( $this->settings::SETTING_NAME_ARCHIVE );
 		$custom_archive_page_id = (int) $this->settings->get_setting( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID );
 		$has_archive            = true;
@@ -383,18 +357,5 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 		}
 
 		return $has_archive;
-	}
-
-	/**
-	 * Force WordPress to only keep 10 revisions for the web stories post type.
-	 *
-	 * @since 1.16.0
-	 *
-	 * @param int $num Number of revisions to store.
-	 * @return int  Number of revisions to store.
-	 */
-	public function revisions_to_keep( $num ): int {
-		$num = (int) $num;
-		return ( $num >= 0 && $num < 10 ) ? $num : 10;
 	}
 }

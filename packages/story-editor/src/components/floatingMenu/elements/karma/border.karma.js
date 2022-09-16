@@ -30,7 +30,6 @@ describe('Design Menu: Border width & color', () => {
 
   beforeEach(async () => {
     fixture = new Fixture();
-    fixture.setFlags({ floatingMenu: true });
     try {
       await fixture.render();
     } catch {
