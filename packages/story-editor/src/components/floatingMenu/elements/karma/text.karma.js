@@ -32,7 +32,6 @@ describe('Design Menu: Text Styles', () => {
 
   beforeEach(async () => {
     fixture = new Fixture();
-    fixture.setFlags({ floatingMenu: true });
     await fixture.render();
 
     await fixture.collapseHelpCenter();

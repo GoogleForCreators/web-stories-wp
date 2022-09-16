@@ -108,6 +108,7 @@ class Plugin extends ServiceBasedPlugin {
 		'site_health'                  => Admin\Site_Health::class,
 		'story_archive'                => Story_Archive::class,
 		'story_post_type'              => Story_Post_Type::class,
+		'story_revisions'              => Story_Revisions::class,
 		'story_shortcode'              => Shortcode\Stories_Shortcode::class,
 		'svg'                          => Media\SVG::class,
 		'tracking'                     => Tracking::class,

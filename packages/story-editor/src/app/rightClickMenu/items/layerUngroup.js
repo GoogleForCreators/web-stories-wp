@@ -19,7 +19,6 @@
  */
 import { ContextMenuComponents } from '@googleforcreators/design-system';
 import { useCallback } from '@googleforcreators/react';
-import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -41,10 +40,9 @@ function LayerUngroup() {
     });
   }, [selectedElements, removeElementFromGroup]);
 
-  const isLayerGroupingEnabled = useFeature('layerGrouping');
   const isLayerInGroup = selectedElements.some((el) => el.groupId);
 
-  if (!isLayerGroupingEnabled || !isLayerInGroup) {
+  if (!isLayerInGroup) {
     return null;
   }
 

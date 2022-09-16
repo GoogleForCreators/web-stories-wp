@@ -31,7 +31,6 @@ describe('CUJ: Creator can Transform an Element: Selection integration', () => {
 
   beforeEach(async () => {
     fixture = new Fixture();
-    fixture.setFlags({ layerLocking: true });
     await fixture.render();
     await fixture.collapseHelpCenter();
 

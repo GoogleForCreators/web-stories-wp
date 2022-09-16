@@ -40,11 +40,9 @@ describe('Template', () => {
     await expect(page).toMatch('Viewing all');
     await expect(page).toMatch('templates');
 
-    const firstTemplate = await expect(page).toMatchElement(
-      '[data-testid="template-grid-item-1"]'
-    );
-
-    await expect(firstTemplate).toClick('button', { text: 'See details' });
+    await expect(page).toClick('[data-testid="template-grid-item-1"] button', {
+      text: 'See details',
+    });
     // Get count of template colors to compare to 'saved colors' in the editor.
     const templateDetailsColors = await page.evaluate(() => {
       const elements = document.querySelectorAll(

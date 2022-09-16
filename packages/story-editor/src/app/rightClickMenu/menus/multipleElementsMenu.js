@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { ContextMenuComponents } from '@googleforcreators/design-system';
-import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -35,7 +34,6 @@ function MultipleElementsMenu() {
     handleUngroupSelectedElements,
   } = useElementActions();
   const { canMergeIntoMask, mergeIntoMask } = useShapeMaskElements();
-  const isLayerGroupingEnabled = useFeature('layerGrouping');
   const { selectedElements } = useStory(({ state }) => ({
     selectedElements: state.selectedElements,
   }));
@@ -57,12 +55,12 @@ function MultipleElementsMenu() {
           {RIGHT_CLICK_MENU_LABELS.USE_SHAPE_AS_MASK}
         </ContextMenuComponents.MenuButton>
       )}
-      {isLayerGroupingEnabled && !isOnlyGroupSelected && (
+      {!isOnlyGroupSelected && (
         <ContextMenuComponents.MenuButton onClick={handleGroupSelectedElements}>
           {RIGHT_CLICK_MENU_LABELS.GROUP_LAYERS}
         </ContextMenuComponents.MenuButton>
       )}
-      {isLayerGroupingEnabled && isGroupSelected && (
+      {isGroupSelected && (
         <ContextMenuComponents.MenuButton
           onClick={handleUngroupSelectedElements}
         >
