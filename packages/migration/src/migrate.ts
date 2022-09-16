@@ -121,7 +121,7 @@ export const DATA_VERSION = Math.max.apply(
 );
 
 export function migrate(storyData: Story, version: number): Story {
-  let result: Story = storyData;
+  let result = storyData;
   for (let v = version; v < DATA_VERSION; v++) {
     const migrations = MIGRATIONS[v + 1];
     if (!migrations) {

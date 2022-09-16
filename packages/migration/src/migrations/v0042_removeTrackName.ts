@@ -19,7 +19,7 @@
  */
 import type { ElementV43, PageV43, StoryV43 } from './v0043_removeTagNames';
 
-interface ElementV42 extends ElementV43 {
+export interface ElementV42 extends ElementV43 {
   tagName?: 'string';
 }
 
@@ -33,14 +33,14 @@ interface Track {
   trackName?: string;
 }
 
-interface PageV42 extends Omit<PageV43, 'elements'> {
+export interface PageV42 extends Omit<PageV43, 'elements'> {
   elements: ElementV42[];
   backgroundAudio?: {
     tracks: Track[];
   };
 }
 
-interface StoryV42 extends Omit<StoryV43, 'pages'> {
+export interface StoryV42 extends Omit<StoryV43, 'pages'> {
   pages: PageV42[];
   backgroundAudio?: Record<string, unknown>;
 }

@@ -14,22 +14,46 @@
  * limitations under the License.
  */
 
-function removeFontProperties({ pages, ...rest }) {
+/**
+ * Internal dependencies
+ */
+import type { ElementV42, PageV42, StoryV42 } from './v0042_removeTrackName';
+import {
+  GifElement,
+  ImageElement,
+  ProductElement,
+  ShapeElement,
+  TextElement,
+  VideoElement
+} from "@googleforcreators/types";
+
+
+type GenElement =
+  | GifElement
+  | ImageElement
+  | ProductElement
+  | ShapeElement
+  | TextElement
+  | VideoElement;
+
+export interface ElementV41 extends ElementV42 {}
+
+function removeFontProperties({ pages, ...rest }: StoryV42) {
   return {
     pages: pages.map(reducePage),
     ...rest,
   };
 }
 
-function reducePage({ elements, ...rest }) {
+function reducePage({ elements, ...rest }: PageV42) {
   return {
     elements: elements.map(updateElement),
     ...rest,
   };
 }
 
-function updateElement(element) {
-  if (element.type === 'text') {
+function updateElement(element: GenElement) {
+  if ('font' in element) {
     const { id, name, value, ...newFontFormatted } = element.font;
     element.font = newFontFormatted;
   }

@@ -14,6 +14,16 @@
  * limitations under the License.
  */
 
+/**
+ * Internal dependencies
+ */
+import type { GifElement } from './gifElement';
+import type { ImageElement } from './imageElement';
+import type { ProductElement } from './productElement';
+import type { ShapeElement } from './shapeElement';
+import type { TextElement } from './textElement';
+import type { VideoElement } from './videoElement';
+
 export * from './element';
 export * from './elementBox';
 export * from './gifElement';
