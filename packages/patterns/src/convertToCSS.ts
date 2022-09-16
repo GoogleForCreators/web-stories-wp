@@ -25,7 +25,7 @@ function convertToCSS(style: CSSProperties) {
       /[A-Z]/g,
       (match) => `-${match.toLowerCase()}`
     );
-    return `${str}${casedKey}:${val as string};`;
+    return `${str}${casedKey}:${String(val)};`;
   }, '');
 }
 
