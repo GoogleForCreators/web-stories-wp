@@ -39,6 +39,7 @@ import {
   ElementAlignmentPanel,
   VideoOptionsPanel,
   PageBackgroundAudioPanel,
+  PageAdvancementPanel,
   ProductPanel,
 } from '../panels/design';
 
@@ -48,7 +49,10 @@ function intersect(a, b) {
   return a.filter((v) => b.includes(v));
 }
 
-function getDesignPanelsForSelection(elements) {
+function getDesignPanelsForSelection(
+  elements,
+  hasCustomPageAdvancement = false
+) {
   if (elements.length === 0) {
     return [];
   }
@@ -105,6 +109,13 @@ function getDesignPanelsForSelection(elements) {
       type: PanelTypes.PAGE_BACKGROUND_AUDIO,
       Panel: PageBackgroundAudioPanel,
     });
+
+    if (hasCustomPageAdvancement) {
+      panels.push({
+        type: PanelTypes.PAGE_ADVANCEMENT,
+        Panel: PageAdvancementPanel,
+      });
+    }
 
     return panels;
   }
