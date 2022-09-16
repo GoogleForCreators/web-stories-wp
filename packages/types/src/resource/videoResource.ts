@@ -30,7 +30,7 @@ export interface TrimData {
 }
 
 export interface VideoResource extends SequenceResource {
-  type: ResourceType.VIDEO;
+  type: ResourceType.Video;
   /** Length in seconds. */
   length: number;
   /** The formatted length, e.g. "01:17". */

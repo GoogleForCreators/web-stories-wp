@@ -28,6 +28,6 @@ export interface Output {
 }
 
 export interface GifResource extends SequenceResource {
-  type: ResourceType.GIF;
+  type: ResourceType.Gif;
   output: Output;
 }

@@ -73,7 +73,7 @@ function createResource({
     posterId,
     isOptimized,
   };
-  if (type === ResourceType.VIDEO) {
+  if (type === ResourceType.Video) {
     return {
       ...resource,
       ...sequenceProps,
@@ -83,7 +83,7 @@ function createResource({
       trimData,
     } as VideoResource;
   }
-  if (type === ResourceType.GIF) {
+  if (type === ResourceType.Gif) {
     return {
       ...resource,
       ...sequenceProps,
