@@ -25,7 +25,6 @@ import {
   getDefinitionForType,
   getLayerName,
 } from '@googleforcreators/elements';
-import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -59,7 +58,6 @@ const LayerIconWrapper = styled.div`
 
 function ElementLayer({ element }) {
   const layerName = getLayerName(element);
-  const isLayerLockingEnabled = useFeature('layerLocking');
   const { LayerIcon } = getDefinitionForType(element.type);
   const { isSelected, handleClick } = useLayerSelection(element);
   const { id, isDefaultBackground, isBackground, type } = element;
@@ -93,9 +91,7 @@ function ElementLayer({ element }) {
     [currentPageBackgroundColor, element, getProxiedUrl]
   );
 
-  const hasLayerLockIcon = Boolean(
-    isBackground || (element.isLocked && isLayerLockingEnabled)
-  );
+  const hasLayerLockIcon = Boolean(isBackground || element.isLocked);
   const LayerLockIcon = useCallback(
     () =>
       isBackground || isNested ? (

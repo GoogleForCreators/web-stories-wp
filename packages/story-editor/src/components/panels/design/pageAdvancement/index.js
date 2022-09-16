@@ -14,28 +14,4 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import { AbstractPanel } from './abstractPanel';
-
-/**
- * The video options panel containing controls for loop, mute, and trim.
- */
-export class VideoOptions extends AbstractPanel {
-  constructor(node, path) {
-    super(node, path);
-  }
-
-  get loop() {
-    return this.getByRole('checkbox', { name: 'Loop' });
-  }
-
-  get volume() {
-    return this.getByRole('slider');
-  }
-
-  get panelTitle() {
-    return this.getByRole('button', { name: 'Video Settings' });
-  }
-}
+export { default } from './customPageAdvancement';

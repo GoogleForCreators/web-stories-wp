@@ -160,7 +160,12 @@ function PlaybackMedia() {
       if (hasVideoEffect && canvasRef.current) {
         canvasRef.current.getContext('2d');
         setCanvasNode(canvasRef.current);
-        setCanvasStream(canvasRef.current.captureStream());
+        const canvasStreamRaw = canvasRef.current.captureStream();
+        const liveStreamAudio = liveStream.getAudioTracks();
+        if (liveStreamAudio.length > 0) {
+          canvasStreamRaw.addTrack(liveStreamAudio[0]);
+        }
+        setCanvasStream(canvasStreamRaw);
       }
       if (videoEffect === VIDEO_EFFECTS.BLUR) {
         selfieSegmentation.onResults(onSelfieSegmentationResults);
@@ -187,6 +192,7 @@ function PlaybackMedia() {
       }
     }
     run();
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- including liveStream will cause freeze
   }, [videoEffect, hasVideoEffect, streamNode, setCanvasStream, setCanvasNode]);
 
   // Only previewing a gif means that the play button is hidden,
