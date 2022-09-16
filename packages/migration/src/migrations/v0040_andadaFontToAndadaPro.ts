@@ -90,7 +90,7 @@ const andadaPro = {
 } as Font;
 
 function updateElement(element: ElementV39): ElementV40 {
-  if (element.type === 'text' && element?.font?.family === 'Andada') {
+  if ('font' in element && element.font?.family === 'Andada') {
     element.font = {
       ...element.font,
       ...andadaPro,

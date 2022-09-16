@@ -21,13 +21,18 @@ import type {
   FontStyle,
   FontVariant,
   FontWeight,
+  GifElement,
+  ImageElement,
+  ProductElement,
+  ShapeElement,
+  VideoElement,
 } from '@googleforcreators/types';
 
 /**
  * Internal dependencies
  */
 import type { PageV41, StoryV41 } from './v0042_removeTrackName';
-import type { ElementV42 } from './v0043_removeTagNames';
+import type { ElementV42, TextElementV42 } from './v0043_removeTagNames';
 
 interface FontV40 {
   id?: string;
@@ -41,10 +46,17 @@ interface FontV40 {
   fallbacks?: string[];
 }
 
-// We extend V42 here instead of V41 since it's the same as V42.
-export type ElementV40 = Omit<ElementV42, 'font'> & {
+export interface TextElementV40 extends TextElementV42 {
   font: FontV40;
-};
+}
+
+export type ElementV40 =
+  | GifElement
+  | ImageElement
+  | ProductElement
+  | ShapeElement
+  | TextElementV40
+  | VideoElement;
 
 export interface PageV40 extends Omit<PageV41, 'elements'> {
   elements: ElementV40[];

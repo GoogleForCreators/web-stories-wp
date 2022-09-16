@@ -17,16 +17,34 @@
 /**
  * External dependencies
  */
-import type { Story, Page, TagName } from '@googleforcreators/types';
+import type {
+  Story,
+  Page,
+  TagName,
+  TextElement,
+  GifElement,
+  ImageElement,
+  ProductElement,
+  ShapeElement,
+  VideoElement,
+} from '@googleforcreators/types';
 
 /**
  * Internal dependencies
  */
 import type { StoryElement } from '../types';
 
-export type ElementV42 = StoryElement & {
+export interface TextElementV42 extends TextElement {
   tagName?: TagName;
-};
+}
+
+export type ElementV42 =
+  | GifElement
+  | ImageElement
+  | ProductElement
+  | ShapeElement
+  | TextElementV42
+  | VideoElement;
 
 export interface PageV42 extends Omit<Page, 'elements'> {
   elements: ElementV42[];
@@ -51,7 +69,9 @@ function reducePage({ elements, ...rest }: PageV42): Page {
 }
 
 function updateElement(element: ElementV42): StoryElement {
-  delete element.tagName;
+  if ('tagName' in element) {
+    delete element.tagName;
+  }
   return element as StoryElement;
 }
 
