@@ -325,7 +325,6 @@ class Experiments extends Service_Base implements HasRequirements {
 				'description' => __( 'Enable support for cropping cut off-screen parts of videos', 'web-stories' ),
 				'group'       => 'editor',
 			],
-
 			/**
 			 * Author: @spacedmonkey
 			 * Issue: #12211
@@ -335,6 +334,17 @@ class Experiments extends Service_Base implements HasRequirements {
 				'name'        => 'videoVolume',
 				'label'       => __( 'Video Volume', 'web-stories' ),
 				'description' => __( 'Enable setting video volume', 'web-stories' ),
+				'group'       => 'editor',
+			],
+			/**
+			 * Author: @barklund
+			 * Issue: #12210
+			 * Creation date: 2022-09-14
+			 */
+			[
+				'name'        => 'customPageAdvance',
+				'label'       => __( 'Per-Page Page Advance', 'web-stories' ),
+				'description' => __( 'Enable detailed page advancement settings on a per-page basis', 'web-stories' ),
 				'group'       => 'editor',
 			],
 		];
