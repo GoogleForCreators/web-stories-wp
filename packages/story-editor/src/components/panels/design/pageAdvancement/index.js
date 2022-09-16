@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,20 +14,4 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import type { SequenceResource } from './sequenceResource';
-import type { ResourceType } from './resourceType';
-
-export interface Output {
-  /** The MIME type of the resource. E.g. "image/png". */
-  mimeType: string;
-  /** The source URL of the resource. */
-  src: string;
-}
-
-export interface GifResource extends SequenceResource {
-  type: ResourceType.Gif;
-  output: Output;
-}
+export { default } from './customPageAdvancement';

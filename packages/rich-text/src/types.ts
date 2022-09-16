@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import type { Pattern } from '@googleforcreators/patterns';
+import type { Pattern } from '@googleforcreators/types';
 import type { EditorState, DraftInlineStyle } from 'draft-js';
 import type { CSSProperties } from 'react';
 

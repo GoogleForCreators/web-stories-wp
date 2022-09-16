@@ -38,97 +38,59 @@ import type { ResourceInput } from './types';
  * @return Resource object.
  */
 function createResource({
-  baseColor,
-  blurHash,
   type,
   mimeType,
-  creationDate,
-  src,
-  width,
-  height,
   poster,
   posterId,
-  id,
   length,
   lengthFormatted,
-  alt,
   sizes,
-  attribution,
   output,
+  width = 0,
+  height = 0,
   isPlaceholder = false,
   isOptimized = false,
   isMuted = false,
   isExternal = false,
   trimData,
   needsProxy = false,
+  ...rest
 }: ResourceInput): Resource | VideoResource | GifResource {
   type = type || getTypeFromMime(mimeType);
-  if (type === ResourceType.VIDEO) {
-    return {
-      baseColor,
-      blurHash,
-      type,
-      mimeType,
-      creationDate,
-      src,
-      width: Number(width || 0),
-      height: Number(height || 0),
-      poster,
-      posterId,
-      id,
-      length,
-      lengthFormatted,
-      alt,
-      sizes: normalizeResourceSizes(sizes),
-      attribution,
-      isPlaceholder,
-      isOptimized,
-      isMuted,
-      isExternal,
-      trimData,
-      needsProxy,
-    };
-  }
-  if (type === ResourceType.GIF) {
-    return {
-      baseColor,
-      blurHash,
-      type,
-      mimeType,
-      creationDate,
-      src,
-      width: Number(width || 0),
-      height: Number(height || 0),
-      poster,
-      posterId,
-      id,
-      alt,
-      sizes: normalizeResourceSizes(sizes),
-      attribution,
-      output,
-      isPlaceholder,
-      isOptimized,
-      isExternal,
-      needsProxy,
-    };
-  }
-  return {
-    baseColor,
-    blurHash,
-    type: type || getTypeFromMime(mimeType),
+  const resource: Resource = {
+    type,
     mimeType,
-    creationDate,
-    src,
-    width: Number(width || 0),
-    height: Number(height || 0),
-    id,
-    alt,
+    width,
+    height,
     sizes: normalizeResourceSizes(sizes),
-    attribution,
     isPlaceholder,
     isExternal,
     needsProxy,
+    ...rest,
   };
+  const sequenceProps = {
+    poster,
+    posterId,
+    isOptimized,
+  };
+  if (type === ResourceType.Video) {
+    return {
+      ...resource,
+      ...sequenceProps,
+      length,
+      lengthFormatted,
+      isMuted,
+      trimData,
+    } as VideoResource;
+  }
+  if (type === ResourceType.Gif) {
+    return {
+      ...resource,
+      ...sequenceProps,
+      output,
+    } as GifResource;
+  }
+  return resource;
 }
 
 export default createResource;
