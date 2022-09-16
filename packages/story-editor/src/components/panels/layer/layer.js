@@ -19,7 +19,6 @@
  */
 import PropTypes from 'prop-types';
 import { useRef, memo } from '@googleforcreators/react';
-import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -62,8 +61,6 @@ function Layer({
     eventData: trackingData,
   });
 
-  const isLayerNamingEnabled = useFeature('layerNaming');
-
   if (skipLayer) {
     return null;
   }
@@ -73,7 +70,7 @@ function Layer({
 
   return (
     <LayerContainer>
-      {isRenameable && isLayerNamingEnabled ? (
+      {isRenameable ? (
         <LayerInputWrapper isNested={isNested}>
           <LayerIcon />
           <LayerForm

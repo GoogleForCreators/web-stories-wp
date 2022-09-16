@@ -524,7 +524,6 @@ describe('Checklist integration - Card visibility', () => {
             }),
         },
       });
-      fixture.setFlags({ enableChecklistCompanion: true });
 
       fixture.setConfig({ capabilities: { hasUploadMediaAction: false } });
       await fixture.render();

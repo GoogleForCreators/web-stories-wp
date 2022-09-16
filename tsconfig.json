@@ -5,6 +5,7 @@
     { "path": "packages/media" },
     { "path": "packages/moveable" },
     { "path": "packages/react" },
+    { "path": "packages/rich-text" },
     { "path": "packages/stickers" },
     { "path": "packages/text-sets" },
     { "path": "packages/tracking" },

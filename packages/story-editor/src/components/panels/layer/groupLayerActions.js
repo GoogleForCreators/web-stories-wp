@@ -20,7 +20,6 @@
 import { __ } from '@googleforcreators/i18n';
 import { Icons } from '@googleforcreators/design-system';
 import { memo, useCallback } from '@googleforcreators/react';
-import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -32,7 +31,6 @@ import generateGroupName from '../../../utils/generateGroupName';
 import LayerAction from './layerAction';
 
 function GroupLayerActions({ groupId }) {
-  const isLayerLockingEnabled = useFeature('layerLocking');
   const {
     groups,
     updateGroupById,
@@ -103,11 +101,7 @@ function GroupLayerActions({ groupId }) {
         <Icons.PagePlus />
       </LayerAction>
 
-      <LayerAction
-        isActive={isLayerLockingEnabled}
-        label={lockTitle}
-        handleClick={handleLockGroup}
-      >
+      <LayerAction label={lockTitle} handleClick={handleLockGroup}>
         {isLocked ? <Icons.LockClosed /> : <Icons.LockOpen />}
       </LayerAction>
     </>

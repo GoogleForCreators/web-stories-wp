@@ -102,6 +102,10 @@ describe('Media Hotlinking', () => {
       text: 'Insert',
     });
 
+    await page.waitForSelector('.ReactModal__Content', {
+      visible: false,
+    });
+
     await page.waitForSelector(
       '[aria-label="Design options for selected element"]'
     );

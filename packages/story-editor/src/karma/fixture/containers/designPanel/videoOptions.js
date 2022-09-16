@@ -30,4 +30,12 @@ export class VideoOptions extends AbstractPanel {
   get loop() {
     return this.getByRole('checkbox', { name: 'Loop' });
   }
+
+  get volume() {
+    return this.getByRole('slider');
+  }
+
+  get panelTitle() {
+    return this.getByRole('button', { name: 'Video Settings' });
+  }
 }

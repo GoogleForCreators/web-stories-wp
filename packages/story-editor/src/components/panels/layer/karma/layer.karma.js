@@ -33,7 +33,6 @@ describe('Layer Panel', () => {
 
   beforeEach(async () => {
     fixture = new Fixture();
-    fixture.setFlags({ layerLocking: true, layerNaming: true });
     await fixture.render();
     await fixture.collapseHelpCenter();
     layerPanel = fixture.editor.footer.layerPanel;

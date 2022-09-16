@@ -49,8 +49,8 @@ describe('Floating Menu', () => {
       'div[data-testid="mediaElement-image"]:first-child button'
     );
 
-    const insertButton = await page.waitForXPath(
-      `//li//span[contains(text(), 'Insert image')]`
+    const insertButton = await page.waitForSelector(
+      `xpath/.//li//span[contains(text(), 'Insert image')]`
     );
     await insertButton.click();
 
@@ -76,8 +76,8 @@ describe('Floating Menu', () => {
     await expect(page).toClick(
       '#library-pane-media3p [data-testid="mediaElement-image"]'
     );
-    const insertButton = await page.waitForXPath(
-      `//li//span[contains(text(), 'Insert image')]`
+    const insertButton = await page.waitForSelector(
+      `xpath/.//li//span[contains(text(), 'Insert image')]`
     );
     await insertButton.click();
 

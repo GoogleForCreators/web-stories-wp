@@ -167,9 +167,11 @@ class Story {
 		$this->publisher_name = apply_filters( 'web_stories_publisher_name', get_bloginfo( 'name' ) );
 
 		$post = get_post( $_post );
-		if ( ! $post instanceof WP_Post || Story_Post_Type::POST_TYPE_SLUG !== $post->post_type ) {
+		if ( ! $post instanceof WP_Post ) {
 			return false;
 		}
+
+		// At this point we assume being passed a legit web-story post or perhaps a web-story revision.
 
 		$this->id      = $post->ID;
 		$this->title   = get_the_title( $post );

@@ -106,7 +106,7 @@ function getStopList(stops: Array<ColorStop>, alpha: number) {
 function generatePatternStyles(
   pattern: Pattern | null = null,
   property = 'background'
-) {
+): Record<string, string> {
   if (pattern === null) {
     return { [property]: 'transparent' };
   }
