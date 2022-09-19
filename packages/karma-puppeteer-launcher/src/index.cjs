@@ -35,7 +35,8 @@ function puppeteerBrowser(baseBrowserDecorator, config) {
     const defaultPuppeteerOptions = {
       product: 'chrome',
       slowMo: 0,
-      dumpio: true,
+      // Only enable for debugging
+      // dumpio: true,
       headless: false,
       devtools: false,
       defaultViewport: null,
