@@ -14,27 +14,7 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import type {
-  ElementV39,
-  PageV39,
-  StoryV39,
-} from './v0040_andadaFontToAndadaPro';
-
-export type ElementV38 = ElementV39;
-
-export interface PageV38 extends Omit<PageV39, 'elements' | 'backgroundAudio'> {
-  elements: ElementV38[];
-  backgroundAudio?: Record<string, unknown>;
-}
-
-export interface StoryV38 extends Omit<StoryV39, 'pages'> {
-  pages: PageV38[];
-}
-
-function backgroundAudioFormatting(storyData: StoryV38): StoryV39 {
+function backgroundAudioFormatting(storyData) {
   const updatedStoryData = updateStory(storyData);
   const { pages, ...rest } = updatedStoryData;
   return {
@@ -42,15 +22,15 @@ function backgroundAudioFormatting(storyData: StoryV38): StoryV39 {
     ...rest,
   };
 }
-function updateStory(story: StoryV38): StoryV39 {
+function updateStory(story) {
   if (story?.backgroundAudio) {
     story.backgroundAudio = {
       resource: story?.backgroundAudio,
     };
   }
-  return story as StoryV39;
+  return story;
 }
-function updatePage(page: PageV38): PageV39 {
+function updatePage(page) {
   if (page?.backgroundAudio) {
     page.backgroundAudio = {
       resource: page?.backgroundAudio,
@@ -58,7 +38,7 @@ function updatePage(page: PageV38): PageV39 {
       tracks: [],
     };
   }
-  return page as PageV39;
+  return page;
 }
 
 export default backgroundAudioFormatting;

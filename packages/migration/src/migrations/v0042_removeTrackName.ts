@@ -15,21 +15,11 @@
  */
 
 function removeTrackName(storyData) {
-  const updatedStoryData = updateStory(storyData);
-  const { pages, ...rest } = updatedStoryData;
+  const { pages, ...rest } = storyData;
   return {
     pages: pages.map(updatePage),
     ...rest,
   };
-}
-
-function updateStory(story) {
-  if (story?.backgroundAudio) {
-    story.backgroundAudio = {
-      resource: story?.backgroundAudio,
-    };
-  }
-  return story;
 }
 
 function updatePage(page) {
