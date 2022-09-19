@@ -166,6 +166,12 @@ export interface GifElementV0 extends MediaElement {
 
 export interface TextElementV0 extends Element {
   content: string;
+  bold: boolean;
+  fontWeight: number;
+  fontStyle: string;
+  textDecoration: string;
+  letterSpacing: number;
+  color: Pattern;
   font: FontV0;
 
   backgroundTextMode?: BackgroundTextMode;
