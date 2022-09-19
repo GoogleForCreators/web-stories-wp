@@ -82,6 +82,7 @@ interface ResourceV0 {
   title: string;
 }
 
+// @todo this was added later than V0.
 interface VideoResourceV0 extends ResourceV0 {
   videoId?: string;
   type: ResourceType.Video;
@@ -113,6 +114,12 @@ interface GifResourceV0 extends ResourceV0 {
   title: string;
 }
 
+
+// @todo GIf didn't exist at that point yet. Check when to add.
+export interface GifElementV0 extends MediaElement {
+  resource: GifResourceV0;
+}
+
 interface LinkV0 {
   url: string;
   desc?: string;
@@ -138,24 +145,23 @@ interface ElementV0 extends ElementBox {
 export interface MediaElementV0 extends ElementV0 {
   isFill?: boolean;
   isFullbleedBackground?: boolean;
-  resource: ResourceV0;
+  src: string;
+  origRatio: number;
+  mimeType: string;
   scale: number;
   focalX?: number;
   focalY?: number;
 }
 
 export interface VideoElementV0 extends MediaElementV0 {
-  resource: VideoResourceV0;
   poster?: string;
+  posterId?: number;
+  videoId?: number;
   tracks?: VideoTrack[];
   loop?: boolean;
 }
 
 export type ImageElementV0 = MediaElementV0;
-
-export interface GifElementV0 extends MediaElement {
-  resource: GifResourceV0;
-}
 
 export interface TextElementV0 extends ElementV0 {
   content: string;
