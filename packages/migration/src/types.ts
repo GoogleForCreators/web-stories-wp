@@ -17,7 +17,16 @@
 /**
  * External dependencies
  */
-import type { Pattern, Animation, ShapeElement, Element } from "@googleforcreators/types";
+import type {
+  Pattern,
+  Animation,
+  ShapeElement,
+  Element,
+  Attribution,
+  ResourceId,
+  ResourceSize,
+  ResourceType,
+} from '@googleforcreators/types';
 
 export type FontStyle = 'normal' | 'italic' | 'regular';
 export enum FontVariantStyle {
@@ -70,6 +79,35 @@ export interface FontMetrics {
   lGap: number;
 }
 
+export interface ResourceV0 {
+  id: ResourceId;
+  type: ResourceType;
+  mimeType: string;
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+  baseColor?: string;
+  blurHash?: string;
+  isExternal: boolean;
+  isPlaceholder: boolean;
+  needsProxy: boolean;
+  readonly creationDate?: string;
+  sizes: { [key: string]: ResourceSize };
+  attribution?: Attribution;
+  local: boolean;
+  isTrimming: boolean;
+  isTranscoding: boolean;
+  isMuting: boolean;
+}
+
+export interface MediaElementV0 extends Element {
+  resource: ResourceV0;
+  scale: number;
+  focalX?: number;
+  focalY?: number;
+}
+
 export interface TextElementV0 extends Element {
   content: string;
   font: FontV0;
@@ -91,7 +129,7 @@ export interface Group {
   isCollapsed?: boolean;
 }
 
-// @todo Groups did not exist during V0.
+// @todo Groups did not exist during V0, should we try to pinpoint when it was added?
 export type Groups = Record<string, Group>;
 
 export interface PageV0 {
@@ -105,7 +143,7 @@ export interface PageV0 {
     src: string;
     id: number;
     mimeType: string;
-  }
+  };
 }
 
 export interface StoryV0 {
@@ -115,5 +153,5 @@ export interface StoryV0 {
     src: string;
     id: number;
     mimeType: string;
-  }
+  };
 }
