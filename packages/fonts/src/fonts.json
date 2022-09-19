@@ -1412,6 +1412,31 @@
     }
   },
   {
+    "family": "Amiri Quran",
+    "fallbacks": ["serif"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1815,
+      "des": -634,
+      "tAsc": 1815,
+      "tDes": -634,
+      "tLGap": 0,
+      "wAsc": 1864,
+      "wDes": 892,
+      "xH": 433,
+      "capH": 646,
+      "yMin": -835,
+      "yMax": 1864,
+      "hAsc": 1815,
+      "hDes": -634,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Amita",
     "fallbacks": ["cursive"],
     "weights": [400, 700],
@@ -2378,6 +2403,34 @@
       "xH": 462,
       "capH": 683,
       "yMin": -379,
+      "yMax": 1028,
+      "hAsc": 1221,
+      "hDes": -244,
+      "lGap": 98
+    }
+  },
+  {
+    "family": "Aref Ruqaa Ink",
+    "fallbacks": ["serif"],
+    "weights": [400, 700],
+    "styles": ["regular"],
+    "variants": [
+      [0, 400],
+      [0, 700]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1221,
+      "des": -244,
+      "tAsc": 1221,
+      "tDes": -244,
+      "tLGap": 98,
+      "wAsc": 1221,
+      "wDes": 439,
+      "xH": 462,
+      "capH": 683,
+      "yMin": -376,
       "yMax": 1028,
       "hAsc": 1221,
       "hDes": -244,
@@ -5496,6 +5549,31 @@
     }
   },
   {
+    "family": "Blaka Ink",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 932,
+      "des": -235,
+      "tAsc": 932,
+      "tDes": -235,
+      "tLGap": 0,
+      "wAsc": 970,
+      "wDes": 400,
+      "xH": 500,
+      "capH": 666,
+      "yMin": -400,
+      "yMax": 933,
+      "hAsc": 932,
+      "hDes": -235,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Blinker",
     "fallbacks": ["sans-serif"],
     "weights": [100, 200, 300, 400, 600, 700, 800, 900],
@@ -6082,6 +6160,31 @@
     }
   },
   {
+    "family": "Bungee Spice",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 860,
+      "des": -140,
+      "tAsc": 860,
+      "tDes": -140,
+      "tLGap": 200,
+      "wAsc": 1138,
+      "wDes": 362,
+      "xH": 500,
+      "capH": 720,
+      "yMin": -362,
+      "yMax": 1138,
+      "hAsc": 860,
+      "hDes": -140,
+      "lGap": 200
+    }
+  },
+  {
     "family": "Butcherman",
     "fallbacks": ["cursive"],
     "weights": [400],
@@ -6276,6 +6379,40 @@
   {
     "family": "Cairo",
     "fallbacks": ["sans-serif"],
+    "weights": [200, 300, 400, 500, 600, 700, 800, 900],
+    "styles": ["regular"],
+    "variants": [
+      [0, 200],
+      [0, 300],
+      [0, 400],
+      [0, 500],
+      [0, 600],
+      [0, 700],
+      [0, 800],
+      [0, 900]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1303,
+      "des": -571,
+      "tAsc": 1303,
+      "tDes": -571,
+      "tLGap": 0,
+      "wAsc": 1312,
+      "wDes": 571,
+      "xH": 500,
+      "capH": 700,
+      "yMin": -430,
+      "yMax": 1084,
+      "hAsc": 1303,
+      "hDes": -571,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Cairo Play",
+    "fallbacks": ["cursive"],
     "weights": [200, 300, 400, 500, 600, 700, 800, 900],
     "styles": ["regular"],
     "variants": [
@@ -22939,6 +23076,31 @@
     }
   },
   {
+    "family": "Nabla",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1263,
+      "des": -380,
+      "tAsc": 1263,
+      "tDes": -380,
+      "tLGap": 0,
+      "wAsc": 1263,
+      "wDes": 380,
+      "xH": 500,
+      "capH": 600,
+      "yMin": -380,
+      "yMax": 1263,
+      "hAsc": 1263,
+      "hDes": -380,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Nanum Brush Script",
     "fallbacks": ["cursive"],
     "weights": [400],
@@ -23575,6 +23737,31 @@
       "yMax": 2167,
       "hAsc": 2202,
       "hDes": -593,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Noto Color Emoji",
+    "fallbacks": ["sans-serif"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1024,
+      "asc": 950,
+      "des": -250,
+      "tAsc": 950,
+      "tDes": -250,
+      "tLGap": 0,
+      "wAsc": 950,
+      "wDes": 250,
+      "xH": 512,
+      "capH": 717,
+      "yMin": -250,
+      "yMax": 950,
+      "hAsc": 950,
+      "hDes": -250,
       "lGap": 0
     }
   },
@@ -33046,6 +33233,61 @@
       "xH": 418,
       "capH": 725,
       "yMin": -400,
+      "yMax": 1192,
+      "hAsc": 1100,
+      "hDes": -400,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Reem Kufi Fun",
+    "fallbacks": ["sans-serif"],
+    "weights": [400, 500, 600, 700],
+    "styles": ["regular"],
+    "variants": [
+      [0, 400],
+      [0, 500],
+      [0, 600],
+      [0, 700]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1100,
+      "des": -400,
+      "tAsc": 1100,
+      "tDes": -400,
+      "tLGap": 0,
+      "wAsc": 1400,
+      "wDes": 400,
+      "xH": 418,
+      "capH": 725,
+      "yMin": -400,
+      "yMax": 1192,
+      "hAsc": 1100,
+      "hDes": -400,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Reem Kufi Ink",
+    "fallbacks": ["sans-serif"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1100,
+      "des": -400,
+      "tAsc": 1100,
+      "tDes": -400,
+      "tLGap": 0,
+      "wAsc": 1400,
+      "wDes": 400,
+      "xH": 418,
+      "capH": 725,
+      "yMin": -700,
       "yMax": 1192,
       "hAsc": 1100,
       "hDes": -400,
