@@ -142,6 +142,7 @@ interface GifResourceV0 extends ResourceV0 {
 }
 
 export interface MediaElementV0 extends Element {
+  backgroundOverlay: Pattern;
   resource: ResourceV0;
   scale: number;
   focalX?: number;
