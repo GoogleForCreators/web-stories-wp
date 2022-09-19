@@ -89,7 +89,7 @@ describe('Panels/TextAccessibility', () => {
     fireEvent.click(input);
     const option2 = screen.queryAllByRole('option')[1];
     fireEvent.click(option2);
-    expect(pushUpdate).toHaveBeenCalledTimes(1);
+    expect(pushUpdate).toHaveBeenCalledOnce();
   });
 
   it('should call pushUpdate three times when multiple items have been updated', () => {

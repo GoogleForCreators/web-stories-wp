@@ -26,7 +26,7 @@ describe('textElementFontSizeTooSmall', () => {
       type: 'text',
       fontSize: 11,
     };
-    expect(textElementFontSizeTooSmall(element)).toBe(true);
+    expect(textElementFontSizeTooSmall(element)).toBeTrue();
   });
 
   it('should return false if text element font size is large enough', () => {
@@ -35,6 +35,6 @@ describe('textElementFontSizeTooSmall', () => {
       type: 'text',
       fontSize: 12,
     };
-    expect(textElementFontSizeTooSmall(element)).toBe(false);
+    expect(textElementFontSizeTooSmall(element)).toBeFalse();
   });
 });

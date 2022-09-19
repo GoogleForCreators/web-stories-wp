@@ -70,7 +70,7 @@ describe('SearchInput', () => {
 
     pressEnter(input);
 
-    expect(onSearchMock).toHaveBeenCalledTimes(1);
+    expect(onSearchMock).toHaveBeenCalledOnce();
   });
 
   it('should trigger onSearch when text is emptied', () => {
@@ -88,6 +88,6 @@ describe('SearchInput', () => {
     setInputValue(input, '');
     triggerOnChange(input);
 
-    expect(onSearchMock).toHaveBeenCalledTimes(1);
+    expect(onSearchMock).toHaveBeenCalledOnce();
   });
 });

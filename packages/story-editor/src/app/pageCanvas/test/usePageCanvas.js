@@ -96,7 +96,7 @@ describe('usePageCanvas', () => {
             element
           );
         });
-        expect(storyPageToCanvas).toHaveBeenCalledTimes(1);
+        expect(storyPageToCanvas).toHaveBeenCalledOnce();
       });
 
       it('does not generate a page canvas when called and canvas cache is populated', async () => {
@@ -111,7 +111,7 @@ describe('usePageCanvas', () => {
             element1
           );
         });
-        expect(storyPageToCanvas).toHaveBeenCalledTimes(1);
+        expect(storyPageToCanvas).toHaveBeenCalledOnce();
 
         // cache already populated with generated canvas for currentPage
         await act(async () => {
@@ -120,7 +120,7 @@ describe('usePageCanvas', () => {
             element2
           );
         });
-        expect(storyPageToCanvas).toHaveBeenCalledTimes(1);
+        expect(storyPageToCanvas).toHaveBeenCalledOnce();
       });
 
       it('generates a page canvas when called and canvas cache is stale', async () => {
@@ -138,7 +138,7 @@ describe('usePageCanvas', () => {
             element1
           );
         });
-        expect(storyPageToCanvas).toHaveBeenCalledTimes(1);
+        expect(storyPageToCanvas).toHaveBeenCalledOnce();
 
         // make currentPage stale by making an update to it
         act(() => storyActions.duplicateLastElement());
@@ -175,7 +175,7 @@ describe('usePageCanvas', () => {
             selectedElement
           );
         });
-        expect(storyPageToCanvas).toHaveBeenCalledTimes(1);
+        expect(storyPageToCanvas).toHaveBeenCalledOnce();
 
         // See that we're calling the story generation on a page partial and
         // not the full page.
@@ -206,7 +206,7 @@ describe('usePageCanvas', () => {
             selectedElement
           );
         });
-        expect(storyPageToCanvas).toHaveBeenCalledTimes(1);
+        expect(storyPageToCanvas).toHaveBeenCalledOnce();
 
         // update the selected element
         act(() =>
@@ -235,7 +235,7 @@ describe('usePageCanvas', () => {
             selectedElement
           );
         });
-        expect(storyPageToCanvas).toHaveBeenCalledTimes(1);
+        expect(storyPageToCanvas).toHaveBeenCalledOnce();
       });
 
       it('generates a new partial page canvas when called and snapshot cache is not valid', async () => {
@@ -259,7 +259,7 @@ describe('usePageCanvas', () => {
             selectedElement
           );
         });
-        expect(storyPageToCanvas).toHaveBeenCalledTimes(1);
+        expect(storyPageToCanvas).toHaveBeenCalledOnce();
 
         // add a new element
         act(() => storyActions.duplicateLastElement());

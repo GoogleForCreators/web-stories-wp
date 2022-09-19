@@ -226,7 +226,7 @@ describe('DropDown <DropDown />', () => {
       basicDropDownOptions[2].value
     );
 
-    expect(onClickMock).toHaveBeenCalledTimes(1);
+    expect(onClickMock).toHaveBeenCalledOnce();
   });
 
   it('should close active menu when select is clicked', () => {
@@ -292,7 +292,7 @@ describe('DropDown <DropDown />', () => {
         basicDropDownOptions[1].value
       );
 
-      expect(onClickMock).toHaveBeenCalledTimes(1);
+      expect(onClickMock).toHaveBeenCalledOnce();
 
       expect(menu).toBeInTheDocument();
     });
@@ -337,7 +337,7 @@ describe('DropDown <DropDown />', () => {
         expect.anything(),
         basicDropDownOptions[2].value
       );
-      expect(onClickMock).toHaveBeenCalledTimes(1);
+      expect(onClickMock).toHaveBeenCalledOnce();
 
       // menu should be closed
       await waitFor(() =>

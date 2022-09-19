@@ -383,7 +383,7 @@ describe('ApiProvider', () => {
       await result.current.actions.storyApi.fetchStories({});
     });
 
-    expect(listenerMock).toHaveBeenCalledTimes(1);
+    expect(listenerMock).toHaveBeenCalledOnce();
     expect(listenerMock).toHaveBeenCalledWith({ all: 1, draft: 0, publish: 1 });
 
     // Run again just to make sure it doesn't call the listeners more than once
@@ -391,6 +391,6 @@ describe('ApiProvider', () => {
       await result.current.actions.storyApi.fetchStories({});
     });
 
-    expect(listenerMock).toHaveBeenCalledTimes(1);
+    expect(listenerMock).toHaveBeenCalledOnce();
   });
 });

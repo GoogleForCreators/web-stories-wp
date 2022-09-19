@@ -526,7 +526,7 @@ describe('useQuickActions', () => {
       const { result } = renderHook(() => useQuickActions());
 
       result.current[0].onClick(mockClickEvent);
-      expect(mockDispatchStoryEvent).toHaveBeenCalledTimes(1);
+      expect(mockDispatchStoryEvent).toHaveBeenCalledOnce();
       expect(mockDispatchStoryEvent).toHaveBeenCalledWith(
         STORY_EVENTS.onReplaceBackgroundMedia
       );
@@ -681,7 +681,7 @@ describe('useQuickActions', () => {
       const { result } = renderHook(() => useQuickActions());
 
       result.current[0].onClick(mockClickEvent);
-      expect(mockDispatchStoryEvent).toHaveBeenCalledTimes(1);
+      expect(mockDispatchStoryEvent).toHaveBeenCalledOnce();
       expect(mockDispatchStoryEvent).toHaveBeenCalledWith(
         STORY_EVENTS.onReplaceForegroundMedia
       );
@@ -985,7 +985,7 @@ describe('MediaPicker', () => {
 
     fireEvent.click(screen.getByText('onSelect gif'));
 
-    expect(mockOptimizeGif).toHaveBeenCalledTimes(1);
+    expect(mockOptimizeGif).toHaveBeenCalledOnce();
     expect(mockOptimizeVideo).toHaveBeenCalledTimes(0);
     expect(mockUpdateElementsById).toHaveBeenCalledWith({
       elementIds: [IMAGE_ELEMENT.id],
@@ -999,7 +999,7 @@ describe('MediaPicker', () => {
     fireEvent.click(screen.getByText('onSelect video'));
 
     expect(mockOptimizeGif).toHaveBeenCalledTimes(0);
-    expect(mockOptimizeVideo).toHaveBeenCalledTimes(1);
+    expect(mockOptimizeVideo).toHaveBeenCalledOnce();
     expect(mockUpdateElementsById).toHaveBeenCalledWith({
       elementIds: [IMAGE_ELEMENT.id],
       properties: { type: videoResource.id, resource: videoResource },

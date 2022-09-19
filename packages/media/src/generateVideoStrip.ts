@@ -15,12 +15,16 @@
  */
 
 /**
+ * External dependencies
+ */
+import type { VideoResource } from '@googleforcreators/types';
+
+/**
  * Internal dependencies
  */
 import getMediaSizePositionProps from './getMediaSizePositionProps';
 import preloadVideo from './preloadVideo';
 import seekVideo from './seekVideo';
-import type { VideoResource } from './types';
 
 const CACHE: Map<string, string> = new Map();
 

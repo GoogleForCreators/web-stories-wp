@@ -26,7 +26,7 @@ describe('imageElementMissingAlt', () => {
       resource: {},
     };
     const test = imageElementMissingAlt(element);
-    expect(test).toBe(true);
+    expect(test).toBeTrue();
   });
 
   it('should return true if image element has empty alt', () => {
@@ -39,7 +39,7 @@ describe('imageElementMissingAlt', () => {
       },
     };
     const test = imageElementMissingAlt(element);
-    expect(test).toBe(true);
+    expect(test).toBeTrue();
   });
 
   it('should return false if image element has alt', () => {
@@ -49,7 +49,7 @@ describe('imageElementMissingAlt', () => {
       alt: 'Image is about things',
       resource: {},
     };
-    expect(imageElementMissingAlt(element)).toBe(false);
+    expect(imageElementMissingAlt(element)).toBeFalse();
   });
 
   it('should return false if image element has a resource alt', () => {
@@ -58,7 +58,7 @@ describe('imageElementMissingAlt', () => {
       type: 'image',
       resource: { alt: 'Image is about things' },
     };
-    expect(imageElementMissingAlt(element)).toBe(false);
+    expect(imageElementMissingAlt(element)).toBeFalse();
   });
 
   it(`should return false if it's not an image element`, () => {
@@ -67,6 +67,6 @@ describe('imageElementMissingAlt', () => {
       id: 'elementid',
       resource: { alt: '' },
     };
-    expect(imageElementMissingAlt(element)).toBe(false);
+    expect(imageElementMissingAlt(element)).toBeFalse();
   });
 });

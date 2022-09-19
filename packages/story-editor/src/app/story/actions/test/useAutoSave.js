@@ -114,7 +114,7 @@ describe('useAutoSave', () => {
     act(() => {
       autoSave();
     });
-    expect(autoSaveById).toHaveBeenCalledTimes(1);
+    expect(autoSaveById).toHaveBeenCalledOnce();
 
     const expected = {
       ...story,
@@ -188,7 +188,7 @@ describe('useAutoSave', () => {
     act(() => {
       autoSave();
     });
-    expect(autoSaveById).toHaveBeenCalledTimes(1);
+    expect(autoSaveById).toHaveBeenCalledOnce();
 
     const expected = {
       ...story,
