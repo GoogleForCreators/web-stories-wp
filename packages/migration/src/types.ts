@@ -27,7 +27,6 @@ import type {
   ResourceType,
   MediaElement,
   VideoTrack,
-  GifResource,
   TrimData,
 } from '@googleforcreators/types';
 
@@ -125,7 +124,16 @@ interface VideoResourceV0 extends ResourceV0 {
   title: string;
 }
 
-interface GifResourceV0 extends GifResource {
+interface OutputV0 {
+  mimeType: string;
+  src: string;
+  poster?: string;
+  sizes?: { [key: string]: ResourceSizeV0 };
+}
+
+interface GifResourceV0 extends ResourceV0 {
+  type: ResourceType.Gif;
+  output: OutputV0;
   local?: boolean;
   isTrimming?: boolean;
   isTranscoding?: boolean;
