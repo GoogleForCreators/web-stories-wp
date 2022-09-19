@@ -103,6 +103,7 @@ export interface ResourceV0 {
   isTrimming?: boolean;
   isTranscoding?: boolean;
   isMuting?: boolean;
+  title: string;
 }
 
 interface VideoResourceV0 extends VideoResource {
@@ -110,6 +111,7 @@ interface VideoResourceV0 extends VideoResource {
   isTrimming?: boolean;
   isTranscoding?: boolean;
   isMuting?: boolean;
+  title: string;
 }
 
 interface GifResourceV0 extends GifResource {
@@ -117,6 +119,7 @@ interface GifResourceV0 extends GifResource {
   isTrimming?: boolean;
   isTranscoding?: boolean;
   isMuting?: boolean;
+  title: string;
 }
 
 export interface VideoElementV0 extends MediaElement {
