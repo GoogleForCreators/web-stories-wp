@@ -46,6 +46,7 @@ class Optimization extends Service_Base implements HasMeta {
 	 */
 	public function register(): void {
 		$this->register_meta();
+		add_action( 'delete_attachment', [ $this, 'delete_video' ] );
 	}
 
 	/**
@@ -67,5 +68,16 @@ class Optimization extends Service_Base implements HasMeta {
 				'object_subtype'    => 'attachment',
 			]
 		);
+	}
+
+	/**
+	 * Deletes associated meta data when a video is deleted.
+	 *
+	 * @since 1.26.0
+	 *
+	 * @param int $attachment_id ID of the attachment to be deleted.
+	 */
+	public function delete_video( int $attachment_id ): void {
+		delete_metadata( 'post', 0, self::OPTIMIZED_ID_POST_META_KEY, $attachment_id, true );
 	}
 }
