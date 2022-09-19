@@ -24,7 +24,6 @@ import type {
   AnimationZoomDirection,
   ElementBox,
   Attribution,
-  ResourceId,
   ResourceType,
   Mask,
   Flip,
@@ -44,7 +43,6 @@ interface Padding {
 
 type TextAlign = 'left' | 'center' | 'right' | 'justify';
 type TagName = 'h1' | 'h2' | 'h3' | 'p' | 'auto';
-type BackgroundTextMode = 'NONE' | 'FILL' | 'HIGHLIGHT';
 
 export interface FontMetrics {
   upm: number;
@@ -183,7 +181,6 @@ export interface TextElementV0 extends ElementV0 {
   fontFamily: string;
   fontFallback: string[];
 
-  backgroundTextMode?: BackgroundTextMode;
   backgroundColor?: Pattern;
   fontSize?: number;
   lineHeight?: number;
