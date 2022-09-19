@@ -22,7 +22,6 @@ import type {
   AnimationType,
   AnimationPanDirection,
   AnimationZoomDirection,
-  ShapeElement,
   Element,
   Attribution,
   ResourceId,
@@ -180,6 +179,10 @@ export interface TextElementV0 extends Element {
   metrics?: FontMetrics;
 }
 
+export interface ShapeElementV0 extends Element {
+  backgroundColor: Pattern;
+}
+
 export interface Group {
   name: string;
   isLocked: boolean;
@@ -201,7 +204,6 @@ export type Groups = Record<string, Group>;
 
 export interface PageV0 {
   elements: Element[];
-  defaultBackgroundElement?: ShapeElement;
   animations?: AnimationV0[];
   type: 'page';
   groups: Groups;
