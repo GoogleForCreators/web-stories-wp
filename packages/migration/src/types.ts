@@ -26,7 +26,6 @@ import type {
   Attribution,
   ResourceType,
   Mask,
-  Flip,
   Border,
   BorderRadius,
   MediaElement,
@@ -134,7 +133,6 @@ interface ElementV0 extends ElementBox {
   link?: LinkV0;
   opacity?: number;
   lockAspectRatio?: boolean;
-  flip?: Flip;
   groupId?: string;
   border?: Border;
   borderRadius?: BorderRadius;
