@@ -17,19 +17,90 @@
 /**
  * External dependencies
  */
-import type {
-  GifElement,
-  ImageElement,
-  ProductElement,
-  ShapeElement,
-  TextElement,
-  VideoElement,
-} from '@googleforcreators/types';
+import type { Pattern, Animation, ShapeElement, Element } from "@googleforcreators/types";
 
-export type StoryElement =
-  | GifElement
-  | ImageElement
-  | ProductElement
-  | ShapeElement
-  | TextElement
-  | VideoElement;
+export type FontStyle = 'normal' | 'italic' | 'regular';
+export enum FontVariantStyle {
+  Normal = 0,
+  Italic = 1,
+}
+
+export type FontWeight = 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
+
+export type FontVariant = [FontVariantStyle, FontWeight];
+
+export interface Font {
+  family: string;
+  service?: string;
+  weights?: FontWeight[];
+  styles?: FontStyle[];
+  variants?: FontVariant[];
+  fallbacks?: string[];
+}
+
+export interface Padding {
+  horizontal: number;
+  vertical: number;
+  locked: boolean;
+  hasHiddenPadding: boolean;
+}
+
+export type TextAlign = 'left' | 'center' | 'right' | 'justify';
+export type TagName = 'h1' | 'h2' | 'h3' | 'p' | 'auto';
+export type BackgroundTextMode = 'NONE' | 'FILL' | 'HIGHLIGHT';
+
+export interface FontMetrics {
+  upm: number;
+  asc: number;
+  des: number;
+  tAsc: number;
+  tDes: number;
+  tLGap: number;
+  wAsc: number;
+  wDes: number;
+  xH: number;
+  capH: number;
+  yMin: number;
+  yMax: number;
+  hAsc: number;
+  hDes: number;
+  lGap: number;
+}
+
+export interface TextElementV0 extends Element {
+  content: string;
+  font: Font;
+
+  backgroundTextMode?: BackgroundTextMode;
+  backgroundColor?: Pattern;
+  fontSize?: number;
+  lineHeight?: number;
+  padding?: Padding;
+  textAlign?: TextAlign;
+  tagName?: TagName;
+  marginOffset?: number;
+  metrics?: FontMetrics;
+}
+
+export interface Group {
+  name: string;
+  isLocked: boolean;
+  isCollapsed?: boolean;
+}
+
+// @todo Groups did not exist during V0.
+export type Groups = Record<string, Group>;
+
+export interface PageV0 {
+  elements: Element[];
+  defaultBackgroundElement?: ShapeElement;
+  animations?: Animation[];
+  backgroundColor: Pattern;
+  type: 'page';
+  groups: Groups;
+}
+
+export interface StoryV0 {
+  version: number;
+  pages: PageV0[];
+}

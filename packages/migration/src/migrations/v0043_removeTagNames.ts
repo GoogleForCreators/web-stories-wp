@@ -14,65 +14,23 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import type {
-  Story,
-  Page,
-  TagName,
-  TextElement,
-  GifElement,
-  ImageElement,
-  ProductElement,
-  ShapeElement,
-  VideoElement,
-} from '@googleforcreators/types';
-
-/**
- * Internal dependencies
- */
-import type { StoryElement } from '../types';
-
-export interface TextElementV42 extends TextElement {
-  tagName?: TagName;
-}
-
-export type ElementV42 =
-  | GifElement
-  | ImageElement
-  | ProductElement
-  | ShapeElement
-  | TextElementV42
-  | VideoElement;
-
-export interface PageV42 extends Omit<Page, 'elements'> {
-  elements: ElementV42[];
-}
-
-export interface StoryV42 extends Omit<Story, 'pages'> {
-  pages: PageV42[];
-}
-
-function removeTagNames({ pages, ...rest }: StoryV42): Story {
+function removeTagNames({ pages, ...rest }) {
   return {
     pages: pages.map(reducePage),
     ...rest,
   };
 }
 
-function reducePage({ elements, ...rest }: PageV42): Page {
+function reducePage({ elements, ...rest }) {
   return {
     elements: elements.map(updateElement),
     ...rest,
   };
 }
 
-function updateElement(element: ElementV42): StoryElement {
-  if ('tagName' in element) {
-    delete element.tagName;
-  }
-  return element as StoryElement;
+function updateElement(element) {
+  delete element.tagName;
+  return element;
 }
 
 export default removeTagNames;
