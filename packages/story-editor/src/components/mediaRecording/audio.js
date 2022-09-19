@@ -53,6 +53,10 @@ const AudioAnalyser = ({ source }) => {
   }
 
   useEffect(() => {
+    if (source.getAudioTracks().length === 0) {
+      return () => {};
+    }
+
     const audioNode = audioContextRef.current.createMediaStreamSource(source);
     audioNode.connect(analyserRef.current);
 
