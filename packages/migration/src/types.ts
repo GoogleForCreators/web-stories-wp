@@ -114,7 +114,6 @@ interface GifResourceV0 extends ResourceV0 {
   title: string;
 }
 
-
 // @todo GIf didn't exist at that point yet. Check when to add.
 export interface GifElementV0 extends MediaElement {
   resource: GifResourceV0;
@@ -218,13 +217,6 @@ export interface PageV0 {
     mimeType: string;
   };
 }
-
 export interface StoryV0 {
-  version: number;
-  pages: PageV0[];
-  backgroundAudio?: {
-    src: string;
-    id: number;
-    mimeType: string;
-  };
+  [i: number]: PageV0;
 }
