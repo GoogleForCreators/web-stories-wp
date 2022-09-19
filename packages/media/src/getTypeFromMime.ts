@@ -15,9 +15,9 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import type { ResourceType } from './types';
+import type { ResourceType } from '@googleforcreators/types';
 
 /**
  * Infer element type from mime type of its resource

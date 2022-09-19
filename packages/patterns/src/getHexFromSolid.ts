@@ -15,9 +15,9 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import type { Solid } from './types';
+import type { Solid } from '@googleforcreators/types';
 
 function getHexFromSolid(solid: Solid) {
   const {

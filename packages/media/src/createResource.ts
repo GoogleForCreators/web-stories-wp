@@ -15,16 +15,21 @@
  */
 
 /**
+ * External dependencies
+ */
+import {
+  GifResource,
+  Resource,
+  ResourceType,
+  VideoResource,
+} from '@googleforcreators/types';
+
+/**
  * Internal dependencies
  */
 import getTypeFromMime from './getTypeFromMime';
 import normalizeResourceSizes from './normalizeResourceSizes';
-import type {
-  GifResource,
-  Resource,
-  VideoResource,
-  ResourceInput,
-} from './types';
+import type { ResourceInput } from './types';
 
 /**
  * Creates a resource object.
@@ -33,55 +38,59 @@ import type {
  * @return Resource object.
  */
 function createResource({
-  baseColor,
-  blurHash,
   type,
   mimeType,
-  creationDate,
-  src,
-  width,
-  height,
   poster,
   posterId,
-  id,
   length,
   lengthFormatted,
-  alt,
   sizes,
-  attribution,
   output,
+  width = 0,
+  height = 0,
   isPlaceholder = false,
   isOptimized = false,
   isMuted = false,
   isExternal = false,
   trimData,
   needsProxy = false,
+  ...rest
 }: ResourceInput): Resource | VideoResource | GifResource {
-  return {
-    baseColor,
-    blurHash,
-    type: type || getTypeFromMime(mimeType),
+  type = type || getTypeFromMime(mimeType);
+  const resource: Resource = {
+    type,
     mimeType,
-    creationDate,
-    src,
-    width: Number(width || 0),
-    height: Number(height || 0),
+    width,
+    height,
+    sizes: normalizeResourceSizes(sizes),
+    isPlaceholder,
+    isExternal,
+    needsProxy,
+    ...rest,
+  };
+  const sequenceProps = {
     poster,
     posterId,
-    id,
-    length,
-    lengthFormatted,
-    alt,
-    sizes: normalizeResourceSizes(sizes),
-    attribution,
-    output,
-    isPlaceholder,
     isOptimized,
-    isMuted,
-    isExternal,
-    trimData,
-    needsProxy,
   };
+  if (type === ResourceType.Video) {
+    return {
+      ...resource,
+      ...sequenceProps,
+      length,
+      lengthFormatted,
+      isMuted,
+      trimData,
+    } as VideoResource;
+  }
+  if (type === ResourceType.Gif) {
+    return {
+      ...resource,
+      ...sequenceProps,
+      output,
+    } as GifResource;
+  }
+  return resource;
 }
 
 export default createResource;
