@@ -35,7 +35,7 @@ describe('publisherLogoMissing', () => {
       width: 200,
     };
 
-    expect(publisherLogoMissing(noPublisherLogo)).toBe(true);
-    expect(publisherLogoMissing(publisherLogo)).toBe(false);
+    expect(publisherLogoMissing(noPublisherLogo)).toBeTrue();
+    expect(publisherLogoMissing(publisherLogo)).toBeFalse();
   });
 });

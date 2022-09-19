@@ -54,7 +54,7 @@ describe('Chip', () => {
     renderWithProviders(<Chip onClick={onClick}>{chipText}</Chip>);
     const chip = screen.getByText(chipText);
     fireEvent.click(chip);
-    expect(onClick).toHaveBeenCalledTimes(1);
+    expect(onClick).toHaveBeenCalledOnce();
   });
 
   it('should not trigger a click on <Chip /> when disabled', () => {

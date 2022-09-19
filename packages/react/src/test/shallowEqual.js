@@ -39,14 +39,14 @@ describe('shallowEqual', () => {
     shallowEqual([1], [2]);
 
     expect(shallowEqualObjectsSpy).not.toHaveBeenCalled();
-    expect(shallowEqualArraysSpy).toHaveBeenCalledTimes(1);
+    expect(shallowEqualArraysSpy).toHaveBeenCalledOnce();
   });
 
   it('calls shallowEqualObjects for object', () => {
     shallowEqual({ a: 1 }, { a: 1 });
 
     expect(shallowEqualArraysSpy).not.toHaveBeenCalled();
-    expect(shallowEqualObjectsSpy).toHaveBeenCalledTimes(1);
+    expect(shallowEqualObjectsSpy).toHaveBeenCalledOnce();
   });
 
   it('calls neither shallowEqualObjects nor shallowEqualArrays for primitives', () => {

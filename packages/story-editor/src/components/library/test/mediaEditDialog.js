@@ -121,8 +121,8 @@ describe('MediaEditDialog', () => {
     fireEvent.change(input, { target: { value: 'new alt text' } });
     fireEvent.click(screen.getByRole('button', { name: /save/i }));
 
-    await waitFor(() => expect(updateMedia).toHaveBeenCalledTimes(1));
-    expect(updateMediaElement).toHaveBeenCalledTimes(1);
+    await waitFor(() => expect(updateMedia).toHaveBeenCalledOnce());
+    expect(updateMediaElement).toHaveBeenCalledOnce();
 
     expect(serverAltText).toBe('new alt text');
     expect(stateAltText).toBe('new alt text');
@@ -141,9 +141,9 @@ describe('MediaEditDialog', () => {
     fireEvent.change(input, { target: { value: 'new alt text' } });
     fireEvent.click(screen.getByRole('button', { name: /save/i }));
 
-    await waitFor(() => expect(updateMedia).toHaveBeenCalledTimes(1));
+    await waitFor(() => expect(updateMedia).toHaveBeenCalledOnce());
     expect(updateMediaElement).toHaveBeenCalledTimes(0);
-    expect(showSnackbar).toHaveBeenCalledTimes(1);
+    expect(showSnackbar).toHaveBeenCalledOnce();
     expect(serverAltText).toBe('my image alt text');
   });
 
@@ -159,8 +159,8 @@ describe('MediaEditDialog', () => {
     fireEvent.change(input, { target: { value: 'new alt text' } });
     fireEvent.click(screen.getByRole('button', { name: /save/i }));
 
-    await waitFor(() => expect(updateMedia).toHaveBeenCalledTimes(1));
-    expect(updateMediaElement).toHaveBeenCalledTimes(1);
-    expect(showSnackbar).toHaveBeenCalledTimes(1);
+    await waitFor(() => expect(updateMedia).toHaveBeenCalledOnce());
+    expect(updateMediaElement).toHaveBeenCalledOnce();
+    expect(showSnackbar).toHaveBeenCalledOnce();
   });
 });

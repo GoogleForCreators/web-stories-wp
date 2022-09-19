@@ -181,7 +181,7 @@ describe('EditLayerFocusManager', () => {
 
     // [esc] should exit focus group
     pressKey(KEYS.esc);
-    expect(focusGroupTrigger.cleanup).toHaveBeenCalledTimes(1);
+    expect(focusGroupTrigger.cleanup).toHaveBeenCalledOnce();
     focusGroupProps.forEach((focusGroupEl) => {
       const node = screen.getByText(focusGroupEl.text);
       expect(node).not.toHaveFocus();

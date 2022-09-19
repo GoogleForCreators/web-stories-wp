@@ -130,7 +130,7 @@ describe('Panels/PageBackground', () => {
     const { combineElements } = arrange([backgroundImage]);
     const replaceButton = screen.getByRole('button', { name: 'Replace' });
     fireEvent.click(replaceButton);
-    expect(combineElements).toHaveBeenCalledTimes(1);
+    expect(combineElements).toHaveBeenCalledOnce();
     expect(combineElements).toHaveBeenCalledWith({
       firstElement: expect.any(Object),
       secondId: '123',

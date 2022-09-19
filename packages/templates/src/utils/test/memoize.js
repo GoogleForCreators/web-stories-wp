@@ -56,7 +56,7 @@ describe('memoize(func, argumentsHash)', () => {
     memoized(1, 2, 3);
     memoized(1, 2, 3);
 
-    expect(func).toHaveBeenCalledTimes(1);
+    expect(func).toHaveBeenCalledOnce();
     expect(func).toHaveBeenCalledWith(1, 2, 3);
   });
 });

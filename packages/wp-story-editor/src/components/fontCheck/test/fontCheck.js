@@ -205,6 +205,6 @@ describe('fontCheck metrics', () => {
         </StoryContext.Provider>
       </HistoryProvider>
     );
-    expect(mockUpdateByFontFamily).toHaveBeenCalledTimes(1);
+    expect(mockUpdateByFontFamily).toHaveBeenCalledOnce();
   });
 });

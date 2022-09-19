@@ -205,7 +205,7 @@ describe('PostLock', () => {
 
     setup();
 
-    expect(setInterval).toHaveBeenCalledTimes(1);
+    expect(setInterval).toHaveBeenCalledOnce();
 
     act(() => {
       jest.advanceTimersByTime(160 * 1000);

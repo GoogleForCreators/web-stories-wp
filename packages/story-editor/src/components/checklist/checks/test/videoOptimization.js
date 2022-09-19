@@ -32,7 +32,7 @@ describe('videoOptimization (pre-publish checklist card)', () => {
     };
 
     const result = videoElementsNotOptimized(largeUnoptimizedVideo);
-    expect(result).toBe(true);
+    expect(result).toBeTrue();
   });
 
   it('should return true if the video element is larger than 1080x1920 and not optimized', () => {
@@ -47,7 +47,7 @@ describe('videoOptimization (pre-publish checklist card)', () => {
     };
 
     const result = videoElementsNotOptimized(largeUnoptimizedVideo);
-    expect(result).toBe(true);
+    expect(result).toBeTrue();
   });
 
   it('should return false if the video element is larger than 1080x1920 and is optimizing', () => {
@@ -62,7 +62,7 @@ describe('videoOptimization (pre-publish checklist card)', () => {
     };
 
     const result = videoElementsNotOptimized(largeUnoptimizedVideo);
-    expect(result).toBe(true);
+    expect(result).toBeTrue();
   });
 
   it('should return false if the video element is larger than 1080x1920 and Optimized', () => {
@@ -77,7 +77,7 @@ describe('videoOptimization (pre-publish checklist card)', () => {
     };
 
     const result = videoElementsNotOptimized(largeUnoptimizedVideo);
-    expect(result).toBe(false);
+    expect(result).toBeFalse();
   });
 
   it('should return false if the video element is larger than 1080x1920 and isExternal', () => {
@@ -93,7 +93,7 @@ describe('videoOptimization (pre-publish checklist card)', () => {
     };
 
     const result = videoElementsNotOptimized(largeUnoptimizedVideo);
-    expect(result).toBe(false);
+    expect(result).toBeFalse();
   });
 
   it('should return false if the video element is smaller than 1080x1920', () => {
@@ -116,8 +116,8 @@ describe('videoOptimization (pre-publish checklist card)', () => {
       },
     };
 
-    expect(videoElementsNotOptimized(smallUnoptimizedVideo)).toBe(false);
-    expect(videoElementsNotOptimized(smallOptimizedVideo)).toBe(false);
+    expect(videoElementsNotOptimized(smallUnoptimizedVideo)).toBeFalse();
+    expect(videoElementsNotOptimized(smallOptimizedVideo)).toBeFalse();
   });
 
   it('should return false if the video element is exactly 1280x720', () => {
@@ -140,7 +140,7 @@ describe('videoOptimization (pre-publish checklist card)', () => {
       },
     };
 
-    expect(videoElementsNotOptimized(landscapeVideo)).toBe(false);
-    expect(videoElementsNotOptimized(portraitVideo)).toBe(false);
+    expect(videoElementsNotOptimized(landscapeVideo)).toBeFalse();
+    expect(videoElementsNotOptimized(portraitVideo)).toBeFalse();
   });
 });

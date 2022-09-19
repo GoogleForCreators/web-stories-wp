@@ -137,7 +137,7 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', () => {
       />
     );
 
-    expect(mockUpdate).toHaveBeenCalledTimes(1);
+    expect(mockUpdate).toHaveBeenCalledOnce();
 
     fireEvent.change(input, { target: { value: '' } });
     fireEvent.keyDown(input, { key: 'Enter', keyCode: 13 });
@@ -188,7 +188,7 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', () => {
       />
     );
 
-    expect(mockUpdate).toHaveBeenCalledTimes(1);
+    expect(mockUpdate).toHaveBeenCalledOnce();
 
     fireEvent.change(input, { target: { value: '' } });
 

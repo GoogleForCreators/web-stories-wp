@@ -81,6 +81,6 @@ describe('bundlePlugin', () => {
 
   it('should delete existing ZIP files if asked', () => {
     bundlePlugin('/foo', false, true, true);
-    expect(deleteExistingZipFiles).toHaveBeenCalledTimes(1);
+    expect(deleteExistingZipFiles).toHaveBeenCalledOnce();
   });
 });

@@ -34,7 +34,7 @@ describe('isElementLinkTappableRegionTooBig', () => {
       width: 336,
       height: 504,
     };
-    expect(isElementLinkTappableRegionTooBig(element, pageSize)).toBe(true);
+    expect(isElementLinkTappableRegionTooBig(element, pageSize)).toBeTrue();
   });
 
   it('should return false if element has large enough tappable region', () => {
@@ -52,7 +52,7 @@ describe('isElementLinkTappableRegionTooBig', () => {
       width: 336,
       height: 504,
     };
-    expect(isElementLinkTappableRegionTooBig(element, pageSize)).toBe(false);
+    expect(isElementLinkTappableRegionTooBig(element, pageSize)).toBeFalse();
   });
 
   it('should return false if not an element with link', () => {
@@ -67,7 +67,7 @@ describe('isElementLinkTappableRegionTooBig', () => {
       width: 336,
       height: 504,
     };
-    expect(isElementLinkTappableRegionTooBig(element, pageSize)).toBe(false);
+    expect(isElementLinkTappableRegionTooBig(element, pageSize)).toBeFalse();
   });
 
   it('should return false for an element of an unknown type', () => {
@@ -85,6 +85,6 @@ describe('isElementLinkTappableRegionTooBig', () => {
       width: 336,
       height: 504,
     };
-    expect(isElementLinkTappableRegionTooBig(element, pageSize)).toBe(false);
+    expect(isElementLinkTappableRegionTooBig(element, pageSize)).toBeFalse();
   });
 });

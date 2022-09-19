@@ -22,19 +22,19 @@ describe('storyMissingExcerpt', () => {
   it('should return true if story is missing excerpt', () => {
     const excerpt = undefined;
     const test = storyMissingExcerpt(excerpt);
-    expect(test).toBe(true);
+    expect(test).toBeTrue();
   });
 
   it('should return true if story has empty excerpt', () => {
     const excerpt = '';
     const test = storyMissingExcerpt(excerpt);
 
-    expect(test).toBe(true);
+    expect(test).toBeTrue();
   });
 
   it('should return true if story has excerpt', () => {
     const excerpt = 'This is an excerpt';
     const test = storyMissingExcerpt(excerpt);
-    expect(test).toBe(false);
+    expect(test).toBeFalse();
   });
 });

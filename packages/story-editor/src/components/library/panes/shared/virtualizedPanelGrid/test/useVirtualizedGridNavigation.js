@@ -39,7 +39,7 @@ describe('useVirtualizedGridNavigation()', () => {
     );
 
     expect(result.current.activeGridItemId).toBeUndefined();
-    expect(result.current.isGridFocused).toBe(false);
+    expect(result.current.isGridFocused).toBeFalse();
   });
 
   it('should update isGridFocused to true and set activeGridItemId to first index when handleGridFocus is called', () => {
@@ -59,7 +59,7 @@ describe('useVirtualizedGridNavigation()', () => {
     });
 
     expect(result.current.activeGridItemId).toBe('one');
-    expect(result.current.isGridFocused).toBe(true);
+    expect(result.current.isGridFocused).toBeTrue();
   });
 
   it('should update activeGridItemId when handleGridItemFocus is called', () => {

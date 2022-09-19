@@ -35,6 +35,6 @@ describe('videoElementLength', () => {
     };
 
     const result = videoElementLength(tooLongVideo);
-    expect(result).toBe(true);
+    expect(result).toBeTrue();
   });
 });

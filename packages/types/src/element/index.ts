@@ -14,10 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-
 export * from './element';
 export * from './elementBox';
 export * from './gifElement';

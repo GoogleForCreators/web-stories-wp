@@ -92,7 +92,7 @@ describe('publishModal/mainStoryInfo', () => {
 
     fireEvent.blur(titleInput);
 
-    expect(mockHandleUpdateStory).toHaveBeenCalledTimes(1);
+    expect(mockHandleUpdateStory).toHaveBeenCalledOnce();
   });
 
   it('should trigger mockHandleUpdateStory on excerpt input change', () => {
@@ -108,6 +108,6 @@ describe('publishModal/mainStoryInfo', () => {
 
     fireEvent.blur(descriptionInput);
 
-    expect(mockHandleUpdateStory).toHaveBeenCalledTimes(1);
+    expect(mockHandleUpdateStory).toHaveBeenCalledOnce();
   });
 });

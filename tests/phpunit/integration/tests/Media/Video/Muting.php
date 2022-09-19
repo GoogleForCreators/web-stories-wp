@@ -43,6 +43,7 @@ class Muting extends DependencyInjectedTestCase {
 		$this->instance->register();
 
 		$this->assertSame( 10, has_action( 'rest_api_init', [ $this->instance, 'rest_api_init' ] ) );
+		$this->assertSame( 10, has_action( 'delete_attachment', [ $this->instance, 'delete_video' ] ) );
 		$this->assertSame(
 			10,
 			has_filter(
@@ -185,5 +186,33 @@ class Muting extends DependencyInjectedTestCase {
 
 		$result = $this->instance->update_callback_is_muted( true, get_post( $video_attachment_id ) );
 		$this->assertInstanceOf( 'WP_Error', $result );
+	}
+
+	/**
+	 * @covers ::delete_video
+	 */
+	public function test_delete_video_meta_attachment_is_deleted(): void {
+		$video_attachment_id = self::factory()->attachment->create_object(
+			[
+				'file'           => DIR_TESTDATA . '/uploads/test-video.mp4',
+				'post_parent'    => 0,
+				'post_mime_type' => 'video/mp4',
+				'post_title'     => 'Test Video',
+			]
+		);
+
+		$muted_attachment_id = self::factory()->attachment->create_object(
+			[
+				'file'           => DIR_TESTDATA . '/uploads/test-video.mp4',
+				'post_parent'    => 0,
+				'post_mime_type' => 'image/jpeg',
+				'post_title'     => 'Test Image',
+			]
+		);
+
+		add_post_meta( $video_attachment_id, $this->instance::MUTED_ID_POST_META_KEY, $muted_attachment_id );
+		$this->assertSame( $muted_attachment_id, (int) get_post_meta( $video_attachment_id, $this->instance::MUTED_ID_POST_META_KEY, true ) );
+		wp_delete_attachment( $muted_attachment_id );
+		$this->assertEmpty( get_post_meta( $video_attachment_id, $this->instance::MUTED_ID_POST_META_KEY, true ) );
 	}
 }

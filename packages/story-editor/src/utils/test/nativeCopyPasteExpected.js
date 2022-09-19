@@ -24,7 +24,7 @@ describe('nativeCopyPasteExpected', () => {
     const textArea = document.createElement('textarea');
     document.body.appendChild(textArea);
     textArea.focus();
-    expect(nativeCopyPasteExpected()).toBe(true);
+    expect(nativeCopyPasteExpected()).toBeTrue();
   });
 
   it('should detect selection correctly for text input', () => {
@@ -32,7 +32,7 @@ describe('nativeCopyPasteExpected', () => {
     textInput.type = 'text';
     document.body.appendChild(textInput);
     textInput.focus();
-    expect(nativeCopyPasteExpected()).toBe(true);
+    expect(nativeCopyPasteExpected()).toBeTrue();
   });
 
   it('should detect selection correctly for number input', () => {
@@ -40,7 +40,7 @@ describe('nativeCopyPasteExpected', () => {
     numberInput.type = 'number';
     document.body.appendChild(numberInput);
     numberInput.focus();
-    expect(nativeCopyPasteExpected()).toBe(true);
+    expect(nativeCopyPasteExpected()).toBeTrue();
   });
 
   it('should detect selection correctly for search input', () => {
@@ -48,7 +48,7 @@ describe('nativeCopyPasteExpected', () => {
     searchInput.type = 'search';
     document.body.appendChild(searchInput);
     searchInput.focus();
-    expect(nativeCopyPasteExpected()).toBe(true);
+    expect(nativeCopyPasteExpected()).toBeTrue();
   });
 
   /* eslint-disable-next-line jest/no-disabled-tests --
@@ -60,7 +60,7 @@ describe('nativeCopyPasteExpected', () => {
     contentEditable.setAttribute('contenteditable', 'true');
     document.body.appendChild(contentEditable);
     contentEditable.focus();
-    expect(nativeCopyPasteExpected()).toBe(true);
+    expect(nativeCopyPasteExpected()).toBeTrue();
   });
 
   it('should detect selection correctly for unsupported input', () => {
@@ -74,7 +74,7 @@ describe('nativeCopyPasteExpected', () => {
     document.body.appendChild(incorrectInput);
     incorrectInput.focus();
 
-    expect(nativeCopyPasteExpected()).toBe(false);
+    expect(nativeCopyPasteExpected()).toBeFalse();
 
     windowSpy.mockRestore();
   });
@@ -88,7 +88,7 @@ describe('nativeCopyPasteExpected', () => {
         getRangeAt: () => true,
       }));
 
-    expect(nativeCopyPasteExpected()).toBe(true);
+    expect(nativeCopyPasteExpected()).toBeTrue();
 
     windowSpy.mockRestore();
   });
