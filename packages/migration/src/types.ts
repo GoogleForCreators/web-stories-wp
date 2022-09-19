@@ -91,6 +91,15 @@ export interface Group {
 // @todo Groups did not exist during V0.
 export type Groups = Record<string, Group>;
 
+interface TrackV0 {
+  track: string;
+  trackId: number;
+  trackName: string;
+  id: string;
+  srcLang?: string;
+  label?: string;
+  kind: string;
+}
 export interface PageV0 {
   elements: Element[];
   defaultBackgroundElement?: ShapeElement;
@@ -98,9 +107,17 @@ export interface PageV0 {
   backgroundColor: Pattern;
   type: 'page';
   groups: Groups;
+  backgroundAudio?: {
+    tracks: TrackV0[];
+  };
 }
 
 export interface StoryV0 {
   version: number;
   pages: PageV0[];
+  backgroundAudio?: {
+    src: string;
+    id: number;
+    mimeType: string;
+  }
 }

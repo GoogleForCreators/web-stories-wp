@@ -14,35 +14,7 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import type { StoryV42, PageV42, ElementV42 } from './v0043_removeTagNames';
-
-interface TrackV41 {
-  track: string;
-  trackId: number;
-  id: string;
-  srcLang: string;
-  label: string;
-  kind: string;
-  trackName?: string;
-}
-
-export interface PageV41 extends Omit<PageV42, 'elements'> {
-  elements: ElementV42[];
-  backgroundAudio?: {
-    resource?: Record<string, unknown>;
-    tracks: TrackV41[];
-  };
-}
-
-export interface StoryV41 extends Omit<StoryV42, 'pages'> {
-  pages: PageV41[];
-  backgroundAudio?: Record<string, unknown>;
-}
-
-function removeTrackName(storyData: StoryV41): StoryV42 {
+function removeTrackName(storyData) {
   const updatedStoryData = updateStory(storyData);
   const { pages, ...rest } = updatedStoryData;
   return {
@@ -51,16 +23,16 @@ function removeTrackName(storyData: StoryV41): StoryV42 {
   };
 }
 
-function updateStory(story: StoryV41): StoryV42 {
+function updateStory(story) {
   if (story?.backgroundAudio) {
     story.backgroundAudio = {
       resource: story?.backgroundAudio,
     };
   }
-  return story as StoryV42;
+  return story;
 }
 
-function updatePage(page: PageV41): PageV42 {
+function updatePage(page) {
   if (
     page?.backgroundAudio?.tracks &&
     page?.backgroundAudio?.tracks?.length > 0
@@ -70,7 +42,7 @@ function updatePage(page: PageV41): PageV42 {
       return track;
     });
   }
-  return page as PageV42;
+  return page;
 }
 
 export default removeTrackName;
