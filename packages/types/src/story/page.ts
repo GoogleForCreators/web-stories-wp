@@ -34,7 +34,7 @@ export type Track = {
   srcLang?: string;
   label?: string;
   kind: string;
-}
+};
 
 export type Groups = Record<string, Group>;
 
@@ -50,8 +50,10 @@ export interface Page {
       src: string;
       id: number;
       mimeType: string;
-    }
+    };
     tracks: Track[];
     loop: boolean;
-  }
+  };
+  autoAdvance: 'auto' | 'manual';
+  defaultPageDuration: number;
 }
