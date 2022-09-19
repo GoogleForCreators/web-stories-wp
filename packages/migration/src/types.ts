@@ -144,6 +144,7 @@ interface GifResourceV0 extends ResourceV0 {
 
 export interface MediaElementV0 extends Element {
   isFill?: boolean;
+  isFullbleedBackground?: boolean;
   backgroundOverlay: Pattern;
   resource: ResourceV0;
   scale: number;
