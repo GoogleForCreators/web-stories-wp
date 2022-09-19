@@ -19,7 +19,9 @@
  */
 import type {
   Pattern,
-  Animation,
+  AnimationType,
+  AnimationPanDirection,
+  AnimationZoomDirection,
   ShapeElement,
   Element,
   Attribution,
@@ -183,13 +185,23 @@ export interface Group {
   isCollapsed?: boolean;
 }
 
+interface AnimationV0 {
+  id: string;
+  type: AnimationType;
+  target: string;
+  panDir?: AnimationPanDirection;
+  duration: number;
+  delay: number;
+  zoomDirection?: AnimationZoomDirection;
+}
+
 // @todo Groups did not exist during V0, should we try to pinpoint when it was added?
 export type Groups = Record<string, Group>;
 
 export interface PageV0 {
   elements: Element[];
   defaultBackgroundElement?: ShapeElement;
-  animations?: Animation[];
+  animations?: AnimationV0[];
   backgroundColor: Pattern;
   type: 'page';
   groups: Groups;
