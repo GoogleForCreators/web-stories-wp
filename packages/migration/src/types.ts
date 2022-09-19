@@ -22,10 +22,14 @@ import type {
   AnimationType,
   AnimationPanDirection,
   AnimationZoomDirection,
-  Element,
+  ElementBox,
   Attribution,
   ResourceId,
   ResourceType,
+  Mask,
+  Flip,
+  Border,
+  BorderRadius,
   MediaElement,
   VideoTrack,
   TrimData,
@@ -120,7 +124,31 @@ interface GifResourceV0 extends ResourceV0 {
   title: string;
 }
 
-export interface MediaElementV0 extends Element {
+interface LinkV0 {
+  url: string;
+  desc?: string;
+  needsProxy?: boolean;
+  icon?: string;
+  rel?: string[];
+  type?: string;
+}
+
+interface ElementV0 extends ElementBox {
+  id: string;
+  type: string;
+  isBackground: boolean;
+
+  mask?: Mask;
+  link?: LinkV0;
+  opacity?: number;
+  lockAspectRatio?: boolean;
+  flip?: Flip;
+  groupId?: string;
+  border?: Border;
+  borderRadius?: BorderRadius;
+}
+
+export interface MediaElementV0 extends ElementV0 {
   isFill?: boolean;
   isFullbleedBackground?: boolean;
   backgroundOverlay: Pattern;
@@ -143,7 +171,7 @@ export interface GifElementV0 extends MediaElement {
   resource: GifResourceV0;
 }
 
-export interface TextElementV0 extends Element {
+export interface TextElementV0 extends ElementV0 {
   content: string;
   bold: boolean;
   fontWeight: number;
@@ -165,7 +193,7 @@ export interface TextElementV0 extends Element {
   metrics?: FontMetrics;
 }
 
-export interface ShapeElementV0 extends Element {
+export interface ShapeElementV0 extends ElementV0 {
   backgroundColor: Pattern;
 }
 
