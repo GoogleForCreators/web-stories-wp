@@ -202,7 +202,6 @@ export interface PageV0 {
   elements: Element[];
   defaultBackgroundElement?: ShapeElement;
   animations?: AnimationV0[];
-  backgroundColor: Pattern;
   type: 'page';
   groups: Groups;
   backgroundAudio?: {
