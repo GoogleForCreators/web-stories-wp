@@ -14,78 +14,26 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import type {
-  FontStyle,
-  FontVariant,
-  FontWeight,
-  GifElement,
-  ImageElement,
-  ProductElement,
-  ShapeElement,
-  VideoElement,
-} from '@googleforcreators/types';
-
-/**
- * Internal dependencies
- */
-import type { PageV41, StoryV41 } from './v0042_removeTrackName';
-import type { ElementV42, TextElementV42 } from './v0043_removeTagNames';
-
-interface FontV40 {
-  id?: string;
-  name?: string;
-  value?: string;
-  family: string;
-  service?: string;
-  weights?: FontWeight[];
-  styles?: FontStyle[];
-  variants?: FontVariant[];
-  fallbacks?: string[];
-}
-
-export interface TextElementV40 extends TextElementV42 {
-  font: FontV40;
-}
-
-export type ElementV40 =
-  | GifElement
-  | ImageElement
-  | ProductElement
-  | ShapeElement
-  | TextElementV40
-  | VideoElement;
-
-export interface PageV40 extends Omit<PageV41, 'elements'> {
-  elements: ElementV40[];
-}
-
-export interface StoryV40 extends Omit<StoryV41, 'pages'> {
-  pages: PageV40[];
-}
-
-function removeFontProperties({ pages, ...rest }: StoryV40): StoryV41 {
+function removeFontProperties({ pages, ...rest }) {
   return {
     pages: pages.map(reducePage),
     ...rest,
   };
 }
 
-function reducePage({ elements, ...rest }: PageV40): PageV41 {
+function reducePage({ elements, ...rest }) {
   return {
     elements: elements.map(updateElement),
     ...rest,
   };
 }
 
-function updateElement(element: ElementV40): ElementV42 {
+function updateElement(element) {
   if ('font' in element) {
     const { id, name, value, ...newFontFormatted } = element.font;
     element.font = newFontFormatted;
   }
-  return element as ElementV42;
+  return element;
 }
 
 export default removeFontProperties;

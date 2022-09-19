@@ -29,7 +29,10 @@ export type FontWeight = 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
 
 export type FontVariant = [FontVariantStyle, FontWeight];
 
-export interface Font {
+export interface FontV0 {
+  id: string;
+  name: string;
+  value: string;
   family: string;
   service?: string;
   weights?: FontWeight[];
@@ -69,7 +72,7 @@ export interface FontMetrics {
 
 export interface TextElementV0 extends Element {
   content: string;
-  font: Font;
+  font: FontV0;
 
   backgroundTextMode?: BackgroundTextMode;
   backgroundColor?: Pattern;
