@@ -24,12 +24,11 @@ import type {
   Element,
   Attribution,
   ResourceId,
-  ResourceSize,
   ResourceType,
   MediaElement,
-  VideoResource,
   VideoTrack,
   GifResource,
+  TrimData,
 } from '@googleforcreators/types';
 
 export type FontStyle = 'normal' | 'italic' | 'regular';
@@ -83,21 +82,28 @@ export interface FontMetrics {
   lGap: number;
 }
 
+export interface ResourceSizeV0 {
+  mimeType: string;
+  sourceUrl: string;
+  width: number | string;
+  height: number | string;
+}
+
 export interface ResourceV0 {
   id: ResourceId;
   type: ResourceType;
   mimeType: string;
   src: string;
   alt: string;
-  width: number;
-  height: number;
+  width: number | string;
+  height: number | string;
   baseColor?: Pattern;
   blurHash?: string;
   isExternal: boolean;
   isPlaceholder: boolean;
   needsProxy: boolean;
   readonly creationDate?: string;
-  sizes: { [key: string]: ResourceSize };
+  sizes: { [key: string]: ResourceSizeV0 };
   attribution?: Attribution;
   local?: boolean;
   isTrimming?: boolean;
@@ -106,7 +112,12 @@ export interface ResourceV0 {
   title: string;
 }
 
-interface VideoResourceV0 extends VideoResource {
+interface VideoResourceV0 extends ResourceV0 {
+  type: ResourceType.Video;
+  length: number;
+  lengthFormatted: string;
+  isMuted?: boolean;
+  trimData?: TrimData;
   local?: boolean;
   isTrimming?: boolean;
   isTranscoding?: boolean;
@@ -122,18 +133,18 @@ interface GifResourceV0 extends GifResource {
   title: string;
 }
 
-export interface VideoElementV0 extends MediaElement {
-  resource: VideoResourceV0;
-  poster?: string;
-  tracks?: VideoTrack[];
-  loop?: boolean;
-}
-
 export interface MediaElementV0 extends Element {
   resource: ResourceV0;
   scale: number;
   focalX?: number;
   focalY?: number;
+}
+
+export interface VideoElementV0 extends MediaElementV0 {
+  resource: VideoResourceV0;
+  poster?: string;
+  tracks?: VideoTrack[];
+  loop?: boolean;
 }
 
 export type ImageElementV0 = MediaElementV0;
