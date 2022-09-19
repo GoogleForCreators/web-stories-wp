@@ -129,7 +129,6 @@ interface ElementV0 extends ElementBox {
 
   mask?: Mask;
   link?: LinkV0;
-  opacity?: number;
   lockAspectRatio?: boolean;
   groupId?: string;
   border?: Border;
