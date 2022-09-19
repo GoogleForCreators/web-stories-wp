@@ -34,13 +34,6 @@ import type {
   TrimData,
 } from '@googleforcreators/types';
 
-interface Padding {
-  horizontal: number;
-  vertical: number;
-  locked: boolean;
-  hasHiddenPadding: boolean;
-}
-
 type TextAlign = 'left' | 'center' | 'right' | 'justify';
 type TagName = 'h1' | 'h2' | 'h3' | 'p' | 'auto';
 
@@ -184,7 +177,7 @@ export interface TextElementV0 extends ElementV0 {
   backgroundColor?: Pattern;
   fontSize?: number;
   lineHeight?: number;
-  padding?: Padding;
+  padding?: number;
   textAlign?: TextAlign;
   tagName?: TagName;
   marginOffset?: number;
