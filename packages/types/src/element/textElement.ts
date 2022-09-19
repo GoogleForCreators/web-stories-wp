@@ -50,6 +50,24 @@ export type TextAlign = 'left' | 'center' | 'right' | 'justify';
 export type TagName = 'h1' | 'h2' | 'h3' | 'p' | 'auto';
 export type BackgroundTextMode = 'NONE' | 'FILL' | 'HIGHLIGHT';
 
+export interface FontMetrics {
+  upm: number;
+  asc: number;
+  des: number;
+  tAsc: number;
+  tDes: number;
+  tLGap: number;
+  wAsc: number;
+  wDes: number;
+  xH: number;
+  capH: number;
+  yMin: number;
+  yMax: number;
+  hAsc: number;
+  hDes: number;
+  lGap: number;
+}
+
 export interface TextElement extends Element {
   content: string;
   font: Font;
@@ -62,4 +80,5 @@ export interface TextElement extends Element {
   textAlign?: TextAlign;
   tagName?: TagName;
   marginOffset?: number;
+  metrics?: FontMetrics;
 }
