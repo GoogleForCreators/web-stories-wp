@@ -31,38 +31,16 @@ import type {
   TrimData,
 } from '@googleforcreators/types';
 
-export type FontStyle = 'normal' | 'italic' | 'regular';
-export enum FontVariantStyle {
-  Normal = 0,
-  Italic = 1,
-}
-
-export type FontWeight = 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
-
-export type FontVariant = [FontVariantStyle, FontWeight];
-
-export interface FontV0 {
-  id: string;
-  name: string;
-  value: string;
-  family: string;
-  service?: string;
-  weights?: FontWeight[];
-  styles?: FontStyle[];
-  variants?: FontVariant[];
-  fallbacks?: string[];
-}
-
-export interface Padding {
+interface Padding {
   horizontal: number;
   vertical: number;
   locked: boolean;
   hasHiddenPadding: boolean;
 }
 
-export type TextAlign = 'left' | 'center' | 'right' | 'justify';
-export type TagName = 'h1' | 'h2' | 'h3' | 'p' | 'auto';
-export type BackgroundTextMode = 'NONE' | 'FILL' | 'HIGHLIGHT';
+type TextAlign = 'left' | 'center' | 'right' | 'justify';
+type TagName = 'h1' | 'h2' | 'h3' | 'p' | 'auto';
+type BackgroundTextMode = 'NONE' | 'FILL' | 'HIGHLIGHT';
 
 export interface FontMetrics {
   upm: number;
@@ -82,14 +60,14 @@ export interface FontMetrics {
   lGap: number;
 }
 
-export interface ResourceSizeV0 {
+interface ResourceSizeV0 {
   mimeType: string;
   sourceUrl: string;
   width: number | string;
   height: number | string;
 }
 
-export interface ResourceV0 {
+interface ResourceV0 {
   id: ResourceId;
   type: ResourceType;
   mimeType: string;
@@ -173,7 +151,8 @@ export interface TextElementV0 extends Element {
   textDecoration: string;
   letterSpacing: number;
   color: Pattern;
-  font: FontV0;
+  fontFamily: string;
+  fontFallback: string[];
 
   backgroundTextMode?: BackgroundTextMode;
   backgroundColor?: Pattern;
