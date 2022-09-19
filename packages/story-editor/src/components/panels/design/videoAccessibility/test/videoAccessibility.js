@@ -111,7 +111,7 @@ describe('Panels/VideoAccessibility', () => {
     fireEvent.click(menuToggle);
     const editMenuItem = screen.getByRole('menuitem', { name: 'Edit' });
     fireEvent.click(editMenuItem);
-    expect(pushUpdate).toHaveBeenCalledTimes(1);
+    expect(pushUpdate).toHaveBeenCalledOnce();
     expect(pushUpdate).toHaveBeenCalledWith({ poster: 'media1' }, true);
   });
 });

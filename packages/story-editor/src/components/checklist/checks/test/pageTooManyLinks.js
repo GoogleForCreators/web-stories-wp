@@ -61,7 +61,7 @@ describe('pageTooManyLinks', () => {
         ...linkElements,
       ],
     };
-    expect(pageTooManyLinks(page)).toBe(true);
+    expect(pageTooManyLinks(page)).toBeTrue();
   });
 
   it('should return undefined if page has a reasonable number of links', () => {

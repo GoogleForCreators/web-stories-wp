@@ -58,6 +58,6 @@ describe('Template Details <Header />', () => {
 
     fireEvent.click(cta);
 
-    expect(mockHandleCtaClick).toHaveBeenCalledTimes(1);
+    expect(mockHandleCtaClick).toHaveBeenCalledOnce();
   });
 });

@@ -106,19 +106,19 @@ describe('Underline formatter', () => {
     it('should return false if both underline and non-underline', () => {
       const styles = [NONE, UNDERLINE];
       const result = setupFormatter(styles);
-      expect(result).toBe(false);
+      expect(result).toBeFalse();
     });
 
     it('should return false if no style matches', () => {
       const styles = [NONE];
       const result = setupFormatter(styles);
-      expect(result).toBe(false);
+      expect(result).toBeFalse();
     });
 
     it('should return true if only underline', () => {
       const styles = [UNDERLINE];
       const result = setupFormatter(styles);
-      expect(result).toBe(true);
+      expect(result).toBeTrue();
     });
   });
 
@@ -145,7 +145,7 @@ describe('Underline formatter', () => {
 
       // Third argument is tester
       const shouldSetStyle = togglePrefixStyle.mock.calls[0][2];
-      expect(shouldSetStyle()).toBe(false);
+      expect(shouldSetStyle()).toBeFalse();
     });
 
     it('should invoke togglePrefixStyle correctly for explicitly setting underline to true', () => {
@@ -159,7 +159,7 @@ describe('Underline formatter', () => {
 
       // Third argument is tester
       const shouldSetStyle = togglePrefixStyle.mock.calls[0][2];
-      expect(shouldSetStyle()).toBe(true);
+      expect(shouldSetStyle()).toBeTrue();
     });
   });
 });

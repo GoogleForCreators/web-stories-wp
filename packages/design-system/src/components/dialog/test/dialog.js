@@ -64,6 +64,6 @@ describe('DesignSystem/Components/Dialog', () => {
     const dialogButton = screen.getByText('dialog button');
 
     fireEvent.click(dialogButton);
-    expect(mockButtonClick).toHaveBeenCalledTimes(1);
+    expect(mockButtonClick).toHaveBeenCalledOnce();
   });
 });

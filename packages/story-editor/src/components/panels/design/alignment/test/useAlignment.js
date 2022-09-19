@@ -83,7 +83,7 @@ describe('useAlignment', () => {
     describe('that is not rotated', () => {
       it('should not be distributable', () => {
         const { isDistributionEnabled } = renderUseAlignment([CENTER_SHAPE]);
-        expect(isDistributionEnabled).toBe(false);
+        expect(isDistributionEnabled).toBeFalse();
       });
       it('should attempt to set x to 0 when aligning left', () => {
         const hookResult = renderUseAlignment([CENTER_SHAPE]);
@@ -143,7 +143,7 @@ describe('useAlignment', () => {
     describe('that is rotated', () => {
       it('should not be distributable', () => {
         const { isDistributionEnabled } = renderUseAlignment([CENTER_SHAPE]);
-        expect(isDistributionEnabled).toBe(false);
+        expect(isDistributionEnabled).toBeFalse();
       });
       it('should attempt to set x to OFFSET when aligning left', () => {
         const hookResult = renderUseAlignment([CENTER_ROTATED_SHAPE]);
@@ -205,7 +205,7 @@ describe('useAlignment', () => {
     it('should not be distributable', () => {
       const hookResult = renderUseAlignment([TOPLEFT_SHAPE, CENTER_SHAPE]);
       const { isDistributionEnabled } = hookResult;
-      expect(isDistributionEnabled).toBe(false);
+      expect(isDistributionEnabled).toBeFalse();
     });
     it('should attempt to set x to min x when aligning left', () => {
       const hookResult = renderUseAlignment([TOPLEFT_SHAPE, CENTER_SHAPE]);
@@ -266,7 +266,7 @@ describe('useAlignment', () => {
         BOTTOMRIGHT_SHAPE,
       ]);
       const { isDistributionEnabled } = hookResult;
-      expect(isDistributionEnabled).toBe(true);
+      expect(isDistributionEnabled).toBeTrue();
     });
     it('should attempt to set middle element x to center when distributing horizontally', () => {
       const hookResult = renderUseAlignment([

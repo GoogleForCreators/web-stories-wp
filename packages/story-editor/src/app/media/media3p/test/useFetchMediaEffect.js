@@ -44,13 +44,19 @@ describe('useFetchMediaEffect', () => {
   let fetchMediaStart;
   let fetchMediaSuccess;
   let fetchMediaError;
+  let consoleErrorFn;
 
   beforeEach(() => {
+    consoleErrorFn = jest.spyOn(console, 'error').mockImplementation(() => {});
     mockListMedia.mockReset();
     fetchMediaStart = jest.fn();
     fetchMediaSuccess = jest.fn();
     fetchMediaError = jest.fn();
     mockShowSnackbar.mockReset();
+  });
+
+  afterEach(() => {
+    consoleErrorFn.mockRestore();
   });
 
   function renderUseFetchMediaEffect(propertyOverrides) {
@@ -178,14 +184,14 @@ describe('useFetchMediaEffect', () => {
   });
 
   it('should call fetchMediaError if the fetch has failed', async () => {
-    mockListMedia.mockImplementation(() => Promise.error(new Error()));
+    mockListMedia.mockImplementation(() => Promise.reject(new Error()));
 
     await renderUseFetchMediaEffect();
 
-    expect(fetchMediaStart).toHaveBeenCalledTimes(1);
+    expect(fetchMediaStart).toHaveBeenCalledOnce();
     expect(fetchMediaSuccess).not.toHaveBeenCalledWith();
-    expect(fetchMediaError).toHaveBeenCalledTimes(1);
-    expect(mockShowSnackbar).toHaveBeenCalledTimes(1);
+    expect(fetchMediaError).toHaveBeenCalledOnce();
+    expect(mockShowSnackbar).toHaveBeenCalledOnce();
   });
 
   it('should not fetch media if the provider is not the same as selected provider', async () => {
@@ -193,9 +199,9 @@ describe('useFetchMediaEffect', () => {
       provider: 'coverr',
       selectedProvider: 'unsplash',
     });
-    expect(fetchMediaStart).not.toHaveBeenCalledTimes(1);
-    expect(fetchMediaSuccess).not.toHaveBeenCalledTimes(1);
-    expect(fetchMediaError).not.toHaveBeenCalledTimes(1);
-    expect(mockShowSnackbar).not.toHaveBeenCalledTimes(1);
+    expect(fetchMediaStart).not.toHaveBeenCalledOnce();
+    expect(fetchMediaSuccess).not.toHaveBeenCalledOnce();
+    expect(fetchMediaError).not.toHaveBeenCalledOnce();
+    expect(mockShowSnackbar).not.toHaveBeenCalledOnce();
   });
 });

@@ -74,7 +74,7 @@ describe('RadioGroup', () => {
     );
     const optionB = screen.getByRole('radio', { name: 'Option B' });
     fireEvent.click(optionB);
-    expect(onChange).toHaveBeenCalledTimes(1);
+    expect(onChange).toHaveBeenCalledOnce();
 
     expect(onChange).toHaveBeenCalledWith(expect.any(Object));
   });

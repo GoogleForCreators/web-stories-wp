@@ -62,7 +62,7 @@ describe('StoryMenu', () => {
 
     const menuButton = screen.getAllByRole('button')[0];
     fireEvent.click(menuButton);
-    expect(mockOnMoreButtonSelected).toHaveBeenCalledTimes(1);
+    expect(mockOnMoreButtonSelected).toHaveBeenCalledOnce();
   });
 
   it('should call onMenuItemSelected when menu item is clicked', () => {
@@ -79,7 +79,7 @@ describe('StoryMenu', () => {
 
     fireEvent.click(menuItem);
 
-    expect(mockMenuItemSelected).toHaveBeenCalledTimes(1);
+    expect(mockMenuItemSelected).toHaveBeenCalledOnce();
     expect(mockMenuItemSelected).toHaveBeenCalledWith(
       `called: ${STORY_CONTEXT_MENU_ITEMS[0].value}`
     );

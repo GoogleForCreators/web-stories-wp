@@ -83,7 +83,11 @@ export default {
     '!**/testUtils/**',
     '!**/stories/**',
   ],
-  modulePathIgnorePatterns: ['<rootDir>/build', '<rootDir>/vendor'],
+  modulePathIgnorePatterns: [
+    '<rootDir>/build',
+    '<rootDir>/vendor',
+    '/dist-types/',
+  ],
   reporters: [
     [
       'jest-silent-reporter',

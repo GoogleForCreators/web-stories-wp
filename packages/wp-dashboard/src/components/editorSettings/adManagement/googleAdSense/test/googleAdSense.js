@@ -111,7 +111,7 @@ describe('Editor Settings: Google AdSense <GoogleAdSense />', () => {
       />
     );
 
-    expect(mockUpdatePublisherId).toHaveBeenCalledTimes(1);
+    expect(mockUpdatePublisherId).toHaveBeenCalledOnce();
 
     fireEvent.change(input, { target: { value: '' } });
     fireEvent.keyDown(input, { key: 'Enter', keyCode: 13 });
@@ -162,7 +162,7 @@ describe('Editor Settings: Google AdSense <GoogleAdSense />', () => {
       />
     );
 
-    expect(mockUpdatePublisherId).toHaveBeenCalledTimes(1);
+    expect(mockUpdatePublisherId).toHaveBeenCalledOnce();
 
     fireEvent.change(input, { target: { value: '' } });
 
@@ -212,7 +212,7 @@ describe('Editor Settings: Google AdSense <GoogleAdSense />', () => {
       />
     );
 
-    expect(mockUpdateSlotId).toHaveBeenCalledTimes(1);
+    expect(mockUpdateSlotId).toHaveBeenCalledOnce();
 
     fireEvent.change(input, { target: { value: '' } });
     fireEvent.keyDown(input, { key: 'Enter', keyCode: 13 });
@@ -263,7 +263,7 @@ describe('Editor Settings: Google AdSense <GoogleAdSense />', () => {
       />
     );
 
-    expect(mockUpdateSlotId).toHaveBeenCalledTimes(1);
+    expect(mockUpdateSlotId).toHaveBeenCalledOnce();
 
     fireEvent.change(input, { target: { value: '' } });
 

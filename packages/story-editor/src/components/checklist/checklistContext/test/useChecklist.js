@@ -35,17 +35,17 @@ describe('useChecklist', () => {
   it('returns isOpen as false by default', () => {
     const { result } = setup();
 
-    expect(result.current.state.isOpen).toBe(false);
+    expect(result.current.state.isOpen).toBeFalse();
   });
 
   it('updates `isOpen` to false when close fires', () => {
     const { result } = setup();
 
     act(() => result.current.actions.toggle());
-    expect(result.current.state.isOpen).toBe(true);
+    expect(result.current.state.isOpen).toBeTrue();
 
     act(() => result.current.actions.close());
-    expect(result.current.state.isOpen).toBe(false);
+    expect(result.current.state.isOpen).toBeFalse();
   });
 
   it('updates the `openPanel` value when `setOpenPanel` is called', () => {

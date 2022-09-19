@@ -45,7 +45,7 @@ describe('Editor Settings: <VideoCache />', () => {
     const checkbox = screen.getByRole('checkbox');
     fireEvent.click(checkbox);
 
-    expect(onChange).toHaveBeenCalledTimes(1);
+    expect(onChange).toHaveBeenCalledOnce();
     expect(onChange).toHaveBeenCalledWith({ videoCache: true });
   });
 });

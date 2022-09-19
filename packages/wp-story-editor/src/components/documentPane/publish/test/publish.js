@@ -177,7 +177,7 @@ describe('PublishPanel', () => {
     await waitFor(() => expect(firstOfJanuary).toBeDefined());
 
     fireEvent.click(firstOfJanuary);
-    expect(updateStory).toHaveBeenCalledTimes(1);
+    expect(updateStory).toHaveBeenCalledOnce();
     const calledArg = updateStory.mock.calls[0][0];
     const date = new Date(calledArg.properties.date);
     expect(date.getMonth()).toBe(0);
