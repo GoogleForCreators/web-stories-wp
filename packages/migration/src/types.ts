@@ -72,7 +72,7 @@ interface ResourceSizeV0 {
 }
 
 interface ResourceV0 {
-  id: ResourceId;
+  id: string;
   type: ResourceType;
   mimeType: string;
   src: string;
@@ -95,6 +95,7 @@ interface ResourceV0 {
 }
 
 interface VideoResourceV0 extends ResourceV0 {
+  videoId?: string;
   type: ResourceType.Video;
   length: number;
   lengthFormatted: string;
