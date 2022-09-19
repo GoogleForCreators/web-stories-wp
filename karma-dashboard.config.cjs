@@ -144,7 +144,7 @@ module.exports = function (config) {
         specsToRetry && `/${specsToRetry}/`,
       ].filter(Boolean),
       jasmine: {
-        timeoutInterval: 10000,
+        timeoutInterval: 20000,
       },
       useIframe: false,
       runInParent: true,

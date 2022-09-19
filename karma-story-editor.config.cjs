@@ -149,6 +149,7 @@ module.exports = function (config) {
         snapshots: config.snapshots || false,
         snapshotsDir: '.test_artifacts/karma_snapshots',
         defaultViewport: getViewport(config.viewport),
+        args: config.headless ? null : ['--window-size=1600,1000']
       },
     },
     client: {
@@ -157,7 +158,7 @@ module.exports = function (config) {
         specsToRetry && `/${specsToRetry}/`,
       ].filter(Boolean),
       jasmine: {
-        timeoutInterval: 10000,
+        timeoutInterval: 20000,
       },
       useIframe: false,
       runInParent: true,
