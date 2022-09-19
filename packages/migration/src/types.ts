@@ -143,7 +143,7 @@ interface ElementV0 extends ElementBox {
 }
 
 export interface MediaElementV0 extends ElementV0 {
-  isFill?: boolean;
+  isFullbleed?: boolean;
   isFullbleedBackground?: boolean;
   src: string;
   origRatio: number;
