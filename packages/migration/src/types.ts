@@ -18,7 +18,6 @@
  * External dependencies
  */
 import type {
-  Pattern,
   AnimationType,
   AnimationPanDirection,
   AnimationZoomDirection,
@@ -69,7 +68,6 @@ interface ResourceV0 {
   alt: string;
   width: number | string;
   height: number | string;
-  baseColor?: Pattern;
   blurHash?: string;
   isExternal: boolean;
   isPlaceholder: boolean;
@@ -141,7 +139,6 @@ interface ElementV0 extends ElementBox {
 export interface MediaElementV0 extends ElementV0 {
   isFill?: boolean;
   isFullbleedBackground?: boolean;
-  backgroundOverlay: Pattern;
   resource: ResourceV0;
   scale: number;
   focalX?: number;
@@ -168,11 +165,11 @@ export interface TextElementV0 extends ElementV0 {
   fontStyle: string;
   textDecoration: string;
   letterSpacing: number;
-  color: Pattern;
+  color: string;
   fontFamily: string;
   fontFallback: string[];
 
-  backgroundColor?: Pattern;
+  backgroundColor?: string;
   fontSize?: number;
   lineHeight?: number;
   padding?: number;
@@ -183,7 +180,7 @@ export interface TextElementV0 extends ElementV0 {
 }
 
 export interface ShapeElementV0 extends ElementV0 {
-  backgroundColor: Pattern;
+  backgroundColor: string;
 }
 
 export interface Group {
