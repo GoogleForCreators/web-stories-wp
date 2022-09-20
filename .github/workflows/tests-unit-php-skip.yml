@@ -1,0 +1,65 @@
+# Handling skipped but required checks
+# See https://docs.github.com/en/enterprise-cloud@latest/repositories/configuring-branches-and-merges-in-your-repository/defining-the-mergeability-of-pull-requests/troubleshooting-required-status-checks#handling-skipped-but-required-checks
+# Keep in sync with tests-unit-php.yml
+
+name: PHP Unit Tests
+
+on:
+  push:
+    # Only run if NO PHP-related files changed.
+    paths-ignore:
+      - '**.php'
+      - 'phpunit.xml.dist'
+      - 'phpunit-multisite.xml.dist'
+      - 'composer.json'
+      - 'composer.lock'
+      - 'tests/phpunit/**'
+      - 'includes/data/**'
+      - '.github/workflows/tests-unit-php.yml'
+    branches:
+      - main
+      - release/*
+  pull_request:
+    # Only run if NO PHP-related files changed.
+    paths-ignore:
+      - '**.php'
+      - 'phpunit.xml.dist'
+      - 'phpunit-multisite.xml.dist'
+      - 'composer.json'
+      - 'composer.lock'
+      - 'tests/phpunit/**'
+      - 'includes/data/**'
+      - '.github/workflows/tests-unit-php.yml'
+
+permissions:
+  contents: read
+
+# Cancels all previous workflow runs for pull requests that have not completed.
+concurrency:
+  # The concurrency group contains the workflow name and the (target) branch name.
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  unit-php:
+    name: PHP ${{ matrix.php }} - WP ${{ matrix.wp }}${{ matrix.experimental && ' (experimental)' || '' }}${{ matrix.coverage && ' (with coverage)' || '' }}${{ matrix.random && ' (in random order)' || '' }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php: ['8.0']
+        wp: ['latest']
+        coverage: [false]
+        experimental: [false]
+        include:
+          # Using PHP 7.4 for code coverage run as 8.0 throws errors.
+          - php: '7.4'
+            wp: 'latest'
+            coverage: true
+            experimental: false
+
+          - php: '7.2'
+            wp: '5.7'
+            experimental: false
+
+    steps:
+      - 24pxrun: 'echo "No build required"'

@@ -1,0 +1,63 @@
+# Handling skipped but required checks
+# See https://docs.github.com/en/enterprise-cloud@latest/repositories/configuring-branches-and-merges-in-your-repository/defining-the-mergeability-of-pull-requests/troubleshooting-required-status-checks#handling-skipped-but-required-checks
+# Keep in sync with tests-karma-editor.yml
+
+name: Editor Integration Tests
+
+on:
+  push:
+    # Only run if NO editor-related files changed.
+    paths-ignore:
+      - 'babel.config.cjs'
+      - 'karma-story-editor.config.cjs'
+      - 'webpack.config.cjs'
+      - 'webpack.config.test.cjs'
+      - 'packages/**/*.js'
+      - 'packages/**/*.cjs'
+      - 'packages/**/*.ts'
+      - '**/package.json'
+      - 'package-lock.json'
+      - '__static__/**'
+      - '.github/workflows/tests-karma-editor.yml'
+    branches:
+      - main
+      - release/*
+  pull_request:
+    # Only run if NO editor-related files changed.
+    paths:
+      - 'babel.config.cjs'
+      - 'karma-story-editor.config.cjs'
+      - 'webpack.config.cjs'
+      - 'webpack.config.test.cjs'
+      - 'packages/**/*.js'
+      - 'packages/**/*.cjs'
+      - 'packages/**/*.ts'
+      - '**/package.json'
+      - 'package-lock.json'
+      - '__static__/**'
+      - '.github/workflows/tests-karma-editor.yml'
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - ready_for_review
+
+permissions:
+  contents: read
+
+# Cancels all previous workflow runs for pull requests that have not completed.
+concurrency:
+  # The concurrency group contains the workflow name and the (target) branch name.
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  karma:
+    name: Karma (${{ matrix.shard }})
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        # We want to split up the tests into 4 parts running in parallel.
+        shard: ['1/4', '2/4', '3/4', '4/4']
+    steps:
+      - 24pxrun: 'echo "No build required"'
