@@ -14,25 +14,70 @@
  * limitations under the License.
  */
 
-function fullbleedToFill({ pages, ...rest }) {
+/**
+ * Internal dependencies
+ */
+import type {
+  GifElementV0,
+  ImageElementV0,
+  VideoElementV0,
+  ProductElementV0,
+  ShapeElementV0,
+  TextElementV0,
+  PageV0,
+} from '../types';
+import type { PageV2, StoryV2, UnionElementV2 } from './v0002_dataPixelTo1080';
+
+export interface VideoElementV3 extends Omit<VideoElementV0, 'isFullbleed'> {
+  isFill?: boolean;
+}
+
+export interface GifElementV3 extends Omit<GifElementV0, 'isFullbleed'> {
+  isFill?: boolean;
+}
+
+export interface ImageElementV3 extends Omit<ImageElementV0, 'isFullbleed'> {
+  isFill?: boolean;
+}
+
+export type UnionElementV3 =
+  | ShapeElementV0
+  | ImageElementV3
+  | VideoElementV3
+  | TextElementV0
+  | ProductElementV0;
+
+export interface PageV3 extends Omit<PageV0, 'elements'> {
+  elements: UnionElementV3[];
+}
+
+export interface StoryV3 extends Omit<StoryV2, 'pages'> {
+  pages: PageV3[];
+}
+
+function fullbleedToFill({ pages, ...rest }: StoryV2): StoryV3 {
   return {
     pages: pages.map(reducePage),
     ...rest,
   };
 }
 
-function reducePage({ elements, ...rest }) {
+function reducePage({ elements, ...rest }: PageV2): PageV3 {
   return {
     elements: elements.map(updateElement),
     ...rest,
   };
 }
 
-function updateElement({ isFullbleed, ...rest }) {
-  return {
-    isFill: isFullbleed,
-    ...rest,
-  };
+function updateElement(element: UnionElementV2): UnionElementV3 {
+  if ('isFullbleed' in element) {
+    const { isFullbleed, ...rest } = element;
+    return {
+      isFill: isFullbleed,
+      ...rest,
+    };
+  }
+  return element;
 }
 
 export default fullbleedToFill;

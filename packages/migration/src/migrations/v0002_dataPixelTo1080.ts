@@ -15,9 +15,10 @@
  */
 
 /**
- * External dependencies
+ * Internal dependencies
  */
-import type { Element, Page, Story } from '@googleforcreators/types';
+import type { PageV0, UnionElementV0 } from '../types';
+import type { StoryV1 } from './v0001_storyDataArrayToObject';
 
 const NEW_PAGE_WIDTH = 1080;
 const NEW_PAGE_HEIGHT = 1920;
@@ -27,22 +28,22 @@ const OLD_PAGE_HEIGHT = 732;
 const SCALE_X = NEW_PAGE_WIDTH / OLD_PAGE_WIDTH;
 const SCALE_Y = NEW_PAGE_HEIGHT / OLD_PAGE_HEIGHT;
 
-interface ElementV2 extends Element {
-  fontSize?: number | null;
-}
+export type StoryV2 = StoryV1;
+export type PageV2 = PageV0;
+export type UnionElementV2 = UnionElementV0;
 
-function dataPixelTo1080({ pages, ...rest }: Story): Story {
+function dataPixelTo1080({ pages, ...rest }: StoryV1): StoryV2 {
   return {
     pages: pages.map(reducePage),
     ...rest,
-  } as Story;
+  };
 }
 
-function reducePage({ elements, ...rest }: Page) {
+function reducePage({ elements, ...rest }: PageV0): PageV0 {
   return {
     elements: elements.map(updateElement),
     ...rest,
-  } as Page;
+  };
 }
 
 function updateElement({
@@ -50,20 +51,19 @@ function updateElement({
   y,
   width,
   height,
-  fontSize,
   ...rest
-}: ElementV2): Element {
-  const element: Partial<ElementV2> = {
+}: UnionElementV0): UnionElementV0 {
+  const element = {
     x: dataPixels(x * SCALE_X),
     y: dataPixels(y * SCALE_Y),
     width: dataPixels(width * SCALE_X),
     height: dataPixels(height * SCALE_Y),
     ...rest,
   };
-  if (typeof fontSize === 'number') {
-    element.fontSize = dataPixels(fontSize * SCALE_Y);
+  if ('fontSize' in element && typeof element.fontSize === 'number') {
+    element.fontSize = dataPixels(element.fontSize * SCALE_Y);
   }
-  return element as Element;
+  return element;
 }
 
 /**

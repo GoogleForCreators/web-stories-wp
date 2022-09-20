@@ -14,7 +14,17 @@
  * limitations under the License.
  */
 
-function storyDataArrayToObject(storyData) {
+/**
+ * Internal dependencies
+ */
+import type { PageV0, StoryV0 } from '../types';
+
+export interface StoryV1 {
+  pages: PageV0[];
+  version?: number;
+}
+
+function storyDataArrayToObject(storyData: StoryV0): StoryV1 {
   return { pages: storyData };
 }
 

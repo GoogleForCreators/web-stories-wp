@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-enum ResourceTypeV0 {
+export enum ResourceTypeV0 {
   Image = 'image',
   Video = 'video',
   Gif = 'gif',
@@ -38,25 +38,11 @@ interface AttributionV0 {
 }
 
 interface ResourceV0 {
-  id: string;
   type: ResourceTypeV0;
   mimeType: string;
   src: string;
-  alt: string;
   width: number | string;
   height: number | string;
-  blurHash?: string;
-  isExternal: boolean;
-  isPlaceholder: boolean;
-  needsProxy: boolean;
-  readonly creationDate?: string;
-  sizes: { [key: string]: ResourceSizeV0 };
-  attribution?: AttributionV0;
-  local?: boolean;
-  isTrimming?: boolean;
-  isTranscoding?: boolean;
-  isMuting?: boolean;
-  title: string;
 }
 
 interface TrimDataV0 {
@@ -65,18 +51,15 @@ interface TrimDataV0 {
   end: string;
 }
 
+export interface ImageResourceV0 extends ResourceV0 {
+  type: ResourceTypeV0.Image;
+}
+
 export interface VideoResourceV0 extends ResourceV0 {
-  videoId?: string;
+  poster?: string;
+  posterId?: number;
+  videoId?: number;
   type: ResourceTypeV0.Video;
-  length: number;
-  lengthFormatted: string;
-  isMuted?: boolean;
-  trimData?: TrimDataV0;
-  local?: boolean;
-  isTrimming?: boolean;
-  isTranscoding?: boolean;
-  isMuting?: boolean;
-  title: string;
 }
 
 interface OutputV0 {
@@ -89,7 +72,6 @@ interface OutputV0 {
 export interface GifResourceV0 extends ResourceV0 {
   type: ResourceTypeV0.Gif;
   output: OutputV0;
-  local?: boolean;
   isTrimming?: boolean;
   isTranscoding?: boolean;
   isMuting?: boolean;

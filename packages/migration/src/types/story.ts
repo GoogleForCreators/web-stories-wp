@@ -23,7 +23,7 @@
 /**
  * Internal dependencies
  */
-import type { ElementV0 } from './element';
+import type { UnionElementV0 } from './element';
 
 export interface Group {
   name: string;
@@ -82,7 +82,7 @@ interface AnimationV0 {
 export type Groups = Record<string, Group>;
 
 export interface PageV0 {
-  elements: ElementV0[];
+  elements: UnionElementV0[];
   animations?: AnimationV0[];
   type: 'page';
   groups: Groups;
@@ -92,6 +92,5 @@ export interface PageV0 {
     mimeType: string;
   };
 }
-export interface StoryV0 {
-  [i: number]: PageV0;
-}
+
+export type StoryV0 = PageV0[];

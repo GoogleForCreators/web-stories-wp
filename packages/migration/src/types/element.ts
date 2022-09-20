@@ -145,3 +145,15 @@ export interface TextElementV0 extends ElementV0 {
 export interface ShapeElementV0 extends ElementV0 {
   backgroundColor: string;
 }
+
+export interface ProductElementV0 extends ElementV0 {
+  productId: string;
+}
+
+export type UnionElementV0 =
+  | ShapeElementV0
+  | ImageElementV0
+  | VideoElementV0
+  | GifElementV0
+  | TextElementV0
+  | ProductElementV0;
