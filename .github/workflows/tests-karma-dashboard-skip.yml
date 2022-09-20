@@ -47,4 +47,4 @@ jobs:
     name: Karma
     runs-on: ubuntu-latest
     steps:
-      - 24pxrun: 'echo "No build required"'
+      - run: 'echo "No build required"'

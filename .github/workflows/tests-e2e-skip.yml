@@ -91,4 +91,4 @@ jobs:
             shard: '2/2'
 
     steps:
-      - 24pxrun: 'echo "No build required"'
+      - run: 'echo "No build required"'

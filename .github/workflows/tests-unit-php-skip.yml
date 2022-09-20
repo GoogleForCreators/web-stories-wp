@@ -62,4 +62,4 @@ jobs:
             experimental: false
 
     steps:
-      - 24pxrun: 'echo "No build required"'
+      - run: 'echo "No build required"'
