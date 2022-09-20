@@ -70,7 +70,7 @@ describe('SnackbarContainer', () => {
 
     rerender(<SnackbarContainer notifications={[NOTIFICATIONS[0]]} />);
 
-    expect(mockSpeak).toHaveBeenCalledTimes(1);
+    expect(mockSpeak).toHaveBeenCalledOnce();
     expect(mockSpeak).toHaveBeenCalledWith(NOTIFICATIONS[0].message);
 
     rerender(<SnackbarContainer notifications={NOTIFICATIONS} />);
@@ -98,7 +98,7 @@ describe('SnackbarContainer', () => {
       />
     );
 
-    expect(mockSpeak).toHaveBeenCalledTimes(1);
+    expect(mockSpeak).toHaveBeenCalledOnce();
     expect(mockSpeak).toHaveBeenCalledWith(
       `${NOTIFICATIONS[0].message} click this button for christmas every day`
     );

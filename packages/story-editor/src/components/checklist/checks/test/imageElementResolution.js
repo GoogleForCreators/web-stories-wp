@@ -33,7 +33,7 @@ describe('imageElementResolution', () => {
     };
 
     const result = imageElementResolution(tooLowResolutionImageElement);
-    expect(result).toBe(true);
+    expect(result).toBeTrue();
   });
 
   it("should return true if a gif element's resolution is too low (<2x pixel density)", () => {
@@ -49,7 +49,7 @@ describe('imageElementResolution', () => {
     };
 
     const result = imageElementResolution(tooLowResolutionImageElement);
-    expect(result).toBe(true);
+    expect(result).toBeTrue();
   });
 
   it("should return true if an image element's resolution is too low (<2x pixel density) accounting for scale", () => {
@@ -66,6 +66,6 @@ describe('imageElementResolution', () => {
     };
 
     const result = imageElementResolution(tooLowResolutionImageElement);
-    expect(result).toBe(true);
+    expect(result).toBeTrue();
   });
 });

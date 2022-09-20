@@ -15,9 +15,9 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import type { Resource } from './types';
+import type { Resource } from '@googleforcreators/types';
 
 interface MediaSizePositionProps {
   width: number;

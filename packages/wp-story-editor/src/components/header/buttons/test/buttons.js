@@ -223,7 +223,7 @@ describe('Buttons', () => {
     const draftButton = screen.getByRole('button', { name: 'Switch to Draft' });
 
     fireEvent.click(draftButton);
-    expect(saveStory).toHaveBeenCalledTimes(1);
+    expect(saveStory).toHaveBeenCalledOnce();
   });
 
   it('should display Schedule button when future date is set', () => {
@@ -246,7 +246,7 @@ describe('Buttons', () => {
     });
 
     fireEvent.click(publishModalButton);
-    expect(saveStory).toHaveBeenCalledTimes(1);
+    expect(saveStory).toHaveBeenCalledOnce();
   });
 
   it('should display Schedule button with future status', () => {

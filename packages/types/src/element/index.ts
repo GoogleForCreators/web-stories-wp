@@ -14,26 +14,14 @@
  * limitations under the License.
  */
 
-// TODO(#12126): Use improved Element type from shared package.
-export interface Element {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-  rotationAngle: number;
-  isBackground: boolean;
-  border: {
-    top: number;
-    right: number;
-    bottom: number;
-    left: number;
-  };
-}
-
-export interface ElementBox {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-  rotationAngle: number;
-}
+export * from './element';
+export * from './elementBox';
+export * from './gifElement';
+export * from './imageElement';
+export * from './mediaElement';
+export * from './pattern';
+export * from './productElement';
+export * from './shapeElement';
+export * from './stickerElement';
+export * from './textElement';
+export * from './videoElement';

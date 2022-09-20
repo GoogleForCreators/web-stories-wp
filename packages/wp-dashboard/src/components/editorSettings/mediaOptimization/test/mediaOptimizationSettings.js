@@ -63,6 +63,6 @@ describe('Editor Settings: <MediaOptimizationSettings />', () => {
     const checkbox = screen.getByRole('checkbox');
     fireEvent.click(checkbox);
 
-    expect(changeFn).toHaveBeenCalledTimes(1);
+    expect(changeFn).toHaveBeenCalledOnce();
   });
 });

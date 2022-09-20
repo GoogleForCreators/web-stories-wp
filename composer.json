@@ -22,7 +22,7 @@
   "require-dev": {
     "automattic/vipwpcs": "^2.3",
     "dealerdirect/phpcodesniffer-composer-installer": "^0.7",
-    "dg/bypass-finals": "1.3.1",
+    "dg/bypass-finals": "^1.4.1",
     "php-stubs/woocommerce-stubs": "^6.0",
     "phpcompatibility/phpcompatibility-wp": "^2.1",
     "phpmd/phpmd": "^2.9",
@@ -71,7 +71,8 @@
       "civicrm/composer-downloads-plugin": true,
       "cweagans/composer-patches": true,
       "mcaskill/composer-exclude-files": true,
-      "phpstan/extension-installer": true
+      "phpstan/extension-installer": true,
+      "composer/installers": true
     },
     "discard-changes": true,
     "platform": {
@@ -96,6 +97,7 @@
     "exclude-from-files": [
       "ampproject/amp-wp/includes/bootstrap.php"
     ],
+    "installer-disable": true,
     "patches": {
       "phpunit/phpunit-mock-objects": {
         "Fix PHPUnit for PHP 7.4": "patches/phpunit-mock-objects.patch"

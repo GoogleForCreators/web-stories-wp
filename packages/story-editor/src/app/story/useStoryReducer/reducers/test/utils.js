@@ -58,16 +58,16 @@ describe('isInsideRange', () => {
   it('should function as expected', () => {
     const isSingleDigit = (number) => isInsideRange(number, 0, 9);
 
-    expect(isSingleDigit(0)).toBe(true);
-    expect(isSingleDigit(3.2)).toBe(true);
-    expect(isSingleDigit(9)).toBe(true);
+    expect(isSingleDigit(0)).toBeTrue();
+    expect(isSingleDigit(3.2)).toBeTrue();
+    expect(isSingleDigit(9)).toBeTrue();
 
-    expect(isSingleDigit(-0.1)).toBe(false);
-    expect(isSingleDigit(10)).toBe(false);
+    expect(isSingleDigit(-0.1)).toBeFalse();
+    expect(isSingleDigit(10)).toBeFalse();
 
-    expect(isSingleDigit(Number.POSITIVE_INFINITY)).toBe(false);
-    expect(isSingleDigit(Number.NEGATIVE_INFINITY)).toBe(false);
-    expect(isSingleDigit(Number.NaN)).toBe(false);
+    expect(isSingleDigit(Number.POSITIVE_INFINITY)).toBeFalse();
+    expect(isSingleDigit(Number.NEGATIVE_INFINITY)).toBeFalse();
+    expect(isSingleDigit(Number.NaN)).toBeFalse();
   });
 });
 

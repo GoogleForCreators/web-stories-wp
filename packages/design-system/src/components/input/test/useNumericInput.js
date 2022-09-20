@@ -87,7 +87,7 @@ describe('useNumericInput', () => {
       act(() => {
         result.current.handleBlur('dummy data');
       });
-      expect(mockOnChange).toHaveBeenCalledTimes(1);
+      expect(mockOnChange).toHaveBeenCalledOnce();
       expect(mockOnChange).toHaveBeenCalledWith('dummy data', 1234);
     });
 
@@ -106,7 +106,7 @@ describe('useNumericInput', () => {
       act(() => {
         result.current.handleBlur('dummy data');
       });
-      expect(mockOnChange).toHaveBeenCalledTimes(1);
+      expect(mockOnChange).toHaveBeenCalledOnce();
       expect(mockOnChange).toHaveBeenCalledWith('dummy data', 10);
     });
 
@@ -125,7 +125,7 @@ describe('useNumericInput', () => {
       act(() => {
         result.current.handleBlur('dummy data');
       });
-      expect(mockOnChange).toHaveBeenCalledTimes(1);
+      expect(mockOnChange).toHaveBeenCalledOnce();
       expect(mockOnChange).toHaveBeenCalledWith('dummy data', 20);
     });
 
@@ -280,7 +280,7 @@ describe('useNumericInput', () => {
       act(() => {
         result.current.handleEsc();
       });
-      expect(mockOnBlur).toHaveBeenCalledTimes(1);
+      expect(mockOnBlur).toHaveBeenCalledOnce();
     });
   });
 

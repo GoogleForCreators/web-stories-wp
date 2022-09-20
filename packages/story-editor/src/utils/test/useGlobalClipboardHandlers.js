@@ -39,7 +39,7 @@ describe('useGlobalClipboardHandlers', () => {
     });
 
     fireEvent.paste(document, '');
-    expect(pasteHandler).toHaveBeenCalledTimes(1);
+    expect(pasteHandler).toHaveBeenCalledOnce();
 
     fireEvent.copy(document);
     fireEvent.cut(document);

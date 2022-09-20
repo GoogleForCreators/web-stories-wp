@@ -41,7 +41,7 @@ describe('OnInitialElementAddedRegister', () => {
     );
 
     // Should fire onInitialElementAdded event once when story starts empty
-    expect(dispatchMock).toHaveBeenCalledTimes(1);
+    expect(dispatchMock).toHaveBeenCalledOnce();
     expect(dispatchMock).toHaveBeenCalledWith(
       STORY_EVENTS.onInitialElementAdded
     );
@@ -54,7 +54,7 @@ describe('OnInitialElementAddedRegister', () => {
         dispatchStoryEvent={dispatchMock}
       />
     );
-    expect(dispatchMock).toHaveBeenCalledTimes(1);
+    expect(dispatchMock).toHaveBeenCalledOnce();
   });
 
   it('fires onInitialElementAdded once when story first becomes non-empty', () => {
@@ -84,7 +84,7 @@ describe('OnInitialElementAddedRegister', () => {
         dispatchStoryEvent={dispatchMock}
       />
     );
-    expect(dispatchMock).toHaveBeenCalledTimes(1);
+    expect(dispatchMock).toHaveBeenCalledOnce();
     expect(dispatchMock).toHaveBeenCalledWith(
       STORY_EVENTS.onInitialElementAdded
     );

@@ -104,6 +104,6 @@ describe('publishModal/content', () => {
 
     fireEvent.click(checklistButton);
 
-    expect(mockHandleReviewChecklist).toHaveBeenCalledTimes(1);
+    expect(mockHandleReviewChecklist).toHaveBeenCalledOnce();
   });
 });

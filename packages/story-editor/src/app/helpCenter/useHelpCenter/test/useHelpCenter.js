@@ -210,13 +210,13 @@ describe('useHelpCenter', () => {
       });
 
       expect(result.current.state.navigationIndex).toBe(-1);
-      expect(result.current.state.isOpen).toBe(false);
+      expect(result.current.state.isOpen).toBeFalse();
 
       await act(async () => {
         await result.current.actions.openToUnreadTip('cropSelectedElements');
       });
       expect(result.current.state.navigationIndex).toBe(-1);
-      expect(result.current.state.isOpen).toBe(false);
+      expect(result.current.state.isOpen).toBeFalse();
 
       await act(async () => {
         await result.current.actions.openToUnreadTip('addBackgroundMedia');
@@ -226,7 +226,7 @@ describe('useHelpCenter', () => {
           (v) => v === 'addBackgroundMedia'
         )
       );
-      expect(result.current.state.isOpen).toBe(true);
+      expect(result.current.state.isOpen).toBeTrue();
     });
   });
 });
