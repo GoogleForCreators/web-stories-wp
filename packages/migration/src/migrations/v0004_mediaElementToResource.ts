@@ -21,19 +21,26 @@ import type {
   GifResourceV0,
   ImageResourceV0,
   VideoResourceV0,
-  ProductElementV0,
-  ShapeElementV0,
-  TextElementV0,
-  ResourceTypeV0,
+  ResourceV0,
+  ResourceType,
 } from '../types';
 import type {
-  UnionElementV3,
   ImageElementV3,
   GifElementV3,
   VideoElementV3,
   PageV3,
   StoryV3,
+  ElementV3,
+  TextElementV3,
+  MediaElementV3,
 } from './v0003_fullbleedToFill';
+
+// @todo This is less commonly used type in migration, as the other resource types, should we still carry these along through all files?
+export type ResourceV4 = ResourceV0;
+
+export interface MediaElementV4 extends MediaElementV3 {
+  resource: ResourceV0;
+}
 
 export interface VideoElementV4
   extends Omit<VideoElementV3, 'src' | 'origRatio' | 'mimeType'> {
@@ -50,20 +57,10 @@ export interface ImageElementV4
   resource: ImageResourceV0;
 }
 
-export type UnionElementV4 =
-  | ShapeElementV0
-  | ImageElementV4
-  | VideoElementV4
-  | TextElementV0
-  | ProductElementV0;
-
-export interface PageV4 extends Omit<PageV3, 'elements'> {
-  elements: UnionElementV4[];
-}
-
-export interface StoryV4 extends Omit<StoryV3, 'pages'> {
-  pages: PageV4[];
-}
+export type ElementV4 = ElementV3;
+export type PageV4 = PageV3;
+export type StoryV4 = StoryV3;
+export type TextElementV4 = TextElementV3;
 
 function dataMediaElementToResource({ pages, ...rest }: StoryV3): StoryV4 {
   return {
@@ -79,13 +76,17 @@ function reducePage({ elements, ...rest }: PageV3): PageV4 {
   };
 }
 
-function updateElement(element: UnionElementV3): UnionElementV4 {
-  if ('mimeType' in element) {
+function isMediaElement(element: ElementV3): element is MediaElementV3 {
+  return 'mimeType' in element;
+}
+
+function updateElement(element: ElementV3): ElementV4 {
+  if (isMediaElement(element)) {
     if (element.type === 'image') {
       const { src, origRatio, width, height, mimeType, ...rest } = element;
       return {
         resource: {
-          type: 'image' as ResourceTypeV0.Image,
+          type: 'image' as ResourceType.Image,
           src,
           width,
           height,
@@ -94,7 +95,7 @@ function updateElement(element: UnionElementV3): UnionElementV4 {
         width,
         height,
         ...rest,
-      };
+      } as ElementV4;
     } else if ('videoId' in element) {
       const {
         src,
@@ -106,10 +107,10 @@ function updateElement(element: UnionElementV3): UnionElementV4 {
         width,
         height,
         ...rest
-      } = element;
+      } = element as VideoElementV3;
       return {
         resource: {
-          type: 'video' as ResourceTypeV0.Video,
+          type: 'video' as ResourceType.Video,
           src,
           width,
           height,
@@ -121,10 +122,10 @@ function updateElement(element: UnionElementV3): UnionElementV4 {
         width,
         height,
         ...rest,
-      };
+      } as ElementV4;
     }
   }
-  return element as UnionElementV4;
+  return element;
 }
 
 export default dataMediaElementToResource;

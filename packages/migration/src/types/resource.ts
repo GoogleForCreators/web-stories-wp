@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-export enum ResourceTypeV0 {
+export enum ResourceType {
   Image = 'image',
   Video = 'video',
   Gif = 'gif',
@@ -37,8 +37,8 @@ interface AttributionV0 {
   registerUsageUrl?: string;
 }
 
-interface ResourceV0 {
-  type: ResourceTypeV0;
+export interface ResourceV0 {
+  type: ResourceType;
   mimeType: string;
   src: string;
   width: number | string;
@@ -52,14 +52,14 @@ interface TrimDataV0 {
 }
 
 export interface ImageResourceV0 extends ResourceV0 {
-  type: ResourceTypeV0.Image;
+  type: ResourceType.Image;
 }
 
 export interface VideoResourceV0 extends ResourceV0 {
   poster?: string;
   posterId?: number;
   videoId?: number;
-  type: ResourceTypeV0.Video;
+  type: ResourceType.Video;
 }
 
 interface OutputV0 {
@@ -70,7 +70,7 @@ interface OutputV0 {
 }
 
 export interface GifResourceV0 extends ResourceV0 {
-  type: ResourceTypeV0.Gif;
+  type: ResourceType.Gif;
   output: OutputV0;
   isTrimming?: boolean;
   isTranscoding?: boolean;

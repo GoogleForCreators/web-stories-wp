@@ -18,42 +18,36 @@
  * Internal dependencies
  */
 import type {
-  GifElementV0,
-  ImageElementV0,
-  VideoElementV0,
-  ProductElementV0,
-  ShapeElementV0,
-  TextElementV0,
-  PageV0,
-} from '../types';
-import type { PageV2, StoryV2, UnionElementV2 } from './v0002_dataPixelTo1080';
+  ElementV2,
+  MediaElementV2,
+  PageV2,
+  StoryV2,
+  VideoElementV2,
+  GifElementV2,
+  ImageElementV2,
+  TextElementV2,
+} from './v0002_dataPixelTo1080';
 
-export interface VideoElementV3 extends Omit<VideoElementV0, 'isFullbleed'> {
+export interface MediaElementV3 extends Omit<MediaElementV2, 'isFullbleed'> {
   isFill?: boolean;
 }
 
-export interface GifElementV3 extends Omit<GifElementV0, 'isFullbleed'> {
+export interface VideoElementV3 extends Omit<VideoElementV2, 'isFullbleed'> {
   isFill?: boolean;
 }
 
-export interface ImageElementV3 extends Omit<ImageElementV0, 'isFullbleed'> {
+export interface GifElementV3 extends Omit<GifElementV2, 'isFullbleed'> {
   isFill?: boolean;
 }
 
-export type UnionElementV3 =
-  | ShapeElementV0
-  | ImageElementV3
-  | VideoElementV3
-  | TextElementV0
-  | ProductElementV0;
-
-export interface PageV3 extends Omit<PageV0, 'elements'> {
-  elements: UnionElementV3[];
+export interface ImageElementV3 extends Omit<ImageElementV2, 'isFullbleed'> {
+  isFill?: boolean;
 }
 
-export interface StoryV3 extends Omit<StoryV2, 'pages'> {
-  pages: PageV3[];
-}
+export type ElementV3 = ElementV2;
+export type PageV3 = PageV2;
+export type StoryV3 = StoryV2;
+export type TextElementV3 = TextElementV2;
 
 function fullbleedToFill({ pages, ...rest }: StoryV2): StoryV3 {
   return {
@@ -69,13 +63,18 @@ function reducePage({ elements, ...rest }: PageV2): PageV3 {
   };
 }
 
-function updateElement(element: UnionElementV2): UnionElementV3 {
-  if ('isFullbleed' in element) {
+function isMediaElement(element: ElementV2): element is MediaElementV2 {
+  return 'isFullbleed' in element;
+}
+
+function updateElement(element: ElementV2): ElementV3 {
+  if (isMediaElement(element)) {
     const { isFullbleed, ...rest } = element;
     return {
       isFill: isFullbleed,
       ...rest,
-    };
+      // @todo If we use `Element` instead of the union element type, we'll need to do quite a lot of casting like this, is that ok?
+    } as ElementV3;
   }
   return element;
 }

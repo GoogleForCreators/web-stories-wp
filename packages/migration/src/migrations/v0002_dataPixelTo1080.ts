@@ -17,8 +17,16 @@
 /**
  * Internal dependencies
  */
-import type { PageV0, UnionElementV0 } from '../types';
-import type { StoryV1 } from './v0001_storyDataArrayToObject';
+import type {
+  StoryV1,
+  PageV1,
+  MediaElementV1,
+  ElementV1,
+  TextElementV1,
+  GifElementV1,
+  ImageElementV1,
+  VideoElementV1,
+} from './v0001_storyDataArrayToObject';
 
 const NEW_PAGE_WIDTH = 1080;
 const NEW_PAGE_HEIGHT = 1920;
@@ -29,8 +37,13 @@ const SCALE_X = NEW_PAGE_WIDTH / OLD_PAGE_WIDTH;
 const SCALE_Y = NEW_PAGE_HEIGHT / OLD_PAGE_HEIGHT;
 
 export type StoryV2 = StoryV1;
-export type PageV2 = PageV0;
-export type UnionElementV2 = UnionElementV0;
+export type PageV2 = PageV1;
+export type ElementV2 = ElementV1;
+export type TextElementV2 = TextElementV1;
+export type GifElementV2 = GifElementV1;
+export type ImageElementV2 = ImageElementV1;
+export type VideoElementV2 = VideoElementV1;
+export type MediaElementV2 = MediaElementV1;
 
 function dataPixelTo1080({ pages, ...rest }: StoryV1): StoryV2 {
   return {
@@ -39,20 +52,18 @@ function dataPixelTo1080({ pages, ...rest }: StoryV1): StoryV2 {
   };
 }
 
-function reducePage({ elements, ...rest }: PageV0): PageV0 {
+function reducePage({ elements, ...rest }: PageV1): PageV2 {
   return {
     elements: elements.map(updateElement),
     ...rest,
   };
 }
 
-function updateElement({
-  x,
-  y,
-  width,
-  height,
-  ...rest
-}: UnionElementV0): UnionElementV0 {
+function isTextElement(element: ElementV1): element is TextElementV1 {
+  return 'fontSize' in element;
+}
+
+function updateElement({ x, y, width, height, ...rest }: ElementV1): ElementV2 {
   const element = {
     x: dataPixels(x * SCALE_X),
     y: dataPixels(y * SCALE_Y),
@@ -60,7 +71,7 @@ function updateElement({
     height: dataPixels(height * SCALE_Y),
     ...rest,
   };
-  if ('fontSize' in element && typeof element.fontSize === 'number') {
+  if (isTextElement(element) && typeof element.fontSize === 'number') {
     element.fontSize = dataPixels(element.fontSize * SCALE_Y);
   }
   return element;

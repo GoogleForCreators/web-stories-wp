@@ -17,12 +17,29 @@
 /**
  * Internal dependencies
  */
-import type { PageV0, StoryV0 } from '../types';
+import type {
+  MediaElementV0,
+  PageV0,
+  StoryV0,
+  TextElementV0,
+  ElementV0,
+  GifElementV0,
+  ImageElementV0,
+  VideoElementV0,
+} from '../types';
 
+export type PageV1 = PageV0;
 export interface StoryV1 {
-  pages: PageV0[];
+  pages: PageV1[];
   version?: number;
 }
+
+export type ElementV1 = ElementV0;
+export type TextElementV1 = TextElementV0;
+export type GifElementV1 = GifElementV0;
+export type ImageElementV1 = ImageElementV0;
+export type VideoElementV1 = VideoElementV0;
+export type MediaElementV1 = MediaElementV0;
 
 function storyDataArrayToObject(storyData: StoryV0): StoryV1 {
   return { pages: storyData };
