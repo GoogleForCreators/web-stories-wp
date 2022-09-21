@@ -39,7 +39,7 @@
   },
   "dependencies": {
     "@googleforcreators/i18n": "*",
-    "@googleforcreators/media": "*",
+    "@googleforcreators/elements": "*",
     "@googleforcreators/react": "*",
     "@googleforcreators/units": "*",
     "flagged": "^2.0.6",
