@@ -42,8 +42,8 @@ function preloadImage({
     // so that is preloaded with its full dimensions.
     // Avoids creating an image with 0x0 dimensions.
     const image = new window.Image(
-      Number(width) || undefined,
-      Number(height) || undefined
+      width ? Number(width) : undefined,
+      height ? Number(height) : undefined
     );
     image.onload = () => resolve(image);
     image.onerror = reject;
