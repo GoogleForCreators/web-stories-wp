@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
@@ -144,15 +145,12 @@ export function updateStory(config, story) {
  * @param {Object} template Template object.
  * @return {Promise} Request promise.
  */
-export const createStoryFromTemplate = async (config, template) => {
+export const createStoryFromTemplate = (config, template) => {
   const path = addQueryArgs(config.api.stories, {
     _fields: 'edit_link',
   });
 
-  const { createdBy, pages, version, colors } = template;
-  const { getStoryMarkup } = await import(
-    /* webpackChunkName: "chunk-getStoryMarkup" */ '@googleforcreators/output'
-  );
+  const { pages, version, colors } = template;
 
   const story = {
     featuredMedia: {
@@ -165,12 +163,7 @@ export const createStoryFromTemplate = async (config, template) => {
     title: '',
   };
 
-  const content = getStoryMarkup(story, pages, {
-    publisher: createdBy,
-  });
-
   const storyPropsToSave = {
-    content,
     pages,
     featuredMedia: story.featuredMedia,
     title: story.title,
