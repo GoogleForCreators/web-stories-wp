@@ -1,5 +1,3 @@
-# Keep in sync with tests-karma-dashboard-skip.yml
-
 name: Dashboard Integration Tests
 
 on:
