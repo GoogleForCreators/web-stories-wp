@@ -105,8 +105,8 @@ const EditElement = memo(
           deleteSelectedElements={deleteSelectedElements}
           maybeEnqueueFontStyle={maybeEnqueueFontStyle}
           zIndexCanvas={Z_INDEX_CANVAS}
-          min={BG_MIN_SCALE}
-          max={BG_MAX_SCALE}
+          scaleMin={BG_MIN_SCALE}
+          scaleMax={BG_MAX_SCALE}
         />
       </Wrapper>
     );

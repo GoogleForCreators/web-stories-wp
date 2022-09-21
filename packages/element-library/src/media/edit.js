@@ -105,8 +105,8 @@ function MediaEdit({
   getProxiedUrl,
   updateElementById,
   zIndexCanvas,
-  min,
-  max,
+  scaleMin,
+  scaleMax,
 }) {
   const {
     id,
@@ -208,12 +208,12 @@ function MediaEdit({
   const handleWheel = useCallback(
     (evt) => {
       updateLocalProperties(({ scale: oldScale }) => ({
-        scale: Math.min(min, Math.max(max, oldScale + evt.deltaY)),
+        scale: Math.min(scaleMin, Math.max(scaleMax, oldScale + evt.deltaY)),
       }));
       evt.preventDefault();
       evt.stopPropagation();
     },
-    [updateLocalProperties, min, max]
+    [updateLocalProperties, scaleMin, scaleMax]
   );
 
   // Cancelable wheel events require a non-passive listener, which React
@@ -303,8 +303,8 @@ function MediaEdit({
         height={height}
         scale={scale || 100}
         zIndexCanvas={zIndexCanvas}
-        min={min}
-        max={max}
+        min={scaleMin}
+        max={scaleMax}
       />
     </Element>
   );
@@ -317,8 +317,8 @@ MediaEdit.propTypes = {
   getProxiedUrl: PropTypes.func,
   updateElementById: PropTypes.func,
   zIndexCanvas: PropTypes.object,
-  min: PropTypes.number.isRequired,
-  max: PropTypes.number.isRequired,
+  scaleMin: PropTypes.number.isRequired,
+  scaleMax: PropTypes.number.isRequired,
 };
 
 export default MediaEdit;
