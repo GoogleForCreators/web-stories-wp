@@ -75,9 +75,7 @@ describe('useMediaUploadQueue', () => {
               id: 456,
               foo: 'bar',
             }),
-            additionalData: {
-              meta: {},
-            },
+            additionalData: {},
           }),
         ],
       });
@@ -113,7 +111,6 @@ describe('useMediaUploadQueue', () => {
               isMuted: false,
             }),
             additionalData: {
-              meta: {},
               isMuted: false,
             },
           }),
@@ -151,9 +148,7 @@ describe('useMediaUploadQueue', () => {
               baseColor: 'barbaz',
             }),
             additionalData: {
-              meta: {
                 baseColor: 'barbaz',
-              },
             },
           }),
         ],
@@ -190,9 +185,7 @@ describe('useMediaUploadQueue', () => {
               blurHash: 'barbaz',
             }),
             additionalData: {
-              meta: {
-                blurHash: 'barbaz',
-              },
+              blurHash: 'barbaz',
             },
           }),
         ],

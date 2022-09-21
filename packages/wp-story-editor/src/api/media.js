@@ -166,6 +166,10 @@ export function uploadMedia(config, file, additionalData) {
     mediaId,
     storyId,
     templateId,
+    optimizedId,
+    originalCropId,
+    mutedId,
+    posterId,
     isMuted,
     mediaSource,
     trimData,
@@ -180,17 +184,24 @@ export function uploadMedia(config, file, additionalData) {
     web_stories_is_muted: isMuted,
     post: templateId || storyId || mediaId,
     original_id: originalId,
-    web_stories_trim_data: trimData,
-    web_stories_base_color: baseColor,
-    web_stories_blurhash: blurHash,
+    meta: {
+      web_stories_base_color: baseColor,
+      web_stories_blurhash: blurHash,
+      web_stories_cropped_origin_id: originalCropId,
+      web_stories_optimized_id: optimizedId,
+      web_stories_muted_id: mutedId,
+      web_stories_poster_id: posterId,
+      web_stories_trim_data: trimData,
+      web_stories_is_gif: isGif,
+    },
     alt_text: altText,
   };
 
-  if (isGif !== undefined) {
-    wpKeysMapping.meta = {
-      web_stories_is_gif: isGif,
-    };
-  }
+  Object.entries(wpKeysMapping.meta).forEach(([key, value]) => {
+    if (value === undefined) {
+      delete wpKeysMapping.meta[key];
+    }
+  });
 
   Object.entries(wpKeysMapping).forEach(([key, value]) => {
     if (value === undefined) {
@@ -228,6 +239,7 @@ export function updateMedia(config, mediaId, data) {
     isMuted,
     mediaSource,
     optimizedId,
+    originalCropId,
     mutedId,
     posterId,
     storyId,
@@ -240,6 +252,7 @@ export function updateMedia(config, mediaId, data) {
       web_stories_blurhash: blurHash,
       web_stories_optimized_id: optimizedId,
       web_stories_muted_id: mutedId,
+      web_stories_cropped_origin_id: originalCropId,
       web_stories_poster_id: posterId,
     },
     web_stories_is_muted: isMuted,
