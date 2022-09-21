@@ -268,18 +268,6 @@ class Experiments extends Service_Base implements HasRequirements {
 			],
 			/**
 			 * Author: @barklund
-			 * Issue: #9643
-			 * Creation date: 2022-06-21
-			 */
-			[
-				'name'        => 'extraPages',
-				'label'       => __( 'Context Pages', 'web-stories' ),
-				'description' => __( 'Show extra pages for context before and after the current canvas page. Note: This might come with a performance penalty.', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-			/**
-			 * Author: @barklund
 			 * Issue: #11908
 			 * Creation date: 2022-07-19
 			 */
