@@ -38,7 +38,13 @@ function preloadImage({
   height,
 }: ImageArguments): Promise<HTMLImageElement> {
   return new Promise((resolve, reject) => {
-    const image = new window.Image(Number(width), Number(height));
+    // If no width or height are provided, set them to undefined
+    // so that is preloaded with its full dimensions.
+    // Avoids creating an image with 0x0 dimensions.
+    const image = new window.Image(
+      Number(width) || undefined,
+      Number(height) || undefined
+    );
     image.onload = () => resolve(image);
     image.onerror = reject;
     image.decoding = 'async';
