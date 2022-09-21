@@ -38,8 +38,8 @@
     "access": "public"
   },
   "dependencies": {
-    "@googleforcreators/i18n": "*",
     "@googleforcreators/elements": "*",
+    "@googleforcreators/i18n": "*",
     "@googleforcreators/react": "*",
     "@googleforcreators/units": "*",
     "flagged": "^2.0.6",
