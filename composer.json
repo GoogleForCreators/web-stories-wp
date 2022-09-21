@@ -71,7 +71,8 @@
       "civicrm/composer-downloads-plugin": true,
       "cweagans/composer-patches": true,
       "mcaskill/composer-exclude-files": true,
-      "phpstan/extension-installer": true
+      "phpstan/extension-installer": true,
+      "composer/installers": true
     },
     "discard-changes": true,
     "platform": {
@@ -96,6 +97,7 @@
     "exclude-from-files": [
       "ampproject/amp-wp/includes/bootstrap.php"
     ],
+    "installer-disable": true,
     "patches": {
       "phpunit/phpunit-mock-objects": {
         "Fix PHPUnit for PHP 7.4": "patches/phpunit-mock-objects.patch"

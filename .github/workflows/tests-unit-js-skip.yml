@@ -1,0 +1,54 @@
+# Handling skipped but required checks
+# See https://docs.github.com/en/enterprise-cloud@latest/repositories/configuring-branches-and-merges-in-your-repository/defining-the-mergeability-of-pull-requests/troubleshooting-required-status-checks#handling-skipped-but-required-checks
+# Keep in sync with tests-unit-js.yml
+
+name: JavaScript Unit Tests
+
+on:
+  push:
+    # Only run if NO JS-related files changed.
+    paths-ignore:
+      - '**.js'
+      - '**.cjs'
+      - '**.ts'
+      - '**/package.json'
+      - 'package-lock.json'
+      - 'packages/templates/src/raw/**'
+      - 'packages/text-sets/src/raw/**'
+      - 'patches/**'
+      - 'packages/fonts/src/fonts.json'
+    branches:
+      - main
+      - release/*
+  pull_request:
+    # Only run if NO JS-related files changed.
+    paths:
+      - '**.js'
+      - '**.cjs'
+      - '**.ts'
+      - '**/package.json'
+      - 'package-lock.json'
+      - 'packages/templates/src/raw/**'
+      - 'packages/text-sets/src/raw/**'
+      - 'patches/**'
+      - 'packages/fonts/src/fonts.json'
+
+permissions:
+  contents: read
+
+# Cancels all previous workflow runs for pull requests that have not completed.
+concurrency:
+  # The concurrency group contains the workflow name and the (target) branch name.
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  unit-js:
+    name: Unit Tests (${{ matrix.shard }})
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        # We want to split up the tests into 2 parts running in parallel.
+        shard: ['1/2', '2/2']
+    steps:
+      - run: 'echo "No build required"'
