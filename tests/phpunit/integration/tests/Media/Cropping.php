@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,25 +15,25 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\Tests\Integration\Media\Video;
+namespace Google\Web_Stories\Tests\Integration\Media;
 
 use Google\Web_Stories\Tests\Integration\TestCase;
 
 /**
- * @coversDefaultClass \Google\Web_Stories\Media\Video\Cropped
+ * @coversDefaultClass \Google\Web_Stories\Media\Cropping
  */
-class Cropped extends TestCase {
+class Cropping extends TestCase {
 	/**
 	 * Test instance.
 	 *
-	 * @var \Google\Web_Stories\Media\Video\Cropped
+	 * @var \Google\Web_Stories\Media\Cropping
 	 */
 	protected $instance;
 
 	public function set_up(): void {
 		parent::set_up();
 
-		$this->instance = new \Google\Web_Stories\Media\Video\Cropped();
+		$this->instance = new \Google\Web_Stories\Media\Cropping();
 	}
 
 	/**

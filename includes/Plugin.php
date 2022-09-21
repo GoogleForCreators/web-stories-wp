@@ -98,7 +98,7 @@ class Plugin extends ServiceBasedPlugin {
 		'media.image_sizes'            => Media\Image_Sizes::class,
 		'media.media_source'           => Media\Media_Source_Taxonomy::class,
 		'media.video.captions'         => Media\Video\Captions::class,
-		'media.video.cropped'          => Media\Video\Cropped::class,
+		'media.cropping'               => Media\Cropping::class,
 		'media.video.muting'           => Media\Video\Muting::class,
 		'media.video.optimization'     => Media\Video\Optimization::class,
 		'media.video.poster'           => Media\Video\Poster::class,

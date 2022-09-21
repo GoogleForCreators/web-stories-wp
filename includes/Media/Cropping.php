@@ -1,6 +1,6 @@
 <?php
 /**
- * Class Cropped
+ * Class Cropping
  *
  * @link      https://github.com/googleforcreators/web-stories-wp
  *
@@ -24,15 +24,15 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\Media\Video;
+namespace Google\Web_Stories\Media;
 
 use Google\Web_Stories\Infrastructure\HasMeta;
 use Google\Web_Stories\Service_Base;
 
 /**
- * Class Cropped
+ * Class Cropping
  */
-class Cropped extends Service_Base implements HasMeta {
+class Cropping extends Service_Base implements HasMeta {
 
 	/**
 	 * The cropped video id post meta key.
