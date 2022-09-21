@@ -39,6 +39,7 @@ namespace PHPSTORM_META {
 			'media.image_sizes'            => \Google\Web_Stories\Media\Image_Sizes::class,
 			'media.media_source'           => \Google\Web_Stories\Media\Media_Source_Taxonomy::class,
 			'media.video.captions'         => \Google\Web_Stories\Media\Video\Captions::class,
+			'media.video.cropped'          => \Google\Web_Stories\Media\Video\Cropped::class,
 			'media.video.muting'           => \Google\Web_Stories\Media\Video\Muting::class,
 			'media.video.optimization'     => \Google\Web_Stories\Media\Video\Optimization::class,
 			'media.video.poster'           => \Google\Web_Stories\Media\Video\Poster::class,
