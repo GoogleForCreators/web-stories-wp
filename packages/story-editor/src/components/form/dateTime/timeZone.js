@@ -42,7 +42,7 @@ const StyledText = styled(Text)`
 `;
 
 function TimeZone({ date }) {
-  const { timezone, gmtOffset } = getSettings();
+  const { timezone, gmtOffset, timezoneAbbr } = getSettings();
 
   // Convert timezone offset to hours.
   const userTimezoneOffset = -1 * (new Date().getTimezoneOffset() / 60);
@@ -54,10 +54,10 @@ function TimeZone({ date }) {
   }
 
   const { timeZone: timeZoneString } = getOptions();
-  const zoneAbbr = timezone?.length
+  const zoneAbbrRaw = timezone?.length
     ? format(date, 'T')
     : `UTC${timeZoneString}`;
-
+  const zoneAbbr = !parseInt(timezoneAbbr) ? timezoneAbbr : zoneAbbrRaw;
   const tooltip =
     'UTC' === zoneAbbr
       ? __('Coordinated Universal Time', 'web-stories')
