@@ -1,5 +1,3 @@
-# Keep in sync with tests-karma-editor-skip.yml
-
 name: Editor Integration Tests
 
 on:
