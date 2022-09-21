@@ -1,5 +1,3 @@
-# Keep in sync with tests-unit-js-skip.yml
-
 name: JavaScript Unit Tests
 
 on:

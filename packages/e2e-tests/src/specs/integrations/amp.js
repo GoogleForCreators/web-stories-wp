@@ -41,8 +41,6 @@ describe('AMP plugin integration', () => {
     const editorPage = page;
     const previewPage = await previewStory(editorPage);
 
-    await previewPage.screenshot({ path: 'build/amp.png' });
-
     await expect(previewPage).toMatchElement('amp-analytics');
 
     await editorPage.bringToFront();
