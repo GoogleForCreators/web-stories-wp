@@ -86,9 +86,9 @@ export function addItem(
     additionalData.baseColor = resource.baseColor;
   }
 
-  // Do not copy over BlurHash for new trimmed videos
+  // Do not copy over BlurHash for new trimmed and cropped videos
   // since the poster (and thus the BlurHash) might be different.
-  if (resource?.blurHash && !resource?.trimData) {
+  if (resource?.blurHash && !trimData && !cropVideo) {
     additionalData.blurHash = resource.blurHash;
   }
 
