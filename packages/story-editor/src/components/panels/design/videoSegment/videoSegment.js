@@ -166,7 +166,7 @@ function VideoSegmentPanel({ pushUpdate, selectedElements }) {
           value={segmentTime}
           handleChange={onChangeSegmentTime}
           minorStep={1}
-          majorStep={2}
+          majorStep={5}
           min={MIN_SEGMENT_LENGTH}
           max={
             resource.length <= MAX_SEGMENT_LENGTH
