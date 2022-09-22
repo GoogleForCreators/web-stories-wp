@@ -542,7 +542,7 @@ function useProcessMedia({
             cropVideo: true,
             additionalData: {
               original_id: resourceId,
-              originalCropId: resourceId,
+              cropOriginId: resourceId,
               cropParams,
               mediaSource: isOptimized ? 'video-optimization' : 'editor',
             },
