@@ -114,10 +114,7 @@ function VideoSegmentPanel({ pushUpdate, selectedElements }) {
     await segmentVideo({ resource, segmentTime }, (segmentedFiles) => {
       // return the "addElement" function
       // called via "onUploadSuccess" of the segmented file
-      return (element) => {
-        if (!element.id.length) {
-          return;
-        }
+      return (newResource) => {
         if (initialized) {
           addPageAt({
             page: createPage(),
@@ -128,7 +125,7 @@ function VideoSegmentPanel({ pushUpdate, selectedElements }) {
           deleteElementById({ elementId: originalElementId });
         }
 
-        insertElement(ELEMENT_TYPES.VIDEO, element);
+        insertElement(ELEMENT_TYPES.VIDEO, newResource);
         initialized = true;
         processedFiles += 1;
 
