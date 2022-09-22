@@ -17,7 +17,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { __ } from '@googleforcreators/i18n';
+import { __, sprintf } from '@googleforcreators/i18n';
 import styled from 'styled-components';
 import {
   Text,
@@ -175,7 +175,11 @@ function VideoSegmentPanel({ pushUpdate, selectedElements }) {
           }
           aria-label={__('Segment length', 'web-stories')}
         />
-        {segmentTime} {__('sec', 'web-stories')}
+        {sprintf(
+          /* translators: %d number of seconds */
+          __('%d sec', 'web-stories'),
+          segmentTime
+        )}
         <StyledButton
           disabled={isSegmenting}
           variant={BUTTON_VARIANTS.RECTANGLE}
