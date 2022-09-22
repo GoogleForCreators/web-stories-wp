@@ -30,7 +30,7 @@ import {
   Slider,
 } from '@googleforcreators/design-system';
 import { useCallback, useState } from '@googleforcreators/react';
-import { createPage } from '@googleforcreators/elements';
+import { createPage, ELEMENT_TYPES } from '@googleforcreators/elements';
 import { useFeature } from 'flagged';
 
 /**
@@ -62,6 +62,8 @@ const HelperText = styled(Text).attrs({
 `;
 
 function VideoSegmentPanel({ pushUpdate, selectedElements }) {
+  const MIN_SEGMENT_LENGTH = 20;
+  const MAX_SEGMENT_LENGTH = 120;
   const resource = getCommonValue(selectedElements, 'resource');
   const elementId = getCommonValue(selectedElements, 'id');
   const enableSegmentVideo = useFeature('segmentVideo');
@@ -153,7 +155,7 @@ function VideoSegmentPanel({ pushUpdate, selectedElements }) {
     showSnackbar,
   ]);
 
-  if (!enableSegmentVideo) {
+  if (!enableSegmentVideo || resource.length <= MIN_SEGMENT_LENGTH) {
     return null;
   }
 
@@ -168,8 +170,12 @@ function VideoSegmentPanel({ pushUpdate, selectedElements }) {
           handleChange={onChangeSegmentTime}
           minorStep={1}
           majorStep={2}
-          min={20}
-          max={120}
+          min={MIN_SEGMENT_LENGTH}
+          max={
+            resource.length <= MAX_SEGMENT_LENGTH
+              ? resource.length - MIN_SEGMENT_LENGTH
+              : MAX_SEGMENT_LENGTH
+          }
           aria-label={__('Segment length', 'web-stories')}
         />
         {segmentTime} {__('sec', 'web-stories')}
