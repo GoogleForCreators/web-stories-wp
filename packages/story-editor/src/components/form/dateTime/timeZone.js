@@ -53,15 +53,15 @@ function TimeZone({ date }) {
     return null;
   }
 
-  const offsetSymbol = Number( gmtOffset ) >= 0 ? '+' : '';
+  const offsetSymbol = Number(gmtOffset) >= 0 ? '+' : '';
   const zoneAbbr =
-    '' !== timezoneAbbr && isNaN( Number( timezoneAbbr ) )
+    '' !== timezoneAbbr && isNaN(Number(timezoneAbbr))
       ? timezoneAbbr
-      : `UTC${ offsetSymbol }${ gmtOffset }`;
+      : `UTC${offsetSymbol}${gmtOffset}`;
   const tooltip =
     'UTC' === timezone
-      ? __( 'Coordinated Universal Time', 'web-stories' )
-      : `(${ zoneAbbr }) ${ timezone.replace( '_', ' ' ) }`;
+      ? __('Coordinated Universal Time', 'web-stories')
+      : `(${zoneAbbr}) ${timezone.replace('_', ' ')}`;
 
   return (
     <Wrapper>
