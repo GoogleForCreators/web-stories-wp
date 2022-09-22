@@ -62,8 +62,8 @@ const HelperText = styled(Text).attrs({
 `;
 
 function VideoSegmentPanel({ pushUpdate, selectedElements }) {
-  const MIN_SEGMENT_LENGTH = 20;
-  const MAX_SEGMENT_LENGTH = 120;
+  const MIN_SEGMENT_LENGTH = 10;
+  const MAX_SEGMENT_LENGTH = 60;
   const resource = getCommonValue(selectedElements, 'resource');
   const elementId = getCommonValue(selectedElements, 'id');
   const enableSegmentVideo = useFeature('segmentVideo');
