@@ -30,19 +30,16 @@ function AutoSaveHandler() {
   const {
     state: { hasNewChanges },
   } = useHistory();
-  const { isDraft, autoSave } = useStory(({ state: { story }, actions }) => ({
+  const { autoSave } = useStory(({ actions }) => ({
     autoSave: actions.autoSave,
-    isDraft: 'draft' === story.status || !story.status,
   }));
   const isUploading = useIsUploadingToStory();
 
-  const save = autoSave;
-
   // Cache it to make it stable in terms of the below timeout
-  const cachedSaveStory = useRef(save);
+  const cachedSaveStory = useRef(autoSave);
   useEffect(() => {
-    cachedSaveStory.current = save;
-  }, [save]);
+    cachedSaveStory.current = autoSave;
+  }, [autoSave]);
 
   useEffect(() => {
     if (!hasNewChanges || !autoSaveInterval || isUploading) {
@@ -57,7 +54,7 @@ function AutoSaveHandler() {
     );
 
     return () => clearTimeout(timeout);
-  }, [autoSaveInterval, isDraft, hasNewChanges, isUploading]);
+  }, [autoSaveInterval, hasNewChanges, isUploading]);
 
   return null;
 }
