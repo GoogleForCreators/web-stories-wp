@@ -148,7 +148,7 @@ describe('useMediaUploadQueue', () => {
               baseColor: 'barbaz',
             }),
             additionalData: {
-                baseColor: 'barbaz',
+              baseColor: 'barbaz',
             },
           }),
         ],
