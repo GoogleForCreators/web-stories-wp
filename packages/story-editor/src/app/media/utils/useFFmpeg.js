@@ -291,6 +291,8 @@ function useFFmpeg() {
    */
   const segmentVideo = useCallback(
     async (file, segmentTime) => {
+      //eslint-disable-next-line @wordpress/no-unused-vars-before-return -- False positive because of the finally().
+      const trackTiming = getTimeTracker('segment_video');
       let ffmpeg;
       try {
         ffmpeg = await getFFmpegInstance(file);
@@ -329,6 +331,7 @@ function useFFmpeg() {
       } catch (err) {
         // eslint-disable-next-line no-console -- We want to surface this error.
         console.error(err);
+        trackError('segment_video', err.message);
         throw err;
       } finally {
         try {
@@ -336,6 +339,8 @@ function useFFmpeg() {
         } catch {
           // Not interested in errors here.
         }
+
+        trackTiming();
       }
     },
     [getFFmpegInstance]
@@ -382,11 +387,7 @@ function useFFmpeg() {
           type
         );
       } catch (err) {
-        // eslint-disable-next-line no-console -- We want to surface this error.
-        console.log(err);
-
         trackError('trim_video_transcoding', err.message);
-
         throw err;
       } finally {
         try {
