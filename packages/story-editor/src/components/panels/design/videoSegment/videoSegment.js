@@ -126,7 +126,7 @@ function VideoSegmentPanel({ pushUpdate, selectedElements }) {
           deleteElementById({ elementId: originalElementId });
         }
 
-        insertElement('video', element);
+        insertElement(ELEMENT_TYPES.VIDEO, element);
         initialized = true;
         processedFiles += 1;
 
