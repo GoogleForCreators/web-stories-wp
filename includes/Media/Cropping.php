@@ -61,7 +61,7 @@ class Cropping extends Service_Base implements HasMeta {
 			[
 				'sanitize_callback' => 'absint',
 				'type'              => 'integer',
-				'description'       => __( 'ID of origin of crop.', 'web-stories' ),
+				'description'       => __( 'Parent ID if this is a cropped attachment', 'web-stories' ),
 				'show_in_rest'      => true,
 				'default'           => 0,
 				'single'            => true,
