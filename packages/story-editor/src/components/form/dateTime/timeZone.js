@@ -41,7 +41,7 @@ const StyledText = styled(Text)`
   line-height: 30px;
 `;
 
-function TimeZone({ date }) {
+function TimeZone() {
   const { timezone, gmtOffset, timezoneAbbr } = getSettings();
 
   // Convert timezone offset to hours.
@@ -53,13 +53,14 @@ function TimeZone({ date }) {
     return null;
   }
 
-  const offsetSymbol = Number(gmtOffset) >= 0 ? '+' : '';
+  const { timeZone: timeZoneString } = getOptions();
   const zoneAbbr =
-    '' !== timezoneAbbr && isNaN(Number(timezoneAbbr))
+    '' !== timezoneAbbr && Number.isNaN(Number(timezoneAbbr))
       ? timezoneAbbr
-      : `UTC${offsetSymbol}${gmtOffset}`;
+      : `UTC${timeZoneString}`;
+
   const tooltip =
-    'UTC' === timezone
+    'UTC' === zoneAbbr
       ? __('Coordinated Universal Time', 'web-stories')
       : `(${zoneAbbr}) ${timezone.replace('_', ' ')}`;
 
