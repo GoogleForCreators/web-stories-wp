@@ -304,18 +304,6 @@ class Experiments extends Service_Base implements HasRequirements {
 			],
 			/**
 			 * Author: @timarney
-			 * Issue: #12094
-			 * Creation date: 2022-08-11
-			 */
-			[
-				'name'        => 'improvedAutosaves',
-				'label'       => __( 'Improved Autosaves', 'web-stories' ),
-				'description' => __( 'Enable improved autosaves support', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-			/**
-			 * Author: @timarney
 			 * Issue: #12093
 			 * Creation date: 2022-08-18
 			 */

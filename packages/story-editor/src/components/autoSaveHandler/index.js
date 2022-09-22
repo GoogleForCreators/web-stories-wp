@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { useEffect, useRef } from '@googleforcreators/react';
-import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -27,21 +26,17 @@ import { useConfig, useHistory, useStory } from '../../app';
 import useIsUploadingToStory from '../../utils/useIsUploadingToStory';
 
 function AutoSaveHandler() {
-  const improvedAutosaves = useFeature('improvedAutosaves');
   const { autoSaveInterval } = useConfig();
   const {
     state: { hasNewChanges },
   } = useHistory();
-  const { isDraft, saveStory, autoSave } = useStory(
-    ({ state: { story }, actions }) => ({
-      autoSave: actions.autoSave,
-      saveStory: actions.saveStory,
-      isDraft: 'draft' === story.status || !story.status,
-    })
-  );
+  const { isDraft, autoSave } = useStory(({ state: { story }, actions }) => ({
+    autoSave: actions.autoSave,
+    isDraft: 'draft' === story.status || !story.status,
+  }));
   const isUploading = useIsUploadingToStory();
 
-  const save = improvedAutosaves ? autoSave : saveStory;
+  const save = autoSave;
 
   // Cache it to make it stable in terms of the below timeout
   const cachedSaveStory = useRef(save);
@@ -50,13 +45,7 @@ function AutoSaveHandler() {
   }, [save]);
 
   useEffect(() => {
-    // TODO: Remove isDraft check when improvedAutosaves gets enabled by default.
-    if (
-      (!isDraft && !improvedAutosaves) ||
-      !hasNewChanges ||
-      !autoSaveInterval ||
-      isUploading
-    ) {
+    if (!hasNewChanges || !autoSaveInterval || isUploading) {
       return undefined;
     }
     // This is only a timeout (and not an interval), as `hasNewChanges` will come
@@ -68,13 +57,7 @@ function AutoSaveHandler() {
     );
 
     return () => clearTimeout(timeout);
-  }, [
-    autoSaveInterval,
-    isDraft,
-    improvedAutosaves,
-    hasNewChanges,
-    isUploading,
-  ]);
+  }, [autoSaveInterval, isDraft, hasNewChanges, isUploading]);
 
   return null;
 }
