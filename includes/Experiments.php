@@ -357,7 +357,6 @@ class Experiments extends Service_Base implements HasRequirements {
 				'label'       => __( 'Segment video', 'web-stories' ),
 				'description' => __( 'Enable support for segmenting video files', 'web-stories' ),
 				'group'       => 'editor',
-				'default'     => true,
 			],
 		];
 	}
