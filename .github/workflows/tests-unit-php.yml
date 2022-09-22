@@ -1,5 +1,3 @@
-# Keep in sync with tests-unit-php-skip.yml
-
 name: PHP Unit Tests
 
 on:

@@ -1,5 +1,3 @@
-# Keep in sync with tests-e2e-skip.yml
-
 name: E2E Tests
 
 on:
