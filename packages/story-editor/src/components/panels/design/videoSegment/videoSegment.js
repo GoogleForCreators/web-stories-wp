@@ -67,8 +67,7 @@ function VideoSegmentPanel({ pushUpdate, selectedElements }) {
   const enableSegmentVideo = useFeature('segmentVideo');
 
   const onChangeSegmentTime = (value) => {
-    const newSegmentTime = value;
-    pushUpdate({ segmentTime: newSegmentTime }, true);
+    pushUpdate({ segmentTime: value }, true);
   };
 
   const segmentTime = getCommonValue(selectedElements, 'segmentTime', 20);
