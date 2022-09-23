@@ -51,6 +51,11 @@ export interface BorderRadius {
   bottomRight: number;
   locked: boolean;
 }
+export interface PageAttachement {
+  icon: string,
+  needsProxy: boolean,
+  url: string
+}
 
 export interface Element extends ElementBox {
   id: string;
@@ -65,4 +70,5 @@ export interface Element extends ElementBox {
   groupId?: string;
   border?: Border;
   borderRadius?: BorderRadius;
+  pageAttachement?: PageAttachement;
 }

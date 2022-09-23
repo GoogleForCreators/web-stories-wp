@@ -22,18 +22,17 @@ import {
   BackgroundAudioPropType,
   StoryPropTypes,
 } from '@googleforcreators/elements';
+import type { Story } from '@googleforcreators/types';
 
 /**
  * Internal dependencies
  */
 import getUsedAmpExtensions from './utils/getUsedAmpExtensions';
 import Boilerplate from './utils/ampBoilerplate';
-import CustomCSS from './utils/styles';
 import FontDeclarations from './utils/fontDeclarations';
-import OutputPage from './page';
 import getPreloadResources from './utils/getPreloadResources';
 
-function OutputStory({
+const OutputStory = ({
   story: {
     featuredMedia,
     link,
@@ -46,7 +45,7 @@ function OutputStory({
   pages,
   metadata: { publisher },
   flags,
-}) {
+} : Story) => {
   const ampExtensions = getUsedAmpExtensions(pages);
   const preloadResources = getPreloadResources(pages);
 

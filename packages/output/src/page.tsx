@@ -26,7 +26,7 @@ import {
   StoryPropTypes,
   isElementBelowLimit,
 } from '@googleforcreators/elements';
-
+import type { Page, Element } from '@googleforcreators/types';
 /**
  * Internal dependencies
  */
@@ -45,7 +45,7 @@ function OutputPage({
   defaultAutoAdvance = DEFAULT_AUTO_ADVANCE,
   defaultPageDuration = DEFAULT_PAGE_DURATION,
   flags,
-}) {
+}: Page) {
   const {
     id,
     animations,
@@ -84,7 +84,7 @@ function OutputPage({
     otherElements.filter(({ type }) => 'text' === type)
   );
 
-  const regularElements = otherElements.map((element) => {
+  const regularElements = otherElements.map((element: Element) => {
     // Check if we need to change anything in this element
 
     // Text elements need a tag name
@@ -111,8 +111,8 @@ function OutputPage({
   });
 
   const products = elements
-    .filter(({ type }) => type === ELEMENT_TYPES.PRODUCT)
-    .map(({ product }) => product)
+    .filter(({ type }: Element) => type === ELEMENT_TYPES.PRODUCT)
+    .map(({ product }: Element) => product)
     .filter(Boolean);
 
   const hasProducts = products.length > 0;
@@ -120,9 +120,10 @@ function OutputPage({
 
   const videoCaptions = elements
     .filter(
-      ({ type, tracks }) => type === ELEMENT_TYPES.VIDEO && tracks?.length > 0
+      ({ type, tracks }: Element) =>
+        type === ELEMENT_TYPES.VIDEO && tracks?.length > 0
     )
-    .map(({ id: videoId }) => `el-${videoId}-captions`);
+    .map(({ id: videoId }: Element) => `el-${videoId}-captions`);
 
   const backgroundAudioSrc = backgroundAudio?.resource?.src;
   const hasBackgroundAudioCaptions = backgroundAudio?.tracks?.length > 0;
