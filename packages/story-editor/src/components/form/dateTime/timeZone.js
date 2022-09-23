@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { getSettings, getOptions } from '@googleforcreators/date';
+import { getSettings } from '@googleforcreators/date';
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
 import {
