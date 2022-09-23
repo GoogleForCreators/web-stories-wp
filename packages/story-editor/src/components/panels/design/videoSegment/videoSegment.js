@@ -115,7 +115,7 @@ function VideoSegmentPanel({ pushUpdate, selectedElements }) {
 
       const exists = segmentedFiles.find(item => item.batchPosition === batchPosition);
       if (!exists) {
-        segmentedFiles.push({ batchPosition, newResource });
+        segmentedFiles.push({ batchPosition, resource: newResource });
       }
 
       if (!exists && segmentedFiles.length === batchCount) {
