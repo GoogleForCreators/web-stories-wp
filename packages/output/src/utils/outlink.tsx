@@ -19,8 +19,9 @@
  */
 import PropTypes from 'prop-types';
 import { __ } from '@googleforcreators/i18n';
+import type { Link } from '@googleforcreators/types';
 
-function Outlink({ ctaText, url, icon, theme, rel = [] }) {
+function Outlink({ ctaText, url, icon, theme, rel = [] }: Link) {
   return (
     <amp-story-page-outlink
       layout="nodisplay"

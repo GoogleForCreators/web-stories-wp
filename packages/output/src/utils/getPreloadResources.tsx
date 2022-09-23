@@ -13,25 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import type { Page } from '@googleforcreators/types';
 
 /**
- * AMP Extension
- *
- * @typedef {Object} PreloadResource
- * @property {string} url The URL to the resource.
- * @property {string} type Type of resource, e.g. "video" or "image".
+ * Internal dependencies
  */
+import type { PreloadResource } from '../types';
 
 /**
  * Goes through all pages in a story to find the resources that should be preloaded.
- *
- * Currently this includes the first page's background image/video.
- *
- * @param {Array} pages List of pages.
- * @return {Array<PreloadResource>} List of preload resources.
  */
-function getPreloadResources(pages) {
-  const preloadResources = [];
+function getPreloadResources(pages: Page[]):PreloadResource[] {
+  const preloadResources: PreloadResource[] = [];
 
   if (pages.length === 0) {
     return preloadResources;

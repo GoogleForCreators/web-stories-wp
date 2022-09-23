@@ -22,10 +22,10 @@ import { theme } from '@googleforcreators/design-system';
 import { isHexColorString } from '@googleforcreators/patterns';
 
 function CustomStyles() {
-  const safeToFullRatio = PAGE_RATIO / FULLBLEED_RATIO;
-  const fullToSafeRatio = 1 / safeToFullRatio;
-  const safeRatio = PAGE_RATIO;
-  const fullRatio = FULLBLEED_RATIO;
+  const safeToFullRatio: number = PAGE_RATIO / FULLBLEED_RATIO;
+  const fullToSafeRatio: number = 1 / safeToFullRatio;
+  const safeRatio: number = PAGE_RATIO;
+  const fullRatio: number = FULLBLEED_RATIO;
 
   // Make the story content aligned with top of viewport between aspect ratios
   // 320:678 and 9:16. This ensures that the story's system UI (progress bar,
@@ -33,13 +33,13 @@ function CustomStyles() {
   // content (i.e. never partially overlapping). The icon height is 48px. Based
   // on research, the smallest screen size in active use is 320 pixels wide. In
   // this case, the minimum screen width that this ratio will work for it 320px.
-  const gridLayerExpandLowerBound = '320 / 678';
-  const gridLayerExpandUpperBound = '9 / 16';
+  const gridLayerExpandLowerBound: string = '320 / 678';
+  const gridLayerExpandUpperBound: string = '9 / 16';
 
   // Match page background color to the workspace background color.
   // Validate since we're using dangerouslySetInnerHTML with imported variable.
-  const workspaceColor = theme.colors.bg.primary;
-  const pageBackgroundColor = isHexColorString(workspaceColor)
+  const workspaceColor: string = theme.colors.bg.primary;
+  const pageBackgroundColor: string = isHexColorString(workspaceColor)
     ? workspaceColor
     : '#1B1D1C';
 

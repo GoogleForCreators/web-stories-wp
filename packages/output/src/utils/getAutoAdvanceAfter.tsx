@@ -18,11 +18,13 @@
  */
 import { getTotalDuration } from '@googleforcreators/animation';
 
+
 /**
  * Internal dependencies
  */
 import { DEFAULT_PAGE_DURATION } from '../constants';
 import getLongestMediaElement from './getLongestMediaElement';
+import type { GetAutoAdvanceAfterTyping } from "../types";
 
 function getAutoAdvanceAfter({
   animations,
@@ -30,7 +32,7 @@ function getAutoAdvanceAfter({
   elements,
   backgroundAudio,
   id,
-}) {
+}: GetAutoAdvanceAfterTyping): string {
   const { resource, loop } = backgroundAudio || {};
 
   const animationDuration = getTotalDuration({ animations }) / 1000;

@@ -13,15 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
- * External dependencies
+ * Internal dependencies
  */
-import PropTypes from 'prop-types';
-import { ResourcePropTypes } from '@googleforcreators/media';
-import { BackgroundAudioPropType } from '@googleforcreators/elements';
+import type { BackgroundAudioType } from '../types';
 
-function BackgroundAudio({ backgroundAudio, id }) {
+function BackgroundAudio({ backgroundAudio, id }: BackgroundAudioType) {
   const { resource, tracks, loop } = backgroundAudio || {};
   const { mimeType, src } = resource;
 
@@ -70,14 +67,4 @@ function BackgroundAudio({ backgroundAudio, id }) {
     </amp-story-grid-layer>
   );
 }
-
-BackgroundAudio.propTypes = {
-  backgroundAudio: PropTypes.shape({
-    resource: BackgroundAudioPropType,
-    loop: PropTypes.bool,
-    tracks: PropTypes.arrayOf(ResourcePropTypes.trackResource),
-  }),
-  id: PropTypes.string.isRequired,
-};
-
 export default BackgroundAudio;

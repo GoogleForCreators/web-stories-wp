@@ -13,6 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import type { TextElement } from '@googleforcreators/types';
 
 const MINIMUM_CONTENT_LENGTH = 3;
 
@@ -25,22 +29,11 @@ const MINIMUM_CONTENT_LENGTH = 3;
  * @param {Array<Object>} elements List of text elements
  * @return {Map<string, string>} Map of element IDs to tag name.
  */
-function getTextElementTagNames(elements) {
+function getTextElementTagNames(elements: TextElement): Map<string, string> {
   return elements
-    .sort((a, b) => a.y - b.y)
+    .sort((a: TextElement, b: TextElement) => a.y - b.y)
     .reduce(
-      /**
-       * Reducer.
-       *
-       * @param {Map<string, string>} tagNamesMap Tag names map.
-       * @param {Object} element Text element.
-       * @param {string} element.id Element ID
-       * @param {number} element.fontSize Font size.
-       * @param {string} element.content Text content.
-       * @param {string} element.tagName Existing tagName
-       * @return {Map<string, string>} Tag names map.
-       */
-      (tagNamesMap, { id, fontSize, content, tagName }) => {
+      (tagNamesMap: Map<string, string>, { id, fontSize, content, tagName }: TextElement): Map<string, string> => {
         // if a tag already exists,
         // utilize the one already part of the element
         if (tagName && tagName !== 'auto') {

@@ -13,25 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
- * AMP Extension
- *
- * @typedef {Extension} Extension
- * @property {string} src The URL to the extension.
- * @property {?string} name The extension's name. Used for the custom-element attribute.
+ * External dependencies
  */
+import type { Page } from '@googleforcreators/types';
+
+type AMPExtension = {
+  src: string,
+  name?: string,
+}
 
 /**
  * Goes through all pages in a story to find the needed AMP extensions for them.
  *
  * Always includes the runtime as well as the amp-story extension.
- *
- * @param {Array} pages List of pages.
- * @return {Array<Extension>} List of used AMP extensions.
  */
-const getUsedAmpExtensions = (pages) => {
-  const extensions = [
+const getUsedAmpExtensions = (pages: Page[]): AMPExtension[] => {
+  const extensions: AMPExtension[] = [
     // runtime.
     { src: 'https://cdn.ampproject.org/v0.js' },
     {
@@ -40,17 +38,17 @@ const getUsedAmpExtensions = (pages) => {
     },
   ];
 
-  const ampVideo = {
+  const ampVideo: AMPExtension = {
     name: 'amp-video',
     src: 'https://cdn.ampproject.org/v0/amp-video-0.1.js',
   };
 
-  const ampStoryCaptions = {
+  const ampStoryCaptions: AMPExtension = {
     name: 'amp-story-captions',
     src: 'https://cdn.ampproject.org/v0/amp-story-captions-0.1.js',
   };
 
-  const ampStoryShopping = {
+  const ampStoryShopping: AMPExtension = {
     name: 'amp-story-shopping',
     src: 'https://cdn.ampproject.org/v0/amp-story-shopping-0.1.js',
   };

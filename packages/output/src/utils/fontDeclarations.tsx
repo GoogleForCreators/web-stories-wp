@@ -17,19 +17,18 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import { getGoogleFontURL, getFontCSS } from '@googleforcreators/fonts';
 import { getFontVariants } from '@googleforcreators/rich-text';
-import { StoryPropTypes } from '@googleforcreators/elements';
+import type { Page, TextElement } from '@googleforcreators/typings';
 
-const hasTuple = (tuples, tuple) =>
-  tuples.some((val) => val[0] === tuple[0] && val[1] === tuple[1]);
+const hasTuple = (tuples: number[][], tuple: number[]): boolean =>
+  tuples.some((val: number[]) => val[0] === tuple[0] && val[1] === tuple[1]);
 
-const tupleDiff = (a, b) => {
+const tupleDiff = (a: number[], b: number[]): number => {
   return Math.abs(a[0] + a[1] - b[0] - b[1]);
 };
 
-const getNearestTuple = (tuples, tuple) => {
+const getNearestTuple = (tuples: number[][], tuple: number[]): number[] => {
   return tuples.reduce((acc, curr) => {
     const currDiff = tupleDiff(curr, tuple);
     const accDiff = tupleDiff(acc, tuple);
@@ -38,11 +37,11 @@ const getNearestTuple = (tuples, tuple) => {
   });
 };
 
-function FontDeclarations({ pages }) {
+function FontDeclarations({ pages } : Page) {
   const map = new Map();
 
   for (const { elements } of pages) {
-    const textElements = elements.filter(({ type }) => type === 'text');
+    const textElements = elements.filter(({ type }: TextElement) => type === 'text');
     // Prepare font objects for later use.
     for (const { font, content } of textElements) {
       const { service, family, variants = [], url } = font;
@@ -102,7 +101,7 @@ function FontDeclarations({ pages }) {
               />
             );
           case 'custom':
-            return Array.from(serviceMap.values()).map(({ family, url }) => {
+            return Array.from(serviceMap.values()).map(({ family, url }: TextElement) => {
               const inlineStyle = getFontCSS(family, url);
               return (
                 <style
@@ -120,9 +119,5 @@ function FontDeclarations({ pages }) {
     </>
   );
 }
-
-FontDeclarations.propTypes = {
-  pages: PropTypes.arrayOf(StoryPropTypes.page).isRequired,
-};
 
 export default FontDeclarations;

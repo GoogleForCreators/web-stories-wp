@@ -13,15 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+/**
+ * External dependencies
+ */
+import type { ReactElement } from 'react';
 /**
  * Renders AMP boilerplate
  *
  * @see https://amp.dev/documentation/guides-and-tutorials/learn/spec/amp-boilerplate/
  * @see https://amp.dev/documentation/components/amp-story/#boilerplate
- * @return {Element} AMP boilerplate.
  */
-function Boilerplate() {
+function Boilerplate(): ReactElement {
   return (
     <>
       <style

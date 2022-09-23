@@ -17,15 +17,12 @@
  * External dependencies
  */
 import { getDefinitionForType } from '@googleforcreators/elements';
+import type { Element } from '@googleforcreators/types';
 
 /**
  * Among all elements, returns the media element with the longest duration.
- *
- * @param {Array<Object>} elements List of elements.
- * @param {number} minDuration Duration that the minimum element must exceed in seconds.
- * @return {Object|undefined} Found element, or undefined if there are no media elements.
  */
-function getLongestMediaElement(elements, minDuration = 0) {
+function getLongestMediaElement(elements: Element[], minDuration = 0): Element {
   return elements
     .filter(({ type, loop }) => {
       const { isMedia } = getDefinitionForType(type);

@@ -15,11 +15,11 @@
  */
 
 /**
- * External dependencies
+ * Internal dependencies
  */
-import PropTypes from 'prop-types';
+import type { ShoppingAttachmentType } from '../types';
 
-function ShoppingAttachment({ products, theme, ctaText }) {
+function ShoppingAttachment({ products, theme, ctaText }: ShoppingAttachmentType) {
   return (
     <amp-story-shopping-attachment
       theme={theme}
@@ -36,11 +36,5 @@ function ShoppingAttachment({ products, theme, ctaText }) {
     </amp-story-shopping-attachment>
   );
 }
-
-ShoppingAttachment.propTypes = {
-  theme: PropTypes.oneOf(['light', 'dark']),
-  ctaText: PropTypes.string,
-  products: PropTypes.arrayOf(PropTypes.object),
-};
 
 export default ShoppingAttachment;
