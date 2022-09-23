@@ -78,7 +78,9 @@ export interface ElementV0 extends ElementBoxV0 {
   type: string;
   isBackground: boolean;
 
-  mask?: string;
+  mask?: {
+    type: string;
+  };
   link?: LinkV0;
   lockAspectRatio?: boolean;
   groupId?: string;

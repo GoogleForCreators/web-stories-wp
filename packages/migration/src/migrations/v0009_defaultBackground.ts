@@ -19,23 +19,56 @@
  */
 import { v4 as uuidv4 } from 'uuid';
 
+/**
+ * Internal dependencies
+ */
+import type {
+  GifElementV8,
+  ImageElementV8,
+  PageV8,
+  ProductElementV8,
+  ShapeElementV8,
+  StoryV8,
+  TextElementV8,
+  VideoElementV8,
+} from './v0008_paddingToObject';
+
+export type TextElementV9 = TextElementV8;
+export type ProductElementV9 = ProductElementV8;
+export type ShapeElementV9 = ShapeElementV8;
+export type ImageElementV9 = ImageElementV8;
+export type VideoElementV9 = VideoElementV8;
+export type GifElementV9 = GifElementV8;
+
+export type UnionElementV9 =
+  | ShapeElementV9
+  | ImageElementV9
+  | VideoElementV9
+  | GifElementV9
+  | TextElementV9
+  | ProductElementV9;
+
+export interface StoryV9 extends Omit<StoryV8, 'pages'> {
+  pages: PageV9[];
+}
+export interface PageV9 extends Omit<PageV8, 'elements' | 'backgroundColor'> {
+  elements: UnionElementV9[];
+  backgroundElementId?: string;
+}
+
 const PAGE_WIDTH = 1080;
 const DEFAULT_ELEMENT_WIDTH = PAGE_WIDTH / 3;
 
-function defaultBackground({ pages, ...rest }) {
+function defaultBackground({ pages, ...rest }: StoryV8): StoryV9 {
   return {
     pages: pages.map(reducePage),
     ...rest,
   };
 }
 
-function reducePage({
-  elements,
-  backgroundElementId,
-  backgroundColor,
-  ...rest
-}) {
-  if (!backgroundElementId) {
+function reducePage({ backgroundColor, ...rest }: PageV8): PageV9 {
+  if (!('backgroundElementId' in rest)) {
+    const { elements } = rest;
     const element = {
       type: 'shape',
       x: (PAGE_WIDTH / 4) * Math.random(),
@@ -54,16 +87,17 @@ function reducePage({
       backgroundColor: backgroundColor || {
         color: { r: 255, g: 255, b: 255, a: 1 },
       },
-      id: uuidv4(),
+      id: (uuidv4 as () => string)(),
+      opacity: 100,
     };
     elements.unshift(element);
-    backgroundElementId = element.id;
+    return {
+      ...rest,
+      elements,
+      backgroundElementId: element.id,
+    };
   }
-  return {
-    backgroundElementId,
-    elements,
-    ...rest,
-  };
+  return rest;
 }
 
 export default defaultBackground;

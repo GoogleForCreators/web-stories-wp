@@ -14,47 +14,86 @@
  * limitations under the License.
  */
 
-function paddingToObject({ pages, ...rest }) {
+/**
+ * Internal dependencies
+ */
+import type {
+  GifElementV7,
+  ImageElementV7,
+  PageV7,
+  ProductElementV7,
+  ShapeElementV7,
+  StoryV7,
+  TextElementV7,
+  VideoElementV7,
+  UnionElementV7,
+} from './v0007_setFlip';
+
+interface Padding {
+  horizontal: number;
+  vertical: number;
+}
+
+export interface TextElementV8 extends Omit<TextElementV7, 'padding'> {
+  padding: Padding;
+}
+export type ProductElementV8 = ProductElementV7;
+export type ShapeElementV8 = ShapeElementV7;
+export type ImageElementV8 = ImageElementV7;
+export type VideoElementV8 = VideoElementV7;
+export type GifElementV8 = GifElementV7;
+
+export type UnionElementV8 =
+  | ShapeElementV8
+  | ImageElementV8
+  | VideoElementV8
+  | GifElementV8
+  | TextElementV8
+  | ProductElementV8;
+
+export interface StoryV8 extends Omit<StoryV7, 'pages'> {
+  pages: PageV8[];
+}
+export interface PageV8 extends Omit<PageV7, 'elements'> {
+  elements: UnionElementV8[];
+}
+
+function paddingToObject({ pages, ...rest }: StoryV7): StoryV8 {
   return {
     pages: pages.map(reducePage),
     ...rest,
   };
 }
 
-function reducePage({ elements, ...rest }) {
+function reducePage({ elements, ...rest }: PageV7): PageV8 {
   return {
     elements: elements.map(updateElement),
     ...rest,
   };
 }
 
-function updateElement({ padding, type, ...rest }) {
-  if ('text' !== type) {
-    return {
-      type,
-      ...rest,
-    };
+function updateElement(element: UnionElementV7): UnionElementV8 {
+  if (!('content' in element)) {
+    return element;
   }
-  // If padding is already set, just return as is.
+
+  const { padding } = element;
   if (
     padding &&
-    Object.prototype.hasOwnProperty.call(padding, 'vertical') &&
-    Object.prototype.hasOwnProperty.call(padding, 'horizontal')
+    Object.prototype.hasOwnProperty.call(element.padding, 'vertical') &&
+    Object.prototype.hasOwnProperty.call(element.padding, 'horizontal')
   ) {
-    return {
-      type,
-      padding,
-      ...rest,
-    };
+    // If padding is already set, just return as is.
+    return element;
   }
+
   const newPadding = padding || 0;
   return {
+    ...element,
     padding: {
       horizontal: newPadding,
       vertical: newPadding,
     },
-    type,
-    ...rest,
   };
 }
 
