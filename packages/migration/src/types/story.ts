@@ -82,6 +82,7 @@ interface AnimationV0 {
 export type Groups = Record<string, Group>;
 
 export interface PageV0 {
+  backgroundColor: string;
   elements: UnionElementV0[];
   animations?: AnimationV0[];
   type: 'page';
