@@ -135,4 +135,44 @@ describe('reducer', () => {
       })
     );
   });
+
+  describe('prependMedia', () => {
+    it('should not add items that are already in state', () => {
+      const { result } = renderHook(() =>
+        useMediaReducer(reducer, localActionsToWrap)
+      );
+
+      act(() => {
+        result.current.actions.prependMedia({
+          media: [
+            {
+              id: 123,
+            },
+            {
+              id: 456,
+            },
+          ],
+        });
+      });
+
+      act(() => {
+        result.current.actions.prependMedia({
+          media: [
+            {
+              id: 456,
+            },
+            {
+              id: 789,
+            },
+          ],
+        });
+      });
+
+      expect(result.current.state).toStrictEqual(
+        expect.objectContaining({
+          media: [{ id: 789 }, { id: 123 }, { id: 456 }],
+        })
+      );
+    });
+  });
 });

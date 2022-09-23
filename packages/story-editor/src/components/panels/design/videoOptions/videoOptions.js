@@ -29,9 +29,11 @@ import {
   BUTTON_TYPES,
   BUTTON_VARIANTS,
   useLiveRegion,
+  Slider,
 } from '@googleforcreators/design-system';
-import { useEffect } from '@googleforcreators/react';
-
+import { useEffect, useInitializedValue } from '@googleforcreators/react';
+import { useFeature } from 'flagged';
+import { v4 as uuidv4 } from 'uuid';
 /**
  * Internal dependencies
  */
@@ -62,6 +64,12 @@ const Spinner = styled.div`
   margin-left: 4px;
   margin-top: 4px;
 `;
+const StyledSlider = styled(Slider)`
+  width: 100%;
+`;
+const VolumeWrapper = styled.div`
+  margin-bottom: 20px;
+`;
 
 const HelperText = styled(Text).attrs({
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL,
@@ -73,7 +81,11 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
   const resource = getCommonValue(selectedElements, 'resource');
   const elementId = getCommonValue(selectedElements, 'id');
   const loop = getCommonValue(selectedElements, 'loop');
+  const volume = getCommonValue(selectedElements, 'volume', 1);
   const isSingleElement = selectedElements.length === 1;
+  const enableVideoVolume = useFeature('videoVolume');
+  const showVolumeControl =
+    enableVideoVolume && isSingleElement && !resource?.isMuted;
 
   const {
     state: { canTrim, canMute, isTrimming, isMuting, isDisabled },
@@ -103,6 +115,12 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
   }, [isTrimming, trimButtonText, speak]);
 
   const onChange = (evt) => pushUpdate({ loop: evt.target.checked }, true);
+  const onChangeVolume = (value) => {
+    const newVolume = Math.max(0.1, value / 100);
+    pushUpdate({ volume: newVolume }, true);
+  };
+
+  const slideId = useInitializedValue(() => `slide-${uuidv4()}`);
 
   const Processing = () => {
     return (
@@ -134,6 +152,27 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
           </TrimWrapper>
         )}
       </Row>
+      {showVolumeControl && (
+        <VolumeWrapper>
+          <Text
+            as="label"
+            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+            htmlFor={slideId}
+          >
+            {__('Volume', 'web-stories')}
+          </Text>
+          <StyledSlider
+            value={Math.round(volume * 100)}
+            handleChange={onChangeVolume}
+            minorStep={5}
+            majorStep={10}
+            min={0}
+            max={100}
+            id={slideId}
+            aria-label={__('Volume', 'web-stories')}
+          />
+        </VolumeWrapper>
+      )}
       {canMute && (
         <>
           <Row spaceBetween={false}>

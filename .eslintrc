@@ -24,6 +24,7 @@
     "styled-components-a11y"
   ],
   "parserOptions": {
+    "ecmaVersion": "latest",
     "ecmaFeatures": {
       "jsx": true
     }
@@ -35,6 +36,8 @@
     "consistent-return": "error",
     "curly": ["error", "all"],
     "default-case": "error",
+    "eol-last": "error",
+    "eqeqeq": "error",
     "guard-for-in": "error",
     "no-await-in-loop": "error",
     "no-constant-binary-expression": "error",
@@ -48,6 +51,8 @@
     "no-new": "error",
     "no-new-func": "error",
     "no-new-wrappers": "error",
+    "no-multiple-empty-lines": "error",
+    "no-trailing-spaces": "error",
     "header/header": [ "error", "block", [
       "",
       {
@@ -119,6 +124,12 @@
     "no-console": "error",
     "no-duplicate-imports": "error",
     "no-var": "error",
+    "prefer-arrow-callback": [
+      "error",
+      {
+        "allowNamedFunctions": true
+      }
+    ],
     "prefer-const": "error",
     "prefer-object-spread": "error",
     "prefer-promise-reject-errors": "error",
@@ -131,6 +142,20 @@
       "forbid": ["for"]
     }],
     "react/no-array-index-key": "warn",
+    "react/no-unknown-property": [
+      "error",
+      {
+        "ignore": [
+          "amp",
+          "amp-boilerplate",
+          "amp-custom",
+          "animate-in",
+          "animate-in-delay",
+          "animate-in-duration",
+          "custom-element"
+        ]
+      }
+    ],
     "react/prop-types": "error",
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": [
@@ -250,7 +275,8 @@
           "^@googleforcreators\\/(.*)\\/(.*)": "./packages/$1/src/$2",
           "^@googleforcreators\\/(.*)": "./packages/$1/src/",
           "^@web-stories-wp\\/(.*)": "./packages/$1/src/"
-        }
+        },
+        "extensions": [ ".js", ".jsx", ".ts", ".tsx" ]
       }
     },
     "jsdoc": {
@@ -286,11 +312,82 @@
   "overrides": [
     {
       "files": [
+        "**/*.ts",
+        "**/*.tsx"
+      ],
+      "excludedFiles": [
+        "**/*.d.ts"
+      ],
+      "plugins": [
+        "@typescript-eslint"
+      ],
+      "extends": [
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@typescript-eslint/recommended-requiring-type-checking"
+      ],
+      "parser": "@typescript-eslint/parser",
+      "parserOptions": {
+        "project": [
+          "./tsconfig.json",
+          "./packages/*/tsconfig.json"
+        ]
+      },
+      "rules": {
+        "@typescript-eslint/no-duplicate-imports": "error",
+        "@typescript-eslint/no-shadow": "error",
+        "@typescript-eslint/unbound-method": [
+          "error",
+          {
+            "ignoreStatic": true
+          }
+        ],
+        "@typescript-eslint/no-unused-vars": [
+          "error",
+          {
+            "ignoreRestSiblings": true
+          }
+        ],
+        "react/prop-types": "off",
+        "jsdoc/check-param-names": "off",
+        "jsdoc/require-param": "off",
+        "jsdoc/require-param-type": "off",
+        "jsdoc/require-returns": "off",
+        "jsdoc/require-returns-check": "off",
+        "jsdoc/require-returns-type": "off",
+        "jsdoc/no-types": "error",
+        "no-duplicate-imports": "off",
+        "no-unused-vars": "off",
+        "no-shadow": "off",
+        "no-restricted-imports": [
+          "error",
+          {
+            "paths": [
+              {
+                "name": "prop-types",
+                "message": "Use TypeScript instead."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": [
+        "typings/**/*.ts",
+        "**/*.d.ts"
+      ],
+      "rules": {
+        "no-undef": "off",
+        "no-unused-vars": "off",
+        "no-var": "off",
+        "@wordpress/dependency-group": "off"
+      }
+    },
+    {
+      "files": [
         "__mocks__/**/*.js",
-        "**/__tests__/**/*.js",
         "**/test/**/*.js",
         "**/testUtils/**/*.js",
-        "**/?(*.)test.js",
         "tests/js/**/*.js"
       ],
       "excludedFiles": [
@@ -300,7 +397,8 @@
       "extends": [
         "plugin:jest/all",
         "plugin:testing-library/react",
-        "plugin:jest-dom/recommended"
+        "plugin:jest-dom/recommended",
+        "plugin:jest-extended/all"
       ],
       "plugins": [
         "jsx-a11y",
@@ -315,6 +413,7 @@
         "eslint-comments/require-description": "off",
         "react/prop-types": "off",
         "jest/no-hooks": "off",
+        "jest/max-expects": "off",
         "jest/prefer-expect-assertions": "off",
         "jest/prefer-inline-snapshots": "off",
         "jest/prefer-lowercase-title": [
@@ -323,8 +422,10 @@
             "ignore": ["describe"]
           }
         ],
+        "jest/prefer-mock-promise-shorthand": "off",
         "jest/prefer-snapshot-hint": "off",
         "jsdoc/require-jsdoc": "off",
+        "jest/unbound-method": "off",
         "testing-library/no-await-sync-events": "error",
         "testing-library/no-debugging-utils": "error",
         "testing-library/no-dom-import": "error"
@@ -415,6 +516,7 @@
       },
       "rules": {
         "eslint-comments/require-description": "off",
+        "jest/max-expects": "off",
         "jest/no-hooks": "off",
         "jest/prefer-expect-assertions": "off",
         "jest/prefer-inline-snapshots": "off",
@@ -438,7 +540,8 @@
             ]
           }
         ],
-        "jest/prefer-snapshot-hint": "off"
+        "jest/prefer-snapshot-hint": "off",
+        "jest/unbound-method": "off"
       },
       "globals": {
         "browser": "readonly",
@@ -453,6 +556,7 @@
       "rules": {
         "eslint-comments/require-description": "off",
         "jest/expect-expect": "off",
+        "jest/max-expects": "off",
         "jest/no-export": "off",
         "jest/require-top-level-describe": "off"
       }
@@ -539,7 +643,7 @@
     },
     {
       "files": [
-        "packages/migration/src/utils/updateTemplates.js"
+        "packages/migration/scripts/utils/updateTemplates.js"
       ],
       "rules": {
         "eslint-comments/no-unused-disable": "off"

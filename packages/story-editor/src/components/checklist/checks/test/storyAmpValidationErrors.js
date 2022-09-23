@@ -39,7 +39,7 @@ describe('getStoryAmpValidationErrors', () => {
   it('should return false if no link', async () => {
     await expect(
       getStoryAmpValidationErrors({ link: null, status: 'draft' })
-    ).resolves.toBe(false);
+    ).resolves.toBeFalse();
   });
 
   it('should return false if there are no violations', async () => {
@@ -59,7 +59,7 @@ describe('getStoryAmpValidationErrors', () => {
         link: 'http://test/web-stories/123',
         status: 'publish',
       })
-    ).resolves.toBe(false);
+    ).resolves.toBeFalse();
   });
 
   it('should return true if there are AMP violations', async () => {
@@ -88,7 +88,7 @@ describe('getStoryAmpValidationErrors', () => {
         link: 'http://test/web-stories/123',
         status: 'publish',
       })
-    ).resolves.toBe(true);
+    ).resolves.toBeTrue();
   });
 
   it('should return false if there are no ERROR severity errors', async () => {
@@ -111,7 +111,7 @@ describe('getStoryAmpValidationErrors', () => {
         link: 'http://test/web-stories/123',
         status: 'publish',
       })
-    ).resolves.toBe(false);
+    ).resolves.toBeFalse();
   });
 
   it('should return false if MISSING URL is the only AMP Violation', async () => {
@@ -137,6 +137,6 @@ describe('getStoryAmpValidationErrors', () => {
         link: 'http://test/web-stories/123',
         status: 'publish',
       })
-    ).resolves.toBe(false);
+    ).resolves.toBeFalse();
   });
 });

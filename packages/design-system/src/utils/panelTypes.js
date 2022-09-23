@@ -20,6 +20,7 @@ const CAPTIONS = 'captions';
 const FILTER = 'filter';
 const IMAGE_ACCESSIBILITY = 'imageAccessibility';
 const LINK = 'link';
+const PAGE_ADVANCEMENT = 'pageAdvancement';
 const PAGE_ATTACHMENT = 'pageAttachment';
 const PAGE_BACKGROUND = 'pageBackground';
 const PAGE_BACKGROUND_AUDIO = 'pageBackgroundAudio';
@@ -35,6 +36,7 @@ const PRODUCT = 'product';
 const PanelTypes = {
   ELEMENT_ALIGNMENT,
   PAGE_BACKGROUND,
+  PAGE_ADVANCEMENT,
   PAGE_ATTACHMENT,
   PAGE_BACKGROUND_AUDIO,
   SIZE_POSITION,

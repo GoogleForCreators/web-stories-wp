@@ -30,8 +30,8 @@ import {
   VIEW_STYLE,
 } from '../../constants';
 
-describe('useStoryView()', function () {
-  it('should have the default options initially selected', function () {
+describe('useStoryView()', () => {
+  it('should have the default options initially selected', () => {
     const { result } = renderHook(() => useStoryView({ totalPages: 1 }), {});
 
     expect(result.current.filters.value.status).toBe(STORY_STATUSES[0].value);
@@ -40,7 +40,7 @@ describe('useStoryView()', function () {
     expect(result.current.page.value).toBe(1);
   });
 
-  it('should set the new filter when passed and reset the page.', function () {
+  it('should set the new filter when passed and reset the page.', () => {
     const { result } = renderHook(() => useStoryView({ totalPages: 2 }), {});
 
     act(() => {
@@ -61,7 +61,7 @@ describe('useStoryView()', function () {
     expect(result.current.page.value).toBe(1);
   });
 
-  it('should set the new sort when passed and reset the page.', function () {
+  it('should set the new sort when passed and reset the page.', () => {
     const { result } = renderHook(() => useStoryView({ totalPages: 2 }), {});
 
     act(() => {
@@ -76,7 +76,7 @@ describe('useStoryView()', function () {
     expect(result.current.page.value).toBe(1);
   });
 
-  it('should set the new filters when passed and reset the page.', function () {
+  it('should set the new filters when passed and reset the page.', () => {
     const { result } = renderHook(() => useStoryView({ totalPages: 2 }), {});
 
     act(() => {
@@ -93,7 +93,7 @@ describe('useStoryView()', function () {
     expect(result.current.page.value).toBe(1);
   });
 
-  it('should set the new search keyword when typed and reset the page.', function () {
+  it('should set the new search keyword when typed and reset the page.', () => {
     const { result } = renderHook(() => useStoryView({ totalPages: 2 }), {});
 
     act(() => {
@@ -110,7 +110,7 @@ describe('useStoryView()', function () {
     expect(result.current.page.value).toBe(1);
   });
 
-  it('should set the new view style when toggled.', function () {
+  it('should set the new view style when toggled.', () => {
     const { result } = renderHook(() => useStoryView({ totalPages: 2 }), {});
 
     expect(result.current.view.style).toBe(VIEW_STYLE.GRID);
@@ -121,7 +121,7 @@ describe('useStoryView()', function () {
     expect(result.current.view.style).toBe(VIEW_STYLE.LIST);
   });
 
-  it('should request the next page when called.', function () {
+  it('should request the next page when called.', () => {
     const { result } = renderHook(() => useStoryView({ totalPages: 2 }), {});
 
     act(() => {
@@ -131,7 +131,7 @@ describe('useStoryView()', function () {
     expect(result.current.page.value).toBe(2);
   });
 
-  it('should request the next page when called and not exceed maximum pages.', function () {
+  it('should request the next page when called and not exceed maximum pages.', () => {
     const { result } = renderHook(() => useStoryView({ totalPages: 2 }), {});
 
     act(() => {
@@ -150,7 +150,7 @@ describe('useStoryView()', function () {
   it('should not show stories while loading by default', () => {
     const { result } = renderHook(() => useStoryView({ totalPages: 2 }), {});
 
-    expect(result.current.showStoriesWhileLoading.current).toBe(false);
+    expect(result.current.showStoriesWhileLoading.current).toBeFalse();
   });
 
   it('should set showStoriesWhileLoading to true when next page is called', () => {
@@ -160,7 +160,7 @@ describe('useStoryView()', function () {
       result.current.page.requestNextPage();
     });
 
-    expect(result.current.showStoriesWhileLoading.current).toBe(true);
+    expect(result.current.showStoriesWhileLoading.current).toBeTrue();
   });
 
   it('should reset showStoriesWhileLoading when `isLoading` is set to false', () => {
@@ -178,12 +178,12 @@ describe('useStoryView()', function () {
     act(() => {
       result.current.page.requestNextPage();
     });
-    expect(result.current.showStoriesWhileLoading.current).toBe(true);
+    expect(result.current.showStoriesWhileLoading.current).toBeTrue();
 
     isLoading = false;
 
     rerender();
 
-    expect(result.current.showStoriesWhileLoading.current).toBe(false);
+    expect(result.current.showStoriesWhileLoading.current).toBeFalse();
   });
 });

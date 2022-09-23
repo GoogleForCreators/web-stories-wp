@@ -32,7 +32,6 @@ describe('Shape Design Menu: Keyboard Navigation', () => {
 
   beforeEach(async () => {
     fixture = new Fixture();
-    fixture.setFlags({ floatingMenu: true });
     await fixture.render();
     await fixture.collapseHelpCenter();
 
@@ -177,6 +176,10 @@ describe('Shape Design Menu: Keyboard Navigation', () => {
     // Arrow right to more button
     await fixture.events.keyboard.press('ArrowRight');
     expect(document.activeElement.getAttribute('title')).toBe('More');
+
+    // Arrow right to Menu settings
+    await fixture.events.keyboard.press('ArrowRight');
+    expect(document.activeElement.getAttribute('title')).toBe('Menu settings');
 
     // Arrow right to Dismiss menu button
     await fixture.events.keyboard.press('ArrowRight');

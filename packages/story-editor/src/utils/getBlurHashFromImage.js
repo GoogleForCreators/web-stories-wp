@@ -42,7 +42,16 @@ const getBlurHashFromImage = async (src) => {
   } catch {
     return Promise.reject(new Error('Failed to get blurhash from image'));
   }
-  const imageData = getImageData(image);
+
+  let imageData;
+
+  try {
+    imageData = getImageData(image);
+  } catch {
+    // For example if `CanvasRenderingContext2D.getImageData()` throws.
+    return Promise.reject(new Error('Failed to get blurhash from image'));
+  }
+
   const { data, width, height } = imageData;
 
   const trackTiming = getTimeTracker('load_get_blurhash');
@@ -56,7 +65,7 @@ const getBlurHashFromImage = async (src) => {
       componentX: 4,
       componentY: 4,
     });
-    worker.addEventListener('message', function (event) {
+    worker.addEventListener('message', (event) => {
       worker.terminate(); // lgtm [js/property-access-on-non-object]
       trackTiming();
       if (event.data.type === 'success') {

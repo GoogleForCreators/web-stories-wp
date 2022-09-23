@@ -44,10 +44,10 @@ describe('publisherLogoSize', () => {
     const testHeight = publisherLogoSize(testHeightPublisherLogo);
     const testWidth = publisherLogoSize(testWidthPublisherLogo);
     const test = publisherLogoSize(testPublisherLogo);
-    expect(testHappy).toBe(false);
-    expect(testNoLogo).toBe(false);
-    expect(testHeight).toBe(true);
-    expect(testWidth).toBe(true);
-    expect(test).toBe(true);
+    expect(testHappy).toBeFalse();
+    expect(testNoLogo).toBeFalse();
+    expect(testHeight).toBeTrue();
+    expect(testWidth).toBeTrue();
+    expect(test).toBeTrue();
   });
 });

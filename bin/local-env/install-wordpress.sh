@@ -56,10 +56,13 @@ fi
 echo -e $(status_message "Installing WordPress...")
 wp core install --title="$SITE_TITLE" --admin_user=admin --admin_password=password --admin_email=test@test.com --skip-email --url=http://localhost:$HOST_PORT --quiet
 
+# Potentially update WordPress
 if [ "$WP_VERSION" == "latest" ]; then
-	# Potentially update WordPress
-	echo -e $(status_message "Updating WordPress")
+	echo -e $(status_message "Updating WordPress to the latest major")
 	wp core update --force --quiet
+else
+  echo -e $(status_message "Updating WordPress to the latest minor")
+  wp core update --minor --force --quiet
 fi
 
 # Create additional users.

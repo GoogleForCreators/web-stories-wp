@@ -117,8 +117,8 @@ describe.skip('Inserting WebM Video', () => {
     );
     // Clicking will only act on the first element.
     await expect(page).toClick('[data-testid="mediaElement-video"]');
-    const insertButton = await page.waitForXPath(
-      `//li//span[contains(text(), 'Insert video')]`
+    const insertButton = await page.waitForSelector(
+      `xpath/.//li//span[contains(text(), 'Insert video')]`
     );
     await insertButton.click();
 
@@ -144,8 +144,8 @@ describe.skip('Inserting WebM Video', () => {
     );
     // Clicking will only act on the first element.
     await expect(page).toClick('[data-testid="mediaElement-video"]');
-    const insertButton = await page.waitForXPath(
-      `//li//span[contains(text(), 'Insert video')]`
+    const insertButton = await page.waitForSelector(
+      `xpath/.//li//span[contains(text(), 'Insert video')]`
     );
     await insertButton.click();
 

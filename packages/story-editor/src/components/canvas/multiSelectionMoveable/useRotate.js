@@ -42,7 +42,7 @@ function useRotate({
       const { element } = targetList[i];
       sFrame.rotate = normalizeRotationDegrees(beforeRotate);
       sFrame.translate = drag.beforeTranslate;
-      setTransformStyle(element.id, target, sFrame);
+      setTransformStyle(element, target, sFrame);
     });
   };
   const onRotateGroupEnd = ({ targets }) => {

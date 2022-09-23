@@ -27,7 +27,7 @@ jobs:
     if: github.event.pull_request.merged == true
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@74b568e8591fbb3115c70f3436a0c6b0909a8504
+        uses: step-security/harden-runner@dd2c410b088af7c0dc8046f3ac9a8f4148492a95
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
@@ -58,7 +58,7 @@ jobs:
           RELEASE_ID: ${{ steps.release.outputs.release_id }}
 
       - name: Retrieve linked issues
-        uses: actions/github-script@7a5c598405937d486b0331594b5da2b14db670da
+        uses: actions/github-script@c713e510dbd7d213d92d41b7a7805a986f4c5c66
         id: linked-issues
         with:
           script: |

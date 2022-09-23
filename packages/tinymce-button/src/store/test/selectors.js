@@ -44,7 +44,7 @@ describe('Test Store Selectors', () => {
     };
 
     const ModalOpen = selector.getModal(state);
-    expect(ModalOpen).toBe(true);
+    expect(ModalOpen).toBeTrue();
   });
 
   it('get editor', () => {
@@ -67,6 +67,7 @@ describe('Test Store Selectors', () => {
 
   it('get current view settings for round', () => {
     const state = {
+      currentView: 'round',
       settings: {
         round: {
           test: 'dummy',

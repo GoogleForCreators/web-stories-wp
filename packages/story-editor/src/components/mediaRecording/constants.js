@@ -18,6 +18,8 @@ export const MAX_RECORDING_DURATION_IN_SECONDS = 120;
 export const MAX_RECORDING_DURATION_IN_MINUTES = 2;
 export const COUNTDOWN_TIME_IN_SECONDS = 3;
 
+export const BACKGROUND_BLUR_PX = 3;
+
 export const VIDEO_MIME_TYPE = 'video/mp4';
 export const VIDEO_FILE_TYPE = 'mp4';
 
@@ -26,3 +28,7 @@ export const AUDIO_FILE_TYPE = 'mp3';
 
 export const PHOTO_MIME_TYPE = 'image/jpeg';
 export const PHOTO_FILE_TYPE = 'jpeg';
+
+export const SETTINGS_POPUP_ZINDEX = 11;
+
+export const VIDEO_EFFECTS = { NONE: 'none', BLUR: 'blur' };

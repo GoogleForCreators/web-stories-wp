@@ -56,6 +56,6 @@ describe('help center toggle <Toggle />', () => {
 
     const toggle = screen.getByRole('button');
     fireEvent.click(toggle);
-    expect(onClickMock).toHaveBeenCalledTimes(1);
+    expect(onClickMock).toHaveBeenCalledOnce();
   });
 });

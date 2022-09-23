@@ -45,7 +45,7 @@ const keys = {
  * the hook.
  */
 function testIsKeyPressed(result, node, { key, which }, shouldRegister = true) {
-  expect(result.current).toBe(false);
+  expect(result.current).toBeFalse();
 
   // eslint-disable-next-line testing-library/no-unnecessary-act
   act(() => {
@@ -59,7 +59,7 @@ function testIsKeyPressed(result, node, { key, which }, shouldRegister = true) {
     fireEvent.keyUp(node, { key, which });
   });
 
-  expect(result.current).toBe(false);
+  expect(result.current).toBeFalse();
 }
 
 describe('keyboard/index.js', () => {

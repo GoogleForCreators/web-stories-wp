@@ -52,7 +52,7 @@ describe('useMouseDownOutsideRef', () => {
 
     fireEvent.mouseDown(elementOutsideContextMenu);
 
-    expect(handleMouseDownOutside).toHaveBeenCalledTimes(1);
+    expect(handleMouseDownOutside).toHaveBeenCalledOnce();
   });
 
   it('does not fire when a user mouses down on the referenced node', () => {

@@ -25,8 +25,11 @@ import {
   useRef,
   useState,
 } from '@googleforcreators/react';
-import SAT from 'sat';
 import { UnitsProvider } from '@googleforcreators/units';
+import {
+  LOCAL_STORAGE_PREFIX,
+  localStore,
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -36,7 +39,6 @@ import { useStory } from '../story';
 
 import useCanvasCopyPaste from './useCanvasCopyPaste';
 import useEditingElement from './useEditingElement';
-import createPolygon from './utils/createPolygon';
 
 import Context from './context';
 import { RECT_OBSERVATION_KEY } from './constants';
@@ -56,6 +58,18 @@ function CanvasProvider({ children }) {
   const [isEyedropperActive, setIsEyedropperActive] = useState(null);
   const [eyedropperCallback, setEyedropperCallback] = useState(null);
   const [renamableLayer, setRenamableLayer] = useState(null);
+  const [floatingMenuPosition, setFloatingMenuPosition] = useState(() => {
+    const local = localStore.getItemByKey(
+      LOCAL_STORAGE_PREFIX.ELEMENT_TOOLBAR_SETTINGS
+    );
+    return local?.position;
+  });
+  const [displayFloatingMenu, setDisplayFloatingMenu] = useState(() => {
+    const local = localStore.getItemByKey(
+      LOCAL_STORAGE_PREFIX.ELEMENT_TOOLBAR_SETTINGS
+    );
+    return local?.isDisplayed;
+  });
 
   // IntersectionObserver tracks clientRects which is what we need here.
   // different from use case of useIntersectionEffect because this is extensible
@@ -95,7 +109,6 @@ function CanvasProvider({ children }) {
   } = useEditingElement();
 
   const {
-    elements,
     backgroundElementId,
     selectedElementIds,
     toggleElementInSelection,
@@ -107,7 +120,6 @@ function CanvasProvider({ children }) {
     }) => {
       const elements = currentPage?.elements || [];
       return {
-        elements,
         backgroundElementId: elements[0]?.id,
         selectedElementIds,
         toggleElementInSelection,
@@ -163,25 +175,6 @@ function CanvasProvider({ children }) {
     ]
   );
 
-  const selectIntersection = useCallback(
-    ({ x: lx, y: ly, width: lw, height: lh }) => {
-      const lassoP = createPolygon(0, lx, ly, lw, lh);
-      const newSelectedElementIds = elements
-        // Skip background and locked elements
-        .filter(({ isBackground, isLocked }) => !isBackground && !isLocked)
-        .map(({ id, rotationAngle, x, y, width, height }) => {
-          const elementP = createPolygon(rotationAngle, x, y, width, height);
-          return SAT.testPolygonPolygon(lassoP, elementP) ? id : null;
-        })
-        .filter((id) => id);
-      setSelectedElementsById({
-        elementIds: newSelectedElementIds,
-        withLinked: true,
-      });
-    },
-    [elements, setSelectedElementsById]
-  );
-
   // Reset editing mode when selection changes.
   useEffect(() => {
     if (
@@ -225,6 +218,8 @@ function CanvasProvider({ children }) {
         clientRectObserver,
         onMoveableMount,
         renamableLayer,
+        floatingMenuPosition,
+        displayFloatingMenu,
       },
       actions: {
         setPageContainer,
@@ -235,7 +230,6 @@ function CanvasProvider({ children }) {
         setEditingElementWithState,
         clearEditing,
         handleSelectElement,
-        selectIntersection,
         setDisplayLinkGuidelines,
         setPageAttachmentContainer,
         setCanvasContainer,
@@ -246,6 +240,8 @@ function CanvasProvider({ children }) {
         setEyedropperPixelData,
         setMoveableMount,
         setRenamableLayer,
+        setFloatingMenuPosition,
+        setDisplayFloatingMenu,
       },
     }),
     [
@@ -267,12 +263,13 @@ function CanvasProvider({ children }) {
       clientRectObserver,
       renamableLayer,
       getNodeForElement,
+      floatingMenuPosition,
+      displayFloatingMenu,
       setNodeForElement,
       setEditingElementWithoutState,
       setEditingElementWithState,
       clearEditing,
       handleSelectElement,
-      selectIntersection,
       onMoveableMount,
       setMoveableMount,
       setRenamableLayer,

@@ -62,19 +62,19 @@ on:
 
 permissions:
   contents: read
+  pull-requests: write
 
 # Cancels all previous workflow runs for pull requests that have not completed.
 concurrency:
-  # The concurrency group contains the workflow name and the branch name for pull requests
-  # or the commit hash for any other events.
-  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.head_ref || github.sha }}
+  # The concurrency group contains the workflow name and the (target) branch name.
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
   cancel-in-progress: true
 
 jobs:
   bundle-size:
     name: Bundle size check
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     # The action cannot annotate the PR when run from a PR fork or authored by Dependabot.
     if: >
       github.event_name == 'pull_request' &&
@@ -83,7 +83,7 @@ jobs:
       github.event.pull_request.user.login != 'dependabot[bot]'
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@74b568e8591fbb3115c70f3436a0c6b0909a8504
+        uses: step-security/harden-runner@dd2c410b088af7c0dc8046f3ac9a8f4148492a95
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
@@ -107,16 +107,16 @@ jobs:
           strip-hash: '.*-(\w{20})|^(\d{2,5})\.js$'
 
   build:
-    name: Package ZIP files
+    name: Build & deploy
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     if: >
       github.event.pull_request.draft == false &&
       github.event.pull_request.head.repo.fork == false &&
       github.event.pull_request.user.login != 'dependabot[bot]'
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@74b568e8591fbb3115c70f3436a0c6b0909a8504
+        uses: step-security/harden-runner@dd2c410b088af7c0dc8046f3ac9a8f4148492a95
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
@@ -130,7 +130,7 @@ jobs:
           cache: npm
 
       - name: Setup PHP
-        uses: shivammathur/setup-php@945c34c1751f6d2c8106ec0feba5662fcbc1c943
+        uses: shivammathur/setup-php@e04e1d97f0c0481c6e1ba40f8a538454fe5d7709
         with:
           php-version: '8.0'
           coverage: none
@@ -154,86 +154,16 @@ jobs:
 
       - name: Bundle regular version
         run: |
-          npm run workflow:build-plugin
-          mv build/web-stories build/web-stories-regular/
+          npm run workflow:build-plugin -- --zip web-stories.zip
+          cp -r build/web-stories/ build/web-stories-regular/
 
       - name: Bundle development version
         run: |
           rm -rf assets/css/* assets/js/*
           npx webpack --node-env=development
-          npm run workflow:build-plugin
-          mv build/web-stories build/web-stories-dev/
+          npm run workflow:build-plugin -- --zip web-stories-dev.zip
 
-      - name: Upload regular bundle
-        uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8
-        with:
-          name: web-stories
-          path: build/web-stories-regular
-
-      - name: Upload development bundle
-        uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8
-        with:
-          name: web-stories-dev
-          path: build/web-stories-dev
-
-  bundle:
-    name: Bundle npm packages
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-    if: >
-      github.event.pull_request.draft == false &&
-      github.event.pull_request.head.repo.fork == false &&
-      github.event.pull_request.user.login != 'dependabot[bot]'
-    steps:
-      - name: Harden Runner
-        uses: step-security/harden-runner@74b568e8591fbb3115c70f3436a0c6b0909a8504
-        with:
-          egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
-
-      - name: Checkout
-        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
-
-      - name: Setup Node
-        uses: actions/setup-node@2fddd8803e2f5c9604345a0b591c3020ee971a93
-        with:
-          node-version-file: '.nvmrc'
-          cache: npm
-
-      - name: Install dependencies
-        run: npm ci
-        env:
-          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
-
-      - name: Bundle packages
-        run: npm run workflow:bundle-packages
-
-  upload-artifacts:
-    name: Upload ZIP files to storage
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    # Only run if the PR was not authored by Dependabot and it is not a draft or not from a fork.
-    if: >
-      github.event.pull_request.draft == false &&
-      github.event.pull_request.head.repo.fork == false &&
-      github.event.pull_request.user.login != 'dependabot[bot]'
-    needs: build
-    steps:
-      - name: Harden Runner
-        uses: step-security/harden-runner@74b568e8591fbb3115c70f3436a0c6b0909a8504
-        with:
-          egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
-
-      - name: Download all artifacts
-        uses: actions/download-artifact@fb598a63ae348fa914e94cd0ff38f362e927b741
-        with:
-          path: ${{ github.ref }}
-
-      - name: ZIP artifacts
-        run: |
-          rm -rf web-stories.zip web-stories-dev.zip
-          (cd web-stories && zip -mrT web-stories.zip web-stories && mv web-stories.zip ../ )
-          (cd web-stories-dev && zip -mrT web-stories-dev.zip web-stories && mv web-stories-dev.zip ../ )
-        working-directory: ${{ github.ref }}
+      # Upload ZIP file to GCS for use in QA environment.
 
       - name: Setup Cloud SDK
         uses: google-github-actions/setup-gcloud@877d4953d2c70a0ba7ef3290ae968eb24af233bb
@@ -241,64 +171,12 @@ jobs:
           project_id: ${{ secrets.GCP_PROJECT_ID }}
           service_account_key: ${{ secrets.GCP_SA_KEY }}
 
-      - name: Upload dev build to GCS
-        run: gsutil cp -r web-stories-dev.zip gs://web-stories-wp-github-artifacts/${{ github.ref }}/web-stories-dev.zip
-        working-directory: ${{ github.ref }}
+      - name: Upload ZIP files to GCS
+        run: |
+          gsutil cp -r build/web-stories.zip gs://web-stories-wp-github-artifacts/${{ github.ref }}/web-stories.zip
+          gsutil cp -r build/web-stories-dev.zip gs://web-stories-wp-github-artifacts/${{ github.ref }}/web-stories-dev.zip
 
-      - name: Upload prod build to GCS
-        run: gsutil cp -r web-stories.zip gs://web-stories-wp-github-artifacts/${{ github.ref }}/web-stories.zip
-        working-directory: ${{ github.ref }}
-
-  deploy-to-staging:
-    name: Deploy to staging environment
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    needs: [build]
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-
-    steps:
-      - name: Harden Runner
-        uses: step-security/harden-runner@74b568e8591fbb3115c70f3436a0c6b0909a8504
-        with:
-          egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
-
-      - name: Checkout
-        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
-
-      - name: Download full bundle
-        uses: actions/download-artifact@fb598a63ae348fa914e94cd0ff38f362e927b741
-        with:
-          name: web-stories
-          path: build
-
-      - name: Setup SSH Keys and known_hosts
-        uses: webfactory/ssh-agent@fc49353b67b2b7c1e0e6a600572d01a69f2672dd
-        with:
-          ssh-private-key: ${{ secrets.PANTHEON_DEPLOY_KEY }}
-
-      - name: Run deployment
-        run: bash bin/deploy-to-test-environment.sh
-
-  comment-on-pr:
-    name: Leave comment with links to plugin ZIPs
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    # Only run this job if it's a PR. One way to check for that is if `github.head_ref` is not empty.
-    # Only run if the PR was not authored by Dependabot and it is not a draft or not from a fork.
-    if: >
-      github.head_ref &&
-      github.event.pull_request.draft == false &&
-      github.event.pull_request.head.repo.fork == false &&
-      github.event.pull_request.user.login != 'dependabot[bot]'
-    needs: upload-artifacts
-    outputs:
-      comment_body: ${{ steps.get-comment-body.outputs.body }}
-
-    steps:
-      - name: Harden Runner
-        uses: step-security/harden-runner@74b568e8591fbb3115c70f3436a0c6b0909a8504
-        with:
-          egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
+      # Leave comment with links to plugin ZIPs.
 
       - name: Check if a comment was already made
         id: find-comment
@@ -307,6 +185,13 @@ jobs:
           issue-number: ${{ github.event.pull_request.number }}
           comment-author: googleforcreators-bot
           body-includes: Plugin builds for
+        # Only run this step if it's a PR. One way to check for that is if `github.head_ref` is not empty.
+        # Only run if the PR was not authored by Dependabot and it is not a draft or not from a fork.
+        if: >
+          github.head_ref &&
+          github.event.pull_request.draft == false &&
+          github.event.pull_request.head.repo.fork == false &&
+          github.event.pull_request.user.login != 'dependabot[bot]'
 
       - name: Get comment body
         id: get-comment-body
@@ -317,20 +202,50 @@ jobs:
           - Download [production build](https://storage.googleapis.com/web-stories-wp-github-artifacts/${{ github.ref }}/web-stories.zip?${{ github.sha }})"
           body="${body//$'\n'/'%0A'}"
           echo "::set-output name=body::$body"
+        if: >
+          github.head_ref &&
+          github.event.pull_request.draft == false &&
+          github.event.pull_request.head.repo.fork == false &&
+          github.event.pull_request.user.login != 'dependabot[bot]'
 
       - name: Create comment on PR with links to plugin builds
-        if: ${{ steps.find-comment.outputs.comment-id == '' }}
         uses: peter-evans/create-or-update-comment@c9fcb64660bc90ec1cc535646af190c992007c32
         with:
           issue-number: ${{ github.event.pull_request.number }}
           body: ${{ steps.get-comment-body.outputs.body }}
           token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
+        if: >
+          github.head_ref &&
+          github.event.pull_request.draft == false &&
+          github.event.pull_request.head.repo.fork == false &&
+          github.event.pull_request.user.login != 'dependabot[bot]' &&
+          steps.find-comment.outputs.comment-id == ''
 
       - name: Update comment on PR with links to plugin builds
-        if: ${{ steps.find-comment.outputs.comment-id != '' }}
         uses: peter-evans/create-or-update-comment@c9fcb64660bc90ec1cc535646af190c992007c32
         with:
           comment-id: ${{ steps.find-comment.outputs.comment-id }}
           edit-mode: replace
           body: ${{ steps.get-comment-body.outputs.body }}
           token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
+        if: >
+          github.head_ref &&
+          github.event.pull_request.draft == false &&
+          github.event.pull_request.head.repo.fork == false &&
+          github.event.pull_request.user.login != 'dependabot[bot]' &&
+          steps.find-comment.outputs.comment-id != ''
+
+      # Deploy to staging site if on main branch.
+
+      - name: Setup SSH Keys and known_hosts
+        uses: webfactory/ssh-agent@fc49353b67b2b7c1e0e6a600572d01a69f2672dd
+        with:
+          ssh-private-key: ${{ secrets.PANTHEON_DEPLOY_KEY }}
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+
+      - name: Deploy to staging
+        run: |
+          rm -rf build/web-stories
+          mv build/web-stories-regular/* build/web-stories
+          bash bin/deploy-to-test-environment.sh
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'

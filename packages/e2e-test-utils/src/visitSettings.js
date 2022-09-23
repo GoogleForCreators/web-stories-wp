@@ -27,11 +27,7 @@ async function visitSettings() {
 
   await page.waitForSelector('[aria-label="Main dashboard navigation"]');
 
-  const dashboardNavigation = await expect(page).toMatchElement(
-    '[aria-label="Main dashboard navigation"]'
-  );
-
-  await expect(dashboardNavigation).toClick('a', {
+  await expect(page).toClick('[aria-label="Main dashboard navigation"] a', {
     text: 'Settings',
   });
 

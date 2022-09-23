@@ -71,7 +71,7 @@ describe('composeEffects', () => {
     const effectedStateKeys = Object.keys(effectedState);
     const nextKeys = Object.keys(next);
 
-    expect(nextKeys.every((key) => effectedStateKeys.includes(key))).toBe(true);
+    expect(nextKeys.every((key) => effectedStateKeys.includes(key))).toBeTrue();
   });
 
   it('calls all effects sequentially', () => {
@@ -241,7 +241,7 @@ describe('deriveBottomNavigation', () => {
       previousState,
       nextState
     );
-    expect(hasBottomNavigation).toBe(true);
+    expect(hasBottomNavigation).toBeTrue();
   });
 
   it('sets hasBottomNavigation to false if navigationIndex is on menu index', () => {
@@ -255,7 +255,7 @@ describe('deriveBottomNavigation', () => {
       previousState,
       nextState
     );
-    expect(hasBottomNavigation).toBe(false);
+    expect(hasBottomNavigation).toBeFalse();
   });
 });
 
@@ -278,7 +278,7 @@ describe('deriveTransitionDirection', () => {
       previousState,
       nextState
     );
-    expect(isLeftToRightTransition).toBe(true);
+    expect(isLeftToRightTransition).toBeTrue();
   });
 
   it('sets isLeftToRightTransition to false if navigationIndex is decreasing', () => {
@@ -292,7 +292,7 @@ describe('deriveTransitionDirection', () => {
       previousState,
       nextState
     );
-    expect(isLeftToRightTransition).toBe(false);
+    expect(isLeftToRightTransition).toBeFalse();
   });
 });
 
@@ -309,14 +309,14 @@ describe('deriveDisabledButtons', () => {
     const previousState = mockState({ navigationIndex: 5 });
     const nextState = mockState({ navigationIndex: 0 });
     const { isPrevDisabled } = deriveDisabledButtons(previousState, nextState);
-    expect(isPrevDisabled).toBe(true);
+    expect(isPrevDisabled).toBeTrue();
   });
 
   it('sets isPrevDisabled to false if navigationIndex is greater than 0', () => {
     const previousState = mockState({ navigationIndex: 0 });
     const nextState = mockState({ navigationIndex: 5 });
     const { isPrevDisabled } = deriveDisabledButtons(previousState, nextState);
-    expect(isPrevDisabled).toBe(false);
+    expect(isPrevDisabled).toBeFalse();
   });
 
   it('sets isNextDisabled to true if navigationIndex is on last index in navigation flow', () => {
@@ -329,7 +329,7 @@ describe('deriveDisabledButtons', () => {
       navigationFlow: ['tip_1', 'tip_2'],
     });
     const { isNextDisabled } = deriveDisabledButtons(previousState, nextState);
-    expect(isNextDisabled).toBe(true);
+    expect(isNextDisabled).toBeTrue();
   });
 
   it('sets isNextDisabled to false if navigationIndex is not on last index in navigation flow', () => {
@@ -342,7 +342,7 @@ describe('deriveDisabledButtons', () => {
       navigationFlow: ['tip_1', 'tip_2', 'tip_3'],
     });
     const { isNextDisabled } = deriveDisabledButtons(previousState, nextState);
-    expect(isNextDisabled).toBe(false);
+    expect(isNextDisabled).toBeFalse();
   });
 });
 
@@ -363,7 +363,7 @@ describe('deriveReadTip', () => {
       navigationFlow: navigationFlow,
     });
     const { readTips } = deriveReadTip(previousState, nextState);
-    expect(readTips[navigationFlow[0]]).toBe(true);
+    expect(readTips[navigationFlow[0]]).toBeTrue();
   });
 });
 
@@ -429,15 +429,15 @@ describe('resetIsOpeningToTip', () => {
     let previousState = mockState({ isOpeningToTip: false });
     let nextState = mockState({ isOpeningToTip: true });
     const testTrue = resetIsOpeningToTip(previousState, nextState);
-    expect(testTrue.isOpeningToTip).toBe(true);
+    expect(testTrue.isOpeningToTip).toBeTrue();
 
     previousState = mockState({ isOpeningToTip: true });
     const testBothTrue = resetIsOpeningToTip(previousState, nextState);
-    expect(testBothTrue.isOpeningToTip).toBe(false);
+    expect(testBothTrue.isOpeningToTip).toBeFalse();
 
     previousState = mockState({ isOpeningToTip: false });
     nextState = mockState({ isOpeningToTip: false });
     const testBothFalse = resetIsOpeningToTip(previousState, nextState);
-    expect(testBothFalse.isOpeningToTip).toBe(false);
+    expect(testBothFalse.isOpeningToTip).toBeFalse();
   });
 });

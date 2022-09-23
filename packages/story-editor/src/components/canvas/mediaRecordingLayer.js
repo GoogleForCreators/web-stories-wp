@@ -63,39 +63,45 @@ function MediaRecordingLayer() {
 
   const {
     status,
+    inputStatus,
     audioInput,
     videoInput,
     hasVideo,
-    isTrimming,
+    isAdjustingTrim,
     trimData,
-    mediaBlobUrl,
+    originalMediaBlobUrl,
     duration,
     updateMediaDevices,
     getMediaStream,
     resetStream,
     onTrim,
+    videoEffect,
   } = useMediaRecording(({ state, actions }) => ({
     status: state.status,
+    inputStatus: state.inputStatus,
     audioInput: state.audioInput,
     videoInput: state.videoInput,
     hasVideo: state.hasVideo,
-    isTrimming: state.isTrimming,
+    isAdjustingTrim: state.isAdjustingTrim,
     trimData: state.trimData,
-    mediaBlobUrl: state.mediaBlobUrl,
+    originalMediaBlobUrl: state.originalMediaBlobUrl,
     duration: state.duration,
+    videoEffect: state.videoEffect,
     updateMediaDevices: actions.updateMediaDevices,
     getMediaStream: actions.getMediaStream,
     resetStream: actions.resetStream,
     onTrim: actions.onTrim,
   }));
-
-  const isReady = 'ready' === status;
+  const isReady = 'ready' === inputStatus || 'ready' === status;
 
   useEffect(() => {
-    resetStream();
-    getMediaStream();
+    async function run() {
+      resetStream();
+      await getMediaStream();
+    }
+    run();
     // eslint-disable-next-line react-hooks/exhaustive-deps -- Only want to act on actual input changes.
-  }, [audioInput, videoInput, hasVideo]);
+  }, [audioInput, videoInput, hasVideo, videoEffect]);
 
   useEffect(() => {
     if (isReady) {
@@ -105,7 +111,7 @@ function MediaRecordingLayer() {
 
   // Video data was designed for a different purpose, so we need to fake the api a bit here
   const videoData = useMemo(() => {
-    return isTrimming
+    return isAdjustingTrim
       ? {
           element: {
             width: FULLBLEED_RATIO * 480,
@@ -116,13 +122,13 @@ function MediaRecordingLayer() {
             flip: {},
           },
           resource: {
-            src: mediaBlobUrl,
+            src: originalMediaBlobUrl,
             length: duration,
           },
           ...trimData,
         }
       : null;
-  }, [isTrimming, trimData, mediaBlobUrl, duration]);
+  }, [isAdjustingTrim, trimData, originalMediaBlobUrl, duration]);
 
   return (
     // CanvasLayout disables stylisRTLPlugin, but for this subtree we want it again
@@ -139,7 +145,7 @@ function MediaRecordingLayer() {
             <MediaRecording />
           </DisplayPageArea>
           <StyledFooter showOverflow>
-            {isTrimming ? <VideoTrimmer /> : <Footer />}
+            {isAdjustingTrim ? <VideoTrimmer /> : <Footer />}
           </StyledFooter>
         </LayerWithGrayout>
         <SettingsModal />

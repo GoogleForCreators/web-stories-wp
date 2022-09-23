@@ -40,7 +40,7 @@ import {
   blobToFile,
   createBlob,
   getImageFromVideo,
-  formatMsToHMS,
+  getCanvasBlob,
 } from '@googleforcreators/media';
 import { format } from '@googleforcreators/date';
 import { BackgroundAudioPropTypeShape } from '@googleforcreators/elements';
@@ -62,6 +62,7 @@ import {
   COUNTDOWN_TIME_IN_SECONDS,
   PHOTO_MIME_TYPE,
   PHOTO_FILE_TYPE,
+  VIDEO_EFFECTS,
 } from './constants';
 
 const BaseButton = styled(Button).attrs({
@@ -79,8 +80,15 @@ const RecordingButton = styled(BaseButton)`
   }
 `;
 
-const StopButton = styled(BaseButton)`
+const PauseButton = styled(BaseButton).attrs({
+  type: BUTTON_TYPES.SECONDARY,
+})`
   margin-right: 20px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+`;
+
+const StopButton = styled(BaseButton)`
   padding-top: 12px;
   padding-bottom: 12px;
 
@@ -131,7 +139,6 @@ function Footer() {
     countdown,
     duration,
     isCountingDown,
-    trimData,
     setMediaBlobUrl,
     setDuration,
     setCountdown,
@@ -143,8 +150,15 @@ function Footer() {
     resetState,
     resetStream,
     streamNode,
+    canvasStream,
     liveStream,
     hasVideo,
+    videoEffect,
+    pauseRecording,
+    resumeRecording,
+    isProcessingTrim,
+    cancelTrim,
+    canvasNode,
   } = useMediaRecording(({ state, actions }) => ({
     status: state.status,
     file: state.file,
@@ -154,10 +168,12 @@ function Footer() {
     duration: state.duration,
     isCountingDown: state.isCountingDown,
     hasVideo: state.hasVideo,
+    videoEffect: state.videoEffect,
     hasMediaToInsert: Boolean(state.mediaBlobUrl),
-    trimData: state.trimData,
     liveStream: state.liveStream,
     streamNode: state.streamNode,
+    canvasStream: state.canvasStream,
+    isProcessingTrim: state.isProcessingTrim,
     startRecording: actions.startRecording,
     stopRecording: actions.stopRecording,
     setFile: actions.setFile,
@@ -168,6 +184,10 @@ function Footer() {
     getMediaStream: actions.getMediaStream,
     resetState: actions.resetState,
     resetStream: actions.resetStream,
+    pauseRecording: actions.pauseRecording,
+    resumeRecording: actions.resumeRecording,
+    cancelTrim: actions.cancelTrim,
+    canvasNode: state.canvasNode,
   }));
   const videoNode = useVideoTrim(({ state: { videoNode } }) => videoNode);
 
@@ -179,6 +199,16 @@ function Footer() {
     allowedMimeTypes: { audio: allowedAudioMimeTypes },
   } = useConfig();
 
+  const onPause = useCallback(() => {
+    pauseRecording();
+    trackEvent('media_recording_pause');
+  }, [pauseRecording]);
+
+  const onResume = useCallback(() => {
+    resumeRecording();
+    trackEvent('media_recording_resume');
+  }, [resumeRecording]);
+
   const onRetry = useCallback(async () => {
     resetState();
     await getMediaStream();
@@ -186,7 +216,10 @@ function Footer() {
     trackEvent('media_recording_retry');
   }, [getMediaStream, resetState]);
 
-  const debouncedStartRecording = useDebouncedCallback(startRecording, 3000);
+  const debouncedStartRecording = useDebouncedCallback(
+    startRecording,
+    COUNTDOWN_TIME_IN_SECONDS * 1000
+  );
 
   const onStart = useCallback(() => {
     speak(
@@ -209,7 +242,10 @@ function Footer() {
 
   const [isInserting, setIsInserting] = useState(false);
 
-  const isRecording = ['recording', 'stopping', 'stopped'].includes(status);
+  const isRecording = ['recording', 'stopping', 'stopped', 'paused'].includes(
+    status
+  );
+  const isPaused = status === 'paused';
 
   const onInsert = useCallback(async () => {
     setIsInserting(true);
@@ -240,23 +276,12 @@ function Footer() {
       args.resource.isOptimized = true;
       args.resource.isMuted = isMuted;
       args.posterFile = posterFile;
-      // If video has been trimmed, `end` will no longer be `null`,
-      // but some number bigger than 0
-      if (trimData.end) {
-        args.trimData = {
-          start: formatMsToHMS(trimData.start),
-          end: formatMsToHMS(trimData.end),
-        };
-        const trimmedLength = (trimData.end - trimData.start) / 1000;
-        args.resource.length = trimmedLength;
-        args.resource.lengthFormatted = getVideoLengthDisplay(trimmedLength);
-      } else {
-        const { length, lengthFormatted } = getVideoLength(videoNode);
-        args.resource.length = length || duration;
-        args.resource.lengthFormatted = length
-          ? lengthFormatted
-          : getVideoLengthDisplay(duration);
-      }
+
+      const { length, lengthFormatted } = getVideoLength(videoNode);
+      args.resource.length = length || duration;
+      args.resource.lengthFormatted = length
+        ? lengthFormatted
+        : getVideoLengthDisplay(duration);
     }
 
     uploadWithPreview([file], true, args);
@@ -286,8 +311,6 @@ function Footer() {
     isMuted,
     duration,
     toggleRecordingMode,
-    trimData.end,
-    trimData.start,
     videoNode,
     setMediaBlobUrl,
     setFile,
@@ -307,14 +330,20 @@ function Footer() {
   const { showSnackbar } = useSnackbar();
 
   const captureImage = useCallback(async () => {
-    if (!streamNode) {
+    const hasVideoEffect = videoEffect && videoEffect !== VIDEO_EFFECTS.NONE;
+    const inputStream = hasVideoEffect ? canvasStream : streamNode;
+    if (!inputStream) {
       return;
     }
 
     let blob;
 
     try {
-      blob = await getImageFromVideo(streamNode);
+      if (hasVideoEffect) {
+        blob = await getCanvasBlob(canvasNode);
+      } else {
+        blob = await getImageFromVideo(inputStream);
+      }
       setMediaBlobUrl(createBlob(blob));
     } catch (e) {
       trackError('media_recording_capture', e.message);
@@ -335,8 +364,21 @@ function Footer() {
     );
     setFile(imageFile);
     resetStream();
-  }, [resetStream, setFile, setMediaBlobUrl, showSnackbar, streamNode]);
+  }, [
+    resetStream,
+    setFile,
+    setMediaBlobUrl,
+    showSnackbar,
+    streamNode,
+    canvasStream,
+    videoEffect,
+    canvasNode,
+  ]);
 
+  const debouncedCaptureImage = useDebouncedCallback(
+    captureImage,
+    COUNTDOWN_TIME_IN_SECONDS * 1000
+  );
   const onCapture = useCallback(() => {
     speak(
       sprintf(
@@ -352,10 +394,10 @@ function Footer() {
     );
 
     setCountdown(COUNTDOWN_TIME_IN_SECONDS);
-    captureImage();
+    debouncedCaptureImage();
 
     trackEvent('media_recording_capture', { type: 'image' });
-  }, [captureImage, setCountdown, speak]);
+  }, [debouncedCaptureImage, setCountdown, speak]);
   const {
     actions: { uploadFile },
   } = useUploader();
@@ -417,55 +459,83 @@ function Footer() {
     return null;
   }
 
-  return (
-    <>
-      {hasMediaToInsert && (
-        <>
-          <RetryButton onClick={onRetry} disabled={isInserting}>
-            {__('Retry', 'web-stories')}
-          </RetryButton>
-          <InsertButton
-            onClick={hasVideo ? onInsert : onAudioInsert}
-            disabled={isInserting}
-          >
-            {isInserting
-              ? __('Inserting…', 'web-stories')
-              : hasVideo
-              ? __('Insert', 'web-stories')
-              : __('Insert page background audio', 'web-stories')}
-          </InsertButton>
-        </>
-      )}
-      {!hasMediaToInsert && countdown === 0 && (
-        <>
-          {isRecording && (
-            <StopButton onClick={stopRecording}>
-              {__('Stop Recording', 'web-stories')}
+  if (isProcessingTrim) {
+    return (
+      <RetryButton onClick={cancelTrim}>
+        {__('Cancel trimming', 'web-stories')}
+      </RetryButton>
+    );
+  }
+
+  if (hasMediaToInsert) {
+    return (
+      <>
+        <RetryButton onClick={onRetry} disabled={isInserting}>
+          {__('Retry', 'web-stories')}
+        </RetryButton>
+        <InsertButton
+          onClick={hasVideo ? onInsert : onAudioInsert}
+          disabled={isInserting}
+        >
+          {isInserting
+            ? __('Inserting…', 'web-stories')
+            : hasVideo
+            ? __('Insert', 'web-stories')
+            : __('Insert page background audio', 'web-stories')}
+        </InsertButton>
+      </>
+    );
+  }
+
+  if (countdown === 0) {
+    return (
+      <>
+        {isRecording && (
+          <>
+            <PauseButton
+              onClick={isPaused ? onResume : onPause}
+              aria-label={
+                isPaused
+                  ? __('Resume Recording', 'web-stories')
+                  : __('Pause Recording', 'web-stories')
+              }
+            >
+              {isPaused
+                ? __('Resume', 'web-stories')
+                : __('Pause', 'web-stories')}
+            </PauseButton>
+            <StopButton
+              onClick={stopRecording}
+              aria-label={__('Stop Recording', 'web-stories')}
+            >
+              {__('Stop', 'web-stories')}
             </StopButton>
-          )}
-          {!isRecording &&
-            !isCountingDown &&
-            (hasVideo ? (
-              <>
-                <RecordingButton onClick={onStart}>
-                  <Icons.Camera width={24} height={24} aria-hidden />
-                  {__('Record Video', 'web-stories')}
-                </RecordingButton>
-                <CaptureButton onClick={onCapture}>
-                  <Icons.PhotoCamera width={24} height={24} aria-hidden />
-                  {__('Take a photo', 'web-stories')}
-                </CaptureButton>
-              </>
-            ) : (
+          </>
+        )}
+        {!isRecording &&
+          !isCountingDown &&
+          (hasVideo ? (
+            <>
               <RecordingButton onClick={onStart}>
-                <Icons.Mic width={24} height={24} aria-hidden />
-                {__('Record Audio', 'web-stories')}
+                <Icons.Camera width={24} height={24} aria-hidden />
+                {__('Record Video', 'web-stories')}
               </RecordingButton>
-            ))}
-        </>
-      )}
-    </>
-  );
+              <CaptureButton onClick={onCapture}>
+                <Icons.PhotoCamera width={24} height={24} aria-hidden />
+                {__('Take a photo', 'web-stories')}
+              </CaptureButton>
+            </>
+          ) : (
+            <RecordingButton onClick={onStart}>
+              <Icons.Mic width={24} height={24} aria-hidden />
+              {__('Record Audio', 'web-stories')}
+            </RecordingButton>
+          ))}
+      </>
+    );
+  }
+
+  return null;
 }
 
 export default Footer;

@@ -23,7 +23,25 @@ import {
   previewStory,
 } from '@web-stories-wp/e2e-test-utils';
 
+/**
+ * Internal dependencies
+ */
+import { addAllowedErrorMessage } from '../../config/bootstrap';
+
 describe('Password protected stories', () => {
+  let removeErrorMessage;
+
+  beforeAll(() => {
+    // TODO: Address 404 caused by AMP validation being called for protected post.
+    removeErrorMessage = addAllowedErrorMessage(
+      'the server responded with a status of 404'
+    );
+  });
+
+  afterAll(() => {
+    removeErrorMessage();
+  });
+
   it('should display password form on frontend', async () => {
     await createNewStory();
 
@@ -42,6 +60,8 @@ describe('Password protected stories', () => {
 
     const editorPage = page;
     const previewPage = await previewStory(editorPage);
+
+    await expect(previewPage).not.toMatch('Page not found');
 
     await previewPage.waitForSelector('input[name="post_password"]');
     await previewPage.focus('input[name="post_password"]');

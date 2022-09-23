@@ -26,7 +26,7 @@ import { waitFor } from '@testing-library/react';
 import { Fixture } from '../../../../../karma/fixture';
 import { useStory } from '../../../../../app';
 
-describe('Animation Panel', function () {
+describe('Animation Panel', () => {
   let fixture;
 
   beforeEach(async () => {
@@ -46,7 +46,7 @@ describe('Animation Panel', function () {
     return currentPage;
   }
 
-  it('should render the animation panel when an element is selected.', async function () {
+  it('should render the animation panel when an element is selected.', async () => {
     await fixture.events.click(fixture.editor.canvas.pageActions.addPage);
     await fixture.editor.library.textTab.click();
     await fixture.events.click(fixture.editor.library.text.preset('Paragraph'));
@@ -63,7 +63,7 @@ describe('Animation Panel', function () {
     expect(panel).not.toBeNull();
   });
 
-  it('should not render the animation panel when multiple elements are selected.', async function () {
+  it('should not render the animation panel when multiple elements are selected.', async () => {
     await fixture.events.click(fixture.editor.canvas.pageActions.addPage);
     // add shape to canvas
     await fixture.editor.library.shapesTab.click();
@@ -92,7 +92,7 @@ describe('Animation Panel', function () {
 
   // TODO #6953
   // eslint-disable-next-line jasmine/no-disabled-tests
-  xit('can click the animation chooser and select an effect.', async function () {
+  xit('can click the animation chooser and select an effect.', async () => {
     await fixture.editor.library.textTab.click();
     await fixture.events.click(fixture.editor.library.text.preset('Paragraph'));
     await waitFor(() => {
@@ -117,7 +117,7 @@ describe('Animation Panel', function () {
     expect(effectChooser.innerText).toBe('Fade In');
   });
 
-  it('replaces an existing effect with a new one.', async function () {
+  it('replaces an existing effect with a new one.', async () => {
     await fixture.events.click(fixture.editor.canvas.pageActions.addPage);
     await fixture.editor.library.textTab.click();
     await fixture.events.click(fixture.editor.library.text.preset('Paragraph'));
@@ -148,7 +148,7 @@ describe('Animation Panel', function () {
     expect(effectChooser.innerText).toBe('Drop');
   });
 
-  it('plays the animation when a control in the panel is changed.', async function () {
+  it('plays the animation when a control in the panel is changed.', async () => {
     await fixture.events.click(fixture.editor.canvas.pageActions.addPage);
     await fixture.editor.library.textTab.click();
     await fixture.events.click(fixture.editor.library.text.preset('Paragraph'));
@@ -182,7 +182,7 @@ describe('Animation Panel', function () {
     expect(animationState).toBe(STORY_ANIMATION_STATE.PLAYING_SELECTED);
   });
 
-  it('should render the animation panel with warning if on the first page.', async function () {
+  it('should render the animation panel with warning if on the first page.', async () => {
     // add text to the canvas
     await fixture.editor.library.textTab.click();
     await fixture.events.click(fixture.editor.library.text.preset('Paragraph'));
@@ -206,7 +206,7 @@ describe('Animation Panel', function () {
     await expectAsync(contrastWarning).toHaveNoViolations();
   });
 
-  it('should render the animation panel with effectChooser input disabled if on the first page.', async function () {
+  it('should render the animation panel with effectChooser input disabled if on the first page.', async () => {
     // add text to the canvas
     await fixture.editor.library.textTab.click();
     await fixture.events.click(fixture.editor.library.text.preset('Paragraph'));
@@ -227,7 +227,7 @@ describe('Animation Panel', function () {
     expect(panel.effectChooser.disabled).toBeTrue();
   });
 
-  it('should render the animation panel with inputs disabled when page becomes the first page', async function () {
+  it('should render the animation panel with inputs disabled when page becomes the first page', async () => {
     const { id: firstPageId } = await getCurrentPage();
     // create a new page with in the story
     await fixture.events.click(fixture.editor.canvas.pageActions.addPage);

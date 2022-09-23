@@ -968,7 +968,6 @@
         }
       ],
       "animations": [],
-      "backgroundOverlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "fonts": ["Source Serif Pro"],
@@ -1487,7 +1486,6 @@
         }
       ],
       "animations": [],
-      "backgroundOverlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "fonts": ["Poppins", "IBM Plex Sans"],
@@ -1995,7 +1993,6 @@
         }
       ],
       "animations": [],
-      "backgroundOverlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "fonts": ["Playfair Display", "Lora"],
@@ -2446,7 +2443,6 @@
         }
       ],
       "animations": [],
-      "backgroundOverlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "fonts": ["Oswald", "Roboto Condensed"],
@@ -2914,7 +2910,6 @@
         }
       ],
       "animations": [],
-      "backgroundOverlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "fonts": ["Merriweather"],
@@ -3651,7 +3646,6 @@
         }
       ],
       "animations": [],
-      "backgroundOverlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "fonts": ["Titillium Web", "Work Sans"],
@@ -4106,7 +4100,6 @@
         }
       ],
       "animations": [],
-      "backgroundOverlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "fonts": ["Nunito", "Karla"],
@@ -4821,7 +4814,6 @@
         }
       ],
       "animations": [],
-      "backgroundOverlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "fonts": ["Roboto"],
@@ -6229,7 +6221,6 @@
         }
       ],
       "animations": [],
-      "backgroundOverlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "fonts": ["Source Serif Pro"],
@@ -6965,7 +6956,6 @@
         }
       ],
       "animations": [],
-      "backgroundOverlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "fonts": ["Roboto", "Rubik"],
@@ -7305,7 +7295,6 @@
         }
       ],
       "animations": [],
-      "backgroundOverlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "fonts": ["Playfair Display"],
@@ -8352,7 +8341,6 @@
         }
       ],
       "animations": [],
-      "backgroundOverlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "fonts": ["Roboto Condensed", "Oswald"],
@@ -8838,7 +8826,6 @@
         }
       ],
       "animations": [],
-      "backgroundOverlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "id": "7fee5f83-94b7-40ed-ad0b-a503bab0e1de"
@@ -9172,7 +9159,6 @@
         }
       ],
       "animations": [],
-      "backgroundOverlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "fonts": ["Merriweather", "Titillium Web"],
@@ -9820,7 +9806,6 @@
         }
       ],
       "animations": [],
-      "backgroundOverlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "fonts": ["Nunito", "Karla"],
@@ -10007,7 +9992,6 @@
         }
       ],
       "animations": [],
-      "backgroundOverlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "fonts": ["Oswald", "Cookie", "Roboto Condensed"],

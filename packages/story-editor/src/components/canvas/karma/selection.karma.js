@@ -31,7 +31,6 @@ describe('CUJ: Creator can Transform an Element: Selection integration', () => {
 
   beforeEach(async () => {
     fixture = new Fixture();
-    fixture.setFlags({ layerLocking: true });
     await fixture.render();
     await fixture.collapseHelpCenter();
 
@@ -121,7 +120,7 @@ describe('CUJ: Creator can Transform an Element: Selection integration', () => {
     await fixture.events.click(layerPanel.togglePanel);
     const paragraphLayer = layerPanel.getLayerByInnerText('Fill in some text');
     await fixture.events.hover(paragraphLayer);
-    const lockButton = within(paragraphLayer).getByLabelText('Lock/Unlock');
+    const lockButton = within(paragraphLayer).getByLabelText(/Lock/);
     await fixture.events.click(lockButton);
 
     // Try to click on the text element
@@ -232,5 +231,48 @@ describe('CUJ: Creator can Transform an Element: Selection integration', () => {
     await fixture.events.keyboard.shortcut('mod+alt+2');
     expect(fixture.editor.canvas.header.title).not.toHaveFocus();
     await fixture.snapshot('selected element has focus');
+  });
+
+  it('should allow selecting element by clicking on its border', async () => {
+    // Add a shape.
+    await fixture.events.click(fixture.editor.library.shapesTab);
+    await fixture.events.click(
+      fixture.editor.library.shapes.shape('Rectangle')
+    );
+
+    const node = fixture.editor.canvas.framesLayer.frames[1].node;
+    // Get the initial coordinates.
+    const { x, y } = node.getBoundingClientRect();
+
+    // Open style pane
+    await fixture.events.click(fixture.editor.sidebar.designTab);
+
+    const panel = fixture.editor.sidebar.designPanel.border;
+    await fixture.events.click(panel.width(), { clickCount: 3 });
+    await fixture.events.keyboard.type('10');
+    await fixture.events.keyboard.press('tab');
+
+    // Select page by clicking on the background element
+    await fixture.events.mouse.clickOn(
+      fixture.editor.canvas.framesLayer.frames[0].node,
+      10,
+      10
+    );
+
+    // Now select the shape by clicking on the border.
+    await fixture.events.mouse.click(x - 5, y - 5);
+    const storyContext = await fixture.renderHook(() => useStory());
+    const [element] = storyContext.state.selectedElements;
+    // Verify the shape was selected.
+    expect(element.border).toEqual({
+      left: 10,
+      right: 10,
+      top: 10,
+      bottom: 10,
+      lockedWidth: true,
+      color: { color: { r: 0, g: 0, b: 0 } },
+    });
+
+    await fixture.snapshot('Border included in selection frame');
   });
 });

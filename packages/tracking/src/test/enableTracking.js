@@ -34,7 +34,7 @@ describe.skip('enableTracking', () => {
     config.trackingEnabled = false;
 
     await enableTracking();
-    expect(config.trackingEnabled).toBe(false);
+    expect(config.trackingEnabled).toBeFalse();
   });
 
   it('enqueues tracking script if tracking is allowed', async () => {
@@ -43,7 +43,7 @@ describe.skip('enableTracking', () => {
 
     await enableTracking();
 
-    expect(config.trackingEnabled).toBe(true);
+    expect(config.trackingEnabled).toBeTrue();
     const result = document.querySelector(`script[data-web-stories-tracking]`);
     expect(result).not.toBeNull();
   });

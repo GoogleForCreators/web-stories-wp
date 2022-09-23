@@ -76,6 +76,7 @@ export const RIGHT_CLICK_MENU_LABELS = {
   ),
   SCALE_AND_CROP_IMAGE: __('Scale & Crop Image', 'web-stories'),
   SCALE_AND_CROP_VIDEO: __('Scale & Crop Video', 'web-stories'),
+  CROP_OFF_SCREEN_VIDEO: __('Crop Off-Screen Video', 'web-stories'),
   SEND_BACKWARD: __('Send Backward', 'web-stories'),
   SEND_TO_BACK: __('Send to Back', 'web-stories'),
   SET_AS_PAGE_BACKGROUND: __('Set as Page Background', 'web-stories'),
@@ -84,6 +85,7 @@ export const RIGHT_CLICK_MENU_LABELS = {
   USE_SHAPE_AS_MASK: __('Use Shape as a Mask', 'web-stories'),
   REMOVE_MASK: __('Unmask', 'web-stories'),
   RECORD_VIDEO: __('Record Video', 'web-stories'),
+  HEADING_LEVEL: __('Heading Level', 'web-stories'),
 };
 
 const StyledKbd = styled(Text).attrs({

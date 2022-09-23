@@ -156,7 +156,7 @@ describe('TextPane', () => {
       which: 13,
     });
 
-    await waitFor(() => expect(insertPreset).toHaveBeenCalledTimes(1));
+    await waitFor(() => expect(insertPreset).toHaveBeenCalledOnce());
 
     // Height is being assigned in the process of text insertion.
     await waitFor(() =>

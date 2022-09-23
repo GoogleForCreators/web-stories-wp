@@ -24,14 +24,33 @@ import {
   takeSnapshot,
 } from '@web-stories-wp/e2e-test-utils';
 
+/**
+ * Internal dependencies
+ */
+import { addAllowedErrorMessage } from '../../../config/bootstrap';
+
+const openStoryDetailsModal = async () => {
+  await expect(page).toClick('button', { text: 'Publish' });
+  await expect(page).toMatchElement('div[aria-label="Story details"]');
+};
+
 describe('Story Details Modal - Admin User', () => {
-  const openStoryDetailsModal = async () => {
-    await expect(page).toClick('button', { text: 'Publish' });
-    await expect(page).toMatchElement('div[aria-label="Story details"]');
-  };
+  let removeErrorMessage;
+
+  beforeAll(() => {
+    // TODO: Address 404 caused by AMP validation being called for protected post.
+    removeErrorMessage = addAllowedErrorMessage(
+      'the server responded with a status of 404'
+    );
+  });
+
   beforeEach(async () => {
     await createNewStory();
     await openStoryDetailsModal();
+  });
+
+  afterAll(() => {
+    removeErrorMessage();
   });
 
   describe('Main Details', () => {
@@ -121,12 +140,10 @@ describe('Story Details Modal - Admin User', () => {
 
       await authorDropDownButton.click();
 
-      const authorDropDownOptions = await expect(page).toMatchElement(
-        '[aria-label="Option List Selector"]'
-      );
+      await expect(page).toMatchElement('[aria-label="Option List Selector"]');
 
-      const optionListBeforeSearch = await authorDropDownOptions.$$eval(
-        'li[role="option"]',
+      const optionListBeforeSearch = await page.$$eval(
+        '[aria-label="Option List Selector"] li[role="option"]',
         (nodeList) => nodeList.map((node) => node.innerText)
       );
       expect(optionListBeforeSearch).toBeDefined();
@@ -145,14 +162,16 @@ describe('Story Details Modal - Admin User', () => {
       // add small delay after we have results
       await page.waitForTimeout(400);
 
-      const optionListAfterSearch = await authorDropDownOptions.$$eval(
-        'li[role="option"]',
+      const optionListAfterSearch = await page.$$eval(
+        '[aria-label="Option List Selector"] li[role="option"]',
         (nodeList) => nodeList.map((node) => node.innerText)
       );
 
       expect(optionListAfterSearch).toHaveLength(1);
 
-      await expect(authorDropDownOptions).toClick('li', { text: 'author' });
+      await expect(page).toClick('[aria-label="Option List Selector"] li', {
+        text: 'author',
+      });
       await expect(authorDropDownButton).toMatch('author');
     });
 

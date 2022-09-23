@@ -18,10 +18,11 @@ export * from './fonts';
 export * from './media';
 export * from './multipleValue';
 export * from './performanceTrackingEvents';
+export * from './headings';
 
 export const ADMIN_TOOLBAR_HEIGHT = 32;
 export const HEADER_HEIGHT = 64;
-export const HEADER_GAP = 10;
+export const HEADER_GAP = 52;
 export const CANVAS_MIN_WIDTH = 570;
 export const SIDEBAR_WIDTH = 360;
 export const PAGE_NAV_PADDING = 60;

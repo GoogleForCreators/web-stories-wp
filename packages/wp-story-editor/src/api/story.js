@@ -108,6 +108,7 @@ export function saveStoryById(config, story) {
       'link',
       'preview_link',
       'edit_link',
+      '_links',
       'embed_post_link',
       'story_poster',
     ].join(','),
@@ -119,7 +120,12 @@ export function saveStoryById(config, story) {
     data: storySaveData,
     method: 'POST',
   }).then((data) => {
-    const { story_poster: storyPoster, ...rest } = data;
+    const { story_poster: storyPoster, _links: links = {}, ...rest } = data;
+
+    const revisions = {
+      count: links?.['version-history']?.[0]?.count,
+      id: links?.['predecessor-version']?.[0]?.id,
+    };
 
     const featuredMedia = storyPoster
       ? {
@@ -138,6 +144,7 @@ export function saveStoryById(config, story) {
     return {
       ...snakeToCamelCaseObjectKeys(rest),
       featuredMedia,
+      revisions,
     };
   });
 }

@@ -59,9 +59,8 @@ permissions:
 
 # Cancels all previous workflow runs for pull requests that have not completed.
 concurrency:
-  # The concurrency group contains the workflow name and the branch name for pull requests
-  # or the commit hash for any other events.
-  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.head_ref || github.sha }}
+  # The concurrency group contains the workflow name and the (target) branch name.
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -71,7 +70,7 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@74b568e8591fbb3115c70f3436a0c6b0909a8504
+        uses: step-security/harden-runner@dd2c410b088af7c0dc8046f3ac9a8f4148492a95
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
@@ -85,7 +84,7 @@ jobs:
           cache: npm
 
       - name: Setup PHP
-        uses: shivammathur/setup-php@945c34c1751f6d2c8106ec0feba5662fcbc1c943
+        uses: shivammathur/setup-php@e04e1d97f0c0481c6e1ba40f8a538454fe5d7709
         with:
           php-version: '8.0'
           coverage: none
@@ -141,29 +140,19 @@ jobs:
         wp: ['5.7']
         snapshots: [false]
         experimental: [false]
-        # We want to split up the tests into 4 parts running in parallel.
-        shard: ['1/4', '2/4', '3/4', '4/4']
+        # We want to split up the tests into 2 parts running in parallel.
+        shard: ['1/2', '2/2']
         include:
           - browser: 'chrome'
             wp: 'latest'
             experimental: false
             snapshots: true
-            shard: '1/4'
+            shard: '1/2'
           - browser: 'chrome'
             wp: 'latest'
             experimental: false
             snapshots: true
-            shard: '2/4'
-          - browser: 'chrome'
-            wp: 'latest'
-            experimental: false
-            snapshots: true
-            shard: '3/4'
-          - browser: 'chrome'
-            wp: 'latest'
-            experimental: false
-            snapshots: true
-            shard: '4/4'
+            shard: '2/2'
           - browser: 'firefox'
             wp: 'latest'
             experimental: true
@@ -177,7 +166,7 @@ jobs:
 
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@74b568e8591fbb3115c70f3436a0c6b0909a8504
+        uses: step-security/harden-runner@dd2c410b088af7c0dc8046f3ac9a8f4148492a95
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
@@ -194,7 +183,10 @@ jobs:
         run: sudo apt-get install libgbm1
 
       - name: Install dependencies
-        run: npm install puppeteer
+        run: |
+          npm install puppeteer
+          npm install expect-puppeteer --no-save
+          npx patch-package # Apply patches to expect-puppeteer
         env:
           PUPPETEER_PRODUCT: ${{ matrix.browser }}
 
@@ -248,11 +240,15 @@ jobs:
     name: Percy
     runs-on: ubuntu-latest
     timeout-minutes: 5
-    if: always() && github.event.pull_request.draft == false
+    if: >
+      always() &&
+      github.event.pull_request.draft == false &&
+      github.event.pull_request.head.repo.fork == false &&
+      github.event.pull_request.user.login != 'dependabot[bot]'
     needs: [e2e, nonce]
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@74b568e8591fbb3115c70f3436a0c6b0909a8504
+        uses: step-security/harden-runner@dd2c410b088af7c0dc8046f3ac9a8f4148492a95
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 

@@ -597,7 +597,7 @@ async function dragToDropTarget(fixture, from, toId) {
 function getAllTransformsBetween(startElement, endElement) {
   let e = startElement;
   const transforms = [];
-  while (e && e != endElement) {
+  while (e && e !== endElement) {
     transforms.unshift(getComputedStyle(e).transform);
     e = e.parentNode;
   }

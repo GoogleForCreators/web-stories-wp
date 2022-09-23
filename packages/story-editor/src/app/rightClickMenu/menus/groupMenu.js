@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { ContextMenuComponents } from '@googleforcreators/design-system';
-import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -33,7 +32,6 @@ function GroupMenu() {
     //handleGroupSelectedElements,
     handleUngroupSelectedElements,
   } = useElementActions();
-  const isLayerGroupingEnabled = useFeature('layerGrouping');
   const { selectedElements } = useStory(({ state }) => ({
     selectedElements: state.selectedElements,
   }));
@@ -49,7 +47,7 @@ function GroupMenu() {
       >
         {RIGHT_CLICK_MENU_LABELS.DUPLICATE_ELEMENTS(2)}
       </ContextMenuComponents.MenuButton>
-      {isLayerGroupingEnabled && isGroupSelected && (
+      {isGroupSelected && (
         <ContextMenuComponents.MenuButton
           onClick={handleUngroupSelectedElements}
         >

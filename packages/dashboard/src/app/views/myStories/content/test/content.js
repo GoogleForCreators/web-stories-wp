@@ -77,12 +77,12 @@ const pageSize = {
   height: 300,
 };
 
-describe('Dashboard <Content />', function () {
+describe('Dashboard <Content />', () => {
   afterEach(() => {
     jest.resetAllMocks();
   });
 
-  it('should render the content grid with the correct story count.', function () {
+  it('should render the content grid with the correct story count.', () => {
     renderWithProviders(
       <SnackbarProvider>
         <LayoutProvider>
@@ -110,7 +110,7 @@ describe('Dashboard <Content />', function () {
     );
   });
 
-  it('should show "Start telling Stories." if no stories are present.', function () {
+  it('should show "Start telling Stories." if no stories are present.', () => {
     renderWithProviders(
       <SnackbarProvider>
         <LayoutProvider>
@@ -136,7 +136,7 @@ describe('Dashboard <Content />', function () {
     expect(screen.getByText('Start telling Stories.')).toBeInTheDocument();
   });
 
-  it('should show "Sorry, we couldn\'t find any results matching "scooby dooby doo" if no stories are found for a search query are present.', function () {
+  it('should show "Sorry, we couldn\'t find any results matching "scooby dooby doo" if no stories are found for a search query are present.', () => {
     renderWithProviders(
       <SnackbarProvider>
         <LayoutProvider>
@@ -170,7 +170,7 @@ describe('Dashboard <Content />', function () {
     ).toBeInTheDocument();
   });
 
-  it('should show "Sorry, we couldn\'t find any results if no stories are found for a filter query are present.', function () {
+  it('should show "Sorry, we couldn\'t find any results if no stories are found for a filter query are present.', () => {
     renderWithProviders(
       <SnackbarProvider>
         <LayoutProvider>

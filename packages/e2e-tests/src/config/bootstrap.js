@@ -32,6 +32,10 @@ import {
   clearLocalStorage,
 } from '@web-stories-wp/e2e-test-utils';
 
+async function clearSessionStorage() {
+  await page.evaluate(() => window.sessionStorage.clear());
+}
+
 expect.extend({
   toBeValidAMP,
 });
@@ -204,6 +208,19 @@ const ALLOWED_ERROR_MESSAGES = [
   // TODO(#9240): Fix usage in the web stories block.
   "select( 'core' ).getAuthors() is deprecated since version 5.9.",
 
+  // See https://www.chromestatus.com/feature/508239670987980
+  "Blocked attempt to show a 'beforeunload' confirmation panel for a frame that never had a user gesture since its load",
+
+  // Sometimes the AMP viewer can fail to load translations when viewing a story.
+  'Bundle not found for language en:',
+
+  // Media3p API requests can sometimes fail in the Docker environment (due to network issues?).
+  'Failed to fetch',
+
+  // Sometimes ffmpeg.wasm is not loading.
+  'wasm streaming compile failed',
+  'falling back to ArrayBuffer instantiation',
+
   ...('chrome' === PUPPETEER_PRODUCT
     ? ALLOWED_ERROR_MESSAGES_CHROME
     : ALLOWED_ERROR_MESSAGES_FIREFOX),
@@ -353,12 +370,14 @@ beforeAll(async () => {
 
   // Disable cross-origin isolation by default as it causes issues in Firefox.
   await toggleVideoOptimization(false);
+  await clearSessionStorage();
 });
 
 // eslint-disable-next-line jest/require-top-level-describe
 afterEach(async () => {
   await setupBrowser();
   await clearLocalStorage();
+  await clearSessionStorage();
 });
 
 // eslint-disable-next-line jest/require-top-level-describe

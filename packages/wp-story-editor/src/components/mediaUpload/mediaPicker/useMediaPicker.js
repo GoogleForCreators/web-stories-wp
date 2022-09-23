@@ -113,10 +113,13 @@ function useMediaPicker({
         library: {
           type,
         },
-        button: {
-          text: buttonInsertText,
-        },
         multiple,
+      });
+
+      fileFrame.on('toolbar:create:select', (toolbar) => {
+        fileFrame.createSelectToolbar(toolbar, {
+          text: buttonInsertText,
+        });
       });
 
       // When an image is selected, run a callback.
@@ -137,16 +140,11 @@ function useMediaPicker({
         onSelect(getResourceFromMediaPicker(mediaPickerEl));
       });
 
-      if (onClose) {
-        fileFrame.once('close', onClose);
-      }
-
-      fileFrame.once('content:activate:browse', () => {
-        // Force-refresh media modal contents every time it's opened
-        // to avoid stale data due to media items being upload & updated
-        // through the editor in the meantime.
-        fileFrame.content?.get()?.collection?._requery(true);
-        fileFrame.content?.get()?.options?.selection?.reset();
+      fileFrame.once('close', () => {
+        if (onClose) {
+          onClose();
+        }
+        fileFrame.remove();
       });
 
       // Finally, open the modal
@@ -155,16 +153,16 @@ function useMediaPicker({
       evt.preventDefault();
     },
     [
-      hasUploadMediaAction,
-      showSnackbar,
-      onPermissionError,
-      onClose,
-      onSelect,
       buttonInsertText,
-      onSelectErrorMessage,
+      hasUploadMediaAction,
       multiple,
-      type,
+      onClose,
+      onPermissionError,
+      onSelect,
+      onSelectErrorMessage,
+      showSnackbar,
       title,
+      type,
     ]
   );
 
@@ -191,19 +189,16 @@ function useMediaPicker({
         mustBeCropped,
       };
 
-      const button = {
-        text: buttonInsertText,
-        close: false,
-      };
-
       // Create the media frame.
       const fileFrame = window.wp.media({
-        button,
+        button: {
+          text: buttonInsertText,
+          close: false,
+        },
         states: [
           new window.wp.media.controller.Library({
             title,
             library: window.wp.media.query({ type }),
-            button,
             multiple,
             suggestedWidth: params.width,
             suggestedHeight: params.height,
@@ -272,15 +267,11 @@ function useMediaPicker({
         }
       });
 
-      if (onClose) {
-        fileFrame.once('close', onClose);
-      }
-
-      fileFrame.once('content:activate:browse', () => {
-        // Force-refresh media modal contents every time
-        // to avoid stale data.
-        fileFrame.content?.get()?.collection?._requery(true);
-        fileFrame.content?.get()?.options?.selection?.reset();
+      fileFrame.once('close', () => {
+        if (onClose) {
+          onClose();
+        }
+        fileFrame.remove();
       });
 
       // Finally, open the modal

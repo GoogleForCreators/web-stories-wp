@@ -28,8 +28,8 @@ async function createStoryWithTitle(title) {
   await createNewStory();
   await insertStoryTitle(title);
   await expect(page).toClick('#library-tab-text');
-  const insertButton = await page.waitForXPath(
-    `//button//span[contains(text(), 'Title 1')]`
+  const insertButton = await page.waitForSelector(
+    `xpath/.//button//span[contains(text(), 'Title 1')]`
   );
   await insertButton.click();
   await expect(page).toMatchElement('[data-testid="textFrame"]', {

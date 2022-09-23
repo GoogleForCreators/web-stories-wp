@@ -234,17 +234,6 @@ class Experiments extends Service_Base implements HasRequirements {
 	public function get_experiments(): array {
 		return [
 			/**
-			 * Author: @littlemilkstudio
-			 * Issue: 6379
-			 * Creation date: 2021-03-09
-			 */
-			[
-				'name'        => 'enableExperimentalAnimationEffects',
-				'label'       => __( 'Experimental animations', 'web-stories' ),
-				'description' => __( 'Enable any animation effects that are currently experimental', 'web-stories' ),
-				'group'       => 'editor',
-			],
-			/**
 			 * Author: @brittanyirl
 			 * Issue: 2381
 			 * Creation date: 2020-06-11
@@ -279,90 +268,6 @@ class Experiments extends Service_Base implements HasRequirements {
 			],
 			/**
 			 * Author: @barklund
-			 * Issue: #10112
-			 * Creation date: 2022-01-27
-			 */
-			[
-				'name'        => 'floatingMenu',
-				'label'       => __( 'Floating Menu', 'web-stories' ),
-				'description' => __( 'Enable the new floating design menu', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-			/**
-			 * Author: @spacedmonkey
-			 * Issue: #11536
-			 * Creation date: 2022-06-22
-			 */
-			[
-				'name'        => 'posterHotlinking',
-				'label'       => __( 'Poster hotlinking', 'web-stories' ),
-				'description' => __( 'Enable story poster hotlinking', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-			/**
-			 * Author: @spacedmonkey
-			 * Issue: #11777
-			 * Creation date: 2022-06-24
-			 */
-			[
-				'name'        => 'linkIconHotlinking',
-				'label'       => __( 'Link icon hotlinking', 'web-stories' ),
-				'description' => __( 'Enable link icon hotlinking', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-			/**
-			 * Author: @spacedmonkey
-			 * Issue: #11535
-			 * Creation date: 2022-06-24
-			 */
-			[
-				'name'        => 'videoPosterHotlinking',
-				'label'       => __( 'Video poster hotlinking', 'web-stories' ),
-				'description' => __( 'Enable video poster hotlinking', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-			/**
-			 * Author: @barklund
-			 * Issue: #7332
-			 * Creation date: 2022-04-19
-			 */
-			[
-				'name'        => 'layerLocking',
-				'label'       => __( 'Layer locking', 'web-stories' ),
-				'description' => __( 'Enable layer locking', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-			/**
-			 * Author: @merapi
-			 * Issue: #9244
-			 * Creation date: 2022-05-04
-			 */
-			[
-				'name'        => 'layerGrouping',
-				'label'       => __( 'Layer grouping', 'web-stories' ),
-				'description' => __( 'Enable layer grouping', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-			/**
-			 * Author: @mariana-k
-			 * Issue: #9248
-			 * Creation date: 2022-05-12
-			 */
-			[
-				'name'        => 'layerNaming',
-				'label'       => __( 'Layer naming', 'web-stories' ),
-				'description' => __( 'Enable layer naming', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-			/**
-			 * Author: @barklund
 			 * Issue: #9643
 			 * Creation date: 2022-06-21
 			 */
@@ -371,6 +276,7 @@ class Experiments extends Service_Base implements HasRequirements {
 				'label'       => __( 'Context Pages', 'web-stories' ),
 				'description' => __( 'Show extra pages for context before and after the current canvas page. Note: This might come with a performance penalty.', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 			/**
 			 * Author: @barklund
@@ -382,6 +288,7 @@ class Experiments extends Service_Base implements HasRequirements {
 				'label'       => __( 'Trim media recording', 'web-stories' ),
 				'description' => __( 'Enable the ability to trim a media recording before you insert it', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 			/**
 			 * Author: @swissspidy
@@ -394,6 +301,51 @@ class Experiments extends Service_Base implements HasRequirements {
 				'description' => __( 'Enable Tenor stickers support', 'web-stories' ),
 				'group'       => 'editor',
 				'default'     => true,
+			],
+			/**
+			 * Author: @timarney
+			 * Issue: #12094
+			 * Creation date: 2022-08-11
+			 */
+			[
+				'name'        => 'improvedAutosaves',
+				'label'       => __( 'Improved Autosaves', 'web-stories' ),
+				'description' => __( 'Enable improved autosaves support', 'web-stories' ),
+				'group'       => 'editor',
+				'default'     => true,
+			],
+			/**
+			 * Author: @timarney
+			 * Issue: #12093
+			 * Creation date: 2022-08-18
+			 */
+			[
+				'name'        => 'offScreenVideoCropping',
+				'label'       => __( 'Crop off-screen video parts', 'web-stories' ),
+				'description' => __( 'Enable support for cropping cut off-screen parts of videos', 'web-stories' ),
+				'group'       => 'editor',
+			],
+			/**
+			 * Author: @spacedmonkey
+			 * Issue: #12211
+			 * Creation date: 2022-09-07
+			 */
+			[
+				'name'        => 'videoVolume',
+				'label'       => __( 'Video Volume', 'web-stories' ),
+				'description' => __( 'Enable setting video volume', 'web-stories' ),
+				'group'       => 'editor',
+			],
+			/**
+			 * Author: @barklund
+			 * Issue: #12210
+			 * Creation date: 2022-09-14
+			 */
+			[
+				'name'        => 'customPageAdvance',
+				'label'       => __( 'Per-Page Page Advance', 'web-stories' ),
+				'description' => __( 'Enable detailed page advancement settings on a per-page basis', 'web-stories' ),
+				'group'       => 'editor',
 			],
 		];
 	}
