@@ -98,6 +98,7 @@ export interface MediaElementV0 extends ElementV0 {
 }
 
 export interface GifElementV0 extends MediaElementV0 {
+  opacity: number;
   resource: GifResourceV0;
 }
 
@@ -112,9 +113,9 @@ interface VideoTrackV0 {
 }
 
 export interface VideoElementV0 extends MediaElementV0 {
-  poster?: string;
-  posterId?: number;
-  videoId?: number;
+  poster: string;
+  posterId: number;
+  videoId: number;
   tracks?: VideoTrackV0[];
   loop?: boolean;
 }
@@ -154,6 +155,4 @@ export type UnionElementV0 =
   | ShapeElementV0
   | ImageElementV0
   | VideoElementV0
-  | GifElementV0
-  | TextElementV0
-  | ProductElementV0;
+  | TextElementV0;

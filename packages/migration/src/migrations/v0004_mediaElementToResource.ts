@@ -21,7 +21,6 @@ import type {
   GifResourceV0,
   ImageResourceV0,
   VideoResourceV0,
-  ResourceV0,
   ResourceType,
 } from '../types';
 import type {
@@ -30,20 +29,17 @@ import type {
   VideoElementV3,
   PageV3,
   StoryV3,
-  ElementV3,
   TextElementV3,
-  MediaElementV3,
+  ShapeElementV3,
+  ProductElementV3,
+  UnionElementV3,
 } from './v0003_fullbleedToFill';
 
-// @todo This is less commonly used type in migration, as the other resource types, should we still carry these along through all files?
-export type ResourceV4 = ResourceV0;
-
-export interface MediaElementV4 extends MediaElementV3 {
-  resource: ResourceV0;
-}
-
 export interface VideoElementV4
-  extends Omit<VideoElementV3, 'src' | 'origRatio' | 'mimeType'> {
+  extends Omit<
+    VideoElementV3,
+    'src' | 'origRatio' | 'mimeType' | 'videoId' | 'poster' | 'posterId'
+  > {
   resource: VideoResourceV0;
 }
 
@@ -57,10 +53,23 @@ export interface ImageElementV4
   resource: ImageResourceV0;
 }
 
-export type ElementV4 = ElementV3;
-export type PageV4 = PageV3;
-export type StoryV4 = StoryV3;
 export type TextElementV4 = TextElementV3;
+export type ShapeElementV4 = ShapeElementV3;
+export type ProductElementV4 = ProductElementV3;
+
+export type UnionElementV4 =
+  | ShapeElementV4
+  | ImageElementV4
+  | VideoElementV4
+  | TextElementV4
+  | GifElementV4;
+
+export interface StoryV4 extends Omit<StoryV3, 'pages'> {
+  pages: PageV4[];
+}
+export interface PageV4 extends Omit<PageV3, 'elements'> {
+  elements: UnionElementV4[];
+}
 
 function dataMediaElementToResource({ pages, ...rest }: StoryV3): StoryV4 {
   return {
@@ -76,27 +85,9 @@ function reducePage({ elements, ...rest }: PageV3): PageV4 {
   };
 }
 
-function isMediaElement(element: ElementV3): element is MediaElementV3 {
-  return 'mimeType' in element;
-}
-
-function updateElement(element: ElementV3): ElementV4 {
-  if (isMediaElement(element)) {
-    if (element.type === 'image') {
-      const { src, origRatio, width, height, mimeType, ...rest } = element;
-      return {
-        resource: {
-          type: 'image' as ResourceType.Image,
-          src,
-          width,
-          height,
-          mimeType,
-        },
-        width,
-        height,
-        ...rest,
-      } as ElementV4;
-    } else if ('videoId' in element) {
+function updateElement(element: UnionElementV3): UnionElementV4 {
+  if ('mimeType' in element) {
+    if ('videoId' in element) {
       const {
         src,
         origRatio,
@@ -107,7 +98,7 @@ function updateElement(element: ElementV3): ElementV4 {
         width,
         height,
         ...rest
-      } = element as VideoElementV3;
+      } = element;
       return {
         resource: {
           type: 'video' as ResourceType.Video,
@@ -122,10 +113,24 @@ function updateElement(element: ElementV3): ElementV4 {
         width,
         height,
         ...rest,
-      } as ElementV4;
+      };
+    } else if (element.type === 'image') {
+      const { src, origRatio, width, height, mimeType, ...rest } = element;
+      return {
+        resource: {
+          type: 'image' as ResourceType.Image,
+          src,
+          width,
+          height,
+          mimeType,
+        },
+        width,
+        height,
+        ...rest,
+      };
     }
   }
-  return element;
+  return element as UnionElementV4;
 }
 
 export default dataMediaElementToResource;

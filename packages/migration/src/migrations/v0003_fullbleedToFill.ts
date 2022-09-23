@@ -18,19 +18,16 @@
  * Internal dependencies
  */
 import type {
-  ElementV2,
-  MediaElementV2,
   PageV2,
   StoryV2,
   VideoElementV2,
   GifElementV2,
   ImageElementV2,
   TextElementV2,
+  ShapeElementV2,
+  ProductElementV2,
+  UnionElementV2,
 } from './v0002_dataPixelTo1080';
-
-export interface MediaElementV3 extends Omit<MediaElementV2, 'isFullbleed'> {
-  isFill?: boolean;
-}
 
 export interface VideoElementV3 extends Omit<VideoElementV2, 'isFullbleed'> {
   isFill?: boolean;
@@ -44,10 +41,22 @@ export interface ImageElementV3 extends Omit<ImageElementV2, 'isFullbleed'> {
   isFill?: boolean;
 }
 
-export type ElementV3 = ElementV2;
-export type PageV3 = PageV2;
-export type StoryV3 = StoryV2;
 export type TextElementV3 = TextElementV2;
+export type ShapeElementV3 = ShapeElementV2;
+export type ProductElementV3 = ProductElementV2;
+
+export type UnionElementV3 =
+  | ShapeElementV3
+  | ImageElementV3
+  | VideoElementV3
+  | TextElementV3;
+
+export interface StoryV3 extends Omit<StoryV2, 'pages'> {
+  pages: PageV3[];
+}
+export interface PageV3 extends Omit<PageV2, 'elements'> {
+  elements: UnionElementV3[];
+}
 
 function fullbleedToFill({ pages, ...rest }: StoryV2): StoryV3 {
   return {
@@ -63,18 +72,13 @@ function reducePage({ elements, ...rest }: PageV2): PageV3 {
   };
 }
 
-function isMediaElement(element: ElementV2): element is MediaElementV2 {
-  return 'isFullbleed' in element;
-}
-
-function updateElement(element: ElementV2): ElementV3 {
-  if (isMediaElement(element)) {
+function updateElement(element: UnionElementV2): UnionElementV3 {
+  if ('isFullbleed' in element) {
     const { isFullbleed, ...rest } = element;
     return {
       isFill: isFullbleed,
       ...rest,
-      // @todo If we use `Element` instead of the union element type, we'll need to do quite a lot of casting like this, is that ok?
-    } as ElementV3;
+    };
   }
   return element;
 }

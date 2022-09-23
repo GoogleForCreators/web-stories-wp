@@ -14,25 +14,37 @@
  * limitations under the License.
  */
 
-function dataSquareToShape({ pages, ...rest }) {
+/**
+ * Internal dependencies
+ */
+import type {
+  StoryV4,
+  PageV4,
+  UnionElementV4,
+} from './v0004_mediaElementToResource';
+
+function dataSquareToShape({ pages, ...rest }: StoryV4): StoryV4 {
   return {
     pages: pages.map(reducePage),
     ...rest,
   };
 }
 
-function reducePage({ elements, ...rest }) {
+function reducePage({ elements, ...rest }: PageV4): PageV4 {
   return {
     elements: elements.map(updateElement),
     ...rest,
   };
 }
 
-function updateElement({ type, ...rest }) {
-  const element = {
-    type: type === 'square' ? 'shape' : type,
-    ...rest,
-  };
+function updateElement(element: UnionElementV4): UnionElementV4 {
+  const { type, ...rest } = element;
+  if ('backgroundColor' in element && 'square' === type) {
+    return {
+      type: 'shape',
+      ...rest,
+    };
+  }
   return element;
 }
 

@@ -20,12 +20,13 @@
 import type {
   StoryV1,
   PageV1,
-  MediaElementV1,
-  ElementV1,
   TextElementV1,
   GifElementV1,
   ImageElementV1,
   VideoElementV1,
+  ShapeElementV1,
+  ProductElementV1,
+  UnionElementV1,
 } from './v0001_storyDataArrayToObject';
 
 const NEW_PAGE_WIDTH = 1080;
@@ -36,14 +37,25 @@ const OLD_PAGE_HEIGHT = 732;
 const SCALE_X = NEW_PAGE_WIDTH / OLD_PAGE_WIDTH;
 const SCALE_Y = NEW_PAGE_HEIGHT / OLD_PAGE_HEIGHT;
 
-export type StoryV2 = StoryV1;
-export type PageV2 = PageV1;
-export type ElementV2 = ElementV1;
 export type TextElementV2 = TextElementV1;
 export type GifElementV2 = GifElementV1;
 export type ImageElementV2 = ImageElementV1;
 export type VideoElementV2 = VideoElementV1;
-export type MediaElementV2 = MediaElementV1;
+export type ShapeElementV2 = ShapeElementV1;
+export type ProductElementV2 = ProductElementV1;
+
+export type UnionElementV2 =
+  | ShapeElementV2
+  | ImageElementV2
+  | VideoElementV2
+  | TextElementV2;
+
+export interface StoryV2 extends Omit<StoryV1, 'pages'> {
+  pages: PageV2[];
+}
+export interface PageV2 extends Omit<PageV1, 'elements'> {
+  elements: UnionElementV2[];
+}
 
 function dataPixelTo1080({ pages, ...rest }: StoryV1): StoryV2 {
   return {
@@ -59,11 +71,13 @@ function reducePage({ elements, ...rest }: PageV1): PageV2 {
   };
 }
 
-function isTextElement(element: ElementV1): element is TextElementV1 {
-  return 'fontSize' in element;
-}
-
-function updateElement({ x, y, width, height, ...rest }: ElementV1): ElementV2 {
+function updateElement({
+  x,
+  y,
+  width,
+  height,
+  ...rest
+}: UnionElementV1): UnionElementV2 {
   const element = {
     x: dataPixels(x * SCALE_X),
     y: dataPixels(y * SCALE_Y),
@@ -71,7 +85,7 @@ function updateElement({ x, y, width, height, ...rest }: ElementV1): ElementV2 {
     height: dataPixels(height * SCALE_Y),
     ...rest,
   };
-  if (isTextElement(element) && typeof element.fontSize === 'number') {
+  if ('fontSize' in element && typeof element.fontSize === 'number') {
     element.fontSize = dataPixels(element.fontSize * SCALE_Y);
   }
   return element;

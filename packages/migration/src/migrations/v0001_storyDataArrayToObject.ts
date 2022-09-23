@@ -18,14 +18,14 @@
  * Internal dependencies
  */
 import type {
-  MediaElementV0,
   PageV0,
   StoryV0,
   TextElementV0,
-  ElementV0,
   GifElementV0,
   ImageElementV0,
   VideoElementV0,
+  ShapeElementV0,
+  ProductElementV0,
 } from '../types';
 
 export type PageV1 = PageV0;
@@ -34,12 +34,18 @@ export interface StoryV1 {
   version?: number;
 }
 
-export type ElementV1 = ElementV0;
 export type TextElementV1 = TextElementV0;
 export type GifElementV1 = GifElementV0;
 export type ImageElementV1 = ImageElementV0;
 export type VideoElementV1 = VideoElementV0;
-export type MediaElementV1 = MediaElementV0;
+export type ShapeElementV1 = ShapeElementV0;
+export type ProductElementV1 = ProductElementV0;
+
+export type UnionElementV1 =
+  | ShapeElementV1
+  | ImageElementV1
+  | VideoElementV1
+  | TextElementV1;
 
 function storyDataArrayToObject(storyData: StoryV0): StoryV1 {
   return { pages: storyData };
