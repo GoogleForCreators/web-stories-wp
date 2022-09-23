@@ -349,9 +349,9 @@ function useUploadMedia({
             onUploadSuccess,
             additionalData:
             {
+              ...additionalData
               batchPosition: files.length - 1 - index,
               batchCount: files.length,
-              ...additionalData
             },
             posterFile,
             muteVideo,
