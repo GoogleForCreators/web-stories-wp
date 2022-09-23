@@ -17,8 +17,7 @@
 /**
  * External dependencies
  */
-import { getSettings, getOptions, format } from '@googleforcreators/date';
-import PropTypes from 'prop-types';
+import { getSettings, getOptions } from '@googleforcreators/date';
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
 import {
@@ -77,10 +76,5 @@ function TimeZone() {
     </Wrapper>
   );
 }
-
-TimeZone.propTypes = {
-  date: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Date)])
-    .isRequired,
-};
 
 export default TimeZone;
