@@ -247,9 +247,7 @@ class Story {
 		if ( \is_array( $products ) ) {
 			$product_objects = [];
 			foreach ( $products as $product ) {
-				$product_object = new Product();
-				$product_object->load_from_array( $product );
-				$product_objects[] = $product_object;
+				$product_objects[] = Product::load_from_array( $product );
 			}
 			$this->products = $product_objects;
 		}

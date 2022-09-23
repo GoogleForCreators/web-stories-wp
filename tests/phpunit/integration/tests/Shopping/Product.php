@@ -27,8 +27,7 @@ class Product extends TestCase {
 	 * @covers ::load_from_array
 	 */
 	public function test_load_from_array(): void {
-		$product_object = new \Google\Web_Stories\Shopping\Product();
-		$product_object->load_from_array(
+		$product_object = \Google\Web_Stories\Shopping\Product::load_from_array(
 			[
 				'aggregateRating'      => [
 					'ratingValue' => 5,
@@ -65,8 +64,7 @@ class Product extends TestCase {
 	 * @covers ::load_from_array
 	 */
 	public function test_load_from_array_empty(): void {
-		$product_object = new \Google\Web_Stories\Shopping\Product();
-		$product_object->load_from_array( [] );
+		$product_object = \Google\Web_Stories\Shopping\Product::load_from_array( [] );
 		$this->assertEmpty( $product_object->get_price_currency() );
 		$this->assertEmpty( $product_object->get_price() );
 		$this->assertEmpty( $product_object->get_id() );

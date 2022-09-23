@@ -241,9 +241,7 @@ class Discovery extends DependencyInjectedTestCase {
 	 * @covers ::get_product_data
 	 */
 	public function test_get_product_data(): void {
-
-		$product_object = new \Google\Web_Stories\Shopping\Product();
-		$product_object->load_from_array(
+		$product_object = \Google\Web_Stories\Shopping\Product::load_from_array(
 			[
 				'aggregateRating'      => [
 					'ratingValue' => 5,
