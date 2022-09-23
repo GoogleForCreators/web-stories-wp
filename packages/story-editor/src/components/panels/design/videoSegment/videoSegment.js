@@ -99,40 +99,39 @@ function VideoSegmentPanel({ pushUpdate, selectedElements }) {
     : __('Segment', 'web-stories');
 
   const handleSegmentation = useCallback(async () => {
-    let initialized = false;
-    let processedFiles = 0;
     setIsSegmenting(true);
     showSnackbar({
       message: __('Video segmentation in progress', 'web-stories'),
       dismissible: true,
     });
 
-    const originalElementId = elementId;
+    // const originalElementId = elementId;
     const pageIds = pages.map(({ id }) => id);
-    const originalPageIndex = pageIds.indexOf(currentPage.id);
+    // const originalPageIndex = pageIds.indexOf(currentPage.id);
 
-    await segmentVideo({ resource, segmentTime }, (segmentedFiles) => {
-      // return the "addElement" function
-      // called via "onUploadSuccess" of the segmented file
-      return (newResource) => {
-        if (initialized) {
-          addPageAt({
-            page: createPage(),
-            position: originalPageIndex + processedFiles,
-          });
-        } else {
-          // remove the original element
-          deleteElementById({ elementId: originalElementId });
-        }
+    let segmentedFiles = [];
 
-        insertElement(ELEMENT_TYPES.VIDEO, newResource);
-        initialized = true;
-        processedFiles += 1;
+    await segmentVideo({ resource, segmentTime }, ({ resource: newResource, batchPosition, batchCount }) => {
 
-        if (segmentedFiles.length === processedFiles) {
-          setIsSegmenting(false);
-        }
-      };
+      const exists = segmentedFiles.find(item => item.batchPosition === batchPosition);
+      if (!exists) {
+        segmentedFiles.push({ batchPosition, newResource });
+      }
+
+      if (!exists && segmentedFiles.length === batchCount) {
+        segmentedFiles.sort((a, b) => a.batchPosition - b.batchPosition);
+        setIsSegmenting(false);
+
+        // @todo insert pages + elements
+        /* 
+        deleteElementById({ elementId: originalElementId });  // remove the original element
+        addPageAt({
+          page: createPage(),
+          position: originalPageIndex + processedFiles,
+        });
+        insertElement(ELEMENT_TYPES.VIDEO, resource);
+        */
+      }
     });
 
     showSnackbar({

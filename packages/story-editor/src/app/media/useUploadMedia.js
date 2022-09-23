@@ -155,6 +155,7 @@ function useUploadMedia({
       resource,
       onUploadSuccess,
       previousResourceId,
+      additionalData
     } of uploaded) {
       const { id: resourceId } = resource;
       if (!resource) {
@@ -170,9 +171,21 @@ function useUploadMedia({
       // will cause things like base color and BlurHash generation to run
       // twice for a given resource.
       if (onUploadSuccess) {
-        onUploadSuccess({ id: resourceId, resource: resource });
+        onUploadSuccess(
+          {
+            id: resourceId,
+            resource: resource,
+            batchPosition: additionalData?.batchPosition,
+            batchCount: additionalData?.batchCount
+          });
         if (previousResourceId) {
-          onUploadSuccess({ id: previousResourceId, resource: resource });
+          onUploadSuccess(
+            {
+              id: previousResourceId,
+              resource: resource,
+              batchPosition: additionalData?.batchPosition,
+              batchCount: additionalData?.batchCount
+            });
         }
       }
 
@@ -275,11 +288,10 @@ function useUploadMedia({
       }
 
       await Promise.all(
-        files.reverse().map(async (file) => {
+        files.reverse().map(async (file, index) => {
           // First, let's make sure the files we're trying to upload are actually valid.
           // We don't want to display placeholders / progress bars for items that
           // aren't supported anyway.
-
           const canTranscode = isTranscodingEnabled && canTranscodeFile(file);
           const isTooLarge = canTranscode && isFileTooLarge(file);
 
@@ -335,7 +347,12 @@ function useUploadMedia({
             onUploadProgress,
             onUploadError,
             onUploadSuccess,
-            additionalData,
+            additionalData:
+            {
+              batchPosition: files.length - 1 - index,
+              batchCount: files.length,
+              ...additionalData
+            },
             posterFile,
             muteVideo,
             cropVideo,

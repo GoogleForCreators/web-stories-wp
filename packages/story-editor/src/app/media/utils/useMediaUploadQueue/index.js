@@ -421,6 +421,7 @@ function useMediaUploadQueue() {
       finishUploading({
         id,
         resource: newResource,
+        additionalData
       });
     },
     [finishUploading, getFirstFrameOfVideo, uploadFile, uploadVideoPoster]

@@ -585,12 +585,10 @@ function useProcessMedia({
         segmentTime
       );
 
-      const addElement = handleSegmented(segmentedFiles);
+      const result = await uploadMedia(segmentedFiles, { onUploadSuccess: handleSegmented });
+      console.log("result", result);
 
-      for (const file of segmentedFiles) {
-        // eslint-disable-next-line no-await-in-loop -- need to await new new resource
-        await uploadMedia([file], { onUploadSuccess: addElement });
-      }
+
       return segmentedFiles;
     },
     [uploadMedia, ffSegmentVideo]
