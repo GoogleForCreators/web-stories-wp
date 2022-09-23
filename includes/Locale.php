@@ -91,11 +91,18 @@ class Locale {
 		 */
 		$start_of_week = get_option( 'start_of_week', 0 );
 
+		/**
+		 * GMT Offset.
+		 *
+		 * @var int $gmt_offset
+		 */
+		$gmt_offset = get_option( 'gmt_offset', 0 );
+
 		return [
 			'locale'           => str_replace( '_', '-', get_user_locale() ),
 			'dateFormat'       => $date_format,
 			'timeFormat'       => $time_format,
-			'gmtOffset'        => (float) get_option( 'gmt_offset', 0 ),
+			'gmtOffset'        => (float) $gmt_offset,
 			'timezone'         => $timezone_string,
 			'timezoneAbbr'     => $timezone_abbr,
 			'months'           => array_values( $wp_locale->month ),
