@@ -109,6 +109,12 @@ Web Stories are powered by [AMP](https://amp.dev/), which adds some restrictions
 
 For the plugin's full changelog, please see [the Releases page on GitHub](https://github.com/googleforcreators/web-stories-wp/releases).
 
+= 1.25.1 =
+
+* Fixes an issue with an incorrectly shown compatibility warning in the checklist.
+* Fixes template insertion from the dashboard
+* Fixes a couple of edge case issues around media uploads & trimming.
+
 = 1.25.0 =
 
 * New feature: background blurring support for webcam recording.
@@ -126,11 +132,11 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 * Enhancement: improved media upload experience for pre-optimized videos.
 * Bug fixes and performance improvements.
 
-= 1.23.2 =
-
-* Fixes another issue related to story poster images.
-
 == Upgrade Notice ==
+
+= 1.25.1 =
+
+This release addresses a few regressions regarding the checklist, templates, and media uploads.
 
 = 1.25.0 =
 
@@ -139,7 +145,3 @@ This release adds improvements to webcam recording, saving, and the floating men
 = 1.24.0 =
 
 This release introduces multi-page canvas and contains improvements to webcam recording, third-party media, and templates.
-
-= 1.23.2 =
-
-This release fixes another issue related to story poster images.
