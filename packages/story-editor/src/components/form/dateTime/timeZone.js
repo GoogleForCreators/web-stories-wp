@@ -36,7 +36,7 @@ const Wrapper = styled.div`
 `;
 
 const StyledText = styled(Text)`
-  color: ${({ theme }) => theme.colors.fg.disable};
+  color: ${({ theme }) => theme.colors.fg.tertiary};
   line-height: 30px;
 `;
 
@@ -65,7 +65,13 @@ function TimeZone() {
 
   return (
     <Wrapper>
-      <Tooltip hasTail title={tooltip} placement={PLACEMENT.TOP}>
+      <Tooltip
+        hasTail
+        title={tooltip}
+        placement={PLACEMENT.TOP}
+        // Higher than popup z-index in PublishTime.
+        popupZIndexOverride={11}
+      >
         <StyledText
           forwardedAs="span"
           size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
