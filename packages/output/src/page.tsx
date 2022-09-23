@@ -39,7 +39,6 @@ import Outlink from './utils/outlink';
 import ShoppingAttachment from './utils/shoppingAttachment';
 
 const ASPECT_RATIO = `${PAGE_WIDTH}:${PAGE_HEIGHT}`;
-
 function OutputPage({
   page,
   defaultAutoAdvance = DEFAULT_AUTO_ADVANCE,
@@ -57,10 +56,10 @@ function OutputPage({
     shoppingAttachment = {},
   } = page;
 
-  const [backgroundElement, ...otherElements] = elements;
+  const [backgroundElement, ...otherElements]: Element = elements;
 
   // If the background element has base color set, it's media, use that.
-  const baseColor = backgroundElement?.resource?.baseColor;
+  const baseColor: string = backgroundElement?.resource?.baseColor;
   const backgroundStyles = baseColor
     ? { backgroundColor: baseColor }
     : { backgroundColor: 'white', ...generatePatternStyles(backgroundColor) };
@@ -68,7 +67,10 @@ function OutputPage({
   const {
     autoAdvance = defaultAutoAdvance,
     pageDuration = defaultPageDuration,
-  } = advancement || {};
+  } = advancement || {} as {
+    autoAdvance?: boolean;
+    pageDuration?: number;
+  };
 
   const autoAdvanceAfter = autoAdvance
     ? getAutoAdvanceAfter({
@@ -81,7 +83,7 @@ function OutputPage({
     : undefined;
 
   const tagNamesMap = getTextElementTagNames(
-    otherElements.filter(({ type }) => 'text' === type)
+    otherElements.filter(({ type }: Element) => 'text' === type)
   );
 
   const regularElements = otherElements.map((element: Element) => {

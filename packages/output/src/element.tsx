@@ -37,7 +37,6 @@ import {
 import WithLink from './components/withLink';
 import type { OutputElementTyping } from './types';
 
-
 function OutputElement({ element, flags }: OutputElementTyping) {
   const {
     id,

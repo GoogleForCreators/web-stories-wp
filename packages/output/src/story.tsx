@@ -45,7 +45,7 @@ const OutputStory = ({
   pages,
   metadata: { publisher },
   flags,
-} : Story) => {
+}: Story) => {
   const ampExtensions = getUsedAmpExtensions(pages);
   const preloadResources = getPreloadResources(pages);
 
@@ -97,7 +97,7 @@ const OutputStory = ({
       </body>
     </html>
   );
-}
+};
 
 OutputStory.propTypes = {
   story: PropTypes.shape({

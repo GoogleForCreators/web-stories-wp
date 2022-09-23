@@ -28,7 +28,12 @@ import OutputStory from '../story';
 /**
  * Creates AMP HTML markup for saving to DB for rendering in the FE.
  */
-export default function getStoryMarkup(story: Story, pages: Page[], metadata: MetaData, flags = {}): string {
+export default function getStoryMarkup(
+  story: Story,
+  pages: Page[],
+  metadata: MetaData,
+  flags = {}
+): string {
   // Note that react-dom/server will warn about useLayoutEffect usage here.
   // Not because of any wrongdoing in our code, but mostly because
   // of its own profiler.

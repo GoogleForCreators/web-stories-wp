@@ -52,9 +52,9 @@ export interface BorderRadius {
   locked: boolean;
 }
 export interface PageAttachement {
-  icon: string,
-  needsProxy: boolean,
-  url: string
+  icon: string;
+  needsProxy: boolean;
+  url: string;
 }
 
 export interface Element extends ElementBox {

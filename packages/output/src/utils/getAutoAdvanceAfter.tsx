@@ -18,13 +18,12 @@
  */
 import { getTotalDuration } from '@googleforcreators/animation';
 
-
 /**
  * Internal dependencies
  */
 import { DEFAULT_PAGE_DURATION } from '../constants';
+import type { GetAutoAdvanceAfterTyping } from '../types';
 import getLongestMediaElement from './getLongestMediaElement';
-import type { GetAutoAdvanceAfterTyping } from "../types";
 
 function getAutoAdvanceAfter({
   animations,

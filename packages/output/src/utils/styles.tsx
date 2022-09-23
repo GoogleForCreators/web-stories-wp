@@ -33,8 +33,8 @@ function CustomStyles() {
   // content (i.e. never partially overlapping). The icon height is 48px. Based
   // on research, the smallest screen size in active use is 320 pixels wide. In
   // this case, the minimum screen width that this ratio will work for it 320px.
-  const gridLayerExpandLowerBound: string = '320 / 678';
-  const gridLayerExpandUpperBound: string = '9 / 16';
+  const gridLayerExpandLowerBound = '320 / 678';
+  const gridLayerExpandUpperBound = '9 / 16';
 
   // Match page background color to the workspace background color.
   // Validate since we're using dangerouslySetInnerHTML with imported variable.

@@ -19,9 +19,9 @@
 import type { Page } from '@googleforcreators/types';
 
 type AMPExtension = {
-  src: string,
-  name?: string,
-}
+  src: string;
+  name?: string;
+};
 
 /**
  * Goes through all pages in a story to find the needed AMP extensions for them.

@@ -17,42 +17,46 @@
  * External dependencies
  */
 import type { ResourcePropTypes } from '@googleforcreators/media';
-import type { Animation, Element, ProductElement } from '@googleforcreators/types';
+import type {
+  Animation,
+  Element,
+  ProductElement,
+} from '@googleforcreators/types';
 
-interface BackgroundAudioPropType {
-  id: number,
-  src: string,
-  length: number,
-  lengthFormatted: string,
-  mimeType: string,
-  needsProxy: boolean,
-};
+export interface BackgroundAudioPropType {
+  id: number;
+  src: string;
+  length: number;
+  lengthFormatted: string;
+  mimeType: string;
+  needsProxy: boolean;
+}
 interface BackgroundAudioTyping {
-  loop: boolean,
-  resource: BackgroundAudioPropType,
-  tracks: ResourcePropTypes[],
+  loop: boolean;
+  resource: BackgroundAudioPropType;
+  tracks: ResourcePropTypes[];
 }
 export interface BackgroundAudioType {
-  backgroundAudio: BackgroundAudioTyping,
-  id: string,
+  backgroundAudio: BackgroundAudioTyping;
+  id: string;
 }
 export interface GetAutoAdvanceAfterTyping {
-  animations: Animation[],
-  defaultPageDuration: number,
-  elements: Element[],
-  backgroundAudio: BackgroundAudioTyping,
-  id: number
+  animations: Animation[];
+  defaultPageDuration: number;
+  elements: Element[];
+  backgroundAudio: BackgroundAudioTyping;
+  id: number;
 }
 export interface PreloadResource {
-  url: string,
-  type: string ,
+  url: string;
+  type: string;
 }
 export interface OutputElementTyping {
-  element: Element,
-  flags: {},
+  element: Element;
+  flags: Record<string, unknown>;
 }
 export interface ShoppingAttachmentType {
-  products: ProductElement,
-  ctaText: string,
-  theme: string,
+  products: ProductElement;
+  ctaText: string;
+  theme: string;
 }

@@ -26,14 +26,17 @@ const MINIMUM_CONTENT_LENGTH = 3;
  * Uses a very simple algorithm to set tag name (h1, h2, h3, p)
  * based on font size.
  *
- * @param {Array<Object>} elements List of text elements
- * @return {Map<string, string>} Map of element IDs to tag name.
+ * @param elements List of text elements
+ * @return Map of element IDs to tag name.
  */
 function getTextElementTagNames(elements: TextElement): Map<string, string> {
   return elements
     .sort((a: TextElement, b: TextElement) => a.y - b.y)
     .reduce(
-      (tagNamesMap: Map<string, string>, { id, fontSize, content, tagName }: TextElement): Map<string, string> => {
+      (
+        tagNamesMap: Map<string, string>,
+        { id, fontSize, content, tagName }: TextElement
+      ): Map<string, string> => {
         // if a tag already exists,
         // utilize the one already part of the element
         if (tagName && tagName !== 'auto') {

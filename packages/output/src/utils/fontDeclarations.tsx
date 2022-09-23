@@ -37,11 +37,13 @@ const getNearestTuple = (tuples: number[][], tuple: number[]): number[] => {
   });
 };
 
-function FontDeclarations({ pages } : Page) {
+function FontDeclarations({ pages }: Page) {
   const map = new Map();
 
   for (const { elements } of pages) {
-    const textElements = elements.filter(({ type }: TextElement) => type === 'text');
+    const textElements = elements.filter(
+      ({ type }: TextElement) => type === 'text'
+    );
     // Prepare font objects for later use.
     for (const { font, content } of textElements) {
       const { service, family, variants = [], url } = font;
@@ -101,17 +103,19 @@ function FontDeclarations({ pages } : Page) {
               />
             );
           case 'custom':
-            return Array.from(serviceMap.values()).map(({ family, url }: TextElement) => {
-              const inlineStyle = getFontCSS(family, url);
-              return (
-                <style
-                  key={family}
-                  dangerouslySetInnerHTML={{
-                    __html: inlineStyle,
-                  }}
-                />
-              );
-            });
+            return Array.from(serviceMap.values()).map(
+              ({ family, url }: TextElement) => {
+                const inlineStyle = getFontCSS(family, url);
+                return (
+                  <style
+                    key={family}
+                    dangerouslySetInnerHTML={{
+                      __html: inlineStyle,
+                    }}
+                  />
+                );
+              }
+            );
           default:
             return null;
         }

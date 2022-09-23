@@ -26,7 +26,7 @@ import type { PreloadResource } from '../types';
 /**
  * Goes through all pages in a story to find the resources that should be preloaded.
  */
-function getPreloadResources(pages: Page[]):PreloadResource[] {
+function getPreloadResources(pages: Page[]): PreloadResource[] {
   const preloadResources: PreloadResource[] = [];
 
   if (pages.length === 0) {

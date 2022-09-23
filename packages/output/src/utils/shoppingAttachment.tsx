@@ -19,7 +19,11 @@
  */
 import type { ShoppingAttachmentType } from '../types';
 
-function ShoppingAttachment({ products, theme, ctaText }: ShoppingAttachmentType) {
+function ShoppingAttachment({
+  products,
+  theme,
+  ctaText,
+}: ShoppingAttachmentType) {
   return (
     <amp-story-shopping-attachment
       theme={theme}

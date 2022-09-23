@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 export interface MetaData {
-    isAutoSavingStory: boolean,
-    isFreshlyPending: boolean,
-    isFreshlyPublished: boolean,
-    isSaving: boolean,
-    isSavingStory: boolean,
+  isAutoSavingStory: boolean;
+  isFreshlyPending: boolean;
+  isFreshlyPublished: boolean;
+  isSaving: boolean;
+  isSavingStory: boolean;
 }
