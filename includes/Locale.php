@@ -95,7 +95,7 @@ class Locale {
 			'locale'           => str_replace( '_', '-', get_user_locale() ),
 			'dateFormat'       => $date_format,
 			'timeFormat'       => $time_format,
-			'gmtOffset'        => get_option( 'gmt_offset' ),
+			'gmtOffset'        => (float) get_option( 'gmt_offset', 0 ),
 			'timezone'         => $timezone_string,
 			'timezoneAbbr'     => $timezone_abbr,
 			'months'           => array_values( $wp_locale->month ),

@@ -52,14 +52,14 @@ function TimeZone() {
     return null;
   }
 
-  const { timeZone: timeZoneString } = getOptions();
+  const offsetSymbol = Number( gmtOffset ) >= 0 ? '+' : '';
   const zoneAbbr =
     '' !== timezoneAbbr && Number.isNaN(Number(timezoneAbbr))
       ? timezoneAbbr
-      : `UTC${timeZoneString}`;
+      : `UTC${offsetSymbol}${gmtOffset}`;
 
   const tooltip =
-    'UTC' === zoneAbbr
+    'UTC' === timezone
       ? __('Coordinated Universal Time', 'web-stories')
       : `(${zoneAbbr}) ${timezone.replace('_', ' ')}`;
 
