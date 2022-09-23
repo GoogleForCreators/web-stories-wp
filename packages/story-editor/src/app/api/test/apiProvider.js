@@ -82,14 +82,14 @@ describe('APIProvider', () => {
       pageTemplatesResult = await result.current.actions.getPageTemplates();
     });
 
-    expect(getAllTemplates).toHaveBeenCalledTimes(1);
+    expect(getAllTemplates).toHaveBeenCalledOnce();
     expect(pageTemplatesResult).toStrictEqual(pageTemplates);
 
     await act(async () => {
       pageTemplatesResult = await result.current.actions.getPageTemplates();
     });
 
-    expect(getAllTemplates).toHaveBeenCalledTimes(1);
+    expect(getAllTemplates).toHaveBeenCalledOnce();
     expect(pageTemplatesResult).toStrictEqual(pageTemplates);
   });
 });

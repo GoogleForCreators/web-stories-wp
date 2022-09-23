@@ -61,7 +61,7 @@ describe('usePresetActions', () => {
 
     result.current.handleAddTextPreset();
 
-    expect(mockAddGlobalPreset).toHaveBeenCalledTimes(1);
+    expect(mockAddGlobalPreset).toHaveBeenCalledOnce();
 
     expect(mockShowSnackbar).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -76,7 +76,7 @@ describe('usePresetActions', () => {
 
     result.current.handleAddColorPreset(4);
 
-    expect(mockAddGlobalPreset).toHaveBeenCalledTimes(1);
+    expect(mockAddGlobalPreset).toHaveBeenCalledOnce();
 
     expect(mockShowSnackbar).toHaveBeenCalledWith(
       expect.objectContaining({

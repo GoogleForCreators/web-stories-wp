@@ -7,6 +7,7 @@
   "references": [
     { "path": "../react" },
     { "path": "../tracking" },
+    { "path": "../types" },
     { "path": "../units" }
   ],
   "include": ["src/**/*"]

@@ -85,7 +85,7 @@ describe('DesignPanel', () => {
         />
       );
 
-      expect(formContext.isMultiple).toBe(false);
+      expect(formContext.isMultiple).toBeFalse();
       expect(formContext.registerPresubmitHandler).toStrictEqual(
         expect.any(Function)
       );
@@ -228,7 +228,7 @@ describe('DesignPanel', () => {
         />
       );
 
-      expect(formContext.isMultiple).toBe(true);
+      expect(formContext.isMultiple).toBeTrue();
     });
 
     it('should push updates to all elements', () => {
@@ -283,7 +283,7 @@ describe('DesignPanel', () => {
       fireEvent.submit(container.firstElementChild);
       expect(presubmitHandler1).toHaveBeenCalledTimes(2);
       expect(presubmitHandler2).toHaveBeenCalledTimes(2);
-      expect(onSetProperties).toHaveBeenCalledTimes(1);
+      expect(onSetProperties).toHaveBeenCalledOnce();
       const func = onSetProperties.mock.calls[0][0];
       expect(func(element1)).toStrictEqual({
         x: 12 + 1,

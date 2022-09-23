@@ -52,7 +52,7 @@ describe('Input', () => {
     fireEvent.focus(input);
     fireEvent.keyDown(input, { key: 'z', metaKey: true });
 
-    expect(mockUndo).toHaveBeenCalledTimes(1);
+    expect(mockUndo).toHaveBeenCalledOnce();
   });
 
   it('should show suggestion list when suggestedTerms length is greater than 0', () => {

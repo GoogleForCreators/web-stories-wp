@@ -22,7 +22,7 @@ describe('firstPageAnimation', () => {
   it('should return false if animations is empty', () => {
     const animations = [];
     const test = firstPageAnimation(animations);
-    expect(test).toBe(false);
+    expect(test).toBeFalse();
   });
 
   it('should return true if animations is not empty', () => {
@@ -37,12 +37,12 @@ describe('firstPageAnimation', () => {
     ];
     const test = firstPageAnimation(animations);
 
-    expect(test).toBe(true);
+    expect(test).toBeTrue();
   });
 
   it('should return false if animations is undefined', () => {
     const animations = undefined;
     const test = firstPageAnimation(animations);
-    expect(test).toBe(false);
+    expect(test).toBeFalse();
   });
 });

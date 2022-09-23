@@ -160,7 +160,7 @@ function MediaRecordingProvider({ children }) {
   });
 
   const currentRecorder =
-    videoEffect && videoEffect !== 'none'
+    videoEffect && videoEffect !== 'none' && hasVideo
       ? {
           ...mediaRecorder,
           inputStatus: mediaRecorder.status,

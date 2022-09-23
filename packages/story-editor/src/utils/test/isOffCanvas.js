@@ -30,7 +30,7 @@ import { isOffCanvas } from '../isOffCanvas';
 describe('isOffCanvas', () => {
   it('should return element as not off canvas', () => {
     const { offCanvas } = isOffCanvas({ x: 0, y: 0, width: 320, height: 240 });
-    expect(offCanvas).toBe(false);
+    expect(offCanvas).toBeFalse();
   });
 
   it('should return element off canvas', () => {
@@ -40,7 +40,7 @@ describe('isOffCanvas', () => {
       width: 320,
       height: 240,
     });
-    expect(offCanvas).toBe(true);
+    expect(offCanvas).toBeTrue();
   });
 
   it('should return off canvas params as 0', () => {

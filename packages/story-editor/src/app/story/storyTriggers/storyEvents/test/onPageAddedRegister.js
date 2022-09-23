@@ -41,7 +41,7 @@ describe('OnPageAddedRegister', () => {
       );
 
       // Should fire onSecondPageAdded event if story has more than one page
-      expect(dispatchMock).toHaveBeenCalledTimes(1);
+      expect(dispatchMock).toHaveBeenCalledOnce();
       expect(dispatchMock).toHaveBeenCalledWith(STORY_EVENTS.onSecondPageAdded);
     });
 
@@ -71,7 +71,7 @@ describe('OnPageAddedRegister', () => {
           dispatchStoryEvent={dispatchMock}
         />
       );
-      expect(dispatchMock).toHaveBeenCalledTimes(1);
+      expect(dispatchMock).toHaveBeenCalledOnce();
       expect(dispatchMock).toHaveBeenCalledWith(STORY_EVENTS.onSecondPageAdded);
     });
 
@@ -101,7 +101,7 @@ describe('OnPageAddedRegister', () => {
           dispatchStoryEvent={dispatchMock}
         />
       );
-      expect(dispatchMock).toHaveBeenCalledTimes(1);
+      expect(dispatchMock).toHaveBeenCalledOnce();
       expect(dispatchMock).toHaveBeenCalledWith(STORY_EVENTS.onSecondPageAdded);
 
       // going from 1 to 2 pages again will not re-trigger the event
@@ -117,7 +117,7 @@ describe('OnPageAddedRegister', () => {
           dispatchStoryEvent={dispatchMock}
         />
       );
-      expect(dispatchMock).toHaveBeenCalledTimes(1);
+      expect(dispatchMock).toHaveBeenCalledOnce();
     });
   });
 

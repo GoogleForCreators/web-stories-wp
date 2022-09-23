@@ -15,9 +15,9 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import type { ResourceId } from './types';
+import type { ResourceId } from '@googleforcreators/types';
 
 interface ResourceCacheEntry {
   url: string;

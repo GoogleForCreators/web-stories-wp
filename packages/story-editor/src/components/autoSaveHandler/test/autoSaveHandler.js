@@ -92,7 +92,7 @@ describe('AutoSaveHandler', () => {
   it('should trigger saving in case of a draft', () => {
     const { saveStory } = setup({});
     jest.runAllTimers();
-    expect(saveStory).toHaveBeenCalledTimes(1);
+    expect(saveStory).toHaveBeenCalledOnce();
   });
 
   it('should not trigger saving in case of not having new changes', () => {
@@ -139,6 +139,6 @@ describe('AutoSaveHandler', () => {
 
     jest.runAllTimers();
     expect(saveStory).toHaveBeenCalledTimes(0);
-    expect(secondarySaveStory).toHaveBeenCalledTimes(1);
+    expect(secondarySaveStory).toHaveBeenCalledOnce();
   });
 });

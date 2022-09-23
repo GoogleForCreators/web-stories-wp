@@ -386,8 +386,8 @@ describe('StoryAnimation.Provider', () => {
           expect(animation.pause).toHaveBeenCalledTimes(0);
           expect(animation.currentTime).toStrictEqual(initialTime);
         } else {
-          expect(animation.play).toHaveBeenCalledTimes(1);
-          expect(animation.pause).toHaveBeenCalledTimes(1);
+          expect(animation.play).toHaveBeenCalledOnce();
+          expect(animation.pause).toHaveBeenCalledOnce();
           expect(animation.currentTime).toStrictEqual(newTime);
         }
       });
@@ -429,7 +429,7 @@ describe('StoryAnimation.Provider', () => {
         };
 
         await completeAllAnimations();
-        expect(onWAAPIFinish).toHaveBeenCalledTimes(1);
+        expect(onWAAPIFinish).toHaveBeenCalledOnce();
         await completeAllAnimations();
         expect(onWAAPIFinish).toHaveBeenCalledTimes(2);
         await completeAllAnimations();

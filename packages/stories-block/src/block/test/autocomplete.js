@@ -49,6 +49,6 @@ describe('autocomplete', () => {
     fireEvent.change(screen.getByRole('combobox'), {
       target: { value: 'author' },
     });
-    expect(onInputChangeHandler).toHaveBeenCalledTimes(1);
+    expect(onInputChangeHandler).toHaveBeenCalledOnce();
   });
 });

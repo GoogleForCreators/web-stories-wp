@@ -15,9 +15,9 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import type { ResourceSize } from './types';
+import type { ResourceSize } from '@googleforcreators/types';
 
 interface ResourceSizeInput {
   width: number | string;

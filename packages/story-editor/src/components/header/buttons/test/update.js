@@ -123,7 +123,7 @@ describe('UpdateButton', () => {
     expect(updateButton).toBeEnabled();
     fireEvent.click(updateButton);
 
-    expect(saveStory).toHaveBeenCalledTimes(1);
+    expect(saveStory).toHaveBeenCalledOnce();
   });
 
   it('should be able to save a published story if there are changes', () => {
@@ -136,7 +136,7 @@ describe('UpdateButton', () => {
     expect(updateButton).toBeEnabled();
     fireEvent.click(updateButton);
 
-    expect(saveStory).toHaveBeenCalledTimes(1);
+    expect(saveStory).toHaveBeenCalledOnce();
   });
 
   it('should not be able to save if there are no new changes', () => {
@@ -182,7 +182,7 @@ describe('UpdateButton', () => {
 
     fireEvent.click(updateButton);
 
-    expect(saveStory).toHaveBeenCalledTimes(1);
+    expect(saveStory).toHaveBeenCalledOnce();
   });
 
   it('should be able to save a post if has changes and already published', () => {
@@ -195,7 +195,7 @@ describe('UpdateButton', () => {
     expect(updateButton).toBeEnabled();
     fireEvent.click(updateButton);
 
-    expect(saveStory).toHaveBeenCalledTimes(1);
+    expect(saveStory).toHaveBeenCalledOnce();
   });
 
   it('should disable button while upload is in progress', () => {
@@ -219,7 +219,7 @@ describe('UpdateButton', () => {
     expect(scheduleButton).toBeInTheDocument();
     fireEvent.click(scheduleButton);
     expect(scheduleButton).toBeEnabled();
-    expect(saveStory).toHaveBeenCalledTimes(1);
+    expect(saveStory).toHaveBeenCalledOnce();
   });
 
   it('should not change label for private stories with future date', () => {
@@ -239,7 +239,7 @@ describe('UpdateButton', () => {
     expect(scheduleButton).not.toBeInTheDocument();
     expect(updateButton).toBeInTheDocument();
     fireEvent.click(updateButton);
-    expect(saveStory).toHaveBeenCalledTimes(1);
+    expect(saveStory).toHaveBeenCalledOnce();
   });
 
   it('should save post via shortcut', () => {
@@ -253,7 +253,7 @@ describe('UpdateButton', () => {
       ctrlKey: true,
     });
 
-    expect(saveStory).toHaveBeenCalledTimes(1);
+    expect(saveStory).toHaveBeenCalledOnce();
   });
 
   it('should not save post via shortcut if already saving', () => {

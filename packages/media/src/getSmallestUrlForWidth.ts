@@ -15,10 +15,14 @@
  */
 
 /**
+ * External dependencies
+ */
+import type { Resource } from '@googleforcreators/types';
+
+/**
  * Internal dependencies
  */
 import aspectRatiosApproximatelyMatch from './aspectRatiosApproximatelyMatch';
-import type { Resource } from './types';
 
 /**
  * Choose the source URL of the smallest available size image / video wider than

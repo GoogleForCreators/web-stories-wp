@@ -36,7 +36,7 @@ describe('pageContainsBlobUrl', () => {
         ],
       },
     ];
-    expect(pageContainsBlobUrl(pages)).toBe(true);
+    expect(pageContainsBlobUrl(pages)).toBeTrue();
   });
 
   it('should find resource poster entry with blob url', () => {
@@ -69,7 +69,7 @@ describe('pageContainsBlobUrl', () => {
         ],
       },
     ];
-    expect(pageContainsBlobUrl(pages)).toBe(true);
+    expect(pageContainsBlobUrl(pages)).toBeTrue();
   });
 
   it('should allow page entries without blob urls', () => {
@@ -97,6 +97,6 @@ describe('pageContainsBlobUrl', () => {
       },
     ];
 
-    expect(pageContainsBlobUrl(pages)).toBe(false);
+    expect(pageContainsBlobUrl(pages)).toBeFalse();
   });
 });

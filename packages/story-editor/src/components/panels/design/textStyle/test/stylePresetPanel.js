@@ -157,7 +157,7 @@ describe('panels/Text/Style', () => {
       const addButton = screen.queryByLabelText('Add style');
       fireEvent.click(addButton);
 
-      expect(updateStory).toHaveBeenCalledTimes(1);
+      expect(updateStory).toHaveBeenCalledOnce();
       expect(updateStory).toHaveBeenCalledWith({
         properties: {
           globalStoryStyles: {

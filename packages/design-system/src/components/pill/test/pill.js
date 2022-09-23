@@ -64,6 +64,6 @@ describe('Pill', () => {
 
     fireEvent.click(pil);
 
-    expect(onClickMock).toHaveBeenCalledTimes(1);
+    expect(onClickMock).toHaveBeenCalledOnce();
   });
 });

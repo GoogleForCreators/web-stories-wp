@@ -75,7 +75,7 @@ describe('<ColorPicker /> when moving a stop with a pointer device', () => {
     });
 
     // Wait for callback to have been called after debounce
-    await waitFor(() => expect(onChange).toHaveBeenCalledTimes(1));
+    await waitFor(() => expect(onChange).toHaveBeenCalledOnce());
 
     expect(onChange).toHaveBeenCalledWith({
       type: 'linear',

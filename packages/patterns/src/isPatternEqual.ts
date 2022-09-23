@@ -15,11 +15,15 @@
  */
 
 /**
+ * External dependencies
+ */
+import type { Pattern } from '@googleforcreators/types';
+
+/**
  * Internal dependencies
  */
 import convertToCSS from './convertToCSS';
 import generatePatternStyles from './generatePatternStyles';
-import type { Pattern } from './types';
 
 export default function isPatternEqual(
   p1: Pattern,

@@ -98,7 +98,7 @@ describe('PageAdvancementPanel', () => {
       })
     );
 
-    expect(updateStory).toHaveBeenCalledTimes(1);
+    expect(updateStory).toHaveBeenCalledOnce();
 
     fireEvent.change(input, {
       target: { value: '21' },

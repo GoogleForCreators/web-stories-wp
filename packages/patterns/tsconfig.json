@@ -4,6 +4,6 @@
     "rootDir": "src",
     "declarationDir": "dist-types"
   },
-  "references": [{ "path": "../i18n" }],
+  "references": [{ "path": "../i18n" }, { "path": "../types" }],
   "include": ["src/**/*"]
 }

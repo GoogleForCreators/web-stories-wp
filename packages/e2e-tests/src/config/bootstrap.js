@@ -111,6 +111,10 @@ const ALLOWED_ERROR_MESSAGES = [
 
   // Media3p API requests can sometimes fail in the Docker environment (due to network issues?).
   'Failed to fetch',
+
+  // Sometimes ffmpeg.wasm is not loading.
+  'wasm streaming compile failed',
+  'falling back to ArrayBuffer instantiation',
 ];
 
 export function addAllowedErrorMessage(message) {
