@@ -27,6 +27,7 @@
 namespace Google\Web_Stories\Model;
 
 use Google\Web_Stories\Media\Image_Sizes;
+use Google\Web_Stories\Shopping\Product;
 use Google\Web_Stories\Shopping\Product_Meta;
 use Google\Web_Stories\Story_Post_Type;
 use WP_Post;
@@ -119,8 +120,7 @@ class Story {
 	/**
 	 * Array of product data.
 	 *
-	 * @var array<string, mixed>
-	 * @phpstan-return ProductData[] $products
+	 * @var Product[]
 	 */
 	protected $products = [];
 
@@ -245,7 +245,13 @@ class Story {
 		$products = get_post_meta( $this->id, Product_Meta::PRODUCTS_POST_META_KEY, true );
 
 		if ( \is_array( $products ) ) {
-			$this->products = $products;
+			$product_objects = [];
+			foreach ( $products as $product ) {
+				$product_object = new Product();
+				$product_object->load_from_array( $product );
+				$product_objects[] = $product_object;
+			}
+			$this->products = $product_objects;
 		}
 
 		return true;
@@ -458,9 +464,7 @@ class Story {
 	 *
 	 * @since 1.26.0
 	 *
-	 * @return array<string, mixed>
-	 *
-	 * @phpstan-return ProductData[] $products
+	 * @return Product[]
 	 */
 	public function get_products(): array {
 		return $this->products;

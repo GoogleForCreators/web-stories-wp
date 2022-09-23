@@ -128,6 +128,35 @@ class Product implements JsonSerializable {
 	}
 
 	/**
+	 * Convert array to object properties.
+	 *
+	 * @since 1.26.0
+	 *
+	 * @param array<string, mixed> $product Array of product.
+	 *
+	 * @phpstan-param ProductData $product
+	 */
+	public function load_from_array( array $product ): void {
+		$this->id             = $product['productId'] ?? '';
+		$this->title          = $product['productTitle'] ?? '';
+		$this->details        = $product['productDetails'] ?? '';
+		$this->brand          = $product['productBrand'] ?? '';
+		$this->url            = $product['productUrl'] ?? '';
+		$this->images         = $product['productImages'] ?? [];
+		$this->price          = $product['productPrice'] ?? 0;
+		$this->price_currency = $product['productPriceCurrency'] ?? '';
+
+
+		if ( isset( $product['aggregateRating'] ) ) {
+			$this->aggregate_rating = [
+				'rating_value' => $product['aggregateRating']['ratingValue'] ?? 0,
+				'review_count' => $product['aggregateRating']['reviewCount'] ?? 0,
+				'review_url'   => $product['aggregateRating']['reviewUrl'] ?? '',
+			];
+		}
+	}
+
+	/**
 	 * Get id.
 	 *
 	 * @since 1.21.0

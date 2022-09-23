@@ -30,12 +30,11 @@ namespace Google\Web_Stories;
 
 use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Model\Story;
+use Google\Web_Stories\Shopping\Product;
 use WP_Post;
 
 /**
  * Discovery class.
- *
- * @phpstan-import-type ProductData from \Google\Web_Stories\Shopping\Product
  */
 class Discovery extends Service_Base implements HasRequirements {
 
@@ -253,7 +252,7 @@ class Discovery extends Service_Base implements HasRequirements {
 			/**
 			 * List of products.
 			 *
-			 * @phpstan-var ProductData[] $products
+			 * @phpstan-var Product[] $products
 			 */
 			$products         = $story->get_products();
 			$product_metadata = $this->get_product_data( $products );
@@ -278,10 +277,10 @@ class Discovery extends Service_Base implements HasRequirements {
 	 *
 	 * @since 1.22.0
 	 *
-	 * @param array<int, array<string, mixed>> $products Array of products.
+	 * @param Product[] $products Array of products.
 	 * @return array<string, array<string, array<int, array<string, mixed>>|string>>
 	 *
-	 * @phpstan-param ProductData[] $products
+	 * @phpstan-param Product[] $products
 	 */
 	protected function get_product_data( array $products ): array {
 		if ( ! $products ) {
@@ -291,28 +290,30 @@ class Discovery extends Service_Base implements HasRequirements {
 		foreach ( $products as $product ) {
 			$data = [
 				'@type'       => 'Product',
-				'brand'       => $product['productBrand'] ?? '',
-				'productID'   => $product['productId'] ?? '',
-				'url'         => $product['productUrl'] ?? '',
-				'name'        => $product['productTitle'] ?? '',
-				'description' => $product['productDetails'] ?? '',
+				'brand'       => $product->get_brand(),
+				'productID'   => $product->get_id(),
+				'url'         => $product->get_url(),
+				'name'        => $product->get_title(),
+				'description' => $product->get_details(),
 				'offers'      => [
 					[
 						'@type'         => 'Offer',
-						'price'         => $product['productPrice'] ?? 0,
-						'priceCurrency' => $product['productPriceCurrency'] ?? '',
+						'price'         => $product->get_price(),
+						'priceCurrency' => $product->get_price_currency(),
 					],
 				],
 			];
-			if ( isset( $product['productImages'] ) && $product['productImages'] ) {
-				$data['image'] = $product['productImages'][0]['url'];
+			if ( $product->get_images() ) {
+				$data['image'] = $product->get_images()[0]['url'];
 			}
-			if ( ! empty( $product['aggregateRating']['reviewCount'] ) ) {
+
+			$aggregate_rating = $product->get_aggregate_rating();
+			if ( ! empty( $aggregate_rating['review_count'] ) ) {
 				$data['aggregateRating'] = [
 					'@type'       => 'AggregateRating',
-					'ratingValue' => $product['aggregateRating']['ratingValue'] ?? 0,
-					'reviewCount' => $product['aggregateRating']['reviewCount'],
-					'url'         => $product['aggregateRating']['reviewUrl'] ?? '',
+					'ratingValue' => $aggregate_rating['rating_value'],
+					'reviewCount' => $aggregate_rating['review_count'],
+					'url'         => $aggregate_rating['review_url'],
 				];
 			}
 			$product_data[] = $data;
