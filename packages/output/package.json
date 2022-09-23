@@ -49,6 +49,9 @@
     "@googleforcreators/rich-text": "*",
     "@googleforcreators/units": "*",
     "@googleforcreators/url": "*",
+    "@googleforcreators/types": "*",
+    "@types/react": "^18.0.21",
+    "@types/react-dom": "^18.0.6",
     "prop-types": "^15.8.0"
   },
   "devDependencies": {
