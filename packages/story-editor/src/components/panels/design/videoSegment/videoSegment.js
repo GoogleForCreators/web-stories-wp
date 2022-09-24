@@ -105,34 +105,37 @@ function VideoSegmentPanel({ pushUpdate, selectedElements }) {
       dismissible: true,
     });
 
-    // const originalElementId = elementId;
+    const originalElementId = elementId;
     const pageIds = pages.map(({ id }) => id);
-    // const originalPageIndex = pageIds.indexOf(currentPage.id);
+    const originalPageIndex = pageIds.indexOf(currentPage.id);
 
-    let segmentedFiles = [];
+    const segmentedFiles = [];
 
-    await segmentVideo({ resource, segmentTime }, ({ resource: newResource, batchPosition, batchCount }) => {
+    await segmentVideo(
+      { resource, segmentTime },
+      ({ resource: newResource, batchPosition, batchCount }) => {
+        const exists = segmentedFiles.find(
+          (item) => item.batchPosition === batchPosition
+        );
+        if (!exists) {
+          segmentedFiles.push({ batchPosition, resource: newResource });
+        }
 
-      const exists = segmentedFiles.find(item => item.batchPosition === batchPosition);
-      if (!exists) {
-        segmentedFiles.push({ batchPosition, resource: newResource });
+        if (!exists && segmentedFiles.length === batchCount) {
+          segmentedFiles.sort((a, b) => a.batchPosition - b.batchPosition);
+          setIsSegmenting(false);
+
+          if (batchCount <= 1000) {
+            deleteElementById({ elementId: originalElementId }); // remove the original element
+            addPageAt({
+              page: createPage(),
+              position: originalPageIndex + batchPosition,
+            });
+            insertElement(ELEMENT_TYPES.VIDEO, resource);
+          }
+        }
       }
-
-      if (!exists && segmentedFiles.length === batchCount) {
-        segmentedFiles.sort((a, b) => a.batchPosition - b.batchPosition);
-        setIsSegmenting(false);
-
-        // @todo insert pages + elements
-        /* 
-        deleteElementById({ elementId: originalElementId });  // remove the original element
-        addPageAt({
-          page: createPage(),
-          position: originalPageIndex + processedFiles,
-        });
-        insertElement(ELEMENT_TYPES.VIDEO, resource);
-        */
-      }
-    });
+    );
 
     showSnackbar({
       message: __('Inserting video segments', 'web-stories'),
