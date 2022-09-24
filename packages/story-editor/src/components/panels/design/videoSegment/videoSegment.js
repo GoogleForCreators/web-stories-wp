@@ -110,37 +110,52 @@ function VideoSegmentPanel({ pushUpdate, selectedElements }) {
     const originalPageIndex = pageIds.indexOf(currentPage.id);
 
     const segmentedFiles = [];
+    const segmentedFiles1 = [];
+    let inited = false;
 
     await segmentVideo(
       { resource, segmentTime },
       ({ resource: newResource, batchPosition, batchCount }) => {
-        const exists = segmentedFiles.find(
-          (item) => item.batchPosition === batchPosition
-        );
-        if (!exists) {
-          segmentedFiles.push({ batchPosition, resource: newResource });
+        if (segmentedFiles[batchPosition]) {
+          segmentedFiles1[batchPosition] = newResource;
         }
+        segmentedFiles[batchPosition] = newResource;
 
-        if (!exists && segmentedFiles.length === batchCount) {
-          segmentedFiles.sort((a, b) => a.batchPosition - b.batchPosition);
-          setIsSegmenting(false);
-
-          if (batchCount <= 1000) {
-            deleteElementById({ elementId: originalElementId }); // remove the original element
-            addPageAt({
-              page: createPage(),
-              position: originalPageIndex + batchPosition,
+        if (
+          segmentedFiles.length === batchCount &&
+          !segmentedFiles.includes(undefined)
+        ) {
+          if (!inited) {
+            showSnackbar({
+              message: __('Inserting video segments', 'web-stories'),
+              dismissible: false,
             });
-            insertElement(ELEMENT_TYPES.VIDEO, resource);
+
+            segmentedFiles.forEach((segmentedResource, index) => {
+              if (index >= 1) {
+                const page = createPage();
+                addPageAt({
+                  page,
+                  position: originalPageIndex + index,
+                  select: false,
+                });
+                insertElement(ELEMENT_TYPES.VIDEO, {
+                  resource: segmentedResource,
+                  pageId: page.id,
+                });
+              } else {
+                // remove the original non-segmented element
+                deleteElementById({ elementId: originalElementId });
+                insertElement(ELEMENT_TYPES.VIDEO, {
+                  resource: segmentedResource,
+                });
+              }
+            });
           }
+          inited = true;
         }
       }
     );
-
-    showSnackbar({
-      message: __('Inserting video segments', 'web-stories'),
-      dismissible: false,
-    });
   }, [
     elementId,
     deleteElementById,

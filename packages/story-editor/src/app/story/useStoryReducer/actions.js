@@ -27,8 +27,8 @@ const addPage =
 
 const addPageAt =
   (dispatch) =>
-  ({ page, position }) =>
-    dispatch({ type: types.ADD_PAGE, payload: { page, position } });
+  ({ page, position, select }) =>
+    dispatch({ type: types.ADD_PAGE, payload: { page, position, select } });
 
 const deletePage =
   (dispatch) =>
@@ -63,13 +63,16 @@ const setCurrentPage =
 
 const addElements =
   (dispatch) =>
-  ({ elements }) =>
-    dispatch({ type: types.ADD_ELEMENTS, payload: { elements } });
+  ({ elements, pageId }) =>
+    dispatch({ type: types.ADD_ELEMENTS, payload: { elements, pageId } });
 
 const addElement =
   (dispatch) =>
-  ({ element }) =>
-    dispatch({ type: types.ADD_ELEMENTS, payload: { elements: [element] } });
+  ({ element, pageId }) =>
+    dispatch({
+      type: types.ADD_ELEMENTS,
+      payload: { elements: [element], pageId },
+    });
 
 const deleteElementsById =
   (dispatch) =>

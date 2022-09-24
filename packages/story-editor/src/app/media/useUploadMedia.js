@@ -155,7 +155,7 @@ function useUploadMedia({
       resource,
       onUploadSuccess,
       previousResourceId,
-      additionalData
+      additionalData,
     } of uploaded) {
       const { id: resourceId } = resource;
       if (!resource) {
@@ -171,21 +171,19 @@ function useUploadMedia({
       // will cause things like base color and BlurHash generation to run
       // twice for a given resource.
       if (onUploadSuccess) {
-        onUploadSuccess(
-          {
-            id: resourceId,
+        onUploadSuccess({
+          id: resourceId,
+          resource: resource,
+          batchPosition: additionalData?.batchPosition,
+          batchCount: additionalData?.batchCount,
+        });
+        if (previousResourceId) {
+          onUploadSuccess({
+            id: previousResourceId,
             resource: resource,
             batchPosition: additionalData?.batchPosition,
-            batchCount: additionalData?.batchCount
+            batchCount: additionalData?.batchCount,
           });
-        if (previousResourceId) {
-          onUploadSuccess(
-            {
-              id: previousResourceId,
-              resource: resource,
-              batchPosition: additionalData?.batchPosition,
-              batchCount: additionalData?.batchCount
-            });
         }
       }
 
@@ -347,9 +345,8 @@ function useUploadMedia({
             onUploadProgress,
             onUploadError,
             onUploadSuccess,
-            additionalData:
-            {
-              ...additionalData
+            additionalData: {
+              ...additionalData,
               batchPosition: files.length - 1 - index,
               batchCount: files.length,
             },
