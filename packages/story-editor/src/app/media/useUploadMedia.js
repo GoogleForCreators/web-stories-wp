@@ -25,6 +25,7 @@ import {
   LOCAL_STORAGE_PREFIX,
 } from '@googleforcreators/design-system';
 import { isAnimatedGif } from '@googleforcreators/media';
+import { v4 as uuidv4 } from 'uuid';
 
 /**
  * Internal dependencies
@@ -155,7 +156,7 @@ function useUploadMedia({
       resource,
       onUploadSuccess,
       previousResourceId,
-      additionalData
+      additionalData,
     } of uploaded) {
       const { id: resourceId } = resource;
       if (!resource) {
@@ -171,21 +172,19 @@ function useUploadMedia({
       // will cause things like base color and BlurHash generation to run
       // twice for a given resource.
       if (onUploadSuccess) {
-        onUploadSuccess(
-          {
-            id: resourceId,
+        onUploadSuccess({
+          id: resourceId,
+          resource: resource,
+          batchPosition: additionalData?.batchPosition,
+          batchCount: additionalData?.batchCount, // @todo remove batch count once batchId works
+        });
+        if (previousResourceId) {
+          onUploadSuccess({
+            id: previousResourceId,
             resource: resource,
             batchPosition: additionalData?.batchPosition,
-            batchCount: additionalData?.batchCount
+            batchCount: additionalData?.batchCount, // @todo remove batch count once batchId works
           });
-        if (previousResourceId) {
-          onUploadSuccess(
-            {
-              id: previousResourceId,
-              resource: resource,
-              batchPosition: additionalData?.batchPosition,
-              batchCount: additionalData?.batchCount
-            });
         }
       }
 
@@ -287,6 +286,8 @@ function useUploadMedia({
         return;
       }
 
+      const batchId = uuidv4();
+
       await Promise.all(
         files.reverse().map(async (file, index) => {
           // First, let's make sure the files we're trying to upload are actually valid.
@@ -347,11 +348,11 @@ function useUploadMedia({
             onUploadProgress,
             onUploadError,
             onUploadSuccess,
-            additionalData:
-            {
-              ...additionalData
+            additionalData: {
+              ...additionalData,
               batchPosition: files.length - 1 - index,
-              batchCount: files.length,
+              batchCount: files.length, // @todo remove batch count once batchId works
+              batchId,
             },
             posterFile,
             muteVideo,

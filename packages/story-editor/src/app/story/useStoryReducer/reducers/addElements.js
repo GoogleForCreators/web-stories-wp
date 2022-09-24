@@ -45,13 +45,20 @@ const isNotProduct = ({ type }) => type !== ELEMENT_TYPES.PRODUCT;
  * @param {Object} draft Current state
  * @param {Object} payload Action payload
  * @param {Array.<Object>} payload.elements Elements to insert on the given page.
+ * @param {string} payload.pageId optional pageId for page to insert elements into.
  */
-export const addElements = (draft, { elements }) => {
+export const addElements = (draft, { elements, pageId }) => {
   if (!Array.isArray(elements)) {
     return;
   }
 
-  const page = draft.pages.find(({ id }) => id === draft.current);
+  let page = draft.pages.find(({ id }) => id === draft.current);
+
+  if (pageId) {
+    // insert elements into specific page
+    page = draft.pages.find(({ id }) => id === pageId);
+  }
+
   const newElements = exclusion(page.elements, elements);
 
   if (newElements.length === 0) {
