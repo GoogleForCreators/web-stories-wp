@@ -75,15 +75,22 @@ function VideoSegmentPanel({ pushUpdate, selectedElements }) {
   const segmentTime = getCommonValue(selectedElements, 'segmentTime', 20);
   const insertElement = useInsertElement();
 
-  const { pages, currentPage, addPageAt, deleteElementById } = useStory(
+  const {
+    pages,
+    currentPage,
+    addPageAt,
+    deleteElementById,
+    setSelectedElementsById,
+  } = useStory(
     ({
       state: { pages, currentPage },
-      actions: { addPageAt, deleteElementById },
+      actions: { addPageAt, deleteElementById, setSelectedElementsById },
     }) => ({
       pages,
       currentPage,
       addPageAt,
       deleteElementById,
+      setSelectedElementsById,
     })
   );
 
@@ -110,17 +117,13 @@ function VideoSegmentPanel({ pushUpdate, selectedElements }) {
     const originalPageIndex = pageIds.indexOf(currentPage.id);
 
     const segmentedFiles = [];
-    const segmentedFiles1 = [];
     let inited = false;
+    let newElement;
 
     await segmentVideo(
       { resource, segmentTime },
       ({ resource: newResource, batchPosition, batchCount }) => {
-        if (segmentedFiles[batchPosition]) {
-          segmentedFiles1[batchPosition] = newResource;
-        }
         segmentedFiles[batchPosition] = newResource;
-
         if (
           segmentedFiles.length === batchCount &&
           !segmentedFiles.includes(undefined)
@@ -150,11 +153,13 @@ function VideoSegmentPanel({ pushUpdate, selectedElements }) {
               } else {
                 // remove the original non-segmented element
                 deleteElementById({ elementId: originalElementId });
-                insertElement(ELEMENT_TYPES.VIDEO, {
+                newElement = insertElement(ELEMENT_TYPES.VIDEO, {
                   resource: segmentedResource,
                 });
               }
             });
+
+            setSelectedElementsById({ elementIds: [newElement.id] });
           }
           inited = true;
         }
@@ -163,6 +168,7 @@ function VideoSegmentPanel({ pushUpdate, selectedElements }) {
   }, [
     elementId,
     deleteElementById,
+    setSelectedElementsById,
     pages,
     currentPage,
     addPageAt,
