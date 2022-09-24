@@ -57,7 +57,7 @@ export function addItem(
       onUploadProgress,
       onUploadError,
       onUploadSuccess,
-      additionalData: _additionalData = {},
+      additionalData = {},
       posterFile,
       muteVideo,
       cropVideo,
@@ -74,13 +74,6 @@ export function addItem(
     resource.id = uuidv4();
   }
 
-  const additionalData = {
-    ..._additionalData,
-    meta: {
-      ...(_additionalData.meta || {}),
-    },
-  };
-
   if (
     resource.type === 'video' &&
     resource.isMuted !== null &&
@@ -90,13 +83,13 @@ export function addItem(
   }
 
   if (resource?.baseColor) {
-    additionalData.meta.baseColor = resource.baseColor;
+    additionalData.baseColor = resource.baseColor;
   }
 
-  // Do not copy over BlurHash for new trimmed videos
+  // Do not copy over BlurHash for new trimmed and cropped videos
   // since the poster (and thus the BlurHash) might be different.
-  if (resource?.blurHash && !resource?.trimData) {
-    additionalData.meta.blurHash = resource.blurHash;
+  if (resource?.blurHash && !trimData && !cropVideo) {
+    additionalData.blurHash = resource.blurHash;
   }
 
   const newItem = {
@@ -139,9 +132,9 @@ export function prepareItem(state, { payload: { id } }) {
     queue: state.queue.map((item) =>
       item.id === id
         ? {
-          ...item,
-          state: ITEM_STATUS.PREPARING,
-        }
+            ...item,
+            state: ITEM_STATUS.PREPARING,
+          }
         : item
     ),
   };
@@ -162,9 +155,9 @@ export function prepareForTranscoding(state, { payload: { id } }) {
     queue: state.queue.map((item) =>
       item.id === id
         ? {
-          ...item,
-          state: ITEM_STATUS.PENDING_TRANSCODING,
-        }
+            ...item,
+            state: ITEM_STATUS.PENDING_TRANSCODING,
+          }
         : item
     ),
   };
@@ -185,9 +178,9 @@ export function startUploading(state, { payload: { id } }) {
     queue: state.queue.map((item) =>
       item.id === id
         ? {
-          ...item,
-          state: ITEM_STATUS.UPLOADING,
-        }
+            ...item,
+            state: ITEM_STATUS.UPLOADING,
+          }
         : item
     ),
   };
@@ -203,7 +196,7 @@ export function startUploading(state, { payload: { id } }) {
  * @param {import('@googleforcreators/media').Resource} action.payload.resource Resource object.
  * @return {Object} New state
  */
-export function finishUploading(state, { payload: { id, resource, additionalData } }) {
+export function finishUploading(state, { payload: { id, resource } }) {
   const queueItem = state.queue.find((item) => item.id === id);
   if (!queueItem) {
     return state;
@@ -226,18 +219,17 @@ export function finishUploading(state, { payload: { id, resource, additionalData
     queue: state.queue.map((item) =>
       item.id === id
         ? {
-          ...item,
-          resource: {
-            ...resource,
-            // Ensure that we don't override
-            poster: resource.poster || item.resource.poster,
-          },
-          additionalData,
-          previousResourceId: item.resource.id,
-          posterFile: null,
-          originalResourceId: null,
-          state: ITEM_STATUS.UPLOADED,
-        }
+            ...item,
+            resource: {
+              ...resource,
+              // Ensure that we don't override
+              poster: resource.poster || item.resource.poster,
+            },
+            previousResourceId: item.resource.id,
+            posterFile: null,
+            originalResourceId: null,
+            state: ITEM_STATUS.UPLOADED,
+          }
         : item
     ),
   };
@@ -258,9 +250,9 @@ export function cancelUploading(state, { payload: { id } }) {
     queue: state.queue.map((item) =>
       item.id === id
         ? {
-          ...item,
-          state: ITEM_STATUS.CANCELLED,
-        }
+            ...item,
+            state: ITEM_STATUS.CANCELLED,
+          }
         : item
     ),
   };
@@ -281,9 +273,9 @@ export function startTranscoding(state, { payload: { id } }) {
     queue: state.queue.map((item) =>
       item.id === id
         ? {
-          ...item,
-          state: ITEM_STATUS.TRANSCODING,
-        }
+            ...item,
+            state: ITEM_STATUS.TRANSCODING,
+          }
         : item
     ),
   };
@@ -309,18 +301,18 @@ export function finishTranscoding(
     queue: state.queue.map((item) =>
       item.id === id
         ? {
-          ...item,
-          file,
-          state: ITEM_STATUS.TRANSCODED,
-          resource: {
-            ...item.resource,
-            isOptimized: true,
-          },
-          additionalData: {
-            ...item.additionalData,
-            ...additionalData,
-          },
-        }
+            ...item,
+            file,
+            state: ITEM_STATUS.TRANSCODED,
+            resource: {
+              ...item.resource,
+              isOptimized: true,
+            },
+            additionalData: {
+              ...item.additionalData,
+              ...additionalData,
+            },
+          }
         : item
     ),
   };
@@ -341,9 +333,9 @@ export function startMuting(state, { payload: { id } }) {
     queue: state.queue.map((item) =>
       item.id === id
         ? {
-          ...item,
-          state: ITEM_STATUS.MUTING,
-        }
+            ...item,
+            state: ITEM_STATUS.MUTING,
+          }
         : item
     ),
   };
@@ -369,18 +361,18 @@ export function finishMuting(
     queue: state.queue.map((item) =>
       item.id === id
         ? {
-          ...item,
-          file,
-          state: ITEM_STATUS.MUTED,
-          resource: {
-            ...item.resource,
-            isMuted: true,
-          },
-          additionalData: {
-            ...item.additionalData,
-            ...additionalData,
-          },
-        }
+            ...item,
+            file,
+            state: ITEM_STATUS.MUTED,
+            resource: {
+              ...item.resource,
+              isMuted: true,
+            },
+            additionalData: {
+              ...item.additionalData,
+              ...additionalData,
+            },
+          }
         : item
     ),
   };
@@ -401,9 +393,9 @@ export function startCropping(state, { payload: { id } }) {
     queue: state.queue.map((item) =>
       item.id === id
         ? {
-          ...item,
-          state: ITEM_STATUS.CROPPING,
-        }
+            ...item,
+            state: ITEM_STATUS.CROPPING,
+          }
         : item
     ),
   };
@@ -430,19 +422,19 @@ export function finishCropping(
     queue: state.queue.map((item) =>
       item.id === id
         ? {
-          ...item,
-          file,
-          posterFile,
-          state: ITEM_STATUS.CROPPED,
-          resource: {
-            ...item.resource,
-            isCropped: true,
-          },
-          additionalData: {
-            ...item.additionalData,
-            ...additionalData,
-          },
-        }
+            ...item,
+            file,
+            posterFile,
+            state: ITEM_STATUS.CROPPED,
+            resource: {
+              ...item.resource,
+              isCropped: true,
+            },
+            additionalData: {
+              ...item.additionalData,
+              ...additionalData,
+            },
+          }
         : item
     ),
   };
@@ -463,9 +455,9 @@ export function startTrimming(state, { payload: { id } }) {
     queue: state.queue.map((item) =>
       item.id === id
         ? {
-          ...item,
-          state: ITEM_STATUS.TRIMMING,
-        }
+            ...item,
+            state: ITEM_STATUS.TRIMMING,
+          }
         : item
     ),
   };
@@ -491,14 +483,14 @@ export function finishTrimming(
     queue: state.queue.map((item) =>
       item.id === id
         ? {
-          ...item,
-          file,
-          state: ITEM_STATUS.TRIMMED,
-          additionalData: {
-            ...item.additionalData,
-            ...additionalData,
-          },
-        }
+            ...item,
+            file,
+            state: ITEM_STATUS.TRIMMED,
+            additionalData: {
+              ...item.additionalData,
+              ...additionalData,
+            },
+          }
         : item
     ),
   };
@@ -536,16 +528,16 @@ export function replacePlaceholderResource(
     queue: state.queue.map((item) =>
       item.id === id
         ? {
-          ...item,
-          resource: {
-            ...resource,
-            // Keep the existing resource's ID (which at this point is a random uuid)
-            // instead of overriding it with another random uuid.
-            id: item.resource.id,
-            isPlaceholder: false,
-          },
-          posterFile,
-        }
+            ...item,
+            resource: {
+              ...resource,
+              // Keep the existing resource's ID (which at this point is a random uuid)
+              // instead of overriding it with another random uuid.
+              id: item.resource.id,
+              isPlaceholder: false,
+            },
+            posterFile,
+          }
         : item
     ),
   };
@@ -566,9 +558,9 @@ export function finishItem(state, { payload: { id } }) {
     queue: state.queue.map((item) =>
       item.id === id
         ? {
-          ...item,
-          state: ITEM_STATUS.FINISHED,
-        }
+            ...item,
+            state: ITEM_STATUS.FINISHED,
+          }
         : item
     ),
   };
