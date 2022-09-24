@@ -140,6 +140,10 @@ function VideoSegmentPanel({ pushUpdate, selectedElements }) {
                   select: false,
                 });
                 insertElement(ELEMENT_TYPES.VIDEO, {
+                  x: originalElementId.x,
+                  y: originalElementId.y,
+                  width: originalElementId.width,
+                  height: originalElementId.height,
                   resource: segmentedResource,
                   pageId: page.id,
                 });
