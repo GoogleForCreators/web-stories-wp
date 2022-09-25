@@ -52,7 +52,11 @@ export const addPage = (draft, { page, position, select = true }) => {
   const currentPageIndex = draft.pages.findIndex(
     ({ id }) => id === draft.current
   );
-  const insertionPoint = isWithinBounds ? position : currentPageIndex + 1;
+
+  const insertionPoint =
+    isWithinBounds || draft.pages.length === position
+      ? position
+      : currentPageIndex + 1;
 
   draft.pages.splice(insertionPoint, 0, page);
   if (select) {

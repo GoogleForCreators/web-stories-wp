@@ -137,7 +137,7 @@ function VideoSegmentPanel({ pushUpdate, selectedElements }) {
             segmentedFiles.forEach((segmentedResource, index) => {
               if (index >= 1) {
                 const page = createPage();
-                const position = originalPageIndex + index + 1;
+                const position = originalPageIndex + index;
                 addPageAt({
                   page,
                   position,
