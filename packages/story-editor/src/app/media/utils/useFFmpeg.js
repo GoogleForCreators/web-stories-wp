@@ -314,7 +314,6 @@ function useFFmpeg() {
         );
 
         const files = [];
-
         await ffmpeg
           .FS('readdir', '/')
           .filter(
@@ -327,7 +326,7 @@ function useFFmpeg() {
               blobToFile(new Blob([data.buffer], { type }), outputFile, type)
             );
           });
-        return files;
+        return files.sort((a, b) => a.name.localeCompare(b.name));
       } catch (err) {
         // eslint-disable-next-line no-console -- We want to surface this error.
         console.error(err);

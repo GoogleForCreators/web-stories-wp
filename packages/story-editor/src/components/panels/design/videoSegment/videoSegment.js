@@ -123,7 +123,7 @@ function VideoSegmentPanel({ pushUpdate, selectedElements }) {
     await segmentVideo(
       { resource, segmentTime },
       ({ resource: newResource, batchPosition, batchCount }) => {
-        segmentedFiles[batchPosition] = newResource;
+        segmentedFiles[batchPosition] = { ...newResource, batchPosition };
         if (
           segmentedFiles.length === batchCount &&
           !segmentedFiles.includes(undefined)
@@ -137,9 +137,10 @@ function VideoSegmentPanel({ pushUpdate, selectedElements }) {
             segmentedFiles.forEach((segmentedResource, index) => {
               if (index >= 1) {
                 const page = createPage();
+                const position = originalPageIndex + index + 1;
                 addPageAt({
                   page,
-                  position: originalPageIndex + index,
+                  position,
                   select: false,
                 });
                 insertElement(ELEMENT_TYPES.VIDEO, {
@@ -150,11 +151,23 @@ function VideoSegmentPanel({ pushUpdate, selectedElements }) {
                   resource: segmentedResource,
                   pageId: page.id,
                 });
+                // add some text to help debug
+                insertElement(ELEMENT_TYPES.TEXT, {
+                  content: segmentedResource.alt,
+                  pageId: page.id,
+                  y: 300,
+                });
               } else {
                 // remove the original non-segmented element
                 deleteElementById({ elementId: originalElementId });
                 newElement = insertElement(ELEMENT_TYPES.VIDEO, {
                   resource: segmentedResource,
+                });
+
+                // add some text to help debug
+                insertElement(ELEMENT_TYPES.TEXT, {
+                  content: segmentedResource.alt,
+                  y: 300,
                 });
               }
             });
