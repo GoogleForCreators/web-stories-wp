@@ -22,6 +22,7 @@ import { getStoryMarkup } from '@googleforcreators/output';
  * Internal dependencies
  */
 import objectPick from '../../../utils/objectPick';
+import getAllVideos from './getAllVideos';
 import getAllProducts from './getAllProducts';
 
 function getStoryPropsToSave({ story, pages, metadata, flags }) {
@@ -44,6 +45,7 @@ function getStoryPropsToSave({ story, pages, metadata, flags }) {
     'terms',
   ]);
   const products = getAllProducts(pages);
+  const videos = getAllVideos(pages);
   const content = getStoryMarkup(story, pages, metadata, flags);
   return {
     content,
@@ -51,6 +53,7 @@ function getStoryPropsToSave({ story, pages, metadata, flags }) {
     ...propsFromStory,
     ...terms,
     products,
+    videos,
   };
 }
 

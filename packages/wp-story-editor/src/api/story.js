@@ -54,6 +54,7 @@ const getStorySaveData = (
     content,
     author,
     products,
+    videos,
     ...rest
   },
   encodeMarkup
@@ -72,6 +73,7 @@ const getStorySaveData = (
     meta: {
       web_stories_publisher_logo: publisherLogo?.id,
       web_stories_products: products,
+      web_stories_videos: videos,
       web_stories_poster: featuredMedia.isExternal
         ? {
             url: featuredMedia.url,

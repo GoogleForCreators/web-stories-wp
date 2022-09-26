@@ -121,6 +121,7 @@ describe('useAutoSave', () => {
       pages,
       content: 'Hello World!',
       products: [],
+      videos: [],
     };
     delete expected.taxonomies;
 
@@ -195,6 +196,7 @@ describe('useAutoSave', () => {
       pages,
       content: 'Hello World!',
       products: [],
+      videos: [],
     };
     delete expected.taxonomies;
 
