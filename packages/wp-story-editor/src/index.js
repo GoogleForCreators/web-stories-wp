@@ -68,7 +68,7 @@ window.webStories = window.webStories || {};
  */
 window.webStories.initializeStoryEditor = (id, config, initialEdits) => {
   const appElement = document.getElementById(id);
-
+  // Just testing
   // see http://reactcommunity.org/react-modal/accessibility/
   setAppElement(appElement);
 
