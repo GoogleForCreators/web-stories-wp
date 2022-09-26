@@ -27,11 +27,14 @@
 namespace Google\Web_Stories\Model;
 
 use Google\Web_Stories\Media\Image_Sizes;
+use Google\Web_Stories\Media\Video\Video_Meta;
 use Google\Web_Stories\Story_Post_Type;
 use WP_Post;
 
 /**
  * Class Story
+ *
+ * @phpstan-import-type VideoData from \Google\Web_Stories\Model\Video
  */
 class Story {
 	/**
@@ -135,6 +138,13 @@ class Story {
 	protected $author = '';
 
 	/**
+	 * Videos.
+	 *
+	 * @var Video[]
+	 */
+	protected $videos = [];
+
+	/**
 	 * Story constructor.
 	 *
 	 * @since 1.0.0
@@ -207,6 +217,21 @@ class Story {
 				$this->poster_portrait      = $poster['url'];
 				$this->poster_portrait_size = [ (int) $poster['width'], (int) $poster['height'] ];
 			}
+		}
+
+		/**
+		 * Video data.
+		 *
+		 * @var VideoData[]|false $videos
+		 */
+		$videos = get_post_meta( $this->id, Video_Meta::VIDEOS_POST_META_KEY, true );
+
+		if ( \is_array( $videos ) ) {
+			$videos_objects = [];
+			foreach ( $videos as $video ) {
+				$videos_objects[] = Video::load_from_array( $video );
+			}
+			$this->set_videos( $videos_objects );
 		}
 
 		/**
@@ -429,5 +454,23 @@ class Story {
 	 */
 	public function get_poster_portrait_size(): array {
 		return $this->poster_portrait_size;
+	}
+
+	/**
+	 * Set videos.
+	 *
+	 * @param Video[] $videos Videos.
+	 */
+	public function set_videos( array $videos ): void {
+		$this->videos = $videos;
+	}
+
+	/**
+	 * Get videos.
+	 *
+	 * @return Video[]
+	 */
+	public function get_videos(): array {
+		return $this->videos;
 	}
 }
