@@ -18,3 +18,4 @@ export * from './gifResource';
 export * from './resource';
 export * from './resourceType';
 export * from './videoResource';
+export * from './backgroundAudioResource';

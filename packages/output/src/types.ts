@@ -16,36 +16,19 @@
 /**
  * External dependencies
  */
-import type { ResourcePropTypes } from '@googleforcreators/media';
+
 import type {
   Animation,
   Element,
-  ProductElement,
+  Page,
+  BackgroundAudio,
 } from '@googleforcreators/types';
-
-export interface BackgroundAudioPropType {
-  id: number;
-  src: string;
-  length: number;
-  lengthFormatted: string;
-  mimeType: string;
-  needsProxy: boolean;
-}
-interface BackgroundAudioTyping {
-  loop: boolean;
-  resource: BackgroundAudioPropType;
-  tracks: ResourcePropTypes[];
-}
-export interface BackgroundAudioType {
-  backgroundAudio: BackgroundAudioTyping;
-  id: string;
-}
-export interface GetAutoAdvanceAfterTyping {
-  animations: Animation[];
+export interface AutoAdvance {
+  animations?: Animation[];
   defaultPageDuration: number;
   elements: Element[];
-  backgroundAudio: BackgroundAudioTyping;
-  id: number;
+  backgroundAudio: BackgroundAudio;
+  id: string;
 }
 export interface PreloadResource {
   url: string;
@@ -55,8 +38,9 @@ export interface OutputElementTyping {
   element: Element;
   flags: Record<string, unknown>;
 }
-export interface ShoppingAttachmentType {
-  products: ProductElement;
-  ctaText: string;
-  theme: string;
+export interface PageObject {
+  page: Page;
+  defaultAutoAdvance: boolean;
+  defaultPageDuration: number;
+  flags: Record<string, boolean>;
 }

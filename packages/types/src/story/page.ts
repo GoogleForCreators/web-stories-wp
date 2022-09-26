@@ -17,7 +17,14 @@
 /**
  * Internal dependencies
  */
-import type { Element, Pattern, ShapeElement } from '../element';
+import type {
+  Element,
+  Pattern,
+  ShapeElement,
+  PageAttachment,
+  ShoppingAttachment,
+} from '../element';
+import type { BackgroundAudio } from '../resource';
 import type { Animation } from './animation';
 
 export interface Group {
@@ -27,6 +34,10 @@ export interface Group {
 }
 
 export type Groups = Record<string, Group>;
+export type Advancement = {
+  autoAdvance?: boolean;
+  pageDuration?: number;
+};
 
 export interface Page {
   elements: Element[];
@@ -35,4 +46,9 @@ export interface Page {
   backgroundColor: Pattern;
   type: 'page';
   groups: Groups;
+  id: string;
+  pageAttachment?: PageAttachment;
+  advancement: Advancement;
+  backgroundAudio: BackgroundAudio;
+  shoppingAttachment: ShoppingAttachment;
 }

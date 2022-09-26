@@ -17,11 +17,10 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import { __ } from '@googleforcreators/i18n';
-import type { Link } from '@googleforcreators/types';
+import type { PageAttachment } from '@googleforcreators/types';
 
-function Outlink({ ctaText, url, icon, theme, rel = [] }: Link) {
+function Outlink({ ctaText, url, icon, theme, rel = [] }: PageAttachment) {
   return (
     <amp-story-page-outlink
       layout="nodisplay"
@@ -34,13 +33,4 @@ function Outlink({ ctaText, url, icon, theme, rel = [] }: Link) {
     </amp-story-page-outlink>
   );
 }
-
-Outlink.propTypes = {
-  icon: PropTypes.string,
-  theme: PropTypes.oneOf(['light', 'dark']),
-  url: PropTypes.string,
-  rel: PropTypes.arrayOf(PropTypes.string),
-  ctaText: PropTypes.string,
-};
-
 export default Outlink;

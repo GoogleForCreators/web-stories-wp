@@ -17,7 +17,9 @@
 /**
  * Internal dependencies
  */
+import type { Resource } from '../resource';
 import type { ElementBox } from './elementBox';
+import type { Pattern } from './pattern';
 
 export interface Link {
   url: string;
@@ -51,10 +53,13 @@ export interface BorderRadius {
   bottomRight: number;
   locked: boolean;
 }
-export interface PageAttachement {
-  icon: string;
-  needsProxy: boolean;
-  url: string;
+export interface PageAttachment {
+  icon?: string;
+  needsProxy?: boolean;
+  url?: string;
+  ctaText?: string;
+  theme?: string;
+  rel?: string[];
 }
 
 export interface Element extends ElementBox {
@@ -70,5 +75,7 @@ export interface Element extends ElementBox {
   groupId?: string;
   border?: Border;
   borderRadius?: BorderRadius;
-  pageAttachement?: PageAttachement;
+  pageAttachment?: PageAttachment;
+  resource?: Resource;
+  overlay?: Pattern;
 }

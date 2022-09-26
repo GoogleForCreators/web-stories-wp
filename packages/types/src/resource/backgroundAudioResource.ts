@@ -13,30 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
- * Internal dependencies
+ * External dependencies
  */
-import type { Element } from './element';
-interface ProductImage {
-  alt: string;
-  url: string;
+/* eslint-disable no-restricted-imports -- Still used by other packages. */
+import type { Requireable } from 'prop-types';
+/* eslint-enable no-restricted-imports -- Still used by other packages. */
+
+export interface BackgroundAudioResource {
+  id: number;
+  src: string;
+  length: number;
+  lengthFormatted: string;
+  mimeType: string;
+  needsProxy: boolean;
 }
-export interface Product {
-  productId: string;
-  productBrand: string;
-  productDetails: string;
-  productImages: ProductImage[];
-  productPrice: number;
-  productPriceCurrency: string;
-  productTitle: string;
-  productUrl: string;
-}
-export interface ProductElement extends Element {
-  product: Product;
-}
-export interface ShoppingAttachment {
-  products?: ProductElement;
-  ctaText?: string;
-  theme?: string;
+export interface BackgroundAudio {
+  loop: boolean;
+  resource: BackgroundAudioResource;
+  tracks: Record<string, Requireable<unknown>>[];
+  id: string;
 }

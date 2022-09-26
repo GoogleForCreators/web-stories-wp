@@ -15,15 +15,11 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import type { ShoppingAttachmentType } from '../types';
+import type { ShoppingAttachment } from '@googleforcreators/types';
 
-function ShoppingAttachment({
-  products,
-  theme,
-  ctaText,
-}: ShoppingAttachmentType) {
+function ShoppingAttachment({ products, theme, ctaText }: ShoppingAttachment) {
   return (
     <amp-story-shopping-attachment
       theme={theme}

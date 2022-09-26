@@ -17,16 +17,21 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import { generatePatternStyles } from '@googleforcreators/patterns';
 import { PAGE_HEIGHT, PAGE_WIDTH } from '@googleforcreators/units';
 import { StoryAnimation } from '@googleforcreators/animation';
 import {
   ELEMENT_TYPES,
-  StoryPropTypes,
   isElementBelowLimit,
 } from '@googleforcreators/elements';
-import type { Page, Element } from '@googleforcreators/types';
+import type {
+  Element,
+  ProductElement,
+  TagName,
+  TextElement,
+  Product,
+  VideoElement,
+} from '@googleforcreators/types';
 /**
  * Internal dependencies
  */
@@ -37,6 +42,7 @@ import getTextElementTagNames from './utils/getTextElementTagNames';
 import getAutoAdvanceAfter from './utils/getAutoAdvanceAfter';
 import Outlink from './utils/outlink';
 import ShoppingAttachment from './utils/shoppingAttachment';
+import type { PageObject } from './types';
 
 const ASPECT_RATIO = `${PAGE_WIDTH}:${PAGE_HEIGHT}`;
 function OutputPage({
@@ -44,7 +50,7 @@ function OutputPage({
   defaultAutoAdvance = DEFAULT_AUTO_ADVANCE,
   defaultPageDuration = DEFAULT_PAGE_DURATION,
   flags,
-}: Page) {
+}: PageObject) {
   const {
     id,
     animations,
@@ -52,25 +58,25 @@ function OutputPage({
     elements,
     backgroundColor,
     backgroundAudio,
-    pageAttachment = {},
     shoppingAttachment = {},
+    pageAttachment = {},
   } = page;
 
-  const [backgroundElement, ...otherElements]: Element = elements;
+  const [backgroundElement, ...otherElements]: [Element, ...Element[]] =
+    elements as [Element, ...Element[]];
 
   // If the background element has base color set, it's media, use that.
-  const baseColor: string = backgroundElement?.resource?.baseColor;
+  const baseColor: string | undefined = backgroundElement?.resource?.baseColor;
   const backgroundStyles = baseColor
     ? { backgroundColor: baseColor }
     : { backgroundColor: 'white', ...generatePatternStyles(backgroundColor) };
-
+  const textElements = otherElements as TextElement[];
+  const productElements = elements as ProductElement[];
+  const videoElements = elements as VideoElement[];
   const {
     autoAdvance = defaultAutoAdvance,
     pageDuration = defaultPageDuration,
-  } = advancement || {} as {
-    autoAdvance?: boolean;
-    pageDuration?: number;
-  };
+  } = advancement || {};
 
   const autoAdvanceAfter = autoAdvance
     ? getAutoAdvanceAfter({
@@ -81,20 +87,23 @@ function OutputPage({
         id,
       })
     : undefined;
-
-  const tagNamesMap = getTextElementTagNames(
-    otherElements.filter(({ type }: Element) => 'text' === type)
+  const isTextElement = ({ type }: TextElement) => 'text' === type;
+  const tagNamesMap: Map<string, TagName> = getTextElementTagNames(
+    textElements.filter(isTextElement)
   );
 
-  const regularElements = otherElements.map((element: Element) => {
+  const regularElements = textElements.map((element: TextElement) => {
     // Check if we need to change anything in this element
 
     // Text elements need a tag name
     const needsTagName = 'text' === element.type;
     // Invalid links must be removed
     // TODO: this should come from the pre-publish checklist in the future.
-    const hasIllegalLink = pageAttachment?.url && isElementBelowLimit(element);
-    const requiresChange = needsTagName || hasIllegalLink;
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- Needs fixing of elements package
+    const hasIllegalLink: boolean =
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call -- Needs fixing of elements package
+      pageAttachment?.url && isElementBelowLimit(element);
+    const requiresChange: boolean = needsTagName || hasIllegalLink;
 
     // If neither change needed, return original
     if (!requiresChange) {
@@ -112,17 +121,17 @@ function OutputPage({
     return newElement;
   });
 
-  const products = elements
-    .filter(({ type }: Element) => type === ELEMENT_TYPES.PRODUCT)
-    .map(({ product }: Element) => product)
+  const products = productElements
+    .filter(({ type }: ProductElement) => type === ELEMENT_TYPES.PRODUCT)
+    .map(({ product }: ProductElement): Product => product)
     .filter(Boolean);
 
   const hasProducts = products.length > 0;
   const hasPageAttachment = pageAttachment?.url && !hasProducts;
 
-  const videoCaptions = elements
+  const videoCaptions = videoElements
     .filter(
-      ({ type, tracks }: Element) =>
+      ({ type, tracks }: VideoElement) =>
         type === ELEMENT_TYPES.VIDEO && tracks?.length > 0
     )
     .map(({ id: videoId }: Element) => `el-${videoId}-captions`);
@@ -221,12 +230,5 @@ function OutputPage({
     </amp-story-page>
   );
 }
-
-OutputPage.propTypes = {
-  page: StoryPropTypes.page.isRequired,
-  defaultAutoAdvance: PropTypes.bool,
-  defaultPageDuration: PropTypes.number,
-  flags: PropTypes.object,
-};
 
 export default OutputPage;
