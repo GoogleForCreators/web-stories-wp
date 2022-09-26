@@ -33,7 +33,6 @@
     "@googleforcreators/fonts": "*",
     "@googleforcreators/i18n": "*",
     "@googleforcreators/media": "*",
-    "@googleforcreators/output": "*",
     "@googleforcreators/patterns": "*",
     "@googleforcreators/react": "*",
     "@googleforcreators/tracking": "*",
