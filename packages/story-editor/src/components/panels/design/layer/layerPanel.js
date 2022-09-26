@@ -81,6 +81,7 @@ function LayerPanel() {
           isResizable
           count={layers?.length}
           maxHeight={maxHeight}
+          title="test"
         >
           {__('Layers', 'web-stories')}
         </StyledPanelTitle>
