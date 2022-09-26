@@ -30,6 +30,7 @@ namespace Google\Web_Stories;
 
 use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Model\Story;
+use Google\Web_Stories\Model\Video;
 use Google\Web_Stories\Shopping\Product_Meta;
 use WP_Post;
 
@@ -260,6 +261,14 @@ class Discovery extends Service_Base implements HasRequirements {
 			}
 
 
+			$videos = $story->get_videos();
+
+			$video_metadata = $this->get_video_data( $videos );
+			if ( $video_metadata ) {
+				$metadata = array_merge( $video_metadata, $metadata );
+			}
+
+
 			/**
 			 * List of products.
 			 *
@@ -281,6 +290,56 @@ class Discovery extends Service_Base implements HasRequirements {
 		 * @param WP_Post $post The current post object.
 		 */
 		return apply_filters( 'web_stories_story_schema_metadata', $metadata, $post );
+	}
+
+	/**
+	 * Get video schema data.
+	 *
+	 * @since 1.26.0
+	 *
+	 * @param Video[] $videos Array of Video.
+	 * @return array<string, array<string, array<int, array<string, mixed>>|string>>
+	 */
+	protected function get_video_data( array $videos ): array {
+		if ( ! $videos ) {
+			return [];
+		}
+		$video_data = [];
+		foreach ( $videos as $video ) {
+
+			$duration  = new \DateInterval( 'PT' . $video->get_duration() . 'S' );
+			$hours     = $duration->h;
+			$minutes   = $duration->m;
+			$seconds   = $duration->s;
+			$date_time = "PT{$hours}H{$minutes}M{$seconds}S";
+
+			$data = [
+				'@type'        => 'VideoObject',
+				'contentURL'   => $video->get_url(),
+				'name'         => $video->get_title(),
+				'description'  => $video->get_title(),
+				'thumbnailUrl' => $video->get_poster(),
+				'duration'     => $date_time,
+
+			];
+
+			if ( $video->get_date() > 0 ) {
+				$data['uploadDate'] = gmdate(
+					'Y-m-d\TH:i:s',
+					(int) strtotime( (string) $video->get_date() )
+				);
+			}
+
+			$video_data[] = $data;
+		}
+
+		return [
+			'mainEntity' => [
+				'@type'           => 'ItemList',
+				'numberOfItems'   => (string) \count( $videos ),
+				'itemListElement' => $video_data,
+			],
+		];
 	}
 
 	/**
