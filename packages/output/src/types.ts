@@ -22,6 +22,9 @@ import type {
   Element,
   Page,
   BackgroundAudio,
+  StoryMetaData,
+  MetaData,
+  Flags,
 } from '@googleforcreators/types';
 export interface AutoAdvance {
   animations?: Animation[];
@@ -36,11 +39,17 @@ export interface PreloadResource {
 }
 export interface OutputElementTyping {
   element: Element;
-  flags: Record<string, unknown>;
+  flags: Record<string, boolean>;
 }
 export interface PageObject {
   page: Page;
   defaultAutoAdvance: boolean;
   defaultPageDuration: number;
   flags: Record<string, boolean>;
+}
+export interface StoryProps {
+  story: StoryMetaData;
+  pages: Page[];
+  metadata: MetaData;
+  flags: Flags;
 }

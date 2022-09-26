@@ -51,14 +51,14 @@ function getTextElementTagNames(elements: TextElement[]): Map<string, TagName> {
 
         const hasH1 = Array.from(tagNamesMap.values()).includes('h1');
 
-        if (fontSize >= 36 && !hasH1) {
+        if (fontSize && fontSize >= 36 && !hasH1) {
           tagNamesMap.set(id, 'h1');
           return tagNamesMap;
         }
 
-        if (fontSize >= 27) {
+        if (fontSize && fontSize >= 27) {
           tagNamesMap.set(id, 'h2');
-        } else if (fontSize >= 21) {
+        } else if (fontSize && fontSize >= 21) {
           tagNamesMap.set(id, 'h3');
         } else {
           tagNamesMap.set(id, 'p');

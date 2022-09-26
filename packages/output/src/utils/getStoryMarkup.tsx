@@ -18,7 +18,12 @@
  * External dependencies
  */
 import { renderToStaticMarkup } from '@googleforcreators/react';
-import type { Story, Page, MetaData } from '@googleforcreators/react';
+import type {
+  Page,
+  MetaData,
+  Flags,
+  StoryMetaData,
+} from '@googleforcreators/types';
 
 /**
  * Internal dependencies
@@ -29,10 +34,10 @@ import OutputStory from '../story';
  * Creates AMP HTML markup for saving to DB for rendering in the FE.
  */
 export default function getStoryMarkup(
-  story: Story,
+  story: StoryMetaData,
   pages: Page[],
   metadata: MetaData,
-  flags = {}
+  flags: Flags
 ): string {
   // Note that react-dom/server will warn about useLayoutEffect usage here.
   // Not because of any wrongdoing in our code, but mostly because

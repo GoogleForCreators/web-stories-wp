@@ -34,6 +34,7 @@ function getAutoAdvanceAfter({
 }: AutoAdvance): string {
   const { resource, loop } = backgroundAudio || {};
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-call -- Needs fixing in animation package
   const animationDuration = getTotalDuration({ animations }) / 1000;
   const backgroundAudioDuration =
     !loop && resource?.length ? resource.length : 0;

@@ -78,4 +78,6 @@ export interface Element extends ElementBox {
   pageAttachment?: PageAttachment;
   resource?: Resource;
   overlay?: Pattern;
+  backgroundColor?: Pattern;
+  backgroundTextMode?: string;
 }

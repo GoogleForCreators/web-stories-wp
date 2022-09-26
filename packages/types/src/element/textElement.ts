@@ -37,6 +37,7 @@ export interface Font {
   styles?: FontStyle[];
   variants?: FontVariant[];
   fallbacks?: string[];
+  url?: string;
 }
 
 export interface Padding {

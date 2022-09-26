@@ -47,6 +47,7 @@ function OutputElement({ element, flags }: OutputElementTyping) {
     backgroundTextMode,
     overlay,
   } = element;
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,  @typescript-eslint/no-unsafe-call -- Needs fixing elements package.
   const { Output, isMaskable } = getDefinitionForType(type);
 
   // Box is calculated based on the 100%:100% basis for width and height
@@ -62,46 +63,52 @@ function OutputElement({ element, flags }: OutputElementTyping) {
 
   return (
     <div
-      style={{
-        position: 'absolute',
-        pointerEvents: 'none',
-        left: x ? `${x}%` : 0,
-        top: y ? `${y}%` : 0,
-        width: `${width}%`,
-        height: `${height}%`,
-        ...(shouldDisplayBorder(element)
-          ? getBorderPositionCSS({
-              ...border,
-              width: `${width}%`,
-              height: `${height}%`,
-              posTop: `${y}%`,
-              posLeft: `${x}%`,
-            })
-          : null),
-        transform: rotationAngle ? `rotate(${rotationAngle}deg)` : null,
-        opacity: typeof opacity !== 'undefined' ? opacity / 100 : null,
-      }}
+      style={
+        {
+          position: 'absolute',
+          pointerEvents: 'none',
+          left: x ? `${x}%` : 0,
+          top: y ? `${y}%` : 0,
+          width: `${width}%`,
+          height: `${height}%`,
+          ...(shouldDisplayBorder(element)
+            ? getBorderPositionCSS({
+                ...border,
+                width: `${width}%`,
+                height: `${height}%`,
+                posTop: `${y}%`,
+                posLeft: `${x}%`,
+              })
+            : null),
+          transform: rotationAngle ? `rotate(${rotationAngle}deg)` : null,
+          opacity: typeof opacity !== 'undefined' ? opacity / 100 : null,
+        } as React.CSSProperties
+      }
     >
       <StoryAnimation.AMPWrapper target={id}>
         <WithMask
           className={!isMaskable ? undefined : 'mask'}
           element={element}
           id={'el-' + id}
-          style={{
-            ...(shouldDisplayBorder(element) ? getBorderStyle(element) : null),
-            pointerEvents: 'initial',
-            width: '100%',
-            height: '100%',
-            display: 'block',
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            zIndex: 0,
-            ...getBorderRadius(element),
-            ...(backgroundTextMode === BACKGROUND_TEXT_MODE.FILL
-              ? bgStyles
-              : null),
-          }}
+          style={
+            {
+              ...(shouldDisplayBorder(element)
+                ? getBorderStyle(element)
+                : null),
+              pointerEvents: 'initial',
+              width: '100%',
+              height: '100%',
+              display: 'block',
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              zIndex: 0,
+              ...getBorderRadius(element),
+              ...(backgroundTextMode === BACKGROUND_TEXT_MODE.FILL
+                ? bgStyles
+                : null),
+            } as React.CSSProperties
+          }
           skipDefaultMask
         >
           <WithLink

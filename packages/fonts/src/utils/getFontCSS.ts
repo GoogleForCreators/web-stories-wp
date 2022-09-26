@@ -21,7 +21,11 @@
  * @return Font format string or null if the font is unsupported.
  */
 function getFontFormat(src: string): string | null {
-  const fileExtension = src.split(/[#?]/)?.[0]?.split('.')?.pop()?.trim();
+  const fileExtension: string | undefined = src
+    .split(/[#?]/)?.[0]
+    ?.split('.')
+    ?.pop()
+    ?.trim();
 
   switch (fileExtension) {
     case 'woff':

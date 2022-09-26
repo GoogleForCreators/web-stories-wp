@@ -15,23 +15,15 @@
  */
 
 /**
- * External dependencies
- */
-import PropTypes from 'prop-types';
-import {
-  BackgroundAudioPropType,
-  StoryPropTypes,
-} from '@googleforcreators/elements';
-import type { Story } from '@googleforcreators/types';
-
-/**
  * Internal dependencies
  */
 import getUsedAmpExtensions from './utils/getUsedAmpExtensions';
 import Boilerplate from './utils/ampBoilerplate';
+import CustomCSS from './utils/styles';
 import FontDeclarations from './utils/fontDeclarations';
+import OutputPage from './page';
 import getPreloadResources from './utils/getPreloadResources';
-
+import type { StoryProps } from './types';
 const OutputStory = ({
   story: {
     featuredMedia,
@@ -45,7 +37,7 @@ const OutputStory = ({
   pages,
   metadata: { publisher },
   flags,
-}: Story) => {
+}: StoryProps) => {
   const ampExtensions = getUsedAmpExtensions(pages);
   const preloadResources = getPreloadResources(pages);
 
@@ -61,7 +53,7 @@ const OutputStory = ({
           content="width=device-width,minimum-scale=1,initial-scale=1"
         />
         {ampExtensions.map(({ name, src }) => (
-          <script key={src} async="async" src={src} custom-element={name} />
+          <script key={src} async src={src} custom-element={name} />
         ))}
         <FontDeclarations pages={pages} />
         {preloadResources.map(({ url, type }) => (
@@ -97,29 +89,6 @@ const OutputStory = ({
       </body>
     </html>
   );
-};
-
-OutputStory.propTypes = {
-  story: PropTypes.shape({
-    link: PropTypes.string,
-    title: PropTypes.string.isRequired,
-    autoAdvance: PropTypes.bool,
-    defaultPageDuration: PropTypes.number,
-    backgroundAudio: PropTypes.shape({
-      resource: BackgroundAudioPropType,
-    }),
-    publisherLogo: PropTypes.shape({
-      url: PropTypes.string.isRequired,
-    }),
-    featuredMedia: PropTypes.shape({
-      url: PropTypes.string.isRequired,
-    }),
-  }).isRequired,
-  pages: PropTypes.arrayOf(StoryPropTypes.page).isRequired,
-  metadata: PropTypes.shape({
-    publisher: PropTypes.string.isRequired,
-  }).isRequired,
-  flags: PropTypes.object,
 };
 
 export default OutputStory;

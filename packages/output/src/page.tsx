@@ -132,7 +132,7 @@ function OutputPage({
   const videoCaptions = videoElements
     .filter(
       ({ type, tracks }: VideoElement) =>
-        type === ELEMENT_TYPES.VIDEO && tracks?.length > 0
+        type === ELEMENT_TYPES.VIDEO && tracks && tracks?.length > 0
     )
     .map(({ id: videoId }: Element) => `el-${videoId}-captions`);
 

@@ -13,12 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * External dependencies
- */
-/* eslint-disable no-restricted-imports -- Still used by other packages. */
-import type { Requireable } from 'prop-types';
-/* eslint-enable no-restricted-imports -- Still used by other packages. */
 
 export interface BackgroundAudioResource {
   id: number;
@@ -28,9 +22,16 @@ export interface BackgroundAudioResource {
   mimeType: string;
   needsProxy: boolean;
 }
+export interface Track {
+  srclang: string;
+  label: string;
+  kind: string;
+  track: string;
+  id: string;
+}
 export interface BackgroundAudio {
   loop: boolean;
   resource: BackgroundAudioResource;
-  tracks: Record<string, Requireable<unknown>>[];
+  tracks: Track[];
   id: string;
 }

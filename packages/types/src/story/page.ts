@@ -22,7 +22,7 @@ import type {
   Pattern,
   ShapeElement,
   PageAttachment,
-  ShoppingAttachment,
+  ShoppingAttachmentType,
 } from '../element';
 import type { BackgroundAudio } from '../resource';
 import type { Animation } from './animation';
@@ -50,5 +50,5 @@ export interface Page {
   pageAttachment?: PageAttachment;
   advancement: Advancement;
   backgroundAudio: BackgroundAudio;
-  shoppingAttachment: ShoppingAttachment;
+  shoppingAttachment: ShoppingAttachmentType;
 }

@@ -17,19 +17,21 @@
  * External dependencies
  */
 import { getDefinitionForType } from '@googleforcreators/elements';
-import type { Element } from '@googleforcreators/types';
+import type { Element, VideoElement } from '@googleforcreators/types';
 
 /**
  * Among all elements, returns the media element with the longest duration.
  */
 function getLongestMediaElement(elements: Element[], minDuration = 0): Element {
-  return elements
+  const videoElements = elements as VideoElement[];
+  return videoElements
     .filter(({ type, loop }) => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call -- Needs fixing in elements library
       const { isMedia } = getDefinitionForType(type);
       // Ensure looping media is not considered.
       return isMedia && !loop;
     })
-    .reduce((longest, element) => {
+    .reduce((longest: VideoElement, element: VideoElement) => {
       if (!element?.resource?.length) {
         return longest;
       }

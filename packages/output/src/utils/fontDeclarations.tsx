@@ -19,17 +19,25 @@
  */
 import { getGoogleFontURL, getFontCSS } from '@googleforcreators/fonts';
 import { getFontVariants } from '@googleforcreators/rich-text';
-import type { Page, TextElement } from '@googleforcreators/typings';
+import type {
+  Story,
+  TextElement,
+  Font,
+  FontVariant,
+} from '@googleforcreators/types';
 
-const hasTuple = (tuples: number[][], tuple: number[]): boolean =>
-  tuples.some((val: number[]) => val[0] === tuple[0] && val[1] === tuple[1]);
+const hasTuple = (tuples: FontVariant[], tuple: FontVariant): boolean =>
+  tuples.some((val: FontVariant) => val[0] === tuple[0] && val[1] === tuple[1]);
 
-const tupleDiff = (a: number[], b: number[]): number => {
+const tupleDiff = (a: FontVariant, b: FontVariant): number => {
   return Math.abs(a[0] + a[1] - b[0] - b[1]);
 };
 
-const getNearestTuple = (tuples: number[][], tuple: number[]): number[] => {
-  return tuples.reduce((acc, curr) => {
+const getNearestTuple = (
+  tuples: FontVariant[],
+  tuple: FontVariant
+): FontVariant => {
+  return tuples.reduce((acc: FontVariant, curr: FontVariant) => {
     const currDiff = tupleDiff(curr, tuple);
     const accDiff = tupleDiff(acc, tuple);
 
@@ -37,11 +45,12 @@ const getNearestTuple = (tuples: number[][], tuple: number[]): number[] => {
   });
 };
 
-function FontDeclarations({ pages }: Page) {
-  const map = new Map();
+function FontDeclarations({ pages }: Pick<Story, 'pages'>) {
+  const map = new Map() as Map<string, Map<string, Font>>;
 
   for (const { elements } of pages) {
-    const textElements = elements.filter(
+    const elementsAsTextElements = elements as TextElement[];
+    const textElements = elementsAsTextElements.filter(
       ({ type }: TextElement) => type === 'text'
     );
     // Prepare font objects for later use.
@@ -51,10 +60,15 @@ function FontDeclarations({ pages }: Page) {
         continue;
       }
 
-      const serviceMap = map.get(service) || new Map();
+      const serviceMap: Map<string, Font> = (map.get(service) ||
+        new Map()) as Map<string, Font>;
       map.set(service, serviceMap);
 
-      const fontObj = serviceMap.get(family) || { family, variants: [], url };
+      const fontObj: Font = serviceMap.get(family) || {
+        family,
+        variants: [],
+        url,
+      };
 
       const contentVariants = getFontVariants(content);
 
@@ -74,12 +88,13 @@ function FontDeclarations({ pages }: Page) {
           // - If only [ [ 1, 400 ] ] exist, and
           //   [ 0, 400] was requested, fall back to [ 1, 400 ].
 
-          const newVariant = getNearestTuple(variants, variant);
-          const fontObjHasVariant = hasTuple(fontObj.variants, newVariant);
+          const newVariant = getNearestTuple(variants, variant as FontVariant);
+          const fontObjHasVariant =
+            fontObj.variants && hasTuple(fontObj.variants, newVariant);
           const isValidVariant = hasTuple(variants, newVariant);
 
           // Keeps list unique.
-          if (!fontObjHasVariant && isValidVariant) {
+          if (!fontObjHasVariant && isValidVariant && fontObj.variants) {
             fontObj.variants.push(newVariant);
           }
         }
@@ -91,21 +106,26 @@ function FontDeclarations({ pages }: Page) {
 
   return (
     <>
-      {Array.from(map.keys()).map((service) => {
-        const serviceMap = map.get(service);
+      {Array.from(map.keys()).map((service: string) => {
+        const serviceMap: Map<string, Font> | undefined = map.get(service);
         switch (service) {
           case 'fonts.google.com':
             return (
-              <link
-                key={service}
-                href={getGoogleFontURL(Array.from(serviceMap.values()))}
-                rel="stylesheet"
-              />
+              serviceMap && (
+                <link
+                  key={service}
+                  href={
+                    getGoogleFontURL(Array.from(serviceMap.values())) as string
+                  }
+                  rel="stylesheet"
+                />
+              )
             );
           case 'custom':
-            return Array.from(serviceMap.values()).map(
-              ({ family, url }: TextElement) => {
-                const inlineStyle = getFontCSS(family, url);
+            return (
+              serviceMap &&
+              Array.from(serviceMap.values()).map(({ family, url }: Font) => {
+                const inlineStyle: string = getFontCSS(family, url) as string;
                 return (
                   <style
                     key={family}
@@ -114,7 +134,7 @@ function FontDeclarations({ pages }: Page) {
                     }}
                   />
                 );
-              }
+              })
             );
           default:
             return null;

@@ -14,11 +14,17 @@
  * limitations under the License.
  */
 /**
- * Internal dependencies
+ * External dependencies
  */
-import type { BackgroundAudioType } from '../types';
+import type { BackgroundAudio } from '@googleforcreators/types';
 
-function BackgroundAudio({ backgroundAudio, id }: BackgroundAudioType) {
+function BackgroundAudio({
+  backgroundAudio,
+  id,
+}: {
+  backgroundAudio: BackgroundAudio;
+  id: string;
+}) {
   const { resource, tracks, loop } = backgroundAudio || {};
   const { mimeType, src } = resource;
 
