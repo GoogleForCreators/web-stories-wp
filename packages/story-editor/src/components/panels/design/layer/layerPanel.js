@@ -82,7 +82,7 @@ function LayerPanel() {
           count={layers?.length}
           maxHeight={maxHeight}
         >
-          {__('Layers test', 'web-stories')}
+          {__('Layers test 2', 'web-stories')}
         </StyledPanelTitle>
 
         <DividerContainer>
