@@ -25,6 +25,7 @@ import {
   LOCAL_STORAGE_PREFIX,
 } from '@googleforcreators/design-system';
 import { isAnimatedGif } from '@googleforcreators/media';
+import { v4 as uuidv4 } from 'uuid';
 
 /**
  * Internal dependencies
@@ -175,14 +176,14 @@ function useUploadMedia({
           id: resourceId,
           resource: resource,
           batchPosition: additionalData?.batchPosition,
-          batchCount: additionalData?.batchCount,
+          batchCount: additionalData?.batchCount, // @todo remove batch count once batchId works
         });
         if (previousResourceId) {
           onUploadSuccess({
             id: previousResourceId,
             resource: resource,
             batchPosition: additionalData?.batchPosition,
-            batchCount: additionalData?.batchCount,
+            batchCount: additionalData?.batchCount, // @todo remove batch count once batchId works
           });
         }
       }
@@ -285,6 +286,8 @@ function useUploadMedia({
         return;
       }
 
+      const batchId = uuidv4();
+
       await Promise.all(
         files.reverse().map(async (file, index) => {
           // First, let's make sure the files we're trying to upload are actually valid.
@@ -348,7 +351,8 @@ function useUploadMedia({
             additionalData: {
               ...additionalData,
               batchPosition: files.length - 1 - index,
-              batchCount: files.length,
+              batchCount: files.length, // @todo remove batch count once batchId works
+              batchId,
             },
             posterFile,
             muteVideo,
