@@ -29,7 +29,7 @@ import {
   useSnackbar,
   Slider,
 } from '@googleforcreators/design-system';
-import { useCallback, useState } from '@googleforcreators/react';
+import { useCallback, useState, useEffect } from '@googleforcreators/react';
 import { createPage, ELEMENT_TYPES } from '@googleforcreators/elements';
 import { useFeature } from 'flagged';
 
@@ -42,6 +42,7 @@ import { getCommonValue } from '../../shared';
 import { useLocalMedia } from '../../../../app/media';
 import { useStory } from '../../../../app/story';
 import useInsertElement from '../../../canvas/useInsertElement';
+import useMediaUploadQueue from '../../../../app/media/utils/useMediaUploadQueue';
 
 const Row = styled(DefaultRow)`
   margin-top: 2px;
@@ -75,15 +76,22 @@ function VideoSegmentPanel({ pushUpdate, selectedElements }) {
   const segmentTime = getCommonValue(selectedElements, 'segmentTime', 20);
   const insertElement = useInsertElement();
 
-  const { pages, currentPage, addPageAt, deleteElementById } = useStory(
+  const {
+    pages,
+    currentPage,
+    addPageAt,
+    deleteElementById,
+    setSelectedElementsById,
+  } = useStory(
     ({
       state: { pages, currentPage },
-      actions: { addPageAt, deleteElementById },
+      actions: { addPageAt, deleteElementById, setSelectedElementsById },
     }) => ({
       pages,
       currentPage,
       addPageAt,
       deleteElementById,
+      setSelectedElementsById,
     })
   );
 
@@ -91,12 +99,79 @@ function VideoSegmentPanel({ pushUpdate, selectedElements }) {
     segmentVideo,
   }));
 
+  const {
+    state: { isBatchUploading },
+  } = useMediaUploadQueue();
+
   const [isSegmenting, setIsSegmenting] = useState();
+  const [segmentedFiles, setSegmentedFiles] = useState([]);
+  const [batchCount, setBatchCount] = useState(); // remove this one useEffect + queue check works
   const showSnackbar = useSnackbar(({ showSnackbar }) => showSnackbar);
 
   const segmentButtonText = isSegmenting
     ? __('Segmenting…', 'web-stories')
     : __('Segment', 'web-stories');
+
+  const addElementsToPages = useCallback(() => {
+    showSnackbar({
+      message: __('Inserting video segments', 'web-stories'),
+      dismissible: false,
+    });
+    let newElement;
+    const pageIds = pages.map(({ id }) => id);
+    const originalPageIndex = pageIds.indexOf(currentPage.id);
+
+    // @todo
+    // elementId should be the original items selected
+    // originalPageIndex should be the page id of the orginal element
+    // set x, y, width, height props
+
+    segmentedFiles.forEach((segmentedResource, index) => {
+      if (index >= 1) {
+        const page = createPage();
+        const position = originalPageIndex + index;
+        addPageAt({
+          page,
+          position,
+          select: false,
+        });
+        insertElement(ELEMENT_TYPES.VIDEO, {
+          pageId: page.id,
+          resource: segmentedResource,
+        });
+        // @todo remove this ... add some text to help debug
+        insertElement(ELEMENT_TYPES.TEXT, {
+          content: segmentedResource.alt,
+          pageId: page.id,
+          y: 300,
+        });
+      } else {
+        // remove the original non-segmented element
+        deleteElementById({ elementId: elementId });
+        newElement = insertElement(ELEMENT_TYPES.VIDEO, {
+          resource: segmentedResource,
+        });
+
+        // @todo remove this ... add some text to help debug
+        insertElement(ELEMENT_TYPES.TEXT, {
+          content: segmentedResource.alt,
+          y: 300,
+        });
+      }
+    });
+    setSelectedElementsById({ elementIds: [newElement.id] });
+    setIsSegmenting(false);
+  }, [
+    segmentedFiles,
+    showSnackbar,
+    pages,
+    currentPage,
+    elementId,
+    addPageAt,
+    insertElement,
+    setSelectedElementsById,
+    deleteElementById,
+  ]);
 
   const handleSegmentation = useCallback(async () => {
     setIsSegmenting(true);
@@ -105,51 +180,28 @@ function VideoSegmentPanel({ pushUpdate, selectedElements }) {
       dismissible: true,
     });
 
-    // const originalElementId = elementId;
-    const pageIds = pages.map(({ id }) => id);
-    // const originalPageIndex = pageIds.indexOf(currentPage.id);
+    const files = [];
 
-    let segmentedFiles = [];
-
-    await segmentVideo({ resource, segmentTime }, ({ resource: newResource, batchPosition, batchCount }) => {
-
-      const exists = segmentedFiles.find(item => item.batchPosition === batchPosition);
-      if (!exists) {
-        segmentedFiles.push({ batchPosition, resource: newResource });
+    await segmentVideo(
+      { resource, segmentTime },
+      ({ resource: newResource, batchPosition, batchCount: count }) => {
+        files[batchPosition] = newResource;
+        setSegmentedFiles([...files]);
+        setBatchCount(count); // remove this one useEffect + queue check works
       }
+    );
+  }, [showSnackbar, segmentVideo, segmentTime, resource, setSegmentedFiles]);
 
-      if (!exists && segmentedFiles.length === batchCount) {
-        segmentedFiles.sort((a, b) => a.batchPosition - b.batchPosition);
-        setIsSegmenting(false);
-
-        // @todo insert pages + elements
-        /* 
-        deleteElementById({ elementId: originalElementId });  // remove the original element
-        addPageAt({
-          page: createPage(),
-          position: originalPageIndex + processedFiles,
-        });
-        insertElement(ELEMENT_TYPES.VIDEO, resource);
-        */
-      }
-    });
-
-    showSnackbar({
-      message: __('Inserting video segments', 'web-stories'),
-      dismissible: false,
-    });
-  }, [
-    elementId,
-    deleteElementById,
-    pages,
-    currentPage,
-    addPageAt,
-    insertElement,
-    segmentVideo,
-    segmentTime,
-    resource,
-    showSnackbar,
-  ]);
+  useEffect(() => {
+    // @todo replace this with isBatchUploading check
+    if (
+      segmentedFiles.length === batchCount &&
+      !segmentedFiles.includes(undefined)
+    ) {
+      addElementsToPages();
+    }
+    isBatchUploading('123'); // @todo get proper batchId here
+  }, [batchCount, segmentedFiles, isBatchUploading, addElementsToPages]);
 
   if (!enableSegmentVideo || resource.length <= MIN_SEGMENT_LENGTH) {
     return null;

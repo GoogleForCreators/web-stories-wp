@@ -39,8 +39,9 @@ import { isInsideRange } from './utils';
  * @param {Object} payload Action payload
  * @param {Object} payload.page Object with properties of new page
  * @param {Object} payload.position Position at which to insert the new page. If null, insert after current
+ * @param {boolean} payload.select Whether or not to select (give focus to) the newly created page
  */
-export const addPage = (draft, { page, position }) => {
+export const addPage = (draft, { page, position, select = true }) => {
   // Ensure new page has at least one element
   if (!page.elements?.length) {
     return;
@@ -51,11 +52,17 @@ export const addPage = (draft, { page, position }) => {
   const currentPageIndex = draft.pages.findIndex(
     ({ id }) => id === draft.current
   );
-  const insertionPoint = isWithinBounds ? position : currentPageIndex + 1;
+
+  const insertionPoint =
+    isWithinBounds || draft.pages.length === position
+      ? position
+      : currentPageIndex + 1;
 
   draft.pages.splice(insertionPoint, 0, page);
-  draft.current = page.id;
-  draft.selection = [page.elements[0].id];
+  if (select) {
+    draft.current = page.id;
+    draft.selection = [page.elements[0].id];
+  }
 };
 
 export default produce(addPage);
