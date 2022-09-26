@@ -67,7 +67,7 @@ const FloatingMenu = memo(
             isAlwaysVisible
             disableControlledTabNavigation
             aria-label={__(
-              'Design options for selected element',
+              'Design options for selected element, just testing',
               'web-stories'
             )}
             onMouseDown={(e) => {
