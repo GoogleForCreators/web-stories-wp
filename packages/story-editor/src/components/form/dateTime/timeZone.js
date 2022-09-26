@@ -52,7 +52,7 @@ function TimeZone() {
     return null;
   }
 
-  const offsetSymbol = Number( gmtOffset ) >= 0 ? '+' : '';
+  const offsetSymbol = Number(gmtOffset) >= 0 ? '+' : '';
   const zoneAbbr =
     '' !== timezoneAbbr && Number.isNaN(Number(timezoneAbbr))
       ? timezoneAbbr
