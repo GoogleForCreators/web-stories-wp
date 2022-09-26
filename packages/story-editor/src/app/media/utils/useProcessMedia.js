@@ -310,6 +310,7 @@ function useProcessMedia({
           additionalData: {
             originalId: resourceId,
             isMuted,
+            trimData,
             mediaSource: isOptimized ? 'video-optimization' : 'editor',
           },
           elementId,
@@ -545,6 +546,7 @@ function useProcessMedia({
             cropVideo: true,
             additionalData: {
               original_id: resourceId,
+              cropOriginId: resourceId,
               cropParams,
               mediaSource: isOptimized ? 'video-optimization' : 'editor',
             },

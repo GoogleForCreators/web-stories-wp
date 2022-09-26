@@ -57,7 +57,7 @@ export function addItem(
       onUploadProgress,
       onUploadError,
       onUploadSuccess,
-      additionalData: _additionalData = {},
+      additionalData = {},
       posterFile,
       muteVideo,
       cropVideo,
@@ -74,13 +74,6 @@ export function addItem(
     resource.id = uuidv4();
   }
 
-  const additionalData = {
-    ..._additionalData,
-    meta: {
-      ...(_additionalData.meta || {}),
-    },
-  };
-
   if (
     resource.type === 'video' &&
     resource.isMuted !== null &&
@@ -90,13 +83,13 @@ export function addItem(
   }
 
   if (resource?.baseColor) {
-    additionalData.meta.baseColor = resource.baseColor;
+    additionalData.baseColor = resource.baseColor;
   }
 
-  // Do not copy over BlurHash for new trimmed videos
+  // Do not copy over BlurHash for new trimmed and cropped videos
   // since the poster (and thus the BlurHash) might be different.
-  if (resource?.blurHash && !resource?.trimData) {
-    additionalData.meta.blurHash = resource.blurHash;
+  if (resource?.blurHash && !trimData && !cropVideo) {
+    additionalData.blurHash = resource.blurHash;
   }
 
   const newItem = {
@@ -430,19 +423,15 @@ export function finishCropping(
     queue: state.queue.map((item) =>
       item.id === id
         ? {
-          ...item,
-          file,
-          posterFile,
-          state: ITEM_STATUS.CROPPED,
-          resource: {
-            ...item.resource,
-            isCropped: true,
-          },
-          additionalData: {
-            ...item.additionalData,
-            ...additionalData,
-          },
-        }
+            ...item,
+            file,
+            posterFile,
+            state: ITEM_STATUS.CROPPED,
+            additionalData: {
+              ...item.additionalData,
+              ...additionalData,
+            },
+          }
         : item
     ),
   };
