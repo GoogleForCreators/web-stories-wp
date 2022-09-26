@@ -54,11 +54,13 @@ on:
       - synchronize
       - ready_for_review
 
+permissions:
+  contents: read
+
 # Cancels all previous workflow runs for pull requests that have not completed.
 concurrency:
-  # The concurrency group contains the workflow name and the branch name for pull requests
-  # or the commit hash for any other events.
-  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.head_ref || github.sha }}
+  # The concurrency group contains the workflow name and the (target) branch name.
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -67,17 +69,22 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@dd2c410b088af7c0dc8046f3ac9a8f4148492a95
+        with:
+          egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
+
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
 
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@2fddd8803e2f5c9604345a0b591c3020ee971a93
         with:
           node-version-file: '.nvmrc'
           cache: npm
 
       - name: Setup PHP
-        uses: shivammathur/setup-php@v2
+        uses: shivammathur/setup-php@e04e1d97f0c0481c6e1ba40f8a538454fe5d7709
         with:
           php-version: '8.0'
           coverage: none
@@ -89,7 +96,7 @@ jobs:
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
 
       - name: Install PHP dependencies
-        uses: 'ramsey/composer-install@v1'
+        uses: ramsey/composer-install@f680dac46551dffb2234a240d65ae806c2999dd6
         with:
           composer-options: '--prefer-dist --no-progress --no-interaction'
 
@@ -104,7 +111,7 @@ jobs:
         run: npm run workflow:build-plugin
 
       - name: Upload bundle
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8
         with:
           name: web-stories
           path: build/web-stories
@@ -116,7 +123,7 @@ jobs:
       result: ${{ steps.nonce.outputs.result }}
     steps:
       - id: nonce
-        run: echo "::set-output name=result::${{ github.run_id }}-$(date +%s)"
+        run: echo "::set-output name=result::${{ github.run_id }}-${{ github.run_attempt }}-$(date +%s)"
 
   e2e:
     name: '${{ matrix.browser }} - WP ${{ matrix.wp }} (${{ matrix.shard }})'
@@ -128,7 +135,7 @@ jobs:
       matrix:
         # TODO: add back Firefox once support is more mature.
         browser: ['chrome']
-        wp: ['5.5']
+        wp: ['5.7']
         snapshots: [false]
         # We want to split up the tests into 2 parts running in parallel.
         shard: ['1/2', '2/2']
@@ -143,11 +150,16 @@ jobs:
             shard: '2/2'
 
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@dd2c410b088af7c0dc8046f3ac9a8f4148492a95
+        with:
+          egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
+
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
 
       - name: Download bundle
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@fb598a63ae348fa914e94cd0ff38f362e927b741
         with:
           name: web-stories
 
@@ -156,7 +168,10 @@ jobs:
         run: sudo apt-get install libgbm1
 
       - name: Install dependencies
-        run: npm install puppeteer
+        run: |
+          npm install puppeteer
+          npm install expect-puppeteer --no-save
+          npx patch-package # Apply patches to expect-puppeteer
         env:
           PUPPETEER_PRODUCT: ${{ matrix.browser }}
 
@@ -174,16 +189,17 @@ jobs:
         if: ( matrix.snapshots ) && ( github.event.pull_request.draft == false )
 
       - name: Run E2E tests with percy
-        run: npm run test:e2e:percy
+        run: npm run test:e2e:percy -- -- --shard=$SHARD
         env:
           PERCY_TOKEN: ${{ secrets.PERCY_TOKEN_E2E }}
           WP_VERSION: ${{ matrix.wp }}
           PERCY_BROWSER_EXECUTABLE: ${{ steps.chromium_path.outputs.chromium_path }}
           PERCY_PARALLEL_NONCE: ${{ needs.nonce.outputs.result }}
+          SHARD: ${{ matrix.shard }}
         if: ( matrix.snapshots ) && ( github.event.pull_request.draft == false )
 
       - name: Run E2E tests
-        run: npm run test:e2e
+        run: npm run test:e2e -- --shard=$SHARD
         env:
           WP_VERSION: ${{ matrix.wp }}
           SHARD: ${{ matrix.shard }}
@@ -195,18 +211,35 @@ jobs:
         env:
           COMPOSE_INTERACTIVE_NO_CLI: true
 
+      - name: Upload artifacts
+        uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8
+        if: always()
+        with:
+          name: failures-artifacts
+          path: build/e2e-artifacts
+          if-no-files-found: ignore
+
   percy:
     name: Percy
     runs-on: ubuntu-latest
     timeout-minutes: 5
-    if: always() && github.event.pull_request.draft == false
+    if: >
+      always() &&
+      github.event.pull_request.draft == false &&
+      github.event.pull_request.head.repo.fork == false &&
+      github.event.pull_request.user.login != 'dependabot[bot]'
     needs: [e2e, nonce]
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@dd2c410b088af7c0dc8046f3ac9a8f4148492a95
+        with:
+          egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
+
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
 
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@2fddd8803e2f5c9604345a0b591c3020ee971a93
         with:
           node-version-file: '.nvmrc'
           cache: npm

@@ -25,7 +25,6 @@ describe('Design Menu: Flip toggles', () => {
 
   beforeEach(async () => {
     fixture = new Fixture();
-    fixture.setFlags({ floatingMenu: true });
     await fixture.render();
 
     await fixture.collapseHelpCenter();
@@ -61,11 +60,12 @@ describe('Design Menu: Flip toggles', () => {
 
   it('should render the buttons as toggled if current selection is flipped both ways', async () => {
     // Toggle the flips using the design panel
+    await fixture.events.click(fixture.editor.sidebar.designTab);
     await fixture.events.click(
-      fixture.editor.inspector.designPanel.sizePosition.flipHorizontal
+      fixture.editor.sidebar.designPanel.sizePosition.flipHorizontal
     );
     await fixture.events.click(
-      fixture.editor.inspector.designPanel.sizePosition.flipVertical
+      fixture.editor.sidebar.designPanel.sizePosition.flipVertical
     );
 
     // Check that actual element properties have flips set to true

@@ -60,7 +60,7 @@ export default function useFetchCategoriesEffect({
       fetchCategoriesStart({ provider });
       try {
         const { categories: newCategories } = await listCategories({
-          provider,
+          provider: PROVIDERS[provider].provider,
         });
         fetchCategoriesSuccess({ provider, categories: newCategories });
       } catch (e) {

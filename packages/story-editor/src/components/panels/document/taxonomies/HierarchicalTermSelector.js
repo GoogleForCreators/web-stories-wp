@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { __, sprintf } from '@googleforcreators/i18n';
+import { __, _x, sprintf } from '@googleforcreators/i18n';
 import {
   Button,
   BUTTON_SIZES,
@@ -250,7 +250,7 @@ function HierarchicalTermSelector({
       [
         {
           value: NO_PARENT_VALUE,
-          label: __('None', 'web-stories'),
+          label: _x('None', 'parent taxonomy', 'web-stories'),
         },
       ]
         .concat(orderedCategories)

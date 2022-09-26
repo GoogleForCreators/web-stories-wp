@@ -77,18 +77,16 @@ const pageSize = {
   height: 300,
 };
 
-describe('Dashboard <Content />', function () {
+describe('Dashboard <Content />', () => {
   afterEach(() => {
     jest.resetAllMocks();
   });
 
-  it('should render the content grid with the correct story count.', function () {
+  it('should render the content grid with the correct story count.', () => {
     renderWithProviders(
       <SnackbarProvider>
         <LayoutProvider>
           <Content
-            filter={STORY_STATUSES[0]}
-            search={{ keyword: '' }}
             stories={fakeStories}
             page={{
               requestNextPage: jest.fn,
@@ -112,13 +110,11 @@ describe('Dashboard <Content />', function () {
     );
   });
 
-  it('should show "Start telling Stories." if no stories are present.', function () {
+  it('should show "Start telling Stories." if no stories are present.', () => {
     renderWithProviders(
       <SnackbarProvider>
         <LayoutProvider>
           <Content
-            filter={STORY_STATUSES[0]}
-            search={{ keyword: '' }}
             stories={[]}
             page={{
               requestNextPage: jest.fn,
@@ -140,13 +136,15 @@ describe('Dashboard <Content />', function () {
     expect(screen.getByText('Start telling Stories.')).toBeInTheDocument();
   });
 
-  it('should show "Sorry, we couldn\'t find any results matching "scooby dooby doo" if no stories are found for a search query are present.', function () {
+  it('should show "Sorry, we couldn\'t find any results matching "scooby dooby doo" if no stories are found for a search query are present.', () => {
     renderWithProviders(
       <SnackbarProvider>
         <LayoutProvider>
           <Content
-            filter={STORY_STATUSES[0]}
-            search={{ keyword: 'scooby dooby doo' }}
+            filtersObject={{
+              search: 'scooby dooby doo',
+              status: STORY_STATUSES[0],
+            }}
             stories={[]}
             page={{
               requestNextPage: jest.fn,
@@ -169,6 +167,37 @@ describe('Dashboard <Content />', function () {
       screen.getByText(
         'Sorry, we couldn\'t find any results matching "scooby dooby doo"'
       )
+    ).toBeInTheDocument();
+  });
+
+  it('should show "Sorry, we couldn\'t find any results if no stories are found for a filter query are present.', () => {
+    renderWithProviders(
+      <SnackbarProvider>
+        <LayoutProvider>
+          <Content
+            stories={[]}
+            filtersObject={{
+              sports: 2,
+            }}
+            page={{
+              requestNextPage: jest.fn,
+            }}
+            view={{
+              style: VIEW_STYLE.GRID,
+              pageSize,
+            }}
+            storyActions={{
+              duplicateStory: jest.fn,
+              trashStory: jest.fn,
+              updateStory: jest.fn,
+            }}
+          />
+        </LayoutProvider>
+      </SnackbarProvider>
+    );
+
+    expect(
+      screen.getByText("Sorry, we couldn't find any results")
     ).toBeInTheDocument();
   });
 });

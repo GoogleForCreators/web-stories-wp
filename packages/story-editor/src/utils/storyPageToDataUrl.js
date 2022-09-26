@@ -17,79 +17,11 @@
 /**
  * External dependencies
  */
-import { theme as ds_theme } from '@googleforcreators/design-system';
-import {
-  forwardRef,
-  render,
-  unmountComponentAtNode,
-} from '@googleforcreators/react';
-import {
-  PAGE_RATIO,
-  FULLBLEED_RATIO,
-  UnitsProvider,
-} from '@googleforcreators/units';
-import styled, { ThemeProvider } from 'styled-components';
-import { generatePatternStyles } from '@googleforcreators/patterns';
-import { TransformProvider } from '@googleforcreators/transform';
-
+import { PAGE_RATIO } from '@googleforcreators/units';
 /**
  * Internal dependencies
  */
-import { FontProvider } from '../app/font';
-import DisplayElement from '../components/canvas/displayElement';
-
-const Page = styled.div`
-  display: block;
-  position: relative;
-  padding: 0;
-  border: 0;
-  background-color: transparent;
-  height: ${({ height }) => height}px;
-  width: ${({ width }) => width}px;
-  flex: none;
-  outline: 0;
-`;
-
-const PreviewWrapper = styled.div`
-  height: 100%;
-  position: relative;
-  overflow: hidden;
-  background-color: ${({ theme }) => theme.colors.fg.white};
-  border-radius: 4px;
-  ${({ background }) => generatePatternStyles(background)}
-`;
-
-const PageWithDependencies = forwardRef(function PageWithDependencies(
-  { page, width, height },
-  ref
-) {
-  return (
-    <ThemeProvider theme={ds_theme}>
-      <FontProvider>
-        <TransformProvider>
-          <UnitsProvider
-            pageSize={{
-              width,
-              height,
-            }}
-          >
-            <Page ref={ref} height={height} width={width}>
-              <PreviewWrapper background={page.backgroundColor}>
-                {page.elements.map((element) => (
-                  <DisplayElement
-                    key={element.id}
-                    previewMode
-                    element={element}
-                  />
-                ))}
-              </PreviewWrapper>
-            </Page>
-          </UnitsProvider>
-        </TransformProvider>
-      </FontProvider>
-    </ThemeProvider>
-  );
-});
+import storyPageToNode from './storyPageToNode';
 
 /**
  * @typedef {import('../../../types').Page} Page
@@ -108,43 +40,7 @@ async function storyPageToDataUrl(page, { width = 400, ...options }) {
     /* webpackChunkName: "chunk-html-to-image" */ 'html-to-image'
   );
 
-  const height = width * (1 / PAGE_RATIO);
-  const containerHeight = width * (1 / FULLBLEED_RATIO);
-
-  const bufferRoot = document.createElement('div');
-  bufferRoot.style.cssText = `
-    contain: strict;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: ${width}px;
-    height: ${containerHeight}px;
-    opacity: 0;
-    transform: translate(-100%, -100%);
-    pointer-events: none;
-  `;
-
-  const node = await new Promise((resolve) => {
-    const resolverRef = (htmlNode) => {
-      if (!htmlNode) {
-        return;
-      }
-      resolve(htmlNode);
-    };
-
-    render(
-      <PageWithDependencies
-        ref={resolverRef}
-        page={page}
-        width={width}
-        height={height}
-        containerHeight={containerHeight}
-      />,
-      bufferRoot
-    );
-  });
-
-  document.body.appendChild(bufferRoot);
+  const [node, cleanup] = await storyPageToNode(page, width);
 
   const dataUrl = await htmlToImage.toJpeg(node, {
     ...options,
@@ -154,8 +50,7 @@ async function storyPageToDataUrl(page, { width = 400, ...options }) {
     canvasWidth: width,
   });
 
-  unmountComponentAtNode(bufferRoot);
-  document.body.removeChild(bufferRoot);
+  cleanup();
 
   return dataUrl;
 }

@@ -37,6 +37,37 @@ use WP_REST_Server;
 
 /**
  * Font_Controller class.
+ *
+ * @phpstan-type Font array{
+ *   family: string,
+ *   fallbacks?: string[],
+ *   weights?: array<int, array{0: int, 1: int}>,
+ *   styles?: string[],
+ *   variants?: string[],
+ *   service?: string,
+ *   metrics?: mixed,
+ *   id?: string,
+ *   url?: string
+ * }
+ * @phpstan-type SchemaEntry array{
+ *   description: string,
+ *   type: string,
+ *   context: string[],
+ *   default?: mixed,
+ * }
+ * @phpstan-type Schema array{
+ *   properties: array{
+ *     family?: SchemaEntry,
+ *     fallbacks?: SchemaEntry,
+ *     weights?: SchemaEntry,
+ *     styles?: SchemaEntry,
+ *     variants?: SchemaEntry,
+ *     service?: SchemaEntry,
+ *     metrics?: SchemaEntry,
+ *     id?: SchemaEntry,
+ *     url?: SchemaEntry
+ *   }
+ * }
  */
 class Font_Controller extends WP_REST_Posts_Controller {
 	/**
@@ -110,7 +141,9 @@ class Font_Controller extends WP_REST_Posts_Controller {
 	 *
 	 * @since 1.16.0
 	 *
-	 * @return array List of Google fonts.
+	 * @return array<int, mixed> List of Google fonts.
+	 *
+	 * @phpstan-return Font[]
 	 */
 	protected function get_builtin_fonts(): array {
 		$file = WEBSTORIES_PLUGIN_DIR_PATH . 'includes/data/fonts/fonts.json';
@@ -129,6 +162,7 @@ class Font_Controller extends WP_REST_Posts_Controller {
 		 * List of Google Fonts.
 		 *
 		 * @var array|null $fonts
+		 * @phpstan-var Font[]|null $fonts
 		 */
 		$fonts = json_decode( $content, true );
 
@@ -145,7 +179,7 @@ class Font_Controller extends WP_REST_Posts_Controller {
 	 * @since 1.16.0
 	 *
 	 * @param WP_REST_Request $request Full details about the request.
-	 * @return array List of custom fonts.
+	 * @return array<int, mixed> List of custom fonts.
 	 */
 	protected function get_custom_fonts( $request ): array {
 		// Retrieve the list of registered collection query parameters.
@@ -217,6 +251,11 @@ class Font_Controller extends WP_REST_Posts_Controller {
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
 	public function get_items( $request ) {
+		/**
+		 * Fonts list.
+		 *
+		 * @phpstan-var Font[] $fonts
+		 */
 		$fonts = [];
 
 		// Retrieve the list of registered collection query parameters.
@@ -284,6 +323,12 @@ class Font_Controller extends WP_REST_Posts_Controller {
 				usort(
 					$fonts,
 					static function( $a, $b ) {
+						/**
+						 * Font A and Font B.
+						 *
+						 * @phpstan-var Font $a
+						 * @phpstan-var Font $b
+						 */
 						return strnatcasecmp( $a['family'], $b['family'] );
 					}
 				);
@@ -364,7 +409,7 @@ class Font_Controller extends WP_REST_Posts_Controller {
 		/**
 		 * Font data.
 		 *
-		 * @var array|null $font_data
+		 * @var array<string, mixed>|null $font_data
 		 */
 		$font_data = json_decode( $post->post_content, true );
 
@@ -498,7 +543,7 @@ class Font_Controller extends WP_REST_Posts_Controller {
 	 *
 	 * @since 1.16.0
 	 *
-	 * @return array Collection parameters.
+	 * @return array<string, array<string, mixed>> Collection parameters.
 	 */
 	public function get_collection_params(): array {
 		$query_params = parent::get_collection_params();
@@ -540,13 +585,23 @@ class Font_Controller extends WP_REST_Posts_Controller {
 	/**
 	 * Retrieves the font's schema, conforming to JSON Schema.
 	 *
+	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+	 *
 	 * @since 1.16.0
 	 *
 	 * @return array Item schema data.
+	 *
+	 * @phpstan-return Schema
 	 */
 	public function get_item_schema(): array {
 		if ( $this->schema ) {
-			return $this->add_additional_fields_schema( $this->schema );
+			/**
+			 * Schema.
+			 *
+			 * @phpstan-var Schema $schema
+			 */
+			$schema = $this->add_additional_fields_schema( $this->schema );
+			return $schema;
 		}
 
 		$schema = [
@@ -638,6 +693,12 @@ class Font_Controller extends WP_REST_Posts_Controller {
 
 		$this->schema = $schema;
 
-		return $this->add_additional_fields_schema( $this->schema );
+		/**
+		 * Schema.
+		 *
+		 * @phpstan-var Schema $schema
+		 */
+		$schema = $this->add_additional_fields_schema( $this->schema );
+		return $schema;
 	}
 }

@@ -21,6 +21,8 @@ import {
   StoryEditor,
   InterfaceSkeleton,
 } from '@googleforcreators/story-editor';
+import { elementTypes } from '@googleforcreators/element-library';
+import { registerElementType } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -38,9 +40,13 @@ export const _default = () => {
   const story = content ? JSON.parse(content) : {};
   const apiCallbacks = { saveStoryById, getMedia, getFonts };
 
+  elementTypes.forEach(registerElementType);
+
   return (
-    <StoryEditor config={{ apiCallbacks }} initialEdits={{ story }}>
-      <InterfaceSkeleton header={<HeaderLayout />} />
-    </StoryEditor>
+    <div style={{ height: '100vh' }}>
+      <StoryEditor config={{ apiCallbacks }} initialEdits={{ story }}>
+        <InterfaceSkeleton header={<HeaderLayout />} />
+      </StoryEditor>
+    </div>
   );
 };

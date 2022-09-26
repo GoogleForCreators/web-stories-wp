@@ -18,6 +18,8 @@
  * External dependencies
  */
 import { renderHook, act } from '@testing-library/react-hooks';
+import { registerElementType } from '@googleforcreators/elements';
+import { elementTypes } from '@googleforcreators/element-library';
 
 /**
  * Internal dependencies
@@ -78,6 +80,8 @@ describe('useInsertElement', () => {
     useLayout.mockReturnValue({
       setZoomSetting,
     });
+
+    elementTypes.forEach(registerElementType);
   });
 
   it('should always invoke setZoomSetting with FIT', () => {

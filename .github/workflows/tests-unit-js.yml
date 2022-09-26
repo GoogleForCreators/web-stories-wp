@@ -5,11 +5,14 @@ on:
     # Only run if JS-related files changed.
     paths:
       - '**.js'
+      - '**.cjs'
+      - '**.ts'
       - '**/package.json'
       - 'package-lock.json'
       - 'packages/templates/src/raw/**'
       - 'packages/text-sets/src/raw/**'
       - 'patches/**'
+      - 'packages/fonts/src/fonts.json'
     branches:
       - main
       - release/*
@@ -17,17 +20,22 @@ on:
     # Only run if JS-related files changed.
     paths:
       - '**.js'
+      - '**.cjs'
+      - '**.ts'
       - '**/package.json'
       - 'package-lock.json'
       - 'packages/templates/src/raw/**'
       - 'packages/text-sets/src/raw/**'
       - 'patches/**'
+      - 'packages/fonts/src/fonts.json'
+
+permissions:
+  contents: read
 
 # Cancels all previous workflow runs for pull requests that have not completed.
 concurrency:
-  # The concurrency group contains the workflow name and the branch name for pull requests
-  # or the commit hash for any other events.
-  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.head_ref || github.sha }}
+  # The concurrency group contains the workflow name and the (target) branch name.
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -40,18 +48,22 @@ jobs:
         # We want to split up the tests into 2 parts running in parallel.
         shard: ['1/2', '2/2']
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@dd2c410b088af7c0dc8046f3ac9a8f4148492a95
+        with:
+          egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
+
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
 
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@2fddd8803e2f5c9604345a0b591c3020ee971a93
         with:
           node-version-file: '.nvmrc'
           cache: npm
 
       - name: Setup Jest cache
-        uses: actions/cache@v2.1.7
-        id: cache-jest-cache
+        uses: actions/cache@fd5de65bc895cf536527842281bea11763fefd77
         with:
           path: .jest-cache
           key: ${{ runner.os }}-${{ steps.nvm.outputs.NVMRC }}-jest
@@ -64,13 +76,21 @@ jobs:
         env:
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
 
+      - name: Download AMP validator JS
+        id: amp_validator
+        run: |
+          cd $RUNNER_TEMP && curl -O -f -s -S https://cdn.ampproject.org/v0/validator_wasm.js
+          AMP_VALIDATOR_FILE="${RUNNER_TEMP}/validator_wasm.js"
+          echo "::set-output name=validator_file::$AMP_VALIDATOR_FILE"
+
       - name: Run JavaScript unit tests
-        run: npm run test:js -- --runInBand --ci --cacheDirectory="$HOME/.jest-cache" --collectCoverage
+        run: npm run test:js -- --runInBand --ci --cacheDirectory="$HOME/.jest-cache" --collectCoverage --shard=$SHARD
         env:
           SHARD: ${{ matrix.shard }}
+          AMP_VALIDATOR_FILE: ${{ steps.amp_validator.outputs.validator_file }}
 
       - name: Upload code coverage report
-        uses: codecov/codecov-action@v2.1.0
+        uses: codecov/codecov-action@81cd2dc8148241f03f5839d295e000b8f761e378
         with:
           file: build/logs/lcov.info
           flags: unittests

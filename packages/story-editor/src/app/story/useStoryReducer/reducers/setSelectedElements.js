@@ -18,6 +18,8 @@
  * External dependencies
  */
 import { STORY_ANIMATION_STATE } from '@googleforcreators/animation';
+import { produce, current } from 'immer';
+
 /**
  * Internal dependencies
  */
@@ -33,54 +35,76 @@ import { intersect } from './utils';
  *
  * Duplicates will be removed from the given list of element ids.
  *
+ * Locked elements can never be part of a multi-selection, so remove those if so.
+ *
  * Current page and pages are unchanged.
  *
- * @param {Object} state Current state
+ * @param {Object} draft Current state
  * @param {Object} payload Action payload
  * @param {Array.<string>} payload.elementIds Object with properties of new page
- * @return {Object} New state
+ * @param {boolean} payload.withLinked Include elements from the group?
  */
-function setSelectedElements(state, { elementIds }) {
+export const setSelectedElements = (
+  draft,
+  { elementIds, withLinked = false }
+) => {
   const newElementIds =
-    typeof elementIds === 'function' ? elementIds(state.selection) : elementIds;
+    typeof elementIds === 'function'
+      ? elementIds(current(draft.selection))
+      : elementIds;
 
   if (!Array.isArray(newElementIds)) {
-    return state;
+    return;
   }
 
-  const uniqueElementIds = [...new Set(newElementIds)];
+  const currentPage = draft.pages.find(({ id }) => id === draft.current);
+  let allIds = newElementIds;
+
+  if (withLinked) {
+    const elements = currentPage.elements.filter(({ id }) =>
+      newElementIds.includes(id)
+    );
+    const groupIds = elements.map(({ groupId }) => groupId).filter(Boolean);
+    const elementsFromGroups = currentPage.elements.filter(({ groupId }) =>
+      groupIds.includes(groupId)
+    );
+    const elementsIdsFromGroups = elementsFromGroups.map(({ id }) => id);
+    allIds = allIds.concat(elementsIdsFromGroups);
+  }
+
+  const uniqueElementIds = [...new Set(allIds)];
 
   // They can only be similar if they have the same length
-  if (state.selection.length === uniqueElementIds.length) {
+  if (draft.selection.length === uniqueElementIds.length) {
     // If intersection of the two lists has the same length as the old list,
     // nothing will change.
     // NB: this assumes selection is always without duplicates.
-    const commonElements = intersect(state.selection, uniqueElementIds);
-    if (commonElements.length === state.selection.length) {
-      return state;
+    const commonElements = intersect(draft.selection, uniqueElementIds);
+    if (commonElements.length === draft.selection.length) {
+      return;
     }
   }
 
-  // If it's a multi-selection, filter out the background element and video placeholders.
-  const currentPage = state.pages.find(({ id }) => id === state.current);
+  // If it's a non-group multi-selection, filter out the background element,
+  // locked elements, and video placeholders.
+  const byId = (id) => currentPage.elements.find(({ id: i }) => i === id);
+  const isMultiSelection = uniqueElementIds.length > 1;
+  const isGroupSelection = withLinked;
   const isNotBackgroundElement = (id) => currentPage.elements[0].id !== id;
-  const isNotVideoPlaceholder = (id) => {
-    const element = currentPage.elements.find((element) => element.id === id);
-    const isVideoPlaceholder = element?.resource?.isPlaceholder;
-    return !isVideoPlaceholder;
-  };
+  const isNotLockedElement = (id) => !byId(id).isLocked;
+  const isNotVideoPlaceholder = (id) => !byId(id).resource?.isPlaceholder;
   const newSelection =
-    uniqueElementIds.length > 1
+    isMultiSelection && !isGroupSelection
       ? uniqueElementIds.filter(
-          (id) => isNotBackgroundElement(id) && isNotVideoPlaceholder(id)
+          (id) =>
+            isNotBackgroundElement(id) &&
+            isNotVideoPlaceholder(id) &&
+            isNotLockedElement(id)
         )
       : uniqueElementIds;
 
-  return {
-    ...state,
-    animationState: STORY_ANIMATION_STATE.RESET,
-    selection: newSelection,
-  };
-}
+  draft.animationState = STORY_ANIMATION_STATE.RESET;
+  draft.selection = newSelection;
+};
 
-export default setSelectedElements;
+export default produce(setSelectedElements);

@@ -18,10 +18,12 @@
  * External dependencies
  */
 import { STORY_ANIMATION_STATE } from '@googleforcreators/animation';
+import { produce } from 'immer';
+
 /**
  * Internal dependencies
  */
-import { updateElementWithUpdater, updateAnimations, intersect } from './utils';
+import { updateElementWithUpdater, updateAnimations } from './utils';
 
 /**
  * Update elements by the given list of ids with the given properties.
@@ -37,103 +39,48 @@ import { updateElementWithUpdater, updateAnimations, intersect } from './utils';
  *
  * Current selection and page is unchanged.
  *
- * @param {Object} state Current state
+ * @param {Object} draft Current state
  * @param {Object} payload Action payload
  * @param {Array.<string>} payload.elementIds List of elements to update
  * @param {Object|function(Object):Object} payload.properties Properties to set on all the given elements or
  * a function to calculate new values based on the current properties.
- * @return {Object} New state
  */
-function updateElements(
-  state,
+export const updateElements = (
+  draft,
   { elementIds, properties: propertiesOrUpdater }
-) {
+) => {
   if (
     [
       STORY_ANIMATION_STATE.PLAYING,
       STORY_ANIMATION_STATE.PLAYING_SELECTED,
       STORY_ANIMATION_STATE.SCRUBBING,
-    ].includes(state.animationState)
+    ].includes(draft.animationState)
   ) {
-    return state;
+    return;
   }
 
-  const idsToUpdate = elementIds === null ? state.selection : elementIds;
-
-  if (idsToUpdate.length === 0) {
-    return state;
-  }
-
-  const pageIndex = state.pages.findIndex(({ id }) => id === state.current);
-
-  const oldPage = state.pages[pageIndex];
-  const pageElementIds = oldPage.elements.map(({ id }) => id);
-
-  // Nothing to update?
-  const hasAnythingToUpdate = intersect(pageElementIds, idsToUpdate).length > 0;
-  if (!hasAnythingToUpdate) {
-    return state;
-  }
-
-  const animationLookup = oldPage.elements.reduce(
-    (animationLookup, element) => {
-      if (!idsToUpdate.includes(element.id)) {
-        return animationLookup;
+  const idsToUpdate = elementIds === null ? draft.selection : elementIds;
+  const page = draft.pages.find(({ id }) => id === draft.current);
+  const animationLookup = {};
+  page.elements
+    .filter(({ id }) => idsToUpdate.includes(id))
+    .forEach((element) => {
+      // Update function will update the element inline unless there's an animation update.
+      // If so, the element will remain unchanged, and the animation will be returned instead.
+      const animation = updateElementWithUpdater(element, propertiesOrUpdater);
+      if (animation) {
+        animationLookup[animation.id] = {
+          ...animation,
+          targets: [element.id],
+        };
       }
-      const { animation, ...elem } = updateElementWithUpdater(
-        element,
-        propertiesOrUpdater
-      );
-      const animLookup = animation
-        ? { [animation.id]: { ...animation, targets: [elem.id] } }
-        : {};
-      return {
-        ...animationLookup,
-        ...animLookup,
-      };
-    },
-    {}
-  );
-
-  const updatedElements = oldPage.elements.reduce((elements, element) => {
-    if (!idsToUpdate.includes(element.id)) {
-      return [...elements, element];
-    }
-    const { animation, ...elem } = updateElementWithUpdater(
-      element,
-      propertiesOrUpdater
-    );
-    return [...elements, elem];
-  }, []);
+    });
 
   const isAnimationUpdate = Object.keys(animationLookup).length > 0;
-  const newAnimations = isAnimationUpdate
-    ? updateAnimations(oldPage.animations || [], animationLookup)
-    : oldPage.animations;
 
-  // Element properties are not updating if it is an animation update.
-  // Keep the same reference to elements if they are not updating.
-  const updatedAnimationsProperty = newAnimations && {
-    animations: newAnimations,
-  };
-  const updatedElementsProperty = { elements: updatedElements };
-  const newPage = {
-    ...oldPage,
-    ...(isAnimationUpdate
-      ? updatedAnimationsProperty
-      : updatedElementsProperty),
-  };
+  if (isAnimationUpdate) {
+    page.animations = updateAnimations(page.animations || [], animationLookup);
+  }
+};
 
-  const newPages = [
-    ...state.pages.slice(0, pageIndex),
-    newPage,
-    ...state.pages.slice(pageIndex + 1),
-  ];
-
-  return {
-    ...state,
-    pages: newPages,
-  };
-}
-
-export default updateElements;
+export default produce(updateElements);

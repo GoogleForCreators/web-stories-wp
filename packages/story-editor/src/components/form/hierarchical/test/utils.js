@@ -252,6 +252,7 @@ describe('makeFlatOptionTree', () => {
     const getIndex = (id) => flatOptionTree.findIndex(findOpt(id));
     const isInOrder = (...args) =>
       args.every(
+        //eslint-disable-next-line jest/no-conditional-in-test
         (el, i, _args) => i === 0 || getIndex(_args[i - 1]) < getIndex(el)
       );
 

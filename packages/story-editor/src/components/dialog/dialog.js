@@ -62,7 +62,7 @@ const Dialog = ({
         <Button
           type={BUTTON_TYPES.PRIMARY}
           size={BUTTON_SIZES.SMALL}
-          onClick={() => onPrimary?.()}
+          onClick={(evt) => onPrimary?.(evt)}
           {...primaryRest}
         >
           {primaryText}

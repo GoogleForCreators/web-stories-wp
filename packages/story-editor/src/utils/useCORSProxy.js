@@ -38,7 +38,7 @@ function useCORSProxy() {
    * If the request passes, we don't need to do anything.
    * If it doesn't, it means we need to run the resource through our CORS proxy at all times.
    *
-   * @type {function(): boolean}
+   * @type {function(string): Promise<boolean>}
    */
   const checkResourceAccess = useCallback(async (link) => {
     let shouldProxy = false;

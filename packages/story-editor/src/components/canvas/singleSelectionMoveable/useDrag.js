@@ -47,9 +47,7 @@ function useSingleSelectionDrag({
     );
 
   const { handleElementOutOfCanvas } = useElementOutOfCanvas();
-  const { handleFullbleedMediaAsBackground } = useFullbleedMediaAsBackground({
-    selectedElement,
-  });
+  const { handleFullbleedMediaAsBackground } = useFullbleedMediaAsBackground();
 
   const { updateSelectedElements } = useStory((state) => ({
     updateSelectedElements: state.actions.updateSelectedElements,
@@ -109,8 +107,9 @@ function useSingleSelectionDrag({
 
     // When dragging finishes, set the new properties based on the original + what moved meanwhile.
     const [deltaX, deltaY] = frame.translate;
+    let properties = {};
     if (deltaX !== 0 || deltaY !== 0) {
-      const properties = {
+      properties = {
         x: roundToZero(selectedElement.x + editorToDataX(deltaX)),
         y: roundToZero(selectedElement.y + editorToDataY(deltaY)),
       };
@@ -120,7 +119,7 @@ function useSingleSelectionDrag({
       }
     }
     resetDragging(target);
-    handleFullbleedMediaAsBackground(target);
+    handleFullbleedMediaAsBackground({ ...selectedElement, ...properties });
     return undefined;
   };
 

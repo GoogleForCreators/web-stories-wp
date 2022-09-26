@@ -163,4 +163,29 @@ class Page_Template_Controller extends RestTestCase {
 
 		$this->assertEquals( 3, $data['headers']['X-WP-Total'] );
 	}
+
+	/**
+	 * @covers ::create_item
+	 */
+	public function test_create_item_as_author_should_not_strip_markup(): void {
+		$this->controller->register_routes();
+
+		wp_set_current_user( self::$author_id );
+
+		$this->kses_int();
+
+		$unsanitized_story_data = json_decode( file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/story_post_content_filtered.json' ), true );
+
+		$request = new WP_REST_Request( \WP_REST_Server::CREATABLE, '/web-stories/v1/web-story-page' );
+		$request->set_body_params(
+			[
+				'story_data' => $unsanitized_story_data,
+			]
+		);
+
+		$response = rest_get_server()->dispatch( $request );
+		$new_data = $response->get_data();
+		$this->assertArrayHasKey( 'story_data', $new_data );
+		$this->assertSame( $unsanitized_story_data, $new_data['story_data'] );
+	}
 }

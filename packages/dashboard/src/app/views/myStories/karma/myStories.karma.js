@@ -38,9 +38,7 @@ describe('CUJ: Creator can view their stories in grid view', () => {
   beforeEach(async () => {
     fixture = new Fixture();
     await fixture.render();
-    dashboardGridItems = await fixture.screen.getAllByTestId(
-      /^story-grid-item/
-    );
+    dashboardGridItems = fixture.screen.getAllByTestId(/^story-grid-item/);
   });
 
   afterEach(() => {
@@ -120,9 +118,11 @@ describe('CUJ: Creator can view their stories in grid view', () => {
     });
 
     it('should navigate to Explore Templates', async () => {
-      const exploreTemplatesMenuItem = fixture.screen.queryByRole('link', {
-        name: /^Explore Templates/,
-      });
+      const navigation = fixture.screen.queryByRole('navigation');
+      const utils = within(navigation);
+
+      const exploreTemplatesMenuItem = utils.getByText(/^Explore Templates/);
+
       expect(exploreTemplatesMenuItem).toBeTruthy();
 
       await fixture.events.click(exploreTemplatesMenuItem);
@@ -130,6 +130,33 @@ describe('CUJ: Creator can view their stories in grid view', () => {
         'Viewing all templates'
       );
       expect(templatesGridEl).toBeTruthy();
+    });
+  });
+
+  describe('Creator should be prevented from performing basic updates on locked stories from dashboard', () => {
+    let utils;
+    let moreOptionsButton;
+
+    beforeEach(async () => {
+      const lockedStory = dashboardGridItems[1];
+      await fixture.events.hover(lockedStory);
+
+      utils = within(lockedStory);
+      moreOptionsButton = utils.getByRole('button', {
+        name: /^Context menu for/,
+      });
+
+      await fixture.events.click(moreOptionsButton);
+    });
+
+    it('should not Rename a locked story', () => {
+      const rename = utils.getByText(/^Rename/);
+      expect(rename.hasAttribute('disabled')).toBe(true);
+    });
+
+    it('should not delete a locked story', () => {
+      const deleteStory = utils.getByText(/^Delete/);
+      expect(deleteStory.hasAttribute('disabled')).toBe(true);
     });
   });
 
@@ -175,9 +202,7 @@ describe('CUJ: Creator can view their stories in grid view', () => {
       const duplicate = utils.getByText(/^Duplicate/);
       await fixture.events.click(duplicate);
 
-      const updatedStories = await fixture.screen.getAllByTestId(
-        /^story-grid-item/
-      );
+      const updatedStories = fixture.screen.getAllByTestId(/^story-grid-item/);
       const copiedStory = within(updatedStories[0]).getByRole('heading', {
         level: 3,
       });
@@ -313,7 +338,7 @@ describe('CUJ: Creator can view their stories in grid view', () => {
       // Wait for the debounce
       await fixture.events.sleep(300);
 
-      const searchOptions = await fixture.screen.getByRole('listbox');
+      const searchOptions = fixture.screen.getByRole('listbox');
       expect(searchOptions).toBeTruthy();
 
       const activeListItems = within(searchOptions).queryAllByRole('option');
@@ -356,16 +381,14 @@ describe('CUJ: Creator can view their stories in grid view', () => {
 
   describe('Creator can sort their stories', () => {
     let sortDropdown;
-    beforeEach(async () => {
-      sortDropdown = await fixture.screen.getByLabelText(
+    beforeEach(() => {
+      sortDropdown = fixture.screen.getByLabelText(
         'Choose sort option for display'
       );
     });
 
-    const getRenderedStoriesById = async () => {
-      const storyElements = await fixture.screen.getAllByTestId(
-        /^story-grid-item/
-      );
+    const getRenderedStoriesById = () => {
+      const storyElements = fixture.screen.getAllByTestId(/^story-grid-item/);
       const renderedStoriesById = storyElements.map(({ dataset }) =>
         Number(dataset['testid'].split('-').slice(-1)[0])
       );
@@ -387,7 +410,7 @@ describe('CUJ: Creator can view their stories in grid view', () => {
 
       await fixture.events.click(dateCreated);
 
-      const renderedStoriesById = await getRenderedStoriesById();
+      const renderedStoriesById = getRenderedStoriesById();
       const { storiesOrderById } = await getStoriesOrderById();
 
       expect(renderedStoriesById).toEqual(storiesOrderById);
@@ -395,7 +418,7 @@ describe('CUJ: Creator can view their stories in grid view', () => {
 
     it('should sort by Last Modified by default', async () => {
       const { storiesOrderById } = await getStoriesOrderById();
-      const renderedStoriesById = await getRenderedStoriesById();
+      const renderedStoriesById = getRenderedStoriesById();
 
       expect(renderedStoriesById).toEqual(storiesOrderById);
     });
@@ -413,7 +436,7 @@ describe('CUJ: Creator can view their stories in grid view', () => {
 
       await fixture.events.click(name);
 
-      const renderedStoriesById = await getRenderedStoriesById();
+      const renderedStoriesById = getRenderedStoriesById();
       const { storiesOrderById } = await getStoriesOrderById();
       expect(renderedStoriesById).toEqual(storiesOrderById);
     });
@@ -431,7 +454,7 @@ describe('CUJ: Creator can view their stories in grid view', () => {
 
       await fixture.events.click(createdBy);
 
-      const renderedStoriesById = await getRenderedStoriesById();
+      const renderedStoriesById = getRenderedStoriesById();
       const { storiesOrderById } = await getStoriesOrderById();
       expect(renderedStoriesById).toEqual(storiesOrderById);
     });
@@ -472,13 +495,47 @@ describe('CUJ: Creator can view their stories in grid view', () => {
         expect(authorEl).toBeDefined();
       }
     });
+
+    it('should filter by category', async () => {
+      const { stories } = await getStoriesState();
+      let renderedStoriesById = getRenderedStoriesById();
+      // click the category dropdown
+      const categoryDropdown =
+        fixture.screen.getByLabelText('Filter by category');
+      expect(categoryDropdown).toBeTruthy();
+      await fixture.events.click(categoryDropdown);
+
+      // find all category filters
+      const categorySelect = await fixture.screen.findByLabelText(
+        new RegExp(`^Option List Selector$`)
+      );
+      expect(categorySelect).toBeTruthy();
+
+      // click the first category
+      const firstCategory = within(categorySelect).getAllByRole('option')?.[0];
+      expect(firstCategory).toBeTruthy();
+      const firstCategoryName = firstCategory.innerText;
+      await fixture.events.click(firstCategory);
+
+      // Check that not all the stories have the first category originally
+      const found = renderedStoriesById.map(
+        (id) => !stories[id].categories.includes(firstCategoryName)
+      );
+      expect(found.length).toBeGreaterThan(0);
+
+      // see that all rendered stories have the selected category
+      renderedStoriesById = getRenderedStoriesById();
+      renderedStoriesById.every((id) =>
+        stories[id].categories.includes(firstCategoryName)
+      );
+    });
   });
 
   describe('Creator can navigate and use the Dashboard via keyboard', () => {
     let storyCards = [];
 
     beforeEach(async () => {
-      storyCards = await fixture.screen.getAllByTestId(/story-context-button-/);
+      storyCards = fixture.screen.getAllByTestId(/story-context-button-/);
       await focusOnGridByKeyboard();
     });
 
@@ -597,7 +654,7 @@ describe('CUJ: Creator can view their stories in grid view', () => {
         /story-editor-grid-link/
       );
 
-      const storyIndex = 1;
+      const storyIndex = 0;
       const selectedStory = allItemGridLinks[storyIndex];
       // focus the delete context menu item of the first story with the keyboard
       // test cancelling deletion of the second story (not the default first story)

@@ -72,6 +72,8 @@ const OptionList = forwardRef(function OptionList(
     onObserve,
     focusSearch = noop,
     listId,
+    listStyleOverrides,
+    noMatchesFoundLabel = __('No matches found', 'web-stories'),
   },
   listRef
 ) {
@@ -227,7 +229,7 @@ const OptionList = forwardRef(function OptionList(
   }, [focusTrigger]);
 
   return filteredOptions.length <= 0 ? (
-    <NoResult>{__('No matches found', 'web-stories')}</NoResult>
+    <NoResult>{noMatchesFoundLabel}</NoResult>
   ) : (
     <List
       ref={listRef}
@@ -237,6 +239,7 @@ const OptionList = forwardRef(function OptionList(
       onKeyDown={handleKeyPress}
       aria-label={__('Option List Selector', 'web-stories')}
       aria-required={false}
+      $listStyleOverrides={listStyleOverrides}
     >
       {filteredListGroups.map((group, i) => {
         const groupLabelId = `group-${uuidv4()}`;
@@ -253,20 +256,19 @@ const OptionList = forwardRef(function OptionList(
                 </GroupLabel>
               )}
               {group.options.map((option, j) => {
+                const optionInset = getInset(filteredListGroups, i, j);
+
                 return (
                   <OptionRenderer
                     key={option.id || ''}
                     role={'option'}
                     tabIndex="-1"
                     aria-selected={value === option.id}
-                    aria-posinset={getInset(filteredListGroups, i, j)}
+                    aria-posinset={optionInset + 1}
                     aria-setsize={filteredOptions.length}
                     data-option={option.id}
                     onClick={() => onSelect(option)}
-                    ref={(el) =>
-                      (optionsRef.current[getInset(filteredListGroups, i, j)] =
-                        el)
-                    }
+                    ref={(el) => (optionsRef.current[optionInset] = el)}
                     option={option}
                     value={value}
                   />
@@ -296,6 +298,8 @@ OptionList.propTypes = {
   onObserve: PropTypes.func,
   listId: PropTypes.string.isRequired,
   focusSearch: PropTypes.func,
+  listStyleOverrides: PropTypes.array,
+  noMatchesFoundLabel: PropTypes.string,
 };
 
 export default memo(OptionList);

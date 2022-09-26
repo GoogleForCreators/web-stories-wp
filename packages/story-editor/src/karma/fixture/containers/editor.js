@@ -22,14 +22,14 @@ import { Canvas } from './canvas';
 import { GridView } from './gridView';
 import { Footer } from './footer';
 import { Library } from './library';
-import { Inspector } from './inspector';
+import { Sidebar } from './sidebar';
 import { Header } from './header';
 import { HelpCenter } from './helpCenter';
 import { Checklist } from './checklist';
 import { KeyboardShortcuts } from './keyboardShortcuts';
 
 /**
- * The complete editor container, including library, canvas, inspector, etc.
+ * The complete editor container, including library, canvas, sidebar, etc.
  */
 export class Editor extends Container {
   constructor(node, path) {
@@ -60,11 +60,11 @@ export class Editor extends Container {
     );
   }
 
-  get inspector() {
+  get sidebar() {
     return this._get(
-      this.getByRole('region', { name: 'Inspector' }),
-      'inspector',
-      Inspector
+      this.getByRole('region', { name: 'Sidebar' }),
+      'sidebar',
+      Sidebar
     );
   }
 

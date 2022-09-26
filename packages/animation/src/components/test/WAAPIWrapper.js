@@ -108,8 +108,8 @@ describe('StoryAnimation.WAAPIWrapper', () => {
       );
 
       // See that mock methods were called on mount
-      expect(ElOneWAAPIInvocationTracker).toHaveBeenCalledTimes(1);
-      expect(ElTwoWAAPIInvocationTracker).toHaveBeenCalledTimes(1);
+      expect(ElOneWAAPIInvocationTracker).toHaveBeenCalledOnce();
+      expect(ElTwoWAAPIInvocationTracker).toHaveBeenCalledOnce();
 
       // Update animations with one new animation and one
       // previous animation instance
@@ -130,7 +130,7 @@ describe('StoryAnimation.WAAPIWrapper', () => {
       // See that only the element effected by the animation update rerendered
       // See that mock methods were called on mount
       expect(ElOneWAAPIInvocationTracker).toHaveBeenCalledTimes(2);
-      expect(ElTwoWAAPIInvocationTracker).toHaveBeenCalledTimes(1);
+      expect(ElTwoWAAPIInvocationTracker).toHaveBeenCalledOnce();
     });
 
     it('doesnt rerender wrappers uneffected by element updates', () => {
@@ -147,8 +147,8 @@ describe('StoryAnimation.WAAPIWrapper', () => {
       );
 
       // See that mock methods were called on mount
-      expect(ElOneWAAPIInvocationTracker).toHaveBeenCalledTimes(1);
-      expect(ElTwoWAAPIInvocationTracker).toHaveBeenCalledTimes(1);
+      expect(ElOneWAAPIInvocationTracker).toHaveBeenCalledOnce();
+      expect(ElTwoWAAPIInvocationTracker).toHaveBeenCalledOnce();
 
       // Update animations with one new animation and one
       // previous animation instance
@@ -166,7 +166,7 @@ describe('StoryAnimation.WAAPIWrapper', () => {
       // See that only the element effected by the animation update rerendered
       // See that mock methods were called on mount
       expect(ElOneWAAPIInvocationTracker).toHaveBeenCalledTimes(2);
-      expect(ElTwoWAAPIInvocationTracker).toHaveBeenCalledTimes(1);
+      expect(ElTwoWAAPIInvocationTracker).toHaveBeenCalledOnce();
     });
   });
 });

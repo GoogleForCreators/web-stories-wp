@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { renderHook, act } from '@testing-library/react-hooks';
-import { FlagsProvider } from 'flagged';
 
 /**
  * Internal dependencies
@@ -73,15 +72,13 @@ function setup({
     },
   };
   const wrapper = ({ children }) => (
-    <FlagsProvider features={['enableVideoTrim']}>
-      <CanvasContext.Provider value={canvasCtx}>
-        <APIContext.Provider value={apiCtx}>
-          <StoryContext.Provider value={storyCtx}>
-            {children}
-          </StoryContext.Provider>
-        </APIContext.Provider>
-      </CanvasContext.Provider>
-    </FlagsProvider>
+    <CanvasContext.Provider value={canvasCtx}>
+      <APIContext.Provider value={apiCtx}>
+        <StoryContext.Provider value={storyCtx}>
+          {children}
+        </StoryContext.Provider>
+      </APIContext.Provider>
+    </CanvasContext.Provider>
   );
   const rendering = renderHook(() => useVideoTrimMode(), { wrapper });
 
@@ -104,14 +101,14 @@ describe('useVideoTrimMode', () => {
   it('should allow trim mode for single video element', () => {
     const { result } = setup();
 
-    expect(result.current.isTrimMode).toBe(false);
-    expect(result.current.hasTrimMode).toBe(true);
+    expect(result.current.isTrimMode).toBeFalse();
+    expect(result.current.hasTrimMode).toBeTrue();
   });
 
   it('should not allow trim mode for non-video', () => {
     const { result } = setup({ element: { type: 'image' } });
 
-    expect(result.current.hasTrimMode).toBe(false);
+    expect(result.current.hasTrimMode).toBeFalse();
   });
 
   it('should not allow trim mode for resource that is currently being uploaded', () => {
@@ -120,7 +117,7 @@ describe('useVideoTrimMode', () => {
     });
     const { result } = setup({ element: { resource: { id: 123 } } });
 
-    expect(result.current.hasTrimMode).toBe(false);
+    expect(result.current.hasTrimMode).toBeFalse();
   });
 
   it('should not allow trim mode for third-party video', () => {
@@ -130,26 +127,26 @@ describe('useVideoTrimMode', () => {
 
     const { result } = setup({ element: { resource: { isExternal: true } } });
 
-    expect(result.current.hasTrimMode).toBe(false);
+    expect(result.current.hasTrimMode).toBeFalse();
   });
 
   it('should not allow trim mode if multiple videos selected', () => {
     const { result } = setup({ extraElements: [{ type: 'image' }] });
 
-    expect(result.current.hasTrimMode).toBe(false);
+    expect(result.current.hasTrimMode).toBeFalse();
   });
 
   it('should not allow trim mode if transcoding is not supported', () => {
     mockTranscodingEnabled.mockImplementationOnce(() => false);
     const { result } = setup();
 
-    expect(result.current.hasTrimMode).toBe(false);
+    expect(result.current.hasTrimMode).toBeFalse();
   });
 
   it('should not in trim mode if editing element without trim mode state', () => {
     const { result } = setup({ canvas: { isEditing: true } });
 
-    expect(result.current.isTrimMode).toBe(false);
+    expect(result.current.isTrimMode).toBeFalse();
   });
 
   it('should be in trim mode if editing element in trim mode state', () => {
@@ -157,7 +154,7 @@ describe('useVideoTrimMode', () => {
       canvas: { isEditing: true, editingElementState: { isTrimMode: true } },
     });
 
-    expect(result.current.isTrimMode).toBe(true);
+    expect(result.current.isTrimMode).toBeTrue();
   });
 
   it('should exit trim mode if editing any element and toggling', () => {

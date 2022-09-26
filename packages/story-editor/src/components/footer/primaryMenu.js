@@ -22,9 +22,12 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
+import { Z_INDEX_FOOTER } from '../../constants/zIndex';
 import ZoomSelector from './zoomSelector';
 import { GridViewButton } from './gridview';
+import Layers from './layers';
 import { FOOTER_MENU_GAP, FOOTER_MARGIN } from './constants';
+import ToolbarToggle from './toolbarToggle';
 
 const Wrapper = styled.div`
   display: flex;
@@ -32,6 +35,7 @@ const Wrapper = styled.div`
   justify-content: flex-end;
   width: 100%;
   height: 100%;
+  z-index: ${Z_INDEX_FOOTER};
 `;
 
 const MenuItems = styled.div`
@@ -48,8 +52,10 @@ function PrimaryMenu() {
     <Wrapper>
       {/* This ID is used for portal rendering of additional menu items, e.g. for custom meta boxes */}
       <MenuItems id="primary-menu-items">
+        <ToolbarToggle />
         <ZoomSelector />
         <GridViewButton />
+        <Layers />
       </MenuItems>
     </Wrapper>
   );

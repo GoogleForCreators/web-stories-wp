@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { produce } from 'immer';
+
+/**
  * Internal dependencies
  */
 import { intersect } from './utils';
@@ -37,23 +42,20 @@ import { intersect } from './utils';
  *
  * Current page is unchanged.
  *
- * @param {Object} state Current state
+ * @param {Object} draft Current state
  * @param {Object} payload Action payload
  * @param {Array.<string>} payload.elementIds List of ids of elements to delete.
- * @return {Object} New state
  */
-function deleteElements(state, { elementIds }) {
-  const idsToDelete = elementIds === null ? state.selection : elementIds;
+export const deleteElements = (draft, { elementIds }) => {
+  const idsToDelete = elementIds === null ? draft.selection : elementIds;
 
   if (idsToDelete.length === 0) {
-    return state;
+    return;
   }
 
-  const pageIndex = state.pages.findIndex(({ id }) => id === state.current);
-
-  const oldPage = state.pages[pageIndex];
-  const pageElementIds = oldPage.elements.map(({ id }) => id);
-  const backgroundElement = oldPage.elements[0];
+  const page = draft.pages.find(({ id }) => id === draft.current);
+  const pageElementIds = page.elements.map(({ id }) => id);
+  const backgroundElement = page.elements[0];
 
   const isDeletingBackground = idsToDelete.some(
     (id) => id === backgroundElement.id
@@ -69,48 +71,28 @@ function deleteElements(state, { elementIds }) {
   const hasAnythingToDelete =
     intersect(pageElementIds, validDeletionIds).length > 0;
   if (!hasAnythingToDelete) {
-    return state;
+    return;
   }
 
-  let newElements = oldPage.elements.filter(
+  page.elements = page.elements.filter(
     (element) => !validDeletionIds.includes(element.id)
   );
 
   // Restore default background if non-default bg has been deleted.
   if (isDeletingBackground && !backgroundIsDefault) {
-    newElements = [oldPage.defaultBackgroundElement, ...newElements];
+    page.elements.unshift(page.defaultBackgroundElement);
   }
 
   // Remove animations associated with elements
-  const oldAnimations = oldPage.animations || [];
-  const newAnimations = oldAnimations.filter((anim) =>
-    anim.targets.some((elementId) => !validDeletionIds.includes(elementId))
+  if (page.animations) {
+    page.animations = page.animations.filter((anim) =>
+      anim.targets.some((elementId) => !validDeletionIds.includes(elementId))
+    );
+  }
+
+  draft.selection = draft.selection.filter(
+    (id) => !validDeletionIds.includes(id)
   );
+};
 
-  const newPage = {
-    ...oldPage,
-    elements: newElements,
-    ...(oldAnimations.length > 0 ? { animations: newAnimations } : {}),
-  };
-
-  const newPages = [
-    ...state.pages.slice(0, pageIndex),
-    newPage,
-    ...state.pages.slice(pageIndex + 1),
-  ];
-
-  // This check is to make sure not to modify the selection array if no update is necessary.
-  const wasAnySelected =
-    intersect(state.selection, validDeletionIds).length > 0;
-  const newSelection = wasAnySelected
-    ? state.selection.filter((id) => !validDeletionIds.includes(id))
-    : state.selection;
-
-  return {
-    ...state,
-    pages: newPages,
-    selection: newSelection,
-  };
-}
-
-export default deleteElements;
+export default produce(deleteElements);

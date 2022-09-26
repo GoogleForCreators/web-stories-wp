@@ -69,24 +69,11 @@ class HTML {
 		$markup = $this->story->get_markup();
 		$markup = $this->fix_malformed_script_link_tags( $markup );
 		$markup = $this->replace_html_head( $markup );
-		$markup = $this->replace_url_scheme( $markup );
+		$markup = wp_replace_insecure_home_url( $markup );
 		$markup = $this->print_analytics( $markup );
 		$markup = $this->print_social_share( $markup );
 
 		return $markup;
-	}
-
-	/**
-	 * Get story meta images.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return string[] Images.
-	 */
-	protected function get_poster_images(): array {
-		return [
-			'poster-portrait-src' => $this->story->get_poster_portrait(),
-		];
 	}
 
 	/**
@@ -116,10 +103,10 @@ class HTML {
 	 * @return string Filtered content
 	 */
 	protected function fix_malformed_script_link_tags( string $content ): string {
-		$content = (string) preg_replace_callback(
-			'/(?P<link><a[^>]+href=\"(?P<href>.*?)\"[^>]*>(?P<content>.*?)<\/a>)/ms',
+		$replaced_content = preg_replace_callback(
+			'/<a[^>]+href="(?P<href>[^"]+)"[^>]*>\1<\/a>/m',
 			static function( $matches ) {
-				if ( $matches['href'] === $matches['content'] && 0 === strpos( $matches['href'], 'https://cdn.ampproject.org/' ) ) {
+				if ( 0 === strpos( $matches['href'], 'https://cdn.ampproject.org/' ) ) {
 					$script_url = $matches['href'];
 
 					// Turns `<a href="https://cdn.ampproject.org/v0.js">https://cdn.ampproject.org/v0.js</a>`
@@ -143,7 +130,8 @@ class HTML {
 			$content
 		);
 
-		return $content;
+		// On errors the return value of preg_replace_callback() is null.
+		return $replaced_content ?: $content;
 	}
 
 	/**
@@ -181,8 +169,8 @@ class HTML {
 		$end_tag   = '<meta name="web-stories-replace-head-end"/>';
 
 		// Replace malformed meta tags with correct tags.
-		$content = (string) preg_replace( '/<meta name="web-stories-replace-head-start\s?"\s?\/>/i', $start_tag, $content );
-		$content = (string) preg_replace( '/<meta name="web-stories-replace-head-end\s?"\s?\/>/i', $end_tag, $content );
+		$content = (string) preg_replace( '/<meta name="web-stories-replace-head-start\s?"\s?\/?>/i', $start_tag, $content );
+		$content = (string) preg_replace( '/<meta name="web-stories-replace-head-end\s?"\s?\/?>/i', $end_tag, $content );
 
 		$start_tag_pos = strpos( $content, $start_tag );
 		$end_tag_pos   = strpos( $content, $end_tag );
@@ -193,24 +181,6 @@ class HTML {
 		}
 
 		return $content;
-	}
-
-	/**
-	 * Force home urls to http / https based on context.
-	 *
-	 * @since 1.1.0
-	 *
-	 * @param string $content String to replace.
-	 */
-	protected function replace_url_scheme( string $content ): string {
-		if ( is_ssl() ) {
-			$search  = home_url( '', 'http' );
-			$replace = home_url( '', 'https' );
-			$content = str_replace( $search, $replace, $content );
-		}
-
-		return $content;
-
 	}
 
 	/**

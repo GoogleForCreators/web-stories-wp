@@ -42,6 +42,8 @@ describe('save', () => {
         >
           <img
             alt="Stories in AMP"
+            decoding="async"
+            loading="lazy"
             src="https://amp.dev/static/samples/img/story_dog2_portrait.jpg"
           />
         </a>

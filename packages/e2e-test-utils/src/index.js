@@ -31,7 +31,6 @@ export { default as publishStory } from './publishStory';
 export { default as addTextElement } from './addTextElement';
 export { default as insertStoryTitle } from './insertStoryTitle';
 export { default as setAnalyticsCode } from './setAnalyticsCode';
-export { default as clickButton } from './clickButton';
 export { default as uploadFile } from './uploadFile';
 export { default as uploadMedia } from './uploadMedia';
 export { default as uploadPublisherLogo } from './uploadPublisherLogo';
@@ -43,6 +42,14 @@ export { default as getFileName } from './getFileName';
 export { default as trashAllPosts } from './trashAllPosts';
 export { default as trashAllTerms } from './trashAllTerms';
 export { default as visitAdminPage } from './visitAdminPage';
+export {
+  addCustomFont,
+  removeCustomFont,
+  getFontList,
+  removeAllFonts,
+} from './customFonts';
+
+export { insertProduct, setShoppingProvider } from './shopping';
 export { setCurrentUser, getCurrentUser } from './user';
 export { default as activatePlugin } from './activatePlugin';
 export { default as deactivatePlugin } from './deactivatePlugin';
@@ -54,7 +61,9 @@ export { default as triggerHighPriorityChecklistSection } from './triggerHighPri
 export { default as disableCheckbox } from './disableCheckbox';
 export { default as enableCheckbox } from './enableCheckbox';
 export { default as takeSnapshot } from './takeSnapshot';
+export { default as loadPostEditor } from './loadPostEditor.js';
 export { default as uploadPublisherLogoEditor } from './uploadPublisherLogoEditor';
+export { default as editStoryWithTitle } from './editStoryWithTitle';
 export {
   getEditedPostContent,
   setPostContent,

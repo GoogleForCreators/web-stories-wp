@@ -41,9 +41,10 @@ describe('See template details modal', () => {
   });
 
   async function navigateToFirstTemplate() {
-    const exploreTemplatesMenuItem = fixture.screen.queryByRole('link', {
-      name: /^Explore Templates/,
-    });
+    const navigation = fixture.screen.queryByRole('navigation');
+    let utils = within(navigation);
+
+    const exploreTemplatesMenuItem = utils.getByText(/^Explore Templates/);
 
     await fixture.events.click(exploreTemplatesMenuItem);
 
@@ -51,7 +52,7 @@ describe('See template details modal', () => {
 
     const firstTemplate = getTemplateElementById(templatesOrderById[0]);
 
-    const utils = within(firstTemplate);
+    utils = within(firstTemplate);
 
     await fixture.events.hover(firstTemplate);
 

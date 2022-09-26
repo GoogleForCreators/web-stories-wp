@@ -19,13 +19,14 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { Popup } from '@googleforcreators/design-system';
+import { PLACEMENT, Popup } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
+import { useUnits } from '@googleforcreators/units';
 
 /**
  * Internal dependencies
  */
-import { useCanvas, useConfig } from '../../../app';
+import { useCanvas } from '../../../app';
 import useElementsWithLinks from '../../../utils/useElementsWithLinks';
 import { OUTLINK_THEME } from '../../../constants';
 import DefaultIcon from './icons/defaultIcon.svg';
@@ -70,10 +71,10 @@ const ArrowBar = styled(ArrowIcon)`
 `;
 
 const OutlinkChip = styled.div`
-  height: 36px;
+  height: ${({ $factor }) => $factor(36)}px;
   display: flex;
   position: relative;
-  padding: 10px 6px;
+  padding: ${({ $factor }) => $factor(10)}px ${({ $factor }) => $factor(6)}px;
   margin: 0 0 20px;
   max-width: calc(100% - 64px);
   border-radius: 30px;
@@ -84,7 +85,7 @@ const OutlinkChip = styled.div`
 
 const TextWrapper = styled.span`
   font-family: Roboto, sans-serif;
-  font-size: 16px;
+  font-size: ${({ $factor }) => $factor(16)}px;
   line-height: 18px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -109,15 +110,13 @@ const Tooltip = styled.div`
   text-align: center;
 `;
 
-const LinkImage = styled.div`
+const LinkImage = styled.img`
   height: 24px;
   width: 24px;
   vertical-align: middle;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: 50%;
   border-radius: 50%;
-  background-image: url('${({ icon }) => icon}') !important;
+  border: 0 none;
+  object-fit: contain;
 `;
 
 const spacing = { x: 8 };
@@ -136,15 +135,13 @@ function PageAttachment({ pageAttachment = {} }) {
     setPageAttachmentContainer: state.actions.setPageAttachmentContainer,
   }));
 
+  const { dataToEditorY } = useUnits(({ actions: { dataToEditorY } }) => ({
+    dataToEditorY,
+  }));
+
   const { hasInvalidLinkSelected } = useElementsWithLinks();
 
-  const {
-    ctaText = __('Learn more', 'web-stories'),
-    url,
-    icon,
-    theme,
-  } = pageAttachment;
-  const { isRTL, styleConstants: { topOffset } = {} } = useConfig();
+  const { ctaText, url, icon, theme } = pageAttachment;
   const bgColor = theme === OUTLINK_THEME.DARK ? DARK_COLOR : LIGHT_COLOR;
   const fgColor = theme === OUTLINK_THEME.DARK ? LIGHT_COLOR : DARK_COLOR;
   return (
@@ -154,22 +151,31 @@ function PageAttachment({ pageAttachment = {} }) {
         {url?.length > 0 && (
           <>
             <ArrowBar fill={bgColor} />
-            <OutlinkChip bgColor={bgColor}>
+            <OutlinkChip bgColor={bgColor} $factor={dataToEditorY}>
               {icon ? (
-                <LinkImage icon={icon} />
+                <LinkImage
+                  src={icon}
+                  alt={__('Site Icon', 'web-stories')}
+                  decoding="async"
+                  crossOrigin="anonymous"
+                />
               ) : (
-                <DefaultIcon fill={fgColor} width={24} height={24} />
+                <DefaultIcon
+                  fill={fgColor}
+                  width={dataToEditorY(24)}
+                  height={dataToEditorY(24)}
+                />
               )}
-              <TextWrapper fgColor={fgColor}>{ctaText}</TextWrapper>
+              <TextWrapper fgColor={fgColor} $factor={dataToEditorY}>
+                {ctaText || __('Learn more', 'web-stories')}
+              </TextWrapper>
             </OutlinkChip>
             {pageAttachmentContainer && hasInvalidLinkSelected && (
               <Popup
-                isRTL={isRTL}
                 anchor={{ current: pageAttachmentContainer }}
                 isOpen
-                placement={'left'}
+                placement={PLACEMENT.LEFT}
                 spacing={spacing}
-                topOffset={topOffset}
               >
                 <Tooltip>
                   {__(
@@ -190,6 +196,9 @@ PageAttachment.propTypes = {
   pageAttachment: PropTypes.shape({
     url: PropTypes.string,
     ctaText: PropTypes.string,
+    icon: PropTypes.string,
+    theme: PropTypes.string,
+    rel: PropTypes.arrayOf(PropTypes.string),
   }),
 };
 

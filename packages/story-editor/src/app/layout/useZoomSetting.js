@@ -32,6 +32,7 @@ import {
   ZOOM_SETTING,
   PAGE_NAV_WIDTH,
   PAGE_WIDTH_FACTOR,
+  MAX_EXTRA_PAGES,
 } from '../../constants';
 
 // Beware, that these are slightly magic numbers, that just happens to look good
@@ -160,6 +161,15 @@ function calculateViewportProperties(workspaceSize, zoomSetting, zoomLevel) {
   const viewportHeight = hasAnyOverflow
     ? workspaceSize.availableHeight
     : fullbleedHeight + pagePadding;
+
+  // Calculate if extra pages can be seen before/after current page and if so how many
+  const extraSpace =
+    (workspaceSize.width - (pageWidth + 2 * PAGE_NAV_WIDTH)) / 2;
+  const extraPageWidth = Math.round(0.9 * pageWidth);
+  const hasExtraPages = !hasAnyOverflow && hasPageNavigation && extraSpace > 50;
+  const extraPageCount = hasExtraPages
+    ? Math.min(MAX_EXTRA_PAGES, Math.ceil(extraSpace / extraPageWidth))
+    : 0;
   return {
     pageWidth,
     pageHeight,
@@ -169,6 +179,9 @@ function calculateViewportProperties(workspaceSize, zoomSetting, zoomLevel) {
     pagePadding,
     viewportWidth,
     viewportHeight,
+    hasExtraPages,
+    extraPageWidth,
+    extraPageCount,
   };
 }
 

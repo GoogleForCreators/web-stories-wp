@@ -37,6 +37,7 @@ use Google\Web_Stories\Media\Types;
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Page_Template_Post_Type;
 use Google\Web_Stories\Service_Base;
+use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tracking;
 use WP_Post;
@@ -134,6 +135,13 @@ class Editor extends Service_Base implements HasRequirements {
 	private $types;
 
 	/**
+	 * Settings instance.
+	 *
+	 * @var Settings Settings instance.
+	 */
+	private $settings;
+
+	/**
 	 * Dashboard constructor.
 	 *
 	 * @SuppressWarnings(PHPMD.ExcessiveParameterList)
@@ -151,6 +159,7 @@ class Editor extends Service_Base implements HasRequirements {
 	 * @param Font_Post_Type          $font_post_type          Font_Post_Type instance.
 	 * @param Context                 $context                 Context instance.
 	 * @param Types                   $types                   Types instance.
+	 * @param Settings                $settings                Settings instance.
 	 */
 	public function __construct(
 		Experiments $experiments,
@@ -163,7 +172,8 @@ class Editor extends Service_Base implements HasRequirements {
 		Page_Template_Post_Type $page_template_post_type,
 		Font_Post_Type $font_post_type,
 		Context $context,
-		Types $types
+		Types $types,
+		Settings $settings
 	) {
 		$this->experiments             = $experiments;
 		$this->meta_boxes              = $meta_boxes;
@@ -176,6 +186,7 @@ class Editor extends Service_Base implements HasRequirements {
 		$this->font_post_type          = $font_post_type;
 		$this->context                 = $context;
 		$this->types                   = $types;
+		$this->settings                = $settings;
 	}
 
 	/**
@@ -305,7 +316,7 @@ class Editor extends Service_Base implements HasRequirements {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @return array
+	 * @return array<string,mixed> Editor settings.
 	 */
 	public function get_editor_settings(): array {
 		$post                 = get_post();
@@ -331,6 +342,8 @@ class Editor extends Service_Base implements HasRequirements {
 			admin_url( 'edit.php' )
 		);
 
+		$revision_url = admin_url( 'revision.php' );
+
 		$dashboard_settings_url = add_query_arg(
 			[
 				'post_type' => $this->story_post_type->get_slug(),
@@ -346,26 +359,44 @@ class Editor extends Service_Base implements HasRequirements {
 		/** This filter is documented in wp-admin/includes/post.php */
 		$show_locked_dialog = apply_filters( 'show_post_locked_dialog', true, $post, $user );
 		$nonce              = wp_create_nonce( 'wp_rest' );
-		$mime_types         = $this->types->get_allowed_mime_types();
-		$image_mime_types   = $this->types->get_allowed_image_mime_types();
-		$audio_mime_types   = $this->types->get_allowed_audio_mime_types();
 
 		$story = new Story();
 		$story->load_from_post( $post );
 
+		// Explicitly setting these flags which became the default in PHP 8.1.
+		// Needed for correct single quotes in the editor & output.
+		// See https://github.com/GoogleForCreators/web-stories-wp/issues/10809.
+		$publisher_name = html_entity_decode( $story->get_publisher_name(), ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401 );
+
+		$shopping_provider = $this->settings->get_setting( $this->settings::SETTING_NAME_SHOPPING_PROVIDER );
+
+		$auto_save_link     = '';
+		$improved_autosaves = $this->experiments->is_experiment_enabled( 'improvedAutosaves' );
+
+		if ( $improved_autosaves && isset( $story_id ) ) {
+
+			$auto_save = wp_get_post_autosave( $story_id );
+
+			if ( $auto_save && $post ) {
+				if ( mysql2date( 'U', $auto_save->post_modified_gmt, false ) > mysql2date( 'U', $post->post_modified_gmt, false ) ) {
+					$auto_save_link = get_edit_post_link( $auto_save->ID );
+				} else {
+					wp_delete_post_revision( $auto_save->ID );
+				}
+			}
+		}
+
 		$settings = [
 			'autoSaveInterval'        => \defined( 'AUTOSAVE_INTERVAL' ) ? AUTOSAVE_INTERVAL : null,
+			'localAutoSaveInterval'   => 15,
+			'autoSaveLink'            => $auto_save_link,
 			'isRTL'                   => is_rtl(),
 			'locale'                  => $this->locale->get_locale_settings(),
-			'allowedFileTypes'        => $this->types->get_allowed_file_types(),
-			'allowedImageFileTypes'   => $this->types->get_file_type_exts( $image_mime_types ),
-			'allowedImageMimeTypes'   => $image_mime_types,
-			'allowedAudioFileTypes'   => $this->types->get_file_type_exts( $audio_mime_types ),
-			'allowedAudioMimeTypes'   => $audio_mime_types,
-			'allowedMimeTypes'        => $mime_types,
+			'allowedMimeTypes'        => $this->types->get_allowed_mime_types(),
 			'postType'                => $this->story_post_type->get_slug(),
 			'storyId'                 => $story_id,
 			'dashboardLink'           => $dashboard_url,
+			'revisionLink'            => $revision_url,
 			'dashboardSettingsLink'   => $dashboard_settings_url,
 			'generalSettingsLink'     => $general_settings_url,
 			'cdnURL'                  => trailingslashit( WEBSTORIES_CDN_URL ),
@@ -383,6 +414,7 @@ class Editor extends Service_Base implements HasRequirements {
 				'media'          => '/web-stories/v1/media/',
 				'hotlink'        => '/web-stories/v1/hotlink/validate/',
 				'publisherLogos' => '/web-stories/v1/publisher-logos/',
+				'products'       => '/web-stories/v1/products/',
 				'proxy'          => rest_url( '/web-stories/v1/hotlink/proxy/' ),
 				'link'           => '/web-stories/v1/link/',
 				'statusCheck'    => '/web-stories/v1/status-check/',
@@ -392,7 +424,7 @@ class Editor extends Service_Base implements HasRequirements {
 				'storyLocking'   => rest_url( sprintf( '%s/%s/lock/', $this->story_post_type->get_rest_url(), $story_id ) ),
 			],
 			'metadata'                => [
-				'publisher' => $story->get_publisher_name(),
+				'publisher' => $publisher_name,
 			],
 			'postLock'                => [
 				'interval'         => $time_window,
@@ -402,9 +434,11 @@ class Editor extends Service_Base implements HasRequirements {
 			'version'                 => WEBSTORIES_VERSION,
 			'nonce'                   => $nonce,
 			'showMedia3p'             => true,
+			'shoppingProvider'        => $shopping_provider,
 			'encodeMarkup'            => $this->decoder->supports_decoding(),
 			'metaBoxes'               => $this->meta_boxes->get_meta_boxes_per_location(),
-			'ffmpegCoreUrl'           => trailingslashit( WEBSTORIES_CDN_URL ) . 'js/@ffmpeg/core@0.10.0/dist/ffmpeg-core.js',
+			'ffmpegCoreUrl'           => trailingslashit( WEBSTORIES_CDN_URL ) . 'js/@ffmpeg/core@0.11.0/dist/ffmpeg-core.js',
+			'mediainfoUrl'            => trailingslashit( WEBSTORIES_CDN_URL ) . 'js/mediainfo.js@0.1.7/dist/mediainfo.min.js',
 			'flags'                   => array_merge(
 				$this->experiments->get_experiment_statuses( 'general' ),
 				$this->experiments->get_experiment_statuses( 'editor' )
@@ -429,10 +463,6 @@ class Editor extends Service_Base implements HasRequirements {
 	 * @param int $story_id Post id of story.
 	 */
 	protected function setup_lock( int $story_id ): void {
-		if ( ! $this->experiments->is_experiment_enabled( 'enablePostLocking' ) ) {
-			return;
-		}
-
 		if ( ! $this->story_post_type->has_cap( 'edit_posts' ) ) {
 			return;
 		}

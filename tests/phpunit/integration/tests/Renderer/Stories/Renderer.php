@@ -47,6 +47,13 @@ class Renderer extends TestCase {
 	private static $story_id;
 
 	/**
+	 * Poster attachment ID.
+	 *
+	 * @var int
+	 */
+	private static $poster_id;
+
+	/**
 	 * Stories mock object.
 	 *
 	 * @var Story_Query
@@ -66,7 +73,6 @@ class Renderer extends TestCase {
 	 * @param \WP_UnitTest_Factory $factory Factory class object.
 	 */
 	public static function wpSetUpBeforeClass( $factory ): void {
-
 		self::$story_id = $factory->post->create(
 			[
 				'post_type'  => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
@@ -74,6 +80,14 @@ class Renderer extends TestCase {
 			]
 		);
 
+		self::$poster_id = self::factory()->attachment->create_object(
+			[
+				'file'           => DIR_TESTDATA . '/images/canola.jpg',
+				'post_parent'    => 0,
+				'post_mime_type' => 'image/jpeg',
+				'post_title'     => 'Test Image',
+			]
+		);
 	}
 
 	/**
@@ -146,7 +160,65 @@ class Renderer extends TestCase {
 	/**
 	 * @covers ::render_story_with_poster
 	 */
+	public function test_render_story_with_poster_missing(): void {
+		$this->story_query->method( 'get_story_attributes' )->willReturn(
+			[
+				'view_type'       => 'list',
+				'class'           => '',
+				'image_alignment' => 'left',
+			]
+		);
+
+		$renderer = $this->getMockForAbstractClass( AbstractRenderer::class, [ $this->story_query ], '', true, true, true, [ 'is_amp_request' ] );
+		$renderer->expects( $this->any() )->method( 'is_amp_request' )->willReturn( false );
+		$this->set_private_property( $renderer, 'stories', [ $this->story_model ] );
+
+		ob_start();
+		$this->call_private_method( $renderer, 'render_story_with_poster' );
+		$output = ob_get_clean();
+
+		$this->assertStringContainsString( 'web-stories-list__story-poster', $output );
+		$this->assertStringNotContainsString( '<img', $output );
+	}
+
+	/**
+	 * @covers ::render_story_with_poster
+	 */
 	public function test_render_story_with_poster(): void {
+		wp_maybe_generate_attachment_metadata( get_post( self::$poster_id ) );
+		set_post_thumbnail( self::$story_id, self::$poster_id );
+
+		$this->story_model = new \Google\Web_Stories\Model\Story();
+		$this->story_model->load_from_post( self::$poster_id );
+
+		$this->story_query->method( 'get_story_attributes' )->willReturn(
+			[
+				'view_type'       => 'list',
+				'class'           => '',
+				'image_alignment' => 'left',
+			]
+		);
+
+		$renderer = $this->getMockForAbstractClass( AbstractRenderer::class, [ $this->story_query ], '', true, true, true, [ 'is_amp_request' ] );
+		$renderer->expects( $this->any() )->method( 'is_amp_request' )->willReturn( false );
+		$this->set_private_property( $renderer, 'stories', [ $this->story_model ] );
+
+		ob_start();
+		$this->call_private_method( $renderer, 'render_story_with_poster' );
+		$output = ob_get_clean();
+
+		$this->assertStringContainsString( 'web-stories-list__story-poster', $output );
+	}
+
+
+	/**
+	 * @covers ::render_story_with_poster
+	 */
+	public function test_render_story_with_poster_missing_srcset_and_sizes(): void {
+		set_post_thumbnail( self::$story_id, self::$poster_id );
+
+		$this->story_model = new \Google\Web_Stories\Model\Story();
+		$this->story_model->load_from_post( self::$poster_id );
 
 		$this->story_query->method( 'get_story_attributes' )->willReturn(
 			[

@@ -32,6 +32,19 @@ use WP_REST_Response;
 
 /**
  * Page_Template_Controller class.
+ *
+ * @phpstan-type SchemaEntry array{
+ *   description: string,
+ *   type: string,
+ *   context: string[],
+ *   default?: mixed,
+ * }
+ * @phpstan-type Schema array{
+ *   properties: array{
+ *     permalink_template?: SchemaEntry,
+ *     generated_slug?: SchemaEntry
+ *   }
+ * }
  */
 class Page_Template_Controller extends Stories_Base_Controller {
 	/**
@@ -53,7 +66,7 @@ class Page_Template_Controller extends Stories_Base_Controller {
 			/**
 			 * Embed directive.
 			 *
-			 * @var string|array $embed
+			 * @var string|string[] $embed
 			 */
 			$embed    = $request['_embed'] ?? false;
 			$embed    = $embed ? rest_parse_embed_param( $embed ) : false;
@@ -67,7 +80,7 @@ class Page_Template_Controller extends Stories_Base_Controller {
 	 *
 	 * @since 1.7.0
 	 *
-	 * @return array Collection parameters.
+	 * @return array<string, array<string, mixed>> Collection parameters.
 	 */
 	public function get_collection_params(): array {
 		$query_params = parent::get_collection_params();
@@ -89,13 +102,26 @@ class Page_Template_Controller extends Stories_Base_Controller {
 	 *
 	 * @since 1.10.0
 	 *
-	 * @return array Item schema as an array.
+	 * @return array Item schema data.
+	 *
+	 * @phpstan-return Schema
 	 */
 	public function get_item_schema(): array {
 		if ( $this->schema ) {
-			return $this->add_additional_fields_schema( $this->schema );
+			/**
+			 * Schema.
+			 *
+			 * @phpstan-var Schema $schema
+			 */
+			$schema = $this->add_additional_fields_schema( $this->schema );
+			return $schema;
 		}
 
+		/**
+		 * Schema.
+		 *
+		 * @phpstan-var Schema $schema
+		 */
 		$schema = parent::get_item_schema();
 
 		unset(
@@ -105,7 +131,13 @@ class Page_Template_Controller extends Stories_Base_Controller {
 
 		$this->schema = $schema;
 
-		return $this->add_additional_fields_schema( $this->schema );
+		/**
+		 * Schema.
+		 *
+		 * @phpstan-var Schema $schema
+		 */
+		$schema = $this->add_additional_fields_schema( $this->schema );
+		return $schema;
 	}
 
 	/**

@@ -17,22 +17,16 @@
 /**
  * External dependencies
  */
-import {
-  useEffect,
-  useMemo,
-  useCallback,
-  useRef,
-} from '@googleforcreators/react';
-import { noop } from '@googleforcreators/design-system';
+import { useEffect, useMemo, useRef } from '@googleforcreators/react';
 
 /**
  * Internal dependencies
  */
 import { ScrollToTop, Layout } from '../../../components';
-import { STORY_STATUSES } from '../../../constants';
 import { useStoryView } from '../../../utils';
-import useApi from '../../api/useApi';
 import { useConfig } from '../../config';
+import useApi from '../../api/useApi';
+import useStoryFilters from './filters/useStoryFilters';
 import Content from './content';
 import Header from './header';
 
@@ -48,12 +42,10 @@ function MyStories() {
     storiesOrderById,
     totalPages,
     totalStoriesByStatus,
-    getAuthors,
   } = useApi(
     ({
       actions: {
         storyApi: { duplicateStory, fetchStories, trashStory, updateStory },
-        usersApi: { getAuthors },
       },
       state: {
         stories: {
@@ -76,11 +68,16 @@ function MyStories() {
       storiesOrderById,
       totalPages,
       totalStoriesByStatus,
-      getAuthors,
     })
   );
-  const { apiCallbacks, canViewDefaultTemplates } = useConfig();
+  const { filtersObject, sortObject } = useStoryFilters(
+    ({ state: { filtersObject, sortObject } }) => ({
+      filtersObject,
+      sortObject,
+    })
+  );
 
+  const { apiCallbacks, canViewDefaultTemplates } = useConfig();
   const isMounted = useRef(false);
 
   useEffect(() => {
@@ -91,72 +88,21 @@ function MyStories() {
     };
   }, []);
 
-  const {
-    filter,
-    page,
-    search,
-    sort,
-    view,
-    showStoriesWhileLoading,
-    initialPageReady,
-    author,
-  } = useStoryView({
-    filters: STORY_STATUSES,
-    isLoading,
-    totalPages,
-  });
-
-  const { setQueriedAuthors } = author;
-  let queryAuthorsBySearch = useCallback(
-    (authorSearchTerm) => {
-      return getAuthors(authorSearchTerm).then((data) => {
-        if (!isMounted.current) {
-          return;
-        }
-
-        const userData = data.map(({ id, name }) => ({
-          id,
-          name,
-        }));
-        setQueriedAuthors((existingUsers) => {
-          const existingUsersIds = existingUsers.map(({ id }) => id);
-          const newUsers = userData.filter(
-            (newUser) => !existingUsersIds.includes(newUser.id)
-          );
-          return [...existingUsers, ...newUsers];
-        });
-      });
-    },
-    [getAuthors, setQueriedAuthors]
-  );
-
-  if (!getAuthors) {
-    queryAuthorsBySearch = noop;
-  }
-
-  useEffect(() => {
-    queryAuthorsBySearch();
-  }, [queryAuthorsBySearch]);
+  const { page, view, showStoriesWhileLoading, initialPageReady } =
+    useStoryView({
+      filtersObject,
+      sortObject,
+      isLoading,
+      totalPages,
+    });
 
   useEffect(() => {
     fetchStories({
       page: page.value,
-      searchTerm: search.keyword,
-      sortDirection: sort.direction,
-      sortOption: sort.value,
-      status: filter.value,
-      author: author.filterId,
+      filters: filtersObject,
+      sort: sortObject,
     });
-  }, [
-    fetchStories,
-    filter.value,
-    page.value,
-    search.keyword,
-    sort.direction,
-    sort.value,
-    author.filterId,
-    apiCallbacks,
-  ]);
+  }, [fetchStories, filtersObject, sortObject, page.value, apiCallbacks]);
 
   const orderedStories = useMemo(() => {
     return storiesOrderById.map((storyId) => {
@@ -164,31 +110,24 @@ function MyStories() {
     });
   }, [stories, storiesOrderById]);
 
-  const showAuthorDropdown = typeof getAuthors === 'function';
-
   return (
     <Layout.Provider>
       <Header
         initialPageReady={initialPageReady}
-        filter={filter}
-        search={search}
-        sort={sort}
         stories={orderedStories}
         totalStoriesByStatus={totalStoriesByStatus}
         view={view}
-        author={author}
-        queryAuthorsBySearch={queryAuthorsBySearch}
-        showAuthorDropdown={showAuthorDropdown}
       />
 
       <Content
         allPagesFetched={allPagesFetched}
         canViewDefaultTemplates={canViewDefaultTemplates}
-        filter={filter}
-        loading={{ isLoading, showStoriesWhileLoading }}
+        filtersObject={filtersObject}
+        loading={{
+          isLoading: isLoading,
+          showStoriesWhileLoading,
+        }}
         page={page}
-        search={search}
-        sort={sort}
         stories={orderedStories}
         storyActions={{
           duplicateStory,

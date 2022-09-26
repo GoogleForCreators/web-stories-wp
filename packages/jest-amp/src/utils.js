@@ -17,11 +17,18 @@
 /**
  * External dependencies
  */
+import { existsSync } from 'fs';
+import { tmpdir } from 'os';
 import PropTypes from 'prop-types';
 import AmpOptimizer, {
   TRANSFORMATIONS_AMP_FIRST,
 } from '@ampproject/toolbox-optimizer';
 import amphtmlValidator from 'amphtml-validator';
+
+const fallback = tmpdir() + '/validator_wasm.js';
+const validatorJs =
+  process.env.AMP_VALIDATOR_FILE ||
+  (existsSync(fallback) ? fallback : undefined);
 
 /** @typedef {import('react').ReactElement} ReactElement */
 
@@ -108,7 +115,7 @@ async function getAMPValidationErrors(string, optimize = true) {
     completeString = await ampOptimizer.transformHtml(completeString, params);
   }
 
-  const validator = await amphtmlValidator.getInstance();
+  const validator = await amphtmlValidator.getInstance(validatorJs);
   const { errors } = validator.validateString(completeString);
 
   const errorMessages = [];

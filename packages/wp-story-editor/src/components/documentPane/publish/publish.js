@@ -21,11 +21,18 @@ import PropTypes from 'prop-types';
 import {
   useState,
   useEffect,
+  useMemo,
   useCallback,
   forwardRef,
 } from '@googleforcreators/react';
 import styled from 'styled-components';
-import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
+import { getExtensionsFromMimeType } from '@googleforcreators/media';
+import {
+  __,
+  _n,
+  sprintf,
+  translateToExclusiveList,
+} from '@googleforcreators/i18n';
 import {
   Link,
   Text,
@@ -45,9 +52,10 @@ import {
   useStory,
   useConfig,
   useHighlights,
-  useInspector,
+  useSidebar,
 } from '@googleforcreators/story-editor';
-
+import { useFeature } from 'flagged';
+import { addQueryArgs } from '@googleforcreators/url';
 /**
  * Internal dependencies
  */
@@ -115,10 +123,28 @@ const LogoImg = styled.img`
   max-height: 96px;
 `;
 
+const RevisionsWrapper = styled.div`
+  width: 100%;
+  margin-bottom: 16px;
+  margin-top: 20px;
+`;
+
+const RevisionsLabel = styled.div`
+  display: inline-block;
+  margin-left: 20px;
+  margin-right: 20px;
+`;
+
+const LabelIconWrapper = styled.div`
+  position: absolute;
+  display: inline-block;
+  margin-left: -5px;
+`;
+
 function PublishPanel({ nameOverride }) {
   const {
     state: { users },
-  } = useInspector();
+  } = useSidebar();
   const {
     api: { publisherLogos: publisherLogosPath },
   } = useConfig();
@@ -126,12 +152,22 @@ function PublishPanel({ nameOverride }) {
   const { getPublisherLogos, addPublisherLogo } = apiCallbacks;
 
   const {
-    allowedImageMimeTypes,
-    allowedImageFileTypes,
+    allowedMimeTypes: { image: allowedImageMimeTypes },
     dashboardSettingsLink,
     capabilities: { hasUploadMediaAction, canManageSettings },
     MediaUpload,
+    revisionLink,
   } = useConfig();
+
+  const improvedAutosaves = useFeature('improvedAutosaves');
+
+  const allowedImageFileTypes = useMemo(
+    () =>
+      allowedImageMimeTypes
+        .map((type) => getExtensionsFromMimeType(type))
+        .flat(),
+    [allowedImageMimeTypes]
+  );
 
   const [publisherLogos, setPublisherLogos] = useState([]);
 
@@ -148,25 +184,31 @@ function PublishPanel({ nameOverride }) {
     })
   );
 
-  const { featuredMedia, publisherLogo, updateStory, capabilities } = useStory(
-    ({
-      state: {
-        story: {
-          featuredMedia = { id: 0, url: '', height: 0, width: 0 },
-          publisherLogo = { id: 0, url: '', height: 0, width: 0 },
+  const { featuredMedia, publisherLogo, updateStory, capabilities, revisions } =
+    useStory(
+      ({
+        state: {
+          story: {
+            featuredMedia = { id: 0, url: '', height: 0, width: 0 },
+            publisherLogo = { id: 0, url: '', height: 0, width: 0 },
+            revisions,
+          },
+          capabilities,
         },
-        capabilities,
-      },
-      actions: { updateStory },
-    }) => {
-      return {
-        featuredMedia,
-        publisherLogo,
-        updateStory,
-        capabilities,
-      };
-    }
-  );
+        actions: { updateStory },
+      }) => {
+        return {
+          featuredMedia,
+          publisherLogo,
+          updateStory,
+          capabilities,
+          revisions,
+        };
+      }
+    );
+
+  const revisionCount = revisions?.count ? revisions?.count : 0;
+  const revisionId = revisions?.id ? revisions?.id : 0;
 
   const handleChangePoster = useCallback(
     /**
@@ -183,6 +225,8 @@ function PublishPanel({ nameOverride }) {
             url: newPoster.src,
             height: newPoster.height,
             width: newPoster.width,
+            isExternal: newPoster.isExternal,
+            needsProxy: newPoster.needsProxy,
           },
         },
       });
@@ -255,7 +299,12 @@ function PublishPanel({ nameOverride }) {
       ? __('Select logo', 'web-stories')
       : __('No logo', 'web-stories');
     return publisherLogo.id ? (
-      <LogoImg src={publisherLogo.url} alt="" />
+      <LogoImg
+        src={publisherLogo.url}
+        alt=""
+        decoding="async"
+        crossOrigin="anonymous"
+      />
     ) : (
       <Text as="span" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
         {displayText}
@@ -289,6 +338,10 @@ function PublishPanel({ nameOverride }) {
       />
     );
   }
+
+  const menuOptions = [hasUploadMediaAction && 'upload', 'hotlink'].filter(
+    Boolean
+  );
 
   return (
     <Panel
@@ -327,12 +380,25 @@ function PublishPanel({ nameOverride }) {
                 value={featuredMedia?.url}
                 onChange={handleChangePoster}
                 title={__('Select as poster image', 'web-stories')}
+                hotlinkTitle={__(
+                  'Use external image as poster image',
+                  'web-stories'
+                )}
+                hotlinkInsertText={__(
+                  'Use image as poster image',
+                  'web-stories'
+                )}
+                hotlinkInsertingText={__(
+                  'Using image as poster image',
+                  'web-stories'
+                )}
                 buttonInsertText={__('Select as poster image', 'web-stories')}
                 type={allowedImageMimeTypes}
                 ariaLabel={__('Poster image', 'web-stories')}
                 onChangeErrorText={posterErrorMessage}
                 imgProps={featuredMedia}
-                canUpload={hasUploadMediaAction}
+                canUpload
+                menuOptions={menuOptions}
               />
             </MediaWrapper>
             <LabelWrapper>
@@ -346,7 +412,8 @@ function PublishPanel({ nameOverride }) {
                 options={publisherLogosWithUploadOption}
                 primaryOptions={publisherLogosWithUploadOption}
                 onChange={onPublisherLogoChange}
-                aria-label={__('Publisher Logo', 'web-stories')}
+                title={__('Available publisher logos', 'web-stories')}
+                dropdownButtonLabel={__('Publisher Logo', 'web-stories')}
                 renderer={publisherLogoOptionRenderer}
                 activeItemRenderer={activeItemRenderer}
                 selectedId={publisherLogo.id}
@@ -381,6 +448,37 @@ function PublishPanel({ nameOverride }) {
             </LabelWrapper>
           </DropdownWrapper>
         </HighlightRow>
+        {improvedAutosaves && revisionCount > 1 ? (
+          <RevisionsWrapper>
+            <Label>
+              <LabelIconWrapper>
+                <Icons.History width={24} height={24} aria-hidden />
+              </LabelIconWrapper>
+              <RevisionsLabel>
+                {sprintf(
+                  /* translators: %d: number of revisions. */
+                  _n(
+                    '%d Revision',
+                    '%d Revisions',
+                    revisionCount,
+                    'web-stories'
+                  ),
+                  revisionCount
+                )}
+              </RevisionsLabel>
+              {revisionLink && revisionId ? (
+                <Link
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  href={addQueryArgs(revisionLink, { revision: revisionId })}
+                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
+                >
+                  {__('Browse', 'web-stories')}
+                </Link>
+              ) : null}
+            </Label>
+          </RevisionsWrapper>
+        ) : null}
       </PanelContent>
     </Panel>
   );

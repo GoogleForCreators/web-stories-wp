@@ -1,0 +1,108 @@
+{
+  "data": {
+    "products": {
+      "edges": [
+        {
+          "node": {
+            "id": "gid://shopify/Product/9895276099",
+            "handle": "snare-boot",
+            "title": "Snare Boot",
+            "vendor": "All Saints",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pharetra consequat diam. In metus risus, aliquam non massa tempus, gravida commodo orci. Praesent interdum pharetra quam eu pharetra. Nullam commodo nec mi non cursus. In hac habitasse platea dictumst. Nunc nec tincidunt odio, nec suscipit elit. Nam suscipit lectus vel justo pulvinar ultrices. Sed convallis eget dui consectetur placerat. Nunc id elementum dolor. Duis suscipit pulvinar mi a tristique.",
+            "priceRange": {
+              "minVariantPrice": {
+                "amount": "158.0",
+                "currencyCode": "CAD"
+              }
+            },
+            "onlineStoreUrl": "https://graphql.myshopify.com/products/snare-boot",
+            "images": {
+              "edges": [
+                {
+                  "node": {
+                    "url": "https://cdn.shopify.com/s/files/1/1312/0893/products/001_grande_89f870ed-dc56-4990-9aa5-4f11ddf13108.jpg?v=1491918957",
+                    "altText": null
+                  }
+                },
+                {
+                  "node": {
+                    "url": "https://cdn.shopify.com/s/files/1/1312/0893/products/002_grande_d74b53c6-ff42-4143-9728-2666f568632a.jpg?v=1491918957",
+                    "altText": null
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "node": {
+            "id": "gid://shopify/Product/9895279043",
+            "handle": "neptune-boot",
+            "title": "Neptune Boot",
+            "vendor": "All Saints",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pharetra consequat diam. In metus risus, aliquam non massa tempus, gravida commodo orci. Praesent interdum pharetra quam eu pharetra. Nullam commodo nec mi non cursus. In hac habitasse platea dictumst. Nunc nec tincidunt odio, nec suscipit elit. Nam suscipit lectus vel justo pulvinar ultrices. Sed convallis eget dui consectetur placerat. Nunc id elementum dolor. Duis suscipit pulvinar mi a tristique.",
+            "priceRange": {
+              "minVariantPrice": {
+                "amount": "188.0",
+                "currencyCode": "CAD"
+              }
+            },
+            "onlineStoreUrl": "https://graphql.myshopify.com/products/neptune-boot",
+            "images": {
+              "edges": [
+                {
+                  "node": {
+                    "url": "https://cdn.shopify.com/s/files/1/1312/0893/products/001_f5b2f018-5434-446e-912c-10484293c134.jpg?v=1491850944",
+                    "altText": null
+                  }
+                },
+                {
+                  "node": {
+                    "url": "https://cdn.shopify.com/s/files/1/1312/0893/products/002_0920679e-5437-4ad1-a9a2-ffc3339bbd0e.jpg?v=1491850944",
+                    "altText": null
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "node": {
+            "id": "gid://shopify/Product/9895281475",
+            "handle": "arena-zip-boot",
+            "title": "Arena Zip Boot",
+            "vendor": "All Saints",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pharetra consequat diam. In metus risus, aliquam non massa tempus, gravida commodo orci. Praesent interdum pharetra quam eu pharetra. Nullam commodo nec mi non cursus. In hac habitasse platea dictumst. Nunc nec tincidunt odio, nec suscipit elit. Nam suscipit lectus vel justo pulvinar ultrices. Sed convallis eget dui consectetur placerat. Nunc id elementum dolor. Duis suscipit pulvinar mi a tristique.",
+            "priceRange": {
+              "minVariantPrice": {
+                "amount": "188.0",
+                "currencyCode": "CAD"
+              }
+            },
+            "onlineStoreUrl": "https://graphql.myshopify.com/products/arena-zip-boot",
+            "images": {
+              "edges": [
+                {
+                  "node": {
+                    "url": "https://cdn.shopify.com/s/files/1/1312/0893/products/001_d31a9463-4495-4024-ab4b-6901bdd1752e.jpg?v=1491850970",
+                    "altText": null
+                  }
+                },
+                {
+                  "node": {
+                    "url": "https://cdn.shopify.com/s/files/1/1312/0893/products/002_22f0cd08-aa18-4da9-882c-0f11df4169b1.jpg?v=1491850970",
+                    "altText": null
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "pageInfo": {
+        "hasNextPage": true,
+        "endCursor": "eyJsYXN0X2lkIjo5ODk1Mjc5MDQzLCJsYXN0X3ZhbHVlIjoiMjAxNy0wNC0xMCAxOTowMjoyNC4wMDAwMDAifQ=="
+      }
+    }
+  }
+}

@@ -23,7 +23,7 @@ import {
   Text,
   Link,
   List,
-  Tooltip,
+  BaseTooltip,
 } from '@googleforcreators/design-system';
 
 /**
@@ -70,9 +70,9 @@ export const _default = () => {
           displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
           aria-label="my helper text describing this thumbnail image"
         >
-          <Tooltip title="Optimize">
+          <BaseTooltip title="Optimize">
             <StyledVideoOptimizationIcon />
-          </Tooltip>
+          </BaseTooltip>
         </Thumbnail>
       );
       index++;

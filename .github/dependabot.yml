@@ -27,13 +27,11 @@ updates:
         versions:
           - '>= 3'
 
-      # Needs manual upgrade.
-      - dependency-name: 'husky'
-        versions:
-          - '>= 6'
-
       # Best updated manually as they have very frequent updates.
       - dependency-name: '@storybook/*'
+
+      # Best updated manually as they have very frequent updates.
+      - dependency-name: '@wordpress/*'
 
   - package-ecosystem: composer
     directory: '/'

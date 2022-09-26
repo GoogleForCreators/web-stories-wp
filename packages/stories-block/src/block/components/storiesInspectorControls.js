@@ -96,7 +96,7 @@ const StoriesInspectorControls = (props) => {
   useEffect(() => {
     // Set default field state on load.
     const defaultState = {};
-    Object.entries(fieldStates[viewType]).map(([field, fieldObj]) => {
+    Object.entries(fieldStates[viewType]).forEach(([field, fieldObj]) => {
       const { show } = fieldObj;
       // Initially the fieldState will be an empty object. Set the defaults based on current viewType.
       if (undefined === fieldState[`show_${field}`]) {
@@ -125,7 +125,7 @@ const StoriesInspectorControls = (props) => {
     }
 
     const defaultState = {};
-    Object.entries(fieldStates[viewType]).map(([field, fieldObj]) => {
+    Object.entries(fieldStates[viewType]).forEach(([field, fieldObj]) => {
       const { show } = fieldObj;
       defaultState[`show_${field}`] = show;
     });

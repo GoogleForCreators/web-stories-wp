@@ -23,12 +23,7 @@ import PropTypes from 'prop-types';
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import {
-  DropdownMenu,
-  ToolbarGroup,
-  Toolbar,
-  ToolbarItem,
-} from '@wordpress/components';
+import { DropdownMenu, ToolbarGroup, ToolbarItem } from '@wordpress/components';
 
 /**
  * Internal dependencies
@@ -36,11 +31,8 @@ import {
 import { BLOCK_TYPES } from '../constants';
 
 function BlockTypeSwitcher({ selectedBlockType, setAttributes }) {
-  // Note: ToolbarGroup and ToolbarButton are only available in Gutenberg 7.0 or later,
-  // so they do not exist in WP 5.3.
-  const ToolbarComponent = ToolbarGroup ? ToolbarGroup : Toolbar;
   return (
-    <ToolbarComponent>
+    <ToolbarGroup>
       {ToolbarItem ? (
         <ToolbarItem>
           {(toolbarItemHTMLProps) => (
@@ -73,7 +65,7 @@ function BlockTypeSwitcher({ selectedBlockType, setAttributes }) {
           })}
         />
       )}
-    </ToolbarComponent>
+    </ToolbarGroup>
   );
 }
 

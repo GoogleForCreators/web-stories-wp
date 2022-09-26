@@ -32,6 +32,7 @@ import * as compose from '@wordpress/compose';
 import { withViewportMatch } from '@wordpress/viewport';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
+import { store as blockEditorStore } from '@wordpress/block-editor';
 
 /**
  * Internal dependencies
@@ -195,7 +196,7 @@ function StoryEmbedEdit({
   }, []);
 
   const { isRTL, maxWidth } = useSelect((select) => {
-    const { getSettings } = select('core/block-editor');
+    const { getSettings } = select(blockEditorStore);
     const settings = getSettings();
     return {
       isRTL: settings.isRTL,
@@ -203,7 +204,7 @@ function StoryEmbedEdit({
     };
   }, []);
 
-  const { toggleSelection } = useDispatch('core/block-editor');
+  const { toggleSelection } = useDispatch(blockEditorStore);
 
   if (showLoadingIndicator) {
     return <EmbedLoadinng />;

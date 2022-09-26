@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { renderHook, act } from '@testing-library/react-hooks';
+import { getStoryMarkup } from '@googleforcreators/output';
 
 /**
  * Internal dependencies
@@ -25,9 +26,10 @@ import { renderHook, act } from '@testing-library/react-hooks';
 import APIContext from '../../../api/context';
 import ConfigContext from '../../../config/context';
 import useAutoSave from '../useAutoSave';
-import getStoryMarkup from '../../../../output/utils/getStoryMarkup';
 
-jest.mock('../../../../output/utils/getStoryMarkup', () => jest.fn());
+jest.mock('@googleforcreators/output', () => ({
+  getStoryMarkup: jest.fn(),
+}));
 
 function setup(args) {
   const configValue = {
@@ -72,7 +74,13 @@ describe('useAutoSave', () => {
       date: '2020-04-10T07:06:26',
       modified: '',
       excerpt: '',
-      featuredMedia: { id: 0 },
+      featuredMedia: {
+        id: 0,
+        url: 'https://example.com/image.png',
+        isExternal: false,
+        height: 100,
+        width: 100,
+      },
       password: '',
       globalStoryStyles: '',
       taxonomies: [],
@@ -106,18 +114,90 @@ describe('useAutoSave', () => {
     act(() => {
       autoSave();
     });
-    expect(autoSaveById).toHaveBeenCalledTimes(1);
+    expect(autoSaveById).toHaveBeenCalledOnce();
 
     const expected = {
       ...story,
       pages,
       content: 'Hello World!',
-      meta: {
-        web_stories_publisher_logo: 1,
-      },
+      products: [],
     };
-    delete expected.publisherLogo;
     delete expected.taxonomies;
+
+    expect(autoSaveById).toHaveBeenCalledWith(expected);
+  });
+
+  it('should properly call autoSaveById when using autoSave with custom poster', () => {
+    getStoryMarkup.mockImplementation(() => {
+      return 'Hello World!';
+    });
+    const story = {
+      storyId: 1,
+      title: 'Story!',
+      author: { id: 1, name: 'John Doe' },
+      slug: 'story',
+      publisherLogo: {
+        id: 1,
+        url: 'https://example.com/logo.png',
+        height: 0,
+        width: 0,
+      },
+      defaultPageDuration: 7,
+      status: 'publish',
+      date: '2020-04-10T07:06:26',
+      modified: '',
+      excerpt: '',
+      featuredMedia: {
+        id: 0,
+        url: 'https://example.com/image.png',
+        isExternal: true,
+        needsProxy: false,
+        height: 100,
+        width: 100,
+      },
+      password: '',
+      globalStoryStyles: '',
+      taxonomies: [],
+    };
+    const pages = [
+      {
+        type: 'page',
+        id: '2',
+        elements: [
+          {
+            id: '2',
+            type: 'text',
+            x: 0,
+            y: 0,
+          },
+        ],
+      },
+    ];
+    const { autoSave, autoSaveById } = setup({
+      storyId: 1,
+      story,
+      pages,
+    });
+
+    autoSaveById.mockImplementation(() => ({
+      finally(callback) {
+        callback();
+      },
+    }));
+
+    act(() => {
+      autoSave();
+    });
+    expect(autoSaveById).toHaveBeenCalledOnce();
+
+    const expected = {
+      ...story,
+      pages,
+      content: 'Hello World!',
+      products: [],
+    };
+    delete expected.taxonomies;
+
     expect(autoSaveById).toHaveBeenCalledWith(expected);
   });
 });

@@ -17,7 +17,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { Tooltip, Icons } from '@googleforcreators/design-system';
+import { BaseTooltip, Icons } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
@@ -71,9 +71,9 @@ export const _default = (args) => {
       onClick={() => args.onClick(thumbnailType)}
     >
       {thumbnailType === THUMBNAIL_TYPES.VIDEO && (
-        <Tooltip title="test tooltip">
+        <BaseTooltip title="test tooltip">
           <StyledVideoOptimizationIcon />
-        </Tooltip>
+        </BaseTooltip>
       )}
     </Thumbnail>
   ));

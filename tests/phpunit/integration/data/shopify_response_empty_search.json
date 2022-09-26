@@ -1,0 +1,11 @@
+{
+  "data": {
+    "products": {
+      "edges": [],
+      "pageInfo": {
+        "hasNextPage": false,
+        "endCursor": null
+      }
+    }
+  }
+}

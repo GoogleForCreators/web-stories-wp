@@ -120,7 +120,7 @@ function SavedTemplates({ pageSize, loadTemplates, isLoading, ...rest }) {
   );
 
   return (
-    // tabIndex is required for FireFox bug when using keyboard to navigate from Chips to Template
+    // tabIndex is required for FireFox bug when using keyboard to navigate from Saved / Default Templates dropdown to Template
     <Wrapper ref={ref} tabIndex={-1}>
       {!isLoading && ref.current ? (
         <TemplateList

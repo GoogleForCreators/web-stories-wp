@@ -16,22 +16,22 @@
     "civicrm/composer-downloads-plugin": "^3.0",
     "cweagans/composer-patches": "^1.6",
     "enshrined/svg-sanitize": "^0.15.2",
-    "mcaskill/composer-exclude-files": "^2.0",
-    "sabberworm/php-css-parser": "dev-master#bfdd976",
+    "mcaskill/composer-exclude-files": "^3.0",
     "symfony/polyfill-mbstring": "^1.18"
   },
   "require-dev": {
     "automattic/vipwpcs": "^2.3",
     "dealerdirect/phpcodesniffer-composer-installer": "^0.7",
-    "dg/bypass-finals": "1.3.1",
+    "dg/bypass-finals": "^1.4.1",
+    "php-stubs/woocommerce-stubs": "^6.0",
     "phpcompatibility/phpcompatibility-wp": "^2.1",
     "phpmd/phpmd": "^2.9",
     "phpstan/extension-installer": "^1.1",
     "roave/security-advisories": "dev-latest",
     "sirbrillig/phpcs-variable-analysis": "^2.8",
-    "slevomat/coding-standard": "^7.0.18",
-    "sniccowp/php-scoper-wordpress-excludes": "^5.9",
-    "szepeviktor/phpstan-wordpress": "^1.0",
+    "slevomat/coding-standard": "^8.0.0",
+    "sniccowp/php-scoper-wordpress-excludes": "^6.0",
+    "szepeviktor/phpstan-wordpress": "^v1.1.3",
     "wp-coding-standards/wpcs": "^2.3",
     "yoast/wp-test-utils": "^1.0.0"
   },
@@ -61,7 +61,8 @@
     "psr-4": {
       "Google\\Web_Stories\\Tests\\Integration\\": "tests/phpunit/integration/includes",
       "Google\\Web_Stories\\Tests\\Unit\\": "tests/phpunit/unit/includes",
-      "SzepeViktor\\PHPStan\\WordPress\\": "tests/phpstan/src"
+      "Google\\Web_Stories\\Tests\\Shared\\": "tests/phpunit/shared",
+      "Google\\Web_Stories\\PHPStan\\": "tests/phpstan/src"
     }
   },
   "config": {
@@ -70,7 +71,8 @@
       "civicrm/composer-downloads-plugin": true,
       "cweagans/composer-patches": true,
       "mcaskill/composer-exclude-files": true,
-      "phpstan/extension-installer": true
+      "phpstan/extension-installer": true,
+      "composer/installers": true
     },
     "discard-changes": true,
     "platform": {
@@ -83,18 +85,19 @@
       "composer-normalize": {
         "path": "vendor/bin/composer-normalize",
         "type": "phar",
-        "url": "https://github.com/ergebnis/composer-normalize/releases/download/2.23.0/composer-normalize.phar"
+        "url": "https://github.com/ergebnis/composer-normalize/releases/download/2.24.0/composer-normalize.phar"
       },
       "php-scoper": {
         "path": "vendor/bin/php-scoper",
         "type": "phar",
-        "url": "https://github.com/humbug/php-scoper/releases/download/0.17.0/php-scoper.phar"
+        "url": "https://github.com/humbug/php-scoper/releases/download/0.17.2/php-scoper.phar"
       }
     },
     "enable-patching": true,
     "exclude-from-files": [
       "ampproject/amp-wp/includes/bootstrap.php"
     ],
+    "installer-disable": true,
     "patches": {
       "phpunit/phpunit-mock-objects": {
         "Fix PHPUnit for PHP 7.4": "patches/phpunit-mock-objects.patch"
@@ -119,7 +122,7 @@
     "phpcbf": "phpcbf --severity=1",
     "phpcs": "phpcs --severity=1",
     "phpmd": "phpmd . text phpmd.xml",
-    "phpstan": "phpstan analyse --memory-limit=512M",
+    "phpstan": "phpstan analyse --memory-limit=2048M",
     "prefix-dependencies": [
       "php-scoper add-prefix --output-dir=./third-party --force --quiet",
       "echo '{ \"autoload\": { \"classmap\": [\"\"] } }' > ./third-party/composer.json",

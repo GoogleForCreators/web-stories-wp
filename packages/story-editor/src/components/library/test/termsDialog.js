@@ -36,12 +36,12 @@ import {
   localStore,
   LOCAL_STORAGE_PREFIX,
 } from '@googleforcreators/design-system';
+import { renderWithTheme } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
  */
 import TermsDialog from '../panes/media/media3p/termsDialog';
-import { renderWithTheme } from '../../../testUtils';
 
 jest.mock('@googleforcreators/design-system', () => ({
   __esModule: true,

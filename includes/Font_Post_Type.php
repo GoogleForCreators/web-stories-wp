@@ -31,6 +31,8 @@ use Google\Web_Stories\REST_API\Font_Controller;
 
 /**
  * Class Font_Post_Type.
+ *
+ * @phpstan-import-type PostTypeArgs from \Google\Web_Stories\Post_Type_Base
  */
 class Font_Post_Type extends Post_Type_Base implements HasRequirements {
 
@@ -71,9 +73,16 @@ class Font_Post_Type extends Post_Type_Base implements HasRequirements {
 	 *
 	 * @since 1.16.0
 	 *
-	 * @return array
+	 * @return array<string, mixed> Post type args.
+	 *
+	 * @phpstan-return PostTypeArgs
 	 */
 	protected function get_args(): array {
+		/**
+		 * The edit_posts capability.
+		 *
+		 * @var string $edit_posts
+		 */
 		$edit_posts = $this->story_post_type->get_cap_name( 'edit_posts' );
 
 		// Only admins are allowed to modify custom fonts,

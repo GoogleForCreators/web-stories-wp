@@ -85,9 +85,9 @@ class Analytics extends Service_Base {
 	 * @see https://github.com/ampproject/amphtml/blob/master/spec/amp-var-substitutions.md
 	 *
 	 * @param string $tracking_id Tracking ID.
-	 * @return array<string, array> <amp-analytics> configuration.
+	 * @return array<string, array<string, mixed>> <amp-analytics> configuration.
 	 */
-	public function get_default_configuration( $tracking_id ): array {
+	public function get_default_configuration( string $tracking_id ): array {
 		$config = [
 			'vars'     => [
 				'gtag_id' => $tracking_id,
@@ -237,7 +237,7 @@ class Analytics extends Service_Base {
 			return;
 		}
 
-		if ( (bool) $this->settings->get_setting( $this->settings::SETTING_NAME_USING_LEGACY_ANALYTICS ) ) {
+		if ( $this->settings->get_setting( $this->settings::SETTING_NAME_USING_LEGACY_ANALYTICS ) ) {
 			$this->print_amp_analytics_tag( $tracking_id );
 		} else {
 			$this->print_amp_story_auto_analytics_tag( $tracking_id );

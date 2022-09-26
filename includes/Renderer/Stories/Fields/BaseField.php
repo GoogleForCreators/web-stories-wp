@@ -51,12 +51,12 @@ class BaseField implements Field {
 	/**
 	 * BaseField constructor.
 	 *
-	 * @param array $args Arguments.
+	 * @param array<string,string|bool> $args Arguments.
 	 */
 	public function __construct( array $args ) {
-		$this->label  = $args['label'] ?? '';
-		$this->hidden = isset( $args['hidden'] ) ? (bool) $args['hidden'] : true;
-		$this->show   = isset( $args['show'] ) ? (bool) $args['show'] : true;
+		$this->label  = isset( $args['label'] ) ? (string) $args['label'] : '';
+		$this->hidden = ! isset( $args['hidden'] ) || $args['hidden'];
+		$this->show   = ! isset( $args['show'] ) || $args['show'];
 	}
 
 	/**
@@ -65,7 +65,7 @@ class BaseField implements Field {
 	 * @return string
 	 */
 	public function label(): string {
-		return (string) $this->label;
+		return $this->label;
 	}
 
 	/**
@@ -74,7 +74,7 @@ class BaseField implements Field {
 	 * @return bool
 	 */
 	public function show(): bool {
-		return (bool) $this->show;
+		return $this->show;
 	}
 
 	/**
@@ -83,6 +83,6 @@ class BaseField implements Field {
 	 * @return bool
 	 */
 	public function hidden(): bool {
-		return (bool) $this->hidden;
+		return $this->hidden;
 	}
 }

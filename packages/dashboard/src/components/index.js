@@ -21,7 +21,6 @@ export { default as ColorList } from './colorList';
 export { StandardViewContentGutter } from './contentGutter';
 export { default as Dialog } from './dialog';
 export { default as FileUpload } from './fileUpload';
-export { default as InfiniteScroller } from './infiniteScroller';
 export { default as InlineInputForm } from './inlineInputForm';
 export { default as Layout, useLayoutContext } from './layout';
 export {

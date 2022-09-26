@@ -23,11 +23,12 @@ import {
   calcRotatedObjectPositionAndSize,
   clamp,
 } from '@googleforcreators/units';
+import { getDefinitionForType } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
-import { getDefinitionForType } from '../../../../elements';
+
 import usePresubmitHandler from '../../../form/usePresubmitHandler';
 import { MIN_MAX } from './constants';
 import { isNum } from './utils';

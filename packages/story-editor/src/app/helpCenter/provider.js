@@ -260,9 +260,9 @@ function HelpCenterProvider({ children }) {
 
   // Hydrate unread tips once from current user endpoint.
   useEffect(() => {
-    if (!isHydrated && currentUser?.meta?.web_stories_onboarding) {
+    if (!isHydrated && currentUser?.onboarding) {
       actions.hydrateReadTipsSuccess({
-        readTips: currentUser.meta.web_stories_onboarding,
+        readTips: currentUser.onboarding,
       });
     }
   }, [actions, currentUser, isHydrated]);
@@ -281,9 +281,7 @@ function HelpCenterProvider({ children }) {
       return;
     }
     updateCurrentUser({
-      meta: {
-        web_stories_onboarding: createBooleanMapFromKey(persistenceKey),
-      },
+      onboarding: createBooleanMapFromKey(persistenceKey),
     }).catch(actions.persistingReadTipsError);
   }, [
     actions,

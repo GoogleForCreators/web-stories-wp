@@ -27,15 +27,29 @@ import {
 /**
  * Internal dependencies
  */
-import { useCanvas, useLayout, useStory } from '../../app';
-import { FLOATING_MENU_DISTANCE } from '../../constants';
-import { SELECTED_ELEMENT_TYPES } from './constants';
+import { useCanvas, useLayout, useStory, useTransform } from '../../app';
+import { FLOATING_MENU_DISTANCE, HEADER_HEIGHT } from '../../constants';
+import DirectionAware from '../directionAware';
+import {
+  SELECTED_ELEMENT_TYPES,
+  hasDesignMenu,
+  TOOLBAR_POSITIONS,
+} from './constants';
 import FloatingMenu from './menu';
 
 function FloatingMenuLayer() {
-  const { setMoveableMount } = useCanvas(
-    ({ actions: { setMoveableMount } }) => ({ setMoveableMount })
-  );
+  const {
+    setMoveableMount,
+    isEyedropperActive,
+    floatingMenuPosition,
+    displayFloatingMenu,
+  } = useCanvas(({ actions, state }) => ({
+    setMoveableMount: actions.setMoveableMount,
+    isEyedropperActive: state.isEyedropperActive,
+    floatingMenuPosition: state.floatingMenuPosition,
+    displayFloatingMenu: state.displayFloatingMenu,
+  }));
+
   const { workspaceWidth, workspaceHeight } = useLayout(
     ({ state: { workspaceWidth, workspaceHeight } }) => ({
       workspaceWidth,
@@ -56,6 +70,10 @@ function FloatingMenuLayer() {
     })
   );
 
+  const isAnythingTransforming = useTransform(
+    ({ state }) => state.isAnythingTransforming
+  );
+
   const [moveable, setMoveable] = useState(null);
   const menuRef = useRef();
   const workspaceSize = useRef();
@@ -73,6 +91,15 @@ function FloatingMenuLayer() {
     return () => setMoveableMount(null);
   }, [setMoveableMount]);
 
+  // When eyedropper is active, always hide the floating menu, too.
+  useEffect(() => {
+    if (isEyedropperActive) {
+      setDismissed(true);
+    } else {
+      setDismissed(false);
+    }
+  }, [isEyedropperActive]);
+
   // Whenever the workspace resizes, update size
   useEffect(() => {
     workspaceSize.current = { width: workspaceWidth, height: workspaceHeight };
@@ -80,10 +107,13 @@ function FloatingMenuLayer() {
     // frame will already be updating because of the resize, so a DOM mutation is incoming.
   }, [workspaceWidth, workspaceHeight]);
 
+  const selectedElementHasDesignMenu = hasDesignMenu(selectedElementType);
+  const isMenuPermanentlyDismissed = false === displayFloatingMenu;
   const hasMenu =
-    selectedElementType !== SELECTED_ELEMENT_TYPES.NONE &&
+    selectedElementHasDesignMenu &&
     !isDismissed &&
-    moveable;
+    moveable &&
+    !isMenuPermanentlyDismissed;
 
   // Whenever moveable is set (because selection count changed between none, single, or multiple)
   useEffect(() => {
@@ -92,13 +122,22 @@ function FloatingMenuLayer() {
       return undefined;
     }
 
+    // If the toolbar is positioned to the top, we keep it in a fixed position.
     const updatePosition = () => {
       const frameRect = moveable.getRect();
       const { width, height } = workspaceSize.current;
-      const centerX = frameRect.left + frameRect.width / 2;
-      menu.style.left = `clamp(0px, ${centerX}px - (var(--width) / 2), ${width}px - var(--width))`;
-      const bottomX = frameRect.top + frameRect.height + FLOATING_MENU_DISTANCE;
-      menu.style.top = `clamp(0px, ${bottomX}px, ${height}px - var(--height))`;
+      if (floatingMenuPosition === TOOLBAR_POSITIONS.TOP) {
+        menu.style.left = `clamp(0px, ${
+          width / 2
+        }px - (var(--width) / 2), ${width}px - var(--width))`;
+        menu.style.top = `clamp(0px, ${HEADER_HEIGHT}px, ${height}px - var(--height))`;
+      } else {
+        const centerX = frameRect.left + frameRect.width / 2;
+        menu.style.left = `clamp(0px, ${centerX}px - (var(--width) / 2), ${width}px - var(--width))`;
+        const bottomX =
+          frameRect.top + frameRect.height + FLOATING_MENU_DISTANCE;
+        menu.style.top = `clamp(0px, ${bottomX}px, ${height}px - var(--height))`;
+      }
     };
 
     // Update now
@@ -114,19 +153,22 @@ function FloatingMenuLayer() {
     });
 
     return () => observer.disconnect();
-  }, [moveable, hasMenu]);
+  }, [moveable, hasMenu, floatingMenuPosition]);
 
   if (!hasMenu) {
     return false;
   }
 
   return (
-    <FloatingMenu
-      ref={menuRef}
-      handleDismiss={handleDismiss}
-      selectedElementType={selectedElementType}
-      selectionIdentifier={selectionIdentifier}
-    />
+    <DirectionAware>
+      <FloatingMenu
+        ref={menuRef}
+        handleDismiss={handleDismiss}
+        selectedElementType={selectedElementType}
+        selectionIdentifier={selectionIdentifier}
+        visuallyHidden={isAnythingTransforming}
+      />
+    </DirectionAware>
   );
 }
 

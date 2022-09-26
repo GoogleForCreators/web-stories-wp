@@ -22,7 +22,12 @@ import { __ } from '@googleforcreators/i18n';
 /**
  * External dependencies
  */
-import { useDebouncedCallback, useCallback } from '@googleforcreators/react';
+import {
+  useDebouncedCallback,
+  useCallback,
+  useMemo,
+  useEffect,
+} from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { useFeature } from 'flagged';
 
@@ -31,41 +36,60 @@ import { useFeature } from 'flagged';
  */
 import {
   DASHBOARD_VIEWS,
+  DEFAULT_TEMPLATE_FILTERS,
   TEMPLATES_GALLERY_SORT_MENU_ITEMS,
+  TEMPLATES_GALLERY_SORT_OPTIONS,
   TEXT_INPUT_DEBOUNCE,
 } from '../../../../constants';
-import {
-  FilterPropTypes,
-  SortPropTypes,
-  ViewPropTypes,
-  SearchPropTypes,
-} from '../../../../utils/useTemplateView';
+import { ViewPropTypes } from '../../../../utils/useTemplateView';
+import useTemplateFilters from '../filters/useTemplateFilters';
 import { useDashboardResultsLabel } from '../../../../utils';
 import { PageHeading, BodyViewOptions } from '../../shared';
 
-function Header({
-  filter,
-  isLoading,
-  totalTemplates,
-  sort,
-  view,
-  search,
-  searchOptions = [],
-}) {
+function Header({ isLoading, totalTemplates, view, searchOptions = [] }) {
   const enableInProgressTemplateActions = useFeature(
     'enableInProgressTemplateActions'
   );
 
-  const { setKeyword } = search;
+  const { filters, sortObject, updateFilter, updateSort, registerFilters } =
+    useTemplateFilters(
+      ({
+        state: { filters, sortObject },
+        actions: { updateFilter, updateSort, registerFilters },
+      }) => ({
+        filters,
+        sortObject,
+        updateFilter,
+        updateSort,
+        registerFilters,
+      })
+    );
+
+  const [statusFilterValue, searchFilterValue] = useMemo(() => {
+    const status = filters.find(({ key }) => key === 'status');
+    const search = filters.find(({ key }) => key === 'search');
+    return [status?.filterId, search?.filterId];
+  }, [filters]);
+
   const debouncedSearchChange = useDebouncedCallback((value) => {
-    setKeyword(value);
+    updateFilter('search', { filterId: value });
   }, TEXT_INPUT_DEBOUNCE);
 
-  const clearSearch = useCallback(() => setKeyword(''), [setKeyword]);
+  useEffect(() => {
+    registerFilters([{ key: 'search' }]);
+    registerFilters([
+      { key: 'status', filterId: DEFAULT_TEMPLATE_FILTERS.filters.status },
+    ]);
+  }, [registerFilters]);
+
+  const clearSearch = useCallback(
+    () => updateFilter('search', { filterId: null }),
+    [updateFilter]
+  );
 
   const resultsLabel = useDashboardResultsLabel({
     totalResults: totalTemplates,
-    currentFilter: filter.value,
+    currentFilter: statusFilterValue,
     view: DASHBOARD_VIEWS.TEMPLATES_GALLERY,
   });
 
@@ -76,7 +100,7 @@ function Header({
         searchPlaceholder={__('Search Templates', 'web-stories')}
         showSearch
         searchOptions={searchOptions}
-        searchValue={search.keyword}
+        searchValue={searchFilterValue}
         handleSearchChange={debouncedSearchChange}
         onClear={clearSearch}
       />
@@ -84,11 +108,12 @@ function Header({
         resultsLabel={resultsLabel}
         layoutStyle={view.style}
         handleLayoutSelect={view.toggleStyle}
-        currentSort={sort.value}
         isLoading={isLoading}
         pageSortOptions={TEMPLATES_GALLERY_SORT_MENU_ITEMS}
+        pageSortDefaultOption={TEMPLATES_GALLERY_SORT_OPTIONS.POPULAR}
+        currentSort={sortObject}
+        handleSortChange={updateSort}
         showSortDropdown={enableInProgressTemplateActions}
-        handleSortChange={enableInProgressTemplateActions ? sort.set : () => {}}
         sortDropdownAriaLabel={__(
           'Choose sort option for display',
           'web-stories'
@@ -99,12 +124,9 @@ function Header({
 }
 
 Header.propTypes = {
-  filter: FilterPropTypes.isRequired,
   isLoading: PropTypes.bool,
-  sort: SortPropTypes.isRequired,
   totalTemplates: PropTypes.number,
   view: ViewPropTypes.isRequired,
-  search: SearchPropTypes.isRequired,
   searchOptions: PropTypes.arrayOf(PropTypes.object),
 };
 

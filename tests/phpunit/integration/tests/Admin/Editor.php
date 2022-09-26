@@ -108,6 +108,11 @@ class Editor extends DependencyInjectedTestCase {
 	private $context;
 
 	/**
+	 * @var \Google\Web_Stories\Settings
+	 */
+	private $settings;
+
+	/**
 	 * @param \WP_UnitTest_Factory $factory
 	 */
 	public static function wpSetUpBeforeClass( $factory ): void {
@@ -153,6 +158,7 @@ class Editor extends DependencyInjectedTestCase {
 		$this->fonts_post_type         = $this->injector->make( \Google\Web_Stories\Font_Post_Type::class );
 		$this->context                 = $this->injector->make( \Google\Web_Stories\Context::class );
 		$this->types                   = $this->injector->make( \Google\Web_Stories\Media\Types::class );
+		$this->settings                = $this->injector->make( \Google\Web_Stories\Settings::class );
 
 		$this->instance = new \Google\Web_Stories\Admin\Editor(
 			$this->experiments,
@@ -165,7 +171,8 @@ class Editor extends DependencyInjectedTestCase {
 			$this->page_template_post_type,
 			$this->fonts_post_type,
 			$this->context,
-			$this->types
+			$this->types,
+			$this->settings
 		);
 
 		$this->add_caps_to_roles();
@@ -226,6 +233,20 @@ class Editor extends DependencyInjectedTestCase {
 	}
 
 	/**
+	 * @covers ::get_editor_settings
+	 */
+	public function test_get_editor_settings_passes_publisher_name_without_quotes(): void {
+		$blogname = get_option( 'blogname' );
+		update_option( 'blogname', "S'mores" );
+
+		$results = $this->instance->get_editor_settings();
+
+		update_option( 'blogname', $blogname );
+
+		$this->assertSame( "S'mores", $results['metadata']['publisher'] );
+	}
+
+	/**
 	 * @covers ::setup_lock
 	 */
 	public function test_setup_lock_admin(): void {
@@ -239,22 +260,6 @@ class Editor extends DependencyInjectedTestCase {
 		$value = get_post_meta( self::$story_id, '_edit_lock', true );
 
 		$this->assertNotEmpty( $value );
-	}
-
-	/**
-	 * @covers ::setup_lock
-	 */
-	public function test_setup_lock_experiment_disabled(): void {
-		wp_set_current_user( self::$admin_id );
-
-		$this->experiments->method( 'get_experiment_statuses' )->willReturn( [] );
-		$this->experiments->method( 'is_experiment_enabled' )->willReturn( false );
-
-		$this->call_private_method( $this->instance, 'setup_lock', [ self::$story_id ] );
-
-		$value = get_post_meta( self::$story_id, '_edit_lock', true );
-
-		$this->assertEmpty( $value );
 	}
 
 	/**

@@ -29,7 +29,7 @@ export const SVG_TOOLTIP_TAIL_ID = 'tooltip-tail';
 const TAIL_WIDTH = 34;
 export const TAIL_HEIGHT = 8;
 
-const getTailPosition = ({ placement, translateX }) => {
+const getTailPosition = ({ placement, translateX, isRTL }) => {
   switch (placement) {
     case PLACEMENT.TOP:
     case PLACEMENT.TOP_START:
@@ -52,14 +52,14 @@ const getTailPosition = ({ placement, translateX }) => {
     case PLACEMENT.LEFT_END:
       return css`
         right: -${TAIL_WIDTH / 2 + TAIL_HEIGHT / 2 - 1}px;
-        transform: rotate(90deg);
+        transform: rotate(${isRTL ? '-90deg' : '90deg'});
       `;
     case PLACEMENT.RIGHT:
     case PLACEMENT.RIGHT_START:
     case PLACEMENT.RIGHT_END:
       return css`
         left: -${TAIL_WIDTH / 2 + TAIL_HEIGHT / 2 - 1}px;
-        transform: rotate(-90deg);
+        transform: rotate(${isRTL ? '90deg' : '-90deg'});
       `;
     default:
       return ``;
@@ -78,8 +78,8 @@ export const Tail = styled.span`
     display: block;
     height: ${TAIL_HEIGHT}px;
     width: ${TAIL_WIDTH}px;
-    ${({ placement, translateX }) =>
-      getTailPosition({ placement, translateX })};
+    ${({ placement, translateX, isRTL }) =>
+      getTailPosition({ placement, translateX, isRTL })};
     background-color: inherit;
     border: none;
     border-bottom: none;

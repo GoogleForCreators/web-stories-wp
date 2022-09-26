@@ -23,6 +23,7 @@ import {
   preloadImage,
   getFirstFrameOfVideo,
   getFileNameFromUrl,
+  getFileBasename,
 } from '@googleforcreators/media';
 /**
  * Internal dependencies
@@ -69,8 +70,8 @@ function useUploadVideoFrame({ updateMediaElement }) {
       }
 
       const resource = await uploadFile(posterFile, {
-        post: id,
-        web_stories_media_source: 'poster-generation',
+        mediaId: id,
+        mediaSource: 'poster-generation',
       });
       const {
         id: posterId,
@@ -82,11 +83,8 @@ function useUploadVideoFrame({ updateMediaElement }) {
       // If video ID is not set, skip relating media.
       if (id) {
         await updateMedia(id, {
-          featured_media: posterId,
-          meta: {
-            web_stories_poster_id: posterId,
-          },
-          post: storyId,
+          posterId,
+          storyId,
         });
       }
 
@@ -119,7 +117,9 @@ function useUploadVideoFrame({ updateMediaElement }) {
       const trackTiming = getTimeTracker('load_video_poster');
       try {
         const originalFileName = getFileNameFromUrl(src);
-        const fileName = getPosterName(originalFileName);
+        const fileName = getPosterName(
+          getFileBasename({ name: originalFileName })
+        );
         const obj = await getFirstFrameOfVideo(src);
         const { posterId, poster, posterWidth, posterHeight } =
           await uploadVideoPoster(id, fileName, obj);

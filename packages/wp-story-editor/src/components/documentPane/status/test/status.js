@@ -19,11 +19,11 @@
  */
 import { fireEvent, screen } from '@testing-library/react';
 import { StoryContext } from '@googleforcreators/story-editor';
+import { renderWithTheme } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
  */
-import { renderWithTheme } from '../../../../testUtils';
 import StatusPanel from '../status';
 import { STATUS, VISIBILITY } from '../../../../constants';
 
@@ -160,7 +160,6 @@ describe('statusPanel', () => {
     expect(saveStory).toHaveBeenCalledWith({
       status: STATUS.PRIVATE,
       password: '',
-      visibility: VISIBILITY.PRIVATE,
     });
   });
 
@@ -200,7 +199,6 @@ describe('statusPanel', () => {
       properties: {
         status: 'draft',
         password: '',
-        visibility: VISIBILITY.PUBLIC,
       },
     });
   });

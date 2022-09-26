@@ -26,7 +26,7 @@ import { isValidUrl, withProtocol } from '@googleforcreators/url';
 /**
  * Internal dependencies
  */
-import { inputContainerStyleOverride } from '../panels/shared';
+import { inputContainerStyleOverride } from '../panels/shared/styles';
 import Row from './row';
 
 const MIN_MAX = {

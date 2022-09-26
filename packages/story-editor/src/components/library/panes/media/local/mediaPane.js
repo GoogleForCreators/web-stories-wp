@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { useFeature } from 'flagged';
 import { useCallback, useEffect } from '@googleforcreators/react';
 import styled from 'styled-components';
 import { __, _n, sprintf } from '@googleforcreators/i18n';
@@ -48,15 +47,15 @@ import {
   StyledPane,
 } from '../common/styles';
 import PaginatedMediaGallery from '../common/paginatedMediaGallery';
-import Flags from '../../../../../flags';
 import { PANE_PADDING } from '../../shared';
 import { LOCAL_MEDIA_TYPE_ALL } from '../../../../../app/media/local/types';
-import { focusStyle } from '../../../../panels/shared';
+import { focusStyle } from '../../../../panels/shared/styles';
 import Tooltip from '../../../../tooltip';
 import useOnMediaSelect from './useOnMediaSelect';
 import paneId from './paneId';
 import VideoOptimizationDialog from './videoOptimizationDialog';
 import LinkInsertion from './hotlink';
+import MediaRecording from './mediaRecording';
 
 export const ROOT_MARGIN = 300;
 
@@ -97,6 +96,7 @@ function MediaPane(props) {
   const {
     hasMore,
     media,
+    uploadingMedia,
     isMediaLoading,
     isMediaLoaded,
     mediaType,
@@ -110,6 +110,7 @@ function MediaPane(props) {
       state: {
         hasMore,
         media,
+        uploadingMedia,
         isMediaLoading,
         isMediaLoaded,
         mediaType,
@@ -121,6 +122,9 @@ function MediaPane(props) {
       return {
         hasMore,
         media,
+        // If the media library is empty and we're still loading new items,
+        // do not display uploading items either for better UX.
+        uploadingMedia: !media.length && isMediaLoading ? [] : uploadingMedia,
         isMediaLoading,
         isMediaLoaded,
         mediaType,
@@ -132,8 +136,6 @@ function MediaPane(props) {
       };
     }
   );
-
-  const enableHotlinking = useFeature('enableHotlinking');
 
   const {
     capabilities: { hasUploadMediaAction },
@@ -172,10 +174,6 @@ function MediaPane(props) {
     }
   }, [searchTerm, mediaType]);
 
-  const incrementalSearchDebounceMedia = useFeature(
-    Flags.INCREMENTAL_SEARCH_DEBOUNCE_MEDIA
-  );
-
   const renderUploadButtonIcon = useCallback(
     (open) => (
       <Button
@@ -191,20 +189,6 @@ function MediaPane(props) {
     []
   );
 
-  const renderUploadButton = useCallback(
-    (open) => (
-      <Button
-        variant={BUTTON_VARIANTS.RECTANGLE}
-        type={BUTTON_TYPES.SECONDARY}
-        size={BUTTON_SIZES.SMALL}
-        onClick={open}
-      >
-        {__('Upload', 'web-stories')}
-      </Button>
-    ),
-    []
-  );
-
   return (
     <StyledPane id={paneId} {...props}>
       <PaneInner>
@@ -214,7 +198,6 @@ function MediaPane(props) {
               initialValue={searchTerm}
               placeholder={__('Search', 'web-stories')}
               onSearch={onSearch}
-              incremental={incrementalSearchDebounceMedia}
             />
           </SearchInputContainer>
           <FilterArea>
@@ -238,8 +221,10 @@ function MediaPane(props) {
                 )}
               </SearchCount>
             )}
-            {!isSearching && enableHotlinking && (
+            {!isSearching && (
               <ButtonsWrapper>
+                {/* MediaRecording already checks for permissions */}
+                <MediaRecording />
                 <LinkInsertion />
                 {hasUploadMediaAction && (
                   <Tooltip title={__('Upload', 'web-stories')}>
@@ -251,16 +236,10 @@ function MediaPane(props) {
                 )}
               </ButtonsWrapper>
             )}
-            {!isSearching && !enableHotlinking && hasUploadMediaAction && (
-              <MediaUploadButton
-                renderButton={renderUploadButton}
-                onInsert={onSelect}
-              />
-            )}
           </FilterArea>
         </PaneHeader>
 
-        {isMediaLoaded && !media.length ? (
+        {isMediaLoaded && !media.length && !uploadingMedia.length ? (
           <MediaGalleryMessage>
             {isSearching
               ? __('No results found.', 'web-stories')
@@ -271,6 +250,7 @@ function MediaPane(props) {
             providerType="local"
             canEditMedia={hasUploadMediaAction}
             resources={media}
+            uploadingResources={uploadingMedia}
             isMediaLoading={isMediaLoading}
             isMediaLoaded={isMediaLoaded}
             hasMore={hasMore}

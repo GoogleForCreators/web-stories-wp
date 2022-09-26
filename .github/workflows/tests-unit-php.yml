@@ -27,18 +27,20 @@ on:
       - 'includes/data/**'
       - '.github/workflows/tests-unit-php.yml'
 
+permissions:
+  contents: read
+
 # Cancels all previous workflow runs for pull requests that have not completed.
 concurrency:
-  # The concurrency group contains the workflow name and the branch name for pull requests
-  # or the commit hash for any other events.
-  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.head_ref || github.sha }}
+  # The concurrency group contains the workflow name and the (target) branch name.
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
   cancel-in-progress: true
 
 jobs:
   unit-php:
     name: PHP ${{ matrix.php }} - WP ${{ matrix.wp }}${{ matrix.experimental && ' (experimental)' || '' }}${{ matrix.coverage && ' (with coverage)' || '' }}${{ matrix.random && ' (in random order)' || '' }}
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20
     services:
       mysql:
         image: mariadb:latest
@@ -48,11 +50,11 @@ jobs:
           MYSQL_DATABASE: wordpress_test
         ports:
           - 3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3 --restart=always
     continue-on-error: ${{ matrix.experimental }}
     strategy:
       matrix:
-        php: ['7.2', '8.0']
+        php: ['8.0']
         wp: ['latest']
         coverage: [false]
         experimental: [false]
@@ -64,7 +66,7 @@ jobs:
             experimental: false
 
           - php: '7.2'
-            wp: '5.5'
+            wp: '5.7'
             experimental: false
 
           - php: '8.0'
@@ -72,30 +74,35 @@ jobs:
             random: true
             experimental: true
 
-          - php: '8.0'
-            wp: 'trunk'
-            experimental: true
-
           - php: '8.1'
             wp: 'trunk'
             experimental: true
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+          - php: '8.2'
+            wp: 'trunk'
+            experimental: true
 
-      # PHP-Scoper only works on PHP 7.2+ and we need to prefix our dependencies to accurately test them.
+    steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@dd2c410b088af7c0dc8046f3ac9a8f4148492a95
+        with:
+          egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
+
+      - name: Checkout
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
+
+      # PHP-Scoper only works on PHP 7.4+ and we need to prefix our dependencies to accurately test them.
       # So we temporarily switch PHP versions, do a full install and then remove the package.
       # Then switch back to the PHP version we want to test and delete the vendor directory.
 
       - name: Setup PHP 8.0
-        uses: shivammathur/setup-php@v2
+        uses: shivammathur/setup-php@e04e1d97f0c0481c6e1ba40f8a538454fe5d7709
         with:
           php-version: '8.0'
           tools: composer
 
       - name: Install PHP dependencies
-        uses: 'ramsey/composer-install@v1'
+        uses: ramsey/composer-install@f680dac46551dffb2234a240d65ae806c2999dd6
         with:
           composer-options: '--prefer-dist --no-progress --no-interaction'
 
@@ -103,7 +110,7 @@ jobs:
         run: rm -rf vendor/*
 
       - name: Setup PHP
-        uses: shivammathur/setup-php@v2
+        uses: shivammathur/setup-php@e04e1d97f0c0481c6e1ba40f8a538454fe5d7709
         with:
           php-version: ${{ matrix.php }}
           extensions: mysql
@@ -111,7 +118,7 @@ jobs:
           tools: composer, cs2pr
 
       - name: Install PHP dependencies
-        uses: 'ramsey/composer-install@v1'
+        uses: ramsey/composer-install@f680dac46551dffb2234a240d65ae806c2999dd6
         with:
           composer-options: '--prefer-dist --no-progress --no-interaction --no-scripts'
 
@@ -119,7 +126,7 @@ jobs:
       #
       # | WP  / PHP | PHPUnit |
       # |-----------|---------|
-      # | 5.5 / 7.2 | 7       |
+      # | 5.7 / 7.2 | 7       |
       # | 5.9 / 7.2 | 8       |
       # | 5.9 / 7.4 | 9       |
       # | *   / 8   | 9       |
@@ -127,7 +134,7 @@ jobs:
       # See https://make.wordpress.org/core/handbook/references/phpunit-compatibility-and-wordpress-versions/
       - name: Update PHPUnit
         run: |
-          if [[ $WP_VERSION == "5.5" && $PHP_VERSION == "7.2" ]]; then
+          if [[ $WP_VERSION == "5.7" && $PHP_VERSION == "7.2" ]]; then
             echo "Installing PHPUnit 7.5.x"
             composer require --ignore-platform-reqs --no-interaction --no-scripts phpunit/phpunit:^7.5 --with-dependencies
           elif [[ $PHP_VERSION == "7.2" ]]; then
@@ -183,7 +190,7 @@ jobs:
         if: ${{ matrix.random }}
 
       - name: Upload code coverage report
-        uses: codecov/codecov-action@v2.1.0
+        uses: codecov/codecov-action@81cd2dc8148241f03f5839d295e000b8f761e378
         with:
           file: build/logs/*.xml
         if: ${{ matrix.coverage }}

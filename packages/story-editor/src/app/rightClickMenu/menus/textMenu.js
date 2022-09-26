@@ -37,6 +37,8 @@ import {
   usePresetActions,
 } from '../hooks';
 import useLayerSelect from '../useLayerSelect';
+import useHeadingSelect from '../hooks/useHeadingSelect';
+import { LayerLock, LayerName, LayerUngroup } from '../items';
 import { useStory } from '../..';
 import useRightClickMenu from '../useRightClickMenu';
 import {
@@ -64,6 +66,7 @@ function TextMenu({ parentMenuRef }) {
   const { handleAddColorPreset, handleAddTextPreset } = usePresetActions();
 
   const subMenuRef = useRef();
+  const headingSubMenuRef = useRef();
   const { menuPosition, onCloseMenu } = useRightClickMenu();
   const layerSelectProps = useLayerSelect({
     menuPosition,
@@ -72,6 +75,18 @@ function TextMenu({ parentMenuRef }) {
 
   const { closeSubMenu, isSubMenuOpen, subMenuItems, ...subMenuTriggerProps } =
     layerSelectProps || {};
+
+  const headingSelectProps = useHeadingSelect({
+    menuPosition,
+    isMenuOpen: true,
+  });
+
+  const {
+    closeHeadingSubMenu,
+    isHeadingSubMenuOpen,
+    headingSubMenuItems,
+    ...headingSubMenuTriggerProps
+  } = headingSelectProps || {};
 
   return (
     <>
@@ -102,6 +117,41 @@ function TextMenu({ parentMenuRef }) {
               parentMenuRef={parentMenuRef}
             >
               {subMenuItems.map(({ key, ...menuItemProps }) => (
+                <ContextMenuComponents.MenuItem key={key} {...menuItemProps} />
+              ))}
+            </ContextMenu>
+          </SubMenuContainer>
+          <ContextMenuComponents.MenuSeparator />
+        </>
+      )}
+
+      {headingSelectProps && (
+        <>
+          <ContextMenuComponents.SubMenuTrigger
+            closeSubMenu={closeHeadingSubMenu}
+            parentMenuRef={parentMenuRef}
+            subMenuRef={headingSubMenuRef}
+            isSubMenuOpen={isHeadingSubMenuOpen}
+            {...headingSubMenuTriggerProps}
+          />
+          <SubMenuContainer
+            ref={headingSubMenuRef}
+            position={{
+              x:
+                (parentMenuRef.current.firstChild?.offsetWidth ||
+                  DEFAULT_DISPLACEMENT) + 2,
+              y: 40,
+            }}
+          >
+            <ContextMenu
+              onDismiss={onCloseMenu}
+              isOpen={isHeadingSubMenuOpen}
+              onCloseSubMenu={closeHeadingSubMenu}
+              aria-label={RIGHT_CLICK_MENU_LABELS.HEADING_LEVEL}
+              isSubMenu
+              parentMenuRef={parentMenuRef}
+            >
+              {headingSubMenuItems.map(({ key, ...menuItemProps }) => (
                 <ContextMenuComponents.MenuItem key={key} {...menuItemProps} />
               ))}
             </ContextMenu>
@@ -154,6 +204,10 @@ function TextMenu({ parentMenuRef }) {
           {RIGHT_CLICK_MENU_SHORTCUTS.BRING_TO_FRONT.display}
         </ContextMenuComponents.MenuShortcut>
       </ContextMenuComponents.MenuButton>
+
+      <LayerName />
+      <LayerLock />
+      <LayerUngroup />
 
       <ContextMenuComponents.MenuSeparator />
 

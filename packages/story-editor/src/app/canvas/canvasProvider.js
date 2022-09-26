@@ -25,8 +25,11 @@ import {
   useRef,
   useState,
 } from '@googleforcreators/react';
-import SAT from 'sat';
 import { UnitsProvider } from '@googleforcreators/units';
+import {
+  LOCAL_STORAGE_PREFIX,
+  localStore,
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -36,7 +39,6 @@ import { useStory } from '../story';
 
 import useCanvasCopyPaste from './useCanvasCopyPaste';
 import useEditingElement from './useEditingElement';
-import createPolygon from './utils/createPolygon';
 
 import Context from './context';
 import { RECT_OBSERVATION_KEY } from './constants';
@@ -55,8 +57,19 @@ function CanvasProvider({ children }) {
   const [eyedropperPixelData, setEyedropperPixelData] = useState(null);
   const [isEyedropperActive, setIsEyedropperActive] = useState(null);
   const [eyedropperCallback, setEyedropperCallback] = useState(null);
-  const [pageCanvasData, setPageCanvasData] = useState(null);
-  const [pageCanvasPromise, setPageCanvasPromise] = useState(null);
+  const [renamableLayer, setRenamableLayer] = useState(null);
+  const [floatingMenuPosition, setFloatingMenuPosition] = useState(() => {
+    const local = localStore.getItemByKey(
+      LOCAL_STORAGE_PREFIX.ELEMENT_TOOLBAR_SETTINGS
+    );
+    return local?.position;
+  });
+  const [displayFloatingMenu, setDisplayFloatingMenu] = useState(() => {
+    const local = localStore.getItemByKey(
+      LOCAL_STORAGE_PREFIX.ELEMENT_TOOLBAR_SETTINGS
+    );
+    return local?.isDisplayed;
+  });
 
   // IntersectionObserver tracks clientRects which is what we need here.
   // different from use case of useIntersectionEffect because this is extensible
@@ -96,7 +109,6 @@ function CanvasProvider({ children }) {
   } = useEditingElement();
 
   const {
-    elements,
     backgroundElementId,
     selectedElementIds,
     toggleElementInSelection,
@@ -108,7 +120,6 @@ function CanvasProvider({ children }) {
     }) => {
       const elements = currentPage?.elements || [];
       return {
-        elements,
         backgroundElementId: elements[0]?.id,
         selectedElementIds,
         toggleElementInSelection,
@@ -131,9 +142,12 @@ function CanvasProvider({ children }) {
       }
       lastSelectedElementId.current = elId;
       if (evt.shiftKey) {
-        toggleElementInSelection({ elementId: elId });
+        toggleElementInSelection({ elementId: elId, withLinked: !evt.altKey });
       } else {
-        setSelectedElementsById({ elementIds: [elId] });
+        setSelectedElementsById({
+          elementIds: [elId],
+          withLinked: !evt.altKey,
+        });
       }
       evt.currentTarget.focus({ preventScroll: true });
       if (backgroundElementId !== elId) {
@@ -159,21 +173,6 @@ function CanvasProvider({ children }) {
       toggleElementInSelection,
       setSelectedElementsById,
     ]
-  );
-
-  const selectIntersection = useCallback(
-    ({ x: lx, y: ly, width: lw, height: lh }) => {
-      const lassoP = createPolygon(0, lx, ly, lw, lh);
-      const newSelectedElementIds = elements
-        .filter(({ isBackground }) => !isBackground)
-        .map(({ id, rotationAngle, x, y, width, height }) => {
-          const elementP = createPolygon(rotationAngle, x, y, width, height);
-          return SAT.testPolygonPolygon(lassoP, elementP) ? id : null;
-        })
-        .filter((id) => id);
-      setSelectedElementsById({ elementIds: newSelectedElementIds });
-    },
-    [elements, setSelectedElementsById]
   );
 
   // Reset editing mode when selection changes.
@@ -215,11 +214,12 @@ function CanvasProvider({ children }) {
         eyedropperCallback,
         eyedropperImg,
         eyedropperPixelData,
-        pageCanvasData,
-        pageCanvasPromise,
         boundingBoxes,
         clientRectObserver,
         onMoveableMount,
+        renamableLayer,
+        floatingMenuPosition,
+        displayFloatingMenu,
       },
       actions: {
         setPageContainer,
@@ -230,7 +230,6 @@ function CanvasProvider({ children }) {
         setEditingElementWithState,
         clearEditing,
         handleSelectElement,
-        selectIntersection,
         setDisplayLinkGuidelines,
         setPageAttachmentContainer,
         setCanvasContainer,
@@ -239,9 +238,10 @@ function CanvasProvider({ children }) {
         setEyedropperCallback,
         setEyedropperImg,
         setEyedropperPixelData,
-        setPageCanvasData,
-        setPageCanvasPromise,
         setMoveableMount,
+        setRenamableLayer,
+        setFloatingMenuPosition,
+        setDisplayFloatingMenu,
       },
     }),
     [
@@ -259,19 +259,20 @@ function CanvasProvider({ children }) {
       eyedropperCallback,
       eyedropperImg,
       eyedropperPixelData,
-      pageCanvasData,
-      pageCanvasPromise,
       boundingBoxes,
       clientRectObserver,
+      renamableLayer,
       getNodeForElement,
+      floatingMenuPosition,
+      displayFloatingMenu,
       setNodeForElement,
       setEditingElementWithoutState,
       setEditingElementWithState,
       clearEditing,
       handleSelectElement,
-      selectIntersection,
       onMoveableMount,
       setMoveableMount,
+      setRenamableLayer,
     ]
   );
   return (

@@ -29,7 +29,6 @@ import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import { __ } from '@googleforcreators/i18n';
 import styled from 'styled-components';
-import { Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
 import {
   BACKGROUND_ANIMATION_EFFECTS,
   BG_MAX_SCALE,
@@ -46,6 +45,9 @@ import { progress } from '@googleforcreators/units';
  * Internal dependencies
  */
 import StoryPropTypes, { AnimationPropType } from '../../../../types';
+import { useStory } from '../../../../app';
+import { DESIGN_COPY } from '../../../checklist';
+import Warning from '../warning';
 import { Row } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { states, styles, useHighlights } from '../../../../app/highlights';
@@ -56,10 +58,6 @@ const ANIMATION_PROPERTY = 'animation';
 
 const StyledRow = styled(Row)`
   margin-bottom: -1px;
-`;
-
-const Note = styled(Text)`
-  color: ${({ theme }) => theme.colors.fg.secondary};
 `;
 
 const GroupWrapper = styled.div`
@@ -83,6 +81,9 @@ function AnimationPanel({
   pushUpdateForObject,
   updateAnimationState,
 }) {
+  const isFirstPage = useStory(
+    ({ state: { currentPageNumber } }) => currentPageNumber === 1
+  );
   const playUpdatedAnimation = useRef(false);
 
   const { highlight, resetHighlight } = useHighlights((state) => ({
@@ -233,18 +234,7 @@ function AnimationPanel({
   }, [selectedElements]);
 
   const selectedEffectTitle = getEffectName(updatedAnimations[0]?.type);
-  return selectedElements.length > 1 ? (
-    <SimplePanel name="animation" title={__('Animation', 'web-stories')}>
-      <Row>
-        <Note
-          forwardedAs="span"
-          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-        >
-          {__('Group animation support coming soon.', 'web-stories')}
-        </Note>
-      </Row>
-    </SimplePanel>
-  ) : (
+  return selectedElements.length > 1 ? null : (
     <SimplePanel
       name="animation"
       title={__('Animation', 'web-stories')}
@@ -267,6 +257,7 @@ function AnimationPanel({
             direction={getEffectDirection(updatedAnimations[0])}
             selectedEffectType={updatedAnimations[0]?.type}
             selectButtonStylesOverride={highlight?.focus && styles.OUTLINE}
+            disabled={isFirstPage}
           />
         </StyledRow>
         {updatedAnimations[0] && (
@@ -274,9 +265,13 @@ function AnimationPanel({
             animation={updatedAnimations[0]}
             onChange={handlePanelChange}
             disabledTypeOptionsMap={disabledTypeOptionsMap}
+            disabled={isFirstPage}
           />
         )}
       </GroupWrapper>
+      {isFirstPage && (
+        <Warning message={DESIGN_COPY.firstPageAnimation.animationPanel} />
+      )}
     </SimplePanel>
   );
 }

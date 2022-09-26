@@ -18,10 +18,13 @@
  */
 import { fireEvent, screen } from '@testing-library/react';
 import { axe } from 'jest-axe';
+import { renderWithTheme } from '@googleforcreators/test-utils';
+
 /**
  * Internal dependencies
  */
-import renderWithTheme from '../../../testUtils/renderWithTheme';
+import { StoryContext } from '../../../app/story';
+import { CheckpointContext } from '../../checklist';
 import Header from '../header';
 
 describe('publishModal/header', () => {
@@ -32,46 +35,78 @@ describe('publishModal/header', () => {
     jest.clearAllMocks();
   });
 
-  it('should have no accessibility issues', async () => {
-    const { container } = renderWithTheme(
-      <Header
-        onClose={mockOnClose}
-        onPublish={mockOnPublish}
-        publishButtonCopy="Publish"
-      />
+  const view = (args) => {
+    const { storyArgs = {}, capabilitiesArgs = {} } = args || {};
+    return renderWithTheme(
+      <StoryContext.Provider
+        value={{
+          state: {
+            story: {
+              story: { status: 'draft', ...storyArgs },
+            },
+            capabilities: { publish: true, ...capabilitiesArgs },
+            meta: { isSaving: false },
+          },
+        }}
+      >
+        <CheckpointContext.Provider
+          value={{
+            state: {
+              hasHighPriorityIssues: true,
+              checkpoint: 'all',
+            },
+          }}
+        >
+          <Header
+            onClose={mockOnClose}
+            onPublish={mockOnPublish}
+            hasFutureDate={false}
+          />
+        </CheckpointContext.Provider>
+      </StoryContext.Provider>
     );
+  };
+
+  it('should have no accessibility issues', async () => {
+    const { container } = view();
 
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });
 
   it('should call onClose when close button is clicked', () => {
-    renderWithTheme(
-      <Header
-        onClose={mockOnClose}
-        onPublish={mockOnPublish}
-        publishButtonCopy="Publish"
-      />
-    );
+    view();
 
     const closeButton = screen.getByLabelText('Close');
     fireEvent.click(closeButton);
 
-    expect(mockOnClose).toHaveBeenCalledTimes(1);
+    expect(mockOnClose).toHaveBeenCalledOnce();
   });
 
   it('should call onPublish when publish button is clicked', () => {
-    renderWithTheme(
-      <Header
-        onClose={mockOnClose}
-        onPublish={mockOnPublish}
-        publishButtonCopy="Publish"
-      />
-    );
+    view();
 
     const publishButton = screen.getByText('Publish');
     fireEvent.click(publishButton);
 
-    expect(mockOnPublish).toHaveBeenCalledTimes(1);
+    expect(mockOnPublish).toHaveBeenCalledOnce();
+  });
+
+  it('should show submit for review when capability of publish is false', () => {
+    view({ capabilitiesArgs: { publish: false } });
+
+    const reviewButton = screen.getByText('Submit for review');
+    fireEvent.click(reviewButton);
+
+    expect(mockOnPublish).toHaveBeenCalledOnce();
+  });
+
+  it('should show tooltip in button when priority issues present', () => {
+    view();
+
+    const publishButton = screen.getByText('Publish');
+    fireEvent.focus(publishButton);
+
+    expect('Make updates before publishing to improve').toBeTruthy();
   });
 });

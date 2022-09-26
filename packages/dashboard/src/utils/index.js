@@ -22,3 +22,4 @@ export {
 } from './usePagePreviewSize';
 export { default as useStoryView } from './useStoryView';
 export { default as useTemplateView } from './useTemplateView';
+export { noop } from './noop';

@@ -69,6 +69,11 @@ abstract class Migration_Meta_To_Term extends Migrate_Base {
 		);
 
 		if ( \is_array( $post_ids ) && ! empty( $post_ids ) ) {
+			/**
+			 * Post ID.
+			 *
+			 * @var int|string $post_id
+			 */
 			foreach ( $post_ids as $post_id ) {
 				wp_set_object_terms( (int) $post_id, $this->get_term_name(), $this->media_source_taxonomy->get_taxonomy_slug() );
 			}

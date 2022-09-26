@@ -17,21 +17,38 @@
 /**
  * External dependencies
  */
-import { Icons } from '@googleforcreators/design-system';
-import { __ } from '@googleforcreators/i18n';
+import styled from 'styled-components';
+import { trackEvent } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies
  */
-import { IconButton } from './shared';
+import { useStory } from '../../../app';
+import LoopPanelContent from '../../panels/shared/media/loopPanelContent';
+import { useProperties } from './shared';
+
+const StyledLoopContent = styled(LoopPanelContent)`
+  gap: 8px;
+`;
 
 function Loop() {
+  const { loop } = useProperties(['loop']);
+  const updateSelectedElements = useStory(
+    (state) => state.actions.updateSelectedElements
+  );
+
+  const handleChange = () => {
+    trackEvent('floating_menu', {
+      name: 'set_loop',
+    });
+
+    updateSelectedElements({
+      properties: ({ loop: oldLoop }) => ({ loop: !oldLoop }),
+    });
+  };
+
   return (
-    <IconButton
-      Icon={Icons.ArrowLeftright}
-      title={__('Loop video', 'web-stories')}
-      onClick={() => {}}
-    />
+    <StyledLoopContent tabIndex={-1} loop={loop} onChange={handleChange} />
   );
 }
 

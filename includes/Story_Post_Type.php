@@ -33,6 +33,8 @@ use WP_Post;
 
 /**
  * Class Story_Post_Type.
+ *
+ * @phpstan-import-type PostTypeArgs from \Google\Web_Stories\Post_Type_Base
  */
 class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta {
 
@@ -55,6 +57,11 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 	 * Publisher logo meta key.
 	 */
 	public const PUBLISHER_LOGO_META_KEY = 'web_stories_publisher_logo';
+
+	/**
+	 * Poster meta key.
+	 */
+	public const POSTER_META_KEY = 'web_stories_poster';
 
 	/**
 	 * Settings instance.
@@ -87,13 +94,10 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 		$this->register_post_type();
 		$this->register_meta();
 
-		add_filter( '_wp_post_revision_fields', [ $this, 'filter_revision_fields' ], 10, 2 );
 		add_filter( 'wp_insert_post_data', [ $this, 'change_default_title' ] );
+		add_filter( 'wp_insert_post_empty_content', [ $this, 'filter_empty_content' ], 10, 2 );
 		add_filter( 'bulk_post_updated_messages', [ $this, 'bulk_post_updated_messages' ], 10, 2 );
 		add_action( 'clean_post_cache', [ $this, 'clear_user_posts_count' ], 10, 2 );
-
-		$post_type = $this->get_slug();
-		add_action( "wp_{$post_type}_revisions_to_keep", [ $this, 'revisions_to_keep' ] );
 	}
 
 	/**
@@ -123,7 +127,9 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 	 *
 	 * @since 1.12.0
 	 *
-	 * @return array
+	 * @return array<string, mixed> Post type args.
+	 *
+	 * @phpstan-return PostTypeArgs
 	 */
 	protected function get_args(): array {
 		return [
@@ -209,6 +215,41 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 				'single'            => true,
 			]
 		);
+
+		register_post_meta(
+			$this->get_slug(),
+			self::POSTER_META_KEY,
+			[
+				'type'         => 'object',
+				'description'  => __( 'Poster object', 'web-stories' ),
+				'show_in_rest' => [
+					'schema' => [
+						'type'       => 'object',
+						'properties' => [
+							'needsProxy' => [
+								'description' => __( 'If poster needs to be proxied', 'web-stories' ),
+								'type'        => 'boolean',
+							],
+							'height'     => [
+								'type'        => 'integer',
+								'description' => __( 'Poster height', 'web-stories' ),
+							],
+							'url'        => [
+								'description' => __( 'Poster URL.', 'web-stories' ),
+								'type'        => 'string',
+								'format'      => 'uri',
+							],
+							'width'      => [
+								'description' => __( 'Poster width.', 'web-stories' ),
+								'type'        => 'integer',
+							],
+						],
+					],
+				],
+				'default'      => [],
+				'single'       => true,
+			]
+		);
 	}
 
 	/**
@@ -220,27 +261,6 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 	 */
 	protected function get_post_type_icon(): string {
 		return 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xMCAyMGM1LjUyMyAwIDEwLTQuNDc3IDEwLTEwUzE1LjUyMyAwIDEwIDAgMCA0LjQ3NyAwIDEwczQuNDc3IDEwIDEwIDEwek01LjUgNmExIDEgMCAwMTEtMUgxMWExIDEgMCAwMTEgMXY4YTEgMSAwIDAxLTEgMUg2LjVhMSAxIDAgMDEtMS0xVjZ6TTEzIDZhMSAxIDAgMDExIDF2NmExIDEgMCAwMS0xIDFWNnptMi43NSAxLjc1QS43NS43NSAwIDAwMTUgN3Y2YS43NS43NSAwIDAwLjc1LS43NXYtNC41eiIgZmlsbD0iI2EwYTVhYSIvPjwvc3ZnPg==';
-	}
-
-	/**
-	 * Filters the revision fields to ensure that JSON representation gets saved to Story revisions.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param array|mixed $fields Array of allowed revision fields.
-	 * @param array       $story  Story post array.
-	 * @return array|mixed Array of allowed fields.
-	 */
-	public function filter_revision_fields( $fields, $story ) {
-		if ( ! \is_array( $fields ) ) {
-			return $fields;
-		}
-
-		if ( $this->get_slug() === $story['post_type'] ) {
-			$fields['post_content_filtered'] = __( 'Story data', 'web-stories' );
-		}
-
-		return $fields;
 	}
 
 	/**
@@ -295,6 +315,27 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 	}
 
 	/**
+	 * Filters whether the post should be considered "empty".
+	 *
+	 * Takes into account post_content_filtered for stories.
+	 *
+	 * @since 1.25.1
+	 *
+	 * @param bool|mixed $maybe_empty Whether the post should be considered "empty".
+	 * @param array      $data        Array of post data.
+	 * @return bool Whether the post should be considered "empty".
+	 *
+	 * @phpstan-param array{post_type: string, post_content_filtered: string} $data
+	 */
+	public function filter_empty_content( $maybe_empty, array $data ): bool {
+		if ( $this->get_slug() === $data['post_type'] ) {
+			return $maybe_empty && ! $data['post_content_filtered'];
+		}
+
+		return (bool) $maybe_empty;
+	}
+
+	/**
 	 * Invalid cache.
 	 *
 	 * @since 1.10.0
@@ -320,7 +361,6 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 	 * @return bool|string Whether the post type should have an archive, or archive slug.
 	 */
 	public function get_has_archive() {
-
 		$archive_page_option    = $this->settings->get_setting( $this->settings::SETTING_NAME_ARCHIVE );
 		$custom_archive_page_id = (int) $this->settings->get_setting( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID );
 		$has_archive            = true;
@@ -339,18 +379,5 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 		}
 
 		return $has_archive;
-	}
-
-	/**
-	 * Force WordPress to only keep 10 revisions for the web stories post type.
-	 *
-	 * @since 1.16.0
-	 *
-	 * @param int $num Number of revisions to store.
-	 * @return int  Number of revisions to store.
-	 */
-	public function revisions_to_keep( $num ): int {
-		$num = (int) $num;
-		return ( $num >= 0 && $num < 10 ) ? $num : 10;
 	}
 }

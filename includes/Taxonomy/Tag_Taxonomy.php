@@ -32,6 +32,8 @@ use Google\Web_Stories\Story_Post_Type;
 
 /**
  * Tag_Taxonomy class.
+ *
+ * @phpstan-import-type TaxonomyArgs from \Google\Web_Stories\Taxonomy\Taxonomy_Base
  */
 class Tag_Taxonomy extends Taxonomy_Base implements HasRequirements {
 	/**
@@ -68,7 +70,9 @@ class Tag_Taxonomy extends Taxonomy_Base implements HasRequirements {
 	 *
 	 * @since 1.12.0
 	 *
-	 * @return array
+	 * @return array<string,mixed> Taxonomy args.
+	 *
+	 * @phpstan-return TaxonomyArgs
 	 */
 	protected function taxonomy_args(): array {
 		$labels = [

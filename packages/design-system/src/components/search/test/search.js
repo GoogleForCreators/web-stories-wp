@@ -251,7 +251,7 @@ describe('Search <Search />', () => {
       value: 'tapir',
     });
 
-    expect(onClickMock).toHaveBeenCalledTimes(1);
+    expect(onClickMock).toHaveBeenCalledOnce();
   });
 
   it('should trigger onMenuItemClick from menu when input has value and menu can be seen', () => {
@@ -290,7 +290,7 @@ describe('Search <Search />', () => {
       basicDropDownOptions[2]
     );
 
-    expect(onClickMock).toHaveBeenCalledTimes(1);
+    expect(onClickMock).toHaveBeenCalledOnce();
   });
 });
 

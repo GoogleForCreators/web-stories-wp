@@ -51,8 +51,8 @@ describe('Inline style override', () => {
     describe('CUJ: Creator Can Style Text: Apply Uppercase', () => {
       it('should have correct formatting when pressing uppercase toggle, then inserting text', async () => {
         // Verify that uppercase is untoggled in design panel
-        const { uppercase } =
-          data.fixture.editor.inspector.designPanel.textStyle;
+        await data.fixture.events.click(data.fixture.editor.sidebar.designTab);
+        const { uppercase } = data.fixture.editor.sidebar.designPanel.textStyle;
         expect(uppercase.checked).toBe(false);
 
         // Toggle uppercase by button
@@ -70,11 +70,11 @@ describe('Inline style override', () => {
         // Expect correct result
         const actual = getTextContent();
         const expected =
-          'Lo<span style="text-transform: uppercase">foo</span>rem ipsum dolor sit amet, consectetur adipiscing elit.';
+          'Fi<span style="text-transform: uppercase">foo</span>ll in some text';
         expect(actual).toBe(expected);
 
         await data.fixture.snapshot(
-          '"Lofoorem ipsum dolor sit amet, ..." in mixed formatting'
+          '"Fifooll in some text" in mixed formatting'
         );
       });
     });
@@ -82,7 +82,8 @@ describe('Inline style override', () => {
     describe('CUJ: Creator Can Style Text: Apply B', () => {
       it('should have correct formatting when pressing mod+b for bold, then inserting text', async () => {
         // Verify that bold is untoggled in design panel
-        const { bold } = data.fixture.editor.inspector.designPanel.textStyle;
+        await data.fixture.events.click(data.fixture.editor.sidebar.designTab);
+        const { bold } = data.fixture.editor.sidebar.designPanel.textStyle;
         expect(bold.checked).toBe(false);
 
         // Toggle bold by keyboard command
@@ -100,17 +101,18 @@ describe('Inline style override', () => {
         // Expect correct result
         const actual = getTextContent();
         const expected =
-          'Lo<span style="font-weight: 700">foo</span>rem ipsum dolor sit amet, consectetur adipiscing elit.';
+          'Fi<span style="font-weight: 700">foo</span>ll in some text';
         expect(actual).toBe(expected);
 
         await data.fixture.snapshot(
-          '"Lofoorem ipsum dolor sit amet, ..." in mixed formatting'
+          '"Fifooll in some text" in mixed formatting'
         );
       });
 
       it('should have correct formatting when pressing bold toggle, then inserting text', async () => {
         // Verify that bold is untoggled in design panel
-        const { bold } = data.fixture.editor.inspector.designPanel.textStyle;
+        await data.fixture.events.click(data.fixture.editor.sidebar.designTab);
+        const { bold } = data.fixture.editor.sidebar.designPanel.textStyle;
         expect(bold.checked).toBe(false);
 
         // Toggle bold by button
@@ -128,11 +130,11 @@ describe('Inline style override', () => {
         // Expect correct result
         const actual = getTextContent();
         const expected =
-          'Lo<span style="font-weight: 700">foo</span>rem ipsum dolor sit amet, consectetur adipiscing elit.';
+          'Fi<span style="font-weight: 700">foo</span>ll in some text';
         expect(actual).toBe(expected);
 
         await data.fixture.snapshot(
-          '"Lofoorem ipsum dolor sit amet, ..." in mixed formatting'
+          '"Fifooll in some text" in mixed formatting'
         );
       });
     });
@@ -140,8 +142,9 @@ describe('Inline style override', () => {
     describe('CUJ: Creator Can Style Text: Apply U, Apply I', () => {
       it('should have correct formatting when pressing underline toggle, then mod+i, then inserting text', async () => {
         // Verify that italic and underline are untoggled in design panel
+        await data.fixture.events.click(data.fixture.editor.sidebar.designTab);
         const { italic, underline } =
-          data.fixture.editor.inspector.designPanel.textStyle;
+          data.fixture.editor.sidebar.designPanel.textStyle;
         expect(italic.checked).toBe(false);
         expect(underline.checked).toBe(false);
 
@@ -162,11 +165,11 @@ describe('Inline style override', () => {
         // Expect correct result
         const actual = getTextContent();
         const expected =
-          'Lo<span style="font-style: italic; text-decoration: underline">foo</span>rem ipsum dolor sit amet, consectetur adipiscing elit.';
+          'Fi<span style="font-style: italic; text-decoration: underline">foo</span>ll in some text';
         expect(actual).toBe(expected);
 
         await data.fixture.snapshot(
-          '"Lofoorem ipsum dolor sit amet..." in mixed formatting'
+          '"Fifooll in some text" in mixed formatting'
         );
       });
 
@@ -176,8 +179,9 @@ describe('Inline style override', () => {
        **/
       xit('should have correct formatting when pressing mod+i, then underline toggle, then inserting text', async () => {
         // Verify that italic and underline are untoggled in design panel
+        await data.fixture.events.click(data.fixture.editor.sidebar.designTab);
         const { italic, underline } =
-          data.fixture.editor.inspector.designPanel.textStyle;
+          data.fixture.editor.sidebar.designPanel.textStyle;
         expect(italic.checked).toBe(false);
         expect(underline.checked).toBe(false);
 
@@ -210,8 +214,9 @@ describe('Inline style override', () => {
     describe('CUJ: Creator Can Style Text: Select weight', () => {
       it('should have correct formatting when selecting font weight, then inserting text', async () => {
         // Verify that bold is untoggled in design panel
+        await data.fixture.events.click(data.fixture.editor.sidebar.designTab);
         const { fontWeight } =
-          data.fixture.editor.inspector.designPanel.textStyle;
+          data.fixture.editor.sidebar.designPanel.textStyle;
         expect(fontWeight.value).toBe('Regular');
 
         // Open dropdown and select "Black"
@@ -235,11 +240,11 @@ describe('Inline style override', () => {
         // Expect correct result
         const actual = getTextContent();
         const expected =
-          'Lo<span style="font-weight: 900">foo</span>rem ipsum dolor sit amet, consectetur adipiscing elit.';
+          'Fi<span style="font-weight: 900">foo</span>ll in some text';
         expect(actual).toBe(expected);
 
         await data.fixture.snapshot(
-          '"Lofoorem ipsum dolor sit amet..." in mixed formatting'
+          '"Fifooll in some text" in mixed formatting'
         );
       });
     });
@@ -253,8 +258,9 @@ describe('Inline style override', () => {
       // Place cursor at start and then move to after second character
       await setSelection(2, 2);
 
+      await data.fixture.events.click(data.fixture.editor.sidebar.designTab);
       const { italic, bold } =
-        data.fixture.editor.inspector.designPanel.textStyle;
+        data.fixture.editor.sidebar.designPanel.textStyle;
 
       // Verify that italic is toggled, bold is not
       expect(italic.checked).toBe(true);
@@ -278,7 +284,7 @@ describe('Inline style override', () => {
       // Expect correct result
       const actual = getTextContent();
       const expected =
-        '<span style="font-style: italic">Lo</span><span style="font-weight: 700">foo</span><span style="font-style: italic">rem ipsum dolor sit amet, consectetur adipiscing elit.</span>';
+        '<span style="font-style: italic">Fi</span><span style="font-weight: 700">foo</span><span style="font-style: italic">ll in some text</span>';
       expect(actual).toBe(expected);
 
       await data.fixture.snapshot('"Fifooll in some text" in mixed formatting');
@@ -295,16 +301,19 @@ describe('Inline style override', () => {
     // Make just this character italic
     await data.fixture.events.keyboard.shortcut('mod+i');
 
-    const { italic, bold } =
-      data.fixture.editor.inspector.designPanel.textStyle;
+    await data.fixture.events.click(data.fixture.editor.sidebar.designTab);
+    const { italic, bold } = data.fixture.editor.sidebar.designPanel.textStyle;
 
     // Verify that both italic and bold are toggled
     expect(italic.checked).toBe(true);
     expect(bold.checked).toBe(true);
 
     // Delete the italic character
+    await data.fixture.events.focus(
+      data.fixture.editor.canvas.framesLayer.frames[1].node
+    );
+    await setSelection(1, 2);
     await data.fixture.events.keyboard.press('Delete');
-
     // Verify that bold is still on, italic is off
     expect(bold.checked).toBe(true);
     expect(italic.checked).toBe(false);
@@ -317,10 +326,9 @@ describe('Inline style override', () => {
 
     // Expect correct result
     const actual = getTextContent();
-    const expected =
-      '<span style="font-weight: 700">Lurem ipsum dolor sit amet, consectetur adipiscing elit.</span>';
+    const expected = '<span style="font-weight: 700">Full in some text</span>';
     expect(actual).toBe(expected);
-    await data.fixture.snapshot('"Lurem ipsum dolor sit amet, ..." in bold');
+    await data.fixture.snapshot('"Full in some text" in bold');
   });
 
   it('should keep formatting when all text is replaced', async () => {

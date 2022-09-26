@@ -21,27 +21,32 @@ import PropTypes from 'prop-types';
 import { memo, useRef, useState } from '@googleforcreators/react';
 import styled, { css } from 'styled-components';
 import { generatePatternStyles } from '@googleforcreators/patterns';
-import { useUnits } from '@googleforcreators/units';
+import { calcRotatedResizeOffset, useUnits } from '@googleforcreators/units';
 import { StoryAnimation } from '@googleforcreators/animation';
 import { useTransformHandler } from '@googleforcreators/transform';
-
-/**
- * Internal dependencies
- */
-import { getDefinitionForType } from '../../elements';
+import {
+  getDefinitionForType,
+  ELEMENT_TYPES,
+} from '@googleforcreators/elements';
 import {
   elementWithPosition,
   elementWithRotation,
   elementWithSize,
-} from '../../elements/shared';
-import WithMask from '../../masks/display';
-import StoryPropTypes from '../../types';
-import useColorTransformHandler from '../../elements/shared/useColorTransformHandler';
+  useColorTransformHandler,
+} from '@googleforcreators/element-library';
 import {
-  getBorderPositionCSS,
+  canSupportMultiBorder,
+  DisplayWithMask as WithMask,
   getResponsiveBorder,
-  shouldDisplayBorder,
-} from '../../utils/elementBorder';
+} from '@googleforcreators/masks';
+
+/**
+ * Internal dependencies
+ */
+import StoryPropTypes from '../../types';
+import useCORSProxy from '../../utils/useCORSProxy';
+import { useLocalMedia, useFont } from '../../app';
+import renderResourcePlaceholder from './renderResourcePlaceholder';
 
 // Using attributes to avoid creation of hundreds of classes by styled components for previewMode.
 const Wrapper = styled.div.attrs(
@@ -101,11 +106,21 @@ AnimationWrapper.propTypes = {
   id: PropTypes.string,
 };
 
-function DisplayElement({ element, previewMode, isAnimatable = false }) {
-  const { getBox, dataToEditorX } = useUnits((state) => ({
+function DisplayElement({
+  element,
+  previewMode,
+  isAnimatable = false,
+  siblingCount = 0,
+}) {
+  const { getBox, getBoxWithBorder, dataToEditorX } = useUnits((state) => ({
     getBox: state.actions.getBox,
+    getBoxWithBorder: state.actions.getBoxWithBorder,
     dataToEditorX: state.actions.dataToEditorX,
   }));
+  const { getProxiedUrl } = useCORSProxy();
+  const {
+    actions: { maybeEnqueueFontStyle },
+  } = useFont();
 
   const [replacement, setReplacement] = useState(null);
 
@@ -117,9 +132,20 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
     type,
     isBackground,
     overlay,
-    border = {},
+    border,
     flip,
+    rotationAngle,
   } = element;
+
+  const { isCurrentResourceProcessing, isCurrentResourceUploading } =
+    useLocalMedia(({ state }) => {
+      return ELEMENT_TYPES.IMAGE === type
+        ? {
+            isCurrentResourceProcessing: state.isCurrentResourceProcessing,
+            isCurrentResourceUploading: state.isCurrentResourceUploading,
+          }
+        : {};
+    });
 
   const replacementElement = hasReplacement
     ? {
@@ -145,8 +171,11 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
 
   const wrapperRef = useRef(null);
 
+  // The element content will use box without border, the wrapper will use box with border.
   const box = getBox(element);
+  const boxWithBorder = getBoxWithBorder(element);
 
+  const { left = 0, right = 0, top = 0, bottom = 0 } = border || {};
   useTransformHandler(id, (transform) => {
     const target = wrapperRef.current;
     if (transform === null) {
@@ -154,12 +183,34 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
       target.style.width = '';
       target.style.height = '';
     } else {
-      const { translate, rotate, resize, dropTargets } = transform;
-      target.style.transform = `translate(${translate?.[0]}px, ${translate?.[1]}px) rotate(${rotate}deg)`;
+      const { translate = [0, 0], rotate, resize, dropTargets } = transform;
+
+      let dx = 0;
+      let dy = 0;
       if (resize && resize[0] !== 0 && resize[1] !== 0) {
         target.style.width = `${resize[0]}px`;
         target.style.height = `${resize[1]}px`;
+
+        // If we have border, we have to adjust the transformation since the border was considered by Moveable when
+        // creating the transformation values but the border is not considered in the width and height of the element.
+        // So we calculate a transformation assuming that the element was resized by the border and then deduct it from the
+        // applied transformation.
+        // We add canSupportMultiBorder check to ignore non-rectangular shapes since the border works differently for those.
+        if (canSupportMultiBorder(element)) {
+          const [_dx, _dy] = calcRotatedResizeOffset(
+            rotationAngle,
+            0,
+            left + right,
+            0,
+            top + bottom
+          );
+          dx = _dx;
+          dy = _dy;
+        }
       }
+      target.style.transform = `translate(${translate[0] - dx}px, ${
+        translate[1] - dy
+      }px) rotate(${rotate}deg)`;
       if (dropTargets?.hover !== undefined) {
         target.style.opacity = dropTargets.hover ? 0 : 1;
       }
@@ -188,27 +239,29 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
       data-element-id={id}
       isBackground={element.isBackground}
       previewMode={previewMode}
-      {...box}
+      {...(previewMode ? box : boxWithBorder)}
     >
       <AnimationWrapper id={id} isAnimatable={isAnimatable}>
         <WithMask
           element={element}
           fill
-          box={box}
           style={{
             opacity: typeof opacity !== 'undefined' ? opacity / 100 : null,
-            ...(shouldDisplayBorder(element)
-              ? getBorderPositionCSS({
-                  ...responsiveBorder,
-                  width: `${box.width}px`,
-                  height: `${box.height}px`,
-                })
-              : null),
           }}
           previewMode={previewMode}
           responsiveBorder={responsiveBorder}
         >
-          <Display element={element} previewMode={previewMode} box={box} />
+          <Display
+            element={element}
+            previewMode={previewMode}
+            box={box}
+            getProxiedUrl={getProxiedUrl}
+            isCurrentResourceProcessing={isCurrentResourceProcessing}
+            isCurrentResourceUploading={isCurrentResourceUploading}
+            maybeEnqueueFontStyle={maybeEnqueueFontStyle}
+            siblingCount={siblingCount}
+            renderResourcePlaceholder={renderResourcePlaceholder}
+          />
         </WithMask>
         {!previewMode && (
           <ReplacementContainer hasReplacement={hasReplacement}>
@@ -216,13 +269,19 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
               <WithMask
                 element={replacementElement}
                 fill
-                box={box}
                 style={{
                   opacity: opacity ? opacity / 100 : null,
                 }}
                 previewMode={previewMode}
               >
-                <Replacement element={replacementElement} box={box} />
+                <Replacement
+                  element={replacementElement}
+                  box={box}
+                  getProxiedUrl={getProxiedUrl}
+                  isCurrentResourceProcessing={isCurrentResourceProcessing}
+                  isCurrentResourceUploading={isCurrentResourceUploading}
+                  maybeEnqueueFontStyle={maybeEnqueueFontStyle}
+                />
               </WithMask>
             )}
           </ReplacementContainer>
@@ -241,6 +300,7 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
 DisplayElement.propTypes = {
   previewMode: PropTypes.bool,
   element: StoryPropTypes.element.isRequired,
+  siblingCount: PropTypes.number,
   isAnimatable: PropTypes.bool,
 };
 

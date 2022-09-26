@@ -18,12 +18,31 @@
  * External dependencies
  */
 import { waitFor, screen } from '@testing-library/react';
+import { renderWithTheme } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
  */
-import { renderWithTheme } from '../../../../../../testUtils';
+import {
+  useCanvas,
+  useCanvasBoundingBox,
+  useLocalMedia,
+} from '../../../../../../app';
 import PaginatedMediaGallery from '../paginatedMediaGallery';
+
+jest.mock('../../../../../../app/media');
+
+jest.mock('../../../../../../app/canvas', () => ({
+  ...jest.requireActual('../../../../../../app/canvas'),
+  useCanvas: jest.fn(),
+  useCanvasBoundingBox: jest.fn(),
+}));
+
+const mockCanvasContext = {
+  fullbleedContainer: {},
+  nodesById: {},
+  pageContainer: { getBoundingClientRect: () => ({ x: 0, y: 0 }) },
+};
 
 describe('paginatedMediaGallery', () => {
   const providerType = 'unsplash';
@@ -59,10 +78,25 @@ describe('paginatedMediaGallery', () => {
       width: 530,
     },
   ];
+  const mockUseCanvas = useCanvas;
+  const mockUseCanvasBoundingBox = useCanvasBoundingBox;
 
   beforeAll(() => {
     // https://stackoverflow.com/questions/53271193/typeerror-scrollintoview-is-not-a-function
     window.HTMLElement.prototype.scrollTo = () => {};
+  });
+
+  beforeEach(() => {
+    mockUseCanvas.mockReturnValue(mockCanvasContext);
+    mockUseCanvasBoundingBox.mockReturnValue({ x: 0, y: 0 });
+    useLocalMedia.mockReturnValue({
+      isCurrentResourceTrimming: jest.fn(),
+      isCurrentResourceMuting: jest.fn(),
+      isCurrentResourceTranscoding: jest.fn(),
+      isCurrentResourceProcessing: jest.fn(),
+      isCurrentResourceUploading: jest.fn(),
+      isNewResourceProcessing: jest.fn(),
+    });
   });
 
   it('should render attribution when media is present', () => {

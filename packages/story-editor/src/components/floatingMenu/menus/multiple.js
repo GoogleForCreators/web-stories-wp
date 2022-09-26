@@ -22,7 +22,7 @@ import { memo } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
-import { ElementAlignment, Dismiss, Separator } from '../elements';
+import { ElementAlignment, Dismiss, Separator, Settings } from '../elements';
 
 const FloatingMultipleMenu = memo(function FloatingMultipleMenu() {
   return (
@@ -31,7 +31,9 @@ const FloatingMultipleMenu = memo(function FloatingMultipleMenu() {
 
       <Separator />
 
-      <Dismiss />
+      <Settings />
+
+      <Dismiss isMultiple />
     </>
   );
 });

@@ -27,6 +27,12 @@ import {
 import { setAppElement } from '@googleforcreators/design-system';
 import { FixtureEvents } from '@googleforcreators/karma-fixture';
 import { DATA_VERSION } from '@googleforcreators/migration';
+import {
+  createPage,
+  TEXT_ELEMENT_DEFAULT_FONT,
+  registerElementType,
+} from '@googleforcreators/elements';
+import { elementTypes } from '@googleforcreators/element-library';
 
 /**
  * Internal dependencies
@@ -35,11 +41,10 @@ import StoryEditor from '../../storyEditor';
 import APIProvider from '../../app/api/apiProvider';
 import APIContext from '../../app/api/context';
 import Layout from '../../components/layout';
-import { createPage } from '../../elements';
-import { TEXT_ELEMENT_DEFAULT_FONT } from '../../app/font/defaultFonts';
 import formattedTemplatesArray from '../../dataUtils/formattedTemplatesArray';
 import { PRESET_TYPES } from '../../constants';
 import getMediaResponse from './db/getMediaResponse';
+import getProductsResponse, { sortStrings } from './db/getProductsResponse';
 import { Editor as EditorContainer } from './containers';
 import taxonomiesResponse from './db/getTaxonomiesResponse';
 import singleSavedTemplate from './db/singleSavedTemplate';
@@ -61,6 +66,7 @@ if ('true' === WEB_STORIES_CI) {
       error.stack = null;
       return error;
     },
+    asyncUtilTimeout: 5000,
   });
 }
 
@@ -92,14 +98,12 @@ export const FIXTURE_DEFAULT_CONFIG = {
   storyId: 1,
   api: {},
   allowedMimeTypes: {
+    audio: ['audio/mpeg', 'audio/aac', 'audio/wav', 'audio/ogg'],
     image: ['image/png', 'image/jpeg', 'image/jpg', 'image/gif', 'image/webp'],
+    caption: ['text/vtt'],
+    vector: ['image/svg+xml'],
     video: ['video/mp4', 'video/webm'],
   },
-  allowedFileTypes: ['png', 'jpeg', 'jpg', 'gif', 'mp4', 'webp', 'webm'],
-  allowedImageFileTypes: ['gif', 'jpe', 'jpeg', 'jpg', 'png'],
-  allowedImageMimeTypes: ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'],
-  allowedAudioFileTypes: ['mp3', 'aac', 'wav', 'ogg'],
-  allowedAudioMimeTypes: ['audio/mpeg', 'audio/aac', 'audio/wav', 'audio/ogg'],
   capabilities: {
     hasUploadMediaAction: true,
   },
@@ -217,6 +221,8 @@ export class Fixture {
         JSON.stringify({ isCollapsed: false })
       );
     });
+
+    elementTypes.forEach(registerElementType);
   }
 
   restore() {
@@ -331,7 +337,7 @@ export class Fixture {
               },
             },
           }}
-          inspectorTabs={{
+          sidebarTabs={{
             document: {
               title: 'Document',
               Pane: DocumentPane,
@@ -379,9 +385,7 @@ export class Fixture {
       const font = '12px "Google Sans"';
       const fonts = weights.map((weight) => `${weight} ${font}`);
       await Promise.all(
-        fonts.map((thisFont) => {
-          document.fonts.load(thisFont, '');
-        })
+        fonts.map((thisFont) => document.fonts.load(thisFont, ''))
       );
       fonts.forEach((thisFont) => {
         if (!document.fonts.check(thisFont, '')) {
@@ -675,16 +679,23 @@ class APIProviderFixture {
         []
       );
 
-      const getHotlinkInfo = useCallback(
-        () =>
-          asyncResponse({
-            ext: 'jpg',
-            mimeType: 'image/jpeg',
-            type: 'image',
-            fileName: 'example.jpg',
-          }),
-        []
-      );
+      const getHotlinkInfo = useCallback((link) => {
+        if (link.endsWith('mp3')) {
+          return asyncResponse({
+            ext: 'mp3',
+            mimeType: 'audio/mp3',
+            type: 'audio',
+            fileName: 'example.mp3',
+          });
+        }
+
+        return asyncResponse({
+          ext: 'jpg',
+          mimeType: 'image/jpeg',
+          type: 'image',
+          fileName: 'example.jpg',
+        });
+      }, []);
 
       const getProxyUrl = useCallback(
         () => 'http://localhost:9876/__static__/saturn.jpg',
@@ -710,11 +721,9 @@ class APIProviderFixture {
         () =>
           asyncResponse({
             id: 1,
-            meta: {
-              web_stories_tracking_optin: false,
-              web_stories_onboarding: {},
-              web_stories_media_optimization: true,
-            },
+            trackingOptin: false,
+            onboarding: {},
+            mediaOptimization: true,
           }),
         []
       );
@@ -723,11 +732,9 @@ class APIProviderFixture {
         () =>
           asyncResponse({
             id: 1,
-            meta: {
-              web_stories_tracking_optin: false,
-              web_stories_onboarding: {},
-              web_stories_media_optimization: true,
-            },
+            trackingOptin: false,
+            onboarding: {},
+            mediaOptimization: true,
           }),
         []
       );
@@ -1105,6 +1112,22 @@ class APIProviderFixture {
         return asyncResponse(fonts);
       }, []);
 
+      const getProducts = useCallback((search, page, orderby, order) => {
+        let products = getProductsResponse;
+        if (search) {
+          products = products.filter(({ productTitle }) =>
+            productTitle.toLowerCase().includes(search.toLowerCase())
+          );
+        }
+
+        // handling title sorting (asc, desc) only here
+        if (orderby === 'title') {
+          products = sortStrings(products, 'productTitle', order);
+        }
+
+        return { products, hasNextPage: false };
+      }, []);
+
       const state = {
         actions: {
           autoSaveById,
@@ -1129,6 +1152,7 @@ class APIProviderFixture {
           createTaxonomyTerm,
           getTaxonomies,
           getFonts,
+          getProducts,
           ...mocks,
         },
       };

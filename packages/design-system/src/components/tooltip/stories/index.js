@@ -31,7 +31,7 @@ import {
   BUTTON_TYPES,
   BUTTON_VARIANTS,
 } from '../../button';
-import { Tooltip, TOOLTIP_PLACEMENT } from '..';
+import { BaseTooltip as Tooltip, TOOLTIP_PLACEMENT } from '..';
 import { Text } from '../../typography';
 
 export default {

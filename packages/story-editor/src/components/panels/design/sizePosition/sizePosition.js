@@ -34,25 +34,24 @@ import {
   BUTTON_TYPES,
   BUTTON_SIZES,
   BUTTON_VARIANTS,
-  Tooltip,
 } from '@googleforcreators/design-system';
+import { getDefinitionForType } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
-import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
-import { getDefinitionForType } from '../../../../elements';
 import { SimplePanel } from '../../panel';
 import FlipControls from '../../shared/flipControls';
-import {
-  focusStyle,
-  getCommonValue,
-  inputContainerStyleOverride,
-  useCommonObjectValue,
-} from '../../shared';
+import { focusStyle, inputContainerStyleOverride } from '../../shared/styles';
+import { getCommonValue, useCommonObjectValue } from '../../shared';
 import useStory from '../../../../app/story/useStory';
+import {
+  MULTIPLE_VALUE,
+  MULTIPLE_DISPLAY_VALUE,
+  TRACKING_EVENTS,
+} from '../../../../constants';
 import usePerformanceTracking from '../../../../utils/usePerformanceTracking';
-import { TRACKING_EVENTS } from '../../../../constants/performanceTrackingEvents';
+import Tooltip from '../../../tooltip';
 import usePresubmitHandlers from './usePresubmitHandlers';
 import { getMultiSelectionMinMaxXY, isNum } from './utils';
 import { MIN_MAX, DEFAULT_FLIP } from './constants';
@@ -61,6 +60,10 @@ import RadiusControls from './radius';
 
 const StyledLockToggle = styled(LockToggle)`
   ${focusStyle};
+`;
+
+const stackableGroupStyleOverride = css`
+  max-width: none;
 `;
 
 function getStickerAspectRatio(element) {
@@ -398,7 +401,10 @@ function SizePositionPanel(props) {
           <OpacityControls {...props} />
         </Area>
         <Area area="c">
-          <RadiusControls {...props} />
+          <RadiusControls
+            stackableGroupStyleOverride={stackableGroupStyleOverride}
+            {...props}
+          />
         </Area>
       </Grid>
     </SimplePanel>

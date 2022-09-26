@@ -30,12 +30,9 @@ import { flattenFormData, getResourceFromAttachment } from './utils';
 import { MEDIA_FIELDS } from './constants';
 
 // Important: Keep in sync with REST API preloading definition.
-export function getMedia(
-  config,
-  { mediaType, searchTerm, pagingNum, cacheBust }
-) {
+export function getMedia(config, { mediaType, searchTerm, pagingNum }) {
   let path = addQueryArgs(config.api.media, {
-    context: 'edit',
+    context: 'view',
     per_page: 50,
     page: pagingNum,
     _web_stories_envelope: true,
@@ -50,15 +47,6 @@ export function getMedia(
     path = addQueryArgs(path, { search: searchTerm });
   }
 
-  // cacheBusting is due to the preloading logic preloading and caching
-  // some requests. (see preload_paths in Dashboard.php)
-  // Adding cache_bust forces the path to look different from the preloaded
-  // paths and hence skipping the cache. (cache_bust itself doesn't do
-  // anything)
-  if (cacheBust) {
-    path = addQueryArgs(path, { cache_bust: true });
-  }
-
   return apiFetch({ path }).then(({ body: attachments, headers }) => ({
     data: attachments.map(getResourceFromAttachment),
     headers: {
@@ -67,6 +55,19 @@ export function getMedia(
       totalPages: headers['X-WP-TotalPages'],
     },
   }));
+}
+
+// Important: Keep in sync with REST API preloading definition.
+export function getMediaForCorsCheck(config) {
+  const path = addQueryArgs(config.api.media, {
+    context: 'view',
+    per_page: 10,
+    _fields: 'source_url',
+  });
+
+  return apiFetch({ path }).then((attachments) =>
+    attachments.map((attachment) => attachment.source_url)
+  );
 }
 
 /**
@@ -78,7 +79,7 @@ export function getMedia(
  */
 export function getMediaById(config, mediaId) {
   const path = addQueryArgs(`${config.api.media}${mediaId}/`, {
-    context: 'edit',
+    context: 'view',
     _fields: MEDIA_FIELDS,
   });
 
@@ -94,7 +95,7 @@ export function getMediaById(config, mediaId) {
  */
 export async function getMutedMediaById(config, mediaId) {
   const path = addQueryArgs(`${config.api.media}${mediaId}/`, {
-    context: 'edit',
+    context: 'view',
     _fields: 'meta.web_stories_muted_id',
   });
 
@@ -116,7 +117,7 @@ export async function getMutedMediaById(config, mediaId) {
  */
 export async function getOptimizedMediaById(config, mediaId) {
   const path = addQueryArgs(`${config.api.media}${mediaId}/`, {
-    context: 'edit',
+    context: 'view',
     _fields: 'meta.web_stories_optimized_id',
   });
 
@@ -138,7 +139,7 @@ export async function getOptimizedMediaById(config, mediaId) {
  */
 export async function getPosterMediaById(config, mediaId) {
   const path = addQueryArgs(`${config.api.media}${mediaId}/`, {
-    context: 'edit',
+    context: 'view',
     _fields: 'featured_media',
   });
 
@@ -160,10 +161,58 @@ export async function getPosterMediaById(config, mediaId) {
  * @return {Promise<import('@googleforcreators/media').Resource>} Media resource.
  */
 export function uploadMedia(config, file, additionalData) {
+  const {
+    originalId,
+    mediaId,
+    storyId,
+    templateId,
+    optimizedId,
+    cropOriginId,
+    mutedId,
+    posterId,
+    isMuted,
+    mediaSource,
+    trimData,
+    baseColor,
+    blurHash,
+    isGif,
+    altText,
+  } = additionalData;
+
+  const wpKeysMapping = {
+    web_stories_media_source: mediaSource,
+    web_stories_is_muted: isMuted,
+    post: templateId || storyId || mediaId,
+    original_id: originalId,
+    meta: {
+      web_stories_base_color: baseColor,
+      web_stories_blurhash: blurHash,
+      web_stories_cropped_origin_id: cropOriginId,
+      web_stories_optimized_id: optimizedId,
+      web_stories_muted_id: mutedId,
+      web_stories_poster_id: posterId,
+      web_stories_trim_data: trimData,
+      web_stories_is_gif: isGif,
+    },
+    alt_text: altText,
+  };
+
+  Object.entries(wpKeysMapping.meta).forEach(([key, value]) => {
+    if (value === undefined) {
+      delete wpKeysMapping.meta[key];
+    }
+  });
+
+  Object.entries(wpKeysMapping).forEach(([key, value]) => {
+    if (value === undefined) {
+      delete wpKeysMapping[key];
+    }
+  });
+
   // Create upload payload
   const data = new window.FormData();
   data.append('file', file, file.name || file.type.replace('/', '.'));
-  Object.entries(additionalData).forEach(([key, value]) =>
+  Object.entries(wpKeysMapping).forEach(([key, value]) =>
     flattenFormData(data, key, value)
   );
 
@@ -184,9 +233,49 @@ export function uploadMedia(config, file, additionalData) {
  * @return {Promise} Media Object Promise.
  */
 export function updateMedia(config, mediaId, data) {
+  const {
+    baseColor,
+    blurHash,
+    isMuted,
+    mediaSource,
+    optimizedId,
+    cropOriginId,
+    mutedId,
+    posterId,
+    storyId,
+    altText,
+  } = data;
+
+  const wpKeysMapping = {
+    meta: {
+      web_stories_base_color: baseColor,
+      web_stories_blurhash: blurHash,
+      web_stories_optimized_id: optimizedId,
+      web_stories_muted_id: mutedId,
+      web_stories_cropped_origin_id: cropOriginId,
+      web_stories_poster_id: posterId,
+    },
+    web_stories_is_muted: isMuted,
+    web_stories_media_source: mediaSource,
+    featured_media: posterId,
+    post: storyId,
+    alt_text: altText,
+  };
+
+  Object.entries(wpKeysMapping.meta).forEach(([key, value]) => {
+    if (value === undefined) {
+      delete wpKeysMapping.meta[key];
+    }
+  });
+
+  Object.entries(wpKeysMapping).forEach(([key, value]) => {
+    if (value === undefined) {
+      delete wpKeysMapping[key];
+    }
+  });
   return apiFetch({
     path: `${config.api.media}${mediaId}/`,
-    data,
+    data: wpKeysMapping,
     method: 'POST',
   }).then(getResourceFromAttachment);
 }

@@ -100,37 +100,46 @@ class Story {
 	/**
 	 * Publisher logo size.
 	 *
-	 * @var array
+	 * @var int[]
+	 * @phpstan-var array{0?: int, 1?: int}
 	 */
 	protected $publisher_logo_size = [];
+
+	/**
+	 * Poster portrait logo size.
+	 *
+	 * @var int[]
+	 * @phpstan-var array{0?: int, 1?: int}
+	 */
+	protected $poster_portrait_size = [];
 
 	/**
 	 * Poster url - portrait.
 	 *
 	 * @var string
 	 */
-	protected $poster_portrait;
+	protected $poster_portrait = '';
 
 	/**
 	 * Date for the story.
 	 *
 	 * @var string
 	 */
-	protected $date;
+	protected $date = '';
 
 	/**
 	 * Author of story.
 	 *
 	 * @var string
 	 */
-	protected $author;
+	protected $author = '';
 
 	/**
 	 * Story constructor.
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param array $story Array of attributes.
+	 * @param array<string,mixed> $story Array of attributes.
 	 */
 	public function __construct( array $story = [] ) {
 		foreach ( $story as $key => $value ) {
@@ -148,12 +157,21 @@ class Story {
 	 * @param int|null|WP_Post $_post Post id or Post object.
 	 */
 	public function load_from_post( $_post ): bool {
-		$this->publisher_name = get_bloginfo( 'name' );
+		/**
+		 * Filters the publisher's name
+		 *
+		 * @since 1.7.0
+		 *
+		 * @param string $name Publisher Name.
+		 */
+		$this->publisher_name = apply_filters( 'web_stories_publisher_name', get_bloginfo( 'name' ) );
 
 		$post = get_post( $_post );
-		if ( ! $post instanceof WP_Post || Story_Post_Type::POST_TYPE_SLUG !== $post->post_type ) {
+		if ( ! $post instanceof WP_Post ) {
 			return false;
 		}
+
+		// At this point we assume being passed a legit web-story post or perhaps a web-story revision.
 
 		$this->id      = $post->ID;
 		$this->title   = get_the_title( $post );
@@ -169,6 +187,7 @@ class Story {
 			if ( $poster_src ) {
 				[ $poster_url, $width, $height ] = $poster_src;
 				$this->poster_portrait           = $poster_url;
+				$this->poster_portrait_size      = [ (int) $width, (int) $height ];
 
 				$size_array = [ (int) $width, (int) $height ];
 				$image_meta = wp_get_attachment_metadata( $thumbnail_id );
@@ -176,6 +195,17 @@ class Story {
 					$this->poster_sizes  = (string) wp_calculate_image_sizes( $size_array, $poster_url, $image_meta, $thumbnail_id );
 					$this->poster_srcset = (string) wp_calculate_image_srcset( $size_array, $poster_url, $image_meta, $thumbnail_id );
 				}
+			}
+		} else {
+			/**
+			 * Poster.
+			 *
+			 * @var array{url?:string, width?: int, height?: int}|false $poster
+			 */
+			$poster = get_post_meta( $post->ID, Story_Post_Type::POSTER_META_KEY, true );
+			if ( ! empty( $poster ) ) {
+				$this->poster_portrait      = $poster['url'];
+				$this->poster_portrait_size = [ (int) $poster['width'], (int) $poster['height'] ];
 			}
 		}
 
@@ -200,12 +230,45 @@ class Story {
 	}
 
 	/**
+	 * Setter for poster set sizes.
+	 *
+	 * @since 1.21.0
+	 *
+	 * @param string $poster_sizes Poster sizes.
+	 */
+	public function set_poster_sizes( string $poster_sizes ): void {
+		$this->poster_sizes = $poster_sizes;
+	}
+
+	/**
+	 * Setter for poster source set.
+	 *
+	 * @since 1.21.0
+	 *
+	 * @param string $poster_srcset Poster source set.
+	 */
+	public function set_poster_srcset( string $poster_srcset ): void {
+		$this->poster_srcset = $poster_srcset;
+	}
+
+	/**
+	 * Setter for title.
+	 *
+	 * @since 1.21.0
+	 *
+	 * @param string $title Title.
+	 */
+	public function set_title( string $title ): void {
+		$this->title = $title;
+	}
+
+	/**
 	 * Getter for poster source set sizes.
 	 *
 	 * @since 1.18.0
 	 */
 	public function get_poster_sizes(): string {
-		return (string) $this->poster_sizes;
+		return $this->poster_sizes;
 	}
 
 	/**
@@ -214,7 +277,7 @@ class Story {
 	 * @since 1.18.0
 	 */
 	public function get_poster_srcset(): string {
-		return (string) $this->poster_srcset;
+		return $this->poster_srcset;
 	}
 
 	/**
@@ -223,14 +286,14 @@ class Story {
 	 * @since 1.0.0
 	 */
 	public function get_title(): string {
-		return (string) $this->title;
+		return $this->title;
 	}
 
 	/**
 	 * Getter for excerpt attribute.
 	 */
 	public function get_excerpt(): string {
-		return (string) $this->excerpt;
+		return $this->excerpt;
 	}
 
 	/**
@@ -239,7 +302,7 @@ class Story {
 	 * @since 1.0.0
 	 */
 	public function get_url(): string {
-		return (string) $this->url;
+		return $this->url;
 	}
 
 	/**
@@ -248,7 +311,7 @@ class Story {
 	 * @since 1.0.0
 	 */
 	public function get_markup(): string {
-		return (string) $this->markup;
+		return $this->markup;
 	}
 
 	/**
@@ -257,28 +320,28 @@ class Story {
 	 * @since 1.0.0
 	 */
 	public function get_poster_portrait(): string {
-		return (string) $this->poster_portrait;
+		return $this->poster_portrait;
 	}
 
 	/**
 	 * Get the story ID.
 	 */
 	public function get_id(): int {
-		return (int) $this->id;
+		return $this->id;
 	}
 
 	/**
 	 * Get author of the story.
 	 */
 	public function get_author(): string {
-		return (string) $this->author;
+		return $this->author;
 	}
 
 	/**
 	 * Date for the story.
 	 */
 	public function get_date(): string {
-		return (string) $this->date;
+		return $this->date;
 	}
 
 	/**
@@ -289,16 +352,7 @@ class Story {
 	 * @return string Publisher Name.
 	 */
 	public function get_publisher_name(): string {
-		/**
-		 * Filters the publisher's name
-		 *
-		 * @since 1.7.0
-		 *
-		 * @param string $name Publisher Name.
-		 */
-		$this->publisher_name = apply_filters( 'web_stories_publisher_name', $this->publisher_name );
-
-		return esc_attr( $this->publisher_name );
+		return $this->publisher_name;
 	}
 
 	/**
@@ -335,6 +389,8 @@ class Story {
 	 *     @type int    $1 Image width in pixels.
 	 *     @type int    $2 Image height in pixels.
 	 * }
+	 *
+	 * @phpstan-return array{0?: int, 1?: int}
 	 */
 	public function get_publisher_logo_size(): array {
 		/**
@@ -353,5 +409,25 @@ class Story {
 		 * @param int|null $id   Story ID if available.
 		 */
 		return apply_filters( 'web_stories_publisher_logo_size', $this->publisher_logo_size, $this->id );
+	}
+
+	/**
+	 * Get poster portrait size.
+	 *
+	 * @since 1.23.0
+	 *
+	 * @return array {
+	 *     Poster portrait logo size.
+	 *
+	 *     Array of image data, or empty array if no image is available.
+	 *
+	 *     @type int    $1 Image width in pixels.
+	 *     @type int    $2 Image height in pixels.
+	 * }
+	 *
+	 * @phpstan-return array{0?: int, 1?: int}
+	 */
+	public function get_poster_portrait_size(): array {
+		return $this->poster_portrait_size;
 	}
 }

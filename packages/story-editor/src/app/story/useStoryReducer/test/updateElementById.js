@@ -157,4 +157,139 @@ describe('updateElementById', () => {
       { id: '222', elements: [{ id: '456' }] },
     ]);
   });
+
+  it('should update animations correctly', () => {
+    const { restore, updateElementById } = setupReducer();
+
+    // Set an initial state with one page with elements and animations
+    restore({
+      pages: [
+        {
+          id: 'p1',
+          animations: [
+            { id: 'a1', targets: ['e3'] },
+            { id: 'a2', targets: ['e3'] },
+            { id: 'a3', targets: ['e2'] },
+          ],
+          elements: [{ id: 'e1' }, { id: 'e2' }, { id: 'e3' }],
+        },
+      ],
+      current: 'p1',
+    });
+
+    // update animation a2:
+    const result = updateElementById({
+      elementId: 'e3',
+      properties: {
+        animation: { id: 'a2', newProp: 'x' },
+      },
+    });
+
+    expect(result.pages[0].animations).toStrictEqual([
+      { id: 'a1', targets: ['e3'] },
+      { id: 'a2', targets: ['e3'], newProp: 'x' },
+      { id: 'a3', targets: ['e2'] },
+    ]);
+  });
+
+  it('should add animations correctly', () => {
+    const { restore, updateElementById } = setupReducer();
+
+    // Set an initial state with one page with elements and no animations
+    restore({
+      pages: [
+        {
+          id: 'p1',
+          elements: [{ id: 'e1' }, { id: 'e2' }, { id: 'e3' }],
+        },
+      ],
+      current: 'p1',
+    });
+
+    // add animation a4:
+    const result = updateElementById({
+      elementId: 'e3',
+      properties: {
+        animation: { id: 'a4' },
+      },
+    });
+
+    expect(result.pages[0].animations).toStrictEqual([
+      { id: 'a4', targets: ['e3'] },
+    ]);
+  });
+
+  it('should delete animations correctly', () => {
+    const { restore, updateElementById } = setupReducer();
+
+    // Set an initial state with one page with elements and animations
+    restore({
+      pages: [
+        {
+          id: 'p1',
+          animations: [
+            { id: 'a1', targets: ['e3'] },
+            { id: 'a2', targets: ['e3'] },
+            { id: 'a3', targets: ['e2'] },
+          ],
+          elements: [{ id: 'e1' }, { id: 'e2' }, { id: 'e3' }],
+        },
+      ],
+      current: 'p1',
+    });
+
+    // delete animation a1:
+    const result = updateElementById({
+      elementId: 'e3',
+      properties: {
+        animation: { id: 'a1', delete: true },
+      },
+    });
+
+    expect(result.pages[0].animations).toStrictEqual([
+      { id: 'a2', targets: ['e3'] },
+      { id: 'a3', targets: ['e2'] },
+    ]);
+  });
+
+  it('if updating both animation and regular element property, only animation gets updated', () => {
+    const { restore, updateElementById } = setupReducer();
+
+    // Set an initial state with one page with elements and animations
+    restore({
+      pages: [
+        {
+          id: 'p1',
+          animations: [
+            { id: 'a1', targets: ['e3'] },
+            { id: 'a2', targets: ['e3'] },
+            { id: 'a3', targets: ['e2'] },
+          ],
+          elements: [{ id: 'e1' }, { id: 'e2' }, { id: 'e3', a: 11 }],
+        },
+      ],
+      current: 'p1',
+    });
+
+    // update animation a2 and change property 'a'
+    const result = updateElementById({
+      elementId: 'e3',
+      properties: {
+        a: 22,
+        animation: { id: 'a2', newProp: 'x' },
+      },
+    });
+
+    expect(result.pages[0].animations).toStrictEqual([
+      { id: 'a1', targets: ['e3'] },
+      { id: 'a2', targets: ['e3'], newProp: 'x' },
+      { id: 'a3', targets: ['e2'] },
+    ]);
+    // Note that property 'a' was not changed
+    expect(result.pages[0].elements).toStrictEqual([
+      { id: 'e1' },
+      { id: 'e2' },
+      { id: 'e3', a: 11 },
+    ]);
+  });
 });

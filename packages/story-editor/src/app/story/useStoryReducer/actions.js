@@ -156,21 +156,32 @@ const clearBackgroundElement = (dispatch) => () =>
 
 const arrangeElement =
   (dispatch) =>
-  ({ elementId, position }) =>
-    dispatch({ type: types.ARRANGE_ELEMENT, payload: { elementId, position } });
+  ({ elementId, position, groupId }) =>
+    dispatch({
+      type: types.ARRANGE_ELEMENT,
+      payload: { elementId, position, groupId },
+    });
+
+const arrangeGroup =
+  (dispatch) =>
+  ({ groupId, position }) =>
+    dispatch({ type: types.ARRANGE_GROUP, payload: { groupId, position } });
 
 const arrangeSelection =
   (dispatch) =>
-  ({ position }) =>
+  ({ position, groupId }) =>
     dispatch({
       type: types.ARRANGE_ELEMENT,
-      payload: { elementId: null, position },
+      payload: { elementId: null, position, groupId },
     });
 
 const setSelectedElementsById =
   (dispatch) =>
-  ({ elementIds }) =>
-    dispatch({ type: types.SET_SELECTED_ELEMENTS, payload: { elementIds } });
+  ({ elementIds, withLinked }) =>
+    dispatch({
+      type: types.SET_SELECTED_ELEMENTS,
+      payload: { elementIds, withLinked },
+    });
 
 const clearSelection = (dispatch) => () =>
   dispatch({ type: types.SET_SELECTED_ELEMENTS, payload: { elementIds: [] } });
@@ -187,10 +198,10 @@ const removeElementFromSelection =
 
 const toggleElementInSelection =
   (dispatch) =>
-  ({ elementId }) =>
+  ({ elementId, withLinked }) =>
     dispatch({
       type: types.TOGGLE_ELEMENT_IN_SELECTION,
-      payload: { elementId },
+      payload: { elementId, withLinked },
     });
 
 const updateStory =
@@ -213,16 +224,69 @@ const addAnimations =
 
 const toggleLayer =
   (dispatch) =>
-  ({ metaKey, shiftKey, elementId }) =>
+  ({ metaKey, shiftKey, elementId, withLinked }) =>
     dispatch({
       type: types.TOGGLE_LAYER,
-      payload: { metaKey, shiftKey, elementId },
+      payload: { metaKey, shiftKey, elementId, withLinked },
     });
 
 const copySelectedElement = (dispatch) => () =>
   dispatch({
     type: types.COPY_SELECTED_ELEMENT,
   });
+
+const updateElementsByFontFamily =
+  (dispatch) =>
+  ({ family, properties }) =>
+    dispatch({
+      type: types.UPDATE_ELEMENTS_BY_FONT_FAMILY,
+      payload: { family, properties },
+    });
+
+const addGroup =
+  (dispatch) =>
+  ({ groupId, name, isLocked }) =>
+    dispatch({ type: types.ADD_GROUP, payload: { groupId, name, isLocked } });
+
+const updateGroupById =
+  (dispatch) =>
+  ({ groupId, properties }) =>
+    dispatch({
+      type: types.UPDATE_GROUP,
+      payload: { groupId, properties },
+    });
+
+const deleteGroupById =
+  (dispatch) =>
+  ({ groupId }) =>
+    dispatch({
+      type: types.DELETE_GROUP,
+      payload: { groupId },
+    });
+
+const deleteGroupAndElementsById =
+  (dispatch) =>
+  ({ groupId }) =>
+    dispatch({
+      type: types.DELETE_GROUP,
+      payload: { groupId, includeElements: true },
+    });
+
+const duplicateGroupById =
+  (dispatch) =>
+  ({ groupId, name, oldGroupId, isLocked }) =>
+    dispatch({
+      type: types.DUPLICATE_GROUP,
+      payload: { groupId, name, oldGroupId, isLocked },
+    });
+
+const removeElementFromGroup =
+  (dispatch) =>
+  ({ elementId, groupId }) =>
+    dispatch({
+      type: types.REMOVE_ELEMENT_FROM_GROUP,
+      payload: { elementId, groupId },
+    });
 
 export const exposedActions = {
   addPage,
@@ -249,6 +313,7 @@ export const exposedActions = {
   setBackgroundElement,
   clearBackgroundElement,
   arrangeElement,
+  arrangeGroup,
   arrangeSelection,
   setSelectedElementsById,
   clearSelection,
@@ -259,6 +324,13 @@ export const exposedActions = {
   addAnimations,
   updateStory,
   toggleLayer,
+  updateElementsByFontFamily,
+  addGroup,
+  updateGroupById,
+  deleteGroupById,
+  deleteGroupAndElementsById,
+  duplicateGroupById,
+  removeElementFromGroup,
 };
 
 // Internal actions

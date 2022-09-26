@@ -17,10 +17,15 @@
 /**
  * External dependencies
  */
-import { NumericInput } from '@googleforcreators/design-system';
+import {
+  NumericInput,
+  CONTEXT_MENU_SKIP_ELEMENT,
+} from '@googleforcreators/design-system';
 import styled from 'styled-components';
 
-const Input = styled(NumericInput)`
+const Input = styled(NumericInput).attrs({
+  inputClassName: CONTEXT_MENU_SKIP_ELEMENT,
+})`
   width: 70px;
   flex: 0 0 70px;
 `;

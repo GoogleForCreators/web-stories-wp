@@ -25,6 +25,7 @@ import {
   useFocusOut,
   useMemo,
   forwardRef,
+  useDebouncedCallback,
 } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
@@ -64,6 +65,8 @@ const Container = styled.div`
     css`
       border: 1px solid ${theme.colors.border.defaultNormal};
     `}
+
+   ${({ $containerStyleOverrides }) => $containerStyleOverrides};
 `;
 
 const OptionsContainer = forwardRef(function OptionsContainer(
@@ -75,6 +78,9 @@ const OptionsContainer = forwardRef(function OptionsContainer(
     renderContents,
     isInline,
     hasDropDownBorder = false,
+    containerStyleOverrides,
+    title,
+    placeholder,
   },
   inputRef
 ) {
@@ -91,17 +97,19 @@ const OptionsContainer = forwardRef(function OptionsContainer(
     []
   );
 
-  const handleLoadOptions = useCallback(() => {
-    getOptionsByQuery(searchKeyword).then(setQueriedOptions);
-  }, [getOptionsByQuery, searchKeyword]);
+  const debounceHandleLoadOptions = useDebouncedCallback(() => {
+    getOptionsByQuery(searchKeyword).then((res) => {
+      setQueriedOptions(res);
+    });
+  }, 500);
 
   useEffect(() => {
     if (getOptionsByQuery && isKeywordFilterable(searchKeyword)) {
-      handleLoadOptions();
+      debounceHandleLoadOptions();
     } else {
       setQueriedOptions(null);
     }
-  }, [getOptionsByQuery, searchKeyword, handleLoadOptions]);
+  }, [getOptionsByQuery, searchKeyword, debounceHandleLoadOptions]);
 
   useEffect(() => {
     if (isOpen) {
@@ -113,9 +121,11 @@ const OptionsContainer = forwardRef(function OptionsContainer(
   return (
     <Container
       role="dialog"
+      title={title}
       ref={ref}
       isInline={isInline}
       hasDropDownBorder={hasDropDownBorder}
+      $containerStyleOverrides={containerStyleOverrides}
     >
       {hasSearch && (
         <SearchInput
@@ -126,6 +136,7 @@ const OptionsContainer = forwardRef(function OptionsContainer(
           isExpanded={isExpanded}
           focusFontListFirstOption={() => setTrigger((v) => v + 1)}
           aria-owns={listId}
+          placeholder={placeholder}
         />
       )}
       {renderContents({
@@ -147,6 +158,8 @@ OptionsContainer.propTypes = {
   renderContents: PropTypes.func.isRequired,
   isInline: PropTypes.bool,
   hasDropDownBorder: PropTypes.bool,
+  title: PropTypes.string,
+  placeholder: PropTypes.string,
 };
 
 export default OptionsContainer;

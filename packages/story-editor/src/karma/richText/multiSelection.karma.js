@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * Internal dependencies
  */
@@ -46,9 +45,7 @@ describe('Styling multiple text fields', () => {
 
   it('should both have the correct initial text and formatting', () => {
     // Get content of first textfield
-    expect(getTextContent(0)).toBe(
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
-    );
+    expect(getTextContent(0)).toBe('Fill in some text');
     // Get content of second textfield
     expect(getTextContent(1)).toBe('Number #2');
   });
@@ -58,8 +55,9 @@ describe('Styling multiple text fields', () => {
     // When fixing this, ensure that uppercase is also handled here.
     // eslint-disable-next-line jasmine/no-disabled-tests
     xit('should apply formatting correctly for identically styled text fields', async () => {
+      await data.fixture.events.click(data.fixture.editor.sidebar.designTab);
       const { bold, italic, underline, fontWeight, letterSpacing, fontColor } =
-        data.fixture.editor.inspector.designPanel.textStyle;
+        data.fixture.editor.sidebar.designPanel.textStyle;
 
       // Select both text fields
       await selectBothTextFields();
@@ -116,6 +114,7 @@ describe('Styling multiple text fields', () => {
     });
 
     it('should apply formatting correctly for multi-style text field', async () => {
+      await data.fixture.events.click(data.fixture.editor.sidebar.designTab);
       const {
         bold,
         italic,
@@ -124,7 +123,7 @@ describe('Styling multiple text fields', () => {
         fontWeight,
         letterSpacing,
         fontColor,
-      } = data.fixture.editor.inspector.designPanel.textStyle;
+      } = data.fixture.editor.sidebar.designPanel.textStyle;
 
       // Edit formatting for second text field
       await data.fixture.events.click(letterSpacing, { clickCount: 3 });
@@ -163,17 +162,22 @@ describe('Styling multiple text fields', () => {
       await data.fixture.events.sleep(300);
       await data.fixture.events.click(await fontWeight.option('Bold'));
       await data.fixture.events.sleep(300);
-      await data.fixture.events.click(fontColor.button);
-      await data.fixture.events.click(fontColor.picker.custom);
-      await data.fixture.events.click(fontColor.picker.hexButton);
-      await data.fixture.events.keyboard.type('00FF00');
-      // Wait for debounce in color picker (100ms)
-      await data.fixture.events.sleep(100);
       await data.fixture.events.click(letterSpacing, { clickCount: 3 });
       await data.fixture.events.keyboard.type('100');
       await data.fixture.events.keyboard.press('Enter');
       await data.fixture.events.click(uppercase.button);
       await data.fixture.events.keyboard.press('Escape');
+      await data.fixture.events.click(fontColor.button);
+      await data.fixture.events.click(fontColor.picker.custom);
+      await data.fixture.events.click(fontColor.picker.hexButton);
+      await data.fixture.events.keyboard.type('00FF00');
+      await data.fixture.events.keyboard.press('Enter');
+      await data.fixture.events.keyboard.press('Escape');
+      await data.fixture.events.sleep(100);
+      await data.fixture.events.keyboard.press('Escape');
+      // Wait for debounce in color picker (100ms)
+      await data.fixture.events.sleep(100);
+      await selectBothTextFields();
 
       // Verify all styles, now expected to be updated
       expect(bold.checked).toBe(true);
@@ -194,7 +198,7 @@ describe('Styling multiple text fields', () => {
         'letter-spacing: 1em',
         'text-transform: uppercase',
       ].join('; ');
-      const expected = `<span style="${css}">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>`;
+      const expected = `<span style="${css}">Fill in some text</span>`;
       expect(actual).toBe(expected);
 
       await data.fixture.snapshot('Two texts in bold,italic,underline,green');
@@ -203,8 +207,9 @@ describe('Styling multiple text fields', () => {
 
   describe('CUJ: Creator Can Style Text: Apply B, Select weight', () => {
     it('should make black text field + bold text field non-bold when toggling', async () => {
+      await data.fixture.events.click(data.fixture.editor.sidebar.designTab);
       const { bold, fontWeight } =
-        data.fixture.editor.inspector.designPanel.textStyle;
+        data.fixture.editor.sidebar.designPanel.textStyle;
 
       // Make text field 1 black
       await selectTextField(0);
@@ -235,17 +240,16 @@ describe('Styling multiple text fields', () => {
       expect(fontWeight.value).toBe('Regular');
 
       // Assume both texts' content to now be formatting-free
-      expect(getTextContent(0)).toBe(
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
-      );
+      expect(getTextContent(0)).toBe('Fill in some text');
       expect(getTextContent(1)).toBe('Number #2');
 
       await data.fixture.snapshot('Two texts without formatting');
     });
 
     it('should make bold text field + light text field bold when toggling', async () => {
+      await data.fixture.events.click(data.fixture.editor.sidebar.designTab);
       const { bold, fontWeight } =
-        data.fixture.editor.inspector.designPanel.textStyle;
+        data.fixture.editor.sidebar.designPanel.textStyle;
 
       // Make text field 1 black
       await selectTextField(0);
@@ -277,7 +281,7 @@ describe('Styling multiple text fields', () => {
 
       // Assume texts' content to now be correctly bold
       expect(getTextContent(0)).toBe(
-        '<span style="font-weight: 700">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>'
+        '<span style="font-weight: 700">Fill in some text</span>'
       );
       expect(getTextContent(1)).toBe(
         '<span style="font-weight: 700">Number #2</span>'

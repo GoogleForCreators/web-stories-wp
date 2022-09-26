@@ -28,6 +28,7 @@ import {
   Button,
   PLACEMENT,
   Popup,
+  Disclosure,
 } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 import styled from 'styled-components';
@@ -36,10 +37,10 @@ import { useRef, useState } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
-import { useStory, useConfig } from '../../../../app';
+import { useStory } from '../../../../app';
 import { PRESET_TYPES } from '../../../../constants';
 import useAddPreset from '../../../../utils/useAddPreset';
-import useInspector from '../../../inspector/useInspector';
+import useSidebar from '../../../sidebar/useSidebar';
 import StyleGroup from '../../../styleManager/styleGroup';
 import StyleManager, {
   NoStylesWrapper,
@@ -69,18 +70,18 @@ const NoStylesText = styled(Text)`
   color: ${({ theme }) => theme.colors.fg.tertiary};
 `;
 
-const SPACING = { x: 20 };
+const SPACING = { x: 12 };
+
 function PresetPanel({ pushUpdate }) {
   const textStyles = useStory(
     ({ state }) => state.story.globalStoryStyles.textStyles
   );
 
   const {
-    refs: { inspector },
-  } = useInspector();
+    refs: { sidebar },
+  } = useSidebar();
   const buttonRef = useRef(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const { isRTL, styleConstants: { topOffset } = {} } = useConfig();
   const hasPresets = textStyles.length > 0;
 
   const handleApplyStyle = useApplyStyle({ pushUpdate });
@@ -121,15 +122,13 @@ function PresetPanel({ pushUpdate }) {
             aria-expanded={isPopupOpen}
           >
             {__('More styles', 'web-stories')}
-            <Icons.ChevronDownSmall />
+            <Disclosure isOpen={isPopupOpen} />
           </MoreButton>
           <Popup
-            topOffset={topOffset}
-            isRTL={isRTL}
             anchor={buttonRef}
-            dock={inspector}
+            dock={sidebar}
             isOpen={isPopupOpen}
-            placement={PLACEMENT.LEFT_START}
+            placement={PLACEMENT.RIGHT_START}
             spacing={SPACING}
             renderContents={() => (
               <StyleManager

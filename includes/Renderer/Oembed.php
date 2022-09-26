@@ -76,7 +76,7 @@ class Oembed extends Service_Base {
 	 * @param int          $height The height for the response.
 	 * @return string|mixed Filtered embed code.
 	 */
-	public function filter_embed_html( $output, $post, $width, $height ) {
+	public function filter_embed_html( $output, WP_Post $post, int $width, int $height ) {
 		if ( ! \is_string( $output ) ) {
 			return $output;
 		}
@@ -94,7 +94,7 @@ class Oembed extends Service_Base {
 		$new_width  = $new_data['width'];
 		$new_height = $new_data['height'];
 
-		$output = str_replace(
+		return str_replace(
 			[ "width=\"$width\"", "height=\"$height\"" ],
 			[
 				"width=\"$new_width\"",
@@ -102,8 +102,6 @@ class Oembed extends Service_Base {
 			],
 			$output
 		);
-
-		return $output;
 	}
 
 	/**
@@ -118,7 +116,7 @@ class Oembed extends Service_Base {
 	 * @param int         $width  The requested width.
 	 * @return array|mixed The modified response data.
 	 */
-	public function filter_oembed_response_data( $data, $post, $width ) {
+	public function filter_oembed_response_data( $data, WP_Post $post, int $width ) {
 		if ( Story_Post_Type::POST_TYPE_SLUG !== $post->post_type ) {
 			return $data;
 		}
@@ -140,9 +138,9 @@ class Oembed extends Service_Base {
 	 * @since 1.7.0
 	 *
 	 * @param int $old_width Old width, used to generate new height and width.
-	 * @return array
+	 * @return array{width: int, height: int}
 	 */
-	protected function get_embed_height_width( $old_width ): array {
+	protected function get_embed_height_width( int $old_width ): array {
 		/** This filter is documented in wp-includes/embed.php */
 		$min_max_width = apply_filters(
 			'oembed_min_max_width',
@@ -152,7 +150,7 @@ class Oembed extends Service_Base {
 			]
 		);
 
-		$width  = (int) min( max( $min_max_width['min'], (int) $old_width ), $min_max_width['max'] );
+		$width  = (int) min( max( $min_max_width['min'], $old_width ), $min_max_width['max'] );
 		$height = (int) max( ceil( $width / 3 * 5 ), 330 );
 
 		return compact( 'width', 'height' );

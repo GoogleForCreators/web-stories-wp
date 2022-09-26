@@ -31,7 +31,6 @@ describe('Text Style Panel', () => {
   beforeEach(async () => {
     fixture = new Fixture();
     localStorage.clear();
-    fixture.setFlags({ customFonts: true });
     await fixture.render();
     await fixture.collapseHelpCenter();
   });
@@ -50,16 +49,24 @@ describe('Text Style Panel', () => {
 
     it('should have the style panel always expanded', async () => {
       await fixture.snapshot('Default panels state with only style panel open');
+      await fixture.events.click(fixture.editor.sidebar.designTab);
       await fixture.events.click(
-        fixture.editor.inspector.designPanel.textStyle.collapse
+        fixture.editor.sidebar.designPanel.textStyle.collapse
       );
       // Expect the inputs not to be visible since tha panel is collapsed.
       expect(
-        () => fixture.editor.inspector.designPanel.textStyle.lineHeight
+        () => fixture.editor.sidebar.designPanel.textStyle.lineHeight
       ).toThrow();
       await fixture.snapshot('Collapsed style panel');
 
+      // Select background for being able to insert a text.
+      await fixture.events.mouse.clickOn(
+        fixture.editor.canvas.framesLayer.frames[0].node,
+        '90%',
+        '90%'
+      );
       // Add a new text now.
+      await fixture.events.click(fixture.editor.sidebar.insertTab);
       await fixture.editor.library.textTab.click();
       await fixture.events.click(
         fixture.editor.library.text.preset('Paragraph')
@@ -71,8 +78,9 @@ describe('Text Style Panel', () => {
         expect(fixture.editor.canvas.framesLayer.frames[2].node).toBeTruthy();
       });
       // Expect the inputs to be visible again, since the panel should be expanded again.
+      await fixture.events.click(fixture.editor.sidebar.designTab);
       expect(
-        fixture.editor.inspector.designPanel.textStyle.lineHeight
+        fixture.editor.sidebar.designPanel.textStyle.lineHeight
       ).toBeDefined();
     });
   });
@@ -82,17 +90,29 @@ describe('Text Style Panel', () => {
       // Add 2 text elements.
       await fixture.editor.library.textTab.click();
       await fixture.events.click(fixture.editor.library.text.preset('Title 1'));
+
+      await fixture.events.mouse.clickOn(
+        fixture.editor.canvas.framesLayer.frames[0].node,
+        '90%',
+        '90%'
+      );
       await fixture.events.click(fixture.editor.library.text.preset('Title 2'));
 
       // Select first text as well (the second is selected by default).
       await fixture.events.keyboard.down('Shift');
-      await fixture.events.click(
-        fixture.editor.canvas.framesLayer.frames[1].node
+      await fixture.events.mouse.clickOn(
+        fixture.editor.canvas.framesLayer.frames[1].node,
+        10,
+        10
       );
+      // await fixture.events.click(
+      //   fixture.editor.canvas.framesLayer.frames[1].node
+      // );
       await fixture.events.keyboard.up('Shift');
 
+      await fixture.events.click(fixture.editor.sidebar.designTab);
       expect(
-        fixture.editor.inspector.designPanel.textStyle.adaptiveColor.disabled
+        fixture.editor.sidebar.designPanel.textStyle.adaptiveColor.disabled
       ).toBeTrue();
     });
 
@@ -105,18 +125,20 @@ describe('Text Style Panel', () => {
       await fixture.events.keyboard.press('Tab');
 
       // Add text element.
+      await fixture.events.click(fixture.editor.sidebar.insertTab);
       await fixture.editor.library.textTab.click();
       await fixture.events.click(
         fixture.editor.library.text.preset('Paragraph')
       );
+      await fixture.events.click(fixture.editor.sidebar.designTab);
       await fixture.events.click(
-        fixture.editor.inspector.designPanel.textStyle.adaptiveColor
+        fixture.editor.sidebar.designPanel.textStyle.adaptiveColor
       );
 
       await waitFor(
         async () => {
           const texts = await fixture.screen.findAllByText(
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+            'Fill in some text',
             { timeout: 2000 }
           );
           await expect(texts.length).toBeGreaterThan(1);
@@ -143,8 +165,13 @@ describe('Text Style Panel', () => {
               currentPage: { elements },
             },
           } = await fixture.renderHook(() => useStory());
+
+          if (!elements) {
+            throw new Error('story elements not ready');
+          }
+
           expect(elements[1].content).toBe(
-            '<span style="color: #fff">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>'
+            '<span style="color: #fff">Fill in some text</span>'
           );
         },
         { timeout: 9000 }
@@ -158,11 +185,12 @@ describe('Text Style Panel', () => {
       await fixture.events.click(
         fixture.editor.library.text.preset('Paragraph')
       );
+      await fixture.events.click(fixture.editor.sidebar.designTab);
     });
 
     it('should display padding and line-height correctly', async () => {
       const { padding, lineHeight } =
-        fixture.editor.inspector.designPanel.textStyle;
+        fixture.editor.sidebar.designPanel.textStyle;
       await fixture.events.focus(padding);
       await fixture.events.keyboard.type('10');
 
@@ -170,9 +198,7 @@ describe('Text Style Panel', () => {
       await fixture.events.keyboard.type('4');
       await fixture.events.keyboard.press('tab');
 
-      const texts = await fixture.screen.findAllByText(
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
-      );
+      const texts = await fixture.screen.findAllByText('Fill in some text');
 
       // Display layer.
       const displayStyle = await waitFor(() =>
@@ -204,10 +230,11 @@ describe('Text Style Panel', () => {
       await fixture.events.click(
         fixture.editor.library.text.preset('Paragraph')
       );
+      await fixture.events.click(fixture.editor.sidebar.designTab);
     });
 
     it('should allow whole number font sizes', async () => {
-      const { fontSize } = fixture.editor.inspector.designPanel.textStyle;
+      const { fontSize } = fixture.editor.sidebar.designPanel.textStyle;
 
       const size = 42;
 
@@ -224,7 +251,7 @@ describe('Text Style Panel', () => {
     });
 
     it('should allow fractional font sizes', async () => {
-      const { fontSize } = fixture.editor.inspector.designPanel.textStyle;
+      const { fontSize } = fixture.editor.sidebar.designPanel.textStyle;
 
       const size = 15.25;
 
@@ -247,6 +274,7 @@ describe('Text Style Panel', () => {
       await fixture.events.click(
         fixture.editor.library.text.preset('Paragraph')
       );
+      await fixture.events.click(fixture.editor.sidebar.designTab);
     });
     const getOptions = () => {
       return fixture.screen
@@ -263,7 +291,7 @@ describe('Text Style Panel', () => {
       // Timeout used for submitting / search update + 250ms (250 + 250).
       const TIMEOUT = 500;
       const openFontPicker = async () => {
-        const input = await fixture.screen.getByLabelText('Font family');
+        const input = fixture.screen.getByLabelText('Font family');
         await fixture.events.click(input);
       };
 
@@ -304,7 +332,7 @@ describe('Text Style Panel', () => {
         await fixture.events.click(option);
         await fixture.events.sleep(TIMEOUT);
 
-        const { fontWeight } = fixture.editor.inspector.designPanel.textStyle;
+        const { fontWeight } = fixture.editor.sidebar.designPanel.textStyle;
         expect(fontWeight.value).toBe('Regular');
 
         await fixture.events.click(fontWeight.select);
@@ -323,7 +351,7 @@ describe('Text Style Panel', () => {
         await fixture.events.click(option2);
         await fixture.events.sleep(600);
         const updatedFontWeight =
-          fixture.editor.inspector.designPanel.textStyle.fontWeight;
+          fixture.editor.sidebar.designPanel.textStyle.fontWeight;
 
         expect(updatedFontWeight.value).toBe('Regular');
       });
@@ -547,7 +575,7 @@ describe('Text Style Panel', () => {
         });
 
         it('should close the font picker with Esc', async () => {
-          const input = await fixture.screen.getByLabelText('Font family');
+          const input = fixture.screen.getByLabelText('Font family');
           expect(input.getAttribute('aria-expanded')).toBe('true');
           await fixture.events.keyboard.press('Esc');
           await waitForElementToBeRemoved(

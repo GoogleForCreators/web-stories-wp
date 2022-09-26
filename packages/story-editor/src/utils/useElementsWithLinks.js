@@ -17,85 +17,81 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo } from '@googleforcreators/react';
+import { useCallback } from '@googleforcreators/react';
+import { isElementBelowLimit } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import { useStory, useCanvas } from '../app';
-import isElementBelowLimit from './isElementBelowLimit';
 
+/**
+ * Custom hook to aid with detecting links conflicting with page attachments.
+ *
+ * @return {{hasElementsInAttachmentArea: boolean, isElementInAttachmentArea: (Object) => (boolean), hasLinksInAttachmentArea: boolean, hasInvalidLinkSelected: boolean}} Hook result.
+ */
 function useElementsWithLinks() {
-  const { currentPage, selectedElements } = useStory((state) => ({
-    currentPage: state.state.currentPage,
-    selectedElements: state.state.selectedElements,
-  }));
   const { pageAttachmentContainer } = useCanvas((state) => ({
     pageAttachmentContainer: state.state.pageAttachmentContainer,
   }));
+  const {
+    hasLinksInAttachmentArea,
+    hasInvalidLinkSelected,
+    hasPageAttachment,
+    hasElementsInAttachmentArea,
+  } = useStory(({ state }) => {
+    const elementHasLink = ({ link }) => link?.url?.length;
+    const elementsWithLinks = state.currentPage.elements.filter(elementHasLink);
 
-  const { elements } = currentPage;
-  const elementsWithLinks = useMemo(
-    () => elements.filter(({ link }) => link?.url?.length),
-    [elements]
-  );
+    const hasPageAttachment = Boolean(
+      state.currentPage?.pageAttachment?.url?.length
+    );
 
-  // Checks if there is a link with invalid position among the selection.
-  const hasInvalidLinkSelected = useCallback(() => {
-    if (!pageAttachmentContainer) {
-      return false;
-    }
-    if (!currentPage?.pageAttachment?.url?.length) {
-      return false;
-    }
-    const linksInActivePageAttachment = selectedElements
-      .filter(({ link }) => link?.url?.length)
-      .filter((element) => {
-        return isElementBelowLimit(element);
-      });
-    return linksInActivePageAttachment.length > 0;
-  }, [currentPage, selectedElements, pageAttachmentContainer]);
-
-  /**
-   * Returns the elements that were found in the attachment area.
-   */
-  const getElementsInAttachmentArea = useCallback(
-    (els, verifyLink = false) => {
-      if (!pageAttachmentContainer) {
-        return [];
-      }
-      return els.filter((element) => {
-        return isElementBelowLimit(element, verifyLink);
-      });
-    },
-    [pageAttachmentContainer]
-  );
-
-  // Checks if a link is in the attachment area, even if there's no active attachment.
-  const getLinksInAttachmentArea = useCallback(() => {
-    return getElementsInAttachmentArea(elementsWithLinks, true);
-  }, [elementsWithLinks, getElementsInAttachmentArea]);
+    return {
+      hasInvalidLinkSelected: Boolean(
+        pageAttachmentContainer &&
+          hasPageAttachment &&
+          state.selectedElements
+            .filter(elementHasLink)
+            .some(isElementBelowLimit)
+      ),
+      hasLinksInAttachmentArea: Boolean(
+        pageAttachmentContainer &&
+          elementsWithLinks.some((element) =>
+            isElementBelowLimit(element, true)
+          )
+      ),
+      hasElementsInAttachmentArea: Boolean(
+        pageAttachmentContainer &&
+          hasPageAttachment &&
+          state.selectedElements.some((element) =>
+            isElementBelowLimit(element, false)
+          )
+      ),
+      hasPageAttachment,
+    };
+  });
 
   const isElementInAttachmentArea = useCallback(
     (element) => {
       if (!pageAttachmentContainer) {
         return false;
       }
-      // If there is no Page Attachment present, return.
-      if (!currentPage?.pageAttachment?.url.length) {
+
+      if (!hasPageAttachment) {
         return false;
       }
-      // If the node is inside the page attachment container.
+
       return isElementBelowLimit(element, false);
     },
-    [pageAttachmentContainer, currentPage]
+    [pageAttachmentContainer, hasPageAttachment]
   );
 
   return {
-    getLinksInAttachmentArea,
-    hasInvalidLinkSelected: hasInvalidLinkSelected(),
+    hasLinksInAttachmentArea,
+    hasInvalidLinkSelected,
     isElementInAttachmentArea,
-    getElementsInAttachmentArea,
+    hasElementsInAttachmentArea,
   };
 }
 

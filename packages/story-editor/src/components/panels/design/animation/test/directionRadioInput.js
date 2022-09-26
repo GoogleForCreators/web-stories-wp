@@ -21,11 +21,11 @@ import { useState } from '@googleforcreators/react';
 import { fireEvent, screen } from '@testing-library/react';
 import PropTypes from 'prop-types';
 import { DIRECTION, SCALE_DIRECTION } from '@googleforcreators/animation';
+import { renderWithTheme } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
  */
-import { renderWithTheme } from '../../../../../testUtils';
 import { DirectionRadioInput } from '../directionRadioInput';
 
 function DirectionRadioInputUncontrolled({ onChange, directions }) {
@@ -75,7 +75,7 @@ describe('<DirectionRadioInput />', () => {
     const buttons = screen.getAllByRole('button');
     fireEvent.click(buttons[1]);
 
-    expect(onChange).toHaveBeenCalledTimes(1);
+    expect(onChange).toHaveBeenCalledOnce();
     expect(onChange).toHaveBeenCalledWith(directions[1]);
   });
 

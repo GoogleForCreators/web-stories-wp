@@ -49,11 +49,6 @@ import usePinchToZoom from './usePinchToZoom';
  * for the layering details.
  */
 
-export const Z_INDEX = {
-  NAV: 2,
-  EDIT: 3,
-};
-
 // 8px extra is for the focus outline to display.
 const PAGE_NAV_WIDTH = THEME_CONSTANTS.LARGE_BUTTON_SIZE + 8;
 const PAGE_NAV_GAP = 20;
@@ -73,11 +68,14 @@ const LayerGrid = styled.section`
   /*
     . = empty space
     h = header
+    p = previous page
+    n = next page
     b = back navigation
     f = forward navigation
-    p = canvas page
+    c = canvas page
     m = page action menu
     w = workspace footer
+    t = canvas page title
 
     Also note that we need to specify all the widths and heights
     even though some of the elements could just use the size that
@@ -87,8 +85,8 @@ const LayerGrid = styled.section`
   */
   grid:
     'h h h h h h h' ${HEADER_HEIGHT}px
-    '. . . . . . .' minmax(16px, 1fr)
-    '. b . p . f .' var(--viewport-height-px)
+    '. . . t . . .' minmax(${HEADER_GAP}px, 1fr)
+    'p b . c . f n' var(--viewport-height-px)
     '. . . . . . .' 1fr
     'w w w w w w w' ${({ footerHeight }) => footerHeight}px
     '. . . . . . .' ${FOOTER_BOTTOM_MARGIN}px
@@ -117,7 +115,7 @@ const Area = styled.div`
 // Page area is not `overflow:hidden` by default to allow different clipping
 // mechanisms.
 const PageAreaContainer = styled(Area).attrs({
-  area: 'p',
+  area: 'c',
 })`
   position: relative;
   display: flex;
@@ -127,7 +125,6 @@ const PageAreaContainer = styled(Area).attrs({
     hasVerticalOverflow ? 'flex-start' : 'center'};
   overflow: ${({ showOverflow }) =>
     showOverflow ? 'visible' : 'var(--overflow-x) var(--overflow-y)'};
-
   ${({
     isControlled,
     hasVerticalOverflow,
@@ -144,6 +141,15 @@ const PageAreaContainer = styled(Area).attrs({
         100% - ${hasHorizontalOverflow ? themeHelpers.SCROLLBAR_WIDTH : 0}px
       );
     `}
+`;
+
+const PageTitleContainer = styled(Area).attrs({
+  area: 't',
+})`
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Layer = forwardRef(function Layer({ children, ...rest }, ref) {
@@ -255,16 +261,16 @@ const NavArea = styled(Area)`
   justify-content: center;
 `;
 
-const NavPrevArea = styled(NavArea).attrs({
-  area: 'b',
-})``;
+const NavPrevArea = styled(NavArea).attrs({ area: 'b' })``;
 
-const NavNextArea = styled(NavArea).attrs({
-  area: 'f',
-})``;
+const NavNextArea = styled(NavArea).attrs({ area: 'f' })``;
+
+const PageBeforeArea = styled(Area).attrs({ area: 'p' })``;
+
+const PageAfterArea = styled(Area).attrs({ area: 'n' })``;
 
 const PageMenuArea = styled.div`
-  grid-area: p;
+  grid-area: c;
   position: absolute;
   right: calc(-24px + var(--page-padding-px));
   top: calc(0.5 * var(--page-padding-px));
@@ -480,6 +486,9 @@ PageArea.propTypes = {
 export {
   Layer,
   PageArea,
+  PageBeforeArea,
+  PageAfterArea,
+  PageTitleContainer as PageTitleArea,
   HeadArea,
   MenuArea,
   NavPrevArea,

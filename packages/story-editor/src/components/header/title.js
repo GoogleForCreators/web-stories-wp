@@ -26,7 +26,6 @@ import { themeHelpers } from '@googleforcreators/design-system';
  * Internal dependencies
  */
 import { useStory } from '../../app/story';
-import { useConfig } from '../../app/config';
 import { updateSlug } from '../../utils/storyUpdates';
 import { styles, states, useHighlights } from '../../app/highlights';
 
@@ -43,6 +42,10 @@ const Input = styled.input`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  border-radius: ${({ theme }) => theme.borders.radius.small};
+
+  ${themeHelpers.focusableOutlineCSS};
+
   ${({ isHighlighted }) =>
     isHighlighted &&
     css`
@@ -69,8 +72,6 @@ function HeaderTitle() {
     })
   );
 
-  const { storyId } = useConfig();
-
   const handleChange = useCallback(
     (evt) => updateStory({ properties: { title: evt.target.value } }),
     [updateStory]
@@ -80,10 +81,9 @@ function HeaderTitle() {
     updateSlug({
       currentSlug: slug,
       currentTitle: title,
-      storyId,
       updateStory,
     });
-  }, [slug, storyId, title, updateStory]);
+  }, [slug, title, updateStory]);
 
   if (typeof title !== 'string') {
     return null;

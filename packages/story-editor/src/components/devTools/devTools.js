@@ -229,7 +229,7 @@ function DevTools() {
     };
     const [stateWithDummyResources, videosToReload] = isDummyResources
       ? replaceResourcesWithDummy(stateToRestore)
-      : [stateToRestore];
+      : [stateToRestore, []];
     restore(stateWithDummyResources);
     if (videosToReload.length > 0) {
       videosToReload.forEach((videoId) => {
@@ -279,13 +279,13 @@ function DevTools() {
           </Label>
         </div>
         <div>
-          <Button title="Load data from input" onClick={loadFromInput}>
+          <Button aria-label="Load data from input" onClick={loadFromInput}>
             {'Load'}
           </Button>
-          <Button title="Copy data to clipboard" onClick={copyToClipboard}>
+          <Button aria-label="Copy data to clipboard" onClick={copyToClipboard}>
             {'Copy'}
           </Button>
-          <Button title="Close DevTools" onClick={toggleVisible}>
+          <Button aria-label="Close DevTools" onClick={toggleVisible}>
             {'X'}
           </Button>
         </div>

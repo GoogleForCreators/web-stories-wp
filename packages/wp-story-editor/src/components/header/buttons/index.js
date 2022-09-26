@@ -20,7 +20,6 @@
 import styled from 'styled-components';
 import {
   useStory,
-  CircularProgress,
   RedoButton,
   PreviewButton,
   SwitchToDraftButton,
@@ -28,6 +27,7 @@ import {
   UpdateButton,
   PublishButton,
 } from '@googleforcreators/story-editor';
+import { CircularProgress } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -127,7 +127,7 @@ function Buttons() {
   );
 
   const isPending = 'pending' === status;
-  const isDraft = 'draft' === status || !status;
+  const isDraft = ['draft', 'auto-draft'].includes(status) || !status;
   const isDraftOrPending = isDraft || isPending;
 
   const { hasMetaBoxes, isSavingMetaBoxes } = useMetaBoxes(

@@ -22,12 +22,12 @@ import {
   useEscapeToBlurEffect,
   useKeyDownEffect,
 } from '@googleforcreators/design-system';
+import { duplicatePage } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import { useStory, useConfig } from '../../../app';
-import { duplicatePage } from '../../../elements';
 
 function useCarouselKeys({ listElement, pageRefs }) {
   const { isRTL } = useConfig();

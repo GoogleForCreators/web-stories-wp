@@ -31,7 +31,7 @@ describe('videoElementMissingPoster', () => {
     };
 
     const result = videoElementMissingPoster(posterlessVideo);
-    expect(result).toBe(true);
+    expect(result).toBeTrue();
   });
 
   it('should not return true if the video resource has a poster image', () => {
@@ -46,7 +46,7 @@ describe('videoElementMissingPoster', () => {
     };
 
     const result = videoElementMissingPoster(posterlessVideo);
-    expect(result).toBe(false);
+    expect(result).toBeFalse();
   });
 
   it('should not return true if the video element has a poster image', () => {
@@ -61,6 +61,6 @@ describe('videoElementMissingPoster', () => {
     };
 
     const result = videoElementMissingPoster(posterlessVideo);
-    expect(result).toBe(false);
+    expect(result).toBeFalse();
   });
 });

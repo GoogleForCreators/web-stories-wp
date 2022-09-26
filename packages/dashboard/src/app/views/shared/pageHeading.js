@@ -25,6 +25,7 @@ import {
   THEME_CONSTANTS,
   noop,
 } from '@googleforcreators/design-system';
+
 /**
  * Internal dependencies
  */
@@ -70,7 +71,7 @@ const PageHeading = ({
   searchOptions = [],
   showSearch,
   handleSearchChange,
-  searchValue = '',
+  searchValue,
   onClear = noop,
 }) => {
   return (
@@ -87,7 +88,7 @@ const PageHeading = ({
         <HeaderSearch>
           <Search
             placeholder={searchPlaceholder}
-            selectedValue={{ label: searchValue, value: searchValue }}
+            searchValue={searchValue}
             options={searchOptions}
             handleSearchValueChange={handleSearchChange}
             onClear={onClear}

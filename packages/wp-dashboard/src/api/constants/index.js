@@ -21,6 +21,7 @@ export const STORY_FIELDS = [
   'date_gmt',
   'modified',
   'modified_gmt',
+  'story_poster',
   'link',
   'preview_link',
   'edit_link',
@@ -33,7 +34,7 @@ export const STORY_FIELDS = [
 export const SEARCH_PAGES_FIELDS = ['id', 'title'];
 export const GET_PAGE_FIELDS = ['title', 'link'];
 
-export const STORY_EMBED = 'wp:lock,wp:lockuser,author,wp:featuredmedia';
+export const STORY_EMBED = 'wp:lock,wp:lockuser,author';
 
 export const REST_LINKS = {
   EDIT: 'wp:action-edit',

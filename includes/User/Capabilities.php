@@ -169,7 +169,7 @@ class Capabilities implements Service, PluginActivationAware, SiteInitialization
 	 *
 	 * @since 1.12.0
 	 *
-	 * @return array
+	 * @return string[]
 	 */
 	protected function get_all_capabilities(): array {
 		$all_capabilities = Taxonomy_Base::DEFAULT_CAPABILITIES;

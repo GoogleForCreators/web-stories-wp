@@ -22,7 +22,7 @@ import styled, { css } from 'styled-components';
  * Internal dependencies
  */
 import { INPUT_HEIGHT } from '../constants';
-import { focusStyle } from '../../../shared';
+import { focusStyle } from '../../../shared/styles';
 import { BaseAnimationCell, GRID_ITEM_HEIGHT } from './effectChooserElements';
 import { GRID_SIZING } from './dropdownConstants';
 

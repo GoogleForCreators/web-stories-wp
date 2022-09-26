@@ -64,7 +64,6 @@ describe('getResourceFromMedia3p', () => {
     };
     const expectedStoryEditorResource = {
       baseColor: '#00379b',
-      blurHash: undefined,
       type: 'video',
       mimeType: 'video/mp4',
       creationDate: '2018-09-25T20:03.07Z',
@@ -102,7 +101,6 @@ describe('getResourceFromMedia3p', () => {
         },
       },
       attribution: undefined,
-      output: undefined,
       trimData: undefined,
     };
     expect(getResourceFromMedia3p(media3pResource)).toStrictEqual(
@@ -154,7 +152,6 @@ describe('getResourceFromMedia3p', () => {
     };
     const expectedStoryEditorResource = {
       baseColor: '#00379b',
-      blurHash: undefined,
       type: 'video',
       mimeType: 'video/mp4',
       creationDate: '2018-09-25T20:03.07Z',
@@ -192,7 +189,6 @@ describe('getResourceFromMedia3p', () => {
         },
       },
       attribution: undefined,
-      output: undefined,
       trimData: undefined,
     };
     expect(getResourceFromMedia3p(media3pResource)).toStrictEqual(
@@ -243,7 +239,6 @@ describe('getResourceFromMedia3p', () => {
     };
     const expectedStoryEditorResource = {
       baseColor: '#00379b',
-      blurHash: undefined,
       type: 'video',
       mimeType: 'video/mp4',
       creationDate: '2018-09-25T20:03.07Z',
@@ -281,7 +276,6 @@ describe('getResourceFromMedia3p', () => {
         },
       },
       attribution: undefined,
-      output: undefined,
       trimData: undefined,
     };
     expect(getResourceFromMedia3p(media3pResource)).toStrictEqual(
@@ -329,7 +323,6 @@ describe('getResourceFromMedia3p', () => {
     };
     const expectedStoryEditorResource = {
       baseColor: '#00379b',
-      blurHash: undefined,
       type: 'video',
       mimeType: 'video/mp4',
       creationDate: '2018-09-25T20:03.07Z',
@@ -368,7 +361,6 @@ describe('getResourceFromMedia3p', () => {
       },
       trimData: undefined,
       attribution: undefined,
-      output: undefined,
     };
     expect(getResourceFromMedia3p(media3pResource)).toStrictEqual(
       expectedStoryEditorResource
@@ -521,10 +513,7 @@ describe('getResourceFromMedia3p', () => {
 
     const expectedStoryEditorResource = {
       baseColor: '#00379b',
-      blurHash: undefined,
       id: 'media/tenor:3468838096637910112',
-      length: undefined,
-      lengthFormatted: undefined,
       type: 'gif',
       mimeType: 'image/gif',
       creationDate: '2020-10-26T21:36:35Z',
@@ -533,11 +522,9 @@ describe('getResourceFromMedia3p', () => {
       height: 498,
       alt: 'media/tenor:3468838096637910112',
       isPlaceholder: false,
-      isMuted: false,
       isOptimized: true,
       isExternal: true,
       needsProxy: false,
-      trimData: undefined,
       poster:
         'https://c.tenor.com/MCPJ3sVx3GAAAAAe/happy-national-cat-day-peace.png',
       posterId: 'media/tenor:3468838096637910112',
@@ -578,6 +565,186 @@ describe('getResourceFromMedia3p', () => {
         },
         registerUsageUrl:
           'https://media3p.googleapis.com/v1/media:registerUsage?token=ASGVQQM7RDo11b9csHFps5CdRRojuc3hJdc5cgBr817EXo%2B4oHZyK/RIyx4%2Bko/WHVgHwgBx1wThYyUgljKneqDEakyl0A%3D%3D',
+      },
+    };
+    expect(getResourceFromMedia3p(media3pResource)).toStrictEqual(
+      expectedStoryEditorResource
+    );
+  });
+
+  it('should return sticker resource', () => {
+    const media3pResource = {
+      name: 'media/tenor:7259408917338674423',
+      provider: 'TENOR',
+      type: 'STICKER',
+      author: {
+        displayName: 'tenor',
+        url: 'https://tenor.com/official/tenor',
+      },
+      title: 'Tuesday Happy Tuesday Sticker',
+      createTime: '2020-09-14T18:44:39Z',
+      registerUsageUrl:
+        'https://media3p.googleapis.com/v1/media:registerUsage?token=AdnbmE%2Blc8Z9N5qFNkRHgYpJLI9SgPhj7JhlSjmK7Fy6OABL6uRP0NXphMGvHFqDrhfhHQaVI3CLXT3Qsz6xDyjN/dV2AA%3D%3D',
+      imageUrls: [
+        {
+          url: 'https://c.tenor.com/ZL6Z8sVGVPcAAAAl/tuesday-happy-tuesday.webp',
+          imageName: 'webp_transparent',
+          mimeType: 'image/webp',
+          width: 498,
+          height: 303,
+        },
+        {
+          url: 'https://c.tenor.com/ZL6Z8sVGVPcAAAAt/tuesday-happy-tuesday.webp',
+          imageName: 'webppreview_transparent',
+          mimeType: 'image/webp',
+          width: 498,
+          height: 303,
+        },
+        {
+          url: 'https://c.tenor.com/ZL6Z8sVGVPcAAAAi/tuesday-happy-tuesday.gif',
+          imageName: 'gif_transparent',
+          mimeType: 'image/gif',
+          width: 498,
+          height: 286,
+        },
+        {
+          url: 'https://c.tenor.com/ZL6Z8sVGVPcAAAAq/tenor.gif',
+          imageName: 'gifpreview_transparent',
+          mimeType: 'image/gif',
+          width: 498,
+          height: 286,
+        },
+        {
+          url: 'https://c.tenor.com/ZL6Z8sVGVPcAAAAm/tuesday-happy-tuesday.webp',
+          imageName: 'tinywebp_transparent',
+          mimeType: 'image/webp',
+          width: 200,
+          height: 122,
+        },
+        {
+          url: 'https://c.tenor.com/ZL6Z8sVGVPcAAAAj/tuesday-happy-tuesday.gif',
+          imageName: 'tinygif_transparent',
+          mimeType: 'image/gif',
+          width: 200,
+          height: 115,
+        },
+        {
+          url: 'https://c.tenor.com/ZL6Z8sVGVPcAAAAn/tuesday-happy-tuesday.webp',
+          imageName: 'nanowebp_transparent',
+          mimeType: 'image/webp',
+          width: 90,
+          height: 55,
+        },
+        {
+          url: 'https://c.tenor.com/ZL6Z8sVGVPcAAAAk/tuesday-happy-tuesday.gif',
+          imageName: 'nanogif_transparent',
+          mimeType: 'image/gif',
+          width: 90,
+          height: 52,
+        },
+      ],
+      videoUrls: [
+        {
+          url: 'https://c.tenor.com/ZL6Z8sVGVPcAAAPs/tuesday-happy-tuesday.webm',
+          videoName: 'webm',
+          mimeType: 'image/webm',
+          width: 640,
+          height: 388,
+        },
+        {
+          url: 'https://c.tenor.com/ZL6Z8sVGVPcAAAPo/tuesday-happy-tuesday.mp4',
+          videoName: 'mp4',
+          mimeType: 'video/mp4',
+          width: 640,
+          height: 388,
+        },
+        {
+          url: 'https://c.tenor.com/ZL6Z8sVGVPcAAAP3/tuesday-happy-tuesday.webm',
+          videoName: 'tinywebm',
+          mimeType: 'image/webm',
+          width: 258,
+          height: 156,
+        },
+        {
+          url: 'https://c.tenor.com/ZL6Z8sVGVPcAAAP1/tuesday-happy-tuesday.mp4',
+          videoName: 'tinymp4',
+          mimeType: 'video/mp4',
+          width: 258,
+          height: 156,
+        },
+        {
+          url: 'https://c.tenor.com/ZL6Z8sVGVPcAAAP4/tuesday-happy-tuesday.webm',
+          videoName: 'nanowebm',
+          mimeType: 'image/webm',
+          width: 120,
+          height: 72,
+        },
+        {
+          url: 'https://c.tenor.com/ZL6Z8sVGVPcAAAP2/tuesday-happy-tuesday.mp4',
+          videoName: 'nanomp4',
+          mimeType: 'video/mp4',
+          width: 120,
+          height: 72,
+        },
+      ],
+      videoMetadata: {
+        duration: '0s',
+      },
+    };
+    const expectedStoryEditorResource = {
+      baseColor: undefined,
+      blurHash: undefined,
+      type: 'image',
+      mimeType: 'image/gif',
+      creationDate: '2020-09-14T18:44:39Z',
+      src: 'https://c.tenor.com/ZL6Z8sVGVPcAAAAi/tuesday-happy-tuesday.gif',
+      width: 498,
+      height: 286,
+      id: 'media/tenor:7259408917338674423',
+      alt: 'Tuesday Happy Tuesday Sticker',
+      isPlaceholder: false,
+      isExternal: true,
+      needsProxy: false,
+      sizes: {
+        '200_115': {
+          file: 'media/tenor:7259408917338674423',
+          height: 115,
+          mimeType: 'image/gif',
+          sourceUrl:
+            'https://c.tenor.com/ZL6Z8sVGVPcAAAAj/tuesday-happy-tuesday.gif',
+          width: 200,
+        },
+        full: {
+          file: 'media/tenor:7259408917338674423',
+          height: 286,
+          mimeType: 'image/gif',
+          sourceUrl:
+            'https://c.tenor.com/ZL6Z8sVGVPcAAAAi/tuesday-happy-tuesday.gif',
+          width: 498,
+        },
+        large: {
+          file: 'media/tenor:7259408917338674423',
+          height: 286,
+          mimeType: 'image/gif',
+          sourceUrl: 'https://c.tenor.com/ZL6Z8sVGVPcAAAAq/tenor.gif',
+          width: 498,
+        },
+        web_stories_thumbnail: {
+          file: 'media/tenor:7259408917338674423',
+          height: 52,
+          mimeType: 'image/gif',
+          sourceUrl:
+            'https://c.tenor.com/ZL6Z8sVGVPcAAAAk/tuesday-happy-tuesday.gif',
+          width: 90,
+        },
+      },
+      attribution: {
+        author: {
+          displayName: 'tenor',
+          url: 'https://tenor.com/official/tenor',
+        },
+        registerUsageUrl:
+          'https://media3p.googleapis.com/v1/media:registerUsage?token=AdnbmE%2Blc8Z9N5qFNkRHgYpJLI9SgPhj7JhlSjmK7Fy6OABL6uRP0NXphMGvHFqDrhfhHQaVI3CLXT3Qsz6xDyjN/dV2AA%3D%3D',
       },
     };
     expect(getResourceFromMedia3p(media3pResource)).toStrictEqual(

@@ -22,8 +22,11 @@ import {
   isInsideRange,
   moveArrayElement,
   getAbsolutePosition,
-  objectWithout,
+  removeAnimationsWithElementIds,
+  updateAnimations,
+  removeDuplicates,
   exclusion,
+  getLastIndexOfGroup,
 } from '../utils';
 import { LAYER_DIRECTIONS } from '../../../../../constants';
 
@@ -55,16 +58,16 @@ describe('isInsideRange', () => {
   it('should function as expected', () => {
     const isSingleDigit = (number) => isInsideRange(number, 0, 9);
 
-    expect(isSingleDigit(0)).toBe(true);
-    expect(isSingleDigit(3.2)).toBe(true);
-    expect(isSingleDigit(9)).toBe(true);
+    expect(isSingleDigit(0)).toBeTrue();
+    expect(isSingleDigit(3.2)).toBeTrue();
+    expect(isSingleDigit(9)).toBeTrue();
 
-    expect(isSingleDigit(-0.1)).toBe(false);
-    expect(isSingleDigit(10)).toBe(false);
+    expect(isSingleDigit(-0.1)).toBeFalse();
+    expect(isSingleDigit(10)).toBeFalse();
 
-    expect(isSingleDigit(Number.POSITIVE_INFINITY)).toBe(false);
-    expect(isSingleDigit(Number.NEGATIVE_INFINITY)).toBe(false);
-    expect(isSingleDigit(Number.NaN)).toBe(false);
+    expect(isSingleDigit(Number.POSITIVE_INFINITY)).toBeFalse();
+    expect(isSingleDigit(Number.NEGATIVE_INFINITY)).toBeFalse();
+    expect(isSingleDigit(Number.NaN)).toBeFalse();
   });
 });
 
@@ -190,19 +193,84 @@ describe('getAbsolutePosition', () => {
   });
 });
 
-describe('objectWithout', () => {
-  it('should return a cloned object without the given key', () => {
-    const input = { a: 1, b: 2 };
-    const result = objectWithout(input, 'a');
-    expect(input).toStrictEqual({ a: 1, b: 2 });
-    expect(result).toStrictEqual({ b: 2 });
+describe('removeAnimationsWithElementIds', () => {
+  it('should return an empty array if no animations passed in', () => {
+    expect(removeAnimationsWithElementIds()).toStrictEqual([]);
   });
 
-  it('should do nothing if key not found', () => {
-    const input = { a: 1, b: 2 };
-    const result = objectWithout(input, 'c');
-    expect(input).toStrictEqual({ a: 1, b: 2 });
-    expect(result).toStrictEqual({ a: 1, b: 2 });
+  it('should return all animations if no ids passed in', () => {
+    const animations = [{ id: 'a', targets: ['e1'] }];
+    expect(removeAnimationsWithElementIds(animations)).toStrictEqual(
+      animations
+    );
+  });
+
+  it('should filter out animations with matching ids', () => {
+    const animations = [
+      { id: 'a', targets: ['e1'] },
+      { id: 'b', targets: ['e2'] },
+      { id: 'c', targets: ['e1'] },
+    ];
+    expect(removeAnimationsWithElementIds(animations, ['e1'])).toStrictEqual([
+      { id: 'b', targets: ['e2'] },
+    ]);
+  });
+});
+
+describe('updateAnimations', () => {
+  it('should return original if no updates requested', () => {
+    const animations = [
+      { id: 'a', targets: ['e1'] },
+      { id: 'b', targets: ['e2'] },
+      { id: 'c', targets: ['e1'] },
+    ];
+    const updates = {};
+    expect(updateAnimations(animations, updates)).toStrictEqual(animations);
+  });
+  it('should delete animations if requested', () => {
+    const animations = [
+      { id: 'a', targets: ['e1'] },
+      { id: 'b', targets: ['e2'] },
+      { id: 'c', targets: ['e1'] },
+    ];
+    const updates = { b: { delete: true } };
+    expect(updateAnimations(animations, updates)).toStrictEqual([
+      { id: 'a', targets: ['e1'] },
+      { id: 'c', targets: ['e1'] },
+    ]);
+  });
+  it('should modify animations if requested', () => {
+    const animations = [
+      { id: 'a', targets: ['e1'] },
+      { id: 'b', targets: ['e2'] },
+      { id: 'c', targets: ['e1'] },
+    ];
+    const updates = { b: { id: 'b', targets: ['e2'], newProp: 'x' } };
+    expect(updateAnimations(animations, updates)).toStrictEqual([
+      { id: 'a', targets: ['e1'] },
+      { id: 'b', targets: ['e2'], newProp: 'x' },
+      { id: 'c', targets: ['e1'] },
+    ]);
+  });
+  it('should add animations if requested', () => {
+    const animations = [
+      { id: 'a', targets: ['e1'] },
+      { id: 'b', targets: ['e2'] },
+      { id: 'c', targets: ['e1'] },
+    ];
+    const updates = { d: { id: 'd', targets: ['e3'] } };
+    expect(updateAnimations(animations, updates)).toStrictEqual([
+      { id: 'a', targets: ['e1'] },
+      { id: 'b', targets: ['e2'] },
+      { id: 'c', targets: ['e1'] },
+      { id: 'd', targets: ['e3'] },
+    ]);
+  });
+});
+
+describe('removeDuplicates', () => {
+  it('should return an empty array if nothing passed in', () => {
+    expect(removeDuplicates()).toStrictEqual([]);
   });
 });
 
@@ -227,5 +295,29 @@ describe('exclusion', () => {
     const left = [{ id: 'a' }, { id: 'b' }, { id: 'c' }];
     const right = [{ id: 'a' }, { id: 'b' }, { id: 'c' }];
     expect(exclusion(left, right)).toStrictEqual([]);
+  });
+
+  it('should return an empty array if nothing passed in', () => {
+    expect(exclusion()).toStrictEqual([]);
+  });
+});
+
+describe('getLastIndexOfGroup', () => {
+  it('should calculate the last position of a group', () => {
+    const elements = [
+      { id: 'e1', isBackground: true },
+      { id: 'e2' },
+      { id: 'e3', groupId: 'g1' },
+      { id: 'e4', groupId: 'g1' },
+      { id: 'e5', groupId: 'g1' },
+      { id: 'e6', groupId: 'g1' },
+      { id: 'e7', groupId: 'g1' }, // <-- 6th index
+      { id: 'e8' },
+      { id: 'e9', groupId: 'g2' },
+      { id: 'e10', groupId: 'g2' }, // <-- 9th index
+    ];
+
+    expect(getLastIndexOfGroup({ elements, groupId: 'g1' })).toBe(6);
+    expect(getLastIndexOfGroup({ elements, groupId: 'g2' })).toBe(9);
   });
 });

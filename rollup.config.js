@@ -22,14 +22,13 @@ import { fileURLToPath } from 'url';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import { babel } from '@rollup/plugin-babel';
-import { terser } from 'rollup-plugin-terser';
-import svgr from '@svgr/rollup';
-import filesize from 'rollup-plugin-filesize';
-import css from 'rollup-plugin-import-css';
 import url from '@rollup/plugin-url';
 import json from '@rollup/plugin-json';
-import image from '@rollup/plugin-image';
 import dynamicImportVars from '@rollup/plugin-dynamic-import-vars';
+import typescript from '@rollup/plugin-typescript';
+import svgr from '@svgr/rollup';
+import { terser } from 'rollup-plugin-terser';
+import filesize from 'rollup-plugin-filesize';
 import license from 'rollup-plugin-license';
 import del from 'rollup-plugin-delete';
 import copy from 'rollup-plugin-copy';
@@ -44,24 +43,69 @@ const plugins = [
     preferBuiltins: true,
     dedupe: [],
   }),
+  typescript(),
   babel({
+    babelrc: false,
+    extensions: ['.ts', '.tsx', '.js', '.jsx', '.mjs'],
     babelHelpers: 'inline',
     exclude: 'node_modules/**',
-    presets: ['@babel/env', '@babel/preset-react'],
+    presets: ['@babel/env', '@babel/preset-react', '@babel/preset-typescript'],
     plugins: [
       'babel-plugin-styled-components',
       'babel-plugin-transform-react-remove-prop-types',
     ],
   }),
-  url(),
-  svgr(),
+  url({
+    include: '**/inline-icons/*.svg',
+  }),
+  svgr({
+    include: '**/icons/*.svg',
+    titleProp: true,
+    svgo: true,
+    memo: true,
+    svgoConfig: {
+      plugins: [
+        {
+          name: 'preset-default',
+          params: {
+            overrides: {
+              removeViewBox: false,
+              convertColors: {
+                currentColor: /^(?!url|none)/i,
+              },
+            },
+          },
+        },
+        'removeDimensions',
+      ],
+    },
+  }),
+  svgr({
+    include: '**/images/*.svg',
+    titleProp: true,
+    svgo: true,
+    memo: true,
+    svgoConfig: {
+      plugins: [
+        {
+          name: 'preset-default',
+          params: {
+            overrides: {
+              removeViewBox: false,
+              convertColors: {
+                // See https://github.com/googleforcreators/web-stories-wp/pull/6361
+                currentColor: false,
+              },
+            },
+          },
+        },
+        'removeDimensions',
+      ],
+    },
+  }),
   commonjs(),
   json({
     compact: true,
-  }),
-  css(),
-  image({
-    include: '/inline-icons/*.svg',
   }),
   dynamicImportVars(),
   webWorkerLoader({

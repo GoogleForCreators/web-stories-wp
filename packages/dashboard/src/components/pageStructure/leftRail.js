@@ -18,25 +18,21 @@
  */
 import {
   useCallback,
-  useEffect,
   useFocusOut,
   useLayoutEffect,
   useRef,
 } from '@googleforcreators/react';
 import { trackClick, trackEvent } from '@googleforcreators/tracking';
-import { getTemplateMetaData } from '@googleforcreators/templates';
 import { __, sprintf } from '@googleforcreators/i18n';
 import {
   Button,
   BUTTON_SIZES,
   BUTTON_TYPES,
   LogoWithTypeCircleColor,
-  NotificationBubble,
   Text,
   THEME_CONSTANTS,
 } from '@googleforcreators/design-system';
 import styled from 'styled-components';
-import { differenceInDays, getOptions, toDate } from '@googleforcreators/date';
 
 /**
  * Internal dependencies
@@ -56,36 +52,13 @@ import {
 } from './navigationComponents';
 import { LeftRailContainer } from './pageStructureComponents';
 
-const StyledNotificationBubble = styled(NotificationBubble)`
-  position: absolute;
-  top: 0;
-  left: 11px;
-  transform: translateY(-50%);
-
-  /* prevent active color from applying to bubble inner text */
-  && > span,
-  &&:hover > span {
-    color: ${({ theme }) => theme.colors.bg.primary};
-  }
-`;
-
 const IconWrap = styled.div`
   position: relative;
 `;
 
-const NEW_TEMPLATE_THRESHOLD_IN_DAYS = 60;
-
-function getNewTemplatesMetaData(metaDataEntries, days) {
-  const currentDate = toDate(new Date(), getOptions());
-  return metaDataEntries.filter((metaData) => {
-    const creationDate = toDate(metaData.creationDate, getOptions());
-    const deltaDays = differenceInDays(currentDate, creationDate);
-    return deltaDays < days;
-  });
-}
-
 function LeftRail() {
-  const { state } = useRouteHistory();
+  const activeRoute = useRouteHistory(({ state }) => state.activeRoute);
+
   const {
     newStoryURL,
     version,
@@ -97,8 +70,8 @@ function LeftRail() {
   const upperContentRef = useRef(null);
 
   const {
-    state: { sideBarVisible, numNewTemplates },
-    actions: { toggleSideBar, updateNumNewTemplates },
+    state: { sideBarVisible },
+    actions: { toggleSideBar },
   } = useNavContext();
 
   const onContainerClickCapture = useCallback(
@@ -136,30 +109,6 @@ function LeftRail() {
     trackClick(evt, path.trackingEvent);
   }, []);
 
-  // See how many templates are new based on the current date
-  useEffect(() => {
-    let mounted = true;
-
-    async function refreshNewTemplateCount() {
-      const metaData = await getTemplateMetaData();
-      if (metaData) {
-        const newTemplates = getNewTemplatesMetaData(
-          metaData,
-          NEW_TEMPLATE_THRESHOLD_IN_DAYS
-        );
-        if (mounted) {
-          updateNumNewTemplates(newTemplates.length);
-        }
-      }
-    }
-
-    refreshNewTemplateCount();
-
-    return () => {
-      mounted = false;
-    };
-  }, [updateNumNewTemplates]);
-
   return (
     <LeftRailContainer
       onClickCapture={onContainerClickCapture}
@@ -191,54 +140,35 @@ function LeftRail() {
               const isTemplatesDisabled =
                 path.value === APP_ROUTES.TEMPLATES_GALLERY &&
                 !canViewDefaultTemplates;
+
               if (isTemplatesDisabled) {
                 return null;
               }
-              const isNotificationBubbleEnabled =
-                path.value === APP_ROUTES.TEMPLATES_GALLERY &&
-                state.currentPath !== APP_ROUTES.TEMPLATES_GALLERY;
-              const appendNewBadgeToLable = (label) =>
-                isNotificationBubbleEnabled
-                  ? sprintf(
-                      /* translators: 1: current page. 2: number of new templates. */
-                      __('%1$s (%2$s new)', 'web-stories'),
-                      label,
-                      numNewTemplates
-                    )
-                  : label;
 
               return (
                 <NavListItem key={path.value}>
                   <NavLink
-                    active={path.value === state.currentPath}
+                    active={activeRoute === path.value}
                     href={resolveRoute(path.value)}
                     size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
                     isBold
                     isIconLink={Boolean(Icon)}
-                    aria-label={appendNewBadgeToLable(
-                      path.value === state.currentPath
+                    aria-label={
+                      activeRoute === path.value
                         ? sprintf(
                             /* translators: %s: the current page, for example "Dashboard". */
                             __('%s (active view)', 'web-stories'),
                             path.label
                           )
                         : path.label
-                    )}
+                    }
                     {...(path.isExternal && {
                       rel: 'noreferrer',
                       target: '_blank',
                       onClick: (evt) => onExternalLinkClick(evt, path),
                     })}
                   >
-                    <IconWrap>
-                      {Icon && <Icon width="22px" />}
-                      {isNotificationBubbleEnabled && numNewTemplates > 0 && (
-                        <StyledNotificationBubble
-                          notificationCount={numNewTemplates}
-                          isSmall
-                        />
-                      )}
-                    </IconWrap>
+                    <IconWrap>{Icon && <Icon width="22px" />}</IconWrap>
 
                     <PathName as="span" isBold>
                       {path.label}
@@ -256,11 +186,11 @@ function LeftRail() {
             {leftRailSecondaryNavigation.map((path) => (
               <NavListItem key={path.value}>
                 <NavLink
-                  active={path.value === state.currentPath}
+                  active={activeRoute === path.value}
                   href={resolveRoute(path.value)}
                   size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
                   aria-label={
-                    path.value === state.currentPath
+                    activeRoute === path.value
                       ? sprintf(
                           /* translators: %s: the current page, for example "Dashboard". */
                           __('%s (active view)', 'web-stories'),

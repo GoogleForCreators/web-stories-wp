@@ -13,12 +13,47 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * External dependencies
+ */
+import { registerElementType } from '@googleforcreators/elements';
+import { elementTypes } from '@googleforcreators/element-library';
+
 /**
  * Internal dependencies
  */
 import { setupReducer } from './_utils';
 
 describe('duplicateElementsById', () => {
+  beforeAll(() => {
+    elementTypes.forEach(registerElementType);
+  });
+
+  it('should do nothing if not passed an array', () => {
+    const { restore, duplicateElementsById } = setupReducer();
+
+    // Set an initial state with a current page.
+    const initialState = restore({
+      pages: [
+        {
+          id: '111',
+          animations: [],
+          elements: [
+            { id: '123', isBackground: true, type: 'shape' },
+            { id: '456', x: 0, y: 0, type: 'shape' },
+            { id: '789', x: 0, y: 0, type: 'shape' },
+          ],
+        },
+      ],
+      current: '111',
+      selection: ['789', '456'],
+    });
+
+    const result = duplicateElementsById({ elementIds: '123' });
+    expect(result).toStrictEqual(initialState);
+  });
+
   it('duplicates an element at index after specified element', () => {
     const { restore, duplicateElementsById } = setupReducer();
 
@@ -120,7 +155,7 @@ describe('duplicateElementsById', () => {
     expect(result).toStrictEqual(initialState);
   });
 
-  it("duplicates an element's animations", () => {
+  it('duplicates an elements animations', () => {
     const { restore, duplicateElementsById } = setupReducer();
 
     // Set an initial state with a current page.
@@ -281,7 +316,7 @@ describe('duplicateElementsById', () => {
     });
   });
 
-  it('should only duplicates existing elements', () => {
+  it('should only duplicate existing elements', () => {
     const { restore, duplicateElementsById } = setupReducer();
 
     // Set an initial state with a current page.
@@ -338,6 +373,59 @@ describe('duplicateElementsById', () => {
               type: 'shape',
             }),
             expect.objectContaining({ id: '789', x: 0, y: 0, type: 'image' }),
+          ],
+        },
+      ],
+    });
+  });
+
+  it('should skip product elements', () => {
+    const { restore, duplicateElementsById } = setupReducer();
+
+    // Set an initial state with a current page.
+    const initialState = restore({
+      pages: [
+        {
+          id: '111',
+          animations: [],
+          elements: [
+            { id: '123', isBackground: true, type: 'shape' },
+            { id: '456', x: 0, y: 0, type: 'product' },
+            { id: '789', x: 0, y: 0, type: 'shape' },
+          ],
+        },
+      ],
+      current: '111',
+      selection: ['789', '456'],
+    });
+
+    const result = duplicateElementsById({ elementIds: ['456', '789'] });
+
+    const newElementId = result.pages[0].elements.find(
+      (el) => !initialState.pages[0].elements.includes(el)
+    ).id;
+
+    expect(result).toStrictEqual({
+      ...initialState,
+      selection: [newElementId],
+      pages: [
+        {
+          id: '111',
+          animations: [],
+          elements: [
+            expect.objectContaining({
+              id: '123',
+              isBackground: true,
+              type: 'shape',
+            }),
+            expect.objectContaining({ id: '456', x: 0, y: 0, type: 'product' }),
+            expect.objectContaining({ id: '789', x: 0, y: 0, type: 'shape' }),
+            expect.objectContaining({
+              id: newElementId,
+              x: expect.any(Number),
+              y: expect.any(Number),
+              type: 'shape',
+            }),
           ],
         },
       ],

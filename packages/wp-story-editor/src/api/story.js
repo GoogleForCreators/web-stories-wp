@@ -53,6 +53,7 @@ const getStorySaveData = (
     backgroundAudio,
     content,
     author,
+    products,
     ...rest
   },
   encodeMarkup
@@ -66,10 +67,19 @@ const getStorySaveData = (
       currentStoryStyles,
       backgroundAudio,
     },
-    featured_media: featuredMedia.id,
+    featured_media: !featuredMedia.isExternal ? featuredMedia.id : null,
     style_presets: globalStoryStyles,
     meta: {
       web_stories_publisher_logo: publisherLogo?.id,
+      web_stories_products: products,
+      web_stories_poster: featuredMedia.isExternal
+        ? {
+            url: featuredMedia.url,
+            width: featuredMedia.width,
+            height: featuredMedia.height,
+            needsProxy: featuredMedia.needsProxy,
+          }
+        : null, // null ensures the meta value will be deleted.
     },
     publisher_logo: publisherLogo,
     content: encodeMarkup ? base64Encode(content) : content,
@@ -98,7 +108,9 @@ export function saveStoryById(config, story) {
       'link',
       'preview_link',
       'edit_link',
+      '_links',
       'embed_post_link',
+      'story_poster',
     ].join(','),
     _embed: STORY_EMBED,
   });
@@ -108,16 +120,31 @@ export function saveStoryById(config, story) {
     data: storySaveData,
     method: 'POST',
   }).then((data) => {
-    const { _embedded: embedded = {}, ...rest } = data;
+    const { story_poster: storyPoster, _links: links = {}, ...rest } = data;
+
+    const revisions = {
+      count: links?.['version-history']?.[0]?.count,
+      id: links?.['predecessor-version']?.[0]?.id,
+    };
+
+    const featuredMedia = storyPoster
+      ? {
+          ...storyPoster,
+          isExternal: !storyPoster.id,
+        }
+      : {
+          id: 0,
+          height: 0,
+          width: 0,
+          url: '',
+          needsProxy: false,
+          isExternal: false,
+        };
 
     return {
       ...snakeToCamelCaseObjectKeys(rest),
-      featuredMedia: {
-        id: embedded?.['wp:featuredmedia']?.[0].id || 0,
-        height: embedded?.['wp:featuredmedia']?.[0]?.media_details?.height || 0,
-        width: embedded?.['wp:featuredmedia']?.[0]?.media_details?.width || 0,
-        url: embedded?.['wp:featuredmedia']?.[0]?.source_url || '',
-      },
+      featuredMedia,
+      revisions,
     };
   });
 }

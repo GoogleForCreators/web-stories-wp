@@ -46,7 +46,7 @@ interface Renderer {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param array $args Array of rendering related arguments.
+	 * @param array<string,mixed> $args Array of rendering related arguments.
 	 * @return string Rendering markup.
 	 */
 	public function render( array $args = [] ): string;

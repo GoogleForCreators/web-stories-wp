@@ -25,7 +25,7 @@ import { useSnackbar } from '@googleforcreators/design-system';
  * Internal dependencies
  */
 import { SUCCESS } from '../constants';
-import { useEditorSettings } from '../components/editorSettings';
+import useEditorSettings from '../components/editorSettings/useEditorSettings';
 
 export default function useMediaOptimization() {
   const { showSnackbar } = useSnackbar();

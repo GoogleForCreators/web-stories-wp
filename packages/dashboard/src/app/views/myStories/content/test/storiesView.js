@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { screen } from '@testing-library/react';
-import { noop } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
@@ -30,6 +29,7 @@ import {
   STORY_STATUS,
 } from '../../../../../constants';
 import StoriesView from '../storiesView';
+import useStoryFilters from '../../filters/useStoryFilters';
 
 const fakeStories = [
   {
@@ -41,7 +41,7 @@ const fakeStories = [
     link: 'https://example.com',
     editStoryLink: 'https://example.com',
     previewLink: 'https://example.com',
-    featuredMediaUrl: 'http://placekitten.com/640/853',
+    featuredMediaUrl: 'http://localhost:9876/__static__/featured-media-1.png',
     capabilities: {
       hasEditAction: true,
       hasDeleteAction: true,
@@ -56,7 +56,7 @@ const fakeStories = [
     link: 'https://example.com',
     editStoryLink: 'https://example.com',
     previewLink: 'https://example.com',
-    featuredMediaUrl: 'http://placekitten.com/640/853',
+    featuredMediaUrl: 'http://localhost:9876/__static__/featured-media-2.png',
     capabilities: {
       hasEditAction: true,
       hasDeleteAction: true,
@@ -71,7 +71,7 @@ const fakeStories = [
     link: 'https://example.com',
     editStoryLink: 'https://example.com',
     previewLink: 'https://example.com',
-    featuredMediaUrl: 'http://placekitten.com/640/853',
+    featuredMediaUrl: 'http://localhost:9876/__static__/featured-media-3.png',
     locked: true,
     lockUser: {
       name: 'Batgirl',
@@ -84,17 +84,39 @@ const fakeStories = [
   },
 ];
 
-describe('Dashboard <StoriesView />', function () {
-  it(`should render stories as a grid when view is ${VIEW_STYLE.GRID}`, function () {
+jest.mock('../../filters/useStoryFilters', () => ({
+  ...jest.requireActual('../../filters/useStoryFilters'),
+  __esModule: true,
+  default: jest.fn(),
+}));
+
+const mockUseStoryFilters = useStoryFilters;
+
+const updateSort = jest.fn();
+
+const mockFilterState = {
+  filters: [
+    {
+      key: 'status',
+      filterId: STORY_STATUS.ALL,
+    },
+  ],
+  filtersObject: {},
+  sortObject: {
+    orderby: STORY_SORT_OPTIONS.NAME,
+    order: SORT_DIRECTION.ASC,
+  },
+  updateSort,
+};
+
+describe('Dashboard <StoriesView />', () => {
+  beforeEach(() => {
+    mockUseStoryFilters.mockImplementation(() => mockFilterState);
+  });
+
+  it(`should render stories as a grid when view is ${VIEW_STYLE.GRID}`, () => {
     renderWithProviders(
       <StoriesView
-        filterValue={STORY_STATUS.ALL}
-        sort={{
-          value: STORY_SORT_OPTIONS.NAME,
-          direction: SORT_DIRECTION.ASC,
-          set: noop,
-          setDirection: noop,
-        }}
         storyActions={{
           duplicateStory: jest.fn,
           trashStory: jest.fn,
@@ -118,16 +140,12 @@ describe('Dashboard <StoriesView />', function () {
   });
 
   describe('Loading stories', () => {
+    beforeEach(() => {
+      mockUseStoryFilters.mockImplementation(() => mockFilterState);
+    });
     it('should be able to hide the grid while the stories are loading', () => {
       renderWithProviders(
         <StoriesView
-          filterValue={STORY_STATUS.ALL}
-          sort={{
-            value: STORY_SORT_OPTIONS.NAME,
-            direction: SORT_DIRECTION.ASC,
-            set: noop,
-            setDirection: noop,
-          }}
           storyActions={{
             duplicateStory: jest.fn,
             trashStory: jest.fn,
@@ -155,13 +173,6 @@ describe('Dashboard <StoriesView />', function () {
     it('should be able to show the grid while stories are loading', () => {
       renderWithProviders(
         <StoriesView
-          filterValue={STORY_STATUS.ALL}
-          sort={{
-            value: STORY_SORT_OPTIONS.NAME,
-            direction: SORT_DIRECTION.ASC,
-            set: noop,
-            setDirection: noop,
-          }}
           storyActions={{
             duplicateStory: jest.fn,
             trashStory: jest.fn,
@@ -191,13 +202,6 @@ describe('Dashboard <StoriesView />', function () {
     it('should hide stories in the list view when stories are loading', () => {
       renderWithProviders(
         <StoriesView
-          filterValue={STORY_STATUS.ALL}
-          sort={{
-            value: STORY_SORT_OPTIONS.NAME,
-            direction: SORT_DIRECTION.ASC,
-            set: noop,
-            setDirection: noop,
-          }}
           storyActions={{
             duplicateStory: jest.fn,
             trashStory: jest.fn,
@@ -225,13 +229,6 @@ describe('Dashboard <StoriesView />', function () {
     it('should be able to show the list while stories are loading', () => {
       renderWithProviders(
         <StoriesView
-          filterValue={STORY_STATUS.ALL}
-          sort={{
-            value: STORY_SORT_OPTIONS.NAME,
-            direction: SORT_DIRECTION.ASC,
-            set: noop,
-            setDirection: noop,
-          }}
           storyActions={{
             duplicateStory: jest.fn,
             trashStory: jest.fn,
@@ -260,16 +257,12 @@ describe('Dashboard <StoriesView />', function () {
   });
 
   describe('Locked story', () => {
-    it('should show a lock icon and helpful tooltip and aria text in list view when a story is being edited by another user', function () {
+    beforeEach(() => {
+      mockUseStoryFilters.mockImplementation(() => mockFilterState);
+    });
+    it('should show a lock icon and helpful tooltip and aria text in list view when a story is being edited by another user', () => {
       renderWithProviders(
         <StoriesView
-          filterValue={STORY_STATUS.ALL}
-          sort={{
-            value: STORY_SORT_OPTIONS.NAME,
-            direction: SORT_DIRECTION.ASC,
-            set: noop,
-            setDirection: noop,
-          }}
           storyActions={{
             duplicateStory: jest.fn,
             trashStory: jest.fn,
@@ -285,9 +278,7 @@ describe('Dashboard <StoriesView />', function () {
           }}
         />,
         {
-          features: {
-            enablePostLocking: true,
-          },
+          features: {},
         },
         {}
       );

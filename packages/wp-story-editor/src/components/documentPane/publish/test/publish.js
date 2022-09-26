@@ -23,19 +23,22 @@ import {
   APIContext,
   ConfigContext,
   StoryContext,
-  InspectorContext,
+  SidebarContext,
 } from '@googleforcreators/story-editor';
+import { renderWithTheme } from '@googleforcreators/test-utils';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
  */
-import { renderWithTheme } from '../../../../testUtils';
 import PublishPanel from '../publish';
 
 jest.mock('./../../../../api/publisherLogos', () => ({
   getPublisherLogos: jest.fn().mockResolvedValue([]),
   addPublisherLogo: jest.fn().mockResolvedValue([]),
 }));
+
+jest.mock('flagged');
 
 function MediaUpload({ render }) {
   const open = jest.fn();
@@ -59,6 +62,7 @@ function arrange(
         date: '2020-01-01T20:20:20',
         modified: '2020-01-01T20:20:19',
         featuredMedia: { id: 0, url: '', height: 0, width: 0 },
+        revisions: { count: 8, id: 189 },
         publisherLogo: { id: 0, url: '', height: 0, width: 0 },
         status: 'draft',
       },
@@ -68,13 +72,10 @@ function arrange(
 
   const config = {
     capabilities,
-    allowedImageFileTypes: ['gif', 'jpe', 'jpeg', 'jpg', 'png'],
-    allowedImageMimeTypes: [
-      'image/png',
-      'image/jpeg',
-      'image/jpg',
-      'image/gif',
-    ],
+    allowedMimeTypes: {
+      image: ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'],
+    },
+    revisionLink: 'http://example.com',
     apiCallbacks: {
       getAuthors: jest.fn().mockResolvedValue({}),
     },
@@ -85,7 +86,7 @@ function arrange(
   };
   const loadUsers = jest.fn();
 
-  const inspectorContextValue = {
+  const sidebarContextValue = {
     actions: { loadUsers },
     state: {
       users: [{ value: 'foo' }, { value: 'bar' }],
@@ -98,9 +99,9 @@ function arrange(
     <ConfigContext.Provider value={config}>
       <APIContext.Provider value={{ actions }}>
         <StoryContext.Provider value={storyContextValue}>
-          <InspectorContext.Provider value={inspectorContextValue}>
+          <SidebarContext.Provider value={sidebarContextValue}>
             <PublishPanel />
-          </InspectorContext.Provider>
+          </SidebarContext.Provider>
         </StoryContext.Provider>
       </APIContext.Provider>
     </ConfigContext.Provider>
@@ -118,6 +119,7 @@ describe('PublishPanel', () => {
       JSON.stringify({ isCollapsed: false })
     );
     MockDate.set('2020-07-15T12:00:00+00:00');
+    useFeature.mockImplementation(() => true);
   });
 
   afterAll(() => {
@@ -129,9 +131,15 @@ describe('PublishPanel', () => {
     arrange();
     const publishPanel = screen.getByText('Publishing');
     const publisherLogo = screen.getByText('Publisher Logo');
-
+    const revisionsText = screen.getByText('8 Revisions');
+    const revisionsLink = screen.getByRole('link', { name: 'Browse' });
     await waitFor(() => expect(publishPanel).toBeDefined());
     await waitFor(() => expect(publisherLogo).toBeDefined());
+    await waitFor(() => expect(revisionsText).toBeDefined());
+    expect(revisionsLink).toHaveAttribute(
+      'href',
+      'http://example.com/?revision=189'
+    );
   });
 
   it('should display Author field if authors available', async () => {
@@ -169,7 +177,7 @@ describe('PublishPanel', () => {
     await waitFor(() => expect(firstOfJanuary).toBeDefined());
 
     fireEvent.click(firstOfJanuary);
-    expect(updateStory).toHaveBeenCalledTimes(1);
+    expect(updateStory).toHaveBeenCalledOnce();
     const calledArg = updateStory.mock.calls[0][0];
     const date = new Date(calledArg.properties.date);
     expect(date.getMonth()).toBe(0);

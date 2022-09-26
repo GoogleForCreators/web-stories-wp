@@ -18,12 +18,12 @@
  * External dependencies
  */
 import { axe } from 'jest-axe';
+import { renderWithTheme } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
  */
 import MediaElement from '../panes/media/common/mediaElement';
-import { renderWithTheme } from '../../../testUtils';
 import CanvasContext from '../../../app/canvas/context';
 import StoryContext from '../../../app/story/context';
 import { useLocalMedia } from '../../../app/media';

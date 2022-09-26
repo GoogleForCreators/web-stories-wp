@@ -19,6 +19,7 @@
  */
 import styled from 'styled-components';
 import { useMemo } from '@googleforcreators/react';
+import { getExtensionsFromMimeType } from '@googleforcreators/media';
 import PropTypes from 'prop-types';
 
 /**
@@ -36,10 +37,18 @@ const StyledMedia = styled(Media)`
 
 function LinkIcon({ handleChange, icon, isLoading = false, ...rest }) {
   const {
-    allowedImageMimeTypes,
-    allowedImageFileTypes,
+    allowedMimeTypes: { image: allowedImageMimeTypes },
     capabilities: { hasUploadMediaAction },
   } = useConfig();
+
+  const allowedImageFileTypes = useMemo(
+    () =>
+      allowedImageMimeTypes
+        .map((type) => getExtensionsFromMimeType(type))
+        .flat(),
+    [allowedImageMimeTypes]
+  );
+
   const iconErrorMessage = useMemo(() => {
     let message = __(
       'No image file types are currently supported.',
@@ -57,7 +66,12 @@ function LinkIcon({ handleChange, icon, isLoading = false, ...rest }) {
     return message;
   }, [allowedImageFileTypes]);
 
-  const options = hasUploadMediaAction ? ['edit', 'remove'] : ['remove'];
+  const options = [
+    hasUploadMediaAction && 'upload',
+    hasUploadMediaAction && 'edit',
+    'hotlink',
+    icon && 'remove',
+  ].filter(Boolean);
 
   return (
     <StyledMedia
@@ -71,11 +85,14 @@ function LinkIcon({ handleChange, icon, isLoading = false, ...rest }) {
       title={__('Select as link icon', 'web-stories')}
       ariaLabel={__('Edit link icon', 'web-stories')}
       buttonInsertText={__('Select as link icon', 'web-stories')}
+      hotlinkTitle={__('Use external image as link icon', 'web-stories')}
+      hotlinkInsertText={__('Use image as link icon', 'web-stories')}
+      hotlinkInsertingText={__('Using image as link icon', 'web-stories')}
       type={allowedImageMimeTypes}
       isLoading={isLoading}
       variant={MEDIA_VARIANTS.CIRCLE}
-      canUpload={(icon && !hasUploadMediaAction) || hasUploadMediaAction}
-      menuOptions={icon ? options : []}
+      canUpload={options.length !== 0}
+      menuOptions={options}
       {...rest}
     />
   );

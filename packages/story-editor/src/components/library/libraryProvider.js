@@ -25,36 +25,45 @@ import {
   useState,
   useCallback,
 } from '@googleforcreators/react';
-import { useFeatures } from 'flagged';
 import { getTimeTracker, trackEvent } from '@googleforcreators/tracking';
 import { loadTextSets } from '@googleforcreators/text-sets';
 import { uniqueEntriesByKey } from '@googleforcreators/design-system';
+import { ELEMENT_TYPES } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import { useInsertElement, useInsertTextSet } from '../canvas';
 import { useHighlights } from '../../app/highlights';
-import { useConfig, useAPI } from '../../app';
+import { useConfig, useAPI, useStory } from '../../app';
 import Context from './context';
 import {
-  ELEMS,
   MEDIA,
   MEDIA3P,
   PAGE_TEMPLATES,
   SHAPES,
   TEXT,
+  SHOPPING,
 } from './constants';
 
 const LIBRARY_TAB_IDS = new Set(
-  [ELEMS, MEDIA, MEDIA3P, PAGE_TEMPLATES, SHAPES, TEXT].map((tab) => tab.id)
+  [MEDIA, MEDIA3P, PAGE_TEMPLATES, SHAPES, TEXT, SHOPPING].map((tab) => tab.id)
 );
 
 function LibraryProvider({ children }) {
-  const { showMedia3p, canViewDefaultTemplates } = useConfig();
+  const { showMedia3p, shoppingProvider, canViewDefaultTemplates } =
+    useConfig();
   const {
     actions: { getMedia, getCustomPageTemplates },
   } = useAPI();
+
+  const { hasProducts } = useStory(({ state: { currentPage } }) => ({
+    hasProducts: currentPage?.elements?.some(
+      ({ type }) => type === ELEMENT_TYPES.PRODUCT
+    ),
+  }));
+
+  const isShoppingEnabled = 'none' !== shoppingProvider || hasProducts;
 
   const supportsCustomTemplates = Boolean(getCustomPageTemplates);
   const showPageTemplates = canViewDefaultTemplates || supportsCustomTemplates;
@@ -80,7 +89,19 @@ function LibraryProvider({ children }) {
     []
   );
 
-  const { showElementsTab } = useFeatures();
+  const updateSavedTemplate = useCallback((template) => {
+    _setSavedTemplates((_savedTemplates) => {
+      return _savedTemplates.map((t) => {
+        if (t.templateId === template.templateId) {
+          return {
+            ...t,
+            ...template,
+          };
+        }
+        return t;
+      });
+    });
+  }, []);
 
   const tabs = useMemo(
     // Order here is important, as it denotes the actual visual order of elements.
@@ -90,10 +111,10 @@ function LibraryProvider({ children }) {
         showMedia3p && MEDIA3P,
         TEXT,
         SHAPES,
-        showElementsTab && ELEMS,
+        isShoppingEnabled && SHOPPING,
         showPageTemplates && PAGE_TEMPLATES,
       ].filter(Boolean),
-    [showMedia3p, showElementsTab, showMedia, showPageTemplates]
+    [showMedia3p, showMedia, showPageTemplates, isShoppingEnabled]
   );
 
   const [tab, setTab] = useState(tabs[0].id);
@@ -102,7 +123,7 @@ function LibraryProvider({ children }) {
   const { insertTextSet, insertTextSetByOffset } =
     useInsertTextSet(shouldUseSmartColor);
 
-  const { highlightedTab } = useHighlights(({ tab: highlightedTab }) => ({
+  const { highlightedTab } = useHighlights(({ section: highlightedTab }) => ({
     highlightedTab,
   }));
 
@@ -119,8 +140,8 @@ function LibraryProvider({ children }) {
   const media3pTabRef = useRef(null);
   const textTabRef = useRef(null);
   const shapesTabRef = useRef(null);
-  const elementsTabRef = useRef(null);
   const pageTemplatesTabRef = useRef(null);
+  const shoppingRef = useRef(null);
 
   const tabRefs = useMemo(
     () => ({
@@ -128,8 +149,8 @@ function LibraryProvider({ children }) {
       [MEDIA3P.id]: media3pTabRef,
       [TEXT.id]: textTabRef,
       [SHAPES.id]: shapesTabRef,
-      [ELEMS.id]: elementsTabRef,
       [PAGE_TEMPLATES.id]: pageTemplatesTabRef,
+      [SHOPPING.id]: shoppingRef,
     }),
     []
   );
@@ -151,11 +172,12 @@ function LibraryProvider({ children }) {
         insertTextSet,
         insertTextSetByOffset,
         setSavedTemplates,
+        updateSavedTemplate,
         setNextTemplatesToFetch,
         setShouldUseSmartColor,
       },
       data: {
-        tabs: tabs,
+        tabs,
       },
     }),
     [
@@ -172,6 +194,7 @@ function LibraryProvider({ children }) {
       setNextTemplatesToFetch,
       shouldUseSmartColor,
       setSavedTemplates,
+      updateSavedTemplate,
     ]
   );
   useEffect(() => {
@@ -200,6 +223,13 @@ function LibraryProvider({ children }) {
       mounted = false;
     };
   }, [tab, textSets]);
+
+  useEffect(() => {
+    // Set tab back to first tab if on shopping and shopping is disabled.
+    if (tab === SHOPPING.id && !isShoppingEnabled) {
+      setTab(tabs[0].id);
+    }
+  }, [isShoppingEnabled, tab, tabs]);
 
   return <Context.Provider value={state}>{children}</Context.Provider>;
 }

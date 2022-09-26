@@ -23,6 +23,7 @@ import {
   LOCAL_STORAGE_PREFIX,
   setAppElement,
 } from '@googleforcreators/design-system';
+import { renderWithTheme } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
@@ -30,7 +31,6 @@ import {
 import CurrentUserContext from '../../../../../../app/currentUser/context';
 import MediaContext from '../../../../../../app/media/context';
 import VideoOptimizationDialog from '../videoOptimizationDialog';
-import { renderWithTheme } from '../../../../../../testUtils';
 
 const updateCurrentUser = jest.fn();
 const storageKey = LOCAL_STORAGE_PREFIX.VIDEO_OPTIMIZATION_DIALOG_DISMISSED;
@@ -84,6 +84,6 @@ describe('videoOptimizationDialog', () => {
 
     fireEvent.click(screen.getByRole('button', { name: /Disable/i }));
 
-    await waitFor(() => expect(updateCurrentUser).toHaveBeenCalledTimes(1));
+    await waitFor(() => expect(updateCurrentUser).toHaveBeenCalledOnce());
   });
 });

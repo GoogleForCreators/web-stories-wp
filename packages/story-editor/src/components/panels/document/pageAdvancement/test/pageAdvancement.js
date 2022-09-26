@@ -18,12 +18,12 @@
  * External dependencies
  */
 import { fireEvent, waitFor, screen } from '@testing-library/react';
+import { renderWithTheme } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
  */
 import StoryContext from '../../../../../app/story/context';
-import { renderWithTheme } from '../../../../../testUtils';
 import PageAdvancementPanel from '../pageAdvancement';
 
 function arrange(configs = {}) {
@@ -98,21 +98,7 @@ describe('PageAdvancementPanel', () => {
       })
     );
 
-    updateStory.mockClear();
-    fireEvent.change(input, {
-      target: { value: '1' },
-    });
-    fireEvent.blur(input);
-
-    await waitFor(() => {
-      expect(updateStory).toHaveBeenCalledWith({
-        properties: {
-          defaultPageDuration: 1,
-        },
-      });
-    });
-
-    expect(updateStory).toHaveBeenCalledTimes(1);
+    expect(updateStory).toHaveBeenCalledOnce();
 
     fireEvent.change(input, {
       target: { value: '21' },

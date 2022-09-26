@@ -147,7 +147,7 @@ export const SnackbarContainer = ({
       }
     });
   }, [notifications, speak]);
-  const nodeRef = useRef();
+  const nodeRefs = useRef({});
   return (
     <StyledContainer placement={placement}>
       <TransitionGroup>
@@ -163,16 +163,23 @@ export const SnackbarContainer = ({
             ...notificationProps
           } = notification;
 
+          const id = notification.id || ids[index];
+
           return (
             <CSSTransition
               in
-              key={notification.id || ids[index]}
+              key={id}
               timeout={300}
               unmountOnExit
-              nodeRef={nodeRef}
+              nodeRef={nodeRefs.current[id]}
               classNames="react-snackbar-alert__snackbar-container"
             >
-              <ChildContainer ref={nodeRef} placement={placement}>
+              <ChildContainer
+                ref={(el) => {
+                  nodeRefs.current[id] = el;
+                }}
+                placement={placement}
+              >
                 <Component
                   {...notificationProps}
                   aria-hidden

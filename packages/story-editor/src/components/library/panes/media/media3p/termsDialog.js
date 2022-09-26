@@ -31,18 +31,18 @@ import {
  */
 import Dialog from '../../../../dialog';
 
-const TERMS_URL = 'https://wp.stories.google/docs#Terms';
+const TERMS_URL = 'https://wp.stories.google/docs/terms/';
 
 function TermsDialog() {
   const hasAcknowledgedTerms3p = localStore.getItemByKey(
-    `${LOCAL_STORAGE_PREFIX.TERMS_MEDIA3P}`
+    LOCAL_STORAGE_PREFIX.TERMS_MEDIA3P
   );
 
   const [dialogOpen, setDialogOpen] = useState(!hasAcknowledgedTerms3p);
 
   const acknowledgeTerms = useCallback(() => {
     setDialogOpen(false);
-    localStore.setItemByKey(`${LOCAL_STORAGE_PREFIX.TERMS_MEDIA3P}`, true);
+    localStore.setItemByKey(LOCAL_STORAGE_PREFIX.TERMS_MEDIA3P, true);
     trackEvent('media3p_terms_acknowledged');
   }, []);
 

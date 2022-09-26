@@ -124,6 +124,7 @@ const opacity = {
   violet24: rgba(brand.violet[30], 0.24),
   overlay: rgba('#1E1F1F', 0.5),
   overlayDark: rgba(standard.black, 0.47),
+  overlayExtraDark: rgba(standard.black, 0.7),
 };
 
 const darkTheme = {

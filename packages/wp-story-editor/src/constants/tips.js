@@ -18,6 +18,8 @@
  */
 import { __ } from '@googleforcreators/i18n';
 
+const DOCS_URL = 'https://wp.stories.google/docs/best-practices/';
+
 const KEYS = {
   EMBED_WEB_STORIES: 'embedWebStories',
 };
@@ -36,6 +38,6 @@ export const TIPS = {
         'web-stories'
       ),
     ],
-    href: __('https://wp.stories.google/docs/', 'web-stories'),
+    href: DOCS_URL,
   },
 };

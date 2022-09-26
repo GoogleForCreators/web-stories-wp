@@ -101,13 +101,14 @@ describe('<Menu />', () => {
 
     fireEvent.click(option3);
 
-    expect(onClickMock).toHaveBeenCalledTimes(1);
+    expect(onClickMock).toHaveBeenCalledOnce();
   });
 
   it('should override list items when renderMenu is present', () => {
     const OverrideRenderItem = forwardRef(({ isSelected, ...rest }, ref) => {
       return (
         <li {...rest} ref={ref}>
+          {/* eslint-disable-next-line jest/no-conditional-in-test */}
           {isSelected ? 'I AM SELECTED' : 'I AM EXTRA CONTENT'}
         </li>
       );

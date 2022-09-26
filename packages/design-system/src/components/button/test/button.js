@@ -56,6 +56,6 @@ describe('Button', () => {
 
     fireEvent.click(button);
 
-    expect(onClickMock).toHaveBeenCalledTimes(1);
+    expect(onClickMock).toHaveBeenCalledOnce();
   });
 });

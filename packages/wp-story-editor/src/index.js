@@ -30,12 +30,14 @@ import './setLocaleData';
 /**
  * External dependencies
  */
-import { StoryEditor } from '@googleforcreators/story-editor';
+import { StoryEditor, AutoSaveCheck } from '@googleforcreators/story-editor';
 import { setAppElement } from '@googleforcreators/design-system';
 import { StrictMode, render } from '@googleforcreators/react';
 import { updateSettings } from '@googleforcreators/date';
 import { initializeTracking } from '@googleforcreators/tracking';
 import { bindToCallbacks } from '@web-stories-wp/wp-utils';
+import { registerElementType } from '@googleforcreators/elements';
+import { elementTypes } from '@googleforcreators/element-library';
 
 /**
  * WordPress dependencies
@@ -48,13 +50,16 @@ import '@wordpress/dom-ready'; // Just imported here so it's part of the bundle.
 import {
   Layout,
   PostPublishDialog,
+  PostReviewDialog,
   StatusCheck,
+  CorsCheck,
+  FontCheck,
   PostLock,
   MediaUpload,
 } from './components';
 import * as apiCallbacks from './api';
 import { transformStoryResponse } from './api/utils';
-import { TIPS, TOOLBAR_HEIGHT, MENU_WIDTH } from './constants';
+import { TIPS, TOOLBAR_HEIGHT, MENU_FOLDED_WIDTH } from './constants';
 import { GlobalStyle } from './theme.js';
 
 window.webStories = window.webStories || {};
@@ -76,6 +81,8 @@ window.webStories.initializeStoryEditor = (id, config, initialEdits) => {
 
   initializeTracking('Editor');
 
+  elementTypes.forEach(registerElementType);
+
   initialEdits.story = initialEdits.story
     ? transformStoryResponse(initialEdits.story)
     : null;
@@ -87,7 +94,7 @@ window.webStories.initializeStoryEditor = (id, config, initialEdits) => {
     MediaUpload,
     styleConstants: {
       topOffset: TOOLBAR_HEIGHT,
-      leftOffset: MENU_WIDTH,
+      leftOffset: MENU_FOLDED_WIDTH,
     },
   };
 
@@ -97,7 +104,11 @@ window.webStories.initializeStoryEditor = (id, config, initialEdits) => {
         <GlobalStyle />
         <Layout />
         <PostPublishDialog />
+        <PostReviewDialog />
         <StatusCheck />
+        <CorsCheck />
+        <FontCheck />
+        <AutoSaveCheck />
         <PostLock />
         <div />
       </StoryEditor>

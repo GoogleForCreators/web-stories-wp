@@ -23,6 +23,7 @@ import {
   useRef,
   forwardRef,
   useDebouncedCallback,
+  useEffect,
 } from '@googleforcreators/react';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
@@ -70,6 +71,10 @@ const Container = styled.div`
  * @param {boolean} props.isInline If to display the selection list inline instead of as a separate popup modal.
  * @param {string} props.dropDownLabel The visible label of the dropdown select.
  * @param {number} props.zIndex an override for default zIndex of popup
+ * @param {string} props.title The title of the dialog (popup) container of the list.
+ * @param {string} props.dropdownButtonLabel The label attached to the unexpanded datalist (button)
+ * @param {boolean} props.offsetOverride override popup offsets updates, use x and y offset based on anchor
+ * @param {number} props.maxWidth sets a max-width on the Popup component
  * @return {*} Render.
  */
 const Datalist = forwardRef(function Datalist(
@@ -92,6 +97,16 @@ const Datalist = forwardRef(function Datalist(
     highlightStylesOverride,
     hasDropDownBorder = false,
     zIndex,
+    listStyleOverrides,
+    containerStyleOverrides,
+    title,
+    dropdownButtonLabel,
+    className,
+    offsetOverride = false,
+    noMatchesFoundLabel,
+    searchPlaceholder,
+    maxWidth,
+    getPrimaryOptions,
     ...rest
   },
   ref
@@ -110,6 +125,7 @@ const Datalist = forwardRef(function Datalist(
   const internalRef = useRef();
 
   const [isOpen, setIsOpen] = useState(false);
+  const [_primaryOptions, _setPrimaryOptions] = useState([]);
 
   const closeDropDown = useCallback(() => {
     setIsOpen(false);
@@ -143,7 +159,10 @@ const Datalist = forwardRef(function Datalist(
       getOptionsByQuery={getOptionsByQuery}
       hasSearch={hasSearch}
       isInline={isInline}
+      title={title}
       hasDropDownBorder={hasDropDownBorder}
+      containerStyleOverrides={containerStyleOverrides}
+      placeholder={searchPlaceholder}
       renderContents={({
         searchKeyword,
         setIsExpanded,
@@ -162,12 +181,14 @@ const Datalist = forwardRef(function Datalist(
           focusTrigger={trigger}
           onObserve={onObserve}
           options={options || queriedOptions}
-          primaryOptions={primaryOptions}
+          primaryOptions={_primaryOptions}
           primaryLabel={primaryLabel}
           priorityOptionGroups={priorityOptionGroups}
           searchResultsLabel={searchResultsLabel}
           focusSearch={focusSearch}
           renderer={renderer}
+          listStyleOverrides={listStyleOverrides}
+          noMatchesFoundLabel={noMatchesFoundLabel}
         />
       )}
     />
@@ -176,7 +197,7 @@ const Datalist = forwardRef(function Datalist(
   const DropDownSelectRef = useCallback(
     (node) => {
       // `ref` can either be a callback ref or a normal ref.
-      if (typeof ref == 'function') {
+      if (typeof ref === 'function') {
         ref(node);
       } else if (ref) {
         ref.current = node;
@@ -186,10 +207,26 @@ const Datalist = forwardRef(function Datalist(
     [ref]
   );
 
-  const selectedOption = primaryOptions.find(({ id }) => id === selectedId);
+  // Logic for fetching primaryOptions
+  useEffect(() => {
+    if (getPrimaryOptions) {
+      getPrimaryOptions().then((res) => {
+        _setPrimaryOptions(res);
+      });
+    } else if (primaryOptions) {
+      _setPrimaryOptions(primaryOptions);
+    }
+  }, [
+    _setPrimaryOptions,
+    getOptionsByQuery,
+    getPrimaryOptions,
+    primaryOptions,
+  ]);
+
+  const selectedOption = _primaryOptions.find(({ id }) => id === selectedId);
   // In case of isInline, the list is displayed with 'absolute' positioning instead of using a separate popup.
   return (
-    <Container>
+    <Container className={className}>
       <DropDownSelect
         aria-pressed={isOpen}
         aria-haspopup
@@ -200,6 +237,8 @@ const Datalist = forwardRef(function Datalist(
         dropDownLabel={dropDownLabel}
         onSelectClick={toggleDropDown}
         selectButtonStylesOverride={highlightStylesOverride || focusStyle}
+        aria-label={dropdownButtonLabel}
+        isOpen={isOpen}
         {...rest}
       />
       {isOpen && !disabled && isInline && list}
@@ -207,8 +246,10 @@ const Datalist = forwardRef(function Datalist(
         <Popup
           anchor={internalRef}
           isOpen={isOpen}
-          fillWidth={DEFAULT_WIDTH}
           zIndex={zIndex}
+          offsetOverride={offsetOverride}
+          maxWidth={maxWidth || DEFAULT_WIDTH}
+          fillWidth
         >
           {list}
         </Popup>
@@ -237,6 +278,13 @@ Datalist.propTypes = {
   isInline: PropTypes.bool,
   hasDropDownBorder: PropTypes.bool,
   zIndex: PropTypes.number,
+  containerStyleOverrides: PropTypes.array,
+  listStyleOverrides: PropTypes.array,
+  title: PropTypes.string,
+  dropdownButtonLabel: PropTypes.string,
+  offsetOverride: PropTypes.bool,
+  maxWidth: PropTypes.number,
+  getPrimaryOptions: PropTypes.func,
 };
 
 export default Datalist;

@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import 'react-calendar/dist/Calendar.css';
 import {
   useRef,
   useCallback,
@@ -29,19 +28,18 @@ import {
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { _x } from '@googleforcreators/i18n';
+import { getOptions, format, formatDate } from '@googleforcreators/date';
+import { CircularProgress } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
  */
-import CircularProgress from '../../circularProgress';
+import CalendarWrapper from './calendarWrapper';
+import { getCalendarType } from './utils';
 
 const Calendar = lazy(() =>
   import(/* webpackChunkName: "chunk-react-calendar" */ 'react-calendar')
 );
-
-const CalendarWrapper = styled.div`
-  min-height: 236px;
-`;
 
 const FallbackCalendar = styled.div`
   height: 256px;
@@ -119,7 +117,8 @@ function DatePicker({ currentDate, onChange, onViewChange }) {
       clearTimeout(timeout);
     };
   }, [updateTabIndexes]);
-
+  const { weekStartsOn } = getOptions();
+  const calendarType = getCalendarType(weekStartsOn);
   return (
     <Suspense
       fallback={
@@ -131,6 +130,7 @@ function DatePicker({ currentDate, onChange, onViewChange }) {
       <CalendarWrapper ref={nodeRef}>
         <Calendar
           value={value}
+          calendarType={calendarType}
           onChange={handleOnChange}
           onViewChange={onViewChange}
           onActiveStartDateChange={() => updateTabIndexes(true /* Set focus */)}
@@ -154,6 +154,13 @@ function DatePicker({ currentDate, onChange, onViewChange }) {
             'This label can apply to month, year and/or decade',
             'web-stories'
           )}
+          formatDay={(locale, date) => format(date, 'j')}
+          formatWeekday={(locale, date) => format(date, 'l')}
+          formatLongDate={(locale, date) => formatDate(date)}
+          formatMonth={(locale, date) => format(date, 'F')}
+          formatMonthYear={(locale, date) => format(date, 'F Y')}
+          formatShortWeekday={(locale, date) => format(date, 'D')}
+          formatYear={(locale, date) => format(date, 'Y')}
         />
       </CalendarWrapper>
     </Suspense>

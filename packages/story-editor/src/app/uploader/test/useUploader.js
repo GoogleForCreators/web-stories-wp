@@ -36,6 +36,7 @@ function setup(args) {
   const configValue = {
     api: {},
     allowedMimeTypes: {
+      audio: ['audio/mpeg', 'audio/aac', 'audio/wav', 'audio/ogg'],
       image: [
         'image/png',
         'image/jpeg',
@@ -43,16 +44,10 @@ function setup(args) {
         'image/gif',
         'image/webp',
       ],
+      caption: ['text/vtt'],
+      vector: [],
       video: ['video/mp4', 'video/webm'],
     },
-    allowedFileTypes: ['png', 'jpeg', 'jpg', 'gif', 'mp4', 'webp', 'webm'],
-    allowedImageFileTypes: ['gif', 'jpe', 'jpeg', 'jpg', 'png'],
-    allowedImageMimeTypes: [
-      'image/png',
-      'image/jpeg',
-      'image/jpg',
-      'image/gif',
-    ],
     maxUpload: 104857600,
     capabilities: {
       hasUploadMediaAction: true,
@@ -93,7 +88,7 @@ describe('useUploader', () => {
         },
       });
 
-      await expect(() => validateFileForUpload({})).toThrow(
+      await expect(() => validateFileForUpload({ file: {} })).toThrow(
         'Sorry, you are not allowed to upload files.'
       );
     });
@@ -105,7 +100,9 @@ describe('useUploader', () => {
         maxUpload: 2000000,
       });
 
-      await expect(() => validateFileForUpload({ size: 3000000 })).toThrow(
+      await expect(() =>
+        validateFileForUpload({ file: { size: 3000000 } })
+      ).toThrow(
         'Your file is 3MB and the upload limit is 2MB. Please resize and try again!'
       );
     });
@@ -116,10 +113,25 @@ describe('useUploader', () => {
       } = setup({});
 
       await expect(() =>
-        validateFileForUpload({ size: 20000, type: 'video/quicktime' })
+        validateFileForUpload({
+          file: { size: 20000, type: 'video/quicktime' },
+        })
       ).toThrow(
-        'Please choose only png, jpeg, jpg, gif, mp4, webp, or webm to upload.'
+        'Please choose only png, jpg, jpeg, gif, webp, mp4, or webm to upload.'
       );
+    });
+
+    it('throws an error if file type is not supported and in list of mime types', async () => {
+      const {
+        actions: { validateFileForUpload },
+      } = setup({});
+
+      await expect(() =>
+        validateFileForUpload({
+          file: { size: 20000, type: 'video/quicktime' },
+          overrideAllowedMimeTypes: ['video/mp4'],
+        })
+      ).toThrow('Please choose only mp4 to upload.');
     });
 
     it('throws an error if file too large to transcode', async () => {
@@ -128,11 +140,11 @@ describe('useUploader', () => {
       } = setup({});
 
       await expect(() =>
-        validateFileForUpload(
-          { size: 1024 * 1024 * 1024 * 2, type: 'video/mp4' },
-          true,
-          true
-        )
+        validateFileForUpload({
+          file: { size: 1024 * 1024 * 1024 * 2, type: 'video/mp4' },
+          canTranscodeFile: true,
+          isFileTooLarge: true,
+        })
       ).toThrow(
         'Your file is too large (2048 MB) and cannot be processed. Please try again with a file that is smaller than 2048 MB.'
       );
@@ -146,14 +158,11 @@ describe('useUploader', () => {
       });
 
       await expect(() =>
-        validateFileForUpload(
-          {
-            size: 1024 * 1024 * 1024 * 3,
-            type: 'video/quicktime',
-          },
-          true,
-          true
-        )
+        validateFileForUpload({
+          file: { size: 1024 * 1024 * 1024 * 3, type: 'video/quicktime' },
+          canTranscodeFile: true,
+          isFileTooLarge: true,
+        })
       ).toThrow(
         'Your file is too large (3072 MB) and cannot be processed. Please try again with a file that is smaller than 2048 MB.'
       );
@@ -165,11 +174,11 @@ describe('useUploader', () => {
       } = setup({});
 
       await expect(() =>
-        validateFileForUpload(
-          { size: 1024 * 1024 * 150, type: 'video/mp4' },
-          true,
-          false
-        )
+        validateFileForUpload({
+          file: { size: 1024 * 1024 * 150, type: 'video/mp4' },
+          canTranscodeFile: true,
+          isFileTooLarge: false,
+        })
       ).not.toThrow();
     });
 
@@ -179,11 +188,11 @@ describe('useUploader', () => {
       } = setup({});
 
       await expect(() =>
-        validateFileForUpload(
-          { size: 1024 * 1024 * 1024 * 2, type: 'video/mp4' },
-          false,
-          true
-        )
+        validateFileForUpload({
+          file: { size: 1024 * 1024 * 1024 * 2, type: 'video/mp4' },
+          canTranscodeFile: false,
+          isFileTooLarge: true,
+        })
       ).toThrow(
         'Your file is 2048MB and the upload limit is 100MB. Please resize and try again!'
       );
@@ -195,31 +204,37 @@ describe('useUploader', () => {
       } = setup({});
 
       await expect(() =>
-        validateFileForUpload(
-          { size: 1024 * 1024 * 50, type: 'video/mp4' },
-          false,
-          false
-        )
+        validateFileForUpload({
+          file: { size: 1024 * 1024 * 50, type: 'video/mp4' },
+          canTranscodeFile: false,
+          isFileTooLarge: false,
+        })
       ).not.toThrow();
     });
 
     it('formats the error message correctly if there is only one file type supported', async () => {
       const {
         actions: { validateFileForUpload },
-      } = setup({ allowedFileTypes: ['mp4'] });
+      } = setup({
+        allowedMimeTypes: { image: [], video: ['video/mp4'], vector: [] },
+      });
 
       await expect(() =>
-        validateFileForUpload({ size: 20000, type: 'video/quicktime' })
+        validateFileForUpload({
+          file: { size: 20000, type: 'video/quicktime' },
+        })
       ).toThrow('Please choose only mp4 to upload.');
     });
 
     it('formats the error message correctly if no file types are supported', async () => {
       const {
         actions: { validateFileForUpload },
-      } = setup({ allowedFileTypes: [] });
+      } = setup({ allowedMimeTypes: { image: [], video: [], vector: [] } });
 
       await expect(() =>
-        validateFileForUpload({ size: 20000, type: 'video/quicktime' })
+        validateFileForUpload({
+          file: { size: 20000, type: 'video/quicktime' },
+        })
       ).toThrow('No file types are currently supported.');
     });
   });

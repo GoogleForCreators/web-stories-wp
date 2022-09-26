@@ -27,7 +27,11 @@ import {
 describe('Quick Edit', () => {
   withUser('author', 'password');
 
-  it('should save story without breaking markup', async () => {
+  // There is currently a known "i.isSingleDoc is not a function" bug in AMP
+  // for which the fix has not landed in production yet.
+  // It causes the navigation at the end of the test to fail.
+  // eslint-disable-next-line jest/no-disabled-tests -- Temporarily disabled.
+  it.skip('should save story without breaking markup', async () => {
     await createNewStory();
 
     await expect(page).toMatchElement('input[placeholder="Add title"]');
@@ -56,17 +60,33 @@ describe('Quick Edit', () => {
     await page.type('input[name="post_title"]', ' - updated.');
     await expect(page).toClick('button', { text: 'Update' });
 
-    const storyTitleNew = 'Test quick edit – updated.';
+    // Wait for update to finish and for the Quick Edit form to close.
+    await page.waitForResponse(
+      (response) =>
+        // eslint-disable-next-line jest/no-conditional-in-test -- False positive
+        response.url().includes('admin-ajax.php') && response.status() === 200
+    );
+    await page.waitForSelector('.spinner', {
+      visible: false,
+    });
 
-    await expect(page).toMatch(storyTitleNew);
+    // After updating, the row for this story in the table will be slowly fading in.
+    // The "Quick Edit" link will be focused after successful editing.
+    // See https://github.com/WordPress/wordpress-develop/blob/6d23d07e8014f551d836c3876515c3cc2c5c594b/src/js/_enqueues/admin/inline-edit-post.js#L457-L463
+    await page.waitForFunction(
+      () => document.activeElement.innerHTML === 'Quick&nbsp;Edit'
+    );
 
-    await page.hover(`#${elmId}`);
+    await expect(page).toMatchElement('button', { text: 'Quick Edit' });
 
-    await Promise.all([
-      expect(page).toClick(`#${elmId} a`, { text: 'View' }),
+    await expect(page).toMatch('Test quick edit – updated.');
+
+    const [response] = await Promise.all([
       page.waitForNavigation(),
+      page.click(`#${elmId} a[rel="bookmark"]`),
     ]);
 
-    await expect(page).toMatchElement('amp-story');
+    // When the <amp-story> element exists in the response body we know that the output was not mangled.
+    await expect(response.text()).resolves.toContain('<amp-story');
   });
 });

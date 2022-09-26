@@ -28,7 +28,7 @@ import { DESIGN_COPY, MAX_VIDEO_LENGTH_SECONDS } from '../constants';
 import { filterStoryElements } from '../utils';
 import { useRegisterCheck } from '../countContext';
 import { useIsChecklistMounted } from '../popupMountedContext';
-import { VideoChecklistCard } from './shared';
+import VideoChecklistCard from './shared/videoChecklistCard';
 
 export function videoElementLength(element) {
   return (

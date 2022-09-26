@@ -51,6 +51,11 @@ final class SimpleServiceContainer
 			throw InvalidService::from_service_id( $id );
 		}
 
+		/**
+		 * Service.
+		 *
+		 * @var Service $service Service.
+		 */
 		$service = $this->offsetGet( $id );
 
 		// Instantiate actual services if they were stored lazily.

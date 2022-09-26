@@ -20,6 +20,7 @@
 import { useMemo, useState } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { differenceInSeconds } from '@googleforcreators/date';
+import { uniqueEntriesByKey } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -27,8 +28,10 @@ import { differenceInSeconds } from '@googleforcreators/date';
 import { ApiContext } from '../app/api/apiProvider';
 import { defaultStoriesState } from '../app/reducer/stories';
 import formattedStoriesArray from '../dataUtils/formattedStoriesArray';
+import formattedTaxonomiesArray from '../dataUtils/formattedTaxonomiesArray';
+import formattedTaxonomyTermsObject from '../dataUtils/formattedTaxonomyTermsObject';
 import formattedTemplatesArray from '../dataUtils/formattedTemplatesArray';
-import { STORY_STATUSES, STORY_SORT_OPTIONS } from '../constants/stories';
+import { STORY_SORT_OPTIONS, DEFAULT_FILTERS } from '../constants/stories';
 import { groupTemplatesByTag } from '../testUtils';
 
 /* eslint-disable jasmine/no-unsafe-spy */
@@ -65,8 +68,36 @@ export default function ApiProviderFixture({ children }) {
 
   const usersApi = useMemo(
     () => ({
-      getAuthors: () =>
-        Promise.resolve(formattedStoriesArray.map((story) => story.author)),
+      getAuthors: () => {
+        const authors = formattedStoriesArray.map((story) => story.author);
+        return Promise.resolve(uniqueEntriesByKey(authors, 'id'));
+      },
+    }),
+    []
+  );
+
+  const taxonomyApi = useMemo(
+    () => ({
+      getTaxonomies: (args) => {
+        if (args.hierarchical) {
+          return Promise.resolve(
+            formattedTaxonomiesArray.filter((f) => f.hierarchical)
+          );
+        }
+        return Promise.resolve(formattedTaxonomiesArray);
+      },
+      getTaxonomyTerms: (path, args) => {
+        const restBase = path.split('/').pop();
+        const { search } = args;
+        let response = formattedTaxonomyTermsObject[restBase];
+        if (search) {
+          response = response.filter((r) => {
+            const term = r.name.toLowerCase();
+            return term.length && term.includes(search.toLowerCase());
+          });
+        }
+        return Promise.resolve(response);
+      },
     }),
     []
   );
@@ -81,9 +112,10 @@ export default function ApiProviderFixture({ children }) {
         storyApi,
         templateApi,
         usersApi,
+        taxonomyApi,
       },
     }),
-    [stories, templates, storyApi, templateApi, usersApi]
+    [stories, templates, storyApi, templateApi, usersApi, taxonomyApi]
   );
 
   return <ApiContext.Provider value={value}>{children}</ApiContext.Provider>;
@@ -111,39 +143,45 @@ function getStoriesState() {
   };
 }
 
-function fetchStories(
-  {
-    status = STORY_STATUSES[0].value,
-    searchTerm = '',
-    sortOption = STORY_SORT_OPTIONS.LAST_MODIFIED,
-    sortDirection,
-    author,
-  },
-  currentState
-) {
+function fetchStories({ sort, filters }, currentState) {
   const storiesState = currentState ? { ...currentState } : getStoriesState();
+  const {
+    author,
+    web_story_category,
+    search = '',
+    status = DEFAULT_FILTERS.filters.status,
+  } = filters;
+  const {
+    orderby = DEFAULT_FILTERS.sort.orderby,
+    order = DEFAULT_FILTERS.sort.order,
+  } = sort;
   const statuses = status.split(',');
 
   storiesState.storiesOrderById = Object.values(storiesState.stories)
     .filter(
       ({ status: storyStatus, title }) =>
         statuses.includes(storyStatus) &&
-        title.toLowerCase().includes(searchTerm.toLowerCase())
+        title.toLowerCase().includes(search.toLowerCase())
     )
     .filter((story) => typeof author !== 'number' || story.author.id === author)
+    .filter(
+      (story) =>
+        typeof category !== 'number' ||
+        Boolean(story.categories.find((c) => c.id === web_story_category))
+    )
     .sort((a, b) => {
       let value;
-      switch (sortOption) {
+      switch (orderby) {
         case STORY_SORT_OPTIONS.DATE_CREATED: {
           value = new Date(a.created).getTime() - new Date(b.created).getTime();
           break;
         }
         case STORY_SORT_OPTIONS.LAST_MODIFIED: {
-          value = differenceInSeconds(a[sortOption], b[sortOption]);
+          value = differenceInSeconds(a[orderby], b[orderby]);
           break;
         }
         case STORY_SORT_OPTIONS.NAME: {
-          value = a[sortOption].localeCompare(b[sortOption]);
+          value = a[orderby].localeCompare(b[orderby]);
           break;
         }
         case STORY_SORT_OPTIONS.CREATED_BY: {
@@ -157,8 +195,8 @@ function fetchStories(
       }
 
       const shouldSortDescending =
-        (sortDirection && sortDirection === 'desc') ||
-        (!sortDirection && sortOption === STORY_SORT_OPTIONS.LAST_MODIFIED);
+        (order && order === 'desc') ||
+        (!order && orderby === STORY_SORT_OPTIONS.LAST_MODIFIED);
 
       return shouldSortDescending ? value * -1 : value;
     })

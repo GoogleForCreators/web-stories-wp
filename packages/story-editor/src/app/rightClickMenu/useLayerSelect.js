@@ -28,15 +28,15 @@ import { __ } from '@googleforcreators/i18n';
 import { Icons } from '@googleforcreators/design-system';
 import { trackEvent } from '@googleforcreators/tracking';
 import styled from 'styled-components';
+import { getLayerName } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import useStory from '../story/useStory';
-import createPolygon from '../canvas/utils/createPolygon';
 import { useCanvas } from '../canvas';
-import { getDefinitionForType } from '../../elements';
 import { useConfig } from '../config';
+import useElementPolygon from '../../utils/useElementPolygon';
 
 const ReversedIcon = styled(Icons.ChevronRightSmall)`
   transform: rotate(180deg);
@@ -57,6 +57,8 @@ function useLayerSelect({ menuItemProps, menuPosition, isMenuOpen }) {
     })
   );
 
+  const getElementPolygon = useElementPolygon();
+
   useEffect(() => {
     // Close submenu if the menu itself also closes.
     if (!isMenuOpen) {
@@ -70,21 +72,18 @@ function useLayerSelect({ menuItemProps, menuPosition, isMenuOpen }) {
       return [];
     }
     const clickedPoint = new SAT.Vector(x, y);
-    const intersectingElements = currentPage.elements
-      .map((element) => {
-        const { id, rotationAngle } = element;
-        const node = nodesById[id];
-        if (!node) {
-          return null;
-        }
-        const { x: elX, y: elY, width, height } = node.getBoundingClientRect();
-        const elementP = createPolygon(rotationAngle, elX, elY, width, height);
-        return SAT.pointInPolygon(clickedPoint, elementP) ? element : null;
-      })
-      .filter((el) => el);
+    const elementsWithPolygons = currentPage.elements.map((element) => {
+      const polygon = getElementPolygon(element);
+      return { element, polygon };
+    });
+    const intersectingElements = elementsWithPolygons
+      .map(({ element, polygon }) =>
+        SAT.pointInPolygon(clickedPoint, polygon) ? element : null
+      )
+      .filter(Boolean);
     intersectingElements.reverse();
     return intersectingElements;
-  }, [currentPage, x, y, nodesById]);
+  }, [currentPage, x, y, nodesById, getElementPolygon]);
 
   const subMenuItems = useMemo(() => {
     if (!isMenuOpen || selectedElements.length === 0) {
@@ -100,16 +99,11 @@ function useLayerSelect({ menuItemProps, menuPosition, isMenuOpen }) {
     }
     return intersectingElements.map((element) => {
       const { id, isBackground, type } = element;
-      const { LayerContent } = getDefinitionForType(type);
       return {
         key: id,
         supportsIcon: true,
         icon: selectedElements[0].id === id ? <Icons.CheckmarkSmall /> : null,
-        label: isBackground ? (
-          <span>{__('Background', 'web-stories')}</span>
-        ) : (
-          <LayerContent element={element} />
-        ),
+        label: <span>{getLayerName(element)}</span>,
         onClick: () => {
           setSelectedElementsById({ elementIds: [id] });
           trackEvent('context_menu_action', {

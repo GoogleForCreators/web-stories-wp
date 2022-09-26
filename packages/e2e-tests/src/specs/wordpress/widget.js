@@ -33,7 +33,8 @@ describe('Web Stories Widget', () => {
     await activatePlugin('classic-widgets');
   });
 
-  describe('Widgets Screen', () => {
+  // eslint-disable-next-line jest/no-disabled-tests -- TODO(#11990): Fix flakey test.
+  describe.skip('Widgets Screen', () => {
     it('should be able to add widget', async () => {
       await visitAdminPage('widgets.php');
 

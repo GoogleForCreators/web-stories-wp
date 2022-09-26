@@ -31,6 +31,7 @@ namespace Google\Web_Stories;
 use Google\Web_Stories\AMP\Output_Buffer;
 use Google\Web_Stories\Infrastructure\Injector;
 use Google\Web_Stories\Infrastructure\ServiceBasedPlugin;
+use Google\Web_Stories\Shopping\Shopping_Vendors;
 
 /**
  * Plugin class.
@@ -84,26 +85,31 @@ class Plugin extends ServiceBasedPlugin {
 		'integrations.cfi'             => Integrations\Conditional_Featured_Image::class,
 		'integrations.sitekit'         => Integrations\Site_Kit::class,
 		'integrations.themes_support'  => Integrations\Core_Themes_Support::class,
+		'integrations.shortpixel'      => Integrations\ShortPixel::class,
 		'imgareaselect_patch'          => Admin\ImgAreaSelect_Patch::class,
 		'kses'                         => KSES::class,
 		'font_post_type'               => Font_Post_Type::class,
 		'page_template_post_type'      => Page_Template_Post_Type::class,
 		'plugin_row_meta'              => Admin\PluginRowMeta::class,
 		'plugin_action_links'          => Admin\PluginActionLinks::class,
+		'product_meta'                 => Shopping\Product_Meta::class,
 		'media.base_color'             => Media\Base_Color::class,
 		'media.blurhash'               => Media\Blurhash::class,
 		'media.image_sizes'            => Media\Image_Sizes::class,
 		'media.media_source'           => Media\Media_Source_Taxonomy::class,
 		'media.video.captions'         => Media\Video\Captions::class,
+		'media.cropping'               => Media\Cropping::class,
 		'media.video.muting'           => Media\Video\Muting::class,
 		'media.video.optimization'     => Media\Video\Optimization::class,
 		'media.video.poster'           => Media\Video\Poster::class,
 		'media.video.trimming'         => Media\Video\Trimming::class,
+		'media.video.is_gif'           => Media\Video\Is_Gif::class,
 		'meta_boxes'                   => Admin\Meta_Boxes::class,
 		'settings'                     => Settings::class,
 		'site_health'                  => Admin\Site_Health::class,
 		'story_archive'                => Story_Archive::class,
 		'story_post_type'              => Story_Post_Type::class,
+		'story_revisions'              => Story_Revisions::class,
 		'story_shortcode'              => Shortcode\Stories_Shortcode::class,
 		'svg'                          => Media\SVG::class,
 		'tracking'                     => Tracking::class,
@@ -117,6 +123,7 @@ class Plugin extends ServiceBasedPlugin {
 		'rest.embed_controller'        => REST_API\Embed_Controller::class,
 		'rest.link_controller'         => REST_API\Link_Controller::class,
 		'rest.hotlinking_controller'   => REST_API\Hotlinking_Controller::class,
+		'rest.products'                => REST_API\Products_Controller::class,
 		'rest.publisher_logos'         => REST_API\Publisher_Logos_Controller::class,
 		'rest.status_check_controller' => REST_API\Status_Check_Controller::class,
 		'rest.stories_autosave'        => REST_API\Stories_Autosaves_Controller::class,
@@ -173,7 +180,9 @@ class Plugin extends ServiceBasedPlugin {
 			Story_Post_Type::class,
 			Injector::class,
 			Integrations\Site_Kit::class,
+			Integrations\WooCommerce::class,
 			Media\Types::class,
+			Shopping_Vendors::class,
 			Locale::class,
 			Settings::class,
 			Stories_Script_Data::class,

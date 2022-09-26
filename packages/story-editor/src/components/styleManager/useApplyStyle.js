@@ -40,13 +40,14 @@ function useApplyStyle({ pushUpdate }) {
   const extraPropsToAdd = useRef(null);
   const push = useCallback(
     (updater) => {
+      const extraProps = extraPropsToAdd.current || {};
+      extraPropsToAdd.current = null;
       pushUpdate((oldProps) => {
         return {
           ...updater(oldProps),
-          ...extraPropsToAdd.current,
+          ...extraProps,
         };
       }, true);
-      extraPropsToAdd.current = null;
     },
     [pushUpdate]
   );

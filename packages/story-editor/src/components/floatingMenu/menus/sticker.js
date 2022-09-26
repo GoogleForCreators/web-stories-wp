@@ -29,6 +29,7 @@ import {
   More,
   Separator,
   Dismiss,
+  Settings,
 } from '../elements';
 
 const FloatingStickerMenu = memo(function FloatingStickerMenu() {
@@ -46,6 +47,8 @@ const FloatingStickerMenu = memo(function FloatingStickerMenu() {
       <More />
 
       <Separator />
+
+      <Settings />
 
       <Dismiss />
     </>

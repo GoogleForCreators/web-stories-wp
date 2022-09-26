@@ -13,12 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
 import { useContext } from '@googleforcreators/react';
 import { render } from '@testing-library/react';
 import { act, renderHook } from '@testing-library/react-hooks';
+
 /**
  * Internal dependencies
  */
@@ -31,7 +33,17 @@ import {
   useRegisterCheck,
 } from '../checkCountContext';
 
+let consoleErrorFn;
+
 describe('ChecklistCategoryProvider', () => {
+  beforeEach(() => {
+    consoleErrorFn = jest.spyOn(console, 'error').mockImplementation(() => {});
+  });
+
+  afterEach(() => {
+    consoleErrorFn.mockRestore();
+  });
+
   it('throws an error if used outside of ChecklistCountProvider', () => {
     expect(() =>
       render(<ChecklistCategoryProvider category={ISSUE_TYPES.DESIGN} />)

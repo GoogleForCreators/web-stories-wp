@@ -39,7 +39,7 @@ $initial_edits     = [ 'story' => null ];
 $preload_paths = [
 	'/web-stories/v1/media/?' . build_query(
 		[
-			'context'               => 'edit',
+			'context'               => 'view',
 			'per_page'              => 50,
 			'page'                  => 1,
 			'_web_stories_envelope' => 'true',
@@ -67,6 +67,13 @@ $preload_paths = [
 			),
 		]
 	),
+	'/web-stories/v1/media/?' . build_query(
+		[
+			'context'  => 'view',
+			'per_page' => 10,
+			'_fields'  => 'source_url',
+		]
+	),
 	'/web-stories/v1/users/?' . build_query(
 		[
 			'per_page' => 100,
@@ -77,6 +84,7 @@ $preload_paths = [
 	'/web-stories/v1/taxonomies/?' . build_query(
 		[
 			'context' => 'edit',
+			'show_ui' => 'true',
 			'type'    => $post_type_object->name,
 		]
 	),
@@ -87,7 +95,7 @@ $story_query_params = [
 	'_embed'  => rawurlencode(
 		implode(
 			',',
-			[ 'wp:featuredmedia', 'wp:lockuser', 'author', 'wp:publisherlogo', 'wp:term' ]
+			[ 'wp:lockuser', 'author', 'wp:publisherlogo', 'wp:term' ]
 		)
 	),
 	'context' => 'edit',
@@ -103,6 +111,7 @@ $story_query_params = [
 				'modified',
 				'excerpt',
 				'link',
+				'story_poster',
 				'story_data',
 				'preview_link',
 				'edit_link',
@@ -110,10 +119,18 @@ $story_query_params = [
 				'permalink_template',
 				'style_presets',
 				'password',
+				'_links',
 			]
 		)
 	),
 ];
+
+/*
+ * Ensure the global $post remains the same after API data is preloaded.
+ * Because API preloading can call the_content and other filters, plugins
+ * can unexpectedly modify $post.
+ */
+$backup_global_post = $post;
 
 if ( empty( $_GET['web-stories-demo'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 	$preload_paths[] = $story_initial_path . build_query( $story_query_params );
@@ -134,13 +151,6 @@ if ( empty( $_GET['web-stories-demo'] ) ) { // phpcs:ignore WordPress.Security.N
  * @param WP_Post  $post          Post being edited.
  */
 $preload_paths = apply_filters( 'web_stories_editor_preload_paths', $preload_paths, $post );
-
-/*
- * Ensure the global $post remains the same after API data is preloaded.
- * Because API preloading can call the_content and other filters, plugins
- * can unexpectedly modify $post.
- */
-$backup_global_post = $post;
 
 $preload_data = array_reduce(
 	$preload_paths,

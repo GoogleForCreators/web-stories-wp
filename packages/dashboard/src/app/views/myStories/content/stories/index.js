@@ -18,7 +18,6 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { FlagsProvider } from 'flagged';
 import { SnackbarProvider } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
@@ -61,7 +60,6 @@ export default {
     allPagesFetched: false,
     thumbnailMode: false,
     isGrid: true,
-    enablePostLocking: false,
     isLoading: false,
     canViewDefaultTemplates: true,
   },
@@ -93,7 +91,6 @@ export default {
         'duplicateStory',
         'updateStory',
         'trashStory',
-        'enablePostLocking',
         'isGrid',
         'isThumbnailMode',
         'isLoading',
@@ -159,15 +156,13 @@ export const _default = (args) => {
     view: view,
   };
   return (
-    <FlagsProvider features={{ ...args.enablePostLocking }}>
-      <SnackbarProvider>
-        <Layout.Provider>
-          <StorybookLayoutContainer>
-            <Content {...args} {...defaultProps} />
-          </StorybookLayoutContainer>
-        </Layout.Provider>
-      </SnackbarProvider>
-    </FlagsProvider>
+    <SnackbarProvider>
+      <Layout.Provider>
+        <StorybookLayoutContainer>
+          <Content {...args} {...defaultProps} />
+        </StorybookLayoutContainer>
+      </Layout.Provider>
+    </SnackbarProvider>
   );
 };
 

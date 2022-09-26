@@ -21,30 +21,41 @@ import PropTypes from 'prop-types';
 import { useCallback, useMemo, useRef } from '@googleforcreators/react';
 import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
 import {
+  Icons,
+  PLACEMENT,
   prettifyShortcut,
   useSnackbar,
-  PLACEMENT,
-  Icons,
 } from '@googleforcreators/design-system';
 import { trackEvent } from '@googleforcreators/tracking';
-import { resourceList } from '@googleforcreators/media';
+import { ELEMENT_TYPES } from '@googleforcreators/elements';
+import {
+  getExtensionsFromMimeType,
+  resourceList,
+} from '@googleforcreators/media';
+import styled from 'styled-components';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
  */
 import states from '../states';
 import useHighlights from '../useHighlights';
-import updateProperties from '../../../components/inspector/design/updateProperties';
-import useVideoTrim from '../../../components/videoTrim/useVideoTrim';
+import updateProperties from '../../../components/style/updateProperties';
 import { useHistory } from '../../history';
 import { useConfig } from '../../config';
-import { useLocalMedia, TRANSCODABLE_MIME_TYPES } from '../../media';
-import { ELEMENT_TYPES } from '../../../elements';
-import { useStory, useStoryTriggersDispatch, STORY_EVENTS } from '../../story';
+import { TRANSCODABLE_MIME_TYPES, useLocalMedia } from '../../media';
+import { STORY_EVENTS, useStory, useStoryTriggersDispatch } from '../../story';
 import useApplyTextAutoStyle from '../../../utils/useApplyTextAutoStyle';
 import useFFmpeg from '../../media/utils/useFFmpeg';
+import useInsertElement from '../../../components/canvas/useInsertElement';
+import { DEFAULT_PRESET } from '../../../components/library/panes/text/textPresets';
+import { useMediaRecording } from '../../../components/mediaRecording';
+import {
+  BACKGROUND_BLUR_PX,
+  VIDEO_EFFECTS,
+} from '../../../components/mediaRecording/constants';
 import { getResetProperties } from './utils';
-import { ACTIONS, RESET_PROPERTIES, RESET_DEFAULTS } from './constants';
+import { ACTIONS, RESET_DEFAULTS, RESET_PROPERTIES } from './constants';
 
 const UNDO_HELP_TEXT = sprintf(
   /* translators: %s: Ctrl/Cmd + Z keyboard shortcut */
@@ -57,20 +68,37 @@ const {
   ColorBucket,
   CircleSpeed,
   Eraser,
-  LetterTLargeLetterTSmall,
   LetterTPlus,
   Link,
   Media,
   PictureSwap,
   Captions,
+  Cross,
+  Settings,
   Scissors,
 } = Icons;
 
+const quickActionIconAttrs = {
+  width: 24,
+  height: 24,
+};
+const StyledSettings = styled(Settings).attrs(quickActionIconAttrs)``;
+const Mic = styled(Icons.Mic).attrs(quickActionIconAttrs)``;
+const MicOff = styled(Icons.MicOff).attrs(quickActionIconAttrs)``;
+const Video = styled(Icons.Camera).attrs(quickActionIconAttrs)``;
+const VideoOff = styled(Icons.CameraOff).attrs(quickActionIconAttrs)``;
+const BackgroundBlur = styled(Icons.BackgroundBlur).attrs(
+  quickActionIconAttrs
+)``;
+const BackgroundBlurOff = styled(Icons.BackgroundBlurOff).attrs(
+  quickActionIconAttrs
+)``;
+
 export const MediaPicker = ({ render, ...props }) => {
   const {
-    allowedFileTypes,
     allowedMimeTypes: {
       image: allowedImageMimeTypes,
+      vector: allowedVectorMimeTypes,
       video: allowedVideoMimeTypes,
     },
     MediaUpload,
@@ -110,7 +138,19 @@ export const MediaPicker = ({ render, ...props }) => {
   const { showSnackbar } = useSnackbar();
 
   // Media Upload Props
-  let allowedMimeTypes = [...allowedImageMimeTypes, ...allowedVideoMimeTypes];
+  let allowedMimeTypes = useMemo(
+    () => [
+      ...allowedImageMimeTypes,
+      ...allowedVectorMimeTypes,
+      ...allowedVideoMimeTypes,
+    ],
+    [allowedImageMimeTypes, allowedVectorMimeTypes, allowedVideoMimeTypes]
+  );
+  const allowedFileTypes = useMemo(
+    () =>
+      allowedMimeTypes.map((type) => getExtensionsFromMimeType(type)).flat(),
+    [allowedMimeTypes]
+  );
   if (isTranscodingEnabled) {
     allowedMimeTypes = allowedMimeTypes.concat(TRANSCODABLE_MIME_TYPES);
   }
@@ -231,22 +271,28 @@ MediaPicker.propTypes = {
 const useQuickActions = () => {
   const {
     capabilities: { hasUploadMediaAction },
-    isRTL,
   } = useConfig();
   const dispatchStoryEvent = useStoryTriggersDispatch();
   const {
     backgroundElement,
+    currentPageNumber,
     selectedElementAnimations,
     selectedElements,
     updateElementsById,
   } = useStory(
     ({
-      state: { currentPage, selectedElementAnimations, selectedElements },
+      state: {
+        currentPage,
+        currentPageNumber,
+        selectedElementAnimations,
+        selectedElements,
+      },
       actions: { updateElementsById },
     }) => ({
       backgroundElement: currentPage?.elements.find(
         (element) => element.isBackground
       ),
+      currentPageNumber,
       selectedElementAnimations,
       selectedElements,
       updateElementsById,
@@ -259,18 +305,50 @@ const useQuickActions = () => {
   const { setHighlights } = useHighlights(({ setHighlights }) => ({
     setHighlights,
   }));
-  const { hasTrimMode, toggleTrimMode } = useVideoTrim(
-    ({ state: { hasTrimMode }, actions: { toggleTrimMode } }) => ({
-      hasTrimMode,
-      toggleTrimMode,
-    })
-  );
 
-  const { canTranscodeResource } = useLocalMedia(
-    ({ state: { canTranscodeResource } }) => ({
-      canTranscodeResource,
-    })
-  );
+  const {
+    isInRecordingMode,
+    toggleRecordingMode,
+    toggleVideo,
+    toggleAudio,
+    hasVideo,
+    hasAudio,
+    videoEffect,
+    setVideoEffect,
+    toggleSettings,
+    audioInput,
+    videoInput,
+    isReady,
+    isProcessing,
+    isAdjustingTrim,
+    isProcessingTrim,
+    startTrim,
+  } = useMediaRecording(({ state, actions }) => ({
+    isInRecordingMode: state.isInRecordingMode,
+    hasAudio: state.hasAudio,
+    hasVideo: state.hasVideo,
+    videoEffect: state.videoEffect,
+    audioInput: state.audioInput,
+    videoInput: state.videoInput,
+    isReady:
+      state.inputStatus === 'ready' &&
+      !state.file?.type?.startsWith('image') &&
+      !state.isCountingDown &&
+      (state.status === 'ready' || state.status === 'idle'),
+    isProcessing: state.isProcessing,
+    isAdjustingTrim: state.isAdjustingTrim,
+    isProcessingTrim: state.isProcessingTrim,
+    toggleRecordingMode: actions.toggleRecordingMode,
+    toggleVideo: actions.toggleVideo,
+    toggleAudio: actions.toggleAudio,
+    toggleSettings: actions.toggleSettings,
+    muteAudio: actions.muteAudio,
+    unMuteAudio: actions.unMuteAudio,
+    startTrim: actions.startTrim,
+    setVideoEffect: actions.setVideoEffect,
+  }));
+
+  const enableMediaRecordingTrimming = useFeature('recordingTrimming');
 
   const undoRef = useRef(undo);
   undoRef.current = undo;
@@ -409,10 +487,7 @@ const useQuickActions = () => {
     handleFocusAnimationPanel,
     handleFocusLinkPanel,
     handleFocusPageBackground,
-    handleFocusTextColor,
-    handleFocusFontPicker,
     handleFocusTextSetsPanel,
-    handleFocusStylePanel,
     handleFocusCaptionsPanel,
   } = useMemo(
     () => ({
@@ -420,20 +495,20 @@ const useQuickActions = () => {
       handleFocusLinkPanel: handleFocusPanel(states.LINK),
       handleFocusPageBackground: handleFocusPanel(states.PAGE_BACKGROUND),
       handleFocusTextSetsPanel: handleFocusPanel(states.TEXT_SET),
-      handleFocusFontPicker: handleFocusPanel(states.FONT),
-      handleFocusTextColor: handleFocusPanel(states.TEXT_COLOR),
-      handleFocusStylePanel: handleFocusPanel(states.STYLE),
       handleFocusCaptionsPanel: handleFocusPanel(states.CAPTIONS),
     }),
     [handleFocusPanel]
   );
 
+  const insertElement = useInsertElement();
+
   const actionMenuProps = useMemo(
     () => ({
-      tooltipPlacement: isRTL ? PLACEMENT.LEFT : PLACEMENT.RIGHT,
+      // The <BaseTooltip> component will handle proper placement for RTL layout
+      tooltipPlacement: PLACEMENT.RIGHT,
       onMouseDown: handleMouseDown,
     }),
-    [handleMouseDown, isRTL]
+    [handleMouseDown]
   );
 
   const noElementSelectedActions = useMemo(() => {
@@ -470,7 +545,7 @@ const useQuickActions = () => {
         label: ACTIONS.INSERT_TEXT.text,
         onClick: (evt) => {
           handleFocusTextSetsPanel()(evt);
-
+          insertElement('text', DEFAULT_PRESET);
           trackEvent('quick_action', {
             name: ACTIONS.INSERT_TEXT.trackingEventName,
             element: 'none',
@@ -485,17 +560,23 @@ const useQuickActions = () => {
     handleFocusMediaPanel,
     handleFocusPageBackground,
     handleFocusTextSetsPanel,
+    insertElement,
   ]);
 
   const resetProperties = useMemo(
     () => getResetProperties(selectedElement, selectedElementAnimations),
     [selectedElement, selectedElementAnimations]
   );
+
   const showClearAction = resetProperties.length > 0;
 
   const foregroundCommonActions = useMemo(() => {
-    const baseActions = [
-      {
+    const commonActions = [];
+
+    // Don't show the 'Add animation' button on the first page
+    if (currentPageNumber > 1) {
+      // 'Add animation' button
+      commonActions.push({
         Icon: CircleSpeed,
         label: ACTIONS.ADD_ANIMATION.text,
         onClick: (evt) => {
@@ -507,43 +588,50 @@ const useQuickActions = () => {
           });
         },
         ...actionMenuProps,
-      },
-      {
-        Icon: Link,
-        label: ACTIONS.ADD_LINK.text,
-        onClick: (evt) => {
-          handleFocusLinkPanel()(evt);
+      });
+    }
 
-          trackEvent('quick_action', {
-            name: ACTIONS.ADD_LINK.trackingEventName,
-            element: selectedElement?.type,
-          });
-        },
-        ...actionMenuProps,
-      },
-    ];
-
-    const clearAction = {
-      Icon: Eraser,
-      label: ACTIONS.RESET_ELEMENT.text,
-      onClick: () => {
-        handleElementReset({
-          elementId: selectedElement?.id,
-          resetProperties,
-          elementType: selectedElement?.type,
-        });
+    // 'Add link' button is always rendered
+    commonActions.push({
+      Icon: Link,
+      label: ACTIONS.ADD_LINK.text,
+      onClick: (evt) => {
+        handleFocusLinkPanel()(evt);
 
         trackEvent('quick_action', {
-          name: ACTIONS.RESET_ELEMENT.trackingEventName,
+          name: ACTIONS.ADD_LINK.trackingEventName,
           element: selectedElement?.type,
         });
       },
-      separator: 'top',
       ...actionMenuProps,
-    };
+    });
 
-    return showClearAction ? [...baseActions, clearAction] : baseActions;
+    // Only show 'Reset element' button for modified elements
+    if (showClearAction) {
+      // 'Reset element' button
+      commonActions.push({
+        Icon: Eraser,
+        label: ACTIONS.RESET_ELEMENT.text,
+        onClick: () => {
+          handleElementReset({
+            elementId: selectedElement?.id,
+            resetProperties,
+            elementType: selectedElement?.type,
+          });
+
+          trackEvent('quick_action', {
+            name: ACTIONS.RESET_ELEMENT.trackingEventName,
+            element: selectedElement?.type,
+          });
+        },
+        separator: 'top',
+        ...actionMenuProps,
+      });
+    }
+
+    return commonActions;
   }, [
+    currentPageNumber,
     handleFocusAnimationPanel,
     selectedElement?.id,
     selectedElement?.type,
@@ -583,30 +671,7 @@ const useQuickActions = () => {
     selectedElement?.type,
   ]);
 
-  const shapeActions = useMemo(
-    () => [
-      {
-        Icon: Bucket,
-        label: ACTIONS.CHANGE_COLOR.text,
-        onClick: (evt) => {
-          handleFocusStylePanel()(evt);
-
-          trackEvent('quick_action', {
-            name: ACTIONS.CHANGE_COLOR.trackingEventName,
-            element: selectedElement?.type,
-          });
-        },
-        ...actionMenuProps,
-      },
-      ...foregroundCommonActions,
-    ],
-    [
-      actionMenuProps,
-      foregroundCommonActions,
-      handleFocusStylePanel,
-      selectedElement?.type,
-    ]
-  );
+  const shapeActions = foregroundCommonActions;
 
   const applyTextAutoStyle = useApplyTextAutoStyle(
     selectedElement,
@@ -618,32 +683,6 @@ const useQuickActions = () => {
   );
   const textActions = useMemo(
     () => [
-      {
-        Icon: Bucket,
-        label: ACTIONS.CHANGE_COLOR.text,
-        onClick: (evt) => {
-          handleFocusTextColor()(evt);
-
-          trackEvent('quick_action', {
-            name: ACTIONS.CHANGE_COLOR.trackingEventName,
-            element: selectedElement?.type,
-          });
-        },
-        ...actionMenuProps,
-      },
-      {
-        Icon: LetterTLargeLetterTSmall,
-        label: ACTIONS.CHANGE_FONT.text,
-        onClick: (evt) => {
-          handleFocusFontPicker()(evt);
-
-          trackEvent('quick_action', {
-            name: ACTIONS.CHANGE_FONT.trackingEventName,
-            element: selectedElement?.type,
-          });
-        },
-        ...actionMenuProps,
-      },
       {
         Icon: ColorBucket,
         label: ACTIONS.AUTO_STYLE_TEXT.text,
@@ -662,41 +701,9 @@ const useQuickActions = () => {
       applyTextAutoStyle,
       foregroundCommonActions,
       actionMenuProps,
-      handleFocusTextColor,
-      handleFocusFontPicker,
       selectedElement?.type,
     ]
   );
-
-  const videoCommonActions = useMemo(() => {
-    const resource = selectedElements?.[0]?.resource;
-    if (!resource) {
-      return [];
-    }
-    return canTranscodeResource(resource) && hasTrimMode
-      ? [
-          {
-            Icon: Scissors,
-            label: ACTIONS.TRIM_VIDEO.text,
-            onClick: () => {
-              toggleTrimMode();
-              trackEvent('quick_action', {
-                name: ACTIONS.TRIM_VIDEO.trackingEventName,
-                element: selectedElement.type,
-              });
-            },
-            ...actionMenuProps,
-          },
-        ]
-      : [];
-  }, [
-    selectedElements,
-    selectedElement,
-    canTranscodeResource,
-    hasTrimMode,
-    actionMenuProps,
-    toggleTrimMode,
-  ]);
 
   const videoActions = useMemo(() => {
     const [baseActions, clearActions] = showClearAction
@@ -721,7 +728,6 @@ const useQuickActions = () => {
         },
         ...actionMenuProps,
       },
-      ...videoCommonActions,
       ...clearActions,
     ];
   }, [
@@ -730,7 +736,6 @@ const useQuickActions = () => {
     handleFocusCaptionsPanel,
     selectedElement?.type,
     showClearAction,
-    videoCommonActions,
   ]);
 
   const backgroundElementMediaActions = useMemo(() => {
@@ -801,6 +806,117 @@ const useQuickActions = () => {
     showClearAction,
   ]);
 
+  const mediaRecordingActions = useMemo(() => {
+    return [
+      {
+        Icon: Cross,
+        label: __('Close', 'web-stories'),
+        onClick: () => {
+          trackEvent('media_recording_mode_toggled', {
+            status: 'closed',
+          });
+          toggleRecordingMode();
+        },
+        ...actionMenuProps,
+      },
+      {
+        Icon: StyledSettings,
+        label: __('Options', 'web-stories'),
+        onClick: () => {
+          trackEvent('media_recording_open_settings');
+          toggleSettings();
+        },
+        disabled: !isReady,
+        separator: 'top',
+        ...actionMenuProps,
+      },
+      audioInput && {
+        Icon: hasAudio ? Mic : MicOff,
+        label: hasAudio
+          ? __('Disable Audio', 'web-stories')
+          : __('Enable Audio', 'web-stories'),
+        onClick: () => {
+          trackEvent('media_recording_audio_toggled', {
+            status: hasAudio ? 'muted' : 'unmuted',
+          });
+          toggleAudio();
+        },
+        disabled: !isReady || !hasVideo,
+        ...actionMenuProps,
+      },
+      videoInput && {
+        Icon: hasVideo ? Video : VideoOff,
+        label: hasVideo
+          ? __('Disable Video', 'web-stories')
+          : __('Enable Video', 'web-stories'),
+        onClick: () => {
+          trackEvent('media_recording_video_toggled', {
+            status: hasVideo ? 'off' : 'on',
+          });
+          toggleVideo();
+        },
+        disabled: !isReady || !hasAudio,
+        ...actionMenuProps,
+      },
+      videoInput && {
+        Icon:
+          videoEffect === VIDEO_EFFECTS.BLUR
+            ? BackgroundBlur
+            : BackgroundBlurOff,
+        label:
+          videoEffect === VIDEO_EFFECTS.BLUR
+            ? __('Disable Background Blur', 'web-stories')
+            : __('Enable Background Blur', 'web-stories'),
+        onClick: () => {
+          trackEvent('media_recording_background_blur_px', {
+            value: videoEffect === VIDEO_EFFECTS.BLUR ? 0 : BACKGROUND_BLUR_PX,
+          });
+          const newVideoEffect =
+            videoEffect === VIDEO_EFFECTS.BLUR
+              ? VIDEO_EFFECTS.NONE
+              : VIDEO_EFFECTS.BLUR;
+          setVideoEffect(newVideoEffect);
+        },
+        disabled: !isReady || !hasVideo,
+        ...actionMenuProps,
+      },
+      enableMediaRecordingTrimming && {
+        Icon: Scissors,
+        label: __('Trim Video', 'web-stories'),
+        onClick: () => {
+          trackEvent('media_recording_trim_start');
+          startTrim();
+        },
+        disabled:
+          !isProcessing || isAdjustingTrim || !hasVideo || isProcessingTrim,
+        ...actionMenuProps,
+      },
+    ].filter(Boolean);
+  }, [
+    actionMenuProps,
+    isReady,
+    audioInput,
+    videoInput,
+    hasVideo,
+    hasAudio,
+    isProcessing,
+    isAdjustingTrim,
+    isProcessingTrim,
+    toggleAudio,
+    toggleVideo,
+    toggleRecordingMode,
+    toggleSettings,
+    startTrim,
+    enableMediaRecordingTrimming,
+    videoEffect,
+    setVideoEffect,
+  ]);
+
+  // Return special actions for media recording mode.
+  if (isInRecordingMode) {
+    return mediaRecordingActions;
+  }
+
   // Hide menu if there are multiple elements selected
   if (selectedElements.length > 1) {
     return [];
@@ -830,7 +946,7 @@ const useQuickActions = () => {
     const isVideo = selectedElement.type === 'video';
     // In case of video, we're also adding actions that are common for video regardless of bg/not.
     if (isVideo) {
-      return [...backgroundElementMediaActions, ...videoCommonActions];
+      return [...backgroundElementMediaActions];
     }
     return backgroundElementMediaActions;
   }

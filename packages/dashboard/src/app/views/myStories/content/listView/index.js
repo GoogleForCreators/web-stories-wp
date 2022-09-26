@@ -21,7 +21,6 @@ import PropTypes from 'prop-types';
 import { useCallback, useMemo } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import { Icons, Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
-import { useFeatures } from 'flagged';
 /**
  * Internal dependencies
  */
@@ -48,6 +47,7 @@ import {
   STORY_STATUS,
 } from '../../../../../constants';
 import { useConfig } from '../../../../config';
+import useStoryFilters from '../../filters/useStoryFilters';
 import { StoryListItem } from '../storyListItem';
 import {
   ArrowIcon,
@@ -63,32 +63,42 @@ const toggleSortLookup = {
 };
 
 export default function StoryListView({
-  handleSortChange,
-  handleSortDirectionChange,
   hideStoryList,
   renameStory,
-  sortDirection,
   stories,
   storyMenu,
-  storySort,
-  storyStatus,
 }) {
-  const { enablePostLocking } = useFeatures();
   const {
     userId,
     styleConstants: { topOffset },
   } = useConfig();
 
+  const { filters, sortObject, updateSort } = useStoryFilters(
+    ({ state: { filters, sortObject }, actions: { updateSort } }) => ({
+      filters,
+      sortObject,
+      updateSort,
+    })
+  );
+
+  const [storySort, sortDirection] = useMemo(() => {
+    return [sortObject?.orderby, sortObject?.order];
+  }, [sortObject]);
+
+  const statusFilterValue = useMemo(() => {
+    const statusFilter = filters.filter(({ key }) => key === 'status');
+    return statusFilter.filterId;
+  }, [filters]);
+
   const onSortTitleSelected = useCallback(
-    (newStorySort) => {
-      if (newStorySort !== storySort) {
-        handleSortChange(newStorySort);
-        handleSortDirectionChange(ORDER_BY_SORT[newStorySort]);
+    (orderby) => {
+      if (orderby !== storySort) {
+        updateSort({ orderby, order: ORDER_BY_SORT[orderby] });
       } else {
-        handleSortDirectionChange(toggleSortLookup[sortDirection]);
+        updateSort({ order: toggleSortLookup[sortDirection] });
       }
     },
-    [handleSortDirectionChange, handleSortChange, storySort, sortDirection]
+    [updateSort, storySort, sortDirection]
   );
 
   const onKeyDownSort = useCallback(
@@ -107,19 +117,18 @@ export default function StoryListView({
         <StoryListItem
           key={`story-${story.id}`}
           story={story}
-          userId={enablePostLocking && userId}
+          userId={userId}
           renameStory={renameStory}
-          storyStatus={storyStatus}
+          storyStatus={statusFilterValue}
           storyMenu={storyMenu}
         />
       ))
     );
   }, [
-    enablePostLocking,
     hideStoryList,
     renameStory,
     stories,
-    storyStatus,
+    statusFilterValue,
     storyMenu,
     userId,
   ]);
@@ -250,7 +259,7 @@ export default function StoryListView({
                 <Icons.ArrowDown />
               </ArrowIconWithTitle>
             </TableDateHeaderCell>
-            {storyStatus !== STORY_STATUS.DRAFT && (
+            {statusFilterValue !== STORY_STATUS.DRAFT && (
               <TableStatusHeaderCell>
                 <Text
                   as="span"
@@ -270,13 +279,8 @@ export default function StoryListView({
 }
 
 StoryListView.propTypes = {
-  handleSortChange: PropTypes.func.isRequired,
-  handleSortDirectionChange: PropTypes.func.isRequired,
   hideStoryList: PropTypes.bool,
   renameStory: RenameStoryPropType,
-  sortDirection: PropTypes.string.isRequired,
   storyMenu: StoryMenuPropType.isRequired,
-  storySort: PropTypes.string.isRequired,
-  storyStatus: PropTypes.oneOf(Object.values(STORY_STATUS)),
   stories: StoriesPropType,
 };

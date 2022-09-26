@@ -18,14 +18,19 @@
  * External dependencies
  */
 import { createSolidFromString } from '@googleforcreators/patterns';
+import { createPage, registerElementType } from '@googleforcreators/elements';
+import { elementTypes } from '@googleforcreators/element-library';
 
 /**
  * Internal dependencies
  */
 import isEmptyStory from '../isEmptyStory';
-import { createPage } from '../../../../elements';
 
 describe('isEmptyStory', () => {
+  beforeAll(() => {
+    elementTypes.forEach(registerElementType);
+  });
+
   it('should count newly created story as empty', () => {
     const newlyCreatedStoryPages = [createPage()];
     expect(isEmptyStory(newlyCreatedStoryPages)).toBeTrue();
@@ -53,5 +58,37 @@ describe('isEmptyStory', () => {
     const storyWithExtraElements = [createPage()];
     storyWithExtraElements[0].elements.push({});
     expect(isEmptyStory(storyWithExtraElements)).toBeFalse();
+  });
+
+  it('should not count story with an attachment as empty', () => {
+    const storyWithAttachment = [createPage()];
+    const testUrl = 'https://testurl.com';
+    const pageAttachmentObject = { url: testUrl };
+
+    storyWithAttachment[0].pageAttachment = pageAttachmentObject;
+    expect(isEmptyStory(storyWithAttachment)).toBeFalse();
+  });
+
+  it('should count story without the pageAttachment property as empty', () => {
+    const storyWithoutAttachment = [createPage()];
+
+    expect(isEmptyStory(storyWithoutAttachment)).toBeTrue();
+  });
+
+  it('should count story without the pageAttachment property set to null as empty', () => {
+    const storyWithoutAttachment = [createPage()];
+    const pageAttachmentObject = null;
+
+    storyWithoutAttachment[0].pageAttachment = pageAttachmentObject;
+    expect(isEmptyStory(storyWithoutAttachment)).toBeTrue();
+  });
+
+  it('should count story that has the pageAttachment property with an empty url string as empty', () => {
+    const storyWithoutAttachment = [createPage()];
+    const testUrl = '';
+    const pageAttachmentObject = { url: testUrl };
+
+    storyWithoutAttachment[0].pageAttachment = pageAttachmentObject;
+    expect(isEmptyStory(storyWithoutAttachment)).toBeTrue();
   });
 });

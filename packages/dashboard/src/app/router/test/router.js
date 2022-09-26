@@ -24,6 +24,7 @@ import { createBrowserHistory } from 'history';
  * Internal dependencies
  */
 import { RouterProvider, Route, useRouteHistory } from '..';
+import { RouterContext } from '../routerProvider';
 
 describe('RouterProvider', () => {
   it('should render the first route by default', () => {
@@ -36,6 +37,46 @@ describe('RouterProvider', () => {
 
     expect(screen.getByText('Home')).toBeInTheDocument();
     expect(screen.queryByText('Second Route')).not.toBeInTheDocument();
+  });
+
+  it('should render the default route if currentPath has no matching route of its own', () => {
+    render(
+      <RouterContext.Provider
+        value={{
+          state: {
+            currentPath: 'wpbody-content',
+            availableRoutes: ['/', '/second-route'],
+            defaultRoute: '/',
+          },
+        }}
+      >
+        <Route path="/" exact isDefault component={<div>{'Home'}</div>} />
+        <Route path="/second-route" component={<div>{'Second Route'}</div>} />
+      </RouterContext.Provider>
+    );
+
+    expect(screen.getByText('Home')).toBeInTheDocument();
+    expect(screen.queryByText('Second Route')).not.toBeInTheDocument();
+  });
+
+  it('should render secondary route on a partial match', () => {
+    render(
+      <RouterContext.Provider
+        value={{
+          state: {
+            currentPath: '/second-route123',
+            availableRoutes: ['/', '/second-route'],
+            defaultRoute: '/',
+          },
+        }}
+      >
+        <Route path="/" exact isDefault component={<div>{'Home'}</div>} />
+        <Route path="/second-route" component={<div>{'Second Route'}</div>} />
+      </RouterContext.Provider>
+    );
+
+    expect(screen.queryByText('Home')).not.toBeInTheDocument();
+    expect(screen.getByText('Second Route')).toBeInTheDocument();
   });
 
   it('should render the second route when navigated to', async () => {

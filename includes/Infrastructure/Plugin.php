@@ -43,7 +43,7 @@ interface Plugin extends PluginActivationAware, PluginDeactivationAware, Registe
 	 *
 	 * @since 1.6.0
 	 *
-	 * @return ServiceContainer Service container of the plugin.
+	 * @return ServiceContainer<Service> Service container of the plugin.
 	 */
 	public function get_container(): ServiceContainer;
 }

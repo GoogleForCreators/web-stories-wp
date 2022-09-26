@@ -63,7 +63,7 @@ class Web_Stories_Compatibility {
 	 *
 	 * @since 1.2.0
 	 *
-	 * @var array
+	 * @var array<string, array{functions: string[], classes: string[]}>
 	 */
 	protected $extensions = array();
 
@@ -72,7 +72,7 @@ class Web_Stories_Compatibility {
 	 *
 	 * @since 1.2.0
 	 *
-	 * @var array
+	 * @var string[]
 	 */
 	protected $required_files = array();
 
@@ -349,10 +349,10 @@ class Web_Stories_Compatibility {
 	 *
 	 * @since 1.2.0
 	 *
-	 * @return array
+	 * @return array<string, array{functions: string[], classes: string[]}>
 	 */
 	public function get_extensions() {
-		return (array) $this->extensions;
+		return $this->extensions;
 	}
 
 	/**
@@ -362,10 +362,10 @@ class Web_Stories_Compatibility {
 	 *
 	 * @since 1.2.0
 	 *
-	 * @return array
+	 * @return string[]
 	 */
 	public function get_required_files() {
-		return (array) $this->required_files;
+		return $this->required_files;
 	}
 
 	/**
@@ -416,7 +416,7 @@ class Web_Stories_Compatibility {
 	 *
 	 * @since 1.2.0
 	 *
-	 * @param array $extensions Array of extensions.
+	 * @param array<string, array{functions: string[], classes: string[]}> $extensions Array of extensions.
 	 * @return void
 	 */
 	public function set_extensions( array $extensions ) {
@@ -430,7 +430,7 @@ class Web_Stories_Compatibility {
 	 *
 	 * @since 1.2.0
 	 *
-	 * @param array $required_files Array of require files.
+	 * @param string[] $required_files Array of require files.
 	 * @return void
 	 */
 	public function set_required_files( array $required_files ) {

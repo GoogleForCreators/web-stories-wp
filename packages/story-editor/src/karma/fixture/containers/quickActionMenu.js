@@ -95,4 +95,34 @@ export class QuickActionMenu extends Container {
       name: ACTIONS.CHANGE_FONT.text,
     });
   }
+
+  get closeButton() {
+    return this.queryByRole('menuitem', {
+      name: 'Close',
+    });
+  }
+
+  get optionsButton() {
+    return this.queryByRole('menuitem', {
+      name: 'Options',
+    });
+  }
+
+  get disableAudioButton() {
+    return this.queryByRole('menuitem', {
+      name: 'Disable Audio',
+    });
+  }
+
+  get disableVideoButton() {
+    return this.queryByRole('menuitem', {
+      name: 'Disable Video',
+    });
+  }
+
+  get enableAudioButton() {
+    return this.queryByRole('menuitem', {
+      name: 'Enable Audio',
+    });
+  }
 }

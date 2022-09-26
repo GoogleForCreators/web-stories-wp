@@ -1273,13 +1273,34 @@ const formattedTemplatesArray = [
       },
     ],
     postersByPage: [
-      { png: 'http://placekitten.com/158/237', type: 'cover' },
-      { png: 'http://placekitten.com/158/237', type: 'section' },
-      { png: 'http://placekitten.com/158/237', type: 'quote' },
-      { png: 'http://placekitten.com/158/237', type: 'editorial' },
-      { png: 'http://placekitten.com/158/237', type: 'list' },
-      { png: 'http://placekitten.com/158/237', type: 'table' },
-      { png: 'http://placekitten.com/158/237', type: 'steps' },
+      {
+        png: 'http://localhost:9876/__static__/featured-media-1.png',
+        type: 'cover',
+      },
+      {
+        png: 'http://localhost:9876/__static__/featured-media-2.png',
+        type: 'section',
+      },
+      {
+        png: 'http://localhost:9876/__static__/featured-media-3.png',
+        type: 'quote',
+      },
+      {
+        png: 'http://localhost:9876/__static__/featured-media-1.png',
+        type: 'editorial',
+      },
+      {
+        png: 'http://localhost:9876/__static__/featured-media-2.png',
+        type: 'list',
+      },
+      {
+        png: 'http://localhost:9876/__static__/featured-media-3.png',
+        type: 'table',
+      },
+      {
+        png: 'http://localhost:9876/__static__/featured-media-1.png',
+        type: 'steps',
+      },
     ],
     status: 'template',
     tags: ['Delicious', 'Baker', 'Cook'],
@@ -1480,7 +1501,12 @@ const formattedTemplatesArray = [
         pageTemplateType: 'cover',
       },
     ],
-    postersByPage: [{ png: 'http://placekitten.com/158/237', type: 'cover' }],
+    postersByPage: [
+      {
+        png: 'http://localhost:9876/__static__/featured-media-2.png',
+        type: 'cover',
+      },
+    ],
     status: 'template',
     tags: ['Delicious', 'Baker', 'Cook'],
     colors: [
@@ -1680,7 +1706,12 @@ const formattedTemplatesArray = [
         pageTemplateType: 'section',
       },
     ],
-    postersByPage: [{ png: 'http://placekitten.com/158/237', type: 'section' }],
+    postersByPage: [
+      {
+        png: 'http://localhost:9876/__static__/featured-media-3.png',
+        type: 'section',
+      },
+    ],
     status: 'template',
     tags: ['Delicious', 'Baker', 'Cook'],
     colors: [
@@ -1881,7 +1912,10 @@ const formattedTemplatesArray = [
       },
     ],
     postersByPage: [
-      { png: 'http://placekitten.com/158/237', type: 'editorial' },
+      {
+        png: 'http://localhost:9876/__static__/featured-media-1.png',
+        type: 'editorial',
+      },
     ],
     status: 'template',
     tags: ['Delicious', 'Baker', 'Cook'],
@@ -2082,7 +2116,12 @@ const formattedTemplatesArray = [
         pageTemplateType: 'steps',
       },
     ],
-    postersByPage: [{ png: 'http://placekitten.com/158/237', type: 'steps' }],
+    postersByPage: [
+      {
+        png: 'http://localhost:9876/__static__/featured-media-2.png',
+        type: 'steps',
+      },
+    ],
     status: 'template',
     tags: ['Delicious', 'Baker', 'Cook'],
     colors: [
@@ -2282,7 +2321,12 @@ const formattedTemplatesArray = [
         pageTemplateType: 'cover',
       },
     ],
-    postersByPage: [{ png: 'http://placekitten.com/158/237', type: 'cover' }],
+    postersByPage: [
+      {
+        png: 'http://localhost:9876/__static__/featured-media-1.png',
+        type: 'cover',
+      },
+    ],
     status: 'template',
     tags: ['Delicious', 'Baker', 'Cook'],
     colors: [
@@ -2482,7 +2526,12 @@ const formattedTemplatesArray = [
         pageTemplateType: 'section',
       },
     ],
-    postersByPage: [{ png: 'http://placekitten.com/158/237', type: 'section' }],
+    postersByPage: [
+      {
+        png: 'http://localhost:9876/__static__/featured-media-3.png',
+        type: 'section',
+      },
+    ],
     status: 'template',
     tags: ['Delicious', 'Baker', 'Cook'],
     colors: [
@@ -2683,7 +2732,10 @@ const formattedTemplatesArray = [
       },
     ],
     postersByPage: [
-      { png: 'http://placekitten.com/158/237', type: 'editorial' },
+      {
+        png: 'http://localhost:9876/__static__/featured-media-2.png',
+        type: 'editorial',
+      },
     ],
     status: 'template',
     tags: ['Delicious', 'Baker', 'Cook'],

@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { useEffect, useRef } from '@googleforcreators/react';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -26,35 +27,36 @@ import { useConfig, useHistory, useStory } from '../../app';
 import useIsUploadingToStory from '../../utils/useIsUploadingToStory';
 
 function AutoSaveHandler() {
+  const improvedAutosaves = useFeature('improvedAutosaves');
   const { autoSaveInterval } = useConfig();
   const {
     state: { hasNewChanges },
   } = useHistory();
-  const { status, saveStory } = useStory(
-    ({
-      state: {
-        story: { status },
-      },
-      actions: { saveStory },
-    }) => ({
-      status,
-      saveStory,
+  const { isDraft, saveStory, autoSave } = useStory(
+    ({ state: { story }, actions }) => ({
+      autoSave: actions.autoSave,
+      saveStory: actions.saveStory,
+      isDraft: 'draft' === story.status || !story.status,
     })
   );
   const isUploading = useIsUploadingToStory();
 
-  const isDraft = 'draft' === status || !status;
+  const save = improvedAutosaves ? autoSave : saveStory;
 
   // Cache it to make it stable in terms of the below timeout
-  const cachedSaveStory = useRef(saveStory);
+  const cachedSaveStory = useRef(save);
   useEffect(() => {
-    cachedSaveStory.current = saveStory;
-  }, [saveStory]);
+    cachedSaveStory.current = save;
+  }, [save]);
 
   useEffect(() => {
-    // @todo The isDraft check is temporary to ensure only draft gets auto-saved,
-    // until the logic for other statuses has been decided.
-    if (!isDraft || !hasNewChanges || !autoSaveInterval || isUploading) {
+    // TODO: Remove isDraft check when improvedAutosaves gets enabled by default.
+    if (
+      (!isDraft && !improvedAutosaves) ||
+      !hasNewChanges ||
+      !autoSaveInterval ||
+      isUploading
+    ) {
       return undefined;
     }
     // This is only a timeout (and not an interval), as `hasNewChanges` will come
@@ -66,7 +68,13 @@ function AutoSaveHandler() {
     );
 
     return () => clearTimeout(timeout);
-  }, [autoSaveInterval, isDraft, hasNewChanges, isUploading]);
+  }, [
+    autoSaveInterval,
+    isDraft,
+    improvedAutosaves,
+    hasNewChanges,
+    isUploading,
+  ]);
 
   return null;
 }

@@ -25,7 +25,6 @@ import {
   Headline,
   Text,
   THEME_CONSTANTS,
-  Tooltip,
 } from '@googleforcreators/design-system';
 
 /**
@@ -37,6 +36,7 @@ import {
   TableCell,
   TablePreviewCell,
   TableStatusCell,
+  Tooltip,
 } from '../../../../../components';
 import { generateStoryMenu } from '../../../../../components/popoverMenu/story-menu-generator';
 import { DISPLAY_STATUS, STORY_STATUS } from '../../../../../constants';
@@ -125,7 +125,11 @@ export const StoryListItem = ({
               {...(story.featuredMediaUrl
                 ? {
                     src: story.featuredMediaUrl,
-                    alt: formattedTitle,
+                    alt: sprintf(
+                      /* translators: %s: Story title. */
+                      __('%s Poster image', 'web-stories'),
+                      formattedTitle
+                    ),
                     as: 'img',
                     decoding: 'async',
                   }

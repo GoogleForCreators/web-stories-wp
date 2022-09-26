@@ -29,11 +29,16 @@ import { useStory } from '../../../app';
 import PageMenuButton from './pageMenuButton';
 
 function AnimationToggle() {
-  const { animationState, updateAnimationState } = useStory(
-    ({ state: { animationState }, actions: { updateAnimationState } }) => {
+  const { animationState, updateAnimationState, isFirstPage } = useStory(
+    ({
+      state: { animationState, currentPageNumber },
+      actions: { updateAnimationState },
+    }) => {
+      const _isFirstPage = currentPageNumber === 1;
       return {
         animationState,
         updateAnimationState,
+        isFirstPage: _isFirstPage,
       };
     }
   );
@@ -41,13 +46,18 @@ function AnimationToggle() {
     STORY_ANIMATION_STATE.PLAYING,
     STORY_ANIMATION_STATE.PLAYING_SELECTED,
   ].includes(animationState);
-  const tooltip = isPlaying
+
+  const tooltip = isFirstPage
+    ? __('Animations Disabled', 'web-stories')
+    : isPlaying
     ? __('Stop', 'web-stories')
     : __('Play', 'web-stories');
-  const label = isPlaying
+  const label = isFirstPage
+    ? __('Page Animations Disabled', 'web-stories')
+    : isPlaying
     ? __('Stop Page Animations', 'web-stories')
     : __('Play Page Animations', 'web-stories');
-  const shortcut = 'mod+k';
+  const shortcut = isFirstPage ? null : 'mod+enter';
   const Icon = isPlaying ? Icons.StopOutline : Icons.PlayOutline;
 
   const toggleAnimationState = useCallback(() => {
@@ -68,6 +78,7 @@ function AnimationToggle() {
       shortcut={shortcut}
       onClick={toggleAnimationState}
       aria-label={label}
+      disabled={isFirstPage}
     >
       <Icon />
     </PageMenuButton>

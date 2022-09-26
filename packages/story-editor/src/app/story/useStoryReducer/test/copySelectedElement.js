@@ -19,7 +19,32 @@
 import { setupReducer } from './_utils';
 
 describe('copySelectedElement', () => {
-  it("copies an element's styles and animations", () => {
+  it('should do nothing if no selection', () => {
+    const { restore, copySelectedElement } = setupReducer();
+
+    // Set an initial state with a current page.
+    const initialState = restore({
+      pages: [
+        {
+          id: '111',
+          animations: [],
+          elements: [
+            { id: '123', isBackground: true, type: 'shape' },
+            { id: '456', x: 0, y: 0, type: 'shape' },
+            { id: '789', x: 0, y: 0, type: 'shape' },
+          ],
+        },
+      ],
+      current: '111',
+      selection: [],
+    });
+
+    const result = copySelectedElement();
+
+    expect(result).toStrictEqual(initialState);
+  });
+
+  it('copies the styles of an element and animations', () => {
     const { restore, copySelectedElement } = setupReducer();
 
     // Set an initial state with a current page.
@@ -60,6 +85,51 @@ describe('copySelectedElement', () => {
             targets: ['456'],
           },
         ],
+        styles: {
+          background: 'blue',
+          backgroundColor: 'red',
+          backgroundTextMode: null,
+          textAlign: 'middle',
+        },
+        type: 'shape',
+      },
+    });
+  });
+
+  it('copies the styles of an element if no animations', () => {
+    const { restore, copySelectedElement } = setupReducer();
+
+    // Set an initial state with a current page.
+    const initialState = restore({
+      pages: [
+        {
+          id: '111',
+          elements: [
+            { id: '123', isBackground: true, type: 'shape' },
+            {
+              id: '456',
+              x: 0,
+              y: 0,
+              type: 'shape',
+              background: 'blue',
+              backgroundColor: 'red',
+              backgroundTextMode: null,
+              textAlign: 'middle',
+            },
+            { id: '789', x: 0, y: 0, type: 'shape' },
+          ],
+        },
+      ],
+      current: '111',
+      selection: ['456'],
+    });
+
+    const result = copySelectedElement();
+
+    expect(result).toStrictEqual({
+      ...initialState,
+      copiedElementState: {
+        animations: [],
         styles: {
           background: 'blue',
           backgroundColor: 'red',

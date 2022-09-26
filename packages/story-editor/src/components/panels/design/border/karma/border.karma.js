@@ -54,7 +54,8 @@ describe('Border Panel', () => {
           throw new Error('node not ready');
         }
       });
-      const panel = fixture.editor.inspector.designPanel.border;
+      await fixture.events.click(fixture.editor.sidebar.designTab);
+      const panel = fixture.editor.sidebar.designPanel.border;
 
       await fixture.events.click(panel.width(), { clickCount: 3 });
       await fixture.events.keyboard.type('2');
@@ -86,7 +87,8 @@ describe('Border Panel', () => {
       // Add media element and basic border.
       const mediaItem = fixture.editor.library.media.item(0);
       await fixture.events.mouse.clickOn(mediaItem, 20, 20);
-      const panel = fixture.editor.inspector.designPanel.border;
+      await fixture.events.click(fixture.editor.sidebar.designTab);
+      const panel = fixture.editor.sidebar.designPanel.border;
       await fixture.events.click(panel.width(), { clickCount: 3 });
       await fixture.events.keyboard.type('10');
       await fixture.events.keyboard.press('Tab');
@@ -124,7 +126,8 @@ describe('Border Panel', () => {
       fixture.editor.library.shapes.shape('Rectangle')
     );
 
-    const panel = fixture.editor.inspector.designPanel.border;
+    await fixture.events.click(fixture.editor.sidebar.designTab);
+    const panel = fixture.editor.sidebar.designPanel.border;
     await fixture.events.click(panel.width(), { clickCount: 3 });
     await fixture.events.keyboard.type('5');
     await fixture.events.keyboard.press('Tab');
@@ -142,7 +145,8 @@ describe('Border Panel', () => {
     await fixture.events.click(fixture.editor.library.shapesTab);
     await fixture.events.click(fixture.editor.library.shapes.shape('Circle'));
 
-    const panel = fixture.editor.inspector.designPanel.border;
+    await fixture.events.click(fixture.editor.sidebar.designTab);
+    const panel = fixture.editor.sidebar.designPanel.border;
     await fixture.events.click(panel.width(), { clickCount: 3 });
     await fixture.events.keyboard.type('10');
     await fixture.events.keyboard.press('Tab');

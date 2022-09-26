@@ -15,26 +15,28 @@
  */
 
 /**
+ * External dependencies
+ */
+import { produce, current } from 'immer';
+
+/**
  * Update story properties.
  *
  * No validation is performed and existing values are overwritten.
  *
- * @param {Object} state Current state
+ * @param {Object} draft Current state
  * @param {Object} payload Action payload
  * @param {Object | Function} payload.properties Object with story properties to set.
- * @return {Object} New state
  */
-function updateStory(state, { properties }) {
-  return {
-    ...state,
-    story:
-      typeof properties === 'function'
-        ? properties(state.story)
-        : {
-            ...state.story,
-            ...properties,
-          },
-  };
-}
+export const updateStory = (draft, { properties }) => {
+  // If properties is a callback, replace story with callback response
+  if (typeof properties === 'function') {
+    draft.story = properties(current(draft.story));
+    return;
+  }
 
-export default updateStory;
+  // Otherwise copy all the properties into the existing story object
+  Object.assign(draft.story, properties);
+};
+
+export default produce(updateStory);

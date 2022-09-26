@@ -103,6 +103,6 @@ describe('Search <Input />', () => {
 
     fireEvent.click(clearButton);
 
-    expect(handleClearInputMock).toHaveBeenCalledTimes(1);
+    expect(handleClearInputMock).toHaveBeenCalledOnce();
   });
 });

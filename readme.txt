@@ -1,8 +1,8 @@
 === Web Stories ===
 
 Contributors:      google
-Tested up to:      5.9
-Requires at least: 5.5
+Tested up to:      6.0
+Requires at least: 5.7
 Stable tag:        V.V.V
 License:           Apache License 2.0
 License URI:       https://www.apache.org/licenses/LICENSE-2.0
@@ -109,47 +109,39 @@ Web Stories are powered by [AMP](https://amp.dev/), which adds some restrictions
 
 For the plugin's full changelog, please see [the Releases page on GitHub](https://github.com/googleforcreators/web-stories-wp/releases).
 
-= 1.18.0 =
+= 1.25.1 =
 
-**Release Date:** March 1, 2022.
+* Fixes an issue with an incorrectly shown compatibility warning in the checklist.
+* Fixes template insertion from the dashboard
+* Fixes a couple of edge case issues around media uploads & trimming.
 
-* Enhancement: new pre-publish confirmation dialog.
-* Enhancement: new canvas appearance when creating a new story.
-* Enhancement: use semantic heading tags (`h1`, `h2`, etc.) based on font size.
-* Bumped minimum PHP version requirement to 7.2.
+= 1.25.0 =
+
+* New feature: background blurring support for webcam recording.
+* Enhancement: change and lock placement of floating menu bar.
+* Enhancements: improved saving and revisions mechanism to prevent content loss.
 * Bug fixes and performance improvements.
 
-= 1.17.0 =
+= 1.24.0 =
 
-**Release Date:** February 1, 2022.
-
-* New feature: border support for shapes.
-* Enhancement: added contrast check to color picker.
-* Enhancement: added support for `tel:` and `mailto:` links.
-* Enhancement: improved element resizing handling.
-* Bug fixes and performance improvements.
-
-= 1.16.0 =
-
-**Release Date:** January 18, 2022.
-
-* Compatibility with WordPress 5.9
-* New feature: improved video captions appearance in the editor.
-* New feature: duplicate elements via right-click menu.
-* Enhancement: use static images for displaying saved templates in the editor.
-* Enhancement: improved appearance when exploring templates in the dashboard.
+* New feature: pause/resume and video trimming support for webcam recording.
+* New feature: multi-page canvas in the editor.
+* New feature: added stickers library to third-party media tab.
+* Enhancement: added category filter for videos in third-party media tab.
+* Enhancement: improved templates to make them easier to use.
+* Enhancement: improved media upload experience for pre-optimized videos.
 * Bug fixes and performance improvements.
 
 == Upgrade Notice ==
 
-= 1.18.0 =
+= 1.25.1 =
 
-New pre-publish confirmation dialog, semantic headings, and several bug fixes and performance improvements.
+This release addresses a few regressions regarding the checklist, templates, and media uploads.
 
-= 1.17.0 =
+= 1.25.0 =
 
-Various smaller enhancements throughout the editor, plus several bug fixes and performance improvements.
+This release adds improvements to webcam recording, saving, and the floating menu bar.
 
-= 1.16.0 =
+= 1.24.0 =
 
-WordPress 5.9 compatibility, various UI refinements, right-click menu element duplication, and several bug fixes and performance improvements.
+This release introduces multi-page canvas and contains improvements to webcam recording, third-party media, and templates.

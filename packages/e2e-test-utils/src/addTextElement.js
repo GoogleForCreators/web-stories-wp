@@ -15,11 +15,11 @@
  */
 export default async function addTextElement() {
   await expect(page).toClick('#library-tab-text');
-  const insertButton = await page.waitForXPath(
-    `//button//span[contains(text(), 'Paragraph')]`
+  const insertButton = await page.waitForSelector(
+    `xpath/.//button//span[contains(text(), 'Paragraph')]`
   );
   await insertButton.click();
   await expect(page).toMatchElement('[data-testid="textFrame"]', {
-    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    text: 'Fill in some text',
   });
 }

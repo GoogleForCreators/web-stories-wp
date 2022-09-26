@@ -134,7 +134,7 @@ function Element({
     if (!isMenuOpen) {
       if (active) {
         setShowVideoDetail(false);
-        if (mediaElement.current && hoverTimer == null) {
+        if (mediaElement.current && hoverTimer === null) {
           const timer = setTimeout(() => {
             if (activeRef.current && src) {
               mediaElement.current.play().catch(() => {});
@@ -229,6 +229,8 @@ function Element({
           width={width}
           index={index}
           isLocal={providerType === 'local'}
+          setParentActive={makeActive}
+          setParentInactive={makeInactive}
         />
         {providerType === 'local' && canEditMedia && (
           <DropDownMenu
@@ -238,6 +240,7 @@ function Element({
             onMenuOpen={onMenuOpen}
             onMenuCancelled={onMenuCancelled}
             onMenuSelected={onMenuSelected}
+            setParentActive={makeActive}
           />
         )}
       </InnerContainer>

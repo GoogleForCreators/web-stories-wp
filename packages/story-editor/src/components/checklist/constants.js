@@ -66,6 +66,8 @@ export const CATEGORY_LABELS = {
   [ISSUE_TYPES.PRIORITY]: __('Priority', 'web-stories'),
 };
 
+const DOCS_URL = 'https://wp.stories.google/docs/faq/';
+
 // Event Tracking
 const onAmpErrorClick = (evt) => trackClick(evt, 'click_checklist_amp_test');
 
@@ -314,6 +316,17 @@ export const DESIGN_COPY = {
     ),
     footer: __('Shorter videos help readers navigate stories', 'web-stories'),
   },
+  firstPageAnimation: {
+    title: __('First Page Animations', 'web-stories'),
+    footer: __(
+      'Animations on the first page of a story are not supported for user experience and performance reasons.',
+      'web-stories'
+    ),
+    animationPanel: __(
+      'Animations on the first page of a story are not supported for user experience and performance reasons.',
+      'web-stories'
+    ),
+  },
 };
 
 export const PRIORITY_COPY = {
@@ -499,7 +512,7 @@ export const PRIORITY_COPY = {
         mapping={{
           a: (
             <Link
-              href={__('https://wp.stories.google/docs/', 'web-stories')}
+              href={DOCS_URL}
               rel="noreferrer"
               target="_blank"
               onClick={onAmpErrorClick}

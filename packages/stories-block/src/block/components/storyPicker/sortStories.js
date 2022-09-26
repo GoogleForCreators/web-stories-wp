@@ -25,11 +25,11 @@ import PropTypes from 'prop-types';
 import { __ } from '@wordpress/i18n';
 import { Draggable } from '@wordpress/components';
 import { useCallback, useState } from '@wordpress/element';
+import { useThrottle } from '@wordpress/compose';
 
 /**
  * Internal dependencies
  */
-import useThrottle from '../../hooks/useThrottle';
 import StoryPreview from './storyPreview';
 
 function SortStories({ selectedStories, setSelectedStories }) {

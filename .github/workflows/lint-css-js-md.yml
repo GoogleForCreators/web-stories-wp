@@ -6,7 +6,9 @@ on:
     paths:
       - '**.js'
       - '**.cjs'
+      - '**.ts'
       - '**.css'
+      - 'docs/**/*.md'
       - 'packages/**/*.md'
       - '.eslint*'
       - '.markdownlint*'
@@ -24,7 +26,9 @@ on:
     paths:
       - '**.js'
       - '**.cjs'
+      - '**.ts'
       - '**.css'
+      - 'docs/**/*.md'
       - 'packages/**/*.md'
       - '.eslint*'
       - '.markdownlint*'
@@ -37,22 +41,33 @@ on:
 
 # Cancels all previous workflow runs for pull requests that have not completed.
 concurrency:
-  # The concurrency group contains the workflow name and the branch name for pull requests
-  # or the commit hash for any other events.
-  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.head_ref || github.sha }}
+  # The concurrency group contains the workflow name and the (target) branch name.
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
   cancel-in-progress: true
+
+permissions:
+  contents: read
 
 jobs:
   lint:
     name: Lint
     runs-on: ubuntu-latest
+    permissions:
+      checks: write # for ataylorme/eslint-annotate-action to create checks
+      contents: read # for actions/checkout to fetch code
+      pull-requests: read # for ataylorme/eslint-annotate-action to get changed PR files
     timeout-minutes: 15
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@dd2c410b088af7c0dc8046f3ac9a8f4148492a95
+        with:
+          egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
+
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
 
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@2fddd8803e2f5c9604345a0b591c3020ee971a93
         with:
           node-version-file: '.nvmrc'
           cache: npm
@@ -70,6 +85,11 @@ jobs:
 
       - name: package.json Lint
         run: npm run lint:package-json
+
+      # Do this first so that the types are available to ESLint,
+      # particularly the more sophisticated `@typescript/eslint` rules.
+      - name: Type checking
+        run: npm run workflow:bundle-packages:types
 
       - name: JS Lint
         run: npm run lint:js
@@ -94,3 +114,6 @@ jobs:
         if: >
           github.event.pull_request.head.repo.fork == false &&
           github.event.pull_request.user.login != 'dependabot[bot]'
+
+      - name: JSON Schema validation
+        run: npm run test:schema

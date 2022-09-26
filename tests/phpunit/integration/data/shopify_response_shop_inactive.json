@@ -1,0 +1,14 @@
+{
+  "data": null,
+  "errors": [
+    {
+      "message": "Shop inactive error message.",
+      "locations": [{ "line": 1, "column": 1 }],
+      "path": ["products"],
+      "extensions": {
+        "code": "SHOP_INACTIVE",
+        "documentation": "https://shopify.dev/api/usage/page"
+      }
+    }
+  ]
+}

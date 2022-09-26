@@ -13,11 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import { ELEMENT_TYPES } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
-import { ELEMENT_TYPES } from '../../../../elements';
 import { RESET_PROPERTIES, RESET_DEFAULTS } from '../constants';
 
 function isBorderRadiusDefault(element) {

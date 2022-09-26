@@ -19,27 +19,42 @@
  */
 import { Icons } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
+import { trackEvent } from '@googleforcreators/tracking';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
 import { useFloatingMenu } from '../context';
-import { IconButton } from './shared';
+import { IconButton, useProperties } from './shared';
 
-function Dismiss() {
+function Dismiss({ isMultiple }) {
+  const { type } = useProperties(['type']);
   const { handleDismiss } = useFloatingMenu(
     ({ actions: { handleDismiss } }) => ({
       handleDismiss,
     })
   );
 
+  const handleClick = () => {
+    trackEvent('floating_menu', {
+      name: 'dismiss_menu',
+      element: isMultiple ? 'multiple' : type,
+    });
+    handleDismiss();
+  };
+
   return (
     <IconButton
       Icon={Icons.Cross}
       title={__('Dismiss menu', 'web-stories')}
-      onClick={handleDismiss}
+      onClick={handleClick}
     />
   );
 }
 
 export default Dismiss;
+
+Dismiss.propTypes = {
+  isMultiple: PropTypes.bool,
+};

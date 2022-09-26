@@ -19,7 +19,7 @@
  */
 import { useCallback, useReducer } from '@googleforcreators/react';
 import { compareDesc } from '@googleforcreators/date';
-import { getAllTemplates } from '@googleforcreators/templates';
+
 /**
  * Internal dependencies
  */
@@ -41,6 +41,10 @@ const useTemplateApi = () => {
     });
 
     const templatesByTag = {};
+
+    const { getAllTemplates } = await import(
+      /* webpackChunkName: "chunk-web-stories-templates" */ '@googleforcreators/templates'
+    );
 
     const reshapedTemplates = (await getAllTemplates({ cdnURL }))
       .map((template) => {

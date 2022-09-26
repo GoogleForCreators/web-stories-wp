@@ -18,12 +18,12 @@
  * External dependencies
  */
 import { fireEvent, screen } from '@testing-library/react';
+import { renderWithTheme } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
  */
 import DragHandle from '../handle';
-import { renderWithTheme } from '../../../../../testUtils';
 import { noop } from '../../../../../utils/noop';
 
 const handleHeightChange = jest.fn();

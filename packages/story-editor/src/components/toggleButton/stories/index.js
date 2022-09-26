@@ -46,30 +46,19 @@ const Container = styled.div`
   grid-template-columns: 200px 200px;
   background-color: ${({ theme }) => theme.colors.bg.primary};
 `;
-const HelpCenterIcon = styled(Icons.QuestionMarkOutline)`
-  height: 32px;
-  width: auto;
-  display: block;
-`;
-
-const ChecklistIcon = styled(Icons.Checkbox)`
-  height: 32px;
-  width: auto;
-  display: block;
-`;
 
 export const _default = (args) => (
   <Container>
     <ToggleButton
       label="Help"
-      MainIcon={HelpCenterIcon}
+      MainIcon={Icons.QuestionMarkOutline}
       onClick={() => args.helpCenterClick()}
       aria-owns="my popupId"
       {...args}
     />
     <ToggleButton
       label="Checklist"
-      MainIcon={ChecklistIcon}
+      MainIcon={Icons.Checkbox}
       onClick={() => args.checklistClicked()}
       aria-owns="my popupId"
       {...args}

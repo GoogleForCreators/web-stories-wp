@@ -16,6 +16,9 @@ on:
         description: 'Plugin version (e.g. 1.2.3 or 7.2.0-rc.1)'
         required: true
 
+permissions:
+  contents: read
+
 env:
   PLUGIN_VERSION: ${{ github.event.inputs.version }}
   TAG_NAME: 'v${{ github.event.inputs.version }}'
@@ -25,6 +28,7 @@ env:
   GIT_AUTHOR_NAME: googleforcreators-bot
   GIT_COMMITTER_EMAIL: 94923726+googleforcreators-bot@users.noreply.github.com
   GIT_COMMITTER_NAME: googleforcreators-bot
+  GITHUB_REPO_ID: 235435637
 
 jobs:
   # Perform some sanity checks at the beginning to avoid surprises.
@@ -32,9 +36,17 @@ jobs:
     name: Checks
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    # This step requires additional review
+    # See https://docs.github.com/en/actions/reference/environments
+    environment: Production
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@dd2c410b088af7c0dc8046f3ac9a8f4148492a95
+        with:
+          egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
+
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
 
       - name: Verify semver compatibility
         run: |
@@ -91,6 +103,11 @@ jobs:
     timeout-minutes: 10
     needs: [checks]
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@dd2c410b088af7c0dc8046f3ac9a8f4148492a95
+        with:
+          egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
+
       # TODO: Define behavior for patch releases.
       #
       # A patch release is done from a specific release branch instead of `main`
@@ -110,7 +127,7 @@ jobs:
 
       # Grab current assets version from `web-stories.php` and pass on to next steps.
       # - name: Checkout
-      #   uses: actions/checkout@v3
+      #   uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
       #   with:
       #     ref:
 
@@ -126,7 +143,7 @@ jobs:
       #       ASSETS_VERSION_REGEX: "https://wp.stories.google/static/([^']+)"
 
       - name: Checkout wp.stories.google
-        uses: actions/checkout@v3
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
         with:
           repository: GoogleForCreators/wp.stories.google
           lfs: true
@@ -134,7 +151,7 @@ jobs:
           token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
 
       - name: Setup Cloud SDK
-        uses: google-github-actions/setup-gcloud@v0.5.1
+        uses: google-github-actions/setup-gcloud@877d4953d2c70a0ba7ef3290ae968eb24af233bb
         with:
           project_id: ${{ secrets.GCP_PROJECT_ID }}
           service_account_key: ${{ secrets.GCP_SA_KEY }}
@@ -169,13 +186,13 @@ jobs:
             echo "Uploading new assets to new version."
             gsutil -m rsync -r -x '(^|/)\.' main gs://web-stories-wp-cdn-assets/$NEW_ASSETS_VERSION
 
-            rm -rf static/main/*
+            rm -rf main/*
 
             echo "Updating LATEST_ASSETS_VERSION Firebase env variable."
 
-            echo "LATEST_ASSETS_VERSION=$NEW_ASSETS_VERSION" > ../../functions/.env
+            echo "LATEST_ASSETS_VERSION=$NEW_ASSETS_VERSION" > ../../packages/functions/.env
 
-            git add ../../functions/.env
+            git add ../../packages/functions/.env
             git add .
             git status
             git commit -m "Preparing assets for plugin release $PLUGIN_VERSION"
@@ -200,98 +217,33 @@ jobs:
           echo "" > assets_version/assets_version.txt
 
       - name: Upload assets version
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8
         with:
           name: assets-version
           path: public/static/assets_version
 
-  # Generate the changelog before we do any commits.
-  changelog:
-    name: Changelog
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    needs: [checks]
-    outputs:
-      release_name: ${{ steps.changelog.outputs.release_name }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0 # 0 indicates all history for all branches and tags.
-
-      - name: Setup Node
-        uses: actions/setup-node@v3
-        with:
-          node-version-file: '.nvmrc'
-          cache: npm
-
-      - name: Install dependencies
-        run: npm ci
-        env:
-          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
-
-      # For release candidates, generate changelog since last tag (stable release or previous RC)
-      # For stable releases, generate full changelog since last stable release.
-      # TODO: Implement tag logic for patch releases.
-      - name: Generate changelog
-        id: changelog
-        run: |
-          TAG_NAME_WITHOUT_SUFFIX=${TAG_NAME/-rc.*/}
-          if $IS_RC; then
-            # Get the most recent tag.
-            # Note: This will return v1.4.0-rc.1 as it is listed before v1.4.0
-            PREVIOUS_TAG=$(git tag -l --sort=-version:refname | grep --invert-match $TAG_NAME | head -1)
-
-            # If this is the first RC for this version (e.g. v1.5.0-rc.1), the previous version is v1.4.0, without suffix.
-            if [[ $TAG_NAME == *"-rc.1" ]]; then
-              PREVIOUS_TAG=${PREVIOUS_TAG/-rc.*/}
-            fi
-          else
-            # This will return v1.4.0-rc.1 as it is listed before v1.4.0
-            PREVIOUS_TAG=$(git tag -l --sort=-version:refname | grep --invert-match $TAG_NAME_WITHOUT_SUFFIX | head -1)
-            PREVIOUS_TAG=${PREVIOUS_TAG/-rc.*/}
-          fi
-
-          RELEASE_NAME=${PLUGIN_VERSION/-rc./ RC}
-          echo "Gathering list of changes since $PREVIOUS_TAG..."
-          echo "Release name: $RELEASE_NAME"
-
-          CHANGELOG=$(npm run workflow:changelog --silent -- --next-version=$RELEASE_NAME --from=$PREVIOUS_TAG)
-
-          if [[ -z $CHANGELOG ]]; then
-            echo "Warning: Changelog is empty, probably because there were no changes since the last release."
-            CHANGELOG="No merged changes since last release."
-          fi
-
-          mkdir -p build/changelog
-          echo "$CHANGELOG" >> build/changelog/changelog.txt
-
-          echo "::set-output name=release_name::${RELEASE_NAME}"
-        env:
-          GITHUB_AUTH: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
-
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: changelog
-          path: build/changelog
-
   build:
     name: Build new version
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20
     needs: [assets-version]
     outputs:
       release_branch: ${{ steps.release_branch.outputs.release_branch }}
+      release_name: ${{ steps.release_branch.outputs.release_name }}
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@dd2c410b088af7c0dc8046f3ac9a8f4148492a95
+        with:
+          egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
+
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
         with:
           fetch-depth: 0 # 0 indicates all history for all branches and tags.
           token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
 
       - name: Download assets version
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@fb598a63ae348fa914e94cd0ff38f362e927b741
         with:
           name: assets-version
         continue-on-error: true
@@ -304,13 +256,13 @@ jobs:
         continue-on-error: true
 
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@2fddd8803e2f5c9604345a0b591c3020ee971a93
         with:
           node-version-file: '.nvmrc'
           cache: npm
 
       - name: Setup PHP
-        uses: shivammathur/setup-php@v2
+        uses: shivammathur/setup-php@e04e1d97f0c0481c6e1ba40f8a538454fe5d7709
         with:
           php-version: '8.0'
           coverage: none
@@ -323,7 +275,7 @@ jobs:
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
 
       - name: Install PHP dependencies
-        uses: 'ramsey/composer-install@v1'
+        uses: ramsey/composer-install@f680dac46551dffb2234a240d65ae806c2999dd6
         with:
           composer-options: '--prefer-dist --no-progress --no-interaction'
 
@@ -347,6 +299,9 @@ jobs:
           fi
 
           echo "::set-output name=release_branch::${BRANCH/-rc./ RC}"
+
+          RELEASE_NAME=${PLUGIN_VERSION/-rc./ RC}
+          echo "::set-output name=release_name::${RELEASE_NAME}"
 
       - name: Update assets version
         run: npm run workflow:assets-version $ASSETS_VERSION
@@ -379,13 +334,13 @@ jobs:
           git add web-stories.php
           git status
 
-          if ! git diff --cached --exit-code > /dev/null; then
-            echo 'No changes to commit; exiting!'
-            echo "::set-output name=changes::no"
-          else
+          if git diff --cached --exit-code > /dev/null; then
             git commit -m "Prepare release $PLUGIN_VERSION"
             git push -u origin HEAD
             echo "::set-output name=changes::yes"
+          else
+            echo 'No changes to commit; exiting!'
+            echo "::set-output name=changes::no"
           fi
 
       # Only non-patch release version bumps should be cherry picked to main
@@ -423,7 +378,7 @@ jobs:
           mv build/*.zip build/release-assets/
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8
         with:
           name: release-assets
           path: build/release-assets
@@ -432,75 +387,36 @@ jobs:
     name: Create Release
     runs-on: ubuntu-latest
     timeout-minutes: 5
-    needs: [build, changelog]
+    needs: [build]
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@dd2c410b088af7c0dc8046f3ac9a8f4148492a95
+        with:
+          egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
+
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
 
       - name: Download release artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@fb598a63ae348fa914e94cd0ff38f362e927b741
         with:
           name: release-assets
           path: build
 
-      - name: Download changelog
-        uses: actions/download-artifact@v2
-        with:
-          name: changelog
-          path: changelog
-
-      - name: Set branch name
-        id: release_branch
-        run: |
-          VERSION_WITHOUT_SUFFIX=${PLUGIN_VERSION/-rc.*/}
-          BRANCH=release/$VERSION_WITHOUT_SUFFIX
-          echo "::set-output name=RELEASE_BRANCH::${BRANCH/-rc./ RC}"
-
-      # TODO: Replace with maintained action.
-      - name: Create Release Draft
+      - name: Publish Release
         id: create_release
-        uses: actions/create-release@v1
+        uses: softprops/action-gh-release@1e07f4398721186383de40550babbdf2b84acfc5
         with:
           tag_name: ${{ env.TAG_NAME }}
-          release_name: ${{ needs.changelog.outputs.release_name }}
-          commitish: ${{ needs.build.outputs.release_branch || github.ref }}
-          draft: true
+          name: ${{ needs.build.outputs.release_name }}
+          target_commitish: ${{ needs.build.outputs.release_branch || github.ref }}
           prerelease: ${{ env.IS_RC }}
-        # TODO: Fix changelog generation.
-        #          body_path: changelog/changelog.txt
-        env:
-          GITHUB_TOKEN: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
-
-      - name: Upload regular bundle
-        uses: actions/upload-release-asset@v1.0.2
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: build/web-stories.zip
-          asset_name: web-stories.zip
-          asset_content_type: application/zip
-        env:
-          GITHUB_TOKEN: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
-
-      - name: Upload development bundle
-        uses: actions/upload-release-asset@v1.0.2
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: build/web-stories-dev.zip
-          asset_name: web-stories-dev.zip
-          asset_content_type: application/zip
-        env:
-          GITHUB_TOKEN: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
-
-      # Done so that any triggers/webhooks will have access to the published release
-      # including all the release assets.
-      - name: Publish Release
-        run: |
-          curl \
-            --request PATCH \
-            --url https://api.github.com/repos/${{ github.repository }}/releases/${{ steps.create_release.outputs.id }} \
-            --header 'Authorization: token ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}' \
-            --header "Accept: application/vnd.github.v3+json" \
-            --data-raw '{"draft":false}'
+          generate_release_notes: true
+          files: |
+            build/web-stories.zip
+            build/web-stories-dev.zip
+          fail_on_unmatched_files: true
+          token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
 
   # Post-release version bumps for non-patch releases.
   post-release:
@@ -509,14 +425,19 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ ! startsWith(github.ref, 'refs/heads/release/') && ! contains(github.event.inputs.version, 'rc') }}
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@dd2c410b088af7c0dc8046f3ac9a8f4148492a95
+        with:
+          egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
+
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
         with:
           ref: main
           token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
 
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@2fddd8803e2f5c9604345a0b591c3020ee971a93
         with:
           node-version-file: '.nvmrc'
           cache: npm
@@ -548,9 +469,6 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     needs: [create-release]
-    # This step requires additional review
-    # See https://docs.github.com/en/actions/reference/environments
-    environment: Production
     if: ${{ ! contains(github.event.inputs.version, 'rc') }}
     env:
       PLUGIN_REPO_URL: 'https://plugins.svn.wordpress.org/web-stories'
@@ -558,8 +476,13 @@ jobs:
       SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
       SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@dd2c410b088af7c0dc8046f3ac9a8f4148492a95
+        with:
+          egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
+
       - name: Download release artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@fb598a63ae348fa914e94cd0ff38f362e927b741
         with:
           name: release-assets
           path: release-assets
@@ -619,3 +542,36 @@ jobs:
           sed -r -i "s/${STABLE_TAG_REGEX}/Stable tag:        ${PLUGIN_VERSION}/g" ./trunk/readme.txt
           svn commit -m "Releasing version $PLUGIN_VERSION" \
            --no-auth-cache --non-interactive  --username "$SVN_USERNAME" --password "$SVN_PASSWORD"
+
+  close-release:
+    name: Close ZenHub release
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    needs: [create-release]
+    if: ${{ ! contains(github.event.inputs.version, 'rc') }}
+    steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@dd2c410b088af7c0dc8046f3ac9a8f4148492a95
+        with:
+          egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
+
+      # https://github.com/ZenHubIO/API#get-release-reports-for-a-repository
+      # https://github.com/ZenHubIO/API#add-or-remove-issues-to-or-from-a-release-report
+      - name: Close release report
+        id: zenhub_release
+        run: |
+          echo "Getting list of releases from ZenHub"
+
+          RELEASES=$(curl -f -s -H "X-Authentication-Token: $ZENHUB_API_TOKEN" "https://api.zenhub.com/p1/repositories/${GITHUB_REPO_ID}/reports/releases")
+          CURRENT_RELEASE=$((echo $RELEASES ) | jq -r "first(.[] | select( .title == \"$PLUGIN_VERSION\" )) | .release_id")
+
+          if [[ -z $CURRENT_RELEASE ]]; then
+            echo "No ZenHub release found. Check whether the release titles match the expected plugin version."
+            exit 1
+          else
+            echo "Closing release report on ZenHub for release: $CURRENT_RELEASE"
+
+            curl -f -s -H "X-Authentication-Token: $ZENHUB_API_TOKEN" -H 'Content-Type: application/json' -X PATCH "https://api.zenhub.com/p1/reports/release/${CURRENT_RELEASE}" -d '{ "state": "closed" }'
+          fi
+        env:
+          ZENHUB_API_TOKEN: ${{ secrets.ZENHUB_API_TOKEN }}

@@ -57,7 +57,6 @@ jest.mock('../../../api/publisherLogo', () => ({
 
 jest.mock('../../../api/fonts', () => ({
   addCustomFont: () => mockedPromise,
-  fetchCustomFonts: () => mockedPromise,
   deleteCustomFont: () => mockedPromise,
 }));
 
@@ -92,8 +91,8 @@ const mockAddPublisherLogo = jest.fn();
 const mockRemovePublisherLogo = jest.fn();
 const mockSetPublisherLogoAsDefault = jest.fn();
 const mockAddCustomFont = jest.fn();
-const mockFetchCustomFonts = jest.fn();
 const mockDeleteCustomFont = jest.fn();
+const mockFetchCustomFonts = jest.fn();
 
 function createProviderValues({
   canUploadFiles,
@@ -125,6 +124,8 @@ function createProviderValues({
         pages: '/wp/v2/pages/',
         publisherLogos: '/web-stories/v1/publisher-logos/',
       },
+      vendors: { none: 'None', shopify: 'Shopify', woocommerce: 'WooCommerce' },
+      plugins: { siteKit: {}, woocommerce: {} },
     },
     api: {
       state: {
@@ -179,8 +180,8 @@ function createProviderValues({
         },
         fontsApi: {
           addCustomFont: mockAddCustomFont,
-          fetchCustomFonts: mockFetchCustomFonts,
           deleteCustomFont: mockDeleteCustomFont,
+          fetchCustomFonts: mockFetchCustomFonts,
         },
       },
     },
@@ -197,13 +198,13 @@ const renderEditorSettings = (values) => {
   );
 };
 
-describe('Editor Settings: <Editor Settings />', function () {
+describe('Editor Settings: <Editor Settings />', () => {
   afterEach(() => {
     mockFetchSettings.mockReset();
     mockRemovePublisherLogo.mockReset();
   });
 
-  it('should render settings page with google analytics and publisher logo sections', function () {
+  it('should render settings page with google analytics and publisher logo sections', () => {
     const { container } = renderEditorSettings({
       googleAnalyticsId: 'UA-098909-05',
       usingLegacyAnalytics: false,
@@ -230,14 +231,14 @@ describe('Editor Settings: <Editor Settings />', function () {
       screen.getByText(PUBLISHER_LOGO_TEXT.SECTION_HEADING)
     ).toBeInTheDocument();
     expect(screen.getByTestId('upload-file-input')).toBeInTheDocument();
-    expect(mockFetchSettings).toHaveBeenCalledTimes(1);
+    expect(mockFetchSettings).toHaveBeenCalledOnce();
 
     expect(
       screen.getByText(AD_NETWORK_TEXT.SECTION_HEADING)
     ).toBeInTheDocument();
   });
 
-  it('should render settings page with publisher logos', function () {
+  it('should render settings page with publisher logos', () => {
     const { container } = renderEditorSettings({
       googleAnalyticsId: 'UA-098909-05',
       usingLegacyAnalytics: false,
@@ -254,7 +255,7 @@ describe('Editor Settings: <Editor Settings />', function () {
     );
   });
 
-  it('should call mockRemovePublisherLogo when a logo is removed', function () {
+  it('should call mockRemovePublisherLogo when a logo is removed', () => {
     renderEditorSettings({
       googleAnalyticsId: 'UA-098909-05',
       usingLegacyAnalytics: false,
@@ -278,10 +279,10 @@ describe('Editor Settings: <Editor Settings />', function () {
 
     fireEvent.click(DeleteFileButton);
 
-    expect(mockRemovePublisherLogo).toHaveBeenCalledTimes(1);
+    expect(mockRemovePublisherLogo).toHaveBeenCalledOnce();
   });
 
-  it('should render settings page without file upload section when canUploadFiles is false', function () {
+  it('should render settings page without file upload section when canUploadFiles is false', () => {
     const { container } = renderEditorSettings({
       googleAnalyticsId: 'UA-098909-05',
       usingLegacyAnalytics: false,
@@ -295,7 +296,7 @@ describe('Editor Settings: <Editor Settings />', function () {
     expect(screen.queryByTestId('upload-file-input')).not.toBeInTheDocument();
   });
 
-  it('should render settings page with AdSense', function () {
+  it('should render settings page with AdSense', () => {
     const { container } = renderEditorSettings({
       googleAnalyticsId: 'UA-098909-05',
       usingLegacyAnalytics: false,

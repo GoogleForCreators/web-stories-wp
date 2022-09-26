@@ -18,10 +18,11 @@
  */
 import { fireEvent, screen } from '@testing-library/react';
 import { axe } from 'jest-axe';
+import { renderWithTheme } from '@googleforcreators/test-utils';
+
 /**
  * Internal dependencies
  */
-import renderWithTheme from '../../../testUtils/renderWithTheme';
 import { StoryContext } from '../../../app/story';
 import { ConfigContext } from '../../../app/config';
 import StoryPreview from '../content/storyPreview';
@@ -38,7 +39,6 @@ describe('publishModal/storyPreview', () => {
 
   const view = (props) => {
     const {
-      allowedImageFileTypes = [],
       allowedImageMimeTypes = [],
       featuredMedia = '',
       hasUploadMediaAction = false,
@@ -50,8 +50,7 @@ describe('publishModal/storyPreview', () => {
     return renderWithTheme(
       <ConfigContext.Provider
         value={{
-          allowedImageFileTypes,
-          allowedImageMimeTypes,
+          allowedMimeTypes: { image: allowedImageMimeTypes },
           metadata: {
             publisher: publisher,
           },
@@ -103,8 +102,8 @@ describe('publishModal/storyPreview', () => {
   it('should have no accessibility issues', async () => {
     const { container } = view({
       storyTitle: 'Great books to read',
-      featuredMedia: 'http://placekitten.com/230/342',
-      publisherLogo: 'http://placekitten.com/158/96',
+      featuredMedia: 'http://test.com/imageurl',
+      publisherLogo: 'http://test.com/imageurl',
       publisher: 'My Site Title',
     });
 
@@ -114,35 +113,35 @@ describe('publishModal/storyPreview', () => {
 
   it('should render the story title when present', () => {
     view({ storyTitle: 'Great books to read' });
-    const storyTitle = screen.getByTestId('story_preview_title');
+    const storyTitle = screen.getByText('Great books to read');
 
     expect(storyTitle).toBeInTheDocument();
   });
 
   it('should render the site title when present', () => {
     view({ publisher: 'My Site Title' });
-    const siteTitle = screen.getByTestId('story_preview_publisher');
+    const siteTitle = screen.getByText('My Site Title');
 
     expect(siteTitle).toBeInTheDocument();
   });
 
   it('should render the featured media image when present', () => {
-    view({ featuredMedia: 'http://placekitten.com/230/342' });
+    view({ featuredMedia: 'http://test.com/imageurl' });
     const featuredMedia = screen.getByTestId('story_preview_featured_media');
 
     expect(featuredMedia).toBeInTheDocument();
   });
 
   it('should render the publisher logo when present', () => {
-    view({ publisherLogo: 'http://placekitten.com/158/96' });
-    const publisherLogo = screen.getByTestId('story_preview_logo');
+    view({ publisherLogo: 'http://test.com/imageurl' });
+    const publisherLogo = screen.getByRole('img', { alt: 'Publisher Logo' });
 
     expect(publisherLogo).toBeInTheDocument();
   });
 
   it('should not render the story title when not present', () => {
     view();
-    const storyTitle = screen.queryByTestId('story_preview_title');
+    const storyTitle = screen.queryByRole('heading', { level: 3 });
 
     expect(storyTitle).not.toBeInTheDocument();
   });
@@ -163,16 +162,9 @@ describe('publishModal/storyPreview', () => {
 
   it('should not render the publisher logo when not present', () => {
     view();
-    const publisherLogo = screen.queryByTestId('story_preview_logo');
+    const publisherLogo = screen.queryByRole('img', { alt: 'Publisher Logo' });
 
     expect(publisherLogo).not.toBeInTheDocument();
-  });
-
-  it('should not render the update featured media button if the user does not have update permissions', () => {
-    view();
-    const uploadMediaButton = screen.queryByText('Media Upload Button!');
-
-    expect(uploadMediaButton).not.toBeInTheDocument();
   });
 
   it('should update the poster image when the upload media button is clicked', () => {
@@ -188,6 +180,8 @@ describe('publishModal/storyPreview', () => {
           url: newPoster.src,
           height: newPoster.height,
           width: newPoster.width,
+          isExternal: newPoster.isExternal,
+          needsProxy: newPoster.needsProxy,
         },
       },
     });

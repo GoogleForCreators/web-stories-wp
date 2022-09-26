@@ -40,10 +40,6 @@ describe('AMP plugin integration', () => {
 
     const editorPage = page;
     const previewPage = await previewStory(editorPage);
-    previewPage.bringToFront();
-    await expect(previewPage).toMatchElement('p', {
-      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    });
 
     await expect(previewPage).toMatchElement('amp-analytics');
 

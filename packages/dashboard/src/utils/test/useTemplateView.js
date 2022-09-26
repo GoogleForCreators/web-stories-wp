@@ -28,19 +28,20 @@ import {
   TEMPLATES_GALLERY_SORT_OPTIONS,
 } from '../../constants';
 
-describe('useTemplateView()', function () {
-  it('should have the default options initially selected', function () {
+describe('useTemplateView()', () => {
+  it('should have the default options initially selected', () => {
     const { result } = renderHook(() => useTemplateView({ totalPages: 1 }), {});
 
-    expect(result.current.filter.value).toBe(TEMPLATES_GALLERY_STATUS.ALL);
+    expect(result.current.filters.value.status).toBe(
+      TEMPLATES_GALLERY_STATUS.ALL
+    );
     expect(result.current.sort.value).toBe(
       TEMPLATES_GALLERY_SORT_OPTIONS.POPULAR
     );
     expect(result.current.page.value).toBe(1);
-    expect(result.current.search.keyword).toBe('');
   });
 
-  it('should set the new sort when passed and reset the page.', function () {
+  it('should set the new sort when passed and reset the page.', () => {
     const { result } = renderHook(() => useTemplateView({ totalPages: 2 }), {});
 
     act(() => {
@@ -49,7 +50,9 @@ describe('useTemplateView()', function () {
     expect(result.current.page.value).toBe(2);
 
     act(() => {
-      result.current.sort.set(TEMPLATES_GALLERY_SORT_OPTIONS.RECENT);
+      result.current.sort.set({
+        orderby: TEMPLATES_GALLERY_SORT_OPTIONS.RECENT,
+      });
     });
     expect(result.current.sort.value).toBe(
       TEMPLATES_GALLERY_SORT_OPTIONS.RECENT
@@ -57,7 +60,7 @@ describe('useTemplateView()', function () {
     expect(result.current.page.value).toBe(1);
   });
 
-  it('should set the new search keyword when typed and reset the page.', function () {
+  it('should set the new search keyword when typed and reset the page.', () => {
     const { result } = renderHook(() => useTemplateView({ totalPages: 2 }), {});
 
     act(() => {
@@ -66,13 +69,17 @@ describe('useTemplateView()', function () {
     expect(result.current.page.value).toBe(2);
 
     act(() => {
-      result.current.search.setKeyword('Magical Creatures Template');
+      result.current.filters.set({
+        search: 'Magical Creatures Template',
+      });
     });
-    expect(result.current.search.keyword).toBe('Magical Creatures Template');
+    expect(result.current.filters.value.search).toBe(
+      'Magical Creatures Template'
+    );
     expect(result.current.page.value).toBe(1);
   });
 
-  it('should request the next page when called.', function () {
+  it('should request the next page when called.', () => {
     const { result } = renderHook(() => useTemplateView({ totalPages: 2 }), {});
 
     act(() => {
@@ -82,7 +89,7 @@ describe('useTemplateView()', function () {
     expect(result.current.page.value).toBe(2);
   });
 
-  it('should request the next page when called and not exceed maximum pages.', function () {
+  it('should request the next page when called and not exceed maximum pages.', () => {
     const { result } = renderHook(() => useTemplateView({ totalPages: 2 }), {});
 
     act(() => {

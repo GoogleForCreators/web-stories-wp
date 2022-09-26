@@ -90,7 +90,7 @@ class HTML extends TestCase {
 	 * @covers ::replace_html_head
 	 * @covers ::get_html_head_markup
 	 */
-	public function test_replace_html_head_invalid(): void {
+	public function test_replace_html_head_malformed(): void {
 		$start_tag = '<meta name="web-stories-replace-head-start " />';
 		$end_tag   = '<meta name="web-stories-replace-head-end" />';
 
@@ -114,36 +114,30 @@ class HTML extends TestCase {
 	}
 
 	/**
-	 * @covers ::replace_url_scheme
+	 * @covers ::replace_html_head
+	 * @covers ::get_html_head_markup
 	 */
-	public function test_replace_url_scheme(): void {
-		$_SERVER['HTTPS'] = 'on';
+	public function test_replace_html_head_malformed_missing_slash(): void {
+		$start_tag = '<meta name="web-stories-replace-head-start">';
+		$end_tag   = '<meta name="web-stories-replace-head-end">';
 
-		$link = get_home_url( null, 'web-storires/test' );
-		$link = set_url_scheme( $link, 'http' );
+		$post = self::factory()->post->create_and_get(
+			[
+				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
+				'post_content' => "<html><head>FOO{$start_tag}BAR{$end_tag}BAZ</head><body><amp-story></amp-story></body></html>",
+			]
+		);
 
-		$link_https = set_url_scheme( $link, 'https' );
+		$actual = $this->setup_renderer( $post );
 
-		$story    = new Story();
-		$renderer = new \Google\Web_Stories\Renderer\Story\HTML( $story );
-
-		$result = $this->call_private_method( $renderer, 'replace_url_scheme', [ $link ] );
-		$this->assertEquals( $result, $link_https );
-	}
-
-
-	/**
-	 * @covers ::replace_url_scheme
-	 */
-	public function test_replace_url_scheme_different_host(): void {
-		$_SERVER['HTTPS'] = 'on';
-		$link             = 'https://www.google.com';
-
-		$story    = new Story();
-		$renderer = new \Google\Web_Stories\Renderer\Story\HTML( $story );
-
-		$result = $this->call_private_method( $renderer, 'replace_url_scheme', [ $link ] );
-		$this->assertEquals( $result, $link );
+		$this->assertStringContainsString( 'FOO', $actual );
+		$this->assertStringContainsString( 'BAZ', $actual );
+		$this->assertStringNotContainsString( 'BAR', $actual );
+		$this->assertStringNotContainsString( $start_tag, $actual );
+		$this->assertStringNotContainsString( $end_tag, $actual );
+		$this->assertStringContainsString( '<meta name="amp-story-generator-name" content="Web Stories for WordPress"', $actual );
+		$this->assertStringContainsString( '<meta name="amp-story-generator-version" content="', $actual );
+		$this->assertSame( 1, did_action( 'web_stories_story_head' ) );
 	}
 
 	/**

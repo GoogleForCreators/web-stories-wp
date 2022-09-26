@@ -36,7 +36,7 @@ import cleanForSlug from '../../../../utils/cleanForSlug';
 import inRange from '../../../../utils/inRange';
 import { Row } from '../../../form';
 import { SimplePanel } from '../../panel';
-import { inputContainerStyleOverride } from '../../shared';
+import { inputContainerStyleOverride } from '../../shared/styles';
 
 export const MIN_MAX = {
   PERMALINK: {

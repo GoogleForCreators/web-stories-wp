@@ -28,16 +28,17 @@ import {
   Button,
   PLACEMENT,
   Popup,
+  Disclosure,
 } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 import styled from 'styled-components';
 import { useCallback, useRef, useState, memo } from '@googleforcreators/react';
-import { useFeature } from 'flagged';
+import { getHTMLFormatters } from '@googleforcreators/rich-text';
 
 /**
  * Internal dependencies
  */
-import { useStory, useConfig } from '../../../../../app';
+import { useStory } from '../../../../../app';
 import { PRESET_TYPES } from '../../../../../constants';
 import useAddPreset from '../../../../../utils/useAddPreset';
 import { DEFAULT_PRESET } from '../textPresets';
@@ -49,7 +50,7 @@ import StyleManager, {
 import useLibrary from '../../../useLibrary';
 import { areAllType } from '../../../../../utils/presetUtils';
 import useApplyStyle from '../../../../styleManager/useApplyStyle';
-import updateProperties from '../../../../inspector/design/updateProperties';
+import updateProperties from '../../../../style/updateProperties';
 import getUpdatedSizeAndPosition from '../../../../../utils/getUpdatedSizeAndPosition';
 import InsertionOverlay from '../../shared/insertionOverlay';
 import { Container } from '../../../common/section';
@@ -83,27 +84,31 @@ const TYPE = 'text';
 const STYLE_BUTTON_WIDTH = 150;
 
 function PresetPanel() {
-  const isStylePaneEnabled = useFeature('libraryTextStyles');
   const { textStyles, isText, updateSelectedElements } = useStory(
-    ({ state, actions }) => {
-      const isText =
-        state.selectedElements && areAllType(TYPE, state.selectedElements);
-      return {
-        isText,
-        textStyles: state.story?.globalStoryStyles?.textStyles || [],
-        updateSelectedElements: actions.updateSelectedElements,
-      };
-    }
+    ({ state, actions }) => ({
+      isText: Boolean(
+        state.selectedElements && areAllType(TYPE, state.selectedElements)
+      ),
+      textStyles: state.story?.globalStoryStyles?.textStyles || [],
+      updateSelectedElements: actions.updateSelectedElements,
+    })
   );
 
   const { insertElement } = useLibrary((state) => ({
     insertElement: state.actions.insertElement,
   }));
 
+  const {
+    setColor,
+    setFontWeight,
+    setLetterSpacing,
+    toggleItalic,
+    toggleUnderline,
+  } = getHTMLFormatters();
+
   const buttonRef = useRef(null);
   const stylesRef = useRef(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const { isRTL, styleConstants: { topOffset } = {} } = useConfig();
   const hasPresets = textStyles.length > 0;
 
   const pushUpdate = useCallback(
@@ -128,14 +133,20 @@ function PresetPanel() {
   const handleApplyStyle = useApplyStyle({ pushUpdate });
   const { addGlobalPreset } = useAddPreset({ presetType: PRESET_TYPES.STYLE });
 
-  if (!isStylePaneEnabled) {
-    return null;
-  }
-
   const addStyledText = (preset) => {
+    // Get all the inline styles that saved styles support.
+    const { color, fontWeight, isItalic, isUnderline, letterSpacing } = preset;
+    let content = DEFAULT_PRESET.content;
+    content = setColor(content, color);
+    content = setFontWeight(content, fontWeight);
+    content = toggleItalic(content, isItalic);
+    content = toggleUnderline(content, isUnderline);
+    content = setLetterSpacing(content, letterSpacing);
+
     insertElement(TYPE, {
       ...DEFAULT_PRESET,
       ...preset,
+      content,
     });
   };
 
@@ -194,11 +205,9 @@ function PresetPanel() {
             aria-expanded={isPopupOpen}
           >
             {__('More styles', 'web-stories')}
-            <Icons.ChevronDownSmall />
+            <Disclosure isOpen={isPopupOpen} />
           </MoreButton>
           <Popup
-            topOffset={topOffset}
-            isRTL={isRTL}
             anchor={buttonRef}
             isOpen={isPopupOpen}
             placement={PLACEMENT.RIGHT_START}

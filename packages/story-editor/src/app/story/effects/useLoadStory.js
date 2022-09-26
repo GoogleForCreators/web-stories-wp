@@ -19,13 +19,13 @@
  */
 import { useEffect } from '@googleforcreators/react';
 import { migrate } from '@googleforcreators/migration';
+import { createPage } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import { useAPI } from '../../api';
 import { useHistory } from '../../history';
-import { createPage } from '../../../elements';
 import getUniquePresets from '../../../utils/getUniquePresets';
 
 function loadStory(storyId, post, restore, clearHistory) {
@@ -33,7 +33,7 @@ function loadStory(storyId, post, restore, clearHistory) {
     title: { raw: title = '' } = {},
     status,
     slug,
-    date,
+    date: origDate,
     modified,
     excerpt: { raw: excerpt = '' } = {},
     link,
@@ -54,7 +54,14 @@ function loadStory(storyId, post, restore, clearHistory) {
     publisherLogo,
     taxonomies,
     terms,
+    revisions,
   } = post;
+
+  const date =
+    ['draft', 'auto-draft', 'pending'].includes(status) &&
+    (origDate === modified || !origDate)
+      ? null
+      : origDate;
 
   const [prefix, suffix] = permalinkTemplate
     ? permalinkTemplate.split(/%(?:postname|pagename)%/)
@@ -67,7 +74,6 @@ function loadStory(storyId, post, restore, clearHistory) {
         suffix,
       }
     : null;
-  const statusFormat = status === 'auto-draft' ? 'draft' : status;
 
   // First clear history completely.
   clearHistory();
@@ -79,24 +85,20 @@ function loadStory(storyId, post, restore, clearHistory) {
 
   // Initialize color/style presets, if missing.
   // Otherwise ensure the saved presets are unique.
-  if (!globalStoryStyles.colors) {
-    globalStoryStyles.colors = [];
-  } else {
-    globalStoryStyles.colors = getUniquePresets(globalStoryStyles.colors);
-  }
-  if (!globalStoryStyles.textStyles) {
-    globalStoryStyles.textStyles = [];
-  } else {
-    globalStoryStyles.textStyles = getUniquePresets(
-      globalStoryStyles.textStyles
-    );
-  }
+  const newGlobalStoryStyles = {
+    colors: globalStoryStyles.colors
+      ? getUniquePresets(globalStoryStyles.colors)
+      : [],
+    textStyles: globalStoryStyles.textStyles
+      ? getUniquePresets(globalStoryStyles.textStyles)
+      : [],
+  };
 
   // Set story-global variables.
   const story = {
     storyId: storyId,
     title,
-    status: statusFormat,
+    status,
     author,
     date,
     modified,
@@ -111,12 +113,13 @@ function loadStory(storyId, post, restore, clearHistory) {
     previewLink,
     editLink,
     embedPostLink,
+    revisions,
     currentStoryStyles: {
       colors: storyData?.currentStoryStyles?.colors
         ? getUniquePresets(storyData.currentStoryStyles.colors)
         : [],
     },
-    globalStoryStyles,
+    globalStoryStyles: newGlobalStoryStyles,
     autoAdvance: storyData?.autoAdvance,
     defaultPageDuration: storyData?.defaultPageDuration,
     backgroundAudio: storyData?.backgroundAudio,

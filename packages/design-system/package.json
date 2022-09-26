@@ -2,7 +2,7 @@
   "name": "@googleforcreators/design-system",
   "description": "Main UI components for the Web Stories editor and dashboard",
   "private": false,
-  "version": "0.1.202203010801",
+  "version": "0.1.202208291229",
   "author": {
     "name": "Google",
     "url": "https://creators.google/"
@@ -26,12 +26,13 @@
   },
   "customExports": {
     ".": {
-      "default": "./src/index.js"
+      "default": "./src/index.ts"
     }
   },
   "main": "dist/index.js",
   "module": "dist-module/index.js",
-  "source": "src/index.js",
+  "types": "dist-types/index.d.ts",
+  "source": "src/index.ts",
   "publishConfig": {
     "access": "public"
   },
@@ -41,19 +42,21 @@
     "@googleforcreators/patterns": "*",
     "@googleforcreators/react": "*",
     "@googleforcreators/tracking": "*",
-    "big.js": "^6.1.1",
+    "@types/react-modal": "^3.13.1",
+    "@types/styled-components": "^5.1.26",
+    "big.js": "^6.2.1",
     "focus-visible": "^5.2.0",
     "mousetrap": "^1.6.5",
-    "polished": "^4.1.4",
+    "polished": "^4.2.2",
     "prop-types": "^15.8.1",
-    "react-modal": "^3.14.4",
-    "react-transition-group": "^4.4.2",
+    "react-modal": "^3.15.1",
+    "react-transition-group": "^4.4.5",
     "styled-components": "^5.3.3",
-    "uuid": "^8.3.2"
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
-    "@storybook/addon-essentials": "^6.4.13",
-    "@testing-library/react": "^12.1.2",
-    "@testing-library/react-hooks": "^7.0.2"
+    "@storybook/addon-essentials": "^6.5.12",
+    "@testing-library/react": "^12.1.5",
+    "@testing-library/react-hooks": "^8.0.0"
   }
 }

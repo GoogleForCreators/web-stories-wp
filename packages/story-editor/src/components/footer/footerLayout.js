@@ -24,6 +24,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
+import DirectionAware from '../directionAware';
 import Carousel from './carousel';
 import PrimaryMenu from './primaryMenu';
 import SecondaryMenu from './secondaryMenu';
@@ -35,9 +36,9 @@ const Wrapper = styled.section`
   grid:
     /* Note the two empty 1fr areas each side of the buttons - that's on purpose */
     'secondary carousel primary' auto /
-    ${MAX_MENU_WIDTH}px
-    minmax(auto, calc(100% - ${2 * MAX_MENU_WIDTH}px))
-    ${MAX_MENU_WIDTH}px;
+    1fr
+    minmax(auto, calc(100% - ${3 * MAX_MENU_WIDTH}px))
+    1fr;
   width: 100%;
   max-width: 100%;
   height: 100%;
@@ -48,26 +49,30 @@ const Area = styled.div`
   display: flex;
   align-items: flex-end;
   justify-content: center;
+  z-index: ${({ zIndex = 'auto' }) => zIndex};
 `;
 
-function FooterLayout({ footer }) {
+function FooterLayout({ footer, zIndex }) {
   return (
-    <Wrapper aria-label={__('Workspace Footer', 'web-stories')}>
-      <Area area="carousel">
-        <Carousel />
-      </Area>
-      <Area area="primary">
-        <PrimaryMenu />
-      </Area>
-      <Area area="secondary">
-        <SecondaryMenu menu={footer?.secondaryMenu} />
-      </Area>
-    </Wrapper>
+    <DirectionAware>
+      <Wrapper aria-label={__('Workspace Footer', 'web-stories')}>
+        <Area area="carousel">
+          <Carousel />
+        </Area>
+        <Area area="primary" zIndex={zIndex}>
+          <PrimaryMenu />
+        </Area>
+        <Area area="secondary" zIndex={zIndex}>
+          <SecondaryMenu menu={footer?.secondaryMenu} />
+        </Area>
+      </Wrapper>
+    </DirectionAware>
   );
 }
 
 FooterLayout.propTypes = {
   footer: PropTypes.object,
+  zIndex: PropTypes.number,
 };
 
 export default FooterLayout;

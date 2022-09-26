@@ -35,6 +35,10 @@ import { PANEL_STATES } from './constants';
 
 export const Tablist = styled.div.attrs({ role: 'tablist' })`
   background: ${({ theme }) => theme.colors.bg.primary};
+
+  * {
+    user-select: text;
+  }
 `;
 Tablist.propTypes = {
   // label to describe purpose of tabs

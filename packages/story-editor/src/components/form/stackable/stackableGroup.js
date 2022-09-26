@@ -45,11 +45,22 @@ const StackableContainer = styled.div`
       border-bottom-right-radius: 4px;
     }
   }
+
+  ${({ $stackableGroupStyleOverride }) => $stackableGroupStyleOverride}
 `;
 
-function StackableGroup({ children, locked, className }) {
+function StackableGroup({
+  children,
+  locked,
+  className,
+  stackableGroupStyleOverride,
+}) {
   return (
-    <StackableContainer locked={locked} className={className}>
+    <StackableContainer
+      $stackableGroupStyleOverride={stackableGroupStyleOverride}
+      locked={locked}
+      className={className}
+    >
       {children}
     </StackableContainer>
   );
@@ -59,6 +70,7 @@ StackableGroup.propTypes = {
   children: PropTypes.node,
   locked: PropTypes.bool,
   className: PropTypes.string,
+  stackableGroupStyleOverride: PropTypes.array,
 };
 
 export default StackableGroup;

@@ -35,15 +35,21 @@ const TEMPLATE_FIELDS = [
 const TEMPLATE_EMBED = 'wp:featuredmedia';
 
 function transformResponse(template) {
-  const { _embedded: embedded = {}, id: templateId, story_data } = template;
+  const {
+    _embedded: embedded = {},
+    id: templateId,
+    story_data = {},
+  } = template;
   const image = {
     id: embedded?.['wp:featuredmedia']?.[0].id || 0,
     height: embedded?.['wp:featuredmedia']?.[0]?.media_details?.height || 0,
     width: embedded?.['wp:featuredmedia']?.[0]?.media_details?.width || 0,
     url: embedded?.['wp:featuredmedia']?.[0]?.source_url || '',
+    needsProxy: false,
+    isExternal: false,
   };
 
-  return { ...story_data, templateId, image };
+  return { id: templateId, elements: [], ...story_data, templateId, image };
 }
 
 export function getCustomPageTemplates(config, page = 1) {
@@ -75,7 +81,7 @@ export function getCustomPageTemplates(config, page = 1) {
  */
 export function addPageTemplate(config, data) {
   return apiFetch({
-    path: `${config.api.pageTemplates}/`,
+    path: config.api.pageTemplates,
     data: {
       ...data,
       status: 'publish',

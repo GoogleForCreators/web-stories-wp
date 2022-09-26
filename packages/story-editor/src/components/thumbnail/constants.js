@@ -19,8 +19,8 @@
 import { __ } from '@googleforcreators/i18n';
 
 export const THUMBNAIL_DIMENSIONS = {
-  WIDTH: 52,
-  HEIGHT: 78,
+  WIDTH: 54,
+  HEIGHT: 96,
   NESTED_ICON: 32,
   THUMBNAIL_SHAPE: 36,
 };

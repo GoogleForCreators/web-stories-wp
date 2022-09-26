@@ -25,11 +25,11 @@ import {
   StoryContext,
   CurrentUserContext,
 } from '@googleforcreators/story-editor';
+import { renderWithTheme } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
  */
-import { renderWithTheme } from '../../../testUtils';
 import {
   getStoryLockById,
   setStoryLockById,
@@ -53,7 +53,6 @@ function setup(_storyContextValue = {}, _configValue = {}) {
       storyLocking: '',
     },
     flags: {
-      enablePostLocking: true,
       enablePostLockingTakeOver: true,
     },
     ..._configValue,
@@ -175,7 +174,6 @@ describe('PostLock', () => {
 
     const configValue = {
       flags: {
-        enablePostLocking: true,
         enablePostLockingTakeOver: false,
       },
     };
@@ -207,7 +205,7 @@ describe('PostLock', () => {
 
     setup();
 
-    expect(setInterval).toHaveBeenCalledTimes(1);
+    expect(setInterval).toHaveBeenCalledOnce();
 
     act(() => {
       jest.advanceTimersByTime(160 * 1000);

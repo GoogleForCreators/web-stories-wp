@@ -17,68 +17,48 @@
 /**
  * External dependencies
  */
-import { useCallback, useState } from '@googleforcreators/react';
+import { useCallback, useRef, useState } from '@googleforcreators/react';
 import {
   toDate,
   isAfter,
   subMinutes,
   getOptions,
 } from '@googleforcreators/date';
-import { __ } from '@googleforcreators/i18n';
 import { trackEvent } from '@googleforcreators/tracking';
 import PropTypes from 'prop-types';
-import { useFeature } from 'flagged';
 /**
  * Internal dependencies
  */
 import { useStory } from '../../../app';
 import useRefreshPostEditURL from '../../../utils/useRefreshPostEditURL';
-import { useCheckpoint, ReviewChecklistDialog } from '../../checklist';
-import useIsUploadingToStory from '../../../utils/useIsUploadingToStory';
+import { useCheckpoint } from '../../checklist';
 import { PublishModal } from '../../publishModal';
 import ButtonWithChecklistWarning from './buttonWithChecklistWarning';
 
 function PublishButton({ forceIsSaving }) {
-  const isUpdatedPublishModalEnabled = useFeature(
-    'enableUpdatedPublishStoryModal'
-  );
-  const {
-    isSaving,
-    date,
-    storyId,
-    saveStory,
-    title,
-    editLink,
-    status,
-    canPublish,
-  } = useStory(
+  const { date, storyId, saveStory, title, editLink, canPublish } = useStory(
     ({
       state: {
-        meta: { isSaving },
-        story: { date, storyId, title, editLink, status },
+        story: { date, storyId, title, editLink },
         capabilities,
       },
       actions: { saveStory },
     }) => ({
-      isSaving,
       date,
       storyId,
       saveStory,
       title,
       editLink,
-      status,
       canPublish: Boolean(capabilities?.publish),
     })
   );
-  const isUploading = useIsUploadingToStory();
 
-  const { shouldReviewDialogBeSeen } = useCheckpoint(
-    ({ state: { shouldReviewDialogBeSeen } }) => ({
-      shouldReviewDialogBeSeen,
-    })
+  const showPriorityIssues = useCheckpoint(
+    ({ actions: { showPriorityIssues } }) => showPriorityIssues
   );
 
   const [showDialog, setShowDialog] = useState(false);
+  const publishButtonRef = useRef();
 
   const refreshPostEditURL = useRefreshPostEditURL(storyId, editLink);
   // Offset the date by one minute to accommodate for network latency.
@@ -109,53 +89,33 @@ function PublishButton({ forceIsSaving }) {
   }, [refreshPostEditURL, saveStory, hasFutureDate, title, canPublish]);
 
   const handlePublish = useCallback(() => {
-    if (
-      canPublish &&
-      (shouldReviewDialogBeSeen || isUpdatedPublishModalEnabled)
-    ) {
-      setShowDialog(true);
-      return;
+    showPriorityIssues();
+    setShowDialog(true);
+  }, [showPriorityIssues]);
+
+  const closeDialog = useCallback(({ focusPublishButton = true } = {}) => {
+    setShowDialog(false);
+
+    if (focusPublishButton) {
+      publishButtonRef.current.focus();
     }
-
-    publish();
-  }, [
-    shouldReviewDialogBeSeen,
-    isUpdatedPublishModalEnabled,
-    canPublish,
-    publish,
-  ]);
-
-  const closeDialog = useCallback(() => setShowDialog(false), []);
-
-  const text =
-    hasFutureDate && status !== 'private'
-      ? __('Schedule', 'web-stories')
-      : __('Publish', 'web-stories');
+  }, []);
 
   return (
     <>
       <ButtonWithChecklistWarning
+        ref={publishButtonRef}
         onClick={handlePublish}
-        disabled={isSaving || forceIsSaving || isUploading}
-        text={canPublish ? text : __('Submit for review', 'web-stories')}
-        isUploading={isUploading}
-        canPublish={canPublish}
+        disabled={forceIsSaving}
+        hasFutureDate={hasFutureDate}
       />
-      {isUpdatedPublishModalEnabled ? (
-        <PublishModal
-          isOpen={showDialog}
-          onPublish={publish}
-          onClose={closeDialog}
-          publishButtonCopy={text}
-        />
-      ) : (
-        <ReviewChecklistDialog
-          isOpen={showDialog}
-          onIgnore={publish}
-          onClose={closeDialog}
-          onReview={closeDialog}
-        />
-      )}
+      <PublishModal
+        isOpen={showDialog}
+        onPublish={publish}
+        onClose={closeDialog}
+        hasFutureDate={hasFutureDate}
+        publishButtonDisabled={forceIsSaving}
+      />
     </>
   );
 }

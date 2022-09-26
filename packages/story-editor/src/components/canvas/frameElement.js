@@ -18,34 +18,55 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import { sprintf, __ } from '@googleforcreators/i18n';
 import {
   useCallback,
   useLayoutEffect,
   useRef,
   useState,
   memo,
+  useCombinedRefs,
+  useEffect,
 } from '@googleforcreators/react';
 import { useUnits } from '@googleforcreators/units';
 import { useTransformHandler } from '@googleforcreators/transform';
 import PropTypes from 'prop-types';
-
-/**
- * Internal dependencies
- */
-import { getDefinitionForType } from '../../elements';
-import { useStory, useTransform, useCanvas } from '../../app';
+import {
+  getDefinitionForType,
+  getLayerName,
+} from '@googleforcreators/elements';
 import {
   elementWithPosition,
   elementWithSize,
   elementWithRotation,
-} from '../../elements/shared';
-import WithMask from '../../masks/frame';
+} from '@googleforcreators/element-library';
+import { FrameWithMask as WithMask } from '@googleforcreators/masks';
+import {
+  useKeyDownEffect,
+  useLiveRegion,
+  prettifyShortcut,
+} from '@googleforcreators/design-system';
+
+/**
+ * Internal dependencies
+ */
+import {
+  useStory,
+  useTransform,
+  useCanvas,
+  useConfig,
+  useDropTargets,
+} from '../../app';
 import WithLink from '../elementLink/frame';
-import { getElementMask } from '../../masks';
-import { MaskTypes } from '../../masks/constants';
+import WithProductPill from '../shopping/frame';
 import useDoubleClick from '../../utils/useDoubleClick';
 import usePerformanceTracking from '../../utils/usePerformanceTracking';
-import { TRACKING_EVENTS } from '../../constants/performanceTrackingEvents';
+import { TRACKING_EVENTS } from '../../constants';
+import {
+  FOCUS_GROUPS,
+  useFocusGroupRef,
+  useEditLayerFocusManager,
+} from './editLayerFocusManager';
 
 // @todo: should the frame borders follow clip lines?
 
@@ -54,18 +75,23 @@ import { TRACKING_EVENTS } from '../../constants/performanceTrackingEvents';
 const Wrapper = styled.div`
   ${elementWithPosition}
   ${elementWithSize}
-	${elementWithRotation}
-  pointer-events: ${({ maskDisabled }) => (maskDisabled ? 'initial' : 'none')};
-
+  ${elementWithRotation}
   outline: 1px solid transparent;
   transition: outline-color 0.5s;
-
   &:focus,
-  &:active,
-  &:hover {
+  &:active {
     outline-color: ${({ theme, hasMask }) =>
       hasMask ? 'transparent' : theme.colors.border.selection};
   }
+  ${({ isLocked, hasMask, theme }) =>
+    !isLocked &&
+    !hasMask &&
+    `
+    &:hover {
+      outline-color: ${theme.colors.border.selection};
+    }
+  `}
+  ${({ isClickable }) => !isClickable && `pointer-events: none;`}
 `;
 
 const EmptyFrame = styled.div`
@@ -79,41 +105,99 @@ const EmptyFrame = styled.div`
 
 const NOOP = () => {};
 
+const FRAME_ELEMENT_MESSAGE = sprintf(
+  /* translators: %s: Ctrl+Alt+P keyboard shortcut. */
+  __(
+    'To exit the canvas area, press Escape. Press Tab to move to the next group or element. To enter floating menu, press %s.',
+    'web-stories'
+  ),
+  prettifyShortcut('ctrl+alt+p')
+);
+
 function FrameElement({ id }) {
-  const { isSelected, isBackground, element } = useStory(({ state }) => ({
-    isSelected: state.selectedElementIds.includes(id),
-    isBackground: state.currentPage?.elements[0].id === id,
-    element: state.currentPage?.elements.find((el) => el.id === id),
-  }));
-  const setEditingElement = useCanvas(
-    ({ actions }) => actions.setEditingElement
+  const speak = useLiveRegion();
+  const { enterFocusGroup, setFocusGroupCleanup } = useEditLayerFocusManager(
+    ({ enterFocusGroup, setFocusGroupCleanup }) => ({
+      enterFocusGroup,
+      setFocusGroupCleanup,
+    })
   );
-  const { type, flip } = element;
+  const [isTransforming, setIsTransforming] = useState(false);
+  const focusGroupRef = useFocusGroupRef(FOCUS_GROUPS.ELEMENT_SELECTION);
+
+  const {
+    setNodeForElement,
+    handleSelectElement,
+    isEditing,
+    setEditingElement,
+    setEditingElementWithState,
+  } = useCanvas(({ state, actions }) => ({
+    setNodeForElement: actions.setNodeForElement,
+    handleSelectElement: actions.handleSelectElement,
+    isEditing: state.isEditing,
+    setEditingElement: actions.setEditingElement,
+    setEditingElementWithState: actions.setEditingElementWithState,
+  }));
+  const { isSelected, isOnlySelectedElement, isActive, isBackground, element } =
+    useStory(({ state }) => {
+      const isSelected = state.selectedElementIds.includes(id);
+      const isOnlySelectedElement =
+        isSelected && state.selectedElementIds.length === 1;
+      const isActive = isOnlySelectedElement && !isTransforming && !isEditing;
+
+      return {
+        isSelected,
+        isBackground: state.currentPage?.elements[0].id === id,
+        element: state.currentPage?.elements.find((el) => el.id === id),
+        isOnlySelectedElement,
+        isActive,
+      };
+    });
+  const { type, flip, isLocked } = element;
+
+  // Unlocked elements are always clickable,
+  // locked elements are only clickable if selected
+  const isClickable = !isLocked || isSelected;
+
   const { Frame, isMaskable, Controls } = getDefinitionForType(type);
   const elementRef = useRef();
+  const combinedFocusGroupRef = useCombinedRefs(elementRef, focusGroupRef); // Only attach focus group ref to one element.
   const [hovering, setHovering] = useState(false);
+  const { isRTL, styleConstants: { topOffset } = {} } = useConfig();
+
+  const {
+    draggingResource,
+    activeDropTargetId,
+    isDropSource,
+    registerDropTarget,
+    unregisterDropTarget,
+  } = useDropTargets(
+    ({
+      state: { draggingResource, activeDropTargetId },
+      actions: { isDropSource, registerDropTarget, unregisterDropTarget },
+    }) => ({
+      draggingResource,
+      activeDropTargetId,
+      isDropSource,
+      registerDropTarget,
+      unregisterDropTarget,
+    })
+  );
 
   const onPointerEnter = () => setHovering(true);
   const onPointerLeave = () => setHovering(false);
 
-  const isLinkActive = useTransform(
+  const isAnythingTransforming = useTransform(
     ({ state }) => !isSelected && hovering && !state.isAnythingTransforming
   );
-  const { setNodeForElement, handleSelectElement, isEditing } = useCanvas(
-    ({ state, actions }) => ({
-      setNodeForElement: actions.setNodeForElement,
-      handleSelectElement: actions.handleSelectElement,
-      isEditing: state.isEditing,
-    })
-  );
-  const getBox = useUnits(({ actions }) => actions.getBox);
+  const isLinkActive = isAnythingTransforming && !isLocked;
+
+  const getBoxWithBorder = useUnits(({ actions }) => actions.getBoxWithBorder);
 
   useLayoutEffect(() => {
     setNodeForElement(id, elementRef.current);
   }, [id, setNodeForElement]);
-  const box = getBox(element);
-
-  const [isTransforming, setIsTransforming] = useState(false);
+  const boxWithBorder = getBoxWithBorder(element);
 
   useTransformHandler(id, (transform) => {
     const target = elementRef.current;
@@ -136,32 +220,50 @@ function FrameElement({ id }) {
   );
   const handleMediaClick = useDoubleClick(NOOP, handleMediaDoubleClick);
 
-  // For elements with no mask, handle events by the wrapper.
-  const mask = getElementMask(element);
-  const maskDisabled =
-    !mask?.type || (isBackground && mask.type !== MaskTypes.RECTANGLE);
-  const eventHandlers = {
-    onMouseDown: (evt) => {
+  /**
+   * Announce keyboard options on element.
+   *
+   * Using a live region because an `aria-label` would remove
+   * any labels/content that would be read from children.
+   */
+  const handleFocus = useCallback(
+    (evt) => {
       if (!isSelected) {
         handleSelectElement(id, evt);
       }
+
+      // no floating menu on background, so no need to announce
+      // possible floating menu keyboard navigation commands
+      if (isBackground) {
+        return;
+      }
+      speak(FRAME_ELEMENT_MESSAGE);
+    },
+    [handleSelectElement, id, isBackground, isSelected, speak]
+  );
+
+  const { clearTransforms } = useTransform((state) => ({
+    clearTransforms: state.actions.clearTransforms,
+  }));
+
+  const handleMouseDown = useCallback(
+    (evt) => {
+      if (!isSelected) {
+        handleSelectElement(id, evt);
+        clearTransforms();
+      }
+
       elementRef.current.focus({ preventScroll: true });
+
       if (!isBackground) {
         evt.stopPropagation();
       }
     },
-    onFocus: (evt) => {
-      if (!isSelected) {
-        handleSelectElement(id, evt);
-      }
-    },
-    onPointerEnter,
-    onPointerLeave,
-    onClick: isMedia ? handleMediaClick(id) : null,
-  };
+    [handleSelectElement, id, isBackground, isSelected, clearTransforms]
+  );
 
   usePerformanceTracking({
-    node: maskDisabled ? elementRef.current : null,
+    node: elementRef.current,
     eventData: {
       ...TRACKING_EVENTS.SELECT_ELEMENT,
       label: element.type,
@@ -169,44 +271,100 @@ function FrameElement({ id }) {
     eventType: 'pointerdown',
   });
 
+  useKeyDownEffect(
+    elementRef,
+    { key: ['ctrl+alt+p'] },
+    () => {
+      enterFocusGroup({
+        groupId: FOCUS_GROUPS.EDIT_ELEMENT,
+      });
+    },
+    [enterFocusGroup]
+  );
+
+  useEffect(() => {
+    if (isSelected) {
+      setFocusGroupCleanup({
+        groupId: FOCUS_GROUPS.EDIT_ELEMENT,
+        cleanup: () => elementRef.current?.focus(),
+      });
+    }
+  }, [setFocusGroupCleanup, isSelected]);
+
+  const layerName = getLayerName(element);
+  const elementLabel = element.isLocked
+    ? sprintf(
+        // translators: %s: Name of element
+        __('Locked element: %s', 'web-stories'),
+        layerName
+      )
+    : sprintf(
+        // translators: %s: Name of element
+        __('Element: %s', 'web-stories'),
+        layerName
+      );
+
   return (
-    <WithLink element={element} active={isLinkActive} anchorRef={elementRef}>
-      {Controls && (
-        <Controls
-          isTransforming={isTransforming}
-          isSelected={isSelected}
-          isEditing={isEditing}
-          box={box}
-          elementRef={elementRef}
-          element={element}
-        />
-      )}
-      <Wrapper
-        ref={elementRef}
-        data-element-id={id}
-        {...box}
-        // eslint-disable-next-line styled-components-a11y/no-noninteractive-tabindex -- Needed for being able to focus on the selected element on canvas, e.g. for entering edit mode.
-        tabIndex={0}
-        aria-labelledby={`layer-${id}`}
-        hasMask={isMaskable}
-        data-testid="frameElement"
-        maskDisabled={maskDisabled}
-        {...(maskDisabled ? eventHandlers : null)}
-      >
-        <WithMask
-          element={element}
-          fill
-          flip={flip}
-          eventHandlers={!maskDisabled ? eventHandlers : null}
+    <WithProductPill
+      element={element}
+      active={isLinkActive}
+      anchorRef={elementRef}
+    >
+      <WithLink element={element} active={isLinkActive} anchorRef={elementRef}>
+        {Controls && (
+          <Controls
+            isTransforming={isTransforming}
+            box={boxWithBorder}
+            elementRef={elementRef}
+            element={element}
+            isRTL={isRTL}
+            topOffset={topOffset}
+            isActive={isActive}
+          />
+        )}
+        {/* eslint-disable-next-line styled-components-a11y/click-events-have-key-events -- False positive */}
+        <Wrapper
+          ref={combinedFocusGroupRef}
+          data-element-id={id}
+          {...boxWithBorder}
+          tabIndex={-1}
+          role="button"
+          aria-label={elementLabel}
+          hasMask={isMaskable}
+          isClickable={isClickable}
+          data-testid="frameElement"
+          onMouseDown={handleMouseDown}
+          onFocus={handleFocus}
+          onPointerEnter={onPointerEnter}
+          onPointerLeave={onPointerLeave}
+          onClick={isMedia ? handleMediaClick(id) : null}
         >
-          {Frame ? (
-            <Frame wrapperRef={elementRef} element={element} box={box} />
-          ) : (
-            <EmptyFrame />
-          )}
-        </WithMask>
-      </Wrapper>
-    </WithLink>
+          <WithMask
+            element={element}
+            fill
+            flip={flip}
+            draggingResource={draggingResource}
+            activeDropTargetId={activeDropTargetId}
+            isDropSource={isDropSource}
+            registerDropTarget={registerDropTarget}
+            unregisterDropTarget={unregisterDropTarget}
+            isSelected={isSelected}
+          >
+            {Frame ? (
+              <Frame
+                wrapperRef={elementRef}
+                element={element}
+                box={boxWithBorder}
+                isOnlySelectedElement={isOnlySelectedElement}
+                setEditingElementWithState={setEditingElementWithState}
+              />
+            ) : (
+              <EmptyFrame />
+            )}
+          </WithMask>
+        </Wrapper>
+      </WithLink>
+    </WithProductPill>
   );
 }
 

@@ -19,12 +19,15 @@
  */
 import { _x } from '@googleforcreators/i18n';
 import { dataFontEm, PAGE_HEIGHT } from '@googleforcreators/units';
+import {
+  TEXT_ELEMENT_DEFAULT_FONT,
+  BACKGROUND_TEXT_MODE,
+} from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
-import { FONT_WEIGHT, BACKGROUND_TEXT_MODE } from '../../../../constants';
-import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../app/font/defaultFonts';
+import { FONT_WEIGHT } from '../../../../constants';
 
 // Measured in editor. As small as you can make
 // width with preset font before line wraps
@@ -52,15 +55,14 @@ const DEFAULT_TEXT_BORDER_RADIUS = {
 const DEFAULT_TEXT_PADDING = {
   locked: true,
   hasHiddenPadding: false,
+  horizontal: 0,
+  vertical: 0,
 };
 
+const DEFAULT_TEXT_ALIGN = 'left';
+
 const DEFAULT_PRESET = {
-  content: _x(
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    'text preset content',
-    'web-stories'
-  ),
-  fontWeight: FONT_WEIGHT.NORMAL,
+  content: _x('Fill in some text', 'text preset content', 'web-stories'),
   fontSize: dataFontEm(1.33),
   lineHeight: 1.2,
   x: DEFAULT_LEFT_MARGIN,
@@ -70,6 +72,7 @@ const DEFAULT_PRESET = {
   borderRadius: DEFAULT_TEXT_BORDER_RADIUS,
   backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
   padding: DEFAULT_TEXT_PADDING,
+  textAlign: DEFAULT_TEXT_ALIGN,
 };
 
 const PRESETS = [
@@ -81,7 +84,6 @@ const PRESETS = [
         'text preset content',
         'web-stories'
       )}</span>`,
-      fontWeight: FONT_WEIGHT.BOLD,
       fontSize: dataFontEm(2.667),
       lineHeight: 1.19,
       x: DEFAULT_LEFT_MARGIN,
@@ -91,6 +93,7 @@ const PRESETS = [
       borderRadius: DEFAULT_TEXT_BORDER_RADIUS,
       backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
       padding: DEFAULT_TEXT_PADDING,
+      textAlign: DEFAULT_TEXT_ALIGN,
     },
   },
   {
@@ -101,7 +104,6 @@ const PRESETS = [
         'text preset content',
         'web-stories'
       )}</span>`,
-      fontWeight: FONT_WEIGHT.BOLD,
       fontSize: dataFontEm(2),
       lineHeight: 1.2,
       x: DEFAULT_LEFT_MARGIN,
@@ -111,6 +113,7 @@ const PRESETS = [
       borderRadius: DEFAULT_TEXT_BORDER_RADIUS,
       backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
       padding: DEFAULT_TEXT_PADDING,
+      textAlign: DEFAULT_TEXT_ALIGN,
     },
   },
   {
@@ -121,7 +124,6 @@ const PRESETS = [
         'text preset content',
         'web-stories'
       )}</span>`,
-      fontWeight: FONT_WEIGHT.BOLD,
       fontSize: dataFontEm(1.6),
       lineHeight: 1.2,
       x: DEFAULT_LEFT_MARGIN,
@@ -131,6 +133,7 @@ const PRESETS = [
       borderRadius: DEFAULT_TEXT_BORDER_RADIUS,
       backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
       padding: DEFAULT_TEXT_PADDING,
+      textAlign: DEFAULT_TEXT_ALIGN,
     },
   },
   {
@@ -145,7 +148,6 @@ const PRESETS = [
         'text preset content',
         'web-stories'
       )}</span>`,
-      fontWeight: FONT_WEIGHT.NORMAL,
       fontSize: dataFontEm(1),
       lineHeight: 1.2,
       x: DEFAULT_LEFT_MARGIN,
@@ -155,13 +157,13 @@ const PRESETS = [
       borderRadius: DEFAULT_TEXT_BORDER_RADIUS,
       backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
       padding: DEFAULT_TEXT_PADDING,
+      textAlign: DEFAULT_TEXT_ALIGN,
     },
   },
   {
     title: _x('Label', 'text preset title', 'web-stories').toUpperCase(),
     element: {
       content: _x('Label', 'text preset content', 'web-stories').toUpperCase(),
-      fontWeight: FONT_WEIGHT.NORMAL,
       fontSize: dataFontEm(0.888),
       lineHeight: 1.2,
       x: DEFAULT_LEFT_MARGIN,
@@ -171,6 +173,7 @@ const PRESETS = [
       borderRadius: DEFAULT_TEXT_BORDER_RADIUS,
       backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
       padding: DEFAULT_TEXT_PADDING,
+      textAlign: DEFAULT_TEXT_ALIGN,
     },
   },
 ];

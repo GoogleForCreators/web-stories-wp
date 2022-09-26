@@ -17,19 +17,19 @@
 export * from './fonts';
 export * from './media';
 export * from './multipleValue';
+export * from './performanceTrackingEvents';
+export * from './headings';
 
 export const ADMIN_TOOLBAR_HEIGHT = 32;
 export const HEADER_HEIGHT = 64;
-export const HEADER_GAP = 16;
+export const HEADER_GAP = 52;
 export const CANVAS_MIN_WIDTH = 570;
-export const LIBRARY_MIN_WIDTH = 220;
-export const LIBRARY_MAX_WIDTH = 360;
-export const INSPECTOR_MIN_WIDTH = 220;
-export const INSPECTOR_MAX_WIDTH = 308;
+export const SIDEBAR_WIDTH = 360;
 export const PAGE_NAV_PADDING = 60;
 export const PAGE_NAV_BUTTON_SIZE = 40;
 export const PAGE_NAV_WIDTH = PAGE_NAV_PADDING + PAGE_NAV_BUTTON_SIZE;
 export const FLOATING_MENU_DISTANCE = 10;
+export const MAX_PRODUCTS_PER_PAGE = 6;
 
 export const ZOOM_SETTING = {
   FILL: 'FILL',
@@ -47,33 +47,17 @@ export const CAROUSEL_STATE = {
 export const CAROUSEL_TRANSITION_DURATION = 300;
 
 export const PAGE_WIDTH_FACTOR = 12;
+export const MAX_EXTRA_PAGES = 4;
 
 export const DESIGN_SPACE_MARGIN = 48;
 
 export const TEXT_SET_SIZE = 150;
-
-export const DEFAULT_ATTRIBUTES_FOR_MEDIA = {
-  scale: 100,
-  focalX: 50,
-  focalY: 50,
-};
 
 export const LAYER_DIRECTIONS = {
   FRONT: 'FRONT',
   BACK: 'BACK',
   FORWARD: 'FORWARD',
   BACKWARD: 'BACKWARD',
-};
-
-export const Z_INDEX_CANVAS = {
-  MOVABLE: 10,
-  FLOAT_PANEL: 11,
-};
-
-export const BACKGROUND_TEXT_MODE = {
-  NONE: 'NONE',
-  FILL: 'FILL',
-  HIGHLIGHT: 'HIGHLIGHT',
 };
 
 export const FONT_WEIGHT = {
@@ -102,6 +86,3 @@ export const PRESET_TYPES = {
 };
 
 export const STABLE_ARRAY = [];
-
-export const DEFAULT_AUTO_ADVANCE = true;
-export const DEFAULT_PAGE_DURATION = 7;

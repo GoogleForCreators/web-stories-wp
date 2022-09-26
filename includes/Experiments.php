@@ -32,6 +32,14 @@ use Google\Web_Stories\Infrastructure\HasRequirements;
  * Experiments class.
  *
  * Allows turning flags on/off via the admin UI.
+ *
+ * @phpstan-type Experiment array{
+ *   name: string,
+ *   label: string,
+ *   description: string,
+ *   group: string,
+ *   default?: bool
+ * }
  */
 class Experiments extends Service_Base implements HasRequirements {
 	/**
@@ -160,6 +168,8 @@ class Experiments extends Service_Base implements HasRequirements {
 	 *     @type string $label   Experiment label.
 	 *     @type bool   $default Whether the experiment is enabled by default.
 	 * }
+	 *
+	 * @phpstan-param array{id: string, label: string, default: bool} $args
 	 */
 	public function display_experiment_field( array $args ): void {
 		$is_enabled_by_default = ! empty( $args['default'] );
@@ -200,7 +210,7 @@ class Experiments extends Service_Base implements HasRequirements {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @return array List of experiment groups
+	 * @return array<string,string> List of experiment groups
 	 */
 	public function get_experiment_groups(): array {
 		return [
@@ -218,20 +228,11 @@ class Experiments extends Service_Base implements HasRequirements {
 	 * @since 1.0.0
 	 *
 	 * @return array List of experiments by group.
+	 *
+	 * @phpstan-return Experiment[]
 	 */
 	public function get_experiments(): array {
 		return [
-			/**
-			 * Author: @littlemilkstudio
-			 * Issue: 6379
-			 * Creation date: 2021-03-09
-			 */
-			[
-				'name'        => 'enableExperimentalAnimationEffects',
-				'label'       => __( 'Experimental animations', 'web-stories' ),
-				'description' => __( 'Enable any animation effects that are currently experimental', 'web-stories' ),
-				'group'       => 'editor',
-			],
 			/**
 			 * Author: @brittanyirl
 			 * Issue: 2381
@@ -242,28 +243,6 @@ class Experiments extends Service_Base implements HasRequirements {
 				'label'       => __( 'Template actions', 'web-stories' ),
 				'description' => __( 'Enable in-progress template actions', 'web-stories' ),
 				'group'       => 'dashboard',
-			],
-			/**
-			 * Author: @diegovar
-			 * Issue: #2616
-			 * Creation date: 2020-06-23
-			 */
-			[
-				'name'        => 'showElementsTab',
-				'label'       => __( 'Elements tab', 'web-stories' ),
-				'description' => __( 'Enable elements tab', 'web-stories' ),
-				'group'       => 'editor',
-			],
-			/**
-			 * Author: @diegovar
-			 * Issue: #3206
-			 * Creation date: 2020-07-15
-			 */
-			[
-				'name'        => 'incrementalSearchDebounceMedia',
-				'label'       => __( 'Incremental Search', 'web-stories' ),
-				'description' => __( 'Enable incremental search in the Upload and Third-party media tabs', 'web-stories' ),
-				'group'       => 'editor',
 			],
 			/**
 			 * Author: @spacedmonkey
@@ -278,17 +257,6 @@ class Experiments extends Service_Base implements HasRequirements {
 			],
 			/**
 			 * Author: @spacedmonkey
-			 * Issue: #3126
-			 * Creation date: 2021-02-02
-			 */
-			[
-				'name'        => 'enablePostLocking',
-				'label'       => __( 'Story locking', 'web-stories' ),
-				'description' => __( 'Lock in-progress stories from being edited by other authors', 'web-stories' ),
-				'group'       => 'general',
-			],
-			/**
-			 * Author: @spacedmonkey
 			 * Issue: #10339
 			 * Creation date: 2022-02-02
 			 */
@@ -299,83 +267,79 @@ class Experiments extends Service_Base implements HasRequirements {
 				'group'       => 'editor',
 			],
 			/**
-			 * Author: @brittanyirl
-			 * Issue: #10115
-			 * Creation date: 2022-02-02
+			 * Author: @barklund
+			 * Issue: #9643
+			 * Creation date: 2022-06-21
 			 */
 			[
-				'name'        => 'enableUpdatedPublishStoryModal',
-				'label'       => __( 'Updated Publish Story Modal', 'web-stories' ),
-				'description' => __( 'Enable new pre-publish confirmation modal', 'web-stories' ),
+				'name'        => 'extraPages',
+				'label'       => __( 'Context Pages', 'web-stories' ),
+				'description' => __( 'Show extra pages for context before and after the current canvas page. Note: This might come with a performance penalty.', 'web-stories' ),
 				'group'       => 'editor',
 				'default'     => true,
 			],
-			/**
-			 * Author: @miina
-			 * Issue #471
-			 * Creation date: 2021-08-10
-			 */
-			[
-				'name'        => 'enableHotlinking',
-				'label'       => __( 'Insert media from link', 'web-stories' ),
-				'description' => __( 'Enable inserting media element from external link', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-
 			/**
 			 * Author: @barklund
-			 * Issue: #8877
-			 * Creation date: 2021-09-01
+			 * Issue: #11908
+			 * Creation date: 2022-07-19
 			 */
 			[
-				'name'        => 'enableVideoTrim',
-				'label'       => __( 'Video trimming', 'web-stories' ),
-				'description' => __( 'Enable video trimming', 'web-stories' ),
+				'name'        => 'recordingTrimming',
+				'label'       => __( 'Trim media recording', 'web-stories' ),
+				'description' => __( 'Enable the ability to trim a media recording before you insert it', 'web-stories' ),
 				'group'       => 'editor',
 				'default'     => true,
 			],
-
 			/**
-			 * Author: @barklund
-			 * Issue: #8973
-			 * Creation date: 2021-09-07
+			 * Author: @swissspidy
+			 * Issue: #11878
+			 * Creation date: 2022-07-06
 			 */
 			[
-				'name'        => 'enableThumbnailCaching',
-				'label'       => __( 'Thumbnail Caching', 'web-stories' ),
-				'description' => __( 'Enable thumbnail caching', 'web-stories' ),
+				'name'        => 'tenorStickers',
+				'label'       => __( 'Stickers', 'web-stories' ),
+				'description' => __( 'Enable Tenor stickers support', 'web-stories' ),
 				'group'       => 'editor',
 				'default'     => true,
 			],
-
 			/**
-			 * Author: @miina
-			 * Issue: #9880
-			 * Creation date: 2021-12-15
+			 * Author: @timarney
+			 * Issue: #12094
+			 * Creation date: 2022-08-11
 			 */
 			[
-				'name'        => 'customFonts',
-				'label'       => __( 'Custom Fonts', 'web-stories' ),
-				'description' => __( 'Enable adding custom fonts', 'web-stories' ),
-				'group'       => 'general',
+				'name'        => 'improvedAutosaves',
+				'label'       => __( 'Improved Autosaves', 'web-stories' ),
+				'description' => __( 'Enable improved autosaves support', 'web-stories' ),
+				'group'       => 'editor',
+				'default'     => true,
+			],
+			/**
+			 * Author: @timarney
+			 * Issue: #12093
+			 * Creation date: 2022-08-18
+			 */
+			[
+				'name'        => 'offScreenVideoCropping',
+				'label'       => __( 'Crop off-screen video parts', 'web-stories' ),
+				'description' => __( 'Enable support for cropping cut off-screen parts of videos', 'web-stories' ),
+				'group'       => 'editor',
 			],
 			/**
 			 * Author: @spacedmonkey
-			 * Issue: #8821
-			 * Creation date: 2022-01-19
+			 * Issue: #12211
+			 * Creation date: 2022-09-07
 			 */
 			[
-				'name'        => 'enhancedPageBackgroundAudio',
-				'label'       => __( 'Page Background Audio', 'web-stories' ),
-				'description' => __( 'Enable adding captions to background audio', 'web-stories' ),
+				'name'        => 'videoVolume',
+				'label'       => __( 'Video Volume', 'web-stories' ),
+				'description' => __( 'Enable setting video volume', 'web-stories' ),
 				'group'       => 'editor',
-				'default'     => true,
 			],
 			/**
 			 * Author: @barklund
-			 * Issue: #10112
-			 * Creation date: 2022-01-27
+			 * Issue: #12210
+			 * Creation date: 2022-09-14
 			 */
 			[
 				'name'        => 'floatingMenu',
@@ -404,9 +368,14 @@ class Experiments extends Service_Base implements HasRequirements {
 	 * @since 1.0.0
 	 *
 	 * @param string $group Experiments group name.
-	 * @return array Experiment statuses with name as key and status as value.
+	 * @return array<string,bool> Experiment statuses with name as key and status as value.
 	 */
 	public function get_experiment_statuses( string $group ): array {
+		/**
+		 * List of experiments.
+		 *
+		 * @phpstan-var Experiment[]
+		 */
 		$experiments = wp_list_filter( $this->get_experiments(), [ 'group' => $group ] );
 
 		if ( empty( $experiments ) ) {
@@ -429,6 +398,8 @@ class Experiments extends Service_Base implements HasRequirements {
 	 *
 	 * @param string $name Experiment name.
 	 * @return array|null Experiment if found, null otherwise.
+	 *
+	 * @phpstan-return Experiment|null
 	 */
 	protected function get_experiment( string $name ): ?array {
 		$experiment = wp_list_filter( $this->get_experiments(), [ 'name' => $name ] );
@@ -458,6 +429,7 @@ class Experiments extends Service_Base implements HasRequirements {
 		 * List of enabled experiments.
 		 *
 		 * @var array<string, array> $experiments
+		 * @phpstan-var Experiment[]
 		 */
 		$experiments = $this->settings->get_setting( $this->settings::SETTING_NAME_EXPERIMENTS, [] );
 		return ! empty( $experiments[ $name ] );
@@ -468,7 +440,7 @@ class Experiments extends Service_Base implements HasRequirements {
 	 *
 	 * @since 1.4.0
 	 *
-	 * @return array List of all enabled experiments.
+	 * @return string[] List of all enabled experiments.
 	 */
 	public function get_enabled_experiments(): array {
 		$experiments = array_filter(

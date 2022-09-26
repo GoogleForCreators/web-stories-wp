@@ -22,11 +22,12 @@ import {
   SnackbarContext,
   setAppElement,
 } from '@googleforcreators/design-system';
+import { renderWithTheme } from '@googleforcreators/test-utils';
+
 /**
  * Internal dependencies
  */
 import MediaEditDialog from '../panes/media/local/mediaEditDialog';
-import { renderWithTheme } from '../../../testUtils';
 import ApiContext from '../../../app/api/context';
 import MediaContext from '../../../app/media/context';
 
@@ -107,7 +108,7 @@ describe('MediaEditDialog', () => {
     // Mock out `updateMedia`.
     let serverAltText = resource.alt;
     updateMedia.mockImplementation((_id, update) => {
-      serverAltText = update.alt_text;
+      serverAltText = update.altText;
     });
 
     // Mock out `updateMediaElement`.
@@ -120,8 +121,8 @@ describe('MediaEditDialog', () => {
     fireEvent.change(input, { target: { value: 'new alt text' } });
     fireEvent.click(screen.getByRole('button', { name: /save/i }));
 
-    await waitFor(() => expect(updateMedia).toHaveBeenCalledTimes(1));
-    expect(updateMediaElement).toHaveBeenCalledTimes(1);
+    await waitFor(() => expect(updateMedia).toHaveBeenCalledOnce());
+    expect(updateMediaElement).toHaveBeenCalledOnce();
 
     expect(serverAltText).toBe('new alt text');
     expect(stateAltText).toBe('new alt text');
@@ -140,9 +141,9 @@ describe('MediaEditDialog', () => {
     fireEvent.change(input, { target: { value: 'new alt text' } });
     fireEvent.click(screen.getByRole('button', { name: /save/i }));
 
-    await waitFor(() => expect(updateMedia).toHaveBeenCalledTimes(1));
+    await waitFor(() => expect(updateMedia).toHaveBeenCalledOnce());
     expect(updateMediaElement).toHaveBeenCalledTimes(0);
-    expect(showSnackbar).toHaveBeenCalledTimes(1);
+    expect(showSnackbar).toHaveBeenCalledOnce();
     expect(serverAltText).toBe('my image alt text');
   });
 
@@ -158,8 +159,8 @@ describe('MediaEditDialog', () => {
     fireEvent.change(input, { target: { value: 'new alt text' } });
     fireEvent.click(screen.getByRole('button', { name: /save/i }));
 
-    await waitFor(() => expect(updateMedia).toHaveBeenCalledTimes(1));
-    expect(updateMediaElement).toHaveBeenCalledTimes(1);
-    expect(showSnackbar).toHaveBeenCalledTimes(1);
+    await waitFor(() => expect(updateMedia).toHaveBeenCalledOnce());
+    expect(updateMediaElement).toHaveBeenCalledOnce();
+    expect(showSnackbar).toHaveBeenCalledOnce();
   });
 });

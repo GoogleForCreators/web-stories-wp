@@ -32,7 +32,7 @@ module.exports = function (api) {
           shippedProposals: true,
           targets,
           useBuiltIns: 'usage',
-          corejs: 3,
+          corejs: '3.25.2',
         },
       ],
       [
@@ -43,10 +43,16 @@ module.exports = function (api) {
           development: !isProduction,
         },
       ],
+      '@babel/preset-typescript',
     ],
     plugins: [
       '@wordpress/babel-plugin-import-jsx-pragma',
-      'babel-plugin-styled-components',
+      [
+        'babel-plugin-styled-components',
+        {
+          meaninglessFileNames: ['index', 'styles', 'components'],
+        },
+      ],
     ],
     sourceMaps: true,
     env: {

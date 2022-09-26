@@ -40,9 +40,6 @@
 .web-stories-embed.aligncenter .wp-block-embed__wrapper {
   margin-left: auto;
   margin-right: auto;
-}
-
-.web-stories-embed:not(.web-stories-embed-amp) .wp-block-embed__wrapper {
   max-width: var(--width);
 }
 

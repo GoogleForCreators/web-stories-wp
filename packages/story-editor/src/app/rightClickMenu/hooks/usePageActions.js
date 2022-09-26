@@ -19,10 +19,11 @@
  */
 import { trackEvent } from '@googleforcreators/tracking';
 import { useCallback } from '@googleforcreators/react';
+import { createPage, duplicatePage } from '@googleforcreators/elements';
+
 /**
  * Internal dependencies
  */
-import { createPage, duplicatePage } from '../../../elements';
 import { useStory } from '../..';
 
 /**

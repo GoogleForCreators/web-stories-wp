@@ -25,8 +25,8 @@ import { fireEvent, screen } from '@testing-library/react';
 import TelemetrySettings from '..';
 import { renderWithProviders } from '../../../../testUtils';
 
-describe('Editor Settings: <TelemetrySettings />', function () {
-  it('should render the telemetry as checked when selected is true.', function () {
+describe('Editor Settings: <TelemetrySettings />', () => {
+  it('should render the telemetry as checked when selected is true.', () => {
     renderWithProviders(
       <TelemetrySettings
         disabled={false}
@@ -38,7 +38,7 @@ describe('Editor Settings: <TelemetrySettings />', function () {
     expect(screen.getByRole('checkbox')).toBeChecked();
   });
 
-  it('should render the telemetry as not checked when selected is false.', function () {
+  it('should render the telemetry as not checked when selected is false.', () => {
     renderWithProviders(
       <TelemetrySettings
         disabled={false}
@@ -50,7 +50,7 @@ describe('Editor Settings: <TelemetrySettings />', function () {
     expect(screen.getByRole('checkbox')).not.toBeChecked();
   });
 
-  it('should call the change function when the checkbox is clicked.', function () {
+  it('should call the change function when the checkbox is clicked.', () => {
     const changeFn = jest.fn();
     renderWithProviders(
       <TelemetrySettings
@@ -63,6 +63,6 @@ describe('Editor Settings: <TelemetrySettings />', function () {
     const checkbox = screen.getByRole('checkbox');
     fireEvent.click(checkbox);
 
-    expect(changeFn).toHaveBeenCalledTimes(1);
+    expect(changeFn).toHaveBeenCalledOnce();
   });
 });

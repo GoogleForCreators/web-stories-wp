@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { setDefaultOptions } from 'expect-puppeteer';
+import { matchers } from 'jest-json-schema';
 import { toBeValidAMP } from '@web-stories-wp/jest-puppeteer-amp';
 import {
   enablePageDialogAccept,
@@ -29,9 +30,15 @@ import {
   clearLocalStorage,
 } from '@web-stories-wp/e2e-test-utils';
 
+async function clearSessionStorage() {
+  await page.evaluate(() => window.sessionStorage.clear());
+}
+
 expect.extend({
   toBeValidAMP,
 });
+
+expect.extend(matchers);
 
 /**
  * Environment variables
@@ -95,6 +102,19 @@ const ALLOWED_ERROR_MESSAGES = [
 
   // TODO(#9240): Fix usage in the web stories block.
   "select( 'core' ).getAuthors() is deprecated since version 5.9.",
+
+  // See https://www.chromestatus.com/feature/508239670987980
+  "Blocked attempt to show a 'beforeunload' confirmation panel for a frame that never had a user gesture since its load",
+
+  // Sometimes the AMP viewer can fail to load translations when viewing a story.
+  'Bundle not found for language en:',
+
+  // Media3p API requests can sometimes fail in the Docker environment (due to network issues?).
+  'Failed to fetch',
+
+  // Sometimes ffmpeg.wasm is not loading.
+  'wasm streaming compile failed',
+  'falling back to ArrayBuffer instantiation',
 ];
 
 export function addAllowedErrorMessage(message) {
@@ -115,13 +135,8 @@ const pageEvents = [];
 // The Jest timeout is increased because these tests are a bit slow
 jest.setTimeout(PUPPETEER_TIMEOUT || 100000);
 
-// Retry flaky tests at most 2 times in CI (off by 1).
-if ('true' === process.env.CI) {
-  jest.retryTimes(3);
-}
-
 // Set default timeout for individual expect-puppeteer assertions. (Default: 500)
-setDefaultOptions({ timeout: EXPECT_PUPPETEER_TIMEOUT || 1000 });
+setDefaultOptions({ timeout: EXPECT_PUPPETEER_TIMEOUT || 2000 });
 
 /**
  * Set up browser.
@@ -209,31 +224,6 @@ function observeConsoleLogging() {
 }
 
 /**
- * Runs Axe tests when the story editor is found on the current page.
- *
- * @return {?Promise} Promise resolving once Axe texts are finished.
- */
-async function runAxeTestsForStoriesEditor() {
-  if (!(await page.$('body.edit-story'))) {
-    return;
-  }
-
-  await expect(page).toPassAxeTests({
-    // Temporary disabled rules to enable initial integration.
-    disabledRules: [
-      'aria-input-field-name',
-      'aria-required-parent',
-      'color-contrast',
-      // Because of multiple #_wpnonce elements.
-      'duplicate-id',
-      'region',
-      'aria-allowed-attr',
-      'nested-interactive',
-    ],
-  });
-}
-
-/**
  * Before every test suite run, delete all content created by the test. This ensures
  * other posts/comments/etc. aren't dirtying tests and tests don't depend on
  * each other's side-effects.
@@ -255,13 +245,14 @@ beforeAll(async () => {
   await deleteAllMedia();
 
   await clearLocalStorage();
+  await clearSessionStorage();
 });
 
 // eslint-disable-next-line jest/require-top-level-describe
 afterEach(async () => {
-  await runAxeTestsForStoriesEditor();
   await setupBrowser();
   await clearLocalStorage();
+  await clearSessionStorage();
 });
 
 // eslint-disable-next-line jest/require-top-level-describe

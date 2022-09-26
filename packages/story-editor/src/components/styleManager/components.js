@@ -28,7 +28,7 @@ import {
 /**
  * Internal dependencies
  */
-import { focusStyle } from '../panels/shared';
+import { focusStyle } from '../panels/shared/styles';
 
 export const NoStylesWrapper = styled.div`
   display: flex;

@@ -18,9 +18,10 @@
 namespace Google\Web_Stories\Tests\Integration\REST_API;
 
 use DateTime;
+use Google\Web_Stories\Media\Image_Sizes;
 use Google\Web_Stories\Story_Post_Type;
+use Google\Web_Stories\Tests\Integration\DependencyInjectedRestTestCase;
 use Google\Web_Stories\Tests\Integration\Fixture\DummyTaxonomy;
-use Google\Web_Stories\Tests\Integration\RestTestCase;
 use WP_REST_Request;
 
 /**
@@ -28,7 +29,7 @@ use WP_REST_Request;
  *
  * @coversDefaultClass \Google\Web_Stories\REST_API\Stories_Controller
  */
-class Stories_Controller extends RestTestCase {
+class Stories_Controller extends DependencyInjectedRestTestCase {
 
 	protected $server;
 
@@ -141,6 +142,8 @@ class Stories_Controller extends RestTestCase {
 	public function set_up(): void {
 		parent::set_up();
 
+		$story_post_type = $this->injector->make( \Google\Web_Stories\Story_Post_Type::class );
+		$story_post_type->register();
 		$this->controller = new \Google\Web_Stories\REST_API\Stories_Controller( Story_Post_Type::POST_TYPE_SLUG );
 	}
 
@@ -486,6 +489,172 @@ class Stories_Controller extends RestTestCase {
 	}
 
 	/**
+	 * @covers ::get_item
+	 * @covers ::get_story_poster
+	 * @covers \Google\Web_Stories\REST_API\Stories_Base_Controller::prepare_links
+	 */
+	public function test_get_item_with_no_poster(): void {
+		$this->controller->register_routes();
+
+		wp_set_current_user( self::$user_id );
+
+		$story = self::factory()->post->create(
+			[
+				'post_type'   => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_status' => 'future',
+				'post_date'   => ( new DateTime( '+1day' ) )->format( 'Y-m-d H:i:s' ),
+				'post_author' => self::$user_id,
+			]
+		);
+
+		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story/' . $story );
+		$response = rest_get_server()->dispatch( $request );
+		$data     = $response->get_data();
+
+		$this->assertArrayNotHasKey( 'story_poster', $data );
+	}
+
+	/**
+	 * @covers ::get_item
+	 * @covers ::get_story_poster
+	 * @covers \Google\Web_Stories\REST_API\Stories_Base_Controller::prepare_links
+	 */
+	public function test_get_item_with_featured_image(): void {
+		$this->controller->register_routes();
+
+		wp_set_current_user( self::$user_id );
+
+		$story = self::factory()->post->create(
+			[
+				'post_type'   => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_status' => 'future',
+				'post_date'   => ( new DateTime( '+1day' ) )->format( 'Y-m-d H:i:s' ),
+				'post_author' => self::$user_id,
+			]
+		);
+
+		$attachment_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg', 0 );
+		set_post_thumbnail( $story, $attachment_id );
+
+		$attachment_src = wp_get_attachment_image_src( $attachment_id, Image_Sizes::POSTER_PORTRAIT_IMAGE_SIZE );
+
+		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story/' . $story );
+		$response = rest_get_server()->dispatch( $request );
+		$data     = $response->get_data();
+
+		$this->assertArrayHasKey( 'story_poster', $data );
+		$this->assertEqualSetsWithIndex(
+			[
+				'id'         => $attachment_id,
+				'url'        => $attachment_src[0],
+				'height'     => $attachment_src[1],
+				'width'      => $attachment_src[2],
+				'needsProxy' => false,
+			],
+			$data['story_poster']
+		);
+	}
+
+	/**
+	 * @covers ::get_item
+	 * @covers ::get_story_poster
+	 * @covers \Google\Web_Stories\REST_API\Stories_Base_Controller::prepare_links
+	 */
+	public function test_get_item_with_hotlinked_poster(): void {
+		$this->controller->register_routes();
+
+		wp_set_current_user( self::$user_id );
+
+		$story = self::factory()->post->create(
+			[
+				'post_type'   => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_status' => 'future',
+				'post_date'   => ( new DateTime( '+1day' ) )->format( 'Y-m-d H:i:s' ),
+				'post_author' => self::$user_id,
+			]
+		);
+
+		add_post_meta(
+			$story,
+			\Google\Web_Stories\Story_Post_Type::POSTER_META_KEY,
+			[
+				'url'        => 'http://www.example.com/image.png',
+				'height'     => 1000,
+				'width'      => 1000,
+				'needsProxy' => false,
+			]
+		);
+
+		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story/' . $story );
+		$response = rest_get_server()->dispatch( $request );
+		$data     = $response->get_data();
+
+		$this->assertArrayHasKey( 'story_poster', $data );
+		$this->assertEqualSetsWithIndex(
+			[
+				'url'        => 'http://www.example.com/image.png',
+				'height'     => 1000,
+				'width'      => 1000,
+				'needsProxy' => false,
+			],
+			$data['story_poster']
+		);
+	}
+
+	/**
+	 * @covers ::get_item
+	 * @covers ::get_story_poster
+	 * @covers \Google\Web_Stories\REST_API\Stories_Base_Controller::prepare_links
+	 */
+	public function test_get_item_with_featured_image_and_hotlinked_poster(): void {
+		$this->controller->register_routes();
+
+		wp_set_current_user( self::$user_id );
+
+		$story = self::factory()->post->create(
+			[
+				'post_type'   => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_status' => 'future',
+				'post_date'   => ( new DateTime( '+1day' ) )->format( 'Y-m-d H:i:s' ),
+				'post_author' => self::$user_id,
+			]
+		);
+
+		$attachment_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg', 0 );
+		set_post_thumbnail( $story, $attachment_id );
+
+		$attachment_src = wp_get_attachment_image_src( $attachment_id, Image_Sizes::POSTER_PORTRAIT_IMAGE_SIZE );
+
+		add_post_meta(
+			$story,
+			\Google\Web_Stories\Story_Post_Type::POSTER_META_KEY,
+			[
+				'url'        => 'http://www.example.com/image.png',
+				'height'     => 1000,
+				'width'      => 1000,
+				'needsProxy' => false,
+			]
+		);
+
+		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story/' . $story );
+		$response = rest_get_server()->dispatch( $request );
+		$data     = $response->get_data();
+
+		$this->assertArrayHasKey( 'story_poster', $data );
+		$this->assertEqualSetsWithIndex(
+			[
+				'id'         => $attachment_id,
+				'url'        => $attachment_src[0],
+				'height'     => $attachment_src[1],
+				'width'      => $attachment_src[2],
+				'needsProxy' => false,
+			],
+			$data['story_poster']
+		);
+	}
+
+
+	/**
 	 * @covers ::get_item_schema
 	 */
 	public function test_get_item_schema(): void {
@@ -544,6 +713,68 @@ class Stories_Controller extends RestTestCase {
 			$results,
 			'Expected posts ordered by author display names'
 		);
+	}
+
+	/**
+	 * @covers ::get_attached_post_ids
+	 */
+	public function test_get_attached_post_ids(): void {
+		$original_id = self::factory()->post->create(
+			[
+				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_title'   => 'Example title',
+				'post_excerpt' => 'Example excerpt',
+				'post_author'  => self::$user_id,
+				'post_status'  => 'private',
+			]
+		);
+
+		$attachment_id     = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg', 0 );
+		$publisher_logo_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg', 0 );
+		set_post_thumbnail( $original_id, $attachment_id );
+		update_post_meta( $original_id, \Google\Web_Stories\Story_Post_Type::PUBLISHER_LOGO_META_KEY, $publisher_logo_id );
+
+		$posts  = [ get_post( $original_id ) ];
+		$result = $this->call_private_method( $this->controller, 'get_attached_post_ids', [ $posts ] );
+		$this->assertEqualSets( [ $attachment_id, $publisher_logo_id ], $result );
+	}
+
+	/**
+	 * @covers ::get_attached_post_ids
+	 */
+	public function test_get_attached_post_ids_empty(): void {
+		$posts  = [];
+		$result = $this->call_private_method( $this->controller, 'get_attached_post_ids', [ $posts ] );
+		$this->assertEqualSets( [], $result );
+	}
+
+
+	/**
+	 * @covers ::get_attached_user_ids
+	 */
+	public function test_get_attached_user_ids(): void {
+		$original_id = self::factory()->post->create(
+			[
+				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_title'   => 'Example title',
+				'post_excerpt' => 'Example excerpt',
+				'post_author'  => self::$user_id,
+				'post_status'  => 'private',
+			]
+		);
+
+		$posts  = [ get_post( $original_id ) ];
+		$result = $this->call_private_method( $this->controller, 'get_attached_user_ids', [ $posts ] );
+		$this->assertEqualSets( [ self::$user_id ], $result );
+	}
+
+	/**
+	 * @covers ::get_attached_user_ids
+	 */
+	public function test_get_attached_user_ids_empty(): void {
+		$posts  = [];
+		$result = $this->call_private_method( $this->controller, 'get_attached_user_ids', [ $posts ] );
+		$this->assertEqualSets( [], $result );
 	}
 
 	/**
@@ -620,6 +851,7 @@ class Stories_Controller extends RestTestCase {
 
 	/**
 	 * @covers ::create_item
+	 * @covers ::get_registered_meta
 	 */
 	public function test_create_item_duplicate_id(): void {
 		$this->controller->register_routes();
@@ -637,8 +869,17 @@ class Stories_Controller extends RestTestCase {
 			]
 		);
 
-		$attachment_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg', 0 );
+		$attachment_id     = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg', 0 );
+		$publisher_logo_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg', 0 );
+		$custom_poster     = [
+			'url'        => 'http://www.example.com/image.png',
+			'width'      => 1000,
+			'height'     => 1000,
+			'needsProxy' => false,
+		];
 		set_post_thumbnail( $original_id, $attachment_id );
+		update_post_meta( $original_id, \Google\Web_Stories\Story_Post_Type::PUBLISHER_LOGO_META_KEY, $publisher_logo_id );
+		update_post_meta( $original_id, \Google\Web_Stories\Story_Post_Type::POSTER_META_KEY, $custom_poster );
 
 		wp_set_current_user( self::$user_id );
 		$this->kses_int();
@@ -660,11 +901,54 @@ class Stories_Controller extends RestTestCase {
 		$this->assertArrayHasKey( 'raw', $new_data['excerpt'] );
 		$this->assertArrayHasKey( 'story_data', $new_data );
 		$this->assertArrayHasKey( 'featured_media', $new_data );
+		$this->assertArrayHasKey( 'meta', $new_data );
+		$this->assertArrayHasKey( \Google\Web_Stories\Story_Post_Type::PUBLISHER_LOGO_META_KEY, $new_data['meta'] );
+		$this->assertArrayHasKey( \Google\Web_Stories\Story_Post_Type::POSTER_META_KEY, $new_data['meta'] );
 
 		$this->assertSame( 'Example title (Copy)', $new_data['title']['raw'] );
 		$this->assertSame( 'Example excerpt', $new_data['excerpt']['raw'] );
 		$this->assertSame( $attachment_id, $new_data['featured_media'] );
+		$this->assertSame( $publisher_logo_id, $new_data['meta'][ \Google\Web_Stories\Story_Post_Type::PUBLISHER_LOGO_META_KEY ] );
+		$this->assertSame( $custom_poster, $new_data['meta'][ \Google\Web_Stories\Story_Post_Type::POSTER_META_KEY ] );
 		$this->assertSame( [ 'pages' => [] ], $new_data['story_data'] );
+	}
+
+	/**
+	 * @covers ::create_item
+	 * @covers ::get_registered_meta
+	 */
+	public function test_create_item_duplicate_id_invalid_meta(): void {
+		$this->controller->register_routes();
+
+		$unsanitized_content    = file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/story_post_content.html' );
+		$unsanitized_story_data = wp_json_encode( [ 'pages' => [] ] );
+		$original_id            = self::factory()->post->create(
+			[
+				'post_type'             => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_content'          => $unsanitized_content,
+				'post_title'            => 'Example title',
+				'post_excerpt'          => 'Example excerpt',
+				'post_author'           => self::$user_id,
+				'post_content_filtered' => $unsanitized_story_data,
+			]
+		);
+
+
+		update_post_meta( $original_id, \Google\Web_Stories\Story_Post_Type::PUBLISHER_LOGO_META_KEY, 'wibble' );
+		update_post_meta( $original_id, \Google\Web_Stories\Story_Post_Type::POSTER_META_KEY, -1 );
+
+		wp_set_current_user( self::$user_id );
+		$this->kses_int();
+
+		$request = new WP_REST_Request( \WP_REST_Server::CREATABLE, '/web-stories/v1/web-story' );
+		$request->set_body_params(
+			[
+				'original_id' => $original_id,
+			]
+		);
+
+		$response = rest_get_server()->dispatch( $request );
+		$this->assertErrorResponse( 'rest_invalid_type', $response, 400 );
 	}
 
 	/**

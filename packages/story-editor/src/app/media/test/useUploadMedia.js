@@ -70,7 +70,10 @@ jest.mock('../../config', () => ({
   useConfig: jest.fn(() => ({
     allowedMimeTypes: {
       image: [],
+      vector: [],
       video: [],
+      caption: [],
+      audio: [],
     },
   })),
 }));
@@ -149,7 +152,7 @@ describe('useUploadMedia', () => {
     await act(() => uploadMedia(newFiles));
 
     expect(setMedia).toHaveBeenCalledTimes(0);
-    expect(mockShowSnackbar).toHaveBeenCalledTimes(1);
+    expect(mockShowSnackbar).toHaveBeenCalledOnce();
     expect(mockShowSnackbar).toHaveBeenCalledWith({
       message: 'Whoopsie',
       dismissible: true,

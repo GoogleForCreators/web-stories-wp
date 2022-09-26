@@ -26,7 +26,7 @@ import {
   useResizeEffect,
 } from '@googleforcreators/react';
 import { __, sprintf } from '@googleforcreators/i18n';
-import { PAGE_RATIO } from '@googleforcreators/units';
+import { FULLBLEED_RATIO } from '@googleforcreators/units';
 import {
   Slider,
   Button,
@@ -47,6 +47,7 @@ import {
   ReorderableItem,
 } from '../../reorderable';
 import PagePreview from '../pagepreview';
+import { Z_INDEX_GRID_VIEW_SLIDER } from '../../../constants/zIndex';
 
 const MIN_GRID_GAP = 20;
 const LINE_HEIGHT = 64;
@@ -176,7 +177,7 @@ function GridView({ onClose }) {
   const pageGridGap = Math.floor(
     (availableWidth - actualPageWidths) / (pagesPerRow - 1)
   );
-  const pageHeight = pageWidth / PAGE_RATIO;
+  const pageHeight = pageWidth / FULLBLEED_RATIO;
 
   const handleClickPage = (page) => () => setCurrentPage({ pageId: page.id });
 
@@ -223,13 +224,14 @@ function GridView({ onClose }) {
           value={pagesPerRow}
           handleChange={(newValue) => setPagesPerRow(newValue)}
           aria-label={__('Pages per row', 'web-stories')}
+          popupZIndexOverride={Z_INDEX_GRID_VIEW_SLIDER}
         />
         <NoButton />
       </TopRow>
       <Wrapper
         aria-label={__('Grid View Pages List', 'web-stories')}
         ref={wrapperRef}
-        onPositionChange={(oldPos, newPos) => {
+        onPositionChange={({ position: oldPos }, { position: newPos }) => {
           const pageId = pages[oldPos].id;
           arrangePage({ pageId, position: newPos });
           setCurrentPage({ pageId });

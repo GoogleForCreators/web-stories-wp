@@ -28,7 +28,7 @@ import { useMemo } from '@googleforcreators/react';
 import theme from '../../../../theme';
 import useHandlers from '../../../../utils/useHandlers';
 import FormContext from '../../../form/context';
-import updateProperties from '../../../inspector/design/updateProperties';
+import updateProperties from '../../../style/updateProperties';
 
 function TestPanel({
   panelType,
@@ -59,7 +59,7 @@ function TestPanel({
   );
   const Wrapper = wrapperComp;
   if (Wrapper) {
-    return <Wrapper>{panel}</Wrapper>;
+    return <Wrapper selectedElements={selectedElements}>{panel}</Wrapper>;
   }
   return panel;
 }

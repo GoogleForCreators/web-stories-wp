@@ -1278,20 +1278,20 @@ const formattedTemplatesArray = [
     title: 'Filterable By Tag',
     postersByPage: [
       {
-        webp: 'https://placekitten.com/g/200/300',
-        png: 'https://placekitten.com/g/200/300',
+        webp: 'http://localhost:9876/__static__/featured-media-1.png',
+        png: 'http://localhost:9876/__static__/featured-media-1.png',
       },
       {
-        webp: 'https://placekitten.com/g/200/300',
-        png: 'https://placekitten.com/g/200/300',
+        webp: 'http://localhost:9876/__static__/featured-media-1.png',
+        png: 'http://localhost:9876/__static__/featured-media-1.png',
       },
       {
-        webp: 'https://placekitten.com/g/200/300',
-        png: 'https://placekitten.com/g/200/300',
+        webp: 'http://localhost:9876/__static__/featured-media-1.png',
+        png: 'http://localhost:9876/__static__/featured-media-1.png',
       },
       {
-        webp: 'https://placekitten.com/g/200/300',
-        png: 'https://placekitten.com/g/200/300',
+        webp: 'http://localhost:9876/__static__/featured-media-1.png',
+        png: 'http://localhost:9876/__static__/featured-media-1.png',
       },
     ],
   },
@@ -1496,20 +1496,20 @@ const formattedTemplatesArray = [
     title: 'Filterable By Color',
     postersByPage: [
       {
-        webp: 'https://placekitten.com/g/200/300',
-        png: 'https://placekitten.com/g/200/300',
+        webp: 'http://localhost:9876/__static__/featured-media-2.png',
+        png: 'http://localhost:9876/__static__/featured-media-2.png',
       },
       {
-        webp: 'https://placekitten.com/g/200/300',
-        png: 'https://placekitten.com/g/200/300',
+        webp: 'http://localhost:9876/__static__/featured-media-2.png',
+        png: 'http://localhost:9876/__static__/featured-media-2.png',
       },
       {
-        webp: 'https://placekitten.com/g/200/300',
-        png: 'https://placekitten.com/g/200/300',
+        webp: 'http://localhost:9876/__static__/featured-media-2.png',
+        png: 'http://localhost:9876/__static__/featured-media-2.png',
       },
       {
-        webp: 'https://placekitten.com/g/200/300',
-        png: 'https://placekitten.com/g/200/300',
+        webp: 'http://localhost:9876/__static__/featured-media-2.png',
+        png: 'http://localhost:9876/__static__/featured-media-2.png',
       },
     ],
   },
@@ -1713,20 +1713,20 @@ const formattedTemplatesArray = [
     title: 'Entertainment',
     postersByPage: [
       {
-        webp: 'https://placekitten.com/g/200/300',
-        png: 'https://placekitten.com/g/200/300',
+        webp: 'http://localhost:9876/__static__/featured-media-2.png',
+        png: 'http://localhost:9876/__static__/featured-media-2.png',
       },
       {
-        webp: 'https://placekitten.com/g/200/300',
-        png: 'https://placekitten.com/g/200/300',
+        webp: 'http://localhost:9876/__static__/featured-media-2.png',
+        png: 'http://localhost:9876/__static__/featured-media-2.png',
       },
       {
-        webp: 'https://placekitten.com/g/200/300',
-        png: 'https://placekitten.com/g/200/300',
+        webp: 'http://localhost:9876/__static__/featured-media-2.png',
+        png: 'http://localhost:9876/__static__/featured-media-2.png',
       },
       {
-        webp: 'https://placekitten.com/g/200/300',
-        png: 'https://placekitten.com/g/200/300',
+        webp: 'http://localhost:9876/__static__/featured-media-2.png',
+        png: 'http://localhost:9876/__static__/featured-media-2.png',
       },
     ],
   },
@@ -1930,20 +1930,20 @@ const formattedTemplatesArray = [
     title: 'Filterable By Vertical',
     postersByPage: [
       {
-        webp: 'https://placekitten.com/g/200/300',
-        png: 'https://placekitten.com/g/200/300',
+        webp: 'http://localhost:9876/__static__/featured-media-3.png',
+        png: 'http://localhost:9876/__static__/featured-media-3.png',
       },
       {
-        webp: 'https://placekitten.com/g/200/300',
-        png: 'https://placekitten.com/g/200/300',
+        webp: 'http://localhost:9876/__static__/featured-media-3.png',
+        png: 'http://localhost:9876/__static__/featured-media-3.png',
       },
       {
-        webp: 'https://placekitten.com/g/200/300',
-        png: 'https://placekitten.com/g/200/300',
+        webp: 'http://localhost:9876/__static__/featured-media-3.png',
+        png: 'http://localhost:9876/__static__/featured-media-3.png',
       },
       {
-        webp: 'https://placekitten.com/g/200/300',
-        png: 'https://placekitten.com/g/200/300',
+        webp: 'http://localhost:9876/__static__/featured-media-3.png',
+        png: 'http://localhost:9876/__static__/featured-media-3.png',
       },
     ],
   },
@@ -2147,20 +2147,20 @@ const formattedTemplatesArray = [
     title: 'Fitness',
     postersByPage: [
       {
-        webp: 'https://placekitten.com/g/200/300',
-        png: 'https://placekitten.com/g/200/300',
+        webp: 'http://localhost:9876/__static__/featured-media-1.png',
+        png: 'http://localhost:9876/__static__/featured-media-1.png',
       },
       {
-        webp: 'https://placekitten.com/g/200/300',
-        png: 'https://placekitten.com/g/200/300',
+        webp: 'http://localhost:9876/__static__/featured-media-1.png',
+        png: 'http://localhost:9876/__static__/featured-media-1.png',
       },
       {
-        webp: 'https://placekitten.com/g/200/300',
-        png: 'https://placekitten.com/g/200/300',
+        webp: 'http://localhost:9876/__static__/featured-media-1.png',
+        png: 'http://localhost:9876/__static__/featured-media-1.png',
       },
       {
-        webp: 'https://placekitten.com/g/200/300',
-        png: 'https://placekitten.com/g/200/300',
+        webp: 'http://localhost:9876/__static__/featured-media-1.png',
+        png: 'http://localhost:9876/__static__/featured-media-1.png',
       },
     ],
   },
@@ -2364,20 +2364,20 @@ const formattedTemplatesArray = [
     title: 'Travel',
     postersByPage: [
       {
-        webp: 'https://placekitten.com/g/200/300',
-        png: 'https://placekitten.com/g/200/300',
+        webp: 'http://localhost:9876/__static__/featured-media-3.png',
+        png: 'http://localhost:9876/__static__/featured-media-3.png',
       },
       {
-        webp: 'https://placekitten.com/g/200/300',
-        png: 'https://placekitten.com/g/200/300',
+        webp: 'http://localhost:9876/__static__/featured-media-3.png',
+        png: 'http://localhost:9876/__static__/featured-media-3.png',
       },
       {
-        webp: 'https://placekitten.com/g/200/300',
-        png: 'https://placekitten.com/g/200/300',
+        webp: 'http://localhost:9876/__static__/featured-media-3.png',
+        png: 'http://localhost:9876/__static__/featured-media-3.png',
       },
       {
-        webp: 'https://placekitten.com/g/200/300',
-        png: 'https://placekitten.com/g/200/300',
+        webp: 'http://localhost:9876/__static__/featured-media-3.png',
+        png: 'http://localhost:9876/__static__/featured-media-3.png',
       },
     ],
   },
@@ -2581,20 +2581,20 @@ const formattedTemplatesArray = [
     title: 'Wellbeing',
     postersByPage: [
       {
-        webp: 'https://placekitten.com/g/200/300',
-        png: 'https://placekitten.com/g/200/300',
+        webp: 'http://localhost:9876/__static__/featured-media-1.png',
+        png: 'http://localhost:9876/__static__/featured-media-1.png',
       },
       {
-        webp: 'https://placekitten.com/g/200/300',
-        png: 'https://placekitten.com/g/200/300',
+        webp: 'http://localhost:9876/__static__/featured-media-1.png',
+        png: 'http://localhost:9876/__static__/featured-media-1.png',
       },
       {
-        webp: 'https://placekitten.com/g/200/300',
-        png: 'https://placekitten.com/g/200/300',
+        webp: 'http://localhost:9876/__static__/featured-media-1.png',
+        png: 'http://localhost:9876/__static__/featured-media-1.png',
       },
       {
-        webp: 'https://placekitten.com/g/200/300',
-        png: 'https://placekitten.com/g/200/300',
+        webp: 'http://localhost:9876/__static__/featured-media-1.png',
+        png: 'http://localhost:9876/__static__/featured-media-1.png',
       },
     ],
   },
@@ -2798,20 +2798,20 @@ const formattedTemplatesArray = [
     title: 'Beauty',
     postersByPage: [
       {
-        webp: 'https://placekitten.com/g/200/300',
-        png: 'https://placekitten.com/g/200/300',
+        webp: 'http://localhost:9876/__static__/featured-media-2.png',
+        png: 'http://localhost:9876/__static__/featured-media-2.png',
       },
       {
-        webp: 'https://placekitten.com/g/200/300',
-        png: 'https://placekitten.com/g/200/300',
+        webp: 'http://localhost:9876/__static__/featured-media-2.png',
+        png: 'http://localhost:9876/__static__/featured-media-2.png',
       },
       {
-        webp: 'https://placekitten.com/g/200/300',
-        png: 'https://placekitten.com/g/200/300',
+        webp: 'http://localhost:9876/__static__/featured-media-2.png',
+        png: 'http://localhost:9876/__static__/featured-media-2.png',
       },
       {
-        webp: 'https://placekitten.com/g/200/300',
-        png: 'https://placekitten.com/g/200/300',
+        webp: 'http://localhost:9876/__static__/featured-media-2.png',
+        png: 'http://localhost:9876/__static__/featured-media-2.png',
       },
     ],
   },

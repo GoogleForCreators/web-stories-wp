@@ -41,12 +41,6 @@ export const APP_ROUTES = {
   TEMPLATE_DETAIL: 'template-detail',
 };
 
-export const NESTED_APP_ROUTES = {
-  TEMPLATES_GALLERY_DETAIL: `${APP_ROUTES.TEMPLATES_GALLERY}/${APP_ROUTES.TEMPLATE_DETAIL}`,
-};
-
-export const ADMIN_TITLE = __('Web Stories', 'web-stories');
-
 export const ROUTE_TITLES = {
   [APP_ROUTES.DASHBOARD]: __('Dashboard', 'web-stories'),
   [APP_ROUTES.TEMPLATES_GALLERY]: __('Explore Templates', 'web-stories'),

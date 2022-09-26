@@ -29,9 +29,9 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
+import { Z_INDEX_FOOTER } from '../../constants/zIndex';
 import DirectionAware from '../directionAware';
 import Popup, { NavigationWrapper, TopNavigation } from '../secondaryPopup';
-import { Z_INDEX } from '../canvas/layout';
 import { Tablist } from '../tablist';
 import { Toggle } from './toggle';
 import {
@@ -55,12 +55,7 @@ import { useCheckpoint } from './checkpointContext';
 import { getTabPanelMaxHeight } from './styles';
 
 const Wrapper = styled.div`
-  /**
-    * sibling inherits parent z-index of Z_INDEX.EDIT
-    * so this needs to be placed above that while still
-    * retaining its position in the DOM for focus purposes
-    */
-  z-index: ${Z_INDEX.EDIT + 1};
+  z-index: ${Z_INDEX_FOOTER};
 `;
 
 // TODO make this responsive so that title bar is never covered by popup.
@@ -70,15 +65,32 @@ const ThroughputPopup = forwardRef(function ThroughputPopup(
   { isOpen, children, close },
   ref
 ) {
-  const { isChecklistMounted, setIsChecklistMounted } = useChecklist(
+  const closeButtonRef = useRef();
+  const {
+    checklistFocused,
+    isChecklistMounted,
+    resetChecklistFocused,
+    setIsChecklistMounted,
+  } = useChecklist(
     ({
-      state: { isChecklistMounted },
-      actions: { setIsChecklistMounted },
+      state: { isChecklistMounted, checklistFocused },
+      actions: { setIsChecklistMounted, resetChecklistFocused },
     }) => ({
+      checklistFocused,
       isChecklistMounted,
+      resetChecklistFocused,
       setIsChecklistMounted,
     })
   );
+
+  // focus checklist
+  useEffect(() => {
+    if (checklistFocused && closeButtonRef.current) {
+      closeButtonRef.current.focus();
+    }
+
+    resetChecklistFocused();
+  }, [checklistFocused, resetChecklistFocused]);
 
   return (
     <Popup
@@ -92,6 +104,7 @@ const ThroughputPopup = forwardRef(function ThroughputPopup(
       {isChecklistMounted ? (
         <StyledNavigationWrapper ref={ref} isOpen={isOpen}>
           <TopNavigation
+            ref={closeButtonRef}
             onClose={close}
             label={CHECKLIST_TITLE}
             popupId={POPUP_ID}

@@ -19,13 +19,13 @@
  */
 import PropTypes from 'prop-types';
 import { fireEvent, screen } from '@testing-library/react';
+import { BACKGROUND_TEXT_MODE } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import TextStyle from '../textStyle';
 import {
-  BACKGROUND_TEXT_MODE,
   HIDDEN_PADDING,
   MULTIPLE_DISPLAY_VALUE,
 } from '../../../../../constants';
@@ -38,6 +38,7 @@ jest.mock('../../../../form/color/color', () => {
   const React = require('@googleforcreators/react');
 
   const _PropTypes = require('prop-types');
+
   const FakeControl = React.forwardRef(function FakeControl(props, ref) {
     mockControls[props['data-testid']] = props;
     return <div ref={ref} />;
@@ -54,7 +55,13 @@ jest.mock('../../../../form/color/color', () => {
 function Wrapper({ children }) {
   const storyContextValue = {
     state: {
-      selectedElements: [],
+      selectedElements: [
+        {
+          font: {
+            family: 'ABeeZee',
+          },
+        },
+      ],
       story: {
         globalStoryStyles: {
           ...{ colors: [], textStyles: [] },

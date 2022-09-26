@@ -15,12 +15,17 @@
  */
 
 /**
+ * External dependencies
+ */
+import { produce } from 'immer';
+
+/**
  * Internal dependencies
  */
 import { getAbsolutePosition, moveArrayElement } from './utils';
 
 /**
- * Move element in element order on the current page.
+ * Move element in element order on the current page (optionally handle group id when moved in the Layers Panel).
  *
  * If no element is given, check if selection only has one element, and if so, use that.
  * If no element is given and selection is empty or has multiple elements, state is unchanged.
@@ -41,30 +46,35 @@ import { getAbsolutePosition, moveArrayElement } from './utils';
  *
  * If element is already at the desired position, state is unchanged.
  *
+ * If group is set to a specific id, that id is enforced and will be copied to group.
+ * If group is set to null or undefined, group is required to not be present and will be removed.
+ * If group is unset or set to false, group will be ignored whether set or not and will not be changed or removed.
+ *
  * Selection and current page is unchanged.
  *
  * TODO: Handle multi-element re-order when UX and priority is finalized.
  *
- * @param {Object} state Current state
+ * @param {Object} draft Current state
  * @param {Object} payload Action payload
  * @param {string} payload.elementId Id of element to move
  * @param {number|string} payload.position New position of element to move
- * @return {Object} New state
+ * @param {string|boolean} payload.groupId New group id (when moving in the Layers Panel), false to skip updating.
  */
-function arrangeElement(state, { elementId, position }) {
-  if (elementId === null && state.selection.length !== 1) {
-    return state;
+export const arrangeElement = (
+  draft,
+  { elementId, position, groupId = false }
+) => {
+  if (elementId === null && draft.selection.length !== 1) {
+    return;
   }
 
-  const idToArrange = elementId !== null ? elementId : state.selection[0];
+  const idToArrange = elementId !== null ? elementId : draft.selection[0];
 
-  const pageIndex = state.pages.findIndex(({ id }) => id === state.current);
-
-  const page = state.pages[pageIndex];
+  const page = draft.pages.find(({ id }) => id === draft.current);
 
   // Abort if there's less than three elements (nothing to rearrange as first is bg)
   if (page.elements.length < 3) {
-    return state;
+    return;
   }
 
   const currentPosition = page.elements.findIndex(
@@ -72,7 +82,7 @@ function arrangeElement(state, { elementId, position }) {
   );
 
   if (currentPosition === -1 || page.elements[0].id === idToArrange) {
-    return state;
+    return;
   }
 
   const minPosition = 1;
@@ -84,30 +94,36 @@ function arrangeElement(state, { elementId, position }) {
     desiredPosition: position,
   });
 
+  const currentGroupId = page.elements[currentPosition].groupId;
+
   // If it's already there, do nothing.
-  if (currentPosition === newPosition) {
-    return state;
+  if (currentPosition === newPosition && currentGroupId === groupId) {
+    return;
   }
 
-  const newElements = moveArrayElement(
-    page.elements,
-    currentPosition,
-    newPosition
-  );
+  // Update group id on current element
+  if (groupId) {
+    // Can only change groups to a group that exists
+    if (!page.groups[groupId]) {
+      return;
+    }
+    page.elements[currentPosition].groupId = groupId;
+  } else if (groupId === undefined || groupId === null) {
+    delete page.elements[currentPosition].groupId;
+  }
 
-  const newPages = [
-    ...state.pages.slice(0, pageIndex),
-    {
-      ...page,
-      elements: newElements,
-    },
-    ...state.pages.slice(pageIndex + 1),
-  ];
+  // If there are no elements left in the group, remove the group as well.
+  if (currentGroupId) {
+    const groupHasElements = page.elements.some(
+      (e) => e.groupId === currentGroupId
+    );
+    if (!groupHasElements) {
+      delete page.groups[currentGroupId];
+    }
+  }
 
-  return {
-    ...state,
-    pages: newPages,
-  };
-}
+  // Then reorder if relevant
+  page.elements = moveArrayElement(page.elements, currentPosition, newPosition);
+};
 
-export default arrangeElement;
+export default produce(arrangeElement);

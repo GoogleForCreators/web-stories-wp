@@ -120,10 +120,10 @@ describe('CUJ: Creator can view their stories in list view: ', () => {
       // drop the header row using slice
       const rows = fixture.screen.getAllByRole('row').slice(1);
 
-      const utils = within(rows[1]);
+      const utils = within(rows[0]);
 
       const titleCell = utils.getByRole('heading', {
-        name: storiesSortedByModified[1].title,
+        name: storiesSortedByModified[0].title,
       });
 
       await fixture.events.hover(titleCell);
@@ -138,12 +138,12 @@ describe('CUJ: Creator can view their stories in list view: ', () => {
 
       await fixture.events.click(rename);
 
-      const input = await utils.getByRole('textbox');
+      const input = utils.getByRole('textbox');
 
       const inputLength = input.value.length;
 
       for (let iter = 0; iter < inputLength; iter++) {
-        // disable eslint to prevet overlapping .act calls
+        // disable eslint to prevent overlapping .act calls
         // eslint-disable-next-line no-await-in-loop
         await fixture.events.keyboard.press('Backspace');
       }
@@ -284,6 +284,62 @@ describe('CUJ: Creator can view their stories in list view: ', () => {
     });
   });
 
+  describe('Creator should be prevented from performing basic updates on locked stories from dashboard list view', () => {
+    it('should not Rename a locked story', async () => {
+      const { stories, storiesOrderById } = await getStoriesState();
+
+      const storiesSortedByModified = storiesOrderById.map((id) => stories[id]);
+
+      await clickListView();
+
+      // drop the header row using slice
+      const rows = fixture.screen.getAllByRole('row').slice(1);
+
+      const utils = within(rows[1]);
+
+      const titleCell = utils.getByRole('heading', {
+        name: new RegExp(`^${storiesSortedByModified[1].title}`),
+      });
+
+      await fixture.events.hover(titleCell);
+
+      const moreOptionsButton = utils.getByRole('button', {
+        name: /^Context menu for/,
+      });
+
+      await fixture.events.click(moreOptionsButton);
+
+      const rename = utils.getByText(/^Rename/);
+      expect(rename.hasAttribute('disabled')).toBe(true);
+    });
+
+    it('should not Delete a locked story', async () => {
+      const { stories, storiesOrderById } = await getStoriesState();
+      const storiesSortedByModified = storiesOrderById.map((id) => stories[id]);
+
+      await clickListView();
+
+      // drop the header row using slice
+      const rows = fixture.screen.getAllByRole('row').slice(1);
+
+      const utils = within(rows[1]);
+      const titleCell = utils.getByRole('heading', {
+        name: new RegExp(`^${storiesSortedByModified[1].title}`),
+      });
+
+      await fixture.events.hover(titleCell);
+
+      const moreOptionsButton = utils.getByRole('button', {
+        name: /^Context menu for/,
+      });
+
+      await fixture.events.click(moreOptionsButton);
+
+      const deleteButton = utils.getByText(/^Delete/);
+      expect(deleteButton.hasAttribute('disabled')).toBe(true);
+    });
+  });
+
   describe('Creator can sort their stories (last modified / date created / author / title)', () => {
     beforeEach(async () => {
       await enterListView();
@@ -413,7 +469,9 @@ describe('CUJ: Creator can view their stories in list view: ', () => {
       expect(rowModifiedValues).toEqual(storieModifiedSortedByModified);
 
       // sort ascending
-      const lastModifiedHeader = fixture.screen.getByText(/^Last Modified/);
+      const [table] = fixture.screen.getAllByTestId('story-list-view');
+      const utils = within(table);
+      const lastModifiedHeader = utils.getByText(/^Last Modified/);
 
       await fixture.events.click(lastModifiedHeader);
 
@@ -552,7 +610,9 @@ describe('CUJ: Creator can view their stories in list view: ', () => {
       expect(rowModifiedValues).toEqual(storieModifiedSortedByModified);
 
       // sort ascending
-      const lastModifiedHeader = fixture.screen.getByText(/^Last Modified/);
+      const [table] = fixture.screen.getAllByTestId('story-list-view');
+      const utils = within(table);
+      const lastModifiedHeader = utils.getByText(/^Last Modified/);
 
       await fixture.events.focus(lastModifiedHeader);
       await fixture.events.keyboard.press('Enter');
@@ -577,7 +637,9 @@ describe('CUJ: Creator can view their stories in list view: ', () => {
       await clickListView();
 
       // place focus on last modified header
-      const lastModifiedHeader = fixture.screen.getByText(/^Last Modified/);
+      const [table] = fixture.screen.getAllByTestId('story-list-view');
+      const utils = within(table);
+      const lastModifiedHeader = utils.getByText(/^Last Modified/);
       await fixture.events.focus(lastModifiedHeader);
     });
 

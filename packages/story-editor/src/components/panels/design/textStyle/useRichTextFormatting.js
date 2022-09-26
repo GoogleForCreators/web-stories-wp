@@ -34,8 +34,8 @@ import {
 /**
  * Internal dependencies
  */
-import { MULTIPLE_VALUE } from '../../../../constants';
 import { useCanvas } from '../../../../app';
+import { MULTIPLE_VALUE } from '../../../../constants';
 
 /**
  * Equality function for *primitives and color patterns* only.

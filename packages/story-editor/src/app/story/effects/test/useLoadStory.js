@@ -19,6 +19,8 @@
  */
 import { renderHook } from '@testing-library/react-hooks';
 import PropTypes from 'prop-types';
+import { registerElementType } from '@googleforcreators/elements';
+import { elementTypes } from '@googleforcreators/element-library';
 
 /**
  * Internal dependencies
@@ -49,17 +51,23 @@ ContextWrapper.propTypes = {
 };
 
 describe('useLoadStory', () => {
+  beforeAll(() => {
+    elementTypes.forEach(registerElementType);
+  });
+
   beforeEach(() => {
     getStoryById.mockReset();
     clearHistory.mockReset();
   });
 
-  it('should load story', async () => {
+  it('should load draft story with identical date and modified as having no publish date', async () => {
     getStoryById.mockReturnValue(
       Promise.resolve(
         createStory({
           date: '2020-01-01T19:20:20',
           dateGmt: '2020-01-01T20:20:20',
+          modified: '2020-01-01T19:20:20',
+          status: 'draft',
         })
       )
     );
@@ -71,7 +79,6 @@ describe('useLoadStory', () => {
           storyId: 11,
           shouldLoad: true,
           restore,
-          isDemo: false,
         }),
       { wrapper: ContextWrapper }
     );
@@ -80,6 +87,88 @@ describe('useLoadStory', () => {
       expect.objectContaining({
         storyId: 11,
         title: 'title',
+        date: null,
+        modified: '2020-01-01T19:20:20',
+        author: { id: 1, name: 'John Doe' },
+        excerpt: 'excerpt',
+        featuredMedia: { id: 0, height: 0, width: 0, url: '' },
+        permalinkConfig: {
+          prefix: 'http://localhost:8899/web-stories/',
+          suffix: '',
+        },
+      })
+    );
+  });
+
+  it('should load draft story with specific publish date set to that date', async () => {
+    getStoryById.mockReturnValue(
+      Promise.resolve(
+        createStory({
+          date: '2020-01-01T19:20:20',
+          dateGmt: '2020-01-01T20:20:20',
+          modified: '2019-01-01T19:20:20',
+          status: 'draft',
+        })
+      )
+    );
+
+    const restore = jest.fn();
+    await renderHook(
+      () =>
+        useLoadStory({
+          storyId: 12,
+          shouldLoad: true,
+          restore,
+        }),
+      { wrapper: ContextWrapper }
+    );
+
+    expect(restore.mock.calls[0][0].story).toStrictEqual(
+      expect.objectContaining({
+        storyId: 12,
+        title: 'title',
+        date: '2020-01-01T19:20:20',
+        modified: '2019-01-01T19:20:20',
+        author: { id: 1, name: 'John Doe' },
+        excerpt: 'excerpt',
+        featuredMedia: { id: 0, height: 0, width: 0, url: '' },
+        permalinkConfig: {
+          prefix: 'http://localhost:8899/web-stories/',
+          suffix: '',
+        },
+      })
+    );
+  });
+
+  it('should load published story with identical date and modified with actual publish date', async () => {
+    getStoryById.mockReturnValue(
+      Promise.resolve(
+        createStory({
+          date: '2020-01-01T19:20:20',
+          dateGmt: '2020-01-01T20:20:20',
+          modified: '2020-01-01T19:20:20',
+          status: 'published',
+        })
+      )
+    );
+
+    const restore = jest.fn();
+    await renderHook(
+      () =>
+        useLoadStory({
+          storyId: 13,
+          shouldLoad: true,
+          restore,
+        }),
+      { wrapper: ContextWrapper }
+    );
+
+    expect(restore.mock.calls[0][0].story).toStrictEqual(
+      expect.objectContaining({
+        storyId: 13,
+        title: 'title',
+        date: '2020-01-01T19:20:20',
+        modified: '2020-01-01T19:20:20',
         author: { id: 1, name: 'John Doe' },
         excerpt: 'excerpt',
         featuredMedia: { id: 0, height: 0, width: 0, url: '' },

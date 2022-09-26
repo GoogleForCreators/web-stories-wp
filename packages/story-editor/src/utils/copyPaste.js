@@ -18,14 +18,15 @@
  * External dependencies
  */
 import { renderToStaticMarkup } from '@googleforcreators/react';
+import {
+  getDefinitionForType,
+  duplicateElement,
+} from '@googleforcreators/elements';
+
 /**
  * Internal dependencies
  */
-import {
-  duplicateElement,
-  getDefinitionForType,
-  getOffsetCoordinates,
-} from '../elements';
+import generateGroupName from './generateGroupName';
 
 const DOUBLE_DASH_ESCAPE = '_DOUBLEDASH_';
 
@@ -71,6 +72,11 @@ export function processPastedElements(content, currentPage) {
       { animations: [], elements: [] }
     );
 
+    const groups = { ...payload.groups };
+    for (const prop of Object.keys(groups)) {
+      groups[prop].name = generateGroupName(groups, groups[prop].name);
+    }
+
     foundElementsAndAnimations = {
       animations: [
         ...foundElementsAndAnimations.animations,
@@ -80,6 +86,7 @@ export function processPastedElements(content, currentPage) {
         ...foundElementsAndAnimations.elements,
         ...processedPayload.elements,
       ],
+      groups: groups,
     };
     return foundElementsAndAnimations;
   }
@@ -92,9 +99,16 @@ export function processPastedElements(content, currentPage) {
  * @param {Object} page Page which all the elements belong to.
  * @param {Array} elements Array of story elements.
  * @param {Array} animations Array of story animations.
+ * @param {Array} groups Array of page groups used in the elements.
  * @param {Object} evt Copy/cut event object.
  */
-export function addElementsToClipboard(page, elements, animations, evt) {
+export function addElementsToClipboard(
+  page,
+  elements,
+  animations,
+  groups,
+  evt
+) {
   if (!elements.length || !evt) {
     return;
   }
@@ -113,6 +127,7 @@ export function addElementsToClipboard(page, elements, animations, evt) {
       id: undefined,
     })),
     animations,
+    groups,
   };
   const serializedPayload = JSON.stringify(payload).replace(
     /--/g,
@@ -149,5 +164,3 @@ export function addElementsToClipboard(page, elements, animations, evt) {
     `<!-- ${serializedPayload} -->${htmlContent}`
   );
 }
-
-export { getOffsetCoordinates as getPastedCoordinates };

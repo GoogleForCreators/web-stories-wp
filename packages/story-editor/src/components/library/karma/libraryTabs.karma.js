@@ -60,7 +60,7 @@ describe('LibraryTabs integration', () => {
 
     it('Media 3p Panel should have no aXe violations', async () => {
       // Set local storage to have accepted third party media terms to avoid interruption with dialog
-      localStore.setItemByKey(`${LOCAL_STORAGE_PREFIX.TERMS_MEDIA3P}`, true);
+      localStore.setItemByKey(LOCAL_STORAGE_PREFIX.TERMS_MEDIA3P, true);
       const { media3pTab } = fixture.editor.library;
       expect(media3pTab).toBeDefined();
       // navigate to third party media panel
@@ -118,7 +118,7 @@ describe('LibraryTabs integration', () => {
 
   describe('keyboard navigation', () => {
     beforeEach(async () => {
-      localStore.setItemByKey(`${LOCAL_STORAGE_PREFIX.TERMS_MEDIA3P}`, true);
+      localStore.setItemByKey(LOCAL_STORAGE_PREFIX.TERMS_MEDIA3P, true);
       const textTab = fixture.container.querySelector('#library-tab-media');
       await fixture.events.focus(textTab);
     });
@@ -165,9 +165,9 @@ describe('LibraryTabs integration', () => {
       await fixture.events.keyboard.press('Space');
       await expectActivePaneToBe('pageTemplates');
 
-      // Then press "left" to focus shapes tab
+      // Then press "left" to focus shopping tab
       await fixture.events.keyboard.press('ArrowLeft');
-      expectFocusedTabToBe('shapes');
+      expectFocusedTabToBe('shopping');
       await expectActivePaneToBe('pageTemplates');
 
       // Then press "home" to focus media tab

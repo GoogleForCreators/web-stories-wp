@@ -70,7 +70,6 @@ export const _default = (args) => {
       addCustomFont={handleAddFont}
       customFonts={addedFonts}
       deleteCustomFont={deleteFont}
-      fetchCustomFonts={() => {}}
     />
   );
 };

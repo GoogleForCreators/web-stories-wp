@@ -28,6 +28,7 @@ import Context from './context';
 
 const ChecklistProvider = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [checklistFocused, setChecklistFocused] = useState(false);
   const [openPanel, _setOpenPanel] = useState();
   const [isChecklistMounted, setIsChecklistMounted] = useState(false);
 
@@ -57,11 +58,19 @@ const ChecklistProvider = ({ children }) => {
       status: 'open',
     });
     setIsOpen(true);
+    // focus checklist even if checklist is already open
+    setChecklistFocused(true);
   }, []);
+
+  const resetChecklistFocused = useCallback(
+    () => setChecklistFocused(false),
+    []
+  );
 
   const contextValue = useMemo(
     () => ({
       state: {
+        checklistFocused,
         isOpen,
         isChecklistMounted,
         openPanel,
@@ -70,15 +79,18 @@ const ChecklistProvider = ({ children }) => {
         toggle,
         close,
         open,
+        resetChecklistFocused,
         setIsChecklistMounted,
         setOpenPanel,
       },
     }),
     [
+      checklistFocused,
       close,
       openPanel,
       isOpen,
       open,
+      resetChecklistFocused,
       toggle,
       setOpenPanel,
       setIsChecklistMounted,

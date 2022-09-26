@@ -4,6 +4,8 @@ on:
   push:
     paths:
       - '**.js'
+      - '**.cjs'
+      - '**.ts'
       - '**/package.json'
       - 'package-lock.json'
       - 'web-stories.php'
@@ -14,17 +16,21 @@ on:
   pull_request:
     paths:
       - '**.js'
+      - '**.cjs'
+      - '**.ts'
       - '**/package.json'
       - 'package-lock.json'
       - 'web-stories.php'
       - 'includes/**.php'
       - '.github/workflows/lint-i18n.yml'
 
+permissions:
+  contents: read
+
 # Cancels all previous workflow runs for pull requests that have not completed.
 concurrency:
-  # The concurrency group contains the workflow name and the branch name for pull requests
-  # or the commit hash for any other events.
-  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.head_ref || github.sha }}
+  # The concurrency group contains the workflow name and the (target) branch name.
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -33,8 +39,13 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@dd2c410b088af7c0dc8046f3ac9a8f4148492a95
+        with:
+          egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
+
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
 
       - name: Install WP-CLI
         run: |
@@ -54,13 +65,13 @@ jobs:
         run: wp package list
 
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@2fddd8803e2f5c9604345a0b591c3020ee971a93
         with:
           node-version-file: '.nvmrc'
           cache: npm
 
       - name: Setup PHP
-        uses: shivammathur/setup-php@v2
+        uses: shivammathur/setup-php@e04e1d97f0c0481c6e1ba40f8a538454fe5d7709
         with:
           php-version: '8.0'
           coverage: none
@@ -73,7 +84,7 @@ jobs:
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
 
       - name: Install PHP dependencies
-        uses: 'ramsey/composer-install@v1'
+        uses: ramsey/composer-install@f680dac46551dffb2234a240d65ae806c2999dd6
         with:
           composer-options: '--prefer-dist --no-progress --no-interaction'
 

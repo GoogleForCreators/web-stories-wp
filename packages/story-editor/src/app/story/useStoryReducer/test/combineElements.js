@@ -13,14 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import { MaskTypes } from '@googleforcreators/masks';
+import { registerElementType } from '@googleforcreators/elements';
+import { elementTypes } from '@googleforcreators/element-library';
 
 /**
  * Internal dependencies
  */
-import { MaskTypes } from '../../../../masks/constants';
 import { setupReducer } from './_utils';
 
 describe('combineElements', () => {
+  beforeAll(() => {
+    elementTypes.forEach(registerElementType);
+  });
+
   it('should do nothing if first element is missing', () => {
     const { restore, combineElements } = setupReducer();
 
@@ -183,6 +192,36 @@ describe('combineElements', () => {
         overlay: { r: 1, g: 1, b: 1 },
       },
     ]);
+  });
+
+  it('should preserve selection if first element was selected and second was background', () => {
+    const { restore, combineElements } = setupReducer();
+
+    const state = getDefaultState1();
+    restore(state);
+
+    // Combine element 456 into 123
+    const result = combineElements({
+      firstElement: state.pages[0].elements[1],
+      secondId: '123',
+    });
+
+    expect(result.selection).toStrictEqual(['123']);
+  });
+
+  it('should preserve selection if first element was selected and second was not background', () => {
+    const { restore, combineElements } = setupReducer();
+
+    const state = getDefaultState1();
+    restore(state);
+
+    // Combine element 456 into 789
+    const result = combineElements({
+      firstElement: state.pages[0].elements[1],
+      secondId: '789',
+    });
+
+    expect(result.selection).toStrictEqual(['789']);
   });
 
   it('should keep the poster of the first video', () => {
@@ -688,6 +727,41 @@ describe('combineElements', () => {
       });
     });
   });
+
+  describe('combine elements with animations', () => {
+    it('should by default remove animations only from the original element', () => {
+      const { restore, combineElements } = setupReducer();
+
+      const state = getDefaultState7();
+      restore(state);
+
+      // Combine element 456 into 789
+      const result = combineElements({
+        firstElement: state.pages[0].elements[1],
+        secondId: '789',
+      });
+
+      expect(result.pages[0].animations).toStrictEqual([
+        { id: 'b', targets: ['789'] },
+      ]);
+    });
+
+    it('should remove animations from both elements if instructed', () => {
+      const { restore, combineElements } = setupReducer();
+
+      const state = getDefaultState7();
+      restore(state);
+
+      // Combine element 456 into 789 with retain elements flag set to false
+      const result = combineElements({
+        firstElement: state.pages[0].elements[1],
+        secondId: '789',
+        shouldRetainAnimations: false,
+      });
+
+      expect(result.pages[0].animations).toStrictEqual([]);
+    });
+  });
 });
 
 function getDefaultState1() {
@@ -736,6 +810,7 @@ function getDefaultState1() {
       },
     ],
     current: '111',
+    selection: ['456'],
   };
 }
 
@@ -991,6 +1066,51 @@ function getDefaultState6() {
               bottomRight: 1,
               bottomLeft: 1,
             },
+          },
+        ],
+      },
+    ],
+    current: '111',
+  };
+}
+
+// State with background element, 1 media element, 1 shape, and animations on both latter elements
+function getDefaultState7() {
+  return {
+    pages: [
+      {
+        id: '111',
+        animations: [
+          { id: 'a', targets: ['456'] },
+          { id: 'b', targets: ['789'] },
+        ],
+        elements: [
+          {
+            id: '123',
+            type: 'image',
+            overlay: { color: { r: 0, g: 0, b: 0 } },
+            isBackground: true,
+            x: 1,
+            y: 1,
+            width: 1,
+            height: 1,
+          },
+          {
+            id: '456',
+            type: 'image',
+            resource: { type: 'image', src: '1' },
+            x: 10,
+            y: 10,
+            width: 10,
+            height: 10,
+          },
+          {
+            id: '789',
+            type: 'shape',
+            x: 10,
+            y: 10,
+            width: 10,
+            height: 10,
           },
         ],
       },

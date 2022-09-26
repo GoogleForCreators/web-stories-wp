@@ -33,13 +33,12 @@ import {
 /**
  * Internal dependencies
  */
-import { MULTIPLE_VALUE } from '../../../../constants';
 import { usePresubmitHandler } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { getCommonValue } from '../../shared';
 import { states, styles, useHighlights } from '../../../../app/highlights';
-import { useConfig } from '../../../../app';
-import CaptionsPanelContent from '../../shared/captionsPanelContent';
+import CaptionsPanelContent from '../../shared/media/captionsPanelContent';
+import { MULTIPLE_VALUE } from '../../../../constants';
 
 const StyledButton = styled(Button)`
   ${({ theme }) =>
@@ -62,10 +61,6 @@ export const MIN_MAX = {
 function CaptionsPanel({ selectedElements, pushUpdate }) {
   const tracks = getCommonValue(selectedElements, 'tracks', []);
   const isIndeterminate = tracks === MULTIPLE_VALUE;
-
-  const {
-    capabilities: { hasUploadMediaAction },
-  } = useConfig();
 
   usePresubmitHandler(
     ({ resource: newResource }) => ({
@@ -93,20 +88,20 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
   );
 
   const handleChangeTrack = useCallback(
-    ({ src = '', id }) => {
-      const newTracks = {
+    ({ src = '', id, needsProxy = false }) => {
+      const newTrack = {
         track: src,
         trackId: id,
-        trackName: src.split('/').pop(),
         id: uuidv4(),
         kind: 'captions',
         srclang: '',
         label: '',
+        needsProxy,
       };
 
-      pushUpdate({ tracks: [...tracks, newTracks] }, true);
+      pushUpdate({ tracks: [newTrack] }, true);
     },
-    [tracks, pushUpdate]
+    [pushUpdate]
   );
 
   const { highlight, resetHighlight } = useHighlights((state) => ({
@@ -135,10 +130,6 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
     ),
     [resetHighlight, highlight?.focus, highlight?.showEffect]
   );
-
-  if (!hasUploadMediaAction && !tracks.length) {
-    return null;
-  }
 
   return (
     <SimplePanel

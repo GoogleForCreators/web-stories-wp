@@ -17,23 +17,36 @@
 /**
  * External dependencies
  */
-import { fireEvent, screen } from '@testing-library/react';
+import { fireEvent, screen, within } from '@testing-library/react';
 import MockDate from 'mockdate';
 import { setAppElement } from '@googleforcreators/design-system';
-import { StoryContext } from '@googleforcreators/story-editor';
+import {
+  StoryContext,
+  CheckpointContext,
+  ChecklistCountProvider,
+  ConfigContext,
+} from '@googleforcreators/story-editor';
+import { renderWithTheme } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
  */
 import MetaBoxesContext from '../../../metaBoxes/context';
-import { renderWithTheme } from '../../../../testUtils';
 import Buttons from '..';
+
+const newPoster = {
+  id: 'new-poster',
+  src: 'new-poster-url',
+  height: '36px',
+  width: '100000px',
+};
 
 function arrange({
   story: extraStoryProps,
   storyState: extraStoryStateProps,
   meta: extraMetaProps,
   metaBoxes: extraMetaBoxesProps,
+  config: extraConfigProps,
 } = {}) {
   const saveStory = jest.fn();
   const autoSave = jest.fn();
@@ -47,6 +60,8 @@ function arrange({
       meta: { isSaving: false, isFreshlyPublished: false, ...extraMetaProps },
       story: {
         status: 'draft',
+        title: '',
+        excerpt: '',
         storyId: 123,
         date: null,
         editLink: 'http://localhost/wp-admin/post.php?post=123&action=edit',
@@ -67,12 +82,41 @@ function arrange({
       ...extraMetaBoxesProps,
     },
   };
+  const configValue = {
+    allowedMimeTypes: {},
+    capabilities: {},
+    metadata: {
+      publisher: 'publisher title',
+    },
+    MediaUpload: ({ onSelect }) => (
+      <button
+        data-testid="media-upload-button"
+        onClick={() => onSelect(newPoster)}
+      >
+        {'Media Upload Button!'}
+      </button>
+    ),
+    ...extraConfigProps,
+  };
 
   renderWithTheme(
     <MetaBoxesContext.Provider value={metaBoxesValue}>
-      <StoryContext.Provider value={storyContextValue}>
-        <Buttons />
-      </StoryContext.Provider>
+      <ConfigContext.Provider value={configValue}>
+        <StoryContext.Provider value={storyContextValue}>
+          <ChecklistCountProvider>
+            <CheckpointContext.Provider
+              value={{
+                actions: {
+                  showPriorityIssues: () => {},
+                },
+                state: { hasHighPriorityIssues: false, checkpoint: 'all' },
+              }}
+            >
+              <Buttons />
+            </CheckpointContext.Provider>
+          </ChecklistCountProvider>
+        </StoryContext.Provider>
+      </ConfigContext.Provider>
     </MetaBoxesContext.Provider>
   );
   return {
@@ -96,6 +140,7 @@ describe('Buttons', () => {
   afterAll(() => {
     document.documentElement.removeChild(modalWrapper);
     MockDate.reset();
+    jest.clearAllMocks();
   });
 
   it('should always display history and preview buttons', () => {
@@ -178,7 +223,7 @@ describe('Buttons', () => {
     const draftButton = screen.getByRole('button', { name: 'Switch to Draft' });
 
     fireEvent.click(draftButton);
-    expect(saveStory).toHaveBeenCalledTimes(1);
+    expect(saveStory).toHaveBeenCalledOnce();
   });
 
   it('should display Schedule button when future date is set', () => {
@@ -192,7 +237,16 @@ describe('Buttons', () => {
     const scheduleButton = screen.getByRole('button', { name: 'Schedule' });
 
     fireEvent.click(scheduleButton);
-    expect(saveStory).toHaveBeenCalledTimes(1);
+    expect(saveStory).not.toHaveBeenCalled();
+
+    const publishModal = screen.getByRole('dialog');
+
+    const publishModalButton = within(publishModal).getByRole('button', {
+      name: 'Schedule',
+    });
+
+    fireEvent.click(publishModalButton);
+    expect(saveStory).toHaveBeenCalledOnce();
   });
 
   it('should display Schedule button with future status', () => {

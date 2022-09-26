@@ -75,6 +75,10 @@ function StoriesPreview(props) {
 
   const StoriesLoop = () =>
     stories.map((story) => {
+      const externalPoster = story.meta['web_stories_poster']?.url;
+      const featuredImage =
+        story._embedded?.['wp:featuredmedia']?.[0]?.source_url;
+      const posterImage = externalPoster || featuredImage;
       return (
         <StoryCard
           key={story.id}
@@ -83,7 +87,7 @@ function StoriesPreview(props) {
           excerpt={story.excerpt.rendered ? story.excerpt.rendered : ''}
           date={story.date_gmt}
           author={story._embedded.author[0].name}
-          poster={story._embedded?.['wp:featuredmedia']?.[0]?.source_url}
+          poster={posterImage}
           imageAlignment={imageAlignment}
           isShowingAuthor={fieldState['show_author']}
           isShowingDate={fieldState['show_date']}

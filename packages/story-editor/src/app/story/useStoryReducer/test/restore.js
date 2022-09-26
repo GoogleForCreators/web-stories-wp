@@ -44,7 +44,7 @@ describe('restore', () => {
     });
   });
 
-  it('should restore pages, current and selection', () => {
+  it('should restore pages, current, capabilities, and selection', () => {
     const reducer = setupReducer();
 
     const { restore } = reducer;
@@ -52,11 +52,13 @@ describe('restore', () => {
     const result = restore({
       pages: [{ id: '111' }, { id: '222', elements: [{ id: '333' }] }],
       current: '222',
+      capabilities: { canDo: true },
       selection: ['333'],
     });
 
     expect(result.pages).toHaveLength(2);
     expect(result.current).toBe('222');
+    expect(result.capabilities).toStrictEqual({ canDo: true });
     expect(result.selection).toHaveLength(1);
   });
 

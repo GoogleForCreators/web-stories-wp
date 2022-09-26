@@ -77,7 +77,7 @@ const YOUTUBE_URL = __(
   'web-stories'
 );
 
-const DOCS_URL = 'https://wp.stories.google/docs/';
+const DOCS_URL = 'https://wp.stories.google/docs/getting-started/';
 
 export default function Footer() {
   const onSupportClick = useCallback((evt) => {
@@ -107,7 +107,7 @@ export default function Footer() {
           rel="noreferrer"
           onClick={onDocsClick}
         >
-          {__('Read Start Guide', 'web-stories')}
+          {__('Read Documentation', 'web-stories')}
         </Link>
         <Link
           href={SUPPORT_URL}

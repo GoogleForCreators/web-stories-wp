@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { act } from '@testing-library/react';
+import { renderWithTheme } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
@@ -27,12 +28,12 @@ import { MediaProvider } from '../../../../app/media';
 import { ConfigProvider } from '../../../../app/config';
 import { FontProvider } from '../../../../app/font';
 import APIContext from '../../../../app/api/context';
-import { renderWithTheme } from '../../../../testUtils';
 
 export async function arrange({ mediaResponse = [] }) {
   const config = {
     api: {},
     allowedMimeTypes: {
+      audio: ['audio/mpeg', 'audio/aac', 'audio/wav', 'audio/ogg'],
       image: [
         'image/png',
         'image/jpeg',
@@ -40,16 +41,10 @@ export async function arrange({ mediaResponse = [] }) {
         'image/gif',
         'image/webp',
       ],
+      caption: ['text/vtt'],
+      vector: [],
       video: ['video/mp4', 'video/webm'],
     },
-    allowedFileTypes: ['png', 'jpeg', 'jpg', 'gif', 'mp4', 'webp', 'webm'],
-    allowedImageFileTypes: ['gif', 'jpe', 'jpeg', 'jpg', 'png'],
-    allowedImageMimeTypes: [
-      'image/png',
-      'image/jpeg',
-      'image/jpg',
-      'image/gif',
-    ],
     capabilities: {
       hasUploadMediaAction: true,
     },

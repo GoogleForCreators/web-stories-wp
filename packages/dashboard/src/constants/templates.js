@@ -154,9 +154,29 @@ export const TEMPLATES_GALLERY_VIEWING_LABELS = {
       n
     ),
 };
+
+export const TEMPLATE_SORT_DIRECTION = {
+  ASC: 'asc',
+  DESC: 'desc',
+};
+
 export const TEMPLATES_GALLERY_SORT_OPTIONS = {
   POPULAR: 'popular',
   RECENT: 'recent',
+};
+
+export const TEMPLATE_SORT_KEYS = {
+  orderby: TEMPLATES_GALLERY_SORT_OPTIONS,
+  order: TEMPLATE_SORT_DIRECTION,
+};
+
+export const DEFAULT_TEMPLATE_FILTERS = {
+  filters: {
+    status: TEMPLATES_GALLERY_STATUS.ALL,
+  },
+  sort: {
+    orderby: TEMPLATES_GALLERY_SORT_OPTIONS.POPULAR,
+  },
 };
 
 export const TEMPLATES_GALLERY_SORT_MENU_ITEMS = [

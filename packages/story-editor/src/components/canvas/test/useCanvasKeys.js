@@ -19,14 +19,22 @@
  */
 import { render, fireEvent } from '@testing-library/react';
 import { useRef } from '@googleforcreators/react';
-import { TransformContext } from '@googleforcreators/transform';
+import { registerElementType } from '@googleforcreators/elements';
+import { elementTypes } from '@googleforcreators/element-library';
 
 /**
  * Internal dependencies
  */
+import useHighlights from '../../../app/highlights/useHighlights';
 import useCanvasKeys from '../../../app/canvas/useCanvasKeys';
 import StoryContext from '../../../app/story/context.js';
 import CanvasContext from '../../../app/canvas/context.js';
+
+jest.mock('../../../app/highlights/useHighlights', () => ({
+  ...jest.requireActual('../../../app/highlights/useHighlights'),
+  __esModule: true,
+  default: jest.fn(),
+}));
 
 const Canvas = () => {
   const ref = useRef(null);
@@ -34,7 +42,17 @@ const Canvas = () => {
   return <div ref={ref} />;
 };
 
-describe('useCanvasKeys', function () {
+const mockUseHighlights = useHighlights;
+const setHighlights = jest.fn();
+
+describe('useCanvasKeys', () => {
+  beforeAll(() => {
+    elementTypes.forEach(registerElementType);
+    mockUseHighlights.mockImplementation(() => ({
+      setHighlights,
+    }));
+  });
+
   it('should select all elements and collect their IDs when mod+a is pressed.', () => {
     const setSelectedElementsById = jest.fn();
 
@@ -118,36 +136,57 @@ describe('useCanvasKeys', function () {
     expect(deleteSelectedElements).toHaveBeenCalledWith();
   });
 
-  it('should deselect items when the "Escape" key is pressed.', () => {
-    const clearSelection = jest.fn();
-    const clearTransforms = jest.fn();
-
+  it('should open and focus the design panel link input when mod+k is pressed.', () => {
     const { container } = render(
-      <TransformContext.Provider
+      <StoryContext.Provider
         value={{
-          actions: { clearTransforms },
+          actions: {},
+          state: {
+            selectedElements: [{ id: '123' }, { id: '456' }],
+          },
         }}
       >
-        <StoryContext.Provider
-          value={{
-            state: {
-              currentPage: { elements: [{ id: '123' }] },
-              selectedElements: [{ id: '123' }],
-            },
-            actions: { clearSelection },
-          }}
-        >
-          <Canvas />
-        </StoryContext.Provider>
-      </TransformContext.Provider>
+        <Canvas />
+      </StoryContext.Provider>
     );
 
     fireEvent.keyDown(container, {
-      key: 'Escape',
-      which: 27,
+      key: 'k',
+      which: 75,
+      ctrlKey: true,
     });
 
-    expect(clearSelection).toHaveBeenCalledWith();
-    expect(clearTransforms).toHaveBeenCalledWith();
+    expect(setHighlights).toHaveBeenCalledWith({
+      elements: [{ id: '123' }, { id: '456' }],
+      highlight: 'LINK',
+    });
+  });
+
+  it('should should play/pause animation when mod+enter is pressed.', () => {
+    const updateAnimationState = jest.fn();
+
+    const { container } = render(
+      <StoryContext.Provider
+        value={{
+          state: {
+            currentPageNumber: 2,
+            currentPage: { elements: [{ id: '123' }] },
+          },
+          actions: { updateAnimationState },
+        }}
+      >
+        <Canvas />
+      </StoryContext.Provider>
+    );
+
+    fireEvent.keyDown(container, {
+      key: 'Enter',
+      which: 13,
+      ctrlKey: true,
+    });
+
+    expect(updateAnimationState).toHaveBeenCalledWith({
+      animationState: 'playing',
+    });
   });
 });

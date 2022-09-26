@@ -44,7 +44,7 @@ services:
     command: tail -f /dev/null
 
   mysql:
-    image: mysql:5.7
+    image: mariadb:focal
     command: --max-allowed-packet=16777216
     environment:
       MYSQL_ROOT_PASSWORD: example

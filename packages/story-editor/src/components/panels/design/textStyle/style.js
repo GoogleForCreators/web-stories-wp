@@ -36,12 +36,9 @@ import { clamp } from '@googleforcreators/units';
  */
 import { useFont } from '../../../../app/font';
 import { Row, usePresubmitHandler } from '../../../form';
+import { focusStyle, inputContainerStyleOverride } from '../../shared/styles';
+import { getCommonValue } from '../../shared';
 import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
-import {
-  focusStyle,
-  getCommonValue,
-  inputContainerStyleOverride,
-} from '../../shared';
 import useRichTextFormatting from './useRichTextFormatting';
 
 const MIN_MAX = {

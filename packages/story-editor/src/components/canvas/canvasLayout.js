@@ -21,7 +21,6 @@ import styled, { StyleSheetManager } from 'styled-components';
 import { memo, useRef, useCombinedRefs } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import PropTypes from 'prop-types';
-import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -33,6 +32,7 @@ import {
   useLayout,
 } from '../../app';
 import { FloatingMenuLayer } from '../floatingMenu';
+import { useMediaRecording } from '../mediaRecording';
 import EditLayer from './editLayer';
 import DisplayLayer from './displayLayer';
 import FramesLayer from './framesLayer';
@@ -43,6 +43,8 @@ import CanvasUploadDropTarget from './canvasUploadDropTarget';
 import CanvasElementDropzone from './canvasElementDropzone';
 import EyedropperLayer from './eyedropperLayer';
 import EmptyStateLayer from './emptyStateLayer';
+import EditLayerFocusManager from './editLayerFocusManager';
+import MediaRecordingLayer from './mediaRecordingLayer';
 
 // data-fix-caret is for allowing caretRangeFromPoint to work in Safari.
 // See https://github.com/googleforcreators/web-stories-wp/issues/7745.
@@ -61,9 +63,9 @@ function CanvasLayout({ header, footer }) {
   const boundingBoxTrackingRef = useCanvasBoundingBoxRef(
     CANVAS_BOUNDING_BOX_IDS.CANVAS_CONTAINER
   );
-  const { setCanvasContainer } = useCanvas((state) => ({
-    setCanvasContainer: state.actions.setCanvasContainer,
-  }));
+  const setCanvasContainer = useCanvas(
+    (state) => state.actions.setCanvasContainer
+  );
 
   const backgroundRef = useRef(null);
 
@@ -83,7 +85,9 @@ function CanvasLayout({ header, footer }) {
     })
   );
 
-  const isFloatingMenuEnabled = useFeature('floatingMenu');
+  const { isInRecordingMode } = useMediaRecording(
+    ({ state: { isInRecordingMode } }) => ({ isInRecordingMode })
+  );
 
   // If we don't have proper canvas dimensions yet, don't bother rendering element layers.
   const hasDimensions = pageWidth !== 0 && pageHeight !== 0;
@@ -94,21 +98,28 @@ function CanvasLayout({ header, footer }) {
   // See also https://styled-components.com/docs/api#stylesheetmanager for general usage.
   return (
     <StyleSheetManager stylisPlugins={[]}>
-      <Background ref={setBackgroundRef} style={layoutParamsCss}>
-        <CanvasUploadDropTarget>
-          <CanvasElementDropzone>
-            <SelectionCanvas>
-              {hasDimensions && <DisplayLayer />}
-              {hasDimensions && <FramesLayer />}
-              <NavLayer header={header} footer={footer} />
-            </SelectionCanvas>
-            <EditLayer />
-            <EyedropperLayer />
-            <EmptyStateLayer />
-            {isFloatingMenuEnabled && <FloatingMenuLayer />}
-          </CanvasElementDropzone>
-        </CanvasUploadDropTarget>
-      </Background>
+      <EditLayerFocusManager>
+        <Background ref={setBackgroundRef} style={layoutParamsCss}>
+          <CanvasUploadDropTarget>
+            <CanvasElementDropzone>
+              <SelectionCanvas>
+                {hasDimensions && !isInRecordingMode && <DisplayLayer />}
+                {hasDimensions && !isInRecordingMode && <FramesLayer />}
+                <NavLayer header={header} footer={footer} />
+              </SelectionCanvas>
+              <EditLayer />
+              {!isInRecordingMode && (
+                <>
+                  <EyedropperLayer />
+                  <EmptyStateLayer />
+                  <FloatingMenuLayer />
+                </>
+              )}
+              {isInRecordingMode && <MediaRecordingLayer />}
+            </CanvasElementDropzone>
+          </CanvasUploadDropTarget>
+        </Background>
+      </EditLayerFocusManager>
     </StyleSheetManager>
   );
 }

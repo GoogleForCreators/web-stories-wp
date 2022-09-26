@@ -72,7 +72,7 @@ class Database_Upgrader extends TestCase {
 	 * @covers ::on_site_initialization
 	 */
 	public function test_sets_missing_options_on_site_initialization(): void {
-		$blog_id = (int) self::factory()->blog->create();
+		$blog_id = self::factory()->blog->create();
 
 		switch_to_blog( $blog_id );
 

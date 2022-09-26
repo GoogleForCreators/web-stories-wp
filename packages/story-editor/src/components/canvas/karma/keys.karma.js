@@ -15,12 +15,16 @@
  */
 
 /**
+ * External dependencies
+ */
+import { TEXT_ELEMENT_DEFAULT_FONT } from '@googleforcreators/elements';
+
+/**
  * Internal dependencies
  */
 import { Fixture } from '../../../karma';
 import { useStory } from '../../../app/story';
 import { useInsertElement } from '..';
-import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../app/font/defaultFonts';
 
 describe('Canvas keys integration', () => {
   let fixture;
@@ -81,7 +85,8 @@ describe('Canvas keys integration', () => {
   });
 
   it('should delete element from the design panel', async () => {
-    const bold = fixture.editor.inspector.designPanel.textStyle.bold.button;
+    await fixture.events.click(fixture.editor.sidebar.designTab);
+    const bold = fixture.editor.sidebar.designPanel.textStyle.bold.button;
     await fixture.events.focus(bold);
     expect(await getSelection()).toEqual([element1.id]);
 
@@ -101,14 +106,14 @@ describe('Canvas keys integration', () => {
   });
 
   it('should not be able to delete element from a dialog', async () => {
+    await fixture.events.click(fixture.editor.sidebar.designTab);
     const colorButton = fixture.querySelector(
       'button[aria-label="Text color"]'
     );
     await fixture.events.click(colorButton);
     expect(await getSelection()).toEqual([element1.id]);
-    // there are two dialogs, [0] checklist companion and [1]color picker
     const dialogs = await fixture.screen.findAllByRole('dialog');
-    expect(dialogs.length).toBe(2);
+    expect(dialogs.length).toBe(1);
 
     await fixture.snapshot('color picker open');
 

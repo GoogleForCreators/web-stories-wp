@@ -135,7 +135,7 @@ class Activation_Notice implements ServiceInterface, Registerable, PluginActivat
 	 *
 	 * @since 1.0.0
 	 *
-	 * @return array Script settings.
+	 * @return array{id: string, config: array<string, bool|string>,publicPath: string} Script settings.
 	 */
 	protected function get_script_settings(): array {
 		$new_story_url = admin_url(

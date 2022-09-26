@@ -85,7 +85,7 @@ class Optimization extends TestCase {
 		$transformers   = Configuration::DEFAULT_TRANSFORMERS;
 		$transformers[] = AmpStoryCssOptimizer::class;
 
-		$this->assertCount( 2, $config_array );
+		$this->assertCount( 3, $config_array );
 		$this->assertArrayHasKey( 'transformers', $config_array );
 		$this->assertEqualSets( $transformers, $config_array['transformers'] );
 	}
@@ -110,7 +110,7 @@ class Optimization extends TestCase {
 			ReorderHead::class,
 		];
 
-		$this->assertCount( 2, $config_array );
+		$this->assertCount( 3, $config_array );
 		$this->assertArrayHasKey( 'transformers', $config_array );
 		$this->assertEqualSets( $transformers, $config_array['transformers'] );
 	}

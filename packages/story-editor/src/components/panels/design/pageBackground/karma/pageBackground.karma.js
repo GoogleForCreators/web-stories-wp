@@ -46,8 +46,9 @@ describe('Page background panel', () => {
 
       // Allow the background to be set.
       await fixture.events.sleep(300);
+      await fixture.events.click(fixture.editor.sidebar.designTab);
       await fixture.events.click(
-        fixture.editor.inspector.designPanel.pageBackground.detachBg
+        fixture.editor.sidebar.designPanel.pageBackground.detachBg
       );
       const storyContext = await fixture.renderHook(() => useStory());
       expect(

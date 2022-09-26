@@ -107,7 +107,14 @@ class Trimming extends Service_Base implements HasMeta {
 			return $response;
 		}
 		if ( 'video' === $response['type'] ) {
-			$response[ self::TRIM_DATA_KEY ] = get_post_meta( $response['id'], self::TRIM_POST_META_KEY, true );
+			/**
+			 * Post ID.
+			 *
+			 * @var int $post_id
+			 */
+			$post_id = $response['id'];
+
+			$response[ self::TRIM_DATA_KEY ] = get_post_meta( $post_id, self::TRIM_POST_META_KEY, true );
 		}
 
 		return $response;

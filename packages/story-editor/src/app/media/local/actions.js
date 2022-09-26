@@ -91,42 +91,6 @@ export const removeAudioProcessing =
     });
   };
 
-export const setBaseColorProcessing =
-  (dispatch) =>
-  ({ id }) => {
-    dispatch({
-      type: types.LOCAL_MEDIA_ADD_BASE_COLOR_PROCESSING,
-      payload: { id },
-    });
-  };
-
-export const removeBaseColorProcessing =
-  (dispatch) =>
-  ({ id }) => {
-    dispatch({
-      type: types.LOCAL_MEDIA_REMOVE_BASE_COLOR_PROCESSING,
-      payload: { id },
-    });
-  };
-
-export const setBlurhashProcessing =
-  (dispatch) =>
-  ({ id }) => {
-    dispatch({
-      type: types.LOCAL_MEDIA_ADD_BLURHASH_PROCESSING,
-      payload: { id },
-    });
-  };
-
-export const removeBlurhashProcessing =
-  (dispatch) =>
-  ({ id }) => {
-    dispatch({
-      type: types.LOCAL_MEDIA_REMOVE_BLURHASH_PROCESSING,
-      payload: { id },
-    });
-  };
-
 export const setPosterProcessing =
   (dispatch) =>
   ({ id }) => {

@@ -126,12 +126,20 @@ function Panel({
     if (resizable) {
       setHeight(0);
     }
+  }, [resizable, canCollapse, setHeight]);
+
+  const onCollapse = useCallback(() => {
+    if (!canCollapse) {
+      return;
+    }
+
+    collapse();
 
     trackEvent('panel_toggled', {
       name: name,
       status: 'collapsed',
     });
-  }, [resizable, canCollapse, name, setHeight]);
+  }, [canCollapse, collapse, name]);
 
   const expand = useCallback(
     (restoreHeight = true) => {
@@ -140,13 +148,20 @@ function Panel({
       if (restoreHeight && resizable) {
         setHeight(expandToHeight);
       }
+    },
+    [resizable, expandToHeight, setHeight]
+  );
+
+  const onExpand = useCallback(
+    (restoreHeight = true) => {
+      expand(restoreHeight);
 
       trackEvent('panel_toggled', {
         name: name,
         status: 'expanded',
       });
     },
-    [resizable, expandToHeight, name, setHeight]
+    [expand, name]
   );
 
   // Expand panel on first mount/on selection change if it can't be persisted.
@@ -262,8 +277,8 @@ function Panel({
     actions: {
       setHeight: manuallySetHeight,
       setExpandToHeight,
-      collapse,
-      expand,
+      collapse: onCollapse,
+      expand: onExpand,
       resetHeight,
       confirmTitle,
     },

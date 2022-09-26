@@ -34,6 +34,7 @@ import useHistoryReplay from './effects/useHistoryReplay';
 import useStoryReducer from './useStoryReducer';
 import useAutoSave from './actions/useAutoSave';
 import { StoryTriggersProvider } from './storyTriggers';
+import useLocalAutoSave from './actions/useLocalAutoSave';
 
 function StoryProvider({ storyId, initialEdits, children }) {
   const [hashPageId, setHashPageId] = useHashState('page', null);
@@ -57,33 +58,16 @@ function StoryProvider({ storyId, initialEdits, children }) {
   useEffect(() => setHashPageId(current), [current, setHashPageId]);
 
   // Generate current page info.
-  const {
-    currentPageId,
-    currentPageIndex,
-    currentPageNumber,
-    currentPage,
-    currentPageHash,
-  } = useMemo(() => {
-    if (!current) {
-      return {
-        currentPageId: null,
-        currentPageIndex: null,
-        currentPageNumber: null,
-        currentPage: null,
-        currentPageHash: null,
-      };
-    }
-    const index = pages.findIndex(({ id }) => id === current);
-    const number = index + 1;
-    const page = pages[index];
-    return {
-      currentPageId: current,
-      currentPageIndex: index,
-      currentPageNumber: number,
-      currentPage: page,
-      currentPageHash: JSON.stringify(page),
-    };
-  }, [pages, current]);
+  let currentPageId = null;
+  let currentPageIndex = null;
+  let currentPageNumber = null;
+  let currentPage = null;
+  if (current) {
+    currentPageId = current;
+    currentPageIndex = pages.findIndex(({ id }) => id === current);
+    currentPageNumber = currentPageIndex + 1;
+    currentPage = pages[currentPageIndex];
+  }
 
   // Generate selection info
   const selectedElementIds = useMemo(
@@ -131,12 +115,13 @@ function StoryProvider({ storyId, initialEdits, children }) {
   // (and it will have side-effects because saving can update url and status,
   //  thus the need for `updateStory`)
   const { updateStory } = api;
-  const { saveStory, isSaving, isFreshlyPublished } = useSaveStory({
-    storyId,
-    pages,
-    story,
-    updateStory,
-  });
+  const { saveStory, isSaving, isFreshlyPublished, isFreshlyPending } =
+    useSaveStory({
+      storyId,
+      pages,
+      story,
+      updateStory,
+    });
 
   const { autoSave, isAutoSaving } = useAutoSave({
     storyId,
@@ -144,11 +129,18 @@ function StoryProvider({ storyId, initialEdits, children }) {
     story,
   });
 
+  const { restoreLocalAutoSave } = useLocalAutoSave({
+    pages,
+    capabilities,
+    restore,
+    storyId,
+    isNew: story.status === 'auto-draft',
+  });
+
   const fullStory = useMemo(
     () => ({
       pages,
       currentPage,
-      currentPageHash,
       currentPageId,
       currentPageIndex,
       currentPageNumber,
@@ -164,13 +156,13 @@ function StoryProvider({ storyId, initialEdits, children }) {
         isSavingStory: isSaving,
         isAutoSavingStory: isAutoSaving,
         isFreshlyPublished,
+        isFreshlyPending,
       },
       copiedElementState,
     }),
     [
       pages,
       currentPage,
-      currentPageHash,
       currentPageId,
       currentPageIndex,
       currentPageNumber,
@@ -184,6 +176,7 @@ function StoryProvider({ storyId, initialEdits, children }) {
       isSaving,
       isAutoSaving,
       isFreshlyPublished,
+      isFreshlyPending,
       copiedElementState,
     ]
   );
@@ -194,6 +187,7 @@ function StoryProvider({ storyId, initialEdits, children }) {
       ...api,
       autoSave,
       saveStory,
+      restoreLocalAutoSave,
     },
     internal: { reducerState, restore },
   };

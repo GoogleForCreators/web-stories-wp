@@ -84,7 +84,7 @@ describe('CUJ: Page Templates: Custom Saved Templates', () => {
         fixture.editor.library.pageTemplatesPane.saveTemplateBtn
       );
       await fixture.events.sleep(200);
-      const message = await fixture.screen.getByRole('alert', { hidden: true });
+      const message = fixture.screen.getByRole('alert', { hidden: true });
       expect(message.textContent).toBe('Page Template saved.');
 
       expect(
@@ -118,6 +118,7 @@ describe('CUJ: Page Templates: Custom Saved Templates', () => {
       await fixture.events.hover(
         fixture.editor.library.pageTemplatesPane.pageTemplates[0]
       );
+      await fixture.events.sleep(200);
       // Choose the Delete button of the first item.
       await fixture.events.click(
         fixture.editor.library.pageTemplatesPane.deleteBtnByIndex(0)
@@ -198,7 +199,7 @@ describe('CUJ: Page Templates: Custom Saved Templates', () => {
       await fixture.events.keyboard.press('Enter');
 
       await fixture.events.sleep(200);
-      const message = await fixture.screen.getByRole('alert', { hidden: true });
+      const message = fixture.screen.getByRole('alert', { hidden: true });
       expect(message.textContent).toBe('Page Template saved.');
 
       expect(

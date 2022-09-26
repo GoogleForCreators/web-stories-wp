@@ -1,16 +1,15 @@
 services:
   -
-    class: SzepeViktor\PHPStan\WordPress\GetTermsDynamicFunctionReturnTypeExtension
-    tags:
-      - phpstan.broker.dynamicFunctionReturnTypeExtension
-  -
-    class: SzepeViktor\PHPStan\WordPress\ServiceContainerDynamicReturnTypeExtension
+    class: Google\Web_Stories\PHPStan\ServiceContainerDynamicReturnTypeExtension
     tags:
       - phpstan.broker.dynamicMethodReturnTypeExtension
   -
-    class: SzepeViktor\PHPStan\WordPress\ServicesDynamicReturnTypeExtension
+    class: Google\Web_Stories\PHPStan\ServicesDynamicReturnTypeExtension
     tags:
       - phpstan.broker.dynamicStaticMethodReturnTypeExtension
+
+includes:
+	- vendor/phpstan/phpstan/conf/bleedingEdge.neon
 
 parameters:
   level: 9
@@ -19,6 +18,7 @@ parameters:
   checkMissingIterableValueType: false
   paths:
     - includes/
+    - uninstall.php
   excludePaths:
     - includes/vendor/*
     - includes/polyfills/*
@@ -35,15 +35,10 @@ parameters:
     - tests/phpstan/bootstrap.php
     - third-party/vendor/ampproject/amp-wp/includes/sanitizers/class-amp-base-sanitizer.php
     - third-party/vendor/ampproject/amp-wp/includes/sanitizers/class-amp-meta-sanitizer.php
+    - vendor/php-stubs/woocommerce-stubs/woocommerce-stubs.php
   dynamicConstantNames:
     - WEBSTORIES_DEV_MODE
     - WPCOM_IS_VIP_ENV
     - IS_WPCOM
     - GOOGLESITEKIT_VERSION
     - AMP__VERSION
-  ignoreErrors:
-    # Uses func_get_args()
-    - '#^Function apply_filters(_ref_array)? invoked with [34567] parameters, 2 required\.$#'
-
-    # Core issue - https://core.trac.wordpress.org/ticket/54015
-    - '#^Parameter \#2 \$embed of method WP_REST_Server::envelope_response\(\) expects bool, array<string>\|bool given.$#'

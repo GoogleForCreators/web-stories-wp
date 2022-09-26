@@ -17,28 +17,30 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { TranslateWithMarkup, __ } from '@googleforcreators/i18n';
 import {
   Text,
   THEME_CONSTANTS,
-  DropDown,
   Datalist,
-  noop,
 } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
  */
-import { AuthorPropTypes } from '../../../utils/useStoryView.js';
 import { StandardViewContentGutter, ViewStyleBar } from '../../../components';
-import { DROPDOWN_TYPES, VIEW_STYLE } from '../../../constants';
+import useStoryFilters from '../myStories/filters/useStoryFilters';
+import SortDropDown from './sortDropDown';
+
+const FILTER_MAX_WIDTH = 350;
 
 const DisplayFormatContainer = styled.div`
-  height: 76px;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  gap: 1rem;
+  min-height: 76px;
+  grid-template-columns: 1fr auto auto;
+  justify-content: start;
   align-items: center;
   margin-top: -10px;
 `;
@@ -50,39 +52,33 @@ const StorySortDropdownContainer = styled.div`
 
 const ControlsContainer = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const StyledDropDown = styled(DropDown)`
-  width: 210px;
+  flex-wrap: wrap;
+  margin: 1rem 0;
+  row-gap: 1rem;
+  justify-self: end;
 `;
 
 const BodyViewOptionsHeader = styled.div``;
 const StyledDatalist = styled(Datalist.DropDown)`
-  width: 150px;
+  max-width: ${FILTER_MAX_WIDTH}px;
 `;
 
-const defaultAuthor = {
-  filterId: null,
-  toggleFilterId: noop,
-  queriedAuthors: [],
-};
-
 export default function BodyViewOptions({
-  currentSort,
   handleLayoutSelect,
-  handleSortChange,
   resultsLabel,
   layoutStyle,
   pageSortOptions = [],
+  pageSortDefaultOption,
   showGridToggle,
   showSortDropdown,
-  sortDropdownAriaLabel,
-  showAuthorDropdown = false,
-  author = defaultAuthor,
-  queryAuthorsBySearch = noop,
+  filters = [],
+  currentSort,
+  handleSortChange,
 }) {
+  const { updateFilter } = useStoryFilters(({ actions: { updateFilter } }) => ({
+    updateFilter,
+  }));
+
   return (
     <StandardViewContentGutter>
       <BodyViewOptionsHeader id="body-view-options-header" />
@@ -91,63 +87,76 @@ export default function BodyViewOptions({
           <TranslateWithMarkup>{resultsLabel}</TranslateWithMarkup>
         </Text>
         <ControlsContainer>
-          {layoutStyle === VIEW_STYLE.GRID && showAuthorDropdown && (
+          {filters?.length
+            ? filters.map((filter) => (
+                <StorySortDropdownContainer
+                  key={filter.key}
+                  title={filter.placeholder}
+                >
+                  <StyledDatalist
+                    hasSearch
+                    hasDropDownBorder
+                    searchResultsLabel={__('Search results', 'web-stories')}
+                    aria-label={filter.ariaLabel}
+                    onChange={({ id }) => {
+                      updateFilter(filter.key, {
+                        filterId: id,
+                      });
+                    }}
+                    getOptionsByQuery={filter.query}
+                    getPrimaryOptions={filter.getPrimaryOptions}
+                    selectedId={filter.filterId}
+                    placeholder={filter.placeholder}
+                    noMatchesFoundLabel={filter.noMatchesFoundLabel}
+                    searchPlaceholder={filter.searchPlaceholder}
+                    offsetOverride
+                    maxWidth={FILTER_MAX_WIDTH}
+                    containerStyleOverrides={css`
+                      flex-direction: column;
+                    `}
+                  />
+                </StorySortDropdownContainer>
+              ))
+            : null}
+          {showSortDropdown && (
             <StorySortDropdownContainer>
-              <StyledDatalist
-                hasSearch
-                hasDropDownBorder
-                searchResultsLabel={__('Search results', 'web-stories')}
-                aria-label={__('Filter stories by author', 'web-stories')}
-                onChange={author.toggleFilterId}
-                getOptionsByQuery={queryAuthorsBySearch}
-                selectedId={author.filterId}
-                placeholder={__('Author', 'web-stories')}
-                primaryOptions={author.queriedAuthors}
-                options={author.queriedAuthors}
+              <SortDropDown
+                pageSortOptions={pageSortOptions}
+                pageSortDefaultOption={pageSortDefaultOption}
+                currentSort={currentSort}
+                handleSortChange={handleSortChange}
               />
             </StorySortDropdownContainer>
-          )}
-          {layoutStyle === VIEW_STYLE.GRID && showSortDropdown && (
-            <StorySortDropdownContainer>
-              <StyledDropDown
-                ariaLabel={sortDropdownAriaLabel}
-                options={pageSortOptions}
-                type={DROPDOWN_TYPES.MENU}
-                selectedValue={currentSort}
-                onMenuItemClick={(_, newSort) => handleSortChange(newSort)}
-              />
-            </StorySortDropdownContainer>
-          )}
-          {showGridToggle && (
-            <ControlsContainer>
-              <ViewStyleBar
-                layoutStyle={layoutStyle}
-                onPress={handleLayoutSelect}
-              />
-            </ControlsContainer>
           )}
         </ControlsContainer>
+        {showGridToggle && (
+          <ViewStyleBar
+            layoutStyle={layoutStyle}
+            onPress={handleLayoutSelect}
+          />
+        )}
       </DisplayFormatContainer>
     </StandardViewContentGutter>
   );
 }
 
 BodyViewOptions.propTypes = {
-  currentSort: PropTypes.string.isRequired,
   handleLayoutSelect: PropTypes.func,
-  handleSortChange: PropTypes.func,
   layoutStyle: PropTypes.string.isRequired,
   resultsLabel: PropTypes.string.isRequired,
+  showGridToggle: PropTypes.bool,
+  showSortDropdown: PropTypes.bool,
+  filters: PropTypes.array,
   pageSortOptions: PropTypes.arrayOf(
     PropTypes.shape({
       value: PropTypes.string,
       label: PropTypes.string,
     })
   ),
-  showGridToggle: PropTypes.bool,
-  showSortDropdown: PropTypes.bool,
-  sortDropdownAriaLabel: PropTypes.string.isRequired,
-  showAuthorDropdown: PropTypes.bool,
-  author: AuthorPropTypes,
-  queryAuthorsBySearch: PropTypes.func,
+  pageSortDefaultOption: PropTypes.string,
+  currentSort: PropTypes.shape({
+    orderby: PropTypes.string,
+    order: PropTypes.string,
+  }),
+  handleSortChange: PropTypes.func,
 };

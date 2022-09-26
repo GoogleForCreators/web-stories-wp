@@ -13,6 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import { TEXT_ELEMENT_DEFAULT_FONT } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -20,11 +24,10 @@
 import { Fixture } from '../../../karma';
 import { useStory } from '../../../app/story';
 import { useInsertElement } from '..';
-import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../app/font/defaultFonts';
 
 describe('Lasso integration', () => {
   let fixture;
-  let element1, element2;
+  let element1, element2, element3;
 
   beforeEach(async () => {
     fixture = new Fixture();
@@ -50,6 +53,16 @@ describe('Lasso integration', () => {
         width: 250,
       })
     );
+    element3 = await fixture.act(() =>
+      insertElement('text', {
+        font: TEXT_ELEMENT_DEFAULT_FONT,
+        content: 'hello world!',
+        isLocked: true,
+        x: 300,
+        y: 500,
+        width: 250,
+      })
+    );
   });
 
   afterEach(() => {
@@ -62,7 +75,7 @@ describe('Lasso integration', () => {
   }
 
   it('should have the last element selected by default', async () => {
-    expect(await getSelection()).toEqual([element2.id]);
+    expect(await getSelection()).toEqual([element3.id]);
   });
 
   it('should select right on the top-left corner', async () => {
@@ -99,6 +112,19 @@ describe('Lasso integration', () => {
       moveBy(-2, 2),
       up(),
     ]);
+    expect(await getSelection()).toEqual([element1.id, element2.id]);
+  });
+
+  it('should select only unlocked elements', async () => {
+    const frame1 = fixture.editor.canvas.framesLayer.frame(element1.id);
+    const frame3 = fixture.editor.canvas.framesLayer.frame(element3.id);
+    await fixture.events.mouse.seq(({ moveRel, down, up }) => [
+      moveRel(frame1.node, -2, -2),
+      down(),
+      moveRel(frame3.node, '50%', '50%', { steps: 5 }),
+      up(),
+    ]);
+    // Note no element 3 in the resulting selection
     expect(await getSelection()).toEqual([element1.id, element2.id]);
   });
 });

@@ -99,7 +99,7 @@ function GoogleAnalyticsSettings({
     setAnalyticsId(googleAnalyticsId);
   }, [googleAnalyticsId]);
 
-  const handleUpdateAnalyticsIdId = useCallback((event) => {
+  const onUpdateAnalyticsId = useCallback((event) => {
     const { value } = event.target;
     setAnalyticsId(value);
 
@@ -244,7 +244,7 @@ function GoogleAnalyticsSettings({
               aria-label={TEXT.ARIA_LABEL}
               id="gaTrackingId"
               value={analyticsId}
-              onChange={handleUpdateAnalyticsIdId}
+              onChange={onUpdateAnalyticsId}
               onKeyDown={handleOnKeyDown}
               placeholder={TEXT.PLACEHOLDER}
               hasError={Boolean(inputError)}

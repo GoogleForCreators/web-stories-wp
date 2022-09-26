@@ -19,16 +19,29 @@
  */
 import { createSolid } from '@googleforcreators/patterns';
 import { PAGE_WIDTH } from '@googleforcreators/units';
+import {
+  SHARED_DEFAULT_ATTRIBUTES,
+  MEDIA_DEFAULT_ATTRIBUTES,
+  elementTypes,
+} from '@googleforcreators/element-library';
+import {
+  registerElementType,
+  TEXT_ELEMENT_DEFAULT_FONT,
+} from '@googleforcreators/elements';
+
 /**
  * Internal dependencies
  */
 import { addElementsToClipboard, processPastedElements } from '../copyPaste';
-import { SHARED_DEFAULT_ATTRIBUTES } from '../../elements/shared/constants';
-import { TEXT_ELEMENT_DEFAULT_FONT } from '../../app/font/defaultFonts';
-import { getDefinitionForType } from '../../elements';
-import { MEDIA_DEFAULT_ATTRIBUTES } from '../../elements/media/constants';
+
+const getDefinitionForType = (type) =>
+  elementTypes.find((element) => element.type === type);
 
 describe('copyPaste utils', () => {
+  beforeAll(() => {
+    elementTypes.forEach(registerElementType);
+  });
+
   const PAGE = {
     backgroundColor: createSolid(255, 0, 0),
   };
@@ -223,7 +236,7 @@ describe('copyPaste utils', () => {
           id: '1',
         },
       ];
-      addElementsToClipboard(PAGE, elements, [], evt);
+      addElementsToClipboard(PAGE, elements, [], {}, evt);
 
       expect(setData).toHaveBeenCalledTimes(2);
       expect(setData).toHaveBeenCalledWith('text/plain', 'Fill in some text');
@@ -245,7 +258,7 @@ describe('copyPaste utils', () => {
           isDefaultBackground: true,
         },
       ];
-      addElementsToClipboard(PAGE, elements, [], evt);
+      addElementsToClipboard(PAGE, elements, [], {}, evt);
 
       expect(setData).toHaveBeenCalledTimes(2);
       expect(setData).toHaveBeenCalledWith('text/plain', 'shape');
@@ -271,7 +284,7 @@ describe('copyPaste utils', () => {
           id: '1',
         },
       ];
-      addElementsToClipboard(PAGE, elements, [], evt);
+      addElementsToClipboard(PAGE, elements, [], {}, evt);
 
       expect(setData).toHaveBeenCalledTimes(2);
       expect(setData).toHaveBeenCalledWith('text/plain', 'shape');
@@ -299,7 +312,7 @@ describe('copyPaste utils', () => {
           type: 'ANIMATION_TYPE',
         },
       ];
-      addElementsToClipboard(PAGE, elements, animations, evt);
+      addElementsToClipboard(PAGE, elements, animations, {}, evt);
 
       expect(setData).toHaveBeenCalledTimes(2);
       expect(setData).toHaveBeenCalledWith('text/plain', 'shape');
@@ -316,7 +329,7 @@ describe('copyPaste utils', () => {
           setData,
         },
       };
-      addElementsToClipboard(PAGE, [], [], evt);
+      addElementsToClipboard(PAGE, [], [], {}, evt);
       expect(setData).toHaveBeenCalledTimes(0);
     });
   });

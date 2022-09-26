@@ -63,14 +63,13 @@ describe('Alignment Panel', () => {
     describe('CUJ: Creator can Transform an Element: Align element to page', () => {
       it('should not show a border when focusing an alignment button using mouse', async () => {
         // Click left align
+        await fixture.events.click(fixture.editor.sidebar.designTab);
         await fixture.events.click(
-          fixture.editor.inspector.designPanel.alignment.left
+          fixture.editor.sidebar.designPanel.alignment.left
         );
 
         // Expect button to have focus
-        expect(
-          fixture.editor.inspector.designPanel.alignment.left
-        ).toHaveFocus();
+        expect(fixture.editor.sidebar.designPanel.alignment.left).toHaveFocus();
 
         // Expect element to be left-aligned
         const textFrame = fixture.editor.canvas.framesLayer.frame(textA);
@@ -84,14 +83,15 @@ describe('Alignment Panel', () => {
 
       it('should show a border when focusing an alignment button using keyboard', async () => {
         // Click left align
+        await fixture.events.click(fixture.editor.sidebar.designTab);
         await fixture.events.click(
-          fixture.editor.inspector.designPanel.alignment.left
+          fixture.editor.sidebar.designPanel.alignment.left
         );
 
         // Press "tab" once - focus should now be on "center align"
         await fixture.events.keyboard.press('tab');
         expect(
-          fixture.editor.inspector.designPanel.alignment.center
+          fixture.editor.sidebar.designPanel.alignment.center
         ).toHaveFocus();
 
         // Expect "center align" button to have visible outline

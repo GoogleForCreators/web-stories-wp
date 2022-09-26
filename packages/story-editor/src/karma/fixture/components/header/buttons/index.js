@@ -18,12 +18,12 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import { CircularProgress } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
  */
 import useStory from '../../../../../app/story/useStory';
-import CircularProgress from '../../../../../components/circularProgress';
 import {
   RedoButton,
   PreviewButton,
@@ -82,7 +82,8 @@ function Buttons() {
   );
 
   const isPending = 'pending' === status;
-  const isDraft = 'draft' === status || isPending || !status;
+  const isDraft =
+    ['draft', 'auto-draft'].includes(status) || isPending || !status;
   const isDraftOrPending = isDraft || isPending;
 
   return (

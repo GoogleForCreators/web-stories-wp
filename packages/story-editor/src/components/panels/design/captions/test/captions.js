@@ -22,10 +22,10 @@ import { screen } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { MULTIPLE_DISPLAY_VALUE } from '../../../../../constants';
 import ConfigContext from '../../../../../app/config/context';
 import { renderPanel } from '../../../shared/test/_utils';
 import Captions from '../captions';
+import { MULTIPLE_DISPLAY_VALUE } from '../../../../../constants';
 
 function MediaUpload({ render }) {
   const open = jest.fn();
@@ -43,6 +43,7 @@ describe('Panels/Captions', () => {
       capabilities: {
         hasUploadMediaAction: true,
       },
+      allowedMimeTypes: { caption: ['text/vtt'] },
       ...config,
       MediaUpload,
     };
@@ -73,9 +74,19 @@ describe('Panels/Captions', () => {
       name: /Caption and subtitles/i,
     });
     expect(captionRegion).toBeInTheDocument();
+
+    const captionButton = screen.queryByRole('button', {
+      name: /Upload a file/i,
+    });
+    expect(captionButton).toBeInTheDocument();
+
+    const captionHotlinkButton = screen.queryByRole('button', {
+      name: /Link to caption file/i,
+    });
+    expect(captionHotlinkButton).toBeInTheDocument();
   });
 
-  it('should not render <Captions /> panel', () => {
+  it('should not render captions upload button', () => {
     arrange(
       {
         capabilities: {
@@ -84,10 +95,15 @@ describe('Panels/Captions', () => {
       },
       [defaultElement]
     );
-    const captionRegion = screen.queryByRole('region', {
-      name: /Caption and subtitles/i,
+    const captionButton = screen.queryByRole('button', {
+      name: /Upload a file/i,
     });
-    expect(captionRegion).not.toBeInTheDocument();
+    expect(captionButton).not.toBeInTheDocument();
+
+    const captionHotlinkButton = screen.queryByRole('button', {
+      name: /Link to caption file/i,
+    });
+    expect(captionHotlinkButton).toBeInTheDocument();
   });
 
   it('should display Mixed in case of mixed value multi-selection', () => {
@@ -103,7 +119,7 @@ describe('Panels/Captions', () => {
         tracks: ['Some track here'],
       },
     ]);
-    const input = screen.getByRole('textbox', { name: 'Filename' });
-    expect(input).toHaveValue(MULTIPLE_DISPLAY_VALUE);
+
+    expect(screen.getByText(MULTIPLE_DISPLAY_VALUE)).toBeInTheDocument();
   });
 });

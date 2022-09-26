@@ -1,0 +1,14 @@
+{
+  "data": null,
+  "errors": [
+    {
+      "message": "Unknown error message.",
+      "locations": [{ "line": 1, "column": 1 }],
+      "path": ["products"],
+      "extensions": {
+        "code": "",
+        "documentation": "https://shopify.dev/api/usage/page"
+      }
+    }
+  ]
+}

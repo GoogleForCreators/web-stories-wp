@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { ELEMENT_TYPES } from '@googleforcreators/elements';
+
+/**
  * Internal dependencies
  */
 import { setupReducer } from './_utils';
@@ -72,6 +77,95 @@ describe('addElement', () => {
     expect(result.pages[0]).toStrictEqual({
       id: '111',
       elements: [{ id: '321' }],
+    });
+    expect(result.selection).toStrictEqual(['321']);
+  });
+
+  it('should add an element with a unique product id', () => {
+    const { restore, addElement } = setupReducer();
+
+    // Set an initial state with a current page and one element.
+    restore({
+      pages: [
+        {
+          id: '111',
+          elements: [
+            {
+              id: '321',
+              type: ELEMENT_TYPES.PRODUCT,
+              product: { productId: 'abc' },
+            },
+          ],
+        },
+      ],
+      current: '111',
+      selection: ['321'],
+    });
+
+    const result = addElement({
+      element: {
+        id: '234',
+        type: ELEMENT_TYPES.PRODUCT,
+        product: { productId: 'bcd' },
+      },
+    });
+
+    expect(result.pages[0]).toStrictEqual({
+      id: '111',
+      elements: [
+        {
+          id: '321',
+          type: ELEMENT_TYPES.PRODUCT,
+          product: { productId: 'abc' },
+        },
+        {
+          id: '234',
+          type: ELEMENT_TYPES.PRODUCT,
+          product: { productId: 'bcd' },
+        },
+      ],
+    });
+    expect(result.selection).toStrictEqual(['234']);
+  });
+
+  it('should not add an element with a duplicate product id', () => {
+    const { restore, addElement } = setupReducer();
+
+    // Set an initial state with a current page and one element.
+    restore({
+      pages: [
+        {
+          id: '111',
+          elements: [
+            {
+              id: '321',
+              type: ELEMENT_TYPES.PRODUCT,
+              product: { productId: 'abc' },
+            },
+          ],
+        },
+      ],
+      current: '111',
+      selection: ['321'],
+    });
+
+    const result = addElement({
+      element: {
+        id: '234',
+        type: ELEMENT_TYPES.PRODUCT,
+        product: { productId: 'abc' },
+      },
+    });
+
+    expect(result.pages[0]).toStrictEqual({
+      id: '111',
+      elements: [
+        {
+          id: '321',
+          type: ELEMENT_TYPES.PRODUCT,
+          product: { productId: 'abc' },
+        },
+      ],
     });
     expect(result.selection).toStrictEqual(['321']);
   });

@@ -29,7 +29,7 @@ import { TextArea as StyledTextArea } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
-import { inputContainerStyleOverride } from '../panels/shared';
+import { inputContainerStyleOverride } from '../panels/shared/styles';
 
 const TextArea = forwardRef(
   (

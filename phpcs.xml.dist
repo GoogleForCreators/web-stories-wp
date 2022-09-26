@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <ruleset name="Web Stories PHP Coding Standards Rules">
-  <config name="minimum_supported_wp_version" value="5.5" />
+  <config name="minimum_supported_wp_version" value="5.7" />
 
   <rule ref="WordPress-Core">
     <type>error</type>

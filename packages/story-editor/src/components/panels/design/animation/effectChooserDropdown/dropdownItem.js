@@ -19,10 +19,10 @@
  */
 import { forwardRef } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
-import { Tooltip } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
+import Tooltip from '../../../../tooltip';
 import { AnimationListItem, ContentWrapper } from './styles';
 import { ANIMATION_DROPDOWN_OPTION_PROP_TYPE } from './types';
 

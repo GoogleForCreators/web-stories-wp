@@ -20,10 +20,10 @@ import {
   lightMode,
   ModalGlobalStyle,
   SnackbarProvider,
+  PopupProvider,
   theme as externalDesignSystemTheme,
   ThemeGlobals,
   deepMerge,
-  setAppElement,
 } from '@googleforcreators/design-system';
 import { StyleSheetManager, ThemeProvider } from 'styled-components';
 import stylisRTLPlugin from 'stylis-plugin-rtl';
@@ -44,16 +44,15 @@ import getDefaultConfig from './getDefaultConfig';
 
 function Dashboard({ config, children }) {
   const _config = deepMerge(getDefaultConfig(), config);
-  const { isRTL, flags } = _config;
   const activeTheme = {
     ...externalDesignSystemTheme,
     colors: lightMode,
   };
-  // Set up modal focus trap on app's mount
-
-  document.body.setAttribute('id', 'dashboardWrapper');
-  setAppElement('#dashboardWrapper > div:first-of-type');
-
+  const {
+    isRTL,
+    flags,
+    styleConstants: { leftOffset, topOffset } = {},
+  } = _config;
   return (
     <FlagsProvider features={flags}>
       <StyleSheetManager stylisPlugins={isRTL ? [stylisRTLPlugin] : []}>
@@ -65,9 +64,17 @@ function Dashboard({ config, children }) {
               <NavProvider>
                 <RouterProvider>
                   <SnackbarProvider>
-                    <GlobalStyle />
-                    <KeyboardOnlyOutline />
-                    {children}
+                    <PopupProvider
+                      value={{
+                        isRTL,
+                        leftOffset,
+                        topOffset,
+                      }}
+                    >
+                      <GlobalStyle />
+                      <KeyboardOnlyOutline />
+                      {children}
+                    </PopupProvider>
                   </SnackbarProvider>
                 </RouterProvider>
               </NavProvider>

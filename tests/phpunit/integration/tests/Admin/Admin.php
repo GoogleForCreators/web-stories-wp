@@ -17,6 +17,7 @@
 
 namespace Google\Web_Stories\Tests\Integration\Admin;
 
+use DateTime;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 
 /**
@@ -24,6 +25,13 @@ use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
  */
 class Admin extends DependencyInjectedTestCase {
 
+	/**
+	 * Settings for test.
+	 * 
+	 * @var \Google\Web_Stories\Settings
+	 */
+	private $settings;
+	
 	/**
 	 * Admin user for test.
 	 *
@@ -46,6 +54,7 @@ class Admin extends DependencyInjectedTestCase {
 	protected static $post_id;
 
 	public static function wpSetUpBeforeClass( $factory ): void {
+		
 		self::$admin_id = $factory->user->create(
 			[ 'role' => 'administrator' ]
 		);
@@ -79,7 +88,7 @@ class Admin extends DependencyInjectedTestCase {
 
 	public function set_up(): void {
 		parent::set_up();
-
+		$this->settings = $this->injector->make( \Google\Web_Stories\Settings::class );
 		$this->instance = $this->injector->make( \Google\Web_Stories\Admin\Admin::class );
 	}
 
@@ -116,6 +125,29 @@ class Admin extends DependencyInjectedTestCase {
 		$poster                 = (string) wp_get_attachment_image_url( (int) get_post_thumbnail_id( self::$story_id ), \Google\Web_Stories\Media\Image_Sizes::POSTER_PORTRAIT_IMAGE_SIZE );
 		$this->assertStringContainsString( 'wp-block-web-stories-embed', $result );
 		$this->assertStringContainsString( $poster, $result );
+	}
+
+	/**
+	 * @covers ::prefill_post_content
+	 */
+	public function test_prefill_post_content_url_scheduled(): void {
+		wp_set_current_user( self::$admin_id );
+	
+		$story_id = self::factory()->post->create(
+			[
+				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_status'  => 'future',
+				'post_date'    => ( new DateTime( '+1day' ) )->format( 'Y-m-d H:i:s' ),
+				'post_title'   => 'Example',
+				'post_content' => '<html><head></head><body><amp-story standalone="" publisher="Web Stories" title="Example" poster-portrait-src="https://example.com/image.png"></amp-story></body></html>',
+			]
+		);
+	
+		$_GET['from-web-story'] = $story_id;
+		$result                 = $this->instance->prefill_post_content( 'current', get_post( self::$post_id ) );
+	
+		$this->assertStringNotContainsString( sprintf( '"url":"http://example.org/?post_type=web-story&#038;p=%s', $story_id ), $result );
+		$this->assertStringContainsString( sprintf( '"url":"http://example.org/?post_type=web-story&p=%s', $story_id ), $result );
 	}
 
 	/**
@@ -197,5 +229,24 @@ class Admin extends DependencyInjectedTestCase {
 		);
 
 		$this->assertSame( 'Story - Test', $result );
+	}
+
+	/**
+	 * @covers ::media_states
+	 */
+	public function test_media_states_no_active_logo(): void {
+		$post   = self::factory()->post->create_and_get( [] );
+		$result = $this->instance->media_states( [], $post );
+		$this->assertEqualSets( [], $result );
+	}
+
+	/**
+	 * @covers ::media_states
+	 */
+	public function test_media_states_with_active_logo(): void {
+		$post = self::factory()->post->create_and_get( [] );
+		$this->settings->update_setting( $this->settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO, $post->ID );
+		$result = $this->instance->media_states( [], $post );
+		$this->assertEqualSets( [ 'Web Stories Publisher Logo' ], $result );
 	}
 }

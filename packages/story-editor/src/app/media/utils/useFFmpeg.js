@@ -22,7 +22,7 @@ import { useCallback, useMemo } from '@googleforcreators/react';
 import { getTimeTracker, trackError } from '@googleforcreators/tracking';
 import {
   getExtensionFromMimeType,
-  getFileName,
+  getFileBasename,
   blobToFile,
 } from '@googleforcreators/media';
 
@@ -183,7 +183,7 @@ function useFFmpeg() {
         ffmpeg = await getFFmpegInstance(file);
 
         const tempFileName = uuidv4() + '.' + MEDIA_POSTER_IMAGE_FILE_TYPE;
-        const originalFileName = getFileName(file);
+        const originalFileName = getFileBasename(file);
         const outputFileName = getPosterName(originalFileName);
 
         await ffmpeg.run(
@@ -244,7 +244,7 @@ function useFFmpeg() {
 
         const tempFileName = uuidv4() + '.' + MEDIA_TRANSCODED_FILE_TYPE;
         const outputFileName =
-          getFileName(file) + '.' + MEDIA_TRANSCODED_FILE_TYPE;
+          getFileBasename(file) + '.' + MEDIA_TRANSCODED_FILE_TYPE;
 
         await ffmpeg.run(
           // Input filename.
@@ -303,7 +303,7 @@ function useFFmpeg() {
         const type = file?.type || MEDIA_TRANSCODED_MIME_TYPE;
         const ext = getExtensionFromMimeType(type);
         const tempFileName = uuidv4() + '.' + ext;
-        const outputFileName = getFileName(file) + '-trimmed.' + ext;
+        const outputFileName = getFileBasename(file) + '-trimmed.' + ext;
 
         await ffmpeg.run(
           // Input filename.
@@ -343,6 +343,55 @@ function useFFmpeg() {
   );
 
   /**
+   * Crop Video to remove portions of the video using FFmpeg.
+   */
+  const cropVideo = useCallback(
+    async (file, cropParams) => {
+      let ffmpeg;
+
+      const { cropWidth, cropHeight, cropX, cropY } = cropParams;
+
+      try {
+        ffmpeg = await getFFmpegInstance(file);
+
+        const type = file?.type || MEDIA_TRANSCODED_MIME_TYPE;
+        const ext = getExtensionFromMimeType(type);
+        const tempFileName = uuidv4() + '.' + ext;
+        const outputFileName = getFileBasename(file) + '-cropped.' + ext;
+        const crop = `crop=${cropWidth}:${cropHeight}:${cropX}:${cropY}`;
+
+        await ffmpeg.run(
+          // Input filename.
+          '-i',
+          file.name,
+          '-vf',
+          crop,
+          tempFileName
+        );
+
+        const data = ffmpeg.FS('readFile', tempFileName);
+
+        return blobToFile(
+          new Blob([data.buffer], { type }),
+          outputFileName,
+          type
+        );
+      } catch (err) {
+        // eslint-disable-next-line no-console -- We want to surface this error.
+        console.log(err);
+        throw err;
+      } finally {
+        try {
+          ffmpeg.exit();
+        } catch {
+          // Not interested in errors here.
+        }
+      }
+    },
+    [getFFmpegInstance]
+  );
+
+  /**
    * Strip audio from video using FFmpeg.
    *
    * @param {File} file Original video file object.
@@ -361,7 +410,7 @@ function useFFmpeg() {
         const type = file?.type || MEDIA_TRANSCODED_MIME_TYPE;
         const ext = getExtensionFromMimeType(type);
         const tempFileName = uuidv4() + '.' + ext;
-        const outputFileName = getFileName(file) + '-muted.' + ext;
+        const outputFileName = getFileBasename(file) + '-muted.' + ext;
 
         await ffmpeg.run(
           // Input filename.
@@ -420,7 +469,7 @@ function useFFmpeg() {
 
         const tempFileName = uuidv4() + '.' + MEDIA_TRANSCODED_FILE_TYPE;
         const outputFileName =
-          getFileName(file) + '.' + MEDIA_TRANSCODED_FILE_TYPE;
+          getFileBasename(file) + '.' + MEDIA_TRANSCODED_FILE_TYPE;
 
         await ffmpeg.run(
           // Input filename.
@@ -458,6 +507,59 @@ function useFFmpeg() {
   );
 
   /**
+   * Converts any audio file format to MP3 using FFmpeg.
+   *
+   * @param {File} file Original audio file object.
+   * @return {Promise<File>} Converted video file object.
+   */
+  const convertToMp3 = useCallback(
+    async (file) => {
+      //eslint-disable-next-line @wordpress/no-unused-vars-before-return -- False positive because of the finally().
+      const trackTiming = getTimeTracker('load_mp3_conversion');
+
+      let ffmpeg;
+
+      try {
+        ffmpeg = await getFFmpegInstance(file);
+
+        const tempFileName = uuidv4() + '.mp3';
+        const outputFileName = getFileBasename(file) + '.mp3';
+
+        await ffmpeg.run(
+          // Input filename.
+          '-i',
+          file.name,
+          // Output filename. MUST be different from input filename.
+          tempFileName
+        );
+
+        const data = ffmpeg.FS('readFile', tempFileName);
+
+        return new blobToFile(
+          new Blob([data.buffer], { type: 'audio/mpeg' }),
+          outputFileName,
+          'audio/mpeg'
+        );
+      } catch (err) {
+        // eslint-disable-next-line no-console -- We want to surface this error.
+        console.error(err);
+
+        trackError('mp3_conversion', err.message);
+
+        throw err;
+      } finally {
+        try {
+          ffmpeg.exit();
+          // eslint-disable-next-line no-empty -- no-op
+        } catch (e) {}
+
+        trackTiming();
+      }
+    },
+    [getFFmpegInstance]
+  );
+
+  /**
    * Determines whether the given file can be transcoded.
    *
    * @param {File} file File object.
@@ -473,9 +575,7 @@ function useFFmpeg() {
    *
    * @type {boolean}
    */
-  const isUserSettingEnabled = Boolean(
-    currentUser?.meta?.web_stories_media_optimization
-  );
+  const isUserSettingEnabled = Boolean(currentUser?.mediaOptimization);
 
   /**
    * Whether transcoding as a whole is supported.
@@ -498,7 +598,9 @@ function useFFmpeg() {
       stripAudioFromVideo,
       getFirstFrameOfVideo,
       convertGifToVideo,
+      convertToMp3,
       trimVideo,
+      cropVideo,
     }),
     [
       isTranscodingEnabled,
@@ -507,7 +609,9 @@ function useFFmpeg() {
       stripAudioFromVideo,
       getFirstFrameOfVideo,
       convertGifToVideo,
+      convertToMp3,
       trimVideo,
+      cropVideo,
     ]
   );
 }

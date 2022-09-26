@@ -21,15 +21,17 @@ import { useCallback } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import { Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
 import styled from 'styled-components';
-import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
  */
-import { useConfig, useStory } from '../../../../app';
+import { useStory } from '../../../../app';
 import { Row } from '../../../form';
 import { SimplePanel } from '../../panel';
-import BackgroundAudioPanelContent from '../../shared/backgroundAudioPanelContent';
+import BackgroundAudioPanelContent from '../../shared/media/backgroundAudioPanelContent';
+import useHighlights from '../../../../app/highlights/useHighlights';
+import states from '../../../../app/highlights/states';
+import { styles } from '../../../../app/highlights';
 
 const HelperText = styled(Text).attrs({
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
@@ -37,18 +39,36 @@ const HelperText = styled(Text).attrs({
   color: ${({ theme }) => theme.colors.fg.secondary};
 `;
 
-function PageBackgroundAudioPanel() {
-  const {
-    capabilities: { hasUploadMediaAction },
-  } = useConfig();
-  const enhancedPageBackgroundAudio = useFeature('enhancedPageBackgroundAudio');
+const HighlightRow = styled(Row).attrs({
+  spaceBetween: false,
+})`
+  position: relative;
+  &::after {
+    content: '';
+    position: absolute;
+    top: -10px;
+    bottom: -10px;
+    left: -20px;
+    right: -10px;
+    ${({ isHighlighted }) => isHighlighted && styles.FLASH}
+    pointer-events: none;
+  }
+`;
 
+function PageBackgroundAudioPanel() {
   const { backgroundAudio, currentPageId, updateCurrentPageProperties } =
     useStory((state) => ({
       updateCurrentPageProperties: state.actions.updateCurrentPageProperties,
       backgroundAudio: state.state.currentPage?.backgroundAudio,
       currentPageId: state.state.currentPage?.id,
     }));
+
+  const { highlightBackgroundAudio, resetHighlight } = useHighlights(
+    (state) => ({
+      highlightBackgroundAudio: state[states.PAGE_BACKGROUND_AUDIO],
+      resetHighlight: state.onFocusOut,
+    })
+  );
 
   const updateBackgroundAudio = useCallback(
     (updatedBackgroundAudio) => {
@@ -61,29 +81,29 @@ function PageBackgroundAudioPanel() {
     [updateCurrentPageProperties]
   );
 
-  if (!backgroundAudio && !hasUploadMediaAction) {
-    return null;
-  }
-
   return (
     <SimplePanel
       name="pageBackgroundAudio"
       title={__('Page Background Audio', 'web-stories')}
       collapsedByDefault={false}
+      isPersistable={!highlightBackgroundAudio}
     >
-      <Row>
+      <HighlightRow
+        isHighlighted={highlightBackgroundAudio?.showEffect}
+        onAnimationEnd={() => resetHighlight()}
+      >
         <HelperText>
           {__(
             'Select an audio file that plays while this page is in view.',
             'web-stories'
           )}
         </HelperText>
-      </Row>
+      </HighlightRow>
       <BackgroundAudioPanelContent
         backgroundAudio={backgroundAudio}
         updateBackgroundAudio={updateBackgroundAudio}
-        showCaptions={enhancedPageBackgroundAudio}
-        showLoopControl={enhancedPageBackgroundAudio}
+        showCaptions
+        showLoopControl
         audioId={`page-${currentPageId}-background-audio`}
       />
     </SimplePanel>

@@ -19,19 +19,20 @@
  */
 import PropTypes from 'prop-types';
 import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
+import { getExtensionsFromMimeType } from '@googleforcreators/media';
 import { useCallback, useMemo } from '@googleforcreators/react';
 import styled from 'styled-components';
+import { Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
  */
-import { Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
 import { Media, Row, TextArea } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { getCommonValue, useCommonObjectValue } from '../../shared';
 import { useConfig } from '../../../../app/config';
-import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
 import { styles, states, useHighlights } from '../../../../app/highlights';
+import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
 
 const DEFAULT_RESOURCE = {
   alt: null,
@@ -73,10 +74,24 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
   const rawPoster = getCommonValue(selectedElements, 'poster');
   const poster = getCommonValue(selectedElements, 'poster', resource.poster);
   const {
-    allowedImageMimeTypes,
-    allowedImageFileTypes,
+    allowedMimeTypes: { image: allowedImageMimeTypes },
     capabilities: { hasUploadMediaAction },
   } = useConfig();
+
+  const options = [
+    hasUploadMediaAction && 'upload',
+    hasUploadMediaAction && 'edit',
+    'hotlink',
+    poster !== resource.poster && 'reset',
+  ].filter(Boolean);
+
+  const allowedImageFileTypes = useMemo(
+    () =>
+      allowedImageMimeTypes
+        .map((type) => getExtensionsFromMimeType(type))
+        .flat(),
+    [allowedImageMimeTypes]
+  );
 
   const handleChangePoster = useCallback(
     /**
@@ -156,13 +171,19 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
           onChange={handleChangePoster}
           onChangeErrorText={posterErrorMessage}
           title={__('Select as video poster', 'web-stories')}
+          hotlinkTitle={__('Use external image as video poster', 'web-stories')}
+          hotlinkInsertText={__('Use image as video poster', 'web-stories')}
+          hotlinkInsertingText={__(
+            'Using image as video poster',
+            'web-stories'
+          )}
           buttonInsertText={__('Set as video poster', 'web-stories')}
           alt={__('Preview poster image', 'web-stories')}
           type={allowedImageMimeTypes}
           ariaLabel={__('Video poster', 'web-stories')}
-          menuOptions={['edit', 'reset']}
+          menuOptions={options}
           imgProps={cropParams}
-          canUpload={hasUploadMediaAction}
+          canUpload={options.length !== 0}
         />
         <InputsWrapper>
           <StyledText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>

@@ -17,11 +17,12 @@
  * External dependencies
  */
 import { waitFor } from '@testing-library/react';
+import { TEXT_ELEMENT_DEFAULT_FONT } from '@googleforcreators/elements';
+
 /**
  * Internal dependencies
  */
 import { useStory } from '../../../app';
-import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../app/font/defaultFonts';
 import { ACTIONS } from '../../../app/highlights';
 import { Fixture } from '../../../karma';
 import useInsertElement from '../useInsertElement';
@@ -38,6 +39,8 @@ describe('Quick Actions integration', () => {
     fixture = new Fixture();
     await fixture.render();
     await fixture.collapseHelpCenter();
+    // #11321 adding/editing animations on the first page is disabled
+    await fixture.events.click(fixture.editor.canvas.pageActions.addPage);
   });
 
   afterEach(() => {
@@ -54,6 +57,35 @@ describe('Quick Actions integration', () => {
       await fixture.events.sleep(300);
 
       expect(fixture.screen.queryByTestId('quick-actions-menu')).toBeNull();
+    });
+
+    it('quick menu should not be visible if no quick actions are present', async () => {
+      // when two different elements types are selected, there may not be any quick actions to show
+      // in that case, we shouldn't be rendering the context menu at all
+      // add shape to canvas
+      await fixture.editor.library.shapesTab.click();
+      await fixture.events.click(
+        fixture.editor.library.shapes.shape('Triangle')
+      );
+
+      // add text to canvas
+      await fixture.editor.library.textTab.click();
+      await fixture.events.click(
+        fixture.editor.library.text.preset('Paragraph')
+      );
+      await fixture.editor.canvas.framesLayer.waitFocusedWithin();
+
+      expect(
+        fixture.screen.queryByTestId('Element quick actions')
+      ).not.toBeNull();
+
+      // select both text and shape elements
+      await fixture.events.keyboard.down('Shift');
+      const triangle = fixture.editor.canvas.framesLayer.frames[1].node;
+      await clickOnTarget(triangle);
+      await fixture.events.keyboard.up('Shift');
+
+      expect(fixture.screen.queryByTestId('Element quick actions')).toBeNull();
     });
   });
 
@@ -72,11 +104,9 @@ describe('Quick Actions integration', () => {
         fixture.editor.canvas.quickActionMenu.changeBackgroundColorButton
       );
 
-      expect(
-        fixture.editor.inspector.designPanel.pageBackground
-      ).not.toBeNull();
+      expect(fixture.editor.sidebar.designPanel.pageBackground).not.toBeNull();
       expect(document.activeElement).toEqual(
-        fixture.editor.inspector.designPanel.pageBackground.backgroundColorInput
+        fixture.editor.sidebar.designPanel.pageBackground.backgroundColorInput
       );
     });
 
@@ -93,14 +123,16 @@ describe('Quick Actions integration', () => {
       expect(document.activeElement).toEqual(fixture.editor.library.mediaTab);
     });
 
-    it(`clicking the \`${ACTIONS.INSERT_TEXT.text}\` button should select the background and open the text tab in the library`, async () => {
+    it(`clicking the \`${ACTIONS.INSERT_TEXT.text}\` button should select the background, open the text tab in the library and insert the default text`, async () => {
       // click quick menu button
       await fixture.events.click(
         fixture.editor.canvas.quickActionMenu.insertTextButton
       );
-
+      expect(fixture.editor.canvas.framesLayer.frames.length).toBe(2);
       expect(fixture.editor.library.text).not.toBeNull();
-      expect(document.activeElement).toEqual(fixture.editor.library.textTab);
+      expect(document.activeElement).toEqual(
+        fixture.editor.canvas.framesLayer.frames[1].node
+      );
     });
 
     it('should allow clicking multiple actions', async () => {
@@ -111,9 +143,7 @@ describe('Quick Actions integration', () => {
         fixture.editor.canvas.quickActionMenu.changeBackgroundColorButton
       );
 
-      expect(
-        fixture.editor.inspector.designPanel.pageBackground
-      ).not.toBeNull();
+      expect(fixture.editor.sidebar.designPanel.pageBackground).not.toBeNull();
 
       // click quick menu button
       await fixture.events.click(
@@ -190,10 +220,10 @@ describe('Quick Actions integration', () => {
         fixture.editor.canvas.quickActionMenu.addAnimationButton
       );
 
-      expect(fixture.editor.inspector.designPanel.animation).not.toBeNull();
+      expect(fixture.editor.sidebar.designPanel.animation).not.toBeNull();
 
       expect(document.activeElement).toEqual(
-        fixture.editor.inspector.designPanel.animation.effectChooser
+        fixture.editor.sidebar.designPanel.animation.effectChooser
       );
     });
 
@@ -204,10 +234,10 @@ describe('Quick Actions integration', () => {
         fixture.editor.canvas.quickActionMenu.addLinkButton
       );
 
-      expect(fixture.editor.inspector.designPanel.link).not.toBeNull();
+      expect(fixture.editor.sidebar.designPanel.link).not.toBeNull();
 
       expect(document.activeElement).toEqual(
-        fixture.editor.inspector.designPanel.link.address
+        fixture.editor.sidebar.designPanel.link.address
       );
     });
 
@@ -218,8 +248,12 @@ describe('Quick Actions integration', () => {
       ).toBeNull();
 
       // add animation to image
+      await fixture.events.click(fixture.editor.sidebar.designTab);
+      await fixture.events.click(
+        fixture.editor.sidebar.designPanel.animationSection
+      );
       const effectChooserToggle =
-        fixture.editor.inspector.designPanel.animation.effectChooser;
+        fixture.editor.sidebar.designPanel.animation.effectChooser;
 
       await fixture.events.click(effectChooserToggle, { clickCount: 1 });
 
@@ -244,8 +278,12 @@ describe('Quick Actions integration', () => {
       );
 
       // apply filter
+      await fixture.events.click(fixture.editor.sidebar.designTab);
       await fixture.events.click(
-        fixture.editor.inspector.designPanel.filters.linear
+        fixture.editor.sidebar.designPanel.selectionSection
+      );
+      await fixture.events.click(
+        fixture.editor.sidebar.designPanel.filters.linear
       );
 
       // verify the animations and styles were added
@@ -254,7 +292,7 @@ describe('Quick Actions integration', () => {
       await waitFor(async () => {
         const story = await fixture.renderHook(() =>
           useStory(({ state }) => ({
-            animations: state.pages[0].animations,
+            animations: state.pages[1].animations,
             selectedElement: state.selectedElements[0],
           }))
         );
@@ -279,7 +317,7 @@ describe('Quick Actions integration', () => {
       // verify that element has no animations or styles
       const { animations, selectedElement } = await fixture.renderHook(() =>
         useStory(({ state }) => ({
-          animations: state.pages[0].animations,
+          animations: state.pages[1].animations,
           selectedElement: state.selectedElements[0],
         }))
       );
@@ -309,7 +347,7 @@ describe('Quick Actions integration', () => {
         selectedElement: revertedSelectedElement,
       } = await fixture.renderHook(() =>
         useStory(({ state }) => ({
-          animations: state.pages[0].animations,
+          animations: state.pages[1].animations,
           selectedElement: state.selectedElements[0],
         }))
       );
@@ -357,29 +395,16 @@ describe('Quick Actions integration', () => {
       );
     });
 
-    it(`should select the \`${ACTIONS.CHANGE_COLOR.text}\` button and select the shape style panel and focus the input`, async () => {
-      await fixture.events.click(
-        fixture.editor.canvas.quickActionMenu.changeColorButton
-      );
-
-      expect(
-        fixture.editor.inspector.designPanel.shapeStyle.backgroundColor.hex
-      ).not.toBeNull();
-      expect(document.activeElement).toEqual(
-        fixture.editor.inspector.designPanel.shapeStyle.backgroundColor.hex
-      );
-    });
-
     it(`should select the \`${ACTIONS.ADD_ANIMATION.text}\` button and select the animation panel and focus the dropdown`, async () => {
       // click quick menu button
       await fixture.events.click(
         fixture.editor.canvas.quickActionMenu.addAnimationButton
       );
 
-      expect(fixture.editor.inspector.designPanel.animation).not.toBeNull();
+      expect(fixture.editor.sidebar.designPanel.animation).not.toBeNull();
 
       expect(document.activeElement).toEqual(
-        fixture.editor.inspector.designPanel.animation.effectChooser
+        fixture.editor.sidebar.designPanel.animation.effectChooser
       );
     });
 
@@ -389,10 +414,10 @@ describe('Quick Actions integration', () => {
         fixture.editor.canvas.quickActionMenu.addLinkButton
       );
 
-      expect(fixture.editor.inspector.designPanel.link).not.toBeNull();
+      expect(fixture.editor.sidebar.designPanel.link).not.toBeNull();
 
       expect(document.activeElement).toEqual(
-        fixture.editor.inspector.designPanel.link.address
+        fixture.editor.sidebar.designPanel.link.address
       );
     });
 
@@ -403,8 +428,12 @@ describe('Quick Actions integration', () => {
       ).toBeNull();
 
       // add animation to shape
+      await fixture.events.click(fixture.editor.sidebar.designTab);
+      await fixture.events.click(
+        fixture.editor.sidebar.designPanel.animationSection
+      );
       const effectChooserToggle =
-        fixture.editor.inspector.designPanel.animation.effectChooser;
+        fixture.editor.sidebar.designPanel.animation.effectChooser;
 
       await fixture.events.click(effectChooserToggle, { clickCount: 1 });
 
@@ -429,7 +458,10 @@ describe('Quick Actions integration', () => {
 
       // add styles to the shape
       await fixture.events.click(
-        fixture.editor.inspector.designPanel.sizePosition.opacity
+        fixture.editor.sidebar.designPanel.selectionSection
+      );
+      await fixture.events.click(
+        fixture.editor.sidebar.designPanel.sizePosition.opacity
       );
       await fixture.events.keyboard.type('99');
       await fixture.events.keyboard.press('Enter');
@@ -440,7 +472,7 @@ describe('Quick Actions integration', () => {
       await waitFor(async () => {
         const story = await fixture.renderHook(() =>
           useStory(({ state }) => ({
-            animations: state.pages[0].animations,
+            animations: state.pages[1].animations,
             selectedElement: state.selectedElements[0],
           }))
         );
@@ -465,7 +497,7 @@ describe('Quick Actions integration', () => {
       // verify that element has no animations or styles
       const { animations, selectedElement } = await fixture.renderHook(() =>
         useStory(({ state }) => ({
-          animations: state.pages[0].animations,
+          animations: state.pages[1].animations,
           selectedElement: state.selectedElements[0],
         }))
       );
@@ -495,7 +527,7 @@ describe('Quick Actions integration', () => {
         selectedElement: revertedSelectedElement,
       } = await fixture.renderHook(() =>
         useStory(({ state }) => ({
-          animations: state.pages[0].animations,
+          animations: state.pages[1].animations,
           selectedElement: state.selectedElements[0],
         }))
       );
@@ -567,10 +599,10 @@ describe('Quick Actions integration', () => {
         fixture.editor.canvas.quickActionMenu.addAnimationButton
       );
 
-      expect(fixture.editor.inspector.designPanel.animation).not.toBeNull();
+      expect(fixture.editor.sidebar.designPanel.animation).not.toBeNull();
 
       expect(document.activeElement).toEqual(
-        fixture.editor.inspector.designPanel.animation.effectChooser
+        fixture.editor.sidebar.designPanel.animation.effectChooser
       );
     });
 
@@ -581,8 +613,12 @@ describe('Quick Actions integration', () => {
       ).toBeNull();
 
       // add animation to background image
+      await fixture.events.click(fixture.editor.sidebar.designTab);
+      await fixture.events.click(
+        fixture.editor.sidebar.designPanel.animationSection
+      );
       const effectChooserToggle =
-        fixture.editor.inspector.designPanel.animation.effectChooser;
+        fixture.editor.sidebar.designPanel.animation.effectChooser;
 
       await fixture.events.click(effectChooserToggle, { clickCount: 1 });
 
@@ -607,7 +643,10 @@ describe('Quick Actions integration', () => {
 
       // apply filter
       await fixture.events.click(
-        fixture.editor.inspector.designPanel.filters.linear
+        fixture.editor.sidebar.designPanel.selectionSection
+      );
+      await fixture.events.click(
+        fixture.editor.sidebar.designPanel.filters.linear
       );
 
       // verify the styles were added
@@ -616,7 +655,7 @@ describe('Quick Actions integration', () => {
       await waitFor(async () => {
         const story = await fixture.renderHook(() =>
           useStory(({ state }) => ({
-            animations: state.pages[0].animations,
+            animations: state.pages[1].animations,
             selectedElement: state.selectedElements[0],
           }))
         );
@@ -641,7 +680,7 @@ describe('Quick Actions integration', () => {
       // verify that element has no animations or styles
       const { animations, selectedElement } = await fixture.renderHook(() =>
         useStory(({ state }) => ({
-          animations: state.pages[0].animations,
+          animations: state.pages[1].animations,
           selectedElement: state.selectedElements[0],
         }))
       );
@@ -670,7 +709,7 @@ describe('Quick Actions integration', () => {
         selectedElement: revertedSelectedElement,
       } = await fixture.renderHook(() =>
         useStory(({ state }) => ({
-          animations: state.pages[0].animations,
+          animations: state.pages[1].animations,
           selectedElement: state.selectedElements[0],
         }))
       );
@@ -714,46 +753,16 @@ describe('Quick Actions integration', () => {
       await fixture.editor.canvas.framesLayer.waitFocusedWithin();
     });
 
-    it(`clicking the \`${ACTIONS.CHANGE_TEXT_COLOR.text}\` button should select the font styles on the design panel and focus the color input`, async () => {
-      // click quick menu button
-      await fixture.events.click(
-        fixture.editor.canvas.quickActionMenu.textColorButton
-      );
-
-      expect(fixture.editor.inspector.designPanel.textStyle).not.toBeNull();
-
-      const textStyleColorInput = fixture.screen.queryByRole('textbox', {
-        name: /^Text color$/,
-      });
-      expect(textStyleColorInput).toBeDefined();
-      expect(document.activeElement).toEqual(textStyleColorInput);
-    });
-
-    it(`clicking the \`${ACTIONS.CHANGE_FONT.text}\` button should select the font styles on the design panel and focus the font dropdown`, async () => {
-      // click quick menu button
-      await fixture.events.click(
-        fixture.editor.canvas.quickActionMenu.fontButton
-      );
-
-      expect(fixture.editor.inspector.designPanel.textStyle).not.toBeNull();
-
-      const fontDropdown = fixture.screen.queryByRole('button', {
-        name: /^Font family$/,
-      });
-      expect(fontDropdown).toBeDefined();
-      expect(document.activeElement).toEqual(fontDropdown);
-    });
-
     it(`clicking the \`${ACTIONS.ADD_ANIMATION.text}\` button should select the animation panel and focus the dropdown`, async () => {
       // click quick menu button
       await fixture.events.click(
         fixture.editor.canvas.quickActionMenu.addAnimationButton
       );
 
-      expect(fixture.editor.inspector.designPanel.animation).not.toBeNull();
+      expect(fixture.editor.sidebar.designPanel.animation).not.toBeNull();
 
       expect(document.activeElement).toEqual(
-        fixture.editor.inspector.designPanel.animation.effectChooser
+        fixture.editor.sidebar.designPanel.animation.effectChooser
       );
     });
 
@@ -763,10 +772,10 @@ describe('Quick Actions integration', () => {
         fixture.editor.canvas.quickActionMenu.addLinkButton
       );
 
-      expect(fixture.editor.inspector.designPanel.link).not.toBeNull();
+      expect(fixture.editor.sidebar.designPanel.link).not.toBeNull();
 
       expect(document.activeElement).toEqual(
-        fixture.editor.inspector.designPanel.link.address
+        fixture.editor.sidebar.designPanel.link.address
       );
     });
 
@@ -777,8 +786,12 @@ describe('Quick Actions integration', () => {
       ).toBeNull();
 
       // add animation to text
+      await fixture.events.click(fixture.editor.sidebar.designTab);
+      await fixture.events.click(
+        fixture.editor.sidebar.designPanel.animationSection
+      );
       const effectChooserToggle =
-        fixture.editor.inspector.designPanel.animation.effectChooser;
+        fixture.editor.sidebar.designPanel.animation.effectChooser;
 
       await fixture.events.click(effectChooserToggle, { clickCount: 1 });
 
@@ -806,7 +819,7 @@ describe('Quick Actions integration', () => {
       await waitFor(async () => {
         const story = await fixture.renderHook(() =>
           useStory(({ state }) => ({
-            animations: state.pages[0].animations,
+            animations: state.pages[1].animations,
           }))
         );
         ({ animations: originalAnimations } = story);
@@ -826,7 +839,7 @@ describe('Quick Actions integration', () => {
       // verify that element has no animations
       const { animations } = await fixture.renderHook(() =>
         useStory(({ state }) => ({
-          animations: state.pages[0].animations,
+          animations: state.pages[1].animations,
         }))
       );
       expect(animations.length).toBe(0);
@@ -851,7 +864,7 @@ describe('Quick Actions integration', () => {
       // Verify that new animations match original animation
       const { animations: revertedAnimations } = await fixture.renderHook(() =>
         useStory(({ state }) => ({
-          animations: state.pages[0].animations,
+          animations: state.pages[1].animations,
         }))
       );
       expect(revertedAnimations.length).toBe(1);
@@ -951,10 +964,10 @@ describe('Quick Actions integration', () => {
         fixture.editor.canvas.quickActionMenu.addAnimationButton
       );
 
-      expect(fixture.editor.inspector.designPanel.animation).not.toBeNull();
+      expect(fixture.editor.sidebar.designPanel.animation).not.toBeNull();
 
       expect(document.activeElement).toEqual(
-        fixture.editor.inspector.designPanel.animation.effectChooser
+        fixture.editor.sidebar.designPanel.animation.effectChooser
       );
     });
 
@@ -964,10 +977,10 @@ describe('Quick Actions integration', () => {
         fixture.editor.canvas.quickActionMenu.addLinkButton
       );
 
-      expect(fixture.editor.inspector.designPanel.link).not.toBeNull();
+      expect(fixture.editor.sidebar.designPanel.link).not.toBeNull();
 
       expect(document.activeElement).toEqual(
-        fixture.editor.inspector.designPanel.link.address
+        fixture.editor.sidebar.designPanel.link.address
       );
     });
 
@@ -976,7 +989,7 @@ describe('Quick Actions integration', () => {
         fixture.editor.canvas.quickActionMenu.addCaptionsButton
       );
       expect(
-        fixture.editor.inspector.designPanel.captions.addCaptionsButton
+        fixture.editor.sidebar.designPanel.captions.addCaptionsButton
       ).not.toBeNull();
     });
 
@@ -987,8 +1000,12 @@ describe('Quick Actions integration', () => {
       ).toBeNull();
 
       // add animation to video
+      await fixture.events.click(fixture.editor.sidebar.designTab);
+      await fixture.events.click(
+        fixture.editor.sidebar.designPanel.animationSection
+      );
       const effectChooserToggle =
-        fixture.editor.inspector.designPanel.animation.effectChooser;
+        fixture.editor.sidebar.designPanel.animation.effectChooser;
 
       await fixture.events.click(effectChooserToggle, { clickCount: 1 });
 
@@ -1013,7 +1030,10 @@ describe('Quick Actions integration', () => {
 
       // apply filter
       await fixture.events.click(
-        fixture.editor.inspector.designPanel.filters.linear
+        fixture.editor.sidebar.designPanel.selectionSection
+      );
+      await fixture.events.click(
+        fixture.editor.sidebar.designPanel.filters.linear
       );
 
       // verify the animations and styles were added
@@ -1022,7 +1042,7 @@ describe('Quick Actions integration', () => {
       await waitFor(async () => {
         const story = await fixture.renderHook(() =>
           useStory(({ state }) => ({
-            animations: state.pages[0].animations,
+            animations: state.pages[1].animations,
             selectedElement: state.selectedElements[0],
           }))
         );
@@ -1047,7 +1067,7 @@ describe('Quick Actions integration', () => {
       // verify that element has no animations or styles
       const { animations, selectedElement } = await fixture.renderHook(() =>
         useStory(({ state }) => ({
-          animations: state.pages[0].animations,
+          animations: state.pages[1].animations,
           selectedElement: state.selectedElements[0],
         }))
       );
@@ -1076,7 +1096,7 @@ describe('Quick Actions integration', () => {
         selectedElement: revertedSelectedElement,
       } = await fixture.renderHook(() =>
         useStory(({ state }) => ({
-          animations: state.pages[0].animations,
+          animations: state.pages[1].animations,
           selectedElement: state.selectedElements[0],
         }))
       );
@@ -1118,6 +1138,7 @@ describe('Quick Actions integration', () => {
       await clickOnTarget(
         fixture.editor.canvas.framesLayer.frame(sticker.id).node
       );
+      await fixture.events.click(fixture.editor.sidebar.designTab);
     });
 
     it(`clicking the \`${ACTIONS.ADD_ANIMATION.text}\` button should select the animation panel and focus the dropdown`, async () => {
@@ -1126,10 +1147,10 @@ describe('Quick Actions integration', () => {
         fixture.editor.canvas.quickActionMenu.addAnimationButton
       );
 
-      expect(fixture.editor.inspector.designPanel.animation).not.toBeNull();
+      expect(fixture.editor.sidebar.designPanel.animation).not.toBeNull();
 
       expect(document.activeElement).toEqual(
-        fixture.editor.inspector.designPanel.animation.effectChooser
+        fixture.editor.sidebar.designPanel.animation.effectChooser
       );
     });
 
@@ -1139,10 +1160,10 @@ describe('Quick Actions integration', () => {
         fixture.editor.canvas.quickActionMenu.addLinkButton
       );
 
-      expect(fixture.editor.inspector.designPanel.link).not.toBeNull();
+      expect(fixture.editor.sidebar.designPanel.link).not.toBeNull();
 
       expect(document.activeElement).toEqual(
-        fixture.editor.inspector.designPanel.link.address
+        fixture.editor.sidebar.designPanel.link.address
       );
     });
 
@@ -1153,8 +1174,12 @@ describe('Quick Actions integration', () => {
       ).toBeNull();
 
       // add animation to image
+      await fixture.events.click(fixture.editor.sidebar.designTab);
+      await fixture.events.click(
+        fixture.editor.sidebar.designPanel.animationSection
+      );
       const effectChooserToggle =
-        fixture.editor.inspector.designPanel.animation.effectChooser;
+        fixture.editor.sidebar.designPanel.animation.effectChooser;
 
       await fixture.events.click(effectChooserToggle, { clickCount: 1 });
 
@@ -1179,7 +1204,10 @@ describe('Quick Actions integration', () => {
 
       // apply opacity
       await fixture.events.click(
-        fixture.editor.inspector.designPanel.sizePosition.opacity
+        fixture.editor.sidebar.designPanel.selectionSection
+      );
+      await fixture.events.click(
+        fixture.editor.sidebar.designPanel.sizePosition.opacity
       );
       await fixture.events.keyboard.type('40');
       await fixture.events.keyboard.press('Enter');
@@ -1190,7 +1218,7 @@ describe('Quick Actions integration', () => {
       await waitFor(async () => {
         const story = await fixture.renderHook(() =>
           useStory(({ state }) => ({
-            animations: state.pages[0].animations,
+            animations: state.pages[1].animations,
             selectedElement: state.selectedElements[0],
           }))
         );
@@ -1215,7 +1243,7 @@ describe('Quick Actions integration', () => {
       // verify that element has no animations or styles
       const { animations, selectedElement } = await fixture.renderHook(() =>
         useStory(({ state }) => ({
-          animations: state.pages[0].animations,
+          animations: state.pages[1].animations,
           selectedElement: state.selectedElements[0],
         }))
       );
@@ -1244,7 +1272,7 @@ describe('Quick Actions integration', () => {
         selectedElement: revertedSelectedElement,
       } = await fixture.renderHook(() =>
         useStory(({ state }) => ({
-          animations: state.pages[0].animations,
+          animations: state.pages[1].animations,
           selectedElement: state.selectedElements[0],
         }))
       );

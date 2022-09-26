@@ -24,6 +24,7 @@ import {
   localStore,
   LOCAL_STORAGE_PREFIX,
 } from '@googleforcreators/design-system';
+import { isAnimatedGif } from '@googleforcreators/media';
 
 /**
  * Internal dependencies
@@ -66,11 +67,12 @@ function useUploadMedia({
       uploaded,
       failures,
       finished,
+      active,
       isNewResourceProcessing,
       isCurrentResourceProcessing,
       isNewResourceTranscoding,
       isNewResourceMuting,
-      isResourceTrimming,
+      isElementTrimming,
       isCurrentResourceUploading,
       isCurrentResourceTranscoding,
       isCurrentResourceMuting,
@@ -120,13 +122,7 @@ function useUploadMedia({
         onUploadStart({ resource });
       }
     }
-
-    const resourcesToAdd = newItems.map(({ resource }) => resource);
-
-    prependMedia({
-      media: resourcesToAdd,
-    });
-  }, [pending, prependMedia]);
+  }, [pending]);
 
   // Update *existing* items in the media library and on canvas.
   useEffect(() => {
@@ -170,6 +166,9 @@ function useUploadMedia({
         updateMediaElement({ id: previousResourceId, data: resource });
       }
 
+      // onUploadSuccess typically calls postProcessingResource, which
+      // will cause things like base color and BlurHash generation to run
+      // twice for a given resource.
       if (onUploadSuccess) {
         onUploadSuccess({ id: resourceId, resource: resource });
         if (previousResourceId) {
@@ -184,12 +183,20 @@ function useUploadMedia({
   // Handle *finished* items.
   // At this point, uploaded resources have been updated and rendered everywhere,
   // and no further action is required.
-  // It is safe to remove them from the queue now.
+  // It is safe to remove them from the queue now and *properly* prepend them
+  // to the media library list.
   useEffect(() => {
+    if (!finished.length) {
+      return;
+    }
+
     for (const { id } of finished) {
       removeItem({ id });
     }
-  }, [finished, removeItem]);
+
+    // Update state in 1 call instead of in the above loop.
+    prependMedia({ media: finished.map(({ resource }) => resource) });
+  }, [finished, removeItem, prependMedia]);
 
   // Handle *failed* items.
   // Remove resources from media library and canvas.
@@ -236,11 +243,13 @@ function useUploadMedia({
      * @param {Function} args.onUploadError Callback for when upload fails.
      * @param {Function} args.onUploadSuccess Callback for when upload succeeds.
      * @param {Object} args.additionalData Object of additionalData.
-     * @param {boolean} args.muteVideo Should the video being transcoded, should also be muted.
+     * @param {boolean} args.muteVideo If passing a video, should it be muted.
+     * @param {boolean} args.cropVideo If passing a video, should it be cropped.
      * @param {import('@googleforcreators/media').TrimData} args.trimData Trim data.
      * @param {import('@googleforcreators/media').Resource} args.resource Resource object.
      * @param {Blob} args.posterFile Blob object of poster.
      * @param {number} args.originalResourceId Original resource id.
+     * @param {string} args.elementId ID of element on the canvas.
      * @return {void}
      */
     async (
@@ -252,10 +261,12 @@ function useUploadMedia({
         onUploadSuccess,
         additionalData,
         muteVideo,
+        cropVideo,
         trimData,
         resource,
         posterFile,
         originalResourceId,
+        elementId,
       } = {}
     ) => {
       // If there are no files passed, don't try to upload.
@@ -273,7 +284,11 @@ function useUploadMedia({
           const isTooLarge = canTranscode && isFileTooLarge(file);
 
           try {
-            validateFileForUpload(file, canTranscode, isTooLarge);
+            validateFileForUpload({
+              file,
+              canTranscodeFile: canTranscode,
+              isFileTooLarge: isTooLarge,
+            });
           } catch (e) {
             showSnackbar({
               message: e.message,
@@ -289,11 +304,28 @@ function useUploadMedia({
           // having to update the dimensions later on as the information becomes available.
           // Downside: it takes a tad longer for the file to initially appear.
           // Upside: file is displayed with the right dimensions from the beginning.
-          if (!resource || !posterFile) {
+          if ((!resource || !posterFile) && !cropVideo) {
             const { resource: newResource, posterFile: newPosterFile } =
               await getResourceFromLocalFile(file);
             posterFile = newPosterFile;
             resource = newResource;
+          }
+
+          const isGif =
+            resource.mimeType === 'image/gif' &&
+            isAnimatedGif(await file.arrayBuffer());
+
+          // Treat incoming video as a gif if wanted, used by media recording.
+          if (additionalData?.isGif) {
+            resource = {
+              ...resource,
+              type: 'gif',
+              mimeType: 'image/gif',
+              output: {
+                mimeType: resource.mimeType,
+                src: resource.src,
+              },
+            };
           }
 
           addItem({
@@ -306,8 +338,11 @@ function useUploadMedia({
             additionalData,
             posterFile,
             muteVideo,
+            cropVideo,
             trimData,
             originalResourceId,
+            elementId,
+            isAnimatedGif: isGif,
           });
         })
       );
@@ -323,6 +358,7 @@ function useUploadMedia({
   );
 
   return {
+    active,
     uploadMedia,
     isUploading,
     isTranscoding,
@@ -330,7 +366,7 @@ function useUploadMedia({
     isCurrentResourceProcessing,
     isNewResourceTranscoding,
     isNewResourceMuting,
-    isResourceTrimming,
+    isElementTrimming,
     isCurrentResourceUploading,
     isCurrentResourceTranscoding,
     isCurrentResourceMuting,

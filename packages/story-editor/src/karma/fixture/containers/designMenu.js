@@ -26,7 +26,7 @@ export class DesignMenu extends Container {
 
   get flipVertical() {
     return this._get(
-      this.getByRole('menuitem', { name: 'Flip vertically' }),
+      this.getByRole('button', { name: 'Flip vertically' }),
       'flipVertical',
       ToggleButton
     );
@@ -34,7 +34,7 @@ export class DesignMenu extends Container {
 
   get flipHorizontal() {
     return this._get(
-      this.getByRole('menuitem', { name: 'Flip horizontally' }),
+      this.getByRole('button', { name: 'Flip horizontally' }),
       'flipHorizontal',
       ToggleButton
     );
@@ -50,7 +50,7 @@ export class DesignMenu extends Container {
 
   get borderColor() {
     const region = this.queryByRole('region', {
-      name: /Color input: Border color/,
+      name: 'Color input (floating menu): Border color',
     });
     if (!region) {
       return null;
@@ -62,5 +62,70 @@ export class DesignMenu extends Container {
 
   get swapMedia() {
     return this.getByRole('menuitem', { name: 'Replace media' });
+  }
+
+  get loop() {
+    return this.getByRole('checkbox', { name: 'Loop' });
+  }
+
+  get textAlign() {
+    return this.getByRole('menuitem', { name: 'Change text alignment' });
+  }
+
+  textAlignIcon(name) {
+    return this.getByRoleIn(this.textAlign, 'img', { name });
+  }
+
+  textAlignOption(name) {
+    const dialog = this.getByRole('dialog', { name: 'Text alignment options' });
+    return this.getByRoleIn(dialog, 'button', { name });
+  }
+
+  get fontSize() {
+    return this.getByRole('textbox', { name: /Font size/ });
+  }
+
+  get fontColor() {
+    const region = this.queryByRole('region', {
+      name: 'Color input (floating menu): Text color',
+    });
+    if (!region) {
+      return null;
+    }
+    const element = this._get(region, 'textColor', Color);
+    element.label = 'Text color';
+    return element;
+  }
+
+  get opacity() {
+    return this.getByRole('textbox', { name: /^Opacity in percent$/ });
+  }
+
+  get bold() {
+    return this._get(
+      this.getByRole('button', { name: /Toggle bold/ }),
+      'toggleBold',
+      ToggleButton
+    );
+  }
+
+  get italic() {
+    return this._get(
+      this.getByRole('button', { name: /Toggle italic/ }),
+      'toggleItalic',
+      ToggleButton
+    );
+  }
+
+  get underline() {
+    return this._get(
+      this.getByRole('button', { name: /Toggle underline/ }),
+      'toggleUnderline',
+      ToggleButton
+    );
+  }
+
+  get more() {
+    return this.getByRole('menuitem', { name: /^More$/ });
   }
 }

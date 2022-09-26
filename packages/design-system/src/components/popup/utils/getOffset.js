@@ -25,11 +25,12 @@ export function getXOffset(
   dockRect,
   isRTL
 ) {
-  const leftAligned = (dockRect?.left || anchorRect.left) - spacing;
-  const rightAligned =
-    (dockRect?.left || anchorRect.left) + anchorRect.width + spacing;
-  const centerAligned =
-    (dockRect?.left || anchorRect.left) + anchorRect.width / 2;
+  // doctRect.left can have a valid value of zero, if dockRect exists, it takes precedence.
+  const leftAligned = (dockRect ? dockRect.left : anchorRect.left) - spacing;
+  const rightAligned = (dockRect ? dockRect.right : anchorRect.right) + spacing;
+  const centerAligned = dockRect
+    ? dockRect.left + dockRect.width / 2
+    : anchorRect.left + anchorRect.width / 2;
 
   switch (placement) {
     case PLACEMENT.BOTTOM_START:
@@ -97,6 +98,8 @@ export function getYOffset(placement, spacing = 0, anchorRect) {
  * @param {MutableRefObject<HTMLElement>} args.popup Popup element.
  * @param {boolean} args.isRTL isRTL.
  * @param {number} args.topOffset Header Offset.
+ * @param {boolean} args.offsetOverride Defaults to false. Mainly used for Dropdowns that do not need to stay on
+ * the screen at all times like a popup needs to.  The x and y offset of the popup will stay in line with the anchorRect
  * @param {boolean} args.ignoreMaxOffsetY Defaults to false. Sometimes, we want the popup to respect the y value
  * as perceived by the page because of scroll. This is really only true of dropDowns that
  * exist beyond the initial page scroll. Because the editor is a fixed view this only
@@ -110,8 +113,9 @@ export function getOffset({
   dock,
   popup,
   isRTL,
-  topOffset,
   ignoreMaxOffsetY,
+  offsetOverride,
+  topOffset = 0,
 }) {
   const anchorRect = anchor.current.getBoundingClientRect();
   const bodyRect = document.body.getBoundingClientRect();
@@ -129,22 +133,34 @@ export function getOffset({
 
   // Horizontal
   const offsetX = getXOffset(placement, spacingH, anchorRect, dockRect, isRTL);
-  const maxOffsetX = bodyRect.width - width - getXTransforms(placement) * width;
+
+  const maxOffsetX = !isRTL
+    ? bodyRect.width - width - getXTransforms(placement) * width
+    : bodyRect.width - getXTransforms(placement) * width;
 
   // Vertical
   const offsetY = getYOffset(placement, spacingV, anchorRect);
   const maxOffsetY =
     bodyRect.height + bodyRect.y - height - getYTransforms(placement) * height;
 
-  // Clamp values
-  return {
-    x: Math.max(0, Math.min(offsetX, maxOffsetX)),
-    y: ignoreMaxOffsetY
-      ? offsetY
-      : Math.max(topOffset, Math.min(offsetY, maxOffsetY)),
+  const offset = {
     width: anchorRect.width,
     height: anchorRect.height,
-    popupLeft: popupRect?.left,
-    popupHeight: popupRect?.height,
+    bodyRight: bodyRect?.right,
   };
+
+  // Clamp values
+  return offsetOverride
+    ? {
+        x: offsetX,
+        y: offsetY,
+        ...offset,
+      }
+    : {
+        x: Math.max(0, Math.min(offsetX, maxOffsetX)),
+        y: ignoreMaxOffsetY
+          ? offsetY
+          : Math.max(topOffset, Math.min(offsetY, maxOffsetY)),
+        ...offset,
+      };
 }

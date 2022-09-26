@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { PLACEMENT } from '@googleforcreators/design-system';
+import { __ } from '@googleforcreators/i18n';
 import PropTypes from 'prop-types';
 
 /**
@@ -26,7 +27,7 @@ import PropTypes from 'prop-types';
 import Color from '../../../form/color';
 
 const EYEDROPPER_WIDTH = 38; // icon width + spacing
-const WIDTH_INCLUDING_INPUTS = 178;
+const WIDTH_INCLUDING_INPUTS = 184;
 const WIDTH_EXCLUDING_INPUTS = 60;
 
 const PICKER_MAX_HEIGHT = 362;
@@ -39,19 +40,19 @@ function getWidth(hasInputs, hasEyedropper) {
 }
 
 function FloatingColor(props) {
-  const { hasInputs, hasEyedropper } = props;
+  const { hasInputs, hasEyedropper, allowsGradient = true } = props;
   const width = getWidth(hasInputs, hasEyedropper);
   return (
     <Color
       width={width}
       maxHeight={PICKER_MAX_HEIGHT}
-      pickerPlacement={PLACEMENT.TOP_END}
+      pickerPlacement={PLACEMENT.TOP_START}
       isInDesignMenu
-      shouldCloseOnSelection
-      allowsGradient
+      allowsGradient={allowsGradient}
       allowsSavedColors
       allowsSavedColorDeletion={false}
       pickerHasEyedropper={!hasEyedropper}
+      containerLabelBase={__('Color input (floating menu)', 'web-stories')}
       {...props}
     />
   );
@@ -60,6 +61,7 @@ function FloatingColor(props) {
 FloatingColor.propTypes = {
   hasInputs: PropTypes.bool,
   hasEyedropper: PropTypes.bool,
+  allowsGradient: PropTypes.bool,
 };
 
 export default FloatingColor;

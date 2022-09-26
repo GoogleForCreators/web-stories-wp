@@ -321,6 +321,7 @@ describe('StoryAnimation.Provider', () => {
         result.current.actions.WAAPIAnimationMethods.setCurrentTime(200)
       );
 
+      /* eslint-disable jest/no-conditional-in-test */
       animationsWithIds.forEach(({ animation, elementId }) => {
         expect(animation.currentTime).toStrictEqual(
           selectedElementIds.includes(elementId) ? 200 : 0
@@ -332,6 +333,7 @@ describe('StoryAnimation.Provider', () => {
           selectedElementIds.includes(elementId) ? 1 : 0
         );
       });
+      /* eslint-enable jest/no-conditional-in-test */
     });
 
     it('excludes cleaned up animation methods when called', () => {
@@ -377,19 +379,19 @@ describe('StoryAnimation.Provider', () => {
         result.current.actions.WAAPIAnimationMethods.setCurrentTime(newTime)
       );
 
-      /* eslint-disable jest/no-conditional-expect */
-      animations.map((animation, i) => {
+      /* eslint-disable jest/no-conditional-expect, jest/no-conditional-in-test */
+      animations.forEach((animation, i) => {
         if (i === unhoistIndex) {
           expect(animation.play).toHaveBeenCalledTimes(0);
           expect(animation.pause).toHaveBeenCalledTimes(0);
           expect(animation.currentTime).toStrictEqual(initialTime);
         } else {
-          expect(animation.play).toHaveBeenCalledTimes(1);
-          expect(animation.pause).toHaveBeenCalledTimes(1);
+          expect(animation.play).toHaveBeenCalledOnce();
+          expect(animation.pause).toHaveBeenCalledOnce();
           expect(animation.currentTime).toStrictEqual(newTime);
         }
       });
-      /* eslint-enable jest/no-conditional-expect */
+      /* eslint-enable jest/no-conditional-expect, jest/no-conditional-in-test */
     });
   });
 
@@ -427,7 +429,7 @@ describe('StoryAnimation.Provider', () => {
         };
 
         await completeAllAnimations();
-        expect(onWAAPIFinish).toHaveBeenCalledTimes(1);
+        expect(onWAAPIFinish).toHaveBeenCalledOnce();
         await completeAllAnimations();
         expect(onWAAPIFinish).toHaveBeenCalledTimes(2);
         await completeAllAnimations();

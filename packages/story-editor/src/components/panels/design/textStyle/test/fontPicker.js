@@ -20,12 +20,12 @@
 import { fireEvent, waitFor, screen } from '@testing-library/react';
 import { Datalist } from '@googleforcreators/design-system';
 import { CURATED_FONT_NAMES } from '@googleforcreators/fonts';
+import { renderWithTheme } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
  */
 import FontContext from '../../../../../app/font/context';
-import { renderWithTheme } from '../../../../../testUtils';
 import fontsListResponse from './fontsResponse';
 
 jest.mock('@googleforcreators/design-system', () => ({
@@ -212,14 +212,14 @@ describe('DropDown: Font Picker', () => {
       availableCuratedFonts.length
     );
 
-    // Search for "Ab" which is the prefix of 3 fonts, but the substring of 5 fonts
-    // only the 3 with prefix should match
+    // Search for "Ab" which is the prefix of 3 font, and the substring of another 2 fonts
+    // should match all 5 fonts
     fireEvent.change(screen.getByRole('combobox'), {
       target: { value: 'Ab' },
     });
 
     await waitFor(
-      () => expect(screen.queryAllByRole('option')).toHaveLength(3),
+      () => expect(screen.queryAllByRole('option')).toHaveLength(5),
       {
         timeout: 500,
       }

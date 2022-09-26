@@ -24,18 +24,23 @@
     "styled-components-a11y"
   ],
   "parserOptions": {
+    "ecmaVersion": "latest",
     "ecmaFeatures": {
       "jsx": true
     }
   },
   "rules": {
+    "array-callback-return": "error",
     "block-scoped-var": "error",
     "complexity": ["error", {"max": 20}],
     "consistent-return": "error",
     "curly": ["error", "all"],
     "default-case": "error",
+    "eol-last": "error",
+    "eqeqeq": "error",
     "guard-for-in": "error",
     "no-await-in-loop": "error",
+    "no-constant-binary-expression": "error",
     "no-extra-bind": "error",
     "no-extra-label": "error",
     "no-floating-decimal": "error",
@@ -46,6 +51,8 @@
     "no-new": "error",
     "no-new-func": "error",
     "no-new-wrappers": "error",
+    "no-multiple-empty-lines": "error",
+    "no-trailing-spaces": "error",
     "header/header": [ "error", "block", [
       "",
       {
@@ -90,14 +97,14 @@
     "jsx-a11y/label-has-for": "off",
     "jsx-a11y/media-has-caption": [ "error", {
       "audio": [ "Audio" ],
-      "video": [ "Video", "FadedVideo", "CropVideo" ],
+      "video": [ "Video", "FadedVideo", "CropVideo", "StyledVideo" ],
       "track": [ "Track" ]
     }],
     "no-restricted-properties": "error",
     "no-return-assign": "error",
     "no-return-await": "error",
     "no-sequences": "error",
-    "no-shadow": ["error", 
+    "no-shadow": ["error",
       {
         "ignoreOnInitialization": true
       }
@@ -117,6 +124,12 @@
     "no-console": "error",
     "no-duplicate-imports": "error",
     "no-var": "error",
+    "prefer-arrow-callback": [
+      "error",
+      {
+        "allowNamedFunctions": true
+      }
+    ],
     "prefer-const": "error",
     "prefer-object-spread": "error",
     "prefer-promise-reject-errors": "error",
@@ -129,6 +142,20 @@
       "forbid": ["for"]
     }],
     "react/no-array-index-key": "warn",
+    "react/no-unknown-property": [
+      "error",
+      {
+        "ignore": [
+          "amp",
+          "amp-boilerplate",
+          "amp-custom",
+          "animate-in",
+          "animate-in-delay",
+          "animate-in-duration",
+          "custom-element"
+        ]
+      }
+    ],
     "react/prop-types": "error",
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": [
@@ -206,12 +233,13 @@
     "jsdoc/require-jsdoc": ["off", {
       "publicOnly": true
     }],
-    "jsdoc/require-returns": "warn",
-    "jsdoc/require-param-description": "warn",
+    "jsdoc/require-returns": "error",
+    "jsdoc/require-param-description": "error",
     "jsdoc/valid-types": "error",
     "eslint-comments/no-unused-disable": "error",
     "eslint-comments/require-description": "error",
     "@wordpress/dependency-group": "error",
+    "@wordpress/i18n-no-flanking-whitespace": "error",
     "@wordpress/no-unused-vars-before-return": ["error", {
       "excludePattern": "^use"
     }],
@@ -247,7 +275,8 @@
           "^@googleforcreators\\/(.*)\\/(.*)": "./packages/$1/src/$2",
           "^@googleforcreators\\/(.*)": "./packages/$1/src/",
           "^@web-stories-wp\\/(.*)": "./packages/$1/src/"
-        }
+        },
+        "extensions": [ ".js", ".jsx", ".ts", ".tsx" ]
       }
     },
     "jsdoc": {
@@ -283,11 +312,82 @@
   "overrides": [
     {
       "files": [
+        "**/*.ts",
+        "**/*.tsx"
+      ],
+      "excludedFiles": [
+        "**/*.d.ts"
+      ],
+      "plugins": [
+        "@typescript-eslint"
+      ],
+      "extends": [
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@typescript-eslint/recommended-requiring-type-checking"
+      ],
+      "parser": "@typescript-eslint/parser",
+      "parserOptions": {
+        "project": [
+          "./tsconfig.json",
+          "./packages/*/tsconfig.json"
+        ]
+      },
+      "rules": {
+        "@typescript-eslint/no-duplicate-imports": "error",
+        "@typescript-eslint/no-shadow": "error",
+        "@typescript-eslint/unbound-method": [
+          "error",
+          {
+            "ignoreStatic": true
+          }
+        ],
+        "@typescript-eslint/no-unused-vars": [
+          "error",
+          {
+            "ignoreRestSiblings": true
+          }
+        ],
+        "react/prop-types": "off",
+        "jsdoc/check-param-names": "off",
+        "jsdoc/require-param": "off",
+        "jsdoc/require-param-type": "off",
+        "jsdoc/require-returns": "off",
+        "jsdoc/require-returns-check": "off",
+        "jsdoc/require-returns-type": "off",
+        "jsdoc/no-types": "error",
+        "no-duplicate-imports": "off",
+        "no-unused-vars": "off",
+        "no-shadow": "off",
+        "no-restricted-imports": [
+          "error",
+          {
+            "paths": [
+              {
+                "name": "prop-types",
+                "message": "Use TypeScript instead."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": [
+        "typings/**/*.ts",
+        "**/*.d.ts"
+      ],
+      "rules": {
+        "no-undef": "off",
+        "no-unused-vars": "off",
+        "no-var": "off",
+        "@wordpress/dependency-group": "off"
+      }
+    },
+    {
+      "files": [
         "__mocks__/**/*.js",
-        "**/__tests__/**/*.js",
         "**/test/**/*.js",
         "**/testUtils/**/*.js",
-        "**/?(*.)test.js",
         "tests/js/**/*.js"
       ],
       "excludedFiles": [
@@ -297,7 +397,8 @@
       "extends": [
         "plugin:jest/all",
         "plugin:testing-library/react",
-        "plugin:jest-dom/recommended"
+        "plugin:jest-dom/recommended",
+        "plugin:jest-extended/all"
       ],
       "plugins": [
         "jsx-a11y",
@@ -312,6 +413,7 @@
         "eslint-comments/require-description": "off",
         "react/prop-types": "off",
         "jest/no-hooks": "off",
+        "jest/max-expects": "off",
         "jest/prefer-expect-assertions": "off",
         "jest/prefer-inline-snapshots": "off",
         "jest/prefer-lowercase-title": [
@@ -320,7 +422,10 @@
             "ignore": ["describe"]
           }
         ],
+        "jest/prefer-mock-promise-shorthand": "off",
+        "jest/prefer-snapshot-hint": "off",
         "jsdoc/require-jsdoc": "off",
+        "jest/unbound-method": "off",
         "testing-library/no-await-sync-events": "error",
         "testing-library/no-debugging-utils": "error",
         "testing-library/no-dom-import": "error"
@@ -354,6 +459,8 @@
       },
       "rules": {
         "eslint-comments/require-description": "off",
+        "testing-library/no-await-sync-events": "error",
+        "testing-library/no-await-sync-query": "error",
         "testing-library/no-debugging-utils": "error",
         "testing-library/no-dom-import": "error",
         "jasmine/new-line-before-expect": "off",
@@ -389,6 +496,15 @@
     },
     {
       "files": [
+        "packages/jest-amp/src/**/*.js",
+        "packages/jest-puppeteer-amp/src/**/*.js"
+      ],
+      "env": {
+        "node": true
+      }
+    },
+    {
+      "files": [
         "packages/e2e-test-utils/**/*.js",
         "packages/e2e-tests/src/**/*.js"
       ],
@@ -400,6 +516,7 @@
       },
       "rules": {
         "eslint-comments/require-description": "off",
+        "jest/max-expects": "off",
         "jest/no-hooks": "off",
         "jest/prefer-expect-assertions": "off",
         "jest/prefer-inline-snapshots": "off",
@@ -421,7 +538,9 @@
               "withUser"
             ]
           }
-        ]
+        ],
+        "jest/prefer-snapshot-hint": "off",
+        "jest/unbound-method": "off"
       },
       "globals": {
         "browser": "readonly",
@@ -436,6 +555,7 @@
       "rules": {
         "eslint-comments/require-description": "off",
         "jest/expect-expect": "off",
+        "jest/max-expects": "off",
         "jest/no-export": "off",
         "jest/require-top-level-describe": "off"
       }
@@ -468,14 +588,6 @@
         "import/no-useless-path-segments": ["error", {
           "noUselessIndex": false
         }]
-      }
-    },
-    {
-      "files": [
-        "packages/jest-parallel-sequencer/**/*.js"
-      ],
-      "env": {
-        "node": true
       }
     },
     {
@@ -522,7 +634,7 @@
     },
     {
       "files": [
-        "packages/migration/src/utils/updateTemplates.js"
+        "packages/migration/scripts/utils/updateTemplates.js"
       ],
       "rules": {
         "eslint-comments/no-unused-disable": "off"
@@ -590,6 +702,7 @@
         "packages/tinymce-button/**/*.js"
       ],
       "rules":{
+        "@wordpress/data-no-store-string-literals": "error",
         "no-restricted-imports": [
           "error",
           {
@@ -661,6 +774,27 @@
         "react/prop-types": "off",
         "eslint-comments/no-unused-disable": "off",
         "eslint-comments/require-description": "off"
+      }
+    },
+    {
+      "files": [
+        "packages/story-editor/src/**/*.js",
+        "packages/dashboard/src/**/*.js"
+      ],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": [
+              {
+                "group": [
+                  "**/*.css"
+                ],
+                "message": "css import is not allowed in story-editor and dashboard"
+              }
+            ]
+          }
+        ]
       }
     }
   ]

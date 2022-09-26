@@ -31,9 +31,9 @@ import PaginatedMediaGallery from '../common/paginatedMediaGallery';
 import useMedia from '../../../../../app/media/useMedia';
 import { PROVIDERS } from '../../../../../app/media/media3p/providerConfiguration';
 import useMedia3pApi from '../../../../../app/media/media3p/api/useMedia3pApi';
-import useDetectBaseColor from '../../../../../app/media/utils/useDetectBaseColor';
 import useLibrary from '../../../useLibrary';
 import { ChipGroup } from '../../shared';
+import useLocalMedia from '../../../../../app/media/local/useLocalMedia';
 
 const MediaSubheading = styled(Headline).attrs(() => ({
   as: 'h2',
@@ -70,7 +70,11 @@ function ProviderPanel({ providerType, isActive, searchTerm, ...rest }) {
     actions: { registerUsage },
   } = useMedia3pApi();
 
-  const { updateBaseColor } = useDetectBaseColor({});
+  const { updateBaseColor } = useLocalMedia(
+    ({ actions: { updateBaseColor } }) => ({
+      updateBaseColor,
+    })
+  );
 
   /**
    * If the resource has a register usage url then the fact that it's been

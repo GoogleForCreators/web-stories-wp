@@ -215,7 +215,11 @@ describe('useContextValueProvider', () => {
     const configState = {
       api: {},
       allowedMimeTypes: {
+        image: [],
+        vector: [],
         video: [],
+        caption: [],
+        audio: [],
       },
       capabilities: { hasUploadMediaAction: true },
     };
@@ -248,7 +252,6 @@ describe('useContextValueProvider', () => {
       mediaType: '',
       searchTerm: '',
       pagingNum: 1,
-      cacheBust: true,
     });
 
     expect(reducerActions.fetchMediaSuccess).toHaveBeenNthCalledWith(2, {

@@ -25,7 +25,7 @@ import { Icons } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
-import { focusStyle } from '../panels/shared';
+import { focusStyle } from '../panels/shared/styles';
 import useAddPreset from '../../utils/useAddPreset';
 import { PRESET_TYPES } from '../../constants';
 

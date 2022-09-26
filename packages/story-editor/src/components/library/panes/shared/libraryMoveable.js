@@ -22,25 +22,28 @@ import { useCallback, useRef, useState } from '@googleforcreators/react';
 import styled from 'styled-components';
 import { editorToDataX, editorToDataY } from '@googleforcreators/units';
 import { useKeyDownEffect } from '@googleforcreators/design-system';
-import { Moveable, InOverlay } from '@googleforcreators/moveable';
+import {
+  Moveable,
+  InOverlay,
+  areEventsDragging,
+} from '@googleforcreators/moveable';
 import { useTransform } from '@googleforcreators/transform';
 
 /**
  * Internal dependencies
  */
-import { ZOOM_SETTING } from '../../../../constants';
+import { ZOOM_SETTING, TRACKING_EVENTS } from '../../../../constants';
 import { useDropTargets } from '../../../dropTargets';
 import { useLayout } from '../../../../app/layout';
 import useInsertElement from '../../../canvas/useInsertElement';
 import { useInsertTextSet } from '../../../canvas';
-import areEventsDragging from '../../../../utils/areEventsDragging';
 import isTargetOutOfContainer from '../../../../utils/isTargetOutOfContainer';
 import useSnapping from '../../../canvas/utils/useSnapping';
 import { useStory, useCanvas } from '../../../../app';
 import objectWithout from '../../../../utils/objectWithout';
 import { noop } from '../../../../utils/noop';
 import usePerformanceTracking from '../../../../utils/usePerformanceTracking';
-import { TRACKING_EVENTS } from '../../../../constants/performanceTrackingEvents';
+import { PRODUCT_WIDTH, PRODUCT_HEIGHT } from '../shopping/constants';
 
 const TargetBox = styled.div`
   position: absolute;
@@ -124,6 +127,10 @@ function LibraryMoveable({
   };
 
   const resetMoveable = useCallback(() => {
+    if (!targetBoxRef.current || !cloneRef.current) {
+      return;
+    }
+
     targetBoxRef.current.style.transform = null;
     cloneRef.current.style.transform = null;
     // Hide the clone, too.
@@ -258,6 +265,14 @@ function LibraryMoveable({
         insertTextSetByOffset(elements, {
           offsetX: editorToDataX(x - pageX, pageSize.width),
           offsetY: editorToDataY(y - pageY, pageSize.height),
+        });
+      } else if (type === 'product') {
+        insertElement(type, {
+          ...elementProps,
+          width: PRODUCT_WIDTH,
+          height: PRODUCT_HEIGHT,
+          x: editorToDataX(x - pageX, pageSize.width),
+          y: editorToDataY(y - pageY, pageSize.height),
         });
       } else {
         insertElement(type, {

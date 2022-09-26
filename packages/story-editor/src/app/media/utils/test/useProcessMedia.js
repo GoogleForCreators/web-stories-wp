@@ -26,6 +26,7 @@ import { waitFor } from '@testing-library/react';
 import APIContext from '../../../api/context';
 import StoryContext from '../../../story/context';
 import useProcessMedia from '../useProcessMedia';
+import useMediaInfo from '../useMediaInfo';
 
 const fetchRemoteFileMock = (url, mimeType) => {
   if (url === 'http://www.google.com/foo.mov') {
@@ -56,6 +57,7 @@ const fetchRemoteBlobMock = (url) => {
 
   return Promise.reject(new Error('Invalid file'));
 };
+
 jest.mock('@googleforcreators/media', () => {
   return {
     fetchRemoteFile: fetchRemoteFileMock,
@@ -77,7 +79,7 @@ const uploadMedia = (
     type: 'gif',
   };
   if (onUploadSuccess) {
-    onUploadSuccess({ resource });
+    onUploadSuccess({ resource, id: 2 });
   }
   if (onUploadStart) {
     onUploadStart({ resource });
@@ -89,6 +91,14 @@ const uploadMedia = (
 
 const getOptimizedMediaById = jest.fn();
 const getMutedMediaById = jest.fn();
+
+jest.mock('../useMediaInfo', () => ({
+  __esModule: true,
+  default: jest.fn(() => ({
+    getFileInfo: jest.fn(() => null),
+    isConsideredOptimized: jest.fn(() => false),
+  })),
+}));
 
 function setup() {
   const apiContextValue = {
@@ -157,6 +167,10 @@ function setup() {
 }
 
 describe('useProcessMedia', () => {
+  afterEach(() => {
+    useMediaInfo.mockClear();
+  });
+
   describe('optimizeVideo', () => {
     it('should reuse already existing optimized video', async () => {
       getOptimizedMediaById.mockImplementationOnce(() => ({
@@ -211,16 +225,12 @@ describe('useProcessMedia', () => {
         type: 'gif',
       });
       expect(updateMedia).toHaveBeenCalledWith(123, {
-        web_stories_media_source: 'source-video',
-        meta: {
-          web_stories_optimized_id: 2,
-        },
+        mediaSource: 'source-video',
+        optimizedId: 2,
       });
       expect(updateMedia).toHaveBeenCalledWith(123, {
-        web_stories_media_source: 'source-video',
-        meta: {
-          web_stories_optimized_id: 2,
-        },
+        mediaSource: 'source-video',
+        optimizedId: 2,
       });
     });
 
@@ -252,10 +262,8 @@ describe('useProcessMedia', () => {
         type: 'gif',
       });
       expect(updateMedia).toHaveBeenCalledWith(123, {
-        web_stories_media_source: 'source-video',
-        meta: {
-          web_stories_optimized_id: 2,
-        },
+        mediaSource: 'source-video',
+        optimizedId: 2,
       });
     });
 
@@ -347,9 +355,7 @@ describe('useProcessMedia', () => {
         type: 'gif',
       });
       expect(updateMedia).toHaveBeenCalledWith(123, {
-        meta: {
-          web_stories_muted_id: 2,
-        },
+        mutedId: 2,
       });
     });
 
@@ -372,9 +378,7 @@ describe('useProcessMedia', () => {
         );
       });
       expect(updateMedia).toHaveBeenCalledWith(123, {
-        meta: {
-          web_stories_muted_id: 2,
-        },
+        mutedId: 2,
       });
     });
 
@@ -409,9 +413,7 @@ describe('useProcessMedia', () => {
         'http://www.google.com/foo.gif'
       );
       expect(updateMedia).toHaveBeenCalledWith(123, {
-        meta: {
-          web_stories_muted_id: 2,
-        },
+        mutedId: 2,
       });
     });
 
@@ -470,10 +472,8 @@ describe('useProcessMedia', () => {
       });
 
       expect(updateMedia).toHaveBeenCalledWith(123, {
-        web_stories_media_source: 'source-image',
-        meta: {
-          web_stories_optimized_id: 2,
-        },
+        mediaSource: 'source-image',
+        optimizedId: 2,
       });
     });
 
@@ -505,10 +505,8 @@ describe('useProcessMedia', () => {
       });
 
       expect(updateMedia).toHaveBeenCalledWith(123, {
-        web_stories_media_source: 'source-image',
-        meta: {
-          web_stories_optimized_id: 2,
-        },
+        mediaSource: 'source-image',
+        optimizedId: 2,
       });
     });
 

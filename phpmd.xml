@@ -35,6 +35,9 @@
     <exclude name="UnusedFormalParameter" />
   </rule>
 
+  <!-- Temporary workaround for https://github.com/phpmd/phpmd/issues/337 -->
+  <exclude-pattern>includes/namespace.php</exclude-pattern>
+
   <!-- Third-party or auto-generated code -->
   <exclude-pattern>*/build/*</exclude-pattern>
   <exclude-pattern>*/data/*</exclude-pattern>

@@ -20,12 +20,12 @@ namespace Google\Web_Stories\Tests\Integration;
 /**
  * @coversDefaultClass \Google\Web_Stories\Settings
  */
-class Settings extends TestCase {
+class Settings extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::register
 	 */
 	public function test_register(): void {
-		$settings = new \Google\Web_Stories\Settings();
+		$settings = $this->injector->make( \Google\Web_Stories\Settings::class );
 		$settings->register();
 
 		$options = get_registered_settings();
@@ -40,6 +40,7 @@ class Settings extends TestCase {
 		$this->assertArrayHasKey( $settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO, $options );
 		$this->assertArrayHasKey( $settings::SETTING_NAME_PUBLISHER_LOGOS, $options );
 		$this->assertArrayHasKey( $settings::SETTING_NAME_VIDEO_CACHE, $options );
+		$this->assertArrayHasKey( $settings::SETTING_NAME_DATA_REMOVAL, $options );
 		$this->assertArrayHasKey( $settings::SETTING_NAME_ARCHIVE, $options );
 	}
 }

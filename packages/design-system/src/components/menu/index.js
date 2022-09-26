@@ -15,6 +15,7 @@
  */
 
 export { Menu } from './menu';
+export { DefaultListItemInner, DefaultListItemLabelDisplayText } from './list';
 export {
   DROP_DOWN_ITEM,
   DROP_DOWN_ITEMS,

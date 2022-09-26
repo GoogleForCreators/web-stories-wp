@@ -87,7 +87,14 @@ class Base_Color extends Service_Base implements HasMeta {
 			return $response;
 		}
 
-		$response[ self::BASE_COLOR_POST_META_KEY ] = get_post_meta( $response['id'], self::BASE_COLOR_POST_META_KEY, true );
+		/**
+		 * Attachment ID.
+		 *
+		 * @var int $post_id
+		 */
+		$post_id = $response['id'];
+
+		$response[ self::BASE_COLOR_POST_META_KEY ] = get_post_meta( $post_id, self::BASE_COLOR_POST_META_KEY, true );
 
 		return $response;
 	}

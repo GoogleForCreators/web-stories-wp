@@ -19,12 +19,14 @@
  */
 import PropTypes from 'prop-types';
 import { fireEvent, screen } from '@testing-library/react';
+import { registerElementType } from '@googleforcreators/elements';
+import { elementTypes } from '@googleforcreators/element-library';
+import { renderWithTheme } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
  */
 import { createResource } from '@googleforcreators/media';
-import { renderWithTheme } from '../../../../../../testUtils';
 import useLibrary from '../../../../useLibrary';
 import useConfig from '../../../../../../app/config/useConfig';
 import useMedia from '../../../../../../app/media/useMedia';
@@ -60,13 +62,6 @@ jest.mock('../../../../../../app/media/media3p/providerConfiguration', () => ({
       fetchCategoriesErrorMessage: 'Error loading categories from Provider 1',
     },
   },
-}));
-
-jest.mock('react-photo-gallery', () => ({
-  __esModule: true,
-  default: jest.fn(({ photos, renderImage }) => (
-    <>{photos.map((photo, index) => renderImage({ photo, index }))}</>
-  )),
 }));
 
 const createMediaResource = (id, name, provider) =>
@@ -162,6 +157,8 @@ describe('Media3pPane', () => {
   let useMediaResult;
 
   beforeAll(() => {
+    elementTypes.forEach(registerElementType);
+
     useConfig.mockImplementation(() => ({
       capabilities: {
         hasUploadMediaAction: true,

@@ -38,9 +38,15 @@ const Container = styled.div`
   border-radius: ${theme.borders.radius.medium};
 `;
 
-function PublishModal({ isOpen, onPublish, onClose, publishButtonCopy }) {
+function PublishModal({
+  isOpen,
+  onPublish,
+  onClose,
+  publishButtonDisabled,
+  hasFutureDate,
+}) {
   const openChecklist = useCheckpoint(
-    ({ actions }) => actions.onPublishDialogChecklistRequest
+    ({ actions }) => actions.handleReviewChecklist
   );
 
   useEffect(() => {
@@ -51,7 +57,7 @@ function PublishModal({ isOpen, onPublish, onClose, publishButtonCopy }) {
 
   const handleReviewChecklist = useCallback(() => {
     trackEvent('review_prepublish_checklist');
-    onClose();
+    onClose({ focusPublishButton: false });
     openChecklist();
   }, [onClose, openChecklist]);
 
@@ -76,7 +82,8 @@ function PublishModal({ isOpen, onPublish, onClose, publishButtonCopy }) {
         <DirectionAware>
           <Container>
             <Header
-              publishButtonCopy={publishButtonCopy}
+              hasFutureDate={hasFutureDate}
+              publishButtonDisabled={publishButtonDisabled}
               onClose={onClose}
               onPublish={onPublish}
             />
@@ -94,5 +101,6 @@ PublishModal.propTypes = {
   isOpen: PropTypes.bool,
   onPublish: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
-  publishButtonCopy: PropTypes.string.isRequired,
+  hasFutureDate: PropTypes.bool,
+  publishButtonDisabled: PropTypes.bool,
 };

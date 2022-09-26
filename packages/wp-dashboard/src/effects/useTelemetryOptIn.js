@@ -23,7 +23,7 @@ import { useRouteHistory } from '@googleforcreators/dashboard';
 /**
  * Internal dependencies
  */
-import { useEditorSettings } from '../components/editorSettings';
+import useEditorSettings from '../components/editorSettings/useEditorSettings';
 
 /**
  * Internal dependencies

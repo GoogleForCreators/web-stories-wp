@@ -32,9 +32,9 @@ export const DRAWER_BUTTON_GAP_COLLAPSED = 2;
 
 // Thumbnail size varies with available carousel size - over or under this limit
 export const WIDE_CAROUSEL_LIMIT = 400;
-export const WIDE_THUMBNAIL_WIDTH = 40;
-export const WIDE_THUMBNAIL_HEIGHT = 60;
+export const WIDE_THUMBNAIL_WIDTH = 45;
+export const WIDE_THUMBNAIL_HEIGHT = 80;
 export const NARROW_THUMBNAIL_WIDTH = 36;
-export const NARROW_THUMBNAIL_HEIGHT = 54;
+export const NARROW_THUMBNAIL_HEIGHT = 64;
 export const THUMBNAIL_MARGIN = 16;
 export const THUMBNAIL_LINE_WIDTH = 4;

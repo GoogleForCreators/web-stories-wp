@@ -26,7 +26,6 @@ import {
   MIN_IMG_HEIGHT,
   useConfig,
 } from '@googleforcreators/dashboard';
-import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -38,11 +37,13 @@ import PublisherLogoSettings from './publisherLogo';
 import TelemetrySettings from './telemetry';
 import MediaOptimizationSettings from './mediaOptimization';
 import VideoCacheSettings from './videoCache';
+import DataRemovalSettings from './dataRemoval';
 import ArchiveSettings from './archive';
 import GoogleAnalyticsSettings from './googleAnalytics';
 import { Wrapper, Main } from './components';
 import useEditorSettings from './useEditorSettings';
 import CustomFontsSettings from './customFonts';
+import Shopping from './shopping';
 
 function EditorSettings() {
   const {
@@ -58,23 +59,27 @@ function EditorSettings() {
     newlyCreatedMediaIds,
     isMediaLoading,
     videoCache,
+    dataRemoval,
     archive,
     archivePageId,
     searchPages,
     getPageById,
     customFonts,
     addCustomFont,
-    fetchCustomFonts,
     deleteCustomFont,
+    fetchCustomFonts,
     publisherLogos,
     addPublisherLogo,
     fetchPublisherLogos,
     removePublisherLogo,
     setPublisherLogoAsDefault,
+    shoppingProvider,
+    shopifyHost,
+    shopifyAccessToken,
   } = useEditorSettings(
     ({
       actions: {
-        fontsApi: { addCustomFont, fetchCustomFonts, deleteCustomFont },
+        fontsApi: { addCustomFont, deleteCustomFont, fetchCustomFonts },
         settingsApi: { fetchSettings, updateSettings },
         pagesApi: { searchPages, getPageById },
         mediaApi: { uploadMedia },
@@ -94,8 +99,12 @@ function EditorSettings() {
           adManagerSlotId,
           adNetwork,
           videoCache,
+          dataRemoval,
           archive,
           archivePageId,
+          shoppingProvider,
+          shopifyHost,
+          shopifyAccessToken,
         },
         media: { isLoading: isMediaLoading, newlyCreatedMediaIds },
         publisherLogos: { publisherLogos },
@@ -114,32 +123,35 @@ function EditorSettings() {
       isMediaLoading,
       newlyCreatedMediaIds,
       videoCache,
+      dataRemoval,
       archive,
       archivePageId,
       searchPages,
       getPageById,
       customFonts,
       addCustomFont,
-      fetchCustomFonts,
       deleteCustomFont,
+      fetchCustomFonts,
       fetchPublisherLogos,
       addPublisherLogo,
       removePublisherLogo,
       setPublisherLogoAsDefault,
       publisherLogos,
+      shoppingProvider,
+      shopifyHost,
+      shopifyAccessToken,
     })
   );
 
-  const isCustomFontsEnabled = useFeature('customFonts');
-
   const {
     capabilities: { canUploadFiles, canManageSettings } = {},
-    siteKitStatus = {},
+    plugins: { siteKit = {}, woocommerce = {} },
     maxUpload,
     maxUploadFormatted,
     allowedImageMimeTypes,
     archiveURL,
     defaultArchiveURL,
+    vendors,
   } = useConfig();
 
   const {
@@ -160,8 +172,9 @@ function EditorSettings() {
     if (canManageSettings) {
       fetchSettings();
       fetchPublisherLogos();
+      fetchCustomFonts();
     }
-  }, [fetchSettings, fetchPublisherLogos, canManageSettings]);
+  }, [fetchSettings, fetchPublisherLogos, canManageSettings, fetchCustomFonts]);
 
   useEffect(() => {
     if (newlyCreatedMediaIds.length > 0) {
@@ -323,7 +336,7 @@ function EditorSettings() {
                   handleUpdateAnalyticsId={handleUpdateGoogleAnalyticsId}
                   usingLegacyAnalytics={usingLegacyAnalytics}
                   handleMigrateLegacyAnalytics={handleMigrateLegacyAnalytics}
-                  siteKitStatus={siteKitStatus}
+                  siteKitStatus={siteKit}
                 />
                 <PublisherLogoSettings
                   onAddLogos={handleAddLogos}
@@ -336,14 +349,11 @@ function EditorSettings() {
                 />
               </>
             )}
-            {isCustomFontsEnabled && (
-              <CustomFontsSettings
-                customFonts={customFonts}
-                addCustomFont={addCustomFont}
-                fetchCustomFonts={fetchCustomFonts}
-                deleteCustomFont={deleteCustomFont}
-              />
-            )}
+            <CustomFontsSettings
+              customFonts={customFonts}
+              addCustomFont={addCustomFont}
+              deleteCustomFont={deleteCustomFont}
+            />
             <TelemetrySettings
               disabled={disableOptedIn}
               onCheckboxSelected={toggleWebStoriesTrackingOptIn}
@@ -362,6 +372,10 @@ function EditorSettings() {
                   isEnabled={videoCache}
                   updateSettings={updateSettings}
                 />
+                <DataRemovalSettings
+                  isEnabled={dataRemoval}
+                  updateSettings={updateSettings}
+                />
                 <ArchiveSettings
                   archive={archive}
                   archiveURL={archiveURL}
@@ -377,7 +391,15 @@ function EditorSettings() {
                   publisherId={adSensePublisherId}
                   adSenseSlotId={adSenseSlotId}
                   adManagerSlotId={adManagerSlotId}
-                  siteKitStatus={siteKitStatus}
+                  siteKitStatus={siteKit}
+                />
+                <Shopping
+                  updateSettings={updateSettings}
+                  shoppingProvider={shoppingProvider}
+                  shopifyHost={shopifyHost}
+                  shopifyAccessToken={shopifyAccessToken}
+                  vendors={vendors}
+                  woocommerce={woocommerce}
                 />
               </>
             )}

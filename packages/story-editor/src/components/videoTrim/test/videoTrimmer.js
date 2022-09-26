@@ -18,6 +18,10 @@
  * External dependencies
  */
 import { fireEvent, screen } from '@testing-library/react';
+import {
+  renderWithTheme,
+  firePointerEvent,
+} from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
@@ -25,7 +29,6 @@ import { fireEvent, screen } from '@testing-library/react';
 import VideoTrimmer from '../videoTrimmer';
 import VideoTrimContext from '../videoTrimContext';
 import LayoutContext from '../../../app/layout/context';
-import { renderWithTheme, firePointerEvent } from '../../../testUtils';
 
 jest.mock('../useRailBackground');
 

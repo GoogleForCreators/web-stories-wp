@@ -352,18 +352,22 @@ describe('Checklist integration', () => {
     });
   });
 
-  it('should open the checklist after following "review checklist" button in dialog on publishing story', async () => {
-    fixture.events.click(fixture.editor.titleBar.publish);
-    // Ensure the debounced callback has taken effect.
-    await fixture.events.sleep(800);
+  it('should open the checklist after following "checklist" button in dialog on publishing story', async () => {
+    await fixture.events.click(fixture.editor.titleBar.publish);
 
-    const reviewButton = await fixture.screen.getByRole('button', {
-      name: /^Review Checklist$/,
+    const reviewButton = fixture.screen.getByRole('button', {
+      name: /^Checklist$/,
     });
     await fixture.events.click(reviewButton);
-    // This is the initial load of the checklist tab so we need to wait for it to load
-    // before we can see tabs.
-    await fixture.events.sleep(300);
+
+    await waitFor(
+      () => {
+        if (!fixture.editor.checklist.issues) {
+          throw new Error('Checklist not visible yet');
+        }
+      },
+      { timeout: 2000 }
+    );
 
     expect(
       fixture.editor.checklist.issues.getAttribute('data-isexpanded')
@@ -393,63 +397,6 @@ describe('Checklist integration - Card visibility', () => {
   const accessibilityIssuesRequiringMediaUploadPermissions = [
     ACCESSIBILITY_COPY.videoMissingCaptions.title,
   ];
-
-  beforeEach(() => {
-    // mock the wordpress media explorer
-    const media = () => ({
-      state: () => ({
-        get: () => ({
-          first: () => ({
-            toJSON: () => ({
-              id: 10,
-              type: 'image',
-              mimeType: 'image/jpg',
-              src: 'http://localhost:9876/__static__/earth.jpg',
-              alt: 'earth',
-              width: 640,
-              height: 529,
-              baseColor: '#734727',
-            }),
-          }),
-        }),
-      }),
-      on: (_type, callback) => callback(),
-      once: (_type, callback) =>
-        callback({
-          id: 10,
-          type: 'image',
-          mimeType: 'image/jpg',
-          src: 'http://localhost:9876/__static__/earth.jpg',
-          alt: 'earth',
-          width: 640,
-          height: 529,
-          baseColor: '#734727',
-        }),
-      open: () => {},
-      close: () => {},
-      setState: () => {},
-    });
-
-    class Library {}
-
-    class Cropper {
-      extend() {
-        return class ExtendedCropper {};
-      }
-    }
-
-    media.controller = {
-      Cropper,
-      Library,
-    };
-    media.query = () => {};
-
-    // Create fake media browser
-    window.wp = {
-      ...window.wp,
-      media,
-    };
-  });
 
   const addPages = async (count) => {
     let clickCount = 1;
@@ -577,7 +524,6 @@ describe('Checklist integration - Card visibility', () => {
             }),
         },
       });
-      fixture.setFlags({ enableChecklistCompanion: true });
 
       fixture.setConfig({ capabilities: { hasUploadMediaAction: false } });
       await fixture.render();
@@ -592,8 +538,8 @@ describe('Checklist integration - Card visibility', () => {
      *
      * @param {string} title Title of the card
      */
-    const checkIfCardDoesNotExist = async (title) => {
-      const card = await fixture.screen.queryByText(title);
+    const checkIfCardDoesNotExist = (title) => {
+      const card = fixture.screen.queryByText(title);
 
       expect(card).toBeNull();
     };

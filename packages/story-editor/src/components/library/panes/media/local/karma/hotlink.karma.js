@@ -31,7 +31,6 @@ describe('Embedding hotlinked media', () => {
 
   beforeEach(async () => {
     fixture = new Fixture();
-    fixture.setFlags({ enableHotlinking: true });
     await fixture.render();
     await fixture.collapseHelpCenter();
   });
@@ -46,12 +45,12 @@ describe('Embedding hotlinked media', () => {
   }
 
   it('should not allow embedding media from an invalid link', async () => {
-    const button = await fixture.screen.getByRole('button', {
+    const button = fixture.screen.getByRole('button', {
       name: 'Insert by link',
     });
     await fixture.events.click(button);
-    const input = await fixture.screen.getByRole('textbox', { name: 'URL' });
-    const insertBtn = await fixture.screen.getByRole('button', {
+    const input = fixture.screen.getByRole('textbox', { name: 'URL' });
+    const insertBtn = fixture.screen.getByRole('button', {
       name: 'Insert',
     });
 
@@ -59,24 +58,42 @@ describe('Embedding hotlinked media', () => {
     await fixture.events.click(input);
     await fixture.events.keyboard.type('d');
     await fixture.events.click(insertBtn);
-    let dialog = screen.getByRole('dialog');
-    await waitFor(() => expect(dialog.textContent).toContain('Invalid link'));
+    let dialog;
+    await waitFor(() => {
+      dialog = screen.getByRole('dialog');
+      if (!dialog) {
+        throw new Error('dialog not ready');
+      }
+      expect(dialog.textContent).toContain('Invalid link');
+    });
 
     // Delete the value, verify now the informative message show instead again.
     await fixture.events.click(input, { clickCount: 3 });
     await fixture.events.keyboard.press('Del');
-    dialog = screen.getByRole('dialog');
-    await waitFor(() => expect(dialog.textContent).toContain('You can insert'));
+    await waitFor(() => {
+      dialog = screen.getByRole('dialog');
+      if (!dialog) {
+        throw new Error('dialog not ready');
+      }
+      expect(dialog.textContent).toContain('You can insert');
+    });
 
     await fixture.events.click(input);
     await fixture.events.keyboard.type('https://example.jpgef');
     await fixture.events.click(insertBtn);
 
-    await fixture.events.sleep(500);
-    dialog = screen.getByRole('dialog');
-    await waitFor(() => expect(dialog.textContent).toContain('Invalid link'), {
-      timeout: 1500,
-    });
+    await waitFor(
+      () => {
+        dialog = screen.getByRole('dialog');
+        if (!dialog) {
+          throw new Error('dialog not ready');
+        }
+        expect(dialog.textContent).toContain('Invalid link');
+      },
+      {
+        timeout: 1500,
+      }
+    );
   });
 
   it('should insert a new media element from valid url', async () => {
@@ -88,12 +105,12 @@ describe('Embedding hotlinked media', () => {
     const libraryElement = fixture.editor.library.media.item(0);
     const img = libraryElement.getElementsByTagName('img')[0];
 
-    const button = await fixture.screen.getByRole('button', {
+    const button = fixture.screen.getByRole('button', {
       name: 'Insert by link',
     });
     await fixture.events.click(button);
-    const input = await fixture.screen.getByRole('textbox', { name: 'URL' });
-    const insertBtn = await fixture.screen.getByRole('button', {
+    const input = fixture.screen.getByRole('textbox', { name: 'URL' });
+    const insertBtn = fixture.screen.getByRole('button', {
       name: 'Insert',
     });
     await fixture.events.click(input);
@@ -110,12 +127,12 @@ describe('Embedding hotlinked media', () => {
       throw new Error();
     });
 
-    const button = await fixture.screen.getByRole('button', {
+    const button = fixture.screen.getByRole('button', {
       name: 'Insert by link',
     });
     await fixture.events.click(button);
-    const input = await fixture.screen.getByRole('textbox', { name: 'URL' });
-    const insertBtn = await fixture.screen.getByRole('button', {
+    const input = fixture.screen.getByRole('textbox', { name: 'URL' });
+    const insertBtn = fixture.screen.getByRole('button', {
       name: 'Insert',
     });
     await fixture.events.click(input);

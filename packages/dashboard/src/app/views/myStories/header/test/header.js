@@ -26,11 +26,19 @@ import {
   STORY_SORT_OPTIONS,
   VIEW_STYLE,
   STORY_STATUS,
-  STORY_STATUSES,
 } from '../../../../../constants';
 import LayoutProvider from '../../../../../components/layout/provider';
 import { renderWithProviders } from '../../../../../testUtils';
 import Header from '..';
+import useStoryFilters from '../../filters/useStoryFilters';
+
+jest.mock('../../filters/useStoryFilters', () => ({
+  ...jest.requireActual('../../filters/useStoryFilters'),
+  __esModule: true,
+  default: jest.fn(),
+}));
+
+const mockUseStoryFilters = useStoryFilters;
 
 const fakeStories = [
   {
@@ -59,15 +67,53 @@ const fakeStories = [
   },
 ];
 
-describe('Dashboard <Header />', function () {
-  it('should have results label that says "Viewing all stories" on initial page view', function () {
+jest.mock('../../../../api/useApi', () => {
+  const getTaxonomies = () => {
+    return Promise.resolve([]);
+  };
+  const getTaxonomyTerms = () => {
+    return Promise.resolve([]);
+  };
+  return {
+    __esModule: true,
+    default: function useApi() {
+      return {
+        getTaxonomies,
+        getTaxonomyTerms,
+      };
+    },
+  };
+});
+
+const updateSort = jest.fn();
+const updateFilter = jest.fn();
+
+const mockFilterState = {
+  filters: [
+    {
+      key: 'status',
+      filterId: STORY_STATUS.ALL,
+    },
+  ],
+  filtersObject: {},
+  sortObject: {
+    orderby: STORY_SORT_OPTIONS.DATE_CREATED,
+  },
+  registerFilters: () => {},
+  updateFilter,
+  updateSort,
+};
+
+describe('Dashboard <Header />', () => {
+  beforeEach(() => {
+    mockUseStoryFilters.mockImplementation(() => mockFilterState);
+  });
+
+  it('should have results label that says "Viewing all stories" on initial page view', () => {
     renderWithProviders(
       <LayoutProvider>
         <Header
-          filter={STORY_STATUSES[0]}
           stories={fakeStories}
-          search={{ keyword: '', setKeyword: jest.fn() }}
-          sort={{ value: STORY_SORT_OPTIONS.NAME, set: jest.fn() }}
           totalStoriesByStatus={{
             all: 19,
             draft: 9,
@@ -84,47 +130,15 @@ describe('Dashboard <Header />', function () {
     expect(screen.getByText('Viewing all stories')).toBeInTheDocument();
   });
 
-  it('should render with the correct count label and search keyword.', function () {
+  it('should have results label that says "Viewing drafts" when filter is set to drafts', () => {
+    mockUseStoryFilters.mockImplementation(() => ({
+      ...mockFilterState,
+      filters: [{ key: 'status', filterId: STORY_STATUS.DRAFT }],
+    }));
     renderWithProviders(
       <LayoutProvider>
         <Header
-          filter={STORY_STATUSES[0]}
           stories={fakeStories}
-          search={{
-            keyword: 'Harry Potter',
-            setKeyword: jest.fn(),
-          }}
-          sort={{ value: STORY_SORT_OPTIONS.NAME, set: jest.fn() }}
-          totalStoriesByStatus={{
-            all: 19,
-            draft: 9,
-            future: 5,
-            publish: 5,
-          }}
-          view={{
-            style: VIEW_STYLE.GRID,
-            pageSize: { width: 200, height: 300 },
-          }}
-          initialPageReady
-        />
-      </LayoutProvider>
-    );
-    expect(screen.getByPlaceholderText('Search Stories')).toHaveValue(
-      'Harry Potter'
-    );
-    expect(
-      screen.getByText((_, node) => node.textContent === '19 results')
-    ).toBeInTheDocument();
-  });
-
-  it('should have results label that says "Viewing drafts" when filter is set to drafts', function () {
-    renderWithProviders(
-      <LayoutProvider>
-        <Header
-          filter={{ status: 'DRAFT', value: STORY_STATUS.DRAFT }}
-          stories={fakeStories}
-          search={{ keyword: '', setKeyword: jest.fn() }}
-          sort={{ value: STORY_SORT_OPTIONS.NAME, set: jest.fn() }}
           totalStoriesByStatus={{
             all: 19,
             draft: 9,
@@ -141,14 +155,11 @@ describe('Dashboard <Header />', function () {
     expect(screen.getByText('Viewing drafts')).toBeInTheDocument();
   });
 
-  it('should have 3 toggle buttons, one for each status that say how many items belong to that status', function () {
+  it('should have 3 toggle buttons, one for each status that say how many items belong to that status', () => {
     renderWithProviders(
       <LayoutProvider>
         <Header
-          filter={STORY_STATUSES[0]}
           stories={fakeStories}
-          search={{ keyword: '', setKeyword: jest.fn() }}
-          sort={{ value: STORY_SORT_OPTIONS.NAME, set: jest.fn() }}
           totalStoriesByStatus={{
             all: 19,
             [STORY_STATUS.DRAFT]: 9,
@@ -187,13 +198,11 @@ describe('Dashboard <Header />', function () {
     expect(screen.queryByText('Private')).not.toBeInTheDocument();
   });
 
-  it('should show the private tab only when there are private stories.', function () {
+  it('should show the private tab only when there are private stories.', () => {
     renderWithProviders(
       <LayoutProvider>
         <Header
-          filter={STORY_STATUSES[0]}
           stories={fakeStories}
-          search={{ keyword: '', setKeyword: jest.fn() }}
           sort={{ value: STORY_SORT_OPTIONS.NAME, set: jest.fn() }}
           totalStoriesByStatus={{
             all: 19,
@@ -230,13 +239,11 @@ describe('Dashboard <Header />', function () {
     expect(privateButton).toHaveTextContent('Private2');
   });
 
-  it('should not show the private tab even if there are private stories when the user does not have permission.', function () {
+  it('should not show the private tab even if there are private stories when the user does not have permission.', () => {
     renderWithProviders(
       <LayoutProvider>
         <Header
-          filter={STORY_STATUSES[0]}
           stories={fakeStories}
-          search={{ keyword: '', setKeyword: jest.fn() }}
           sort={{ value: STORY_SORT_OPTIONS.NAME, set: jest.fn() }}
           totalStoriesByStatus={{
             all: 19,
@@ -267,17 +274,11 @@ describe('Dashboard <Header />', function () {
     expect(screen.queryByText('Private')).not.toBeInTheDocument();
   });
 
-  it('should call the set keyword function when new text is searched', async function () {
-    const setKeywordFn = jest.fn();
+  it('should call the set keyword function when new text is searched', async () => {
     renderWithProviders(
       <LayoutProvider>
         <Header
-          filter={STORY_STATUSES[0]}
           stories={fakeStories}
-          search={{
-            keyword: 'Harry Potter',
-            setKeyword: setKeywordFn,
-          }}
           sort={{ value: STORY_SORT_OPTIONS.NAME, set: jest.fn() }}
           totalStoriesByStatus={{
             all: 19,
@@ -296,22 +297,17 @@ describe('Dashboard <Header />', function () {
       target: { value: 'Hermione Granger' },
     });
     await waitFor(() => {
-      expect(setKeywordFn).toHaveBeenCalledWith('Hermione Granger');
+      expect(updateFilter).toHaveBeenCalledWith('search', {
+        filterId: 'Hermione Granger',
+      });
     });
   });
 
-  it('should call the set sort function when a new sort is selected', async function () {
-    const setSortFn = jest.fn();
+  it('should call the set sort function when a new sort is selected', async () => {
     renderWithProviders(
       <LayoutProvider>
         <Header
-          filter={STORY_STATUSES[0]}
           stories={fakeStories}
-          search={{
-            keyword: 'Harry Potter',
-            setKeyword: jest.fn(),
-          }}
-          sort={{ value: STORY_SORT_OPTIONS.CREATED_BY, set: setSortFn }}
           totalStoriesByStatus={{
             all: 19,
             draft: 9,
@@ -329,7 +325,7 @@ describe('Dashboard <Header />', function () {
     fireEvent.click(screen.getByText('Last Modified'));
 
     await waitFor(() => {
-      expect(setSortFn).toHaveBeenCalledWith('modified');
+      expect(updateSort).toHaveBeenCalledWith({ orderby: 'modified' });
     });
   });
 });

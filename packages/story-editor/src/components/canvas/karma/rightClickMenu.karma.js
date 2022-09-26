@@ -17,12 +17,12 @@
  * External dependencies
  */
 import { waitFor, within } from '@testing-library/react';
+import { TEXT_ELEMENT_DEFAULT_FONT } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import { useStory } from '../../../app';
-import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../app/font/defaultFonts';
 import { ATTRIBUTES_TO_COPY } from '../../../app/story/useStoryReducer/reducers/copySelectedElement';
 import { Fixture } from '../../../karma';
 import objectPick from '../../../utils/objectPick';
@@ -36,6 +36,7 @@ describe('Right Click Menu integration', () => {
     fixture = new Fixture();
     await fixture.render();
     await fixture.collapseHelpCenter();
+    await fixture.events.click(fixture.editor.footer.layerPanel.togglePanel);
 
     insertElement = await fixture.renderHook(() => useInsertElement());
 
@@ -87,6 +88,12 @@ describe('Right Click Menu integration', () => {
   function selectLayerButton() {
     return fixture.screen.getByRole('menuitem', {
       name: /^Select Layer/i,
+    });
+  }
+
+  function selectHeadingLevel() {
+    return fixture.screen.getByRole('menuitem', {
+      name: /^Heading Level/i,
     });
   }
 
@@ -175,6 +182,18 @@ describe('Right Click Menu integration', () => {
   function addToSavedColors() {
     return fixture.screen.getByRole('menuitem', {
       name: /^Add Color to/i,
+    });
+  }
+
+  function useShapeAsMask() {
+    return fixture.screen.getByRole('menuitem', {
+      name: /^Use Shape as a Mask/i,
+    });
+  }
+
+  function removeShapeMask() {
+    return fixture.screen.getByRole('menuitem', {
+      name: /^Unmask/i,
     });
   }
 
@@ -356,9 +375,31 @@ describe('Right Click Menu integration', () => {
     );
   }
 
+  /**
+   * Add product to canvas
+   *
+   * @param {Object} productPartial Object with product properties to override defaults.
+   * @return {Object} the product element
+   */
+  function addProduct(productPartial = {}) {
+    return fixture.act(() =>
+      insertElement('product', {
+        x: 10,
+        y: 10,
+        width: 50,
+        height: 50,
+        product: {
+          productId: 'kt-38',
+          productTitle: 'Logo Collection',
+        },
+        ...productPartial,
+      })
+    );
+  }
+
   const verifyPageDuplicated = (pages = []) => {
     expect(pages[0].backgroundColor).toEqual(pages[1].backgroundColor);
-    pages[0].elements.map((elem, index) => {
+    pages[0].elements.forEach((elem, index) => {
       // ids won't match
       const { id, ...originalElement } = elem;
       const { id: newId, basedOn, ...newElement } = pages[1].elements[index];
@@ -414,18 +455,16 @@ describe('Right Click Menu integration', () => {
     it('right clicking a layer in the layer panel should open the custom right click menu', async () => {
       await addEarthImage();
 
-      await fixture.events.click(
-        fixture.editor.inspector.designPanel.layerPanel.layers[0],
-        {
-          button: 'right',
-        }
-      );
+      await fixture.events.click(fixture.editor.footer.layerPanel.layers[0], {
+        button: 'right',
+      });
 
       expect(rightClickMenu()).not.toBeNull();
     });
 
     it('should open and close the context menu using keyboard shortcuts', async () => {
       // add an element to the page
+      await fixture.events.click(fixture.editor.sidebar.insertTab);
       await fixture.editor.library.textTab.click();
       await fixture.events.click(
         fixture.editor.library.text.preset('Paragraph')
@@ -464,6 +503,8 @@ describe('Right Click Menu integration', () => {
   describe('Right click menu: Select Layer', () => {
     it('should allow selecting a layer from the point where the menu was opened from', async () => {
       // Add a Triangle and an image to the same place.
+      await fixture.events.click(fixture.editor.sidebar.insertTab);
+      await fixture.events.sleep(100);
       const mediaItem = fixture.editor.library.media.item(0);
       await fixture.events.mouse.clickOn(mediaItem, 20, 20);
       await fixture.events.click(fixture.editor.library.shapesTab);
@@ -501,12 +542,9 @@ describe('Right Click Menu integration', () => {
     it('should not display the option to select layer when opening from the layer panel', async () => {
       await addEarthImage();
 
-      await fixture.events.click(
-        fixture.editor.inspector.designPanel.layerPanel.layers[0],
-        {
-          button: 'right',
-        }
-      );
+      await fixture.events.click(fixture.editor.footer.layerPanel.layers[0], {
+        button: 'right',
+      });
 
       expect(() => selectLayerButton()).toThrow();
     });
@@ -760,18 +798,16 @@ describe('Right Click Menu integration', () => {
       );
 
       // verify multiple layers
-      expect(
-        fixture.editor.inspector.designPanel.layerPanel.layers.length
-      ).toBe(4);
-      expect(
-        fixture.editor.inspector.designPanel.layerPanel.layers[2].textContent
-      ).toContain('Earth');
-      expect(
-        fixture.editor.inspector.designPanel.layerPanel.layers[1].textContent
-      ).toContain('beach');
-      expect(
-        fixture.editor.inspector.designPanel.layerPanel.layers[0].textContent
-      ).toContain('Ranger');
+      expect(fixture.editor.footer.layerPanel.layers.length).toBe(4);
+      expect(fixture.editor.footer.layerPanel.layers[2].textContent).toContain(
+        'Earth'
+      );
+      expect(fixture.editor.footer.layerPanel.layers[1].textContent).toContain(
+        'beach'
+      );
+      expect(fixture.editor.footer.layerPanel.layers[0].textContent).toContain(
+        'Ranger'
+      );
 
       // More than one layer so some movement buttons will be enabled
       expect(sendBackward().disabled).toBeFalse();
@@ -783,15 +819,15 @@ describe('Right Click Menu integration', () => {
       await fixture.events.click(sendBackward());
 
       // verify new layer order
-      expect(
-        fixture.editor.inspector.designPanel.layerPanel.layers[2].textContent
-      ).toContain('Earth');
-      expect(
-        fixture.editor.inspector.designPanel.layerPanel.layers[1].textContent
-      ).toContain('Ranger');
-      expect(
-        fixture.editor.inspector.designPanel.layerPanel.layers[0].textContent
-      ).toContain('beach');
+      expect(fixture.editor.footer.layerPanel.layers[2].textContent).toContain(
+        'Earth'
+      );
+      expect(fixture.editor.footer.layerPanel.layers[1].textContent).toContain(
+        'Ranger'
+      );
+      expect(fixture.editor.footer.layerPanel.layers[0].textContent).toContain(
+        'beach'
+      );
 
       // right click image
       await rightClickOnTarget(
@@ -808,15 +844,15 @@ describe('Right Click Menu integration', () => {
       // Move image with 'Bring forward' button
       await fixture.events.click(bringForward());
 
-      expect(
-        fixture.editor.inspector.designPanel.layerPanel.layers[2].textContent
-      ).toContain('Earth');
-      expect(
-        fixture.editor.inspector.designPanel.layerPanel.layers[1].textContent
-      ).toContain('beach');
-      expect(
-        fixture.editor.inspector.designPanel.layerPanel.layers[0].textContent
-      ).toContain('Ranger');
+      expect(fixture.editor.footer.layerPanel.layers[2].textContent).toContain(
+        'Earth'
+      );
+      expect(fixture.editor.footer.layerPanel.layers[1].textContent).toContain(
+        'beach'
+      );
+      expect(fixture.editor.footer.layerPanel.layers[0].textContent).toContain(
+        'Ranger'
+      );
 
       // Move image all the way to back
       await rightClickOnTarget(
@@ -828,15 +864,15 @@ describe('Right Click Menu integration', () => {
       await rightClickOnTarget(
         fixture.editor.canvas.framesLayer.frame(rangerImage.id).node
       );
-      expect(
-        fixture.editor.inspector.designPanel.layerPanel.layers[2].textContent
-      ).toContain('Ranger');
-      expect(
-        fixture.editor.inspector.designPanel.layerPanel.layers[1].textContent
-      ).toContain('Earth');
-      expect(
-        fixture.editor.inspector.designPanel.layerPanel.layers[0].textContent
-      ).toContain('beach');
+      expect(fixture.editor.footer.layerPanel.layers[2].textContent).toContain(
+        'Ranger'
+      );
+      expect(fixture.editor.footer.layerPanel.layers[1].textContent).toContain(
+        'Earth'
+      );
+      expect(fixture.editor.footer.layerPanel.layers[0].textContent).toContain(
+        'beach'
+      );
 
       // verify 'back' buttons are disabled since ranger image is under everything
       // except the background
@@ -849,15 +885,15 @@ describe('Right Click Menu integration', () => {
       await fixture.events.click(bringToFront());
 
       // verify positioning
-      expect(
-        fixture.editor.inspector.designPanel.layerPanel.layers[2].textContent
-      ).toContain('Earth');
-      expect(
-        fixture.editor.inspector.designPanel.layerPanel.layers[1].textContent
-      ).toContain('beach');
-      expect(
-        fixture.editor.inspector.designPanel.layerPanel.layers[0].textContent
-      ).toContain('Ranger');
+      expect(fixture.editor.footer.layerPanel.layers[2].textContent).toContain(
+        'Earth'
+      );
+      expect(fixture.editor.footer.layerPanel.layers[1].textContent).toContain(
+        'beach'
+      );
+      expect(fixture.editor.footer.layerPanel.layers[0].textContent).toContain(
+        'Ranger'
+      );
 
       // verify 'forward' buttons are disabled since ranger image is under everything
       // except the background
@@ -872,6 +908,8 @@ describe('Right Click Menu integration', () => {
 
     describe('right click menu: copying and pasting styles', () => {
       it('should copy and paste styles', async () => {
+        // #11321 adding/editing animations on the first page is disabled
+        await fixture.events.click(fixture.editor.canvas.pageActions.addPage);
         const earthImage = await addEarthImage();
         const rangerImage = await addRangerImage();
 
@@ -881,8 +919,11 @@ describe('Right Click Menu integration', () => {
         );
 
         // add animation
+        await fixture.events.click(
+          fixture.editor.sidebar.designPanel.animationSection
+        );
         const effectChooserToggle =
-          fixture.editor.inspector.designPanel.animation.effectChooser;
+          fixture.editor.sidebar.designPanel.animation.effectChooser;
 
         await fixture.events.click(effectChooserToggle, { clickCount: 1 });
 
@@ -910,24 +951,27 @@ describe('Right Click Menu integration', () => {
 
         // add border
         await fixture.events.click(
-          fixture.editor.inspector.designPanel.border.width()
+          fixture.editor.sidebar.designPanel.selectionSection
+        );
+        await fixture.events.click(
+          fixture.editor.sidebar.designPanel.border.width()
         );
         await fixture.events.keyboard.type('20');
 
         // add border radius
         await fixture.events.click(
-          fixture.editor.inspector.designPanel.sizePosition.radius()
+          fixture.editor.sidebar.designPanel.sizePosition.radius()
         );
         await fixture.events.keyboard.type('50');
 
         // add filter
         await fixture.events.click(
-          fixture.editor.inspector.designPanel.filters.solid
+          fixture.editor.sidebar.designPanel.filters.solid
         );
 
         // add opacity
         await fixture.events.click(
-          fixture.editor.inspector.designPanel.sizePosition.opacity
+          fixture.editor.sidebar.designPanel.sizePosition.opacity
         );
         await fixture.events.keyboard.type('40');
 
@@ -1346,6 +1390,114 @@ describe('Right Click Menu integration', () => {
       );
       expect(shapeElements.length).toBe(2);
       verifyElementDuplicated(shapeElements[0], shapeElements[1]);
+    });
+  });
+
+  describe('right click menu: use shape mask', () => {
+    it('adds and removes mask from image element', async () => {
+      const image = await addEarthImage();
+      const shape = await addShape({
+        backgroundColor: {
+          color: {
+            r: 203,
+            g: 103,
+            b: 103,
+          },
+        },
+      });
+
+      const imageFrame = fixture.editor.canvas.framesLayer.frame(image.id).node;
+      const shapeFrame = fixture.editor.canvas.framesLayer.frame(shape.id).node;
+
+      // select shape and image targets
+      await clickOnTarget(imageFrame);
+      await clickOnTarget(shapeFrame, 'Shift');
+
+      // multiple elements should be selected
+      const selectedElements = await fixture.renderHook(() =>
+        useStory(({ state }) => state.selectedElements)
+      );
+      expect(selectedElements.length).toBe(2);
+
+      // add shape mask
+      await rightClickOnTarget(imageFrame);
+      await fixture.events.click(useShapeAsMask());
+      await clickOnTarget(imageFrame);
+
+      const { selectedElement } = await fixture.renderHook(() =>
+        useStory(({ state }) => ({
+          selectedElement: state.selectedElements[0],
+        }))
+      );
+
+      expect(selectedElement.mask.type).toEqual('heart');
+
+      // remove the mask
+      const maskedFrame = fixture.editor.canvas.framesLayer.frame(
+        selectedElement.id
+      ).node;
+      await rightClickOnTarget(maskedFrame);
+      await fixture.events.click(removeShapeMask());
+
+      // click on the now "detached" mask
+      await clickOnTarget(imageFrame);
+
+      // delete the "detached" mask
+      await fixture.events.keyboard.press('del');
+
+      const { unmaskedElement } = await fixture.renderHook(() =>
+        useStory(({ state }) => ({
+          unmaskedElement: state.currentPage.elements[1],
+        }))
+      );
+
+      expect(unmaskedElement.mask.type).toEqual('rectangle');
+    });
+  });
+
+  describe('right click menu: product', () => {
+    it('product has right click menu', async () => {
+      const product = await addProduct({});
+      const productElement = fixture.editor.canvas.framesLayer.frame(
+        product.id
+      ).node;
+      await rightClickOnTarget(productElement);
+      await fixture.events.click(selectLayerButton());
+
+      const productItem = fixture.screen.getByRole('menuitem', {
+        name: /^Logo Collection$/,
+      });
+
+      expect(productItem).toBeDefined();
+      expect(sendBackward().disabled).toBeTrue();
+      expect(sendToBack().disabled).toBeTrue();
+      expect(bringForward().disabled).toBeTrue();
+      expect(bringToFront().disabled).toBeTrue();
+    });
+  });
+
+  describe('right click menu: heading level', () => {
+    it('text has heading right click menu', async () => {
+      const text = await addText({
+        y: 300,
+        fontSize: 40,
+        content: '<span style="color: #000">Web Stories</span>',
+        tagName: 'h2',
+      });
+
+      const textElement = fixture.editor.canvas.framesLayer.frame(text.id).node;
+
+      await rightClickOnTarget(textElement);
+      await fixture.events.click(selectHeadingLevel());
+
+      const textItemH2 = fixture.screen.getByRole('menuitem', {
+        name: /^Heading 2$/,
+      });
+
+      expect(textItemH2).toBeDefined();
+
+      // check if h2 has the "checked" icon
+      expect(textItemH2.firstChild.tagName).toEqual('svg');
     });
   });
 });

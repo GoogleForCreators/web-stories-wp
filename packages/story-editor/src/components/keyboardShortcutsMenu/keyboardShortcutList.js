@@ -111,7 +111,7 @@ const shortcuts = {
           shortcut: (
             <kbd>
               <kbd className="large-key">{prettifyShortcut('mod')}</kbd>
-              <kbd>{'K'}</kbd>
+              <kbd>{prettifyShortcut('enter')}</kbd>
             </kbd>
           ),
         },
@@ -121,8 +121,6 @@ const shortcuts = {
       title: __('Text', 'web-stories'),
       commands: [
         {
-          // Not yet implemented
-          disabled: true,
           label: __('Insert/edit link', 'web-stories'),
           shortcut: (
             <kbd>
@@ -351,6 +349,16 @@ const shortcuts = {
                   prettifyShortcut('mod')
                 )}
               </TranslateWithMarkup>
+            </kbd>
+          ),
+        },
+        {
+          label: __('Access floating toolbar', 'web-stories'),
+          shortcut: (
+            <kbd>
+              <kbd className="large-key">{prettifyShortcut('ctrl')}</kbd>
+              <kbd className="large-key">{prettifyShortcut('alt')}</kbd>
+              <kbd>{'P'}</kbd>
             </kbd>
           ),
         },

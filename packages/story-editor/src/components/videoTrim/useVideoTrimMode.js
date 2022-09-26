@@ -17,13 +17,7 @@
 /**
  * External dependencies
  */
-import { useFeature } from 'flagged';
-import {
-  useCallback,
-  useMemo,
-  useState,
-  useEffect,
-} from '@googleforcreators/react';
+import { useCallback, useMemo, useState } from '@googleforcreators/react';
 import { trackEvent } from '@googleforcreators/tracking';
 import { getMsFromHMS } from '@googleforcreators/media';
 
@@ -34,7 +28,6 @@ import { useCanvas, useStory, useAPI, useLocalMedia } from '../../app';
 import useFFmpeg from '../../app/media/utils/useFFmpeg';
 
 function useVideoTrimMode() {
-  const isVideoTrimEnabled = useFeature('enableVideoTrim');
   const { isEditing, isTrimMode, setEditingElementWithState, clearEditing } =
     useCanvas(
       ({
@@ -96,12 +89,6 @@ function useVideoTrimMode() {
     }
   }, [getMediaById, selectedElement]);
 
-  useEffect(() => {
-    if (selectedElement?.resource?.trimData) {
-      getVideoData();
-    }
-  }, [selectedElement, getVideoData]);
-
   const toggleTrimMode = useCallback(() => {
     if (isEditing) {
       clearEditing();
@@ -135,17 +122,9 @@ function useVideoTrimMode() {
     const { id, isExternal } = selectedElement.resource;
 
     return (
-      isVideoTrimEnabled &&
-      isTranscodingEnabled &&
-      !isExternal &&
-      !isCurrentResourceUploading(id)
+      isTranscodingEnabled && !isExternal && !isCurrentResourceUploading(id)
     );
-  }, [
-    selectedElement,
-    isVideoTrimEnabled,
-    isTranscodingEnabled,
-    isCurrentResourceUploading,
-  ]);
+  }, [selectedElement, isTranscodingEnabled, isCurrentResourceUploading]);
 
   return {
     isTrimMode: Boolean(isEditing && isTrimMode),

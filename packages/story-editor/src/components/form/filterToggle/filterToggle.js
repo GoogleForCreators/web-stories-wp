@@ -31,7 +31,7 @@ import {
 /**
  * Internal dependencies
  */
-import { focusStyle } from '../../panels/shared';
+import { focusStyle } from '../../panels/shared/styles';
 
 const fillCss = css`
   width: 100%;

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useEffect } from '@googleforcreators/react';
+import { useCallback, useEffect, useRef } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { createSolid, PatternPropType } from '@googleforcreators/patterns';
 import {
@@ -65,6 +65,14 @@ function CustomColorPicker({
     },
   } = useColor();
 
+  const isMounted = useRef(true);
+  useEffect(() => {
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
+
+  // If color picker isn't mounted while using eyedropper, generatedColor won't update.
   useEffect(() => {
     if (generatedColor) {
       handleColorChange(generatedColor);
@@ -79,6 +87,21 @@ function CustomColorPicker({
       load(createSolid(0, 0, 0));
     }
   }, [color, load]);
+
+  const handleColorPickerChange = useCallback(
+    (e) => {
+      updateCurrentColor(e);
+      // If using the eyedropper in floating menu, the popup unmounts
+      // so the generatedColor won't ever be updated
+      // check for unmount and if so, we know this change event
+      // is from the eyedropper so we can just grab the rgb and
+      // trigger the rest of the change for the element.
+      if (!isMounted.current && e?.rgb) {
+        handleColorChange({ color: e.rgb });
+      }
+    },
+    [updateCurrentColor, handleColorChange]
+  );
 
   return (
     <>
@@ -115,7 +138,7 @@ function CustomColorPicker({
       )}
       <CurrentColorPicker
         color={currentColor}
-        onChange={updateCurrentColor}
+        onChange={handleColorPickerChange}
         showOpacity={allowsOpacity}
         hasEyedropper={hasEyedropper}
       />

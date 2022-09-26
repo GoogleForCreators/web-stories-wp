@@ -28,6 +28,19 @@ describe('updateStory', () => {
     expect(result.story).toStrictEqual({ a: 1, b: 2 });
   });
 
+  it('should update story with property updater function which will overwrite existing values', () => {
+    const { updateStory } = setupReducer();
+
+    const firstResult = updateStory({ properties: { a: 1, b: 2 } });
+    expect(firstResult.story).toStrictEqual({ a: 1, b: 2 });
+
+    const secondResult = updateStory({
+      properties: (old) => ({ b: old.b + 2 }),
+    });
+    // Note how 'a' has been deleted, because only 'b' was returned in the updater
+    expect(secondResult.story).toStrictEqual({ b: 4 });
+  });
+
   it('should overwrite existing properties but not delete old ones', () => {
     const { updateStory } = setupReducer();
 

@@ -27,7 +27,6 @@ import { format, formatTime, is12Hour } from '@googleforcreators/date';
 import { __ } from '@googleforcreators/i18n';
 import {
   DropDownSelect,
-  PLACEMENT,
   useKeyDownEffect,
   Popup,
 } from '@googleforcreators/design-system';
@@ -36,13 +35,8 @@ import {
   Row,
   useStory,
   focusStyle,
-  useConfig,
 } from '@googleforcreators/story-editor';
 
-/**
- * Internal dependencies
- */
-import { TOOLBAR_HEIGHT } from '../../../constants';
 // date-fns format without timezone.
 const TIMEZONELESS_FORMAT = 'Y-m-d\\TH:i:s';
 
@@ -64,7 +58,7 @@ function PublishTime() {
     })
   );
   const use12HourFormat = is12Hour();
-  const { isRTL } = useConfig();
+
   /* translators: Date format, see https://www.php.net/manual/en/datetime.format.php */
   const shortDateFormat = __('d/m/Y', 'web-stories');
 
@@ -130,14 +124,12 @@ function PublishTime() {
           selectButtonStylesOverride={focusStyle}
           onPointerEnter={() => loadCalendar()}
           onFocus={() => loadCalendar()}
+          isOpen={showDatePicker}
         />
       </Row>
       <Popup
-        topOffset={TOOLBAR_HEIGHT}
         anchor={dateFieldRef}
         isOpen={showDatePicker}
-        placement={PLACEMENT.BOTTOM_END}
-        isRTL={isRTL}
         zIndex={10}
         renderContents={({ propagateDimensionChange }) => (
           <DateTime

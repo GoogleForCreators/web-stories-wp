@@ -22,26 +22,26 @@ import { __ } from '@googleforcreators/i18n';
 import styled from 'styled-components';
 import {
   Text,
+  CircularProgress,
   THEME_CONSTANTS,
   Button,
   BUTTON_SIZES,
   BUTTON_TYPES,
   BUTTON_VARIANTS,
   useLiveRegion,
+  Slider,
 } from '@googleforcreators/design-system';
-import { useCallback, useEffect } from '@googleforcreators/react';
-
+import { useEffect, useInitializedValue } from '@googleforcreators/react';
+import { useFeature } from 'flagged';
+import { v4 as uuidv4 } from 'uuid';
 /**
  * Internal dependencies
  */
-import useVideoTrim from '../../../videoTrim/useVideoTrim';
+import useVideoElementTranscoding from '../../../../app/media/utils/useVideoElementTranscoding';
 import { Row as DefaultRow } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { getCommonValue } from '../../shared';
-import useFFmpeg from '../../../../app/media/utils/useFFmpeg';
-import { useLocalMedia } from '../../../../app';
-import CircularProgress from '../../../circularProgress';
-import LoopPanelContent from '../../shared/loopPanelContent';
+import LoopPanelContent from '../../shared/media/loopPanelContent';
 
 const Row = styled(DefaultRow)`
   margin-top: 2px;
@@ -64,6 +64,12 @@ const Spinner = styled.div`
   margin-left: 4px;
   margin-top: 4px;
 `;
+const StyledSlider = styled(Slider)`
+  width: 100%;
+`;
+const VolumeWrapper = styled.div`
+  margin-bottom: 20px;
+`;
 
 const HelperText = styled(Text).attrs({
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL,
@@ -72,40 +78,20 @@ const HelperText = styled(Text).attrs({
 `;
 
 function VideoOptionsPanel({ selectedElements, pushUpdate }) {
-  const { isTranscodingEnabled } = useFFmpeg();
-  const {
-    muteExistingVideo,
-    isResourceTrimming,
-    isNewResourceMuting,
-    canTranscodeResource,
-  } = useLocalMedia(
-    ({
-      state: { canTranscodeResource, isNewResourceMuting, isResourceTrimming },
-      actions: { muteExistingVideo },
-    }) => ({
-      canTranscodeResource,
-      isNewResourceMuting,
-      isResourceTrimming,
-      muteExistingVideo,
-    })
-  );
   const resource = getCommonValue(selectedElements, 'resource');
-  const { isMuted, id: resourceId = 0 } = resource;
-  const isTrimming = isResourceTrimming(resourceId);
-  const isMuting = isNewResourceMuting(resourceId);
+  const elementId = getCommonValue(selectedElements, 'id');
   const loop = getCommonValue(selectedElements, 'loop');
+  const volume = getCommonValue(selectedElements, 'volume', 1);
   const isSingleElement = selectedElements.length === 1;
+  const enableVideoVolume = useFeature('videoVolume');
+  const showVolumeControl =
+    enableVideoVolume && isSingleElement && !resource?.isMuted;
 
-  const handleMuteVideo = useCallback(() => {
-    muteExistingVideo({ resource });
-  }, [resource, muteExistingVideo]);
+  const {
+    state: { canTrim, canMute, isTrimming, isMuting, isDisabled },
+    actions: { handleMute, handleTrim },
+  } = useVideoElementTranscoding({ resource, elementId, isSingleElement });
 
-  const shouldDisableVideoActions = !canTranscodeResource(resource);
-
-  const shouldDisplayMuteButton =
-    isTranscodingEnabled &&
-    isSingleElement &&
-    ((!isMuted && canTranscodeResource(resource)) || isMuting);
   const muteButtonText = isMuting
     ? __('Removing audio…', 'web-stories')
     : __('Remove audio', 'web-stories');
@@ -113,13 +99,6 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
   const trimButtonText = isTrimming
     ? __('Trimming…', 'web-stories')
     : __('Trim', 'web-stories');
-
-  const { hasTrimMode, toggleTrimMode } = useVideoTrim(
-    ({ state: { hasTrimMode }, actions: { toggleTrimMode } }) => ({
-      hasTrimMode,
-      toggleTrimMode,
-    })
-  );
 
   const speak = useLiveRegion();
 
@@ -136,6 +115,12 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
   }, [isTrimming, trimButtonText, speak]);
 
   const onChange = (evt) => pushUpdate({ loop: evt.target.checked }, true);
+  const onChangeVolume = (value) => {
+    const newVolume = Math.max(0.1, value / 100);
+    pushUpdate({ volume: newVolume }, true);
+  };
+
+  const slideId = useInitializedValue(() => `slide-${uuidv4()}`);
 
   const Processing = () => {
     return (
@@ -152,14 +137,14 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
     >
       <Row spaceBetween={false}>
         <LoopPanelContent loop={loop} onChange={onChange} />
-        {hasTrimMode && (
+        {canTrim && (
           <TrimWrapper>
             <TrimButton
-              disabled={shouldDisableVideoActions}
+              disabled={isDisabled}
               variant={BUTTON_VARIANTS.RECTANGLE}
               type={BUTTON_TYPES.SECONDARY}
               size={BUTTON_SIZES.SMALL}
-              onClick={toggleTrimMode}
+              onClick={handleTrim}
             >
               {trimButtonText}
             </TrimButton>
@@ -167,15 +152,36 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
           </TrimWrapper>
         )}
       </Row>
-      {shouldDisplayMuteButton && (
+      {showVolumeControl && (
+        <VolumeWrapper>
+          <Text
+            as="label"
+            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+            htmlFor={slideId}
+          >
+            {__('Volume', 'web-stories')}
+          </Text>
+          <StyledSlider
+            value={Math.round(volume * 100)}
+            handleChange={onChangeVolume}
+            minorStep={5}
+            majorStep={10}
+            min={0}
+            max={100}
+            id={slideId}
+            aria-label={__('Volume', 'web-stories')}
+          />
+        </VolumeWrapper>
+      )}
+      {canMute && (
         <>
           <Row spaceBetween={false}>
             <StyledButton
-              disabled={shouldDisableVideoActions}
+              disabled={isDisabled}
               variant={BUTTON_VARIANTS.RECTANGLE}
               type={BUTTON_TYPES.SECONDARY}
               size={BUTTON_SIZES.SMALL}
-              onClick={handleMuteVideo}
+              onClick={handleMute}
             >
               {muteButtonText}
             </StyledButton>

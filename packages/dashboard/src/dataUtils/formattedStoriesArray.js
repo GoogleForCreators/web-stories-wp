@@ -22,11 +22,6 @@ import { toUTCDate } from '@googleforcreators/date';
 // @todo Remove WordPress specific and unused fields.
 const formattedStoriesArray = [
   {
-    locked: true,
-    lockUser: {
-      name: 'batgirl',
-      id: 888877665,
-    },
     id: 167,
     status: 'publish',
     title: 'ORANGE SHAPES',
@@ -34,7 +29,7 @@ const formattedStoriesArray = [
     modifiedGmt: '2020-05-21T23:25:51.000Z',
     created: toUTCDate('2020-05-21T23:25:51.000Z'),
     createdGmt: '2020-05-21T23:25:51.000Z',
-    featuredMediaUrl: 'http://placekitten.com/640/853',
+    featuredMediaUrl: 'http://localhost:9876/__static__/featured-media-1.png',
     tags: [],
     categories: [],
     author: {
@@ -52,6 +47,38 @@ const formattedStoriesArray = [
     previewLink: 'http://localhost:8899/wp-admin/post.php?action=edit&post=167',
   },
   {
+    locked: true,
+    lockUser: {
+      name: 'batgirl',
+      id: 888877665,
+      avatar:
+        'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y&s=96',
+    },
+    id: 168,
+    status: 'publish',
+    title: 'PURPLE SHAPES',
+    modified: toUTCDate('2020-05-21T23:25:35.000Z'),
+    modifiedGmt: '2020-05-21T23:25:35.000Z',
+    created: toUTCDate('2020-05-21T23:25:35.000Z'),
+    createdGmt: '2020-05-21T23:25:35.000Z',
+    featuredMediaUrl: 'http://localhost:9876/__static__/featured-media-1.png',
+    tags: [],
+    categories: [{ name: 'Dagobah', id: 1 }],
+    author: {
+      name: 'Jango Fett',
+      id: 1,
+    },
+    bottomTargetAction:
+      'http://localhost:8899/wp-admin/post.php?action=edit&post=168',
+    capabilities: {
+      hasEditAction: true,
+      hasDeleteAction: true,
+    },
+    editStoryLink:
+      'http://localhost:8899/wp-admin/post.php?action=edit&post=168',
+    previewLink: 'http://localhost:8899/wp-admin/post.php?action=edit&post=168',
+  },
+  {
     id: 165,
     status: 'draft',
     title: 'GREEN SHAPES',
@@ -59,7 +86,7 @@ const formattedStoriesArray = [
     modifiedGmt: '2020-05-21T23:25:22.000Z',
     created: toUTCDate('2020-05-21T23:25:22.000Z'),
     createdGmt: '2020-05-21T23:25:22.000Z',
-    featuredMediaUrl: 'http://placekitten.com/640/853',
+    featuredMediaUrl: 'http://localhost:9876/__static__/featured-media-2.png',
     tags: [],
     categories: [],
     author: {
@@ -84,7 +111,7 @@ const formattedStoriesArray = [
     modifiedGmt: '2020-05-21T23:24:47.000Z',
     created: toUTCDate('2020-05-21T23:24:47.000Z'),
     createdGmt: '2020-05-21T23:24:47.000Z',
-    featuredMediaUrl: 'http://placekitten.com/640/853',
+    featuredMediaUrl: 'http://localhost:9876/__static__/featured-media-3.png',
     tags: [],
     categories: [],
     author: {
@@ -109,7 +136,7 @@ const formattedStoriesArray = [
     modifiedGmt: '2020-05-21T23:24:06.000Z',
     created: toUTCDate('2020-05-21T23:24:06.000Z'),
     createdGmt: '2020-05-21T23:24:06.000Z',
-    featuredMediaUrl: 'http://placekitten.com/640/853',
+    featuredMediaUrl: 'http://localhost:9876/__static__/featured-media-1.png',
     tags: [],
     categories: [],
     author: {

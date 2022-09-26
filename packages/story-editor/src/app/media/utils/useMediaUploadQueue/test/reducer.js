@@ -30,6 +30,8 @@ import {
   finishTranscoding,
   finishTrimming,
   finishUploading,
+  prepareItem,
+  prepareForTranscoding,
   replacePlaceholderResource,
   startMuting,
   startTranscoding,
@@ -73,6 +75,118 @@ describe('useMediaUploadQueue', () => {
               id: 456,
               foo: 'bar',
             }),
+            additionalData: {},
+          }),
+        ],
+      });
+    });
+
+    it('sets additionalData.isMuted if possible', () => {
+      const initialState = { queue: [] };
+
+      const result = addItem(initialState, {
+        payload: {
+          file: {},
+          resource: {
+            id: 456,
+            type: 'video',
+            foo: 'bar',
+            isMuted: false,
+          },
+          originalResourceId: 789,
+        },
+      });
+
+      expect(result).toStrictEqual({
+        queue: [
+          expect.objectContaining({
+            id: expect.any(String),
+            state: ITEM_STATUS.PENDING,
+            file: {},
+            originalResourceId: 789,
+            resource: expect.objectContaining({
+              id: 456,
+              type: 'video',
+              foo: 'bar',
+              isMuted: false,
+            }),
+            additionalData: {
+              isMuted: false,
+            },
+          }),
+        ],
+      });
+    });
+
+    it('sets additionalData.muted.baseColor if possible', () => {
+      const initialState = { queue: [] };
+
+      const result = addItem(initialState, {
+        payload: {
+          file: {},
+          resource: {
+            id: 456,
+            type: 'video',
+            foo: 'bar',
+            baseColor: 'barbaz',
+          },
+          originalResourceId: 789,
+        },
+      });
+
+      expect(result).toStrictEqual({
+        queue: [
+          expect.objectContaining({
+            id: expect.any(String),
+            state: ITEM_STATUS.PENDING,
+            file: {},
+            originalResourceId: 789,
+            resource: expect.objectContaining({
+              id: 456,
+              type: 'video',
+              foo: 'bar',
+              baseColor: 'barbaz',
+            }),
+            additionalData: {
+              baseColor: 'barbaz',
+            },
+          }),
+        ],
+      });
+    });
+
+    it('sets additionalData.muted.blurHash if possible', () => {
+      const initialState = { queue: [] };
+
+      const result = addItem(initialState, {
+        payload: {
+          file: {},
+          resource: {
+            id: 456,
+            type: 'video',
+            foo: 'bar',
+            blurHash: 'barbaz',
+          },
+          originalResourceId: 789,
+        },
+      });
+
+      expect(result).toStrictEqual({
+        queue: [
+          expect.objectContaining({
+            id: expect.any(String),
+            state: ITEM_STATUS.PENDING,
+            file: {},
+            originalResourceId: 789,
+            resource: expect.objectContaining({
+              id: 456,
+              type: 'video',
+              foo: 'bar',
+              blurHash: 'barbaz',
+            }),
+            additionalData: {
+              blurHash: 'barbaz',
+            },
           }),
         ],
       });
@@ -548,6 +662,82 @@ describe('useMediaUploadQueue', () => {
             },
             additionalData: {},
             state: ITEM_STATUS.TRIMMED,
+          },
+        ],
+      });
+    });
+  });
+
+  describe('prepareItem', () => {
+    it('changes state of pending item', () => {
+      const initialState = {
+        queue: [
+          {
+            id: 123,
+            file: {},
+            resource: {
+              id: 456,
+              foo: 'bar',
+            },
+            state: ITEM_STATUS.PENDING,
+          },
+        ],
+      };
+
+      const result = prepareItem(initialState, {
+        payload: {
+          id: 123,
+        },
+      });
+
+      expect(result).toStrictEqual({
+        queue: [
+          {
+            id: 123,
+            file: {},
+            resource: {
+              id: 456,
+              foo: 'bar',
+            },
+            state: ITEM_STATUS.PREPARING,
+          },
+        ],
+      });
+    });
+  });
+
+  describe('prepareForTranscoding', () => {
+    it('changes state of pending item', () => {
+      const initialState = {
+        queue: [
+          {
+            id: 123,
+            file: {},
+            resource: {
+              id: 456,
+              foo: 'bar',
+            },
+            state: ITEM_STATUS.PREPARING,
+          },
+        ],
+      };
+
+      const result = prepareForTranscoding(initialState, {
+        payload: {
+          id: 123,
+        },
+      });
+
+      expect(result).toStrictEqual({
+        queue: [
+          {
+            id: 123,
+            file: {},
+            resource: {
+              id: 456,
+              foo: 'bar',
+            },
+            state: ITEM_STATUS.PENDING_TRANSCODING,
           },
         ],
       });

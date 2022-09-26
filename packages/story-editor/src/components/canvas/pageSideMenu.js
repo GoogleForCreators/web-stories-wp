@@ -33,6 +33,12 @@ import { Fragment } from '@googleforcreators/react';
 import { useLayout } from '../../app';
 import { MediaPicker, useQuickActions } from '../../app/highlights';
 import { ZOOM_SETTING } from '../../constants';
+import {
+  Z_INDEX_CANVAS_SIDE_MENU,
+  Z_INDEX_CANVAS_SIDE_MENU_RECORDING_MODE,
+} from '../../constants/zIndex';
+import Tooltip from '../tooltip';
+import { useMediaRecording } from '../mediaRecording';
 import PageMenu from './pagemenu/pageMenu';
 
 const MenusWrapper = styled.section`
@@ -41,9 +47,10 @@ const MenusWrapper = styled.section`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  z-index: 9999;
+  z-index: ${({ $zIndex }) => $zIndex};
   pointer-events: auto;
   min-height: 100%;
+  pointer-events: none;
   ${({ isZoomed, theme }) =>
     isZoomed &&
     `
@@ -62,11 +69,19 @@ const Divider = styled.div`
   background-color: ${({ theme }) => theme.colors.divider.primary};
 `;
 
+const StyledContextMenu = styled(ContextMenu)`
+  pointer-events: all;
+`;
+
 function PageSideMenu() {
   const { zoomSetting } = useLayout(({ state: { zoomSetting } }) => ({
     zoomSetting,
   }));
   const quickActions = useQuickActions();
+
+  const { isInRecordingMode } = useMediaRecording(
+    ({ state: { isInRecordingMode } }) => ({ isInRecordingMode })
+  );
 
   const isZoomed = zoomSetting !== ZOOM_SETTING.FIT;
 
@@ -74,73 +89,90 @@ function PageSideMenu() {
     <MenusWrapper
       aria-label={__('Page side menu', 'web-stories')}
       isZoomed={isZoomed}
+      $zIndex={
+        isInRecordingMode
+          ? Z_INDEX_CANVAS_SIDE_MENU_RECORDING_MODE
+          : Z_INDEX_CANVAS_SIDE_MENU
+      }
     >
-      <ContextMenu
-        isInline
-        isAlwaysVisible
-        isIconMenu
-        disableControlledTabNavigation
-        aria-label={__(
-          'Group of available options for selected element',
-          'web-stories'
-        )}
-        onMouseDown={(e) => {
-          // Stop the event from bubbling if the user clicks in between buttons.
-          // This prevents the selected element in the canvas from losing focus.
-          e.stopPropagation();
-        }}
-      >
-        {quickActions.map(
-          ({
-            Icon,
-            label,
-            onClick,
-            separator,
-            tooltipPlacement,
-            wrapWithMediaPicker,
-            ...quickAction
-          }) => {
-            const action = (externalOnClick = noop) => (
-              <Fragment key={label}>
-                {separator === 'top' && <ContextMenuComponents.MenuSeparator />}
-                <ContextMenuComponents.MenuButton
-                  aria-label={label}
-                  onClick={(evt) => {
-                    onClick(evt);
-                    externalOnClick(evt);
-                  }}
-                  {...quickAction}
-                >
-                  <ContextMenuComponents.MenuIcon
-                    title={label}
-                    placement={tooltipPlacement}
-                  >
-                    <Icon />
-                  </ContextMenuComponents.MenuIcon>
-                </ContextMenuComponents.MenuButton>
-                {separator === 'bottom' && (
-                  <ContextMenuComponents.MenuSeparator />
-                )}
-              </Fragment>
-            );
+      {
+        // Dont render a menu wrapper if there are no quick actions
+        quickActions.length ? (
+          <StyledContextMenu
+            isInline
+            isAlwaysVisible
+            isIconMenu
+            disableControlledTabNavigation
+            data-testid="Element quick actions"
+            aria-label={__(
+              'Group of available options for selected element',
+              'web-stories'
+            )}
+            onMouseDown={(e) => {
+              // Stop the event from bubbling if the user clicks in between buttons.
+              // This prevents the selected element in the canvas from losing focus.
+              e.stopPropagation();
+            }}
+          >
+            {quickActions.map(
+              ({
+                Icon,
+                label,
+                onClick,
+                separator,
+                tooltipPlacement,
+                wrapWithMediaPicker,
+                ...quickAction
+              }) => {
+                const action = (externalOnClick = noop) => (
+                  <Fragment key={label}>
+                    {separator === 'top' && (
+                      <ContextMenuComponents.MenuSeparator />
+                    )}
+                    <Tooltip placement={tooltipPlacement} title={label}>
+                      <ContextMenuComponents.MenuButton
+                        aria-label={label}
+                        onClick={(evt) => {
+                          onClick(evt);
 
-            if (wrapWithMediaPicker) {
-              return (
-                <MediaPicker
-                  key={label}
-                  render={({ onClick: openMediaPicker }) =>
-                    action(openMediaPicker)
-                  }
-                />
-              );
-            }
+                          externalOnClick(evt);
+                        }}
+                        {...quickAction}
+                      >
+                        <ContextMenuComponents.MenuIcon title={label}>
+                          <Icon />
+                        </ContextMenuComponents.MenuIcon>
+                      </ContextMenuComponents.MenuButton>
+                    </Tooltip>
+                    {separator === 'bottom' && (
+                      <ContextMenuComponents.MenuSeparator />
+                    )}
+                  </Fragment>
+                );
 
-            return action();
-          }
-        )}
-      </ContextMenu>
-      {isZoomed && <Divider />}
-      <PageMenu />
+                if (wrapWithMediaPicker) {
+                  return (
+                    <MediaPicker
+                      key={label}
+                      render={({ onClick: openMediaPicker }) =>
+                        action(openMediaPicker)
+                      }
+                    />
+                  );
+                }
+
+                return action();
+              }
+            )}
+          </StyledContextMenu>
+        ) : null
+      }
+      {!isInRecordingMode && (
+        <>
+          {isZoomed && <Divider />}
+          <PageMenu />
+        </>
+      )}
     </MenusWrapper>
   );
 }

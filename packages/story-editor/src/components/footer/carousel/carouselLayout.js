@@ -30,6 +30,7 @@ import {
   CAROUSEL_STATE,
   CAROUSEL_TRANSITION_DURATION,
 } from '../../../constants';
+import { Z_INDEX_FOOTER } from '../../../constants/zIndex';
 import { CarouselScrollForward, CarouselScrollBack } from './carouselScroll';
 import CarouselList from './carouselList';
 import CarouselDrawer from './carouselDrawer';
@@ -68,6 +69,7 @@ const Wrapper = styled.section`
     1fr;
   width: 100%;
   height: auto;
+  z-index: ${Z_INDEX_FOOTER};
 
   &.carousel-enter {
     top: ${({ thumbHeight }) => thumbHeight + DRAWER_BUTTON_GAP_DIFF}px;

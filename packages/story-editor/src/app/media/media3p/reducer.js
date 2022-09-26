@@ -52,9 +52,9 @@ function reduceProviderStates(state, { type, payload }) {
   const result = { ...state };
   for (const provider of Object.keys(PROVIDERS)) {
     if (
-      type == INITIAL_STATE_ACTION ||
+      type === INITIAL_STATE_ACTION ||
       !payload?.provider ||
-      provider == payload?.provider
+      provider === payload?.provider
     ) {
       result[provider] = providerReducer(state[provider], { type, payload });
     }

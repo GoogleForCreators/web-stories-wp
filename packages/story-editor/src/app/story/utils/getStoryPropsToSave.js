@@ -14,10 +14,15 @@
  * limitations under the License.
  */
 /**
+ * External dependencies
+ */
+import { getStoryMarkup } from '@googleforcreators/output';
+
+/**
  * Internal dependencies
  */
 import objectPick from '../../../utils/objectPick';
-import getStoryMarkup from '../../../output/utils/getStoryMarkup';
+import getAllProducts from './getAllProducts';
 
 function getStoryPropsToSave({ story, pages, metadata, flags }) {
   const { terms, ...propsFromStory } = objectPick(story, [
@@ -29,6 +34,7 @@ function getStoryPropsToSave({ story, pages, metadata, flags }) {
     'slug',
     'excerpt',
     'featuredMedia',
+    'publisherLogo',
     'password',
     'currentStoryStyles',
     'globalStoryStyles',
@@ -37,16 +43,14 @@ function getStoryPropsToSave({ story, pages, metadata, flags }) {
     'backgroundAudio',
     'terms',
   ]);
-
+  const products = getAllProducts(pages);
   const content = getStoryMarkup(story, pages, metadata, flags);
   return {
     content,
     pages,
     ...propsFromStory,
     ...terms,
-    meta: {
-      web_stories_publisher_logo: story.publisherLogo?.id,
-    },
+    products,
   };
 }
 

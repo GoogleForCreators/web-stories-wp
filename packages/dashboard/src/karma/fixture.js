@@ -25,7 +25,7 @@ import {
   screen,
   waitFor,
 } from '@testing-library/react';
-import { setAppElement, noop } from '@googleforcreators/design-system';
+import { setAppElement } from '@googleforcreators/design-system';
 import {
   FixtureEvents,
   ComponentStub,
@@ -39,6 +39,7 @@ import Dashboard from '../dashboard';
 import ApiProvider from '../app/api/apiProvider';
 import { AppFrame } from '../components';
 import InterfaceSkeleton from '../components/interfaceSkeleton';
+import { noop } from '../utils';
 import ApiProviderFixture from './apiProviderFixture';
 
 const React = require('react');
@@ -51,6 +52,7 @@ if ('true' === WEB_STORIES_CI) {
       error.stack = null;
       return error;
     },
+    asyncUtilTimeout: 5000,
   });
 }
 export const FIXTURE_DEFAULT_CONFIG = {
@@ -95,6 +97,7 @@ export const FIXTURE_DEFAULT_CONFIG = {
     fetchStories: noop,
     createStoryFromTemplate: noop,
   },
+  vendors: { none: 'None', shopify: 'Shopify', woocommerce: 'WooCommerce' },
 };
 
 export default class Fixture {
@@ -232,9 +235,7 @@ export default class Fixture {
       const font = '12px "Google Sans"';
       const fonts = weights.map((weight) => `${weight} ${font}`);
       await Promise.all(
-        fonts.map((thisFont) => {
-          document.fonts.load(thisFont, '');
-        })
+        fonts.map((thisFont) => document.fonts.load(thisFont, ''))
       );
       fonts.forEach((thisFont) => {
         if (!document.fonts.check(thisFont, '')) {

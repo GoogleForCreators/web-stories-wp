@@ -23,6 +23,7 @@ import {
   VideoElementResolution,
   ImageElementResolution,
   StoryPagesCount,
+  FirstPageAnimation,
 } from '../../../../../components/checklist';
 import { useConfig } from '../../../../../app/config';
 
@@ -36,6 +37,7 @@ function Design() {
       <PageTooMuchText />
       <PageTooLittleText />
       <PageTooManyLinks />
+      <FirstPageAnimation />
       {hasUploadMediaAction && <VideoElementResolution />}
       {hasUploadMediaAction && <ImageElementResolution />}
     </>

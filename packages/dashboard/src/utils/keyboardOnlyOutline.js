@@ -55,10 +55,10 @@ const KeyboardOnlyOutline = () => {
     }
   };
 
-  document.addEventListener('keydown', handleKeydown);
-  document.addEventListener('mousedown', handleMousedown);
-
   useEffect(() => {
+    document.addEventListener('keydown', handleKeydown);
+    document.addEventListener('mousedown', handleMousedown);
+
     return function cleanup() {
       document.removeEventListener('keydown', handleKeydown);
       document.removeEventListener('mousedown', handleMousedown);

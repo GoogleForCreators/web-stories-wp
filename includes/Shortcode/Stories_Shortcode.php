@@ -31,6 +31,8 @@ use Google\Web_Stories\Story_Query as Stories;
 
 /**
  * Class Stories_Shortcode
+ *
+ * @phpstan-import-type StoryAttributes from \Google\Web_Stories\Story_Query
  */
 class Stories_Shortcode extends Service_Base {
 
@@ -56,7 +58,7 @@ class Stories_Shortcode extends Service_Base {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param array $attrs Shortcode attributes.
+	 * @param array<string,string|int> $attrs Shortcode attributes.
 	 * @return string Story markup.
 	 */
 	public function render_stories( array $attrs ): string {
@@ -92,8 +94,10 @@ class Stories_Shortcode extends Service_Base {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param array $attributes Shortcode attributes.
-	 * @return array Attributes to pass to Story_Query class.
+	 * @param array<string, string|int> $attributes Shortcode attributes.
+	 * @return array<string, string|int|bool> Attributes to pass to Story_Query class.
+	 *
+	 * @phpstan-return StoryAttributes
 	 */
 	private function prepare_story_attrs( array $attributes ): array {
 		return [
@@ -104,7 +108,7 @@ class Stories_Shortcode extends Service_Base {
 			'show_date'          => ( 'true' === $attributes['date'] ),
 			'show_excerpt'       => ( 'true' === $attributes['excerpt'] ),
 			'show_archive_link'  => ( 'true' === $attributes['archive_link'] ),
-			'archive_link_label' => $attributes['archive_link_label'],
+			'archive_link_label' => (string) $attributes['archive_link_label'],
 			'image_alignment'    => (string) $attributes['image_alignment'],
 			'class'              => (string) $attributes['class'],
 			'circle_size'        => (int) $attributes['circle_size'],
@@ -117,8 +121,8 @@ class Stories_Shortcode extends Service_Base {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param array $attributes Array of arguments for Story Query.
-	 * @return array Array of story arguments to pass to Story_Query.
+	 * @param array<string,string|int> $attributes Array of arguments for Story Query.
+	 * @return array<string,string|int> Array of story arguments to pass to Story_Query.
 	 */
 	private function prepare_story_args( array $attributes ): array {
 		return [

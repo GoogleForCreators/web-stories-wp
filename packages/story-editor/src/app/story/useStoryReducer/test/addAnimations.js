@@ -66,6 +66,25 @@ describe('addAnimations', () => {
     });
   });
 
+  it('should add animations even if page has no animation array', () => {
+    const { restore, addAnimations } = setupReducer();
+
+    // Set an initial state with a current page and no animations
+    restore({
+      pages: [{ id: '111' }],
+      current: '111',
+    });
+
+    const result = addAnimations({
+      animations: [{ id: '123' }, { id: '234' }],
+    });
+
+    expect(result.pages[0]).toStrictEqual({
+      id: '111',
+      animations: [{ id: '123' }, { id: '234' }],
+    });
+  });
+
   it('should skip animations matching existing ids', () => {
     const { restore, addAnimations } = setupReducer();
 

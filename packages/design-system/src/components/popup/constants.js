@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
+import styled from 'styled-components';
+
 export const PLACEMENT = {
   // TOP
   TOP: 'top',
@@ -36,12 +41,12 @@ export const PLACEMENT = {
 export const RTL_PLACEMENT = {
   // TOP
   [PLACEMENT.TOP]: PLACEMENT.TOP,
-  [PLACEMENT.TOP_START]: PLACEMENT.TOP_END,
-  [PLACEMENT.TOP_END]: PLACEMENT.TOP_START,
+  [PLACEMENT.TOP_START]: PLACEMENT.TOP_START,
+  [PLACEMENT.TOP_END]: PLACEMENT.TOP_END,
   // BOTTOM
   [PLACEMENT.BOTTOM]: PLACEMENT.BOTTOM,
-  [PLACEMENT.BOTTOM_END]: PLACEMENT.BOTTOM_START,
-  [PLACEMENT.BOTTOM_START]: PLACEMENT.BOTTOM_END,
+  [PLACEMENT.BOTTOM_END]: PLACEMENT.BOTTOM_END,
+  [PLACEMENT.BOTTOM_START]: PLACEMENT.BOTTOM_START,
   // RIGHT
   [PLACEMENT.RIGHT]: PLACEMENT.LEFT,
   [PLACEMENT.RIGHT_START]: PLACEMENT.LEFT_START,
@@ -51,3 +56,42 @@ export const RTL_PLACEMENT = {
   [PLACEMENT.LEFT_START]: PLACEMENT.RIGHT_START,
   [PLACEMENT.LEFT_END]: PLACEMENT.RIGHT_END,
 };
+
+export const PopupContainer = styled.div.attrs(
+  ({ $offset: { x, y, width }, fillWidth, transforms, zIndex, maxWidth }) => {
+    // set the width properties
+    const widthProp = {};
+
+    // fillWidth should expand the PopupContainer width to the offset.width
+    if (fillWidth) {
+      // if maxWidth is given with fillWidth, set the PopupContainers min-width
+      // to offset.width to ensure the PopupContainer does not get any smaller
+      // than offset.width
+      if (maxWidth) {
+        widthProp.minWidth = `${width}px`;
+      } else {
+        widthProp.width = `${width}px`;
+      }
+    }
+    // if maxWidth is given and the width propery hasn't been set
+    // set the PopupContainers max-width
+    if (maxWidth && !widthProp.width) {
+      widthProp.maxWidth = `${maxWidth}px`;
+    }
+
+    return {
+      style: {
+        transform: `translate(${x}px, ${y}px) ${transforms}`,
+        ...widthProp,
+        zIndex,
+      },
+    };
+  }
+)`
+  /*! @noflip */
+  left: 0px;
+  top: 0px;
+  position: fixed;
+  ${({ noOverFlow }) => (noOverFlow ? '' : 'overflow-y: auto;')};
+  max-height: ${({ topOffset }) => `calc(100vh - ${topOffset}px)`};
+`;

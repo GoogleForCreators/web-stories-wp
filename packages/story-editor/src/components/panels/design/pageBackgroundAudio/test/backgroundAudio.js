@@ -18,14 +18,13 @@
  * External dependencies
  */
 import { screen } from '@testing-library/react';
-import { FlagsProvider } from 'flagged';
+import { renderWithTheme } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
  */
 import ConfigContext from '../../../../../app/config/context';
 import StoryContext from '../../../../../app/story/context';
-import { renderWithTheme } from '../../../../../testUtils';
 import BackgroundAudioPanel from '../backgroundAudio';
 
 function MediaUpload({ render }) {
@@ -33,24 +32,26 @@ function MediaUpload({ render }) {
   return render(open);
 }
 
-function arrange({
-  backgroundAudio,
-  hasUploadMediaAction = true,
-  enhancedPageBackgroundAudio = false,
-} = {}) {
+function arrange({ backgroundAudio, hasUploadMediaAction = true } = {}) {
   const updateStory = jest.fn();
 
   const configValue = {
     capabilities: {
       hasUploadMediaAction,
     },
-    allowedAudioMimeTypes: [
-      'audio/mpeg',
-      'audio/aac',
-      'audio/wav',
-      'audio/ogg',
-    ],
-    allowedAudioFileTypes: ['mp3', 'aac', 'wav', 'ogg'],
+    allowedMimeTypes: {
+      audio: ['audio/mpeg', 'audio/aac', 'audio/wav', 'audio/ogg'],
+      image: [
+        'image/png',
+        'image/jpeg',
+        'image/jpg',
+        'image/gif',
+        'image/webp',
+      ],
+      caption: ['text/vtt'],
+      vector: [],
+      video: ['video/mp4', 'video/webm'],
+    },
     MediaUpload,
   };
 
@@ -64,17 +65,11 @@ function arrange({
   };
 
   return renderWithTheme(
-    <FlagsProvider
-      features={{
-        enhancedPageBackgroundAudio,
-      }}
-    >
-      <ConfigContext.Provider value={configValue}>
-        <StoryContext.Provider value={storyContextValue}>
-          <BackgroundAudioPanel />
-        </StoryContext.Provider>
-      </ConfigContext.Provider>
-    </FlagsProvider>
+    <ConfigContext.Provider value={configValue}>
+      <StoryContext.Provider value={storyContextValue}>
+        <BackgroundAudioPanel />
+      </StoryContext.Provider>
+    </ConfigContext.Provider>
   );
 }
 
@@ -143,7 +138,6 @@ describe('BackgroundAudioPanel', () => {
         },
         loop: true,
       },
-      enhancedPageBackgroundAudio: true,
     });
     expect(
       screen.getByRole('button', {
@@ -171,7 +165,6 @@ describe('BackgroundAudioPanel', () => {
           {
             track: 'https://example.com/track.vtt',
             trackId: 123,
-            trackName: 'track.vtt',
             id: 'rersd-fdfd-fdfd-fdfd',
             srcLang: '',
             label: '',
@@ -180,10 +173,8 @@ describe('BackgroundAudioPanel', () => {
         ],
         loop: true,
       },
-      enhancedPageBackgroundAudio: true,
     });
-    const input = screen.getByRole('textbox', { name: 'Filename' });
-    expect(input).toHaveValue('track.vtt');
+    expect(screen.getByText('track.vtt')).toBeInTheDocument();
   });
 
   it('should render upload button for captions', () => {
@@ -197,7 +188,6 @@ describe('BackgroundAudioPanel', () => {
         tracks: [],
         loop: true,
       },
-      enhancedPageBackgroundAudio: true,
     });
     expect(
       screen.getByRole('button', { name: 'Upload audio captions' })
@@ -215,7 +205,6 @@ describe('BackgroundAudioPanel', () => {
         tracks: [],
         loop: true,
       },
-      enhancedPageBackgroundAudio: true,
       hasUploadMediaAction: false,
     });
     expect(
@@ -235,7 +224,6 @@ describe('BackgroundAudioPanel', () => {
           {
             track: 'https://example.com/track.vtt',
             trackId: 123,
-            trackName: 'track.vtt',
             id: 'rersd-fdfd-fdfd-fdfd',
             srcLang: '',
             label: '',
@@ -244,10 +232,9 @@ describe('BackgroundAudioPanel', () => {
         ],
         loop: true,
       },
-      enhancedPageBackgroundAudio: true,
       hasUploadMediaAction: false,
     });
-    const input = screen.getByRole('textbox', { name: 'Filename' });
-    expect(input).toHaveValue('track.vtt');
+
+    expect(screen.getByText('track.vtt')).toBeInTheDocument();
   });
 });

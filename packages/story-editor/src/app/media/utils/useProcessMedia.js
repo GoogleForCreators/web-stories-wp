@@ -22,12 +22,15 @@ import {
   fetchRemoteFile,
   isAnimatedGif,
 } from '@googleforcreators/media';
+import { DANGER_ZONE_HEIGHT } from '@googleforcreators/units';
+import { trackError } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies
  */
 import useAPI from '../../api/useAPI';
 import useStory from '../../story/useStory';
+import useMediaInfo from './useMediaInfo';
 
 function useProcessMedia({
   uploadMedia,
@@ -44,6 +47,7 @@ function useProcessMedia({
       updateElementById: state.actions.updateElementById,
     })
   );
+  const { isConsideredOptimized } = useMediaInfo();
 
   const copyResourceData = useCallback(
     ({ oldResource, resource }) => {
@@ -122,10 +126,8 @@ function useProcessMedia({
   const updateOldTranscodedObject = useCallback(
     (oldId, newId, mediaSource) => {
       updateMedia(oldId, {
-        web_stories_media_source: mediaSource,
-        meta: {
-          web_stories_optimized_id: newId,
-        },
+        mediaSource,
+        optimizedId: newId,
       });
     },
     [updateMedia]
@@ -134,9 +136,7 @@ function useProcessMedia({
   const updateOldMutedObject = useCallback(
     (oldId, newId) => {
       updateMedia(oldId, {
-        meta: {
-          web_stories_muted_id: newId,
-        },
+        mutedId: newId,
       });
     },
     [updateMedia]
@@ -156,11 +156,16 @@ function useProcessMedia({
           isOptimized: false,
         });
 
-      const onUploadSuccess = ({ resource }) => {
+      const onUploadSuccess = ({ id, resource }) => {
         copyResourceData({ oldResource, resource });
         updateOldTranscodedObject(resourceId, resource.id, 'source-video');
         deleteMediaElement({ id: resourceId });
-        postProcessingResource(resource);
+
+        // onUploadSuccess is also called with previousResourceId,
+        // for which we don't need to run this.
+        if (id === resource.id) {
+          postProcessingResource(resource);
+        }
       };
 
       // TODO: Confirm which properties exactly need to be updated.
@@ -188,13 +193,23 @@ function useProcessMedia({
           return;
         }
 
+        // Video meets criteria to be considered optimized,
+        // just mark it as such and call it a day.
+        if (await isConsideredOptimized(oldResource, file)) {
+          updateExistingElementsByResourceId(resourceId, { isOptimized: true });
+          updateMedia(resourceId, {
+            mediaSource: 'video-optimization',
+          });
+          return;
+        }
+
         await uploadMedia([file], {
           onUploadSuccess,
           onUploadError,
           onUploadProgress,
           additionalData: {
-            original_id: oldResource.id,
-            web_stories_is_muted: oldResource.isMuted,
+            originalId: oldResource.id,
+            isMuted: oldResource.isMuted,
           },
           originalResourceId: oldResource.id,
         });
@@ -208,6 +223,8 @@ function useProcessMedia({
       postProcessingResource,
       getOptimizedMediaById,
       uploadMedia,
+      isConsideredOptimized,
+      updateMedia,
     ]
   );
 
@@ -227,7 +244,6 @@ function useProcessMedia({
         original: resourceId,
         start,
         end,
-        elementId,
       };
 
       const onUploadStart = () =>
@@ -240,7 +256,7 @@ function useProcessMedia({
           trimData: oldResource.trimData || {},
         });
 
-      const onUploadSuccess = ({ resource }) => {
+      const onUploadSuccess = ({ id, resource }) => {
         const oldCanvasResource = {
           alt: oldResource.alt,
           id: canvasResourceId,
@@ -250,7 +266,12 @@ function useProcessMedia({
           oldResource: oldCanvasResource,
           resource,
         });
-        postProcessingResource(resource);
+
+        // onUploadSuccess is also called with previousResourceId,
+        // for which we don't need to run this.
+        if (id === resource.id) {
+          postProcessingResource(resource);
+        }
       };
 
       const onUploadProgress = ({ resource }) => {
@@ -283,12 +304,12 @@ function useProcessMedia({
           onUploadError,
           onUploadProgress,
           additionalData: {
-            original_id: resourceId,
-            web_stories_is_muted: isMuted,
-            web_stories_media_source: isOptimized
-              ? 'video-optimization'
-              : 'editor',
+            originalId: resourceId,
+            isMuted,
+            trimData,
+            mediaSource: isOptimized ? 'video-optimization' : 'editor',
           },
+          elementId,
           trimData,
           resource: {
             ...oldResourceWithoutId,
@@ -324,10 +345,15 @@ function useProcessMedia({
         });
       };
 
-      const onUploadSuccess = ({ resource }) => {
+      const onUploadSuccess = ({ id, resource }) => {
         copyResourceData({ oldResource, resource });
         updateOldMutedObject(oldResource.id, resource.id);
-        postProcessingResource(resource);
+
+        // onUploadSuccess is also called with previousResourceId,
+        // for which we don't need to run this.
+        if (id === resource.id) {
+          postProcessingResource(resource);
+        }
       };
 
       // TODO: Confirm which properties exactly need to be updated.
@@ -368,10 +394,8 @@ function useProcessMedia({
           onUploadError,
           onUploadProgress,
           additionalData: {
-            original_id: resourceId,
-            web_stories_media_source: isOptimized
-              ? 'video-optimization'
-              : 'editor',
+            originalId: resourceId,
+            mediaSource: isOptimized ? 'video-optimization' : 'editor',
           },
           muteVideo: true,
           resource: {
@@ -402,11 +426,16 @@ function useProcessMedia({
     ({ resource: oldResource }) => {
       const { id: resourceId, src: url, mimeType } = oldResource;
 
-      const onUploadSuccess = ({ resource }) => {
+      const onUploadSuccess = ({ id, resource }) => {
         copyResourceData({ oldResource, resource });
         updateOldTranscodedObject(oldResource.id, resource.id, 'source-image');
         deleteMediaElement({ id: oldResource.id });
-        postProcessingResource(resource);
+
+        // onUploadSuccess is also called with previousResourceId,
+        // for which we don't need to run this.
+        if (id === resource.id) {
+          postProcessingResource(resource);
+        }
       };
 
       // TODO: Confirm which properties exactly need to be updated.
@@ -452,11 +481,100 @@ function useProcessMedia({
     ]
   );
 
+  /**
+   * Crop video using FFmpeg.
+   *
+   * @param {import('@googleforcreators/media').Resource} resource Resource object.
+   * @param {Object<{newWidth: number, newHeight: number, cropElement: Element}>} cropParams Crop params.
+   */
+  const cropExistingVideo = useCallback(
+    ({ id: elementId, resource: oldResource }, cropParams) => {
+      const { id: resourceId, ...oldResourceWithoutId } = oldResource;
+      const { src: url, mimeType, isOptimized } = oldResource;
+      const { newWidth, newHeight, cropElement } = cropParams;
+
+      const onUploadError = () => {
+        updateExistingElementsByResourceId(resourceId, {
+          height: oldResource.height,
+          width: oldResource.width,
+        });
+      };
+
+      // TODO: Confirm which properties exactly need to be updated.
+      const onUploadProgress = ({ resource }) => {
+        const oldResourceWithId = { ...resource, id: oldResource.id };
+        updateExistingElementsByResourceId(resourceId, {
+          ...oldResourceWithId,
+        });
+      };
+
+      const onUploadSuccess = ({ id, resource }) => {
+        copyResourceData({ oldResource, resource });
+        updateElementById({
+          elementId,
+          properties: {
+            x: cropElement.x < 0 ? 0 : cropElement.x,
+            y:
+              cropElement.y < DANGER_ZONE_HEIGHT
+                ? -DANGER_ZONE_HEIGHT
+                : cropElement.y,
+            width: newWidth,
+            height: newHeight,
+            resource,
+          },
+        });
+
+        // onUploadSuccess is also called with previousResourceId,
+        // for which we don't need to run this.
+        if (id === resource.id) {
+          postProcessingResource(resource);
+        }
+      };
+
+      const process = async () => {
+        let file = false;
+        try {
+          file = await fetchRemoteFile(url, mimeType);
+          await uploadMedia([file], {
+            onUploadSuccess,
+            onUploadProgress,
+            onUploadError,
+            cropVideo: true,
+            additionalData: {
+              original_id: resourceId,
+              cropOriginId: resourceId,
+              cropParams,
+              mediaSource: isOptimized ? 'video-optimization' : 'editor',
+            },
+            originalResourceId: resourceId,
+            resource: {
+              ...oldResourceWithoutId,
+              width: newWidth,
+              height: newHeight,
+            },
+          });
+        } catch (e) {
+          trackError('crop_existing_video', e.message);
+          return;
+        }
+      };
+      return process();
+    },
+    [
+      updateElementById,
+      copyResourceData,
+      postProcessingResource,
+      uploadMedia,
+      updateExistingElementsByResourceId,
+    ]
+  );
+
   return {
     optimizeVideo,
     optimizeGif,
     muteExistingVideo,
     trimExistingVideo,
+    cropExistingVideo,
   };
 }
 

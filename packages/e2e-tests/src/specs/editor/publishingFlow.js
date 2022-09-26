@@ -19,84 +19,105 @@
  */
 import {
   createNewStory,
-  addRequestInterception,
-  publishPost,
   insertStoryTitle,
   withPlugin,
   publishStory,
   getEditedPostContent,
+  loadPostEditor,
+  deleteMedia,
+  publishPost,
 } from '@web-stories-wp/e2e-test-utils';
 
-// Disable for https://github.com/googleforcreators/web-stories-wp/issues/6238
-// eslint-disable-next-line jest/no-disabled-tests
+/**
+ * Internal dependencies
+ */
+import { addAllowedErrorMessage } from '../../config/bootstrap.js';
+
+//eslint-disable-next-line jest/no-disabled-tests -- TODO(#11970): Fix flakey test.
 describe.skip('Publishing Flow', () => {
-  let stopRequestInterception;
+  let uploadedFiles;
+  let removeCORSErrorMessage;
+  let removeResourceErrorMessage;
 
-  beforeAll(async () => {
-    await page.setRequestInterception(true);
-    stopRequestInterception = addRequestInterception((request) => {
-      if (request.url().startsWith('https://cdn.ampproject.org/')) {
-        request.respond({
-          status: 200,
-          body: '',
-        });
-      } else {
-        request.continue();
-      }
+  beforeAll(() => {
+    // Ignore CORS errors related to the AMP validator JS.
+    removeCORSErrorMessage = addAllowedErrorMessage(
+      'has been blocked by CORS policy'
+    );
+    removeResourceErrorMessage = addAllowedErrorMessage(
+      'Failed to load resource'
+    );
+  });
+
+  beforeEach(() => (uploadedFiles = []));
+
+  afterEach(async () => {
+    for (const file of uploadedFiles) {
+      // eslint-disable-next-line no-await-in-loop
+      await deleteMedia(file);
+    }
+  });
+
+  afterAll(() => {
+    removeCORSErrorMessage();
+    removeResourceErrorMessage();
+  });
+
+  async function addPosterImage() {
+    await expect(page).toClick('li[role="tab"]', { text: 'Document' });
+
+    await expect(page).toMatchElement('button[aria-label="Poster image"]');
+
+    await expect(page).toClick('button[aria-label="Poster image"]');
+
+    await page.waitForSelector('.media-modal', {
+      visible: true,
     });
-  });
 
-  afterAll(async () => {
-    await page.setRequestInterception(false);
-    stopRequestInterception();
-  });
+    await expect(page).toMatchElement('.media-toolbar-primary button', {
+      text: 'Select as poster image',
+    });
 
-  it('should guide me towards creating a new post to embed my story', async () => {
+    await expect(page).toClick('button', { text: 'Media Library' });
+
+    await expect(page).toClick(
+      '.attachments-browser .attachments .attachment[aria-label="example-3"]'
+    );
+
+    await expect(page).toClick('.media-toolbar-primary button', {
+      text: 'Select as poster image',
+    });
+
+    await page.waitForSelector('[alt="Preview image"]');
+    await expect(page).toMatchElement('[alt="Preview image"]');
+  }
+
+  it('should guide me towards creating a new post to embed my story with poster', async () => {
     await createNewStory();
 
     await insertStoryTitle('Publishing Flow Test');
-
+    await addPosterImage();
     await publishStory(false);
 
     // Create new post and embed story.
-    await expect(page).toClick('a', { text: 'Add to new post' });
-    await page.waitForNavigation();
+    await Promise.all([
+      expect(page).toClick('a', { text: 'Add to new post' }),
+      page.waitForNavigation(),
+    ]);
 
-    // See https://github.com/WordPress/gutenberg/blob/c31555d4cec541db929ee5f63b900c6577513272/packages/e2e-test-utils/src/create-new-post.js#L37-L63.
-    await page.waitForSelector('.edit-post-layout');
+    await loadPostEditor();
 
-    // Disable Gutenberg's Welcome Guide if existing.
-    const isWelcomeGuideActive = await page.evaluate(() =>
-      wp.data.select('core/edit-post').isFeatureActive('welcomeGuide')
+    await expect(getEditedPostContent()).resolves.toMatch(
+      '<!-- wp:web-stories/embed'
     );
-
-    if (isWelcomeGuideActive) {
-      await page.evaluate(() =>
-        wp.data.dispatch('core/edit-post').toggleFeature('welcomeGuide')
-      );
-
-      await page.reload();
-      await page.waitForSelector('.edit-post-layout');
-    }
-
-    // Disable Gutenberg's full screen mode.
-    const isFullscreenMode = await page.evaluate(() =>
-      wp.data.select('core/edit-post').isFeatureActive('fullscreenMode')
+    await expect(page).not.toMatch(
+      'This block contains unexpected or invalid content.'
     );
-
-    if (isFullscreenMode) {
-      await page.evaluate(() =>
-        wp.data.dispatch('core/edit-post').toggleFeature('fullscreenMode')
-      );
-
-      await page.waitForSelector('body:not(.is-fullscreen-mode)');
-    }
 
     await page.waitForSelector('amp-story-player');
+
     await expect(page).toMatchElement('amp-story-player');
     await expect(page).toMatch('Publishing Flow Test');
-
-    await expect(getEditedPostContent()).resolves.toMatchSnapshot();
 
     const postPermalink = await publishPost();
 
@@ -111,6 +132,28 @@ describe.skip('Publishing Flow', () => {
     await expect(page).toMatch('Publishing Flow Test');
   });
 
+  it('should guide me towards creating a new post to embed my story without poster', async () => {
+    await createNewStory();
+
+    await insertStoryTitle('Publishing Flow Test');
+    await publishStory(false);
+
+    // Create new post and embed story.
+    await Promise.all([
+      expect(page).toClick('a', { text: 'Add to new post' }),
+      page.waitForNavigation(),
+    ]);
+
+    await loadPostEditor();
+
+    await expect(getEditedPostContent()).resolves.toMatch(
+      '<!-- wp:web-stories/embed'
+    );
+    await expect(page).not.toMatch(
+      'This block contains unexpected or invalid content.'
+    );
+  });
+
   describe('Classic Editor', () => {
     withPlugin('classic-editor');
 
@@ -118,7 +161,7 @@ describe.skip('Publishing Flow', () => {
       await createNewStory();
 
       await insertStoryTitle('Publishing Flow Test (Shortcode)');
-
+      await addPosterImage();
       await publishStory(false);
 
       // Create new post and embed story.
@@ -135,7 +178,7 @@ describe.skip('Publishing Flow', () => {
         (element) => element.value
       );
 
-      expect(textEditorContent).toMatchSnapshot();
+      expect(textEditorContent).toMatch('[web_stories_embed');
 
       await expect(page).toClick('#publish');
 

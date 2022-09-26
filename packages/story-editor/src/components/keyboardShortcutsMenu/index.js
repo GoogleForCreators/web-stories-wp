@@ -28,36 +28,19 @@ import { useEffect, useFocusOut, useRef } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
+import { Z_INDEX_FOOTER } from '../../constants/zIndex';
 import { isKeyboardUser } from '../../utils/keyboardOnlyOutline';
 import Popup from '../secondaryPopup';
 import { ToggleButton } from '../toggleButton';
-import { Z_INDEX } from '../canvas/layout';
 import DirectionAware from '../directionAware';
-import { KEYBOARD_SHORTCUTS_PADDING } from '../footer/constants';
 import ShortcutMenu from './shortcutMenu';
 import { TOGGLE_SHORTCUTS_MENU } from './constants';
 import { useKeyboardShortcutsMenu } from './keyboardShortcutsMenuContext';
 
-const StyledToggleButton = styled(ToggleButton)`
-  padding-left: ${KEYBOARD_SHORTCUTS_PADDING}px;
-  padding-right: ${KEYBOARD_SHORTCUTS_PADDING}px;
-  width: auto;
-  display: block;
+const Wrapper = styled.div`
+  z-index: ${Z_INDEX_FOOTER};
 `;
 
-const Wrapper = styled.div`
-  /**
-    * sibling inherits parent z-index of Z_INDEX.EDIT
-    * so this needs to be placed above that while still
-    * retaining its position in the DOM for focus purposes
-    */
-  z-index: ${Z_INDEX.EDIT + 1};
-`;
-const MainIcon = styled(Icons.Keyboard)`
-  height: 32px;
-  width: auto;
-  display: block;
-`;
 function KeyboardShortcutsMenu() {
   const anchorRef = useRef();
   const wrapperRef = useRef();
@@ -90,14 +73,14 @@ function KeyboardShortcutsMenu() {
           <ShortcutMenu toggleMenu={toggle} />
         </Popup>
 
-        <StyledToggleButton
+        <ToggleButton
           ref={anchorRef}
           isOpen={isOpen}
           aria-owns="keyboard_shortcut_menu"
           onClick={toggle}
           aria-label={__('Keyboard Shortcuts', 'web-stories')}
           label={__('Keyboard Shortcuts', 'web-stories')}
-          MainIcon={MainIcon}
+          MainIcon={Icons.Keyboard}
           shortcut="mod+/"
         />
       </Wrapper>

@@ -72,7 +72,12 @@ function WithLink({ element, active, children, anchorRef }) {
       <>
         <IconWrapper>
           {link?.icon && (
-            <BrandIcon src={link.icon} alt={__('Site Icon', 'web-stories')} />
+            <BrandIcon
+              src={link.icon}
+              alt={__('Site Icon', 'web-stories')}
+              decoding="async"
+              crossOrigin="anonymous"
+            />
           )}
         </IconWrapper>
         <LinkDesc>{link.desc || link.url}</LinkDesc>

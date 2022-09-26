@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { waitFor } from '@testing-library/react';
+import { waitFor, within } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -51,8 +51,14 @@ describe('CUJ: Creator can Transform an Element: Selection integration', () => {
     return storyContext.state.selectedElementIds;
   }
 
+  async function getElements() {
+    const storyContext = await fixture.renderHook(() => useStory());
+    return storyContext.state.currentPage.elements;
+  }
+
   async function setFontSize(size) {
-    const fontSize = fixture.editor.inspector.designPanel.textStyle.fontSize;
+    await fixture.events.click(fixture.editor.sidebar.designTab);
+    const fontSize = fixture.editor.sidebar.designPanel.textStyle.fontSize;
     await fixture.events.click(fontSize, { clickCount: 3 });
     await fixture.events.keyboard.type(size);
     await fixture.events.keyboard.press('tab');
@@ -74,7 +80,7 @@ describe('CUJ: Creator can Transform an Element: Selection integration', () => {
     expect(await getSelection()).toEqual([frame1.dataset.elementId]);
   });
 
-  it('should allow selecting background through the empty area of a triangle', async () => {
+  it('should not allow background selection through the empty area of a triangle', async () => {
     // Switch to shapes tab and click the triangle
     await fixture.events.click(fixture.editor.library.shapesTab);
     await fixture.events.click(fixture.editor.library.shapes.shape('Triangle'));
@@ -87,8 +93,40 @@ describe('CUJ: Creator can Transform an Element: Selection integration', () => {
       down(),
       up(),
     ]);
-    const bgFrame = fixture.editor.canvas.framesLayer.frames[0].node;
-    expect(await getSelection()).toEqual([bgFrame.dataset.elementId]);
+    expect(await getSelection()).toEqual([frame1.dataset.elementId]);
+  });
+
+  it('should click "through" a locked element', async () => {
+    await fixture.events.click(fixture.editor.canvas.pageActions.addPage);
+
+    await fixture.editor.library.textTab.click();
+    await fixture.events.click(fixture.editor.library.text.preset('Paragraph'));
+    await waitFor(() => {
+      const node = fixture.editor.canvas.framesLayer.frames[1].node;
+      if (!node) {
+        throw new Error('node not ready');
+      }
+      expect(node).toBeTruthy();
+    });
+    const elements = await getElements();
+
+    // Click on the background and confirm it is selected
+    const background = fixture.editor.canvas.framesLayer.frames[0].node;
+    await fixture.events.mouse.clickOn(background, 20, 20);
+    expect(await getSelection()).toEqual([elements[0].id]);
+
+    // Hover layer and enable lock
+    const layerPanel = fixture.editor.footer.layerPanel;
+    await fixture.events.click(layerPanel.togglePanel);
+    const paragraphLayer = layerPanel.getLayerByInnerText('Fill in some text');
+    await fixture.events.hover(paragraphLayer);
+    const lockButton = within(paragraphLayer).getByLabelText(/Lock/);
+    await fixture.events.click(lockButton);
+
+    // Try to click on the text element
+    const frame1 = fixture.editor.canvas.framesLayer.frames[1].node;
+    await fixture.events.mouse.clickOn(frame1, 20, 20);
+    expect(await getSelection()).toEqual([elements[0].id]);
   });
 
   it('should show the selection lines when an element is being selected', async () => {
@@ -193,5 +231,48 @@ describe('CUJ: Creator can Transform an Element: Selection integration', () => {
     await fixture.events.keyboard.shortcut('mod+alt+2');
     expect(fixture.editor.canvas.header.title).not.toHaveFocus();
     await fixture.snapshot('selected element has focus');
+  });
+
+  it('should allow selecting element by clicking on its border', async () => {
+    // Add a shape.
+    await fixture.events.click(fixture.editor.library.shapesTab);
+    await fixture.events.click(
+      fixture.editor.library.shapes.shape('Rectangle')
+    );
+
+    const node = fixture.editor.canvas.framesLayer.frames[1].node;
+    // Get the initial coordinates.
+    const { x, y } = node.getBoundingClientRect();
+
+    // Open style pane
+    await fixture.events.click(fixture.editor.sidebar.designTab);
+
+    const panel = fixture.editor.sidebar.designPanel.border;
+    await fixture.events.click(panel.width(), { clickCount: 3 });
+    await fixture.events.keyboard.type('10');
+    await fixture.events.keyboard.press('tab');
+
+    // Select page by clicking on the background element
+    await fixture.events.mouse.clickOn(
+      fixture.editor.canvas.framesLayer.frames[0].node,
+      10,
+      10
+    );
+
+    // Now select the shape by clicking on the border.
+    await fixture.events.mouse.click(x - 5, y - 5);
+    const storyContext = await fixture.renderHook(() => useStory());
+    const [element] = storyContext.state.selectedElements;
+    // Verify the shape was selected.
+    expect(element.border).toEqual({
+      left: 10,
+      right: 10,
+      top: 10,
+      bottom: 10,
+      lockedWidth: true,
+      color: { color: { r: 0, g: 0, b: 0 } },
+    });
+
+    await fixture.snapshot('Border included in selection frame');
   });
 });

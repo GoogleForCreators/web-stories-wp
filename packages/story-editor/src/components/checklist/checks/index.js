@@ -16,6 +16,7 @@
 
 export { default as ElementLinkTappableRegionTooBig } from './elementLinkTappableRegionTooBig';
 export { default as ElementLinkTappableRegionTooSmall } from './elementLinkTappableRegionTooSmall';
+export { default as FirstPageAnimation } from './firstPageAnimation';
 export { default as ImageElementMissingAlt } from './imageElementMissingAlt';
 export { default as ImageElementResolution } from './imageElementResolution';
 export {

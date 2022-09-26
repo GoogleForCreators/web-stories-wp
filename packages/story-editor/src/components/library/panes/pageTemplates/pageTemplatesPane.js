@@ -31,6 +31,7 @@ import {
   LOCAL_STORAGE_PREFIX,
 } from '@googleforcreators/design-system';
 import { DATA_VERSION, migrate } from '@googleforcreators/migration';
+import { trackError } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies
@@ -152,7 +153,8 @@ function PageTemplatesPane(props) {
           setNextTemplatesToFetch(nextTemplatesToFetch + 1);
         }
       })
-      .catch(() => {
+      .catch((err) => {
+        trackError('saved_templates', err.message);
         setNextTemplatesToFetch(false);
         setSavedTemplates((_savedTemplates) => _savedTemplates ?? []);
       })

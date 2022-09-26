@@ -44,3 +44,19 @@
 ## WordPress Developers
 
 * [Embeds](./web-stories-embeds.md)
+
+## Third-Party Integrations
+
+### Dashboard
+
+* [Getting Started](./third-party-integration/dashboard/getting-started.md)
+* [API Callbacks](./third-party-integration/dashboard/api-callbacks.md)
+* [Integration Layer](./third-party-integration/dashboard/integration-layer.md)
+* [Tutorial](./third-party-integration/dashboard/tutorial.md)
+
+### Story Editor
+
+* [Getting Started](./third-party-integration/story-editor/getting-started.md)
+* [API Callbacks](./third-party-integration/story-editor/api-callbacks.md)
+* [Integration Layer](./third-party-integration/story-editor/integration-layer.md)
+* [Tutorial](./third-party-integration/story-editor/tutorial.md)

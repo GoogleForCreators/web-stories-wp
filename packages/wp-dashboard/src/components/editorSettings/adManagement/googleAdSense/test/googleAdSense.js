@@ -24,7 +24,7 @@ import { fireEvent, screen } from '@testing-library/react';
 import GoogleAdSenseSettings, { TEXT } from '..';
 import { renderWithProviders } from '../../../../../testUtils';
 
-describe('Editor Settings: Google AdSense <GoogleAdSense />', function () {
+describe('Editor Settings: Google AdSense <GoogleAdSense />', () => {
   let publisherId;
   let slotId;
   let mockUpdatePublisherId;
@@ -46,7 +46,7 @@ describe('Editor Settings: Google AdSense <GoogleAdSense />', function () {
     slotId = '';
   });
 
-  it('should render google AdSense input and helper text by default', function () {
+  it('should render google AdSense input and helper text by default', () => {
     renderWithProviders(
       <GoogleAdSenseSettings
         publisherId={publisherId}
@@ -69,7 +69,7 @@ describe('Editor Settings: Google AdSense <GoogleAdSense />', function () {
     expect(slotIdLabel).toBeInTheDocument();
   });
 
-  it('should render a visually hidden label for inputs', function () {
+  it('should render a visually hidden label for inputs', () => {
     renderWithProviders(
       <GoogleAdSenseSettings
         publisherId={publisherId}
@@ -86,7 +86,7 @@ describe('Editor Settings: Google AdSense <GoogleAdSense />', function () {
     expect(label2).toBeInTheDocument();
   });
 
-  it('should call mockUpdatePublisherId when enter is keyed on input', function () {
+  it('should call mockUpdatePublisherId when enter is keyed on input', () => {
     const { rerender } = renderWithProviders(
       <GoogleAdSenseSettings
         publisherId={publisherId}
@@ -111,7 +111,7 @@ describe('Editor Settings: Google AdSense <GoogleAdSense />', function () {
       />
     );
 
-    expect(mockUpdatePublisherId).toHaveBeenCalledTimes(1);
+    expect(mockUpdatePublisherId).toHaveBeenCalledOnce();
 
     fireEvent.change(input, { target: { value: '' } });
     fireEvent.keyDown(input, { key: 'Enter', keyCode: 13 });
@@ -135,7 +135,7 @@ describe('Editor Settings: Google AdSense <GoogleAdSense />', function () {
     expect(mockUpdatePublisherId).toHaveBeenCalledTimes(2);
   });
 
-  it('should call mockUpdatePublisherId when the save button is clicked', function () {
+  it('should call mockUpdatePublisherId when the save button is clicked', () => {
     const { rerender } = renderWithProviders(
       <GoogleAdSenseSettings
         publisherId={publisherId}
@@ -162,7 +162,7 @@ describe('Editor Settings: Google AdSense <GoogleAdSense />', function () {
       />
     );
 
-    expect(mockUpdatePublisherId).toHaveBeenCalledTimes(1);
+    expect(mockUpdatePublisherId).toHaveBeenCalledOnce();
 
     fireEvent.change(input, { target: { value: '' } });
 
@@ -187,7 +187,7 @@ describe('Editor Settings: Google AdSense <GoogleAdSense />', function () {
     expect(mockUpdatePublisherId).toHaveBeenCalledTimes(2);
   });
 
-  it('should call mockUpdateSlotId when enter is keyed on input', function () {
+  it('should call mockUpdateSlotId when enter is keyed on input', () => {
     const { rerender } = renderWithProviders(
       <GoogleAdSenseSettings
         publisherId={publisherId}
@@ -212,7 +212,7 @@ describe('Editor Settings: Google AdSense <GoogleAdSense />', function () {
       />
     );
 
-    expect(mockUpdateSlotId).toHaveBeenCalledTimes(1);
+    expect(mockUpdateSlotId).toHaveBeenCalledOnce();
 
     fireEvent.change(input, { target: { value: '' } });
     fireEvent.keyDown(input, { key: 'Enter', keyCode: 13 });
@@ -236,7 +236,7 @@ describe('Editor Settings: Google AdSense <GoogleAdSense />', function () {
     expect(mockUpdateSlotId).toHaveBeenCalledTimes(2);
   });
 
-  it('should call mockUpdateSlotId when the save button is clicked', function () {
+  it('should call mockUpdateSlotId when the save button is clicked', () => {
     const { rerender } = renderWithProviders(
       <GoogleAdSenseSettings
         publisherId={publisherId}
@@ -263,7 +263,7 @@ describe('Editor Settings: Google AdSense <GoogleAdSense />', function () {
       />
     );
 
-    expect(mockUpdateSlotId).toHaveBeenCalledTimes(1);
+    expect(mockUpdateSlotId).toHaveBeenCalledOnce();
 
     fireEvent.change(input, { target: { value: '' } });
 

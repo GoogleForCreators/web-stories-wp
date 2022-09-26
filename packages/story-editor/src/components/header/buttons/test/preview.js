@@ -18,13 +18,13 @@
  * External dependencies
  */
 import { fireEvent, screen } from '@testing-library/react';
+import { renderWithTheme } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
  */
 import StoryContext from '../../../../app/story/context';
 import MediaContext from '../../../../app/media/context';
-import { renderWithTheme } from '../../../../testUtils';
 import PreviewButton from '../preview';
 
 function arrange({

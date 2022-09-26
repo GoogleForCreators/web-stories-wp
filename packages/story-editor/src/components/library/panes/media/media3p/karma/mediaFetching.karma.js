@@ -201,7 +201,7 @@ describe('Media3pPane fetching', () => {
   let listCategoriesSpy;
 
   beforeEach(async () => {
-    localStore.setItemByKey(`${LOCAL_STORAGE_PREFIX.TERMS_MEDIA3P}`, true);
+    localStore.setItemByKey(LOCAL_STORAGE_PREFIX.TERMS_MEDIA3P, true);
 
     fixture = new Fixture();
 
@@ -357,6 +357,12 @@ describe('Media3pPane fetching', () => {
     // 3p media fetching can take extra time to load, waiting to prevent flakey tests
     await waitForInitialMediaLoad();
     await fixture.events.click(fixture.editor.library.media3p.coverrTab);
+
+    const mediaGallery = fixture.editor.library.media3p.mediaGallery;
+    mediaGallery.scrollTo(
+      0,
+      mediaGallery.scrollHeight - mediaGallery.clientHeight - ROOT_MARGIN / 2
+    );
 
     // Wait for the debounce
     await expectMediaElements(
@@ -588,7 +594,7 @@ describe('Media3pPane fetching', () => {
       await fixture.events.click(fixture.editor.library.media3pTab);
       // 3p media fetching can take extra time to load, waiting to prevent flakey tests
       await waitForInitialMediaLoad();
-      const { mediaElements, unsplashSection } = fixture.editor.library.media3p;
+      const { unsplashSection } = fixture.editor.library.media3p;
 
       await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
 
@@ -599,9 +605,7 @@ describe('Media3pPane fetching', () => {
       await fixture.events.keyboard.press('End');
 
       expect(document.activeElement).toBe(
-        fixture.editor.library.media3p.insertionBtnByIndex([
-          mediaElements.length - 1,
-        ])
+        fixture.editor.library.media3p.insertionBtnByIndex([MEDIA_PER_PAGE - 1])
       );
 
       await fixture.events.keyboard.press('Home');

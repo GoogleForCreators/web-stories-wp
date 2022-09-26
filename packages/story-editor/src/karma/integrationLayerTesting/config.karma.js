@@ -15,12 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-
-import { waitFor } from '@testing-library/react';
-
-/**
  * Internal dependencies
  */
 
@@ -173,56 +167,5 @@ describe('Integration Layer tests : EditorConfig Params :', () => {
       name: 'Upload',
     });
     expect(uploadButton).toBeFalsy();
-  });
-
-  it('should not render upload by link button if flags.enableHotlinking is false', async () => {
-    fixture = new Fixture();
-
-    fixture.setFlags({ enableHotlinking: false });
-
-    await shouldRenderWithConfig({
-      ...MINIMUM_CONFIG,
-      capabilities: {
-        hasUploadMediaAction: true,
-      },
-      MediaUpload: FIXTURE_DEFAULT_CONFIG.MediaUpload,
-    });
-
-    await fixture.collapseHelpCenter();
-
-    //wait for mediaPane to stabalize
-    await fixture.events.sleep(500);
-
-    const insertByLinkButton = fixture.querySelector(
-      `[aria-label="Insert by link"]`
-    );
-
-    expect(insertByLinkButton).toBeFalsy();
-  });
-
-  it('should render upload by link button if flags.enableHotlinking is true', async () => {
-    fixture = new Fixture();
-
-    fixture.setFlags({ enableHotlinking: true });
-
-    await shouldRenderWithConfig({
-      ...MINIMUM_CONFIG,
-      capabilities: {
-        hasUploadMediaAction: true,
-      },
-      MediaUpload: FIXTURE_DEFAULT_CONFIG.MediaUpload,
-    });
-
-    await fixture.collapseHelpCenter();
-
-    await waitFor(() => {
-      const insertByLinkButton = fixture.querySelector(
-        `[aria-label="Insert by link"]`
-      );
-      if (!insertByLinkButton) {
-        throw new Error('insertByLinkButton not ready');
-      }
-      expect(insertByLinkButton).toBeTruthy();
-    });
   });
 });

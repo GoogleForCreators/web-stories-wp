@@ -142,6 +142,7 @@ export const BaseInput = styled.input(
 export const Input = forwardRef(
   (
     {
+      inputClassName,
       className,
       disabled,
       hasError,
@@ -192,7 +193,7 @@ export const Input = forwardRef(
             disabled={disabled}
             ref={(input) => {
               // `ref` can either be a callback ref or a normal ref.
-              if (typeof ref == 'function') {
+              if (typeof ref === 'function') {
                 ref(input);
               } else if (ref) {
                 ref.current = input;
@@ -213,6 +214,7 @@ export const Input = forwardRef(
             }}
             value={displayedValue}
             hasSuffix={hasSuffix}
+            className={inputClassName}
             {...props}
           />
           {hasSuffix && (
@@ -237,7 +239,7 @@ export const InputPropTypes = {
   className: PropTypes.string,
   disabled: PropTypes.bool,
   hasError: PropTypes.bool,
-  hint: PropTypes.string,
+  hint: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   id: PropTypes.string,
   label: labelAccessibilityValidator,
   onBlur: PropTypes.func,

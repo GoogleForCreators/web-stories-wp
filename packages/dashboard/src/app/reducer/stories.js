@@ -149,7 +149,7 @@ function storyReducer(state, action) {
           ...stories,
           ...payloadStories,
         },
-        totalPages: totalPages,
+        totalPages: totalPages || 1,
         totalStoriesByStatus: totalStoriesByStatus,
         allPagesFetched: page >= totalPages,
       };

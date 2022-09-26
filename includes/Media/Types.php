@@ -33,31 +33,10 @@ class Types {
 	/**
 	 * Returns a list of allowed file types.
 	 *
-	 * @since 1.0.0
-	 *
-	 * @return array List of allowed file types.
-	 */
-	public function get_allowed_file_types(): array {
-		$allowed_mime_types = $this->get_allowed_mime_types();
-		$mime_types         = [];
-
-		foreach ( $allowed_mime_types as $mimes ) {
-			// Otherwise this throws a warning on PHP < 7.3.
-			if ( ! empty( $mimes ) ) {
-				array_push( $mime_types, ...$mimes );
-			}
-		}
-
-		return $this->get_file_type_exts( $mime_types );
-	}
-
-	/**
-	 * Returns a list of allowed file types.
-	 *
 	 * @since 1.5.0
 	 *
-	 * @param array $mime_types Array of mime types.
-	 * @return array
+	 * @param string[] $mime_types Array of mime types.
+	 * @return string[]
 	 */
 	public function get_file_type_exts( array $mime_types = [] ): array {
 		$allowed_file_types = [];
@@ -78,20 +57,26 @@ class Types {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @return array<string, array> List of allowed mime types.
+	 * @return array<string, string[]> List of allowed mime types.
 	 */
 	public function get_allowed_mime_types(): array {
 		$default_allowed_mime_types = [
-			'image' => [
+			'image'   => [
 				'image/webp',
 				'image/png',
 				'image/jpeg',
 				'image/jpg',
 				'image/gif',
 			],
-			// TODO: Update once audio elements are supported.
-			'audio' => [],
-			'video' => [
+			'audio'   => [
+				'audio/mpeg',
+				'audio/aac',
+				'audio/wav',
+				'audio/ogg',
+			],
+			'caption' => [ 'text/vtt' ],
+			'vector'  => [],
+			'video'   => [
 				'video/mp4',
 				'video/webm',
 			],
@@ -105,10 +90,15 @@ class Types {
 		 *
 		 * @since 1.0.0
 		 *
-		 * @param array $default_allowed_mime_types Associative array of allowed mime types per media type (image, audio, video).
+		 * @param array<string, string[]> $default_allowed_mime_types Associative array of allowed mime types per media type (image, audio, video).
 		 */
 		$allowed_mime_types = apply_filters( 'web_stories_allowed_mime_types', $default_allowed_mime_types );
 
+		/**
+		 * Media type.
+		 *
+		 * @var string $media_type
+		 */
 		foreach ( array_keys( $default_allowed_mime_types ) as $media_type ) {
 			if ( ! \is_array( $allowed_mime_types[ $media_type ] ) || empty( $allowed_mime_types[ $media_type ] ) ) {
 				$allowed_mime_types[ $media_type ] = $default_allowed_mime_types[ $media_type ];
@@ -119,56 +109,5 @@ class Types {
 		}
 
 		return $allowed_mime_types;
-	}
-
-	/**
-	 * Returns a list of image mime types.
-	 *
-	 * @since 1.4.0
-	 *
-	 * @return array List of allowed mime types.
-	 */
-	public function get_allowed_image_mime_types(): array {
-		$mime_type         = $this->get_allowed_mime_types();
-		$allowed_mime_type = $mime_type['image'];
-		$image_mime_type   = [
-			'image/webp',
-			'image/png',
-			'image/jpeg',
-			'image/jpg',
-			'image/gif',
-		];
-
-		/**
-		 * Filter list of allowed poster image mime types.
-		 *
-		 * @since 1.4.0
-		 *
-		 * @param array $image_mime_type   List of allowed mime types. Defaults to 'image/png', 'image/jpeg', 'image/jpg','image/gif'.
-		 * @param array $allowed_mime_type Allowed mime types from get_allowed_mime_types.
-		 */
-		$image_mime_type = apply_filters( 'web_stories_allowed_image_mime_types', $image_mime_type, $allowed_mime_type );
-
-		return array_values( array_intersect( $allowed_mime_type, $image_mime_type ) );
-	}
-
-	/**
-	 * Returns a list of audio mime types.
-	 *
-	 * Used for the allowlist when adding background audio.
-	 *
-	 * @since 1.11.0
-	 *
-	 * @return array List of allowed mime types.
-	 */
-	public function get_allowed_audio_mime_types(): array {
-		$allowed_mime_types = [
-			'audio/mpeg',
-			'audio/aac',
-			'audio/wav',
-			'audio/ogg',
-		];
-
-		return array_values( array_intersect( $allowed_mime_types, get_allowed_mime_types() ) );
 	}
 }

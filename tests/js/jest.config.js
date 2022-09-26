@@ -25,6 +25,9 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 export default {
   rootDir: '../../',
   resolver: '@web-stories-wp/jest-resolver',
+  transform: {
+    '^.+\\.[jt]sx?$': 'babel-jest',
+  },
   moduleNameMapper: {
     '\\.svg': join(__dirname, '/svgrMock.js'),
     '\\.css': join(__dirname, '/styleMock.js'),
@@ -36,6 +39,9 @@ export default {
     'jest-canvas-mock',
     'core-js',
   ],
+  // Do not transform any node_modules except use-reduction
+  // See https://jestjs.io/docs/configuration#transformignorepatterns-arraystring
+  transformIgnorePatterns: ['/node_modules/(?!(use-reduction)/)'],
   testEnvironment: 'jsdom',
   testMatch: [
     '**/__tests__/**/*.[jt]s',
@@ -49,16 +55,7 @@ export default {
     WEB_STORIES_DISABLE_PREVENT: true,
     WEB_STORIES_DISABLE_QUICK_TIPS: true,
   },
-  // @jest/test-sequencer is the default.
-  testSequencer:
-    'true' === process.env.CI
-      ? '@web-stories-wp/jest-parallel-sequencer'
-      : undefined,
-  setupFilesAfterEnv: [
-    'jest-extended/all',
-    '<rootDir>/tests/js/jest.setup',
-    '@wordpress/jest-console',
-  ],
+  setupFilesAfterEnv: ['jest-extended/all', '<rootDir>/tests/js/jest.setup'],
   testPathIgnorePatterns: [
     '<rootDir>/.git',
     '<rootDir>/build',
@@ -86,7 +83,11 @@ export default {
     '!**/testUtils/**',
     '!**/stories/**',
   ],
-  modulePathIgnorePatterns: ['<rootDir>/build', '<rootDir>/vendor'],
+  modulePathIgnorePatterns: [
+    '<rootDir>/build',
+    '<rootDir>/vendor',
+    '/dist-types/',
+  ],
   reporters: [
     [
       'jest-silent-reporter',

@@ -18,14 +18,34 @@
  * External dependencies
  */
 import { fireEvent } from '@testing-library/react';
+import {
+  queryByAriaLabel,
+  renderWithTheme,
+} from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
  */
 import StoryContext from '../../../../app/story/context';
 import GridView from '../gridView';
-import { queryByAriaLabel, renderWithTheme } from '../../../../testUtils';
 import { noop } from '../../../../utils/noop';
+
+jest.mock('../../../../app/pageCanvas', () => {
+  const usePageCanvasMock = (selector) => {
+    return selector({
+      state: {
+        pageCanvasMap: {},
+      },
+      actions: {
+        generateDeferredPageCanvas: () => {},
+      },
+    });
+  };
+  return {
+    default: ({ children }) => children,
+    usePageCanvas: usePageCanvasMock,
+  };
+});
 
 function setupGridView() {
   const setCurrentPage = jest.fn();

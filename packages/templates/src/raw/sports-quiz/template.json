@@ -1,5 +1,5 @@
 {
-  "version": 39,
+  "version": 43,
   "pages": [
     {
       "elements": [
@@ -82,7 +82,6 @@
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; font-style: italic; color: #ffcd48; text-transform: uppercase\">The</span>\n<span style=\"font-weight: 700; font-style: italic; color: #ffcd48; text-transform: uppercase\">Bools</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -144,7 +143,6 @@
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; font-style: italic; color: rgba(255,205,72,0.5); text-transform: uppercase\">Quiz</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -238,7 +236,6 @@
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; color: #462486; text-transform: uppercase\">How much do you know about the BOOLS</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -257,40 +254,7 @@
           "type": "text"
         }
       ],
-      "animations": [
-        {
-          "id": "d737e6c0-c774-4fcc-90c0-8a8f7ec0c9c9",
-          "type": "effect-fly-in",
-          "targets": ["60afc5ad-d6cd-435f-a1e1-e73404a58dcd"],
-          "flyInDir": "bottomToTop",
-          "duration": 1200,
-          "delay": 0
-        },
-        {
-          "id": "b83d6ba9-e3fc-49e5-b5fa-a54a0e41f350",
-          "type": "effect-fly-in",
-          "targets": ["eba1ce7d-a9c6-4909-8fe5-b6eb1c8b4999"],
-          "flyInDir": "bottomToTop",
-          "duration": 1200,
-          "delay": 0
-        },
-        {
-          "id": "70c7a3a7-dd38-494b-9e61-b191b767e032",
-          "type": "effect-fly-in",
-          "targets": ["9e6c1333-5fe1-4561-b08f-550f3fa74593"],
-          "flyInDir": "leftToRight",
-          "duration": 1200,
-          "delay": 300
-        },
-        {
-          "id": "fa226695-e59e-4afb-88bb-5af108eba218",
-          "type": "effect-fly-in",
-          "targets": ["1ac4e0a4-88ad-4fa3-81f8-7ef7dbf0c003"],
-          "flyInDir": "leftToRight",
-          "duration": 1200,
-          "delay": 300
-        }
-      ],
+      "animations": [],
       "backgroundColor": { "color": { "r": 68, "g": 35, "b": 131 } },
       "type": "page",
       "id": "d16d2719-b94a-46d4-94c1-f3f863bc5b3d",
@@ -310,7 +274,7 @@
         "type": "shape",
         "id": "6f39febc-9740-4eef-b245-61220d8dd24f"
       },
-      "pageTemplateType": "Cover"
+      "pageTemplateType": "cover"
     },
     {
       "elements": [
@@ -393,7 +357,6 @@
           "textAlign": "center",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; font-style: italic; color: #ffcd48; text-transform: uppercase\">The Bools</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -462,7 +425,6 @@
           "textAlign": "center",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #ffcd48\">One of the all time famous teams in the NBA.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -525,7 +487,6 @@
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; font-style: italic; color: rgba(255,205,72,0.5); text-transform: uppercase\">Bools</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -582,7 +543,7 @@
         "type": "shape",
         "id": "d7642b5d-8078-4300-8209-2851ee55404f"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -673,7 +634,6 @@
           "textAlign": "center",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; font-style: italic; color: #ffcd48; text-transform: uppercase\">But how well do</span>\n<span style=\"font-weight: 700; font-style: italic; color: #ffcd48; text-transform: uppercase\">you really know them?</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -713,7 +673,7 @@
         "type": "shape",
         "id": "80053e48-dac4-4189-b135-b77d68038f92"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -802,7 +762,6 @@
           "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; color: #ffcd48\">Question</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -865,7 +824,6 @@
           "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; font-style: italic; color: #ffcd48; text-transform: uppercase\">Before they were the NBA team of LA, what city did they play for?</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -933,7 +891,6 @@
             "vertical": 14
           },
           "content": "<span style=\"font-weight: 700; font-style: italic; color: #462486; text-transform: uppercase\">Dallas</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -1001,7 +958,6 @@
             "vertical": 14
           },
           "content": "<span style=\"font-weight: 700; font-style: italic; color: #462486; text-transform: uppercase\">Minneapolis</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -1070,7 +1026,6 @@
             "vertical": 14
           },
           "content": "<span style=\"font-weight: 700; font-style: italic; color: #462486; text-transform: uppercase\">Kansas City</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -1138,7 +1093,6 @@
           "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 900; color: #fff\">1 / 6</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -1203,7 +1157,7 @@
         "id": "94e49dc9-9c6c-45b1-8484-e5132c904931",
         "type": "shape"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -1286,7 +1240,6 @@
           "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; font-style: italic; color: #ffcd48; text-transform: uppercase\">Minneapolis. Where the legend was born.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -1355,7 +1308,6 @@
           "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #ffcd48\">The Bools got their name from the Great Bools after their move to Minnesota. It was the making of legends and legacies from then on.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -1526,7 +1478,6 @@
           "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; color: #ffcd48\">Question</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -1589,7 +1540,6 @@
           "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; font-style: italic; color: #ffcd48; text-transform: uppercase\">How many NBA championships have the BOOLS won?</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -1657,7 +1607,6 @@
             "vertical": 14
           },
           "content": "<span style=\"font-weight: 700; font-style: italic; color: #462486; text-transform: uppercase\">4</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -1726,7 +1675,6 @@
             "vertical": 14
           },
           "content": "<span style=\"font-weight: 700; font-style: italic; color: #462486; text-transform: uppercase\">9</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -1795,7 +1743,6 @@
             "vertical": 14
           },
           "content": "<span style=\"font-weight: 700; font-style: italic; color: #462486; text-transform: uppercase\">16</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -1863,7 +1810,6 @@
           "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 900; color: #fff\">2 / 6</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -1928,7 +1874,7 @@
         "type": "shape",
         "id": "d91ed00b-42d2-42ce-821a-5eafd6b1d77b"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -2017,7 +1963,6 @@
           "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; color: #ffcd48\">Question</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -2084,7 +2029,6 @@
           "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 900; color: #fff\">2 / 6</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -2147,7 +2091,6 @@
           "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; font-style: italic; color: #ffcd48; text-transform: uppercase\">How many NBA championships have the BOOLS won?</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -2215,7 +2158,6 @@
             "vertical": 14
           },
           "content": "<span style=\"font-weight: 700; font-style: italic; color: #462486; text-transform: uppercase\">4</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -2315,7 +2257,6 @@
           "textAlign": "right",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; font-style: italic; color: #fff; text-transform: uppercase\">32%</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -2383,7 +2324,6 @@
             "vertical": 14
           },
           "content": "<span style=\"font-weight: 700; font-style: italic; color: #462486; text-transform: uppercase\">9</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -2483,7 +2423,6 @@
           "textAlign": "right",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; font-style: italic; color: #fff; text-transform: uppercase\">46%</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -2551,7 +2490,6 @@
             "vertical": 14
           },
           "content": "<span style=\"font-weight: 700; font-style: italic; color: #462486; text-transform: uppercase\">16</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -2651,7 +2589,6 @@
           "textAlign": "right",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; font-style: italic; color: #fff; text-transform: uppercase\">12%</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -2755,7 +2692,7 @@
         "type": "shape",
         "id": "d91ed00b-42d2-42ce-821a-5eafd6b1d77b"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -2838,7 +2775,6 @@
           "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; font-style: italic; color: #ffcd48; text-transform: uppercase\">The Bools</span>\n<span style=\"font-weight: 700; font-style: italic; color: #ffcd48; text-transform: uppercase\">have won</span>\n<span style=\"font-weight: 700; font-style: italic; color: #ffcd48; text-transform: uppercase\">16 rINGS</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -2907,7 +2843,6 @@
           "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #ffcd48\">In their 52 seasons of championships in the making, they have won 16 rings in total.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -2989,7 +2924,7 @@
         "type": "shape",
         "id": "c8b5df99-5aac-4f95-b30c-c1c68d188882"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -3078,7 +3013,6 @@
           "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; color: #ffcd48\">Question</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -3141,7 +3075,6 @@
           "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; font-style: italic; color: #ffcd48; text-transform: uppercase\">Can you name the all-time leading BOOLS scorer in NBA history?</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -3209,7 +3142,6 @@
             "vertical": 14
           },
           "content": "<span style=\"font-weight: 700; font-style: italic; color: #462486; text-transform: uppercase\">Kobe Brians</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -3278,7 +3210,6 @@
             "vertical": 14
           },
           "content": "<span style=\"font-weight: 700; font-style: italic; color: #462486; text-transform: uppercase\">Lawrence O'Neal</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -3347,7 +3278,6 @@
             "vertical": 14
           },
           "content": "<span style=\"font-weight: 700; font-style: italic; color: #462486; text-transform: uppercase\">K.Abdil-Japaar</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -3415,7 +3345,6 @@
           "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 900; color: #fff\">3 / 6</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -3480,7 +3409,7 @@
         "id": "76b087bc-fefd-4fd2-b80a-acb6bb496174",
         "type": "shape"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -3563,7 +3492,6 @@
           "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; font-style: italic; color: #ffcd48; text-transform: uppercase\">Kareem</span>\n<span style=\"font-weight: 700; font-style: italic; color: #ffcd48; text-transform: uppercase\">Japaar</span>\n<span style=\"font-weight: 700; font-style: italic; color: #ffcd48; text-transform: uppercase\">38,387 points</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -3632,7 +3560,6 @@
           "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #ffcd48\">The highest scoring player of all time is Kareem Japaar with over 38,000 points from 1982 to 2012.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -3714,7 +3641,7 @@
         "type": "shape",
         "id": "b9a458b1-326e-484b-801e-98e3729869c2"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -3885,7 +3812,6 @@
           "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; color: #ffcd48\">Correct</span>\n<span style=\"font-weight: 700; color: #ffcd48\">Answers</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -3952,7 +3878,6 @@
           "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 900; color: #fff\">5 / 6</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -4015,7 +3940,6 @@
           "textAlign": "center",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; font-style: italic; color: #ffcd48\">5</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -4078,7 +4002,6 @@
           "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; font-style: italic; color: #fff; text-transform: uppercase\">Someone knows their team. Congratulations!</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -4147,7 +4070,6 @@
           "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #ffcd48\">Most Bools fans average a score of 3/5. Not you though my friend. You really know your stuff.</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -4204,7 +4126,7 @@
       "backgroundColor": { "color": { "r": 68, "g": 35, "b": 131 } },
       "type": "page",
       "id": "6992edac-d28c-4193-a001-044f004dbdad",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -4267,7 +4189,6 @@
           "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; font-style: italic; text-transform: uppercase\">Enjoyed this sport quiz?</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -4336,7 +4257,6 @@
           "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "Test your NFL trivia knowledge at: triviaonline.com/sport",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -4450,7 +4370,6 @@
           "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; font-style: italic; text-transform: uppercase\">Click to play</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -4498,7 +4417,7 @@
       "backgroundColor": { "color": { "r": 255, "g": 205, "b": 72 } },
       "type": "page",
       "id": "136cca74-5131-4053-a4e2-003b582a3306",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     }
   ],
   "current": null,

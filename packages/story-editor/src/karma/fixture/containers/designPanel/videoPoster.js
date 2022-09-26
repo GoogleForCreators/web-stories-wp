@@ -43,6 +43,12 @@ export class VideoPoster extends AbstractPanel {
     });
   }
 
+  get posterMenuHotlink() {
+    return this.getByRoleIn(this.node.ownerDocument, 'menuitem', {
+      name: /link to a file/i,
+    });
+  }
+
   get posterMenuReset() {
     return this.getByRoleIn(this.node.ownerDocument, 'menuitem', {
       name: /reset/i,

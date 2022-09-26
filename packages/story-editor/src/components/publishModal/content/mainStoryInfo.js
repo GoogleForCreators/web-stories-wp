@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
@@ -24,12 +25,13 @@ import {
 } from '@googleforcreators/design-system';
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
+
 /**
  * Internal dependencies
  */
-import { useConfig, useStory } from '../../../app';
+import { useStory } from '../../../app';
 import { updateSlug } from '../../../utils/storyUpdates';
-import useInspector from '../../inspector/useInspector';
+import useSidebar from '../../sidebar/useSidebar';
 import { EXCERPT_MAX_LENGTH } from '../../panels/document/excerpt';
 import { INPUT_KEYS } from '../constants';
 
@@ -50,8 +52,6 @@ const _TextArea = styled(TextArea)`
 `;
 
 const MainStoryInfo = () => {
-  const storyId = useConfig(({ storyId }) => storyId);
-
   const updateStory = useStory(({ actions }) => actions.updateStory);
   const _inputValues = useStory(({ state: { story } }) => ({
     [INPUT_KEYS.EXCERPT]: story.excerpt,
@@ -66,8 +66,8 @@ const MainStoryInfo = () => {
     }) => slug
   );
 
-  const IsolatedStatusPanel = useInspector(
-    ({ data }) => data?.modalInspectorTab?.IsolatedStatusPanel
+  const IsolatedStatusPanel = useSidebar(
+    ({ data }) => data?.modalSidebarTab?.IsolatedStatusPanel
   );
 
   const [inputValues, setInputValues] = useState(_inputValues);
@@ -77,11 +77,10 @@ const MainStoryInfo = () => {
       updateSlug({
         currentSlug: slug,
         currentTitle: newTitle,
-        storyId,
         updateStory,
       });
     },
-    [slug, updateStory, storyId]
+    [slug, updateStory]
   );
 
   const handleUpdateStoryInfo = useCallback(

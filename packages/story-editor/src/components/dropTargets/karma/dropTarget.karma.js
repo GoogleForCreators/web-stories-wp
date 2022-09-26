@@ -349,8 +349,9 @@ describe('Drop-Target integration', () => {
           await fixture.events.mouse.clickOn(bgElement, 5, 5);
 
           // And flip it
+          await fixture.events.click(fixture.editor.sidebar.designTab);
           await fixture.events.click(
-            fixture.editor.inspector.designPanel.pageBackground.flipHorizontal
+            fixture.editor.sidebar.designPanel.pageBackground.flipHorizontal
           );
         });
 
@@ -400,8 +401,9 @@ describe('Drop-Target integration', () => {
           await fixture.events.mouse.clickOn(element, 1, 1);
 
           // And flip it
+          await fixture.events.click(fixture.editor.sidebar.designTab);
           await fixture.events.click(
-            fixture.editor.inspector.designPanel.sizePosition.flipHorizontal
+            fixture.editor.sidebar.designPanel.sizePosition.flipHorizontal
           );
         });
 
@@ -455,8 +457,9 @@ describe('Drop-Target integration', () => {
           await insertMediaByIndex(fixture, 2);
           flippedImageData = (await getElements(fixture))[2];
 
+          await fixture.events.click(fixture.editor.sidebar.designTab);
           await fixture.events.click(
-            fixture.editor.inspector.designPanel.sizePosition.flipHorizontal
+            fixture.editor.sidebar.designPanel.sizePosition.flipHorizontal
           );
 
           const element = fixture.editor.canvas.displayLayer.display(
@@ -594,7 +597,7 @@ async function dragToDropTarget(fixture, from, toId) {
 function getAllTransformsBetween(startElement, endElement) {
   let e = startElement;
   const transforms = [];
-  while (e && e != endElement) {
+  while (e && e !== endElement) {
     transforms.unshift(getComputedStyle(e).transform);
     e = e.parentNode;
   }

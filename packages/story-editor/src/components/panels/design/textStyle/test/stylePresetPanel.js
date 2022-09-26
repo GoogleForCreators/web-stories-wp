@@ -18,16 +18,18 @@
  * External dependencies
  */
 import { fireEvent, screen } from '@testing-library/react';
+import {
+  TEXT_ELEMENT_DEFAULT_FONT,
+  BACKGROUND_TEXT_MODE,
+} from '@googleforcreators/elements';
+import { renderWithTheme } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
  */
 import StylePresetPanel from '../stylePresets';
 import StoryContext from '../../../../../app/story/context';
-import { BACKGROUND_TEXT_MODE } from '../../../../../constants';
 import { getTextPresets, areAllType } from '../../../../../utils/presetUtils';
-import { renderWithTheme } from '../../../../../testUtils';
-import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../../app/font/defaultFonts';
 
 jest.mock('../../../../../utils/presetUtils');
 
@@ -155,7 +157,7 @@ describe('panels/Text/Style', () => {
       const addButton = screen.queryByLabelText('Add style');
       fireEvent.click(addButton);
 
-      expect(updateStory).toHaveBeenCalledTimes(1);
+      expect(updateStory).toHaveBeenCalledOnce();
       expect(updateStory).toHaveBeenCalledWith({
         properties: {
           globalStoryStyles: {
@@ -187,7 +189,9 @@ describe('panels/Text/Style', () => {
       const expectedContent = {
         content: '<span style="color: #010101">Hello World</span>',
       };
-      expect(updatedContent).toStrictEqual(expectedContent);
+      expect(updatedContent).toStrictEqual(
+        expect.objectContaining(expectedContent)
+      );
     });
   });
 });

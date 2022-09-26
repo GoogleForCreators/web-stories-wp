@@ -19,6 +19,7 @@
  */
 import { createSolid } from '@googleforcreators/patterns';
 import { waitFor } from '@testing-library/react';
+
 /**
  * Internal dependencies
  */

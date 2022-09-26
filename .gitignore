@@ -7,9 +7,11 @@ node_modules
 /packages/migration/scripts/module.js
 /packages/*/dist
 /packages/*/dist-module
+/packages/*/dist-types
 /build
 /bin/build
 /bin/local-env/data
+bin/local-env/docker-compose.override.yml
 /includes/vendor
 /includes/composer.json
 /plugin-assets
@@ -21,3 +23,4 @@ phpcs.xml
 phpunit.xml
 .phpunit.result.cache
 /packages/*/package-lock.json
+tsconfig.tsbuildinfo

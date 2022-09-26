@@ -34,6 +34,7 @@ function ReorderableItem({
   position,
   onStartReordering,
   disabled,
+  data,
   ...props
 }) {
   const handleStartReordering = useReorderable(
@@ -48,6 +49,7 @@ function ReorderableItem({
             onPointerDown: handleStartReordering({
               position,
               onStartReordering,
+              data,
             }),
           })}
       {...props}
@@ -62,6 +64,7 @@ ReorderableItem.propTypes = {
   position: PropTypes.number.isRequired,
   onStartReordering: PropTypes.func,
   disabled: PropTypes.bool,
+  data: PropTypes.object,
 };
 
 export default ReorderableItem;

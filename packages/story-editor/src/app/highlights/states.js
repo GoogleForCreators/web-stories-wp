@@ -13,29 +13,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * External dependencies
+ */
+import { STYLE_PANE_IDS } from '@googleforcreators/design-system';
+
 /**
  * Internal dependencies
  */
-import { DOCUMENT, DESIGN } from '../../components/inspector';
-import {
-  MEDIA,
-  MEDIA3P,
-  TEXT as TEXT_SET,
-  PAGE_TEMPLATES,
-} from '../../components/library/constants';
+import { INSERT, DOCUMENT, STYLE } from '../../components/sidebar';
+import { PANE_IDS } from '../../components/library/paneIds';
 
 /**
  * Highlight state object
  *
  * @typedef {Highlight} Highlight The current state of editor highlights
- * @property {string} tab The ID of the Inspector tab to highlight
+ * @property {string} tab The ID of the Sidebar tab to highlight
  * @property {boolean} focus Whether there is a focusable element, use for accessibility
  */
 
 const keys = {
   STORY_TITLE: 'STORY_TITLE',
+  ELEMENT_TOOLBAR_TOGGLE: 'ELEMENT_TOOLBAR_TOGGLE',
 
-  // INSPECTOR
+  // Sidebar tabs
+  STYLE_PANE: 'STYLE_PANE',
+
+  // STYLE
   ANIMATION: 'ANIMATION',
   ASSISTIVE_TEXT: 'ASSISTIVE_TEXT',
   CAPTIONS: 'CAPTIONS',
@@ -54,6 +59,9 @@ const keys = {
   MEDIA3P: 'MEDIA3P',
   TEXT_SET: 'TEXT',
   PAGE_TEMPLATES: 'PAGE_TEMPLATES',
+
+  // DOCUMENT
+  PAGE_BACKGROUND_AUDIO: 'PAGE_BACKGROUND_AUDIO',
 };
 
 export const STATES = {
@@ -61,7 +69,17 @@ export const STATES = {
     focus: true,
   },
 
-  // Inspector
+  [keys.ELEMENT_TOOLBAR_TOGGLE]: {
+    focus: true,
+  },
+
+  // Sidebar tabs
+  [keys.STYLE_PANE]: {
+    focus: true,
+    tab: STYLE,
+    section: STYLE_PANE_IDS.SELECTION,
+  },
+
   [keys.POSTER]: {
     focus: true,
     tab: DOCUMENT,
@@ -74,59 +92,76 @@ export const STATES = {
     focus: true,
     tab: DOCUMENT,
   },
+  [keys.PAGE_BACKGROUND_AUDIO]: {
+    focus: true,
+    tab: STYLE,
+  },
   [keys.CAPTIONS]: {
     focus: true,
-    tab: DESIGN,
+    tab: STYLE,
+    section: STYLE_PANE_IDS.SELECTION,
   },
   [keys.ASSISTIVE_TEXT]: {
     focus: true,
-    tab: DESIGN,
+    tab: STYLE,
+    section: STYLE_PANE_IDS.SELECTION,
   },
   [keys.PAGE_BACKGROUND]: {
     focus: true,
-    tab: DESIGN,
+    tab: STYLE,
+    section: STYLE_PANE_IDS.SELECTION,
   },
   [keys.ANIMATION]: {
     focus: true,
-    tab: DESIGN,
+    tab: STYLE,
+    section: STYLE_PANE_IDS.ANIMATION,
   },
   [keys.FONT]: {
     focus: true,
-    tab: DESIGN,
+    tab: STYLE,
+    section: STYLE_PANE_IDS.SELECTION,
   },
   [keys.LINK]: {
     focus: true,
-    tab: DESIGN,
+    tab: STYLE,
+    section: STYLE_PANE_IDS.LINK,
   },
   [keys.VIDEO_A11Y_POSTER]: {
     focus: true,
-    tab: DESIGN,
+    tab: STYLE,
+    section: STYLE_PANE_IDS.SELECTION,
   },
   [keys.STYLE]: {
     focus: true,
-    tab: DESIGN,
+    tab: STYLE,
+    section: STYLE_PANE_IDS.SELECTION,
   },
   [keys.TEXT_COLOR]: {
     focus: true,
-    tab: DESIGN,
+    tab: STYLE,
+    section: STYLE_PANE_IDS.SELECTION,
   },
 
   // Library
   [keys.MEDIA]: {
     focus: true,
-    tab: MEDIA.id,
+    tab: INSERT,
+    section: PANE_IDS.MEDIA,
   },
   [keys.MEDIA3P]: {
     focus: true,
-    tab: MEDIA3P.id,
+    tab: INSERT,
+    section: PANE_IDS.MEDIA_3P,
   },
   [keys.TEXT_SET]: {
     focus: true,
-    tab: TEXT_SET.id,
+    tab: INSERT,
+    section: PANE_IDS.TEXT,
   },
   [keys.PAGE_TEMPLATES]: {
     focus: true,
-    tab: PAGE_TEMPLATES.id,
+    tab: INSERT,
+    section: PANE_IDS.PAGE_TEMPLATES,
   },
 };
 

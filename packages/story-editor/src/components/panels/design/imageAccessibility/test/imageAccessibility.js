@@ -22,9 +22,9 @@ import { screen } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { MULTIPLE_DISPLAY_VALUE } from '../../../../../constants';
 import { renderPanel } from '../../../shared/test/_utils';
 import ImageAccessibility from '../imageAccessibility';
+import { MULTIPLE_DISPLAY_VALUE } from '../../../../../constants';
 
 describe('Panels/ImageAccessibility', () => {
   const defaultElement = {

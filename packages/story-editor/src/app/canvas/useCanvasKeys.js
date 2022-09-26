@@ -19,17 +19,25 @@
  */
 import { useCallback, useEffect, useRef } from '@googleforcreators/react';
 import { trackEvent } from '@googleforcreators/tracking';
-import { useGlobalKeyDownEffect } from '@googleforcreators/design-system';
+import {
+  useGlobalKeyDownEffect,
+  getKeyboardMovement,
+  useSnackbar,
+} from '@googleforcreators/design-system';
 import { STORY_ANIMATION_STATE } from '@googleforcreators/animation';
-import { useTransform } from '@googleforcreators/transform';
+import {
+  getDefinitionForType,
+  ELEMENT_TYPES,
+} from '@googleforcreators/elements';
+import { __, sprintf } from '@googleforcreators/i18n';
 
 /**
  * Internal dependencies
  */
+import states from '../highlights/states';
+import useHighlights from '../highlights/useHighlights';
 import { useStory } from '../story';
-import { LAYER_DIRECTIONS } from '../../constants';
-import getKeyboardMovement from '../../utils/getKeyboardMovement';
-import { getDefinitionForType } from '../../elements';
+import getLayerArrangementProps from './utils/getLayerArrangementProps';
 import { useCanvas } from '.';
 
 /**
@@ -40,25 +48,27 @@ function useCanvasKeys(ref) {
     selectedElementIds,
     selectedElements,
     arrangeSelection,
-    clearSelection,
     deleteSelectedElements,
     duplicateElementsById,
     updateSelectedElements,
     setSelectedElementsById,
     currentPage,
+    currentPageNumber,
     animationState,
     updateAnimationState,
+    currentPageProductIds,
+    pageElements,
   } = useStory(
     ({
       state: {
         selectedElementIds,
         selectedElements,
         currentPage,
+        currentPageNumber,
         animationState,
       },
       actions: {
         arrangeSelection,
-        clearSelection,
         deleteSelectedElements,
         duplicateElementsById,
         updateSelectedElements,
@@ -68,23 +78,29 @@ function useCanvasKeys(ref) {
     }) => {
       return {
         currentPage,
+        currentPageNumber,
         selectedElementIds,
         selectedElements,
         arrangeSelection,
-        clearSelection,
         deleteSelectedElements,
         duplicateElementsById,
         updateSelectedElements,
         setSelectedElementsById,
         animationState,
         updateAnimationState,
+        currentPageProductIds: currentPage?.elements
+          ?.filter(({ type }) => type === ELEMENT_TYPES.PRODUCT)
+          .map(({ product }) => product?.productId),
+        pageElements: currentPage?.elements,
       };
     }
   );
 
-  const {
-    actions: { clearTransforms },
-  } = useTransform();
+  const showSnackbar = useSnackbar(({ showSnackbar }) => showSnackbar);
+
+  const { setHighlights } = useHighlights(({ setHighlights }) => ({
+    setHighlights,
+  }));
 
   const { isEditing, getNodeForElement, setEditingElement } = useCanvas(
     ({
@@ -151,15 +167,6 @@ function useCanvasKeys(ref) {
   ]);
 
   useGlobalKeyDownEffect(
-    'esc',
-    () => {
-      clearSelection();
-      clearTransforms();
-    },
-    [clearSelection, clearTransforms]
-  );
-
-  useGlobalKeyDownEffect(
     { key: ['mod+a'] },
     () => {
       const elementIds = currentPage.elements.map(({ id }) => id);
@@ -175,7 +182,8 @@ function useCanvasKeys(ref) {
       if (isEditing) {
         return;
       }
-      if (selectedElements?.[0]?.isBackground) {
+      const { isBackground, isLocked } = selectedElements?.[0] || {};
+      if (isBackground || isLocked) {
         return;
       }
       const { dx, dy } = getKeyboardMovement(key, shiftKey);
@@ -199,12 +207,21 @@ function useCanvasKeys(ref) {
       // into mod+left/right triggering the browser's back/forward navigation.
       evt.preventDefault();
 
-      const layerDir = getLayerDirection(key, shiftKey);
-      if (layerDir) {
-        arrangeSelection({ position: layerDir });
+      // The shortcut doesn't support moving multiple elements currently.
+      if (selectedElements?.length === 1) {
+        const { position, groupId } = getLayerArrangementProps(
+          key,
+          shiftKey,
+          selectedElements,
+          pageElements
+        );
+
+        if (position || groupId) {
+          arrangeSelection({ position, groupId });
+        }
       }
     },
-    [arrangeSelection]
+    [arrangeSelection, selectedElements, pageElements]
   );
 
   // Edit mode
@@ -215,10 +232,10 @@ function useCanvasKeys(ref) {
         return;
       }
 
-      const { type, id } = selectedElements[0];
-      const { hasEditMode } = getDefinitionForType(type);
+      const { type, id, isLocked } = selectedElements[0];
+      const { hasEditMode, hasEditModeIfLocked } = getDefinitionForType(type);
       // Only handle Enter key for editable elements
-      if (!hasEditMode) {
+      if (!hasEditMode || (!hasEditModeIfLocked && isLocked)) {
         return;
       }
 
@@ -232,10 +249,36 @@ function useCanvasKeys(ref) {
       return;
     }
 
+    for (const { type, product } of selectedElements) {
+      const { productId, productTitle, productImages } = product || {};
+      if (
+        type === ELEMENT_TYPES.PRODUCT &&
+        productId &&
+        currentPageProductIds.includes(productId)
+      ) {
+        showSnackbar({
+          message: sprintf(
+            /* translators: %s: product title. */
+            __('Product "%s" already exists on the page.', 'web-stories'),
+            productTitle
+          ),
+          thumbnail: productImages?.[0]?.url && {
+            src: productImages[0].url,
+            alt: productImages[0].alt,
+          },
+        });
+      }
+    }
+
     duplicateElementsById({
       elementIds: selectedElements.map((element) => element.id),
     });
-  }, [duplicateElementsById, selectedElements]);
+  }, [
+    duplicateElementsById,
+    selectedElements,
+    currentPageProductIds,
+    showSnackbar,
+  ]);
 
   useGlobalKeyDownEffect('clone', () => cloneHandler(), [cloneHandler]);
 
@@ -244,10 +287,12 @@ function useCanvasKeys(ref) {
     STORY_ANIMATION_STATE.PLAYING_SELECTED,
   ].includes(animationState);
   useGlobalKeyDownEffect(
-    { key: ['mod+k'] },
+    { key: ['mod+enter'] },
     (evt) => {
       evt.preventDefault();
-
+      if (currentPageNumber === 1) {
+        return;
+      }
       updateAnimationState({
         animationState: isPlaying
           ? STORY_ANIMATION_STATE.RESET
@@ -258,18 +303,23 @@ function useCanvasKeys(ref) {
         status: isPlaying ? 'stop' : 'play',
       });
     },
-    [isPlaying, updateAnimationState]
+    [isPlaying, updateAnimationState, currentPageNumber]
   );
-}
 
-function getLayerDirection(key, shift) {
-  if (key === 'ArrowUp') {
-    return shift ? LAYER_DIRECTIONS.FRONT : LAYER_DIRECTIONS.FORWARD;
-  }
-  if (key === 'ArrowDown') {
-    return shift ? LAYER_DIRECTIONS.BACK : LAYER_DIRECTIONS.BACKWARD;
-  }
-  return null;
+  useGlobalKeyDownEffect(
+    { key: ['mod+k'] },
+    (evt) => {
+      evt.preventDefault();
+      if (!selectedElements.length || selectedElements?.[0]?.isBackground) {
+        return;
+      }
+      setHighlights({
+        elements: selectedElements,
+        highlight: states.LINK,
+      });
+    },
+    [setHighlights, selectedElements]
+  );
 }
 
 export default useCanvasKeys;

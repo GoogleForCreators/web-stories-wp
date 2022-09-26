@@ -116,18 +116,8 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	public function test_register(): void {
 		$this->instance->register();
 
-		$this->assertSame(
-			10,
-			has_filter(
-				'_wp_post_revision_fields',
-				[
-					$this->instance,
-					'filter_revision_fields',
-				]
-			)
-		);
 		$this->assertSame( 10, has_filter( 'wp_insert_post_data', [ $this->instance, 'change_default_title' ] ) );
-		$this->assertSame( 10, has_filter( 'wp_web-story_revisions_to_keep', [ $this->instance, 'revisions_to_keep' ] ) );
+		$this->assertSame( 10, has_filter( 'wp_insert_post_empty_content', [ $this->instance, 'filter_empty_content' ] ) );
 		$this->assertSame(
 			10,
 			has_filter(
@@ -182,6 +172,7 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 		$this->instance->register_meta();
 
 		$this->assertTrue( registered_meta_key_exists( 'post', $this->instance::PUBLISHER_LOGO_META_KEY, $this->instance->get_slug() ) );
+		$this->assertTrue( registered_meta_key_exists( 'post', $this->instance::POSTER_META_KEY, $this->instance->get_slug() ) );
 	}
 
 	/**
@@ -198,6 +189,26 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 		);
 
 		$this->assertSame( '', $post->post_title );
+	}
+
+	/**
+	 * @covers ::filter_empty_content
+	 */
+	public function test_filter_empty_content(): void {
+		$postarr = [
+			'post_type'             => $this->instance->get_slug(),
+			'post_content_filtered' => 'Not empty',
+		];
+
+		$empty_postarr = [
+			'post_type'             => $this->instance->get_slug(),
+			'post_content_filtered' => '',
+		];
+
+		$this->assertFalse( $this->instance->filter_empty_content( false, $postarr ) );
+		$this->assertFalse( $this->instance->filter_empty_content( false, $empty_postarr ) );
+		$this->assertFalse( $this->instance->filter_empty_content( true, $postarr ) );
+		$this->assertTrue( $this->instance->filter_empty_content( true, $empty_postarr ) );
 	}
 
 	/**
@@ -303,55 +314,5 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 		);
 
 		$this->assertTrue( $actual );
-	}
-
-	/**
-	 * Testing the revisions_to_keep() method.
-	 *
-	 * @param int $num      Number of revisions
-	 * @param int $expected Expected string of CSS rules.
-	 *
-	 * @dataProvider data_test_revisions_to_keep
-	 * @covers ::revisions_to_keep
-	 */
-	public function test_revisions_to_keep( $num, $expected ): void {
-		$this->assertSame( $expected, $this->instance->revisions_to_keep( $num ) );
-	}
-
-	public function data_test_revisions_to_keep(): array {
-		return [
-			[
-				'num'      => 0,
-				'expected' => 0,
-			],
-			[
-				'num'      => 10,
-				'expected' => 10,
-			],
-			[
-				'num'      => 6,
-				'expected' => 6,
-			],
-			[
-				'num'      => -1,
-				'expected' => 10,
-			],
-			[
-				'num'      => '10',
-				'expected' => 10,
-			],
-			[
-				'num'      => 'ten',
-				'expected' => 0,
-			],
-			[
-				'num'      => true,
-				'expected' => 1,
-			],
-			[
-				'num'      => false,
-				'expected' => 0,
-			],
-		];
 	}
 }

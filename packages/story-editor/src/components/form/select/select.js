@@ -23,7 +23,7 @@ import { DropDown } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
-import { focusStyle } from '../../panels/shared';
+import { focusStyle } from '../../panels/shared/styles';
 
 const Container = styled.div`
   position: relative;
@@ -52,7 +52,7 @@ const selectButtonStylesOverride = css`
 `;
 
 const selectValueStylesOverride = css`
-  margin-right: -12px;
+  margin-right: 0;
 `;
 
 function Select(props) {

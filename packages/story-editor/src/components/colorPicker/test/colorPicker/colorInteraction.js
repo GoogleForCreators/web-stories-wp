@@ -19,21 +19,23 @@
  */
 import { fireEvent, screen } from '@testing-library/react';
 import { setAppElement } from '@googleforcreators/design-system';
+import {
+  TEXT_ELEMENT_DEFAULT_FONT,
+  BACKGROUND_TEXT_MODE,
+} from '@googleforcreators/elements';
+import { renderWithTheme } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
  */
 import ColorPicker from '../../colorPicker';
 import { StoryContext } from '../../../../app/story';
-import { BACKGROUND_TEXT_MODE } from '../../../../constants';
 import {
   getShapePresets,
   getTextPresets,
   getPagePreset,
   areAllType,
 } from '../../../../utils/presetUtils';
-import { renderWithTheme } from '../../../../testUtils';
-import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../app/font/defaultFonts';
 
 jest.mock('../../../../utils/presetUtils');
 
@@ -201,7 +203,7 @@ describe('colorPicker/colorsInteraction', () => {
       const addButton = screen.queryByLabelText(ADD_GLOBAL_LABEL);
       fireEvent.click(addButton);
 
-      expect(updateStory).toHaveBeenCalledTimes(1);
+      expect(updateStory).toHaveBeenCalledOnce();
       expect(updateStory).toHaveBeenCalledWith({
         properties: {
           globalStoryStyles: {
@@ -216,7 +218,7 @@ describe('colorPicker/colorsInteraction', () => {
       // Local color for all stories.
       const addLocal = screen.queryByLabelText(ADD_LOCAL_LABEL);
       fireEvent.click(addLocal);
-      expect(updateStory).toHaveBeenCalledTimes(1);
+      expect(updateStory).toHaveBeenCalledOnce();
       expect(updateStory).toHaveBeenCalledWith({
         properties: {
           currentStoryStyles: {
@@ -249,7 +251,7 @@ describe('colorPicker/colorsInteraction', () => {
       const addButton = screen.queryByLabelText(ADD_GLOBAL_LABEL);
       fireEvent.click(addButton);
 
-      expect(updateStory).toHaveBeenCalledTimes(1);
+      expect(updateStory).toHaveBeenCalledOnce();
       expect(updateStory).toHaveBeenCalledWith({
         properties: {
           globalStoryStyles: {
@@ -263,7 +265,7 @@ describe('colorPicker/colorsInteraction', () => {
       // Color for current story.
       const addLocal = screen.queryByLabelText(ADD_LOCAL_LABEL);
       fireEvent.click(addLocal);
-      expect(updateStory).toHaveBeenCalledTimes(1);
+      expect(updateStory).toHaveBeenCalledOnce();
       expect(updateStory).toHaveBeenCalledWith({
         properties: {
           currentStoryStyles: {
@@ -294,7 +296,7 @@ describe('colorPicker/colorsInteraction', () => {
       const addButton = screen.queryByLabelText(ADD_GLOBAL_LABEL);
       fireEvent.click(addButton);
 
-      expect(updateStory).toHaveBeenCalledTimes(1);
+      expect(updateStory).toHaveBeenCalledOnce();
       expect(updateStory).toHaveBeenCalledWith({
         properties: {
           globalStoryStyles: {
@@ -308,7 +310,7 @@ describe('colorPicker/colorsInteraction', () => {
       // Color for current story.
       const addLocal = screen.queryByLabelText(ADD_LOCAL_LABEL);
       fireEvent.click(addLocal);
-      expect(updateStory).toHaveBeenCalledTimes(1);
+      expect(updateStory).toHaveBeenCalledOnce();
       expect(updateStory).toHaveBeenCalledWith({
         properties: {
           currentStoryStyles: {
@@ -337,7 +339,7 @@ describe('colorPicker/colorsInteraction', () => {
       const addButton = screen.queryByLabelText(ADD_GLOBAL_LABEL);
       fireEvent.click(addButton);
 
-      expect(updateStory).toHaveBeenCalledTimes(1);
+      expect(updateStory).toHaveBeenCalledOnce();
       expect(updateStory).toHaveBeenCalledWith({
         properties: {
           globalStoryStyles: {
@@ -351,7 +353,7 @@ describe('colorPicker/colorsInteraction', () => {
       // Color for current story.
       const addLocal = screen.queryByLabelText(ADD_LOCAL_LABEL);
       fireEvent.click(addLocal);
-      expect(updateStory).toHaveBeenCalledTimes(1);
+      expect(updateStory).toHaveBeenCalledOnce();
       expect(updateStory).toHaveBeenCalledWith({
         properties: {
           currentStoryStyles: {
@@ -386,7 +388,7 @@ describe('colorPicker/colorsInteraction', () => {
       const confirmationButton = screen.getByRole('button', { name: 'Delete' });
       fireEvent.click(confirmationButton);
 
-      expect(updateStory).toHaveBeenCalledTimes(1);
+      expect(updateStory).toHaveBeenCalledOnce();
       expect(updateStory).toHaveBeenCalledWith({
         properties: {
           globalStoryStyles: {

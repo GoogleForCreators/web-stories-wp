@@ -22,16 +22,16 @@ import PropTypes from 'prop-types';
 import { __ } from '@googleforcreators/i18n';
 import { generatePatternStyles } from '@googleforcreators/patterns';
 import { Icons } from '@googleforcreators/design-system';
+import { BACKGROUND_TEXT_MODE } from '@googleforcreators/elements';
 import { useState } from '@googleforcreators/react';
 import { stripHTML } from '@googleforcreators/dom';
 
 /**
  * Internal dependencies
  */
-import { BACKGROUND_TEXT_MODE } from '../../constants';
 import { generatePresetStyle } from '../../utils/presetUtils';
 import { useStory } from '../../app/story';
-import { focusStyle } from '../panels/shared';
+import { focusStyle } from '../panels/shared/styles';
 
 const REMOVE_ICON_SIZE = 32;
 

@@ -26,11 +26,11 @@ import { useState, useEffect } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
 import { __ } from '@wordpress/i18n';
+import { useDebounce } from '@wordpress/compose';
 
 /**
  * Internal dependencies
  */
-import useDebounce from '../hooks/useDebounce';
 import Autocomplete from './autocomplete';
 
 /**

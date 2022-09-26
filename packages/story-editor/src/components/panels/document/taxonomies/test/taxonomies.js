@@ -18,12 +18,12 @@
  * External dependencies
  */
 import { screen } from '@testing-library/react';
+import { renderWithTheme } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
  */
 import TaxonomyContext from '../../../../../app/taxonomy/context';
-import { renderWithTheme } from '../../../../../testUtils';
 import TaxonomiesPanel from '../taxonomies';
 import { StoryContext } from '../../../../../app/story';
 

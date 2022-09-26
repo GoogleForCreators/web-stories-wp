@@ -39,7 +39,7 @@ import {
 } from '../button';
 import { Pencil } from '../../icons';
 import { Menu } from '../menu';
-import { Tooltip } from '../tooltip';
+import { BaseTooltip } from '../tooltip';
 import { PLACEMENT, Popup } from '../popup';
 import Landscape from './icons/landscape.svg';
 import { MEDIA_VARIANTS } from './constants';
@@ -88,7 +88,7 @@ const Img = styled.img`
 `;
 
 const menuStyleOverride = css`
-  min-width: 100px;
+  white-space: nowrap;
   margin-top: 0;
   li {
     display: block;
@@ -183,7 +183,6 @@ export const MediaInput = forwardRef(function Media(
     canUpload = true,
     menuProps = {},
     imgProps = {},
-    isRTL = false,
     ...rest
   },
   ref
@@ -222,13 +221,13 @@ export const MediaInput = forwardRef(function Media(
         </ImageWrapper>
       )}
       {canUpload && (
-        <Tooltip
+        <BaseTooltip
           title={hasMenu ? null : __('Open media picker', 'web-stories')}
         >
           <Button
             ref={(node) => {
               // `ref` can either be a callback ref or a normal ref.
-              if (typeof ref == 'function') {
+              if (typeof ref === 'function') {
                 ref(node);
               } else if (ref) {
                 ref.current = node;
@@ -249,13 +248,14 @@ export const MediaInput = forwardRef(function Media(
           >
             <Pencil />
           </Button>
-        </Tooltip>
+        </BaseTooltip>
       )}
       <Popup
         placement={PLACEMENT.BOTTOM_END}
         anchor={internalRef}
         isOpen={isMenuOpen}
-        isRTL={isRTL}
+        // Ensure that popup is visible in publish dialog.
+        zIndex={11}
       >
         <Menu
           parentId={buttonId}

@@ -23,6 +23,8 @@ import PropTypes from 'prop-types';
 import { forwardRef } from '@googleforcreators/react';
 import { UnitsProvider } from '@googleforcreators/units';
 import { TransformProvider } from '@googleforcreators/transform';
+import { registerElementType } from '@googleforcreators/elements';
+import { elementTypes } from '@googleforcreators/element-library';
 
 /**
  * Internal dependencies
@@ -57,6 +59,10 @@ describe('singleSelectionMoveable', () => {
   let storyContext;
   let canvasContext;
 
+  beforeAll(() => {
+    elementTypes.forEach(registerElementType);
+  });
+
   beforeEach(() => {
     updateSelectedElements = jest.fn();
     target = document.createElement('div');
@@ -65,7 +71,7 @@ describe('singleSelectionMoveable', () => {
       state: {
         selectedElements: [element],
         currentPage: {
-          elements: [],
+          elements: [{ isBackground: true, id: 2 }],
         },
       },
       actions: { updateSelectedElements },
@@ -73,7 +79,7 @@ describe('singleSelectionMoveable', () => {
     canvasContext = {
       state: {
         pageSize,
-        nodesById: { 1: target },
+        nodesById: { 1: target, 2: document.body },
         fullbleedContainer: document.body,
       },
       actions: {

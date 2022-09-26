@@ -2,7 +2,7 @@
   "name": "@googleforcreators/patterns",
   "description": "Utility package to deal with color \"patterns\" like solid colors, and gradients.",
   "private": false,
-  "version": "0.1.202203010801",
+  "version": "0.1.202208291229",
   "author": {
     "name": "Google",
     "url": "https://creators.google/"
@@ -26,19 +26,21 @@
   },
   "customExports": {
     ".": {
-      "default": "./src/index.js"
+      "default": "./src/index.ts"
     }
   },
   "main": "dist/index.js",
   "module": "dist-module/index.js",
-  "source": "src/index.js",
+  "types": "dist-types/index.d.ts",
+  "source": "src/index.ts",
   "publishConfig": {
     "access": "public"
   },
   "sideEffects": false,
   "dependencies": {
     "@googleforcreators/i18n": "*",
-    "polished": "^4.1.4",
+    "@googleforcreators/types": "*",
+    "polished": "^4.2.2",
     "prop-types": "^15.8.1"
   },
   "devDependencies": {}

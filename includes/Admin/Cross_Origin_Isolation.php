@@ -270,17 +270,17 @@ class Cross_Origin_Isolation extends Service_Base implements HasRequirements {
 	 *
 	 * @since 1.6.0
 	 *
-	 * @param string|mixed $avatar      HTML for the user's avatar.
-	 * @param mixed        $id_or_email The avatar to retrieve. Accepts a user_id, Gravatar MD5 hash,
-	 *                                  user email, WP_User object, WP_Post object, or WP_Comment object.
-	 * @param int          $size        Square avatar width and height in pixels to retrieve.
-	 * @param string       $default     URL for the default image or a default type. Accepts '404', 'retro', 'monsterid',
-	 *                                  'wavatar', 'indenticon', 'mystery', 'mm', 'mysteryman', 'blank', or
-	 *                                  'gravatar_default'. Default is the value of the 'avatar_default' option, with a
-	 *                                  fallback of 'mystery'.
-	 * @param string       $alt         Alternative text to use in the avatar image tag. Default empty.
-	 * @param array        $args        Arguments passed to get_avatar_data(), after processing.
-	 * @return string|mixed
+	 * @param string|mixed        $avatar      HTML for the user's avatar.
+	 * @param mixed               $id_or_email The avatar to retrieve. Accepts a user_id, Gravatar MD5 hash,
+	 *                                         user email, WP_User object, WP_Post object, or WP_Comment object.
+	 * @param int                 $size        Square avatar width and height in pixels to retrieve.
+	 * @param string              $default     URL for the default image or a default type. Accepts '404', 'retro', 'monsterid',
+	 *                                         'wavatar', 'indenticon', 'mystery', 'mm', 'mysteryman', 'blank', or
+	 *                                         'gravatar_default'. Default is the value of the 'avatar_default' option, with a
+	 *                                         fallback of 'mystery'.
+	 * @param string              $alt         Alternative text to use in the avatar image tag. Default empty.
+	 * @param array<string,mixed> $args        Arguments passed to get_avatar_data(), after processing.
+	 * @return string|mixed Filtered avatar tag.
 	 */
 	public function get_avatar( $avatar, $id_or_email, $size, $default, $alt, array $args ) {
 		return $this->add_attribute( $avatar, 'src', $args['url'] );
@@ -291,12 +291,17 @@ class Cross_Origin_Isolation extends Service_Base implements HasRequirements {
 	 *
 	 * @since 1.6.0
 	 *
-	 * @param string|mixed $html HTML string.
-	 * @param string       $attribute Attribute to check for.
-	 * @param string|null  $url URL.
-	 * @return string|mixed
+	 * @param string|mixed      $html HTML string.
+	 * @param string            $attribute Attribute to check for.
+	 * @param string|null|mixed $url URL.
+	 * @return string|mixed Filtered HTML string.
 	 */
 	protected function add_attribute( $html, string $attribute, $url ) {
+		/**
+		 * URL.
+		 *
+		 * @var string $url
+		 */
 		if ( ! $url || ! \is_string( $html ) ) {
 			return $html;
 		}

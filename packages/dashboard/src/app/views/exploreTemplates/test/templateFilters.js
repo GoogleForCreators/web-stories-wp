@@ -37,7 +37,7 @@ describe('templateFilters', () => {
       (color) => color.value === TEMPLATE_COLORS.YELLOW
     );
 
-    expect(yellow.selected).toBe(true);
+    expect(yellow.selected).toBeTrue();
   });
 
   it('should select a category when the value is passed to the category selected method', () => {
@@ -51,7 +51,7 @@ describe('templateFilters', () => {
       (category) => category.value === TEMPLATE_CATEGORIES.SPORTS
     );
 
-    expect(sports.selected).toBe(true);
+    expect(sports.selected).toBeTrue();
   });
 
   it('should clear the category selection when the clear method is called', () => {
@@ -65,7 +65,7 @@ describe('templateFilters', () => {
       result.current.selectedCategories.find(
         (category) => category.value === TEMPLATE_CATEGORIES.SPORTS
       ).selected
-    ).toBe(true);
+    ).toBeTrue();
 
     act(() => {
       result.current.clearAllCategories();
@@ -75,7 +75,7 @@ describe('templateFilters', () => {
       result.current.selectedCategories.find(
         (category) => category.value === TEMPLATE_CATEGORIES.SPORTS
       ).selected
-    ).toBe(false);
+    ).toBeFalse();
   });
 
   it('should clear the color selection when the clear method is called', () => {
@@ -89,7 +89,7 @@ describe('templateFilters', () => {
       result.current.selectedColors.find(
         (color) => color.value === TEMPLATE_COLORS.BLUE
       ).selected
-    ).toBe(true);
+    ).toBeTrue();
 
     act(() => {
       result.current.clearAllColors();
@@ -99,6 +99,6 @@ describe('templateFilters', () => {
       result.current.selectedColors.find(
         (color) => color.value === TEMPLATE_COLORS.BLUE
       ).selected
-    ).toBe(false);
+    ).toBeFalse();
   });
 });

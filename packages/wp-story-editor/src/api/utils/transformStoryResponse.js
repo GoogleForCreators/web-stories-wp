@@ -19,7 +19,12 @@
 import { snakeToCamelCaseObjectKeys } from '@web-stories-wp/wp-utils';
 
 function transformStoryResponse(post) {
-  const { _embedded: embedded = {}, _links: links = {}, ...rest } = post;
+  const {
+    _embedded: embedded = {},
+    story_poster: storyPoster,
+    _links: links = {},
+    ...rest
+  } = post;
 
   // TODO: Make author, lockUser, etc. null if absent, instead of these "empty" objects.
   const story = {
@@ -36,12 +41,19 @@ function transformStoryResponse(post) {
         avatar: embedded?.['wp:lockuser']?.[0].avatar_urls?.['96'] || '',
       },
     },
-    featuredMedia: {
-      id: embedded?.['wp:featuredmedia']?.[0].id || 0,
-      height: embedded?.['wp:featuredmedia']?.[0]?.media_details?.height || 0,
-      width: embedded?.['wp:featuredmedia']?.[0]?.media_details?.width || 0,
-      url: embedded?.['wp:featuredmedia']?.[0]?.source_url || '',
-    },
+    featuredMedia: storyPoster
+      ? {
+          ...storyPoster,
+          isExternal: !storyPoster.id,
+        }
+      : {
+          id: 0,
+          height: 0,
+          width: 0,
+          url: '',
+          needsProxy: false,
+          isExternal: false,
+        },
     publisherLogo: {
       id: embedded?.['wp:publisherlogo']?.[0].id || 0,
       height: embedded?.['wp:publisherlogo']?.[0]?.media_details?.height || 0,
@@ -49,6 +61,10 @@ function transformStoryResponse(post) {
       url: embedded?.['wp:publisherlogo']?.[0]?.source_url || '',
     },
     taxonomies: links?.['wp:term']?.map(({ taxonomy }) => taxonomy) || [],
+    revisions: {
+      count: links?.['version-history']?.[0]?.count,
+      id: links?.['predecessor-version']?.[0]?.id,
+    },
     terms: embedded?.['wp:term'] || [],
   };
 

@@ -16,14 +16,13 @@
 
 export function parseInput(value, { allowEmpty, isFloat, min, max }) {
   if (`${value}`.length > 0) {
-    const valueAsNumber = isFloat ? parseFloat(value) : parseInt(value);
+    let boundedValue = isFloat ? parseFloat(value) : parseInt(value);
 
-    let boundedValue = valueAsNumber;
     if (min !== undefined) {
-      boundedValue = Math.max(min, valueAsNumber);
+      boundedValue = Math.max(min, boundedValue);
     }
     if (max !== undefined) {
-      boundedValue = Math.min(max, valueAsNumber);
+      boundedValue = Math.min(max, boundedValue);
     }
 
     return !isNaN(boundedValue) ? boundedValue : null;

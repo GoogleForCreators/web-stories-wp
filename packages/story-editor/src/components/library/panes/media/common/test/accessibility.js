@@ -18,11 +18,12 @@
  * External dependencies
  */
 import { axe } from 'jest-axe';
+import { renderWithTheme } from '@googleforcreators/test-utils';
+
 /**
  * Internal dependencies
  */
 import { useCanvas, useCanvasBoundingBox } from '../../../../../../app';
-import { renderWithTheme } from '../../../../../../testUtils';
 import Attribution from '../attribution';
 import MediaElement from '../mediaElement';
 import { useLocalMedia } from '../../../../../../app/media';
@@ -96,6 +97,7 @@ describe('automated accessibility tests', () => {
         resource={RESOURCE}
         width={RESOURCE.width}
         height={RESOURCE.height}
+        onInsert={() => {}}
       />
     );
 
@@ -119,6 +121,7 @@ describe('automated accessibility tests', () => {
         resource={RESOURCE}
         width={RESOURCE.width}
         height={RESOURCE.height}
+        onInsert={() => {}}
       />
     );
 

@@ -57,7 +57,7 @@ class Stories_Script_Data {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @return array
+	 * @return array<string,array<string|int,array<string, mixed>>> Script data.
 	 */
 	public function get_script_data(): array {
 		$views      = $this->get_layouts();
@@ -86,7 +86,7 @@ class Stories_Script_Data {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @return array
+	 * @return array<string,array<string,array<string,array<string,string|bool>>>> Field states.
 	 */
 	public function fields_states(): array {
 		$field_states = [];
@@ -130,7 +130,7 @@ class Stories_Script_Data {
 	 *
 	 * @since 1.14.0
 	 *
-	 * @return array
+	 * @return array<string,string>
 	 */
 	public function get_layouts(): array {
 		return [

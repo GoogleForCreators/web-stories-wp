@@ -16,8 +16,6 @@
 
 export { PAGE_RATIO, PAGE_WIDTH, PAGE_HEIGHT } from '@googleforcreators/units';
 
-export const WPBODY_ID = 'wpbody';
-
 export const DASHBOARD_LEFT_NAV_WIDTH = 288;
 
 export const MIN_DASHBOARD_WIDTH = 1098;

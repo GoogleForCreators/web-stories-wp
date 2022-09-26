@@ -17,6 +17,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import { forwardRef } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
@@ -24,16 +25,19 @@ import { useKeyDownEffect } from '../keyboard';
 import { useNumericInput } from './useNumericInput';
 import { Input, InputPropTypes } from '.';
 
-export const NumericInput = ({
-  allowEmpty,
-  isFloat,
-  onChange,
-  max,
-  min,
-  value = '',
-  isIndeterminate: originalIsIndeterminate,
-  ...props
-}) => {
+export const NumericInput = forwardRef(function NumericInput(
+  {
+    allowEmpty,
+    isFloat,
+    onChange,
+    max,
+    min,
+    value = '',
+    isIndeterminate: originalIsIndeterminate,
+    ...props
+  },
+  ref
+) {
   const {
     currentValue,
     handleBlur,
@@ -50,6 +54,7 @@ export const NumericInput = ({
     min,
     value,
     isIndeterminate: originalIsIndeterminate,
+    ref,
   });
 
   useKeyDownEffect(
@@ -92,7 +97,7 @@ export const NumericInput = ({
       {...props}
     />
   );
-};
+});
 NumericInput.propTypes = {
   ...InputPropTypes,
   allowEmpty: PropTypes.bool,

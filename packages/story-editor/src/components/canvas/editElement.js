@@ -21,16 +21,23 @@ import { memo, useState, forwardRef } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useUnits } from '@googleforcreators/units';
-
-/**
- * Internal dependencies
- */
-import { getDefinitionForType } from '../../elements';
+import { getDefinitionForType } from '@googleforcreators/elements';
 import {
   elementWithPosition,
   elementWithSize,
   elementWithRotation,
-} from '../../elements/shared';
+} from '@googleforcreators/element-library';
+
+/**
+ * Internal dependencies
+ */
+import useCORSProxy from '../../utils/useCORSProxy';
+import { useConfig, useStory, useFont } from '../../app';
+import useVideoTrim from '../videoTrim/useVideoTrim';
+
+const Z_INDEX_CANVAS = {
+  FLOAT_PANEL: 11,
+};
 
 const Wrapper = styled.div`
   ${elementWithPosition}
@@ -42,9 +49,29 @@ const Wrapper = styled.div`
 const EditElement = memo(
   forwardRef(function EditElement({ element, editWrapper, onResize }, ref) {
     const { id, type } = element;
-    const { getBox } = useUnits((state) => ({
+    const { getBox, getBoxWithBorder } = useUnits((state) => ({
       getBox: state.actions.getBox,
+      getBoxWithBorder: state.actions.getBoxWithBorder,
     }));
+    const { getProxiedUrl } = useCORSProxy();
+    const { isRTL, styleConstants: { topOffset } = {} } = useConfig();
+    const {
+      actions: { maybeEnqueueFontStyle },
+    } = useFont();
+
+    // Update the true global properties of the current element
+    // This now only happens on unmount
+    const { updateElementById, deleteSelectedElements } = useStory((state) => ({
+      updateElementById: state.actions.updateElementById,
+      deleteSelectedElements: state.actions.deleteSelectedElements,
+    }));
+    const { isTrimMode, resource, setVideoNode } = useVideoTrim(
+      ({ state: { isTrimMode, videoData }, actions: { setVideoNode } }) => ({
+        isTrimMode,
+        setVideoNode,
+        resource: videoData?.resource,
+      })
+    );
 
     // Needed for elements that can scale in edit mode.
     const [localProperties, setLocalProperties] = useState(null);
@@ -53,16 +80,30 @@ const EditElement = memo(
     const elementWithLocal = localProperties
       ? { ...element, ...localProperties }
       : element;
-    const box = getBox(elementWithLocal);
+    // In case of text edit mode, we include the border to the selection, so get the box with border.
+    const isText = 'text' === type;
+    const editBox = isText
+      ? getBoxWithBorder(elementWithLocal)
+      : getBox(elementWithLocal);
 
     return (
-      <Wrapper aria-labelledby={`layer-${id}`} {...box} ref={ref}>
+      <Wrapper aria-labelledby={`layer-${id}`} {...editBox} ref={ref}>
         <Edit
           element={elementWithLocal}
-          box={box}
+          box={editBox}
           editWrapper={editWrapper}
           onResize={onResize}
           setLocalProperties={setLocalProperties}
+          getProxiedUrl={getProxiedUrl}
+          isRTL={isRTL}
+          topOffset={topOffset}
+          isTrimMode={isTrimMode}
+          resource={resource}
+          setVideoNode={setVideoNode}
+          updateElementById={updateElementById}
+          deleteSelectedElements={deleteSelectedElements}
+          maybeEnqueueFontStyle={maybeEnqueueFontStyle}
+          zIndexCanvas={Z_INDEX_CANVAS}
         />
       </Wrapper>
     );

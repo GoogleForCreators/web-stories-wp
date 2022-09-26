@@ -19,7 +19,6 @@
 import { VisuallyHidden } from '@googleforcreators/design-system';
 import { getRelativeDisplayDate } from '@googleforcreators/date';
 import { __, sprintf } from '@googleforcreators/i18n';
-import { useFeatures } from 'flagged';
 import PropTypes from 'prop-types';
 import { useMemo, forwardRef } from '@googleforcreators/react';
 import { css } from 'styled-components';
@@ -52,7 +51,6 @@ import StoryDisplayContent from './storyDisplayContent';
 
 const StoryGridItem = forwardRef(
   ({ onFocus, isActive, pageSize, renameStory, story, storyMenu }, ref) => {
-    const { enablePostLocking } = useFeatures();
     const { userId } = useConfig();
     const tabIndex = isActive ? 0 : -1;
     const titleRenameProps = renameStory
@@ -65,8 +63,8 @@ const StoryGridItem = forwardRef(
       : {};
 
     const isLocked = useMemo(
-      () => enablePostLocking && story?.locked && userId !== story?.lockUser.id,
-      [enablePostLocking, story, userId]
+      () => story?.locked && userId !== story?.lockUser.id,
+      [story, userId]
     );
 
     const generatedMenuItems = useMemo(

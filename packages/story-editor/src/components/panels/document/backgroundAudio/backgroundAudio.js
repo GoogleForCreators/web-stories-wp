@@ -30,7 +30,7 @@ import { useStory } from '../../../../app/story';
 import { useConfig } from '../../../../app';
 import { Row } from '../../../form';
 import { SimplePanel } from '../../panel';
-import BackgroundAudioPanelContent from '../../shared/backgroundAudioPanelContent';
+import BackgroundAudioPanelContent from '../../shared/media/backgroundAudioPanelContent';
 
 const HelperText = styled(Text).attrs({
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
@@ -79,10 +79,12 @@ function BackgroundAudioPanel({ nameOverride }) {
           )}
         </HelperText>
       </Row>
-      <BackgroundAudioPanelContent
-        backgroundAudio={backgroundAudio}
-        updateBackgroundAudio={updateBackgroundAudio}
-      />
+      <Row>
+        <BackgroundAudioPanelContent
+          backgroundAudio={backgroundAudio}
+          updateBackgroundAudio={updateBackgroundAudio}
+        />
+      </Row>
     </SimplePanel>
   );
 }

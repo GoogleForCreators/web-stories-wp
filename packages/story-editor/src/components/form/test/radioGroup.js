@@ -20,12 +20,12 @@
 import { fireEvent, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import { __ } from '@googleforcreators/i18n';
+import { renderWithTheme } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
  */
 import RadioGroup from '../radioGroup';
-import { renderWithTheme } from '../../../testUtils';
 
 describe('RadioGroup', () => {
   const options = [
@@ -74,7 +74,7 @@ describe('RadioGroup', () => {
     );
     const optionB = screen.getByRole('radio', { name: 'Option B' });
     fireEvent.click(optionB);
-    expect(onChange).toHaveBeenCalledTimes(1);
+    expect(onChange).toHaveBeenCalledOnce();
 
     expect(onChange).toHaveBeenCalledWith(expect.any(Object));
   });

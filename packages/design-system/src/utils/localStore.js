@@ -31,6 +31,13 @@ export const LOCAL_STORAGE_PREFIX = {
   DELETE_STYLE_PRESET_DIALOG_DISMISSED:
     'web_stories_delete_style_preset_dialog_dismissed',
   DEFAULT_VIEW_PAGE_TEMPLATE_LAYOUT: 'web_stories_default_template_view',
+  BACKGROUND_IS_SET_DIALOG_DISMISSED:
+    'web_stories_background_is_set_dialog_dismissed',
+  CORS_CHECK_DIALOG_DISMISSED: 'web_stories_cors_check_dialog_dismissed',
+  MEDIA_RECORDING_AUDIO_INPUT: 'web_stories_media_recording_audio_input',
+  MEDIA_RECORDING_VIDEO_INPUT: 'web_stories_media_recording_video_input',
+  ELEMENT_TOOLBAR_SETTINGS: 'web_stories_toolbar_settings',
+  MEDIA_RECORDING_VIDEO_EFFECT: 'web_stories_media_recording_video_effect',
 };
 
 function getItemByKey(key) {

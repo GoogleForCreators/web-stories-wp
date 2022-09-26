@@ -13,15 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
 import { addQueryArgs } from '@googleforcreators/url';
 import {
-  ORDER_BY_SORT,
   STORIES_PER_REQUEST,
-  STORY_SORT_OPTIONS,
-  STORY_STATUS,
+  DEFAULT_FILTERS,
 } from '@googleforcreators/dashboard';
 import { createSolidFromString } from '@googleforcreators/patterns';
 import { snakeToCamelCaseObjectKeys } from '@web-stories-wp/wp-utils';
@@ -46,28 +45,28 @@ import { reshapeStoryObject } from './utils';
  */
 export function fetchStories(config, queryParams) {
   const {
-    status = STORY_STATUS.ALL,
-    sortOption = STORY_SORT_OPTIONS.LAST_MODIFIED,
-    sortDirection,
-    searchTerm,
     page = 1,
     perPage = STORIES_PER_REQUEST,
-    author,
+    filters = {},
+    sort = {},
   } = queryParams;
 
   // Important: Keep in sync with REST API preloading definition.
-  const query = {
+  const _defaultPreload = {
     _embed: STORY_EMBED,
     context: 'edit',
     _web_stories_envelope: true,
-    search: searchTerm || undefined,
-    orderby: sortOption,
+    _fields: STORY_FIELDS,
+    ...DEFAULT_FILTERS.filters,
+    ...DEFAULT_FILTERS.sort,
+  };
+
+  const query = {
+    ..._defaultPreload,
     page,
     per_page: perPage,
-    order: sortDirection || ORDER_BY_SORT[sortOption],
-    status,
-    _fields: STORY_FIELDS,
-    author,
+    ...filters,
+    ...sort,
   };
 
   return apiFetch({
@@ -146,27 +145,33 @@ export function updateStory(config, story) {
  * @param {Object} template Template object.
  * @return {Promise} Request promise.
  */
-export const createStoryFromTemplate = async (config, template) => {
+export const createStoryFromTemplate = (config, template) => {
   const path = addQueryArgs(config.api.stories, {
     _fields: 'edit_link',
   });
 
-  const { createdBy, pages, version, colors } = template;
-  const { getStoryPropsToSave } = await import(
-    /* webpackChunkName: "chunk-getStoryPropsToSave" */ '@googleforcreators/story-editor'
-  );
-  const storyPropsToSave = await getStoryPropsToSave({
-    story: {
-      status: 'auto-draft',
-      featuredMedia: {
-        id: 0,
-      },
+  const { pages, version, colors } = template;
+
+  const story = {
+    featuredMedia: {
+      id: 0,
+      url: '',
     },
+    publisherLogo: {
+      url: '',
+    },
+    title: '',
+  };
+
+  const storyPropsToSave = {
     pages,
-    metadata: {
-      publisher: createdBy,
+    featuredMedia: story.featuredMedia,
+    title: story.title,
+    status: 'auto-draft',
+    meta: {
+      web_stories_publisher_logo: story.publisherLogo.id,
     },
-  });
+  };
 
   const convertedColors = colors.map(({ color }) =>
     createSolidFromString(color)

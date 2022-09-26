@@ -18,11 +18,11 @@
  * External dependencies
  */
 import { fireEvent, waitFor } from '@testing-library/react';
+import { firePointerEvent } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
  */
-import { firePointerEvent } from '../../../../testUtils';
 import { LINE_LENGTH } from '../../constants';
 import { arrange } from './_utils';
 
@@ -75,7 +75,7 @@ describe('<ColorPicker /> when moving a stop with a pointer device', () => {
     });
 
     // Wait for callback to have been called after debounce
-    await waitFor(() => expect(onChange).toHaveBeenCalledTimes(1));
+    await waitFor(() => expect(onChange).toHaveBeenCalledOnce());
 
     expect(onChange).toHaveBeenCalledWith({
       type: 'linear',

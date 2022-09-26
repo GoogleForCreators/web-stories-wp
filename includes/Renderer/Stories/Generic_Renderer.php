@@ -62,7 +62,7 @@ class Generic_Renderer extends Renderer {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param array $args Array of rendering arguments.
+	 * @param array<string,mixed> $args Array of rendering arguments.
 	 * @return string Rendered stories output.
 	 */
 	public function render( array $args = [] ): string {

@@ -17,22 +17,98 @@
 /**
  * External dependencies
  */
-import { useState } from '@googleforcreators/react';
-import { dataPixels } from '@googleforcreators/units';
+import { useMemo } from '@googleforcreators/react';
+import {
+  PAGE_WIDTH,
+  PAGE_HEIGHT,
+  getBoundRect,
+  calcRotatedObjectPositionAndSize,
+  dataPixels,
+} from '@googleforcreators/units';
+import { trackEvent } from '@googleforcreators/tracking';
 
-function useAlignment() {
-  const [
-    updatedSelectedElementsWithFrame,
-    setUpdatedSelectedElementsWithFrame,
-  ] = useState([]);
+const PAGE_RECT = {
+  startX: 0,
+  startY: 0,
+  endX: PAGE_WIDTH,
+  endY: PAGE_HEIGHT,
+  width: PAGE_WIDTH,
+  height: PAGE_HEIGHT,
+};
 
-  const handleAlign = (direction, boundRect, pushUpdate) => {
-    pushUpdate((properties) => {
-      const { id } = properties;
+const ALIGNMENT = {
+  LEFT: 'left',
+  RIGHT: 'right',
+  TOP: 'top',
+  BOTTOM: 'bottom',
+};
 
-      const element = updatedSelectedElementsWithFrame.find(
-        (item) => item.id === id
-      );
+function useAlignment({ selectedElements, updateElements, isFloatingMenu }) {
+  const isDistributionEnabled = selectedElements.length > 2;
+  const selectedElementsWithFrame = useMemo(
+    () =>
+      selectedElements.map((item) => {
+        const { id, groupId, x, y, width, height, rotationAngle } = item;
+        let frameX = x;
+        let frameY = y;
+        let frameWidth = width;
+        let frameHeight = height;
+        if (rotationAngle) {
+          const elementFrame = calcRotatedObjectPositionAndSize(
+            rotationAngle,
+            x,
+            y,
+            width,
+            height
+          );
+          frameX = elementFrame.x;
+          frameY = elementFrame.y;
+          frameWidth = elementFrame.width;
+          frameHeight = elementFrame.height;
+        }
+        return {
+          id,
+          groupId,
+          x,
+          y,
+          width,
+          height,
+          frameX,
+          frameY,
+          frameWidth,
+          frameHeight,
+        };
+      }),
+    [selectedElements]
+  );
+  // Set boundRect with pageSize when there is only one element selected or only group is selected
+  const selectedGroupId = selectedElements[0].groupId;
+  const isOnlyGroupSelected =
+    selectedGroupId &&
+    selectedElements.every(
+      (el) => el.groupId && el.groupId === selectedGroupId
+    );
+  const boundRect =
+    selectedElements.length === 1 || isOnlyGroupSelected
+      ? PAGE_RECT
+      : getBoundRect(selectedElements);
+
+  const handleTrackEvent = (direction) => {
+    trackEvent(isFloatingMenu ? 'floating_menu' : 'design_panel', {
+      name: `set_alignment_${direction}`,
+      element: 'multiple',
+    });
+  };
+
+  const handleAlign = (direction) => {
+    handleTrackEvent(direction);
+    updateElements((properties) => {
+      const { id, groupId } = properties;
+      const groupRect = groupId
+        ? getBoundRect(selectedElements.filter((el) => el.groupId === groupId))
+        : null;
+
+      const element = selectedElementsWithFrame.find((item) => item.id === id);
       const {
         width = 0,
         height = 0,
@@ -40,49 +116,72 @@ function useAlignment() {
         frameHeight = 0,
       } = element || {};
       const offset =
-        direction === 'left' || direction === 'right'
+        direction === ALIGNMENT.LEFT || direction === ALIGNMENT.RIGHT
           ? (frameWidth - width) / 2
           : (frameHeight - height) / 2;
+      const offsetInGroup = groupId
+        ? direction === ALIGNMENT.LEFT || direction === ALIGNMENT.RIGHT
+          ? element.frameX - groupRect.startX
+          : element.frameY - groupRect.startY
+        : 0;
 
-      if (direction === 'left' || direction === 'right') {
+      const calcWidth = groupId ? groupRect.width : width;
+      const calcHeight = groupId ? groupRect.height : height;
+
+      if (direction === ALIGNMENT.LEFT || direction === ALIGNMENT.RIGHT) {
         return {
           x:
-            direction === 'left'
-              ? boundRect.startX + offset
-              : boundRect.endX - width - offset,
+            direction === ALIGNMENT.LEFT
+              ? boundRect.startX + offset + offsetInGroup
+              : boundRect.endX - calcWidth - offset + offsetInGroup,
         };
       }
       return {
         y:
-          direction === 'top'
-            ? boundRect.startY + offset
-            : boundRect.endY - height - offset,
+          direction === ALIGNMENT.TOP
+            ? boundRect.startY + offset + offsetInGroup
+            : boundRect.endY - calcHeight - offset + offsetInGroup,
       };
-    }, true);
+    });
   };
 
-  const handleAlignCenter = (boundRect, pushUpdate) => {
+  const handleAlignCenter = () => {
+    handleTrackEvent('center');
     const centerX = (boundRect.endX + boundRect.startX) / 2;
-    pushUpdate((properties) => {
-      const { width } = properties;
+    updateElements((properties) => {
+      const { id, width, groupId } = properties;
+      const groupRect = groupId
+        ? getBoundRect(selectedElements.filter((el) => el.groupId === groupId))
+        : null;
+      const calcWidth = groupId ? groupRect.width : width;
+      const element = selectedElementsWithFrame.find((item) => item.id === id);
+      const offsetInGroup = groupId ? element.frameX - groupRect.startX : 0;
       return {
-        x: centerX - width / 2,
+        x: centerX - calcWidth / 2 + offsetInGroup,
       };
-    }, true);
+    });
   };
 
-  const handleAlignMiddle = (boundRect, pushUpdate) => {
+  const handleAlignMiddle = () => {
+    handleTrackEvent('middle');
     const centerY = (boundRect.endY + boundRect.startY) / 2;
-    pushUpdate((properties) => {
-      const { height } = properties;
+    updateElements((properties) => {
+      const { id, height, groupId } = properties;
+      const groupRect = groupId
+        ? getBoundRect(selectedElements.filter((el) => el.groupId === groupId))
+        : null;
+      const calcHeight = groupId ? groupRect.height : height;
+      const element = selectedElementsWithFrame.find((item) => item.id === id);
+      const offsetInGroup = groupId ? element.frameY - groupRect.startY : 0;
       return {
-        y: centerY - height / 2,
+        y: centerY - calcHeight / 2 + offsetInGroup,
       };
-    }, true);
+    });
   };
 
-  const handleHorizontalDistribution = (boundRect, pushUpdate) => {
-    const sortedElementsWithFrame = [...updatedSelectedElementsWithFrame];
+  const handleHorizontalDistribution = () => {
+    handleTrackEvent('horizontal_distribution');
+    const sortedElementsWithFrame = [...selectedElementsWithFrame];
     sortedElementsWithFrame.sort(
       (a, b) => (a.frameX + a.frameWidth) / 2 - (b.frameX + b.frameWidth) / 2
     );
@@ -108,11 +207,12 @@ function useAlignment() {
       }
       offsetX += frameWidth + commonSpaceWidthPerElement;
     });
-    pushUpdate(({ id }) => updatedX[id], true);
+    updateElements(({ id }) => updatedX[id]);
   };
 
-  const handleVerticalDistribution = (boundRect, pushUpdate) => {
-    const sortedElementsWithFrame = [...updatedSelectedElementsWithFrame];
+  const handleVerticalDistribution = () => {
+    handleTrackEvent('vertical_distribution');
+    const sortedElementsWithFrame = [...selectedElementsWithFrame];
     sortedElementsWithFrame.sort(
       (a, b) => (a.frameY + a.frameHeight) / 2 - (b.frameY + b.frameHeight) / 2
     );
@@ -138,14 +238,17 @@ function useAlignment() {
       }
       offsetY += frameHeight + commonSpaceHeightPerElement;
     });
-    pushUpdate(({ id }) => updatedY[id], true);
+    updateElements(({ id }) => updatedY[id]);
   };
 
   return {
-    setUpdatedSelectedElementsWithFrame,
-    handleAlign,
+    isDistributionEnabled,
+    handleAlignLeft: () => handleAlign(ALIGNMENT.LEFT),
     handleAlignCenter,
+    handleAlignRight: () => handleAlign(ALIGNMENT.RIGHT),
+    handleAlignTop: () => handleAlign(ALIGNMENT.TOP),
     handleAlignMiddle,
+    handleAlignBottom: () => handleAlign(ALIGNMENT.BOTTOM),
     handleHorizontalDistribution,
     handleVerticalDistribution,
   };

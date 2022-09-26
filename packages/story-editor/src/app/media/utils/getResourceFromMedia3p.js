@@ -17,7 +17,11 @@
 /**
  * External dependencies
  */
-import { createResource } from '@googleforcreators/media';
+import {
+  createResource,
+  getVideoLengthDisplay,
+} from '@googleforcreators/media';
+
 /**
  * Internal dependencies
  */
@@ -83,12 +87,6 @@ import { PROVIDERS } from '../media3p/providerConfiguration';
  * @return {Object} The array of "sizes"-type objects.
  */
 function getImageUrls(m) {
-  const type = m.type.toLowerCase();
-
-  if (type !== 'image') {
-    throw new Error('Invalid media type.');
-  }
-
   // The rest of the application expects 3 named "sizes": "full", "large" and
   // "web_stories_thumbnail". We use the biggest as "full", the next biggest
   // as "large", and the smallest as "web_stories_thumbnail". The rest are
@@ -120,10 +118,6 @@ function getImageUrls(m) {
  */
 
 function getGifUrls(m) {
-  if (m.type.toLowerCase() !== 'gif') {
-    throw new Error('Invalid media type');
-  }
-
   // The rest of the application expects 3 named "sizes": "full", "large" and
   // "web_stories_thumbnail". We use the biggest as "full", the next biggest
   // as "large", and the smallest as "web_stories_thumbnail". The rest are
@@ -187,10 +181,6 @@ function getGifUrls(m) {
  * @return {Object} The array of "sizes"-type objects.
  */
 function getVideoUrls(m) {
-  if (m.type.toLowerCase() !== 'video') {
-    throw new Error('Invalid media type.');
-  }
-
   // The rest of the application expects 2 named "sizes": "full", and "preview"
   // The highest fidelity is used (videoUrls is ordered by fidelity from the backend)
   // as "full", and the lowest as "preview".
@@ -207,6 +197,11 @@ function getVideoUrls(m) {
 }
 
 function sortMediaBySize(m, mediaUrls) {
+  // https://github.com/GoogleForCreators/web-stories-wp/issues/12083
+  if (mediaUrls.length < 1) {
+    return [];
+  }
+
   const sortedUrls = mediaUrls.sort((x, y) => (y.width ?? 0) - (x.width ?? 0));
   const originalSize = getOriginalSize(sortedUrls);
   return sortedUrls.map((u) =>
@@ -253,12 +248,6 @@ function getAttributionFromMedia3p(m) {
   );
 }
 
-function formatVideoLength(length) {
-  const minutes = Math.floor(length / 60);
-  const seconds = Math.floor(length % 60);
-  return minutes + ':' + seconds.toString().padStart(2, '0');
-}
-
 function getImageResourceFromMedia3p(m) {
   const imageUrls = getImageUrls(m);
   return createResource({
@@ -294,7 +283,7 @@ function getVideoResourceFromMedia3p(m) {
     height: videoUrls.full.height,
     poster: m.imageUrls[0].url,
     length,
-    lengthFormatted: formatVideoLength(length),
+    lengthFormatted: getVideoLengthDisplay(length),
     alt: m.description || m.title || m.name,
     isExternal: true,
     isPlaceholder: false,
@@ -331,6 +320,35 @@ function getGifResourceFromMedia3p(m) {
   });
 }
 
+function getStickerResourceFromMedia3p(m) {
+  // Animated WebP images are typically larger than GIFs, albeit with
+  // better quality.
+  // For now we prefer lower-quality GIFs, but this can be revisited again in the future.
+  const mWithGifUrlsOnly = {
+    ...m,
+    imageUrls: m.imageUrls.filter((i) => i.mimeType === 'image/gif'),
+  };
+
+  // Not using videos because of transparency.
+  const imageUrls = getImageUrls(mWithGifUrlsOnly);
+  return createResource({
+    id: m.name,
+    baseColor: m.color,
+    blurHash: m.blurHash,
+    type: 'image',
+    mimeType: imageUrls.full.mimeType,
+    creationDate: m.createTime,
+    src: imageUrls.full.sourceUrl,
+    width: imageUrls.full.width,
+    height: imageUrls.full.height,
+    alt: m.description || m.title || m.name,
+    isExternal: true,
+    isPlaceholder: false,
+    sizes: imageUrls,
+    attribution: getAttributionFromMedia3p(m),
+  });
+}
+
 /**
  * Generates a resource object from a Media3P object from the API.
  *
@@ -345,6 +363,8 @@ export default function getResourceFromMedia3p(m) {
       return getVideoResourceFromMedia3p(m);
     case 'gif':
       return getGifResourceFromMedia3p(m);
+    case 'sticker':
+      return getStickerResourceFromMedia3p(m);
     default:
       throw new Error('Invalid media type.');
   }

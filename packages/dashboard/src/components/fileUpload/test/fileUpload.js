@@ -69,7 +69,7 @@ describe('FileUpload', () => {
     expect(UploadInput).toBeInTheDocument();
     fireEvent.click(UploadInput);
     fireEvent.change(UploadInput, { target: { files: {} } });
-    expect(onSubmitMock).toHaveBeenCalledTimes(1);
+    expect(onSubmitMock).toHaveBeenCalledOnce();
   });
 
   it('should trigger onSubmit when file is dropped in container', () => {
@@ -104,6 +104,6 @@ describe('FileUpload', () => {
 
     fireEvent(DropArea, dropEvent);
 
-    expect(onSubmitMock).toHaveBeenCalledTimes(1);
+    expect(onSubmitMock).toHaveBeenCalledOnce();
   });
 });

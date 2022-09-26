@@ -23,7 +23,7 @@ import {
   withPlugin,
 } from '@web-stories-wp/e2e-test-utils';
 
-describe('Template', () => {
+describe('Explore Templates', () => {
   it('should be able to use existing template for new story', async () => {
     await visitDashboard();
 
@@ -39,11 +39,9 @@ describe('Template', () => {
     await expect(page).toMatch('Viewing all');
     await expect(page).toMatch('templates');
 
-    const firstTemplate = await expect(page).toMatchElement(
-      '[data-testid="template-grid-item-1"]'
-    );
-
-    await expect(firstTemplate).toClick('button', { text: 'See details' });
+    await expect(page).toClick('[data-testid="template-grid-item-1"] button', {
+      text: 'See details',
+    });
     // Get count of template colors to compare to 'saved colors' in the editor.
     const templateDetailsColors = await page.evaluate(() => {
       const elements = document.querySelectorAll(
@@ -65,11 +63,8 @@ describe('Template', () => {
 
     // Wait for title input to load before continuing.
     await page.waitForSelector('input[placeholder="Add title"]');
-    await expect(page).toMatch('Layers');
-    await expect(page).toMatchElement('input[placeholder="Add title"]');
-    await expect(page).toMatchElement('[data-element-id]');
 
-    // Wait for skeleton thumbnails in the carousel to render before taking a screenshot.
+    // Wait for skeleton thumbnails in the carousel to render which gives footer time to also render
     await page.waitForFunction(
       () =>
         !document.querySelector(
@@ -77,14 +72,18 @@ describe('Template', () => {
         ),
       { timeout: 5000 } // requestIdleCallback in the carousel kicks in after 5s the latest.
     );
+
+    // Click on text element so the 'Saved Colors' panel is present.
+    // Pressing Option/Alt key because it's part of a layer group.
+    await page.keyboard.down('Alt');
+    await expect(page).toClick(
+      '[data-testid="frameElement"][aria-label^="Element: Fresh"]'
+    );
+    await page.keyboard.up('Alt');
+
     await takeSnapshot(page, 'Story From Template');
 
-    // Select a text layer so 'Saved Colors' panel is present
-    await expect(page).toClick('div[data-testid="layer-option"] button', {
-      text: 'Fresh',
-    });
-
-    // Open the color picker
+    // Open the color picker from the floating menu
     await expect(page).toClick('button[aria-label="Text color"]');
 
     // Get all saved story colors and subtract 1 button for adding other colors
@@ -102,13 +101,14 @@ describe('Template', () => {
 
     expect(editorSavedColors).toStrictEqual(templateDetailsColors);
   });
+
   describe('Disabled', () => {
     withPlugin('e2e-tests-disable-default-templates');
 
-    it('should not render explore templates', async () => {
+    it('should not display Explore Templates screen', async () => {
       await visitDashboard();
 
-      await expect(page).toMatch('Start telling Stories');
+      await expect(page).toMatchElement('h2', { text: 'Dashboard' });
 
       await expect(page).not.toMatchElement('a', {
         text: 'Explore Templates',

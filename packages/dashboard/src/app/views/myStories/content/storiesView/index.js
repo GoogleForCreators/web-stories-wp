@@ -39,7 +39,6 @@ import {
 import { StoriesPropType, StoryActionsPropType } from '../../../../../types';
 import { titleFormatted } from '../../../../../utils';
 import {
-  SortPropTypes,
   ViewPropTypes,
   ShowStoriesWhileLoadingPropType,
 } from '../../../../../utils/useStoryView';
@@ -53,14 +52,7 @@ import ListView from '../listView';
 import StoryGridView from '../storyGridView';
 
 const ACTIVE_DIALOG_DELETE_STORY = 'DELETE_STORY';
-function StoriesView({
-  filterValue,
-  loading,
-  sort,
-  storyActions,
-  stories,
-  view,
-}) {
+function StoriesView({ loading, storyActions, stories, view }) {
   const [contextMenuId, setContextMenuId] = useState(-1);
   const [titleRenameId, setTitleRenameId] = useState(-1);
 
@@ -215,18 +207,13 @@ function StoriesView({
       // when filtering.
       return (
         <ListView
-          handleSortChange={sort.set}
-          handleSortDirectionChange={sort.setDirection}
           hideStoryList={
             loading?.isLoading && !loading?.showStoriesWhileLoading.current
           }
           pageSize={view.pageSize}
           renameStory={renameStory}
-          sortDirection={sort.direction}
           stories={stories}
           storyMenu={storyMenu}
-          storySort={sort.value}
-          storyStatus={filterValue}
         />
       );
     }
@@ -252,16 +239,7 @@ function StoriesView({
 
     // Hide all stories when filter is triggered.
     return null;
-  }, [
-    loading,
-    filterValue,
-    renameStory,
-    returnStoryFocusId,
-    sort,
-    stories,
-    storyMenu,
-    view,
-  ]);
+  }, [loading, renameStory, returnStoryFocusId, stories, storyMenu, view]);
 
   return (
     <>
@@ -312,12 +290,10 @@ function StoriesView({
 }
 
 StoriesView.propTypes = {
-  filterValue: PropTypes.string,
   loading: PropTypes.shape({
     isLoading: PropTypes.bool,
     showStoriesWhileLoading: ShowStoriesWhileLoadingPropType,
   }),
-  sort: SortPropTypes,
   storyActions: StoryActionsPropType,
   stories: StoriesPropType,
   view: ViewPropTypes,

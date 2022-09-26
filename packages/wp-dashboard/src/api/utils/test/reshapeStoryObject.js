@@ -36,19 +36,20 @@ describe('reshapeStoryObject', () => {
       title: { raw: 'Carlos Draft' },
       excerpt: { rendered: '', protected: false },
       author: 1,
-      featured_media: 0,
+      featured_media: 33,
       preview_link: 'http://localhost:8899/preview/27',
       edit_link: 'http://localhost:8899/edit/27',
       template: '',
       categories: [],
       tags: [],
+      story_poster: {
+        id: 33,
+        url: 'http://localhost:8899/wp-content/uploads/poster.jpg',
+        width: 640,
+        height: 853,
+        needsProxy: false,
+      },
       _embedded: {
-        'wp:featuredmedia': [
-          {
-            id: 33,
-            source_url: 'http://localhost:8899/wp-content/uploads/poster.jpg',
-          },
-        ],
         author: [{ id: 1, name: 'admin' }],
         'wp:lock': [{ locked: true, time: '1628506372', user: 1 }],
         'wp:lockuser': [
@@ -117,13 +118,14 @@ describe('reshapeStoryObject', () => {
       template: '',
       categories: [],
       tags: [],
+      story_poster: {
+        id: 33,
+        url: 'http://localhost:8899/wp-content/uploads/poster.jpg',
+        width: 640,
+        height: 853,
+        needsProxy: false,
+      },
       _embedded: {
-        'wp:featuredmedia': [
-          {
-            id: 33,
-            source_url: 'http://localhost:8899/wp-content/uploads/poster.jpg',
-          },
-        ],
         author: [{ id: 1, name: 'admin' }],
         'wp:lock': [{ locked: true, time: '1628506372', user: 1 }],
         'wp:lockuser': [
@@ -183,6 +185,9 @@ describe('reshapeStoryObject', () => {
       template: '',
       categories: [],
       tags: [],
+      meta: {
+        web_stories_poster: {},
+      },
       _embedded: {
         'wp:featuredmedia': [{ id: 0, source_url: '' }],
         author: [{ id: 1, name: 'admin' }],
@@ -212,6 +217,9 @@ describe('reshapeStoryObject', () => {
       template: '',
       categories: [],
       tags: [],
+      meta: {
+        web_stories_poster: {},
+      },
       _embedded: {
         'wp:featuredmedia': [{ id: 0, source_url: '' }],
         author: [{ id: 1, name: 'admin' }],

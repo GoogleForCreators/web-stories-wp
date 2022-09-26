@@ -31,8 +31,7 @@ export function initHelpers(data) {
   }
 
   async function setFontSize(size) {
-    const fontSize =
-      data.fixture.editor.inspector.designPanel.textStyle.fontSize;
+    const fontSize = data.fixture.editor.sidebar.designPanel.textStyle.fontSize;
     await data.fixture.events.click(fontSize, { clickCount: 3 });
     await data.fixture.events.keyboard.type(size);
     await data.fixture.events.keyboard.press('tab');
@@ -51,6 +50,12 @@ export function initHelpers(data) {
       // Move the first text field 10 steps down to avoid placing these on top of each other.
       await repeatPress('ArrowDown', 10);
       await data.fixture.editor.library.textTab.click();
+      // Select background for being able to insert another text.
+      await data.fixture.events.mouse.clickOn(
+        data.fixture.editor.canvas.framesLayer.frames[0].node,
+        '90%',
+        '90%'
+      );
       await data.fixture.events.click(
         data.fixture.editor.library.text.preset('Paragraph')
       );

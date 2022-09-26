@@ -92,7 +92,7 @@ function MediaCaptionsLayer() {
 
     if (backgroundAudio) {
       setMediaElementId(`page-${currentPageId}-background-audio`);
-      setMediaTrackCount(backgroundAudio.tracks.length);
+      setMediaTrackCount(backgroundAudio?.tracks?.length);
       return;
     }
 

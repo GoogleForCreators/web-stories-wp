@@ -20,19 +20,17 @@
 import { forwardRef, useCallback, useMemo } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { __, _x } from '@googleforcreators/i18n';
-import { useFeatures } from 'flagged';
 import { css } from 'styled-components';
 import { DropDown, PLACEMENT } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
  */
-import { focusStyle } from '../../../shared';
+import { focusStyle } from '../../../shared/styles';
 import {
   backgroundEffectOptions,
   NO_ANIMATION,
   foregroundEffectOptions,
-  experimentalEffects,
   getDirectionalEffect,
 } from './dropdownConstants';
 import { ANIMATION_DIRECTION_PROP_TYPE } from './types';
@@ -53,11 +51,10 @@ const EffectChooserDropdown = forwardRef(function EffectChooserDropdown(
     disabledTypeOptionsMap,
     direction,
     selectButtonStylesOverride,
+    disabled = false,
   },
   ref
 ) {
-  const { enableExperimentalAnimationEffects } = useFeatures();
-
   const selectedValue = useMemo(
     () => getDirectionalEffect(selectedEffectType, direction),
     [selectedEffectType, direction]
@@ -82,16 +79,7 @@ const EffectChooserDropdown = forwardRef(function EffectChooserDropdown(
     ? backgroundEffectOptions
     : foregroundEffectOptions;
 
-  // remove experiments if needed
-  const availableAnimationOptions = useMemo(
-    () =>
-      enableExperimentalAnimationEffects
-        ? Object.values(animationOptionsObject)
-        : Object.values(animationOptionsObject).filter(({ value }) => {
-            return experimentalEffects.indexOf(value) === -1;
-          }),
-    [animationOptionsObject, enableExperimentalAnimationEffects]
-  );
+  const availableAnimationOptions = Object.values(animationOptionsObject);
 
   const assembledOptions = useMemo(
     () =>
@@ -170,6 +158,7 @@ const EffectChooserDropdown = forwardRef(function EffectChooserDropdown(
       placement={expandedPlacement}
       isKeepMenuOpenOnSelection
       selectButtonStylesOverride={buttonStyleOverride}
+      disabled={disabled}
     />
   );
 });
@@ -186,6 +175,7 @@ EffectChooserDropdown.propTypes = {
       options: PropTypes.arrayOf(PropTypes.string),
     })
   ),
+  disabled: PropTypes.bool,
   selectButtonStylesOverride: PropTypes.oneOfType([
     PropTypes.object,
     PropTypes.array,

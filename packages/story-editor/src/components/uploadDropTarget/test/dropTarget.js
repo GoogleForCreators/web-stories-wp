@@ -86,7 +86,7 @@ describe('UploadDropTarget', () => {
         files: [transferFile1],
       };
 
-      expect(isDragging()).toBe(false);
+      expect(isDragging()).toBeFalse();
       expect(getGlasspane()).toBeNull();
       expect(isDraggingElement).toHaveAttribute('data-value', 'false');
     });
@@ -117,7 +117,7 @@ describe('UploadDropTarget', () => {
       expect(event.preventDefault).toHaveBeenCalledWith();
       expect(event.stopPropagation).toHaveBeenCalledWith();
 
-      expect(isDragging()).toBe(true);
+      expect(isDragging()).toBeTrue();
       const glasspane = getGlasspane();
       expect(glasspane).toHaveAttribute('aria-label', 'drop target');
       expect(event.dataTransfer.effectAllowed).toBe('copy');
@@ -148,7 +148,7 @@ describe('UploadDropTarget', () => {
       const event = fireDragEvent(content1, 'dragEnter');
       expect(event.preventDefault).toHaveBeenCalledWith();
       expect(event.stopPropagation).toHaveBeenCalledWith();
-      expect(isDragging()).toBe(true);
+      expect(isDragging()).toBeTrue();
     });
 
     it('should ignore non-file payloads', () => {
@@ -178,7 +178,7 @@ describe('UploadDropTarget', () => {
       const event = fireDragEvent(content1, 'dragEnter');
       expect(event.preventDefault).not.toHaveBeenCalledWith();
       expect(event.stopPropagation).not.toHaveBeenCalledWith();
-      expect(isDragging()).toBe(false);
+      expect(isDragging()).toBeFalse();
     });
   });
 
@@ -208,7 +208,7 @@ describe('UploadDropTarget', () => {
       fireDragEvent(container, 'dragEnter');
       const glasspane = getGlasspane();
 
-      expect(isDragging()).toBe(true);
+      expect(isDragging()).toBeTrue();
       expect(getGlasspane()).not.toBeNull();
       expect(getGlasspane()).toBe(glasspane);
       expect(isDraggingElement).toHaveAttribute('data-value', 'true');
@@ -241,7 +241,7 @@ describe('UploadDropTarget', () => {
       const event = fireDragEvent(container, 'dragLeave');
       expect(event.preventDefault).not.toHaveBeenCalledWith();
       expect(event.stopPropagation).not.toHaveBeenCalledWith();
-      expect(isDragging()).toBe(true);
+      expect(isDragging()).toBeTrue();
     });
 
     it('should continue dragging when a child exits', () => {
@@ -271,7 +271,7 @@ describe('UploadDropTarget', () => {
       const event = fireDragEvent(content1, 'dragLeave');
       expect(event.preventDefault).not.toHaveBeenCalledWith();
       expect(event.stopPropagation).not.toHaveBeenCalledWith();
-      expect(isDragging()).toBe(true);
+      expect(isDragging()).toBeTrue();
     });
 
     it('should cancel dragging over the container', () => {
@@ -301,7 +301,7 @@ describe('UploadDropTarget', () => {
       const event = fireDragEvent(container, 'dragOver');
       expect(event.preventDefault).toHaveBeenCalledWith();
       expect(event.stopPropagation).toHaveBeenCalledWith();
-      expect(isDragging()).toBe(true);
+      expect(isDragging()).toBeTrue();
     });
 
     it('should intercept dragging over the glasspane', () => {
@@ -332,7 +332,7 @@ describe('UploadDropTarget', () => {
       const event = fireDragEvent(glasspane, 'dragOver');
       expect(event.preventDefault).toHaveBeenCalledWith();
       expect(event.stopPropagation).toHaveBeenCalledWith();
-      expect(isDragging()).toBe(true);
+      expect(isDragging()).toBeTrue();
     });
 
     it('should cancel dragging when the glasspane exits', () => {
@@ -366,7 +366,7 @@ describe('UploadDropTarget', () => {
       expect(onDropSpy).not.toHaveBeenCalledWith();
 
       // State is reset.
-      expect(isDragging()).toBe(false);
+      expect(isDragging()).toBeFalse();
       expect(getGlasspane()).toBeNull();
       expect(isDraggingElement).toHaveAttribute('data-value', 'false');
     });
@@ -402,7 +402,7 @@ describe('UploadDropTarget', () => {
       expect(onDropSpy).toHaveBeenCalledWith([...dataTransfer.files]);
 
       // State is reset.
-      expect(isDragging()).toBe(false);
+      expect(isDragging()).toBeFalse();
       expect(getGlasspane()).toBeNull();
       expect(isDraggingElement).toHaveAttribute('data-value', 'false');
     });

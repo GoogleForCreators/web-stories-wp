@@ -83,7 +83,7 @@ function FlipControls({ value, onChange }) {
           }
           aria-label={__('Flip horizontally', 'web-stories')}
         >
-          <Icons.MirrorLeftright />
+          <Icons.MirrorLeftRight />
         </StyledToggleButton>
       </Tooltip>
       <Space />
@@ -97,7 +97,7 @@ function FlipControls({ value, onChange }) {
           }
           aria-label={__('Flip vertically', 'web-stories')}
         >
-          <Icons.MirrorUpdown />
+          <Icons.MirrorUpDown />
         </StyledToggleButton>
       </Tooltip>
     </ControlsContainer>

@@ -38,7 +38,37 @@ use WP_REST_Response;
 /**
  * Stories_Base_Controller class.
  *
+ * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
+ *
  * Override the WP_REST_Posts_Controller class to add `post_content_filtered` to REST request.
+ *
+ * @phpstan-type Link array{
+ *   href?: string,
+ *   embeddable?: bool,
+ *   taxonomy?: string
+ * }
+ * @phpstan-type Links array<string, Link|Link[]>
+ * @phpstan-type SchemaEntry array{
+ *   description: string,
+ *   type: string,
+ *   context: string[],
+ *   default?: mixed,
+ * }
+ * @phpstan-type Schema array{
+ *   properties: array{
+ *     content?: SchemaEntry,
+ *     story_data?: SchemaEntry
+ *   }
+ * }
+ * @phpstan-type RegisteredMetadata array{
+ *   type: string,
+ *   description: string,
+ *   single: bool,
+ *   sanitize_callback?: callable,
+ *   auth_callback: callable,
+ *   show_in_rest: bool|array{schema: array<string, mixed>},
+ *   default?: mixed
+ * }
  */
 class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	/**
@@ -86,16 +116,34 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 			return $prepared_post;
 		}
 
+		/**
+		 * Schema.
+		 *
+		 * @phpstan-var Schema $schema
+		 */
 		$schema = $this->get_item_schema();
+
 		// Post content.
 		if ( ! empty( $schema['properties']['content'] ) ) {
 
 			// Ensure that content and story_data are updated together.
+			// Exception: new auto-draft created from a template.
 			if (
+				(
 				( ! empty( $request['story_data'] ) && empty( $request['content'] ) ) ||
 				( ! empty( $request['content'] ) && empty( $request['story_data'] ) )
+				) && ( 'auto-draft' !== $prepared_post->post_status )
 			) {
-				return new \WP_Error( 'rest_empty_content', __( 'content and story_data should always be updated together.', 'web-stories' ), [ 'status' => 412 ] );
+				return new \WP_Error(
+					'rest_empty_content',
+					sprintf(
+						/* translators: 1: content, 2: story_data */
+						__( '%1$s and %2$s should always be updated together.', 'web-stories' ),
+						'content',
+						'story_data'
+					),
+					[ 'status' => 412 ]
+				);
 			}
 
 			if ( isset( $request['content'] ) ) {
@@ -125,16 +173,22 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	public function prepare_item_for_response( $post, $request ): WP_REST_Response {
 		$response = parent::prepare_item_for_response( $post, $request );
 		$fields   = $this->get_fields_for_response( $request );
-		$schema   = $this->get_item_schema();
+
+		/**
+		 * Schema.
+		 *
+		 * @phpstan-var Schema $schema
+		 */
+		$schema = $this->get_item_schema();
 
 		/**
 		 * Response data.
 		 *
-		 * @var array $data
+		 * @var array<string,mixed> $data
 		 */
 		$data = $response->get_data();
 
-		if ( rest_is_field_included( 'story_data', $fields ) ) {
+		if ( ! empty( $schema['properties']['story_data'] ) && rest_is_field_included( 'story_data', $fields ) ) {
 			$post_story_data    = json_decode( $post->post_content_filtered, true );
 			$data['story_data'] = rest_sanitize_value_from_schema( $post_story_data, $schema['properties']['story_data'] );
 		}
@@ -214,7 +268,38 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 			$request->set_param( 'featured_media', $thumbnail_id );
 		}
 
+		$meta = $this->get_registered_meta( $original_post );
+		if ( $meta ) {
+			$request->set_param( 'meta', $meta );
+		}
+
 		return parent::create_item( $request );
+	}
+
+	/**
+	 * Get registered post meta.
+	 *
+	 * @since 1.23.0
+	 *
+	 * @param WP_Post $original_post Post Object.
+	 * @return array<string, mixed> $meta
+	 */
+	protected function get_registered_meta( WP_Post $original_post ): array {
+		$meta_keys = get_registered_meta_keys( 'post', $this->post_type );
+		$meta      = [];
+		/**
+		 * Meta key settings.
+		 *
+		 * @var array $settings
+		 * @phpstan-var RegisteredMetadata $settings
+		 */
+		foreach ( $meta_keys as $key => $settings ) {
+			if ( $settings['show_in_rest'] ) {
+				$meta[ $key ] = get_post_meta( $original_post->ID, $key, $settings['single'] );
+			}
+		}
+
+		return $meta;
 	}
 
 	/**
@@ -222,11 +307,19 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @return array Item schema as an array.
+	 * @return array Item schema data.
+	 *
+	 * @phpstan-return Schema
 	 */
 	public function get_item_schema(): array {
 		if ( $this->schema ) {
-			return $this->add_additional_fields_schema( $this->schema );
+			/**
+			 * Schema.
+			 *
+			 * @phpstan-var Schema $schema
+			 */
+			$schema = $this->add_additional_fields_schema( $this->schema );
+			return $schema;
 		}
 
 		$schema = parent::get_item_schema();
@@ -246,7 +339,13 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 
 		$this->schema = $schema;
 
-		return $this->add_additional_fields_schema( $this->schema );
+		/**
+		 * Schema.
+		 *
+		 * @phpstan-var Schema $schema
+		 */
+		$schema = $this->add_additional_fields_schema( $this->schema );
+		return $schema;
 	}
 
 	/**
@@ -258,6 +357,8 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	 *
 	 * @param WP_Post $post Post object.
 	 * @return array Links for the given post.
+	 *
+	 * @phpstan-return Links
 	 */
 	protected function prepare_links( $post ): array {
 		$links = parent::prepare_links( $post );
@@ -300,8 +401,11 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	 * @since 1.12.0
 	 *
 	 * @param array   $links Links for the given post.
-	 * @param WP_Post $post Post object.
+	 * @param WP_Post $post  Post object.
 	 * @return array Modified list of links.
+	 *
+	 * @phpstan-param Links $links
+	 * @phpstan-return Links
 	 */
 	private function add_taxonomy_links( array $links, WP_Post $post ): array {
 		$taxonomies = get_object_taxonomies( $post->post_type, 'objects' );
@@ -309,6 +413,7 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 		if ( empty( $taxonomies ) ) {
 			return $links;
 		}
+
 		$links['https://api.w.org/term'] = [];
 
 		foreach ( $taxonomies as $taxonomy_obj ) {
@@ -327,9 +432,13 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 			$tax       = $taxonomy_obj->name;
 			$tax_base  = ! empty( $taxonomy_obj->rest_base ) ? $taxonomy_obj->rest_base : $tax;
 
+			$query_params = [
+				'post'     => $post->ID,
+				'per_page' => 100,
+			];
+
 			$terms_url = add_query_arg(
-				'post',
-				$post->ID,
+				$query_params,
 				rest_url( sprintf( '%s/%s', $namespace, $tax_base ) )
 			);
 
@@ -339,6 +448,7 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 				'embeddable' => true,
 			];
 		}
+
 		return $links;
 	}
 
@@ -349,7 +459,7 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	 *
 	 * @param WP_Post         $post    Post object.
 	 * @param WP_REST_Request $request Request object.
-	 * @return array List of link relations.
+	 * @return string[] List of link relations.
 	 */
 	protected function get_available_actions( $post, $request ): array {
 		$rels = parent::get_available_actions( $post, $request );

@@ -30,6 +30,21 @@ use Google\Web_Stories\Story_Post_Type;
 
 /**
  * Class Remove_Broken_Text_Styles
+ *
+ * @phpstan-type Color array{
+ *   type?: string,
+ *   r?: int,
+ *   g?: int,
+ *   b?: int
+ * }
+ * @phpstan-type StylePresets array{
+ *   fillColors: Color[],
+ *   textStyles: array<int, array{
+ *     backgroundColor?: Color,
+ *     color?: Color
+ *   }>,
+ *   textColors: mixed,
+ * }
  */
 class Remove_Broken_Text_Styles extends Migrate_Base {
 	/**
@@ -38,6 +53,11 @@ class Remove_Broken_Text_Styles extends Migrate_Base {
 	 * @since 1.7.0
 	 */
 	public function migrate(): void {
+		/**
+		 * List of style presets.
+		 *
+		 * @phpstan-var StylePresets|false
+		 */
 		$style_presets = get_option( Story_Post_Type::STYLE_PRESETS_OPTION, false );
 		// Nothing to do if style presets don't exist.
 		if ( ! $style_presets || ! \is_array( $style_presets ) ) {
