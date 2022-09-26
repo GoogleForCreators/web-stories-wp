@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import type { Page } from '@googleforcreators/types';
+import type { Page, VideoElement } from '@googleforcreators/types';
 
 type AMPExtension = {
   src: string;
@@ -58,11 +58,12 @@ const getUsedAmpExtensions = (pages: Page[]): AMPExtension[] => {
       extensions.push(ampVideo);
       extensions.push(ampStoryCaptions);
     }
-    for (const { type, tracks } of elements) {
+    const videoElements = elements as VideoElement[];
+    for (const { type, tracks } of videoElements) {
       switch (type) {
         case 'video':
           extensions.push(ampVideo);
-          if (tracks?.length > 0) {
+          if (tracks && tracks?.length > 0) {
             extensions.push(ampStoryCaptions);
           }
           break;
