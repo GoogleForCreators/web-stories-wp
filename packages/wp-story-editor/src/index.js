@@ -99,6 +99,7 @@ window.webStories.initializeStoryEditor = (id, config, initialEdits) => {
         <PostPublishDialog />
         <StatusCheck />
         <PostLock />
+        <div />
       </StoryEditor>
     </StrictMode>,
     appElement
