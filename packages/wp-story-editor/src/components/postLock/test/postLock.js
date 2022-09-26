@@ -244,7 +244,7 @@ describe('PostLock', () => {
     ).toBeInTheDocument();
   });
 
-  it('should autosave', async () => {
+  it('should autosave', () => {
     jest.spyOn(window, 'setInterval');
 
     getStoryLockById.mockReturnValue(
@@ -273,7 +273,7 @@ describe('PostLock', () => {
       jest.advanceTimersByTime(160 * 1000);
     });
 
-    expect(autoSave).toHaveBeenCalled();
+    expect(autoSave).toHaveBeenCalledWith();
   });
 
   it('should not display dialog', () => {

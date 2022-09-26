@@ -180,6 +180,7 @@ function PostLock() {
     }
   }, [
     enablePostLockingTakeOver,
+    hasNewChanges,
     improvedAutosaves,
     showLockedDialog,
     user,
