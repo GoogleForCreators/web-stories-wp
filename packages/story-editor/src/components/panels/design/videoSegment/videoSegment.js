@@ -120,6 +120,12 @@ function VideoSegmentPanel({ pushUpdate, selectedElements }) {
     let newElement;
     const pageIds = pages.map(({ id }) => id);
     const originalPageIndex = pageIds.indexOf(currentPage.id);
+
+    // @todo
+    // elementId should be the original items selected
+    // originalPageIndex should be the page id of the orginal element
+    // set x, y, width, height props
+
     segmentedFiles.forEach((segmentedResource, index) => {
       if (index >= 1) {
         const page = createPage();
@@ -133,7 +139,7 @@ function VideoSegmentPanel({ pushUpdate, selectedElements }) {
           pageId: page.id,
           resource: segmentedResource,
         });
-        // add some text to help debug
+        // @todo remove this ... add some text to help debug
         insertElement(ELEMENT_TYPES.TEXT, {
           content: segmentedResource.alt,
           pageId: page.id,
@@ -146,7 +152,7 @@ function VideoSegmentPanel({ pushUpdate, selectedElements }) {
           resource: segmentedResource,
         });
 
-        // add some text to help debug
+        // @todo remove this ... add some text to help debug
         insertElement(ELEMENT_TYPES.TEXT, {
           content: segmentedResource.alt,
           y: 300,
