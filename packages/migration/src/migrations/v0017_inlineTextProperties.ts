@@ -114,7 +114,7 @@ function convertInlineBold(
   const globalWeight =
     typeof fontWeight === 'number' && fontWeight !== 400
       ? fontWeight
-      : isBold === true
+      : isBold
       ? 700
       : null;
 
