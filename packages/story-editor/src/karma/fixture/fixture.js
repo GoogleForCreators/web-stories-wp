@@ -24,7 +24,7 @@ import {
   screen,
   waitFor,
 } from '@testing-library/react';
-import { setAppElement } from '@googleforcreators/design-system';
+import { LOCAL_STORAGE_PREFIX, setAppElement } from '@googleforcreators/design-system';
 import { FixtureEvents } from '@googleforcreators/karma-fixture';
 import { DATA_VERSION } from '@googleforcreators/migration';
 import {
@@ -221,6 +221,12 @@ export class Fixture {
         JSON.stringify({ isCollapsed: false })
       );
     });
+
+    // Hide Floating Menu by default, it obstructs too many elements.
+    localStorage.setItem(
+      LOCAL_STORAGE_PREFIX.ELEMENT_TOOLBAR_SETTINGS,
+      JSON.stringify({ isDisplayed: false })
+    );
 
     elementTypes.forEach(registerElementType);
   }
