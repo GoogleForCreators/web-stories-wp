@@ -117,6 +117,7 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 		$this->instance->register();
 
 		$this->assertSame( 10, has_filter( 'wp_insert_post_data', [ $this->instance, 'change_default_title' ] ) );
+		$this->assertSame( 10, has_filter( 'wp_insert_post_empty_content', [ $this->instance, 'filter_empty_content' ] ) );
 		$this->assertSame(
 			10,
 			has_filter(
@@ -188,6 +189,26 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 		);
 
 		$this->assertSame( '', $post->post_title );
+	}
+
+	/**
+	 * @covers ::filter_empty_content
+	 */
+	public function test_filter_empty_content(): void {
+		$postarr = [
+			'post_type'             => $this->instance->get_slug(),
+			'post_content_filtered' => 'Not empty',
+		];
+
+		$empty_postarr = [
+			'post_type'             => $this->instance->get_slug(),
+			'post_content_filtered' => '',
+		];
+
+		$this->assertFalse( $this->instance->filter_empty_content( false, $postarr ) );
+		$this->assertFalse( $this->instance->filter_empty_content( false, $empty_postarr ) );
+		$this->assertFalse( $this->instance->filter_empty_content( true, $postarr ) );
+		$this->assertTrue( $this->instance->filter_empty_content( true, $empty_postarr ) );
 	}
 
 	/**

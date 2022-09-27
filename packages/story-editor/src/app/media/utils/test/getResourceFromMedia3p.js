@@ -64,7 +64,6 @@ describe('getResourceFromMedia3p', () => {
     };
     const expectedStoryEditorResource = {
       baseColor: '#00379b',
-      blurHash: undefined,
       type: 'video',
       mimeType: 'video/mp4',
       creationDate: '2018-09-25T20:03.07Z',
@@ -102,7 +101,6 @@ describe('getResourceFromMedia3p', () => {
         },
       },
       attribution: undefined,
-      output: undefined,
       trimData: undefined,
     };
     expect(getResourceFromMedia3p(media3pResource)).toStrictEqual(
@@ -154,7 +152,6 @@ describe('getResourceFromMedia3p', () => {
     };
     const expectedStoryEditorResource = {
       baseColor: '#00379b',
-      blurHash: undefined,
       type: 'video',
       mimeType: 'video/mp4',
       creationDate: '2018-09-25T20:03.07Z',
@@ -192,7 +189,6 @@ describe('getResourceFromMedia3p', () => {
         },
       },
       attribution: undefined,
-      output: undefined,
       trimData: undefined,
     };
     expect(getResourceFromMedia3p(media3pResource)).toStrictEqual(
@@ -243,7 +239,6 @@ describe('getResourceFromMedia3p', () => {
     };
     const expectedStoryEditorResource = {
       baseColor: '#00379b',
-      blurHash: undefined,
       type: 'video',
       mimeType: 'video/mp4',
       creationDate: '2018-09-25T20:03.07Z',
@@ -281,7 +276,6 @@ describe('getResourceFromMedia3p', () => {
         },
       },
       attribution: undefined,
-      output: undefined,
       trimData: undefined,
     };
     expect(getResourceFromMedia3p(media3pResource)).toStrictEqual(
@@ -329,7 +323,6 @@ describe('getResourceFromMedia3p', () => {
     };
     const expectedStoryEditorResource = {
       baseColor: '#00379b',
-      blurHash: undefined,
       type: 'video',
       mimeType: 'video/mp4',
       creationDate: '2018-09-25T20:03.07Z',
@@ -368,7 +361,6 @@ describe('getResourceFromMedia3p', () => {
       },
       trimData: undefined,
       attribution: undefined,
-      output: undefined,
     };
     expect(getResourceFromMedia3p(media3pResource)).toStrictEqual(
       expectedStoryEditorResource
@@ -521,10 +513,7 @@ describe('getResourceFromMedia3p', () => {
 
     const expectedStoryEditorResource = {
       baseColor: '#00379b',
-      blurHash: undefined,
       id: 'media/tenor:3468838096637910112',
-      length: undefined,
-      lengthFormatted: undefined,
       type: 'gif',
       mimeType: 'image/gif',
       creationDate: '2020-10-26T21:36:35Z',
@@ -533,11 +522,9 @@ describe('getResourceFromMedia3p', () => {
       height: 498,
       alt: 'media/tenor:3468838096637910112',
       isPlaceholder: false,
-      isMuted: false,
       isOptimized: true,
       isExternal: true,
       needsProxy: false,
-      trimData: undefined,
       poster:
         'https://c.tenor.com/MCPJ3sVx3GAAAAAe/happy-national-cat-day-peace.png',
       posterId: 'media/tenor:3468838096637910112',
@@ -707,8 +694,6 @@ describe('getResourceFromMedia3p', () => {
     const expectedStoryEditorResource = {
       baseColor: undefined,
       blurHash: undefined,
-      length: undefined,
-      lengthFormatted: undefined,
       type: 'image',
       mimeType: 'image/gif',
       creationDate: '2020-09-14T18:44:39Z',
@@ -718,13 +703,8 @@ describe('getResourceFromMedia3p', () => {
       id: 'media/tenor:7259408917338674423',
       alt: 'Tuesday Happy Tuesday Sticker',
       isPlaceholder: false,
-      isMuted: false,
-      isOptimized: false,
       isExternal: true,
       needsProxy: false,
-      output: undefined,
-      poster: undefined,
-      posterId: undefined,
       sizes: {
         '200_115': {
           file: 'media/tenor:7259408917338674423',
@@ -766,8 +746,6 @@ describe('getResourceFromMedia3p', () => {
         registerUsageUrl:
           'https://media3p.googleapis.com/v1/media:registerUsage?token=AdnbmE%2Blc8Z9N5qFNkRHgYpJLI9SgPhj7JhlSjmK7Fy6OABL6uRP0NXphMGvHFqDrhfhHQaVI3CLXT3Qsz6xDyjN/dV2AA%3D%3D',
       },
-
-      trimData: undefined,
     };
     expect(getResourceFromMedia3p(media3pResource)).toStrictEqual(
       expectedStoryEditorResource

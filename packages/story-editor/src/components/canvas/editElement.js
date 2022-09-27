@@ -22,6 +22,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useUnits } from '@googleforcreators/units';
 import { getDefinitionForType } from '@googleforcreators/elements';
+import { BG_MIN_SCALE, BG_MAX_SCALE } from '@googleforcreators/animation';
 import {
   elementWithPosition,
   elementWithSize,
@@ -104,6 +105,8 @@ const EditElement = memo(
           deleteSelectedElements={deleteSelectedElements}
           maybeEnqueueFontStyle={maybeEnqueueFontStyle}
           zIndexCanvas={Z_INDEX_CANVAS}
+          scaleMin={BG_MIN_SCALE}
+          scaleMax={BG_MAX_SCALE}
         />
       </Wrapper>
     );

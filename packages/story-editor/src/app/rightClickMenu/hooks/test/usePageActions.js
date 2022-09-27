@@ -119,7 +119,7 @@ describe('usePageActions', () => {
 
       result.current.handleDeletePage();
 
-      expect(mockDeleteCurrentPage).toHaveBeenCalledTimes(1);
+      expect(mockDeleteCurrentPage).toHaveBeenCalledOnce();
     });
   });
 });

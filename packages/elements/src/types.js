@@ -20,7 +20,6 @@
 import PropTypes from 'prop-types';
 import { PatternPropType } from '@googleforcreators/patterns';
 import { ResourcePropTypes } from '@googleforcreators/media';
-import { AnimationProps } from '@googleforcreators/animation';
 
 /**
  * Internal dependencies
@@ -63,7 +62,9 @@ StoryPropTypes.box = PropTypes.exact({
 
 StoryPropTypes.page = PropTypes.shape({
   id: PropTypes.string.isRequired,
-  animations: PropTypes.arrayOf(PropTypes.shape(AnimationProps)),
+  // Temporary solution for animations. Better would be to move this
+  // prop type to the types package, but really?
+  animations: PropTypes.arrayOf(PropTypes.object),
   elements: PropTypes.arrayOf(PropTypes.shape(StoryPropTypes.element)),
   overlay: PropTypes.oneOf(Object.values(OverlayType)),
   backgroundAudio: PropTypes.shape({

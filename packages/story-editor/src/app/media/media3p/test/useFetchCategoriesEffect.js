@@ -110,7 +110,7 @@ describe('useFetchCategoriesEffect', () => {
     expect(fetchCategoriesStart.mock.calls).toHaveLength(1);
     expect(fetchCategoriesSuccess.mock.calls).toHaveLength(0);
     expect(fetchCategoriesError.mock.calls).toHaveLength(1);
-    expect(mockShowSnackbar).toHaveBeenCalledTimes(1);
+    expect(mockShowSnackbar).toHaveBeenCalledOnce();
   });
 
   it('should not fetch media if the provider is not the same as selected provider', async () => {
@@ -118,9 +118,9 @@ describe('useFetchCategoriesEffect', () => {
       provider: 'coverr',
       selectedProvider: 'unsplash',
     });
-    expect(fetchCategoriesStart).not.toHaveBeenCalledTimes(1);
-    expect(fetchCategoriesSuccess).not.toHaveBeenCalledTimes(1);
-    expect(fetchCategoriesError).not.toHaveBeenCalledTimes(1);
+    expect(fetchCategoriesStart).not.toHaveBeenCalledOnce();
+    expect(fetchCategoriesSuccess).not.toHaveBeenCalledOnce();
+    expect(fetchCategoriesError).not.toHaveBeenCalledOnce();
     expect(mockShowSnackbar).not.toHaveBeenCalled();
   });
 });

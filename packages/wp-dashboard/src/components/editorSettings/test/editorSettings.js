@@ -231,7 +231,7 @@ describe('Editor Settings: <Editor Settings />', () => {
       screen.getByText(PUBLISHER_LOGO_TEXT.SECTION_HEADING)
     ).toBeInTheDocument();
     expect(screen.getByTestId('upload-file-input')).toBeInTheDocument();
-    expect(mockFetchSettings).toHaveBeenCalledTimes(1);
+    expect(mockFetchSettings).toHaveBeenCalledOnce();
 
     expect(
       screen.getByText(AD_NETWORK_TEXT.SECTION_HEADING)
@@ -279,7 +279,7 @@ describe('Editor Settings: <Editor Settings />', () => {
 
     fireEvent.click(DeleteFileButton);
 
-    expect(mockRemovePublisherLogo).toHaveBeenCalledTimes(1);
+    expect(mockRemovePublisherLogo).toHaveBeenCalledOnce();
   });
 
   it('should render settings page without file upload section when canUploadFiles is false', () => {

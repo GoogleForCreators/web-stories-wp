@@ -75,7 +75,7 @@ describe('<DirectionRadioInput />', () => {
     const buttons = screen.getAllByRole('button');
     fireEvent.click(buttons[1]);
 
-    expect(onChange).toHaveBeenCalledTimes(1);
+    expect(onChange).toHaveBeenCalledOnce();
     expect(onChange).toHaveBeenCalledWith(directions[1]);
   });
 

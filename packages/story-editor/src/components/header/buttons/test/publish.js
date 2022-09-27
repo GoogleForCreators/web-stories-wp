@@ -147,7 +147,7 @@ describe('PublishButton', () => {
     expect(publishButton).toBeEnabled();
     fireEvent.click(publishButton);
 
-    expect(showPriorityIssues).toHaveBeenCalledTimes(1);
+    expect(showPriorityIssues).toHaveBeenCalledOnce();
 
     const publishModal = screen.getByRole('dialog');
 
@@ -216,7 +216,7 @@ describe('PublishButton', () => {
     });
     fireEvent.click(publishModalButton);
 
-    expect(saveStory).toHaveBeenCalledTimes(1);
+    expect(saveStory).toHaveBeenCalledOnce();
     expect(window.location.href).toContain('post=123&action=edit');
   });
 });

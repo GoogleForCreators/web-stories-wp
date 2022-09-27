@@ -16,9 +16,9 @@
 /**
  * Internal dependencies
  */
-import { getMediaOrigin } from '..';
+import getElementOrigin from '../getElementOrigin';
 
-describe('getMediaOrigin', () => {
+describe('getElementOrigin', () => {
   it.each([
     [
       {
@@ -93,6 +93,6 @@ describe('getMediaOrigin', () => {
       },
     ],
   ])('given %p returns %p', (offset, origin) => {
-    expect(getMediaOrigin(offset)).toStrictEqual(origin);
+    expect(getElementOrigin(offset)).toStrictEqual(origin);
   });
 });

@@ -84,6 +84,6 @@ describe('videoOptimizationDialog', () => {
 
     fireEvent.click(screen.getByRole('button', { name: /Disable/i }));
 
-    await waitFor(() => expect(updateCurrentUser).toHaveBeenCalledTimes(1));
+    await waitFor(() => expect(updateCurrentUser).toHaveBeenCalledOnce());
   });
 });

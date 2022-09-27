@@ -18,11 +18,7 @@
  * External dependencies
  */
 import { __ } from '@googleforcreators/i18n';
-
-/**
- * Internal dependencies
- */
-import { Pattern, PatternType } from './types';
+import { Pattern, PatternType } from '@googleforcreators/types';
 
 function printRGB(r: number, g: number, b: number) {
   const hex = (v: number) => v.toString(16).padStart(2, '0');
@@ -34,11 +30,11 @@ function getPreviewText(pattern: Pattern | null) {
     return null;
   }
   switch (pattern.type) {
-    case PatternType.RADIAL:
+    case PatternType.Radial:
       return __('Radial', 'web-stories');
-    case PatternType.LINEAR:
+    case PatternType.Linear:
       return __('Linear', 'web-stories');
-    case PatternType.SOLID:
+    case PatternType.Solid:
     default: {
       const {
         color: { r, g, b },

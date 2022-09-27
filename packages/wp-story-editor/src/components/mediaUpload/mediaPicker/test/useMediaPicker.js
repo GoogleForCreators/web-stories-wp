@@ -75,7 +75,7 @@ describe('useMediaPicker', () => {
     act(() => {
       openMediaPicker(new Event('click'));
     });
-    expect(onPermissionError).toHaveBeenCalledTimes(1);
+    expect(onPermissionError).toHaveBeenCalledOnce();
   });
 
   it('user unable to upload with cropped', () => {
@@ -95,6 +95,6 @@ describe('useMediaPicker', () => {
     act(() => {
       openMediaPicker(new Event('click'));
     });
-    expect(onPermissionError).toHaveBeenCalledTimes(1);
+    expect(onPermissionError).toHaveBeenCalledOnce();
   });
 });

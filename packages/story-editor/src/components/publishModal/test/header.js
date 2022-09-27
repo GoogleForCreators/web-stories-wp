@@ -80,7 +80,7 @@ describe('publishModal/header', () => {
     const closeButton = screen.getByLabelText('Close');
     fireEvent.click(closeButton);
 
-    expect(mockOnClose).toHaveBeenCalledTimes(1);
+    expect(mockOnClose).toHaveBeenCalledOnce();
   });
 
   it('should call onPublish when publish button is clicked', () => {
@@ -89,7 +89,7 @@ describe('publishModal/header', () => {
     const publishButton = screen.getByText('Publish');
     fireEvent.click(publishButton);
 
-    expect(mockOnPublish).toHaveBeenCalledTimes(1);
+    expect(mockOnPublish).toHaveBeenCalledOnce();
   });
 
   it('should show submit for review when capability of publish is false', () => {
@@ -98,7 +98,7 @@ describe('publishModal/header', () => {
     const reviewButton = screen.getByText('Submit for review');
     fireEvent.click(reviewButton);
 
-    expect(mockOnPublish).toHaveBeenCalledTimes(1);
+    expect(mockOnPublish).toHaveBeenCalledOnce();
   });
 
   it('should show tooltip in button when priority issues present', () => {

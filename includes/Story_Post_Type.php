@@ -95,6 +95,7 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 		$this->register_meta();
 
 		add_filter( 'wp_insert_post_data', [ $this, 'change_default_title' ] );
+		add_filter( 'wp_insert_post_empty_content', [ $this, 'filter_empty_content' ], 10, 2 );
 		add_filter( 'bulk_post_updated_messages', [ $this, 'bulk_post_updated_messages' ], 10, 2 );
 		add_action( 'clean_post_cache', [ $this, 'clear_user_posts_count' ], 10, 2 );
 	}
@@ -311,6 +312,27 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 		}
 
 		return $data;
+	}
+
+	/**
+	 * Filters whether the post should be considered "empty".
+	 *
+	 * Takes into account post_content_filtered for stories.
+	 *
+	 * @since 1.25.1
+	 *
+	 * @param bool|mixed $maybe_empty Whether the post should be considered "empty".
+	 * @param array      $data        Array of post data.
+	 * @return bool Whether the post should be considered "empty".
+	 *
+	 * @phpstan-param array{post_type: string, post_content_filtered: string} $data
+	 */
+	public function filter_empty_content( $maybe_empty, array $data ): bool {
+		if ( $this->get_slug() === $data['post_type'] ) {
+			return $maybe_empty && ! $data['post_content_filtered'];
+		}
+
+		return (bool) $maybe_empty;
 	}
 
 	/**
