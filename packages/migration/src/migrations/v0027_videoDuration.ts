@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import type { ResourceType } from '../types';
+import type { ResourceType, ResourceV0 } from '../types';
 import type {
   GifElementV26,
   ImageElementV26,
@@ -34,15 +34,18 @@ export type TextElementV27 = TextElementV26;
 export type ProductElementV27 = ProductElementV26;
 export type ShapeElementV27 = ShapeElementV26;
 export type ImageElementV27 = ImageElementV26;
+
+interface VideoResourceV26 extends ResourceV0 {
+  poster?: string;
+  posterId?: number;
+  id?: number;
+  type: ResourceType.Video;
+  lengthFormatted?: string;
+  length?: number;
+  isOptimized?: boolean;
+}
 export interface VideoElementV27 extends Omit<VideoElementV26, 'resource'> {
-  resource: {
-    poster?: string;
-    posterId?: number;
-    id?: number;
-    type: ResourceType.Video;
-    lengthFormatted?: string;
-    length?: number;
-  };
+  resource: VideoResourceV26;
 }
 export type GifElementV27 = GifElementV26;
 
@@ -99,9 +102,9 @@ function updateElement(element: UnionElementV26): UnionElementV27 {
         ...resource,
         length,
       },
-    };
+    } as VideoElementV27;
   }
-  return element;
+  return element as UnionElementV27;
 }
 
 export default videoDuration;

@@ -27,28 +27,12 @@ interface ResourceSizeV0 {
   height: number | string;
 }
 
-interface AttributionAuthorV0 {
-  displayName: string;
-  url: string;
-}
-
-interface AttributionV0 {
-  author?: AttributionAuthorV0;
-  registerUsageUrl?: string;
-}
-
 export interface ResourceV0 {
   type: ResourceType;
   mimeType: string;
   src: string;
   width: number | string;
   height: number | string;
-}
-
-interface TrimDataV0 {
-  original: string;
-  start: string;
-  end: string;
 }
 
 export interface ImageResourceV0 extends ResourceV0 {
@@ -76,4 +60,5 @@ export interface GifResourceV0 extends ResourceV0 {
   isTranscoding?: boolean;
   isMuting?: boolean;
   title: string;
+  alt: string;
 }

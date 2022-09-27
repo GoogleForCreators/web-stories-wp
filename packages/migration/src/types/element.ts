@@ -120,6 +120,7 @@ export interface VideoElementV0 extends MediaElementV0 {
   videoId: number;
   tracks?: VideoTrackV0[];
   loop?: boolean;
+  type: 'video';
 }
 
 export type ImageElementV0 = MediaElementV0;
