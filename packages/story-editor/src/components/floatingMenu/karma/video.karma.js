@@ -28,7 +28,8 @@ describe('Video Design Menu: Keyboard Navigation', () => {
     fixture = new Fixture();
     await fixture.render();
     await fixture.collapseHelpCenter();
-
+    await fixture.showFloatingMenu();
+    
     focusContainer = fixture.screen.getByTestId('canvas-focus-container');
   });
 

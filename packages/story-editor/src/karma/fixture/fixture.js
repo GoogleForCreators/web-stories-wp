@@ -419,6 +419,15 @@ export class Fixture {
   }
 
   /**
+   * Floating menu is hidden by default, this will make it visible.
+   *
+   * @return {Promise<Object>} Resolves when floating menu show button is clicked.
+   */
+  showFloatingMenu() {
+    return this._events.click(screen.getByRole('button', { name: /Show element toolbar/ }));
+  }
+
+  /**
    * Calls a hook in the context of the whole editor.
    *
    * Similar to the `@testing-library/react`'s `renderHook()` method.
