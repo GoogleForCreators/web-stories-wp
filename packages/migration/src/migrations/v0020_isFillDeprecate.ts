@@ -14,28 +14,66 @@
  * limitations under the License.
  */
 
+/**
+ * Internal dependencies
+ */
+import type {
+  GifElementV19,
+  ImageElementV19,
+  PageV19,
+  ProductElementV19,
+  ShapeElementV19,
+  StoryV19,
+  TextElementV19,
+  UnionElementV19,
+  VideoElementV19,
+} from './v0019_conicToLinear';
+
+export type TextElementV20 = TextElementV19;
+export type ProductElementV20 = ProductElementV19;
+export type ShapeElementV20 = ShapeElementV19;
+export type ImageElementV20 = Omit<ImageElementV19, 'isFill'>;
+export type VideoElementV20 = Omit<VideoElementV19, 'isFill'>;
+export type GifElementV20 = Omit<GifElementV19, 'isFill'>;
+
+export type UnionElementV20 =
+  | ShapeElementV20
+  | ImageElementV20
+  | VideoElementV20
+  | GifElementV20
+  | TextElementV20
+  | ProductElementV20;
+
+export interface StoryV20 extends Omit<StoryV19, 'pages'> {
+  pages: PageV20[];
+}
+export interface PageV20 extends Omit<PageV19, 'elements'> {
+  elements: UnionElementV20[];
+}
+
 const PAGE_WIDTH = 440;
 const PAGE_HEIGHT = 660;
 const FULLBLEED_RATIO = 9 / 16;
 const FULLBLEED_HEIGHT = PAGE_WIDTH / FULLBLEED_RATIO;
 const DANGER_ZONE_HEIGHT = (FULLBLEED_HEIGHT - PAGE_HEIGHT) / 2;
 
-function isFillDeprecate({ pages, ...rest }) {
+function isFillDeprecate({ pages, ...rest }: StoryV19): StoryV20 {
   return {
     pages: pages.map(reducePage),
     ...rest,
   };
 }
 
-function reducePage({ elements, ...rest }) {
+function reducePage({ elements, ...rest }: PageV19): PageV20 {
   return {
     elements: elements.map(updateElement),
     ...rest,
   };
 }
 
-function updateElement({ isFill, ...rest }) {
-  if (isFill) {
+function updateElement(element: UnionElementV19): UnionElementV20 {
+  if ('isFill' in element) {
+    const { isFill, ...rest } = element;
     return {
       ...rest,
       x: 0,
@@ -45,7 +83,7 @@ function updateElement({ isFill, ...rest }) {
       rotationAngle: 0,
     };
   }
-  return rest;
+  return element;
 }
 
 export default isFillDeprecate;

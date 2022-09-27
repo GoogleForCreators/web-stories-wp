@@ -14,10 +14,12 @@
  * limitations under the License.
  */
 
+// @todo Create new type without conic.
 export enum PatternType {
   Solid = 'solid',
   Linear = 'linear',
   Radial = 'radial',
+  Conic = 'conic',
 }
 
 export type Hex = {
@@ -38,13 +40,18 @@ export type ColorStop = {
 };
 
 type AbstractGradient = {
-  type: PatternType.Linear | PatternType.Radial;
+  type: PatternType.Linear | PatternType.Radial | PatternType.Conic;
   stops: ColorStop[];
   alpha?: number;
 };
 
 export type Linear = AbstractGradient & {
   type: PatternType.Linear;
+  rotation?: number;
+};
+
+export type Conic = AbstractGradient & {
+  type: PatternType.Conic;
   rotation?: number;
 };
 
@@ -61,5 +68,5 @@ export type Radial = AbstractGradient & {
   rotation?: number;
 };
 
-export type Gradient = Linear | Radial;
+export type Gradient = Linear | Radial | Conic;
 export type Pattern = Solid | Gradient;

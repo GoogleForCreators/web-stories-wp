@@ -14,22 +14,59 @@
  * limitations under the License.
  */
 
-function isFullbleedDeprecate({ pages, ...rest }) {
+/**
+ * Internal dependencies
+ */
+import type {
+  GifElementV15,
+  ImageElementV15,
+  PageV15,
+  ProductElementV15,
+  ShapeElementV15,
+  StoryV15,
+  TextElementV15,
+  UnionElementV15,
+  VideoElementV15,
+} from './v0015_fontObjects';
+
+export type TextElementV16 = TextElementV15;
+export type ProductElementV16 = ProductElementV15;
+export type ShapeElementV16 = ShapeElementV15;
+export type ImageElementV16 = Omit<ImageElementV15, 'isFullbleedBackground'>;
+export type VideoElementV16 = Omit<VideoElementV15, 'isFullbleedBackground'>;
+export type GifElementV16 = Omit<GifElementV15, 'isFullbleedBackground'>;
+
+export type UnionElementV16 =
+  | ShapeElementV16
+  | ImageElementV16
+  | VideoElementV16
+  | GifElementV16
+  | TextElementV16
+  | ProductElementV16;
+
+export interface StoryV16 extends Omit<StoryV15, 'pages'> {
+  pages: PageV16[];
+}
+export interface PageV16 extends Omit<PageV15, 'elements'> {
+  elements: UnionElementV16[];
+}
+
+function isFullbleedDeprecate({ pages, ...rest }: StoryV15): StoryV16 {
   return {
     pages: pages.map(reducePage),
     ...rest,
   };
 }
 
-function reducePage({ elements, ...rest }) {
+function reducePage({ elements, ...rest }: PageV15): PageV16 {
   return {
     elements: elements.map(updateElement),
     ...rest,
   };
 }
 
-function updateElement(element) {
-  if (typeof element.isFullbleedBackground !== 'undefined') {
+function updateElement(element: UnionElementV15): UnionElementV16 {
+  if ('isFullbleedBackground' in element) {
     delete element.isFullbleedBackground;
   }
   return element;
