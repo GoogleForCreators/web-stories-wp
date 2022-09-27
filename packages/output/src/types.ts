@@ -53,3 +53,8 @@ export interface StoryProps {
   metadata: MetaData;
   flags: Flags;
 }
+export interface WithLinkTyping {
+  element: Element;
+  children: JSX.Element;
+  style?: React.CSSProperties;
+}

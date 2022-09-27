@@ -17,12 +17,15 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
+import type { Link } from '@googleforcreators/types';
 import { withProtocol } from '@googleforcreators/url';
-import { StoryPropTypes } from '@googleforcreators/elements';
+/**
+ * Internal dependencies
+ */
+import type { WithLinkTyping } from '../../types';
 
-function WithLink({ element, children, ...rest }) {
-  const link = element.link || {};
+function WithLink({ element, children, ...rest }: WithLinkTyping) {
+  const link: Link = element.link || ({} as Link);
   const { url, icon, desc, rel = [] } = link;
   if (!url) {
     return children;
@@ -43,10 +46,5 @@ function WithLink({ element, children, ...rest }) {
     </a>
   );
 }
-
-WithLink.propTypes = {
-  element: StoryPropTypes.element.isRequired,
-  children: PropTypes.node.isRequired,
-};
 
 export default WithLink;
