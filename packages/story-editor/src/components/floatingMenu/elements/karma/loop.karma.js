@@ -32,6 +32,7 @@ describe('Design Menu: Video loop toggle', () => {
     }
 
     await fixture.collapseHelpCenter();
+    await fixture.showFloatingMenu();
 
     // Add a video to stage
     await fixture.events.mouse.clickOn(
