@@ -36,6 +36,7 @@ export interface VideoElementV13 extends Omit<VideoElementV12, 'resource'> {
     posterId?: number;
     id?: number;
     type: ResourceType.Video;
+    lengthFormatted?: string;
   };
 }
 

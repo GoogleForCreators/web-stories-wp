@@ -14,24 +14,78 @@
  * limitations under the License.
  */
 
-function backgroundOverlayToOverlay({ pages, ...rest }) {
+/**
+ * Internal dependencies
+ */
+import type { Pattern } from '../types/pattern';
+import type {
+  GifElementV25,
+  ImageElementV25,
+  PageV25,
+  ProductElementV25,
+  ShapeElementV25,
+  StoryV25,
+  TextElementV25,
+  UnionElementV25,
+  VideoElementV25,
+} from './v0025_singleAnimationTarget';
+
+export type TextElementV26 = TextElementV25;
+export type ProductElementV26 = ProductElementV25;
+
+export interface ShapeElementV26
+  extends Omit<ShapeElementV25, 'backgroundOverlay'> {
+  overlay?: Pattern | null;
+}
+export interface ImageElementV26
+  extends Omit<ImageElementV25, 'backgroundOverlay'> {
+  overlay?: Pattern | null;
+}
+export interface VideoElementV26
+  extends Omit<VideoElementV25, 'backgroundOverlay'> {
+  overlay?: Pattern | null;
+}
+export interface GifElementV26
+  extends Omit<GifElementV25, 'backgroundOverlay'> {
+  overlay?: Pattern | null;
+}
+
+export type UnionElementV26 =
+  | ShapeElementV26
+  | ImageElementV26
+  | VideoElementV26
+  | GifElementV26
+  | TextElementV26
+  | ProductElementV26;
+
+export interface StoryV26 extends Omit<StoryV25, 'pages'> {
+  pages: PageV26[];
+}
+export interface PageV26 extends Omit<PageV25, 'elements'> {
+  elements: UnionElementV26[];
+}
+
+function backgroundOverlayToOverlay({ pages, ...rest }: StoryV25): StoryV26 {
   return {
     pages: pages.map(reducePage),
     ...rest,
   };
 }
 
-function reducePage({ elements, ...rest }) {
+function reducePage({ elements, ...rest }: PageV25): PageV26 {
   return {
     elements: elements.map(updateElement),
     ...rest,
   };
 }
 
-function updateElement(element) {
-  if (typeof element.backgroundOverlay !== 'undefined') {
-    element.overlay = element.backgroundOverlay;
-    delete element.backgroundOverlay;
+function updateElement(element: UnionElementV25): UnionElementV26 {
+  if ('backgroundOverlay' in element) {
+    const { backgroundOverlay, ...rest } = element;
+    return {
+      ...rest,
+      overlay: backgroundOverlay,
+    };
   }
   return element;
 }

@@ -69,10 +69,10 @@ type AnimationPanDirectionV0 =
   | 'rightToLeft'
   | 'bottomToTop';
 
-interface AnimationV0 {
+export interface AnimationV0 {
   id: string;
   type: AnimationTypeV0;
-  target: string;
+  targets: string[];
   panDir?: AnimationPanDirectionV0;
   duration: number;
   delay: number;

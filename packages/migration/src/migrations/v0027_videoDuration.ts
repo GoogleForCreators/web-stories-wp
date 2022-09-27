@@ -14,40 +14,92 @@
  * limitations under the License.
  */
 
-function videoDuration({ pages, ...rest }) {
+/**
+ * Internal dependencies
+ */
+import type { ResourceType } from '../types';
+import type {
+  GifElementV26,
+  ImageElementV26,
+  PageV26,
+  ProductElementV26,
+  ShapeElementV26,
+  StoryV26,
+  TextElementV26,
+  UnionElementV26,
+  VideoElementV26,
+} from './v0026_backgroundOverlayToOverlay';
+
+export type TextElementV27 = TextElementV26;
+export type ProductElementV27 = ProductElementV26;
+export type ShapeElementV27 = ShapeElementV26;
+export type ImageElementV27 = ImageElementV26;
+export interface VideoElementV27 extends Omit<VideoElementV26, 'resource'> {
+  resource: {
+    poster?: string;
+    posterId?: number;
+    id?: number;
+    type: ResourceType.Video;
+    lengthFormatted?: string;
+    length?: number;
+  };
+}
+export type GifElementV27 = GifElementV26;
+
+export type UnionElementV27 =
+  | ShapeElementV27
+  | ImageElementV27
+  | VideoElementV27
+  | GifElementV27
+  | TextElementV27
+  | ProductElementV27;
+
+export interface StoryV27 extends Omit<StoryV26, 'pages'> {
+  pages: PageV27[];
+}
+export interface PageV27 extends Omit<PageV26, 'elements'> {
+  elements: UnionElementV27[];
+}
+
+function videoDuration({ pages, ...rest }: StoryV26): StoryV27 {
   return {
     pages: pages.map(reducePage),
     ...rest,
   };
 }
 
-function reducePage({ elements, ...rest }) {
+function reducePage({ elements, ...rest }: PageV26): PageV27 {
   return {
     elements: elements.map(updateElement),
     ...rest,
   };
 }
 
-function updateElement(element) {
+function updateElement(element: UnionElementV26): UnionElementV27 {
   if (
-    element.type === 'video' &&
+    'resource' in element &&
+    element.resource.type === ('video' as ResourceType.Video) &&
     element.resource &&
-    element.resource?.lengthFormatted &&
-    !element.resource?.length
+    element.resource.lengthFormatted
   ) {
+    let length = 0;
     const times = element.resource.lengthFormatted.split(':');
     const timesNumbers = times.map(Number);
     if (timesNumbers.length === 2) {
       const [minutes, seconds] = timesNumbers;
-      const length = 60 * minutes + seconds;
-
-      element.resource.length = length;
+      length = 60 * minutes + seconds;
     } else if (timesNumbers.length === 3) {
       const [hours, minutes, seconds] = timesNumbers;
-      const length = 60 * 60 * hours + 60 * minutes + seconds;
-
-      element.resource.length = length;
+      length = 60 * 60 * hours + 60 * minutes + seconds;
     }
+    const { resource } = element;
+    return {
+      ...element,
+      resource: {
+        ...resource,
+        length,
+      },
+    };
   }
   return element;
 }
