@@ -290,7 +290,7 @@ function useFFmpeg() {
    * @return {Promise<File[]>} Segmented video files .
    */
   const segmentVideo = useCallback(
-    async (file, segmentTime) => {
+    async (file, segmentTime, fileLength) => {
       //eslint-disable-next-line @wordpress/no-unused-vars-before-return -- False positive because of the finally().
       const trackTiming = getTimeTracker('segment_video');
       let ffmpeg;
@@ -299,15 +299,24 @@ function useFFmpeg() {
         const type = file?.type || MEDIA_TRANSCODED_MIME_TYPE;
         const ext = getExtensionFromMimeType(type);
         const outputFileName = getFileBasename(file) + '_%03d.' + ext;
+        const keyframes = [];
+        for (let i = segmentTime; i < fileLength; i += segmentTime) {
+          keyframes.push(i);
+        }
+
+        const forceKeyframes = keyframes.join(',');
+
         await ffmpeg.run(
           '-i',
           file.name,
           '-c',
           'copy',
+          '-force_key_frames',
+          `${forceKeyframes}`,
           '-f',
           'segment',
-          '-segment_time',
-          `${segmentTime}`,
+          '-segment_times',
+          `${forceKeyframes}`,
           '-reset_timestamps',
           '1',
           outputFileName

@@ -584,7 +584,8 @@ function useProcessMedia({
       const { src: url, mimeType } = oldResource;
       const segmentedFiles = await ffSegmentVideo(
         await fetchRemoteFile(url, mimeType),
-        segmentTime
+        segmentTime,
+        oldResource.length
       );
       await uploadMedia(segmentedFiles, { onUploadSuccess: handleSegmented });
       return segmentedFiles;
