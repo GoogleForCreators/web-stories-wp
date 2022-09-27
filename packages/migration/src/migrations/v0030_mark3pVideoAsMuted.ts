@@ -35,6 +35,7 @@ export type ProductElementV30 = ProductElementV29;
 export type ShapeElementV30 = ShapeElementV29;
 export type ImageElementV30 = ImageElementV29;
 
+// @todo SHould we drag resource versions along in each file? Currently, basing on ResourceV0 and extending fully per file.
 interface VideoResourceV30 extends ResourceV0 {
   poster?: string;
   posterId?: number;
@@ -80,6 +81,7 @@ function reducePage({ elements, ...rest }: PageV29): PageV30 {
 }
 
 function updateElement(element: UnionElementV29): UnionElementV30 {
+  // @todo How to make TS understand it's a video element? Assigning type: 'video' and checking that doesn't work.
   if (
     'resource' in element &&
     'id' in element.resource &&
