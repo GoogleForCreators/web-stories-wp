@@ -14,14 +14,58 @@
  * limitations under the License.
  */
 
-function fontObjects({ pages, ...rest }) {
+/**
+ * Internal dependencies
+ */
+import type {
+  GifElementV14,
+  ImageElementV14,
+  PageV14,
+  ProductElementV14,
+  ShapeElementV14,
+  StoryV14,
+  TextElementV14,
+  UnionElementV14,
+  VideoElementV14,
+} from './v0014_oneTapLinkDeprecate';
+
+export interface TextElementV15 extends Omit<TextElementV14, 'font'> {
+  font: {
+    service: string;
+    family: string;
+    fallbacks: string[];
+  };
+}
+
+export type ProductElementV15 = ProductElementV14;
+export type ShapeElementV15 = ShapeElementV14;
+export type ImageElementV15 = ImageElementV14;
+export type VideoElementV15 = VideoElementV14;
+export type GifElementV15 = GifElementV14;
+
+export type UnionElementV15 =
+  | ShapeElementV15
+  | ImageElementV15
+  | VideoElementV15
+  | GifElementV15
+  | TextElementV15
+  | ProductElementV15;
+
+export interface StoryV15 extends Omit<StoryV14, 'pages'> {
+  pages: PageV15[];
+}
+export interface PageV15 extends Omit<PageV14, 'elements'> {
+  elements: UnionElementV15[];
+}
+
+function fontObjects({ pages, ...rest }: StoryV14): StoryV15 {
   return {
     pages: pages.map(reducePage),
     ...rest,
   };
 }
 
-function reducePage({ elements, ...rest }) {
+function reducePage({ elements, ...rest }: PageV14): PageV15 {
   return {
     elements: elements.map(updateElement),
     ...rest,
@@ -50,14 +94,12 @@ const SYSTEM_FONTS = [
   'Verdana',
 ];
 
-function updateElement({ type, fontFamily, fontFallback, ...rest }) {
-  if ('text' !== type) {
-    return {
-      type,
-      ...rest,
-    };
+function updateElement(element: UnionElementV14): UnionElementV15 {
+  if (!('fontFamily' in element)) {
+    return element;
   }
 
+  const { fontFamily, fontFallback, ...rest } = element;
   const isSystemFont = SYSTEM_FONTS.includes(fontFamily);
 
   return {
@@ -66,7 +108,6 @@ function updateElement({ type, fontFamily, fontFallback, ...rest }) {
       family: fontFamily,
       fallbacks: fontFallback,
     },
-    type,
     ...rest,
   };
 }

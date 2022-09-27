@@ -40,7 +40,7 @@ export interface FontMetrics {
   lGap: number;
 }
 
-interface LinkV0 {
+export interface LinkV0 {
   url: string;
   desc?: string;
   needsProxy?: boolean;

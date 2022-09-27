@@ -14,12 +14,52 @@
  * limitations under the License.
  */
 
-function pageAdvancement({ autoAdvance, defaultPageDuration, ...rest }) {
+/**
+ * Internal dependencies
+ */
+import type {
+  GifElementV10,
+  ImageElementV10,
+  PageV10,
+  ProductElementV10,
+  ShapeElementV10,
+  StoryV10,
+  TextElementV10,
+  VideoElementV10,
+} from './v0010_dataPixelTo440';
+
+export type TextElementV11 = TextElementV10;
+export type ProductElementV11 = ProductElementV10;
+export type ShapeElementV11 = ShapeElementV10;
+export type ImageElementV11 = ImageElementV10;
+export type VideoElementV11 = VideoElementV10;
+export type GifElementV11 = GifElementV10;
+
+export type UnionElementV11 =
+  | ShapeElementV11
+  | ImageElementV11
+  | VideoElementV11
+  | GifElementV11
+  | TextElementV11
+  | ProductElementV11;
+
+export interface StoryV11 extends Omit<StoryV10, 'pages'> {
+  pages: PageV11[];
+  autoAdvance: boolean;
+  defaultPageDuration: number;
+}
+export interface PageV11 extends Omit<PageV10, 'elements'> {
+  elements: UnionElementV11[];
+}
+
+function pageAdvancement(story: StoryV10): StoryV11 {
+  if ('autoAdvance' in story && 'defaultPageDuration' in story) {
+    return story as StoryV11;
+  }
   return {
-    autoAdvance: typeof autoAdvance !== 'undefined' ? autoAdvance : true,
-    defaultPageDuration:
-      typeof defaultPageDuration === 'number' ? defaultPageDuration : 7,
-    ...rest,
+    autoAdvance: true,
+    defaultPageDuration: 7,
+    ...story,
   };
 }
 
