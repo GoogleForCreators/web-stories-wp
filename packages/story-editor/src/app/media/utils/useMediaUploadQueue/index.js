@@ -82,6 +82,7 @@ function useMediaUploadQueue() {
   const { isConsideredOptimized } = useMediaInfo();
 
   const [state, actions] = useReduction(initialState, reducer);
+
   const { uploadVideoPoster } = useUploadVideoFrame({
     updateMediaElement: noop,
   });
@@ -875,7 +876,7 @@ function useMediaUploadQueue() {
      */
     const isBatchUploading = (batchId) => {
       return state.queue.some(
-        (item) => item.state.additionalData?.batchId === batchId
+        (item) => item.additionalData?.batchId === batchId
       );
     };
 
