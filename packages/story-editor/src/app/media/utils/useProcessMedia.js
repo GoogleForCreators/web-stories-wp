@@ -587,7 +587,15 @@ function useProcessMedia({
         segmentTime,
         oldResource.length
       );
-      await uploadMedia(segmentedFiles, { onUploadSuccess: handleSegmented });
+
+      const onUploadError = (err) => {
+        // eslint-disable-next-line no-console -- temp remove this
+        console.log('error', err);
+      };
+      await uploadMedia(segmentedFiles, {
+        onUploadSuccess: handleSegmented,
+        onUploadError,
+      });
       return segmentedFiles;
     },
     [uploadMedia, ffSegmentVideo]

@@ -304,8 +304,9 @@ function useFFmpeg() {
           keyframes.push(i);
         }
 
-        const forceKeyframes = keyframes.join(',');
-
+        // const forceKeyframes = keyframes.join(',');
+        // test code to use forced keyframes
+        /*
         await ffmpeg.run(
           '-i',
           file.name,
@@ -317,6 +318,21 @@ function useFFmpeg() {
           'segment',
           '-segment_times',
           `${forceKeyframes}`,
+          '-reset_timestamps',
+          '1',
+          outputFileName
+        );
+        */
+
+        await ffmpeg.run(
+          '-i',
+          file.name,
+          '-c',
+          'copy',
+          '-f',
+          'segment',
+          '-segment_time',
+          `${segmentTime}`,
           '-reset_timestamps',
           '1',
           outputFileName
