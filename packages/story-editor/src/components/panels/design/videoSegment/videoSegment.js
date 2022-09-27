@@ -42,7 +42,6 @@ import { getCommonValue } from '../../shared';
 import { useLocalMedia } from '../../../../app/media';
 import { useStory } from '../../../../app/story';
 import useInsertElement from '../../../canvas/useInsertElement';
-import useMediaUploadQueue from '../../../../app/media/utils/useMediaUploadQueue';
 
 const Row = styled(DefaultRow)`
   margin-top: 2px;
@@ -95,16 +94,17 @@ function VideoSegmentPanel({ pushUpdate, selectedElements }) {
     })
   );
 
-  const { segmentVideo } = useLocalMedia(({ actions: { segmentVideo } }) => ({
-    segmentVideo,
-  }));
-
-  const {
-    state: { isBatchUploading },
-  } = useMediaUploadQueue();
+  const { isBatchUploading, segmentVideo } = useLocalMedia(
+    ({ state: { isBatchUploading }, actions: { segmentVideo } }) => ({
+      segmentVideo,
+      isBatchUploading,
+    })
+  );
 
   const [isSegmenting, setIsSegmenting] = useState();
   const [segmentedFiles, setSegmentedFiles] = useState([]);
+  const [segmentElementId, setSegmentElementId] = useState();
+  const [segmentPageId, setSegmentPageId] = useState();
   const [batchCount, setBatchCount] = useState(); // remove this one useEffect + queue check works
   const showSnackbar = useSnackbar(({ showSnackbar }) => showSnackbar);
 
@@ -113,18 +113,18 @@ function VideoSegmentPanel({ pushUpdate, selectedElements }) {
     : __('Segment', 'web-stories');
 
   const addElementsToPages = useCallback(() => {
+    if (!segmentPageId || !segmentElementId) {
+      return;
+    }
+
     showSnackbar({
       message: __('Inserting video segments', 'web-stories'),
       dismissible: false,
     });
+
     let newElement;
     const pageIds = pages.map(({ id }) => id);
-    const originalPageIndex = pageIds.indexOf(currentPage.id);
-
-    // @todo
-    // elementId should be the original items selected
-    // originalPageIndex should be the page id of the orginal element
-    // set x, y, width, height props
+    const originalPageIndex = pageIds.indexOf(segmentPageId);
 
     segmentedFiles.forEach((segmentedResource, index) => {
       if (index >= 1) {
@@ -147,7 +147,7 @@ function VideoSegmentPanel({ pushUpdate, selectedElements }) {
         });
       } else {
         // remove the original non-segmented element
-        deleteElementById({ elementId: elementId });
+        deleteElementById({ elementId: segmentElementId });
         newElement = insertElement(ELEMENT_TYPES.VIDEO, {
           resource: segmentedResource,
         });
@@ -161,27 +161,32 @@ function VideoSegmentPanel({ pushUpdate, selectedElements }) {
     });
     setSelectedElementsById({ elementIds: [newElement.id] });
     setIsSegmenting(false);
+    setSegmentElementId(null);
+    setSegmentPageId(null);
+    batchCount(null);
   }, [
     segmentedFiles,
     showSnackbar,
     pages,
-    currentPage,
-    elementId,
     addPageAt,
     insertElement,
     setSelectedElementsById,
     deleteElementById,
+    segmentElementId,
+    segmentPageId,
+    batchCount,
   ]);
 
   const handleSegmentation = useCallback(async () => {
     setIsSegmenting(true);
+    setSegmentElementId(elementId);
+    setSegmentPageId(currentPage.id);
     showSnackbar({
       message: __('Video segmentation in progress', 'web-stories'),
       dismissible: true,
     });
 
     const files = [];
-
     await segmentVideo(
       { resource, segmentTime },
       ({ resource: newResource, batchPosition, batchCount: count }) => {
@@ -190,7 +195,15 @@ function VideoSegmentPanel({ pushUpdate, selectedElements }) {
         setBatchCount(count); // remove this one useEffect + queue check works
       }
     );
-  }, [showSnackbar, segmentVideo, segmentTime, resource, setSegmentedFiles]);
+  }, [
+    elementId,
+    currentPage,
+    showSnackbar,
+    segmentVideo,
+    segmentTime,
+    resource,
+    setSegmentedFiles,
+  ]);
 
   useEffect(() => {
     // @todo replace this with isBatchUploading check
@@ -200,8 +213,11 @@ function VideoSegmentPanel({ pushUpdate, selectedElements }) {
     ) {
       addElementsToPages();
     }
-    isBatchUploading('123'); // @todo get proper batchId here
-  }, [batchCount, segmentedFiles, isBatchUploading, addElementsToPages]);
+    if (!isBatchUploading('123')) {
+      // @todo get proper batchId here
+      //
+    }
+  }, [batchCount, segmentedFiles, addElementsToPages, isBatchUploading]);
 
   if (!enableSegmentVideo || resource.length <= MIN_SEGMENT_LENGTH) {
     return null;

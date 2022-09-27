@@ -78,6 +78,7 @@ function useUploadMedia({
       isCurrentResourceTranscoding,
       isCurrentResourceMuting,
       isCurrentResourceTrimming,
+      isBatchUploading,
       canTranscodeResource,
     },
     actions: { addItem, removeItem, finishItem },
@@ -389,6 +390,7 @@ function useUploadMedia({
     isCurrentResourceTranscoding,
     isCurrentResourceMuting,
     isCurrentResourceTrimming,
+    isBatchUploading,
     canTranscodeResource,
   };
 }

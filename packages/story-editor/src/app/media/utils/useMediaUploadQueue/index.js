@@ -875,7 +875,7 @@ function useMediaUploadQueue() {
      */
     const isBatchUploading = (batchId) => {
       return state.queue.some(
-        (item) => item.state.additionalData.batchId === batchId
+        (item) => item.state.additionalData?.batchId === batchId
       );
     };
 

@@ -145,6 +145,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     isCurrentResourceMuting,
     isCurrentResourceTrimming,
     canTranscodeResource,
+    isBatchUploading,
   } = useUploadMedia({
     media,
     prependMedia,
@@ -326,6 +327,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
       isCurrentResourceMuting,
       isCurrentResourceTrimming,
       canTranscodeResource,
+      isBatchUploading,
     },
     actions: {
       setNextPage,
