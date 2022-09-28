@@ -67,9 +67,9 @@ import removeFontProperties from './migrations/v0041_removeFontProperties';
 import removeTrackName from './migrations/v0042_removeTrackName';
 import removeTagNames from './migrations/v0043_removeTagNames';
 
-type MigrationFn = (storyData: Story) => Story;
+type MigrationFn<T, S> = (storyData: T) => S;
 
-const MIGRATIONS: Record<number, MigrationFn[]> = {
+const MIGRATIONS: Record<number, MigrationFn<any, any>[]> = {
   1: [storyDataArrayToObject],
   2: [dataPixelTo1080],
   3: [fullbleedToFill],

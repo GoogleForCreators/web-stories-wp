@@ -35,13 +35,26 @@ import type {
 export type TextElementV38 = TextElementV37;
 export type ProductElementV38 = ProductElementV37;
 export type ShapeElementV38 = Omit<ShapeElementV37, 'isDefaultBackground'>;
-export type ImageElementV38 = ImageElementV37;
-export type VideoElementV38 = VideoElementV37;
-export type GifElementV38 = GifElementV37;
 
-export type ImageResourceV38 = ImageResourceV37;
-export type VideoResourceV38 = VideoResourceV37;
-export type GifResourceV38 = GifResourceV37;
+export interface ImageResourceV38 extends Omit<ImageResourceV37, 'sizes'> {
+  sizes: Record<string, CamelCaseSize>;
+}
+export interface VideoResourceV38 extends Omit<VideoResourceV37, 'sizes'> {
+  sizes: Record<string, CamelCaseSize>;
+}
+export interface GifResourceV38 extends Omit<GifResourceV37, 'sizes'> {
+  sizes: Record<string, CamelCaseSize>;
+}
+
+export interface ImageElementV38 extends Omit<ImageElementV37, 'resource'> {
+  resource: ImageResourceV38;
+}
+export interface VideoElementV38 extends Omit<VideoElementV37, 'resource'> {
+  resource: VideoResourceV38;
+}
+export interface GifElementV38 extends Omit<GifElementV37, 'resource'> {
+  resource: GifResourceV38;
+}
 
 export type UnionElementV38 =
   | ShapeElementV38
@@ -55,6 +68,15 @@ interface Size {
   file: string;
   source_url: string;
   mime_type: string;
+  width: number;
+  height: number;
+}
+
+interface CamelCaseSize {
+  [index: string]: string | number;
+  file: string;
+  sourceUrl: string;
+  mimeType: string;
   width: number;
   height: number;
 }
@@ -94,11 +116,15 @@ export function snakeToCamelCase(string = ''): string {
     );
 }
 
-function snakeToCamelCaseObjectKeys(obj: Size): Size {
-  return Object.entries(obj).reduce((_obj: Size, [key, value]) => {
-    _obj[snakeToCamelCase(key)] = value;
-    return _obj as Size;
-  }, {});
+type Key = keyof CamelCaseSize;
+function snakeToCamelCaseObjectKeys(obj: Size): CamelCaseSize {
+  return Object.entries(obj).reduce(
+    (_obj: CamelCaseSize, [key, value]: [string, string | number]) => {
+      _obj[snakeToCamelCase(key) as Key] = value;
+      return _obj;
+    },
+    {} as CamelCaseSize
+  );
 }
 
 function updateElement(element: UnionElementV37): UnionElementV38 {
@@ -107,11 +133,19 @@ function updateElement(element: UnionElementV37): UnionElementV38 {
     'sizes' in element.resource &&
     element.resource.sizes
   ) {
+    const sizes: Record<string, CamelCaseSize> = {};
     for (const [key, value] of Object.entries(element.resource.sizes)) {
-      element.resource.sizes[key] = snakeToCamelCaseObjectKeys(value as Size);
+      sizes[key] = snakeToCamelCaseObjectKeys(value as Size);
     }
+    return {
+      ...element,
+      resource: {
+        ...element.resource,
+        sizes,
+      },
+    };
   }
-  return element;
+  return element as UnionElementV38;
 }
 
 export default camelCaseResourceSizes;

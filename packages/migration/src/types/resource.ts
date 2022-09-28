@@ -38,7 +38,7 @@ export interface ResourceV0 {
   src: string;
   width: number | string;
   height: number | string;
-  sizes: Record<string, SizeV0>;
+  sizes?: Record<string, SizeV0>;
   title?: string;
   baseColor?: number[];
   local?: boolean;
