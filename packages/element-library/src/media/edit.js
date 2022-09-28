@@ -31,7 +31,6 @@ import {
   getMediaSizePositionProps,
   calculateSrcSet,
 } from '@googleforcreators/media';
-import { BG_MIN_SCALE, BG_MAX_SCALE } from '@googleforcreators/animation';
 import {
   DisplayWithMask as WithMask,
   shouldDisplayBorder,
@@ -106,6 +105,8 @@ function MediaEdit({
   getProxiedUrl,
   updateElementById,
   zIndexCanvas,
+  scaleMin,
+  scaleMax,
 }) {
   const {
     id,
@@ -207,15 +208,12 @@ function MediaEdit({
   const handleWheel = useCallback(
     (evt) => {
       updateLocalProperties(({ scale: oldScale }) => ({
-        scale: Math.min(
-          BG_MAX_SCALE,
-          Math.max(BG_MIN_SCALE, oldScale + evt.deltaY)
-        ),
+        scale: Math.min(scaleMin, Math.max(scaleMax, oldScale + evt.deltaY)),
       }));
       evt.preventDefault();
       evt.stopPropagation();
     },
-    [updateLocalProperties]
+    [updateLocalProperties, scaleMin, scaleMax]
   );
 
   // Cancelable wheel events require a non-passive listener, which React
@@ -305,6 +303,8 @@ function MediaEdit({
         height={height}
         scale={scale || 100}
         zIndexCanvas={zIndexCanvas}
+        min={scaleMin}
+        max={scaleMax}
       />
     </Element>
   );
@@ -317,6 +317,8 @@ MediaEdit.propTypes = {
   getProxiedUrl: PropTypes.func,
   updateElementById: PropTypes.func,
   zIndexCanvas: PropTypes.object,
+  scaleMin: PropTypes.number.isRequired,
+  scaleMax: PropTypes.number.isRequired,
 };
 
 export default MediaEdit;

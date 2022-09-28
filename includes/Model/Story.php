@@ -27,11 +27,15 @@
 namespace Google\Web_Stories\Model;
 
 use Google\Web_Stories\Media\Image_Sizes;
+use Google\Web_Stories\Shopping\Product;
+use Google\Web_Stories\Shopping\Product_Meta;
 use Google\Web_Stories\Story_Post_Type;
 use WP_Post;
 
 /**
  * Class Story
+ *
+ * @phpstan-import-type ProductData from \Google\Web_Stories\Shopping\Product
  */
 class Story {
 	/**
@@ -112,6 +116,13 @@ class Story {
 	 * @phpstan-var array{0?: int, 1?: int}
 	 */
 	protected $poster_portrait_size = [];
+
+	/**
+	 * Array of product data.
+	 *
+	 * @var Product[]
+	 */
+	protected $products = [];
 
 	/**
 	 * Poster url - portrait.
@@ -224,6 +235,21 @@ class Story {
 				$this->publisher_logo_size = [ $width, $height ];
 				$this->publisher_logo      = $src;
 			}
+		}
+
+		/**
+		 * Product data.
+		 *
+		 * @var ProductData[]|false $products
+		 */
+		$products = get_post_meta( $this->id, Product_Meta::PRODUCTS_POST_META_KEY, true );
+
+		if ( \is_array( $products ) ) {
+			$product_objects = [];
+			foreach ( $products as $product ) {
+				$product_objects[] = Product::load_from_array( $product );
+			}
+			$this->products = $product_objects;
 		}
 
 		return true;
@@ -429,5 +455,16 @@ class Story {
 	 */
 	public function get_poster_portrait_size(): array {
 		return $this->poster_portrait_size;
+	}
+
+	/**
+	 * Get product data.
+	 *
+	 * @since 1.26.0
+	 *
+	 * @return Product[]
+	 */
+	public function get_products(): array {
+		return $this->products;
 	}
 }

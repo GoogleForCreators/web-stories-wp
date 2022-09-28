@@ -15,6 +15,14 @@
  */
 
 /**
+ * External dependencies
+ */
+import {
+  getElementOffsets,
+  getElementOrigin,
+} from '@googleforcreators/elements';
+
+/**
  * Internal dependencies
  */
 import {
@@ -25,7 +33,6 @@ import {
 import SimpleAnimation from '../../parts/simpleAnimation';
 import { EffectBackgroundPan } from '../backgroundPan';
 import { EffectBackgroundZoom } from '../backgroundZoom';
-import { getMediaOrigin, getMediaBoundOffsets } from '../../utils';
 
 const defaults = {
   fill: 'forwards',
@@ -50,10 +57,10 @@ export function EffectBackgroundPanAndZoom({
   const animationName = `direction-${panDir}-${zoomDirection}-${BACKGROUND_ANIMATION_EFFECTS.PAN_AND_ZOOM.value}`;
 
   // We have to move the origin with respect to the pan
-  // direction and the current media position relative to
+  // direction and the current element position relative to
   // the frame. This prevents area from ever being shown
-  // where the media does't fill the frame during scaling
-  const origin = getMediaOrigin(element && getMediaBoundOffsets({ element }));
+  // where the element does't fill the frame during scaling
+  const origin = getElementOrigin(element && getElementOffsets(element));
   const transformOrigin =
     {
       [DIRECTION.RIGHT_TO_LEFT]: {
