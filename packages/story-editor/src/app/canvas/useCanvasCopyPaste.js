@@ -79,7 +79,9 @@ function useCanvasGlobalKeys() {
 
   const uploadWithPreview = useUploadWithPreview();
   const insertElement = useInsertElement();
-  const pasteTextContent = usePasteTextContent(insertElement, DEFAULT_PRESET);
+  const pasteInserter = (content) =>
+    insertElement('text', { ...DEFAULT_PRESET, content });
+  const pasteTextContent = usePasteTextContent(pasteInserter);
 
   const copyCutHandler = useCallback(
     (evt) => {

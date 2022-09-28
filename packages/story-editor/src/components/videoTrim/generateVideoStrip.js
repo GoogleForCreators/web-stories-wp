@@ -17,47 +17,24 @@
 /**
  * External dependencies
  */
-import type { VideoResource } from '@googleforcreators/types';
+import {
+  getMediaSizePositionProps,
+  preloadVideo,
+  seekVideo,
+} from '@googleforcreators/media';
 
-/**
- * Internal dependencies
- */
-import getMediaSizePositionProps from './getMediaSizePositionProps';
-import preloadVideo from './preloadVideo';
-import seekVideo from './seekVideo';
-
-const CACHE: Map<string, string> = new Map();
-
-interface FlipSettings {
-  vertical: boolean;
-  horizontal: boolean;
-}
-
-// TODO(#12126): Use improved Element type from shared package.
-interface Element {
-  width: number;
-  height: number;
-  scale: number;
-  focalX: number;
-  focalY: number;
-  flip: FlipSettings;
-}
+const CACHE = new Map();
 
 /**
  * Returns an image data URL with a video strip of the frames of the video.
  *
- * @param element Canvas element with information about size, scale, and focal point.
- * @param resource Resource object with url and video length.
- * @param stripWidth Target strip width.
- * @param stripHeight Video src URL.
- * @return The video strip as a data URL or null if there was an error.
+ * @param {Object} element Canvas element with information about size, scale, and focal point.
+ * @param {Object} resource Resource object with url and video length.
+ * @param {number} stripWidth Target strip width.
+ * @param {number} stripHeight Video src URL.
+ * @return {Promise<string|null>} The video strip as a data URL or null if there was an error.
  */
-async function generateVideoStrip(
-  element: Element,
-  resource: VideoResource,
-  stripWidth: number,
-  stripHeight: number
-) {
+async function generateVideoStrip(element, resource, stripWidth, stripHeight) {
   const {
     width: frameWidth,
     height: frameHeight,
@@ -140,7 +117,7 @@ async function generateVideoStrip(
   // Create a function to grab the current frame and either schedule next or abort
   let timeOffset = 0;
   let frame = 0;
-  const grabFrame: () => Promise<void> = async () => {
+  const grabFrame = async () => {
     // Seek to the next offset
     await seekVideo(video, timeOffset);
 
