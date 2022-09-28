@@ -102,13 +102,10 @@ const StoryAmpValidationErrors = () => {
     let isMounted = true;
     if (!isSaving) {
       if (!isPublic) {
-        setIsRendered(true);
         return () => {
           isMounted = false;
         };
       }
-
-      // TODO: Do not call if freshly set to password protected and story has never been saved yet (and thus 404s).
 
       getStoryAmpValidationErrors(link).then((hasErrors) => {
         if (isMounted) {

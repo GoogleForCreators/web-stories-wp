@@ -241,8 +241,7 @@ class Discovery extends DependencyInjectedTestCase {
 	 * @covers ::get_product_data
 	 */
 	public function test_get_product_data(): void {
-
-		$product_data = [
+		$product_object = \Google\Web_Stories\Shopping\Product::load_from_array(
 			[
 				'aggregateRating'      => [
 					'ratingValue' => 5,
@@ -265,10 +264,10 @@ class Discovery extends DependencyInjectedTestCase {
 				'productPriceCurrency' => 'USD',
 				'productTitle'         => 'T-Shirt with Logo',
 				'productUrl'           => 'http://www.example.com/product/t-shirt-with-logo',
-			],
-		];
+			]
+		);
 
-		$result = $this->call_private_method( $this->instance, 'get_product_data', [ $product_data ] );
+		$result = $this->call_private_method( $this->instance, 'get_product_data', [ [ $product_object ] ] );
 
 		$expected = [
 			'products' =>

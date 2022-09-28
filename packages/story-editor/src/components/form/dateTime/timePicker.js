@@ -255,7 +255,7 @@ function TimePicker({ onChange, is12Hour, localData, setLocalData }) {
               </PMButton>
             </InputGroup>
           )}
-          <TimeZone date={localData?.date} />
+          <TimeZone />
         </InputRow>
       </Fieldset>
     </TimeWrapper>

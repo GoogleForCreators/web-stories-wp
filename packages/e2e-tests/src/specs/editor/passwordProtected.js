@@ -61,8 +61,6 @@ describe('Password protected stories', () => {
     const editorPage = page;
     const previewPage = await previewStory(editorPage);
 
-    await previewPage.screenshot({ path: 'build/password-page.png' });
-
     await expect(previewPage).not.toMatch('Page not found');
 
     await previewPage.waitForSelector('input[name="post_password"]');
