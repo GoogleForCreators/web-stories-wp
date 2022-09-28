@@ -36,6 +36,8 @@ use WP_Post;
 /**
  * Class Story
  *
+ * @SuppressWarnings(PHPMD.TooManyFields)
+ *
  * @phpstan-import-type VideoData from \Google\Web_Stories\Model\Video
  * @phpstan-import-type ProductData from \Google\Web_Stories\Shopping\Product
  */
@@ -199,8 +201,21 @@ class Story {
 		$this->markup  = $post->post_content;
 		$this->url     = (string) get_permalink( $post );
 
-		$thumbnail_id = (int) get_post_thumbnail_id( $post );
+		$this->load_poster_from_post();
+		$this->load_videos_from_post();
+		$this->load_publisher_logo_from_post();
+		$this->load_products_from_post();
 
+		return true;
+	}
+
+	/**
+	 * Load poster from post meta
+	 *
+	 * @since 1.26.0
+	 */
+	protected function load_poster_from_post(): void {
+		$thumbnail_id = (int) get_post_thumbnail_id( $this->id );
 		if ( 0 !== $thumbnail_id ) {
 			$poster_src = wp_get_attachment_image_src( $thumbnail_id, Image_Sizes::POSTER_PORTRAIT_IMAGE_SIZE );
 
@@ -222,13 +237,20 @@ class Story {
 			 *
 			 * @var array{url?:string, width?: int, height?: int}|false $poster
 			 */
-			$poster = get_post_meta( $post->ID, Story_Post_Type::POSTER_META_KEY, true );
+			$poster = get_post_meta( $this->id, Story_Post_Type::POSTER_META_KEY, true );
 			if ( ! empty( $poster ) ) {
 				$this->poster_portrait      = $poster['url'];
 				$this->poster_portrait_size = [ (int) $poster['width'], (int) $poster['height'] ];
 			}
 		}
+	}
 
+	/**
+	 * Load videos from post meta.
+	 *
+	 * @since 1.26.0
+	 */
+	protected function load_videos_from_post(): void {
 		/**
 		 * Video data.
 		 *
@@ -243,6 +265,14 @@ class Story {
 			}
 			$this->set_videos( $videos_objects );
 		}
+	}
+
+	/**
+	 * Load publisher logo from post meta.
+	 *
+	 * @since 1.26.0
+	 */
+	protected function load_publisher_logo_from_post(): void {
 
 		/**
 		 * Publisher logo ID.
@@ -260,7 +290,14 @@ class Story {
 				$this->publisher_logo      = $src;
 			}
 		}
+	}
 
+	/**
+	 * Load product data from post meta.
+	 *
+	 * @since 1.26.0
+	 */
+	protected function load_products_from_post(): void {
 		/**
 		 * Product data.
 		 *
@@ -275,8 +312,6 @@ class Story {
 			}
 			$this->products = $product_objects;
 		}
-
-		return true;
 	}
 
 	/**
@@ -497,9 +532,9 @@ class Story {
 	 */
 	public function get_videos(): array {
 		return $this->videos;
-  }
-  
-  /**
+	}
+
+	/**
 	 * Get product data.
 	 *
 	 * @since 1.26.0
