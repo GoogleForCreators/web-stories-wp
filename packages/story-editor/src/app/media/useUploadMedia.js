@@ -177,14 +177,12 @@ function useUploadMedia({
           id: resourceId,
           resource: resource,
           batchPosition: additionalData?.batchPosition,
-          batchCount: additionalData?.batchCount, // @todo remove batch count once batchId works
         });
         if (previousResourceId) {
           onUploadSuccess({
             id: previousResourceId,
             resource: resource,
             batchPosition: additionalData?.batchPosition,
-            batchCount: additionalData?.batchCount, // @todo remove batch count once batchId works
           });
         }
       }
@@ -352,7 +350,6 @@ function useUploadMedia({
             additionalData: {
               ...additionalData,
               batchPosition: files.length - 1 - index,
-              batchCount: files.length, // @todo remove batch count once batchId works
               batchId,
             },
             posterFile,

@@ -94,17 +94,20 @@ function VideoSegmentPanel({ pushUpdate, selectedElements }) {
     })
   );
 
-  const { isBatchUploading, segmentVideo } = useLocalMedia(
-    ({ state: { isBatchUploading }, actions: { segmentVideo } }) => ({
+  const { isBatchUploading, segmentVideo, isUploading } = useLocalMedia(
+    ({
+      state: { isBatchUploading, isUploading },
+      actions: { segmentVideo },
+    }) => ({
       segmentVideo,
       isBatchUploading,
+      isUploading,
     })
   );
 
   const [isSegmenting, setIsSegmenting] = useState();
   const [isAddingElements, setIsAddingElements] = useState(false);
   const [segmentedFiles, setSegmentedFiles] = useState([]);
-  const [batchCount, setBatchCount] = useState();
   const [segmentElementId, setSegmentElementId] = useState();
   const [segmentPageId, setSegmentPageId] = useState();
 
@@ -180,10 +183,9 @@ function VideoSegmentPanel({ pushUpdate, selectedElements }) {
     const files = [];
     const result = await segmentVideo(
       { resource, segmentTime },
-      ({ resource: newResource, batchPosition, batchCount: count }) => {
+      ({ resource: newResource, batchPosition }) => {
         files[batchPosition] = newResource;
         setSegmentedFiles([...files]);
-        setBatchCount(count);
       }
     );
 
@@ -204,17 +206,15 @@ function VideoSegmentPanel({ pushUpdate, selectedElements }) {
   ]);
 
   useEffect(() => {
-    if (!isBatchUploading('123')) {
-      // @todo replace will real check
-    }
-    // replace this with isBatchUploading check
+    // @todo pull real batchId
     if (
-      segmentedFiles.length === batchCount &&
-      !segmentedFiles.includes(undefined)
+      !isBatchUploading('123') &&
+      !isUploading &&
+      segmentedFiles.length >= 1
     ) {
       addElementsToPages();
     }
-  }, [isBatchUploading, segmentedFiles, batchCount, addElementsToPages]);
+  }, [isBatchUploading, isUploading, segmentedFiles, addElementsToPages]);
 
   if (!enableSegmentVideo || resource.length <= MIN_SEGMENT_LENGTH) {
     return null;
