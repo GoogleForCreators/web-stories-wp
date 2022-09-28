@@ -261,7 +261,7 @@ function useUploadMedia({
      * @param {Blob} args.posterFile Blob object of poster.
      * @param {number} args.originalResourceId Original resource id.
      * @param {string} args.elementId ID of element on the canvas.
-     * @return {void}
+     * @return {string|null} Batch ID of the uploaded files on success, null otherwise.
      */
     async (
       files,
@@ -282,7 +282,7 @@ function useUploadMedia({
     ) => {
       // If there are no files passed, don't try to upload.
       if (!files?.length) {
-        return;
+        return null;
       }
 
       const batchId = uuidv4();
@@ -362,6 +362,8 @@ function useUploadMedia({
           });
         })
       );
+
+      return batchId;
     },
     [
       showSnackbar,

@@ -94,17 +94,14 @@ function VideoSegmentPanel({ pushUpdate, selectedElements }) {
     })
   );
 
-  const { isBatchUploading, segmentVideo, isUploading } = useLocalMedia(
-    ({
-      state: { isBatchUploading, isUploading },
-      actions: { segmentVideo },
-    }) => ({
+  const { isBatchUploading, segmentVideo } = useLocalMedia(
+    ({ state: { isBatchUploading }, actions: { segmentVideo } }) => ({
       segmentVideo,
       isBatchUploading,
-      isUploading,
     })
   );
 
+  const [batchId, setBatchId] = useState();
   const [isSegmenting, setIsSegmenting] = useState();
   const [isAddingElements, setIsAddingElements] = useState(false);
   const [segmentedFiles, setSegmentedFiles] = useState([]);
@@ -181,7 +178,7 @@ function VideoSegmentPanel({ pushUpdate, selectedElements }) {
     });
 
     const files = [];
-    const result = await segmentVideo(
+    const batchId_ = await segmentVideo(
       { resource, segmentTime },
       ({ resource: newResource, batchPosition }) => {
         files[batchPosition] = newResource;
@@ -189,13 +186,18 @@ function VideoSegmentPanel({ pushUpdate, selectedElements }) {
       }
     );
 
-    if (!result) {
+    if (!batchId_) {
       showSnackbar({
         message: __('Segmentation failed', 'web-stories'),
         dismissible: true,
       });
+
       setIsSegmenting(false);
+
+      return;
     }
+
+    setBatchId(batchId_);
   }, [
     elementId,
     currentPage,
@@ -206,15 +208,10 @@ function VideoSegmentPanel({ pushUpdate, selectedElements }) {
   ]);
 
   useEffect(() => {
-    // @todo pull real batchId
-    if (
-      !isBatchUploading('123') &&
-      !isUploading &&
-      segmentedFiles.length >= 1
-    ) {
+    if (!isBatchUploading(batchId) && segmentedFiles.length >= 1) {
       addElementsToPages();
     }
-  }, [isBatchUploading, isUploading, segmentedFiles, addElementsToPages]);
+  }, [isBatchUploading, segmentedFiles, addElementsToPages, batchId]);
 
   if (!enableSegmentVideo || resource.length <= MIN_SEGMENT_LENGTH) {
     return null;
