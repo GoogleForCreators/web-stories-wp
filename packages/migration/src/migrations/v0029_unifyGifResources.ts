@@ -36,7 +36,7 @@ export type ShapeElementV29 = ShapeElementV28;
 export type ImageElementV29 = ImageElementV28;
 export type VideoElementV29 = VideoElementV28;
 
-interface GifResourceV29 extends ResourceV0 {
+export interface GifResourceV29 extends ResourceV0 {
   type: ResourceType.Gif;
   output: {
     mimeType: string;

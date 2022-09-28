@@ -27,12 +27,19 @@ interface ResourceSizeV0 {
   height: number | string;
 }
 
+interface SizeV0 {
+  width: string | number;
+  height: string | number;
+  source_url: string;
+}
 export interface ResourceV0 {
   type: ResourceType;
   mimeType: string;
   src: string;
   width: number | string;
   height: number | string;
+  sizes: Record<string, SizeV0>;
+  title?: string;
 }
 
 export interface ImageResourceV0 extends ResourceV0 {

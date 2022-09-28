@@ -92,6 +92,11 @@ export interface PageV0 {
     id: number;
     mimeType: string;
   };
+  pageAttachment?: {
+    url: string;
+    ctaText?: string;
+  };
+  overlay: string;
 }
 
 export type StoryV0 = PageV0[];
