@@ -41,6 +41,10 @@ export interface ResourceV0 {
   sizes: Record<string, SizeV0>;
   title?: string;
   baseColor?: number[];
+  local?: boolean;
+  isTrimming?: boolean;
+  isTranscoding?: boolean;
+  isMuting?: boolean;
 }
 
 export interface ImageResourceV0 extends ResourceV0 {
