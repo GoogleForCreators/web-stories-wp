@@ -426,10 +426,6 @@ export function finishCropping(
             file,
             posterFile,
             state: ITEM_STATUS.CROPPED,
-            resource: {
-              ...item.resource,
-              isCropped: true,
-            },
             additionalData: {
               ...item.additionalData,
               ...additionalData,
