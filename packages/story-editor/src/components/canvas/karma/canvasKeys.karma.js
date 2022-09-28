@@ -154,6 +154,7 @@ describe('Canvas Keyboard Shortcuts', () => {
     await fixture.events.keyboard.shortcut('mod+enter');
 
     // check that 'Play Animation' toggle button is there
+    await fixture.events.sleep(1000);
     toggle = fixture.screen.getByLabelText('Play Page Animations');
     expect(toggle).toBeDefined();
   });
