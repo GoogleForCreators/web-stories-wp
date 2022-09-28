@@ -27,6 +27,6 @@ export interface Story {
       src: string;
       id: number;
       mimeType: string;
-    }
-  }
+    };
+  };
 }
