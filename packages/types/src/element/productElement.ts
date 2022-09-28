@@ -36,7 +36,7 @@ export interface ProductElement extends Element {
   product: Product;
 }
 export interface ShoppingAttachmentType {
-  products?: ProductElement;
+  products?: Product[];
   ctaText?: string;
   theme?: string;
 }

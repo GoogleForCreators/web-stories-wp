@@ -35,7 +35,7 @@ export interface Font {
   service?: string;
   weights?: FontWeight[];
   styles?: FontStyle[];
-  variants?: FontVariant[];
+  variants: FontVariant[];
   fallbacks?: string[];
   url?: string;
 }

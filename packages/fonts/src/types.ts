@@ -17,4 +17,5 @@
 export interface Font {
   family: string;
   variants: Array<[number, number]>;
+  url?: string;
 }

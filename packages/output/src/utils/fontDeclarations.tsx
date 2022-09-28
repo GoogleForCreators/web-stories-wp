@@ -107,16 +107,17 @@ function FontDeclarations({ pages }: Pick<Story, 'pages'>) {
   return (
     <>
       {Array.from(map.keys()).map((service: string) => {
-        const serviceMap: Map<string, Font> | undefined = map.get(service);
+        const serviceMap: Map<string, Font> = map.get(service) as Map<
+          string,
+          Font
+        >;
         switch (service) {
           case 'fonts.google.com':
             return (
               serviceMap && (
                 <link
                   key={service}
-                  href={
-                    getGoogleFontURL(Array.from(serviceMap.values())) as string
-                  }
+                  href={getGoogleFontURL(Array.from(serviceMap.values()))}
                   rel="stylesheet"
                 />
               )
@@ -125,7 +126,10 @@ function FontDeclarations({ pages }: Pick<Story, 'pages'>) {
             return (
               serviceMap &&
               Array.from(serviceMap.values()).map(({ family, url }: Font) => {
-                const inlineStyle: string = getFontCSS(family, url) as string;
+                const inlineStyle: string = getFontCSS(
+                  family,
+                  url as string
+                ) as string;
                 return (
                   <style
                     key={family}
