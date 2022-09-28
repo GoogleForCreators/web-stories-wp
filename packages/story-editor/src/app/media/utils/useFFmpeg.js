@@ -398,7 +398,11 @@ function useFFmpeg() {
           type
         );
       } catch (err) {
+        // eslint-disable-next-line no-console -- We want to surface this error.
+        console.log(err);
+
         trackError('trim_video_transcoding', err.message);
+
         throw err;
       } finally {
         try {
