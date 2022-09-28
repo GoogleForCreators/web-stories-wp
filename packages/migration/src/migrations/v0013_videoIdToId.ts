@@ -85,7 +85,7 @@ function updateElement(element: UnionElementV12): UnionElementV13 {
     return {
       ...element,
       resource: updatedResource,
-    };
+    } as VideoElementV13;
   }
   return element;
 }
