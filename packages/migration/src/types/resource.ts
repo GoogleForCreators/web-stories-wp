@@ -40,6 +40,7 @@ export interface ResourceV0 {
   height: number | string;
   sizes: Record<string, SizeV0>;
   title?: string;
+  isExternal?: boolean;
 }
 
 export interface ImageResourceV0 extends ResourceV0 {
