@@ -14,22 +14,70 @@
  * limitations under the License.
  */
 
-function removeTagNames({ pages, ...rest }) {
+/**
+ * Internal dependencies
+ */
+import type {
+  GifResourceV42,
+  ImageResourceV42,
+  VideoResourceV42,
+  GifElementV42,
+  ImageElementV42,
+  PageV42,
+  ProductElementV42,
+  ShapeElementV42,
+  StoryV42,
+  TextElementV42,
+  VideoElementV42,
+  UnionElementV42,
+} from './v0042_removeTrackName';
+
+export type TextElementV43 = TextElementV42;
+export type ProductElementV43 = ProductElementV42;
+export type ShapeElementV43 = ShapeElementV42;
+export type ImageElementV43 = ImageElementV42;
+export type VideoElementV43 = VideoElementV42;
+export type GifElementV43 = GifElementV42;
+
+export type ImageResourceV43 = ImageResourceV42;
+export type VideoResourceV43 = VideoResourceV42;
+export type GifResourceV43 = GifResourceV42;
+
+export type UnionElementV43 =
+  | ShapeElementV43
+  | ImageElementV43
+  | VideoElementV43
+  | GifElementV43
+  | TextElementV43
+  | ProductElementV43;
+
+export interface StoryV43 extends Omit<StoryV42, 'pages'> {
+  pages: PageV43[];
+}
+
+export interface PageV43 extends Omit<PageV42, 'elements'> {
+  elements: UnionElementV43[];
+}
+
+function removeTagNames({ pages, ...rest }: StoryV42): StoryV43 {
   return {
     pages: pages.map(reducePage),
     ...rest,
   };
 }
 
-function reducePage({ elements, ...rest }) {
+function reducePage({ elements, ...rest }: PageV42): PageV43 {
   return {
     elements: elements.map(updateElement),
     ...rest,
   };
 }
 
-function updateElement(element) {
-  delete element.tagName;
+function updateElement(element: UnionElementV42): UnionElementV43 {
+  if ('tagName' in element) {
+    const { tagName, ...rest } = element;
+    return rest;
+  }
   return element;
 }
 

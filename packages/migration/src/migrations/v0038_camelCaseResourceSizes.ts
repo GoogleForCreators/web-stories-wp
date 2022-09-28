@@ -97,7 +97,7 @@ export function snakeToCamelCase(string = ''): string {
 function snakeToCamelCaseObjectKeys(obj: Size): Size {
   return Object.entries(obj).reduce((_obj: Size, [key, value]) => {
     _obj[snakeToCamelCase(key)] = value;
-    return _obj;
+    return _obj as Size;
   }, {});
 }
 
@@ -108,7 +108,7 @@ function updateElement(element: UnionElementV37): UnionElementV38 {
     element.resource.sizes
   ) {
     for (const [key, value] of Object.entries(element.resource.sizes)) {
-      element.resource.sizes[key] = snakeToCamelCaseObjectKeys(value);
+      element.resource.sizes[key] = snakeToCamelCaseObjectKeys(value as Size);
     }
   }
   return element;

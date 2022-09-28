@@ -35,6 +35,9 @@ export interface TextElementV15
     service: string;
     family: string;
     fallbacks: string[];
+    id?: string;
+    name?: string;
+    value?: string;
   };
 }
 

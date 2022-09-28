@@ -14,7 +14,69 @@
  * limitations under the License.
  */
 
-function removeTrackName(storyData) {
+/**
+ * Internal dependencies
+ */
+import type {
+  GifResourceV41,
+  ImageResourceV41,
+  VideoResourceV41,
+  GifElementV41,
+  ImageElementV41,
+  PageV41,
+  ProductElementV41,
+  ShapeElementV41,
+  StoryV41,
+  TextElementV41,
+  VideoElementV41,
+} from './v0041_removeFontProperties';
+
+export type TextElementV42 = TextElementV41;
+export type ProductElementV42 = ProductElementV41;
+export type ShapeElementV42 = ShapeElementV41;
+export type ImageElementV42 = ImageElementV41;
+export type VideoElementV42 = VideoElementV41;
+export type GifElementV42 = GifElementV41;
+
+export type ImageResourceV42 = ImageResourceV41;
+export type VideoResourceV42 = VideoResourceV41;
+export type GifResourceV42 = GifResourceV41;
+
+export type UnionElementV42 =
+  | ShapeElementV42
+  | ImageElementV42
+  | VideoElementV42
+  | GifElementV42
+  | TextElementV42
+  | ProductElementV42;
+
+export interface StoryV42 extends Omit<StoryV41, 'pages'> {
+  pages: PageV42[];
+}
+
+interface Track {
+  track: string;
+  trackId: number;
+  id: string;
+  srcLang?: string;
+  label?: string;
+  kind: string;
+}
+
+export interface PageV42 extends Omit<PageV41, 'elements' | 'backgroundAudio'> {
+  elements: UnionElementV42[];
+  backgroundAudio?: {
+    loop: boolean;
+    resource: {
+      src: string;
+      id: number;
+      mimetype: string;
+    };
+    tracks: Track[];
+  };
+}
+
+function removeTrackName(storyData: StoryV41): StoryV42 {
   const { pages, ...rest } = storyData;
   return {
     pages: pages.map(updatePage),
@@ -22,14 +84,12 @@ function removeTrackName(storyData) {
   };
 }
 
-function updatePage(page) {
-  if (
-    page?.backgroundAudio?.tracks &&
-    page?.backgroundAudio?.tracks?.length > 0
-  ) {
-    page?.backgroundAudio?.tracks.map((track) => {
-      delete track.trackName;
-      return track;
+function updatePage(page: PageV41): PageV42 {
+  if ('backgroundAudio' in page && 'tracks' in page.backgroundAudio) {
+    // @todo Fix track type.
+    page.backgroundAudio.tracks.map((track) => {
+      const { trackName, ...rest } = track;
+      return rest;
     });
   }
   return page;

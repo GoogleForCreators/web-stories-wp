@@ -14,7 +14,71 @@
  * limitations under the License.
  */
 
-function backgroundAudioFormatting(storyData) {
+/**
+ * Internal dependencies
+ */
+import type {
+  GifResourceV38,
+  ImageResourceV38,
+  VideoResourceV38,
+  GifElementV38,
+  ImageElementV38,
+  PageV38,
+  ProductElementV38,
+  ShapeElementV38,
+  StoryV38,
+  TextElementV38,
+  VideoElementV38,
+} from './v0038_camelCaseResourceSizes';
+
+export type TextElementV39 = TextElementV38;
+export type ProductElementV39 = ProductElementV38;
+export type ShapeElementV39 = ShapeElementV38;
+export type ImageElementV39 = ImageElementV38;
+export type VideoElementV39 = VideoElementV38;
+export type GifElementV39 = GifElementV38;
+
+export type ImageResourceV39 = ImageResourceV38;
+export type VideoResourceV39 = VideoResourceV38;
+export type GifResourceV39 = GifResourceV38;
+
+export type UnionElementV39 =
+  | ShapeElementV39
+  | ImageElementV39
+  | VideoElementV39
+  | GifElementV39
+  | TextElementV39
+  | ProductElementV39;
+
+interface Track {
+  track: string;
+  trackId: number;
+  trackName: string;
+  id: string;
+  srcLang?: string;
+  label?: string;
+  kind: string;
+}
+
+interface BackgroundAudioResource {
+  src: string;
+  id: number;
+  mimetype: string;
+}
+interface BackgroundAudio {
+  resource: BackgroundAudioResource;
+  tracks: Track[];
+}
+export interface StoryV39 extends Omit<StoryV38, 'pages' | 'backgroundAudio'> {
+  pages: PageV39[];
+  backgroundAudio?: BackgroundAudio;
+}
+export interface PageV39 extends Omit<PageV38, 'elements' | 'backgroundAudio'> {
+  elements: UnionElementV39[];
+  backgroundAudio?: BackgroundAudio;
+}
+
+function backgroundAudioFormatting(storyData: StoryV38): StoryV39 {
   const updatedStoryData = updateStory(storyData);
   const { pages, ...rest } = updatedStoryData;
   return {
@@ -22,18 +86,18 @@ function backgroundAudioFormatting(storyData) {
     ...rest,
   };
 }
-function updateStory(story) {
-  if (story?.backgroundAudio) {
+function updateStory(story: StoryV38): StoryV39 {
+  if ('backgroundAudio' in story) {
     story.backgroundAudio = {
-      resource: story?.backgroundAudio,
+      resource: story?.backgroundAudio as BackgroundAudio,
     };
   }
   return story;
 }
-function updatePage(page) {
+function updatePage(page: PageV38): PageV39 {
   if (page?.backgroundAudio) {
     page.backgroundAudio = {
-      resource: page?.backgroundAudio,
+      resource: page.backgroundAudio as BackgroundAudioResource,
       loop: true,
       tracks: [],
     };

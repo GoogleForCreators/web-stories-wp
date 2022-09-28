@@ -14,14 +14,58 @@
  * limitations under the License.
  */
 
-function andadaFontToAndadaPro({ pages, ...rest }) {
+/**
+ * Internal dependencies
+ */
+import type {
+  GifResourceV39,
+  ImageResourceV39,
+  VideoResourceV39,
+  GifElementV39,
+  ImageElementV39,
+  PageV39,
+  ProductElementV39,
+  ShapeElementV39,
+  StoryV39,
+  TextElementV39,
+  UnionElementV39,
+  VideoElementV39,
+} from './v0039_backgroundAudioFormatting';
+
+export type TextElementV40 = TextElementV39;
+export type ProductElementV40 = ProductElementV39;
+export type ShapeElementV40 = ShapeElementV39;
+export type ImageElementV40 = ImageElementV39;
+export type VideoElementV40 = VideoElementV39;
+export type GifElementV40 = GifElementV39;
+
+export type ImageResourceV40 = ImageResourceV39;
+export type VideoResourceV40 = VideoResourceV39;
+export type GifResourceV40 = GifResourceV39;
+
+export type UnionElementV40 =
+  | ShapeElementV40
+  | ImageElementV40
+  | VideoElementV40
+  | GifElementV40
+  | TextElementV40
+  | ProductElementV40;
+
+export interface StoryV40 extends Omit<StoryV39, 'pages'> {
+  pages: PageV40[];
+}
+export interface PageV40 extends Omit<PageV39, 'elements'> {
+  elements: UnionElementV40[];
+}
+
+function andadaFontToAndadaPro({ pages, ...rest }: StoryV39): StoryV40 {
   return {
     pages: pages.map(reducePage),
     ...rest,
   };
 }
 
-function reducePage({ elements, ...rest }) {
+function reducePage({ elements, ...rest }: PageV39): PageV40 {
   return {
     elements: elements.map(updateElement),
     ...rest,
@@ -65,7 +109,7 @@ const andadaPro = {
   },
 };
 
-function updateElement(element) {
+function updateElement(element: UnionElementV39): UnionElementV40 {
   if ('font' in element && element.font?.family === 'Andada') {
     element.font = {
       ...element.font,
