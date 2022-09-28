@@ -124,37 +124,20 @@ function VideoSegmentPanel({ pushUpdate, selectedElements }) {
       let newElement;
       const pageIds = pages.map(({ id }) => id);
       const originalPageIndex = pageIds.indexOf(segmentPageId);
-
       segmentedFiles.forEach((segmentedResource, index) => {
         if (index >= 1) {
           const page = createPage();
           const position = originalPageIndex + index;
-          addPageAt({
-            page,
-            position,
-            select: false,
-          });
+          addPageAt({ page, position, select: false });
           insertElement(ELEMENT_TYPES.VIDEO, {
             pageId: page.id,
             resource: segmentedResource,
-          });
-          // @todo remove this ... add some text to help debug
-          insertElement(ELEMENT_TYPES.TEXT, {
-            content: segmentedResource.alt,
-            pageId: page.id,
-            y: 300,
           });
         } else {
           // remove the original non-segmented element
           deleteElementById({ elementId: segmentElementId });
           newElement = insertElement(ELEMENT_TYPES.VIDEO, {
             resource: segmentedResource,
-          });
-
-          // @todo remove this ... add some text to help debug
-          insertElement(ELEMENT_TYPES.TEXT, {
-            content: segmentedResource.alt,
-            y: 300,
           });
         }
       });

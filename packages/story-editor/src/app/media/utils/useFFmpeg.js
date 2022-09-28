@@ -303,36 +303,23 @@ function useFFmpeg() {
         for (let i = segmentTime; i < fileLength; i += segmentTime) {
           keyframes.push(i);
         }
+        const segmentTimes = keyframes.join(',');
 
-        // const forceKeyframes = keyframes.join(',');
-        // test code to use forced keyframes
-        /*
         await ffmpeg.run(
           '-i',
           file.name,
           '-c',
           'copy',
+          '-map',
+          '0',
           '-force_key_frames',
-          `${forceKeyframes}`,
+          `${segmentTimes}`,
           '-f',
           'segment',
           '-segment_times',
-          `${forceKeyframes}`,
-          '-reset_timestamps',
-          '1',
-          outputFileName
-        );
-        */
-
-        await ffmpeg.run(
-          '-i',
-          file.name,
-          '-c',
-          'copy',
-          '-f',
-          'segment',
-          '-segment_time',
-          `${segmentTime}`,
+          `${segmentTimes}`,
+          '-segment_time_delta', //account for possible roundings operated when setting key frame times.
+          `${(1 / (2 * FFMPEG_CONFIG.FPS[1])).toFixed(2)}`, //
           '-reset_timestamps',
           '1',
           outputFileName
