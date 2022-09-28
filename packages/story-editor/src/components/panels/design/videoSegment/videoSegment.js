@@ -229,11 +229,10 @@ function VideoSegmentPanel({ pushUpdate, selectedElements }) {
           minorStep={1}
           majorStep={5}
           min={MIN_SEGMENT_LENGTH}
-          max={
-            resource.length <= MAX_SEGMENT_LENGTH
-              ? resource.length - MIN_SEGMENT_LENGTH
-              : MAX_SEGMENT_LENGTH
-          }
+          max={Math.max(
+            MIN_SEGMENT_LENGTH,
+            Math.min(resource.length, MAX_SEGMENT_LENGTH)
+          )}
           aria-label={__('Segment length', 'web-stories')}
         />
         {sprintf(
