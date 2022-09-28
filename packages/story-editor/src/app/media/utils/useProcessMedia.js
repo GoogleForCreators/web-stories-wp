@@ -581,22 +581,23 @@ function useProcessMedia({
    */
   const segmentVideo = useCallback(
     async ({ resource: oldResource, segmentTime }, handleSegmented) => {
-      const { src: url, mimeType } = oldResource;
-      const segmentedFiles = await ffSegmentVideo(
-        await fetchRemoteFile(url, mimeType),
-        segmentTime,
-        oldResource.length
-      );
-
-      const onUploadError = (err) => {
-        // eslint-disable-next-line no-console -- temp remove this
-        console.log('error', err);
-      };
-      await uploadMedia(segmentedFiles, {
-        onUploadSuccess: handleSegmented,
-        onUploadError,
-      });
-      return segmentedFiles;
+      try {
+        const { src: url, mimeType } = oldResource;
+        const segmentedFiles = await ffSegmentVideo(
+          await fetchRemoteFile(url, mimeType),
+          segmentTime,
+          oldResource.length
+        );
+        await uploadMedia(segmentedFiles, {
+          onUploadSuccess: handleSegmented,
+        });
+        return segmentedFiles;
+      } catch (err) {
+        // eslint-disable-next-line no-console -- surface this error
+        console.log(err.message);
+        trackError('segment_video', err.message);
+        return false;
+      }
     },
     [uploadMedia, ffSegmentVideo]
   );

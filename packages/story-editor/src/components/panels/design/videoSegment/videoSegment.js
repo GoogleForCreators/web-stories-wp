@@ -168,7 +168,7 @@ function VideoSegmentPanel({ pushUpdate, selectedElements }) {
     });
 
     const files = [];
-    await segmentVideo(
+    const result = await segmentVideo(
       { resource, segmentTime },
       ({ resource: newResource, batchPosition, batchCount: count }) => {
         files[batchPosition] = newResource;
@@ -180,6 +180,14 @@ function VideoSegmentPanel({ pushUpdate, selectedElements }) {
         }
       }
     );
+
+    if (!result) {
+      showSnackbar({
+        message: __('Segmentation failed', 'web-stories'),
+        dismissible: true,
+      });
+      setIsSegmenting(false);
+    }
   }, [
     elementId,
     currentPage,
