@@ -35,13 +35,26 @@ import type {
 export type TextElementV35 = TextElementV34;
 export type ProductElementV35 = ProductElementV34;
 export type ShapeElementV35 = Omit<ShapeElementV34, 'isDefaultBackground'>;
-export type ImageElementV35 = ImageElementV34;
-export type VideoElementV35 = VideoElementV34;
-export type GifElementV35 = GifElementV34;
 
-export type ImageResourceV35 = ImageResourceV34;
-export type VideoResourceV35 = VideoResourceV34;
-export type GifResourceV35 = GifResourceV34;
+export interface ImageResourceV35 extends ImageResourceV34 {
+  isExternal?: boolean;
+}
+export interface VideoResourceV35 extends VideoResourceV34 {
+  isExternal?: boolean;
+}
+export interface GifResourceV35 extends GifResourceV34 {
+  isExternal?: boolean;
+}
+
+export interface ImageElementV35 extends Omit<ImageElementV34, 'resource'> {
+  resource: ImageResourceV35;
+}
+export interface VideoElementV35 extends Omit<VideoElementV34, 'resource'> {
+  resource: VideoResourceV35;
+}
+export interface GifElementV35 extends Omit<GifElementV34, 'resource'> {
+  resource: GifResourceV35;
+}
 
 export type UnionElementV35 =
   | ShapeElementV35
@@ -77,9 +90,21 @@ function updateElement(element: UnionElementV34): UnionElementV35 {
     if ('id' in element.resource && element.resource.id) {
       const resourceId = element.resource.id.toString();
       const is3pMedia = resourceId.startsWith('media/');
-      element.resource.isExternal = is3pMedia;
+      return {
+        ...element,
+        resource: {
+          ...element.resource,
+          isExternal: is3pMedia,
+        },
+      };
     } else {
-      element.resource.isExternal = true;
+      return {
+        ...element,
+        resource: {
+          ...element.resource,
+          isExternal: true,
+        },
+      };
     }
   }
   return element;
