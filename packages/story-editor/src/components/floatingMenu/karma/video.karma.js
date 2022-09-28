@@ -29,6 +29,7 @@ describe('Video Design Menu: Keyboard Navigation', () => {
     await fixture.render();
     await fixture.collapseHelpCenter();
     await fixture.showFloatingMenu();
+    await fixture.events.sleep(500);
 
     focusContainer = fixture.screen.getByTestId('canvas-focus-container');
   });
@@ -36,8 +37,8 @@ describe('Video Design Menu: Keyboard Navigation', () => {
   afterEach(() => {
     fixture.restore();
   });
-
-  it('should navigate into and out of floating menu by keyboard', async () => {
+  
+  fit('should navigate into and out of floating menu by keyboard', async () => {
     const elementUpdates = {
       opacity: {
         keyboard: '60',
