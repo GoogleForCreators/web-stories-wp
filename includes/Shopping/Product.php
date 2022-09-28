@@ -128,6 +128,140 @@ class Product implements JsonSerializable {
 	}
 
 	/**
+	 * Convert array to object properties.
+	 *
+	 * @since 1.26.0
+	 *
+	 * @param array<string, mixed> $product Array of product.
+	 * @return Product Product.
+	 *
+	 * @phpstan-param ProductData $product
+	 */
+	public static function load_from_array( array $product ): Product {
+		$product_object = new self();
+		$product_object->set_id( $product['productId'] ?? '' );
+		$product_object->set_title( $product['productTitle'] ?? '' );
+		$product_object->set_details( $product['productDetails'] ?? '' );
+		$product_object->set_brand( $product['productBrand'] ?? '' );
+		$product_object->set_url( $product['productUrl'] ?? '' );
+		$product_object->set_images( $product['productImages'] ?? [] );
+		$product_object->set_price( $product['productPrice'] ?? 0 );
+		$product_object->set_price_currency( $product['productPriceCurrency'] ?? '' );
+
+
+		if ( isset( $product['aggregateRating'] ) ) {
+			$product_object->set_aggregate_rating(
+				[
+					'rating_value' => $product['aggregateRating']['ratingValue'] ?? 0,
+					'review_count' => $product['aggregateRating']['reviewCount'] ?? 0,
+					'review_url'   => $product['aggregateRating']['reviewUrl'] ?? '',
+				]
+			);
+		}
+
+		return $product_object;
+	}
+
+	/**
+	 * Set id.
+	 *
+	 * @since 1.26.0
+	 *
+	 * @param string $id ID.
+	 */
+	protected function set_id( string $id ): void {
+		$this->id = $id;
+	}
+
+	/**
+	 * Set title.
+	 *
+	 * @since 1.26.0
+	 *
+	 * @param string $title Title.
+	 */
+	protected function set_title( string $title ): void {
+		$this->title = $title;
+	}
+
+	/**
+	 * Set brand.
+	 *
+	 * @since 1.26.0
+	 *
+	 * @param string $brand Brand.
+	 */
+	protected function set_brand( string $brand ): void {
+		$this->brand = $brand;
+	}
+
+	/**
+	 * Set price.
+	 *
+	 * @since 1.26.0
+	 *
+	 * @param float $price Price.
+	 */
+	protected function set_price( float $price ): void {
+		$this->price = $price;
+	}
+
+	/**
+	 * Set Price currency.
+	 *
+	 * @since 1.26.0
+	 *
+	 * @param string $price_currency Price Currency.
+	 */
+	protected function set_price_currency( string $price_currency ): void {
+		$this->price_currency = $price_currency;
+	}
+
+	/**
+	 * Set Images.
+	 *
+	 * @since 1.26.0
+	 *
+	 * @param array{url: string, alt: string}[] $images Images.
+	 */
+	protected function set_images( array $images ): void {
+		$this->images = $images;
+	}
+
+	/**
+	 * Set Details.
+	 *
+	 * @since 1.26.0
+	 *
+	 * @param string $details Deatils.
+	 */
+	protected function set_details( string $details ): void {
+		$this->details = $details;
+	}
+
+	/**
+	 * Set url.
+	 *
+	 * @since 1.26.0
+	 *
+	 * @param string $url URL.
+	 */
+	protected function set_url( string $url ): void {
+		$this->url = $url;
+	}
+
+	/**
+	 * Set aggregate rating.
+	 *
+	 * @since 1.26.0
+	 *
+	 * @param array{rating_value: float, review_count: int, review_url: string} $aggregate_rating Rating data in array.
+	 */
+	protected function set_aggregate_rating( array $aggregate_rating ): void {
+		$this->aggregate_rating = $aggregate_rating;
+	}
+
+	/**
 	 * Get id.
 	 *
 	 * @since 1.21.0

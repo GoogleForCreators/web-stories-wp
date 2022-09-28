@@ -32,15 +32,7 @@ import customExport from './customExport';
  * Compare this with `useHandlePastedText` that handles pasting text while being
  * in text edit-mode.
  */
-// @todo this really returns the inserted element and props is Partial<Element>, so is preset.
-function usePasteTextContent(
-  insertElement: (
-    type: string,
-    props: Record<string, unknown>,
-    asBackground?: boolean
-  ) => Record<string, unknown>,
-  preset: Record<string, unknown>
-) {
+function usePasteTextContent(insertElement: (content: string) => void) {
   return useCallback(
     (html: string) => {
       const blockMap = getPastedBlocks(html);
@@ -51,13 +43,10 @@ function usePasteTextContent(
       if (!validContent) {
         return false;
       }
-      insertElement('text', {
-        ...preset,
-        content: validContent,
-      });
+      insertElement(validContent);
       return true;
     },
-    [insertElement, preset]
+    [insertElement]
   );
 }
 

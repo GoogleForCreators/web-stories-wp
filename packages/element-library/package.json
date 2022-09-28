@@ -36,7 +36,6 @@
     "access": "public"
   },
   "dependencies": {
-    "@googleforcreators/animation": "*",
     "@googleforcreators/design-system": "*",
     "@googleforcreators/dom": "*",
     "@googleforcreators/elements": "*",
