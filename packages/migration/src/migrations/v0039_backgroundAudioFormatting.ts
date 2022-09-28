@@ -50,7 +50,7 @@ export type UnionElementV39 =
   | TextElementV39
   | ProductElementV39;
 
-interface Track {
+export interface AudioTrackV39 {
   track: string;
   trackId: number;
   trackName: string;
@@ -65,17 +65,17 @@ interface BackgroundAudioResource {
   id: number;
   mimetype: string;
 }
-interface BackgroundAudio {
+export interface BackgroundAudioV39 {
   resource: BackgroundAudioResource;
-  tracks: Track[];
+  tracks: AudioTrackV39[];
 }
 export interface StoryV39 extends Omit<StoryV38, 'pages' | 'backgroundAudio'> {
   pages: PageV39[];
-  backgroundAudio?: BackgroundAudio;
+  backgroundAudio?: BackgroundAudioV39;
 }
 export interface PageV39 extends Omit<PageV38, 'elements' | 'backgroundAudio'> {
   elements: UnionElementV39[];
-  backgroundAudio?: BackgroundAudio;
+  backgroundAudio?: BackgroundAudioV39;
 }
 
 function backgroundAudioFormatting(storyData: StoryV38): StoryV39 {
@@ -89,7 +89,7 @@ function backgroundAudioFormatting(storyData: StoryV38): StoryV39 {
 function updateStory(story: StoryV38): StoryV39 {
   if ('backgroundAudio' in story) {
     story.backgroundAudio = {
-      resource: story?.backgroundAudio as BackgroundAudio,
+      resource: story?.backgroundAudio as BackgroundAudioV39,
     };
   }
   return story;

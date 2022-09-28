@@ -31,6 +31,12 @@ import type {
   VideoElementV41,
 } from './v0041_removeFontProperties';
 
+// @todo Should we now add Track and BgAudio version to each file instead?
+import type {
+  AudioTrackV39,
+  BackgroundAudioV39,
+} from './v0039_backgroundAudioFormatting';
+
 export type TextElementV42 = TextElementV41;
 export type ProductElementV42 = ProductElementV41;
 export type ShapeElementV42 = ShapeElementV41;
@@ -86,11 +92,12 @@ function removeTrackName(storyData: StoryV41): StoryV42 {
 
 function updatePage(page: PageV41): PageV42 {
   if ('backgroundAudio' in page && 'tracks' in page.backgroundAudio) {
-    // @todo Fix track type.
-    page.backgroundAudio.tracks.map((track) => {
-      const { trackName, ...rest } = track;
-      return rest;
-    });
+    (page.backgroundAudio as BackgroundAudioV39).tracks.map(
+      (track: AudioTrackV39) => {
+        const { trackName, ...rest } = track;
+        return rest;
+      }
+    );
   }
   return page;
 }
