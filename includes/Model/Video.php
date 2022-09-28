@@ -30,11 +30,11 @@ namespace Google\Web_Stories\Model;
  * Class Video.
  *
  * @phpstan-type VideoData array{
- *   src: string,
- *   alt: string,
- *   creationDate: string,
- *   poster: string,
- *   length: int,
+ *   src?: string,
+ *   alt?: string,
+ *   creationDate?: string,
+ *   poster?: string,
+ *   length?: int,
  * }
  */
 class Video {
@@ -101,17 +101,19 @@ class Video {
 	public static function load_from_array( array $data ): Video {
 		$video = new self();
 
-		$video->set_duration( $data['length'] );
-		$video->set_url( $data['src'] );
-		$video->set_title( $data['alt'] );
-		$video->set_poster( $data['poster'] );
-		$video->set_date( $data['creationDate'] );
+		$video->set_duration( $data['length'] ?? 0 );
+		$video->set_url( $data['src'] ?? '' );
+		$video->set_title( $data['alt'] ?? '' );
+		$video->set_poster( $data['poster'] ?? '' );
+		$video->set_date( $data['creationDate'] ?? '' );
 
 		return $video;
 	}
 
 	/**
 	 * Set URL.
+	 *
+	 * @since 1.26.0
 	 *
 	 * @param string $url URL.
 	 */
@@ -121,6 +123,8 @@ class Video {
 
 	/**
 	 * Get URL.
+	 *
+	 * @since 1.26.0
 	 */
 	public function get_url(): string {
 		return $this->url;
@@ -128,6 +132,8 @@ class Video {
 
 	/**
 	 * Set title.
+	 *
+	 * @since 1.26.0
 	 *
 	 * @param string $title Title.
 	 */
@@ -137,6 +143,8 @@ class Video {
 
 	/**
 	 * Get title.
+	 *
+	 * @since 1.26.0
 	 */
 	public function get_title(): string {
 		return $this->title;
@@ -144,6 +152,8 @@ class Video {
 
 	/**
 	 * Set date.
+	 *
+	 * @since 1.26.0
 	 *
 	 * @param string $date Date.
 	 */
@@ -153,6 +163,8 @@ class Video {
 
 	/**
 	 * Get date.
+	 *
+	 * @since 1.26.0
 	 */
 	public function get_date(): string {
 		return $this->date;
@@ -160,6 +172,8 @@ class Video {
 
 	/**
 	 * Set poster.
+	 *
+	 * @since 1.26.0
 	 *
 	 * @param string $poster Poster.
 	 */
@@ -169,6 +183,8 @@ class Video {
 
 	/**
 	 * Get poster.
+	 *
+	 * @since 1.26.0
 	 */
 	public function get_poster(): string {
 		return $this->poster;
@@ -176,6 +192,8 @@ class Video {
 
 	/**
 	 * Set duration.
+	 *
+	 * @since 1.26.0
 	 *
 	 * @param int $duration Duration.
 	 */
@@ -185,10 +203,10 @@ class Video {
 
 	/**
 	 * Get duration.
+	 *
+	 * @since 1.26.0
 	 */
 	public function get_duration(): int {
 		return $this->duration;
 	}
-
-
 }

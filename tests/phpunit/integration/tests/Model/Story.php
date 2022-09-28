@@ -58,6 +58,7 @@ class Story extends TestCase {
 
 	/**
 	 * @covers ::load_from_post
+	 * @covers ::load_products_from_post
 	 */
 	public function test_load_from_post_with_product(): void {
 		$post = self::factory()->post->create_and_get(
@@ -96,7 +97,7 @@ class Story extends TestCase {
 					'productUrl'           => 'http://www.example.com/product/t-shirt-with-logo',
 				],
 
-			] 
+			]
 		);
 
 		$story = new \Google\Web_Stories\Model\Story();
@@ -108,9 +109,46 @@ class Story extends TestCase {
 		$this->assertInstanceOf( \Google\Web_Stories\Shopping\Product::class, $story->get_products()[0] );
 	}
 
+	/**
+	 * @covers ::load_from_post
+	 * @covers ::load_videos_from_post
+	 */
+	public function test_load_from_post_with_video(): void {
+		$post = self::factory()->post->create_and_get(
+			[
+				'post_title'   => 'test title',
+				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
+			]
+		);
+
+		add_post_meta(
+			$post->ID,
+			\Google\Web_Stories\Media\Video\Video_Meta::VIDEOS_POST_META_KEY,
+			[
+				[
+					'length'       => 60,
+					'src'          => 'http://www.example.com/test.mp4',
+					'poster'       => 'http://www.example.com/test.jpg',
+					'alt'          => 'Alt text',
+					'creationDate' => '2022-09-28T15:44:54',
+				],
+
+			]
+		);
+
+		$story = new \Google\Web_Stories\Model\Story();
+		$story->load_from_post( $post );
+
+		$this->assertEquals( $story->get_title(), 'test title' );
+		$this->assertEquals( $story->get_url(), get_permalink( $post ) );
+		$this->assertIsArray( $story->get_videos() );
+		$this->assertInstanceOf( \Google\Web_Stories\Model\Video::class, $story->get_videos()[0] );
+	}
 
 	/**
 	 * @covers ::load_from_post
+	 * @covers ::load_poster_from_post
 	 */
 	public function test_load_from_post_with_poster(): void {
 		$post = self::factory()->post->create_and_get(
@@ -146,6 +184,7 @@ class Story extends TestCase {
 
 	/**
 	 * @covers ::load_from_post
+	 * @covers ::load_poster_from_post
 	 */
 	public function test_load_from_post_with_poster_meta(): void {
 		$post = self::factory()->post->create_and_get(
@@ -179,6 +218,7 @@ class Story extends TestCase {
 
 	/**
 	 * @covers ::load_from_post
+	 * @covers ::load_poster_from_post
 	 */
 	public function test_load_from_post_with_poster_and_poster_meta(): void {
 		$post = self::factory()->post->create_and_get(

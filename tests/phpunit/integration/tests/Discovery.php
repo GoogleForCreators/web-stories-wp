@@ -270,37 +270,28 @@ class Discovery extends DependencyInjectedTestCase {
 		$result = $this->call_private_method( $this->instance, 'get_product_data', [ [ $product_object ] ] );
 
 		$expected = [
-			'products' =>
-				[
-
-					'@type'           => 'ItemList',
-					'numberOfItems'   => '1',
-					'itemListElement' =>
-						[
-							[
-								'@type'           => 'Product',
-								'brand'           => 'Google',
-								'productID'       => 'wc-36',
-								'url'             => 'http://www.example.com/product/t-shirt-with-logo',
-								'name'            => 'T-Shirt with Logo',
-								'description'     => 'This is a simple product.',
-								'image'           => 'http://www.example.com/wp-content/uploads/2019/01/t-shirt-with-logo-1-4.jpg',
-								'aggregateRating' => [
-									'@type'       => 'AggregateRating',
-									'ratingValue' => 5,
-									'reviewCount' => 1,
-									'url'         => 'http://www.example.com/product/t-shirt-with-logo',
-								],
-								'offers'          => [
-									[
-										'@type'         => 'Offer',
-										'price'         => 18,
-										'priceCurrency' => 'USD',
-									],
-								],
-							],
-						],
+			[
+				'@type'           => 'Product',
+				'brand'           => 'Google',
+				'productID'       => 'wc-36',
+				'url'             => 'http://www.example.com/product/t-shirt-with-logo',
+				'name'            => 'T-Shirt with Logo',
+				'description'     => 'This is a simple product.',
+				'image'           => 'http://www.example.com/wp-content/uploads/2019/01/t-shirt-with-logo-1-4.jpg',
+				'aggregateRating' => [
+					'@type'       => 'AggregateRating',
+					'ratingValue' => 5,
+					'reviewCount' => 1,
+					'url'         => 'http://www.example.com/product/t-shirt-with-logo',
 				],
+				'offers'          => [
+					[
+						'@type'         => 'Offer',
+						'price'         => 18,
+						'priceCurrency' => 'USD',
+					],
+				],
+			],
 		];
 
 		$this->assertEqualSets( $expected, $result );

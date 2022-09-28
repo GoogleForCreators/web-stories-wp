@@ -28,6 +28,7 @@
 
 namespace Google\Web_Stories;
 
+use DateInterval;
 use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Model\Video;
@@ -249,24 +250,18 @@ class Discovery extends Service_Base implements HasRequirements {
 				];
 			}
 
+			$videos     = $story->get_videos();
+			$products   = $story->get_products();
+			$item_count = \count( $videos ) + \count( $products );
 
-			$videos = $story->get_videos();
-
-			$video_metadata = $this->get_video_data( $videos );
-			if ( $video_metadata ) {
-				$metadata = array_merge( $video_metadata, $metadata );
-			}
-
-
-			/**
-			 * List of products.
-			 *
-			 * @phpstan-var Product[] $products
-			 */
-			$products         = $story->get_products();
-			$product_metadata = $this->get_product_data( $products );
-			if ( $product_metadata ) {
-				$metadata = array_merge( $product_metadata, $metadata );
+			if ( $item_count ) {
+				$video_metadata         = $this->get_video_data( $videos );
+				$product_metadata       = $this->get_product_data( $products );
+				$metadata['mainEntity'] = [
+					'@type'           => 'ItemList',
+					'numberOfItems'   => (string) $item_count,
+					'itemListElement' => array_merge( $video_metadata, $product_metadata ),
+				];
 			}
 		}
 
@@ -287,7 +282,7 @@ class Discovery extends Service_Base implements HasRequirements {
 	 * @since 1.26.0
 	 *
 	 * @param Video[] $videos Array of Video.
-	 * @return array<string, array<string, array<int, array<string, mixed>>|string>>
+	 * @return array<array<string, mixed>>
 	 */
 	protected function get_video_data( array $videos ): array {
 		if ( ! $videos ) {
@@ -295,13 +290,12 @@ class Discovery extends Service_Base implements HasRequirements {
 		}
 		$video_data = [];
 		foreach ( $videos as $video ) {
-
-			$duration  = new \DateInterval( 'PT' . $video->get_duration() . 'S' );
-			$hours     = $duration->h;
-			$minutes   = $duration->m;
-			$seconds   = $duration->s;
-			$date_time = "PT{$hours}H{$minutes}M{$seconds}S";
-
+			try {
+				$duration  = new DateInterval( sprintf( 'PT%dS', $video->get_duration() ) );
+				$date_time = sprintf( 'PT%dH%dM%dS', $duration->h, $duration->m, $duration->s );
+			} catch ( \Exception $e ) {
+				$date_time = '';
+			}
 			$data = [
 				'@type'        => 'VideoObject',
 				'contentURL'   => $video->get_url(),
@@ -322,13 +316,7 @@ class Discovery extends Service_Base implements HasRequirements {
 			$video_data[] = $data;
 		}
 
-		return [
-			'mainEntity' => [
-				'@type'           => 'ItemList',
-				'numberOfItems'   => (string) \count( $videos ),
-				'itemListElement' => $video_data,
-			],
-		];
+		return $video_data;
 	}
 
 	/**
@@ -337,7 +325,7 @@ class Discovery extends Service_Base implements HasRequirements {
 	 * @since 1.22.0
 	 *
 	 * @param Product[] $products Array of products.
-	 * @return array<string, array<string, array<int, array<string, mixed>>|string>>
+	 * @return array<array<string, mixed>>
 	 *
 	 * @phpstan-param Product[] $products
 	 */
@@ -378,13 +366,7 @@ class Discovery extends Service_Base implements HasRequirements {
 			$product_data[] = $data;
 		}
 
-		return [
-			'mainEntity' => [
-				'@type'           => 'ItemList',
-				'numberOfItems'   => (string) \count( $products ),
-				'itemListElement' => $product_data,
-			],
-		];
+		return $product_data;
 	}
 
 	/**
