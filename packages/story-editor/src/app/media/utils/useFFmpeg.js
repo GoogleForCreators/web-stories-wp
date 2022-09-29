@@ -319,7 +319,7 @@ function useFFmpeg() {
           '-segment_times',
           `${segmentTimes}`,
           '-segment_time_delta', //account for possible roundings operated when setting key frame times.
-          `${(1 / (2 * FFMPEG_CONFIG.FPS[1])).toFixed(2)}`, //
+          `${(1 / (2 * FFMPEG_CONFIG.FPS[1])).toFixed(2)}`,
           '-reset_timestamps',
           '1',
           outputFileName
