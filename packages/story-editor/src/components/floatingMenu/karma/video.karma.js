@@ -13,13 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * External dependencies
+ */
+import { waitFor } from "@testing-library/react";
+
 /**
  * Internal dependencies
  */
 import { Fixture } from '../../../karma';
 import { useStory } from '../../../app/story';
 import { focusFloatingMenu, tabToCanvasFocusContainer } from './utils';
-import { waitFor } from "@testing-library/react";
 
 describe('Video Design Menu: Keyboard Navigation', () => {
   let fixture;
