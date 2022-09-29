@@ -75,7 +75,7 @@ export interface PageV42 extends Omit<PageV41, 'elements' | 'backgroundAudio'> {
       id: number;
       mimetype: string;
     };
-    tracks: Track[];
+    tracks?: Track[];
   };
 }
 

@@ -32,6 +32,11 @@ export type PageV1 = PageV0;
 export interface StoryV1 {
   pages: PageV1[];
   version?: number;
+  backgroundAudio?: {
+    src: string;
+    id: number;
+    mimeType: string;
+  };
 }
 
 export type TextElementV1 = TextElementV0;

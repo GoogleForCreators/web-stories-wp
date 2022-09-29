@@ -80,24 +80,20 @@ export interface PageV39 extends Omit<PageV38, 'elements' | 'backgroundAudio'> {
 }
 
 function backgroundAudioFormatting(storyData: StoryV38): StoryV39 {
-  const updatedStoryData = updateStory(storyData);
-  const { pages, ...rest } = updatedStoryData;
+  const { pages, backgroundAudio, ...rest } = storyData;
   return {
     pages: pages.map(updatePage),
+    ...(backgroundAudio
+      ? {
+          backgroundAudio: {
+            resource: backgroundAudio as BackgroundAudioResource,
+          },
+        }
+      : null),
     ...rest,
   };
 }
-function updateStory(story: StoryV38): StoryV39 {
-  if ('backgroundAudio' in story) {
-    return {
-      ...story,
-      backgroundAudio: {
-        resource: story.backgroundAudio as BackgroundAudioResource,
-      },
-    };
-  }
-  return story;
-}
+
 function updatePage(page: PageV38): PageV39 {
   if ('backgroundAudio' in page && page.backgroundAudio) {
     return {
