@@ -291,6 +291,14 @@ const removeElementFromGroup =
       payload: { elementId, groupId },
     });
 
+const addElementsAcrossPages =
+  (dispatch) =>
+  ({ elements, page, position }) =>
+    dispatch({
+      type: types.ADD_ELEMENTS_ACROSS_PAGES,
+      payload: { elements, page, position },
+    });
+
 export const exposedActions = {
   addPage,
   addPageAt,
@@ -334,6 +342,7 @@ export const exposedActions = {
   deleteGroupAndElementsById,
   duplicateGroupById,
   removeElementFromGroup,
+  addElementsAcrossPages,
 };
 
 // Internal actions

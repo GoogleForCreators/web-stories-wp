@@ -33,15 +33,15 @@ import { isInsideRange } from './utils';
  *
  * New page must have at least one element, the default background element.
  *
- * Selection is cleared.
+ * Selection is cleared by default.
  *
  * @param {Object} draft Current state
  * @param {Object} payload Action payload
  * @param {Object} payload.page Object with properties of new page
  * @param {Object} payload.position Position at which to insert the new page. If null, insert after current
- * @param {boolean} payload.select Whether or not to select (give focus to) the newly created page
+ * @param {boolean} [payload.updateSelection=true] Whether to update page and element selection.
  */
-export const addPage = (draft, { page, position, select = true }) => {
+export const addPage = (draft, { page, position, updateSelection = true }) => {
   // Ensure new page has at least one element
   if (!page.elements?.length) {
     return;
@@ -59,7 +59,7 @@ export const addPage = (draft, { page, position, select = true }) => {
       : currentPageIndex + 1;
 
   draft.pages.splice(insertionPoint, 0, page);
-  if (select) {
+  if (updateSelection) {
     draft.current = page.id;
     draft.selection = [page.elements[0].id];
   }
