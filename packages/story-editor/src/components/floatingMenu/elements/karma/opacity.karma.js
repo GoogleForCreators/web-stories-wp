@@ -27,6 +27,7 @@ describe('Design Menu: Opacity Input', () => {
 
     await fixture.render();
     await fixture.collapseHelpCenter();
+    await fixture.showFloatingMenu();
 
     // add image to canvas
     await fixture.events.mouse.clickOn(
