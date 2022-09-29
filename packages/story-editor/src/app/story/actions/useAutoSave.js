@@ -45,14 +45,18 @@ function useAutoSave({ storyId, pages, story }) {
   const autoSave = useCallback(
     (props) => {
       setIsAutoSaving(true);
+      const storyProps = getStoryPropsToSave({
+        story,
+        pages,
+        metadata,
+        flags,
+      });
+      if (!flags?.videoMeta) {
+        delete storyProps.videos;
+      }
       return autoSaveById({
         storyId,
-        ...getStoryPropsToSave({
-          story,
-          pages,
-          metadata,
-          flags,
-        }),
+        ...storyProps,
         ...props,
       }).finally(() => setIsAutoSaving(false));
     },
