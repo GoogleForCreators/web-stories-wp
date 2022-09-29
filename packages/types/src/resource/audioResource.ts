@@ -14,9 +14,16 @@
  * limitations under the License.
  */
 
-export enum ResourceType {
-  Image = 'image',
-  Video = 'video',
-  Gif = 'gif',
-  Audio = 'audio',
+/**
+ * Internal dependencies
+ */
+import type { ResourceType } from './resourceType';
+import type { Resource } from './resource';
+
+export interface AudioResource extends Resource {
+  type: ResourceType.Audio;
+  /** Length in seconds. */
+  length: number;
+  /** The formatted length, e.g. "01:17". */
+  lengthFormatted: string;
 }
