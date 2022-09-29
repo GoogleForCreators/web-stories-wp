@@ -34,7 +34,7 @@ import type {
 
 export type TextElementV34 = TextElementV33;
 export type ProductElementV34 = ProductElementV33;
-export type ShapeElementV34 = Omit<ShapeElementV33, 'isDefaultBackground'>;
+export type ShapeElementV34 = ShapeElementV33;
 export type ImageElementV34 = ImageElementV33;
 export type VideoElementV34 = VideoElementV33;
 export type GifElementV34 = GifElementV33;
@@ -74,7 +74,7 @@ function reducePage({ elements, overlay, ...rest }: PageV33): PageV34 {
 
 function updateElement(element: UnionElementV33): UnionElementV34 {
   if ('isDefaultBackground' in element && element.isDefaultBackground) {
-    const { isDefaultBackground, ...rest } = element;
+    const { backgroundColor, ...rest } = element;
     return rest;
   }
 

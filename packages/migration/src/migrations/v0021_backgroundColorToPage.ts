@@ -67,6 +67,7 @@ function reducePage(page: PageV20): PageV21 {
   } as Pattern;
   let pageBackgroundColor;
   if (
+    elements[0] &&
     'isDefaultBackground' in elements[0] &&
     elements[0].isDefaultBackground &&
     elements[0].backgroundColor

@@ -20,7 +20,8 @@
 import type {
   StoryV4,
   PageV4,
-  UnionElementV4, ShapeElementV4,
+  UnionElementV4,
+  ShapeElementV4,
 } from './v0004_mediaElementToResource';
 
 function dataSquareToShape({ pages, ...rest }: StoryV4): StoryV4 {
@@ -39,7 +40,7 @@ function reducePage({ elements, ...rest }: PageV4): PageV4 {
 
 function updateElement(element: UnionElementV4): UnionElementV4 {
   const { type, ...rest } = element;
-  if ('backgroundColor' in element && 'square' === type) {
+  if ('square' === type) {
     return {
       type: 'shape',
       ...rest,

@@ -89,10 +89,7 @@ function updateElement(element: UnionElementV28): UnionElementV29 {
     return element;
   }
 
-  if (
-    element.resource.type !== ('gif' as ResourceType.Gif) ||
-    !('output' in element.resource)
-  ) {
+  if (element.resource.type !== ('gif' as ResourceType.Gif)) {
     return element as UnionElementV29;
   }
 
@@ -100,6 +97,7 @@ function updateElement(element: UnionElementV28): UnionElementV29 {
     return element as UnionElementV29;
   }
 
+  const { sizes, poster, ...output } = element.resource.output;
   return {
     ...element,
     resource: {
@@ -110,6 +108,7 @@ function updateElement(element: UnionElementV28): UnionElementV29 {
         ? element.resource.output.poster
         : undefined,
       isOptimized: true,
+      output,
     },
   };
 }

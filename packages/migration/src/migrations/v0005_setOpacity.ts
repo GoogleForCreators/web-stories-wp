@@ -79,7 +79,7 @@ function reducePage({ elements, ...rest }: PageV4): PageV5 {
 }
 
 function updateElement(element: UnionElementV4): UnionElementV5 {
-  if ('opacity' in element) {
+  if ('opacity' in element && element.opacity) {
     return element;
   }
   return {

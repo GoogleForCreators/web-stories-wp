@@ -20,7 +20,7 @@
 import setBackgroundTextMode from '../v0012_setBackgroundTextMode';
 
 describe('setBackgroundTextMode', () => {
-  it('should set flip if not set', () => {
+  it('should set background text mode if not set', () => {
     expect(
       setBackgroundTextMode({
         _test: 'story',
@@ -32,15 +32,17 @@ describe('setBackgroundTextMode', () => {
                 _test: 'element1',
                 type: 'text',
                 backgroundColor: '#000',
+                content: '',
               },
               {
                 _test: 'element2',
                 type: 'text',
-                backgroundColor: 'transparent',
+                content: '',
               },
               {
                 _test: 'element3',
                 type: 'text',
+                content: '',
               },
               {
                 _test: 'element4',
@@ -65,17 +67,19 @@ describe('setBackgroundTextMode', () => {
               backgroundColor: '#000',
               backgroundTextMode: 'FILL',
               type: 'text',
+              content: '',
             },
             {
               _test: 'element2',
-              backgroundColor: 'transparent',
               backgroundTextMode: 'NONE',
               type: 'text',
+              content: '',
             },
             {
               _test: 'element3',
               backgroundTextMode: 'NONE',
               type: 'text',
+              content: '',
             },
             {
               _test: 'element4',

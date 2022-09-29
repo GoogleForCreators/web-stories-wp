@@ -78,9 +78,10 @@ function reducePage({ elements, ...rest }: PageV12): PageV13 {
 function updateElement(element: UnionElementV12): UnionElementV13 {
   if ('resource' in element && 'videoId' in element.resource) {
     const { resource } = element;
+    const { videoId, ...rest } = resource;
     const updatedResource = {
-      ...resource,
-      id: resource.videoId,
+      ...rest,
+      id: videoId,
     };
     return {
       ...element,

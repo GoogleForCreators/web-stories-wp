@@ -74,14 +74,16 @@ function reducePage({ elements, ...rest }: PageV19): PageV20 {
 function updateElement(element: UnionElementV19): UnionElementV20 {
   if ('isFill' in element) {
     const { isFill, ...rest } = element;
-    return {
-      ...rest,
-      x: 0,
-      y: -DANGER_ZONE_HEIGHT,
-      width: PAGE_WIDTH,
-      height: PAGE_WIDTH / FULLBLEED_RATIO,
-      rotationAngle: 0,
-    };
+    return isFill
+      ? {
+          ...rest,
+          x: 0,
+          y: -DANGER_ZONE_HEIGHT,
+          width: PAGE_WIDTH,
+          height: PAGE_WIDTH / FULLBLEED_RATIO,
+          rotationAngle: 0,
+        }
+      : rest;
   }
   return element;
 }

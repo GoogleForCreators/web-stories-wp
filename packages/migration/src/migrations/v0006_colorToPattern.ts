@@ -43,7 +43,7 @@ export interface TextElementV6
 
 export interface ShapeElementV6
   extends Omit<ShapeElementV5, 'backgroundColor'> {
-  backgroundColor: Pattern | null;
+  backgroundColor?: Pattern | null;
 }
 export type GifElementV6 = GifElementV5;
 export type ProductElementV6 = ProductElementV5;

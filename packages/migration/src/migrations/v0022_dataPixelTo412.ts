@@ -79,9 +79,6 @@ function reducePage({ elements, ...rest }: PageV21): PageV22 {
 }
 
 function updateElement(props: UnionElementV21): UnionElementV22 {
-  if (!('content' in props)) {
-    return props;
-  }
   const { x, y, width, height, ...rest } = props;
   const element = {
     x: dataPixels(x * SCALE),
@@ -90,10 +87,10 @@ function updateElement(props: UnionElementV21): UnionElementV22 {
     height: dataPixels(height * SCALE),
     ...rest,
   };
-  if (typeof element.fontSize === 'number') {
+  if ('fontSize' in element && typeof element.fontSize === 'number') {
     element.fontSize = dataPixels(element.fontSize * SCALE);
   }
-  if (element.padding) {
+  if ('padding' in element && element.padding) {
     const { horizontal, vertical } = element.padding;
     element.padding = {
       horizontal: dataPixels(horizontal * SCALE),
