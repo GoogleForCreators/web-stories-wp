@@ -28,7 +28,6 @@
 
 namespace Google\Web_Stories;
 
-use DateInterval;
 use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Model\Video;
@@ -41,6 +40,13 @@ use WP_Post;
 class Discovery extends Service_Base implements HasRequirements {
 
 	/**
+	 * Experiments instance.
+	 *
+	 * @var Experiments Experiments instance.
+	 */
+	private $experiments;
+
+	/**
 	 * Story_Post_Type instance.
 	 *
 	 * @var Story_Post_Type Story_Post_Type instance.
@@ -51,9 +57,11 @@ class Discovery extends Service_Base implements HasRequirements {
 	 * Constructor.
 	 *
 	 * @param Story_Post_Type $story_post_type Story_Post_Type instance.
+	 * @param Experiments     $experiments      Experiments instance.
 	 */
-	public function __construct( Story_Post_Type $story_post_type ) {
+	public function __construct( Story_Post_Type $story_post_type, Experiments $experiments ) {
 		$this->story_post_type = $story_post_type;
+		$this->experiments     = $experiments;
 	}
 
 	/**
@@ -250,17 +258,22 @@ class Discovery extends Service_Base implements HasRequirements {
 				];
 			}
 
-			$videos     = $story->get_videos();
 			$products   = $story->get_products();
-			$item_count = \count( $videos ) + \count( $products );
+			$item_count = \count( $products );
+			$item_list  = [];
+			if ( $this->experiments->is_experiment_enabled( 'videoMeta' ) ) {
+				$videos     = $story->get_videos();
+				$item_count = \count( $videos ) + \count( $products );
+				$item_list  = $this->get_video_data( $videos );
+			}
 
 			if ( $item_count ) {
-				$video_metadata         = $this->get_video_data( $videos );
 				$product_metadata       = $this->get_product_data( $products );
+				$item_list              = array_merge( $item_list, $product_metadata );
 				$metadata['mainEntity'] = [
 					'@type'           => 'ItemList',
 					'numberOfItems'   => (string) $item_count,
-					'itemListElement' => array_merge( $video_metadata, $product_metadata ),
+					'itemListElement' => $item_list,
 				];
 			}
 		}
@@ -290,27 +303,22 @@ class Discovery extends Service_Base implements HasRequirements {
 		}
 		$video_data = [];
 		foreach ( $videos as $video ) {
-			try {
-				$duration  = new DateInterval( sprintf( 'PT%dS', $video->get_duration() ) );
-				$date_time = sprintf( 'PT%dH%dM%dS', $duration->h, $duration->m, $duration->s );
-			} catch ( \Exception $e ) {
-				$date_time = '';
-			}
+
 			$data = [
 				'@type'        => 'VideoObject',
 				'contentURL'   => $video->get_url(),
 				'name'         => $video->get_title(),
 				'description'  => $video->get_title(),
 				'thumbnailUrl' => $video->get_poster(),
-				'duration'     => $date_time,
-
+				'duration'     => sprintf( 'PT%dS', $video->get_duration() ),
 			];
 
-			if ( $video->get_date() > 0 ) {
-				$data['uploadDate'] = gmdate(
-					'Y-m-d\TH:i:s',
-					(int) strtotime( (string) $video->get_date() )
-				);
+
+			if ( $video->get_date() ) {
+				$time = strtotime( $video->get_date() );
+				if ( $time ) {
+					$data['uploadDate'] = gmdate( 'Y-m-d\TH:i:s', (int) $time );
+				}
 			}
 
 			$video_data[] = $data;

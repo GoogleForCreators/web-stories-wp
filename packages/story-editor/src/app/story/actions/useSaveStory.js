@@ -75,18 +75,23 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
       const isStoryAlreadyPending = 'pending' === story.status;
       const trackTiming = getTimeTracker('load_save_story');
 
+      const storyProps = getStoryPropsToSave({
+        story,
+        pages,
+        metadata,
+        flags,
+      });
+      if (!flags?.videoMeta) {
+        delete storyProps.videos;
+      }
+
       // Wrapping everything in a Promise so we can catch
       // errors caused by getStoryPropsToSave() / getStoryMarkup().
       return Promise.resolve()
         .then(() =>
           saveStoryById({
             storyId,
-            ...getStoryPropsToSave({
-              story,
-              pages,
-              metadata,
-              flags,
-            }),
+            ...storyProps,
             // Saving an auto-draft should create a draft by default.
             status: 'auto-draft' === story.status ? 'draft' : story.status,
             ...props,

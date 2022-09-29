@@ -337,6 +337,17 @@ class Experiments extends Service_Base implements HasRequirements {
 				'group'       => 'editor',
 			],
 			/**
+			 * Author: @spacedmonkey
+			 * Issue: #12221
+			 * Creation date: 2022-09-29
+			 */
+			[
+				'name'        => 'videoMeta',
+				'label'       => __( 'Video Metadata', 'web-stories' ),
+				'description' => __( 'Enable video metadata', 'web-stories' ),
+				'group'       => 'editor',
+			],
+			/**
 			 * Author: @barklund
 			 * Issue: #12210
 			 * Creation date: 2022-09-14

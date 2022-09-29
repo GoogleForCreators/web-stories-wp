@@ -67,7 +67,7 @@ class Discovery extends DependencyInjectedTestCase {
 			]
 		);
 
-		self::$story_id      = $factory->post->create(
+		self::$story_id = $factory->post->create(
 			[
 				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
 				'post_title'   => 'Discovery Test Story',
@@ -76,6 +76,52 @@ class Discovery extends DependencyInjectedTestCase {
 				'post_author'  => self::$user_id,
 			]
 		);
+
+		add_post_meta(
+			self::$story_id,
+			\Google\Web_Stories\Media\Video\Video_Meta::VIDEOS_POST_META_KEY,
+			[
+				[
+					'length'       => 60,
+					'src'          => 'http://www.example.com/test.mp4',
+					'poster'       => 'http://www.example.com/test.jpg',
+					'alt'          => 'Alt text',
+					'creationDate' => '2022-09-28T15:44:54',
+				],
+			]
+		);
+
+		add_post_meta(
+			self::$story_id,
+			\Google\Web_Stories\Shopping\Product_Meta::PRODUCTS_POST_META_KEY,
+			[
+				[
+					'aggregateRating'      => [
+						'ratingValue' => 5,
+						'reviewCount' => 1,
+						'reviewUrl'   => 'http://www.example.com/product/t-shirt-with-logo',
+					],
+					'ratingValue'          => 0,
+					'reviewCount'          => 0,
+					'reviewUrl'            => 'http://www.example.com/product/t-shirt-with-logo',
+					'productBrand'         => 'Google',
+					'productDetails'       => 'This is a simple product.',
+					'productId'            => 'wc-36',
+					'productImages'        => [
+						[
+							'url' => 'http://www.example.com/wp-content/uploads/2019/01/t-shirt-with-logo-1-4.jpg',
+							'alt' => '',
+						],
+					],
+					'productPrice'         => 18,
+					'productPriceCurrency' => 'USD',
+					'productTitle'         => 'T-Shirt with Logo',
+					'productUrl'           => 'http://www.example.com/product/t-shirt-with-logo',
+				],
+
+			]
+		);
+
 		self::$attachment_id = $factory->attachment->create_object(
 			DIR_TESTDATA . '/images/canola.jpg',
 			self::$story_id,
@@ -157,6 +203,68 @@ class Discovery extends DependencyInjectedTestCase {
 		$this->assertArrayHasKey( 'dateModified', $result );
 		$this->assertArrayHasKey( 'author', $result );
 		$this->assertArrayHasKey( 'image', $result );
+	}
+
+
+	/**
+	 * @covers ::get_schemaorg_metadata
+	 */
+	public function test_get_schemaorg_metadata_experiment(): void {
+
+		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
+		$experiments->method( 'is_experiment_enabled' )
+					->willReturn( true );
+
+		$spt      = $this->injector->make( \Google\Web_Stories\Story_Post_Type::class );
+		$instance = new \Google\Web_Stories\Discovery( $spt, $experiments );
+
+		$result = $this->call_private_method( $instance, 'get_schemaorg_metadata' );
+		$this->assertArrayHasKey( 'mainEntityOfPage', $result );
+		$this->assertArrayHasKey( 'headline', $result );
+		$this->assertArrayHasKey( 'datePublished', $result );
+		$this->assertArrayHasKey( 'dateModified', $result );
+		$this->assertArrayHasKey( 'author', $result );
+		$this->assertArrayHasKey( 'image', $result );
+		$this->assertArrayHasKey( 'mainEntity', $result );
+		$this->assertArrayHasKey( 'numberOfItems', $result['mainEntity'] );
+		$this->assertArrayHasKey( 'itemListElement', $result['mainEntity'] );
+		$this->assertSame( '2', $result['mainEntity']['numberOfItems'] );
+
+		$expected = [
+			[
+				'@type'        => 'VideoObject',
+				'name'         => 'Alt text',
+				'description'  => 'Alt text',
+				'contentURL'   => 'http://www.example.com/test.mp4',
+				'thumbnailUrl' => 'http://www.example.com/test.jpg',
+				'duration'     => 'PT60S',
+				'uploadDate'   => '2022-09-28T15:44:54',
+			],
+			[
+				'@type'           => 'Product',
+				'brand'           => 'Google',
+				'productID'       => 'wc-36',
+				'url'             => 'http://www.example.com/product/t-shirt-with-logo',
+				'name'            => 'T-Shirt with Logo',
+				'description'     => 'This is a simple product.',
+				'image'           => 'http://www.example.com/wp-content/uploads/2019/01/t-shirt-with-logo-1-4.jpg',
+				'aggregateRating' => [
+					'@type'       => 'AggregateRating',
+					'ratingValue' => 5,
+					'reviewCount' => 1,
+					'url'         => 'http://www.example.com/product/t-shirt-with-logo',
+				],
+				'offers'          => [
+					[
+						'@type'         => 'Offer',
+						'price'         => 18,
+						'priceCurrency' => 'USD',
+					],
+				],
+			],
+		];
+
+		$this->assertEqualSets( $expected, $result['mainEntity']['itemListElement'] );
 	}
 
 	/**
@@ -302,6 +410,78 @@ class Discovery extends DependencyInjectedTestCase {
 	 */
 	public function test_get_product_data_empty_story(): void {
 		$result = $this->call_private_method( $this->instance, 'get_product_data', [ [] ] );
+
+		$expected = [];
+
+		$this->assertEqualSets( $expected, $result );
+	}
+
+	/**
+	 * @covers ::get_video_data
+	 */
+	public function test_get_videos_data(): void {
+		$video_object = \Google\Web_Stories\Model\Video::load_from_array(
+			[
+				'length'       => 60,
+				'src'          => 'http://www.example.com/test.mp4',
+				'poster'       => 'http://www.example.com/test.jpg',
+				'alt'          => 'Alt text',
+				'creationDate' => '2022-09-28T15:44:54',
+			]
+		);
+
+		$result = $this->call_private_method( $this->instance, 'get_video_data', [ [ $video_object ] ] );
+
+		$expected = [
+			[
+				'@type'        => 'VideoObject',
+				'name'         => 'Alt text',
+				'description'  => 'Alt text',
+				'contentURL'   => 'http://www.example.com/test.mp4',
+				'thumbnailUrl' => 'http://www.example.com/test.jpg',
+				'duration'     => 'PT60S',
+				'uploadDate'   => '2022-09-28T15:44:54',
+			],
+		];
+
+		$this->assertEqualSets( $expected, $result );
+	}
+
+	/**
+	 * @covers ::get_video_data
+	 */
+	public function test_get_videos_data_invalid_date(): void {
+		$video_object = \Google\Web_Stories\Model\Video::load_from_array(
+			[
+				'length'       => 60,
+				'src'          => 'http://www.example.com/test.mp4',
+				'poster'       => 'http://www.example.com/test.jpg',
+				'alt'          => 'Alt text',
+				'creationDate' => 'invalid',
+			]
+		);
+
+		$result = $this->call_private_method( $this->instance, 'get_video_data', [ [ $video_object ] ] );
+
+		$expected = [
+			[
+				'@type'        => 'VideoObject',
+				'name'         => 'Alt text',
+				'description'  => 'Alt text',
+				'contentURL'   => 'http://www.example.com/test.mp4',
+				'thumbnailUrl' => 'http://www.example.com/test.jpg',
+				'duration'     => 'PT60S',
+			],
+		];
+
+		$this->assertEqualSets( $expected, $result );
+	}
+
+	/**
+	 * @covers ::get_video_data
+	 */
+	public function test_get_videos_data_empty_story(): void {
+		$result = $this->call_private_method( $this->instance, 'get_video_data', [ [] ] );
 
 		$expected = [];
 
