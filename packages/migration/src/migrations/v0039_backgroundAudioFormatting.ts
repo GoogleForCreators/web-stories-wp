@@ -106,7 +106,7 @@ function updatePage(page: PageV38): PageV39 {
       },
     };
   }
-  return page;
+  return page as PageV39;
 }
 
 export default backgroundAudioFormatting;
