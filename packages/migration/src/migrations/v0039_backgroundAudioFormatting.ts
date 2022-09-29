@@ -63,7 +63,7 @@ export interface AudioTrackV39 {
 interface BackgroundAudioResource {
   src: string;
   id: number;
-  mimetype: string;
+  mimeType: string;
 }
 export interface BackgroundAudioV39 {
   resource: BackgroundAudioResource;
