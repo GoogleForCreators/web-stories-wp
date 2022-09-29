@@ -97,7 +97,7 @@ function updateElement(element: UnionElementV30): UnionElementV31 {
     element.resource.width = Number(element.resource.width);
     element.resource.height = Number(element.resource.height);
 
-    if ('sizes' in element.resource) {
+    if ('sizes' in element.resource && element.resource.sizes) {
       for (const size of Object.keys(element.resource.sizes)) {
         // Disable reason: not acting on untrusted user input.
         const data = element.resource.sizes[size];

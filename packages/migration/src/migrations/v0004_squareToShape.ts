@@ -20,7 +20,7 @@
 import type {
   StoryV4,
   PageV4,
-  UnionElementV4,
+  UnionElementV4, ShapeElementV4,
 } from './v0004_mediaElementToResource';
 
 function dataSquareToShape({ pages, ...rest }: StoryV4): StoryV4 {
@@ -43,7 +43,7 @@ function updateElement(element: UnionElementV4): UnionElementV4 {
     return {
       type: 'shape',
       ...rest,
-    };
+    } as ShapeElementV4;
   }
   return element;
 }

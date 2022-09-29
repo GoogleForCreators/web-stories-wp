@@ -67,7 +67,8 @@ interface BackgroundAudioResource {
 }
 export interface BackgroundAudioV39 {
   resource: BackgroundAudioResource;
-  tracks: AudioTrackV39[];
+  tracks?: AudioTrackV39[];
+  loop?: boolean;
 }
 export interface StoryV39 extends Omit<StoryV38, 'pages' | 'backgroundAudio'> {
   pages: PageV39[];
@@ -88,18 +89,24 @@ function backgroundAudioFormatting(storyData: StoryV38): StoryV39 {
 }
 function updateStory(story: StoryV38): StoryV39 {
   if ('backgroundAudio' in story) {
-    story.backgroundAudio = {
-      resource: story?.backgroundAudio as BackgroundAudioV39,
+    return {
+      ...story,
+      backgroundAudio: {
+        resource: story.backgroundAudio as BackgroundAudioResource,
+      },
     };
   }
   return story;
 }
 function updatePage(page: PageV38): PageV39 {
-  if (page?.backgroundAudio) {
-    page.backgroundAudio = {
-      resource: page.backgroundAudio as BackgroundAudioResource,
-      loop: true,
-      tracks: [],
+  if ('backgroundAudio' in page && page.backgroundAudio) {
+    return {
+      ...page,
+      backgroundAudio: {
+        resource: page.backgroundAudio as BackgroundAudioResource,
+        loop: true,
+        tracks: [],
+      },
     };
   }
   return page;

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import type { Page, Story, Element } from '@googleforcreators/types';
+import type { Story } from '@googleforcreators/types';
 
 /**
  * Internal dependencies
@@ -69,7 +69,7 @@ import removeTagNames from './migrations/v0043_removeTagNames';
 
 type MigrationFn<T, S> = (storyData: T) => S;
 
-const MIGRATIONS: Record<number, MigrationFn<any, any>[]> = {
+const MIGRATIONS: Record<number, any[]> = {
   1: [storyDataArrayToObject],
   2: [dataPixelTo1080],
   3: [fullbleedToFill],

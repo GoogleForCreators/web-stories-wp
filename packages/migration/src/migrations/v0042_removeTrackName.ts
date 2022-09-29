@@ -88,11 +88,23 @@ function removeTrackName(storyData: StoryV41): StoryV42 {
 }
 
 function updatePage(page: PageV41): PageV42 {
-  if ('backgroundAudio' in page && 'tracks' in page.backgroundAudio) {
-    page.backgroundAudio.tracks.map((track: AudioTrackV39) => {
+  if (
+    'backgroundAudio' in page &&
+    page.backgroundAudio &&
+    'tracks' in page.backgroundAudio &&
+    page.backgroundAudio.tracks
+  ) {
+    const tracks = page.backgroundAudio.tracks.map((track: AudioTrackV39) => {
       const { trackName, ...rest } = track;
       return rest;
     });
+    return {
+      ...page,
+      backgroundAudio: {
+        ...page.backgroundAudio,
+        tracks,
+      },
+    };
   }
   return page;
 }
