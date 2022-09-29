@@ -58,13 +58,14 @@ const ContextMenu = forwardRef(
         onDismiss={onDismiss}
       >
         <Wrapper
+          aria-label={ariaLabel}
           isInline={isInline}
           role={isAlwaysVisible ? null : 'dialog'}
           isOpen={isAlwaysVisible || props.isOpen}
           isRTL={isRTL}
           popoverZIndex={popoverZIndex}
         >
-          <Menu ref={ref} aria-expanded={props.isOpen} aria-label={ariaLabel} {...props}>
+          <Menu ref={ref} aria-expanded={props.isOpen} {...props}>
             {children}
           </Menu>
           {/* <AnimationContainer /> has a <Shadow />. Don't double the shadow. */}
