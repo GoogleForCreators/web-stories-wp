@@ -27,7 +27,7 @@ class Locale extends TestCase {
 	public function test_get_locale_settings(): void {
 		$actual = ( new \Google\Web_Stories\Locale() )->get_locale_settings();
 
-		$this->assertCount( 11, $actual );
+		$this->assertCount( 12, $actual );
 		$this->assertEqualSets(
 			[
 				'locale',
@@ -35,6 +35,7 @@ class Locale extends TestCase {
 				'timeFormat',
 				'gmtOffset',
 				'timezone',
+				'timezoneAbbr',
 				'months',
 				'monthsShort',
 				'weekdays',

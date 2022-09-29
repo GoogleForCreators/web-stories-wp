@@ -18,6 +18,7 @@ parameters:
   checkMissingIterableValueType: false
   paths:
     - includes/
+    - uninstall.php
   excludePaths:
     - includes/vendor/*
     - includes/polyfills/*

@@ -20,7 +20,7 @@
 /**
  * External dependencies
  */
-import { mkdirSync, rmdirSync, existsSync } from 'fs';
+import { mkdirSync, rmSync, existsSync } from 'fs';
 import { relative } from 'path';
 import { Command } from 'commander';
 import semver from 'semver';
@@ -126,7 +126,7 @@ program
 
     // Make sure build directory exists and is empty.
     if (existsSync(BUILD_DIR)) {
-      rmdirSync(BUILD_DIR, { recursive: true, force: true });
+      rmSync(BUILD_DIR, { recursive: true, force: true });
     }
     mkdirSync(BUILD_DIR, { recursive: true });
 

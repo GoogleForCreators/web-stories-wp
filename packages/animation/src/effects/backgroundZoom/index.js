@@ -17,13 +17,16 @@
  * External dependencies
  */
 import { clamp, progress, lerp } from '@googleforcreators/units';
+import {
+  getElementOffsets,
+  getElementOrigin,
+} from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import { BG_MIN_SCALE, BG_MAX_SCALE, SCALE_DIRECTION } from '../../constants';
 import { AnimationZoom } from '../../parts/zoom';
-import { getMediaOrigin, getMediaBoundOffsets } from '../../utils';
 
 export function EffectBackgroundZoom({
   element,
@@ -57,9 +60,9 @@ export function EffectBackgroundZoom({
     delay,
     easing,
     targetLeafElement: true,
-    // Account for moving bg media relative to frame
+    // Account for moving bg element relative to frame
     transformOrigin:
       transformOrigin ||
-      getMediaOrigin(element && getMediaBoundOffsets({ element })),
+      getElementOrigin(element && getElementOffsets(element)),
   });
 }
