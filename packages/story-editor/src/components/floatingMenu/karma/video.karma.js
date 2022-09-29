@@ -19,6 +19,7 @@
 import { Fixture } from '../../../karma';
 import { useStory } from '../../../app/story';
 import { focusFloatingMenu, tabToCanvasFocusContainer } from './utils';
+import { waitFor } from "@testing-library/react";
 
 describe('Video Design Menu: Keyboard Navigation', () => {
   let fixture;
@@ -29,9 +30,12 @@ describe('Video Design Menu: Keyboard Navigation', () => {
     await fixture.render();
     await fixture.collapseHelpCenter();
     await fixture.showFloatingMenu();
-    await fixture.events.sleep(500);
-
-    focusContainer = fixture.screen.getByTestId('canvas-focus-container');
+    await waitFor(() => {
+      focusContainer = fixture.screen.getByTestId('canvas-focus-container');
+      if (!focusContainer) {
+        throw new Error('Canvas container not ready');
+      }
+    });
   });
 
   afterEach(() => {

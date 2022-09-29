@@ -128,11 +128,12 @@ describe('Canvas Keyboard Shortcuts', () => {
     await fixture.events.click(effectChooser, { clickCount: 1 });
     const duration = fixture.screen.getByLabelText('Duration');
     await fixture.events.click(duration);
-    await fixture.events.keyboard.type('1000');
+    const durationMs = 1000;
+    await fixture.events.keyboard.type(durationMs.toString());
     await fixture.events.keyboard.press('Enter');
 
     // wait for initial animation
-    await fixture.events.sleep(1000);
+    await fixture.events.sleep(durationMs);
 
     // select the canvas
     await fixture.events.click(
@@ -154,7 +155,7 @@ describe('Canvas Keyboard Shortcuts', () => {
     await fixture.events.keyboard.shortcut('mod+enter');
 
     // check that 'Play Animation' toggle button is there
-    await fixture.events.sleep(1000);
+    await fixture.events.sleep(durationMs);
     toggle = fixture.screen.getByLabelText('Play Page Animations');
     expect(toggle).toBeDefined();
   });
