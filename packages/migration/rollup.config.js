@@ -24,7 +24,7 @@ import resolve from '@rollup/plugin-node-resolve';
 const __dirname = fileURLToPath(dirname(import.meta.url));
 
 export default {
-  input: resolvePath(__dirname, 'src/index.js'),
+  input: resolvePath(__dirname, 'src/index.ts'),
   output: {
     file: resolvePath(__dirname, 'scripts/module.js'),
     format: 'es',
