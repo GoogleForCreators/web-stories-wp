@@ -48,15 +48,12 @@ export const addPage = (draft, { page, position, updateSelection = true }) => {
   }
 
   const isWithinBounds =
-    position !== null && isInsideRange(position, 0, draft.pages.length - 1);
+    position !== null && isInsideRange(position, 0, draft.pages.length);
   const currentPageIndex = draft.pages.findIndex(
     ({ id }) => id === draft.current
   );
 
-  const insertionPoint =
-    isWithinBounds || draft.pages.length === position
-      ? position
-      : currentPageIndex + 1;
+  const insertionPoint = isWithinBounds ? position : currentPageIndex + 1;
 
   draft.pages.splice(insertionPoint, 0, page);
   if (updateSelection) {
