@@ -96,7 +96,7 @@ function backgroundAudioFormatting(storyData: StoryV38): StoryV39 {
 
 function updatePage(page: PageV38): PageV39 {
   const { backgroundAudio } = page;
-  if (backgroundAudio) {
+  if (backgroundAudio !== undefined) {
     return {
       ...page,
       backgroundAudio: {
