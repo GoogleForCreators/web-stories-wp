@@ -21,6 +21,7 @@ import { createGlobalStyle } from 'styled-components';
 /**
  * Internal dependencies
  */
+import { scrollbarCSS } from '../helpers/scrollbar';
 import { overrideFocusOutlineStyles } from './overrideFocusOutline';
 
 /**
@@ -35,4 +36,5 @@ export const Styles = createGlobalStyle`
   }
 
   ${overrideFocusOutlineStyles};
+  ${scrollbarCSS};
 `;

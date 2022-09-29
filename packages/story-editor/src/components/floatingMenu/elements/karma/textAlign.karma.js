@@ -28,6 +28,7 @@ describe('Design Menu: Text alignment', () => {
     await fixture.render();
 
     await fixture.collapseHelpCenter();
+    await fixture.showFloatingMenu();
 
     await fixture.editor.library.textTab.click();
     await fixture.events.click(fixture.editor.library.text.preset('Paragraph'));

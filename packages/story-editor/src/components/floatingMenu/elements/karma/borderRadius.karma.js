@@ -33,6 +33,7 @@ describe('Design Menu: Border radius', () => {
     await fixture.render();
 
     await fixture.collapseHelpCenter();
+    await fixture.showFloatingMenu();
   });
 
   afterEach(() => {

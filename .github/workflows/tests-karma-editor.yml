@@ -63,9 +63,10 @@ jobs:
     timeout-minutes: 60
     needs: nonce
     strategy:
+      fail-fast: false
       matrix:
-        # We want to split up the tests into 4 parts running in parallel.
-        shard: ['1/4', '2/4', '3/4', '4/4']
+        # We want to split up the tests into 20 parts running in parallel.
+        shard: ['1/20', '2/20', '3/20', '4/20', '5/20', '6/20', '7/20', '8/20', '9/20', '10/20', '11/20', '12/20', '13/20', '14/20', '15/20', '16/20', '17/20', '18/20', '19/20', '20/20']
     steps:
       - name: Harden Runner
         uses: step-security/harden-runner@dd2c410b088af7c0dc8046f3ac9a8f4148492a95
@@ -101,9 +102,9 @@ jobs:
 
       - name: Run integration tests with Percy
         run: |
-          npx percy exec --parallel --config=percy.config.karma.yml -- \
+          npx percy exec --quiet --parallel --config=percy.config.karma.yml -- \
             npm run test:karma:story-editor -- --headless --viewport=1600:1000 --coverage --shard=$SHARD || \
-          npx percy exec --parallel --config=percy.config.karma.yml -- \
+          npx percy exec --quiet --parallel --config=percy.config.karma.yml -- \
             npm run test:karma:story-editor:retry-failed -- --headless --viewport=1600:1000 --shard=$SHARD
         env:
           DISABLE_ERROR_BOUNDARIES: true
