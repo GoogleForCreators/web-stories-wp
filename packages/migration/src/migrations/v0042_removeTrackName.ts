@@ -73,7 +73,7 @@ export interface PageV42 extends Omit<PageV41, 'elements' | 'backgroundAudio'> {
     resource: {
       src: string;
       id: number;
-      mimetype: string;
+      mimeType: string;
     };
     tracks?: Track[];
   };

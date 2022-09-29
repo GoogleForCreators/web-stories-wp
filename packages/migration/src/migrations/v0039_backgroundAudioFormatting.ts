@@ -95,17 +95,19 @@ function backgroundAudioFormatting(storyData: StoryV38): StoryV39 {
 }
 
 function updatePage(page: PageV38): PageV39 {
-  if ('backgroundAudio' in page && page.backgroundAudio) {
-    return {
-      ...page,
-      backgroundAudio: {
-        resource: page.backgroundAudio as BackgroundAudioResource,
-        loop: true,
-        tracks: [],
-      },
-    };
-  }
-  return page;
+  const { backgroundAudio } = page;
+  return {
+    ...page,
+    ...(backgroundAudio
+      ? {
+          backgroundAudio: {
+            resource: page.backgroundAudio as BackgroundAudioResource,
+            loop: true,
+            tracks: [],
+          },
+        }
+      : null),
+  };
 }
 
 export default backgroundAudioFormatting;
