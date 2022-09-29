@@ -45,7 +45,7 @@ function getStoryPropsToSave({ story, pages, metadata, flags }) {
     'terms',
   ]);
   const products = getAllProducts(pages);
-  const videos = getAllVideos(pages);
+  const videos = flags?.videoMeta ? getAllVideos(pages) : undefined;
   const content = getStoryMarkup(story, pages, metadata, flags);
   return {
     content,

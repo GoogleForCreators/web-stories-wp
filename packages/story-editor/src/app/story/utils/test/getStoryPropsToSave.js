@@ -86,7 +86,7 @@ describe('getStoryPropsToSave', () => {
       pages,
       ...neededProps,
       products: [],
-      videos: [],
+      videos: undefined,
     };
     delete expected.taxonomies;
 
@@ -152,7 +152,7 @@ describe('getStoryPropsToSave', () => {
       pages,
       ...neededProps,
       products: [],
-      videos: [],
+      videos: undefined,
     };
 
     delete expected.taxonomies;
