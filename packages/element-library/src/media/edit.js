@@ -208,7 +208,7 @@ function MediaEdit({
   const handleWheel = useCallback(
     (evt) => {
       updateLocalProperties(({ scale: oldScale }) => ({
-        scale: Math.min(scaleMin, Math.max(scaleMax, oldScale + evt.deltaY)),
+        scale: Math.min(scaleMax, Math.max(scaleMin, oldScale + evt.deltaY)),
       }));
       evt.preventDefault();
       evt.stopPropagation();
