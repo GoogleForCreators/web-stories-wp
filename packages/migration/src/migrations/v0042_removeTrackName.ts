@@ -69,7 +69,7 @@ interface Track {
 export interface PageV42 extends Omit<PageV41, 'elements' | 'backgroundAudio'> {
   elements: UnionElementV42[];
   backgroundAudio?: {
-    loop: boolean;
+    loop?: boolean;
     resource: {
       src: string;
       id: number;
