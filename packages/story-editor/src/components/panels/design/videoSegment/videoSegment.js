@@ -17,7 +17,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { __, sprintf } from '@googleforcreators/i18n';
+import { __ } from '@googleforcreators/i18n';
 import styled from 'styled-components';
 import {
   Text,
@@ -30,7 +30,7 @@ import {
   Slider,
 } from '@googleforcreators/design-system';
 import { useCallback, useState, useEffect } from '@googleforcreators/react';
-import { createPage, ELEMENT_TYPES } from '@googleforcreators/elements';
+import { createNewElement, createPage } from '@googleforcreators/elements';
 import { useFeature } from 'flagged';
 
 /**
@@ -41,7 +41,7 @@ import { SimplePanel } from '../../panel';
 import { getCommonValue } from '../../shared';
 import { useLocalMedia } from '../../../../app/media';
 import { useStory } from '../../../../app/story';
-import useInsertElement from '../../../canvas/useInsertElement';
+import getElementProperties from '../../../canvas/utils/getElementProperties';
 
 const Row = styled(DefaultRow)`
   margin-top: 2px;
@@ -49,6 +49,11 @@ const Row = styled(DefaultRow)`
 
 const StyledButton = styled(Button)`
   padding: 12px 8px;
+`;
+
+const SliderWrapper = styled.div`
+  flex: 1;
+  margin-right: 20px;
 `;
 
 const StyledSlider = styled(Slider)`
@@ -73,26 +78,19 @@ function VideoSegmentPanel({ pushUpdate, selectedElements }) {
   };
 
   const segmentTime = getCommonValue(selectedElements, 'segmentTime', 20);
-  const insertElement = useInsertElement();
 
-  const {
-    pages,
-    currentPage,
-    addPageAt,
-    deleteElementById,
-    setSelectedElementsById,
-  } = useStory(
-    ({
-      state: { pages, currentPage },
-      actions: { addPageAt, deleteElementById, setSelectedElementsById },
-    }) => ({
-      pages,
-      currentPage,
-      addPageAt,
-      deleteElementById,
-      setSelectedElementsById,
-    })
-  );
+  const { pageIds, currentPageId, deleteElementById, addElementsAcrossPages } =
+    useStory(
+      ({
+        state: { pages, currentPageId },
+        actions: { deleteElementById, addElementsAcrossPages },
+      }) => ({
+        pageIds: pages.map(({ id }) => id),
+        currentPageId,
+        deleteElementById,
+        addElementsAcrossPages,
+      })
+    );
 
   const { isBatchUploading, segmentVideo } = useLocalMedia(
     ({ state: { isBatchUploading }, actions: { segmentVideo } }) => ({
@@ -103,10 +101,11 @@ function VideoSegmentPanel({ pushUpdate, selectedElements }) {
 
   const [batchId, setBatchId] = useState();
   const [isSegmenting, setIsSegmenting] = useState();
-  const [isAddingElements, setIsAddingElements] = useState(false);
   const [segmentedFiles, setSegmentedFiles] = useState([]);
   const [segmentElementId, setSegmentElementId] = useState();
   const [segmentPageId, setSegmentPageId] = useState();
+
+  const isUploading = batchId && isBatchUploading(batchId);
 
   const showSnackbar = useSnackbar(({ showSnackbar }) => showSnackbar);
 
@@ -115,75 +114,68 @@ function VideoSegmentPanel({ pushUpdate, selectedElements }) {
     : __('Segment', 'web-stories');
 
   const addElementsToPages = useCallback(() => {
-    if (!segmentPageId || !segmentElementId || isAddingElements) {
+    if (!segmentPageId || !segmentElementId) {
       return;
     }
 
-    setIsAddingElements(true);
     showSnackbar({
       message: __('Inserting video segments', 'web-stories'),
       dismissible: false,
     });
 
-    let newElement;
-    const pageIds = pages.map(({ id }) => id);
-    const originalPageIndex = pageIds.indexOf(segmentPageId);
-    segmentedFiles.forEach((segmentedResource, index) => {
-      if (index >= 1) {
-        const page = createPage();
-        const position = originalPageIndex + index;
-        addPageAt({ page, position, select: false });
-        insertElement(ELEMENT_TYPES.VIDEO, {
-          pageId: page.id,
+    const elements = segmentedFiles.map((segmentedResource) =>
+      createNewElement(
+        segmentedResource.type,
+        getElementProperties(segmentedResource.type, {
           resource: segmentedResource,
-        });
-      } else {
-        // remove the original non-segmented element
-        deleteElementById({ elementId: segmentElementId });
-        newElement = insertElement(ELEMENT_TYPES.VIDEO, {
-          resource: segmentedResource,
-        });
-      }
+        })
+      )
+    );
+
+    const page = createPage();
+    const position = pageIds.indexOf(segmentPageId);
+
+    addElementsAcrossPages({
+      elements,
+      page,
+      position,
     });
 
-    if (newElement) {
-      setSelectedElementsById({ elementIds: [newElement?.id] });
-    }
+    deleteElementById({ elementId: segmentElementId });
 
     setSegmentedFiles([]);
     setIsSegmenting(false);
-    setIsAddingElements(false);
+    setBatchId(null);
   }, [
     segmentPageId,
     segmentElementId,
     showSnackbar,
-    pages,
-    addPageAt,
-    insertElement,
-    setSelectedElementsById,
-    deleteElementById,
-    setIsAddingElements,
     segmentedFiles,
-    isAddingElements,
+    pageIds,
+    addElementsAcrossPages,
+    deleteElementById,
   ]);
 
-  const handleSegmentation = useCallback(async () => {
+  const onClick = useCallback(async () => {
     setIsSegmenting(true);
     setSegmentElementId(elementId);
-    setSegmentPageId(currentPage.id);
+    setSegmentPageId(currentPageId);
 
     showSnackbar({
       message: __('Video segmentation in progress', 'web-stories'),
       dismissible: true,
     });
 
-    const files = [];
+    const onUploadSuccess = ({ resource: newResource, batchPosition }) => {
+      setSegmentedFiles((f) => {
+        f[batchPosition] = newResource;
+        return f;
+      });
+    };
+
     const batchId_ = await segmentVideo(
       { resource, segmentTime },
-      ({ resource: newResource, batchPosition }) => {
-        files[batchPosition] = newResource;
-        setSegmentedFiles([...files]);
-      }
+      onUploadSuccess
     );
 
     if (!batchId_) {
@@ -200,7 +192,7 @@ function VideoSegmentPanel({ pushUpdate, selectedElements }) {
     setBatchId(batchId_);
   }, [
     elementId,
-    currentPage,
+    currentPageId,
     showSnackbar,
     segmentVideo,
     segmentTime,
@@ -208,10 +200,10 @@ function VideoSegmentPanel({ pushUpdate, selectedElements }) {
   ]);
 
   useEffect(() => {
-    if (!isBatchUploading(batchId) && segmentedFiles.length >= 1) {
+    if (!isUploading && segmentedFiles.length >= 1) {
       addElementsToPages();
     }
-  }, [isBatchUploading, segmentedFiles, addElementsToPages, batchId]);
+  }, [isUploading, segmentedFiles, addElementsToPages]);
 
   if (!enableSegmentVideo || resource.length <= MIN_SEGMENT_LENGTH) {
     return null;
@@ -223,29 +215,27 @@ function VideoSegmentPanel({ pushUpdate, selectedElements }) {
       title={__('Video Segment Settings', 'web-stories')}
     >
       <Row spaceBetween>
-        <StyledSlider
-          value={segmentTime}
-          handleChange={onChangeSegmentTime}
-          minorStep={1}
-          majorStep={5}
-          min={MIN_SEGMENT_LENGTH}
-          max={Math.max(
-            MIN_SEGMENT_LENGTH,
-            Math.min(resource.length, MAX_SEGMENT_LENGTH)
-          )}
-          aria-label={__('Segment length', 'web-stories')}
-        />
-        {sprintf(
-          /* translators: %d number of seconds */
-          __('%d sec', 'web-stories'),
-          segmentTime
-        )}
+        <SliderWrapper>
+          <StyledSlider
+            value={segmentTime}
+            handleChange={onChangeSegmentTime}
+            minorStep={1}
+            majorStep={5}
+            min={MIN_SEGMENT_LENGTH}
+            max={Math.max(
+              MIN_SEGMENT_LENGTH,
+              Math.min(resource.length, MAX_SEGMENT_LENGTH)
+            )}
+            aria-label={__('Segment length', 'web-stories')}
+            suffix={'s'}
+          />
+        </SliderWrapper>
         <StyledButton
           disabled={isSegmenting}
           variant={BUTTON_VARIANTS.RECTANGLE}
           type={BUTTON_TYPES.SECONDARY}
           size={BUTTON_SIZES.SMALL}
-          onClick={handleSegmentation}
+          onClick={onClick}
         >
           {segmentButtonText}
         </StyledButton>
