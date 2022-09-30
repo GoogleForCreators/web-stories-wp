@@ -81,7 +81,7 @@
     "@types/styled-components": "^5.1.26",
     "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^5.38.1",
-    "@typescript-eslint/parser": "^5.37.0",
+    "@typescript-eslint/parser": "^5.38.1",
     "@web-stories-wp/e2e-tests": "*",
     "@web-stories-wp/eslint-import-resolver": "*",
     "@web-stories-wp/jest-amp": "*",
