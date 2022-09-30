@@ -84,19 +84,19 @@ describe('useIdleTaskQueue', () => {
 
       // See that task queue exhibits first out (FIFO) behavior.
       await runAllIdleCallbacks();
-      expect(task1Tuple[1]).toHaveBeenCalledTimes(1);
+      expect(task1Tuple[1]).toHaveBeenCalledOnce();
       expect(task2Tuple[1]).toHaveBeenCalledTimes(0);
       expect(task3Tuple[1]).toHaveBeenCalledTimes(0);
 
       await runAllIdleCallbacks();
-      expect(task1Tuple[1]).toHaveBeenCalledTimes(1);
-      expect(task2Tuple[1]).toHaveBeenCalledTimes(1);
+      expect(task1Tuple[1]).toHaveBeenCalledOnce();
+      expect(task2Tuple[1]).toHaveBeenCalledOnce();
       expect(task3Tuple[1]).toHaveBeenCalledTimes(0);
 
       await runAllIdleCallbacks();
-      expect(task1Tuple[1]).toHaveBeenCalledTimes(1);
-      expect(task2Tuple[1]).toHaveBeenCalledTimes(1);
-      expect(task3Tuple[1]).toHaveBeenCalledTimes(1);
+      expect(task1Tuple[1]).toHaveBeenCalledOnce();
+      expect(task2Tuple[1]).toHaveBeenCalledOnce();
+      expect(task3Tuple[1]).toHaveBeenCalledOnce();
     });
   });
 });

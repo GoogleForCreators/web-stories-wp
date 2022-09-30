@@ -35,11 +35,15 @@ import {
   BG_MIN_SCALE,
   DIRECTION,
   SCALE_DIRECTION,
-  hasOffsets,
   STORY_ANIMATION_STATE,
   getAnimationEffectDefaults,
 } from '@googleforcreators/animation';
 import { progress } from '@googleforcreators/units';
+import {
+  getDefinitionForType,
+  getHasElementOffsets,
+  DEFAULT_HAS_OFFSETS,
+} from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -191,12 +195,17 @@ function AnimationPanel({
 
   // Figure out if any options are disabled
   // for an animation type input
+  const selectedElement = selectedElements[0];
   const disabledTypeOptionsMap = useMemo(() => {
-    if (selectedElements[0]?.isBackground) {
-      const hasOffset =
-        ['media', 'image', 'video', 'gif'].includes(selectedElements[0].type) &&
-        hasOffsets({ element: selectedElements[0] });
-      const normalizedScale = progress(selectedElements[0]?.scale || 0, {
+    if (!selectedElement) {
+      return {};
+    }
+    if (selectedElement.isBackground) {
+      const { isMedia } = getDefinitionForType(selectedElement.type);
+      const hasOffset = isMedia
+        ? getHasElementOffsets(selectedElement)
+        : DEFAULT_HAS_OFFSETS;
+      const normalizedScale = progress(selectedElement.scale || 0, {
         MIN: BG_MIN_SCALE,
         MAX: BG_MAX_SCALE,
       });
@@ -231,7 +240,7 @@ function AnimationPanel({
       };
     }
     return {};
-  }, [selectedElements]);
+  }, [selectedElement]);
 
   const selectedEffectTitle = getEffectName(updatedAnimations[0]?.type);
   return selectedElements.length > 1 ? null : (

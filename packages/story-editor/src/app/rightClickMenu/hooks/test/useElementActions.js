@@ -248,7 +248,7 @@ describe('useElementActions', () => {
         isBackground: false,
       });
 
-      expect(mockClearBackgroundElement).toHaveBeenCalledTimes(1);
+      expect(mockClearBackgroundElement).toHaveBeenCalledOnce();
     });
 
     it('should show a snackbar', () => {

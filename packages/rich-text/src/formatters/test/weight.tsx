@@ -153,19 +153,19 @@ describe('Color formatter', () => {
     it('should return false if mix of bold and non-bold', () => {
       const styles = [`${WEIGHT}-300`, `${WEIGHT}-700`];
       const result = setupIsBold(styles);
-      expect(result).toBe(false);
+      expect(result).toBeFalse();
     });
 
     it('should return false if no style matches', () => {
       const styles = [NONE];
       const result = setupIsBold(styles);
-      expect(result).toBe(false);
+      expect(result).toBeFalse();
     });
 
     it('should return true if all are bold', () => {
       const styles = [`${WEIGHT}-800`, `${WEIGHT}-600`];
       const result = setupIsBold(styles);
-      expect(result).toBe(true);
+      expect(result).toBeTrue();
     });
   });
 
@@ -197,7 +197,7 @@ describe('Color formatter', () => {
       // Third argument is tester
       const shouldSetStyle = jest.mocked(togglePrefixStyle).mock
         .calls[0][2] as SetStyleCallback;
-      expect(shouldSetStyle()).toBe(false);
+      expect(shouldSetStyle()).toBeFalse();
     });
 
     it('should invoke togglePrefixStyle correctly for non-trivial font weight', () => {
@@ -209,7 +209,7 @@ describe('Color formatter', () => {
       // Third argument is tester
       const shouldSetStyle = jest.mocked(togglePrefixStyle).mock
         .calls[0][2] as SetStyleCallback;
-      expect(shouldSetStyle()).toBe(true);
+      expect(shouldSetStyle()).toBeTrue();
 
       // Fourth argument is actual style to set
       const styleToSet = jest.mocked(togglePrefixStyle).mock.calls[0][3] as StyleGetter;
@@ -228,7 +228,7 @@ describe('Color formatter', () => {
       // Third argument is tester
       const shouldSetStyle = jest.mocked(togglePrefixStyle).mock
         .calls[0][2] as SetStyleCallback;
-      expect(shouldSetStyle()).toBe(false);
+      expect(shouldSetStyle()).toBeFalse();
     });
 
     it('should invoke togglePrefixStyle correctly for explicitly setting bold to true', () => {
@@ -244,7 +244,7 @@ describe('Color formatter', () => {
       // Third argument is tester
       const shouldSetStyle = jest.mocked(togglePrefixStyle).mock
         .calls[0][2] as SetStyleCallback;
-      expect(shouldSetStyle()).toBe(true);
+      expect(shouldSetStyle()).toBeTrue();
 
       // Fourth argument is actual style to set
       const styleToSet = jest.mocked(togglePrefixStyle).mock
@@ -265,9 +265,9 @@ describe('Color formatter', () => {
       // Third argument is tester
       const shouldSetStyle = jest.mocked(togglePrefixStyle).mock
         .calls[0][2] as SetStyleCallback;
-      expect(shouldSetStyle([NONE])).toBe(true);
-      expect(shouldSetStyle([`${WEIGHT}-300`, `${WEIGHT}-900`])).toBe(true);
-      expect(shouldSetStyle([`${WEIGHT}-600`, `${WEIGHT}-900`])).toBe(false);
+      expect(shouldSetStyle([NONE])).toBeTrue();
+      expect(shouldSetStyle([`${WEIGHT}-300`, `${WEIGHT}-900`])).toBeTrue();
+      expect(shouldSetStyle([`${WEIGHT}-600`, `${WEIGHT}-900`])).toBeFalse();
 
       // Fourth argument is actual style to set
       const styleToSet = jest.mocked(togglePrefixStyle).mock

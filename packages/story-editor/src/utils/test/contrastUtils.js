@@ -58,7 +58,7 @@ describe('contrastUtils', () => {
       expect(
         contrastUtils.checkContrastFromLuminances(luminanceA, luminanceB)
           .WCAG_AA
-      ).toBe(true);
+      ).toBeTrue();
     });
 
     it('calculate failed contrast check from similar luminances', () => {
@@ -67,7 +67,7 @@ describe('contrastUtils', () => {
       expect(
         contrastUtils.checkContrastFromLuminances(luminanceA, luminanceB)
           .WCAG_AA
-      ).toBe(false);
+      ).toBeFalse();
     });
 
     it('calculate successful contrast check from large font size', () => {
@@ -76,7 +76,7 @@ describe('contrastUtils', () => {
       expect(
         contrastUtils.checkContrastFromLuminances(luminanceA, luminanceB, 24)
           .WCAG_AA
-      ).toBe(true);
+      ).toBeTrue();
     });
     it('calculate failed contrast check from small font size', () => {
       const luminanceA = 1;
@@ -84,7 +84,7 @@ describe('contrastUtils', () => {
       expect(
         contrastUtils.checkContrastFromLuminances(luminanceA, luminanceB, 12)
           .WCAG_AA
-      ).toBe(false);
+      ).toBeFalse();
     });
   });
 });

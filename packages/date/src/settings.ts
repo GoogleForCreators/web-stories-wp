@@ -21,6 +21,7 @@ export const DEFAULT_DATE_SETTINGS = {
   timeFormat: 'g:i a',
   gmtOffset: 0,
   timezone: '',
+  timezoneAbbr: '',
   weekStartsOn: 0 as WeekdayIndex,
 };
 
@@ -29,6 +30,7 @@ type Settings = {
   timeFormat: string;
   gmtOffset: number;
   timezone: string;
+  timezoneAbbr: string;
   weekStartsOn: WeekdayIndex;
   locale?: string;
   months?: string[];

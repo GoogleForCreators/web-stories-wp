@@ -26,7 +26,7 @@ describe('videoElementMissingCaptions', () => {
     };
 
     const test = videoElementMissingCaptions(element);
-    expect(test).toBe(true);
+    expect(test).toBeTrue();
   });
 
   it('should return a warning if video element has empty captions', () => {
@@ -36,7 +36,7 @@ describe('videoElementMissingCaptions', () => {
       tracks: [],
     };
     const test = videoElementMissingCaptions(element);
-    expect(test).toBe(true);
+    expect(test).toBeTrue();
   });
 
   it('should return undefined if video element has captions', () => {
@@ -45,6 +45,6 @@ describe('videoElementMissingCaptions', () => {
       type: 'text',
       tracks: [{ id: 'trackid' }],
     };
-    expect(videoElementMissingCaptions(element)).toBe(false);
+    expect(videoElementMissingCaptions(element)).toBeFalse();
   });
 });

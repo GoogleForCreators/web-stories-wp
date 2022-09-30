@@ -17,8 +17,7 @@
 /**
  * External dependencies
  */
-import { getSettings, getOptions, format } from '@googleforcreators/date';
-import PropTypes from 'prop-types';
+import { getSettings } from '@googleforcreators/date';
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
 import {
@@ -41,8 +40,8 @@ const StyledText = styled(Text)`
   line-height: 30px;
 `;
 
-function TimeZone({ date }) {
-  const { timezone, gmtOffset } = getSettings();
+function TimeZone() {
+  const { timezone, gmtOffset, timezoneAbbr } = getSettings();
 
   // Convert timezone offset to hours.
   const userTimezoneOffset = -1 * (new Date().getTimezoneOffset() / 60);
@@ -53,15 +52,16 @@ function TimeZone({ date }) {
     return null;
   }
 
-  const { timeZone: timeZoneString } = getOptions();
-  const zoneAbbr = timezone?.length
-    ? format(date, 'T')
-    : `UTC${timeZoneString}`;
+  const offsetSymbol = Number(gmtOffset) >= 0 ? '+' : '';
+  const zoneAbbr =
+    '' !== timezoneAbbr && Number.isNaN(Number(timezoneAbbr))
+      ? timezoneAbbr
+      : `UTC${offsetSymbol}${gmtOffset}`;
 
   const tooltip =
-    'UTC' === zoneAbbr
+    'UTC' === timezone
       ? __('Coordinated Universal Time', 'web-stories')
-      : timezone;
+      : `(${zoneAbbr}) ${timezone.replace('_', ' ')}`;
 
   return (
     <Wrapper>
@@ -76,10 +76,5 @@ function TimeZone({ date }) {
     </Wrapper>
   );
 }
-
-TimeZone.propTypes = {
-  date: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Date)])
-    .isRequired,
-};
 
 export default TimeZone;

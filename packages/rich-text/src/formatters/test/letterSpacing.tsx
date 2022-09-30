@@ -181,7 +181,7 @@ describe('Color formatter', () => {
       // Third argument is tester
       const shouldSetStyle = jest.mocked(togglePrefixStyle).mock
         .calls[0][2] as SetStyleCallback;
-      expect(shouldSetStyle()).toBe(false);
+      expect(shouldSetStyle()).toBeFalse();
     });
 
     it('should invoke togglePrefixStyle correctly for non-trivial letter spacing', () => {
@@ -193,7 +193,7 @@ describe('Color formatter', () => {
       // Third argument is tester
       const shouldSetStyle = jest.mocked(togglePrefixStyle).mock
         .calls[0][2] as SetStyleCallback;
-      expect(shouldSetStyle()).toBe(true);
+      expect(shouldSetStyle()).toBeTrue();
 
       // Fourth argument is actual style to set
       const styleToSet = jest.mocked(togglePrefixStyle).mock

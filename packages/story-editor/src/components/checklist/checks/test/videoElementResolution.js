@@ -30,6 +30,6 @@ describe('videoElementResolution', () => {
     };
 
     const result = videoElementResolution(tooLowResolutionVideoElement);
-    expect(result).toBe(true);
+    expect(result).toBeTrue();
   });
 });

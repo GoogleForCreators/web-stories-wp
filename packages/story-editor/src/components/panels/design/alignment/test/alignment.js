@@ -126,42 +126,42 @@ describe('Panels/Alignment', () => {
       const { justifyLeftButton, pushUpdate } = arrange([defaultElement]);
 
       fireEvent.click(justifyLeftButton);
-      expect(pushUpdate).toHaveBeenCalledTimes(1);
+      expect(pushUpdate).toHaveBeenCalledOnce();
     });
 
     it('should update element on alignright button click', () => {
       const { justifyRightButton, pushUpdate } = arrange([defaultElement]);
 
       fireEvent.click(justifyRightButton);
-      expect(pushUpdate).toHaveBeenCalledTimes(1);
+      expect(pushUpdate).toHaveBeenCalledOnce();
     });
 
     it('should update element on aligncenter button click', () => {
       const { justifyCenterButton, pushUpdate } = arrange([defaultElement]);
 
       fireEvent.click(justifyCenterButton);
-      expect(pushUpdate).toHaveBeenCalledTimes(1);
+      expect(pushUpdate).toHaveBeenCalledOnce();
     });
 
     it('should update element on justifytop button click', () => {
       const { justifyTopButton, pushUpdate } = arrange([defaultElement]);
 
       fireEvent.click(justifyTopButton);
-      expect(pushUpdate).toHaveBeenCalledTimes(1);
+      expect(pushUpdate).toHaveBeenCalledOnce();
     });
 
     it('should update element on justifybottom button click', () => {
       const { justifyBottomButton, pushUpdate } = arrange([defaultElement]);
 
       fireEvent.click(justifyBottomButton);
-      expect(pushUpdate).toHaveBeenCalledTimes(1);
+      expect(pushUpdate).toHaveBeenCalledOnce();
     });
 
     it('should update element on justifymiddle button click', () => {
       const { justifyMiddleButton, pushUpdate } = arrange([defaultElement]);
 
       fireEvent.click(justifyMiddleButton);
-      expect(pushUpdate).toHaveBeenCalledTimes(1);
+      expect(pushUpdate).toHaveBeenCalledOnce();
     });
   });
 

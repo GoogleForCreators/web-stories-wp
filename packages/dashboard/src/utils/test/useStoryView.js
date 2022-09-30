@@ -150,7 +150,7 @@ describe('useStoryView()', () => {
   it('should not show stories while loading by default', () => {
     const { result } = renderHook(() => useStoryView({ totalPages: 2 }), {});
 
-    expect(result.current.showStoriesWhileLoading.current).toBe(false);
+    expect(result.current.showStoriesWhileLoading.current).toBeFalse();
   });
 
   it('should set showStoriesWhileLoading to true when next page is called', () => {
@@ -160,7 +160,7 @@ describe('useStoryView()', () => {
       result.current.page.requestNextPage();
     });
 
-    expect(result.current.showStoriesWhileLoading.current).toBe(true);
+    expect(result.current.showStoriesWhileLoading.current).toBeTrue();
   });
 
   it('should reset showStoriesWhileLoading when `isLoading` is set to false', () => {
@@ -178,12 +178,12 @@ describe('useStoryView()', () => {
     act(() => {
       result.current.page.requestNextPage();
     });
-    expect(result.current.showStoriesWhileLoading.current).toBe(true);
+    expect(result.current.showStoriesWhileLoading.current).toBeTrue();
 
     isLoading = false;
 
     rerender();
 
-    expect(result.current.showStoriesWhileLoading.current).toBe(false);
+    expect(result.current.showStoriesWhileLoading.current).toBeFalse();
   });
 });

@@ -27,7 +27,7 @@ describe('storyTitleLength', () => {
       'Once, there was a man from Nantucket...'
     );
     const test = storyTitleLength(testTitle);
-    expect(test).toBe(true);
-    expect(testFalse).toBe(false);
+    expect(test).toBeTrue();
+    expect(testFalse).toBeFalse();
   });
 });

@@ -117,19 +117,19 @@ describe('Uppercase formatter', () => {
     it('should return false if both uppercase and non-uppercase', () => {
       const styles = [NONE, UPPERCASE];
       const result = setupFormatter(styles);
-      expect(result).toBe(false);
+      expect(result).toBeFalse();
     });
 
     it('should return false if no style matches', () => {
       const styles = [NONE];
       const result = setupFormatter(styles);
-      expect(result).toBe(false);
+      expect(result).toBeFalse();
     });
 
     it('should return true if only uppercase', () => {
       const styles = [UPPERCASE];
       const result = setupFormatter(styles);
-      expect(result).toBe(true);
+      expect(result).toBeTrue();
     });
   });
 
@@ -157,7 +157,7 @@ describe('Uppercase formatter', () => {
       // Third argument is tester
       const shouldSetStyle = jest.mocked(togglePrefixStyle).mock
         .calls[0][2] as SetStyleCallback;
-      expect(shouldSetStyle()).toBe(false);
+      expect(shouldSetStyle()).toBeFalse();
     });
 
     it('should invoke togglePrefixStyle correctly for explicitly setting uppercase to true', () => {
@@ -172,7 +172,7 @@ describe('Uppercase formatter', () => {
       // Third argument is tester
       const shouldSetStyle = jest.mocked(togglePrefixStyle).mock
         .calls[0][2] as SetStyleCallback;
-      expect(shouldSetStyle()).toBe(true);
+      expect(shouldSetStyle()).toBeTrue();
     });
   });
 });

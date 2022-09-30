@@ -32,14 +32,12 @@ use Google\Web_Stories\Story_Post_Type;
 
 /**
  * Class Product_Meta.
- *
- * @phpstan-import-type ProductData from \Google\Web_Stories\Shopping\Product
  */
 class Product_Meta extends Service_Base implements HasMeta {
 	/**
 	 * The products meta key.
 	 */
-	private const PRODUCTS_POST_META_KEY = 'web_stories_products';
+	public const PRODUCTS_POST_META_KEY = 'web_stories_products';
 
 
 	/**
@@ -105,30 +103,4 @@ class Product_Meta extends Service_Base implements HasMeta {
 			]
 		);
 	}
-
-	/**
-	 * Get array of products from story ID.
-	 *
-	 * @since 1.22.0
-	 *
-	 * @param int $story_id ID of story.
-	 * @return array<string, mixed>
-	 *
-	 * @phpstan-return ProductData[] $products
-	 */
-	public function get_products( int $story_id ): array {
-		/**
-		 * Product data.
-		 *
-		 * @var ProductData[]|false $products
-		 */
-		$products = get_post_meta( $story_id, self::PRODUCTS_POST_META_KEY, true );
-
-		if ( ! \is_array( $products ) ) {
-			return [];
-		}
-
-		return $products;
-	}
-
 }

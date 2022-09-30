@@ -399,7 +399,8 @@
       "extends": [
         "plugin:jest/all",
         "plugin:testing-library/react",
-        "plugin:jest-dom/recommended"
+        "plugin:jest-dom/recommended",
+        "plugin:jest-extended/all"
       ],
       "plugins": [
         "jsx-a11y",

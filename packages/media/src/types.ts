@@ -21,6 +21,14 @@
 import * as PropTypes from 'prop-types';
 import type { Requireable } from 'prop-types';
 /* eslint-enable no-restricted-imports -- Still used by other packages. */
+import type {
+  Attribution,
+  Output,
+  ResourceSize,
+  ResourceType,
+  ResourceId,
+  TrimData,
+} from '@googleforcreators/types';
 
 const ResourcePropTypes: Record<string, Requireable<unknown>> = {};
 
@@ -202,118 +210,6 @@ export { ResourcePropTypes };
  * @property {?TrimData} trimData An optional object of video trim data.
  * @property {boolean} needsProxy Whether the resource needs a CORS proxy.
  */
-
-export interface Dimensions {
-  width: number;
-  height: number;
-}
-
-export enum ResourceType {
-  IMAGE = 'image',
-  VIDEO = 'video',
-  GIF = 'gif',
-}
-
-export interface AttributionAuthor {
-  /** Display name of the author. */
-  displayName: string;
-  /** The author's profile or website. */
-  url: string;
-}
-
-export interface Attribution {
-  /** The optional author of the media object. */
-  author?: AttributionAuthor;
-  /** The optional url to register the media usage. */
-  registerUsageUrl?: string;
-}
-
-export interface TrimData {
-  /** ID of the original video. */
-  original: string;
-  /** Time stamp of start time of new video. Example '00:01:02.345'. */
-  start: string;
-  /** Time stamp of end time of new video. Example '00:01:02.345'. */
-  end: string;
-}
-
-export interface Output {
-  /** The MIME type of the resource. E.g. "image/png". */
-  mimeType: string;
-  /** The source URL of the resource. */
-  src: string;
-}
-
-export interface ResourceSize {
-  /** The MIME type of the resource. E.g. "image/png". */
-  mimeType: string;
-  /** The source URL of the resource. */
-  sourceUrl: string;
-  /** The natural width of the resource in physical pixels. */
-  width: number;
-  /** The natural height of the resource in physical pixels. */
-  height: number;
-}
-
-export type ResourceId = string | number;
-
-/** A media resource. */
-export interface Resource {
-  /**
-   * The resource ID.
-   * TODO: currently this value is local to the editor's media system.
-   */
-  id: ResourceId;
-  /** The type of the resource. */
-  type: ResourceType;
-  /** The MIME type of the resource. E.g. "image/png". */
-  mimeType: string;
-  /** The source URL of the resource. */
-  src: string;
-  /** The "alt" text of the resource. */
-  alt: string;
-  /** The natural width of the resource in physical pixels. */
-  width: number;
-  /** The natural height of the resource in physical pixels. */
-  height: number;
-  /** The resource's average color. */
-  baseColor?: string;
-  /** BlurHash. */
-  blurHash?: string;
-  /** Whether the resource externally hosted. */
-  isExternal: boolean;
-  /** Whether the resource is a placeholder. */
-  isPlaceholder: boolean;
-  /** Whether the resource needs a CORS proxy. */
-  needsProxy: boolean;
-  /** Resource creation date. */
-  readonly creationDate?: string;
-  /** Resource sizes */
-  sizes: { [key: string]: ResourceSize };
-  /** Resource author attribution */
-  attribution?: Attribution;
-}
-
-export interface VideoResource extends Resource {
-  /** The resource's poster. */
-  poster?: string;
-  /** The resource's poster ID. */
-  posterId?: string;
-  /** Length in seconds. */
-  length: number;
-  /** The formatted length, e.g. "01:17". */
-  lengthFormatted: string;
-  /** Whether the resource has already been optimized. */
-  isOptimized?: boolean;
-  /** Whether the resource is muted. */
-  isMuted?: boolean;
-  /** Information about trimmed video and its original. */
-  trimData?: TrimData;
-}
-
-export interface GifResource extends Resource {
-  output: Output;
-}
 
 export interface ResourceInput {
   /**

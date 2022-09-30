@@ -26,8 +26,8 @@ describe('storyMissingTitle', () => {
     const testUndefined = storyMissingTitle(testUndefinedTitleStory);
     const testEmptyString = storyMissingTitle(testEmptyStringTitle);
     const testHappy = storyMissingTitle('The Allegory of the Cave');
-    expect(testHappy).toBe(false);
-    expect(testEmptyString).toBe(true);
-    expect(testUndefined).toBe(true);
+    expect(testHappy).toBeFalse();
+    expect(testEmptyString).toBeTrue();
+    expect(testUndefined).toBeTrue();
   });
 });

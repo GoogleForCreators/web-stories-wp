@@ -128,7 +128,7 @@ describe('ApiFetcher', () => {
         filter,
       });
       expect(result.media[0].name).toBe('photo 29044');
-      expect(window.fetch).toHaveBeenCalledTimes(1);
+      expect(window.fetch).toHaveBeenCalledOnce();
       const fetchArg = fetch.mock.calls[0][0];
       const queryString = fetchArg.substring(fetchArg.indexOf('?') + 1);
       const queryParams = queryString.split('&');
@@ -253,7 +253,7 @@ describe('ApiFetcher', () => {
       });
 
       expect(result.categories[0].label).toBe('Covid-19');
-      expect(window.fetch).toHaveBeenCalledTimes(1);
+      expect(window.fetch).toHaveBeenCalledOnce();
       const fetchArg = fetch.mock.calls[0][0];
       const queryString = fetchArg.substring(fetchArg.indexOf('?') + 1);
       const queryParams = queryString.split('&');

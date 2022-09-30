@@ -30,7 +30,7 @@ describe('elementLinkTappableRegionTooSmall', () => {
       width: 40,
       height: 40,
     };
-    expect(elementLinkTappableRegionTooSmall(element)).toBe(true);
+    expect(elementLinkTappableRegionTooSmall(element)).toBeTrue();
   });
 
   it('should return false if element has large enough tappable region', () => {
@@ -44,7 +44,7 @@ describe('elementLinkTappableRegionTooSmall', () => {
       width: 48,
       height: 48,
     };
-    expect(elementLinkTappableRegionTooSmall(element)).toBe(false);
+    expect(elementLinkTappableRegionTooSmall(element)).toBeFalse();
   });
 
   it('should return false if not an element with link', () => {
@@ -55,7 +55,7 @@ describe('elementLinkTappableRegionTooSmall', () => {
       width: 40,
       height: 40,
     };
-    expect(elementLinkTappableRegionTooSmall(element)).toBe(false);
+    expect(elementLinkTappableRegionTooSmall(element)).toBeFalse();
   });
 
   it('should return false for an element of an unknown type', () => {
@@ -69,6 +69,6 @@ describe('elementLinkTappableRegionTooSmall', () => {
       width: 40,
       height: 40,
     };
-    expect(elementLinkTappableRegionTooSmall(element)).toBe(false);
+    expect(elementLinkTappableRegionTooSmall(element)).toBeFalse();
   });
 });

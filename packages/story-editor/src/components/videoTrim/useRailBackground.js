@@ -18,12 +18,12 @@
  * External dependencies
  */
 import { useState, useEffect } from '@googleforcreators/react';
-import { generateVideoStrip } from '@googleforcreators/media';
 
 /**
  * Internal dependencies
  */
 import { RAIL_HEIGHT } from './constants';
+import generateVideoStrip from './generateVideoStrip';
 
 function useRailBackground(isReady, videoData, railWidth) {
   const [railBackgroundImage, setRailBackgroundImage] = useState(null);

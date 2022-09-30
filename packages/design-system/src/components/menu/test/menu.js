@@ -101,7 +101,7 @@ describe('<Menu />', () => {
 
     fireEvent.click(option3);
 
-    expect(onClickMock).toHaveBeenCalledTimes(1);
+    expect(onClickMock).toHaveBeenCalledOnce();
   });
 
   it('should override list items when renderMenu is present', () => {

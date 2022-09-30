@@ -24,11 +24,11 @@ describe('storyPagesCount', () => {
     const { hasTooManyPages } = storyPagesCount(31);
     const result = storyPagesCount(20);
 
-    expect(hasTooFewPages).toBe(true);
+    expect(hasTooFewPages).toBeTrue();
 
-    expect(hasTooManyPages).toBe(true);
+    expect(hasTooManyPages).toBeTrue();
 
-    expect(result.hasTooFewPages).toBe(false);
-    expect(result.hasTooManyPages).toBe(false);
+    expect(result.hasTooFewPages).toBeFalse();
+    expect(result.hasTooManyPages).toBeFalse();
   });
 });

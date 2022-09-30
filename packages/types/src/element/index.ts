@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,15 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * External dependencies
- */
-import { createGlobalStyle } from 'styled-components';
-/**
- * Internal dependencies
- */
-import { scrollbarCSS } from '../helpers/scrollbar';
 
-export const OverrideScrollbarCSS = createGlobalStyle`
-  ${scrollbarCSS};
-`;
+export * from './element';
+export * from './elementBox';
+export * from './gifElement';
+export * from './imageElement';
+export * from './mediaElement';
+export * from './pattern';
+export * from './productElement';
+export * from './shapeElement';
+export * from './stickerElement';
+export * from './textElement';
+export * from './videoElement';

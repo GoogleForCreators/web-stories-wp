@@ -26,7 +26,7 @@ describe('videoElementMissingDescription', () => {
       resource: {},
     };
     const test = videoElementMissingDescription(element);
-    expect(test).toBe(true);
+    expect(test).toBeTrue();
   });
 
   it('should return a warning if video element has empty description', () => {
@@ -39,7 +39,7 @@ describe('videoElementMissingDescription', () => {
       },
     };
     const test = videoElementMissingDescription(element);
-    expect(test).toBe(true);
+    expect(test).toBeTrue();
   });
 
   it('should return undefined if video element has title', () => {
@@ -49,7 +49,7 @@ describe('videoElementMissingDescription', () => {
       alt: 'Video description',
       resource: {},
     };
-    expect(videoElementMissingDescription(element)).toBe(false);
+    expect(videoElementMissingDescription(element)).toBeFalse();
   });
 
   it('should return undefined if video resource has title', () => {
@@ -60,6 +60,6 @@ describe('videoElementMissingDescription', () => {
         alt: 'Video description',
       },
     };
-    expect(videoElementMissingDescription(element)).toBe(false);
+    expect(videoElementMissingDescription(element)).toBeFalse();
   });
 });
