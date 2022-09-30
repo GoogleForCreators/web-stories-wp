@@ -307,51 +307,51 @@ class Editor extends DependencyInjectedTestCase {
 	 */
 	public function data_editor_max_image_size(): array {
 		return [
-			'thumb'        => [
+			'thumb'                      => [
 				'max_size' => [],
 				'size'     => 'thumb',
 				'expected' => [ 150, 150 ],
 			],
-			'thumbnail'    => [
+			'thumbnail'                  => [
 				'max_size' => [],
 				'size'     => 'thumbnail',
 				'expected' => [ 150, 150 ],
 			],
-			'medium'       => [
+			'medium'                     => [
 				'max_size' => [],
 				'size'     => 'medium',
 				'expected' => [ 300, 300 ],
 			],
-			'medium_large' => [
+			'medium_large'               => [
 				'max_size' => [],
 				'size'     => 'medium_large',
 				'expected' => [ 0, 768 ],
 			],
-			'large'        => [
+			'large'                      => [
 				'max_size' => [],
 				'size'     => 'large',
 				'expected' => [ 1024, 1024 ],
 			],
-			'full'         => [
+			'full'                       => [
 				'max_size' => [ 888, 888 ],
 				'size'     => 'full',
 				'expected' => [ 888, 888 ],
 			],
-			'web-stories-publisher-logo'         => [
+			'web-stories-publisher-logo' => [
 				'max_size' => [],
 				'size'     => 'web-stories-publisher-logo',
 				'expected' => [ 96, 96 ],
 			],
-			'web-stories-thumbnail'         => [
+			'web-stories-thumbnail'      => [
 				'max_size' => [],
 				'size'     => 'web-stories-thumbnail',
 				'expected' => [ 150, 9999 ],
 			],
-			'custom_size'         => [
+			'custom_size'                => [
 				'max_size' => [],
 				'size'     => [ 777, 777 ],
 				'expected' => [ 777, 777 ],
-			]
+			],
 		];
 	}
 }

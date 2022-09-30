@@ -486,41 +486,80 @@ class Editor extends Service_Base implements HasRequirements {
 	 *
 	 * @since 1.26.0
 	 *
-	 * @param int[] $max_size {
-	 *     An array of width and height values.
+	 * @param int[]        $max_size {
+	 *            An array of width and height values.
 	 *
 	 *     @type int $0 The maximum width in pixels.
 	 *     @type int $1 The maximum height in pixels.
 	 * }
 	 * @param string|int[] $size     Requested image size. Can be any registered image size name, or
 	 *                               an array of width and height values in pixels (in that order).
-	 *
-	 * @return array
+	 * @return array<int, int>
 	 */
-	public function editor_max_image_size( $max_size, $size ) {
+	public function editor_max_image_size( $max_size, $size ): array {
 		$_wp_additional_image_sizes = wp_get_additional_image_sizes();
 
-		if ( is_array( $size ) ) {
+		if ( \is_array( $size ) ) {
 			$max_width  = $size[0];
 			$max_height = $size[1];
 		} elseif ( 'thumb' === $size || 'thumbnail' === $size ) {
-			$max_width  = (int) get_option( 'thumbnail_size_w' );
-			$max_height = (int) get_option( 'thumbnail_size_h' );
+			/**
+			 * Thumbnail size width.
+			 *
+			 * @var int $max_width
+			 */
+			$max_width = get_option( 'thumbnail_size_w' );
+			/**
+			 * Thumbnail size height.
+			 *
+			 * @var int $max_height
+			 */
+			$max_height = get_option( 'thumbnail_size_h' );
 			// Last chance thumbnail size defaults.
 			if ( ! $max_width && ! $max_height ) {
 				$max_width  = 128;
 				$max_height = 96;
 			}
 		} elseif ( 'medium' === $size ) {
-			$max_width  = (int) get_option( 'medium_size_w' );
-			$max_height = (int) get_option( 'medium_size_h' );
+			/**
+			 * Thumbnail size width.
+			 *
+			 * @var int $max_width
+			 */
+			$max_width = get_option( 'medium_size_w' );
+			/**
+			 * Thumbnail size height.
+			 *
+			 * @var int $max_height
+			 */
+			$max_height = get_option( 'medium_size_h' );
 		} elseif ( 'medium_large' === $size ) {
-			$max_width  = (int) get_option( 'medium_large_size_w' );
-			$max_height = (int) get_option( 'medium_large_size_h' );
+			/**
+			 * Medium large size width.
+			 *
+			 * @var int $max_width
+			 */
+			$max_width = get_option( 'medium_large_size_w' );
+			/**
+			 * Medium large size height.
+			 *
+			 * @var int $max_height
+			 */
+			$max_height = get_option( 'medium_large_size_h' );
 		} elseif ( 'large' === $size ) {
-			$max_width  = (int) get_option( 'large_size_w' );
-			$max_height = (int) get_option( 'large_size_h' );
-		} elseif ( ! empty( $_wp_additional_image_sizes ) && array_key_exists( $size, $_wp_additional_image_sizes ) ) {
+			/**
+			 * Large size width.
+			 *
+			 * @var int $max_width
+			 */
+			$max_width = get_option( 'large_size_w' );
+			/**
+			 * Large size height.
+			 *
+			 * @var int $max_height
+			 */
+			$max_height = get_option( 'large_size_h' );
+		} elseif ( ! empty( $_wp_additional_image_sizes ) && \array_key_exists( $size, $_wp_additional_image_sizes ) ) {
 			$max_width  = (int) $_wp_additional_image_sizes[ $size ]['width'];
 			$max_height = (int) $_wp_additional_image_sizes[ $size ]['height'];
 		} else { // $size === 'full' has no constraint.
@@ -528,6 +567,6 @@ class Editor extends Service_Base implements HasRequirements {
 			$max_height = $max_size[1];
 		}
 
-		return [ $max_width, $max_height ];
+		return [ (int) $max_width, (int) $max_height ];
 	}
 }
