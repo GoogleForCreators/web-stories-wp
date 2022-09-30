@@ -151,6 +151,10 @@ export class Media3P extends Container {
     return this.getByRole('tab', { name: /^GIFs$/ });
   }
 
+  get stickersTab() {
+    return this.getByRole('tab', { name: /^Stickers$/ });
+  }
+
   get coverrSection() {
     return this.getByRole('tabpanel', { name: /^Video$/ });
   }
