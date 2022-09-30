@@ -33,6 +33,7 @@ describe('Design Menu: Keyboard Navigation', () => {
     fixture = new Fixture();
     await fixture.render();
     await fixture.collapseHelpCenter();
+    await fixture.showFloatingMenu();
   });
 
   afterEach(() => {

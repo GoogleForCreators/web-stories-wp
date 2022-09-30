@@ -37,6 +37,7 @@ describe('Design Menu: Border width & color', () => {
     }
 
     await fixture.collapseHelpCenter();
+    await fixture.showFloatingMenu();
   });
 
   afterEach(() => {

@@ -108,6 +108,5 @@ export const PROVIDERS = {
       __('Error loading media from %s', 'web-stories'),
       'Tenor'
     ),
-    featureName: 'tenorStickers',
   },
 };
