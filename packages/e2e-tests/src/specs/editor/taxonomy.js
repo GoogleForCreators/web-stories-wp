@@ -23,6 +23,7 @@ import {
   publishStory,
   insertStoryTitle,
   withPlugin,
+  createNewTerm,
 } from '@web-stories-wp/e2e-test-utils';
 
 async function goToAndExpandTaxonomyPanel() {
@@ -95,27 +96,18 @@ async function addTag(name) {
   await expect(tokenNames).toContainValue(name);
 }
 
-describe('taxonomy', () => {
+describe('Taxonomies', () => {
   // Create some categories and tags before running all tests so that they are available there.
   beforeAll(async () => {
-    await createNewStory();
-    await goToAndExpandTaxonomyPanel();
+    await createNewTerm('web_story_category', 'music genres');
+    await createNewTerm('web_story_category', 'rock', 'music genres');
 
-    await Promise.all([
-      await addCategory('music genres'),
-      await addCategory('rock', 'music genres'),
-
-      await addTag('adventure'),
-      await addTag('sci-fi'),
-      await addTag('comedy'),
-    ]);
-
-    // No need to save/publish the story, as the new categories will have been
-    // created in the background via the REST API already.
+    await createNewTerm('web_story_tag', 'adventure');
+    await createNewTerm('web_story_tag', 'sci-fi');
+    await createNewTerm('web_story_tag', 'comedy');
   });
 
-  // eslint-disable-next-line jest/no-disabled-tests -- TODO(#12026): Fix flakey test.
-  describe.skip('Administrator', () => {
+  describe('Administrator', () => {
     it('should be able to add new categories', async () => {
       await createNewStory();
       await insertStoryTitle('Taxonomies - Categories - Admin');
