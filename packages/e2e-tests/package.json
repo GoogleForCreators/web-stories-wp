@@ -31,7 +31,7 @@
     "@web-stories-wp/jest-resolver": "*",
     "@wordpress/jest-console": "^6.0.0",
     "@wordpress/jest-puppeteer-axe": "^5.0.0",
-    "babel-jest": "^29.0.3",
+    "babel-jest": "^29.1.2",
     "expect-puppeteer": "^6.0.2",
     "jest-environment-puppeteer": "^6.1.1",
     "jest-extended": "^3.0.2",
