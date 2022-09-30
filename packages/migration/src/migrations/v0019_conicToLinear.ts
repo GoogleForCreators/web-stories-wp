@@ -82,10 +82,14 @@ function reducePage({
 }: PageV18): PageV19 {
   const updatedDefaultBackground = defaultBackgroundElement
     ? (updateElement(defaultBackgroundElement) as ShapeElementV19)
-    : undefined;
+    : null;
   return {
     elements: elements.map(updateElement),
-    defaultBackgroundElement: updatedDefaultBackground,
+    ...(updatedDefaultBackground
+      ? {
+          defaultBackgroundElement: updatedDefaultBackground,
+        }
+      : null),
     ...rest,
   };
 }
