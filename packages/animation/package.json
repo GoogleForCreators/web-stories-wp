@@ -38,18 +38,18 @@
     "access": "public"
   },
   "dependencies": {
+    "@googleforcreators/elements": "*",
     "@googleforcreators/i18n": "*",
-    "@googleforcreators/media": "*",
     "@googleforcreators/react": "*",
     "@googleforcreators/units": "*",
     "flagged": "^2.0.6",
     "prop-types": "^15.8.1",
-    "styled-components": "^5.3.3",
+    "styled-components": "^5.3.6",
     "uuid": "^9.0.0",
     "web-animations-js": "^2.3.2"
   },
   "devDependencies": {
     "@testing-library/react": "^12.1.5",
-    "@testing-library/react-hooks": "^8.0.0"
+    "@testing-library/react-hooks": "^8.0.1"
   }
 }

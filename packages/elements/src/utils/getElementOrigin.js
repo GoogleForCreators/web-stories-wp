@@ -13,10 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * External dependencies
- */
-import { lerp } from '@googleforcreators/units';
 
 /**
  * Given a media element, calculates where the origin is on the media
@@ -27,7 +23,7 @@ import { lerp } from '@googleforcreators/units';
  * @param {Object} offsets - story media element offsets
  * @return {Object} object containing horizontal and vertical transform origin percentages
  */
-export function getMediaOrigin(
+function getElementOrigin(
   offsets = {
     top: 0,
     right: 0,
@@ -38,35 +34,24 @@ export function getMediaOrigin(
   // If both offsets are 0, we want the origin to be in the middle.
   // Otherwise we want the percentage of one offset relative to the
   // other
-  let vertical = 0.5;
-  const absOffsets = Object.entries(offsets).reduce(
-    (accum, [key, val]) => ({
-      ...accum,
-      [key]: Math.abs(val),
-    }),
-    {}
-  );
-  if (!(absOffsets.top < 0.01 && absOffsets.bottom < 0.01)) {
-    vertical = absOffsets.top / (absOffsets.top + absOffsets.bottom);
-  }
-  let horizontal = 0.5;
-  if (!(absOffsets.left < 0.01 && absOffsets.right < 0.01)) {
-    horizontal = absOffsets.left / (absOffsets.left + absOffsets.right);
-  }
-
   const progress = {
-    vertical,
-    horizontal,
+    vertical: 50,
+    horizontal: 50,
   };
+  const absOffsets = Object.fromEntries(
+    Object.entries(offsets).map(([key, val]) => [key, Math.abs(val)])
+  );
+  const isSignificant = (val) => val >= 0.01;
+  if ([absOffsets.top, absOffsets.bottom].some(isSignificant)) {
+    progress.vertical =
+      (100 * absOffsets.top) / (absOffsets.top + absOffsets.bottom);
+  }
+  if ([absOffsets.left, absOffsets.right].some(isSignificant)) {
+    progress.horizontal =
+      (100 * absOffsets.left) / (absOffsets.left + absOffsets.right);
+  }
 
-  return {
-    horizontal: lerp(isNaN(progress.horizontal) ? 0.5 : progress.horizontal, {
-      MIN: 0,
-      MAX: 100,
-    }),
-    vertical: lerp(isNaN(progress.vertical) ? 0.5 : progress.vertical, {
-      MIN: 0,
-      MAX: 100,
-    }),
-  };
+  return progress;
 }
+
+export default getElementOrigin;
