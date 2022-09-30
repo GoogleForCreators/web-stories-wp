@@ -46,6 +46,7 @@ class Uninstall extends DependencyInjectedTestCase {
 			wp_set_object_terms( $attachment_id, $terms_ids, $source_taxonomy->get_taxonomy_slug() );
 		}
 
+		self::factory()->post->create_many( 5, [ 'post_type' => \Google\Web_Stories\Font_Post_Type::POST_TYPE_SLUG ] );
 		self::factory()->post->create_many( 5, [ 'post_type' => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG ] );
 		self::factory()->post->create_many( 5, [ 'post_type' => \Google\Web_Stories\Page_Template_Post_Type::POST_TYPE_SLUG ] );
 
@@ -101,6 +102,7 @@ class Uninstall extends DependencyInjectedTestCase {
 				'fields'           => 'ids',
 				'suppress_filters' => false,
 				'post_type'        => [
+					\Google\Web_Stories\Font_Post_Type::POST_TYPE_SLUG,
 					\Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
 					\Google\Web_Stories\Page_Template_Post_Type::POST_TYPE_SLUG,
 				],

@@ -159,6 +159,7 @@ function delete_posts(): void {
 			'post_status'      => 'any',
 			'post_type'        => [
 				Story_Post_Type::POST_TYPE_SLUG,
+				Font_Post_Type::POST_TYPE_SLUG,
 				Page_Template_Post_Type::POST_TYPE_SLUG,
 			],
 			'posts_per_page'   => - 1,
