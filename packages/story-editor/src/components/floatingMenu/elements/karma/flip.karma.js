@@ -28,6 +28,7 @@ describe('Design Menu: Flip toggles', () => {
     await fixture.render();
 
     await fixture.collapseHelpCenter();
+    await fixture.showFloatingMenu();
 
     // Add an image to stage
     await fixture.events.mouse.clickOn(
