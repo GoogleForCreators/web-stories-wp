@@ -56,6 +56,7 @@ export const addPage = (draft, { page, position, updateSelection = true }) => {
   const insertionPoint = isWithinBounds ? position : currentPageIndex + 1;
 
   draft.pages.splice(insertionPoint, 0, page);
+
   if (updateSelection) {
     draft.current = page.id;
     draft.selection = [page.elements[0].id];

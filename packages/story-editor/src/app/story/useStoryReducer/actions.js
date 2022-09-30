@@ -22,8 +22,11 @@ import * as types from './types';
 // Exposed actions
 const addPage =
   (dispatch) =>
-  ({ page }) =>
-    dispatch({ type: types.ADD_PAGE, payload: { page, position: null } });
+  ({ page, position, updateSelection }) =>
+    dispatch({
+      type: types.ADD_PAGE,
+      payload: { page, position, updateSelection },
+    });
 
 const addPageAt =
   (dispatch) =>
