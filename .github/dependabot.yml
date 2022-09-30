@@ -27,6 +27,11 @@ updates:
         versions:
           - '>= 3'
 
+      # Package is ESM-only, can't use it just yet.
+      - dependency-name: 'got'
+        versions:
+          - '>= 12'
+
       # Best updated manually as they have very frequent updates.
       - dependency-name: '@storybook/*'
 
