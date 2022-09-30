@@ -291,18 +291,6 @@ class Experiments extends Service_Base implements HasRequirements {
 				'default'     => true,
 			],
 			/**
-			 * Author: @swissspidy
-			 * Issue: #11878
-			 * Creation date: 2022-07-06
-			 */
-			[
-				'name'        => 'tenorStickers',
-				'label'       => __( 'Stickers', 'web-stories' ),
-				'description' => __( 'Enable Tenor stickers support', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-			/**
 			 * Author: @timarney
 			 * Issue: #12093
 			 * Creation date: 2022-08-18

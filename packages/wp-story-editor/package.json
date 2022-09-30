@@ -45,12 +45,12 @@
     "flagged": "^2.0.6",
     "polished": "^4.2.2",
     "react-calendar": "^3.9.0",
-    "styled-components": "^5.3.3"
+    "styled-components": "^5.3.6"
   },
   "devDependencies": {
     "@googleforcreators/test-utils": "*",
     "@testing-library/react": "^12.1.5",
-    "@testing-library/react-hooks": "^8.0.0",
+    "@testing-library/react-hooks": "^8.0.1",
     "mockdate": "^3.0.5",
     "prop-types": "^15.8.1"
   }
