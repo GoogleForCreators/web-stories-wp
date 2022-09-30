@@ -73,7 +73,7 @@ function PostLock() {
     })
   );
 
-  const { enablePostLockingTakeOver, improvedAutosaves } = useFeatures();
+  const { enablePostLockingTakeOver } = useFeatures();
   const [isFirstTime, setIsFirstTime] = useState(true);
   const [user, setUser] = useState({});
   const [nonce, setNonce] = useState(firstNonce);
@@ -170,7 +170,6 @@ function PostLock() {
   useEffect(() => {
     if (
       enablePostLockingTakeOver &&
-      improvedAutosaves &&
       showLockedDialog &&
       user &&
       hasNewChanges &&
@@ -181,7 +180,6 @@ function PostLock() {
   }, [
     enablePostLockingTakeOver,
     hasNewChanges,
-    improvedAutosaves,
     showLockedDialog,
     user,
     isFirstTime,

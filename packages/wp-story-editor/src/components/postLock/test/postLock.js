@@ -60,7 +60,6 @@ function setup({
       storyLocking: '',
     },
     flags: {
-      improvedAutosaves: false,
       enablePostLockingTakeOver: true,
     },
     ...extraConfigValue,
@@ -258,7 +257,6 @@ describe('PostLock', () => {
 
     const extraConfigValue = {
       flags: {
-        improvedAutosaves: true,
         enablePostLockingTakeOver: true,
       },
     };
