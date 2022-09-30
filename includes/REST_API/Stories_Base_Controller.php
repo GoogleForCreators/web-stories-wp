@@ -127,11 +127,23 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 		if ( ! empty( $schema['properties']['content'] ) ) {
 
 			// Ensure that content and story_data are updated together.
+			// Exception: new auto-draft created from a template.
 			if (
+				(
 				( ! empty( $request['story_data'] ) && empty( $request['content'] ) ) ||
 				( ! empty( $request['content'] ) && empty( $request['story_data'] ) )
+				) && ( 'auto-draft' !== $prepared_post->post_status )
 			) {
-				return new \WP_Error( 'rest_empty_content', __( 'content and story_data should always be updated together.', 'web-stories' ), [ 'status' => 412 ] );
+				return new \WP_Error(
+					'rest_empty_content',
+					sprintf(
+						/* translators: 1: content, 2: story_data */
+						__( '%1$s and %2$s should always be updated together.', 'web-stories' ),
+						'content',
+						'story_data'
+					),
+					[ 'status' => 412 ]
+				);
 			}
 
 			if ( isset( $request['content'] ) ) {

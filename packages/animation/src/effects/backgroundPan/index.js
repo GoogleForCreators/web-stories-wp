@@ -15,11 +15,15 @@
  */
 
 /**
+ * External dependencies
+ */
+import { getElementOffsets } from '@googleforcreators/elements';
+
+/**
  * Internal dependencies
  */
 import { BACKGROUND_ANIMATION_EFFECTS, DIRECTION } from '../../constants';
 import SimpleAnimation from '../../parts/simpleAnimation';
-import { getMediaBoundOffsets } from '../../utils';
 
 export function EffectBackgroundPan({
   panDir = DIRECTION.RIGHT_TO_LEFT,
@@ -40,7 +44,7 @@ export function EffectBackgroundPan({
   const translateToOriginX = 'translate3d(0%, 0, 0)';
   const translateToOriginY = 'translate3d(0, 0%, 0)';
   const offsets = element
-    ? getMediaBoundOffsets({ element })
+    ? getElementOffsets(element)
     : {
         top: 0,
         right: 0,

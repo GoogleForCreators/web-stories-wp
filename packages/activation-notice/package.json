@@ -32,7 +32,7 @@
     "flagged": "^2.0.6",
     "polished": "^4.2.2",
     "prop-types": "^15.8.1",
-    "styled-components": "^5.3.3",
+    "styled-components": "^5.3.6",
     "stylis-plugin-rtl": "^1.0.0"
   },
   "devDependencies": {

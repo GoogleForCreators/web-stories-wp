@@ -40,8 +40,9 @@ class Uninstall extends DependencyInjectedTestCase {
 		$terms_ids            = self::factory()->term->create_many( 5, [ 'taxonomy' => $source_taxonomy->get_taxonomy_slug() ] );
 
 		foreach ( self::$attachment_ids as $attachment_id ) {
-			add_post_meta( $attachment_id, 'web_stories_is_poster', '1' );
-			add_post_meta( $attachment_id, 'web_stories_poster_id', '999' );
+			add_post_meta( $attachment_id, \Google\Web_Stories\Media\Video\Poster::POSTER_POST_META_KEY, '1' );
+			add_post_meta( $attachment_id, \Google\Web_Stories\Media\Video\Poster::POSTER_ID_POST_META_KEY, '999' );
+			add_post_meta( $attachment_id, \Google\Web_Stories\Media\Cropping::CROPPED_ID_POST_META_KEY, '999' );
 			wp_set_object_terms( $attachment_id, $terms_ids, $source_taxonomy->get_taxonomy_slug() );
 		}
 
@@ -115,8 +116,9 @@ class Uninstall extends DependencyInjectedTestCase {
 		\Google\Web_Stories\delete_stories_post_meta();
 
 		foreach ( self::$attachment_ids as $attachment_id ) {
-			$this->assertSame( '', get_post_meta( $attachment_id, 'web_stories_is_poster', true ) );
-			$this->assertSame( 0, get_post_meta( $attachment_id, 'web_stories_poster_id', true ) );
+			$this->assertSame( '', get_post_meta( $attachment_id, \Google\Web_Stories\Media\Video\Poster::POSTER_POST_META_KEY, true ) );
+			$this->assertSame( 0, get_post_meta( $attachment_id, \Google\Web_Stories\Media\Video\Poster::POSTER_ID_POST_META_KEY, true ) );
+			$this->assertSame( 0, get_post_meta( $attachment_id, \Google\Web_Stories\Media\Cropping::CROPPED_ID_POST_META_KEY, true ) );
 		}
 	}
 

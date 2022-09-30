@@ -1,5 +1,3 @@
-# Keep in sync with tests-karma-dashboard-skip.yml
-
 name: Dashboard Integration Tests
 
 on:
@@ -90,9 +88,9 @@ jobs:
 
       - name: Run integration tests with Percy
         run: |
-          npx percy exec --parallel --config=percy.config.karma.yml -- \
+          npx percy exec --quiet --parallel --config=percy.config.karma.yml -- \
             npm run test:karma:dashboard -- --headless --viewport=1600:1000 --coverage --shard=$SHARD || \
-          npx percy exec --parallel --config=percy.config.karma.yml -- \
+          npx percy exec --quiet --parallel --config=percy.config.karma.yml -- \
             npm run test:karma:dashboard:retry-failed -- --headless --viewport=1600:1000 --shard=$SHARD
         env:
           DISABLE_ERROR_BOUNDARIES: true
