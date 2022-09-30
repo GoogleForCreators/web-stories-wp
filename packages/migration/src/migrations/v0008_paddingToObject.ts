@@ -84,7 +84,7 @@ function updateElement(element: UnionElementV7): UnionElementV8 {
     Object.prototype.hasOwnProperty.call(element.padding, 'horizontal')
   ) {
     // If padding is already set, just return as is.
-    return element;
+    return element as UnionElementV8;
   }
 
   const newPadding = padding || 0;

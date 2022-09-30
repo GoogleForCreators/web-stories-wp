@@ -54,6 +54,6 @@ export interface Page {
     tracks: Track[];
     loop: boolean;
   };
-  autoAdvance: 'auto' | 'manual';
+  autoAdvance: boolean;
   defaultPageDuration: number;
 }

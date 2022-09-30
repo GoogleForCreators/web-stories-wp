@@ -14,13 +14,25 @@
  * limitations under the License.
  */
 
-// @todo Create new type without conic.
-export enum PatternType {
+export enum PatternTypeV0 {
   Solid = 'solid',
   Linear = 'linear',
   Radial = 'radial',
   Conic = 'conic',
 }
+type AbstractGradientV0 = {
+  type: PatternTypeV0.Linear | PatternTypeV0.Radial | PatternTypeV0.Conic;
+  stops: ColorStop[];
+  alpha?: number;
+};
+
+export type ConicV0 = AbstractGradientV0 & {
+  type: PatternTypeV0.Conic;
+  rotation?: number;
+};
+
+export type GradientV0 = Linear | Radial | ConicV0;
+export type PatternV0 = Solid | GradientV0;
 
 export type Hex = {
   r: number;
@@ -28,6 +40,12 @@ export type Hex = {
   b: number;
   a?: number;
 };
+
+export enum PatternType {
+  Solid = 'solid',
+  Linear = 'linear',
+  Radial = 'radial',
+}
 
 export type Solid = {
   type?: PatternType.Solid;
@@ -40,18 +58,13 @@ export type ColorStop = {
 };
 
 type AbstractGradient = {
-  type: PatternType.Linear | PatternType.Radial | PatternType.Conic;
+  type: PatternType.Linear | PatternType.Radial;
   stops: ColorStop[];
   alpha?: number;
 };
 
 export type Linear = AbstractGradient & {
   type: PatternType.Linear;
-  rotation?: number;
-};
-
-export type Conic = AbstractGradient & {
-  type: PatternType.Conic;
   rotation?: number;
 };
 
@@ -68,5 +81,5 @@ export type Radial = AbstractGradient & {
   rotation?: number;
 };
 
-export type Gradient = Linear | Radial | Conic;
+export type Gradient = Linear | Radial;
 export type Pattern = Solid | Gradient;

@@ -67,7 +67,11 @@ import removeFontProperties from './migrations/v0041_removeFontProperties';
 import removeTrackName from './migrations/v0042_removeTrackName';
 import removeTagNames from './migrations/v0043_removeTagNames';
 
-const MIGRATIONS: Record<number, any[]> = {
+type MigrationFn<T, S> = (storyData: T) => S;
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment -- See below.
+// @ts-ignore Reason: Temporary (hopefully). Don't have a good solution for this yet as it accepts all story types.
+const MIGRATIONS: Record<number, MigrationFn<any, any>[]> = {
   1: [storyDataArrayToObject],
   2: [dataPixelTo1080],
   3: [fullbleedToFill],
@@ -127,6 +131,7 @@ export function migrate(storyData: Story, version: number): Story {
     }
     for (let i = 0; v < migrations.length; i++) {
       if (Object.prototype.hasOwnProperty.call(migrations, i)) {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- Remove when MigrationFn is typed correctly.
         result = migrations[Number(i)](result);
       }
     }

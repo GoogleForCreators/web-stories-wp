@@ -22,7 +22,7 @@ import { parseToRgb } from 'polished';
 /**
  * Internal dependencies
  */
-import type { Pattern } from '../types/pattern';
+import type { PatternV0, Pattern } from '../types/pattern';
 import type {
   GifElementV5,
   ImageElementV5,
@@ -38,12 +38,12 @@ import type {
 export interface TextElementV6
   extends Omit<TextElementV5, 'color' | 'backgroundColor'> {
   color: Pattern | null;
-  backgroundColor: Pattern | null;
+  backgroundColor: PatternV0 | null;
 }
 
 export interface ShapeElementV6
   extends Omit<ShapeElementV5, 'backgroundColor'> {
-  backgroundColor?: Pattern | null;
+  backgroundColor: PatternV0;
 }
 export type GifElementV6 = GifElementV5;
 export type ProductElementV6 = ProductElementV5;
@@ -63,7 +63,7 @@ export interface StoryV6 extends Omit<StoryV5, 'pages'> {
 }
 export interface PageV6 extends Omit<PageV5, 'elements' | 'backgroundColor'> {
   elements: UnionElementV6[];
-  backgroundColor: Pattern | null;
+  backgroundColor: PatternV0 | null;
 }
 
 function colorToPattern({ pages, ...rest }: StoryV5): StoryV6 {
@@ -82,7 +82,7 @@ function updatePage({ elements, backgroundColor, ...rest }: PageV5): PageV6 {
 }
 
 function updateElement(element: UnionElementV5): UnionElementV6 {
-  const newProps: Record<string, null | Pattern> = {};
+  const newProps: Record<string, null | PatternV0> = {};
 
   if ('color' in element) {
     newProps.color = parse(element.color);
@@ -98,7 +98,7 @@ function updateElement(element: UnionElementV5): UnionElementV6 {
   } as UnionElementV6;
 }
 
-function parse(colorString: string | undefined): Pattern | null {
+function parse(colorString: string | undefined): PatternV0 | null {
   if (!colorString || colorString === 'transparent') {
     return null;
   }

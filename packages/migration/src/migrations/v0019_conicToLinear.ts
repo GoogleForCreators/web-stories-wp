@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import type { Linear } from '../types/pattern';
+import type { Linear, Pattern } from '../types/pattern';
 import type {
   GifElementV18,
   ImageElementV18,
@@ -30,8 +30,15 @@ import type {
   VideoElementV18,
 } from './v0018_defaultBackgroundElement';
 
-export type ShapeElementV19 = ShapeElementV18;
-export type TextElementV19 = TextElementV18;
+export interface ShapeElementV19
+  extends Omit<ShapeElementV18, 'backgroundColor'> {
+  backgroundColor?: Pattern;
+}
+export interface TextElementV19
+  extends Omit<TextElementV18, 'color' | 'backgroundColor'> {
+  color: Pattern;
+  backgroundColor?: Pattern;
+}
 export type ProductElementV19 = ProductElementV18;
 export type ImageElementV19 = ImageElementV18;
 export type VideoElementV19 = VideoElementV18;
@@ -49,8 +56,16 @@ export interface StoryV19 extends Omit<StoryV18, 'pages'> {
   pages: PageV19[];
 }
 export interface PageV19
-  extends Omit<PageV18, 'elements' | 'backgroundElementId'> {
+  extends Omit<
+    PageV18,
+    | 'elements'
+    | 'backgroundElementId'
+    | 'backgroundColor'
+    | 'defaultBackgroundElement'
+  > {
   elements: UnionElementV19[];
+  backgroundColor?: Pattern;
+  defaultBackgroundElement?: ShapeElementV19;
 }
 
 function conicToLinear({ pages, ...rest }: StoryV18): StoryV19 {
@@ -60,19 +75,36 @@ function conicToLinear({ pages, ...rest }: StoryV18): StoryV19 {
   };
 }
 
-function reducePage({ elements, ...rest }: PageV18): PageV19 {
+function reducePage({
+  elements,
+  defaultBackgroundElement,
+  ...rest
+}: PageV18): PageV19 {
+  const updatedDefaultBackground = defaultBackgroundElement
+    ? (updateElement(defaultBackgroundElement) as ShapeElementV19)
+    : undefined;
   return {
     elements: elements.map(updateElement),
+    defaultBackgroundElement: updatedDefaultBackground,
     ...rest,
   };
 }
 
 function updateElement(element: UnionElementV18): UnionElementV19 {
   if ('backgroundColor' in element) {
-    if (!element.backgroundColor) {
-      return element;
+    const { backgroundColor, ...rest } = element;
+    if (!backgroundColor) {
+      return {
+        ...rest,
+        backgroundColor: {
+          color: {
+            r: 196,
+            g: 196,
+            b: 196,
+          },
+        },
+      };
     }
-    const { backgroundColor } = element;
     if (backgroundColor.type === 'conic') {
       return {
         ...element,
@@ -82,7 +114,7 @@ function updateElement(element: UnionElementV18): UnionElementV19 {
         } as Linear,
       };
     }
-    return element;
+    return element as UnionElementV19;
   }
   return element;
 }

@@ -72,7 +72,9 @@ export interface BackgroundAudioV39 {
 }
 export interface StoryV39 extends Omit<StoryV38, 'pages' | 'backgroundAudio'> {
   pages: PageV39[];
-  backgroundAudio?: BackgroundAudioV39;
+  backgroundAudio?: {
+    resource: BackgroundAudioResource;
+  };
 }
 export interface PageV39 extends Omit<PageV38, 'elements' | 'backgroundAudio'> {
   elements: UnionElementV39[];
