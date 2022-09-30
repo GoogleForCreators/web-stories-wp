@@ -621,7 +621,7 @@ describe('Media3pPane fetching', () => {
       await fixture.events.click(fixture.editor.library.media3pTab);
       // 3p media fetching can take extra time to load, waiting to prevent flakey tests
       await waitForInitialMediaLoad();
-      expect(fixture.editor.library.media3p.tabs.length).toBe(3);
+      expect(fixture.editor.library.media3p.tabs.length).toBe(4);
 
       // unsplash section should be visible
       expect(
@@ -648,7 +648,7 @@ describe('Media3pPane fetching', () => {
       // 3p media fetching can take extra time to load, waiting to prevent flakey tests
       await waitForInitialMediaLoad();
       const { tabs } = fixture.editor.library.media3p;
-      expect(tabs.length).toBe(3);
+      expect(tabs.length).toBe(4);
 
       // unsplash section should be visible
       expect(
@@ -669,7 +669,7 @@ describe('Media3pPane fetching', () => {
       // 3p media fetching can take extra time to load, waiting to prevent flakey tests
       await waitForInitialMediaLoad();
       const { tabs } = fixture.editor.library.media3p;
-      expect(tabs.length).toBe(3);
+      expect(tabs.length).toBe(4);
 
       // unsplash section should be visible
       expect(
@@ -688,7 +688,7 @@ describe('Media3pPane fetching', () => {
       // 3p media fetching can take extra time to load, waiting to prevent flakey tests
       await waitForInitialMediaLoad();
       const { tabs } = fixture.editor.library.media3p;
-      expect(tabs.length).toBe(3);
+      expect(tabs.length).toBe(4);
 
       // unsplash section should be visible
       expect(
@@ -700,7 +700,7 @@ describe('Media3pPane fetching', () => {
       await fixture.events.keyboard.press('ArrowLeft');
 
       expect(document.activeElement).toBe(
-        fixture.editor.library.media3p.tenorTab
+        fixture.editor.library.media3p.stickersTab
       );
     });
   });
