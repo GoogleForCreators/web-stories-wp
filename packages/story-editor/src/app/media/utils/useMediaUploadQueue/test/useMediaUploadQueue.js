@@ -366,6 +366,7 @@ describe('useMediaUploadQueue', () => {
         isCurrentResourceTrimming: expect.any(Function),
         isCurrentResourceUploading: expect.any(Function),
         canTranscodeResource: expect.any(Function),
+        isBatchUploading: expect.any(Function),
       })
     );
   });
