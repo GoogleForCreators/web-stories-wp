@@ -265,6 +265,7 @@ class Experiments extends Service_Base implements HasRequirements {
 				'label'       => __( 'Story locking take over', 'web-stories' ),
 				'description' => __( 'Allow locked stories to be taken over by another author', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 			/**
 			 * Author: @barklund
