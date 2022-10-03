@@ -19,6 +19,8 @@
  */
 import { SESSION_STORAGE_PREFIX } from '@googleforcreators/design-system';
 
+// Note: this format is also used in the `dashboard` package that should be updated in case of the format changing.
+// See https://github.com/GoogleForCreators/web-stories-wp/pull/12416/files#diff-a314e9df4ccf61e1a84cd3ca5b318a729c086e49e92da545b5a6272da3666b98R43
 export default function getSessionStorageKey(storyId, isNew) {
   return `${SESSION_STORAGE_PREFIX.LOCAL_AUTOSAVE_PREFIX}_${
     isNew ? 'auto-draft' : storyId
