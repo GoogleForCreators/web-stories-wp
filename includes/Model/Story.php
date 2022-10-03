@@ -193,7 +193,7 @@ class Story {
 		$thumbnail_id = (int) get_post_thumbnail_id( $post );
 
 		if ( 0 !== $thumbnail_id ) {
-			$poster_src = wp_get_attachment_image_src( $thumbnail_id, Image_Sizes::POSTER_PORTRAIT_IMAGE_SIZE );
+			$poster_src = wp_get_attachment_image_src( $thumbnail_id, Image_Sizes::POSTER_PORTRAIT_IMAGE_DIMENSIONS );
 
 			if ( $poster_src ) {
 				[ $poster_url, $width, $height ] = $poster_src;
@@ -228,7 +228,7 @@ class Story {
 		$publisher_logo_id = get_post_meta( $this->id, Story_Post_Type::PUBLISHER_LOGO_META_KEY, true );
 
 		if ( ! empty( $publisher_logo_id ) ) {
-			$img_src = wp_get_attachment_image_src( (int) $publisher_logo_id, Image_Sizes::PUBLISHER_LOGO_IMAGE_SIZE );
+			$img_src = wp_get_attachment_image_src( (int) $publisher_logo_id, Image_Sizes::PUBLISHER_LOGO_IMAGE_DIMENSIONS );
 
 			if ( $img_src ) {
 				[ $src, $width, $height ]  = $img_src;
