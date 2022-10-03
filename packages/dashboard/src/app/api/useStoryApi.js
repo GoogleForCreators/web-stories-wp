@@ -40,7 +40,7 @@ import storyReducer, {
 import { ERRORS } from '../textContent';
 import { useConfig } from '../config';
 
-// The format here is taken from the `getSessionStorageKey`.
+// The format here is taken from the `getSessionStorageKey` util.
 // See https://github.com/GoogleForCreators/web-stories-wp/blob/d62ed358d069b3cd8586bc5f6949f50cdc0a39e6/packages/story-editor/src/utils/getSessionStorageKey.js
 const DRAFT_STORAGE_KEY = `${SESSION_STORAGE_PREFIX.LOCAL_AUTOSAVE_PREFIX}_auto-draft`;
 
