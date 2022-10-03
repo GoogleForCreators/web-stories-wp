@@ -33,7 +33,6 @@ import {
   resourceList,
 } from '@googleforcreators/media';
 import styled from 'styled-components';
-import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -347,8 +346,6 @@ const useQuickActions = () => {
     startTrim: actions.startTrim,
     setVideoEffect: actions.setVideoEffect,
   }));
-
-  const enableMediaRecordingTrimming = useFeature('recordingTrimming');
 
   const undoRef = useRef(undo);
   undoRef.current = undo;
@@ -880,7 +877,7 @@ const useQuickActions = () => {
         disabled: !isReady || !hasVideo,
         ...actionMenuProps,
       },
-      enableMediaRecordingTrimming && {
+      {
         Icon: Scissors,
         label: __('Trim Video', 'web-stories'),
         onClick: () => {
@@ -907,7 +904,6 @@ const useQuickActions = () => {
     toggleRecordingMode,
     toggleSettings,
     startTrim,
-    enableMediaRecordingTrimming,
     videoEffect,
     setVideoEffect,
   ]);
