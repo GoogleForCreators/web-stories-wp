@@ -59,8 +59,7 @@ interface TemplateData extends Omit<Story, 'pages'> {
   pages: TemplatePage[];
 }
 
-interface TemplatePage
-  extends Omit<Page, 'elements' | 'defaultPageDuration' | 'autoAdvance'> {
+interface TemplatePage extends Omit<Page, 'elements'> {
   elements: UnionElement[];
   pageTemplateType: string;
 }
