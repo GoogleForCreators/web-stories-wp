@@ -21,7 +21,6 @@
  */
 import { __ } from '@googleforcreators/i18n';
 import { useCallback, useRef, useEffect } from '@googleforcreators/react';
-import { SelfieSegmentation } from '@mediapipe/selfie_segmentation';
 
 /**
  * Internal dependencies
@@ -34,15 +33,6 @@ import { VideoWrapper, Video, Photo, Canvas } from './components';
 import Audio from './audio';
 import { BACKGROUND_BLUR_PX, VIDEO_EFFECTS } from './constants';
 import blur from './blur';
-
-const selfieSegmentation = new SelfieSegmentation({
-  locateFile: (file) =>
-    `https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/${file}`,
-});
-selfieSegmentation.setOptions({
-  modelSelection: 1,
-});
-selfieSegmentation.initialize();
 
 function PlaybackMedia() {
   const {
@@ -155,6 +145,20 @@ function PlaybackMedia() {
 
   useEffect(() => {
     async function run() {
+      const { SelfieSegmentation } = await import(
+        /* webpackChunkName: "chunk-selfie-segmentation" */ '@mediapipe/selfie_segmentation'
+      );
+
+      const selfieSegmentation = new SelfieSegmentation({
+        // TODO: Consider fetching from wp.stories.google instead.
+        locateFile: (file) =>
+          `https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/${file}`,
+      });
+
+      selfieSegmentation.setOptions({
+        modelSelection: 1,
+      });
+
       await selfieSegmentation.initialize();
 
       if (hasVideoEffect && canvasRef.current) {
@@ -191,6 +195,7 @@ function PlaybackMedia() {
         }
       }
     }
+
     run();
     // eslint-disable-next-line react-hooks/exhaustive-deps -- including liveStream will cause freeze
   }, [videoEffect, hasVideoEffect, streamNode, setCanvasStream, setCanvasNode]);
