@@ -48,4 +48,11 @@ export type Flags = Record<string, boolean>;
 export interface Story {
   version: number;
   pages: Page[];
+  backgroundAudio?: {
+    resource: {
+      src: string;
+      id: number;
+      mimeType: string;
+    };
+  };
 }

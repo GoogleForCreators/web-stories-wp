@@ -3,6 +3,7 @@
     { "path": "packages/fonts" },
     { "path": "packages/i18n" },
     { "path": "packages/media" },
+    { "path": "packages/migration" },
     { "path": "packages/moveable" },
     { "path": "packages/output" },
     { "path": "packages/patterns" },

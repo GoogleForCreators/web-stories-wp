@@ -72,7 +72,7 @@ export class Canvas extends Container {
 
   get quickActionMenu() {
     return this._get(
-      this.getByRole('menu'),
+      this.getByRole('menu', { name: /Group of available options/ }),
       'quickActionMenu',
       QuickActionMenu
     );
@@ -179,7 +179,9 @@ class FramesLayer extends AbstractLayer {
   get frames() {
     return this._getAll(
       // @todo: improve query.
-      this.node.querySelectorAll('[data-element-id]'),
+      this.node.querySelectorAll(
+        '[data-testid="frameElement"][data-element-id]'
+      ),
       (node) => `frames[${node.getAttribute('data-element-id')}]`,
       Frame
     );

@@ -24,7 +24,6 @@ import type {
   PageAttachment,
   ShoppingAttachmentType,
 } from '../element';
-import type { BackgroundAudio } from '../resource';
 import type { Animation } from './animation';
 
 export interface Group {
@@ -32,6 +31,16 @@ export interface Group {
   isLocked: boolean;
   isCollapsed?: boolean;
 }
+
+export type Track = {
+  track: string;
+  trackId: number;
+  trackName: string;
+  id: string;
+  srcLang?: string;
+  label?: string;
+  kind: string;
+};
 
 export type Groups = Record<string, Group>;
 export type Advancement = {
@@ -48,7 +57,16 @@ export interface Page {
   groups: Groups;
   id: string;
   pageAttachment?: PageAttachment;
-  advancement: Advancement;
-  backgroundAudio: BackgroundAudio;
-  shoppingAttachment: ShoppingAttachmentType;
+  shoppingAttachment?: ShoppingAttachmentType;
+  backgroundAudio?: {
+    resource: {
+      src: string;
+      id: number;
+      mimeType: string;
+    };
+    tracks: Track[];
+    loop: boolean;
+  };
+  autoAdvance: boolean;
+  defaultPageDuration: number;
 }

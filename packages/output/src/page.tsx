@@ -180,6 +180,10 @@ function OutputPage({
           </amp-story-grid-layer>
         )}
 
+        {backgroundAudioSrc && needsEnhancedBackgroundAudio && (
+          <BackgroundAudio backgroundAudio={backgroundAudio} id={id} />
+        )}
+
         <amp-story-grid-layer
           template="vertical"
           aspect-ratio={ASPECT_RATIO}
@@ -198,10 +202,6 @@ function OutputPage({
           </div>
         </amp-story-grid-layer>
       </StoryAnimation.Provider>
-
-      {backgroundAudioSrc && needsEnhancedBackgroundAudio && (
-        <BackgroundAudio backgroundAudio={backgroundAudio} id={id} />
-      )}
 
       {videoCaptions.length > 0 && (
         <amp-story-grid-layer
