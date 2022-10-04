@@ -129,10 +129,10 @@ export function migrate(storyData: Story, version: number): Story {
     if (!migrations) {
       continue;
     }
-    for (let i = 0; v < migrations.length; i++) {
+    for (let i = 0; i < migrations.length; i++) {
       if (Object.prototype.hasOwnProperty.call(migrations, i)) {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- Remove when MigrationFn is typed correctly.
-        result = migrations[Number(i)](result);
+        result = migrations[i](result);
       }
     }
   }
