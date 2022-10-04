@@ -26,6 +26,16 @@ export interface Group {
   isCollapsed?: boolean;
 }
 
+export type Track = {
+  track: string;
+  trackId: number;
+  trackName: string;
+  id: string;
+  srcLang?: string;
+  label?: string;
+  kind: string;
+};
+
 export type Groups = Record<string, Group>;
 
 export interface Page {
@@ -35,4 +45,15 @@ export interface Page {
   backgroundColor: Pattern;
   type: 'page';
   groups: Groups;
+  backgroundAudio?: {
+    resource: {
+      src: string;
+      id: number;
+      mimeType: string;
+    };
+    tracks: Track[];
+    loop: boolean;
+  };
+  autoAdvance: boolean;
+  defaultPageDuration: number;
 }

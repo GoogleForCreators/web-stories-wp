@@ -14,7 +14,24 @@
  * limitations under the License.
  */
 
-export type AnimationType =
+/* The types in StoryV0 do not reflect the exact state as the Story actually was at that point.
+ The types are accurate for the properties that have been migrated
+ but since the types were added only later then we don't how the story exactly was at that point.
+ For example FontMetrics, Resource, and GifElement did not exist at StoryV0.
+ */
+
+/**
+ * Internal dependencies
+ */
+import type { UnionElementV0 } from './element';
+
+export interface Group {
+  name: string;
+  isLocked: boolean;
+  isCollapsed?: boolean;
+}
+
+type AnimationTypeV0 =
   | 'blinkOn'
   | 'bounce'
   | 'effect-background-pan'
@@ -37,7 +54,7 @@ export type AnimationType =
   | 'spin'
   | 'zoom';
 
-export type AnimationZoomDirection =
+type AnimationZoomDirectionV0 =
   | 'dynamicPropertyValue'
   | 'scaleIn'
   | 'scaleInBottomRight'
@@ -46,18 +63,42 @@ export type AnimationZoomDirection =
   | 'scaleOutTopRight'
   | 'scaleOutBottomLeft';
 
-export type AnimationPanDirection =
+type AnimationPanDirectionV0 =
   | 'leftToRight'
   | 'topToBottom'
   | 'rightToLeft'
   | 'bottomToTop';
 
-export interface Animation {
+export interface AnimationV0 {
   id: string;
-  type: AnimationType;
+  type: AnimationTypeV0;
   targets: string[];
-  panDir?: AnimationPanDirection;
+  panDir?: AnimationPanDirectionV0;
   duration: number;
   delay: number;
-  zoomDirection?: AnimationZoomDirection;
+  zoomDirection?: AnimationZoomDirectionV0;
 }
+
+export type Groups = Record<string, Group>;
+
+export interface PageV0 {
+  backgroundColor: string;
+  elements: UnionElementV0[];
+  animations?: AnimationV0[];
+  type: 'page';
+  groups: Groups;
+  backgroundAudio?: {
+    src: string;
+    id: number;
+    mimeType: string;
+  };
+  pageAttachment?: {
+    url: string;
+    ctaText?: string;
+  };
+  overlay: string;
+  autoAdvance: boolean;
+  defaultPageDuration: number;
+}
+
+export type StoryV0 = PageV0[];
