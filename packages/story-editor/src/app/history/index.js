@@ -15,4 +15,5 @@
  */
 
 export { default as HistoryProvider } from './historyProvider';
+export { default as HistoryContext } from './context';
 export { default as useHistory } from './useHistory';
