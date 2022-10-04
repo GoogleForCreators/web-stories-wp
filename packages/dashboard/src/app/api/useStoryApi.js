@@ -25,6 +25,10 @@ import {
   useRef,
 } from '@googleforcreators/react';
 import { getTimeTracker } from '@googleforcreators/tracking';
+import {
+  SESSION_STORAGE_PREFIX,
+  sessionStore,
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -35,6 +39,10 @@ import storyReducer, {
 } from '../reducer/stories';
 import { ERRORS } from '../textContent';
 import { useConfig } from '../config';
+
+// The format here is taken from the `getSessionStorageKey` util.
+// See https://github.com/GoogleForCreators/web-stories-wp/blob/d62ed358d069b3cd8586bc5f6949f50cdc0a39e6/packages/story-editor/src/utils/getSessionStorageKey.js
+const DRAFT_STORAGE_KEY = `${SESSION_STORAGE_PREFIX.LOCAL_AUTOSAVE_PREFIX}_auto-draft`;
 
 const useStoryApi = () => {
   const isInitialFetch = useRef(true);
@@ -171,7 +179,7 @@ const useStoryApi = () => {
 
       try {
         const response = await apiCallbacks.createStoryFromTemplate(template);
-
+        sessionStore.deleteItemByKey(DRAFT_STORAGE_KEY);
         dispatch({
           type: STORY_ACTION_TYPES.CREATE_STORY_FROM_TEMPLATE_SUCCESS,
         });

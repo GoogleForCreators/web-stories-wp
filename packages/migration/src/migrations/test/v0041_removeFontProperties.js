@@ -16,7 +16,7 @@
 /**
  * Internal dependencies
  */
-import removeFontProperties from '../v0041_removeFontProperties.js';
+import removeFontProperties from '../v0041_removeFontProperties';
 
 describe('removeFontProperties', () => {
   it('should migrate to Andada Pro font', () => {

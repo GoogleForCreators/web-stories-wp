@@ -19,10 +19,12 @@
  */
 import type { Resource } from '../resource';
 import type { Element } from './element';
+import type { Pattern } from './pattern';
 
 export interface MediaElement extends Element {
   resource: Resource;
   scale: number;
   focalX?: number;
   focalY?: number;
+  overlay?: Pattern;
 }
