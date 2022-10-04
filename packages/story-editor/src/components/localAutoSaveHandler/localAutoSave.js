@@ -97,15 +97,15 @@ function LocalAutoSave() {
     setBackup(null);
   };
 
-  const hasNewChangesTracker = useRef(false);
+  const hadNewChangesTracker = useRef(false);
   useEffect(() => {
     // If we have new changes, track that we had new changes.
     if (hasNewChanges) {
-      hasNewChangesTracker.current = true;
+      hadNewChangesTracker.current = true;
       // If we don't have new changes but had before, we are in a saved state. Delete `auto-draft` storage.
-    } else if (hasNewChangesTracker.current) {
+    } else if (hadNewChangesTracker.current) {
       sessionStore.deleteItemByKey(getSessionStorageKey(null, true));
-      hasNewChangesTracker.current = false;
+      hadNewChangesTracker.current = false;
     }
   }, [hasNewChanges]);
 
