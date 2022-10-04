@@ -89,9 +89,15 @@ export const addCustomFont = async (fontUrl) => {
  * @return {Promise<void>}
  */
 export const removeCustomFont = async (fontName) => {
+  await expect(page).toMatch('Custom Fonts');
+
   const numberOfFonts = await page.evaluate(() => {
     return document.querySelector('div[role=listbox]')?.children?.length || 0;
   });
+
+  if (0 === numberOfFonts) {
+    return;
+  }
 
   const selector = `[aria-label="Delete ${fontName}"]`;
   await page.waitForSelector(selector);
