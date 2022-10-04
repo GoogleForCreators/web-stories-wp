@@ -167,8 +167,10 @@ describe.skip('Publishing Flow', () => {
       await publishStory(false);
 
       // Create new post and embed story.
-      await expect(page).toClick('a', { text: 'Add to new post' });
-      await page.waitForNavigation();
+      await Promise.all([
+        expect(page).toClick('a', { text: 'Add to new post' }),
+        page.waitForNavigation(),
+      ]);
 
       await expect(page).toMatch('Publishing Flow Test');
 

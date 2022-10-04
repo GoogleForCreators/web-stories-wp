@@ -57,11 +57,12 @@ describe('Explore Templates', () => {
       return colors;
     });
 
-    await expect(page).toClick(
-      'button[aria-label="Use Fresh & Bright template to create new story"]'
-    );
-
-    await page.waitForNavigation();
+    await Promise.all([
+      expect(page).toClick(
+        'button[aria-label="Use Fresh & Bright template to create new story"]'
+      ),
+      page.waitForNavigation(),
+    ]);
 
     // Wait for title input to load before continuing.
     await page.waitForSelector('input[placeholder="Add title"]');

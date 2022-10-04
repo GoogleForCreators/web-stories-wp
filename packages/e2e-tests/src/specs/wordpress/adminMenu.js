@@ -48,10 +48,12 @@ describe('Admin Menu', () => {
     await page.hover('#menu-posts-web-story a');
     await expect(page).toMatchElement('#menu-posts-web-story.opensub');
 
-    await expect(page).toClick('#menu-posts-web-story a', {
-      text: 'Dashboard',
-    });
-    await page.waitForNavigation();
+    await Promise.all([
+      expect(page).toClick('#menu-posts-web-story a', {
+        text: 'Dashboard',
+      }),
+      page.waitForNavigation(),
+    ]);
 
     // Can be Explore Templates or My Stories depending on if user has 0
     // stories, so just check that we get navigated to the dashboard
@@ -64,10 +66,12 @@ describe('Admin Menu', () => {
     await page.hover('#menu-posts-web-story a');
     await expect(page).toMatchElement('#menu-posts-web-story.opensub');
 
-    await expect(page).toClick('#menu-posts-web-story a', {
-      text: 'Explore Templates',
-    });
-    await page.waitForNavigation();
+    await Promise.all([
+      expect(page).toClick('#menu-posts-web-story a', {
+        text: 'Explore Templates',
+      }),
+      page.waitForNavigation(),
+    ]);
 
     await expect(page).toMatch('Viewing all');
     await expect(page).toMatch('templates');
@@ -79,10 +83,12 @@ describe('Admin Menu', () => {
     await page.hover('#menu-posts-web-story a');
     await expect(page).toMatchElement('#menu-posts-web-story.opensub');
 
-    await expect(page).toClick('#menu-posts-web-story a', {
-      text: 'Settings',
-    });
-    await page.waitForNavigation();
+    await Promise.all([
+      expect(page).toClick('#menu-posts-web-story a', {
+        text: 'Settings',
+      }),
+      page.waitForNavigation(),
+    ]);
 
     await expect(page).toMatch('Google Analytics Tracking ID');
   });

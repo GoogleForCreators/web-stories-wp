@@ -68,8 +68,10 @@ describe('Plugin Activation', () => {
   });
 
   it('should lead to the dashboard in success message', async () => {
-    await expect(page).toClick('a', { text: 'Go to Stories Dashboard' });
-    await page.waitForNavigation();
+    await Promise.all([
+      expect(page).toClick('a', { text: 'Go to Stories Dashboard' }),
+      page.waitForNavigation(),
+    ]);
 
     // Can be Explore Templates or My Stories depending on if user has 0
     // stories, so just check that we get navigated to the dashboard
@@ -80,8 +82,10 @@ describe('Plugin Activation', () => {
     const dashboardStep = await expect(page).toMatchElement('p', {
       text: /Head to the\s?Dashboard/i,
     });
-    await expect(dashboardStep).toClick('a', { text: 'Dashboard' });
-    await page.waitForNavigation();
+    await Promise.all([
+      expect(dashboardStep).toClick('a', { text: 'Dashboard' }),
+      page.waitForNavigation(),
+    ]);
 
     // Can be Explore Templates or My Stories depending on if user has 0
     // stories, so just check that we get navigated to the dashboard
@@ -96,8 +100,11 @@ describe('Plugin Activation', () => {
     const editorStep = await expect(page).toMatchElement('p', {
       text: /Jump into the\s?Editor/i,
     });
-    await expect(editorStep).toClick('a', { text: 'Editor' });
-    await page.waitForNavigation();
+
+    await Promise.all([
+      expect(editorStep).toClick('a', { text: 'Editor' }),
+      page.waitForNavigation(),
+    ]);
 
     await expect(page).toMatchElement('input[placeholder="Add title"]');
   });
