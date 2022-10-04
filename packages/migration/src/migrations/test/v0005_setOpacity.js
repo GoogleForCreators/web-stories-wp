@@ -55,7 +55,7 @@ describe('setOpacity', () => {
           elements: [
             {
               _test: 'element1',
-              opacity: 100,
+              opacity: 0,
             },
             {
               _test: 'element2',

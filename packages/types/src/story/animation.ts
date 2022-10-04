@@ -55,7 +55,7 @@ export type AnimationPanDirection =
 export interface Animation {
   id: string;
   type: AnimationType;
-  target: string[];
+  targets: string[];
   panDir?: AnimationPanDirection;
   duration: number;
   delay: number;
