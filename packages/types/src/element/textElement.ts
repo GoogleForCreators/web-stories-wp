@@ -47,7 +47,6 @@ export interface Padding {
 }
 
 export type TextAlign = 'left' | 'center' | 'right' | 'justify';
-export type TagName = 'h1' | 'h2' | 'h3' | 'p' | 'auto';
 export type BackgroundTextMode = 'NONE' | 'FILL' | 'HIGHLIGHT';
 
 export interface FontMetrics {
@@ -78,7 +77,6 @@ export interface TextElement extends Element {
   lineHeight?: number;
   padding?: Padding;
   textAlign?: TextAlign;
-  tagName?: TagName;
   marginOffset?: number;
   metrics?: FontMetrics;
 }
