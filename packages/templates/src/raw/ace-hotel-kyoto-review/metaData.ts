@@ -19,6 +19,11 @@
  */
 import { __, _x } from '@googleforcreators/i18n';
 
+/**
+ * Internal dependencies
+ */
+import type { MetaData } from '../../types';
+
 export default {
   slug: 'ace-hotel-kyoto-review',
   creationDate: '2021-07-29T00:00:00.000Z',
@@ -67,4 +72,4 @@ export default {
     'web-stories'
   ),
   vertical: _x('Travel', 'template vertical', 'web-stories'),
-};
+} as MetaData;

@@ -17,13 +17,18 @@
  * Internal dependencies
  */
 import { TEMPLATE_NAMES } from './constants';
+import type { MetaData } from './types';
 
-export function getTemplateMetaData() {
+type Data = {
+  default: MetaData;
+};
+
+export function getTemplateMetaData(): Promise<MetaData[]> {
   return Promise.all(
     TEMPLATE_NAMES.map((title) =>
       import(
-        /* webpackChunkName: "chunk-web-stories-template-[index]-metaData" */ `./raw/${title}/metaData.js`
-      ).then((data) => data.default)
+        /* webpackChunkName: "chunk-web-stories-template-[index]-metaData" */ `./raw/${title}/metaData.ts`
+      ).then((data: Data) => data.default)
     )
   );
 }

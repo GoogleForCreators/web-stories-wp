@@ -24,43 +24,52 @@ import { DATA_VERSION, migrate } from '@googleforcreators/migration';
  * Internal dependencies
  */
 import { TEMPLATE_NAMES } from './constants';
+import type { RawTemplate, Template } from './types';
 
-async function loadTemplate(title, imageBaseUrl) {
-  const data = await import(
+type Data = {
+  default: RawTemplate;
+};
+
+async function loadTemplate(
+  title: string,
+  imageBaseUrl: string
+): Promise<Template> {
+  const data: Data = (await import(
     /* webpackChunkName: "chunk-web-stories-template-[index]" */ `./raw/${title}/index.ts`
-  );
+  )) as Data;
 
   const template = {
     ...data.default,
     pages: (data.default.pages || []).map((page) => ({
       ...page,
       elements: page.elements?.map((elem) => {
-        if (elem?.resource?.sizes) {
-          elem.resource.sizes = [];
-        }
-        if (elem?.resource?.src) {
-          // imageBaseUrl (cdnURL) will always have a trailing slash,
-          // so make sure to avoid double slashes when replacing.
-          elem.resource.src = elem.resource.src.replace(
-            '__WEB_STORIES_TEMPLATE_BASE_URL__/',
-            imageBaseUrl
-          );
-        }
+        if ('resource' in elem && elem.resource) {
+          if ('sizes' in elem.resource.sizes && elem.resource.sizes) {
+            elem.resource.sizes = {};
+          }
+          if (elem.resource.src) {
+            // imageBaseUrl (cdnURL) will always have a trailing slash,
+            // so make sure to avoid double slashes when replacing.
+            elem.resource.src = elem.resource.src.replace(
+              '__WEB_STORIES_TEMPLATE_BASE_URL__/',
+              imageBaseUrl
+            );
+          }
 
-        if (elem?.resource?.poster) {
-          // imageBaseUrl (cdnURL) will always have a trailing slash,
-          // so make sure to avoid double slashes when replacing.
-          elem.resource.poster = elem.resource.poster.replace(
-            '__WEB_STORIES_TEMPLATE_BASE_URL__/',
-            imageBaseUrl
-          );
+          if ('poster' in elem.resource && elem.resource.poster) {
+            // imageBaseUrl (cdnURL) will always have a trailing slash,
+            // so make sure to avoid double slashes when replacing.
+            elem.resource.poster = elem.resource.poster.replace(
+              '__WEB_STORIES_TEMPLATE_BASE_URL__/',
+              imageBaseUrl
+            );
+          }
         }
-
         return elem;
       }),
     })),
 
-    postersByPage: data.default.pages.map((page, i) => {
+    postersByPage: data.default.pages.map((_, i) => {
       const srcPath = `${imageBaseUrl}images/templates/${
         data.default.slug
       }/posters/${i + 1}`;
@@ -73,12 +82,12 @@ async function loadTemplate(title, imageBaseUrl) {
   };
 
   return {
-    ...migrate(template, template.version),
-    version: DATA_VERSION,
-  };
+    ...(migrate(template, template.version) as unknown as Template),
+    version: DATA_VERSION as number,
+  } as Template;
 }
 
-async function getTemplates(imageBaseUrl) {
+async function getTemplates(imageBaseUrl: string) {
   const trackTiming = getTimeTracker('load_templates');
 
   const templates = await Promise.all(

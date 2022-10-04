@@ -4,7 +4,10 @@
     "rootDir": "src",
     "declarationDir": "dist-types"
   },
-  "references": [{ "path": "../react" }],
+  "references": [
+    { "path": "../migration" },
+    { "path": "../react" }
+  ],
   "include": [
     "src/**/*.json",
     "src/**/*"

@@ -16,10 +16,11 @@
 /**
  * Internal dependencies
  */
+import type { RawTemplate } from '../../types';
 import { default as template } from './template.json';
 import { default as metaData } from './metaData';
 
 export default {
   ...metaData,
   ...template,
-};
+} as RawTemplate;

@@ -19,6 +19,11 @@
  */
 import { __, _x } from '@googleforcreators/i18n';
 
+/**
+ * Internal dependencies
+ */
+import type { MetaData } from '../../types';
+
 export default {
   slug: 'fashion-on-the-go',
   creationDate: '2021-05-29T00:00:00.000Z',
@@ -59,4 +64,4 @@ export default {
     'web-stories'
   ),
   vertical: _x('Fashion', 'template vertical', 'web-stories'),
-};
+} as MetaData;

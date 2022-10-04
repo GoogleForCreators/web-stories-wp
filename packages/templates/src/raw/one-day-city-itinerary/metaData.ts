@@ -19,6 +19,11 @@
  */
 import { __, _x } from '@googleforcreators/i18n';
 
+/**
+ * Internal dependencies
+ */
+import type { MetaData } from '../../types';
+
 export default {
   slug: 'one-day-city-itinerary',
   creationDate: '2021-08-25T00:00:00.000Z',

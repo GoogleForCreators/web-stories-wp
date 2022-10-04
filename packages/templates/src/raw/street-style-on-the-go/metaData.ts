@@ -19,6 +19,11 @@
  */
 import { __, _x } from '@googleforcreators/i18n';
 
+/**
+ * Internal dependencies
+ */
+import type { MetaData } from '../../types';
+
 export default {
   slug: 'street-style-on-the-go',
   creationDate: '2021-07-12T00:00:00.000Z',

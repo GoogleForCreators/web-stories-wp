@@ -19,6 +19,11 @@
  */
 import { __, _x } from '@googleforcreators/i18n';
 
+/**
+ * Internal dependencies
+ */
+import type { MetaData } from '../../types';
+
 export default {
   slug: 'skin-care-at-home',
   creationDate: '2021-08-09T00:00:00.000Z',

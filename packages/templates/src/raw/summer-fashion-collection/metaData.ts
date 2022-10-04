@@ -19,6 +19,11 @@
  */
 import { __, _x } from '@googleforcreators/i18n';
 
+/**
+ * Internal dependencies
+ */
+import type { MetaData } from '../../types';
+
 export default {
   slug: 'summer-fashion-collection',
   creationDate: '2021-08-03T00:00:00.000Z',
@@ -62,4 +67,4 @@ export default {
     'web-stories'
   ),
   vertical: _x('Fashion & Beauty', 'template vertical', 'web-stories'),
-};
+} as MetaData;

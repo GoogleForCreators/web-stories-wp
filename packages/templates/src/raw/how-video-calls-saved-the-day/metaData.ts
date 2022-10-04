@@ -19,6 +19,11 @@
  */
 import { __, _x } from '@googleforcreators/i18n';
 
+/**
+ * Internal dependencies
+ */
+import type { MetaData } from '../../types';
+
 export default {
   slug: 'how-video-calls-saved-the-day',
   creationDate: '2021-07-29T00:00:00.000Z',
@@ -52,4 +57,4 @@ export default {
     'web-stories'
   ),
   vertical: _x('Technology', 'template vertical', 'web-stories'),
-};
+} as MetaData;
