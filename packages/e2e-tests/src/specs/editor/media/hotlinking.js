@@ -72,13 +72,20 @@ describe('Media Hotlinking', () => {
       }
     );
 
-    await expect(page).toClick('[role="dialog"] button', {
-      text: 'Insert',
-    });
+    await Promise.all([
+      expect(page).toClick('[role="dialog"] button', {
+        text: 'Insert',
+      }),
+      await page.waitForResponse(
+        (response) =>
+          //eslint-disable-next-line jest/no-conditional-in-test -- False positive.
+          response.url().includes('web-stories/v1/hotlink/validate') &&
+          response.status() === 200
+      ),
+    ]);
 
-    await page.waitForSelector(
-      '[aria-label="Design options for selected element"]'
-    );
+    // Dialog should disappear by now.
+    await expect(page).not.toMatch('Insert external image or video');
 
     await expect(page).toMatchElement(`img[src="${IMAGE_URL_LOCAL}"]`);
   });
@@ -100,13 +107,24 @@ describe('Media Hotlinking', () => {
       }
     );
 
-    await expect(page).toClick('[role="dialog"] button', {
-      text: 'Insert',
-    });
+    await Promise.all([
+      expect(page).toClick('[role="dialog"] button', {
+        text: 'Insert',
+      }),
+      await page.waitForResponse(
+        (response) =>
+          //eslint-disable-next-line jest/no-conditional-in-test -- False positive.
+          response.url().includes('web-stories/v1/hotlink/validate') &&
+          response.status() === 200
+      ),
+    ]);
 
-    await page.waitForSelector('.ReactModal__Content', {
-      visible: false,
-    });
+    await page.screenshot({ path: 'build/insert-hotlinked-image.png' });
+
+    // Dialog should disappear by now.
+    await expect(page).not.toMatch('Insert external image or video');
+
+    await page.screenshot({ path: 'build/insert-hotlinked-image-2.png' });
 
     await page.waitForSelector(
       '[aria-label="Design options for selected element"]'
