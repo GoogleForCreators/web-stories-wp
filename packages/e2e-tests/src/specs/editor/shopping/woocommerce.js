@@ -30,6 +30,8 @@ import {
  */
 import * as schema from './schema.json';
 
+jest.retryTimes(2, { logErrorsBeforeRetry: true });
+
 describe('Shopping', () => {
   minWPVersionRequired('5.8'); // WooCommerce requires WP 5.7+
 

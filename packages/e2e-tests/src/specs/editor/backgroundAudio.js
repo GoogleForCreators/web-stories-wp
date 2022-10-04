@@ -30,6 +30,8 @@ import {
 const VTT_URL = `${process.env.WP_BASE_URL}/wp-content/e2e-assets/test.vtt`;
 const MP3_URL = `${process.env.WP_BASE_URL}/wp-content/e2e-assets/audio.mp3`;
 
+jest.retryTimes(2, { logErrorsBeforeRetry: true });
+
 describe('Background Audio', () => {
   let uploadedFiles;
 

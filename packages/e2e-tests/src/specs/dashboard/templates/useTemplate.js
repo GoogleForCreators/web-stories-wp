@@ -23,6 +23,8 @@ import {
   withPlugin,
 } from '@web-stories-wp/e2e-test-utils';
 
+jest.retryTimes(2, { logErrorsBeforeRetry: true });
+
 describe('Explore Templates', () => {
   it('should be able to use existing template for new story', async () => {
     await visitDashboard();

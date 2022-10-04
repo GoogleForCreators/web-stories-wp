@@ -51,6 +51,8 @@ const changeStoriesArchivesType = async (option) => {
   });
 };
 
+jest.retryTimes(2, { logErrorsBeforeRetry: true });
+
 // TODO(#9636): Fix flakey test.
 // eslint-disable-next-line jest/no-disabled-tests
 describe.skip('Stories Archive', () => {

@@ -24,6 +24,8 @@ import {
   withUser,
 } from '@web-stories-wp/e2e-test-utils';
 
+jest.retryTimes(2, { logErrorsBeforeRetry: true });
+
 describe('Inserting Media from Dialog', () => {
   // Uses the existence of the element's frame element as an indicator for successful insertion.
   // TODO https://github.com/googleforcreators/web-stories-wp/issues/7107

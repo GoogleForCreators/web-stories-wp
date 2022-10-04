@@ -98,6 +98,8 @@ async function getCurrentStoryData() {
   return JSON.parse(textareaContent);
 }
 
+jest.retryTimes(2, { logErrorsBeforeRetry: true });
+
 describe('Font Check Metrics', () => {
   let stopRequestInterception;
   let mockResponse;

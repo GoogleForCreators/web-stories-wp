@@ -24,6 +24,8 @@ import {
   toggleVideoOptimization,
 } from '@web-stories-wp/e2e-test-utils';
 
+jest.retryTimes(2, { logErrorsBeforeRetry: true });
+
 describe('Handling .mov files', () => {
   let uploadedFiles;
 

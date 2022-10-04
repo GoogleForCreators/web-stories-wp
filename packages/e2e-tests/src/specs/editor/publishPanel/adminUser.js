@@ -19,6 +19,8 @@
  */
 import { createNewStory } from '@web-stories-wp/e2e-test-utils';
 
+jest.retryTimes(2, { logErrorsBeforeRetry: true });
+
 describe('Publish panel in document tab', () => {
   const openPublishPanel = async () => {
     await expect(page).toClick('p', { text: 'Document' });

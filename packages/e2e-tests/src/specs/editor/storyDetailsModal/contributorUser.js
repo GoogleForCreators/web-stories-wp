@@ -25,6 +25,8 @@ import {
   withUser,
 } from '@web-stories-wp/e2e-test-utils';
 
+jest.retryTimes(2, { logErrorsBeforeRetry: true });
+
 describe('Story Details Modal - Contributor User', () => {
   const openStoryDetailsModal = async () => {
     await expect(page).toClick('button', { text: 'Submit for review' });

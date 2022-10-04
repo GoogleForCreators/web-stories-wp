@@ -19,6 +19,8 @@
  */
 import { visitDashboard } from '@web-stories-wp/e2e-test-utils';
 
+jest.retryTimes(2, { logErrorsBeforeRetry: true });
+
 describe('Admin Menu', () => {
   // eslint-disable-next-line jest/no-disabled-tests -- broken by https://github.com/googleforcreators/web-stories-wp/pull/7213, needs updating.
   it.skip('should sync the WP nav with the dashboard nav', async () => {

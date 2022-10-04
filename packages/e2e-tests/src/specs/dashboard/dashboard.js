@@ -28,6 +28,8 @@ import {
 
 const percyCSS = `.dashboard-grid-item-date { display: none; }`;
 
+jest.retryTimes(2, { logErrorsBeforeRetry: true });
+
 describe('Stories Dashboard', () => {
   it('should be able to open the dashboard', async () => {
     await visitDashboard();

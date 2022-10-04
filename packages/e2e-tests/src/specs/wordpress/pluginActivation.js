@@ -27,6 +27,8 @@ import {
 
 const percyCSS = `.plugin-version-author-uri, .amp-plugin-notice, .update-message, .subsubsub { display: none; }`;
 
+jest.retryTimes(2, { logErrorsBeforeRetry: true });
+
 describe('Plugin Activation', () => {
   beforeEach(async () => {
     await deactivatePlugin('web-stories');

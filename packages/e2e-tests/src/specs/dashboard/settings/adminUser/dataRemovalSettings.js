@@ -28,6 +28,8 @@ import {
 
 const checkbox = 'input[data-testid="data-removal-settings-checkbox"]';
 
+jest.retryTimes(2, { logErrorsBeforeRetry: true });
+
 describe('Admin User', () => {
   beforeEach(async () => {
     await visitSettings();

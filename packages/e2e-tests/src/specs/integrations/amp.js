@@ -26,6 +26,8 @@ import {
   withPlugin,
 } from '@web-stories-wp/e2e-test-utils';
 
+jest.retryTimes(2, { logErrorsBeforeRetry: true });
+
 describe('AMP plugin integration', () => {
   withPlugin('amp');
 

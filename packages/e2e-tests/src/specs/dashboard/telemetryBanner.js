@@ -24,6 +24,8 @@ import {
   clearLocalStorage,
 } from '@web-stories-wp/e2e-test-utils';
 
+jest.retryTimes(2, { logErrorsBeforeRetry: true });
+
 describe('Telemetry Banner', () => {
   beforeAll(async () => {
     await visitSettings();

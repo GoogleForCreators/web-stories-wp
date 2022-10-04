@@ -32,6 +32,8 @@ const percyCSS = `.dashboard-grid-item-date { display: none; }`;
 
 const storyTitle = 'Test post lock';
 
+jest.retryTimes(2, { logErrorsBeforeRetry: true });
+
 describe('Post Locking', () => {
   beforeAll(async () => {
     await createNewStory();

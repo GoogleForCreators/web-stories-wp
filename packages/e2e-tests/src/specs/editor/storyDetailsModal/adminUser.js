@@ -34,6 +34,8 @@ const openStoryDetailsModal = async () => {
   await expect(page).toMatchElement('div[aria-label="Story details"]');
 };
 
+jest.retryTimes(2, { logErrorsBeforeRetry: true });
+
 describe('Story Details Modal - Admin User', () => {
   let removeErrorMessage;
 

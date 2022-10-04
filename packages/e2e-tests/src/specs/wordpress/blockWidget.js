@@ -32,6 +32,8 @@ import {
  */
 import { addAllowedErrorMessage } from '../../config/bootstrap.js';
 
+jest.retryTimes(2, { logErrorsBeforeRetry: true });
+
 describe('Web Stories Widget Block', () => {
   let removeErrorMessage;
 

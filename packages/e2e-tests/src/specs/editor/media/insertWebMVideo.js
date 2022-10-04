@@ -26,6 +26,8 @@ import {
   uploadFile,
 } from '@web-stories-wp/e2e-test-utils';
 
+jest.retryTimes(2, { logErrorsBeforeRetry: true });
+
 // eslint-disable-next-line jest/no-disabled-tests -- TODO(#11959): Fix flakey test
 describe.skip('Inserting WebM Video', () => {
   let uploadedFiles;

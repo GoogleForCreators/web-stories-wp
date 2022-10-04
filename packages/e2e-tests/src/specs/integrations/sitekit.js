@@ -26,6 +26,8 @@ import {
   visitSettings,
 } from '@web-stories-wp/e2e-test-utils';
 
+jest.retryTimes(2, { logErrorsBeforeRetry: true });
+
 describe('Site Kit plugin integration', () => {
   describe('Google Analytics', () => {
     withPlugin('e2e-tests-site-kit-analytics-mock');

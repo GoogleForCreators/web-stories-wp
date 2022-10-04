@@ -27,6 +27,8 @@ import {
   insertStoryTitle,
 } from '@web-stories-wp/e2e-test-utils';
 
+jest.retryTimes(2, { logErrorsBeforeRetry: true });
+
 describe('Pre-Publish Checklist : Admin User', () => {
   const addNewPage = async () => {
     await expect(page).toClick('button[aria-label="Add New Page"]');

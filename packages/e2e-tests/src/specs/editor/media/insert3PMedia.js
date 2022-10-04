@@ -25,6 +25,8 @@ import {
 
 const media3pSelector = '#library-tab-media3p';
 
+jest.retryTimes(2, { logErrorsBeforeRetry: true });
+
 describe('Inserting 3P Media', () => {
   beforeAll(async () => {
     await clearLocalStorage();

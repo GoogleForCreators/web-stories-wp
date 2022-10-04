@@ -24,6 +24,8 @@ import {
   insertStoryTitle,
 } from '@web-stories-wp/e2e-test-utils';
 
+jest.retryTimes(2, { logErrorsBeforeRetry: true });
+
 describe('Stories Dashboard', () => {
   const storyName = 'Test Story';
   beforeEach(async () => {

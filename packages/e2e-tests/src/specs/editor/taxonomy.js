@@ -96,6 +96,8 @@ async function addTag(name) {
   await expect(tokenNames).toContainValue(name);
 }
 
+jest.retryTimes(2, { logErrorsBeforeRetry: true });
+
 describe('Taxonomies', () => {
   // Create some categories and tags before running all tests so that they are available there.
   beforeAll(async () => {

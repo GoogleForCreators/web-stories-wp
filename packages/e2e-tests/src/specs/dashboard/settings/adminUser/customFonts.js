@@ -39,6 +39,8 @@ const OPEN_SANS_CONDENSED_LIGHT_ITALIC_URL = `${FONT_BASE_URL}/OpenSansCondensed
 
 const findByUrl = (arr, val) => arr.find((o) => o.url === val);
 
+jest.retryTimes(2, { logErrorsBeforeRetry: true });
+
 describe('Custom Fonts', () => {
   let removeResourceErrorMessage;
 

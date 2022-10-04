@@ -33,6 +33,8 @@ import {
   videoOptimizationCheckboxSelector,
 } from '../../../utils';
 
+jest.retryTimes(2, { logErrorsBeforeRetry: true });
+
 describe('Editor User', () => {
   withUser('editor', 'password');
 

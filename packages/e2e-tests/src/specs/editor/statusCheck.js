@@ -27,6 +27,8 @@ import {
  */
 import { addAllowedErrorMessage } from '../../config/bootstrap';
 
+jest.retryTimes(2, { logErrorsBeforeRetry: true });
+
 // eslint-disable-next-line jest/no-disabled-tests -- TODO(#11991): Fix flakey test.
 describe.skip('Status Check', () => {
   let removeErrorMessage;

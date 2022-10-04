@@ -18,6 +18,8 @@
  */
 import { createNewStory, withPlugin } from '@web-stories-wp/e2e-test-utils';
 
+jest.retryTimes(2, { logErrorsBeforeRetry: true });
+
 describe('Templates', () => {
   describe('Disabled', () => {
     withPlugin('e2e-tests-disable-default-templates');

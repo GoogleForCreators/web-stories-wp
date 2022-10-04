@@ -29,6 +29,8 @@ import {
  */
 import { addAllowedErrorMessage } from '../../config/bootstrap';
 
+jest.retryTimes(2, { logErrorsBeforeRetry: true });
+
 describe('Saving Story', () => {
   let removeErrorMessage;
   let stopRequestInterception;
