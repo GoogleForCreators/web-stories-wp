@@ -38,15 +38,12 @@ import WithLink from './components/withLink';
 import type { OutputElementTyping } from './types';
 
 function OutputElement({ element, flags }: OutputElementTyping) {
-  const {
-    id,
-    opacity,
-    type,
-    border,
-    backgroundColor,
-    backgroundTextMode,
-    overlay,
-  } = element;
+  let overlay;
+  if ('overlay' in element) {
+    overlay = element.overlay;
+  }
+  const { id, opacity, type, border, backgroundColor, backgroundTextMode } =
+    element;
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,  @typescript-eslint/no-unsafe-call -- Needs fixing elements package.
   const { Output, isMaskable } = getDefinitionForType(type);
 

@@ -17,7 +17,6 @@
 /**
  * Internal dependencies
  */
-import type { Resource } from '../resource';
 import type { ElementBox } from './elementBox';
 import type { Pattern } from './pattern';
 
@@ -75,9 +74,5 @@ export interface Element extends ElementBox {
   groupId?: string;
   border?: Border;
   borderRadius?: BorderRadius;
-  pageAttachment?: PageAttachment;
-  resource?: Resource;
-  overlay?: Pattern;
   backgroundColor?: Pattern;
-  backgroundTextMode?: string;
 }

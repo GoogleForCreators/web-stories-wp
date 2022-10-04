@@ -21,31 +21,35 @@ import type {
   Animation,
   Element,
   Page,
-  BackgroundAudio,
   StoryMetaData,
   MetaData,
   Flags,
+  MediaElement,
+  BackgroundAudioResourceTyping,
+  TextElement,
 } from '@googleforcreators/types';
 export interface AutoAdvance {
   animations?: Animation[];
   defaultPageDuration: number;
   elements: Element[];
-  backgroundAudio: BackgroundAudio;
+  backgroundAudio?: BackgroundAudioResourceTyping;
   id: string;
 }
 export interface PreloadResource {
   url: string;
   type: string;
 }
+
+type Elements = MediaElement | TextElement;
 export interface OutputElementTyping {
-  element: Element;
-  flags: Record<string, boolean>;
+  element: Elements;
+  flags: Flags;
 }
 export interface PageObject {
   page: Page;
   defaultAutoAdvance: boolean;
   defaultPageDuration: number;
-  flags: Record<string, boolean>;
+  flags: Flags;
 }
 export interface StoryProps {
   story: StoryMetaData;

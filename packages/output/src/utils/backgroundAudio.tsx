@@ -16,13 +16,12 @@
 /**
  * External dependencies
  */
-import type { BackgroundAudio as BackgroundAudioType } from '@googleforcreators/types';
-
+import type { BackgroundAudioResourceTyping } from '@googleforcreators/types';
 function BackgroundAudio({
   backgroundAudio,
   id,
 }: {
-  backgroundAudio: BackgroundAudioType;
+  backgroundAudio: BackgroundAudioResourceTyping;
   id: string;
 }) {
   const { resource, tracks, loop } = backgroundAudio || {};

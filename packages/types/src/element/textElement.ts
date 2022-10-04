@@ -27,7 +27,7 @@ export enum FontVariantStyle {
 }
 
 export type FontWeight = 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
-
+export type TagName = 'h1' | 'h2' | 'h3' | 'p' | 'auto';
 export type FontVariant = [FontVariantStyle, FontWeight];
 
 export interface Font {
@@ -71,7 +71,7 @@ export interface FontMetrics {
 export interface TextElement extends Element {
   content: string;
   font: Font;
-
+  tagName?: TagName;
   backgroundTextMode?: BackgroundTextMode;
   backgroundColor?: Pattern;
   fontSize?: number;

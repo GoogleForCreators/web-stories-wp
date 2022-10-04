@@ -31,6 +31,7 @@ import type {
   TextElement,
   Product,
   VideoElement,
+  MediaElement,
 } from '@googleforcreators/types';
 /**
  * Internal dependencies
@@ -62,8 +63,8 @@ function OutputPage({
     pageAttachment = {},
   } = page;
 
-  const [backgroundElement, ...otherElements]: [Element, ...Element[]] =
-    elements as [Element, ...Element[]];
+  const [backgroundElement, ...otherElements]: [MediaElement, ...Element[]] =
+    elements as [MediaElement, ...Element[]];
 
   // If the background element has base color set, it's media, use that.
   const baseColor: string | undefined = backgroundElement?.resource?.baseColor;
@@ -137,7 +138,8 @@ function OutputPage({
     .map(({ id: videoId }: Element) => `el-${videoId}-captions`);
 
   const backgroundAudioSrc = backgroundAudio?.resource?.src;
-  const hasBackgroundAudioCaptions = backgroundAudio?.tracks?.length > 0;
+  const hasBackgroundAudioCaptions =
+    (backgroundAudio?.tracks && backgroundAudio?.tracks?.length > 0) ?? false;
   const hasNonLoopingBackgroundAudio =
     false === backgroundAudio?.loop && backgroundAudio?.resource?.length;
   const needsEnhancedBackgroundAudio =

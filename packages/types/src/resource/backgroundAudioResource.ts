@@ -14,6 +14,10 @@
  * limitations under the License.
  */
 
+/**
+ * Internal dependencies
+ */
+import type { Track } from '../story';
 export interface BackgroundAudioResource {
   id: number;
   src: string;
@@ -22,16 +26,19 @@ export interface BackgroundAudioResource {
   mimeType: string;
   needsProxy: boolean;
 }
-export interface Track {
-  srclang: string;
-  label: string;
-  kind: string;
-  track: string;
-  id: string;
-}
-export interface BackgroundAudio {
-  loop: boolean;
-  resource: BackgroundAudioResource;
+export interface BackgroundAudioResourceTyping {
+  resource: {
+    id: number;
+    src: string;
+    length: number;
+    lengthFormatted: string;
+    mimeType: string;
+    needsProxy: boolean;
+  };
   tracks: Track[];
-  id: string;
+  loop: boolean;
+}
+
+export interface BackgroundAudioTyping {
+  backgroundAudio?: BackgroundAudioResourceTyping;
 }

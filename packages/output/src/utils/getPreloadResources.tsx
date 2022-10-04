@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import type { Page, GifResource } from '@googleforcreators/types';
+import type { Page, GifResource, MediaElement } from '@googleforcreators/types';
 
 /**
  * Internal dependencies
@@ -33,7 +33,8 @@ function getPreloadResources(pages: Page[]): PreloadResource[] {
     return preloadResources;
   }
 
-  for (const { type, resource, isBackground } of pages[0].elements) {
+  for (const { type, resource, isBackground } of pages[0]
+    .elements as MediaElement[]) {
     if (!['image', 'video', 'gif'].includes(type)) {
       continue;
     }
@@ -43,8 +44,7 @@ function getPreloadResources(pages: Page[]): PreloadResource[] {
     }
     const gifResource = resource as GifResource;
     // resource?.output?.src is used only for GIF resources.
-    const src =
-      gifResource?.output?.src || ((resource && resource.src) as string);
+    const src = gifResource?.output?.src || (resource && resource.src);
 
     preloadResources.push({
       url: src,

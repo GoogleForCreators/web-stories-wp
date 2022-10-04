@@ -43,6 +43,7 @@ export type Track = {
 };
 
 export type Groups = Record<string, Group>;
+
 export type Advancement = {
   autoAdvance?: boolean;
   pageDuration?: number;
@@ -63,10 +64,16 @@ export interface Page {
       src: string;
       id: number;
       mimeType: string;
+      length: number;
+      lengthFormatted: string;
+      needsProxy: boolean;
     };
     tracks: Track[];
     loop: boolean;
   };
-  autoAdvance: boolean;
-  defaultPageDuration: number;
+  advancement: {
+    autoAdvance: boolean;
+    defaultPageDuration: number;
+    pageDuration?: number;
+  };
 }
