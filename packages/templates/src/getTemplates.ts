@@ -27,7 +27,7 @@ import { TEMPLATE_NAMES } from './constants';
 
 async function loadTemplate(title, imageBaseUrl) {
   const data = await import(
-    /* webpackChunkName: "chunk-web-stories-template-[index]" */ `./raw/${title}/index.js`
+    /* webpackChunkName: "chunk-web-stories-template-[index]" */ `./raw/${title}/index.ts`
   );
 
   const template = {
