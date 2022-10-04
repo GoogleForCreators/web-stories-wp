@@ -179,7 +179,9 @@ class FramesLayer extends AbstractLayer {
   get frames() {
     return this._getAll(
       // @todo: improve query.
-      this.node.querySelectorAll('[data-element-id]'),
+      this.node.querySelectorAll(
+        '[data-testid="frameElement"][data-element-id]'
+      ),
       (node) => `frames[${node.getAttribute('data-element-id')}]`,
       Frame
     );
