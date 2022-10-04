@@ -26,7 +26,6 @@ import {
   Headline,
   THEME_CONSTANTS,
   themeHelpers,
-  ThemeGlobals,
 } from '@googleforcreators/design-system';
 
 /**
@@ -132,7 +131,8 @@ const TabElement = styled.li.attrs(({ isActive }) => ({
     color: ${({ theme }) => theme.colors.fg.primary};
   }
 
-  &.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR}, &[data-focus-visible-added] {
+  &:focus-visible,
+  &[data-focus-visible-added] {
     svg:not(.alert) {
       background-color: ${({ theme }) =>
         theme.colors.interactiveBg.tertiaryHover};

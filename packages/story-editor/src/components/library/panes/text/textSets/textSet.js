@@ -24,7 +24,6 @@ import { useCallback, forwardRef, useState } from '@googleforcreators/react';
 import { dataToEditorX, dataToEditorY } from '@googleforcreators/units';
 import {
   BUTTON_TRANSITION_TIMING,
-  ThemeGlobals,
   themeHelpers,
 } from '@googleforcreators/design-system';
 
@@ -61,7 +60,7 @@ const TextSetItem = styled.button`
   transition: background-color ${BUTTON_TRANSITION_TIMING};
   outline: none;
 
-  &.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR} [role='presentation'],
+  &:focus-visible [role='presentation'],
   &[data-focus-visible-added] [role='presentation'] {
     ${({ theme }) =>
       themeHelpers.focusCSS(

@@ -29,7 +29,7 @@ import styled from 'styled-components';
 import { trackEvent } from '@googleforcreators/tracking';
 import { createSolidFromString } from '@googleforcreators/patterns';
 import { PAGE_WIDTH, useUnits } from '@googleforcreators/units';
-import { ThemeGlobals, themeHelpers } from '@googleforcreators/design-system';
+import { themeHelpers } from '@googleforcreators/design-system';
 import { MaskTypes } from '@googleforcreators/masks';
 
 /**
@@ -53,7 +53,7 @@ const Aspect = styled.button`
   border-radius: ${({ theme }) => theme.borders.radius.small};
   background-color: ${({ theme }) => theme.colors.interactiveBg.previewOverlay};
 
-  &.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR} [role='presentation'],
+  &:focus-visible [role='presentation'],
   &[data-focus-visible-added] [role='presentation'] {
     ${({ theme }) =>
       themeHelpers.focusCSS(
