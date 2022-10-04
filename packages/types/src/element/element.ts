@@ -28,8 +28,8 @@ export interface Link {
 }
 
 export interface Flip {
-  vertical: number;
-  horizontal: number;
+  vertical: boolean;
+  horizontal: boolean;
 }
 
 export interface Mask {
