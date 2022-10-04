@@ -114,6 +114,10 @@ describe('Background Audio', () => {
       await expect(page).toMatch(fileName);
 
       await expect(page).toMatchElement('button[aria-label="Play"]');
+
+      await expect(page).toMatchElement('label', {
+        text: 'Loop',
+      });
     });
 
     it('should allow adding background audio with captions', async () => {
