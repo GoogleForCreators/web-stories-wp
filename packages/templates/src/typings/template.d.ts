@@ -14,16 +14,9 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import type { Element, ElementType } from './element';
+import type { TemplateData } from '../types';
 
-export interface Sticker {
-  type: string;
-}
-
-export interface StickerElement extends Element {
-  type: ElementType.Sticker;
-  sticker: Sticker;
+declare module '*.json' {
+  const templateStory: TemplateData;
+  export default templateStory;
 }

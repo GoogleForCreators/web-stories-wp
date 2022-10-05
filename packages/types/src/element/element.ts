@@ -66,3 +66,13 @@ export interface Element extends ElementBox {
   border?: Border;
   borderRadius?: BorderRadius;
 }
+
+export enum ElementType {
+  Text = 'text',
+  Image = 'image',
+  Video = 'video',
+  Gif = 'gif',
+  Sticker = 'sticker',
+  Shape = 'shape',
+  Product = 'product',
+}

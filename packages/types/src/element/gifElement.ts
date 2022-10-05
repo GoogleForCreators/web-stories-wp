@@ -19,8 +19,9 @@
  */
 import type { GifResource } from '../resource';
 import type { MediaElement } from './mediaElement';
+import type { ElementType } from './element';
 
 export interface GifElement extends MediaElement {
   resource: GifResource;
-  type: 'gif';
+  type: ElementType.Gif;
 }

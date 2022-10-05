@@ -44,7 +44,7 @@ async function loadTemplate(
       ...page,
       elements: page.elements?.map((elem) => {
         if ('resource' in elem && elem.resource) {
-          if ('sizes' in elem.resource.sizes && elem.resource.sizes) {
+          if ('sizes' in elem.resource && elem.resource.sizes) {
             elem.resource.sizes = {};
           }
           if (elem.resource.src) {
@@ -83,7 +83,7 @@ async function loadTemplate(
 
   return {
     ...(migrate(template, template.version) as unknown as Template),
-    version: DATA_VERSION as number,
+    version: DATA_VERSION,
   } as Template;
 }
 

@@ -19,6 +19,7 @@
  */
 import type { VideoResource } from '../resource';
 import type { MediaElement } from './mediaElement';
+import type { ElementType } from './element';
 
 export interface VideoTrack {
   id: string;
@@ -35,5 +36,5 @@ export interface VideoElement extends MediaElement {
   poster?: string;
   tracks?: VideoTrack[];
   loop?: boolean;
-  type: 'video';
+  type: ElementType.Video;
 }

@@ -18,7 +18,8 @@
  * Internal dependencies
  */
 import type { MediaElement } from './mediaElement';
+import type { ElementType } from './element';
 
 export type ImageElement = MediaElement & {
-  type: 'image';
+  type: ElementType.Image;
 };

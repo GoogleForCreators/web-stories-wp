@@ -17,7 +17,7 @@
  * Internal dependencies
  */
 import type { RawTemplate } from '../../types';
-import { default as template } from './template.json';
+import { default as template } from './template';
 import { default as metaData } from './metaData';
 
 export default {

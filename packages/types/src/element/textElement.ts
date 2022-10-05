@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import type { Element } from './element';
+import type { Element, ElementType } from './element';
 import type { Pattern } from './pattern';
 
 export type FontStyle = 'normal' | 'italic' | 'regular';
@@ -68,7 +68,7 @@ export interface FontMetrics {
 }
 
 export interface TextElement extends Element {
-  type: 'text';
+  type: ElementType.Text;
   content: string;
   font: Font;
 
