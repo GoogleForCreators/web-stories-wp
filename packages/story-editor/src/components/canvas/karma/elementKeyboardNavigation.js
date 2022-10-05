@@ -33,6 +33,7 @@ describe('Canvas Element - keyboard navigation', () => {
 
     await fixture.render();
     await fixture.collapseHelpCenter();
+    await fixture.showFloatingMenu();
   });
 
   afterEach(() => {

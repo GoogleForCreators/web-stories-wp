@@ -256,10 +256,6 @@ function useMediaUploadQueue() {
           return;
         }
 
-        additionalData.meta = {
-          ...additionalData.meta,
-          trimData,
-        };
         finishTrimming({ id, file: newFile, additionalData });
       } catch (error) {
         // Cancel uploading if there were any errors.
@@ -318,7 +314,6 @@ function useMediaUploadQueue() {
           return;
         }
 
-        additionalData.isCropped = true;
         finishCropping({ id, file: newFile, posterFile, additionalData });
       } catch (error) {
         // Cancel uploading if there were any errors.

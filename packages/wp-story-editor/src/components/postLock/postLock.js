@@ -30,6 +30,7 @@ import {
   useStory,
   useConfig,
   useCurrentUser,
+  useHistory,
 } from '@googleforcreators/story-editor';
 
 /**
@@ -55,14 +56,20 @@ function PostLock() {
     api: { stories, storyLocking },
   } = useConfig();
 
-  const { previewLink, lockUser } = useStory(
+  const {
+    state: { hasNewChanges },
+  } = useHistory();
+
+  const { previewLink, lockUser, autoSave } = useStory(
     ({
       state: {
         story: { previewLink, extras: { lockUser = {} } = {} },
       },
+      actions: { autoSave },
     }) => ({
       previewLink,
       lockUser,
+      autoSave,
     })
   );
 
@@ -159,6 +166,25 @@ function PostLock() {
 
     return () => clearInterval(timeout);
   }, [postLockInterval, currentUserLoaded]);
+
+  useEffect(() => {
+    if (
+      enablePostLockingTakeOver &&
+      showLockedDialog &&
+      user &&
+      hasNewChanges &&
+      !isFirstTime
+    ) {
+      autoSave();
+    }
+  }, [
+    enablePostLockingTakeOver,
+    hasNewChanges,
+    showLockedDialog,
+    user,
+    isFirstTime,
+    autoSave,
+  ]);
 
   if (!showLockedDialog || !user) {
     return null;

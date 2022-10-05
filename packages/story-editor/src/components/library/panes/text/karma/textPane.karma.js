@@ -51,8 +51,8 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
     // Select background for being able to insert a text.
     await fixture.events.mouse.clickOn(
       fixture.editor.canvas.framesLayer.frames[0].node,
-      '90%',
-      '90%'
+      '2%',
+      '2%'
     );
     // Imitate the movement of real use to trigger the background processes while the user is moving the mouse.
     await fixture.events.mouse.moveRel(

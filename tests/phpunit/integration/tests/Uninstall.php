@@ -40,11 +40,13 @@ class Uninstall extends DependencyInjectedTestCase {
 		$terms_ids            = self::factory()->term->create_many( 5, [ 'taxonomy' => $source_taxonomy->get_taxonomy_slug() ] );
 
 		foreach ( self::$attachment_ids as $attachment_id ) {
-			add_post_meta( $attachment_id, 'web_stories_is_poster', '1' );
-			add_post_meta( $attachment_id, 'web_stories_poster_id', '999' );
+			add_post_meta( $attachment_id, \Google\Web_Stories\Media\Video\Poster::POSTER_POST_META_KEY, '1' );
+			add_post_meta( $attachment_id, \Google\Web_Stories\Media\Video\Poster::POSTER_ID_POST_META_KEY, '999' );
+			add_post_meta( $attachment_id, \Google\Web_Stories\Media\Cropping::CROPPED_ID_POST_META_KEY, '999' );
 			wp_set_object_terms( $attachment_id, $terms_ids, $source_taxonomy->get_taxonomy_slug() );
 		}
 
+		self::factory()->post->create_many( 5, [ 'post_type' => \Google\Web_Stories\Font_Post_Type::POST_TYPE_SLUG ] );
 		self::factory()->post->create_many( 5, [ 'post_type' => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG ] );
 		self::factory()->post->create_many( 5, [ 'post_type' => \Google\Web_Stories\Page_Template_Post_Type::POST_TYPE_SLUG ] );
 
@@ -100,6 +102,7 @@ class Uninstall extends DependencyInjectedTestCase {
 				'fields'           => 'ids',
 				'suppress_filters' => false,
 				'post_type'        => [
+					\Google\Web_Stories\Font_Post_Type::POST_TYPE_SLUG,
 					\Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
 					\Google\Web_Stories\Page_Template_Post_Type::POST_TYPE_SLUG,
 				],
@@ -115,8 +118,9 @@ class Uninstall extends DependencyInjectedTestCase {
 		\Google\Web_Stories\delete_stories_post_meta();
 
 		foreach ( self::$attachment_ids as $attachment_id ) {
-			$this->assertSame( '', get_post_meta( $attachment_id, 'web_stories_is_poster', true ) );
-			$this->assertSame( 0, get_post_meta( $attachment_id, 'web_stories_poster_id', true ) );
+			$this->assertSame( '', get_post_meta( $attachment_id, \Google\Web_Stories\Media\Video\Poster::POSTER_POST_META_KEY, true ) );
+			$this->assertSame( 0, get_post_meta( $attachment_id, \Google\Web_Stories\Media\Video\Poster::POSTER_ID_POST_META_KEY, true ) );
+			$this->assertSame( 0, get_post_meta( $attachment_id, \Google\Web_Stories\Media\Cropping::CROPPED_ID_POST_META_KEY, true ) );
 		}
 	}
 

@@ -21,7 +21,6 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { _x } from '@googleforcreators/i18n';
 import { Slider } from '@googleforcreators/design-system';
-import { BG_MIN_SCALE, BG_MAX_SCALE } from '@googleforcreators/animation';
 import { InOverlay } from '@googleforcreators/moveable';
 
 const MIN_WIDTH = 165;
@@ -67,8 +66,6 @@ function ScalePanel({
         */}
         <ScaleSlider
           width={width}
-          min={BG_MIN_SCALE}
-          max={BG_MAX_SCALE}
           majorStep={10}
           minorStep={1}
           value={scale}

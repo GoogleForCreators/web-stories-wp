@@ -370,10 +370,9 @@ class Editor extends Service_Base implements HasRequirements {
 
 		$shopping_provider = $this->settings->get_setting( $this->settings::SETTING_NAME_SHOPPING_PROVIDER );
 
-		$auto_save_link     = '';
-		$improved_autosaves = $this->experiments->is_experiment_enabled( 'improvedAutosaves' );
+		$auto_save_link = '';
 
-		if ( $improved_autosaves && isset( $story_id ) ) {
+		if ( isset( $story_id ) ) {
 
 			$auto_save = wp_get_post_autosave( $story_id );
 

@@ -35,6 +35,7 @@ describe('Design Menu: Text Styles', () => {
     await fixture.render();
 
     await fixture.collapseHelpCenter();
+    await fixture.showFloatingMenu();
 
     await fixture.editor.library.textTab.click();
     await fixture.events.click(fixture.editor.library.text.preset('Paragraph'));
