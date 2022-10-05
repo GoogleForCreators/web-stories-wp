@@ -20,18 +20,24 @@ namespace Google\Web_Stories\Tests\Integration;
 /**
  * @runInSeparateProcess
  * @preserveGlobalState disabled
+ * @coversDefaultClass \Google\Web_Stories\Uninstaller
  */
 class Uninstall extends DependencyInjectedTestCase {
 	protected static $attachment_ids;
 
 	protected static $user_id;
 
-	public static function wpSetUpBeforeClass(): void {
-		require_once WEBSTORIES_PLUGIN_DIR_PATH . '/includes/uninstall.php';
-	}
+	/**
+	 * Test instance.
+	 *
+	 * @var \Google\Web_Stories\Uninstaller
+	 */
+	private $instance;
 
 	public function set_up(): void {
 		parent::set_up();
+
+		$this->instance = $this->injector->make( \Google\Web_Stories\Uninstaller::class );
 
 		update_option( \Google\Web_Stories\Database_Upgrader::OPTION, '2.0.0' );
 		update_option( \Google\Web_Stories\Database_Upgrader::PREVIOUS_OPTION, '1.0.0' );
@@ -40,10 +46,13 @@ class Uninstall extends DependencyInjectedTestCase {
 		set_site_transient( 'web_stories_updater', 'hello' );
 	}
 
+	/**
+	 * @covers ::delete_options
+	 */
 	public function test_delete_options(): void {
 		$this->assertSame( '2.0.0', get_option( \Google\Web_Stories\Database_Upgrader::OPTION ) );
 		$this->assertSame( '1.0.0', get_option( \Google\Web_Stories\Database_Upgrader::PREVIOUS_OPTION ) );
-		\Google\Web_Stories\delete_options();
+		$this->call_private_method( $this->instance, 'delete_options' );
 		$this->assertFalse( get_option( \Google\Web_Stories\Database_Upgrader::OPTION ) );
 		$this->assertFalse( get_option( \Google\Web_Stories\Database_Upgrader::PREVIOUS_OPTION ) );
 		$this->assertFalse( get_transient( 'web_stories_link_data_fdsf' ) );
@@ -51,9 +60,10 @@ class Uninstall extends DependencyInjectedTestCase {
 
 	/**
 	 * @group ms-required
+	 * @covers ::delete_site_options
 	 */
 	public function test_delete_site_options(): void {
-		\Google\Web_Stories\delete_site_options();
+		$this->call_private_method( $this->instance, 'delete_site_options' );
 		$this->assertFalse( get_site_transient( 'web_stories_updater' ) );
 	}
 }
