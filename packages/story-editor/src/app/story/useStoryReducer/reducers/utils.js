@@ -89,9 +89,16 @@ export function updateElementWithUpdater(element, properties) {
   if (Object.keys(allowedProperties).length === 0) {
     return null;
   }
-  if (allowedProperties.animation) {
-    return allowedProperties.animation;
+
+  if (allowedProperties?.animation) {
+    return { animation: allowedProperties.animation };
   }
+
+  if (allowedProperties?.font) {
+    Object.assign(element, allowedProperties);
+    return { font: allowedProperties.font };
+  }
+
   Object.assign(element, allowedProperties);
   return null;
 }
@@ -103,6 +110,26 @@ export function removeAnimationsWithElementIds(animations = [], ids = []) {
     }
     return [...accum, animation];
   }, []);
+}
+
+export function updateFonts(draftFonts = {}, elements) {
+  elements.forEach((element) => {
+    if (element?.font) {
+      draftFonts[element?.font.family] = element?.font;
+    }
+  });
+  return draftFonts;
+}
+
+export function pickElementFontProperties(element) {
+  if (element?.font) {
+    const { upm, asc, des } = element.font.metrics;
+    element.font = {
+      family: element.font.family,
+      metrics: { upm, asc, des },
+    };
+  }
+  return element;
 }
 
 export function updateAnimations(oldAnimations, animationUpdates) {

@@ -138,6 +138,8 @@ function TextEdit({
     height: elementHeight,
     ...rest
   } = element;
+
+  // @todo pull metrics off story data fonts
   const { font } = rest;
   const { top = 0, bottom = 0, left = 0, right = 0 } = border || {};
   const fontFaceSetConfigs = useMemo(() => {
@@ -276,6 +278,7 @@ function TextEdit({
   const handleResize = useCallback(() => {
     const wrapper = wrapperRef.current;
     const textBox = textBoxRef.current;
+    // @todo pull metrics off story data fonts
     const { marginOffset } = calcFontMetrics(element);
     editorHeightRef.current =
       textBox.offsetHeight - dataToEditorY(marginOffset);

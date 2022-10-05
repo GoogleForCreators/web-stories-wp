@@ -169,6 +169,7 @@ function TextDisplay({
     dataToEditorY: state.actions.dataToEditorY,
   }));
 
+  // @todo pull metrics off story data fonts
   const { font, width: elementWidth, height: elementHeight } = rest;
   const fontFaceSetConfigs = useMemo(() => {
     const htmlInfo = getHTMLInfo(content);
@@ -179,6 +180,7 @@ function TextDisplay({
     };
   }, [content]);
 
+  // @todo pull metrics off story data fonts
   const { marginOffset } = calcFontMetrics(element);
   const props = {
     font,

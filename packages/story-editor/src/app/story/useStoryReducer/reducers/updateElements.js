@@ -23,7 +23,12 @@ import { produce } from 'immer';
 /**
  * Internal dependencies
  */
-import { updateElementWithUpdater, updateAnimations } from './utils';
+import {
+  updateElementWithUpdater,
+  updateAnimations,
+  updateFonts,
+  pickElementFontProperties,
+} from './utils';
 
 /**
  * Update elements by the given list of ids with the given properties.
@@ -62,17 +67,23 @@ export const updateElements = (
   const idsToUpdate = elementIds === null ? draft.selection : elementIds;
   const page = draft.pages.find(({ id }) => id === draft.current);
   const animationLookup = {};
+  let isFontUpdate = false;
   page.elements
     .filter(({ id }) => idsToUpdate.includes(id))
     .forEach((element) => {
       // Update function will update the element inline unless there's an animation update.
       // If so, the element will remain unchanged, and the animation will be returned instead.
-      const animation = updateElementWithUpdater(element, propertiesOrUpdater);
-      if (animation) {
-        animationLookup[animation.id] = {
-          ...animation,
+      const updater = updateElementWithUpdater(element, propertiesOrUpdater);
+
+      if (updater?.animation) {
+        animationLookup[updater.animation.id] = {
+          ...updater.animation,
           targets: [element.id],
         };
+      }
+
+      if (updater?.font) {
+        isFontUpdate = true;
       }
     });
 
@@ -80,6 +91,16 @@ export const updateElements = (
 
   if (isAnimationUpdate) {
     page.animations = updateAnimations(page.animations || [], animationLookup);
+  }
+
+  if (isFontUpdate) {
+    // store font props at the story level
+    draft.story.fonts = updateFonts(draft.story?.fonts, page.elements);
+
+    // pull font props off the individual elements
+    page.elements = page.elements.map((element) =>
+      pickElementFontProperties(element)
+    );
   }
 };
 

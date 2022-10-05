@@ -99,6 +99,7 @@ export function TextOutputWithUnits({
       ? generatePatternStyles(backgroundColor)
       : undefined;
 
+  // @todo pull metrics off story data fonts
   const {
     dataToEditorY: _dataToEditorY,
     font: _font,
@@ -148,6 +149,7 @@ export function TextOutputWithUnits({
   };
 
   const marginStyle = (el) => {
+    // @todo pull metrics off story data fonts
     const { marginOffset } = calcFontMetrics(el);
     return {
       display: 'block',

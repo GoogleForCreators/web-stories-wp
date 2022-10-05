@@ -107,6 +107,7 @@ function useSingleSelectionResize({
       newWidth = Math.max(newWidth, minWidth);
     }
 
+    // @todo pull font metrics at story level
     if (updateForResizeEvent) {
       updates = updateForResizeEvent(
         selectedElement,
