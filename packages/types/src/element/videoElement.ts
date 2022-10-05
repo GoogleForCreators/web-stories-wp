@@ -35,4 +35,5 @@ export interface VideoElement extends MediaElement {
   poster?: string;
   tracks?: VideoTrack[];
   loop?: boolean;
+  type: 'video';
 }

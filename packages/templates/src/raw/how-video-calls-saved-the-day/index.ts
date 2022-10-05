@@ -18,9 +18,10 @@
  * Internal dependencies
  */
 import type { RawTemplate, TemplateData } from '../../types';
-import template from './template.json';
+import { default as template } from './template.json';
 import { default as metaData } from './metaData';
 
+type test1 = typeof template;
 const test: TemplateData = template;
 
 export default {
