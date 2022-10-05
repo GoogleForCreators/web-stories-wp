@@ -35,12 +35,12 @@ describe('Web Stories Widget', () => {
     await activatePlugin('classic-widgets');
   });
 
-  // eslint-disable-next-line jest/no-disabled-tests -- TODO(#11990): Fix flakey test.
-  describe.skip('Widgets Screen', () => {
+  describe('Widgets Screen', () => {
     it('should be able to add widget', async () => {
       await visitAdminPage('widgets.php');
 
       await insertWidget('Web Stories');
+
       await expect(page).toMatchElement(
         '.widget-liquid-right .web-stories-field-wrapper'
       );
@@ -57,11 +57,17 @@ describe('Web Stories Widget', () => {
         'Test widget'
       );
 
-      await expect(page).toMatchElement(
-        '.widget-liquid-right .widget-control-save'
-      );
-
-      await page.keyboard.press('Enter');
+      await Promise.all([
+        expect(page).toClick(
+          '.widget-liquid-right .widget-control-save:not(:disabled)'
+        ),
+        page.waitForResponse(
+          (response) =>
+            // eslint-disable-next-line jest/no-conditional-in-test
+            response.url().includes('/wp-admin/admin-ajax.php') &&
+            response.status() === 200
+        ),
+      ]);
 
       await expect(page).toMatchElement(
         '.widget-liquid-right .widget-control-save:disabled'
@@ -69,9 +75,7 @@ describe('Web Stories Widget', () => {
     });
   });
 
-  // See https://github.com/googleforcreators/web-stories-wp/issues/6879
-  // eslint-disable-next-line jest/no-disabled-tests -- Flakey test that needs to be investigated.
-  describe.skip('Customizer', () => {
+  describe('Customizer', () => {
     it('should be able to add widget', async () => {
       await visitAdminPage('customize.php');
 
@@ -82,6 +86,9 @@ describe('Web Stories Widget', () => {
         '#accordion-section-sidebar-widgets-sidebar-1 .accordion-section-title'
       );
 
+      // The customizer has lots of transition animations.
+      await page.waitForTimeout(500);
+
       // expect(page).toClick(...) doesn't seem to work.
       await page.evaluate(() => {
         document
@@ -91,12 +98,19 @@ describe('Web Stories Widget', () => {
           .click();
       });
 
+      // The customizer has lots of transition animations.
+      await page.waitForTimeout(500);
+
       await expect(page).toClick('button', { text: 'Add a Widget' });
+
       await expect(page).toMatch('Web Stories');
 
       await page.type('#widgets-search', 'web stories');
 
       await expect(page).toClick("div[class*='web_stories_widget-']");
+
+      // The customizer has lots of transition animations.
+      await page.waitForTimeout(500);
 
       await page.evaluate(() => {
         const input = document.querySelector(
@@ -109,19 +123,36 @@ describe('Web Stories Widget', () => {
 
       await page.keyboard.press('Enter');
 
+      await page.waitForResponse(
+        (response) =>
+          // eslint-disable-next-line jest/no-conditional-in-test
+          response.url().includes('/wp-admin/admin-ajax.php') &&
+          response.status() === 200
+      );
+
       await page.waitForSelector('.spinner', {
         visible: false,
       });
 
+      await expect(page).toClick('.widget-control-close', { text: 'Done' });
+
       await expect(page).toClick('#save');
       await expect(page).toMatchElement('#save[value="Published"]');
 
-      // TODO: Ensure this works reliably in tests.
+      await page.waitForResponse(
+        (response) =>
+          // eslint-disable-next-line jest/no-conditional-in-test
+          response.url().includes('/wp-admin/admin-ajax.php') &&
+          response.status() === 200
+      );
 
-      //const frameHandle = await page.$("iframe[title='Site Preview']");
-      //const frame = await frameHandle.contentFrame();
-      //await expect(frame).toMatchElement('.web-stories-widget');
-      //await expect(frame).toMatch('Test widget');
+      await page.waitForSelector('.spinner', {
+        visible: false,
+      });
+
+      const frameHandle = await page.$("iframe[title='Site Preview']");
+      const frame = await frameHandle.contentFrame();
+      await expect(frame).toMatchElement('.web-stories-widget');
     });
   });
 });
