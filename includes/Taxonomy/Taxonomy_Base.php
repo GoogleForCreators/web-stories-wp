@@ -28,9 +28,12 @@ namespace Google\Web_Stories\Taxonomy;
 
 use Google\Web_Stories\Infrastructure\PluginActivationAware;
 use Google\Web_Stories\Infrastructure\PluginDeactivationAware;
+use Google\Web_Stories\Infrastructure\PluginUninstallAware;
 use Google\Web_Stories\Infrastructure\SiteInitializationAware;
 use Google\Web_Stories\Service_Base;
 use WP_Site;
+use WP_Term;
+use WP_Term_Query;
 
 /**
  * Taxonomy_Base class
@@ -72,7 +75,7 @@ use WP_Site;
  *   _builtin?: bool,
  * }
  */
-abstract class Taxonomy_Base extends Service_Base implements PluginActivationAware, PluginDeactivationAware, SiteInitializationAware {
+abstract class Taxonomy_Base extends Service_Base implements PluginActivationAware, PluginDeactivationAware, SiteInitializationAware, PluginUninstallAware {
 
 	public const DEFAULT_CAPABILITIES = [
 		'manage_terms' => 'manage_terms_web-stories',
@@ -178,4 +181,32 @@ abstract class Taxonomy_Base extends Service_Base implements PluginActivationAwa
 		return $this->taxonomy_slug;
 	}
 
+
+	/**
+	 * Act on plugin uninstall.
+	 *
+	 * @since 1.26.0
+	 */
+	public function on_plugin_uninstall(): void {
+		clean_taxonomy_cache( $this->get_taxonomy_slug() );
+
+
+		$term_query = new WP_Term_Query();
+		$terms      = $term_query->query(
+			[
+				'taxonomy'   => $this->get_taxonomy_slug(),
+				'hide_empty' => false,
+			]
+		);
+
+		if ( empty( $terms ) || ! \is_array( $terms ) ) {
+			return;
+		}
+
+		foreach ( $terms as $term ) {
+			if ( $term instanceof WP_Term ) {
+				wp_delete_term( $term->term_id, $term->taxonomy );
+			}
+		}
+	}
 }

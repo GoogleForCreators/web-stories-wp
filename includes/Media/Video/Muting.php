@@ -27,6 +27,7 @@
 namespace Google\Web_Stories\Media\Video;
 
 use Google\Web_Stories\Infrastructure\HasMeta;
+use Google\Web_Stories\Infrastructure\PluginUninstallAware;
 use Google\Web_Stories\Service_Base;
 use WP_Error;
 use WP_Post;
@@ -34,7 +35,7 @@ use WP_Post;
 /**
  * Class Muting
  */
-class Muting extends Service_Base implements HasMeta {
+class Muting extends Service_Base implements HasMeta, PluginUninstallAware {
 
 	/**
 	 * Is muted.
@@ -210,5 +211,14 @@ class Muting extends Service_Base implements HasMeta {
 	 */
 	public function delete_video( int $attachment_id ): void {
 		delete_metadata( 'post', 0, self::MUTED_ID_POST_META_KEY, $attachment_id, true );
+	}
+
+	/**
+	 * Act on plugin uninstall.
+	 *
+	 * @since 1.26.0
+	 */
+	public function on_plugin_uninstall(): void {
+		delete_post_meta_by_key( self::MUTED_ID_POST_META_KEY );
 	}
 }

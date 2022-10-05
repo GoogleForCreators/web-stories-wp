@@ -383,4 +383,29 @@ class Settings extends Service_Base {
 	public function update_setting( string $key, $value ) {
 		return update_option( $key, $value );
 	}
+
+	/**
+	 * Act on plugin uninstall.
+	 *
+	 * @since 1.26.0
+	 */
+	public function on_plugin_uninstall(): void {
+		delete_option( self::SETTING_NAME_ARCHIVE );
+		delete_option( self::SETTING_NAME_EXPERIMENTS );
+		delete_option( self::SETTING_NAME_TRACKING_ID );
+		delete_option( self::SETTING_NAME_USING_LEGACY_ANALYTICS );
+		delete_option( self::SETTING_NAME_AD_NETWORK );
+		delete_option( self::SETTING_NAME_ADSENSE_PUBLISHER_ID );
+		delete_option( self::SETTING_NAME_ADSENSE_SLOT_ID );
+		delete_option( self::SETTING_NAME_AD_MANAGER_SLOT_ID );
+		delete_option( self::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
+		delete_option( self::SETTING_NAME_PUBLISHER_LOGOS );
+		delete_option( self::SETTING_NAME_VIDEO_CACHE );
+		delete_option( self::SETTING_NAME_DATA_REMOVAL );
+		delete_option( self::SETTING_NAME_ARCHIVE );
+		delete_option( self::SETTING_NAME_ARCHIVE_PAGE_ID );
+		delete_option( self::SETTING_NAME_SHOPPING_PROVIDER );
+		delete_option( self::SETTING_NAME_SHOPIFY_HOST );
+		delete_option( self::SETTING_NAME_SHOPIFY_ACCESS_TOKEN );
+	}
 }

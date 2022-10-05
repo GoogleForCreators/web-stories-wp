@@ -58,7 +58,8 @@ if ( file_exists( WEBSTORIES_PLUGIN_DIR_PATH . '/includes/vendor/autoload.php' )
 	require WEBSTORIES_PLUGIN_DIR_PATH . '/includes/vendor/autoload.php';
 }
 
-\Google\Web_Stories\PluginFactory::create()->register();
+$ws_plugin = \Google\Web_Stories\PluginFactory::create();
+$ws_plugin->register();
 
 $erase = (bool) get_option( \Google\Web_Stories\Settings::SETTING_NAME_DATA_REMOVAL );
 
@@ -77,6 +78,8 @@ if ( false === $erase ) {
 
 require_once WEBSTORIES_PLUGIN_DIR_PATH . '/includes/uninstall.php';
 
+$ws_plugin->on_site_uninstall();
+
 if ( is_multisite() ) {
 	\Google\Web_Stories\delete_site_options();
 	$site_ids = get_sites(
@@ -92,11 +95,10 @@ if ( is_multisite() ) {
 		// phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.switch_to_blog_switch_to_blog
 		switch_to_blog( $site_id );
 
-		\Google\Web_Stories\delete_site();
+		\Google\Web_Stories\delete_options();
 	}
 
 	restore_current_blog();
 } else {
-	\Google\Web_Stories\delete_site();
+	\Google\Web_Stories\delete_options();
 }
-\Google\Web_Stories\delete_stories_user_meta();
