@@ -35,8 +35,7 @@ describe('Stories Dashboard', () => {
     await visitDashboard();
   });
 
-  // eslint-disable-next-line jest/no-disabled-tests -- TODO(#11362): Fix flakey test
-  it.skip('should delete story', async () => {
+  it('should delete story', async () => {
     await expect(page).toMatchElement('h2', { text: 'Dashboard' });
     await page.hover(
       `[role="listitem"][aria-label="Details about ${storyName}"]`
@@ -44,15 +43,34 @@ describe('Stories Dashboard', () => {
     await expect(page).toClick(
       `button[aria-label="Context menu for ${storyName}"]`
     );
+
     await expect(page).toClick('button', { text: 'Delete Story' });
-    await expect(page).toClick(
-      `button[aria-label='Confirm deleting story "${storyName}"']`
+    await expect(page).toMatch(/Are you sure you want to delete/);
+
+    await expect(page).toMatchElement(
+      '[role="dialog"][aria-label="Dialog to confirm deleting a story"] button',
+      {
+        text: 'Delete',
+      }
     );
-    await page.waitForTimeout(100);
+
+    await expect(page).toClick(
+      '[role="dialog"][aria-label="Dialog to confirm deleting a story"] button',
+      {
+        text: 'Delete',
+      }
+    );
+
+    await page.waitForResponse((response) =>
+      response.url().includes('web-stories/v1/web-story/')
+    );
+
+    await expect(page).toMatch(/Start telling Stories/);
     await expect(page).not.toMatchElement('h3', {
       text: storyName,
     });
   });
+
   it('should duplicate story', async () => {
     await expect(page).toMatchElement('h2', { text: 'Dashboard' });
     await page.hover(
@@ -61,14 +79,24 @@ describe('Stories Dashboard', () => {
     await expect(page).toClick(
       `button[aria-label="Context menu for ${storyName}"]`
     );
-    await expect(page).toClick('button', { text: 'Duplicate' });
-    await page.waitForTimeout(100);
+
+    await Promise.all([
+      expect(page).toClick('button', { text: 'Duplicate' }),
+      page.waitForResponse(
+        (response) =>
+          //eslint-disable-next-line jest/no-conditional-in-test
+          response.url().includes('web-stories/v1/web-story/') &&
+          response.status() === 201
+      ),
+    ]);
+
     await expect(page).toMatchElement('h3', {
       text: `${storyName} (Copy)`,
     });
   });
+
   it('should rename story', async () => {
-    const storyToBeNamed = 'Renamed story';
+    const newStoryName = 'Renamed story';
     await expect(page).toMatchElement('h2', { text: 'Dashboard' });
     await page.hover(
       `[role="listitem"][aria-label="Details about ${storyName}"]`
@@ -78,11 +106,20 @@ describe('Stories Dashboard', () => {
     );
     await expect(page).toClick('button', { text: 'Rename' });
     await expect(page).toMatchElement(`input[value="${storyName}"]`);
-    await page.type(`input[value="${storyName}"]`, storyToBeNamed);
-    await page.keyboard.press('Enter');
-    await page.waitForTimeout(100);
+    await page.type(`input[value="${storyName}"]`, newStoryName);
+
+    await Promise.all([
+      page.keyboard.press('Enter'),
+      page.waitForResponse(
+        (response) =>
+          //eslint-disable-next-line jest/no-conditional-in-test
+          response.url().includes('web-stories/v1/web-story/') &&
+          response.status() === 200
+      ),
+    ]);
+
     await expect(page).toMatchElement('h3', {
-      text: storyToBeNamed,
+      text: newStoryName,
     });
   });
 });
