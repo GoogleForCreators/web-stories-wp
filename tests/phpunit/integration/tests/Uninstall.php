@@ -22,7 +22,7 @@ namespace Google\Web_Stories\Tests\Integration;
  * @preserveGlobalState disabled
  * @coversDefaultClass \Google\Web_Stories\Uninstaller
  */
-class Uninstall extends DependencyInjectedTestCase {
+class Uninstall extends TestCase {
 	protected static $attachment_ids;
 
 	protected static $user_id;
@@ -37,7 +37,7 @@ class Uninstall extends DependencyInjectedTestCase {
 	public function set_up(): void {
 		parent::set_up();
 
-		$this->instance = $this->injector->make( \Google\Web_Stories\Uninstaller::class );
+		$this->instance = new \Google\Web_Stories\Uninstaller();
 
 		update_option( \Google\Web_Stories\Database_Upgrader::OPTION, '2.0.0' );
 		update_option( \Google\Web_Stories\Database_Upgrader::PREVIOUS_OPTION, '1.0.0' );

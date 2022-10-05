@@ -75,9 +75,6 @@ if ( false === $erase ) {
 	return;
 }
 
-require_once WEBSTORIES_PLUGIN_DIR_PATH . '/includes/uninstall.php';
-
-
 $uninstaller = \Google\Web_Stories\UninstallerFactory::create();
 $uninstaller->register();
 $uninstaller->on_site_uninstall();
