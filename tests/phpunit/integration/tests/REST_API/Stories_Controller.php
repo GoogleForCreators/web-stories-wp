@@ -669,7 +669,8 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 			]
 		);
 
-		$attachment_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg', 0 );
+		$attachment_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/example-3.png', 0 );
+		wp_maybe_generate_attachment_metadata( get_post( $attachment_id ) );
 		set_post_thumbnail( $story, $attachment_id );
 
 		$attachment_src = wp_get_attachment_image_src( $attachment_id, Image_Sizes::POSTER_PORTRAIT_IMAGE_DIMENSIONS );
@@ -694,8 +695,8 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 			[
 				'id'         => $attachment_id,
 				'url'        => $attachment_src[0],
-				'height'     => $attachment_src[1],
-				'width'      => $attachment_src[2],
+				'height'     => $attachment_src[2],
+				'width'      => $attachment_src[1],
 				'needsProxy' => false,
 			],
 			$data['story_poster']
