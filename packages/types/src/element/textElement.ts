@@ -68,6 +68,7 @@ export interface FontMetrics {
 }
 
 export interface TextElement extends Element {
+  type: 'text';
   content: string;
   font: Font;
 

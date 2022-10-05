@@ -55,12 +55,12 @@ type UnionElement =
   | ImageElement
   | ShapeElement;
 
-interface TemplateData extends Omit<Story, 'pages'> {
+export interface TemplateData extends Omit<Story, 'pages'> {
   pages: TemplatePage[];
 }
 
 interface TemplatePage
-  extends Omit<Page, 'elements' | 'autoAdvance' | 'defaultPageDuration'> {
+  extends Omit<Page, 'autoAdvance' | 'defaultPageDuration' | 'elements'> {
   pageTemplateType: string;
   elements: UnionElement[];
 }

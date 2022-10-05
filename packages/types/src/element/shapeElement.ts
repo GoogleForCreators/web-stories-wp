@@ -23,4 +23,5 @@ import type { Pattern } from './pattern';
 export interface ShapeElement extends Element {
   backgroundColor: Pattern;
   isDefaultBackground?: boolean;
+  type: 'shape';
 }

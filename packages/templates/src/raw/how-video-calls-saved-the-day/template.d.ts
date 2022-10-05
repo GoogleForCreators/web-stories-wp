@@ -18,5 +18,5 @@ import type { TemplateData } from '../../types';
 
 declare module 'template.json' {
   const templateStory: TemplateData;
-  export default templateStory;
+  export = templateStory;
 }

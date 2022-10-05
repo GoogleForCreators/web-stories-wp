@@ -21,4 +21,5 @@ import type { Element } from './element';
 
 export interface ProductElement extends Element {
   productId: string;
+  type: 'product';
 }

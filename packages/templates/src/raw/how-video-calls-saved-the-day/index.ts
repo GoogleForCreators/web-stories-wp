@@ -17,11 +17,13 @@
 /**
  * Internal dependencies
  */
-import type { RawTemplate } from '../../types';
-import { default as template } from './template.json';
+import type { RawTemplate, TemplateData } from '../../types';
+import template from './template.json';
 import { default as metaData } from './metaData';
+
+const test: TemplateData = template;
 
 export default {
   ...metaData,
-  ...template,
+  ...test,
 } as RawTemplate;

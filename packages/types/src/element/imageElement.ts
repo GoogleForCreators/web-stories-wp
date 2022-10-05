@@ -19,4 +19,6 @@
  */
 import type { MediaElement } from './mediaElement';
 
-export type ImageElement = MediaElement;
+export type ImageElement = MediaElement & {
+  type: 'image';
+};

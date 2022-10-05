@@ -22,4 +22,5 @@ import type { MediaElement } from './mediaElement';
 
 export interface GifElement extends MediaElement {
   resource: GifResource;
+  type: 'gif';
 }
