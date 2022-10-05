@@ -18,10 +18,11 @@
  * External dependencies
  */
 import { migrate } from '@googleforcreators/migration';
+import type { Element, Story } from '@googleforcreators/types';
 /**
  * Internal dependencies
  */
-import type { Data, Page, Element, MinMax, TextSet } from './types';
+import type { MinMax, PageTextSet } from './types';
 
 function updateMinMax(minMax: MinMax, element: Element): MinMax {
   // Purposely mutating object so passed
@@ -36,11 +37,11 @@ function updateMinMax(minMax: MinMax, element: Element): MinMax {
 }
 
 async function loadTextSet(name: string): Promise<Array<object>> {
-  const data: TextSet = (await import(
+  const data: Story = (await import(
     /* webpackChunkName: "chunk-web-stories-textset-[index]" */ `./raw/${name}.json`
-  )) as TextSet;
-  const migrated: Data = migrate(data.default, data.default.version);
-  return migrated.pages.reduce((sets, page: Page) => {
+  )) as Story;
+  const migrated = migrate(data, data.version);
+  return migrated.pages.reduce((sets, page: PageTextSet) => {
     const minMax = {
       minX: Infinity,
       maxX: 0,

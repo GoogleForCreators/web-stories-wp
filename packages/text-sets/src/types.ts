@@ -13,13 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export interface Element {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-  isBackground: boolean;
-}
+import type { Page } from '@googleforcreators/types';
 
 export interface MinMax {
   minX: number;
@@ -28,16 +22,7 @@ export interface MinMax {
   maxY: number;
 }
 
-export interface Page {
-  elements: Array<Element>;
-  fonts: Array<string>;
-  id: string;
-}
-export interface Data {
-  pages: Array<Page>;
-}
-export interface TextSet {
-  default: {
-    version: number;
-  };
+export interface PageTextSet extends Page {
+  fonts: string[],
+  id: string,
 }
