@@ -28,12 +28,13 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Infrastructure\PluginUninstallAware;
 use Google\Web_Stories\Shopping\Shopping_Vendors;
 
 /**
  * Settings class.
  */
-class Settings extends Service_Base {
+class Settings extends Service_Base implements PluginUninstallAware {
 	/**
 	 * Settings group.
 	 */
