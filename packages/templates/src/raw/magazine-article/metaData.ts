@@ -62,4 +62,4 @@ export default {
     'web-stories'
   ),
   vertical: _x('Technology', 'template vertical', 'web-stories'),
-};
+} as MetaData;

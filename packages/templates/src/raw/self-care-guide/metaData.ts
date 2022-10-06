@@ -77,4 +77,4 @@ export default {
     'web-stories'
   ),
   vertical: _x('Health & Wellness', 'template vertical', 'web-stories'),
-};
+} as MetaData;

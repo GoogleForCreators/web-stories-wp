@@ -24,4 +24,4 @@ import { default as metaData } from './metaData';
 export default {
   ...metaData,
   ...template,
-};
+} as RawTemplate;

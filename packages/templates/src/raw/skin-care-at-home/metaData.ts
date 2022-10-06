@@ -72,4 +72,4 @@ export default {
     'web-stories'
   ),
   vertical: _x('Fashion & Beauty', 'template vertical', 'web-stories'),
-};
+} as MetaData;

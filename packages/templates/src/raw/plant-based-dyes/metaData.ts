@@ -67,4 +67,4 @@ export default {
     'web-stories'
   ),
   vertical: _x('Arts & Crafts', 'template vertical', 'web-stories'),
-};
+} as MetaData;

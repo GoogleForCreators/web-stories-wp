@@ -62,4 +62,4 @@ export default {
     'web-stories'
   ),
   vertical: _x('Home & Garden', 'template vertical', 'web-stories'),
-};
+} as MetaData;

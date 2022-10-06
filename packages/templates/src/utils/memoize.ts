@@ -13,9 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export default function memoize(func, argsHash = (args) => args.join('-')) {
+
+type ArgHash = (args: string[] | number[]) => string;
+export default function memoize<T>(
+  func: (...args: string[]) => Promise<T>,
+  argsHash: ArgHash = (args) => args.join('-')
+) {
   const memoized = new Map();
-  return function (...args) {
+  return function (...args: string[]): undefined | Promise<T> {
     const key = argsHash(args);
     /**
      * The map value should only ever be undefined if
@@ -37,6 +42,6 @@ export default function memoize(func, argsHash = (args) => args.join('-')) {
       return undefined;
     }
 
-    return memoized.get(key);
+    return memoized.get(key) as Promise<T>;
   };
 }
