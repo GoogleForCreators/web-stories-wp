@@ -57,6 +57,8 @@ export interface Animation {
   type: AnimationType;
   targets: string[];
   panDir?: AnimationDirection;
+  scale?: number;
+  iterations?: number;
   duration: number;
   delay: number;
   zoomDirection?: ZoomDirection;

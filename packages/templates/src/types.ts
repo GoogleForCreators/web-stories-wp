@@ -43,7 +43,6 @@ export interface MetaData {
   colors: Color[];
   description: string;
   vertical: string;
-  version: number;
   createdBy?: string;
   modified?: string;
 }

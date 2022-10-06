@@ -27,5 +27,5 @@ export interface MediaElement extends Element {
   scale: number;
   focalX?: number;
   focalY?: number;
-  overlay?: Pattern;
+  overlay?: Pattern | null;
 }

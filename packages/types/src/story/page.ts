@@ -45,7 +45,7 @@ export interface Page {
   animations?: Animation[];
   backgroundColor: Pattern;
   type: 'page';
-  groups: Groups;
+  groups?: Groups;
   backgroundAudio?: {
     resource: {
       src: string;

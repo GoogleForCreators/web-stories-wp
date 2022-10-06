@@ -18,12 +18,13 @@
  * Internal dependencies
  */
 import type { ElementBox } from './elementBox';
+import type { Solid } from './pattern';
 
 export interface Link {
   url: string;
   desc?: string;
   needsProxy?: boolean;
-  icon?: string;
+  icon?: string | null;
   rel?: string[];
 }
 
@@ -47,7 +48,9 @@ export interface Border {
   right: number;
   bottom: number;
   left: number;
-  locked: boolean;
+  locked?: boolean;
+  lockedWidth?: boolean;
+  color?: Solid;
 }
 
 export interface BorderRadius {

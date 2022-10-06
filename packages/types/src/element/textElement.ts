@@ -43,7 +43,7 @@ export interface Font {
 export interface Padding {
   horizontal?: number;
   vertical?: number;
-  locked: boolean;
+  locked?: boolean;
   hasHiddenPadding?: boolean;
 }
 

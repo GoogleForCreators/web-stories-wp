@@ -19,6 +19,11 @@
  */
 import type { ResourceType } from './resourceType';
 
+export interface Dimensions {
+  width: number;
+  height: number;
+}
+
 export interface AttributionAuthor {
   /** Display name of the author. */
   displayName: string;
@@ -82,7 +87,10 @@ export interface Resource {
   /** Resource author attribution */
   attribution?: Attribution;
 
-  // TODO: Figure out why sometimes images end up having these properties.
+  // TODO: This property should probably not end up in a story. Only relevant for the media library.
+  provider?: 'local' | 'unsplash' | 'coverr' | 'tenor' | 'tenor_stickers';
+
+  // TODO: Figure out why sometimes _images_ end up having these properties.
   posterId?: ResourceId;
   isOptimized?: boolean;
 }
