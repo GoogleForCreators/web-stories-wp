@@ -21,7 +21,7 @@ import memoize from './utils/memoize';
 import getTemplates from './getTemplates';
 import type { Template } from './types';
 
-const memoizedGetTemplates = memoize<Template[]>(getTemplates);
+const memoizedGetTemplates = memoize<Promise<Template[]>>(getTemplates);
 
 export async function getAllTemplates({
   cdnURL,

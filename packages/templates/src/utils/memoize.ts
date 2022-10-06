@@ -16,11 +16,11 @@
 
 type ArgHash = (args: string[] | number[]) => string;
 export default function memoize<T>(
-  func: (...args: string[]) => Promise<T>,
+  func: (...args: string[]) => T,
   argsHash: ArgHash = (args) => args.join('-')
 ) {
   const memoized = new Map();
-  return function (...args: string[]): undefined | Promise<T> {
+  return function (...args: string[]): undefined | T {
     const key = argsHash(args);
     /**
      * The map value should only ever be undefined if
@@ -42,6 +42,6 @@ export default function memoize<T>(
       return undefined;
     }
 
-    return memoized.get(key) as Promise<T>;
+    return memoized.get(key) as T;
   };
 }
