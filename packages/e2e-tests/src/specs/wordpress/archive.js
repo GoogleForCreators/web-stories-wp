@@ -30,15 +30,25 @@ import {
   createURL,
   trashAllPosts,
   setPostContent,
+  deleteWidgets,
+  activatePlugin,
 } from '@web-stories-wp/e2e-test-utils';
+
+/**
+ * Internal dependencies
+ */
+import { addAllowedErrorMessage } from '../../config/bootstrap.js';
 
 const pageTitle = 'Web Stories Archive';
 const pageContent = 'Web Stories archive content';
-const pageInput = 'input[placeholder="Select page"]';
-const saveMessage = 'Setting saved.';
 
+/**
+ * Change archives page type.
+ *
+ * @param {string} option Archive type to select.
+ * @return {Promise<void>}
+ */
 const changeStoriesArchivesType = async (option) => {
-  await visitSettings();
   await expect(page).toClick('button[aria-label="Stories Archives"]');
   await expect(page).toClick('li[role="option"]', { text: option });
   await page.waitForResponse(
@@ -47,15 +57,13 @@ const changeStoriesArchivesType = async (option) => {
       response.status() === 200
   );
   await expect(page).toMatchElement('[role="alert"]', {
-    text: saveMessage,
+    text: 'Setting saved.',
   });
 };
 
 jest.retryTimes(2, { logErrorsBeforeRetry: true });
 
-// TODO(#9636): Fix flakey test.
-// eslint-disable-next-line jest/no-disabled-tests
-describe.skip('Stories Archive', () => {
+describe('Stories Archive', () => {
   describe('Custom Page', () => {
     beforeAll(async () => {
       await createNewPost({
@@ -68,45 +76,48 @@ describe.skip('Stories Archive', () => {
     });
 
     afterAll(async () => {
+      await visitSettings();
       await changeStoriesArchivesType('Default');
       await trashAllPosts('page');
     });
 
     it('should select a custom page', async () => {
       await visitSettings();
-      await changeStoriesArchivesType('Custom');
-      await expect(page).toMatchElement(pageInput);
-      await page.type(pageInput, pageTitle);
+      await changeStoriesArchivesType('Create your own');
+      await expect(page).toMatchElement('input[placeholder="Select page"]');
+      await page.type('input[placeholder="Select page"]', pageTitle);
       await expect(page).toMatchElement('li[role="option"]', {
         text: pageTitle,
       });
-      await expect(page).toClick('li[role="option"]', {
-        text: pageTitle,
-      });
-      await page.waitForResponse(
-        (response) =>
-          //eslint-disable-next-line jest/no-conditional-in-test
-          response.url().includes('web-stories/v1/settings') &&
-          response.status() === 200
-      );
+      await Promise.all([
+        expect(page).toClick('li[role="option"]', {
+          text: pageTitle,
+        }),
+        page.waitForResponse(
+          (response) =>
+            //eslint-disable-next-line jest/no-conditional-in-test
+            response.url().includes('web-stories/v1/settings') &&
+            response.status() === 200
+        ),
+      ]);
       await expect(page).toMatchElement('[role="alert"]', {
-        text: saveMessage,
+        text: 'Setting saved.',
       });
-
       const archiveLink = createURL('web-stories');
       await page.goto(archiveLink, {
         waitUntil: 'networkidle2',
       });
-
       await expect(page).toMatch(pageContent);
     });
   });
 
   describe('Disabled', () => {
     beforeAll(async () => {
+      await visitSettings();
       await changeStoriesArchivesType('Disabled');
     });
     afterAll(async () => {
+      await visitSettings();
       await changeStoriesArchivesType('Default');
     });
 
@@ -128,10 +139,34 @@ describe.skip('Stories Archive', () => {
 
     describe('Widget Block', () => {
       minWPVersionRequired('5.8');
-      it('should insert a new web stories block', async () => {
+
+      let removeErrorMessage;
+
+      beforeAll(() => {
+        // Caused by the NotEmpty component in wp-includes/js/dist/widgets.js.
+        removeErrorMessage = addAllowedErrorMessage(
+          "Can't perform a React state update on an unmounted component"
+        );
+      });
+
+      beforeEach(async () => {
+        await deleteWidgets();
+      });
+
+      afterEach(async () => {
+        await deleteWidgets();
+      });
+
+      afterAll(() => {
+        removeErrorMessage();
+      });
+
+      it('should not show archive link option', async () => {
         await visitBlockWidgetScreen();
+
         await expect(page).toClick('button[aria-label="Add block"]');
-        await page.type('.block-editor-inserter__search-input', 'Web Stories');
+
+        await page.type('input[type="search"]', 'Web Stories');
         await expect(page).toClick('button span', { text: 'Web Stories' });
 
         await page.waitForSelector('.web-stories-block-configuration-panel');
@@ -148,8 +183,16 @@ describe.skip('Stories Archive', () => {
     describe('Widget', () => {
       withPlugin('classic-widgets');
 
-      // eslint-disable-next-line jest/no-disabled-tests -- TODO(#11990): Fix flakey test.
-      it.skip('should be able to add widget', async () => {
+      beforeEach(async () => {
+        await deleteWidgets();
+        await activatePlugin('classic-widgets');
+      });
+
+      afterEach(async () => {
+        await deleteWidgets();
+      });
+
+      it('should not show archive link option', async () => {
         await visitAdminPage('widgets.php');
 
         await insertWidget('Web Stories');
