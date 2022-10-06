@@ -41,8 +41,7 @@ const EMBED_BLOCK_CONTENT = `
 
 jest.retryTimes(2, { logErrorsBeforeRetry: true });
 
-//eslint-disable-next-line jest/no-disabled-tests -- TODO(#11975): Fix flakey test.
-describe.skip('Web Stories Block', () => {
+describe('Web Stories Block', () => {
   let stopRequestInterception;
   let removeErrorMessage;
 
@@ -135,11 +134,25 @@ describe.skip('Web Stories Block', () => {
     await takeSnapshot(page, 'Story select modal');
   });
 
-  // Disable for https://github.com/googleforcreators/web-stories-wp/issues/6237
-  // eslint-disable-next-line jest/no-disabled-tests
-  describe.skip('AMP validation', () => {
+  describe('AMP validation', () => {
     withDisabledToolbarOnFrontend();
     withPlugin('amp');
+
+    let removeMessage1;
+    let removeMessage2;
+
+    beforeAll(() => {
+      // Some CORS errors when trying to load scripts from AMP CDN.
+      removeMessage1 = addAllowedErrorMessage(
+        'has been blocked by CORS policy'
+      );
+      removeMessage2 = addAllowedErrorMessage('Failed to load resource');
+    });
+
+    afterAll(() => {
+      removeMessage1();
+      removeMessage2();
+    });
 
     it('should produce valid AMP when using the AMP plugin', async () => {
       await createNewPost({
