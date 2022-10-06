@@ -33,9 +33,11 @@ import {
  *
  * @param {string} adminPath String to be serialized as pathname.
  * @param {string} [query] String to be serialized as query portion of URL.
+ * @param {string} [hash] Location hash string, e.g. "/editor-settings".
  */
-async function visitAdminPage(adminPath, query = '') {
-  const targetUrl = createURL(join('wp-admin', adminPath), query);
+async function visitAdminPage(adminPath, query = '', hash = '') {
+  const targetUrl =
+    createURL(join('wp-admin', adminPath), query) + (hash ? `#${hash}` : '');
 
   if (isCurrentURL(targetUrl)) {
     return;

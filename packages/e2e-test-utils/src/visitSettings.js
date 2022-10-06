@@ -17,17 +17,19 @@
 /**
  * Internal dependencies
  */
-import visitDashboard from './visitDashboard';
+import visitAdminPage from './visitAdminPage.js';
 
 /**
  * Creates a new story.
  */
 async function visitSettings() {
-  await visitDashboard();
+  await visitAdminPage(
+    'edit.php',
+    'post_type=web-story&page=stories-dashboard',
+    '/editor-settings'
+  );
 
-  await expect(page).toClick('[aria-label="Main dashboard navigation"] a', {
-    text: 'Settings',
-  });
+  expect(page).toMatchElement('h2', { text: 'Settings' });
 }
 
 export default visitSettings;
