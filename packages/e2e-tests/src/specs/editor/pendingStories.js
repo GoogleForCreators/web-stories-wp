@@ -26,8 +26,7 @@ import {
 
 jest.retryTimes(2, { logErrorsBeforeRetry: true });
 
-// eslint-disable-next-line jest/no-disabled-tests -- TODO(#11993): Fix flakey test.
-describe.skip('Pending Stories', () => {
+describe('Pending Stories', () => {
   let currentUser;
 
   beforeAll(() => {
