@@ -550,8 +550,8 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 			[
 				'id'         => $attachment_id,
 				'url'        => $attachment_src[0],
-				'height'     => $attachment_src[2],
 				'width'      => $attachment_src[1],
+				'height'     => $attachment_src[2],
 				'needsProxy' => false,
 			],
 			$data['story_poster']
@@ -596,8 +596,8 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 			[
 				'id'         => $attachment_id,
 				'url'        => $attachment_src[0],
-				'height'     => $attachment_src[2],
 				'width'      => $attachment_src[1],
+				'height'     => $attachment_src[2],
 				'needsProxy' => false,
 			],
 			$data['story_poster']
@@ -695,8 +695,8 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 			[
 				'id'         => $attachment_id,
 				'url'        => $attachment_src[0],
-				'height'     => $attachment_src[2],
 				'width'      => $attachment_src[1],
+				'height'     => $attachment_src[2],
 				'needsProxy' => false,
 			],
 			$data['story_poster']
