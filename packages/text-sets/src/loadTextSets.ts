@@ -18,11 +18,11 @@
  * External dependencies
  */
 import { migrate } from '@googleforcreators/migration';
-import type { Element, Story } from '@googleforcreators/types';
+import type { Element } from '@googleforcreators/types';
 /**
  * Internal dependencies
  */
-import type { MinMax, PageTextSet } from './types';
+import type { MinMax, TemplateData, TextSet, TextSets } from './types';
 
 function updateMinMax(minMax: MinMax, element: Element): MinMax {
   // Purposely mutating object so passed
@@ -36,12 +36,12 @@ function updateMinMax(minMax: MinMax, element: Element): MinMax {
   return minMax;
 }
 
-async function loadTextSet(name: string): Promise<Array<object>> {
-  const data: Story = (await import(
+async function loadTextSet(name: string): Promise<TextSet[]> {
+  const data: TemplateData = (await import(
     /* webpackChunkName: "chunk-web-stories-textset-[index]" */ `./raw/${name}.json`
-  )) as Story;
-  const migrated = migrate(data, data.version);
-  return migrated.pages.reduce((sets, page: PageTextSet) => {
+  )) as TemplateData;
+  const migrated = migrate(data, data.version) as TemplateData;
+  return migrated.pages.reduce((sets: TextSet[], page) => {
     const minMax = {
       minX: Infinity,
       maxX: 0,
@@ -75,7 +75,7 @@ async function loadTextSet(name: string): Promise<Array<object>> {
   }, []);
 }
 
-export default async function loadTextSets() {
+export default async function loadTextSets(): Promise<TextSets> {
   const textSets = [
     'cover',
     'step',
@@ -88,10 +88,10 @@ export default async function loadTextSets() {
   ];
 
   const results = await Promise.all(
-    textSets.map(async (name: string): Promise<Array<object>> => {
+    textSets.map(async (name: string): Promise<Array<string | TextSet[]>> => {
       return [name, await loadTextSet(name)];
     })
   );
 
-  return Object.fromEntries(results);
+  return Object.fromEntries(results) as TextSets;
 }

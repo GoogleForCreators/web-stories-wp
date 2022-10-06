@@ -13,7 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import type { Page } from '@googleforcreators/types';
+/**
+ * External dependencies
+ */
+import type { Page, Story, Element } from '@googleforcreators/types';
+
+export interface TemplateData extends Omit<Story, 'pages'> {
+  current: null;
+  selection: never[];
+  story: Record<string, never>;
+  version: number;
+  pages: TextSetPage[];
+}
+
+export interface TextSetPage extends Page {
+  fonts: string[];
+  id: string;
+}
 
 export interface MinMax {
   minX: number;
@@ -22,7 +38,27 @@ export interface MinMax {
   maxY: number;
 }
 
-export interface PageTextSet extends Page {
-  fonts: string[],
-  id: string,
+export interface TextSetElement extends Element {
+  normalizedOffsetX: number;
+  normalizedOffsetY: number;
+  textSetWidth: number;
+  textSetHeight: number;
+}
+
+export interface TextSet {
+  id: string;
+  elements: TextSetElement[];
+  textSetCategory: string;
+  textSetFonts: string[];
+}
+
+export interface TextSets {
+  cover: TextSet[];
+  step: TextSet[];
+  section_header: TextSet[];
+  editorial: TextSet[];
+  contact: TextSet[];
+  table: TextSet[];
+  list: TextSet[];
+  quote: TextSet[];
 }
