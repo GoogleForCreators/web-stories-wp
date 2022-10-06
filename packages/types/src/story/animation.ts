@@ -37,7 +37,7 @@ export type AnimationType =
   | 'spin'
   | 'zoom';
 
-export type AnimationZoomDirection =
+export type ZoomDirection =
   | 'dynamicPropertyValue'
   | 'scaleIn'
   | 'scaleInBottomRight'
@@ -46,7 +46,7 @@ export type AnimationZoomDirection =
   | 'scaleOutTopRight'
   | 'scaleOutBottomLeft';
 
-export type AnimationPanDirection =
+export type AnimationDirection =
   | 'leftToRight'
   | 'topToBottom'
   | 'rightToLeft'
@@ -56,8 +56,11 @@ export interface Animation {
   id: string;
   type: AnimationType;
   targets: string[];
-  panDir?: AnimationPanDirection;
+  panDir?: AnimationDirection;
   duration: number;
   delay: number;
-  zoomDirection?: AnimationZoomDirection;
+  zoomDirection?: ZoomDirection;
+  whooshInDir?: AnimationDirection;
+  scaleDirection?: ZoomDirection;
+  flyInDir?: AnimationDirection;
 }

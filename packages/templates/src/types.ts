@@ -26,6 +26,7 @@ import type {
   ShapeElement,
   TextElement,
   VideoElement,
+  StickerElement,
 } from '@googleforcreators/types';
 
 export interface Color {
@@ -53,15 +54,20 @@ type UnionElement =
   | ProductElement
   | VideoElement
   | ImageElement
-  | ShapeElement;
+  | ShapeElement
+  | StickerElement;
 
 export interface TemplateData extends Omit<Story, 'pages'> {
+  current: null;
+  selection: never[];
+  story: Record<string, never>;
+  version: number;
   pages: TemplatePage[];
 }
 
 interface TemplatePage
   extends Omit<Page, 'autoAdvance' | 'defaultPageDuration' | 'elements'> {
-  pageTemplateType: string;
+  pageTemplateType: string | null;
   elements: UnionElement[];
 }
 

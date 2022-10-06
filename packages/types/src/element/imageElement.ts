@@ -19,7 +19,11 @@
  */
 import type { MediaElement } from './mediaElement';
 import type { ElementType } from './element';
+import type { Pattern } from './pattern';
 
 export type ImageElement = MediaElement & {
   type: ElementType.Image;
+
+  // TODO: Figure out why some images have this property.
+  backgroundColor?: Pattern;
 };

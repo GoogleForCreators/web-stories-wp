@@ -19,11 +19,6 @@
  */
 import type { ResourceType } from './resourceType';
 
-export interface Dimensions {
-  width: number;
-  height: number;
-}
-
 export interface AttributionAuthor {
   /** Display name of the author. */
   displayName: string;
@@ -49,7 +44,7 @@ export interface ResourceSize {
   height: number;
 }
 
-export type ResourceId = string;
+export type ResourceId = string | number;
 
 /** A media resource. */
 export interface Resource {
@@ -77,13 +72,17 @@ export interface Resource {
   /** Whether the resource externally hosted. */
   isExternal: boolean;
   /** Whether the resource is a placeholder. */
-  isPlaceholder: boolean;
+  isPlaceholder?: boolean;
   /** Whether the resource needs a CORS proxy. */
-  needsProxy: boolean;
+  needsProxy?: boolean;
   /** Resource creation date. */
   readonly creationDate?: string;
   /** Resource sizes */
-  sizes: { [key: string]: ResourceSize };
+  sizes: { [key: string]: ResourceSize } | never[];
   /** Resource author attribution */
   attribution?: Attribution;
+
+  // TODO: Figure out why sometimes images end up having these properties.
+  posterId?: ResourceId;
+  isOptimized?: boolean;
 }

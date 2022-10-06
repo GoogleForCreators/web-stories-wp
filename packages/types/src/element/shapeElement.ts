@@ -21,7 +21,12 @@ import type { Element, ElementType } from './element';
 import type { Pattern } from './pattern';
 
 export interface ShapeElement extends Element {
-  backgroundColor: Pattern;
+  backgroundColor?: Pattern;
+  isBackground?: boolean;
   isDefaultBackground?: boolean;
   type: ElementType.Shape;
+  // TODO: Figure out why shape elements end up having these properties & fix it.
+  scale?: number;
+  focalX?: number;
+  focalY?: number;
 }

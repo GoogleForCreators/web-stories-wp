@@ -34,6 +34,12 @@ export interface Flip {
 
 export interface Mask {
   type: string;
+  // TODO(#12259): Remove these from the type & from templates.
+  showInLibrary?: boolean;
+  name?: string;
+  path?: string;
+  ratio?: number;
+  supportsBorder?: boolean;
 }
 
 export interface Border {
@@ -52,11 +58,11 @@ export interface BorderRadius {
   locked: boolean;
 }
 
-export interface Element extends ElementBox {
-  id: string;
-  type: string;
-  isBackground: boolean;
+export type ElementId = string;
 
+export interface Element extends ElementBox {
+  id: ElementId;
+  type: string;
   mask?: Mask;
   link?: Link;
   opacity?: number;
@@ -65,6 +71,9 @@ export interface Element extends ElementBox {
   groupId?: string;
   border?: Border;
   borderRadius?: BorderRadius;
+
+  // TODO(#12262): Remove this.
+  basedOn?: ElementId;
 }
 
 export enum ElementType {

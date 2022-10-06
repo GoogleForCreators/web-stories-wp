@@ -37,16 +37,17 @@ export interface Font {
   styles?: FontStyle[];
   variants?: FontVariant[];
   fallbacks?: string[];
+  metrics?: FontMetrics;
 }
 
 export interface Padding {
-  horizontal: number;
-  vertical: number;
+  horizontal?: number;
+  vertical?: number;
   locked: boolean;
-  hasHiddenPadding: boolean;
+  hasHiddenPadding?: boolean;
 }
 
-export type TextAlign = 'left' | 'center' | 'right' | 'justify';
+export type TextAlign = 'left' | 'center' | 'right' | 'justify' | 'initial';
 export type BackgroundTextMode = 'NONE' | 'FILL' | 'HIGHLIGHT';
 
 export interface FontMetrics {
@@ -76,8 +77,15 @@ export interface TextElement extends Element {
   backgroundColor?: Pattern;
   fontSize?: number;
   lineHeight?: number;
-  padding?: Padding;
   textAlign?: TextAlign;
+  tagName?: 'h1' | 'h2' | 'h3' | 'p';
+  padding?: Padding;
   marginOffset?: number;
-  metrics?: FontMetrics;
+  // TODO(#12258): Remove this.
+  fontWeight?: number;
+
+  // TODO: Figure out why text elements end up having these properties & fix it.
+  scale: number;
+  focalX?: number;
+  focalY?: number;
 }
