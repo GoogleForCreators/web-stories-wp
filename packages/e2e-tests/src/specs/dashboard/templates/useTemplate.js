@@ -29,17 +29,16 @@ describe('Explore Templates', () => {
   it('should be able to use existing template for new story', async () => {
     await visitDashboard();
 
-    const dashboardNavigation = await expect(page).toMatchElement(
+    await expect(page).toMatchElement(
       '[aria-label="Main dashboard navigation"]'
     );
 
-    await expect(dashboardNavigation).toClick('a', {
+    await expect(page).toClick('[aria-label="Main dashboard navigation"] a', {
       text: 'Explore Templates',
     });
     await page.waitForTimeout(100);
 
-    await expect(page).toMatch('Viewing all');
-    await expect(page).toMatch('templates');
+    await expect(page).toMatch(/Viewing all (\d+) templates/);
 
     await expect(page).toClick('[data-testid="template-grid-item-1"] button', {
       text: 'See details',
