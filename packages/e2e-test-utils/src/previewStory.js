@@ -14,45 +14,37 @@
  * limitations under the License.
  */
 
-const MAX_WAIT_THRESHOLD = 5000;
-
 /** @typedef {import('puppeteer').Page} Page */
 
 /**
  * Attempts to open the story preview in a new tab.
  *
- * @param {Page} editorPage Editor page object.
  * @return {Promise<Page>} Preview page object.
  */
-async function previewStory(editorPage) {
-  let openTabs = await browser.pages();
-  const expectedTabsCount = openTabs.length + 1;
-  await expect(editorPage).toClick(
-    'button:not([disabled])[aria-label="Preview"]'
-  );
-  await expect(editorPage).not.toMatch('The preview window failed to open.');
+async function previewStory() {
+  const previewPagePromise = new Promise((resolve, reject) => {
+    setTimeout(
+      () => reject(new Error('There was an error previewing the story')),
+      5000
+    );
 
-  let waits = 0;
+    page
+      .browser()
+      .on('targetcreated', async (target) => resolve(await target.page()));
+  });
 
-  // Wait for the new tab to open.
-  while (openTabs.length < expectedTabsCount) {
-    waits++;
+  await expect(page).toClick('button:not([disabled])[aria-label="Preview"]');
 
-    if (waits >= MAX_WAIT_THRESHOLD) {
-      throw new Error('There was an error previewing the story');
-    }
-    /* eslint-disable no-await-in-loop */
-    await editorPage.waitForTimeout(1);
-    openTabs = await browser.pages();
-    /* eslint-enable no-await-in-loop */
-  }
-
-  const previewPage = openTabs[openTabs.length - 1];
-
-  // Wait for the preview interstitial to end.
+  const previewPage = await previewPagePromise;
   await previewPage.waitForFunction(
     () => !document.title.includes('Generating the preview')
   );
+
+  await previewPage.waitForSelector('.i-amphtml-story-dev-tools-header');
+
+  await expect(previewPage).toMatch(/Preview/i);
+  await expect(previewPage).toMatch(/Debug/i);
+  await expect(previewPage).toMatch(/Add device/i);
 
   return previewPage;
 }
