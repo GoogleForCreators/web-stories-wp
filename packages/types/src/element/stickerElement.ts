@@ -27,7 +27,7 @@ export interface StickerElement extends Element {
   type: ElementType.Sticker;
   sticker: Sticker;
   // TODO: Figure out why sticker elements end up having these properties & fix it.
-  scale: number;
+  scale?: number;
   focalX?: number;
   focalY?: number;
 }

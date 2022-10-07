@@ -85,7 +85,7 @@ export interface TextElement extends Element {
   fontWeight?: number;
 
   // TODO: Figure out why text elements end up having these properties & fix it.
-  scale: number;
+  scale?: number;
   focalX?: number;
   focalY?: number;
 }
