@@ -63,7 +63,6 @@ export { default as disableCheckbox } from './disableCheckbox';
 export { default as enableCheckbox } from './enableCheckbox';
 export { default as takeSnapshot } from './takeSnapshot';
 export { default as loadPostEditor } from './loadPostEditor.js';
-export { default as uploadPublisherLogoEditor } from './uploadPublisherLogoEditor';
 export { default as editStoryWithTitle } from './editStoryWithTitle';
 export {
   getEditedPostContent,
