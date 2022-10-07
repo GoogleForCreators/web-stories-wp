@@ -18,7 +18,9 @@
  * Internal dependencies
  */
 import type { RawTemplate } from '../../types';
-import { default as template } from './template.json';
+// For some reason, the inferred TypeScript type is too narrow here and we have to use
+// file declaration instead of importing directly from `template.json`.
+import { default as template } from './template';
 import { default as metaData } from './metaData';
 
 export default {

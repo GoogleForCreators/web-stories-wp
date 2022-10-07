@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,16 +14,9 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import type { RawTemplate } from '../../types';
-// For some reason, the inferred TypeScript type is too narrow here and we have to use
-// file declaration instead of importing directly from `template.json`.
-import { default as template } from './template';
-import { default as metaData } from './metaData';
+import type { TemplateData } from '../../types';
 
-export default {
-  ...metaData,
-  ...template,
-} as RawTemplate;
+declare module 'template.json' {
+  const templateStory: TemplateData;
+  export default templateStory;
+}
