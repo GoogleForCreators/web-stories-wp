@@ -46,20 +46,21 @@ describe('Publish panel in document tab', () => {
   });
 
   it('should allow changing author', async () => {
-    const authorDropDownButton = await expect(page).toMatchElement(
-      'button[aria-label="Author"]'
-    );
-    await expect(authorDropDownButton).toMatch('admin');
+    await expect(page).toClick('button[aria-label="Author"]', {
+      text: 'admin',
+    });
 
-    await authorDropDownButton.click();
+    await expect(page).toMatchElement('[aria-label="Option List Selector"]', {
+      text: 'author',
+    });
 
-    const authorDropDownOptions = await expect(page).toMatchElement(
-      '[aria-label="Option List Selector"]'
-    );
+    await expect(page).toClick(' [aria-label="Option List Selector"] li', {
+      text: 'author',
+    });
 
-    await expect(authorDropDownOptions).toClick('li', { text: 'author' });
-
-    await expect(authorDropDownButton).toMatch('author');
+    await expect(page).toMatchElement('button[aria-label="Author"]', {
+      text: 'author',
+    });
   });
 
   it('should allow searching author', async () => {
