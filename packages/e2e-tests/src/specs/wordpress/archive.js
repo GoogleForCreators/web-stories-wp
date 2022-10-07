@@ -37,7 +37,7 @@ import {
 /**
  * Internal dependencies
  */
-import { addAllowedErrorMessage } from '../../config/bootstrap.js';
+import { addAllowedErrorMessage } from '../../config/bootstrap';
 
 const pageTitle = 'Web Stories Archive';
 const pageContent = 'Web Stories archive content';

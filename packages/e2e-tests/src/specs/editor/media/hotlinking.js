@@ -25,7 +25,7 @@ import {
 /**
  * Internal dependencies
  */
-import { addAllowedErrorMessage } from '../../../config/bootstrap.js';
+import { addAllowedErrorMessage } from '../../../config/bootstrap';
 
 const IMAGE_URL_LOCAL = `${process.env.WP_BASE_URL}/wp-content/e2e-assets/example-3.png`;
 const IMAGE_URL_CORS_PROXY = 'https://wp.stories.google/e2e-tests/example.jpg';

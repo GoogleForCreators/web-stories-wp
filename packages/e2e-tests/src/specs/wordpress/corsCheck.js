@@ -25,7 +25,7 @@ import {
 /**
  * Internal dependencies
  */
-import { addAllowedErrorMessage } from '../../config/bootstrap.js';
+import { addAllowedErrorMessage } from '../../config/bootstrap';
 
 jest.retryTimes(2, { logErrorsBeforeRetry: true });
 
