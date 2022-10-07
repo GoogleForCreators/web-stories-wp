@@ -24,6 +24,6 @@ import type { Pattern } from './pattern';
 export type ImageElement = MediaElement & {
   type: ElementType.Image;
 
-  // TODO: Figure out why some images have this property.
+  // TODO: Figure out why some images have this property. See https://github.com/GoogleForCreators/web-stories-wp/issues/12437
   backgroundColor?: Pattern;
 };

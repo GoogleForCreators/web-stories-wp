@@ -25,7 +25,7 @@ export interface ShapeElement extends Element {
   isBackground?: boolean;
   isDefaultBackground?: boolean;
   type: ElementType.Shape;
-  // TODO: Figure out why shape elements end up having these properties & fix it.
+  // TODO: Figure out why shape elements end up having these properties & fix it. See https://github.com/GoogleForCreators/web-stories-wp/issues/12437
   scale?: number;
   focalX?: number;
   focalY?: number;

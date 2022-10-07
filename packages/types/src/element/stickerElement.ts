@@ -26,7 +26,7 @@ export interface Sticker {
 export interface StickerElement extends Element {
   type: ElementType.Sticker;
   sticker: Sticker;
-  // TODO: Figure out why sticker elements end up having these properties & fix it.
+  // TODO: Figure out why sticker elements end up having these properties & fix it. See https://github.com/GoogleForCreators/web-stories-wp/issues/12437
   scale?: number;
   focalX?: number;
   focalY?: number;
