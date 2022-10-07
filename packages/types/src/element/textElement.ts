@@ -84,7 +84,7 @@ export interface TextElement extends Element {
   // TODO(#12258): Remove this.
   fontWeight?: number;
 
-  // TODO: Figure out why text elements end up having these properties & fix it. See https://github.com/GoogleForCreators/web-stories-wp/issues/12437
+  // TODO(#12437): Figure out why text elements end up having these properties & fix it.
   scale?: number;
   focalX?: number;
   focalY?: number;
