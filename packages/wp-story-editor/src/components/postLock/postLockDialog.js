@@ -71,6 +71,8 @@ function PostLockDialog({
     <Dialog
       isOpen={isOpen}
       onClose={onClose}
+      shouldCloseOnEsc={false}
+      shouldCloseOnOverlayClick={false}
       title={dialogTile}
       contentLabel={dialogTile}
       actions={
