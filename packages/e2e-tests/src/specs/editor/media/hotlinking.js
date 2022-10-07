@@ -35,23 +35,19 @@ jest.retryTimes(2, { logErrorsBeforeRetry: true });
 describe('Media Hotlinking', () => {
   withPlugin('e2e-tests-hotlink');
 
-  let removeCORSErrorMessage;
-  let removeResourceErrorMessage;
+  let removeMessage1;
+  let removeMessage2;
 
   beforeAll(() => {
     // Ignore CORS error, this is present in the test by design.
-    removeCORSErrorMessage = addAllowedErrorMessage(
-      'has been blocked by CORS policy'
-    );
+    removeMessage1 = addAllowedErrorMessage('has been blocked by CORS policy');
     // Ignore resource failing to load. This is only present because of the CORS error.
-    removeResourceErrorMessage = addAllowedErrorMessage(
-      'Failed to load resource'
-    );
+    removeMessage2 = addAllowedErrorMessage('Failed to load resource');
   });
 
   afterAll(() => {
-    removeCORSErrorMessage();
-    removeResourceErrorMessage();
+    removeMessage1();
+    removeMessage2();
   });
 
   // Uses the existence of the element's frame element as an indicator for successful insertion.
@@ -119,12 +115,8 @@ describe('Media Hotlinking', () => {
       ),
     ]);
 
-    await page.screenshot({ path: 'build/insert-hotlinked-image.png' });
-
     // Dialog should disappear by now.
     await expect(page).not.toMatch('Insert external image or video');
-
-    await page.screenshot({ path: 'build/insert-hotlinked-image-2.png' });
 
     await page.waitForSelector(
       '[aria-label="Design options for selected element"]'

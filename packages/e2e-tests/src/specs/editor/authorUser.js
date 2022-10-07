@@ -31,25 +31,23 @@ jest.retryTimes(2, { logErrorsBeforeRetry: true });
 describe('Author User', () => {
   withUser('author', 'password');
 
-  it('should be able to directly preview a story without markup being stripped', async () => {
+  it('should directly preview a story without markup being stripped', async () => {
     await createNewStory();
 
     await insertStoryTitle('Previewing without Publishing');
 
     await addTextElement();
 
-    const editorPage = page;
-    const previewPage = await previewStory(editorPage);
+    const previewPage = await previewStory();
     await expect(previewPage).toMatchElement('p', {
       text: 'Fill in some text',
     });
 
-    await editorPage.bringToFront();
+    await page.bringToFront();
     await previewPage.close();
   });
 
-  //eslint-disable-next-line jest/no-disabled-tests
-  it.skip('should be able to publish a story without markup being stripped', async () => {
+  it('should publish a story without markup being stripped', async () => {
     await createNewStory();
 
     await insertStoryTitle('Publishing and Previewing');
@@ -59,18 +57,16 @@ describe('Author User', () => {
 
     await publishStory();
 
-    const editorPage = page;
-    const previewPage = await previewStory(editorPage);
+    const previewPage = await previewStory();
     await expect(previewPage).toMatchElement('p', {
-      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+      text: 'Fill in some text',
     });
 
-    await editorPage.bringToFront();
     await previewPage.close();
+    await page.bringToFront();
   });
 
-  //eslint-disable-next-line jest/no-disabled-tests
-  it.skip('should be able to publish and preview a story without markup being stripped', async () => {
+  it('should publish and preview a story without markup being stripped', async () => {
     await createNewStory();
 
     await insertStoryTitle('Autosaving and Previewing');
@@ -80,13 +76,12 @@ describe('Author User', () => {
     // Make some changes _after_ publishing so previewing will cause an autosave.
     await addTextElement();
 
-    const editorPage = page;
-    const previewPage = await previewStory(editorPage);
+    const previewPage = await previewStory();
     await expect(previewPage).toMatchElement('p', {
-      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+      text: 'Fill in some text',
     });
 
-    await editorPage.bringToFront();
+    await page.bringToFront();
     await previewPage.close();
   });
 });

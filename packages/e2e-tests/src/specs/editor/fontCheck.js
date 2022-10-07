@@ -104,8 +104,6 @@ function isPlatformMacOS() {
 async function toggleDevTools() {
   const areDevToolsOpen = Boolean(await page.$('#web-stories-editor textarea'));
 
-  await page.screenshot({ path: `build/toggleDevTools-a.png` });
-
   // Cancel whatever current action to ensure the below shortcut works.
   await page.keyboard.press('Escape');
   await page.click('#wpadminbar');
@@ -121,8 +119,6 @@ async function toggleDevTools() {
   await page.keyboard.up('Alt');
   await page.keyboard.up('Shift');
   await page.keyboard.down(Meta);
-
-  await page.screenshot({ path: `build/toggleDevTools-b.png` });
 
   // Dev Tools were not open before, but now they should be open.
   if (!areDevToolsOpen) {
@@ -152,11 +148,8 @@ describe('Font Check', () => {
   });
 
   afterAll(async () => {
-    await page.screenshot({ path: `build/afterAll-a.png` });
     await visitSettings();
-    await page.screenshot({ path: `build/afterAll-b.png` });
     await removeAllFonts();
-    await page.screenshot({ path: `build/afterAll-c.png` });
   });
 
   it('should show dialog & replace font with default font', async () => {
@@ -233,11 +226,7 @@ describe('Font Check', () => {
     const storyTitle = 'Font Check Metrics';
     await createStoryWithFont(storyTitle, 'Rock Salt');
 
-    await page.screenshot({ path: `build/fontMetrics-0.png` });
-
     const storyData = await getCurrentStoryData();
-
-    await page.screenshot({ path: `build/fontMetrics-1.png` });
 
     const fontBefore = storyData.pages[0].elements[1].font;
     expect(fontBefore.family).toBe('Rock Salt');
