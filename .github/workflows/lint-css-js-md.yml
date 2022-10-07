@@ -53,9 +53,7 @@ jobs:
     name: Lint
     runs-on: ubuntu-latest
     permissions:
-      checks: write # for ataylorme/eslint-annotate-action to create checks
       contents: read # for actions/checkout to fetch code
-      pull-requests: read # for ataylorme/eslint-annotate-action to get changed PR files
     timeout-minutes: 15
     steps:
       - name: Harden Runner
@@ -66,16 +64,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
 
-      - name: Setup Node
-        uses: actions/setup-node@969bd2663942d722d85b6a8626225850c2f7be4b
-        with:
-          node-version-file: '.nvmrc'
-          cache: npm
-
-      - name: Install dependencies
-        run: npm ci
-        env:
-          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
+      - uses: GoogleForCreators/web-stories-wp/.github/actions/install-js-deps@main
 
       - name: Markdown Lint
         run: npm run lint:md
@@ -93,27 +82,6 @@ jobs:
 
       - name: JS Lint
         run: npm run lint:js
-        if: >
-          github.event.pull_request.head.repo.fork == true ||
-          github.event.pull_request.user.login == 'dependabot[bot]'
-
-      - name: JS Lint Report
-        run: npm run lint:js:report
-        continue-on-error: true
-        # Prevent generating the ESLint report if PR is from a fork or authored by Dependabot.
-        if: >
-          github.event.pull_request.head.repo.fork == false &&
-          github.event.pull_request.user.login != 'dependabot[bot]'
-
-      - name: Annotate JS Lint Results
-        uses: ataylorme/eslint-annotate-action@1.2.0
-        with:
-          repo-token: '${{ secrets.GITHUB_TOKEN }}'
-          report-json: 'build/lint-js-report.json'
-        # The action cannot annotate the PR when run from a PR fork or authored by Dependabot.
-        if: >
-          github.event.pull_request.head.repo.fork == false &&
-          github.event.pull_request.user.login != 'dependabot[bot]'
 
       - name: JSON Schema validation
         run: npm run test:schema

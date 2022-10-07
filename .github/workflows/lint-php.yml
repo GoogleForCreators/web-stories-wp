@@ -48,20 +48,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@e04e1d97f0c0481c6e1ba40f8a538454fe5d7709
-        with:
-          php-version: '8.0'
-          coverage: none
-          tools: composer, cs2pr
+      - uses: GoogleForCreators/web-stories-wp/.github/actions/install-php-deps@main
 
       - name: Validate composer.json
         run: composer --no-interaction validate --no-check-all
-
-      - name: Install PHP dependencies
-        uses: ramsey/composer-install@f680dac46551dffb2234a240d65ae806c2999dd6
-        with:
-          composer-options: '--prefer-dist --no-progress --no-interaction'
 
       - name: Detect coding standard violations (PHPCS)
         run: vendor/bin/phpcs -q --report=checkstyle --severity=1 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 | cs2pr --graceful-warnings
