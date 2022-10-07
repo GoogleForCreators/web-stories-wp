@@ -13,12 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export default async function addTextElement() {
+
+export default async function addTextElement(preset = 'Paragraph') {
   await expect(page).toClick('#library-tab-text');
-  const insertButton = await page.waitForSelector(
-    `xpath/.//button//span[contains(text(), 'Paragraph')]`
-  );
-  await insertButton.click();
+  await expect(page).toClick('#library-pane-text button', { text: preset });
   await expect(page).toMatchElement('[data-testid="textFrame"]', {
     text: 'Fill in some text',
   });
