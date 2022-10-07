@@ -23,37 +23,53 @@ import {
   clearLocalStorage,
 } from '@web-stories-wp/e2e-test-utils';
 
+/**
+ * Internal dependencies
+ */
+import { addAllowedErrorMessage } from '../../../config/bootstrap';
+
 const media3pSelector = '#library-tab-media3p';
 
 jest.retryTimes(2, { logErrorsBeforeRetry: true });
 
+async function goToMedia3PTab() {
+  await expect(page).toClick(
+    '[aria-label="Element Library Selection"] [role="tab"]',
+    { text: 'Explore Media' }
+  );
+
+  await expect(page).toMatch(
+    'Your use of stock content is subject to third party terms'
+  );
+
+  await expect(page).toClick('button', { text: 'Dismiss' });
+
+  await expect(page).not.toMatch(
+    'Your use of stock content is subject to third party terms'
+  );
+}
+
 describe('Inserting 3P Media', () => {
-  beforeAll(async () => {
+  let removeErrorMessage;
+
+  beforeAll(() => {
+    // Coverr videos served from stream.mux.com don't have any CORS headers.
+    removeErrorMessage = addAllowedErrorMessage(
+      'NotSameOriginAfterDefaultedToSameOriginByCoep'
+    );
+  });
+
+  beforeEach(async () => {
     await clearLocalStorage();
   });
 
-  it('should dismiss TOS dialog', async () => {
-    await createNewStory();
-
-    await expect(page).toMatchElement(media3pSelector);
-    await expect(page).toClick(media3pSelector);
-
-    await expect(page).toMatch(
-      'Your use of stock content is subject to third party terms'
-    );
-
-    await expect(page).toClick('button', { text: 'Dismiss' });
-
-    await expect(page).not.toMatch(
-      'Your use of stock content is subject to third party terms'
-    );
+  afterAll(() => {
+    removeErrorMessage();
   });
 
   it('should insert an Unsplash image', async () => {
     await createNewStory();
-
-    await expect(page).toMatchElement(media3pSelector);
-    await expect(page).toClick(media3pSelector);
+    await goToMedia3PTab();
 
     await expect(page).toMatchElement('button', { text: 'Image' });
     await expect(page).toClick('button', { text: 'Image' });
@@ -74,47 +90,73 @@ describe('Inserting 3P Media', () => {
     await expect(page).toMatchElement('[data-testid="imageElement"]');
   });
 
-  // Skipped for https://github.com/googleforcreators/web-stories-wp/issues/7481
-  // eslint-disable-next-line jest/no-disabled-tests
-  it.skip('should insert a Coverr video', async () => {
+  it('should insert a Coverr video', async () => {
     await createNewStory();
+    await goToMedia3PTab();
 
-    await expect(page).toMatchElement(media3pSelector);
-    await expect(page).toClick(media3pSelector);
-
-    await expect(page).toMatchElement('button', { text: 'Video' });
-    await expect(page).toClick('button', { text: 'Video' });
+    await expect(page).toClick('[role="tablist"] [role="tab"] ', {
+      text: 'Video',
+    });
 
     await page.waitForSelector(
       '#library-pane-media3p [data-testid="mediaElement-video"]'
     );
-    // Clicking will only act on the first element.
+
+    // This will click in the center of the element, opening the "+" insertion menu.
     await expect(page).toClick(
       '#library-pane-media3p [data-testid="mediaElement-video"]'
     );
+    await expect(page).toClick('[role="menu"] [role="menuitem"]', {
+      text: 'Insert video',
+    });
 
     await page.waitForSelector('[data-testid="videoElement"]');
     await expect(page).toMatchElement('[data-testid="videoElement"]');
   });
 
-  // Skipped for https://github.com/googleforcreators/web-stories-wp/issues/7481
-  // eslint-disable-next-line jest/no-disabled-tests
-  it.skip('should insert a Tenor GIF', async () => {
+  it('should insert a Tenor GIF', async () => {
     await createNewStory();
+    await goToMedia3PTab();
 
-    await expect(page).toMatchElement(media3pSelector);
-    await expect(page).toClick(media3pSelector);
-
-    await expect(page).toMatchElement('button', { text: 'GIFs' });
-    await expect(page).toClick('button', { text: 'GIFs' });
+    await expect(page).toClick('[role="tablist"] [role="tab"] ', {
+      text: 'GIFs',
+    });
 
     await page.waitForSelector(
       '#library-pane-media3p [data-testid="mediaElement-gif"]'
     );
-    // Clicking will only act on the first element.
+
+    // This will click in the center of the element, opening the "+" insertion menu.
     await expect(page).toClick(
       '#library-pane-media3p [data-testid="mediaElement-gif"]'
     );
+    await expect(page).toClick('[role="menu"] [role="menuitem"]', {
+      text: 'Insert image',
+    });
+
+    await page.waitForSelector('[data-testid="videoElement"]');
+    await expect(page).toMatchElement('[data-testid="videoElement"]');
+  });
+
+  it('should insert a Tenor sticker', async () => {
+    await createNewStory();
+    await goToMedia3PTab();
+
+    await expect(page).toClick('[role="tablist"] [role="tab"] ', {
+      text: 'Stickers',
+    });
+
+    await page.waitForSelector(
+      '#library-pane-media3p [data-testid="mediaElement-image"]'
+    );
+
+    // This will click in the center of the element, opening the "+" insertion menu.
+    await expect(page).toClick(
+      '#library-pane-media3p [data-testid="mediaElement-image"]'
+    );
+    await expect(page).toClick('[role="menu"] [role="menuitem"]', {
+      text: 'Insert image',
+    });
 
     await page.waitForSelector('[data-testid="imageElement"]');
     await expect(page).toMatchElement('[data-testid="imageElement"]');
