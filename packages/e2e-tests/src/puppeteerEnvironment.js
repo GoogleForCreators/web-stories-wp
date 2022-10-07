@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { mkdir, writeFile } from 'fs/promises';
+import { mkdirSync, writeFileSync } from 'fs';
 import util from 'node:util';
 import OriginalEnvironment from 'jest-environment-puppeteer';
 
@@ -30,7 +30,7 @@ class PuppeteerEnvironment extends OriginalEnvironment {
     await super.setup();
 
     try {
-      await mkdir(ARTIFACTS_PATH, { recursive: true });
+      mkdirSync(ARTIFACTS_PATH, { recursive: true });
     } catch (err) {
       if (err.code !== 'EEXIST') {
         throw err;
@@ -71,9 +71,13 @@ class PuppeteerEnvironment extends OriginalEnvironment {
     const datetime = new Date().toISOString().split('.')[0];
     const fileName = `${testName} ${datetime}`.replaceAll(/[ :"/\\|?*]+/g, '-');
 
-    await writeFile(`${ARTIFACTS_PATH}/${fileName}-errors.txt`, errorMessages);
+    writeFileSync(`${ARTIFACTS_PATH}/${fileName}-errors.txt`, errorMessages);
 
-    await writeFile(
+    if (this.global.page.isClosed()) {
+      return;
+    }
+
+    writeFileSync(
       `${ARTIFACTS_PATH}/${fileName}-snapshot.html`,
       await this.global.page.content()
     );
