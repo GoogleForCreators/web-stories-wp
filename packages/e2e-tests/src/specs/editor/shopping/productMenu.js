@@ -28,35 +28,38 @@ jest.retryTimes(2, { logErrorsBeforeRetry: true });
 
 describe('Shopping product', () => {
   minWPVersionRequired('5.8');
+
   describe('Product menu', () => {
     withPlugin('woocommerce');
+
     beforeAll(async () => {
       await setShoppingProvider('WooCommerce');
     });
 
     function isStoryEmpty() {
-      return page.evaluate(() => {
-        // checks for a blank canvas / empty state i.e. no products exist
-        if (document.getElementById('emptystate-message')) {
-          return true;
-        }
-        return false;
-      });
+      return page.evaluate(() =>
+        Boolean(document.getElementById('emptystate-message'))
+      );
     }
-    //eslint-disable-next-line jest/no-disabled-tests -- TODO(#11989): Fix flakey test.
-    it.skip('should show a floating menu with product dropdown', async () => {
+
+    it('should show a floating menu with product dropdown', async () => {
       const productText = 'Hoodie with Zipper';
+
       await createNewStory();
       await expect(isStoryEmpty()).resolves.toBe(true);
+
       await insertProduct(productText);
       await expect(isStoryEmpty()).resolves.toBe(false);
+
       await page.waitForSelector(
         '[aria-label="Design menu"] [aria-label="Product"]'
       );
+
       await expect(page).toMatchElement(
         '[aria-label="Design menu"] [aria-label="Product"]',
         { text: productText }
       );
+
       await expect(page).toClick('button', { text: 'Remove product' });
       await expect(isStoryEmpty()).resolves.toBe(true);
     });
