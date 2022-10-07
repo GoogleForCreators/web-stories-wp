@@ -21,13 +21,52 @@ import {
   createNewStory,
   publishStory,
   triggerHighPriorityChecklistSection,
-  uploadPublisherLogoEditor,
   takeSnapshot,
   addTextElement,
   insertStoryTitle,
+  uploadFile,
 } from '@web-stories-wp/e2e-test-utils';
 
 jest.retryTimes(2, { logErrorsBeforeRetry: true });
+
+async function uploadPosterImage(file) {
+  await expect(page).toClick('li[role="tab"]', { text: 'Document' });
+
+  await expect(page).toClick('button[aria-label="Poster image"]');
+  await expect(page).toClick('[role="menuitem"]', { text: 'Upload a file' });
+
+  await page.waitForSelector('.media-modal', {
+    visible: true,
+  });
+
+  await expect(page).toClick('.media-modal #menu-item-upload', {
+    text: 'Upload files',
+    visible: true,
+  });
+
+  const fileName = await uploadFile(file, false);
+
+  await expect(page).toClick('button', {
+    text: 'Select as poster image',
+    visible: true,
+  });
+
+  await expect(page).toClick('button', {
+    text: 'Crop image',
+    visible: true,
+  });
+
+  await page.keyboard.press('Escape');
+
+  await page.waitForSelector('.media-modal', {
+    visible: false,
+  });
+
+  await page.waitForSelector('[alt="Preview image"]');
+  await expect(page).toMatchElement('[alt="Preview image"]');
+
+  return fileName;
+}
 
 describe('Pre-Publish Checklist : Admin User', () => {
   const addNewPage = async () => {
@@ -61,7 +100,9 @@ describe('Pre-Publish Checklist : Admin User', () => {
     await insertButton.click();
     await expect(page).toMatchElement('[data-testid="imageElement"]');
 
-    await insertStoryTitle('Prepublish Checklist - admin - no poster warning');
+    await insertStoryTitle(
+      'Prepublish Checklist - admin - missing poster warning'
+    );
 
     await publishStory();
 
@@ -73,11 +114,10 @@ describe('Pre-Publish Checklist : Admin User', () => {
       '#pre-publish-checklist[data-isexpanded="true"]'
     );
     await expect(page).toMatch('Add poster image');
-    await takeSnapshot(page, 'Prepublish checklist');
+    await takeSnapshot(page, 'Pre-publish Checklist');
   });
 
-  //eslint-disable-next-line jest/no-disabled-tests -- TODO(#11977): Fix flakey test.
-  it.skip('should show cards related to poster image issues', async () => {
+  it('should show cards related to poster image issues', async () => {
     await addTextElement();
     await addPages(3);
 
@@ -105,7 +145,8 @@ describe('Pre-Publish Checklist : Admin User', () => {
     if (!isPublishPanelExpanded) {
       await publishPanelButton.click();
     }
-    await uploadPublisherLogoEditor('example-1.jpg', false);
+
+    await uploadPosterImage('example-1.jpg');
 
     await expect(page).not.toMatch('Add poster image');
   });
