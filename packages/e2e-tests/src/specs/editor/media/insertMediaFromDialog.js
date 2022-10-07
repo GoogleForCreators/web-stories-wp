@@ -27,10 +27,7 @@ import {
 jest.retryTimes(2, { logErrorsBeforeRetry: true });
 
 describe('Inserting Media from Dialog', () => {
-  // Uses the existence of the element's frame element as an indicator for successful insertion.
-  // TODO https://github.com/googleforcreators/web-stories-wp/issues/7107
-  // eslint-disable-next-line jest/no-disabled-tests
-  it.skip('should insert an image by clicking on it', async () => {
+  it('should insert an image by clicking on it', async () => {
     await createNewStory();
 
     const filename = await uploadMedia('example-1.jpg', false);
