@@ -28,8 +28,7 @@ import {
 
 jest.retryTimes(2, { logErrorsBeforeRetry: true });
 
-// eslint-disable-next-line jest/no-disabled-tests -- TODO(#11959): Fix flakey test
-describe.skip('Inserting WebM Video', () => {
+describe('Inserting WebM Video', () => {
   let uploadedFiles;
 
   beforeEach(() => (uploadedFiles = []));
@@ -42,7 +41,6 @@ describe.skip('Inserting WebM Video', () => {
   });
 
   async function openPanel(name) {
-    // open style pane
     await expect(page).toClick('li', { text: /^Style$/ });
 
     // Open the panel.
@@ -51,8 +49,9 @@ describe.skip('Inserting WebM Video', () => {
       (button) => button.getAttribute('aria-expanded') === 'false',
       panel
     );
+
     if (isCollapsed) {
-      panel.click();
+      await panel.click();
     }
   }
 
@@ -73,6 +72,7 @@ describe.skip('Inserting WebM Video', () => {
 
     // Wait for poster image (inside Accessibility panel) to appear.
     await openA11yPanel();
+
     await page.waitForSelector('[alt="Preview poster image"]');
     await expect(page).toMatchElement('[alt="Preview poster image"]');
   });
