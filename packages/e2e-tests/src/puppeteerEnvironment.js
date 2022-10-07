@@ -59,11 +59,6 @@ class PuppeteerEnvironment extends OriginalEnvironment {
       errorMessages += eventError;
 
       await this.storeArtifacts(testName, errorMessages);
-
-      if (eventError.includes('JestAssertionError')) {
-        // return already handled
-        return;
-      }
     }
   }
 
