@@ -133,6 +133,7 @@ jobs:
     needs: [build, nonce]
     strategy:
       matrix:
+        fail-fast: false
         # TODO: add back Firefox once support is more mature.
         browser: ['chrome']
         wp: ['5.7']
