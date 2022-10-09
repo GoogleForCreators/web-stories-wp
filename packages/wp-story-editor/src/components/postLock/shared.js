@@ -17,8 +17,21 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import { Text } from '@googleforcreators/design-system';
 
-export const Img = styled.img`
-  float: left;
-  margin: 0px 10px 10px 0px;
+export const DialogWrapper = styled.div`
+  display: grid;
+  grid-template-columns: auto 1fr;
+`;
+
+export const DialogImage = styled.div``;
+
+export const DialogContent = styled.div``;
+
+export const DialogText = styled(Text)`
+  margin-bottom: 12px;
+`;
+
+export const Avatar = styled.img`
+  margin: 0 12px 0 0;
 `;

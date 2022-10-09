@@ -24,14 +24,19 @@ import {
   BUTTON_SIZES,
   BUTTON_TYPES,
   THEME_CONSTANTS,
-  Text,
 } from '@googleforcreators/design-system';
 import { Dialog } from '@googleforcreators/story-editor';
 
 /**
  * Internal dependencies
  */
-import { Img } from './shared';
+import {
+  DialogWrapper,
+  DialogText,
+  DialogImage,
+  DialogContent,
+  Avatar,
+} from './shared';
 
 /**
  * @param {Object} props Component props.
@@ -51,37 +56,13 @@ function PostLockDialog({
   previewLink,
   showTakeOver = false,
 }) {
-  const dialogTile = __('Story is locked', 'web-stories');
-  const dialogContent = showTakeOver
-    ? sprintf(
-        /* translators: %s: user's name */
-        __(
-          '%s is already editing this story. Do you want to take over?',
-          'web-stories'
-        ),
-        user?.name
-      )
-    : sprintf(
-        /* translators: %s: user's name */
-        __('%s is already editing this story.', 'web-stories'),
-        user?.name
-      );
-
   return (
     <Dialog
       isOpen={isOpen}
       onClose={onClose}
-      title={dialogTile}
-      contentLabel={dialogTile}
+      title={__('This story is already being edited', 'web-stories')}
       actions={
         <>
-          <Button
-            type={BUTTON_TYPES.TERTIARY}
-            size={BUTTON_SIZES.SMALL}
-            href={dashboardLink}
-          >
-            {__('Dashboard', 'web-stories')}
-          </Button>
           <Button
             type={BUTTON_TYPES.TERTIARY}
             size={BUTTON_SIZES.SMALL}
@@ -100,22 +81,67 @@ function PostLockDialog({
               {__('Take over', 'web-stories')}
             </Button>
           )}
+          <Button
+            type={BUTTON_TYPES.PRIMARY}
+            size={BUTTON_SIZES.SMALL}
+            href={dashboardLink}
+          >
+            {__('Back to dashboard', 'web-stories')}
+          </Button>
         </>
       }
     >
-      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+      <DialogWrapper>
         {user?.avatar && (
-          <Img
-            src={user.avatar}
-            alt={user.name}
-            height={48}
-            width={48}
-            crossOrigin="anonymous"
-            decoding="async"
-          />
+          <DialogImage>
+            <Avatar
+              src={user.avatar}
+              alt={user.name}
+              height={48}
+              width={48}
+              crossOrigin="anonymous"
+              decoding="async"
+            />
+          </DialogImage>
         )}
-        {dialogContent}
-      </Text>
+
+        <DialogContent>
+          <DialogText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+            {showTakeOver ? (
+              <>
+                {sprintf(
+                  /* translators: %s: user's name */
+                  __(
+                    '%s is currently working on this story, which means you cannot make changes, unless you take over.',
+                    'web-stories'
+                  ),
+                  user?.name
+                )}
+              </>
+            ) : (
+              sprintf(
+                /* translators: %s: user's name */
+                __(
+                  '%s is currently working on this story, which means you cannot make changes.',
+                  'web-stories'
+                ),
+                user?.name
+              )
+            )}
+          </DialogText>
+          {showTakeOver && (
+            <DialogText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+              {sprintf(
+                /* translators: %s: user's name */ __(
+                  'If you take over, %s will lose editing control to the story, but their changes will be saved.',
+                  'web-stories'
+                ),
+                user?.name
+              )}
+            </DialogText>
+          )}
+        </DialogContent>
+      </DialogWrapper>
     </Dialog>
   );
 }
