@@ -50,6 +50,7 @@
     "@storybook/addon-essentials": "^6.5.12",
     "@testing-library/react": "^12.1.5",
     "@testing-library/react-hooks": "^8.0.1",
-    "@testing-library/user-event": "^14.4.3"
+    "@testing-library/user-event": "^14.4.3",
+    "wp-types": "^3.60.0"
   }
 }
