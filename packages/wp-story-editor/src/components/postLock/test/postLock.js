@@ -157,7 +157,7 @@ describe('PostLock', () => {
     const dialog = await screen.findByRole('dialog');
     expect(dialog).toBeInTheDocument();
 
-    const dashboardButton = screen.getByRole('link', { name: 'Dashboard' });
+    const dashboardButton = screen.getByRole('link', { name: /Dashboard/i });
     expect(dashboardButton).toBeInTheDocument();
 
     const takeOverButton = screen.getByRole('button', { name: 'Take over' });
@@ -199,7 +199,9 @@ describe('PostLock', () => {
     const dialog = await screen.findByRole('dialog');
     expect(dialog).toBeInTheDocument();
 
-    const dashboardButton = screen.getByRole('link', { name: 'Dashboard' });
+    const dashboardButton = screen.getByRole('link', {
+      name: /Dashboard/i,
+    });
     expect(dashboardButton).toBeInTheDocument();
 
     const takeOverButton = screen.queryByRole('button', { name: 'Take over' });
