@@ -18,7 +18,7 @@
  */
 import type { Page, Story, Element } from '@googleforcreators/types';
 
-export interface TemplateData extends Omit<Story, 'pages'> {
+export interface TextSetData extends Omit<Story, 'pages'> {
   current: null;
   selection: never[];
   story: Record<string, never>;

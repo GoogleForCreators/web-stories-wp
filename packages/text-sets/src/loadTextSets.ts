@@ -22,7 +22,7 @@ import type { Element } from '@googleforcreators/types';
 /**
  * Internal dependencies
  */
-import type { MinMax, TemplateData, TextSet, TextSets } from './types';
+import type { MinMax, TextSetData, TextSet, TextSets } from './types';
 
 function updateMinMax(minMax: MinMax, element: Element): MinMax {
   // Purposely mutating object so passed
@@ -37,10 +37,10 @@ function updateMinMax(minMax: MinMax, element: Element): MinMax {
 }
 
 async function loadTextSet(name: string): Promise<TextSet[]> {
-  const data: TemplateData = (await import(
+  const data: TextSetData = (await import(
     /* webpackChunkName: "chunk-web-stories-textset-[index]" */ `./raw/${name}.json`
-  )) as TemplateData;
-  const migrated = migrate(data, data.version) as TemplateData;
+  )) as TextSetData;
+  const migrated = migrate(data, data.version) as TextSetData;
   return migrated.pages.reduce((sets: TextSet[], page) => {
     const minMax = {
       minX: Infinity,
