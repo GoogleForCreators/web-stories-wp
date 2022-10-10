@@ -190,7 +190,6 @@ abstract class Taxonomy_Base extends Service_Base implements PluginActivationAwa
 	public function on_plugin_uninstall(): void {
 		clean_taxonomy_cache( $this->get_taxonomy_slug() );
 
-
 		$term_query = new WP_Term_Query();
 		$terms      = $term_query->query(
 			[
