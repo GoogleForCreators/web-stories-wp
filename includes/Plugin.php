@@ -135,6 +135,7 @@ class Plugin extends ServiceBasedPlugin {
 		'taxonomy.category'            => Taxonomy\Category_Taxonomy::class,
 		'taxonomy.tag'                 => Taxonomy\Tag_Taxonomy::class,
 		'user_preferences'             => User\Preferences::class,
+		'remove_options'               => Remove_Options::class,
 		'web_stories_block'            => Block\Web_Stories_Block::class,
 	];
 

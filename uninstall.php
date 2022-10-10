@@ -58,7 +58,8 @@ if ( file_exists( WEBSTORIES_PLUGIN_DIR_PATH . '/includes/vendor/autoload.php' )
 	require WEBSTORIES_PLUGIN_DIR_PATH . '/includes/vendor/autoload.php';
 }
 
-\Google\Web_Stories\PluginFactory::create()->register();
+$uninstaller = \Google\Web_Stories\UninstallerFactory::create();
+$uninstaller->register();
 
 $erase = (bool) get_option( \Google\Web_Stories\Settings::SETTING_NAME_DATA_REMOVAL );
 
@@ -75,7 +76,4 @@ if ( false === $erase ) {
 	return;
 }
 
-$uninstaller = \Google\Web_Stories\UninstallerFactory::create();
-$uninstaller->register();
 $uninstaller->on_site_uninstall();
-$uninstaller->remove_options();
