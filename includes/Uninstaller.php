@@ -26,10 +26,11 @@
 
 namespace Google\Web_Stories;
 
-use Google\Web_Stories\Infrastructure\Service;
+use Google\Web_Stories\Exception\InvalidService;
 use Google\Web_Stories\Infrastructure\Delayed;
 use Google\Web_Stories\Infrastructure\PluginUninstallAware;
 use Google\Web_Stories\Infrastructure\Registerable;
+use Google\Web_Stories\Infrastructure\Service;
 
 /**
  * Uninstaller class.

@@ -37,7 +37,7 @@ class Remove_Options extends DependencyInjectedTestCase {
 	public function set_up(): void {
 		parent::set_up();
 
-		$this->instance = $this->injector->make(  \Google\Web_Stories\Remove_Options::class );
+		$this->instance = $this->injector->make( \Google\Web_Stories\Remove_Options::class );
 
 		update_option( \Google\Web_Stories\Database_Upgrader::OPTION, '2.0.0' );
 		update_option( \Google\Web_Stories\Database_Upgrader::PREVIOUS_OPTION, '1.0.0' );
