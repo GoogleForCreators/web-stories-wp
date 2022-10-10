@@ -26,17 +26,17 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Infrastructure\Service;
 use Google\Web_Stories\Infrastructure\Delayed;
 use Google\Web_Stories\Infrastructure\PluginUninstallAware;
+use Google\Web_Stories\Infrastructure\Registerable;
 
 /**
  * Uninstaller class.
  */
 class Uninstaller extends Plugin {
 	/**
-	 * Schedule the potential registration of a single service.
-	 *
-	 * This takes into account whether the service registration needs to be delayed or not.
+	 * Override schedule_potential_service_registration method, to ignore delayed services.
 	 *
 	 * @since 1.26.0
 	 *
@@ -49,6 +49,7 @@ class Uninstaller extends Plugin {
 
 	/**
 	 * Register a single service, provided its conditions are met.
+	 * Only register services that Uninstall aware service. Only call register in a case where the service is not delayed.
 	 *
 	 * @since 1.26.0
 	 *
@@ -60,7 +61,6 @@ class Uninstaller extends Plugin {
 		if ( $this->service_container->has( $id ) ) {
 			return;
 		}
-
 		if ( ! is_a( $class, PluginUninstallAware::class, true ) ) {
 			return;
 		}
@@ -72,5 +72,26 @@ class Uninstaller extends Plugin {
 		if ( $service instanceof Registerable && ! ( $service instanceof Delayed ) ) {
 			$service->register();
 		}
+	}
+
+	/**
+	 * Instantiate a single service with no lazy loading services.
+	 *
+	 * @since 1.26.0
+	 *
+	 * @throws InvalidService If the service could not be properly instantiated.
+	 *
+	 * @param class-string|object $class Service class to instantiate.
+	 * @return Service Instantiated service.
+	 */
+	protected function instantiate_service( $class ): Service {
+		// The service needs to be registered, so instantiate right away.
+		$service = $this->injector->make( $class );
+
+		if ( ! $service instanceof Service ) {
+			throw InvalidService::from_service( $service );
+		}
+
+		return $service;
 	}
 }
