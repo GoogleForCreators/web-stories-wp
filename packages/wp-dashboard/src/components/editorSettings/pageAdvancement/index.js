@@ -69,12 +69,22 @@ function PageAdvancementSettings({
   defaultPageDuration,
 }) {
   const onAdvanceChange = useCallback(
-    (newAdvance) => updateSettings({ autoAdvance: newAdvance }),
+    (_, newAdvance) => {
+      updateSettings({ autoAdvance: newAdvance });
+      trackEvent('change_auto_advance', {
+        value: newAdvance,
+      });
+    },
     [updateSettings]
   );
 
   const onDurationChange = useCallback(
-    (newDuration) => updateSettings({ defaultPageDuration: newDuration }),
+    (_, newDuration) => {
+      updateSettings({ defaultPageDuration: newDuration });
+      trackEvent('change_default_page_duration', {
+        value: newDuration,
+      });
+    },
     [updateSettings]
   );
 

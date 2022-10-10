@@ -125,6 +125,16 @@ class Settings extends Service_Base {
 	public const SETTING_NAME_SHOPIFY_ACCESS_TOKEN = 'web_stories_shopify_access_token';
 
 	/**
+	 * Auto-advance setting, `true` means advancing automatically.
+	 */
+	public const SETTING_NAME_AUTO_ADVANCE = 'web_stories_auto_advance';
+
+	/**
+	 * Default Page Duration in seconds.
+	 */
+	public const SETTING_NAME_DEFAULT_PAGE_DURATION = 'web_stories_default_page_duration';
+
+	/**
 	 * Shopping_Vendors instance.
 	 *
 	 * @var Shopping_Vendors Shopping_Vendors instance.
@@ -346,6 +356,28 @@ class Settings extends Service_Base {
 				'description'  => __( 'Shopify API Access Token', 'web-stories' ),
 				'type'         => 'string',
 				'default'      => '',
+				'show_in_rest' => true,
+			]
+		);
+
+		register_setting(
+			self::SETTING_GROUP,
+			self::SETTING_NAME_AUTO_ADVANCE,
+			[
+				'description'  => __( 'Auto-advance', 'web-stories' ),
+				'type'         => 'boolean',
+				'default'      => true,
+				'show_in_rest' => true,
+			]
+		);
+
+		register_setting(
+			self::SETTING_GROUP,
+			self::SETTING_NAME_DEFAULT_PAGE_DURATION,
+			[
+				'description'  => __( 'Default Page Duration', 'web-stories' ),
+				'type'         => 'number',
+				'default'      => 7,
 				'show_in_rest' => true,
 			]
 		);
