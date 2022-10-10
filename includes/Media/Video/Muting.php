@@ -220,5 +220,6 @@ class Muting extends Service_Base implements HasMeta, PluginUninstallAware {
 	 */
 	public function on_plugin_uninstall(): void {
 		delete_post_meta_by_key( self::MUTED_ID_POST_META_KEY );
+		delete_post_meta_by_key( self::IS_MUTED_POST_META_KEY );
 	}
 }

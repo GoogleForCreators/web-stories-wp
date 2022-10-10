@@ -26,6 +26,7 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Infrastructure\Delayed;
 use Google\Web_Stories\Infrastructure\PluginUninstallAware;
 
 /**
@@ -67,5 +68,9 @@ class Uninstaller extends Plugin {
 		$service = $this->instantiate_service( $class );
 
 		$this->service_container->put( $id, $service );
+
+		if ( $service instanceof Registerable && ! ( $service instanceof Delayed ) ) {
+			$service->register();
+		}
 	}
 }
