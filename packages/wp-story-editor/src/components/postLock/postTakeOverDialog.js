@@ -97,21 +97,19 @@ function PostTakeOverDialog({
         )}
 
         <DialogContent>
-          <DialogText>
-            <DialogText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-              {sprintf(
-                /* translators: %s: user's name */
-                __('%s now has editing control of this story.', 'web-stories'),
-                user?.name
-              )}
-            </DialogText>
+          <DialogText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+            {sprintf(
+              /* translators: %s: user's name */
+              __('%s now has editing control of this story.', 'web-stories'),
+              user?.name
+            )}
+          </DialogText>
 
-            <DialogText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-              {__(
-                "Don't worry, your changes up to this moment have been saved",
-                'web-stories'
-              )}
-            </DialogText>
+          <DialogText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+            {__(
+              "Don't worry, your changes up to this moment have been saved",
+              'web-stories'
+            )}
           </DialogText>
         </DialogContent>
       </DialogWrapper>
