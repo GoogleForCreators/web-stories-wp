@@ -36,7 +36,7 @@ function updateMinMax(minMax: MinMax, element: Element): MinMax {
   return minMax;
 }
 
-async function loadTextSet(name: string): Promise<TextSet[]> {
+async function loadTextSet(name: string) {
   const data: TextSetData = (await import(
     /* webpackChunkName: "chunk-web-stories-textset-[index]" */ `./raw/${name}.json`
   )) as TextSetData;
@@ -74,7 +74,7 @@ async function loadTextSet(name: string): Promise<TextSet[]> {
   }, []);
 }
 
-export default async function loadTextSets(): Promise<TextSets> {
+export default async function loadTextSets() {
   const textSets = [
     'cover',
     'step',
