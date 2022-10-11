@@ -58,7 +58,7 @@ async function loadTextSet(name: string): Promise<TextSet[]> {
         textSetFonts: page.fonts,
         id: page.id,
         textSetCategory: name,
-        elements: textElements.map((e: Element) => ({
+        elements: textElements.map((e) => ({
           ...e,
           // Offset elements so the text set's
           // default position is (0,0)
@@ -87,7 +87,7 @@ export default async function loadTextSets(): Promise<TextSets> {
   ];
 
   const results = await Promise.all(
-    textSets.map(async (name: string): Promise<Array<string | TextSet[]>> => {
+    textSets.map(async (name) => {
       return [name, await loadTextSet(name)];
     })
   );
