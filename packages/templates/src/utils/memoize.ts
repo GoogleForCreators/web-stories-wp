@@ -14,14 +14,13 @@
  * limitations under the License.
  */
 
-type Arg = string | number;
-type ArgHash = (args: Arg[]) => string;
+type ArgHash = (args: string[]) => string;
 export default function memoize<T>(
-  func: (...args: Arg[]) => T,
+  func: (...args: string[]) => T,
   argsHash: ArgHash = (args) => args.join('-')
 ) {
   const memoized = new Map<string, T>();
-  return function (...args: Arg[]) {
+  return function (...args: string[]) {
     const key = argsHash(args);
     if (!memoized.has(key)) {
       const result = func(...args);
