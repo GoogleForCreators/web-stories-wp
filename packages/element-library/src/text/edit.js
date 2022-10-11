@@ -44,7 +44,6 @@ import {
   StoryPropTypes,
   BACKGROUND_TEXT_MODE,
 } from '@googleforcreators/elements';
-
 import { useFont } from '@googleforcreators/story-editor';
 
 /**

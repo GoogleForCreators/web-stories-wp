@@ -33,6 +33,7 @@ import {
   StoryPropTypes,
   BACKGROUND_TEXT_MODE,
 } from '@googleforcreators/elements';
+import { useFont } from '@googleforcreators/story-editor';
 
 /**
  * Internal dependencies
@@ -169,8 +170,17 @@ function TextDisplay({
     dataToEditorY: state.actions.dataToEditorY,
   }));
 
-  // @todo pull metrics off story data fonts
   const { font, width: elementWidth, height: elementHeight } = rest;
+
+  const { getFontByName } = useFont(({ actions: { getFontByName } }) => ({
+    getFontByName,
+  }));
+
+  const fontData = useMemo(
+    () => getFontByName(font?.family),
+    [font, getFontByName]
+  );
+
   const fontFaceSetConfigs = useMemo(() => {
     const htmlInfo = getHTMLInfo(content);
     return {
@@ -180,10 +190,9 @@ function TextDisplay({
     };
   }, [content]);
 
-  // @todo pull metrics off story data fonts
-  const { marginOffset } = calcFontMetrics(element);
+  const { marginOffset } = calcFontMetrics({ font: fontData });
   const props = {
-    font,
+    font: fontData,
     element,
     marginOffset: dataToEditorY(marginOffset),
     ...(backgroundTextMode === BACKGROUND_TEXT_MODE.NONE
