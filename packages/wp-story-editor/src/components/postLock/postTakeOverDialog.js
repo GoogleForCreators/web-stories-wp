@@ -59,6 +59,8 @@ function PostTakeOverDialog({ isOpen, user, dashboardLink, onClose }) {
       title={dialogTile}
       contentLabel={dialogTile}
       onClose={onClose}
+      shouldCloseOnEsc={false}
+      shouldCloseOnOverlayClick={false}
       actions={
         <Button
           type={BUTTON_TYPES.QUATERNARY}
