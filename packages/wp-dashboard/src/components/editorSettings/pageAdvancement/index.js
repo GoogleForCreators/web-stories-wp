@@ -126,7 +126,7 @@ function PageAdvancementSettings({
 
 PageAdvancementSettings.propTypes = {
   updateSettings: PropTypes.func,
-  autoAdvance: PropTypes.string,
+  autoAdvance: PropTypes.bool,
   defaultPageDuration: PropTypes.number,
 };
 
