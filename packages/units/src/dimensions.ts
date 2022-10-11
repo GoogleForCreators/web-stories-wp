@@ -144,7 +144,7 @@ function elementAsBackground(
 }
 
 /**
- * Converts the element's position, width, and rotation) to the "box" in the
+ * Converts the element's position, width, and rotation to the "box" in the
  * "editor" coordinate space.
  *
  * @param element The element's position, width, and rotation. See `StoryPropTypes.element`.
@@ -157,10 +157,7 @@ export function getBox(
   pageWidth: number,
   pageHeight: number
 ): ElementBox {
-  let isBackground = false;
-  if (elementAsBackground(element) && element.isBackground) {
-    isBackground = true;
-  }
+  const isBackground = elementAsBackground(element) && element.isBackground;
 
   const { x, y, width, height, rotationAngle } = element;
   return {

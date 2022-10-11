@@ -21,14 +21,14 @@ import memoize from './utils/memoize';
 import getTemplates from './getTemplates';
 import type { Template } from './types';
 
-const memoizedGetTemplates = memoize<Promise<Template[]>>(getTemplates);
+const memoizedGetTemplates = memoize(getTemplates);
 
 export async function getAllTemplates({
   cdnURL,
 }: {
   cdnURL: string;
 }): Promise<Template[]> {
-  const templates = (await memoizedGetTemplates(cdnURL)) as Template[];
+  const templates = await memoizedGetTemplates(cdnURL);
 
   const globalConfig = {
     createdBy: 'Google',

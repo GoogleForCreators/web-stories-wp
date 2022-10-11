@@ -14,34 +14,23 @@
  * limitations under the License.
  */
 
-type ArgHash = (args: string[] | number[]) => string;
+type Arg = string | number;
+type ArgHash = (args: Arg[]) => string;
 export default function memoize<T>(
-  func: (...args: string[]) => T,
+  func: (...args: Arg[]) => T,
   argsHash: ArgHash = (args) => args.join('-')
 ) {
-  const memoized = new Map();
-  return function (...args: string[]): undefined | T {
+  const memoized = new Map<string, T>();
+  return function (...args: Arg[]) {
     const key = argsHash(args);
-    /**
-     * The map value should only ever be undefined if
-     * func has never been called with this arg key.
-     *
-     * This allows us to memoize functions with
-     * `null` or `false` return values.
-     */
-    if (memoized.get(key) === undefined) {
-      const value = func(...args);
-      memoized.set(key, value === undefined ? 'IS_VOID' : value);
+    if (!memoized.has(key)) {
+      const result = func(...args);
+      memoized.set(key, result);
+      return result;
     }
-    /**
-     * `IS_VOID` is how we indicate that a function
-     * has been called with a given argument key, and the return
-     * value of that call was undefined.
-     */
-    if (memoized.get(key) === 'IS_VOID') {
-      return undefined;
-    }
-
+    // Here get() has signature `T | undefined` but because of has() above,
+    // it must be T (which can technically still include undefined, but that's
+    // besides the point).
     return memoized.get(key) as T;
   };
 }
