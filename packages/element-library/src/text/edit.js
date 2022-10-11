@@ -45,6 +45,8 @@ import {
   BACKGROUND_TEXT_MODE,
 } from '@googleforcreators/elements';
 
+import { useFont } from '@googleforcreators/story-editor';
+
 /**
  * Internal dependencies
  */
@@ -139,8 +141,17 @@ function TextEdit({
     ...rest
   } = element;
 
-  // @todo pull metrics off story data fonts
   const { font } = rest;
+
+  const { getFontByName } = useFont(({ actions: { getFontByName } }) => ({
+    getFontByName,
+  }));
+
+  const fontData = useMemo(
+    () => getFontByName(font?.family),
+    [font, getFontByName]
+  );
+
   const { top = 0, bottom = 0, left = 0, right = 0 } = border || {};
   const fontFaceSetConfigs = useMemo(() => {
     const htmlInfo = getHTMLInfo(content);
@@ -171,7 +182,7 @@ function TextEdit({
       dataToEditorY,
       element
     ),
-    font,
+    font: fontData,
     element,
     backgroundColor,
     opacity,
@@ -278,8 +289,7 @@ function TextEdit({
   const handleResize = useCallback(() => {
     const wrapper = wrapperRef.current;
     const textBox = textBoxRef.current;
-    // @todo pull metrics off story data fonts
-    const { marginOffset } = calcFontMetrics(element);
+    const { marginOffset } = calcFontMetrics({ font: fontData });
     editorHeightRef.current =
       textBox.offsetHeight - dataToEditorY(marginOffset);
     wrapper.style.height = `${editorHeightRef.current}px`;
@@ -298,7 +308,7 @@ function TextEdit({
       editWrapper.style.top = `${boxRef.current.y + dy}px`;
       onResize && onResize();
     }
-  }, [dataToEditorY, editWrapper, element, onResize, top, bottom]);
+  }, [dataToEditorY, editWrapper, onResize, top, bottom, fontData]);
   // Invoke on each content update.
   const handleUpdate = useCallback(
     (newContent) => {
