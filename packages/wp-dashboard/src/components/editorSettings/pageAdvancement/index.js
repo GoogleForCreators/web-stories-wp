@@ -68,15 +68,12 @@ function PageAdvancementSettings({
   autoAdvance,
   defaultPageDuration,
 }) {
-  const onAdvanceChange = useCallback(
-    (_, newAdvance) => {
-      updateSettings({ autoAdvance: newAdvance });
-      trackEvent('change_auto_advance', {
-        value: newAdvance,
-      });
-    },
-    [updateSettings]
-  );
+  const onAdvanceChange = useCallback(() => {
+    trackEvent('change_auto_advance', {
+      value: !autoAdvance,
+    });
+    updateSettings({ autoAdvance: !autoAdvance });
+  }, [autoAdvance, updateSettings]);
 
   const onDurationChange = useCallback(
     (_, newDuration) => {
@@ -125,9 +122,9 @@ function PageAdvancementSettings({
 }
 
 PageAdvancementSettings.propTypes = {
-  updateSettings: PropTypes.func,
-  autoAdvance: PropTypes.bool,
-  defaultPageDuration: PropTypes.number,
+  updateSettings: PropTypes.func.isRequired,
+  autoAdvance: PropTypes.bool.isRequired,
+  defaultPageDuration: PropTypes.number.isRequired,
 };
 
 export default PageAdvancementSettings;

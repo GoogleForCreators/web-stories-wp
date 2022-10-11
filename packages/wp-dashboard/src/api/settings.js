@@ -43,7 +43,7 @@ const transformSettingResponse = (response) => ({
   shoppingProvider: response.web_stories_shopping_provider,
   shopifyHost: response.web_stories_shopify_host,
   shopifyAccessToken: response.web_stories_shopify_access_token,
-  autoAdvance: response.web_stories_auto_advance,
+  autoAdvance: Boolean(response.web_stories_auto_advance),
   defaultPageDuration: response.web_stories_default_page_duration,
 });
 
@@ -141,7 +141,7 @@ export function updateSettings(apiPath, queryParams) {
   }
 
   if (autoAdvance !== undefined) {
-    query.web_stories_auto_advance = autoAdvance;
+    query.web_stories_auto_advance = Boolean(autoAdvance);
   }
 
   if (defaultPageDuration !== undefined) {
