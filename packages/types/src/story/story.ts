@@ -29,4 +29,6 @@ export interface Story {
       mimeType: string;
     };
   };
+  autoAdvance?: boolean;
+  defaultPageDuration?: number;
 }
