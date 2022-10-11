@@ -49,9 +49,8 @@ async function loadTextSet(name: string): Promise<TextSet[]> {
       maxY: 0,
     };
 
-    const textElements = page.elements.filter((element: Element) => {
-      return !element.isBackground && Boolean(updateMinMax(minMax, element));
-    });
+    const textElements = page.elements.filter(({ type }) => type === 'text');
+    textElements.forEach((element) => updateMinMax(minMax, element));
 
     return [
       ...sets,
