@@ -9,7 +9,7 @@
     { "path": "../react" }
   ],
   "include": [
-    "src/**/*.json",
+    "src/raw/**/*.json",
     "src/**/*"
   ]
 }
