@@ -146,7 +146,7 @@ echo -e $(status_message "Installing WordPress importer...")
 wp plugin install wordpress-importer --activate --force --quiet
 
 # Only install woocommerce on latest version of WordPress.
-if [ "$WP_VERSION" == "latest" ] || [ "$WP_VERSION" == "6.1-beta3" ]; then
+if [ "$WP_VERSION" == "latest" ] || [ "$WP_VERSION" == "6.1-RC1" ]; then
 	echo -e $(status_message "Installing WooCommerce plugin...")
 	wp plugin install woocommerce --activate --force --quiet
 fi
@@ -233,7 +233,7 @@ wp post list --post_type=attachment --format=yaml
 wp plugin list --format=yaml
 
 # Only install woocommerce on latest version of WordPress.
-if [ "$WP_VERSION" == "latest" ] || [ "$WP_VERSION" == "6.1-beta3" ]; then
+if [ "$WP_VERSION" == "latest" ] || [ "$WP_VERSION" == "6.1-RC1" ]; then
 	echo -e $(status_message "Import sample woocommerce products...")
 	wp import /var/www/html/wp-content/plugins/woocommerce/sample-data/sample_products.xml --authors=skip --quiet
 	# deactivate test etc... can activate as needed
