@@ -63,6 +63,10 @@ const InputsWrapper = styled.div`
   margin-top: 8px;
 `;
 
+const StyledSwitch = styled(Switch)`
+  width: 186px;
+`;
+
 function PageAdvancementSettings({
   updateSettings,
   autoAdvance,
@@ -103,13 +107,14 @@ function PageAdvancementSettings({
       </div>
       <InputsWrapper>
         <InlineForm>
-          <Switch
+          <StyledSwitch
             groupLabel={TEXT.SWITCH_LABEL}
             name="page-advancement-switch"
             value={_autoAdvance}
             onLabel={TEXT.LABEL_AUTO}
             offLabel={TEXT.LABEL_MANUAL}
             onChange={onAdvanceChange}
+            darkTheme={false}
           />
         </InlineForm>
         {_autoAdvance && (
