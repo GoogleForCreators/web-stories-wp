@@ -60,7 +60,10 @@ function PostLockDialog({
     <Dialog
       isOpen={isOpen}
       onClose={onClose}
+      shouldCloseOnEsc={false}
+      shouldCloseOnOverlayClick={false}
       title={__('This story is already being edited', 'web-stories')}
+      contentLabel={dialogTile}
       actions={
         <>
           <Button

@@ -60,6 +60,8 @@ function PostTakeOverDialog({
       isOpen={isOpen}
       title={__('Someone else has taken over this story', 'web-stories')}
       onClose={onClose}
+      shouldCloseOnEsc={false}
+      shouldCloseOnOverlayClick={false}
       actions={
         <>
           <Button
