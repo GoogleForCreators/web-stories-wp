@@ -8,8 +8,5 @@
     { "path": "../migration" },
     { "path": "../react" }
   ],
-  "include": [
-    "src/raw/**/*.json",
-    "src/**/*"
-  ]
+  "include": [ "src/**/*" ]
 }
