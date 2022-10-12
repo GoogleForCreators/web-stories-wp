@@ -75,10 +75,15 @@ if ( false === $erase ) {
 	return;
 }
 
-// Defer running on install until every service is registered.
-add_action( 'shutdown', function () {
+/**
+ * Defer running uninstall until every service is registered.
+ *
+ * @since 1.26.0
+ */
+function web_stories_uninstall(): void {
 	$ws_plugin = \Google\Web_Stories\PluginFactory::create();
 	$ws_plugin->register();
 	$ws_plugin->on_site_uninstall();
-} );
+}
+add_action( 'shutdown', 'web_stories_uninstall' );
 
