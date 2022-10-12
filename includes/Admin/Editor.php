@@ -370,9 +370,9 @@ class Editor extends Service_Base implements HasRequirements {
 
 		$shopping_provider = $this->settings->get_setting( $this->settings::SETTING_NAME_SHOPPING_PROVIDER );
 
-		$auto_advance = boolval($this->settings->get_setting($this->settings::SETTING_NAME_AUTO_ADVANCE));
+		$auto_advance = $this->settings->get_setting( $this->settings::SETTING_NAME_AUTO_ADVANCE );
 
-		$page_duration = $this->settings->get_setting($this->settings::SETTING_NAME_DEFAULT_PAGE_DURATION);
+		$page_duration = $this->settings->get_setting( $this->settings::SETTING_NAME_DEFAULT_PAGE_DURATION );
 
 		$auto_save_link = '';
 
@@ -437,7 +437,7 @@ class Editor extends Service_Base implements HasRequirements {
 			'version'                 => WEBSTORIES_VERSION,
 			'nonce'                   => $nonce,
 			'showMedia3p'             => true,
-			'globalAutoAdvance'       => $auto_advance,
+			'globalAutoAdvance'       => (bool) $auto_advance,
 			'globalPageDuration'      => $page_duration,
 			'shoppingProvider'        => $shopping_provider,
 			'encodeMarkup'            => $this->decoder->supports_decoding(),
