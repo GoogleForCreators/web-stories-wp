@@ -77,9 +77,13 @@ export const addCustomFont = async (fontUrl) => {
     text: 'Insert Font URL',
   });
 
+  await page.waitForFunction(
+    () => document.activeElement.tagName.toLowerCase() === 'input'
+  );
+
   await page.keyboard.type(fontUrl);
   await expect(page).toClick('button', { text: 'Add Font' });
-  await expect(page).toMatch(fontUrl);
+  await expect(page).toMatchElement('[role="option"]', { text: fontUrl });
 };
 
 /**
