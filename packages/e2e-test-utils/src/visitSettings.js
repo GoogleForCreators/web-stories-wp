@@ -29,7 +29,7 @@ async function visitSettings() {
     '/editor-settings'
   );
 
-  expect(page).toMatchElement('h2', { text: 'Settings' });
+  await expect(page).toMatchElement('h2', { text: 'Settings' });
 }
 
 export default visitSettings;
