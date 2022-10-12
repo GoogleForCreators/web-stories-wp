@@ -24,7 +24,7 @@ export const DialogWrapper = styled.div`
   grid-template-columns: auto 1fr;
 `;
 
-export const DialogImage = styled.div``;
+export const DialogImageWrapper = styled.div``;
 
 export const DialogContent = styled.div``;
 

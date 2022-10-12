@@ -34,7 +34,7 @@ import { Dialog } from '@googleforcreators/story-editor';
 import {
   DialogWrapper,
   DialogText,
-  DialogImage,
+  DialogImageWrapper,
   DialogContent,
   Avatar,
 } from './shared';
@@ -86,7 +86,7 @@ function PostTakeOverDialog({
     >
       <DialogWrapper>
         {user?.avatar && (
-          <DialogImage>
+          <DialogImageWrapper>
             <Avatar
               src={user.avatar}
               alt={user.name}
@@ -95,7 +95,7 @@ function PostTakeOverDialog({
               crossOrigin="anonymous"
               decoding="async"
             />
-          </DialogImage>
+          </DialogImageWrapper>
         )}
 
         <DialogContent>
