@@ -62,3 +62,14 @@ export interface TextSets {
   list: TextSet[];
   quote: TextSet[];
 }
+
+export enum TextSetType {
+  Cover = 'cover',
+  Step = 'step',
+  SectionHeader = 'section_header',
+  Editorial = 'editorial',
+  Contact = 'contact',
+  Table = 'table',
+  List = 'list',
+  Quote = 'quote',
+}
