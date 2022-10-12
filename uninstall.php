@@ -58,8 +58,7 @@ if ( file_exists( WEBSTORIES_PLUGIN_DIR_PATH . '/includes/vendor/autoload.php' )
 	require WEBSTORIES_PLUGIN_DIR_PATH . '/includes/vendor/autoload.php';
 }
 
-$ws_plugin = \Google\Web_Stories\PluginFactory::create();
-$ws_plugin->register();
+\Google\Web_Stories\PluginFactory::create()->register();
 
 $erase = (bool) get_option( \Google\Web_Stories\Settings::SETTING_NAME_DATA_REMOVAL );
 
@@ -76,8 +75,10 @@ if ( false === $erase ) {
 	return;
 }
 
-// Defer running on install until every service is registered. 
-add_action( 'shutdown', function () use ( $ws_plugin ) {
+// Defer running on install until every service is registered.
+add_action( 'shutdown', function () {
+	$ws_plugin = \Google\Web_Stories\PluginFactory::create();
+	$ws_plugin->register();
 	$ws_plugin->on_site_uninstall();
 } );
 
