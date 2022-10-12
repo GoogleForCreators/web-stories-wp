@@ -29,149 +29,28 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 
-global $post_type, $post_type_object, $post;
-
-$stories_rest_base = ! empty( $post_type_object->rest_base ) ? $post_type_object->rest_base : $post_type_object->name;
-$initial_edits     = [ 'story' => null ];
-
-// Preload common data.
-// Important: keep in sync with usage & definition in React app.
-$preload_paths = [
-	'/web-stories/v1/media/?' . build_query(
-		[
-			'context'               => 'view',
-			'per_page'              => 50,
-			'page'                  => 1,
-			'_web_stories_envelope' => 'true',
-			'_fields'               => rawurlencode(
-				implode(
-					',',
-					[
-						'id',
-						'date_gmt',
-						'media_details',
-						'mime_type',
-						'featured_media',
-						'featured_media_src',
-						'alt_text',
-						'source_url',
-						'meta',
-						'web_stories_media_source',
-						'web_stories_is_muted',
-						// _web_stories_envelope will add these fields, we need them too.
-						'body',
-						'status',
-						'headers',
-					]
-				)
-			),
-		]
-	),
-	'/web-stories/v1/media/?' . build_query(
-		[
-			'context'  => 'view',
-			'per_page' => 10,
-			'_fields'  => 'source_url',
-		]
-	),
-	'/web-stories/v1/users/?' . build_query(
-		[
-			'per_page' => 100,
-			'who'      => 'authors',
-		]
-	),
-	'/web-stories/v1/users/me/',
-	'/web-stories/v1/taxonomies/?' . build_query(
-		[
-			'context' => 'edit',
-			'show_ui' => 'true',
-			'type'    => $post_type_object->name,
-		]
-	),
-];
-
-$story_initial_path = "/web-stories/v1/$stories_rest_base/{$post->ID}/?";
-$story_query_params = [
-	'_embed'  => rawurlencode(
-		implode(
-			',',
-			[ 'wp:lockuser', 'author', 'wp:publisherlogo', 'wp:term' ]
-		)
-	),
-	'context' => 'edit',
-	'_fields' => rawurlencode(
-		implode(
-			',',
-			[
-				'id',
-				'title',
-				'status',
-				'slug',
-				'date',
-				'modified',
-				'excerpt',
-				'link',
-				'story_poster',
-				'story_data',
-				'preview_link',
-				'edit_link',
-				'embed_post_link',
-				'permalink_template',
-				'style_presets',
-				'password',
-				'_links',
-			]
-		)
-	),
-];
-
-/*
- * Ensure the global $post remains the same after API data is preloaded.
- * Because API preloading can call the_content and other filters, plugins
- * can unexpectedly modify $post.
- */
-$backup_global_post = $post;
-
-if ( empty( $_GET['web-stories-demo'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-	$preload_paths[] = $story_initial_path . build_query( $story_query_params );
-} else {
-	$story_query_params['web_stories_demo'] = 'true';
-
-	$story_path             = $story_initial_path . build_query( $story_query_params );
-	$story_data             = \Google\Web_Stories\rest_preload_api_request( [], $story_path );
-	$initial_edits['story'] = ( ! empty( $story_data[ $story_path ]['body'] ) ) ? $story_data[ $story_path ]['body'] : [];
-}
-
-/**
- * Preload common data by specifying an array of REST API paths that will be preloaded.
- *
- * Filters the array of paths that will be preloaded.
- *
- * @param string[] $preload_paths Array of paths to preload.
- * @param WP_Post  $post          Post being edited.
- */
-$preload_paths = apply_filters( 'web_stories_editor_preload_paths', $preload_paths, $post );
-
-$preload_data = array_reduce(
-	$preload_paths,
-	'\Google\Web_Stories\rest_preload_api_request',
-	[]
-);
-
-// Restore the global $post as it was before API preloading.
-$post = $backup_global_post; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+global $post;
 
 // In order to duplicate classic meta box behaviour, we need to run the classic meta box actions.
 require_once ABSPATH . 'wp-admin/includes/meta-boxes.php';
 register_and_do_post_meta_boxes( $post );
 
-$editor_settings = \Google\Web_Stories\Services::get( 'editor' )->get_editor_settings();
+$editor          = \Google\Web_Stories\Services::get( 'editor' );
+$editor_settings = $editor->get_editor_settings();
 
-wp_add_inline_script(
-	'wp-api-fetch',
-	sprintf( 'wp.apiFetch.use( wp.apiFetch.createPreloadingMiddleware( %s ) );', wp_json_encode( $preload_data ) ),
-	'after'
-);
+$story_initial_path = $editor->rest_get_route_for_post( $post );
+$story_query_params = $editor->get_rest_query_args();
+
+
+$initial_edits = [ 'story' => null ];
+if ( ! empty( $_GET['web-stories-demo'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	$story_query_params['web_stories_demo'] = 'true';
+
+	$story_path             = $story_initial_path . '?' . build_query( $story_query_params );
+	$story_data             = \Google\Web_Stories\rest_preload_api_request( [], $story_path );
+	$initial_edits['story'] = ( ! empty( $story_data[ $story_path ]['body'] ) ) ? $story_data[ $story_path ]['body'] : [];
+}
+
 
 $init_script = <<<JS
 	wp.domReady( function() {
@@ -182,6 +61,8 @@ JS;
 $script = sprintf( $init_script, wp_json_encode( $editor_settings ), wp_json_encode( $initial_edits ) );
 
 wp_add_inline_script( \Google\Web_Stories\Admin\Editor::SCRIPT_HANDLE, $script );
+
+$editor->load_stories_editor();
 
 require_once ABSPATH . 'wp-admin/admin-header.php';
 

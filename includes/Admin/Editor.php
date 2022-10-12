@@ -214,6 +214,175 @@ class Editor extends Service_Base implements HasRequirements {
 	}
 
 	/**
+	 * Preload API requests in the editor.
+	 *
+	 * Important: keep in sync with usage & definition in React app.
+	 *
+	 * @since 1.26.0
+	 */
+	public function load_stories_editor(): void {
+		global $post;
+
+		if ( get_post_Type( $post ) !== $this->story_post_type->get_slug() ) {
+			return;
+		}
+
+		$preload_paths = [
+			'/web-stories/v1/media/?' . build_query(
+				[
+					'context'               => 'view',
+					'per_page'              => 50,
+					'page'                  => 1,
+					'_web_stories_envelope' => 'true',
+					'_fields'               => rawurlencode(
+						implode(
+							',',
+							[
+								'id',
+								'date_gmt',
+								'media_details',
+								'mime_type',
+								'featured_media',
+								'featured_media_src',
+								'alt_text',
+								'source_url',
+								'meta',
+								'web_stories_media_source',
+								'web_stories_is_muted',
+								// _web_stories_envelope will add these fields, we need them too.
+								'body',
+								'status',
+								'headers',
+							]
+						)
+					),
+				]
+			),
+			'/web-stories/v1/media/?' . build_query(
+				[
+					'context'  => 'view',
+					'per_page' => 10,
+					'_fields'  => 'source_url',
+				]
+			),
+			'/web-stories/v1/users/?' . build_query(
+				[
+					'per_page' => 100,
+					'who'      => 'authors',
+				]
+			),
+			'/web-stories/v1/users/me/',
+			'/web-stories/v1/taxonomies/?' . build_query(
+				[
+					'context' => 'edit',
+					'show_ui' => 'true',
+					'type'    => $this->story_post_type->get_slug(),
+				]
+			),
+		];
+
+		/*
+		 * Ensure the global $post remains the same after API data is preloaded.
+		 * Because API preloading can call the_content and other filters, plugins
+		 * can unexpectedly modify $post.
+		 */
+		$backup_global_post = $post;
+
+
+		if ( empty( $_GET['web-stories-demo'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$story_initial_path = $this->rest_get_route_for_post( $post );
+			$story_query_params = $this->get_rest_query_args();
+			$preload_paths[]    = $story_initial_path . '?' . build_query( $story_query_params );
+		}
+		/**
+		 * Preload common data by specifying an array of REST API paths that will be preloaded.
+		 *
+		 * Filters the array of paths that will be preloaded.
+		 *
+		 * @param string[] $preload_paths Array of paths to preload.
+		 * @param WP_Post  $post          Post being edited.
+		 */
+		$preload_paths = apply_filters( 'web_stories_editor_preload_paths', $preload_paths, $post );
+
+		$preload_data = array_reduce(
+			$preload_paths,
+			'\Google\Web_Stories\rest_preload_api_request',
+			[]
+		);
+
+		// Restore the global $post as it was before API preloading.
+		$post = $backup_global_post; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+
+		wp_add_inline_script(
+			'wp-api-fetch',
+			sprintf( 'wp.apiFetch.use( wp.apiFetch.createPreloadingMiddleware( %s ) );', wp_json_encode( $preload_data ) ),
+			'after'
+		);
+	}
+
+	/**
+	 * Based on rest_get_route_for_post found in WordPress 5.9.
+	 *
+	 * @since 1.26.0
+	 *
+	 * @param WP_Post|null $post Post or null.
+	 */
+	public function rest_get_route_for_post( $post ): string {
+		$post = get_post( $post );
+
+		if ( ! $post instanceof WP_Post ) {
+			return '';
+		}
+
+		$post_type_route = $this->story_post_type->get_rest_url();
+
+		return sprintf( '%s/%d', $post_type_route, $post->ID );
+	}
+
+	/**
+	 * Return array of params to pass to the REST API request.
+	 *
+	 * @since 1.26.0
+	 *
+	 * @return array<string, string>
+	 */
+	public function get_rest_query_args(): array {
+		return [
+			'_embed'  => rawurlencode(
+				implode(
+					',',
+					[ 'wp:lockuser', 'author', 'wp:publisherlogo', 'wp:term' ]
+				)
+			),
+			'context' => 'edit',
+			'_fields' => rawurlencode(
+				implode(
+					',',
+					[
+						'id',
+						'title',
+						'status',
+						'slug',
+						'date',
+						'modified',
+						'excerpt',
+						'link',
+						'story_poster',
+						'story_data',
+						'preview_link',
+						'edit_link',
+						'embed_post_link',
+						'permalink_template',
+						'style_presets',
+						'password',
+						'_links',
+					]
+				)
+			),
+		];
+	}
+
+	/**
 	 * Replace default post editor with our own implementation.
 	 *
 	 * @codeCoverageIgnore
