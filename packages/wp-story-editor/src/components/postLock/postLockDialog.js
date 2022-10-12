@@ -63,7 +63,6 @@ function PostLockDialog({
       shouldCloseOnEsc={false}
       shouldCloseOnOverlayClick={false}
       title={__('This story is already being edited', 'web-stories')}
-      contentLabel={dialogTile}
       actions={
         <>
           <Button
