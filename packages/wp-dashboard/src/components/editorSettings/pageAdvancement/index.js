@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback } from '@googleforcreators/react';
+import { useCallback, useEffect, useState } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import {
   THEME_CONSTANTS,
@@ -34,7 +34,7 @@ import { trackEvent } from '@googleforcreators/tracking';
  */
 import {
   InlineForm,
-  SettingForm,
+  MultilineForm,
   SettingHeading,
   SettingSubheading,
 } from '../components';
@@ -68,12 +68,20 @@ function PageAdvancementSettings({
   autoAdvance,
   defaultPageDuration,
 }) {
+  // Track the value locally to display it to the user visually right away, otherwise it looks broken.
+  const [_autoAdvance, _setAutoAdvance] = useState(autoAdvance);
+
   const onAdvanceChange = useCallback(() => {
     trackEvent('change_auto_advance', {
       value: !autoAdvance,
     });
+    _setAutoAdvance(!autoAdvance);
     updateSettings({ autoAdvance: !autoAdvance });
   }, [autoAdvance, updateSettings]);
+
+  useEffect(() => {
+    _setAutoAdvance(autoAdvance);
+  }, [autoAdvance]);
 
   const onDurationChange = useCallback(
     (_, newDuration) => {
@@ -86,7 +94,7 @@ function PageAdvancementSettings({
   );
 
   return (
-    <SettingForm onSubmit={(e) => e.preventDefault()}>
+    <MultilineForm onSubmit={(e) => e.preventDefault()}>
       <div>
         <SettingHeading as="h3">{TEXT.SECTION_HEADING}</SettingHeading>
         <SettingSubheading size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
@@ -98,12 +106,14 @@ function PageAdvancementSettings({
           <Switch
             groupLabel={TEXT.SWITCH_LABEL}
             name="page-advancement-switch"
-            value={autoAdvance}
+            value={_autoAdvance}
             onLabel={TEXT.LABEL_AUTO}
             offLabel={TEXT.LABEL_MANUAL}
             onChange={onAdvanceChange}
           />
-          {autoAdvance && (
+        </InlineForm>
+        {_autoAdvance && (
+          <InlineForm>
             <NumericInput
               unit={` ${__('seconds', 'web-stories')}`}
               suffix={TEXT.INPUT_SUFFIX}
@@ -114,10 +124,10 @@ function PageAdvancementSettings({
               max={MIN_MAX.PAGE_DURATION.MAX}
               isFloat
             />
-          )}
-        </InlineForm>
+          </InlineForm>
+        )}
       </InputsWrapper>
-    </SettingForm>
+    </MultilineForm>
   );
 }
 
