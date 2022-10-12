@@ -20,8 +20,8 @@
  * (with the given transform-origin) most optimistically tries to
  * fill the frame
  *
- * @param {Object} offsets - story media element offsets
- * @return {Object} object containing horizontal and vertical transform origin percentages
+ * @param offsets - story media element offsets
+ * @return object containing horizontal and vertical transform origin percentages
  */
 function getElementOrigin(
   offsets = {
@@ -41,7 +41,7 @@ function getElementOrigin(
   const absOffsets = Object.fromEntries(
     Object.entries(offsets).map(([key, val]) => [key, Math.abs(val)])
   );
-  const isSignificant = (val) => val >= 0.01;
+  const isSignificant = (val: number) => val >= 0.01;
   if ([absOffsets.top, absOffsets.bottom].some(isSignificant)) {
     progress.vertical =
       (100 * absOffsets.top) / (absOffsets.top + absOffsets.bottom);

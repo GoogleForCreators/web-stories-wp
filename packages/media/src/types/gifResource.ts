@@ -17,16 +17,17 @@
 /**
  * Internal dependencies
  */
-import type { Page } from './page';
+import type { SequenceResource } from './sequenceResource';
+import type { ResourceType } from './resourceType';
 
-export interface Story {
-  version: number;
-  pages: Page[];
-  backgroundAudio?: {
-    resource: {
-      src: string;
-      id: number;
-      mimeType: string;
-    };
-  };
+export interface Output {
+  /** The MIME type of the resource. E.g. "image/png". */
+  mimeType: string;
+  /** The source URL of the resource. */
+  src: string;
+}
+
+export interface GifResource extends SequenceResource {
+  type: ResourceType.Gif;
+  output: Output;
 }

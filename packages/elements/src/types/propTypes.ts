@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+// eslint-disable-next-line no-restricted-imports -- Still used elsewhere
 import PropTypes from 'prop-types';
 import { PatternPropType } from '@googleforcreators/patterns';
 import { ResourcePropTypes } from '@googleforcreators/media';
@@ -24,9 +25,11 @@ import { ResourcePropTypes } from '@googleforcreators/media';
 /**
  * Internal dependencies
  */
-import { MULTIPLE_VALUE, BACKGROUND_TEXT_MODE, OverlayType } from './constants';
-
-const StoryPropTypes = {};
+import {
+  MULTIPLE_VALUE,
+  BACKGROUND_TEXT_MODE,
+  OverlayType,
+} from '../constants';
 
 export const BackgroundAudioPropTypeShape = {
   id: PropTypes.number,
@@ -40,11 +43,11 @@ export const BackgroundAudioPropType = PropTypes.shape(
   BackgroundAudioPropTypeShape
 );
 
-StoryPropTypes.mask = PropTypes.shape({
+const mask = PropTypes.shape({
   type: PropTypes.string.isRequired,
 });
 
-StoryPropTypes.link = PropTypes.shape({
+const link = PropTypes.shape({
   url: PropTypes.string.isRequired,
   desc: PropTypes.string,
   needsProxy: PropTypes.bool,
@@ -52,7 +55,7 @@ StoryPropTypes.link = PropTypes.shape({
   rel: PropTypes.arrayOf(PropTypes.string),
 });
 
-StoryPropTypes.box = PropTypes.exact({
+const box = PropTypes.exact({
   x: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired,
   width: PropTypes.number.isRequired,
@@ -60,12 +63,36 @@ StoryPropTypes.box = PropTypes.exact({
   rotationAngle: PropTypes.number.isRequired,
 });
 
-StoryPropTypes.page = PropTypes.shape({
+const flip = PropTypes.shape({
+  vertical: PropTypes.bool,
+  horizontal: PropTypes.bool,
+});
+
+const StoryElementPropTypes = {
+  id: PropTypes.string.isRequired,
+  groupId: PropTypes.string,
+  type: PropTypes.string.isRequired,
+  x: PropTypes.number.isRequired,
+  y: PropTypes.number.isRequired,
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
+  flip,
+  rotationAngle: PropTypes.number.isRequired,
+  mask,
+  link,
+  opacity: PropTypes.number,
+  lockAspectRatio: PropTypes.bool,
+  isBackground: PropTypes.bool,
+};
+
+const element = PropTypes.shape(StoryElementPropTypes);
+
+const page = PropTypes.shape({
   id: PropTypes.string.isRequired,
   // Temporary solution for animations. Better would be to move this
   // prop type to the types package, but really?
   animations: PropTypes.arrayOf(PropTypes.object),
-  elements: PropTypes.arrayOf(PropTypes.shape(StoryPropTypes.element)),
+  elements: PropTypes.arrayOf(element),
   overlay: PropTypes.oneOf(Object.values(OverlayType)),
   backgroundAudio: PropTypes.shape({
     resource: BackgroundAudioPropType,
@@ -79,47 +106,21 @@ const StoryLayerPropTypes = {
   type: PropTypes.string.isRequired,
 };
 
-StoryPropTypes.flip = PropTypes.shape({
-  vertical: PropTypes.bool,
-  horizontal: PropTypes.bool,
-});
-
-const StoryElementPropTypes = {
-  id: PropTypes.string.isRequired,
-  groupId: PropTypes.string,
-  type: PropTypes.string.isRequired,
-  x: PropTypes.number.isRequired,
-  y: PropTypes.number.isRequired,
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
-  flip: StoryPropTypes.flip,
-  rotationAngle: PropTypes.number.isRequired,
-  mask: StoryPropTypes.mask,
-  link: StoryPropTypes.link,
-  opacity: PropTypes.number,
-  lockAspectRatio: PropTypes.bool,
-  isBackground: PropTypes.bool,
-};
-
 const StoryMediaPropTypes = {
   scale: PropTypes.number.isRequired,
   focalX: PropTypes.number,
   focalY: PropTypes.number,
 };
 
-StoryPropTypes.element = PropTypes.shape(StoryElementPropTypes);
+const layer = PropTypes.shape(StoryLayerPropTypes);
 
-StoryPropTypes.layer = PropTypes.shape(StoryLayerPropTypes);
-
-StoryPropTypes.elements = {};
-
-StoryPropTypes.elements.image = PropTypes.shape({
+const image = PropTypes.shape({
   ...StoryElementPropTypes,
   ...StoryMediaPropTypes,
   resource: ResourcePropTypes.imageResource,
 });
 
-StoryPropTypes.elements.video = PropTypes.shape({
+const video = PropTypes.shape({
   ...StoryElementPropTypes,
   ...StoryMediaPropTypes,
   resource: ResourcePropTypes.videoResource,
@@ -129,17 +130,13 @@ StoryPropTypes.elements.video = PropTypes.shape({
   volume: PropTypes.number,
 });
 
-StoryPropTypes.elements.gif = PropTypes.shape({
+const gif = PropTypes.shape({
   ...StoryElementPropTypes,
   ...StoryMediaPropTypes,
   resource: ResourcePropTypes.gifResource,
 });
 
-StoryPropTypes.elements.media = PropTypes.oneOfType([
-  StoryPropTypes.elements.image,
-  StoryPropTypes.elements.video,
-  StoryPropTypes.elements.gif,
-]);
+const media = PropTypes.oneOfType([image, video, gif]);
 
 export const FontPropType = PropTypes.shape({
   family: PropTypes.string,
@@ -178,67 +175,42 @@ const StoryTextElementPropTypes = {
   tagName: PropTypes.oneOf(['h1', 'h2', 'h3', 'p', 'auto']),
 };
 
-StoryPropTypes.textContent = PropTypes.shape({
+const textContent = PropTypes.shape({
   ...StoryTextElementPropTypes,
 });
 
-StoryPropTypes.elements.text = PropTypes.shape({
+const text = PropTypes.shape({
   ...StoryElementPropTypes,
   ...StoryTextElementPropTypes,
 });
 
-StoryPropTypes.elements.shape = PropTypes.shape({
+const shape = PropTypes.shape({
   ...StoryElementPropTypes,
   backgroundColor: PatternPropType,
 });
 
-StoryPropTypes.elements.sticker = PropTypes.shape({
+const sticker = PropTypes.shape({
   ...StoryElementPropTypes,
   sticker: PropTypes.shape({
     type: PropTypes.string.isRequired,
   }),
 });
 
-StoryPropTypes.elements.background = PropTypes.shape({
+const background = PropTypes.shape({
   ...StoryLayerPropTypes,
-  inner: StoryPropTypes.element,
+  inner: element,
 });
 
+const StoryPropTypes = {
+  mask,
+  link,
+  box,
+  page,
+  flip,
+  element,
+  layer,
+  textContent,
+  elements: { image, video, gif, media, text, shape, sticker, background },
+};
+
 export { StoryPropTypes };
-
-/**
- * Page object.
- *
- * @typedef {Page} Page
- * @property {Element[]} elements Array of all elements.
- */
-
-/**
- * Element object
- *
- * @typedef {Element} Element A story element
- * @property {string} id  A unique uuid for the element
- * @property {string} type The type of the element, e.g. video, gif, image
- * @property {number} x The x position of the element, its top left corner
- * @property {number} y The y position of the element, its top left corner
- * @property {number} width The width of the element
- * @property {number} height The height of the element
- * @property {Object} flip If the element has been flipped vertical/horizontal
- * @property {number} rotationAngle The element's rotation angle
- * @property {Object} mask The type of mask applied to the element
- * @property {Object} link The url, icon and description of a link applied to element
- * @property {number} opacity The opacity of the element
- * @property {boolean} lockAspectRatio Whether the element's aspect ratio is locked
- * @property {Resource} resource The element's resource object
- */
-
-/**
- * Resource object
- *
- * @typedef {Resource} Resource Resource data for elements
- * @property {{ full: { height: number, width: number }, output: Object }} sizes The data for the full-size element
- * @property {boolean} local Whether the media was uploaded by the user
- * @property {boolean} isOptimized Whether the media was uploaded by the user
- * @property {boolean} isPlaceholder Whether the resource is a placeholder and not fully uploaded yet.
- * @property {string} src The source string for the resource
- */

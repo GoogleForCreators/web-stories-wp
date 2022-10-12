@@ -17,8 +17,13 @@
 /**
  * Internal dependencies
  */
-import { elementTypes } from '../elementType';
+import type { ElementDefinition, ElementTypes } from './types';
 
-const getDefinitionForType = (type) => elementTypes[type];
+// @todo Create a custom hook to manage state.
+const elementTypes: ElementTypes = {};
 
-export default getDefinitionForType;
+function registerElementType(elementType: ElementDefinition) {
+  elementTypes[elementType.type] = elementType;
+}
+
+export { registerElementType, elementTypes };

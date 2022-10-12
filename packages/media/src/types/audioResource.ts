@@ -17,25 +17,13 @@
 /**
  * Internal dependencies
  */
-import type { Hex, Pattern } from './types';
+import type { ResourceType } from './resourceType';
+import type { Resource } from './resource';
 
-function colorHasTransparency(color: Hex) {
-  return color.a !== undefined && color.a < 1;
+export interface AudioResource extends Resource {
+  type: ResourceType.Audio;
+  /** Length in seconds. */
+  length: number;
+  /** The formatted length, e.g. "01:17". */
+  lengthFormatted: string;
 }
-
-function hasOpacity(pattern: Pattern) {
-  if ('color' in pattern) {
-    return Boolean(colorHasTransparency(pattern.color));
-  }
-  if (typeof pattern.alpha === 'number' && pattern.alpha < 1) {
-    return true;
-  }
-  for (const colorStop of pattern.stops || []) {
-    if (colorHasTransparency(colorStop.color)) {
-      return true;
-    }
-  }
-  return false;
-}
-
-export default hasOpacity;

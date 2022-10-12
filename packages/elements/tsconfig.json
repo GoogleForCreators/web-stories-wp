@@ -5,8 +5,9 @@
     "declarationDir": "dist-types"
   },
   "references": [
-    { "path": "../react" },
-    { "path": "../tracking" },
+    { "path": "../i18n" },
+    { "path": "../media" },
+    { "path": "../patterns" },
     { "path": "../units" }
   ],
   "include": ["src/**/*"]

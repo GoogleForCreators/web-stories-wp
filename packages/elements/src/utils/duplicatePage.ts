@@ -17,13 +17,24 @@
 /**
  * Internal dependencies
  */
-import createNewElement from './createNewElement';
+import type { Page } from '../types';
+import createPage from './createPage';
 import duplicateElement from './duplicateElement';
 
-const duplicatePage = (oldPage) => {
-  const { elements: oldElements, animations: oldAnimations, ...rest } = oldPage;
+// Required<> is a reverse Partial<> - removing the optional
+// part from the animations property below
+type ElementsAndAnimationsOnly = Required<
+  Pick<Page, 'elements' | 'animations'>
+>;
 
-  const { elements, animations } = oldElements.reduce(
+const duplicatePage = (oldPage: Page) => {
+  const {
+    elements: oldElements,
+    animations: oldAnimations = [],
+    ...rest
+  } = oldPage;
+
+  const elementAndAnimations: ElementsAndAnimationsOnly = oldElements.reduce(
     ({ elements, animations }, oldElement) => {
       const { element, elementAnimations } = duplicateElement({
         element: oldElement,
@@ -37,16 +48,15 @@ const duplicatePage = (oldPage) => {
     {
       elements: [],
       animations: [],
-    }
+    } as ElementsAndAnimationsOnly
   );
 
-  const newAttributes = {
-    elements,
-    animations,
+  const newAttributes: Partial<Page> = {
+    ...elementAndAnimations,
     ...rest,
   };
 
-  return createNewElement('page', newAttributes);
+  return createPage(newAttributes);
 };
 
 export default duplicatePage;

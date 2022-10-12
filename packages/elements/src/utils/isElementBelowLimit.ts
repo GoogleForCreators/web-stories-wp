@@ -15,12 +15,26 @@
  */
 
 /**
+ * External dependencies
+ */
+import {
+  DANGER_ZONE_HEIGHT,
+  FULLBLEED_HEIGHT,
+  getCorners,
+} from '@googleforcreators/units';
+
+/**
  * Internal dependencies
  */
-import { Pattern, PatternType } from './types';
+import type { Element } from '../types';
 
-function hasGradient(pattern: Pattern) {
-  return Boolean(pattern?.type) && PatternType.Solid !== pattern.type;
+function isElementBelowLimit(element: Element, verifyLink = true) {
+  if (verifyLink && !element.link?.url?.length) {
+    return false;
+  }
+  const limit = FULLBLEED_HEIGHT * 0.8 - DANGER_ZONE_HEIGHT;
+  const { x, y, width, height, rotationAngle } = element;
+  const points = getCorners(rotationAngle, x, y, width, height);
+  return Boolean(Object.values(points).find((coord) => coord.y > limit));
 }
-
-export default hasGradient;
+export default isElementBelowLimit;

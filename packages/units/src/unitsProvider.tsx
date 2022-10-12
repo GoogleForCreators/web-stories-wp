@@ -19,7 +19,6 @@
  */
 import type { ReactNode } from 'react';
 import { useMemo } from '@googleforcreators/react';
-import type { Element } from '@googleforcreators/types';
 
 /**
  * Internal dependencies
@@ -33,6 +32,7 @@ import {
   getBox,
   getBoxWithBorder,
 } from './dimensions';
+import type { DimensionableElement } from './types';
 
 interface PageSize {
   width: number;
@@ -58,8 +58,9 @@ function UnitsProvider({ pageSize, children }: UnitsProviderProps) {
           editorToDataX(x, pageWidth, withRounding),
         editorToDataY: (y: number, withRounding: boolean) =>
           editorToDataY(y, pageHeight, withRounding),
-        getBox: (element: Element) => getBox(element, pageWidth, pageHeight),
-        getBoxWithBorder: (element: Element) =>
+        getBox: (element: DimensionableElement) =>
+          getBox(element, pageWidth, pageHeight),
+        getBoxWithBorder: (element: DimensionableElement) =>
           getBoxWithBorder(element, pageWidth, pageHeight),
       },
     }),

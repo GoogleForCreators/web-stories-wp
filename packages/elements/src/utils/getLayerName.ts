@@ -15,18 +15,32 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import type { ResourceType } from './types';
+import { __ } from '@googleforcreators/i18n';
 
 /**
- * Infer element type from mime type of its resource
- *
- * @param mimeType Mime type.
- * @return Element type.
+ * Internal dependencies
  */
-function getTypeFromMime(mimeType: string): ResourceType {
-  return mimeType.split('/')[0] as ResourceType;
+import type { Element } from '../types';
+import getDefinitionForType from './getDefinitionForType';
+
+/**
+ * Returns the layer name based on the element properties.
+ *
+ * @param element Element.
+ * @return Layer name.
+ */
+function getLayerName(element: Element) {
+  if (element.layerName) {
+    return element.layerName;
+  }
+
+  if (element.isBackground) {
+    return __('Background', 'web-stories');
+  }
+
+  return getDefinitionForType(element.type).getLayerText(element);
 }
 
-export default getTypeFromMime;
+export default getLayerName;

@@ -15,11 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import type { Element, ElementBox } from '@googleforcreators/types';
-
-/**
  * Internal dependencies
  */
 import calcRotatedResizeOffset from './calcRotatedResizeOffset';
@@ -30,6 +25,7 @@ import {
   PAGE_HEIGHT,
   PAGE_WIDTH,
 } from './constants';
+import type { DimensionableElement, ElementBox } from './types';
 
 /**
  * Rounds the pixel value to the max allowed precision in the "data" space.
@@ -141,7 +137,7 @@ export function editorToDataY(
  * @return The "box" in the editor space.
  */
 export function getBox(
-  { x, y, width, height, rotationAngle, isBackground }: Element,
+  { x, y, width, height, rotationAngle, isBackground }: DimensionableElement,
   pageWidth: number,
   pageHeight: number
 ): ElementBox {
@@ -164,7 +160,7 @@ export function getBox(
  * @return The "box" in the editor space.
  */
 export function getBoxWithBorder(
-  element: Element,
+  element: DimensionableElement,
   pageWidth: number,
   pageHeight: number
 ): ElementBox {

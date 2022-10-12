@@ -18,20 +18,24 @@
  * External dependencies
  */
 import { createSolid } from '@googleforcreators/patterns';
+import { v4 as uuidv4 } from 'uuid';
+
 /**
  * Internal dependencies
  */
+import type { Page } from '../types';
 import createNewElement from './createNewElement';
 
 export const DEFAULT_PAGE_BACKGROUND_COLOR = createSolid(255, 255, 255);
 
-const createPage = (pageProps = null) => {
+const createPage = (pageProps: Partial<Page> = {}): Page => {
   const backgroundElementProps = {
     // The values of x, y, width, height are irrelevant here, however, need to be set.
     x: 1,
     y: 1,
     width: 1,
     height: 1,
+    rotationAngle: 0,
     mask: {
       type: 'rectangle',
     },
@@ -40,13 +44,15 @@ const createPage = (pageProps = null) => {
   };
   const backgroundElement = createNewElement('shape', backgroundElementProps);
 
-  const newAttributes = {
+  const page: Page = {
+    id: uuidv4(),
+    type: 'page',
     elements: [backgroundElement],
     backgroundColor: DEFAULT_PAGE_BACKGROUND_COLOR,
     ...pageProps,
   };
 
-  return createNewElement('page', newAttributes);
+  return page;
 };
 
 export default createPage;

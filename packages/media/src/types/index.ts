@@ -14,28 +14,10 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import type { Hex, Pattern } from './types';
-
-function colorHasTransparency(color: Hex) {
-  return color.a !== undefined && color.a < 1;
-}
-
-function hasOpacity(pattern: Pattern) {
-  if ('color' in pattern) {
-    return Boolean(colorHasTransparency(pattern.color));
-  }
-  if (typeof pattern.alpha === 'number' && pattern.alpha < 1) {
-    return true;
-  }
-  for (const colorStop of pattern.stops || []) {
-    if (colorHasTransparency(colorStop.color)) {
-      return true;
-    }
-  }
-  return false;
-}
-
-export default hasOpacity;
+export * from './gifResource';
+export * from './resource';
+export * from './resourceType';
+export * from './videoResource';
+export * from './audioResource';
+export * from './resourceInput';
+export * from './propTypes';

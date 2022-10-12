@@ -16,4 +16,3 @@
 
 export * from './resource';
 export * from './element';
-export * from './story';

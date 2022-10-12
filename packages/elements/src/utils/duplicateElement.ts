@@ -22,6 +22,7 @@ import { PAGE_HEIGHT, PAGE_WIDTH } from '@googleforcreators/units';
 /**
  * Internal dependencies
  */
+import type { Element, Animation } from '../types';
 import createNewElement from './createNewElement';
 
 /** @typedef {import('../types').Element} Element */
@@ -29,11 +30,11 @@ import createNewElement from './createNewElement';
 /**
  * Gets x, y values for cloned element, ensuring it's not added out of the page.
  *
- * @param {number} originX Original X.
- * @param {number} originY Original Y.
- * @return {{x: (number), y: (number)}} Coordinates.
+ * @param originX Original X.
+ * @param originY Original Y.
+ * @return Coordinates.
  */
-export function getOffsetCoordinates(originX, originY) {
+export function getOffsetCoordinates(originX: number, originY: number) {
   const placementDiff = 30;
   const allowedBorderDistance = 20;
   const x = originX + placementDiff;
@@ -49,18 +50,28 @@ export function getOffsetCoordinates(originX, originY) {
  * as offsetting the elements position if the new element is based
  * on any existing element on the page.
  *
- * @param {Object} args - named arguments
- * @param {Element} args.element - story element to be coppied
- * @param {Array<Object>} args.animations - set of existing animations
- * @param {Array<Element>} args.existingElements - set of existing story elements
- * @return {{element: Element, elementAnimations: Array<Object>}} cloned story element and associated cloned animations
+ * @param args - named arguments
+ * @param args.element - story element to be coppied
+ * @param args.animations - set of existing animations
+ * @param args.existingElements - set of existing story elements
+ * @return cloned story element and associated cloned animations
  */
-function duplicateElement({ element, animations = [], existingElements = [] }) {
+interface DuplicateElementArgs {
+  element: Element;
+  animations?: Animation[];
+  existingElements?: Element[];
+}
+interface DuplicateElementReturn {
+  element: Element;
+  elementAnimations: Animation[];
+}
+function duplicateElement({
+  element,
+  animations = [],
+  existingElements = [],
+}: DuplicateElementArgs): DuplicateElementReturn {
   const { type, ...attrs } = element;
-  const duplicatedElement = {
-    ...element,
-    ...createNewElement(type, attrs),
-  };
+  const duplicatedElement = createNewElement(type, attrs);
   duplicatedElement.basedOn = element.id;
 
   existingElements.forEach((existingElement) => {

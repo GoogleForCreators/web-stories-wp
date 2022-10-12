@@ -1,5 +1,6 @@
 {
   "references": [
+    { "path": "packages/elements" },
     { "path": "packages/fonts" },
     { "path": "packages/i18n" },
     { "path": "packages/media" },
@@ -11,7 +12,6 @@
     { "path": "packages/stickers" },
     { "path": "packages/tracking" },
     { "path": "packages/transform" },
-    { "path": "packages/types" },
     { "path": "packages/units" },
     { "path": "packages/url" },
     { "path": "packages/wp-utils" }

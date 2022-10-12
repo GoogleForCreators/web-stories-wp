@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,21 +15,25 @@
  */
 
 /**
- * External dependencies
+ * Internal dependencies
  */
-import {
-  DANGER_ZONE_HEIGHT,
-  FULLBLEED_HEIGHT,
-  getCorners,
-} from '@googleforcreators/units';
+import type { Flip } from '../types';
 
-function isElementBelowLimit(element, verifyLink = true) {
-  if (verifyLink && !element.link?.url?.length) {
-    return false;
+/**
+ * Returns transform scale value based on the flip setting.
+ *
+ * @param flip Flip value.
+ * @return CSS transform scale value.
+ */
+function getTransformFlip(flip: Flip) {
+  // If no flip
+  if (!flip || (!flip.horizontal && !flip.vertical)) {
+    return null;
   }
-  const limit = FULLBLEED_HEIGHT * 0.8 - DANGER_ZONE_HEIGHT;
-  const { x, y, width, height, rotationAngle } = element;
-  const points = getCorners(rotationAngle, x, y, width, height);
-  return Boolean(Object.keys(points).find((point) => points[point].y > limit));
+
+  const xSign = flip.horizontal ? '-' : '';
+  const ySign = flip.vertical ? '-' : '';
+  return `scale3d(${xSign}1, ${ySign}1, 1)`;
 }
-export default isElementBelowLimit;
+
+export default getTransformFlip;

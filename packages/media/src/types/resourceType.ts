@@ -14,11 +14,9 @@
  * limitations under the License.
  */
 
-// @todo Create a custom hook to manage state.
-const elementTypes = {};
-
-function registerElementType(elementType) {
-  elementTypes[elementType.type] = elementType;
+export enum ResourceType {
+  Image = 'image',
+  Video = 'video',
+  Gif = 'gif',
+  Audio = 'audio',
 }
-
-export { registerElementType, elementTypes };

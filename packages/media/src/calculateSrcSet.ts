@@ -15,13 +15,9 @@
  */
 
 /**
- * External dependencies
- */
-import type { Resource, ResourceSize } from '@googleforcreators/types';
-
-/**
  * Internal dependencies
  */
+import type { Resource, ResourceSize } from './types';
 import aspectRatiosApproximatelyMatch from './aspectRatiosApproximatelyMatch';
 
 /**

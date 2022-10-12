@@ -17,32 +17,54 @@
 /**
  * External dependencies
  */
+import type { ElementBox } from '@googleforcreators/units';
 import { v4 as uuidv4 } from 'uuid';
+
+/**
+ * Internal dependencies
+ */
+import type { DefaultBackgroundElement, Element } from '../types';
 
 /**
  * Internal dependencies
  */
 import getDefinitionForType from './getDefinitionForType';
 
-const createNewElement = (type, attributes = {}) => {
+function isDefaultBackgroundElement(e: Element): e is DefaultBackgroundElement {
+  return 'isDefaultBackground' in e;
+}
+
+function createNewElement(
+  type: string,
+  attributes: ElementBox & Partial<Element> = {
+    x: 0,
+    y: 0,
+    width: 1,
+    height: 1,
+    rotationAngle: 0,
+  }
+): Element {
   const element = getDefinitionForType(type);
   if (!element) {
     throw new Error(`Unknown element type: ${type}`);
   }
   const { defaultAttributes } = element;
-  const newElement = {
+  const newElement: Element = {
     ...defaultAttributes,
     ...attributes,
     type,
     id: uuidv4(),
   };
 
-  // There's an exception for the background shape that should not get all the default attributes.
-  if (attributes.isDefaultBackground) {
+  // There's an exception for the background elements that should not get all the default attributes.
+  if (
+    isDefaultBackgroundElement(newElement) &&
+    newElement.isDefaultBackground
+  ) {
     const { backgroundColor: _, ...newElementWithoutBgColor } = newElement;
     return newElementWithoutBgColor;
   }
   return newElement;
-};
+}
 
 export default createNewElement;

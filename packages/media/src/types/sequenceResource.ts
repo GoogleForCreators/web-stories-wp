@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,6 +14,17 @@
  * limitations under the License.
  */
 
-export * from './animation';
-export * from './page';
-export * from './story';
+/**
+ * Internal dependencies
+ */
+import type { Resource } from './resource';
+
+/** This is an abstract parent type of both video and gif resources */
+export interface SequenceResource extends Resource {
+  /** The resource's poster. */
+  poster?: string;
+  /** The resource's poster ID. */
+  posterId?: string;
+  /** Whether the resource has already been optimized. */
+  isOptimized?: boolean;
+}

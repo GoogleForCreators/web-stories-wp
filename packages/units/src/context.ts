@@ -18,7 +18,11 @@
  * External dependencies
  */
 import { createContext } from '@googleforcreators/react';
-import type { Element, ElementBox } from '@googleforcreators/types';
+
+/**
+ * Internal dependencies
+ */
+import type { DimensionableElement, ElementBox } from './types';
 
 export const INITIAL_STATE = {
   state: {},
@@ -37,8 +41,8 @@ interface Actions {
   dataToEditorY?: (y: number) => number;
   editorToDataX?: (x: number, withRounding: boolean) => number;
   editorToDataY?: (y: number, withRounding: boolean) => number;
-  getBox?: (element: Element) => ElementBox;
-  getBoxWithBorder?: (element: Element) => ElementBox;
+  getBox?: (element: DimensionableElement) => ElementBox;
+  getBoxWithBorder?: (element: DimensionableElement) => ElementBox;
 }
 
 export interface ContextState {

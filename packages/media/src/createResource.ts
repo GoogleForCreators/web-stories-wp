@@ -15,22 +15,18 @@
  */
 
 /**
- * External dependencies
+ * Internal dependencies
  */
+import getTypeFromMime from './getTypeFromMime';
+import normalizeResourceSizes from './normalizeResourceSizes';
 import {
+  ResourceInput,
   GifResource,
   Resource,
   ResourceType,
   VideoResource,
   AudioResource,
-} from '@googleforcreators/types';
-
-/**
- * Internal dependencies
- */
-import getTypeFromMime from './getTypeFromMime';
-import normalizeResourceSizes from './normalizeResourceSizes';
-import type { ResourceInput } from './types';
+} from './types';
 
 /**
  * Creates a resource object.

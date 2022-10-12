@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,31 +17,17 @@
 /**
  * External dependencies
  */
-import { __ } from '@googleforcreators/i18n';
+import type { AudioResource } from '@googleforcreators/media';
 
 /**
  * Internal dependencies
  */
-import getDefinitionForType from './getDefinitionForType';
+import type { Page } from './page';
 
-/** @typedef {import('../types').Element} Element */
-
-/**
- * Returns the layer name based on the element properties.
- *
- * @param {Element} element Element.
- * @return {string} Layer name.
- */
-function getLayerName(element) {
-  if (element.layerName) {
-    return element.layerName;
-  }
-
-  if (element.isBackground) {
-    return __('Background', 'web-stories');
-  }
-
-  return getDefinitionForType(element.type).getLayerText(element);
+export interface Story {
+  version: number;
+  pages: Page[];
+  backgroundAudio?: {
+    resource: AudioResource;
+  };
 }
-
-export default getLayerName;

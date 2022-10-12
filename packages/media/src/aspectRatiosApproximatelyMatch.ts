@@ -15,9 +15,9 @@
  */
 
 /**
- * External dependencies
+ * Internal dependencies
  */
-import type { Dimensions } from '@googleforcreators/types';
+import type { Dimensions } from './types';
 
 function aspectRatiosApproximatelyMatch(
   obj1: Dimensions,
