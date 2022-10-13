@@ -38,6 +38,13 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	protected static $story_id;
 
 	/**
+	 * Story id.
+	 *
+	 * @var int
+	 */
+	protected static $story_id_meta;
+
+	/**
 	 * Test instance.
 	 *
 	 * @var \Google\Web_Stories\Story_Post_Type
@@ -82,8 +89,28 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 				'post_title'     => 'Test Image',
 			]
 		);
+		wp_maybe_generate_attachment_metadata( get_post( $poster_attachment_id ) );
 
 		set_post_thumbnail( self::$story_id, $poster_attachment_id );
+
+		self::$story_id_meta = $factory->post->create(
+			[
+				'post_title'   => 'test title',
+				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
+			]
+		);
+
+		add_post_meta(
+			self::$story_id_meta,
+			\Google\Web_Stories\Story_Post_Type::POSTER_META_KEY,
+			[
+				'url'        => 'http://www.example.com/image.png',
+				'height'     => 1000,
+				'width'      => 1000,
+				'needsProxy' => false,
+			]
+		);
 
 		self::$archive_page_id = self::factory()->post->create( [ 'post_type' => 'page' ] );
 	}
@@ -91,12 +118,9 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	public function set_up(): void {
 		parent::set_up();
 
-		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
-		$experiments->method( 'is_experiment_enabled' )
-					->willReturn( true );
-
-		$this->settings = $this->injector->make( \Google\Web_Stories\Settings::class );
-		$this->instance = new \Google\Web_Stories\Story_Post_Type( $this->settings, $experiments );
+		$media = $this->injector->make( \Google\Web_Stories\Media\Image_Sizes::class );
+		$media->register();
+		$this->instance = $this->injector->make( \Google\Web_Stories\Story_Post_Type::class );
 
 		$this->add_caps_to_roles();
 	}
@@ -104,8 +128,8 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	public function tear_down(): void {
 		$this->remove_caps_from_roles();
 
-		delete_option( $this->settings::SETTING_NAME_ARCHIVE );
-		delete_option( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID );
+		delete_option( \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE );
+		delete_option( \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE_PAGE_ID );
 
 		parent::tear_down();
 	}
@@ -151,7 +175,7 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	 * @covers ::register_post_type
 	 */
 	public function test_register_post_type_disabled(): void {
-		update_option( $this->settings::SETTING_NAME_ARCHIVE, 'disabled' );
+		update_option( \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE, 'disabled' );
 		$post_type = $this->instance->register_post_type();
 		$this->assertFalse( $post_type->has_archive );
 	}
@@ -160,7 +184,7 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	 * @covers ::register_post_type
 	 */
 	public function test_register_post_type_default(): void {
-		update_option( $this->settings::SETTING_NAME_ARCHIVE, 'default' );
+		update_option( \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE, 'default' );
 		$post_type = $this->instance->register_post_type();
 		$this->assertTrue( $post_type->has_archive );
 	}
@@ -223,9 +247,6 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	 * @covers ::get_has_archive
 	 */
 	public function test_get_has_archive_disabled_experiments(): void {
-		$experiments    = new \Google\Web_Stories\Experiments( $this->settings );
-		$this->instance = new \Google\Web_Stories\Story_Post_Type( $this->settings, $experiments );
-
 		$actual = $this->instance->get_has_archive();
 		$this->assertTrue( $actual );
 	}
@@ -234,11 +255,11 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	 * @covers ::get_has_archive
 	 */
 	public function test_get_has_archive_disabled(): void {
-		update_option( $this->settings::SETTING_NAME_ARCHIVE, 'disabled' );
+		update_option( \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE, 'disabled' );
 
 		$actual = $this->instance->get_has_archive();
 
-		delete_option( $this->settings::SETTING_NAME_ARCHIVE );
+		delete_option( \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE );
 
 		$this->assertFalse( $actual );
 	}
@@ -247,11 +268,11 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	 * @covers ::get_has_archive
 	 */
 	public function test_get_has_archive_custom_but_no_page(): void {
-		update_option( $this->settings::SETTING_NAME_ARCHIVE, 'custom' );
+		update_option( \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE, 'custom' );
 
 		$actual = $this->instance->get_has_archive();
 
-		delete_option( $this->settings::SETTING_NAME_ARCHIVE );
+		delete_option( \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE );
 
 		$this->assertTrue( $actual );
 	}
@@ -260,13 +281,13 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	 * @covers ::get_has_archive
 	 */
 	public function test_get_has_archive_custom_but_invalid_page(): void {
-		update_option( $this->settings::SETTING_NAME_ARCHIVE, 'custom' );
-		update_option( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID, PHP_INT_MAX );
+		update_option( \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE, 'custom' );
+		update_option( \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE_PAGE_ID, PHP_INT_MAX );
 
 		$actual = $this->instance->get_has_archive();
 
-		delete_option( $this->settings::SETTING_NAME_ARCHIVE );
-		delete_option( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID );
+		delete_option( \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE );
+		delete_option( \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE_PAGE_ID );
 
 		$this->assertTrue( $actual );
 	}
@@ -275,13 +296,13 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	 * @covers ::get_has_archive
 	 */
 	public function test_get_has_archive_custom(): void {
-		update_option( $this->settings::SETTING_NAME_ARCHIVE, 'custom' );
-		update_option( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID, self::$archive_page_id );
+		update_option( \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE, 'custom' );
+		update_option( \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE_PAGE_ID, self::$archive_page_id );
 
 		$actual = $this->instance->get_has_archive();
 
-		delete_option( $this->settings::SETTING_NAME_ARCHIVE );
-		delete_option( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID );
+		delete_option( \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE );
+		delete_option( \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE_PAGE_ID );
 
 		$this->assertIsString( $actual );
 		$this->assertSame( urldecode( get_page_uri( self::$archive_page_id ) ), $actual );
@@ -291,8 +312,8 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	 * @covers ::get_has_archive
 	 */
 	public function test_get_has_archive_custom_not_published(): void {
-		update_option( $this->settings::SETTING_NAME_ARCHIVE, 'custom' );
-		update_option( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID, self::$archive_page_id );
+		update_option( \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE, 'custom' );
+		update_option( \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE_PAGE_ID, self::$archive_page_id );
 
 		wp_update_post(
 			[
@@ -303,8 +324,8 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 
 		$actual = $this->instance->get_has_archive();
 
-		delete_option( $this->settings::SETTING_NAME_ARCHIVE );
-		delete_option( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID );
+		delete_option( \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE );
+		delete_option( \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE_PAGE_ID );
 
 		wp_update_post(
 			[
@@ -314,5 +335,103 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 		);
 
 		$this->assertTrue( $actual );
+	}
+
+	/**
+	 * @covers ::has_post_thumbnail
+	 */
+	public function test_has_post_thumbnail(): void {
+		$this->instance->register();
+		$result = has_post_thumbnail( self::$story_id );
+		$this->assertTrue( $result );
+	}
+
+	/**
+	 * @covers ::has_post_thumbnail
+	 */
+	public function test_has_post_thumbnail_meta_poster(): void {
+		$this->instance->register();
+
+		$result = has_post_thumbnail( self::$story_id_meta );
+		$this->assertTrue( $result );
+	}
+
+	/**
+	 * @covers ::post_thumbnail_html
+	 * @dataProvider data_test_post_thumbnail_html
+	 */
+	public function test_post_thumbnail_html( $size, $attr, $height, $width ): void {
+		$this->instance->register();
+		$result = get_the_post_thumbnail( self::$story_id, $size, $attr );
+		$this->assertStringContainsString( 'canola', $result );
+		$this->assertStringContainsString( 'loading="lazy"', $result );
+		if ( \is_array( $size ) ) {
+			$this->assertStringContainsString( sprintf( 'height="%s"', $height ), $result );
+			$this->assertStringContainsString( sprintf( 'width="%s"', $width ), $result );
+		}
+		foreach ( $attr as $name => $value ) {
+			$this->assertStringContainsString( " $name=" . '"' . $value, $result );
+
+		}
+	}
+
+	/**
+	 * @covers ::post_thumbnail_html
+	 * @dataProvider data_test_post_thumbnail_html
+	 */
+	public function test_post_thumbnail_html_poster_meta( $size, $attr ): void {
+		$this->instance->register();
+		$result = get_the_post_thumbnail( self::$story_id_meta, $size, $attr );
+		$this->assertStringContainsString( 'http://www.example.com/image.png', $result );
+		$this->assertStringContainsString( 'loading="lazy"', $result );
+		if ( \is_array( $size ) ) {
+			$this->assertStringContainsString( sprintf( 'height="%s"', $size[0] ), $result );
+			$this->assertStringContainsString( sprintf( 'width="%s"', $size[1] ), $result );
+		}
+		foreach ( $attr as $name => $value ) {
+			$this->assertStringContainsString( " $name=" . '"' . $value, $result );
+
+		}
+	}
+
+	public function data_test_post_thumbnail_html(): array {
+		return [
+			'post-thumbnail' => [
+				'size'   => 'post-thumbnail',
+				'attr'   => [ 'alt' => 'test alt' ],
+				'height' => '',
+				'width'  => '',
+			],
+			'999x999'        => [
+				'size'   => [ 999, 999 ],
+				'attr'   => [ 'alt' => 'test alt' ],
+				'height' => '480',
+				'width'  => '640',
+			],
+			'100x100'        => [
+				'size'   => [ 100, 100 ],
+				'attr'   => [ 'alt' => 'test alt' ],
+				'height' => '100',
+				'width'  => '100',
+			],
+			'custom size'    => [
+				'size'   => \Google\Web_Stories\Media\Image_Sizes::STORY_THUMBNAIL_IMAGE_SIZE,
+				'attr'   => [ 'alt' => 'test alt' ],
+				'height' => '100',
+				'width'  => '100',
+			],
+			'sync'           => [
+				'size'   => 'post-thumbnail',
+				'attr'   => [ 'decoding' => 'sync' ],
+				'height' => '',
+				'width'  => '',
+			],
+			'custom class'   => [
+				'size'   => 'post-thumbnail',
+				'attr'   => [ 'class' => 'custom-class-name' ],
+				'height' => '',
+				'width'  => '',
+			],
+		];
 	}
 }

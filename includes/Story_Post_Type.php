@@ -262,9 +262,9 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 	 * @param bool             $has_thumbnail true if the post has a post thumbnail, otherwise false.
 	 * @param int|WP_Post|null $post          Post ID or WP_Post object. Default is global `$post`.
 	 */
-	public function has_post_thumbnail( $has_thumbnail, $post ) {
+	public function has_post_thumbnail( $has_thumbnail, $post ): bool {
 		$post = get_post( $post );
-		if ( ! $has_thumbnail && $this->get_slug() === get_post_type( $post ) ) {
+		if ( $post && ! $has_thumbnail && $this->get_slug() === get_post_type( $post ) ) {
 			$poster        = get_post_meta( $post->ID, self::POSTER_META_KEY, true );
 			$has_thumbnail = (bool) $poster;
 		}
@@ -273,47 +273,50 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 	}
 
 	/**
-	 * Filters the post thumbnail HTML.
+	 * Filters the post thumbnail HTML to return a img of hotlink image.
 	 *
 	 * @since 1.26.0
 	 *
-	 * @param string       $html              The post thumbnail HTML.
-	 * @param int          $post_id           The post ID.
-	 * @param int          $post_thumbnail_id The post thumbnail ID, or 0 if there isn't one.
-	 * @param string|int[] $size              Requested image size. Can be any registered image size name, or
-	 *                                        an array of width and height values in pixels (in that order).
-	 * @param string|array $attr              Query string or array of attributes.
-	 *
+	 * @param string                       $html              The post thumbnail HTML.
+	 * @param int                          $post_id           The post ID.
+	 * @param int                          $post_thumbnail_id The post thumbnail ID, or 0 if there isn't one.
+	 * @param string|int[]                 $size              Requested image size. Can be any registered image size name, or
+	 *                                                        an array of width and height values in pixels (in that order).
+	 * @param string|array<string, string> $attr              Query string or array of attributes.
 	 * @return string The post thumbnail image tag.
 	 */
-	public function post_thumbnail_html( $html, $postId, $post_thumbnail_id, $size, $attr ) {
-		$post = get_post( $postId );
-		if ( $html || $post_thumbnail_id || $this->get_slug() !== get_post_type( $post ) ) {
+	public function post_thumbnail_html( $html, $post_id, $post_thumbnail_id, $size, $attr ): string {
+		$post = get_post( $post_id );
+		if ( ! $post || $html || $post_thumbnail_id || $this->get_slug() !== get_post_type( $post ) ) {
 			return $html;
 		}
 
+		/**
+		 * Poster.
+		 *
+		 * @var array{url?:string, width?: int, height?: int}|false $poster
+		 */
 		$poster = get_post_meta( $post->ID, self::POSTER_META_KEY, true );
 		if ( ! $poster ) {
 			return $html;
 		}
 
 		list( $width, $height ) = image_constrain_size_for_editor( (int) $poster['width'], (int) $poster['height'], $size );
-		$hwstring   = image_hwstring( $width, $height );
-		$size_class = $size;
-		if ( is_array( $size ) ) {
-			$size_class = implode( 'x', $size );
-		}
-		$default_attr = array(
+		$size_class             = \is_array( $size ) ? implode( 'x', $size ) : $size;
+
+		$default_attr = [
 			'src'      => $poster['url'],
 			'class'    => "attachment-$size_class size-$size_class",
 			'decoding' => 'async',
 			'loading'  => 'lazy',
-		);
+			'width'    => $width,
+			'height'   => $height,
+		];
 
 		$attr = wp_parse_args( $attr, $default_attr );
 
 		$attr = array_map( 'esc_attr', $attr );
-		$html = rtrim( "<img $hwstring" );
+		$html = '<img';
 
 		foreach ( $attr as $name => $value ) {
 			$html .= " $name=" . '"' . $value . '"';
@@ -344,7 +347,6 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 	 *                                     keyed with 'updated', 'locked', 'deleted', 'trashed', and 'untrashed'.
 	 * @param int[]         $bulk_counts   Array of item counts for each message, used to build internationalized
 	 *                                     strings.
-	 *
 	 * @return array|mixed Bulk counts.
 	 */
 	public function bulk_post_updated_messages( $bulk_messages, $bulk_counts ) {
@@ -374,7 +376,6 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 	 * @since 1.0.0
 	 *
 	 * @param array|mixed $data Array of data to save.
-	 *
 	 * @return array|mixed
 	 */
 	public function change_default_title( $data ) {
@@ -395,10 +396,9 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 	 *
 	 * @since 1.25.1
 	 *
-	 * @param bool|mixed                                                      $maybe_empty Whether the post should be
-	 *                                                                                     considered "empty".
-	 * @param array                                                           $data        Array of post data.
-	 *
+	 * @param bool|mixed $maybe_empty Whether the post should be
+	 *                                considered "empty".
+	 * @param array      $data        Array of post data.
 	 * @return bool Whether the post should be considered "empty".
 	 *
 	 * @phpstan-param array{post_type: string, post_content_filtered: string} $data
