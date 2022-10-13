@@ -82,12 +82,3 @@ export interface MediaElement extends Element {
   focalX?: number;
   focalY?: number;
 }
-
-export interface ElementDefinition {
-  type: string;
-  isMedia?: boolean;
-  getLayerText: (element: Element) => string;
-  defaultAttributes: Partial<Element>;
-}
-
-export type ElementTypes = Record<string, ElementDefinition>;

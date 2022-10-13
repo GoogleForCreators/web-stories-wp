@@ -14,8 +14,13 @@
  * limitations under the License.
  */
 
-function TextContent({ src }) {
-  return `image: ${src}`;
+/**
+ * Internal dependencies
+ */
+import MediaFrame from '../media/frame';
+
+function GifFrame() {
+  return <MediaFrame />;
 }
 
-export default TextContent;
+export default GifFrame;

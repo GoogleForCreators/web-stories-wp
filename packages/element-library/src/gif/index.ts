@@ -13,22 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * External dependencies
- */
-import { StoryPropTypes } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
-import MediaFrame from '../media/frame';
+import type { PartialElementDefinition } from '../types';
+import Edit from './edit';
+import Frame from './frame';
+import getLayerText from './layer';
+import Output from './output';
+import LayerIcon from './icon';
+import Display from './display';
+import * as constants from './constants';
+import type { GifElement } from './types';
 
-function GifFrame({ element }) {
-  return <MediaFrame element={element} />;
-}
-
-GifFrame.propTypes = {
-  element: StoryPropTypes.elements.gif.isRequired,
+const gifElement: PartialElementDefinition<GifElement> = {
+  Edit,
+  Frame,
+  getLayerText,
+  Output,
+  LayerIcon,
+  Display,
+  ...constants,
 };
 
-export default GifFrame;
+export default gifElement;

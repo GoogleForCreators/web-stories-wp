@@ -13,23 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
-import { StoryPropTypes } from '@googleforcreators/elements';
+import type { Element } from '@googleforcreators/elements';
+import type { GifResource } from '@googleforcreators/media';
 
-/**
- * Internal dependencies
- */
-import MediaEdit from '../media/edit';
-
-function GifEdit({ element, box, ...rest }) {
-  return <MediaEdit element={element} box={box} {...rest} />;
+export interface GifElement extends Element {
+  resource: GifResource;
 }
-
-GifEdit.propTypes = {
-  element: StoryPropTypes.elements.gif.isRequired,
-  box: StoryPropTypes.box.isRequired,
-};
-
-export default GifEdit;

@@ -15,14 +15,11 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-export { default as Edit } from './edit';
-export { default as Frame } from './frame';
-export { default as Output } from './output';
-export { default as LayerIcon } from './icon';
-export { default as getLayerText } from './layer';
-export { default as Display } from '../media/imageDisplay';
-export { default as TextContent } from '../media/textContent';
+import type { Element, ElementDefinition } from '@googleforcreators/elements';
 
-export * from './constants';
+export type PartialElementDefinition<E extends Element> = Omit<
+  ElementDefinition<E>,
+  'type' | 'name'
+>;

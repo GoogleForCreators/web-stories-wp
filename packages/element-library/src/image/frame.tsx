@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,10 +14,13 @@
  * limitations under the License.
  */
 
-export interface ElementBox {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-  rotationAngle: number;
+/**
+ * Internal dependencies
+ */
+import MediaFrame from '../media/frame';
+
+function ImageFrame() {
+  return <MediaFrame />;
 }
+
+export default ImageFrame;

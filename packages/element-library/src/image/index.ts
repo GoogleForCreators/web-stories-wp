@@ -13,22 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * External dependencies
- */
-import { StoryPropTypes } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
-import MediaFrame from '../media/frame';
+export { default as Edit } from './edit';
+export { default as Frame } from './frame';
+export { default as Output } from './output';
+export { default as LayerIcon } from './icon';
+export { default as getLayerText } from './layer';
+export { default as Display } from '../media/imageDisplay';
 
-function ImageFrame({ element }) {
-  return <MediaFrame element={element} />;
-}
-
-ImageFrame.propTypes = {
-  element: StoryPropTypes.elements.image.isRequired,
-};
-
-export default ImageFrame;
+export * from './constants';

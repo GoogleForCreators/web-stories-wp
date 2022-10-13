@@ -17,16 +17,16 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import { isBlobURL } from '@googleforcreators/media';
-import { StoryPropTypes } from '@googleforcreators/elements';
+import type { OutputProps } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import MediaOutput from '../media/output';
+import type { GifElement } from './types';
 
-function GifOutput({ element, box, flags }) {
+function GifOutput({ element, box, flags }: OutputProps<GifElement>) {
   const { resource } = element;
 
   const src =
@@ -52,11 +52,5 @@ function GifOutput({ element, box, flags }) {
     </MediaOutput>
   );
 }
-
-GifOutput.propTypes = {
-  element: StoryPropTypes.elements.gif.isRequired,
-  box: StoryPropTypes.box.isRequired,
-  flags: PropTypes.object,
-};
 
 export default GifOutput;

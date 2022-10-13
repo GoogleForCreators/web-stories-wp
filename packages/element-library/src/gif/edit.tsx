@@ -13,16 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import type { EditProps } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
-export { default as Edit } from './edit';
-export { default as Frame } from './frame';
-export { default as getLayerText } from './layer';
-export { default as Output } from './output';
-export { default as LayerIcon } from './icon';
-export { default as TextContent } from '../media/textContent';
-export { default as Display } from './display';
+import MediaEdit from '../media/edit';
+import type { GifElement } from './types';
 
-export * from './constants';
+function GifEdit({ element, box, ...rest }: EditProps<GifElement>) {
+  return <MediaEdit element={element} box={box} {...rest} />;
+}
+
+export default GifEdit;

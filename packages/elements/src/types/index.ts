@@ -15,6 +15,7 @@
  */
 export * from './animation';
 export * from './element';
+export * from './elementDefinition';
 export * from './propTypes';
 export * from './page';
 export * from './story';

@@ -26,7 +26,6 @@ import {
   useUnmount,
 } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
-import PropTypes from 'prop-types';
 import {
   getMediaSizePositionProps,
   calculateSrcSet,
@@ -35,7 +34,12 @@ import {
   DisplayWithMask as WithMask,
   shouldDisplayBorder,
 } from '@googleforcreators/masks';
-import { StoryPropTypes, getTransformFlip } from '@googleforcreators/elements';
+import {
+  StoryPropTypes,
+  getTransformFlip,
+  EditProps,
+  MediaElement,
+} from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -107,7 +111,7 @@ function MediaEdit({
   zIndexCanvas,
   scaleMin,
   scaleMax,
-}) {
+}: EditProps<MediaElement>) {
   const {
     id,
     resource,
@@ -309,16 +313,5 @@ function MediaEdit({
     </Element>
   );
 }
-
-MediaEdit.propTypes = {
-  element: StoryPropTypes.elements.media.isRequired,
-  box: StoryPropTypes.box.isRequired,
-  setLocalProperties: PropTypes.func.isRequired,
-  getProxiedUrl: PropTypes.func,
-  updateElementById: PropTypes.func,
-  zIndexCanvas: PropTypes.object,
-  scaleMin: PropTypes.number.isRequired,
-  scaleMax: PropTypes.number.isRequired,
-};
 
 export default MediaEdit;

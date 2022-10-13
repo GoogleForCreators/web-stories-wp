@@ -16,23 +16,20 @@
 /**
  * External dependencies
  */
-import { StoryPropTypes } from '@googleforcreators/elements';
+import type { LayerIconProps } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import VisibleImage from '../shared/visibleImage';
+import type { GifElement } from './types';
 
 function GifLayerIcon({
   element: {
     resource: { poster, alt },
   },
-}) {
-  return <VisibleImage src={poster} alt={alt} height={21} width={21} />;
+}: LayerIconProps<GifElement>) {
+  return <VisibleImage src={poster || ''} alt={alt} height={21} width={21} />;
 }
-
-GifLayerIcon.propTypes = {
-  element: StoryPropTypes.element.isRequired,
-};
 
 export default GifLayerIcon;
