@@ -214,7 +214,6 @@
     "lint:css:css:fix": "stylelint \"**/*.css\" --fix",
     "lint:js": "eslint --ext .js,.ts,.tsx .",
     "lint:js:fix": "eslint --ext .js,.ts,.tsx --fix .",
-    "lint:js:report": "eslint --ext .js,.ts,.tsx --output-file build/lint-js-report.json --format json .",
     "lint:package-json": "npmPkgJsonLint .",
     "lint:php": "composer phpcs",
     "lint:php:fix": "composer phpcbf",

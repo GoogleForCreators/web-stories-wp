@@ -90,12 +90,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
 
-      - name: Setup Node
-        uses: actions/setup-node@969bd2663942d722d85b6a8626225850c2f7be4b
-        with:
-          node-version-file: '.nvmrc'
-          cache: npm
-
       - name: Bundle size check
         uses: preactjs/compressed-size-action@8119d3d31b6e57b167e09c81dfa877eada3bcb35
         with:
@@ -123,28 +117,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
 
-      - name: Setup Node
-        uses: actions/setup-node@969bd2663942d722d85b6a8626225850c2f7be4b
-        with:
-          node-version-file: '.nvmrc'
-          cache: npm
+      - uses: GoogleForCreators/web-stories-wp/.github/actions/install-js-deps@main
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@e04e1d97f0c0481c6e1ba40f8a538454fe5d7709
-        with:
-          php-version: '8.0'
-          coverage: none
-          tools: composer
-
-      - name: Install dependencies
-        run: npm ci
-        env:
-          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
-
-      - name: Install PHP dependencies
-        uses: ramsey/composer-install@f680dac46551dffb2234a240d65ae806c2999dd6
-        with:
-          composer-options: '--prefer-dist --no-progress --no-interaction'
+      - uses: GoogleForCreators/web-stories-wp/.github/actions/install-php-deps@main
 
       - name: Build plugin
         run: |
