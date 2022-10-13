@@ -40,18 +40,26 @@ const isNotProduct = ({ type }) => type !== ELEMENT_TYPES.PRODUCT;
  *
  * Elements will be added to the front (end) of the list of elements on the current page.
  *
- * Selection is set to be exactly the new elements.
+ * Selection is set to be exactly the new elements by default.
  *
  * @param {Object} draft Current state
  * @param {Object} payload Action payload
  * @param {Array.<Object>} payload.elements Elements to insert on the given page.
+ * @param {string} payload.pageId optional pageId for page to insert elements into.
+ * @param {boolean} [payload.updateSelection=true] Whether to select the new element.
  */
-export const addElements = (draft, { elements }) => {
+export const addElements = (
+  draft,
+  { elements, pageId, updateSelection = true }
+) => {
   if (!Array.isArray(elements)) {
     return;
   }
 
-  const page = draft.pages.find(({ id }) => id === draft.current);
+  const page = draft.pages.find(({ id }) =>
+    pageId ? id === pageId : id === draft.current
+  );
+
   const newElements = exclusion(page.elements, elements);
 
   if (newElements.length === 0) {
@@ -91,7 +99,8 @@ export const addElements = (draft, { elements }) => {
   }
 
   // If any elements were added, update selection to match the ids of those
-  if (addedIds.length > 0) {
+  // but only if inserting on the current page and not opted out.
+  if (addedIds.length > 0 && updateSelection) {
     draft.selection = addedIds;
   }
 };
