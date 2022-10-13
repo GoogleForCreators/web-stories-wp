@@ -99,6 +99,8 @@ function VideoSegmentPanel({ pushUpdate, selectedElements }) {
     })
   );
 
+  // @todo state needs to persist across tabs
+  // https://github.com/GoogleForCreators/web-stories-wp/issues/12463
   const [batchId, setBatchId] = useState();
   const [isSegmenting, setIsSegmenting] = useState();
   const [segmentedFiles, setSegmentedFiles] = useState([]);
