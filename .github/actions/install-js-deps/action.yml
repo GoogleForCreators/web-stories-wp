@@ -4,6 +4,9 @@ description: Installs JavaScript dependencies
 runs:
   using: 'composite'
   steps:
+    - name: Checkout
+      uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
+
     - name: Setup Node
       uses: actions/setup-node@969bd2663942d722d85b6a8626225850c2f7be4b
       with:
