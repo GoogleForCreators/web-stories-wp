@@ -23,7 +23,7 @@ import type { Element } from '@googleforcreators/types';
  * Internal dependencies
  */
 import type { MinMax, TextSetData, TextSet, TextSets } from './types';
-import { TextSetType } from "./types";
+import { TextSetType } from './types';
 
 function updateMinMax(minMax: MinMax, element: Element): MinMax {
   // Purposely mutating object so passed
@@ -76,7 +76,7 @@ async function loadTextSet(name: string) {
 }
 
 export default async function loadTextSets() {
-  const textSets : TextSets = {} as TextSets;
+  const textSets: TextSets = {} as TextSets;
 
   await Promise.all(
     Object.values(TextSetType).map(async (name) => {
