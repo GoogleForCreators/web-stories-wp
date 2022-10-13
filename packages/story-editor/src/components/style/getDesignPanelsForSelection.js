@@ -38,6 +38,7 @@ import {
   VideoAccessibilityPanel,
   ElementAlignmentPanel,
   VideoOptionsPanel,
+  VideoSegmentPanel,
   PageBackgroundAudioPanel,
   PageAdvancementPanel,
   ProductPanel,
@@ -79,6 +80,7 @@ function getDesignPanelsForSelection(
     // If the selected element's type is video / image , display accessibility panel, too.
     if ('video' === elements[0].type) {
       panels.push({ type: PanelTypes.VIDEO_OPTIONS, Panel: VideoOptionsPanel });
+      panels.push({ type: PanelTypes.VIDEO_SEGMENT, Panel: VideoSegmentPanel });
       panels.push({
         type: PanelTypes.CAPTIONS,
         Panel: CaptionsPanel,
@@ -147,6 +149,8 @@ function getDesignPanelsForSelection(
           return { type, Panel: BorderStylePanel };
         case PanelTypes.VIDEO_OPTIONS:
           return { type, Panel: VideoOptionsPanel };
+        case PanelTypes.VIDEO_SEGMENT:
+          return { type, Panel: VideoSegmentPanel };
         case PanelTypes.CAPTIONS:
           return { type, Panel: CaptionsPanel };
         case PanelTypes.VIDEO_ACCESSIBILITY:

@@ -25,6 +25,7 @@ import {
   LOCAL_STORAGE_PREFIX,
 } from '@googleforcreators/design-system';
 import { isAnimatedGif } from '@googleforcreators/media';
+import { v4 as uuidv4 } from 'uuid';
 
 /**
  * Internal dependencies
@@ -77,6 +78,7 @@ function useUploadMedia({
       isCurrentResourceTranscoding,
       isCurrentResourceMuting,
       isCurrentResourceTrimming,
+      isBatchUploading,
       canTranscodeResource,
     },
     actions: { addItem, removeItem, finishItem },
@@ -155,6 +157,7 @@ function useUploadMedia({
       resource,
       onUploadSuccess,
       previousResourceId,
+      additionalData,
     } of uploaded) {
       const { id: resourceId } = resource;
       if (!resource) {
@@ -170,9 +173,17 @@ function useUploadMedia({
       // will cause things like base color and BlurHash generation to run
       // twice for a given resource.
       if (onUploadSuccess) {
-        onUploadSuccess({ id: resourceId, resource: resource });
+        onUploadSuccess({
+          id: resourceId,
+          resource: resource,
+          batchPosition: additionalData?.batchPosition,
+        });
         if (previousResourceId) {
-          onUploadSuccess({ id: previousResourceId, resource: resource });
+          onUploadSuccess({
+            id: previousResourceId,
+            resource: resource,
+            batchPosition: additionalData?.batchPosition,
+          });
         }
       }
 
@@ -250,7 +261,7 @@ function useUploadMedia({
      * @param {Blob} args.posterFile Blob object of poster.
      * @param {number} args.originalResourceId Original resource id.
      * @param {string} args.elementId ID of element on the canvas.
-     * @return {void}
+     * @return {string|null} Batch ID of the uploaded files on success, null otherwise.
      */
     async (
       files,
@@ -271,15 +282,16 @@ function useUploadMedia({
     ) => {
       // If there are no files passed, don't try to upload.
       if (!files?.length) {
-        return;
+        return null;
       }
 
+      const batchId = uuidv4();
+
       await Promise.all(
-        files.reverse().map(async (file) => {
+        files.reverse().map(async (file, index) => {
           // First, let's make sure the files we're trying to upload are actually valid.
           // We don't want to display placeholders / progress bars for items that
           // aren't supported anyway.
-
           const canTranscode = isTranscodingEnabled && canTranscodeFile(file);
           const isTooLarge = canTranscode && isFileTooLarge(file);
 
@@ -335,7 +347,11 @@ function useUploadMedia({
             onUploadProgress,
             onUploadError,
             onUploadSuccess,
-            additionalData,
+            additionalData: {
+              ...additionalData,
+              batchPosition: files.length - 1 - index,
+              batchId,
+            },
             posterFile,
             muteVideo,
             cropVideo,
@@ -346,6 +362,8 @@ function useUploadMedia({
           });
         })
       );
+
+      return batchId;
     },
     [
       showSnackbar,
@@ -371,6 +389,7 @@ function useUploadMedia({
     isCurrentResourceTranscoding,
     isCurrentResourceMuting,
     isCurrentResourceTrimming,
+    isBatchUploading,
     canTranscodeResource,
   };
 }

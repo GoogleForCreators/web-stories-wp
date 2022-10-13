@@ -27,6 +27,7 @@ import APIContext from '../../../api/context';
 import StoryContext from '../../../story/context';
 import useProcessMedia from '../useProcessMedia';
 import useMediaInfo from '../useMediaInfo';
+import { ConfigProvider } from '../../../config';
 
 const fetchRemoteFileMock = (url, mimeType) => {
   if (url === 'http://www.google.com/foo.mov') {
@@ -110,12 +111,19 @@ function setup() {
   const storyContextValue = {
     actions: { updateElementsByResourceId },
   };
+  const configState = {
+    capabilities: {
+      hasUploadMediaAction: true,
+    },
+  };
   const wrapper = ({ children }) => (
-    <APIContext.Provider value={apiContextValue}>
-      <StoryContext.Provider value={storyContextValue}>
-        {children}
-      </StoryContext.Provider>
-    </APIContext.Provider>
+    <ConfigProvider config={configState}>
+      <APIContext.Provider value={apiContextValue}>
+        <StoryContext.Provider value={storyContextValue}>
+          {children}
+        </StoryContext.Provider>
+      </APIContext.Provider>
+    </ConfigProvider>
   );
 
   const uploadVideoPoster = jest.fn();
