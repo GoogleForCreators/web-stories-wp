@@ -211,6 +211,7 @@ function PostLock() {
         isOpen={Boolean(user?.id)}
         user={user}
         dashboardLink={dashboardLink}
+        previewLink={previewLink}
         onClose={closeDialog}
       />
     );
