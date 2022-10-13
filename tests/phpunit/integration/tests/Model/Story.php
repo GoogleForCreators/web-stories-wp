@@ -96,7 +96,7 @@ class Story extends TestCase {
 					'productUrl'           => 'http://www.example.com/product/t-shirt-with-logo',
 				],
 
-			] 
+			]
 		);
 
 		$story = new \Google\Web_Stories\Model\Story();
@@ -123,7 +123,7 @@ class Story extends TestCase {
 
 		$poster_attachment_id = self::factory()->attachment->create_object(
 			[
-				'file'           => DIR_TESTDATA . '/images/canola.jpg',
+				'file'           => WEB_STORIES_TEST_DATA_DIR . '/paint.jpeg',
 				'post_parent'    => 0,
 				'post_mime_type' => 'image/jpeg',
 				'post_title'     => 'Test Image',
@@ -137,7 +137,7 @@ class Story extends TestCase {
 
 		$this->assertEquals( $story->get_title(), 'test title' );
 		$this->assertEquals( $story->get_url(), get_permalink( $post ) );
-		$this->assertStringContainsString( 'canola.jpg', $story->get_poster_portrait() );
+		$this->assertStringContainsString( 'paint-640x853.jpeg', $story->get_poster_portrait() );
 		$this->assertNotEmpty( $story->get_poster_sizes() );
 		$this->assertIsString( $story->get_poster_sizes() );
 		$this->assertNotEmpty( $story->get_poster_srcset() );
@@ -191,7 +191,7 @@ class Story extends TestCase {
 
 		$poster_attachment_id = self::factory()->attachment->create_object(
 			[
-				'file'           => DIR_TESTDATA . '/images/canola.jpg',
+				'file'           => WEB_STORIES_TEST_DATA_DIR . '/paint.jpeg',
 				'post_parent'    => 0,
 				'post_mime_type' => 'image/jpeg',
 				'post_title'     => 'Test Image',
@@ -216,7 +216,7 @@ class Story extends TestCase {
 
 		$this->assertEquals( $story->get_title(), 'test title' );
 		$this->assertEquals( $story->get_url(), get_permalink( $post ) );
-		$this->assertStringContainsString( 'canola.jpg', $story->get_poster_portrait() );
+		$this->assertStringContainsString( 'paint-640x853.jpeg', $story->get_poster_portrait() );
 		$this->assertNotEmpty( $story->get_poster_sizes() );
 		$this->assertIsString( $story->get_poster_sizes() );
 		$this->assertNotEmpty( $story->get_poster_srcset() );

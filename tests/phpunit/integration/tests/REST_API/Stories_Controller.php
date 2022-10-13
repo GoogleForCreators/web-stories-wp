@@ -533,7 +533,7 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 			]
 		);
 
-		$attachment_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/example-3.png', 0 );
+		$attachment_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/paint.jpeg', 0 );
 		wp_maybe_generate_attachment_metadata( get_post( $attachment_id ) );
 		set_post_thumbnail( $story, $attachment_id );
 
@@ -579,7 +579,7 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 			]
 		);
 
-		$attachment_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/example-3.png', 0 );
+		$attachment_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/paint.jpeg', 0 );
 		wp_maybe_generate_attachment_metadata( get_post( $attachment_id ) );
 		set_post_thumbnail( $story, $attachment_id );
 
@@ -669,7 +669,7 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 			]
 		);
 
-		$attachment_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/example-3.png', 0 );
+		$attachment_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/paint.jpeg', 0 );
 		wp_maybe_generate_attachment_metadata( get_post( $attachment_id ) );
 		set_post_thumbnail( $story, $attachment_id );
 
