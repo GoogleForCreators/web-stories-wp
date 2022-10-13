@@ -213,7 +213,7 @@ function EditorSettings() {
           return;
         }
 
-        imagePromises.push(preloadImage(URL.createObjectURL(file)));
+        imagePromises.push(preloadImage({src: URL.createObjectURL(file)}));
       });
 
       if (!allFileSizesWithinMaxUpload) {
