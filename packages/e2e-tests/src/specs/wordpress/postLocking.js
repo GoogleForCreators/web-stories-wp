@@ -63,7 +63,7 @@ describe('Post Locking', () => {
 
     await page.waitForSelector('.ReactModal__Content');
 
-    await expect(page).toMatch('Story is locked');
+    await expect(page).toMatch('This story is already being edited');
 
     await takeSnapshot(page, 'Stories editor with lock dialog');
   });
