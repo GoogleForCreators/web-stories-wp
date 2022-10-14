@@ -23,22 +23,21 @@
  * @return {Promise<Page>} Preview page object.
  */
 async function previewStory(waitForStoryDebugView = true) {
-  const previewPagePromise = new Promise((resolve, reject) => {
-    setTimeout(
-      () => reject(new Error('There was an error previewing the story')),
-      5000
-    );
-
-    page
-      .browser()
-      .on('targetcreated', async (target) => resolve(await target.page()));
-  });
-
+  await page.waitForSelector('button:not([disabled])[aria-label="Preview"]');
   await page.click('button:not([disabled])[aria-label="Preview"]');
 
-  const previewPage = await previewPagePromise;
+  const currentTarget = page.target();
+  const previewPageTarget = await browser.waitForTarget(
+    (target) => target.opener() === currentTarget
+  );
+
+  const previewPage = await previewPageTarget.page();
+  await previewPage.waitForSelector('body');
+
   await previewPage.waitForFunction(
-    () => !document.title.includes('Generating the preview')
+    () =>
+      document.title.length > 0 &&
+      !document.title.includes('Generating the preview')
   );
 
   if (waitForStoryDebugView) {
