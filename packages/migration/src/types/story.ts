@@ -97,8 +97,8 @@ export interface PageV0 {
     ctaText?: string;
   };
   overlay: string;
-  autoAdvance: boolean;
-  defaultPageDuration: number;
+  autoAdvance?: boolean;
+  defaultPageDuration?: number;
 }
 
 export type StoryV0 = PageV0[];
