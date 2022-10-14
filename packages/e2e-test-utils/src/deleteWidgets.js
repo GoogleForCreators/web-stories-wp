@@ -27,17 +27,27 @@ async function deleteWidgets() {
   // Remove all widgets
   await visitAdminPage('widgets.php');
 
+  const hasWidgets = () =>
+    page.evaluate(
+      () =>
+        document.querySelectorAll('#widgets-right .widget .widget-action')
+          .length > 0
+    );
+
   /* eslint-disable no-await-in-loop */
-  while (await page.$('#widgets-right .widget .widget-action')) {
+  while (await hasWidgets()) {
+    // Catching race conditions.
+    if (!(await hasWidgets())) {
+      break;
+    }
+
     await expect(page).toClick('#widgets-right .widget .widget-action');
+
     // Transition animation.
     await page.waitForTimeout(300);
+
     await expect(page).toClick('#widgets-right .widget .widget-control-remove');
-    await page.waitForResponse(
-      (response) =>
-        response.url().includes('/wp-admin/admin-ajax.php') &&
-        response.status() === 200
-    );
+
     // Transition animation.
     await page.waitForTimeout(300);
   }
