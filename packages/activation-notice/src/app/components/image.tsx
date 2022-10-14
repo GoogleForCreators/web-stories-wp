@@ -18,19 +18,29 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
 import { useConfig } from '../config';
 
-const Img = styled.img`
+interface ImgProps {
+  $rotationAngle: string;
+}
+
+interface ImageProps {
+  name: string;
+  name2x: string;
+  width: number;
+  height: number;
+}
+
+const Img = styled.img<ImgProps>`
   transform: rotate(${(props) => props.$rotationAngle});
   margin-top: 60px;
 `;
 
-function Image({ name, name2x, ...props }) {
+function Image({ name, name2x, ...props }: ImageProps) {
   const { cdnURL, isRTL } = useConfig();
   return (
     <Img
@@ -42,13 +52,5 @@ function Image({ name, name2x, ...props }) {
     />
   );
 }
-
-Image.propTypes = {
-  name: PropTypes.string.isRequired,
-  name2x: PropTypes.string.isRequired,
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
-  $marginTop: PropTypes.number,
-};
 
 export default Image;

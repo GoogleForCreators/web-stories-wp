@@ -29,20 +29,40 @@ import { StrictMode, render } from '@wordpress/element';
  * Internal dependencies
  */
 import App from './app';
+import type { ContextState } from './app/config/context';
+
+interface ActivationNoticeSettings {
+  publicPath: string;
+  id: string;
+  config: ContextState;
+  flags: Record<string, boolean>;
+}
+
+declare global {
+  let __webpack_public_path__: string;
+
+  interface Window {
+    webStoriesActivationSettings: ActivationNoticeSettings;
+  }
+}
 
 __webpack_public_path__ = window.webStoriesActivationSettings.publicPath;
 
 /**
  * Initializes the Web Stories dashboard screen.
  *
- * @param {string} id       ID of the root element to render the screen in.
- * @param {Object} config   Story editor settings.
- * @param {Object} flags    The flags for the application.
+ * @param id       ID of the root element to render the screen in.
+ * @param config   Story editor settings.
+ * @param flags    The flags for the application.
  */
-const initialize = (id, config, flags) => {
+const initialize = (
+  id: string,
+  config: ContextState,
+  flags: Record<string, boolean>
+) => {
   const appElement = document.getElementById(id);
 
-  initializeTracking('Plugin Activation');
+  void initializeTracking('Plugin Activation');
 
   render(
     <FlagsProvider features={flags}>
