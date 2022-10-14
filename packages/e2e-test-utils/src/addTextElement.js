@@ -15,7 +15,7 @@
  */
 
 export default async function addTextElement(preset = 'Paragraph') {
-  await expect(page).toClick('#library-tab-text');
+  await page.click('#library-tab-text');
   await expect(page).toClick('#library-pane-text button', { text: preset });
   await expect(page).toMatchElement('[data-testid="textFrame"]', {
     text: 'Fill in some text',
