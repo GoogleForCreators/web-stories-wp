@@ -24,8 +24,8 @@
     "node": ">= 12 || >= 14 || >= 16",
     "npm": ">= 7.3"
   },
-  "types": "./dist-types/index.d.ts",
   "main": "./src/index.ts",
+  "types": "dist-types/index.d.ts",
   "dependencies": {
     "@googleforcreators/tracking": "*",
     "@wordpress/element": "^4.15.0",
