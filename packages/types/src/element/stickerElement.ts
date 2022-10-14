@@ -17,12 +17,17 @@
 /**
  * Internal dependencies
  */
-import type { Element } from './element';
+import type { Element, ElementType } from './element';
 
 export interface Sticker {
   type: string;
 }
 
 export interface StickerElement extends Element {
+  type: ElementType.Sticker;
   sticker: Sticker;
+  // TODO(#12437): Figure out why sticker elements end up having these properties & fix it.
+  scale?: number;
+  focalX?: number;
+  focalY?: number;
 }
