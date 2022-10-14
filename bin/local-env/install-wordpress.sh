@@ -147,8 +147,8 @@ if [ "$WP_VERSION" == "latest" ] || [ "$WP_VERSION" == "6.1-RC1" ]; then
   echo -e $(status_message "Installing WordPress importer...")
   wp plugin install wordpress-importer --activate --force --quiet
 
-	echo -e $(status_message "Installing WooCommerce plugin...")
-	wp plugin install woocommerce --activate --force --quiet
+  echo -e $(status_message "Installing WooCommerce plugin...")
+  wp plugin install woocommerce --activate --force --quiet
 fi
 
 echo -e $(status_message "Installing AMP plugin...")
