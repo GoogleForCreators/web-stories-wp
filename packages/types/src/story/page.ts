@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import type { Element, Pattern, ShapeElement } from '../element';
+import type { Element, ElementId, Pattern, ShapeElement } from '../element';
 import type { Animation } from './animation';
 
 export interface Group {
@@ -39,12 +39,13 @@ export type Track = {
 export type Groups = Record<string, Group>;
 
 export interface Page {
+  id: ElementId;
   elements: Element[];
   defaultBackgroundElement?: ShapeElement;
   animations?: Animation[];
   backgroundColor: Pattern;
   type: 'page';
-  groups: Groups;
+  groups?: Groups;
   backgroundAudio?: {
     resource: {
       src: string;
@@ -54,6 +55,6 @@ export interface Page {
     tracks: Track[];
     loop: boolean;
   };
-  autoAdvance: boolean;
-  defaultPageDuration: number;
+  autoAdvance?: boolean;
+  defaultPageDuration?: number;
 }
