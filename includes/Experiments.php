@@ -300,6 +300,17 @@ class Experiments extends Service_Base implements HasRequirements {
 				'description' => __( 'Enable detailed page advancement settings on a per-page basis', 'web-stories' ),
 				'group'       => 'editor',
 			],
+			/**
+			 * Author: @timarney
+			 * Issue: #12164
+			 * Creation date: 2022-09-19
+			 */
+			[
+				'name'        => 'segmentVideo',
+				'label'       => __( 'Segment video', 'web-stories' ),
+				'description' => __( 'Enable support for segmenting video files', 'web-stories' ),
+				'group'       => 'editor',
+			],
 		];
 	}
 

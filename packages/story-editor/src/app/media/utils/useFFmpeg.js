@@ -283,6 +283,81 @@ function useFFmpeg() {
   );
 
   /**
+   * Segment a video using FFmpeg.
+   *
+   * @param {File} file Original video file object.
+   * @param {string} segmentTime number of secs to split the video into.
+   * @return {Promise<File[]>} Segmented video files .
+   */
+  const segmentVideo = useCallback(
+    async (file, segmentTime, fileLength) => {
+      //eslint-disable-next-line @wordpress/no-unused-vars-before-return -- False positive because of the finally().
+      const trackTiming = getTimeTracker('segment_video');
+      let ffmpeg;
+      try {
+        ffmpeg = await getFFmpegInstance(file);
+        const type = file?.type || MEDIA_TRANSCODED_MIME_TYPE;
+        const ext = getExtensionFromMimeType(type);
+        const outputFileName = getFileBasename(file) + '_%03d.' + ext;
+        const keyframes = [];
+        for (let i = segmentTime; i < fileLength; i += segmentTime) {
+          keyframes.push(i);
+        }
+        const segmentTimes = keyframes.join(',');
+
+        await ffmpeg.run(
+          '-i',
+          file.name,
+          '-c',
+          'copy',
+          '-map',
+          '0',
+          '-force_key_frames',
+          `${segmentTimes}`,
+          '-f',
+          'segment',
+          '-segment_times',
+          `${segmentTimes}`,
+          '-segment_time_delta', //account for possible roundings operated when setting key frame times.
+          `${(1 / (2 * FFMPEG_CONFIG.FPS[1])).toFixed(2)}`,
+          '-reset_timestamps',
+          '1',
+          outputFileName
+        );
+
+        const files = [];
+        await ffmpeg
+          .FS('readdir', '/')
+          .filter(
+            (outputFile) =>
+              outputFile !== file.name && outputFile.endsWith(`.${ext}`)
+          )
+          .forEach(async (outputFile) => {
+            const data = await ffmpeg.FS('readFile', outputFile);
+            files.push(
+              blobToFile(new Blob([data.buffer], { type }), outputFile, type)
+            );
+          });
+        return files.sort((a, b) => a.name.localeCompare(b.name));
+      } catch (err) {
+        // eslint-disable-next-line no-console -- We want to surface this error.
+        console.error(err);
+        trackError('segment_video', err.message);
+        throw err;
+      } finally {
+        try {
+          ffmpeg.exit();
+        } catch {
+          // Not interested in errors here.
+        }
+
+        trackTiming();
+      }
+    },
+    [getFFmpegInstance]
+  );
+
+  /**
    * Trim Video using FFmpeg.
    *
    * @param {File} file Original video file object.
@@ -601,6 +676,7 @@ function useFFmpeg() {
       convertToMp3,
       trimVideo,
       cropVideo,
+      segmentVideo,
     }),
     [
       isTranscodingEnabled,
@@ -612,6 +688,7 @@ function useFFmpeg() {
       convertToMp3,
       trimVideo,
       cropVideo,
+      segmentVideo,
     ]
   );
 }

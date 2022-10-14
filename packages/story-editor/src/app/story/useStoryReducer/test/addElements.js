@@ -281,4 +281,64 @@ describe('addElements', () => {
     });
     expect(result.selection).toStrictEqual(['130', '125', '126', '127', '128']);
   });
+
+  it('should add elements to a specific page', () => {
+    const { restore, addElements } = setupReducer();
+
+    // Set an initial state with a current page and other elements.
+    restore({
+      pages: [
+        {
+          id: '111',
+          elements: [{ id: '000' }],
+        },
+        { id: '222', elements: [{ id: '123', type: 'text' }] },
+      ],
+      current: '111',
+      selection: ['123'],
+    });
+
+    const result = addElements({
+      elements: [
+        { id: '124', type: 'video' },
+        { id: '125', type: 'video' },
+      ],
+      pageId: '222',
+      updateSelection: false,
+    });
+
+    expect(result.pages[1].elements).toHaveLength(3);
+    expect(result.pages[1].elements).toStrictEqual([
+      { id: '123', type: 'text' },
+      { id: '124', type: 'video' },
+      { id: '125', type: 'video' },
+    ]);
+
+    expect(result.selection).toStrictEqual(['123']);
+  });
+
+  it('should add elements to a specific page and select element', () => {
+    const { restore, addElements } = setupReducer();
+
+    // Set an initial state with a current page and other elements.
+    restore({
+      pages: [{ id: '222', elements: [{ id: '123', type: 'text' }] }],
+      current: '111',
+      selection: ['123'],
+    });
+
+    const result = addElements({
+      elements: [{ id: '124', type: 'video' }],
+      pageId: '222',
+      updateSelection: true,
+    });
+
+    expect(result.pages[0].elements).toHaveLength(2);
+    expect(result.pages[0].elements).toStrictEqual([
+      { id: '123', type: 'text' },
+      { id: '124', type: 'video' },
+    ]);
+
+    expect(result.selection).toStrictEqual(['124']);
+  });
 });
