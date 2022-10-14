@@ -33,7 +33,6 @@ import {
   StoryPropTypes,
   BACKGROUND_TEXT_MODE,
 } from '@googleforcreators/elements';
-import { useFont } from '@googleforcreators/story-editor';
 
 /**
  * Internal dependencies
@@ -159,6 +158,7 @@ function TextDisplay({
   },
   previewMode,
   maybeEnqueueFontStyle,
+  elementFontData,
 }) {
   const ref = useRef(null);
   const outerBorderRef = useRef(null);
@@ -171,16 +171,6 @@ function TextDisplay({
   }));
 
   const { font, width: elementWidth, height: elementHeight } = rest;
-
-  const { getFontByName } = useFont(({ actions: { getFontByName } }) => ({
-    getFontByName,
-  }));
-
-  const fontData = useMemo(
-    () => getFontByName(font?.family),
-    [font, getFontByName]
-  );
-
   const fontFaceSetConfigs = useMemo(() => {
     const htmlInfo = getHTMLInfo(content);
     return {
@@ -190,9 +180,9 @@ function TextDisplay({
     };
   }, [content]);
 
-  const { marginOffset } = calcFontMetrics({ font: fontData });
+  const { marginOffset } = calcFontMetrics({ font: elementFontData });
   const props = {
-    font: fontData,
+    font: elementFontData,
     element,
     marginOffset: dataToEditorY(marginOffset),
     ...(backgroundTextMode === BACKGROUND_TEXT_MODE.NONE
@@ -333,6 +323,7 @@ function TextDisplay({
 
 TextDisplay.propTypes = {
   element: StoryPropTypes.elements.text.isRequired,
+  elementFontData: PropTypes.object,
   box: StoryPropTypes.box.isRequired,
   previewMode: PropTypes.bool,
   maybeEnqueueFontStyle: PropTypes.func,

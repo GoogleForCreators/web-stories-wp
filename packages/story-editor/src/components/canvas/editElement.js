@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { memo, useState, forwardRef } from '@googleforcreators/react';
+import { memo, useState, forwardRef, useMemo } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useUnits } from '@googleforcreators/units';
@@ -57,8 +57,13 @@ const EditElement = memo(
     const { getProxiedUrl } = useCORSProxy();
     const { isRTL, styleConstants: { topOffset } = {} } = useConfig();
     const {
-      actions: { maybeEnqueueFontStyle },
+      actions: { maybeEnqueueFontStyle, getFontByName },
     } = useFont();
+
+    const elementFontData = useMemo(
+      () => getFontByName(element.font?.family),
+      [element, getFontByName]
+    );
 
     // Update the true global properties of the current element
     // This now only happens on unmount
@@ -90,6 +95,7 @@ const EditElement = memo(
     return (
       <Wrapper aria-labelledby={`layer-${id}`} {...editBox} ref={ref}>
         <Edit
+          elementFontData={elementFontData}
           element={elementWithLocal}
           box={editBox}
           editWrapper={editWrapper}

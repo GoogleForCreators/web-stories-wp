@@ -49,7 +49,6 @@
     "@googleforcreators/stickers": "*",
     "@googleforcreators/transform": "*",
     "@googleforcreators/units": "*",
-    "@googleforcreators/story-editor":  "*",
     "classnames": "^2.3.2",
     "polished": "^4.2.2",
     "prop-types": "^15.7.2",

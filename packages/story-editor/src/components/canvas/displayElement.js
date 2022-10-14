@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { memo, useRef, useState } from '@googleforcreators/react';
+import { memo, useRef, useState, useMemo } from '@googleforcreators/react';
 import styled, { css } from 'styled-components';
 import { generatePatternStyles } from '@googleforcreators/patterns';
 import { calcRotatedResizeOffset, useUnits } from '@googleforcreators/units';
@@ -119,8 +119,13 @@ function DisplayElement({
   }));
   const { getProxiedUrl } = useCORSProxy();
   const {
-    actions: { maybeEnqueueFontStyle },
+    actions: { maybeEnqueueFontStyle, getFontByName },
   } = useFont();
+
+  const elementFontData = useMemo(
+    () => getFontByName(element.font?.family),
+    [element, getFontByName]
+  );
 
   const [replacement, setReplacement] = useState(null);
 
@@ -253,6 +258,7 @@ function DisplayElement({
         >
           <Display
             element={element}
+            elementFontData={elementFontData}
             previewMode={previewMode}
             box={box}
             getProxiedUrl={getProxiedUrl}
@@ -300,6 +306,7 @@ function DisplayElement({
 DisplayElement.propTypes = {
   previewMode: PropTypes.bool,
   element: StoryPropTypes.element.isRequired,
+  fontData: PropTypes.object,
   siblingCount: PropTypes.number,
   isAnimatable: PropTypes.bool,
 };

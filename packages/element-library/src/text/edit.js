@@ -44,7 +44,6 @@ import {
   StoryPropTypes,
   BACKGROUND_TEXT_MODE,
 } from '@googleforcreators/elements';
-import { useFont } from '@googleforcreators/story-editor';
 
 /**
  * Internal dependencies
@@ -127,6 +126,7 @@ function TextEdit({
   updateElementById,
   deleteSelectedElements,
   maybeEnqueueFontStyle,
+  elementFontData,
 }) {
   const {
     id,
@@ -141,15 +141,6 @@ function TextEdit({
   } = element;
 
   const { font } = rest;
-
-  const { getFontByName } = useFont(({ actions: { getFontByName } }) => ({
-    getFontByName,
-  }));
-
-  const fontData = useMemo(
-    () => getFontByName(font?.family),
-    [font, getFontByName]
-  );
 
   const { top = 0, bottom = 0, left = 0, right = 0 } = border || {};
   const fontFaceSetConfigs = useMemo(() => {
@@ -181,7 +172,7 @@ function TextEdit({
       dataToEditorY,
       element
     ),
-    font: fontData,
+    font: elementFontData,
     element,
     backgroundColor,
     opacity,
@@ -288,7 +279,7 @@ function TextEdit({
   const handleResize = useCallback(() => {
     const wrapper = wrapperRef.current;
     const textBox = textBoxRef.current;
-    const { marginOffset } = calcFontMetrics({ font: fontData });
+    const { marginOffset } = calcFontMetrics({ font: elementFontData });
     editorHeightRef.current =
       textBox.offsetHeight - dataToEditorY(marginOffset);
     wrapper.style.height = `${editorHeightRef.current}px`;
@@ -307,7 +298,7 @@ function TextEdit({
       editWrapper.style.top = `${boxRef.current.y + dy}px`;
       onResize && onResize();
     }
-  }, [dataToEditorY, editWrapper, onResize, top, bottom, fontData]);
+  }, [dataToEditorY, editWrapper, onResize, top, bottom, elementFontData]);
   // Invoke on each content update.
   const handleUpdate = useCallback(
     (newContent) => {
@@ -440,6 +431,7 @@ function TextEdit({
 
 TextEdit.propTypes = {
   element: StoryPropTypes.elements.text.isRequired,
+  elementFontData: PropTypes.object,
   box: StoryPropTypes.box.isRequired,
   onResize: PropTypes.func,
   editWrapper: PropTypes.object,
