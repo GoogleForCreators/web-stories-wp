@@ -310,6 +310,17 @@ class Experiments extends Service_Base implements HasRequirements {
 				'description' => __( 'Enable support for segmenting video files', 'web-stories' ),
 				'group'       => 'editor',
 			],
+			/**
+			 * Author: @spacedmonkey
+			 * Issue: #12028
+			 * Creation date: 2022-10-14
+			 */
+			[
+				'name'        => 'hotlinkPosterTheme',
+				'label'       => __( 'Use hotlink poster images in themes', 'web-stories' ),
+				'description' => __( 'Enable theme support for hotlink poster images.', 'web-stories' ),
+				'group'       => 'general',
+			],
 		];
 	}
 

@@ -120,7 +120,13 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 
 		$media = $this->injector->make( \Google\Web_Stories\Media\Image_Sizes::class );
 		$media->register();
-		$this->instance = $this->injector->make( \Google\Web_Stories\Story_Post_Type::class );
+
+		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
+		$experiments->method( 'is_experiment_enabled' )
+					->willReturn( true );
+
+		$settings       = $this->injector->make( \Google\Web_Stories\Settings::class );
+		$this->instance = new \Google\Web_Stories\Story_Post_Type( $settings, $experiments );
 
 		$this->add_caps_to_roles();
 	}
@@ -152,7 +158,34 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 				]
 			)
 		);
+		$this->assertSame( 10, has_filter( 'has_post_thumbnail', [ $this->instance, 'has_post_thumbnail' ] ) );
+		$this->assertSame( 10, has_filter( 'post_thumbnail_html', [ $this->instance, 'post_thumbnail_html' ] ) );
 	}
+
+	/**
+	 * @covers ::register
+	 */
+	public function test_register_disable_filters(): void {
+		$instance = $this->injector->make( \Google\Web_Stories\Story_Post_Type::class );
+
+		$this->assertSame( 10, has_filter( 'wp_insert_post_data', [ $instance, 'change_default_title' ] ) );
+		$this->assertSame( 10, has_filter( 'wp_insert_post_empty_content', [ $instance, 'filter_empty_content' ] ) );
+		$this->assertSame(
+			10,
+			has_filter(
+				'bulk_post_updated_messages',
+				[
+					$instance,
+					'bulk_post_updated_messages',
+				]
+			)
+		);
+		$this->assertFalse( has_filter( 'has_post_thumbnail', [ $instance, 'has_post_thumbnail' ] ) );
+		$this->assertFalse( has_filter( 'post_thumbnail_html', [ $instance, 'post_thumbnail_html' ] ) );
+
+	}
+
+
 
 	/**
 	 * @covers ::get_post_type_icon

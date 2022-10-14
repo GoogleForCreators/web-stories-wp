@@ -33,7 +33,8 @@ trait Kses_Setup {
 	 */
 	protected function kses_int(): void {
 		$settings        = $this->createMock( \Google\Web_Stories\Settings::class );
-		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $settings );
+		$experiments     = $this->createMock( \Google\Web_Stories\Experiments::class );
+		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $settings, $experiments );
 		$this->kses      = new \Google\Web_Stories\KSES(
 			$story_post_type,
 			new \Google\Web_Stories\Page_Template_Post_Type( $story_post_type )
