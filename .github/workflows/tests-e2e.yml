@@ -150,10 +150,6 @@ jobs:
             snapshots: true
             shard: '2/2'
           - browser: 'chrome'
-            wp: 'latest'
-            snapshots: true
-            shard: '1/2'
-          - browser: 'chrome'
             wp: '6.1-RC1'
             experimental: true
             snapshots: false
