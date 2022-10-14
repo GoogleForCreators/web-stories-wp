@@ -23,10 +23,6 @@ namespace Google\Web_Stories\Tests\Integration;
  * @coversDefaultClass \Google\Web_Stories\Remove_Transients
  */
 class Remove_Transients extends DependencyInjectedTestCase {
-	protected static $attachment_ids;
-
-	protected static $user_id;
-
 	/**
 	 * Test instance.
 	 *
