@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { createNewStory } from '@web-stories-wp/e2e-test-utils';
+import { addTextElement, createNewStory } from '@web-stories-wp/e2e-test-utils';
 
 jest.retryTimes(2, { logErrorsBeforeRetry: true });
 
@@ -29,15 +29,8 @@ describe('Floating Menu', () => {
   });
 
   it('should display text floating menu', async () => {
-    // Open a text tab
-    await expect(page).toClick('#library-tab-text');
+    await addTextElement('Paragraph');
 
-    // Add a paragraph
-    await expect(page).toClick('#library-pane-text button span', {
-      text: /^Paragraph/,
-    });
-
-    // Floating menu should show up
     await page.waitForSelector(floatingMenu);
     await expect(page).toMatchElement(floatingMenu);
   });

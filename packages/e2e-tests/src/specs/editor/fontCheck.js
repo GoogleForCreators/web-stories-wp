@@ -27,6 +27,7 @@ import {
   visitSettings,
   removeAllFonts,
   addRequestInterception,
+  addTextElement,
 } from '@web-stories-wp/e2e-test-utils';
 
 const OPEN_SANS_CONDENSED_LIGHT = 'Open Sans Condensed Light';
@@ -54,14 +55,7 @@ async function changeFont(fontName) {
 async function createStoryWithFont(title, font = OPEN_SANS_CONDENSED_LIGHT) {
   await createNewStory();
   await insertStoryTitle(title);
-  await expect(page).toClick('#library-tab-text');
-  const insertButton = await page.waitForSelector(
-    `xpath/.//button//span[contains(text(), 'Title 1')]`
-  );
-  await insertButton.click();
-  await expect(page).toMatchElement('[data-testid="textFrame"]', {
-    text: 'Title 1',
-  });
+  await addTextElement('Title 1');
 
   await changeFont(font);
 
