@@ -42,7 +42,7 @@ class Remove_Transients extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::delete_transients
 	 */
-	public function test_delete_options(): void {
+	public function test_delete_transients(): void {
 		$this->call_private_method( $this->instance, 'delete_transients' );
 		$this->assertFalse( get_transient( 'web_stories_link_data_fdsf' ) );
 	}
@@ -51,7 +51,7 @@ class Remove_Transients extends DependencyInjectedTestCase {
 	 * @group ms-required
 	 * @covers ::delete_network_transients
 	 */
-	public function test_delete_site_options(): void {
+	public function test_delete_network_transients(): void {
 		$this->call_private_method( $this->instance, 'delete_network_transients' );
 		$this->assertFalse( get_site_transient( 'web_stories_updater' ) );
 	}
