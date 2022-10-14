@@ -145,6 +145,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     isCurrentResourceMuting,
     isCurrentResourceTrimming,
     canTranscodeResource,
+    isBatchUploading,
   } = useUploadMedia({
     media,
     prependMedia,
@@ -284,6 +285,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     muteExistingVideo,
     cropExistingVideo,
     trimExistingVideo,
+    segmentVideo,
   } = useProcessMedia({
     postProcessingResource,
     uploadMedia,
@@ -325,6 +327,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
       isCurrentResourceMuting,
       isCurrentResourceTrimming,
       canTranscodeResource,
+      isBatchUploading,
     },
     actions: {
       setNextPage,
@@ -344,6 +347,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
       updateBaseColor,
       updateBlurHash,
       cropExistingVideo,
+      segmentVideo,
     },
   };
 }

@@ -149,6 +149,11 @@ function useMediaInfo() {
         // This will expose the window.MediaInfo global.
         await loadScriptOnce(mediainfoUrl);
 
+        // If for some reason it's not available yet.
+        if (!window.MediaInfo) {
+          return null;
+        }
+
         const mediaInfo = await window.MediaInfo({ format: 'JSON' });
         const result = JSON.parse(
           await mediaInfo.analyzeData(getSize, readChunk)
