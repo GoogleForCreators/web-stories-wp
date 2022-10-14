@@ -1,0 +1,36 @@
+diff --git a/node_modules/jest-environment-puppeteer/lib/PuppeteerEnvironment.js b/node_modules/jest-environment-puppeteer/lib/PuppeteerEnvironment.js
+index 0e557bc..497ce33 100644
+--- a/node_modules/jest-environment-puppeteer/lib/PuppeteerEnvironment.js
++++ b/node_modules/jest-environment-puppeteer/lib/PuppeteerEnvironment.js
+@@ -65,8 +65,6 @@ class PuppeteerEnvironment extends _jestEnvironmentNode.default {
+           debugger;
+         }); // eslint-disable-next-line no-console
+ 
+-        console.log(_chalk.default.blue('\n\n🕵️‍  Code is paused, press enter to resume')); // Run an infinite promise
+-
+         return new Promise(resolve => {
+           const {
+             stdin
+@@ -172,11 +170,20 @@ class PuppeteerEnvironment extends _jestEnvironmentNode.default {
+       if (context) {
+         await context.close();
+       }
+-    } else if (page) {
++    } else if (page && !page.isClosed()) {
+       await page.close();
+     }
+ 
+-    if (browser) {
++    if (browser && browser.isConnected()) {
++      const pages = await browser.pages();
++      console.log('pages', pages);
++      if (pages) {
++        for (const page of pages) {
++          if (page && !page.isClosed()) {
++            await page.close();
++          }
++        }
++      }
+       await browser.disconnect();
+     }
+   }
