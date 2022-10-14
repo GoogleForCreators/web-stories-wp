@@ -26,7 +26,13 @@ import {
   calculateTextHeight,
 } from '../utils/textMeasurements';
 
-function updateForResizeEvent(element, direction, newWidth, newHeight) {
+function updateForResizeEvent(
+  element,
+  direction,
+  newWidth,
+  newHeight,
+  elementFontData
+) {
   const isResizingWidth = direction[0] !== 0;
   const isResizingHeight = direction[1] !== 0;
 
@@ -35,7 +41,8 @@ function updateForResizeEvent(element, direction, newWidth, newHeight) {
     const { fontSize, marginOffset } = calculateFitTextFontSize(
       element,
       newWidth || element.width,
-      newHeight
+      newHeight,
+      elementFontData
     );
 
     return {
@@ -46,7 +53,11 @@ function updateForResizeEvent(element, direction, newWidth, newHeight) {
 
   // Width-only resize: recalc height.
   if (isResizingWidth) {
-    return { height: dataPixels(calculateTextHeight(element, newWidth)) };
+    return {
+      height: dataPixels(
+        calculateTextHeight(element, newWidth, null, elementFontData)
+      ),
+    };
   }
 
   return null;

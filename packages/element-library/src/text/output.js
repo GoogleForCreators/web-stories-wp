@@ -65,6 +65,7 @@ export function TextOutputWithUnits({
   dataToPaddingX,
   dataToPaddingY,
   className,
+  elementFontData,
 }) {
   const {
     content: rawContent,
@@ -99,7 +100,6 @@ export function TextOutputWithUnits({
       ? generatePatternStyles(backgroundColor)
       : undefined;
 
-  // @todo pull metrics off story data fonts
   const {
     dataToEditorY: _dataToEditorY,
     font: _font,
@@ -109,7 +109,7 @@ export function TextOutputWithUnits({
     dataToStyleX,
     dataToStyleY,
     dataToFontSizeY,
-    element,
+    { ...element, font: elementFontData },
     dataToPaddingY
   );
   const fillStyle = {
@@ -148,9 +148,8 @@ export function TextOutputWithUnits({
     right: 0,
   };
 
-  const marginStyle = (el) => {
-    // @todo pull metrics off story data fonts
-    const { marginOffset } = calcFontMetrics(el);
+  const marginStyle = () => {
+    const { marginOffset } = calcFontMetrics({ font: elementFontData });
     return {
       display: 'block',
       position: 'relative',
@@ -241,6 +240,7 @@ TextOutputWithUnits.propTypes = {
   dataToPaddingX: PropTypes.func,
   dataToPaddingY: PropTypes.func,
   className: PropTypes.string,
+  elementFontData: PropTypes.object,
 };
 
 /**

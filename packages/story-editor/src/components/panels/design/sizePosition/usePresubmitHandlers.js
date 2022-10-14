@@ -48,7 +48,6 @@ function usePresubmitHandlers(lockAspectRatio, height, width) {
       if (!isResizeWidth && !isResizeHeight) {
         return null;
       }
-
       // Use resize rules if available.
       const { updateForResizeEvent } = getDefinitionForType(type);
       if (updateForResizeEvent) {
@@ -57,7 +56,8 @@ function usePresubmitHandlers(lockAspectRatio, height, width) {
           newElement,
           direction,
           clamp(newWidth, MIN_MAX.WIDTH),
-          clamp(newHeight, MIN_MAX.HEIGHT)
+          clamp(newHeight, MIN_MAX.HEIGHT),
+          null
         );
       }
 

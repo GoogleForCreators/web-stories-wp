@@ -28,6 +28,7 @@ import { useState } from '@googleforcreators/react';
 import { useStory } from '../../../app';
 import useElementOutOfCanvas from '../utils/useElementOutOfCanvas';
 import useFullbleedMediaAsBackground from '../utils/useFullbleedMediaAsBackground';
+import { useFont } from '../../../app/font';
 
 const EMPTY_HANDLES = [];
 const VERTICAL_HANDLES = ['n', 's'];
@@ -71,6 +72,10 @@ function useSingleSelectionResize({
       })
     );
 
+  const {
+    actions: { getFontByName },
+  } = useFont();
+
   const { lockAspectRatio: elementLockRatio, type, border } = selectedElement;
   const isText = type === 'text';
   const [isResizingFromCorner, setIsResizingFromCorner] = useState(true);
@@ -107,13 +112,14 @@ function useSingleSelectionResize({
       newWidth = Math.max(newWidth, minWidth);
     }
 
-    // @todo pull font metrics at story level
     if (updateForResizeEvent) {
+      const elementFontData = getFontByName(selectedElement?.font?.family);
       updates = updateForResizeEvent(
         selectedElement,
         direction,
         editorToDataX(newWidth, false),
-        editorToDataY(newHeight, false)
+        editorToDataY(newHeight, false),
+        elementFontData
       );
     }
     if (updates && updates.height) {

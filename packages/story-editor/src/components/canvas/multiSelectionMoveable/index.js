@@ -41,6 +41,7 @@ import isTargetOutOfContainer from '../../../utils/isTargetOutOfContainer';
 import useSnapping from '../utils/useSnapping';
 import useUpdateSelectionRectangle from '../utils/useUpdateSelectionRectangle';
 import useWindowResizeHandler from '../useWindowResizeHandler';
+import { useFont } from '../../../app/font';
 import useDrag from './useDrag';
 import useResize from './useResize';
 import useRotate from './useRotate';
@@ -84,6 +85,10 @@ const MultiSelectionMoveable = forwardRef(function MultiSelectionMoveable(
     actions: { pushTransform },
   } = useTransform();
 
+  const {
+    actions: { getFontByName },
+  } = useFont();
+
   useWindowResizeHandler(moveable);
 
   // Update moveable with whatever properties could be updated outside moveable
@@ -103,6 +108,7 @@ const MultiSelectionMoveable = forwardRef(function MultiSelectionMoveable(
     node: nodesById[element.id],
     updateForResizeEvent: getDefinitionForType(element.type)
       .updateForResizeEvent,
+    elementFontData: getFontByName(element.font?.family),
   }));
 
   /**
@@ -179,7 +185,7 @@ const MultiSelectionMoveable = forwardRef(function MultiSelectionMoveable(
     const updates = {};
     const toRemove = [];
     targets.forEach((target, i) => {
-      const { element, updateForResizeEvent } = targetList[i];
+      const { element, updateForResizeEvent, elementFontData } = targetList[i];
       if (isTargetOutOfContainer(target, fullbleedContainer)) {
         toRemove.push(element.id);
         return;
@@ -209,7 +215,13 @@ const MultiSelectionMoveable = forwardRef(function MultiSelectionMoveable(
         if (updateForResizeEvent) {
           Object.assign(
             properties,
-            updateForResizeEvent(element, direction, newWidth, newHeight)
+            updateForResizeEvent(
+              element,
+              direction,
+              newWidth,
+              newHeight,
+              elementFontData
+            )
           );
         }
       }

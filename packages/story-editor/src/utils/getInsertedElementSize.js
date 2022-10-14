@@ -59,6 +59,7 @@ function getInsertedElementSize(
       width = PAGE_WIDTH / 2;
     }
   }
+
   if (!isNum(height) && updateForResizeEvent) {
     // Try resize API with width-only direction.
     height = updateForResizeEvent(

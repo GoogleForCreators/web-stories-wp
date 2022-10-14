@@ -54,14 +54,19 @@ const MEASURER_PROPS = {
 const MEASURER_NODE = '__WEB_STORIES_MEASURER__';
 const LAST_ELEMENT = '__WEB_STORIES_LASTEL__';
 
-export function calculateTextHeight(element, width) {
-  const measurer = getOrCreateMeasurer(element);
+export function calculateTextHeight(element, width, elementFontData) {
+  const measurer = getOrCreateMeasurer(element, elementFontData);
   setStyles(measurer, { width: `${width}px`, height: null });
   return measurer.parentNode.offsetHeight;
 }
 
-export function calculateFitTextFontSize(element, width, height) {
-  const measurer = getOrCreateMeasurer(element);
+export function calculateFitTextFontSize(
+  element,
+  width,
+  height,
+  elementFontData
+) {
+  const measurer = getOrCreateMeasurer(element, elementFontData);
   setStyles(measurer, { width: `${width}px`, height: null, fontSize: null });
 
   // Binomial search for the best font size.
@@ -70,7 +75,11 @@ export function calculateFitTextFontSize(element, width, height) {
   let margin;
   while (maxFontSize - minFontSize > 1) {
     const mid = dataPixels((minFontSize + maxFontSize) / 2);
-    const { marginOffset } = calcFontMetrics({ ...element, fontSize: mid });
+    const { marginOffset } = calcFontMetrics({
+      ...element,
+      fontSize: mid,
+      font: elementFontData,
+    });
     margin = marginOffset;
     setStyles(measurer, {
       fontSize: `${mid}px`,
@@ -91,7 +100,7 @@ export function calculateFitTextFontSize(element, width, height) {
   return { fontSize: minFontSize, marginOffset: margin };
 }
 
-function getOrCreateMeasurer(element) {
+function getOrCreateMeasurer(element, elementFontData) {
   let measurerNode = document.body[MEASURER_NODE];
   if (!measurerNode) {
     measurerNode = document.createElement('div');
@@ -106,7 +115,11 @@ function getOrCreateMeasurer(element) {
   // diffing.
   if (changed(measurerNode, element)) {
     measurerNode.innerHTML = renderToStaticMarkup(
-      <TextOutputWithUnits element={element} {...MEASURER_PROPS} />,
+      <TextOutputWithUnits
+        element={element}
+        {...MEASURER_PROPS}
+        elementFontData={elementFontData}
+      />,
       measurerNode
     );
   }
