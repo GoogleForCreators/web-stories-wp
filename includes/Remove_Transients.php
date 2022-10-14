@@ -32,19 +32,25 @@ use Google\Web_Stories\Infrastructure\Service;
 /**
  * Uninstaller class.
  */
-class Remove_Options implements Service, PluginUninstallAware {
+class Remove_Transients implements Service, PluginUninstallAware {
 	protected const PREFIX = 'web_stories\_%';
 
 	/**
-	 * Delete network and site option.
+	 * Delete network and site transients.
 	 *
 	 * @since 1.26.0
 	 */
 	public function on_plugin_uninstall(): void {
-		if ( ! is_multisite() ) {
-			$this->delete_options();
+		if ( wp_using_ext_object_cache() ) {
+			return;
 		}
-		$this->delete_site_options();
+
+		if ( ! is_multisite() ) {
+			$this->delete_transients();
+			return;
+		}
+
+		$this->delete_network_transients();
 		$site_ids = get_sites(
 			[
 				'fields'                 => 'ids',
@@ -58,32 +64,19 @@ class Remove_Options implements Service, PluginUninstallAware {
 			// phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.switch_to_blog_switch_to_blog
 			switch_to_blog( $site_id );
 
-			$this->delete_options();
+			$this->delete_transients();
 		}
 
 		restore_current_blog();
 	}
 
 	/**
-	 * Deletes options and transients.
+	 * Delete transients.
 	 *
 	 * @since 1.26.0
 	 */
-	protected function delete_options(): void {
+	protected function delete_transients(): void {
 		global $wpdb;
-
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery
-		$options = $wpdb->get_col(
-			$wpdb->prepare(
-				"SELECT option_name FROM $wpdb->options WHERE option_name LIKE %s",
-				self::PREFIX
-			)
-		);
-
-		if ( ! empty( $options ) ) {
-			array_map( 'delete_option', (array) $options );
-		}
-
 
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery
 		$transients = $wpdb->get_col(
@@ -100,26 +93,12 @@ class Remove_Options implements Service, PluginUninstallAware {
 	}
 
 	/**
-	 * Deletes options and transients on multisite.
+	 * Delete transients on multisite.
 	 *
 	 * @since 1.26.0
 	 */
-	protected function delete_site_options(): void {
+	protected function delete_network_transients(): void {
 		global $wpdb;
-
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery
-		$options = $wpdb->get_results(
-			$wpdb->prepare(
-				"SELECT * FROM $wpdb->sitemeta WHERE meta_key LIKE %s",
-				self::PREFIX
-			)
-		);
-
-		if ( ! empty( $options ) ) {
-			foreach ( (array) $options as $option ) {
-				delete_network_option( $option->site_id, $option->meta_key );
-			}
-		}
 
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery
 		$transients = $wpdb->get_col(
