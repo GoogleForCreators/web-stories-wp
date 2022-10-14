@@ -45,15 +45,22 @@ export type UnionElementV11 =
 
 export interface StoryV11 extends Omit<StoryV10, 'pages'> {
   pages: PageV11[];
-  autoAdvance?: boolean;
-  defaultPageDuration?: number;
+  autoAdvance: boolean;
+  defaultPageDuration: number;
 }
 export interface PageV11 extends Omit<PageV10, 'elements'> {
   elements: UnionElementV11[];
 }
 
 function pageAdvancement(story: StoryV10): StoryV11 {
-  return story as StoryV11;
+  if ('autoAdvance' in story && 'defaultPageDuration' in story) {
+    return story as StoryV11;
+  }
+  return {
+    autoAdvance: true,
+    defaultPageDuration: 7,
+    ...story,
+  };
 }
 
 export default pageAdvancement;
