@@ -125,8 +125,8 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 		$experiments->method( 'is_experiment_enabled' )
 					->willReturn( true );
 
-		$settings       = $this->injector->make( \Google\Web_Stories\Settings::class );
-		$this->instance = new \Google\Web_Stories\Story_Post_Type( $settings, $experiments );
+		$this->settings = $this->injector->make( $this->settings::class );
+		$this->instance = new \Google\Web_Stories\Story_Post_Type( $this->settings, $experiments );
 
 		$this->add_caps_to_roles();
 	}
@@ -134,8 +134,8 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	public function tear_down(): void {
 		$this->remove_caps_from_roles();
 
-		delete_option( \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE );
-		delete_option( \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE_PAGE_ID );
+		delete_option( $this->settings::SETTING_NAME_ARCHIVE );
+		delete_option( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID );
 
 		parent::tear_down();
 	}
@@ -208,7 +208,7 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	 * @covers ::register_post_type
 	 */
 	public function test_register_post_type_disabled(): void {
-		update_option( \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE, 'disabled' );
+		update_option( $this->settings::SETTING_NAME_ARCHIVE, 'disabled' );
 		$post_type = $this->instance->register_post_type();
 		$this->assertFalse( $post_type->has_archive );
 	}
@@ -217,7 +217,7 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	 * @covers ::register_post_type
 	 */
 	public function test_register_post_type_default(): void {
-		update_option( \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE, 'default' );
+		update_option( $this->settings::SETTING_NAME_ARCHIVE, 'default' );
 		$post_type = $this->instance->register_post_type();
 		$this->assertTrue( $post_type->has_archive );
 	}
@@ -288,11 +288,11 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	 * @covers ::get_has_archive
 	 */
 	public function test_get_has_archive_disabled(): void {
-		update_option( \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE, 'disabled' );
+		update_option( $this->settings::SETTING_NAME_ARCHIVE, 'disabled' );
 
 		$actual = $this->instance->get_has_archive();
 
-		delete_option( \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE );
+		delete_option( $this->settings::SETTING_NAME_ARCHIVE );
 
 		$this->assertFalse( $actual );
 	}
@@ -301,11 +301,11 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	 * @covers ::get_has_archive
 	 */
 	public function test_get_has_archive_custom_but_no_page(): void {
-		update_option( \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE, 'custom' );
+		update_option( $this->settings::SETTING_NAME_ARCHIVE, 'custom' );
 
 		$actual = $this->instance->get_has_archive();
 
-		delete_option( \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE );
+		delete_option( $this->settings::SETTING_NAME_ARCHIVE );
 
 		$this->assertTrue( $actual );
 	}
@@ -314,13 +314,13 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	 * @covers ::get_has_archive
 	 */
 	public function test_get_has_archive_custom_but_invalid_page(): void {
-		update_option( \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE, 'custom' );
-		update_option( \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE_PAGE_ID, PHP_INT_MAX );
+		update_option( $this->settings::SETTING_NAME_ARCHIVE, 'custom' );
+		update_option( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID, PHP_INT_MAX );
 
 		$actual = $this->instance->get_has_archive();
 
-		delete_option( \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE );
-		delete_option( \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE_PAGE_ID );
+		delete_option( $this->settings::SETTING_NAME_ARCHIVE );
+		delete_option( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID );
 
 		$this->assertTrue( $actual );
 	}
@@ -329,13 +329,13 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	 * @covers ::get_has_archive
 	 */
 	public function test_get_has_archive_custom(): void {
-		update_option( \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE, 'custom' );
-		update_option( \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE_PAGE_ID, self::$archive_page_id );
+		update_option( $this->settings::SETTING_NAME_ARCHIVE, 'custom' );
+		update_option( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID, self::$archive_page_id );
 
 		$actual = $this->instance->get_has_archive();
 
-		delete_option( \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE );
-		delete_option( \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE_PAGE_ID );
+		delete_option( $this->settings::SETTING_NAME_ARCHIVE );
+		delete_option( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID );
 
 		$this->assertIsString( $actual );
 		$this->assertSame( urldecode( get_page_uri( self::$archive_page_id ) ), $actual );
@@ -345,8 +345,8 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	 * @covers ::get_has_archive
 	 */
 	public function test_get_has_archive_custom_not_published(): void {
-		update_option( \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE, 'custom' );
-		update_option( \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE_PAGE_ID, self::$archive_page_id );
+		update_option( $this->settings::SETTING_NAME_ARCHIVE, 'custom' );
+		update_option( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID, self::$archive_page_id );
 
 		wp_update_post(
 			[
@@ -357,8 +357,8 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 
 		$actual = $this->instance->get_has_archive();
 
-		delete_option( \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE );
-		delete_option( \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE_PAGE_ID );
+		delete_option( $this->settings::SETTING_NAME_ARCHIVE );
+		delete_option( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID );
 
 		wp_update_post(
 			[
