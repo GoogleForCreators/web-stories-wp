@@ -36,14 +36,21 @@ async function deleteAllPublisherLogos() {
 
   /* eslint-disable no-await-in-loop */
   for (const item of publisherLogos) {
-    await item.hover();
+    await item.$eval('button', (button) => button.click());
 
     await expect(item).toClick('button[aria-label^="Publisher logo menu for"]');
 
-    await expect(item).toClick('[aria-label="Menu"] button[role="menuitem"]', {
-      text: 'Delete',
-      visible: true,
-    });
+    await page.waitForSelector(
+      '[role="menu"][aria-label="Menu"][aria-expanded="true"]'
+    );
+
+    await expect(item).toClick(
+      '[role="menu"][aria-label="Menu"] button[role="menuitem"]',
+      {
+        text: 'Delete',
+        visible: true,
+      }
+    );
 
     await expect(page).toMatch('Setting saved.');
   }
@@ -63,7 +70,7 @@ describe('Publisher Logos', () => {
     });
 
     afterEach(async () => {
-      await deleteAllPublisherLogos();
+      await deleteAllMedia();
     });
 
     it('should update the default logo', async () => {
@@ -74,23 +81,18 @@ describe('Publisher Logos', () => {
       const initialDefault = publisherLogos[0];
       const logoToMakeDefault = publisherLogos[1];
 
-      expect(initialDefault).toBeTruthy();
       await expect(initialDefault).toMatchElement('p', { text: 'Default' });
-
-      expect(logoToMakeDefault).toBeTruthy();
       await expect(logoToMakeDefault).not.toMatchElement('p', {
         text: 'Default',
       });
 
+      await logoToMakeDefault.hover();
+
       await expect(logoToMakeDefault).toClick(
         'button[aria-label^="Publisher logo menu for"]'
       );
-      await expect(logoToMakeDefault).toMatchElement(
-        '[aria-label="Menu"] button[role="menuitem"]',
-        {
-          text: 'Set as Default',
-          visible: true,
-        }
+      await page.waitForSelector(
+        '[role="menu"][aria-label="Menu"][aria-expanded="true"]'
       );
       await expect(logoToMakeDefault).toClick(
         '[aria-label="Menu"] button[role="menuitem"]',
@@ -109,10 +111,7 @@ describe('Publisher Logos', () => {
       const oldDefault = updatedPublisherLogos[0];
       const newDefault = updatedPublisherLogos[1];
 
-      expect(oldDefault).toBeTruthy();
       await expect(oldDefault).not.toMatchElement('p', { text: 'Default' });
-
-      expect(newDefault).toBeTruthy();
       await expect(newDefault).toMatchElement('p', { text: 'Default' });
     });
 
