@@ -48,6 +48,55 @@ const LAYOUT_CONTEXT = {
   actions: {},
 };
 
+const FONT_CONTEXT = {
+  state: {
+    fonts: [
+      {
+        name: 'ABeeZee',
+        value: 'ABeeZee',
+        service: 'foo.bar.baz',
+        weights: [400],
+        styles: ['italic', 'regular'],
+        variants: [
+          [0, 400],
+          [1, 400],
+        ],
+        fallbacks: ['serif'],
+      },
+      {
+        name: 'Neu Font',
+        value: 'Neu Font',
+        service: 'foo.bar.baz',
+        weights: [400],
+        styles: ['italic', 'regular'],
+        variants: [
+          [0, 400],
+          [1, 400],
+        ],
+        fallbacks: ['fallback1'],
+      },
+    ],
+  },
+  actions: {
+    maybeEnqueueFontStyle: () => Promise.resolve(),
+    getFontByName: () => ({
+      name: 'Neu Font',
+      value: 'Neu Font',
+      service: 'foo.bar.baz',
+      weights: [400],
+      styles: ['italic', 'regular'],
+      variants: [
+        [0, 400],
+        [1, 400],
+      ],
+      fallbacks: ['fallback1'],
+    }),
+    addRecentFont: jest.fn(),
+    getCustomFonts: jest.fn(),
+    getCuratedFonts: jest.fn(),
+  },
+};
+
 export function TestFrameElement({
   element,
   refs,
@@ -67,55 +116,6 @@ export function TestFrameElement({
     },
     locale: {
       locale: 'en-US',
-    },
-  };
-
-  const fontContext = {
-    state: {
-      fonts: [
-        {
-          name: 'ABeeZee',
-          value: 'ABeeZee',
-          service: 'foo.bar.baz',
-          weights: [400],
-          styles: ['italic', 'regular'],
-          variants: [
-            [0, 400],
-            [1, 400],
-          ],
-          fallbacks: ['serif'],
-        },
-        {
-          name: 'Neu Font',
-          value: 'Neu Font',
-          service: 'foo.bar.baz',
-          weights: [400],
-          styles: ['italic', 'regular'],
-          variants: [
-            [0, 400],
-            [1, 400],
-          ],
-          fallbacks: ['fallback1'],
-        },
-      ],
-    },
-    actions: {
-      maybeEnqueueFontStyle: () => Promise.resolve(),
-      getFontByName: () => ({
-        name: 'Neu Font',
-        value: 'Neu Font',
-        service: 'foo.bar.baz',
-        weights: [400],
-        styles: ['italic', 'regular'],
-        variants: [
-          [0, 400],
-          [1, 400],
-        ],
-        fallbacks: ['fallback1'],
-      }),
-      addRecentFont: jest.fn(),
-      getCustomFonts: jest.fn(),
-      getCuratedFonts: jest.fn(),
     },
   };
 
@@ -149,7 +149,7 @@ export function TestFrameElement({
   return (
     <ThemeProvider theme={theme}>
       <ConfigProvider config={configContext}>
-        <FontProvider value={fontContext}>
+        <FontProvider value={FONT_CONTEXT}>
           <StoryContext.Provider value={storyContext}>
             <LayoutContext.Provider value={LAYOUT_CONTEXT}>
               <CanvasProvider>
@@ -219,19 +219,21 @@ export function TestDisplayElement({
   return (
     <ThemeProvider theme={theme}>
       <ConfigProvider config={configContext}>
-        <StoryContext.Provider value={storyContext}>
-          <LayoutContext.Provider value={LAYOUT_CONTEXT}>
-            <CanvasProvider>
-              <MediaProvider>
-                <TransformProvider>
-                  <WithRefs refs={refs}>
-                    <DisplayElement element={element} page={null} />
-                  </WithRefs>
-                </TransformProvider>
-              </MediaProvider>
-            </CanvasProvider>
-          </LayoutContext.Provider>
-        </StoryContext.Provider>
+        <FontProvider value={FONT_CONTEXT}>
+          <StoryContext.Provider value={storyContext}>
+            <LayoutContext.Provider value={LAYOUT_CONTEXT}>
+              <CanvasProvider>
+                <MediaProvider>
+                  <TransformProvider>
+                    <WithRefs refs={refs}>
+                      <DisplayElement element={element} page={null} />
+                    </WithRefs>
+                  </TransformProvider>
+                </MediaProvider>
+              </CanvasProvider>
+            </LayoutContext.Provider>
+          </StoryContext.Provider>
+        </FontProvider>
       </ConfigProvider>
     </ThemeProvider>
   );
