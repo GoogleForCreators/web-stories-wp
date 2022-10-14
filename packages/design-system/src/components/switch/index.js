@@ -212,6 +212,7 @@ export const Switch = forwardRef(function Switch(
         htmlFor={ids.onInput}
         isActive={value}
         disabled={disabled}
+        darkTheme={darkTheme}
       >
         {onLabel}
         <HiddenRadioButton
