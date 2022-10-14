@@ -24,7 +24,7 @@
     "node": ">= 12 || >= 14 || >= 16",
     "npm": ">= 7.3"
   },
-  "main": "./src/index.ts",
+  "main": "./src/index.tsx",
   "types": "dist-types/index.d.ts",
   "dependencies": {
     "@googleforcreators/tracking": "*",
