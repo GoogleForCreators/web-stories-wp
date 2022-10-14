@@ -65,16 +65,6 @@ async function addCategory(name, parent) {
 
     await expect(page).toClick('li[role="option"]', { text: parent });
 
-    const isDropdownStillOpen = await page.evaluate(
-      () =>
-        document.querySelector('button[aria-label="Parent Category"]')
-          .ariaExpanded === 'true'
-    );
-
-    if (isDropdownStillOpen) {
-      await expect(page).toClick('button[aria-label="Parent Category"]');
-    }
-
     await expect(page).toMatchElement('button[aria-label="Parent Category"]', {
       text: parent,
     });
