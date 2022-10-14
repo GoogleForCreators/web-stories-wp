@@ -30,6 +30,7 @@ import DisplayElement from '../displayElement';
 import { CanvasProvider } from '../../../app/canvas';
 import LayoutContext from '../../../app/layout/context';
 import ConfigProvider from '../../../app/config/configProvider';
+import { FontProvider } from '../../../app/font';
 import StoryContext from '../../../app/story/context';
 import theme from '../../../theme';
 import useEditingElement from '../../../app/canvas/useEditingElement';
@@ -68,6 +69,56 @@ export function TestFrameElement({
       locale: 'en-US',
     },
   };
+
+  const fontContext = {
+    state: {
+      fonts: [
+        {
+          name: 'ABeeZee',
+          value: 'ABeeZee',
+          service: 'foo.bar.baz',
+          weights: [400],
+          styles: ['italic', 'regular'],
+          variants: [
+            [0, 400],
+            [1, 400],
+          ],
+          fallbacks: ['serif'],
+        },
+        {
+          name: 'Neu Font',
+          value: 'Neu Font',
+          service: 'foo.bar.baz',
+          weights: [400],
+          styles: ['italic', 'regular'],
+          variants: [
+            [0, 400],
+            [1, 400],
+          ],
+          fallbacks: ['fallback1'],
+        },
+      ],
+    },
+    actions: {
+      maybeEnqueueFontStyle: () => Promise.resolve(),
+      getFontByName: () => ({
+        name: 'Neu Font',
+        value: 'Neu Font',
+        service: 'foo.bar.baz',
+        weights: [400],
+        styles: ['italic', 'regular'],
+        variants: [
+          [0, 400],
+          [1, 400],
+        ],
+        fallbacks: ['fallback1'],
+      }),
+      addRecentFont: jest.fn(),
+      getCustomFonts: jest.fn(),
+      getCuratedFonts: jest.fn(),
+    },
+  };
+
   const storyContext = {
     ...inputStoryContext,
     state: {
@@ -98,21 +149,23 @@ export function TestFrameElement({
   return (
     <ThemeProvider theme={theme}>
       <ConfigProvider config={configContext}>
-        <StoryContext.Provider value={storyContext}>
-          <LayoutContext.Provider value={LAYOUT_CONTEXT}>
-            <CanvasProvider>
-              <TransformProvider>
-                <DropTargetsProvider>
-                  <WithRefs refs={refs}>
-                    <EditLayerFocusManager>
-                      <FrameElement id={element.id} />
-                    </EditLayerFocusManager>
-                  </WithRefs>
-                </DropTargetsProvider>
-              </TransformProvider>
-            </CanvasProvider>
-          </LayoutContext.Provider>
-        </StoryContext.Provider>
+        <FontProvider value={fontContext}>
+          <StoryContext.Provider value={storyContext}>
+            <LayoutContext.Provider value={LAYOUT_CONTEXT}>
+              <CanvasProvider>
+                <TransformProvider>
+                  <DropTargetsProvider>
+                    <WithRefs refs={refs}>
+                      <EditLayerFocusManager>
+                        <FrameElement id={element.id} />
+                      </EditLayerFocusManager>
+                    </WithRefs>
+                  </DropTargetsProvider>
+                </TransformProvider>
+              </CanvasProvider>
+            </LayoutContext.Provider>
+          </StoryContext.Provider>
+        </FontProvider>
       </ConfigProvider>
     </ThemeProvider>
   );

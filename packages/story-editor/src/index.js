@@ -51,7 +51,6 @@ export { default as SidebarContext } from './components/sidebar/context';
 export { AutoSaveCheck } from './components/autoSaveCheck';
 export { default as useIsUploadingToStory } from './utils/useIsUploadingToStory';
 export { getInUseFontsForPages } from './utils/getInUseFonts';
-export { useFont } from './app/font';
 export {
   styles as highlightStyles,
   states as highlightStates,
