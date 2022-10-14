@@ -30,5 +30,6 @@ export { default as TextAccessibilityPanel } from './textAccessibility';
 export { default as TextStylePanel } from './textStyle';
 export { default as VideoAccessibilityPanel } from './videoAccessibility';
 export { default as VideoOptionsPanel } from './videoOptions';
+export { default as VideoSegmentPanel } from './videoSegment';
 export { default as PageBackgroundAudioPanel } from './pageBackgroundAudio';
 export { default as ProductPanel } from './product';

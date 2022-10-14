@@ -22,13 +22,19 @@ import * as types from './types';
 // Exposed actions
 const addPage =
   (dispatch) =>
-  ({ page }) =>
-    dispatch({ type: types.ADD_PAGE, payload: { page, position: null } });
+  ({ page, position, updateSelection }) =>
+    dispatch({
+      type: types.ADD_PAGE,
+      payload: { page, position, updateSelection },
+    });
 
 const addPageAt =
   (dispatch) =>
-  ({ page, position }) =>
-    dispatch({ type: types.ADD_PAGE, payload: { page, position } });
+  ({ page, position, updateSelection }) =>
+    dispatch({
+      type: types.ADD_PAGE,
+      payload: { page, position, updateSelection },
+    });
 
 const deletePage =
   (dispatch) =>
@@ -63,13 +69,19 @@ const setCurrentPage =
 
 const addElements =
   (dispatch) =>
-  ({ elements }) =>
-    dispatch({ type: types.ADD_ELEMENTS, payload: { elements } });
+  ({ elements, pageId, updateSelection }) =>
+    dispatch({
+      type: types.ADD_ELEMENTS,
+      payload: { elements, pageId, updateSelection },
+    });
 
 const addElement =
   (dispatch) =>
-  ({ element }) =>
-    dispatch({ type: types.ADD_ELEMENTS, payload: { elements: [element] } });
+  ({ element, pageId, updateSelection }) =>
+    dispatch({
+      type: types.ADD_ELEMENTS,
+      payload: { elements: [element], pageId, updateSelection },
+    });
 
 const deleteElementsById =
   (dispatch) =>
@@ -288,6 +300,14 @@ const removeElementFromGroup =
       payload: { elementId, groupId },
     });
 
+const addElementsAcrossPages =
+  (dispatch) =>
+  ({ elements, page, position }) =>
+    dispatch({
+      type: types.ADD_ELEMENTS_ACROSS_PAGES,
+      payload: { elements, page, position },
+    });
+
 export const exposedActions = {
   addPage,
   addPageAt,
@@ -331,6 +351,7 @@ export const exposedActions = {
   deleteGroupAndElementsById,
   duplicateGroupById,
   removeElementFromGroup,
+  addElementsAcrossPages,
 };
 
 // Internal actions
