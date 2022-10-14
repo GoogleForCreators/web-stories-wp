@@ -53,11 +53,9 @@ export interface PageV44 extends Omit<PageV43, 'elements'> {
 }
 
 function pageAdvancement(story: StoryV43): StoryV44 {
-  if ('autoAdvance' in story && 'defaultPageDuration' in story) {
-    const { autoAdvance, defaultPageDuration, ...rest } = story;
-    if (autoAdvance && defaultPageDuration === 7) {
-      return rest;
-    }
+  const { autoAdvance, defaultPageDuration, ...rest } = story;
+  if (autoAdvance && defaultPageDuration === 7) {
+    return rest;
   }
   return story;
 }
