@@ -38,7 +38,9 @@ async function createNewTerm(taxonomy, term, parent) {
 
   await page.click('#submit');
 
-  await expect(page).toMatch('Item added.');
+  await expect(page).toMatchElement('td.slug', {
+    text: term.replaceAll(' ', '-'),
+  });
 }
 
 export default createNewTerm;
