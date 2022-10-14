@@ -69,10 +69,6 @@ describe('Web Stories Widget', () => {
           text: 'Done',
         }
       );
-
-      await expect(page).toMatchElement(
-        '.widget-liquid-right .widget-control-save:disabled'
-      );
     });
   });
 

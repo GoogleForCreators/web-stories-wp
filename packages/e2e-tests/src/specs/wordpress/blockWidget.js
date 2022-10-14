@@ -78,6 +78,10 @@ describe('Web Stories Widget Block', () => {
     );
     await expect(page).toClick('button[aria-label="Embed"]');
 
+    await page.waitForFunction(
+      () => !document.querySelector('.wp-block-web-stories-embed.is-loading')
+    );
+
     await expect(page).not.toMatch(
       'Sorry, this content could not be embedded.'
     );

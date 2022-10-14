@@ -37,7 +37,7 @@ async function deleteWidgets() {
   /* eslint-disable no-await-in-loop */
   while (await hasWidgets()) {
     // Catching race conditions.
-    if (!(await hasWidgets())) {
+    if (!(await page.$('#widgets-right .widget .widget-action'))) {
       break;
     }
 
