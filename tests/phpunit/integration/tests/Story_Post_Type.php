@@ -125,7 +125,7 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 		$experiments->method( 'is_experiment_enabled' )
 					->willReturn( true );
 
-		$this->settings = $this->injector->make( $this->settings::class );
+		$this->settings = $this->injector->make( \Google\Web_Stories\Settings::class );
 		$this->instance = new \Google\Web_Stories\Story_Post_Type( $this->settings, $experiments );
 
 		$this->add_caps_to_roles();
