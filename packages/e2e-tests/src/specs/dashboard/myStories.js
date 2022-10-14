@@ -65,7 +65,6 @@ describe('Stories Dashboard', () => {
       response.url().includes('web-stories/v1/web-story/')
     );
 
-    await expect(page).toMatch(/Start telling Stories/);
     await expect(page).not.toMatchElement('h3', {
       text: storyName,
     });
