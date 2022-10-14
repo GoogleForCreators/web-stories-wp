@@ -41,7 +41,7 @@ describe('AMP plugin integration', () => {
     await addTextElement();
 
     const editorPage = page;
-    const previewPage = await previewStory(editorPage);
+    const previewPage = await previewStory();
 
     await expect(previewPage).toMatchElement('amp-analytics');
 

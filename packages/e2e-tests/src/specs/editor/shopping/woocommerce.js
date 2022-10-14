@@ -48,7 +48,7 @@ describe('Shopping', () => {
         await insertProduct('Hoodie with Zipper', true);
         await insertProduct('Album', false);
         await insertProduct('Sunglasses', false);
-        const previewPage = await previewStory(page);
+        const previewPage = await previewStory();
 
         await previewPage.waitForSelector(
           'amp-story-shopping-attachment script'

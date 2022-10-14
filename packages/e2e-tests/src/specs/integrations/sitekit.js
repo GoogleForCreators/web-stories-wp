@@ -51,7 +51,7 @@ describe('Site Kit plugin integration', () => {
         await addTextElement();
 
         const editorPage = page;
-        const previewPage = await previewStory(editorPage);
+        const previewPage = await previewStory();
         await expect(previewPage).toMatch('XXX-YYY');
 
         await editorPage.bringToFront();

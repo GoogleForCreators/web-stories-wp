@@ -19,9 +19,10 @@
 /**
  * Attempts to open the story preview in a new tab.
  *
+ * @param {boolean} waitForStoryDebugView Whether to wait for the expected dev view.
  * @return {Promise<Page>} Preview page object.
  */
-async function previewStory() {
+async function previewStory(waitForStoryDebugView = true) {
   const previewPagePromise = new Promise((resolve, reject) => {
     setTimeout(
       () => reject(new Error('There was an error previewing the story')),
@@ -40,11 +41,13 @@ async function previewStory() {
     () => !document.title.includes('Generating the preview')
   );
 
-  await previewPage.waitForSelector('.i-amphtml-story-dev-tools-header');
+  if (waitForStoryDebugView) {
+    await previewPage.waitForSelector('.i-amphtml-story-dev-tools-header');
 
-  await expect(previewPage).toMatch(/Preview/i);
-  await expect(previewPage).toMatch(/Debug/i);
-  await expect(previewPage).toMatch(/Add device/i);
+    await expect(previewPage).toMatch(/Preview/i);
+    await expect(previewPage).toMatch(/Debug/i);
+    await expect(previewPage).toMatch(/Add device/i);
+  }
 
   return previewPage;
 }

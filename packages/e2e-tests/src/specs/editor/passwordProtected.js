@@ -61,7 +61,9 @@ describe('Password protected stories', () => {
     await page.type('input[placeholder="Enter a password"]', 'password');
 
     const editorPage = page;
-    const previewPage = await previewStory(editorPage);
+    const previewPage = await previewStory(false);
+
+    await expect(previewPage).toMatch('Protected: Password protected story');
 
     await expect(previewPage).not.toMatch('Page not found');
 
