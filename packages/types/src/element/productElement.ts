@@ -17,8 +17,9 @@
 /**
  * Internal dependencies
  */
-import type { Element } from './element';
+import type { Element, ElementType } from './element';
 
 export interface ProductElement extends Element {
   productId: string;
+  type: ElementType.Product;
 }
