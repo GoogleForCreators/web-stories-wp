@@ -26,6 +26,7 @@ import {
   MIN_IMG_HEIGHT,
   useConfig,
 } from '@googleforcreators/dashboard';
+import { preloadImage } from '@googleforcreators/media';
 
 /**
  * Internal dependencies
@@ -219,16 +220,7 @@ function EditorSettings() {
           return;
         }
 
-        imagePromises.push(
-          new Promise((resolve, reject) => {
-            const img = new Image();
-
-            img.onload = () => resolve(img);
-            img.onerror = () => reject(new Error(file.name));
-
-            img.src = URL.createObjectURL(file);
-          })
-        );
+        imagePromises.push(preloadImage({ src: URL.createObjectURL(file) }));
       });
 
       if (!allFileSizesWithinMaxUpload) {

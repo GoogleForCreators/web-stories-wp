@@ -147,6 +147,10 @@ function reducer(state, { type, payload }) {
       return reducers.removeElementFromGroup(state, payload);
     }
 
+    case types.ADD_ELEMENTS_ACROSS_PAGES: {
+      return reducers.addElementsAcrossPages(state, payload);
+    }
+
     default:
       return state;
   }
