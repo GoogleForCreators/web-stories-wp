@@ -317,7 +317,7 @@ class Experiments extends Service_Base implements HasRequirements {
 			 */
 			[
 				'name'        => 'hotlinkPosterTheme',
-				'label'       => __( 'Use hotlink poster images in themes', 'web-stories' ),
+				'label'       => __( 'Hotlink poster in themes', 'web-stories' ),
 				'description' => __( 'Enable theme support for hotlink poster images.', 'web-stories' ),
 				'group'       => 'general',
 			],
