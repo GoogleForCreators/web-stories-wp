@@ -34,7 +34,7 @@ async function previewStory(waitForStoryDebugView = true) {
       .on('targetcreated', async (target) => resolve(await target.page()));
   });
 
-  await expect(page).toClick('button:not([disabled])[aria-label="Preview"]');
+  await page.click('button:not([disabled])[aria-label="Preview"]');
 
   const previewPage = await previewPagePromise;
   await previewPage.waitForFunction(
