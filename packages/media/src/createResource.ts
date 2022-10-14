@@ -22,6 +22,7 @@ import {
   Resource,
   ResourceType,
   VideoResource,
+  AudioResource,
 } from '@googleforcreators/types';
 
 /**
@@ -54,7 +55,7 @@ function createResource({
   trimData,
   needsProxy = false,
   ...rest
-}: ResourceInput): Resource | VideoResource | GifResource {
+}: ResourceInput): Resource | VideoResource | GifResource | AudioResource {
   type = type || getTypeFromMime(mimeType);
   const resource: Resource = {
     type,
@@ -90,6 +91,13 @@ function createResource({
       ...sequenceProps,
       output,
     } as GifResource;
+  }
+  if (type === ResourceType.Audio) {
+    return {
+      ...resource,
+      length,
+      lengthFormatted,
+    } as AudioResource;
   }
   return resource;
 }

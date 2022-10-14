@@ -62,8 +62,8 @@ function useInsertElement() {
     (type, props, insertAsBackground = false) => {
       setZoomSetting(ZOOM_SETTING.FIT);
       const element = createElementForCanvas(type, props);
-      const { id, resource } = element;
-      addElement({ element });
+      const { id, resource, pageId } = element;
+      addElement({ element, pageId });
 
       if (insertAsBackground) {
         combineElements({

@@ -267,42 +267,6 @@ class Experiments extends Service_Base implements HasRequirements {
 				'group'       => 'editor',
 			],
 			/**
-			 * Author: @barklund
-			 * Issue: #9643
-			 * Creation date: 2022-06-21
-			 */
-			[
-				'name'        => 'extraPages',
-				'label'       => __( 'Context Pages', 'web-stories' ),
-				'description' => __( 'Show extra pages for context before and after the current canvas page. Note: This might come with a performance penalty.', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-			/**
-			 * Author: @barklund
-			 * Issue: #11908
-			 * Creation date: 2022-07-19
-			 */
-			[
-				'name'        => 'recordingTrimming',
-				'label'       => __( 'Trim media recording', 'web-stories' ),
-				'description' => __( 'Enable the ability to trim a media recording before you insert it', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-			/**
-			 * Author: @timarney
-			 * Issue: #12094
-			 * Creation date: 2022-08-11
-			 */
-			[
-				'name'        => 'improvedAutosaves',
-				'label'       => __( 'Improved Autosaves', 'web-stories' ),
-				'description' => __( 'Enable improved autosaves support', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-			/**
 			 * Author: @timarney
 			 * Issue: #12093
 			 * Creation date: 2022-08-18
@@ -333,6 +297,17 @@ class Experiments extends Service_Base implements HasRequirements {
 				'name'        => 'customPageAdvance',
 				'label'       => __( 'Per-Page Page Advance', 'web-stories' ),
 				'description' => __( 'Enable detailed page advancement settings on a per-page basis', 'web-stories' ),
+				'group'       => 'editor',
+			],
+			/**
+			 * Author: @timarney
+			 * Issue: #12164
+			 * Creation date: 2022-09-19
+			 */
+			[
+				'name'        => 'segmentVideo',
+				'label'       => __( 'Segment video', 'web-stories' ),
+				'description' => __( 'Enable support for segmenting video files', 'web-stories' ),
 				'group'       => 'editor',
 			],
 		];

@@ -17,14 +17,14 @@
 /**
  * Internal dependencies
  */
-import type { Resource } from './resource';
+import type { Resource, ResourceId } from './resource';
 
 /** This is an abstract parent type of both video and gif resources */
 export interface SequenceResource extends Resource {
   /** The resource's poster. */
   poster?: string;
   /** The resource's poster ID. */
-  posterId?: string;
+  posterId?: ResourceId;
   /** Whether the resource has already been optimized. */
   isOptimized?: boolean;
 }
