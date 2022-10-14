@@ -143,7 +143,7 @@ echo -e $(status_message "Installing and activating RTL Tester plugin...")
 wp plugin install rtl-tester --activate --force --quiet
 
 # Only install WooCommerce on latest version of WordPress.
-if [ "$WP_VERSION" == "latest" ]; then
+if [ "$WP_VERSION" == "latest" ] || [ "$WP_VERSION" == "6.1-RC1" ]; then
   echo -e $(status_message "Installing WordPress importer...")
   wp plugin install wordpress-importer --activate --force --quiet
 
@@ -233,7 +233,7 @@ wp post list --post_type=attachment --format=yaml
 wp plugin list --format=yaml
 
 # Only install woocommerce on latest version of WordPress.
-if [ "$WP_VERSION" == "latest" ]; then
+if [ "$WP_VERSION" == "latest" ] || [ "$WP_VERSION" == "6.1-RC1" ]; then
 	echo -e $(status_message "Import sample WooCommerce products...")
 	wp import /var/www/html/wp-content/plugins/woocommerce/sample-data/sample_products.xml --authors=skip --quiet
 
