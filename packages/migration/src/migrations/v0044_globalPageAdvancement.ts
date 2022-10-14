@@ -43,7 +43,8 @@ export type UnionElementV44 =
   | TextElementV44
   | ProductElementV44;
 
-export interface StoryV44 extends Omit<StoryV43, 'pages' | 'autoAdvance' | 'defaultPageDuration'> {
+export interface StoryV44
+  extends Omit<StoryV43, 'pages' | 'autoAdvance' | 'defaultPageDuration'> {
   pages: PageV44[];
   autoAdvance?: boolean;
   defaultPageDuration?: number;
