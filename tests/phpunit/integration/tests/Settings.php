@@ -43,6 +43,6 @@ class Settings extends DependencyInjectedTestCase {
 		$this->assertArrayHasKey( $settings::SETTING_NAME_DATA_REMOVAL, $options );
 		$this->assertArrayHasKey( $settings::SETTING_NAME_ARCHIVE, $options );
 		$this->assertArrayHasKey( $settings::SETTING_NAME_AUTO_ADVANCE, $options );
-		$this->assertArrayHasKey( $settings::SETTING_NAME_DEFAULT_PAGE_DURATION );
+		$this->assertArrayHasKey( $settings::SETTING_NAME_DEFAULT_PAGE_DURATION, $options );
 	}
 }
