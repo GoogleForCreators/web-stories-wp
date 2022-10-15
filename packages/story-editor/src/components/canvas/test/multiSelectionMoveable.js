@@ -33,11 +33,61 @@ import { elementTypes } from '@googleforcreators/element-library';
 import CanvasContext from '../../../app/canvas/context';
 import Selection from '../selection';
 import StoryContext from '../../../app/story/context';
+import { FontProvider } from '../../../app/font';
 
 const pageSize = { width: 100, height: 100 };
 
 const element1 = { id: '1', type: 'text', x: 0, y: 0 };
 const element2 = { id: '2', type: 'text', x: 10, y: 10 };
+
+const FONT_CONTEXT = {
+  state: {
+    fonts: [
+      {
+        name: 'ABeeZee',
+        value: 'ABeeZee',
+        service: 'foo.bar.baz',
+        weights: [400],
+        styles: ['italic', 'regular'],
+        variants: [
+          [0, 400],
+          [1, 400],
+        ],
+        fallbacks: ['serif'],
+      },
+      {
+        name: 'Neu Font',
+        value: 'Neu Font',
+        service: 'foo.bar.baz',
+        weights: [400],
+        styles: ['italic', 'regular'],
+        variants: [
+          [0, 400],
+          [1, 400],
+        ],
+        fallbacks: ['fallback1'],
+      },
+    ],
+  },
+  actions: {
+    maybeEnqueueFontStyle: () => Promise.resolve(),
+    getFontByName: () => ({
+      name: 'Neu Font',
+      value: 'Neu Font',
+      service: 'foo.bar.baz',
+      weights: [400],
+      styles: ['italic', 'regular'],
+      variants: [
+        [0, 400],
+        [1, 400],
+      ],
+      fallbacks: ['fallback1'],
+    }),
+    addRecentFont: jest.fn(),
+    getCustomFonts: jest.fn(),
+    getCuratedFonts: jest.fn(),
+  },
+};
 
 const WrapperWithRef = ({ children }, ref) => (
   <div ref={ref}>
@@ -94,11 +144,13 @@ describe('multiSelectionMoveable', () => {
 
   function arrange() {
     return render(
-      <StoryContext.Provider value={storyContext}>
-        <CanvasContext.Provider value={canvasContext}>
-          <Selection />
-        </CanvasContext.Provider>
-      </StoryContext.Provider>,
+      <FontProvider value={FONT_CONTEXT}>
+        <StoryContext.Provider value={storyContext}>
+          <CanvasContext.Provider value={canvasContext}>
+            <Selection />
+          </CanvasContext.Provider>
+        </StoryContext.Provider>
+      </FontProvider>,
       { wrapper: Wrapper }
     );
   }
