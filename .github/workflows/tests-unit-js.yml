@@ -66,7 +66,7 @@ jobs:
         uses: actions/cache@56461b9eb0f8438fd15c7a9968e3c9ebb18ceff1
         with:
           path: .jest-cache
-          key: ${{ runner.os }}-${{ steps.nvm.outputs.NVMRC }}-jest
+          key: ${{ runner.os }}-${{ env.NVMRC }}-jest
 
       # Rollup is needed for tests in `packages/migration/src` expecting `module.js`
       - name: Install dependencies
@@ -87,7 +87,7 @@ jobs:
         run: npm run test:js -- --runInBand --ci --cacheDirectory="$HOME/.jest-cache" --collectCoverage --shard=$SHARD
         env:
           SHARD: ${{ matrix.shard }}
-          AMP_VALIDATOR_FILE: ${{ steps.amp_validator.outputs.validator_file }}
+          AMP_VALIDATOR_FILE: ${{ env.validator_file }}
 
       - name: Upload code coverage report
         uses: codecov/codecov-action@d9f34f8cd5cb3b3eb79b3e4b5dae3a16df499a70

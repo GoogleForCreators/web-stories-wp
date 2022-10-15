@@ -228,8 +228,8 @@ jobs:
     timeout-minutes: 20
     needs: [assets-version]
     outputs:
-      release_branch: ${{ steps.release_branch.outputs.release_branch }}
-      release_name: ${{ steps.release_branch.outputs.release_name }}
+      release_branch: ${{ env.release_branch }}
+      release_name: ${{ env.release_name }}
     steps:
       - name: Harden Runner
         uses: step-security/harden-runner@2e205a28d0e1da00c5f53b161f4067b052c61f34
@@ -307,7 +307,7 @@ jobs:
         run: npm run workflow:assets-version $ASSETS_VERSION
         if: ${{ env.ASSETS_VERSION }}
         env:
-          ASSETS_VERSION: ${{ steps.assets_version.outputs.ASSETS_VERSION }}
+          ASSETS_VERSION: ${{ env.ASSETS_VERSION }}
 
       - name: Commit assets version bump
         run: |
@@ -318,7 +318,7 @@ jobs:
           git push -u origin HEAD
         if: ${{ env.ASSETS_VERSION }}
         env:
-          ASSETS_VERSION: ${{ steps.assets_version.outputs.ASSETS_VERSION }}
+          ASSETS_VERSION: ${{ env.ASSETS_VERSION }}
 
       - name: Update plugin version
         run: npm run workflow:version $PLUGIN_VERSION
@@ -356,9 +356,9 @@ jobs:
           git pull --rebase
           git push
           git checkout $BRANCH
-        if: ${{ ! startsWith(github.ref, 'refs/heads/release/') && steps.plugin_version_bump.outputs.changes == 'yes' }}
+        if: ${{ ! startsWith(github.ref, 'refs/heads/release/') && env.changes == 'yes' }}
         env:
-          BRANCH: ${{ steps.release_branch.outputs.release_branch }}
+          BRANCH: ${{ env.release_branch }}
 
       - name: Build plugin
         run: npm run build:js
@@ -408,8 +408,8 @@ jobs:
         uses: softprops/action-gh-release@1e07f4398721186383de40550babbdf2b84acfc5
         with:
           tag_name: ${{ env.TAG_NAME }}
-          name: ${{ needs.build.outputs.release_name }}
-          target_commitish: ${{ needs.build.outputs.release_branch || github.ref }}
+          name: ${{ env.release_name }}
+          target_commitish: ${{ env.release_branch || github.ref }}
           prerelease: ${{ env.IS_RC }}
           generate_release_notes: true
           files: |
@@ -511,7 +511,7 @@ jobs:
           sed -r -i "s/${STABLE_TAG_REGEX}/${STABLE_TAG}/g" ./readme.txt
         working-directory: ./svn/trunk
         env:
-          STABLE_TAG: ${{ steps.get_previous_stable_tag.outputs.stable_tag }}
+          STABLE_TAG: ${{ env.stable_tag }}
 
       # Note: Creating the tag trigger an email confirmation that needs to be confirmed by someone with commit access.
       - name: Commit changes to trunk
