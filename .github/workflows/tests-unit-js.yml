@@ -81,7 +81,7 @@ jobs:
         run: |
           cd $RUNNER_TEMP && curl -O -f -s -S https://cdn.ampproject.org/v0/validator_wasm.js
           AMP_VALIDATOR_FILE="${RUNNER_TEMP}/validator_wasm.js"
-          echo "::set-output name=validator_file::$AMP_VALIDATOR_FILE"
+          echo "validator_file=$AMP_VALIDATOR_FILE" >> $GITHUB_ENV
 
       - name: Run JavaScript unit tests
         run: npm run test:js -- --runInBand --ci --cacheDirectory="$HOME/.jest-cache" --collectCoverage --shard=$SHARD

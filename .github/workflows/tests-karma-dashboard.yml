@@ -46,7 +46,7 @@ jobs:
       result: ${{ steps.nonce.outputs.result }}
     steps:
       - id: nonce
-        run: echo "::set-output name=result::${{ github.run_id }}-${{ github.run_attempt }}-$(date +%s)"
+        run: echo "result=${{ github.run_id }}-${{ github.run_attempt }}-$(date +%s)" >> $GITHUB_ENV
 
   karma:
     name: Karma
@@ -84,7 +84,7 @@ jobs:
         id: chromium_path
         run: |
           CHROMIUM=$(node -p "const puppeteer = require('puppeteer'); puppeteer.executablePath();")
-          echo "::set-output name=chromium_path::${CHROMIUM}"
+          echo "chromium_path=${CHROMIUM}" >> $GITHUB_ENV
 
       - name: Run integration tests with Percy
         run: |

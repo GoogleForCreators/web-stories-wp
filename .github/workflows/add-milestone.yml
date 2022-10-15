@@ -43,7 +43,7 @@ jobs:
 
           echo "Determined release with ID $NEXT_RELEASE to be the next one"
 
-          echo "::set-output name=release_id::$NEXT_RELEASE"
+          echo "release_id=$NEXT_RELEASE" >> $GITHUB_ENV
         env:
           ZENHUB_API_TOKEN: ${{ secrets.ZENHUB_API_TOKEN }}
 

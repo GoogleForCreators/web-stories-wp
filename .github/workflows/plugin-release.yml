@@ -138,7 +138,7 @@ jobs:
       #     if  [[ $(cat web-stories.php) =~ $ASSETS_VERSION_REGEX ]]; then
       #       BASE_ASSETS_VERSION=${BASH_REMATCH[1]}
       #     fi
-      #     echo "::set-output name=BASE_ASSETS_VERSION::$BASE_ASSETS_VERSION"
+      #     echo "BASE_ASSETS_VERSION::$BASE_ASSETS_VERSION"
       #     env:
       #       ASSETS_VERSION_REGEX: "https://wp.stories.google/static/([^']+)"
 
@@ -251,7 +251,7 @@ jobs:
       - name: Retrieve assets version
         id: assets_version
         run: |
-          echo "::set-output name=ASSETS_VERSION::$(cat assets_version.txt)"
+          echo "ASSETS_VERSION=$(cat assets_version.txt)" >> $GITHUB_ENV
           rm -rf assets_version.txt
         continue-on-error: true
 
@@ -288,7 +288,7 @@ jobs:
           # Patch releases are already on the correct branch.
           if $IS_PATCH_RELEASE; then
             BRANCH=${GITHUB_REF#refs/heads/}
-            echo "::set-output name=release_branch::${BRANCH}"
+            echo "release_branch=${BRANCH}" >> $GITHUB_ENV
             exit 0
           fi
 
@@ -298,10 +298,10 @@ jobs:
             git checkout --track origin/$BRANCH
           fi
 
-          echo "::set-output name=release_branch::${BRANCH/-rc./ RC}"
+          echo "release_branch=${BRANCH/-rc./ RC}" >> $GITHUB_ENV
 
           RELEASE_NAME=${PLUGIN_VERSION/-rc./ RC}
-          echo "::set-output name=release_name::${RELEASE_NAME}"
+          echo "release_name=${RELEASE_NAME}" >> $GITHUB_ENV
 
       - name: Update assets version
         run: npm run workflow:assets-version $ASSETS_VERSION
@@ -337,10 +337,10 @@ jobs:
           if git diff --cached --exit-code > /dev/null; then
             git commit -m "Prepare release $PLUGIN_VERSION"
             git push -u origin HEAD
-            echo "::set-output name=changes::yes"
+            echo "changes=yes" >> $GITHUB_ENV
           else
             echo 'No changes to commit; exiting!'
-            echo "::set-output name=changes::no"
+            echo "changes=no" >> $GITHUB_ENV
           fi
 
       # Only non-patch release version bumps should be cherry picked to main
@@ -493,7 +493,7 @@ jobs:
       - name: Get previous stable tag
         id: get_previous_stable_tag
         # Returns the whole matching line.
-        run: echo ::set-output name=stable_tag::$(grep -P "$STABLE_TAG_REGEX" ./svn/trunk/readme.txt)
+        run: echo stable_tag=$(grep -P "$STABLE_TAG_REGEX" ./svn/trunk/readme.txt) >> $GITHUB_ENV
 
       - name: Delete everything in trunk
         run: find . -maxdepth 1 -not -name ".svn" -not -name "." -not -name ".." -exec rm -rf {} +

@@ -201,7 +201,7 @@ jobs:
           - Download [development build](https://storage.googleapis.com/web-stories-wp-github-artifacts/${{ github.ref }}/web-stories-dev.zip?${{ github.sha }})
           - Download [production build](https://storage.googleapis.com/web-stories-wp-github-artifacts/${{ github.ref }}/web-stories.zip?${{ github.sha }})"
           body="${body//$'\n'/'%0A'}"
-          echo "::set-output name=body::$body"
+          echo "body=$body" >> $GITHUB_ENV
         if: >
           github.head_ref &&
           github.event.pull_request.draft == false &&

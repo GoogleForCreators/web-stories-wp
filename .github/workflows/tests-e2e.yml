@@ -123,7 +123,7 @@ jobs:
       result: ${{ steps.nonce.outputs.result }}
     steps:
       - id: nonce
-        run: echo "::set-output name=result::${{ github.run_id }}-${{ github.run_attempt }}-$(date +%s)"
+        run: echo "result=${{ github.run_id }}-${{ github.run_attempt }}-$(date +%s)" >> $GITHUB_ENV
 
   e2e:
     name: '${{ matrix.browser }} - WP ${{ matrix.wp }} (${{ matrix.shard }})'
@@ -199,7 +199,7 @@ jobs:
         id: chromium_path
         run: |
           CHROMIUM=$(node -p "const puppeteer = require('puppeteer'); puppeteer.executablePath();")
-          echo "::set-output name=chromium_path::${CHROMIUM}"
+          echo "chromium_path=${CHROMIUM}" >> $GITHUB_ENV
         if: ( matrix.snapshots ) && ( github.event.pull_request.draft == false )
 
       - name: Run E2E tests with percy
