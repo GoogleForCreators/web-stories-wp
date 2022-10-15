@@ -91,16 +91,29 @@ describe('Publisher Logos', () => {
       await expect(logoToMakeDefault).toClick(
         'button[aria-label^="Publisher logo menu for"]'
       );
+
+      // Flyout animation.
+      await page.waitForTimeout(100);
+
       await page.waitForSelector(
         '[role="menu"][aria-label="Menu"][aria-expanded="true"]'
       );
-      await expect(logoToMakeDefault).toClick(
-        '[aria-label="Menu"] button[role="menuitem"]',
-        {
-          text: 'Set as Default',
-          visible: true,
-        }
-      );
+
+      await Promise.all([
+        expect(logoToMakeDefault).toClick(
+          '[aria-label="Menu"] button[role="menuitem"]',
+          {
+            text: 'Set as Default',
+            visible: true,
+          }
+        ),
+        page.waitForResponse(
+          (response) =>
+            // eslint-disable-next-line jest/no-conditional-in-test
+            response.url().includes('/web-stories/v1/publisher-logos') &&
+            response.status() === 200
+        ),
+      ]);
 
       await expect(page).toMatch('Setting saved.');
 
