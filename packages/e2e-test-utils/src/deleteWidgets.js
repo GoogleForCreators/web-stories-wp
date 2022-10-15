@@ -27,26 +27,18 @@ async function deleteWidgets() {
   // Remove all widgets
   await visitAdminPage('widgets.php');
 
-  const hasWidgets = () =>
-    page.evaluate(
-      () =>
-        document.querySelectorAll('#widgets-right .widget .widget-action')
-          .length > 0
-    );
+  const widgets = await page.$$('#widgets-right .widget');
 
   /* eslint-disable no-await-in-loop */
-  while (await hasWidgets()) {
-    // Catching race conditions.
-    if (!(await page.$('#widgets-right .widget .widget-action'))) {
-      break;
-    }
-
-    await expect(page).toClick('#widgets-right .widget .widget-action');
+  for (const item of widgets) {
+    await item.$eval('.widget-action', (toggleButton) => toggleButton.click());
 
     // Transition animation.
     await page.waitForTimeout(300);
 
-    await expect(page).toClick('#widgets-right .widget .widget-control-remove');
+    await item.$eval('.widget-control-remove', (deleteLink) =>
+      deleteLink.click()
+    );
 
     // Transition animation.
     await page.waitForTimeout(300);
