@@ -279,7 +279,10 @@ function TextEdit({
   const handleResize = useCallback(() => {
     const wrapper = wrapperRef.current;
     const textBox = textBoxRef.current;
-    const { marginOffset } = calcFontMetrics({ font: elementFontData });
+    const { marginOffset } = calcFontMetrics({
+      ...element,
+      font: elementFontData,
+    });
     editorHeightRef.current =
       textBox.offsetHeight - dataToEditorY(marginOffset);
     wrapper.style.height = `${editorHeightRef.current}px`;
@@ -298,7 +301,15 @@ function TextEdit({
       editWrapper.style.top = `${boxRef.current.y + dy}px`;
       onResize && onResize();
     }
-  }, [dataToEditorY, editWrapper, onResize, top, bottom, elementFontData]);
+  }, [
+    dataToEditorY,
+    editWrapper,
+    onResize,
+    top,
+    bottom,
+    element,
+    elementFontData,
+  ]);
   // Invoke on each content update.
   const handleUpdate = useCallback(
     (newContent) => {

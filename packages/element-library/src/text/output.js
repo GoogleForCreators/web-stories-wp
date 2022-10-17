@@ -149,7 +149,10 @@ export function TextOutputWithUnits({
   };
 
   const marginStyle = () => {
-    const { marginOffset } = calcFontMetrics({ font: elementFontData });
+    const { marginOffset } = calcFontMetrics({
+      ...element,
+      font: elementFontData,
+    });
     return {
       display: 'block',
       position: 'relative',
@@ -199,7 +202,7 @@ export function TextOutputWithUnits({
     return (
       <>
         <TagName className={className} style={highlightStyle}>
-          <span style={marginStyle(element)}>
+          <span style={marginStyle()}>
             <span
               style={backgroundTextStyle}
               dangerouslySetInnerHTML={{
@@ -213,7 +216,7 @@ export function TextOutputWithUnits({
           style={highlightCloneStyle}
           aria-hidden="true"
         >
-          <span style={marginStyle(element)}>
+          <span style={marginStyle()}>
             <span
               style={foregroundTextStyle}
               dangerouslySetInnerHTML={{
@@ -257,7 +260,7 @@ function TextOutput({ element }) {
   return (
     <TextOutputWithUnits
       element={element}
-      elementFontData={{ ...element.font }}
+      elementFontData={element?.font ? { ...element.font } : null}
       className="fill"
       dataToStyleX={(x) => `${dataToEditorX(x, 100)}%`}
       dataToStyleY={(y) => `${dataToEditorY(y, 100)}%`}

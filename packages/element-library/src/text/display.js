@@ -180,7 +180,10 @@ function TextDisplay({
     };
   }, [content]);
 
-  const { marginOffset } = calcFontMetrics({ font: elementFontData });
+  const { marginOffset } = calcFontMetrics({
+    ...element,
+    font: elementFontData,
+  });
   const props = {
     font: elementFontData,
     element,
