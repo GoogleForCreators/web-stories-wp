@@ -45,3 +45,7 @@ export const Z_INDEX_FOOTER = 3;
 // The Grid View component is a modal, the Slider that is used inside
 // needs to be pulled on top.
 export const Z_INDEX_GRID_VIEW_SLIDER = 11;
+
+// In PublishTime, the time picker's tooltip's z-index needs to be higher than
+// the z-index of the date picker popup itself.
+export const Z_INDEX_TIME_PICKER_TOOLTIP = 11;

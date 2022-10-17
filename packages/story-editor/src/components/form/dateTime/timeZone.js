@@ -30,6 +30,7 @@ import {
  * Internal dependencies
  */
 import Tooltip from '../../tooltip';
+import { Z_INDEX_TIME_PICKER_TOOLTIP } from '../../../constants/zIndex';
 
 const Wrapper = styled.div`
   white-space: nowrap;
@@ -69,8 +70,7 @@ function TimeZone() {
         hasTail
         title={tooltip}
         placement={PLACEMENT.TOP}
-        // Higher than popup z-index in PublishTime.
-        popupZIndexOverride={11}
+        popupZIndexOverride={Z_INDEX_TIME_PICKER_TOOLTIP}
       >
         <StyledText
           forwardedAs="span"
