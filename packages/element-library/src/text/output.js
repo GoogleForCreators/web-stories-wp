@@ -251,9 +251,13 @@ TextOutputWithUnits.propTypes = {
  */
 function TextOutput({ element }) {
   const { width } = element;
+  {
+    /* @todo modify how we pass elementFontData -- added for debug */
+  }
   return (
     <TextOutputWithUnits
       element={element}
+      elementFontData={{ ...element.font }}
       className="fill"
       dataToStyleX={(x) => `${dataToEditorX(x, 100)}%`}
       dataToStyleY={(y) => `${dataToEditorY(y, 100)}%`}
