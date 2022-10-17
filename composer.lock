@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0437630733405be8163323956810961b",
+    "content-hash": "7e9255698224b82b6ba0a9cd66a8d15a",
     "packages": [
         {
             "name": "ampproject/amp-toolbox",
@@ -3887,53 +3887,6 @@
                 }
             ],
             "time": "2022-09-27T16:45:37+00:00"
-        },
-        {
-            "name": "sniccowp/php-scoper-wordpress-excludes",
-            "version": "6.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/snicco/php-scoper-wordpress-excludes.git",
-                "reference": "6fce87f9c5463223013745ec5489967198c11348"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/snicco/php-scoper-wordpress-excludes/zipball/6fce87f9c5463223013745ec5489967198c11348",
-                "reference": "6fce87f9c5463223013745ec5489967198c11348",
-                "shasum": ""
-            },
-            "require-dev": {
-                "php": "^7.4",
-                "php-stubs/wordpress-globals": "0.2.0",
-                "php-stubs/wordpress-stubs": "6.0.1",
-                "sniccowp/php-scoper-excludes": "dev-master"
-            },
-            "type": "library",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Calvin Alkan",
-                    "email": "calvin@snicco.de"
-                },
-                {
-                    "name": "Marlon Alkan",
-                    "email": "marlon@snicco.de"
-                }
-            ],
-            "description": "A list of all WordPress core classes, functions and constants. Meant to be used with the PHP-Scoper exclusion functionality.",
-            "keywords": [
-                "php-scoper",
-                "scoping WordPress",
-                "wordpress"
-            ],
-            "support": {
-                "issues": "https://github.com/snicco/php-scoper-wordpress-excludes/issues",
-                "source": "https://github.com/snicco/php-scoper-wordpress-excludes/tree/6.0.1"
-            },
-            "time": "2022-07-16T01:54:10+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
