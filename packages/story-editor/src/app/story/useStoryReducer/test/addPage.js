@@ -78,4 +78,34 @@ describe('addPage', () => {
 
     expect(pageIds).toStrictEqual(['111', '123', '222']);
   });
+
+  it('should add pages at position and not move to it', () => {
+    const { restore, addPage } = setupReducer();
+
+    // Set an initial state with multiple pages.
+    restore({
+      pages: [{ id: '111' }, { id: '221' }],
+      current: '221',
+    });
+
+    addPage({
+      page: { id: '331', elements: [{ id: '123' }] },
+      position: 2,
+      updateSelection: false,
+    });
+    addPage({
+      page: { id: '441', elements: [{ id: '456' }] },
+      position: 3,
+      updateSelection: false,
+    });
+    const result = addPage({
+      page: { id: '551', elements: [{ id: '789' }] },
+      position: 4,
+      updateSelection: false,
+    });
+
+    const pageIds = result.pages.map(({ id }) => id);
+    expect(pageIds).toStrictEqual(['111', '221', '331', '441', '551']);
+    expect(result.current).toBe('221');
+  });
 });
