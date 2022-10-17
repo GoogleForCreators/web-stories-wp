@@ -30,6 +30,7 @@ export default {
         'http://1.gravatar.com/avatar/767fc9c115a1b989744c755db47feb60?size=48',
     },
     dashboardLink: 'http://www.example.com/dashboard',
+    previewLink: 'http://www.example.com/preview',
   },
   argTypes: {
     onClose: { action: 'onClose' },

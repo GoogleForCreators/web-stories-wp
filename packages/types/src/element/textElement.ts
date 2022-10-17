@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import type { Element } from './element';
+import type { Element, ElementType } from './element';
 import type { Pattern } from './pattern';
 
 export type FontStyle = 'normal' | 'italic' | 'regular';
@@ -38,16 +38,17 @@ export interface Font {
   variants: FontVariant[];
   fallbacks?: string[];
   url?: string;
+  metrics?: FontMetrics;
 }
 
 export interface Padding {
-  horizontal: number;
-  vertical: number;
-  locked: boolean;
-  hasHiddenPadding: boolean;
+  horizontal?: number;
+  vertical?: number;
+  locked?: boolean;
+  hasHiddenPadding?: boolean;
 }
 
-export type TextAlign = 'left' | 'center' | 'right' | 'justify';
+export type TextAlign = 'left' | 'center' | 'right' | 'justify' | 'initial';
 export type BackgroundTextMode = 'NONE' | 'FILL' | 'HIGHLIGHT';
 
 export interface FontMetrics {
@@ -69,15 +70,22 @@ export interface FontMetrics {
 }
 
 export interface TextElement extends Element {
+  type: ElementType.Text;
   content: string;
   font: Font;
-  tagName?: TagName;
   backgroundTextMode?: BackgroundTextMode;
   backgroundColor?: Pattern;
   fontSize?: number;
   lineHeight?: number;
-  padding?: Padding;
   textAlign?: TextAlign;
+  tagName?: 'h1' | 'h2' | 'h3' | 'p';
+  padding?: Padding;
   marginOffset?: number;
-  metrics?: FontMetrics;
+  // TODO(#12258): Remove this.
+  fontWeight?: number;
+
+  // TODO(#12437): Figure out why text elements end up having these properties & fix it.
+  scale?: number;
+  focalX?: number;
+  focalY?: number;
 }

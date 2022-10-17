@@ -82,6 +82,7 @@ function useMediaUploadQueue() {
   const { isConsideredOptimized } = useMediaInfo();
 
   const [state, actions] = useReduction(initialState, reducer);
+
   const { uploadVideoPoster } = useUploadVideoFrame({
     updateMediaElement: noop,
   });
@@ -865,6 +866,20 @@ function useMediaUploadQueue() {
       );
 
     /**
+     * Determine whether a batch of resources is being uploaded.
+     *
+     * batchId is available when uploading a new array of files
+     *
+     * @param {number} batchId Resource batchId.
+     * @return {boolean} Whether the batch of resources is uploading.
+     */
+    const isBatchUploading = (batchId) => {
+      return state.queue.some(
+        (item) => item.additionalData?.batchId === batchId
+      );
+    };
+
+    /**
      * Determine whether the current resource is being trimmed.
      *
      * This is the case when trimming an existing video in the story,
@@ -971,6 +986,7 @@ function useMediaUploadQueue() {
         isNewResourceProcessing,
         isNewResourceTranscoding,
         isElementTrimming,
+        isBatchUploading,
         canTranscodeResource,
       },
       actions: {

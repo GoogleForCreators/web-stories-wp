@@ -19,6 +19,7 @@
  */
 import type {
   Element,
+  ElementId,
   Pattern,
   ShapeElement,
   PageAttachment,
@@ -50,13 +51,13 @@ export type Advancement = {
 };
 
 export interface Page {
+  id: ElementId;
   elements: Element[];
   defaultBackgroundElement?: ShapeElement;
   animations?: Animation[];
   backgroundColor: Pattern;
   type: 'page';
   groups: Groups;
-  id: string;
   pageAttachment?: PageAttachment;
   shoppingAttachment?: ShoppingAttachmentType;
   backgroundAudio?: {
@@ -76,4 +77,6 @@ export interface Page {
     defaultPageDuration: number;
     pageDuration?: number;
   };
+  autoAdvance?: boolean;
+  defaultPageDuration?: number;
 }

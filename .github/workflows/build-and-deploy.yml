@@ -88,7 +88,7 @@ jobs:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
       - name: Checkout
-        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
+        uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
 
       - name: Setup Node
         uses: actions/setup-node@969bd2663942d722d85b6a8626225850c2f7be4b
@@ -121,7 +121,7 @@ jobs:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
       - name: Checkout
-        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
+        uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
 
       - name: Setup Node
         uses: actions/setup-node@969bd2663942d722d85b6a8626225850c2f7be4b
@@ -201,7 +201,7 @@ jobs:
           - Download [development build](https://storage.googleapis.com/web-stories-wp-github-artifacts/${{ github.ref }}/web-stories-dev.zip?${{ github.sha }})
           - Download [production build](https://storage.googleapis.com/web-stories-wp-github-artifacts/${{ github.ref }}/web-stories.zip?${{ github.sha }})"
           body="${body//$'\n'/'%0A'}"
-          echo "::set-output name=body::$body"
+          echo "body=$body" >> $GITHUB_ENV
         if: >
           github.head_ref &&
           github.event.pull_request.draft == false &&
@@ -212,28 +212,28 @@ jobs:
         uses: peter-evans/create-or-update-comment@c9fcb64660bc90ec1cc535646af190c992007c32
         with:
           issue-number: ${{ github.event.pull_request.number }}
-          body: ${{ steps.get-comment-body.outputs.body }}
+          body: ${{ env.body }}
           token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
         if: >
           github.head_ref &&
           github.event.pull_request.draft == false &&
           github.event.pull_request.head.repo.fork == false &&
           github.event.pull_request.user.login != 'dependabot[bot]' &&
-          steps.find-comment.outputs.comment-id == ''
+          env.comment-id == ''
 
       - name: Update comment on PR with links to plugin builds
         uses: peter-evans/create-or-update-comment@c9fcb64660bc90ec1cc535646af190c992007c32
         with:
-          comment-id: ${{ steps.find-comment.outputs.comment-id }}
+          comment-id: ${{ env.comment-id }}
           edit-mode: replace
-          body: ${{ steps.get-comment-body.outputs.body }}
+          body: ${{ env.body }}
           token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
         if: >
           github.head_ref &&
           github.event.pull_request.draft == false &&
           github.event.pull_request.head.repo.fork == false &&
           github.event.pull_request.user.login != 'dependabot[bot]' &&
-          steps.find-comment.outputs.comment-id != ''
+          env.comment-id != ''
 
       # Deploy to staging site if on main branch.
 

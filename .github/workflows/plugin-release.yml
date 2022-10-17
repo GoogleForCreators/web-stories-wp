@@ -46,7 +46,7 @@ jobs:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
       - name: Checkout
-        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
+        uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
 
       - name: Verify semver compatibility
         run: |
@@ -127,7 +127,7 @@ jobs:
 
       # Grab current assets version from `web-stories.php` and pass on to next steps.
       # - name: Checkout
-      #   uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
+      #   uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
       #   with:
       #     ref:
 
@@ -138,12 +138,12 @@ jobs:
       #     if  [[ $(cat web-stories.php) =~ $ASSETS_VERSION_REGEX ]]; then
       #       BASE_ASSETS_VERSION=${BASH_REMATCH[1]}
       #     fi
-      #     echo "::set-output name=BASE_ASSETS_VERSION::$BASE_ASSETS_VERSION"
+      #     echo "BASE_ASSETS_VERSION::$BASE_ASSETS_VERSION"
       #     env:
       #       ASSETS_VERSION_REGEX: "https://wp.stories.google/static/([^']+)"
 
       - name: Checkout wp.stories.google
-        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
+        uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
         with:
           repository: GoogleForCreators/wp.stories.google
           lfs: true
@@ -228,8 +228,8 @@ jobs:
     timeout-minutes: 20
     needs: [assets-version]
     outputs:
-      release_branch: ${{ steps.release_branch.outputs.release_branch }}
-      release_name: ${{ steps.release_branch.outputs.release_name }}
+      release_branch: ${{ env.release_branch }}
+      release_name: ${{ env.release_name }}
     steps:
       - name: Harden Runner
         uses: step-security/harden-runner@2e205a28d0e1da00c5f53b161f4067b052c61f34
@@ -237,7 +237,7 @@ jobs:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
       - name: Checkout
-        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
+        uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
         with:
           fetch-depth: 0 # 0 indicates all history for all branches and tags.
           token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
@@ -251,7 +251,7 @@ jobs:
       - name: Retrieve assets version
         id: assets_version
         run: |
-          echo "::set-output name=ASSETS_VERSION::$(cat assets_version.txt)"
+          echo "ASSETS_VERSION=$(cat assets_version.txt)" >> $GITHUB_ENV
           rm -rf assets_version.txt
         continue-on-error: true
 
@@ -288,7 +288,7 @@ jobs:
           # Patch releases are already on the correct branch.
           if $IS_PATCH_RELEASE; then
             BRANCH=${GITHUB_REF#refs/heads/}
-            echo "::set-output name=release_branch::${BRANCH}"
+            echo "release_branch=${BRANCH}" >> $GITHUB_ENV
             exit 0
           fi
 
@@ -298,16 +298,16 @@ jobs:
             git checkout --track origin/$BRANCH
           fi
 
-          echo "::set-output name=release_branch::${BRANCH/-rc./ RC}"
+          echo "release_branch=${BRANCH/-rc./ RC}" >> $GITHUB_ENV
 
           RELEASE_NAME=${PLUGIN_VERSION/-rc./ RC}
-          echo "::set-output name=release_name::${RELEASE_NAME}"
+          echo "release_name=${RELEASE_NAME}" >> $GITHUB_ENV
 
       - name: Update assets version
         run: npm run workflow:assets-version $ASSETS_VERSION
         if: ${{ env.ASSETS_VERSION }}
         env:
-          ASSETS_VERSION: ${{ steps.assets_version.outputs.ASSETS_VERSION }}
+          ASSETS_VERSION: ${{ env.ASSETS_VERSION }}
 
       - name: Commit assets version bump
         run: |
@@ -318,7 +318,7 @@ jobs:
           git push -u origin HEAD
         if: ${{ env.ASSETS_VERSION }}
         env:
-          ASSETS_VERSION: ${{ steps.assets_version.outputs.ASSETS_VERSION }}
+          ASSETS_VERSION: ${{ env.ASSETS_VERSION }}
 
       - name: Update plugin version
         run: npm run workflow:version $PLUGIN_VERSION
@@ -337,10 +337,10 @@ jobs:
           if git diff --cached --exit-code > /dev/null; then
             git commit -m "Prepare release $PLUGIN_VERSION"
             git push -u origin HEAD
-            echo "::set-output name=changes::yes"
+            echo "changes=yes" >> $GITHUB_ENV
           else
             echo 'No changes to commit; exiting!'
-            echo "::set-output name=changes::no"
+            echo "changes=no" >> $GITHUB_ENV
           fi
 
       # Only non-patch release version bumps should be cherry picked to main
@@ -356,9 +356,9 @@ jobs:
           git pull --rebase
           git push
           git checkout $BRANCH
-        if: ${{ ! startsWith(github.ref, 'refs/heads/release/') && steps.plugin_version_bump.outputs.changes == 'yes' }}
+        if: ${{ ! startsWith(github.ref, 'refs/heads/release/') && env.changes == 'yes' }}
         env:
-          BRANCH: ${{ steps.release_branch.outputs.release_branch }}
+          BRANCH: ${{ env.release_branch }}
 
       - name: Build plugin
         run: npm run build:js
@@ -395,7 +395,7 @@ jobs:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
       - name: Checkout
-        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
+        uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
 
       - name: Download release artifacts
         uses: actions/download-artifact@fb598a63ae348fa914e94cd0ff38f362e927b741
@@ -408,8 +408,8 @@ jobs:
         uses: softprops/action-gh-release@1e07f4398721186383de40550babbdf2b84acfc5
         with:
           tag_name: ${{ env.TAG_NAME }}
-          name: ${{ needs.build.outputs.release_name }}
-          target_commitish: ${{ needs.build.outputs.release_branch || github.ref }}
+          name: ${{ env.release_name }}
+          target_commitish: ${{ env.release_branch || github.ref }}
           prerelease: ${{ env.IS_RC }}
           generate_release_notes: true
           files: |
@@ -431,7 +431,7 @@ jobs:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
       - name: Checkout
-        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
+        uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
         with:
           ref: main
           token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
@@ -493,7 +493,7 @@ jobs:
       - name: Get previous stable tag
         id: get_previous_stable_tag
         # Returns the whole matching line.
-        run: echo ::set-output name=stable_tag::$(grep -P "$STABLE_TAG_REGEX" ./svn/trunk/readme.txt)
+        run: echo stable_tag=$(grep -P "$STABLE_TAG_REGEX" ./svn/trunk/readme.txt) >> $GITHUB_ENV
 
       - name: Delete everything in trunk
         run: find . -maxdepth 1 -not -name ".svn" -not -name "." -not -name ".." -exec rm -rf {} +
@@ -511,7 +511,7 @@ jobs:
           sed -r -i "s/${STABLE_TAG_REGEX}/${STABLE_TAG}/g" ./readme.txt
         working-directory: ./svn/trunk
         env:
-          STABLE_TAG: ${{ steps.get_previous_stable_tag.outputs.stable_tag }}
+          STABLE_TAG: ${{ env.stable_tag }}
 
       # Note: Creating the tag trigger an email confirmation that needs to be confirmed by someone with commit access.
       - name: Commit changes to trunk

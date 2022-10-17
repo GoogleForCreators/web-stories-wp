@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import type { Element } from './element';
+import type { Element, ElementType } from './element';
 interface ProductImage {
   alt: string;
   url: string;
@@ -31,6 +31,7 @@ export interface Product {
   productPriceCurrency: string;
   productTitle: string;
   productUrl: string;
+  type: ElementType.Product;
 }
 export interface ProductElement extends Element {
   product: Product;

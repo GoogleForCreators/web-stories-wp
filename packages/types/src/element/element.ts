@@ -18,13 +18,13 @@
  * Internal dependencies
  */
 import type { ElementBox } from './elementBox';
-import type { Pattern } from './pattern';
+import type { Pattern, Solid } from './pattern';
 
 export interface Link {
   url: string;
   desc?: string;
   needsProxy?: boolean;
-  icon?: string;
+  icon?: string | null;
   rel?: string[];
 }
 
@@ -35,6 +35,12 @@ export interface Flip {
 
 export interface Mask {
   type: string;
+  // TODO(#12259): Remove these from the type & from templates.
+  showInLibrary?: boolean;
+  name?: string;
+  path?: string;
+  ratio?: number;
+  supportsBorder?: boolean;
 }
 
 export interface Border {
@@ -42,7 +48,9 @@ export interface Border {
   right: number;
   bottom: number;
   left: number;
-  locked: boolean;
+  locked?: boolean;
+  lockedWidth?: boolean;
+  color?: Solid;
 }
 
 export interface BorderRadius {
@@ -61,11 +69,11 @@ export interface PageAttachment {
   rel?: string[];
 }
 
-export interface Element extends ElementBox {
-  id: string;
-  type: string;
-  isBackground: boolean;
+export type ElementId = string;
 
+export interface Element extends ElementBox {
+  id: ElementId;
+  type: string;
   mask?: Mask;
   link?: Link;
   opacity?: number;
@@ -75,4 +83,17 @@ export interface Element extends ElementBox {
   border?: Border;
   borderRadius?: BorderRadius;
   backgroundColor?: Pattern;
+
+  // TODO(#12262): Remove this.
+  basedOn?: ElementId;
+}
+
+export enum ElementType {
+  Text = 'text',
+  Image = 'image',
+  Video = 'video',
+  Gif = 'gif',
+  Sticker = 'sticker',
+  Shape = 'shape',
+  Product = 'product',
 }
