@@ -200,7 +200,7 @@ if ( file_exists( WEBSTORIES_PLUGIN_DIR_PATH . '/third-party/vendor/scoper-autol
 	require WEBSTORIES_PLUGIN_DIR_PATH . '/third-party/vendor/scoper-autoload.php';
 }
 
-// Autoloader for plugin itself.
+// Autoloader for plugin itself..
 if ( file_exists( WEBSTORIES_PLUGIN_DIR_PATH . '/includes/vendor/autoload.php' ) ) {
 	require WEBSTORIES_PLUGIN_DIR_PATH . '/includes/vendor/autoload.php';
 }
