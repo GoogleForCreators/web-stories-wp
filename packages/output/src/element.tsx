@@ -31,24 +31,50 @@ import {
   getBorderStyle,
   shouldDisplayBorder,
 } from '@googleforcreators/masks';
+import type {
+  Flags,
+  Element,
+  MediaElement,
+  TextElement, ShapeElement
+} from "@googleforcreators/types";
+import type { CSSProperties } from 'react';
+
 /**
  * Internal dependencies
  */
 import WithLink from './components/withLink';
-import type { OutputElementProps } from './types';
+
+interface OutputElementProps {
+  element: Element;
+  flags: Flags;
+}
+
+function hasOverlay(element: Element): element is MediaElement {
+  return 'overlay' in element;
+}
+
+function isTextElement(element: Element): element is TextElement {
+  return 'backgroundTextMode' in element;
+}
+
+function hasBackgroundFill(element: Element) {
+  return (
+    isTextElement(element) &&
+    element.backgroundTextMode === BACKGROUND_TEXT_MODE.FILL
+  );
+}
+
+function hasBackground(element: Element): element is TextElement | ShapeElement {
+  return 'backgroundColor' in element;
+}
 
 function OutputElement({ element, flags }: OutputElementProps) {
-  let overlay;
-  let backgroundTextMode;
-  if ('overlay' in element) {
-    overlay = element.overlay;
-  }
-  if ('backgroundTextMode' in element) {
-    overlay = element.backgroundTextMode;
-  }
-  const { id, opacity, type, border, backgroundColor } = element;
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,  @typescript-eslint/no-unsafe-call -- Needs fixing elements package.
-  const { Output, isMaskable } = getDefinitionForType(type);
+  const { Output, isMaskable } = getDefinitionForType(element.type);
+  const { id, opacity, border } = element;
+
+  const backgroundColor = hasBackground(element)
+    ? element.backgroundColor
+    : null;
 
   // Box is calculated based on the 100%:100% basis for width and height
   const box = getBox(element, 100, 100);
@@ -82,7 +108,7 @@ function OutputElement({ element, flags }: OutputElementProps) {
             : null),
           transform: rotationAngle ? `rotate(${rotationAngle}deg)` : null,
           opacity: typeof opacity !== 'undefined' ? opacity / 100 : null,
-        } as React.CSSProperties
+        } as CSSProperties
       }
     >
       <StoryAnimation.AMPWrapper target={id}>
@@ -104,7 +130,7 @@ function OutputElement({ element, flags }: OutputElementProps) {
               left: 0,
               zIndex: 0,
               ...getBorderRadius(element),
-              ...(backgroundTextMode === BACKGROUND_TEXT_MODE.FILL
+              ...((hasBackgroundFill(element))
                 ? bgStyles
                 : null),
             } as React.CSSProperties
@@ -124,10 +150,10 @@ function OutputElement({ element, flags }: OutputElementProps) {
           >
             <Output element={element} box={box} flags={flags} />
           </WithLink>
-          {overlay && (
+          {hasOverlay(element) && element.overlay && (
             <div
               className="element-overlay-area"
-              style={generatePatternStyles(overlay)}
+              style={generatePatternStyles(element.overlay)}
             />
           )}
         </WithMask>

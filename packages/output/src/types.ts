@@ -16,49 +16,18 @@
 /**
  * External dependencies
  */
-
 import type {
-  Animation,
-  Element,
-  Page,
-  StoryMetaData,
-  MetaData,
-  Flags,
-  MediaElement,
-  BackgroundAudioResourceTyping,
-  TextElement,
+  BackgroundAudio,
+  FeaturedMedia,
+  PublisherLogo,
 } from '@googleforcreators/types';
-export interface AutoAdvance {
-  animations?: Animation[];
-  defaultPageDuration: number;
-  elements: Element[];
-  backgroundAudio?: BackgroundAudioResourceTyping;
-  id: string;
-}
-export interface PreloadResource {
-  url: string;
-  type: string;
-}
 
-type Elements = MediaElement | TextElement;
-export interface OutputElementProps {
-  element: Elements;
-  flags: Flags;
-}
-export interface PageObject {
-  page: Page;
-  defaultAutoAdvance: boolean;
+export interface StoryMetaData {
+  featuredMedia?: FeaturedMedia;
+  link?: string;
+  title: string;
+  autoAdvance: boolean;
   defaultPageDuration: number;
-  flags: Flags;
-}
-export interface StoryProps {
-  story: StoryMetaData;
-  pages: Page[];
-  metadata: MetaData;
-  flags: Flags;
-}
-export interface WithLinkProps {
-  element: Element;
-  children: JSX.Element;
-  style?: React.CSSProperties;
+  backgroundAudio?: BackgroundAudio;
+  publisherLogo: PublisherLogo;
 }

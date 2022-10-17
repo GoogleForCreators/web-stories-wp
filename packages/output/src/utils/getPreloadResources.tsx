@@ -16,12 +16,25 @@
 /**
  * External dependencies
  */
-import type { Page, GifResource, MediaElement } from '@googleforcreators/types';
+import type {
+  Page,
+  Element,
+  MediaElement,
+  GifElement,
+} from '@googleforcreators/types';
 
-/**
- * Internal dependencies
- */
-import type { PreloadResource } from '../types';
+interface PreloadResource {
+  url: string;
+  type: string;
+}
+
+function isMediaElement(element: Element): element is MediaElement {
+  return ['image', 'video', 'gif'].includes(element.type);
+}
+
+function isGifElement(element: Element): element is GifElement {
+  return 'gif' === element.type;
+}
 
 /**
  * Goes through all pages in a story to find the resources that should be preloaded.
@@ -33,22 +46,24 @@ function getPreloadResources(pages: Page[]): PreloadResource[] {
     return preloadResources;
   }
 
-  for (const { type, resource, isBackground } of pages[0]
-    .elements as MediaElement[]) {
-    if (!['image', 'video', 'gif'].includes(type)) {
+  for (const element of pages[0].elements) {
+    if (!isMediaElement(element)) {
       continue;
     }
+
+    const { resource, isBackground } = element;
 
     if (!isBackground) {
       continue;
     }
-    const gifResource = resource as GifResource;
-    // resource?.output?.src is used only for GIF resources.
-    const src = gifResource?.output?.src || (resource && resource.src);
+
+    const url = isGifElement(element)
+      ? element.resource.output.src
+      : resource.src;
 
     preloadResources.push({
-      url: src,
-      type: 'image' === type ? 'image' : 'video',
+      url,
+      type: 'image' === element.type ? 'image' : 'video',
     });
   }
 

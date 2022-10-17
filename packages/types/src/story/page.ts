@@ -21,9 +21,8 @@ import type {
   Element,
   ElementId,
   Pattern,
+  Product,
   ShapeElement,
-  PageAttachment,
-  ShoppingAttachment,
 } from '../element';
 import type { Animation } from './animation';
 
@@ -38,17 +37,33 @@ export type Track = {
   trackId: number;
   trackName: string;
   id: string;
-  srcLang?: string;
+  srclang?: string;
   label?: string;
   kind: string;
 };
 
 export type Groups = Record<string, Group>;
 
-export type Advancement = {
+export type PageAdvancement = {
   autoAdvance?: boolean;
   pageDuration?: number;
+  defaultPageDuration: number;
 };
+
+export interface PageAttachment {
+  icon?: string;
+  needsProxy?: boolean;
+  url?: string;
+  ctaText?: string;
+  theme?: 'light' | 'dark';
+  rel?: string[];
+}
+
+export interface ShoppingAttachment {
+  products?: Product[];
+  ctaText?: string;
+  theme?: 'light' | 'dark';
+}
 
 export interface Page {
   id: ElementId;
@@ -72,11 +87,7 @@ export interface Page {
     tracks: Track[];
     loop: boolean;
   };
-  advancement: {
-    autoAdvance: boolean;
-    defaultPageDuration: number;
-    pageDuration?: number;
-  };
+  advancement: PageAdvancement;
   autoAdvance?: boolean;
   defaultPageDuration?: number;
 }

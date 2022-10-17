@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-export interface Font {
-  family: string;
-  variants: Array<[number, number]>;
-  url?: string;
-}
+/**
+ * External dependencies
+ */
+import type { Font } from '@googleforcreators/types';
+
+export type { Font };

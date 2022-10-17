@@ -32,7 +32,10 @@ import type {
   Product,
   VideoElement,
   MediaElement,
+  Flags,
+  Page,
 } from '@googleforcreators/types';
+
 /**
  * Internal dependencies
  */
@@ -43,15 +46,26 @@ import getTextElementTagNames from './utils/getTextElementTagNames';
 import getAutoAdvanceAfter from './utils/getAutoAdvanceAfter';
 import Outlink from './utils/outlink';
 import ShoppingAttachment from './utils/shoppingAttachment';
-import type { PageObject } from './types';
 
 const ASPECT_RATIO = `${PAGE_WIDTH}:${PAGE_HEIGHT}`;
+
+interface OutputPageProps {
+  page: Page;
+  defaultAutoAdvance: boolean;
+  defaultPageDuration: number;
+  flags: Flags;
+}
+
+function isTextElement(element: Element): element is TextElement {
+  return 'text' === element.type;
+}
+
 function OutputPage({
   page,
   defaultAutoAdvance = DEFAULT_AUTO_ADVANCE,
   defaultPageDuration = DEFAULT_PAGE_DURATION,
   flags,
-}: PageObject) {
+}: OutputPageProps) {
   const {
     id,
     animations,
@@ -88,7 +102,6 @@ function OutputPage({
         id,
       })
     : undefined;
-  const isTextElement = ({ type }: TextElement) => 'text' === type;
   const tagNamesMap: Map<string, TagName> = getTextElementTagNames(
     textElements.filter(isTextElement)
   );
@@ -100,9 +113,7 @@ function OutputPage({
     const needsTagName = 'text' === element.type;
     // Invalid links must be removed
     // TODO: this should come from the pre-publish checklist in the future.
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- Needs fixing of elements package
     const hasIllegalLink: boolean =
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call -- Needs fixing of elements package
       pageAttachment?.url && isElementBelowLimit(element);
     const requiresChange: boolean = needsTagName || hasIllegalLink;
 

@@ -18,17 +18,13 @@
  * External dependencies
  */
 import { renderToStaticMarkup } from '@googleforcreators/react';
-import type {
-  Page,
-  MetaData,
-  Flags,
-  StoryMetaData,
-} from '@googleforcreators/types';
+import type { Page, MetaData, Flags } from '@googleforcreators/types';
 
 /**
  * Internal dependencies
  */
 import OutputStory from '../story';
+import type { StoryMetaData } from '../types';
 
 /**
  * Creates AMP HTML markup for saving to DB for rendering in the FE.

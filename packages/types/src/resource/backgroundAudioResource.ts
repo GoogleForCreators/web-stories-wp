@@ -18,6 +18,7 @@
  * Internal dependencies
  */
 import type { Track } from '../story';
+
 export interface BackgroundAudioResource {
   id: number;
   src: string;
@@ -26,19 +27,9 @@ export interface BackgroundAudioResource {
   mimeType: string;
   needsProxy: boolean;
 }
-export interface BackgroundAudioResourceTyping {
-  resource: {
-    id: number;
-    src: string;
-    length: number;
-    lengthFormatted: string;
-    mimeType: string;
-    needsProxy: boolean;
-  };
+
+export interface BackgroundAudio {
+  resource: BackgroundAudioResource;
   tracks: Track[];
   loop: boolean;
-}
-
-export interface BackgroundAudioTyping {
-  backgroundAudio?: BackgroundAudioResourceTyping;
 }

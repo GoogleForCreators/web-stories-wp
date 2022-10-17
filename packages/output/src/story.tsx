@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import type { Flags, MetaData, Page } from '@googleforcreators/types';
+
+/**
  * Internal dependencies
  */
 import getUsedAmpExtensions from './utils/getUsedAmpExtensions';
@@ -23,7 +28,15 @@ import CustomCSS from './utils/styles';
 import FontDeclarations from './utils/fontDeclarations';
 import OutputPage from './page';
 import getPreloadResources from './utils/getPreloadResources';
-import type { StoryProps } from './types';
+import type { StoryMetaData } from './types';
+
+interface OutputStoryProps {
+  story: StoryMetaData;
+  pages: Page[];
+  metadata: MetaData;
+  flags: Flags;
+}
+
 const OutputStory = ({
   story: {
     featuredMedia,
@@ -37,7 +50,7 @@ const OutputStory = ({
   pages,
   metadata: { publisher },
   flags,
-}: StoryProps) => {
+}: OutputStoryProps) => {
   const ampExtensions = getUsedAmpExtensions(pages);
   const preloadResources = getPreloadResources(pages);
 
@@ -45,7 +58,7 @@ const OutputStory = ({
   const publisherLogoUrl = publisherLogo?.url || '';
 
   return (
-    <html amp="" lang="en">
+    <html amp="" lang="en" amp-custom={1}>
       <head>
         <meta charSet="utf-8" />
         <meta

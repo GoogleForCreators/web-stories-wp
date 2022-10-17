@@ -17,19 +17,26 @@
 /**
  * External dependencies
  */
-import type { Link } from '@googleforcreators/types';
+import type { Element } from '@googleforcreators/types';
 import { withProtocol } from '@googleforcreators/url';
+import type { CSSProperties } from 'react';
+
 /**
  * Internal dependencies
  */
-import type { WithLinkProps } from '../../types';
+
+interface WithLinkProps {
+  element: Element;
+  children: JSX.Element;
+  style: CSSProperties;
+}
 
 function WithLink({ element, children, ...rest }: WithLinkProps) {
-  const link: Link = element.link || ({} as Link);
-  const { url, icon, desc, rel = [] } = link;
-  if (!url) {
+  if (!('link' in element) || !element.link) {
     return children;
   }
+
+  const { url, icon, desc, rel = [] } = element.link;
   const clonedRel = rel.concat(['noreferrer']);
   const urlWithProtocol = withProtocol(url);
   return (

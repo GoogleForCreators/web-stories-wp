@@ -30,10 +30,7 @@ import type { Font } from '../types';
  * @param [display] Valid font-display value, e.g. 'swap' or 'auto'. Default 'swap'.
  * @return Google Fonts embed URL.
  */
-function getGoogleFontURL(
-  fonts: Font[],
-  display: 'swap' | 'auto' = 'swap'
-): string {
+function getGoogleFontURL(fonts: Font[], display: 'swap' | 'auto' = 'swap') {
   const url = new URL('https://fonts.googleapis.com/css2');
   url.searchParams.append('display', display);
 

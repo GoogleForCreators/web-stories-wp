@@ -17,13 +17,25 @@
  * External dependencies
  */
 import { getTotalDuration } from '@googleforcreators/animation';
+import type {
+  Animation,
+  BackgroundAudio,
+  Element,
+} from '@googleforcreators/types';
 
 /**
  * Internal dependencies
  */
 import { DEFAULT_PAGE_DURATION } from '../constants';
-import type { AutoAdvance } from '../types';
 import getLongestMediaElement from './getLongestMediaElement';
+
+interface AutoAdvanceArgs {
+  animations?: Animation[];
+  defaultPageDuration: number;
+  elements: Element[];
+  backgroundAudio?: BackgroundAudio;
+  id: string;
+}
 
 function getAutoAdvanceAfter({
   animations,
@@ -31,13 +43,12 @@ function getAutoAdvanceAfter({
   elements,
   backgroundAudio,
   id,
-}: AutoAdvance): string {
+}: AutoAdvanceArgs): string {
   const { resource, loop } = backgroundAudio || {};
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-call -- Needs fixing in animation package
   const animationDuration = getTotalDuration({ animations }) / 1000;
   const backgroundAudioDuration =
-    !loop && resource?.length ? resource.length : 0;
+    resource && !loop && resource.length ? resource.length : 0;
 
   // If we have media, take the media time for advancement time and ignore the default,
   // but still consider animation time as the minimum, too.

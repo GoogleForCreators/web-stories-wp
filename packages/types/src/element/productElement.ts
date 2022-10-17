@@ -18,10 +18,12 @@
  * Internal dependencies
  */
 import type { Element, ElementType } from './element';
+
 interface ProductImage {
   alt: string;
   url: string;
 }
+
 export interface Product {
   productId: string;
   productBrand: string;
@@ -33,11 +35,7 @@ export interface Product {
   productUrl: string;
   type: ElementType.Product;
 }
+
 export interface ProductElement extends Element {
   product: Product;
-}
-export interface ShoppingAttachment {
-  products?: Product[];
-  ctaText?: string;
-  theme?: string;
 }

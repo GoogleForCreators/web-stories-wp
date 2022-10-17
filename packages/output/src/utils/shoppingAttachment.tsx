@@ -17,13 +17,9 @@
 /**
  * External dependencies
  */
-import type { ShoppingAttachmentType } from '@googleforcreators/types';
+import type { ShoppingAttachment as ShoppingAttachmentType } from '@googleforcreators/types';
 
-function ShoppingAttachment({
-  products,
-  theme,
-  ctaText,
-}: ShoppingAttachmentType) {
+function ShoppingAttachment({ products, theme, ctaText }: ShoppingAttachmentType) {
   return (
     <amp-story-shopping-attachment
       theme={theme}

@@ -24,7 +24,12 @@ import type {
   TextElement,
   Font,
   FontVariant,
+  CustomFont,
+  FontFamily,
+  GoogleFont,
 } from '@googleforcreators/types';
+import { FontService } from '@googleforcreators/types';
+import type { Key } from 'react';
 
 const hasTuple = (tuples: FontVariant[], tuple: FontVariant): boolean =>
   tuples.some((val: FontVariant) => val[0] === tuple[0] && val[1] === tuple[1]);
@@ -46,7 +51,7 @@ const getNearestTuple = (
 };
 
 function FontDeclarations({ pages }: Pick<Story, 'pages'>) {
-  const map = new Map() as Map<string, Map<string, Font>>;
+  const map = new Map<FontService, Map<FontFamily, CustomFont | GoogleFont>>();
 
   for (const { elements } of pages) {
     const elementsAsTextElements = elements as TextElement[];
@@ -55,16 +60,19 @@ function FontDeclarations({ pages }: Pick<Story, 'pages'>) {
     );
     // Prepare font objects for later use.
     for (const { font, content } of textElements) {
-      const { service, family, variants = [], url } = font;
-      if (!service || service === 'system') {
+      const { service, family, variants = [] } = font;
+      if (!service || service === FontService.System) {
         continue;
       }
 
-      const serviceMap: Map<string, Font> = (map.get(service) ||
-        new Map()) as Map<string, Font>;
+      const serviceMap =
+        map.get(service) || new Map<string, CustomFont | GoogleFont>();
       map.set(service, serviceMap);
 
-      const fontObj: Font = serviceMap.get(family) || {
+      const { url } = font;
+      const fontObj: Partial<CustomFont | GoogleFont> = serviceMap.get(
+        family
+      ) || {
         family,
         variants: [],
         url,
@@ -89,8 +97,9 @@ function FontDeclarations({ pages }: Pick<Story, 'pages'>) {
           //   [ 0, 400] was requested, fall back to [ 1, 400 ].
 
           const newVariant = getNearestTuple(variants, variant as FontVariant);
-          const fontObjHasVariant =
-            fontObj.variants && hasTuple(fontObj.variants, newVariant);
+          const fontObjHasVariant = Boolean(
+            fontObj.variants && hasTuple(fontObj.variants, newVariant)
+          );
           const isValidVariant = hasTuple(variants, newVariant);
 
           // Keeps list unique.
@@ -106,13 +115,11 @@ function FontDeclarations({ pages }: Pick<Story, 'pages'>) {
 
   return (
     <>
-      {Array.from(map.keys()).map((service: string) => {
-        const serviceMap: Map<string, Font> = map.get(service) as Map<
-          string,
-          Font
-        >;
+      {Array.from(map.keys()).map((service) => {
+        const serviceMap = map.get(service);
+
         switch (service) {
-          case 'fonts.google.com':
+          case FontService.GoogleFonts:
             return (
               serviceMap && (
                 <link
@@ -122,23 +129,25 @@ function FontDeclarations({ pages }: Pick<Story, 'pages'>) {
                 />
               )
             );
-          case 'custom':
+          case FontService.Custom:
             return (
               serviceMap &&
-              Array.from(serviceMap.values()).map(({ family, url }: Font) => {
-                const inlineStyle: string = getFontCSS(
-                  family,
-                  url as string
-                ) as string;
-                return (
-                  <style
-                    key={family}
-                    dangerouslySetInnerHTML={{
-                      __html: inlineStyle,
-                    }}
-                  />
-                );
-              })
+              Array.from(serviceMap.values()).map(
+                ({ family, url }: CustomFont) => {
+                  const inlineStyle = getFontCSS(family, url);
+
+                  return (
+                    inlineStyle && (
+                      <style
+                        key={family as Key}
+                        dangerouslySetInnerHTML={{
+                          __html: inlineStyle,
+                        }}
+                      />
+                    )
+                  );
+                }
+              )
             );
           default:
             return null;

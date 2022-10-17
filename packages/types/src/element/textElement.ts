@@ -20,6 +20,9 @@
 import type { Element, ElementType } from './element';
 import type { Pattern } from './pattern';
 
+export type FontFamily = string;
+type FontFallback = FontFamily | 'serif' | 'sans-serif';
+
 export type FontStyle = 'normal' | 'italic' | 'regular';
 export enum FontVariantStyle {
   Normal = 0,
@@ -30,16 +33,42 @@ export type FontWeight = 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
 export type TagName = 'h1' | 'h2' | 'h3' | 'p' | 'auto';
 export type FontVariant = [FontVariantStyle, FontWeight];
 
-export interface Font {
-  family: string;
+export enum FontService {
+  Custom = 'custom',
+  GoogleFonts = 'fonts.google.com',
+  System = 'system',
+}
+
+interface BaseFont {
+  family: FontFamily;
   service?: string;
   weights?: FontWeight[];
   styles?: FontStyle[];
   variants: FontVariant[];
-  fallbacks?: string[];
-  url?: string;
+  fallbacks?: FontFallback[];
   metrics?: FontMetrics;
 }
+
+export interface CustomFont extends BaseFont {
+  service: FontService.Custom;
+  url: string;
+}
+
+export interface GoogleFont extends BaseFont {
+  service: FontService.GoogleFonts;
+}
+
+export interface SystemFont extends BaseFont {
+  service: FontService.System;
+}
+
+export interface FontPerService {
+  [FontService.Custom]: CustomFont;
+  [FontService.System]: SystemFont;
+  [FontService.GoogleFonts]: GoogleFont;
+}
+
+export type Font = CustomFont | GoogleFont | SystemFont;
 
 export interface Padding {
   horizontal?: number;

@@ -13,15 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
-import type { Page, VideoTrack, ElementType } from '@googleforcreators/types';
+import type { Page, Element, VideoElement } from '@googleforcreators/types';
+import { ElementType } from '@googleforcreators/types';
+
+type AMPExtensionName = `amp-${Lowercase<string>}`;
 
 type AMPExtension = {
   src: string;
-  name?: string;
+  name?: AMPExtensionName;
 };
+
+function isVideo(element: Element): element is VideoElement {
+  return 'tracks' in element;
+}
+
+function hasTracks(element: Element) {
+  return isVideo(element) && element.tracks && element.tracks.length > 0;
+}
 
 /**
  * Goes through all pages in a story to find the needed AMP extensions for them.
@@ -58,22 +70,19 @@ const getUsedAmpExtensions = (pages: Page[]): AMPExtension[] => {
       extensions.push(ampVideo);
       extensions.push(ampStoryCaptions);
     }
-    const videoElements = elements as {
-      tracks?: VideoTrack[];
-      type: ElementType;
-    }[];
-    for (const { type, tracks } of videoElements) {
-      switch (type) {
-        case 'video':
+    for (const element of elements) {
+      switch (element.type) {
+        case ElementType.Video:
           extensions.push(ampVideo);
-          if (tracks && tracks?.length > 0) {
+
+          if (hasTracks(element)) {
             extensions.push(ampStoryCaptions);
           }
           break;
-        case 'gif':
+        case ElementType.Gif:
           extensions.push(ampVideo);
           break;
-        case 'product':
+        case ElementType.Product:
           extensions.push(ampStoryShopping);
           break;
         default:

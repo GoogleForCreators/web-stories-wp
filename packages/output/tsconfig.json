@@ -4,6 +4,16 @@
     "rootDir": "src",
     "declarationDir": "dist-types"
   },
-  "references": [{ "path": "../react" }],
+  "references": [
+    { "path": "../fonts" },
+    { "path": "../i18n" },
+    { "path": "../media" },
+    { "path": "../patterns" },
+    { "path": "../react" },
+    { "path": "../rich-text" },
+    { "path": "../types" },
+    { "path": "../units" },
+    { "path": "../url" }
+  ],
   "include": ["src/**/*"]
 }

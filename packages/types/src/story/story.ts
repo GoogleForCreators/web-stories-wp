@@ -17,31 +17,21 @@
 /**
  * Internal dependencies
  */
-import type { BackgroundAudioResource } from '../resource';
 import type { Page } from './page';
 
 export interface FeaturedMedia {
-  height: number;
-  id: number;
-  isExternal: boolean;
-  needsProxy: boolean;
+  id?: number;
   url: string;
   width: number;
+  height: number;
+  isExternal?: boolean;
+  needsProxy?: boolean;
 }
 export interface PublisherLogo {
   height: number;
   id: number;
   url: string;
   width: number;
-}
-export interface StoryMetaData {
-  featuredMedia: FeaturedMedia;
-  link: string;
-  title: string;
-  autoAdvance: boolean;
-  defaultPageDuration: number;
-  backgroundAudio?: Record<string, BackgroundAudioResource>;
-  publisherLogo: PublisherLogo;
 }
 
 export type Flags = Record<string, boolean>;

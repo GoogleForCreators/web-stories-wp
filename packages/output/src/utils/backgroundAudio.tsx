@@ -16,19 +16,22 @@
 /**
  * External dependencies
  */
-import type { BackgroundAudioResourceTyping } from '@googleforcreators/types';
-function BackgroundAudio({
-  backgroundAudio,
-  id,
-}: {
-  backgroundAudio: BackgroundAudioResourceTyping;
+import type {
+  BackgroundAudio as BackgroundAudioType,
+  Track,
+} from '@googleforcreators/types';
+
+export interface BackgroundAudioProps {
+  backgroundAudio?: BackgroundAudioType;
   id: string;
-}) {
+}
+
+function BackgroundAudio({ backgroundAudio, id }: BackgroundAudioProps) {
   const { resource, tracks, loop } = backgroundAudio || {};
-  const { mimeType, src } = resource;
+  const { mimeType, src } = resource || {};
 
   const videoProps = {
-    loop: loop ? 'loop' : undefined,
+    loop: loop ? true : undefined,
     id: `page-${id}-background-audio`,
     // Actual <amp-story-captions> output happens in OutputPage.
     'captions-id': tracks?.length > 0 ? `el-${id}-captions` : undefined,
@@ -45,7 +48,7 @@ function BackgroundAudio({
   return (
     <amp-story-grid-layer template="fill">
       <amp-video
-        autoPlay="autoplay"
+        autoPlay
         // Not using "nodisplay" here, because it might cause the audio to
         // not actually load at all.
         // The good thing is that even with a layout, there's nothing visible
@@ -58,7 +61,7 @@ function BackgroundAudio({
       >
         <source {...sourceProps} />
         {tracks &&
-          tracks.map(({ srclang, label, kind, track, id: key }, i) => (
+          tracks.map(({ srclang, label, kind, track, id: key }: Track, i) => (
             <track
               srcLang={srclang}
               label={label}

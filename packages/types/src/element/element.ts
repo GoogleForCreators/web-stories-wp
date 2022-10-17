@@ -18,14 +18,16 @@
  * Internal dependencies
  */
 import type { ElementBox } from './elementBox';
-import type { Pattern, Solid } from './pattern';
+import type { Solid } from './pattern';
+
+type LinkRel = 'noreferrer' | 'sponsored' | 'nofollow';
 
 export interface Link {
   url: string;
   desc?: string;
   needsProxy?: boolean;
   icon?: string | null;
-  rel?: string[];
+  rel?: LinkRel[];
 }
 
 export interface Flip {
@@ -60,20 +62,12 @@ export interface BorderRadius {
   bottomRight: number;
   locked: boolean;
 }
-export interface PageAttachment {
-  icon?: string;
-  needsProxy?: boolean;
-  url?: string;
-  ctaText?: string;
-  theme?: string;
-  rel?: string[];
-}
 
 export type ElementId = string;
 
 export interface Element extends ElementBox {
   id: ElementId;
-  type: string;
+  type: ElementType;
   mask?: Mask;
   link?: Link;
   opacity?: number;
@@ -82,7 +76,7 @@ export interface Element extends ElementBox {
   groupId?: string;
   border?: Border;
   borderRadius?: BorderRadius;
-  backgroundColor?: Pattern;
+  layerName?: string;
 
   // TODO(#12262): Remove this.
   basedOn?: ElementId;
