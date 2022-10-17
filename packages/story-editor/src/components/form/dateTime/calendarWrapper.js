@@ -129,8 +129,8 @@ const CalendarWrapper = styled.div`
 
     &:enabled:hover,
     &:enabled:focus {
-      background-color: ${({ theme }) => theme.colors.bg.secondary};
-      color: ${({ theme }) => theme.colors.fg.secondary};
+      background-color: ${({ theme }) => theme.colors.bg.tertiary};
+      color: ${({ theme }) => theme.colors.fg.primary};
     }
   }
 
