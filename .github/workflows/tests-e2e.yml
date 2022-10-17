@@ -199,6 +199,13 @@ jobs:
           echo "chromium_path=${CHROMIUM}" >> $GITHUB_ENV
         if: ( matrix.snapshots ) && ( github.event.pull_request.draft == false )
 
+      - name: Download AMP validator JS
+        id: amp_validator
+        run: |
+          cd $RUNNER_TEMP && curl -O -f -s -S https://cdn.ampproject.org/v0/validator_wasm.js
+          AMP_VALIDATOR_FILE="${RUNNER_TEMP}/validator_wasm.js"
+          echo "validator_file=$AMP_VALIDATOR_FILE" >> $GITHUB_ENV
+
       - name: Run E2E tests with percy
         run: npm run test:e2e:percy -- -- --shard=$SHARD
         env:

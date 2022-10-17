@@ -18,7 +18,6 @@
  * External dependencies
  */
 import {
-  addRequestInterception,
   publishPost,
   withDisabledToolbarOnFrontend,
   insertBlock,
@@ -39,43 +38,20 @@ const EMBED_BLOCK_CONTENT = `
 <!-- /wp:web-stories/embed -->
 `;
 
-jest.retryTimes(2, { logErrorsBeforeRetry: true });
+// jest.retryTimes(2, { logErrorsBeforeRetry: true });
 
 describe('Web Stories Block', () => {
-  let stopRequestInterception;
+  withPlugin('e2e-tests-embed');
+
   let removeErrorMessage;
 
-  beforeAll(async () => {
+  beforeAll(() => {
     removeErrorMessage = addAllowedErrorMessage(
       'Failed to load resource: the server responded with a status of 404'
     );
-    await page.setRequestInterception(true);
-    stopRequestInterception = addRequestInterception((request) => {
-      // amp-story-player scripts
-      if (request.url().startsWith('https://cdn.ampproject.org/')) {
-        request.respond({
-          status: 200,
-          body: '',
-        });
-        return;
-      }
-
-      // Fetching metadata for the story.
-      if (request.url().includes('web-stories/v1/embed')) {
-        request.respond({
-          status: 200,
-          body: '{"title":"Stories in AMP - Hello World","poster":"https:\\/\\/amp.dev\\/static\\/samples\\/img\\/story_dog2_portrait.jpg"}',
-        });
-        return;
-      }
-
-      request.continue();
-    });
   });
 
-  afterAll(async () => {
-    await page.setRequestInterception(false);
-    stopRequestInterception();
+  afterAll(() => {
     removeErrorMessage();
   });
 
@@ -96,7 +72,7 @@ describe('Web Stories Block', () => {
 
     await page.type(
       'input[aria-label="Story URL"]',
-      'https://wp.stories.google/stories/intro-to-web-stories-storytime'
+      'https://wp.stories.google/stories/intro-to-web-stories-storytime/'
     );
     await expect(page).toClick('button[aria-label="Embed"]');
 
@@ -171,14 +147,7 @@ describe('Web Stories Block', () => {
         ? `${postPermalink}&amp`
         : `${postPermalink}?amp`;
 
-      await page.goto(ampPostPermaLink, {
-        waitUntil: 'networkidle0',
-      });
-
-      await page.waitForSelector('amp-story-player');
-      await expect(page).toMatchElement('amp-story-player');
-
-      await expect(page).toBeValidAMP();
+      await expect(ampPostPermaLink).toBeValidAMP();
     });
   });
 });
