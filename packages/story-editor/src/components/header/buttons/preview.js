@@ -33,7 +33,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { useStory } from '../../../app';
+import { useHistory, useStory } from '../../../app';
 import PreviewErrorDialog from '../previewErrorDialog';
 import Tooltip from '../../tooltip';
 import useIsUploadingToStory from '../../../utils/useIsUploadingToStory';
@@ -50,6 +50,9 @@ function PreviewButton({ forceIsSaving = false }) {
       actions: { autoSave, saveStory },
     }) => ({ isSaving, status, previewLink, autoSave, saveStory })
   );
+  const {
+    state: { hasNewChanges },
+  } = useHistory();
   const isUploading = useIsUploadingToStory();
 
   const [previewLinkToOpenViaDialog, setPreviewLinkToOpenViaDialog] =
@@ -108,22 +111,24 @@ function PreviewButton({ forceIsSaving = false }) {
       // will be resolved after the story is saved.
     }
 
-    // Save story directly if draft, otherwise, use auto-save.
-    const updateFunc = isDraft ? saveStory : autoSave;
-    updateFunc()
-      .then((update) => {
-        if (popup && !popup.closed) {
-          if (popup.location.href) {
-            // Auto-save sends an updated preview link, use that instead if available.
-            const updatedPreviewLink = decoratePreviewLink(
-              update?.previewLink ?? previewLink
-            );
-            popup.location.replace(updatedPreviewLink);
+    if (hasNewChanges) {
+      // Save story directly if draft, otherwise, use auto-save.
+      const updateFunc = isDraft ? saveStory : autoSave;
+      updateFunc()
+        .then((update) => {
+          if (popup && !popup.closed) {
+            if (popup.location.href) {
+              // Auto-save sends an updated preview link, use that instead if available.
+              const updatedPreviewLink = decoratePreviewLink(
+                update?.previewLink ?? previewLink
+              );
+              popup.location.replace(updatedPreviewLink);
+            }
           }
-        }
-      })
-      .catch(() => setPreviewLinkToOpenViaDialog(previewLink));
-  }, [autoSave, isDraft, previewLink, saveStory]);
+        })
+        .catch(() => setPreviewLinkToOpenViaDialog(previewLink));
+    }
+  }, [autoSave, isDraft, previewLink, saveStory, hasNewChanges]);
 
   const openPreviewLinkSync = useCallback(
     (evt) => {
