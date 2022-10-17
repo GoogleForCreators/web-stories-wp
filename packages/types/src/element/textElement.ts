@@ -78,7 +78,7 @@ export interface TextElement extends Element {
   fontSize?: number;
   lineHeight?: number;
   textAlign?: TextAlign;
-  tagName?: 'h1' | 'h2' | 'h3' | 'p';
+  tagName?: TagName;
   padding?: Padding;
   marginOffset?: number;
   // TODO(#12258): Remove this.

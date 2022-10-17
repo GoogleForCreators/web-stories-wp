@@ -112,7 +112,7 @@ function OutputPage({
     }
 
     // At least one change needed, create shallow clone and modify that
-    const newElement = { ...element };
+    const newElement: TextElement = { ...element };
     if (needsTagName) {
       newElement.tagName = tagNamesMap.get(element.id);
     }

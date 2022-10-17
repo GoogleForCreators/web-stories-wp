@@ -39,11 +39,14 @@ import type { OutputElementProps } from './types';
 
 function OutputElement({ element, flags }: OutputElementProps) {
   let overlay;
+  let backgroundTextMode;
   if ('overlay' in element) {
     overlay = element.overlay;
   }
-  const { id, opacity, type, border, backgroundColor, backgroundTextMode } =
-    element;
+  if ('backgroundTextMode' in element) {
+    overlay = element.backgroundTextMode;
+  }
+  const { id, opacity, type, border, backgroundColor } = element;
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,  @typescript-eslint/no-unsafe-call -- Needs fixing elements package.
   const { Output, isMaskable } = getDefinitionForType(type);
 

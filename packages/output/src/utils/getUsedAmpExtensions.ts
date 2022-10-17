@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import type { Page, VideoElement } from '@googleforcreators/types';
+import type { Page, VideoTrack, ElementType } from '@googleforcreators/types';
 
 type AMPExtension = {
   src: string;
@@ -58,7 +58,10 @@ const getUsedAmpExtensions = (pages: Page[]): AMPExtension[] => {
       extensions.push(ampVideo);
       extensions.push(ampStoryCaptions);
     }
-    const videoElements = elements as VideoElement[];
+    const videoElements = elements as {
+      tracks?: VideoTrack[];
+      type: ElementType;
+    }[];
     for (const { type, tracks } of videoElements) {
       switch (type) {
         case 'video':
