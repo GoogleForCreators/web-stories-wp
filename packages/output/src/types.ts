@@ -41,7 +41,7 @@ export interface PreloadResource {
 }
 
 type Elements = MediaElement | TextElement;
-export interface OutputElementTyping {
+export interface OutputElementProps {
   element: Elements;
   flags: Flags;
 }
@@ -57,7 +57,7 @@ export interface StoryProps {
   metadata: MetaData;
   flags: Flags;
 }
-export interface WithLinkTyping {
+export interface WithLinkProps {
   element: Element;
   children: JSX.Element;
   style?: React.CSSProperties;

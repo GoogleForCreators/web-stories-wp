@@ -35,9 +35,9 @@ import {
  * Internal dependencies
  */
 import WithLink from './components/withLink';
-import type { OutputElementTyping } from './types';
+import type { OutputElementProps } from './types';
 
-function OutputElement({ element, flags }: OutputElementTyping) {
+function OutputElement({ element, flags }: OutputElementProps) {
   let overlay;
   if ('overlay' in element) {
     overlay = element.overlay;

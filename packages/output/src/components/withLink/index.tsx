@@ -22,9 +22,9 @@ import { withProtocol } from '@googleforcreators/url';
 /**
  * Internal dependencies
  */
-import type { WithLinkTyping } from '../../types';
+import type { WithLinkProps } from '../../types';
 
-function WithLink({ element, children, ...rest }: WithLinkTyping) {
+function WithLink({ element, children, ...rest }: WithLinkProps) {
   const link: Link = element.link || ({} as Link);
   const { url, icon, desc, rel = [] } = link;
   if (!url) {
