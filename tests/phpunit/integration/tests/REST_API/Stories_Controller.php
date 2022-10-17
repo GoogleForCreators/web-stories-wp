@@ -543,6 +543,8 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
 
+		wp_delete_attachment( $attachment_id, true );
+
 		$this->assertArrayHasKey( 'story_poster', $data );
 		$this->assertSame( Image_Sizes::POSTER_PORTRAIT_IMAGE_DIMENSIONS[0], $attachment_src[1] );
 		$this->assertSame( Image_Sizes::POSTER_PORTRAIT_IMAGE_DIMENSIONS[1], $attachment_src[2] );
@@ -588,6 +590,8 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story/' . $story );
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
+
+		wp_delete_attachment( $attachment_id, true );
 
 		$this->assertArrayHasKey( 'story_poster', $data );
 		$this->assertSame( Image_Sizes::POSTER_PORTRAIT_IMAGE_DIMENSIONS[0], $attachment_src[1] );
@@ -689,6 +693,8 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story/' . $story );
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
+
+		wp_delete_attachment( $attachment_id, true );
 
 		$this->assertArrayHasKey( 'story_poster', $data );
 		$this->assertEqualSetsWithIndex(

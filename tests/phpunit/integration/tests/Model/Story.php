@@ -135,6 +135,8 @@ class Story extends TestCase {
 		$story = new \Google\Web_Stories\Model\Story();
 		$story->load_from_post( $post );
 
+		wp_delete_attachment( $poster_attachment_id, true );
+
 		$this->assertEquals( $story->get_title(), 'test title' );
 		$this->assertEquals( $story->get_url(), get_permalink( $post ) );
 		$this->assertStringContainsString( 'paint-640x853.jpeg', $story->get_poster_portrait() );
@@ -213,6 +215,8 @@ class Story extends TestCase {
 
 		$story = new \Google\Web_Stories\Model\Story();
 		$story->load_from_post( $post );
+
+		wp_delete_attachment( $poster_attachment_id, true );
 
 		$this->assertEquals( $story->get_title(), 'test title' );
 		$this->assertEquals( $story->get_url(), get_permalink( $post ) );
