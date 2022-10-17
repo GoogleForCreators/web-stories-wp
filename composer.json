@@ -78,6 +78,7 @@
     "platform": {
       "php": "7.2.24"
     },
+    "platform-check": false,
     "sort-packages": true
   },
   "extra": {
