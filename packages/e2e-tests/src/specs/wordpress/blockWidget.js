@@ -39,12 +39,14 @@ describe('Web Stories Widget Block', () => {
 
   minWPVersionRequired('5.8');
 
-  beforeAll(async () => {
+  beforeAll(() => {
     // Known issue in WP 6.0 RC1, see https://github.com/GoogleForCreators/web-stories-wp/pull/11435
     removeErrorMessage = addAllowedErrorMessage(
       "Warning: Can't perform a React state update on an unmounted component."
     );
+  });
 
+  beforeEach(async () => {
     await deleteWidgets();
   });
 
@@ -136,25 +138,27 @@ describe('Web Stories Widget Block', () => {
 
     // Wait for widget to render.
     await page.waitForSelector('.wp-block-legacy-widget__edit-preview');
-    await expect(page).toClick('.wp-block-legacy-widget');
 
-    await expect(page).toMatchElement('.web-stories-field-wrapper');
+    await expect(page).toClick('.wp-block-legacy-widget');
+    await expect(page).toMatchElement('.web-stories-field-wrapper', {
+      visible: true,
+    });
 
     await page.evaluate(() => {
       const input = document.querySelector('.web-stories-field-wrapper input');
       input.value = '';
     });
 
-    await page.type('.web-stories-field-wrapper input', 'Test Block Widget');
+    await Promise.all([
+      page.type('.web-stories-field-wrapper input', 'Test Block Widget'),
 
-    await page.waitForResponse(
-      (response) =>
-        // eslint-disable-next-line jest/no-conditional-in-test
-        response
-          .url()
-          .includes('wp/v2/widget-types/web_stories_widget/render') &&
-        response.status() === 200
-    );
+      page.waitForResponse(
+        (response) =>
+          // eslint-disable-next-line jest/no-conditional-in-test
+          response.url().includes('wp/v2/widget-types/web_stories_widget') &&
+          response.status() === 200
+      ),
+    ]);
 
     await expect(page).toClick('.components-button.is-primary', {
       text: 'Update',
