@@ -25,6 +25,7 @@ export const STORY_FIELDS = [
   'link',
   'preview_link',
   'edit_link',
+  '_links', // Needed for WP 6.1+
   // _web_stories_envelope will add these fields, we need them too.
   'body',
   'status',
