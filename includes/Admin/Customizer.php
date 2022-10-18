@@ -196,7 +196,7 @@ class Customizer extends Service_Base implements Conditional {
 		$wp_customize->add_setting(
 			self::STORY_OPTION . '[show_stories]',
 			[
-				'default' => false,
+				'default' => 'false',
 				'type'    => 'option',
 			]
 		);
@@ -232,7 +232,7 @@ class Customizer extends Service_Base implements Conditional {
 		$wp_customize->add_setting(
 			self::STORY_OPTION . '[number_of_stories]',
 			[
-				'default'           => $theme_support['number_of_stories']['default'],
+				'default'           => (string) $theme_support['number_of_stories']['default'],
 				'type'              => 'option',
 				'validate_callback' => [ $this, 'validate_number_of_stories' ],
 			]
@@ -255,7 +255,7 @@ class Customizer extends Service_Base implements Conditional {
 		$wp_customize->add_setting(
 			self::STORY_OPTION . '[number_of_columns]',
 			[
-				'default'           => $theme_support['number_of_columns']['default'],
+				'default'           => (string) $theme_support['number_of_columns']['default'],
 				'type'              => 'option',
 				'validate_callback' => [ $this, 'validate_number_of_columns' ],
 			]
@@ -324,7 +324,7 @@ class Customizer extends Service_Base implements Conditional {
 		$wp_customize->add_setting(
 			self::STORY_OPTION . '[circle_size]',
 			[
-				'default' => $theme_support['circle_size']['default'],
+				'default' => (string) $theme_support['circle_size']['default'],
 				'type'    => 'option',
 			]
 		);
@@ -375,7 +375,7 @@ class Customizer extends Service_Base implements Conditional {
 			$wp_customize->add_setting(
 				self::STORY_OPTION . '[show_title]',
 				[
-					'default' => $theme_support['title']['default'],
+					'default' => (string) $theme_support['title']['default'],
 					'type'    => 'option',
 				]
 			);
@@ -396,7 +396,7 @@ class Customizer extends Service_Base implements Conditional {
 			$wp_customize->add_setting(
 				self::STORY_OPTION . '[show_excerpt]',
 				[
-					'default' => $theme_support['excerpt']['default'],
+					'default' => (string) $theme_support['excerpt']['default'],
 					'type'    => 'option',
 				]
 			);
@@ -418,7 +418,7 @@ class Customizer extends Service_Base implements Conditional {
 			$wp_customize->add_setting(
 				self::STORY_OPTION . '[show_author]',
 				[
-					'default' => $theme_support['author']['default'],
+					'default' => (string) $theme_support['author']['default'],
 					'type'    => 'option',
 				]
 			);
@@ -440,7 +440,7 @@ class Customizer extends Service_Base implements Conditional {
 			$wp_customize->add_setting(
 				self::STORY_OPTION . '[show_date]',
 				[
-					'default' => $theme_support['date']['default'],
+					'default' => (string) $theme_support['date']['default'],
 					'type'    => 'option',
 				]
 			);
@@ -462,7 +462,7 @@ class Customizer extends Service_Base implements Conditional {
 			$wp_customize->add_setting(
 				self::STORY_OPTION . '[sharp_corners]',
 				[
-					'default' => $theme_support['sharp_corners']['default'],
+					'default' => (string) $theme_support['sharp_corners']['default'],
 					'type'    => 'option',
 				]
 			);
@@ -484,7 +484,7 @@ class Customizer extends Service_Base implements Conditional {
 			$wp_customize->add_setting(
 				self::STORY_OPTION . '[show_archive_link]',
 				[
-					'default' => $theme_support['archive_link']['default'],
+					'default' => (string) $theme_support['archive_link']['default'],
 					'type'    => 'option',
 				]
 			);
