@@ -18,26 +18,35 @@
  * External dependencies
  */
 import { __ } from '@googleforcreators/i18n';
+import type {
+  Element,
+  MediaElement,
+  ShapeElement,
+} from '@googleforcreators/types';
 
 /**
  * Internal dependencies
  */
 import getDefinitionForType from './getDefinitionForType';
 
-/** @typedef {import('../types').Element} Element */
+function canBeBackground(
+  element: Element
+): element is MediaElement | ShapeElement {
+  return 'isBackground' in element;
+}
 
 /**
  * Returns the layer name based on the element properties.
  *
- * @param {Element} element Element.
- * @return {string} Layer name.
+ * @param element Element.
+ * @return Layer name.
  */
-function getLayerName(element) {
+function getLayerName(element: Element) {
   if (element.layerName) {
-    return element.layerName;
+    return element.layerName as string;
   }
 
-  if (element.isBackground) {
+  if (canBeBackground(element) && element.isBackground) {
     return __('Background', 'web-stories');
   }
 

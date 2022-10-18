@@ -19,6 +19,6 @@
  */
 import { elementTypes } from '../elementType';
 
-const getDefinitionForType = (type) => elementTypes[type];
+const getDefinitionForType = (type: string) => elementTypes[type];
 
 export default getDefinitionForType;

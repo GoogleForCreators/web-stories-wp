@@ -18,18 +18,24 @@
  * External dependencies
  */
 import {
+  Corner,
   DANGER_ZONE_HEIGHT,
   FULLBLEED_HEIGHT,
   getCorners,
 } from '@googleforcreators/units';
+import type { Element } from '@googleforcreators/types';
 
-function isElementBelowLimit(element, verifyLink = true) {
+function isElementBelowLimit(element: Element, verifyLink = true) {
   if (verifyLink && !element.link?.url?.length) {
     return false;
   }
+
   const limit = FULLBLEED_HEIGHT * 0.8 - DANGER_ZONE_HEIGHT;
   const { x, y, width, height, rotationAngle } = element;
   const points = getCorners(rotationAngle, x, y, width, height);
-  return Boolean(Object.keys(points).find((point) => points[point].y > limit));
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment -- See below.
+  // @ts-ignore
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access -- TODO: Fix.
+  return Object.keys(points).some((point: Corner) => points[point].y > limit);
 }
 export default isElementBelowLimit;

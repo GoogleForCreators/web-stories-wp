@@ -15,12 +15,17 @@
  */
 
 /**
+ * External dependencies
+ */
+import type { Flip } from '@googleforcreators/types';
+
+/**
  * Returns transform scale value based on the flip setting.
  *
- * @param {Object} flip Flip value.
- * @return {string} CSS transform scale value.
+ * @param flip Flip value.
+ * @return CSS transform scale value.
  */
-function getTransformFlip(flip) {
+function getTransformFlip(flip: Flip) {
   // If no flip
   if (!flip || (!flip.horizontal && !flip.vertical)) {
     return null;
