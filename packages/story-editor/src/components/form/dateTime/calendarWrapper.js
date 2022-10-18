@@ -113,7 +113,7 @@ const CalendarWrapper = styled.div`
   .react-calendar__year-view .react-calendar__tile,
   .react-calendar__decade-view .react-calendar__tile,
   .react-calendar__century-view .react-calendar__tile {
-    padding: 2em 0.5em;
+    padding: 1.2em 0.5em;
   }
 
   .react-calendar__tile {
@@ -124,13 +124,14 @@ const CalendarWrapper = styled.div`
     line-height: 16px;
 
     &:disabled {
-      background-color: #f0f0f0;
+      background-color: ${({ theme }) => theme.colors.bg.tertiary};
     }
 
     &:enabled:hover,
     &:enabled:focus {
-      background-color: ${({ theme }) => theme.colors.bg.tertiary};
-      color: ${({ theme }) => theme.colors.fg.primary};
+      background-color: ${({ theme }) =>
+        theme.colors.interactiveBg.tertiaryHover};
+      color: ${({ theme }) => theme.colors.interactiveFg.active};
     }
   }
 
@@ -140,16 +141,14 @@ const CalendarWrapper = styled.div`
 
     &:enabled:hover,
     &:enabled:focus {
-      background-color: ${({ theme }) => theme.colors.interactiveBg.brandHover};
-      color: ${({ theme }) => theme.colors.interactiveFg.brandHover};
-    }
-
-    .react-calendar__month-view__days__day:focus {
-      background-color: #eeeec1;
+      background-color: ${({ theme }) =>
+        theme.colors.interactiveBg.secondaryHover};
+      color: ${({ theme }) => theme.colors.interactiveFg.active};
     }
   }
 
-  .react-calendar button.react-calendar__tile--active {
+  .react-calendar button.react-calendar__tile--active,
+  .react-calendar button.react-calendar__tile--hasActive {
     background: ${({ theme }) => theme.colors.interactiveBg.brandNormal};
     color: ${({ theme }) => theme.colors.interactiveFg.brandNormal};
 
