@@ -40,6 +40,7 @@ export const TEXT_ELEMENT_DEFAULT_FONT = {
     asc: 1900,
     des: -500,
   },
+  weights: [100, 300, 400, 500, 700, 900],
 };
 
 export const BACKGROUND_TEXT_MODE = {
