@@ -19,7 +19,7 @@ parameters:
   ignoreErrors:
     -
       message: '/^Parameter #2 \$args of method WP_Customize_Manager::add_setting\(\)/'
-  	  path: includes/Admin/Customizer.php
+      path: includes/Admin/Customizer.php
   paths:
     - includes/
     - uninstall.php
