@@ -123,10 +123,8 @@ export function updateFonts(draftFonts = {}, elements) {
 
 export function pickElementFontProperties(element) {
   if (element?.font) {
-    const { upm, asc, des } = element.font.metrics;
     element.font = {
       family: element.font.family,
-      metrics: { upm, asc, des },
     };
   }
   return element;
