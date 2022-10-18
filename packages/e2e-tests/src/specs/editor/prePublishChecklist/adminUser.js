@@ -27,7 +27,7 @@ import {
   uploadFile,
 } from '@web-stories-wp/e2e-test-utils';
 
-jest.retryTimes(2, { logErrorsBeforeRetry: true });
+jest.retryTimes(3, { logErrorsBeforeRetry: true });
 
 async function uploadPosterImage(file) {
   await expect(page).toClick('li[role="tab"]', { text: 'Document' });

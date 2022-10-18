@@ -24,7 +24,7 @@ import {
   setShoppingProvider,
 } from '@web-stories-wp/e2e-test-utils';
 
-jest.retryTimes(2, { logErrorsBeforeRetry: true });
+jest.retryTimes(3, { logErrorsBeforeRetry: true });
 
 describe('Shopping product', () => {
   minWPVersionRequired('5.8');

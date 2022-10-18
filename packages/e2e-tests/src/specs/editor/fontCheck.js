@@ -132,7 +132,7 @@ async function getCurrentStoryData() {
   return JSON.parse(textareaContent);
 }
 
-jest.retryTimes(2, { logErrorsBeforeRetry: true });
+jest.retryTimes(3, { logErrorsBeforeRetry: true });
 
 describe('Font Check', () => {
   beforeEach(async () => {

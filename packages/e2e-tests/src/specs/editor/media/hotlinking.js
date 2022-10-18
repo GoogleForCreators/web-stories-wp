@@ -30,7 +30,7 @@ import { addAllowedErrorMessage } from '../../../config/bootstrap';
 const IMAGE_URL_LOCAL = `${process.env.WP_BASE_URL}/wp-content/e2e-assets/example-3.png`;
 const IMAGE_URL_CORS_PROXY = 'https://wp.stories.google/e2e-tests/example.jpg';
 
-jest.retryTimes(2, { logErrorsBeforeRetry: true });
+jest.retryTimes(3, { logErrorsBeforeRetry: true });
 
 describe('Media Hotlinking', () => {
   withPlugin('e2e-tests-hotlink');

@@ -38,7 +38,7 @@ expect.extend({
   },
 });
 
-jest.retryTimes(2, { logErrorsBeforeRetry: true });
+jest.retryTimes(3, { logErrorsBeforeRetry: true });
 
 describe('Admin Menu', () => {
   it('should sync the WP nav with the dashboard nav', async () => {

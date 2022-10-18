@@ -24,7 +24,7 @@ import { visitSettings } from '@web-stories-wp/e2e-test-utils';
  */
 import { monetizationDropdownSelector } from '../../../../utils';
 
-jest.retryTimes(2, { logErrorsBeforeRetry: true });
+jest.retryTimes(3, { logErrorsBeforeRetry: true });
 
 describe('Admin User', () => {
   it('should let me see and update monetization settings', async () => {

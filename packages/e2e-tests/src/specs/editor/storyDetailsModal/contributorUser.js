@@ -26,7 +26,7 @@ import {
 
 const IMAGE_URL_LOCAL = `${process.env.WP_BASE_URL}/wp-content/e2e-assets/example-3.png`;
 
-jest.retryTimes(2, { logErrorsBeforeRetry: true });
+jest.retryTimes(3, { logErrorsBeforeRetry: true });
 
 describe('Story Details Modal - Contributor User', () => {
   withPlugin('e2e-tests-hotlink');

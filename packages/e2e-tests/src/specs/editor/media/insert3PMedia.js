@@ -30,7 +30,7 @@ import { addAllowedErrorMessage } from '../../../config/bootstrap';
 
 const media3pSelector = '#library-tab-media3p';
 
-jest.retryTimes(2, { logErrorsBeforeRetry: true });
+jest.retryTimes(3, { logErrorsBeforeRetry: true });
 
 async function goToMedia3PTab() {
   await expect(page).toClick(

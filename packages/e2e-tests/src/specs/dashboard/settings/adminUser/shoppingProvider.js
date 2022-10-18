@@ -21,7 +21,7 @@ import { visitSettings } from '@web-stories-wp/e2e-test-utils';
 const shoppingProviderDropdownSelector =
   'button[aria-label="Shopping provider"]';
 
-jest.retryTimes(2, { logErrorsBeforeRetry: true });
+jest.retryTimes(3, { logErrorsBeforeRetry: true });
 
 describe('Shopify settings', () => {
   it('should let me see and update shopping provider settings', async () => {

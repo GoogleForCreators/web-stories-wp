@@ -27,7 +27,7 @@ import {
  */
 import { addAllowedErrorMessage } from '../../config/bootstrap';
 
-jest.retryTimes(2, { logErrorsBeforeRetry: true });
+jest.retryTimes(3, { logErrorsBeforeRetry: true });
 
 describe('CORS check', () => {
   withPlugin('e2e-tests-cors-error');

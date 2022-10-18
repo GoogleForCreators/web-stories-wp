@@ -60,7 +60,7 @@ async function addPosterImage() {
   await expect(page).toMatchElement('[alt="Preview image"]');
 }
 
-jest.retryTimes(2, { logErrorsBeforeRetry: true });
+jest.retryTimes(3, { logErrorsBeforeRetry: true });
 
 describe('Publishing Flow', () => {
   let removeCORSErrorMessage;

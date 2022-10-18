@@ -38,7 +38,7 @@ const EMBED_BLOCK_CONTENT = `
 <!-- /wp:web-stories/embed -->
 `;
 
-// jest.retryTimes(2, { logErrorsBeforeRetry: true });
+jest.retryTimes(3, { logErrorsBeforeRetry: true });
 
 describe('Web Stories Block', () => {
   withPlugin('e2e-tests-embed');

@@ -57,7 +57,7 @@ async function deleteAllPublisherLogos() {
   /* eslint-enable no-await-in-loop */
 }
 
-jest.retryTimes(2, { logErrorsBeforeRetry: true });
+jest.retryTimes(3, { logErrorsBeforeRetry: true });
 
 describe('Publisher Logos', () => {
   describe('Without SVG support', () => {
