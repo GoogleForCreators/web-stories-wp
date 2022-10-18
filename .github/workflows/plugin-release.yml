@@ -138,7 +138,7 @@ jobs:
       #     if  [[ $(cat web-stories.php) =~ $ASSETS_VERSION_REGEX ]]; then
       #       BASE_ASSETS_VERSION=${BASH_REMATCH[1]}
       #     fi
-      #     echo "BASE_ASSETS_VERSION::$BASE_ASSETS_VERSION"
+      #     echo "BASE_ASSETS_VERSION=$BASE_ASSETS_VERSION" >> $GITHUB_OUTPUT
       #     env:
       #       ASSETS_VERSION_REGEX: "https://wp.stories.google/static/([^']+)"
 
@@ -204,6 +204,7 @@ jobs:
 
           mkdir -p assets_version
           echo $NEW_ASSETS_VERSION > assets_version/assets_version.txt
+          echo "ASSETS_VERSION=${NEW_ASSETS_VERSION}" >> $GITHUB_ENV
         working-directory: public/static
         env:
           BASE_ASSETS_VERSION: main
@@ -222,14 +223,22 @@ jobs:
           name: assets-version
           path: public/static/assets_version
 
+      - name: Write summary
+        run: |
+          echo "Preparing assets for release" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Assets version: $ASSETS_VERSION" >> $GITHUB_STEP_SUMMARY
+        env:
+          ASSETS_VERSION: ${{ env.ASSES_VERSION }}
+
   build:
     name: Build new version
     runs-on: ubuntu-latest
     timeout-minutes: 20
     needs: [assets-version]
     outputs:
-      release_branch: ${{ env.release_branch }}
-      release_name: ${{ env.release_name }}
+      release_branch: ${{ steps.release_branch.outputs.release_branch }}
+      release_name: ${{ steps.release_branch.outputs.release_name }}
     steps:
       - name: Harden Runner
         uses: step-security/harden-runner@2e205a28d0e1da00c5f53b161f4067b052c61f34
@@ -288,7 +297,7 @@ jobs:
           # Patch releases are already on the correct branch.
           if $IS_PATCH_RELEASE; then
             BRANCH=${GITHUB_REF#refs/heads/}
-            echo "release_branch=${BRANCH}" >> $GITHUB_ENV
+            echo "release_branch=${BRANCH}" >> $GITHUB_OUTPUT
             exit 0
           fi
 
@@ -298,10 +307,10 @@ jobs:
             git checkout --track origin/$BRANCH
           fi
 
-          echo "release_branch=${BRANCH/-rc./ RC}" >> $GITHUB_ENV
+          echo "release_branch=${BRANCH/-rc./ RC}" >> $GITHUB_OUTPUT
 
           RELEASE_NAME=${PLUGIN_VERSION/-rc./ RC}
-          echo "release_name=${RELEASE_NAME}" >> $GITHUB_ENV
+          echo "release_name=${RELEASE_NAME}" >> $GITHUB_OUTPUT
 
       - name: Update assets version
         run: npm run workflow:assets-version $ASSETS_VERSION
@@ -358,7 +367,7 @@ jobs:
           git checkout $BRANCH
         if: ${{ ! startsWith(github.ref, 'refs/heads/release/') && env.changes == 'yes' }}
         env:
-          BRANCH: ${{ env.release_branch }}
+          BRANCH: ${{ steps.release_branch.outputs.release_branch }}
 
       - name: Build plugin
         run: npm run build:js
@@ -409,7 +418,7 @@ jobs:
         with:
           tag_name: ${{ env.TAG_NAME }}
           name: ${{ env.release_name }}
-          target_commitish: ${{ env.release_branch || github.ref }}
+          target_commitish: ${{ steps.release_branch.outputs.release_branch || github.ref }}
           prerelease: ${{ env.IS_RC }}
           generate_release_notes: true
           files: |
