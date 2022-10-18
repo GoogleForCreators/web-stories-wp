@@ -195,7 +195,7 @@ class Customizer extends Service_Base implements Conditional {
 
 		$wp_customize->add_setting(
 			self::STORY_OPTION . '[show_stories]',
-			[ /** @phpstan-ignore-line */
+			[
 				'default' => false,
 				'type'    => 'option',
 			]
@@ -231,7 +231,7 @@ class Customizer extends Service_Base implements Conditional {
 
 		$wp_customize->add_setting(
 			self::STORY_OPTION . '[number_of_stories]',
-			[ /** @phpstan-ignore-line */
+			[
 				'default'           => $theme_support['number_of_stories']['default'],
 				'type'              => 'option',
 				'validate_callback' => [ $this, 'validate_number_of_stories' ],
@@ -254,7 +254,7 @@ class Customizer extends Service_Base implements Conditional {
 
 		$wp_customize->add_setting(
 			self::STORY_OPTION . '[number_of_columns]',
-			[ /** @phpstan-ignore-line */
+			[
 				'default'           => $theme_support['number_of_columns']['default'],
 				'type'              => 'option',
 				'validate_callback' => [ $this, 'validate_number_of_columns' ],
@@ -323,7 +323,7 @@ class Customizer extends Service_Base implements Conditional {
 
 		$wp_customize->add_setting(
 			self::STORY_OPTION . '[circle_size]',
-			[ /** @phpstan-ignore-line */
+			[
 				'default' => $theme_support['circle_size']['default'],
 				'type'    => 'option',
 			]
@@ -374,7 +374,7 @@ class Customizer extends Service_Base implements Conditional {
 
 			$wp_customize->add_setting(
 				self::STORY_OPTION . '[show_title]',
-				[ /** @phpstan-ignore-line */
+				[
 					'default' => $theme_support['title']['default'],
 					'type'    => 'option',
 				]
@@ -395,7 +395,7 @@ class Customizer extends Service_Base implements Conditional {
 
 			$wp_customize->add_setting(
 				self::STORY_OPTION . '[show_excerpt]',
-				[ /** @phpstan-ignore-line */
+				[
 					'default' => $theme_support['excerpt']['default'],
 					'type'    => 'option',
 				]
@@ -417,7 +417,7 @@ class Customizer extends Service_Base implements Conditional {
 		if ( $theme_support['author']['enabled'] ) {
 			$wp_customize->add_setting(
 				self::STORY_OPTION . '[show_author]',
-				[ /** @phpstan-ignore-line */
+				[
 					'default' => $theme_support['author']['default'],
 					'type'    => 'option',
 				]
@@ -439,7 +439,7 @@ class Customizer extends Service_Base implements Conditional {
 		if ( $theme_support['date']['enabled'] ) {
 			$wp_customize->add_setting(
 				self::STORY_OPTION . '[show_date]',
-				[ /** @phpstan-ignore-line */
+				[
 					'default' => $theme_support['date']['default'],
 					'type'    => 'option',
 				]
@@ -461,7 +461,7 @@ class Customizer extends Service_Base implements Conditional {
 		if ( $theme_support['sharp_corners']['enabled'] ) {
 			$wp_customize->add_setting(
 				self::STORY_OPTION . '[sharp_corners]',
-				[ /** @phpstan-ignore-line */
+				[
 					'default' => $theme_support['sharp_corners']['default'],
 					'type'    => 'option',
 				]
@@ -483,7 +483,7 @@ class Customizer extends Service_Base implements Conditional {
 		if ( $theme_support['archive_link']['enabled'] ) {
 			$wp_customize->add_setting(
 				self::STORY_OPTION . '[show_archive_link]',
-				[ /** @phpstan-ignore-line */
+				[
 					'default' => $theme_support['archive_link']['default'],
 					'type'    => 'option',
 				]
