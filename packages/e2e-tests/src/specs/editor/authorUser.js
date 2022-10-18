@@ -20,7 +20,6 @@
 import {
   createNewStory,
   previewStory,
-  addTextElement,
   insertStoryTitle,
   withUser,
   publishStory,
@@ -36,12 +35,13 @@ describe('Author User', () => {
 
     await insertStoryTitle('Previewing without Publishing');
 
-    await addTextElement();
+    await expect(page).toClick('[data-testid="mediaElement-image"]');
+    await expect(page).toClick('[role="menu"] [role="menuitem"]', {
+      text: 'Insert image',
+    });
 
     const previewPage = await previewStory();
-    await expect(previewPage).toMatchElement('p', {
-      text: 'Fill in some text',
-    });
+    await expect(previewPage).toMatchElement('amp-img');
 
     await page.bringToFront();
     await previewPage.close();
@@ -53,14 +53,15 @@ describe('Author User', () => {
     await insertStoryTitle('Publishing and Previewing');
 
     // Make some changes _before_ publishing the story.
-    await addTextElement();
+    await expect(page).toClick('[data-testid="mediaElement-image"]');
+    await expect(page).toClick('[role="menu"] [role="menuitem"]', {
+      text: 'Insert image',
+    });
 
     await publishStory();
 
     const previewPage = await previewStory();
-    await expect(previewPage).toMatchElement('p', {
-      text: 'Fill in some text',
-    });
+    await expect(previewPage).toMatchElement('amp-img');
 
     await previewPage.close();
     await page.bringToFront();
@@ -73,13 +74,16 @@ describe('Author User', () => {
 
     await publishStory();
 
+    await page.screenshot({ path: 'build/after-publish.png' });
+
     // Make some changes _after_ publishing so previewing will cause an autosave.
-    await addTextElement();
+    await expect(page).toClick('[data-testid="mediaElement-image"]');
+    await expect(page).toClick('[role="menu"] [role="menuitem"]', {
+      text: 'Insert image',
+    });
 
     const previewPage = await previewStory();
-    await expect(previewPage).toMatchElement('p', {
-      text: 'Fill in some text',
-    });
+    await expect(previewPage).toMatchElement('amp-img');
 
     await page.bringToFront();
     await previewPage.close();

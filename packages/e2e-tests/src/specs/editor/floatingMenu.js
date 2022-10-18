@@ -36,18 +36,10 @@ describe('Floating Menu', () => {
   });
 
   it('should display media floating menu', async () => {
-    // Open a media tab
-    await expect(page).toClick('#library-tab-media');
-
-    // Add a media item
-    await expect(page).toClick(
-      'div[data-testid="mediaElement-image"]:first-child button'
-    );
-
-    const insertButton = await page.waitForSelector(
-      `xpath/.//li//span[contains(text(), 'Insert image')]`
-    );
-    await insertButton.click();
+    await expect(page).toClick('[data-testid="mediaElement-image"]');
+    await expect(page).toClick('[role="menu"] [role="menuitem"]', {
+      text: 'Insert image',
+    });
 
     // Floating menu should show up
     await page.waitForSelector(floatingMenu);
