@@ -1211,7 +1211,7 @@ describe('Right Click Menu integration', () => {
           },
         },
         backgroundTextMode: 'NONE',
-        font: TEXT_ELEMENT_DEFAULT_FONT,
+        font: { family: TEXT_ELEMENT_DEFAULT_FONT.family },
         fontSize: 60,
         lineHeight: 1.3,
         padding: {

@@ -153,7 +153,7 @@ describe('Text Style Panel', () => {
               }
               expect(whiteTexts.length).toBeGreaterThan(0);
             },
-            { timeout: 3000 }
+            { timeout: 9000 }
           );
 
           const html = whiteTexts[0].outerHTML;
