@@ -43,7 +43,7 @@ jobs:
 
           echo "Determined release with ID $NEXT_RELEASE to be the next one"
 
-          echo "release_id=$NEXT_RELEASE" >> $GITHUB_ENV
+          echo "release_id=$NEXT_RELEASE" >> $GITHUB_OUTPUT
         env:
           ZENHUB_API_TOKEN: ${{ secrets.ZENHUB_API_TOKEN }}
 
@@ -55,10 +55,10 @@ jobs:
           curl -f -s -H "X-Authentication-Token: $ZENHUB_API_TOKEN" -H 'Content-Type: application/json' -X PATCH "https://api.zenhub.com/p1/reports/release/${RELEASE_ID}/issues" -d '{ "add_issues": [{ "repo_id": '"$GITHUB_REPO_ID"', "issue_number": '"$PR_NUMBER"' }], "remove_issues": [] }'
         env:
           ZENHUB_API_TOKEN: ${{ secrets.ZENHUB_API_TOKEN }}
-          RELEASE_ID: ${{ env.release_id }}
+          RELEASE_ID: ${{ steps.release.outputs.release_id }}
 
       - name: Retrieve linked issues
-        uses: actions/github-script@7dff1a87643417cf3b95bb10b29f4c4bc60d8ebd
+        uses: actions/github-script@d556feaca394842dc55e4734bf3bb9f685482fa0
         id: linked-issues
         with:
           script: |
