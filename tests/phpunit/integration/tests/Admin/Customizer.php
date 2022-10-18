@@ -184,7 +184,7 @@ class Customizer extends DependencyInjectedTestCase {
 			[
 				'web_stories_customizer_settings[show_stories]',
 				[
-					'default' => false,
+					'default' => 'false',
 					'type'    => 'option',
 				],
 			],
