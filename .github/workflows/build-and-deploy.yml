@@ -197,43 +197,30 @@ jobs:
         id: get-comment-body
         # Setting a multi-line output requires escaping line-feeds. See <https://github.community/t/set-output-truncates-multiline-strings/16852/3>.
         run: |
-          body="Plugin builds for ${{ github.event.pull_request.head.sha }} are ready :bellhop_bell:!
-          - Download [development build](https://storage.googleapis.com/web-stories-wp-github-artifacts/${{ github.ref }}/web-stories-dev.zip?${{ github.sha }})
-          - Download [production build](https://storage.googleapis.com/web-stories-wp-github-artifacts/${{ github.ref }}/web-stories.zip?${{ github.sha }})"
-          body="${body//$'\n'/'%0A'}"
-          echo "body=$body" >> $GITHUB_ENV
+          echo 'COMMENT_BODY<<EOF' >> $GITHUB_ENV
+          echo 'Plugin builds for ${{ github.event.pull_request.head.sha }} are ready :bellhop_bell:!' >> $GITHUB_ENV
+          echo '- Download [development build](https://storage.googleapis.com/web-stories-wp-github-artifacts/${{ github.ref }}/web-stories-dev.zip?${{ github.sha }})' >> $GITHUB_ENV
+          echo '- Download [production build](https://storage.googleapis.com/web-stories-wp-github-artifacts/${{ github.ref }}/web-stories.zip?${{ github.sha }})' >> $GITHUB_ENV
+          echo 'EOF' >> $GITHUB_ENV
         if: >
           github.head_ref &&
           github.event.pull_request.draft == false &&
           github.event.pull_request.head.repo.fork == false &&
           github.event.pull_request.user.login != 'dependabot[bot]'
 
-      - name: Create comment on PR with links to plugin builds
+      - name: Create or update comment on PR with links to plugin builds
         uses: peter-evans/create-or-update-comment@2b2c85d0bf1b8a7b4e7e344bd5c71dc4b9196e9f
         with:
           issue-number: ${{ github.event.pull_request.number }}
-          body: ${{ env.body }}
-          token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
-        if: >
-          github.head_ref &&
-          github.event.pull_request.draft == false &&
-          github.event.pull_request.head.repo.fork == false &&
-          github.event.pull_request.user.login != 'dependabot[bot]' &&
-          env.comment-id == ''
-
-      - name: Update comment on PR with links to plugin builds
-        uses: peter-evans/create-or-update-comment@2b2c85d0bf1b8a7b4e7e344bd5c71dc4b9196e9f
-        with:
-          comment-id: ${{ env.comment-id }}
+          comment-id: ${{ steps.find-comment.outputs.comment-id }}
           edit-mode: replace
-          body: ${{ env.body }}
+          body: ${{ env.COMMENT_BODY }}
           token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
         if: >
           github.head_ref &&
           github.event.pull_request.draft == false &&
           github.event.pull_request.head.repo.fork == false &&
-          github.event.pull_request.user.login != 'dependabot[bot]' &&
-          env.comment-id != ''
+          github.event.pull_request.user.login != 'dependabot[bot]'
 
       # Deploy to staging site if on main branch.
 
