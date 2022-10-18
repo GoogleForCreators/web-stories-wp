@@ -114,7 +114,7 @@
     "eslint-plugin-jest": "^27.1.2",
     "eslint-plugin-jest-dom": "^4.0.2",
     "eslint-plugin-jest-extended": "^2.0.0",
-    "eslint-plugin-jsdoc": "^39.3.4",
+    "eslint-plugin-jsdoc": "^39.3.13",
     "eslint-plugin-jsx-a11y": "^6.6.1",
     "eslint-plugin-markdown": "^3.0.0",
     "eslint-plugin-node": "^11.1.0",
