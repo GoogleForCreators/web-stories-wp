@@ -82,7 +82,13 @@ export const addCustomFont = async (fontUrl) => {
   );
 
   await page.keyboard.type(fontUrl);
-  await expect(page).toClick('button', { text: 'Add Font' });
+  await Promise.all([
+    expect(page).toClick('button', { text: 'Add Font' }),
+    page.waitForResponse((response) => response.url() === fontUrl),
+    page.waitForResponse((response) =>
+      response.url().includes('web-stories/v1/font')
+    ),
+  ]);
   await expect(page).toMatchElement('[role="option"]', { text: fontUrl });
 };
 

@@ -141,7 +141,7 @@ describe('Font Check', () => {
     await addCustomFont(OPEN_SANS_CONDENSED_LIGHT_URL);
   });
 
-  afterAll(async () => {
+  afterEach(async () => {
     await visitSettings();
     await removeAllFonts();
   });
