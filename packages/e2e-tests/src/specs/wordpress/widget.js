@@ -147,6 +147,7 @@ describe('Web Stories Widget', () => {
 
       const frameHandle = await page.$("iframe[title='Site Preview']");
       const frame = await frameHandle.contentFrame();
+      expect(frame).not.toBeNull();
       await expect(frame).toMatchElement('.web-stories-widget');
     });
   });
