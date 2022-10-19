@@ -15,12 +15,24 @@
  */
 
 /**
- * External dependencies
+ * WordPress dependencies
  */
-import { createGlobalStyle } from 'styled-components';
+import { useEffect } from '@wordpress/element';
 
-export const GlobalStyle = createGlobalStyle`
-	.react-calendar__tile--now.react-calendar__month-view__days__day:focus {
-    background-color: #eeeec1;
-	}
-`;
+/**
+ * Renders a Dismiss button as required/used by WordPress.
+ *
+ * Does not actually *render* the button itself, but emits an event so that
+ * WordPress detects the notice and registers a click handler.
+ *
+ * @return Rendered component.
+ */
+function Dismiss() {
+  useEffect(() => {
+    document.dispatchEvent(new Event('wp-updates-notice-added'));
+  }, []);
+
+  return null;
+}
+
+export default Dismiss;

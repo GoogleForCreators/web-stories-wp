@@ -54,7 +54,7 @@ class Remove_Transients implements Service, PluginUninstallAware {
 		$site_ids = get_sites(
 			[
 				'fields'                 => 'ids',
-				'number'                 => '',
+				'number'                 => 0,
 				'update_site_cache'      => false,
 				'update_site_meta_cache' => false,
 			]

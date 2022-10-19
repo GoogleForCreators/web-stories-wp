@@ -19,7 +19,6 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { rgba } from 'polished';
 import { useCallback, useRef, useState } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import {
@@ -38,16 +37,20 @@ import DatePicker from './datePicker';
 
 const DateTimeWrapper = styled.div`
   border-radius: 4px;
-  box-shadow: 0 3px 30px rgba(25, 30, 35, 0.1);
-  border: 1px solid ${({ theme }) => rgba(theme.colors.standard.black, 0.2)};
-  background-color: ${({ theme }) => theme.colors.standard.white};
+  background-color: ${({ theme }) => theme.colors.bg.primary};
+  border-radius: ${({ theme }) => theme.borders.radius.small};
+  border: 1px solid ${({ theme }) => theme.colors.divider.primary};
   width: 100%;
   padding: 4px;
 `;
 
 const StyledButton = styled(Button)`
-  color: #006edc;
   margin: 5px 0;
+  color: ${({ theme }) => theme.colors.interactiveBg.brandNormal};
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.interactiveBg.brandHover};
+  }
 `;
 
 function DateTime({
