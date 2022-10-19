@@ -17,6 +17,4 @@ export { defaultUnit } from './defaultUnit';
 export { getGlobalSpace, literal } from './getGlobalSpace';
 export { default as getOffPageOffset } from './getOffPageOffset';
 export { getTotalDuration } from './getTotalDuration';
-export { getMediaBoundOffsets, hasOffsets } from './mediaPositions';
 export { getExclusion, orderByKeys } from './objectOperations';
-export { getMediaOrigin } from './getMediaOrigin';

@@ -131,6 +131,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
   );
 
   const {
+    active = [],
     uploadMedia,
     isUploading,
     isTranscoding,
@@ -144,6 +145,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     isCurrentResourceMuting,
     isCurrentResourceTrimming,
     canTranscodeResource,
+    isBatchUploading,
   } = useUploadMedia({
     media,
     prependMedia,
@@ -277,13 +279,19 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     ]
   );
 
-  const { optimizeVideo, optimizeGif, muteExistingVideo, trimExistingVideo } =
-    useProcessMedia({
-      postProcessingResource,
-      uploadMedia,
-      updateMedia,
-      deleteMediaElement,
-    });
+  const {
+    optimizeVideo,
+    optimizeGif,
+    muteExistingVideo,
+    cropExistingVideo,
+    trimExistingVideo,
+    segmentVideo,
+  } = useProcessMedia({
+    postProcessingResource,
+    uploadMedia,
+    updateMedia,
+    deleteMediaElement,
+  });
 
   // Whenever media items in the library change,
   // generate missing posters / has audio / base color if needed.
@@ -295,9 +303,18 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     stateRef.current?.posterProcessing?.length
   );
 
+  let uploadingResources = active.map(({ resource }) => resource);
+
+  if (mediaType && mediaType !== LOCAL_MEDIA_TYPE_ALL) {
+    uploadingResources = uploadingResources.filter(
+      ({ type }) => mediaType === type
+    );
+  }
+
   return {
     state: {
       ...reducerState,
+      uploadingMedia: uploadingResources,
       isUploading: isUploading || isGeneratingPosterImages,
       isTranscoding,
       isNewResourceProcessing,
@@ -310,6 +327,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
       isCurrentResourceMuting,
       isCurrentResourceTrimming,
       canTranscodeResource,
+      isBatchUploading,
     },
     actions: {
       setNextPage,
@@ -328,6 +346,8 @@ export default function useContextValueProvider(reducerState, reducerActions) {
       trimExistingVideo,
       updateBaseColor,
       updateBlurHash,
+      cropExistingVideo,
+      segmentVideo,
     },
   };
 }

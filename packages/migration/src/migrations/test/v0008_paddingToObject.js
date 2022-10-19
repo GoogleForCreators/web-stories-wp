@@ -32,10 +32,12 @@ describe('paddingToObject', () => {
                 _test: 'element1',
                 type: 'text',
                 padding: 10,
+                content: '',
               },
               {
                 _test: 'element2',
                 type: 'text',
+                content: '',
               },
             ],
           },
@@ -54,6 +56,7 @@ describe('paddingToObject', () => {
                 horizontal: 10,
                 vertical: 10,
               },
+              content: '',
             },
             {
               _test: 'element2',
@@ -62,6 +65,7 @@ describe('paddingToObject', () => {
                 horizontal: 0,
                 vertical: 0,
               },
+              content: '',
             },
           ],
         },

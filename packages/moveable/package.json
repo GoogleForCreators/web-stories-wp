@@ -2,7 +2,7 @@
   "name": "@googleforcreators/moveable",
   "description": "Provides a wrapper around react-moveable.",
   "private": false,
-  "version": "0.1.202208081316",
+  "version": "0.1.202208291229",
   "author": {
     "name": "Google",
     "url": "https://creators.google/"
@@ -26,20 +26,23 @@
   },
   "customExports": {
     ".": {
-      "default": "./src/index.js"
+      "default": "./src/index.ts"
     }
   },
   "main": "dist/index.js",
   "module": "dist-module/index.js",
-  "source": "src/index.js",
+  "types": "dist-types/index.d.ts",
+  "source": "src/index.ts",
   "publishConfig": {
     "access": "public"
   },
   "dependencies": {
+    "@googleforcreators/design-system": "*",
     "@googleforcreators/react": "*",
+    "@types/styled-components": "^5.1.26",
     "prop-types": "^15.7.2",
     "preact-moveable": "^0.34.0",
-    "styled-components": "^5.3.3"
+    "styled-components": "^5.3.6"
   },
   "devDependencies": {}
 }

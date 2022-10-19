@@ -25,8 +25,8 @@ import { fireEvent, screen } from '@testing-library/react';
 import DataRemovalSettings from '..';
 import { renderWithProviders } from '../../../../testUtils';
 
-describe('Editor Settings: <DataRemovalSettings />', function () {
-  it('should render the data removal setting as checked when isEnabled', function () {
+describe('Editor Settings: <DataRemovalSettings />', () => {
+  it('should render the data removal setting as checked when isEnabled', () => {
     renderWithProviders(
       <DataRemovalSettings updateSettings={jest.fn()} isEnabled />
     );
@@ -34,20 +34,20 @@ describe('Editor Settings: <DataRemovalSettings />', function () {
     expect(screen.getByRole('checkbox')).toBeChecked();
   });
 
-  it('should not render the data removal setting as checked when not isEnabled', function () {
+  it('should not render the data removal setting as checked when not isEnabled', () => {
     renderWithProviders(<DataRemovalSettings updateSettings={jest.fn()} />);
 
     expect(screen.getByRole('checkbox')).not.toBeChecked();
   });
 
-  it('should update settings when the checkbox is clicked.', function () {
+  it('should update settings when the checkbox is clicked.', () => {
     const onChange = jest.fn();
     renderWithProviders(<DataRemovalSettings updateSettings={onChange} />);
 
     const checkbox = screen.getByRole('checkbox');
     fireEvent.click(checkbox);
 
-    expect(onChange).toHaveBeenCalledTimes(1);
+    expect(onChange).toHaveBeenCalledOnce();
     expect(onChange).toHaveBeenCalledWith({ dataRemoval: true });
   });
 });

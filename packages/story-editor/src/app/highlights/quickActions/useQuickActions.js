@@ -33,7 +33,6 @@ import {
   resourceList,
 } from '@googleforcreators/media';
 import styled from 'styled-components';
-import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -50,6 +49,10 @@ import useFFmpeg from '../../media/utils/useFFmpeg';
 import useInsertElement from '../../../components/canvas/useInsertElement';
 import { DEFAULT_PRESET } from '../../../components/library/panes/text/textPresets';
 import { useMediaRecording } from '../../../components/mediaRecording';
+import {
+  BACKGROUND_BLUR_PX,
+  VIDEO_EFFECTS,
+} from '../../../components/mediaRecording/constants';
 import { getResetProperties } from './utils';
 import { ACTIONS, RESET_DEFAULTS, RESET_PROPERTIES } from './constants';
 
@@ -83,6 +86,12 @@ const Mic = styled(Icons.Mic).attrs(quickActionIconAttrs)``;
 const MicOff = styled(Icons.MicOff).attrs(quickActionIconAttrs)``;
 const Video = styled(Icons.Camera).attrs(quickActionIconAttrs)``;
 const VideoOff = styled(Icons.CameraOff).attrs(quickActionIconAttrs)``;
+const BackgroundBlur = styled(Icons.BackgroundBlur).attrs(
+  quickActionIconAttrs
+)``;
+const BackgroundBlurOff = styled(Icons.BackgroundBlurOff).attrs(
+  quickActionIconAttrs
+)``;
 
 export const MediaPicker = ({ render, ...props }) => {
   const {
@@ -303,6 +312,8 @@ const useQuickActions = () => {
     toggleAudio,
     hasVideo,
     hasAudio,
+    videoEffect,
+    setVideoEffect,
     toggleSettings,
     audioInput,
     videoInput,
@@ -315,12 +326,14 @@ const useQuickActions = () => {
     isInRecordingMode: state.isInRecordingMode,
     hasAudio: state.hasAudio,
     hasVideo: state.hasVideo,
+    videoEffect: state.videoEffect,
     audioInput: state.audioInput,
     videoInput: state.videoInput,
     isReady:
-      state.status === 'ready' &&
+      state.inputStatus === 'ready' &&
       !state.file?.type?.startsWith('image') &&
-      !state.isCountingDown,
+      !state.isCountingDown &&
+      (state.status === 'ready' || state.status === 'idle'),
     isProcessing: state.isProcessing,
     isAdjustingTrim: state.isAdjustingTrim,
     isProcessingTrim: state.isProcessingTrim,
@@ -331,9 +344,8 @@ const useQuickActions = () => {
     muteAudio: actions.muteAudio,
     unMuteAudio: actions.unMuteAudio,
     startTrim: actions.startTrim,
+    setVideoEffect: actions.setVideoEffect,
   }));
-
-  const enableMediaRecordingTrimming = useFeature('recordingTrimming');
 
   const undoRef = useRef(undo);
   undoRef.current = undo;
@@ -843,7 +855,29 @@ const useQuickActions = () => {
         disabled: !isReady || !hasAudio,
         ...actionMenuProps,
       },
-      enableMediaRecordingTrimming && {
+      videoInput && {
+        Icon:
+          videoEffect === VIDEO_EFFECTS.BLUR
+            ? BackgroundBlur
+            : BackgroundBlurOff,
+        label:
+          videoEffect === VIDEO_EFFECTS.BLUR
+            ? __('Disable Background Blur', 'web-stories')
+            : __('Enable Background Blur', 'web-stories'),
+        onClick: () => {
+          trackEvent('media_recording_background_blur_px', {
+            value: videoEffect === VIDEO_EFFECTS.BLUR ? 0 : BACKGROUND_BLUR_PX,
+          });
+          const newVideoEffect =
+            videoEffect === VIDEO_EFFECTS.BLUR
+              ? VIDEO_EFFECTS.NONE
+              : VIDEO_EFFECTS.BLUR;
+          setVideoEffect(newVideoEffect);
+        },
+        disabled: !isReady || !hasVideo,
+        ...actionMenuProps,
+      },
+      {
         Icon: Scissors,
         label: __('Trim Video', 'web-stories'),
         onClick: () => {
@@ -870,7 +904,8 @@ const useQuickActions = () => {
     toggleRecordingMode,
     toggleSettings,
     startTrim,
-    enableMediaRecordingTrimming,
+    videoEffect,
+    setVideoEffect,
   ]);
 
   // Return special actions for media recording mode.

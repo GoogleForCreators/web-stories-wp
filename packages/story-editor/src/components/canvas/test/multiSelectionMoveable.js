@@ -153,7 +153,7 @@ describe('multiSelectionMoveable', () => {
         y: 10,
         rotationAngle: expectedRotationAngle,
       });
-      expect(updateElementsById).toHaveBeenCalledTimes(1);
+      expect(updateElementsById).toHaveBeenCalledOnce();
     }
   );
 });

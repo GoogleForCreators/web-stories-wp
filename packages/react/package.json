@@ -2,7 +2,7 @@
   "name": "@googleforcreators/react",
   "description": "A tiny wrapper package that re-exports React and provides additional utilities and custom hooks.",
   "private": false,
-  "version": "0.1.202208081316",
+  "version": "0.1.202208291229",
   "author": {
     "name": "Google",
     "url": "https://creators.google/"
@@ -26,25 +26,27 @@
   },
   "customExports": {
     ".": {
-      "default": "./src/index.js"
+      "default": "./src/index.ts"
     }
   },
   "main": "dist/index.js",
   "module": "dist-module/index.js",
-  "source": "src/index.js",
+  "types": "dist-types/index.d.ts",
+  "source": "src/index.ts",
   "publishConfig": {
     "access": "public"
   },
   "dependencies": {
     "prop-types": "^15.8.1",
-    "resize-observer-polyfill": "^1.5.1",
     "shallow-equal": "^1.2.1",
     "use-context-selector": "^1.2.11",
-    "use-debounce": "^7.0.1"
+    "use-debounce": "^8.0.4",
+    "use-reduction": "^2.1.2"
   },
   "devDependencies": {
     "@testing-library/react": "^12.1.5",
-    "@testing-library/react-hooks": "^8.0.0"
+    "@testing-library/react-hooks": "^8.0.1",
+    "@types/react": "^17.0.44"
   },
   "peerDependencies": {
     "react": "^17.0.2",

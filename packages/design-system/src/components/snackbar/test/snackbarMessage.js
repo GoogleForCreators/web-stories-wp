@@ -58,7 +58,7 @@ describe('design-system/components/snackbar/SnackbarMessage', () => {
       />
     );
     jest.runAllTimers();
-    await waitFor(() => expect(mockHandleDismiss).toHaveBeenCalledTimes(1));
+    await waitFor(() => expect(mockHandleDismiss).toHaveBeenCalledOnce());
   });
 
   it('should call mockHandleDismiss when the close button is clicked', () => {
@@ -77,7 +77,7 @@ describe('design-system/components/snackbar/SnackbarMessage', () => {
 
     fireEvent.click(closeButton);
 
-    expect(mockHandleDismiss).toHaveBeenCalledTimes(1);
+    expect(mockHandleDismiss).toHaveBeenCalledOnce();
   });
 
   it('should not render a button if showCloseButton is false', () => {
@@ -110,6 +110,6 @@ describe('design-system/components/snackbar/SnackbarMessage', () => {
 
     fireEvent.click(button);
 
-    expect(mockActionClick).toHaveBeenCalledTimes(1);
+    expect(mockActionClick).toHaveBeenCalledOnce();
   });
 });

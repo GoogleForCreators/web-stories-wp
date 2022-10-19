@@ -54,7 +54,7 @@ describe('EmbedPlaceholder', () => {
     );
     fireEvent.click(screen.getByText('Replace URL'));
     fireEvent.submit(screen.getByTestId('embed-placeholder-form'));
-    expect(onSubmit).toHaveBeenCalledTimes(1);
+    expect(onSubmit).toHaveBeenCalledOnce();
   });
 
   it('should display a message if embedding is not possible', () => {

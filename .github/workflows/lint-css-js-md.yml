@@ -6,6 +6,7 @@ on:
     paths:
       - '**.js'
       - '**.cjs'
+      - '**.ts'
       - '**.css'
       - 'docs/**/*.md'
       - 'packages/**/*.md'
@@ -25,6 +26,7 @@ on:
     paths:
       - '**.js'
       - '**.cjs'
+      - '**.ts'
       - '**.css'
       - 'docs/**/*.md'
       - 'packages/**/*.md'
@@ -39,9 +41,8 @@ on:
 
 # Cancels all previous workflow runs for pull requests that have not completed.
 concurrency:
-  # The concurrency group contains the workflow name and the branch name for pull requests
-  # or the commit hash for any other events.
-  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.head_ref || github.sha }}
+  # The concurrency group contains the workflow name and the (target) branch name.
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
   cancel-in-progress: true
 
 permissions:
@@ -58,15 +59,15 @@ jobs:
     timeout-minutes: 15
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@74b568e8591fbb3115c70f3436a0c6b0909a8504
+        uses: step-security/harden-runner@2e205a28d0e1da00c5f53b161f4067b052c61f34
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
       - name: Checkout
-        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
+        uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
 
       - name: Setup Node
-        uses: actions/setup-node@2fddd8803e2f5c9604345a0b591c3020ee971a93
+        uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516
         with:
           node-version-file: '.nvmrc'
           cache: npm
@@ -84,6 +85,11 @@ jobs:
 
       - name: package.json Lint
         run: npm run lint:package-json
+
+      # Do this first so that the types are available to ESLint,
+      # particularly the more sophisticated `@typescript/eslint` rules.
+      - name: Type checking
+        run: npm run workflow:bundle-packages:types
 
       - name: JS Lint
         run: npm run lint:js
@@ -109,7 +115,5 @@ jobs:
           github.event.pull_request.head.repo.fork == false &&
           github.event.pull_request.user.login != 'dependabot[bot]'
 
-      # Bundle npm packages to see whether that still works as expected.
-
-      - name: Bundle npm packages
-        run: npm run workflow:bundle-packages
+      - name: JSON Schema validation
+        run: npm run test:schema

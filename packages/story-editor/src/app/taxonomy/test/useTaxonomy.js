@@ -112,7 +112,7 @@ describe('TaxonomyProvider', () => {
       useStoryPartial: { hasTaxonomies: true },
     });
 
-    expect(getTaxonomiesMock).toHaveBeenCalledTimes(1);
+    expect(getTaxonomiesMock).toHaveBeenCalledOnce();
     expect(result.current.state.taxonomies).toStrictEqual([sampleTaxonomy]);
   });
 

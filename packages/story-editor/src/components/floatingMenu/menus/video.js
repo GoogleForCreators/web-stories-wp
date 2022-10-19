@@ -33,6 +33,7 @@ import {
   More,
   Separator,
   Dismiss,
+  Settings,
 } from '../elements';
 
 const FloatingVideoMenu = memo(function FloatingVideoMenu() {
@@ -60,6 +61,8 @@ const FloatingVideoMenu = memo(function FloatingVideoMenu() {
       <More />
 
       <Separator />
+
+      <Settings />
 
       <Dismiss />
     </>

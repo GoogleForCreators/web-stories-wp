@@ -38,7 +38,9 @@ import {
   VideoAccessibilityPanel,
   ElementAlignmentPanel,
   VideoOptionsPanel,
+  VideoSegmentPanel,
   PageBackgroundAudioPanel,
+  PageAdvancementPanel,
   ProductPanel,
 } from '../panels/design';
 
@@ -48,7 +50,10 @@ function intersect(a, b) {
   return a.filter((v) => b.includes(v));
 }
 
-function getDesignPanelsForSelection(elements) {
+function getDesignPanelsForSelection(
+  elements,
+  hasCustomPageAdvancement = false
+) {
   if (elements.length === 0) {
     return [];
   }
@@ -75,6 +80,7 @@ function getDesignPanelsForSelection(elements) {
     // If the selected element's type is video / image , display accessibility panel, too.
     if ('video' === elements[0].type) {
       panels.push({ type: PanelTypes.VIDEO_OPTIONS, Panel: VideoOptionsPanel });
+      panels.push({ type: PanelTypes.VIDEO_SEGMENT, Panel: VideoSegmentPanel });
       panels.push({
         type: PanelTypes.CAPTIONS,
         Panel: CaptionsPanel,
@@ -106,6 +112,13 @@ function getDesignPanelsForSelection(elements) {
       Panel: PageBackgroundAudioPanel,
     });
 
+    if (hasCustomPageAdvancement) {
+      panels.push({
+        type: PanelTypes.PAGE_ADVANCEMENT,
+        Panel: PageAdvancementPanel,
+      });
+    }
+
     return panels;
   }
 
@@ -136,6 +149,8 @@ function getDesignPanelsForSelection(elements) {
           return { type, Panel: BorderStylePanel };
         case PanelTypes.VIDEO_OPTIONS:
           return { type, Panel: VideoOptionsPanel };
+        case PanelTypes.VIDEO_SEGMENT:
+          return { type, Panel: VideoSegmentPanel };
         case PanelTypes.CAPTIONS:
           return { type, Panel: CaptionsPanel };
         case PanelTypes.VIDEO_ACCESSIBILITY:

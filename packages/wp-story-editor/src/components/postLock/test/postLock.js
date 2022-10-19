@@ -24,6 +24,7 @@ import {
   ConfigContext,
   StoryContext,
   CurrentUserContext,
+  HistoryContext,
 } from '@googleforcreators/story-editor';
 import { renderWithTheme } from '@googleforcreators/test-utils';
 
@@ -39,7 +40,13 @@ import PostLock from '../postLock';
 
 jest.mock('../../../api/storyLock');
 
-function setup(_storyContextValue = {}, _configValue = {}) {
+const autoSave = jest.fn();
+
+function setup({
+  extraStoryContextValue = {},
+  extraConfigValue = {},
+  extraHistoryProps = {},
+}) {
   const configValue = {
     storyId: 123,
     dashboardLink: 'http://www.example.com/dashboard',
@@ -55,7 +62,7 @@ function setup(_storyContextValue = {}, _configValue = {}) {
     flags: {
       enablePostLockingTakeOver: true,
     },
-    ..._configValue,
+    ...extraConfigValue,
   };
 
   const storyContextValue = {
@@ -70,7 +77,10 @@ function setup(_storyContextValue = {}, _configValue = {}) {
         },
       },
     },
-    ..._storyContextValue,
+    actions: {
+      autoSave,
+    },
+    ...extraStoryContextValue,
   };
 
   const userContextValue = {
@@ -82,15 +92,21 @@ function setup(_storyContextValue = {}, _configValue = {}) {
     },
   };
 
+  const historyContextValue = {
+    state: { ...extraHistoryProps },
+  };
+
   return renderWithTheme(
     <FlagsProvider features={configValue.flags}>
-      <ConfigContext.Provider value={configValue}>
-        <StoryContext.Provider value={storyContextValue}>
-          <CurrentUserContext.Provider value={userContextValue}>
-            <PostLock />
-          </CurrentUserContext.Provider>
-        </StoryContext.Provider>
-      </ConfigContext.Provider>
+      <HistoryContext.Provider value={historyContextValue}>
+        <ConfigContext.Provider value={configValue}>
+          <StoryContext.Provider value={storyContextValue}>
+            <CurrentUserContext.Provider value={userContextValue}>
+              <PostLock />
+            </CurrentUserContext.Provider>
+          </StoryContext.Provider>
+        </ConfigContext.Provider>
+      </HistoryContext.Provider>
     </FlagsProvider>
   );
 }
@@ -113,7 +129,7 @@ describe('PostLock', () => {
   });
 
   it('should display take over dialog', async () => {
-    const storyContextValue = {
+    const extraStoryContextValue = {
       state: {
         story: {
           previewLink: 'http://www.example.com/preview',
@@ -136,12 +152,12 @@ describe('PostLock', () => {
       })
     );
 
-    setup(storyContextValue);
+    setup({ extraStoryContextValue });
 
     const dialog = await screen.findByRole('dialog');
     expect(dialog).toBeInTheDocument();
 
-    const dashboardButton = screen.getByRole('link', { name: 'Dashboard' });
+    const dashboardButton = screen.getByRole('link', { name: /Dashboard/i });
     expect(dashboardButton).toBeInTheDocument();
 
     const takeOverButton = screen.getByRole('button', { name: 'Take over' });
@@ -149,7 +165,7 @@ describe('PostLock', () => {
   });
 
   it('should display take over dialog with no take over', async () => {
-    const storyContextValue = {
+    const extraStoryContextValue = {
       state: {
         story: {
           previewLink: 'http://www.example.com/preview',
@@ -172,18 +188,20 @@ describe('PostLock', () => {
       })
     );
 
-    const configValue = {
+    const extraConfigValue = {
       flags: {
         enablePostLockingTakeOver: false,
       },
     };
 
-    setup(storyContextValue, configValue);
+    setup({ extraStoryContextValue, extraConfigValue });
 
     const dialog = await screen.findByRole('dialog');
     expect(dialog).toBeInTheDocument();
 
-    const dashboardButton = screen.getByRole('link', { name: 'Dashboard' });
+    const dashboardButton = screen.getByRole('link', {
+      name: /Dashboard/i,
+    });
     expect(dashboardButton).toBeInTheDocument();
 
     const takeOverButton = screen.queryByRole('button', { name: 'Take over' });
@@ -205,7 +223,7 @@ describe('PostLock', () => {
 
     setup();
 
-    expect(setInterval).toHaveBeenCalledTimes(1);
+    expect(setInterval).toHaveBeenCalledOnce();
 
     act(() => {
       jest.advanceTimersByTime(160 * 1000);
@@ -227,6 +245,39 @@ describe('PostLock', () => {
     ).toBeInTheDocument();
   });
 
+  it('should autosave', async () => {
+    jest.spyOn(window, 'setInterval');
+
+    getStoryLockById.mockReturnValue(
+      Promise.resolve({
+        locked: true,
+        user: 123,
+        nonce: 'fsdfds',
+        _embedded: { author: [{ id: 123, name: 'John Doe' }] },
+      })
+    );
+
+    const extraConfigValue = {
+      flags: {
+        enablePostLockingTakeOver: true,
+      },
+    };
+
+    const extraHistoryProps = { hasNewChanges: true };
+
+    setup({ extraConfigValue, extraHistoryProps });
+
+    expect(setInterval).toHaveBeenCalledOnce();
+
+    act(() => {
+      jest.advanceTimersByTime(160 * 1000);
+    });
+
+    await waitFor(() => {
+      expect(autoSave).toHaveBeenCalledWith();
+    });
+  });
+
   it('should not display dialog', () => {
     getStoryLockById.mockReturnValue(
       Promise.resolve({
@@ -237,7 +288,7 @@ describe('PostLock', () => {
       })
     );
 
-    setup();
+    setup({});
 
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
   });
@@ -253,7 +304,7 @@ describe('PostLock', () => {
         _embedded: { author: [{ id: 150, name: 'John Doe' }] },
       })
     );
-    setup();
+    setup({});
 
     expect(window.addEventListener).toHaveBeenCalledWith(
       'beforeunload',

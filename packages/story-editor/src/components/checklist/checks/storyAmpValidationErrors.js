@@ -30,11 +30,7 @@ import { useRegisterCheck } from '../countContext';
 
 /** @typedef {import('amphtml-validator').ValidationResult} ValidationResult */
 
-export async function getStoryAmpValidationErrors({ link, status }) {
-  if (!link || !['publish', 'future'].includes(status)) {
-    return false;
-  }
-
+export async function getStoryAmpValidationErrors(link) {
   try {
     const response = await fetch(link);
     const storyMarkup = await response.text();
@@ -69,6 +65,7 @@ export async function getStoryAmpValidationErrors({ link, status }) {
         ) {
           return false;
         }
+
         // Missing video posters
         if ('INVALID_URL_PROTOCOL' === code && params?.[0].startsWith('src')) {
           return false;
@@ -85,10 +82,13 @@ export async function getStoryAmpValidationErrors({ link, status }) {
 const StoryAmpValidationErrors = () => {
   // ampValidationErrorRef is making sure that tracking is only fired once per session.
   const ampValidationErrorsRef = useRef();
-  const { isSaving, link, status } = useStory(({ state }) => ({
+  const { isSaving, link, isPublic } = useStory(({ state }) => ({
     isSaving: state.meta.isSaving,
     link: state.story.link,
-    status: state.story.status,
+    isPublic:
+      ['publish', 'future'].includes(state.story.status) &&
+      state.story.link &&
+      !state.story.password?.length,
   }));
 
   // isRendered is getting set asynchronously based on the returned value of `getStoryAmpValidationErrors`,
@@ -101,7 +101,13 @@ const StoryAmpValidationErrors = () => {
   useEffect(() => {
     let isMounted = true;
     if (!isSaving) {
-      getStoryAmpValidationErrors({ link, status }).then((hasErrors) => {
+      if (!isPublic) {
+        return () => {
+          isMounted = false;
+        };
+      }
+
+      getStoryAmpValidationErrors(link).then((hasErrors) => {
         if (isMounted) {
           setIsRendered(hasErrors);
           if (hasErrors && !ampValidationErrorsRef?.current) {
@@ -113,7 +119,7 @@ const StoryAmpValidationErrors = () => {
     return () => {
       isMounted = false;
     };
-  }, [link, status, isSaving]);
+  }, [link, isPublic, isSaving]);
 
   useEffect(() => {
     if (isRendered && ampValidationErrorsRef?.current) {

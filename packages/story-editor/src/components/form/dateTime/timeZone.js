@@ -17,8 +17,7 @@
 /**
  * External dependencies
  */
-import { getSettings, getOptions, format } from '@googleforcreators/date';
-import PropTypes from 'prop-types';
+import { getSettings } from '@googleforcreators/date';
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
 import {
@@ -31,18 +30,19 @@ import {
  * Internal dependencies
  */
 import Tooltip from '../../tooltip';
+import { Z_INDEX_TIME_PICKER_TOOLTIP } from '../../../constants/zIndex';
 
 const Wrapper = styled.div`
   white-space: nowrap;
 `;
 
 const StyledText = styled(Text)`
-  color: ${({ theme }) => theme.colors.fg.disable};
+  color: ${({ theme }) => theme.colors.fg.tertiary};
   line-height: 30px;
 `;
 
-function TimeZone({ date }) {
-  const { timezone, gmtOffset } = getSettings();
+function TimeZone() {
+  const { timezone, gmtOffset, timezoneAbbr } = getSettings();
 
   // Convert timezone offset to hours.
   const userTimezoneOffset = -1 * (new Date().getTimezoneOffset() / 60);
@@ -53,19 +53,25 @@ function TimeZone({ date }) {
     return null;
   }
 
-  const { timeZone: timeZoneString } = getOptions();
-  const zoneAbbr = timezone?.length
-    ? format(date, 'T')
-    : `UTC${timeZoneString}`;
+  const offsetSymbol = Number(gmtOffset) >= 0 ? '+' : '';
+  const zoneAbbr =
+    '' !== timezoneAbbr && Number.isNaN(Number(timezoneAbbr))
+      ? timezoneAbbr
+      : `UTC${offsetSymbol}${gmtOffset}`;
 
   const tooltip =
-    'UTC' === zoneAbbr
+    'UTC' === timezone
       ? __('Coordinated Universal Time', 'web-stories')
-      : timezone;
+      : `(${zoneAbbr}) ${timezone.replace('_', ' ')}`;
 
   return (
     <Wrapper>
-      <Tooltip hasTail title={tooltip} placement={PLACEMENT.TOP}>
+      <Tooltip
+        hasTail
+        title={tooltip}
+        placement={PLACEMENT.TOP}
+        popupZIndexOverride={Z_INDEX_TIME_PICKER_TOOLTIP}
+      >
         <StyledText
           forwardedAs="span"
           size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
@@ -76,10 +82,5 @@ function TimeZone({ date }) {
     </Wrapper>
   );
 }
-
-TimeZone.propTypes = {
-  date: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Date)])
-    .isRequired,
-};
 
 export default TimeZone;

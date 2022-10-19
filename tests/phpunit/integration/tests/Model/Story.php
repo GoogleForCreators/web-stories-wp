@@ -56,6 +56,58 @@ class Story extends TestCase {
 		$this->assertEquals( $story->get_url(), get_permalink( $post ) );
 	}
 
+	/**
+	 * @covers ::load_from_post
+	 */
+	public function test_load_from_post_with_product(): void {
+		$post = self::factory()->post->create_and_get(
+			[
+				'post_title'   => 'test title',
+				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
+			]
+		);
+
+		add_post_meta(
+			$post->ID,
+			\Google\Web_Stories\Shopping\Product_Meta::PRODUCTS_POST_META_KEY,
+			[
+				[
+					'aggregateRating'      => [
+						'ratingValue' => 5,
+						'reviewCount' => 1,
+						'reviewUrl'   => 'http://www.example.com/product/t-shirt-with-logo',
+					],
+					'ratingValue'          => 0,
+					'reviewCount'          => 0,
+					'reviewUrl'            => 'http://www.example.com/product/t-shirt-with-logo',
+					'productBrand'         => 'Google',
+					'productDetails'       => 'This is a simple product.',
+					'productId'            => 'wc-36',
+					'productImages'        => [
+						[
+							'url' => 'http://www.example.com/wp-content/uploads/2019/01/t-shirt-with-logo-1-4.jpg',
+							'alt' => '',
+						],
+					],
+					'productPrice'         => 18,
+					'productPriceCurrency' => 'USD',
+					'productTitle'         => 'T-Shirt with Logo',
+					'productUrl'           => 'http://www.example.com/product/t-shirt-with-logo',
+				],
+
+			] 
+		);
+
+		$story = new \Google\Web_Stories\Model\Story();
+		$story->load_from_post( $post );
+
+		$this->assertEquals( $story->get_title(), 'test title' );
+		$this->assertEquals( $story->get_url(), get_permalink( $post ) );
+		$this->assertIsArray( $story->get_products() );
+		$this->assertInstanceOf( \Google\Web_Stories\Shopping\Product::class, $story->get_products()[0] );
+	}
+
 
 	/**
 	 * @covers ::load_from_post
@@ -169,23 +221,5 @@ class Story extends TestCase {
 		$this->assertIsString( $story->get_poster_sizes() );
 		$this->assertNotEmpty( $story->get_poster_srcset() );
 		$this->assertIsString( $story->get_poster_srcset() );
-	}
-
-	/**
-	 * @covers ::load_from_post
-	 */
-	public function test_invalid_load_from_post(): void {
-		$post = self::factory()->post->create_and_get(
-			[
-				'post_title'   => 'test title',
-				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
-			]
-		);
-
-		$story = new \Google\Web_Stories\Model\Story();
-		$story->load_from_post( $post );
-
-		$this->assertEquals( $story->get_title(), '' );
-		$this->assertEquals( $story->get_url(), '' );
 	}
 }

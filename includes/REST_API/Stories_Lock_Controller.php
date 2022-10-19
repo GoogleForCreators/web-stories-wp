@@ -315,7 +315,7 @@ class Stories_Lock_Controller extends REST_Controller implements HasRequirements
 				$lock_data = [
 					'locked' => true,
 					'time'   => $item['time'],
-					'user'   => (int) $item['user'],
+					'user'   => isset( $item['user'] ) ? (int) $item['user'] : 0,
 					'nonce'  => $nonce,
 				];
 			}
@@ -389,7 +389,7 @@ class Stories_Lock_Controller extends REST_Controller implements HasRequirements
 			/** This filter is documented in wp-admin/includes/ajax-actions.php */
 			$time_window = apply_filters( 'wp_check_post_lock_window', 150 );
 
-			if ( $lock['time'] && $lock['time'] > time() - $time_window ) {
+			if ( $lock['time'] && $lock['time'] > time() - $time_window && isset( $lock['user'] ) ) {
 				$links['author'] = [
 					'href'       => rest_url( sprintf( '%s/%s/%s', $this->namespace, 'users', $lock['user'] ) ),
 					'embeddable' => true,

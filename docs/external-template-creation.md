@@ -223,35 +223,20 @@ In the path's `d` attribute you'll see a mix of numbers and letters. The letters
 
 #### Normalizing your svg path
 
-All the svg paths in the shapes panel are declared in a 0->1 coordinate space. In theory you could scale down your svg in illustrator and it would update the path coordinates accordingly, but we found that Illustrator lacks the level of precision needed for large shapes with small details. This can lead to necessary parts of your path getting rounded off. To accommodate for this, we created a little node script you can run your svg path through and it will normalize the path with a much higher level of precision that won't round off details in your shape.
+All the SVG paths in the shapes panel are declared in a 0->1 coordinate space. In theory you could scale down your SVG in illustrator and it would update the path coordinates accordingly, but we found that Illustrator lacks the level of precision needed for large shapes with small details.
+This can lead to necessary parts of your path getting rounded off. To accommodate for this, we created a little node script you can run your SVG path through and it will normalize the path with a much higher level of precision that won't round off details in your shape.
 
-This script is located in `bin/normalize-path.js`. You'll need to copy the path and viewbox from your scratchpad svg file and paste them into the resize command in that file like so:
+This script is available via in `npm run workflow:normalize-path`. You'll need to copy the path and viewbox from your scratchpad svg file and pass them to the command like so:
 
-```javascript
-console.log(
-  resize(
-    // viewBox width
-    392,
-    // viewBox height
-    392,
-    // path that you're normalizing
-    `M392,196c0,108.25-87.75,196-196,196S0,304.25,0,196S87.75,0,196,0S392,87.75,392,196z M196,30
-	c-44.34,0-86.03,17.27-117.38,48.62C47.27,109.97,30,151.66,30,196s17.27,86.03,48.62,117.38C109.97,344.73,151.66,362,196,362
-	s86.03-17.27,117.38-48.62C344.73,282.03,362,240.34,362,196s-17.27-86.03-48.62-117.38C282.03,47.27,240.34,30,196,30 M196,0
-	c108.25,0,196,87.75,196,196s-87.75,196-196,196S0,304.25,0,196S87.75,0,196,0L196,0z`
-  )
-);
-```
-
-You can then save the file and run the command:
+You can then run the command like so:
 
 ```bash
-node bin/normalize-path
+npm run workflow:normalize-path 392 392 "M392,196c0,108.25-87.75,196-196,196S0,304.25,0,196S87.75,0,196,0S392,87.75,392,196z M196,30 c-44.34,0-86.03,17.27-117.38,48.62C47.27,109.97,30,151.66,30,196s17.27,86.03,48.62,117.38C109.97,344.73,151.66,362,196,362 s86.03-17.27,117.38-48.62C344.73,282.03,362,240.34,362,196s-17.27-86.03-48.62-117.38C282.03,47.27,240.34,30,196,30 M196,0 c108.25,0,196,87.75,196,196s-87.75,196-196,196S0,304.25,0,196S87.75,0,196,0L196,0z"
 ```
 
 It should output a normalized path like this in the console:
 
-```javascript
+```text
 M 1.000000 , 0.500000 c 0.000000 , 0.276148 -0.223852 , 0.500000 -0.500000 , 0.500000 S 0.000000 , 0.776148 , 0.000000 , 0.500000 S 0.223852 , 0.000000 , 0.500000 , 0.000000 S 1.000000 , 0.223852 , 1.000000 , 0.500000 z  M 0.500000 , 0.076531 c -0.113112 , 0.000000 -0.219464 , 0.044056 -0.299439 , 0.124031 C 0.120587 , 0.280536 , 0.076531 , 0.386888 , 0.076531 , 0.500000 s 0.044056 , 0.219464 , 0.124031 , 0.299439 C 0.280536 , 0.879413 , 0.386888 , 0.923469 , 0.500000 , 0.923469 s 0.219464 -0.044056 , 0.299439 -0.124031 C 0.879413 , 0.719464 , 0.923469 , 0.613112 , 0.923469 , 0.500000 s -0.044056 -0.219464 -0.124031 -0.299439 C 0.719464 , 0.120587 , 0.613112 , 0.076531 , 0.500000 , 0.076531 M 0.500000 , 0.000000 c 0.276148 , 0.000000 , 0.500000 , 0.223852 , 0.500000 , 0.500000 s -0.223852 , 0.500000 -0.500000 , 0.500000 S 0.000000 , 0.776148 , 0.000000 , 0.500000 S 0.223852 , 0.000000 , 0.500000 , 0.000000 L 0.500000 , 0.000000 z
 ```
 
@@ -303,11 +288,9 @@ WordPress has a naming convention where if you upload an image with the same nam
 **i.e**
 if I upload `some_image.png` 3 times to the WordPress media upload in the story editor, it will store those images as:
 
-```javascript
-// some_image.png
-// some_image-1.png
-// some_image-2.png
-```
+1. `some_image.png`
+1. `some_image-1.png`
+1. `some_image-2.png`
 
 Because of this, our conversion script will strip the `-x` suffix off of the image source so it can point to the correct image stored in our repo.
 

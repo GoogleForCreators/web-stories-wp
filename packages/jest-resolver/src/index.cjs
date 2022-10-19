@@ -76,6 +76,20 @@ module.exports = (request, options) => {
     });
   }
 
+  if ('use-debounce' === request) {
+    return options.defaultResolver(request, {
+      ...options,
+      packageFilter: (pkg) => {
+        if ('use-debounce' === pkg.name) {
+          delete pkg.exports;
+          delete pkg.module;
+        }
+
+        return pkg;
+      },
+    });
+  }
+
   if (!isLocalRepo(request)) {
     return options.defaultResolver(request, options);
   }

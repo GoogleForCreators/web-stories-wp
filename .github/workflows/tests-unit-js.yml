@@ -5,6 +5,8 @@ on:
     # Only run if JS-related files changed.
     paths:
       - '**.js'
+      - '**.cjs'
+      - '**.ts'
       - '**/package.json'
       - 'package-lock.json'
       - 'packages/templates/src/raw/**'
@@ -18,6 +20,8 @@ on:
     # Only run if JS-related files changed.
     paths:
       - '**.js'
+      - '**.cjs'
+      - '**.ts'
       - '**/package.json'
       - 'package-lock.json'
       - 'packages/templates/src/raw/**'
@@ -30,9 +34,8 @@ permissions:
 
 # Cancels all previous workflow runs for pull requests that have not completed.
 concurrency:
-  # The concurrency group contains the workflow name and the branch name for pull requests
-  # or the commit hash for any other events.
-  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.head_ref || github.sha }}
+  # The concurrency group contains the workflow name and the (target) branch name.
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -46,24 +49,24 @@ jobs:
         shard: ['1/2', '2/2']
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@74b568e8591fbb3115c70f3436a0c6b0909a8504
+        uses: step-security/harden-runner@2e205a28d0e1da00c5f53b161f4067b052c61f34
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
       - name: Checkout
-        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
+        uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
 
       - name: Setup Node
-        uses: actions/setup-node@2fddd8803e2f5c9604345a0b591c3020ee971a93
+        uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516
         with:
           node-version-file: '.nvmrc'
           cache: npm
 
       - name: Setup Jest cache
-        uses: actions/cache@f4278025ab0f432ce369118909e46deec636f50c
+        uses: actions/cache@9b0c1fce7a93df8e3bb8926b0d6e9d89e92f20a7
         with:
           path: .jest-cache
-          key: ${{ runner.os }}-${{ steps.nvm.outputs.NVMRC }}-jest
+          key: ${{ runner.os }}-${{ env.NVMRC }}-jest
 
       # Rollup is needed for tests in `packages/migration/src` expecting `module.js`
       - name: Install dependencies
@@ -78,16 +81,16 @@ jobs:
         run: |
           cd $RUNNER_TEMP && curl -O -f -s -S https://cdn.ampproject.org/v0/validator_wasm.js
           AMP_VALIDATOR_FILE="${RUNNER_TEMP}/validator_wasm.js"
-          echo "::set-output name=validator_file::$AMP_VALIDATOR_FILE"
+          echo "validator_file=$AMP_VALIDATOR_FILE" >> $GITHUB_ENV
 
       - name: Run JavaScript unit tests
         run: npm run test:js -- --runInBand --ci --cacheDirectory="$HOME/.jest-cache" --collectCoverage --shard=$SHARD
         env:
           SHARD: ${{ matrix.shard }}
-          AMP_VALIDATOR_FILE: ${{ steps.amp_validator.outputs.validator_file }}
+          AMP_VALIDATOR_FILE: ${{ env.validator_file }}
 
       - name: Upload code coverage report
-        uses: codecov/codecov-action@81cd2dc8148241f03f5839d295e000b8f761e378
+        uses: codecov/codecov-action@d9f34f8cd5cb3b3eb79b3e4b5dae3a16df499a70
         with:
           file: build/logs/lcov.info
           flags: unittests

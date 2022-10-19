@@ -2,7 +2,7 @@
   "name": "@googleforcreators/dom",
   "description": "DOM utility package for Web Stories editor",
   "private": false,
-  "version": "0.1.202208081316",
+  "version": "0.1.202208291229",
   "author": {
     "name": "Google",
     "url": "https://creators.google/"
@@ -27,12 +27,13 @@
   "type": "module",
   "customExports": {
     ".": {
-      "default": "./src/index.js"
+      "default": "./src/index.ts"
     }
   },
   "main": "dist/index.js",
   "module": "dist-module/index.js",
-  "source": "src/index.js",
+  "types": "dist-types/index.d.ts",
+  "source": "src/index.ts",
   "publishConfig": {
     "access": "public"
   },

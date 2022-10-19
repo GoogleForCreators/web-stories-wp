@@ -20,7 +20,6 @@
 import {
   createNewStory,
   takeSnapshot,
-  withExperimentalFeatures,
   withPlugin,
 } from '@web-stories-wp/e2e-test-utils';
 /**
@@ -103,6 +102,10 @@ describe('Media Hotlinking', () => {
       text: 'Insert',
     });
 
+    await page.waitForSelector('.ReactModal__Content', {
+      visible: false,
+    });
+
     await page.waitForSelector(
       '[aria-label="Design options for selected element"]'
     );
@@ -116,7 +119,6 @@ describe('Media Hotlinking', () => {
   });
 
   describe('Story Poster', () => {
-    withExperimentalFeatures(['posterHotlinking']);
     it('should insert an external poster via proxy', async () => {
       await createNewStory();
 

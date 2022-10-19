@@ -37,6 +37,13 @@ import PublishButton from '../publish';
 
 jest.mock('../../../../utils/useIsUploadingToStory');
 
+const newPoster = {
+  id: 'new-poster',
+  src: 'new-poster-url',
+  height: '36px',
+  width: '100000px',
+};
+
 function arrange({
   props: extraButtonProps,
   story: extraStoryProps,
@@ -80,6 +87,14 @@ function arrange({
     metadata: {
       publisher: 'publisher title',
     },
+    MediaUpload: ({ onSelect }) => (
+      <button
+        data-testid="media-upload-button"
+        onClick={() => onSelect(newPoster)}
+      >
+        {'Media Upload Button!'}
+      </button>
+    ),
     ...extraConfigProps,
   };
   const prepublishChecklistContextValue = {
@@ -132,7 +147,7 @@ describe('PublishButton', () => {
     expect(publishButton).toBeEnabled();
     fireEvent.click(publishButton);
 
-    expect(showPriorityIssues).toHaveBeenCalledTimes(1);
+    expect(showPriorityIssues).toHaveBeenCalledOnce();
 
     const publishModal = screen.getByRole('dialog');
 
@@ -201,7 +216,7 @@ describe('PublishButton', () => {
     });
     fireEvent.click(publishModalButton);
 
-    expect(saveStory).toHaveBeenCalledTimes(1);
+    expect(saveStory).toHaveBeenCalledOnce();
     expect(window.location.href).toContain('post=123&action=edit');
   });
 });

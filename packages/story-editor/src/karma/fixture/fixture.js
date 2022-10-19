@@ -24,7 +24,10 @@ import {
   screen,
   waitFor,
 } from '@testing-library/react';
-import { setAppElement } from '@googleforcreators/design-system';
+import {
+  LOCAL_STORAGE_PREFIX,
+  setAppElement,
+} from '@googleforcreators/design-system';
 import { FixtureEvents } from '@googleforcreators/karma-fixture';
 import { DATA_VERSION } from '@googleforcreators/migration';
 import {
@@ -68,6 +71,7 @@ if ('true' === WEB_STORIES_CI) {
       error.stack = null;
       return error;
     },
+    asyncUtilTimeout: 5000,
   });
 }
 
@@ -222,6 +226,12 @@ export class Fixture {
         JSON.stringify({ isCollapsed: false })
       );
     });
+
+    // Hide Floating Menu by default, it obstructs too many elements.
+    localStorage.setItem(
+      LOCAL_STORAGE_PREFIX.ELEMENT_TOOLBAR_SETTINGS,
+      JSON.stringify({ isDisplayed: false })
+    );
 
     elementTypes.forEach(registerElementType);
   }
@@ -411,6 +421,17 @@ export class Fixture {
     const { toggleButton } = _editor.helpCenter;
 
     return _events.click(toggleButton);
+  }
+
+  /**
+   * Floating menu is hidden by default, this will make it visible.
+   *
+   * @return {Promise<Object>} Resolves when floating menu show button is clicked.
+   */
+  showFloatingMenu() {
+    return this._events.click(
+      screen.getByRole('button', { name: /Show element toolbar/ })
+    );
   }
 
   /**

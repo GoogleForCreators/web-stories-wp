@@ -376,7 +376,6 @@
         }
       ],
       "animations": [],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 18,
@@ -657,7 +656,6 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 900; color: #f7722f; text-transform: uppercase\">Travis</span>\n<span style=\"font-weight: 900; color: #f7722f; text-transform: uppercase\">Travis</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -830,7 +828,6 @@
           "groupId": "c45c4c27-b9c6-4fb5-95e7-6292b90a8bd5"
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 18,
@@ -1044,7 +1041,6 @@
           "tagName": "p"
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 18,
@@ -1091,7 +1087,7 @@
           "delay": 0
         }
       ],
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -1383,7 +1379,6 @@
           "tagName": "p"
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 255,
@@ -1439,7 +1434,7 @@
           "delay": 0
         }
       ],
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -1689,7 +1684,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 900; color: #3d3225; text-transform: uppercase\">Ariana</span>\n<span style=\"font-weight: 900; color: #3d3225; text-transform: uppercase\">Ariana</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1862,7 +1856,6 @@
           "groupId": "ee199a09-f665-4161-a5f2-0592e8820fa1"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "292cf925-5c64-4d9a-927f-23f7bc7c89bd",
@@ -2078,7 +2071,6 @@
           "tagName": "p"
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 255,
@@ -2125,7 +2117,7 @@
           "delay": 0
         }
       ],
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -2415,7 +2407,6 @@
           "tagName": "p"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "9343a994-cb5e-4acd-a72f-633070260b8f",
@@ -2471,7 +2462,7 @@
         "id": "1899b726-b36a-4990-86c8-9747fb2e5c08",
         "type": "shape"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -2721,7 +2712,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 900; color: #f4e6b0; text-transform: uppercase\">Teyana</span>\n<span style=\"font-weight: 900; color: #f4e6b0; text-transform: uppercase\">Teyana</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2894,7 +2884,6 @@
           "groupId": "14ed837d-1653-4efa-bb7c-c777a1b57766"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "55b31a08-c71a-4cd6-8f84-514d153a89a1",
@@ -2914,7 +2903,7 @@
       },
       "type": "page",
       "id": "eb00917e-1f2f-40d0-a8d4-a78c4e6b1274",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "14ed837d-1653-4efa-bb7c-c777a1b57766": {
           "name": "Info",
@@ -3111,7 +3100,6 @@
           "tagName": "p"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "9670bdf5-0262-4baa-bb3f-86650fb40923",
@@ -3158,7 +3146,7 @@
         "id": "a05807ee-5090-4aa2-90f2-8e899d080aa9",
         "type": "shape"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -3448,7 +3436,6 @@
           "tagName": "p"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "582fee31-e323-468c-8d63-28774e5b52a2",
@@ -3504,7 +3491,7 @@
         "id": "8ecdb58d-3192-47e7-b2e7-896b2d0af033",
         "type": "shape"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -3704,7 +3691,6 @@
             "hasHiddenPadding": false
           },
           "content": "<span style=\"font-weight: 900; color: #fee2c6; text-transform: uppercase\">Justin</span>\n<span style=\"font-weight: 900; color: #fee2c6; text-transform: uppercase\">Barber</span>",
-          "fontWeight": 700,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3927,7 +3913,6 @@
           }
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "e5a9473e-ce1c-41a9-b496-8c0192dd04e0",
@@ -3947,7 +3932,7 @@
       },
       "type": "page",
       "id": "c0864782-cc25-4f04-bbd8-633e2b4ac38f",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "a748016b-6b98-43e2-b85c-e21038ae39b0": {
           "name": "Info",
@@ -4142,7 +4127,6 @@
           "tagName": "p"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "8e001318-e10f-4b9a-9da2-a91290e4bac6",
@@ -4189,7 +4173,7 @@
         "id": "2f709f3f-4120-4fde-9068-983f77b8c753",
         "type": "shape"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -4479,7 +4463,6 @@
           "tagName": "p"
         }
       ],
-      "backgroundOverlay": "none",
       "animations": [
         {
           "id": "c8ecf35e-8f70-4f69-a772-b8060d5f444b",
@@ -4835,7 +4818,6 @@
           }
         }
       ],
-      "backgroundOverlay": "none",
       "backgroundColor": {
         "color": {
           "r": 18,
@@ -4864,7 +4846,7 @@
           "delay": 400
         }
       ],
-      "pageTemplateType": ""
+      "pageTemplateType": null
     }
   ]
 }

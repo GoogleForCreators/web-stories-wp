@@ -113,6 +113,7 @@ class Discovery extends DependencyInjectedTestCase {
 	 */
 	public function test_register(): void {
 		$this->instance->register();
+		$this->assertSame( 10, has_action( 'web_stories_story_head', [ $this->instance, 'print_document_title' ] ) );
 		$this->assertSame( 10, has_action( 'web_stories_story_head', [ $this->instance, 'print_metadata' ] ) );
 		$this->assertSame( 10, has_action( 'web_stories_story_head', [ $this->instance, 'print_schemaorg_metadata' ] ) );
 		$this->assertSame( 10, has_action( 'web_stories_story_head', [ $this->instance, 'print_open_graph_metadata' ] ) );
@@ -126,6 +127,14 @@ class Discovery extends DependencyInjectedTestCase {
 	 */
 	public function test_print_metadata(): void {
 		$output = get_echo( [ $this->instance, 'print_metadata' ] );
+		$this->assertStringContainsString( '<meta', $output );
+	}
+
+	/**
+	 * @covers ::print_metadata
+	 */
+	public function test_print_document_title(): void {
+		$output = get_echo( [ $this->instance, 'print_document_title' ] );
 		$this->assertStringContainsString( '<title>', $output );
 	}
 
@@ -232,8 +241,7 @@ class Discovery extends DependencyInjectedTestCase {
 	 * @covers ::get_product_data
 	 */
 	public function test_get_product_data(): void {
-
-		$product_data = [
+		$product_object = \Google\Web_Stories\Shopping\Product::load_from_array(
 			[
 				'aggregateRating'      => [
 					'ratingValue' => 5,
@@ -256,10 +264,10 @@ class Discovery extends DependencyInjectedTestCase {
 				'productPriceCurrency' => 'USD',
 				'productTitle'         => 'T-Shirt with Logo',
 				'productUrl'           => 'http://www.example.com/product/t-shirt-with-logo',
-			],
-		];
+			]
+		);
 
-		$result = $this->call_private_method( $this->instance, 'get_product_data', [ $product_data ] );
+		$result = $this->call_private_method( $this->instance, 'get_product_data', [ [ $product_object ] ] );
 
 		$expected = [
 			'products' =>

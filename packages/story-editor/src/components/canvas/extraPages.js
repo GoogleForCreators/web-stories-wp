@@ -22,7 +22,6 @@ import { memo } from '@googleforcreators/react';
 import { PAGE_RATIO } from '@googleforcreators/units';
 import PropTypes from 'prop-types';
 import { __, sprintf } from '@googleforcreators/i18n';
-import { useFeature } from 'flagged';
 import { useTransform } from '@googleforcreators/transform';
 
 /**
@@ -114,9 +113,8 @@ function ExtraPages({ isPrevious = false }) {
     ({ state: { isAnythingTransforming } }) => isAnythingTransforming
   );
 
-  const isExtraPagesEnabled = useFeature('extraPages');
   const pageCount = pages?.length;
-  if (!pageCount || !isExtraPagesEnabled) {
+  if (!pageCount) {
     return null;
   }
   const pagesToShow = getPagesToShow({

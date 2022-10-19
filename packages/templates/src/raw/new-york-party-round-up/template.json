@@ -534,7 +534,7 @@
           "delay": 0
         }
       ],
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -1148,7 +1148,7 @@
         "type": "shape",
         "id": "7e8ad10a-4c7a-4079-851e-62b191e6a10b"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "603d19e4-8ed7-44c3-bfab-293d78a0b171": {
           "name": "Event",
@@ -1775,7 +1775,7 @@
         "id": "727b7e7b-484b-4cd3-afa3-041444f2a67b",
         "type": "shape"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "e2c8a297-c656-4285-ac41-f7f8d203e4b9": {
           "name": "Event",
@@ -3373,7 +3373,7 @@
           "delay": 600
         }
       ],
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "c1ff5c76-454b-45ed-a640-bd6784d4541f": {
           "name": "Venue",
@@ -3785,7 +3785,7 @@
         "id": "77a60ee3-cc7a-4003-9e9f-31de55a3ae32",
         "type": "shape"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -4998,7 +4998,7 @@
         "id": "191e072e-711f-4b46-9532-f614fd246a1c",
         "type": "shape"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "3483e291-f8ef-47b8-9539-5621f397ddca": {
           "name": "Venue",
@@ -5409,7 +5409,7 @@
         "id": "8737f47b-5d87-45bc-9cae-ff7a878feeaa",
         "type": "shape"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -6625,7 +6625,7 @@
         "id": "b79c177b-c135-4f3f-b342-efd3f615497a",
         "type": "shape"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "d7ad1e80-23f6-44c3-ae9f-cb816d5a0062": {
           "name": "Venue",
@@ -7036,7 +7036,7 @@
         "id": "7beeb408-2591-4821-8627-55944e27d884",
         "type": "shape"
       },
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -8227,7 +8227,7 @@
         "id": "d322a8ce-765a-4050-b7a7-86ddecf4b937",
         "type": "shape"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "65c27a80-9505-4587-ab6f-8b0e4c5cd0fd": {
           "name": "Venue",
@@ -8871,7 +8871,7 @@
         "id": "0c895083-d433-4f42-af00-f680c3f9fa49",
         "type": "shape"
       },
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "caf28278-b654-4345-8139-80127981e025": {
           "name": "Event",

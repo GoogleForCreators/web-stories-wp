@@ -67,6 +67,8 @@ function MediaRecordingProvider({ children }) {
   const [isProcessing, setIsProcessing] = useState(false);
 
   const [streamNode, setStreamNode] = useState(null);
+  const [canvasStream, setCanvasStream] = useState(null);
+  const [canvasNode, setCanvasNode] = useState(null);
 
   const [countdown, setCountdown] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -80,6 +82,9 @@ function MediaRecordingProvider({ children }) {
   );
   const [audioInput, setAudioInput] = useState(
     localStore.getItemByKey(LOCAL_STORAGE_PREFIX.MEDIA_RECORDING_AUDIO_INPUT)
+  );
+  const [videoEffect, setVideoEffect] = useState(
+    localStore.getItemByKey(LOCAL_STORAGE_PREFIX.MEDIA_RECORDING_VIDEO_EFFECT)
   );
 
   const [mediaDevices, setMediaDevices] = useState([]);
@@ -134,21 +139,7 @@ function MediaRecordingProvider({ children }) {
     [showSnackbar, hasVideo]
   );
 
-  const {
-    error,
-    status,
-    mediaBlob,
-    stopRecording: originalStopRecording,
-    startRecording,
-    liveStream,
-    getMediaStream,
-    clearMediaStream,
-    clearMediaBlob,
-    muteAudio,
-    unMuteAudio,
-    pauseRecording,
-    resumeRecording,
-  } = useMediaRecorder({
+  const mediaRecorder = useMediaRecorder({
     recordScreen: false,
     // If the device does not have a microphone or camera, this could result
     // in an OverconstrainedError.
@@ -161,6 +152,51 @@ function MediaRecordingProvider({ children }) {
     },
     onStop,
   });
+
+  const canvasRecorder = useMediaRecorder({
+    recordScreen: false,
+    customMediaStream: canvasStream,
+    onStop,
+  });
+
+  const currentRecorder =
+    videoEffect && videoEffect !== 'none' && hasVideo
+      ? {
+          ...mediaRecorder,
+          inputStatus: mediaRecorder.status,
+          status: canvasRecorder.status,
+          startRecording: canvasRecorder.startRecording,
+          pauseRecording: canvasRecorder.pauseRecording,
+          resumeRecording: canvasRecorder.resumeRecording,
+          stopRecording: canvasRecorder.stopRecording,
+          mediaBlob: canvasRecorder.mediaBlob,
+          clearMediaBlob: canvasRecorder.clearMediaBlob,
+          getMediaStream: async () => {
+            canvasRecorder.clearMediaStream();
+            await mediaRecorder.getMediaStream();
+          },
+        }
+      : {
+          ...mediaRecorder,
+          inputStatus: mediaRecorder.status,
+        };
+
+  const {
+    error,
+    inputStatus,
+    status,
+    mediaBlob,
+    stopRecording: originalStopRecording,
+    startRecording,
+    liveStream,
+    getMediaStream,
+    clearMediaStream,
+    clearMediaBlob,
+    muteAudio,
+    unMuteAudio,
+    pauseRecording,
+    resumeRecording,
+  } = currentRecorder;
 
   const isRecording = 'recording' === status;
 
@@ -296,10 +332,15 @@ function MediaRecordingProvider({ children }) {
     if (liveStream) {
       liveStream.getTracks().forEach((track) => track.stop());
     }
+    if (canvasRecorder.liveStream) {
+      canvasRecorder.liveStream.getTracks().forEach((track) => track.stop());
+    }
 
     clearMediaBlob();
     clearMediaStream();
-  }, [clearMediaBlob, clearMediaStream, liveStream]);
+
+    canvasRecorder.clearMediaStream();
+  }, [clearMediaBlob, clearMediaStream, liveStream, canvasRecorder]);
 
   const resetState = useCallback(() => {
     setFile(null);
@@ -315,8 +356,15 @@ function MediaRecordingProvider({ children }) {
 
   const toggleRecordingMode = useCallback(() => {
     setIsInRecordingMode((state) => !state);
-    resetState();
-  }, [resetState]);
+    if (canvasRecorder.status === 'recording') {
+      stopRecording();
+    } else {
+      resetState();
+      if (isInRecordingMode === true) {
+        canvasRecorder.clearMediaStream();
+      }
+    }
+  }, [resetState, canvasRecorder, isInRecordingMode, stopRecording]);
 
   const toggleSettings = useCallback(
     () => setIsSettingsOpen((state) => !state),
@@ -337,8 +385,10 @@ function MediaRecordingProvider({ children }) {
         mediaDevices,
         audioInput,
         videoInput,
+        videoEffect,
         isSettingsOpen,
         error,
+        inputStatus,
         status,
         mediaBlob,
         mediaBlobUrl,
@@ -354,6 +404,8 @@ function MediaRecordingProvider({ children }) {
         isAdjustingTrim,
         streamNode,
         isProcessingTrim,
+        canvasStream,
+        canvasNode,
       },
       actions: {
         toggleRecordingMode,
@@ -364,6 +416,7 @@ function MediaRecordingProvider({ children }) {
         toggleIsGif,
         setAudioInput,
         setVideoInput,
+        setVideoEffect,
         updateMediaDevices,
         stopRecording,
         startRecording,
@@ -383,6 +436,8 @@ function MediaRecordingProvider({ children }) {
         pauseRecording,
         resumeRecording,
         cancelTrim,
+        setCanvasStream,
+        setCanvasNode,
       },
     }),
     [
@@ -392,8 +447,10 @@ function MediaRecordingProvider({ children }) {
       mediaDevices,
       audioInput,
       videoInput,
+      videoEffect,
       isSettingsOpen,
       error,
+      inputStatus,
       status,
       mediaBlob,
       mediaBlobUrl,
@@ -431,6 +488,10 @@ function MediaRecordingProvider({ children }) {
       pauseRecording,
       resumeRecording,
       cancelTrim,
+      canvasStream,
+      setCanvasStream,
+      canvasNode,
+      setCanvasNode,
     ]
   );
 

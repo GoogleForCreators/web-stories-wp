@@ -377,7 +377,7 @@
       "type": "page",
       "id": "0d4492e9-e0e1-4c5d-913c-bf32ef001186",
       "animations": [],
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -618,7 +618,7 @@
           "delay": 0
         }
       ],
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -1773,7 +1773,7 @@
       },
       "type": "page",
       "id": "1a932019-c548-4c31-8220-caec6987e58b",
-      "pageTemplateType": "",
+      "pageTemplateType": null,
       "groups": {
         "c19a8f4c-52b5-498b-8483-df9f0b39505f": {
           "name": "Sign",
@@ -2544,7 +2544,7 @@
       },
       "type": "page",
       "id": "6870c42a-6aa3-46b7-83a8-53ef90ac7162",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [
@@ -3307,7 +3307,7 @@
       },
       "type": "page",
       "id": "f55be543-f8e9-46cd-9b43-8b4463471b82",
-      "pageTemplateType": ""
+      "pageTemplateType": null
     },
     {
       "elements": [

@@ -44,7 +44,7 @@ describe('useVideoNode', () => {
   it('should initially be empty when no video has loaded', () => {
     const { result } = setup();
 
-    expect(result.current.hasChanged).toBe(false);
+    expect(result.current.hasChanged).toBeFalse();
     expect(result.current.startOffset).toBeNull();
     expect(result.current.endOffset).toBeNull();
     expect(result.current.maxOffset).toBeNull();
@@ -56,13 +56,13 @@ describe('useVideoNode', () => {
     const videoNode = loadVideo(result, 10);
 
     // Expect offsets to have been set:
-    expect(result.current.hasChanged).toBe(false);
+    expect(result.current.hasChanged).toBeFalse();
     expect(result.current.startOffset).toBe(0);
     expect(result.current.endOffset).toBe(10000);
     expect(result.current.maxOffset).toBe(10000);
 
     // Expect video to be playing from 0 second on
-    expect(videoNode.playing).toBe(true);
+    expect(videoNode.playing).toBeTrue();
     expect(videoNode.currentTime).toBe(0);
   });
 
@@ -72,13 +72,13 @@ describe('useVideoNode', () => {
     const videoNode = loadVideo(result, 10);
 
     // Expect offsets to have been set:
-    expect(result.current.hasChanged).toBe(false);
+    expect(result.current.hasChanged).toBeFalse();
     expect(result.current.startOffset).toBe(1000);
     expect(result.current.endOffset).toBe(9000);
     expect(result.current.maxOffset).toBe(10000);
 
     // Expect video to be playing from 1 second on
-    expect(videoNode.playing).toBe(true);
+    expect(videoNode.playing).toBeTrue();
     expect(videoNode.currentTime).toBe(1);
   });
 
@@ -133,25 +133,25 @@ describe('useVideoNode', () => {
     loadVideo(result, 10);
 
     // Expect currentTime to be initial
-    expect(result.current.hasChanged).toBe(false);
+    expect(result.current.hasChanged).toBeFalse();
 
     /// Set start offset to 2000
     act(() => result.current.setStartOffset(2000));
 
     // Expect hasChanged to be true
-    expect(result.current.hasChanged).toBe(true);
+    expect(result.current.hasChanged).toBeTrue();
 
     /// Set start offset back to 1000
     act(() => result.current.setStartOffset(1000));
 
     // Expect hasChanged to be back at false
-    expect(result.current.hasChanged).toBe(false);
+    expect(result.current.hasChanged).toBeFalse();
 
     // Set end offset to 8000
     act(() => result.current.setEndOffset(8000));
 
     // Expect hasChanged to be true again
-    expect(result.current.hasChanged).toBe(true);
+    expect(result.current.hasChanged).toBeTrue();
   });
 
   it('should enforce minimum video duration', () => {

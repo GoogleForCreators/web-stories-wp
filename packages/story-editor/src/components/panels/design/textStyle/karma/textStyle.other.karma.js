@@ -31,7 +31,6 @@ describe('Text Style Panel', () => {
   beforeEach(async () => {
     fixture = new Fixture();
     localStorage.clear();
-    fixture.setFlags({ customFonts: true });
     await fixture.render();
     await fixture.collapseHelpCenter();
   });
@@ -291,8 +290,9 @@ describe('Text Style Panel', () => {
       const DEFAULT_CUSTOM_FONTS = 2;
       // Timeout used for submitting / search update + 250ms (250 + 250).
       const TIMEOUT = 500;
-      const openFontPicker = async () => {
-        const input = fixture.screen.getByLabelText('Font family');
+      const openFontPicker = async (i = 0) => {
+        const inputs = fixture.screen.getAllByLabelText('Font family');
+        const input = i > 0 && inputs.length > i ? inputs[i] : inputs[0];
         await fixture.events.click(input);
       };
 
@@ -576,7 +576,7 @@ describe('Text Style Panel', () => {
         });
 
         it('should close the font picker with Esc', async () => {
-          const input = fixture.screen.getByLabelText('Font family');
+          const input = fixture.screen.getAllByLabelText('Font family')[0];
           expect(input.getAttribute('aria-expanded')).toBe('true');
           await fixture.events.keyboard.press('Esc');
           await waitForElementToBeRemoved(

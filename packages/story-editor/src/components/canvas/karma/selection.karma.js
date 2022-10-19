@@ -31,7 +31,6 @@ describe('CUJ: Creator can Transform an Element: Selection integration', () => {
 
   beforeEach(async () => {
     fixture = new Fixture();
-    fixture.setFlags({ layerLocking: true });
     await fixture.render();
     await fixture.collapseHelpCenter();
 
@@ -121,7 +120,7 @@ describe('CUJ: Creator can Transform an Element: Selection integration', () => {
     await fixture.events.click(layerPanel.togglePanel);
     const paragraphLayer = layerPanel.getLayerByInnerText('Fill in some text');
     await fixture.events.hover(paragraphLayer);
-    const lockButton = within(paragraphLayer).getByLabelText('Lock/Unlock');
+    const lockButton = within(paragraphLayer).getByLabelText(/Lock/);
     await fixture.events.click(lockButton);
 
     // Try to click on the text element

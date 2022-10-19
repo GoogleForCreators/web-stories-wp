@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { __ } from '@googleforcreators/i18n';
 import { useEffect, useRef } from '@googleforcreators/react';
@@ -25,6 +25,7 @@ import { useEffect, useRef } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
+import Switch from '../switch';
 import TimeZone from './timeZone';
 
 const TimeWrapper = styled.div`
@@ -47,25 +48,29 @@ const InputRow = styled.div`
   display: flex;
 `;
 
-const inputCSS = css`
+const NumberInput = styled.input`
   min-height: 30px;
   box-shadow: 0 0 0 transparent;
   transition: box-shadow 0.1s linear;
   border-radius: 4px;
-  border: 1px solid #006edc;
+  border: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
   height: 28px;
   vertical-align: middle;
-  background-color: ${({ theme }) => theme.colors.standard.white};
-  color: #32373c;
-`;
+  background-color: ${({ theme }) => theme.colors.bg.tertiary};
+  color: ${({ theme }) => theme.colors.fg.tertiary};
 
-const NumberInput = styled.input`
-  ${inputCSS}
+  &:active,
+  &:focus {
+    color: ${({ theme }) => theme.colors.fg.primary};
+    border: 1px solid ${({ theme }) => theme.colors.border.defaultActive};
+  }
+
   padding: 0;
   margin-right: 4px;
   text-align: center;
   width: 50%;
   max-width: 50px;
+
   ::-webkit-inner-spin-button,
   ::-webkit-outer-spin-button {
     margin: 0;
@@ -78,54 +83,12 @@ const TimeSeparator = styled.span`
   color: #555d66;
 `;
 
-const Button = styled.button`
-  display: inline-flex;
-  text-decoration: none;
-  font-size: 13px;
-  margin: 0;
-  border: 0;
-  cursor: pointer;
-  transition: box-shadow 0.1s linear;
-  padding: 0 10px;
-  line-height: 2;
-  height: 30px;
-  border-radius: 3px;
-  white-space: nowrap;
-  border-width: 1px;
-  border-style: solid;
-  color: #006edc;
-  border-color: #006edc;
-  background: #f3f5f6;
-
-  &:focus {
-    outline: 2px solid transparent;
-    background: #f3f5f6;
-    color: rgb(0, 93, 140);
-    border-color: ${({ theme }) => theme.colors.fg.linkHover};
-    box-shadow: 0 0 0 1px ${({ theme }) => theme.colors.fg.linkHover};
-    text-decoration: none;
-  }
-  ${({ isToggled }) =>
-    isToggled &&
-    `
-  background: #edeff0;
-  border-color: #8f98a1;
-  box-shadow: inset 0 2px 5px -3px #555d66;
-  `}
-`;
-
 const InputGroup = styled.div`
   flex-basis: 100%;
 `;
 
-const AMButton = styled(Button)`
-  margin-right: -1px;
-  border-radius: 3px 0 0 3px;
-`;
-
-const PMButton = styled(Button)`
-  margin-left: -1px;
-  border-radius: 0 3px 3px 0;
+const StyledSwitch = styled(Switch)`
+  width: 100px;
 `;
 
 function TimePicker({ onChange, is12Hour, localData, setLocalData }) {
@@ -184,18 +147,21 @@ function TimePicker({ onChange, is12Hour, localData, setLocalData }) {
     }
   };
 
-  const updateAmPm = (value) => () => {
+  const updateAmPm = (_evt, useAM) => {
     const { am, date, hours } = localData;
-    if (am === value) {
+
+    if (am === 'AM' && useAM) {
       return;
     }
     const newDate = date;
-    if (value === 'PM') {
-      newDate.setHours(((hours % 12) + 12) % 24);
-    } else {
+
+    if (useAM) {
       newDate.setHours(hours % 12);
+    } else {
+      newDate.setHours(((hours % 12) + 12) % 24);
     }
-    changeDate(newDate, { am: value });
+
+    changeDate(newDate, { am: useAM ? 'AM' : 'PM' });
   };
 
   const hours = useRef();
@@ -204,7 +170,7 @@ function TimePicker({ onChange, is12Hour, localData, setLocalData }) {
   }, []);
 
   const isAM = localData.am === 'AM';
-  const isPM = localData.am === 'PM';
+
   return (
     <TimeWrapper>
       <Fieldset>
@@ -235,27 +201,17 @@ function TimePicker({ onChange, is12Hour, localData, setLocalData }) {
           </InputGroup>
           {is12Hour && (
             <InputGroup>
-              <AMButton
-                aria-pressed={isAM}
-                type="button"
-                isToggled={isAM}
-                onClick={updateAmPm('AM')}
-              >
-                {__('AM', 'web-stories')}
-              </AMButton>
-              <PMButton
-                aria-pressed={isPM}
-                type="button"
-                isToggled={isPM}
-                // Handled by arrow keys.
-                tabIndex="-1"
-                onClick={updateAmPm('PM')}
-              >
-                {__('PM', 'web-stories')}
-              </PMButton>
+              <StyledSwitch
+                groupLabel={__('AM or PM', 'web-stories')}
+                name="time-picker-am-pm-switch"
+                value={isAM}
+                onLabel={__('AM', 'web-stories')}
+                offLabel={__('PM', 'web-stories')}
+                onChange={updateAmPm}
+              />
             </InputGroup>
           )}
-          <TimeZone date={localData?.date} />
+          <TimeZone />
         </InputRow>
       </Fieldset>
     </TimeWrapper>

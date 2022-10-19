@@ -95,7 +95,7 @@ export const _default = () => {
           {Object.keys(activeTheme[themeSection]).map((sectionValue) => {
             if (typeof activeTheme[themeSection][sectionValue] === 'object') {
               return (
-                <Row>
+                <Row key={`${themeSection} - ${sectionValue}`}>
                   <Headline as="h3" size={SMALL}>
                     {`${themeSection} - ${sectionValue}`}
                   </Headline>

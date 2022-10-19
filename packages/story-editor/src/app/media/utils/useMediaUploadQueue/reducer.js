@@ -40,6 +40,7 @@ import { ITEM_STATUS } from './constants';
  * @param {Object}   action.payload.additionalData Additional Data object.
  * @param {File} action.payload.posterFile File object.
  * @param {boolean} action.payload.muteVideo Whether the video being uploaded should be muted.
+ * @param {boolean} action.payload.cropVideo Whether the video being uploaded should be cropped.
  * @param {import('@googleforcreators/media').TrimData} action.payload.trimData Trim data.
  * @param {number} action.payload.originalResourceId Original resource id.
  * @param {string} action.payload.elementId ID of element on the canvas.
@@ -56,9 +57,10 @@ export function addItem(
       onUploadProgress,
       onUploadError,
       onUploadSuccess,
-      additionalData: _additionalData = {},
+      additionalData = {},
       posterFile,
       muteVideo,
+      cropVideo,
       trimData,
       originalResourceId,
       elementId,
@@ -72,13 +74,6 @@ export function addItem(
     resource.id = uuidv4();
   }
 
-  const additionalData = {
-    ..._additionalData,
-    meta: {
-      ...(_additionalData.meta || {}),
-    },
-  };
-
   if (
     resource.type === 'video' &&
     resource.isMuted !== null &&
@@ -88,13 +83,13 @@ export function addItem(
   }
 
   if (resource?.baseColor) {
-    additionalData.meta.baseColor = resource.baseColor;
+    additionalData.baseColor = resource.baseColor;
   }
 
-  // Do not copy over BlurHash for new trimmed videos
+  // Do not copy over BlurHash for new trimmed and cropped videos
   // since the poster (and thus the BlurHash) might be different.
-  if (resource?.blurHash && !resource?.trimData) {
-    additionalData.meta.blurHash = resource.blurHash;
+  if (resource?.blurHash && !trimData && !cropVideo) {
+    additionalData.blurHash = resource.blurHash;
   }
 
   const newItem = {
@@ -109,6 +104,7 @@ export function addItem(
     additionalData,
     posterFile,
     muteVideo,
+    cropVideo,
     trimData,
     originalResourceId,
     elementId,
@@ -372,6 +368,64 @@ export function finishMuting(
               ...item.resource,
               isMuted: true,
             },
+            additionalData: {
+              ...item.additionalData,
+              ...additionalData,
+            },
+          }
+        : item
+    ),
+  };
+}
+
+/**
+ * Starts cropping a file.
+ *
+ * @param {Object} state Current state.
+ * @param {Object} action Action object.
+ * @param {Object} action.payload Action payload.
+ * @param {string} action.payload.id Item ID.
+ * @return {Object} New state
+ */
+export function startCropping(state, { payload: { id } }) {
+  return {
+    ...state,
+    queue: state.queue.map((item) =>
+      item.id === id
+        ? {
+            ...item,
+            state: ITEM_STATUS.CROPPING,
+          }
+        : item
+    ),
+  };
+}
+
+/**
+ * Finishes cropping a file.
+ *
+ * @param {Object} state Current state.
+ * @param {Object} action Action object.
+ * @param {Object} action.payload Action payload.
+ * @param {string} action.payload.id Item ID.
+ * @param {File} action.payload.file New file object.
+ * @param {File} action.payload.posterFile New poster file object.
+ * @param {Object} action.payload.additionalData Additional data.
+ * @return {Object} New state
+ */
+export function finishCropping(
+  state,
+  { payload: { id, file, posterFile, additionalData = {} } }
+) {
+  return {
+    ...state,
+    queue: state.queue.map((item) =>
+      item.id === id
+        ? {
+            ...item,
+            file,
+            posterFile,
+            state: ITEM_STATUS.CROPPED,
             additionalData: {
               ...item.additionalData,
               ...additionalData,

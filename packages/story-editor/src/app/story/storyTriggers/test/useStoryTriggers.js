@@ -60,13 +60,13 @@ describe('useStoryTriggers', () => {
     // with current story passed to the provider
     let [, dispatchStoryEvent] = result.current;
     dispatchStoryEvent(STORY_EVENTS.onInitialElementAdded);
-    expect(listenerMock).toHaveBeenCalledTimes(1);
+    expect(listenerMock).toHaveBeenCalledOnce();
     expect(listenerMock).toHaveBeenCalledWith(story);
 
     // dispatching a different story event doesn't call
     // the listener of another story event
     dispatchStoryEvent('This is not a supported story event');
-    expect(listenerMock).toHaveBeenCalledTimes(1);
+    expect(listenerMock).toHaveBeenCalledOnce();
 
     // Dispatching an event after a listener
     // has cleaned up should not call that listener
@@ -75,6 +75,6 @@ describe('useStoryTriggers', () => {
     });
     dispatchStoryEvent = result.current[1];
     dispatchStoryEvent(STORY_EVENTS.onInitialElementAdded);
-    expect(listenerMock).toHaveBeenCalledTimes(1);
+    expect(listenerMock).toHaveBeenCalledOnce();
   });
 });

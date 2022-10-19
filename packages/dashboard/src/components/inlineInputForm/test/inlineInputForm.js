@@ -59,7 +59,7 @@ describe('InlineInputForm', () => {
 
     fireEvent.keyDown(input, { key: 'escape', keyCode: 27 });
 
-    expect(mockCancel).toHaveBeenCalledTimes(1);
+    expect(mockCancel).toHaveBeenCalledOnce();
   });
 
   it('should call onEditComplete when enter is hit from the input', () => {
@@ -80,6 +80,6 @@ describe('InlineInputForm', () => {
 
     fireEvent.keyDown(input, { key: 'enter', keyCode: 13 });
 
-    expect(mockComplete).toHaveBeenCalledTimes(1);
+    expect(mockComplete).toHaveBeenCalledOnce();
   });
 });

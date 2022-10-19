@@ -62,6 +62,7 @@ const sharedConfig = {
   resolve: {
     // Fixes resolving packages in the monorepo so we use the "src" folder, not "dist".
     exportsFields: ['customExports', 'exports'],
+    extensions: ['.ts', '.tsx', '.js', '.jsx', '.json', '.wasm'],
   },
   mode,
   devtool: !isProduction ? 'source-map' : undefined,
@@ -95,7 +96,7 @@ const sharedConfig = {
         },
       },
       {
-        test: /\.m?js$/,
+        test: /\.(j|t)sx?$/,
         exclude: /node_modules/,
         resolve: {
           // Avoid having to provide full file extension for imports.
@@ -443,7 +444,7 @@ const activationNotice = {
   ...sharedConfig,
   entry: {
     'web-stories-activation-notice':
-      './packages/activation-notice/src/index.js',
+      './packages/activation-notice/src/index.tsx',
   },
   plugins: [
     ...sharedConfig.plugins,

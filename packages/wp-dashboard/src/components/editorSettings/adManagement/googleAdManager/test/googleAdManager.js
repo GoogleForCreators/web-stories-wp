@@ -25,7 +25,7 @@ import { fireEvent, screen } from '@testing-library/react';
 import GoogleAdManagerSettings, { TEXT } from '..';
 import { renderWithProviders } from '../../../../../testUtils';
 
-describe('Editor Settings: Google Analytics <GoogleAdManager />', function () {
+describe('Editor Settings: Google Analytics <GoogleAdManager />', () => {
   let adManagerSlotId;
   let mockUpdate;
 
@@ -40,7 +40,7 @@ describe('Editor Settings: Google Analytics <GoogleAdManager />', function () {
     adManagerSlotId = '';
   });
 
-  it('should render a visually hidden label for Google Ad Manager input', function () {
+  it('should render a visually hidden label for Google Ad Manager input', () => {
     renderWithProviders(
       <GoogleAdManagerSettings
         slotId={adManagerSlotId}
@@ -52,7 +52,7 @@ describe('Editor Settings: Google Analytics <GoogleAdManager />', function () {
     expect(label).toBeInTheDocument();
   });
 
-  it('should call mockUpdate when enter is keyed on input', function () {
+  it('should call mockUpdate when enter is keyed on input', () => {
     const { rerender } = renderWithProviders(
       <GoogleAdManagerSettings
         slotId={adManagerSlotId}
@@ -75,7 +75,7 @@ describe('Editor Settings: Google Analytics <GoogleAdManager />', function () {
       />
     );
 
-    expect(mockUpdate).toHaveBeenCalledTimes(1);
+    expect(mockUpdate).toHaveBeenCalledOnce();
 
     fireEvent.change(input, { target: { value: '' } });
     fireEvent.keyDown(input, { key: 'Enter', keyCode: 13 });
@@ -97,7 +97,7 @@ describe('Editor Settings: Google Analytics <GoogleAdManager />', function () {
     expect(mockUpdate).toHaveBeenCalledTimes(2);
   });
 
-  it('should call mockUpdate when the save button is clicked', function () {
+  it('should call mockUpdate when the save button is clicked', () => {
     const { rerender } = renderWithProviders(
       <GoogleAdManagerSettings
         slotId={adManagerSlotId}
@@ -122,7 +122,7 @@ describe('Editor Settings: Google Analytics <GoogleAdManager />', function () {
       />
     );
 
-    expect(mockUpdate).toHaveBeenCalledTimes(1);
+    expect(mockUpdate).toHaveBeenCalledOnce();
 
     fireEvent.change(input, { target: { value: '' } });
 

@@ -54,6 +54,7 @@ function loadStory(storyId, post, restore, clearHistory) {
     publisherLogo,
     taxonomies,
     terms,
+    revisions,
   } = post;
 
   const date =
@@ -73,7 +74,6 @@ function loadStory(storyId, post, restore, clearHistory) {
         suffix,
       }
     : null;
-  const statusFormat = status === 'auto-draft' ? 'draft' : status;
 
   // First clear history completely.
   clearHistory();
@@ -98,7 +98,7 @@ function loadStory(storyId, post, restore, clearHistory) {
   const story = {
     storyId: storyId,
     title,
-    status: statusFormat,
+    status,
     author,
     date,
     modified,
@@ -113,6 +113,7 @@ function loadStory(storyId, post, restore, clearHistory) {
     previewLink,
     editLink,
     embedPostLink,
+    revisions,
     currentStoryStyles: {
       colors: storyData?.currentStoryStyles?.colors
         ? getUniquePresets(storyData.currentStoryStyles.colors)

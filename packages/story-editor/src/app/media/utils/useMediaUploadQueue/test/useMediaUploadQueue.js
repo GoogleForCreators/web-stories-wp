@@ -131,10 +131,12 @@ describe('useMediaUploadQueue', () => {
         failures: [],
         uploaded: [],
         finished: [],
+        active: [],
         progress: [],
         isUploading: false,
         isTranscoding: false,
         isMuting: false,
+        isCropping: false,
         isTrimming: false,
         isNewResourceMuting: expect.any(Function),
         isCurrentResourceMuting: expect.any(Function),
@@ -146,6 +148,7 @@ describe('useMediaUploadQueue', () => {
         isCurrentResourceTrimming: expect.any(Function),
         isCurrentResourceUploading: expect.any(Function),
         canTranscodeResource: expect.any(Function),
+        isBatchUploading: expect.any(Function),
       })
     );
   });
@@ -345,11 +348,13 @@ describe('useMediaUploadQueue', () => {
         pending: [],
         failures: [],
         finished: [],
+        active: [],
         uploaded: [],
         progress: [],
         isUploading: false,
         isTranscoding: false,
         isMuting: false,
+        isCropping: false,
         isTrimming: false,
         isNewResourceMuting: expect.any(Function),
         isCurrentResourceMuting: expect.any(Function),
@@ -361,6 +366,7 @@ describe('useMediaUploadQueue', () => {
         isCurrentResourceTrimming: expect.any(Function),
         isCurrentResourceUploading: expect.any(Function),
         canTranscodeResource: expect.any(Function),
+        isBatchUploading: expect.any(Function),
       })
     );
   });

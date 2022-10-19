@@ -10,6 +10,7 @@ on:
       - 'webpack.config.test.cjs'
       - 'packages/**/*.js'
       - 'packages/**/*.cjs'
+      - 'packages/**/*.ts'
       - '**/package.json'
       - 'package-lock.json'
       - '__static__/**'
@@ -26,6 +27,7 @@ on:
       - 'webpack.config.test.cjs'
       - 'packages/**/*.js'
       - 'packages/**/*.cjs'
+      - 'packages/**/*.ts'
       - '**/package.json'
       - 'package-lock.json'
       - '__static__/**'
@@ -41,9 +43,8 @@ permissions:
 
 # Cancels all previous workflow runs for pull requests that have not completed.
 concurrency:
-  # The concurrency group contains the workflow name and the branch name for pull requests
-  # or the commit hash for any other events.
-  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.head_ref || github.sha }}
+  # The concurrency group contains the workflow name and the (target) branch name.
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -51,10 +52,10 @@ jobs:
     name: Percy Nonce
     runs-on: ubuntu-latest
     outputs:
-      result: ${{ steps.nonce.outputs.result }}
+      result: ${{ env.result }}
     steps:
       - id: nonce
-        run: echo "::set-output name=result::${{ github.run_id }}-${{ github.run_attempt }}-$(date +%s)"
+        run: echo "result=${{ github.run_id }}-${{ github.run_attempt }}-$(date +%s)" >> $GITHUB_ENV
 
   karma:
     name: Karma (${{ matrix.shard }})
@@ -62,20 +63,43 @@ jobs:
     timeout-minutes: 60
     needs: nonce
     strategy:
+      fail-fast: false
       matrix:
-        # We want to split up the tests into 4 parts running in parallel.
-        shard: ['1/4', '2/4', '3/4', '4/4']
+        # We want to split up the tests into 20 parts running in parallel.
+        shard:
+          [
+            '1/20',
+            '2/20',
+            '3/20',
+            '4/20',
+            '5/20',
+            '6/20',
+            '7/20',
+            '8/20',
+            '9/20',
+            '10/20',
+            '11/20',
+            '12/20',
+            '13/20',
+            '14/20',
+            '15/20',
+            '16/20',
+            '17/20',
+            '18/20',
+            '19/20',
+            '20/20',
+          ]
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@74b568e8591fbb3115c70f3436a0c6b0909a8504
+        uses: step-security/harden-runner@2e205a28d0e1da00c5f53b161f4067b052c61f34
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
       - name: Checkout
-        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
+        uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
 
       - name: Setup Node
-        uses: actions/setup-node@2fddd8803e2f5c9604345a0b591c3020ee971a93
+        uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516
         with:
           node-version-file: '.nvmrc'
           cache: npm
@@ -96,19 +120,19 @@ jobs:
         id: chromium_path
         run: |
           CHROMIUM=$(node -p "const puppeteer = require('puppeteer'); puppeteer.executablePath();")
-          echo "::set-output name=chromium_path::${CHROMIUM}"
+          echo "chromium_path=${CHROMIUM}" >> $GITHUB_ENV
 
       - name: Run integration tests with Percy
         run: |
-          npx percy exec --parallel --config=percy.config.karma.yml -- \
+          npx percy exec --quiet --parallel --config=percy.config.karma.yml -- \
             npm run test:karma:story-editor -- --headless --viewport=1600:1000 --coverage --shard=$SHARD || \
-          npx percy exec --parallel --config=percy.config.karma.yml -- \
+          npx percy exec --quiet --parallel --config=percy.config.karma.yml -- \
             npm run test:karma:story-editor:retry-failed -- --headless --viewport=1600:1000 --shard=$SHARD
         env:
           DISABLE_ERROR_BOUNDARIES: true
           SHARD: ${{ matrix.shard }}
           PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
-          PERCY_BROWSER_EXECUTABLE: ${{ steps.chromium_path.outputs.chromium_path }}
+          PERCY_BROWSER_EXECUTABLE: ${{ env.chromium_path }}
           PERCY_PARALLEL_NONCE: ${{ needs.nonce.outputs.result }}
         if: github.event.pull_request.draft == false
 
@@ -122,7 +146,7 @@ jobs:
         if: github.event.pull_request.draft == true
 
       - name: Upload code coverage report
-        uses: codecov/codecov-action@81cd2dc8148241f03f5839d295e000b8f761e378
+        uses: codecov/codecov-action@d9f34f8cd5cb3b3eb79b3e4b5dae3a16df499a70
         with:
           file: build/logs/karma-coverage/story-editor/lcov.info
           flags: karmatests
@@ -131,19 +155,23 @@ jobs:
     name: Percy
     runs-on: ubuntu-latest
     timeout-minutes: 5
-    if: always() && github.event.pull_request.draft == false
+    if: >
+      always() &&
+      github.event.pull_request.draft == false &&
+      github.event.pull_request.head.repo.fork == false &&
+      github.event.pull_request.user.login != 'dependabot[bot]'
     needs: [karma, nonce]
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@74b568e8591fbb3115c70f3436a0c6b0909a8504
+        uses: step-security/harden-runner@2e205a28d0e1da00c5f53b161f4067b052c61f34
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
       - name: Checkout
-        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
+        uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
 
       - name: Setup Node
-        uses: actions/setup-node@2fddd8803e2f5c9604345a0b591c3020ee971a93
+        uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516
         with:
           node-version-file: '.nvmrc'
           cache: npm

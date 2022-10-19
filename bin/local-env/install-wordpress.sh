@@ -56,10 +56,13 @@ fi
 echo -e $(status_message "Installing WordPress...")
 wp core install --title="$SITE_TITLE" --admin_user=admin --admin_password=password --admin_email=test@test.com --skip-email --url=http://localhost:$HOST_PORT --quiet
 
+# Potentially update WordPress
 if [ "$WP_VERSION" == "latest" ]; then
-	# Potentially update WordPress
-	echo -e $(status_message "Updating WordPress")
+	echo -e $(status_message "Updating WordPress to the latest major")
 	wp core update --force --quiet
+else
+  echo -e $(status_message "Updating WordPress to the latest minor")
+  wp core update --minor --force --quiet
 fi
 
 # Create additional users.
@@ -143,7 +146,7 @@ echo -e $(status_message "Installing WordPress importer...")
 wp plugin install wordpress-importer --activate --force --quiet
 
 # Only install woocommerce on latest version of WordPress.
-if [ "$WP_VERSION" == "latest" ]; then
+if [ "$WP_VERSION" == "latest" ] || [ "$WP_VERSION" == "6.1-RC2" ]; then
 	echo -e $(status_message "Installing WooCommerce plugin...")
 	wp plugin install woocommerce --activate --force --quiet
 fi
@@ -230,7 +233,7 @@ wp post list --post_type=attachment --format=yaml
 wp plugin list --format=yaml
 
 # Only install woocommerce on latest version of WordPress.
-if [ "$WP_VERSION" == "latest" ]; then
+if [ "$WP_VERSION" == "latest" ] || [ "$WP_VERSION" == "6.1-RC2" ]; then
 	echo -e $(status_message "Import sample woocommerce products...")
 	wp import /var/www/html/wp-content/plugins/woocommerce/sample-data/sample_products.xml --authors=skip --quiet
 	# deactivate test etc... can activate as needed

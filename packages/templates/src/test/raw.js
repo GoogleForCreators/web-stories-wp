@@ -117,7 +117,16 @@ describe('raw template files', () => {
       for (const page of templateData.pages) {
         expect(page).toStrictEqual(
           expect.objectContaining({
-            pageTemplateType: expect.any(String),
+            pageTemplateType: expect.toBeOneOf([
+              null,
+              'cover',
+              'editorial',
+              'list',
+              'quote',
+              'section',
+              'table',
+              'steps',
+            ]),
           })
         );
       }
@@ -199,8 +208,8 @@ describe('raw template files', () => {
         /* webpackChunkName: "chunk-web-stories-template-[index]-metaData" */ `../raw/${template}/metaData`
       );
 
-      expect(isValid(new Date(metaData.creationDate))).toBe(true);
-      expect(isValid(new Date(templateData.creationDate))).toBe(true);
+      expect(isValid(new Date(metaData.creationDate))).toBeTrue();
+      expect(isValid(new Date(templateData.creationDate))).toBeTrue();
     });
 
     it('should contain fonts from global fonts list', () => {

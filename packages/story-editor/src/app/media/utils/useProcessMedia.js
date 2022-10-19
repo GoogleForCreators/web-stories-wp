@@ -22,12 +22,15 @@ import {
   fetchRemoteFile,
   isAnimatedGif,
 } from '@googleforcreators/media';
+import { DANGER_ZONE_HEIGHT } from '@googleforcreators/units';
+import { trackError } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies
  */
 import useAPI from '../../api/useAPI';
 import useStory from '../../story/useStory';
+import useFFmpeg from './useFFmpeg';
 import useMediaInfo from './useMediaInfo';
 
 function useProcessMedia({
@@ -39,6 +42,9 @@ function useProcessMedia({
   const {
     actions: { getOptimizedMediaById, getMutedMediaById },
   } = useAPI();
+
+  const { segmentVideo: ffSegmentVideo } = useFFmpeg();
+
   const { updateElementsByResourceId, updateElementById } = useStory(
     (state) => ({
       updateElementsByResourceId: state.actions.updateElementsByResourceId,
@@ -304,6 +310,7 @@ function useProcessMedia({
           additionalData: {
             originalId: resourceId,
             isMuted,
+            trimData,
             mediaSource: isOptimized ? 'video-optimization' : 'editor',
           },
           elementId,
@@ -478,11 +485,131 @@ function useProcessMedia({
     ]
   );
 
+  /**
+   * Crop video using FFmpeg.
+   *
+   * @param {import('@googleforcreators/media').Resource} resource Resource object.
+   * @param {Object<{newWidth: number, newHeight: number, cropElement: Element}>} cropParams Crop params.
+   */
+  const cropExistingVideo = useCallback(
+    ({ id: elementId, resource: oldResource }, cropParams) => {
+      const { id: resourceId, ...oldResourceWithoutId } = oldResource;
+      const { src: url, mimeType, isOptimized } = oldResource;
+      const { newWidth, newHeight, cropElement } = cropParams;
+
+      const onUploadError = () => {
+        updateExistingElementsByResourceId(resourceId, {
+          height: oldResource.height,
+          width: oldResource.width,
+        });
+      };
+
+      // TODO: Confirm which properties exactly need to be updated.
+      const onUploadProgress = ({ resource }) => {
+        const oldResourceWithId = { ...resource, id: oldResource.id };
+        updateExistingElementsByResourceId(resourceId, {
+          ...oldResourceWithId,
+        });
+      };
+
+      const onUploadSuccess = ({ id, resource }) => {
+        copyResourceData({ oldResource, resource });
+        updateElementById({
+          elementId,
+          properties: {
+            x: cropElement.x < 0 ? 0 : cropElement.x,
+            y:
+              cropElement.y < DANGER_ZONE_HEIGHT
+                ? -DANGER_ZONE_HEIGHT
+                : cropElement.y,
+            width: newWidth,
+            height: newHeight,
+            resource,
+          },
+        });
+
+        // onUploadSuccess is also called with previousResourceId,
+        // for which we don't need to run this.
+        if (id === resource.id) {
+          postProcessingResource(resource);
+        }
+      };
+
+      const process = async () => {
+        let file = false;
+        try {
+          file = await fetchRemoteFile(url, mimeType);
+          await uploadMedia([file], {
+            onUploadSuccess,
+            onUploadProgress,
+            onUploadError,
+            cropVideo: true,
+            additionalData: {
+              original_id: resourceId,
+              cropOriginId: resourceId,
+              cropParams,
+              mediaSource: isOptimized ? 'video-optimization' : 'editor',
+            },
+            originalResourceId: resourceId,
+            resource: {
+              ...oldResourceWithoutId,
+              width: newWidth,
+              height: newHeight,
+            },
+          });
+        } catch (e) {
+          trackError('crop_existing_video', e.message);
+          return;
+        }
+      };
+      return process();
+    },
+    [
+      updateElementById,
+      copyResourceData,
+      postProcessingResource,
+      uploadMedia,
+      updateExistingElementsByResourceId,
+    ]
+  );
+
+  /**
+   * Segment video using FFmpeg.
+   *
+   * @param {import('@googleforcreators/media').Resource} resource Resource object.
+   * @param {Function} onUploadSuccess Callback for when upload finishes.
+   * @return {string|null} Batch ID of the uploaded files on success, null otherwise.
+   */
+  const segmentVideo = useCallback(
+    async ({ resource, segmentTime }, onUploadSuccess) => {
+      try {
+        const { src: url, mimeType } = resource;
+        const segmentedFiles = await ffSegmentVideo(
+          await fetchRemoteFile(url, mimeType),
+          segmentTime,
+          resource.length
+        );
+
+        return await uploadMedia(segmentedFiles, {
+          onUploadSuccess: onUploadSuccess,
+        });
+      } catch (err) {
+        // eslint-disable-next-line no-console -- surface this error
+        console.log(err.message);
+        trackError('segment_video', err.message);
+        return null;
+      }
+    },
+    [uploadMedia, ffSegmentVideo]
+  );
+
   return {
     optimizeVideo,
     optimizeGif,
     muteExistingVideo,
     trimExistingVideo,
+    cropExistingVideo,
+    segmentVideo,
   };
 }
 

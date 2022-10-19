@@ -13,6 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * External dependencies
+ */
+import { waitFor } from '@testing-library/react';
+
 /**
  * Internal dependencies
  */
@@ -26,11 +32,15 @@ describe('Video Design Menu: Keyboard Navigation', () => {
 
   beforeEach(async () => {
     fixture = new Fixture();
-    fixture.setFlags({ floatingMenu: true });
     await fixture.render();
     await fixture.collapseHelpCenter();
-
-    focusContainer = fixture.screen.getByTestId('canvas-focus-container');
+    await fixture.showFloatingMenu();
+    await waitFor(() => {
+      focusContainer = fixture.screen.getByTestId('canvas-focus-container');
+      if (!focusContainer) {
+        throw new Error('Canvas container not ready');
+      }
+    });
   });
 
   afterEach(() => {
@@ -54,6 +64,9 @@ describe('Video Design Menu: Keyboard Navigation', () => {
       20,
       20
     );
+
+    // Escape out of the canvas elements focus trap
+    await fixture.events.keyboard.press('esc');
 
     await tabToCanvasFocusContainer(focusContainer, fixture);
     await fixture.events.keyboard.press('Enter');
@@ -132,6 +145,10 @@ describe('Video Design Menu: Keyboard Navigation', () => {
     await fixture.events.keyboard.press('ArrowRight');
 
     expect(document.activeElement.getAttribute('title')).toBe('More');
+
+    // Arrow right to Menu settings
+    await fixture.events.keyboard.press('ArrowRight');
+    expect(document.activeElement.getAttribute('title')).toBe('Menu settings');
 
     // Arrow right to Dismiss menu button
     await fixture.events.keyboard.press('ArrowRight');

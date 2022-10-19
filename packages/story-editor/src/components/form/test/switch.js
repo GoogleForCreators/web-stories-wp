@@ -48,8 +48,8 @@ describe('Switch', () => {
     const offLabelEl = screen.getByText(offLabel);
     const offLabelRadio = screen.getByRole('radio', { name: offLabel });
 
-    expect(onLabelRadio.checked).toBe(true);
-    expect(offLabelRadio.checked).toBe(false);
+    expect(onLabelRadio.checked).toBeTrue();
+    expect(offLabelRadio.checked).toBeFalse();
 
     fireEvent.click(onLabelEl);
 
@@ -57,7 +57,7 @@ describe('Switch', () => {
 
     fireEvent.click(offLabelEl);
 
-    expect(onChange).toHaveBeenCalledTimes(1);
+    expect(onChange).toHaveBeenCalledOnce();
     expect(onChange).toHaveBeenCalledWith(expect.any(Object), false);
   });
 
