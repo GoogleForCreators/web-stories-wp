@@ -131,8 +131,7 @@ const TabElement = styled.li.attrs(({ isActive }) => ({
     color: ${({ theme }) => theme.colors.fg.primary};
   }
 
-  &:focus-visible,
-  &[data-focus-visible-added] {
+  &:focus-visible {
     svg:not(.alert) {
       background-color: ${({ theme }) =>
         theme.colors.interactiveBg.tertiaryHover};

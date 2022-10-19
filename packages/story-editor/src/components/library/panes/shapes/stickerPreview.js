@@ -44,13 +44,11 @@ const StickerButton = styled(Button).attrs({
   height: 60px;
   background-color: ${({ theme }) => theme.colors.interactiveBg.previewOverlay};
 
-  &:focus-visible,
-  &[data-focus-visible-added] [role='presentation'] {
+  &:focus-visible {
     box-shadow: none;
   }
 
-  &:focus-visible [role='presentation'],
-  &[data-focus-visible-added] [role='presentation'] {
+  &:focus-visible [role='presentation'] {
     ${({ theme }) =>
       themeHelpers.focusCSS(
         theme.colors.border.focus,

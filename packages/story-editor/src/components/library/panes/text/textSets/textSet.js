@@ -60,8 +60,7 @@ const TextSetItem = styled.button`
   transition: background-color ${BUTTON_TRANSITION_TIMING};
   outline: none;
 
-  &:focus-visible [role='presentation'],
-  &[data-focus-visible-added] [role='presentation'] {
+  &:focus-visible [role='presentation'] {
     ${({ theme }) =>
       themeHelpers.focusCSS(
         theme.colors.border.focus,

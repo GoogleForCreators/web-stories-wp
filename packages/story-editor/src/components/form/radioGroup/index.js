@@ -33,7 +33,7 @@ const VisuallyHiddenLabel = styled.h3`
 
 const StyledRadio = styled(Radio)`
   input:focus + span,
-  input&:focus-visible + span {
+  input:focus-visible + span {
     ${({ theme }) =>
       `box-shadow: 0px 0px 0 2px ${theme.colors.bg.secondary}, 0px 0px 0 4px ${theme.colors.border.focus} !important;`};
   }

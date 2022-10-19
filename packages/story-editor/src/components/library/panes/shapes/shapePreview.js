@@ -53,8 +53,7 @@ const Aspect = styled.button`
   border-radius: ${({ theme }) => theme.borders.radius.small};
   background-color: ${({ theme }) => theme.colors.interactiveBg.previewOverlay};
 
-  &:focus-visible [role='presentation'],
-  &[data-focus-visible-added] [role='presentation'] {
+  &:focus-visible [role='presentation'] {
     ${({ theme }) =>
       themeHelpers.focusCSS(
         theme.colors.border.focus,

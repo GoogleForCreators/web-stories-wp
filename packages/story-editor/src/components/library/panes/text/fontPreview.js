@@ -67,8 +67,7 @@ const Preview = styled.button`
 
   ${({ isTextSelected }) => (isTextSelected ? focusStyle : 'outline: none;')}
 
-  &:focus-visible [role='presentation'],
-    &[data-focus-visible-added] [role='presentation'] {
+  &:focus-visible [role='presentation'] {
     ${({ theme }) =>
       themeHelpers.focusCSS(
         theme.colors.border.focus,
