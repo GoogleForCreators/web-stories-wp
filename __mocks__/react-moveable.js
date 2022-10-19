@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { forwardRef } from 'preact/compat';
+import { forwardRef } from 'react';
 
 // eslint-disable-next-line no-unused-vars
 export const MockMoveable = jest.fn((props, ref) => <div />);

@@ -28,7 +28,11 @@
     "pretty": true,
     "sourceMap": true,
     "typeRoots": ["./typings", "./node_modules/@types"],
-    "types": []
+    "types": [],
+    "paths": {
+      "react": ["./node_modules/preact/compat/"],
+      "react-dom": ["./node_modules/preact/compat/"]
+    }
   },
   "exclude": [
     "packages/*/dist-*/**",

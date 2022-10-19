@@ -15,6 +15,12 @@
  */
 
 /**
+ * External dependencies
+ */
+// Must be the first import.
+import 'preact/devtools'; // eslint-disable-line import/no-extraneous-dependencies -- False positive.
+
+/**
  * Internal dependencies
  */
 // The __webpack_public_path__ assignment will be done after the imports.

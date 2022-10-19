@@ -32,6 +32,10 @@ export default {
     '\\.svg': join(__dirname, '/svgrMock.js'),
     '\\.css': join(__dirname, '/styleMock.js'),
     '\\.png': join(__dirname, '/imageMock.js'),
+    '^react$': 'preact/compat',
+    '^react-dom/test-utils$': 'preact/test-utils',
+    '^react-dom$': 'preact/compat',
+    '^react/jsx-runtime$': 'preact/jsx-runtime',
   },
   setupFiles: [
     '<rootDir>/tests/js/setup-globals',

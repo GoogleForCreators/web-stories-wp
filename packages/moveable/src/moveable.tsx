@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { forwardRef } from '@googleforcreators/react';
-import OriginalMoveable from 'preact-moveable';
+import OriginalMoveable from 'react-moveable';
 import type { MoveableProps, MoveableDefaultOptions } from 'react-moveable';
 import type { ForwardedRef, MouseEventHandler } from 'react';
 
