@@ -23,12 +23,13 @@ import { trackClick } from '@googleforcreators/tracking';
 /**
  * WordPress dependencies
  */
-import { createInterpolateElement, useCallback } from '@wordpress/element';
 import { __, _x } from '@wordpress/i18n';
+import { useCallback, createInterpolateElement } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
+import type { MouseEventHandler, MouseEvent } from 'react';
 import { useConfig } from '../config';
 
 import Paragraph from './paragraph';
@@ -38,74 +39,58 @@ import Image from './image';
 
 const Wrapper = styled.div`
   display: none;
-  min-width: 300px;
+  margin-left: 30px;
   justify-content: center;
 
-  @media ${({ theme }) => theme.breakpoint.tabletSmall} {
+  @media ${({ theme }) => theme.breakpoint.desktop} {
     display: flex;
   }
 `;
 
 const ParagraphWrapper = styled.div`
   align-self: flex-start;
-  margin: 20px 0 0 70px;
-  text-align: right;
-  min-width: 100px;
-
-  @media ${({ theme }) => theme.breakpoint.desktop} {
-    margin-left: 30px;
-  }
+  margin: 20px 0 0 -50px;
 `;
 
-function Step1() {
-  const { demoStoryURL } = useConfig();
+function Step3() {
+  const { newStoryURL } = useConfig();
 
-  const onClick = useCallback((evt) => {
-    trackClick(evt, 'open_demo_story');
-  }, []);
+  const onClick: MouseEventHandler<HTMLAnchorElement> = useCallback(
+    (event: MouseEvent<HTMLAnchorElement>) => {
+      void trackClick(event, 'open_story_editor');
+    },
+    []
+  );
 
   // createInterpolateElement doesn't support br tags.
   const translatedString = createInterpolateElement(
-    __('Read the <a>Get Started story</a>', 'web-stories'),
+    __('Jump into the <a>Editor</a>', 'web-stories'),
     {
-      a: (
-        <Link
-          href={demoStoryURL}
-          onClick={onClick}
-          target="_blank"
-          rel="noreferrer"
-        />
-      ),
+      a: <Link href={newStoryURL} onClick={onClick} />,
     }
   );
 
   return (
     <Wrapper>
-      <Link
-        href={demoStoryURL}
-        onClick={onClick}
-        target="_blank"
-        rel="noreferrer"
-      >
+      <Link href={newStoryURL} onClick={onClick}>
         <Image
-          name="tips.png"
-          name2x="tips-2x.png"
-          width={150}
-          height={245}
-          $marginTop={60}
+          name="editor.png"
+          name2x="editor-2x.png"
+          width={430}
+          height={251}
         />
       </Link>
       <ParagraphWrapper>
         <Number>
           {
             /* translators: Number of the step displayed in plugin activation message. */
-            _x('1', 'Step number', 'web-stories')
+            _x('3', 'Step number', 'web-stories')
           }
         </Number>
-        <Paragraph $secondary>{translatedString}</Paragraph>
+        <Paragraph>{translatedString}</Paragraph>
       </ParagraphWrapper>
     </Wrapper>
   );
 }
 
-export default Step1;
+export default Step3;

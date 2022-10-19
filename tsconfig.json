@@ -1,5 +1,6 @@
 {
   "references": [
+    { "path": "packages/activation-notice" },
     { "path": "packages/fonts" },
     { "path": "packages/i18n" },
     { "path": "packages/media" },
@@ -10,6 +11,7 @@
     { "path": "packages/rich-text" },
     { "path": "packages/stickers" },
     { "path": "packages/templates" },
+    { "path": "packages/text-sets" },
     { "path": "packages/tracking" },
     { "path": "packages/transform" },
     { "path": "packages/types" },

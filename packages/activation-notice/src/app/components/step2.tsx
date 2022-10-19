@@ -19,6 +19,7 @@
  */
 import styled from 'styled-components';
 import { trackClick } from '@googleforcreators/tracking';
+import type { MouseEventHandler, MouseEvent } from 'react';
 
 /**
  * WordPress dependencies
@@ -55,9 +56,12 @@ const ParagraphWrapper = styled.div`
 function Step2() {
   const { dashboardURL } = useConfig();
 
-  const onClick = useCallback((evt) => {
-    trackClick(evt, 'open_dashboard');
-  }, []);
+  const onClick: MouseEventHandler<HTMLAnchorElement> = useCallback(
+    (evt: MouseEvent<HTMLAnchorElement>) => {
+      void trackClick(evt, 'open_dashboard');
+    },
+    []
+  );
 
   // createInterpolateElement doesn't support br tags.
   const translatedString = createInterpolateElement(
@@ -75,7 +79,6 @@ function Step2() {
           name2x="dashboard-2x.png"
           width={420}
           height={246}
-          $marginTop={60}
         />
       </Link>
       <ParagraphWrapper>
