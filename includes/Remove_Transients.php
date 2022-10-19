@@ -1,6 +1,6 @@
 <?php
 /**
- * Uninstaller class.
+ * Remove Transients class.
  *
  * @link      https://github.com/googleforcreators/web-stories-wp
  *
@@ -30,7 +30,7 @@ use Google\Web_Stories\Infrastructure\PluginUninstallAware;
 use Google\Web_Stories\Infrastructure\Service;
 
 /**
- * Uninstaller class.
+ * Remove Transients class.
  */
 class Remove_Transients implements Service, PluginUninstallAware {
 	protected const PREFIX = 'web_stories\_%';
