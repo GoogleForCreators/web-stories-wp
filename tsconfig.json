@@ -10,6 +10,7 @@
     { "path": "packages/rich-text" },
     { "path": "packages/stickers" },
     { "path": "packages/templates" },
+    { "path": "packages/text-sets" },
     { "path": "packages/tracking" },
     { "path": "packages/transform" },
     { "path": "packages/types" },
