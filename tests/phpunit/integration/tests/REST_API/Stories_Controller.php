@@ -567,6 +567,10 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 	 * @covers \Google\Web_Stories\REST_API\Stories_Base_Controller::prepare_links
 	 */
 	public function test_get_item_with_featured_image_in_admin(): void {
+		global $content_width;
+
+		$_content_width            = $content_width;
+		$content_width             = 400;
 		$GLOBALS['current_screen'] = convert_to_screen( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
 		wp_set_current_user( self::$user_id );
 
@@ -592,6 +596,8 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 		$data     = $response->get_data();
 
 		wp_delete_attachment( $attachment_id, true );
+
+		$content_width = $_content_width;
 
 		$this->assertArrayHasKey( 'story_poster', $data );
 		$this->assertSame( Image_Sizes::POSTER_PORTRAIT_IMAGE_DIMENSIONS[0], $attachment_src[1] );
