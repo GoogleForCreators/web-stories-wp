@@ -33,7 +33,9 @@
   "exclude": [
     "packages/*/dist-*/**",
     "packages/*/dist/**",
+    "**/karma/**",
+    "**/stories/**",
     "**/test/**",
-    "**/karma/**"
+    "**/testUtils/**"
   ]
 }
