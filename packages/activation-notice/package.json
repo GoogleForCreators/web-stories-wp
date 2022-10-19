@@ -24,14 +24,14 @@
     "node": ">= 12 || >= 14 || >= 16",
     "npm": ">= 7.3"
   },
-  "main": "./src/index.js",
+  "main": "./src/index.tsx",
+  "types": "dist-types/index.d.ts",
   "dependencies": {
     "@googleforcreators/tracking": "*",
     "@wordpress/element": "^4.15.0",
     "@wordpress/i18n": "^4.17.0",
     "flagged": "^2.0.6",
     "polished": "^4.2.2",
-    "prop-types": "^15.8.1",
     "styled-components": "^5.3.6",
     "stylis-plugin-rtl": "^1.0.0"
   },
