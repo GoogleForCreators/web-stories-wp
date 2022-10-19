@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig.shared.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "declarationDir": "dist-types"
+  },
+  "references": [{ "path": "../tracking" }],
+  "include": ["src/**/*"],
+  "exclude": ["src/stories", "**/test/**", "src/testUtils"]
+}
