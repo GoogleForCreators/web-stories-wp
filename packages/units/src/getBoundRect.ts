@@ -23,8 +23,8 @@ import type { ElementBox } from '@googleforcreators/types';
  * Internal dependencies
  */
 import { dataPixels } from './dimensions';
-import type { Coordinates, Corners } from "./types";
-import { Corner } from "./types";
+import type { Coordinates, Corners } from './types';
+import { Corner } from './types';
 
 /**
  * Get the outer frame values for all objects in `list`,

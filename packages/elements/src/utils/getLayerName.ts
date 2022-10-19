@@ -43,7 +43,7 @@ function canBeBackground(
  */
 function getLayerName(element: Element) {
   if (element.layerName) {
-    return element.layerName as string;
+    return element.layerName;
   }
 
   if (canBeBackground(element) && element.isBackground) {

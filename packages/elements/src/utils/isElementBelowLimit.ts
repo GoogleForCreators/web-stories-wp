@@ -35,7 +35,7 @@ function isElementBelowLimit(element: Element, verifyLink = true) {
   const points = getCorners(rotationAngle, x, y, width, height);
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment -- See below.
   // @ts-ignore
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access -- TODO: Fix.
+
   return Object.keys(points).some((point: Corner) => points[point].y > limit);
 }
 export default isElementBelowLimit;
