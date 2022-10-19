@@ -18,9 +18,9 @@
  * External dependencies
  */
 import { StyleSheetManager, ThemeProvider } from 'styled-components';
+import type { StylisPlugin } from 'styled-components';
 import stylisRTLPlugin from 'stylis-plugin-rtl';
 Object.defineProperty(stylisRTLPlugin, 'name', { value: 'stylisRTLPlugin' });
-import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
@@ -28,12 +28,19 @@ import PropTypes from 'prop-types';
 import { theme, GlobalStyle } from '../theme';
 import MessageContent from './components/messageContent';
 import { ConfigProvider } from './config';
+import type { ContextState } from './config/context';
 
-function App({ config }) {
+interface AppProps {
+  config: ContextState;
+}
+
+function App({ config }: AppProps) {
   const { isRTL } = config;
 
   return (
-    <StyleSheetManager stylisPlugins={isRTL ? [stylisRTLPlugin] : []}>
+    <StyleSheetManager
+      stylisPlugins={isRTL ? [stylisRTLPlugin as unknown as StylisPlugin] : []}
+    >
       <ThemeProvider theme={theme}>
         <ConfigProvider config={config}>
           <GlobalStyle />
@@ -43,9 +50,5 @@ function App({ config }) {
     </StyleSheetManager>
   );
 }
-
-App.propTypes = {
-  config: PropTypes.object.isRequired,
-};
 
 export default App;

@@ -1,5 +1,6 @@
 {
   "references": [
+    { "path": "packages/activation-notice" },
     { "path": "packages/elements" },
     { "path": "packages/fonts" },
     { "path": "packages/i18n" },

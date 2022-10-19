@@ -17,15 +17,22 @@
 /**
  * WordPress dependencies
  */
-import { useContext } from '@wordpress/element';
+import { useEffect } from '@wordpress/element';
 
 /**
- * Internal dependencies
+ * Renders a Dismiss button as required/used by WordPress.
+ *
+ * Does not actually *render* the button itself, but emits an event so that
+ * WordPress detects the notice and registers a click handler.
+ *
+ * @return Rendered component.
  */
-import Context from './context';
+function Dismiss() {
+  useEffect(() => {
+    document.dispatchEvent(new Event('wp-updates-notice-added'));
+  }, []);
 
-function useConfig() {
-  return useContext(Context);
+  return null;
 }
 
-export default useConfig;
+export default Dismiss;
