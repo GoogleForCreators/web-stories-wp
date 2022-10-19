@@ -30,13 +30,14 @@ import {
  * Internal dependencies
  */
 import Tooltip from '../../tooltip';
+import { Z_INDEX_TIME_PICKER_TOOLTIP } from '../../../constants/zIndex';
 
 const Wrapper = styled.div`
   white-space: nowrap;
 `;
 
 const StyledText = styled(Text)`
-  color: ${({ theme }) => theme.colors.fg.disable};
+  color: ${({ theme }) => theme.colors.fg.tertiary};
   line-height: 30px;
 `;
 
@@ -65,7 +66,12 @@ function TimeZone() {
 
   return (
     <Wrapper>
-      <Tooltip hasTail title={tooltip} placement={PLACEMENT.TOP}>
+      <Tooltip
+        hasTail
+        title={tooltip}
+        placement={PLACEMENT.TOP}
+        popupZIndexOverride={Z_INDEX_TIME_PICKER_TOOLTIP}
+      >
         <StyledText
           forwardedAs="span"
           size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}

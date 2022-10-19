@@ -18,8 +18,14 @@
  * External dependencies
  */
 import { migrate } from '@googleforcreators/migration';
+import type { Element } from '@googleforcreators/types';
+/**
+ * Internal dependencies
+ */
+import type { MinMax, TextSetData, TextSet, TextSets } from './types';
+import { TextSetType } from './types';
 
-function updateMinMax(minMax, element) {
+function updateMinMax(minMax: MinMax, element: Element): MinMax {
   // Purposely mutating object so passed
   // in minMax is modified
   minMax.minX = Math.min(minMax.minX, element.x);
@@ -31,13 +37,12 @@ function updateMinMax(minMax, element) {
   return minMax;
 }
 
-async function loadTextSet(name) {
-  const data = await import(
+async function loadTextSet(name: string) {
+  const data: TextSetData = (await import(
     /* webpackChunkName: "chunk-web-stories-textset-[index]" */ `./raw/${name}.json`
-  );
-  const migrated = migrate(data.default, data.default.version);
-
-  return migrated.pages.reduce((sets, page) => {
+  )) as TextSetData;
+  const migrated = migrate(data, data.version) as TextSetData;
+  return migrated.pages.reduce((sets: TextSet[], page) => {
     const minMax = {
       minX: Infinity,
       maxX: 0,
@@ -45,9 +50,8 @@ async function loadTextSet(name) {
       maxY: 0,
     };
 
-    const textElements = page.elements.filter((element) => {
-      return !element.isBackground && Boolean(updateMinMax(minMax, element));
-    });
+    const textElements = page.elements.filter(({ type }) => type === 'text');
+    textElements.forEach((element) => updateMinMax(minMax, element));
 
     return [
       ...sets,
@@ -72,22 +76,13 @@ async function loadTextSet(name) {
 }
 
 export default async function loadTextSets() {
-  const textSets = [
-    'cover',
-    'step',
-    'section_header',
-    'editorial',
-    'contact',
-    'table',
-    'list',
-    'quote',
-  ];
+  const textSets: TextSets = {} as TextSets;
 
-  const results = await Promise.all(
-    textSets.map(async (name) => {
-      return [name, await loadTextSet(name)];
+  await Promise.all(
+    Object.values(TextSetType).map(async (name) => {
+      textSets[name] = await loadTextSet(name);
     })
   );
 
-  return Object.fromEntries(results);
+  return textSets;
 }
