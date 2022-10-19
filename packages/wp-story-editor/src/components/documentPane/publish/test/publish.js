@@ -209,7 +209,7 @@ describe('PublishPanel', () => {
     fireEvent.click(element);
     const hours = screen.getByLabelText('Hours');
     const minutes = screen.getByLabelText('Minutes');
-    const am = screen.getByRole('button', { name: 'AM' });
+    const am = screen.getByRole('radio', { name: 'AM' });
 
     await waitFor(() => expect(minutes).toBeDefined());
     expect(hours).toBeInTheDocument();
