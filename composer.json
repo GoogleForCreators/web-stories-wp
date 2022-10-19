@@ -30,7 +30,6 @@
     "roave/security-advisories": "dev-latest",
     "sirbrillig/phpcs-variable-analysis": "^2.8",
     "slevomat/coding-standard": "^8.0.0",
-    "sniccowp/php-scoper-wordpress-excludes": "^6.0",
     "szepeviktor/phpstan-wordpress": "^v1.1.3",
     "wp-coding-standards/wpcs": "^2.3",
     "yoast/wp-test-utils": "^1.0.0"
@@ -91,6 +90,14 @@
         "path": "vendor/bin/php-scoper",
         "type": "phar",
         "url": "https://github.com/humbug/php-scoper/releases/download/0.17.2/php-scoper.phar"
+      },
+      "php-scoper-wordpress-excludes": {
+        "ignore": [
+          ".github"
+        ],
+        "path": "vendor/sniccowp/php-scoper-wordpress-excludes",
+        "type": "archive",
+        "url": "https://github.com/snicco/php-scoper-wordpress-excludes/archive/refs/tags/6.0.1.zip"
       }
     },
     "enable-patching": true,
