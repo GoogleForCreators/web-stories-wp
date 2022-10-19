@@ -19,4 +19,14 @@
  */
 import { createContext } from '@wordpress/element';
 
-export default createContext({ api: {} });
+export const INITIAL_STATE = {};
+
+export interface ContextState {
+  isRTL: boolean;
+  cdnURL: string;
+  demoStoryURL: string;
+  newStoryURL: string;
+  dashboardURL: string;
+}
+
+export default createContext(INITIAL_STATE);
