@@ -20,7 +20,18 @@
 import type { ElementType, Element } from '@googleforcreators/types';
 import type { FunctionComponent } from 'react';
 
-export interface ElementDefinition {
+interface BaseDefinition {
+  type: string;
+  name: string;
+  defaultAttributes: Record<string, unknown>;
+}
+
+export interface PageElementDefinition extends BaseDefinition {
+  type: 'page';
+  defaultAttributes: Record<string, never>;
+}
+
+export interface ElementDefinition extends BaseDefinition {
   type: ElementType;
   name: string;
   defaultAttributes: Record<string, unknown>;
@@ -28,13 +39,17 @@ export interface ElementDefinition {
   Edit: FunctionComponent;
   Frame: FunctionComponent;
   Output: FunctionComponent;
+  TextContent: FunctionComponent;
   canFlip: boolean;
   isMedia: boolean;
   isMaskable: boolean;
+  isAspectAlwaysLocked: boolean;
   hasDesignMenu: boolean;
   hasDuplicateMenu: boolean;
   hasEditMode: boolean;
   hasEditModeIfLocked: boolean;
+  hasEditModeMoveable: boolean;
+  editModeGrayout: boolean;
   resizeRules: {
     vertical: boolean;
     horizontal: boolean;
@@ -42,14 +57,18 @@ export interface ElementDefinition {
     minWidth: number;
     minHeight: number;
   };
+  panels: string[];
   getLayerText: (element: Element) => string;
+  onDropHandler?: (dropTargetId: string) => void;
 }
+
+export type ElementTypeDefinition = PageElementDefinition | ElementDefinition;
 
 // @todo Create a custom hook to manage state.
 
-const elementTypes: Record<string, ElementDefinition> = {};
+const elementTypes: Record<string, ElementTypeDefinition> = {};
 
-function registerElementType(elementType: ElementDefinition) {
+function registerElementType(elementType: ElementTypeDefinition) {
   elementTypes[elementType.type] = elementType;
 }
 
