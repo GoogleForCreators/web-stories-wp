@@ -44,7 +44,7 @@ function CorsCheck() {
 
   const isDialogDismissed = Boolean(localStore.getItemByKey(storageKey));
   useEffect(() => {
-     const save = async () => {
+    const save = async () => {
       if (isDialogDismissed) {
         return;
       }
@@ -69,7 +69,7 @@ function CorsCheck() {
         setShowDialog(true);
         void trackError('cors_check', err.message);
       }
-    }
+    };
     void save();
     // eslint-disable-next-line react-hooks/exhaustive-deps -- Only run this effect once, so do not pass dependencies.
   }, []);
