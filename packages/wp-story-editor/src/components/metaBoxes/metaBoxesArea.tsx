@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { useEffect, useRef } from '@googleforcreators/react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { rgba } from 'polished';
 import { useStory } from '@googleforcreators/story-editor';
@@ -106,15 +105,19 @@ const Spinner = styled.div`
   z-index: 1;
 `;
 
+interface MetaBoxesArea {
+  location: string;
+}
+
 /**
  * Component for displaying a single meta box.
  *
  * @see https://github.com/WordPress/gutenberg/blob/78585d6935fee9020017d17383cef597b67c5703/packages/edit-post/src/components/meta-boxes/meta-boxes-area/index.js
- * @param {Object} props Component props.
- * @param {string} props.location Location name.
- * @return {*} Element.
+ * @param props Component props.
+ * @param props.location Location name.
+ * @return Element.
  */
-function MetaBoxesArea({ location }) {
+function MetaBoxesArea({ location }: MetaBoxesArea) {
   const formRef = useRef();
   const containerRef = useRef();
 
@@ -145,9 +148,5 @@ function MetaBoxesArea({ location }) {
     </Wrapper>
   );
 }
-
-MetaBoxesArea.propTypes = {
-  location: PropTypes.string.isRequired,
-};
 
 export default MetaBoxesArea;

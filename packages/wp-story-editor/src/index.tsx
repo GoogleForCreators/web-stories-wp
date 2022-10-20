@@ -60,16 +60,16 @@ import {
 import * as apiCallbacks from './api';
 import { transformStoryResponse } from './api/utils';
 import { TIPS, TOOLBAR_HEIGHT, MENU_FOLDED_WIDTH } from './constants';
-import { GlobalStyle } from './theme.js';
+import { GlobalStyle } from './theme';
 
 window.webStories = window.webStories || {};
 
 /**
  * Initializes the web stories editor.
  *
- * @param {string} id           ID of the root element to render the screen in.
- * @param {Object} config       Story editor settings.
- * @param {Object} initialEdits Initial edits.
+ * @param id           ID of the root element to render the screen in.
+ * @param config       Story editor settings.
+ * @param initialEdits Initial edits.
  */
 window.webStories.initializeStoryEditor = (id, config, initialEdits) => {
   const appElement = document.getElementById(id);

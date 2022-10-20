@@ -16,7 +16,6 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import { TranslateWithMarkup, __ } from '@googleforcreators/i18n';
 import { trackClick, trackEvent } from '@googleforcreators/tracking';
 import styled from 'styled-components';
@@ -38,6 +37,7 @@ import {
   FontPicker,
 } from '@googleforcreators/story-editor';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '@googleforcreators/elements';
+import { MouseEvent } from 'react';
 
 const DialogContent = styled.div`
   display: grid;
@@ -73,13 +73,19 @@ const ActionsWrap = styled.div`
   align-self: flex-end;
   width: 100%;
 `;
+interface FontCheckDialogProps {
+  isOpen: boolean;
+  defaultCloseAction?: (evt: MouseEvent<HTMLAnchorElement>) => void;
+  closeDialog: () => void;
+  missingFont: string;
+}
 
 export const FontCheckDialog = ({
   isOpen,
   defaultCloseAction,
   missingFont,
   closeDialog,
-}) => {
+}: FontCheckDialogProps) => {
   const { dashboardLink, dashboardSettingsLink, isRTL } = useConfig();
   const [suggestedFont, setSuggestedFont] = useState(TEXT_ELEMENT_DEFAULT_FONT);
   const { updateElementsByFontFamily } = useStory(({ actions }) => ({
@@ -87,10 +93,11 @@ export const FontCheckDialog = ({
   }));
 
   const onClose = useCallback(
-    (evt) => {
+    (evt: MouseEvent<HTMLAnchorElement>) => {
       trackEvent('font_check_cancel');
-
-      defaultCloseAction(evt);
+      if (defaultCloseAction) {
+        defaultCloseAction(evt);
+      }
     },
     [defaultCloseAction]
   );
@@ -190,11 +197,4 @@ export const FontCheckDialog = ({
       </DialogContent>
     </Dialog>
   );
-};
-
-FontCheckDialog.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
-  defaultCloseAction: PropTypes.func,
-  closeDialog: PropTypes.func.isRequired,
-  missingFont: PropTypes.string.isRequired,
 };

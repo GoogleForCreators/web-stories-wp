@@ -32,7 +32,6 @@ import { CircularProgress } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
-import PropTypes from 'prop-types';
 import useMetaBoxes from '../../metaBoxes/useMetaBoxes';
 
 const ButtonList = styled.nav`
@@ -65,7 +64,12 @@ function Loading() {
   );
 }
 
-function DraftButtons({ forceIsSaving, hasUpdates }) {
+interface DraftButtonsProps {
+  forceIsSaving: boolean;
+  hasUpdates: boolean;
+}
+
+function DraftButtons({ forceIsSaving, hasUpdates }: DraftButtonsProps) {
   return (
     <>
       <UpdateButton hasUpdates={hasUpdates} forceIsSaving={forceIsSaving} />
@@ -74,12 +78,17 @@ function DraftButtons({ forceIsSaving, hasUpdates }) {
   );
 }
 
-DraftButtons.propTypes = {
-  forceIsSaving: PropTypes.bool.isRequired,
-  hasUpdates: PropTypes.bool.isRequired,
-};
+interface PendingButtonsProps {
+  forceIsSaving: boolean;
+  hasUpdates: boolean;
+  canPublish: boolean;
+}
 
-function PendingButtons({ forceIsSaving, hasUpdates, canPublish }) {
+function PendingButtons({
+  forceIsSaving,
+  hasUpdates,
+  canPublish,
+}: PendingButtonsProps) {
   return (
     <>
       <SwitchToDraftButton forceIsSaving={forceIsSaving} />
@@ -91,13 +100,12 @@ function PendingButtons({ forceIsSaving, hasUpdates, canPublish }) {
   );
 }
 
-PendingButtons.propTypes = {
-  forceIsSaving: PropTypes.bool.isRequired,
-  hasUpdates: PropTypes.bool.isRequired,
-  canPublish: PropTypes.bool.isRequired,
-};
+interface PublishedButtons {
+  forceIsSaving: boolean;
+  hasUpdates: boolean;
+}
 
-function PublishedButtons({ forceIsSaving, hasUpdates }) {
+function PublishedButtons({ forceIsSaving, hasUpdates }: PublishedButtons) {
   return (
     <>
       <SwitchToDraftButton forceIsSaving={forceIsSaving} />
@@ -105,11 +113,6 @@ function PublishedButtons({ forceIsSaving, hasUpdates }) {
     </>
   );
 }
-
-PublishedButtons.propTypes = {
-  forceIsSaving: PropTypes.bool.isRequired,
-  hasUpdates: PropTypes.bool.isRequired,
-};
 
 function Buttons() {
   const { status, canPublish, isSaving } = useStory(

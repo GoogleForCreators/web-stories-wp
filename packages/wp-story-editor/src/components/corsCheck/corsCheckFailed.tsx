@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import { useCallback } from '@googleforcreators/react';
 import { __, TranslateWithMarkup } from '@googleforcreators/i18n';
 import { trackClick } from '@googleforcreators/tracking';
@@ -27,7 +26,12 @@ import { Dialog } from '@googleforcreators/story-editor';
 const DOCS_URL =
   'https://wp.stories.google/docs/troubleshooting/common-issues/';
 
-function CorsCheckFailed({ isOpen, onClose }) {
+interface CorsCheckFailed {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+function CorsCheckFailed({ isOpen, onClose }: CorsCheckFailed) {
   const onDocsClick = useCallback((evt) => {
     trackClick(evt, 'click_cors_check_docs');
   }, []);
@@ -64,10 +68,5 @@ function CorsCheckFailed({ isOpen, onClose }) {
     </Dialog>
   );
 }
-
-CorsCheckFailed.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
-  onClose: PropTypes.func.isRequired,
-};
 
 export default CorsCheckFailed;

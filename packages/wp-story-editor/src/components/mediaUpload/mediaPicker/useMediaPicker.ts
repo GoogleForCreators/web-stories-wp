@@ -22,11 +22,11 @@ import { __ } from '@googleforcreators/i18n';
 import { trackEvent } from '@googleforcreators/tracking';
 import { useSnackbar } from '@googleforcreators/design-system';
 import { useConfig, useAPI } from '@googleforcreators/story-editor';
-import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
+import { useMediaPickerProps } from '../types';
 import {
   calculateImageSelectOptions,
   mustBeCropped,
@@ -54,7 +54,7 @@ const defaultCropParams = {
  * @param props.type Media type(s).
  * @param props.multiple Whether multi-selection should be allowed.
  * @param props.cropParams Object params for cropped images.
- * @return {Function} Callback to open the media picker.
+ * @return Callback to open the media picker.
  */
 function useMediaPicker({
   title = __('Upload to Story', 'web-stories'),
@@ -66,7 +66,7 @@ function useMediaPicker({
   type = '',
   multiple = false,
   cropParams,
-}) {
+}: useMediaPickerProps): () => void {
   const {
     actions: { updateMedia },
   } = useAPI();
@@ -299,20 +299,5 @@ function useMediaPicker({
     return cropParams ? openCropper : openMediaDialog;
   }, [cropParams, openCropper, openMediaDialog]);
 }
-
-useMediaPicker.propTypes = {
-  title: PropTypes.string,
-  buttonInsertText: PropTypes.string,
-  onSelect: PropTypes.func.isRequired,
-  onSelectErrorMessage: PropTypes.string,
-  onClose: PropTypes.func,
-  onPermissionError: PropTypes.func,
-  type: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.arrayOf(PropTypes.string),
-  ]),
-  cropParams: PropTypes.object,
-  multiple: PropTypes.bool,
-};
 
 export default useMediaPicker;

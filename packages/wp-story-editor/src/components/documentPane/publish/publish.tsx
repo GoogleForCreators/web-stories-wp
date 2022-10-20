@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import {
   useState,
   useEffect,
@@ -140,7 +139,11 @@ const LabelIconWrapper = styled.div`
   margin-left: -5px;
 `;
 
-function PublishPanel({ nameOverride }) {
+interface PublishPanelProps {
+  nameOverride: string;
+}
+
+function PublishPanel({ nameOverride }: PublishPanelProps) {
   const {
     state: { users },
   } = useSidebar();
@@ -211,8 +214,8 @@ function PublishPanel({ nameOverride }) {
     /**
      * Handle story poster change.
      *
-     * @param {import('@googleforcreators/media').Resource} newPoster The new image.
-     * @return {void}
+     * @param newPoster The new image.
+     * @return
      */
     (newPoster) => {
       return updateStory({
@@ -482,7 +485,3 @@ function PublishPanel({ nameOverride }) {
 }
 
 export default PublishPanel;
-
-PublishPanel.propTypes = {
-  nameOverride: PropTypes.string,
-};

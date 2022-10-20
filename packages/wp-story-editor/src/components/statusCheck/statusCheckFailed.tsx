@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import { useCallback } from '@googleforcreators/react';
 import { __, TranslateWithMarkup } from '@googleforcreators/i18n';
 import { trackClick } from '@googleforcreators/tracking';
@@ -29,7 +28,12 @@ const SUPPORT_URL = __(
   'web-stories'
 );
 
-function StatusCheckFailed({ isOpen, onClose }) {
+interface StatusCheckFailedProps {
+  isOpen: bool;
+  onClose: () => void;
+}
+
+function StatusCheckFailed({ isOpen, onClose }: StatusCheckFailedProps) {
   const onSupportClick = useCallback((evt) => {
     trackClick(evt, 'click_support_page');
   }, []);
@@ -66,10 +70,5 @@ function StatusCheckFailed({ isOpen, onClose }) {
     </Dialog>
   );
 }
-
-StatusCheckFailed.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
-  onClose: PropTypes.func.isRequired,
-};
 
 export default StatusCheckFailed;

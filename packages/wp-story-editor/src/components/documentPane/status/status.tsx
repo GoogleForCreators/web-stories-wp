@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import {
   useCallback,
   useEffect,
@@ -81,13 +80,20 @@ const RenderItemOverride = forwardRef(
   )
 );
 
+interface StatusPanel {
+  nameOverride: string;
+  popupZIndex: number;
+  canCollapse: boolean;
+  isPersistable: boolean;
+}
+
 function StatusPanel({
   nameOverride,
   popupZIndex,
   canCollapse,
   isPersistable,
   ...rest
-}) {
+}: StatusPanel) {
   const {
     status = '',
     password,
@@ -284,10 +290,3 @@ function StatusPanel({
 }
 
 export default StatusPanel;
-
-StatusPanel.propTypes = {
-  nameOverride: PropTypes.string,
-  popupZIndex: PropTypes.number,
-  canCollapse: PropTypes.bool,
-  isPersistable: PropTypes.bool,
-};

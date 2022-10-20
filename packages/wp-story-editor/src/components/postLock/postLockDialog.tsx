@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { __, sprintf } from '@googleforcreators/i18n';
-import PropTypes from 'prop-types';
 import {
   Button,
   BUTTON_SIZES,
@@ -38,15 +37,24 @@ import {
   Avatar,
 } from './shared';
 
+interface PostLockDialogProp {
+  isOpen: boolean;
+  showTakeOver?: boolean;
+  user?: object;
+  dashboardLink: string;
+  previewLink?: string;
+  onClose: () => void;
+}
+
 /**
- * @param {Object} props Component props.
- * @param {boolean} props.isOpen If open or not.
- * @param {Object} props.user Lock owner's user data as a object.
- * @param {string} props.dashboardLink Link to dashboard.
- * @param {string} props.previewLink Preview link.
- * @param {Function} props.onClose Function when dialog is closed.
- * @param {boolean} props.showTakeOver Weather or not to show take over button.
- * @return {*} Render.
+ * @param props Component props.
+ * @param props.isOpen If open or not.
+ * @param props.user Lock owner's user data as a object.
+ * @param props.dashboardLink Link to dashboard.
+ * @param props.previewLink Preview link.
+ * @param props.onClose Function when dialog is closed.
+ * @param props.showTakeOver Weather or not to show take over button.
+ * @return Render.
  */
 function PostLockDialog({
   isOpen,
@@ -55,7 +63,7 @@ function PostLockDialog({
   dashboardLink,
   previewLink,
   showTakeOver = false,
-}) {
+}: PostLockDialogProp) {
   return (
     <Dialog
       isOpen={isOpen}
@@ -147,14 +155,5 @@ function PostLockDialog({
     </Dialog>
   );
 }
-
-PostLockDialog.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
-  showTakeOver: PropTypes.bool,
-  user: PropTypes.object,
-  dashboardLink: PropTypes.string.isRequired,
-  previewLink: PropTypes.string,
-  onClose: PropTypes.func.isRequired,
-};
 
 export default PostLockDialog;

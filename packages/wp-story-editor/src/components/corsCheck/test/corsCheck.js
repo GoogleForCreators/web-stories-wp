@@ -33,7 +33,7 @@ import { renderWithTheme } from '@googleforcreators/test-utils';
 /**
  * Internal dependencies
  */
-import CorsCheck from '../corsCheck.js';
+import CorsCheck from '../corsCheck';
 
 const getMediaForCorsCheck = jest.fn();
 

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
+import type { ReactNode } from 'react';
 import { useCallback, useMemo, useState } from '@googleforcreators/react';
 import { useConfig } from '@googleforcreators/story-editor';
 
@@ -26,7 +26,11 @@ import { useConfig } from '@googleforcreators/story-editor';
  */
 import Context from './context';
 
-function MetaBoxesProvider({ children }) {
+interface MetaBoxesProviderProp {
+  children: ReactNode;
+}
+
+function MetaBoxesProvider({ children }: MetaBoxesProviderProp) {
   const { metaBoxes = {} } = useConfig();
 
   const [metaBoxesVisible, setMetaBoxesVisible] = useState(false);
@@ -69,9 +73,5 @@ function MetaBoxesProvider({ children }) {
 
   return <Context.Provider value={state}>{children}</Context.Provider>;
 }
-
-MetaBoxesProvider.propTypes = {
-  children: PropTypes.node,
-};
 
 export default MetaBoxesProvider;

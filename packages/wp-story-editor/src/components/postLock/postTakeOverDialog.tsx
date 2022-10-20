@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { __, sprintf } from '@googleforcreators/i18n';
-import PropTypes from 'prop-types';
 import {
   Button,
   BUTTON_SIZES,
@@ -39,14 +38,22 @@ import {
   Avatar,
 } from './shared';
 
+interface PostTakeOverDialogProps {
+  isOpen: bool;
+  user?: object;
+  dashboardLink: string;
+  previewLink: string;
+  onClose: () => void;
+}
+
 /**
- * @param {Object} props Component props.
- * @param {boolean} props.isOpen If open or not.
- * @param {Object} props.user Lock owner's user data as a object.
- * @param {string} props.dashboardLink Link to dashboard.
- * @param {string} props.previewLink Preview link.
- * @param {Function} props.onClose Function when dialog is closed.
- * @return {*} Render.
+ * @param props Component props.
+ * @param props.isOpen If open or not.
+ * @param props.user Lock owner's user data as a object.
+ * @param props.dashboardLink Link to dashboard.
+ * @param props.previewLink Preview link.
+ * @param props.onClose Function when dialog is closed.
+ * @return Render.
  */
 function PostTakeOverDialog({
   isOpen,
@@ -54,7 +61,7 @@ function PostTakeOverDialog({
   dashboardLink,
   previewLink,
   onClose,
-}) {
+}: PostTakeOverDialogProps) {
   return (
     <Dialog
       isOpen={isOpen}
@@ -118,13 +125,5 @@ function PostTakeOverDialog({
     </Dialog>
   );
 }
-
-PostTakeOverDialog.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
-  user: PropTypes.object,
-  dashboardLink: PropTypes.string.isRequired,
-  previewLink: PropTypes.string.isRequired,
-  onClose: PropTypes.func.isRequired,
-};
 
 export default PostTakeOverDialog;

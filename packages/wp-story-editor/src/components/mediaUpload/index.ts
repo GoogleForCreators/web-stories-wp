@@ -14,24 +14,15 @@
  * limitations under the License.
  */
 /**
- * External dependencies
- */
-import PropTypes from 'prop-types';
-
-/**
  * Internal dependencies
  */
 import { useMediaPicker } from './mediaPicker';
+import type { MediaUploadProps } from './types';
 
-function MediaUpload({ render, ...rest }) {
+function MediaUpload({ render, ...rest }: MediaUploadProps) {
   const open = useMediaPicker(rest);
 
   return render(open);
 }
-
-MediaUpload.propTypes = {
-  render: PropTypes.func.isRequired,
-  ...useMediaPicker.propTypes,
-};
 
 export default MediaUpload;

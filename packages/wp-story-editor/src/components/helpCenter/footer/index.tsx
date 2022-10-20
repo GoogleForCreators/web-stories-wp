@@ -16,7 +16,6 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
 import { useCallback } from '@googleforcreators/react';
@@ -27,6 +26,7 @@ import {
   THEME_CONSTANTS,
   Text,
 } from '@googleforcreators/design-system';
+import type { ReactNode } from 'react';
 
 const Panel = styled.div`
   padding: 16px 0 24px 0;
@@ -53,7 +53,11 @@ const ListItem = styled.li`
   }
 `;
 
-function Link({ children, ...props }) {
+interface LinkPros {
+  children: ReactNode;
+}
+
+function Link({ children, ...props }: LinkPros) {
   return (
     <ListItem>
       <DsLink {...props} size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
@@ -62,10 +66,6 @@ function Link({ children, ...props }) {
     </ListItem>
   );
 }
-
-Link.propTypes = {
-  children: PropTypes.node,
-};
 
 const SUPPORT_URL = __(
   'https://wordpress.org/support/plugin/web-stories/',

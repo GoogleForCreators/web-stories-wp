@@ -24,7 +24,7 @@ import {
   useRef,
   useState,
 } from '@googleforcreators/react';
-import { useFeatures } from 'flagged';
+import { useFeature } from 'flagged';
 import { trackError } from '@googleforcreators/tracking';
 import {
   useStory,
@@ -73,7 +73,7 @@ function PostLock() {
     })
   );
 
-  const { enablePostLockingTakeOver } = useFeatures();
+  const enablePostLockingTakeOver = useFeature('enablePostLockingTakeOver');
   const [isFirstTime, setIsFirstTime] = useState(true);
   const [user, setUser] = useState({});
   const [nonce, setNonce] = useState(firstNonce);
