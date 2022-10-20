@@ -98,6 +98,7 @@ function loadStory(storyId, post, restore, clearHistory) {
   const story = {
     storyId: storyId,
     title,
+    fonts: storyData?.fonts,
     status,
     author,
     date,
