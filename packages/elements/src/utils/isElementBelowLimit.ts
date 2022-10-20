@@ -18,7 +18,7 @@
  * External dependencies
  */
 import {
-  Corner,
+  Corners,
   DANGER_ZONE_HEIGHT,
   FULLBLEED_HEIGHT,
   getCorners,
@@ -33,9 +33,10 @@ function isElementBelowLimit(element: Element, verifyLink = true) {
   const limit = FULLBLEED_HEIGHT * 0.8 - DANGER_ZONE_HEIGHT;
   const { x, y, width, height, rotationAngle } = element;
   const points = getCorners(rotationAngle, x, y, width, height);
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment -- See below.
-  // @ts-ignore
-
-  return Object.keys(points).some((point: Corner) => points[point].y > limit);
+  return (Object.keys(points) as Array<Extract<keyof Corners, Corners>>).some(
+    (point) => {
+      return (points[point] as typeof points[keyof typeof points]).y > limit;
+    }
+  );
 }
 export default isElementBelowLimit;
