@@ -95,6 +95,8 @@ function PlaybackMedia() {
     [setVideoNode]
   );
 
+  const selfieSegmentation = useRef();
+
   const onSelfieSegmentationResults = (results) => {
     const canvas = canvasRef.current;
     if (!canvas || !results.image || results.image.width === 0) {
@@ -144,23 +146,31 @@ function PlaybackMedia() {
   };
 
   useEffect(() => {
-    async function run() {
+    if (!hasVideoEffect || selfieSegmentation.current) {
+      return;
+    }
+
+    (async () => {
       const { SelfieSegmentation } = await import(
         /* webpackChunkName: "chunk-selfie-segmentation" */ '@mediapipe/selfie_segmentation'
       );
 
-      const selfieSegmentation = new SelfieSegmentation({
+      selfieSegmentation.current = new SelfieSegmentation({
         // TODO: Consider fetching from wp.stories.google instead.
         locateFile: (file) =>
           `https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/${file}`,
       });
 
-      selfieSegmentation.setOptions({
+      selfieSegmentation.current.setOptions({
         modelSelection: 1,
       });
 
-      await selfieSegmentation.initialize();
+      await selfieSegmentation.current.initialize();
+    })();
+  }, [hasVideoEffect]);
 
+  useEffect(() => {
+    async function run() {
       if (hasVideoEffect && canvasRef.current) {
         canvasRef.current.getContext('2d');
         setCanvasNode(canvasRef.current);
@@ -171,17 +181,12 @@ function PlaybackMedia() {
         }
         setCanvasStream(canvasStreamRaw);
       }
-      if (videoEffect === VIDEO_EFFECTS.BLUR) {
-        selfieSegmentation.onResults(onSelfieSegmentationResults);
+      if (videoEffect === VIDEO_EFFECTS.BLUR && selfieSegmentation.current) {
+        selfieSegmentation.current.onResults(onSelfieSegmentationResults);
         const sendFrame = async () => {
-          if (
-            streamNode &&
-            streamNode.videoWidth &&
-            selfieSegmentation &&
-            canvasRef.current
-          ) {
+          if (streamNode && streamNode.videoWidth && canvasRef.current) {
             try {
-              await selfieSegmentation.send({ image: streamNode });
+              await selfieSegmentation.current.send({ image: streamNode });
             } catch (e) {
               // We can't do much about the WASM memory issue.
             }
@@ -197,6 +202,7 @@ function PlaybackMedia() {
     }
 
     run();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps -- including liveStream will cause freeze
   }, [videoEffect, hasVideoEffect, streamNode, setCanvasStream, setCanvasNode]);
 
