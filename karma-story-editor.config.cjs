@@ -149,7 +149,7 @@ module.exports = function (config) {
         snapshots: config.snapshots || false,
         snapshotsDir: '.test_artifacts/karma_snapshots',
         defaultViewport: getViewport(config.viewport),
-        args: config.headless ? undefined : ['--window-size=1600,1000']
+        args: config.headless ? undefined : ['--window-size=1600,1000'],
       },
     },
     client: {
