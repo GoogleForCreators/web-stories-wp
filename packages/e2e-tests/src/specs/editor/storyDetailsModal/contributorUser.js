@@ -20,25 +20,30 @@
 import {
   createNewStory,
   takeSnapshot,
+  trashAllPosts,
   withPlugin,
   withUser,
 } from '@web-stories-wp/e2e-test-utils';
 
 const IMAGE_URL_LOCAL = `${process.env.WP_BASE_URL}/wp-content/e2e-assets/example-3.png`;
 
+const openStoryDetailsModal = async () => {
+  await expect(page).toClick('button', { text: 'Submit for review' });
+  await expect(page).toMatchElement('div[aria-label="Story details"]');
+};
+
 jest.retryTimes(3, { logErrorsBeforeRetry: true });
 
 describe('Story Details Modal - Contributor User', () => {
   withPlugin('e2e-tests-hotlink');
 
-  const openStoryDetailsModal = async () => {
-    await expect(page).toClick('button', { text: 'Submit for review' });
-    await expect(page).toMatchElement('div[aria-label="Story details"]');
-  };
-
   beforeEach(async () => {
     await createNewStory();
     await openStoryDetailsModal();
+  });
+
+  afterAll(async () => {
+    await trashAllPosts('web-story');
   });
 
   withUser('contributor', 'password');

@@ -20,6 +20,7 @@
 import {
   createNewStory,
   takeSnapshot,
+  trashAllPosts,
   withPlugin,
 } from '@web-stories-wp/e2e-test-utils';
 /**
@@ -46,9 +47,11 @@ describe('CORS check', () => {
     );
   });
 
-  afterAll(() => {
+  afterAll(async () => {
     removeCORSErrorMessage();
     removeResourceErrorMessage();
+
+    await trashAllPosts('web-story');
   });
 
   it('should see media dialog', async () => {

@@ -24,6 +24,7 @@ import {
   createNewStory,
   insertStoryTitle,
   publishStory,
+  trashAllPosts,
 } from '@web-stories-wp/e2e-test-utils';
 
 const percyCSS = `.dashboard-grid-item-date { display: none; }`;
@@ -31,6 +32,10 @@ const percyCSS = `.dashboard-grid-item-date { display: none; }`;
 jest.retryTimes(3, { logErrorsBeforeRetry: true });
 
 describe('Stories Dashboard', () => {
+  afterAll(async () => {
+    await trashAllPosts('web-story');
+  });
+
   it('should be able to open the dashboard', async () => {
     await visitDashboard();
 

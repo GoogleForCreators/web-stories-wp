@@ -24,6 +24,7 @@ import {
   insertStoryTitle,
   withPlugin,
   visitSettings,
+  trashAllPosts,
 } from '@web-stories-wp/e2e-test-utils';
 
 jest.retryTimes(3, { logErrorsBeforeRetry: true });
@@ -43,6 +44,10 @@ describe('Site Kit plugin integration', () => {
     });
 
     describe('Editor', () => {
+      afterAll(async () => {
+        await trashAllPosts('web-story');
+      });
+
       it('should print an analytics tag', async () => {
         await createNewStory();
 

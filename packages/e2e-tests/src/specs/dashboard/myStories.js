@@ -22,17 +22,23 @@ import {
   publishStory,
   visitDashboard,
   insertStoryTitle,
+  trashAllPosts,
 } from '@web-stories-wp/e2e-test-utils';
+
+const storyName = 'Test Story';
 
 jest.retryTimes(3, { logErrorsBeforeRetry: true });
 
 describe('Stories Dashboard', () => {
-  const storyName = 'Test Story';
   beforeEach(async () => {
     await createNewStory();
     await insertStoryTitle(storyName);
     await publishStory();
     await visitDashboard();
+  });
+
+  afterAll(async () => {
+    await trashAllPosts('web-story');
   });
 
   it('should delete story', async () => {

@@ -25,6 +25,7 @@ import {
   createNewPost,
   setPostContent,
   takeSnapshot,
+  trashAllPosts,
 } from '@web-stories-wp/e2e-test-utils';
 
 /**
@@ -51,8 +52,10 @@ describe('Web Stories Block', () => {
     );
   });
 
-  afterAll(() => {
+  afterAll(async () => {
     removeErrorMessage();
+
+    await trashAllPosts();
   });
 
   it('should insert a new web stories block', async () => {

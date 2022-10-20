@@ -24,6 +24,7 @@ import {
   insertStoryTitle,
   withPlugin,
   createNewTerm,
+  trashAllPosts,
 } from '@web-stories-wp/e2e-test-utils';
 
 async function goToAndExpandTaxonomyPanel() {
@@ -121,6 +122,10 @@ describe('Taxonomies', () => {
     await createNewTerm('web_story_tag', 'adventure');
     await createNewTerm('web_story_tag', 'sci-fi');
     await createNewTerm('web_story_tag', 'comedy');
+  });
+
+  afterAll(async () => {
+    await trashAllPosts('web-story');
   });
 
   describe('Administrator', () => {

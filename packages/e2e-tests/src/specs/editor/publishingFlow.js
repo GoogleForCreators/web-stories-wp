@@ -25,6 +25,7 @@ import {
   getEditedPostContent,
   loadPostEditor,
   publishPost,
+  trashAllPosts,
 } from '@web-stories-wp/e2e-test-utils';
 
 /**
@@ -81,10 +82,13 @@ describe('Publishing Flow', () => {
     );
   });
 
-  afterAll(() => {
+  afterAll(async () => {
     removeCORSErrorMessage();
     removeResourceErrorMessage();
     removeAMPPreloadErrorMessage();
+
+    await trashAllPosts();
+    await trashAllPosts('web-story');
   });
 
   it('should guide me towards creating a new post to embed my story with poster', async () => {

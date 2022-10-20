@@ -26,6 +26,7 @@ import {
   activatePlugin,
   deactivatePlugin,
   takeSnapshot,
+  trashAllPosts,
 } from '@web-stories-wp/e2e-test-utils';
 
 const percyCSS = `.dashboard-grid-item-date { display: none; }`;
@@ -49,6 +50,7 @@ describe('Post Locking', () => {
 
   afterAll(async () => {
     await deactivatePlugin('e2e-tests-post-lock-mock');
+    await trashAllPosts('web-story');
   });
 
   it('should be able to open the dashboard with locked story', async () => {

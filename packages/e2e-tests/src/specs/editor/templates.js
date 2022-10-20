@@ -16,13 +16,21 @@
 /**
  * External dependencies
  */
-import { createNewStory, withPlugin } from '@web-stories-wp/e2e-test-utils';
+import {
+  createNewStory,
+  trashAllPosts,
+  withPlugin,
+} from '@web-stories-wp/e2e-test-utils';
 
 jest.retryTimes(3, { logErrorsBeforeRetry: true });
 
 describe('Templates', () => {
   describe('Disabled', () => {
     withPlugin('e2e-tests-disable-default-templates');
+
+    afterAll(async () => {
+      await trashAllPosts('web-story');
+    });
 
     it('should not render default templates', async () => {
       await createNewStory();

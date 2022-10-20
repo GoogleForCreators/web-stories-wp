@@ -78,6 +78,7 @@ describe('Stories Archive', () => {
     afterAll(async () => {
       await visitSettings();
       await changeStoriesArchivesType('Default');
+      await trashAllPosts();
       await trashAllPosts('page');
     });
 

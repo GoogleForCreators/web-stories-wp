@@ -25,6 +25,7 @@ import {
   withPlugin,
   insertStoryTitle,
   publishStory,
+  trashAllPosts,
 } from '@web-stories-wp/e2e-test-utils';
 
 const VTT_URL = `${process.env.WP_BASE_URL}/wp-content/e2e-assets/test.vtt`;
@@ -42,6 +43,10 @@ describe('Background Audio', () => {
       // eslint-disable-next-line no-await-in-loop
       await deleteMedia(file);
     }
+  });
+
+  afterAll(async () => {
+    await trashAllPosts('web-story');
   });
 
   describe('Story Background Audio', () => {

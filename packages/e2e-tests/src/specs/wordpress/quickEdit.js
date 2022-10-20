@@ -22,12 +22,17 @@ import {
   publishStory,
   withUser,
   visitAdminPage,
+  trashAllPosts,
 } from '@web-stories-wp/e2e-test-utils';
 
 jest.retryTimes(3, { logErrorsBeforeRetry: true });
 
 describe('Quick Edit', () => {
   withUser('author', 'password');
+
+  afterAll(async () => {
+    await trashAllPosts('web-story');
+  });
 
   it('should save story without breaking markup', async () => {
     await createNewStory();

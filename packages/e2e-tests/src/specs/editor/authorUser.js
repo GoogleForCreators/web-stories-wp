@@ -23,12 +23,17 @@ import {
   insertStoryTitle,
   withUser,
   publishStory,
+  trashAllPosts,
 } from '@web-stories-wp/e2e-test-utils';
 
 jest.retryTimes(3, { logErrorsBeforeRetry: true });
 
 describe('Author User', () => {
   withUser('author', 'password');
+
+  afterAll(async () => {
+    await trashAllPosts('web-story');
+  });
 
   it('should directly preview a story without markup being stripped', async () => {
     await createNewStory();
