@@ -14,5 +14,5 @@
  * limitations under the License.
  */
 export * from './tips';
-export * from './wpAdmin.js';
-export * from './status.js';
+export * from './wpAdmin';
+export * from './status';
