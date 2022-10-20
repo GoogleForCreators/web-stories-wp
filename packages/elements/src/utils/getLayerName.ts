@@ -27,6 +27,7 @@ import type {
 /**
  * Internal dependencies
  */
+import type { ElementDefinition } from '../elementType';
 import getDefinitionForType from './getDefinitionForType';
 
 function canBeBackground(
@@ -50,7 +51,9 @@ function getLayerName(element: Element) {
     return __('Background', 'web-stories');
   }
 
-  return getDefinitionForType(element.type).getLayerText(element);
+  return (getDefinitionForType(element.type) as ElementDefinition).getLayerText(
+    element
+  );
 }
 
 export default getLayerName;
