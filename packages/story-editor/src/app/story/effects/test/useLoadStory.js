@@ -29,6 +29,7 @@ import { createStory } from '../../../api/test/_utils';
 import useLoadStory from '../useLoadStory';
 import APIContext from '../../../api/context';
 import HistoryContext from '../../../history/context';
+import ConfigContext from '../../../config/context';
 
 const getStoryById = jest.fn();
 const clearHistory = jest.fn();
@@ -37,12 +38,18 @@ const apiContextValue = { actions: { getStoryById } };
 const historyContextValue = { actions: { clearHistory } };
 
 function ContextWrapper({ children }) {
+  const configValue = {
+    globalAutoAdvance: true,
+    globalPageDuration: 20,
+  };
   return (
-    <APIContext.Provider value={apiContextValue}>
-      <HistoryContext.Provider value={historyContextValue}>
-        {children}
-      </HistoryContext.Provider>
-    </APIContext.Provider>
+    <ConfigContext.Provider value={configValue}>
+      <APIContext.Provider value={apiContextValue}>
+        <HistoryContext.Provider value={historyContextValue}>
+          {children}
+        </HistoryContext.Provider>
+      </APIContext.Provider>
+    </ConfigContext.Provider>
   );
 }
 
@@ -176,6 +183,37 @@ describe('useLoadStory', () => {
           prefix: 'http://localhost:8899/web-stories/',
           suffix: '',
         },
+      })
+    );
+  });
+
+  it('should load story with global page advancement settings if undefined in story', async () => {
+    getStoryById.mockReturnValue(Promise.resolve(createStory()));
+
+    const restore = jest.fn();
+    await renderHook(
+      () =>
+        useLoadStory({
+          storyId: 11,
+          shouldLoad: true,
+          restore,
+        }),
+      { wrapper: ContextWrapper }
+    );
+
+    expect(restore.mock.calls[0][0].story).toStrictEqual(
+      expect.objectContaining({
+        storyId: 11,
+        title: 'title',
+        author: { id: 1, name: 'John Doe' },
+        excerpt: 'excerpt',
+        featuredMedia: { id: 0, height: 0, width: 0, url: '' },
+        permalinkConfig: {
+          prefix: 'http://localhost:8899/web-stories/',
+          suffix: '',
+        },
+        autoAdvance: true,
+        defaultPageDuration: 20,
       })
     );
   });

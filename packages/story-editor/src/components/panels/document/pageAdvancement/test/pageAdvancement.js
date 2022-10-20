@@ -24,7 +24,6 @@ import { renderWithTheme } from '@googleforcreators/test-utils';
  * Internal dependencies
  */
 import StoryContext from '../../../../../app/story/context';
-import ConfigContext from '../../../../../app/config/context';
 import PageAdvancementPanel from '../pageAdvancement';
 
 function arrange(configs = {}) {
@@ -41,17 +40,10 @@ function arrange(configs = {}) {
     actions: { updateStory },
   };
 
-  const configValue = {
-    globalAutoAdvance: true,
-    globalPageDuration: 20,
-  };
-
   renderWithTheme(
-    <ConfigContext.Provider value={configValue}>
-      <StoryContext.Provider value={storyContextValue}>
-        <PageAdvancementPanel />
-      </StoryContext.Provider>
-    </ConfigContext.Provider>
+    <StoryContext.Provider value={storyContextValue}>
+      <PageAdvancementPanel />
+    </StoryContext.Provider>
   );
 
   return {
@@ -71,12 +63,12 @@ describe('PageAdvancementPanel', () => {
     localStorage.clear();
   });
 
-  it('should render Page Advancement Panel with global settings if undefined in story', () => {
+  it('should render Page Advancement Panel with default settings if undefined in story', () => {
     arrange({ autoAdvance: undefined, defaultPageDuration: undefined });
     const durationInput = screen.getByLabelText(
       'Default page duration in seconds'
     );
-    expect(durationInput).toHaveValue('20 seconds');
+    expect(durationInput).toHaveValue('7 seconds');
   });
 
   it('should render Page Advancement Panel', () => {
