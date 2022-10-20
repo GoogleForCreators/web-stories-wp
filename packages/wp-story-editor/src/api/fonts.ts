@@ -23,6 +23,10 @@ import { addQueryArgs } from '@googleforcreators/url';
  * WordPress dependencies
  */
 import apiFetch from '@wordpress/api-fetch';
+/**
+ * Internal dependencies
+ */
+import type { Config } from '../types';
 
 /**
  * Assembles the `&include` query parameter.
@@ -41,7 +45,10 @@ function getIncludeQueryArgs(include = '') {
     .join('&');
 }
 
-export function getFonts(config, { include: _include, search, service }) {
+export function getFonts(
+  config: Config,
+  { include: _include, search, service }
+) {
   let path = addQueryArgs(`${config.api.fonts}`, {
     search,
     service,

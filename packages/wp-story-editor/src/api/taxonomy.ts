@@ -24,6 +24,10 @@ import { snakeToCamelCaseObjectKeys } from '@web-stories-wp/wp-utils';
  * WordPress dependencies
  */
 import apiFetch from '@wordpress/api-fetch';
+/**
+ * Internal dependencies
+ */
+import type { Config } from '../types';
 
 /**
  * Get all taxonomies.
@@ -31,7 +35,7 @@ import apiFetch from '@wordpress/api-fetch';
  * @param config Configuration object.
  * @return Taxonomies promise.
  */
-export async function getTaxonomies(config) {
+export async function getTaxonomies(config: Config) {
   const result = await apiFetch({
     path: addQueryArgs(config.api.taxonomies, {
       type: config.postType,
@@ -56,7 +60,7 @@ export async function getTaxonomies(config) {
  * @param args Additional args.
  * @return Term promise.
  */
-export function getTaxonomyTerm(config, endpoint, args = {}) {
+export function getTaxonomyTerm(config: Config, endpoint: string, args = {}) {
   return apiFetch({
     url: addQueryArgs(endpoint, args),
   });
@@ -72,7 +76,7 @@ export function getTaxonomyTerm(config, endpoint, args = {}) {
  * @param args.parent The parent id.
  * @return Term promise.
  */
-export function createTaxonomyTerm(config, endpoint, args) {
+export function createTaxonomyTerm(config: Config, endpoint: string, args) {
   return apiFetch({
     url: addQueryArgs(endpoint, args),
     method: 'POST',

@@ -31,7 +31,11 @@ import { base64Encode } from './utils';
  * @param encodeMarkup Encode markup
  * @return Result promise
  */
-export function getStatusCheck(content, statusCheck, encodeMarkup) {
+export function getStatusCheck(
+  content: string,
+  statusCheck: string,
+  encodeMarkup: boolean
+) {
   return apiFetch({
     path: statusCheck,
     data: { content: encodeMarkup ? base64Encode(content) : content },

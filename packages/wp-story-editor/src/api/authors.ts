@@ -24,7 +24,12 @@ import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@googleforcreators/url';
 import { snakeToCamelCaseObjectKeys } from '@web-stories-wp/wp-utils';
 
-export function getAuthors(config, search) {
+/**
+ * Internal dependencies
+ */
+import type { Config } from '../types';
+
+export function getAuthors(config: Config, search: string) {
   return apiFetch({
     path: addQueryArgs(config.api.users, {
       per_page: '100',

@@ -25,6 +25,11 @@ import { addQueryArgs } from '@googleforcreators/url';
 import apiFetch from '@wordpress/api-fetch';
 
 /**
+ * Internal dependencies
+ */
+import type { Config } from '../types';
+
+/**
  * Get products
  *
  * @param config Configuration object.
@@ -34,7 +39,13 @@ import apiFetch from '@wordpress/api-fetch';
  * @param order Sort attribute ascending or descending.
  * @return The response from the API.
  */
-export async function getProducts(config, search, page, orderby, order) {
+export async function getProducts(
+  config: Config,
+  search: string,
+  page: number,
+  orderby: string,
+  order: string
+) {
   const response = await apiFetch({
     path: addQueryArgs(config.api.products, {
       per_page: 50,

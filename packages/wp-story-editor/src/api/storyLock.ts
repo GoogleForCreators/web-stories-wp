@@ -23,7 +23,7 @@ import { addQueryArgs } from '@googleforcreators/url';
  */
 import apiFetch from '@wordpress/api-fetch';
 
-export function getStoryLockById(storyId, stories) {
+export function getStoryLockById(storyId: number, stories: string) {
   const path = addQueryArgs(`${stories}${storyId}/lock/`, {
     _embed: 'author',
   });
@@ -31,12 +31,16 @@ export function getStoryLockById(storyId, stories) {
   return apiFetch({ path });
 }
 
-export function setStoryLockById(storyId, stories) {
+export function setStoryLockById(storyId: number, stories: string) {
   const path = `${stories}${storyId}/lock/`;
   return apiFetch({ path, method: 'POST' });
 }
 
-export function deleteStoryLockById(storyId, nonce, storyLocking) {
+export function deleteStoryLockById(
+  storyId: number,
+  nonce: string,
+  storyLocking: string
+) {
   const data = new window.FormData();
   data.append('_wpnonce', nonce);
 

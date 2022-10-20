@@ -26,11 +26,15 @@ import apiFetch from '@wordpress/api-fetch';
 /**
  * Internal dependencies
  */
+import type { Config } from '../types';
 import { flattenFormData, getResourceFromAttachment } from './utils';
 import { MEDIA_FIELDS } from './constants';
 
 // Important: Keep in sync with REST API preloading definition.
-export function getMedia(config, { mediaType, searchTerm, pagingNum }) {
+export function getMedia(
+  config: Config,
+  { mediaType, searchTerm: string, pagingNum: number }
+) {
   let path = addQueryArgs(config.api.media, {
     context: 'view',
     per_page: 50,
@@ -58,7 +62,7 @@ export function getMedia(config, { mediaType, searchTerm, pagingNum }) {
 }
 
 // Important: Keep in sync with REST API preloading definition.
-export function getMediaForCorsCheck(config) {
+export function getMediaForCorsCheck(config: Config) {
   const path = addQueryArgs(config.api.media, {
     context: 'view',
     per_page: 10,
@@ -77,7 +81,7 @@ export function getMediaForCorsCheck(config) {
  * @param mediaId Media ID.
  * @return Media object promise.
  */
-export function getMediaById(config, mediaId) {
+export function getMediaById(config: Config, mediaId: string) {
   const path = addQueryArgs(`${config.api.media}${mediaId}/`, {
     context: 'view',
     _fields: MEDIA_FIELDS,
@@ -93,7 +97,7 @@ export function getMediaById(config, mediaId) {
  * @param mediaId Media ID.
  * @return Media resource if found, null otherwise.
  */
-export async function getMutedMediaById(config, mediaId) {
+export async function getMutedMediaById(config: Config, mediaId: string) {
   const path = addQueryArgs(`${config.api.media}${mediaId}/`, {
     context: 'view',
     _fields: 'meta.web_stories_muted_id',
@@ -115,7 +119,7 @@ export async function getMutedMediaById(config, mediaId) {
  * @param mediaId Media ID.
  * @return Media resource if found, null otherwise.
  */
-export async function getOptimizedMediaById(config, mediaId) {
+export async function getOptimizedMediaById(config: Config, mediaId: string) {
   const path = addQueryArgs(`${config.api.media}${mediaId}/`, {
     context: 'view',
     _fields: 'meta.web_stories_optimized_id',
@@ -137,7 +141,7 @@ export async function getOptimizedMediaById(config, mediaId) {
  * @param mediaId Media ID.
  * @return Media resource if found, null otherwise.
  */
-export async function getPosterMediaById(config, mediaId) {
+export async function getPosterMediaById(config: Config, mediaId: string) {
   const path = addQueryArgs(`${config.api.media}${mediaId}/`, {
     context: 'view',
     _fields: 'featured_media',
@@ -160,7 +164,7 @@ export async function getPosterMediaById(config, mediaId) {
  * @param additionalData Additional data to include in the request.
  * @return Media resource.
  */
-export function uploadMedia(config, file, additionalData) {
+export function uploadMedia(config: Config, file, additionalData) {
   const {
     originalId,
     mediaId,
@@ -232,7 +236,7 @@ export function uploadMedia(config, file, additionalData) {
  * @param data Object of properties to update on attachment.
  * @return Media Object Promise.
  */
-export function updateMedia(config, mediaId, data) {
+export function updateMedia(config: Config, mediaId: string, data) {
   const {
     baseColor,
     blurHash,
@@ -287,7 +291,7 @@ export function updateMedia(config, mediaId, data) {
  * @param mediaId Media id
  * @return
  */
-export function deleteMedia(config, mediaId) {
+export function deleteMedia(config: Config, mediaId: string) {
   // `apiFetch` by default turns `DELETE` requests into `POST` requests
   // with `X-HTTP-Method-Override: DELETE` headers.
   // However, some Web Application Firewall (WAF) solutions prevent this.

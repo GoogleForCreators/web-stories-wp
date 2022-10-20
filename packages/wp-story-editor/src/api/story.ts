@@ -28,10 +28,11 @@ import apiFetch from '@wordpress/api-fetch';
 /**
  * Internal dependencies
  */
+import type { Config } from '../types';
 import { STORY_EMBED, STORY_FIELDS } from './constants';
 import { base64Encode, transformStoryResponse } from './utils';
 
-export function getStoryById(config, storyId) {
+export function getStoryById(config: Config, storyId: number) {
   const path = addQueryArgs(`${config.api.stories}${storyId}/`, {
     context: 'edit',
     _embed: STORY_EMBED,
@@ -95,7 +96,7 @@ const getStorySaveData = (
  * @param story Story object.
  * @return Return apiFetch promise.
  */
-export function saveStoryById(config, story) {
+export function saveStoryById(config: Config, story) {
   const { storyId } = story;
   const storySaveData = getStorySaveData(story, config.encodeMarkup);
 
@@ -156,7 +157,7 @@ export function saveStoryById(config, story) {
  * @param story Story object.
  * @return Return apiFetch promise.
  */
-export function autoSaveById(config, story) {
+export function autoSaveById(config: Config, story) {
   const { storyId } = story;
   const storySaveData = getStorySaveData(story, config.encodeMarkup);
 

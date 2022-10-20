@@ -34,6 +34,16 @@ export interface Config {
     showLockedDialog: boolean;
   };
   api: {
+    currentUser: string;
+    taxonomies: string;
+    products: string;
+    proxy: string;
+    link: string;
+    pageTemplates: string;
+    fonts: string;
+    users: string;
+    hotlink: string;
+    media: string;
     stories: string;
     storyLocking: string;
     statusCheck: string;

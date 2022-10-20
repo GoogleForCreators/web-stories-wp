@@ -17,6 +17,10 @@
  * WordPress dependencies
  */
 import apiFetch from '@wordpress/api-fetch';
+/**
+ * Internal dependencies
+ */
+import type { Config } from '../types';
 
 function transformResponse(response) {
   return {
@@ -27,13 +31,13 @@ function transformResponse(response) {
   };
 }
 
-export function getCurrentUser(config) {
+export function getCurrentUser(config: Config) {
   return apiFetch({
     path: config.api.currentUser,
   }).then(transformResponse);
 }
 
-export function updateCurrentUser(config, data) {
+export function updateCurrentUser(config: Config, data) {
   const { trackingOptin, onboarding, mediaOptimization } = data;
 
   const wpKeysMapping = {

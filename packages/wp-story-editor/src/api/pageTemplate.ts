@@ -23,6 +23,10 @@ import { addQueryArgs } from '@googleforcreators/url';
  * WordPress dependencies
  */
 import apiFetch from '@wordpress/api-fetch';
+/**
+ * Internal dependencies
+ */
+import type { Config } from '../types';
 
 const TEMPLATE_FIELDS = [
   'id',
@@ -52,7 +56,7 @@ function transformResponse(template) {
   return { id: templateId, elements: [], ...story_data, templateId, image };
 }
 
-export function getCustomPageTemplates(config, page = 1) {
+export function getCustomPageTemplates(config: Config, page = 1) {
   const perPage = 100;
   const path = addQueryArgs(config.api.pageTemplates, {
     context: 'edit',
@@ -79,7 +83,7 @@ export function getCustomPageTemplates(config, page = 1) {
  * @param data Page template data.
  * @return Saved page template.
  */
-export function addPageTemplate(config, data) {
+export function addPageTemplate(config: Config, data) {
   return apiFetch({
     path: config.api.pageTemplates,
     data: {
@@ -98,7 +102,7 @@ export function addPageTemplate(config, data) {
  * @param data Page template data.
  * @return Saved page template.
  */
-export function updatePageTemplate(config, id, data) {
+export function updatePageTemplate(config: Config, id: number, data) {
   return apiFetch({
     path: `${config.api.pageTemplates}${id}/`,
     data: {
@@ -108,7 +112,7 @@ export function updatePageTemplate(config, id, data) {
   }).then(transformResponse);
 }
 
-export function deletePageTemplate(config, id) {
+export function deletePageTemplate(config: Config, id: number) {
   // `?_method=DELETE` is an alternative solution to override the request method.
   // See https://developer.wordpress.org/rest-api/using-the-rest-api/global-parameters/#_method-or-x-http-method-override-header
   return apiFetch({

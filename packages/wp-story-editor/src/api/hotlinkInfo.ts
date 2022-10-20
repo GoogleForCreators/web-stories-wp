@@ -25,7 +25,12 @@ import { snakeToCamelCaseObjectKeys } from '@web-stories-wp/wp-utils';
  */
 import apiFetch from '@wordpress/api-fetch';
 
-export function getHotlinkInfo(config, url) {
+/**
+ * Internal dependencies
+ */
+import type { Config } from '../types';
+
+export function getHotlinkInfo(config: Config, url: string) {
   const path = addQueryArgs(config.api.hotlink, { url });
   return apiFetch({
     path,

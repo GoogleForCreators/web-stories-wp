@@ -22,6 +22,10 @@ import { addQueryArgs } from '@googleforcreators/url';
  * WordPress dependencies
  */
 import apiFetch from '@wordpress/api-fetch';
+/**
+ * Internal dependencies
+ */
+import type { Config } from '../types';
 
 /**
  * Gets metadata (title, favicon, etc.) from
@@ -31,7 +35,7 @@ import apiFetch from '@wordpress/api-fetch';
  * @param url Url
  * @return Result promise
  */
-export function getLinkMetadata(config, url) {
+export function getLinkMetadata(config: Config, url: string) {
   const path = addQueryArgs(config.api.link, { url });
   return apiFetch({
     path,
