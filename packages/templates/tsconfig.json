@@ -5,8 +5,19 @@
     "declarationDir": "dist-types"
   },
   "references": [
+    { "path": "../i18n" },
     { "path": "../migration" },
-    { "path": "../react" }
+    { "path": "../tracking" },
+    { "path": "../types" }
   ],
-  "include": [ "src/**/*" ]
+  "include": ["src/**/*"],
+  "exclude": [
+    "packages/*/dist-*/**",
+    "packages/*/dist/**",
+    "**/karma/**",
+    "**/stories/**",
+    "**/test/**",
+    "**/testUtils/**",
+    "src/raw/**/template.json"
+  ]
 }

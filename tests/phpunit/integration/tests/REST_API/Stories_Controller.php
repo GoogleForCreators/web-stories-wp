@@ -533,22 +533,81 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 			]
 		);
 
-		$attachment_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg', 0 );
+		$attachment_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/paint.jpeg', 0 );
+		wp_maybe_generate_attachment_metadata( get_post( $attachment_id ) );
 		set_post_thumbnail( $story, $attachment_id );
 
-		$attachment_src = wp_get_attachment_image_src( $attachment_id, Image_Sizes::POSTER_PORTRAIT_IMAGE_SIZE );
+		$attachment_src = wp_get_attachment_image_src( $attachment_id, Image_Sizes::POSTER_PORTRAIT_IMAGE_DIMENSIONS );
 
 		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story/' . $story );
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
 
+		wp_delete_attachment( $attachment_id, true );
+
 		$this->assertArrayHasKey( 'story_poster', $data );
+		$this->assertSame( Image_Sizes::POSTER_PORTRAIT_IMAGE_DIMENSIONS[0], $attachment_src[1] );
+		$this->assertSame( Image_Sizes::POSTER_PORTRAIT_IMAGE_DIMENSIONS[1], $attachment_src[2] );
 		$this->assertEqualSetsWithIndex(
 			[
 				'id'         => $attachment_id,
 				'url'        => $attachment_src[0],
-				'height'     => $attachment_src[1],
-				'width'      => $attachment_src[2],
+				'width'      => $attachment_src[1],
+				'height'     => $attachment_src[2],
+				'needsProxy' => false,
+			],
+			$data['story_poster']
+		);
+	}
+
+
+	/**
+	 * @covers ::get_item
+	 * @covers ::get_story_poster
+	 * @covers \Google\Web_Stories\REST_API\Stories_Base_Controller::prepare_links
+	 */
+	public function test_get_item_with_featured_image_in_admin(): void {
+		global $content_width;
+
+		$_content_width            = $content_width;
+		$content_width             = 400;
+		$GLOBALS['current_screen'] = convert_to_screen( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
+		wp_set_current_user( self::$user_id );
+
+		$this->controller->register_routes();
+
+		$story = self::factory()->post->create(
+			[
+				'post_type'   => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_status' => 'future',
+				'post_date'   => ( new DateTime( '+1day' ) )->format( 'Y-m-d H:i:s' ),
+				'post_author' => self::$user_id,
+			]
+		);
+
+		$attachment_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/paint.jpeg', 0 );
+		wp_maybe_generate_attachment_metadata( get_post( $attachment_id ) );
+		set_post_thumbnail( $story, $attachment_id );
+
+		$attachment_src = wp_get_attachment_image_src( $attachment_id, Image_Sizes::POSTER_PORTRAIT_IMAGE_DIMENSIONS );
+
+		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story/' . $story );
+		$response = rest_get_server()->dispatch( $request );
+		$data     = $response->get_data();
+
+		wp_delete_attachment( $attachment_id, true );
+
+		$content_width = $_content_width;
+
+		$this->assertArrayHasKey( 'story_poster', $data );
+		$this->assertSame( Image_Sizes::POSTER_PORTRAIT_IMAGE_DIMENSIONS[0], $attachment_src[1] );
+		$this->assertSame( Image_Sizes::POSTER_PORTRAIT_IMAGE_DIMENSIONS[1], $attachment_src[2] );
+		$this->assertEqualSetsWithIndex(
+			[
+				'id'         => $attachment_id,
+				'url'        => $attachment_src[0],
+				'width'      => $attachment_src[1],
+				'height'     => $attachment_src[2],
 				'needsProxy' => false,
 			],
 			$data['story_poster']
@@ -620,10 +679,11 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 			]
 		);
 
-		$attachment_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg', 0 );
+		$attachment_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/paint.jpeg', 0 );
+		wp_maybe_generate_attachment_metadata( get_post( $attachment_id ) );
 		set_post_thumbnail( $story, $attachment_id );
 
-		$attachment_src = wp_get_attachment_image_src( $attachment_id, Image_Sizes::POSTER_PORTRAIT_IMAGE_SIZE );
+		$attachment_src = wp_get_attachment_image_src( $attachment_id, Image_Sizes::POSTER_PORTRAIT_IMAGE_DIMENSIONS );
 
 		add_post_meta(
 			$story,
@@ -640,13 +700,15 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
 
+		wp_delete_attachment( $attachment_id, true );
+
 		$this->assertArrayHasKey( 'story_poster', $data );
 		$this->assertEqualSetsWithIndex(
 			[
 				'id'         => $attachment_id,
 				'url'        => $attachment_src[0],
-				'height'     => $attachment_src[1],
-				'width'      => $attachment_src[2],
+				'width'      => $attachment_src[1],
+				'height'     => $attachment_src[2],
 				'needsProxy' => false,
 			],
 			$data['story_poster']
