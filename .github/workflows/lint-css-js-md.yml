@@ -93,6 +93,8 @@ jobs:
 
       - name: JS Lint
         run: npm run lint:js
+        env:
+          NODE_OPTIONS: --max-old-space-size=4096
         if: >
           github.event.pull_request.head.repo.fork == true ||
           github.event.pull_request.user.login == 'dependabot[bot]'
@@ -100,6 +102,8 @@ jobs:
       - name: JS Lint Report
         run: npm run lint:js:report
         continue-on-error: true
+        env:
+          NODE_OPTIONS: --max-old-space-size=4096
         # Prevent generating the ESLint report if PR is from a fork or authored by Dependabot.
         if: >
           github.event.pull_request.head.repo.fork == false &&
