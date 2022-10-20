@@ -66,7 +66,8 @@ import andadaFontToAndadaPro from './migrations/v0040_andadaFontToAndadaPro';
 import removeFontProperties from './migrations/v0041_removeFontProperties';
 import removeTrackName from './migrations/v0042_removeTrackName';
 import removeTagNames from './migrations/v0043_removeTagNames';
-import globalPageAdvancement from './migrations/v0044_globalPageAdvancement';
+import unusedProperties from './migrations/v0044_unusedProperties';
+import globalPageAdvancement from './migrations/v0045_globalPageAdvancement';
 
 type MigrationFn<T, S> = (storyData: T) => S;
 
@@ -116,7 +117,8 @@ const MIGRATIONS: Record<number, MigrationFn<any, any>[]> = { // eslint-disable-
   41: [removeFontProperties],
   42: [removeTrackName],
   43: [removeTagNames],
-  44: [globalPageAdvancement],
+  44: [unusedProperties],
+  45: [globalPageAdvancement],
 };
 
 export const DATA_VERSION = Math.max.apply(

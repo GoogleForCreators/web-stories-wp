@@ -18,42 +18,42 @@
  * Internal dependencies
  */
 import type {
-  GifElementV43,
-  ImageElementV43,
-  PageV43,
-  ProductElementV43,
-  ShapeElementV43,
-  StoryV43,
-  TextElementV43,
-  VideoElementV43,
-} from './v0043_removeTagNames';
+  GifElementV44,
+  ImageElementV44,
+  PageV44,
+  ProductElementV44,
+  ShapeElementV44,
+  StoryV44,
+  TextElementV44,
+  VideoElementV44,
+} from './v0044_unusedProperties';
 
-export type TextElementV44 = TextElementV43;
-export type ProductElementV44 = ProductElementV43;
-export type ShapeElementV44 = ShapeElementV43;
-export type ImageElementV44 = ImageElementV43;
-export type VideoElementV44 = VideoElementV43;
-export type GifElementV44 = GifElementV43;
+export type TextElementV45 = TextElementV44;
+export type ProductElementV45 = ProductElementV44;
+export type ShapeElementV45 = ShapeElementV44;
+export type ImageElementV45 = ImageElementV44;
+export type VideoElementV45 = VideoElementV44;
+export type GifElementV45 = GifElementV44;
 
-export type UnionElementV44 =
-  | ShapeElementV44
-  | ImageElementV44
-  | VideoElementV44
-  | GifElementV44
-  | TextElementV44
-  | ProductElementV44;
+export type UnionElementV45 =
+  | ShapeElementV45
+  | ImageElementV45
+  | VideoElementV45
+  | GifElementV45
+  | TextElementV45
+  | ProductElementV45;
 
-export interface StoryV44
-  extends Omit<StoryV43, 'pages' | 'autoAdvance' | 'defaultPageDuration'> {
-  pages: PageV44[];
+export interface StoryV45
+  extends Omit<StoryV44, 'pages' | 'autoAdvance' | 'defaultPageDuration'> {
+  pages: PageV45[];
   autoAdvance?: boolean;
   defaultPageDuration?: number;
 }
-export interface PageV44 extends Omit<PageV43, 'elements'> {
-  elements: UnionElementV44[];
+export interface PageV45 extends Omit<PageV44, 'elements'> {
+  elements: UnionElementV45[];
 }
 
-function pageAdvancement(story: StoryV43): StoryV44 {
+function pageAdvancement(story: StoryV44): StoryV45 {
   const { autoAdvance, defaultPageDuration, ...rest } = story;
   if (autoAdvance && defaultPageDuration === 7) {
     return rest;
