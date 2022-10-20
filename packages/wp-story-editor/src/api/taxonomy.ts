@@ -28,8 +28,8 @@ import apiFetch from '@wordpress/api-fetch';
 /**
  * Get all taxonomies.
  *
- * @param {Object} config Configuration object.
- * @return {Promise} Taxonomies promise.
+ * @param config Configuration object.
+ * @return Taxonomies promise.
  */
 export async function getTaxonomies(config) {
   const result = await apiFetch({
@@ -51,10 +51,10 @@ export async function getTaxonomies(config) {
 /**
  * Get a taxonomy term.
  *
- * @param {Object} config configuration object.
- * @param {string} endpoint absolute url to interact with taxonomy
- * @param {Object} args Additional args.
- * @return {Promise} Term promise.
+ * @param config configuration object.
+ * @param endpoint absolute url to interact with taxonomy
+ * @param args Additional args.
+ * @return Term promise.
  */
 export function getTaxonomyTerm(config, endpoint, args = {}) {
   return apiFetch({
@@ -65,12 +65,12 @@ export function getTaxonomyTerm(config, endpoint, args = {}) {
 /**
  * Create a new taxonomy term.
  *
- * @param {Object} config configuration object.
- * @param {string} endpoint absolute url to interact with taxonomy
- * @param {Object} args The args being sent.
- * @param {string} args.name The name.
- * @param {number|string} args.parent The parent id.
- * @return {Promise} Term promise.
+ * @param config configuration object.
+ * @param endpoint absolute url to interact with taxonomy
+ * @param args The args being sent.
+ * @param args.name The name.
+ * @param args.parent The parent id.
+ * @return Term promise.
  */
 export function createTaxonomyTerm(config, endpoint, args) {
   return apiFetch({

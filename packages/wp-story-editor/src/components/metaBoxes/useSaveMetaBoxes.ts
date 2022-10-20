@@ -30,10 +30,10 @@ import useMetaBoxes from './useMetaBoxes';
  * Effect to save meta boxes for a story.
  *
  * @see https://github.com/WordPress/gutenberg/blob/148e2b28d4cdd4465c4fe68d97fcee154a6b209a/packages/edit-post/src/store/effects.js#L24-L126
- * @param {Object} props Hook props.
- * @param {Object} props.story Story object.
- * @param {boolean} props.isSavingStory Whether saving is in progress.
- * @param {boolean} props.isAutoSavingStory Whether autosaving is in progress.
+ * @param props Hook props.
+ * @param props.story Story object.
+ * @param props.isSavingStory Whether saving is in progress.
+ * @param props.isAutoSavingStory Whether autosaving is in progress.
  */
 function useSaveMetaBoxes({ story, isSavingStory, isAutoSavingStory }) {
   const { hasMetaBoxes, locations, isSavingMetaBoxes, setIsSavingMetaBoxes } =

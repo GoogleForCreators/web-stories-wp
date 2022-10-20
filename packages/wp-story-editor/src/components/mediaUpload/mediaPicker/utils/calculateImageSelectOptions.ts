@@ -19,9 +19,9 @@
  * control-specific data, to be fed to the imgAreaSelect plugin in
  * wp.media.view.Cropper.
  *
- * @param {window.wp.media.model.Attachment} attachment Attachment object.
- * @param {window.wp.media.controller.Cropper} controller wp.media controller object.
- * @return {Object} Options
+ * @param attachment Attachment object.
+ * @param controller wp.media controller object.
+ * @return Options
  */
 const calculateImageSelectOptions = (attachment, controller) => {
   const control = controller.get('control');

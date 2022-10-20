@@ -44,16 +44,16 @@ const defaultCropParams = {
 /**
  * Custom hook to open the WordPress media modal.
  *
- * @param {Object} props Props.
- * @param {string} [props.title] Media modal title.
- * @param {string} [props.buttonInsertText] Text to use for the "Insert" button.
- * @param {Function} props.onSelect Selection callback. Used to process the inserted image.
- * @param {string} props.onSelectErrorMessage Text displayed when incorrect file type is selected.
- * @param {Function?} props.onClose Close Callback.
- * @param {Function?} props.onPermissionError Callback for when user does not have upload permissions.
- * @param {string|string[]} props.type Media type(s).
- * @param {boolean} props.multiple Whether multi-selection should be allowed.
- * @param {Object} props.cropParams Object params for cropped images.
+ * @param props Props.
+ * @param [props.title] Media modal title.
+ * @param [props.buttonInsertText] Text to use for the "Insert" button.
+ * @param props.onSelect Selection callback. Used to process the inserted image.
+ * @param props.onSelectErrorMessage Text displayed when incorrect file type is selected.
+ * @param props.onClose Close Callback.
+ * @param props.onPermissionError Callback for when user does not have upload permissions.
+ * @param props.type Media type(s).
+ * @param props.multiple Whether multi-selection should be allowed.
+ * @param props.cropParams Object params for cropped images.
  * @return {Function} Callback to open the media picker.
  */
 function useMediaPicker({

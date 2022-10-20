@@ -184,8 +184,8 @@ function getGifResourceFromAttachment(attachment) {
 /**
  * Generates a resource object from a WordPress attachment.
  *
- * @param {WPAttachment} attachment WP Attachment object.
- * @return {Resource} Resource object.
+ * @param attachment WP Attachment object.
+ * @return Resource object.
  */
 function getResourceFromAttachment(attachment) {
   const {

@@ -17,6 +17,7 @@
     { "path": "packages/types" },
     { "path": "packages/units" },
     { "path": "packages/url" },
+    { "path": "packages/wp-story-editor" },
     { "path": "packages/wp-utils" }
   ],
   "include": []

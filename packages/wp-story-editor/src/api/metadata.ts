@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * External dependencies
  */
@@ -25,31 +24,15 @@ import { addQueryArgs } from '@googleforcreators/url';
 import apiFetch from '@wordpress/api-fetch';
 
 /**
- * Assembles the `&include` query parameter.
+ * Gets metadata (title, favicon, etc.) from
+ * a provided URL.
  *
- * Works around a bug in WordPress.
- *
- * @see https://github.com/GoogleForCreators/web-stories-wp/issues/10710
- * @param {string} include Comma-separated list of fonts to include.
- * @return {string} include query parameter with bracket notation.
+ * @param config API path.
+ * @param url Url
+ * @return Result promise
  */
-function getIncludeQueryArgs(include = '') {
-  return include
-    .split(',')
-    .filter(Boolean)
-    .map((item) => `include[]=${encodeURI(item)}`)
-    .join('&');
-}
-
-export function getFonts(config, { include: _include, search, service }) {
-  let path = addQueryArgs(`${config.api.fonts}`, {
-    search,
-    service,
-  });
-  const include = getIncludeQueryArgs(_include);
-  if (include.length > 0) {
-    path += path.includes('?') ? `&${include}` : `?${include}`;
-  }
+export function getLinkMetadata(config, url) {
+  const path = addQueryArgs(config.api.link, { url });
   return apiFetch({
     path,
   });

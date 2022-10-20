@@ -13,24 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * WordPress dependencies
+ */
+import apiFetch from '@wordpress/api-fetch';
 
 /**
- * Flatten data passed to form data, to allow using multi-level objects.
- *
- * @param {FormData} formData Form data object.
- * @param {string} key Key to amend to to form data object
- * @param {string|Object} data Data to be amended to form data.
+ * Internal dependencies
  */
-const flattenFormData = (formData, key, data) => {
-  if (typeof data === 'object') {
-    for (const name in data) {
-      if (Object.prototype.hasOwnProperty.call(data, name)) {
-        flattenFormData(formData, `${key}[${name}]`, data[name]);
-      }
-    }
-  } else {
-    formData.append(key, data);
-  }
-};
+import { base64Encode } from './utils';
 
-export default flattenFormData;
+/**
+ * Status check, submit html string.
+ *
+ * @param content Content string.
+ * @param statusCheck Status check
+ * @param encodeMarkup Encode markup
+ * @return Result promise
+ */
+export function getStatusCheck(content, statusCheck, encodeMarkup) {
+  return apiFetch({
+    path: statusCheck,
+    data: { content: encodeMarkup ? base64Encode(content) : content },
+    method: 'POST',
+  });
+}

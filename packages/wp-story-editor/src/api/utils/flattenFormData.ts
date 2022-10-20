@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,16 +15,22 @@
  */
 
 /**
- * Base64-encodes a string with Unicode support.
+ * Flatten data passed to form data, to allow using multi-level objects.
  *
- * Prefixes the encoded result so it can be easily identified
- * and treated accordingly.
- *
- * @param {string} string string to encode.
- * @return {string} Encoded string.
+ * @param formData Form data object.
+ * @param key Key to amend to to form data object
+ * @param data Data to be amended to form data.
  */
-function base64Encode(string) {
-  return '__WEB_STORIES_ENCODED__' + btoa(encodeURIComponent(string));
-}
+const flattenFormData = (formData, key, data) => {
+  if (typeof data === 'object') {
+    for (const name in data) {
+      if (Object.prototype.hasOwnProperty.call(data, name)) {
+        flattenFormData(formData, `${key}[${name}]`, data[name]);
+      }
+    }
+  } else {
+    formData.append(key, data);
+  }
+};
 
-export default base64Encode;
+export default flattenFormData;

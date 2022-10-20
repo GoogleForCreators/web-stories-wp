@@ -23,8 +23,8 @@ import { snakeToCamelCaseObjectKeys } from '@web-stories-wp/wp-utils';
 /**
  * Generates a resource object from a WordPress media picker object.
  *
- * @param {Object} mediaPickerEl WP Media Picker object.
- * @return {import('@googleforcreators/types').Resource} Resource object.
+ * @param mediaPickerEl WP Media Picker object.
+ * @return Resource object.
  */
 const getResourceFromMediaPicker = (mediaPickerEl) => {
   const {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,24 +16,4 @@
 /**
  * External dependencies
  */
-import { addQueryArgs } from '@googleforcreators/url';
-
-/**
- * WordPress dependencies
- */
-import apiFetch from '@wordpress/api-fetch';
-
-/**
- * Gets metadata (title, favicon, etc.) from
- * a provided URL.
- *
- * @param {Object} config API path.
- * @param {string} url Url
- * @return {Promise} Result promise
- */
-export function getLinkMetadata(config, url) {
-  const path = addQueryArgs(config.api.link, { url });
-  return apiFetch({
-    path,
-  });
-}
+import type { Page, Story, Element } from '@googleforcreators/types';

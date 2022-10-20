@@ -13,28 +13,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * WordPress dependencies
  */
 import apiFetch from '@wordpress/api-fetch';
 
 /**
- * Internal dependencies
+ * Get publisher logos.
+ *
+ * @param apiPath API path.
+ * @return Response.
  */
-import { base64Encode } from './utils';
+export function getPublisherLogos(apiPath) {
+  return apiFetch({
+    path: apiPath,
+  });
+}
 
 /**
- * Status check, submit html string.
+ * Add publisher logo.
  *
- * @param {string} content Content string.
- * @param {string} statusCheck Status check
- * @param {string} encodeMarkup Encode markup
- * @return {Promise} Result promise
+ * @param apiPath API path.
+ * @param id Logo media id.
+ * @return Response.
  */
-export function getStatusCheck(content, statusCheck, encodeMarkup) {
+export function addPublisherLogo(apiPath, id) {
   return apiFetch({
-    path: statusCheck,
-    data: { content: encodeMarkup ? base64Encode(content) : content },
+    path: apiPath,
+    data: { id },
     method: 'POST',
   });
 }

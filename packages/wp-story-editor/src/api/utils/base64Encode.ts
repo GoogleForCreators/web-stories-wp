@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,33 +15,16 @@
  */
 
 /**
- * WordPress dependencies
- */
-import apiFetch from '@wordpress/api-fetch';
-
-/**
- * Get publisher logos.
+ * Base64-encodes a string with Unicode support.
  *
- * @param {string} apiPath API path.
- * @return {Promise} Response.
+ * Prefixes the encoded result so it can be easily identified
+ * and treated accordingly.
+ *
+ * @param string string to encode.
+ * @return Encoded string.
  */
-export function getPublisherLogos(apiPath) {
-  return apiFetch({
-    path: apiPath,
-  });
+function base64Encode(string) {
+  return '__WEB_STORIES_ENCODED__' + btoa(encodeURIComponent(string));
 }
 
-/**
- * Add publisher logo.
- *
- * @param {string} apiPath API path.
- * @param {string} id Logo media id.
- * @return {Promise} Response.
- */
-export function addPublisherLogo(apiPath, id) {
-  return apiFetch({
-    path: apiPath,
-    data: { id },
-    method: 'POST',
-  });
-}
+export default base64Encode;

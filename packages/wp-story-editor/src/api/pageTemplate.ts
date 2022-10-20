@@ -75,9 +75,9 @@ export function getCustomPageTemplates(config, page = 1) {
 /**
  * Add a new page template.
  *
- * @param {Object} config Config object.
- * @param {Object} data Page template data.
- * @return {Promise<*>} Saved page template.
+ * @param config Config object.
+ * @param data Page template data.
+ * @return Saved page template.
  */
 export function addPageTemplate(config, data) {
   return apiFetch({
@@ -93,10 +93,10 @@ export function addPageTemplate(config, data) {
 /**
  * Update an existing page template.
  *
- * @param {Object} config Config object.
- * @param {number} id Page template ID.
- * @param {Object} data Page template data.
- * @return {Promise<*>} Saved page template.
+ * @param config Config object.
+ * @param id Page template ID.
+ * @param data Page template data.
+ * @return Saved page template.
  */
 export function updatePageTemplate(config, id, data) {
   return apiFetch({

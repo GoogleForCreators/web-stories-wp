@@ -73,9 +73,9 @@ export function getMediaForCorsCheck(config) {
 /**
  * Get media by ID.
  *
- * @param {Object} config Configuration object.
- * @param {number} mediaId Media ID.
- * @return {Promise<import('@googleforcreators/media').Resource>} Media object promise.
+ * @param config Configuration object.
+ * @param mediaId Media ID.
+ * @return Media object promise.
  */
 export function getMediaById(config, mediaId) {
   const path = addQueryArgs(`${config.api.media}${mediaId}/`, {
@@ -89,9 +89,9 @@ export function getMediaById(config, mediaId) {
 /**
  * Get the muted variant of a given media resource.
  *
- * @param {Object} config Configuration object.
- * @param {number} mediaId Media ID.
- * @return {Promise<import('@googleforcreators/media').Resource>} Media resource if found, null otherwise.
+ * @param config Configuration object.
+ * @param mediaId Media ID.
+ * @return Media resource if found, null otherwise.
  */
 export async function getMutedMediaById(config, mediaId) {
   const path = addQueryArgs(`${config.api.media}${mediaId}/`, {
@@ -111,9 +111,9 @@ export async function getMutedMediaById(config, mediaId) {
 /**
  * Get the optimized variant of a given media resource.
  *
- * @param {Object} config Configuration object.
- * @param {number} mediaId Media ID.
- * @return {Promise<import('@googleforcreators/media').Resource>} Media resource if found, null otherwise.
+ * @param config Configuration object.
+ * @param mediaId Media ID.
+ * @return Media resource if found, null otherwise.
  */
 export async function getOptimizedMediaById(config, mediaId) {
   const path = addQueryArgs(`${config.api.media}${mediaId}/`, {
@@ -133,9 +133,9 @@ export async function getOptimizedMediaById(config, mediaId) {
 /**
  * Get the poster of a given media resource.
  *
- * @param {Object} config Configuration object.
- * @param {number} mediaId Media ID.
- * @return {Promise<import('@googleforcreators/media').Resource>} Media resource if found, null otherwise.
+ * @param config Configuration object.
+ * @param mediaId Media ID.
+ * @return Media resource if found, null otherwise.
  */
 export async function getPosterMediaById(config, mediaId) {
   const path = addQueryArgs(`${config.api.media}${mediaId}/`, {
@@ -155,10 +155,10 @@ export async function getPosterMediaById(config, mediaId) {
 /**
  * Upload file to via REST API.
  *
- * @param {Object} config Configuration object.
- * @param {File} file Media File to Save.
- * @param {?Object} additionalData Additional data to include in the request.
- * @return {Promise<import('@googleforcreators/media').Resource>} Media resource.
+ * @param config Configuration object.
+ * @param file Media File to Save.
+ * @param additionalData Additional data to include in the request.
+ * @return Media resource.
  */
 export function uploadMedia(config, file, additionalData) {
   const {
@@ -227,10 +227,10 @@ export function uploadMedia(config, file, additionalData) {
 /**
  * Update Existing media.
  *
- * @param  {Object} config API path.
- * @param  {number} mediaId Media id
- * @param  {Object} data Object of properties to update on attachment.
- * @return {Promise} Media Object Promise.
+ * @param config API path.
+ * @param mediaId Media id
+ * @param data Object of properties to update on attachment.
+ * @return Media Object Promise.
  */
 export function updateMedia(config, mediaId, data) {
   const {
@@ -283,9 +283,9 @@ export function updateMedia(config, mediaId, data) {
 /**
  * Delete existing media.
  *
- * @param {Object} config Configuration object.
- * @param  {number} mediaId Media id
- * @return {void}
+ * @param config Configuration object.
+ * @param mediaId Media id
+ * @return
  */
 export function deleteMedia(config, mediaId) {
   // `apiFetch` by default turns `DELETE` requests into `POST` requests

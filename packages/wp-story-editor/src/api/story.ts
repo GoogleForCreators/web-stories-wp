@@ -91,9 +91,9 @@ const getStorySaveData = (
 /**
  * Fire REST API call to save story.
  *
- * @param {Object} config Configuration object.
- * @param {import('@googleforcreators/story-editor').StoryPropTypes.story} story Story object.
- * @return {Promise} Return apiFetch promise.
+ * @param config Configuration object.
+ * @param story Story object.
+ * @return Return apiFetch promise.
  */
 export function saveStoryById(config, story) {
   const { storyId } = story;
@@ -152,9 +152,9 @@ export function saveStoryById(config, story) {
 /**
  * Fire REST API call to auto-save story.
  *
- * @param {Object} config API path.
- * @param {import('@googleforcreators/story-editor').StoryPropTypes.story} story Story object.
- * @return {Promise} Return apiFetch promise.
+ * @param config API path.
+ * @param story Story object.
+ * @return Return apiFetch promise.
  */
 export function autoSaveById(config, story) {
   const { storyId } = story;

@@ -27,12 +27,12 @@ import apiFetch from '@wordpress/api-fetch';
 /**
  * Get products
  *
- * @param {Object} config Configuration object.
- * @param {string} search Search term.
- * @param {number} page Page number.
- * @param {string} orderby Order collection by product attribute.
- * @param {string} order Sort attribute ascending or descending.
- * @return {Promise} The response from the API.
+ * @param config Configuration object.
+ * @param search Search term.
+ * @param page Page number.
+ * @param orderby Order collection by product attribute.
+ * @param order Sort attribute ascending or descending.
+ * @return The response from the API.
  */
 export async function getProducts(config, search, page, orderby, order) {
   const response = await apiFetch({

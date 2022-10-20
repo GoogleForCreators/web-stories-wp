@@ -17,13 +17,13 @@
 /**
  * Return whether the image must be cropped, based on required dimensions.
  *
- * @param {boolean} flexW Flexible width.
- * @param {boolean} flexH Flexible height.
- * @param {number}  dstW Destination width.
- * @param {number}  dstH Destination height.
- * @param {number}  imgW Image Width.
- * @param {number}  imgH Image height.
- * @return {boolean} Whether or not an image must be cropped or not.
+ * @param flexW Flexible width.
+ * @param flexH Flexible height.
+ * @param  dstW Destination width.
+ * @param  dstH Destination height.
+ * @param  imgW Image Width.
+ * @param  imgH Image height.
+ * @return Whether or not an image must be cropped or not.
  */
 const mustBeCropped = (flexW, flexH, dstW, dstH, imgW, imgH) => {
   if (true === flexW && true === flexH) {
