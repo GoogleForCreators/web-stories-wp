@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { createGlobalStyle, ThemeContext } from 'styled-components';
+import type { DefaultTheme } from 'styled-components';
 
 /**
  * WordPress dependencies
@@ -31,11 +32,11 @@ export const GlobalStyle = createGlobalStyle`
   }
 `;
 
-export function useTheme() {
+export function useTheme(): DefaultTheme {
   return useContext(ThemeContext);
 }
 
-export const theme = {
+export const theme: DefaultTheme = {
   colors: {
     bg: {
       start: '#CBACFF',
