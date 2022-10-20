@@ -60,9 +60,6 @@ function OutputPage({
 
   const [backgroundElement, ...otherElements] = elements;
 
-  // eslint-disable-next-line no-console -- temp debug
-  console.log('font data at page level', fonts);
-
   // If the background element has base color set, it's media, use that.
   const baseColor = backgroundElement?.resource?.baseColor;
   const backgroundStyles = baseColor
@@ -183,14 +180,20 @@ function OutputPage({
         >
           <div className="page-fullbleed-area">
             <div className="page-safe-area">
-              {/* @todo - possibly pull elementFont data here  */}
-              {regularElements.map((element) => (
-                <OutputElement
-                  key={element.id}
-                  element={element}
-                  flags={flags}
-                />
-              ))}
+              {regularElements.map((element) => {
+                let elementFontData = {};
+                if (element?.font && fonts) {
+                  elementFontData = { font: fonts[element?.font.family] };
+                }
+                return (
+                  <OutputElement
+                    key={element.id}
+                    element={element}
+                    elementFontData={elementFontData}
+                    flags={flags}
+                  />
+                );
+              })}
             </div>
           </div>
         </amp-story-grid-layer>

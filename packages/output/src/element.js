@@ -39,7 +39,7 @@ import {
  */
 import WithLink from './components/withLink';
 
-function OutputElement({ element, flags }) {
+function OutputElement({ element, elementFontData = null, flags }) {
   const {
     id,
     opacity,
@@ -117,7 +117,12 @@ function OutputElement({ element, flags }) {
               left: 0,
             }}
           >
-            <Output element={element} box={box} flags={flags} />
+            <Output
+              element={element}
+              elementFontData={elementFontData}
+              box={box}
+              flags={flags}
+            />
           </WithLink>
           {overlay && (
             <div
@@ -133,6 +138,7 @@ function OutputElement({ element, flags }) {
 
 OutputElement.propTypes = {
   element: StoryPropTypes.element.isRequired,
+  elementFontData: PropTypes.object,
   flags: PropTypes.object,
 };
 

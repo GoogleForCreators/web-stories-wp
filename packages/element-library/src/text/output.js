@@ -252,7 +252,7 @@ TextOutputWithUnits.propTypes = {
  * @param {Object<*>} props Props.
  * @return {*} Rendered component.
  */
-function TextOutput({ element }) {
+function TextOutput({ element, elementFontData }) {
   const { width } = element;
   {
     /* @todo modify how we pass elementFontData -- added for debug */
@@ -260,7 +260,7 @@ function TextOutput({ element }) {
   return (
     <TextOutputWithUnits
       element={element}
-      elementFontData={element?.font ? { ...element.font } : null}
+      elementFontData={elementFontData}
       className="fill"
       dataToStyleX={(x) => `${dataToEditorX(x, 100)}%`}
       dataToStyleY={(y) => `${dataToEditorY(y, 100)}%`}
@@ -275,6 +275,7 @@ function TextOutput({ element }) {
 
 TextOutput.propTypes = {
   element: StoryPropTypes.elements.text.isRequired,
+  elementFontData: PropTypes.object,
 };
 
 export default TextOutput;
