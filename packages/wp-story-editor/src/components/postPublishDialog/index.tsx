@@ -22,6 +22,7 @@ import { __, TranslateWithMarkup } from '@googleforcreators/i18n';
 import { trackClick } from '@googleforcreators/tracking';
 import { Link, Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
 import { Dialog, useStory } from '@googleforcreators/story-editor';
+import { MouseEvent } from 'react';
 
 function PostPublishDialog() {
   const {
@@ -45,11 +46,11 @@ function PostPublishDialog() {
 
   useEffect(() => setIsOpen(Boolean(isFreshlyPublished)), [isFreshlyPublished]);
 
-  const onAddToPostClick = useCallback((evt) => {
+  const onAddToPostClick = useCallback((evt: MouseEvent<HTMLAnchorElement>) => {
     trackClick(evt, 'add_story_to_new_post');
   }, []);
 
-  const onViewStoryClick = useCallback((evt) => {
+  const onViewStoryClick = useCallback((evt: MouseEvent<HTMLAnchorElement>) => {
     trackClick(evt, 'view_story');
   }, []);
   const onClose = useCallback(() => setIsOpen(false), []);

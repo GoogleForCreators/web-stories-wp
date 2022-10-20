@@ -26,6 +26,7 @@ import { useConfig, useAPI } from '@googleforcreators/story-editor';
 /**
  * Internal dependencies
  */
+import { MouseEvent } from 'react';
 import { useMediaPickerProps } from '../types';
 import {
   calculateImageSelectOptions,
@@ -95,7 +96,7 @@ function useMediaPicker({
   }, [updateMedia]);
 
   const openMediaDialog = useCallback(
-    (evt) => {
+    (evt: MouseEvent<HTMLAnchorElement>) => {
       trackEvent('open_media_modal');
 
       // If a user does not have the rights to upload to the media library, do not show the media picker.
@@ -167,7 +168,7 @@ function useMediaPicker({
   );
 
   const openCropper = useCallback(
-    (evt) => {
+    (evt: MouseEvent<HTMLAnchorElement>) => {
       trackEvent('open_media_crop_modal');
       // If a user does not have the rights to upload to the media library, do not show the media picker.
       if (!hasUploadMediaAction) {

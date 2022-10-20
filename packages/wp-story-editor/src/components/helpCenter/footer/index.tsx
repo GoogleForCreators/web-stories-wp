@@ -27,6 +27,7 @@ import {
   Text,
 } from '@googleforcreators/design-system';
 import type { ReactNode } from 'react';
+import { MouseEvent } from 'react';
 
 const Panel = styled.div`
   padding: 16px 0 24px 0;
@@ -80,15 +81,15 @@ const YOUTUBE_URL = __(
 const DOCS_URL = 'https://wp.stories.google/docs/getting-started/';
 
 export default function Footer() {
-  const onSupportClick = useCallback((evt) => {
+  const onSupportClick = useCallback((evt: MouseEvent<HTMLAnchorElement>) => {
     trackClick(evt, 'click_support_page');
   }, []);
 
-  const onDocsClick = useCallback((evt) => {
+  const onDocsClick = useCallback((evt: MouseEvent<HTMLAnchorElement>) => {
     trackClick(evt, 'click_website_docs');
   }, []);
 
-  const onYouTubeClick = useCallback((evt) => {
+  const onYouTubeClick = useCallback((evt: MouseEvent<HTMLAnchorElement>) => {
     trackClick(evt, 'click_storytime_channel');
   }, []);
 

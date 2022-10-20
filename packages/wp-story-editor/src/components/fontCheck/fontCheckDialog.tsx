@@ -102,7 +102,7 @@ export const FontCheckDialog = ({
     [defaultCloseAction]
   );
 
-  const onSettingsClick = useCallback((evt) => {
+  const onSettingsClick = useCallback((evt: MouseEvent<HTMLAnchorElement>) => {
     trackClick(evt, 'click_font_check_settings');
   }, []);
 

@@ -22,6 +22,7 @@ import { __, TranslateWithMarkup } from '@googleforcreators/i18n';
 import { trackClick } from '@googleforcreators/tracking';
 import { Link, Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
 import { Dialog } from '@googleforcreators/story-editor';
+import { MouseEvent } from 'react';
 
 const DOCS_URL =
   'https://wp.stories.google/docs/troubleshooting/common-issues/';
@@ -32,7 +33,7 @@ interface CorsCheckFailed {
 }
 
 function CorsCheckFailed({ isOpen, onClose }: CorsCheckFailed) {
-  const onDocsClick = useCallback((evt) => {
+  const onDocsClick = useCallback((evt: MouseEvent<HTMLAnchorElement>) => {
     trackClick(evt, 'click_cors_check_docs');
   }, []);
 

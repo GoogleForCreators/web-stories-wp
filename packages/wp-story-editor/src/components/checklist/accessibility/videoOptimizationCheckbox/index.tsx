@@ -42,6 +42,7 @@ import {
   ChecklistCard,
   DefaultFooterText,
 } from '@googleforcreators/story-editor';
+import { MouseEvent } from 'react';
 
 const CheckboxContainer = styled.div`
   display: flex;
@@ -157,7 +158,7 @@ function VideoOptimizationCheckbox() {
                   a: (
                     <Link
                       size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-                      onClick={(evt) =>
+                      onClick={(evt: MouseEvent<HTMLAnchorElement>) =>
                         trackClick(evt, 'click_video_optimization_settings')
                       }
                       href={dashboardSettingsLink}

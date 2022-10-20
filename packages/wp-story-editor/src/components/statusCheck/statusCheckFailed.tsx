@@ -22,6 +22,7 @@ import { __, TranslateWithMarkup } from '@googleforcreators/i18n';
 import { trackClick } from '@googleforcreators/tracking';
 import { Link, Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
 import { Dialog } from '@googleforcreators/story-editor';
+import { MouseEvent } from 'react';
 
 const SUPPORT_URL = __(
   'https://wordpress.org/support/plugin/web-stories/',
@@ -34,7 +35,7 @@ interface StatusCheckFailedProps {
 }
 
 function StatusCheckFailed({ isOpen, onClose }: StatusCheckFailedProps) {
-  const onSupportClick = useCallback((evt) => {
+  const onSupportClick = useCallback((evt: MouseEvent<HTMLAnchorElement>) => {
     trackClick(evt, 'click_support_page');
   }, []);
 

@@ -43,6 +43,7 @@ import {
 /**
  * Internal dependencies
  */
+import { MouseEvent } from 'react';
 import { VISIBILITY, STATUS } from '../../../constants';
 
 const StyledListItem = styled.li`
@@ -164,7 +165,7 @@ function StatusPanel({
   }
 
   const handleChangePassword = useCallback(
-    (evt) => {
+    (evt: MouseEvent<HTMLAnchorElement>) => {
       updateStory({
         properties: { password: evt.target.value },
       });
