@@ -5,6 +5,5 @@
     "declarationDir": "dist-types"
   },
   "references": [{ "path": "../tracking" }],
-  "include": ["src/**/*"],
-  "exclude": ["src/stories", "**/test/**", "src/testUtils"]
+  "include": ["src/**/*"]
 }
