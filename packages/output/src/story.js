@@ -38,6 +38,7 @@ function OutputStory({
     featuredMedia,
     link,
     title,
+    fonts,
     autoAdvance,
     defaultPageDuration,
     backgroundAudio,
@@ -87,6 +88,7 @@ function OutputStory({
         >
           {pages.map((page) => (
             <OutputPage
+              fonts={fonts}
               key={page.id}
               page={page}
               defaultAutoAdvance={autoAdvance}
@@ -102,6 +104,7 @@ function OutputStory({
 
 OutputStory.propTypes = {
   story: PropTypes.shape({
+    fonts: PropTypes.object,
     link: PropTypes.string,
     title: PropTypes.string.isRequired,
     autoAdvance: PropTypes.bool,

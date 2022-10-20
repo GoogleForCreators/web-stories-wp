@@ -27,6 +27,7 @@ import getAllProducts from './getAllProducts';
 function getStoryPropsToSave({ story, pages, metadata, flags }) {
   const { terms, ...propsFromStory } = objectPick(story, [
     'title',
+    'fonts',
     'status',
     'author',
     'date',
@@ -43,6 +44,7 @@ function getStoryPropsToSave({ story, pages, metadata, flags }) {
     'backgroundAudio',
     'terms',
   ]);
+
   const products = getAllProducts(pages);
   const content = getStoryMarkup(story, pages, metadata, flags);
   return {

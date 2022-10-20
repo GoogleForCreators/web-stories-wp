@@ -41,6 +41,7 @@ import ShoppingAttachment from './utils/shoppingAttachment';
 const ASPECT_RATIO = `${PAGE_WIDTH}:${PAGE_HEIGHT}`;
 
 function OutputPage({
+  fonts,
   page,
   defaultAutoAdvance = DEFAULT_AUTO_ADVANCE,
   defaultPageDuration = DEFAULT_PAGE_DURATION,
@@ -58,6 +59,9 @@ function OutputPage({
   } = page;
 
   const [backgroundElement, ...otherElements] = elements;
+
+  // eslint-disable-next-line no-console -- temp debug
+  console.log('font data at page level', fonts);
 
   // If the background element has base color set, it's media, use that.
   const baseColor = backgroundElement?.resource?.baseColor;
@@ -179,6 +183,7 @@ function OutputPage({
         >
           <div className="page-fullbleed-area">
             <div className="page-safe-area">
+              {/* @todo - possibly pull elementFont data here  */}
               {regularElements.map((element) => (
                 <OutputElement
                   key={element.id}
@@ -220,6 +225,7 @@ function OutputPage({
 }
 
 OutputPage.propTypes = {
+  fonts: PropTypes.object,
   page: StoryPropTypes.page.isRequired,
   defaultAutoAdvance: PropTypes.bool,
   defaultPageDuration: PropTypes.number,
