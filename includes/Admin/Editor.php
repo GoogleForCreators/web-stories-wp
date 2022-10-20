@@ -438,7 +438,7 @@ class Editor extends Service_Base implements HasRequirements {
 			'nonce'                   => $nonce,
 			'showMedia3p'             => true,
 			'globalAutoAdvance'       => (bool) $auto_advance,
-			'globalPageDuration'      => (int) $page_duration,
+			'globalPageDuration'      => (float) $page_duration,
 			'shoppingProvider'        => $shopping_provider,
 			'encodeMarkup'            => $this->decoder->supports_decoding(),
 			'metaBoxes'               => $this->meta_boxes->get_meta_boxes_per_location(),

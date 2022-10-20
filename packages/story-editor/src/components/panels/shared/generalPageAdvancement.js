@@ -46,7 +46,6 @@ import {
  */
 import { Row, Switch } from '../../form';
 import { SimplePanel } from '../panel';
-import { useConfig } from '../../../app/config';
 import { inputContainerStyleOverride } from './styles';
 
 const SwitchRow = styled.div`
@@ -76,8 +75,8 @@ const MIN_MAX = {
 };
 
 function GeneralPageAdvancementPanel({
-  pageDuration,
-  autoAdvance,
+  pageDuration = DEFAULT_PAGE_DURATION,
+  autoAdvance = DEFAULT_AUTO_ADVANCE,
   onUpdate,
   allowsOverride = false,
   hasOverrideEnabled = false,
@@ -85,19 +84,7 @@ function GeneralPageAdvancementPanel({
   panelName,
   ...rest
 }) {
-  const { globalAutoAdvance, globalPageDuration } = useConfig();
   const [duration, setDuration] = useState(pageDuration);
-
-  // Set the auto advancement values to either globally configured values or default values.
-  if (pageDuration === undefined) {
-    pageDuration = !isNaN(globalPageDuration)
-      ? globalPageDuration
-      : DEFAULT_PAGE_DURATION;
-  }
-  if (autoAdvance === undefined) {
-    autoAdvance =
-      globalAutoAdvance !== null ? globalAutoAdvance : DEFAULT_AUTO_ADVANCE;
-  }
 
   useEffect(() => {
     setDuration(pageDuration);
