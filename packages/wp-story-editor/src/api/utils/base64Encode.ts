@@ -23,7 +23,7 @@
  * @param string string to encode.
  * @return Encoded string.
  */
-function base64Encode(string) {
+function base64Encode(string: string) {
   return '__WEB_STORIES_ENCODED__' + btoa(encodeURIComponent(string));
 }
 

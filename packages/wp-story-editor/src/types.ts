@@ -19,3 +19,32 @@ export interface User {
   name: string;
   avatar: string;
 }
+
+export interface Config {
+  capabilities: {
+    canManageSettings: boolean;
+    hasUploadMediaAction: boolean;
+  };
+  storyId: number;
+  nonce: string;
+  encodeMarkup: string;
+  metaBoxes: object;
+  postLock: {
+    interval: number;
+    showLockedDialog: boolean;
+  };
+  api: {
+    stories: string;
+    storyLocking: string;
+    statusCheck: string;
+    metaBoxes: string;
+  };
+  postType: string;
+  dashboardLink: string;
+  dashboardSettingsLink: string;
+  isRTL: boolean;
+  allowedMimeTypes: {
+    image: string[];
+  };
+  revisionLink: string;
+}

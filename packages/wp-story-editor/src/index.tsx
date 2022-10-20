@@ -79,7 +79,7 @@ window.webStories.initializeStoryEditor = (id, config, initialEdits) => {
 
   updateSettings(config.locale);
 
-  initializeTracking('Editor');
+  void initializeTracking('Editor');
 
   elementTypes.forEach(registerElementType);
 

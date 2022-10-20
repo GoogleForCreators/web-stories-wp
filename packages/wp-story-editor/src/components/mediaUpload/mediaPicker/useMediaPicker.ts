@@ -28,6 +28,7 @@ import { useConfig, useAPI } from '@googleforcreators/story-editor';
  */
 import { MouseEvent } from 'react';
 import { useMediaPickerProps } from '../types';
+import type { Config } from '../../../types';
 import {
   calculateImageSelectOptions,
   mustBeCropped,
@@ -73,7 +74,7 @@ function useMediaPicker({
   } = useAPI();
   const {
     capabilities: { hasUploadMediaAction },
-  } = useConfig();
+  } = useConfig() as Config;
   const { showSnackbar } = useSnackbar();
 
   useEffect(() => {
@@ -97,7 +98,7 @@ function useMediaPicker({
 
   const openMediaDialog = useCallback(
     (evt: MouseEvent<HTMLAnchorElement>) => {
-      trackEvent('open_media_modal');
+      void trackEvent('open_media_modal');
 
       // If a user does not have the rights to upload to the media library, do not show the media picker.
       if (!hasUploadMediaAction) {
@@ -169,7 +170,7 @@ function useMediaPicker({
 
   const openCropper = useCallback(
     (evt: MouseEvent<HTMLAnchorElement>) => {
-      trackEvent('open_media_crop_modal');
+      void trackEvent('open_media_crop_modal');
       // If a user does not have the rights to upload to the media library, do not show the media picker.
       if (!hasUploadMediaAction) {
         if (onPermissionError) {

@@ -24,6 +24,7 @@ import { useConfig } from '@googleforcreators/story-editor';
 /**
  * Internal dependencies
  */
+import type { Config } from '../../types';
 import Context from './context';
 
 interface MetaBoxesProviderProp {
@@ -31,7 +32,7 @@ interface MetaBoxesProviderProp {
 }
 
 function MetaBoxesProvider({ children }: MetaBoxesProviderProp) {
-  const { metaBoxes = {} } = useConfig();
+  const { metaBoxes = {} } = useConfig() as Config;
 
   const [metaBoxesVisible, setMetaBoxesVisible] = useState(false);
   const [isSavingMetaBoxes, setIsSavingMetaBoxes] = useState(false);

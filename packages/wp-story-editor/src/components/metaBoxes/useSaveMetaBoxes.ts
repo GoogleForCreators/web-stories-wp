@@ -24,6 +24,7 @@ import { useConfig } from '@googleforcreators/story-editor';
  * Internal dependencies
  */
 import { saveMetaBoxes } from '../../api/metaboxes';
+import type { Config } from '../../types';
 import useMetaBoxes from './useMetaBoxes';
 
 /**
@@ -46,13 +47,13 @@ function useSaveMetaBoxes({ story, isSavingStory, isAutoSavingStory }) {
 
   const {
     api: { metaBoxes: apiUrl },
-  } = useConfig();
+  } = useConfig() as Config;
 
   const wasSaving = usePrevious(isSavingStory);
   const wasAutoSaving = usePrevious(isAutoSavingStory);
 
   // Save metaboxes when performing a full save on the post.
-  useEffect(() => {
+  useEffect((): void => {
     if (
       !hasMetaBoxes ||
       isSavingStory ||
@@ -64,7 +65,7 @@ function useSaveMetaBoxes({ story, isSavingStory, isAutoSavingStory }) {
       return;
     }
 
-    async function save() {
+    async function save(): void {
       // Saves the wp_editor fields.
       window.tinyMCE?.triggerSave();
 

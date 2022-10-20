@@ -181,7 +181,7 @@ function StatusPanel({
       password: '',
     };
 
-    trackEvent('publish_story', {
+    void trackEvent('publish_story', {
       status: STATUS.PRIVATE,
       title_length: title.length,
     });

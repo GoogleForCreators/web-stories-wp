@@ -36,7 +36,7 @@ interface StatusCheckFailedProps {
 
 function StatusCheckFailed({ isOpen, onClose }: StatusCheckFailedProps) {
   const onSupportClick = useCallback((evt: MouseEvent<HTMLAnchorElement>) => {
-    trackClick(evt, 'click_support_page');
+    void trackClick(evt, 'click_support_page');
   }, []);
 
   return (

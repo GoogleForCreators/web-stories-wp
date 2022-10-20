@@ -34,7 +34,7 @@ interface CorsCheckFailed {
 
 function CorsCheckFailed({ isOpen, onClose }: CorsCheckFailed) {
   const onDocsClick = useCallback((evt: MouseEvent<HTMLAnchorElement>) => {
-    trackClick(evt, 'click_cors_check_docs');
+    void trackClick(evt, 'click_cors_check_docs');
   }, []);
 
   return (

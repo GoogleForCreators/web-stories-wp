@@ -34,15 +34,13 @@ import {
 /**
  * Internal dependencies
  */
+import type { Config } from '../../../types';
 import StoryMissingPublisherName from './storyMissingPublisherName';
 
 function Priority() {
-  const { canManageSettings, hasUploadMediaAction } = useConfig(
-    ({ capabilities }) => ({
-      canManageSettings: capabilities.canManageSettings,
-      hasUploadMediaAction: capabilities.hasUploadMediaAction,
-    })
-  );
+  const {
+    capabilities: { hasUploadMediaAction, canManageSettings },
+  } = useConfig() as Config;
 
   return (
     <>

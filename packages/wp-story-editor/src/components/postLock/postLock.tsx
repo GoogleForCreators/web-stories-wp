@@ -41,6 +41,7 @@ import {
   setStoryLockById,
   deleteStoryLockById,
 } from '../../api/storyLock';
+import type { Config } from '../../types';
 import PostLockDialog from './postLockDialog';
 import PostTakeOverDialog from './postTakeOverDialog';
 
@@ -54,7 +55,7 @@ function PostLock() {
     nonce: firstNonce,
     postLock: { interval: postLockInterval, showLockedDialog },
     api: { stories, storyLocking },
-  } = useConfig();
+  } = useConfig() as Config;
 
   const {
     state: { hasNewChanges },
@@ -84,7 +85,7 @@ function PostLock() {
       return;
     }
     setUser({});
-    setStoryLockById(storyId, stories);
+    void setStoryLockById(storyId, stories);
   }, [enablePostLockingTakeOver, storyId, stories]);
 
   const currentUserLoaded = useMemo(
@@ -105,13 +106,13 @@ function PostLock() {
           if (locked && lockAuthor?.id && lockAuthor?.id !== currentUser.id) {
             setUser(lockAuthor);
           } else {
-            setStoryLockById(storyId, stories);
+            void setStoryLockById(storyId, stories);
           }
           // Refresh nonce on every request.
           setNonce(newNonce);
         })
         .catch((err) => {
-          trackError('post_lock', err.message);
+          void trackError('post_lock', err.message);
         });
     }
   }, [

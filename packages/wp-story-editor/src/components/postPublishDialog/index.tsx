@@ -47,11 +47,11 @@ function PostPublishDialog() {
   useEffect(() => setIsOpen(Boolean(isFreshlyPublished)), [isFreshlyPublished]);
 
   const onAddToPostClick = useCallback((evt: MouseEvent<HTMLAnchorElement>) => {
-    trackClick(evt, 'add_story_to_new_post');
+    void trackClick(evt, 'add_story_to_new_post');
   }, []);
 
   const onViewStoryClick = useCallback((evt: MouseEvent<HTMLAnchorElement>) => {
-    trackClick(evt, 'view_story');
+    void trackClick(evt, 'view_story');
   }, []);
   const onClose = useCallback(() => setIsOpen(false), []);
 

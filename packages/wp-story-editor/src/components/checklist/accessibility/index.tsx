@@ -31,12 +31,13 @@ import {
 /**
  * Internal dependencies
  */
+import type { Config } from '../../../types';
 import VideoOptimizationCheckbox from './videoOptimizationCheckbox';
 
 function Accessibility() {
-  const { hasUploadMediaAction } = useConfig(({ capabilities }) => ({
-    hasUploadMediaAction: capabilities.hasUploadMediaAction,
-  }));
+  const {
+    capabilities: { hasUploadMediaAction },
+  } = useConfig() as Config;
   return (
     <>
       <PageBackgroundTextLowContrast />

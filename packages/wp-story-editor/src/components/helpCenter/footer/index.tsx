@@ -82,15 +82,15 @@ const DOCS_URL = 'https://wp.stories.google/docs/getting-started/';
 
 export default function Footer() {
   const onSupportClick = useCallback((evt: MouseEvent<HTMLAnchorElement>) => {
-    trackClick(evt, 'click_support_page');
+    void trackClick(evt, 'click_support_page');
   }, []);
 
   const onDocsClick = useCallback((evt: MouseEvent<HTMLAnchorElement>) => {
-    trackClick(evt, 'click_website_docs');
+    void trackClick(evt, 'click_website_docs');
   }, []);
 
   const onYouTubeClick = useCallback((evt: MouseEvent<HTMLAnchorElement>) => {
-    trackClick(evt, 'click_storytime_channel');
+    void trackClick(evt, 'click_storytime_channel');
   }, []);
 
   return (

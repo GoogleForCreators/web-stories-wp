@@ -293,7 +293,7 @@ export function deleteMedia(config, mediaId) {
   // However, some Web Application Firewall (WAF) solutions prevent this.
   // `?_method=DELETE` is an alternative solution to override the request method.
   // See https://developer.wordpress.org/rest-api/using-the-rest-api/global-parameters/#_method-or-x-http-method-override-header
-  apiFetch({
+  void apiFetch({
     path: addQueryArgs(`${config.api.media}${mediaId}/`, { _method: 'DELETE' }),
     data: { force: true },
     method: 'POST',

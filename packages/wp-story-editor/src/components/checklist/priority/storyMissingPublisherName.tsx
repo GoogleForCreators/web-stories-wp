@@ -26,11 +26,15 @@ import {
   useIsChecklistMounted,
 } from '@googleforcreators/story-editor';
 import { Link, THEME_CONSTANTS } from '@googleforcreators/design-system';
+/**
+ * Internal dependencies
+ */
+import type { Config } from '../../../types';
 
 const StoryMissingPublisherName = () => {
   const isChecklistMounted = useIsChecklistMounted();
   const { generalSettingsLink, publisherName } = useConfig(
-    ({ metadata, generalSettingsLink }) => ({
+    ({ metadata, generalSettingsLink }: Config) => ({
       publisherName: metadata?.publisher,
       generalSettingsLink,
     })

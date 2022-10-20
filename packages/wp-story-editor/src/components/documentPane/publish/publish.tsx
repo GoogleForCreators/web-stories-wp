@@ -58,6 +58,7 @@ import { addQueryArgs } from '@googleforcreators/url';
  * Internal dependencies
  */
 import * as apiCallbacks from '../../../api/publisherLogos';
+import type { Config } from '../../../types';
 import PublishTime from './publishTime';
 import Author from './author';
 
@@ -149,7 +150,7 @@ function PublishPanel({ nameOverride }: PublishPanelProps) {
   } = useSidebar();
   const {
     api: { publisherLogos: publisherLogosPath },
-  } = useConfig();
+  } = useConfig() as Config;
 
   const { getPublisherLogos, addPublisherLogo } = apiCallbacks;
 
@@ -159,7 +160,7 @@ function PublishPanel({ nameOverride }: PublishPanelProps) {
     capabilities: { hasUploadMediaAction, canManageSettings },
     MediaUpload,
     revisionLink,
-  } = useConfig();
+  } = useConfig() as Config;
 
   const allowedImageFileTypes = useMemo(
     () =>
@@ -172,7 +173,7 @@ function PublishPanel({ nameOverride }: PublishPanelProps) {
   const [publisherLogos, setPublisherLogos] = useState([]);
 
   useEffect(() => {
-    getPublisherLogos(publisherLogosPath).then(setPublisherLogos);
+    void getPublisherLogos(publisherLogosPath).then(setPublisherLogos);
   }, [getPublisherLogos, publisherLogosPath]);
 
   const { highlightPoster, highlightLogo, resetHighlight } = useHighlights(
@@ -236,7 +237,7 @@ function PublishPanel({ nameOverride }: PublishPanelProps) {
 
   const onNewPublisherLogoSelected = ({ id, src }) => {
     const newLogo = { id, url: src };
-    addPublisherLogo(publisherLogosPath, id);
+    void addPublisherLogo(publisherLogosPath, id);
     setPublisherLogos((logos) => [...logos, newLogo]);
     onPublisherLogoChange(newLogo);
   };

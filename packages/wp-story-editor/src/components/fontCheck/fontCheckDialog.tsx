@@ -38,6 +38,10 @@ import {
 } from '@googleforcreators/story-editor';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '@googleforcreators/elements';
 import { MouseEvent } from 'react';
+/**
+ * Internal dependencies
+ */
+import type { Config } from '../../types';
 
 const DialogContent = styled.div`
   display: grid;
@@ -86,7 +90,7 @@ export const FontCheckDialog = ({
   missingFont,
   closeDialog,
 }: FontCheckDialogProps) => {
-  const { dashboardLink, dashboardSettingsLink, isRTL } = useConfig();
+  const { dashboardLink, dashboardSettingsLink, isRTL } = useConfig() as Config;
   const [suggestedFont, setSuggestedFont] = useState(TEXT_ELEMENT_DEFAULT_FONT);
   const { updateElementsByFontFamily } = useStory(({ actions }) => ({
     updateElementsByFontFamily: actions.updateElementsByFontFamily,
@@ -94,7 +98,7 @@ export const FontCheckDialog = ({
 
   const onClose = useCallback(
     (evt: MouseEvent<HTMLAnchorElement>) => {
-      trackEvent('font_check_cancel');
+      void trackEvent('font_check_cancel');
       if (defaultCloseAction) {
         defaultCloseAction(evt);
       }
@@ -103,11 +107,11 @@ export const FontCheckDialog = ({
   );
 
   const onSettingsClick = useCallback((evt: MouseEvent<HTMLAnchorElement>) => {
-    trackClick(evt, 'click_font_check_settings');
+    void trackClick(evt, 'click_font_check_settings');
   }, []);
 
   const updateMissingFontWithDefault = useCallback(() => {
-    trackEvent('font_check_replace_default');
+    void trackEvent('font_check_replace_default');
 
     updateElementsByFontFamily({
       family: missingFont,
@@ -117,7 +121,7 @@ export const FontCheckDialog = ({
   }, [closeDialog, missingFont, updateElementsByFontFamily]);
 
   const updateMissingFontWithSelected = useCallback(() => {
-    trackEvent('font_check_replace_selected');
+    void trackEvent('font_check_replace_selected');
 
     updateElementsByFontFamily({
       family: missingFont,

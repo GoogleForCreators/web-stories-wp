@@ -25,6 +25,7 @@ import { useConfig } from '@googleforcreators/story-editor';
  * Internal dependencies
  */
 import { getStatusCheck } from '../../api/statusCheck';
+import type { Config } from '../../types';
 import { getContent } from './utils';
 import StatusCheckFailed from './statusCheckFailed';
 
@@ -34,14 +35,14 @@ function StatusCheck() {
   const {
     api: { statusCheck },
     encodeMarkup,
-  } = useConfig();
+  } = useConfig() as Config;
 
-  useEffect(() => {
+  useEffect((): void => {
     // If it succeeds, do nothing.
     // Only in case of failure do we want to alert the user and track the error.
     getStatusCheck(getContent(), statusCheck, encodeMarkup).catch((err) => {
       setShowDialog(true);
-      trackError('status_check', err.message);
+      void trackError('status_check', err.message);
     });
   }, [encodeMarkup, statusCheck]);
 

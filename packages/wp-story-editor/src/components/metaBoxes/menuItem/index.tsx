@@ -55,7 +55,7 @@ function MenuItem() {
 
   const handleMetaBoxesClick = useCallback(() => {
     toggleMetaBoxesVisible();
-    trackEvent('meta_boxes_toggled', {
+    void trackEvent('meta_boxes_toggled', {
       status: metaBoxesVisible ? 'visible' : 'hidden',
     });
   }, [metaBoxesVisible, toggleMetaBoxesVisible]);

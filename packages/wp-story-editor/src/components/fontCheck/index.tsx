@@ -27,10 +27,11 @@ import {
 /**
  * Internal dependencies
  */
+import type { Config } from '../../types';
 import { FontCheckDialog } from './fontCheckDialog';
 
 export const FontCheck = () => {
-  const { dashboardLink } = useConfig();
+  const { dashboardLink } = useConfig() as Config;
   const { isStoryLoaded, storyPages, updateElementsByFontFamily } = useStory(
     ({ state: { pages }, actions }) => ({
       storyPages: pages,
@@ -52,8 +53,8 @@ export const FontCheck = () => {
   const closeDialog = () => setShowDialog(false);
 
   useEffect(
-    () => {
-      (async () => {
+    (): void => {
+      (async (): void => {
         if (!isStoryLoaded) {
           return;
         }
