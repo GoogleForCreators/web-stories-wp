@@ -38,6 +38,7 @@
     "access": "public"
   },
   "dependencies": {
+    "@googleforcreators/types": "*",
     "polished": "^4.2.2",
     "uuid": "^9.0.0"
   },
