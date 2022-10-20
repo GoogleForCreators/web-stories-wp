@@ -19,6 +19,7 @@
  */
 import styled from 'styled-components';
 import { trackClick } from '@googleforcreators/tracking';
+import type { MouseEventHandler, MouseEvent } from 'react';
 
 /**
  * WordPress dependencies
@@ -80,12 +81,18 @@ const ParagraphWithSpace = styled(Paragraph)`
 function SuccessMessage() {
   const { dashboardURL, demoStoryURL } = useConfig();
 
-  const onClickPrimary = useCallback((evt) => {
-    trackClick(evt, 'open_dashboard');
-  }, []);
-  const onClickSecondary = useCallback((evt) => {
-    trackClick(evt, 'open_demo_story');
-  }, []);
+  const onClickPrimary: MouseEventHandler<HTMLAnchorElement> = useCallback(
+    (evt: MouseEvent<HTMLAnchorElement>) => {
+      void trackClick(evt, 'open_dashboard');
+    },
+    []
+  );
+  const onClickSecondary: MouseEventHandler<HTMLAnchorElement> = useCallback(
+    (evt: MouseEvent<HTMLAnchorElement>) => {
+      void trackClick(evt, 'open_demo_story');
+    },
+    []
+  );
 
   return (
     <Message>
