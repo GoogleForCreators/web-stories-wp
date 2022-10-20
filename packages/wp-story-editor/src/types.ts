@@ -13,7 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * External dependencies
- */
-import type { Page, Story, Element } from '@googleforcreators/types';
+
+export interface User {
+  id: number;
+  name: string;
+  avatar: string;
+}

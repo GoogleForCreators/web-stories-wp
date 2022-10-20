@@ -30,6 +30,7 @@ import { Dialog } from '@googleforcreators/story-editor';
 /**
  * Internal dependencies
  */
+import type { User } from '../../types';
 import {
   DialogWrapper,
   DialogText,
@@ -40,7 +41,7 @@ import {
 
 interface PostTakeOverDialogProps {
   isOpen: bool;
-  user?: object;
+  user?: User;
   dashboardLink: string;
   previewLink: string;
   onClose: () => void;
@@ -92,7 +93,7 @@ function PostTakeOverDialog({
       }
     >
       <DialogWrapper>
-        {user?.avatar && (
+        {user && user?.avatar && (
           <DialogImageWrapper>
             <Avatar
               src={user.avatar}

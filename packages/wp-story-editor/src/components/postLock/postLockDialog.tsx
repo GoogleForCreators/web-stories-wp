@@ -29,6 +29,7 @@ import { Dialog } from '@googleforcreators/story-editor';
 /**
  * Internal dependencies
  */
+import type { User } from '../../types';
 import {
   DialogWrapper,
   DialogText,
@@ -40,7 +41,7 @@ import {
 interface PostLockDialogProp {
   isOpen: boolean;
   showTakeOver?: boolean;
-  user?: object;
+  user?: User;
   dashboardLink: string;
   previewLink?: string;
   onClose: () => void;
