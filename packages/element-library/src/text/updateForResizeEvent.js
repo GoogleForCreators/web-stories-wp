@@ -55,7 +55,7 @@ function updateForResizeEvent(
   if (isResizingWidth) {
     return {
       height: dataPixels(
-        calculateTextHeight(element, newWidth, null, elementFontData)
+        calculateTextHeight(element, newWidth, elementFontData)
       ),
     };
   }
