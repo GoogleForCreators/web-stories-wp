@@ -32,11 +32,7 @@ import type {
   UnionElementV43,
 } from './v0043_removeTagNames';
 
-export interface TextElementV44 extends Omit<TextElementV43, 'font'> {
-  font: {
-    family: string;
-  };
-}
+export type TextElementV44 = TextElementV43;
 export type ProductElementV44 = ProductElementV43;
 export type ShapeElementV44 = ShapeElementV43;
 export type ImageElementV44 = ImageElementV43;
@@ -58,11 +54,12 @@ export type UnionElementV44 =
 export interface StoryV44 extends Omit<StoryV43, 'pages'> {
   pages: PageV44[];
 }
+
 export interface PageV44 extends Omit<PageV43, 'elements'> {
   elements: UnionElementV44[];
 }
 
-function removeElementFontProperties({ pages, ...rest }: StoryV43): StoryV44 {
+function unusedProperties({ pages, ...rest }: StoryV43): StoryV44 {
   return {
     pages: pages.map(reducePage),
     ...rest,
@@ -77,16 +74,17 @@ function reducePage({ elements, ...rest }: PageV43): PageV44 {
 }
 
 function updateElement(element: UnionElementV43): UnionElementV44 {
-  if ('font' in element) {
-    const { font, ...rest } = element;
-    return {
-      font: {
-        family: font.family,
-      },
-      ...rest,
-    };
+  if ('fontWeight' in element) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment -- Removes lingering properties that came from the templates but don't exist on the type.
+    // @ts-ignore -- Ignore fontWeight not existing on element.
+    delete element.fontWeight;
+  }
+  if ('backgroundOverlay' in element) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment -- Removes lingering properties that came from the templates but don't exist on the type.
+    // @ts-ignore -- Ignore backgroundOverlay not existing on element.
+    delete element.backgroundOverlay;
   }
   return element;
 }
 
-export default removeElementFontProperties;
+export default unusedProperties;
