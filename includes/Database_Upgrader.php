@@ -28,6 +28,7 @@ namespace Google\Web_Stories;
 
 use Google\Web_Stories\Infrastructure\Injector;
 use Google\Web_Stories\Infrastructure\PluginActivationAware;
+use Google\Web_Stories\Infrastructure\PluginUninstallAware;
 use Google\Web_Stories\Infrastructure\Registerable;
 use Google\Web_Stories\Infrastructure\Service;
 use Google\Web_Stories\Infrastructure\SiteInitializationAware;
@@ -36,7 +37,7 @@ use WP_Site;
 /**
  * Class Database_Upgrader
  */
-class Database_Upgrader implements Service, Registerable, PluginActivationAware, SiteInitializationAware {
+class Database_Upgrader implements Service, Registerable, PluginActivationAware, SiteInitializationAware, PluginUninstallAware {
 
 	/**
 	 * The slug of database option.
@@ -174,5 +175,15 @@ class Database_Upgrader implements Service, Registerable, PluginActivationAware,
 	protected function finish_up( string $previous_version ): void {
 		update_option( self::PREVIOUS_OPTION, $previous_version );
 		update_option( self::OPTION, WEBSTORIES_DB_VERSION );
+	}
+
+	/**
+	 * Act on plugin uninstall.
+	 *
+	 * @since 1.26.0
+	 */
+	public function on_plugin_uninstall(): void {
+		delete_option( self::PREVIOUS_OPTION );
+		delete_option( self::OPTION );
 	}
 }

@@ -29,6 +29,7 @@ namespace Google\Web_Stories\Admin;
 use Google\Web_Stories\Assets;
 use Google\Web_Stories\Infrastructure\PluginActivationAware;
 use Google\Web_Stories\Infrastructure\PluginDeactivationAware;
+use Google\Web_Stories\Infrastructure\PluginUninstallAware;
 use Google\Web_Stories\Infrastructure\Registerable;
 use Google\Web_Stories\Infrastructure\Service as ServiceInterface;
 use Google\Web_Stories\Story_Post_Type;
@@ -37,7 +38,7 @@ use Google\Web_Stories\Tracking;
 /**
  * Class Activation_Notice.
  */
-class Activation_Notice implements ServiceInterface, Registerable, PluginActivationAware, PluginDeactivationAware {
+class Activation_Notice implements ServiceInterface, Registerable, PluginActivationAware, PluginDeactivationAware, PluginUninstallAware {
 
 	/**
 	 * Script handle.
@@ -268,5 +269,17 @@ class Activation_Notice implements ServiceInterface, Registerable, PluginActivat
 		}
 
 		return delete_option( self::OPTION_SHOW_ACTIVATION_NOTICE );
+	}
+
+	/**
+	 * Deletes the flag that the plugin has just been uninstalled.
+	 *
+	 * @since 1.26.0
+	 */
+	public function on_plugin_uninstall(): void {
+		if ( is_multisite() ) {
+			delete_site_option( self::OPTION_SHOW_ACTIVATION_NOTICE );
+		}
+		delete_option( self::OPTION_SHOW_ACTIVATION_NOTICE );
 	}
 }

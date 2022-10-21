@@ -23,6 +23,11 @@ use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
  * @coversDefaultClass \Google\Web_Stories\Admin\Activation_Notice
  */
 class Activation_Notice extends DependencyInjectedTestCase {
+	/**
+	 * Activation_Notice for test.
+	 *
+	 * @var \Google\Web_Stories\Admin\Activation_Notice
+	 */
 	protected $instance;
 
 	public function set_up(): void {
@@ -89,5 +94,16 @@ class Activation_Notice extends DependencyInjectedTestCase {
 		$this->call_private_method( $this->instance, 'delete_activation_flag', [ true ] );
 		$flag = $this->call_private_method( $this->instance, 'get_activation_flag', [ true ] );
 		$this->assertFalse( $flag );
+	}
+
+	/**
+	 * @covers ::on_plugin_uninstall
+	 */
+	public function test_on_plugin_uninstall(): void {
+		add_site_option( $this->instance::OPTION_SHOW_ACTIVATION_NOTICE, '1' );
+		add_option( $this->instance::OPTION_SHOW_ACTIVATION_NOTICE, '1' );
+		$this->instance->on_plugin_uninstall();
+		$this->assertFalse( get_site_option( $this->instance::OPTION_SHOW_ACTIVATION_NOTICE ) );
+		$this->assertFalse( get_option( $this->instance::OPTION_SHOW_ACTIVATION_NOTICE ) );
 	}
 }
