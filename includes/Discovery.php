@@ -101,23 +101,26 @@ class Discovery extends Service_Base implements HasRequirements {
 	/**
 	 * Prints document title for stories.
 	 *
-	 * Works both for classic themes and block themes without any conditionals.
+	 * Works both for classic themes and block themes.
 	 *
 	 * @since 1.25.0
 	 *
 	 * @link https://github.com/GoogleForCreators/web-stories-wp/issues/12139
+	 * @link https://github.com/GoogleForCreators/web-stories-wp/issues/12487
 	 * @see _wp_render_title_tag()
 	 * @see _block_template_render_title_tag()
 	 */
 	public function print_document_title(): void {
+		$enable_metadata = function_exists( 'wp_is_block_theme' ) && wp_is_block_theme();
+
 		/**
 		 * Filters whether to print the document title.
 		 *
 		 * @since 1.25.0
 		 *
-		 * @param bool $enable_open_graph Whether to print the document title. Default to true.
+		 * @param bool $enable_open_graph Whether to print the document title. Defaults to true for block themes, false otherwise.
 		 */
-		$enable_metadata = apply_filters( 'web_stories_enable_document_title', true );
+		$enable_metadata = apply_filters( 'web_stories_enable_document_title', $enable_metadata );
 		if ( ! $enable_metadata ) {
 			return;
 		}
