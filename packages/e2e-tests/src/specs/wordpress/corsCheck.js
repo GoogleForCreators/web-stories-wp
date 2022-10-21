@@ -20,15 +20,17 @@
 import {
   createNewStory,
   takeSnapshot,
+  trashAllPosts,
   withPlugin,
 } from '@web-stories-wp/e2e-test-utils';
 /**
  * Internal dependencies
  */
-import { addAllowedErrorMessage } from '../../config/bootstrap.js';
+import { addAllowedErrorMessage } from '../../config/bootstrap';
 
-// eslint-disable-next-line jest/no-disabled-tests -- TODO(#11981): Fix flakey test.
-describe.skip('CORS check', () => {
+jest.retryTimes(3, { logErrorsBeforeRetry: true });
+
+describe('CORS check', () => {
   withPlugin('e2e-tests-cors-error');
 
   let removeCORSErrorMessage;
@@ -45,9 +47,11 @@ describe.skip('CORS check', () => {
     );
   });
 
-  afterAll(() => {
+  afterAll(async () => {
     removeCORSErrorMessage();
     removeResourceErrorMessage();
+
+    await trashAllPosts('web-story');
   });
 
   it('should see media dialog', async () => {

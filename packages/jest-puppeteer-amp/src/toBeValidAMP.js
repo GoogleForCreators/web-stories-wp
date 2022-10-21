@@ -23,13 +23,23 @@ import { getAMPValidationErrors } from '@web-stories-wp/jest-amp';
 /** @typedef {import('jest').CustomMatcherResult} CustomMatcherResult */
 
 /**
- * Whether the current page is valid AMP or not.
+ * Whether a given URL is valid AMP or not.
  *
- * @param {Page} page The page object.
+ * Opens the URL in a new incognito page, retrieves the
+ * page's content and then runs it through the AMP validator.
+ *
+ * @param {string} url The URL to validate.
  * @return {CustomMatcherResult} Matcher result.
  */
-async function toBeValidAMP(page) {
-  const errors = await getAMPValidationErrors(await page.content(), false);
+async function toBeValidAMP(url) {
+  const context = await browser.createIncognitoBrowserContext();
+  const incognitoPage = await context.newPage();
+  const response = await incognitoPage.goto(url);
+  const content = await response.text();
+  await incognitoPage.close();
+  await context.close();
+
+  const errors = await getAMPValidationErrors(content, true);
   const pass = errors.length === 0;
 
   return {

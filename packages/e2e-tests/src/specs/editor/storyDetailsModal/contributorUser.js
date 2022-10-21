@@ -19,21 +19,31 @@
  */
 import {
   createNewStory,
-  uploadMedia,
-  deleteMedia,
   takeSnapshot,
+  trashAllPosts,
+  withPlugin,
   withUser,
 } from '@web-stories-wp/e2e-test-utils';
 
+const IMAGE_URL_LOCAL = `${process.env.WP_BASE_URL}/wp-content/e2e-assets/example-3.png`;
+
+const openStoryDetailsModal = async () => {
+  await expect(page).toClick('button', { text: 'Submit for review' });
+  await expect(page).toMatchElement('div[aria-label="Story details"]');
+};
+
+jest.retryTimes(3, { logErrorsBeforeRetry: true });
+
 describe('Story Details Modal - Contributor User', () => {
-  const openStoryDetailsModal = async () => {
-    await expect(page).toClick('button', { text: 'Submit for review' });
-    await expect(page).toMatchElement('div[aria-label="Story details"]');
-  };
+  withPlugin('e2e-tests-hotlink');
 
   beforeEach(async () => {
     await createNewStory();
     await openStoryDetailsModal();
+  });
+
+  afterAll(async () => {
+    await trashAllPosts('web-story');
   });
 
   withUser('contributor', 'password');
@@ -65,16 +75,12 @@ describe('Story Details Modal - Contributor User', () => {
   });
 
   it('should not be able to update Story visibility', async () => {
-    const visibilityDropDownButton = await expect(page).toMatchElement(
-      'button',
-      { text: 'Public' }
-    );
-    await expect(visibilityDropDownButton).toMatch('Public');
-
-    await visibilityDropDownButton.click();
+    await expect(page).toClick('button', {
+      text: 'Public',
+    });
 
     await expect(page).not.toMatchElement(
-      '[aria-label=" Option List Selector"]'
+      '[aria-label="Option List Selector"]'
     );
   });
 
@@ -111,24 +117,51 @@ describe('Story Details Modal - Contributor User', () => {
       );
     });
 
-    // TODO https://github.com/googleforcreators/web-stories-wp/issues/7107
-    // eslint-disable-next-line jest/no-disabled-tests
-    it.skip('should update featured media (poster)', async () => {
+    it('should update featured media (poster)', async () => {
       await openPublishingPanel();
 
       await expect(page).toClick(
         'div[aria-label="Story details"] button[aria-label="Poster image"]'
       );
 
-      const filename = await uploadMedia('example-1.jpg', false);
+      await expect(page).not.toMatchElement('[role="menuitem"]', {
+        text: 'Upload a file',
+      });
 
-      await expect(page).toClick('button', { text: 'Select as poster image' });
+      await expect(page).toClick('[role="menuitem"]', {
+        text: 'Link to a file',
+      });
+
+      await page.waitForSelector('[role="dialog"]');
+      await expect(page).toMatch('Use external image as poster image');
+
+      await page.type('input[type="url"]', IMAGE_URL_LOCAL);
+
+      await expect(page).toMatchElement(
+        '[role="dialog"] button:not([disabled])',
+        {
+          text: 'Use image as poster image',
+        }
+      );
+
+      await Promise.all([
+        expect(page).toClick('[role="dialog"] button', {
+          text: 'Use image as poster image',
+        }),
+        await page.waitForResponse(
+          (response) =>
+            //eslint-disable-next-line jest/no-conditional-in-test -- False positive.
+            response.url().includes('web-stories/v1/hotlink/validate') &&
+            response.status() === 200
+        ),
+      ]);
+
+      // Dialog should disappear by now.
+      await expect(page).not.toMatch('Use external image as poster image');
 
       await expect(page).toMatchElement(
         '[data-testid="story_preview_featured_media"]'
       );
-
-      await deleteMedia(filename);
     });
   });
 

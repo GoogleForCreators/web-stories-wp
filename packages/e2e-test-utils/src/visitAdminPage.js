@@ -33,9 +33,17 @@ import {
  *
  * @param {string} adminPath String to be serialized as pathname.
  * @param {string} [query] String to be serialized as query portion of URL.
+ * @param {string} [hash] Location hash string, e.g. "/editor-settings".
  */
-async function visitAdminPage(adminPath, query = '') {
-  await page.goto(createURL(join('wp-admin', adminPath), query));
+async function visitAdminPage(adminPath, query = '', hash = '') {
+  const targetUrl =
+    createURL(join('wp-admin', adminPath), query) + (hash ? `#${hash}` : '');
+
+  if (isCurrentURL(targetUrl)) {
+    return;
+  }
+
+  await page.goto(targetUrl);
 
   // Handle upgrade required screen
   if (isCurrentURL('wp-admin/upgrade.php')) {

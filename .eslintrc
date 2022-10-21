@@ -504,6 +504,15 @@
     },
     {
       "files": [
+        "packages/jest-puppeteer-amp/src/**/*.js"
+      ],
+      "globals": {
+        "browser": "readonly",
+        "page": "readonly"
+      }
+    },
+    {
+      "files": [
         "packages/e2e-test-utils/**/*.js",
         "packages/e2e-tests/src/**/*.js"
       ],

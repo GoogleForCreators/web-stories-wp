@@ -23,7 +23,6 @@ import styled, { css } from 'styled-components';
  * Internal dependencies
  */
 import { CheckmarkSmall } from '../../icons';
-import { FOCUS_VISIBLE_SELECTOR } from '../../theme/global';
 
 const BORDER_WIDTH = 1;
 const TOGGLE_TRACK_HEIGHT = 20;
@@ -138,7 +137,7 @@ const ToggleContainer = styled.div(
         }
       }
 
-      &.${FOCUS_VISIBLE_SELECTOR} {
+      &:focus-visible {
         ~ ${Background} {
           outline: none;
           box-shadow: 0 0 0 5px ${theme.colors.bg.primary},

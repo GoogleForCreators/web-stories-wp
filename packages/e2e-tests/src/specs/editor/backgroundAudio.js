@@ -25,10 +25,13 @@ import {
   withPlugin,
   insertStoryTitle,
   publishStory,
+  trashAllPosts,
 } from '@web-stories-wp/e2e-test-utils';
 
 const VTT_URL = `${process.env.WP_BASE_URL}/wp-content/e2e-assets/test.vtt`;
 const MP3_URL = `${process.env.WP_BASE_URL}/wp-content/e2e-assets/audio.mp3`;
+
+jest.retryTimes(3, { logErrorsBeforeRetry: true });
 
 describe('Background Audio', () => {
   let uploadedFiles;
@@ -42,9 +45,12 @@ describe('Background Audio', () => {
     }
   });
 
+  afterAll(async () => {
+    await trashAllPosts('web-story');
+  });
+
   describe('Story Background Audio', () => {
-    //eslint-disable-next-line jest/no-disabled-tests -- TODO(#12025): Fix flakey test.
-    it.skip('should allow adding background audio', async () => {
+    it('should allow adding background audio', async () => {
       await createNewStory();
 
       await expect(page).toClick('li[role="tab"]', { text: 'Document' });

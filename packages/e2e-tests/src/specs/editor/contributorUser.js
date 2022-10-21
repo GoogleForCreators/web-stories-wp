@@ -23,6 +23,8 @@ import {
   withUser,
 } from '@web-stories-wp/e2e-test-utils';
 
+jest.retryTimes(3, { logErrorsBeforeRetry: true });
+
 describe('Contributor User', () => {
   withUser('contributor', 'password');
 

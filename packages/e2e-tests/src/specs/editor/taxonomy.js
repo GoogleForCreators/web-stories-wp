@@ -23,6 +23,8 @@ import {
   publishStory,
   insertStoryTitle,
   withPlugin,
+  createNewTerm,
+  trashAllPosts,
 } from '@web-stories-wp/e2e-test-utils';
 
 async function goToAndExpandTaxonomyPanel() {
@@ -44,22 +46,36 @@ async function goToAndExpandTaxonomyPanel() {
   await taxonomyPanel.focus();
 }
 
+/**
+ * Add a new category.
+ *
+ * @param {string} name Category name.
+ * @param {string} [parent] Parent category name.
+ * @return {Promise<void>}
+ */
 async function addCategory(name, parent) {
   await expect(page).toClick('button', { text: 'Add New Category' });
 
   if (parent) {
     await expect(page).toClick('button[aria-label="Parent Category"]');
     await page.waitForSelector('li[role="option"]');
+
     await expect(page).toMatchElement('li[role="option"]', { text: parent });
 
     await expect(page).toClick('li[role="option"]', { text: parent });
+
     await expect(page).toMatchElement('button[aria-label="Parent Category"]', {
       text: parent,
     });
   }
 
   await expect(page).toFill('input[name="New Category Name"]', name);
+
+  await expect(page).toClick('input[name="New Category Name"]');
+
+  await page.focus('input[name="New Category Name"]');
   await page.keyboard.press('Enter');
+
   await expect(page).toMatchElement('label', {
     text: name,
   });
@@ -95,27 +111,24 @@ async function addTag(name) {
   await expect(tokenNames).toContainValue(name);
 }
 
-describe('taxonomy', () => {
+jest.retryTimes(3, { logErrorsBeforeRetry: true });
+
+describe('Taxonomies', () => {
   // Create some categories and tags before running all tests so that they are available there.
   beforeAll(async () => {
-    await createNewStory();
-    await goToAndExpandTaxonomyPanel();
+    await createNewTerm('web_story_category', 'music genres');
+    await createNewTerm('web_story_category', 'rock', 'music genres');
 
-    await Promise.all([
-      await addCategory('music genres'),
-      await addCategory('rock', 'music genres'),
-
-      await addTag('adventure'),
-      await addTag('sci-fi'),
-      await addTag('comedy'),
-    ]);
-
-    // No need to save/publish the story, as the new categories will have been
-    // created in the background via the REST API already.
+    await createNewTerm('web_story_tag', 'adventure');
+    await createNewTerm('web_story_tag', 'sci-fi');
+    await createNewTerm('web_story_tag', 'comedy');
   });
 
-  // eslint-disable-next-line jest/no-disabled-tests -- TODO(#12026): Fix flakey test.
-  describe.skip('Administrator', () => {
+  afterAll(async () => {
+    await trashAllPosts('web-story');
+  });
+
+  describe('Administrator', () => {
     it('should be able to add new categories', async () => {
       await createNewStory();
       await insertStoryTitle('Taxonomies - Categories - Admin');
